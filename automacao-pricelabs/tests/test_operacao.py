@@ -121,3 +121,25 @@ class TestInstaladorDaInternet(unittest.TestCase):
         self.assertIn("manteve=True", r.stdout)
         self.assertEqual((destino / "config.json").read_text(), '{"meu": "ativo"}', "atualização mantém o config")
         self.assertTrue((destino / "README.md").exists())
+
+
+class TestPacoteDoDownload(unittest.TestCase):
+    """O Windows PowerShell 5.1 não extrai caminhos com mais de 260 caracteres."""
+
+    def test_historico_fora_do_zip_e_caminhos_curtos(self):
+        self.assertIn("/.thinker-doer export-ignore", (RAIZ / ".gitattributes").read_text())
+        maior = max(len(str(p.relative_to(RAIZ)).replace(os.sep, "/")) for p in RAIZ.rglob("*")
+                    if p.is_file() and ".thinker-doer" not in p.parts and "__pycache__" not in p.parts)
+        # C:\Users\<nome>\AppData\Local\Temp\rp99999999\x\ (~60) + pasta do ZIP (~60) + automacao-pricelabs\ (20)
+        self.assertLess(maior + 60 + 60 + 20, 260, f"caminho relativo de {maior} caracteres")
+
+    @unittest.skipUnless(shutil.which("git") and (RAIZ.parent / ".git").exists(), "fora de um clone git")
+    def test_git_archive_respeita_export_ignore(self):
+        r = subprocess.run(["git", "-C", str(RAIZ.parent), "archive", "--worktree-attributes", "--format=tar", "HEAD", "automacao-pricelabs"],
+                           capture_output=True)
+        if r.returncode != 0:
+            self.skipTest("git archive indisponível")
+        import io
+        import tarfile
+        nomes = tarfile.open(fileobj=io.BytesIO(r.stdout)).getnames()
+        self.assertFalse([n for n in nomes if ".thinker-doer" in n and not n.endswith(".gitattributes")])

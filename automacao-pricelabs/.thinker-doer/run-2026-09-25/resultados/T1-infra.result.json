@@ -1,0 +1,198 @@
+{
+  "contract_version": "1.0",
+  "task_id": "T1-infra",
+  "task_revision": 1,
+  "revision": 1,
+  "actor_id": "coordenador",
+  "status": "completed",
+  "summary": "Checks executados pelo coordenador em Linux com Python 3.11.15.",
+  "reviewed_files": [
+    {
+      "path": "pacing/__init__.py",
+      "state": "present",
+      "sha256": "7452c17582a5826bd9e240babd83af5543803c6626b843efa6aa847023848cff"
+    },
+    {
+      "path": "pacing/rede.py",
+      "state": "present",
+      "sha256": "7409038a021cd9786a376ca1003081ebc56c5a87d9a65b66fdaa4b9831db2d3e"
+    },
+    {
+      "path": "pacing/credenciais.py",
+      "state": "present",
+      "sha256": "bca1060092ef41a2286b560953eca294934b70291a23606f407ad3f460edb1d5"
+    },
+    {
+      "path": "pacing/estado.py",
+      "state": "present",
+      "sha256": "44ab0861f4d9fed4d3120e7202fb5ea8c4f3d679c64e9607cbbf088b4b53671f"
+    },
+    {
+      "path": "pacing/config.py",
+      "state": "present",
+      "sha256": "8c0617fc9b0c2311ec2ee0edae6933dd1ff88e31fcfea526d6980f456be4d496"
+    },
+    {
+      "path": "pacing/tempo.py",
+      "state": "present",
+      "sha256": "4547f23015e34d9d0c3d415352871867ce5fa176099279a4624591a86c985bec"
+    },
+    {
+      "path": "tests/test_infra.py",
+      "state": "present",
+      "sha256": "e0a39e82c752de25df66ccab288a8a9318f2bc1974af58c759c58c74fcbaba04"
+    },
+    {
+      "path": "tests/test_contratos.py",
+      "state": "present",
+      "sha256": "1780cd97f4f7597b12a90d4c32919b2530aba27683c2a792e231dbbb0975d517"
+    },
+    {
+      "path": "tests/simulador.py",
+      "state": "present",
+      "sha256": "d97d78c01dc121774c21088bd40645589349f2c2e8c05e58c300e9c727daa776"
+    }
+  ],
+  "snapshot_digest": "730d85e7cce8b1a13e198c13e2a39d261a05e01a9c9a23211fe71b2abbb15ff7",
+  "checks": [
+    {
+      "id": "unit",
+      "command": [
+        "python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-t",
+        "."
+      ],
+      "status": "passed",
+      "exit_code": 0,
+      "evidence": [
+        {
+          "path": ".thinker-doer/run-2026-09-25/evidencias/g3/unittest-discover-s-tests-t.txt",
+          "sha256": "f84a18bd82ca822247242d2add2b7e7600b408bae307674296f431ccdb208861"
+        }
+      ]
+    },
+    {
+      "id": "schemas",
+      "command": [
+        "python",
+        "-m",
+        "unittest",
+        "tests.test_contratos"
+      ],
+      "status": "passed",
+      "exit_code": 0,
+      "evidence": [
+        {
+          "path": ".thinker-doer/run-2026-09-25/evidencias/g3/unittest-tests-test-contratos.txt",
+          "sha256": "7068883c524b79ecbbae5ef7ec5f958e3f5e5117dca1100a4de9f15daeac48a5"
+        }
+      ]
+    },
+    {
+      "id": "coverage",
+      "command": [
+        "python",
+        "-m",
+        "coverage",
+        "run",
+        "--branch",
+        "--source=pacing",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-t",
+        "."
+      ],
+      "status": "passed",
+      "exit_code": 0,
+      "evidence": [
+        {
+          "path": ".thinker-doer/run-2026-09-25/evidencias/g3/coverage-run-branch-source-pacing-m-unittest-discover-s-tests-t.txt",
+          "sha256": "a157a13b25e0024a81a3f9712b93e83d398524d0b1edfa2783ca6766d9f4b067"
+        }
+      ]
+    },
+    {
+      "id": "coverage-report",
+      "command": [
+        "python",
+        "-m",
+        "coverage",
+        "report",
+        "--include=pacing/rede.py,pacing/credenciais.py,pacing/estado.py,pacing/config.py,pacing/tempo.py",
+        "--fail-under=90"
+      ],
+      "status": "passed",
+      "exit_code": 0,
+      "evidence": [
+        {
+          "path": ".thinker-doer/run-2026-09-25/evidencias/g3/coverage-report-include-pacing-rede-py-pacing-credenciais-py-pacing-estado-py-pa.txt",
+          "sha256": "c19980c0e45c2dc0d1445b941eed9c79da0240c84e06dd044cf4676f810c7cb8"
+        }
+      ]
+    }
+  ],
+  "acceptance_results": [
+    {
+      "criterion_id": "AC1",
+      "status": "passed",
+      "evidence": [
+        {
+          "path": ".thinker-doer/run-2026-09-25/evidencias/g3/unittest-discover-s-tests-t.txt",
+          "sha256": "f84a18bd82ca822247242d2add2b7e7600b408bae307674296f431ccdb208861"
+        }
+      ]
+    },
+    {
+      "criterion_id": "AC2",
+      "status": "passed",
+      "evidence": [
+        {
+          "path": ".thinker-doer/run-2026-09-25/evidencias/g3/unittest-discover-s-tests-t.txt",
+          "sha256": "f84a18bd82ca822247242d2add2b7e7600b408bae307674296f431ccdb208861"
+        }
+      ]
+    },
+    {
+      "criterion_id": "AC3",
+      "status": "passed",
+      "evidence": [
+        {
+          "path": ".thinker-doer/run-2026-09-25/evidencias/g3/unittest-discover-s-tests-t.txt",
+          "sha256": "f84a18bd82ca822247242d2add2b7e7600b408bae307674296f431ccdb208861"
+        }
+      ]
+    },
+    {
+      "criterion_id": "AC4",
+      "status": "passed",
+      "evidence": [
+        {
+          "path": ".thinker-doer/run-2026-09-25/evidencias/g3/unittest-discover-s-tests-t.txt",
+          "sha256": "f84a18bd82ca822247242d2add2b7e7600b408bae307674296f431ccdb208861"
+        },
+        {
+          "path": ".thinker-doer/run-2026-09-25/evidencias/g3/unittest-tests-test-contratos.txt",
+          "sha256": "7068883c524b79ecbbae5ef7ec5f958e3f5e5117dca1100a4de9f15daeac48a5"
+        }
+      ]
+    }
+  ],
+  "coverage": {
+    "percent": 98,
+    "scope": "pacing/rede.py pacing/credenciais.py pacing/estado.py pacing/config.py pacing/tempo.py: linhas e ramos (coverage --branch)",
+    "evidence": [
+      {
+        "path": ".thinker-doer/run-2026-09-25/evidencias/g3/coverage-report-include-pacing-rede-py-pacing-credenciais-py-pacing-estado-py-pa.txt",
+        "sha256": "c19980c0e45c2dc0d1445b941eed9c79da0240c84e06dd044cf4676f810c7cb8"
+      }
+    ]
+  }
+}

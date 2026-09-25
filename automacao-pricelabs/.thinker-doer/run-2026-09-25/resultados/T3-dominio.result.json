@@ -1,0 +1,183 @@
+{
+  "contract_version": "1.0",
+  "task_id": "T3-dominio",
+  "task_revision": 1,
+  "revision": 1,
+  "actor_id": "coordenador",
+  "status": "completed",
+  "summary": "Checks executados pelo coordenador em Linux com Python 3.11.15.",
+  "reviewed_files": [
+    {
+      "path": "pacing/metricas.py",
+      "state": "present",
+      "sha256": "f9285c1e04fd9cbbf46b6e3ca418521b35af2bfc8078ba143c8faf0f01b5febf"
+    },
+    {
+      "path": "pacing/regras.py",
+      "state": "present",
+      "sha256": "adea4615b01ce7f599157410fb9009b6a18d8a6e26389aa69a679e478867d679"
+    },
+    {
+      "path": "tests/test_dominio.py",
+      "state": "present",
+      "sha256": "818aca93c34289624b6da74b378dcf4e18427b205c4ddf6d8dc82dc8b232f797"
+    },
+    {
+      "path": "tests/fixtures/calendario-2026-09-25.json",
+      "state": "present",
+      "sha256": "7e6c40f31b404f90cf203df42031b61ae5729a33aa9a5abdeac26b78c9a767cb"
+    }
+  ],
+  "snapshot_digest": "9d86c4c373cc8558f4cccb62448c2f967fa1fdac45ecab6eaaca19c2553aed30",
+  "checks": [
+    {
+      "id": "unit",
+      "command": [
+        "python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-t",
+        "."
+      ],
+      "status": "passed",
+      "exit_code": 0,
+      "evidence": [
+        {
+          "path": ".thinker-doer/run-2026-09-25/evidencias/g3/unittest-discover-s-tests-t.txt",
+          "sha256": "f84a18bd82ca822247242d2add2b7e7600b408bae307674296f431ccdb208861"
+        }
+      ]
+    },
+    {
+      "id": "schemas",
+      "command": [
+        "python",
+        "-m",
+        "unittest",
+        "tests.test_contratos"
+      ],
+      "status": "passed",
+      "exit_code": 0,
+      "evidence": [
+        {
+          "path": ".thinker-doer/run-2026-09-25/evidencias/g3/unittest-tests-test-contratos.txt",
+          "sha256": "7068883c524b79ecbbae5ef7ec5f958e3f5e5117dca1100a4de9f15daeac48a5"
+        }
+      ]
+    },
+    {
+      "id": "coverage",
+      "command": [
+        "python",
+        "-m",
+        "coverage",
+        "run",
+        "--branch",
+        "--source=pacing",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-t",
+        "."
+      ],
+      "status": "passed",
+      "exit_code": 0,
+      "evidence": [
+        {
+          "path": ".thinker-doer/run-2026-09-25/evidencias/g3/coverage-run-branch-source-pacing-m-unittest-discover-s-tests-t.txt",
+          "sha256": "a157a13b25e0024a81a3f9712b93e83d398524d0b1edfa2783ca6766d9f4b067"
+        }
+      ]
+    },
+    {
+      "id": "coverage-report",
+      "command": [
+        "python",
+        "-m",
+        "coverage",
+        "report",
+        "--include=pacing/metricas.py,pacing/regras.py",
+        "--fail-under=90"
+      ],
+      "status": "passed",
+      "exit_code": 0,
+      "evidence": [
+        {
+          "path": ".thinker-doer/run-2026-09-25/evidencias/g3/coverage-report-include-pacing-metricas-py-pacing-regras-py-fail-under-90.txt",
+          "sha256": "06babb9dbbfd8017f5444355e28ce7224bc468d7f0ec2fd68a940522d39e92b5"
+        }
+      ]
+    }
+  ],
+  "acceptance_results": [
+    {
+      "criterion_id": "AC1",
+      "status": "passed",
+      "evidence": [
+        {
+          "path": ".thinker-doer/run-2026-09-25/evidencias/g3/unittest-discover-s-tests-t.txt",
+          "sha256": "f84a18bd82ca822247242d2add2b7e7600b408bae307674296f431ccdb208861"
+        }
+      ]
+    },
+    {
+      "criterion_id": "AC2",
+      "status": "passed",
+      "evidence": [
+        {
+          "path": ".thinker-doer/run-2026-09-25/evidencias/g3/unittest-discover-s-tests-t.txt",
+          "sha256": "f84a18bd82ca822247242d2add2b7e7600b408bae307674296f431ccdb208861"
+        }
+      ]
+    },
+    {
+      "criterion_id": "AC3",
+      "status": "passed",
+      "evidence": [
+        {
+          "path": ".thinker-doer/run-2026-09-25/evidencias/g3/unittest-discover-s-tests-t.txt",
+          "sha256": "f84a18bd82ca822247242d2add2b7e7600b408bae307674296f431ccdb208861"
+        },
+        {
+          "path": ".thinker-doer/run-2026-09-25/evidencias/g3/unittest-tests-test-contratos.txt",
+          "sha256": "7068883c524b79ecbbae5ef7ec5f958e3f5e5117dca1100a4de9f15daeac48a5"
+        }
+      ]
+    },
+    {
+      "criterion_id": "AC4",
+      "status": "passed",
+      "evidence": [
+        {
+          "path": ".thinker-doer/run-2026-09-25/evidencias/g3/unittest-discover-s-tests-t.txt",
+          "sha256": "f84a18bd82ca822247242d2add2b7e7600b408bae307674296f431ccdb208861"
+        }
+      ]
+    },
+    {
+      "criterion_id": "AC5",
+      "status": "passed",
+      "evidence": [
+        {
+          "path": ".thinker-doer/run-2026-09-25/evidencias/g3/unittest-discover-s-tests-t.txt",
+          "sha256": "f84a18bd82ca822247242d2add2b7e7600b408bae307674296f431ccdb208861"
+        }
+      ]
+    }
+  ],
+  "coverage": {
+    "percent": 99,
+    "scope": "pacing/metricas.py pacing/regras.py: linhas e ramos (coverage --branch)",
+    "evidence": [
+      {
+        "path": ".thinker-doer/run-2026-09-25/evidencias/g3/coverage-report-include-pacing-metricas-py-pacing-regras-py-fail-under-90.txt",
+        "sha256": "06babb9dbbfd8017f5444355e28ce7224bc468d7f0ec2fd68a940522d39e92b5"
+      }
+    ]
+  }
+}

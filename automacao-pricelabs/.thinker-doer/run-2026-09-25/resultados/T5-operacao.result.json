@@ -1,0 +1,123 @@
+{
+  "contract_version": "1.0",
+  "task_id": "T5-operacao",
+  "task_revision": 1,
+  "revision": 1,
+  "actor_id": "coordenador",
+  "status": "completed",
+  "summary": "Checks executados pelo coordenador em Linux com Python 3.11.15.",
+  "reviewed_files": [
+    {
+      "path": "windows/instalar.bat",
+      "state": "present",
+      "sha256": "27fcea06a6ba700e02fec235cb21581c10e107220d3360603232ee77d74f5a55"
+    },
+    {
+      "path": "windows/configurar-chaves.bat",
+      "state": "present",
+      "sha256": "dbf93168530296ca398def06ea5f8cdb90c679ec53f07a9e67e3359322d6c7a6"
+    },
+    {
+      "path": "windows/verificar.bat",
+      "state": "present",
+      "sha256": "fd198b14dcc2d73b65b60e349ed377e30361ba058447cad3ddbaadd0ed22351c"
+    },
+    {
+      "path": "windows/executar.bat",
+      "state": "present",
+      "sha256": "a4fe398a930b000215c47b317b091a4b68cb4b920e19638d0baad1bfbdc217af"
+    },
+    {
+      "path": "windows/parar.bat",
+      "state": "present",
+      "sha256": "504e1a5a5916f5fc00b7da8ddd8838c0d1220e8ac95e35fe3bf16d014d08f02c"
+    },
+    {
+      "path": "windows/retomar.bat",
+      "state": "present",
+      "sha256": "997eaf2a4143d430b8055837e1e56603368ea68b5ec4707b6beded53aa923b7f"
+    },
+    {
+      "path": "windows/desfazer.bat",
+      "state": "present",
+      "sha256": "732307fd498776c5ed8612264d1c3293c42a227a5c991914051761a75e4aa02b"
+    },
+    {
+      "path": "README.md",
+      "state": "present",
+      "sha256": "3fa59681278276b86a96c188e6680149fc537bebcee2f2115353d29d19d09cf4"
+    },
+    {
+      "path": "tests/test_operacao.py",
+      "state": "present",
+      "sha256": "58c2d3b6f120127c0739dc1f021281dbbe6c70a9e16b906831ce30c36c7e7a84"
+    },
+    {
+      "path": "windows/agendar.bat",
+      "state": "present",
+      "sha256": "15bd7226b97faf86e0bb3f72abee4bc89585169834896d64012bfcb7c0cace35"
+    },
+    {
+      "path": ".gitattributes",
+      "state": "present",
+      "sha256": "65b1023623fb87849b0d7e7a39141bd9d2662d98dcd55fefc9e8bf1683d2d934"
+    },
+    {
+      "path": "pacing/agenda.py",
+      "state": "present",
+      "sha256": "75893216486220f4e77e2a647227e237ffcc5c7a884a1ad7c9b13606e6f4b44c"
+    },
+    {
+      "path": "pacing/__main__.py",
+      "state": "present",
+      "sha256": "451ccedad3b1fa3895d9585363b847793b0d51ae7551e48a233f6f7c025eab6a"
+    }
+  ],
+  "snapshot_digest": "32b9abb665a1abd71ad851edfb6f76e481a2b1616c941c1cc8d505e749c4adf3",
+  "checks": [
+    {
+      "id": "unit",
+      "command": [
+        "python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-t",
+        "."
+      ],
+      "status": "passed",
+      "exit_code": 0,
+      "evidence": [
+        {
+          "path": ".thinker-doer/run-2026-09-25/evidencias/g3/unittest-discover-s-tests-t.txt",
+          "sha256": "f84a18bd82ca822247242d2add2b7e7600b408bae307674296f431ccdb208861"
+        }
+      ]
+    }
+  ],
+  "acceptance_results": [
+    {
+      "criterion_id": "AC1",
+      "status": "passed",
+      "evidence": [
+        {
+          "path": ".thinker-doer/run-2026-09-25/evidencias/g3/unittest-discover-s-tests-t.txt",
+          "sha256": "f84a18bd82ca822247242d2add2b7e7600b408bae307674296f431ccdb208861"
+        }
+      ]
+    },
+    {
+      "criterion_id": "AC2",
+      "status": "passed",
+      "evidence": [
+        {
+          "path": ".thinker-doer/run-2026-09-25/evidencias/g3/unittest-discover-s-tests-t.txt",
+          "sha256": "f84a18bd82ca822247242d2add2b7e7600b408bae307674296f431ccdb208861"
+        }
+      ]
+    }
+  ],
+  "coverage": null
+}

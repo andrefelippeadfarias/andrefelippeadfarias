@@ -1,0 +1,127 @@
+{
+  "contract_version": "1.0",
+  "task_id": "T2-integracoes",
+  "task_revision": 1,
+  "revision": 1,
+  "actor_id": "coordenador",
+  "status": "completed",
+  "summary": "Checks executados pelo coordenador em Linux com Python 3.11.15.",
+  "reviewed_files": [
+    {
+      "path": "pacing/pricelabs.py",
+      "state": "present",
+      "sha256": "72a55630ef36e6907a9fb5bb70af2eb5c6015b153485c51d13f39cf47bcc294a"
+    },
+    {
+      "path": "pacing/jev.py",
+      "state": "present",
+      "sha256": "18050293ba70a94c1f80b783897b4f96cfafe5dede8c52e140bea0375cdc90d6"
+    },
+    {
+      "path": "tests/test_integracoes.py",
+      "state": "present",
+      "sha256": "805ea412eaa6893122ef9b3f5d89b595c32f65dc31f5b185c4916db356b98279"
+    }
+  ],
+  "snapshot_digest": "35f1fc66378bd54485440dd754a35ad20c86c29c32aa9fb479e44dc41318090b",
+  "checks": [
+    {
+      "id": "unit",
+      "command": [
+        "python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-t",
+        "."
+      ],
+      "status": "passed",
+      "exit_code": 0,
+      "evidence": [
+        {
+          "path": ".thinker-doer/run-2026-09-25/evidencias/g3/unittest-discover-s-tests-t.txt",
+          "sha256": "f84a18bd82ca822247242d2add2b7e7600b408bae307674296f431ccdb208861"
+        }
+      ]
+    },
+    {
+      "id": "coverage",
+      "command": [
+        "python",
+        "-m",
+        "coverage",
+        "run",
+        "--branch",
+        "--source=pacing",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-t",
+        "."
+      ],
+      "status": "passed",
+      "exit_code": 0,
+      "evidence": [
+        {
+          "path": ".thinker-doer/run-2026-09-25/evidencias/g3/coverage-run-branch-source-pacing-m-unittest-discover-s-tests-t.txt",
+          "sha256": "a157a13b25e0024a81a3f9712b93e83d398524d0b1edfa2783ca6766d9f4b067"
+        }
+      ]
+    },
+    {
+      "id": "coverage-report",
+      "command": [
+        "python",
+        "-m",
+        "coverage",
+        "report",
+        "--include=pacing/pricelabs.py,pacing/jev.py",
+        "--fail-under=85"
+      ],
+      "status": "passed",
+      "exit_code": 0,
+      "evidence": [
+        {
+          "path": ".thinker-doer/run-2026-09-25/evidencias/g3/coverage-report-include-pacing-pricelabs-py-pacing-jev-py-fail-under-85.txt",
+          "sha256": "2a92fc385656250e4c16a29bc82153551a5d18fe75c71bfca88c8059f113467f"
+        }
+      ]
+    }
+  ],
+  "acceptance_results": [
+    {
+      "criterion_id": "AC1",
+      "status": "passed",
+      "evidence": [
+        {
+          "path": ".thinker-doer/run-2026-09-25/evidencias/g3/unittest-discover-s-tests-t.txt",
+          "sha256": "f84a18bd82ca822247242d2add2b7e7600b408bae307674296f431ccdb208861"
+        }
+      ]
+    },
+    {
+      "criterion_id": "AC2",
+      "status": "passed",
+      "evidence": [
+        {
+          "path": ".thinker-doer/run-2026-09-25/evidencias/g3/unittest-discover-s-tests-t.txt",
+          "sha256": "f84a18bd82ca822247242d2add2b7e7600b408bae307674296f431ccdb208861"
+        }
+      ]
+    }
+  ],
+  "coverage": {
+    "percent": 99,
+    "scope": "pacing/pricelabs.py pacing/jev.py: linhas e ramos (coverage --branch)",
+    "evidence": [
+      {
+        "path": ".thinker-doer/run-2026-09-25/evidencias/g3/coverage-report-include-pacing-pricelabs-py-pacing-jev-py-fail-under-85.txt",
+        "sha256": "2a92fc385656250e4c16a29bc82153551a5d18fe75c71bfca88c8059f113467f"
+      }
+    ]
+  }
+}

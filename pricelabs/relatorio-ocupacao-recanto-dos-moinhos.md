@@ -1,6 +1,6 @@
 # Relatório PriceLabs — Pousada Recanto dos Moinhos e Villa Dolce Amore
 
-**Versão 4 · 25/09/2026.** Premissa: **os descontos das OTAs são fixos e não podem ser alterados.** Esta versão incorpora as suas respostas às pendências e os relatórios de promoções ativas da Booking. As versões anteriores passaram por revisão independente de números, de funcionamento técnico e de risco operacional.
+**Versão 4 · 25/09/2026.** Premissa: **os descontos das OTAs são fixos e todas as ofertas da Booking são obrigatórias.** Esta versão incorpora as suas respostas às pendências e os relatórios de promoções ativas da Booking. As versões anteriores passaram por revisão independente de números, de funcionamento técnico e de risco operacional.
 
 **Fontes:**
 - Conta PriceLabs, lida pelo conector MCP.
@@ -132,7 +132,7 @@ Os dois arquivos, provavelmente um por propriedade, somam 297 linhas de promoç�
 | Oferta básica (Basic Deal) | 25% em um arquivo, 20% no outro | Todas as estadias até fev ou mar/2027 | Na prática, todo hóspede da Booking tem pelo menos essa oferta |
 | Última hora (Last Minute Deal) | 25% na maioria. 30% em um caso, até 18/10. 40% em outro, até 09/12 | Estadias até meados de 2027 | Substitui a básica quando é maior |
 | "Para este final de semana" | 30% | Estadias até 22/11 | Oferta própria de fim de semana em um dos arquivos |
-| "Para feriado 7 de setembro" | 35% | Estadias até 05/12, com 65 datas excluídas | Continua ativa, apesar do nome. Vale conferir se é intencional |
+| "Para feriado 7 de setembro" | 35% | Estadias até 05/12, com 65 datas excluídas | Continua ativa, apesar do nome. Obrigatória: mantida |
 | Antecipada (Early Booker Deal) | 22% a 30% | Estadias até meados de 2027 | Mesma categoria da básica e da última hora: vale a maior |
 | Tarifa Mobile e tarifa nacional | 10% cada | Sempre ativas | Não se somam entre si |
 | Late Escape (campanha) | 27% a 28% | Estadias de 01/10 a 07/01 | Campanha. Não soma com Genius, Mobile nem nacional |
@@ -354,11 +354,10 @@ Todos os valores estão em "preço enviado", a escala atual.
 |---|---|---|---|
 | Feito | Ofertas da Booking, mínimo e estadia do Beds24, Villa King Spa (7) e estratégia da Balcony | Você | — |
 | Hoje | Pendências que faltam: Queen Spa (2) com 66%, Double com 6 ou 7 unidades, conflito na Villa King Spa (2), multiplicadores dos canais no Beds24 | Você, com o Claude | — |
-| Dia 1 | Fator de Demanda e Sazonalidade → Recommended | Claude | Voltar para Aggressive |
-| Dia 2 | Última hora → "No last minute adjustment" | Claude | Voltar para Market Driven Aggressive |
+| ✅ 25/09 | Fator de Demanda e Sazonalidade → Recommended. Última hora → "No last minute adjustment". Mínimo da Balcony → 950. Estadia mínima 2 em 11/10, 01/11 e 19/11. Ver `registro-de-mudancas.md` | Claude | Pelo registro de mudanças |
 | Dia 2 | Safety Minimum Price → "Do Not Apply". Sincronização às 06:00 | Você, na tela | Anotar o valor anterior |
-| Dia 3 | Estadia mínima 2 nas vésperas de feriado (11/10, 01/11, 19/11). Teste opcional de 1 noite nas Queen Spa em 02–03/10, se vocês aprovarem | Claude | Apagar as substituições pelo conector |
-| Dia 4 | Passo 1 do preço base: Double, Queen Spa (2), Villa King Spa (7), Villa King Spa (2) e Queen Spa (7). Mínimo da Balcony em 950, se aprovado | Claude | Valores no arquivo de configuração salvo |
+| Dia 3 | Teste opcional de 1 noite nas Queen Spa em 02–03/10, só se vocês aprovarem | Claude | Apagar as substituições pelo conector |
+| Dia 4 | Passo 1 do preço base: Double, Queen Spa (2), Villa King Spa (7), Villa King Spa (2) e Queen Spa (7) | Claude | Valores no arquivo de configuração salvo |
 | Dia 7 | Ligar a tabela de ocupação na Queen Spa (7), na Double e na Villa King Spa (7). Na Balcony, deixar o ajuste por ocupação em "Nenhum" | Você, na tela | Desligar |
 | Dia 10 | Revisão: pickup, RevPAR e desconto medido por canal. Passo 2 do preço base se ainda indicado | Claude | — |
 | Dia 14 | Revisão completa contra as metas. Decidir sobre a Fase 2 | Você e o Claude | — |

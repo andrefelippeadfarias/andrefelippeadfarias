@@ -63,3 +63,23 @@ Gate oficial da skill (`validate.py gate`) em 25/09/2026. Saída completa em `ev
 - **Deploy:** preparado, não executado.
 
 **Status final:** entregue para instalação. A validação real no Windows e na conta fica com o dono, pela ordem descrita.
+
+## Revisão posterior: pedido "Execute em meu computador" (25/09/2026)
+
+- **Limite do ambiente:** esta sessão roda em contêiner na nuvem e não alcança o computador do dono. A instalação no Windows continua sendo passo do dono.
+- **Instalação por um comando:** `windows/instalar-da-internet.ps1`, chamado por `irm ... | iex` no PowerShell. Ele:
+  - instala o Python se faltar;
+  - baixa o ZIP do ramo;
+  - desbloqueia os arquivos;
+  - preserva o `config.json`;
+  - recusa pasta alheia.
+- **Achado do auditor B:** o ZIP incluía `.thinker-doer`, com caminhos acima de 260 caracteres que quebrariam o Windows PowerShell 5.1. Corrigido com `export-ignore` e extração em caminho curto. O ZIP real foi conferido.
+- **Ensaio somente leitura com dados reais da conta:** coleta paralela de 8 agentes pelo conector, e o programa rodado com transporte de replay às 12:56, 23:30 e 05:30.
+  - Zero escritas.
+  - Ocupação de 0 a 6 dias igual à do PriceLabs (39, 57, 71, 7, 61, 5 e 36%).
+  - O Jev gratuito está sem servidores (HTTP 404 simulado, que é o estado real), então não há decisão.
+- **Verificação independente** (workflow verificar-ensaio-real: 3 lentes e céticos):
+  - números e portões conferidos sem importar o código;
+  - achados confirmados e corrigidos na revisão 7: conflito calendário × reservas, códigos negativos das métricas, eco de mínimo/máximo que o ensaio de gravação não revelava, paginação, janela de reservas e destino do instalador;
+  - refutados: métricas com `data.data` na API direta (é o envelope do conector) e "datas esgotadas" do R7 (o PMS ainda vende a unidade).
+- **Achado de negócio para o dono:** Queen Spa (7) tem 7 reservas confirmadas para 7 unidades em 27/09, com o calendário do PriceLabs em 6/7 e a data ainda à venda. É risco de overbooking ou de mapeamento no Beds24.

@@ -1,0 +1,139 @@
+{
+  "schema_version": "1.0",
+  "observed_at": "2026-09-25T14:15:49Z",
+  "harnesses": [
+    {
+      "id": "codex",
+      "executable": null,
+      "detected": false,
+      "version": null,
+      "availability": "unavailable",
+      "auth": "unknown",
+      "capabilities": [],
+      "models": [],
+      "quota": {
+        "status": "unknown",
+        "pool_id": null,
+        "observed_at": null,
+        "source": null,
+        "windows": [],
+        "note": "Quota not observed; unknown is not zero or unlimited."
+      },
+      "source": "not_found"
+    },
+    {
+      "id": "claude",
+      "executable": "/opt/node22/bin/claude",
+      "detected": true,
+      "version": "2.1.282",
+      "availability": "detected",
+      "auth": "unknown",
+      "capabilities": [],
+      "models": [],
+      "quota": {
+        "status": "unknown",
+        "pool_id": null,
+        "observed_at": null,
+        "source": null,
+        "windows": [],
+        "note": "Quota not observed; unknown is not zero or unlimited."
+      },
+      "source": "PATH:claude"
+    },
+    {
+      "id": "gemini",
+      "executable": null,
+      "detected": false,
+      "version": null,
+      "availability": "unavailable",
+      "auth": "unknown",
+      "capabilities": [],
+      "models": [],
+      "quota": {
+        "status": "unknown",
+        "pool_id": null,
+        "observed_at": null,
+        "source": null,
+        "windows": [],
+        "note": "Quota not observed; unknown is not zero or unlimited."
+      },
+      "source": "not_found"
+    },
+    {
+      "id": "cursor-agent",
+      "executable": null,
+      "detected": false,
+      "version": null,
+      "availability": "unavailable",
+      "auth": "unknown",
+      "capabilities": [],
+      "models": [],
+      "quota": {
+        "status": "unknown",
+        "pool_id": null,
+        "observed_at": null,
+        "source": null,
+        "windows": [],
+        "note": "Quota not observed; unknown is not zero or unlimited."
+      },
+      "source": "not_found"
+    },
+    {
+      "id": "aider",
+      "executable": null,
+      "detected": false,
+      "version": null,
+      "availability": "unavailable",
+      "auth": "unknown",
+      "capabilities": [],
+      "models": [],
+      "quota": {
+        "status": "unknown",
+        "pool_id": null,
+        "observed_at": null,
+        "source": null,
+        "windows": [],
+        "note": "Quota not observed; unknown is not zero or unlimited."
+      },
+      "source": "not_found"
+    },
+    {
+      "id": "opencode",
+      "executable": null,
+      "detected": false,
+      "version": null,
+      "availability": "unavailable",
+      "auth": "unknown",
+      "capabilities": [],
+      "models": [],
+      "quota": {
+        "status": "unknown",
+        "pool_id": null,
+        "observed_at": null,
+        "source": null,
+        "windows": [],
+        "note": "Quota not observed; unknown is not zero or unlimited."
+      },
+      "source": "not_found"
+    },
+    {
+      "id": "agent-candidate",
+      "executable": null,
+      "detected": false,
+      "version": null,
+      "availability": "unavailable",
+      "auth": "unknown",
+      "capabilities": [],
+      "models": [],
+      "quota": {
+        "status": "unknown",
+        "pool_id": null,
+        "observed_at": null,
+        "source": null,
+        "windows": [],
+        "note": "Quota not observed; unknown is not zero or unlimited."
+      },
+      "source": "not_found"
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "version": "1.0",
+  "run_id": "run-2026-09-25",
+  "status": "prepared",
+  "agents_started": 0,
+  "files": [
+    "briefing.md",
+    "01-arquitetura.md",
+    "02-decomposicao.md",
+    "03-implementacao.md",
+    "04-auditoria.md",
+    "05-integracao-entrega.md"
+  ]
+}

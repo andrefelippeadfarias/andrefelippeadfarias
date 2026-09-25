@@ -50,7 +50,11 @@ class Base(unittest.TestCase):
         self.comandos = []
         self.amb = principal.Ambiente(transporte=self.sim, variaveis=self.variaveis, cofre=self.cofre,
                                       relogio=lambda: self.agora, dormir=lambda s: None, espaco_s=0,
-                                      plataforma="linux", comando=self._comando)
+                                      plataforma="linux", comando=self._comando, mesa=lambda cfg: self.mesa)
+        protecao = mock.patch("pacing.relatorio._pasta_shell",
+                              side_effect=AssertionError("teste tentou usar a Área de Trabalho real"))
+        protecao.start()
+        self.addCleanup(protecao.stop)
         self.dados = self.tmp / "dados"
 
     def _comando(self, args, **kw):
@@ -761,7 +765,7 @@ class TestEntrega(Base):
         cfg = json.loads(self.cfg_path.read_text(encoding="utf-8"))
         self.assertEqual((cfg["modo"], cfg["desconto"]["teto_dia"]), ("ativo", 1))
         self.cfg_path.write_text('{"modo": "ativo",', encoding="utf-8")
-        with mock.patch("pacing.relatorio.area_de_trabalho", return_value=self.mesa):
+        with mock.patch("pacing.relatorio.area_de_trabalho", side_effect=AssertionError("Área de Trabalho real")):
             self.assertEqual(self.cli("executar")[0], 2)
         erro = list(self.mesa.glob("PRECOS ERRO *.txt"))
         self.assertEqual(len(erro), 1)

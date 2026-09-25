@@ -18,12 +18,8 @@
           "sha256": "20fb214bb0bc33f968115865f0867fd421843960de2ece3f0103a9279f28b535"
         },
         {
-          "path": "pacing/regras.py",
-          "sha256": "07b40edfa0938e8186dee93a12c1ab328dac7cf0cc1b2c0ed651faf81e81c3b9"
-        },
-        {
-          "path": "tests/test_dominio.py",
-          "sha256": "bd936eba3b3b65e5f8424f3f5dd28f2038ebe38094398ea3df63ddd6ff4b217f"
+          "path": ".thinker-doer/run-2026-09-25/revisoes/evidencias/auditor-b-final-r4.txt",
+          "sha256": "179537c3c1975a9eadff3abacad24faf74fbe6626c01ef157f41397fa10e1c76"
         }
       ]
     },
@@ -38,16 +34,8 @@
           "sha256": "20fb214bb0bc33f968115865f0867fd421843960de2ece3f0103a9279f28b535"
         },
         {
-          "path": "pacing/metricas.py",
-          "sha256": "58da3cd9b60b8d22f3bb838b9d2c4e181eddc145d51583aad7aa6b3cf48a382a"
-        },
-        {
-          "path": "pacing/regras.py",
-          "sha256": "07b40edfa0938e8186dee93a12c1ab328dac7cf0cc1b2c0ed651faf81e81c3b9"
-        },
-        {
-          "path": "tests/test_dominio.py",
-          "sha256": "bd936eba3b3b65e5f8424f3f5dd28f2038ebe38094398ea3df63ddd6ff4b217f"
+          "path": ".thinker-doer/run-2026-09-25/revisoes/evidencias/auditor-b-final-r4.txt",
+          "sha256": "179537c3c1975a9eadff3abacad24faf74fbe6626c01ef157f41397fa10e1c76"
         }
       ]
     },
@@ -62,12 +50,8 @@
           "sha256": "20fb214bb0bc33f968115865f0867fd421843960de2ece3f0103a9279f28b535"
         },
         {
-          "path": "pacing/metricas.py",
-          "sha256": "58da3cd9b60b8d22f3bb838b9d2c4e181eddc145d51583aad7aa6b3cf48a382a"
-        },
-        {
-          "path": "tests/test_dominio.py",
-          "sha256": "bd936eba3b3b65e5f8424f3f5dd28f2038ebe38094398ea3df63ddd6ff4b217f"
+          "path": ".thinker-doer/run-2026-09-25/revisoes/evidencias/auditor-b-final-r4.txt",
+          "sha256": "179537c3c1975a9eadff3abacad24faf74fbe6626c01ef157f41397fa10e1c76"
         }
       ]
     },
@@ -82,12 +66,8 @@
           "sha256": "20fb214bb0bc33f968115865f0867fd421843960de2ece3f0103a9279f28b535"
         },
         {
-          "path": "pacing/regras.py",
-          "sha256": "07b40edfa0938e8186dee93a12c1ab328dac7cf0cc1b2c0ed651faf81e81c3b9"
-        },
-        {
-          "path": "tests/test_dominio.py",
-          "sha256": "bd936eba3b3b65e5f8424f3f5dd28f2038ebe38094398ea3df63ddd6ff4b217f"
+          "path": ".thinker-doer/run-2026-09-25/revisoes/evidencias/auditor-b-final-r4.txt",
+          "sha256": "179537c3c1975a9eadff3abacad24faf74fbe6626c01ef157f41397fa10e1c76"
         }
       ]
     },
@@ -102,8 +82,8 @@
           "sha256": "20fb214bb0bc33f968115865f0867fd421843960de2ece3f0103a9279f28b535"
         },
         {
-          "path": "tests/test_dominio.py",
-          "sha256": "bd936eba3b3b65e5f8424f3f5dd28f2038ebe38094398ea3df63ddd6ff4b217f"
+          "path": ".thinker-doer/run-2026-09-25/revisoes/evidencias/auditor-b-final-r4.txt",
+          "sha256": "179537c3c1975a9eadff3abacad24faf74fbe6626c01ef157f41397fa10e1c76"
         }
       ]
     },
@@ -118,12 +98,8 @@
           "sha256": "20fb214bb0bc33f968115865f0867fd421843960de2ece3f0103a9279f28b535"
         },
         {
-          "path": "pacing/regras.py",
-          "sha256": "07b40edfa0938e8186dee93a12c1ab328dac7cf0cc1b2c0ed651faf81e81c3b9"
-        },
-        {
-          "path": "tests/test_execucao.py",
-          "sha256": "bc03cc6404d38cf1942d94ac726ec2acf073862b726cbe0f23bad8ed5a797104"
+          "path": ".thinker-doer/run-2026-09-25/revisoes/evidencias/auditor-b-final-r4.txt",
+          "sha256": "179537c3c1975a9eadff3abacad24faf74fbe6626c01ef157f41397fa10e1c76"
         }
       ]
     }
@@ -132,6 +108,10 @@
     {
       "path": ".thinker-doer/run-2026-09-25/revisoes/evidencias/auditor-b-final.txt",
       "sha256": "20fb214bb0bc33f968115865f0867fd421843960de2ece3f0103a9279f28b535"
+    },
+    {
+      "path": ".thinker-doer/run-2026-09-25/revisoes/evidencias/auditor-b-final-r4.txt",
+      "sha256": "179537c3c1975a9eadff3abacad24faf74fbe6626c01ef157f41397fa10e1c76"
     }
   ]
 }

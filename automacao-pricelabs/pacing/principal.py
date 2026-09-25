@@ -24,8 +24,9 @@ class Ambiente:
     """Dependências externas, substituíveis nos testes."""
 
     def __init__(self, transporte=transporte_urllib, variaveis=None, cofre=None, relogio=None,
-                 dormir=time.sleep, espaco_s=1.1, plataforma=sys.platform, comando=subprocess.run):
+                 dormir=time.sleep, espaco_s=1.1, plataforma=sys.platform, comando=subprocess.run, mesa=None):
         self.plataforma = plataforma
+        self.mesa = mesa or relatorio.area_de_trabalho  # onde ficam os avisos; trocado nos testes
         self.comando = comando  # executor de programas externos (schtasks); trocado nos testes
         self.transporte = transporte
         self.variaveis = os.environ if variaveis is None else variaveis

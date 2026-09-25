@@ -56,7 +56,7 @@ def cmd_verificar(args, amb):
     _linha(not atrasado, "última execução: " + (ultima.strftime("%d/%m %H:%M") if ultima else "nenhuma"), itens)
     if (pasta / "PARAR").exists():
         _linha(False, "arquivo PARAR presente: a automação está parada (use RETOMAR)", itens)
-    mesa = relatorio.area_de_trabalho(cfg)
+    mesa = amb.mesa(cfg)
     _linha(mesa is not None, f"Área de Trabalho para avisos: {mesa or 'não encontrada (defina area_de_trabalho no config)'}", itens)
     falhas = [t for ok, t in itens if not ok]
     if atrasado or (args.silencioso and falhas):
@@ -304,7 +304,7 @@ def main(argv=None, amb=None) -> int:
 
 def _avisar_config_invalida(erro, amb):
     """Com pythonw ninguém vê a tela: o erro de config vai para a Área de Trabalho."""
-    mesa = relatorio.area_de_trabalho({})
+    mesa = amb.mesa({})
     if mesa is None:
         return
     agora = tempo.agora(-3) if amb.relogio is None else amb.relogio()

@@ -1,0 +1,29 @@
+Auditor B - rodada r4 (HEAD bd17210). Nenhuma alteracao no projeto alem deste arquivo e de revisoes/T3-dominio.review.json.
+
+Comandos (copia B4 do HEAD bd17210):
+- python3 -m unittest discover -s tests -t .  -> Ran 108 tests, OK (skipped=3)
+- suite inteira com Windows simulado (sys.platform=win32; SHGetFolderPathW falso devolvendo uma
+  pasta "Area de Trabalho real" temporaria com o arquivo "PRECOS OK 25-09 20h30.txt"; subprocess.run falso):
+  108 testes, 0 falhas; 1 erro de artefato (test_salvar_sem_cofre, pulado no Windows real);
+  1 chamada a SHGetFolderPathW; 0 subprocess reais.
+  Depois da suite, a pasta "real" continha so "PRECOS ERRO 25-09 23h30.txt": o status do dono foi apagado.
+- sha256 de reviewed_files conferidos: T3-dominio (task_revision 1, resultado 3) e T5-operacao
+  (task_revision 2, resultado 4) iguais aos arquivos atuais.
+
+T3-dominio: arquivos sem mudanca desde a revisao 3 do resultado. Achados B-3, B-5, B-6, B-9, B-TF2 e B-N1
+continuam resolvidos (ver auditor-b-final.txt). Parecer: aprovado. Review reemitido com evidencias apenas
+de arquivos do auditor, porque tests/test_execucao.py e alterado por outras tarefas.
+
+T5-operacao (resultado 4): conferidos instalar.bat (executar antes de verificar; "&" garante a verificacao
+mesmo se agendar falhar), ensaio.bat e ensaio-manter.bat (data perguntada e validada; PARAR, disjuntor e papel
+respeitados), ativar.bat (--teto-dia 1), ampliar.bat (--teto-dia 6), remocao de agendar.bat, README
+(Desbloquear, "Se aparecer FALHA"), CRLF e ASCII dos .bat. Tudo correto, exceto:
+
+B-R4-1 medium (novo, aberto): o autoteste do VERIFICAR mexe na Area de Trabalho real do dono.
+  tests/test_execucao.py:406-407 (TestComandos.test_agendar_e_chaves) roda "executar" com config invalido
+  sem simular a Area de Trabalho; __main__._avisar_config_invalida chama relatorio.area_de_trabalho({}), que
+  no Windows usa SHGetFolderPathW, e trocar_status apaga o status real e grava "PRECOS ERRO 25-09 23h30.txt"
+  ("O config.json tem um erro"). Acontece em todo VERIFICAR, inclusive no instalar.bat. Mesma classe do
+  achado B-2. Correcao: no teste, simular relatorio.area_de_trabalho (como em TestEntrega); de preferencia,
+  tornar o aviso injetavel pelo Ambiente para que nenhum teste alcance a pasta real.
+Parecer T5: mudancas pedidas; review de T5 nao reemitido.

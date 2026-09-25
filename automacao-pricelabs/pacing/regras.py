@@ -122,6 +122,10 @@ def candidatos(ctx: Contexto, incluir_sombra: bool) -> tuple[list[Bloco], list[d
             bloquear("trava de receita ativa")
             continue
         cal = ctx.calendarios[lid]
+        conflitos = metricas.conflitos_ocupacao(cal, ctx.reservas, lid, ctx.hoje)
+        if conflitos:
+            bloquear(f"calendário do PriceLabs e reservas do Beds24 discordam em {len(conflitos)} data(s)")
+            continue
         ocup = metricas.ocupacao(cal, ctx.hoje, 0, 6)[2]
         if ocup is None or ocup >= cfg["metas"]["0-6"]:
             bloquear("ocupação de 0 a 6 dias já na meta")
@@ -372,6 +376,11 @@ def alertas_gerais(ctx: Contexto) -> list[tuple[str, bool]]:
         totais = {d.total for d in cal.dias.values() if d.total > 1}
         if item["unidades"] > 1 and totais and max(totais) != item["unidades"]:
             msgs.append((f"{nome}: o PriceLabs mostra {max(totais)} unidades, o config diz {item['unidades']}", True))
+        conflitos = metricas.conflitos_ocupacao(cal, ctx.reservas or [], lid, ctx.hoje)
+        if conflitos:
+            datas = ", ".join(d.strftime("%d/%m") for d in conflitos)
+            msgs.append((f"{nome}: o calendário do PriceLabs mostra menos unidades vendidas que as reservas do "
+                         f"Beds24 em {datas}. Conferir o mapeamento dos quartos", True))
         enviado = ler_instante(api.get("last_date_pushed"), ctx.agora.tzinfo, fim_do_dia=True)
         if enviado is not None and ctx.agora - enviado > timedelta(hours=30):
             msgs.append((f"{nome}: última sincronização com o Beds24 há mais de 30 h", True))

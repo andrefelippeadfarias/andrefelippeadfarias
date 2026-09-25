@@ -114,8 +114,8 @@ def noites(reserva: dict) -> list[date]:
         return []
     n = reserva.get("no_of_days")
     if not isinstance(n, int) or isinstance(n, bool) or n < 1:
-        saida = ler_data(reserva.get("check_out"))
-        n = max(1, (saida - chegada).days) if saida else 1
+        saida = ler_data(reserva.get("check_out"))  # na API real, check_out é a última noite
+        n = (saida - chegada).days + 1 if saida and saida >= chegada else 1
     return [chegada + timedelta(days=i) for i in range(min(n, 60))]
 
 
@@ -146,12 +146,18 @@ def vendeu_depois(resumo: ResumoReservas, dia: date, instante: datetime) -> bool
     return any(t is not None and t > instante for t in resumo.noites_vendidas_apos.get(dia, []))
 
 
+def _ocupacao_valida(v):
+    """A API usa negativos como códigos (-1, -2 pendente, -4 indisponível): não são ocupação."""
+    x = _numero(v)
+    return x if x is not None and 0 <= x <= 100 else None
+
+
 def mercado_7d(metricas: dict):
     try:
         v = metricas["market_level"]["occupancy"]["7"]
     except (KeyError, TypeError):
         return None
-    return float(v) if _numero(v) is not None else None
+    return _ocupacao_valida(v)
 
 
 def amostra_receita(metricas_por_listing: dict) -> dict | None:
@@ -163,7 +169,8 @@ def amostra_receita(metricas_por_listing: dict) -> dict | None:
             oc = _numero(m["listing_level"]["occupancy"]["-30"])
         except (KeyError, TypeError):
             continue
-        if rv is not None and oc is not None:
+        oc = _ocupacao_valida(oc)
+        if rv is not None and rv >= 0 and oc is not None:
             revpar.append(rv)
             ocup.append(oc)
     if not revpar:
@@ -186,3 +193,23 @@ def trava_receita(amostras: list, hoje: date) -> bool:
     if not (a0 and a7 and a14):
         return False
     return (a0["ocupacao"] > a7["ocupacao"] > a14["ocupacao"]) and (a0["revpar"] < a7["revpar"] < a14["revpar"])
+
+
+def conflitos_ocupacao(lst: Listing, reservas: list, listing_id: str, hoje: date, dias: int = 7) -> list:
+    """Datas em que as reservas mostram mais unidades vendidas que o calendário do PriceLabs.
+
+    Só conta reservas feitas antes da última atualização do calendário, que ele já deveria conhecer.
+    """
+    if lst.atualizado_em is None:
+        return []
+    contagem = {}
+    for res in reservas:
+        if res.get("listing_id") != listing_id or str(res.get("booking_status") or "").lower() != "booked":
+            continue
+        feita = ler_instante(res.get("booked_date"))
+        if feita is None or feita >= lst.atualizado_em:
+            continue
+        for d in noites(res):
+            if 0 <= (d - hoje).days < dias:
+                contagem[d] = contagem.get(d, 0) + 1
+    return sorted(d for d, n in contagem.items() if d in lst.dias and n > lst.dias[d].vendidas)

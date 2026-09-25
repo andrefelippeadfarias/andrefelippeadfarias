@@ -42,6 +42,22 @@ class TestPriceLabs(unittest.TestCase):
         self.assertEqual(len(linhas), 150)
         self.assertEqual(sum(1 for c in self.sim.chamadas if "reservation_data" in c[1]), 2)
 
+    def test_pagina_cheia_sem_next_page_continua(self):
+        from datetime import date, timedelta
+        for i in range(130):
+            self.sim.reservas.append(reserva(IDS[i % 7], date(2026, 9, 26) + timedelta(days=i % 5)))
+        original = self.sim.__call__
+
+        def sem_next_page(*a):
+            status, cab, corpo = original(*a)
+            if "reservation_data" in a[1]:
+                d = json.loads(corpo)
+                d["next_page"] = False
+                corpo = json.dumps(d).encode()
+            return status, cab, corpo
+        pl = PriceLabs(Rede(sem_next_page, espaco_s=0), "k", "beds24", IDS)
+        self.assertEqual(len(pl.reservas("2026-09-25", "2026-10-03")), 130)
+
     def test_paginacao_infinita_e_contrato_quebrado(self):
         class Sempre:
             def __call__(self, m, url, cab, corpo, t):

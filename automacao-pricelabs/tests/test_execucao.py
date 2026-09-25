@@ -384,6 +384,8 @@ class TestComandos(Base):
         self.assertEqual(self.cli("testar-gravacao", "--listing", AFRODITE, "--data", "2026-10-05")[0], 2)
         codigo, saida = self.cli("testar-gravacao", "--listing", AFRODITE, "--data", "2026-10-05", "--confirmar")
         self.assertIn("Gravar +0%: criada", saida)
+        self.assertIn("campos que o programa não enviou: currency", saida)
+        self.assertNotIn("ATENCAO", saida)
         self.assertIn("Remover: apagada", saida)
         self.assertIn("last_date_pushed antes", saida)
         self.assertEqual(self.nossas(), {})
@@ -770,3 +772,12 @@ class TestEntrega(Base):
         erro = list(self.mesa.glob("PRECOS ERRO *.txt"))
         self.assertEqual(len(erro), 1)
         self.assertIn("config.json", erro[0].read_text(encoding="utf-8"))
+
+
+class TestEnsaioMostraEcoDaApi(Base):
+    def test_ensaio_avisa_quando_a_api_espelha_minimo_e_maximo(self):
+        self.sim.override_extras = {"min_price": 0, "min_price_type": "percent_min", "max_price": 0,
+                                    "max_price_type": "percent_max"}
+        codigo, saida = self.cli("testar-gravacao", "--listing", AFRODITE, "--data", "2026-10-05", "--confirmar")
+        self.assertIn("ATENCAO: a API acrescentou mínimo/máximo", saida)
+        self.assertIn("max_price_type", saida)

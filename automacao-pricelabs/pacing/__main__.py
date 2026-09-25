@@ -230,9 +230,22 @@ def cmd_testar_gravacao(args, amb):
         acao = {"listing": item["id"], "data": args.data, "payload": {"date": args.data, "price": "0",
                 "price_type": "percent", "reason": f"auto-jev {run_id}"}}
         print("Gravar +0%:", ex.criar(acao))
-        dso = est["dsos"].get(f"{item['id']}|{args.data}")
-        if dso:
-            print("  lido de volta:", json.dumps(dso.get("lido"), ensure_ascii=False))
+        try:
+            brutas = [o for o in ex.pl.substituicoes(item["id"], args.data, args.data)
+                      if str(o.get("date", ""))[:10] == args.data]
+        except ErroRede as e:
+            brutas = []
+            print(f"  releitura falhou: {e}")
+        for o in brutas:
+            campos = {k: v for k, v in o.items() if k not in ("created_at", "updated_at")}
+            print("  a API devolveu:", json.dumps(campos, ensure_ascii=False, sort_keys=True))
+            extras = sorted(k for k, v in campos.items() if k not in acao["payload"] and v not in (None, ""))
+            print("  campos que o programa não enviou:", ", ".join(extras) or "nenhum")
+            if any(k in extras for k in ("min_price", "max_price", "min_price_type", "max_price_type")):
+                print("  ATENCAO: a API acrescentou mínimo/máximo à substituição. Não passe para Ativo; "
+                      "mande este resultado para quem mantém o código.")
+            if campos.get("reason") != acao["payload"]["reason"]:
+                print("  ATENCAO: o campo reason não voltou igual. Mande este resultado para quem mantém o código.")
         if args.manter:
             print("Mantido na conta (+0%, preço igual). Agora teste o DESFAZER.bat, que deve removê-lo.")
         else:

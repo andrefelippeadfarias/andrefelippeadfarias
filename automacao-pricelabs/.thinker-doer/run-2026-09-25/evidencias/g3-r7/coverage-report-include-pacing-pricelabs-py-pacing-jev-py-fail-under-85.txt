@@ -1,0 +1,11 @@
+$ python -m coverage report --include=pacing/pricelabs.py,pacing/jev.py --fail-under=85
+exit=0
+--- stdout ---
+Name                  Stmts   Miss Branch BrPart  Cover
+-------------------------------------------------------
+pacing/jev.py            68      1     30      1    98%
+pacing/pricelabs.py      68      0     16      0   100%
+-------------------------------------------------------
+TOTAL                   136      1     46      1    99%
+
+--- stderr ---

@@ -101,6 +101,7 @@ class TestInstaladorDaInternet(unittest.TestCase):
         tmp = Path(tempfile.mkdtemp(prefix="Recanto André "))
         projeto = tmp / "x" / "repo-ramo" / "automacao-pricelabs"
         (projeto / "pacing").mkdir(parents=True)
+        (projeto / "pacing" / "__init__.py").write_text("")
         (projeto / ".thinker-doer").mkdir()
         (projeto / "config.json").write_text('{"novo": true}')
         (projeto / "README.md").write_text("leia")
@@ -121,6 +122,15 @@ class TestInstaladorDaInternet(unittest.TestCase):
         self.assertIn("manteve=True", r.stdout)
         self.assertEqual((destino / "config.json").read_text(), '{"meu": "ativo"}', "atualização mantém o config")
         self.assertTrue((destino / "README.md").exists())
+        alheia = tmp / "Documentos do dono"
+        alheia.mkdir()
+        (alheia / "planilha.xlsx").write_text("dados")
+        (alheia / "docs").mkdir()
+        env["RECANTO_DESTINO"] = str(alheia)
+        r = subprocess.run([_powershell(), "-NoProfile", "-NonInteractive", "-Command", comando], env=env,
+                           capture_output=True, text=True, timeout=120)
+        self.assertNotEqual(r.returncode, 0, "pasta alheia não pode ser usada")
+        self.assertTrue((alheia / "docs").exists() and (alheia / "planilha.xlsx").exists(), "nada do dono é apagado")
 
 
 class TestPacoteDoDownload(unittest.TestCase):

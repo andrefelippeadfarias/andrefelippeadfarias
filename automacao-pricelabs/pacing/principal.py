@@ -135,7 +135,8 @@ def _executar(cfg, amb, agora, run_id, pasta, armazem, est, origem, r):
         return
     calendarios = {x["id"]: metricas.ler_calendario(x, unidades[x["id"]]) for x in brutos}
     try:
-        reservas = pl.reservas(hoje.isoformat(), (hoje + timedelta(days=8)).isoformat())
+        # chegadas dos últimos 14 dias (estadias em andamento) até 6 dias à frente
+        reservas = pl.reservas((hoje - timedelta(days=14)).isoformat(), (hoje + timedelta(days=7)).isoformat())
     except ErroRede as e:
         reservas = None
         r["alertas"].append(f"Reservas ilegíveis ({e}). A chave precisa ser a do dono da conta")

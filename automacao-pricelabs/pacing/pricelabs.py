@@ -71,8 +71,8 @@ class PriceLabs:
                 raise ErroRede("resposta de /reservation_data fora do contrato")
             pagina = dados["data"]
             linhas.extend(r for r in pagina if isinstance(r, dict) and r.get("listing_id") in self.ids)
-            if not dados.get("next_page") or not pagina:
-                return linhas
+            if not pagina or (not dados.get("next_page") and len(pagina) < 100):
+                return linhas  # página cheia sem next_page: segue para não perder reservas
             offset += len(pagina)
         raise ErroRede("paginação de reservas excedeu o limite")
 

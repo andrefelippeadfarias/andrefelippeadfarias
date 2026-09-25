@@ -64,3 +64,19 @@ Cuidados documentados pelo fabricante:
 - A sincronização diária é gratuita. Cada horário extra custa US$ 1 por listing por mês e é configurado na tela: Account → Settings → Sync Settings → "Specify Your Own Time" → "+Add Hour".
 - Cada sincronização recalcula os preços antes de enviar. Por isso o programa não precisa gastar a cota de `refresh_listing` depois de gravar uma substituição.
 - O changelog de 2020 cita `/v1/push_prices` e `/v1/push_price_status`. Eles não estão documentados hoje. O projeto **não** os usa.
+
+## Formatos reais observados em 25/09/2026
+
+Coletados da conta pelo conector do PriceLabs, somente leitura, e usados no ensaio do programa (`.thinker-doer/run-2026-09-25/evidencias/ensaio-dados-reais-2026-09-25.json`).
+
+| Item | O que a conta devolve | Como o programa trata |
+|---|---|---|
+| Reservas: `check_out` | Última noite, não o dia da saída (`check_out - check_in = no_of_days - 1` nas 112 reservas) | Conta as noites por `no_of_days`; sem ele, de `check_in` a `check_out` inclusive |
+| Reservas: `booked_date` | ISO com hora em UTC (`2026-09-02T16:33:22.000Z`) | Lido como instante |
+| Reservas: `cancelled_on` | Sempre meia-noite UTC (`AAAA-MM-DDT00:00:00.000Z`), na prática só a data | Lido como instante: cancelamentos contam como mais antigos, o lado conservador |
+| Reservas: paginação | 112 linhas em duas páginas (100 com `next_page` verdadeiro, 12 com falso) | Segue enquanto `next_page` for verdadeiro ou a página vier cheia |
+| Calendário de quarto com 1 unidade | Não traz `multi_unit_occupancy`; reservado tem `user_price` -1 e `booking_status` preenchido | Usa `booking_status` |
+| Calendário de quartos com várias unidades | `multi_unit_occupancy` em texto ("5/7"). Na Queen Spa (2), `booking_status` diz reservado com "0/2"; na Queen Spa (2), na Villa King Spa (2) e na Queen Spa (7), as reservas confirmadas passam do que o calendário conta | Usa `multi_unit_occupancy`; divergência com reservas feitas antes da atualização do calendário vira alerta grave e tira o quarto das decisões |
+| Métricas | Pela API: `{"data": {"listing_level", "market_level", "metrics_summary"}}`. `market_level` só tem ocupação. Negativos são códigos (-1, -2 pendente, -4 indisponível) | Negativo ou acima de 100 não conta como ocupação |
+| Substituições feitas pela tela | Percentuais trazem `min_price` e `max_price` iguais ao percentual (`percent_min`/`percent_max`), `price` em texto e `reason` vazio | Datas com qualquer substituição ficam fora; o ensaio de gravação mostra se o PriceLabs faz o mesmo com a substituição do programa |
+| Modelo gratuito do Jev | `typesafe/jev-1.13:free` sem servidores; `typesafe/jev-1.13` pago com 1 servidor | Sem resposta, não age; opções pagas no README |

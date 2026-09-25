@@ -46,7 +46,7 @@ Toda a lógica segue o relatório `pricelabs/relatorio-ocupacao-recanto-dos-moin
    ```
 4. O comando instala o Python se faltar e baixa o programa para `C:\RecantoPrecos`. Depois desbloqueia os arquivos e abre o `instalar.bat`, que pede as duas chaves, agenda as execuções, roda uma primeira vez em modo Observar e faz a verificação.
 
-Rodar a mesma linha de novo atualiza o programa e mantém o seu `config.json`.
+Rodar a mesma linha de novo atualiza o programa e mantém o seu `config.json`. Ao final, ele roda uma execução no modo que estiver no config. O instalador só aceita instalar em `C:\RecantoPrecos` vazia ou numa instalação anterior deste programa.
 
 ### Jeito manual
 
@@ -98,6 +98,8 @@ Rodar a mesma linha de novo atualiza o programa e mantém o seu `config.json`.
 
 - **Na Área de Trabalho:** um arquivo `PRECOS OK 26-09 05h30.txt`, trocado a cada execução. `ATENCAO` ou `ERRO` no nome pede sua atenção. `ATRASADO` significa que o programa não roda há mais de 26 horas.
 - **`ATENCAO-PRECOS.txt`:** aparece quando algo precisa de você.
+- **Alerta "o calendário do PriceLabs mostra menos unidades vendidas que as reservas do Beds24":** as reservas confirmadas passam do que o calendário conta, e a data ainda pode estar à venda. Pode ser overbooking ou reserva ligada ao quarto errado no Beds24. Enquanto durar, o quarto fica fora das decisões. No ensaio de 25/09 isso apareceu na Queen Spa (7) em 27 e 28/09, na Queen Spa (2) e na Villa King Spa (2).
+- **A Balcony não gera alertas de ocupação**, porque é a categoria de transbordo e vende por último de propósito. Os alertas de sincronização e de calendário valem para ela também.
 - **Relatório completo:** `%LOCALAPPDATA%\automacao-pricelabs\relatorio.html`. Mostra ocupação contra as metas, decisões do Jev com confiança, o que foi feito, descontos ativos e alertas.
 - **Planilha:** `%LOCALAPPDATA%\automacao-pricelabs\historico.csv`, que abre no Excel com uma linha por execução.
 
@@ -131,7 +133,7 @@ Só quando tudo abaixo estiver cumprido:
 2. Pelo menos 5 dias com o Jev respondendo e 20 decisões registradas. O relatório mostra essa contagem na seção Saúde.
 3. Com dados iguais, o Jev mudou de resposta em menos de 10% das vezes.
 4. Você concorda com o que o programa "faria" nos últimos 3 dias.
-5. Você rodou `ensaio.bat` numa data livre da Afrodite, sem substituição. Ele grava +0% (preço igual), lê de volta, apaga e mostra o `last_date_pushed` antes e depois. Mande esse resultado para quem mantém o código: ele confirma se o PriceLabs devolve o campo `reason`.
+5. Você rodou `ensaio.bat` numa data livre da Afrodite, sem substituição. Ele grava +0% (preço igual), mostra tudo o que o PriceLabs devolveu, apaga e mostra o `last_date_pushed` antes e depois. Se aparecer uma linha ATENCAO, não passe para Ativo: o PriceLabs acrescentou mínimo ou máximo à substituição, ou não devolveu o motivo "auto-jev". Mande esse resultado para quem mantém o código.
 6. Você testou PARAR e DESFAZER. Para testar o DESFAZER, rode `ensaio-manter.bat` e depois `desfazer.bat`.
 
 Depois disso, use `ativar.bat` (1 desconto por dia) e, após uma semana sem surpresas, `ampliar.bat`.

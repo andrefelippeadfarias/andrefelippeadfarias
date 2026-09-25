@@ -40,6 +40,10 @@ function Find-RecantoPasta([string]$Extraido) {
 }
 
 function Copy-RecantoProjeto([string]$Origem, [string]$Destino) {
+    if ((Test-Path $Destino) -and (Get-ChildItem -Path $Destino -Force | Select-Object -First 1) -and
+        -not (Test-Path (Join-Path (Join-Path $Destino 'pacing') '__init__.py'))) {
+        throw "A pasta $Destino ja existe e nao e uma instalacao anterior deste programa. Escolha outra pasta ou esvazie esta."
+    }
     New-Item -ItemType Directory -Force -Path $Destino | Out-Null
     $manterConfig = Test-Path (Join-Path $Destino 'config.json')
     # Pastas do programa: trocadas inteiras, para nao sobrar arquivo antigo. Os dados do dono ficam em LOCALAPPDATA.

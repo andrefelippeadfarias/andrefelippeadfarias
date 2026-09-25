@@ -67,7 +67,8 @@ class TestMetricasReais(unittest.TestCase):
         self.assertEqual((r.novas_48h, r.cancel_proximos_3d_48h), (1, 1))
         self.assertTrue(metricas.vendeu_depois(r, date(2026, 9, 28), agora - timedelta(hours=20)))
         self.assertFalse(metricas.vendeu_depois(r, date(2026, 9, 28), agora))
-        self.assertEqual(metricas.noites(rs[4]), [date(2026, 9, 29), date(2026, 9, 30)])
+        # na API real, check_out é a última noite (conferido nas 112 reservas reais de 25/09)
+        self.assertEqual(metricas.noites(rs[4]), [date(2026, 9, 29), date(2026, 9, 30), date(2026, 10, 1)])
         self.assertEqual(metricas.noites({"check_in": "x"}), [])
         self.assertIsNone(metricas.mercado_7d({}))
         self.assertIsNone(metricas.amostra_receita({"a": {}}))
@@ -125,8 +126,8 @@ class TestCandidatos(unittest.TestCase):
         self.assertIn("trava", bloqueio(contexto(self.sim, trava_receita=True)))
         self.assertIn("substituições", bloqueio(contexto(self.sim, substituicoes={})))
         sim = Simulador(self.sim.agora)
-        sim.reservas.append(reserva(AFRODITE, date(2026, 9, 26), reservada_em=sim.agora - timedelta(hours=3)))
-        self.assertIn("reserva nova", bloqueio(contexto(sim)))
+        sim.reservas.append(reserva(AFRODITE, date(2026, 9, 26), reservada_em=sim.agora - timedelta(hours=1)))
+        self.assertIn("reserva nova", bloqueio(contexto(sim)))  # feita depois da atualização do calendário
         sim.reservas.append(reserva(AFRODITE, date(2026, 9, 26), status="cancelled", cancelada_em=sim.agora - timedelta(hours=2)))
         blocos, _ = regras.candidatos(contexto(sim), False)
         self.assertTrue(blocos)
@@ -350,3 +351,33 @@ class TestAjustesAuditoriaB(unittest.TestCase):
         texto = json.dumps(regras.montar_pedido(blocos, "m", -7))
         self.assertIn("7% price cut", texto)
         self.assertNotIn("10%", texto)
+
+
+class TestAchadosDoEnsaioReal(unittest.TestCase):
+    def test_sentinelas_negativas_nao_viram_ocupacao(self):
+        for v in (-1, -2, -4, 101, "x"):
+            self.assertIsNone(metricas.mercado_7d({"market_level": {"occupancy": {"7": v}}}), v)
+        self.assertEqual(metricas.mercado_7d({"market_level": {"occupancy": {"7": 27.5}}}), 27.5)
+        self.assertIsNone(metricas.amostra_receita({"a": {"listing_level": {"revpar": {"-30": 100}, "occupancy": {"-30": -2}}}}))
+        self.assertIsNone(metricas.amostra_receita({"a": {"listing_level": {"revpar": {"-30": -2}, "occupancy": {"-30": 40}}}}))
+
+    def test_conflito_calendario_x_reservas_bloqueia_e_alerta(self):
+        sim = Simulador(datetime(2026, 9, 25, 23, 30, tzinfo=BRT))
+        villa2 = "350364___722815"
+        feita = sim.agora - timedelta(days=20)   # bem antes da atualização do calendário
+        for _ in range(2):
+            sim.reservas.append(reserva(villa2, date(2026, 9, 27), noites=2, reservada_em=feita))
+        ctx = contexto(sim)
+        self.assertEqual(metricas.conflitos_ocupacao(ctx.calendarios[villa2], sim.reservas, villa2, ctx.hoje),
+                         [date(2026, 9, 27), date(2026, 9, 28)])
+        blocos, bloqueios = regras.candidatos(ctx, True)
+        self.assertNotIn(villa2, {b.listing["id"] for b in blocos})
+        self.assertIn("discordam", " ".join(b["regra"] for b in bloqueios if b["alvo"] == "Villa King Spa (2)"))
+        graves = [t for t, g in regras.alertas_gerais(ctx) if g]
+        self.assertTrue(any("27/09, 28/09" in t for t in graves))
+        recente = Simulador(datetime(2026, 9, 25, 23, 30, tzinfo=BRT))
+        recente.reservas.append(reserva(villa2, date(2026, 9, 27), reservada_em=recente.agora - timedelta(minutes=30)))
+        recente.reservas.append(reserva(villa2, date(2026, 9, 27), reservada_em=recente.agora - timedelta(minutes=20)))
+        ctx = contexto(recente)
+        self.assertEqual(metricas.conflitos_ocupacao(ctx.calendarios[villa2], recente.reservas, villa2, ctx.hoje), [],
+                         "reserva feita depois da atualização do calendário não é conflito")

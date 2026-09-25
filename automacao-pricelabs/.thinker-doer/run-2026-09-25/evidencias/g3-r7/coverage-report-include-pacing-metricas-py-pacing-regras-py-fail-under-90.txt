@@ -1,0 +1,11 @@
+$ python -m coverage report --include=pacing/metricas.py,pacing/regras.py --fail-under=90
+exit=0
+--- stdout ---
+Name                 Stmts   Miss Branch BrPart  Cover
+------------------------------------------------------
+pacing/metricas.py     159      1     58      3    98%
+pacing/regras.py       302      1    122      2    99%
+------------------------------------------------------
+TOTAL                  461      2    180      5    99%
+
+--- stderr ---

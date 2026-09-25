@@ -8,7 +8,7 @@
 - 290 reservas com estadia nos próximos 60 dias, cruzadas com o calendário de preços do PriceLabs.
 - Documentação oficial do PriceLabs, do Beds24, da Booking.com e do Airbnb (lista no fim).
 
-**Cópia da configuração atual, para desfazer mudanças:** `snapshot-configuracao-2026-09-25.json`, na mesma pasta.
+**Cópia da configuração atual, para desfazer a Fase 1:** `snapshot-configuracao-2026-09-25.json`, na mesma pasta. Ela traz preços, personalizações do grupo e substituições por data das 7 listings. O que só aparece na tela (regras de estadia mínima, mínimos avançados, Safety Minimum Price e tudo do Beds24) precisa ser anotado à mão antes do Dia 1.
 
 **Meta de lotação antes de cada data:**
 
@@ -23,8 +23,8 @@
 1. **Nenhuma janela bate a meta hoje.** O portfólio está em 39% nos próximos 7 dias, contra 70% de meta. A janela de 60 dias está praticamente na meta, com 14,9% contra 15%. Vocês estão acima do mercado na janela de 7 dias, que está em 28%. O problema não é falta de demanda na cidade.
 2. **O desconto real das OTAs foi medido: o hóspede da Booking paga cerca de metade do preço que o PriceLabs envia.** A mediana é 48% do preço enviado nas reservas dos últimos 3 dias e 44% nos últimos 10 dias. O desconto efetivo fica entre 51% e 59%, acima do teto de 50% que vocês estimavam.
 3. **Todo valor em reais no PriceLabs vale cerca de metade para o hóspede.** O mínimo de R$ 800 vira cerca de R$ 330 num dia de semana e R$ 390 no fim de semana, ainda antes da comissão da Booking.
-4. **A King Suite with Balcony (6 unidades) está vazia nos próximos 60 dias**, mesmo com o hóspede vendo cerca de R$ 330 a R$ 400 por noite no meio da semana. O problema dessa categoria não é preço, é canal, mapeamento ou anúncio. Não mexa no preço dela antes de checar o Beds24 e a Booking.
-5. **O fim de semana está fraco em 2 dos 7 tipos de quarto:** Queen Spa de 7 unidades (14%) e Queen Spa de 2 unidades (25%). O mercado está em 48%. Os outros tipos vendem melhor no fim de semana do que na semana. A medição cobre um único fim de semana, então vale confirmar nas próximas semanas.
+4. **A King Suite with Balcony (6 unidades) está quase vazia:** 5 quartos-noite vendidos nos próximos 60 dias, todos em 05–06/10 e 11/10. Isso acontece mesmo com o hóspede vendo cerca de R$ 330 por noite no meio da semana. O problema dessa categoria não é preço, é canal, mapeamento ou anúncio. Não mexa no preço dela antes de checar o Beds24 e a Booking.
+5. **O fim de semana está fraco em 2 dos 7 tipos de quarto:** Queen Spa de 7 unidades (14%) e Queen Spa de 2 unidades (25%). O mercado está em 48%. Quatro dos outros cinco vendem melhor no fim de semana do que na semana. A Balcony não vende em nenhum dos dois. A medição cobre um único fim de semana, então vale confirmar nas próximas semanas.
 6. **O tom "Agressivo" em Sazonalidade e Fator de Demanda faz o preço oscilar ao máximo.** Ele cai muito quando a demanda cai e sobe muito quando ela sobe. Com a OTA tirando mais de 50% por cima, isso gera dia de semana barato demais e fim de semana caro demais. O tom "Recomendado" suaviza os dois lados.
 7. **Os descontos do PriceLabs se somam aos da OTA.** A última hora está em "Market Driven Agressivo". A recomendação é deixá-la leve ou desligá-la, conforme as ofertas que estão ativas na Booking.
 8. **Estratégia em duas fases.**
@@ -64,15 +64,15 @@ Ocupação hoje por janela, em quartos-noite vendidos sobre disponíveis. 🟢 b
 
 As metas são cumulativas. Traduzidas para cada faixa de dias, ficam assim:
 
-| Faixa de dias até a data | Ocupação que a faixa precisa ter | Ocupação hoje |
+| Faixa de dias até a data (hoje = dia 0) | Ocupação que a faixa precisa ter | Ocupação hoje |
 |---|---|---|
-| 0 a 7 | ≈ 70% | 35% |
-| 8 a 15 | ≈ 30% | 18% |
-| 16 a 30 | ≈ 20% | 16% |
-| 31 a 45 | ≈ 5% | 9% ✅ |
-| 46 a 60 | já coberta pelas anteriores | 6% ✅ |
+| 0 a 6 | ≈ 70% | 39% |
+| 7 a 14 | ≈ 30% | 14% |
+| 15 a 29 | ≈ 20% | 18% |
+| 30 a 44 | ≈ 5% | 9% ✅ |
+| 45 a 59 | já coberta pelas anteriores | 7% ✅ |
 
-**Leitura:** o funil de longo prazo está bom. O déficit está concentrado nos próximos 15 dias, e principalmente nos próximos 7.
+**Leitura:** o funil de longo prazo está bom. O déficit está concentrado nos próximos 15 dias, e principalmente nos próximos 7. A janela de 45 dias (18%) está abaixo da meta de 25% porque carrega o déficit das faixas mais próximas, não por falta de reservas antecipadas.
 
 ### Como o hóspede reserva (600 reservas feitas entre 27/07 e 25/09)
 
@@ -180,7 +180,7 @@ O procedimento seguro está no **anexo A**. Só vale a pena depois que a Fase 1 
 
 ### 5.2 Ajuste por ocupação por tipo de quarto (Multi-Room Occupancy-Based Adjustment)
 
-**Aplicar só nos quartos com 6 ou 7 unidades:** Queen Spa (7) e Double Spa. A Villa King Spa (7) e a Balcony entram depois de resolvidas as pendências delas. A Afrodite (1 unidade) e os quartos de 2 unidades ficam de fora. Neles, cada reserva mexe a ocupação em 50 ou 100 pontos, e a tabela descontaria demais.
+**Aplicar só nos quartos com 6 ou 7 unidades:** Queen Spa (7) e Double Spa. A Villa King Spa (7) e a Balcony entram depois de resolvidas as pendências delas. A Afrodite (1 unidade) e os quartos de 2 unidades ficam de fora. Neles há poucos quartos-noite em cada faixa: uma única noite vendida mexe a ocupação da faixa de 0 a 6 dias em 7 a 14 pontos, e a tabela ficaria pulando de coluna.
 
 **Como o PriceLabs mede a ocupação:** em cada linha, ele soma as noites vendidas de todas as unidades dentro daquela faixa de dias e divide pelas noites disponíveis. Por isso cada linha tem uma meta própria, a da tabela "O que as suas metas significam dia a dia", na seção 2.
 
@@ -188,14 +188,16 @@ A tabela abaixo substitui o ajuste automático que o PriceLabs já aplica hoje. 
 
 | Faixa de dias (meta da faixa) | < 15% | 15–29% | 30–49% | 50–69% | 70–84% | 85–94% | ≥ 95% |
 |---|---|---|---|---|---|---|---|
-| 0 a 7 (≈ 70%) | −12% | −10% | −7% | −4% | **0%** | +6% | +12% |
-| 8 a 15 (≈ 30%) | −8% | −4% | **0%** | +3% | +6% | +9% | +12% |
-| 16 a 30 (≈ 20%) | −4% | **0%** | +3% | +5% | +8% | +10% | +12% |
-| 31 a 60 (≈ 5%) | **0%** | +2% | +4% | +6% | +8% | +10% | +12% |
+| 0 a 6 (≈ 70%) | −12% | −10% | −7% | −4% | **0%** | +6% | +12% |
+| 7 a 14 (≈ 30%) | −8% | −4% | **0%** | +3% | +6% | +9% | +12% |
+| 15 a 29 (≈ 20%) | −4% | **0%** | +3% | +5% | +8% | +10% | +12% |
+| 30 a 60 (≈ 5%) | **0%** | +2% | +4% | +6% | +8% | +10% | +12% |
 
 Cada linha fica neutra, em 0%, na faixa que contém a sua meta. As faixas de dias são crescentes. Os ajustes sobem conforme a ocupação sobe, como o PriceLabs exige.
 
-**Pior caso:** chegada no mesmo dia, ocupação abaixo de 15% e última hora em −10%. O preço fica 0,88 × 0,90 ≈ 21% abaixo do recomendado. Com a OTA por cima, o hóspede paga entre 32% e 38% do preço recomendado. O preço mínimo segura o resto.
+**Pior caso:** chegada no mesmo dia, ocupação abaixo de 15% e última hora em −10%. O preço fica 0,88 × 0,90 ≈ 21% abaixo do recomendado. Com a OTA por cima, o hóspede paga entre 32% e 39% do preço recomendado, e cerca de 27% na Queen Spa (2). O preço mínimo segura o resto.
+
+**Regra para não empilhar:** num quarto com a tabela ligada, não crie substituição de desconto. Uma substituição de −10% por cima levaria o pior caso a cerca de 29% abaixo do recomendado.
 
 **Antes de ligar:** peça ao conector a comparação do preço de uma data com e sem a tabela (prompt 12 da seção 7). Depois de ligar, observe por uma semana antes de mexer em qualquer outra coisa.
 
@@ -208,7 +210,7 @@ Regra do "passo 1": percorrer 60% do caminho até o preço base recomendado pelo
 | Queen Spa (7) | 1.500 → **1.380** | R$ 565 | 800 (manter) | 5.000 (manter) | não informada | Corte de 8% por decisão própria: 30, 45 e 60 dias abaixo do mercado |
 | Double Spa | 1.600 → **1.480** | R$ 605 | 900 (manter) | 5.000 (manter) | 1.399 (−13%) | Regra dos 60% |
 | Afrodite (1) | 2.000 (manter) | R$ 820 | 1.500 (manter) | 10.000 (manter) | não informada | Bate todas as metas. Não mexer |
-| Queen Spa (2) | 1.700 → **1.560** | R$ 640 | 850 (manter) | 5.000 (manter) | 1.457 (−14%) | Checar antes o desconto de 66% |
+| Queen Spa (2) | 1.700 → **1.555** | R$ 530 (este quarto paga ≈ 0,34) | 850 (manter) | 5.000 (manter) | 1.457 (−14%) | Checar antes o desconto de 66% |
 | Villa King Spa (7) | 1.600 → **1.480** | R$ 605 | 1.000 (manter) | 5.000 (manter) | 1.392 (−13%) | Só depois de confirmar que o PriceLabs precifica esse quarto |
 | Villa Balcony (6) | 1.400 (manter) | R$ 575 | 800 (manter) | 5.000 (manter) | 840 (−40%) | Não é preço. Diagnosticar canal e anúncio primeiro |
 | Villa King Spa (2) | 1.500 → **1.270** | R$ 520 | 900 (manter) | 5.000 (manter) | 1.114 (−26%) | Regra dos 60%. Checar antes o conflito de ocupação |
@@ -219,7 +221,7 @@ Regra do "passo 1": percorrer 60% do caminho até o preço base recomendado pelo
 
 O custo variável inclui lavanderia, amenities, café da manhã, energia e água. Com comissão de 15%, um mínimo de R$ 800 rende cerca de R$ 280 líquidos num dia de semana.
 
-**Máximo: manter.** Os preços dos feriados estão vendendo acima de R$ 3.500. Por exemplo, a Queen Spa (7) está a R$ 3.706 em 10/10, com 5 de 7 quartos vendidos. Um teto menor cortaria essa receita.
+**Máximo: manter.** O teto atual não está limitando nenhum preço. O maior preço enviado da Queen Spa (7) é R$ 3.706 em 10/10, com 5 de 7 quartos vendidos, e o hóspede pagou entre R$ 950 e R$ 1.300 por noite. Um teto menor cortaria esses picos de feriado.
 
 ### 5.4 Fim de semana e estadia mínima
 
@@ -227,9 +229,9 @@ A regra de 2 noites no fim de semana fica **mantida** nos quartos que já vendem
 
 | Ação | Onde | Como |
 |---|---|---|
-| Liberar 1 noite em sexta e sábado nos próximos 7 dias | Queen Spa (7) e Queen Spa (2) | Pelo conector, com substituição por data de estadia mínima 1 em 02–03/10 e 16–17/10. Repetir semana a semana |
-| Garantir 2 noites nos feriados | Todos os quartos | Substituição por data com estadia mínima 2 em 09–11/10 (Nossa Senhora Aparecida), 30/10–01/11 (Finados) e 20–22/11 (Consciência Negra) |
-| Desconto de fim de semana | Queen Spa (7) e Queen Spa (2) | Substituição de −10% do preço recomendado em 02–03/10, 16–17/10 e 23–24/10, com expiração automática. Sem regra permanente até medir 4 a 6 fins de semana |
+| Liberar 1 noite em sexta e sábado nos próximos fins de semana sem feriado | Queen Spa (7) e Queen Spa (2) | Pelo conector, substituição por data com estadia mínima 1 em 02–03/10, 16–17/10 e 23–24/10 |
+| Desconto de fim de semana | Queen Spa (2) nas três datas. Queen Spa (7) só em 02–03/10, porque depois ela entra na tabela de ocupação | Substituição de −10% no mesmo registro da estadia mínima 1. Apagar pelo conector depois da data ou se vender. Sem regra permanente até medir 4 a 6 fins de semana |
+| Garantir 2 noites nos feriados | Todos os quartos. Na Villa King Spa (7), conferir também no Beds24 | Substituição por data com estadia mínima 2 em 09–11/10 (Nossa Senhora Aparecida, segunda 12/10), 30/10–01/11 (Finados, segunda 02/11) e 20–21/11 (Consciência Negra, sexta 20/11; 19/11 opcional como véspera). Com expiração de 3 dias antes da data, para liberar 1 noite perto da chegada |
 | Intervalo livre entre reservas | Todos | Na tela: "Escolha um número" = 1 |
 | Estadia mínima do quarto no Beds24 | Todos | Conferir que está em 1 (Configurações → Propriedades → Quartos → Setup). Senão, ela trava o PriceLabs |
 
@@ -255,14 +257,14 @@ Verificação diária de 5 minutos, pelo Claude com o conector ou pelo Multi Cal
 
 | Situação | Ação |
 |---|---|
-| 7 dias abaixo de 70% e mercado de 7 dias abaixo de 30% | Deixar a tabela de ocupação agir. Se passarem 2 dias sem reserva, substituição de −10% do preço recomendado nas datas vazias, expirando em 48 horas |
+| 7 dias abaixo de 70% e mercado de 7 dias abaixo de 30% | Deixar a tabela de ocupação agir. Nos quartos sem tabela, se passarem 2 dias sem reserva, substituição de −10% nas datas vazias. Apagar pelo conector se a data vender ou em 48 horas |
 | 7 dias abaixo de 70% e mercado de 7 dias acima de 40% | Problema de visibilidade, não de preço. Checar posição na Booking, fotos e disponibilidade. Não baixar mais |
 | Quarto no piso e ainda sem reserva | Mesmo diagnóstico da Balcony: canal, mapeamento e conteúdo. Não baixar o piso |
-| Faixa de 8 a 15 dias abaixo de 30% | Conferir estadia mínima e ofertas. Checar se há fim de semana mais de 60% acima da semana |
-| Faixa de 16 a 30 dias abaixo de 20% | Manter. Revisar o preço base se a relação recomendada/base ficar abaixo de 0,93 por duas semanas |
-| 45 e 60 dias | Já no alvo. Não descontar: metade do público reserva com até 7 dias |
+| Faixa de 7 a 14 dias abaixo de 30% | Conferir estadia mínima e ofertas. Checar se há fim de semana mais de 60% acima da semana |
+| Faixa de 15 a 29 dias abaixo de 20% | Manter. Revisar o preço base se a relação recomendada/base ficar abaixo de 0,93 por duas semanas |
+| Faixas de 30 a 60 dias | Já no alvo da faixa (9% e 7%). Não descontar: metade do público reserva com até 7 dias. A janela de 45 dias sobe quando as faixas mais próximas melhorarem |
 | 7 dias acima de 85% | A tabela já sobe de 6% a 12%. Conferir se o máximo não trava |
-| Cancelamento grande a menos de 3 dias | Substituição de −10% do preço recomendado por 48 horas, expirando sozinha |
+| Cancelamento grande a menos de 3 dias | Nos quartos sem tabela, substituição de −10% na data. Apagar pelo conector depois de 48 horas ou se vender |
 
 **Trava de receita:** acompanhar a receita por quarto disponível (RevPAR) toda semana. Se a ocupação subir e esse valor cair por 2 semanas seguidas, reduza em 3 pontos os descontos da linha de 0 a 7 dias.
 
@@ -278,9 +280,9 @@ Todos os valores estão em "preço enviado", a escala atual.
 4. "Mude Fator de Demanda e Sazonalidade do grupo para Recommended, mantendo compset e peso de hotéis."
 5. "Configure a Última hora do grupo como % Gradual, −10%, começando 7 dias antes." Ou: "Configure a Última hora do grupo como 'No last minute adjustment'."
 6. "Atualize o preço base da Double Spa para 1.480."
-7. "Crie substituição de estadia mínima 1 em 02 e 03/10 na Queen Spa 7 unidades e na Queen Spa 2 unidades."
-8. "Crie substituição de estadia mínima 2 em 09, 10 e 11/10 em todos os quartos."
-9. "Crie substituição de −10% do preço recomendado em 02 e 03/10 na Queen Spa 7 unidades, com motivo 'fim de semana fraco'."
+7. "Leia as substituições existentes e crie, em 02 e 03/10, na Queen Spa 7 unidades e na Queen Spa 2 unidades, um único registro por data com estadia mínima 1 e −10%, motivo 'fim de semana fraco'."
+8. "Crie substituição de estadia mínima 2 em 09, 10 e 11/10 em todos os quartos, expirando 3 dias antes da data."
+9. "Apague as substituições de 02 e 03/10 da Queen Spa 2 unidades."
 10. "Quais reservas foram feitas nas últimas 24 horas e por qual canal?"
 11. "Compare o valor pago nas reservas da última semana com o preço enviado pelo PriceLabs, por canal."
 12. "Recalcule os preços da Queen Spa 7 unidades e mostre o motivo de cada preço nos próximos 7 dias."
@@ -293,6 +295,8 @@ Todos os valores estão em "preço enviado", a escala atual.
 - ligar e desligar a sincronização de cada listing;
 - sazonalidade, última hora, far-out, dia da semana, fator de demanda e perfil sazonal;
 - substituições por data, incluindo preço, piso, teto e estadia mínima.
+
+**Cuidados com substituições por data:** cada data tem um único registro por quarto. Apagar remove o registro inteiro, inclusive estadia mínima e preço. Por isso: leia antes de escrever, mande preço e estadia mínima juntos, e para desfazer só um campo, reenvie a data com os campos que devem ficar. Na primeira substituição de −10%, confira com o prompt 12 se o desconto saiu sobre o preço recomendado.
 
 **O que só dá para fazer na tela:**
 - a tabela de ajuste por ocupação;
@@ -311,10 +315,10 @@ Todos os valores estão em "preço enviado", a escala atual.
 | Hoje | Listar as ofertas ativas na extranet da Booking: nível Genius, Mobile, tarifa por país, oferta básica, de última hora, antecipada, campanhas e Genius dinâmico | Você | — |
 | Hoje | Conferir no Beds24: mínimo e estadia mínima dos quartos, multiplicadores existentes e a lista de canais | Você | — |
 | Dia 1 | Fator de Demanda e Sazonalidade → Recommended | Claude | Voltar para Aggressive |
-| Dia 1 | Estadia mínima 2 nos feriados, por substituição por data | Claude | Apagar as substituições |
+| Dia 1 | Estadia mínima 2 nos feriados, por substituição por data | Claude | Apagar as substituições dos feriados |
 | Dia 2 | Última hora conforme as ofertas da Booking | Claude | Voltar para Market Driven Aggressive |
 | Dia 2 | Safety Minimum Price → "Do Not Apply". Sincronização às 06:00 | Você, na tela | Anotar o valor anterior |
-| Dia 3 | Fim de semana das Queen Spa: 1 noite e −10% em 02–03/10 | Claude | As substituições expiram sozinhas |
+| Dia 3 | Fim de semana das Queen Spa: 1 noite em 02–03, 16–17 e 23–24/10. −10% nas mesmas datas na Queen Spa (2) e só em 02–03/10 na Queen Spa (7) | Claude | Apagar as substituições pelo conector |
 | Dia 4 | Passo 1 do preço base: Double, Queen Spa (2), Villa King Spa (2) e Queen Spa (7). A Villa King Spa (7) só se o calendário estiver resolvido | Claude | Valores no arquivo de configuração salvo |
 | Dia 7 | Ligar a tabela de ocupação na Queen Spa (7) e na Double | Você, na tela | Desligar |
 | Dia 10 | Revisão: pickup, RevPAR e desconto medido por canal. Passo 2 do preço base se ainda indicado | Claude | — |
@@ -327,7 +331,8 @@ Todos os valores estão em "preço enviado", a escala atual.
 - **Somar descontos.** Oferta de última hora da Booking mais última hora do PriceLabs é desconto em dobro. O mesmo vale para a tabela de ocupação com descontos fortes.
 - **Lotar a 100% com receita menor.** A trava é o RevPAR semanal e o mínimo calculado sobre o custo variável.
 - **Ensinar o hóspede a esperar.** A tabela só desconta quando o quarto está vazio, não sempre na última hora.
-- **Substituição com preço fixo fura o mínimo.** Use sempre "% do preço recomendado".
+- **Substituição com preço fixo fura o mínimo.** Use sempre percentual.
+- **Apagar uma substituição apaga tudo naquela data**, inclusive a estadia mínima. Leia antes de apagar.
 - **Bloqueios no Beds24** não contam como ocupados no cálculo do PriceLabs. Mesmo assim, tiram quartos da venda.
 - **Desligar uma personalização** faz o padrão de mercado assumir. Para anular, use "Nenhum" com a chave ligada.
 - **Decidir com uma amostra pequena.** O fim de semana foi medido em uma só semana. O desconto do Airbnb não tem dado confiável.
@@ -344,14 +349,17 @@ Todos os valores estão em "preço enviado", a escala atual.
 4. Você anotou os multiplicadores atuais de cada canal e da página de reserva direta.
 5. A recepção sabe que, depois da virada, o calendário do Beds24 mostra o preço do hóspede. Cotações e reservas manuais passam a usar esse valor multiplicado pelo fator.
 
-**Piloto em um quarto:** a Balcony, que tem zero reservas.
+**Antes de tudo:** gerar um snapshot novo, com o conector e com anotações da tela. O arquivo de 25/09 desfaz a Fase 1, não a virada.
 
-1. Dividir por 2 o base, o mínimo e o máximo dela no PriceLabs. Pode ser pelo conector.
-2. Clicar em "Sync Now" no PriceLabs.
+**Piloto em um quarto:** a Balcony, por ser a de menor risco. Ela tem só 5 quartos-noite vendidos. As reservas já feitas não mudam de preço.
+
+1. Fechar a Balcony para venda em todos os canais, inclusive a página direta. O multiplicador da página direta vale para a propriedade inteira, não para um quarto.
+2. Com o quarto fechado: dividir por 2 o base, o mínimo e o máximo dela no PriceLabs e clicar em "Sync Now".
 3. Conferir no calendário do Beds24 que o Daily Price 1 dela caiu pela metade em 3 datas.
 4. Colocar o multiplicador `*2` no mapeamento desse quarto na Booking. Se já existir um multiplicador, usar o existente × 2. Clicar em "Update".
 5. Conferir na extranet da Booking que a tarifa, antes das promoções, voltou ao valor anterior.
-6. Se não bater, voltar o multiplicador e os valores anotados.
+6. Reabrir a Balcony só na Booking durante o piloto. Os outros canais continuam fechados para ela.
+7. Se não bater, voltar o multiplicador e os valores anotados antes de reabrir.
 
 **Depois de 3 a 5 dias de piloto sem problemas, estender aos outros quartos na mesma ordem:**
 
@@ -364,7 +372,7 @@ Todos os valores estão em "preço enviado", a escala atual.
 
 Reserve de 1 a 2 horas, não 15 minutos.
 
-**Como desfazer:** restaurar os multiplicadores anotados e os valores do arquivo de configuração salvo, depois Sync Now.
+**Como desfazer:** restaurar os multiplicadores anotados e os valores do snapshot feito imediatamente antes da virada, depois Sync Now.
 
 ---
 

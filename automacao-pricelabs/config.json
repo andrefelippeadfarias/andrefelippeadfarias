@@ -1,0 +1,37 @@
+{
+  "versao": 1,
+  "modo": "observar",
+  "pms": "beds24",
+  "fuso_utc": -3,
+  "horarios_sincronizacao": ["06:00"],
+  "janela_criacao_horas": 7,
+  "metas": {"0-6": 70, "7-14": 30, "15-29": 20},
+  "mercado_visibilidade": 40,
+  "listings": [
+    {"id": "350362___722805", "apelido": "Moinhos Queen Spa (7)", "codigo": "R1", "unidades": 7, "papel": "tabela", "desconto_permitido": false, "pendencia": ""},
+    {"id": "350362___722806", "apelido": "Moinhos Double Spa", "codigo": "R2", "unidades": 6, "papel": "tabela", "desconto_permitido": false, "pendencia": "Confirmar 6 ou 7 unidades"},
+    {"id": "350362___722807", "apelido": "Moinhos Afrodite (1)", "codigo": "R3", "unidades": 1, "papel": "sem_tabela", "desconto_permitido": true, "pendencia": ""},
+    {"id": "350362___722808", "apelido": "Moinhos Queen Spa (2)", "codigo": "R4", "unidades": 2, "papel": "sem_tabela", "desconto_permitido": false, "pendencia": "Anomalia de 66%: hóspede paga cerca de 0,34 do preço enviado"},
+    {"id": "350364___722813", "apelido": "Villa King Spa (7)", "codigo": "R5", "unidades": 7, "papel": "tabela", "desconto_permitido": false, "pendencia": ""},
+    {"id": "350364___722814", "apelido": "Villa King Balcony (6)", "codigo": "R6", "unidades": 6, "papel": "transbordo", "desconto_permitido": false, "pendencia": ""},
+    {"id": "350364___722815", "apelido": "Villa King Spa (2)", "codigo": "R7", "unidades": 2, "papel": "sem_tabela", "desconto_permitido": false, "pendencia": "Conflito de ocupação entre Beds24 e PriceLabs"}
+  ],
+  "desconto": {"percentual": -10, "vida_horas": 48, "teto_execucao": 3, "teto_dia": 6, "teto_ativas": 6, "sem_repetir_dias": 7},
+  "jev": {
+    "provedor": "openrouter",
+    "modelo": "typesafe/jev-1.13:free",
+    "familia_modelo": "jev-1.13",
+    "provedor_reserva": "",
+    "modelo_reserva": "jev-1.13.0",
+    "max_chamadas_dia": 7,
+    "confianca_min": 0.80,
+    "probabilidade_min": 0.70,
+    "margem_min": 0.30,
+    "veto_max": 0.30,
+    "confirmar_duas_execucoes": true,
+    "medir_estabilidade": true
+  },
+  "feriados_locais": [],
+  "pasta_dados": "",
+  "area_de_trabalho": ""
+}

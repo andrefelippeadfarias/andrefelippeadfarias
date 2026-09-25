@@ -1,0 +1,83 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:automacao-pricelabs:diario-escrita:1",
+  "title": "Evento do diário de escritas (só acréscimo, fora do Git)",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "ts",
+    "run_id",
+    "evento",
+    "listing",
+    "data"
+  ],
+  "properties": {
+    "ts": {
+      "type": "string",
+      "minLength": 16
+    },
+    "run_id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9T:_-]{1,40}$"
+    },
+    "evento": {
+      "enum": [
+        "intencao",
+        "criada",
+        "falhou",
+        "incerta",
+        "adotada",
+        "ausente",
+        "divergente",
+        "apagada",
+        "expirada"
+      ]
+    },
+    "listing": {
+      "type": "string",
+      "pattern": "^[0-9]+___[0-9]+$"
+    },
+    "data": {
+      "type": "string",
+      "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$"
+    },
+    "payload": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "date",
+        "price",
+        "price_type",
+        "reason"
+      ],
+      "properties": {
+        "date": {
+          "type": "string",
+          "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$"
+        },
+        "price": {
+          "enum": [
+            "-5",
+            "-7",
+            "-10",
+            "0"
+          ]
+        },
+        "price_type": {
+          "const": "percent"
+        },
+        "reason": {
+          "type": "string",
+          "pattern": "^auto-jev [A-Za-z0-9T:_-]{1,40}$"
+        }
+      }
+    },
+    "lido": {
+      "type": "object"
+    },
+    "motivo": {
+      "type": "string",
+      "maxLength": 200
+    }
+  }
+}

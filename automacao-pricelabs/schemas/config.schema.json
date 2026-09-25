@@ -1,0 +1,272 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:automacao-pricelabs:config:1",
+  "title": "Configuração da automação (sem segredos)",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "versao",
+    "modo",
+    "pms",
+    "fuso_utc",
+    "horarios_sincronizacao",
+    "janela_criacao_horas",
+    "metas",
+    "mercado_visibilidade",
+    "listings",
+    "desconto",
+    "jev"
+  ],
+  "properties": {
+    "versao": {
+      "const": 1
+    },
+    "modo": {
+      "enum": [
+        "observar",
+        "ativo"
+      ]
+    },
+    "pms": {
+      "type": "string",
+      "minLength": 1
+    },
+    "fuso_utc": {
+      "type": "integer",
+      "minimum": -12,
+      "maximum": 14
+    },
+    "horarios_sincronizacao": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^([01][0-9]|2[0-3]):[0-5][0-9]$"
+      },
+      "minItems": 1,
+      "maxItems": 24,
+      "uniqueItems": true
+    },
+    "janela_criacao_horas": {
+      "type": "number",
+      "exclusiveMinimum": 0,
+      "maximum": 12
+    },
+    "metas": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "0-6",
+        "7-14",
+        "15-29"
+      ],
+      "properties": {
+        "0-6": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 100
+        },
+        "7-14": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 100
+        },
+        "15-29": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 100
+        }
+      }
+    },
+    "mercado_visibilidade": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 100
+    },
+    "listings": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 7,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "apelido",
+          "codigo",
+          "unidades",
+          "papel",
+          "desconto_permitido"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[0-9]+___[0-9]+$"
+          },
+          "apelido": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 60
+          },
+          "codigo": {
+            "type": "string",
+            "pattern": "^R[1-7]$"
+          },
+          "unidades": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 50
+          },
+          "papel": {
+            "enum": [
+              "tabela",
+              "sem_tabela",
+              "transbordo"
+            ]
+          },
+          "desconto_permitido": {
+            "type": "boolean"
+          },
+          "pendencia": {
+            "type": "string",
+            "maxLength": 200
+          }
+        }
+      }
+    },
+    "desconto": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "percentual",
+        "vida_horas",
+        "teto_execucao",
+        "teto_dia",
+        "teto_ativas",
+        "sem_repetir_dias"
+      ],
+      "properties": {
+        "percentual": {
+          "enum": [
+            -5,
+            -7,
+            -10
+          ]
+        },
+        "vida_horas": {
+          "type": "number",
+          "minimum": 12,
+          "maximum": 48
+        },
+        "teto_execucao": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 3
+        },
+        "teto_dia": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 6
+        },
+        "teto_ativas": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 6
+        },
+        "sem_repetir_dias": {
+          "type": "integer",
+          "minimum": 7,
+          "maximum": 60
+        }
+      }
+    },
+    "jev": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "provedor",
+        "modelo",
+        "familia_modelo",
+        "max_chamadas_dia",
+        "confianca_min",
+        "probabilidade_min",
+        "margem_min",
+        "veto_max",
+        "confirmar_duas_execucoes",
+        "medir_estabilidade"
+      ],
+      "properties": {
+        "provedor": {
+          "enum": [
+            "openrouter",
+            "typesafe"
+          ]
+        },
+        "modelo": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 80
+        },
+        "familia_modelo": {
+          "type": "string",
+          "minLength": 3,
+          "maxLength": 40
+        },
+        "provedor_reserva": {
+          "enum": [
+            "",
+            "typesafe"
+          ]
+        },
+        "modelo_reserva": {
+          "type": "string",
+          "maxLength": 80
+        },
+        "max_chamadas_dia": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 7
+        },
+        "confianca_min": {
+          "type": "number",
+          "minimum": 0.8,
+          "maximum": 1
+        },
+        "probabilidade_min": {
+          "type": "number",
+          "minimum": 0.7,
+          "maximum": 1
+        },
+        "margem_min": {
+          "type": "number",
+          "minimum": 0.3,
+          "maximum": 1
+        },
+        "veto_max": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 0.3
+        },
+        "confirmar_duas_execucoes": {
+          "type": "boolean"
+        },
+        "medir_estabilidade": {
+          "type": "boolean"
+        }
+      }
+    },
+    "feriados_locais": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$"
+      },
+      "uniqueItems": true
+    },
+    "pasta_dados": {
+      "type": "string"
+    },
+    "area_de_trabalho": {
+      "type": "string"
+    }
+  }
+}

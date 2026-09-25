@@ -1,0 +1,130 @@
+{
+  "contract_version": "1.0",
+  "task_id": "T5-operacao",
+  "task_revision": 1,
+  "title": "Scripts do Windows, agendamento 7x/dia e documentação de operação",
+  "requirements": [
+    {
+      "id": "R1",
+      "description": "Instalação e uso por não programador com scripts de um clique."
+    },
+    {
+      "id": "R2",
+      "description": "Agendamento 05:30, 08:30, 11:30, 14:30, 17:30, 20:30 e 23:30 por XML gerado pelo programa e registrado com schtasks (sem PowerShell), sem instâncias simultâneas, com despertar, pyw sem janela e verificação ao fazer logon."
+    },
+    {
+      "id": "R3",
+      "description": "Documentação de operação, custos, critérios para sair da observação e como desfazer."
+    }
+  ],
+  "acceptance_criteria": [
+    {
+      "id": "AC1",
+      "requirement_ids": [
+        "R1",
+        "R2"
+      ],
+      "description": "Scripts .bat de uma linha, só ASCII, com CRLF; XML da tarefa gerado pelo programa tem 7 gatilhos diários e 1 de logon, IgnoreNew, WakeToRun, StartWhenAvailable e limite de 20 min; verificar acusa fuso diferente do config e última execução com mais de 26 h.",
+      "check_ids": [
+        "unit"
+      ]
+    },
+    {
+      "id": "AC2",
+      "requirement_ids": [
+        "R3"
+      ],
+      "description": "README em português cobre instalação, chaves, modos, agenda, relatório, parar, desfazer, custos e pendências.",
+      "check_ids": [
+        "unit"
+      ]
+    }
+  ],
+  "handoff": {
+    "owner_actor_id": "coordenador",
+    "files": [
+      {
+        "path": "windows/instalar.bat",
+        "operation": "create"
+      },
+      {
+        "path": "windows/configurar-chaves.bat",
+        "operation": "create"
+      },
+      {
+        "path": "windows/verificar.bat",
+        "operation": "create"
+      },
+      {
+        "path": "windows/executar.bat",
+        "operation": "create"
+      },
+      {
+        "path": "windows/parar.bat",
+        "operation": "create"
+      },
+      {
+        "path": "windows/retomar.bat",
+        "operation": "create"
+      },
+      {
+        "path": "windows/desfazer.bat",
+        "operation": "create"
+      },
+      {
+        "path": "README.md",
+        "operation": "create"
+      },
+      {
+        "path": "tests/test_operacao.py",
+        "operation": "create"
+      },
+      {
+        "path": "windows/agendar.bat",
+        "operation": "create"
+      },
+      {
+        "path": ".gitattributes",
+        "operation": "create"
+      },
+      {
+        "path": "pacing/agenda.py",
+        "operation": "create"
+      },
+      {
+        "path": "pacing/__main__.py",
+        "operation": "create"
+      }
+    ],
+    "dependencies": [
+      "T4-execucao"
+    ],
+    "context_allowlist": [
+      "docs/apis-verificadas.md",
+      "schemas/",
+      ".thinker-doer/run-2026-09-25/conselho/01-arquitetura.md",
+      "config.json"
+    ]
+  },
+  "checks": [
+    {
+      "id": "unit",
+      "command": [
+        "python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-t",
+        "."
+      ],
+      "required": true
+    }
+  ],
+  "coverage": {
+    "required": false,
+    "minimum_percent": 0,
+    "scope": "windows/: scripts de uma linha sem lógica; pacing/agenda.py coberto em T5 pelo teste do XML"
+  }
+}

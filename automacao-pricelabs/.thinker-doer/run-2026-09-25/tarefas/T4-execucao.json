@@ -1,0 +1,165 @@
+{
+  "contract_version": "1.0",
+  "task_id": "T4-execucao",
+  "task_revision": 1,
+  "title": "Execução ponta a ponta, escritas seguras, desfazer e relatório",
+  "requirements": [
+    {
+      "id": "R1",
+      "description": "Ordem de escrita: releitura, intenção no diário, POST sem nova tentativa, releitura de conferência."
+    },
+    {
+      "id": "R2",
+      "description": "DELETE só de substituição idêntica à registrada; divergente gera alerta e nunca é apagada."
+    },
+    {
+      "id": "R3",
+      "description": "Modos: observar e PARAR fazem zero escritas; contenção só remove; falha do Jev não cria nada."
+    },
+    {
+      "id": "R4",
+      "description": "Relatório HTML, histórico CSV, status na Área de Trabalho e alerta; sem chaves nem dados de hóspedes."
+    },
+    {
+      "id": "R5",
+      "description": "Comandos executar, verificar, desfazer, parar, retomar, configurar-chaves e testar-gravacao."
+    }
+  ],
+  "acceptance_criteria": [
+    {
+      "id": "AC1",
+      "requirement_ids": [
+        "R1",
+        "R3"
+      ],
+      "description": "Com APIs simuladas: modo ativo cria a substituição esperada; observar/PARAR geram zero POST e DELETE; Jev fora do ar ou 422 não cria nada; POST com resultado incerto é conciliado na execução seguinte.",
+      "check_ids": [
+        "unit"
+      ]
+    },
+    {
+      "id": "AC2",
+      "requirement_ids": [
+        "R2"
+      ],
+      "description": "Substituição editada por humano não é apagada pelo desfazer nem pela limpeza; data com substituição humana nunca recebe POST nem DELETE.",
+      "check_ids": [
+        "unit"
+      ]
+    },
+    {
+      "id": "AC3",
+      "requirement_ids": [
+        "R4"
+      ],
+      "description": "Chave-canário não aparece em nenhum arquivo gerado; relatório mostra faixa verde, amarela ou vermelha.",
+      "check_ids": [
+        "unit"
+      ]
+    },
+    {
+      "id": "AC4",
+      "requirement_ids": [
+        "R5"
+      ],
+      "description": "Cada comando roda com APIs simuladas e devolve código de saída coerente.",
+      "check_ids": [
+        "unit"
+      ]
+    },
+    {
+      "id": "AC5",
+      "requirement_ids": [
+        "R1",
+        "R3"
+      ],
+      "description": "Dia simulado com 7 execuções e sincronização às 06:00: cria só na janela, confirmação exige outra chamada real (resposta reaproveitada não confirma), 48 h contadas a partir da sincronização, execução atrasada depois de 2 dias desligado remove os vencidos antes de qualquer criação, sombra nunca grava.",
+      "check_ids": [
+        "unit"
+      ]
+    }
+  ],
+  "handoff": {
+    "owner_actor_id": "coordenador",
+    "files": [
+      {
+        "path": "pacing/acoes.py",
+        "operation": "create"
+      },
+      {
+        "path": "pacing/relatorio.py",
+        "operation": "create"
+      },
+      {
+        "path": "pacing/principal.py",
+        "operation": "create"
+      },
+      {
+        "path": "tests/test_execucao.py",
+        "operation": "create"
+      }
+    ],
+    "dependencies": [
+      "T2-integracoes",
+      "T3-dominio"
+    ],
+    "context_allowlist": [
+      "docs/apis-verificadas.md",
+      "schemas/",
+      ".thinker-doer/run-2026-09-25/conselho/01-arquitetura.md",
+      "config.json"
+    ]
+  },
+  "checks": [
+    {
+      "id": "unit",
+      "command": [
+        "python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-t",
+        "."
+      ],
+      "required": true
+    },
+    {
+      "id": "coverage",
+      "command": [
+        "python",
+        "-m",
+        "coverage",
+        "run",
+        "--branch",
+        "--source=pacing",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-t",
+        "."
+      ],
+      "required": true
+    },
+    {
+      "id": "coverage-report",
+      "command": [
+        "python",
+        "-m",
+        "coverage",
+        "report",
+        "--include=pacing/acoes.py,pacing/relatorio.py,pacing/principal.py",
+        "--fail-under=85"
+      ],
+      "required": true
+    }
+  ],
+  "coverage": {
+    "required": true,
+    "minimum_percent": 85,
+    "scope": "pacing/acoes.py pacing/relatorio.py pacing/principal.py: linhas e ramos (coverage --branch)"
+  }
+}

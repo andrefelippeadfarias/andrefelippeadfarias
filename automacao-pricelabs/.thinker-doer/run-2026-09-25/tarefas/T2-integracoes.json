@@ -1,0 +1,116 @@
+{
+  "contract_version": "1.0",
+  "task_id": "T2-integracoes",
+  "task_revision": 1,
+  "title": "Clientes da PriceLabs Customer API e do Jev",
+  "requirements": [
+    {
+      "id": "R1",
+      "description": "PriceLabs: só listings configuradas; paginação de reservas limitada; respostas fora do contrato viram erro."
+    },
+    {
+      "id": "R2",
+      "description": "Jev: um POST por chamada; validação estrita (modelo da família, todas as perguntas, escolha entre opções, probabilidades somando 1, confiança 0..1)."
+    }
+  ],
+  "acceptance_criteria": [
+    {
+      "id": "AC1",
+      "requirement_ids": [
+        "R1"
+      ],
+      "description": "Listing fora do config é recusada antes da rede; reservas paginam até next_page falso; corpo do POST de substituição tem price em texto e price_type percent.",
+      "check_ids": [
+        "unit"
+      ]
+    },
+    {
+      "id": "AC2",
+      "requirement_ids": [
+        "R2"
+      ],
+      "description": "Resposta com modelo estranho, pergunta faltando, escolha fora das opções, soma diferente de 1 ou confiança fora de 0..1 levanta JevInvalido.",
+      "check_ids": [
+        "unit"
+      ]
+    }
+  ],
+  "handoff": {
+    "owner_actor_id": "coordenador",
+    "files": [
+      {
+        "path": "pacing/pricelabs.py",
+        "operation": "create"
+      },
+      {
+        "path": "pacing/jev.py",
+        "operation": "create"
+      },
+      {
+        "path": "tests/test_integracoes.py",
+        "operation": "create"
+      }
+    ],
+    "dependencies": [
+      "T1-infra"
+    ],
+    "context_allowlist": [
+      "docs/apis-verificadas.md",
+      "schemas/",
+      ".thinker-doer/run-2026-09-25/conselho/01-arquitetura.md",
+      "config.json"
+    ]
+  },
+  "checks": [
+    {
+      "id": "unit",
+      "command": [
+        "python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-t",
+        "."
+      ],
+      "required": true
+    },
+    {
+      "id": "coverage",
+      "command": [
+        "python",
+        "-m",
+        "coverage",
+        "run",
+        "--branch",
+        "--source=pacing",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-t",
+        "."
+      ],
+      "required": true
+    },
+    {
+      "id": "coverage-report",
+      "command": [
+        "python",
+        "-m",
+        "coverage",
+        "report",
+        "--include=pacing/pricelabs.py,pacing/jev.py",
+        "--fail-under=85"
+      ],
+      "required": true
+    }
+  ],
+  "coverage": {
+    "required": true,
+    "minimum_percent": 85,
+    "scope": "pacing/pricelabs.py pacing/jev.py: linhas e ramos (coverage --branch)"
+  }
+}

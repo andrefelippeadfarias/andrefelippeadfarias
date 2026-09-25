@@ -1,0 +1,174 @@
+{
+  "contract_version": "1.0",
+  "task_id": "T3-dominio",
+  "task_revision": 1,
+  "title": "Métricas, portões, perguntas ao Jev, decisões e limpeza",
+  "requirements": [
+    {
+      "id": "R1",
+      "description": "Ocupação por faixa igual à do relatório v4 com o calendário real de 25/09."
+    },
+    {
+      "id": "R2",
+      "description": "Candidato só com todos os portões; datas sem feriado/véspera, sem substituição existente, sem repetição e acima do piso."
+    },
+    {
+      "id": "R3",
+      "description": "Pedido ao Jev só com faixas com nome, conforme schemas/jev-pedido.schema.json."
+    },
+    {
+      "id": "R4",
+      "description": "Desconto só com escolha discount, confiança, probabilidade, margem e veto dentro dos limites, confirmação em outra requisição e tetos."
+    },
+    {
+      "id": "R5",
+      "description": "Remoção determinística: vendeu, 48 h nos canais, preço abaixo do mínimo após sincronização."
+    }
+  ],
+  "acceptance_criteria": [
+    {
+      "id": "AC1",
+      "requirement_ids": [
+        "R1"
+      ],
+      "description": "Faixa de 0 a 6 dias dá 43, 43, 71, 50, 61, 0 e 36% com o calendário real.",
+      "check_ids": [
+        "unit"
+      ]
+    },
+    {
+      "id": "AC2",
+      "requirement_ids": [
+        "R2"
+      ],
+      "description": "Balcony nunca é candidata; quartos com tabela só como sombra; datas 11/10, 01/11 e 19/11 e datas com substituição humana nunca entram.",
+      "check_ids": [
+        "unit"
+      ]
+    },
+    {
+      "id": "AC3",
+      "requirement_ids": [
+        "R3"
+      ],
+      "description": "Pedido gerado valida no schema e não contém datas, ids nem apelidos.",
+      "check_ids": [
+        "unit",
+        "schemas"
+      ]
+    },
+    {
+      "id": "AC4",
+      "requirement_ids": [
+        "R4"
+      ],
+      "description": "Confiança 0,79, veto 0,30 ou escolha hold não geram ação; primeira recomendação aguarda confirmação; tetos respeitados.",
+      "check_ids": [
+        "unit"
+      ]
+    },
+    {
+      "id": "AC5",
+      "requirement_ids": [
+        "R5"
+      ],
+      "description": "Data vendida, prazo cumprido e preço abaixo do mínimo geram remoção; o último aciona o disjuntor.",
+      "check_ids": [
+        "unit"
+      ]
+    }
+  ],
+  "handoff": {
+    "owner_actor_id": "coordenador",
+    "files": [
+      {
+        "path": "pacing/metricas.py",
+        "operation": "create"
+      },
+      {
+        "path": "pacing/regras.py",
+        "operation": "create"
+      },
+      {
+        "path": "tests/test_dominio.py",
+        "operation": "create"
+      },
+      {
+        "path": "tests/fixtures/calendario-2026-09-25.json",
+        "operation": "create"
+      }
+    ],
+    "dependencies": [
+      "T1-infra",
+      "T2-integracoes"
+    ],
+    "context_allowlist": [
+      "docs/apis-verificadas.md",
+      "schemas/",
+      ".thinker-doer/run-2026-09-25/conselho/01-arquitetura.md",
+      "config.json"
+    ]
+  },
+  "checks": [
+    {
+      "id": "unit",
+      "command": [
+        "python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-t",
+        "."
+      ],
+      "required": true
+    },
+    {
+      "id": "schemas",
+      "command": [
+        "python",
+        "-m",
+        "unittest",
+        "tests.test_contratos"
+      ],
+      "required": true
+    },
+    {
+      "id": "coverage",
+      "command": [
+        "python",
+        "-m",
+        "coverage",
+        "run",
+        "--branch",
+        "--source=pacing",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-t",
+        "."
+      ],
+      "required": true
+    },
+    {
+      "id": "coverage-report",
+      "command": [
+        "python",
+        "-m",
+        "coverage",
+        "report",
+        "--include=pacing/metricas.py,pacing/regras.py",
+        "--fail-under=90"
+      ],
+      "required": true
+    }
+  ],
+  "coverage": {
+    "required": true,
+    "minimum_percent": 90,
+    "scope": "pacing/metricas.py pacing/regras.py: linhas e ramos (coverage --branch)"
+  }
+}

@@ -1,0 +1,177 @@
+{
+  "contract_version": "1.0",
+  "task_id": "T1-infra",
+  "task_revision": 1,
+  "title": "Infraestrutura: rede com lista fechada, credenciais, estado, config e tempo",
+  "requirements": [
+    {
+      "id": "R1",
+      "description": "Só rotas da lista fechada saem da máquina; escritas só com o método liberado pelo modo."
+    },
+    {
+      "id": "R2",
+      "description": "Chaves lidas do Gerenciador de Credenciais do Windows ou do ambiente; nunca gravadas em arquivo nem em mensagens de erro."
+    },
+    {
+      "id": "R3",
+      "description": "Estado gravado de forma atômica com .bak, trava de instância única e diário só de acréscimo que reconstrói as substituições ativas."
+    },
+    {
+      "id": "R4",
+      "description": "Config validado com pisos rígidos dos limiares do Jev e tetos de desconto; feriados nacionais e vésperas calculados."
+    }
+  ],
+  "acceptance_criteria": [
+    {
+      "id": "AC1",
+      "requirement_ids": [
+        "R1"
+      ],
+      "description": "Rota desconhecida e escrita fora do modo levantam RotaProibida sem chamar o transporte; 429/5xx repetem até 2 vezes; 4xx não repete. Redirecionamento HTTP vira erro e não leva as chaves.",
+      "check_ids": [
+        "unit"
+      ]
+    },
+    {
+      "id": "AC2",
+      "requirement_ids": [
+        "R2"
+      ],
+      "description": "Chave ausente ou inválida gera ChaveAusente; a chave não aparece em nenhuma mensagem de erro.",
+      "check_ids": [
+        "unit"
+      ]
+    },
+    {
+      "id": "AC3",
+      "requirement_ids": [
+        "R3"
+      ],
+      "description": "Segunda trava falha; trava órfã é recuperada; estado corrompido cai no .bak; sem estado, o diário reconstrói as substituições.",
+      "check_ids": [
+        "unit"
+      ]
+    },
+    {
+      "id": "AC4",
+      "requirement_ids": [
+        "R4"
+      ],
+      "description": "config.json passa no schema e no validador; limiares mais frouxos que os pisos e desconto em quarto com tabela são recusados; Páscoa e vésperas corretas.",
+      "check_ids": [
+        "unit",
+        "schemas"
+      ]
+    }
+  ],
+  "handoff": {
+    "owner_actor_id": "coordenador",
+    "files": [
+      {
+        "path": "pacing/__init__.py",
+        "operation": "create"
+      },
+      {
+        "path": "pacing/rede.py",
+        "operation": "create"
+      },
+      {
+        "path": "pacing/credenciais.py",
+        "operation": "create"
+      },
+      {
+        "path": "pacing/estado.py",
+        "operation": "create"
+      },
+      {
+        "path": "pacing/config.py",
+        "operation": "create"
+      },
+      {
+        "path": "pacing/tempo.py",
+        "operation": "create"
+      },
+      {
+        "path": "tests/test_infra.py",
+        "operation": "create"
+      },
+      {
+        "path": "tests/test_contratos.py",
+        "operation": "create"
+      },
+      {
+        "path": "tests/simulador.py",
+        "operation": "create"
+      }
+    ],
+    "dependencies": [],
+    "context_allowlist": [
+      "docs/apis-verificadas.md",
+      "schemas/",
+      ".thinker-doer/run-2026-09-25/conselho/01-arquitetura.md",
+      "config.json"
+    ]
+  },
+  "checks": [
+    {
+      "id": "unit",
+      "command": [
+        "python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-t",
+        "."
+      ],
+      "required": true
+    },
+    {
+      "id": "schemas",
+      "command": [
+        "python",
+        "-m",
+        "unittest",
+        "tests.test_contratos"
+      ],
+      "required": true
+    },
+    {
+      "id": "coverage",
+      "command": [
+        "python",
+        "-m",
+        "coverage",
+        "run",
+        "--branch",
+        "--source=pacing",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-t",
+        "."
+      ],
+      "required": true
+    },
+    {
+      "id": "coverage-report",
+      "command": [
+        "python",
+        "-m",
+        "coverage",
+        "report",
+        "--include=pacing/rede.py,pacing/credenciais.py,pacing/estado.py,pacing/config.py,pacing/tempo.py",
+        "--fail-under=90"
+      ],
+      "required": true
+    }
+  ],
+  "coverage": {
+    "required": true,
+    "minimum_percent": 90,
+    "scope": "pacing/rede.py pacing/credenciais.py pacing/estado.py pacing/config.py pacing/tempo.py: linhas e ramos (coverage --branch)"
+  }
+}

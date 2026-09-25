@@ -1,0 +1,205 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:automacao-pricelabs:jev-pedido:1",
+  "title": "Corpo enviado ao Jev (System One). Só faixas com nome; sem datas, ids, nomes ou texto livre do PMS",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "state",
+    "model",
+    "questions"
+  ],
+  "properties": {
+    "model": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 80
+    },
+    "state": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "context",
+        "rooms"
+      ],
+      "properties": {
+        "context": {
+          "type": "string",
+          "maxLength": 400
+        },
+        "rooms": {
+          "type": "object",
+          "minProperties": 1,
+          "maxProperties": 14,
+          "propertyNames": {
+            "pattern": "^R[1-7]_(weekday|fri_sat)$"
+          },
+          "additionalProperties": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "block",
+              "empty_dates_in_block",
+              "headroom_above_floor",
+              "market_next_7d",
+              "new_bookings_last_48h",
+              "occupancy_0_6d",
+              "price_vs_room_median",
+              "recent_cancellation_next_3d",
+              "room_size"
+            ],
+            "properties": {
+              "occupancy_0_6d": {
+                "enum": [
+                  "far_below_target",
+                  "below_target"
+                ]
+              },
+              "block": {
+                "enum": [
+                  "weekday",
+                  "fri_sat"
+                ]
+              },
+              "room_size": {
+                "enum": [
+                  "single_unit",
+                  "two_units",
+                  "multi_unit"
+                ]
+              },
+              "empty_dates_in_block": {
+                "enum": [
+                  "one",
+                  "two_or_three",
+                  "four_or_more"
+                ]
+              },
+              "new_bookings_last_48h": {
+                "enum": [
+                  "none",
+                  "some"
+                ]
+              },
+              "recent_cancellation_next_3d": {
+                "enum": [
+                  "yes",
+                  "no"
+                ]
+              },
+              "price_vs_room_median": {
+                "enum": [
+                  "low",
+                  "typical",
+                  "high"
+                ]
+              },
+              "headroom_above_floor": {
+                "enum": [
+                  "tight",
+                  "moderate",
+                  "wide"
+                ]
+              },
+              "market_next_7d": {
+                "enum": [
+                  "weak",
+                  "moderate"
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    "questions": {
+      "type": "object",
+      "minProperties": 2,
+      "maxProperties": 28,
+      "propertyNames": {
+        "pattern": "^(d|v)_R[1-7]_(weekday|fri_sat)$"
+      },
+      "additionalProperties": {
+        "oneOf": [
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "type",
+              "instructions",
+              "criteria"
+            ],
+            "properties": {
+              "type": {
+                "const": "choice"
+              },
+              "instructions": {
+                "type": "string",
+                "maxLength": 600
+              },
+              "criteria": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "hold",
+                  "discount",
+                  "visibility_issue"
+                ],
+                "properties": {
+                  "hold": {
+                    "type": "string",
+                    "maxLength": 255
+                  },
+                  "discount": {
+                    "type": "string",
+                    "maxLength": 255
+                  },
+                  "visibility_issue": {
+                    "type": "string",
+                    "maxLength": 255
+                  }
+                }
+              }
+            }
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "type",
+              "instructions",
+              "criteria"
+            ],
+            "properties": {
+              "type": {
+                "const": "noul"
+              },
+              "instructions": {
+                "type": "string",
+                "maxLength": 600
+              },
+              "criteria": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "true",
+                  "false"
+                ],
+                "properties": {
+                  "true": {
+                    "type": "string",
+                    "maxLength": 255
+                  },
+                  "false": {
+                    "type": "string",
+                    "maxLength": 255
+                  }
+                }
+              }
+            }
+          }
+        ]
+      }
+    }
+  }
+}

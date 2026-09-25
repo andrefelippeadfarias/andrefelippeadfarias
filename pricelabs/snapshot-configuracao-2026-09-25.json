@@ -1,0 +1,39 @@
+{
+  "descricao": "Configuração do PriceLabs em 25/09/2026, antes de qualquer mudança. Usar para desfazer alterações.",
+  "fonte": "Conector MCP do PriceLabs: get_listing_data, get_customizations, get_listing_date_overrides",
+  "grupo": {
+    "id": 124405,
+    "nome": "Recanto dos Moinhos",
+    "personalizacoes": {
+      "seasonality": {"seasonality_customization_on": true, "seasonality_type": "aggressive"},
+      "last_minute_prices": {"last_min_factor_on": true, "last_min_factor_type": "aggressive"},
+      "far_out_premium": {"far_out_premium_on": true, "far_out_premium_type": "recommended"},
+      "day_of_week_adjustment": {"dow_factor_on": false},
+      "demand_factor": {"tone_demand_factor_on": true, "tone_demand_factor": "aggressive", "hotel_compset_type": "custom", "hotel_wt": "mostly_hotel"},
+      "custom_seasonal_profile": {"custom_seasonal_profile_on": false}
+    }
+  },
+  "conta_beds24": {"personalizacoes": {}},
+  "listings": [
+    {"id": "350362___722805", "nome": "Moinhos Queen Spa (7)", "min": 800, "base": 1500, "max": 5000, "push_enabled": true, "tags": "N4,Moinhos", "personalizacoes_listing": {}},
+    {"id": "350362___722806", "nome": "Moinhos Double Spa (7 no nome, 6 no PriceLabs)", "min": 900, "base": 1600, "max": 5000, "push_enabled": true, "tags": "N2,Panoramica-1"},
+    {"id": "350362___722807", "nome": "Moinhos Queen Spa Afrodite (1)", "min": 1500, "base": 2000, "max": 10000, "push_enabled": true, "tags": "N1,Afrodite"},
+    {"id": "350362___722808", "nome": "Moinhos Queen Spa (2)", "min": 850, "base": 1700, "max": 5000, "push_enabled": true, "tags": "N3,Panoramica-2"},
+    {"id": "350364___722813", "nome": "Villa King Spa (7)", "min": 1000, "base": 1600, "max": 5000, "push_enabled": true, "tags": "N1,Villa-Panoramica-1", "personalizacoes_listing": {}},
+    {"id": "350364___722814", "nome": "Villa King Balcony (6)", "min": 800, "base": 1400, "max": 5000, "push_enabled": true, "tags": "N3,Villa-Mansao"},
+    {"id": "350364___722815", "nome": "Villa King Spa (2)", "min": 900, "base": 1500, "max": 5000, "push_enabled": true, "tags": "N2,Villa-Panoramica-2"}
+  ],
+  "substituicoes_por_data": {
+    "350362___722805": [
+      {"date": "2026-09-25", "price": "-20", "price_type": "percent", "min_price": -20, "min_price_type": "percent_min", "max_price": -20, "max_price_type": "percent_max"},
+      {"date": "2026-09-26", "price": "-20", "price_type": "percent", "min_price": -20, "min_price_type": "percent_min", "max_price": -20, "max_price_type": "percent_max"},
+      {"date": "2026-09-27", "price": "20", "price_type": "percent", "min_price": 20, "min_price_type": "percent_min", "max_price": 20, "max_price_type": "percent_max"}
+    ],
+    "350364___722814": []
+  },
+  "nao_verificado_pelo_conector": [
+    "Multi-Room Occupancy-Based Adjustment, regras de estadia mínima, mínimos avançados, Safety Minimum Price, sync programado e Ajuste de preços: conferir e anotar na tela do PriceLabs",
+    "Multiplicadores de canal e preço mínimo dos quartos no Beds24: conferir e anotar na tela do Beds24",
+    "Substituições por data das listings 722806, 722807, 722808, 722813 e 722815: não consultadas"
+  ]
+}

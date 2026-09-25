@@ -1,0 +1,151 @@
+{
+ "descricao": "Ensaio somente leitura com dados reais coletados pelo conector PriceLabs em 25/09/2026 ~15:45Z; programa rodado com transporte de replay; Jev simulado como hoje (modelo gratuito sem servidores, HTTP 404). Sem reservas, ids de reserva ou dados de hóspedes.",
+ "resultados": {
+  "agora": {
+   "quando": "2026-09-25T12:56:00-03:00",
+   "status": "verde",
+   "modo": "observar",
+   "chamadas_http": 9,
+   "escritas": 0,
+   "ocupacao_0_6": {
+    "Moinhos Queen Spa (7)": 38.8,
+    "Moinhos Double Spa": 57.1,
+    "Moinhos Afrodite (1)": 71.4,
+    "Moinhos Queen Spa (2)": 7.1,
+    "Villa King Spa (7)": 61.2,
+    "Villa King Balcony (6)": 4.8,
+    "Villa King Spa (2)": 35.7
+   },
+   "bloqueios": [
+    {
+     "alvo": "Moinhos Queen Spa (7)",
+     "regra": "fora da janela de criação (próxima sincronização distante)"
+    },
+    {
+     "alvo": "Moinhos Double Spa",
+     "regra": "fora da janela de criação (próxima sincronização distante)"
+    },
+    {
+     "alvo": "Moinhos Afrodite (1)",
+     "regra": "fora da janela de criação (próxima sincronização distante)"
+    },
+    {
+     "alvo": "Moinhos Queen Spa (2)",
+     "regra": "fora da janela de criação (próxima sincronização distante)"
+    },
+    {
+     "alvo": "Villa King Spa (7)",
+     "regra": "fora da janela de criação (próxima sincronização distante)"
+    },
+    {
+     "alvo": "Villa King Spa (2)",
+     "regra": "fora da janela de criação (próxima sincronização distante)"
+    }
+   ],
+   "jev_blocos": [],
+   "jev_perguntas": 0,
+   "jev_caracteres": 0,
+   "alertas": [
+    "Moinhos Queen Spa (7): 7 a 14 dias em 5% (meta 30%). Conferir estadia mínima e ofertas",
+    "Moinhos Queen Spa (7): 15 a 29 dias em 10% (meta 20%)",
+    "Moinhos Double Spa: 7 a 14 dias em 21% (meta 30%). Conferir estadia mínima e ofertas",
+    "Moinhos Queen Spa (2): 7 a 14 dias em 6% (meta 30%). Conferir estadia mínima e ofertas",
+    "Villa King Spa (7): 7 a 14 dias em 20% (meta 30%). Conferir estadia mínima e ofertas",
+    "Villa King Spa (2): 7 a 14 dias em 19% (meta 30%). Conferir estadia mínima e ofertas",
+    "Villa King Spa (2): 15 a 29 dias em 17% (meta 20%)"
+   ]
+  },
+  "hoje-2330": {
+   "quando": "2026-09-25T23:30:00-03:00",
+   "status": "amarelo",
+   "modo": "observar",
+   "chamadas_http": 16,
+   "escritas": 0,
+   "ocupacao_0_6": {
+    "Moinhos Queen Spa (7)": 38.8,
+    "Moinhos Double Spa": 57.1,
+    "Moinhos Afrodite (1)": 71.4,
+    "Moinhos Queen Spa (2)": 7.1,
+    "Villa King Spa (7)": 61.2,
+    "Villa King Balcony (6)": 4.8,
+    "Villa King Spa (2)": 35.7
+   },
+   "bloqueios": [
+    {
+     "alvo": "Moinhos Double Spa",
+     "regra": "houve reserva nova nas últimas 48 h"
+    },
+    {
+     "alvo": "Moinhos Afrodite (1)",
+     "regra": "ocupação de 0 a 6 dias já na meta"
+    }
+   ],
+   "jev_blocos": [
+    "R1_weekday",
+    "R4_fri_sat",
+    "R4_weekday",
+    "R5_weekday",
+    "R7_fri_sat",
+    "R7_weekday"
+   ],
+   "jev_perguntas": 12,
+   "jev_caracteres": 9131,
+   "alertas": [
+    "Moinhos Queen Spa (7): 7 a 14 dias em 5% (meta 30%). Conferir estadia mínima e ofertas",
+    "Moinhos Queen Spa (7): 15 a 29 dias em 10% (meta 20%)",
+    "Moinhos Double Spa: 7 a 14 dias em 21% (meta 30%). Conferir estadia mínima e ofertas",
+    "Moinhos Queen Spa (2): 7 a 14 dias em 6% (meta 30%). Conferir estadia mínima e ofertas",
+    "Villa King Spa (7): 7 a 14 dias em 20% (meta 30%). Conferir estadia mínima e ofertas",
+    "Villa King Spa (2): 7 a 14 dias em 19% (meta 30%). Conferir estadia mínima e ofertas",
+    "Villa King Spa (2): 15 a 29 dias em 17% (meta 20%)",
+    "Jev sem resposta válida (openrouter: HTTP 404). Nenhum desconto novo"
+   ]
+  },
+  "amanha-0530": {
+   "quando": "2026-09-26T05:30:00-03:00",
+   "status": "amarelo",
+   "modo": "observar",
+   "chamadas_http": 16,
+   "escritas": 0,
+   "ocupacao_0_6": {
+    "Moinhos Queen Spa (7)": 40.8,
+    "Moinhos Double Spa": 47.6,
+    "Moinhos Afrodite (1)": 71.4,
+    "Moinhos Queen Spa (2)": 7.1,
+    "Villa King Spa (7)": 53.1,
+    "Villa King Balcony (6)": 2.4,
+    "Villa King Spa (2)": 28.6
+   },
+   "bloqueios": [
+    {
+     "alvo": "Moinhos Double Spa",
+     "regra": "houve reserva nova nas últimas 48 h"
+    },
+    {
+     "alvo": "Moinhos Afrodite (1)",
+     "regra": "ocupação de 0 a 6 dias já na meta"
+    }
+   ],
+   "jev_blocos": [
+    "R1_weekday",
+    "R4_fri_sat",
+    "R4_weekday",
+    "R5_fri_sat",
+    "R5_weekday",
+    "R7_fri_sat",
+    "R7_weekday"
+   ],
+   "jev_perguntas": 14,
+   "jev_caracteres": 10604,
+   "alertas": [
+    "Moinhos Queen Spa (7): 7 a 14 dias em 12% (meta 30%). Conferir estadia mínima e ofertas",
+    "Moinhos Queen Spa (7): 15 a 29 dias em 6% (meta 20%)",
+    "Moinhos Double Spa: 7 a 14 dias em 23% (meta 30%). Conferir estadia mínima e ofertas",
+    "Moinhos Queen Spa (2): 7 a 14 dias em 12% (meta 30%). Conferir estadia mínima e ofertas",
+    "Villa King Spa (7): 7 a 14 dias em 25% (meta 30%). Conferir estadia mínima e ofertas",
+    "Villa King Spa (2): 15 a 29 dias em 13% (meta 20%)",
+    "Jev sem resposta válida (openrouter: HTTP 404). Nenhum desconto novo"
+   ]
+  }
+ }
+}

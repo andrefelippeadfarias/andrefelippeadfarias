@@ -145,7 +145,14 @@ Depois disso, use `ativar.bat` (1 desconto por dia) e, após uma semana sem surp
 | Jev gratuito no OpenRouter | US$ 0 |
 | Tokens do Jev | No modo Ativo, cerca de 1 mil por chamada (só a Afrodite). No modo Observar, até cerca de 5 mil, porque ele também pergunta sobre os outros quartos. Em geral são 2 chamadas por dia (23:30 e 05:30), e no máximo 7 |
 
-Se o modelo gratuito sair do ar, dá para ligar o TypeSafe pago (`provedor_reserva: "typesafe"`, cerca de US$ 0,03 por mês). Isso fica desligado por padrão.
+### Se o Jev gratuito continuar fora do ar
+
+Em 25/09/2026, o modelo gratuito `typesafe/jev-1.13:free` estava sem servidores no OpenRouter, e a versão paga `typesafe/jev-1.13` estava no ar. Sem resposta do Jev, o programa só observa e não cria nada. Há duas saídas, ambas desligadas por padrão, porque custam dinheiro:
+
+| Opção | O que mudar no `config.json` | Custo estimado |
+|---|---|---|
+| Jev pago pelo mesmo OpenRouter | `"modelo": "typesafe/jev-1.13"` e comprar créditos no OpenRouter, trocando o limite da chave de US$ 0 para um valor pequeno | Cerca de 3 mil tokens por chamada e 2 chamadas por dia: menos de US$ 0,01 por mês |
+| TypeSafe direto como reserva | `"provedor_reserva": "typesafe"`; rodar `configurar-chaves` não pede essa chave, então ela entra na variável de ambiente `TYPESAFE_API_KEY` | Cerca de US$ 0,03 por mês |
 
 ## Segurança
 

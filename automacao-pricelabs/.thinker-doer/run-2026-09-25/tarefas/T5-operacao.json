@@ -1,12 +1,12 @@
 {
   "contract_version": "1.0",
   "task_id": "T5-operacao",
-  "task_revision": 2,
+  "task_revision": 3,
   "title": "Scripts do Windows, agendamento 7x/dia e documentação de operação",
   "requirements": [
     {
       "id": "R1",
-      "description": "Instalação e uso por não programador com scripts de um clique: instalar (chaves, agendamento, primeira execução e verificação), ensaio de gravação com e sem manter, ativar com 1 desconto por dia e ampliar para 6."
+      "description": "Instalação e uso por não programador com scripts de um clique: instalar (chaves, agendamento, primeira execução e verificação), ensaio de gravação com e sem manter, ativar com 1 desconto por dia e ampliar para 6. Instalação por um comando no PowerShell que instala o Python se faltar, baixa o projeto, desbloqueia os arquivos e preserva o config.json em atualizações."
     },
     {
       "id": "R2",
@@ -24,7 +24,7 @@
         "R1",
         "R2"
       ],
-      "description": "Scripts .bat de uma linha, só ASCII, com CRLF; XML da tarefa gerado pelo programa tem 7 gatilhos diários e 1 de logon, IgnoreNew, WakeToRun, StartWhenAvailable e limite de 20 min; verificar acusa fuso diferente do config e última execução com mais de 26 h.",
+      "description": "Scripts .bat de uma linha, só ASCII, com CRLF; XML da tarefa gerado pelo programa tem 7 gatilhos diários e 1 de logon, IgnoreNew, WakeToRun, StartWhenAvailable e limite de 20 min; verificar acusa fuso diferente do config e última execução com mais de 26 h. O instalar-da-internet.ps1 é ASCII, sem erro de sintaxe, a linha de uso é igual à do README, e a cópia preserva o config.json existente e ignora .thinker-doer (teste executado no PowerShell).",
       "check_ids": [
         "unit"
       ]
@@ -101,6 +101,10 @@
       },
       {
         "path": "windows/ensaio-manter.bat",
+        "operation": "create"
+      },
+      {
+        "path": "windows/instalar-da-internet.ps1",
         "operation": "create"
       }
     ],

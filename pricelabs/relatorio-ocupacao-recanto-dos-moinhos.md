@@ -21,9 +21,9 @@
 
 ## 1. Resumo executivo
 
-1. **Nenhuma janela bate a meta hoje.** O portfólio está em 40% nos próximos 7 dias, contra 70% de meta. Sem a Balcony, que é vendida por último de propósito, fica em 49%. A janela de 60 dias está praticamente na meta, com 14,9% contra 15%. Vocês estão acima do mercado na janela de 7 dias, que está em 28%. O problema não é falta de demanda na cidade.
-2. **O desconto real das OTAs foi medido: o hóspede da Booking paga cerca de metade do preço que o PriceLabs envia.** A mediana é 48% do preço enviado nas reservas dos últimos 3 dias e 44% nos últimos 10 dias. O desconto efetivo fica entre 51% e 59%. As ofertas ativas explicam esse tamanho: Genius até 20%, mais tarifa Mobile ou nacional de 10%, mais uma oferta de 20% a 40%.
-3. **Todo valor em reais no PriceLabs vale cerca de metade para o hóspede.** O mínimo de R$ 800 vira cerca de R$ 330 num dia de semana e R$ 390 no fim de semana, ainda antes da comissão da Booking.
+1. **Nenhuma janela do portfólio bate a meta hoje.** O portfólio está em 40% nos próximos 7 dias, contra 70% de meta. Sem a Balcony, que é vendida por último de propósito, fica em 49%, e só a janela de 60 dias bate a meta (18% contra 15%). Vocês estão acima do mercado na janela de 7 dias, que está em 28%. O problema não é falta de demanda na cidade.
+2. **O desconto real das OTAs foi medido: o hóspede da Booking paga cerca de metade do preço que o PriceLabs envia.** Sem a Queen Spa (2), que é uma exceção, o hóspede paga entre 49% e 51% do preço enviado. Isso está dentro do que as ofertas explicam: Genius até 20%, mais tarifa Mobile ou nacional de 10%, mais uma oferta de 20% a 40%, somando até 57% de desconto.
+3. **Todo valor em reais no PriceLabs vale cerca de metade para o hóspede.** O mínimo de R$ 800 vira cerca de R$ 400, e R$ 345 no pior caso das ofertas, ainda antes da comissão da Booking.
 4. **A King Suite with Balcony (6 unidades) é a categoria de transbordo.** São suítes sem banheira, e vocês mantêm o preço perto das outras para que ela venda só quando a Villa estiver quase lotada. Os dados confirmam que funciona: em 11/10, quando a King Spa (7) lotou, a Balcony vendeu 3 de 6. O ajuste é tirá-la das metas e impedir que o próprio PriceLabs a puxe para o piso.
 5. **O fim de semana está fraco em 2 dos 7 tipos de quarto:** Queen Spa de 7 unidades (14%) e Queen Spa de 2 unidades (25%). O mercado está em 48%. Quatro dos outros cinco vendem melhor no fim de semana do que na semana. A Balcony não vende em nenhum dos dois. A medição cobre um único fim de semana, então vale confirmar nas próximas semanas.
 6. **O tom "Agressivo" em Sazonalidade e Fator de Demanda faz o preço oscilar ao máximo.** Ele cai muito quando a demanda cai e sobe muito quando ela sobe. Com a OTA tirando mais de 50% por cima, isso gera dia de semana barato demais e fim de semana caro demais. O tom "Recomendado" suaviza os dois lados.
@@ -44,11 +44,11 @@
 
 | Pendência | Sua resposta | O que os dados mostram | O que muda no plano |
 |---|---|---|---|
-| Balcony vazia | Suítes sem banheira. Preço perto das outras até a Villa estar quase lotada | A estratégia funciona. Em 11/10 a King Spa (7) lotou e a Balcony vendeu 3 de 6. Em dias de semana, o hóspede pagou R$ 534 na Balcony, contra R$ 571 a R$ 610 nas King Spa. Mas o PriceLabs, por ver ocupação zero, empurra a Balcony para o piso de R$ 800 nos dias de semana | A Balcony sai das metas de ocupação e da tabela de ocupação. Última hora "No last minute adjustment" no nível dela. Opção: subir o mínimo para R$ 950, para ela não cair abaixo das King Spa |
-| Ofertas da Booking | Relatórios anexos. Genius disponível até o nível 3 | Oferta básica de 20% a 25% em todas as datas. Última hora de 25% em quase todos os quartos, e de 30% ou 40% em alguns. Oferta antecipada de 25% a 30%. Mobile 10% e tarifa nacional 10%. Detalhes na seção 3 | Última hora do PriceLabs em "No last minute adjustment". Pior caso de desconto recalculado |
+| Balcony vazia | Suítes sem banheira. Preço perto das outras até a Villa estar quase lotada | A estratégia funciona. Em 11/10 a King Spa (7) lotou e a Balcony vendeu 3 de 6. Em dias de semana, o hóspede pagou R$ 534 na Balcony, contra R$ 571 a R$ 610 nas King Spa. Mas o PriceLabs, por ver ocupação zero, empurra a Balcony para o piso de R$ 800 em 10 dos 42 dias de semana até 08/10 | A Balcony sai das metas de ocupação e da tabela de ocupação. Última hora "No last minute adjustment" no nível dela. Mínimo subido para R$ 950, para ficar mais perto das King Spa (aplicado em 25/09) |
+| Ofertas da Booking | Relatórios anexos. Genius disponível até o nível 3 | Oferta básica de 20% a 25% em todas as datas. Última hora de 25% em quase todos os quartos, e de 30% ou 40% em alguns. Oferta antecipada de 10% a 30%, a maioria de 25%. Mobile 10% e tarifa nacional 10%. Detalhes na seção 3 | Última hora do PriceLabs em "No last minute adjustment". Pior caso de desconto recalculado |
 | Mínimo e estadia no Beds24 | Mínimo de R$ 200. 2 diárias em fins de semana e feriados, 1 diária nos dias de semana | O mínimo de R$ 200 não interfere, porque os mínimos do PriceLabs são de R$ 800 ou mais. Mas o PriceLabs envia 1 noite nas vésperas de feriado que não caem em sexta ou sábado: 11/10, 01/11 e 19/11 | Substituições de 2 noites nessas três datas. A liberação de 1 noite no fim de semana das Queen Spa vira teste opcional, porque contraria a política de vocês |
 | Villa King Spa (7) sem calendário | Bastou recarregar a página | Calendário funcionando: 61% nos próximos 7 dias, com 30 de 49 quartos-noite | Entra na tabela de ocupação e no passo 1 do preço base |
-| Queen Spa (2) com 66% de desconto | É categoria intermediária | A escada de preço está invertida dos dois lados. O PriceLabs envia mais por ela (mediana de R$ 1.333 em dia de semana) do que pela Double (R$ 1.232), que é categoria acima. O hóspede paga menos por ela (R$ 451) do que pela Queen Spa (7) (R$ 510), que é categoria abaixo | Preço base de 1.450 no passo 1, entre a Queen Spa (7) e a Double. E conferir o Beds24 e a Booking: em 30/09 o PriceLabs envia R$ 1.267 para esse quarto. Veja na extranet qual tarifa aparece antes das promoções e se há multiplicador no Beds24 |
+| Queen Spa (2) com 66% de desconto | É categoria intermediária | A escada de preço está invertida dos dois lados. O PriceLabs envia mais por ela (mediana de R$ 1.333 em dia de semana) do que pela Double (R$ 1.232), que é categoria acima. O hóspede paga menos por ela (R$ 451) do que pela Queen Spa (7) (R$ 510), que é categoria abaixo | Preço base de 1.450 no passo 1, entre a Queen Spa (7) e a Double. Isso corrige só a ordem dos preços enviados. Para o hóspede, a inversão só se resolve depois de achar a causa dos 66%, então este passo fica para depois dessa checagem. E conferir o Beds24 e a Booking: em 30/09 o PriceLabs envia R$ 1.267 para esse quarto. Veja na extranet qual tarifa aparece antes das promoções e se há multiplicador no Beds24 |
 
 ---
 
@@ -107,12 +107,14 @@ As metas são cumulativas. Traduzidas para cada faixa de dias, ficam assim:
 
 **Método:** para cada reserva ativa com estadia nos próximos 60 dias, dividi o valor pago por noite pelo preço atual que o PriceLabs envia para aquelas noites. As reservas dos últimos 3 dias são as mais confiáveis, porque o preço quase não mudou desde a reserva. A comissão da Booking não aparece nos dados, então os valores são o que o hóspede pagou, antes da comissão.
 
+Entre parênteses, os valores sem a Queen Spa (2), que tem um desconto fora do padrão.
+
 | Canal e janela | Reservas | Pago ÷ enviado (mediana) | Desconto efetivo |
 |---|---|---|---|
-| Booking.com, reservas dos últimos 3 dias | 14 | 0,48 | 52% |
-| Booking.com, reservas dos últimos 10 dias | 36 | 0,44 | 56% |
-| Booking.com, estadias só em dias de semana (10 dias) | 26 | 0,41 | 59% |
-| Booking.com, estadias com sexta ou sábado (10 dias) | 10 | 0,49 | 51% |
+| Booking.com, reservas dos últimos 3 dias | 16 (13) | 0,48 (0,51) | 52% (49%) |
+| Booking.com, reservas dos últimos 10 dias | 42 (31) | 0,45 (0,49) | 55% (51%) |
+| Booking.com, estadias só em dias de semana (10 dias) | 31 (22) | 0,42 (0,50) | 58% (50%) |
+| Booking.com, estadias com sexta ou sábado (10 dias) | 11 (9) | 0,49 (0,49) | 51% (51%) |
 | Direto e outros | 3 | 0,48 | 52% (amostra pequena) |
 | Airbnb | 3 | inconsistente | os valores do Beds24 não fecham |
 
@@ -129,13 +131,14 @@ Os dois arquivos, provavelmente um por propriedade, somam 297 linhas de promoç�
 
 | Oferta | Desconto | Vale para | Observação |
 |---|---|---|---|
-| Oferta básica (Basic Deal) | 25% em um arquivo, 20% no outro | Todas as estadias até fev ou mar/2027 | Na prática, todo hóspede da Booking tem pelo menos essa oferta |
+| Oferta básica (Basic Deal) | 25% em um arquivo, 20% no outro | Todas as estadias até fev a abr/2027 | Na prática, todo hóspede da Booking tem pelo menos essa oferta |
 | Última hora (Last Minute Deal) | 25% na maioria. 30% em um caso, até 18/10. 40% em outro, até 09/12 | Estadias até meados de 2027 | Substitui a básica quando é maior |
 | "Para este final de semana" | 30% | Estadias até 22/11 | Oferta própria de fim de semana em um dos arquivos |
 | "Para feriado 7 de setembro" | 35% | Estadias até 05/12, com 65 datas excluídas | Continua ativa, apesar do nome. Obrigatória: mantida |
-| Antecipada (Early Booker Deal) | 22% a 30% | Estadias até meados de 2027 | Mesma categoria da básica e da última hora: vale a maior |
+| Antecipada (Early Booker Deal) | 10% a 30%, a maioria de 25% | Estadias até meados de 2027 | Mesma categoria da básica e da última hora: vale a maior |
 | Tarifa Mobile e tarifa nacional | 10% cada | Sempre ativas | Não se somam entre si |
 | Late Escape (campanha) | 27% a 28% | Estadias de 01/10 a 07/01 | Campanha. Não soma com Genius, Mobile nem nacional |
+| Getaway Deal (campanha) | 20% a 29% | Estadias até 30/09 | Termina na próxima semana |
 | Limited Time Deal | 30% | Reservas feitas só em 25 e 26/09, para estadias até 2027 | Quem reservar hoje ou amanhã tem 30% em qualquer data futura, inclusive feriados |
 | Genius | até 20% (nível 3) | Hóspedes Genius | Não aparece nos relatórios. Informado por vocês |
 
@@ -148,26 +151,26 @@ Os dois arquivos, provavelmente um por propriedade, somam 297 linhas de promoç�
 | Genius nível 1 (10%), celular ou brasileiro | 39% | 43% | 51% |
 | Genius nível 3 (20%), celular ou brasileiro | 46% | 50% | 57% |
 
-Muitos hóspedes são brasileiros ou reservam pelo celular, então os 10% da tarifa nacional ou da Mobile valem para a maioria. O desconto medido, de 51% a 59%, fica no alto da tabela. Isso é coerente com muitos hóspedes Genius e com a oferta de 40% em parte dos quartos.
+Muitos hóspedes são brasileiros ou reservam pelo celular, então os 10% da tarifa nacional ou da Mobile valem para a maioria. Sem a Queen Spa (2), o desconto medido fica entre 49% e 51%, dentro da tabela. Isso é coerente com muitos hóspedes Genius e com ofertas de 30% a 40% em parte dos quartos. Com a Queen Spa (2), a mediana sobe para 52% a 58%, acima do máximo possível, o que confirma que o problema dela está fora das ofertas.
 
 **Cancelamentos:** a oferta básica de 25% teve 888 noites reservadas e 437 canceladas no último ano. A oferta antecipada de 30% teve 104 reservadas e 72 canceladas.
 
 **O que isso significa**
 
-- **O desconto efetivo da Booking fica entre 51% e 59%.** É o resultado esperado com Genius até o nível 3, tarifa Mobile ou nacional e ofertas de 20% a 40%.
-- **O hóspede de dia de semana paga em torno de R$ 508 por noite** (mediana, só Booking). Hoje só a Balcony (R$ 800 enviado) e a Afrodite (R$ 1.500 enviado) estão no piso no calendário dos próximos 60 dias.
+- **O desconto efetivo da Booking fica em torno de 50%**, sem contar a Queen Spa (2). É o resultado esperado com Genius até o nível 3, tarifa Mobile ou nacional e ofertas de 20% a 40%. O pior caso possível pelas ofertas é 57%.
+- **O hóspede de dia de semana paga em torno de R$ 610 por noite** (mediana, só Booking, sem a Queen Spa (2)). Hoje só a Balcony (R$ 800 enviado) e a Afrodite (R$ 1.500 enviado) estão no piso no calendário dos próximos 60 dias.
 - **A Queen Spa de 2 unidades perde 66% entre o preço enviado e o pago**, sempre. É mais do que qualquer combinação das ofertas ativas. A causa provável está fora das promoções: um multiplicador menor que 1 no Beds24, o quarto mapeado para outra tarifa na Booking ou um plano tarifário derivado com desconto extra.
 - **O PriceLabs não sabe desse desconto.** A documentação dele diz que taxas e descontos de cada canal entram depois que o preço sai do PriceLabs.
 
 ### Consequências práticas
 
-| Valor no PriceLabs | Enviado | Hóspede em dia de semana (≈ 0,41) | Hóspede no fim de semana (≈ 0,49) |
+| Valor no PriceLabs | Enviado | Hóspede, caso típico (≈ 0,50) | Hóspede, pior caso das ofertas (≈ 0,43) |
 |---|---|---|---|
-| Mínimo da Queen Spa (7) ou da Balcony | R$ 800 | ≈ R$ 330 | ≈ R$ 390 |
-| Mínimo da Afrodite | R$ 1.500 | ≈ R$ 615 | ≈ R$ 735 |
-| Preço base da Double Spa | R$ 1.600 | ≈ R$ 655 | ≈ R$ 785 |
+| Mínimo da Queen Spa (7) | R$ 800 | ≈ R$ 400 | ≈ R$ 345 |
+| Mínimo da Afrodite | R$ 1.500 | ≈ R$ 750 | ≈ R$ 645 |
+| Preço base da Double Spa | R$ 1.600 | ≈ R$ 800 | ≈ R$ 690 |
 
-- **Os descontos do PriceLabs se somam aos da OTA.** Por exemplo, 20% de desconto de última hora do PriceLabs combinados com 52% da Booking deixam o hóspede pagando cerca de 38% do preço recomendado. O piso é o limite.
+- **Os descontos do PriceLabs se somam aos da OTA.** Por exemplo, 20% de desconto de última hora do PriceLabs combinados com 50% da Booking deixavam o hóspede pagando cerca de 40% do preço recomendado. O piso é o limite.
 - **O comparativo com o mercado fica distorcido, mas não em dobro para todo mundo.** Os anúncios de temporada usados como comparação no PriceLabs já incluem as promoções deles. Contra eles, vocês aparecem com o dobro do preço real. O comparador de hotéis usa a tarifa pública da Booking, e o PriceLabs não informa se ela inclui Genius ou Mobile. Contra hotéis, a distância é menor que o dobro.
 - **O valor base recomendado pelo PriceLabs vem do desempenho**, não dessa distorção. Ele considera ocupação, diária média, pickup, avaliações e comparação com o mercado. Para Double, Queen Spa (2) e Villa King Spa (7), ele sugere cerca de 13% abaixo do atual. Para a Villa King Spa (2), 26% abaixo, e para a Balcony, 40% abaixo.
 
@@ -239,7 +242,7 @@ Cada linha fica neutra, em 0%, na faixa que contém a sua meta. As faixas de dia
 
 **Pior caso:** chegada no mesmo dia e ocupação abaixo de 15%. Com a última hora do PriceLabs em "Nenhum", o único desconto do PriceLabs é o da tabela: 12% abaixo do recomendado. Com o desconto máximo da Booking por cima (Genius nível 3, tarifa nacional e oferta de 30% a 40%), o hóspede paga entre 38% e 44% do preço recomendado. O preço mínimo segura o resto.
 
-**Regra para não empilhar:** num quarto com a tabela ligada, não crie substituição de desconto. Uma substituição de −10% por cima levaria o pior caso a cerca de 29% abaixo do recomendado.
+**Regra para não empilhar:** num quarto com a tabela ligada, não crie substituição de desconto. Uma substituição de −10% por cima levaria o pior caso a cerca de 21% abaixo do recomendado, com o hóspede pagando entre 34% e 40% do recomendado.
 
 **Antes de ligar:** peça ao conector a comparação do preço de uma data com e sem a tabela (prompt 12 da seção 7). Depois de ligar, observe por uma semana antes de mexer em qualquer outra coisa.
 
@@ -247,21 +250,21 @@ Cada linha fica neutra, em 0%, na faixa que contém a sua meta. As faixas de dia
 
 Regra do "passo 1": percorrer 60% do caminho até o preço base recomendado pelo PriceLabs, só onde ele dá recomendação. O restante fica para daqui a 10 dias, se ainda indicado.
 
-| Tipo de quarto | Base hoje → passo 1 | Hóspede no dia de semana ≈ | Mínimo | Máximo | Base recomendada pelo PriceLabs | Observação |
+| Tipo de quarto | Base hoje → passo 1 | Base para o hóspede ≈ (× 0,50) | Mínimo | Máximo | Base recomendada pelo PriceLabs | Observação |
 |---|---|---|---|---|---|---|
-| Queen Spa (7) | 1.500 → **1.380** | R$ 565 | 800 (manter) | 5.000 (manter) | não informada | Corte de 8% por decisão própria: 30, 45 e 60 dias abaixo do mercado |
-| Double Spa | 1.600 → **1.480** | R$ 605 | 900 (manter) | 5.000 (manter) | 1.399 (−13%) | Regra dos 60% |
-| Afrodite (1) | 2.000 (manter) | R$ 820 | 1.500 (manter) | 10.000 (manter) | não informada | Bate todas as metas. Não mexer |
-| Queen Spa (2) | 1.700 → **1.450** | R$ 495 (este quarto paga ≈ 0,34) | 850 (manter) | 5.000 (manter) | 1.457 (−14%) | Fora da regra dos 60%: 1.450 coloca a categoria intermediária entre a Queen Spa (7) e a Double. Checar antes o desconto de 66% |
-| Villa King Spa (7) | 1.600 → **1.480** | R$ 605 | 1.000 (manter) | 5.000 (manter) | 1.392 (−13%) | Regra dos 60%. Calendário confirmado |
-| Villa Balcony (6), transbordo | 1.400 (manter) | R$ 575 | 800 → **950** (opcional) | 5.000 (manter) | 840 (−40%) | Ignorar a recomendação de baixar: ela vem da ocupação zero, que é intencional. Com mínimo de 950, ela não cai abaixo das King Spa nos dias de semana |
-| Villa King Spa (2) | 1.500 → **1.270** | R$ 520 | 900 (manter) | 5.000 (manter) | 1.114 (−26%) | Regra dos 60%. Checar antes o conflito de ocupação |
+| Queen Spa (7) | 1.500 → **1.380** | R$ 690 | 800 (manter) | 5.000 (manter) | não informada | Corte de 8% por decisão própria: 30, 45 e 60 dias abaixo do mercado |
+| Double Spa | 1.600 → **1.480** | R$ 740 | 900 (manter) | 5.000 (manter) | 1.399 (−13%) | Regra dos 60% |
+| Afrodite (1) | 2.000 (manter) | R$ 1.000 | 1.500 (manter) | 10.000 (manter) | não informada | Bate todas as metas. Não mexer |
+| Queen Spa (2) | 1.700 → **1.450**, depois de checar os 66% | R$ 495 (este quarto paga ≈ 0,34) | 850 (manter) | 5.000 (manter) | 1.457 (−14%) | Fora da regra dos 60%: 1.450 coloca a categoria intermediária entre a Queen Spa (7) e a Double. Checar antes o desconto de 66% |
+| Villa King Spa (7) | 1.600 → **1.480** | R$ 740 | 1.000 (manter) | 5.000 (manter) | 1.392 (−13%) | Regra dos 60%. Calendário confirmado |
+| Villa Balcony (6), transbordo | 1.400 (manter) | R$ 700 | 800 → **950** (aplicado) | 5.000 (manter) | 840 (−40%) | Ignorar a recomendação de baixar: ela vem da ocupação zero, que é intencional. Com mínimo de 950 ela fica mais perto das King Spa, que estão entre R$ 1.100 e R$ 1.230 enviados em dia de semana. Para nunca ficar abaixo delas, o mínimo teria de ser cerca de R$ 1.100 |
+| Villa King Spa (2) | 1.500 → **1.270** | R$ 635 | 900 (manter) | 5.000 (manter) | 1.114 (−26%) | Regra dos 60%. Checar antes o conflito de ocupação |
 
-**Mínimo: manter todos, exceto a opção da Balcony.** No desconto máximo da Booking, o hóspede paga entre 43% e 50% do mínimo. O mínimo certo só pode ser definido por vocês. A conta é:
+**Mínimo: manter todos. O da Balcony já foi para R$ 950.** No desconto máximo da Booking, o hóspede paga entre 43% e 50% do mínimo. O mínimo certo só pode ser definido por vocês. A conta é:
 
 > custo variável por quarto ocupado + margem mínima ≤ mínimo × 0,43 × (1 − comissão da Booking)
 
-O fator 0,43 corresponde ao pior caso: Genius nível 3, tarifa nacional e oferta de 40%. O custo variável inclui lavanderia, amenities, café da manhã, energia e água. Com comissão de 15%, um mínimo de R$ 800 rende cerca de R$ 290 líquidos no pior caso.
+O fator 0,43 corresponde ao pior caso das ofertas: Genius nível 3, tarifa nacional e oferta de 40%. A Queen Spa (2) fica abaixo disso até a causa dos 66% ser resolvida. O custo variável inclui lavanderia, amenities, café da manhã, energia e água. Com comissão de 15%, um mínimo de R$ 800 rende cerca de R$ 290 líquidos no pior caso.
 
 **Máximo: manter.** O teto atual não está limitando nenhum preço. O maior preço enviado da Queen Spa (7) é R$ 3.706 em 10/10, com 5 de 7 quartos vendidos, e o hóspede pagou entre R$ 950 e R$ 1.300 por noite. Um teto menor cortaria esses picos de feriado.
 
@@ -357,7 +360,7 @@ Todos os valores estão em "preço enviado", a escala atual.
 | ✅ 25/09 | Fator de Demanda e Sazonalidade → Recommended. Última hora → "No last minute adjustment". Mínimo da Balcony → 950. Estadia mínima 2 em 11/10, 01/11 e 19/11. Ver `registro-de-mudancas.md` | Claude | Pelo registro de mudanças |
 | Dia 2 | Safety Minimum Price → "Do Not Apply". Sincronização às 06:00 | Você, na tela | Anotar o valor anterior |
 | Dia 3 | Teste opcional de 1 noite nas Queen Spa em 02–03/10, só se vocês aprovarem | Claude | Apagar as substituições pelo conector |
-| Dia 4 | Passo 1 do preço base: Double, Queen Spa (2), Villa King Spa (7), Villa King Spa (2) e Queen Spa (7) | Claude | Valores no arquivo de configuração salvo |
+| Dia 4 | Passo 1 do preço base: Double, Villa King Spa (7), Villa King Spa (2) e Queen Spa (7). Queen Spa (2) só depois de achar a causa dos 66% | Claude | Valores no arquivo de configuração salvo |
 | Dia 7 | Ligar a tabela de ocupação na Queen Spa (7), na Double e na Villa King Spa (7). Na Balcony, deixar o ajuste por ocupação em "Nenhum" | Você, na tela | Desligar |
 | Dia 10 | Revisão: pickup, RevPAR e desconto medido por canal. Passo 2 do preço base se ainda indicado | Claude | — |
 | Dia 14 | Revisão completa contra as metas. Decidir sobre a Fase 2 | Você e o Claude | — |

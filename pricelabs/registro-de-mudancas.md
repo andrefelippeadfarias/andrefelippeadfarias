@@ -30,6 +30,6 @@ Valores em "preço enviado", antes das ofertas da Booking. O recálculo não env
 
 ### Próximos passos previstos
 
-- **Dia 4:** passo 1 do preço base (Double 1.480, Queen Spa (2) 1.450, Villa King Spa (7) 1.480, Villa King Spa (2) 1.270, Queen Spa (7) 1.380).
+- **Dia 4:** passo 1 do preço base (Double 1.480, Villa King Spa (7) 1.480, Villa King Spa (2) 1.270, Queen Spa (7) 1.380). Queen Spa (2) para 1.450 só depois de achar a causa dos 66%.
 - **Dia 7:** ligar a tabela de ocupação na tela, para Queen Spa (7), Double e Villa King Spa (7). Na Balcony, deixar o ajuste por ocupação em "Nenhum".
 - **Antes disso:** acompanhar por 3 dias o pickup e o valor pago, para separar o efeito de cada mudança.

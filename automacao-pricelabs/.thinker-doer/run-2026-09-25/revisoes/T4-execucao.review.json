@@ -2,8 +2,8 @@
   "contract_version": "1.0",
   "task_id": "T4-execucao",
   "task_revision": 1,
-  "result_revision": 4,
-  "snapshot_digest": "f62757f60a468b4763d8f273cb1c8a16f3517c223e4dee76316eaafab42f4324",
+  "result_revision": 5,
+  "snapshot_digest": "4d93de398f3e409a237882013936a4dfa7e1722f54c15a00677f4909031cdc74",
   "actor_id": "auditor-a",
   "decision": "approved",
   "findings": [
@@ -14,6 +14,10 @@
       "description": "DESFAZER apagava substituicao humana marcada divergente (lido sobrescrito pela leitura divergente). Resolvido: apagar recusa status divergente ou sem lido; divergencia guardada em lido_divergente (testes H1, H1b e TestRegressaoAuditoriaA).",
       "evidence": [
         {
+          "path": ".thinker-doer/run-2026-09-25/revisoes/evidencias/auditor-a-final-r5.txt",
+          "sha256": "c4cf2e120f9a8dd8c2a36c80ea27403daed70e8e12256c7de8f51485500d209e"
+        },
+        {
           "path": ".thinker-doer/run-2026-09-25/revisoes/evidencias/auditor-a-final-r4.txt",
           "sha256": "12cc4c9fafec287e7161bc8d3c92118b12c3fefe394d34016267618248d0317b"
         },
@@ -27,7 +31,7 @@
         },
         {
           "path": "tests/test_execucao.py",
-          "sha256": "e0e4d4e1b50cebff9cf6e05ec84c24faf30e45930f85563e1bb6d212d3e93e12"
+          "sha256": "485f05ba859801953ba38b1fd166afcdf074581f8eb0f406069d30da43a437b8"
         }
       ]
     },
@@ -38,6 +42,10 @@
       "description": "Disjuntor so era gravado no fim da execucao e se perdia com excecao ou recuperacao. Resolvido: Executor.acionar_disjuntor grava estado e diario na hora (teste H2).",
       "evidence": [
         {
+          "path": ".thinker-doer/run-2026-09-25/revisoes/evidencias/auditor-a-final-r5.txt",
+          "sha256": "c4cf2e120f9a8dd8c2a36c80ea27403daed70e8e12256c7de8f51485500d209e"
+        },
+        {
           "path": ".thinker-doer/run-2026-09-25/revisoes/evidencias/auditor-a-final-r4.txt",
           "sha256": "12cc4c9fafec287e7161bc8d3c92118b12c3fefe394d34016267618248d0317b"
         },
@@ -51,7 +59,7 @@
         },
         {
           "path": "pacing/principal.py",
-          "sha256": "4ee4dd752fa6c635b04853fdb750791aa75fc367c6fe89f05ab998e8c476105c"
+          "sha256": "4edf286f90a753fb37405facd76671e149e24ff5c5a98a1295dec01e61ce0ee4"
         }
       ]
     },
@@ -62,6 +70,10 @@
       "description": "Excecao inesperada publicava relatorio verde e perdia o disjuntor. Resolvido: executar captura Exception, marca vermelho e grava erros.log (teste H4).",
       "evidence": [
         {
+          "path": ".thinker-doer/run-2026-09-25/revisoes/evidencias/auditor-a-final-r5.txt",
+          "sha256": "c4cf2e120f9a8dd8c2a36c80ea27403daed70e8e12256c7de8f51485500d209e"
+        },
+        {
           "path": ".thinker-doer/run-2026-09-25/revisoes/evidencias/auditor-a-final-r4.txt",
           "sha256": "12cc4c9fafec287e7161bc8d3c92118b12c3fefe394d34016267618248d0317b"
         },
@@ -71,11 +83,11 @@
         },
         {
           "path": "pacing/principal.py",
-          "sha256": "4ee4dd752fa6c635b04853fdb750791aa75fc367c6fe89f05ab998e8c476105c"
+          "sha256": "4edf286f90a753fb37405facd76671e149e24ff5c5a98a1295dec01e61ce0ee4"
         },
         {
           "path": "tests/test_execucao.py",
-          "sha256": "e0e4d4e1b50cebff9cf6e05ec84c24faf30e45930f85563e1bb6d212d3e93e12"
+          "sha256": "485f05ba859801953ba38b1fd166afcdf074581f8eb0f406069d30da43a437b8"
         }
       ]
     },
@@ -86,6 +98,10 @@
       "description": "Leitura de substituicoes falhava aberta com data em formato desconhecido. Resolvido: data ilegivel conta como existente, listing bloqueada, ausente apos POST vira incerta (testes H5, H5b).",
       "evidence": [
         {
+          "path": ".thinker-doer/run-2026-09-25/revisoes/evidencias/auditor-a-final-r5.txt",
+          "sha256": "c4cf2e120f9a8dd8c2a36c80ea27403daed70e8e12256c7de8f51485500d209e"
+        },
+        {
           "path": ".thinker-doer/run-2026-09-25/revisoes/evidencias/auditor-a-final-r4.txt",
           "sha256": "12cc4c9fafec287e7161bc8d3c92118b12c3fefe394d34016267618248d0317b"
         },
@@ -99,7 +115,7 @@
         },
         {
           "path": "pacing/principal.py",
-          "sha256": "4ee4dd752fa6c635b04853fdb750791aa75fc367c6fe89f05ab998e8c476105c"
+          "sha256": "4edf286f90a753fb37405facd76671e149e24ff5c5a98a1295dec01e61ce0ee4"
         }
       ]
     },
@@ -110,6 +126,10 @@
       "description": "testar-gravacao ignorava PARAR, disjuntor e papel do quarto e gastava o teto diario. Resolvido (testes H7, N2).",
       "evidence": [
         {
+          "path": ".thinker-doer/run-2026-09-25/revisoes/evidencias/auditor-a-final-r5.txt",
+          "sha256": "c4cf2e120f9a8dd8c2a36c80ea27403daed70e8e12256c7de8f51485500d209e"
+        },
+        {
           "path": ".thinker-doer/run-2026-09-25/revisoes/evidencias/auditor-a-final-r4.txt",
           "sha256": "12cc4c9fafec287e7161bc8d3c92118b12c3fefe394d34016267618248d0317b"
         },
@@ -119,7 +139,7 @@
         },
         {
           "path": "tests/test_execucao.py",
-          "sha256": "e0e4d4e1b50cebff9cf6e05ec84c24faf30e45930f85563e1bb6d212d3e93e12"
+          "sha256": "485f05ba859801953ba38b1fd166afcdf074581f8eb0f406069d30da43a437b8"
         }
       ]
     },
@@ -129,6 +149,10 @@
       "status": "resolved",
       "description": "Teto de ativas ignorava divergentes e divergencia na conciliacao nao acionava o disjuntor. Resolvido.",
       "evidence": [
+        {
+          "path": ".thinker-doer/run-2026-09-25/revisoes/evidencias/auditor-a-final-r5.txt",
+          "sha256": "c4cf2e120f9a8dd8c2a36c80ea27403daed70e8e12256c7de8f51485500d209e"
+        },
         {
           "path": ".thinker-doer/run-2026-09-25/revisoes/evidencias/auditor-a-final-r4.txt",
           "sha256": "12cc4c9fafec287e7161bc8d3c92118b12c3fefe394d34016267618248d0317b"
@@ -143,7 +167,7 @@
         },
         {
           "path": "tests/test_execucao.py",
-          "sha256": "e0e4d4e1b50cebff9cf6e05ec84c24faf30e45930f85563e1bb6d212d3e93e12"
+          "sha256": "485f05ba859801953ba38b1fd166afcdf074581f8eb0f406069d30da43a437b8"
         }
       ]
     },
@@ -153,6 +177,10 @@
       "status": "resolved",
       "description": "Desconto do proprio programa devolvido com campo extra ficava irremovivel. Resolvido quando a API devolve o reason: corresponde_nucleo marca ativa com lido, aciona o disjuntor e o DESFAZER remove (teste N4).",
       "evidence": [
+        {
+          "path": ".thinker-doer/run-2026-09-25/revisoes/evidencias/auditor-a-final-r5.txt",
+          "sha256": "c4cf2e120f9a8dd8c2a36c80ea27403daed70e8e12256c7de8f51485500d209e"
+        },
         {
           "path": ".thinker-doer/run-2026-09-25/revisoes/evidencias/auditor-a-final-r4.txt",
           "sha256": "12cc4c9fafec287e7161bc8d3c92118b12c3fefe394d34016267618248d0317b"
@@ -174,6 +202,10 @@
       "description": "Conciliacao adotava substituicao alheia de -10% com campos extras e sem reason, que a limpeza podia apagar. Resolvido: com campos extras corresponde_nucleo exige o reason do programa; a substituicao fica divergente e nao e apagada nem com a data vendida (testes N4c e TestReauditoriaFinalA).",
       "evidence": [
         {
+          "path": ".thinker-doer/run-2026-09-25/revisoes/evidencias/auditor-a-final-r5.txt",
+          "sha256": "c4cf2e120f9a8dd8c2a36c80ea27403daed70e8e12256c7de8f51485500d209e"
+        },
+        {
           "path": ".thinker-doer/run-2026-09-25/revisoes/evidencias/auditor-a-final-r4.txt",
           "sha256": "12cc4c9fafec287e7161bc8d3c92118b12c3fefe394d34016267618248d0317b"
         },
@@ -187,7 +219,7 @@
         },
         {
           "path": "tests/test_execucao.py",
-          "sha256": "e0e4d4e1b50cebff9cf6e05ec84c24faf30e45930f85563e1bb6d212d3e93e12"
+          "sha256": "485f05ba859801953ba38b1fd166afcdf074581f8eb0f406069d30da43a437b8"
         }
       ]
     },
@@ -200,6 +232,10 @@
       "owner": "coordenador",
       "impact": "No pior caso um desconto de -10% numa unica data vale ate a data passar ou ser removido na tela do PriceLabs, com alerta ao dono.",
       "evidence": [
+        {
+          "path": ".thinker-doer/run-2026-09-25/revisoes/evidencias/auditor-a-final-r5.txt",
+          "sha256": "c4cf2e120f9a8dd8c2a36c80ea27403daed70e8e12256c7de8f51485500d209e"
+        },
         {
           "path": ".thinker-doer/run-2026-09-25/revisoes/evidencias/auditor-a-final-r4.txt",
           "sha256": "12cc4c9fafec287e7161bc8d3c92118b12c3fefe394d34016267618248d0317b"
@@ -216,6 +252,10 @@
     }
   ],
   "evidence": [
+    {
+      "path": ".thinker-doer/run-2026-09-25/revisoes/evidencias/auditor-a-final-r5.txt",
+      "sha256": "c4cf2e120f9a8dd8c2a36c80ea27403daed70e8e12256c7de8f51485500d209e"
+    },
     {
       "path": ".thinker-doer/run-2026-09-25/revisoes/evidencias/auditor-a-final-r4.txt",
       "sha256": "12cc4c9fafec287e7161bc8d3c92118b12c3fefe394d34016267618248d0317b"

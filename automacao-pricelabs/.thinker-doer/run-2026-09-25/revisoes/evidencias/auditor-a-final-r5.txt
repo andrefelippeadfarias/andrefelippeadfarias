@@ -1,0 +1,28 @@
+Parecer do auditor A para T4-execucao, resultado revisao 5
+Data: 25/09/2026. Codigo auditado: commit c6eef73. Complementa auditor-a-final.txt (revisao 3)
+e auditor-a-final-r4.txt (revisao 4), que continuam validos.
+Lente: invariantes de seguranca e de dinheiro. Nenhuma chamada real a PriceLabs, OpenRouter ou TypeSafe.
+
+PARECER: aprovado com um risco baixo aceito (N4r, inalterado).
+
+MUDANCA DESDE A REVISAO 4 (bd17210..c6eef73)
+- principal.Ambiente ganhou "mesa" injetavel (padrao relatorio.area_de_trabalho).
+- __main__ usa amb.mesa no verificar e no aviso de config invalida (T5).
+- tests/test_execucao.py: Base injeta a mesa temporaria e bloqueia relatorio._pasta_shell.
+- acoes.py e relatorio.py sem mudanca; nenhuma logica de escrita no PriceLabs mudou
+  (conferido no diff: nenhuma linha tocando POST, DELETE, criar, apagar, PARAR ou disjuntor).
+
+COMO FOI VERIFICADO
+- Copia nova fora do repositorio (scratchpad/auditoria/A5), sem __pycache__.
+- python3 -m unittest discover -s tests -t .  -> 108 testes, OK (3 pulados), Python 3.11.15.
+- Testes descartaveis do auditor na copia, mesmos resultados da revisao 4:
+  N1 (contencao apos DESFAZER sobre estado recuperado), N2 (ensaio recusado),
+  N4 (DESFAZER remove desconto do programa com campo extra e reason),
+  N4c (substituicao alheia com extras e sem reason fica divergente e intacta, inclusive vendida),
+  N4r (extras e API sem reason: divergente, disjuntor, nao removido), N5 (UTF-8 ruim -> contencao).
+- Conferido que os sha256 de reviewed_files de T4 (revisao 5) batem com os arquivos atuais.
+
+ACHADOS DE T4
+A1, A2, A4, A5, A6, A7, N4, N4c: RESOLVIDOS (inalterados desde a revisao 4).
+N4r low: RISCO ACEITO (inalterado; ver auditor-a-final-r4.txt).
+Nenhum achado novo na lente.

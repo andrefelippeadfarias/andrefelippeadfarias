@@ -2,8 +2,8 @@
   "contract_version": "1.0",
   "task_id": "T2-integracoes",
   "task_revision": 1,
-  "result_revision": 3,
-  "snapshot_digest": "35f1fc66378bd54485440dd754a35ad20c86c29c32aa9fb479e44dc41318090b",
+  "result_revision": 7,
+  "snapshot_digest": "401c098f68ae097cf55061e6cda5fc1de1b06dcb419dcabde23ca1fc96a981ed",
   "actor_id": "auditor-a",
   "decision": "approved",
   "findings": [
@@ -17,6 +17,10 @@
       "impact": "Se a API nao devolver type, a automacao nunca desconta ate o ajuste; nenhum efeito financeiro indevido.",
       "evidence": [
         {
+          "path": ".thinker-doer/run-2026-09-25/revisoes/evidencias/auditor-a-final-r7.txt",
+          "sha256": "d9cd1961a3b415df6fee4ab7a12ee2435bb4cf27a12bbdb740d88504a7e536ff"
+        },
+        {
           "path": ".thinker-doer/run-2026-09-25/revisoes/evidencias/auditor-a-final.txt",
           "sha256": "1270f34349ce3fa2e187e143e52c17d1e0a0ba6130b9d29647a44148c692effd"
         },
@@ -28,6 +32,10 @@
     }
   ],
   "evidence": [
+    {
+      "path": ".thinker-doer/run-2026-09-25/revisoes/evidencias/auditor-a-final-r7.txt",
+      "sha256": "d9cd1961a3b415df6fee4ab7a12ee2435bb4cf27a12bbdb740d88504a7e536ff"
+    },
     {
       "path": ".thinker-doer/run-2026-09-25/revisoes/evidencias/auditor-a-final.txt",
       "sha256": "1270f34349ce3fa2e187e143e52c17d1e0a0ba6130b9d29647a44148c692effd"

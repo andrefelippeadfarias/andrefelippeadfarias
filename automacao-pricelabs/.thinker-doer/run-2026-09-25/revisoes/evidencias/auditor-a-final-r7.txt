@@ -1,0 +1,43 @@
+Parecer do auditor A para T2-integracoes e T4-execucao, resultado revisao 7
+Data: 25/09/2026. Codigo auditado: commit 371be6e. Complementa auditor-a-final.txt (rev. 3),
+auditor-a-final-r4.txt e auditor-a-final-r5.txt, que continuam validos.
+Lente: invariantes de seguranca e de dinheiro. Nenhuma chamada real a PriceLabs, OpenRouter ou TypeSafe.
+
+PARECER: aprovado. Riscos aceitos inalterados: J1 (T2) e N4r (T4), ambos baixos.
+
+MUDANCAS AUDITADAS (35054b6..371be6e)
+- pricelabs.reservas: pagina cheia (100) sem next_page continua; limite de 20 paginas mantido.
+- principal: janela de reservas por chegada de hoje-14 a hoje+7 exclusivo.
+- acoes.py, jev.py, rede.py, estado.py e relatorio.py sem mudanca.
+- Fora da lente/escopo (auditor B): regras/metricas (conflito calendario x reservas,
+  codigos negativos, check_out como ultima noite) e testar-gravacao (T5).
+
+COMO FOI VERIFICADO
+- Copia nova fora do repositorio (scratchpad/auditoria/A7), sem __pycache__.
+- python3 -m unittest discover -s tests -t .  -> 116 testes, OK (5 pulados), Python 3.11.15.
+- Conferido que os sha256 de reviewed_files de T2 e T4 (revisao 7) batem com os arquivos atuais.
+- Testes descartaveis do auditor na copia:
+  Paginacao: API que ignora offset e devolve sempre 100 linhas sem next_page -> 20 chamadas e
+    ErroRede (sem laco); ponta a ponta vira "Reservas ilegiveis", amarelo, zero chamada ao Jev e
+    zero POST. Exatamente 100 reservas -> 2 chamadas e 100 linhas (sem duplicar).
+    Linhas duplicadas por deslocamento entre paginas so aumentam contagens (reserva nova,
+    conflito, vendeu), o que so bloqueia desconto ou remove o do programa: lado seguro.
+  Janela: reserva feita ha 10 h para estadia em andamento bloqueia o desconto; reserva feita ha
+    10 h para noite ja passada tambem bloqueia (mais conservador que o pedido, sem risco);
+    estadia em andamento vendida depois da criacao remove o desconto da data coberta ("a data
+    vendeu"). O portao de cancelamento continua exigindo chegada entre hoje e hoje+2, entao a
+    janela maior nao abre nenhum portao. Chegadas em hoje+7 sairam da busca, mas nenhum portao
+    usa datas alem de hoje+6.
+  Regressoes: N1, N2, N4, N4c, N4r e N5 com os mesmos resultados da revisao 5.
+
+OBSERVACAO SOBRE N4r (dados reais)
+- Substituicoes reais criadas pela tela voltam com min_price/max_price espelhando o percentual.
+  Se as criadas pela API tambem voltarem assim, a primeira gravacao real com reason aciona o
+  disjuntor (falha segura: no maximo um desconto por RETOMAR) e, sem reason, cai em N4r.
+- Mitigacao conferida: testar-gravacao agora mostra os campos crus devolvidos (inclusive valor 0)
+  e avisa "ATENCAO" quando aparecem min/max ou quando o reason volta diferente.
+
+ACHADOS
+T2: J1 low risco aceito (inalterado). Nenhum achado novo.
+T4: A1, A2, A4, A5, A6, A7, N4, N4c resolvidos (inalterados); N4r low risco aceito.
+Nenhum achado novo na lente.

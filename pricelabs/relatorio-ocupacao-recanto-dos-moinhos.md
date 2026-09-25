@@ -359,8 +359,8 @@ Todos os valores estão em "preço enviado", a escala atual.
 | Hoje | Pendências que faltam: Queen Spa (2) com 66%, Double com 6 ou 7 unidades, conflito na Villa King Spa (2), multiplicadores dos canais no Beds24 | Você, com o Claude | — |
 | ✅ 25/09 | Fator de Demanda e Sazonalidade → Recommended. Última hora → "No last minute adjustment". Mínimo da Balcony → 950. Estadia mínima 2 em 11/10, 01/11 e 19/11. Ver `registro-de-mudancas.md` | Claude | Pelo registro de mudanças |
 | Dia 2 | Safety Minimum Price → "Do Not Apply". Sincronização às 06:00 | Você, na tela | Anotar o valor anterior |
-| Dia 3 | Teste opcional de 1 noite nas Queen Spa em 02–03/10, só se vocês aprovarem | Claude | Apagar as substituições pelo conector |
-| Dia 4 | Passo 1 do preço base: Double, Villa King Spa (7), Villa King Spa (2) e Queen Spa (7). Queen Spa (2) só depois de achar a causa dos 66% | Claude | Valores no arquivo de configuração salvo |
+| ✅ 25/09 | Teste de 1 noite nas Queen Spa em 02–03/10 | Claude | Apagar as substituições pelo conector |
+| ✅ 25/09 | Passo 1 do preço base: Double 1.480, Villa King Spa (7) 1.480, Villa King Spa (2) 1.270 e Queen Spa (7) 1.380. Queen Spa (2) só depois de achar a causa dos 66% | Claude | Valores no arquivo de configuração salvo |
 | Dia 7 | Ligar a tabela de ocupação na Queen Spa (7), na Double e na Villa King Spa (7). Na Balcony, deixar o ajuste por ocupação em "Nenhum" | Você, na tela | Desligar |
 | Dia 10 | Revisão: pickup, RevPAR e desconto medido por canal. Passo 2 do preço base se ainda indicado | Claude | — |
 | Dia 14 | Revisão completa contra as metas. Decidir sobre a Fase 2 | Você e o Claude | — |

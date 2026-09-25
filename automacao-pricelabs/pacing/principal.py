@@ -6,6 +6,7 @@ import os
 import subprocess
 import sys
 import time
+import traceback
 from datetime import timedelta
 from pathlib import Path
 
@@ -74,7 +75,9 @@ def executar(caminho_config, amb: Ambiente | None = None) -> dict:
             try:
                 _executar(cfg, amb, agora, run_id, pasta, armazem, est, origem, r)
             except Exception as e:  # noqa: BLE001 - nenhuma falha pode sair sem relatório vermelho
-                r["alertas"].append(f"Erro inesperado ({type(e).__name__}). Nada mais foi alterado nesta execução")
+                _registrar_erro(pasta, agora)
+                r["alertas"].append(f"Erro inesperado ({type(e).__name__}). Nada mais foi alterado nesta execução. "
+                                    "Detalhes técnicos em erros.log na pasta de dados")
                 r["resumo"] = "erro inesperado; veja os alertas"
                 _piorar(r, "vermelho")
             finally:
@@ -82,6 +85,14 @@ def executar(caminho_config, amb: Ambiente | None = None) -> dict:
     except OutraExecucao:
         r["status"], r["resumo"] = "amarelo", "outra execução ainda estava rodando; esta foi ignorada"
     return r
+
+
+def _registrar_erro(pasta, agora):
+    try:
+        with open(Path(pasta) / "erros.log", "a", encoding="utf-8") as f:
+            f.write(f"--- {agora.isoformat()}\n{traceback.format_exc()}\n")
+    except OSError:
+        pass
 
 
 def _executar(cfg, amb, agora, run_id, pasta, armazem, est, origem, r):
@@ -157,8 +168,9 @@ def _executar(cfg, amb, agora, run_id, pasta, armazem, est, origem, r):
             r["acoes"].append(f"Remover desconto {nome} {acao['data']} ({acao['motivo']}): {resultado}")
         else:
             r["acoes"].append(f"Faria: remover desconto {nome} {acao['data']} ({acao['motivo']})")
-    if est["dsos"] and modo != "ativo":
+    if est["dsos"] and modo not in ("ativo", "contencao"):
         r["alertas"].append("Há descontos do programa ativos e o modo atual não os remove. Use DESFAZER")
+        _piorar(r, "amarelo")
 
     if ctx.na_janela:
         _ler_substituicoes(ctx, pl, modo, r)
@@ -336,6 +348,18 @@ def _fechar(cfg, agora, pasta, armazem, est, r):
                    for d in sorted(est["dsos"].values(), key=lambda x: (x["data"], x["listing"]))]
     r["saude"] = {"execucoes_hoje": saude["execucoes"], "jev_chamadas_hoje": ej.get("chamadas", 0) if ej.get("dia") == hoje else 0,
                   "jev_tokens": ej.get("tokens", 0) if ej.get("dia") == hoje else 0, "observacao": texto_observacao(est)}
+    ocup = {o["apelido"]: o["0-6"] for o in r["ocupacao"]}
+    linha = {"data_hora": agora.strftime("%d/%m/%Y %H:%M"), "status": r["status"], "modo": r["modo"]}
+    for item in cfg["listings"]:  # colunas fixas, mesmo quando a execução falha cedo
+        v = ocup.get(item["apelido"])
+        linha[f"ocup_0_6_{item['codigo']}"] = "" if v is None else f"{v:.1f}".replace(".", ",")
+    linha.update(descontos_ativos=len(est["dsos"]), chamadas_jev=r["saude"]["jev_chamadas_hoje"],
+                 alertas=len(r["alertas"]))
+    try:
+        armazem.anexar_historico(linha)
+    except OSError:
+        r["alertas"].append("Não foi possível gravar o historico.csv (arquivo aberto no Excel?). Feche a planilha")
+        _piorar(r, "amarelo")
     saude["amarelas_seguidas"] = saude.get("amarelas_seguidas", 0) + 1 if r["status"] == "amarelo" else 0
     r["precisa_atencao"] = r["status"] == "vermelho" or saude["amarelas_seguidas"] >= 2
     if not r["resumo"]:
@@ -344,14 +368,9 @@ def _fechar(cfg, agora, pasta, armazem, est, r):
                        "amarelo": "execução concluída com pendências; veja os alertas",
                        "vermelho": "execução com erro; veja os alertas"}[r["status"]]
     armazem.salvar(est)
-    armazem.registrar_execucao({k: r[k] for k in ("run_id", "status", "modo", "resumo", "alertas", "acoes",
-                                                  "decisoes", "bloqueios")}, agora.strftime("%Y-%m"))
-    ocup = {o["apelido"]: o["0-6"] for o in r["ocupacao"]}
-    linha = {"data_hora": agora.strftime("%d/%m/%Y %H:%M"), "status": r["status"], "modo": r["modo"]}
-    for item in cfg["listings"]:  # colunas fixas, mesmo quando a execução falha cedo
-        v = ocup.get(item["apelido"])
-        linha[f"ocup_0_6_{item['codigo']}"] = "" if v is None else f"{v:.1f}".replace(".", ",")
-    linha.update(descontos_ativos=len(est["dsos"]), chamadas_jev=r["saude"]["jev_chamadas_hoje"],
-                 alertas=len(r["alertas"]))
-    armazem.anexar_historico(linha)
+    try:
+        armazem.registrar_execucao({k: r[k] for k in ("run_id", "status", "modo", "resumo", "alertas", "acoes",
+                                                      "decisoes", "bloqueios")}, agora.strftime("%Y-%m"))
+    except OSError:
+        pass  # o relatório abaixo ainda mostra o resultado
     relatorio.publicar(r, cfg, pasta)

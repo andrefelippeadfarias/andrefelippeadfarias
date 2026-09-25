@@ -695,3 +695,35 @@ class TestReauditoriaA(Base):
         self.assertEqual(len(self.nossas()), 1, "o disjuntor para depois da primeira")
         codigo, saida = self.cli("desfazer", "--confirmar")
         self.assertEqual(self.nossas(), {})
+
+
+class TestReauditoriaB(Base):
+    def test_n2_historico_travado_nao_esconde_o_status(self):
+        (self.dados).mkdir(parents=True, exist_ok=True)
+        (self.dados / "historico.csv").mkdir()   # simula o arquivo travado pelo Excel
+        r = self.rodar()
+        self.assertEqual(r["status"], "amarelo")
+        self.assertIn("historico.csv", " ".join(r["alertas"]))
+        self.assertEqual(len(list(self.mesa.glob("PRECOS ATENCAO *.txt"))), 1)
+
+    def test_erro_inesperado_grava_log_tecnico(self):
+        def quebra(*a):
+            raise RuntimeError("falha interna")
+        self.amb.transporte = quebra
+        r = self.rodar()
+        self.assertEqual(r["status"], "vermelho")
+        self.assertIn("RuntimeError", (self.dados / "erros.log").read_text(encoding="utf-8"))
+
+    def test_n1_sincronizacao_so_com_data_nao_gera_alerta_falso(self):
+        original = self.sim._listing
+        self.sim._listing = lambda lid: dict(original(lid), last_date_pushed="2026-09-26")
+        r = self.rodar(datetime(2026, 9, 27, 5, 30, tzinfo=BRT))
+        self.assertNotIn("mais de 30 h", " ".join(r["alertas"]))
+
+    def test_descontos_ativos_em_observar_deixam_amarelo(self):
+        est = self.estado()
+        est["dsos"]["x"] = {"listing": AFRODITE, "data": "2026-09-27", "status": "ativa", "criado_em": "",
+                            "payload": {"price": "-10"}}
+        Armazem(self.dados).salvar(est)
+        r = self.rodar()
+        self.assertEqual(r["status"], "amarelo")

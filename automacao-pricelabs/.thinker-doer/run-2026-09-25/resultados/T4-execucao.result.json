@@ -2,7 +2,7 @@
   "contract_version": "1.0",
   "task_id": "T4-execucao",
   "task_revision": 1,
-  "revision": 2,
+  "revision": 3,
   "actor_id": "coordenador",
   "status": "completed",
   "summary": "Checks executados pelo coordenador em Linux com Python 3.11.15.",
@@ -10,7 +10,7 @@
     {
       "path": "pacing/acoes.py",
       "state": "present",
-      "sha256": "ed636fb686c83342ff78168f0a2bf8779b3064ef23c60b9843ca0a1431d8964e"
+      "sha256": "ae6eb63390c459f92c612da8fd2fe09b479ae8728987982efbad52eaabd44535"
     },
     {
       "path": "pacing/relatorio.py",
@@ -20,15 +20,15 @@
     {
       "path": "pacing/principal.py",
       "state": "present",
-      "sha256": "703370e48e088638e5df9bda46367e77f8686b79ebf851580289cb47d92bb9aa"
+      "sha256": "4ee4dd752fa6c635b04853fdb750791aa75fc367c6fe89f05ab998e8c476105c"
     },
     {
       "path": "tests/test_execucao.py",
       "state": "present",
-      "sha256": "2890468b32ee171d5189aca04ac5557021a5dc080ce99f2eff43b4868cf11776"
+      "sha256": "bc03cc6404d38cf1942d94ac726ec2acf073862b726cbe0f23bad8ed5a797104"
     }
   ],
-  "snapshot_digest": "a4296768fb073559ec553311f3d1a511cc594aca8d51b101fbfb5f6195808170",
+  "snapshot_digest": "1f5f3eeb5f6a1cf2a89530a9675d3f3ce480c0ed137f93dde6cb2eb14f96cbe6",
   "checks": [
     {
       "id": "unit",
@@ -47,7 +47,7 @@
       "evidence": [
         {
           "path": ".thinker-doer/run-2026-09-25/evidencias/g3/unittest-discover-s-tests-t.txt",
-          "sha256": "4f31278d4400bd5bfc6e091b685cbb58a603ce92953eb023ca9e100789413ab9"
+          "sha256": "b25e64f44a77e67453f64455bb2e845fcce658422d82abd5528255606b9cf409"
         }
       ]
     },
@@ -73,7 +73,7 @@
       "evidence": [
         {
           "path": ".thinker-doer/run-2026-09-25/evidencias/g3/coverage-run-branch-source-pacing-m-unittest-discover-s-tests-t.txt",
-          "sha256": "34934f9efb76e5941a3766c06f249357a9d5df78fbdc2ef0e4525f6a6086070d"
+          "sha256": "f0fc8fc89304d22296f0901d738b160dfee0bfc5b8ff1236b52bea0818f342e2"
         }
       ]
     },
@@ -92,7 +92,7 @@
       "evidence": [
         {
           "path": ".thinker-doer/run-2026-09-25/evidencias/g3/coverage-report-include-pacing-acoes-py-pacing-relatorio-py-pacing-principal-py.txt",
-          "sha256": "ce818aeac7e1c4ecf59f4cb081113e534034ecfc6bc9aa11afe39d697bcd1798"
+          "sha256": "e38838cb3228d7c923374621d503ade7bc6439c864e4aa75136b98193a566d3a"
         }
       ]
     }
@@ -104,7 +104,7 @@
       "evidence": [
         {
           "path": ".thinker-doer/run-2026-09-25/evidencias/g3/unittest-discover-s-tests-t.txt",
-          "sha256": "4f31278d4400bd5bfc6e091b685cbb58a603ce92953eb023ca9e100789413ab9"
+          "sha256": "b25e64f44a77e67453f64455bb2e845fcce658422d82abd5528255606b9cf409"
         }
       ]
     },
@@ -114,7 +114,7 @@
       "evidence": [
         {
           "path": ".thinker-doer/run-2026-09-25/evidencias/g3/unittest-discover-s-tests-t.txt",
-          "sha256": "4f31278d4400bd5bfc6e091b685cbb58a603ce92953eb023ca9e100789413ab9"
+          "sha256": "b25e64f44a77e67453f64455bb2e845fcce658422d82abd5528255606b9cf409"
         }
       ]
     },
@@ -124,7 +124,7 @@
       "evidence": [
         {
           "path": ".thinker-doer/run-2026-09-25/evidencias/g3/unittest-discover-s-tests-t.txt",
-          "sha256": "4f31278d4400bd5bfc6e091b685cbb58a603ce92953eb023ca9e100789413ab9"
+          "sha256": "b25e64f44a77e67453f64455bb2e845fcce658422d82abd5528255606b9cf409"
         }
       ]
     },
@@ -134,7 +134,7 @@
       "evidence": [
         {
           "path": ".thinker-doer/run-2026-09-25/evidencias/g3/unittest-discover-s-tests-t.txt",
-          "sha256": "4f31278d4400bd5bfc6e091b685cbb58a603ce92953eb023ca9e100789413ab9"
+          "sha256": "b25e64f44a77e67453f64455bb2e845fcce658422d82abd5528255606b9cf409"
         }
       ]
     },
@@ -144,7 +144,7 @@
       "evidence": [
         {
           "path": ".thinker-doer/run-2026-09-25/evidencias/g3/unittest-discover-s-tests-t.txt",
-          "sha256": "4f31278d4400bd5bfc6e091b685cbb58a603ce92953eb023ca9e100789413ab9"
+          "sha256": "b25e64f44a77e67453f64455bb2e845fcce658422d82abd5528255606b9cf409"
         }
       ]
     }
@@ -155,7 +155,7 @@
     "evidence": [
       {
         "path": ".thinker-doer/run-2026-09-25/evidencias/g3/coverage-report-include-pacing-acoes-py-pacing-relatorio-py-pacing-principal-py.txt",
-        "sha256": "ce818aeac7e1c4ecf59f4cb081113e534034ecfc6bc9aa11afe39d697bcd1798"
+        "sha256": "e38838cb3228d7c923374621d503ade7bc6439c864e4aa75136b98193a566d3a"
       }
     ]
   }

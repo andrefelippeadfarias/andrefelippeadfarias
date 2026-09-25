@@ -372,7 +372,7 @@ def alertas_gerais(ctx: Contexto) -> list[tuple[str, bool]]:
         totais = {d.total for d in cal.dias.values() if d.total > 1}
         if item["unidades"] > 1 and totais and max(totais) != item["unidades"]:
             msgs.append((f"{nome}: o PriceLabs mostra {max(totais)} unidades, o config diz {item['unidades']}", True))
-        enviado = ler_instante(api.get("last_date_pushed"))
+        enviado = ler_instante(api.get("last_date_pushed"), ctx.agora.tzinfo, fim_do_dia=True)
         if enviado is not None and ctx.agora - enviado > timedelta(hours=30):
             msgs.append((f"{nome}: última sincronização com o Beds24 há mais de 30 h", True))
         if item["papel"] == "transbordo":

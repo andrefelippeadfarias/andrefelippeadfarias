@@ -3,10 +3,10 @@ exit=0
 --- stdout ---
 Name                  Stmts   Miss Branch BrPart  Cover
 -------------------------------------------------------
-pacing/acoes.py         205      1     54      2    99%
-pacing/principal.py     301      5     96      2    98%
+pacing/acoes.py         215      2     58      3    98%
+pacing/principal.py     312      9     94      2    97%
 pacing/relatorio.py      56      1     20      1    97%
 -------------------------------------------------------
-TOTAL                   562      7    170      5    98%
+TOTAL                   583     12    172      6    98%
 
 --- stderr ---

@@ -2,7 +2,7 @@
   "contract_version": "1.0",
   "task_id": "T2-integracoes",
   "task_revision": 1,
-  "revision": 2,
+  "revision": 3,
   "actor_id": "coordenador",
   "status": "completed",
   "summary": "Checks executados pelo coordenador em Linux com Python 3.11.15.",
@@ -42,7 +42,7 @@
       "evidence": [
         {
           "path": ".thinker-doer/run-2026-09-25/evidencias/g3/unittest-discover-s-tests-t.txt",
-          "sha256": "4f31278d4400bd5bfc6e091b685cbb58a603ce92953eb023ca9e100789413ab9"
+          "sha256": "b25e64f44a77e67453f64455bb2e845fcce658422d82abd5528255606b9cf409"
         }
       ]
     },
@@ -68,7 +68,7 @@
       "evidence": [
         {
           "path": ".thinker-doer/run-2026-09-25/evidencias/g3/coverage-run-branch-source-pacing-m-unittest-discover-s-tests-t.txt",
-          "sha256": "34934f9efb76e5941a3766c06f249357a9d5df78fbdc2ef0e4525f6a6086070d"
+          "sha256": "f0fc8fc89304d22296f0901d738b160dfee0bfc5b8ff1236b52bea0818f342e2"
         }
       ]
     },
@@ -99,7 +99,7 @@
       "evidence": [
         {
           "path": ".thinker-doer/run-2026-09-25/evidencias/g3/unittest-discover-s-tests-t.txt",
-          "sha256": "4f31278d4400bd5bfc6e091b685cbb58a603ce92953eb023ca9e100789413ab9"
+          "sha256": "b25e64f44a77e67453f64455bb2e845fcce658422d82abd5528255606b9cf409"
         }
       ]
     },
@@ -109,7 +109,7 @@
       "evidence": [
         {
           "path": ".thinker-doer/run-2026-09-25/evidencias/g3/unittest-discover-s-tests-t.txt",
-          "sha256": "4f31278d4400bd5bfc6e091b685cbb58a603ce92953eb023ca9e100789413ab9"
+          "sha256": "b25e64f44a77e67453f64455bb2e845fcce658422d82abd5528255606b9cf409"
         }
       ]
     }

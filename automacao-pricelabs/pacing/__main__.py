@@ -242,7 +242,7 @@ def cmd_agendar(args, amb):
         return 0
     pythonw = python.with_name("pythonw.exe")
     pythonw = str(pythonw) if pythonw.exists() else "pyw.exe"
-    usuario = "\\".join(filter(None, (os.environ.get("USERDOMAIN"), os.environ.get("USERNAME"))))
+    usuario = "\\".join(filter(None, (os.environ.get("USERDOMAIN"), os.environ.get("USERNAME") or getpass.getuser())))
     pasta = Path(tempfile.mkdtemp())
     falhou = False
     for nome, xml in ((agenda.TAREFA, agenda.xml_execucoes(str(PROJETO), pythonw, usuario=usuario)),

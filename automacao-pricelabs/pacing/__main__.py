@@ -5,7 +5,7 @@ from __future__ import annotations
 import argparse
 import getpass
 import json
-import subprocess
+import os
 import sys
 import tempfile
 import time
@@ -54,12 +54,15 @@ def cmd_verificar(args, amb):
     ultima = tempo.ler_instante(est["saude"].get("ultima_execucao"))
     atrasado = ultima is None or agora - ultima > timedelta(hours=26)
     _linha(not atrasado, "última execução: " + (ultima.strftime("%d/%m %H:%M") if ultima else "nenhuma"), itens)
-    if atrasado:
-        _status_atrasado(cfg, pasta, agora, ultima)
     if (pasta / "PARAR").exists():
         _linha(False, "arquivo PARAR presente: a automação está parada (use RETOMAR)", itens)
+    mesa = relatorio.area_de_trabalho(cfg)
+    _linha(mesa is not None, f"Área de Trabalho para avisos: {mesa or 'não encontrada (defina area_de_trabalho no config)'}", itens)
+    falhas = [t for ok, t in itens if not ok]
+    if atrasado or (args.silencioso and falhas):
+        _status_verificacao(mesa, agora, ultima, atrasado, falhas)
     if args.silencioso:
-        return 0 if all(ok for ok, _ in itens) else 1
+        return 0 if not falhas else 1
     if (PROJETO / "tests").is_dir() and not args.sem_autoteste:
         saida = StringIO()
         suite = unittest.defaultTestLoader.discover(str(PROJETO / "tests"), top_level_dir=str(PROJETO))
@@ -86,9 +89,10 @@ def cmd_verificar(args, amb):
     except (ErroRede, ChaveAusente) as e:
         _linha(False, f"PriceLabs: {e}", itens)
     _linha(_jev_ok(cfg, amb), f"Jev ({cfg['jev']['modelo']}) respondendo", itens)
-    if sys.platform == "win32":
-        q = subprocess.run(["schtasks", "/Query", "/TN", agenda.TAREFA], capture_output=True)
-        _linha(q.returncode == 0, "tarefa agendada RecantoPrecos", itens)
+    if amb.plataforma == "win32":
+        for tarefa in (agenda.TAREFA, agenda.TAREFA_LOGON):
+            q = amb.comando(["schtasks", "/Query", "/TN", tarefa], capture_output=True)
+            _linha(q.returncode == 0, f"tarefa agendada {tarefa}", itens)
     return 0 if all(ok for ok, _ in itens) else 1
 
 
@@ -106,16 +110,19 @@ def _jev_ok(cfg, amb) -> bool:
         return False
 
 
-def _status_atrasado(cfg, pasta, agora, ultima):
-    mesa = relatorio.area_de_trabalho(cfg)
+def _status_verificacao(mesa, agora, ultima, atrasado, falhas):
     if mesa is None:
         return
-    for antigo in mesa.glob("PRECOS * *.txt"):
-        antigo.unlink(missing_ok=True)
     quando = ultima.strftime("%d/%m %H:%M") if ultima else "nunca"
-    (mesa / f"PRECOS ATRASADO {agora.strftime('%d-%m %Hh%M')}.txt").write_text(
-        f"A automação não roda desde {quando}. Descontos ativos continuam valendo.\n"
-        "Ligue o computador na tomada, deixe em suspensão (não desligado) e rode VERIFICAR.\n", encoding="utf-8")
+    if atrasado:
+        nome = f"PRECOS ATRASADO {agora.strftime('%d-%m %Hh%M')}.txt"
+        texto = (f"A automação não roda desde {quando}. Descontos ativos continuam valendo.\n"
+                 "Deixe o computador em suspensão (não desligado) e rode VERIFICAR.\n")
+    else:
+        nome = f"PRECOS ATENCAO {agora.strftime('%d-%m %Hh%M')}.txt"
+        texto = "A verificação encontrou problemas. Rode VERIFICAR para ver os detalhes.\n"
+    texto += "".join(f"- {f}\n" for f in falhas)
+    relatorio.trocar_status(mesa, nome, texto)
 
 
 def _executor(cfg, amb, escritas, run_id):
@@ -229,20 +236,23 @@ def cmd_testar_gravacao(args, amb):
 
 def cmd_agendar(args, amb):
     python = Path(sys.executable)
-    if sys.platform != "win32":
+    if amb.plataforma != "win32":
         print("Fora do Windows, use estas linhas no crontab (horário local do computador):")
         print("\n".join(agenda.linhas_cron(str(PROJETO), str(python))))
         return 0
     pythonw = python.with_name("pythonw.exe")
     pythonw = str(pythonw) if pythonw.exists() else "pyw.exe"
+    usuario = "\\".join(filter(None, (os.environ.get("USERDOMAIN"), os.environ.get("USERNAME"))))
     pasta = Path(tempfile.mkdtemp())
-    for nome, xml in ((agenda.TAREFA, agenda.xml_execucoes(str(PROJETO), pythonw)),
-                      (agenda.TAREFA_LOGON, agenda.xml_logon(str(PROJETO), pythonw))):
+    falhou = False
+    for nome, xml in ((agenda.TAREFA, agenda.xml_execucoes(str(PROJETO), pythonw, usuario=usuario)),
+                      (agenda.TAREFA_LOGON, agenda.xml_logon(str(PROJETO), pythonw, usuario=usuario))):
         arq = pasta / f"{nome}.xml"
         arq.write_text(xml, encoding="utf-16")
-        r = subprocess.run(["schtasks", "/Create", "/TN", nome, "/XML", str(arq), "/F"], capture_output=True, text=True)
-        print(f"{nome}: {'criada' if r.returncode == 0 else 'FALHA ' + (r.stderr or r.stdout).strip()}")
-    return 0
+        r = amb.comando(["schtasks", "/Create", "/TN", nome, "/XML", str(arq), "/F"], capture_output=True, text=True)
+        falhou = falhou or r.returncode != 0
+        print(f"{nome}: {'criada' if r.returncode == 0 else 'FALHA ' + (r.stderr or r.stdout or '').strip()}")
+    return 1 if falhou else 0
 
 
 def main(argv=None, amb=None) -> int:

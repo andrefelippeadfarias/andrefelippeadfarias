@@ -158,8 +158,8 @@ def candidatos(ctx: Contexto, incluir_sombra: bool) -> tuple[list[Bloco], list[d
         if not por_tipo:
             bloquear("nenhuma data elegível (feriado, lotada, com substituição, já descontada ou no piso)")
             continue
-        mediana = metricas.mediana_preco(cal)
         for tipo, datas in sorted(por_tipo.items()):
+            mediana = metricas.mediana_preco(cal, fim_de_semana=(tipo == "fri_sat"))
             bandas = _bandas(item, tipo, datas, cal, ocup, merc, res, mediana, minimo, pct, cfg["metas"]["0-6"])
             blocos.append(Bloco(item, tipo, sorted(datas), bandas, sombra=not real))
     return blocos, bloqueios
@@ -188,19 +188,20 @@ def _bandas(item, tipo, datas, cal, ocup, merc, res, mediana, minimo, pct, meta)
     }
 
 
-def montar_pedido(blocos: list[Bloco], modelo: str) -> dict:
+def montar_pedido(blocos: list[Bloco], modelo: str, percentual: int = -10) -> dict:
     rooms, perguntas = {}, {}
+    corte = f"{abs(int(percentual))}%"
     for b in blocos:
         k = b.chave
         rooms[k] = dict(b.bandas)
         perguntas[f"d_{k}"] = {
             "type": "choice",
             "instructions": (f"Look only at `rooms.{k}` and decide for its empty dates: should we apply a "
-                             "temporary 10% price cut to raise occupancy in the next 6 days?"),
+                             f"temporary {corte} price cut to raise occupancy in the next 6 days?"),
             "criteria": {
                 "hold": "Keep the current price: signals are adequate, the price is already low, the headroom "
                         "above the floor is tight, or a cut would mostly give away revenue.",
-                "discount": "Apply the temporary 10% cut: occupancy is below target, no recent bookings or a "
+                "discount": f"Apply the temporary {corte} cut: occupancy is below target, no recent bookings or a "
                             "recent cancellation opened space, the market is not strong and the price is not low.",
                 "visibility_issue": "Do not cut the price: the gap looks like a visibility or distribution "
                                     "problem rather than a price problem.",
@@ -208,7 +209,7 @@ def montar_pedido(blocos: list[Bloco], modelo: str) -> dict:
         }
         perguntas[f"v_{k}"] = {
             "type": "noul",
-            "instructions": (f"For `rooms.{k}`: would a 10% price cut on these dates most likely reduce total "
+            "instructions": (f"For `rooms.{k}`: would a {corte} price cut on these dates most likely reduce total "
                              "revenue or teach guests to wait for last-minute deals?"),
             "criteria": {
                 "true": "Yes: the cut likely loses revenue or trains guests to wait (price already low, "
@@ -356,40 +357,44 @@ def plano_limpeza(ctx: Contexto) -> tuple[list, list, bool]:
     return acoes, alertas, disjuntor
 
 
-def alertas_gerais(ctx: Contexto) -> list[str]:
+def alertas_gerais(ctx: Contexto) -> list[tuple[str, bool]]:
+    """Alertas determinísticos: (texto, grave). Grave deixa a execução pelo menos amarela."""
     cfg, msgs = ctx.cfg, []
     for item in cfg["listings"]:
         lid, nome = item["id"], item["apelido"]
         cal = ctx.calendarios.get(lid)
         if cal is None or cal.erro:
-            msgs.append(f"{nome}: calendário indisponível ({cal.erro if cal else 'ausente'})")
+            msgs.append((f"{nome}: calendário indisponível ({cal.erro if cal else 'ausente'})", True))
             continue
+        api = ctx.listings_api.get(lid) or {}
+        if api.get("push_enabled") is not True:
+            msgs.append((f"{nome}: sincronização com o Beds24 desligada no PriceLabs", True))
         totais = {d.total for d in cal.dias.values() if d.total > 1}
         if item["unidades"] > 1 and totais and max(totais) != item["unidades"]:
-            msgs.append(f"{nome}: o PriceLabs mostra {max(totais)} unidades, o config diz {item['unidades']}")
+            msgs.append((f"{nome}: o PriceLabs mostra {max(totais)} unidades, o config diz {item['unidades']}", True))
+        enviado = ler_instante(api.get("last_date_pushed"))
+        if enviado is not None and ctx.agora - enviado > timedelta(hours=30):
+            msgs.append((f"{nome}: última sincronização com o Beds24 há mais de 30 h", True))
         if item["papel"] == "transbordo":
             continue
         f = metricas.ocupacao_faixas(cal, ctx.hoje)
         o06, o714, o1529 = f["0-6"], f["7-14"], f["15-29"]
         merc = ctx.mercado.get(lid)
         if o06 is not None and o06 < cfg["metas"]["0-6"] and merc is not None and merc >= cfg["mercado_visibilidade"]:
-            msgs.append(f"{nome}: 0 a 6 dias em {o06:.0f}% com mercado em {merc:.0f}%. Checar visibilidade na Booking")
+            msgs.append((f"{nome}: 0 a 6 dias em {o06:.0f}% com mercado em {merc:.0f}%. Checar visibilidade na Booking", False))
         if o06 is not None and o06 > 85:
-            msgs.append(f"{nome}: 0 a 6 dias em {o06:.0f}%. Conferir se o máximo não trava o preço")
+            msgs.append((f"{nome}: 0 a 6 dias em {o06:.0f}%. Conferir se o máximo não trava o preço", False))
         if o714 is not None and o714 < cfg["metas"]["7-14"]:
-            msgs.append(f"{nome}: 7 a 14 dias em {o714:.0f}% (meta {cfg['metas']['7-14']}%). Conferir estadia mínima e ofertas")
+            msgs.append((f"{nome}: 7 a 14 dias em {o714:.0f}% (meta {cfg['metas']['7-14']}%). Conferir estadia mínima e ofertas", False))
         if o1529 is not None and o1529 < cfg["metas"]["15-29"]:
-            msgs.append(f"{nome}: 15 a 29 dias em {o1529:.0f}% (meta {cfg['metas']['15-29']}%)")
+            msgs.append((f"{nome}: 15 a 29 dias em {o1529:.0f}% (meta {cfg['metas']['15-29']}%)", False))
         minimo = ctx.minimo(lid)
         livres_no_piso = [d for d in cal.dias.values() if 0 <= (d.data - ctx.hoje).days <= 6 and d.livre
                           and d.preco and minimo and d.preco <= minimo * 1.001]
         if livres_no_piso:
-            msgs.append(f"{nome}: {len(livres_no_piso)} data(s) livre(s) nos próximos 7 dias já no preço mínimo. Checar canal e conteúdo")
-        api = ctx.listings_api.get(lid) or {}
-        enviado = ler_instante(api.get("last_date_pushed"))
-        if enviado is not None and ctx.agora - enviado > timedelta(hours=30):
-            msgs.append(f"{nome}: última sincronização com o Beds24 há mais de 30 h")
+            msgs.append((f"{nome}: {len(livres_no_piso)} data(s) livre(s) nos próximos 7 dias já no preço mínimo. "
+                         "Checar canal e conteúdo", False))
     if ctx.trava_receita:
-        msgs.append("Trava de receita: ocupação sobe e RevPAR cai há 2 semanas. Novos descontos pausados; "
-                    "reduza 3 pontos a linha de 0 a 6 dias da tabela de ocupação")
+        msgs.append(("Trava de receita: ocupação sobe e RevPAR cai há 2 semanas. Novos descontos pausados; "
+                     "reduza 3 pontos a linha de 0 a 6 dias da tabela de ocupação", True))
     return msgs

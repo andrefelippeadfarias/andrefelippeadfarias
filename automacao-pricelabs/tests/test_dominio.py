@@ -116,6 +116,10 @@ class TestCandidatos(unittest.TestCase):
 
         self.assertIn("janela", bloqueio(contexto(self.sim, agora=datetime(2026, 9, 25, 14, 30, tzinfo=BRT))))
         self.assertIn("visibilidade", bloqueio(contexto(self.sim, mercado={AFRODITE: 45.0})))
+        self.assertIn("visibilidade", bloqueio(contexto(self.sim, mercado={AFRODITE: 40.0})), "40% já é mercado forte")
+        blocos, _ = regras.candidatos(contexto(self.sim, mercado={AFRODITE: 39.9}), False)
+        self.assertTrue(blocos)
+        self.assertEqual(blocos[0].bandas["market_next_7d"], "moderate")
         self.assertIn("mercado desconhecida", bloqueio(contexto(self.sim, mercado={AFRODITE: None})))
         self.assertIn("reservas ilegíveis", bloqueio(contexto(self.sim, reservas=None)))
         self.assertIn("trava", bloqueio(contexto(self.sim, trava_receita=True)))
@@ -307,7 +311,12 @@ class TestLimpezaEAlertas(unittest.TestCase):
         ctx = contexto(sim, cfg=cfg, mercado={lid: 45.0 for lid in LISTINGS}, trava_receita=True)
         ctx.listings_api[AFRODITE]["last_date_pushed"] = "2026-09-20T09:00:00Z"
         ctx.calendarios["350362___722808"].erro = "LISTING_NO_DATA"
-        texto = " | ".join(regras.alertas_gerais(ctx))
+        alertas = regras.alertas_gerais(ctx)
+        texto = " | ".join(t for t, _ in alertas)
+        graves = " | ".join(t for t, g in alertas if g)
+        for trecho in ("unidades", "sincronização", "Trava de receita", "LISTING_NO_DATA"):
+            self.assertIn(trecho, graves)
+        self.assertNotIn("visibilidade", graves)
         for trecho in ("mostra 6 unidades, o config diz 7", "visibilidade", "Conferir se o máximo", "7 a 14 dias",
                        "preço mínimo", "sincronização", "Trava de receita", "LISTING_NO_DATA"):
             self.assertIn(trecho, texto)
@@ -316,3 +325,28 @@ class TestLimpezaEAlertas(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class TestAjustesAuditoriaB(unittest.TestCase):
+    def test_mediana_por_tipo_de_bloco(self):
+        sim = Simulador(datetime(2026, 9, 25, 23, 30, tzinfo=BRT))
+        for d in sim.cal[AFRODITE]:
+            sim.cal[AFRODITE][d]["preco"] = 3000.0 if d.weekday() in (4, 5) else 1800.0
+        blocos, _ = regras.candidatos(contexto(sim), False)
+        self.assertEqual({b.tipo: b.bandas["price_vs_room_median"] for b in blocos},
+                         {"fri_sat": "typical", "weekday": "typical"})
+
+    def test_data_sem_hora_do_lado_conservador(self):
+        agora = datetime(2026, 9, 26, 5, 30, tzinfo=BRT)
+        rs = [{**reserva(AFRODITE, date(2026, 9, 27)), "booked_date": "2026-09-24"},
+              {**reserva(AFRODITE, date(2026, 9, 26), status="cancelled"), "cancelled_on": "2026-09-24"}]
+        r = metricas.resumir_reservas(rs, AFRODITE, agora)
+        self.assertEqual(r.novas_48h, 1, "reserva de 24/09 ainda conta como recente")
+        self.assertEqual(r.cancel_proximos_3d_48h, 0, "cancelamento de 24/09 não abre o portão")
+
+    def test_pergunta_usa_percentual_do_config(self):
+        sim = Simulador(datetime(2026, 9, 25, 23, 30, tzinfo=BRT))
+        blocos, _ = regras.candidatos(contexto(sim), False)
+        texto = json.dumps(regras.montar_pedido(blocos, "m", -7))
+        self.assertIn("7% price cut", texto)
+        self.assertNotIn("10%", texto)

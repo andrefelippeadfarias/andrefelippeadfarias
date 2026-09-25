@@ -29,8 +29,12 @@ class TestAgenda(unittest.TestCase):
         self.assertTrue(raiz.find(".//t:Exec/t:Command", NS).text.endswith("pythonw.exe"))
 
     def test_xml_do_logon_e_escape(self):
-        raiz = _xml(agenda.xml_logon(r"C:\Pasta & Cia", "pyw.exe"))
+        raiz = _xml(agenda.xml_logon(r"C:\Pasta & Cia", "pyw.exe", usuario="PC\\André"))
         self.assertIsNotNone(raiz.find(".//t:LogonTrigger", NS))
+        self.assertEqual(raiz.find(".//t:LogonTrigger/t:UserId", NS).text, "PC\\André")
+        self.assertEqual(raiz.find(".//t:Principal/t:UserId", NS).text, "PC\\André")
+        sem = _xml(agenda.xml_logon("C:\\x", "pyw.exe"))
+        self.assertIsNone(sem.find(".//t:LogonTrigger/t:UserId", NS))
         self.assertEqual(raiz.find(".//t:Exec/t:WorkingDirectory", NS).text, r"C:\Pasta & Cia")
         self.assertIn("verificar --silencioso", raiz.find(".//t:Exec/t:Arguments", NS).text)
 
@@ -47,6 +51,8 @@ class TestScriptsWindows(unittest.TestCase):
         for bat in bats:
             bruto = bat.read_bytes()
             bruto.decode("ascii")
+            self.assertTrue(bruto.endswith(b"\r\n"), bat.name)
+            self.assertEqual(bruto.count(b"\n"), bruto.count(b"\r\n"), f"{bat.name}: LF sem CR")
             linhas = [l for l in bruto.decode("ascii").splitlines() if l.strip()]
             self.assertEqual(len(linhas), 1, bat.name)
             self.assertTrue(linhas[0].startswith('@cd /d "%~dp0.." && '), bat.name)

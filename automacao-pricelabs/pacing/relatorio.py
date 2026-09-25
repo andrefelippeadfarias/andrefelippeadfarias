@@ -9,6 +9,8 @@ from __future__ import annotations
 
 import html
 import os
+import re
+import sys
 from pathlib import Path
 
 CORES = {"verde": "#1b7f3b", "amarelo": "#b7791f", "vermelho": "#c53030"}
@@ -19,16 +21,45 @@ NOTA_META = ("A automação só pode descontar quartos sem tabela de ocupação 
              "pendências da Queen Spa (2) e da Villa King Spa (2).")
 
 
+STATUS_ARQUIVO = re.compile(r"^PRECOS (OK|ATENCAO|ERRO|ATRASADO) \d{2}-\d{2} \d{2}h\d{2}\.txt$")
+
+
+def _pasta_shell() -> Path | None:  # pragma: no cover - só no Windows
+    """Área de Trabalho real do usuário, inclusive redirecionada ao OneDrive."""
+    if sys.platform != "win32":
+        return None
+    try:
+        import ctypes
+        buf = ctypes.create_unicode_buffer(260)
+        if ctypes.windll.shell32.SHGetFolderPathW(None, 0x0010, None, 0, buf) == 0 and buf.value:
+            return Path(buf.value)
+    except (OSError, AttributeError):
+        return None
+    return None
+
+
 def area_de_trabalho(cfg: dict) -> Path | None:
     if cfg.get("area_de_trabalho"):
         return Path(cfg["area_de_trabalho"])
-    for base in (os.environ.get("USERPROFILE"), str(Path.home())):
-        if base:
-            for nome in ("Desktop", "Área de Trabalho", os.path.join("OneDrive", "Desktop")):
-                p = Path(base) / nome
-                if p.is_dir():
-                    return p
+    shell = _pasta_shell()
+    if shell is not None and shell.is_dir():
+        return shell
+    bases = [os.environ.get("OneDrive"), os.environ.get("USERPROFILE"), str(Path.home())]
+    for base in filter(None, bases):
+        for nome in ("Área de Trabalho", "Desktop", os.path.join("OneDrive", "Área de Trabalho"),
+                     os.path.join("OneDrive", "Desktop")):
+            p = Path(base) / nome
+            if p.is_dir():
+                return p
     return None
+
+
+def trocar_status(mesa: Path, nome: str, texto: str) -> None:
+    """Mantém um único arquivo de status do programa; nunca apaga outros arquivos do dono."""
+    for antigo in mesa.iterdir():
+        if antigo.is_file() and STATUS_ARQUIVO.match(antigo.name):
+            antigo.unlink(missing_ok=True)
+    (mesa / nome).write_text(texto, encoding="utf-8")
 
 
 def _e(v) -> str:
@@ -90,13 +121,10 @@ def publicar(r: dict, cfg: dict, pasta: Path) -> None:
     mesa = area_de_trabalho(cfg)
     if mesa is None:
         return
-    for antigo in mesa.glob("PRECOS * *.txt"):
-        antigo.unlink(missing_ok=True)
     rotulo = ROTULO[r["status"]]
-    nome = f"PRECOS {rotulo} {r['hora_curta']}.txt"
     texto = [f"{rotulo}: {r['resumo']}", f"Relatório completo: {Path(pasta) / 'relatorio.html'}", ""]
     texto += [f"- {a}" for a in r["alertas"][:15]]
-    (mesa / nome).write_text("\n".join(texto) + "\n", encoding="utf-8")
+    trocar_status(mesa, f"PRECOS {rotulo} {r['hora_curta']}.txt", "\n".join(texto) + "\n")
     atencao = mesa / "ATENCAO-PRECOS.txt"
     if r["precisa_atencao"]:
         atencao.write_text("A automação de preços precisa de você.\n" + "\n".join(texto) + "\n", encoding="utf-8")

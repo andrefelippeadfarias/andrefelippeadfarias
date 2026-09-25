@@ -94,8 +94,10 @@ def ocupacao_faixas(lst: Listing, hoje: date) -> dict:
     return {nome: ocupacao(lst, hoje, a, b)[2] for nome, (a, b) in FAIXAS.items()}
 
 
-def mediana_preco(lst: Listing) -> float | None:
-    precos = [d.preco for d in lst.dias.values() if d.preco and d.preco > 0]
+def mediana_preco(lst: Listing, fim_de_semana: bool | None = None) -> float | None:
+    """Mediana dos preços; com fim_de_semana, só sextas e sábados (True) ou só os outros dias (False)."""
+    precos = [d.preco for d in lst.dias.values() if d.preco and d.preco > 0
+              and (fim_de_semana is None or (d.data.weekday() in (4, 5)) == fim_de_semana)]
     return statistics.median(precos) if precos else None
 
 
@@ -125,14 +127,15 @@ def resumir_reservas(reservas: list, listing_id: str, agora: datetime) -> Resumo
         if res.get("listing_id") != listing_id:
             continue
         status = str(res.get("booking_status") or "").lower()
-        reservada_em = ler_instante(res.get("booked_date"))
+        # data sem hora: fim do dia local, para contar como recente (bloqueia desconto, remove desconto)
+        reservada_em = ler_instante(res.get("booked_date"), agora.tzinfo, fim_do_dia=True)
         if status == "booked":
             if reservada_em and reservada_em >= limite:
                 r.novas_48h += 1
             for d in noites(res):
                 r.noites_vendidas_apos.setdefault(d, []).append(reservada_em)
         elif status == "cancelled":
-            cancelada_em = ler_instante(res.get("cancelled_on"))
+            cancelada_em = ler_instante(res.get("cancelled_on"), agora.tzinfo, fim_do_dia=False)  # só abre o portão se certo
             chegada = ler_data(res.get("check_in"))
             if cancelada_em and cancelada_em >= limite and chegada and 0 <= (chegada - hoje).days <= 2:
                 r.cancel_proximos_3d_48h += 1

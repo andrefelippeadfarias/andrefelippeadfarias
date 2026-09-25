@@ -47,9 +47,15 @@ class Base(unittest.TestCase):
                                                       "price": None, "price_type": None}
         self.variaveis = {"PRICELABS_API_KEY": CANARIO_PL, "OPENROUTER_API_KEY": CANARIO_OR}
         self.cofre = CofreVazio()
+        self.comandos = []
         self.amb = principal.Ambiente(transporte=self.sim, variaveis=self.variaveis, cofre=self.cofre,
-                                      relogio=lambda: self.agora, dormir=lambda s: None, espaco_s=0)
+                                      relogio=lambda: self.agora, dormir=lambda s: None, espaco_s=0,
+                                      plataforma="linux", comando=self._comando)
         self.dados = self.tmp / "dados"
+
+    def _comando(self, args, **kw):
+        self.comandos.append(args)
+        return mock.Mock(returncode=self.retorno_comando if hasattr(self, "retorno_comando") else 0, stdout="", stderr="erro")
 
     def rodar(self, quando=None):
         if quando:
@@ -339,9 +345,12 @@ class TestComandos(Base):
         self.assertEqual(self.cli("executar")[0], 0)
 
     def test_verificar(self):
+        (self.mesa / "PRECOS de Natal.txt").write_text("do dono")
         codigo, saida = self.cli("verificar", "--silencioso")
         self.assertEqual(codigo, 1)
         self.assertEqual(len(list(self.mesa.glob("PRECOS ATRASADO *.txt"))), 1)
+        self.assertTrue((self.mesa / "PRECOS de Natal.txt").exists(), "não apaga arquivo do dono")
+        self.assertIn("Área de Trabalho para avisos", saida)
         self.rodar()
         with mock.patch("time.localtime", return_value=mock.Mock(tm_gmtoff=-3 * 3600)):
             codigo, saida = self.cli("verificar", "--sem-autoteste")
@@ -353,6 +362,16 @@ class TestComandos(Base):
         with mock.patch("time.localtime", return_value=mock.Mock(tm_gmtoff=0)):
             codigo, saida = self.cli("verificar", "--sem-autoteste")
         self.assertIn("FALHA fuso do computador UTC+0", saida)
+        with mock.patch("time.localtime", return_value=mock.Mock(tm_gmtoff=0)):
+            self.cli("verificar", "--silencioso")
+        aviso = list(self.mesa.glob("PRECOS ATENCAO *.txt"))
+        self.assertEqual(len(aviso), 1, "fuso errado aparece na Área de Trabalho")
+        self.assertIn("fuso", aviso[0].read_text(encoding="utf-8"))
+        self.amb.plataforma = "win32"
+        with mock.patch("time.localtime", return_value=mock.Mock(tm_gmtoff=-3 * 3600)):
+            codigo, saida = self.cli("verificar", "--sem-autoteste")
+        self.assertIn("tarefa agendada RecantoPrecos-Verificar", saida)
+        self.amb.plataforma = "linux"
         self.sim.jev_status = 401
         codigo, saida = self.cli("verificar", "--sem-autoteste")
         self.assertIn("FALHA Jev", saida)
@@ -370,6 +389,17 @@ class TestComandos(Base):
     def test_agendar_e_chaves(self):
         codigo, saida = self.cli("agendar")
         self.assertEqual(saida.count("-m pacing executar"), 7)
+        self.assertEqual(self.comandos, [])
+        self.amb.plataforma = "win32"
+        with mock.patch.dict("os.environ", {"USERDOMAIN": "PC", "USERNAME": "André"}):
+            codigo, saida = self.cli("agendar")
+        self.assertEqual(codigo, 0)
+        self.assertEqual([c[3] for c in self.comandos], ["RecantoPrecos", "RecantoPrecos-Verificar"])
+        self.retorno_comando = 1
+        codigo, saida = self.cli("agendar")
+        self.assertEqual(codigo, 1)
+        self.assertIn("FALHA", saida)
+        self.amb.plataforma = "linux"
         with mock.patch("getpass.getpass", side_effect=["nova-chave-pl", ""]):
             self.cli("configurar-chaves")
         self.assertEqual(self.cofre.dados, {"automacao-pricelabs/pricelabs": "nova-chave-pl"})
@@ -491,10 +521,17 @@ class TestRelatorio(unittest.TestCase):
         from pacing import relatorio
         tmp = Path(tempfile.mkdtemp(prefix="Usuário "))
         (tmp / "Desktop").mkdir()
-        with mock.patch.dict("os.environ", {"USERPROFILE": str(tmp)}):
+        with mock.patch.dict("os.environ", {"USERPROFILE": str(tmp), "OneDrive": ""}), \
+                mock.patch("pacing.relatorio._pasta_shell", return_value=None):
             self.assertEqual(relatorio.area_de_trabalho({}), tmp / "Desktop")
+        onedrive = Path(tempfile.mkdtemp(prefix="OneDrive "))
+        (onedrive / "Área de Trabalho").mkdir()
+        with mock.patch.dict("os.environ", {"USERPROFILE": str(tmp), "OneDrive": str(onedrive)}), \
+                mock.patch("pacing.relatorio._pasta_shell", return_value=None):
+            self.assertEqual(relatorio.area_de_trabalho({}), onedrive / "Área de Trabalho", "OneDrive tem prioridade")
         vazio = Path(tempfile.mkdtemp())
-        with mock.patch.dict("os.environ", {"USERPROFILE": str(vazio)}), mock.patch("pathlib.Path.home", return_value=vazio):
+        with mock.patch.dict("os.environ", {"USERPROFILE": str(vazio), "OneDrive": ""}), \
+                mock.patch("pathlib.Path.home", return_value=vazio), mock.patch("pacing.relatorio._pasta_shell", return_value=None):
             self.assertIsNone(relatorio.area_de_trabalho({}))
             r = {"status": "verde", "resumo": "<script>x</script>", "run_id": "r", "hora": "h", "hora_curta": "01-01 00h00",
                  "modo": "observar", "proxima_sync": "", "alertas": [], "ocupacao": [], "decisoes": [], "acoes": [],
@@ -609,3 +646,21 @@ class TestRegressaoAuditoriaA(Base):
         self.assertEqual(est["dsos"][chave]["status"], "divergente")
         self.assertTrue(est["disjuntor"]["ativo"])
         self.assertIsNone(est["dsos"][chave].get("lido"))
+
+
+class TestRegressaoAuditoriaB(Base):
+    def test_alertas_graves_deixam_amarelo(self):
+        for lid in self.sim.push:
+            self.sim.push[lid] = False
+        r = self.rodar()
+        self.assertEqual(r["status"], "amarelo")
+        self.assertEqual(list(self.mesa.glob("PRECOS OK *.txt")), [])
+
+    def test_historico_com_colunas_fixas(self):
+        self.variaveis.clear()
+        self.rodar()
+        self.variaveis.update(PRICELABS_API_KEY=CANARIO_PL, OPENROUTER_API_KEY=CANARIO_OR)
+        self.rodar(datetime(2026, 9, 26, 5, 30, tzinfo=BRT))
+        linhas = (self.dados / "historico.csv").read_text(encoding="utf-8-sig").splitlines()
+        self.assertEqual({len(l.split(";")) for l in linhas}, {13})
+        self.assertIn("ocup_0_6_R3", linhas[0])

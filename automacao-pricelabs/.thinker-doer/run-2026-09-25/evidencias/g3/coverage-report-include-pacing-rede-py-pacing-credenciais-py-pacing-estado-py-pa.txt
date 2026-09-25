@@ -5,10 +5,10 @@ Name                    Stmts   Miss Branch BrPart  Cover
 ---------------------------------------------------------
 pacing/config.py           88      0     14      0   100%
 pacing/credenciais.py      26      0      8      0   100%
-pacing/estado.py          115      4     32      5    94%
-pacing/rede.py            115      2     28      1    98%
-pacing/tempo.py            57      0     10      0   100%
+pacing/estado.py          151     12     50      7    91%
+pacing/rede.py            120      4     28      1    97%
+pacing/tempo.py            62      1     14      1    97%
 ---------------------------------------------------------
-TOTAL                     401      6     92      6    98%
+TOTAL                     447     17    114      9    95%
 
 --- stderr ---

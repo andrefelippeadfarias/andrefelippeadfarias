@@ -3,6 +3,8 @@
 from __future__ import annotations
 
 import os
+import subprocess
+import sys
 import time
 from datetime import timedelta
 from pathlib import Path
@@ -21,7 +23,9 @@ class Ambiente:
     """Dependências externas, substituíveis nos testes."""
 
     def __init__(self, transporte=transporte_urllib, variaveis=None, cofre=None, relogio=None,
-                 dormir=time.sleep, espaco_s=1.1):
+                 dormir=time.sleep, espaco_s=1.1, plataforma=sys.platform, comando=subprocess.run):
+        self.plataforma = plataforma
+        self.comando = comando  # executor de programas externos (schtasks); trocado nos testes
         self.transporte = transporte
         self.variaveis = os.environ if variaveis is None else variaveis
         self.cofre = cofre
@@ -137,13 +141,18 @@ def _executar(cfg, amb, agora, run_id, pasta, armazem, est, origem, r):
         cal = calendarios.get(item["id"])
         faixas = metricas.ocupacao_faixas(cal, hoje) if cal and not cal.erro else {"0-6": None, "7-14": None, "15-29": None}
         r["ocupacao"].append({"apelido": item["apelido"], "papel": item["papel"], **faixas})
-    r["alertas"].extend(regras.alertas_gerais(ctx))
+    for texto, grave in regras.alertas_gerais(ctx):
+        r["alertas"].append(texto)
+        if grave:
+            _piorar(r, "amarelo")
 
     executor = Executor(pl, armazem, est, run_id, agora, parar=parar)
     for msg in executor.conciliar():
         r["acoes"].append(f"Conciliação: {msg}")
     limpeza, alertas_limpeza, disjuntor = regras.plano_limpeza(ctx)
     r["alertas"].extend(alertas_limpeza)
+    if alertas_limpeza:
+        _piorar(r, "amarelo")
     if disjuntor:
         executor.acionar_disjuntor("preço abaixo do mínimo depois da sincronização")
     for acao in limpeza:
@@ -189,6 +198,7 @@ def _mercado(cfg, pl, est, hoje, r) -> dict:
         est["mercado"] = {"dia": hoje.isoformat(), "ocupacao_7d": ocupacao}
     else:
         r["alertas"].append("Ocupação do mercado indisponível hoje: sem descontos novos")
+        _piorar(r, "amarelo")
     amostra = metricas.amostra_receita(metricas_ok)
     if amostra:
         est["revpar"] = [a for a in est["revpar"] if a.get("dia") != hoje.isoformat()][-59:]
@@ -220,7 +230,7 @@ def _decidir(cfg, amb, ctx, pl, executor, blocos, modo, run_id, est, r):
     ej = est["jev"]
     if ej.get("dia") != hoje:
         ej.update(dia=hoje, chamadas=0, ultimo_hash="", ultima_resposta=None, tokens=0)
-    pedido = regras.montar_pedido(blocos, cj["modelo"])
+    pedido = regras.montar_pedido(blocos, cj["modelo"], cfg["desconto"]["percentual"])
     h = regras.impressao(pedido)
     medir = modo == "observar" and cj["medir_estabilidade"]
     if ej.get("ultimo_hash") == h and ej.get("ultima_resposta") and not medir:
@@ -341,11 +351,12 @@ def _fechar(cfg, agora, pasta, armazem, est, r):
     armazem.salvar(est)
     armazem.registrar_execucao({k: r[k] for k in ("run_id", "status", "modo", "resumo", "alertas", "acoes",
                                                   "decisoes", "bloqueios")}, agora.strftime("%Y-%m"))
-    armazem.anexar_historico({
-        "data_hora": agora.strftime("%d/%m/%Y %H:%M"), "status": r["status"], "modo": r["modo"],
-        **{f"ocup_0_6_{o['apelido']}": ("" if o["0-6"] is None else f"{o['0-6']:.1f}".replace(".", ","))
-           for o in r["ocupacao"]},
-        "descontos_ativos": len(est["dsos"]), "chamadas_jev": r["saude"]["jev_chamadas_hoje"],
-        "alertas": len(r["alertas"]),
-    } if r["ocupacao"] else {"data_hora": agora.strftime("%d/%m/%Y %H:%M"), "status": r["status"], "modo": r["modo"]})
+    ocup = {o["apelido"]: o["0-6"] for o in r["ocupacao"]}
+    linha = {"data_hora": agora.strftime("%d/%m/%Y %H:%M"), "status": r["status"], "modo": r["modo"]}
+    for item in cfg["listings"]:  # colunas fixas, mesmo quando a execução falha cedo
+        v = ocup.get(item["apelido"])
+        linha[f"ocup_0_6_{item['codigo']}"] = "" if v is None else f"{v:.1f}".replace(".", ",")
+    linha.update(descontos_ativos=len(est["dsos"]), chamadas_jev=r["saude"]["jev_chamadas_hoje"],
+                 alertas=len(r["alertas"]))
+    armazem.anexar_historico(linha)
     relatorio.publicar(r, cfg, pasta)

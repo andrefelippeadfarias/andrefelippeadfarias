@@ -13,10 +13,19 @@ def agora(fuso_utc: int) -> datetime:
     return datetime.now(fuso(fuso_utc))
 
 
-def ler_instante(texto) -> datetime | None:
-    """ISO 8601 com fuso (ex.: 2026-08-27T18:17:10.000Z). Sem fuso, assume UTC."""
+def ler_instante(texto, fuso_local=None, fim_do_dia: bool = False) -> datetime | None:
+    """ISO 8601 com fuso (ex.: 2026-08-27T18:17:10.000Z). Sem fuso, assume UTC.
+
+    Só a data (AAAA-MM-DD) com fuso_local: início ou fim daquele dia no horário local,
+    para quem chama escolher o lado conservador.
+    """
     if not isinstance(texto, str) or len(texto) < 10:
         return None
+    if fuso_local is not None and len(texto.strip()) == 10:
+        d = ler_data(texto)
+        if d is None:
+            return None
+        return datetime.combine(d, time(23, 59, 59) if fim_do_dia else time(0, 0), tzinfo=fuso_local)
     t = texto.strip().replace("Z", "+00:00")
     try:
         dt = datetime.fromisoformat(t if "T" in t or " " in t else t + "T00:00:00+00:00")

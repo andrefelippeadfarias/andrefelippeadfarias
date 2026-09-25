@@ -2,7 +2,7 @@
   "contract_version": "1.0",
   "task_id": "T5-operacao",
   "task_revision": 1,
-  "revision": 1,
+  "revision": 2,
   "actor_id": "coordenador",
   "status": "completed",
   "summary": "Checks executados pelo coordenador em Linux com Python 3.11.15.",
@@ -45,12 +45,12 @@
     {
       "path": "README.md",
       "state": "present",
-      "sha256": "3fa59681278276b86a96c188e6680149fc537bebcee2f2115353d29d19d09cf4"
+      "sha256": "4a2bcac1d5015a63b55ccbf924ba5c2f318b02d834828ee24bbc2f2e937894ad"
     },
     {
       "path": "tests/test_operacao.py",
       "state": "present",
-      "sha256": "58c2d3b6f120127c0739dc1f021281dbbe6c70a9e16b906831ce30c36c7e7a84"
+      "sha256": "aadaf93ce04ab3860c3a217fe4ae7c46f53fec0e2fd82956de10844a925d5e67"
     },
     {
       "path": "windows/agendar.bat",
@@ -65,15 +65,15 @@
     {
       "path": "pacing/agenda.py",
       "state": "present",
-      "sha256": "75893216486220f4e77e2a647227e237ffcc5c7a884a1ad7c9b13606e6f4b44c"
+      "sha256": "413ff2252327686b22548c2aaa9c6477707c51ef9379548257eb8de083a79e96"
     },
     {
       "path": "pacing/__main__.py",
       "state": "present",
-      "sha256": "451ccedad3b1fa3895d9585363b847793b0d51ae7551e48a233f6f7c025eab6a"
+      "sha256": "25563ea6cf12a01b16f1e25cdb42917cfd720aea527b7ddfe31a4b394dc886b1"
     }
   ],
-  "snapshot_digest": "32b9abb665a1abd71ad851edfb6f76e481a2b1616c941c1cc8d505e749c4adf3",
+  "snapshot_digest": "f5dfe0717854b6f5284c5c24fd331c72d5fc676a8a0168f9d61d273f2adcbd27",
   "checks": [
     {
       "id": "unit",
@@ -92,7 +92,7 @@
       "evidence": [
         {
           "path": ".thinker-doer/run-2026-09-25/evidencias/g3/unittest-discover-s-tests-t.txt",
-          "sha256": "f84a18bd82ca822247242d2add2b7e7600b408bae307674296f431ccdb208861"
+          "sha256": "4f31278d4400bd5bfc6e091b685cbb58a603ce92953eb023ca9e100789413ab9"
         }
       ]
     }
@@ -104,7 +104,7 @@
       "evidence": [
         {
           "path": ".thinker-doer/run-2026-09-25/evidencias/g3/unittest-discover-s-tests-t.txt",
-          "sha256": "f84a18bd82ca822247242d2add2b7e7600b408bae307674296f431ccdb208861"
+          "sha256": "4f31278d4400bd5bfc6e091b685cbb58a603ce92953eb023ca9e100789413ab9"
         }
       ]
     },
@@ -114,7 +114,7 @@
       "evidence": [
         {
           "path": ".thinker-doer/run-2026-09-25/evidencias/g3/unittest-discover-s-tests-t.txt",
-          "sha256": "f84a18bd82ca822247242d2add2b7e7600b408bae307674296f431ccdb208861"
+          "sha256": "4f31278d4400bd5bfc6e091b685cbb58a603ce92953eb023ca9e100789413ab9"
         }
       ]
     }

@@ -112,7 +112,7 @@ Na primeira semana em Ativo, recomendo `"teto_dia": 1` no `config.json`.
 | API do PriceLabs | US$ 7 (7 listings × US$ 1), mais impostos |
 | Sincronização extra no PriceLabs (opcional) | US$ 7 por horário extra |
 | Jev gratuito no OpenRouter | US$ 0 |
-| Tokens do Jev | Cerca de 1 mil por chamada; de 0 a 7 chamadas por dia |
+| Tokens do Jev | No modo Ativo, cerca de 1 mil por chamada (só a Afrodite). No modo Observar, até cerca de 5 mil, porque ele também pergunta sobre os outros quartos. Em geral são 2 chamadas por dia (23:30 e 05:30), e no máximo 7 |
 
 Se o modelo gratuito sair do ar, dá para ligar o TypeSafe pago (`provedor_reserva: "typesafe"`, cerca de US$ 0,03 por mês). Isso fica desligado por padrão.
 

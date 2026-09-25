@@ -13,6 +13,7 @@ import shutil
 import sys
 import time
 import uuid
+from datetime import datetime, timezone
 from pathlib import Path
 
 
@@ -102,14 +103,27 @@ class Armazem:
                         base.update(dados)
                         if origem == "bak" and self.diario.exists():
                             self._completar_pelo_diario(base)
+                        if origem == "bak":
+                            self._conter(base, origem)
                         return base, origem
                 except (OSError, ValueError):  # ValueError inclui JSON e UTF-8 inválidos
                     pass
         estado = estado_vazio()
         if self.diario.exists():
             self._completar_pelo_diario(estado)
+            self._conter(estado, "diario")
             return estado, "diario"
         return estado, "novo"
+
+    def _conter(self, estado: dict, origem: str) -> None:
+        """Estado recuperado: disjuntor gravado na hora, valendo para qualquer comando até RETOMAR."""
+        if estado["disjuntor"]["ativo"]:
+            return
+        agora = datetime.now(timezone.utc).isoformat()
+        motivo = f"estado local recuperado ({origem}); conferir e rodar RETOMAR"
+        estado["disjuntor"] = {"ativo": True, "motivo": motivo, "desde": agora}
+        self.registrar_escrita({"ts": agora, "run_id": "recuperacao", "evento": "disjuntor", "motivo": motivo})
+        self.salvar(estado)
 
     def _completar_pelo_diario(self, estado: dict) -> None:
         """O diário é a fonte da verdade das escritas e do disjuntor."""

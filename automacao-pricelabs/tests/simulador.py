@@ -50,6 +50,7 @@ class Simulador:
         self.override_extras = {"min_stay": None, "min_price": None, "lead_time_expiry": None, "currency": "BRL"}
         self.ignorar_post = False
         self.quebrar_resposta_post = False  # grava, mas responde 503 (resultado incerto)
+        self.mutar_post = None  # função que altera o que a API guarda (ex.: preço diferente do enviado)
         self.reservas = []
         self.overrides = {lid: {} for lid in LISTINGS}
         self.push = {lid: True for lid in LISTINGS}
@@ -140,6 +141,8 @@ class Simulador:
                 if "price" in o and "price_type" not in o:
                     return 400, {}, b'{"error":"price_type required"}'
                 novo = {**self.override_extras, **o, "created_at": self.agora.isoformat()}
+                if self.mutar_post:
+                    novo = self.mutar_post(novo)
                 if not self.ignorar_post:
                     lista[o["date"]] = novo
                 salvos.append(novo)

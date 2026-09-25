@@ -87,11 +87,6 @@ def executar(caminho_config, amb: Ambiente | None = None) -> dict:
 def _executar(cfg, amb, agora, run_id, pasta, armazem, est, origem, r):
     hoje = agora.date()
     parar = lambda: (pasta / "PARAR").exists()  # noqa: E731
-    if origem in ("bak", "diario") and not est["disjuntor"]["ativo"]:
-        motivo = f"estado local recuperado ({origem}); conferir e rodar RETOMAR"
-        est["disjuntor"] = {"ativo": True, "motivo": motivo, "desde": agora.isoformat()}
-        armazem.registrar_escrita({"ts": agora.isoformat(), "run_id": run_id, "evento": "disjuntor", "motivo": motivo})
-        armazem.salvar(est)
     if parar():
         modo = "parado"
     elif cfg["modo"] == "observar":

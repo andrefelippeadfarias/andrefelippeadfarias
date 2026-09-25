@@ -449,9 +449,17 @@ class TestExecutorCaminhosDeFalha(unittest.TestCase):
         del self.est["dsos"][f"{AFRODITE}|2026-09-27"]
         self.ex.disjuntor = ""
         self.sim.ignorar_post = False
-        self.sim.override_extras = {"min_stay": 3}
+        self.sim.override_extras = {"min_stay": 1}   # a API acrescenta um padrão: continua nosso e removível
+        self.assertIn("campos extras", self.ex.criar(self.acao))
+        self.assertEqual(self.est["dsos"][f"{AFRODITE}|2026-09-27"]["status"], "ativa")
+        self.assertTrue(self.est["disjuntor"]["ativo"])
+        self.assertEqual(self.ex.apagar(self.acao), "apagada")
+        self.ex.disjuntor = ""
+        self.sim.override_extras = {}
+        self.sim.mutar_post = lambda o: dict(o, price="-20")
         self.assertIn("disjuntor", self.ex.criar(self.acao))
         self.assertEqual(self.est["dsos"][f"{AFRODITE}|2026-09-27"]["status"], "divergente")
+        self.assertIn("não apagada", self.ex.apagar(self.acao))
 
     def test_releitura_depois_do_post_falha(self):
         self.sim.falhas += [("GET", "/overrides", 200)]  # primeira leitura passa (lista vazia simulada abaixo)
@@ -664,3 +672,26 @@ class TestRegressaoAuditoriaB(Base):
         linhas = (self.dados / "historico.csv").read_text(encoding="utf-8-sig").splitlines()
         self.assertEqual({len(l.split(";")) for l in linhas}, {13})
         self.assertIn("ocup_0_6_R3", linhas[0])
+
+
+class TestReauditoriaA(Base):
+    modo = "ativo"
+    confirmar = False
+
+    def test_n1_contencao_de_recuperacao_vale_para_todo_comando(self):
+        self.rodar()
+        (self.dados / "estado.json").unlink()
+        (self.dados / "estado.json.bak").unlink(missing_ok=True)
+        self.cli("desfazer")  # sem --confirmar: só carrega e concilia
+        self.assertTrue(self.estado()["disjuntor"]["ativo"])
+        self.assertEqual(self.cli("testar-gravacao", "--listing", AFRODITE, "--data", "2026-10-05", "--confirmar")[0], 2)
+        r = self.rodar(datetime(2026, 9, 26, 5, 30, tzinfo=BRT))
+        self.assertEqual(r["modo"], "contencao")
+        self.assertIn("recuperado", " ".join(r["alertas"]))
+
+    def test_n4_campo_extra_da_api_ainda_sai_pelo_desfazer(self):
+        self.sim.override_extras = {"min_stay": 1}
+        self.rodar()
+        self.assertEqual(len(self.nossas()), 1, "o disjuntor para depois da primeira")
+        codigo, saida = self.cli("desfazer", "--confirmar")
+        self.assertEqual(self.nossas(), {})

@@ -122,6 +122,7 @@ Se o modelo gratuito sair do ar, dá para ligar o TypeSafe pago (`provedor_reser
 - **O que vai ao Jev:** só faixas com nome ("below_target", "weak", "tight"). Nunca nomes de quartos, datas, ids, reservas ou dados de hóspedes.
 - **Rede:** o programa só fala com uma lista fechada de endereços do PriceLabs, do OpenRouter e do TypeSafe. Ele recusa redirecionamentos.
 - **Diário:** cada gravação é registrada antes e depois em `%LOCALAPPDATA%\automacao-pricelabs\diario-escritas.jsonl`. O DESFAZER usa esse diário.
+- **Não apague a pasta de dados.** Se `estado.json`, a cópia `.bak` e o diário sumirem juntos, o programa esquece os descontos que criou. Eles continuam na conta até a data passar, e é preciso removê-los na tela; procure o motivo "auto-jev". Se só parte dos arquivos se perder, o programa se recupera sozinho e fica só removendo descontos até você rodar RETOMAR.
 
 ## Pendências que dependem de você
 

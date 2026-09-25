@@ -50,6 +50,11 @@ def corresponde(norm: dict, payload: dict) -> bool:
             and not norm["extras"] and norm.get("reason", payload["reason"]) == payload["reason"])
 
 
+def corresponde_nucleo(norm: dict, payload: dict) -> bool:
+    """Data, preço e tipo iguais ao enviado; campos extras preenchidos são tolerados (padrões da API)."""
+    return corresponde(dict(norm, extras={}), payload)
+
+
 def identica(atual: dict, registrada: dict) -> bool:
     if not registrada:
         return False
@@ -162,6 +167,15 @@ class Executor:
             self.estado["saude"]["erros_escrita_seguidos"] = 0
             self._salvar()
             return "criada"
+        if len(normas) == 1 and corresponde_nucleo(normas[0], payload):
+            # a API acrescentou campos: o desconto é do programa e continua removível, mas nada novo é criado
+            dso.update(status="ativa", lido=normas[0])
+            self._evento("criada", lid, data, payload=payload, lido=normas[0],
+                         motivo=f"API devolveu campos extras: {sorted(normas[0]['extras'])}")
+            self.alertas.append(f"A API devolveu campos que o programa não enviou em {data} "
+                                f"({', '.join(sorted(normas[0]['extras']))}). Conferir no ensaio de gravação")
+            self.acionar_disjuntor("releitura com campos não enviados pelo programa")
+            return "criada com campos extras: disjuntor acionado"
         if not normas:
             dso["status"] = "incerta"  # continua rastreada; a próxima execução concilia
             self._evento("incerta", lid, data, payload=payload, motivo="POST aceito mas a releitura não achou")
@@ -193,10 +207,12 @@ class Executor:
                 del self.estado["dsos"][chave]
                 self._evento("ausente", lid, data, payload=payload, motivo="gravação incerta não se confirmou")
                 resultados.append(f"{data}: gravação anterior não existe")
-            elif len(normas) == 1 and corresponde(normas[0], payload):
+            elif len(normas) == 1 and corresponde_nucleo(normas[0], payload):
                 dso.update(status="ativa", lido=normas[0])
                 self._evento("adotada", lid, data, payload=payload, lido=normas[0])
                 resultados.append(f"{data}: gravação anterior confirmada")
+                if normas[0]["extras"]:
+                    self.acionar_disjuntor("releitura com campos não enviados pelo programa")
             else:
                 dso.update(status="divergente", lido_divergente=normas[0])
                 self._evento("divergente", lid, data, payload=payload, lido=normas[0],

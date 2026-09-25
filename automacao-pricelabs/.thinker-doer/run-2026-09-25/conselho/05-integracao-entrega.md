@@ -45,4 +45,21 @@ O que falta para o dono, que não é programador e usa Windows, instalar e opera
 
 ## Fechamento dos gates
 
-(preenchido após os pareceres finais)
+Gate oficial da skill (`validate.py gate`) em 25/09/2026. Saída completa em `evidencias/gates-finais.txt`.
+
+| Tarefa | Resultado (revisão) | Auditor | Decisão | Gate | Riscos aceitos |
+|---|---|---|---|---|---|
+| T1-infra | 3 | auditor-a | approved | passed | N1b (low), R1 (low) |
+| T2-integracoes | 3 | auditor-a | approved | passed | J1 (low) |
+| T3-dominio | 3 | auditor-b | approved | passed | — |
+| T4-execucao | 5 | auditor-a | approved | passed | N4r (low) |
+| T5-operacao | 5 (tarefa rev. 2) | auditor-b | approved | passed | B-4 e B-7 (medium): só verificáveis num Windows real, dono via verificar.bat |
+
+- **G4 (auditoria):** atendido. Checks exigidos aprovados, cobertura aplicável atendida (95 a 99% por tarefa), sem achados altos ou críticos abertos, revisão independente do artefato atual.
+- **G5 (integração):**
+  - suíte completa no estado final: 108 testes, aprovados com e sem jsonschema;
+  - o README cobre operação, recuperação e rollback;
+  - riscos e pendências declarados.
+- **Deploy:** preparado, não executado.
+
+**Status final:** entregue para instalação. A validação real no Windows e na conta fica com o dono, pela ordem descrita.

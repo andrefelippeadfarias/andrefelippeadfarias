@@ -1,6 +1,6 @@
 # Conselho: Auditoria
 
-Status: segunda rodada em andamento (reauditoria das correções).
+Status: concluída em 25/09/2026. Todos os pareceres aprovados; gates em 05-integracao-entrega.md.
 
 ## Pergunta da etapa
 
@@ -71,3 +71,12 @@ Os auditores receberam requisitos, contratos, código e testes. Não receberam a
 ## Parecer final
 
 Os auditores emitem os `revisoes/*.review.json` sobre a revisão 3: A cobre T1, T2 e T4; B cobre T3 e T5. Consulta prévia: `evidencias/inventory-parecer-final-20260925T152750Z.json`.
+
+## Rodadas finais
+
+- **Revisão 4 (bd17210):**
+  - A aprovou T4 e registrou N4c como resolvido (conciliação exige `reason` quando há campos extras) e N4r como risco baixo aceito.
+  - B aprovou T3 (reemitido com evidência própria) e pediu mudança em T5: o autoteste escrevia na Área de Trabalho real.
+- **Revisão 5 (c6eef73):**
+  - `Ambiente.mesa` passou a ser injetável, e os testes falham se usarem a Área de Trabalho real.
+  - A aprovou T4 e B aprovou T5.

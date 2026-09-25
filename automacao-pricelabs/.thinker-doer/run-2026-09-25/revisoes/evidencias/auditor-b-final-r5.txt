@@ -1,0 +1,22 @@
+Auditor B - rodada r5 de T5-operacao (HEAD c6eef73). Nenhuma alteracao no projeto alem deste arquivo e de
+revisoes/T5-operacao.review.json.
+
+Correcao conferida (achado B-R4-1, medium, aberto na r4): o autoteste do VERIFICAR mexia na Area de Trabalho real.
+- principal.Ambiente.mesa injetavel (padrao relatorio.area_de_trabalho); __main__.cmd_verificar e
+  _avisar_config_invalida usam amb.mesa.
+- tests/test_execucao.py Base injeta a mesa temporaria e faz relatorio._pasta_shell falhar se for chamado;
+  o teste de config invalido falha se chamar relatorio.area_de_trabalho.
+
+Comandos (copia B5 do HEAD c6eef73):
+- python3 -m unittest discover -s tests -t .  -> Ran 108 tests, OK (skipped=3)
+- suite inteira com Windows simulado (sys.platform=win32; SHGetFolderPathW falso apontando para uma pasta
+  "Area de Trabalho real" temporaria com "PRECOS OK 25-09 20h30.txt"; subprocess.run falso):
+  108 testes, 0 falhas; 1 erro de artefato (test_salvar_sem_cofre, pulado no Windows real por os.name);
+  0 chamadas a SHGetFolderPathW; 0 subprocess reais; a pasta "real" ficou intacta (so o arquivo original).
+- sha256 dos 15 reviewed_files de T5-operacao (task_revision 2, resultado 5) iguais aos arquivos atuais.
+
+Situacao T5: B-1, B-2, B-8, B-10, B-11, B-12, B-TF1, B-N2 e B-R4-1 resolvidos; B-4 (SHGetFolderPathW) e
+B-7 (registro das tarefas sem administrador) como risco aceito, conferidos pelo dono via verificar.bat e
+instalar.bat num Windows real. Mudancas de entrega (instalar com executar antes de verificar, ensaio e
+ensaio-manter, ativar com teto 1, ampliar com teto 6, README com Desbloquear e "Se aparecer FALHA") corretas.
+Parecer T5: aprovado.

@@ -78,7 +78,12 @@
 
 ## Entrega
 
-- **G1–G5:** ver as atas 01 a 05 e `resultados/`, `revisoes/`.
+- **G1:** contratos em `schemas/`, decisão em `conselho/01-arquitetura.md`.
+- **G2:** `tarefas/T1..T5.json`, validadas e com grafo acíclico.
+- **G3:** `resultados/*.result.json` e `evidencias/g3*`.
+- **G4:** `revisoes/*.review.json`, com 2 auditores e 3 rodadas.
+- **G5:** `evidencias/gates-finais.txt`, os 5 gates `passed`.
+- **Achados da auditoria:** 19 na primeira rodada e 7 nas reauditorias. Todos corrigidos com teste de regressão, exceto os riscos aceitos listados em `conselho/05-integracao-entrega.md`.
 - **Operação e rollback:**
   - `verificar.bat` para conferir;
   - `parar.bat` e `desfazer.bat` para parar e reverter;

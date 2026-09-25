@@ -1,0 +1,36 @@
+{
+  "contract_version": "1.0",
+  "task_id": "T2-integracoes",
+  "task_revision": 1,
+  "result_revision": 3,
+  "snapshot_digest": "35f1fc66378bd54485440dd754a35ad20c86c29c32aa9fb479e44dc41318090b",
+  "actor_id": "auditor-a",
+  "decision": "approved",
+  "findings": [
+    {
+      "id": "J1",
+      "severity": "low",
+      "status": "accepted_risk",
+      "description": "jev.validar exige o campo type em cada resposta, que docs/apis-verificadas.md nao lista.",
+      "rationale": "Falha fechada: resposta sem type vira JevInvalido e nada e criado; conferir na primeira resposta real do Jev.",
+      "owner": "coordenador",
+      "impact": "Se a API nao devolver type, a automacao nunca desconta ate o ajuste; nenhum efeito financeiro indevido.",
+      "evidence": [
+        {
+          "path": ".thinker-doer/run-2026-09-25/revisoes/evidencias/auditor-a-final.txt",
+          "sha256": "1270f34349ce3fa2e187e143e52c17d1e0a0ba6130b9d29647a44148c692effd"
+        },
+        {
+          "path": "pacing/jev.py",
+          "sha256": "18050293ba70a94c1f80b783897b4f96cfafe5dede8c52e140bea0375cdc90d6"
+        }
+      ]
+    }
+  ],
+  "evidence": [
+    {
+      "path": ".thinker-doer/run-2026-09-25/revisoes/evidencias/auditor-a-final.txt",
+      "sha256": "1270f34349ce3fa2e187e143e52c17d1e0a0ba6130b9d29647a44148c692effd"
+    }
+  ]
+}

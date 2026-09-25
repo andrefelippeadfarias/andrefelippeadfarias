@@ -51,7 +51,12 @@ def corresponde(norm: dict, payload: dict) -> bool:
 
 
 def corresponde_nucleo(norm: dict, payload: dict) -> bool:
-    """Data, preço e tipo iguais ao enviado; campos extras preenchidos são tolerados (padrões da API)."""
+    """Data, preço e tipo iguais ao enviado; campos extras tolerados (padrões da API).
+
+    Com campos extras, exige também o `reason` do programa: sem ele não dá para provar que é nossa.
+    """
+    if norm["extras"] and norm.get("reason") != payload["reason"]:
+        return False
     return corresponde(dict(norm, extras={}), payload)
 
 

@@ -47,7 +47,12 @@ class TestAgenda(unittest.TestCase):
 class TestScriptsWindows(unittest.TestCase):
     def test_bats_de_uma_linha_ascii(self):
         bats = sorted((RAIZ / "windows").glob("*.bat"))
-        self.assertGreaterEqual(len(bats), 10)
+        self.assertEqual({b.name for b in bats}, {
+            "instalar.bat", "configurar-chaves.bat", "verificar.bat", "executar.bat", "parar.bat", "retomar.bat",
+            "desfazer.bat", "ativar.bat", "ampliar.bat", "observar.bat", "ensaio.bat", "ensaio-manter.bat"})
+        instalar = (RAIZ / "windows" / "instalar.bat").read_text(encoding="ascii")
+        self.assertLess(instalar.index("pacing executar"), instalar.index("pacing verificar"),
+                        "a primeira verificação precisa de uma execução registrada")
         for bat in bats:
             bruto = bat.read_bytes()
             bruto.decode("ascii")
@@ -63,7 +68,8 @@ class TestScriptsWindows(unittest.TestCase):
     def test_readme_cobre_operacao(self):
         texto = (RAIZ / "README.md").read_text(encoding="utf-8")
         for trecho in ("instalar.bat", "verificar.bat", "parar.bat", "desfazer.bat", "retomar.bat", "ativar.bat",
-                       "typesafe/jev-1.13:free", "US$ 7", "testar-gravacao", "Pendências", "Gerenciador de Credenciais"):
+                       "typesafe/jev-1.13:free", "US$ 7", "Pendências", "Gerenciador de Credenciais",
+                       "ensaio.bat", "ensaio-manter.bat", "ampliar.bat", "Desbloquear", "Se aparecer FALHA"):
             self.assertIn(trecho, texto)
 
 

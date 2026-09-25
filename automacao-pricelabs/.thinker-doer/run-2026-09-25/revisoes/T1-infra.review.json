@@ -1,0 +1,155 @@
+{
+  "contract_version": "1.0",
+  "task_id": "T1-infra",
+  "task_revision": 1,
+  "result_revision": 3,
+  "snapshot_digest": "5ab65b84ab2e7c8e89007b211fede9a56944b7a1b1a82b625fe1943da5584367",
+  "actor_id": "auditor-a",
+  "decision": "approved",
+  "findings": [
+    {
+      "id": "A1",
+      "severity": "high",
+      "status": "resolved",
+      "description": "Reconstrucao pelo diario copiava a leitura divergente (possivelmente humana) para lido, permitindo que DESFAZER a apagasse. Resolvido: estado.reconstruir_dsos so restaura lido de eventos criada/adotada (teste H1b).",
+      "evidence": [
+        {
+          "path": ".thinker-doer/run-2026-09-25/revisoes/evidencias/auditor-a-final.txt",
+          "sha256": "1270f34349ce3fa2e187e143e52c17d1e0a0ba6130b9d29647a44148c692effd"
+        },
+        {
+          "path": "pacing/estado.py",
+          "sha256": "abfd43657af3894367c87c4ea15e60e8af9866bd3cf802baf65683290291d791"
+        }
+      ]
+    },
+    {
+      "id": "A2",
+      "severity": "medium",
+      "status": "resolved",
+      "description": "Disjuntor perdido quando o estado vinha do .bak ou do diario. Resolvido: diario registra disjuntor/retomada e _completar_pelo_diario reconstroi disjuntor, contadores e descontadas (teste H2).",
+      "evidence": [
+        {
+          "path": ".thinker-doer/run-2026-09-25/revisoes/evidencias/auditor-a-final.txt",
+          "sha256": "1270f34349ce3fa2e187e143e52c17d1e0a0ba6130b9d29647a44148c692effd"
+        },
+        {
+          "path": "pacing/estado.py",
+          "sha256": "abfd43657af3894367c87c4ea15e60e8af9866bd3cf802baf65683290291d791"
+        }
+      ]
+    },
+    {
+      "id": "A3",
+      "severity": "medium",
+      "status": "resolved",
+      "description": "UnicodeDecodeError em estado.json derrubava executar e verificar sem relatorio. Resolvido: carregar trata ValueError, diario lido com errors=replace, salvar com fsync (teste H3).",
+      "evidence": [
+        {
+          "path": ".thinker-doer/run-2026-09-25/revisoes/evidencias/auditor-a-final.txt",
+          "sha256": "1270f34349ce3fa2e187e143e52c17d1e0a0ba6130b9d29647a44148c692effd"
+        },
+        {
+          "path": "pacing/estado.py",
+          "sha256": "abfd43657af3894367c87c4ea15e60e8af9866bd3cf802baf65683290291d791"
+        }
+      ]
+    },
+    {
+      "id": "A4",
+      "severity": "medium",
+      "status": "resolved",
+      "description": "http.client.HTTPException escapava do transporte e da nova tentativa. Resolvido: transporte_urllib converte HTTPException e ValueError em ErroRede (teste H4).",
+      "evidence": [
+        {
+          "path": ".thinker-doer/run-2026-09-25/revisoes/evidencias/auditor-a-final.txt",
+          "sha256": "1270f34349ce3fa2e187e143e52c17d1e0a0ba6130b9d29647a44148c692effd"
+        },
+        {
+          "path": "pacing/rede.py",
+          "sha256": "a31fc6eca3cb781e53e600ca28d67694a56938346bee8c9336c869a578ee5acf"
+        }
+      ]
+    },
+    {
+      "id": "A7",
+      "severity": "low",
+      "status": "resolved",
+      "description": "Trava considerava orfao o arquivo recem-criado e __exit__ apagava trava alheia. Resolvido: orfa por mtime e marca propria conferida na saida.",
+      "evidence": [
+        {
+          "path": ".thinker-doer/run-2026-09-25/revisoes/evidencias/auditor-a-final.txt",
+          "sha256": "1270f34349ce3fa2e187e143e52c17d1e0a0ba6130b9d29647a44148c692effd"
+        },
+        {
+          "path": "pacing/estado.py",
+          "sha256": "abfd43657af3894367c87c4ea15e60e8af9866bd3cf802baf65683290291d791"
+        },
+        {
+          "path": "tests/test_infra.py",
+          "sha256": "75aac527cc39c9ab87870de5738366298f49f490b09df44260923b331867e913"
+        }
+      ]
+    },
+    {
+      "id": "N1",
+      "severity": "medium",
+      "status": "resolved",
+      "description": "Contencao por estado recuperado so existia em principal e era contornavel por comandos da CLI. Resolvido: Armazem._conter dentro de carregar grava disjuntor no estado e no diario para todo comando (testes N1, N2).",
+      "evidence": [
+        {
+          "path": ".thinker-doer/run-2026-09-25/revisoes/evidencias/auditor-a-final.txt",
+          "sha256": "1270f34349ce3fa2e187e143e52c17d1e0a0ba6130b9d29647a44148c692effd"
+        },
+        {
+          "path": "pacing/estado.py",
+          "sha256": "abfd43657af3894367c87c4ea15e60e8af9866bd3cf802baf65683290291d791"
+        }
+      ]
+    },
+    {
+      "id": "N1b",
+      "severity": "low",
+      "status": "accepted_risk",
+      "description": "carregar passou a gravar (disjuntor de recuperacao) e o comando verificar nao usa a Trava; corrida rara com uma execucao em andamento pode gerar contencao espuria.",
+      "rationale": "Falha segura: o efeito possivel e so bloquear criacoes ate RETOMAR; exige leitura falhando durante os.replace no Windows.",
+      "owner": "coordenador",
+      "impact": "Contencao desnecessaria e um alerta ao dono; nenhuma escrita indevida no PriceLabs.",
+      "evidence": [
+        {
+          "path": ".thinker-doer/run-2026-09-25/revisoes/evidencias/auditor-a-final.txt",
+          "sha256": "1270f34349ce3fa2e187e143e52c17d1e0a0ba6130b9d29647a44148c692effd"
+        },
+        {
+          "path": "pacing/estado.py",
+          "sha256": "abfd43657af3894367c87c4ea15e60e8af9866bd3cf802baf65683290291d791"
+        }
+      ]
+    },
+    {
+      "id": "R1",
+      "severity": "low",
+      "status": "accepted_risk",
+      "description": "Se estado.json, .bak e diario forem todos apagados, o programa esquece os proprios descontos e o DESFAZER nao os ve.",
+      "rationale": "Exige apagar a pasta de dados; o diario e so de acrescimo e fica fora do Git. Descontos esquecidos expiram com a data (ate 6 dias).",
+      "owner": "coordenador",
+      "impact": "Ate 6 descontos de -10% sem rastreio, removiveis so na tela do PriceLabs; documentar no README.",
+      "evidence": [
+        {
+          "path": ".thinker-doer/run-2026-09-25/revisoes/evidencias/auditor-a-final.txt",
+          "sha256": "1270f34349ce3fa2e187e143e52c17d1e0a0ba6130b9d29647a44148c692effd"
+        },
+        {
+          "path": "pacing/estado.py",
+          "sha256": "abfd43657af3894367c87c4ea15e60e8af9866bd3cf802baf65683290291d791"
+        }
+      ]
+    }
+  ],
+  "evidence": [
+    {
+      "path": ".thinker-doer/run-2026-09-25/revisoes/evidencias/auditor-a-final.txt",
+      "sha256": "1270f34349ce3fa2e187e143e52c17d1e0a0ba6130b9d29647a44148c692effd"
+    }
+  ]
+}

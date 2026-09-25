@@ -1,0 +1,168 @@
+{
+  "contract_version": "1.0",
+  "task_id": "T4-execucao",
+  "task_revision": 1,
+  "result_revision": 3,
+  "snapshot_digest": "1f5f3eeb5f6a1cf2a89530a9675d3f3ce480c0ed137f93dde6cb2eb14f96cbe6",
+  "actor_id": "auditor-a",
+  "decision": "approved",
+  "findings": [
+    {
+      "id": "A1",
+      "severity": "high",
+      "status": "resolved",
+      "description": "DESFAZER apagava substituicao humana marcada divergente (lido sobrescrito pela leitura divergente). Resolvido: apagar recusa status divergente ou sem lido; divergencia guardada em lido_divergente (testes H1, H1b e TestRegressaoAuditoriaA).",
+      "evidence": [
+        {
+          "path": ".thinker-doer/run-2026-09-25/revisoes/evidencias/auditor-a-final.txt",
+          "sha256": "1270f34349ce3fa2e187e143e52c17d1e0a0ba6130b9d29647a44148c692effd"
+        },
+        {
+          "path": "pacing/acoes.py",
+          "sha256": "ae6eb63390c459f92c612da8fd2fe09b479ae8728987982efbad52eaabd44535"
+        },
+        {
+          "path": "tests/test_execucao.py",
+          "sha256": "bc03cc6404d38cf1942d94ac726ec2acf073862b726cbe0f23bad8ed5a797104"
+        }
+      ]
+    },
+    {
+      "id": "A2",
+      "severity": "medium",
+      "status": "resolved",
+      "description": "Disjuntor so era gravado no fim da execucao e se perdia com excecao ou recuperacao. Resolvido: Executor.acionar_disjuntor grava estado e diario na hora (teste H2).",
+      "evidence": [
+        {
+          "path": ".thinker-doer/run-2026-09-25/revisoes/evidencias/auditor-a-final.txt",
+          "sha256": "1270f34349ce3fa2e187e143e52c17d1e0a0ba6130b9d29647a44148c692effd"
+        },
+        {
+          "path": "pacing/acoes.py",
+          "sha256": "ae6eb63390c459f92c612da8fd2fe09b479ae8728987982efbad52eaabd44535"
+        },
+        {
+          "path": "pacing/principal.py",
+          "sha256": "4ee4dd752fa6c635b04853fdb750791aa75fc367c6fe89f05ab998e8c476105c"
+        }
+      ]
+    },
+    {
+      "id": "A4",
+      "severity": "medium",
+      "status": "resolved",
+      "description": "Excecao inesperada publicava relatorio verde e perdia o disjuntor. Resolvido: executar captura Exception, marca vermelho e grava erros.log (teste H4: PRECOS ERRO).",
+      "evidence": [
+        {
+          "path": ".thinker-doer/run-2026-09-25/revisoes/evidencias/auditor-a-final.txt",
+          "sha256": "1270f34349ce3fa2e187e143e52c17d1e0a0ba6130b9d29647a44148c692effd"
+        },
+        {
+          "path": "pacing/principal.py",
+          "sha256": "4ee4dd752fa6c635b04853fdb750791aa75fc367c6fe89f05ab998e8c476105c"
+        },
+        {
+          "path": "tests/test_execucao.py",
+          "sha256": "bc03cc6404d38cf1942d94ac726ec2acf073862b726cbe0f23bad8ed5a797104"
+        }
+      ]
+    },
+    {
+      "id": "A5",
+      "severity": "medium",
+      "status": "resolved",
+      "description": "Leitura de substituicoes falhava aberta com data em formato desconhecido, permitindo POST sobre substituicao humana e perda de rastreio. Resolvido: data ilegivel conta como existente, listing bloqueada, ausente apos POST vira incerta (testes H5, H5b).",
+      "evidence": [
+        {
+          "path": ".thinker-doer/run-2026-09-25/revisoes/evidencias/auditor-a-final.txt",
+          "sha256": "1270f34349ce3fa2e187e143e52c17d1e0a0ba6130b9d29647a44148c692effd"
+        },
+        {
+          "path": "pacing/acoes.py",
+          "sha256": "ae6eb63390c459f92c612da8fd2fe09b479ae8728987982efbad52eaabd44535"
+        },
+        {
+          "path": "pacing/principal.py",
+          "sha256": "4ee4dd752fa6c635b04853fdb750791aa75fc367c6fe89f05ab998e8c476105c"
+        }
+      ]
+    },
+    {
+      "id": "A6",
+      "severity": "low",
+      "status": "resolved",
+      "description": "testar-gravacao ignorava PARAR, disjuntor e papel do quarto e gastava o teto diario. Resolvido: recusa PARAR, disjuntor (inclusive o de recuperacao) e quarto que nao seja sem_tabela; contadores restaurados (testes H7, N2).",
+      "evidence": [
+        {
+          "path": ".thinker-doer/run-2026-09-25/revisoes/evidencias/auditor-a-final.txt",
+          "sha256": "1270f34349ce3fa2e187e143e52c17d1e0a0ba6130b9d29647a44148c692effd"
+        },
+        {
+          "path": "tests/test_execucao.py",
+          "sha256": "bc03cc6404d38cf1942d94ac726ec2acf073862b726cbe0f23bad8ed5a797104"
+        }
+      ]
+    },
+    {
+      "id": "A7",
+      "severity": "low",
+      "status": "resolved",
+      "description": "Teto de ativas ignorava divergentes e divergencia na conciliacao nao acionava o disjuntor. Resolvido em regras.plano_criacao e Executor.conciliar.",
+      "evidence": [
+        {
+          "path": ".thinker-doer/run-2026-09-25/revisoes/evidencias/auditor-a-final.txt",
+          "sha256": "1270f34349ce3fa2e187e143e52c17d1e0a0ba6130b9d29647a44148c692effd"
+        },
+        {
+          "path": "pacing/acoes.py",
+          "sha256": "ae6eb63390c459f92c612da8fd2fe09b479ae8728987982efbad52eaabd44535"
+        },
+        {
+          "path": "tests/test_execucao.py",
+          "sha256": "bc03cc6404d38cf1942d94ac726ec2acf073862b726cbe0f23bad8ed5a797104"
+        }
+      ]
+    },
+    {
+      "id": "N4",
+      "severity": "low",
+      "status": "resolved",
+      "description": "Desconto do proprio programa devolvido com campo extra ficava divergente e irremovivel. Resolvido: corresponde_nucleo marca ativa com lido e aciona o disjuntor; DESFAZER remove (teste N4).",
+      "evidence": [
+        {
+          "path": ".thinker-doer/run-2026-09-25/revisoes/evidencias/auditor-a-final.txt",
+          "sha256": "1270f34349ce3fa2e187e143e52c17d1e0a0ba6130b9d29647a44148c692effd"
+        },
+        {
+          "path": "pacing/acoes.py",
+          "sha256": "ae6eb63390c459f92c612da8fd2fe09b479ae8728987982efbad52eaabd44535"
+        }
+      ]
+    },
+    {
+      "id": "N4c",
+      "severity": "low",
+      "status": "accepted_risk",
+      "description": "Conciliar passou a usar corresponde_nucleo: uma substituicao de exatamente -10% percent com campos extras e sem reason criada por outra pessoa na data de um POST incerto que nao gravou e adotada e pode ser removida pela limpeza.",
+      "rationale": "Exige POST incerto sem gravacao e uma substituicao humana identica em preco e tipo na mesma data antes da conciliacao; o disjuntor dispara na adocao. O ensaio +0% confirma se reason volta na leitura. Correcao sugerida: exigir reason igual na conciliacao quando a API o devolve.",
+      "owner": "coordenador",
+      "impact": "No pior caso uma substituicao humana de -10% numa data e removida, com alerta e disjuntor acionado.",
+      "evidence": [
+        {
+          "path": ".thinker-doer/run-2026-09-25/revisoes/evidencias/auditor-a-final.txt",
+          "sha256": "1270f34349ce3fa2e187e143e52c17d1e0a0ba6130b9d29647a44148c692effd"
+        },
+        {
+          "path": "pacing/acoes.py",
+          "sha256": "ae6eb63390c459f92c612da8fd2fe09b479ae8728987982efbad52eaabd44535"
+        }
+      ]
+    }
+  ],
+  "evidence": [
+    {
+      "path": ".thinker-doer/run-2026-09-25/revisoes/evidencias/auditor-a-final.txt",
+      "sha256": "1270f34349ce3fa2e187e143e52c17d1e0a0ba6130b9d29647a44148c692effd"
+    }
+  ]
+}

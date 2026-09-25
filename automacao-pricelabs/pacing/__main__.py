@@ -182,9 +182,11 @@ def cmd_retomar(args, amb):
 def cmd_modo(args, amb):
     dados = json.loads(Path(args.config).read_text(encoding="utf-8"))
     dados["modo"] = args.novo
+    if args.teto_dia is not None:
+        dados["desconto"]["teto_dia"] = args.teto_dia
     config.validar(dados)
     Path(args.config).write_text(json.dumps(dados, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-    print(f"Modo alterado para {args.novo}.")
+    print(f"Modo alterado para {args.novo}" + (f", até {args.teto_dia} desconto(s) por dia." if args.teto_dia is not None else "."))
     return 0
 
 
@@ -200,9 +202,15 @@ def cmd_configurar_chaves(args, amb):
 
 def cmd_testar_gravacao(args, amb):
     cfg = _cfg(args)
-    item = next((x for x in cfg["listings"] if x["id"] == args.listing), None)
+    listing = args.listing or next((x["id"] for x in cfg["listings"] if x["desconto_permitido"]), None)
+    item = next((x for x in cfg["listings"] if x["id"] == listing), None)
     if item is None or not args.confirmar:
         print("Informe --listing (um id do config) e --confirmar. Nada foi alterado.")
+        return 2
+    if not args.data:
+        args.data = input(f"Data livre de {item['apelido']}, sem substituição (AAAA-MM-DD): ").strip()
+    if tempo.ler_data(args.data) is None or len(args.data) != 10:
+        print("Data inválida. Use o formato AAAA-MM-DD. Nada foi alterado.")
         return 2
     if item["papel"] != "sem_tabela":
         print("O ensaio só é permitido em quarto sem tabela de ocupação (ex.: Afrodite). Nada foi alterado.")
@@ -225,7 +233,10 @@ def cmd_testar_gravacao(args, amb):
         dso = est["dsos"].get(f"{item['id']}|{args.data}")
         if dso:
             print("  lido de volta:", json.dumps(dso.get("lido"), ensure_ascii=False))
-        print("Remover:", ex.apagar(acao, respeitar_parar=False))
+        if args.manter:
+            print("Mantido na conta (+0%, preço igual). Agora teste o DESFAZER.bat, que deve removê-lo.")
+        else:
+            print("Remover:", ex.apagar(acao, respeitar_parar=False))
         est["descontadas"].pop(f"{item['id']}|{args.data}", None)
         est["contadores"] = contadores  # o ensaio não gasta o teto diário
         ex.armazem.salvar(est)
@@ -270,11 +281,13 @@ def main(argv=None, amb=None) -> int:
     sub.add_parser("retomar")
     m = sub.add_parser("modo")
     m.add_argument("novo", choices=["observar", "ativo"])
+    m.add_argument("--teto-dia", type=int, choices=range(0, 7), metavar="0-6")
     sub.add_parser("configurar-chaves")
     t = sub.add_parser("testar-gravacao")
-    t.add_argument("--listing", required=True)
-    t.add_argument("--data", required=True)
+    t.add_argument("--listing", help="padrão: o primeiro quarto com desconto permitido")
+    t.add_argument("--data", help="padrão: pergunta na tela")
     t.add_argument("--confirmar", action="store_true")
+    t.add_argument("--manter", action="store_true", help="deixa o +0%% na conta para testar o DESFAZER")
     sub.add_parser("agendar")
     args = p.parse_args(argv)
     comandos = {"executar": cmd_executar, "verificar": cmd_verificar, "desfazer": cmd_desfazer, "parar": cmd_parar,
@@ -284,7 +297,20 @@ def main(argv=None, amb=None) -> int:
         return comandos[args.comando](args, amb)
     except (config.ConfigInvalida, ChaveAusente) as e:
         print(f"ERRO: {e}")
+        if isinstance(e, config.ConfigInvalida) and args.comando in ("executar", "verificar"):
+            _avisar_config_invalida(e, amb)
         return 2
+
+
+def _avisar_config_invalida(erro, amb):
+    """Com pythonw ninguém vê a tela: o erro de config vai para a Área de Trabalho."""
+    mesa = relatorio.area_de_trabalho({})
+    if mesa is None:
+        return
+    agora = tempo.agora(-3) if amb.relogio is None else amb.relogio()
+    relatorio.trocar_status(mesa, f"PRECOS ERRO {agora.strftime('%d-%m %Hh%M')}.txt",
+                            f"O config.json tem um erro e nada foi executado:\n{erro}\n"
+                            "Desfaça a última edição do config.json ou rode OBSERVAR.bat / ATIVAR.bat.\n")
 
 
 if __name__ == "__main__":

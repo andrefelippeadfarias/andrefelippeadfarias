@@ -1,0 +1,42 @@
+Auditor B (dominio, pacing, datas, fuso, feriados, sincronizacao e operacao no Windows) - parecer final
+Data: 25/09/2026. Codigo conferido: HEAD e17c4f4 (automacao-pricelabs/).
+Regra seguida: nenhuma alteracao no projeto; experimentos em copias na area temporaria do auditor.
+
+Comandos rodados (copia B3 do HEAD e17c4f4):
+- python3 -m unittest discover -s tests -t .            -> Ran 105 tests, OK (skipped=3)
+- testes descartaveis N1/N2/residuo 3/UserId (removidos depois) -> todos OK:
+  - N1: last_date_pushed "2026-09-26" as 27/09 05:30 -> verde, 0 alertas de "30 h";
+        "2026-09-24" as 26/09 08:30 -> amarelo, 7 alertas (alerta verdadeiro continua).
+  - N2: historico.csv travado -> amarelo, alerta "Nao foi possivel gravar o historico.csv",
+        arquivo "PRECOS ATENCAO 26-09 08h30.txt" publicado (nao fica o OK antigo).
+  - erro inesperado -> vermelho, erros.log com traceback, sem chave-canario.
+  - residuo do item 3: modo observar com descontos ativos -> amarelo.
+  - UserId: sem USERNAME, usa getpass.getuser(); XML com <UserId>DOMINIO\usuario</UserId>
+    no LogonTrigger e no Principal, na ordem do schema do Agendador.
+- suite inteira com sys.platform=win32 simulado, ctypes.windll e subprocess.run falsos:
+  105 testes; 0 chamadas reais a SHGetFolderPathW; 0 subprocess reais; unico erro e
+  artefato da simulacao (test_salvar_sem_cofre e pulado no Windows real por os.name).
+- sha256 de reviewed_files de T3-dominio e T5-operacao conferidos: todos iguais aos arquivos atuais.
+
+Achados e situacao final:
+ 1 high   erro inesperado gerava relatorio verde -> resolvido (vermelho + erros.log; _fechar protegido).
+ 2 high   autoteste do VERIFICAR falhava no Windows e rodava schtasks real -> resolvido (plataforma/comando injetados).
+ 3 medium alertas graves nao mudavam a cor -> resolvido (alertas_gerais com gravidade; divergente, mercado,
+          descontos sem remocao no modo atual -> amarelo).
+ 4 medium Area de Trabalho errada com OneDrive -> resolvido no codigo (SHGetFolderPathW CSIDL 0x0010 e
+          alternativas com OneDrive\Area de Trabalho); risco aceito: so conferivel num Windows real (verificar.bat mostra o caminho).
+ 5 medium mediana misturando semana e fim de semana -> resolvido (mediana por tipo de bloco).
+ 6 medium data sem hora em booked_date/cancelled_on -> resolvido (lado conservador em cada uso).
+ 7 medium tarefa de logon exigia administrador -> resolvido no codigo (UserId do usuario atual, agendar devolve 1,
+          verificar consulta as duas tarefas); risco aceito: registro sem administrador so conferivel no Windows real.
+ 8 low    cabecalho do historico.csv variavel -> resolvido (colunas fixas por codigo).
+ 9 low    pergunta ao Jev com 10% fixo -> resolvido (percentual do config).
+10 low    limpeza apagava arquivos do dono "PRECOS * *.txt" -> resolvido (expressao exata).
+11 low    verificar silencioso escondia fuso errado -> resolvido (aviso na Area de Trabalho).
+12 low    tokens declarados abaixo do real -> resolvido (README).
+TF1 low   teste nao conferia CRLF nos bytes -> resolvido.
+TF2 low   limite de mercado 40% sem teste -> resolvido (40,0 bloqueia; 39,9 passa).
+N1 low    last_date_pushed so com data gerava alerta grave falso -> resolvido.
+N2 medium historico.csv travado (Excel) impedia publicar o status -> resolvido.
+
+Parecer: aprovado. Riscos aceitos (4 e 7) dependem de conferencia no Windows real pelo dono via verificar.bat.

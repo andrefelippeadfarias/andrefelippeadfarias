@@ -107,7 +107,7 @@
     "dependencies": [],
     "context_allowlist": [
       "docs/apis-verificadas.md",
-      "schemas/",
+      "schemas",
       ".thinker-doer/run-2026-09-25/conselho/01-arquitetura.md",
       "config.json"
     ]

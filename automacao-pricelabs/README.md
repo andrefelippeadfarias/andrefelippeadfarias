@@ -41,7 +41,10 @@ Toda a lógica segue o relatório `pricelabs/relatorio-ocupacao-recanto-dos-moin
    winget install -e --id Python.Python.3.12
    ```
    Outra opção é o instalador do python.org, marcando "Add python.exe to PATH".
-2. **Copie a pasta** `automacao-pricelabs` para `C:\RecantoPrecos`, fora do OneDrive.
+2. **Baixe o projeto.** No GitHub, use "Code → Download ZIP".
+   - Antes de extrair, clique com o botão direito no ZIP → Propriedades → marque **Desbloquear** → OK. Sem isso, o Windows bloqueia os arquivos `.bat`.
+   - Extraia e deixe a pasta `automacao-pricelabs` em `C:\RecantoPrecos`, fora do OneDrive.
+   - A pasta `.thinker-doer` guarda o histórico do projeto e pode ser ignorada.
 3. **Ligue a API do PriceLabs:** app.pricelabs.co → Account Settings → API Details → Enable → "I Need API Access" → digite `API`. Copie a chave.
    - Precisa ser a conta do **dono**. Com um subusuário, a leitura de reservas falha.
    - Custo: US$ 1 por listing por mês, ou seja, US$ 7 por mês.
@@ -49,10 +52,23 @@ Toda a lógica segue o relatório `pricelabs/relatorio-ocupacao-recanto-dos-moin
    - O nome "jev-1.13-free" não existe; o certo usa dois-pontos.
    - Limite gratuito: 50 chamadas por dia. O programa usa no máximo 7.
 5. **Clique duas vezes em `windows\instalar.bat`.** Ele:
-   - pede as duas chaves e as guarda no Gerenciador de Credenciais do Windows, nunca em arquivo;
-   - cria a tarefa agendada;
-   - roda a verificação.
-6. **Confira o resultado da verificação.** Tudo deve aparecer como OK. O fuso do Windows precisa ser Brasília (UTC−3).
+   - pede as duas chaves. Ao colar, a chave **não aparece na tela**, e isso é normal. As chaves ficam no Gerenciador de Credenciais do Windows, nunca em arquivo;
+   - cria as tarefas agendadas;
+   - roda uma primeira vez em modo Observar;
+   - faz a verificação.
+6. **Confira o resultado da verificação.** O fuso do Windows precisa ser Brasília (UTC−3).
+
+### Se aparecer FALHA
+
+| Item | O que fazer |
+|---|---|
+| Jev | Não é erro seu: o modelo gratuito pode estar sem servidores no OpenRouter. O programa segue em Observar sem decidir nada. No OpenRouter, confira em Settings → Privacy se modelos gratuitos estão liberados e se a chave tem limite de crédito de US$ 0. Erro 402 indica saldo negativo |
+| PriceLabs 403 | A chave não é a do dono da conta, ou a API não foi habilitada |
+| Leitura de reservas | Mesma causa: é preciso a chave do dono |
+| Fuso | Ajuste o Windows para "(UTC−03:00) Brasília" |
+| Tarefa agendada | Rode `instalar.bat` de novo. Se falhar, mande a mensagem de erro |
+| Autoteste | Mande o resultado da verificação para quem mantém o código. Não passe para Ativo |
+| Área de Trabalho | Informe o caminho da sua Área de Trabalho em `area_de_trabalho`, no `config.json` |
 
 ## Como ele roda
 
@@ -75,12 +91,17 @@ Toda a lógica segue o relatório `pricelabs/relatorio-ocupacao-recanto-dos-moin
 
 | Arquivo | O que faz |
 |---|---|
+| `windows\instalar.bat` | Instala: chaves, tarefas agendadas, primeira execução e verificação |
 | `windows\executar.bat` | Roda uma vez agora |
 | `windows\verificar.bat` | Confere Python, fuso, chaves, PriceLabs, reservas, Jev, tarefa agendada e roda o autoteste |
 | `windows\parar.bat` | Para tudo: nenhuma execução lê ou altera a conta. Os descontos já gravados continuam |
 | `windows\retomar.bat` | Volta a rodar e rearma o disjuntor |
 | `windows\desfazer.bat` | Remove **só** os descontos criados pelo programa, e só se estiverem exatamente como ele gravou. Depois, clique em "Sync Now" no PriceLabs para valer na hora |
-| `windows\observar.bat` / `windows\ativar.bat` | Troca o modo |
+| `windows\observar.bat` | Volta para o modo Observar |
+| `windows\ativar.bat` | Liga o modo Ativo com no máximo 1 desconto por dia |
+| `windows\ampliar.bat` | Mantém Ativo e sobe para até 6 descontos por dia. Use depois de uma semana tranquila |
+| `windows\ensaio.bat` | Ensaio de gravação: pergunta uma data, grava +0% na Afrodite, lê de volta e apaga |
+| `windows\ensaio-manter.bat` | Igual, mas deixa o +0% na conta para você testar o `desfazer.bat` |
 
 **Modos:**
 
@@ -96,14 +117,10 @@ Só quando tudo abaixo estiver cumprido:
 2. Pelo menos 5 dias com o Jev respondendo e 20 decisões registradas. O relatório mostra essa contagem na seção Saúde.
 3. Com dados iguais, o Jev mudou de resposta em menos de 10% das vezes.
 4. Você concorda com o que o programa "faria" nos últimos 3 dias.
-5. Você fez o ensaio de gravação numa data livre da Afrodite, sem substituição:
-   ```
-   py -3 -m pacing testar-gravacao --listing 350362___722807 --data AAAA-MM-DD --confirmar
-   ```
-   Ele grava +0% (preço igual), lê de volta, apaga e mostra o `last_date_pushed` antes e depois.
-6. Você testou PARAR e DESFAZER.
+5. Você rodou `ensaio.bat` numa data livre da Afrodite, sem substituição. Ele grava +0% (preço igual), lê de volta, apaga e mostra o `last_date_pushed` antes e depois. Mande esse resultado para quem mantém o código: ele confirma se o PriceLabs devolve o campo `reason`.
+6. Você testou PARAR e DESFAZER. Para testar o DESFAZER, rode `ensaio-manter.bat` e depois `desfazer.bat`.
 
-Na primeira semana em Ativo, recomendo `"teto_dia": 1` no `config.json`.
+Depois disso, use `ativar.bat` (1 desconto por dia) e, após uma semana sem surpresas, `ampliar.bat`.
 
 ## Custos por mês
 

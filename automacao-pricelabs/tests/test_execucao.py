@@ -727,3 +727,42 @@ class TestReauditoriaB(Base):
         Armazem(self.dados).salvar(est)
         r = self.rodar()
         self.assertEqual(r["status"], "amarelo")
+
+
+class TestReauditoriaFinalA(Base):
+    modo = "ativo"
+    confirmar = False
+
+    def test_n4c_conciliacao_nao_adota_substituicao_alheia_com_extras(self):
+        self.sim.falhas.append(("POST", "/overrides", 503))   # a primeira gravação fica incerta e não grava
+        self.rodar()
+        data = "2026-09-26"
+        self.sim.overrides[AFRODITE][data] = {"date": data, "price": "-10", "price_type": "percent", "min_stay": 2}
+        self.cli("retomar")
+        self.rodar(datetime(2026, 9, 26, 8, 30, tzinfo=BRT))
+        self.assertEqual(self.estado()["dsos"][f"{AFRODITE}|{data}"]["status"], "divergente")
+        self.cli("desfazer", "--confirmar")
+        self.assertEqual(self.sim.overrides[AFRODITE][data]["min_stay"], 2, "a substituição alheia continua")
+
+
+class TestEntrega(Base):
+    def test_ensaio_pergunta_a_data_e_manter_permite_testar_desfazer(self):
+        with mock.patch("builtins.input", return_value="2026-10-05"):
+            codigo, saida = self.cli("testar-gravacao", "--confirmar", "--manter")
+        self.assertIn("Mantido na conta", saida)
+        self.assertEqual(sorted(self.nossas()), ["2026-10-05"])
+        self.cli("desfazer", "--confirmar")
+        self.assertEqual(self.nossas(), {})
+        with mock.patch("builtins.input", return_value="05/10/2026"):
+            self.assertEqual(self.cli("testar-gravacao", "--confirmar")[0], 2)
+
+    def test_ativar_com_teto_e_erro_de_config_na_area_de_trabalho(self):
+        self.cli("modo", "ativo", "--teto-dia", "1")
+        cfg = json.loads(self.cfg_path.read_text(encoding="utf-8"))
+        self.assertEqual((cfg["modo"], cfg["desconto"]["teto_dia"]), ("ativo", 1))
+        self.cfg_path.write_text('{"modo": "ativo",', encoding="utf-8")
+        with mock.patch("pacing.relatorio.area_de_trabalho", return_value=self.mesa):
+            self.assertEqual(self.cli("executar")[0], 2)
+        erro = list(self.mesa.glob("PRECOS ERRO *.txt"))
+        self.assertEqual(len(erro), 1)
+        self.assertIn("config.json", erro[0].read_text(encoding="utf-8"))

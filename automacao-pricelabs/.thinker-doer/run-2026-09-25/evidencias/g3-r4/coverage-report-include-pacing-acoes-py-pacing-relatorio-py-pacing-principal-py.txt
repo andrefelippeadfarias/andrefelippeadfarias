@@ -1,0 +1,12 @@
+$ python -m coverage report --include=pacing/acoes.py,pacing/relatorio.py,pacing/principal.py --fail-under=85
+exit=0
+--- stdout ---
+Name                  Stmts   Miss Branch BrPart  Cover
+-------------------------------------------------------
+pacing/acoes.py         217      2     60      3    98%
+pacing/principal.py     312      9     94      2    97%
+pacing/relatorio.py      56      1     20      1    97%
+-------------------------------------------------------
+TOTAL                   585     12    174      6    98%
+
+--- stderr ---

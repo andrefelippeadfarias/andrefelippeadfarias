@@ -1,12 +1,12 @@
 {
   "contract_version": "1.0",
   "task_id": "T5-operacao",
-  "task_revision": 1,
+  "task_revision": 2,
   "title": "Scripts do Windows, agendamento 7x/dia e documentação de operação",
   "requirements": [
     {
       "id": "R1",
-      "description": "Instalação e uso por não programador com scripts de um clique."
+      "description": "Instalação e uso por não programador com scripts de um clique: instalar (chaves, agendamento, primeira execução e verificação), ensaio de gravação com e sem manter, ativar com 1 desconto por dia e ampliar para 6."
     },
     {
       "id": "R2",
@@ -34,7 +34,7 @@
       "requirement_ids": [
         "R3"
       ],
-      "description": "README em português cobre instalação, chaves, modos, agenda, relatório, parar, desfazer, custos e pendências.",
+      "description": "README em português cobre download com Desbloquear, instalação, chaves, o que fazer se aparecer FALHA, modos, agenda, relatório, parar, desfazer, ensaio, custos e pendências; erro no config.json aparece na Área de Trabalho.",
       "check_ids": [
         "unit"
       ]
@@ -80,10 +80,6 @@
         "operation": "create"
       },
       {
-        "path": "windows/agendar.bat",
-        "operation": "create"
-      },
-      {
         "path": ".gitattributes",
         "operation": "create"
       },
@@ -94,6 +90,18 @@
       {
         "path": "pacing/__main__.py",
         "operation": "create"
+      },
+      {
+        "path": "windows/ampliar.bat",
+        "operation": "create"
+      },
+      {
+        "path": "windows/ensaio.bat",
+        "operation": "create"
+      },
+      {
+        "path": "windows/ensaio-manter.bat",
+        "operation": "create"
       }
     ],
     "dependencies": [
@@ -101,7 +109,7 @@
     ],
     "context_allowlist": [
       "docs/apis-verificadas.md",
-      "schemas/",
+      "schemas",
       ".thinker-doer/run-2026-09-25/conselho/01-arquitetura.md",
       "config.json"
     ]

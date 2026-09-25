@@ -1,0 +1,227 @@
+{
+  "contract_version": "1.0",
+  "task_id": "T5-operacao",
+  "task_revision": 1,
+  "result_revision": 3,
+  "snapshot_digest": "fd24c8772f4cfefc7c066c9bc2eb29803f610c810cbc38df52577f94ba8d09ad",
+  "actor_id": "auditor-b",
+  "decision": "approved",
+  "findings": [
+    {
+      "id": "B-1",
+      "severity": "high",
+      "status": "resolved",
+      "description": "Erro inesperado gerava relatório verde e o traceback se perdia no pythonw (principal.executar). Agora vira vermelho, cria ATENCAO e grava erros.log sem chaves.",
+      "evidence": [
+        {
+          "path": ".thinker-doer/run-2026-09-25/revisoes/evidencias/auditor-b-final.txt",
+          "sha256": "20fb214bb0bc33f968115865f0867fd421843960de2ece3f0103a9279f28b535"
+        },
+        {
+          "path": "pacing/principal.py",
+          "sha256": "4ee4dd752fa6c635b04853fdb750791aa75fc367c6fe89f05ab998e8c476105c"
+        },
+        {
+          "path": "tests/test_execucao.py",
+          "sha256": "bc03cc6404d38cf1942d94ac726ec2acf073862b726cbe0f23bad8ed5a797104"
+        }
+      ]
+    },
+    {
+      "id": "B-2",
+      "severity": "high",
+      "status": "resolved",
+      "description": "No Windows o autoteste do VERIFICAR falhava sempre e rodava schtasks /Create de verdade. Plataforma e executor de comandos agora são injetados; suíte com win32 simulado não chama schtasks nem a Área de Trabalho real.",
+      "evidence": [
+        {
+          "path": ".thinker-doer/run-2026-09-25/revisoes/evidencias/auditor-b-final.txt",
+          "sha256": "20fb214bb0bc33f968115865f0867fd421843960de2ece3f0103a9279f28b535"
+        },
+        {
+          "path": "pacing/__main__.py",
+          "sha256": "6c73bfa97c7dd6f078142f9276d5e544cbe4836d13fa58d0a911d9777f00b0c5"
+        },
+        {
+          "path": "tests/test_execucao.py",
+          "sha256": "bc03cc6404d38cf1942d94ac726ec2acf073862b726cbe0f23bad8ed5a797104"
+        }
+      ]
+    },
+    {
+      "id": "B-4",
+      "severity": "medium",
+      "status": "accepted_risk",
+      "description": "Área de Trabalho errada com OneDrive (pasta pt-BR não procurada; Desktop antigo preferido). Corrigido com SHGetFolderPathW (CSIDL_DESKTOPDIRECTORY) e alternativas com OneDrive; verificar mostra o caminho.",
+      "evidence": [
+        {
+          "path": ".thinker-doer/run-2026-09-25/revisoes/evidencias/auditor-b-final.txt",
+          "sha256": "20fb214bb0bc33f968115865f0867fd421843960de2ece3f0103a9279f28b535"
+        },
+        {
+          "path": "pacing/relatorio.py",
+          "sha256": "843bd853624fd046e9a402c864b2de99d86d218e777febbd26c970b18698c6c3"
+        },
+        {
+          "path": "pacing/__main__.py",
+          "sha256": "6c73bfa97c7dd6f078142f9276d5e544cbe4836d13fa58d0a911d9777f00b0c5"
+        },
+        {
+          "path": "tests/test_execucao.py",
+          "sha256": "bc03cc6404d38cf1942d94ac726ec2acf073862b726cbe0f23bad8ed5a797104"
+        }
+      ],
+      "rationale": "A chamada via ctypes só existe no Windows e não pode ser executada neste ambiente; a lógica de alternativas está testada.",
+      "owner": "dono, via verificar.bat",
+      "impact": "Se a pasta vier errada, o status e o ATENCAO-PRECOS.txt não aparecem na Área de Trabalho; o relatorio.html continua na pasta de dados e o verificar mostra FALHA ou o caminho usado."
+    },
+    {
+      "id": "B-7",
+      "severity": "medium",
+      "status": "accepted_risk",
+      "description": "Gatilho de logon sem UserId exigia administrador. Agora o XML leva DOMÍNIO\\usuário no LogonTrigger e no Principal, agendar devolve 1 se falhar e verificar consulta as duas tarefas.",
+      "evidence": [
+        {
+          "path": ".thinker-doer/run-2026-09-25/revisoes/evidencias/auditor-b-final.txt",
+          "sha256": "20fb214bb0bc33f968115865f0867fd421843960de2ece3f0103a9279f28b535"
+        },
+        {
+          "path": "pacing/agenda.py",
+          "sha256": "413ff2252327686b22548c2aaa9c6477707c51ef9379548257eb8de083a79e96"
+        },
+        {
+          "path": "pacing/__main__.py",
+          "sha256": "6c73bfa97c7dd6f078142f9276d5e544cbe4836d13fa58d0a911d9777f00b0c5"
+        },
+        {
+          "path": "tests/test_operacao.py",
+          "sha256": "aadaf93ce04ab3860c3a217fe4ae7c46f53fec0e2fd82956de10844a925d5e67"
+        }
+      ],
+      "rationale": "O registro com schtasks sem elevação só pode ser conferido num Windows real; o XML segue o schema do Agendador.",
+      "owner": "dono, via instalar.bat e verificar.bat",
+      "impact": "Se o registro falhar, instalar.bat mostra FALHA e o verificar acusa a tarefa ausente; sem a tarefa de logon, execuções perdidas só aparecem pelo aviso ATRASADO."
+    },
+    {
+      "id": "B-8",
+      "severity": "low",
+      "status": "resolved",
+      "description": "historico.csv tinha cabeçalho definido pela primeira linha (3 colunas quando a primeira execução falhava). Agora as colunas são fixas por código do quarto.",
+      "evidence": [
+        {
+          "path": ".thinker-doer/run-2026-09-25/revisoes/evidencias/auditor-b-final.txt",
+          "sha256": "20fb214bb0bc33f968115865f0867fd421843960de2ece3f0103a9279f28b535"
+        },
+        {
+          "path": "pacing/principal.py",
+          "sha256": "4ee4dd752fa6c635b04853fdb750791aa75fc367c6fe89f05ab998e8c476105c"
+        },
+        {
+          "path": "tests/test_execucao.py",
+          "sha256": "bc03cc6404d38cf1942d94ac726ec2acf073862b726cbe0f23bad8ed5a797104"
+        }
+      ]
+    },
+    {
+      "id": "B-10",
+      "severity": "low",
+      "status": "resolved",
+      "description": "Limpeza por 'PRECOS * *.txt' apagava arquivos do dono. Agora só remove nomes na expressão exata do programa.",
+      "evidence": [
+        {
+          "path": ".thinker-doer/run-2026-09-25/revisoes/evidencias/auditor-b-final.txt",
+          "sha256": "20fb214bb0bc33f968115865f0867fd421843960de2ece3f0103a9279f28b535"
+        },
+        {
+          "path": "pacing/relatorio.py",
+          "sha256": "843bd853624fd046e9a402c864b2de99d86d218e777febbd26c970b18698c6c3"
+        },
+        {
+          "path": "pacing/__main__.py",
+          "sha256": "6c73bfa97c7dd6f078142f9276d5e544cbe4836d13fa58d0a911d9777f00b0c5"
+        },
+        {
+          "path": "tests/test_execucao.py",
+          "sha256": "bc03cc6404d38cf1942d94ac726ec2acf073862b726cbe0f23bad8ed5a797104"
+        }
+      ]
+    },
+    {
+      "id": "B-11",
+      "severity": "low",
+      "status": "resolved",
+      "description": "Verificar silencioso no logon escondia fuso errado. Agora grava aviso na Área de Trabalho com a falha.",
+      "evidence": [
+        {
+          "path": ".thinker-doer/run-2026-09-25/revisoes/evidencias/auditor-b-final.txt",
+          "sha256": "20fb214bb0bc33f968115865f0867fd421843960de2ece3f0103a9279f28b535"
+        },
+        {
+          "path": "pacing/__main__.py",
+          "sha256": "6c73bfa97c7dd6f078142f9276d5e544cbe4836d13fa58d0a911d9777f00b0c5"
+        },
+        {
+          "path": "tests/test_execucao.py",
+          "sha256": "bc03cc6404d38cf1942d94ac726ec2acf073862b726cbe0f23bad8ed5a797104"
+        }
+      ]
+    },
+    {
+      "id": "B-12",
+      "severity": "low",
+      "status": "resolved",
+      "description": "README declarava cerca de 1 mil tokens por chamada; em observar são até cerca de 5 mil. README corrigido.",
+      "evidence": [
+        {
+          "path": ".thinker-doer/run-2026-09-25/revisoes/evidencias/auditor-b-final.txt",
+          "sha256": "20fb214bb0bc33f968115865f0867fd421843960de2ece3f0103a9279f28b535"
+        },
+        {
+          "path": "README.md",
+          "sha256": "6f5a51e3da0367fdb831e60b2e3393f0a260fbb22da1dabaf1c01090a876d2f8"
+        }
+      ]
+    },
+    {
+      "id": "B-TF1",
+      "severity": "low",
+      "status": "resolved",
+      "description": "Teste dos .bat não conferia CRLF nos bytes. Agora confere fim \\r\\n e ausência de LF solto.",
+      "evidence": [
+        {
+          "path": ".thinker-doer/run-2026-09-25/revisoes/evidencias/auditor-b-final.txt",
+          "sha256": "20fb214bb0bc33f968115865f0867fd421843960de2ece3f0103a9279f28b535"
+        },
+        {
+          "path": "tests/test_operacao.py",
+          "sha256": "aadaf93ce04ab3860c3a217fe4ae7c46f53fec0e2fd82956de10844a925d5e67"
+        }
+      ]
+    },
+    {
+      "id": "B-N2",
+      "severity": "medium",
+      "status": "resolved",
+      "description": "historico.csv aberto no Excel impedia publicar o status e deixava o OK anterior na tela. Agora vira alerta amarelo e o relatório é publicado.",
+      "evidence": [
+        {
+          "path": ".thinker-doer/run-2026-09-25/revisoes/evidencias/auditor-b-final.txt",
+          "sha256": "20fb214bb0bc33f968115865f0867fd421843960de2ece3f0103a9279f28b535"
+        },
+        {
+          "path": "pacing/principal.py",
+          "sha256": "4ee4dd752fa6c635b04853fdb750791aa75fc367c6fe89f05ab998e8c476105c"
+        },
+        {
+          "path": "tests/test_execucao.py",
+          "sha256": "bc03cc6404d38cf1942d94ac726ec2acf073862b726cbe0f23bad8ed5a797104"
+        }
+      ]
+    }
+  ],
+  "evidence": [
+    {
+      "path": ".thinker-doer/run-2026-09-25/revisoes/evidencias/auditor-b-final.txt",
+      "sha256": "20fb214bb0bc33f968115865f0867fd421843960de2ece3f0103a9279f28b535"
+    }
+  ]
+}

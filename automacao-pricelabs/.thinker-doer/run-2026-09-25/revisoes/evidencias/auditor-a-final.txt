@@ -1,0 +1,70 @@
+Parecer final do auditor A (lente: invariantes de seguranca e de dinheiro)
+Data: 25/09/2026. Codigo auditado: commit e17c4f4 (HEAD 6f25f01 so altera ata e inventarios).
+Auditor independente: nao escreveu o codigo. Nenhuma chamada real a PriceLabs, OpenRouter ou TypeSafe.
+
+PARECER: aprovado com riscos aceitos (todos baixos, listados abaixo).
+
+COMO FOI VERIFICADO
+- Copia do projeto fora do repositorio (scratchpad/auditoria/A3), sem __pycache__.
+- python3 -m unittest discover -s tests -t .  -> 105 testes, OK (3 pulados), Python 3.11.15.
+- Testes descartaveis do auditor (so na copia, simulador tests/simulador.py):
+  H1, H1b (desfazer x substituicao humana), H2 (disjuntor com .bak e diario),
+  H3 (UTF-8 truncado em estado, .bak e diario), H4 (IncompleteRead no POST),
+  H5, H5b (data de substituicao em formato desconhecido), H7/N2 (ensaio com PARAR,
+  disjuntor, papel e estado recuperado), N1 (DESFAZER sobre estado recuperado),
+  N4 (POST do programa devolvido com campo extra), N4c (conciliacao com campo extra).
+- Conferido que os sha256 de reviewed_files de T1, T2 e T4 (result revision 3)
+  batem com os arquivos atuais antes de assinar os review.json.
+
+ACHADOS E SITUACAO
+A1 high  DESFAZER apagava substituicao humana marcada divergente.
+         RESOLVIDO: apagar recusa divergente ou sem lido (acoes.py); diario so
+         restaura lido de criada/adotada (estado.py). H1 e H1b: humana intacta.
+A2 med   Disjuntor perdido ao recuperar estado do .bak ou do diario.
+         RESOLVIDO: acionar_disjuntor grava estado e diario na hora; diario
+         reconstroi disjuntor, contadores e descontadas. H2: contencao.
+A3 med   UTF-8 truncado derrubava executar e verificar.
+         RESOLVIDO: ValueError tratado, diario com errors=replace, fsync. H3 ok.
+A4 med   http.client.HTTPException escapava; relatorio saia verde.
+         RESOLVIDO: vira ErroRede (rede.py); excecao inesperada -> vermelho e
+         erros.log. H4: "PRECOS ERRO", gravacao fica pendente para conciliar.
+A5 med   Data de substituicao em formato desconhecido abria a falha.
+         RESOLVIDO: data ilegivel conta como existente e bloqueia a listing;
+         "ausente" apos POST vira "incerta". H5/H5b: zero POST.
+A6 low   testar-gravacao ignorava PARAR, disjuntor e papel.
+         RESOLVIDO: recusa PARAR, disjuntor (inclusive o de recuperacao) e quarto
+         que nao seja sem_tabela; nao gasta o teto diario.
+A7 low   Trava: arquivo vazio tido como orfao; __exit__ apagava trava alheia.
+         Teto de ativas ignorava divergentes.
+         RESOLVIDO: orfa por mtime, marca propria na saida; divergentes contam;
+         divergencia na conciliacao aciona o disjuntor.
+N1 med   Contencao por estado recuperado era contornavel por comandos da CLI.
+         RESOLVIDO: Armazem._conter dentro de carregar. N1: contencao e alerta
+         mesmo depois de DESFAZER; N2: ensaio recusado.
+N4 low   Desconto do proprio programa com campo extra ficava irremovivel.
+         RESOLVIDO: corresponde_nucleo marca ativa com lido e aciona disjuntor.
+         N4: DESFAZER apaga.
+
+RISCOS ACEITOS (baixos)
+N4c low  A conciliacao (acoes.py, conciliar) passou a usar corresponde_nucleo.
+         Se um POST incerto nao gravou e, antes da proxima execucao, alguem criar
+         na mesma data uma substituicao de exatamente -10% percent com campos
+         extras e sem reason (ou se a API nao devolver reason), ela e adotada
+         como do programa e pode ser removida pela limpeza (reproduzido: N4c).
+         O disjuntor dispara. Mitigacao: ensaio +0% confirma se reason volta;
+         correcao sugerida: na conciliacao exigir reason igual quando a API o
+         devolve, ou usar corresponde estrito.
+N1b low  carregar agora grava (disjuntor de recuperacao) e verificar nao usa a
+         Trava. Corrida rara com executar (Windows, arquivo em uso) pode causar
+         contencao espuria. Falha segura (so bloqueia criacao).
+R1  low  Se estado.json, .bak e diario forem todos apagados, o programa esquece
+         os proprios descontos (ate 6 dias) e pode criar outros; DESFAZER nao os
+         ve. Documentar: nao apagar a pasta de dados; remover na tela.
+J1  low  jev.validar exige o campo "type" em cada resposta, que a documentacao
+         nao lista. Se a API nao o devolver, nenhum desconto e criado (falha
+         fechada). Conferir na primeira resposta real.
+
+REFUTADAS NA LENTE: rota fora da lista, redirecionamento com chave, desconto
+maior que -10% ou em quarto proibido, criacao sem confirmacao real, acao com
+resposta invalida do Jev, vazamento de chave em arquivo, PARAR ignorado na
+execucao, POST repetido, limpeza apagando o que nao e do programa.

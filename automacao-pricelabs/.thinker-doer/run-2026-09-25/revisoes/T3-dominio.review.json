@@ -1,0 +1,137 @@
+{
+  "contract_version": "1.0",
+  "task_id": "T3-dominio",
+  "task_revision": 1,
+  "result_revision": 3,
+  "snapshot_digest": "21c6d1d0030361b76618bcb13888d4fbba815d4364a4ae41fb6ac8e2e93507f1",
+  "actor_id": "auditor-b",
+  "decision": "approved",
+  "findings": [
+    {
+      "id": "B-3",
+      "severity": "medium",
+      "status": "resolved",
+      "description": "Alertas graves (calendário indisponível, sincronização desligada ou velha, divergência de unidades, trava de receita) não mudavam a cor do relatório. regras.alertas_gerais agora devolve a gravidade e a execução fica pelo menos amarela.",
+      "evidence": [
+        {
+          "path": ".thinker-doer/run-2026-09-25/revisoes/evidencias/auditor-b-final.txt",
+          "sha256": "20fb214bb0bc33f968115865f0867fd421843960de2ece3f0103a9279f28b535"
+        },
+        {
+          "path": "pacing/regras.py",
+          "sha256": "07b40edfa0938e8186dee93a12c1ab328dac7cf0cc1b2c0ed651faf81e81c3b9"
+        },
+        {
+          "path": "tests/test_dominio.py",
+          "sha256": "bd936eba3b3b65e5f8424f3f5dd28f2038ebe38094398ea3df63ddd6ff4b217f"
+        }
+      ]
+    },
+    {
+      "id": "B-5",
+      "severity": "medium",
+      "status": "resolved",
+      "description": "price_vs_room_median comparava o bloco com a mediana dos 60 dias misturando semana e fim de semana, empurrando o Jev a descontar sexta/sábado. Agora a mediana é por tipo de bloco.",
+      "evidence": [
+        {
+          "path": ".thinker-doer/run-2026-09-25/revisoes/evidencias/auditor-b-final.txt",
+          "sha256": "20fb214bb0bc33f968115865f0867fd421843960de2ece3f0103a9279f28b535"
+        },
+        {
+          "path": "pacing/metricas.py",
+          "sha256": "58da3cd9b60b8d22f3bb838b9d2c4e181eddc145d51583aad7aa6b3cf48a382a"
+        },
+        {
+          "path": "pacing/regras.py",
+          "sha256": "07b40edfa0938e8186dee93a12c1ab328dac7cf0cc1b2c0ed651faf81e81c3b9"
+        },
+        {
+          "path": "tests/test_dominio.py",
+          "sha256": "bd936eba3b3b65e5f8424f3f5dd28f2038ebe38094398ea3df63ddd6ff4b217f"
+        }
+      ]
+    },
+    {
+      "id": "B-6",
+      "severity": "medium",
+      "status": "resolved",
+      "description": "booked_date/cancelled_on só com data eram lidos como 00:00 UTC e abriam o portão de 48 h cedo demais. Agora reserva conta como fim do dia local e cancelamento como início do dia (lado conservador).",
+      "evidence": [
+        {
+          "path": ".thinker-doer/run-2026-09-25/revisoes/evidencias/auditor-b-final.txt",
+          "sha256": "20fb214bb0bc33f968115865f0867fd421843960de2ece3f0103a9279f28b535"
+        },
+        {
+          "path": "pacing/metricas.py",
+          "sha256": "58da3cd9b60b8d22f3bb838b9d2c4e181eddc145d51583aad7aa6b3cf48a382a"
+        },
+        {
+          "path": "tests/test_dominio.py",
+          "sha256": "bd936eba3b3b65e5f8424f3f5dd28f2038ebe38094398ea3df63ddd6ff4b217f"
+        }
+      ]
+    },
+    {
+      "id": "B-9",
+      "severity": "low",
+      "status": "resolved",
+      "description": "Perguntas ao Jev fixavam 10% mesmo com percentual -5 ou -7 no config. Agora usam o percentual configurado.",
+      "evidence": [
+        {
+          "path": ".thinker-doer/run-2026-09-25/revisoes/evidencias/auditor-b-final.txt",
+          "sha256": "20fb214bb0bc33f968115865f0867fd421843960de2ece3f0103a9279f28b535"
+        },
+        {
+          "path": "pacing/regras.py",
+          "sha256": "07b40edfa0938e8186dee93a12c1ab328dac7cf0cc1b2c0ed651faf81e81c3b9"
+        },
+        {
+          "path": "tests/test_dominio.py",
+          "sha256": "bd936eba3b3b65e5f8424f3f5dd28f2038ebe38094398ea3df63ddd6ff4b217f"
+        }
+      ]
+    },
+    {
+      "id": "B-TF2",
+      "severity": "low",
+      "status": "resolved",
+      "description": "Limite de mercado de 40% não tinha teste (trocar >= por > passava). Teste cobre 40,0 bloqueando e 39,9 passando.",
+      "evidence": [
+        {
+          "path": ".thinker-doer/run-2026-09-25/revisoes/evidencias/auditor-b-final.txt",
+          "sha256": "20fb214bb0bc33f968115865f0867fd421843960de2ece3f0103a9279f28b535"
+        },
+        {
+          "path": "tests/test_dominio.py",
+          "sha256": "bd936eba3b3b65e5f8424f3f5dd28f2038ebe38094398ea3df63ddd6ff4b217f"
+        }
+      ]
+    },
+    {
+      "id": "B-N1",
+      "severity": "low",
+      "status": "resolved",
+      "description": "Com o alerta de sincronização agora grave, last_date_pushed só com data gerava amarelo falso toda manhã. Agora é lido como fim do dia local; reproduzido: 05:30 fica verde e data velha continua alertando.",
+      "evidence": [
+        {
+          "path": ".thinker-doer/run-2026-09-25/revisoes/evidencias/auditor-b-final.txt",
+          "sha256": "20fb214bb0bc33f968115865f0867fd421843960de2ece3f0103a9279f28b535"
+        },
+        {
+          "path": "pacing/regras.py",
+          "sha256": "07b40edfa0938e8186dee93a12c1ab328dac7cf0cc1b2c0ed651faf81e81c3b9"
+        },
+        {
+          "path": "tests/test_execucao.py",
+          "sha256": "bc03cc6404d38cf1942d94ac726ec2acf073862b726cbe0f23bad8ed5a797104"
+        }
+      ]
+    }
+  ],
+  "evidence": [
+    {
+      "path": ".thinker-doer/run-2026-09-25/revisoes/evidencias/auditor-b-final.txt",
+      "sha256": "20fb214bb0bc33f968115865f0867fd421843960de2ece3f0103a9279f28b535"
+    }
+  ]
+}

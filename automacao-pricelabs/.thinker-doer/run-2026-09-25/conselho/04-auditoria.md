@@ -57,6 +57,17 @@ Os auditores receberam requisitos, contratos, código e testes. Não receberam a
   - cobertura por tarefa de 95% (T1), 99% (T2), 99% (T3) e 98% (T4);
   - logs em `evidencias/g3/` e resultados em `resultados/*.result.json` (revision 2).
 
-## Rodada 2: reauditoria
+## Rodada 2: reauditoria (HEAD 128b3b8)
 
-Pendente.
+| Auditor | Resultado | Novos achados | Correção (commits cc87a18 e e17c4f4) |
+|---|---|---|---|
+| A | A1–A5 e A7 resolvidos; A6 parcial. Parecer: aprovado com ressalvas | **N1 (MED):** a contenção por estado recuperado só valia na execução agendada; desfazer ou ensaio gravavam o estado e a execução seguinte voltava a ativo. **N4 (LOW):** substituição do programa com campo extra ficava divergente para sempre. **Residual (LOW):** apagar estado, .bak e diário juntos esquece os descontos | N1: o disjuntor de recuperação é gravado dentro de `Armazem.carregar`, então todo comando o herda. N4: `corresponde_nucleo` mantém a substituição ativa e removível, e o disjuntor impede novas criações. Residual: aviso no README |
+| B | 2–12 e força dos testes resolvidos; 1 parcial; 4 e 7 só verificáveis num Windows real. Parecer: aprovado com ressalvas | **N2 (MED):** historico.csv travado pelo Excel impedia a publicação do status. **N1 (LOW):** last_date_pushed só com data gerava alerta falso. **Resíduo:** alerta de descontos ativos em observar ficava verde | N2: histórico protegido, com alerta amarelo; relatório publicado depois; erros inesperados em `erros.log`. N1: leitura como fim do dia local. Resíduo: amarelo |
+
+**Evidência G3 revisão 3:**
+- 105 testes, todos aprovados com jsonschema;
+- cobertura de 95% (T1), 99% (T2), 99% (T3) e 98% (T4).
+
+## Parecer final
+
+Os auditores emitem os `revisoes/*.review.json` sobre a revisão 3: A cobre T1, T2 e T4; B cobre T3 e T5. Consulta prévia: `evidencias/inventory-parecer-final-20260925T152750Z.json`.

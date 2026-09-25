@@ -2,8 +2,8 @@
   "contract_version": "1.0",
   "task_id": "T4-execucao",
   "task_revision": 1,
-  "result_revision": 3,
-  "snapshot_digest": "1f5f3eeb5f6a1cf2a89530a9675d3f3ce480c0ed137f93dde6cb2eb14f96cbe6",
+  "result_revision": 4,
+  "snapshot_digest": "f62757f60a468b4763d8f273cb1c8a16f3517c223e4dee76316eaafab42f4324",
   "actor_id": "auditor-a",
   "decision": "approved",
   "findings": [
@@ -14,16 +14,20 @@
       "description": "DESFAZER apagava substituicao humana marcada divergente (lido sobrescrito pela leitura divergente). Resolvido: apagar recusa status divergente ou sem lido; divergencia guardada em lido_divergente (testes H1, H1b e TestRegressaoAuditoriaA).",
       "evidence": [
         {
+          "path": ".thinker-doer/run-2026-09-25/revisoes/evidencias/auditor-a-final-r4.txt",
+          "sha256": "12cc4c9fafec287e7161bc8d3c92118b12c3fefe394d34016267618248d0317b"
+        },
+        {
           "path": ".thinker-doer/run-2026-09-25/revisoes/evidencias/auditor-a-final.txt",
           "sha256": "1270f34349ce3fa2e187e143e52c17d1e0a0ba6130b9d29647a44148c692effd"
         },
         {
           "path": "pacing/acoes.py",
-          "sha256": "ae6eb63390c459f92c612da8fd2fe09b479ae8728987982efbad52eaabd44535"
+          "sha256": "1f422d28bf07251e2fe89dca9aaccbbf3718823c3f848dc6172028c9a6f659ab"
         },
         {
           "path": "tests/test_execucao.py",
-          "sha256": "bc03cc6404d38cf1942d94ac726ec2acf073862b726cbe0f23bad8ed5a797104"
+          "sha256": "e0e4d4e1b50cebff9cf6e05ec84c24faf30e45930f85563e1bb6d212d3e93e12"
         }
       ]
     },
@@ -34,12 +38,16 @@
       "description": "Disjuntor so era gravado no fim da execucao e se perdia com excecao ou recuperacao. Resolvido: Executor.acionar_disjuntor grava estado e diario na hora (teste H2).",
       "evidence": [
         {
+          "path": ".thinker-doer/run-2026-09-25/revisoes/evidencias/auditor-a-final-r4.txt",
+          "sha256": "12cc4c9fafec287e7161bc8d3c92118b12c3fefe394d34016267618248d0317b"
+        },
+        {
           "path": ".thinker-doer/run-2026-09-25/revisoes/evidencias/auditor-a-final.txt",
           "sha256": "1270f34349ce3fa2e187e143e52c17d1e0a0ba6130b9d29647a44148c692effd"
         },
         {
           "path": "pacing/acoes.py",
-          "sha256": "ae6eb63390c459f92c612da8fd2fe09b479ae8728987982efbad52eaabd44535"
+          "sha256": "1f422d28bf07251e2fe89dca9aaccbbf3718823c3f848dc6172028c9a6f659ab"
         },
         {
           "path": "pacing/principal.py",
@@ -51,8 +59,12 @@
       "id": "A4",
       "severity": "medium",
       "status": "resolved",
-      "description": "Excecao inesperada publicava relatorio verde e perdia o disjuntor. Resolvido: executar captura Exception, marca vermelho e grava erros.log (teste H4: PRECOS ERRO).",
+      "description": "Excecao inesperada publicava relatorio verde e perdia o disjuntor. Resolvido: executar captura Exception, marca vermelho e grava erros.log (teste H4).",
       "evidence": [
+        {
+          "path": ".thinker-doer/run-2026-09-25/revisoes/evidencias/auditor-a-final-r4.txt",
+          "sha256": "12cc4c9fafec287e7161bc8d3c92118b12c3fefe394d34016267618248d0317b"
+        },
         {
           "path": ".thinker-doer/run-2026-09-25/revisoes/evidencias/auditor-a-final.txt",
           "sha256": "1270f34349ce3fa2e187e143e52c17d1e0a0ba6130b9d29647a44148c692effd"
@@ -63,7 +75,7 @@
         },
         {
           "path": "tests/test_execucao.py",
-          "sha256": "bc03cc6404d38cf1942d94ac726ec2acf073862b726cbe0f23bad8ed5a797104"
+          "sha256": "e0e4d4e1b50cebff9cf6e05ec84c24faf30e45930f85563e1bb6d212d3e93e12"
         }
       ]
     },
@@ -71,15 +83,19 @@
       "id": "A5",
       "severity": "medium",
       "status": "resolved",
-      "description": "Leitura de substituicoes falhava aberta com data em formato desconhecido, permitindo POST sobre substituicao humana e perda de rastreio. Resolvido: data ilegivel conta como existente, listing bloqueada, ausente apos POST vira incerta (testes H5, H5b).",
+      "description": "Leitura de substituicoes falhava aberta com data em formato desconhecido. Resolvido: data ilegivel conta como existente, listing bloqueada, ausente apos POST vira incerta (testes H5, H5b).",
       "evidence": [
+        {
+          "path": ".thinker-doer/run-2026-09-25/revisoes/evidencias/auditor-a-final-r4.txt",
+          "sha256": "12cc4c9fafec287e7161bc8d3c92118b12c3fefe394d34016267618248d0317b"
+        },
         {
           "path": ".thinker-doer/run-2026-09-25/revisoes/evidencias/auditor-a-final.txt",
           "sha256": "1270f34349ce3fa2e187e143e52c17d1e0a0ba6130b9d29647a44148c692effd"
         },
         {
           "path": "pacing/acoes.py",
-          "sha256": "ae6eb63390c459f92c612da8fd2fe09b479ae8728987982efbad52eaabd44535"
+          "sha256": "1f422d28bf07251e2fe89dca9aaccbbf3718823c3f848dc6172028c9a6f659ab"
         },
         {
           "path": "pacing/principal.py",
@@ -91,15 +107,19 @@
       "id": "A6",
       "severity": "low",
       "status": "resolved",
-      "description": "testar-gravacao ignorava PARAR, disjuntor e papel do quarto e gastava o teto diario. Resolvido: recusa PARAR, disjuntor (inclusive o de recuperacao) e quarto que nao seja sem_tabela; contadores restaurados (testes H7, N2).",
+      "description": "testar-gravacao ignorava PARAR, disjuntor e papel do quarto e gastava o teto diario. Resolvido (testes H7, N2).",
       "evidence": [
+        {
+          "path": ".thinker-doer/run-2026-09-25/revisoes/evidencias/auditor-a-final-r4.txt",
+          "sha256": "12cc4c9fafec287e7161bc8d3c92118b12c3fefe394d34016267618248d0317b"
+        },
         {
           "path": ".thinker-doer/run-2026-09-25/revisoes/evidencias/auditor-a-final.txt",
           "sha256": "1270f34349ce3fa2e187e143e52c17d1e0a0ba6130b9d29647a44148c692effd"
         },
         {
           "path": "tests/test_execucao.py",
-          "sha256": "bc03cc6404d38cf1942d94ac726ec2acf073862b726cbe0f23bad8ed5a797104"
+          "sha256": "e0e4d4e1b50cebff9cf6e05ec84c24faf30e45930f85563e1bb6d212d3e93e12"
         }
       ]
     },
@@ -107,19 +127,23 @@
       "id": "A7",
       "severity": "low",
       "status": "resolved",
-      "description": "Teto de ativas ignorava divergentes e divergencia na conciliacao nao acionava o disjuntor. Resolvido em regras.plano_criacao e Executor.conciliar.",
+      "description": "Teto de ativas ignorava divergentes e divergencia na conciliacao nao acionava o disjuntor. Resolvido.",
       "evidence": [
+        {
+          "path": ".thinker-doer/run-2026-09-25/revisoes/evidencias/auditor-a-final-r4.txt",
+          "sha256": "12cc4c9fafec287e7161bc8d3c92118b12c3fefe394d34016267618248d0317b"
+        },
         {
           "path": ".thinker-doer/run-2026-09-25/revisoes/evidencias/auditor-a-final.txt",
           "sha256": "1270f34349ce3fa2e187e143e52c17d1e0a0ba6130b9d29647a44148c692effd"
         },
         {
           "path": "pacing/acoes.py",
-          "sha256": "ae6eb63390c459f92c612da8fd2fe09b479ae8728987982efbad52eaabd44535"
+          "sha256": "1f422d28bf07251e2fe89dca9aaccbbf3718823c3f848dc6172028c9a6f659ab"
         },
         {
           "path": "tests/test_execucao.py",
-          "sha256": "bc03cc6404d38cf1942d94ac726ec2acf073862b726cbe0f23bad8ed5a797104"
+          "sha256": "e0e4d4e1b50cebff9cf6e05ec84c24faf30e45930f85563e1bb6d212d3e93e12"
         }
       ]
     },
@@ -127,39 +151,75 @@
       "id": "N4",
       "severity": "low",
       "status": "resolved",
-      "description": "Desconto do proprio programa devolvido com campo extra ficava divergente e irremovivel. Resolvido: corresponde_nucleo marca ativa com lido e aciona o disjuntor; DESFAZER remove (teste N4).",
+      "description": "Desconto do proprio programa devolvido com campo extra ficava irremovivel. Resolvido quando a API devolve o reason: corresponde_nucleo marca ativa com lido, aciona o disjuntor e o DESFAZER remove (teste N4).",
       "evidence": [
+        {
+          "path": ".thinker-doer/run-2026-09-25/revisoes/evidencias/auditor-a-final-r4.txt",
+          "sha256": "12cc4c9fafec287e7161bc8d3c92118b12c3fefe394d34016267618248d0317b"
+        },
         {
           "path": ".thinker-doer/run-2026-09-25/revisoes/evidencias/auditor-a-final.txt",
           "sha256": "1270f34349ce3fa2e187e143e52c17d1e0a0ba6130b9d29647a44148c692effd"
         },
         {
           "path": "pacing/acoes.py",
-          "sha256": "ae6eb63390c459f92c612da8fd2fe09b479ae8728987982efbad52eaabd44535"
+          "sha256": "1f422d28bf07251e2fe89dca9aaccbbf3718823c3f848dc6172028c9a6f659ab"
         }
       ]
     },
     {
       "id": "N4c",
       "severity": "low",
-      "status": "accepted_risk",
-      "description": "Conciliar passou a usar corresponde_nucleo: uma substituicao de exatamente -10% percent com campos extras e sem reason criada por outra pessoa na data de um POST incerto que nao gravou e adotada e pode ser removida pela limpeza.",
-      "rationale": "Exige POST incerto sem gravacao e uma substituicao humana identica em preco e tipo na mesma data antes da conciliacao; o disjuntor dispara na adocao. O ensaio +0% confirma se reason volta na leitura. Correcao sugerida: exigir reason igual na conciliacao quando a API o devolve.",
-      "owner": "coordenador",
-      "impact": "No pior caso uma substituicao humana de -10% numa data e removida, com alerta e disjuntor acionado.",
+      "status": "resolved",
+      "description": "Conciliacao adotava substituicao alheia de -10% com campos extras e sem reason, que a limpeza podia apagar. Resolvido: com campos extras corresponde_nucleo exige o reason do programa; a substituicao fica divergente e nao e apagada nem com a data vendida (testes N4c e TestReauditoriaFinalA).",
       "evidence": [
+        {
+          "path": ".thinker-doer/run-2026-09-25/revisoes/evidencias/auditor-a-final-r4.txt",
+          "sha256": "12cc4c9fafec287e7161bc8d3c92118b12c3fefe394d34016267618248d0317b"
+        },
         {
           "path": ".thinker-doer/run-2026-09-25/revisoes/evidencias/auditor-a-final.txt",
           "sha256": "1270f34349ce3fa2e187e143e52c17d1e0a0ba6130b9d29647a44148c692effd"
         },
         {
           "path": "pacing/acoes.py",
-          "sha256": "ae6eb63390c459f92c612da8fd2fe09b479ae8728987982efbad52eaabd44535"
+          "sha256": "1f422d28bf07251e2fe89dca9aaccbbf3718823c3f848dc6172028c9a6f659ab"
+        },
+        {
+          "path": "tests/test_execucao.py",
+          "sha256": "e0e4d4e1b50cebff9cf6e05ec84c24faf30e45930f85563e1bb6d212d3e93e12"
+        }
+      ]
+    },
+    {
+      "id": "N4r",
+      "severity": "low",
+      "status": "accepted_risk",
+      "description": "Se a API acrescentar campos na substituicao e nao devolver o reason, o desconto do proprio programa fica divergente e o DESFAZER nao o remove.",
+      "rationale": "Falha fechada escolhida de proposito: nao apagar o que nao se prova ser do programa. O disjuntor dispara na primeira ocorrencia e o ensaio +0% (pendencia: confirmar que reason volta na leitura) revela o caso antes do modo ativo.",
+      "owner": "coordenador",
+      "impact": "No pior caso um desconto de -10% numa unica data vale ate a data passar ou ser removido na tela do PriceLabs, com alerta ao dono.",
+      "evidence": [
+        {
+          "path": ".thinker-doer/run-2026-09-25/revisoes/evidencias/auditor-a-final-r4.txt",
+          "sha256": "12cc4c9fafec287e7161bc8d3c92118b12c3fefe394d34016267618248d0317b"
+        },
+        {
+          "path": ".thinker-doer/run-2026-09-25/revisoes/evidencias/auditor-a-final.txt",
+          "sha256": "1270f34349ce3fa2e187e143e52c17d1e0a0ba6130b9d29647a44148c692effd"
+        },
+        {
+          "path": "pacing/acoes.py",
+          "sha256": "1f422d28bf07251e2fe89dca9aaccbbf3718823c3f848dc6172028c9a6f659ab"
         }
       ]
     }
   ],
   "evidence": [
+    {
+      "path": ".thinker-doer/run-2026-09-25/revisoes/evidencias/auditor-a-final-r4.txt",
+      "sha256": "12cc4c9fafec287e7161bc8d3c92118b12c3fefe394d34016267618248d0317b"
+    },
     {
       "path": ".thinker-doer/run-2026-09-25/revisoes/evidencias/auditor-a-final.txt",
       "sha256": "1270f34349ce3fa2e187e143e52c17d1e0a0ba6130b9d29647a44148c692effd"

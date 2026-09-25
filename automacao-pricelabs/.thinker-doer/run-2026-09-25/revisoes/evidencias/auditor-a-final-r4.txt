@@ -1,0 +1,38 @@
+Parecer do auditor A para T4-execucao, resultado revisao 4
+Data: 25/09/2026. Codigo auditado: commit bd17210. Complementa auditor-a-final.txt (revisao 3), que continua valido.
+Lente: invariantes de seguranca e de dinheiro. Nenhuma chamada real a PriceLabs, OpenRouter ou TypeSafe.
+
+PARECER: aprovado com um risco baixo aceito (N4r).
+
+COMO FOI VERIFICADO
+- Mudanca de T4 desde a revisao 3: acoes.corresponde_nucleo passou a exigir o reason do
+  programa quando a leitura traz campos extras; teste TestReauditoriaFinalA.
+- Copia nova fora do repositorio (scratchpad/auditoria/A4), sem __pycache__.
+- python3 -m unittest discover -s tests -t .  -> 108 testes, OK (3 pulados), Python 3.11.15.
+- Testes descartaveis do auditor na copia: N4c (conciliacao com substituicao alheia de -10%,
+  campos extras e sem reason; tambem com a data vendida), N4 (POST do programa devolvido com
+  campo extra e reason), N4r (campo extra e API sem reason), N1, N2, N5.
+- Conferido que os sha256 de reviewed_files de T4 (revisao 4) batem com os arquivos atuais.
+
+ACHADOS DE T4 E SITUACAO
+A1 high  DESFAZER apagava substituicao humana divergente.            RESOLVIDO (inalterado).
+A2 med   Disjuntor gravado so no fim da execucao.                    RESOLVIDO (inalterado).
+A4 med   Excecao inesperada saia com relatorio verde.                RESOLVIDO (inalterado).
+A5 med   Data de substituicao ilegivel abria a falha.                RESOLVIDO (inalterado).
+A6 low   testar-gravacao ignorava PARAR, disjuntor e papel.          RESOLVIDO (inalterado).
+A7 low   Teto de ativas e conciliacao divergente.                    RESOLVIDO (inalterado).
+N4 low   Desconto do programa com campo extra irremovivel.           RESOLVIDO quando a API devolve
+         o reason: DESFAZER apaga (teste N4).
+N4c low  Conciliacao adotava substituicao alheia com campos extras.  RESOLVIDO: sem o reason do
+         programa ela fica divergente, nao e apagada pela limpeza nem pelo DESFAZER, mesmo com a
+         data vendida (testes N4c e TestReauditoriaFinalA).
+
+RISCO ACEITO
+N4r low  Se a API acrescentar campos na substituicao E nao devolver o reason, o desconto do
+         proprio programa fica divergente: o disjuntor dispara (nada novo e criado) e o DESFAZER
+         nao o remove; ele vale ate a data passar ou ser removido na tela. Falha fechada escolhida
+         de proposito (nao apagar o que nao se prova nosso). Limitado a uma data. O ensaio +0%
+         (pendencia do conselho: confirmar que reason volta na leitura) revela o caso antes de
+         ligar o modo ativo.
+
+Fora do escopo desta revisao: __main__.py, windows/ e README (T5, auditor B).

@@ -53,7 +53,7 @@ Os auditores receberam requisitos, contratos, código e testes. Não receberam a
 - **Documentação:** `docs/apis-verificadas.md` foi alinhada ao uso de `start_date`/`end_date` (data de chegada) em reservation_data.
 - **Contratos:** o `diario-escrita.schema.json` ganhou os eventos `disjuntor` e `retomada` (mudança aditiva).
 - **Evidência G3 revisão 2:**
-  - 107 testes, 3 pulados sem jsonschema;
+  - 99 testes, todos aprovados com jsonschema (3 são pulados quando ele falta);
   - cobertura por tarefa de 95% (T1), 99% (T2), 99% (T3) e 98% (T4);
   - logs em `evidencias/g3/` e resultados em `resultados/*.result.json` (revision 2).
 

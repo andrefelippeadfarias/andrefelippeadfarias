@@ -1,0 +1,14 @@
+$ python -m coverage report --include=pacing/rede.py,pacing/credenciais.py,pacing/estado.py,pacing/config.py,pacing/tempo.py --fail-under=90
+exit=0
+--- stdout ---
+Name                    Stmts   Miss Branch BrPart  Cover
+---------------------------------------------------------
+pacing/config.py           88      0     14      0   100%
+pacing/credenciais.py      26      0      8      0   100%
+pacing/estado.py          163     12     54      7    91%
+pacing/rede.py            122      4     28      1    97%
+pacing/tempo.py            62      1     14      1    97%
+---------------------------------------------------------
+TOTAL                     461     17    118      9    96%
+
+--- stderr ---

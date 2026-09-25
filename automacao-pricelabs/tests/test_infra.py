@@ -93,6 +93,13 @@ class TestRede(unittest.TestCase):
         rede.pedir("GET", PL + "/listings", {})
         self.assertAlmostEqual(esperas[0], 0.6)
 
+    def test_envia_assinatura_propria(self):
+        rede, t = self.rede([ok()])
+        rede.pedir("GET", PL + "/listings", {"X-API-Key": "k"})
+        agente = t.pedidos[0][2]["User-Agent"]
+        self.assertFalse(agente.lower().startswith("python-urllib"), "a PriceLabs bloqueia essa assinatura")
+        self.assertTrue(agente.startswith("automacao-pricelabs/"))
+
     def test_corpo_invalido_vira_none(self):
         rede, _ = self.rede([(200, {}, b"<html>")])
         self.assertIsNone(rede.pedir("GET", PL + "/listings", {}).dados)

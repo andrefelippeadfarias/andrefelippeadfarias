@@ -1,0 +1,44 @@
+Parecer do auditor A para T1-infra, resultado revisao 8
+Data: 25/09/2026. Codigo auditado: arvore de trabalho sobre o commit 340b845 (mudanca ainda nao
+commitada em pacing/rede.py e tests/test_infra.py). Complementa auditor-a-final.txt (rev. 3),
+que continua valido.
+Lente: invariantes de seguranca e de dinheiro. Nenhuma chamada real a PriceLabs, OpenRouter ou
+TypeSafe; o arquivo de chaves do scratchpad nao foi lido nem copiado.
+
+PARECER: aprovado. Riscos aceitos inalterados: N1b e R1 (baixos).
+
+MUDANCA AUDITADA
+- rede.py: constante AGENTE = "automacao-pricelabs/0.1" e cab.setdefault("User-Agent", AGENTE)
+  em Rede.pedir, depois do Accept. Motivo: a PriceLabs (Cloudflare) devolve 403 para a
+  assinatura padrao "Python-urllib/x.y".
+- test_infra.py: test_envia_assinatura_propria.
+
+COMO FOI VERIFICADO
+- Copia nova da arvore de trabalho fora do repositorio (scratchpad/auditoria/A8).
+- python3 -m unittest discover -s tests -t .  -> 117 testes, OK (5 pulados), Python 3.11.15.
+- Conferido que os sha256 de reviewed_files de T1 (revisao 8) batem com os arquivos atuais.
+- Teste descartavel com servidor HTTP local em 127.0.0.1 (sem internet), usando o
+  transporte_urllib real:
+  * o servidor recebeu User-Agent "automacao-pricelabs/0.1", um so, sem o padrao do urllib;
+    cabecalhos recebidos: Accept, Accept-Encoding, Connection, Host, User-Agent, X-Api-Key;
+  * resposta 302 com Location para outro caminho: devolvida como status 302, destino nunca
+    contatado (sem redirecionamento, a chave nao viaja);
+  * Rede.pedir com rota fora da lista e cabecalhos arbitrarios (User-Agent, Host) levanta
+    RotaProibida: a lista fechada depende so de metodo e URL, nunca de cabecalho.
+
+ANALISE ADVERSARIAL
+- Vazamento: o valor e uma constante do programa, sem nome de usuario, maquina, versao do
+  Python ou chave. Nao entra em ErroRede, Rede.chamadas, diario nem relatorio.
+- Sobrescrita: setdefault permite que quem chama defina outro User-Agent, mas nenhum chamador
+  o faz (PriceLabs envia so X-API-Key; Jev so Authorization) e cabecalho nao influencia a
+  classificacao de rota nem as escritas permitidas pelo modo.
+- Redirecionamentos: inalterados; _SemRedirecionar continua transformando 3xx em erro.
+- OpenRouter/TypeSafe: recebem a mesma assinatura; sem efeito de seguranca.
+- Se o firewall passar a bloquear tambem esta assinatura: 403 em leitura vira "falha ao ler o
+  PriceLabs" (vermelho, zero escritas); 403 no POST vira "falhou" sem gravacao (bloqueio antes
+  da origem) e conta erro de escrita; no DELETE mantem o registro. Falha segura.
+
+ACHADOS DE T1
+A1, A2, A3, A4, A7, N1: resolvidos (inalterados).
+N1b low, R1 low: riscos aceitos (inalterados).
+Nenhum achado novo.

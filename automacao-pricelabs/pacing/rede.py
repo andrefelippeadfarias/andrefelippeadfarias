@@ -38,6 +38,9 @@ ROTAS = (
 
 REPETIVEIS = {408, 429, 500, 502, 503, 504, 529}
 
+# O firewall da PriceLabs recusa (403) a assinatura padrão "Python-urllib/x.y".
+AGENTE = "automacao-pricelabs/0.1"
+
 
 class ErroRede(Exception):
     """Falha de rede ou HTTP. Nunca contém cabeçalhos nem corpo enviado."""
@@ -131,6 +134,7 @@ class Rede:
         bruto = None if corpo is None else json.dumps(corpo).encode("utf-8")
         cab = dict(cabecalhos)
         cab.setdefault("Accept", "application/json")
+        cab.setdefault("User-Agent", AGENTE)
         if bruto is not None:
             cab["Content-Type"] = "application/json"
         tentativa = 0

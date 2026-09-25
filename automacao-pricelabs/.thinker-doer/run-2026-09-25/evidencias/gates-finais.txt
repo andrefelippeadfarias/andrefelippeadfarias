@@ -1,4 +1,4 @@
-{"status": "passed", "task_id": "T1-infra", "result_revision": 3, "snapshot_digest": "5ab65b84ab2e7c8e89007b211fede9a56944b7a1b1a82b625fe1943da5584367"}
+{"status": "passed", "task_id": "T1-infra", "result_revision": 8, "snapshot_digest": "0587ea6f7ea76356e35cb863e87f37268f3e8d794d67f8161fd5c204a7cce065"}
 
 {"status": "passed", "task_id": "T2-integracoes", "result_revision": 7, "snapshot_digest": "401c098f68ae097cf55061e6cda5fc1de1b06dcb419dcabde23ca1fc96a981ed"}
 

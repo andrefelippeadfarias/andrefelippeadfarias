@@ -2,8 +2,8 @@
   "contract_version": "1.0",
   "task_id": "T1-infra",
   "task_revision": 1,
-  "result_revision": 3,
-  "snapshot_digest": "5ab65b84ab2e7c8e89007b211fede9a56944b7a1b1a82b625fe1943da5584367",
+  "result_revision": 8,
+  "snapshot_digest": "0587ea6f7ea76356e35cb863e87f37268f3e8d794d67f8161fd5c204a7cce065",
   "actor_id": "auditor-a",
   "decision": "approved",
   "findings": [
@@ -13,6 +13,10 @@
       "status": "resolved",
       "description": "Reconstrucao pelo diario copiava a leitura divergente (possivelmente humana) para lido, permitindo que DESFAZER a apagasse. Resolvido: estado.reconstruir_dsos so restaura lido de eventos criada/adotada (teste H1b).",
       "evidence": [
+        {
+          "path": ".thinker-doer/run-2026-09-25/revisoes/evidencias/auditor-a-final-r8.txt",
+          "sha256": "e567636d42e00d26296b41d7e7c26eeb8ac743e50af2f007e81413ba5898eed7"
+        },
         {
           "path": ".thinker-doer/run-2026-09-25/revisoes/evidencias/auditor-a-final.txt",
           "sha256": "1270f34349ce3fa2e187e143e52c17d1e0a0ba6130b9d29647a44148c692effd"
@@ -30,6 +34,10 @@
       "description": "Disjuntor perdido quando o estado vinha do .bak ou do diario. Resolvido: diario registra disjuntor/retomada e _completar_pelo_diario reconstroi disjuntor, contadores e descontadas (teste H2).",
       "evidence": [
         {
+          "path": ".thinker-doer/run-2026-09-25/revisoes/evidencias/auditor-a-final-r8.txt",
+          "sha256": "e567636d42e00d26296b41d7e7c26eeb8ac743e50af2f007e81413ba5898eed7"
+        },
+        {
           "path": ".thinker-doer/run-2026-09-25/revisoes/evidencias/auditor-a-final.txt",
           "sha256": "1270f34349ce3fa2e187e143e52c17d1e0a0ba6130b9d29647a44148c692effd"
         },
@@ -45,6 +53,10 @@
       "status": "resolved",
       "description": "UnicodeDecodeError em estado.json derrubava executar e verificar sem relatorio. Resolvido: carregar trata ValueError, diario lido com errors=replace, salvar com fsync (teste H3).",
       "evidence": [
+        {
+          "path": ".thinker-doer/run-2026-09-25/revisoes/evidencias/auditor-a-final-r8.txt",
+          "sha256": "e567636d42e00d26296b41d7e7c26eeb8ac743e50af2f007e81413ba5898eed7"
+        },
         {
           "path": ".thinker-doer/run-2026-09-25/revisoes/evidencias/auditor-a-final.txt",
           "sha256": "1270f34349ce3fa2e187e143e52c17d1e0a0ba6130b9d29647a44148c692effd"
@@ -62,12 +74,16 @@
       "description": "http.client.HTTPException escapava do transporte e da nova tentativa. Resolvido: transporte_urllib converte HTTPException e ValueError em ErroRede (teste H4).",
       "evidence": [
         {
+          "path": ".thinker-doer/run-2026-09-25/revisoes/evidencias/auditor-a-final-r8.txt",
+          "sha256": "e567636d42e00d26296b41d7e7c26eeb8ac743e50af2f007e81413ba5898eed7"
+        },
+        {
           "path": ".thinker-doer/run-2026-09-25/revisoes/evidencias/auditor-a-final.txt",
           "sha256": "1270f34349ce3fa2e187e143e52c17d1e0a0ba6130b9d29647a44148c692effd"
         },
         {
           "path": "pacing/rede.py",
-          "sha256": "a31fc6eca3cb781e53e600ca28d67694a56938346bee8c9336c869a578ee5acf"
+          "sha256": "987d2edd55af04fea92d3a9b027d6df5fa61b7f09bfe1536e1ad07c571dda6b6"
         }
       ]
     },
@@ -78,6 +94,10 @@
       "description": "Trava considerava orfao o arquivo recem-criado e __exit__ apagava trava alheia. Resolvido: orfa por mtime e marca propria conferida na saida.",
       "evidence": [
         {
+          "path": ".thinker-doer/run-2026-09-25/revisoes/evidencias/auditor-a-final-r8.txt",
+          "sha256": "e567636d42e00d26296b41d7e7c26eeb8ac743e50af2f007e81413ba5898eed7"
+        },
+        {
           "path": ".thinker-doer/run-2026-09-25/revisoes/evidencias/auditor-a-final.txt",
           "sha256": "1270f34349ce3fa2e187e143e52c17d1e0a0ba6130b9d29647a44148c692effd"
         },
@@ -87,7 +107,7 @@
         },
         {
           "path": "tests/test_infra.py",
-          "sha256": "75aac527cc39c9ab87870de5738366298f49f490b09df44260923b331867e913"
+          "sha256": "03a79191b221347583408c7ab4222313ad54f851bf3e23d0d665451876d2da9e"
         }
       ]
     },
@@ -97,6 +117,10 @@
       "status": "resolved",
       "description": "Contencao por estado recuperado so existia em principal e era contornavel por comandos da CLI. Resolvido: Armazem._conter dentro de carregar grava disjuntor no estado e no diario para todo comando (testes N1, N2).",
       "evidence": [
+        {
+          "path": ".thinker-doer/run-2026-09-25/revisoes/evidencias/auditor-a-final-r8.txt",
+          "sha256": "e567636d42e00d26296b41d7e7c26eeb8ac743e50af2f007e81413ba5898eed7"
+        },
         {
           "path": ".thinker-doer/run-2026-09-25/revisoes/evidencias/auditor-a-final.txt",
           "sha256": "1270f34349ce3fa2e187e143e52c17d1e0a0ba6130b9d29647a44148c692effd"
@@ -117,6 +141,10 @@
       "impact": "Contencao desnecessaria e um alerta ao dono; nenhuma escrita indevida no PriceLabs.",
       "evidence": [
         {
+          "path": ".thinker-doer/run-2026-09-25/revisoes/evidencias/auditor-a-final-r8.txt",
+          "sha256": "e567636d42e00d26296b41d7e7c26eeb8ac743e50af2f007e81413ba5898eed7"
+        },
+        {
           "path": ".thinker-doer/run-2026-09-25/revisoes/evidencias/auditor-a-final.txt",
           "sha256": "1270f34349ce3fa2e187e143e52c17d1e0a0ba6130b9d29647a44148c692effd"
         },
@@ -136,6 +164,10 @@
       "impact": "Ate 6 descontos de -10% sem rastreio, removiveis so na tela do PriceLabs; documentar no README.",
       "evidence": [
         {
+          "path": ".thinker-doer/run-2026-09-25/revisoes/evidencias/auditor-a-final-r8.txt",
+          "sha256": "e567636d42e00d26296b41d7e7c26eeb8ac743e50af2f007e81413ba5898eed7"
+        },
+        {
           "path": ".thinker-doer/run-2026-09-25/revisoes/evidencias/auditor-a-final.txt",
           "sha256": "1270f34349ce3fa2e187e143e52c17d1e0a0ba6130b9d29647a44148c692effd"
         },
@@ -147,6 +179,10 @@
     }
   ],
   "evidence": [
+    {
+      "path": ".thinker-doer/run-2026-09-25/revisoes/evidencias/auditor-a-final-r8.txt",
+      "sha256": "e567636d42e00d26296b41d7e7c26eeb8ac743e50af2f007e81413ba5898eed7"
+    },
     {
       "path": ".thinker-doer/run-2026-09-25/revisoes/evidencias/auditor-a-final.txt",
       "sha256": "1270f34349ce3fa2e187e143e52c17d1e0a0ba6130b9d29647a44148c692effd"

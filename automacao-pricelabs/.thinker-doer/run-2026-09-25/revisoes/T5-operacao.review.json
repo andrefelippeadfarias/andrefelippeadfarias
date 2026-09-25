@@ -1,9 +1,9 @@
 {
   "contract_version": "1.0",
   "task_id": "T5-operacao",
-  "task_revision": 2,
-  "result_revision": 5,
-  "snapshot_digest": "fb358f97a04b7ef9f73b9276d393067b25569da1c480c6781d4c490013601a70",
+  "task_revision": 3,
+  "result_revision": 7,
+  "snapshot_digest": "8adbce1ca2fba5d088818b148e3e27f0cd668613324d5d8ebf449c9e779cc683",
   "actor_id": "auditor-b",
   "decision": "approved",
   "findings": [
@@ -24,6 +24,10 @@
         {
           "path": ".thinker-doer/run-2026-09-25/revisoes/evidencias/auditor-b-final-r5.txt",
           "sha256": "da12c343745951243da3caefb6ecb2085c4e13d42ff9e3a3f8dca138cdfecaf9"
+        },
+        {
+          "path": ".thinker-doer/run-2026-09-25/revisoes/evidencias/auditor-b-final-r7.txt",
+          "sha256": "f7887a499180ad60e28b6a91f2f19ca2ad607d9b93861280afe96bbd1040be0e"
         }
       ]
     },
@@ -44,6 +48,10 @@
         {
           "path": ".thinker-doer/run-2026-09-25/revisoes/evidencias/auditor-b-final-r5.txt",
           "sha256": "da12c343745951243da3caefb6ecb2085c4e13d42ff9e3a3f8dca138cdfecaf9"
+        },
+        {
+          "path": ".thinker-doer/run-2026-09-25/revisoes/evidencias/auditor-b-final-r7.txt",
+          "sha256": "f7887a499180ad60e28b6a91f2f19ca2ad607d9b93861280afe96bbd1040be0e"
         }
       ]
     },
@@ -64,6 +72,10 @@
         {
           "path": ".thinker-doer/run-2026-09-25/revisoes/evidencias/auditor-b-final-r5.txt",
           "sha256": "da12c343745951243da3caefb6ecb2085c4e13d42ff9e3a3f8dca138cdfecaf9"
+        },
+        {
+          "path": ".thinker-doer/run-2026-09-25/revisoes/evidencias/auditor-b-final-r7.txt",
+          "sha256": "f7887a499180ad60e28b6a91f2f19ca2ad607d9b93861280afe96bbd1040be0e"
         }
       ],
       "rationale": "A chamada via ctypes só existe no Windows e não pode ser executada neste ambiente; a lógica de alternativas está testada.",
@@ -87,6 +99,10 @@
         {
           "path": ".thinker-doer/run-2026-09-25/revisoes/evidencias/auditor-b-final-r5.txt",
           "sha256": "da12c343745951243da3caefb6ecb2085c4e13d42ff9e3a3f8dca138cdfecaf9"
+        },
+        {
+          "path": ".thinker-doer/run-2026-09-25/revisoes/evidencias/auditor-b-final-r7.txt",
+          "sha256": "f7887a499180ad60e28b6a91f2f19ca2ad607d9b93861280afe96bbd1040be0e"
         }
       ],
       "rationale": "O registro com schtasks sem elevação só pode ser conferido num Windows real; o XML segue o schema do Agendador.",
@@ -110,6 +126,10 @@
         {
           "path": ".thinker-doer/run-2026-09-25/revisoes/evidencias/auditor-b-final-r5.txt",
           "sha256": "da12c343745951243da3caefb6ecb2085c4e13d42ff9e3a3f8dca138cdfecaf9"
+        },
+        {
+          "path": ".thinker-doer/run-2026-09-25/revisoes/evidencias/auditor-b-final-r7.txt",
+          "sha256": "f7887a499180ad60e28b6a91f2f19ca2ad607d9b93861280afe96bbd1040be0e"
         }
       ]
     },
@@ -130,6 +150,10 @@
         {
           "path": ".thinker-doer/run-2026-09-25/revisoes/evidencias/auditor-b-final-r5.txt",
           "sha256": "da12c343745951243da3caefb6ecb2085c4e13d42ff9e3a3f8dca138cdfecaf9"
+        },
+        {
+          "path": ".thinker-doer/run-2026-09-25/revisoes/evidencias/auditor-b-final-r7.txt",
+          "sha256": "f7887a499180ad60e28b6a91f2f19ca2ad607d9b93861280afe96bbd1040be0e"
         }
       ]
     },
@@ -150,6 +174,10 @@
         {
           "path": ".thinker-doer/run-2026-09-25/revisoes/evidencias/auditor-b-final-r5.txt",
           "sha256": "da12c343745951243da3caefb6ecb2085c4e13d42ff9e3a3f8dca138cdfecaf9"
+        },
+        {
+          "path": ".thinker-doer/run-2026-09-25/revisoes/evidencias/auditor-b-final-r7.txt",
+          "sha256": "f7887a499180ad60e28b6a91f2f19ca2ad607d9b93861280afe96bbd1040be0e"
         }
       ]
     },
@@ -170,6 +198,10 @@
         {
           "path": ".thinker-doer/run-2026-09-25/revisoes/evidencias/auditor-b-final-r5.txt",
           "sha256": "da12c343745951243da3caefb6ecb2085c4e13d42ff9e3a3f8dca138cdfecaf9"
+        },
+        {
+          "path": ".thinker-doer/run-2026-09-25/revisoes/evidencias/auditor-b-final-r7.txt",
+          "sha256": "f7887a499180ad60e28b6a91f2f19ca2ad607d9b93861280afe96bbd1040be0e"
         }
       ]
     },
@@ -190,6 +222,10 @@
         {
           "path": ".thinker-doer/run-2026-09-25/revisoes/evidencias/auditor-b-final-r5.txt",
           "sha256": "da12c343745951243da3caefb6ecb2085c4e13d42ff9e3a3f8dca138cdfecaf9"
+        },
+        {
+          "path": ".thinker-doer/run-2026-09-25/revisoes/evidencias/auditor-b-final-r7.txt",
+          "sha256": "f7887a499180ad60e28b6a91f2f19ca2ad607d9b93861280afe96bbd1040be0e"
         }
       ]
     },
@@ -210,6 +246,10 @@
         {
           "path": ".thinker-doer/run-2026-09-25/revisoes/evidencias/auditor-b-final-r5.txt",
           "sha256": "da12c343745951243da3caefb6ecb2085c4e13d42ff9e3a3f8dca138cdfecaf9"
+        },
+        {
+          "path": ".thinker-doer/run-2026-09-25/revisoes/evidencias/auditor-b-final-r7.txt",
+          "sha256": "f7887a499180ad60e28b6a91f2f19ca2ad607d9b93861280afe96bbd1040be0e"
         }
       ]
     },
@@ -230,6 +270,61 @@
         {
           "path": ".thinker-doer/run-2026-09-25/revisoes/evidencias/auditor-b-final-r5.txt",
           "sha256": "da12c343745951243da3caefb6ecb2085c4e13d42ff9e3a3f8dca138cdfecaf9"
+        },
+        {
+          "path": ".thinker-doer/run-2026-09-25/revisoes/evidencias/auditor-b-final-r7.txt",
+          "sha256": "f7887a499180ad60e28b6a91f2f19ca2ad607d9b93861280afe96bbd1040be0e"
+        }
+      ]
+    },
+    {
+      "id": "B-R6-1",
+      "severity": "high",
+      "status": "resolved",
+      "description": "O instalar-da-internet.ps1 falharia no Expand-Archive do Windows PowerShell 5.1 (caminho de 287 caracteres vindo de .thinker-doer). Resolvido com /.thinker-doer export-ignore (maior caminho do pacote: 122), extração em %TEMP%\\rpNNNNNNNN com try/finally e teste de comprimento.",
+      "evidence": [
+        {
+          "path": ".thinker-doer/run-2026-09-25/revisoes/evidencias/auditor-b-final.txt",
+          "sha256": "20fb214bb0bc33f968115865f0867fd421843960de2ece3f0103a9279f28b535"
+        },
+        {
+          "path": ".thinker-doer/run-2026-09-25/revisoes/evidencias/auditor-b-final-r4.txt",
+          "sha256": "179537c3c1975a9eadff3abacad24faf74fbe6626c01ef157f41397fa10e1c76"
+        },
+        {
+          "path": ".thinker-doer/run-2026-09-25/revisoes/evidencias/auditor-b-final-r5.txt",
+          "sha256": "da12c343745951243da3caefb6ecb2085c4e13d42ff9e3a3f8dca138cdfecaf9"
+        },
+        {
+          "path": ".thinker-doer/run-2026-09-25/revisoes/evidencias/auditor-b-final-r7.txt",
+          "sha256": "f7887a499180ad60e28b6a91f2f19ca2ad607d9b93861280afe96bbd1040be0e"
+        }
+      ]
+    },
+    {
+      "id": "B-R6-2",
+      "severity": "medium",
+      "status": "accepted_risk",
+      "description": "Comportamento do instalador no Windows real: Invoke-WebRequest -UseBasicParsing e Expand-Archive no Windows PowerShell 5.1 e winget --scope user instalando o py sem administrador.",
+      "rationale": "Só pode ser executado num Windows real; a cópia, a recusa de pasta alheia e a atualização foram testadas no pwsh 7.4.6 e o comprimento dos caminhos foi medido.",
+      "owner": "dono, via instalar-da-internet.ps1 e verificar.bat",
+      "impact": "Se falhar, o comando mostra o erro e nada é apagado; resta o jeito manual do README.",
+      "evidence": [
+        {
+          "path": ".thinker-doer/run-2026-09-25/revisoes/evidencias/auditor-b-final.txt",
+          "sha256": "20fb214bb0bc33f968115865f0867fd421843960de2ece3f0103a9279f28b535"
+        },
+        {
+          "path": ".thinker-doer/run-2026-09-25/revisoes/evidencias/auditor-b-final-r4.txt",
+          "sha256": "179537c3c1975a9eadff3abacad24faf74fbe6626c01ef157f41397fa10e1c76"
+        },
+        {
+          "path": ".thinker-doer/run-2026-09-25/revisoes/evidencias/auditor-b-final-r5.txt",
+          "sha256": "da12c343745951243da3caefb6ecb2085c4e13d42ff9e3a3f8dca138cdfecaf9"
+        },
+        {
+          "path": ".thinker-doer/run-2026-09-25/revisoes/evidencias/auditor-b-final-r7.txt",
+          "sha256": "f7887a499180ad60e28b6a91f2f19ca2ad607d9b93861280afe96bbd1040be0e"
         }
       ]
     }
@@ -246,6 +341,10 @@
     {
       "path": ".thinker-doer/run-2026-09-25/revisoes/evidencias/auditor-b-final-r5.txt",
       "sha256": "da12c343745951243da3caefb6ecb2085c4e13d42ff9e3a3f8dca138cdfecaf9"
+    },
+    {
+      "path": ".thinker-doer/run-2026-09-25/revisoes/evidencias/auditor-b-final-r7.txt",
+      "sha256": "f7887a499180ad60e28b6a91f2f19ca2ad607d9b93861280afe96bbd1040be0e"
     }
   ]
 }

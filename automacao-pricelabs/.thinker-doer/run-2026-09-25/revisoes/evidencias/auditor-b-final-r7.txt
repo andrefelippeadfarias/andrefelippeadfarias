@@ -1,0 +1,33 @@
+Auditor B - rodada r7 de T3-dominio e T5-operacao (HEAD 371be6e). Nenhuma alteracao no projeto alem deste
+arquivo e de revisoes/T3-dominio.review.json e revisoes/T5-operacao.review.json. Sem chamadas de rede reais.
+
+Comandos (copia B7 do HEAD 371be6e):
+- RECANTO_PWSH=<pwsh 7.4.6 portatil> python3 -m unittest discover -s tests -t .  -> Ran 116 tests, OK (skipped=4;
+  3 de jsonschema e o de git archive, porque a copia nao e um clone git)
+- git archive HEAD com o prefixo do codeload: 59 entradas, sem .thinker-doer, maior caminho 122 caracteres.
+  Com %TEMP%\rpNNNNNNNN\x\ (~47 para usuario de 5 letras) fica em ~169, abaixo de 260.
+- sha256 conferidos: T3-dominio (task_revision 1, resultado 7, 4 arquivos) e T5-operacao (task_revision 3,
+  resultado 7, 16 arquivos) iguais aos arquivos atuais.
+
+T5: B-R6-1 (high, extracao falhava no Windows PowerShell 5.1 por caminho longo) resolvido: /.thinker-doer
+export-ignore, extracao em caminho curto com try/finally, teste de comprimento. Revisado: baixa so de
+raw.githubusercontent.com e codeload.github.com (ramo do dono); recusa destino nao vazio sem o marcador
+pacing\__init__.py (teste com pasta alheia: nada apagado); na atualizacao troca pacing, tests, windows, schemas
+e docs inteiras (dados do dono ficam em LOCALAPPDATA; config.json preservado); $ProgressPreference; ensaio
+mostra o eco da API e avisa sobre minimo/maximo e reason. Atualizacao em duas rodadas conferida no pwsh sem
+aninhar pastas. Continua so conferivel no Windows real (risco aceito, dono via instalar e verificar):
+Expand-Archive/Invoke-WebRequest no 5.1 e o winget --scope user instalar o py sem administrador.
+
+T3: conflitos_ocupacao (reservas feitas antes da atualizacao do calendario acima do multi_unit_occupancy)
+bloqueia o quarto nas decisoes, inclusive sombra, e gera alerta grave; _ocupacao_valida descarta codigos
+negativos e >100; noites() usa check_out como ultima noite so sem no_of_days (formato real informado pelo
+coordenador; nao pude conferir as reservas reais, que nao estao na evidencia). Conferido com o teste do dominio
+e com os resultados da evidencia ensaio-dados-reais (conflitos em Queen Spa 7, Queen Spa 2 e Villa King Spa 2).
+
+B-R7-1 low (risco aceito): com a janela de reservas ampliada para chegadas desde hoje-14 (principal.py),
+resumir_reservas conta em novas_48h reservas feitas nas ultimas 48 h para noites ja passadas. Reproducao:
+reserva de 1 noite em 25/09 feita 25/09 14:00 -> em 27/09 05:30 novas_48h=1 e o portao bloqueia. Lado
+conservador (nao cria desconto) e alinhado ao playbook "2 dias sem reserva", mas mais restrito que a decisao
+("reserva nova para os proximos 7 dias"). Sugestao: contar so reservas com alguma noite entre hoje e hoje+6.
+
+Parecer: T3 aprovado; T5 aprovado.

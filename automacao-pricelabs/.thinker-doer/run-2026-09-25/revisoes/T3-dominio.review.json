@@ -2,8 +2,8 @@
   "contract_version": "1.0",
   "task_id": "T3-dominio",
   "task_revision": 1,
-  "result_revision": 3,
-  "snapshot_digest": "21c6d1d0030361b76618bcb13888d4fbba815d4364a4ae41fb6ac8e2e93507f1",
+  "result_revision": 7,
+  "snapshot_digest": "0d280d383ef34eafe436394dff974797726a07bb254463f3ce017bef6b9c6d17",
   "actor_id": "auditor-b",
   "decision": "approved",
   "findings": [
@@ -20,6 +20,14 @@
         {
           "path": ".thinker-doer/run-2026-09-25/revisoes/evidencias/auditor-b-final-r4.txt",
           "sha256": "179537c3c1975a9eadff3abacad24faf74fbe6626c01ef157f41397fa10e1c76"
+        },
+        {
+          "path": ".thinker-doer/run-2026-09-25/revisoes/evidencias/auditor-b-final-r5.txt",
+          "sha256": "da12c343745951243da3caefb6ecb2085c4e13d42ff9e3a3f8dca138cdfecaf9"
+        },
+        {
+          "path": ".thinker-doer/run-2026-09-25/revisoes/evidencias/auditor-b-final-r7.txt",
+          "sha256": "f7887a499180ad60e28b6a91f2f19ca2ad607d9b93861280afe96bbd1040be0e"
         }
       ]
     },
@@ -36,6 +44,14 @@
         {
           "path": ".thinker-doer/run-2026-09-25/revisoes/evidencias/auditor-b-final-r4.txt",
           "sha256": "179537c3c1975a9eadff3abacad24faf74fbe6626c01ef157f41397fa10e1c76"
+        },
+        {
+          "path": ".thinker-doer/run-2026-09-25/revisoes/evidencias/auditor-b-final-r5.txt",
+          "sha256": "da12c343745951243da3caefb6ecb2085c4e13d42ff9e3a3f8dca138cdfecaf9"
+        },
+        {
+          "path": ".thinker-doer/run-2026-09-25/revisoes/evidencias/auditor-b-final-r7.txt",
+          "sha256": "f7887a499180ad60e28b6a91f2f19ca2ad607d9b93861280afe96bbd1040be0e"
         }
       ]
     },
@@ -52,6 +68,14 @@
         {
           "path": ".thinker-doer/run-2026-09-25/revisoes/evidencias/auditor-b-final-r4.txt",
           "sha256": "179537c3c1975a9eadff3abacad24faf74fbe6626c01ef157f41397fa10e1c76"
+        },
+        {
+          "path": ".thinker-doer/run-2026-09-25/revisoes/evidencias/auditor-b-final-r5.txt",
+          "sha256": "da12c343745951243da3caefb6ecb2085c4e13d42ff9e3a3f8dca138cdfecaf9"
+        },
+        {
+          "path": ".thinker-doer/run-2026-09-25/revisoes/evidencias/auditor-b-final-r7.txt",
+          "sha256": "f7887a499180ad60e28b6a91f2f19ca2ad607d9b93861280afe96bbd1040be0e"
         }
       ]
     },
@@ -68,6 +92,14 @@
         {
           "path": ".thinker-doer/run-2026-09-25/revisoes/evidencias/auditor-b-final-r4.txt",
           "sha256": "179537c3c1975a9eadff3abacad24faf74fbe6626c01ef157f41397fa10e1c76"
+        },
+        {
+          "path": ".thinker-doer/run-2026-09-25/revisoes/evidencias/auditor-b-final-r5.txt",
+          "sha256": "da12c343745951243da3caefb6ecb2085c4e13d42ff9e3a3f8dca138cdfecaf9"
+        },
+        {
+          "path": ".thinker-doer/run-2026-09-25/revisoes/evidencias/auditor-b-final-r7.txt",
+          "sha256": "f7887a499180ad60e28b6a91f2f19ca2ad607d9b93861280afe96bbd1040be0e"
         }
       ]
     },
@@ -84,6 +116,14 @@
         {
           "path": ".thinker-doer/run-2026-09-25/revisoes/evidencias/auditor-b-final-r4.txt",
           "sha256": "179537c3c1975a9eadff3abacad24faf74fbe6626c01ef157f41397fa10e1c76"
+        },
+        {
+          "path": ".thinker-doer/run-2026-09-25/revisoes/evidencias/auditor-b-final-r5.txt",
+          "sha256": "da12c343745951243da3caefb6ecb2085c4e13d42ff9e3a3f8dca138cdfecaf9"
+        },
+        {
+          "path": ".thinker-doer/run-2026-09-25/revisoes/evidencias/auditor-b-final-r7.txt",
+          "sha256": "f7887a499180ad60e28b6a91f2f19ca2ad607d9b93861280afe96bbd1040be0e"
         }
       ]
     },
@@ -100,6 +140,41 @@
         {
           "path": ".thinker-doer/run-2026-09-25/revisoes/evidencias/auditor-b-final-r4.txt",
           "sha256": "179537c3c1975a9eadff3abacad24faf74fbe6626c01ef157f41397fa10e1c76"
+        },
+        {
+          "path": ".thinker-doer/run-2026-09-25/revisoes/evidencias/auditor-b-final-r5.txt",
+          "sha256": "da12c343745951243da3caefb6ecb2085c4e13d42ff9e3a3f8dca138cdfecaf9"
+        },
+        {
+          "path": ".thinker-doer/run-2026-09-25/revisoes/evidencias/auditor-b-final-r7.txt",
+          "sha256": "f7887a499180ad60e28b6a91f2f19ca2ad607d9b93861280afe96bbd1040be0e"
+        }
+      ]
+    },
+    {
+      "id": "B-R7-1",
+      "severity": "low",
+      "status": "accepted_risk",
+      "description": "Com a janela de reservas desde hoje-14, novas_48h conta reservas das últimas 48 h para noites já passadas (reserva de 25/09 feita 25/09 14:00 bloqueia o portão em 27/09 05:30).",
+      "rationale": "Lado conservador: só impede desconto; alinhado ao playbook '2 dias sem reserva', embora mais restrito que a decisão ('reserva nova para os próximos 7 dias').",
+      "owner": "coordenador",
+      "impact": "Menos oportunidades de desconto na Afrodite depois de reservas de última hora; nenhuma escrita indevida.",
+      "evidence": [
+        {
+          "path": ".thinker-doer/run-2026-09-25/revisoes/evidencias/auditor-b-final.txt",
+          "sha256": "20fb214bb0bc33f968115865f0867fd421843960de2ece3f0103a9279f28b535"
+        },
+        {
+          "path": ".thinker-doer/run-2026-09-25/revisoes/evidencias/auditor-b-final-r4.txt",
+          "sha256": "179537c3c1975a9eadff3abacad24faf74fbe6626c01ef157f41397fa10e1c76"
+        },
+        {
+          "path": ".thinker-doer/run-2026-09-25/revisoes/evidencias/auditor-b-final-r5.txt",
+          "sha256": "da12c343745951243da3caefb6ecb2085c4e13d42ff9e3a3f8dca138cdfecaf9"
+        },
+        {
+          "path": ".thinker-doer/run-2026-09-25/revisoes/evidencias/auditor-b-final-r7.txt",
+          "sha256": "f7887a499180ad60e28b6a91f2f19ca2ad607d9b93861280afe96bbd1040be0e"
         }
       ]
     }
@@ -112,6 +187,14 @@
     {
       "path": ".thinker-doer/run-2026-09-25/revisoes/evidencias/auditor-b-final-r4.txt",
       "sha256": "179537c3c1975a9eadff3abacad24faf74fbe6626c01ef157f41397fa10e1c76"
+    },
+    {
+      "path": ".thinker-doer/run-2026-09-25/revisoes/evidencias/auditor-b-final-r5.txt",
+      "sha256": "da12c343745951243da3caefb6ecb2085c4e13d42ff9e3a3f8dca138cdfecaf9"
+    },
+    {
+      "path": ".thinker-doer/run-2026-09-25/revisoes/evidencias/auditor-b-final-r7.txt",
+      "sha256": "f7887a499180ad60e28b6a91f2f19ca2ad607d9b93861280afe96bbd1040be0e"
     }
   ]
 }

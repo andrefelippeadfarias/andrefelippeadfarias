@@ -1,4 +1,8 @@
+import os
 import re
+import shutil
+import subprocess
+import tempfile
 import unittest
 import xml.etree.ElementTree as ET
 from pathlib import Path
@@ -75,3 +79,45 @@ class TestScriptsWindows(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+def _powershell():
+    candidatos = [os.environ.get("RECANTO_PWSH"), shutil.which("pwsh"), shutil.which("powershell")]
+    return next((c for c in candidatos if c and os.path.exists(c)), None)
+
+
+class TestInstaladorDaInternet(unittest.TestCase):
+    SCRIPT = RAIZ / "windows" / "instalar-da-internet.ps1"
+
+    def test_script_ascii_e_linha_do_readme(self):
+        texto = self.SCRIPT.read_bytes().decode("ascii")
+        self.assertIn("codeload.github.com/andrefelippeadfarias/andrefelippeadfarias/zip/refs/heads/$RecantoRamo", texto)
+        linha = next(l[1:].strip() for l in texto.splitlines() if l.startswith("#   irm "))
+        self.assertTrue(linha.endswith("instalar-da-internet.ps1 | iex"))
+        self.assertIn(linha, (RAIZ / "README.md").read_text(encoding="utf-8"))
+
+    @unittest.skipUnless(_powershell(), "PowerShell indisponível")
+    def test_copia_preserva_config_e_ignora_historico(self):
+        tmp = Path(tempfile.mkdtemp(prefix="Recanto André "))
+        projeto = tmp / "x" / "repo-ramo" / "automacao-pricelabs"
+        (projeto / "pacing").mkdir(parents=True)
+        (projeto / ".thinker-doer").mkdir()
+        (projeto / "config.json").write_text('{"novo": true}')
+        (projeto / "README.md").write_text("leia")
+        destino = tmp / "Recanto Precos"
+        comando = (". $env:RECANTO_SCRIPT; $o = Find-RecantoPasta $env:RECANTO_X; "
+                   "$m = Copy-RecantoProjeto $o $env:RECANTO_DESTINO; Write-Output \"manteve=$m\"")
+        env = dict(os.environ, RECANTO_TESTE="1", RECANTO_SCRIPT=str(self.SCRIPT), RECANTO_X=str(tmp / "x"),
+                   RECANTO_DESTINO=str(destino))
+        r = subprocess.run([_powershell(), "-NoProfile", "-NonInteractive", "-Command", comando], env=env,
+                           capture_output=True, text=True, timeout=120)
+        self.assertEqual(r.returncode, 0, r.stderr)
+        self.assertIn("manteve=False", r.stdout)
+        self.assertEqual((destino / "config.json").read_text(), '{"novo": true}')
+        self.assertFalse((destino / ".thinker-doer").exists())
+        (destino / "config.json").write_text('{"meu": "ativo"}')
+        r = subprocess.run([_powershell(), "-NoProfile", "-NonInteractive", "-Command", comando], env=env,
+                           capture_output=True, text=True, timeout=120)
+        self.assertIn("manteve=True", r.stdout)
+        self.assertEqual((destino / "config.json").read_text(), '{"meu": "ativo"}', "atualização mantém o config")
+        self.assertTrue((destino / "README.md").exists())

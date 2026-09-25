@@ -36,6 +36,20 @@ Toda a lógica segue o relatório `pricelabs/relatorio-ocupacao-recanto-dos-moin
 
 ## Instalação (uma vez)
 
+### Jeito mais simples: um comando
+
+1. Ligue a API do PriceLabs e crie a chave do OpenRouter (passos 3 e 4 abaixo).
+2. No Windows, abra o menu Iniciar, digite **PowerShell** e abra. Não precisa ser como administrador.
+3. Cole esta linha e tecle Enter:
+   ```
+   irm https://raw.githubusercontent.com/andrefelippeadfarias/andrefelippeadfarias/claude/pricelabs-hotel-occupancy-ku6zn5/automacao-pricelabs/windows/instalar-da-internet.ps1 | iex
+   ```
+4. O comando instala o Python se faltar e baixa o programa para `C:\RecantoPrecos`. Depois desbloqueia os arquivos e abre o `instalar.bat`, que pede as duas chaves, agenda as execuções, roda uma primeira vez em modo Observar e faz a verificação.
+
+Rodar a mesma linha de novo atualiza o programa e mantém o seu `config.json`.
+
+### Jeito manual
+
 1. **Instale o Python.** Abra o "Prompt de Comando" e rode:
    ```
    winget install -e --id Python.Python.3.12

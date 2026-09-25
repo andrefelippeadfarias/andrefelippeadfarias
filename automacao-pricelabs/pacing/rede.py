@@ -8,6 +8,7 @@ as chaves.
 
 from __future__ import annotations
 
+import http.client
 import json
 import re
 import time
@@ -77,8 +78,12 @@ def transporte_urllib(metodo: str, url: str, cabecalhos: dict, corpo: Optional[b
         with _ABRIDOR.open(pedido, timeout=timeout) as r:
             return r.status, {k.lower(): v for k, v in r.headers.items()}, r.read()
     except urllib.error.HTTPError as e:
-        return e.code, {k.lower(): v for k, v in (e.headers or {}).items()}, e.read() or b""
-    except (urllib.error.URLError, TimeoutError, OSError) as e:
+        try:
+            corpo_erro = e.read() or b""
+        except (OSError, http.client.HTTPException):
+            corpo_erro = b""
+        return e.code, {k.lower(): v for k, v in (e.headers or {}).items()}, corpo_erro
+    except (urllib.error.URLError, TimeoutError, OSError, http.client.HTTPException, ValueError) as e:
         raise ErroRede(f"sem conexão: {type(e).__name__}") from None
 
 

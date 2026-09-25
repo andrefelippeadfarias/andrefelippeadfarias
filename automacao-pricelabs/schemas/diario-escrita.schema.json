@@ -7,9 +7,7 @@
   "required": [
     "ts",
     "run_id",
-    "evento",
-    "listing",
-    "data"
+    "evento"
   ],
   "properties": {
     "ts": {
@@ -30,7 +28,9 @@
         "ausente",
         "divergente",
         "apagada",
-        "expirada"
+        "expirada",
+        "disjuntor",
+        "retomada"
       ]
     },
     "listing": {
@@ -79,5 +79,25 @@
       "type": "string",
       "maxLength": 200
     }
-  }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "evento": {
+            "enum": [
+              "disjuntor",
+              "retomada"
+            ]
+          }
+        }
+      },
+      "else": {
+        "required": [
+          "listing",
+          "data"
+        ]
+      }
+    }
+  ]
 }

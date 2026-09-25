@@ -11,6 +11,7 @@ import math
 from datetime import datetime
 
 from .rede import ErroRede
+from .tempo import ler_data
 
 EXTRAS = ("min_stay", "min_price", "max_price", "base_price", "lead_time_expiry")
 
@@ -80,13 +81,30 @@ class Executor:
         self.armazem.salvar(self.estado)
 
     def _lidas(self, listing: str, data: str) -> list:
-        return [o for o in self.pl.substituicoes(listing, data, data) if str(o.get("date", ""))[:10] == data]
+        """Substituições da data. Item com data ilegível conta como existente (falha fechada)."""
+        alvo = ler_data(data)
+        lidas = []
+        for o in self.pl.substituicoes(listing, data, data):
+            d = ler_data(o.get("date"))
+            if d is None or d == alvo:
+                lidas.append(o)
+        return lidas
+
+    def acionar_disjuntor(self, motivo: str) -> None:
+        """Grava o disjuntor na hora, no estado e no diário, para sobreviver a qualquer falha."""
+        if self.disjuntor:
+            return
+        self.disjuntor = motivo
+        self.estado["disjuntor"] = {"ativo": True, "motivo": motivo, "desde": self.agora.isoformat()}
+        self.armazem.registrar_escrita({"ts": self.agora.isoformat(), "run_id": self.run_id,
+                                        "evento": "disjuntor", "motivo": motivo[:200]})
+        self._salvar()
 
     def _erro_escrita(self, motivo: str) -> None:
         saude = self.estado["saude"]
         saude["erros_escrita_seguidos"] = saude.get("erros_escrita_seguidos", 0) + 1
         if saude["erros_escrita_seguidos"] >= 2:
-            self.disjuntor = self.disjuntor or f"2 erros de escrita seguidos ({motivo})"
+            self.acionar_disjuntor(f"2 erros de escrita seguidos ({motivo})")
 
     # -- criar -------------------------------------------------------------
     def criar(self, acao: dict) -> str:
@@ -145,13 +163,12 @@ class Executor:
             self._salvar()
             return "criada"
         if not normas:
-            del self.estado["dsos"][chave]
-            self._evento("ausente", lid, data, payload=payload, motivo="POST aceito mas a releitura não achou")
+            dso["status"] = "incerta"  # continua rastreada; a próxima execução concilia
+            self._evento("incerta", lid, data, payload=payload, motivo="POST aceito mas a releitura não achou")
         else:
-            dso.update(status="divergente", lido=normas[0])
+            dso.update(status="divergente", lido_divergente=normas[0])
             self._evento("divergente", lid, data, payload=payload, lido=normas[0], motivo="releitura difere do enviado")
-        self.disjuntor = self.disjuntor or "a releitura não confirmou a substituição gravada"
-        self._salvar()
+        self.acionar_disjuntor("a releitura não confirmou a substituição gravada")
         return "não confirmada: disjuntor acionado"
 
     # -- conciliar ---------------------------------------------------------
@@ -181,10 +198,11 @@ class Executor:
                 self._evento("adotada", lid, data, payload=payload, lido=normas[0])
                 resultados.append(f"{data}: gravação anterior confirmada")
             else:
-                dso.update(status="divergente", lido=normas[0])
+                dso.update(status="divergente", lido_divergente=normas[0])
                 self._evento("divergente", lid, data, payload=payload, lido=normas[0],
                              motivo="gravação incerta difere do enviado")
                 self.alertas.append(f"Substituição em {data} difere do que o programa enviou: revisar na tela")
+                self.acionar_disjuntor(f"gravação incerta em {data} não confere com o enviado")
         self._salvar()
         return resultados
 
@@ -195,6 +213,9 @@ class Executor:
         dso = self.estado["dsos"].get(chave)
         if dso is None:
             return "ignorado: não é do programa"
+        if dso.get("status") == "divergente" or not dso.get("lido"):
+            self.alertas.append(f"Substituição em {data} não confere com o que o programa gravou: revisar na tela")
+            return "não apagada: não confere com o que o programa gravou"
         if respeitar_parar and self.parar():
             return "bloqueado: arquivo PARAR"
         try:
@@ -208,7 +229,7 @@ class Executor:
             self._salvar()
             return "já ausente"
         if len(normas) != 1 or not identica(normas[0], dso.get("lido")):
-            dso["status"] = "divergente"
+            dso.update(status="divergente", lido_divergente=normas[0])
             self._evento("divergente", lid, data, lido=normas[0], motivo="alterada fora do programa; não apagada")
             self.alertas.append(f"Substituição em {data} foi alterada fora do programa e não foi apagada")
             self._salvar()

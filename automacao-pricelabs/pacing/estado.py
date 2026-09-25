@@ -12,6 +12,7 @@ import os
 import shutil
 import sys
 import time
+import uuid
 from pathlib import Path
 
 
@@ -27,12 +28,13 @@ class OutraExecucao(Exception):
 
 
 class Trava:
-    """Arquivo criado com O_EXCL. Considerado órfão depois de max_idade_s."""
+    """Arquivo criado com O_EXCL. Órfão só quando o arquivo é mais velho que max_idade_s."""
 
     def __init__(self, pasta: Path, max_idade_s: float = 1800, relogio=time.time):
         self.caminho = Path(pasta) / "execucao.trava"
         self.max_idade_s = max_idade_s
         self._relogio = relogio
+        self._marca = f"{os.getpid()} {uuid.uuid4().hex}"
 
     def __enter__(self):
         self.caminho.parent.mkdir(parents=True, exist_ok=True)
@@ -45,19 +47,23 @@ class Trava:
                     continue
                 raise OutraExecucao("outra execução em andamento") from None
             with os.fdopen(fd, "w") as f:
-                f.write(f"{os.getpid()} {self._relogio():.0f}")
+                f.write(self._marca)
             return self
         raise OutraExecucao("não foi possível obter a trava")
 
     def _orfa(self) -> bool:
         try:
-            criada = float(self.caminho.read_text().split()[1])
-        except (OSError, IndexError, ValueError):
-            return True
-        return self._relogio() - criada > self.max_idade_s
+            idade = self._relogio() - self.caminho.stat().st_mtime
+        except OSError:
+            return False
+        return idade > self.max_idade_s
 
     def __exit__(self, *exc):
-        self.caminho.unlink(missing_ok=True)
+        try:
+            if self.caminho.read_text() == self._marca:
+                self.caminho.unlink(missing_ok=True)
+        except OSError:
+            pass
         return False
 
 
@@ -94,18 +100,44 @@ class Armazem:
                     if isinstance(dados, dict) and dados.get("versao") == 1:
                         base = estado_vazio()
                         base.update(dados)
+                        if origem == "bak" and self.diario.exists():
+                            self._completar_pelo_diario(base)
                         return base, origem
-                except (OSError, json.JSONDecodeError):
+                except (OSError, ValueError):  # ValueError inclui JSON e UTF-8 inválidos
                     pass
         estado = estado_vazio()
         if self.diario.exists():
-            estado["dsos"] = self.reconstruir_dsos()
+            self._completar_pelo_diario(estado)
             return estado, "diario"
         return estado, "novo"
 
+    def _completar_pelo_diario(self, estado: dict) -> None:
+        """O diário é a fonte da verdade das escritas e do disjuntor."""
+        estado["dsos"] = self.reconstruir_dsos()
+        estado["contadores"] = {"dia": "", "criadas": 0}
+        disjuntor = None
+        for ev in self.ler_diario():
+            chave = f"{ev.get('listing')}|{ev.get('data')}"
+            if ev.get("evento") == "intencao":
+                estado["descontadas"][chave] = ev.get("ts", "")
+                dia = str(ev.get("ts", ""))[:10]
+                cont = estado["contadores"]
+                if cont.get("dia") != dia:
+                    cont["dia"], cont["criadas"] = dia, 0
+                cont["criadas"] += 1
+            elif ev.get("evento") == "disjuntor":
+                disjuntor = {"ativo": True, "motivo": ev.get("motivo", ""), "desde": ev.get("ts", "")}
+            elif ev.get("evento") == "retomada":
+                disjuntor = None
+        if disjuntor:
+            estado["disjuntor"] = disjuntor
+
     def salvar(self, estado: dict) -> None:
         tmp = self.arquivo.with_suffix(".json.tmp")
-        tmp.write_text(json.dumps(estado, ensure_ascii=False, indent=1, sort_keys=True), encoding="utf-8")
+        with open(tmp, "w", encoding="utf-8") as f:
+            f.write(json.dumps(estado, ensure_ascii=False, indent=1, sort_keys=True))
+            f.flush()
+            os.fsync(f.fileno())
         if self.arquivo.exists():
             shutil.copyfile(self.arquivo, self.arquivo.with_suffix(".json.bak"))
         os.replace(tmp, self.arquivo)
@@ -121,11 +153,17 @@ class Armazem:
         if not self.diario.exists():
             return []
         eventos = []
-        for linha in self.diario.read_text(encoding="utf-8").splitlines():
+        try:
+            texto = self.diario.read_text(encoding="utf-8", errors="replace")
+        except OSError:
+            return eventos
+        for linha in texto.splitlines():
             try:
-                eventos.append(json.loads(linha))
-            except json.JSONDecodeError:
+                ev = json.loads(linha)
+            except ValueError:
                 continue
+            if isinstance(ev, dict):
+                eventos.append(ev)
         return eventos
 
     def reconstruir_dsos(self) -> dict:
@@ -142,8 +180,8 @@ class Armazem:
                                  "status": "pendente", "lido": None}
             elif evento in status_por_evento and chave in ativas:
                 ativas[chave]["status"] = status_por_evento[evento]
-                if ev.get("lido") is not None:
-                    ativas[chave]["lido"] = ev["lido"]
+                if evento in ("criada", "adotada") and ev.get("lido") is not None:
+                    ativas[chave]["lido"] = ev["lido"]  # só a leitura que confirmou o que o programa gravou
             elif evento in ("falhou", "ausente", "apagada", "expirada"):
                 ativas.pop(chave, None)
         return ativas

@@ -69,6 +69,10 @@ def executar(caminho_config, amb: Ambiente | None = None) -> dict:
             est, origem = armazem.carregar()
             try:
                 _executar(cfg, amb, agora, run_id, pasta, armazem, est, origem, r)
+            except Exception as e:  # noqa: BLE001 - nenhuma falha pode sair sem relatório vermelho
+                r["alertas"].append(f"Erro inesperado ({type(e).__name__}). Nada mais foi alterado nesta execução")
+                r["resumo"] = "erro inesperado; veja os alertas"
+                _piorar(r, "vermelho")
             finally:
                 _fechar(cfg, agora, pasta, armazem, est, r)
     except OutraExecucao:
@@ -79,15 +83,20 @@ def executar(caminho_config, amb: Ambiente | None = None) -> dict:
 def _executar(cfg, amb, agora, run_id, pasta, armazem, est, origem, r):
     hoje = agora.date()
     parar = lambda: (pasta / "PARAR").exists()  # noqa: E731
+    if origem in ("bak", "diario") and not est["disjuntor"]["ativo"]:
+        motivo = f"estado local recuperado ({origem}); conferir e rodar RETOMAR"
+        est["disjuntor"] = {"ativo": True, "motivo": motivo, "desde": agora.isoformat()}
+        armazem.registrar_escrita({"ts": agora.isoformat(), "run_id": run_id, "evento": "disjuntor", "motivo": motivo})
+        armazem.salvar(est)
     if parar():
         modo = "parado"
-    elif cfg["modo"] == "observar" or origem in ("bak", "diario"):
+    elif cfg["modo"] == "observar":
         modo = "observar"
     else:
         modo = "contencao" if est["disjuntor"]["ativo"] else "ativo"
     r["modo"] = modo
     if origem in ("bak", "diario"):
-        r["alertas"].append(f"Estado local recuperado ({origem}). Esta execução só observa")
+        r["alertas"].append(f"Estado local recuperado ({origem}). A automação fica só removendo até RETOMAR")
         _piorar(r, "amarelo")
     if est["disjuntor"]["ativo"]:
         r["alertas"].append(f"Disjuntor ativo desde {est['disjuntor']['desde']}: {est['disjuntor']['motivo']}. "
@@ -136,7 +145,7 @@ def _executar(cfg, amb, agora, run_id, pasta, armazem, est, origem, r):
     limpeza, alertas_limpeza, disjuntor = regras.plano_limpeza(ctx)
     r["alertas"].extend(alertas_limpeza)
     if disjuntor:
-        executor.disjuntor = "preço abaixo do mínimo depois da sincronização"
+        executor.acionar_disjuntor("preço abaixo do mínimo depois da sincronização")
     for acao in limpeza:
         nome = ctx.item(acao["listing"])["apelido"]
         if modo in ("ativo", "contencao"):
@@ -153,8 +162,7 @@ def _executar(cfg, amb, agora, run_id, pasta, armazem, est, origem, r):
     r["bloqueios"].extend(bloqueios)
     if blocos:
         _decidir(cfg, amb, ctx, pl, executor, blocos, modo, run_id, est, r)
-    if executor.disjuntor and not est["disjuntor"]["ativo"]:
-        est["disjuntor"] = {"ativo": True, "motivo": executor.disjuntor, "desde": agora.isoformat()}
+    if executor.disjuntor:
         r["alertas"].append(f"Disjuntor acionado: {executor.disjuntor}. A automação volta a só remover")
         _piorar(r, "vermelho")
     r["alertas"].extend(executor.alertas)
@@ -195,9 +203,15 @@ def _ler_substituicoes(ctx, pl, modo, r):
         if item["papel"] == "transbordo" or (not real and modo != "observar"):
             continue
         try:
-            ctx.substituicoes[item["id"]] = {str(o.get("date", ""))[:10]: o for o in pl.substituicoes(item["id"], inicio, fim)}
+            lidas = pl.substituicoes(item["id"], inicio, fim)
         except ErroRede as e:
             r["alertas"].append(f"{item['apelido']}: substituições ilegíveis ({e})")
+            continue
+        datas = [tempo.ler_data(o.get("date")) for o in lidas]
+        if any(d is None for d in datas):
+            r["alertas"].append(f"{item['apelido']}: substituição com data em formato desconhecido; listing bloqueada")
+            continue
+        ctx.substituicoes[item["id"]] = {d.isoformat(): o for d, o in zip(datas, lidas)}
 
 
 def _decidir(cfg, amb, ctx, pl, executor, blocos, modo, run_id, est, r):

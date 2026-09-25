@@ -264,16 +264,23 @@ class TestAtivoSemConfirmacao(Base):
         self.assertEqual(r["modo"], "contencao")
         self.assertEqual(len(self.posts()), antes)
 
-    def test_estado_perdido_reconstroi_e_so_observa(self):
+    def test_estado_perdido_reconstroi_e_fica_em_contencao(self):
         self.rodar()
         (self.dados / "estado.json").unlink()
         (self.dados / "estado.json.bak").unlink(missing_ok=True)
-        antes = len(self.sim.escritas())
+        antes = len(self.posts())
         r = self.rodar(datetime(2026, 9, 26, 5, 30, tzinfo=BRT))
-        self.assertEqual(r["modo"], "observar")
-        self.assertEqual(len(self.sim.escritas()), antes)
-        self.assertEqual(len(self.estado()["dsos"]), 3)
+        self.assertEqual(r["modo"], "contencao")
+        self.assertEqual(len(self.posts()), antes)
+        est = self.estado()
+        self.assertEqual(len(est["dsos"]), 3)
+        self.assertEqual(est["contadores"], {"dia": "2026-09-25", "criadas": 3})
+        self.assertEqual(len(est["descontadas"]), 3)
         self.assertIn("recuperado", " ".join(r["alertas"]))
+        r = self.rodar(datetime(2026, 9, 26, 23, 30, tzinfo=BRT))
+        self.assertEqual(r["modo"], "contencao", "continua em contenção até RETOMAR")
+        self.cli("retomar")
+        self.assertEqual(self.rodar(datetime(2026, 9, 27, 5, 30, tzinfo=BRT))["modo"], "ativo")
 
     def test_canario_nao_aparece_em_arquivo_nenhum(self):
         self.rodar()
@@ -406,8 +413,10 @@ class TestExecutorCaminhosDeFalha(unittest.TestCase):
     def test_post_aceito_mas_ausente_ou_diferente(self):
         self.sim.ignorar_post = True
         self.assertIn("disjuntor", self.ex.criar(self.acao))
-        self.assertEqual(self.est["dsos"], {})
+        self.assertEqual(self.est["dsos"][f"{AFRODITE}|2026-09-27"]["status"], "incerta", "continua rastreada")
         self.assertTrue(self.ex.disjuntor)
+        self.assertTrue(self.est["disjuntor"]["ativo"])
+        del self.est["dsos"][f"{AFRODITE}|2026-09-27"]
         self.ex.disjuntor = ""
         self.sim.ignorar_post = False
         self.sim.override_extras = {"min_stay": 3}
@@ -496,3 +505,107 @@ class TestRelatorio(unittest.TestCase):
         html = (vazio / "relatorio.html").read_text(encoding="utf-8")
         self.assertNotIn("<script>x", html)
         self.assertIn("&lt;script&gt;", html)
+
+
+class TestRegressaoAuditoriaA(Base):
+    modo = "ativo"
+    confirmar = False
+
+    def test_h1_desfazer_nao_apaga_humana_depois_de_post_incerto(self):
+        self.sim.falhas.append(("POST", "/overrides", 503))  # nada gravado, resultado incerto
+        self.rodar()
+        data = "2026-09-26"
+        self.assertEqual(self.estado()["dsos"][f"{AFRODITE}|{data}"]["status"], "incerta")
+        humana = {"date": data, "price": "20", "price_type": "percent", "reason": "dono"}
+        self.sim.overrides[AFRODITE][data] = dict(humana)
+        codigo, saida = self.cli("desfazer", "--confirmar")
+        self.assertEqual(self.sim.overrides[AFRODITE][data]["reason"], "dono")
+        self.assertIn("não confere", saida)
+
+    def test_h1b_edicao_humana_sobrevive_a_perda_de_estado(self):
+        self.rodar()
+        data = sorted(self.nossas())[-1]
+        self.sim.overrides[AFRODITE][data]["min_stay"] = 3
+        self.cli("desfazer", "--confirmar")
+        (self.dados / "estado.json").unlink()
+        (self.dados / "estado.json.bak").unlink(missing_ok=True)
+        self.cli("desfazer", "--confirmar")
+        self.assertIn(data, self.sim.overrides[AFRODITE])
+        self.assertEqual(self.sim.overrides[AFRODITE][data]["min_stay"], 3)
+
+    def test_h2_disjuntor_sobrevive_a_estado_corrompido(self):
+        self.sim.quebrar_resposta_post = True
+        self.rodar()
+        self.assertTrue(self.estado()["disjuntor"]["ativo"])
+        (self.dados / "estado.json").write_bytes(b"{corrompido")
+        (self.dados / "estado.json.bak").write_bytes(b"{corrompido")
+        self.sim.quebrar_resposta_post = False
+        for quando in (datetime(2026, 9, 26, 5, 30, tzinfo=BRT), datetime(2026, 9, 26, 23, 30, tzinfo=BRT)):
+            self.assertEqual(self.rodar(quando)["modo"], "contencao")
+        self.assertEqual(len(self.posts()), 2)
+
+    def test_h3_utf8_truncado_nao_derruba(self):
+        self.rodar()
+        (self.dados / "estado.json").write_bytes('{"versao": 1, "x": "\u00e7'.encode() + b"\xc3")
+        (self.dados / "estado.json.bak").write_bytes(b"\xff\xfe")
+        with open(self.dados / "diario-escritas.jsonl", "ab") as f:
+            f.write(b"\xc3\x28 lixo\n")
+        r = self.rodar(datetime(2026, 9, 26, 5, 30, tzinfo=BRT))
+        self.assertEqual(r["modo"], "contencao")
+        self.assertEqual(len(self.estado()["dsos"]), 3)
+        with mock.patch("time.localtime", return_value=mock.Mock(tm_gmtoff=-3 * 3600)):
+            codigo, saida = self.cli("verificar", "--silencioso")
+        self.assertIn("última execução", saida)
+
+    def test_h4_excecao_inesperada_sai_vermelha(self):
+        import http.client
+        from pacing.rede import ErroRede, transporte_urllib
+        with mock.patch("pacing.rede._ABRIDOR.open", side_effect=http.client.IncompleteRead(b"x")):
+            with self.assertRaises(ErroRede):
+                transporte_urllib("GET", "https://api.pricelabs.co/v1/listings", {}, None, 5)
+        original = self.sim.__call__
+
+        def quebra(*a):
+            if "/listing_metrics" in a[1]:
+                raise RuntimeError("inesperado")
+            return original(*a)
+        self.amb.transporte = quebra
+        r = self.rodar()
+        self.assertEqual(r["status"], "vermelho")
+        self.assertEqual(list(self.mesa.glob("PRECOS OK *.txt")), [])
+        self.assertTrue((self.mesa / "ATENCAO-PRECOS.txt").exists())
+
+    def test_h5_data_em_outro_formato_conta_como_existente(self):
+        self.sim.overrides[AFRODITE]["2026-09-26"] = {"date": "26/09/2026", "min_stay": 2, "reason": "dono"}
+        r = self.rodar()
+        self.assertEqual(self.posts(), [])
+        self.assertIn("formato desconhecido", " ".join(r["alertas"]))
+
+    def test_h6_ensaio_respeita_parar_disjuntor_e_papel(self):
+        balcony = "350364___722814"
+        self.assertEqual(self.cli("testar-gravacao", "--listing", balcony, "--data", "2026-10-05", "--confirmar")[0], 2)
+        self.cli("parar")
+        self.assertEqual(self.cli("testar-gravacao", "--listing", AFRODITE, "--data", "2026-10-05", "--confirmar")[0], 2)
+        self.cli("retomar")
+        est = self.estado()
+        est["disjuntor"] = {"ativo": True, "motivo": "x", "desde": "y"}
+        Armazem(self.dados).salvar(est)
+        self.assertEqual(self.cli("testar-gravacao", "--listing", AFRODITE, "--data", "2026-10-05", "--confirmar")[0], 2)
+        self.cli("retomar")
+        self.cli("testar-gravacao", "--listing", AFRODITE, "--data", "2026-10-05", "--confirmar")
+        self.assertEqual(self.estado()["contadores"]["criadas"], 0)
+        self.assertEqual(len(self.posts()), 1)
+
+    def test_h7_divergentes_ocupam_vagas_e_conciliacao_divergente_aciona_disjuntor(self):
+        self.sim.quebrar_resposta_post = True
+        self.sim.falhas.append(("POST", "/overrides", 503))
+        self.rodar()
+        chave = next(k for k, v in self.estado()["dsos"].items() if v["status"] == "incerta" and k.endswith("2026-09-27"))
+        self.sim.overrides[AFRODITE]["2026-09-27"]["price"] = "-20"
+        self.sim.quebrar_resposta_post = False
+        self.cli("retomar")
+        r = self.rodar(datetime(2026, 9, 26, 5, 30, tzinfo=BRT))
+        est = self.estado()
+        self.assertEqual(est["dsos"][chave]["status"], "divergente")
+        self.assertTrue(est["disjuntor"]["ativo"])
+        self.assertIsNone(est["dsos"][chave].get("lido"))

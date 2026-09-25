@@ -166,6 +166,7 @@ def cmd_retomar(args, amb):
         est, _ = armazem.carregar()
         est["disjuntor"] = {"ativo": False, "motivo": "", "desde": ""}
         est["saude"]["erros_escrita_seguidos"] = 0
+        armazem.registrar_escrita({"ts": amb.agora(cfg).isoformat(), "run_id": "retomar", "evento": "retomada"})
         armazem.salvar(est)
     print(f"Retomado. Modo no config: {cfg['modo']}.")
     return 0
@@ -196,10 +197,20 @@ def cmd_testar_gravacao(args, amb):
     if item is None or not args.confirmar:
         print("Informe --listing (um id do config) e --confirmar. Nada foi alterado.")
         return 2
+    if item["papel"] != "sem_tabela":
+        print("O ensaio só é permitido em quarto sem tabela de ocupação (ex.: Afrodite). Nada foi alterado.")
+        return 2
     pasta = principal.pasta_dados(cfg)
+    if (pasta / "PARAR").exists():
+        print("Arquivo PARAR presente. Rode RETOMAR antes do ensaio. Nada foi alterado.")
+        return 2
     with Trava(pasta):
         run_id = "teste-" + amb.agora(cfg).strftime("%Y%m%dT%H%M")
         ex, est, _ = _executor(cfg, amb, frozenset({"POST", "DELETE"}), run_id)
+        if est["disjuntor"]["ativo"]:
+            print(f"Disjuntor ativo ({est['disjuntor']['motivo']}). Rode RETOMAR antes do ensaio. Nada foi alterado.")
+            return 2
+        contadores = dict(est["contadores"])
         antes = {x["id"]: x for x in ex.pl.listings()}.get(item["id"], {}).get("last_date_pushed")
         acao = {"listing": item["id"], "data": args.data, "payload": {"date": args.data, "price": "0",
                 "price_type": "percent", "reason": f"auto-jev {run_id}"}}
@@ -209,6 +220,7 @@ def cmd_testar_gravacao(args, amb):
             print("  lido de volta:", json.dumps(dso.get("lido"), ensure_ascii=False))
         print("Remover:", ex.apagar(acao, respeitar_parar=False))
         est["descontadas"].pop(f"{item['id']}|{args.data}", None)
+        est["contadores"] = contadores  # o ensaio não gasta o teto diário
         ex.armazem.salvar(est)
         depois = {x["id"]: x for x in ex.pl.listings()}.get(item["id"], {}).get("last_date_pushed")
         print(f"last_date_pushed antes: {antes} | depois: {depois}")

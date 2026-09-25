@@ -164,19 +164,21 @@ class TestEstado(unittest.TestCase):
         self.tmp = Path(tempfile.mkdtemp(prefix="André Área "))
 
     def test_trava_unica_e_orfa(self):
-        agora = [1000.0]
-        with estado.Trava(self.tmp, relogio=lambda: agora[0]):
+        with estado.Trava(self.tmp):
             with self.assertRaises(estado.OutraExecucao):
-                with estado.Trava(self.tmp, relogio=lambda: agora[0]):
+                with estado.Trava(self.tmp):
                     pass
         self.assertFalse((self.tmp / "execucao.trava").exists())
-        (self.tmp / "execucao.trava").write_text("99 1000")
-        agora[0] = 1000 + 1801
-        with estado.Trava(self.tmp, relogio=lambda: agora[0]):
-            pass
-        (self.tmp / "execucao.trava").write_text("lixo")
+        trava = self.tmp / "execucao.trava"
+        trava.write_text("")  # recém-criada por outra execução, ainda vazia: não é órfã
+        with self.assertRaises(estado.OutraExecucao):
+            with estado.Trava(self.tmp):
+                pass
+        velho = trava.stat().st_mtime - 1801
+        os.utime(trava, (velho, velho))
         with estado.Trava(self.tmp):
-            pass
+            trava.write_text("outra execução")  # trava trocada por outra instância
+        self.assertTrue(trava.exists(), "não apaga trava que não é sua")
 
     def test_salvar_carregar_e_bak(self):
         a = estado.Armazem(self.tmp)

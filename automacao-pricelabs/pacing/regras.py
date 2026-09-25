@@ -288,7 +288,7 @@ def plano_criacao(decisoes: list[Decisao], ctx: Contexto, run_id: str, modo: str
     desc = ctx.cfg["desconto"]
     hoje = ctx.hoje.isoformat()
     criadas_hoje = ctx.estado["contadores"]["criadas"] if ctx.estado["contadores"]["dia"] == hoje else 0
-    ativas = len([x for x in ctx.estado["dsos"].values() if x.get("status") != "divergente" and x["data"] >= hoje])
+    ativas = len([x for x in ctx.estado["dsos"].values() if x["data"] >= hoje])  # divergentes também estão na conta
     vagas = min(desc["teto_execucao"], desc["teto_dia"] - criadas_hoje, desc["teto_ativas"] - ativas)
     pares = sorted(((d, dec) for dec in decisoes for d in dec.bloco.datas), key=lambda x: (x[0], x[1].bloco.chave))
     for d, dec in pares:  # datas mais próximas primeiro, em qualquer bloco

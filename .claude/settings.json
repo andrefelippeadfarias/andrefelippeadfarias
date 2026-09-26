@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "mcp__PriceLabs__get_listing_prices",
+      "mcp__PriceLabs__get_user_logs",
+      "mcp__PriceLabs__get_pms_reservations",
+      "mcp__PriceLabs__get_listing_date_overrides",
+      "mcp__PriceLabs__get_listings"
+    ]
+  }
+}

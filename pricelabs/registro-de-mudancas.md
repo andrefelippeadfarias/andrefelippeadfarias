@@ -99,6 +99,34 @@ A rotina das 5 análises diárias passa a aplicar sozinha as regras abaixo, só 
 | Estadia mínima 1 noite (teste da Fase 1 recolocado) | Queen Spa (2), em 02 e 03/10 | 2 noites (o −35% da tela tinha apagado o teste) | 1 noite, −35% do dono mantido | "Volte a estadia mínima da Queen Spa 2 em 02 e 03/10 para 2" |
 | Preço fixo R$ 1.500 (−9%, até o mínimo) | Afrodite, em 28 e 30/09 | R$ 1.642 | R$ 1.500 | "Apague as substituições de 28 e 30/09 do Afrodite" |
 
+## 28/09/2026, 13:04 — Rodada refeita ("Tentar novamente") e revisão de 3 dias
+
+As rodadas de 27/09 (13:53, 16:53 e 19:53) e de 28/09 (07:53, 09:00 e 10:53) não rodaram, porque o conector caiu. Esta rodada junta todas.
+
+**Estado da PriceLabs agora:**
+- Os 7 quartos respondem "sem dados" (LISTING_NO_DATA). Tentei de novo e o erro continuou.
+- O recálculo está em branco, e o último envio aos canais foi em 27/09 às 09:01.
+- Hoje ainda não houve envio. Os canais seguem com os preços de ontem, que já têm as substituições automáticas.
+
+| Mudança | Onde | Antes | Depois | Como desfazer (pedir ao Claude) |
+|---|---|---|---|---|
+| Preço fixo R$ 1.500 (−5%, até o mínimo), regra C | Afrodite, em 04/10 | R$ 1.572 | R$ 1.500 | "Apague a substituição de 04/10 do Afrodite" |
+
+Conferi as regras A e B e não havia o que aplicar:
+- A: a estadia mínima de 1 noite já estava em todas as datas com vaga até 11/10.
+- B: 02–03/10 já tem o corte, e 09–10/10 é feriado.
+
+**Revisão de 3 dias (reservas feitas desde 25/09):**
+- **Estadia mínima de 1 noite funcionou no sábado 26/09.** Vieram vendas de última hora na Queen (7), Double, Balcony e VKS2, a maior parte pelo canal "others".
+- **O teste de 1 noite em 02–03/10 não gerou reservas de 1 noite.** A única venda nessas datas foi a Queen Spa (2), de 2 noites.
+- **Valor pago na Booking contra o preço enviado:**
+  - Queen Spa (2): 33% em 02–03/10 e 39% em 27–28/09.
+  - Balcony: 47% em 27–28/09 e 39% em 31/10–01/11.
+  - Queen Spa (7): 54% em 20–21/11.
+- **Cancelamentos:** nenhum na Queen Spa (2). Houve 1 na Queen Spa (7), para 25/09, e 3 na Balcony, para 25 e 26/09.
+- **Preços da Fase 1 que continuam sem aplicar (só pela tela):** preço base da Queen (7) em 1.500, da Double em 1.600, da VKS7 em 1.600 e da VKS2 em 1.500. A Balcony está com base e mínimo de 800.
+- **Lote de reservas às 10:44–10:48 de 27/09**, com horários idênticos, na Balcony, na Queen (2), na Queen (7) e no Afrodite. Conferir no Beds24 se não são duplicadas, principalmente as 2 da Balcony em 11/10.
+
 ## O que só pode ser feito na tela (passo a passo para você)
 
 1. **Safety Minimum Price → "Do Not Apply"** (Dynamic Pricing → Customizations → aba Groups → Edit no grupo Recanto dos Moinhos → All Customizations → Safety Minimum Price). Anote o valor atual antes.

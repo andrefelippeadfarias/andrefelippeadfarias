@@ -154,6 +154,41 @@ Com o preço base novo (1.480), a PriceLabs recalculou a Double no meio de seman
 
 **Sincronização:** o Sync Now do dono em 28/09 fez a PriceLabs recalcular às 13:47 e enviar aos canais às 16:35. Em 29/09 às 07:53, os quartos voltaram a aparecer sem dados, e o envio das 06:00 não aconteceu.
 
+## 29/09/2026, 11:41 — Modo agressivo de 14 dias ("Vamos ser mais agressivos para as proximas 2 semanas até atingirmos 50% de lotação")
+
+**Regra E (vale para as próximas 2 semanas, até os 14 dias chegarem a 50% no hotel todo):**
+- **Onde vale:** Queen Spa (7), Double, Villa King Spa (7), Villa King Spa (2) e Afrodite, só nas datas em que o quarto estiver abaixo de 50% de ocupação.
+- **Meio de semana (domingo a quinta):**
+  - até 7 dias antes, o preço vai para o **mínimo do quarto**;
+  - de 8 a 13 dias antes, vai para o **mínimo +10%**.
+- **Fim de semana (sexta e sábado):** fica **40% abaixo do piso de fim de semana**. O piso é 150% do preço base. Os valores são Queen (7) R$ 1.240, Double e VKS7 R$ 1.330, VKS2 R$ 1.140.
+- **Feriado de 09 a 12/10:** **−10%** sobre o preço atual, mantendo a estadia mínima de 2 noites.
+- **Afrodite:** R$ 1.500, que é o mínimo, em qualquer noite livre.
+- **Fora da regra:** Queen Spa (2), por causa da anomalia de 33%, e Balcony, que já está no mínimo de R$ 800.
+- **Quando parar:**
+  - quando uma data de um quarto passar de 50%, a rotina apaga a substituição daquela data e ela volta ao preço automático;
+  - quando o hotel todo chegar a 50% nos 14 dias, o modo termina.
+- **Nunca:** preço abaixo do mínimo, mudança em descontos de OTA ou ofertas da Booking.
+
+| Quarto | Datas | Antes | Depois |
+|---|---|---|---|
+| Queen Spa (7) | 30/09, 01/10, 04 a 06/10 | R$ 980 / cerca de 1.000 | R$ 800 (mínimo) |
+| Queen Spa (7) | 07 e 08/10 | cerca de 1.000 | R$ 880 |
+| Queen Spa (7) | 02 e 03/10 (1 noite mantida) | R$ 1.680 | R$ 1.240 |
+| Double | 30/09, 01/10, 04 a 06/10 | R$ 1.005 a 1.026 | R$ 900 (mínimo) |
+| Double | 07 e 08/10 | R$ 1.026 | R$ 990 |
+| Double | 02 e 03/10 (1 noite mantida) | R$ 1.800 | R$ 1.330 |
+| Double | 09 e 10/10 (2 noites mantidas) | R$ 3.168 | R$ 2.850 |
+| Double | 12/10 | R$ 1.709 | R$ 1.530 |
+| Villa King Spa (7) | 02 e 03/10 (1 noite mantida) | R$ 1.800 | R$ 1.330 |
+| Villa King Spa (7) | 12/10 | R$ 1.171 | R$ 1.050 |
+| Villa King Spa (2) | 02 e 03/10 (1 noite mantida) | R$ 1.680 | R$ 1.140 |
+| Afrodite | 07 e 08/10 | cerca de R$ 1.572 | R$ 1.500 |
+
+**Sem mudança:** o meio de semana da VKS7 e da VKS2 já estava no mínimo (R$ 1.000 e R$ 900). Na Queen (7) e no Afrodite, a PriceLabs estava sem dados nas datas do feriado, então o −10% fica para quando os dados voltarem.
+
+**Para desfazer:** pedir "desligue o modo agressivo". Apago as substituições "Agressivo 29/09" e volto os valores anteriores desta tabela.
+
 ## O que só pode ser feito na tela (passo a passo para você)
 
 1. **Safety Minimum Price → "Do Not Apply"** (Dynamic Pricing → Customizations → aba Groups → Edit no grupo Recanto dos Moinhos → All Customizations → Safety Minimum Price). Anote o valor atual antes.

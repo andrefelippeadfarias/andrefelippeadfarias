@@ -373,6 +373,16 @@ Ocupação dos próximos 7 dias segundo o PriceLabs após o Sync: Queen (7) 18%,
 
 **Recálculo:** a Queen (7) foi recalculada de novo às 13h (o limite de 429 já liberou). Os outros quartos foram recalculados pelo próprio Sync das 12:42; as substituições de fim de semana de 13:42 só entram no cálculo no próximo Sync ou recálculo.
 
+## 30/09/2026, 13:58 — Rotina das 13:53 (Regra F): uma saída da escada e alerta de preço no ar
+
+**Situação (dados de 13:53):** próximos 7 dias **20%** (44 de 217 diárias; meta 70%), 15 dias 27% (125 de 465), 30 dias 19%, 45 dias 19%, 60 dias cerca de 17% (estimado). Sem reserva nova depois do lote das 10:07–10:08; o último envio aos canais foi às 12:42 nos 7 quartos (a Villa King Spa 7 voltou a enviar). Os 27 registros de mudança das últimas 24 h vieram todos da nossa integração; nenhuma mudança manual.
+
+| Mudança | Onde | Antes | Depois | Como desfazer (pedir ao Claude) |
+|---|---|---|---|---|
+| Volta ao algoritmo (Regra F: data com 50% ou mais vendido sai da escada) | Double, 12/10 (3 de 6 vendidas) | fixo R$ 1.530 (acima do recomendado de R$ 1.284) | sem substituição | "Recoloque R$ 1.530 fixo em 12/10 na Double" |
+
+**Alerta:** o Sync das 12:42 enviou R$ 1.405 para a Queen (7) em 13, 14 e 15/10 (o % de dia útil foi anulado pela suavização). A correção para R$ 880 fixo foi gravada às 13:42 e só chega aos canais no próximo Sync. A Fase 2 (sextas e sábados de 16 a 31/10 em %) também aguarda o Sync.
+
 ## O que só pode ser feito na tela (passo a passo para você)
 
 1. **Safety Minimum Price → "Do Not Apply"** (Dynamic Pricing → Customizations → aba Groups → Edit no grupo Recanto dos Moinhos → All Customizations → Safety Minimum Price). Anote o valor atual antes.

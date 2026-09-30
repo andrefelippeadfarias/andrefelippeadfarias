@@ -383,7 +383,7 @@ Ocupação dos próximos 7 dias segundo o PriceLabs após o Sync: Queen (7) 18%,
 
 **Alerta:** o Sync das 12:42 enviou R$ 1.405 para a Queen (7) em 13, 14 e 15/10 (o % de dia útil foi anulado pela suavização). A correção para R$ 880 fixo foi gravada às 13:42 e só chega aos canais no próximo Sync. A Fase 2 (sextas e sábados de 16 a 31/10 em %) também aguarda o Sync.
 
-## 30/09/2026, 14:05 — "Aprovo tudo": Balcony, sexta da Villa e domingo 11/10 da Queen
+## 30/09/2026, 13:59 — "Aprovo tudo": Balcony, sexta da Villa e domingo 11/10 da Queen
 
 Aprovados pelo dono: propostas 2, 3, 4 e 5 da agenda, a exceção à regra D para a Balcony (com a escada em % no mesmo formato do plano) e a recomendação de baixar o piso de fim de semana na tela.
 

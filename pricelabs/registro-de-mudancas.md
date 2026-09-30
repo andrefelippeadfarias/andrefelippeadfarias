@@ -280,6 +280,31 @@ A Queen (7) em 10/10 (4 de 7, 57%) e em 11/10 (5 de 7) ficou sem desconto, porqu
 
 **Ajuste técnico no ambiente (não afeta o repositório):** o navegador não confiava na CA do proxy do ambiente; importei o bundle oficial `/root/.ccr/ca-bundle.crt` no NSS. A verificação TLS nunca foi desativada.
 
+## 30/09/2026, 10:52 — Villa Dolce Amore: o que o hóspede vê e por que a Booking não vende noite avulsa no fim de semana
+
+**Nenhuma mudança de preço foi feita** (só leitura). As páginas diretas continuam bloqueadas: Booking (conteúdo vazio para leitura automática), Airbnb (HTTP 410) e Expedia (HTTP 429). O dado veio do conector oficial da Booking, 2 adultos, em reais.
+
+| Estadia | Booking (Villa) | Enviado pelo PriceLabs (último push) |
+|---|---|---|
+| Sex 02/10, 1 noite | **indisponível** | Balcony 1.200 / VKS2 1.140 / VKS7 1.330 |
+| Sáb 03/10, 1 noite | **indisponível** | Balcony 1.200 / VKS2 1.140 / VKS7 1.330 |
+| Sex+Sáb 02→04/10, 2 noites | **R$ 1.270,08** (R$ 635,04 por noite) | idem |
+| Sáb+Dom 03→05/10, 2 noites | **indisponível** | — |
+| Dom 04/10, 1 noite | R$ 423,36 | Balcony 800 / VKS2 900 / VKS7 1.000 |
+| Ter 06/10, 1 noite | R$ 423,36 | — |
+| Sex 09/10, 1 noite | **indisponível** | — |
+
+**Leituras:**
+1. **O preço de vitrine da Villa na Booking é o do Balcony.** R$ 635,04 é 52,92% de R$ 1.200 e R$ 423,36 é 52,92% de R$ 800, a mesma proporção. Ou seja, o hóspede paga cerca de 53% do que enviamos, depois dos descontos empilhados.
+2. **A Villa só vende, na Booking, a chegada de sexta para 2 noites.** Sexta avulsa, sábado avulso, sáb+dom e a sexta de 09/10 aparecem indisponíveis, embora o PriceLabs mostre quartos livres (sex e sáb: 2 de 15 vendidos, 13%; dom 04/10: 4 de 15, 27%) e `min_stay` = 1. A restrição vem do Beds24 ou da extranet da Booking (estadia mínima 2 noites e/ou chegada fechada no sábado), fora do alcance do PriceLabs. Confirmada em 5 consultas.
+3. **Comparação com vizinhos (raio de 400 m, Booking):** Casa Redonda (9,2, jacuzzi) R$ 540 na sex e no sáb; Blue Village (9,0, spa) R$ 279 na sex e R$ 405 no sáb; Chateau Colinas (9,7, jacuzzi e sauna) cerca de R$ 505 por noite na sex+sáb; Capivari Lodge R$ 240 na sex e R$ 264 no sáb. A Villa (nota 8,1, 175 avaliações) fica a R$ 635 por noite, acima de todos com nota maior.
+
+**Impacto nas propostas pendentes:**
+- Proposta 3 (Villa sexta): antes de cortar preço, a prioridade é liberar a venda de 1 noite e a chegada de sábado. Corte de preço não resolve quarto que o hóspede não consegue reservar.
+- Proposta 4 (Balcony): o dado reforça, pois o Balcony define a vitrine da Villa. Continua dependendo de aprovação explícita (regra D).
+
+**Pendente com o dono (só ele consegue):** conferir no Beds24 (calendário, estadia mínima e restrições) e na extranet da Booking (Tarifas e disponibilidade > Calendário > restrições) os quartos VKS7, VKS2 e Balcony em 02, 03 e 09/10.
+
 ## O que só pode ser feito na tela (passo a passo para você)
 
 1. **Safety Minimum Price → "Do Not Apply"** (Dynamic Pricing → Customizations → aba Groups → Edit no grupo Recanto dos Moinhos → All Customizations → Safety Minimum Price). Anote o valor atual antes.

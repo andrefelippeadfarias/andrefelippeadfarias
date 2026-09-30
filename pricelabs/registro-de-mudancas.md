@@ -383,6 +383,25 @@ Ocupação dos próximos 7 dias segundo o PriceLabs após o Sync: Queen (7) 18%,
 
 **Alerta:** o Sync das 12:42 enviou R$ 1.405 para a Queen (7) em 13, 14 e 15/10 (o % de dia útil foi anulado pela suavização). A correção para R$ 880 fixo foi gravada às 13:42 e só chega aos canais no próximo Sync. A Fase 2 (sextas e sábados de 16 a 31/10 em %) também aguarda o Sync.
 
+## 30/09/2026, 14:05 — "Aprovo tudo": Balcony, sexta da Villa e domingo 11/10 da Queen
+
+Aprovados pelo dono: propostas 2, 3, 4 e 5 da agenda, a exceção à regra D para a Balcony (com a escada em % no mesmo formato do plano) e a recomendação de baixar o piso de fim de semana na tela.
+
+| Mudança | Onde | Antes | Depois | Como desfazer (pedir ao Claude) |
+|---|---|---|---|---|
+| **Exceção à regra D (aprovo 4):** % com mínimo da data no valor aprovado | Balcony, sexta 02/10 e sábado 03/10 | R$ 1.200 (piso de fim de semana); substituição antiga −35% sem efeito | sexta **R$ 850**, sábado **R$ 1.000** (calculado e conferido) | "Volte a Balcony em 02 e 03/10 para −35% sem mínimo de data" (volta a R$ 1.200) |
+| −20% (16 e 17/10) e −12% (23, 24 e 30/10), mínimo da data R$ 800 | Balcony, sextas e sábados à frente | R$ 1.200 (piso de fim de semana) | **R$ 800** (calculado e conferido) | "Apague as substituições de 16, 17, 23, 24 e 30/10 da Balcony" |
+| Fixo → % (aprovo 3) | Villa King Spa (7), sexta 02/10 | fixo R$ 1.330 | −30% do recomendado, mínimo R$ 1.000 (esperado cerca de R$ 1.143 a R$ 1.150; **não conferido**, limite de recálculos) | "Volte 02/10 da Villa King Spa 7 para fixo R$ 1.330" |
+| Fixo → % (aprovo 3) | Villa King Spa (2), sexta 02/10 | fixo R$ 1.140 | −29% do recomendado, mínimo R$ 900 (esperado cerca de R$ 1.003; **não conferido**) | "Volte 02/10 da Villa King Spa 2 para fixo R$ 1.140" |
+| Preço fixo de teste (aprovo 2), 2 diárias mantidas | Queen (7), domingo 11/10 (5 de 7 vendidas) | R$ 1.405 (recomendado; enviado R$ 1.405) | fixo **R$ 1.900** (fixo porque a suavização anula o %); revisão quinta 01/10, 10h | "Apague o preço de 11/10 da Queen 7" (mantém as 2 diárias) |
+
+- **Double 11/10:** a proposta 2 previa R$ 2.000, mas a categoria está esgotada (6 de 6); nada a fazer.
+- **Balcony 31/10:** sábado com 3 de 6 vendidas (50%), fica de fora da escada (regra de saída); 09 e 10/10 (feriado) seguem no piso de R$ 1.200.
+- **Proposta 5 adotada como regra fixa:** quinta 01/10, 10h, com menos de +3 diárias vendidas em sexta e sábado em relação a 30/09 (Queen, Double, Villa King Spa 7 e 2, Balcony), sobem mais 10 pontos de desconto (sempre acima do mínimo); com +8 ou mais, mantém e sobe o sábado.
+- **Balcony, por que o % não flutua:** o recomendado dela está em R$ 295 a R$ 700, muito abaixo do mínimo (R$ 800), então o preço fica sempre no piso; o mínimo da data define o valor.
+- **Piso de fim de semana na tela (aprovado; feito só pelo dono):** não pode ser alterado por aqui (as personalizações aceitas pela integração não incluem o "Preço mínimo de fim de semana"). Passo a passo no registro do plano, seção 7.
+- **Recálculo:** Balcony recalculada e conferida. Villa King Spa (7) e Villa King Spa (2) não puderam ser recalculadas (429, limite de 3 por quarto a cada 24 h); o Sync do dono recalcula.
+
 ## O que só pode ser feito na tela (passo a passo para você)
 
 1. **Safety Minimum Price → "Do Not Apply"** (Dynamic Pricing → Customizations → aba Groups → Edit no grupo Recanto dos Moinhos → All Customizations → Safety Minimum Price). Anote o valor atual antes.

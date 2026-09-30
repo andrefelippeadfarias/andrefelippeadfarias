@@ -43,7 +43,7 @@ As metas de 30 e 45 dias estão baixas só porque carregam o buraco dos 0 a 6 di
 A partir de 30/09 toda substituição de preço nasce em **porcentagem sobre o preço recomendado** (o PriceLabs aplica o percentual depois de todas as personalizações), com **piso da data igual ao mínimo do quarto**. Assim o preço continua acompanhando demanda, ocupação do hotel e feriados, em vez de ficar congelado num valor fixo.
 
 - **Nunca abaixo do mínimo do quarto:** Queen (7) R$ 800, Double R$ 900, Villa King Spa (7) R$ 1.000, Villa King Spa (2) R$ 900, Afrodite R$ 1.500.
-- Não mexe em descontos de OTA, ofertas da Booking, preço base, mínimo, máximo nem personalizações. Queen Spa (2) e Balcony seguem de fora (regra D), salvo aprovação explícita.
+- Não mexe em descontos de OTA, ofertas da Booking, preço base, mínimo, máximo nem personalizações. Queen Spa (2) segue de fora (regra D). A Balcony entrou em 30/09 com aprovação explícita do dono (exceção à regra D): ela sempre fica no piso (recomendado de R$ 295 a R$ 700 contra mínimo R$ 800), então o mínimo da data define o preço.
 - Estadia mínima: mantém 1 noite nos próximos 14 dias com unidade livre e as 2 noites do feriado (09 a 11/10, 01/11, 19/11).
 - Data com **50% ou mais das unidades vendidas** no quarto sai da escada e volta ao algoritmo. Data com 70% ou mais: avaliar subir 10%.
 
@@ -109,8 +109,8 @@ Os preços já estão no piso nos dias úteis, então o próximo ganho não vem 
 1. **Sync Now** depois de cada rodada: o PriceLabs só envia ao Beds24 e aos canais no Sync diário (06h) ou no Sync Now. O corte de sexta (Queen R$ 1.050 e Double R$ 1.150) já está calculado e ainda não foi enviado.
 2. **Villa, restrições na Booking:** a Booking só vende a chegada de sexta para 2 noites. Sexta avulsa, sábado avulso, sábado+domingo e a sexta de 09/10 aparecem indisponíveis. Conferir Beds24 (calendário e estadia mínima) e a extranet (Tarifas e disponibilidade > Calendário > restrições) em 02, 03 e 09/10. Libera 13 unidades por noite vendáveis avulsas.
 3. **Cancelamentos (35%):** investigar no Beds24 os lotes duplicados de 09 a 14/09 e a política de cancelamento das tarifas.
-4. **Piso de fim de semana na tela:** trocar o "Preço mínimo de fim de semana" de 150% do base para um percentual do mínimo (por exemplo 130% do mínimo). Deixa o algoritmo flutuar sozinho nos fins de semana e reduz a dependência de substituições. Decisão do dono.
-5. **Balcony (vitrine da Villa na Booking, R$ 635 por noite contra R$ 279 a R$ 617 dos vizinhos):** exceção à regra D, com a escada no mesmo formato. Precisa de "aprovo".
+4. **Piso de fim de semana na tela (aprovado em 30/09, só o dono consegue):** em Personalizações (grupo Recanto dos Moinhos, ou em cada anúncio se estiver definido lá) > Configurações avançadas de preço mínimo > "Preço mínimo de fim de semana" (Minimum Weekend Price), trocar "% do preço base = 150%" por "% do preço mínimo = 130%" e salvar (Save and Refresh) e depois Sync Now. Piso resultante: Queen (7) R$ 1.040, Double R$ 1.170, Villa King Spa (7) R$ 1.300, Villa King Spa (2) R$ 1.170. O algoritmo passa a flutuar sozinho em todos os fins de semana, inclusive de 32 a 60 dias, sem depender de substituições. Desfazer: voltar para "% do preço base = 150%".
+5. **Balcony (vitrine da Villa na Booking):** aprovada e aplicada em 30/09 (sexta R$ 850, sábado R$ 1.000 e R$ 800 nos fins de semana à frente). Feito.
 6. **Venda direta de última hora:** campanha para hóspedes anteriores nos 0 a 6 dias (WhatsApp), com condição fechada que não vira preço público. Só escrevo quando o dono pedir.
 
 ## 8. Como desfazer

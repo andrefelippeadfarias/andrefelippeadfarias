@@ -402,6 +402,21 @@ Aprovados pelo dono: propostas 2, 3, 4 e 5 da agenda, a exceção à regra D par
 - **Piso de fim de semana na tela (aprovado; feito só pelo dono):** não pode ser alterado por aqui (as personalizações aceitas pela integração não incluem o "Preço mínimo de fim de semana"). Passo a passo no registro do plano, seção 7.
 - **Recálculo:** Balcony recalculada e conferida. Villa King Spa (7) e Villa King Spa (2) não puderam ser recalculadas (429, limite de 3 por quarto a cada 24 h); o Sync do dono recalcula.
 
+## 30/09/2026, 14:10 — "Feito" (Sync das 14:04): conferência do cálculo e correção das sextas da Villa
+
+**Conferido no cálculo (recálculo das 14:04):** Queen (7) 13, 14 e 15/10 em R$ 880; 11/10 em R$ 1.900; 16 e 17/10 em R$ 1.422; 23 e 24/10 em R$ 1.548; 30 e 31/10 em R$ 1.894. Double, Villa King Spa (7) e Villa King Spa (2): sextas e sábados de 16 a 31/10 entre R$ 1.421 e R$ 2.076 (queda de 15% a 31% contra o piso). Balcony: sexta R$ 850, sábado R$ 1.000, 16, 17, 23, 24 e 30/10 em R$ 800. Double 12/10 em R$ 1.284 (sem a substituição).
+
+**Problema encontrado:** a sexta 02/10 da Villa King Spa (7) calculou **R$ 1.451** (−30% diluído pela suavização; o fixo anterior era R$ 1.330) e a da Villa King Spa (2) **R$ 1.262** (antes R$ 1.140). O Sync das 14:04 já pode ter enviado esses valores.
+
+| Mudança | Onde | Antes | Depois | Como desfazer (pedir ao Claude) |
+|---|---|---|---|---|
+| Volta ao valor aprovado em preço fixo | Villa King Spa (7), sexta 02/10 | −30% (calculou R$ 1.451) | fixo **R$ 1.150** | "Volte 02/10 da Villa King Spa 7 para −30% do recomendado" |
+| Volta ao valor aprovado em preço fixo | Villa King Spa (2), sexta 02/10 | −29% (calculou R$ 1.262) | fixo **R$ 1.000** | "Volte 02/10 da Villa King Spa 2 para −29% do recomendado" |
+
+**Pendências para o próximo Sync:** as duas sextas acima (hoje podem estar no ar a R$ 1.451 e R$ 1.262). A **Balcony não foi enviada** no Sync das 14:04 (último envio 12:42; calculada em R$ 850 e R$ 1.000; no ar ainda R$ 1.200). O piso de fim de semana na tela **não aparece alterado** (Queen, 27 e 28/11, segue em R$ 2.070); se já foi trocado, falta o Save and Refresh. O `user_price` dos dias alterados só atualiza depois que o envio termina (levou cerca de 20 minutos no Sync das 12:42).
+
+**Aprendizado:** o % de uma só noite de fim de semana é diluído pela suavização (plano, seção 2). Regra F ajustada: sexta e sábado só recebem % quando as duas noites entram juntas com o mesmo %; corte em uma data só é fixo.
+
 ## O que só pode ser feito na tela (passo a passo para você)
 
 1. **Safety Minimum Price → "Do Not Apply"** (Dynamic Pricing → Customizations → aba Groups → Edit no grupo Recanto dos Moinhos → All Customizations → Safety Minimum Price). Anote o valor atual antes.

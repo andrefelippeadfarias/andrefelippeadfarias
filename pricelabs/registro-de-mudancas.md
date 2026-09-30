@@ -254,6 +254,32 @@ A Queen (7) em 10/10 (4 de 7, 57%) e em 11/10 (5 de 7) ficou sem desconto, porqu
 
 **Limites da análise:** não há dado de elasticidade nem venda depois das 09:41; os efeitos são cenários e os limiares (+3 e +8) são critério do estrategista. A meta de 70% em 7 dias não sai só com preço.
 
+## 30/09/2026, 10:40 — Verificação do que o hóspede vê nas OTAs (Booking, Expedia, Airbnb)
+
+**Nenhuma mudança de preço foi feita nesta rodada** (só leitura).
+
+| Fonte | Resultado |
+|---|---|
+| Booking, página do Recanto (navegador automatizado) | Bloqueio **403**: o site detecta robô e exige identificação. Não contornei. |
+| Expedia, página do Recanto (navegador automatizado) | **429 "Bot or Not?"** (verificação humana). Não contornei. |
+| Airbnb | Sem URL enviada; as tentativas anteriores retornaram 410. |
+| Conector oficial da Booking (busca pública, 02→03 e 02→04/10) | **Funcionou** e é a única fonte de preço público desta rodada. |
+
+**Preço público na Booking agora (Recanto, 2 adultos):**
+- Sex 02/10, 1 noite: **R$742,14** (mesmo valor da checagem anterior).
+- Sex+Sáb 02→04/10: **R$1.406,16** no total, ou R$703 por noite.
+- Rating 8,4 (178 avaliações), 5 estrelas oficiais.
+- A Villa não apareceu nesta busca (a lista devolve poucos hotéis). Na checagem anterior ela tinha R$635 por noite para 2 noites e nenhuma disponibilidade para 1 noite.
+
+**Cruzamento com o PriceLabs (último envio, 09:41 BRT):**
+- Queen Spa (7): sex e sáb 02–03/10 enviadas a R$1.240 (piso do modo agressivo). O público de R$742 na Booking equivale a cerca de 60% do enviado.
+- Villa King Spa (7): sex e sáb enviadas a R$1.330.
+- O corte de sexta do pacote 1 (Queen 1.050) ainda **não foi enviado**: depende do próximo Sync. Depois dele, o público esperado da Queen na sexta é de cerca de R$630.
+
+**Concorrentes com preço público na Booking, sex 02/10 (1 noite):** Champet Boutique R$798, Le Suisse Elegance R$370, Solar d'Izabel R$370, Monte Carlo R$345, Cantinho da Serra R$340, Café Poesia R$330 (com jacuzzi), Leão da Montanha R$326. O Recanto é o segundo mais caro da região e tem a nota mais baixa entre os de 4–5 estrelas.
+
+**Ajuste técnico no ambiente (não afeta o repositório):** o navegador não confiava na CA do proxy do ambiente; importei o bundle oficial `/root/.ccr/ca-bundle.crt` no NSS. A verificação TLS nunca foi desativada.
+
 ## O que só pode ser feito na tela (passo a passo para você)
 
 1. **Safety Minimum Price → "Do Not Apply"** (Dynamic Pricing → Customizations → aba Groups → Edit no grupo Recanto dos Moinhos → All Customizations → Safety Minimum Price). Anote o valor atual antes.

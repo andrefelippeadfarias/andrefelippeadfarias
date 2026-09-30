@@ -227,6 +227,33 @@ A Queen (7) em 10/10 (4 de 7, 57%) e em 11/10 (5 de 7) ficou sem desconto, porqu
   - A PriceLabs falha no recálculo diário e só volta com Sync manual.
   - As reservas chegam do Booking ao Beds24 em lotes.
 
+## 30/09/2026, 10:33 — Estratégia do fim de semana 02–04/10 (painel de 3 estrategistas + preços públicos da Booking)
+
+**Lotação (dados das 09:41):** sex 02/10 16% (5 de 31), sáb 03/10 23% (7 de 31), dom 04/10 16% (5 de 31). Fim de semana inteiro 18% (17 de 93), igual ao mercado (18% a 19%). O sábado pode ser 6 de 31 se a unidade da Queen Spa (7) for bloqueio e não reserva (sem valor pago no calendário).
+
+**Preço público na Booking (Booking.com, 2 adultos, BRL):**
+- Recanto: R$ 742 (sex, 1 noite), R$ 753 (sáb, 1 noite), R$ 703 por noite (sex e sáb juntos). Nota 8,4.
+- Villa: R$ 635 por noite (sex e sáb juntos). Nota 8,1. **Sem disponibilidade na Booking para 1 noite** (sexta 02/10 e sábado 03/10), embora o Beds24 mostre 13 quartos livres na sexta. Conferido 2 vezes.
+- Concorrentes de Campos do Jordão: mediana de R$ 293 (1 noite) e R$ 381 (2 noites); com jacuzzi, R$ 424 e R$ 606. Notas dos pares: 9,0 a 9,5.
+- A busca não diz qual quarto aparece. Se for a Queen (7), o hóspede vê cerca de 60% do preço enviado.
+
+**Airbnb e Expedia:** não consegui ler (Airbnb devolveu erro 410, Expedia 429, Hoteis.com 503). As páginas existem. O dono precisa conferir pelas extranets.
+
+**Mercado:** previsão de chuva nos 3 dias (fontes divergem), primeiro turno das eleições no domingo 04/10, sem evento grande confirmado. A data da Oktoberfest está em conflito (prefeitura: 02 a 12/10; notícia de 25/09: 15 a 18/10). Confirmar antes de usar como argumento.
+
+| Mudança | Onde | Antes | Depois | Como desfazer (pedir ao Claude) |
+|---|---|---|---|---|
+| Pacote 1: sexta −15% (fixo, 1 noite mantida) | Queen Spa (7), 02/10 | R$ 1.240 | R$ 1.050 | "Volte a Queen 7 de 02/10 para R$ 1.240" |
+| Pacote 1: sexta −14% (fixo, 1 noite mantida) | Double, 02/10 | R$ 1.330 | R$ 1.150 | "Volte a Double de 02/10 para R$ 1.330" |
+
+**Propostas aguardando resposta do dono (nada aplicado):**
+- **Pacote 2, domingo do feriado 11/10:** Queen (7) de R$ 1.411 para R$ 1.900 e Double de R$ 1.726 para R$ 2.000. O dia está 90% vendido e o preço enviado está a metade do algoritmo. A base é fraca (Double sem venda há 9 dias), por isso é um teste com revisão na quinta às 10h.
+- **Pacote 3, sexta na Villa:** VKS7 R$ 1.330 para R$ 1.150 e VKS2 R$ 1.140 para R$ 1.000. Só depois de resolver o bloqueio da Villa na Booking.
+- **Pacote 4, exceção de regra (baixa a Balcony):** sexta R$ 1.200 para R$ 850 e sábado R$ 1.200 para R$ 1.000. A Balcony hoje está mais cara que a VKS2 com spa (R$ 1.140) e 45% acima do algoritmo. Só com aprovação explícita e depois do bloqueio da Villa.
+- **Passo 2 da sexta, se a quinta às 10h não tiver pelo menos +3 quartos-noite vendidos em sex e sáb:** Queen (7) R$ 900, Double R$ 1.000, VKS7 R$ 1.050, VKS2 R$ 900 (todos acima do mínimo). Se vierem +8 ou mais, manter e subir o sábado.
+
+**Limites da análise:** não há dado de elasticidade nem venda depois das 09:41; os efeitos são cenários e os limiares (+3 e +8) são critério do estrategista. A meta de 70% em 7 dias não sai só com preço.
+
 ## O que só pode ser feito na tela (passo a passo para você)
 
 1. **Safety Minimum Price → "Do Not Apply"** (Dynamic Pricing → Customizations → aba Groups → Edit no grupo Recanto dos Moinhos → All Customizations → Safety Minimum Price). Anote o valor atual antes.

@@ -334,6 +334,45 @@ Plano completo em `pricelabs/plano-de-atingimento-das-metas.md`.
 
 **Base de conhecimento do PriceLabs (consultada hoje):** o % da substituição é aplicado sobre o preço recomendado já com as personalizações; o mínimo da data na substituição prevalece sobre o "Preço mínimo de fim de semana"; preço fixo pode passar por cima desse piso.
 
+## 30/09/2026, 13:45 — Depois do Sync das 12:42: reservas que entraram, Portão 1 do plano em % e ajustes
+
+**Reservas:** o PriceLabs passou a ler 453 reservas criadas desde 09/09 (antes 443): **10 novas** e 1 mudança de status (uma Double de 28/09 cancelada em 30/09). Todas as novas são de datas futuras ou de hoje e nenhuma foi cancelada.
+
+| Quarto | Entrada | Noites | Canal | Valor | Criada (BRT) |
+|---|---|---|---|---|---|
+| Queen (7) | 03/10 | 1 | Booking | R$ 691 | 29/09 19:44 |
+| Villa King Spa (7) | 30/10 | 3 | direto/outros | R$ 3.202 | 30/09 09:48 |
+| Villa King Spa (7) | 30/09 | 1 | Booking | R$ 410 | 30/09 10:07 |
+| Villa King Spa (7) | 02/10 | 2 | Booking | R$ 1.021 | 30/09 10:07 |
+| Villa King Spa (7) | 18/10 | 1 | Booking | R$ 605 | 30/09 10:07 |
+| Villa King Spa (2) | 19/11 | 3 | Booking | R$ 3.838 | 30/09 10:07 |
+| Balcony | 20/11 | 2 | Booking | R$ 1.060 | 30/09 10:07 |
+| Queen (7) | 02/10 | 2 | Booking | R$ 1.223 | 30/09 10:08 |
+| Double | 11/10 | 2 | Booking | R$ 1.488 | 30/09 10:08 |
+| Queen (2) | 22/11 | 3 | Booking | R$ 1.470 | 30/09 10:08 |
+
+Total: 20 diárias, R$ 15.008. Dessas, 6 diárias caem nos próximos 7 dias (30/09 e 02 e 03/10). Oito reservas da Booking foram criadas no Beds24 em 2 minutos (10:07 e 10:08), por isso a análise das 10:53 não as via: **o PriceLabs só enxerga reserva nova no Sync**. O que o hóspede pagou contra o que enviamos: Villa King Spa (7) 02/10 R$ 510 por noite contra R$ 1.330 (38%); 30/09 R$ 410 contra R$ 1.000 (41%); Queen (7) 02 e 03/10 R$ 611 contra R$ 1.240 (49%). As 8 canceladas de 26 a 28/09 são de datas passadas e não afetam a ocupação futura.
+
+Ocupação dos próximos 7 dias segundo o PriceLabs após o Sync: Queen (7) 18%, Double 17%, Afrodite 71%, Queen (2) 36%, Villa King Spa (7) 22%, Balcony 14%, Villa King Spa (2) 7%; hotel cerca de 20% (era 19%). Último envio aos canais: 12:42 nos 7 quartos.
+
+**Portão 1 (plano em %):** passou nos fins de semana e falhou em dia útil isolado (detalhe em `plano-de-atingimento-das-metas.md`, seção 2).
+- Villa King Spa (7), 16 e 17/10: recomendado R$ 1.923, piso R$ 2.220, agora R$ 1.536 com −20% e mínimo da data R$ 1.000. O mínimo da data vence o piso de fim de semana e o % incide sobre o recomendado.
+- Queen (7) em 13/10 (−35%): ficou em **R$ 1.405**, contra R$ 880 fixos de antes, porque a suavização (Atenuação) somou R$ 774 depois do %. Villa King Spa (7) em 20/10 (−5%): R$ 1.062, igual aos vizinhos. O % de dia útil isolado é anulado.
+
+| Mudança | Onde | Antes | Depois | Como desfazer (pedir ao Claude) |
+|---|---|---|---|---|
+| Volta ao fixo R$ 880 (corrige o efeito do % anulado) | Queen (7), 13/10 | −35% (calculava R$ 1.405) | fixo R$ 880 | "Apague a substituição de 13/10 da Queen 7" |
+| Fixo R$ 880 (mínimo +10%) novo | Queen (7), 14 e 15/10 (quarta e quinta depois do feriado, 0 de 7 vendidas) | sem substituição (calculava R$ 1.405) | fixo R$ 880 | "Apague as substituições de 14 e 15/10 da Queen 7" |
+| **Fase 2:** −20% (16 e 17/10) e −12% (23, 24, 30 e 31/10), mínimo da data = mínimo do quarto | Queen (7) R$ 800, Double R$ 900, Villa King Spa (2) R$ 900: sextas e sábados 16, 17, 23, 24, 30 e 31/10 | sem substituição (piso de fim de semana: R$ 2.070, R$ 2.220 e R$ 1.905) | % do recomendado | "Apague as substituições de sexta e sábado de 16 a 31/10 da Queen 7, da Double e da Villa King Spa 2" |
+| **Fase 2:** −12%, mínimo R$ 1.000 | Villa King Spa (7), 23, 24, 30 e 31/10 (16 e 17/10 já em −20%) | sem substituição (piso R$ 2.220) | −12% do recomendado | "Apague as substituições de 23, 24, 30 e 31/10 da Villa King Spa 7" |
+| Piloto retirado | Villa King Spa (7), 20/10 | −5% (sem efeito) | sem substituição | recolocar: "−5% em 20/10 da Villa King Spa 7" |
+
+**Efeito esperado após o próximo Sync (estimativa com o recomendado de hoje):** Queen (7) 16 e 17/10 de R$ 2.070 para cerca de R$ 1.420; 23, 24, 30 e 31/10 de R$ 2.070–2.084 para cerca de R$ 1.540–1.830. Double, Villa King Spa (7) e Villa King Spa (2): queda de 15% a 31% nas mesmas datas.
+
+**Não mexi:** sexta e sábado 02 e 03/10, feriado 09 a 12/10, dias úteis de 14 a 31 dias, Queen Spa (2) e Balcony. Afrodite conferido: noites livres de 04, 07 e 08/10 calculadas em R$ 1.500.
+
+**Recálculo:** a Queen (7) foi recalculada de novo às 13h (o limite de 429 já liberou). Os outros quartos foram recalculados pelo próprio Sync das 12:42; as substituições de fim de semana de 13:42 só entram no cálculo no próximo Sync ou recálculo.
+
 ## O que só pode ser feito na tela (passo a passo para você)
 
 1. **Safety Minimum Price → "Do Not Apply"** (Dynamic Pricing → Customizations → aba Groups → Edit no grupo Recanto dos Moinhos → All Customizations → Safety Minimum Price). Anote o valor atual antes.

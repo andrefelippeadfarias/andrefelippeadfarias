@@ -36,16 +36,21 @@ As metas de 30 e 45 dias estão baixas só porque carregam o buraco dos 0 a 6 di
 5. **Piso de fim de semana:** é 150% do preço base (Queen 2.070, Double e Villa King Spa 7 2.220, Villa King Spa 2 1.905). Ele fica acima do preço que o algoritmo recomenda em todos os fins de semana à frente. Exemplo: Queen (7) em 16 e 17/10, recomendado R$ 1.773 e enviado R$ 2.070, sem nenhuma venda.
 6. **Suavização (Atenuação):** infla os dias úteis depois do feriado. Queen (7) em 14 e 15/10: o algoritmo chega a R$ 942 e a suavização soma R$ 506, indo a R$ 1.448.
 7. **Ajuste por ocupação de vários quartos:** já corta de 15% a 25% enquanto o hotel está a 19%. Ele é uma personalização de tela e não muda por aqui.
+8. **As reservas só chegam ao PriceLabs no Sync.** Às 10:07 e 10:08 o Beds24 criou 8 reservas da Booking de uma vez; a análise das 10:53 não as via. Elas apareceram depois do Sync das 12:42 (lista no registro de 30/09, 13:45).
 
 ## 2. O que muda: Regra F (porcentagem)
 
-A partir de hoje toda substituição de preço nasce em **porcentagem sobre o preço recomendado** (o PriceLabs aplica o percentual depois de todas as personalizações), com **piso da data igual ao mínimo do quarto**. Assim o preço continua acompanhando demanda, ocupação do hotel, feriados e suavização, em vez de ficar congelado num valor fixo.
+A partir de 30/09 toda substituição de preço nasce em **porcentagem sobre o preço recomendado** (o PriceLabs aplica o percentual depois de todas as personalizações), com **piso da data igual ao mínimo do quarto**. Assim o preço continua acompanhando demanda, ocupação do hotel e feriados, em vez de ficar congelado num valor fixo.
 
-- O piso da data (mínimo do quarto) tem prioridade sobre o piso de fim de semana. Isso é o que permite baixar sexta e sábado. Confirmado pela base de conhecimento do PriceLabs; conferência pelo cálculo é o Portão 1 (seção 4).
 - **Nunca abaixo do mínimo do quarto:** Queen (7) R$ 800, Double R$ 900, Villa King Spa (7) R$ 1.000, Villa King Spa (2) R$ 900, Afrodite R$ 1.500.
 - Não mexe em descontos de OTA, ofertas da Booking, preço base, mínimo, máximo nem personalizações. Queen Spa (2) e Balcony seguem de fora (regra D), salvo aprovação explícita.
 - Estadia mínima: mantém 1 noite nos próximos 14 dias com unidade livre e as 2 noites do feriado (09 a 11/10, 01/11, 19/11).
 - Data com **50% ou mais das unidades vendidas** no quarto sai da escada e volta ao algoritmo. Data com 70% ou mais: avaliar subir 10%.
+
+**Conferência feita em 30/09 (Portão 1), depois do Sync das 12h42:**
+- **Confirmado:** o mínimo da data na substituição vence o piso de fim de semana, e o % incide sobre o preço recomendado. Villa King Spa (7), sexta e sábado 16 e 17/10: recomendado R$ 1.923, enviado antes R$ 2.220 (piso), agora **R$ 1.536** (−20%).
+- **Limite descoberto:** o PriceLabs aplica o % **antes da suavização (Atenuação)**, que puxa cada dia de volta para o nível dos vizinhos. Um dia útil isolado com % é anulado: Queen (7) em 13/10 com −35% ficou em R$ 1.405 (a suavização somou R$ 774); Villa King Spa (7) em 20/10 com −5% ficou em R$ 1.062, igual aos vizinhos. O % funciona quando o preço já está no **mínimo** (dias úteis de 0 a 8 dias) e em **sexta e sábado**.
+- **Consequência:** nos dias úteis depois do feriado (13 a 15/10, onde a suavização espalha o pico de domingo) a substituição segue **fixa**, que é a única que passa por cima da suavização. Nos dias úteis de 14 a 31 dias o algoritmo já está perto do mínimo (Queen R$ 955, Double R$ 1.020, Villa King Spa (7) R$ 1.062, Villa King Spa (2) R$ 945); não criei substituição neles.
 
 ## 3. Escada de desconto por antecedência
 
@@ -53,34 +58,36 @@ Percentual sobre o recomendado, para Queen (7), Double, Villa King Spa (7) e Vil
 
 | Antecedência | Dia útil (dom a qui) | Sexta e sábado |
 |---|---|---|
-| 0 a 13 dias | −35% (na prática o preço fica no mínimo, e sobe sozinho se o algoritmo subir) | 2 a 7 dias: mantém o nível vigente (Queen sex −26% e sáb −13%; Double sex −32% e sáb −21%; Villa King Spa (7) −19%; Villa King Spa (2) −19%) |
-| 14 a 21 dias | −25% | −20% |
-| 22 a 31 dias | −15% | −12% |
+| 0 a 8 dias | −35%, piso = mínimo (o preço fica no mínimo e sobe sozinho se o algoritmo subir) | 2 e 3/10: segue o valor fixo vigente (Queen sex 1.050 e sáb 1.240; Double 1.150 e 1.330; Villa King Spa (7) 1.330; Villa King Spa (2) 1.140) até o preço de sexta ser conferido em % |
+| 9 a 13 dias | fixo no mínimo +10% onde a suavização anula o % (13 a 15/10 na Queen); feriado −10% | feriado 09 e 10/10: fixo até ser convertido |
+| 14 a 21 dias | algoritmo (sem substituição) | **−20%**, piso = mínimo |
+| 22 a 31 dias | algoritmo (sem substituição) | **−12%**, piso = mínimo |
 | 32 dias em diante | algoritmo puro | algoritmo puro |
 
-- **Feriado 09 a 12/10:** −10% sobre o recomendado (é a regra E, agora em %).
+- **Feriado 09 a 12/10:** −10% sobre o recomendado (regra E), hoje ainda em valor fixo.
 - **Afrodite:** acima da meta em todas as janelas (71%, 53%, 40%, 36%, 30%). Só noites livres em até 13 dias, −30% com piso R$ 1.500 (regra C). Sem escada adiante.
 - A faixa de 32 a 45 dias ficou fora de propósito: está à frente da meta implícita (19% contra 5%).
 
-**Efeito esperado no preço enviado** (estimativa com o recomendado de hoje, só datas com menos de 50% vendido):
+**Efeito esperado no preço enviado em sexta e sábado** (estimativa com o recomendado de hoje, só datas com menos de 50% vendido):
 
-| Quarto | Dia útil 14–21 | Dia útil 22–31 | Fim de semana 14–21 | Fim de semana 22–31 |
-|---|---|---|---|---|
-| Queen (7) | 1.112 → 895 (−19%) | 959 → 815 (−15%) | 2.070 → 1.418 (−31%) | 2.077 → 1.687 (−19%) |
-| Double | 1.020 → 900 (−12%) | 1.037 → 900 (−13%) | 2.220 → 1.534 (−31%) | 2.242 → 1.829 (−18%) |
-| Villa King Spa (7) | 1.103 → 1.000 (−9%) | 1.088 → 1.000 (−8%) | 2.220 → 1.538 (−31%) | 2.252 → 1.845 (−18%) |
-| Villa King Spa (2) | 997 → 900 (−10%) | 996 → 900 (−10%) | 1.905 → 1.423 (−25%) | 1.980 → 1.682 (−15%) |
+| Quarto | 14–21 dias (−20%) | 22–31 dias (−12%) |
+|---|---|---|
+| Queen (7) | 2.070 → 1.418 (−31%) | 2.077 → 1.687 (−19%) |
+| Double | 2.220 → 1.534 (−31%) | 2.242 → 1.829 (−18%) |
+| Villa King Spa (7) | 2.220 → 1.536 (−31%) | 2.252 → 1.845 (−18%) |
+| Villa King Spa (2) | 1.905 → 1.423 (−25%) | 1.980 → 1.682 (−15%) |
 
-O hóspede paga cerca de 55 a 60% do valor enviado na Booking (descontos empilhados).
+O hóspede paga de 38% a 57% do valor enviado na Booking (descontos empilhados; nas reservas de hoje, Villa King Spa (7) 38% a 41% e Queen 49% a 56%).
 
 ## 4. Fases e portões
 
-| Fase | O quê | Quando |
+| Fase | O quê | Situação |
 |---|---|---|
-| 1 (feita em 30/09) | Dias úteis de 0 a 13 dias da Queen, da Double e do Afrodite convertidos de fixo para %. Pilotos: Double 08/10, Villa King Spa (2) 13/10 e Villa King Spa (7) em 13, 16, 17 e 20/10. Sexta e sábado 02 e 03/10 e o feriado (09 a 12/10) seguem fixos até o Portão 1. | pronta |
-| Portão 1 | Conferir o piloto no primeiro recálculo do PriceLabs. Villa King Spa (7) deve mostrar: 16 e 17/10 ≈ R$ 1.538 (−20% de 1.923, piso R$ 1.000 no lugar do piso de R$ 2.220) e 20/10 ≈ R$ 1.006 (−5% de 1.059). Se vier ≈ R$ 1.184 (percentual sobre o base) ou R$ 2.220 (piso mantido), o método muda e o dono é avisado. | rotina das 13:53 e 16:53 (ou assim que o limite de recálculos liberar) |
-| 2 | Escada de 14 a 31 dias nos 4 quartos; sexta e sábado 02 e 03/10 e feriado passam para %. | logo após o Portão 1 |
-| Rotina diária | Nas 5 análises: data que muda de faixa recebe o novo %, data com 50% ou mais sai, sexta e sábado da semana seguinte entram. | todos os dias |
+| 1 | Dias úteis de 0 a 13 dias da Queen, da Double e do Afrodite convertidos de fixo para %; Villa King Spa (2) e Villa King Spa (7) em 13/10. | feita em 30/09 |
+| Portão 1 | Conferir o piloto no cálculo depois do Sync. | **feito às 13h: passou nos fins de semana, falhou em dia útil isolado** (seção 2) |
+| 2 | Sexta e sábado de 16, 17, 23, 24, 30 e 31/10 em % (−20% e −12%, piso = mínimo) na Queen (7), na Double, na Villa King Spa (7) e na Villa King Spa (2). | **aplicada às 13h42**; vai ao ar no próximo Sync |
+| 2b | Sexta e sábado 02 e 03/10 e feriado 09 a 12/10 passam para % depois de o primeiro fim de semana em % ser conferido no cálculo e nas reservas. | pendente |
+| Rotina diária | Nas 5 análises: sexta e sábado que entram na faixa de 14 a 31 dias recebem o %, data com 50% ou mais sai, dia útil que vira plateau (suavização) recebe valor fixo. | todos os dias |
 
 ## 5. Gatilhos de escalada e de freio
 

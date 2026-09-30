@@ -280,7 +280,7 @@ A Queen (7) em 10/10 (4 de 7, 57%) e em 11/10 (5 de 7) ficou sem desconto, porqu
 
 **Ajuste técnico no ambiente (não afeta o repositório):** o navegador não confiava na CA do proxy do ambiente; importei o bundle oficial `/root/.ccr/ca-bundle.crt` no NSS. A verificação TLS nunca foi desativada.
 
-## 30/09/2026, 10:52 — Villa Dolce Amore: o que o hóspede vê e por que a Booking não vende noite avulsa no fim de semana
+## 30/09/2026, 10:46 — Villa Dolce Amore: o que o hóspede vê e por que a Booking não vende noite avulsa no fim de semana
 
 **Nenhuma mudança de preço foi feita** (só leitura). As páginas diretas continuam bloqueadas: Booking (conteúdo vazio para leitura automática), Airbnb (HTTP 410) e Expedia (HTTP 429). O dado veio do conector oficial da Booking, 2 adultos, em reais.
 

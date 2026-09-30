@@ -1,6 +1,6 @@
 ---
 name: andre-master-developer
-description: AndreMasterDeveloper, um modo de desenvolvimento de alta qualidade que gasta o mínimo possível de tokens ao criar, atualizar e manter sistemas com agentes de IA (Claude Code, Cursor, Aider). Comprime tudo o que entra no contexto (logs, saída de testes, builds, installs, diffs), navega pelo código com um mapa de símbolos em vez de abrir arquivos inteiros e responde de forma direta, sem prolixidade. Use sempre que o usuário chamar /andre-master-developer, citar AndreMasterDeveloper ou falar em economia de tokens, gastar menos tokens, contexto estourando, limite de uso, logs enormes, respostas mais curtas ou modo caverna/caveman. Use também, mesmo sem pedido explícito, em manutenção, refatoração, depuração ou revisão de repositórios grandes, onde ler arquivos inteiros ou despejar saídas de terminal desperdiçaria contexto. Em inglês os gatilhos incluem token saving, reduce token usage, context compression e terse mode.
+description: Economia de tokens ao programar (logs, mapa, concisão). AndreMasterDeveloper é um modo de desenvolvimento de alta qualidade que gasta o mínimo possível de tokens ao criar, atualizar e manter sistemas com agentes de IA (Claude Code, Hermes, Cursor, Aider). Comprime tudo o que entra no contexto (logs, saída de testes, builds, installs, diffs), navega pelo código com um mapa de símbolos em vez de abrir arquivos inteiros e responde de forma direta, sem prolixidade. Use sempre que o usuário chamar /andre-master-developer, citar AndreMasterDeveloper ou falar em economia de tokens, gastar menos tokens, contexto estourando, limite de uso, logs enormes, respostas mais curtas ou modo caverna/caveman. Use também, mesmo sem pedido explícito, em manutenção, refatoração, depuração ou revisão de repositórios grandes, onde ler arquivos inteiros ou despejar saídas de terminal desperdiçaria contexto. Em inglês os gatilhos incluem token saving, reduce token usage, context compression e terse mode.
 ---
 
 # AndreMasterDeveloper
@@ -9,7 +9,12 @@ O objetivo é entregar código de qualidade gastando o mínimo de tokens. Tudo o
 
 **Regra de ouro: economize no volume, nunca na verificação.** Testar, conferir o diff e validar antes do commit continuam obrigatórios. O que muda é que você só enxerga o que importa em cada um desses passos.
 
-Os scripts ficam em `scripts/`, no diretório base desta skill (o caminho aparece quando ela é carregada; numa instalação pessoal é `~/.claude/skills/andre-master-developer`). Nos exemplos abaixo, `$AMD` representa esse diretório. Troque pelo caminho real, porque variáveis de shell não persistem entre comandos. Os scripts usam só a biblioteca padrão do Python 3.
+Arquivos de apoio desta skill:
+- `scripts/compactar.py`: comprime a saída de comandos (seção 1).
+- `scripts/mapa_codigo.py`: mapa de símbolos do código (seção 2).
+- `references/receitas-comandos.md` e `references/ferramentas-externas.md`: consulta sob demanda.
+
+Eles ficam no diretório desta skill, cujo caminho aparece quando ela é carregada: no Claude Code, como "Base directory for this skill"; no Hermes, como "[Skill directory: …]". Nos exemplos abaixo, `$AMD` representa esse diretório. Troque pelo caminho absoluto real, porque variáveis de shell não persistem entre comandos. Os scripts usam só a biblioteca padrão do Python 3.8+.
 
 No Windows, o comando `python3` costuma não existir ou abrir a Microsoft Store. Nesse caso, use `py -3` no lugar de `python3` (ou `python`, se `py` também faltar). Descubra qual funciona uma vez por sessão e mantenha esse comando.
 

@@ -83,9 +83,10 @@ PALAVRAS_C = {"if", "for", "while", "switch", "return", "sizeof", "else", "do"}
 def listar_arquivos(raiz):
     try:
         saida = subprocess.run(
-            ["git", "-C", raiz, "ls-files", "-co", "--exclude-standard"],
+            # -z: sem isso o git escapa nomes com acento ("rela\303\247\303\243o.py")
+            ["git", "-C", raiz, "ls-files", "-z", "-co", "--exclude-standard"],
             stdout=subprocess.PIPE, stderr=subprocess.DEVNULL, check=True,
-        ).stdout.decode("utf-8", "replace").splitlines()
+        ).stdout.decode("utf-8", "replace").split("\0")
         arquivos = [a for a in saida if a]
     except (OSError, subprocess.CalledProcessError):
         arquivos = []
@@ -186,6 +187,8 @@ def tamanho(caminho):
 
 
 def main(argv):
+    # no Windows, a saída redirecionada usa cp1252 e quebraria em "⚠" e "…"
+    sys.stdout.reconfigure(encoding="utf-8", errors="replace")
     raiz, busca, so_arvore, com_md, max_linhas = ".", None, False, True, 400
     i = 0
     while i < len(argv):

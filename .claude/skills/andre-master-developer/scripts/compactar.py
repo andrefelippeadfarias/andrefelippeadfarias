@@ -20,6 +20,8 @@ O que faz, nesta ordem:
   4. se ainda passar do teto: mantém início, fim e toda linha de erro com contexto
 """
 
+import locale
+import os
 import re
 import subprocess
 import sys
@@ -52,6 +54,20 @@ IMPORTANTE = re.compile(
 )
 
 DIGITOS = re.compile(r"\d+")
+
+
+def decodificar(dados):
+    # UTF-8 primeiro; no Windows, programas antigos ainda escrevem na página de código local
+    try:
+        return dados.decode("utf-8")
+    except UnicodeDecodeError:
+        pass
+    for codificacao in (locale.getpreferredencoding(False), "cp1252"):
+        try:
+            return dados.decode(codificacao)
+        except (UnicodeDecodeError, LookupError):
+            pass
+    return dados.decode("latin-1")  # nunca falha
 
 
 def limpar(texto):
@@ -140,6 +156,8 @@ def compactar(texto, max_linhas=120, contexto=2, manter_ok=False):
 
 
 def main(argv):
+    # no Windows, a saída redirecionada usa cp1252 e quebraria em "→", "⟲", "−"
+    sys.stdout.reconfigure(encoding="utf-8", errors="replace")
     max_linhas, contexto, manter_ok, comando = 120, 2, False, None
     i = 0
     while i < len(argv):
@@ -163,19 +181,24 @@ def main(argv):
 
     codigo = 0
     if comando:
-        usar_shell = len(comando) == 1
+        # no Windows, npm/yarn/etc. são .cmd e só rodam via shell
+        usar_shell = len(comando) == 1 or os.name == "nt"
+        if usar_shell and len(comando) > 1:
+            alvo = subprocess.list2cmdline(comando)
+        else:
+            alvo = comando[0] if usar_shell else comando
         try:
-            proc = subprocess.run(comando[0] if usar_shell else comando, shell=usar_shell,
+            proc = subprocess.run(alvo, shell=usar_shell,
                                   stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
         except FileNotFoundError as exc:
             print(f"[compactar] comando não encontrado: {exc.filename}")
             return 127
-        texto, codigo = proc.stdout.decode("utf-8", "replace"), proc.returncode
+        texto, codigo = decodificar(proc.stdout), proc.returncode
     elif comando == [] or sys.stdin.isatty():
         print(__doc__)
         return 2
     else:
-        texto = sys.stdin.buffer.read().decode("utf-8", "replace")
+        texto = decodificar(sys.stdin.buffer.read())
 
     linhas, total = compactar(texto, max_linhas, contexto, manter_ok)
     if linhas:

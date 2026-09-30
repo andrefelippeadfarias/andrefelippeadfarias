@@ -9,7 +9,9 @@ O objetivo é entregar código de qualidade gastando o mínimo de tokens. Tudo o
 
 **Regra de ouro: economize no volume, nunca na verificação.** Testar, conferir o diff e validar antes do commit continuam obrigatórios. O que muda é que você só enxerga o que importa em cada um desses passos.
 
-Os scripts ficam em `scripts/`, no diretório base desta skill (o caminho aparece quando ela é carregada; neste repositório é `.claude/skills/andre-master-developer`). Nos exemplos abaixo, `$AMD` representa esse diretório. Troque pelo caminho real, porque variáveis de shell não persistem entre comandos. Os scripts usam só a biblioteca padrão do Python 3.
+Os scripts ficam em `scripts/`, no diretório base desta skill (o caminho aparece quando ela é carregada; numa instalação pessoal é `~/.claude/skills/andre-master-developer`). Nos exemplos abaixo, `$AMD` representa esse diretório. Troque pelo caminho real, porque variáveis de shell não persistem entre comandos. Os scripts usam só a biblioteca padrão do Python 3.
+
+No Windows, o comando `python3` costuma não existir ou abrir a Microsoft Store. Nesse caso, use `py -3` no lugar de `python3` (ou `python`, se `py` também faltar). Descubra qual funciona uma vez por sessão e mantenha esse comando.
 
 ## 1. Entrada: comprima o que entra no contexto
 

@@ -305,6 +305,35 @@ A Queen (7) em 10/10 (4 de 7, 57%) e em 11/10 (5 de 7) ficou sem desconto, porqu
 
 **Pendente com o dono (só ele consegue):** conferir no Beds24 (calendário, estadia mínima e restrições) e na extranet da Booking (Tarifas e disponibilidade > Calendário > restrições) os quartos VKS7, VKS2 e Balcony em 02, 03 e 09/10.
 
+## 30/09/2026, 12:20 — Plano em porcentagem (Regra F): conversão dos dias úteis e pilotos ("Vamos aplicar as estratégias nas 2 pousadas ... usar % ao invés do valor fixo")
+
+Plano completo em `pricelabs/plano-de-atingimento-das-metas.md`.
+
+**Regra F (vale para as 5 análises diárias, no lugar dos valores fixos da regra E):** substituição de preço em **% sobre o preço recomendado**, com **piso da data = mínimo do quarto** (Queen 7 R$ 800, Double R$ 900, Villa King Spa 7 R$ 1.000, Villa King Spa 2 R$ 900, Afrodite R$ 1.500).
+- Dia útil: 0 a 13 dias −35%; 14 a 21 dias −25%; 22 a 31 dias −15%.
+- Sexta e sábado: 14 a 21 dias −20%; 22 a 31 dias −12%; 2 a 7 dias mantém o nível vigente (fixo até o Portão 1).
+- Feriado 09 a 12/10: −10%. Afrodite: noite livre até 13 dias −30%, piso R$ 1.500.
+- Data com 50% ou mais vendido no quarto volta ao algoritmo; Queen Spa (2) e Balcony seguem fora (regra D).
+- **Portão 1:** só estender a escada de 14 a 31 dias e passar sexta, sábado e feriado para % depois de conferir o piloto da Villa King Spa (7): 16 e 17/10 ≈ R$ 1.538 e 20/10 ≈ R$ 1.006 no cálculo do PriceLabs.
+
+| Mudança | Onde | Antes | Depois | Como desfazer (pedir ao Claude) |
+|---|---|---|---|---|
+| Fixo → −35% do recomendado, piso R$ 800 | Queen (7), dias úteis 30/09, 01/10, 04, 05, 06, 07, 08 e 13/10 | fixo R$ 800 (08 e 13/10: R$ 880) | −35%, piso R$ 800 | "Volte os dias úteis da Queen 7 de 30/09 a 13/10 para fixo R$ 800 (08 e 13/10: R$ 880)" |
+| Fixo → −35%, piso R$ 900 | Double, dias úteis 30/09, 01/10, 04, 05, 06, 07 e 08/10 | fixo R$ 900 (08/10: R$ 990) | −35%, piso R$ 900 | "Volte os dias úteis da Double de 30/09 a 08/10 para fixo R$ 900 (08/10: R$ 990)" |
+| Fixo → −30%, piso R$ 1.500 | Afrodite, noites livres 30/09, 04, 07 e 08/10 | fixo R$ 1.500 | −30%, piso R$ 1.500 | "Volte as noites livres do Afrodite de 30/09 a 08/10 para fixo R$ 1.500" |
+| Fixo → −35%, piso R$ 900 | Villa King Spa (2), 13/10 | fixo R$ 990 | −35%, piso R$ 900 | "Volte 13/10 da Villa King Spa 2 para fixo R$ 990" |
+| Fixo → −35%, piso R$ 1.000 | Villa King Spa (7), 13/10 | fixo R$ 1.100 | −35%, piso R$ 1.000 | "Volte 13/10 da Villa King Spa 7 para fixo R$ 1.100" |
+| **Piloto novo** −20%, piso R$ 1.000 | Villa King Spa (7), sexta 16 e sábado 17/10 | sem substituição (piso de fim de semana R$ 2.220, enviado R$ 2.220) | −20% do recomendado | "Apague as substituições de 16 e 17/10 da Villa King Spa 7" |
+| **Piloto novo** −5%, piso R$ 1.000 | Villa King Spa (7), terça 20/10 | sem substituição (R$ 1.059) | −5% do recomendado | "Apague a substituição de 20/10 da Villa King Spa 7" |
+
+**Efeito no preço de hoje:** nenhum. Os dias úteis já estavam no mínimo do quarto; com o % o preço passa a subir sozinho se o algoritmo recomendar mais de 1,5 vez o mínimo.
+
+**O que não mudou:** sexta e sábado 02 e 03/10 (Queen 1.050 e 1.240; Double 1.150 e 1.330; Villa King Spa 7 1.330; Villa King Spa 2 1.140), feriado 09 a 12/10, Queen Spa (2) e Balcony. Passei sexta e sábado da Villa King Spa (2), da Villa King Spa (7) e da Double para % por cerca de 30 minutos e voltei ao fixo antes de qualquer recálculo, porque o teste do piso de fim de semana não pôde ser conferido (item abaixo). As substituições fixas de 02 e 03/10 dessas três categorias ficaram com o campo de mínimo da data preenchido (R$ 900 ou R$ 1.000); é inerte, preço fixo ignora mínimo.
+
+**Recálculo:** recalculei a Queen (7) e a Double (a sexta 02/10 já está calculada em R$ 1.050 e R$ 1.150; o enviado continua R$ 1.240 e R$ 1.330 até o Sync). Depois dos pilotos, o PriceLabs respondeu "muitas requisições" (429) nos recálculos da Villa King Spa (7), da Villa King Spa (2) e da Double (limite de 3 por quarto a cada 24 h). Por isso o Portão 1 fica para o próximo recálculo.
+
+**Base de conhecimento do PriceLabs (consultada hoje):** o % da substituição é aplicado sobre o preço recomendado já com as personalizações; o mínimo da data na substituição prevalece sobre o "Preço mínimo de fim de semana"; preço fixo pode passar por cima desse piso.
+
 ## O que só pode ser feito na tela (passo a passo para você)
 
 1. **Safety Minimum Price → "Do Not Apply"** (Dynamic Pricing → Customizations → aba Groups → Edit no grupo Recanto dos Moinhos → All Customizations → Safety Minimum Price). Anote o valor atual antes.

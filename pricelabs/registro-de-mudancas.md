@@ -417,6 +417,34 @@ Aprovados pelo dono: propostas 2, 3, 4 e 5 da agenda, a exceção à regra D par
 
 **Aprendizado:** o % de uma só noite de fim de semana é diluído pela suavização (plano, seção 2). Regra F ajustada: sexta e sábado só recebem % quando as duas noites entram juntas com o mesmo %; corte em uma data só é fixo.
 
+## 01/10/2026, 11:40 — Rotina de quinta (10:53): regra de sexta e sábado aplicada só na Queen (7); a Villa foi negada pelo dono
+
+**Leitura (último Sync às 08:42):** sexta 02/10 com 11 de 31 vendidas e sábado 03/10 com 12 de 31, contra 8 e 9 em 30/09 (+3 e +3). Os ganhos são do Double: 02/10 foi de 0 para 4 de 6 e 03/10 de 1 para 4 de 6, mas sem reserva, sem data de reserva e sem receita (ADR −1) nessas noites, e a lista de reservas do PriceLabs não mostra nenhuma reserva nova desde o lote de 30/09 às 10:08. Leitura: bloqueio de unidades no Beds24, não demanda. Sem o Double, sexta ficou em 7 (−1) e sábado em 9 (0), abaixo do limite de +3. **A regra de quinta (passo 2, aprovada em 30/09) dispara.**
+
+| Mudança | Onde | Antes | Depois | Como desfazer (pedir ao Claude) |
+|---|---|---|---|---|
+| Passo 2 da sexta (mais 10 pontos), fixo, 1 noite | Queen (7), sexta 02/10 | R$ 1.050 | **R$ 900** | "Volte a Queen 7 de 02/10 para R$ 1.050" |
+| Passo 2, sábado (mais 10%), fixo, 1 noite | Queen (7), sábado 03/10 | R$ 1.240 | **R$ 1.115** | "Volte a Queen 7 de 03/10 para R$ 1.240" |
+
+Gravado e conferido na leitura da substituição (atualizado às 11:39). O valor chega aos canais no próximo Sync.
+
+**Não aplicado (a chamada da Villa King Spa 7 foi negada pelo dono; parei sem tentar de novo nem aplicar nos demais):**
+
+| Quarto | Sexta 02/10 | Sábado 03/10 |
+|---|---|---|
+| Double | R$ 1.150 → R$ 1.000 | R$ 1.330 → R$ 1.200 |
+| Villa King Spa (7) | R$ 1.150 → R$ 1.050 | R$ 1.330 → R$ 1.200 |
+| Villa King Spa (2) | R$ 1.000 → R$ 900 | R$ 1.140 → R$ 1.025 |
+| Balcony (mínimo da data) | R$ 850 → R$ 800 | R$ 1.000 → R$ 900 |
+
+Todos ficam acima do mínimo do quarto. Aguardam o "aprovo" do dono.
+
+**Mantido de propósito:**
+- **Queen (7), domingo 11/10:** segue em R$ 1.900 (5 de 7 vendidas, sem venda nova em cerca de 19 h; faltam 10 dias). Tirar a substituição devolveria o preço a cerca de R$ 1.405 por causa da suavização, então fica o teste até 08/10.
+- **Double, substituições de 01, 02 e 03/10:** não saem da escada pela regra de 50% vendido, porque o dado é de bloqueio e não de demanda.
+
+**Alertas:** o Double 02 e 03/10 precisa ser conferido no Beds24 (reserva ou bloqueio). Os preços recalculados às 08:42 de várias datas ainda não aparecem como enviados (por exemplo Double 12 a 15/10: calculado R$ 1.375, enviado R$ 1.284). O piso de fim de semana na tela segue em 150% da base (Queen, 27 e 28/11, em R$ 2.070).
+
 ## O que só pode ser feito na tela (passo a passo para você)
 
 1. **Safety Minimum Price → "Do Not Apply"** (Dynamic Pricing → Customizations → aba Groups → Edit no grupo Recanto dos Moinhos → All Customizations → Safety Minimum Price). Anote o valor atual antes.

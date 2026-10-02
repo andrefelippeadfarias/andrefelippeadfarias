@@ -445,6 +445,25 @@ Todos ficam acima do mínimo do quarto. Aguardam o "aprovo" do dono.
 
 **Alertas:** o Double 02 e 03/10 precisa ser conferido no Beds24 (reserva ou bloqueio). Os preços recalculados às 08:42 de várias datas ainda não aparecem como enviados (por exemplo Double 12 a 15/10: calculado R$ 1.375, enviado R$ 1.284). O piso de fim de semana na tela segue em 150% da base (Queen, 27 e 28/11, em R$ 2.070).
 
+## 01/10/2026, 23:05 — Rotina das 19:53: correção da regra de quinta e Double liberado (regra F)
+
+**Erro corrigido:** na entrada das 11:40 eu li o salto do Double em 01, 02 e 03/10 como bloqueio no Beds24. Estava errado. A lista de reservas mostra reservas reais da Booking feitas de 30/09 17:40 a 01/10 10:23 (Double: duas de 2 diárias em 02 e 03/10, uma de 1 diária em 03/10, uma de 2 diárias em 01 e 02/10 e duas de 1 diária em 01/10, todas com comissão de OTA preenchida). Com os números certos, sexta e sábado ganharam +3 e +3 (total +6) contra 30/09 às 13:53, que fica entre +3 e +8: a regra de quinta manda **manter**. O corte da Queen (7) feito às 11:40 não valia.
+
+| Mudança | Onde | Antes | Depois | Como desfazer (pedir ao Claude) |
+|---|---|---|---|---|
+| Volta ao valor aprovado (fixo, 1 noite) | Queen (7), sexta 02/10 | R$ 900 (corte das 11:40) | **R$ 1.050** | "Baixe a Queen 7 de 02/10 para R$ 900" |
+| Volta ao valor aprovado (fixo, 1 noite) | Queen (7), sábado 03/10 | R$ 1.115 (corte das 11:40) | **R$ 1.240** | "Baixe a Queen 7 de 03/10 para R$ 1.115" |
+| Regra F: ≥ 50% vendido sai da escada. Preço fixo apagado, estadia mínima de 1 noite mantida | Double, sexta 02/10 (4 de 6) | fixo R$ 1.150 | sem preço fixo (o algoritmo calculava R$ 2.108; piso de fim de semana R$ 2.220) | "Volte o Double de 02/10 para fixo R$ 1.150" |
+| Idem | Double, sábado 03/10 (4 de 6) | fixo R$ 1.330 | sem preço fixo (algoritmo R$ 2.431) | "Volte o Double de 03/10 para fixo R$ 1.330" |
+
+Os dois cortes da Queen (7) não chegaram a ir para os canais (alterados às 11:39 e corrigidos antes do próximo Sync). Nenhum Sync desde 08:42.
+
+**Mantido:** Double 01/10 (hoje, 4 de 6, −35% com mínimo R$ 900) segue como está até o fim do dia. A proposta de passo 2 da Villa e do Double (−10 pontos) está **cancelada**, porque a regra não disparou.
+
+**Alertas desta rodada:**
+- **Villa, canal "outros":** 4 reservas de R$ 546 para 15/10 criadas entre 21:38 e 22:16 de 30/09, 3 canceladas e 1 ativa; mais 2 canceladas e 1 ativa de R$ 500 em 30/09. Padrão de criar e cancelar em sequência, conferir a origem (balcão, Beds24 manual ou integração).
+- A lista de reservas do PriceLabs só atualiza no Sync. Reservas feitas depois de 08:42 de 01/10 não aparecem.
+
 ## O que só pode ser feito na tela (passo a passo para você)
 
 1. **Safety Minimum Price → "Do Not Apply"** (Dynamic Pricing → Customizations → aba Groups → Edit no grupo Recanto dos Moinhos → All Customizations → Safety Minimum Price). Anote o valor atual antes.

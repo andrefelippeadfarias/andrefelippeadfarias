@@ -464,6 +464,27 @@ Os dois cortes da Queen (7) não chegaram a ir para os canais (alterados às 11:
 - **Villa, canal "outros":** 4 reservas de R$ 546 para 15/10 criadas entre 21:38 e 22:16 de 30/09, 3 canceladas e 1 ativa; mais 2 canceladas e 1 ativa de R$ 500 em 30/09. Padrão de criar e cancelar em sequência, conferir a origem (balcão, Beds24 manual ou integração).
 - A lista de reservas do PriceLabs só atualiza no Sync. Reservas feitas depois de 08:42 de 01/10 não aparecem.
 
+## 02/10/2026, 11:00 — Rotina das 10:53: regra F nas datas que passaram de 50% vendido
+
+**Sync das 08:25 de hoje recebido** (todos os 7 quartos, push ligado). A ocupação dos próximos 7 dias foi de 21% para **30%** (65 de 217 diárias). Sexta 02/10 está em 17 de 31 (55%) e sábado 03/10 em 19 de 31 (61%); no fim de semana de sexta a domingo, 42 de 93 (45%). Semana de 05 a 11/10: 78 de 217 (36%), com domingo 11/10 em 30 de 31.
+
+| Mudança | Onde | Antes | Depois | Como desfazer (pedir ao Claude) |
+|---|---|---|---|---|
+| Regra F: ≥ 50% vendido sai da escada. Preço fixo apagado, 1 noite mantida | Queen (7), sexta 02/10 (5 de 7) | fixo R$ 1.050 | sem preço fixo (algoritmo R$ 1.879; piso de fim de semana R$ 2.070) | "Volte a Queen 7 de 02/10 para fixo R$ 1.050" |
+| Idem | Queen (7), sábado 03/10 (6 de 7) | fixo R$ 1.240 | sem preço fixo (algoritmo R$ 2.366) | "Volte a Queen 7 de 03/10 para fixo R$ 1.240" |
+| Idem, −35% apagado | Double, terça 06/10 (4 de 6) | −35%, mínimo R$ 900 (enviado R$ 900) | sem desconto (algoritmo R$ 1.303) | "Volte o Double de 06/10 para −35% com mínimo 900" |
+| Idem | Double, quarta 07/10 (3 de 6) | −35%, mínimo R$ 900 | sem desconto (algoritmo R$ 1.176) | "Volte o Double de 07/10 para −35% com mínimo 900" |
+| Idem | Double, quinta 08/10 (3 de 6) | −35%, mínimo R$ 900 | sem desconto (algoritmo R$ 1.194) | "Volte o Double de 08/10 para −35% com mínimo 900" |
+| Idem, preço fixo apagado, 1 noite mantida | Villa King Spa (7), sábado 03/10 (4 de 7) | fixo R$ 1.330 (mínimo R$ 1.000) | sem preço fixo (algoritmo R$ 2.257; piso de fim de semana R$ 2.220) | "Volte a Villa King Spa 7 de 03/10 para fixo R$ 1.330" |
+
+Todas as datas acima chegam aos canais só no próximo Sync.
+
+**Conferido sem mudança:**
+- **Double, sexta e sábado (liberado ontem às 23:04):** o PriceLabs calcula R$ 2.220 nas duas noites (5 de 6 vendidas), mas o último preço confirmado nos canais ainda é R$ 1.150 e R$ 1.330, mesmo com o Sync das 08:25. Conferir no Beds24 e na Booking; se não mudar, outro Sync Now.
+- **Afrodite 02 e 03/10:** o PriceLabs mostra as noites como livres a R$ 3.000, mas a reserva da Booking de R$ 3.465 (01 a 03/10) está ativa, sem cancelamento. Tratei como vendida e **não** apliquei a regra C. Afrodite 12 a 15/11 aparece como "indisponível" sem reserva (bloqueio ou reserva ainda não importada).
+- **Queen (7), domingo 11/10:** 6 de 7 vendidas a R$ 1.900 (era 5 de 7), teste mantido.
+- A lista de reservas por data de reserva só devolve até 01/10; o ganho de ontem à noite aparece na ocupação por quarto.
+
 ## O que só pode ser feito na tela (passo a passo para você)
 
 1. **Safety Minimum Price → "Do Not Apply"** (Dynamic Pricing → Customizations → aba Groups → Edit no grupo Recanto dos Moinhos → All Customizations → Safety Minimum Price). Anote o valor atual antes.

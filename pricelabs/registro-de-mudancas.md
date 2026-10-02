@@ -558,6 +558,41 @@ A Booking confirmou banheira/hidromassagem com vista para a montanha em Gran Par
 
 - **Sync Now agora:** VK2 de sábado ainda está enviado a R$ 1.140 e VK7 a R$ 1.330; o Double de sexta aparece enviado R$ 2.220. Sobram 5 suítes com banheira para sábado (Double 2, VK7 2, VK2 1); enquanto não houver Sync, vendem pelo preço antigo.
 
+## 02/10/2026, 14:30 — Rotina das 13:53: ocupação, regra C no feriado da Afrodite e alertas
+
+**Ocupação (cumulativa a partir de hoje, 02/10), com os dados das 13:55:**
+
+| Quarto | 7 dias (meta 70%) | 15 dias (50%) | 30 dias (35%) | 45 dias (25%) | 60 dias (15%) |
+|---|---|---|---|---|---|
+| Queen (7) | 24% ⚠️ | 30% ⚠️ | 15% ⚠️ | 12% ⚠️ | 11% ⚠️ |
+| Double | 55% ⚠️ | 54% ✅ | 37% ✅ | 27% ✅ | 25% ✅ |
+| Afrodite | 57% ⚠️ | 53% ✅ | 43% ✅ | 33% ✅ | 30% ✅ |
+| Queen (2) | 64% ⚠️ | 40% ⚠️ | 42% ✅ | 43% ✅ | 38% ✅ |
+| Villa King Spa (7) | 37% ⚠️ | 37% ⚠️ | 27% ⚠️ | 28% ✅ | 22% ✅ |
+| Balcony | 12% ⚠️ | 16% ⚠️ | 12% ⚠️ | 16% ⚠️ | 13% ⚠️ |
+| Villa King Spa (2) | 21% ⚠️ | 33% ⚠️ | 27% ⚠️ | 28% ✅ | 24% ✅ |
+| **Hotel todo** | **34% (74/217)** ⚠️ | **35% (163/465)** ⚠️ | **25% (230/930)** ⚠️ | **23% (323/1395)** ⚠️ | **20% (367/1860)** ✅ |
+| **Hotel sem Balcony** | 39% ⚠️ | 40% ⚠️ | 28% ⚠️ | 25% ✅ | 21% ✅ |
+
+Às 11:00 a ocupação de 7 dias era 30% (65 de 217): entraram 9 diárias desde então (Queen (7) sábado 03/10 ficou 7 de 7, Villa King Spa (7) sexta e sábado 5 de 7). Por noite: sex 02/10 65%, sáb 03/10 68%, dom 04/10 19%, seg 23%, ter 32%, qua 16%, qui 16%, sex 09/10 39%, sáb 10/10 45%, dom 11/10 100%.
+
+**Mudança desta rotina (regra C, Afrodite):**
+
+| Mudança | Onde | Antes | Depois | Como desfazer (pedir ao Claude) |
+|---|---|---|---|---|
+| Regra C, noite livre a menos de 14 dias, −30% (piso R$ 1.500) | Afrodite, sexta 09/10 (0 vendida) | fixo R$ 4.060 (2 noites) | fixo R$ 2.840 (2 noites mantidas); público ≈ R$ 1.790 por noite, abaixo do Secreto (nota 9,2) pela nossa nota 8,4 | "Volte a Afrodite de 09/10 para fixo R$ 4.060" |
+| Idem | Afrodite, sábado 10/10 (0 vendida) | fixo R$ 4.060 (2 noites) | fixo R$ 2.840 (2 noites mantidas) | "Volte a Afrodite de 10/10 para fixo R$ 4.060" |
+| Idem, −30% do algoritmo R$ 2.505 | Afrodite, segunda 12/10 (0 vendida) | fixo R$ 2.120 | fixo R$ 1.750 | "Volte a Afrodite de 12/10 para fixo R$ 2.120" |
+
+Sem outras mudanças: as datas de meio de semana (04 a 08/10) já estão no mínimo do quarto (Queen (7) R$ 800, Double R$ 925, Villa King Spa (7) R$ 1.023, Villa King Spa (2) R$ 900, Balcony R$ 800); reduzir mais exige baixar o mínimo, proposta "aprovo 1" ainda pendente. A regra F não encontrou data nova com ≥ 50% vendido nas escadas de 16/10 em diante.
+
+**Conferências:**
+- Registro de ações das últimas 24 h: só as chamadas do Claude (usuário de integração); nenhuma mudança manual de preço base, mínimo ou máximo pela tela.
+- Último Sync confirmado: 11:25 UTC (08:25 de Brasília), push ligado nos 7 quartos. Nenhuma das mudanças de hoje depois disso chegou aos canais.
+- Reservas importadas em lote às 13:35 e 13:36 UTC (Beds24 → Booking), com comissão 0,0: não é sinal de problema, parece só o momento da importação.
+- Airbnb vendeu 7 reservas do Double a R$ 294 a R$ 496 por noite no total pago, a mesma proporção de 39% a 54% do enviado que vemos na Booking; a Expedia vendeu a Villa King Spa (7) de 02 a 03/10 por R$ 7.761 (2 noites, 1 reserva), muito acima da Booking.
+- Cancelamento: Double sexta 02/10 (Airbnb, R$ 376), substituído por outra reserva de R$ 376 minutos depois.
+
 ## O que só pode ser feito na tela (passo a passo para você)
 
 1. **Safety Minimum Price → "Do Not Apply"** (Dynamic Pricing → Customizations → aba Groups → Edit no grupo Recanto dos Moinhos → All Customizations → Safety Minimum Price). Anote o valor atual antes.

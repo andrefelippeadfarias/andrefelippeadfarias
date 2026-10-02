@@ -485,6 +485,79 @@ Todas as datas acima chegam aos canais só no próximo Sync.
 - **Queen (7), domingo 11/10:** 6 de 7 vendidas a R$ 1.900 (era 5 de 7), teste mantido.
 - A lista de reservas por data de reserva só devolve até 01/10; o ganho de ontem à noite aparece na ocupação por quarto.
 
+## 02/10/2026, 13:55 — Pedido do dono: sábado com valor real ≥ R$ 800, sexta mantida e feriado 09–11/10 conferido com os concorrentes
+
+### 1) Sábado 03/10: valor real (o que o hóspede paga) de pelo menos R$ 800 nas suítes com banheira
+
+O valor real vem da lista de reservas do Beds24 (campo de receita da reserva) comparado ao preço enviado à Booking. Reservas de sábado 03/10 feitas até hoje 13:47:
+
+| Quarto | Enviado | Real pago | Real ÷ enviado |
+|---|---|---|---|
+| Villa King Spa (2) | R$ 1.140 | R$ 443 | 39% |
+| Villa King Spa (7) | R$ 1.330 | R$ 528 | 40% |
+| Queen (7) | R$ 1.240 | R$ 523 (hoje) e R$ 666 | 42% a 54% |
+| Double | R$ 1.330 | R$ 702 | 53% |
+
+O real fica entre 39% (Villa) e 54% (Recanto) do enviado, porque o desconto da Booking muda de reserva para reserva e eu não posso mexer nele. Para chegar a R$ 800 no pior caso observado, o preço **enviado** de sábado precisa ser de pelo menos **R$ 2.060 na Villa** (800 ÷ 0,39) e **R$ 1.900 no Recanto** (800 ÷ 0,42). Coloquei um piso de preço na própria data (o piso da data vale no lugar do piso de fim de semana).
+
+| Mudança | Onde | Antes | Depois | Como desfazer (pedir ao Claude) |
+|---|---|---|---|---|
+| Piso da data R$ 2.100, 1 noite mantida | Queen (7), sábado 03/10 | sem piso da data (piso de fim de semana R$ 2.070) | piso R$ 2.100; o PriceLabs calcula R$ 2.100 (algoritmo R$ 2.474). **Já está 7 de 7 vendida** | "Tire o piso de R$ 2.100 da Queen 7 de 03/10" |
+| Piso da data R$ 2.220, 1 noite mantida | Double, sábado 03/10 | sem piso da data (piso de fim de semana R$ 2.220) | piso R$ 2.220; calcula R$ 2.220 (4 de 6 vendidas) | "Tire o piso de R$ 2.220 do Double de 03/10" |
+| Piso da data R$ 2.220, 1 noite mantida | Villa King Spa (7), sábado 03/10 | sem piso da data; calculado R$ 2.220 mas enviado R$ 1.330 | piso R$ 2.220; calcula R$ 2.220 (5 de 7 vendidas) | "Tire o piso de R$ 2.220 da Villa King Spa 7 de 03/10" |
+| Preço fixo R$ 1.140 apagado e recriado só com piso R$ 2.100 e 1 noite | Villa King Spa (2), sábado 03/10 | fixo R$ 1.140 (mínimo R$ 900); real ~R$ 443 | piso R$ 2.100; calcula R$ 2.100 (algoritmo R$ 1.835) | "Volte a Villa King Spa 2 de 03/10 para fixo R$ 1.140 com mínimo 900" |
+
+Real esperado com esses pisos: Double R$ 2.220 × 53% = R$ 1.177; Villa King Spa (7) R$ 2.220 × 40% = R$ 888; Villa King Spa (2) R$ 2.100 × 39% = R$ 819; Queen (7) R$ 2.100 × 42% = R$ 882. Fora do pedido (sem banheira): Balcony 03/10 segue R$ 1.000. Queen (2) e Afrodite do sábado já estão vendidas.
+
+### 2) Sexta 02/10: mesmo patamar, sem ajuste
+
+A regra F de hoje cedo tinha apagado o preço fixo da Queen (7) (R$ 1.050) e o do Double já estava apagado desde 01/10. Pelo seu pedido, **voltei os dois**.
+
+| Mudança | Onde | Antes | Depois | Como desfazer |
+|---|---|---|---|---|
+| Fixo recriado, 1 noite | Queen (7), sexta 02/10 | sem preço fixo (algoritmo R$ 1.879 / piso R$ 2.070) | fixo R$ 1.050 | "Apague o fixo da Queen 7 de 02/10" |
+| Fixo recriado, 1 noite | Double, sexta 02/10 | sem preço fixo (calculado R$ 2.220, enviado R$ 1.150) | fixo R$ 1.150 | "Apague o fixo do Double de 02/10" |
+
+Sem mudança: Villa King Spa (7) R$ 1.150, Villa King Spa (2) R$ 1.000, Balcony R$ 850. **Alerta:** o último valor confirmado do Double na sexta aparece como R$ 2.220 depois do recálculo; o preço calculado voltou a R$ 1.150, mas só chega aos canais no próximo **Sync Now**.
+
+### 3) Feriado 09–11/10: conferência com os concorrentes (Booking, 2 adultos, 2 noites, quarto mais barato)
+
+Busca na Booking de hoje com filtro de hidromassagem/jacuzzi e vista para a montanha, em Campos do Jordão. Preço público do quarto de entrada de cada hotel; não é o enviado.
+
+| Hotel | Nota | Estrelas | 2 noites | Por noite |
+|---|---|---|---|---|
+| Hotel Toriba | 9,4 | 5 | R$ 8.971 | R$ 4.486 |
+| Hotel Boutique Quebra-Noz | 9,0 | 5 | R$ 6.480 | R$ 3.240 |
+| L.A.H. Hostellerie | 9,8 | 5 | R$ 5.100 | R$ 2.550 |
+| Pousada D'Biagy Premium | 9,2 | 5 | R$ 4.978 | R$ 2.489 |
+| Pousada Murano | 9,7 | 5 | R$ 4.668 | R$ 2.334 |
+| Secreto Boutique Hotel | 9,2 | 5 | R$ 3.948 | R$ 1.974 |
+| Carballo Hotel & Spa | 9,7 | 4 | R$ 3.418 | R$ 1.709 |
+| Hotel Serra da Estrela | 9,0 | 4 | R$ 3.058 | R$ 1.529 |
+| Gran Paradiso | 8,2 | 5 | R$ 3.041 | R$ 1.520 |
+| **Recanto dos Moinhos (nós)** | **8,4** | **5** | **R$ 3.062** | **R$ 1.531** |
+| Vila Grega | 9,8 | 4 | R$ 2.723 | R$ 1.361 |
+| Hotel Estoril | 8,8 | 4 | R$ 2.475 | R$ 1.238 |
+| Village della Nonna | 9,5 | 4 | R$ 2.254 | R$ 1.127 |
+| Pousada Casa Redonda | 9,2 | 4 | R$ 1.904 | R$ 952 |
+| Pousada Recanto Feliz | 8,8 | 4 | R$ 1.336 | R$ 668 |
+| **Villa Dolce Amore (nós, busca anterior de hoje)** | **8,1** | **3** | **R$ 1.270** | **R$ 635** |
+
+A Booking confirmou banheira/hidromassagem com vista para a montanha em Gran Paradiso, D'Biagy, Village della Nonna e Serra da Estrela; nos demais há "jacuzzi" na lista de facilidades, mas a ferramenta não confirmou o quarto nem a vista. A busca pelo nome dos nossos dois hotéis para 09 a 11/10 devolveu "sem disponibilidade", mas a busca geral mostra o Recanto disponível por R$ 3.062; não confiei na busca por nome.
+
+**Leitura:** a mediana dos seis hotéis de luxo de nota 9,0 a 9,8 (Secreto, Murano, D'Biagy, L.A.H., Quebra-Noz, Toriba) é **R$ 2.520 por noite**. O quarto de entrada do Recanto (Queen 7) sai a R$ 1.531, empatado com o Gran Paradiso (nota 8,2) e com o Serra da Estrela (nota 9,0), e cerca de 39% abaixo dessa mediana. Com nota 8,4, contra 9,0 a 9,8 dos concorrentes, uma diferença de preço de 10% a 25% é coerente (estimativa de mercado, não medida por mim); abaixo disso estamos pagando um desconto maior que o da nota. A Villa (nota 8,1, 3 estrelas) está no patamar de Recanto Feliz e Casa Redonda e abaixo dos de nota 9+.
+
+| Mudança | Onde | Antes | Depois | Como desfazer (pedir ao Claude) |
+|---|---|---|---|---|
+| Fixo R$ 2.850 nas 2 noites (2 noites mínimas) | Queen (2), 09/10 e 10/10 | sem DSO; enviado R$ 3.558 a R$ 3.667, 52% acima da Queen (7), 0 de 2 vendidas em 09/10 e 1 de 2 em 10/10 | fixo R$ 2.850 (igual ao Double); público ≈ R$ 1.800 por noite, ~9% abaixo do Secreto (nota 9,2) | "Apague o fixo da Queen 2 de 09 e 10/10" |
+| Preço fixo R$ 1.900 apagado; 2 noites mantidas (aviso 3 dias) | Queen (7), domingo 11/10 | fixo R$ 1.900 (6 de 7 vendidas, teste aprovado) | algoritmo R$ 3.094 (regra F: ≥ 50% vendido) | "Volte a Queen 7 de 11/10 para fixo R$ 1.900" |
+
+**Mantidos, com o motivo:** Queen (7) 09/10 R$ 2.420 (2 de 7; já no patamar de Gran Paradiso e Serra da Estrela) e 10/10 calculado R$ 2.682 (4 de 7); Double R$ 2.850 nas duas noites (3 de 6 em 09/10, 1 de 6 em 10/10); Villa King Spa (7) calculado R$ 2.852 (4 de 7); Villa King Spa (2) vendida; Afrodite R$ 4.060; Balcony R$ 1.200 (1 de 6). Queen (2) e Double de domingo 11/10 estão vendidos.
+
+### Pendências do dono
+
+- **Sync Now agora:** VK2 de sábado ainda está enviado a R$ 1.140 e VK7 a R$ 1.330; o Double de sexta aparece enviado R$ 2.220. Sobram 5 suítes com banheira para sábado (Double 2, VK7 2, VK2 1); enquanto não houver Sync, vendem pelo preço antigo.
+
 ## O que só pode ser feito na tela (passo a passo para você)
 
 1. **Safety Minimum Price → "Do Not Apply"** (Dynamic Pricing → Customizations → aba Groups → Edit no grupo Recanto dos Moinhos → All Customizations → Safety Minimum Price). Anote o valor atual antes.

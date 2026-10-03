@@ -610,6 +610,27 @@ Ocupação a partir de hoje, 03/10: **hotel 34% em 7 dias (74/217)**, 34% em 15 
 
 **Conferências:** nenhuma mudança manual de base, mínimo ou máximo; só as chamadas do Claude. A lista de reservas por data de reserva não devolve nada depois de 02/10 13:47 UTC, embora a ocupação tenha subido (Villa King Spa (7) sábado 5 → 7 de 7, Double 05/10 2 → 4, Double 08/10 3 → 4, Queen (7) 17/10 0 → 1, Balcony sábado 1 → 2): usar a ocupação por quarto, não essa lista. Preços de domingo 04/10 calculados: Queen (7) R$ 800, Double R$ 921 (passa ao algoritmo no próximo Sync), Villa King Spa (7) R$ 1.039, Villa King Spa (2) R$ 912, Balcony R$ 800, Afrodite R$ 1.500.
 
+## 03/10/2026, 14:10 — Rotina das 13:53: regra F na Villa (dias úteis), Double 09/10 liberado e sexta 23/10 na faixa de −20%
+
+**Sync Now às 13:34 (16:34 UTC)** nos 7 quartos, push ligado: as mudanças pendentes desde 05:40 chegaram aos canais (Afrodite 16/10 enviada a R$ 2.250, Double 04 e 05/10 no algoritmo).
+
+**Mudança feita pela tela, fora deste registro:** às 13:35 (16:35 UTC), pelo navegador, entrou nos 7 quartos uma substituição de **+20% com estadia mínima de 3 noites de 30/10 a 02/11** (Finados). Ela trocou o −12% da escada em 30 e 31/10. Respeitei e não mexi. Ainda não foi enviada (o Sync foi 1 minuto antes).
+
+**Ocupação a partir de hoje (dados das 13:36):** hotel **35% em 7 dias (75/217)**, 35% em 15 (162/465), 27% em 30, 24% em 45, 21% em 60. Sem a Balcony: 39%, 40%, 30%, 26%, 22%. Hoje, sábado 03/10: 23 de 31 (74%); livres Double 3, Queen (2) 1 e Balcony 4. Por noite: dom 04/10 23%, seg 29%, ter 35%, qua 16%, qui 23%, sex 09/10 42%, sáb 10/10 45%, **dom 11/10 esgotado (31/31)**.
+
+| Mudança | Onde | Antes | Depois | Como desfazer (pedir ao Claude) |
+|---|---|---|---|---|
+| Regra F, dia útil D1 a D5: −35% do recomendado, piso = mínimo do quarto, 1 noite | Villa King Spa (7), 04 a 08/10 (2, 1, 3, 1 e 3 de 7 vendidas) | sem substituição (calculado R$ 1.076) | −35%, mínimo R$ 1.000 (≈ R$ 1.000) | "Apague as substituições de 04 a 08/10 da Villa King Spa 7" |
+| Idem | Villa King Spa (2), 05 a 08/10 (0 de 2 vendidas) | sem substituição (calculado R$ 939) | −35%, mínimo R$ 900 (≈ R$ 900) | "Apague as substituições de 05 a 08/10 da Villa King Spa 2" |
+| Regra F: ≥ 50% vendido sai da escada. Fixo apagado, 2 noites do feriado mantidas | Double, sexta 09/10 (4 de 6) | fixo R$ 2.850 | algoritmo (≈ R$ 2.986), estadia mínima 2 | "Volte o Double de 09/10 para fixo R$ 2.850 com 2 noites" |
+| Regra F: sexta entrou na faixa de 14 a 21 dias (D20) | Queen (7), Double, Villa King Spa (7), Villa King Spa (2), sexta 23/10 | −12% do recomendado (piso = mínimo do quarto) | −20% do recomendado (mesmo piso) | "Volte a sexta 23/10 para −12% nos 4 quartos" |
+
+**Mantido de propósito:** sábado 24/10 segue em −12%. Pela escada iria a −20%, mas ontem você pediu valor real de pelo menos R$ 800 no sábado (o hóspede paga 40% a 55% do enviado). Fica para você decidir se essa regra vale para todos os sábados. Queen (7) 04 a 08/10 já está no mínimo (R$ 800) com 0 de 7 vendidas; Afrodite e feriado sem data nova para a regra C.
+
+**Reservas desde a rotina das 07:53:** Queen (7) 14–15/10 (R$ 465 por noite) e 15–16/10 (R$ 648 por noite), Queen (2) 17/10 (R$ 782), Villa King Spa (7) 06/10 (R$ 595) e 08/10 (R$ 319, canal "outros"), Villa King Spa (2) 03/10 (R$ 568), Balcony 30/10 a 01/11 (R$ 1.660, 3 noites) e 01/11 (R$ 470). Cancelamento: Queen (7) 03/10 (Booking, feita em 02/10). Alerta: as vendas de sábado 03/10 feitas antes de o piso chegar aos canais ficaram abaixo de R$ 800 reais (Villa King Spa (7) R$ 450 e R$ 550, Villa King Spa (2) R$ 568, Queen (7) R$ 645); e a Villa King Spa (7) 08/10 por R$ 319 no canal "outros" precisa ser conferida.
+
+As mudanças desta rotina chegam aos canais no próximo Sync.
+
 ## O que só pode ser feito na tela (passo a passo para você)
 
 1. **Safety Minimum Price → "Do Not Apply"** (Dynamic Pricing → Customizations → aba Groups → Edit no grupo Recanto dos Moinhos → All Customizations → Safety Minimum Price). Anote o valor atual antes.

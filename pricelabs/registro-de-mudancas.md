@@ -593,6 +593,23 @@ Sem outras mudanças: as datas de meio de semana (04 a 08/10) já estão no mín
 - Airbnb vendeu 7 reservas do Double a R$ 294 a R$ 496 por noite no total pago, a mesma proporção de 39% a 54% do enviado que vemos na Booking; a Expedia vendeu a Villa King Spa (7) de 02 a 03/10 por R$ 7.761 (2 noites, 1 reserva), muito acima da Booking.
 - Cancelamento: Double sexta 02/10 (Airbnb, R$ 376), substituído por outra reserva de R$ 376 minutos depois.
 
+## 02/10/2026, 16:30 e 19:30 e 03/10/2026, 07:55 — Rotinas das 16:53, 19:53 e 07:53
+
+**16:53 e 19:53 (02/10):** sem dado novo (último Sync às 08:25 de 02/10), nenhuma mudança. Recalculei a Afrodite e o PriceLabs confirmou 09 e 10/10 em R$ 2.840 e 12/10 em R$ 1.750.
+
+**07:53 (03/10):** o Sync saiu às 05:40 (08:40 UTC) nos 7 quartos, push ligado. O painel ainda mostra como "último valor confirmado" os valores antigos (Villa King Spa (2) sábado R$ 1.140, Afrodite 09 e 10/10 R$ 4.060, Queen (2) 09 e 10/10 R$ 3.558); nas vezes anteriores essa confirmação demorou horas, então conferir na Booking.
+
+Ocupação a partir de hoje, 03/10: **hotel 34% em 7 dias (74/217)**, 34% em 15 (156/465), 26% em 30 (238/930), 23% em 45 (321/1395), 20% em 60 (365/1860). Sem a Balcony: 39%, 38%, 28%, 25%, 21%. Hoje, sábado 03/10: 24 de 31 vendidas (77%); Queen (7), Villa King Spa (7), Queen (2) e Afrodite esgotadas; livres: Double 2, Villa King Spa (2) 1 e Balcony 4. Por noite: dom 04/10 23%, seg 29%, ter 32%, qua 16%, qui 19%, sex 09/10 42%, sáb 10/10 45%, dom 11/10 100%. A Afrodite agora conta as noites "indisponíveis" mesmo sem reserva visível (03/10 e 12 a 15/11), como no número do próprio PriceLabs.
+
+| Mudança | Onde | Antes | Depois | Como desfazer (pedir ao Claude) |
+|---|---|---|---|---|
+| Regra F: ≥ 50% vendido sai da escada. −35% apagado, 1 noite mantida | Double, domingo 04/10 (3 de 6) | −35%, mínimo R$ 900 (enviado R$ 900) | sem desconto (algoritmo R$ 1.199) | "Volte o Double de 04/10 para −35% com mínimo 900" |
+| Idem | Double, segunda 05/10 (4 de 6) | −35%, mínimo R$ 900 (enviado R$ 900) | sem desconto (algoritmo R$ 1.305) | "Volte o Double de 05/10 para −35% com mínimo 900" |
+| Regra A: sexta 16/10 entra na janela de 14 dias, 1 noite | Double, Villa King Spa (7), Villa King Spa (2), Queen (2), sexta 16/10 | estadia mínima 2 | estadia mínima 1 (preços do −20% e da Queen (2) sem mudança) | "Volte a estadia mínima de 16/10 para 2 no(s) quarto(s) X" |
+| Regra C (−30%) + regra A | Afrodite, sexta 16/10 (livre, a 13 dias) | calculado R$ 3.212 (enviado R$ 3.181), estadia mínima 2 | fixo R$ 2.250, estadia mínima 1 | "Apague o fixo da Afrodite de 16/10" |
+
+**Conferências:** nenhuma mudança manual de base, mínimo ou máximo; só as chamadas do Claude. A lista de reservas por data de reserva não devolve nada depois de 02/10 13:47 UTC, embora a ocupação tenha subido (Villa King Spa (7) sábado 5 → 7 de 7, Double 05/10 2 → 4, Double 08/10 3 → 4, Queen (7) 17/10 0 → 1, Balcony sábado 1 → 2): usar a ocupação por quarto, não essa lista. Preços de domingo 04/10 calculados: Queen (7) R$ 800, Double R$ 921 (passa ao algoritmo no próximo Sync), Villa King Spa (7) R$ 1.039, Villa King Spa (2) R$ 912, Balcony R$ 800, Afrodite R$ 1.500.
+
 ## O que só pode ser feito na tela (passo a passo para você)
 
 1. **Safety Minimum Price → "Do Not Apply"** (Dynamic Pricing → Customizations → aba Groups → Edit no grupo Recanto dos Moinhos → All Customizations → Safety Minimum Price). Anote o valor atual antes.

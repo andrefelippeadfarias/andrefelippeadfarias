@@ -631,6 +631,58 @@ Ocupação a partir de hoje, 03/10: **hotel 34% em 7 dias (74/217)**, 34% em 15 
 
 As mudanças desta rotina chegam aos canais no próximo Sync.
 
+## 03/10/2026, 15:00 — Pedido do dono: feriado 09–11/10 reposicionado ("nosso valor parece estar abaixo de mercado")
+
+**Situação do feriado (dados das 13:36):** domingo 11/10 **esgotado nos 7 quartos (31/31)**. Sobram 18 unidades na sexta 09/10 (42% vendido) e 17 no sábado 10/10 (45%). Como domingo está esgotado, só dá para vender sexta + sábado (saída no domingo) ou noites avulsas.
+
+**Mercado (PriceLabs, 144 anúncios de 1 quarto no bairro):** ocupação do mercado no sábado 10/10 em 41% contra 16% na mesma data do ano passado (+25 pontos); sexta 26,5% contra 14,9%; domingo 40,9% contra 15,3%. Segunda 12/10 está fraca (15,7%, igual ao ano passado). O PriceLabs marca o feriado como evento ("Dia das Crianças") e aponta alta de preço de 36% no dia 11.
+
+**Concorrentes na Booking hoje (2 adultos, 09 a 11/10, 2 noites, quarto mais barato, preço público):**
+
+| Hotel | Nota | Estrelas | 2 noites | Por noite |
+|---|---|---|---|---|
+| Hotel Toriba | 9,4 | 5 | R$ 8.971 | R$ 4.486 |
+| Hotel Boutique Quebra-Noz | 9,0 | 5 | R$ 6.480 | R$ 3.240 |
+| Secreto Boutique Hotel | 9,2 | 5 | R$ 4.986 (ontem R$ 3.948, +26%) | R$ 2.493 |
+| Alma Hotel | 9,1 | 5 | R$ 4.812 | R$ 2.406 |
+| Pousada D'Biagy Premium | 9,2 | 5 | R$ 4.810 | R$ 2.405 |
+| Pousada Murano | 9,7 | 5 | R$ 4.668 | R$ 2.334 |
+| Pousada Luis XV | 9,4 | 5 | R$ 4.138 | R$ 2.069 |
+| L.A.H. Hostellerie | 9,8 | 5 | R$ 4.092 | R$ 2.046 |
+| Figueira da Serra | 9,2 | 5 | R$ 3.753 | R$ 1.876 |
+| Carballo Hotel & Spa | 9,7 | 4 | R$ 3.418 | R$ 1.709 |
+| Casa Regaleira | 9,8 | 5 | R$ 3.348 | R$ 1.674 |
+| Hotel Serra da Estrela | 9,0 | 4 | R$ 3.058 | R$ 1.529 |
+| **Recanto dos Moinhos (antes)** | **8,4** | **5** | **R$ 3.042** | **R$ 1.521** |
+| Casablanca Hotel Boutique | 9,6 | 5 | R$ 2.880 | R$ 1.440 |
+| Vila Grega | 9,8 | 4 | R$ 2.723 | R$ 1.361 |
+| Le Renard | 9,3 | 5 | R$ 2.662 | R$ 1.331 |
+| Villa Casato | 9,0 | 5 | R$ 2.500 | R$ 1.250 |
+| Hotel Estoril | 8,8 | 4 | R$ 2.475 | R$ 1.238 |
+| Village della Nonna | 9,5 | 4 | R$ 2.254 | R$ 1.127 |
+| Pousada Casa Redonda | 9,2 | 4 | R$ 1.904 | R$ 952 |
+| Europa Hotel | 8,7 | 3 | R$ 1.320 | R$ 660 |
+| **Villa Dolce Amore (antes, Balcony)** | **8,1** | **3** | **R$ 1.270** | **R$ 635** |
+
+Mediana dos 13 hotéis 5 estrelas com nota 9 ou mais: **R$ 4.138 (R$ 2.069 por noite)**. O Recanto estava 26% abaixo dessa mediana; com nota 8,4, o desconto coerente fica entre 10% e 25%. Sábado avulso (10 a 11/10): L.A.H. R$ 2.462, Recanto R$ 1.660 (antes).
+
+**Problema encontrado:** no Double, sábado 10/10 tinha estadia mínima de 2 noites e o domingo está esgotado. Ninguém conseguia chegar no sábado: **3 das 5 unidades livres estavam presas** (por isso o Double tinha só 1 de 6 vendida no sábado e 4 de 6 na sexta).
+
+| Mudança | Onde | Antes | Depois | Público estimado (Booking) | Como desfazer (pedir ao Claude) |
+|---|---|---|---|---|---|
+| Fixo | Queen (7), sexta 09/10 (2 de 7) | fixo R$ 2.420 | **fixo R$ 2.690** | pacote sexta + sábado ≈ R$ 3.510 (R$ 1.755 por noite), 15% abaixo da mediana | "Volte a Queen 7 de 09/10 para R$ 2.420" |
+| Fixo | Queen (7), sábado 10/10 (5 de 7) | algoritmo R$ 2.588 | **fixo R$ 3.090** | sábado avulso ≈ R$ 1.980 | "Apague o fixo da Queen 7 de 10/10" |
+| Fixo e **1 noite** | Double, sábado 10/10 (1 de 6) | fixo R$ 2.850, 2 noites | **fixo R$ 3.190, 1 noite** | sábado avulso ≈ R$ 2.045 | "Volte o Double de 10/10 para R$ 2.850 com 2 noites" |
+| Fixo, 2 noites | Afrodite, 09 e 10/10 (livre) | fixo R$ 2.840 (regra C) | **fixo R$ 3.390** | pacote ≈ R$ 4.115, na mediana | "Volte a Afrodite de 09 e 10/10 para R$ 2.840" |
+| Fixo, 2 noites | Queen (2), sábado 10/10 (1 de 2) | fixo R$ 2.850 | **fixo R$ 3.290** (≈ 6% acima da Queen 7) | pacote ≈ R$ 3.730 | "Volte a Queen 2 de 10/10 para R$ 2.850" |
+| Fixo | Balcony, 09 e 10/10 (1 de 6) | R$ 1.200 (travado no teto) | **fixo R$ 1.400** | ≈ R$ 740 por noite, entre Europa (8,7) e Casa Redonda (9,2) | "Apague o fixo da Balcony de 09 e 10/10" |
+
+Recalculado e conferido: Queen (7) R$ 2.690 e R$ 3.090; Double 09/10 R$ 3.101 (algoritmo, liberado pela regra F às 14:00) e 10/10 R$ 3.190 com 1 noite; Afrodite R$ 3.390; Queen (2) R$ 2.850 e R$ 3.290; Balcony R$ 1.400. Os valores chegam aos canais no próximo Sync.
+
+**Mantidos, com o motivo:** Villa King Spa (7) no algoritmo (R$ 2.942, 4 de 7 nas duas noites): público estimado ≈ R$ 3.120 o pacote, já no nível do Serra da Estrela (4 estrelas, 9,0) com nota 8,1. Villa King Spa (2) esgotada. Queen (2) sexta R$ 2.850 (≈ 6% acima da Queen 7). Segunda 12/10 sem mudança (mercado em 15,7%).
+
+**Regra de vigilância:** se até terça 06/10 à noite a sexta 09/10 da Queen (7) continuar com 3 ou menos vendidas, volta para R$ 2.420. Se até quarta 07/10 as sextas da Villa King Spa (7), Queen (2) e Afrodite não venderem, abrir o sábado com 1 noite.
+
 ## O que só pode ser feito na tela (passo a passo para você)
 
 1. **Safety Minimum Price → "Do Not Apply"** (Dynamic Pricing → Customizations → aba Groups → Edit no grupo Recanto dos Moinhos → All Customizations → Safety Minimum Price). Anote o valor atual antes.

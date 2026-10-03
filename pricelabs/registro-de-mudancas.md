@@ -681,7 +681,26 @@ Recalculado e conferido: Queen (7) R$ 2.690 e R$ 3.090; Double 09/10 R$ 3.101 (a
 
 **Mantidos, com o motivo:** Villa King Spa (7) no algoritmo (R$ 2.942, 4 de 7 nas duas noites): público estimado ≈ R$ 3.120 o pacote, já no nível do Serra da Estrela (4 estrelas, 9,0) com nota 8,1. Villa King Spa (2) esgotada. Queen (2) sexta R$ 2.850 (≈ 6% acima da Queen 7). Segunda 12/10 sem mudança (mercado em 15,7%).
 
-**Regra de vigilância:** se até terça 06/10 à noite a sexta 09/10 da Queen (7) continuar com 3 ou menos vendidas, volta para R$ 2.420. Se até quarta 07/10 as sextas da Villa King Spa (7), Queen (2) e Afrodite não venderem, abrir o sábado com 1 noite.
+**Regra de vigilância:** ~~se até terça 06/10 à noite a sexta 09/10 da Queen (7) continuar com 3 ou menos vendidas, volta para R$ 2.420~~ (substituída às 15:10 pelo piso de R$ 1.200 reais definido pelo dono; corte só com aprovação dele). Se até quarta 07/10 as sextas da Villa King Spa (7), Queen (2) e Afrodite não venderem, abrir o sábado com 1 noite.
+
+## 03/10/2026, 15:10 — Pedido do dono: feriado com no mínimo R$ 1.200 por diária ("Ainda estamos com valores muito baixos para o feriado")
+
+**Regra definida pelo dono:** nas suítes com banheira, o valor **real** (o que o hóspede paga) deve ser de pelo menos R$ 1.200 por diária em 09 e 10/10. Na Balcony (sem banheira), pelo menos R$ 1.200 **na vitrine da Booking**. Conta usada: o hóspede paga, no pior caso, 42% do enviado no Recanto, 34% na Queen (2) e 39% na Villa; a vitrine da Booking mostra cerca de 53% do enviado na Villa.
+
+| Mudança | Onde | Antes | Depois (recalculado e conferido) | Real estimado por diária | Como desfazer (pedir ao Claude) |
+|---|---|---|---|---|---|
+| Fixo | Queen (7), sexta 09/10 | R$ 2.690 | **R$ 2.890** | ≈ R$ 1.214 | "Volte a Queen 7 de 09/10 para R$ 2.690" |
+| Sem mudança (já acima) | Queen (7), sábado 10/10 | R$ 3.090 | R$ 3.090 | ≈ R$ 1.298 | — |
+| Piso da data R$ 2.890 (preço segue no algoritmo, 2 noites) | Double, sexta 09/10 | algoritmo R$ 3.101, sem piso | R$ 3.101, piso R$ 2.890 | ≈ R$ 1.302 | "Tire o piso de R$ 2.890 do Double de 09/10" |
+| Sem mudança (já acima) | Double, sábado 10/10 | R$ 3.190 | R$ 3.190 | ≈ R$ 1.340 | — |
+| Fixo, 2 noites | Afrodite, 09 e 10/10 | R$ 3.390 | **R$ 3.690** (suíte topo acima da Queen 2) | ≈ R$ 1.550 | "Volte a Afrodite de 09 e 10/10 para R$ 3.390" |
+| Fixo, 2 noites | Queen (2), 09 e 10/10 | R$ 2.850 e R$ 3.290 | **R$ 3.550** | ≈ R$ 1.207 | "Volte a Queen 2 para R$ 2.850 (09/10) e R$ 3.290 (10/10)" |
+| Piso da data R$ 3.090 (2 noites) | Villa King Spa (7), 09 e 10/10 | algoritmo R$ 2.942 | **R$ 3.090** | ≈ R$ 1.205 | "Tire o piso de R$ 3.090 da Villa King Spa 7 de 09 e 10/10" |
+| Fixo | Balcony, 09 e 10/10 | R$ 1.400 | **R$ 2.290** | vitrine ≈ R$ 1.214 | "Volte a Balcony de 09 e 10/10 para R$ 1.400" |
+
+Villa King Spa (2) segue esgotada. Segunda 12/10 sem mudança. Os valores chegam aos canais no próximo Sync.
+
+**Risco a acompanhar:** na Booking, o pacote de 2 noites da Queen (7) passa para cerca de R$ 3.640 (antes R$ 3.042), acima do Carballo (9,7) e do Casa Regaleira (9,8) e perto do Figueira da Serra (9,2). A Balcony passa para cerca de R$ 2.430 o pacote, no nível do Hotel Estoril (4 estrelas, 8,8). Regra de vigilância: se até terça 06/10 à noite a sexta 09/10 não vender nenhuma unidade nova na Queen (7) e na Balcony, avisar o dono antes de qualquer corte (o piso de R$ 1.200 é decisão dele).
 
 ## O que só pode ser feito na tela (passo a passo para você)
 

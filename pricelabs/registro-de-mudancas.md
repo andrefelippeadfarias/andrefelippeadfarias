@@ -741,7 +741,9 @@ Queen (2) 17/10 já está esgotada (2 de 2). Os valores chegam aos canais no pr�
 
 **Ponto em aberto:** a Balcony tem personalizações próprias no nível do anúncio (sazonalidade e fator de demanda "agressivos", desconto de última hora "agressivo" de 25% no mesmo dia), diferentes das do grupo usadas pelas suítes com banheira. Por isso, em algumas datas futuras ela fica **acima** das suítes com banheira: 25 a 29/10 (R$ 1.288 contra R$ 1.059), 15 a 18/11 (R$ 1.561 contra R$ 974) e dezembro (até R$ 4.750 contra R$ 3.052 no Réveillon). Para igualar de vez, a proposta é deixar a Balcony com as mesmas personalizações do grupo; aguarda aprovação do dono.
 
-## 05/10/2026, 17:05 — Rotina das 16:53: sem mudanças (regras A, C, F e G já em dia)
+## 05/10/2026, 17:05 e 19:55 — Rotinas das 16:53 e 19:53: sem mudanças (regras A, C, F e G já em dia)
+
+**19:53:** nenhuma reserva nova desde as 12:25, nenhuma mudança manual e nenhum envio novo aos canais (último envio: Queen (7) e Queen (2) às 09:43, demais quartos entre 14:23 e 15:45). Números iguais aos das 16:53. A Balcony continua sem confirmação de envio dos valores novos.
 
 **Ocupação a partir de hoje:** hotel **48% em 7 dias** (meta 70%), 36% em 15, 28% em 30, 24% em 45 e 21% em 60 dias. Só as suítes com banheira: 53%, 41%, 30%, 26% e 22% (abaixo da meta de 7 e 15 dias: a regra G mantém a Balcony no nível da Villa King Spa (2)). Queen (7) é a mais fraca: 41% em 7 dias e 15% em 30 dias.
 

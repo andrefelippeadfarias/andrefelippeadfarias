@@ -702,6 +702,22 @@ Villa King Spa (2) segue esgotada. Segunda 12/10 sem mudança. Os valores chegam
 
 **Risco a acompanhar:** na Booking, o pacote de 2 noites da Queen (7) passa para cerca de R$ 3.640 (antes R$ 3.042), acima do Carballo (9,7) e do Casa Regaleira (9,8) e perto do Figueira da Serra (9,2). A Balcony passa para cerca de R$ 2.430 o pacote, no nível do Hotel Estoril (4 estrelas, 8,8). Regra de vigilância: se até terça 06/10 à noite a sexta 09/10 não vender nenhuma unidade nova na Queen (7) e na Balcony, avisar o dono antes de qualquer corte (o piso de R$ 1.200 é decisão dele).
 
+## 05/10/2026, 14:15 — Rotina das 13:53 (as rotinas de 04/10 e das 07:53 e 10:53 de 05/10 não rodaram: sessão parada)
+
+**Sync às 09:43 de hoje** (12:43 UTC) nos 7 quartos, push ligado: os preços do feriado (piso de R$ 1.200 reais) já aparecem como enviados. Nenhuma mudança manual no PriceLabs em 04 e 05/10.
+
+**Ocupação a partir de hoje (dados das 09:43):** hotel **47% em 7 dias (103/217)**, era 35% no sábado; 36% em 15 dias (166/465). Sem a Balcony: 52% e 41%. Pelo próprio PriceLabs: Queen (7) 39% em 7 dias, Double 71%, Queen (2) 71%, Villa King Spa (7) 47%, mercado 25%.
+
+**Reservas desde sábado:** Queen (7) 05–06/10 (R$ 404 por noite, feita hoje às 12:25, ainda não aparece na ocupação), 06–07/10 e 06–08/10 (R$ 330 e R$ 404 por noite); Double 04/10, 07–08/10 (duas), 13/10, 18/10 e 30/10–01/11 (R$ 2.882, canal "outros"); Queen (2) 07–08/10, 14–15/10, 16–17/10 e 18/10; Villa King Spa (7) 04/10, 06–07/10, 16–17/10 (R$ 1.647, "outros"), 19/10 (R$ 400, "outros"), 02/11 e 30/11; Villa King Spa (2) 24/10 (R$ 1.072); Balcony 09–10/10 (R$ 973 as 2 noites, feita no sábado às 20:04, antes de o piso do feriado chegar aos canais). Cancelamento: Double 07/10 (Airbnb). **Feriado:** nenhuma venda nova desde a alta de preço; Queen (7) sexta 09/10 segue com 2 de 7.
+
+| Mudança | Onde | Antes | Depois | Como desfazer (pedir ao Claude) |
+|---|---|---|---|---|
+| Regra A: sábado 17/10 entra na janela de 14 dias, 1 noite (−20% e piso mantidos) | Double (2 de 6), Villa King Spa (7) (3 de 7), Villa King Spa (2) (0 de 2) | estadia mínima 2 | estadia mínima 1 | "Volte a estadia mínima de 17/10 para 2 no(s) quarto(s) X" |
+| Regra C + A (−30%, piso R$ 1.500) | Afrodite, sábado 17/10 (livre, a 12 dias) | calculado R$ 3.433, 2 noites | fixo R$ 2.400, 1 noite (real ≈ R$ 1.000) | "Apague o fixo da Afrodite de 17/10" |
+| Regra C (−30% vai abaixo do piso) | Afrodite, domingo 18/10 (livre, a 13 dias) | calculado R$ 1.777 | fixo R$ 1.500 (mínimo do quarto) | "Apague o fixo da Afrodite de 18/10" |
+
+Queen (2) 17/10 já está esgotada (2 de 2). Os valores chegam aos canais no próximo Sync.
+
 ## O que só pode ser feito na tela (passo a passo para você)
 
 1. **Safety Minimum Price → "Do Not Apply"** (Dynamic Pricing → Customizations → aba Groups → Edit no grupo Recanto dos Moinhos → All Customizations → Safety Minimum Price). Anote o valor atual antes.

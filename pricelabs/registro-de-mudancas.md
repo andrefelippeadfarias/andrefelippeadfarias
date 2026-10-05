@@ -741,6 +741,16 @@ Queen (2) 17/10 já está esgotada (2 de 2). Os valores chegam aos canais no pr�
 
 **Ponto em aberto:** a Balcony tem personalizações próprias no nível do anúncio (sazonalidade e fator de demanda "agressivos", desconto de última hora "agressivo" de 25% no mesmo dia), diferentes das do grupo usadas pelas suítes com banheira. Por isso, em algumas datas futuras ela fica **acima** das suítes com banheira: 25 a 29/10 (R$ 1.288 contra R$ 1.059), 15 a 18/11 (R$ 1.561 contra R$ 974) e dezembro (até R$ 4.750 contra R$ 3.052 no Réveillon). Para igualar de vez, a proposta é deixar a Balcony com as mesmas personalizações do grupo; aguarda aprovação do dono.
 
+## 05/10/2026, 17:05 — Rotina das 16:53: sem mudanças (regras A, C, F e G já em dia)
+
+**Ocupação a partir de hoje:** hotel **48% em 7 dias** (meta 70%), 36% em 15, 28% em 30, 24% em 45 e 21% em 60 dias. Só as suítes com banheira: 53%, 41%, 30%, 26% e 22% (abaixo da meta de 7 e 15 dias: a regra G mantém a Balcony no nível da Villa King Spa (2)). Queen (7) é a mais fraca: 41% em 7 dias e 15% em 30 dias.
+
+**Reservas e mudanças:** nenhuma reserva nova desde a rotina das 14:15 e nenhuma mudança manual (os registros das últimas 24 h são só as mudanças feitas por API nesta sessão). Feriado 09–10/10: ainda nenhuma venda desde a alta de 03/10; ficam 17 unidades livres na sexta e 16 no sábado, com os preços já no piso de R$ 1.200 reais pedido pelo dono.
+
+**Regras conferidas:** dias úteis até 13/10 já no mínimo de cada quarto (Queen (7) R$ 800, Villa King Spa (7) R$ 1.000, Villa King Spa (2) e Balcony R$ 900, Afrodite R$ 1.500); estadia mínima de 1 noite até 19/10, fora a política de 2 noites do feriado; nenhuma data da escada passou de 50% vendido. Nada a mudar.
+
+**Alerta de sincronização:** a Balcony foi enviada às 15:45 (18:45 UTC), mas o valor confirmado como enviado continua o antigo (R$ 800 em 16 e 17/10, R$ 1.200 em 30 e 31/10, contra R$ 1.905 e R$ 2.750 calculados). Conferir na extranet da Booking ou clicar em Sync Now.
+
 ## O que só pode ser feito na tela (passo a passo para você)
 
 1. **Safety Minimum Price → "Do Not Apply"** (Dynamic Pricing → Customizations → aba Groups → Edit no grupo Recanto dos Moinhos → All Customizations → Safety Minimum Price). Anote o valor atual antes.

@@ -718,6 +718,29 @@ Villa King Spa (2) segue esgotada. Segunda 12/10 sem mudança. Os valores chegam
 
 Queen (2) 17/10 já está esgotada (2 de 2). Os valores chegam aos canais no próximo Sync.
 
+## 05/10/2026, 15:30 — Pedido do dono: Balcony (sem banheira) com o mesmo nível de preço das suítes com banheira (nova Regra G)
+
+**Pedido:** a Balcony aparecia nas buscas por um valor muito abaixo das suítes com banheira e puxava o "a partir de" da Villa para baixo. Subir o valor dela para ficar equivalente, atingir o mesmo público, e só baixar a Balcony quando as suítes com banheira estiverem com as metas batidas.
+
+**Regra G (vale para todas as rotinas a partir de agora):**
+- A Balcony acompanha a suíte com banheira mais barata da Villa, a Villa King Spa (2): mesmo preço base e mesmo mínimo.
+- A Balcony sai da escada de descontos da regra F e não recebe nenhum corte enquanto as suítes com banheira (os 6 quartos com banheira juntos) não baterem a meta da janela (7 dias 70%, 15 dias 50%, 30 dias 35%, 45 dias 25%, 60 dias 15%).
+- Quando a meta das suítes com banheira for batida numa janela, aí sim a Balcony pode baixar nessa janela, para vender as unidades que sobrarem.
+- Onde algum limite da tela travar a Balcony abaixo da Villa King Spa (2), uso preço fixo por data igual ao dela menos 5%.
+
+| Mudança | Onde | Antes | Depois | Como desfazer (pedir ao Claude) |
+|---|---|---|---|---|
+| Preço base e mínimo do anúncio | Balcony | base R$ 800, mínimo R$ 800 (máximo R$ 5.000 mantido) | **base R$ 1.270, mínimo R$ 900** (iguais aos da Villa King Spa 2) | "Volte a Balcony para base R$ 800 e mínimo R$ 800" |
+| Saída da escada de descontos | Balcony, 16, 17, 23 e 24/10 | −20% e −12% com mínimo R$ 800 (calculado R$ 800) | sem desconto (calculado R$ 1.905, Villa King Spa 7 R$ 1.894) | "Recoloque −20% em 16 e 17/10 e −12% em 23 e 24/10 na Balcony" |
+| Fixo espelhando a Villa King Spa (2) −5% (o +20% de Finados ficava travado em R$ 1.905; estadia de 3 noites mantida) | Balcony, 30 e 31/10 | R$ 1.905 calculado (enviado R$ 1.200) | **R$ 2.750** | "Volte a Balcony de 30/10 a 02/11 para +20%" |
+| Idem | Balcony, 01 a 04/11 | R$ 1.353 | **R$ 1.660** | idem |
+| Idem (feriado da Consciência Negra) | Balcony, 20 e 21/11 | R$ 1.905 (travado) | **R$ 2.690** | "Apague os fixos da Balcony de 20 e 21/11" |
+| Idem | Balcony, 18 e 19/12 | R$ 1.905 (travado) | **R$ 2.440** | "Apague os fixos da Balcony de 18 e 19/12" |
+
+**Resultado recalculado (próximos 60 dias):** a Balcony ficou, na mediana, no mesmo preço da Villa King Spa (2) (razão 1,01) e 11% abaixo da Villa King Spa (7). Exemplos: dias úteis desta semana R$ 900 (VK2 R$ 900, VK7 R$ 1.000); 18 a 22/10 R$ 1.012 (VK2 R$ 1.045); fins de semana 16, 17, 23 e 24/10 R$ 1.905 (VK7 R$ 1.800 a 1.894). Feriado 09 e 10/10 segue em R$ 2.290 (piso de R$ 1.200 na vitrine).
+
+**Ponto em aberto:** a Balcony tem personalizações próprias no nível do anúncio (sazonalidade e fator de demanda "agressivos", desconto de última hora "agressivo" de 25% no mesmo dia), diferentes das do grupo usadas pelas suítes com banheira. Por isso, em algumas datas futuras ela fica **acima** das suítes com banheira: 25 a 29/10 (R$ 1.288 contra R$ 1.059), 15 a 18/11 (R$ 1.561 contra R$ 974) e dezembro (até R$ 4.750 contra R$ 3.052 no Réveillon). Para igualar de vez, a proposta é deixar a Balcony com as mesmas personalizações do grupo; aguarda aprovação do dono.
+
 ## O que só pode ser feito na tela (passo a passo para você)
 
 1. **Safety Minimum Price → "Do Not Apply"** (Dynamic Pricing → Customizations → aba Groups → Edit no grupo Recanto dos Moinhos → All Customizations → Safety Minimum Price). Anote o valor atual antes.

@@ -845,6 +845,50 @@ Queen (2) 17/10 já está esgotada (2 de 2). Os valores chegam aos canais no pr�
 - Não houve mudança manual nem cancelamento.
 - **Feriado:** ainda sem venda nova até 13:54.
 
+## 06/10/2026, 16:20 — Pedido do dono: estratégia agressiva para lotar a Villa Dolce Amore em 3 semanas (06 a 25/10)
+
+**Pedido:** "Preciso que revise e atualize os valores desta semana e da próxima semana, e da outra, para a Villa Dolce Amore. Precisamos de uma estratégia agressiva para lotarmos essas 3 semanas o mais rápido possível."
+
+**Situação às 16:00:**
+- Ocupação da Villa: 37% em 7 dias, 26% em 15 e 23% em 30. Suítes com banheira: 43% em 7 dias.
+- Mercado (PriceLabs): 7% a 23% nos dias comuns.
+- Hoje não entrou reserva na Villa.
+
+**Booking, mediana dos concorrentes contra a Villa (2 noites):**
+
+| Período | Mediana geral | Mediana com hidro | Villa | Posição na busca |
+|---|---|---|---|---|
+| 07–09/10 | R$ 554 | R$ 788 | R$ 847 | fora do top 10 geral |
+| Feriado | R$ 1.610 | R$ 2.433 | R$ 2.000 | fora do top 10 |
+| 13–15/10 | R$ 1.061 | R$ 1.358 | R$ 953 (já abaixo) | 7ª na geral |
+| 16–18/10 | R$ 1.348 | R$ 1.944 | R$ 1.588 | — |
+| 20–22/10 | R$ 646 | R$ 788 | R$ 1.309 (+103%) | — |
+| 23–25/10 | R$ 1.105 | R$ 1.392 | R$ 2.253 (+104%) | — |
+
+A Villa não aparece em nenhuma busca com filtro de hidro (falta a comodidade na extranet).
+
+| Mudança | Onde | Antes | Depois (recalculado e conferido às 16:15) | Como desfazer (pedir ao Claude) |
+|---|---|---|---|---|
+| Mínimo do anúncio (−15%, limite da semana) | Villa King Spa (7), Villa King Spa (2), Balcony | R$ 1.000, R$ 900, R$ 900 | **R$ 850**, **R$ 765**, **R$ 765** | "Volte os mínimos da Villa para 1.000/900/900" |
+| Última hora (Regra I, abaixo do novo mínimo) | 06, 07 e 08/10 | VK7 R$ 800, VK2 R$ 720, Balcony R$ 800 | VK7 **R$ 700**, VK2 **R$ 630**, Balcony **R$ 700** | "Volte 06–08/10 da Villa para 800/720/800" |
+| Feriado: piso real da Villa de R$ 1.000 → **R$ 800** (só Villa; Recanto segue em R$ 1.000) | 09 e 10/10 | VK7 R$ 2.570, VK2 R$ 2.168, Balcony R$ 1.890 | VK7 **R$ 2.060**, VK2 **R$ 2.060**, Balcony **R$ 1.510** | "Volte o feriado da Villa para o piso de R$ 1.000" |
+| Dias úteis e domingos no novo mínimo | 12–15, 18–22 e 25/10 | VK7 R$ 1.000–1.196, VK2 R$ 900–1.078, Balcony R$ 900–1.216 | VK7 **R$ 850**, VK2 **R$ 765**, Balcony **R$ 850** (igual à VK7) | "Volte os dias úteis da Villa para o mínimo antigo" |
+| Fim de semana 16–17/10, −12% | 16 e 17/10 | VK7 R$ 1.300, VK2 R$ 1.200, Balcony R$ 1.300 | VK7 **R$ 1.150**, VK2 **R$ 1.050**, Balcony **R$ 1.150** | "Volte 16–17/10 da Villa para 1.300/1.200/1.300" |
+| Fim de semana 23–24/10 (eleição em 25/10); sexta passa a aceitar 1 noite | 23 e 24/10 | VK7 R$ 1.804, VK2 R$ 1.703, Balcony R$ 1.905 | VK7 **R$ 1.050**, VK2 **R$ 950**, Balcony **R$ 1.050**; 23/10 com 1 noite, 24/10 com 2 (Regra H) | "Volte 23–24/10 da Villa para −20%" |
+
+**Vitrine esperada na Booking**, pelo fator de 59–66%, por noite:
+- 07–08/10: cerca de R$ 370–415.
+- Feriado: cerca de R$ 800 (igual à mediana geral).
+- 13–15 e 20–22/10: cerca de R$ 450–505.
+- 16–18/10: cerca de R$ 620–690.
+- 23–25/10: cerca de R$ 560–630.
+
+**Envio:** o PriceLabs envia sozinho até cerca de 1 h depois do recálculo das 16:10, ou na hora com o Sync Now.
+
+**Para a próxima rotina completa:**
+- Com o mínimo menor, algumas datas de novembro ficaram com a Balcony abaixo da Villa King Spa (2) livre (ex.: 08 e 10/11, R$ 979 contra R$ 1.012). Fazer a varredura da Regra G em novembro.
+- Medir as vendas da Villa nas 3 semanas.
+
 > **Regras em vigor:** desde 06/10/2026 elas ficam em `.claude/skills/gestao-receita-pousadas/references/regras.md`. Este arquivo guarda só o histórico das mudanças.
 
 ## O que só pode ser feito na tela (passo a passo para você)

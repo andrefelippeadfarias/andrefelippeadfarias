@@ -34,7 +34,7 @@ Toda gravação passa antes pelo `scripts/validar_plano.py`, é conferida depois
 
 **Regra I, última hora (dono, 06/10)**
 - Vale para noites de D0 a D3 (`regra_i_dias`), fora de feriado, com unidade livre.
-- Preço fixo até 20% (`regra_i_desconto_max`) abaixo do mínimo do quarto, com `min_price` igual ao preço. Hoje: Queen (7) R$ 640, Double R$ 720, Villa King Spa (7) R$ 800, Villa King Spa (2) R$ 720, Balcony R$ 800 (igual à Villa King Spa 7).
+- Preço fixo até 20% (`regra_i_desconto_max`) abaixo do mínimo do quarto, com `min_price` igual ao preço, nunca abaixo do limite de segurança de 70% do mínimo de referência. Hoje: Queen (7) R$ 640, Double R$ 720; na Villa (novo mínimo desde 06/10 16h) Villa King Spa (7) R$ 700, Villa King Spa (2) R$ 630, Balcony R$ 700 (igual à Villa King Spa 7).
 - Queen (2) e Afrodite ficam fora.
 
 **Regra A, estadia mínima**
@@ -84,6 +84,12 @@ Toda gravação passa antes pelo `scripts/validar_plano.py`, é conferida depois
 - Domingo e meio de semana fracos (mediana do mercado abaixo do nosso mínimo): mínimo do quarto e, de D0 a D3, Regra I.
 
 ## 6. Decisões do dono em vigor (com data)
+- 06/10 16h: estratégia agressiva para lotar a Villa Dolce Amore de 06 a 25/10.
+  - Mínimos da Villa: R$ 850 / R$ 765 / R$ 765 (VK7 / VK2 / Balcony), com corte de 15%; nesta semana não se corta mais (limite semanal).
+  - Feriado só da Villa com piso de R$ 800 reais (`piso_real_por_quarto` em `quartos.json`).
+  - Dias úteis e domingos no mínimo.
+  - Fins de semana perto da mediana geral da Booking.
+  - Sexta 23/10 com 1 noite.
 - 25/09: ofertas da Booking obrigatórias; descontos de OTA intocáveis.
 - 26/09: modo automático. "Sempre apresente a análise e aplique a estratégia. Só pare de aplicar caso eu avise para parar."
 - 03/10: Finados com +20% e 3 noites.

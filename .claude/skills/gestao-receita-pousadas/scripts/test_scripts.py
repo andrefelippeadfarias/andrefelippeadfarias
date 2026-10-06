@@ -61,6 +61,13 @@ class TestValidador(unittest.TestCase):
         self.assertTrue(erros([item(quarto="Q7", data="2026-10-09", preco=2000, price_type="fixed")]))
         self.assertEqual(erros([item(quarto="Balcony", data="2026-10-09", preco=1890, price_type="fixed")]), [])
 
+    def test_piso_feriado_por_quarto(self):
+        fer = CFG["feriados"][0]
+        if (fer.get("piso_real_por_quarto") or {}).get("VK7"):
+            piso = fer["piso_real_por_quarto"]["VK7"]
+            ok = round(piso / 0.39) + 10
+            self.assertEqual(erros([item(quarto="VK7", data="2026-10-09", preco=ok, price_type="fixed", min_price=ok)]), [])
+
     def test_noite_de_volta_nao_e_feriado(self):
         self.assertIsNone(periodo_feriado(CFG, date(2026, 10, 12)))
         self.assertIsNotNone(periodo_feriado(CFG, date(2026, 10, 11)))

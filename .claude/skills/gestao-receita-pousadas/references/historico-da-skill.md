@@ -2,6 +2,14 @@
 
 Cada mudança feita na própria Skill (regras, parâmetros, scripts, fluxo) entra aqui: data, o que mudou, por quê (evidência) e como desfazer. A entrada mais nova fica em cima.
 
+## 06/10/2026 16:20: Villa agressiva e piso de feriado por quarto
+- **O quê:**
+  - `quartos.json`: mínimos da Villa em 850, 765 e 765.
+  - Feriado de 12/10 com `piso_real_por_quarto` (Villa a R$ 800).
+  - `validar_plano.py` passa a ler o piso por quarto, com teste novo (15 testes OK).
+- **Por quê:** pedido do dono de estratégia agressiva para a Villa em 3 semanas.
+- **Como desfazer:** voltar os mínimos para 1000, 900 e 900 no PriceLabs e no `quartos.json`, e remover `piso_real_por_quarto`.
+
 ## 06/10/2026 14:05: esclarecimento da Regra F
 - **O quê:** a saída da escada (50% vendido) não vale para preços definidos por decisão do dono. Nesses preços, a Skill segura até 70% de ocupação e depois sobe no máximo 10% por rodada.
 - **Por quê:** a Double em 16, 17 e 18/10 chegou a 50% horas depois do corte pedido pelo dono para lotar. Voltar ao algoritmo levaria a Double de R$ 1.400 para cerca de R$ 2.600 e desfaria a decisão dele.

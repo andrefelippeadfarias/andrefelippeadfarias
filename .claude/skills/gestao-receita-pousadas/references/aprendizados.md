@@ -34,6 +34,7 @@ Cada item tem data e evidência. Para incluir um item novo: data, o fato, a evid
 | 06/10 | Feriado de 12/10: o mercado estava em 32%, 43% e 44% (09 a 11/10), contra 25%, 22% e 19% no mesmo dia do ano passado. O final do ano passado foi 40%, 53% e 34%. Nós estávamos em 45%, 48% e 100%. | get_neighbourhood_data. |
 | 06/10 | Com o piso de R$ 1.200 reais, o Recanto era o 2º mais caro de 21 no feriado (R$ 1.816 por noite na vitrine) e ficou 3 dias sem vender. | Busca na Booking; reservas. |
 | 06/10 | Em 16 a 18/10 estávamos 47–53% acima da mediana (R$ 690 por noite); domingo 18/10, duas vezes a mediana (R$ 313); meio de semana 13 a 15/10, na mediana. | Busca na Booking. |
+| 06/10 16h | Na Booking, mediana dos concorrentes para 2 noites: 07–09/10 R$ 554 (com hidro R$ 788); feriado R$ 1.610 (R$ 2.433); 13–15/10 R$ 1.061 (R$ 1.358); 16–18/10 R$ 1.348 (R$ 1.944); 20–22/10 R$ 646 (R$ 788); 23–25/10 R$ 1.105 (R$ 1.392). A semana 3 é bem mais fraca que a 2, com mercado em 7–9% de ocupação e eleição em 25/10. | Coleta da Booking de 06/10, 16h. |
 | 06/10 | A Villa Dolce Amore não lista hidromassagem, Wi-Fi nem aquecimento nas comodidades e não aparece nas buscas com filtro de hidro. O Recanto aparece em 1º. | Busca na Booking. |
 
 ## Efeito das mudanças nas vendas (preencher a cada rodada)
@@ -42,5 +43,6 @@ Cada item tem data e evidência. Para incluir um item novo: data, o fato, a evid
 | Feriado com piso de R$ 1.200 (03/10) | R$ 2.690 → R$ 2.890 (Queen 7 sexta) | 0 vendas de feriado de 03 a 06/10 | caro demais contra o mercado |
 | Feriado com piso de R$ 1.000 (06/10) | R$ 2.890 → R$ 2.390 | 0 vendas até 13:54 de 06/10 (5 h depois do envio) | medir até 09/10 |
 | Fim de semana 16–17/10 perto do mercado (06/10) | R$ 1.668 → R$ 1.250 (Queen 7); Double R$ 2.069 → R$ 1.400 | 1 venda em cerca de 3 h: Double, 16–17/10, 2 noites, R$ 630 reais por noite (direto) | resposta rápida ao corte |
+| Villa agressiva de 06 a 25/10 (06/10 16h) | Mínimos −15%, dias úteis no mínimo, feriado a R$ 800 reais, fins de semana perto da mediana | (medir até 09/10 e em 13/10) | |
 | Regra I de 06 a 08/10 (06/10) | R$ 800 → R$ 640 (Queen 7); Double R$ 1.132 → R$ 720 | 2 vendas para a mesma noite (06/10): Queen 7 R$ 320 (direto) e Double R$ 360 (Airbnb), 50% do enviado | última hora vende |
 | Domingo 18/10 no mínimo (06/10) | Double R$ 1.225 → R$ 900; Afrodite R$ 1.500 (piso) | 2 vendas: Double R$ 382 (Airbnb, 42%) e Afrodite R$ 675 (direto, 45%) | domingo no mínimo vende |

@@ -156,7 +156,7 @@ class Validador:
                 if valor < self.piso_seg:
                     self.erro(i, it, f"feriado: valor {base} estimado {valor:.0f} abaixo do limite de "
                                      f"segurança {self.piso_seg}")
-                piso = fer.get("piso_real")
+                piso = (fer.get("piso_real_por_quarto") or {}).get(q["curto"], fer.get("piso_real"))
                 if piso and valor < piso - 1 and excecao != "dono":
                     self.erro(i, it, f"feriado: valor {base} estimado {valor:.0f} abaixo do piso do "
                                      f"período ({piso}); para mudar o piso, atualize dados/quartos.json")

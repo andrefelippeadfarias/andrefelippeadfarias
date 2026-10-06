@@ -753,6 +753,46 @@ Queen (2) 17/10 já está esgotada (2 de 2). Os valores chegam aos canais no pr�
 
 **Alerta de sincronização:** a Balcony foi enviada às 15:45 (18:45 UTC), mas o valor confirmado como enviado continua o antigo (R$ 800 em 16 e 17/10, R$ 1.200 em 30 e 31/10, contra R$ 1.905 e R$ 2.750 calculados). Conferir na extranet da Booking ou clicar em Sync Now.
 
+## 06/10/2026, 08:10 — Pedido do dono: lotar esta semana e a próxima; feriado com piso de R$ 1.000 reais
+
+**Pedido:** "atualize as informações para lotarmos essa semana e semana que vem; me diga como estamos indo para o feriado de 9 a 12; faça os ajustes necessários para lotar na semana que vem também".
+
+**Situação às 06:40:**
+- Hotel com 48% em 7 dias, 35% em 15 e 27% em 30.
+- Feriado vendido: sexta 09/10 com 45% (14 de 31), sábado 10/10 com 48% (15 de 31), domingo 11/10 com 100% e segunda 12/10 com 32%.
+- Mercado do PriceLabs: 32%, 43%, 44% e 20%. No mesmo dia do ano passado eram 25%, 22%, 19% e 19%; o final do ano passado foi 40%, 53%, 34% e 22%.
+- Booking: o Recanto era o 2º mais caro de 21 hotéis no feriado (R$ 3.633 por sexta e sábado). Em 16–18/10 estávamos 47–53% acima da mediana e, no domingo 18/10, duas vezes a mediana. Em 13–15/10, na mediana.
+- Eventos: Oktoberfest de 15 a 18/10, corrida WTR em 17 e 18/10, recesso escolar em MG de 13 a 16/10. Segundo turno presidencial no domingo 25/10.
+
+**Decisões do dono:**
+- Feriado com piso de R$ 1.000 reais.
+- Fim de semana 16–17/10 perto do mercado, e o sábado 24/10 vai a −20%.
+- Abaixo do mínimo só na última hora.
+- Sábado sozinho fica bloqueado (regra abaixo).
+
+**Regras novas, válidas para todas as rotinas:**
+- **Regra H (sábado):** a diária de sábado sozinha não é vendida (bloqueio do dono no Beds24/Booking). Só se libera se, na quarta-feira anterior, a pousada estiver abaixo de 50% naquele sábado e não for feriado. A Regra A (1 noite dentro de 14 dias) deixa de valer para sábados, que ficam com estadia mínima de 2 noites no PriceLabs. Na quarta, se o sábado estiver abaixo de 50%, a rotina volta a estadia para 1 noite e avisa o dono para liberar no Beds24.
+- **Regra I (última hora):** noites a até 3 dias (D0 a D3), fora feriado, com unidade livre, recebem preço fixo até 20% abaixo do mínimo do quarto, com o piso da data igual ao preço: Queen (7) R$ 640, Double R$ 720, Villa King Spa (7) R$ 800, Villa King Spa (2) R$ 720, Balcony R$ 800. Queen (2) e Afrodite ficam fora.
+- **Regra G, ajuste:** nas datas em que as suítes com banheira forem cortadas, a Balcony acompanha o preço da Villa King Spa (7) e nunca fica abaixo das suítes com banheira.
+
+| Mudança | Onde | Antes | Depois (recalculado e conferido às 08:05) | Como desfazer (pedir ao Claude) |
+|---|---|---|---|---|
+| Regra I, última hora | 06, 07 e 08/10 | Queen (7) R$ 800; Double R$ 1.132; Villa King Spa (7) R$ 1.000; Villa King Spa (2) R$ 900; Balcony R$ 900 | Queen (7) **R$ 640**; Double **R$ 720** (06 e 07; 08 esgotado); Villa King Spa (7) **R$ 800**; Villa King Spa (2) **R$ 720**; Balcony **R$ 800** | "Volte 06 a 08/10 para o mínimo de cada quarto" |
+| Feriado, piso de R$ 1.000 reais (estadia de 2 noites mantida onde já existia) | 09 e 10/10 | Queen (7) R$ 2.890 e R$ 3.090; Double algoritmo R$ 2.989 com piso R$ 2.890, e R$ 3.190; Afrodite R$ 3.690; Queen (2) R$ 3.550; Villa King Spa (7) piso R$ 3.090; Balcony R$ 2.290 | Queen (7) **R$ 2.390**; Double **R$ 2.390**; Afrodite **R$ 3.190**; Queen (2) **R$ 2.950**; Villa King Spa (7) **R$ 2.570**; Balcony **R$ 1.890** | "Volte o feriado para o piso de R$ 1.200" |
+| Regra H no feriado | 10/10: Queen (7), Double, Balcony | estadia mínima 1 | estadia mínima **2** (o domingo 11/10 está esgotado, então só vende junto com a sexta) | "Volte 10/10 para 1 noite" |
+| Segunda 12/10 (D6) | Queen (7), Villa King Spa (7), Afrodite | R$ 1.310, R$ 1.050, R$ 1.750 | **R$ 970**, **R$ 1.000**, **R$ 1.500** | "Volte 12/10 para R$ 1.310, R$ 1.050 e R$ 1.750" |
+| Mínimo do quarto | 13 a 15/10: Queen (7), Villa King Spa (7), Villa King Spa (2) | R$ 880, R$ 1.100, R$ 928 | **R$ 800**, **R$ 1.000**, **R$ 900** | "Volte 13 a 15/10 para R$ 880 / −35%" |
+| Fim de semana perto do mercado | 16 e 17/10 | Queen (7) R$ 1.668; Double R$ 2.069; Villa King Spa (7) R$ 1.894; Villa King Spa (2) R$ 1.600; Balcony R$ 1.905 | Queen (7) **R$ 1.250**; Double **R$ 1.400**; Villa King Spa (7) **R$ 1.300**; Villa King Spa (2) **R$ 1.200**; Balcony **R$ 1.300** (Afrodite R$ 2.250 e R$ 2.400 e Queen (2) sem mudança) | "Volte 16 e 17/10 para −20%" |
+| Regra H | 17/10: Queen (7), Double, Afrodite, Villa King Spa (7), Villa King Spa (2), Balcony; 24/10: Queen (7) e Balcony | estadia mínima 1 | estadia mínima **2** (revisar na quarta 14/10) | "Volte 17/10 para 1 noite" |
+| Domingo no mínimo | 18/10 | Queen (7) R$ 1.036; Double R$ 1.225; Villa King Spa (7) R$ 1.168; Balcony R$ 1.003 | **R$ 800**, **R$ 900**, **R$ 1.000**, **R$ 1.000** (Villa King Spa (2), com 1 de 2 vendida, e Afrodite R$ 1.500 sem mudança) | "Volte 18/10 para o algoritmo" |
+| Sábado 24/10 −12% → −20% (aprovado pelo dono; eleição em 25/10) | Queen (7), Double, Villa King Spa (7), Villa King Spa (2) | −12% | −20%: **R$ 1.690**, **R$ 1.910**, **R$ 1.780**, **R$ 1.680** (Balcony R$ 1.905) | "Volte 24/10 para −12%" |
+
+**Envio:** em 08:05 o último envio aos canais ainda era o de 05/10. As mudanças chegam na sincronização das 09:43 ou no Sync Now. A rotina das 10:53 confere na Booking.
+
+**Achados para o dono:**
+- Na Booking, a Villa Dolce Amore não lista hidromassagem/Jacuzzi, Wi-Fi nem aquecimento nas comodidades. Por isso não aparece nas buscas com filtro de hidro (o Recanto aparece em 1º).
+- No feriado, com o domingo esgotado e o sábado sozinho bloqueado, a sexta e o sábado só vendem juntos. Isso dá até 13 pacotes: Queen (7) 2, Double 2, Afrodite 1, Queen (2) 1, Villa King Spa (7) 3 e Balcony 4. Ficam ainda 3 Queen (7) e 1 Queen (2) só para a sexta. As outras 3 Double do sábado não têm como vender, por causa da Regra H.
+
 ## O que só pode ser feito na tela (passo a passo para você)
 
 1. **Safety Minimum Price → "Do Not Apply"** (Dynamic Pricing → Customizations → aba Groups → Edit no grupo Recanto dos Moinhos → All Customizations → Safety Minimum Price). Anote o valor atual antes.

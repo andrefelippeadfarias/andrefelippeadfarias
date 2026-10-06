@@ -112,6 +112,10 @@ Toda gravação passa antes pelo `scripts/validar_plano.py`, é conferida depois
   - piso de fim de semana (150% da base);
   - Sync Now.
 - Extranet da Booking, Villa Dolce Amore: marcar hidromassagem/Jacuzzi, Wi-Fi e aquecimento.
+- **URGENTE, canais no Beds24 (06/10):**
+  - a Villa está na Expedia, Hoteis.com e Decolar com tarifa fixa de R$ 2.037 a R$ 4.075, 3 a 5 vezes a Booking: conferir o mapeamento do quarto e da tarifa;
+  - o Recanto está 38–44% acima da Booking na Expedia: baixar o acréscimo do canal para 10–15%;
+  - o site oficial está 50–89% acima da Booking: criar uma tarifa direta igual ou menor que a da Booking.
 - Visibilidade e paridade (auditoria de 06/10, detalhes em `mercado.md`):
   - o site oficial está mais caro que os revendedores no Google Hotels;
   - o Perfil do Google tem categorias e endereço errados;

@@ -84,3 +84,23 @@
   - não têm marcação estruturada de hotel (schema);
   - fala-se em "imersão" e em "hidromassagem" para a mesma banheira.
 - Bloqueados para pesquisa automática: Expedia, Hoteis.com, TripAdvisor e Decolar (403/429). Google Busca exige JavaScript (usar o Maps).
+
+## Preços por canal (pesquisa de 06/10/2026 à tarde, antes do envio da estratégia agressiva da Villa)
+- **Villa na Expedia, Hoteis.com e Decolar:** tarifa fixa de R$ 2.037 por noite no meio de semana e R$ 4.075 no fim de semana e no feriado, de 3 a 5 vezes o preço da Booking. Não varia com a data. A Villa está, na prática, fora desses canais. Suspeita: o quarto ou a tarifa ligada à Expedia no Beds24 não recebe o preço do PriceLabs.
+- **Recanto na Expedia e na Hoteis.com:** 38–44% acima da própria Booking em todas as datas (provável multiplicador de canal no Beds24). Os concorrentes ficam entre −18% e +16% contra a Booking deles.
+- **Site oficial:** 50–89% mais caro que a Booking (recebe o preço cheio, sem os descontos da OTA). Nos concorrentes (Murano, L.A.H., Carballo, Estoril, Canada Lodge, Geada), o site é o canal mais barato.
+- **Airbnb, mediana por noite das suítes com hidro (1 quarto, com taxas):**
+  - meio de semana R$ 555 (P75 R$ 715);
+  - fim de semana R$ 825 (P75 R$ 1.050);
+  - feriado R$ 1.089 (P90 cerca de R$ 1.450). No feriado sobravam só 16 chalés com hidro em Campos.
+- **Airbnb, nossos anúncios:**
+  - os "premium" (Afrodite/Panorâmica do Recanto, "Lua de Mel" da Villa) ficam acima do P75, com poucas avaliações;
+  - os anúncios por unidade estão na faixa;
+  - há preço dobrado entre anúncios do mesmo prédio na mesma data.
+- **Expedia, mediana das pousadas com hidro:** meio de semana R$ 694, fim de semana R$ 1.161, feriado R$ 1.320.
+- **Booking, mediana da mesma amostra:** meio de semana R$ 679, fim de semana R$ 1.100, feriado R$ 1.256.
+- **Notas no Google:** Recanto 4,1 (341 avaliações), Villa 4,0 (201). Concorrentes de 4,5 a 5,0.
+- **Fontes que funcionam:**
+  - Airbnb: o HTML bruto via curl (busca com `amenities[]=25`, de hidro, 15 páginas) traz os dados embutidos;
+  - Google Hotels: as páginas de preço de cada hotel (`/travel/hotels/entity/<id>/prices?hl=pt-BR&gl=br`) mostram o preço por canal em R$. IDs: Recanto `ChoI1dWu6_WU4siuARoNL2cvMTFxcTI0dGJfOBAB`, Villa `ChkI7tXx2bqr6od-Gg0vZy8xMXZ4MGx3YjY5EAE`.
+  - Expedia, Hoteis.com e Decolar bloqueiam acesso direto (429/403).

@@ -793,6 +793,33 @@ Queen (2) 17/10 já está esgotada (2 de 2). Os valores chegam aos canais no pr�
 - Na Booking, a Villa Dolce Amore não lista hidromassagem/Jacuzzi, Wi-Fi nem aquecimento nas comodidades. Por isso não aparece nas buscas com filtro de hidro (o Recanto aparece em 1º).
 - No feriado, com o domingo esgotado e o sábado sozinho bloqueado, a sexta e o sábado só vendem juntos. Isso dá até 13 pacotes: Queen (7) 2, Double 2, Afrodite 1, Queen (2) 1, Villa King Spa (7) 3 e Balcony 4. Ficam ainda 3 Queen (7) e 1 Queen (2) só para a sexta. As outras 3 Double do sábado não têm como vender, por causa da Regra H.
 
+## 06/10/2026, 09:40 — Pedido do dono: Skill "gestao-receita-pousadas" criada (autonomia total) + correção da Balcony em 12/10
+
+**Pedido:** "Vamos criar uma Skill para fazer tudo que fazemos aqui, para que possamos manter ela sempre atualizada e aprendendo, e que seja permitido você fazer tudo de forma autônoma sem necessidade de ficar fazendo aprovações."
+
+**Decisões do dono:** autonomia total (só descontos de OTA e ofertas da Booking seguem proibidos), aprendizado automático e rotinas nesta conversa.
+
+**O que foi criado:** `.claude/skills/gestao-receita-pousadas/`.
+- `SKILL.md`: modos, procedimento, autonomia, limites de segurança e formato do relatório.
+- `references/regras.md`: a partir de agora, **fonte única das regras**.
+- `references/` também tem aprendizados, mercado, ferramentas e o histórico da Skill.
+- `dados/quartos.json`: IDs, mínimos, fatores, parâmetros, feriados e limites.
+- Scripts de ocupação, validação do plano e conferência do recálculo, com testes.
+- Workflow de coleta em `.claude/workflows/coleta-pricelabs.js`.
+
+**Limites de segurança** (só o dono muda):
+- preço nunca abaixo de 70% do mínimo de referência;
+- base e mínimo com no máximo ±15% por semana;
+- feriado nunca abaixo de R$ 800 de valor real.
+
+| Mudança | Onde | Antes | Depois (recalculado e conferido às 09:36) | Como desfazer (pedir ao Claude) |
+|---|---|---|---|---|
+| Regra G (o validador achou: a Balcony estava abaixo da suíte com banheira livre mais barata) | Balcony, segunda 12/10 | R$ 900 (Villa King Spa 2 livre a R$ 970; Villa King Spa 7 a R$ 1.000) | **R$ 1.000** (igual à Villa King Spa 7) | "Apague o fixo da Balcony de 12/10" |
+
+**Envio:** a correção foi gravada às 09:34, antes do envio diário das 09:43.
+
+> **Regras em vigor:** desde 06/10/2026 elas ficam em `.claude/skills/gestao-receita-pousadas/references/regras.md`. Este arquivo guarda só o histórico das mudanças.
+
 ## O que só pode ser feito na tela (passo a passo para você)
 
 1. **Safety Minimum Price → "Do Not Apply"** (Dynamic Pricing → Customizations → aba Groups → Edit no grupo Recanto dos Moinhos → All Customizations → Safety Minimum Price). Anote o valor atual antes.

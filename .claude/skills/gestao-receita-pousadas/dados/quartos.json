@@ -1,0 +1,242 @@
+{
+  "versao": "2026-10-06",
+  "nota": "Fonte única dos dados de máquina da Skill. Os scripts leem daqui. Quem mudar base, mínimo ou máximo no PriceLabs atualiza este arquivo no mesmo commit.",
+  "pms": "beds24",
+  "grupo": {
+    "id": 124405,
+    "nome": "Recanto dos Moinhos"
+  },
+  "fuso": "America/Sao_Paulo",
+  "metas": {
+    "7": 70,
+    "15": 50,
+    "30": 35,
+    "45": 25,
+    "60": 15
+  },
+  "quartos": [
+    {
+      "curto": "Q7",
+      "id": "350362___722805",
+      "nome": "Queen (7)",
+      "pousada": "Recanto",
+      "unidades": 7,
+      "min": 800,
+      "base": 1380,
+      "max": 5000,
+      "min_referencia": 800,
+      "banheira": true,
+      "fator_real": 0.42,
+      "fator_vitrine": 0.61,
+      "piso_feriado_base": "real",
+      "sem_desconto": false,
+      "regra_i": true,
+      "regra_f": true
+    },
+    {
+      "curto": "Double",
+      "id": "350362___722806",
+      "nome": "Double",
+      "pousada": "Recanto",
+      "unidades": 6,
+      "min": 900,
+      "base": 1480,
+      "max": 5000,
+      "min_referencia": 900,
+      "banheira": true,
+      "fator_real": 0.42,
+      "fator_vitrine": 0.61,
+      "piso_feriado_base": "real",
+      "sem_desconto": false,
+      "regra_i": true,
+      "regra_f": true
+    },
+    {
+      "curto": "Afrodite",
+      "id": "350362___722807",
+      "nome": "Afrodite",
+      "pousada": "Recanto",
+      "unidades": 1,
+      "min": 1500,
+      "base": 2000,
+      "max": 10000,
+      "min_referencia": 1500,
+      "banheira": true,
+      "fator_real": 0.42,
+      "fator_vitrine": 0.61,
+      "piso_feriado_base": "real",
+      "sem_desconto": false,
+      "regra_i": false,
+      "regra_f": false
+    },
+    {
+      "curto": "Q2",
+      "id": "350362___722808",
+      "nome": "Queen (2)",
+      "pousada": "Recanto",
+      "unidades": 2,
+      "min": 850,
+      "base": 1700,
+      "max": 5000,
+      "min_referencia": 850,
+      "banheira": true,
+      "fator_real": 0.34,
+      "fator_vitrine": 0.61,
+      "piso_feriado_base": "real",
+      "sem_desconto": true,
+      "regra_i": false,
+      "regra_f": false
+    },
+    {
+      "curto": "VK7",
+      "id": "350364___722813",
+      "nome": "Villa King Spa (7)",
+      "pousada": "Villa",
+      "unidades": 7,
+      "min": 1000,
+      "base": 1480,
+      "max": 5000,
+      "min_referencia": 1000,
+      "banheira": true,
+      "fator_real": 0.39,
+      "fator_vitrine": 0.53,
+      "piso_feriado_base": "real",
+      "sem_desconto": false,
+      "regra_i": true,
+      "regra_f": true
+    },
+    {
+      "curto": "Balcony",
+      "id": "350364___722814",
+      "nome": "Balcony",
+      "pousada": "Villa",
+      "unidades": 6,
+      "min": 900,
+      "base": 1270,
+      "max": 5000,
+      "min_referencia": 900,
+      "banheira": false,
+      "fator_real": 0.39,
+      "fator_vitrine": 0.53,
+      "piso_feriado_base": "vitrine",
+      "sem_desconto": false,
+      "regra_i": true,
+      "regra_f": false
+    },
+    {
+      "curto": "VK2",
+      "id": "350364___722815",
+      "nome": "Villa King Spa (2)",
+      "pousada": "Villa",
+      "unidades": 2,
+      "min": 900,
+      "base": 1270,
+      "max": 5000,
+      "min_referencia": 900,
+      "banheira": true,
+      "fator_real": 0.39,
+      "fator_vitrine": 0.53,
+      "piso_feriado_base": "real",
+      "sem_desconto": false,
+      "regra_i": true,
+      "regra_f": true
+    }
+  ],
+  "referencia_semanal": {
+    "data": "2026-10-06",
+    "nota": "Base e mínimo de cada quarto no início da semana. A revisão de segunda atualiza. O validador barra mudança acima do limite semanal contra estes valores.",
+    "valores": {
+      "Q7": {
+        "min": 800,
+        "base": 1380
+      },
+      "Double": {
+        "min": 900,
+        "base": 1480
+      },
+      "Afrodite": {
+        "min": 1500,
+        "base": 2000
+      },
+      "Q2": {
+        "min": 850,
+        "base": 1700
+      },
+      "VK7": {
+        "min": 1000,
+        "base": 1480
+      },
+      "Balcony": {
+        "min": 900,
+        "base": 1270
+      },
+      "VK2": {
+        "min": 900,
+        "base": 1270
+      }
+    }
+  },
+  "limites_seguranca": {
+    "nota": "Só o dono muda estes limites. A Skill nunca os altera sozinha.",
+    "fracao_min_referencia": 0.7,
+    "variacao_semanal_base_min": 0.15,
+    "piso_feriado_real_seguranca": 800,
+    "proibido": [
+      "descontos de OTA",
+      "ofertas da Booking",
+      "Genius acima do nível 3",
+      "política de sábado sozinho (Regra H)",
+      "pedir senha ou token no chat"
+    ]
+  },
+  "parametros": {
+    "nota": "A Skill ajusta estes valores sozinha, dentro dos limites de segurança. Toda mudança vai para o historico-da-skill.md.",
+    "regra_i_dias": 3,
+    "regra_i_desconto_max": 0.2,
+    "regra_f_saida_vendido": 0.5,
+    "regra_c_desconto": 0.3,
+    "regra_a_janela_dias": 14,
+    "piso_feriado_real_padrao": 1000
+  },
+  "feriados": [
+    {
+      "nome": "Nossa Senhora Aparecida",
+      "inicio": "2026-10-09",
+      "fim": "2026-10-11",
+      "piso_real": 1000,
+      "nota": "Noites de feriado (a noite de segunda 12/10 é volta e não entra). Piso decidido pelo dono em 06/10."
+    },
+    {
+      "nome": "Finados",
+      "inicio": "2026-10-30",
+      "fim": "2026-11-01",
+      "piso_real": null,
+      "nota": "Dono pôs +20% e 3 noites nos 7 quartos de 30/10 a 02/11 pela tela (03/10)."
+    },
+    {
+      "nome": "Proclamação da República",
+      "inicio": "2026-11-13",
+      "fim": "2026-11-14",
+      "piso_real": null
+    },
+    {
+      "nome": "Consciência Negra",
+      "inicio": "2026-11-19",
+      "fim": "2026-11-21",
+      "piso_real": null
+    },
+    {
+      "nome": "Natal",
+      "inicio": "2026-12-24",
+      "fim": "2026-12-25",
+      "piso_real": null
+    },
+    {
+      "nome": "Réveillon",
+      "inicio": "2026-12-30",
+      "fim": "2027-01-01",
+      "piso_real": null
+    }
+  ],
+  "feriados_nota": "Cada período lista as NOITES de feriado (data de entrada da diária). piso_real null = sem piso do dono; vale só o limite de segurança."
+}

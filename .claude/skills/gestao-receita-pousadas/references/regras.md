@@ -53,6 +53,7 @@ Toda gravação passa antes pelo `scripts/validar_plano.py`, é conferida depois
   - de D2 a D13, mantém o nível vigente ou desce para perto do mercado (ver seção 5).
   - Use percentual só quando as duas noites entram juntas; corte numa noite só vai em preço fixo.
 - Saída da escada: quarto com 50% ou mais vendido na data (`regra_f_saida_vendido`) apaga a substituição de preço e mantém a estadia mínima. Antes, confirme que é reserva e não bloqueio.
+- A saída da escada **não vale** para datas com preço por decisão do dono, como "perto do mercado" ou "domingo no mínimo para lotar" (motivo começando com "Dono"). Nelas o preço fica até a ocupação da data passar de 70%. Aí sobe no máximo 10% por rodada. Esclarecido em 06/10: a prioridade do dono é lotar.
 
 **Regra C, Afrodite**
 - Noite livre a até 13 dias: preço fixo de −30% (`regra_c_desconto`) sobre o calculado, com piso de R$ 1.500.

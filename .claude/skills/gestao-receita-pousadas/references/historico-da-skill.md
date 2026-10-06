@@ -2,6 +2,11 @@
 
 Cada mudança feita na própria Skill (regras, parâmetros, scripts, fluxo) entra aqui: data, o que mudou, por quê (evidência) e como desfazer. A entrada mais nova fica em cima.
 
+## 06/10/2026 14:05: esclarecimento da Regra F
+- **O quê:** a saída da escada (50% vendido) não vale para preços definidos por decisão do dono. Nesses preços, a Skill segura até 70% de ocupação e depois sobe no máximo 10% por rodada.
+- **Por quê:** a Double em 16, 17 e 18/10 chegou a 50% horas depois do corte pedido pelo dono para lotar. Voltar ao algoritmo levaria a Double de R$ 1.400 para cerca de R$ 2.600 e desfaria a decisão dele.
+- **Como desfazer:** remover o item novo da Regra F em `regras.md`.
+
 ## 06/10/2026: v1, criação
 - **O quê:** a Skill nasceu a partir do registro de 25/09 a 06/10 e desta conversa. As regras foram consolidadas em `regras.md`; os dados de máquina, em `dados/quartos.json`. Também foram criados os scripts (ocupação, validação e conferência do recálculo) e o workflow de coleta. A ampliação de `.claude/settings.json` (liberar gravação no PriceLabs, Booking, git e scripts) foi bloqueada pela proteção da sessão: fica para o dono fazer. A rotina `trig_01BMLPUb6e9LDw1Xx1oYy3iT` passou a chamar a Skill.
 - **Decisões do dono:** autonomia total, aprendizado automático e rotinas nesta conversa.

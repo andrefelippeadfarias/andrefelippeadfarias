@@ -826,6 +826,25 @@ Queen (2) 17/10 já está esgotada (2 de 2). Os valores chegam aos canais no pr�
   - 16 a 18/10, 2 noites: Recanto R$ 1.519 (antes R$ 2.027), Villa R$ 1.588 (antes R$ 2.117). Com isso, ficamos 10–15% acima da mediana do mercado, que era R$ 690 por noite; antes ficávamos 47–53% acima.
 - **Reservas de hoje:** nenhuma até 10:54. Também não há cancelamento nem mudança manual (os registros são só as mudanças por API desta manhã). Nada a reaplicar.
 
+## 06/10/2026, 14:05 — Rotina das 13:53: 5 reservas depois dos preços novos; sem mudanças
+
+**Reservas feitas hoje** (os preços novos foram aos canais às 08:48):
+
+| Quarto | Noites | Canal | Pago | Pago ÷ enviado |
+|---|---|---|---|---|
+| Queen (7) | hoje, 06/10 | direto ("outros") | R$ 320 | 50% (enviado R$ 640) |
+| Double | hoje, 06/10 | Airbnb | R$ 360 | 50% (enviado R$ 720) |
+| Double | 16 e 17/10 | direto | R$ 1.260 (R$ 630 por noite) | 45% (enviado R$ 1.400) |
+| Double | domingo 18/10 | Airbnb | R$ 382 | 42% (enviado R$ 900) |
+| Afrodite | domingo 18/10 | direto | R$ 675 | 45% (enviado R$ 1.500) |
+
+**Sem mudanças nesta rotina:**
+- A Double em 16, 17 e 18/10 chegou a 50% vendido. Esses preços são decisão do dono ("perto do mercado" e "domingo no mínimo para lotar"), por isso não voltam ao algoritmo.
+- Ficou registrado em `regras.md`: o preço fica até a data passar de 70% de ocupação e então sobe no máximo 10% por rodada.
+- Afrodite em 18/10: esgotada.
+- Não houve mudança manual nem cancelamento.
+- **Feriado:** ainda sem venda nova até 13:54.
+
 > **Regras em vigor:** desde 06/10/2026 elas ficam em `.claude/skills/gestao-receita-pousadas/references/regras.md`. Este arquivo guarda só o histórico das mudanças.
 
 ## O que só pode ser feito na tela (passo a passo para você)

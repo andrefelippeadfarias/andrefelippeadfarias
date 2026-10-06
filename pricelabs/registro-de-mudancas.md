@@ -889,6 +889,16 @@ A Villa não aparece em nenhuma busca com filtro de hidro (falta a comodidade na
 - Com o mínimo menor, algumas datas de novembro ficaram com a Balcony abaixo da Villa King Spa (2) livre (ex.: 08 e 10/11, R$ 979 contra R$ 1.012). Fazer a varredura da Regra G em novembro.
 - Medir as vendas da Villa nas 3 semanas.
 
+## 06/10/2026, 19:58 — Rotinas das 16:53 e 19:53 (rodadas juntas): sem mudanças; preços da Villa ainda não enviados
+
+- **Reservas desde as 14:05:** nenhuma nova. A última do dia entrou às 12:39 (Double, 06/10, Airbnb). Sem cancelamentos.
+- **Mudanças manuais:** nenhuma. Os registros do dia são todos nossos (API).
+- **Envio aos canais:** o último foi o diário, às 08:49 (Recanto, Villa King Spa 7 e 2) e às 09:47 (Balcony). As mudanças da Villa gravadas às 16:10 **não foram enviadas**. A Booking confirma: Villa 07→08/10 a R$ 423 e 16→18/10 a R$ 1.588, os mesmos valores das 10:55.
+- **Correção:** a entrada das 16:20 dizia que o PriceLabs enviaria sozinho perto de 1 h depois do recálculo. Não aconteceu. O envio extra não é garantido: sem o "Sync Now", os preços agressivos da Villa só chegam aos canais no envio diário de 07/10 (por volta das 08:48).
+- **Ocupação em 7 dias (PriceLabs):** Queen (7) 47%, Villa King Spa (7) 43%, Villa King Spa (2) 36%, Balcony 29%. Mercado: 24–25%.
+- **Mudanças:** nenhuma. Não houve reserva nem cancelamento, então não há regra a reaplicar. A varredura da Regra G em novembro fica para a rotina completa de 07/10, às 07:53, antes do envio diário.
+- **Para o dono:** "Sync Now" na tela do PriceLabs, para a Villa vender ainda hoje à noite com os preços novos.
+
 > **Regras em vigor:** desde 06/10/2026 elas ficam em `.claude/skills/gestao-receita-pousadas/references/regras.md`. Este arquivo guarda só o histórico das mudanças.
 
 ## O que só pode ser feito na tela (passo a passo para você)

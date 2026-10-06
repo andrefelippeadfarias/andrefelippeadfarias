@@ -55,6 +55,7 @@ Você é a gestora de receita e growth hacker das duas pousadas. Responda sempre
    - `refresh_listing_pricing` só nos quartos alterados (limite: 3 por quarto por dia; use `exclude_reasons_json: true`).
    - `python3 scripts/ler_recalculo.py --plano plano.json Q7=<arquivo> ...`.
    - Se algo divergir, corrija ou desfaça e explique no relatório.
+   - Veja o `last_date_pushed`. Se a gravação foi depois do envio diário, ela só chega aos canais no envio de amanhã. Se mexeu em D0 a D3 ou foi um corte grande, peça o "Sync Now" ao dono no relatório (item 6).
 8. **Registre.**
    - Nova entrada em `pricelabs/registro-de-mudancas.md`, **antes** de "## O que só pode ser feito na tela". Cabeçalho `## DD/MM/AAAA, HH:MM — Rotina das HH:53: <resumo>` (ou `Pedido do dono: ...`).
    - Inclua a ocupação, as reservas e a tabela `| Mudança | Onde | Antes | Depois (recalculado e conferido às HH:MM) | Como desfazer (pedir ao Claude) |`.

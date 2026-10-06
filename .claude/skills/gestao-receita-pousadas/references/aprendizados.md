@@ -10,7 +10,8 @@ Cada item tem data e evidência. Para incluir um item novo: data, o fato, a evid
 | 30/09 | Vitrine da Booking ≈ 53% do enviado na Villa (o "a partir de" da Villa é o quarto mais barato) e ≈ 60% no Recanto (Queen 7). | Registro L238, L275 e L298. |
 | 06/10 | Vitrine de 16 a 18/10 ≈ 65–66% do enviado (Queen 7 e Villa King Spa 2). A proporção muda com as ofertas ativas. | Busca na Booking de 06/10. |
 | 06/10 10:55 | Depois do envio, a vitrine ficou em: Queen (7) a R$ 640 → R$ 403 (63%); Queen (7) a R$ 1.250 × 2 → R$ 1.519 (61%); Villa King Spa (2) a R$ 720 → R$ 423 (59%); Villa King Spa (2) a R$ 1.200 × 2 → R$ 1.588 (66%). Faixa usual: **59–66% do enviado**. | Busca na Booking por nome, depois do envio das 08:48. |
-| 06/10 | O envio diário de 06/10 saiu às 08:48. Uma mudança gravada às 09:34 foi enviada às 09:47: houve um segundo envio perto de 1 h depois do recálculo. | `last_date_pushed`. |
+| 06/10 | O envio diário de 06/10 saiu às 08:48. Uma mudança na Balcony gravada às 09:34 foi enviada às 09:47. | `last_date_pushed`. |
+| 06/10 19:56 | **O envio extra não é garantido.** As mudanças da Villa gravadas e recalculadas às 16:10 não tinham sido enviadas 3 h 45 min depois (último envio às 08:49). Mudança gravada depois do envio diário só chega aos canais no envio do dia seguinte, a menos que o dono clique "Sync Now". Provável causa do envio das 09:47: o Real-Time Sync, que só dispara com evento do PMS (reserva, cancelamento ou bloqueio). | `last_date_pushed` dos 3 quartos da Villa; Booking por nome às 19:56 (Villa 07→08/10 a R$ 423 e 16→18/10 a R$ 1.588, iguais às 10:55). |
 | — | Fatores usados para pisos (o pior caso): Recanto 0,42, Queen (2) 0,34, Villa 0,39; vitrine da Balcony 0,53. | `quartos.json`. |
 
 ## Comportamento do PriceLabs e dos canais
@@ -43,6 +44,6 @@ Cada item tem data e evidência. Para incluir um item novo: data, o fato, a evid
 | Feriado com piso de R$ 1.200 (03/10) | R$ 2.690 → R$ 2.890 (Queen 7 sexta) | 0 vendas de feriado de 03 a 06/10 | caro demais contra o mercado |
 | Feriado com piso de R$ 1.000 (06/10) | R$ 2.890 → R$ 2.390 | 0 vendas até 13:54 de 06/10 (5 h depois do envio) | medir até 09/10 |
 | Fim de semana 16–17/10 perto do mercado (06/10) | R$ 1.668 → R$ 1.250 (Queen 7); Double R$ 2.069 → R$ 1.400 | 1 venda em cerca de 3 h: Double, 16–17/10, 2 noites, R$ 630 reais por noite (direto) | resposta rápida ao corte |
-| Villa agressiva de 06 a 25/10 (06/10 16h) | Mínimos −15%, dias úteis no mínimo, feriado a R$ 800 reais, fins de semana perto da mediana | (medir até 09/10 e em 13/10) | |
+| Villa agressiva de 06 a 25/10 (06/10 16h) | Mínimos −15%, dias úteis no mínimo, feriado a R$ 800 reais, fins de semana perto da mediana | 0 vendas até 19:56 de 06/10, mas os preços ainda não tinham chegado aos canais (só no envio de 07/10). Medir a partir do envio, até 09/10 e em 13/10. | |
 | Regra I de 06 a 08/10 (06/10) | R$ 800 → R$ 640 (Queen 7); Double R$ 1.132 → R$ 720 | 2 vendas para a mesma noite (06/10): Queen 7 R$ 320 (direto) e Double R$ 360 (Airbnb), 50% do enviado | última hora vende |
 | Domingo 18/10 no mínimo (06/10) | Double R$ 1.225 → R$ 900; Afrodite R$ 1.500 (piso) | 2 vendas: Double R$ 382 (Airbnb, 42%) e Afrodite R$ 675 (direto, 45%) | domingo no mínimo vende |

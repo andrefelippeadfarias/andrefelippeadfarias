@@ -19,7 +19,7 @@
 | `get_user_logs` | mudanças nas últimas 24 h | Ação `api_*` com device "mcp" é nossa. O resto é manual (pela tela). |
 | `get_neighbourhood_data` | ocupação do mercado | Os números ficam aninhados em `data.data.occupancy.daily`. Os percentis por dia não vêm. |
 
-Não existe API para "Sync Now". O envio aos canais é diário (no começo de outubro, por volta das 09:43) ou pela tela.
+Não existe API para "Sync Now". O envio aos canais é diário (em 06/10, às 08:48) ou pela tela. Recalcular não envia, e o envio extra pelo Real-Time Sync só vem com evento do PMS (reserva, cancelamento ou bloqueio). Por isso, mudança gravada depois do envio diário só chega aos canais no dia seguinte. Quando a mudança mexer em D0 a D3 ou for um corte grande, peça ao dono o "Sync Now" (PriceLabs → Multicalendário → marcar os quartos → Sync Now; chega em até 15 min).
 
 ## Booking.com (`mcp__Booking_com__accommodations_search`)
 Veja como pesquisar em `mercado.md`. Não serve para mudar nada.

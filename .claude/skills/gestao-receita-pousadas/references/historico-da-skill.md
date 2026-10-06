@@ -2,6 +2,11 @@
 
 Cada mudança feita na própria Skill (regras, parâmetros, scripts, fluxo) entra aqui: data, o que mudou, por quê (evidência) e como desfazer. A entrada mais nova fica em cima.
 
+## 06/10/2026 19:58: envio aos canais depois do recálculo
+- **O quê:** `SKILL.md` (passo 7) passa a mandar conferir o `last_date_pushed` depois de gravar e a pedir o "Sync Now" ao dono quando a mudança vier depois do envio diário e mexer em D0 a D3 ou for um corte grande. `ferramentas.md` e `aprendizados.md` corrigidos: o envio extra perto de 1 h depois do recálculo não é garantido.
+- **Por quê:** as mudanças da Villa das 16:10 não tinham sido enviadas às 19:56 (último envio às 08:49), e a Booking mostrava os preços antigos.
+- **Como desfazer:** remover a linha nova do passo 7 do `SKILL.md`.
+
 ## 06/10/2026 16:20: Villa agressiva e piso de feriado por quarto
 - **O quê:**
   - `quartos.json`: mínimos da Villa em 850, 765 e 765.

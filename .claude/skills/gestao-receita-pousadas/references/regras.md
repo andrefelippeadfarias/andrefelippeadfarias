@@ -112,6 +112,13 @@ Toda gravação passa antes pelo `scripts/validar_plano.py`, é conferida depois
   - piso de fim de semana (150% da base);
   - Sync Now.
 - Extranet da Booking, Villa Dolce Amore: marcar hidromassagem/Jacuzzi, Wi-Fi e aquecimento.
+- Visibilidade e paridade (auditoria de 06/10, detalhes em `mercado.md`):
+  - o site oficial está mais caro que os revendedores no Google Hotels;
+  - o Perfil do Google tem categorias e endereço errados;
+  - existem anúncios antigos da Booking com notas melhores;
+  - os anúncios do Airbnb têm erros;
+  - há duplicados no TripAdvisor e na Trivago;
+  - os motores Omnibees antigos seguem no ar.
 - Beds24:
   - reservas no canal "outros" a R$ 320–450 por noite na Villa King Spa (7);
   - Afrodite de 12 a 15/11 "indisponível" sem reserva;

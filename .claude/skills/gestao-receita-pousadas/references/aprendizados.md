@@ -9,6 +9,8 @@ Cada item tem data e evidência. Para incluir um item novo: data, o fato, a evid
 | 05–06/10 | Última hora de meio de semana: Queen (7) pagou 50% do enviado (R$ 807 por 2 diárias a R$ 800), R$ 330–404 por noite. | Reservas de 05/10. |
 | 30/09 | Vitrine da Booking ≈ 53% do enviado na Villa (o "a partir de" da Villa é o quarto mais barato) e ≈ 60% no Recanto (Queen 7). | Registro L238, L275 e L298. |
 | 06/10 | Vitrine de 16 a 18/10 ≈ 65–66% do enviado (Queen 7 e Villa King Spa 2). A proporção muda com as ofertas ativas. | Busca na Booking de 06/10. |
+| 06/10 10:55 | Depois do envio, a vitrine ficou em: Queen (7) a R$ 640 → R$ 403 (63%); Queen (7) a R$ 1.250 × 2 → R$ 1.519 (61%); Villa King Spa (2) a R$ 720 → R$ 423 (59%); Villa King Spa (2) a R$ 1.200 × 2 → R$ 1.588 (66%). Faixa usual: **59–66% do enviado**. | Busca na Booking por nome, depois do envio das 08:48. |
+| 06/10 | O envio diário de 06/10 saiu às 08:48. Uma mudança gravada às 09:34 foi enviada às 09:47: houve um segundo envio perto de 1 h depois do recálculo. | `last_date_pushed`. |
 | — | Fatores usados para pisos (o pior caso): Recanto 0,42, Queen (2) 0,34, Villa 0,39; vitrine da Balcony 0,53. | `quartos.json`. |
 
 ## Comportamento do PriceLabs e dos canais

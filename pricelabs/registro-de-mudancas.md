@@ -818,6 +818,14 @@ Queen (2) 17/10 já está esgotada (2 de 2). Os valores chegam aos canais no pr�
 
 **Envio:** a correção foi gravada às 09:34, antes do envio diário das 09:43.
 
+## 06/10/2026, 10:58 — Rotina das 10:53 (primeira com a Skill): sem mudanças; envio do dia confirmado
+
+- **Envio aos canais:** os 7 quartos foram enviados hoje às 08:48 e a Balcony de novo às 09:47 (com a correção de 12/10). Todas as mudanças de hoje cedo estão nos canais.
+- **Booking, preço total exibido:**
+  - quarta 07/10, 1 noite: Recanto R$ 403 (antes R$ 454), Villa R$ 423 (antes R$ 476);
+  - 16 a 18/10, 2 noites: Recanto R$ 1.519 (antes R$ 2.027), Villa R$ 1.588 (antes R$ 2.117). Com isso, ficamos 10–15% acima da mediana do mercado, que era R$ 690 por noite; antes ficávamos 47–53% acima.
+- **Reservas de hoje:** nenhuma até 10:54. Também não há cancelamento nem mudança manual (os registros são só as mudanças por API desta manhã). Nada a reaplicar.
+
 > **Regras em vigor:** desde 06/10/2026 elas ficam em `.claude/skills/gestao-receita-pousadas/references/regras.md`. Este arquivo guarda só o histórico das mudanças.
 
 ## O que só pode ser feito na tela (passo a passo para você)

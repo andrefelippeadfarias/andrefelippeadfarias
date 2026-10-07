@@ -2,6 +2,15 @@
 
 Cada mudança feita na própria Skill (regras, parâmetros, scripts, fluxo) entra aqui: data, o que mudou, por quê (evidência) e como desfazer. A entrada mais nova fica em cima.
 
+## 07/10/2026 12:30: estratégia por pousada e por suíte, pela demanda
+- **O quê:**
+  - `regras.md` seção 4b: classificação alta/média/baixa e o que fazer em cada nível.
+  - `quartos.json`: campo `demanda` por quarto; base da Queen 7 em 1173 e da Queen (2) em 1870.
+  - `SKILL.md` passo 4: classificar a demanda antes de aplicar as regras.
+  - `percentual.py`: ignora o percentual antigo da data e aceita `escala` (mudança de base).
+- **Por quê:** pedido do dono em 07/10, 11:46.
+- **Como desfazer:** base da Queen 7 em 1380 e da Queen (2) em 1700; remover a seção 4b e o campo `demanda`.
+
 ## 07/10/2026 08:20: piso do feriado de 12/10 em R$ 800 para todos os quartos
 - **O quê:** `quartos.json`: N. S. Aparecida com `piso_real` 800 (era 1000), sem piso por quarto. `percentual.py`: no feriado, o piso é o alvo. O teste do piso de feriado ficou independente do valor.
 - **Por quê:** 24 h sem venda de feriado, a 2 dias, com 19 de 31 unidades livres na sexta. Recanto 13% acima da mediana com hidro da Booking (R$ 2.710 contra R$ 2.400 em 2 noites). A regra manda ficar de 10% a 25% abaixo. O limite de segurança de R$ 800 reais foi respeitado.

@@ -1,5 +1,5 @@
 {
-  "versao": "2026-10-07T08",
+  "versao": "2026-10-07T12",
   "nota": "Fonte única dos dados de máquina da Skill. Os scripts leem daqui. Quem mudar base, mínimo ou máximo no PriceLabs atualiza este arquivo no mesmo commit.",
   "pms": "beds24",
   "grupo": {
@@ -22,7 +22,7 @@
       "pousada": "Recanto",
       "unidades": 7,
       "min": 800,
-      "base": 1380,
+      "base": 1173,
       "max": 5000,
       "min_referencia": 800,
       "banheira": true,
@@ -31,7 +31,8 @@
       "piso_feriado_base": "real",
       "sem_desconto": false,
       "regra_i": true,
-      "regra_f": true
+      "regra_f": true,
+      "demanda": "baixa"
     },
     {
       "curto": "Double",
@@ -49,7 +50,8 @@
       "piso_feriado_base": "real",
       "sem_desconto": false,
       "regra_i": true,
-      "regra_f": true
+      "regra_f": true,
+      "demanda": "alta"
     },
     {
       "curto": "Afrodite",
@@ -67,7 +69,8 @@
       "piso_feriado_base": "real",
       "sem_desconto": false,
       "regra_i": false,
-      "regra_f": false
+      "regra_f": false,
+      "demanda": "media"
     },
     {
       "curto": "Q2",
@@ -76,7 +79,7 @@
       "pousada": "Recanto",
       "unidades": 2,
       "min": 850,
-      "base": 1700,
+      "base": 1870,
       "max": 5000,
       "min_referencia": 850,
       "banheira": true,
@@ -85,7 +88,8 @@
       "piso_feriado_base": "real",
       "sem_desconto": true,
       "regra_i": false,
-      "regra_f": false
+      "regra_f": false,
+      "demanda": "alta"
     },
     {
       "curto": "VK7",
@@ -103,7 +107,8 @@
       "piso_feriado_base": "real",
       "sem_desconto": false,
       "regra_i": true,
-      "regra_f": true
+      "regra_f": true,
+      "demanda": "media"
     },
     {
       "curto": "Balcony",
@@ -121,7 +126,8 @@
       "piso_feriado_base": "vitrine",
       "sem_desconto": false,
       "regra_i": true,
-      "regra_f": false
+      "regra_f": false,
+      "demanda": "baixa"
     },
     {
       "curto": "VK2",
@@ -139,7 +145,8 @@
       "piso_feriado_base": "real",
       "sem_desconto": false,
       "regra_i": true,
-      "regra_f": true
+      "regra_f": true,
+      "demanda": "media"
     }
   ],
   "referencia_semanal": {
@@ -238,5 +245,6 @@
       "piso_real": null
     }
   ],
-  "feriados_nota": "Cada período lista as NOITES de feriado (data de entrada da diária). piso_real null = sem piso do dono; vale só o limite de segurança."
+  "feriados_nota": "Cada período lista as NOITES de feriado (data de entrada da diária). piso_real null = sem piso do dono; vale só o limite de segurança.",
+  "demanda_nota": "Classificação de demanda por suíte (alta/media/baixa), revista em toda rotina completa pela ocupação 15/30 dias contra as metas e pelo ritmo de reservas dos últimos 14 dias. Última revisão: 2026-10-07 12h (pedido do dono)."
 }

@@ -970,6 +970,42 @@ A Villa não aparece em nenhuma busca com filtro de hidro (falta a comodidade na
   - Balcony de 22 a 26/11 a R$ 904, contra a VK2 a R$ 887 ✅.
 - **Observação:** o "último enviado" (`user_price`) do PriceLabs não acompanha o envio. Para saber se o preço chegou, a referência é a Booking.
 
+## 07/10/2026, 12:30 — Pedido do dono: estratégia por pousada e por suíte, de acordo com a demanda
+
+**Pedido:** "verifique como estão as lotações dos 2 hotéis, de cada suíte, para ajustarmos o preço de acordo com a demanda que estamos recebendo em cada hotel separadamente, com uma estratégia bem definida para cada hotel e cada suíte".
+
+**Ocupação às 11:50 (7, 15, 30 e 60 dias) e demanda:**
+
+| Suíte | 7d | 15d | 30d | 60d | Últimos 14 dias | Demanda |
+|---|---|---|---|---|---|---|
+| Double | 76% | 62% | 44% | 30% | 44 reservas | **alta** |
+| Queen (2) | 43% | 63% | 50% | 40% | 14 | **alta** |
+| Afrodite | 29% | 47% | 33% | 35% | 2 | média |
+| Queen 7 | 43% | 26% | 14% | 10% | 24 (quase só de última hora) | **baixa** |
+| VK7 | 47% | 38% | 31% | 22% | 24 (+5 hoje) | média |
+| VK2 | 36% | 30% | 33% | 23% | — | média |
+| Balcony | 26% | 17% | 20% | 15% | — | **baixa** |
+
+- Recanto: 54% / 45% / 31% / 23%.
+- Villa: 37% / 28% / 27% / 19%.
+- Desde as 07:51 entraram vendas na Double (16 e 17/10 esgotados), na VK7 (5), na Afrodite (18/10) e na Queen (2) (25/10).
+
+| Mudança | Onde | Antes | Depois (simulado; conferir no recálculo: Villa às 16:53, Recanto em 08/10 às 07:53) | Como desfazer (pedir ao Claude) |
+|---|---|---|---|---|
+| Base −15% (demanda baixa) | Queen 7 | R$ 1.380 | **R$ 1.173**; piso de fim de semana de R$ 2.070 para R$ 1.760 | "Volte a base da Queen 7 para 1.380" |
+| Base +10% (demanda alta), com o feriado segurando no piso | Queen (2) | R$ 1.700 | **R$ 1.870**; feriado 09–10/10 em R$ 2.355 | "Volte a base da Queen 2 para 1.700" |
+| +10% (12–15/10 com 62% vendido) | Double, 12 a 15/10 | R$ 1.344 | **R$ 1.482** | "Apague as substituições da Double de 12 a 15/10" |
+| Feriado: noite quase esgotada sobe, a fraca segura | Double, 09/10 (5/6) e 10/10 (2/6) | R$ 1.905 e R$ 1.905 | **R$ 2.095** e R$ 1.905 | "Volte a Double 09/10 para R$ 1.905" |
+| Dias úteis no nível da VK2 (Regra G) | Balcony, 12–15, 18–22 e 25–29/10 | R$ 850–861 | **R$ 773–779** (26/10, com a VK2 esgotada: R$ 856) | "Volte a Balcony para o nível da VK7" |
+| Fim de semana não abaixo da VK2 (Regra G) | Balcony, 16 e 17/10 | R$ 1.150 | **R$ 1.171** | — |
+| Finados sem vazamento: 03–05/11 voltam ao normal | Queen 7, Double, Queen (2), Afrodite, VK7, VK2 | R$ 1.459 / 1.676 / 1.685 / 2.316 / 1.893 / 1.712 | **R$ 851 / 1.150 / 1.635 / 1.588 / 1.189 / 1.069** | "Apague as substituições de 03 a 05/11" |
+| Piso de segurança de R$ 800 reais na noite de 01/11 (o vazamento deixava abaixo) | Queen 7, Double, VK2 | R$ 1.459, R$ 1.676, R$ 1.712 | **R$ 1.905, R$ 1.905, R$ 2.052** | — (limite de segurança) |
+| 01/11 com 5/7 vendidos: +10% | VK7 | R$ 1.893 | **R$ 2.082** | "Volte a VK7 01/11 para R$ 1.893" |
+
+**Validação:** 3 erros barrados pela trava antes de gravar (01/11 abaixo do limite de segurança) e corrigidos; no fim, 0 erro.
+
+**Proposta ao dono (Regra G):** com a VK2 esgotada, a Balcony (sem banheira) fica no preço da VK7 (com banheira) e não vende. Sugestão: permitir a Balcony até 10% abaixo da VK7 nessas datas.
+
 > **Regras em vigor:** desde 06/10/2026 elas ficam em `.claude/skills/gestao-receita-pousadas/references/regras.md`. Este arquivo guarda só o histórico das mudanças.
 
 ## O que só pode ser feito na tela (passo a passo para você)

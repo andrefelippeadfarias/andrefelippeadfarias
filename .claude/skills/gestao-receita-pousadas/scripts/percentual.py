@@ -48,7 +48,8 @@ def detalhe_do_refresh(caminho: str) -> dict:
 
 
 def valor_antes_suavizar(dia: dict) -> float:
-    pre = [p for p in dia["passos"] if p[0] != "price_smoothing"]
+    """Valor da data antes da suavização e SEM o percentual que já existe nela (o novo substitui)."""
+    pre = [p for p in dia["passos"] if p[0] not in ("price_smoothing", "date_specific_override")]
     return float(pre[-1][2]) if pre else dia["cust"]
 
 
@@ -77,7 +78,8 @@ def blocos(det: dict) -> list[list[str]]:
     return grupos
 
 
-def calcular(det: dict, alvos: dict, minimo: float, feriado=lambda d: False) -> dict:
+def calcular(det: dict, alvos: dict, minimo: float, feriado=lambda d: False, escala: float = 1.0,
+             atuais: dict | None = None) -> dict:
     """Devolve {data: {"pct", "piso", "simulado"}} para as datas com alvo. No feriado, o piso é o
     próprio alvo (o validador exige o piso de valor real)."""
     res = {}
@@ -86,11 +88,14 @@ def calcular(det: dict, alvos: dict, minimo: float, feriado=lambda d: False) -> 
         if not com_alvo:
             continue
         sem_alvo = [d for d in b if d not in alvos]
+        # escala: mudança de base do anúncio (ex.: 0.85 para −15%); atuais: percentual que já existe
+        # nas datas do bloco sem alvo (continua valendo para elas)
+        atuais = atuais or {}
         nivel = min(alvos[d] for d in com_alvo)
-        soma_x = sum(valor_antes_suavizar(det[d]) for d in com_alvo)
-        soma_n = sum(valor_antes_suavizar(det[d]) for d in sem_alvo)
+        soma_x = sum(valor_antes_suavizar(det[d]) * escala for d in com_alvo)
+        soma_n = sum(valor_antes_suavizar(det[d]) * escala * (1 + atuais.get(d, 0) / 100) for d in sem_alvo)
         pct = round(((nivel * len(b) - soma_n) / soma_x - 1) * 100)
-        v = (sum(valor_antes_suavizar(det[d]) * (1 + pct / 100) for d in com_alvo) + soma_n) / len(b)
+        v = (sum(valor_antes_suavizar(det[d]) * escala * (1 + pct / 100) for d in com_alvo) + soma_n) / len(b)
         for d in com_alvo:
             piso = alvos[d] if (alvos[d] > nivel + 1 or alvos[d] < minimo or feriado(d)) else minimo
             res[d] = {"pct": pct, "piso": round(piso), "simulado": round(max(v, piso)),

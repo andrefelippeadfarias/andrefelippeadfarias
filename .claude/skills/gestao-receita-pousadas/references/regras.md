@@ -1,6 +1,6 @@
 # Regras da operação (fonte única)
 
-Versão: 2026-10-06. Os números de máquina (mínimos, fatores, parâmetros, feriados) ficam em `../dados/quartos.json`. As regras abaixo dizem o que fazer com eles. Ao mudar qualquer regra: edite aqui, registre em `historico-da-skill.md` e faça commit.
+Versão: 2026-10-07. Os números de máquina (mínimos, fatores, parâmetros, feriados) ficam em `../dados/quartos.json`. As regras abaixo dizem o que fazer com eles. Ao mudar qualquer regra: edite aqui, registre em `historico-da-skill.md` e faça commit.
 
 Siglas usadas: D = dias de antecedência (D0 é hoje). "Suítes com banheira" são os 6 quartos sem a Balcony.
 
@@ -27,6 +27,12 @@ Toda gravação passa antes pelo `scripts/validar_plano.py`, é conferida depois
 
 ## 4. Regras de preço e estadia (aplicar nesta ordem)
 
+**Forma de gravar o preço (dono, 07/10: "Faça assim sempre")**
+- Preço por data **sempre em percentual** sobre o recomendado, para o PriceLabs continuar flutuando com a demanda. O piso da data vai em `min_price`; se precisar, o teto em `max_price`. Preço fixo só com ordem expressa do dono (`excecao: "dono"`); o validador barra o resto.
+- O piso é o mínimo do quarto. Nas datas de Regra I e de feriado, o piso é o valor combinado. Numa data mais cara dentro de um bloco mais barato, o piso é o alvo dela.
+- A suavização do PriceLabs tira a média do bloco: domingo a quinta e sexta e sábado; na Balcony, a semana inteira. Por isso o percentual se calcula **por bloco**, com `scripts/percentual.py`. Um percentual numa data só "vaza" para as outras datas do bloco. Se a regra não permitir mexer nelas, use teto na data.
+- Ao converter, o alvo é o preço de antes. Assim a mudança de forma não muda o preço do dia.
+
 **Regra H, sábado (dono, 06/10)**
 - A diária de sábado sozinha não é vendida. O bloqueio é do dono, no Beds24/Booking; no PriceLabs, todo sábado fica com estadia mínima 2.
 - Exceção: na quarta a sexta antes, se a pousada estiver abaixo de 50% naquele sábado e não for feriado, volte o sábado para 1 noite (`excecao: "regra_h"`, com `ocupacao_sabado`) e avise o dono para liberar no Beds24.
@@ -34,7 +40,7 @@ Toda gravação passa antes pelo `scripts/validar_plano.py`, é conferida depois
 
 **Regra I, última hora (dono, 06/10)**
 - Vale para noites de D0 a D3 (`regra_i_dias`), fora de feriado, com unidade livre.
-- Preço fixo até 20% (`regra_i_desconto_max`) abaixo do mínimo do quarto, com `min_price` igual ao preço, nunca abaixo do limite de segurança de 70% do mínimo de referência. Hoje: Queen (7) R$ 640, Double R$ 720; na Villa (novo mínimo desde 06/10 16h) Villa King Spa (7) R$ 700, Villa King Spa (2) R$ 630, Balcony R$ 700 (igual à Villa King Spa 7).
+- Até 20% (`regra_i_desconto_max`) abaixo do mínimo do quarto: percentual com `min_price` igual ao valor da Regra I, nunca abaixo do limite de segurança de 70% do mínimo de referência. Hoje: Queen (7) R$ 640, Double R$ 720; na Villa (novo mínimo desde 06/10 16h) Villa King Spa (7) R$ 700, Villa King Spa (2) R$ 630, Balcony R$ 700 (igual à Villa King Spa 7).
 - Queen (2) e Afrodite ficam fora.
 
 **Regra A, estadia mínima**
@@ -45,18 +51,18 @@ Toda gravação passa antes pelo `scripts/validar_plano.py`, é conferida depois
 **Regra F, escada por antecedência** (Queen 7, Double, Villa King Spa 7, Villa King Spa 2)
 - Percentual sobre o recomendado, com o piso da data igual ao mínimo do quarto (`min_price`).
 - Dia útil:
-  - de D0 a D8, −35%; se a suavização anular o percentual, use preço fixo no mínimo;
+  - de D0 a D8, −35%; se a suavização diluir o percentual, calcule o percentual do bloco inteiro (`percentual.py`), com o piso no mínimo;
   - de D9 a D13, mínimo do quarto quando a semana estiver fraca (pedido do dono de 06/10 para lotar).
 - Sexta e sábado:
   - de D14 a D21, −20%;
   - de D22 a D31, −12%;
   - de D2 a D13, mantém o nível vigente ou desce para perto do mercado (ver seção 5).
-  - Use percentual só quando as duas noites entram juntas; corte numa noite só vai em preço fixo.
+  - Sexta e sábado formam um bloco de suavização: dê o mesmo percentual às duas noites. Para cortar uma noite só, use o piso e o teto da data.
 - Saída da escada: quarto com 50% ou mais vendido na data (`regra_f_saida_vendido`) apaga a substituição de preço e mantém a estadia mínima. Antes, confirme que é reserva e não bloqueio.
 - A saída da escada **não vale** para datas com preço por decisão do dono, como "perto do mercado" ou "domingo no mínimo para lotar" (motivo começando com "Dono"). Nelas o preço fica até a ocupação da data passar de 70%. Aí sobe no máximo 10% por rodada. Esclarecido em 06/10: a prioridade do dono é lotar.
 
 **Regra C, Afrodite**
-- Noite livre a até 13 dias: preço fixo de −30% (`regra_c_desconto`) sobre o calculado, com piso de R$ 1.500.
+- Noite livre a até 13 dias: −30% (`regra_c_desconto`) sobre o calculado, em percentual com piso de R$ 1.500.
 - Afrodite fica acima da Queen (2) nos feriados.
 
 **Regra G, Balcony (sem banheira; dono, 05/10, com ajuste em 06/10)**
@@ -84,6 +90,7 @@ Toda gravação passa antes pelo `scripts/validar_plano.py`, é conferida depois
 - Domingo e meio de semana fracos (mediana do mercado abaixo do nosso mínimo): mínimo do quarto e, de D0 a D3, Regra I.
 
 ## 6. Decisões do dono em vigor (com data)
+- 07/10: "Ajuste tudo que está lançado com preço fixo no PriceLabs para percentual, para usarmos as ferramentas do PriceLabs de flutuação de preços. Faça assim sempre." Feito às 08:10: 103 datas convertidas, conferidas no recálculo.
 - 06/10 16h: estratégia agressiva para lotar a Villa Dolce Amore de 06 a 25/10.
   - Mínimos da Villa: R$ 850 / R$ 765 / R$ 765 (VK7 / VK2 / Balcony), com corte de 15%; nesta semana não se corta mais (limite semanal).
   - Feriado só da Villa com piso de R$ 800 reais (`piso_real_por_quarto` em `quartos.json`).
@@ -105,6 +112,7 @@ Toda gravação passa antes pelo `scripts/validar_plano.py`, é conferida depois
 
 ## 7. Pendências que dependem só da tela ou do dono
 - Personalizações próprias da Balcony (sazonalidade e demanda agressivas, última hora de 25%) diferem das do grupo e a deixam acima das suítes em datas futuras. Pela autonomia total, a Skill pode igualar ao grupo, registrando o que era antes.
+  - A suavização da Balcony junta a semana inteira num bloco só. Com percentual, a sexta e o sábado ficam presos no piso e não flutuam. Igualar a suavização ao grupo (blocos de domingo a quinta e de sexta a sábado) é o próximo passo para a Balcony flutuar de verdade.
 - Só pela tela:
   - Safety Minimum Price em "Do Not Apply";
   - sincronização às 06:00 (e extras às 12:00 e 18:00, a US$ 1 por quarto por mês);

@@ -899,6 +899,30 @@ A Villa não aparece em nenhuma busca com filtro de hidro (falta a comodidade na
 - **Mudanças:** nenhuma. Não houve reserva nem cancelamento, então não há regra a reaplicar. A varredura da Regra G em novembro fica para a rotina completa de 07/10, às 07:53, antes do envio diário.
 - **Para o dono:** "Sync Now" na tela do PriceLabs, para a Villa vender ainda hoje à noite com os preços novos.
 
+## 07/10/2026, 08:15 — Pedido do dono: preços fixos convertidos em percentual ("Faça assim sempre")
+
+**Pedido:** "Ajuste tudo que está lançado com preço fixo no PriceLabs para percentual, para usarmos as ferramentas do PriceLabs de flutuação de preços. Faça assim sempre."
+
+**Como foi feito:**
+- Recálculo com detalhamento nos 7 quartos para obter o recomendado sem a substituição.
+- O percentual foi calculado **por bloco de suavização**, porque o PriceLabs tira a média do bloco antes do piso. O alvo foi o preço de antes, para o preço do dia ficar igual.
+- O piso de cada data foi para `min_price`:
+  - mínimo do quarto;
+  - nas datas de Regra I e de feriado, o valor combinado;
+  - numa data mais cara dentro de um bloco mais barato, o próprio alvo.
+- Validação: 0 erro. Recálculo às 08:07: 0 diferença contra o plano. As estadias mínimas foram mantidas (sábados com 2 noites, feriado com 2, Finados com 3).
+
+| Mudança | Onde | Antes | Depois (recalculado e conferido às 08:07) | Como desfazer (pedir ao Claude) |
+|---|---|---|---|---|
+| Fixo → percentual com piso, mesmo preço | 87 datas: Queen (7), Double, Afrodite, Queen (2), VK7, VK2 e Balcony (07/10 a 21/11) | preço fixo | percentual de −55% a +126%, preço igual ao de antes (diferença de no máximo 1%) | "Volte as datas de 07/10 para preço fixo" (os valores fixos estão no campo motivo de cada data) |
+| Meio de semana fraco no mínimo (o bloco de suavização inteiro, para o domingo no mínimo não vazar) | Queen (7) e Double, 19 a 22/10 | R$ 1.080 e R$ 1.315 (algoritmo) | **R$ 800** e **R$ 900** | "Apague as substituições de 19 a 22/10 da Queen 7 e da Double" |
+| Idem | VK7 e Balcony, 26 a 29/10; VK2, 27 a 29/10 | VK7 R$ 1.159, Balcony R$ 1.213, VK2 R$ 1.058 | VK7 **R$ 850**, Balcony **R$ 850**, VK2 **R$ 765** (VK2 gravada às 08:10; conferir depois do envio) | "Apague as substituições de 26 a 29/10 da Villa" |
+| Regra G: Balcony não pode ficar abaixo da suíte mais barata livre | Balcony, 01 a 04/11 | R$ 1.660 (VK2 a R$ 1.836) | **R$ 1.838** | "Volte a Balcony de 01 a 04/11 para R$ 1.660" |
+
+**Atenção:** um percentual numa data isolada se espalha pelo bloco. Exemplo: a VK2 em 25/10 com −28% sozinha foi a R$ 984, porque o bloco é 25, 27, 28 e 29/10 (26/10 está esgotado). Corrigido aplicando o mesmo percentual ao bloco.
+
+**Balcony:** a suavização dela usa a semana inteira. Com percentual, a sexta, o sábado e o feriado ficam presos no piso e não flutuam. Próximo passo: igualar a suavização da Balcony à do grupo.
+
 > **Regras em vigor:** desde 06/10/2026 elas ficam em `.claude/skills/gestao-receita-pousadas/references/regras.md`. Este arquivo guarda só o histórico das mudanças.
 
 ## O que só pode ser feito na tela (passo a passo para você)

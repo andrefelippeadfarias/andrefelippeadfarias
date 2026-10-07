@@ -9,10 +9,11 @@
 |---|---|---|
 | `get_listing_prices` | preço calculado (`price`), último enviado (`user_price`), `min_stay`, `multi_unit_occupancy` ("vendidas/total"), `booking_status` | 60 dias dão cerca de 27 mil caracteres por quarto. Na Afrodite, `booking_status` preenchido conta como vendido. `user_price` -1 indica indisponível. |
 | `get_listing_date_overrides` | substituições por data já existentes | Leia antes de gravar, para não perder política de feriado. |
-| `update_listing_date_overrides` | gravar preço e estadia por data | Junta os campos com os que já existem. Preço fixo pede `currency` "BRL". Abaixo do mínimo do anúncio, mande `min_price` igual ao preço e `min_price_type` "fixed". A resposta traz "verification": confira. |
+| `update_listing_date_overrides` | gravar preço e estadia por data | Junta os campos com os que já existem. **Sempre `price_type` "percent"** (dono, 07/10), com `min_price` e `min_price_type` "fixed" (e `currency` "BRL") como piso. Para ficar abaixo do mínimo do anúncio, o `min_price` da data vai no valor desejado. A resposta traz "verification": confira. |
 | `delete_listing_date_overrides` | apagar substituição (saída da escada) | Apaga a data inteira, inclusive a estadia mínima. Regrave o sábado com min_stay 2 (Regra H) e as políticas de feriado. |
 | `update_listing_data` | base, mínimo e máximo do anúncio | Limite de ±15% por semana. Atualize `dados/quartos.json` no mesmo commit. |
 | `get_customizations` / `update_customizations` | personalizações | Guarde o JSON de antes no registro, para poder desfazer. |
+| `refresh_listing_pricing` com `parse_reasons_json: true` | detalhamento do preço por data (cerca de 2 milhões de caracteres) | Traz `reasons_json.listing_info.customized_price`, o recomendado sem a substituição, e os passos: ajustes de ocupação, substituição da data, suavização e piso/teto. Use para calcular o percentual (`scripts/percentual.py`). Conta no limite de 3 por quarto por dia. |
 | `refresh_listing_pricing` | recalcular para conferir | Só 3 por quarto a cada 24 h. A saída (cerca de 280 mil caracteres) vai para um arquivo; leia com `scripts/ler_recalculo.py`. Recalcular **não envia** aos canais. Use `exclude_reasons_json: true`. |
 | `get_listing_data` | `push_enabled`, `last_date_pushed`, min, base e max | Não use para buscar quarto. Alerta se o último envio tiver mais de 30 h. |
 | `get_pms_reservations` | reservas por data de criação (`booked_start_date`) ou por estadia | `check_out` é a última noite (inclusivo). `total_cost` é o valor pago. Comissão 0,0 é normal nos lotes. |
@@ -33,6 +34,7 @@ Veja como pesquisar em `mercado.md`. Não serve para mudar nada.
 - Se o Workflow não estiver disponível, chame `get_listing_prices` dos 7 quartos direto. A leitura é mais pesada, mas funciona.
 
 ## Scripts (rodar da pasta `scripts/`)
+- `python3 percentual.py DETALHE.json Q7=<refresh com reasons> ...` grava o detalhe; `python3 percentual.py --alvos alvos.json --detalhe DETALHE.json` calcula o percentual e o piso por bloco de suavização e simula o preço. Avisa quando o percentual "vaza" para datas do bloco sem alvo.
 - `python3 ocupacao.py <saida_do_workflow> [--noites 14] [--json]`: tabela de janelas contra as metas e mapa das noites.
 - `python3 validar_plano.py plano.json --precos <saida_do_workflow> --payload`: barra erros; com `--payload`, devolve os pedidos prontos por quarto.
 - `python3 ler_recalculo.py --plano plano.json Q7=<arq> VK7=<arq> ...`: compara o recalculado com o plano.

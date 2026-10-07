@@ -2,6 +2,18 @@
 
 Cada mudança feita na própria Skill (regras, parâmetros, scripts, fluxo) entra aqui: data, o que mudou, por quê (evidência) e como desfazer. A entrada mais nova fica em cima.
 
+## 07/10/2026 08:15: preço por data sempre em percentual
+- **O quê:**
+  - `regras.md`: nova forma de gravar o preço (percentual com piso; fixo só com ordem do dono) e Regras I, F e C reescritas para percentual.
+  - `validar_plano.py`: barra preço fixo sem `excecao: "dono"`. Com percentual, as travas (segurança, Regra I, feriado, Regra G) olham o piso (`min_price`). Aceita `max_price`.
+  - `ler_recalculo.py`: no percentual, confere se o preço ficou dentro de piso e teto; avisa Regra G.
+  - Script novo `percentual.py`: percentual por bloco de suavização.
+  - Testes: 20, todos OK.
+  - `SKILL.md` (passo 4) e `ferramentas.md` atualizados.
+- **Por quê:** pedido do dono em 07/10, para o PriceLabs flutuar os preços: "Faça assim sempre".
+- **Como medimos o PriceLabs:** o percentual entra depois dos ajustes de ocupação e antes da suavização. A suavização tira a média do bloco (domingo a quinta e sexta e sábado; Balcony, a semana inteira) e pula datas esgotadas. O `min_price` da data substitui o piso de fim de semana.
+- **Como desfazer:** reverter o commit. Os preços no PriceLabs têm um "como desfazer" no registro de 07/10.
+
 ## 06/10/2026 19:58: envio aos canais depois do recálculo
 - **O quê:** `SKILL.md` (passo 7) passa a mandar conferir o `last_date_pushed` depois de gravar e a pedir o "Sync Now" ao dono quando a mudança vier depois do envio diário e mexer em D0 a D3 ou for um corte grande. `ferramentas.md` e `aprendizados.md` corrigidos: o envio extra perto de 1 h depois do recálculo não é garantido.
 - **Por quê:** as mudanças da Villa das 16:10 não tinham sido enviadas às 19:56 (último envio às 08:49), e a Booking mostrava os preços antigos.

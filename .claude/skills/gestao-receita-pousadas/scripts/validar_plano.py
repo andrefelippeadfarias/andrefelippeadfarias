@@ -6,8 +6,8 @@ Uso:
 Formato do plano (JSON):
   {"hoje": "AAAA-MM-DD",
    "itens": [
-     {"tipo": "data", "quarto": "Q7", "data": "2026-10-06", "preco": 640, "price_type": "fixed",
-      "min_price": 640, "min_stay": 1, "preco_antes": 800, "motivo": "Regra I",
+     {"tipo": "data", "quarto": "Q7", "data": "2026-10-06", "preco": -35, "price_type": "percent",
+      "min_price": 640, "max_price": null, "min_stay": 1, "preco_antes": 800, "motivo": "Regra I",
       "excecao": null, "ocupacao_sabado": null},
      {"tipo": "apagar", "quarto": "Q7", "data": "2026-10-13", "motivo": "Regra F: 4 de 7 vendidas"},
      {"tipo": "anuncio", "quarto": "Balcony", "campo": "min", "valor": 850, "antes": 900, "motivo": "..."},
@@ -15,12 +15,16 @@ Formato do plano (JSON):
       "como_desfazer": "..."}
    ]}
 
-Campos de "data": preco/price_type são opcionais (pode ser só min_stay); price_type "fixed" ou
-"percent" (percentual sobre o recomendado, ex.: -20). "excecao" aceita:
+Campos de "data": preco/price_type são opcionais (pode ser só min_stay). Decisão do dono (07/10):
+preço por data SEMPRE em "percent" (percentual sobre o recomendado, ex.: -20), para o PriceLabs
+continuar flutuando. O piso da data vai em "min_price" e, se preciso, o teto em "max_price".
+Com percentual, o preço mais baixo possível é o min_price (ou o mínimo do anúncio): é ele que passa
+pelas travas (limite de segurança, Regra I, piso de feriado, Regra G). "fixed" só com ordem
+expressa do dono (excecao "dono"). "excecao" aceita:
   "regra_h"      sábado sozinho liberado (exige ocupacao_sabado < 50, quarta a sexta antes, fora de feriado)
   "piso_feriado" corte na Queen (2) só para acompanhar o piso de feriado
   "dono"         ordem explícita do dono nesta conversa; cite no motivo. Nunca passa por cima
-                 dos limites de segurança.
+                 dos limites de segurança. É a única forma de gravar preço fixo.
 
 Sai com código 0 se tudo passou e 1 se houve ERRO. Com --payload, imprime os pedidos prontos
 para update_listing_date_overrides, delete_listing_date_overrides e update_listing_data.
@@ -51,6 +55,7 @@ class Validador:
         self.var_semanal = lim["variacao_semanal_base_min"]
         self.piso_seg = lim["piso_feriado_real_seguranca"]
         self.par = cfg["parametros"]
+        self.pisos: set = set()             # (curto, data) cujo valor em "finais" é piso de percentual
 
     # ---------- utilidades
     def erro(self, i, item, msg):
@@ -67,7 +72,7 @@ class Validador:
 
     # ---------- validações
     def validar(self, itens: list[dict]) -> None:
-        finais = {}  # (curto, data) -> preço fixo planejado
+        finais = {}  # (curto, data) -> preço fixo planejado ou piso (min_price) do percentual
         for i, it in enumerate(itens, 1):
             tipo = it.get("tipo")
             texto = json.dumps(it, ensure_ascii=False).lower()
@@ -131,12 +136,38 @@ class Validador:
         if antes is None:
             antes = (self.precos.get((q["curto"], d.isoformat())) or {}).get("preco")
 
+        if tipo_preco == "fixed" and excecao != "dono":
+            self.erro(i, it, "preço fixo: o dono decidiu em 07/10 usar sempre percentual, com o piso em "
+                             "min_price; fixo só com ordem expressa dele (excecao 'dono')")
         if tipo_preco == "fixed":
-            preco = float(preco)
-            finais[(q["curto"], d.isoformat())] = preco
-            if preco < piso_abs:
-                self.erro(i, it, f"preço {preco:.0f} abaixo do limite de segurança {piso_abs:.0f}")
-            if preco < q["min"] and excecao != "dono":
+            minimo = float(preco)            # preço fixo: é o próprio valor
+        elif tipo_preco == "percent" or it.get("min_price") is not None:
+            # percentual (ou só piso): o mais baixo possível é o min_price da data, senão o mínimo do anúncio
+            minimo = float(it["min_price"]) if it.get("min_price") is not None else float(q["min"])
+        else:
+            minimo = None
+        if it.get("max_price") is not None and minimo is not None and float(it["max_price"]) < minimo:
+            self.erro(i, it, f"max_price {it['max_price']} abaixo do piso {minimo:.0f}")
+
+        if tipo_preco == "percent":
+            pct = float(preco)
+            if pct < 0:
+                if q.get("sem_desconto") and excecao not in ("piso_feriado", "dono"):
+                    self.erro(i, it, f"{q['nome']} não recebe desconto percentual")
+                if it.get("min_price") is None:
+                    self.erro(i, it, "desconto percentual sem min_price (piso da data)")
+                if pct < -60:
+                    self.erro(i, it, f"desconto de {pct}% passa do razoável; segure o preço com o min_price")
+            self.aviso(i, it, f"percentual {pct:+g}%: o valor final só aparece no recálculo "
+                              f"(piso {minimo:.0f})")
+
+        if minimo is not None:
+            finais[(q["curto"], d.isoformat())] = minimo
+            if tipo_preco != "fixed":
+                self.pisos.add((q["curto"], d.isoformat()))
+            if minimo < piso_abs:
+                self.erro(i, it, f"preço/piso {minimo:.0f} abaixo do limite de segurança {piso_abs:.0f}")
+            if minimo < q["min"] and excecao != "dono":
                 limite_i = q["min"] * (1 - self.par["regra_i_desconto_max"])
                 if fer:
                     self.erro(i, it, f"abaixo do mínimo ({q['min']}) em feriado ({fer['nome']})")
@@ -145,13 +176,13 @@ class Validador:
                 elif antecedencia > self.par["regra_i_dias"]:
                     self.erro(i, it, f"abaixo do mínimo a {antecedencia} dias; a Regra I só vale até "
                                      f"{self.par['regra_i_dias']} dias")
-                elif preco < limite_i:
-                    self.erro(i, it, f"preço {preco:.0f} abaixo do piso da Regra I ({limite_i:.0f})")
-                elif it.get("min_price") is None or float(it["min_price"]) > preco:
+                elif minimo < limite_i:
+                    self.erro(i, it, f"preço/piso {minimo:.0f} abaixo do piso da Regra I ({limite_i:.0f})")
+                elif tipo_preco == "fixed" and (it.get("min_price") is None or float(it["min_price"]) > minimo):
                     self.erro(i, it, "abaixo do mínimo do anúncio sem min_price igual ao preço: "
                                      "o PriceLabs trava no mínimo")
             if fer:
-                valor = preco * self.fator_piso(q)
+                valor = minimo * self.fator_piso(q)
                 base = "vitrine" if q.get("piso_feriado_base") == "vitrine" else "real"
                 if valor < self.piso_seg:
                     self.erro(i, it, f"feriado: valor {base} estimado {valor:.0f} abaixo do limite de "
@@ -160,19 +191,9 @@ class Validador:
                 if piso and valor < piso - 1 and excecao != "dono":
                     self.erro(i, it, f"feriado: valor {base} estimado {valor:.0f} abaixo do piso do "
                                      f"período ({piso}); para mudar o piso, atualize dados/quartos.json")
-            if q.get("sem_desconto") and antes and preco < float(antes) - 1 and \
+            if q.get("sem_desconto") and antes and minimo < float(antes) - 1 and \
                excecao not in ("piso_feriado", "dono"):
-                self.erro(i, it, f"{q['nome']} não recebe desconto (de {antes} para {preco:.0f})")
-        elif tipo_preco == "percent":
-            pct = float(preco)
-            if pct < 0:
-                if q.get("sem_desconto") and excecao not in ("piso_feriado", "dono"):
-                    self.erro(i, it, f"{q['nome']} não recebe desconto percentual")
-                if it.get("min_price") is None:
-                    self.erro(i, it, "desconto percentual sem min_price (piso da data)")
-                if pct < -60:
-                    self.erro(i, it, f"desconto de {pct}% passa do razoável; use preço fixo")
-            self.aviso(i, it, "preço percentual: o valor final só aparece no recálculo")
+                self.erro(i, it, f"{q['nome']} não recebe desconto (de {antes} para {minimo:.0f})")
 
         ms = it.get("min_stay")
         if ms is not None:
@@ -206,7 +227,10 @@ class Validador:
             self.erro(i, it, "base abaixo do mínimo")
 
     def validar_balcony(self, finais):
-        """Regra G: a Balcony não fica abaixo da suíte com banheira mais barata e livre da Villa."""
+        """Regra G: a Balcony não fica abaixo da suíte com banheira mais barata e livre da Villa.
+
+        Com percentual, compara os pisos (min_price). Se a Balcony é piso e a suíte não está no plano
+        (vale o preço atual da coleta), vira aviso: o valor final só sai no recálculo."""
         datas = {d for (k, d) in finais if k in ("Balcony", "VK7", "VK2")}
         for d in sorted(datas):
             def preco(k):
@@ -215,14 +239,19 @@ class Validador:
             def livre(k):
                 return (self.precos.get((k, d)) or {}).get("livres", 1) > 0
             balc = preco("Balcony")
-            suites = [preco(k) for k in ("VK7", "VK2") if preco(k) is not None and livre(k)]
-            if balc is None or not suites:
+            refs = [(preco(k), (k, d) in finais) for k in ("VK7", "VK2") if preco(k) is not None and livre(k)]
+            if balc is None or not refs:
                 continue
             if periodo_feriado(self.cfg, data(d)):
                 continue  # no feriado a Balcony segue o piso de vitrine definido pelo dono
-            if balc < min(suites) - 1:
-                self.erros.append(f"ERRO Regra G {d}: Balcony {balc:.0f} abaixo da suíte com banheira "
-                                  f"mais barata livre ({min(suites):.0f})")
+            menor, do_plano = min(refs)
+            if balc < menor - 1:
+                msg = (f"Regra G {d}: Balcony {balc:.0f} abaixo da suíte com banheira mais barata livre "
+                       f"({menor:.0f})")
+                if ("Balcony", d) in self.pisos and not do_plano:
+                    self.avisos.append(f"aviso {msg}; é piso de percentual, confira no recálculo")
+                else:
+                    self.erros.append(f"ERRO {msg}")
 
 
 def precos_da_coleta(res: dict) -> dict:
@@ -247,11 +276,14 @@ def montar_payload(cfg: dict, itens: list[dict]) -> dict:
             o = {"date": it["data"], "reason": str(it.get("motivo", ""))[:250]}
             if it.get("preco") is not None:
                 o["price"] = str(int(round(float(it["preco"])))) if it["price_type"] == "fixed" \
-                    else str(it["preco"])
+                    else f"{float(it['preco']):g}"
                 o["price_type"] = it["price_type"]
                 o["currency"] = "BRL"
             if it.get("min_price") is not None:
                 o.update(min_price=str(int(round(float(it["min_price"])))), min_price_type="fixed",
+                         currency="BRL")
+            if it.get("max_price") is not None:
+                o.update(max_price=str(int(round(float(it["max_price"])))), max_price_type="fixed",
                          currency="BRL")
             if it.get("min_stay") is not None:
                 o["min_stay"] = str(int(it["min_stay"]))

@@ -20,7 +20,7 @@ from __future__ import annotations
 import argparse
 import sys
 
-from comum import carregar_quartos, ler_json, reais
+from comum import carregar_quartos, data, ler_json, periodo_feriado, reais
 
 
 def ler_refresh(caminho: str) -> dict:
@@ -82,11 +82,25 @@ def main(argv=None) -> int:
         if all(k in dados for k in ("VK7", "VK2", "Balcony")):
             datas_villa = sorted({it["data"] for it in plano.get("itens", [])
                                   if it.get("tipo") == "data" and it["quarto"] in ("VK7", "VK2", "Balcony")})
+            desc = cfg["parametros"].get("regra_g_desconto", 0.10)
+
+            def livre(k, d):
+                mu = str((dados[k].get(d) or {}).get("mu_occupancy") or "")
+                if "/" in mu:
+                    v, t = (int(x) for x in mu.split("/"))
+                    return t - v > 0
+                return True
             for d in datas_villa:
-                b, s7, s2 = (float((dados[k].get(d) or {}).get("price") or 0) for k in ("Balcony", "VK7", "VK2"))
-                if b and min(s7, s2) and b < min(s7, s2) - 1:
-                    print(f"⚠️ Regra G {d}: Balcony {reais(b)} abaixo da suíte mais barata ({reais(min(s7, s2))}); "
-                          f"confira se essa suíte está livre")
+                b = float((dados["Balcony"].get(d) or {}).get("price") or 0)
+                suites = [float((dados[k].get(d) or {}).get("price") or 0) for k in ("VK7", "VK2") if livre(k, d)]
+                suites = [x for x in suites if x]
+                if not b or not suites or periodo_feriado(cfg, data(d)):
+                    continue  # no feriado a Balcony segue o piso de vitrine
+                ref = min(suites)
+                if b > ref + 1:
+                    print(f"⚠️ Regra G {d}: Balcony {reais(b)} acima da suíte com banheira livre ({reais(ref)})")
+                elif b < ref * (1 - desc) * 0.95:
+                    print(f"⚠️ Regra G {d}: Balcony {reais(b)} muito abaixo do alvo {reais(ref * (1 - desc))}")
         print(f"\n{problemas} diferença(s).")
         return 1 if problemas else 0
 

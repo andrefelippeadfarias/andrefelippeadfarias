@@ -1033,6 +1033,25 @@ A Villa não aparece em nenhuma busca com filtro de hidro (falta a comodidade na
 |---|---|---|---|---|
 | Passou de 70% vendido (5/7): +10% (preço do dono, Regra F) | VK7, 08/10 | piso R$ 700 (cerca de R$ 701) | piso **R$ 770** (não conferido no recálculo: limite do dia; conferir às 16:53) | "Volte a VK7 08/10 para R$ 700" |
 
+## 07/10/2026, 17:00 — Rotina das 16:53: Villa conferida no recálculo (110 datas, 0 diferença); sem reservas novas
+
+- **Reservas, cancelamentos e mudanças manuais desde as 13:53:** nenhum.
+- **Conferência da Villa** (recálculo das 16:54; VK7, VK2 e Balcony): as 110 datas do plano vigente estão dentro do piso e do teto, com 0 diferença. A Regra G nova está ok fora dos feriados; no feriado, a Balcony fica abaixo dos 10% de propósito (piso de vitrine).
+
+| Data | VK7 | VK2 | Balcony |
+|---|---|---|---|
+| 07–08/10 | R$ 784 | R$ 690 | R$ 630 (limite de segurança) |
+| 12/10 | R$ 884 | R$ 779 | R$ 712 |
+| 16/10 | R$ 1.308 | R$ 1.171 | R$ 1.054 |
+| 23/10 | R$ 1.048 | R$ 948 | R$ 853 |
+| 27/10 | R$ 856 | R$ 773 | R$ 696 |
+| 03/11 | R$ 1.104 | R$ 998 | R$ 962 |
+| 19/11 (feriado) | R$ 2.052 | R$ 1.767 | R$ 1.510 |
+
+- **Flutuação:** as suítes já subiram com a demanda; por exemplo, a VK7 em 16/10 foi de R$ 1.154 para R$ 1.308 depois das vendas. É o percentual funcionando. A Balcony, presa nos pisos, ficou 4% a 5% abaixo das suítes em algumas datas (03/11 e 15/11). A rotina completa de amanhã refaz os alvos.
+- **Envio:** nada saiu desde a manhã (Balcony às 09:53; Recanto às 08:36). Pedido ao dono: Sync Now só nos 3 quartos da Villa, que já foram conferidos. O Recanto fica para o envio diário de 08/10, depois da conferência das 07:53.
+- `ler_recalculo.py`: a checagem da Regra G passou a seguir a regra nova e a ignorar feriados.
+
 > **Regras em vigor:** desde 06/10/2026 elas ficam em `.claude/skills/gestao-receita-pousadas/references/regras.md`. Este arquivo guarda só o histórico das mudanças.
 
 ## O que só pode ser feito na tela (passo a passo para você)

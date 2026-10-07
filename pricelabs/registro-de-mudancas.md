@@ -952,6 +952,24 @@ A Villa não aparece em nenhuma busca com filtro de hidro (falta a comodidade na
 | Feriado com piso de R$ 800 reais (era R$ 1.000): 24 h sem venda a 2 dias, Recanto 13% acima da mediana com hidro | Queen (7), Double, Queen (2) e Afrodite, 09 e 10/10 | R$ 2.390, R$ 2.390, R$ 2.950 e R$ 3.190 | **R$ 1.917**, **R$ 1.905**, **R$ 2.355** e **R$ 2.550** (percentual com piso) | "Volte o feriado do Recanto para o piso de R$ 1.000" |
 | Regra G: Balcony não abaixo da VK2 livre (percentual 0 com piso, sem mexer no bloco) | Balcony, 08–12/11 e 22–26/11 | R$ 978 e R$ 842 | piso de **R$ 1.012** e **R$ 904** (não conferido: limite de recálculo; conferir depois do envio) | "Apague as substituições da Balcony de 08–12/11 e 22–26/11" |
 
+## 07/10/2026, 10:58 — Rotina das 10:53: envio confirmado na Booking; pendências conferidas; sem mudanças
+
+- **Reservas:** nenhuma nova desde 06/10 12:39 e nenhum cancelamento.
+- **Mudanças manuais:** nenhuma.
+- **Envio do dia:** saiu às 08:36, depois de todas as gravações da manhã. Booking por nome:
+
+| Datas | Villa antes → agora | Recanto antes → agora |
+|---|---|---|
+| 07→08/10 | R$ 423 → **R$ 370** | R$ 403 → R$ 416 |
+| Feriado 09→11 | R$ 2.000 → **R$ 1.598** | R$ 2.710 → **R$ 2.197** |
+| 23→25/10 | R$ 2.253 → **R$ 1.387** | R$ 1.991 → R$ 1.962 |
+
+- **Pendências conferidas** (pelo cálculo diário das 08:36):
+  - VK2 de 25 a 29/10: R$ 773 (piso de R$ 765) ✅;
+  - Balcony de 08 a 12/11 a R$ 1.012, contra a VK2 a R$ 1.007 ✅;
+  - Balcony de 22 a 26/11 a R$ 904, contra a VK2 a R$ 887 ✅.
+- **Observação:** o "último enviado" (`user_price`) do PriceLabs não acompanha o envio. Para saber se o preço chegou, a referência é a Booking.
+
 > **Regras em vigor:** desde 06/10/2026 elas ficam em `.claude/skills/gestao-receita-pousadas/references/regras.md`. Este arquivo guarda só o histórico das mudanças.
 
 ## O que só pode ser feito na tela (passo a passo para você)

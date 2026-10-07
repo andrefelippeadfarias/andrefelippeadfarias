@@ -1052,6 +1052,30 @@ A Villa não aparece em nenhuma busca com filtro de hidro (falta a comodidade na
 - **Envio:** nada saiu desde a manhã (Balcony às 09:53; Recanto às 08:36). Pedido ao dono: Sync Now só nos 3 quartos da Villa, que já foram conferidos. O Recanto fica para o envio diário de 08/10, depois da conferência das 07:53.
 - `ler_recalculo.py`: a checagem da Regra G passou a seguir a regra nova e a ignorar feriados.
 
+## 07/10/2026, 20:05 — Rotina das 19:53: tudo enviado às 17:01; Recanto conferido; piso de feriado na Queen 7 (13–14/11)
+
+- **Reservas, cancelamentos e mudanças manuais desde as 16:53:** nenhum. As reservas do dia continuam as 2 já registradas: Double 18/10 pelo Airbnb e VK7 de 08 a 11/10 direto.
+- **Envio:** às 17:01 os 7 quartos foram recalculados e enviados de uma vez. A causa não aparece na API (Sync Now ou envio extra). Todas as mudanças de hoje já estão nos canais. O pedido de Sync Now na Villa não é mais necessário.
+- **Conferência do Recanto** (`get_listing_prices` depois do envio das 17:01): as datas do plano batem.
+
+| Data | Queen 7 | Double | Queen 2 | Afrodite |
+|---|---|---|---|---|
+| 09–10/10 | R$ 1.905 | R$ 2.095 / R$ 1.983 | R$ 2.468 | R$ 2.639 |
+| 12–15/10 | R$ 970 / R$ 800 | R$ 1.437 | R$ 1.712 | — |
+| 18–22/10 | R$ 800 | R$ 900 | — | — |
+| 01/11 | R$ 1.905 | R$ 1.905 | — | R$ 2.316 |
+| 03–05/11 | R$ 842 | R$ 1.129 | R$ 1.599 | R$ 1.571 |
+| 19/11 (feriado) | R$ 1.905 | R$ 1.905 | R$ 2.355 | — |
+
+- **Erro encontrado e corrigido:** com a base da Queen 7 em −15%, as noites do feriado da Proclamação (13 e 14/11), que não tinham regra por data, caíram para R$ 1.838. Isso dá cerca de R$ 772 em valor real (× 0,42), abaixo do limite de segurança de R$ 800. A Double (R$ 2.358) e a Queen 2 (R$ 3.358) seguem acima do limite.
+
+| Mudança | Onde | Antes | Depois | Como desfazer (pedir ao Claude) |
+|---|---|---|---|---|
+| Piso de segurança de feriado (R$ 800 reais) | Queen 7, 13 e 14/11 | R$ 1.838, sem regra por data | 0% com piso **R$ 1.905**; conferido no recálculo das 20:02 | "Apague a regra da Queen 7 em 13 e 14/11" (só depois de rever a base) |
+
+- No mesmo recálculo, a Queen 7 em 16–17/10 foi de R$ 1.131 para R$ 1.110. Essas datas estão em percentual (−45%, piso R$ 800), então o preço acompanhou o mercado, como esperado.
+- **Aprendizado:** mudar a base do quarto mexe também nas noites de feriado sem regra por data. Depois de qualquer mudança de base, a varredura de segurança de feriado tem que rodar de novo, em todas as datas de feriado e não só nas que têm regra.
+
 > **Regras em vigor:** desde 06/10/2026 elas ficam em `.claude/skills/gestao-receita-pousadas/references/regras.md`. Este arquivo guarda só o histórico das mudanças.
 
 ## O que só pode ser feito na tela (passo a passo para você)

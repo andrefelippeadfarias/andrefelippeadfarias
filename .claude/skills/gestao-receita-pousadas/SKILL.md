@@ -49,7 +49,7 @@ Você é a gestora de receita e growth hacker das duas pousadas. Responda sempre
    - `motivo` curto, citando a regra;
    - `preco_antes`, quando houver;
    - na Queen (2) e em sábado, a `excecao` correta, quando for o caso.
-   - Varra as noites de feriado dos próximos 60 dias, em todos os quartos: onde preço × fator ficar abaixo de R$ 800, ponha percentual 0 com o piso de segurança (aprendizado de 07/10).
+   - Varra as noites de feriado dos próximos 60 dias, em todos os quartos: onde preço × fator ficar abaixo de R$ 800, ponha percentual 0 com o piso de segurança (aprendizado de 07/10). Inclua as noites **sem** regra por data. Repita a varredura sempre que mudar a base de um quarto, porque a base mexe nessas noites também.
 5. **Valide.** `python3 scripts/validar_plano.py plano.json --precos <saida> --payload`. Se der ERRO, corrija o plano. **Nunca grave com erro.** O limite de segurança não se contorna.
 6. **Grave.** Mande cada bloco do payload: `update_listing_date_overrides`, `delete_listing_date_overrides` (regravando min_stay 2 em sábados e feriados) e `update_listing_data`. Confira o "verification" de cada resposta.
 7. **Confira.**

@@ -65,13 +65,14 @@ Toda gravação passa antes pelo `scripts/validar_plano.py`, é conferida depois
 - Noite livre a até 13 dias: −30% (`regra_c_desconto`) sobre o calculado, em percentual com piso de R$ 1.500.
 - Afrodite fica acima da Queen (2) nos feriados.
 
-**Regra G, Balcony (sem banheira; dono, 05/10, com ajuste em 06/10)**
-- Proposta para o dono (07/10, ainda não aprovada): quando a VK2 estiver esgotada, permitir a Balcony até 10% abaixo da VK7. Hoje, nessas datas, a Balcony (sem banheira) custa o mesmo que a VK7 (com banheira) e não vende.
-- A Balcony tem a mesma base e o mesmo mínimo da Villa King Spa (2).
-- Não recebe desconto próprio enquanto as suítes com banheira não baterem a meta da janela. Batida a meta, pode baixar nessa janela.
-- Nunca fica abaixo da suíte com banheira mais barata e livre da Villa na mesma data (o validador confere).
-- Nas datas em que as suítes com banheira forem cortadas, a Balcony acompanha o preço da Villa King Spa (7).
-- No feriado, a Balcony segue o piso de vitrine definido pelo dono.
+**Regra G, Balcony (sem banheira; dono, 05/10; nova versão do dono em 07/10)**
+- A Balcony fica **10% abaixo** (`regra_g_desconto`) da suíte com banheira mais barata e livre da Villa na mesma data: a VK2, ou a VK7 se a VK2 estiver esgotada.
+  - Pedido do dono (07/10): "colocar uma diferença de 10% para a que não tem banheira".
+- Nunca fica acima da suíte com banheira livre (o validador barra).
+- Nunca fica abaixo do limite de segurança: R$ 630 (70% do mínimo de referência).
+- Abaixo do mínimo do anúncio (R$ 765) só com `excecao: "dono"`.
+- Como a suavização da Balcony junta a semana inteira, o alvo de cada data vai no piso (`min_price`), com o percentual do bloco calculado no `percentual.py`. A cada rotina, refaça o alvo quando as suítes mudarem de preço.
+- No feriado, a Balcony segue o piso de vitrine (R$ 800 na vitrine = R$ 1.510) e nunca sobe por causa desta regra.
 
 **Queen (2), sem desconto**
 - Anomalia: o hóspede paga cerca de 34% do preço enviado.
@@ -115,7 +116,7 @@ Pedido do dono: "ajustar o preço de acordo com a demanda que estamos recebendo 
   - Queen 7 com demanda baixa: 7 unidades e vendas quase só de última hora (26 de 49 reservas com 0 a 1 dia de antecedência).
 - **Villa, agressiva desde 06/10.**
   - VK7 e VK2 com demanda média, já reagindo: 5 vendas da VK7 em 3 horas depois do envio de 07/10.
-  - Balcony com demanda baixa: dias úteis no nível da suíte com banheira mais barata e livre (Regra G).
+  - Balcony com demanda baixa: 10% abaixo da suíte com banheira mais barata e livre (Regra G).
 
 ## 5. Posicionamento contra o mercado (Booking)
 - Nossas notas: Recanto 8,4; Villa 8,1. Fique abaixo dos hotéis de mesmo preço com nota de 9 ou mais. Referência: entre 10% e 25% abaixo da mediana dos hotéis 5 estrelas com nota 9 ou mais nas datas fortes, e perto da mediana nas fracas.
@@ -123,6 +124,7 @@ Pedido do dono: "ajustar o preço de acordo com a demanda que estamos recebendo 
 - Domingo e meio de semana fracos (mediana do mercado abaixo do nosso mínimo): mínimo do quarto e, de D0 a D3, Regra I.
 
 ## 6. Decisões do dono em vigor (com data)
+- 07/10 13h: Balcony 10% abaixo da suíte com banheira mais barata e livre (Regra G nova).
 - 07/10 11:46: estratégia por pousada e por suíte, de acordo com a demanda de cada uma (seção 4b).
 - 07/10: "Ajuste tudo que está lançado com preço fixo no PriceLabs para percentual, para usarmos as ferramentas do PriceLabs de flutuação de preços. Faça assim sempre." Feito às 08:10: 103 datas convertidas, conferidas no recálculo.
 - 06/10 16h: estratégia agressiva para lotar a Villa Dolce Amore de 06 a 25/10.

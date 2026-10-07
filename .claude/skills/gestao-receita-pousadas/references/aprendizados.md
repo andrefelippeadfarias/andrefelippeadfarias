@@ -43,8 +43,12 @@ Cada item tem data e evidência. Para incluir um item novo: data, o fato, a evid
 | Queen (2) | 33 | 13 | 14 | R$ 422 / R$ 724 | forte para 2 unidades (79% na semana de 14/10) |
 | Afrodite | 10 | 2 | 2 | R$ 675 / R$ 1.059 | premium, vende com Regra C |
 | VK7 | 62 | 23 | 24 | R$ 520 / R$ 754 | reagiu rápido ao preço agressivo (+5 em 3 h, 07/10) |
-- A Double vende mais que a Queen 7 mesmo sendo mais cara. Investigar fotos, nome e posição na Booking e no Airbnb (a Double tem 16 reservas pelo Airbnb; a Queen 7, 8).
+- A Double vende mais que a Queen 7 mesmo sendo mais cara. Causa (análise de 07/10, `mercado.md`): visibilidade e conteúdo, não preço.
+  - No Airbnb, a Double fica em 3º na busca com hidro e a Queen 7 em 54º, com "banheiro compartilhado" e fotos do deck.
+  - Na Booking, a Queen 7 é um de três "Queen" iguais à Double.
+  - Antes de baixar mais o preço da Queen 7, corrigir os anúncios e medir por 14 dias.
 - Lotes: 21 horários de "reserva feita" repetidos em muitas reservas (ex.: 09/09 16:05) são importações do Beds24. Não contam como ritmo de venda.
+- Noites de feriado sem substituição podem ficar abaixo do limite de segurança só pelo algoritmo. Em 19/11 (véspera da Consciência Negra) estavam 5 quartos, com a Queen 7 a R$ 1.149 (R$ 483 reais); em 13–14/11, a VK2. **Toda rotina completa deve varrer as noites de feriado dos 60 dias** e pôr piso onde preço × fator < R$ 800.
 - O vazamento do Finados deixava 01/11 abaixo do limite de segurança (Queen 7 a R$ 1.459, cerca de R$ 613 reais). O validador pegou.
 
 ## Mercado e concorrência
@@ -63,6 +67,7 @@ Cada item tem data e evidência. Para incluir um item novo: data, o fato, a evid
 | Feriado com piso de R$ 1.200 (03/10) | R$ 2.690 → R$ 2.890 (Queen 7 sexta) | 0 vendas de feriado de 03 a 06/10 | caro demais contra o mercado |
 | Feriado com piso de R$ 1.000 (06/10) | R$ 2.890 → R$ 2.390 | 0 vendas em 24 h (06/10 08:48 a 07/10 08:15) | caro: Recanto 13% acima da mediana com hidro; baixou para R$ 800 reais |
 | Preços novos da Villa e conversão (envio de 07/10 08:36) | Villa na Booking: 07/10 R$ 370, feriado R$ 1.598, 23–25/10 R$ 1.387 | Em 3 h: VK7 +5 (07, 08, 12, 13 e 14/10); Double 16–17/10 esgotou (+4); Afrodite 18/10; Queen (2) 25/10 | resposta rápida |
+| Regra G nova: Balcony 10% abaixo da suíte com banheira (07/10 12:45) | Balcony de R$ 775–856 para R$ 696–770 nos dias úteis; fins de semana de R$ 1.050–1.171 para R$ 853–1.054 | (medir em 48 h) | |
 | Estratégia por suíte (07/10 12:30) | Queen 7 base −15%; Queen (2) base +10%; Double +10% em 12–15/10 e no feriado 09/10; Balcony no nível da VK2; Finados sem vazamento | (medir em 48 h e na revisão de segunda) | |
 | Feriado do Recanto com piso de R$ 800 (07/10 08:20) | Queen (7) e Double R$ 2.390 → R$ 1.905; Queen (2) R$ 2.950 → R$ 2.355; Afrodite R$ 3.190 → R$ 2.550. Booking: R$ 2.710 → R$ 2.197 (2 noites), 8% abaixo da mediana com hidro | (medir até 09/10) | |
 | Fim de semana 16–17/10 perto do mercado (06/10) | R$ 1.668 → R$ 1.250 (Queen 7); Double R$ 2.069 → R$ 1.400 | 1 venda em cerca de 3 h: Double, 16–17/10, 2 noites, R$ 630 reais por noite (direto) | resposta rápida ao corte |

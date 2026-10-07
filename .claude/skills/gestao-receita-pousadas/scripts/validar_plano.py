@@ -227,10 +227,10 @@ class Validador:
             self.erro(i, it, "base abaixo do mínimo")
 
     def validar_balcony(self, finais):
-        """Regra G: a Balcony não fica abaixo da suíte com banheira mais barata e livre da Villa.
-
-        Com percentual, compara os pisos (min_price). Se a Balcony é piso e a suíte não está no plano
-        (vale o preço atual da coleta), vira aviso: o valor final só sai no recálculo."""
+        """Regra G (dono, 07/10): a Balcony (sem banheira) fica cerca de 10% (`regra_g_desconto`) abaixo da
+        suíte com banheira mais barata e livre da Villa. ERRO se ficar acima dessa suíte ou mais de 5 pontos
+        abaixo do alvo. Com percentual, compara o piso; contra suíte fora do plano, vira aviso."""
+        desc = self.par.get("regra_g_desconto", 0.10)
         datas = {d for (k, d) in finais if k in ("Balcony", "VK7", "VK2")}
         for d in sorted(datas):
             def preco(k):
@@ -245,9 +245,17 @@ class Validador:
             if periodo_feriado(self.cfg, data(d)):
                 continue  # no feriado a Balcony segue o piso de vitrine definido pelo dono
             menor, do_plano = min(refs)
-            if balc < menor - 1:
-                msg = (f"Regra G {d}: Balcony {balc:.0f} abaixo da suíte com banheira mais barata livre "
-                       f"({menor:.0f})")
+            alvo = menor * (1 - desc)
+            if balc > menor + 1:
+                # piso acima da suíte: o preço final só pode ser maior ainda, então é erro sempre
+                self.erros.append(f"ERRO Regra G {d}: Balcony {balc:.0f} acima da suíte com banheira mais "
+                                  f"barata livre ({menor:.0f})")
+                continue
+            msg = None
+            if balc < alvo * 0.95:
+                msg = (f"Regra G {d}: Balcony {balc:.0f} mais de 5% abaixo do alvo {alvo:.0f} "
+                       f"({desc:.0%} abaixo de {menor:.0f})")
+            if msg:
                 if ("Balcony", d) in self.pisos and not do_plano:
                     self.avisos.append(f"aviso {msg}; é piso de percentual, confira no recálculo")
                 else:

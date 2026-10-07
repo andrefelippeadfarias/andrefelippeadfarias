@@ -104,3 +104,17 @@
   - Airbnb: o HTML bruto via curl (busca com `amenities[]=25`, de hidro, 15 páginas) traz os dados embutidos;
   - Google Hotels: as páginas de preço de cada hotel (`/travel/hotels/entity/<id>/prices?hl=pt-BR&gl=br`) mostram o preço por canal em R$. IDs: Recanto `ChoI1dWu6_WU4siuARoNL2cvMTFxcTI0dGJfOBAB`, Villa `ChkI7tXx2bqr6od-Gg0vZy8xMXZ4MGx3YjY5EAE`.
   - Expedia, Hoteis.com e Decolar bloqueiam acesso direto (429/403).
+
+## Anúncios por quarto: Queen 7 × Double (análise de 07/10/2026, só leitura)
+- **Booking:**
+  - 4 quartos: três "Queen Room with Spa Bath" (30, 35 e 40 m²) e um "Double Room with Spa Bath" (30 m²).
+  - Todos com cama king, a mesma lista de comodidades e a mesma descrição genérica.
+  - O "a partir de" (R$ 540 em 20/10) é a Queen 7, que só ganha pelo preço. Por isso vende quase só na última hora.
+- **Airbnb, anúncios ligados pelo calendário** (confiança média; confirmar no Beds24):
+  - Double = 1761651514687322007, "Suíte Premium - Vista para o Por do Sol e Banheira". 3º lugar na busca com hidro; 49 fotos; tipo "Moinho de vento"; pino e texto da Villa.
+  - Queen 7 = 1760278410253811726, "Hidro e Pôr do Sol: O Refúgio Romântico Perfeito". 54º lugar (página 3); diz "banheiro compartilhado" e "1 queen + 1 solteiro"; as 3 primeiras fotos são do deck; pino na Villa.
+  - Afrodite e Queen (2) estão no anúncio de pousada 1755047981565641196 / 1755046111583719490.
+  - Os anúncios 1439757086392620947, 1632051425580163508 e 1790820536724720410 são da Villa.
+- **Airbnb, preço exibido:** a Double aparece mais barata que a Queen 7 (R$ 450 contra R$ 520 em 20/10), o contrário do que o PriceLabs envia. A proporção Airbnb ÷ enviado varia de 0,35 a 0,70.
+- **Risco:** em 11/10, com tudo esgotado, o anúncio da Queen 7 e o "Suite Luxuosa", da Villa, apareciam reserváveis no Airbnb (R$ 605 e R$ 336). Possível overbooking ou calendário fora de sincronia no Beds24.
+- **Mercado no Airbnb, suítes com hidro em 20/10:** mediana R$ 630 (P25 R$ 549, P75 R$ 785).

@@ -91,24 +91,27 @@ class TestValidador(unittest.TestCase):
         self.assertIsNotNone(periodo_feriado(CFG, date(2026, 10, 11)))
 
     def test_regra_g_balcony(self):
-        precos = {("VK2", "2026-10-12"): {"preco": 970, "livres": 1}, ("Balcony", "2026-10-12"): {"preco": 900, "livres": 5}}
-        e = erros([item(quarto="VK7", data="2026-10-12", preco=-35, price_type="percent", min_price=1000)], precos)
-        self.assertTrue(any("Regra G" in x for x in e))
-        e = erros([item(quarto="VK7", data="2026-10-12", preco=-35, price_type="percent", min_price=1000),
-                   item(quarto="Balcony", data="2026-10-12", preco=-35, price_type="percent", min_price=1000)], precos)
-        self.assertEqual(e, [])
-        # Balcony com piso 980: acima da VK2 livre (970) passa; com a VK2 esgotada, a referência vira a VK7 (1000)
-        plano = [item(quarto="VK7", data="2026-10-12", preco=-35, price_type="percent", min_price=1000),
-                 item(quarto="Balcony", data="2026-10-12", preco=-35, price_type="percent", min_price=980)]
-        self.assertEqual(erros(plano, precos), [])
-        precos[("VK2", "2026-10-12")]["livres"] = 0
-        self.assertTrue(any("Regra G" in x for x in erros(plano, precos)))
-        # piso da Balcony contra suíte fora do plano: só aviso
-        precos[("VK2", "2026-10-12")]["livres"] = 1
+        # Regra G (07/10): Balcony cerca de 10% abaixo da suíte com banheira mais barata e livre
+        precos = {("VK2", "2026-10-12"): {"preco": 1000, "livres": 1}, ("Balcony", "2026-10-12"): {"preco": 900, "livres": 5}}
+        ok = [item(quarto="VK7", data="2026-10-12", preco=-35, price_type="percent", min_price=1100),
+              item(quarto="Balcony", data="2026-10-12", preco=-35, price_type="percent", min_price=900)]
+        self.assertEqual(erros(ok, precos), [])
+        # acima da suíte com banheira: erro
+        caro = [item(quarto="VK7", data="2026-10-12", preco=-35, price_type="percent", min_price=1100),
+                item(quarto="Balcony", data="2026-10-12", preco=-35, price_type="percent", min_price=1050)]
+        self.assertTrue(any("Regra G" in x for x in erros(caro, precos)))
+        # muito abaixo do alvo (900) com a VK2 também no plano: erro
+        barato = [item(quarto="VK2", data="2026-10-12", preco=-24, price_type="percent", min_price=1000),
+                  item(quarto="Balcony", data="2026-10-12", preco=-35, price_type="percent", min_price=800)]
+        self.assertTrue(any("Regra G" in x for x in erros(barato, precos)))
+        # a mesma Balcony contra a VK2 fora do plano: só aviso (o preço final pode subir)
         v = Validador(CFG, HOJE, precos)
-        v.validar([item(quarto="Balcony", data="2026-10-12", preco=-35, price_type="percent", min_price=850)])
+        v.validar([item(quarto="Balcony", data="2026-10-12", preco=-35, price_type="percent", min_price=800)])
         self.assertEqual(v.erros, [])
         self.assertTrue(any("Regra G" in x for x in v.avisos))
+        # VK2 esgotada: a referência vira a VK7 (1100 -> alvo 990)
+        precos[("VK2", "2026-10-12")]["livres"] = 0
+        self.assertTrue(any("Regra G" in x for x in erros(ok, precos)))
 
     def test_anuncio_limite_semanal(self):
         self.assertTrue(erros([{"tipo": "anuncio", "quarto": "VK7", "campo": "min", "valor": 700, "motivo": "x"}]))

@@ -2,6 +2,15 @@
 
 Cada mudança feita na própria Skill (regras, parâmetros, scripts, fluxo) entra aqui: data, o que mudou, por quê (evidência) e como desfazer. A entrada mais nova fica em cima.
 
+## 07/10/2026 12:45: Regra G nova (Balcony 10% abaixo) e varredura de feriados
+- **O quê:**
+  - `regras.md`: Regra G reescrita (Balcony 10% abaixo da suíte com banheira mais barata e livre).
+  - `quartos.json`: `parametros.regra_g_desconto` = 0.10.
+  - `validar_plano.py`: erro se a Balcony ficar acima da suíte ou mais de 5% abaixo do alvo; teste novo, 20 OK.
+  - `SKILL.md` passo 4: varrer as noites de feriado contra o limite de segurança.
+- **Por quê:** decisão do dono (07/10, "diferença de 10% para a que não tem banheira") e 6 noites de feriado achadas abaixo do limite de segurança.
+- **Como desfazer:** voltar a Regra G para "nunca abaixo da suíte com banheira mais barata e livre" e remover o parâmetro.
+
 ## 07/10/2026 12:30: estratégia por pousada e por suíte, pela demanda
 - **O quê:**
   - `regras.md` seção 4b: classificação alta/média/baixa e o que fazer em cada nível.

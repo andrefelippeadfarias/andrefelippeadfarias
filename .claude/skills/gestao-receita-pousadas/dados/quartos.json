@@ -1,5 +1,5 @@
 {
-  "versao": "2026-10-07T12",
+  "versao": "2026-10-07T13",
   "nota": "Fonte única dos dados de máquina da Skill. Os scripts leem daqui. Quem mudar base, mínimo ou máximo no PriceLabs atualiza este arquivo no mesmo commit.",
   "pms": "beds24",
   "grupo": {
@@ -203,7 +203,8 @@
     "regra_f_saida_vendido": 0.5,
     "regra_c_desconto": 0.3,
     "regra_a_janela_dias": 14,
-    "piso_feriado_real_padrao": 1000
+    "piso_feriado_real_padrao": 1000,
+    "regra_g_desconto": 0.1
   },
   "feriados": [
     {

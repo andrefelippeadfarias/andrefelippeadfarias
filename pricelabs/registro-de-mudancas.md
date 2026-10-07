@@ -1006,6 +1006,23 @@ A Villa não aparece em nenhuma busca com filtro de hidro (falta a comodidade na
 
 **Proposta ao dono (Regra G):** com a VK2 esgotada, a Balcony (sem banheira) fica no preço da VK7 (com banheira) e não vende. Sugestão: permitir a Balcony até 10% abaixo da VK7 nessas datas.
 
+## 07/10/2026, 12:45 — Pedido do dono: Balcony 10% abaixo das suítes com banheira; pisos de segurança em feriados
+
+**Pedido:** "Podemos colocar então uma diferença de 10% para a que não tem banheira."
+
+| Mudança | Onde | Antes | Depois (simulado; conferir no recálculo das 16:53) | Como desfazer (pedir ao Claude) |
+|---|---|---|---|---|
+| Balcony 10% abaixo da suíte com banheira mais barata e livre (Regra G nova) | Balcony, 54 datas de 07/10 a 05/12 (fora o feriado de 12/10) | Dias úteis R$ 775–856; fins de semana R$ 1.050–1.171; Finados R$ 2.750; 15–18/11 R$ 1.447 | Dias úteis **R$ 696–770** (07–08/10 cerca de R$ 638); fins de semana **R$ 853–1.054**; Finados **R$ 2.609**; 15–18/11 **R$ 849** | "Volte a Balcony para o nível da VK2" |
+| Piso de segurança (R$ 800 reais) em noites de feriado onde o algoritmo estava abaixo | 19/11: Queen 7 (R$ 1.149), Double (R$ 1.253), Queen (2) (R$ 1.622), VK7 (R$ 1.281), Balcony (R$ 1.447); 13–14/11: VK2 (R$ 1.905) | — | **R$ 1.905, R$ 1.905, R$ 2.355, R$ 2.052, R$ 1.510; VK2 R$ 2.052** (percentual 0, sem mexer no bloco) | — (limite de segurança) |
+
+**Validação:** 0 erro. A trava barrou antes a Balcony de 19/11 abaixo do limite de vitrine.
+
+**Análise Queen 7 × Double** (detalhes em `mercado.md`):
+- O problema da Queen 7 é anúncio, não preço.
+- No Airbnb, a Queen 7 está em 54º na busca com hidro, diz "banheiro compartilhado" e abre com fotos do deck. A Double está em 3º.
+- Na Booking, a Queen 7 é um de três "Queen" iguais.
+- **Risco:** a Queen 7 e o "Suite Luxuosa", da Villa, apareciam reserváveis no Airbnb em 11/10 com tudo esgotado.
+
 > **Regras em vigor:** desde 06/10/2026 elas ficam em `.claude/skills/gestao-receita-pousadas/references/regras.md`. Este arquivo guarda só o histórico das mudanças.
 
 ## O que só pode ser feito na tela (passo a passo para você)

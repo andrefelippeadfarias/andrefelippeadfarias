@@ -79,8 +79,9 @@ Toda gravação passa antes pelo `scripts/validar_plano.py`, é conferida depois
 
 **Feriados** (as noites e os pisos estão em `quartos.json` → `feriados`)
 - Piso de valor real por noite: preço × `fator_real`; na Balcony, preço × `fator_vitrine`.
-- Nossa Senhora Aparecida (noites de 09 a 11/10/2026): piso de R$ 1.000 reais (dono, 06/10).
-  - 09 e 10/10: Queen (7) R$ 2.390, Double R$ 2.390, Afrodite R$ 3.190, Queen (2) R$ 2.950, Villa King Spa (7) R$ 2.570, Balcony R$ 1.890.
+- Nossa Senhora Aparecida (noites de 09 a 11/10/2026): piso de R$ 800 reais nos 7 quartos.
+  - Histórico: R$ 1.000 (dono, 06/10); Villa a R$ 800 (dono, 06/10 16h); Recanto a R$ 800 (Skill, 07/10 08:20), depois de 24 h sem venda a 2 dias do feriado e 13% acima da mediana com hidro.
+  - 09 e 10/10, em percentual com piso: Queen (7) e Double R$ 1.905, Queen (2) R$ 2.355, Afrodite R$ 2.550, Villa King Spa (7) e (2) R$ 2.060, Balcony R$ 1.510.
 - Finados (30/10 a 02/11): +20% e 3 noites nos 7 quartos, feito pelo dono na tela em 03/10. Não sobrescrever sem motivo forte; se mudar, registre.
 - O piso padrão de um feriado novo é R$ 1.000 reais. A Skill pode mudar o piso pelos dados (concorrentes, ritmo de vendas), mas nunca abaixo de R$ 800 reais.
 
@@ -93,7 +94,7 @@ Toda gravação passa antes pelo `scripts/validar_plano.py`, é conferida depois
 - 07/10: "Ajuste tudo que está lançado com preço fixo no PriceLabs para percentual, para usarmos as ferramentas do PriceLabs de flutuação de preços. Faça assim sempre." Feito às 08:10: 103 datas convertidas, conferidas no recálculo.
 - 06/10 16h: estratégia agressiva para lotar a Villa Dolce Amore de 06 a 25/10.
   - Mínimos da Villa: R$ 850 / R$ 765 / R$ 765 (VK7 / VK2 / Balcony), com corte de 15%; nesta semana não se corta mais (limite semanal).
-  - Feriado só da Villa com piso de R$ 800 reais (`piso_real_por_quarto` em `quartos.json`).
+  - Feriado da Villa com piso de R$ 800 reais (desde 07/10, o Recanto também).
   - Dias úteis e domingos no mínimo.
   - Fins de semana perto da mediana geral da Booking.
   - Sexta 23/10 com 1 noite.

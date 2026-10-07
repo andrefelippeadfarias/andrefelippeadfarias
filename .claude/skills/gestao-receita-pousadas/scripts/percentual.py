@@ -77,8 +77,9 @@ def blocos(det: dict) -> list[list[str]]:
     return grupos
 
 
-def calcular(det: dict, alvos: dict, minimo: float) -> dict:
-    """Devolve {data: {"pct", "piso", "simulado"}} para as datas com alvo."""
+def calcular(det: dict, alvos: dict, minimo: float, feriado=lambda d: False) -> dict:
+    """Devolve {data: {"pct", "piso", "simulado"}} para as datas com alvo. No feriado, o piso é o
+    próprio alvo (o validador exige o piso de valor real)."""
     res = {}
     for b in blocos(det):
         com_alvo = [d for d in b if d in alvos]
@@ -91,7 +92,7 @@ def calcular(det: dict, alvos: dict, minimo: float) -> dict:
         pct = round(((nivel * len(b) - soma_n) / soma_x - 1) * 100)
         v = (sum(valor_antes_suavizar(det[d]) * (1 + pct / 100) for d in com_alvo) + soma_n) / len(b)
         for d in com_alvo:
-            piso = alvos[d] if (alvos[d] > nivel + 1 or alvos[d] < minimo) else minimo
+            piso = alvos[d] if (alvos[d] > nivel + 1 or alvos[d] < minimo or feriado(d)) else minimo
             res[d] = {"pct": pct, "piso": round(piso), "simulado": round(max(v, piso)),
                       "bloco": f"{b[0]}..{b[-1]}", "vaza_para": sem_alvo}
     return res
@@ -112,7 +113,10 @@ def main(argv=None) -> int:
         alvos_all = ler_json(a.alvos)
         for curto, alvos in alvos_all.items():
             minimo = cfg["por_curto"][curto]["min"]
-            r = calcular(det_all[curto], {k: float(v) for k, v in alvos.items()}, minimo)
+            from datetime import date as _date
+            from comum import periodo_feriado
+            r = calcular(det_all[curto], {k: float(v) for k, v in alvos.items()}, minimo,
+                         lambda d: periodo_feriado(cfg, _date.fromisoformat(d)) is not None)
             for d in sorted(r):
                 x = r[d]
                 vaza = f" (vaza para {', '.join(x['vaza_para'])})" if x["vaza_para"] else ""

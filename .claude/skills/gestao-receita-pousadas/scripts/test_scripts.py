@@ -71,8 +71,10 @@ class TestValidador(unittest.TestCase):
                                     ocupacao_sabado=10)], hoje=date(2026, 10, 7)))
 
     def test_piso_feriado(self):
-        self.assertEqual(erros([item(quarto="Q7", data="2026-10-09", preco=-10, price_type="percent", min_price=2390)]), [])
-        self.assertTrue(erros([item(quarto="Q7", data="2026-10-09", preco=-10, price_type="percent", min_price=2000)]))
+        piso = CFG["feriados"][0]["piso_real"]
+        ok, baixo = round(piso / 0.42) + 5, round(piso / 0.42) - 50
+        self.assertEqual(erros([item(quarto="Q7", data="2026-10-09", preco=-10, price_type="percent", min_price=ok)]), [])
+        self.assertTrue(erros([item(quarto="Q7", data="2026-10-09", preco=-10, price_type="percent", min_price=baixo)]))
         # percentual sem piso no feriado: o mais baixo possível é o mínimo do anúncio, abaixo do piso
         self.assertTrue(erros([item(quarto="Q7", data="2026-10-09", preco=0, price_type="percent")]))
         self.assertEqual(erros([item(quarto="Balcony", data="2026-10-09", preco=0, price_type="percent", min_price=1890)]), [])

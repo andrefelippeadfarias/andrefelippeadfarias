@@ -47,7 +47,8 @@ Cada item tem data e evidência. Para incluir um item novo: data, o fato, a evid
 | Mudança (data) | Antes → depois | Vendas nos 3 dias seguintes | Leitura |
 |---|---|---|---|
 | Feriado com piso de R$ 1.200 (03/10) | R$ 2.690 → R$ 2.890 (Queen 7 sexta) | 0 vendas de feriado de 03 a 06/10 | caro demais contra o mercado |
-| Feriado com piso de R$ 1.000 (06/10) | R$ 2.890 → R$ 2.390 | 0 vendas até 13:54 de 06/10 (5 h depois do envio) | medir até 09/10 |
+| Feriado com piso de R$ 1.000 (06/10) | R$ 2.890 → R$ 2.390 | 0 vendas em 24 h (06/10 08:48 a 07/10 08:15) | caro: Recanto 13% acima da mediana com hidro; baixou para R$ 800 reais |
+| Feriado do Recanto com piso de R$ 800 (07/10 08:20) | Queen (7) e Double R$ 2.390 → R$ 1.905; Queen (2) R$ 2.950 → R$ 2.355; Afrodite R$ 3.190 → R$ 2.550 | (medir até 09/10) | |
 | Fim de semana 16–17/10 perto do mercado (06/10) | R$ 1.668 → R$ 1.250 (Queen 7); Double R$ 2.069 → R$ 1.400 | 1 venda em cerca de 3 h: Double, 16–17/10, 2 noites, R$ 630 reais por noite (direto) | resposta rápida ao corte |
 | Villa agressiva de 06 a 25/10 (06/10 16h) | Mínimos −15%, dias úteis no mínimo, feriado a R$ 800 reais, fins de semana perto da mediana | 0 vendas até 19:56 de 06/10, mas os preços ainda não tinham chegado aos canais (só no envio de 07/10). Medir a partir do envio, até 09/10 e em 13/10. | |
 | Regra I de 06 a 08/10 (06/10) | R$ 800 → R$ 640 (Queen 7); Double R$ 1.132 → R$ 720 | 2 vendas para a mesma noite (06/10): Queen 7 R$ 320 (direto) e Double R$ 360 (Airbnb), 50% do enviado | última hora vende |

@@ -923,6 +923,35 @@ A Villa não aparece em nenhuma busca com filtro de hidro (falta a comodidade na
 
 **Balcony:** a suavização dela usa a semana inteira. Com percentual, a sexta, o sábado e o feriado ficam presos no piso e não flutuam. Próximo passo: igualar a suavização da Balcony à do grupo.
 
+## 07/10/2026, 08:25 — Rotina das 07:53 (completa): feriado do Recanto a R$ 800 reais; Regra G em novembro
+
+**Ocupação:**
+
+| Período | Hotel | Meta |
+|---|---|---|
+| 7 dias | 43% | 70% |
+| 15 dias | 34% | 50% |
+| 30 dias | 27% | 35% |
+| 45 dias | 24% | 25% |
+| 60 dias | 20% | 15% (batida) |
+
+- Por pousada, em 7 dias: Recanto 53%, Villa 33%.
+- Nenhuma reserva nova desde 06/10 12:39, nenhum cancelamento e nenhuma mudança manual.
+- Envio aos canais: o último foi ontem às 08:49; o de hoje deve sair por volta das 08:48.
+
+**Mercado (Booking, 2 noites, mediana geral × com hidro):**
+- 07–09/10: R$ 576 × R$ 788
+- Feriado: R$ 1.550 × R$ 2.400
+- 13–15/10: R$ 1.029 × R$ 1.291
+- 16–18/10: R$ 1.479 × R$ 2.001
+- 20–22/10: R$ 721 × R$ 788
+- 23–25/10: R$ 1.029 × R$ 1.582
+
+| Mudança | Onde | Antes | Depois (recalculado e conferido às 08:21) | Como desfazer (pedir ao Claude) |
+|---|---|---|---|---|
+| Feriado com piso de R$ 800 reais (era R$ 1.000): 24 h sem venda a 2 dias, Recanto 13% acima da mediana com hidro | Queen (7), Double, Queen (2) e Afrodite, 09 e 10/10 | R$ 2.390, R$ 2.390, R$ 2.950 e R$ 3.190 | **R$ 1.917**, **R$ 1.905**, **R$ 2.355** e **R$ 2.550** (percentual com piso) | "Volte o feriado do Recanto para o piso de R$ 1.000" |
+| Regra G: Balcony não abaixo da VK2 livre (percentual 0 com piso, sem mexer no bloco) | Balcony, 08–12/11 e 22–26/11 | R$ 978 e R$ 842 | piso de **R$ 1.012** e **R$ 904** (não conferido: limite de recálculo; conferir depois do envio) | "Apague as substituições da Balcony de 08–12/11 e 22–26/11" |
+
 > **Regras em vigor:** desde 06/10/2026 elas ficam em `.claude/skills/gestao-receita-pousadas/references/regras.md`. Este arquivo guarda só o histórico das mudanças.
 
 ## O que só pode ser feito na tela (passo a passo para você)

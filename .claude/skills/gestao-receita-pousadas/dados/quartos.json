@@ -1,5 +1,5 @@
 {
-  "versao": "2026-10-06T16",
+  "versao": "2026-10-07T08",
   "nota": "Fonte única dos dados de máquina da Skill. Os scripts leem daqui. Quem mudar base, mínimo ou máximo no PriceLabs atualiza este arquivo no mesmo commit.",
   "pms": "beds24",
   "grupo": {
@@ -203,13 +203,8 @@
       "nome": "Nossa Senhora Aparecida",
       "inicio": "2026-10-09",
       "fim": "2026-10-11",
-      "piso_real": 1000,
-      "nota": "Noites de feriado (a noite de segunda 12/10 é volta e não entra). Piso decidido pelo dono em 06/10. Villa (VK7, VK2, Balcony) com piso de R$ 800 desde 06/10 16h: pedido do dono de estratégia agressiva para lotar a Villa em 3 semanas.",
-      "piso_real_por_quarto": {
-        "VK7": 800,
-        "VK2": 800,
-        "Balcony": 800
-      }
+      "piso_real": 800,
+      "nota": "Noites de feriado (a noite de segunda 12/10 é volta e não entra). Piso de R$ 1.000 decidido pelo dono em 06/10; Villa a R$ 800 desde 06/10 16h (estratégia agressiva); Recanto a R$ 800 desde 07/10 08:20 pela Skill: 24 h sem venda de feriado a 2 dias, 19 de 31 unidades livres na sexta, Recanto 13% acima da mediana com hidro da Booking."
     },
     {
       "nome": "Finados",

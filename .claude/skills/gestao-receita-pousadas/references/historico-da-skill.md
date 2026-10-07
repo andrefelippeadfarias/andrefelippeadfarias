@@ -2,6 +2,11 @@
 
 Cada mudança feita na própria Skill (regras, parâmetros, scripts, fluxo) entra aqui: data, o que mudou, por quê (evidência) e como desfazer. A entrada mais nova fica em cima.
 
+## 07/10/2026 08:20: piso do feriado de 12/10 em R$ 800 para todos os quartos
+- **O quê:** `quartos.json`: N. S. Aparecida com `piso_real` 800 (era 1000), sem piso por quarto. `percentual.py`: no feriado, o piso é o alvo. O teste do piso de feriado ficou independente do valor.
+- **Por quê:** 24 h sem venda de feriado, a 2 dias, com 19 de 31 unidades livres na sexta. Recanto 13% acima da mediana com hidro da Booking (R$ 2.710 contra R$ 2.400 em 2 noites). A regra manda ficar de 10% a 25% abaixo. O limite de segurança de R$ 800 reais foi respeitado.
+- **Como desfazer:** `piso_real` 1000 e as datas de 09 e 10/10 do Recanto de volta para os pisos de R$ 2.390, R$ 2.950 e R$ 3.190.
+
 ## 07/10/2026 08:15: preço por data sempre em percentual
 - **O quê:**
   - `regras.md`: nova forma de gravar o preço (percentual com piso; fixo só com ordem do dono) e Regras I, F e C reescritas para percentual.

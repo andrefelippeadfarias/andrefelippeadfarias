@@ -1023,6 +1023,16 @@ A Villa não aparece em nenhuma busca com filtro de hidro (falta a comodidade na
 - Na Booking, a Queen 7 é um de três "Queen" iguais.
 - **Risco:** a Queen 7 e o "Suite Luxuosa", da Villa, apareciam reserváveis no Airbnb em 11/10 com tudo esgotado.
 
+## 07/10/2026, 14:00 — Rotina das 13:53: 1 reserva na VK7 (feriado); VK7 08/10 +10%
+
+- **Reserva nova:** VK7 de 08 a 11/10 (4 noites, com o feriado), R$ 2.250, direto (R$ 562 por noite).
+- **Cancelamentos e mudanças manuais:** nenhum.
+- **Envio:** o último da Balcony foi às 09:53. As mudanças das 12:30 e 12:45 saem no próximo envio (diário ou disparado por reserva).
+
+| Mudança | Onde | Antes | Depois | Como desfazer (pedir ao Claude) |
+|---|---|---|---|---|
+| Passou de 70% vendido (5/7): +10% (preço do dono, Regra F) | VK7, 08/10 | piso R$ 700 (cerca de R$ 701) | piso **R$ 770** (não conferido no recálculo: limite do dia; conferir às 16:53) | "Volte a VK7 08/10 para R$ 700" |
+
 > **Regras em vigor:** desde 06/10/2026 elas ficam em `.claude/skills/gestao-receita-pousadas/references/regras.md`. Este arquivo guarda só o histórico das mudanças.
 
 ## O que só pode ser feito na tela (passo a passo para você)

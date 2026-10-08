@@ -33,6 +33,19 @@ Toda gravação passa antes pelo `scripts/validar_plano.py`, é conferida depois
 - A suavização do PriceLabs tira a média do bloco: domingo a quinta e sexta e sábado; na Balcony, a semana inteira. Por isso o percentual se calcula **por bloco**, com `scripts/percentual.py`. Um percentual numa data só "vaza" para as outras datas do bloco. Se a regra não permitir mexer nelas, use teto na data.
 - Ao converter, o alvo é o preço de antes. Assim a mudança de forma não muda o preço do dia.
 
+**Padrão de qualidade, sexta, sábado e feriado (dono, 08/10)**
+- Pedido do dono: "para consumidores de alto padrão, a diária de feriados e finais de semana nas pousadas com suítes com banheira deve ser sempre a partir de R$ 1.000 (padrão de qualidade). Esse é o discurso. Porém precisamos ficar de olho no mercado para atingir nossos objetivos. [...] Sempre trabalhe com percentuais."
+- Leitura da Skill (08/10; o dono escreveu "100 reais", entendido como R$ 1.000): vale para as 6 suítes com banheira (Queen 7, Double, Afrodite, Queen 2, VK7 e VK2; **a Balcony fica de fora**), nas noites de **sexta e sábado e nas noites de feriado**, sobre o **preço enviado** (o da tabela do PriceLabs, antes dos descontos da OTA). O parâmetro é `padrao_qualidade_diaria` em `quartos.json`.
+- **Como aplicar:** o preço fica em percentual e o piso (`min_price`) dessas datas é no mínimo R$ 1.000. Nunca preço fixo (continua valendo a regra de 07/10).
+- **Quando o mercado libera ficar abaixo:** só com um dado que cite a data, no campo `mercado` do item do plano (o validador exige; sem ele dá ERRO):
+  - mediana da Booking para as mesmas noites (geral, com hidro ou nota 9 ou mais) abaixo do nosso preço, com unidade livre;
+  - ocupação do mercado da data abaixo de cerca de 25% (PriceLabs, `get_neighbourhood_data`);
+  - ritmo de vendas fraco: a pousada abaixo da meta da janela (7 dias 70%, 15 dias 50%, 30 dias 35%).
+  A exceção vale só para as datas citadas. A rotina completa seguinte refaz a conta e volta ao padrão quando o mercado melhorar.
+- **O que continua valendo acima do padrão:** os limites de segurança, o piso de feriado de R$ 800 de valor real (que já leva o preço enviado a mais de R$ 1.000) e a Regra G (a Balcony fica 10% abaixo da suíte com banheira mais barata e livre).
+- **A Regra I** (última hora, D0 a D3) pode ir abaixo do padrão numa sexta ou sábado com unidade livre, sempre com `mercado` no item.
+- **Exceções de mercado em vigor (08/10):** VK2 sexta 23 e sábado 24/10 (R$ 895 enviados): mercado de 13–15% de ocupação, eleição em 25/10, mediana da Booking para 23–25/10 de R$ 1.015 e a Villa a 11% acima dela.
+
 **Regra H, sábado (dono, 06/10)**
 - A diária de sábado sozinha não é vendida. O bloqueio é do dono, no Beds24/Booking; no PriceLabs, todo sábado fica com estadia mínima 2.
 - Exceção: na quarta a sexta antes, se a pousada estiver abaixo de 50% naquele sábado e não for feriado, volte o sábado para 1 noite (`excecao: "regra_h"`, com `ocupacao_sabado`) e avise o dono para liberar no Beds24.
@@ -58,6 +71,7 @@ Toda gravação passa antes pelo `scripts/validar_plano.py`, é conferida depois
   - de D22 a D31, −12%;
   - de D2 a D13, mantém o nível vigente ou desce para perto do mercado (ver seção 5).
   - Sexta e sábado formam um bloco de suavização: dê o mesmo percentual às duas noites. Para cortar uma noite só, use o piso e o teto da data.
+  - Nas suítes com banheira, o piso de sexta e sábado é R$ 1.000 (padrão de qualidade), e não o mínimo do quarto; abaixo disso só com `mercado`.
 - Saída da escada: quarto com 50% ou mais vendido na data (`regra_f_saida_vendido`) apaga a substituição de preço e mantém a estadia mínima. Antes, confirme que é reserva e não bloqueio.
 - A saída da escada **não vale** para datas com preço por decisão do dono, como "perto do mercado" ou "domingo no mínimo para lotar" (motivo começando com "Dono"). Nelas o preço fica até a ocupação da data passar de 70%. Aí sobe no máximo 10% por rodada. Esclarecido em 06/10: a prioridade do dono é lotar.
 
@@ -120,10 +134,12 @@ Pedido do dono: "ajustar o preço de acordo com a demanda que estamos recebendo 
 
 ## 5. Posicionamento contra o mercado (Booking)
 - Nossas notas: Recanto 8,4; Villa 8,1. Fique abaixo dos hotéis de mesmo preço com nota de 9 ou mais. Referência: entre 10% e 25% abaixo da mediana dos hotéis 5 estrelas com nota 9 ou mais nas datas fortes, e perto da mediana nas fracas.
-- Se estivermos mais de 40% acima da mediana numa data com estoque sobrando a até 14 dias, desça para perto do mercado (feito em 06/10 para 16 e 17/10).
+- Se estivermos mais de 40% acima da mediana numa data com estoque sobrando a até 14 dias, desça para perto do mercado (feito em 06/10 para 16 e 17/10). Em sexta, sábado e feriado das suítes com banheira, a descida para no padrão de qualidade (R$ 1.000); abaixo disso só com o dado no campo `mercado`.
 - Domingo e meio de semana fracos (mediana do mercado abaixo do nosso mínimo): mínimo do quarto e, de D0 a D3, Regra I.
 
 ## 6. Decisões do dono em vigor (com data)
+- 08/10: padrão de qualidade. Sexta, sábado e feriado das suítes com banheira a partir de R$ 1.000 por diária, "mas de olho no mercado", e "sempre trabalhe com percentuais" (piso em `min_price`, nunca preço fixo). Aplicado em 16 datas (Queen 7, Double, VK7 e VK2 de 16/10 a 07/11).
+- 08/10: "Pode igualar a suavização da Balcony às outras suítes". A API não permite; só pela tela (seção 7). Aguardando o dono salvar.
 - 07/10 13h: Balcony 10% abaixo da suíte com banheira mais barata e livre (Regra G nova).
 - 07/10 11:46: estratégia por pousada e por suíte, de acordo com a demanda de cada uma (seção 4b).
 - 07/10: "Ajuste tudo que está lançado com preço fixo no PriceLabs para percentual, para usarmos as ferramentas do PriceLabs de flutuação de preços. Faça assim sempre." Feito às 08:10: 103 datas convertidas, conferidas no recálculo.
@@ -148,7 +164,9 @@ Pedido do dono: "ajustar o preço de acordo com a demanda que estamos recebendo 
 
 ## 7. Pendências que dependem só da tela ou do dono
 - Personalizações próprias da Balcony (sazonalidade e demanda agressivas, última hora de 25%) diferem das do grupo e a deixam acima das suítes em datas futuras. Pela autonomia total, a Skill pode igualar ao grupo, registrando o que era antes.
-  - A suavização da Balcony junta a semana inteira num bloco só. Com percentual, a sexta e o sábado ficam presos no piso e não flutuam. Igualar a suavização ao grupo (blocos de domingo a quinta e de sexta a sábado) é o próximo passo para a Balcony flutuar de verdade.
+  - A suavização da Balcony junta a semana inteira num bloco só. Com percentual, a sexta e o sábado ficam presos no piso e não flutuam. O dono pediu em 08/10 para igualar ao grupo (blocos de domingo a quinta e de sexta a sábado).
+  - **Não dá pela API nem pelo MCP** (pesquisa de 08/10: `update_customizations` recusa `smoothing`; `update_listing_data` não tem o campo). Só pela tela, pelo dono: Painel de preços > linha da Balcony (350364___722814) > Revisar preços > Editar em Personalizações > aba "All Customizations" > Smoothing > ligado > **"Smooth weekdays vs. weekends"** > Salvar. Não escolher "Set week start" (é o modo atual, de 7 dias) nem "No Smoothing".
+  - Depois que ele salvar: no primeiro recálculo com `parse_reasons_json` da Balcony, confirmar os blocos (domingo a quinta e sexta a sábado), refazer os percentuais da Balcony com `percentual.py` e trocar os pisos de sexta e sábado presos por pisos de 10% abaixo da VK2 (hoje R$ 1.016 em 16–17/10 fica em R$ 900 a R$ 1.000).
 - Só pela tela:
   - Safety Minimum Price em "Do Not Apply";
   - sincronização às 06:00 (e extras às 12:00 e 18:00, a US$ 1 por quarto por mês);

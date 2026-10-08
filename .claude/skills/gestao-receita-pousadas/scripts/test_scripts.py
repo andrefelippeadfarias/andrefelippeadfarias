@@ -113,6 +113,42 @@ class TestValidador(unittest.TestCase):
         precos[("VK2", "2026-10-12")]["livres"] = 0
         self.assertTrue(any("Regra G" in x for x in erros(ok, precos)))
 
+    def test_padrao_de_qualidade(self):
+        # sexta 23/10 e sábado 24/10 (fora de feriado), suítes com banheira: a partir de R$ 1.000
+        base = dict(data="2026-10-23", preco=-20, price_type="percent")
+        e = erros([item(quarto="Q7", min_price=800, **base)])
+        self.assertTrue(any("padrão de qualidade" in x for x in e))
+        self.assertTrue(any("padrão de qualidade" in x for x in erros(
+            [item(quarto="VK2", data="2026-10-24", preco=-30, price_type="percent", min_price=765)])))
+        # sem min_price o piso é o mínimo do anúncio, também abaixo do padrão
+        self.assertTrue(any("padrão de qualidade" in x for x in erros(
+            [item(quarto="Double", data="2026-10-23", preco=-10, price_type="percent")])))
+        # piso de R$ 1.000 passa; dia útil, Balcony (sem banheira) e Afrodite (piso alto) não entram
+        self.assertEqual(erros([item(quarto="Q7", min_price=1000, **base)]), [])
+        self.assertEqual(erros([item(quarto="Q7", data="2026-10-21", preco=-35, price_type="percent",
+                                     min_price=800)]), [])
+        self.assertEqual(erros([item(quarto="Balcony", data="2026-10-23", preco=-30, price_type="percent",
+                                     min_price=765)]), [])
+        self.assertEqual(erros([item(quarto="Afrodite", min_price=1500, **base)]), [])
+
+    def test_padrao_de_qualidade_com_justificativa_de_mercado(self):
+        base = dict(quarto="VK2", data="2026-10-24", preco=-30, price_type="percent", min_price=765)
+        # justificativa curta demais não vale
+        self.assertTrue(erros([item(mercado="fraco", **base)]))
+        just = "mediana Booking 23-25/10 R$ 1.015 e mercado a 13% de ocupação"
+        v = Validador(CFG, HOJE, {})
+        v.validar([item(mercado=just, **base)])
+        self.assertEqual(v.erros, [])
+        self.assertTrue(any("exceção de mercado" in a for a in v.avisos))
+        # o campo 'mercado' não vai para o payload do PriceLabs
+        pl = montar_payload(CFG, [item(mercado=just, **base)])
+        self.assertNotIn("mercado", str(pl))
+
+    def test_padrao_de_qualidade_no_feriado(self):
+        # feriado: o piso de segurança de R$ 800 reais já leva o preço enviado a mais de R$ 1.000
+        self.assertEqual(erros([item(quarto="Q7", data="2026-11-13", preco=0, price_type="percent",
+                                     min_price=1905)]), [])
+
     def test_anuncio_limite_semanal(self):
         self.assertTrue(erros([{"tipo": "anuncio", "quarto": "VK7", "campo": "min", "valor": 700, "motivo": "x"}]))
         self.assertEqual(erros([{"tipo": "anuncio", "quarto": "VK7", "campo": "min", "valor": 900, "motivo": "x"}]), [])

@@ -2,6 +2,15 @@
 
 Cada mudança feita na própria Skill (regras, parâmetros, scripts, fluxo) entra aqui: data, o que mudou, por quê (evidência) e como desfazer. A entrada mais nova fica em cima.
 
+## 08/10/2026 13:20: padrão de qualidade de R$ 1.000 em sexta, sábado e feriado
+- **O quê:**
+  - `quartos.json`: parâmetro `padrao_qualidade_diaria` = 1000.
+  - `validar_plano.py`: ERRO quando o piso ou preço de sexta, sábado ou feriado de suíte com banheira fica abaixo do padrão sem o campo `mercado`; aviso quando tem o campo. 3 testes novos (23 OK).
+  - `regras.md`: bloco "Padrão de qualidade", critérios de exceção de mercado, Regra F, seção 5, decisões do dono e seção 7 (suavização da Balcony só pela tela).
+  - `SKILL.md`: passo 4 e relatório. `aprendizados.md` e `ferramentas.md`: suavização, validador e varredura.
+- **Por quê:** decisão do dono (08/10): padrão de alto padrão "mas de olho no mercado" e "sempre trabalhe com percentuais". O "100 reais" foi lido como R$ 1.000, com base no padrão de feriado de R$ 1.000 reais de 06/10.
+- **Como desfazer:** pôr `padrao_qualidade_diaria` em 0 (desliga a trava) e voltar os pisos das 16 datas ao mínimo do quarto.
+
 ## 08/10/2026 08:20: conferência da estadia mínima de sábados e feriados
 - **O quê:** `SKILL.md` passo 4 passou a conferir a estadia mínima de sábados e feriados em todos os quartos. `aprendizados.md` ganhou 5 fatos: vitrine ÷ enviado, percentual de dia útil que sobe com as vendas, blocos semanais da Balcony, estadia mínima da Queen 7 e mercado de 08/10. `quartos.json` ganhou a nota de demanda de 08/10 (versão 2026-10-08T08).
 - **Por quê:** a Queen (7) tinha sábados de 07/11 a 28/11 e os feriados de novembro com 1 noite sem regra por data; corrigido nesta rotina.

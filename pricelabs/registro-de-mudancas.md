@@ -1122,6 +1122,24 @@ A Villa não aparece em nenhuma busca com filtro de hidro (falta a comodidade na
 - **Regra G depois do recálculo:** nenhuma Balcony acima de suíte. Em 23–24/10, 22–26/11 e 06/12 a Balcony ficou 6% a 7% abaixo, e não 10%, porque a VK2 baixou no recálculo de hoje. O limite de recálculos da Balcony acabou por hoje; ajusto na próxima rotina com recálculo livre.
 - **Pendência técnica:** em dezembro, a suavização semanal da Balcony puxa os dias úteis para R$ 1.418–1.767, acima das suítes. A solução é igualar a suavização da Balcony à do grupo (domingo a quinta e sexta a sábado). Fica para a revisão de segunda (12/10).
 
+## 08/10/2026, 10:20 — Pedido do dono: padrão de qualidade de R$ 1.000 em sexta, sábado e feriado; suavização da Balcony só pela tela
+
+- **Pedido (dono):** "Existe uma regra para consumidores de alto padrão, que o valor das diárias de feriados e finais de semana nas pousadas com suítes com banheira devem sempre ser a partir de 100 reais [lido como R$ 1.000] como um padrão de qualidade. Esse é o discurso. Porém precisamos ficar de olho no mercado para atingir nossos objetivos." E: "Porém sempre trabalhe com percentuais."
+- **Como entendi:** vale para as 6 suítes com banheira (a Balcony fica de fora), nas noites de sexta, sábado e feriado, sobre o preço enviado. O preço continua em percentual e o piso (`min_price`) dessas datas passa a ser R$ 1.000. Abaixo disso só com um dado de mercado anotado no plano. Se o número que você quis dizer for outro, é só avisar: está em um parâmetro só.
+- **Varredura** das 91 noites de sexta, sábado e feriado com unidade livre (08/10 a 06/12): 73 já estavam com piso de R$ 1.000 ou mais; 18 tinham piso do quarto (R$ 765 a R$ 900); só 2 noites com preço abaixo de R$ 1.000 (VK2 em 23 e 24/10, R$ 895). O piso de feriado de R$ 800 reais já leva o preço enviado a R$ 1.905 ou mais.
+
+| Mudança | Onde | Antes | Depois (recalculado e conferido às 10:21) | Como desfazer (pedir ao Claude) |
+|---|---|---|---|---|
+| Piso de R$ 1.000, percentual mantido | Queen 7: 16–17/10 (−45%), 23–24/10 (−32%), 06–07/11 (−12%) | piso R$ 800 | piso **R$ 1.000**; preço R$ 1.133, R$ 1.171 e R$ 1.928 | "Volte o piso da Queen 7 nessas datas para R$ 800" |
+| Piso de R$ 1.000, percentual mantido | Double: 23–24/10 (−20%), 06–07/11 (−12%) | piso R$ 900 | piso **R$ 1.000**; preço R$ 1.920 e R$ 2.606 | "Volte o piso da Double nessas datas para R$ 900" |
+| Piso de R$ 1.000, percentual mantido | VK7: 23–24/10 (−55%) | piso R$ 850 | piso **R$ 1.000**; preço R$ 1.070 | "Volte o piso da VK7 de 23–24/10 para R$ 850" |
+| Piso de R$ 1.020, percentual mantido | VK7 (−52%) e VK2 (−47%): 16–17/10 | piso R$ 850 e R$ 765 | piso **R$ 1.020** (R$ 20 acima do padrão para cobrir a Balcony presa em R$ 1.016); preço R$ 1.338 e R$ 1.171 | "Volte o piso da VK7 e da VK2 de 16–17/10 para R$ 850 e R$ 765" |
+
+- **Nenhum preço mudou hoje por causa do padrão:** todas essas noites já estavam acima de R$ 1.000. O piso só impede que o PriceLabs desça abaixo dele nos próximos dias.
+- **Exceção de mercado em vigor:** VK2 em 23 e 24/10 fica no piso de R$ 765 (preço R$ 895). Motivo: mercado de 13–15% de ocupação, eleição em 25/10 e mediana da Booking para 23–25/10 de R$ 1.015 (a Villa já está 11% acima). Revejo na rotina completa de 09/10.
+- **Conferência:** `ler_recalculo.py` com 16 datas e 0 diferença. O validador novo barra sexta, sábado e feriado abaixo de R$ 1.000 sem o dado de mercado (23 testes, todos OK).
+- **Suavização da Balcony:** não dá para mudar por mim. Nem a API nem o conector do PriceLabs têm esse campo (confirmado em 4 fontes). Só você, na tela: Painel de preços > linha da Balcony > Revisar preços > Editar em Personalizações > aba "All Customizations" > Smoothing > ligado > **"Smooth weekdays vs. weekends"** > Salvar. A Balcony hoje está em "Set week start = domingo" (7 dias juntos). Não escolha "Set week start" nem "No Smoothing". Quando você salvar, refaço os percentuais e os pisos da Balcony (hoje presos em R$ 1.016 em 16–17/10 e semelhantes).
+
 > **Regras em vigor:** desde 06/10/2026 elas ficam em `.claude/skills/gestao-receita-pousadas/references/regras.md`. Este arquivo guarda só o histórico das mudanças.
 
 ## O que só pode ser feito na tela (passo a passo para você)

@@ -204,6 +204,7 @@
     "regra_c_desconto": 0.3,
     "regra_a_janela_dias": 14,
     "piso_feriado_real_padrao": 1000,
+    "padrao_qualidade_diaria": 1000,
     "regra_g_desconto": 0.1
   },
   "feriados": [

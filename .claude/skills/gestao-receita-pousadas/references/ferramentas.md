@@ -45,3 +45,7 @@ Veja como pesquisar em `mercado.md`. Não serve para mudar nada.
 - Branch: `claude/pricelabs-hotel-occupancy-ku6zn5`, que é a branch padrão do repositório; não há PR a abrir.
 - Mensagem de commit "PriceLabs: <resumo>", com as linhas de atribuição pedidas pelo sistema.
 - Faça push com `git push -u origin claude/pricelabs-hotel-occupancy-ku6zn5`. Em erro de rede, tente de novo até 4 vezes (2 s, 4 s, 8 s, 16 s).
+
+## Padrão de qualidade e suavização (08/10)
+- `validar_plano.py`: o item de sexta, sábado ou feriado de suíte com banheira com preço ou piso abaixo de R$ 1.000 (`parametros.padrao_qualidade_diaria`) dá ERRO, a menos que leve o campo `mercado` (texto de pelo menos 20 caracteres com o dado de mercado). Com o campo, sai um aviso para o relatório. O campo não vai para o PriceLabs. A Balcony não entra.
+- Suavização (Smoothing) não se lê nem se grava por nenhuma ferramenta. Só se enxerga pelos blocos de `price_smoothing` no `refresh_listing_pricing` com `parse_reasons_json`. Mudança só pela tela (ver `regras.md` seção 7).

@@ -26,6 +26,11 @@ expressa do dono (excecao "dono"). "excecao" aceita:
   "dono"         ordem explícita do dono nesta conversa; cite no motivo. Nunca passa por cima
                  dos limites de segurança. É a única forma de gravar preço fixo.
 
+Padrão de qualidade (dono, 08/10): sexta, sábado e noites de feriado das suítes com banheira (todas menos
+a Balcony) ficam a partir de R$ 1.000 (parametros.padrao_qualidade_diaria), no preço ou no piso da data. Para
+ir abaixo, o item leva o campo "mercado" com o dado que justifica (mediana da Booking, ocupação do mercado,
+ritmo de vendas; mínimo de 20 caracteres). Sem ele, ERRO. Com ele, sai um aviso para o relatório.
+
 Sai com código 0 se tudo passou e 1 se houve ERRO. Com --payload, imprime os pedidos prontos
 para update_listing_date_overrides, delete_listing_date_overrides e update_listing_data.
 """
@@ -194,6 +199,7 @@ class Validador:
             if q.get("sem_desconto") and antes and minimo < float(antes) - 1 and \
                excecao not in ("piso_feriado", "dono"):
                 self.erro(i, it, f"{q['nome']} não recebe desconto (de {antes} para {minimo:.0f})")
+            self.padrao_qualidade(i, it, q, d, fer, minimo, excecao)
 
         ms = it.get("min_stay")
         if ms is not None:
@@ -208,6 +214,23 @@ class Validador:
                                      "e ocupacao_sabado)")
             if ms < 1 or ms > 7:
                 self.erro(i, it, f"estadia mínima {ms} fora do razoável")
+
+    def padrao_qualidade(self, i, it, q, d, fer, minimo, excecao):
+        """Padrão de qualidade do dono (08/10): sexta, sábado e noites de feriado das suítes com banheira
+        a partir de R$ 1.000 por diária (preço enviado). Desvio só com justificativa de mercado."""
+        padrao = self.par.get("padrao_qualidade_diaria")
+        if not padrao or not q.get("banheira") or not (d.weekday() in (4, 5) or fer):
+            return
+        if minimo >= padrao - 1 or excecao == "dono":
+            return
+        just = str(it.get("mercado") or "").strip()
+        if len(just) >= 20:
+            self.aviso(i, it, f"abaixo do padrão de qualidade (R$ {padrao:.0f}) por exceção de mercado: {just}")
+        else:
+            self.erro(i, it, f"padrão de qualidade do dono (08/10): sexta, sábado e feriado das suítes com "
+                             f"banheira ficam a partir de R$ {padrao:.0f} (preço/piso {minimo:.0f}). Para ir "
+                             f"abaixo, cite o dado de mercado (mediana da Booking, ocupação do mercado ou ritmo "
+                             f"de vendas) no campo 'mercado'")
 
     def validar_anuncio(self, i, it, q):
         campo, valor = it.get("campo"), it.get("valor")

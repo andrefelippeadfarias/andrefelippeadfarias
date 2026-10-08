@@ -1187,6 +1187,15 @@ A Villa não aparece em nenhuma busca com filtro de hidro (falta a comodidade na
 - **Ainda fora da regra, sem mexer** (abaixo da VK2, só 6% a 10% acima do alvo de 10%): 23/10, 08 a 12/11, 22 a 26/11 e 29/11 a 03/12. Esse realinhamento completo espera a suavização da Balcony (pendente de você na tela), porque a média da semana puxa essas datas.
 - **Aprendizado:** na Balcony, o percentual segue o preço recomendado, que sobe quando ela mesma vende. Então o alvo da Regra G se perde a cada venda e precisa de teto na data. Isso vale até a suavização dela ser igualada à das outras suítes.
 
+## 08/10/2026, 20:05 — Rotina das 19:53: teto da Balcony conferido no recálculo; sem reservas novas
+
+- **Reservas, cancelamentos e mudanças manuais desde as 16:53:** nenhum. O dia fechou com 18 reservas feitas, 1 cancelamento (Queen 7, 07→08/10) e 1 mudança manual sua (VK2 em 09 e 10/10, −30%).
+- **Conferência da Balcony (recálculo das 17:40):** 08/10 em **R$ 630** e 12 a 15/10 em **R$ 689**, como gravado às 16:58. A coluna "enviado" ainda mostra R$ 713 e R$ 740, o valor lido antes; costuma atrasar. Confirmo na Booking amanhã cedo.
+- **Envio:** Balcony às 17:40 (com os tetos e a estadia mínima de 2 noites em 09/10). Pendente nos canais: Double, Afrodite, VK7 e Queen 2 ainda no envio das 09:57, só com os pisos de R$ 1.000 (sem mudança de preço) e o piso de 19/11 da Afrodite. Entram no envio diário de amanhã.
+- **Ocupação dos próximos 7 dias:** hotel 51%, Recanto 54%, Villa 47% (meta 70%). Mesmos números das 16:53.
+- **Nada gravado nesta rodada.**
+- **Para a rotina completa de 09/10 (07:53):** (1) revalidar a exceção de mercado da VK2 em 23–24/10; (2) refazer o alvo da Regra G da Balcony; (3) medir o efeito das mudanças de 07 e 08/10; (4) conferir os canais depois do envio diário; (5) reclassificar a demanda por suíte.
+
 > **Regras em vigor:** desde 06/10/2026 elas ficam em `.claude/skills/gestao-receita-pousadas/references/regras.md`. Este arquivo guarda só o histórico das mudanças.
 
 ## O que só pode ser feito na tela (passo a passo para você)

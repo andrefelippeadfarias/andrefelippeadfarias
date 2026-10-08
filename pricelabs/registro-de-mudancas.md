@@ -1076,6 +1076,52 @@ A Villa não aparece em nenhuma busca com filtro de hidro (falta a comodidade na
 - No mesmo recálculo, a Queen 7 em 16–17/10 foi de R$ 1.131 para R$ 1.110. Essas datas estão em percentual (−45%, piso R$ 800), então o preço acompanhou o mercado, como esperado.
 - **Aprendizado:** mudar a base do quarto mexe também nas noites de feriado sem regra por data. Depois de qualquer mudança de base, a varredura de segurança de feriado tem que rodar de novo, em todas as datas de feriado e não só nas que têm regra.
 
+## 08/10/2026, 08:20 — Rotina das 07:53 (completa): Regra I hoje na Villa, Regra G realinhada, Double +10%, Queen 7 23–24/10 perto do mercado
+
+- **Ocupação** (hotel, 7/15/30/45/60 dias): 48% ⚠️, 37% ⚠️, 30% ⚠️, 25% ✅, 21% ✅. Recanto 54/42/29%, Villa 41/30/31%.
+  - Por quarto em 15 e 30 dias: Double 57/41%, Queen (2) 57/45%, Afrodite 53/33%, VK7 41/36%, VK2 30/37%, Queen (7) 25/13%, Balcony 18/23%. A classificação de demanda não mudou.
+- **Reservas desde ontem** pelo calendário (o relatório de reservas ainda não mostra todas): Queen (7) +2 em 08/10 e +1 em 13/10; VK7 +1 em 08–10/10, além da reserva direta.
+- **Noites liberadas sem cancelamento no relatório:** Double 16 e 17/10 (de 6/6 para 5/6) e Queen (2) 08/10 (de 1/2 para 0/2). Pode ser cancelamento ou bloqueio retirado.
+- **Mudanças manuais:** nenhuma. Os 28 registros são da API.
+- **Envio:** 7 quartos com envio ativo. O último foi ontem às 17:01 (a Queen 7 também às 23:47). As gravações de hoje (08:15) entram no envio diário.
+- **Booking** (2 noites; cálculo sobre os hotéis com Jacuzzi da coleta):
+
+| Período | Mediana geral | Mediana com hidro | Mediana nota 9+ | Recanto | Villa |
+|---|---|---|---|---|---|
+| 13–15/10 | R$ 716 | R$ 1.412 | R$ 1.342 | R$ 946 (1º no filtro de hidro) | R$ 763 |
+| Feriado 09–11/10 | R$ 1.505 | R$ 2.190 | R$ 1.610 | R$ 2.160 | R$ 1.598 |
+| 16–18/10 | R$ 1.416 | R$ 2.660 | R$ 2.456 | R$ 1.380 | R$ 1.394 |
+| 23–25/10 | R$ 1.015 | R$ 1.481 | R$ 1.380 | R$ 1.653 (fora do top 10) | R$ 1.128 |
+| Finados 30/10–01/11 | R$ 1.485 | R$ 2.580 | R$ 2.660 | R$ 2.714 | **R$ 3.451** (2º mais caro de 17) |
+
+- O envio das 17:01 está no ar: a vitrine da Villa bate com a Balcony nova (13–15/10: R$ 763 = R$ 721 × 2 × 0,53).
+- **Finados na Villa:** a vitrine está acima da Murano (nota 9,7), mas a Balcony em 31/10 já tem 4 de 6 vendidas e a Villa em 01/11 está com 73% vendido. Mantive o +20% do dono e revejo em 16/10 (D14) se a sexta 30/10 continuar fraca (2 de 15 vendidas).
+
+| Mudança | Onde | Antes | Depois (recalculado e conferido às 08:17) | Como desfazer (pedir ao Claude) |
+|---|---|---|---|---|
+| Regra I hoje (D0) | VK7 08/10 (2 livres) | −30%, piso R$ 770 (R$ 814) | −40%, piso R$ 700 → **R$ 700** | "Volte a VK7 08/10 para piso R$ 770" |
+| Regra I hoje (D0) | VK2 08/10 (2 livres) | −24% (R$ 700) | −32%, piso R$ 630 → **R$ 630** | "Volte a VK2 08/10 para −24%" |
+| Regra F dia útil, piso no mínimo | VK7 12–15/10 e 18–22/10 | −30% (R$ 917 e R$ 894; o percentual subiu com as vendas) | −35%, piso R$ 850 → **R$ 850** | "Volte a VK7 12–22/10 para −30%" |
+| Regra F dia útil, piso no mínimo | VK2 12–15/10 | −24% (R$ 789) | −35%, piso R$ 765 → **R$ 765** | "Volte a VK2 12–15/10 para −24%" |
+| Regra G: 10% abaixo da suíte com banheira mais barata e livre | Balcony 08/10 | R$ 778 (acima da VK2!) | **R$ 630** (= VK2; limite de segurança) | "Volte a Balcony 08/10 para −60%" |
+| Regra G | Balcony 12–15/10 e 16–17/10 | R$ 711 e R$ 1.054 | **R$ 689** e **R$ 1.016** (bloco −22%) | "Volte a Balcony 12–17/10 para −19%" |
+| Regra G | Balcony 03–04/11 | R$ 962 | **R$ 901** (bloco −31%) | "Volte a Balcony 03–04/11 para piso R$ 962" |
+| Regra G | Balcony 15–18/11 | R$ 906 | **R$ 848** (bloco −42%) | "Volte a Balcony 15–18/11 para −38%, piso R$ 849" |
+| Regra G | Balcony 29/11–03/12 e 04–05/12 | R$ 854 e R$ 1.761 | **R$ 824** e **R$ 1.784** (bloco −17%) | "Volte a Balcony 29/11–05/12 para −14%" |
+| Regra G (teto) | Balcony 06/12 | R$ 1.418 (acima da VK2 R$ 1.044, pela suavização semanal) | teto R$ 940 → **R$ 940** | "Apague a regra da Balcony 06/12" |
+| Feriados no mesmo bloco da Balcony | 09–10/10, 01–02/11, 19–21/11 | pisos R$ 1.510, R$ 1.679, R$ 1.541, R$ 2.544 | percentual do bloco, **mesmos pisos e preços** | — |
+| Demanda alta: datas com 67% ou mais vendido, +10% | Double 13–14/10 | R$ 1.437 | piso **R$ 1.580** | "Volte a Double 13–14/10 para piso R$ 900" |
+| Demanda alta, +10% | Double 16–17/10 (5 de 6) | R$ 1.543 | piso **R$ 1.697** | "Volte a Double 16–17/10 para piso R$ 900" |
+| Demanda baixa: fim de semana perto da mediana nota 9+ | Queen 7 23–24/10 (0 de 7) | −20% (R$ 1.361) | −32% → **R$ 1.163** | "Volte a Queen 7 23–24/10 para −20%" |
+| Regra F, sexta e sábado de D22 a D31: −12% | Queen 7 06–07/11 | algoritmo R$ 2.291 | **R$ 1.940** | "Apague a regra da Queen 7 06–07/11" |
+| Regra F, −12% | Double 06–07/11 | algoritmo R$ 3.015 | **R$ 2.623** | "Apague a regra do Double 06–07/11" |
+| Regra C | Afrodite 20/10 (livre a D12) | R$ 1.659 | −30%, piso R$ 1.500 → **R$ 1.500** | "Apague a regra da Afrodite 20/10" |
+| Regra H e feriados: estadia mínima 2 | Queen 7 07/11, 13–14/11, 20–21/11, 28/11 | 1 noite (os outros quartos já tinham 2) | **2 noites** | "Volte a Queen 7 <data> para 1 noite" |
+
+- **Conferência:** `ler_recalculo.py` com 60 datas e 0 diferença. Varredura de feriado: nenhuma noite abaixo de R$ 800 reais.
+- **Regra G depois do recálculo:** nenhuma Balcony acima de suíte. Em 23–24/10, 22–26/11 e 06/12 a Balcony ficou 6% a 7% abaixo, e não 10%, porque a VK2 baixou no recálculo de hoje. O limite de recálculos da Balcony acabou por hoje; ajusto na próxima rotina com recálculo livre.
+- **Pendência técnica:** em dezembro, a suavização semanal da Balcony puxa os dias úteis para R$ 1.418–1.767, acima das suítes. A solução é igualar a suavização da Balcony à do grupo (domingo a quinta e sexta a sábado). Fica para a revisão de segunda (12/10).
+
 > **Regras em vigor:** desde 06/10/2026 elas ficam em `.claude/skills/gestao-receita-pousadas/references/regras.md`. Este arquivo guarda só o histórico das mudanças.
 
 ## O que só pode ser feito na tela (passo a passo para você)

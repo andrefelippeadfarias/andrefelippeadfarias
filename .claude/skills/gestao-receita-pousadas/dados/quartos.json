@@ -1,5 +1,5 @@
 {
-  "versao": "2026-10-07T13",
+  "versao": "2026-10-08T08",
   "nota": "Fonte única dos dados de máquina da Skill. Os scripts leem daqui. Quem mudar base, mínimo ou máximo no PriceLabs atualiza este arquivo no mesmo commit.",
   "pms": "beds24",
   "grupo": {
@@ -247,5 +247,5 @@
     }
   ],
   "feriados_nota": "Cada período lista as NOITES de feriado (data de entrada da diária). piso_real null = sem piso do dono; vale só o limite de segurança.",
-  "demanda_nota": "Classificação de demanda por suíte (alta/media/baixa), revista em toda rotina completa pela ocupação 15/30 dias contra as metas e pelo ritmo de reservas dos últimos 14 dias. Última revisão: 2026-10-07 12h (pedido do dono)."
+  "demanda_nota": "Classificação de demanda por suíte (alta/media/baixa), revista em toda rotina completa pela ocupação 15/30 dias contra as metas e pelo ritmo de reservas dos últimos 14 dias. Última revisão: 2026-10-08 07:53 (rotina completa; sem mudança de nível: Q7 15d 25%/30d 13% baixa; Double 57%/41% alta; Q2 57%/45% alta; Afrodite 53%/33% média; VK7 41%/36% média; VK2 30%/37% média; Balcony 18%/23% baixa)."
 }

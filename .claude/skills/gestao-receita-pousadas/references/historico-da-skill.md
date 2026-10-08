@@ -2,6 +2,11 @@
 
 Cada mudança feita na própria Skill (regras, parâmetros, scripts, fluxo) entra aqui: data, o que mudou, por quê (evidência) e como desfazer. A entrada mais nova fica em cima.
 
+## 08/10/2026 08:20: conferência da estadia mínima de sábados e feriados
+- **O quê:** `SKILL.md` passo 4 passou a conferir a estadia mínima de sábados e feriados em todos os quartos. `aprendizados.md` ganhou 5 fatos: vitrine ÷ enviado, percentual de dia útil que sobe com as vendas, blocos semanais da Balcony, estadia mínima da Queen 7 e mercado de 08/10. `quartos.json` ganhou a nota de demanda de 08/10 (versão 2026-10-08T08).
+- **Por quê:** a Queen (7) tinha sábados de 07/11 a 28/11 e os feriados de novembro com 1 noite sem regra por data; corrigido nesta rotina.
+- **Como desfazer:** tirar a linha nova do passo 4.
+
 ## 07/10/2026 20:05: varredura de feriado depois de mudar a base
 - **O quê:** `SKILL.md` passo 4: a varredura de feriado inclui as noites sem regra por data e roda de novo sempre que a base de um quarto mudar. `aprendizados.md`: 2 fatos novos (efeito da base no feriado e o envio extra das 17:01).
 - **Por quê:** a base −15% da Queen (7) deixou 13–14/11 em R$ 1.838 (cerca de R$ 772 reais), abaixo do limite de segurança. O erro foi achado na conferência das 19:53 e corrigido.

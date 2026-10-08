@@ -5,6 +5,7 @@ Cada item tem data e evidência. Para incluir um item novo: data, o fato, a evid
 ## Valor real pago e vitrine
 | Data | Fato | Evidência |
 |---|---|---|
+| 08/10 | Vitrine da Booking ÷ preço enviado: Recanto 0,59 em dia útil, 0,57 no feriado e 0,61 no fim de semana; Villa 0,53 em dia útil e no feriado e 0,66 no fim de semana. | Coleta da Booking de 08/10, 5 períodos, contra os preços enviados às 17:01 de 07/10. |
 | 28/09 a 05/10 | Valor real ÷ preço enviado, na Booking: Queen (2) 33–39%; Balcony 39–47%; Queen (7) 42–54%; Double 53%; Villa King Spa (7) 38–41%; Villa King Spa (2) 39%. Airbnb na mesma faixa (39–54%). Expedia bem acima. | Reservas do Beds24 (campo total_cost) contra o user_price. Registro: L123–125, L494–501, L593 e L688. |
 | 05–06/10 | Última hora de meio de semana: Queen (7) pagou 50% do enviado (R$ 807 por 2 diárias a R$ 800), R$ 330–404 por noite. | Reservas de 05/10. |
 | 30/09 | Vitrine da Booking ≈ 53% do enviado na Villa (o "a partir de" da Villa é o quarto mais barato) e ≈ 60% no Recanto (Queen 7). | Registro L238, L275 e L298. |
@@ -19,6 +20,9 @@ Cada item tem data e evidência. Para incluir um item novo: data, o fato, a evid
 ## Comportamento do PriceLabs e dos canais
 | Data | Fato | Evidência |
 |---|---|---|
+| 08/10 | O percentual de dia útil sobe sozinho com as vendas de outras datas do quarto (ajuste de ocupação): VK7 a −30% foi de R$ 864 para R$ 917 em 24 h, com 6 de 7 livres. Na Regra F, refaça o percentual a cada rotina completa para a data voltar ao piso. | Coleta de 08/10 contra o recálculo de 07/10. |
+| 08/10 | A suavização da Balcony junta semanas de domingo a sábado (18–24/10, 25–31/10, 08–14/11 ...). Em dezembro, ela puxa os dias úteis para R$ 1.418–1.767, acima das suítes. | Detalhamento do recálculo da Balcony de 08/10. |
+| 08/10 | Os sábados da Queen (7) de 07/11 a 28/11 e os feriados de novembro estavam com estadia mínima 1, enquanto os outros quartos tinham 2 sem regra por data. Confira a estadia de sábados e feriados de todos os quartos em toda rotina completa. | Coleta de 08/10; corrigido por regra por data. |
 | 30/09 | Percentual respeita o piso de fim de semana (150% da base); preço fixo passa por cima dele. | Portão 1: VKS7 16/10 a R$ 1.536 com piso de R$ 2.220. |
 | 06/10 | Preço fixo abaixo do mínimo do anúncio funciona se a substituição levar `min_price` igual ao preço. | Recálculo de 06/10: Queen (7) R$ 640, VKS7 R$ 800 e VKS2 R$ 720 conferidos. |
 | 30/09 | A suavização anula percentual em dia útil isolado e dilui o percentual em uma noite só de fim de semana. Nesses casos, use preço fixo. | Queen 13/10: −35% deu R$ 1.405. |
@@ -56,6 +60,7 @@ Cada item tem data e evidência. Para incluir um item novo: data, o fato, a evid
 ## Mercado e concorrência
 | Data | Fato | Evidência |
 |---|---|---|
+| 08/10 | Booking (2 noites), mediana geral, com hidro e nota 9+: 13–15/10 R$ 716 / R$ 1.412 / R$ 1.342; feriado R$ 1.505 / R$ 2.190 / R$ 1.610; 16–18/10 R$ 1.416 / R$ 2.660 / R$ 2.456; 23–25/10 R$ 1.015 / R$ 1.481 / R$ 1.380; Finados R$ 1.485 / R$ 2.580 / R$ 2.660. A Villa em Finados (R$ 3.451) era a 2ª mais cara de 17, mas a Balcony em 31/10 já tinha 4 de 6 vendidas. O Recanto em 23–25/10 (R$ 1.653) saiu do top 10 geral. | Coleta de 08/10, 07:53 (15 buscas). |
 | 06/10 | Feriado de 12/10: o mercado estava em 32%, 43% e 44% (09 a 11/10), contra 25%, 22% e 19% no mesmo dia do ano passado. O final do ano passado foi 40%, 53% e 34%. Nós estávamos em 45%, 48% e 100%. | get_neighbourhood_data. |
 | 06/10 | Com o piso de R$ 1.200 reais, o Recanto era o 2º mais caro de 21 no feriado (R$ 1.816 por noite na vitrine) e ficou 3 dias sem vender. | Busca na Booking; reservas. |
 | 06/10 | Em 16 a 18/10 estávamos 47–53% acima da mediana (R$ 690 por noite); domingo 18/10, duas vezes a mediana (R$ 313); meio de semana 13 a 15/10, na mediana. | Busca na Booking. |
@@ -70,8 +75,8 @@ Cada item tem data e evidência. Para incluir um item novo: data, o fato, a evid
 | Feriado com piso de R$ 1.000 (06/10) | R$ 2.890 → R$ 2.390 | 0 vendas em 24 h (06/10 08:48 a 07/10 08:15) | caro: Recanto 13% acima da mediana com hidro; baixou para R$ 800 reais |
 | Preços novos da Villa e conversão (envio de 07/10 08:36) | Villa na Booking: 07/10 R$ 370, feriado R$ 1.598, 23–25/10 R$ 1.387 | Em 3 h: VK7 +5 (07, 08, 12, 13 e 14/10); Double 16–17/10 esgotou (+4); Afrodite 18/10; Queen (2) 25/10 | resposta rápida |
 | Flutuação depois do percentual (07/10, recálculo das 16:54) | Com as vendas do dia, os preços das suítes da Villa subiram sozinhos: VK7 16/10 de R$ 1.154 para R$ 1.308; VK2 07/10 de R$ 632 para R$ 690 | — | o percentual responde à ocupação, como o dono queria. A Balcony presa em piso precisa ser realinhada a cada rotina completa. |
-| Regra G nova: Balcony 10% abaixo da suíte com banheira (07/10 12:45) | Balcony de R$ 775–856 para R$ 696–770 nos dias úteis; fins de semana de R$ 1.050–1.171 para R$ 853–1.054 | (medir em 48 h) | |
-| Estratégia por suíte (07/10 12:30) | Queen 7 base −15%; Queen (2) base +10%; Double +10% em 12–15/10 e no feriado 09/10; Balcony no nível da VK2; Finados sem vazamento | (medir em 48 h e na revisão de segunda) | |
+| Regra G nova: Balcony 10% abaixo da suíte com banheira (07/10 12:45) | Balcony de R$ 775–856 para R$ 696–770 nos dias úteis; fins de semana de R$ 1.050–1.171 para R$ 853–1.054 | Em 20 h: 0 vendas novas da Balcony (Villa na vitrine a R$ 763 em 13–15/10, 7% acima da mediana geral) | medir em 48 h (até 09/10 13h) |
+| Estratégia por suíte (07/10 12:30) | Queen 7 base −15%; Queen (2) base +10%; Double +10% em 12–15/10 e no feriado 09/10; Balcony no nível da VK2; Finados sem vazamento | Em 20 h: Queen 7 +3 noites (08/10 duas vezes e 13/10, todas de última hora); Double 13–15/10 seguiu vendendo (5/6 em 13/10); Queen (2) sem venda nova | medir de novo na revisão de segunda |
 | Feriado do Recanto com piso de R$ 800 (07/10 08:20) | Queen (7) e Double R$ 2.390 → R$ 1.905; Queen (2) R$ 2.950 → R$ 2.355; Afrodite R$ 3.190 → R$ 2.550. Booking: R$ 2.710 → R$ 2.197 (2 noites), 8% abaixo da mediana com hidro | (medir até 09/10) | |
 | Fim de semana 16–17/10 perto do mercado (06/10) | R$ 1.668 → R$ 1.250 (Queen 7); Double R$ 2.069 → R$ 1.400 | 1 venda em cerca de 3 h: Double, 16–17/10, 2 noites, R$ 630 reais por noite (direto) | resposta rápida ao corte |
 | Villa agressiva de 06 a 25/10 (06/10 16h) | Mínimos −15%, dias úteis no mínimo, feriado a R$ 800 reais, fins de semana perto da mediana | 0 vendas até 19:56 de 06/10, mas os preços ainda não tinham chegado aos canais (só no envio de 07/10). Medir a partir do envio, até 09/10 e em 13/10. | |

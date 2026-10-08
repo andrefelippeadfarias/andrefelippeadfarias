@@ -1171,6 +1171,22 @@ A Villa não aparece em nenhuma busca com filtro de hidro (falta a comodidade na
 - **Regras reaplicadas:** Regra I de hoje (Queen 7 R$ 640, VK7 R$ 722, VK2 R$ 652, Balcony R$ 632) está certa; Double 13 e 14/10 (5 e 4 de 6 vendidas) já subiram 10% de manhã e a vitrine está cerca de 30% acima da mediana com hidro da Booking, então não sobe mais; Regra G ok em 09–10/10 (Balcony R$ 1.510 contra a VK2 do dono a R$ 1.660) e em 16–17/10; Regra F não pede saída da escada em nenhuma data (datas "Dono" ficam até passar de 70%). Nada gravado.
 - **Sábado 10/10 na Double:** a sexta esgotou, e com o domingo também esgotado sobram **3 unidades que só vendem em sábado sozinho**. É feriado, então a Regra H não libera. O PriceLabs já mostra 1 noite nessa data (regra de dia isolado entre duas noites esgotadas) a R$ 1.946, com R$ 2.311 no próximo envio. Só você libera no Beds24, se quiser vender.
 
+## 08/10/2026, 17:00 — Rotina das 16:53: sem reservas novas; Balcony passou da VK2 e foi travada
+
+- **Reservas e cancelamentos desde as 13:53:** nenhum. **Mudança manual:** só a sua da VK2, já registrada.
+- **Envio:** Balcony às 16:09 e VK2 às 16:10 (a estadia mínima de 2 noites da Balcony em 09/10 já está nos canais). Queen 7 às 13:46. Double, Afrodite, VK7 e Queen 2 continuam no envio das 09:57; falta neles só o piso de R$ 1.000 (sem mudança de preço) e o piso de 19/11 da Afrodite.
+- **Ocupação dos próximos 7 dias:** hotel 51%, Recanto 54%, Villa 47%. A Balcony passou de 26% para 31% (+2 noites em 09 e 10/10).
+- **Problema achado (Regra G):** a venda da Balcony subiu o preço calculado dela: 08/10 de R$ 632 para **R$ 713**, acima da VK2 (R$ 645); 12 a 15/10 de R$ 689 para R$ 740, só 3% abaixo da VK2 (R$ 765), e não 10%.
+
+| Mudança | Onde | Antes | Depois | Como desfazer (pedir ao Claude) |
+|---|---|---|---|---|
+| Regra G: nunca acima da suíte com banheira. Teto igual ao piso | Balcony, 08/10 (hoje, 6 livres) | calculado R$ 713 (VK2 R$ 645) | piso e teto **R$ 630** (limite de segurança) | "Tire o teto da Balcony em 08/10" |
+| Regra G: 10% abaixo da VK2. Teto no alvo | Balcony, 12 a 15/10 | calculado R$ 740 (VK2 R$ 765) | piso e teto **R$ 689** | "Tire o teto da Balcony em 12–15/10" |
+
+- Conferido na resposta da API (5 datas). Não deu para conferir no recálculo: o limite de 3 recálculos da Balcony já foi usado. Confiro na rotina das 19:53.
+- **Ainda fora da regra, sem mexer** (abaixo da VK2, só 6% a 10% acima do alvo de 10%): 23/10, 08 a 12/11, 22 a 26/11 e 29/11 a 03/12. Esse realinhamento completo espera a suavização da Balcony (pendente de você na tela), porque a média da semana puxa essas datas.
+- **Aprendizado:** na Balcony, o percentual segue o preço recomendado, que sobe quando ela mesma vende. Então o alvo da Regra G se perde a cada venda e precisa de teto na data. Isso vale até a suavização dela ser igualada à das outras suítes.
+
 > **Regras em vigor:** desde 06/10/2026 elas ficam em `.claude/skills/gestao-receita-pousadas/references/regras.md`. Este arquivo guarda só o histórico das mudanças.
 
 ## O que só pode ser feito na tela (passo a passo para você)

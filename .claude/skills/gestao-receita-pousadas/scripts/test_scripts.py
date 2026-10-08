@@ -144,6 +144,38 @@ class TestValidador(unittest.TestCase):
         pl = montar_payload(CFG, [item(mercado=just, **base)])
         self.assertNotIn("mercado", str(pl))
 
+    def test_padrao_de_qualidade_teto_e_mercado_com_numero(self):
+        # item só com teto abaixo do padrão em sexta de suíte com banheira: ERRO
+        self.assertTrue(any("padrão de qualidade" in x for x in erros(
+            [item(quarto="Q7", data="2026-10-23", max_price=700)])))
+        # teto abaixo do limite de segurança: ERRO mesmo em dia útil
+        self.assertTrue(any("limite de segurança" in x for x in erros(
+            [item(quarto="Q7", data="2026-10-21", max_price=400)])))
+        # justificativa sem número, ou que não é texto, não vale
+        base = dict(quarto="VK2", data="2026-10-24", preco=-30, price_type="percent", min_price=765)
+        self.assertTrue(erros([item(mercado="sem dado nenhum aqui ok mesmo", **base)]))
+        self.assertTrue(erros([item(mercado=["mediana", "booking", 1015], **base)]))
+        self.assertTrue(erros([item(mercado=12345678901234567890, **base)]))
+        # fronteira: 999 passa (tolerância de 1), 998 não
+        self.assertEqual(erros([item(quarto="Q7", data="2026-10-23", preco=-20, price_type="percent",
+                                     min_price=999)]), [])
+        self.assertTrue(erros([item(quarto="Q7", data="2026-10-23", preco=-20, price_type="percent",
+                                    min_price=998)]))
+
+    def test_padrao_de_qualidade_so_o_dono_muda(self):
+        import copy
+        cfg = copy.deepcopy(CFG)
+        cfg["limites_seguranca"]["padrao_qualidade_diaria"] = 0
+        v = Validador(cfg, HOJE, {})
+        v.validar([item(quarto="Q7", data="2026-10-21", preco=-35, price_type="percent", min_price=800)])
+        self.assertTrue(any("padrão de qualidade ausente" in x for x in v.erros))
+        # ordem do dono libera, mas avisa
+        v = Validador(CFG, HOJE, {})
+        v.validar([item(quarto="Q7", data="2026-10-23", preco=900, price_type="fixed", min_price=900,
+                        excecao="dono")])
+        self.assertFalse(any("padrão de qualidade" in x for x in v.erros))
+        self.assertTrue(any("ordem do dono" in a for a in v.avisos))
+
     def test_padrao_de_qualidade_no_feriado(self):
         # feriado: o piso de segurança de R$ 800 reais já leva o preço enviado a mais de R$ 1.000
         self.assertEqual(erros([item(quarto="Q7", data="2026-11-13", preco=0, price_type="percent",
@@ -200,6 +232,16 @@ class TestPercentual(unittest.TestCase):
         # alvo no bloco inteiro: todos chegam ao mínimo
         r = calcular(det, {d: 765 for d in ("2026-10-25", "2026-10-27", "2026-10-28", "2026-10-29")}, 765)
         self.assertTrue(all(abs(v["simulado"] - 765) <= 5 for v in r.values()))
+
+    def test_minimo_por_data(self):
+        # minimo como função: sexta e sábado sobem para 1000, dia útil fica no mínimo do quarto
+        det = {d: {"price": 1100.0, "cust": 1100.0, "mu": 0,
+                   "passos": [("price_smoothing", "+0", 1100.0)]} for d in ("2026-10-22", "2026-10-23")}
+        alvos = {"2026-10-22": 1100.0, "2026-10-23": 1100.0}
+        from percentual import calcular as calc_pct
+        r = calc_pct(det, alvos, lambda d: 1000.0 if d == "2026-10-23" else 800.0)
+        self.assertEqual(r["2026-10-23"]["piso"], 1000)
+        self.assertEqual(r["2026-10-22"]["piso"], 800)
 
     def test_alvo_maior_vira_piso(self):
         from percentual import calcular

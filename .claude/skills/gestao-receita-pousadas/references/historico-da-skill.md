@@ -2,14 +2,15 @@
 
 Cada mudança feita na própria Skill (regras, parâmetros, scripts, fluxo) entra aqui: data, o que mudou, por quê (evidência) e como desfazer. A entrada mais nova fica em cima.
 
-## 08/10/2026 13:20: padrão de qualidade de R$ 1.000 em sexta, sábado e feriado
+## 08/10/2026 10:20: padrão de qualidade de R$ 1.000 em sexta, sábado e feriado
 - **O quê:**
-  - `quartos.json`: parâmetro `padrao_qualidade_diaria` = 1000.
-  - `validar_plano.py`: ERRO quando o piso ou preço de sexta, sábado ou feriado de suíte com banheira fica abaixo do padrão sem o campo `mercado`; aviso quando tem o campo. 3 testes novos (23 OK).
-  - `regras.md`: bloco "Padrão de qualidade", critérios de exceção de mercado, Regra F, seção 5, decisões do dono e seção 7 (suavização da Balcony só pela tela).
-  - `SKILL.md`: passo 4 e relatório. `aprendizados.md` e `ferramentas.md`: suavização, validador e varredura.
-- **Por quê:** decisão do dono (08/10): padrão de alto padrão "mas de olho no mercado" e "sempre trabalhe com percentuais". O "100 reais" foi lido como R$ 1.000, com base no padrão de feriado de R$ 1.000 reais de 06/10.
-- **Como desfazer:** pôr `padrao_qualidade_diaria` em 0 (desliga a trava) e voltar os pisos das 16 datas ao mínimo do quarto.
+  - `quartos.json`: `limites_seguranca.padrao_qualidade_diaria` = 1000 (só o dono muda) e lista `excecoes_mercado`.
+  - `validar_plano.py`: ERRO quando o piso, preço ou teto de sexta, sábado ou feriado de suíte com banheira fica abaixo do padrão sem o campo `mercado` (texto com número, mínimo de 20 caracteres); aviso quando tem o campo ou a ordem do dono; ERRO se o padrão estiver ausente ou zerado; teto sozinho também passa pela checagem.
+  - `percentual.py`: piso mínimo por data (sexta e sábado das suítes com banheira = padrão).
+  - 26 testes (eram 20).
+  - `regras.md`: bloco "Padrão de qualidade" com critérios de exceção de mercado, base ainda sem confirmação do dono, piso de fim de semana do PriceLabs, Regras F, G e I, seções 1, 4b, 5, 6 e 7. `SKILL.md`: passo 4, limites e relatório. `aprendizados.md` e `ferramentas.md`.
+- **Por quê:** decisão do dono (08/10): "devem sempre ser a partir de 100 reais" (lido como R$ 1.000, único número plausível: R$ 100 fica abaixo de qualquer mínimo de quarto), "mas de olho no mercado" e "sempre trabalhe com percentuais". Três revisores independentes conferiram a mudança; os achados que procederam (teto sozinho, texto de mercado sem número, parâmetro editável pela Skill, `percentual.py` sem o piso, critérios de exceção vagos, feriado esgotado fora da varredura) foram corrigidos no mesmo dia.
+- **Como desfazer:** o dono edita `limites_seguranca.padrao_qualidade_diaria` (a Skill não pode zerar: o validador barra) e a Skill volta os pisos das 16 datas ao mínimo do quarto.
 
 ## 08/10/2026 08:20: conferência da estadia mínima de sábados e feriados
 - **O quê:** `SKILL.md` passo 4 passou a conferir a estadia mínima de sábados e feriados em todos os quartos. `aprendizados.md` ganhou 5 fatos: vitrine ÷ enviado, percentual de dia útil que sobe com as vendas, blocos semanais da Balcony, estadia mínima da Queen 7 e mercado de 08/10. `quartos.json` ganhou a nota de demanda de 08/10 (versão 2026-10-08T08).

@@ -47,5 +47,5 @@ Veja como pesquisar em `mercado.md`. Não serve para mudar nada.
 - Faça push com `git push -u origin claude/pricelabs-hotel-occupancy-ku6zn5`. Em erro de rede, tente de novo até 4 vezes (2 s, 4 s, 8 s, 16 s).
 
 ## Padrão de qualidade e suavização (08/10)
-- `validar_plano.py`: o item de sexta, sábado ou feriado de suíte com banheira com preço ou piso abaixo de R$ 1.000 (`parametros.padrao_qualidade_diaria`) dá ERRO, a menos que leve o campo `mercado` (texto de pelo menos 20 caracteres com o dado de mercado). Com o campo, sai um aviso para o relatório. O campo não vai para o PriceLabs. A Balcony não entra.
+- `validar_plano.py`: o item de sexta, sábado ou feriado de suíte com banheira com preço ou piso abaixo de R$ 1.000 (`limites_seguranca.padrao_qualidade_diaria`, só o dono muda; ausente ou zerado dá ERRO) dá ERRO, a menos que leve o campo `mercado` (texto de pelo menos 20 caracteres com o dado de mercado). Com o campo, sai um aviso para o relatório. O campo não vai para o PriceLabs. O teto (`max_price`) sozinho também conta. A Balcony não entra. O `percentual.py` já usa o padrão como piso de sexta e sábado das suítes com banheira.
 - Suavização (Smoothing) não se lê nem se grava por nenhuma ferramenta. Só se enxerga pelos blocos de `price_smoothing` no `refresh_listing_pricing` com `parse_reasons_json`. Mudança só pela tela (ver `regras.md` seção 7).

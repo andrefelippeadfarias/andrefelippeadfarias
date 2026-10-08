@@ -1,5 +1,5 @@
 {
-  "versao": "2026-10-08T08",
+  "versao": "2026-10-08T10",
   "nota": "Fonte única dos dados de máquina da Skill. Os scripts leem daqui. Quem mudar base, mínimo ou máximo no PriceLabs atualiza este arquivo no mesmo commit.",
   "pms": "beds24",
   "grupo": {
@@ -188,6 +188,8 @@
     "fracao_min_referencia": 0.7,
     "variacao_semanal_base_min": 0.15,
     "piso_feriado_real_seguranca": 800,
+    "padrao_qualidade_diaria": 1000,
+    "padrao_qualidade_nota": "Dono, 08/10: sexta, sábado e feriado das suítes com banheira a partir deste valor, no preço enviado (tabela do PriceLabs, antes dos descontos da OTA). Só o dono muda. A Skill só desce abaixo com o campo mercado no plano e a entrada em excecoes_mercado.",
     "proibido": [
       "descontos de OTA",
       "ofertas da Booking",
@@ -204,7 +206,6 @@
     "regra_c_desconto": 0.3,
     "regra_a_janela_dias": 14,
     "piso_feriado_real_padrao": 1000,
-    "padrao_qualidade_diaria": 1000,
     "regra_g_desconto": 0.1
   },
   "feriados": [
@@ -248,5 +249,18 @@
     }
   ],
   "feriados_nota": "Cada período lista as NOITES de feriado (data de entrada da diária). piso_real null = sem piso do dono; vale só o limite de segurança.",
-  "demanda_nota": "Classificação de demanda por suíte (alta/media/baixa), revista em toda rotina completa pela ocupação 15/30 dias contra as metas e pelo ritmo de reservas dos últimos 14 dias. Última revisão: 2026-10-08 07:53 (rotina completa; sem mudança de nível: Q7 15d 25%/30d 13% baixa; Double 57%/41% alta; Q2 57%/45% alta; Afrodite 53%/33% média; VK7 41%/36% média; VK2 30%/37% média; Balcony 18%/23% baixa)."
+  "demanda_nota": "Classificação de demanda por suíte (alta/media/baixa), revista em toda rotina completa pela ocupação 15/30 dias contra as metas e pelo ritmo de reservas dos últimos 14 dias. Última revisão: 2026-10-08 07:53 (rotina completa; sem mudança de nível: Q7 15d 25%/30d 13% baixa; Double 57%/41% alta; Q2 57%/45% alta; Afrodite 53%/33% média; VK7 41%/36% média; VK2 30%/37% média; Balcony 18%/23% baixa).",
+  "excecoes_mercado": [
+    {
+      "quarto": "VK2",
+      "datas": [
+        "2026-10-23",
+        "2026-10-24"
+      ],
+      "piso": 860,
+      "preco_em_08_10": 895,
+      "dado": "D15-D16 em 08/10; mercado a 14,9% e 13,3% (ano passado 16,8% e 19%); mediana geral da Booking em 23-25/10 de R$ 1.015 por 2 noites e a Villa 11% acima; Villa 15d em 30% (meta 50%). Em 08/10 a Villa vendeu +1 noite em cada data: revalidar às 13:53.",
+      "revisar_em": "2026-10-09"
+    }
+  ]
 }

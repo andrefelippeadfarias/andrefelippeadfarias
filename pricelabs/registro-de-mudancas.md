@@ -1125,7 +1125,7 @@ A Villa não aparece em nenhuma busca com filtro de hidro (falta a comodidade na
 ## 08/10/2026, 10:20 — Pedido do dono: padrão de qualidade de R$ 1.000 em sexta, sábado e feriado; suavização da Balcony só pela tela
 
 - **Pedido (dono):** "Existe uma regra para consumidores de alto padrão, que o valor das diárias de feriados e finais de semana nas pousadas com suítes com banheira devem sempre ser a partir de 100 reais [lido como R$ 1.000] como um padrão de qualidade. Esse é o discurso. Porém precisamos ficar de olho no mercado para atingir nossos objetivos." E: "Porém sempre trabalhe com percentuais."
-- **Como entendi:** vale para as 6 suítes com banheira (a Balcony fica de fora), nas noites de sexta, sábado e feriado, sobre o preço enviado. O preço continua em percentual e o piso (`min_price`) dessas datas passa a ser R$ 1.000. Abaixo disso só com um dado de mercado anotado no plano. Se o número que você quis dizer for outro, é só avisar: está em um parâmetro só.
+- **Como entendi:** vale para as 6 suítes com banheira (a Balcony fica de fora), nas noites de sexta, sábado e feriado, sobre o preço enviado. O preço continua em percentual e o piso (`min_price`) dessas datas passa a ser R$ 1.000. Abaixo disso só com um dado de mercado anotado no plano. Se o número que você quis dizer for outro, é só avisar: o valor está em um parâmetro só (`limites_seguranca.padrao_qualidade_diaria`, que só você muda). **Pergunta em aberto:** R$ 1.000 no preço enviado aparece na vitrine da Booking como cerca de R$ 610 a R$ 660 por noite; se você quis R$ 1.000 na vitrine, o piso seria cerca de R$ 1.640 a R$ 1.700.
 - **Varredura** das 91 noites de sexta, sábado e feriado com unidade livre (08/10 a 06/12): 73 já estavam com piso de R$ 1.000 ou mais; 18 tinham piso do quarto (R$ 765 a R$ 900); só 2 noites com preço abaixo de R$ 1.000 (VK2 em 23 e 24/10, R$ 895). O piso de feriado de R$ 800 reais já leva o preço enviado a R$ 1.905 ou mais.
 
 | Mudança | Onde | Antes | Depois (recalculado e conferido às 10:21) | Como desfazer (pedir ao Claude) |
@@ -1136,9 +1136,31 @@ A Villa não aparece em nenhuma busca com filtro de hidro (falta a comodidade na
 | Piso de R$ 1.020, percentual mantido | VK7 (−52%) e VK2 (−47%): 16–17/10 | piso R$ 850 e R$ 765 | piso **R$ 1.020** (R$ 20 acima do padrão para cobrir a Balcony presa em R$ 1.016); preço R$ 1.338 e R$ 1.171 | "Volte o piso da VK7 e da VK2 de 16–17/10 para R$ 850 e R$ 765" |
 
 - **Nenhum preço mudou hoje por causa do padrão:** todas essas noites já estavam acima de R$ 1.000. O piso só impede que o PriceLabs desça abaixo dele nos próximos dias.
-- **Exceção de mercado em vigor:** VK2 em 23 e 24/10 fica no piso de R$ 765 (preço R$ 895). Motivo: mercado de 13–15% de ocupação, eleição em 25/10 e mediana da Booking para 23–25/10 de R$ 1.015 (a Villa já está 11% acima). Revejo na rotina completa de 09/10.
+- **Exceção de mercado em vigor:** VK2 em 23 e 24/10, piso de R$ 765 que subiu para R$ 860 às 13:33 (preço R$ 895 na coleta de 07:53). Motivo: mercado de 13–15% de ocupação, eleição em 25/10 e mediana da Booking para 23–25/10 de R$ 1.015 (a Villa já está 11% acima). Revejo na rotina completa de 09/10.
 - **Conferência:** `ler_recalculo.py` com 16 datas e 0 diferença. O validador novo barra sexta, sábado e feriado abaixo de R$ 1.000 sem o dado de mercado (23 testes, todos OK).
 - **Suavização da Balcony:** não dá para mudar por mim. Nem a API nem o conector do PriceLabs têm esse campo (confirmado em 4 fontes). Só você, na tela: Painel de preços > linha da Balcony > Revisar preços > Editar em Personalizações > aba "All Customizations" > Smoothing > ligado > **"Smooth weekdays vs. weekends"** > Salvar. A Balcony hoje está em "Set week start = domingo" (7 dias juntos). Não escolha "Set week start" nem "No Smoothing". Quando você salvar, refaço os percentuais e os pisos da Balcony (hoje presos em R$ 1.016 em 16–17/10 e semelhantes).
+
+## 08/10/2026, 13:35 — Rotina das 10:53: correções da revisão; mudança manual do dono na VK2 do feriado; lote de reservas da Booking
+
+- **Correções depois da revisão independente** (3 revisores; os achados que procediam foram corrigidos no código, nas regras e nestes quartos):
+
+| Mudança | Onde | Antes | Depois | Como desfazer (pedir ao Claude) |
+|---|---|---|---|---|
+| Piso de segurança do feriado (R$ 800 reais) | VK2, 19/11 (Consciência Negra) | só estadia mínima; preço calculado R$ 1.621 = R$ 632 reais se a noite reabrir | 0%, piso **R$ 2.052** | "Apague a regra da VK2 em 19/11" (não recomendado) |
+| Piso de segurança do feriado | Afrodite, 19/11 | só estadia mínima; R$ 1.943 = R$ 816 reais | 0%, piso **R$ 1.905** | idem |
+| Estadia mínima do feriado | Queen 7 e Balcony, 09/10 | 1 noite (os outros 5 quartos já tinham 2) | **2 noites**; chega aos canais no próximo envio | "Volte a estadia de 09/10 para 1 noite" |
+| Exceção de mercado ao padrão de R$ 1.000 | VK2, 23 e 24/10 (−55%) | piso R$ 765 (a Balcony, presa em R$ 853, ficaria acima da VK2) | piso **R$ 860** | "Volte o piso da VK2 de 23–24/10 para R$ 765" |
+
+- **Mudança manual do dono (tela, 12:33 BRT):** VK2 nas noites de feriado **09 e 10/10** foi para **−30%**, com piso e teto também em −30% (o piso virou 70% do mínimo do anúncio). O preço caiu de R$ 2.132 para **R$ 1.660**, o que dá cerca de R$ 647 de valor real, abaixo dos R$ 800 do limite de segurança do feriado. Respeitei e não mexi: é decisão sua, na véspera, para vender a última VK2 (1 de 2 livre em cada noite). O envio saiu às 12:56 BRT.
+- **Reservas desde as 07:53:**
+  - Lote da Booking criado às 10:37 BRT (17 reservas, no mesmo segundo): Queen 7 em 16/10 (R$ 1.223, 2 noites) e 23–25/11 (R$ 1.285); Double em 17/10 (R$ 986) e 31/10–02/11 (**R$ 3.476**, Finados, 3 noites); Queen 2 em 23/10 (R$ 1.522) e 26/09/2027; VK7 em 12/10 (R$ 575), 16/10 (R$ 1.151) e 11/06/2027; Balcony 09/10 (R$ 1.118); VK2 em 23/10 (R$ 1.131) e 24/10 (R$ 463 e R$ 982).
+  - Diretas: Double 09/10 (R$ 2.020, 2 noites) e VK7 09/10 (R$ 1.596, 2 noites).
+  - Outras: Double 18/10 Airbnb R$ 368 (1 noite) e Double 29/11 Airbnb R$ 449 (1 noite) já tinham chegado de madrugada.
+  - Cancelada: Queen 7, 07→08/10, R$ 594 (direta).
+  - A ocupação por quarto da API só reflete esse lote na VK2 (recalculada às 12:56 BRT: +1 noite em 23/10 e +1 em 24/10, 24/10 esgotada). Os outros 6 quartos foram recalculados às 10:26 BRT, antes do lote. As decisões sobre eles esperam a ocupação nova, na rotina de 13:53.
+- **Envio:** todos os quartos subiram às **09:57 BRT** (as mudanças das 08:15 já estão nos canais, inclusive Regra I de hoje na Villa); VK2 de novo às 12:56 BRT (sua edição). As gravações das 10:14 (pisos de R$ 1.000, sem mudança de preço) e das 13:33 (correções acima) entram no próximo envio.
+- **Ocupação dos próximos 7 dias (PriceLabs, 10:26 BRT):** Queen 7 43%, Double 79%, Afrodite 43%, Queen 2 29%, VK7 63%, VK2 36%, Balcony 26%.
+- **Pendência com o dono:** tabela de modelos dos agentes (`hc-executor`, `hc-testes`, `hc-rele`, `hc-auditor`, `hc-cards`, `hc-verificador`): esses agentes não existem neste projeto; aguardando o dono dizer a que fluxo se aplica.
 
 > **Regras em vigor:** desde 06/10/2026 elas ficam em `.claude/skills/gestao-receita-pousadas/references/regras.md`. Este arquivo guarda só o histórico das mudanças.
 

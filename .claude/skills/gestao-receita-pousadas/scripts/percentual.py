@@ -18,7 +18,8 @@ Uso:
 alvos.json: {"VK7": {"2026-10-12": 850, ...}, ...}. Datas do bloco sem alvo ficam com 0% (o preço
 delas não muda). Para levar o bloco inteiro ao mesmo nível, dê alvo a todas as datas do bloco.
 Saída: para cada data com alvo, percentual, piso sugerido (o próprio alvo, quando ele fica acima
-do nível do bloco) e o preço simulado.
+do nível do bloco) e o preço simulado. Em sexta e sábado das suítes com banheira o piso mínimo já é o
+padrão de qualidade (limites_seguranca.padrao_qualidade_diaria), e não o mínimo do quarto.
 """
 
 from __future__ import annotations
@@ -78,10 +79,12 @@ def blocos(det: dict) -> list[list[str]]:
     return grupos
 
 
-def calcular(det: dict, alvos: dict, minimo: float, feriado=lambda d: False, escala: float = 1.0,
+def calcular(det: dict, alvos: dict, minimo, feriado=lambda d: False, escala: float = 1.0,
              atuais: dict | None = None) -> dict:
     """Devolve {data: {"pct", "piso", "simulado"}} para as datas com alvo. No feriado, o piso é o
-    próprio alvo (o validador exige o piso de valor real)."""
+    próprio alvo (o validador exige o piso de valor real). `minimo` é um número ou uma função
+    data -> piso mínimo da data (sexta e sábado das suítes com banheira: padrão de qualidade)."""
+    mn = minimo if callable(minimo) else (lambda d: minimo)
     res = {}
     for b in blocos(det):
         com_alvo = [d for d in b if d in alvos]
@@ -97,7 +100,7 @@ def calcular(det: dict, alvos: dict, minimo: float, feriado=lambda d: False, esc
         pct = round(((nivel * len(b) - soma_n) / soma_x - 1) * 100)
         v = (sum(valor_antes_suavizar(det[d]) * escala * (1 + pct / 100) for d in com_alvo) + soma_n) / len(b)
         for d in com_alvo:
-            piso = alvos[d] if (alvos[d] > nivel + 1 or alvos[d] < minimo or feriado(d)) else minimo
+            piso = alvos[d] if (alvos[d] > nivel + 1 or alvos[d] < mn(d) or feriado(d)) else mn(d)
             res[d] = {"pct": pct, "piso": round(piso), "simulado": round(max(v, piso)),
                       "bloco": f"{b[0]}..{b[-1]}", "vaza_para": sem_alvo}
     return res
@@ -117,9 +120,17 @@ def main(argv=None) -> int:
         det_all = ler_json(a.detalhe)
         alvos_all = ler_json(a.alvos)
         for curto, alvos in alvos_all.items():
-            minimo = cfg["por_curto"][curto]["min"]
+            q = cfg["por_curto"][curto]
             from datetime import date as _date
             from comum import periodo_feriado
+            padrao = float(cfg["limites_seguranca"].get("padrao_qualidade_diaria") or 0)
+
+            def minimo(d, q=q, padrao=padrao):
+                # padrão de qualidade: sexta e sábado das suítes com banheira ficam a partir de R$ 1.000
+                if q.get("banheira") and _date.fromisoformat(d).weekday() in (4, 5):
+                    return max(float(q["min"]), padrao)
+                return float(q["min"])
+
             r = calcular(det_all[curto], {k: float(v) for k, v in alvos.items()}, minimo,
                          lambda d: periodo_feriado(cfg, _date.fromisoformat(d)) is not None)
             for d in sorted(r):

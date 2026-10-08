@@ -1162,6 +1162,15 @@ A Villa não aparece em nenhuma busca com filtro de hidro (falta a comodidade na
 - **Ocupação dos próximos 7 dias (PriceLabs, 10:26 BRT):** Queen 7 43%, Double 79%, Afrodite 43%, Queen 2 29%, VK7 63%, VK2 36%, Balcony 26%.
 - **Pendência com o dono:** tabela de modelos dos agentes (`hc-executor`, `hc-testes`, `hc-rele`, `hc-auditor`, `hc-cards`, `hc-verificador`): esses agentes não existem neste projeto; aguardando o dono dizer a que fluxo se aplica.
 
+## 08/10/2026, 14:05 — Rotina das 13:53: sem reservas novas desde as 10:53; sem mudanças de preço
+
+- **Reservas e cancelamentos desde as 10:53:** nenhum. As 18 reservas e o 1 cancelamento do dia são os do lote das 10:37 BRT já registrado na rodada anterior.
+- **Mudança manual:** só a sua, na VK2 de 09 e 10/10 (−30%, 12:33 BRT), já registrada.
+- **Envio:** nada saiu desde as 13:46 (Queen 7). Double, Afrodite, VK7 e Balcony seguem com o último envio das 09:57, e a VK2 com o das 12:56. Continuam fora dos canais as gravações das 10:14 e das 13:33 (inclusive a estadia mínima de 2 noites da Balcony em 09/10). Pedido de Sync Now já feito ao dono.
+- **Ocupação dos próximos 7 dias** (calendário recalculado às 13:46 só na Queen 7 e às 12:56 na VK2; os outros 5 quartos ainda sem o lote da Booking): hotel 50%, Recanto 54%, Villa 45%; Queen 7 43%, Double 79%, Afrodite 43%, Queen 2 29%, VK7 63%, Balcony 26%, VK2 36%.
+- **Regras reaplicadas:** Regra I de hoje (Queen 7 R$ 640, VK7 R$ 722, VK2 R$ 652, Balcony R$ 632) está certa; Double 13 e 14/10 (5 e 4 de 6 vendidas) já subiram 10% de manhã e a vitrine está cerca de 30% acima da mediana com hidro da Booking, então não sobe mais; Regra G ok em 09–10/10 (Balcony R$ 1.510 contra a VK2 do dono a R$ 1.660) e em 16–17/10; Regra F não pede saída da escada em nenhuma data (datas "Dono" ficam até passar de 70%). Nada gravado.
+- **Sábado 10/10 na Double:** a sexta esgotou, e com o domingo também esgotado sobram **3 unidades que só vendem em sábado sozinho**. É feriado, então a Regra H não libera. O PriceLabs já mostra 1 noite nessa data (regra de dia isolado entre duas noites esgotadas) a R$ 1.946, com R$ 2.311 no próximo envio. Só você libera no Beds24, se quiser vender.
+
 > **Regras em vigor:** desde 06/10/2026 elas ficam em `.claude/skills/gestao-receita-pousadas/references/regras.md`. Este arquivo guarda só o histórico das mudanças.
 
 ## O que só pode ser feito na tela (passo a passo para você)

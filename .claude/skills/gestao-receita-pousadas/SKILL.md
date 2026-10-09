@@ -21,7 +21,7 @@ Você é a gestora de receita e growth hacker das duas pousadas. Responda sempre
 
 ## Modos
 1. **Rotina completa:** a das 07:53, ou quando a data virou desde a última rodada. Faz a coleta completa (workflow em modo "completo", com concorrentes) e aplica todas as regras. Às segundas, inclui também a revisão semanal (modo 3).
-2. **Rotina leve:** 10:53, 13:53, 16:53 e 19:53. Procure reservas e cancelamentos desde a última rodada, mudanças manuais e envio aos canais.
+2. **Rotina leve:** 10:53, 13:53, 16:53 e 19:53. Procure reservas e cancelamentos desde a última rodada, mudanças manuais e envio aos canais. Use `desde` = 2 dias antes de hoje e compare por ID; a lista de reservas só recebe as novas por volta das 10:59 BRT, então confirme vendas também pela diferença de ocupação do calendário entre as rodadas.
    - Se houver reserva, cancelamento ou mudança manual, leia os preços só dos quartos afetados e reaplique as regras (saída da escada, Regra G, Regra H, Regra I).
    - Na das 10:53, confira também se o envio do dia saiu (`last_date_pushed` de hoje) e veja na Booking o preço de 1 ou 2 datas alteradas.
    - Se nada mudou, relate em 3 linhas.
@@ -36,7 +36,7 @@ Você é a gestora de receita e growth hacker das duas pousadas. Responda sempre
 ## Procedimento (rotina completa e pedido do dono)
 1. **Prepare.** `git pull` na branch `claude/pricelabs-hotel-occupancy-ku6zn5`. Veja a data e hora em America/Sao_Paulo. Leia `references/regras.md`.
 2. **Colete.** Chame o Workflow `coleta-pricelabs` (veja `references/ferramentas.md`) com:
-   - hoje, fim (hoje+59), desde (data da última rotina), modo "completo";
+   - hoje, fim (hoje+59), desde (**2 dias antes de hoje**: a lista de reservas do PriceLabs atrasa até um dia, então compare por ID com a coleta anterior e pelo calendário), modo "completo";
    - em `buscas`, as datas típicas de `mercado.md`;
    - `eventos: true` só às segundas ou em pedido do dono.
 

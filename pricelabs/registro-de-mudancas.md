@@ -1224,6 +1224,17 @@ A Villa não aparece em nenhuma busca com filtro de hidro (falta a comodidade na
 - **Nada gravado nesta rodada.**
 - **Pendências suas:** (1) salvar a suavização da Balcony na tela; (2) confirmar a base dos R$ 1.000 (preço enviado, vitrine da Booking ou valor real); (3) liberar no Beds24 as 3 unidades da Double no sábado 10/10, se quiser; (4) confirmar o quadro dos agentes `hc-*`.
 
+## 09/10/2026, 14:15 — Rotina das 13:53 (leve): lote de 15 reservas da Booking (33 noites); nada gravado
+
+- **Reservas:** 15 reservas feitas no mesmo segundo (10:59 BRT, comissão 0,0, padrão de lote da Booking), 33 noites e R$ 19.685 pagos. Recanto 11 reservas: Queen 7 em 15–17/10 (3 reservas), 26–28/10 e 15–16/11; Double em 25–26/10, 28–31/10, 09–10/11 e 05–06/12; Queen (2) em 13–14/10 e 06–07/11. Villa 4: VK7 em 18–19/10 e 23–24/10; VK2 em 13–15/10 e 23/10. Nenhum cancelamento. Valor pago por noite na faixa de 45% a 60% do enviado (Queen (2) em 20%, como já sabemos).
+- **O calendário do PriceLabs ainda não tem o lote** (último recálculo às 10:23 BRT, antes das reservas). A ocupação abaixo é a do calendário; **projetando o lote**, o hotel iria a 48% em 7 dias, 40% em 15, 36% em 30, 28% em 45 e 23% em 60. A Queen 7 é a que mais ganha (+11 noites). Não decidi preço nenhum com base em número que ainda não está no calendário; reavalio na rotina das 16:53, depois do recálculo que as reservas disparam.
+- **Ocupação do calendário** (7/15/30/45/60 dias): hotel 46% ⚠️, 37% ⚠️, 33% ⚠️, 26% ✅, 22% ✅. Recanto 51/42/31%, Villa 40/32/35%.
+- **Envio:** os 7 quartos foram enviados às 10:23 BRT; tudo o que gravei até agora está nos canais. Sem mudança manual nova (a da VK2 é a de 01:08 UTC, já conhecida).
+- **Correção do meu registro das 08:15:** a noite da Queen 7 em 11/10 que caiu para R$ 949 **foi vendida**, às 21:01 BRT de 08/10 (15 minutos depois do envio das 20:46), por R$ 536 pagos. Eu havia escrito "não houve venda": a lista de reservas do PriceLabs só recebe as reservas novas por volta das 10:59 BRT, até um dia depois da venda, e eu li a lista vazia como ausência de venda. O prejuízo é pequeno e já não tem volta (a noite está esgotada, e o piso de R$ 1.905 só entrou depois). Aprendizado e regra de detecção atualizados.
+- **Varredura de feriado, Regra G e estadia mínima:** inalteradas desde as 10:53 (calendário idêntico, exceto o lote que ainda não entrou). Só a VK2 de 09 e 10/10 fica abaixo de R$ 800 reais, por decisão sua de −30%.
+- **Exceção de mercado da VK2 em 23/10:** vai perder o sentido quando o calendário refletir o lote, porque a reserva nova de 23/10 esgota a data (2 de 2). Se esgotar, apago a exceção na rotina das 16:53.
+- **Nada gravado nesta rodada.**
+
 > **Regras em vigor:** desde 06/10/2026 elas ficam em `.claude/skills/gestao-receita-pousadas/references/regras.md`. Este arquivo guarda só o histórico das mudanças.
 
 ## O que só pode ser feito na tela (passo a passo para você)

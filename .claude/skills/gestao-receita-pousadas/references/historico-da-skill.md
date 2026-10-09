@@ -96,3 +96,7 @@ Hora da ANÁLISE E AGENDA DIÁRIA do PriceLabs (rotina "Agenda diária PriceLabs
 
 (Seguiam: tabela dos 7 quartos, metas, regras de negócio, passos 1 a 6 e o formato da resposta em 6 itens; o formato foi mantido no SKILL.md.)
 ```
+
+## 09/10/2026, 14:20 — Lista de reservas atrasa
+- **Motivo:** a Queen 7 em 11/10 vendeu por R$ 949 às 21:01 de 08/10 e a lista de reservas só mostrou a venda às 10:59 de 09/10; três coletas seguidas diziam "sem reservas novas".
+- **Mudança:** `SKILL.md` (rotina leve e passo 2: `desde` = 2 dias antes de hoje, comparar por ID e pelo calendário), `ferramentas.md` e `aprendizados.md`.

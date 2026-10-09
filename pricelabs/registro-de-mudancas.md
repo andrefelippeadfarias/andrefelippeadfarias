@@ -1196,6 +1196,24 @@ A Villa não aparece em nenhuma busca com filtro de hidro (falta a comodidade na
 - **Nada gravado nesta rodada.**
 - **Para a rotina completa de 09/10 (07:53):** (1) revalidar a exceção de mercado da VK2 em 23–24/10; (2) refazer o alvo da Regra G da Balcony; (3) medir o efeito das mudanças de 07 e 08/10; (4) conferir os canais depois do envio diário; (5) reclassificar a demanda por suíte.
 
+## 09/10/2026, 08:15 — Rotina das 07:53 (completa): noite de feriado da Queen 7 salva a R$ 949; Balcony 07/12 travada
+
+- **Reservas e cancelamentos desde as 19:53:** nenhum. **Mudança manual do dono:** VK2 de novo na tela às 22:08 de ontem (09 e 10/10 seguem em −30%, preço R$ 1.659 a R$ 1.712). Respeitei, como ontem.
+- **Envio:** todos os 7 quartos foram enviados às 20:46 de ontem (a VK2 de novo à 01:10). Tudo o que gravei até ontem às 19:58 está nos canais, inclusive os pisos de R$ 1.000, o piso de 19/11 da Afrodite e a estadia mínima de 2 noites da Balcony em 09/10.
+- **Ocupação** (hotel, 7/15/30/45/60 dias): 48% ⚠️, 38% ⚠️, 33% ⚠️, 26% ✅, 22% ✅. Recanto 50/42/31%, Villa 46/34/36%. Por quarto em 15 e 30 dias: Double 59/43%, Queen 2 60/50%, Afrodite 53/47%, VK7 45/40%, VK2 33/45%, Queen 7 21/12%, Balcony 22/28%. A classificação de demanda não mudou.
+- **Problema achado e corrigido (segurança de feriado):** a **Queen 7 em 11/10** (domingo do feriado) tinha 6 de 7 vendidas e só a estadia mínima na substituição. Quando a última unidade reabriu, o preço calculado caiu de R$ 2.389 para **R$ 949** (cerca de R$ 399 de valor real, metade do limite de R$ 800) e subiu aos canais às 20:46. Não houve venda (nenhuma reserva nova) e a Booking não mostra essa noite hoje.
+
+| Mudança | Onde | Antes | Depois | Como desfazer (pedir ao Claude) |
+|---|---|---|---|---|
+| Piso de segurança do feriado (R$ 800 reais) | Queen 7, 11/10 | calculado R$ 949 | 0%, piso **R$ 1.905**; no recálculo das 08:05 deu R$ 2.132 | "Apague a regra da Queen 7 em 11/10" (não recomendado) |
+| Regra G: teto 10% abaixo da VK2 | Balcony, 07/12 (entrou na janela) | calculado R$ 1.470 (VK2 R$ 1.007) | teto **R$ 906** | "Tire o teto da Balcony em 07/12" |
+
+- **Varredura de feriado** (inclui noites esgotadas): nenhuma outra noite abaixo de R$ 800 reais, fora a VK2 de 09 e 10/10 por decisão sua.
+- **Exceção de mercado da VK2** (padrão de R$ 1.000): 24/10 esgotou e saiu; 23/10 continua (piso R$ 860, preço R$ 860; Booking 23–25/10: Villa R$ 1.129, 10,6% acima da mediana geral de R$ 1.020; mercado a 14,9% de ocupação). Revalido em 10/10.
+- **Regra G:** só a Balcony de 23/10 está 10% acima do alvo (R$ 853 contra o alvo de R$ 774, com a VK2 no piso de R$ 860); fica até a suavização ser igualada.
+- **Mercado na Booking** (2 noites; medianas gerais): 13–15/10 R$ 716 (Recanto R$ 1.122, +57%; Villa R$ 729, +2%); 16–18/10 R$ 1.380 (Recanto R$ 1.300, −6%; Villa R$ 1.075, −22%); 23–25/10 R$ 1.020 (Recanto R$ 1.341, +31% mas −3% da mediana com hidro; Villa R$ 1.129, +11%); Finados R$ 1.572 (Recanto R$ 2.741, +74%, +40% sobre a mediana com hidro; Villa R$ 3.452, segunda mais cara de 16). O Recanto de 13–15/10 estava em R$ 1.122 por causa do R$ 949 da Queen 7 nessas datas, que o recálculo de agora já derrubou a R$ 800. O mercado de Finados está com o dobro da ocupação do ano passado (20% contra 8%), então mantive o +20% e revejo em 16/10.
+- **Sábado 10/10 na Double:** continua com 3 unidades que só vendem em sábado sozinho (sexta e domingo esgotados). Só você libera no Beds24.
+
 > **Regras em vigor:** desde 06/10/2026 elas ficam em `.claude/skills/gestao-receita-pousadas/references/regras.md`. Este arquivo guarda só o histórico das mudanças.
 
 ## O que só pode ser feito na tela (passo a passo para você)

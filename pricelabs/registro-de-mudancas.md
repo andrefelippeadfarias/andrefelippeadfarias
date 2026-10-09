@@ -1214,6 +1214,16 @@ A Villa não aparece em nenhuma busca com filtro de hidro (falta a comodidade na
 - **Mercado na Booking** (2 noites; medianas gerais): 13–15/10 R$ 716 (Recanto R$ 1.122, +57%; Villa R$ 729, +2%); 16–18/10 R$ 1.380 (Recanto R$ 1.300, −6%; Villa R$ 1.075, −22%); 23–25/10 R$ 1.020 (Recanto R$ 1.341, +31% mas −3% da mediana com hidro; Villa R$ 1.129, +11%); Finados R$ 1.572 (Recanto R$ 2.741, +74%, +40% sobre a mediana com hidro; Villa R$ 3.452, segunda mais cara de 16). O Recanto de 13–15/10 estava em R$ 1.122 por causa do R$ 949 da Queen 7 nessas datas, que o recálculo de agora já derrubou a R$ 800. O mercado de Finados está com o dobro da ocupação do ano passado (20% contra 8%), então mantive o +20% e revejo em 16/10.
 - **Sábado 10/10 na Double:** continua com 3 unidades que só vendem em sábado sozinho (sexta e domingo esgotados). Só você libera no Beds24.
 
+## 09/10/2026, 11:00 — Rotina das 10:53 (leve): sem reservas novas; envio das 10:23; nada gravado
+
+- **Reservas e cancelamentos desde as 07:53:** nenhum. **Mudança manual do dono:** só a da VK2 de 01:08 (UTC), já conhecida e respeitada (09 e 10/10 em −30%).
+- **Envio:** os 7 quartos foram enviados às 10:23 (13:23–13:24 UTC), então tudo o que gravei na rodada das 07:53 (piso da Queen 7 em 11/10 e teto da Balcony em 07/12) já está nos canais.
+- **Ocupação** (7 dias): hotel 46%, Recanto 51%, Villa 40% (meta 70%). A VK7 voltou a ter 2 unidades livres em 09 e 10/10 (de 7 para 5 vendidas, preço calculado R$ 2.228, cerca de R$ 869 de valor real). A Queen 7 em 11/10 voltou a ter 7 de 7 livres, agora a R$ 2.266 (piso de R$ 1.905 seguro).
+- **Varredura de feriado** (77 noites, inclui esgotadas): só a VK2 de 09 e 10/10 fica abaixo de R$ 800 de valor real (preço calculado R$ 1.645, enviado R$ 1.659, cerca de R$ 642 reais), por decisão sua de −30%. Nenhuma outra.
+- **Regra G:** Balcony nunca acima da suíte com banheira mais barata livre. Desvios abertos iguais aos das 07:53 (à espera da suavização).
+- **Nada gravado nesta rodada.**
+- **Pendências suas:** (1) salvar a suavização da Balcony na tela; (2) confirmar a base dos R$ 1.000 (preço enviado, vitrine da Booking ou valor real); (3) liberar no Beds24 as 3 unidades da Double no sábado 10/10, se quiser; (4) confirmar o quadro dos agentes `hc-*`.
+
 > **Regras em vigor:** desde 06/10/2026 elas ficam em `.claude/skills/gestao-receita-pousadas/references/regras.md`. Este arquivo guarda só o histórico das mudanças.
 
 ## O que só pode ser feito na tela (passo a passo para você)

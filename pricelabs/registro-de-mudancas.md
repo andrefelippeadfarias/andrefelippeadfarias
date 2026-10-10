@@ -1235,6 +1235,26 @@ A Villa não aparece em nenhuma busca com filtro de hidro (falta a comodidade na
 - **Exceção de mercado da VK2 em 23/10:** vai perder o sentido quando o calendário refletir o lote, porque a reserva nova de 23/10 esgota a data (2 de 2). Se esgotar, apago a exceção na rotina das 16:53.
 - **Nada gravado nesta rodada.**
 
+## 10/10/2026, 08:20 — Rotina das 07:53 (completa), com as rodadas das 16:53 e 19:53 de ontem: regras de feriado vencidas por validade corrigidas
+
+- **Resumo:** uma auditoria independente achou que as regras por data de **11/10 e 19/11 tinham validade de 3 dias** (`lead_time_expiry`, da regra antiga "Véspera de feriado: política de 2 diárias") nos 7 quartos. Depois dos 3 dias a regra inteira (preço, piso e estadia) deixa de valer. Por isso: (1) a Queen 7 em 11/10 caiu a R$ 949 em 08/10 e vendeu; (2) a correção que gravei às 08:02 de 09/10 (0% e piso R$ 1.905) **nunca valeu**, e eu a dei como conferida porque a noite estava esgotada com preço alto; (3) o mesmo vale para a VK7 de 11/10 gravada às 16:57 de ontem. Corrigi tudo às 07:56 de hoje.
+- **Reservas e cancelamentos desde as 19:53 de ontem:** nenhum. A lista de reservas do PriceLabs só recebe as vendas novas por volta das 10:59, então confirmo pela diferença do calendário depois do recálculo das 10:23. **Mudanças manuais do dono (tela):** VK7 em 10/10 às 19:48 de ontem (−35%, piso e teto −35% sobre o mínimo e o máximo); Queen 2 em 10/10 às 20:29 e 20:30 (−40%, com piso e teto −40%); VK2 em 09 e 10/10 (−30%) já conhecida. Respeitei as três. Valor real estimado em 10/10: VK7 R$ 726, VK2 R$ 658 e Queen 2 R$ 749, todos abaixo do limite de R$ 800, por decisão sua.
+- **Envio:** os 7 quartos estão com `push_enabled`; ontem a VK7 e a Queen 2 enviaram à noite (depois das suas edições na tela, 22:50 e 23:30 UTC) e os outros 5 enviaram às 10:23. O envio de hoje ainda não saiu (10:23 BRT).
+- **Ocupação** (hotel 7/15/30/45/60 dias): 50% ⚠️, 40% ⚠️, 36% ✅, 29% ✅, 24% ✅. Recanto 60/46/35/30/25%, Villa 39/33/36/29/23%. Por quarto em 15 e 30 dias: Q7 29/18%, Double 58/46%, Afrodite 53/50%, Q2 70/60%, VK7 39/41%, Balcony 20/26%, VK2 50/50%. Classificação de demanda sem mudança de nível (Q7 sobe, mas segue baixa; Afrodite e VK2 candidatas a alta).
+
+| Mudança | Onde | Antes | Depois (conferido no recálculo das 08:01, flag da regra viva e piso igual ao gravado) | Como desfazer (pedir ao Claude) |
+|---|---|---|---|---|
+| Regra por data de 11/10 recriada sem validade, com percentual e piso de feriado | 7 quartos | regra com validade 3 (vencida); piso do anúncio | Queen 7 −40% e R$ 1.905; Double −59% e R$ 1.905; Afrodite 0% e R$ 2.550; Queen 2 0% e R$ 2.355; VK7 −48% e R$ 2.060; VK2 −60% e R$ 2.060; Balcony 0% e R$ 1.510. Recálculo: R$ 1.905 (Q7, Double) e R$ 2.060 (VK2), que seria o preço se uma unidade reabrisse | "Apague as regras de 11/10" (não recomendado) |
+| Regra por data de 19/11 recriada sem validade | 7 quartos | validade 3, venceria em 16/11 | mesmos valores, estadia 2; pisos 1.905 (Q7, Double, Afrodite), 2.355 (Q2), 2.052 (VK7, VK2), 1.510 (Balcony) | idem |
+| Piso de segurança nas noites de Finados e Consciência Negra | Queen 7 e VK2: 30 e 31/10 (com o +20% do dono, 3 noites) e 20 e 21/11; Queen 2: 01/11 (+20%, 3 noites) | piso de fim de semana do PriceLabs (R$ 1.760 e R$ 1.905: R$ 739 e R$ 743 reais) | Queen 7 R$ 1.905, VK2 R$ 2.060, Queen 2 R$ 2.355 (R$ 800 reais) | "Apague o piso de Finados da Queen 7" |
+| Fim da exceção de mercado da VK2 (23 e 24/10 esgotadas) | VK2 | piso R$ 860 | piso **R$ 1.000** (padrão de qualidade) | "Volte o piso da VK2 em 23/10 para R$ 860" |
+| Regra G: Balcony a 10% abaixo da VK7 (VK2 esgotada) | Balcony 23 e 24/10 | R$ 853 (20% abaixo) | piso **R$ 963** (recálculo R$ 963) | "Volte o piso da Balcony para R$ 853" |
+
+- **VK7 em 11/10:** a regra recriada (−48% e R$ 2.060) está gravada e sem validade (conferido na leitura da API), mas o recálculo dela não coube hoje: a VK7 já usou os 3 recálculos de 24 h. Confiro com o `dso_flag` na rotina das 16:53.
+- **Mercado na Booking** (2 noites; mediana geral / mediana com hidro e nota 9+): 13–15/10 R$ 594 / R$ 1.728 (Recanto R$ 946, Villa R$ 729); 16–18/10 R$ 1.136 / R$ 2.660 (Recanto R$ 1.319, Villa R$ 1.075); 23–25/10 R$ 821 / R$ 1.899 (Recanto R$ 1.312, Villa R$ 1.129); Finados 30/10–01/11 R$ 1.413 / R$ 2.914 (Recanto R$ 2.760, Villa R$ 3.452). O Recanto está abaixo da mediana com hidro e nota 9+ em todas as datas; a Villa, dentro da faixa. Nenhum motivo para mexer em preço. Ocupação do mercado: 16 e 17/10 em 25%, igual ao ano passado; Finados 31/10 e 01/11 a 20%, o triplo do ano passado.
+- **Estadia mínima** dos sábados e feriados nos 60 dias: tudo certo (2 noites; Finados 3), exceto 11/10 em 1 noite nos 7 quartos (última hora, esgotada) e o sábado 10/10 da Double (dia isolado entre duas noites esgotadas; 3 unidades presas, só você libera no Beds24).
+- **Correção do registro das 08:15 de 09/10:** a Queen 7 em 11/10 "corrigida a 0% e piso R$ 1.905, recálculo R$ 2.132" não estava protegida; o R$ 2.132 era o preço natural de uma noite esgotada.
+
 > **Regras em vigor:** desde 06/10/2026 elas ficam em `.claude/skills/gestao-receita-pousadas/references/regras.md`. Este arquivo guarda só o histórico das mudanças.
 
 ## O que só pode ser feito na tela (passo a passo para você)

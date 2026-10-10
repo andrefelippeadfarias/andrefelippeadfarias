@@ -249,18 +249,6 @@
     }
   ],
   "feriados_nota": "Cada período lista as NOITES de feriado (data de entrada da diária). piso_real null = sem piso do dono; vale só o limite de segurança.",
-  "demanda_nota": "Classificação de demanda por suíte (alta/media/baixa), revista em toda rotina completa pela ocupação 15/30 dias contra as metas e pelo ritmo de reservas dos últimos 14 dias. Última revisão: 2026-10-09 07:53 (rotina completa; sem mudança de nível: Q7 15d 21%/30d 12% baixa; Double 59%/43% alta; Q2 60%/50% alta; Afrodite 53%/47% média, candidata a alta; VK7 45%/40% média; VK2 33%/45% média; Balcony 22%/28% baixa).",
-  "excecoes_mercado": [
-    {
-      "quarto": "VK2",
-      "datas": [
-        "2026-10-23",
-        "2026-10-24"
-      ],
-      "piso": 860,
-      "preco_em_09_10": 860,
-      "dado": "23 e 24/10 ESGOTADAS (2 de 2) desde o lote de 09/10 10:59; seguem com piso R$ 860 da exceção original (D14 em 09/10; Booking 23-25/10: Villa R$ 1.129 por 2 noites, 10,6% acima da mediana geral de R$ 1.020; mercado a 14,9% contra 16,8% do ano passado). Voltar ao padrão R$ 1.000 junto com a Balcony (piso de R$ 853 → entre R$ 915 e R$ 963, 10% abaixo da VK7 R$ 1.070) na revisão de 10/10, porque a Regra G dá ERRO ao subir só a VK2.",
-      "revisar_em": "2026-10-10"
-    }
-  ]
+  "demanda_nota": "Classificação de demanda por suíte (alta/media/baixa), revista em toda rotina completa pela ocupação 15/30 dias contra as metas e pelo ritmo de reservas dos últimos 14 dias. Última revisão: 2026-10-10 07:53 (rotina completa; sem mudança de nível: Q7 15d 29%/30d 18% baixa (subiu com 11 noites do lote de 09/10); Double 58%/46% alta; Q2 70%/60% alta; Afrodite 53%/50% média, candidata a alta (confirmar o ritmo na segunda 12/10); VK7 39%/41% média; VK2 50%/50% média, candidata a alta (15d igual à meta, não acima); Balcony 20%/26% baixa). Exceções de mercado: nenhuma em vigor (VK2 23 e 24/10 voltou ao padrão de R$ 1.000 em 10/10 por estar esgotada).",
+  "excecoes_mercado": []
 }

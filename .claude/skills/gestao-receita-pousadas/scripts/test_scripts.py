@@ -253,5 +253,19 @@ class TestPercentual(unittest.TestCase):
         self.assertEqual(r["2026-10-13"]["piso"], 800)
 
 
+class TestRecalculo(unittest.TestCase):
+    def test_regra_vencida_por_validade_nao_vale(self):
+        from ler_recalculo import regra_inativa
+        item = {"tipo": "data", "quarto": "Q7", "data": "2026-10-11", "preco": 0, "price_type": "percent", "min_price": 1905}
+        # recálculo de uma data com lead_time_expiry vencido: dso_flag 0 e piso do anúncio
+        self.assertIn("dso_flag 0", regra_inativa(item, {"dso_flag": "0", "min_price": "800", "price": "2416"}))
+        # regra viva com o piso gravado
+        self.assertEqual(regra_inativa(item, {"dso_flag": "1", "min_price": "1905"}), "")
+        # regra viva, mas com outro piso (ex.: algo sobrescreveu)
+        self.assertIn("diferente", regra_inativa(item, {"dso_flag": "1", "min_price": "850"}))
+        # item só de estadia mínima não entra na checagem
+        self.assertEqual(regra_inativa({"tipo": "data", "quarto": "Q7", "data": "2026-10-11", "min_stay": 2}, {"dso_flag": "0"}), "")
+
+
 if __name__ == "__main__":
     unittest.main()

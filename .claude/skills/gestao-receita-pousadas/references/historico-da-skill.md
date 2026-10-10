@@ -100,3 +100,7 @@ Hora da ANÁLISE E AGENDA DIÁRIA do PriceLabs (rotina "Agenda diária PriceLabs
 ## 09/10/2026, 14:20 — Lista de reservas atrasa
 - **Motivo:** a Queen 7 em 11/10 vendeu por R$ 949 às 21:01 de 08/10 e a lista de reservas só mostrou a venda às 10:59 de 09/10; três coletas seguidas diziam "sem reservas novas".
 - **Mudança:** `SKILL.md` (rotina leve e passo 2: `desde` = 2 dias antes de hoje, comparar por ID e pelo calendário), `ferramentas.md` e `aprendizados.md`.
+
+## 10/10/2026, 08:00 — Regras por data com validade (`lead_time_expiry`)
+- **Motivo:** auditoria independente (3 revisores) achou que a regra "Véspera de feriado" de 11/10 e 19/11 (validade de 3 dias) vencia a 3 dias da noite e carregava para o PriceLabs a validade junto com qualquer piso gravado em cima. A correção das 08:02 de 09/10 (Queen 7) e a da VK7 das 16:57 nunca valeram; a conferência passou porque o preço de noite esgotada parecia certo.
+- **Mudança:** `ler_recalculo.py` marca ❌ "regra por data INATIVA" quando `dso_flag` não é 1 ou o `min_price` recalculado difere do gravado (teste novo `TestRecalculo`, 27 testes ok; reproduz o caso da VK7). `SKILL.md` (passos 6 e 7), `regras.md` (seção 4, feriados) e `aprendizados.md`. Dados: 11/10 e 19/11 recriadas sem validade nos 7 quartos; pisos de segurança em Finados (Queen 7, VK2, Queen 2) e Consciência Negra (Queen 7, VK2).

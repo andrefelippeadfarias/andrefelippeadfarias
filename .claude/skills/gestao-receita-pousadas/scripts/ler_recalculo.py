@@ -29,6 +29,22 @@ def ler_refresh(caminho: str) -> dict:
     return {str(x.get("date"))[:10]: x for x in arr}
 
 
+def regra_inativa(it: dict, x: dict) -> str:
+    """Motivo pelo qual a regra por data gravada não está valendo no recálculo, ou '' se está valendo.
+
+    Aprendizado de 09/10/2026: uma regra por data com lead_time_expiry (validade) vence a N dias da
+    noite e o PriceLabs a ignora; o preço conferido "dava certo" só porque a noite estava esgotada ou
+    porque o piso do quarto coincidia. O recálculo mostra dso_flag 0 e o min_price do anúncio. Só vale
+    como conferido se dso_flag == 1 e o min_price recalculado for o gravado."""
+    if it.get("price_type") not in ("fixed", "percent"):
+        return ""
+    if str(x.get("dso_flag")) != "1":
+        return "dso_flag 0 (regra vencida por validade, ou fora do alcance)"
+    if it.get("min_price") is not None and abs(float(x.get("min_price") or 0) - float(it["min_price"])) > 1:
+        return f"piso recalculado {reais(x.get('min_price'))} diferente do gravado {reais(it['min_price'])}"
+    return ""
+
+
 def main(argv=None) -> int:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("arquivos", nargs="+", help="CURTO=arquivo do refresh_listing_pricing")
@@ -72,13 +88,16 @@ def main(argv=None) -> int:
                     ok &= p >= float(it["min_price"]) - 1
                 if it.get("max_price") is not None:
                     ok &= p <= float(it["max_price"]) + 1
+            inativa = regra_inativa(it, x)
+            if inativa:
+                ok = False
             ms_plan = it.get("min_stay")
             if ms_plan is not None:
                 ok &= int(x.get("min_stay") or 0) == int(ms_plan)
             problemas += 0 if ok else 1
+            situacao = "✅" if ok else ("❌ regra por data INATIVA: " + inativa if inativa else "❌ diferente")
             print(f"| {it['quarto']} | {it['data']} | {plan_txt} | {reais(x.get('price'))} | "
-                  f"{ms_plan if ms_plan is not None else '—'}/{x.get('min_stay')} | "
-                  f"{'✅' if ok else '❌ diferente'} |")
+                  f"{ms_plan if ms_plan is not None else '—'}/{x.get('min_stay')} | {situacao} |")
         if all(k in dados for k in ("VK7", "VK2", "Balcony")):
             datas_villa = sorted({it["data"] for it in plano.get("itens", [])
                                   if it.get("tipo") == "data" and it["quarto"] in ("VK7", "VK2", "Balcony")})

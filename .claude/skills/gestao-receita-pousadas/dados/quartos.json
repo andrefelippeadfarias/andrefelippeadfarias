@@ -1,5 +1,5 @@
 {
-  "versao": "2026-10-09T08",
+  "versao": "2026-10-10T08",
   "nota": "Fonte única dos dados de máquina da Skill. Os scripts leem daqui. Quem mudar base, mínimo ou máximo no PriceLabs atualiza este arquivo no mesmo commit.",
   "pms": "beds24",
   "grupo": {
@@ -254,11 +254,12 @@
     {
       "quarto": "VK2",
       "datas": [
-        "2026-10-23"
+        "2026-10-23",
+        "2026-10-24"
       ],
       "piso": 860,
       "preco_em_09_10": 860,
-      "dado": "D14 em 09/10; Booking 23-25/10: Villa R$ 1.129 por 2 noites, 10,6% acima da mediana geral de R$ 1.020 (Villa fora do filtro de hidro); mercado a 14,9% (ano passado 16,8%); Villa 15d em 34% (meta 50%). 24/10 esgotou e saiu da lista.",
+      "dado": "23 e 24/10 ESGOTADAS (2 de 2) desde o lote de 09/10 10:59; seguem com piso R$ 860 da exceção original (D14 em 09/10; Booking 23-25/10: Villa R$ 1.129 por 2 noites, 10,6% acima da mediana geral de R$ 1.020; mercado a 14,9% contra 16,8% do ano passado). Voltar ao padrão R$ 1.000 junto com a Balcony (piso de R$ 853 → entre R$ 915 e R$ 963, 10% abaixo da VK7 R$ 1.070) na revisão de 10/10, porque a Regra G dá ERRO ao subir só a VK2.",
       "revisar_em": "2026-10-10"
     }
   ]

@@ -1,5 +1,5 @@
 {
-  "versao": "2026-10-10T08",
+  "versao": "2026-10-12T14",
   "nota": "Fonte única dos dados de máquina da Skill. Os scripts leem daqui. Quem mudar base, mínimo ou máximo no PriceLabs atualiza este arquivo no mesmo commit.",
   "pms": "beds24",
   "grupo": {
@@ -32,7 +32,7 @@
       "sem_desconto": false,
       "regra_i": true,
       "regra_f": true,
-      "demanda": "baixa"
+      "demanda": "media"
     },
     {
       "curto": "Double",
@@ -150,12 +150,12 @@
     }
   ],
   "referencia_semanal": {
-    "data": "2026-10-06",
+    "data": "2026-10-12",
     "nota": "Base e mínimo de cada quarto no início da semana. A revisão de segunda atualiza. O validador barra mudança acima do limite semanal contra estes valores.",
     "valores": {
       "Q7": {
         "min": 800,
-        "base": 1380
+        "base": 1173
       },
       "Double": {
         "min": 900,
@@ -167,18 +167,18 @@
       },
       "Q2": {
         "min": 850,
-        "base": 1700
+        "base": 1870
       },
       "VK7": {
-        "min": 1000,
+        "min": 850,
         "base": 1480
       },
       "Balcony": {
-        "min": 900,
+        "min": 765,
         "base": 1270
       },
       "VK2": {
-        "min": 900,
+        "min": 765,
         "base": 1270
       }
     }
@@ -249,6 +249,6 @@
     }
   ],
   "feriados_nota": "Cada período lista as NOITES de feriado (data de entrada da diária). piso_real null = sem piso do dono; vale só o limite de segurança.",
-  "demanda_nota": "Classificação de demanda por suíte (alta/media/baixa), revista em toda rotina completa pela ocupação 15/30 dias contra as metas e pelo ritmo de reservas dos últimos 14 dias. Última revisão: 2026-10-10 07:53 (rotina completa; sem mudança de nível: Q7 15d 29%/30d 18% baixa (subiu com 11 noites do lote de 09/10); Double 58%/46% alta; Q2 70%/60% alta; Afrodite 53%/50% média, candidata a alta (confirmar o ritmo na segunda 12/10); VK7 39%/41% média; VK2 50%/50% média, candidata a alta (15d igual à meta, não acima); Balcony 20%/26% baixa). Exceções de mercado: nenhuma em vigor (VK2 23 e 24/10 voltou ao padrão de R$ 1.000 em 10/10 por estar esgotada).",
+  "demanda_nota": "Classificação de demanda por suíte (alta/media/baixa), revista em toda rotina completa pela ocupação 15/30 dias contra as metas e pelo ritmo de reservas dos últimos 14 dias. Última revisão: 2026-10-12 (rotina completa e revisão semanal; hoje o calendário traz o lote de 09/10 e 48 reservas novas desde 10/10). Q7 15d 34%/30d 21% sobe de baixa para MÉDIA (acima de 60% da meta nas duas janelas: 30% e 21%), com 47 diárias vendidas em 06–12/10; Double 56%/47% alta; Q2 70%/62% alta; Afrodite 60%/43% média, candidata a alta (1 unidade; 3 diárias na semana); VK7 34%/40% média; VK2 53%/45% média, candidata a alta (2 unidades; 10 diárias na semana); Balcony 18%/24% baixa. Exceções de mercado: nenhuma em vigor.",
   "excecoes_mercado": []
 }

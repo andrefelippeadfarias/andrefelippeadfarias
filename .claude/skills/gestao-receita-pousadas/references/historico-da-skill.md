@@ -112,3 +112,8 @@ Hora da ANÁLISE E AGENDA DIÁRIA do PriceLabs (rotina "Agenda diária PriceLabs
   - `regras.md`: Regra I (data com mais de 70% vendida não é cortada e sobe 10% por rodada pelo piso, sem apagar o percentual; em demanda alta só a última unidade), Regra G (Balcony esgotada com piso e teto; referência VK7 quando a VK2 esgota; alvo não vai abaixo de R$ 765) e perfil da Villa (4b).
   - `quartos.json` (versão 2026-10-13T13): VK7 de média para **alta** (7d 73,5%, 15d 51,4%, 30d 44,8%; margem de 1,4 ponto no 15d).
 - **Como desfazer:** voltar `demanda` da VK7 para "media" e apagar os bullets novos de `regras.md`.
+
+## 13/10/2026, 17:10 — Rotina leve recalcula os quartos com calendário velho
+- **Motivo:** a coleta das 16:53 saiu idêntica à das 13:53 e o recálculo manual mostrou 8 noites vendidas e 1 cancelamento na Queen 7 (e vendas na Double e na Balcony). Uma rodada leve "sem mudança" era só calendário parado.
+- **Mudança:** `SKILL.md` (rotina leve): rodar `mesclar_recalculo.py --velhos --horas 2`, recalcular os quartos listados com unidade livre de D0 a D14 e mesclar antes de decidir. `aprendizados.md` e `quartos.json` (nota de demanda).
+- **Como desfazer:** apagar o bullet novo da rotina leve no `SKILL.md`.

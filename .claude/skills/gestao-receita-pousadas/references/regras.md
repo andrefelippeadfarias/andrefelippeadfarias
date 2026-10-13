@@ -58,6 +58,8 @@ Toda gravação passa antes pelo `scripts/validar_plano.py`, é conferida depois
 - Vale para noites de D0 a D3 (`regra_i_dias`), fora de feriado, com unidade livre.
 - Até 20% (`regra_i_desconto_max`) abaixo do mínimo do quarto: percentual com `min_price` igual ao valor da Regra I, nunca abaixo do limite de segurança de 70% do mínimo de referência. Hoje: Queen (7) R$ 640, Double R$ 720; na Villa (novo mínimo desde 06/10 16h) Villa King Spa (7) R$ 700, Villa King Spa (2) R$ 630, Balcony R$ 700 (igual à Villa King Spa 7).
 - Queen (2) e Afrodite ficam fora.
+- **Data com mais de 70% vendida (esclarecido em 13/10):** a Regra I não corta; a data fica no mínimo do quarto e, se o quarto não estiver em demanda alta, sobe 10% por rodada pelo piso (`min_price`), mantendo o percentual do bloco. Subir só o piso é de propósito: apagar a substituição (saída da escada pela letra) tiraria o percentual do bloco e levantaria as datas vizinhas com Regra I.
+- **Demanda alta:** a Regra I vale só para a última unidade do dia (seção 4b). Uma data com várias unidades livres volta ao mínimo do quarto.
 
 **Regra A, estadia mínima**
 - 1 noite nas datas dos próximos 14 dias (`regra_a_janela_dias`) com unidade livre.
@@ -90,6 +92,9 @@ Toda gravação passa antes pelo `scripts/validar_plano.py`, é conferida depois
 - Abaixo do mínimo do anúncio (R$ 765) só com `excecao: "dono"`.
 - Como a suavização da Balcony junta a semana inteira, o alvo de cada data vai no piso (`min_price`), com o percentual do bloco calculado no `percentual.py`. A cada rotina, refaça o alvo quando as suítes mudarem de preço.
 - No feriado, a Balcony segue o piso de vitrine (R$ 800 na vitrine = R$ 1.510) e nunca sobe por causa desta regra.
+- **Balcony esgotada na data (13/10):** o preço natural dela numa noite esgotada pode passar da suíte (16 e 17/10: R$ 1.459 e R$ 1.661 contra a VK7 a R$ 1.366 e R$ 1.553). Ponha piso e teto na data (cerca de 10% abaixo da suíte com banheira livre mais barata), para um cancelamento não reabrir a Balcony acima da suíte.
+- **Referência quando a VK2 está esgotada:** a VK7. Se a VK2 reabrir por cancelamento, ela volta ao piso (R$ 765 em dia útil) e a Balcony pode ficar acima dela até a rodada seguinte; refaça o alvo na rodada seguinte. O validador compara com a referência vigente.
+- **Piso do anúncio:** o alvo da Regra G não vai abaixo do mínimo do anúncio (R$ 765) sem `excecao: "dono"`, exceto nas datas D0 a D3 da Regra I (piso de segurança R$ 630). Em 18 a 22/10 o alvo calculado era R$ 760 e o piso gravado foi R$ 765.
 
 **Queen (2), sem desconto**
 - Anomalia: o hóspede paga cerca de 34% do preço enviado.
@@ -135,7 +140,7 @@ Pedido do dono: "ajustar o preço de acordo com a demanda que estamos recebendo 
   - Afrodite com demanda média; vale a Regra C.
   - Queen 7 com demanda baixa: 7 unidades e vendas quase só de última hora (26 de 49 reservas com 0 a 1 dia de antecedência).
 - **Villa, agressiva desde 06/10.**
-  - VK7 e VK2 com demanda média, já reagindo: 5 vendas da VK7 em 3 horas depois do envio de 07/10.
+  - VK7 e VK2 com demanda média, já reagindo: 5 vendas da VK7 em 3 horas depois do envio de 07/10. **VK7 passou a alta em 13/10** (7 dias 74%, 15 dias 51%, 30 dias 45%): Regra I só na última unidade e +10% por rodada nas datas com 67% ou mais vendido a até 14 dias. VK2 é candidata (15d 60%, 30d 47%, mas só 2 unidades).
   - Balcony com demanda baixa: 10% abaixo da suíte com banheira mais barata e livre (Regra G).
 
 ## 5. Posicionamento contra o mercado (Booking)

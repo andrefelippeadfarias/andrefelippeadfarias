@@ -1,5 +1,5 @@
 {
-  "versao": "2026-10-12T14",
+  "versao": "2026-10-13T13",
   "nota": "Fonte única dos dados de máquina da Skill. Os scripts leem daqui. Quem mudar base, mínimo ou máximo no PriceLabs atualiza este arquivo no mesmo commit.",
   "pms": "beds24",
   "grupo": {
@@ -108,7 +108,7 @@
       "sem_desconto": false,
       "regra_i": true,
       "regra_f": true,
-      "demanda": "media"
+      "demanda": "alta"
     },
     {
       "curto": "Balcony",
@@ -249,6 +249,6 @@
     }
   ],
   "feriados_nota": "Cada período lista as NOITES de feriado (data de entrada da diária). piso_real null = sem piso do dono; vale só o limite de segurança.",
-  "demanda_nota": "Classificação de demanda por suíte (alta/media/baixa), revista em toda rotina completa pela ocupação 15/30 dias contra as metas e pelo ritmo de reservas dos últimos 14 dias. Última revisão: 2026-10-12 (rotina completa e revisão semanal; hoje o calendário traz o lote de 09/10 e 48 reservas novas desde 10/10). Q7 15d 34%/30d 21% sobe de baixa para MÉDIA (acima de 60% da meta nas duas janelas: 30% e 21%), com 47 diárias vendidas em 06–12/10; Double 56%/47% alta; Q2 70%/62% alta; Afrodite 60%/43% média, candidata a alta (1 unidade; 3 diárias na semana); VK7 34%/40% média; VK2 53%/45% média, candidata a alta (2 unidades; 10 diárias na semana); Balcony 18%/24% baixa. Exceções de mercado: nenhuma em vigor.",
+  "demanda_nota": "Classificação de demanda por suíte (alta/media/baixa), revista em toda rotina completa pela ocupação 15/30 dias contra as metas e pelo ritmo de reservas dos últimos 14 dias. Última revisão: 2026-10-13 (rotina das 10:53; antes, 2026-10-12, rotina completa e revisão semanal; hoje o calendário traz o lote de 09/10 e 48 reservas novas desde 10/10). Q7 15d 34%/30d 21% sobe de baixa para MÉDIA (acima de 60% da meta nas duas janelas: 30% e 21%), com 47 diárias vendidas em 06–12/10; Double 56%/47% alta; Q2 70%/62% alta; Afrodite 60%/43% média, candidata a alta (1 unidade; 3 diárias na semana); VK7 sobe de média para ALTA em 13/10 (calendário recalculado às 12:44 BRT, 21 h mais novo que o da coleta: 7d 73,5%, 15d 51,4%, 30d 44,8%, 45d 32,7%, 60d 26,7% e 49 diárias vendidas em 06–12/10; margem pequena, 1,4 ponto no 15d: volta a média se o 15d ficar abaixo de 50% em dois recálculos seguidos); VK2 53%/45% média, candidata a alta (2 unidades; 10 diárias na semana); Balcony 18%/24% baixa. Exceções de mercado: nenhuma em vigor.",
   "excecoes_mercado": []
 }

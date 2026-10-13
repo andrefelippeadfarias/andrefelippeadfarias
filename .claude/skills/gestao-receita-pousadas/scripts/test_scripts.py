@@ -267,5 +267,25 @@ class TestRecalculo(unittest.TestCase):
         self.assertEqual(regra_inativa({"tipo": "data", "quarto": "Q7", "data": "2026-10-11", "min_stay": 2}, {"dso_flag": "0"}), "")
 
 
+class TestMesclar(unittest.TestCase):
+    def test_mescla_ocupacao_e_preco_do_recalculo(self):
+        from datetime import datetime, timezone
+        from mesclar_recalculo import mesclar_quarto, quartos_velhos
+        quarto = {"last_refreshed_at": "2026-10-12T17:59:15+00:00", "days": [
+            {"date": "2026-10-16", "price": 1456, "user_price": 1404, "min_stay": 1, "multi_unit_occupancy": "5/7", "booking_status": "Booked (Check-In)"},
+            {"date": "2026-10-17", "price": 1456, "user_price": 1404, "min_stay": 2, "multi_unit_occupancy": "5/7", "booking_status": "Booked"},
+            {"date": "2026-12-11", "price": 900, "user_price": 900, "min_stay": 1, "multi_unit_occupancy": "0/7", "booking_status": ""}]}
+        refresh = {"data": {"pricing_array": [
+            {"date": "2026-10-16", "price": "1366", "user_price": "-1", "min_stay": "1", "mu_occupancy": "7/7", "uncustomized_price": "3060"},
+            {"date": "2026-10-17", "price": "1553", "user_price": "1456", "min_stay": "1", "mu_occupancy": "6/7", "uncustomized_price": "3169"}]}}
+        m = mesclar_quarto(quarto, refresh)
+        self.assertEqual(m["days"][0]["multi_unit_occupancy"], "7/7")
+        self.assertEqual(m["days"][0]["user_price"], -1.0)
+        self.assertEqual(m["days"][1]["min_stay"], 1)
+        self.assertEqual(m["days"][2]["price"], 900)  # data fora do recálculo não muda
+        agora = datetime(2026, 10, 13, 12, 0, tzinfo=timezone.utc)
+        self.assertEqual([c for c, _ in quartos_velhos({"rooms": {"VK7": quarto, "Q7": {"last_refreshed_at": "2026-10-13T11:00:00+00:00"}}}, 6, agora)], ["VK7"])
+
+
 if __name__ == "__main__":
     unittest.main()

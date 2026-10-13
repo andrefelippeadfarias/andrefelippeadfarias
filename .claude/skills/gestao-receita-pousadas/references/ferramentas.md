@@ -38,6 +38,7 @@ Veja como pesquisar em `mercado.md`. Não serve para mudar nada.
 - `python3 ocupacao.py <saida_do_workflow> [--noites 14] [--json]`: tabela de janelas contra as metas e mapa das noites.
 - `python3 validar_plano.py plano.json --precos <saida_do_workflow> --payload`: barra erros; com `--payload`, devolve os pedidos prontos por quarto.
 - `python3 ler_recalculo.py --plano plano.json Q7=<arq> VK7=<arq> ...`: compara o recalculado com o plano.
+- `python3 mesclar_recalculo.py <saida_do_workflow> --velhos [--horas 6]` lista os quartos com recálculo velho; `python3 mesclar_recalculo.py <saida> <mesclado.json> VK7=<arq> ...` junta os recálculos novos (preço, enviado, estadia e ocupação) no arquivo da coleta.
 - `python3 -m unittest test_scripts`: testes dos scripts.
 - Rascunhos de plano e cópias de saída vão para a pasta de rascunho (scratchpad) da sessão, nunca para o repositório.
 

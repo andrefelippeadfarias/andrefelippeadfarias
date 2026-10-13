@@ -104,3 +104,11 @@ Hora da ANÁLISE E AGENDA DIÁRIA do PriceLabs (rotina "Agenda diária PriceLabs
 ## 10/10/2026, 08:00 — Regras por data com validade (`lead_time_expiry`)
 - **Motivo:** auditoria independente (3 revisores) achou que a regra "Véspera de feriado" de 11/10 e 19/11 (validade de 3 dias) vencia a 3 dias da noite e carregava para o PriceLabs a validade junto com qualquer piso gravado em cima. A correção das 08:02 de 09/10 (Queen 7) e a da VK7 das 16:57 nunca valeram; a conferência passou porque o preço de noite esgotada parecia certo.
 - **Mudança:** `ler_recalculo.py` marca ❌ "regra por data INATIVA" quando `dso_flag` não é 1 ou o `min_price` recalculado difere do gravado (teste novo `TestRecalculo`, 27 testes ok; reproduz o caso da VK7). `SKILL.md` (passos 6 e 7), `regras.md` (seção 4, feriados) e `aprendizados.md`. Dados: 11/10 e 19/11 recriadas sem validade nos 7 quartos; pisos de segurança em Finados (Queen 7, VK2, Queen 2) e Consciência Negra (Queen 7, VK2).
+
+## 13/10/2026, 13:10 — Calendário velho, VK7 em demanda alta, Regra I e Regra G esclarecidas
+- **Motivo:** a coleta das 07:53 usou calendários de 19 a 22 h para Double, Queen 2, VK7 e Balcony (eles só recalculam no envio da tarde). A VK7 estava com 53% em 7 dias e na verdade 74%; a Balcony tinha 3 de 6 vendidas em 16 e 17/10 e estava esgotada. A Regra I da VK7 (R$ 700 em 13 a 15/10) foi gravada com esse calendário e desfeita 3 horas depois. Uma auditoria independente (2 revisores) aprovou o plano corrigido com ajustes, todos incorporados.
+- **Mudança:**
+  - `scripts/mesclar_recalculo.py` novo (lista os quartos com recálculo velho e junta o recálculo novo no arquivo da coleta) e teste `TestMesclar` (28 testes ok); `SKILL.md` passo 2 e `ferramentas.md`.
+  - `regras.md`: Regra I (data com mais de 70% vendida não é cortada e sobe 10% por rodada pelo piso, sem apagar o percentual; em demanda alta só a última unidade), Regra G (Balcony esgotada com piso e teto; referência VK7 quando a VK2 esgota; alvo não vai abaixo de R$ 765) e perfil da Villa (4b).
+  - `quartos.json` (versão 2026-10-13T13): VK7 de média para **alta** (7d 73,5%, 15d 51,4%, 30d 44,8%; margem de 1,4 ponto no 15d).
+- **Como desfazer:** voltar `demanda` da VK7 para "media" e apagar os bullets novos de `regras.md`.

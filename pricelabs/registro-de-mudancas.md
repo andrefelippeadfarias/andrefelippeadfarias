@@ -1293,6 +1293,23 @@ A Villa não aparece em nenhuma busca com filtro de hidro (falta a comodidade na
 - **Exceções de mercado:** nenhuma em vigor.
 - **Pendências suas:** (1) **Sync Now** da VK2 (R$ 630 em 13 e 14/10) e, se quiser, da VK7 e da Balcony depois das 13:55 (D0 a D2); (2) salvar a suavização da Balcony na tela (All Customizations > Smoothing > "Smooth weekdays vs. weekends"); (3) confirmar a base dos R$ 1.000 (preço enviado, vitrine da Booking ou valor real). Balcony em 27, 28 e 29/10 segue em R$ 696 (abaixo do mínimo de R$ 765, regra antiga): trato na rotina das 16:53.
 
+## 13/10/2026, 14:05 — Rotina das 13:53 (leve): VK7 esgotou 15/10; piso de 14/10 sobe; sábado 05/12 da Queen 7 em 2 noites
+
+- **Reservas e calendário desde as 10:53 (calendário recalculado de todos os quartos):** a Villa King Spa 7 vendeu mais 2 noites em 13/10 (agora 4 de 7), 2 em 14/10 (6 de 7), 2 em 15/10 (**esgotou**, 7 de 7) e 1 em 23 e 24/10 (5 de 7). A Queen 7 em 13/10 já está com 6 de 7 (+2 em 3 horas depois do envio a R$ 640). **A Double perdeu 4 diárias** (13/10 de 4 para 2 de 6 vendidas, 14/10 de 3 para 2, 15/10 de 2 para 1): são cancelamentos de reservas antigas ou ajuste no Beds24, a lista de reservas só mostra o que foi feito desde 11/10. Balcony, King Spa 2, Queen 2 e Afrodite sem venda nova. Sem mudança manual sua desde 11/10 (as 11 ações no log de hoje são minhas).
+- **Ocupação** (hotel 7/15/30/45/60 dias): 63% ⚠️, 45% ⚠️, 38% ✅, 29% ✅, 24% ✅. Suítes com banheira **72% ✅**, 50% ✅, 40%, 32%, 26%. Recanto 67/45/36/30/25%; Villa 60/45/40/29/23%. A VK7 está em 86%, 59%, 49%, 35% e 29%: **demanda alta confirmada**. A Double cai para 64% e 49% em 7 e 15 dias: reavalio a classe na rotina de 14/10.
+- **Envio de hoje:** Double 11:33 BRT, Balcony 13:09 (já levou a Regra G e os tetos), Queen 2 13:34 e VK7 13:53 (levou R$ 850 em 13/10, R$ 935 em 15 e 20/10). **Falta enviar:** Queen 7 (15/10 R$ 880 e 18/10 R$ 880) e King Spa 2 (R$ 630 em 13 e 14/10), que só saem amanhã às 09:52, a não ser que você aperte o **Sync Now**.
+
+| Mudança | Onde | Antes | Depois | Como desfazer (pedir ao Claude) |
+|---|---|---|---|---|
+| +10% pelo piso: 6 de 7 vendidas, demanda alta | VK7 14/10 | R$ 850 | piso **R$ 935** (gravado e lido de volta; recálculo no limite de 3 por quarto em 24 h, confiro às 16:53) | "Volte a VK7 de 14/10 para R$ 850" |
+| Estadia mínima do sábado novo na janela (Regra H) | Queen 7 05/12 | 1 noite | **2 noites** (gravado e lido de volta; recálculo às 16:53) | "Apague a regra de 05/12 da Queen 7" |
+
+- **Conferido no recálculo desta rodada:** Queen 7 15/10 R$ 880; VK7 13 e 14/10 R$ 850, 15/10 R$ 935 (esgotada) e 20/10 R$ 935; Balcony 15/10 R$ 842, 18 a 22/10 R$ 765 e 25/10 R$ 780. **Não conferido:** Queen 7 em 18/10 (R$ 880, gravado às 13:10; o recálculo bate no limite) e as duas gravações de agora.
+- **Balcony 27, 28 e 29/10 em R$ 696:** correção do meu registro das 13:10 (eu havia tratado como abaixo do mínimo sem exceção). Está dentro da Regra G: a King Spa 2 livre custa R$ 765 e 10% abaixo é R$ 689. Nada a fazer.
+- **Regra I da Queen 7 em 13/10:** a data passou de 70% vendida (6 de 7) por causa do próprio corte; mantive R$ 640 até o fim do dia para vender a última unidade. Regra esclarecida em `regras.md`: o corte só continua no próprio dia (D0); de D1 a D3 volta ao mínimo na rodada seguinte.
+- **Estadia mínima:** sábados e feriados dos 60 dias conferidos: tudo em 2 noites (feriados 2 e 3), exceto o sábado 17/10 da VK7, que o PriceLabs mostra com 1 noite (dia isolado entre duas noites esgotadas, 16 e 18/10).
+- **Pendências suas:** (1) **Sync Now** da Queen 7 e da King Spa 2; (2) olhar no Beds24 a última unidade da VK7 no sábado 17/10 (estadia mínima 1 no PriceLabs; se quiser trancar de vez, desligue a regra de dia isolado em estadia mínima); (3) salvar a suavização da Balcony na tela.
+
 > **Regras em vigor:** desde 06/10/2026 elas ficam em `.claude/skills/gestao-receita-pousadas/references/regras.md`. Este arquivo guarda só o histórico das mudanças.
 
 ## O que só pode ser feito na tela (passo a passo para você)

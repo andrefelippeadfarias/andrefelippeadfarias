@@ -58,7 +58,7 @@ Toda gravação passa antes pelo `scripts/validar_plano.py`, é conferida depois
 - Vale para noites de D0 a D3 (`regra_i_dias`), fora de feriado, com unidade livre.
 - Até 20% (`regra_i_desconto_max`) abaixo do mínimo do quarto: percentual com `min_price` igual ao valor da Regra I, nunca abaixo do limite de segurança de 70% do mínimo de referência. Hoje: Queen (7) R$ 640, Double R$ 720; na Villa (novo mínimo desde 06/10 16h) Villa King Spa (7) R$ 700, Villa King Spa (2) R$ 630, Balcony R$ 700 (igual à Villa King Spa 7).
 - Queen (2) e Afrodite ficam fora.
-- **Data com mais de 70% vendida (esclarecido em 13/10):** a Regra I não corta; a data fica no mínimo do quarto e, se o quarto não estiver em demanda alta, sobe 10% por rodada pelo piso (`min_price`), mantendo o percentual do bloco. Subir só o piso é de propósito: apagar a substituição (saída da escada pela letra) tiraria o percentual do bloco e levantaria as datas vizinhas com Regra I.
+- **Data com mais de 70% vendida (esclarecido em 13/10):** a Regra I não **começa** um corte nela; a data fica no mínimo do quarto e sobe 10% por rodada pelo piso (`min_price`), mantendo o percentual do bloco. Um corte que já estava aplicado e passou de 70% por causa das vendas que ele mesmo gerou (Queen 7 em 13/10: de 4 para 6 de 7 em 3 h) **segue só no próprio dia (D0)**, para vender a última unidade; de D1 a D3 volta ao mínimo na rodada seguinte. Subir só o piso é de propósito: apagar a substituição (saída da escada pela letra) tiraria o percentual do bloco e levantaria as datas vizinhas com Regra I.
 - **Demanda alta:** a Regra I vale só para a última unidade do dia (seção 4b). Uma data com várias unidades livres volta ao mínimo do quarto.
 
 **Regra A, estadia mínima**

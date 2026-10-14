@@ -1416,6 +1416,13 @@ A Villa não aparece em nenhuma busca com filtro de hidro (falta a comodidade na
 - **Pendências suas (nesta ordem):** (1) Sync Now dos 7 quartos; (2) confirmar a base dos R$ 1.000 do padrão de qualidade; (3) Beds24: tarifa da Queen 2 e canais da Villa. Suavização da Balcony na tela continua pendente.
 - **Aprendi:** janela móvel de 24 h do recálculo (a Balcony deu 429 às 11:25 por causa dos 3 de ontem); envio das 09:52 não é garantido; vitrine do Recanto 0,63 em dia útil (R$ 403 ÷ 640); remanejamento no Beds24 aparece como −1/+1 entre quartos. Detalhes em `aprendizados.md`.
 
+## 14/10/2026, 18:40 — Pedido do dono: metas de faturamento por pousada (baixa R$ 150/220 mil; alta R$ 300/350 mil) e modo por faturamento
+
+- **Decisão sua:** baixa temporada Villa R$ 150 mil e Recanto R$ 220 mil; alta temporada Villa no mínimo R$ 300 mil e Recanto R$ 350 mil. Li como faturamento **mensal por pousada** (alta = dezembro e, no inverno, junho a agosto; os outros meses são baixa pelo calendário de demanda).
+- **Leitura contra o modelo (novembro e dezembro):** Villa baixa R$ 150 mil cabe no realista (R$ 162 mil); Villa alta R$ 300 mil fica entre o realista (R$ 257 mil) e o máximo (R$ 308 mil); Recanto baixa R$ 220 mil é igual ao máximo (realista R$ 183 mil; setembro fez R$ 182 mil); Recanto alta R$ 350 mil passa do máximo (R$ 312 mil). Para o Recanto chegar lá precisa de ocupação e diária subindo juntas (60% a R$ 765 reais na baixa; 70% a R$ 1.010 na alta).
+- **O que mudou na estratégia:** modo por faturamento por pousada (`quartos.json` → `modo`): toda segunda a revisão compara o livro do mês com os níveis (mínimo seu, realista, máximo) no ritmo esperado e grava volume / padrão / preço; a flutuação por faixas passa a usar a classe baixa (volume) ou alta (preço) em todos os quartos da pousada. Travas inalteradas. Hoje as duas pousadas estão em "padrão" até a revisão de segunda (19/10).
+- **Nada gravado no PriceLabs nesta rodada.** Documento: `pricelabs/metas-de-faturamento-2026-2027.md`, seção 6.
+
 > **Regras em vigor:** desde 06/10/2026 elas ficam em `.claude/skills/gestao-receita-pousadas/references/regras.md`. Este arquivo guarda só o histórico das mudanças.
 
 ## O que só pode ser feito na tela (passo a passo para você)

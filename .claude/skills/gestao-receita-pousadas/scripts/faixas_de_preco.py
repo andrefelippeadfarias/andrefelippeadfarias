@@ -210,6 +210,17 @@ def cortes_da_noite(tab: dict, d: date, conj: str, tipo: str) -> tuple[list[floa
     return por_tipo.get(chave), f"tipo:{chave}"
 
 
+def demanda_efetiva(q: dict, cfg: dict) -> str:
+    """Classe de demanda que a flutuação usa: o modo por faturamento da pousada (regras.md 4c; revisão de segunda)
+    sobrepõe a classe do quarto: "volume" age como baixa, "preco" como alta, "padrão" mantém a classe."""
+    modo = (cfg.get("modo") or {}).get(q.get("pousada") or "", "padrão")
+    if modo == "volume":
+        return "baixa"
+    if modo == "preco":
+        return "alta"
+    return q.get("demanda", "media")
+
+
 def classificar_quartos(coleta: dict, tab: dict, cal: dict, cfg: dict, hoje: date, dias: int) -> list[dict]:
     """Uma linha por quarto e noite: faixa atual, faixa alvo, ocupação, meta e ação sugerida."""
     from sazonalidade import periodo, indice_faixa
@@ -261,7 +272,7 @@ def classificar_quartos(coleta: dict, tab: dict, cal: dict, cfg: dict, hoje: dat
             if q.get("unidades", tot) <= 2 and not esgotada:
                 pv, pt = ocup_pousada.get((q["pousada"], dia["date"]), (vend, tot))
                 ocup = pv / pt if pt else ocup
-            texto, passo = acao_sugerida(fx if fx is not None else alvo, alvo, ocup, meta, esgotada, ate, q.get("demanda", "media")) if cortes_ else ("sem dado de mercado", 0)
+            texto, passo = acao_sugerida(fx if fx is not None else alvo, alvo, ocup, meta, esgotada, ate, demanda_efetiva(q, cfg)) if cortes_ else ("sem dado de mercado", 0)
             if idade_cortes is not None and idade_cortes > 14 and passo < 0:
                 texto, passo = (f"cortes de mercado com {idade_cortes} dias: só subir ou segurar", 0)
             # alvo de preço: Recanto mira o topo da faixa alvo, Villa a base (regras.md 4c)

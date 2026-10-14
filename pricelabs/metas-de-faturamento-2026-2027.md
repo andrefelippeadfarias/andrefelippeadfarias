@@ -64,7 +64,27 @@ Festas de fim de ano = Natal + Réveillon + 8 noites de ombro (18 a 23 e 27 a 28
 - **Feriados:** vendido contra a meta a 30, 15 e 7 dias. A 7 dias com menos de 50% vendido, a rotina sugere a você liberar 1 noite (feriadões; o Réveillon não) e o preço desce um degrau, nunca para "baixo"; a decisão de liberar é sua.
 - Os números ficam em `.claude/skills/gestao-receita-pousadas/dados/metas_faturamento.json`; o relatório da rotina ganha o item "Faturamento".
 
-## 6. O que pode mudar as previsões
+## 6. Metas do dono (14/10) e os três níveis de operação
+
+Você fixou as metas: **baixa temporada, Villa R$ 150 mil e Recanto R$ 220 mil; alta temporada, Villa no mínimo R$ 300 mil e Recanto R$ 350 mil.** Li como faturamento **mensal por pousada** (se for por temporada inteira, avise que refaço). Pelo calendário de demanda, a alta destes 6 meses é dezembro (festas) e, no ano, o inverno (junho a agosto); outubro, novembro, janeiro, fevereiro, março e abril são baixa.
+
+| Pousada e temporada | Mínimo (sua meta) | RevPAR exigido (R$ por unidade-noite) | Realista (estratégia atual a pleno, índice 1,70/1,50) | Máximo (índice 2,0/1,8: topo da faixa alvo e ocupação nas metas de ritmo) | Hoje (ritmo atual, índice 1,35/1,20) |
+|---|---|---|---|---|---|
+| Recanto, baixa (novembro) | **R$ 220.000** | R$ 458 | R$ 182.612 | R$ 214.838 | R$ 145.015 |
+| Villa, baixa (novembro) | **R$ 150.000** | R$ 333 | R$ 162.233 | R$ 194.679 | R$ 129.786 |
+| Recanto, alta (dezembro) | **R$ 350.000** | R$ 706 | R$ 265.465 | R$ 312.312 | R$ 210.811 |
+| Villa, alta (dezembro) | **R$ 300.000** | R$ 645 | R$ 257.064 | R$ 308.476 | R$ 205.651 |
+
+Leitura honesta: na **Villa**, sua meta da baixa (R$ 150 mil) cabe no realista (R$ 162 mil em novembro) e a da alta (R$ 300 mil) está entre o realista e o máximo. No **Recanto**, a meta da baixa (R$ 220 mil) é 20% acima do realista e igual ao máximo; a da alta (R$ 350 mil) passa do máximo que o mercado do ano passado permite. Setembro, o melhor mês medido, fez R$ 182 mil no Recanto. Para o Recanto chegar lá é preciso subir ocupação **e** diária ao mesmo tempo: por exemplo, 60% de ocupação a R$ 765 reais por noite na baixa (hoje: 57% a R$ 667) e 70% a R$ 1.010 na alta.
+
+**O que muda na estratégia (modo por faturamento, regras.md 4c):** toda segunda a revisão compara o livro do mês com estes níveis e grava um modo por pousada em `quartos.json`, que a flutuação por faixas passa a obedecer:
+- **Modo volume** (livro atrás do realista no ritmo esperado): todos os quartos da pousada agem como classe baixa: a flutuação pode descer um degrau já na meta (até a faixa alvo −1), corte de última hora pleno em D0 a D3, dias úteis no mínimo do quarto, sábado abaixo de 50% vira sugestão de liberar 1 noite. Objetivo: diárias.
+- **Modo padrão** (entre os dois limiares; o menor deles é a linha de baixo, o maior é a de cima, porque na Villa o seu mínimo fica abaixo do realista e no Recanto acima): as regras de hoje, classe de cada quarto.
+- **Modo preço** (no seu mínimo ou acima): todos os quartos agem como classe alta: +5% já na meta até a faixa alvo +1, +10% à frente até alvo +2, corte de última hora só na última unidade, base do anúncio +5% a +10% na segunda. Objetivo: diária.
+- As travas não mudam em nenhum modo: padrão de qualidade de R$ 1.000, pisos de feriado, descontos da Booking, sábado sozinho fechado, ±15% da base por semana. O modo nunca é mudado pela rotina leve.
+- **Ritmo esperado do livro** (referência inicial, recalibrada todo mês): 40% do realista no primeiro dia do mês, 65% no dia 15, 80% a 7 dias do fim; em setembro, 34% das diárias vieram com 0 a 1 dia de antecedência.
+
+## 7. O que pode mudar as previsões
 - Primeira temporada com dados: o índice foi medido em um mês e meio; a cada mês fechado ele é refeito e as metas, ajustadas.
 - Dezembro depende de vender Natal com 2 noites e Réveillon com 3 noites a R$ 1.000 reais ou mais; hoje estão em 2% e 17%, normal a 70 dias, mas é o ponto a vigiar de 15/11 em diante.
 - O mercado perdeu de 11% a 37% de RevPAR em 5 dos 7 meses equivalentes do ano passado e ganhou 35% em setembro: a base assume +5%; se o mercado cair na última hora, a Villa (dias de semana de última hora) sente primeiro.

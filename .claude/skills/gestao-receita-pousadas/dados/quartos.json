@@ -1,5 +1,5 @@
 {
- "versao": "2026-10-14T17",
+ "versao": "2026-10-14T18",
  "nota": "Fonte única dos dados de máquina da Skill. Os scripts leem daqui. Quem mudar base, mínimo ou máximo no PriceLabs atualiza este arquivo no mesmo commit.",
  "pms": "beds24",
  "grupo": {
@@ -359,5 +359,11 @@
  ],
  "feriados_nota": "Cada período lista as NOITES de feriado (data de entrada da diária). piso_real null = sem piso do dono; vale só o limite de segurança. Feriados de 2027 acrescentados em 14/10/2026 a partir de dados/sazonalidade.json (noites de hospedagem; só os que geram viagem: feriados municipais e os que caem em sábado ou domingo ficam de fora). Eventos e temporadas ficam em sazonalidade.json → datas. 14/10: Proclamação 2026 (dom 15/11) saiu da lista: é fim de semana comum (noites 13 e 14/11 seguem o padrão de sexta e sábado); feriados de dezembro de 2026 em diante receberam o piso padrão de R$ 1.000 reais. 14/10: Natal e Réveillon ficam na lista mesmo em sábado ou domingo (Prefeitura: 70% a 95% de ocupação). `estadia_minima` opcional por feriado (Finados 3); sem ela vale o calendário de sazonalidade ou 2.",
  "demanda_nota": "Classificação de demanda por suíte (alta/media/baixa), revista em toda rotina completa pela ocupação 15/30 dias contra as metas e pelo ritmo de reservas dos últimos 14 dias. Última revisão: 2026-10-13 (rotina das 10:53; antes, 2026-10-12, rotina completa e revisão semanal; hoje o calendário traz o lote de 09/10 e 48 reservas novas desde 10/10). Q7 15d 34%/30d 21% sobe de baixa para MÉDIA (acima de 60% da meta nas duas janelas: 30% e 21%), com 47 diárias vendidas em 06–12/10; Double 56%/47% alta; Q2 70%/62% alta; Afrodite 60%/43% média, candidata a alta (1 unidade; 3 diárias na semana); VK7 sobe de média para ALTA em 13/10 (calendário recalculado às 12:44 BRT, 21 h mais novo que o da coleta: 7d 73,5%, 15d 51,4%, 30d 44,8%, 45d 32,7%, 60d 26,7% e 49 diárias vendidas em 06–12/10; margem pequena, 1,4 ponto no 15d: volta a média se o 15d ficar abaixo de 50% em dois recálculos seguidos); VK2 53%/45% média, candidata a alta (2 unidades; 10 diárias na semana); Balcony 18%/24% baixa. Atualização de 13/10 16:55: com os recálculos novos Double 15d 54%/30d 46% (volta a confirmar alta depois da queda das 13:53 pelo calendário velho), VK7 15d 60%/30d 49% alta, Q7 7d 74% mas 15d 42%/30d 25% (média, 15d abaixo da meta de 50%), VK2 15d 60%/30d 47% e Balcony 24%/28% baixa. Exceções de mercado: nenhuma em vigor.",
- "excecoes_mercado": []
+ "excecoes_mercado": [],
+ "modo": {
+  "Recanto": "padrão",
+  "Villa": "padrão",
+  "nota": "Modo por faturamento (regras.md 4c; dono 14/10). A revisão de segunda compara o livro do mês com as metas do dono em metas_faturamento.json e grava: \"volume\" (atrás do realista: a flutuação age como classe baixa), \"padrão\" (entre realista e mínimo do dono) ou \"preco\" (no mínimo do dono ou acima: age como classe alta). Só a revisão de segunda e o dia 1 mudam; a rotina leve nunca.",
+  "desde": "2026-10-14"
+ }
 }

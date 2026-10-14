@@ -51,6 +51,10 @@ INSUMOS = {
         "Tiradentes (20 a 21/4, 2 noites)": {"vendidas": 2, "receita": 924, "diarias": 62, "ocupacao": (0.45, 0.55, 0.65), "diaria": (800, 850, 900), "piso_skill": 800}},
     "pascoa_noites_normais_marco": {"piso": 5678, "base": 7130, "meta": 8454},  # 1 noite comum de março pela fórmula, por cenário (31 unidades)
 }
+# Metas do dono (14/10/2026), lidas como faturamento MENSAL por pousada: baixa temporada (outubro, novembro, janeiro,
+# fevereiro, março e abril, pelo calendário de demanda) e alta temporada (dezembro; no inverno, junho a agosto).
+DONO = {"baixa": {"recanto": 220000, "villa": 150000}, "alta": {"recanto": 300000 + 50000, "villa": 300000},
+        "meses_alta": ["2026-12"], "indice_maximo": {"recanto": 2.00, "villa": 1.80}}
 CEN = ("piso", "base", "meta")
 MESES = list(INSUMOS["mercado_ano_passado"])
 NOME = {"2026-10": "Outubro (mês inteiro)", "2026-11": "Novembro", "2026-12": "Dezembro", "2027-01": "Janeiro",
@@ -94,6 +98,26 @@ def meses(fer):
             row[c] = round(max(tot, row["livro"]))
         res[m] = row
     return res
+
+
+def por_pousada():
+    """Previsão por pousada (só a fórmula) e os três níveis do dono: mínimo (dono), realista (modelo a pleno) e máximo."""
+    out = {}
+    for m in MESES:
+        y, mo = int(m[:4]), int(m[5:]); dias = calendar.monthrange(y, mo)[1]
+        temp = "alta" if m in DONO["meses_alta"] else "baixa"
+        out[m] = {}
+        for p, un in INSUMOS["unidades"].items():
+            occ, adr = INSUMOS["mercado_ano_passado"][m][p]
+            teto = INSUMOS["teto_95_recanto"].get(m, 1.0) if p == "recanto" else 1.0
+            base = occ / 100 * adr * 1.05 * INSUMOS["cenarios"]["base"]["indice"][p] * un * dias * teto
+            realista = occ / 100 * adr * 1.05 * INSUMOS["cenarios"]["meta"]["indice"][p] * un * dias * teto
+            maximo = occ / 100 * adr * 1.05 * DONO["indice_maximo"][p] * un * dias * teto
+            minimo = DONO[temp][p]
+            out[m][p] = {"hoje": round(base), "realista": round(realista), "maximo": round(maximo), "minimo_dono": minimo,
+                         "revpar_minimo_dono": round(minimo / (un * dias)), "temporada": temp,
+                         "minimo_dono_vs_realista": round(minimo / realista - 1, 2)}
+    return out
 
 
 def temporadas(res, fer):
@@ -159,7 +183,23 @@ def documento(res, fer, temp):
     L.append("- **Primeiro dia útil do mês:** mês fechado contra a meta, diária média e ocupação por quarto; o índice contra o mercado é refeito com o mês realizado e as metas dos 6 meses seguintes são recalibradas (basta atualizar os insumos do script).")
     L.append("- **Feriados:** vendido contra a meta a 30, 15 e 7 dias. A 7 dias com menos de 50% vendido, a rotina sugere a você liberar 1 noite (feriadões; o Réveillon não) e o preço desce um degrau, nunca para \"baixo\"; a decisão de liberar é sua.")
     L.append("- Os números ficam em `.claude/skills/gestao-receita-pousadas/dados/metas_faturamento.json`; o relatório da rotina ganha o item \"Faturamento\".\n")
-    L.append("## 6. O que pode mudar as previsões")
+    L.append("## 6. Metas do dono (14/10) e os três níveis de operação\n")
+    L.append("Você fixou as metas: **baixa temporada, Villa R$ 150 mil e Recanto R$ 220 mil; alta temporada, Villa no mínimo R$ 300 mil e Recanto R$ 350 mil.** Li como faturamento **mensal por pousada** (se for por temporada inteira, avise que refaço). Pelo calendário de demanda, a alta destes 6 meses é dezembro (festas) e, no ano, o inverno (junho a agosto); outubro, novembro, janeiro, fevereiro, março e abril são baixa.\n")
+    L.append("| Pousada e temporada | Mínimo (sua meta) | RevPAR exigido (R$ por unidade-noite) | Realista (estratégia atual a pleno, índice 1,70/1,50) | Máximo (índice 2,0/1,8: topo da faixa alvo e ocupação nas metas de ritmo) | Hoje (ritmo atual, índice 1,35/1,20) |")
+    L.append("|---|---|---|---|---|---|")
+    pp = por_pousada()
+    for m, nome in (("2026-11", "Recanto, baixa (novembro)"), ("2026-11", "Villa, baixa (novembro)"), ("2026-12", "Recanto, alta (dezembro)"), ("2026-12", "Villa, alta (dezembro)")):
+        p = "recanto" if nome.startswith("Recanto") else "villa"; v = pp[m][p]
+        L.append(f"| {nome} | **{R(v['minimo_dono'])}** | R$ {v['revpar_minimo_dono']} | {R(v['realista'])} | {R(v['maximo'])} | {R(v['hoje'])} |")
+    L.append("")
+    L.append("Leitura honesta: na **Villa**, sua meta da baixa (R$ 150 mil) cabe no realista (R$ 162 mil em novembro) e a da alta (R$ 300 mil) está entre o realista e o máximo. No **Recanto**, a meta da baixa (R$ 220 mil) é 20% acima do realista e igual ao máximo; a da alta (R$ 350 mil) passa do máximo que o mercado do ano passado permite. Setembro, o melhor mês medido, fez R$ 182 mil no Recanto. Para o Recanto chegar lá é preciso subir ocupação **e** diária ao mesmo tempo: por exemplo, 60% de ocupação a R$ 765 reais por noite na baixa (hoje: 57% a R$ 667) e 70% a R$ 1.010 na alta.\n")
+    L.append("**O que muda na estratégia (modo por faturamento, regras.md 4c):** toda segunda a revisão compara o livro do mês com estes níveis e grava um modo por pousada em `quartos.json`, que a flutuação por faixas passa a obedecer:")
+    L.append("- **Modo volume** (livro atrás do realista no ritmo esperado): todos os quartos da pousada agem como classe baixa: a flutuação pode descer um degrau já na meta (até a faixa alvo −1), corte de última hora pleno em D0 a D3, dias úteis no mínimo do quarto, sábado abaixo de 50% vira sugestão de liberar 1 noite. Objetivo: diárias.")
+    L.append("- **Modo padrão** (entre os dois limiares; o menor deles é a linha de baixo, o maior é a de cima, porque na Villa o seu mínimo fica abaixo do realista e no Recanto acima): as regras de hoje, classe de cada quarto.")
+    L.append("- **Modo preço** (no seu mínimo ou acima): todos os quartos agem como classe alta: +5% já na meta até a faixa alvo +1, +10% à frente até alvo +2, corte de última hora só na última unidade, base do anúncio +5% a +10% na segunda. Objetivo: diária.")
+    L.append("- As travas não mudam em nenhum modo: padrão de qualidade de R$ 1.000, pisos de feriado, descontos da Booking, sábado sozinho fechado, ±15% da base por semana. O modo nunca é mudado pela rotina leve.")
+    L.append("- **Ritmo esperado do livro** (referência inicial, recalibrada todo mês): 40% do realista no primeiro dia do mês, 65% no dia 15, 80% a 7 dias do fim; em setembro, 34% das diárias vieram com 0 a 1 dia de antecedência.\n")
+    L.append("## 7. O que pode mudar as previsões")
     L.append("- Primeira temporada com dados: o índice foi medido em um mês e meio; a cada mês fechado ele é refeito e as metas, ajustadas.")
     L.append("- Dezembro depende de vender Natal com 2 noites e Réveillon com 3 noites a R$ 1.000 reais ou mais; hoje estão em 2% e 17%, normal a 70 dias, mas é o ponto a vigiar de 15/11 em diante.")
     L.append("- O mercado perdeu de 11% a 37% de RevPAR em 5 dos 7 meses equivalentes do ano passado e ganhou 35% em setembro: a base assume +5%; se o mercado cair na última hora, a Villa (dias de semana de última hora) sente primeiro.")
@@ -175,8 +215,8 @@ def main(argv=None):
     doc = documento(res, fer, temp)
     if a.doc: Path(a.doc).write_text(doc, encoding="utf-8")
     if a.json:
-        Path(a.json).write_text(json.dumps({"versao": "2026-10-14T17", "lido_em": INSUMOS["lido_em"], "faturamento": "revenue do PriceLabs = rental_revenue do Beds24, antes da comissão da OTA e sem extras",
-            "metodo": __doc__.split("Método")[1].split("Uso:")[0].strip(), "insumos": INSUMOS, "meses": res, "temporadas": temp, "feriados": fer,
+        Path(a.json).write_text(json.dumps({"versao": "2026-10-14T18", "lido_em": INSUMOS["lido_em"], "faturamento": "revenue do PriceLabs = rental_revenue do Beds24, antes da comissão da OTA e sem extras",
+            "metodo": __doc__.split("Método")[1].split("Uso:")[0].strip(), "insumos": INSUMOS, "meses": res, "temporadas": temp, "feriados": fer, "metas_dono": DONO, "por_pousada": por_pousada(),
             "acompanhamento": "segunda: livro × meta por mês (Report Builder por mês de estadia) e ritmo; dia 1: mês fechado e recalibração do índice; feriados a 30/15/7 dias"},
             ensure_ascii=False, indent=1), encoding="utf-8")
     print(doc)

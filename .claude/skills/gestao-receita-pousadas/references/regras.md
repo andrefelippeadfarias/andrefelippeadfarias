@@ -181,6 +181,7 @@ Pedido do dono: "qualificar os preços: muito baixo, baixo, médio, alto e muito
 - **Fator de vitrine por tipo de dia** (`fator_vitrine` e `fator_vitrine_fds` em `quartos.json`): Recanto 0,59 em dia de semana e feriado, 0,61 em sexta e sábado; Villa 0,53 e 0,66. Recalibrados na revisão semanal pela busca da Booking dos nossos hotéis.
 - **"Topo" e "base" da faixa:** o alvo de preço do Recanto é o corte superior da faixa alvo e o da Villa é o corte inferior; o passo percentual leva até lá, nunca além da faixa alvo mais uma.
 - Recanto (5 estrelas, nota 8,4) opera no topo da faixa alvo; Villa (3 estrelas, nota 8,1) opera na base.
+- **Modo por faturamento (dono, 14/10; `quartos.json` → `modo`, por pousada):** a revisão de segunda (e o dia 1) compara o livro do mês com os níveis de `dados/metas_faturamento.json` (mínimo do dono, realista e máximo) no ritmo esperado (40% do realista no dia 1, 65% no dia 15, 80% a 7 dias do fim) e grava o modo: **volume** quando o livro está atrás do menor dos dois limiares (realista ou mínimo do dono), **preco** quando está no maior ou acima, **padrão** entre eles. `faixas_de_preco.demanda_efetiva` aplica: volume = todos os quartos da pousada agem como classe baixa; preco = como classe alta; padrão = classe de cada quarto. As travas (padrão de qualidade, pisos de feriado, descontos da Booking, Regra H, ±15% da base) não mudam com o modo. A rotina leve nunca muda o modo.
 
 ## 5. Mediana da Booking: só para a exceção de mercado e para o relatório
 - O posicionamento de preço é o da seção 4c (faixa alvo da sazonalidade; topo para o Recanto, base para a Villa). Não existe outra régua.
@@ -197,6 +198,7 @@ Pedido do dono: "qualificar os preços: muito baixo, baixo, médio, alto e muito
 - 08/10: padrão de qualidade. Sexta, sábado e feriado das suítes com banheira a partir de R$ 1.000 por diária, "mas de olho no mercado", e "sempre trabalhe com percentuais".
 - 08/10: "Pode igualar a suavização da Balcony às outras suítes" (só pela tela; pendência do dono).
 - 13/10: preços qualificados em cinco faixas de mercado, sazonalidade prevista para 2026 e 2027 e flutuação percentual por faixa e ocupação contra a meta; pesquisa de mercado feita por agentes de IA (seção 4c); estratégia consolidada em `estrategia.md` (14/10).
+- 14/10 (tarde): metas mensais por pousada: baixa temporada Villa R$ 150 mil e Recanto R$ 220 mil; alta temporada Villa no mínimo R$ 300 mil e Recanto R$ 350 mil (lidas como mês; alta = dezembro e, no inverno, junho a agosto). Três níveis de operação (mínimo do dono, realista, máximo) e modo por faturamento (4c).
 - 14/10: metas de faturamento por temporada e por feriado para os próximos 6 meses (`dados/metas_faturamento.json`, documento `pricelabs/metas-de-faturamento-2026-2027.md`); acompanhamento na revisão de segunda e no dia 1; só o dono muda as metas, a Skill recalibra a previsão.
 - A regra de sábado com valor real de pelo menos R$ 800 (02/10) **não vale como regra geral**: as decisões de 06/10 a superaram.
 

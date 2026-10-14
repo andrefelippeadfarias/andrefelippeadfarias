@@ -470,3 +470,14 @@ class TestSazonalidade(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class TestModoFaturamento(unittest.TestCase):
+    def test_modo_sobrepoe_classe(self):
+        import faixas_de_preco as fp
+        q = {"pousada": "Villa", "demanda": "media"}
+        self.assertEqual(fp.demanda_efetiva(q, {}), "media")
+        self.assertEqual(fp.demanda_efetiva(q, {"modo": {"Villa": "volume"}}), "baixa")
+        self.assertEqual(fp.demanda_efetiva(q, {"modo": {"Villa": "preco"}}), "alta")
+        self.assertEqual(fp.demanda_efetiva(q, {"modo": {"Recanto": "preco"}}), "media")
+        self.assertEqual(fp.demanda_efetiva({"pousada": "Recanto", "demanda": "alta"}, {"modo": {"Recanto": "volume"}}), "baixa")

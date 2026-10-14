@@ -25,6 +25,7 @@ Cada item tem data e evidência. Para incluir um item novo: data, o fato, a evid
 ## Valor real pago e vitrine
 | Data | Fato | Evidência |
 |---|---|---|
+| 14/10 | Vitrine ÷ enviado em dia de semana: Recanto **0,63** (R$ 403 na Booking com a Queen 7 a R$ 640) e **0,63** em 15/10 (R$ 504 com R$ 800); Villa **0,53** (R$ 446 com a Balcony a R$ 842). O Recanto está acima dos 0,59 de 08/10 em dia útil: candidato a 0,61–0,63 na revisão de 19/10. | Busca da Booking de 14/10 11:30 BRT (nossos hotéis, 14→15 e 15→16/10). |
 | 08/10 | Vitrine da Booking ÷ preço enviado: Recanto 0,59 em dia útil, 0,57 no feriado e 0,61 no fim de semana; Villa 0,53 em dia útil e no feriado e 0,66 no fim de semana. | Coleta da Booking de 08/10, 5 períodos, contra os preços enviados às 17:01 de 07/10. |
 | 28/09 a 05/10 | Valor real ÷ preço enviado, na Booking: Queen (2) 33–39%; Balcony 39–47%; Queen (7) 42–54%; Double 53%; Villa King Spa (7) 38–41%; Villa King Spa (2) 39%. Airbnb na mesma faixa (39–54%). Expedia bem acima. | Reservas do Beds24 (campo total_cost) contra o user_price. Registro: L123–125, L494–501, L593 e L688. |
 | 05–06/10 | Última hora de meio de semana: Queen (7) pagou 50% do enviado (R$ 807 por 2 diárias a R$ 800), R$ 330–404 por noite. | Reservas de 05/10. |
@@ -66,6 +67,9 @@ Cada item tem data e evidência. Para incluir um item novo: data, o fato, a evid
 | 06/10 | Pela API, `update_listing_date_overrides` junta os campos novos aos que já existem na data (min_price e min_stay foram mantidos). Pela tela, uma substituição nova apaga a anterior. | Verificação da própria API em 06/10; registro L71 e L617. |
 | 30/09 | Preço fixo não sobe quando o recomendado sobe; percentual sobe. Preço fixo pode ficar acima do algoritmo depois que a base muda. | Registro L149 e L329. |
 | 25/09 | `refresh_listing_pricing` (recalcular) não envia aos canais e tem limite de 3 por quarto a cada 24 h (erro 429). | apis-verificadas.md; registro L333 e L403. |
+| 14/10 | O limite de 3 recálculos é **janela móvel de 24 h**, não dia civil: a Balcony recalculada 3 vezes em 13/10 (13:09, 16:09 e 21:54 BRT) deu 429 às 11:25 BRT de 14/10. Com `parse_reasons_json: true` o mesmo recálculo serve para medir e detalhar (1 em vez de 2). | 429 da Balcony em 14/10 11:25; 6 quartos recalculados com reasons de uma vez. |
+| 14/10 | O envio diário das 09:52 BRT não é garantido: Queen 7, Afrodite e VK2 ficaram sem envio em 14/10 (último às 09:52 de 13/10), enquanto VK7 (09:38) e Balcony (09:10) enviaram. O que foi gravado depende do Sync Now. | `last_date_pushed` dos 7 quartos às 11:25 BRT de 14/10. |
+| 14/10 | Remanejamento no Beds24 aparece no calendário como −1 num quarto e +1 em outro na mesma data, sem reserva nova na lista (VK7 → VK2 em 21 e 22/10). Não é venda nem cancelamento. | Diferença de ocupação 13/10 22:00 → 14/10 11:25 contra a lista de reservas (39, nenhuma nova). |
 | 30/09 a 06/10 | O envio aos canais acontece uma vez por dia, entre 05:40 e 12:42 (no começo de outubro foi às 09:43), ou no Sync Now (só pela tela). `last_date_pushed` mostra o último envio. `user_price` atrasa de minutos a horas. | Registro L108, L356, L422, L469, L600 e L707. |
 | 30/09 | O PriceLabs só vê uma reserva nova depois do próximo envio do Beds24. A lista de reservas por data de criação é mais rápida que a ocupação por quarto. | Registro L354 e L592. |
 | 01/10 | "Indisponível" pode ser bloqueio, e não reserva. Antes de tirar uma data da escada, confira na lista de reservas. | Erro de 01/10 corrigido (L450). |
@@ -115,6 +119,10 @@ Cada item tem data e evidência. Para incluir um item novo: data, o fato, a evid
 ## Efeito das mudanças nas vendas (preencher a cada rodada)
 | Mudança (data) | Antes → depois | Vendas nos 3 dias seguintes | Leitura |
 |---|---|---|---|
+| Regra I da Queen 7 em 14/10 (R$ 640 nos canais desde 13/10 09:52) | R$ 800 → R$ 640 | da noite de 13/10 às 11:25 de 14/10: nenhuma venda nova em 14/10 (4 → 3 de 7 por um cancelamento) | o corte vende no dia (13/10: 3 unidades em 7 h), não na véspera à noite; medir de novo às 13:53 e 16:53 de 14/10 |
+| Balcony a R$ 842 (Regra G, 14 e 15/10; nos canais desde 09:10 de 14/10) | R$ 630 → R$ 842 | 15/10: 1 de 6 (vendida em 13/10 a R$ 842); 14/10: 0 de 6 até 11:25 | medir até 16/10 |
+| VK7 a R$ 935 em 14/10 (6 de 7) e 20/10 (5 de 7) | R$ 850 → R$ 935 | 14/10 segue 6 de 7; 20/10 segue 5 de 7 | medir até 16/10 |
+| Flutuação 4c aplicada em 14/10 (primeira rodada): Recanto 23–24/10 −10%, Queen 7 25–29/10 no mínimo, Double +5/+10% em 19–21 e 25–29/10, Villa Nov–Dez um degrau para baixo, Balcony realinhada | ver registro de 14/10 | (medir até 17/10) | |
 | Regra I da Queen 7 em D0 e D1 (R$ 640 enviado às 09:52 BRT de 13/10) | R$ 800 → R$ 640 | em 7 h: 13/10 de 4 para 7 de 7 (esgotou a R$ 640, 3 unidades), 14/10 de 2 para 4 de 7 (+2); a Queen 7 inteira foi de 63% para 74% em 7 dias | **a Regra I funcionou**: 5 noites vendidas a R$ 640 que ficariam vazias; a Queen 7 só vende de última hora (26 de 49 reservas com 0 a 1 dia de antecedência) |
 | Balcony na Regra G (R$ 842 em 15/10, enviado 13:09 BRT) | R$ 689 → R$ 842 (+22%) | primeira venda da Balcony em 15/10 (1 de 6) em cerca de 4 h | o preço mais alto (10% abaixo da King Spa 7 a R$ 935) não travou a venda; a Balcony tem 7 dias de 31% |
 | VK7 no mínimo de R$ 850 em 13 a 15/10 (sem Regra I), enviada de 12/10 e subindo ao piso R$ 935 a partir das 16:53 UTC de 13/10 | R$ 850 enviado; 13/10 de 2 para 4 de 7, 14/10 de 4 para 6, 15/10 de 5 para 7 (esgotou) | em 4 h (12:44 a 16:53 UTC): +2 em 13/10, +2 em 14/10, +2 em 15/10, +1 em 23 e 24/10; 7 dias de 74% para 86% | demanda alta confirmada; as 2 reservas de 3 noites (13–15/10) pagaram R$ 470 por noite (55% do enviado) |

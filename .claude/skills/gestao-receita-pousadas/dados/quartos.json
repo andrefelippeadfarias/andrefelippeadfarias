@@ -1,355 +1,361 @@
 {
-  "versao": "2026-10-14T11",
-  "nota": "Fonte única dos dados de máquina da Skill. Os scripts leem daqui. Quem mudar base, mínimo ou máximo no PriceLabs atualiza este arquivo no mesmo commit.",
-  "pms": "beds24",
-  "grupo": {
-    "id": 124405,
-    "nome": "Recanto dos Moinhos"
+ "versao": "2026-10-14T14",
+ "nota": "Fonte única dos dados de máquina da Skill. Os scripts leem daqui. Quem mudar base, mínimo ou máximo no PriceLabs atualiza este arquivo no mesmo commit.",
+ "pms": "beds24",
+ "grupo": {
+  "id": 124405,
+  "nome": "Recanto dos Moinhos"
+ },
+ "fuso": "America/Sao_Paulo",
+ "metas": {
+  "7": 70,
+  "15": 50,
+  "30": 35,
+  "45": 25,
+  "60": 15
+ },
+ "quartos": [
+  {
+   "curto": "Q7",
+   "id": "350362___722805",
+   "nome": "Queen (7)",
+   "pousada": "Recanto",
+   "unidades": 7,
+   "min": 800,
+   "base": 1173,
+   "max": 5000,
+   "min_referencia": 800,
+   "banheira": true,
+   "fator_real": 0.42,
+   "fator_vitrine": 0.59,
+   "piso_feriado_base": "real",
+   "sem_desconto": false,
+   "regra_i": true,
+   "regra_f": true,
+   "demanda": "media",
+   "fator_vitrine_fds": 0.61,
+   "demanda_nota": "média em 14/10: 15d 35% (70% da meta), 30d 22% (63%)"
   },
-  "fuso": "America/Sao_Paulo",
-  "metas": {
-    "7": 70,
-    "15": 50,
-    "30": 35,
-    "45": 25,
-    "60": 15
+  {
+   "curto": "Double",
+   "id": "350362___722806",
+   "nome": "Double",
+   "pousada": "Recanto",
+   "unidades": 6,
+   "min": 900,
+   "base": 1480,
+   "max": 5000,
+   "min_referencia": 900,
+   "banheira": true,
+   "fator_real": 0.42,
+   "fator_vitrine": 0.59,
+   "piso_feriado_base": "real",
+   "sem_desconto": false,
+   "regra_i": true,
+   "regra_f": true,
+   "demanda": "alta",
+   "fator_vitrine_fds": 0.61,
+   "demanda_nota": "alta confirmada em 14/10: 7d 81%, 15d 56%, 30d 47%"
   },
-  "quartos": [
-    {
-      "curto": "Q7",
-      "id": "350362___722805",
-      "nome": "Queen (7)",
-      "pousada": "Recanto",
-      "unidades": 7,
-      "min": 800,
-      "base": 1173,
-      "max": 5000,
-      "min_referencia": 800,
-      "banheira": true,
-      "fator_real": 0.42,
-      "fator_vitrine": 0.59,
-      "piso_feriado_base": "real",
-      "sem_desconto": false,
-      "regra_i": true,
-      "regra_f": true,
-      "demanda": "media",
-      "fator_vitrine_fds": 0.61
-    },
-    {
-      "curto": "Double",
-      "id": "350362___722806",
-      "nome": "Double",
-      "pousada": "Recanto",
-      "unidades": 6,
-      "min": 900,
-      "base": 1480,
-      "max": 5000,
-      "min_referencia": 900,
-      "banheira": true,
-      "fator_real": 0.42,
-      "fator_vitrine": 0.59,
-      "piso_feriado_base": "real",
-      "sem_desconto": false,
-      "regra_i": true,
-      "regra_f": true,
-      "demanda": "alta",
-      "fator_vitrine_fds": 0.61
-    },
-    {
-      "curto": "Afrodite",
-      "id": "350362___722807",
-      "nome": "Afrodite",
-      "pousada": "Recanto",
-      "unidades": 1,
-      "min": 1500,
-      "base": 2000,
-      "max": 10000,
-      "min_referencia": 1500,
-      "banheira": true,
-      "fator_real": 0.42,
-      "fator_vitrine": 0.59,
-      "piso_feriado_base": "real",
-      "sem_desconto": false,
-      "regra_i": false,
-      "regra_f": false,
-      "demanda": "media",
-      "fator_vitrine_fds": 0.61
-    },
-    {
-      "curto": "Q2",
-      "id": "350362___722808",
-      "nome": "Queen (2)",
-      "pousada": "Recanto",
-      "unidades": 2,
-      "min": 850,
-      "base": 1870,
-      "max": 5000,
-      "min_referencia": 850,
-      "banheira": true,
-      "fator_real": 0.34,
-      "fator_vitrine": 0.59,
-      "piso_feriado_base": "real",
-      "sem_desconto": true,
-      "regra_i": false,
-      "regra_f": false,
-      "demanda": "alta",
-      "fator_vitrine_fds": 0.61
-    },
-    {
-      "curto": "VK7",
-      "id": "350364___722813",
-      "nome": "Villa King Spa (7)",
-      "pousada": "Villa",
-      "unidades": 7,
-      "min": 850,
-      "base": 1480,
-      "max": 5000,
-      "min_referencia": 1000,
-      "banheira": true,
-      "fator_real": 0.39,
-      "fator_vitrine": 0.53,
-      "piso_feriado_base": "real",
-      "sem_desconto": false,
-      "regra_i": true,
-      "regra_f": true,
-      "demanda": "alta",
-      "fator_vitrine_fds": 0.66
-    },
-    {
-      "curto": "Balcony",
-      "id": "350364___722814",
-      "nome": "Balcony",
-      "pousada": "Villa",
-      "unidades": 6,
-      "min": 765,
-      "base": 1270,
-      "max": 5000,
-      "min_referencia": 900,
-      "banheira": false,
-      "fator_real": 0.39,
-      "fator_vitrine": 0.53,
-      "piso_feriado_base": "vitrine",
-      "sem_desconto": false,
-      "regra_i": true,
-      "regra_f": false,
-      "demanda": "baixa",
-      "fator_vitrine_fds": 0.66
-    },
-    {
-      "curto": "VK2",
-      "id": "350364___722815",
-      "nome": "Villa King Spa (2)",
-      "pousada": "Villa",
-      "unidades": 2,
-      "min": 765,
-      "base": 1270,
-      "max": 5000,
-      "min_referencia": 900,
-      "banheira": true,
-      "fator_real": 0.39,
-      "fator_vitrine": 0.53,
-      "piso_feriado_base": "real",
-      "sem_desconto": false,
-      "regra_i": true,
-      "regra_f": true,
-      "demanda": "media",
-      "fator_vitrine_fds": 0.66
-    }
-  ],
-  "referencia_semanal": {
-    "data": "2026-10-12",
-    "nota": "Base e mínimo de cada quarto no início da semana. A revisão de segunda atualiza. O validador barra mudança acima do limite semanal contra estes valores. Decisão de 14/10 a gravar na rotina completa: mínimo da Balcony de 765 para 690 (Regra G: 10% abaixo da VK2 no mínimo).",
-    "valores": {
-      "Q7": {
-        "min": 800,
-        "base": 1173
-      },
-      "Double": {
-        "min": 900,
-        "base": 1480
-      },
-      "Afrodite": {
-        "min": 1500,
-        "base": 2000
-      },
-      "Q2": {
-        "min": 850,
-        "base": 1870
-      },
-      "VK7": {
-        "min": 850,
-        "base": 1480
-      },
-      "Balcony": {
-        "min": 765,
-        "base": 1270
-      },
-      "VK2": {
-        "min": 765,
-        "base": 1270
-      }
-    }
+  {
+   "curto": "Afrodite",
+   "id": "350362___722807",
+   "nome": "Afrodite",
+   "pousada": "Recanto",
+   "unidades": 1,
+   "min": 1500,
+   "base": 2000,
+   "max": 10000,
+   "min_referencia": 1500,
+   "banheira": true,
+   "fator_real": 0.42,
+   "fator_vitrine": 0.59,
+   "piso_feriado_base": "real",
+   "sem_desconto": false,
+   "regra_i": false,
+   "regra_f": false,
+   "demanda": "media",
+   "fator_vitrine_fds": 0.61
   },
-  "limites_seguranca": {
-    "nota": "Só o dono muda estes limites. A Skill nunca os altera sozinha.",
-    "fracao_min_referencia": 0.7,
-    "variacao_semanal_base_min": 0.15,
-    "piso_feriado_real_seguranca": 800,
-    "padrao_qualidade_diaria": 1000,
-    "padrao_qualidade_nota": "Dono, 08/10: sexta, sábado e feriado das suítes com banheira a partir deste valor, no preço enviado (tabela do PriceLabs, antes dos descontos da OTA). Só o dono muda. A Skill só desce abaixo com o campo mercado no plano e a entrada em excecoes_mercado.",
-    "proibido": [
-      "descontos de OTA",
-      "ofertas da Booking",
-      "Genius acima do nível 3",
-      "política de sábado sozinho (Regra H)",
-      "pedir senha ou token no chat"
-    ]
+  {
+   "curto": "Q2",
+   "id": "350362___722808",
+   "nome": "Queen (2)",
+   "pousada": "Recanto",
+   "unidades": 2,
+   "min": 850,
+   "base": 1870,
+   "max": 5000,
+   "min_referencia": 850,
+   "banheira": true,
+   "fator_real": 0.34,
+   "fator_vitrine": 0.59,
+   "piso_feriado_base": "real",
+   "sem_desconto": true,
+   "regra_i": false,
+   "regra_f": false,
+   "demanda": "alta",
+   "fator_vitrine_fds": 0.61
   },
-  "parametros": {
-    "nota": "A Skill ajusta estes valores sozinha, dentro dos limites de segurança. Toda mudança vai para o historico-da-skill.md.",
-    "regra_i_dias": 3,
-    "regra_i_desconto_max": 0.2,
-    "regra_f_saida_vendido": 0.5,
-    "regra_c_desconto": 0.3,
-    "regra_a_janela_dias": 14,
-    "piso_feriado_real_padrao": 1000,
-    "regra_g_desconto": 0.1
+  {
+   "curto": "VK7",
+   "id": "350364___722813",
+   "nome": "Villa King Spa (7)",
+   "pousada": "Villa",
+   "unidades": 7,
+   "min": 850,
+   "base": 1480,
+   "max": 5000,
+   "min_referencia": 1000,
+   "banheira": true,
+   "fator_real": 0.39,
+   "fator_vitrine": 0.53,
+   "piso_feriado_base": "real",
+   "sem_desconto": false,
+   "regra_i": true,
+   "regra_f": true,
+   "demanda": "alta",
+   "fator_vitrine_fds": 0.66,
+   "demanda_desde": "2026-10-14",
+   "demanda_nota": "candidata em 13/10 (rotina leve), confirmada na rotina completa de 14/10: 7d 88%, 15d 56%, 30d 47%"
   },
-  "feriados": [
-    {
-      "nome": "Nossa Senhora Aparecida",
-      "inicio": "2026-10-09",
-      "fim": "2026-10-11",
-      "piso_real": 800,
-      "nota": "Noites de feriado (a noite de segunda 12/10 é volta e não entra). Piso de R$ 1.000 decidido pelo dono em 06/10; Villa a R$ 800 desde 06/10 16h (estratégia agressiva); Recanto a R$ 800 desde 07/10 08:20 pela Skill: 24 h sem venda de feriado a 2 dias, 19 de 31 unidades livres na sexta, Recanto 13% acima da mediana com hidro da Booking."
-    },
-    {
-      "nome": "Finados",
-      "inicio": "2026-10-30",
-      "fim": "2026-11-01",
-      "piso_real": null,
-      "nota": "Dono pôs +20% e 3 noites nos 7 quartos de 30/10 a 02/11 pela tela (03/10). Piso real R$ 800 por baixo do +20% do dono (03/10); estadia 3 noites por decisão dele.",
-      "estadia_minima": 3
-    },
-    {
-      "nome": "Consciência Negra",
-      "inicio": "2026-11-19",
-      "fim": "2026-11-21",
-      "piso_real": null,
-      "nota": "Piso real R$ 800 (não o padrão de R$ 1.000): decidido em 10/10 com o mercado a 23% a 36 dias e o Recanto já acima da mediana com hidro; rever na rotina completa de 20/10 (D-30)."
-    },
-    {
-      "nome": "Natal",
-      "inicio": "2026-12-24",
-      "fim": "2026-12-25",
-      "piso_real": 1000,
-      "nota": "Piso padrão R$ 1.000 reais (regras.md, feriado novo); a Skill pode ajustar pelos dados, nunca abaixo de R$ 800. Natal e Réveillon são picos em qualquer dia da semana (exceção à regra do feriado em fim de semana)."
-    },
-    {
-      "nome": "Réveillon",
-      "inicio": "2026-12-30",
-      "fim": "2027-01-01",
-      "piso_real": 1000,
-      "nota": "Piso padrão R$ 1.000 reais (regras.md, feriado novo); a Skill pode ajustar pelos dados, nunca abaixo de R$ 800. Natal e Réveillon são picos em qualquer dia da semana (exceção à regra do feriado em fim de semana)."
-    },
-    {
-      "nome": "Aniversário de São Paulo (feriadão paulistano)",
-      "inicio": "2027-01-22",
-      "fim": "2027-01-24",
-      "piso_real": 1000,
-      "fonte": "sazonalidade.json (pesquisa de 13/10/2026)",
-      "nota": "Piso padrão R$ 1.000 reais (regras.md, feriado novo); a Skill pode ajustar pelos dados, nunca abaixo de R$ 800."
-    },
-    {
-      "nome": "Carnaval",
-      "inicio": "2027-02-05",
-      "fim": "2027-02-09",
-      "piso_real": 1000,
-      "fonte": "sazonalidade.json (pesquisa de 13/10/2026)",
-      "nota": "Piso padrão R$ 1.000 reais (regras.md, feriado novo); a Skill pode ajustar pelos dados, nunca abaixo de R$ 800."
-    },
-    {
-      "nome": "Semana Santa / Páscoa",
-      "inicio": "2027-03-25",
-      "fim": "2027-03-27",
-      "piso_real": 1000,
-      "fonte": "sazonalidade.json (pesquisa de 13/10/2026)",
-      "nota": "Piso padrão R$ 1.000 reais (regras.md, feriado novo); a Skill pode ajustar pelos dados, nunca abaixo de R$ 800."
-    },
-    {
-      "nome": "Tiradentes (isolado, quarta)",
-      "inicio": "2027-04-20",
-      "fim": "2027-04-21",
-      "piso_real": 1000,
-      "fonte": "sazonalidade.json (pesquisa de 13/10/2026)",
-      "nota": "Piso padrão R$ 1.000 reais (regras.md, feriado novo); a Skill pode ajustar pelos dados, nunca abaixo de R$ 800."
-    },
-    {
-      "nome": "Corpus Christi (abertura da temporada de inverno)",
-      "inicio": "2027-05-26",
-      "fim": "2027-05-29",
-      "piso_real": 1000,
-      "fonte": "sazonalidade.json (pesquisa de 13/10/2026)",
-      "nota": "Piso padrão R$ 1.000 reais (regras.md, feriado novo); a Skill pode ajustar pelos dados, nunca abaixo de R$ 800."
-    },
-    {
-      "nome": "Revolução Constitucionalista, 9 de Julho (feriado estadual SP)",
-      "inicio": "2027-07-08",
-      "fim": "2027-07-10",
-      "piso_real": 1000,
-      "fonte": "sazonalidade.json (pesquisa de 13/10/2026)",
-      "nota": "Piso padrão R$ 1.000 reais (regras.md, feriado novo); a Skill pode ajustar pelos dados, nunca abaixo de R$ 800."
-    },
-    {
-      "nome": "Independência, 7 de Setembro (ponte)",
-      "inicio": "2027-09-03",
-      "fim": "2027-09-06",
-      "piso_real": 1000,
-      "fonte": "sazonalidade.json (pesquisa de 13/10/2026)",
-      "nota": "Piso padrão R$ 1.000 reais (regras.md, feriado novo); a Skill pode ajustar pelos dados, nunca abaixo de R$ 800."
-    },
-    {
-      "nome": "Nossa Senhora Aparecida / Dia das Crianças (ponte)",
-      "inicio": "2027-10-08",
-      "fim": "2027-10-11",
-      "piso_real": 1000,
-      "fonte": "sazonalidade.json (pesquisa de 13/10/2026)",
-      "nota": "Piso padrão R$ 1.000 reais (regras.md, feriado novo); a Skill pode ajustar pelos dados, nunca abaixo de R$ 800."
-    },
-    {
-      "nome": "Finados (ponte)",
-      "inicio": "2027-10-29",
-      "fim": "2027-11-01",
-      "piso_real": 1000,
-      "fonte": "sazonalidade.json (pesquisa de 13/10/2026)",
-      "nota": "Piso padrão R$ 1.000 reais (regras.md, feriado novo); a Skill pode ajustar pelos dados, nunca abaixo de R$ 800."
-    },
-    {
-      "nome": "Proclamação da República (feriadão)",
-      "inicio": "2027-11-12",
-      "fim": "2027-11-14",
-      "piso_real": 1000,
-      "fonte": "sazonalidade.json (pesquisa de 13/10/2026)",
-      "nota": "Piso padrão R$ 1.000 reais (regras.md, feriado novo); a Skill pode ajustar pelos dados, nunca abaixo de R$ 800."
-    },
-    {
-      "nome": "Natal",
-      "inicio": "2027-12-24",
-      "fim": "2027-12-25",
-      "piso_real": 1000,
-      "fonte": "sazonalidade.json (pesquisa de 13/10/2026)",
-      "nota": "Piso padrão R$ 1.000 reais (regras.md, feriado novo); a Skill pode ajustar pelos dados, nunca abaixo de R$ 800. Natal e Réveillon são picos em qualquer dia da semana (exceção à regra do feriado em fim de semana)."
-    },
-    {
-      "nome": "Réveillon",
-      "inicio": "2027-12-29",
-      "fim": "2027-12-31",
-      "piso_real": 1000,
-      "fonte": "sazonalidade.json (pesquisa de 13/10/2026)",
-      "nota": "Piso padrão R$ 1.000 reais (regras.md, feriado novo); a Skill pode ajustar pelos dados, nunca abaixo de R$ 800. Natal e Réveillon são picos em qualquer dia da semana (exceção à regra do feriado em fim de semana)."
-    }
-  ],
-  "feriados_nota": "Cada período lista as NOITES de feriado (data de entrada da diária). piso_real null = sem piso do dono; vale só o limite de segurança. Feriados de 2027 acrescentados em 14/10/2026 a partir de dados/sazonalidade.json (noites de hospedagem; só os que geram viagem: feriados municipais e os que caem em sábado ou domingo ficam de fora). Eventos e temporadas ficam em sazonalidade.json → datas. 14/10: Proclamação 2026 (dom 15/11) saiu da lista: é fim de semana comum (noites 13 e 14/11 seguem o padrão de sexta e sábado); feriados de dezembro de 2026 em diante receberam o piso padrão de R$ 1.000 reais. 14/10: Natal e Réveillon ficam na lista mesmo em sábado ou domingo (Prefeitura: 70% a 95% de ocupação). `estadia_minima` opcional por feriado (Finados 3); sem ela vale o calendário de sazonalidade ou 2.",
-  "demanda_nota": "Classificação de demanda por suíte (alta/media/baixa), revista em toda rotina completa pela ocupação 15/30 dias contra as metas e pelo ritmo de reservas dos últimos 14 dias. Última revisão: 2026-10-13 (rotina das 10:53; antes, 2026-10-12, rotina completa e revisão semanal; hoje o calendário traz o lote de 09/10 e 48 reservas novas desde 10/10). Q7 15d 34%/30d 21% sobe de baixa para MÉDIA (acima de 60% da meta nas duas janelas: 30% e 21%), com 47 diárias vendidas em 06–12/10; Double 56%/47% alta; Q2 70%/62% alta; Afrodite 60%/43% média, candidata a alta (1 unidade; 3 diárias na semana); VK7 sobe de média para ALTA em 13/10 (calendário recalculado às 12:44 BRT, 21 h mais novo que o da coleta: 7d 73,5%, 15d 51,4%, 30d 44,8%, 45d 32,7%, 60d 26,7% e 49 diárias vendidas em 06–12/10; margem pequena, 1,4 ponto no 15d: volta a média se o 15d ficar abaixo de 50% em dois recálculos seguidos); VK2 53%/45% média, candidata a alta (2 unidades; 10 diárias na semana); Balcony 18%/24% baixa. Atualização de 13/10 16:55: com os recálculos novos Double 15d 54%/30d 46% (volta a confirmar alta depois da queda das 13:53 pelo calendário velho), VK7 15d 60%/30d 49% alta, Q7 7d 74% mas 15d 42%/30d 25% (média, 15d abaixo da meta de 50%), VK2 15d 60%/30d 47% e Balcony 24%/28% baixa. Exceções de mercado: nenhuma em vigor.",
-  "excecoes_mercado": []
+  {
+   "curto": "Balcony",
+   "id": "350364___722814",
+   "nome": "Balcony",
+   "pousada": "Villa",
+   "unidades": 6,
+   "min": 690,
+   "base": 1270,
+   "max": 5000,
+   "min_referencia": 900,
+   "banheira": false,
+   "fator_real": 0.39,
+   "fator_vitrine": 0.53,
+   "piso_feriado_base": "vitrine",
+   "sem_desconto": false,
+   "regra_i": true,
+   "regra_f": false,
+   "demanda": "baixa",
+   "fator_vitrine_fds": 0.66,
+   "demanda_nota": "baixa em 14/10: 15d 24% (48% da meta)"
+  },
+  {
+   "curto": "VK2",
+   "id": "350364___722815",
+   "nome": "Villa King Spa (2)",
+   "pousada": "Villa",
+   "unidades": 2,
+   "min": 765,
+   "base": 1270,
+   "max": 5000,
+   "min_referencia": 900,
+   "banheira": true,
+   "fator_real": 0.39,
+   "fator_vitrine": 0.53,
+   "piso_feriado_base": "real",
+   "sem_desconto": false,
+   "regra_i": true,
+   "regra_f": true,
+   "demanda": "media",
+   "fator_vitrine_fds": 0.66,
+   "demanda_nota": "candidata a alta desde 14/10 (15d 70%, 30d 50%); confirma em 15/10 se repetir"
+  }
+ ],
+ "referencia_semanal": {
+  "data": "2026-10-12",
+  "nota": "Base e mínimo de cada quarto no início da semana. A revisão de segunda atualiza. O validador barra mudança acima do limite semanal contra estes valores. Mínimo da Balcony gravado em 690 na rotina completa de 14/10 (de 765, −9,8%; Regra G: 10% abaixo da VK2 no mínimo); a referência segue 765 até a revisão de 19/10.",
+  "valores": {
+   "Q7": {
+    "min": 800,
+    "base": 1173
+   },
+   "Double": {
+    "min": 900,
+    "base": 1480
+   },
+   "Afrodite": {
+    "min": 1500,
+    "base": 2000
+   },
+   "Q2": {
+    "min": 850,
+    "base": 1870
+   },
+   "VK7": {
+    "min": 850,
+    "base": 1480
+   },
+   "Balcony": {
+    "min": 765,
+    "base": 1270
+   },
+   "VK2": {
+    "min": 765,
+    "base": 1270
+   }
+  }
+ },
+ "limites_seguranca": {
+  "nota": "Só o dono muda estes limites. A Skill nunca os altera sozinha.",
+  "fracao_min_referencia": 0.7,
+  "variacao_semanal_base_min": 0.15,
+  "piso_feriado_real_seguranca": 800,
+  "padrao_qualidade_diaria": 1000,
+  "padrao_qualidade_nota": "Dono, 08/10: sexta, sábado e feriado das suítes com banheira a partir deste valor, no preço enviado (tabela do PriceLabs, antes dos descontos da OTA). Só o dono muda. A Skill só desce abaixo com o campo mercado no plano e a entrada em excecoes_mercado.",
+  "proibido": [
+   "descontos de OTA",
+   "ofertas da Booking",
+   "Genius acima do nível 3",
+   "política de sábado sozinho (Regra H)",
+   "pedir senha ou token no chat"
+  ]
+ },
+ "parametros": {
+  "nota": "A Skill ajusta estes valores sozinha, dentro dos limites de segurança. Toda mudança vai para o historico-da-skill.md.",
+  "regra_i_dias": 3,
+  "regra_i_desconto_max": 0.2,
+  "regra_f_saida_vendido": 0.5,
+  "regra_c_desconto": 0.3,
+  "regra_a_janela_dias": 14,
+  "piso_feriado_real_padrao": 1000,
+  "regra_g_desconto": 0.1
+ },
+ "feriados": [
+  {
+   "nome": "Nossa Senhora Aparecida",
+   "inicio": "2026-10-09",
+   "fim": "2026-10-11",
+   "piso_real": 800,
+   "nota": "Noites de feriado (a noite de segunda 12/10 é volta e não entra). Piso de R$ 1.000 decidido pelo dono em 06/10; Villa a R$ 800 desde 06/10 16h (estratégia agressiva); Recanto a R$ 800 desde 07/10 08:20 pela Skill: 24 h sem venda de feriado a 2 dias, 19 de 31 unidades livres na sexta, Recanto 13% acima da mediana com hidro da Booking."
+  },
+  {
+   "nome": "Finados",
+   "inicio": "2026-10-30",
+   "fim": "2026-11-01",
+   "piso_real": null,
+   "nota": "Dono pôs +20% e 3 noites nos 7 quartos de 30/10 a 02/11 pela tela (03/10). Piso real R$ 800 por baixo do +20% do dono (03/10); estadia 3 noites por decisão dele.",
+   "estadia_minima": 3
+  },
+  {
+   "nome": "Consciência Negra",
+   "inicio": "2026-11-19",
+   "fim": "2026-11-21",
+   "piso_real": null,
+   "nota": "Piso real R$ 800 (não o padrão de R$ 1.000): decidido em 10/10 com o mercado a 23% a 36 dias e o Recanto já acima da mediana com hidro; rever na rotina completa de 20/10 (D-30)."
+  },
+  {
+   "nome": "Natal",
+   "inicio": "2026-12-24",
+   "fim": "2026-12-25",
+   "piso_real": 1000,
+   "nota": "Piso padrão R$ 1.000 reais (regras.md, feriado novo); a Skill pode ajustar pelos dados, nunca abaixo de R$ 800. Natal e Réveillon são picos em qualquer dia da semana (exceção à regra do feriado em fim de semana)."
+  },
+  {
+   "nome": "Réveillon",
+   "inicio": "2026-12-30",
+   "fim": "2027-01-01",
+   "piso_real": 1000,
+   "nota": "Piso padrão R$ 1.000 reais (regras.md, feriado novo); a Skill pode ajustar pelos dados, nunca abaixo de R$ 800. Natal e Réveillon são picos em qualquer dia da semana (exceção à regra do feriado em fim de semana)."
+  },
+  {
+   "nome": "Aniversário de São Paulo (feriadão paulistano)",
+   "inicio": "2027-01-22",
+   "fim": "2027-01-24",
+   "piso_real": 1000,
+   "fonte": "sazonalidade.json (pesquisa de 13/10/2026)",
+   "nota": "Piso padrão R$ 1.000 reais (regras.md, feriado novo); a Skill pode ajustar pelos dados, nunca abaixo de R$ 800."
+  },
+  {
+   "nome": "Carnaval",
+   "inicio": "2027-02-05",
+   "fim": "2027-02-09",
+   "piso_real": 1000,
+   "fonte": "sazonalidade.json (pesquisa de 13/10/2026)",
+   "nota": "Piso padrão R$ 1.000 reais (regras.md, feriado novo); a Skill pode ajustar pelos dados, nunca abaixo de R$ 800."
+  },
+  {
+   "nome": "Semana Santa / Páscoa",
+   "inicio": "2027-03-25",
+   "fim": "2027-03-27",
+   "piso_real": 1000,
+   "fonte": "sazonalidade.json (pesquisa de 13/10/2026)",
+   "nota": "Piso padrão R$ 1.000 reais (regras.md, feriado novo); a Skill pode ajustar pelos dados, nunca abaixo de R$ 800."
+  },
+  {
+   "nome": "Tiradentes (isolado, quarta)",
+   "inicio": "2027-04-20",
+   "fim": "2027-04-21",
+   "piso_real": 1000,
+   "fonte": "sazonalidade.json (pesquisa de 13/10/2026)",
+   "nota": "Piso padrão R$ 1.000 reais (regras.md, feriado novo); a Skill pode ajustar pelos dados, nunca abaixo de R$ 800."
+  },
+  {
+   "nome": "Corpus Christi (abertura da temporada de inverno)",
+   "inicio": "2027-05-26",
+   "fim": "2027-05-29",
+   "piso_real": 1000,
+   "fonte": "sazonalidade.json (pesquisa de 13/10/2026)",
+   "nota": "Piso padrão R$ 1.000 reais (regras.md, feriado novo); a Skill pode ajustar pelos dados, nunca abaixo de R$ 800."
+  },
+  {
+   "nome": "Revolução Constitucionalista, 9 de Julho (feriado estadual SP)",
+   "inicio": "2027-07-08",
+   "fim": "2027-07-10",
+   "piso_real": 1000,
+   "fonte": "sazonalidade.json (pesquisa de 13/10/2026)",
+   "nota": "Piso padrão R$ 1.000 reais (regras.md, feriado novo); a Skill pode ajustar pelos dados, nunca abaixo de R$ 800."
+  },
+  {
+   "nome": "Independência, 7 de Setembro (ponte)",
+   "inicio": "2027-09-03",
+   "fim": "2027-09-06",
+   "piso_real": 1000,
+   "fonte": "sazonalidade.json (pesquisa de 13/10/2026)",
+   "nota": "Piso padrão R$ 1.000 reais (regras.md, feriado novo); a Skill pode ajustar pelos dados, nunca abaixo de R$ 800."
+  },
+  {
+   "nome": "Nossa Senhora Aparecida / Dia das Crianças (ponte)",
+   "inicio": "2027-10-08",
+   "fim": "2027-10-11",
+   "piso_real": 1000,
+   "fonte": "sazonalidade.json (pesquisa de 13/10/2026)",
+   "nota": "Piso padrão R$ 1.000 reais (regras.md, feriado novo); a Skill pode ajustar pelos dados, nunca abaixo de R$ 800."
+  },
+  {
+   "nome": "Finados (ponte)",
+   "inicio": "2027-10-29",
+   "fim": "2027-11-01",
+   "piso_real": 1000,
+   "fonte": "sazonalidade.json (pesquisa de 13/10/2026)",
+   "nota": "Piso padrão R$ 1.000 reais (regras.md, feriado novo); a Skill pode ajustar pelos dados, nunca abaixo de R$ 800."
+  },
+  {
+   "nome": "Proclamação da República (feriadão)",
+   "inicio": "2027-11-12",
+   "fim": "2027-11-14",
+   "piso_real": 1000,
+   "fonte": "sazonalidade.json (pesquisa de 13/10/2026)",
+   "nota": "Piso padrão R$ 1.000 reais (regras.md, feriado novo); a Skill pode ajustar pelos dados, nunca abaixo de R$ 800."
+  },
+  {
+   "nome": "Natal",
+   "inicio": "2027-12-24",
+   "fim": "2027-12-25",
+   "piso_real": 1000,
+   "fonte": "sazonalidade.json (pesquisa de 13/10/2026)",
+   "nota": "Piso padrão R$ 1.000 reais (regras.md, feriado novo); a Skill pode ajustar pelos dados, nunca abaixo de R$ 800. Natal e Réveillon são picos em qualquer dia da semana (exceção à regra do feriado em fim de semana)."
+  },
+  {
+   "nome": "Réveillon",
+   "inicio": "2027-12-29",
+   "fim": "2027-12-31",
+   "piso_real": 1000,
+   "fonte": "sazonalidade.json (pesquisa de 13/10/2026)",
+   "nota": "Piso padrão R$ 1.000 reais (regras.md, feriado novo); a Skill pode ajustar pelos dados, nunca abaixo de R$ 800. Natal e Réveillon são picos em qualquer dia da semana (exceção à regra do feriado em fim de semana)."
+  }
+ ],
+ "feriados_nota": "Cada período lista as NOITES de feriado (data de entrada da diária). piso_real null = sem piso do dono; vale só o limite de segurança. Feriados de 2027 acrescentados em 14/10/2026 a partir de dados/sazonalidade.json (noites de hospedagem; só os que geram viagem: feriados municipais e os que caem em sábado ou domingo ficam de fora). Eventos e temporadas ficam em sazonalidade.json → datas. 14/10: Proclamação 2026 (dom 15/11) saiu da lista: é fim de semana comum (noites 13 e 14/11 seguem o padrão de sexta e sábado); feriados de dezembro de 2026 em diante receberam o piso padrão de R$ 1.000 reais. 14/10: Natal e Réveillon ficam na lista mesmo em sábado ou domingo (Prefeitura: 70% a 95% de ocupação). `estadia_minima` opcional por feriado (Finados 3); sem ela vale o calendário de sazonalidade ou 2.",
+ "demanda_nota": "Classificação de demanda por suíte (alta/media/baixa), revista em toda rotina completa pela ocupação 15/30 dias contra as metas e pelo ritmo de reservas dos últimos 14 dias. Última revisão: 2026-10-13 (rotina das 10:53; antes, 2026-10-12, rotina completa e revisão semanal; hoje o calendário traz o lote de 09/10 e 48 reservas novas desde 10/10). Q7 15d 34%/30d 21% sobe de baixa para MÉDIA (acima de 60% da meta nas duas janelas: 30% e 21%), com 47 diárias vendidas em 06–12/10; Double 56%/47% alta; Q2 70%/62% alta; Afrodite 60%/43% média, candidata a alta (1 unidade; 3 diárias na semana); VK7 sobe de média para ALTA em 13/10 (calendário recalculado às 12:44 BRT, 21 h mais novo que o da coleta: 7d 73,5%, 15d 51,4%, 30d 44,8%, 45d 32,7%, 60d 26,7% e 49 diárias vendidas em 06–12/10; margem pequena, 1,4 ponto no 15d: volta a média se o 15d ficar abaixo de 50% em dois recálculos seguidos); VK2 53%/45% média, candidata a alta (2 unidades; 10 diárias na semana); Balcony 18%/24% baixa. Atualização de 13/10 16:55: com os recálculos novos Double 15d 54%/30d 46% (volta a confirmar alta depois da queda das 13:53 pelo calendário velho), VK7 15d 60%/30d 49% alta, Q7 7d 74% mas 15d 42%/30d 25% (média, 15d abaixo da meta de 50%), VK2 15d 60%/30d 47% e Balcony 24%/28% baixa. Exceções de mercado: nenhuma em vigor.",
+ "excecoes_mercado": []
 }

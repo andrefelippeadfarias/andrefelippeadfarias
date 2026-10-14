@@ -85,49 +85,61 @@
    "responsavel": "skill",
    "desde": "2026-10-14",
    "urgencia": 1,
-   "texto": "Gravar update_listing_data Balcony min 690 (−9,8%) e atualizar quartos.json e referencia_semanal no mesmo commit; depois refazer os alvos da Regra G nos 60 dias (03–04/11 R$ 900; 08–12/11 R$ 968; 06–10/12 R$ 847; 11/12 R$ 1.775; 27–29/10 revisar)."
+   "texto": "Gravar update_listing_data Balcony min 690 (−9,8%) e atualizar quartos.json e referencia_semanal no mesmo commit; depois refazer os alvos da Regra G nos 60 dias (03–04/11 R$ 900; 08–12/11 R$ 968; 06–10/12 R$ 847; 11/12 R$ 1.775; 27–29/10 revisar).",
+   "resolvido_em": "2026-10-14",
+   "resolucao": "gravado update_listing_data min 690 e alvos da Regra G refeitos nos 81 dias lidos (rotina completa de 14/10)"
   },
   {
    "id": "refazer-13-14-11",
    "responsavel": "skill",
    "desde": "2026-10-14",
    "urgencia": 1,
-   "texto": "13 e 14/11/2026 saíram da lista de feriados: apagar e recriar as regras por data dos 7 quartos como sexta e sábado comuns (−15% com piso R$ 1.000 nas suítes com banheira; Balcony piso e teto 10% abaixo da VK2; Queen 2 sem percentual negativo; sábado 2 noites). 53 de 62 unidades-noite livres."
+   "texto": "13 e 14/11/2026 saíram da lista de feriados: apagar e recriar as regras por data dos 7 quartos como sexta e sábado comuns (−15% com piso R$ 1.000 nas suítes com banheira; Balcony piso e teto 10% abaixo da VK2; Queen 2 sem percentual negativo; sábado 2 noites). 53 de 62 unidades-noite livres.",
+   "resolvido_em": "2026-10-14",
+   "resolucao": "Queen 7, Double, VK2 e Balcony regravados como sexta e sábado comuns (14/10); Afrodite bloqueada no Beds24, Queen 2 e VK7 sem mudança (sem desconto / muito alto com 3 de 7)"
   },
   {
    "id": "varredura-rodada-2",
    "responsavel": "skill",
    "desde": "2026-10-14",
    "urgencia": 1,
-   "texto": "Retomar a varredura da concorrência para feriados (Finados, Proclamação, Consciência Negra, Natal, Réveillon) e última hora: Workflow varredura-concorrencia com args.rodada 2 (ou resumeFromRunId wf_f5234400-501), fora da sessão da rotina completa; gravar mercado_faixas.json."
+   "texto": "Retomar a varredura da concorrência para feriados (Finados, Proclamação, Consciência Negra, Natal, Réveillon) e última hora: Workflow varredura-concorrencia com args.rodada 2 (ou resumeFromRunId wf_f5234400-501), fora da sessão da rotina completa; gravar mercado_faixas.json. Em 14/10 a busca de concorrentes da coleta também caiu no limite da sessão (reinicia 14:20 UTC); rodar a rodada 2 numa sessão à parte."
   },
   {
    "id": "natal-reveillon-pisos",
    "responsavel": "skill",
    "desde": "2026-10-14",
    "urgencia": 1,
-   "texto": "Natal e Réveillon estão fora da janela de 60 dias da coleta: estender a leitura (get_listing_prices até 02/01) e gravar os pisos de feriado novo (R$ 1.000 reais: Q7/Double/Afrodite R$ 2.381, Q2 R$ 2.941, VK7/VK2 R$ 2.564, Balcony R$ 1.887) sem validade, com estadia 3 em 29 a 31/12 e 2 em 24 e 25/12."
+   "texto": "Natal e Réveillon estão fora da janela de 60 dias da coleta: estender a leitura (get_listing_prices até 02/01) e gravar os pisos de feriado novo (R$ 1.000 reais: Q7/Double/Afrodite R$ 2.381, Q2 R$ 2.941, VK7/VK2 R$ 2.564, Balcony R$ 1.887) sem validade, com estadia 3 em 29 a 31/12 e 2 em 24 e 25/12.",
+   "resolvido_em": "2026-10-14",
+   "resolucao": "pisos de R$ 1.000 reais gravados nos 7 quartos em 24, 25, 30, 31/12 e 1/1 (2 e 3 noites; 29/12 só 3 noites); leitura estendida até 2/1"
   },
   {
    "id": "q7-dias-uteis-25-29-10",
    "responsavel": "skill",
    "desde": "2026-10-14",
    "urgencia": 2,
-   "texto": "Queen 7 de 25 a 29/10 está a R$ 919 sem substituição com 29 unidades-noite livres em semana fraca (eleição 25/10): percentual do bloco com piso R$ 800 (Regra F D9 a D13)."
+   "texto": "Queen 7 de 25 a 29/10 está a R$ 919 sem substituição com 29 unidades-noite livres em semana fraca (eleição 25/10): percentual do bloco com piso R$ 800 (Regra F D9 a D13).",
+   "resolvido_em": "2026-10-14",
+   "resolucao": "bloco dom–qui de 25 a 29/10 a −17% com piso R$ 800 (14/10)"
   },
   {
    "id": "recanto-23-24-10",
    "responsavel": "skill",
    "desde": "2026-10-14",
    "urgencia": 2,
-   "texto": "Sexta 23 e sábado 24/10 do Recanto com 23 unidades-noite livres a 9 dias: Queen 7 e Double um degrau (−10% com piso R$ 1.000); Afrodite 23 a 27/10 com a Regra C (−30%, piso R$ 1.500), que está a 9 dias e não foi aplicada."
+   "texto": "Sexta 23 e sábado 24/10 do Recanto com 23 unidades-noite livres a 9 dias: Queen 7 e Double um degrau (−10% com piso R$ 1.000); Afrodite 23 a 27/10 com a Regra C (−30%, piso R$ 1.500), que está a 9 dias e não foi aplicada.",
+   "resolvido_em": "2026-10-14",
+   "resolucao": "Queen 7 e Double −10% (piso R$ 1.000) e Afrodite 23 a 29/10 na Regra C (−30%, piso R$ 1.500) em 14/10"
   },
   {
    "id": "recanto-06-07-11",
    "responsavel": "skill",
    "desde": "2026-10-14",
    "urgencia": 2,
-   "texto": "Sexta 06 e sábado 07/11 do Recanto com 27 de 32 livres em faixa 'alto' com alvo 'médio': um degrau (−15% com piso R$ 1.000; Afrodite piso R$ 1.500); a Villa está esgotada nessas noites."
+   "texto": "Sexta 06 e sábado 07/11 do Recanto com 27 de 32 livres em faixa 'alto' com alvo 'médio': um degrau (−15% com piso R$ 1.000; Afrodite piso R$ 1.500); a Villa está esgotada nessas noites.",
+   "resolvido_em": "2026-10-14",
+   "resolucao": "Queen 7, Double e Afrodite um degrau (−15%, pisos R$ 1.000/1.500) em 14/10"
   },
   {
    "id": "consciencia-negra-vk7",
@@ -141,7 +153,7 @@
    "responsavel": "skill",
    "desde": "2026-10-14",
    "urgencia": 2,
-   "texto": "Finados: Queen 7 0/7 em 30 e 31/10 e King Spa 2 0/2 a R$ 3.190 (18% acima da mediana com hidro): com cortes próprios de feriado e reavaliação em 16/10 (D-14), um degrau sobre o +20% do dono, piso R$ 1.905 (Q7) / R$ 2.060 (VK2); registrar como mudança por cima da decisão do dono."
+   "texto": "Finados: Queen 7 0/7 em 30 e 31/10 e King Spa 2 0/2 a R$ 3.190 (18% acima da mediana com hidro): com cortes próprios de feriado e reavaliação em 16/10 (D-14), um degrau sobre o +20% do dono, piso R$ 1.905 (Q7) / R$ 2.060 (VK2); registrar como mudança por cima da decisão do dono. Em 14/10: Queen 7 segue 0 de 7 em 30 e 31/10 (R$ 2.428) e VK2 0 de 2 (R$ 3.183); Double 3 e 5 de 6, VK7 3 e 4 de 7, Balcony 1 e 4 de 6. Reavaliar em 16/10 com a rodada 2 da varredura."
   },
   {
    "id": "regra-h-sabados",
@@ -170,6 +182,28 @@
    "desde": "2026-10-14",
    "urgencia": 3,
    "texto": "Reorganizar aprendizados.md por tema em princípios curtos (feito o começo em 14/10); fechar as células 'medir até' da tabela de efeito."
+  },
+  {
+   "id": "vk2-candidata-alta",
+   "responsavel": "skill",
+   "desde": "2026-10-14",
+   "urgencia": 2,
+   "texto": "VK2 cumpriu o critério de demanda alta na rotina completa de 14/10 (15d 70%, 30d 50%, ritmo ≥3 diárias em 14 dias). Se repetir na rotina completa de 15/10, passar quartos.json → demanda para \"alta\" (Regra I só na última unidade; teto da subida alvo+2)."
+  },
+  {
+   "id": "push-q7-afrodite-vk2-1410",
+   "responsavel": "tela",
+   "desde": "2026-10-14",
+   "urgencia": 1,
+   "texto": "O envio diário das 09:52 de Queen 7, Afrodite e VK2 não saiu em 14/10 (último envio 13/10 09:52). As gravações de 14/10 (Queen 7 15/10 a R$ 640, Finados, Natal) só chegam aos canais no próximo envio: apertar Sync Now nos 7 quartos. Fechar quando last_date_pushed for de 14/10."
+  },
+  {
+   "id": "balcony-24-26-12-min-stay",
+   "responsavel": "skill",
+   "desde": "2026-10-14",
+   "urgencia": 3,
+   "texto": "Natal: 24 a 26/12 aparecem com 3 noites no calendário (origem não identificada: personalização ou Beds24); a rotina gravou 2 noites em 24 e 25/12 pela sazonalidade. Conferir no recálculo se o PriceLabs respeitou 2 e se o Beds24 não impõe 3."
   }
- ]
+ ],
+ "versao": "2026-10-14T15"
 }

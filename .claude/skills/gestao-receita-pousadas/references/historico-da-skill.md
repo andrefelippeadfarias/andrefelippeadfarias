@@ -162,3 +162,11 @@ Hora da ANÁLISE E AGENDA DIÁRIA do PriceLabs (rotina "Agenda diária PriceLabs
 - **Mudança (código, 41 testes ok):** `faixas_de_preco.demanda_efetiva` (o modo por faturamento da pousada sobrepõe a classe do quarto: volume = baixa, preco = alta); `metas_faturamento.py` ganha `DONO`, `por_pousada()` (mínimo do dono, realista, máximo, hoje) e a seção 6 do documento.
 - **Mudança (dados e texto):** `quartos.json` → `modo` (Recanto e Villa em "padrão"); `metas_faturamento.json` com `metas_dono` e `por_pousada`; `regras.md` 4c (modo por faturamento) e 6a; `estrategia.md` 1 e 2; `SKILL.md` revisão semanal grava o modo.
 - **Como desfazer:** `modo` em "padrão" nas duas pousadas e reverter o commit.
+
+## 14/10/2026, 17:30 — Piso e teto por data em percentual da base (regra do dono)
+- **Decisão do dono (14/10):** "Trabalhe sempre com percentuais nunca com valores absolutos no pricelabs."
+- **Medição:** `percent_base` é variação sobre a base do anúncio (King Spa 2: −39 → R$ 775; 61 → R$ 2.045). A base de conhecimento do PriceLabs dizia "fração da base" e errou; o piloto errado da Queen 7 15/10 foi corrigido em 34 minutos, antes de qualquer envio.
+- **Mudança (código, 45 testes ok):** `validar_plano.py` (piso_pct, teto_pct, em_reais, teto_efetivo; payload sem "fixed"; travas com o valor efetivo do percentual); `pisos_percentual.py` novo (gerar e conferir a conversão das regras antigas; corrigido o caso do piso 0%); `ler_recalculo.py` com tolerância de 1,5% no piso.
+- **Mudança (PriceLabs):** 332 de 343 regras por data dos 7 quartos convertidas (410 campos), conferidas antes × depois e por um verificador independente por quarto.
+- **Mudança (texto):** `regras.md` (forma de gravar e 6a), `SKILL.md` passo 6, `estrategia.md`, `ferramentas.md`, `aprendizados.md`.
+- **Como desfazer:** reverter os commits; as regras no PriceLabs voltam a reais com `pisos_percentual.py` invertido (o estado de antes dos 7 quartos está em `pricelabs/snapshot-regras-por-data-2026-10-14.json`).

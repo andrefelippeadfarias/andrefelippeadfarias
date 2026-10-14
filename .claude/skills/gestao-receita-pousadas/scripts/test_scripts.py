@@ -573,3 +573,17 @@ class TestPisosPercentual(unittest.TestCase):
         del ruim[4]                                # regra que sumiu
         a, b, _ = self._arquivos(ruim)
         self.assertEqual(pp.main(["conferir", a, b, "VK2"]), 1)
+
+    def test_conferir_piso_zero_por_cento_com_teto_levantado(self):
+        # Balcony 16/10 (14/10): piso e teto R$ 1.264 na base 1.270 viram 0% e 0% (R$ 1.270). O teto sobe R$ 6
+        # porque nunca fica abaixo do piso; o 0 não pode ser lido como "sem piso".
+        import json
+        import tempfile
+        import pisos_percentual as pp
+        d = tempfile.mkdtemp()
+        a, b = os.path.join(d, "a.json"), os.path.join(d, "b.json")
+        json.dump([{"date": "2026-10-16", "min_price": 1264, "min_price_type": "fixed", "max_price": 1264,
+                    "max_price_type": "fixed"}], open(a, "w"))
+        json.dump([{"date": "2026-10-16", "min_price": 0, "min_price_type": "percent_base", "max_price": 0,
+                    "max_price_type": "percent_base"}], open(b, "w"))
+        self.assertEqual(pp.main(["conferir", a, b, "Balcony"]), 0)

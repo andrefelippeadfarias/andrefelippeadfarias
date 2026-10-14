@@ -1423,6 +1423,41 @@ A Villa não aparece em nenhuma busca com filtro de hidro (falta a comodidade na
 - **O que mudou na estratégia:** modo por faturamento por pousada (`quartos.json` → `modo`): toda segunda a revisão compara o livro do mês com os níveis (mínimo seu, realista, máximo) no ritmo esperado e grava volume / padrão / preço; a flutuação por faixas passa a usar a classe baixa (volume) ou alta (preço) em todos os quartos da pousada. Travas inalteradas. Hoje as duas pousadas estão em "padrão" até a revisão de segunda (19/10).
 - **Nada gravado no PriceLabs nesta rodada.** Documento: `pricelabs/metas-de-faturamento-2026-2027.md`, seção 6.
 
+## 14/10/2026, 17:30 — Regra nova do dono (tudo em percentual): 332 regras convertidas; rotinas leves das 13:53 e 16:53
+
+- **Regra sua (14/10):** "Trabalhe sempre com percentuais nunca com valores absolutos no pricelabs." Nada por data vai mais em reais: o preço já era percentual desde 07/10 e agora o **piso e o teto também** são variação % sobre a base do anúncio. Base, mínimo e máximo do anúncio continuam em reais, porque são a âncora dos percentuais.
+- **Como o PriceLabs lê o percentual (medido hoje):** na King Spa 2 (base R$ 1.270), piso −39% virou R$ 775 e piso 61% virou R$ 2.045. É variação sobre a base, igual ao preço. A base de conhecimento do PriceLabs dizia o contrário e errou. O piloto da Queen 7 em 15/10 ficou 34 minutos com piso de base +69% (R$ 1.982): corrigi às 17:01 para −31% (R$ 809), antes de qualquer cálculo ou envio. O envio das 17:16 já levou R$ 809.
+- **Conversão (17:09 a 17:20):** 343 regras por data lidas nos 7 quartos; 332 tinham piso ou teto em reais e passaram para percentual (410 campos), sem mexer em preço, estadia ou motivo. Piso arredonda para cima e teto para baixo, nunca abaixo do piso: cada piso subiu no máximo 1% da base (R$ 11 a R$ 19; ex.: Queen 7 R$ 800 → R$ 809, VK7 R$ 850 → R$ 858, Balcony R$ 690 → R$ 698). Conferência antes × depois nos 7 quartos: 0 erros, 0 "fixed" restante. O PriceLabs recalculou e enviou os 7 quartos às 17:16 (VK7 e Balcony recalcularam às 17:19 já com os percentuais).
+
+| Quarto | Regras lidas | Convertidas | Maior subida do piso |
+|---|---|---|---|
+| Queen 7 | 41 | 38 | R$ 11 |
+| Double | 52 | 51 | R$ 14 |
+| Afrodite | 32 | 31 | R$ 19 |
+| Queen 2 | 18 | 15 | R$ 18 |
+| VK7 | 61 | 60 | R$ 12 |
+| Balcony | 80 | 80 (piso e teto) | R$ 12 |
+| King Spa 2 | 59 | 57 | R$ 12 |
+
+- **Rotina das 13:53 (leve):** vendas Queen 7 15/10 (R$ 332 reais, a R$ 800), Queen 7 24–25/10 (R$ 898), Queen 7 31/12 a 02/01 (R$ 4.219 por 3 noites, cerca de 0,73 do enviado), Double 11/11 ×2 (R$ 616 cada), Double 14–15/10 (R$ 542) e Balcony 14/10 (R$ 300, a R$ 842); cancelamento Queen 7 14/10. Os 7 quartos foram enviados às 12:08. Decisões: Queen 7 15/10 passou de 70% vendido e voltou ao mínimo pelo piso; Double 11/11 +10% pelo piso. As duas ficaram para depois da conversão (o pedido em reais foi recusado por você) e foram gravadas em percentual nesta rodada.
+- **Rotina das 16:53 (leve, às 17:15):** lista de reservas sem nada novo (71 registros; última venda às 12:43). Calendário: Double 3 de 6 em 14/10 e 2 de 6 em 15/10 (eram 4 e 3); Queen 2 esgotou 15 e 16/10; King Spa 2 esgotou 18/10 e vendeu 1 em 19/10; Queen 7 6 de 7 em 15/10 e reabriu 1 unidade em 16 e 17/10 (agora R$ 1.310); Balcony 0 de 6 em 14/10 com a reserva de R$ 300 na lista (provável remanejamento no Beds24). Sem reserva nova na lista para essas noites: parte é remanejamento.
+- **Plano:** 9 itens validados (0 erros), gravados pela API às 17:24 em 3 chamadas (todas 200). O PriceLabs recalculou sozinho 26 segundos depois e os 9 valores bateram.
+
+| Mudança | Onde | Antes | Depois (conferido no recálculo das 17:25) | Como desfazer (pedir ao Claude) |
+|---|---|---|---|---|
+| Regra I (D0 e D1): VK7 e King Spa 2 esgotadas, a Balcony é o único quarto livre da Villa (6 e 5 de 6 livres) | Balcony 14 e 15/10 | piso e teto R$ 842 | piso e teto −50% = **R$ 635** ✅ | "Volte a Balcony de 14 e 15/10 para piso e teto −33%" |
+| Regra G: 10% abaixo da suíte livre mais barata | Balcony 19/10 (King Spa 2 a R$ 811) e 20/10 (King Spa 2 a R$ 775) | R$ 775 | −42% = **R$ 737** e −45% = **R$ 698** ✅ | "Volte a Balcony de 19 e 20/10 para −39%" |
+| 4c: atrás da meta (0 de 2 a D6), −10% leva ao mínimo; teto só nesta noite | King Spa 2 20/10 | R$ 811 | piso e teto −39% = **R$ 775** ✅ | "Tire o teto da King Spa 2 de 20/10" |
+| 4c (alta): 15/10 caiu para 2 de 6 em D1, −10% pelo teto (14/10 em D0 fica) | Double 15/10 | R$ 1.583 | teto −4% = **R$ 1.421** ✅ | "Tire o teto da Double de 15/10" |
+| 4c (alta): à frente da meta (5 de 6), +10% pelo piso | Double 18/10 | R$ 903 | piso −32% = **R$ 1.006** ✅ | "Volte a Double de 18/10 para piso −39%" |
+| 4c (alta): na meta, +5% pelo piso | Double 22/10 | R$ 903 | piso −35% = **R$ 962** ✅ | "Volte a Double de 22/10 para piso −39%" |
+| 4c (alta, rotina das 13:53): 11/11 de 1 para 3 de 6, +10% pelo piso (igual a 09 e 10/11) | Double 11/11 | R$ 1.252 | piso −6% = **R$ 1.391** ✅ | "Tire o piso da Double de 11/11" |
+| Regra I (rotina das 13:53): 15/10 passou de 70% vendido, volta ao mínimo | Queen 7 15/10 | piso R$ 640 | piso −31% = **R$ 809** ✅ (enviado às 17:16) | "Volte a Queen 7 de 15/10 para piso −45%" |
+
+- **Envio:** o que gravei às 17:24 ainda não chegou aos canais (o calendário mostra o preço novo, os canais o antigo). Hoje a gravação pela API foi seguida de recálculo em segundos e de envio em 6 a 23 minutos (12:08 depois das gravações das 11:45; 17:16 depois das de 17:10); às 17:27 o último envio da Balcony ainda era o das 17:16. Se até a rotina das 19:53 o envio não tiver saído, Balcony 14 e 15/10 e Double 15/10 dependem do Sync Now.
+- **Pendências:** Natal e Réveillon na janela nova (noites 26/12, 29/12 e 02/01 com piso de feriado; 02/01 com 3 noites) ficam para a rotina completa de 15/10; os preços naturais dessas noites já passam do piso.
+- **Aprendi:** percentual do piso é variação sobre a base; piso em percentual acompanha a base (mudar a base muda todos os pisos por data); gravação pela API dispara recálculo em segundos. Detalhes em `aprendizados.md`.
+
 > **Regras em vigor:** desde 06/10/2026 elas ficam em `.claude/skills/gestao-receita-pousadas/references/regras.md`. Este arquivo guarda só o histórico das mudanças.
 
 ## O que só pode ser feito na tela (passo a passo para você)

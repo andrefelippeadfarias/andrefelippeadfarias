@@ -195,7 +195,9 @@
    "responsavel": "tela",
    "desde": "2026-10-14",
    "urgencia": 1,
-   "texto": "O envio diário das 09:52 de Queen 7, Afrodite e VK2 não saiu em 14/10 (último envio 13/10 09:52). As gravações de 14/10 (Queen 7 15/10 a R$ 640, Finados, Natal) só chegam aos canais no próximo envio: apertar Sync Now nos 7 quartos. Fechar quando last_date_pushed for de 14/10."
+   "texto": "O envio diário das 09:52 de Queen 7, Afrodite e VK2 não saiu em 14/10 (último envio 13/10 09:52). As gravações de 14/10 (Queen 7 15/10 a R$ 640, Finados, Natal) só chegam aos canais no próximo envio: apertar Sync Now nos 7 quartos. Fechar quando last_date_pushed for de 14/10.",
+   "resolvido_em": "2026-10-14T20:27",
+   "resolucao": "Os 7 quartos enviaram às 12:08 e às 17:16 BRT de 14/10, depois das gravações pela API."
   },
   {
    "id": "balcony-24-26-12-min-stay",
@@ -209,7 +211,9 @@
    "responsavel": "skill",
    "desde": "2026-10-14",
    "urgencia": 1,
-   "texto": "Rotina completa de 14/10: Queen 7, Double, VK7, VK2 e Balcony gravados (232 regras, API devolveu iguais) mas sem recálculo de conferência (429, janela móvel de 24 h). Conferir com get_listing_prices depois do envio da tarde (13:53/16:53): ler_recalculo.py --plano scratchpad/plano_1410.json; Queen 7 15/10 piso 640; Balcony 18–22/10 690/770; Double 19–21/10 945/990; VK7 23–24/10 1.243; Natal/Réveillon 2 e 3 noites."
+   "texto": "Rotina completa de 14/10: Queen 7, Double, VK7, VK2 e Balcony gravados (232 regras, API devolveu iguais) mas sem recálculo de conferência (429, janela móvel de 24 h). Conferir com get_listing_prices depois do envio da tarde (13:53/16:53): ler_recalculo.py --plano scratchpad/plano_1410.json; Queen 7 15/10 piso 640; Balcony 18–22/10 690/770; Double 19–21/10 945/990; VK7 23–24/10 1.243; Natal/Réveillon 2 e 3 noites.",
+   "resolvido_em": "2026-10-14T20:27",
+   "resolucao": "Calendário conferido nas rotinas leves de 13:53 e 16:53 (recálculos automáticos de 15:56 e 17:25) e as 343 regras por data relidas na conversão para percentual, com preço, estadia e motivo iguais."
   },
   {
    "id": "faturamento-script",
@@ -244,14 +248,16 @@
    "responsavel": "skill",
    "desde": "2026-10-14",
    "urgencia": 2,
-   "texto": "Réveillon passou a 29/12–02/01 com 3 noites (quartos.json 18h), mas a Balcony 02/01 (e talvez outros quartos) ficou com min_stay 2 do plano da manhã: o validador acusa 'feriado (Réveillon) exige estadia mínima 3; item com 2'. Conferir 02/01 nos 7 quartos e regravar min_stay 3 na rotina das 19:53 ou na completa de 15/10."
+   "texto": "Natal (noites 24 a 26/12, 2 noites) e Réveillon (noites 29/12 a 02/01, 3 noites) com a janela nova de quartos.json (14/10 18h): as noites 26/12, 29/12 e 02/01 ainda não têm piso de feriado (R$ 1.000 reais, em percentual da base) e 02/01 está com estadia 2 em pelo menos a Balcony (o validador acusa \"Réveillon exige estadia mínima 3\"). Fazer na rotina completa de 15/10 nos 7 quartos; hoje os preços naturais dessas noites já passam do piso."
   },
   {
    "id": "q7-15-10-piso-percentual",
    "responsavel": "skill",
    "desde": "2026-10-14",
    "urgencia": 1,
-   "texto": "Queen 7 15/10: o piloto gravou piso 69 percent_base (= base +69% = R$ 1.982) às 19:27 UTC e foi corrigido para -31 (R$ 809) às 20:01 UTC; o recálculo da Queen 7 está no limite (429). Conferir no próximo calendário recalculado que 15/10 mostra min_price 809 e preço 809 (2 de 7 livres), e que nada foi enviado a R$ 1.982 (last_date_pushed da Queen 7)."
+   "texto": "Queen 7 15/10: o piloto gravou piso 69 percent_base (= base +69% = R$ 1.982) às 19:27 UTC e foi corrigido para -31 (R$ 809) às 20:01 UTC; o recálculo da Queen 7 está no limite (429). Conferir no próximo calendário recalculado que 15/10 mostra min_price 809 e preço 809 (2 de 7 livres), e que nada foi enviado a R$ 1.982 (last_date_pushed da Queen 7).",
+   "resolvido_em": "2026-10-14T20:27",
+   "resolucao": "Calendário recalculado às 17:25 BRT: Queen 7 15/10 a R$ 809 (piso −31%), já enviado às 17:16 (user_price 809). O piso errado de R$ 1.982 nunca foi calculado nem enviado."
   }
  ],
  "versao": "2026-10-14T20"

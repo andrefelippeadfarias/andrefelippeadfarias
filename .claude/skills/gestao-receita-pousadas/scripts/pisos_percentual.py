@@ -132,7 +132,9 @@ def conferir(args) -> int:
                 ef = em_reais(q, v_dep)
                 if campo == "min_price" and (ef < v_antes - 0.5 or ef > v_antes + tol):
                     erros.append(f"{d}: piso efetivo R$ {ef:.0f} fora da faixa do piso antigo R$ {v_antes:.0f}")
-                if campo == "max_price" and ef > v_antes + 0.5 and int(v_dep) != int(_num(n.get("min_price")) or -999):
+                # o teto só pode passar do antigo quando foi levantado até o piso em percentual (piso 0% vale)
+                pm_dep = _num(n.get("min_price")) if str(n.get("min_price_type") or "") == "percent_base" else None
+                if campo == "max_price" and ef > v_antes + 0.5 and (pm_dep is None or int(v_dep) != int(pm_dep)):
                     erros.append(f"{d}: teto efetivo R$ {ef:.0f} acima do teto antigo R$ {v_antes:.0f}")
                 convertidas += 1
             elif t_antes == t_dep and str(v_antes) != str(v_dep):

@@ -377,6 +377,23 @@ class TestClassificarQuartos(unittest.TestCase):
         self.assertEqual(linhas["2026-10-21"]["vitrine"], round(850 * 0.53))    # quarta: fator de semana
 
 
+class TestFaixasBordas(unittest.TestCase):
+    def test_meta_no_arquivo_e_feriado_sem_busca(self):
+        from faixas_de_preco import cortes_da_noite, classificar_quartos
+        from sazonalidade import carregar
+        tab = {"_meta": {"versao": "x", "conjuntos": {"recanto": "texto"}},
+               "semana-20/10": {"tipo": "semana", "noites": 2, "checkin": "2026-10-20", "completa": True, "nossos": {},
+                                "conjuntos": {"recanto": {"n": 50, "cortes": [330, 727, 1258, 1787], "mediana": 888}}},
+               "fimdesemana-23/10": {"tipo": "fim de semana", "noites": 2, "checkin": "2026-10-23", "completa": True, "nossos": {},
+                                     "conjuntos": {"recanto": {"n": 58, "cortes": [530, 719, 1165, 1679], "mediana": 826}}}}
+        c, origem = cortes_da_noite(tab, date(2026, 10, 30), "recanto", "feriado")   # não quebra com _meta
+        self.assertEqual((c, origem), ([530, 719, 1165, 1679], "tipo:fim de semana"))  # feriado sem busca própria usa fim de semana
+        coleta = {"rooms": {"Q7": {"days": [{"date": "2026-10-30", "price": 2325, "user_price": 2325, "min_stay": 3, "multi_unit_occupancy": "0/7", "booking_status": ""}]}}}
+        linhas = classificar_quartos(coleta, tab, carregar(), CFG, date(2026, 10, 14), 21)
+        self.assertEqual(linhas[0]["passo"], 0)
+        self.assertIn("feriado sem busca própria", linhas[0]["acao"])
+
+
 class TestSazonalidade(unittest.TestCase):
     def test_calendario_cobre_cada_noite_uma_vez(self):
         from sazonalidade import carregar, validar, periodo, datas_especiais

@@ -133,7 +133,9 @@ def tabela_mercado(varr: dict) -> dict:
 def cortes_por_tipo(tab: dict, conjunto_: str) -> dict:
     """Cortes típicos por tipo de dia: mediana dos cortes das datas daquele tipo."""
     por_tipo: dict[str, list[list[float]]] = {}
-    for d in tab.values():
+    for rot, d in tab.items():
+        if rot.startswith("_") or not isinstance(d.get("conjuntos"), dict):
+            continue
         c = d["conjuntos"].get(conjunto_)
         if c and d.get("completa", True):
             por_tipo.setdefault(d["tipo"], []).append(c["cortes"])
@@ -192,6 +194,8 @@ def meta_da_janela(cfg: dict, dias_ate: int) -> float:
 def cortes_da_noite(tab: dict, d: date, conj: str, tipo: str) -> tuple[list[float] | None, str]:
     """Cortes do conjunto `conj` para a noite `d`: da busca que cobre a noite ou, sem busca, do tipo de dia."""
     for rot, m in tab.items():
+        if rot.startswith("_") or not isinstance(m.get("conjuntos"), dict):
+            continue  # _meta e outras chaves de controle
         c = m["conjuntos"].get(conj)
         if not c:
             continue
@@ -240,6 +244,10 @@ def classificar_quartos(coleta: dict, tab: dict, cal: dict, cfg: dict, hoje: dat
             meta = meta_da_janela(cfg, ate)
             ocup = vend / tot
             texto, passo = acao_sugerida(fx if fx is not None else alvo, alvo, ocup, meta, esgotada, ate) if cortes_ else ("sem dado de mercado", 0)
+            if per is None and passo < 0:
+                texto, passo = ("sem período no calendário de sazonalidade: sem passo negativo", 0)
+            elif origem.startswith("tipo:") and tipo == "feriado" and passo != 0:
+                texto, passo = ("feriado sem busca própria de mercado: vale a tática de feriado e o piso, sem passo pela faixa", 0)
             if passo < 0 and q.get("sem_desconto"):
                 texto, passo = ("quarto sem desconto (Queen 2): só segura ou sobe", 0)
             elif passo < 0 and enviado <= q["min"] + 1:

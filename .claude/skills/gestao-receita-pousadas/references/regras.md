@@ -101,6 +101,7 @@ Toda gravação passa antes pelo `scripts/validar_plano.py`, é conferida depois
 **Queen (2), sem desconto**
 - Anomalia: o hóspede paga cerca de 34% do preço enviado.
 - Não entra nas regras F e I e não recebe percentual negativo.
+- Enquanto a anomalia dura: pisos com `fator_real` 0,34; cada reserva nova entra no relatório com valor real ÷ enviado e canal; três reservas seguidas acima de 0,42 mudam o fator em `quartos.json` e fecham a investigação; a conferência do mapeamento de tarifa no Beds24 fica com o dono.
 - Só baixa para acompanhar o piso de feriado (`excecao: "piso_feriado"`) ou por ordem do dono.
 
 **Feriados** (as noites e os pisos estão em `quartos.json` → `feriados`)
@@ -169,6 +170,14 @@ Pedido do dono: "qualificar os preços: muito baixo, baixo, médio, alto e muito
 - **Na meta:** aproxima do alvo devagar (+5% se duas faixas abaixo, −5% se duas acima); senão segura.
 - Os passos entram sempre em **percentual com piso**, por bloco de suavização (`percentual.py`), e por cima deles continuam valendo: limites de segurança, padrão de qualidade de R$ 1.000, piso de feriado (R$ 800 reais), Regras G, H e I e o ±15% por semana da base. Um passo por rodada, no máximo; a rodada seguinte mede o efeito antes do próximo.
 - **Combinação com a escada (Regra F):** a Regra F dá o patamar inicial de uma data que entra no plano (percentual por antecedência); a flutuação move um degrau por rodada a partir do preço vigente, dentro da faixa alvo ±1. Quando as duas discordam, vale o passo da flutuação (ele já olha ocupação e mercado); a escada só manda em data sem substituição ainda.
+- **Saída da escada (Regra F, 50% vendido) não apaga a substituição:** zera o percentual negativo e mantém piso e estadia mínima (apagar levanta o bloco inteiro: Queen 7, 13/10, média de R$ 595 para R$ 776). Gatilho de subida único: ocupação da noite de meta mais 10 pontos para cima (o "67% a até 14 dias" da demanda alta é esse gatilho na janela de 7 a 14 dias).
+- **Um passo por noite por dia:** um passo só conta como medido depois de chegar aos canais (envio diário ou Sync Now, conferido na Booking, nunca pelo `user_price`) e de passar uma rodada; até lá a noite não recebe segundo passo na mesma direção. Em D0 a D1 o pedido de Sync Now sai na primeira linha do relatório.
+- **Sem classificação, sem passo:** noite sem faixa (script falhou, "sem dado de mercado", feriado ou evento sem busca própria, noite fora do calendário) não recebe passo de flutuação; valem travas, pisos de proteção, Regras A, G, H e I e as regras de feriado. Cortes com mais de 14 dias só permitem subir ou segurar.
+- **Classe de demanda com histerese:** classificada só na rotina completa com calendário recalculado; ritmo forte = diárias vendidas nos últimos 14 dias de pelo menos 1,5 vez o número de unidades; a classe só muda com o critério valendo em duas rotinas completas seguidas; rotina leve só anota "candidata".
+- **Classe × faixa alvo:** a faixa alvo vem só da sazonalidade; a classe desloca o teto da subida e o piso da descida (alta pode chegar a alvo+1 mesmo na meta; média fica no alvo; baixa pode descer a alvo−1 já na meta).
+- **Evento estimado** (sem data confirmada em `sazonalidade.json`): usa a faixa do período de fundo até D-90; de D-90 em diante, sem confirmação, a rotina abre "confirmar evento" no relatório e não sobe a faixa por ele; com `confianca: baixa` o alvo do evento nunca passa de alvo+1 do fundo.
+- **Orçamento de recálculo** (3 por quarto por dia): 1 medir (07:53), 1 detalhar quando houver mudança, 1 conferir; rotina leve só recalcula quarto com reserva, cancelamento ou mudança manual, e só com saldo; sem saldo, sem passo (só travas e Regra I em D0 a D1 com dado da Booking), "não conferido (limite de recálculo)".
+- **Exceção de mercado não é um passo:** quando o passo bate no padrão de qualidade, a rotina para no padrão; a exceção só entra pelos critérios da seção de feriados, com `revisar_em` na rotina completa seguinte.
 - **Fator de vitrine da Villa:** 0,53 em dia de semana e feriado, 0,66 em sexta e sábado (`fator_vitrine_fds`, medido em 06 e 07/10); o script usa o de fim de semana nessas noites.
 - **"Topo" e "base" da faixa:** o alvo de preço do Recanto é o corte superior da faixa alvo e o da Villa é o corte inferior; o passo percentual leva até lá, nunca além da faixa alvo mais uma.
 - Recanto (5 estrelas, nota 8,4) opera no topo da faixa alvo; Villa (3 estrelas, nota 8,1) opera na base.

@@ -152,7 +152,7 @@ def tipo_do_dia(d: date, feriados: set[date]) -> str:
     return "semana"
 
 
-def acao_sugerida(f: int, alvo: int, ocupacao: float, meta: float, esgotada: bool, dias_ate: int) -> tuple[str, int]:
+def acao_sugerida(f: int, alvo: int, ocupacao: float, meta: float, esgotada: bool, dias_ate: int, demanda: str = "media") -> tuple[str, int]:
     """Regra de flutuação (dono, 13/10/2026). Devolve (texto, passo em %).
 
     Entradas: f = faixa atual do nosso preço de vitrine (0 muito baixo ... 4 muito alto); alvo = faixa alvo da
@@ -171,14 +171,15 @@ def acao_sugerida(f: int, alvo: int, ocupacao: float, meta: float, esgotada: boo
         if f <= max(0, alvo - 1) or (f <= 1 and dias_ate > 3):
             return ("atrás da meta, já no limite inferior da faixa alvo: segurar (D0 a D3: Regra I)", 0)
         return ("atrás da meta: descer uma faixa", -15 if f >= 3 else -10)
+    teto = min(4, alvo + (2 if demanda == "alta" else 1))  # a classe alta pode ir uma faixa além
     if ocupacao >= meta + 0.10:
-        if f >= min(4, alvo + 1):
+        if f >= teto:
             return ("à frente da meta, já no limite superior da faixa alvo: segurar", 0)
         return ("à frente da meta: subir uma faixa", 10)
-    if f <= alvo - 2:
-        return ("na meta, mas duas faixas abaixo do alvo: subir devagar", 5)
-    if f >= alvo + 2:
-        return ("na meta, mas duas faixas acima do alvo: descer devagar", -5)
+    if f <= alvo - 2 or (demanda == "alta" and f <= alvo):
+        return ("na meta, abaixo do que a classe permite: subir devagar", 5)
+    if f >= alvo + 2 or (demanda == "baixa" and f >= alvo and (f > 1 or dias_ate <= 3)):
+        return ("na meta, acima do que a classe pede: descer devagar", -5)
     return ("na meta: segurar", 0)
 
 
@@ -217,6 +218,20 @@ def classificar_quartos(coleta: dict, tab: dict, cal: dict, cfg: dict, hoje: dat
         d0, d1 = date.fromisoformat(fer["inicio"]), date.fromisoformat(fer["fim"])
         while d0 <= d1:
             feriados.add(d0); d0 += timedelta(days=1)
+    # idade dos cortes: com mais de 14 dias só se sobe ou segura (regras.md 4c)
+    versao = str((tab.get("_meta") or {}).get("versao") or "")[:10]
+    idade_cortes = (hoje - date.fromisoformat(versao)).days if len(versao) == 10 else None
+    # quartos de 1 ou 2 unidades: a ocupação da noite é a das suítes com banheira da mesma pousada (0/50/100% engana)
+    ocup_pousada: dict = {}
+    for curto, quarto in coleta["rooms"].items():
+        q = cfg["por_curto"][curto]
+        if not q.get("banheira"):
+            continue
+        for dia in quarto["days"]:
+            mu = dia.get("multi_unit_occupancy") or ""
+            v, t = ((int(x) for x in mu.split("/")) if "/" in mu else ((1 if dia.get("booking_status") else 0), 1))
+            acc = ocup_pousada.setdefault((q["pousada"], dia["date"]), [0, 0])
+            acc[0] += v; acc[1] += t
     linhas = []
     for curto, quarto in coleta["rooms"].items():
         q = cfg["por_curto"][curto]
@@ -243,7 +258,20 @@ def classificar_quartos(coleta: dict, tab: dict, cal: dict, cfg: dict, hoje: dat
             fx = faixa(vitrine, cortes_) if cortes_ else None
             meta = meta_da_janela(cfg, ate)
             ocup = vend / tot
-            texto, passo = acao_sugerida(fx if fx is not None else alvo, alvo, ocup, meta, esgotada, ate) if cortes_ else ("sem dado de mercado", 0)
+            if q.get("unidades", tot) <= 2 and not esgotada:
+                pv, pt = ocup_pousada.get((q["pousada"], dia["date"]), (vend, tot))
+                ocup = pv / pt if pt else ocup
+            texto, passo = acao_sugerida(fx if fx is not None else alvo, alvo, ocup, meta, esgotada, ate, q.get("demanda", "media")) if cortes_ else ("sem dado de mercado", 0)
+            if idade_cortes is not None and idade_cortes > 14 and passo < 0:
+                texto, passo = (f"cortes de mercado com {idade_cortes} dias: só subir ou segurar", 0)
+            # alvo de preço: Recanto mira o topo da faixa alvo, Villa a base (regras.md 4c)
+            alvo_preco = None
+            if cortes_:
+                if q["pousada"] == "Recanto":
+                    alvo_vitrine = cortes_[alvo] if alvo < 4 else cortes_[3] * 1.15
+                else:
+                    alvo_vitrine = cortes_[alvo - 1] if alvo > 0 else cortes_[0] * 0.85
+                alvo_preco = round(alvo_vitrine / fator)
             if per is None and passo < 0:
                 texto, passo = ("sem período no calendário de sazonalidade: sem passo negativo", 0)
             elif origem.startswith("tipo:") and tipo == "feriado" and passo != 0:
@@ -254,7 +282,7 @@ def classificar_quartos(coleta: dict, tab: dict, cal: dict, cfg: dict, hoje: dat
                 texto, passo = ("já no mínimo do quarto: abaixo só pela Regra I (D0 a D3) ou exceção de mercado", 0)
             linhas.append({"quarto": curto, "data": dia["date"], "dias_ate": ate, "tipo": tipo, "enviado": enviado,
                            "vitrine": round(vitrine), "cortes": cortes_, "origem": origem, "faixa": fx, "faixa_alvo": alvo,
-                           "periodo": per["nome"][:50] if per else "", "vendidas": vend, "total": tot, "ocupacao": round(ocup, 2),
+                           "periodo": per["nome"][:50] if per else "", "vendidas": vend, "total": tot, "ocupacao": round(ocup, 2), "alvo_preco": alvo_preco,
                            "meta": meta, "acao": texto, "passo": passo})
     return linhas
 
@@ -295,14 +323,17 @@ def main(argv=None) -> int:
     coleta = resultado_workflow(ler_json(a.coleta))
     with open(a.mercado, encoding="utf-8") as f:
         tab = json.load(f)
-    hoje = date.fromisoformat(a.hoje) if a.hoje else date.today()
+    from comum import hoje_brt
+    hoje = date.fromisoformat(a.hoje) if a.hoje else (date.fromisoformat(coleta["hoje"]) if coleta.get("hoje") else hoje_brt(cfg))
+    versao = str((tab.get("_meta") or {}).get("versao") or "")[:10]
+    print(f"Cortes de mercado de {versao or '?'}; hoje {hoje}.")
     linhas = classificar_quartos(coleta, tab, carregar(), cfg, hoje, a.dias)
-    print("| Quarto | Noite | Tipo | Enviado | Vitrine | Faixa | Alvo | Vendidas | Meta | Ação |")
-    print("|---|---|---|---|---|---|---|---|---|---|")
+    print("| Quarto | Noite | Tipo | Enviado | Vitrine | Faixa | Alvo | Preço alvo | Vendidas | Meta | Ação |")
+    print("|---|---|---|---|---|---|---|---|---|---|---|")
     for l in linhas:
         fx = f"{EMOJI[l['faixa']]} {FAIXAS[l['faixa']]}" if l["faixa"] is not None else "—"
         print(f"| {l['quarto']} | {l['data']} | {l['tipo']} | R$ {l['enviado']:.0f} | R$ {l['vitrine']} | {fx} | {FAIXAS[l['faixa_alvo']]} | "
-              f"{l['vendidas']}/{l['total']} | {int(l['meta']*100)}% | {l['acao']} ({l['passo']:+d}%) |")
+              f"{('R$ ' + str(l['alvo_preco'])) if l.get('alvo_preco') else '—'} | {l['vendidas']}/{l['total']} | {int(l['meta']*100)}% | {l['acao']} ({l['passo']:+d}%) |")
     if a.json:
         with open(a.json, "w", encoding="utf-8") as f:
             json.dump(linhas, f, ensure_ascii=False, indent=1)

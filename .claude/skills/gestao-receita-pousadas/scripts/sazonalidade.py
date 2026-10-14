@@ -85,7 +85,8 @@ def main(argv=None) -> int:
         p = periodo(cal, d)
         print(json.dumps({"noite": a.data, "periodo": p, "datas": datas_especiais(cal, d)}, ensure_ascii=False, indent=1))
         return 0
-    ini = date.fromisoformat(a.inicio) if a.inicio else date.today()
+    from comum import hoje_brt
+    ini = date.fromisoformat(a.inicio) if a.inicio else hoje_brt()
     vistos = []
     for i in range(a.dias):
         p = periodo(cal, ini + timedelta(days=i))

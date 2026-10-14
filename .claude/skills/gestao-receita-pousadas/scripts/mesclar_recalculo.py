@@ -20,19 +20,21 @@ import json
 import sys
 from datetime import datetime, timezone
 
-from comum import ler_json, resultado_workflow
+from comum import ler_instante, ler_json, resultado_workflow
 
 
-def mesclar_quarto(quarto: dict, refresh: dict) -> dict:
-    """Troca preço, enviado, estadia e ocupação dos dias que existem nos dois lados. Mantém o resto."""
+def mesclar_quarto(quarto: dict, refresh: dict) -> tuple[dict, int]:
+    """Troca preço, enviado, estadia e ocupação dos dias que existem nos dois lados. Mantém o resto.
+    Devolve (quarto mesclado, dias trocados). Zero trocado = refresh vazio ou em erro: não use como dado fresco."""
     arr = (refresh.get("data") or {}).get("pricing_array") or []
     novo = {str(x.get("date"))[:10]: x for x in arr}
-    dias = []
+    dias, trocados = [], 0
     for d in quarto.get("days", []):
         x = novo.get(d["date"])
         if not x:
             dias.append(d)
             continue
+        trocados += 1
         d = dict(d)
         d["price"] = float(x["price"])
         d["user_price"] = float(x["user_price"])
@@ -47,18 +49,23 @@ def mesclar_quarto(quarto: dict, refresh: dict) -> dict:
         if x.get("uncustomized_price") is not None:
             d["uncustomized_price"] = float(x["uncustomized_price"])
         dias.append(d)
-    return {**quarto, "days": dias}
+    saida = {**quarto, "days": dias}
+    if trocados:
+        ts = (refresh.get("data") or {}).get("last_refreshed_at")
+        saida["last_refreshed_at"] = ts or datetime.now(timezone.utc).isoformat(timespec="seconds")
+        saida["mesclado_em"] = datetime.now(timezone.utc).isoformat(timespec="seconds")
+    return saida, trocados
 
 
 def quartos_velhos(coleta: dict, horas: float, agora: datetime) -> list[tuple[str, float]]:
     """(curto, horas desde o último recálculo) dos quartos com recálculo mais velho que `horas`."""
     saida = []
     for curto, q in coleta.get("rooms", {}).items():
-        ts = q.get("last_refreshed_at")
-        if not ts:
+        dt = ler_instante(q.get("last_refreshed_at"))
+        if dt is None:
             saida.append((curto, float("inf")))
             continue
-        idade = (agora - datetime.fromisoformat(ts)).total_seconds() / 3600
+        idade = (agora - dt).total_seconds() / 3600
         if idade > horas:
             saida.append((curto, idade))
     return saida
@@ -87,7 +94,11 @@ def main(argv=None) -> int:
         if curto not in coleta.get("rooms", {}):
             print(f"quarto desconhecido na coleta: {curto}", file=sys.stderr)
             return 2
-        coleta["rooms"][curto] = mesclar_quarto(coleta["rooms"][curto], ler_json(caminho))
+        mesclado, n = mesclar_quarto(coleta["rooms"][curto], ler_json(caminho))
+        if n == 0:
+            print(f"{curto}: o recálculo não trouxe nenhum dia (erro, 429 ou vazio); nada gravado", file=sys.stderr)
+            return 2
+        coleta["rooms"][curto] = mesclado
     with open(a.saida, "w", encoding="utf-8") as f:
         json.dump(coleta, f, ensure_ascii=False)
     print(f"{len(a.refreshes)} quarto(s) mesclado(s) em {a.saida}")

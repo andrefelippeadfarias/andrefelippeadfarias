@@ -7,7 +7,7 @@ from __future__ import annotations
 
 import json
 import sys
-from datetime import date, timedelta
+from datetime import date, datetime, timedelta, timezone
 from pathlib import Path
 
 PASTA_SKILL = Path(__file__).resolve().parents[1]
@@ -59,3 +59,22 @@ def reais(v) -> str:
     if v is None:
         return "—"
     return "R$ " + f"{float(v):,.0f}".replace(",", ".")
+
+
+def hoje_brt(cfg: dict | None = None) -> date:
+    """Data de hoje no fuso das pousadas (o contêiner roda em UTC: das 21h BRT em diante date.today() já é amanhã)."""
+    from zoneinfo import ZoneInfo
+    fuso = (cfg or {}).get("fuso") or "America/Sao_Paulo"
+    return datetime.now(ZoneInfo(fuso)).date()
+
+
+def ler_instante(texto) -> datetime | None:
+    """ISO com ou sem fuso ('Z' vira UTC; sem fuso assume UTC). None quando vazio ou inválido."""
+    if not texto:
+        return None
+    s = str(texto).strip().replace("Z", "+00:00")
+    try:
+        dt = datetime.fromisoformat(s)
+    except ValueError:
+        return None
+    return dt if dt.tzinfo else dt.replace(tzinfo=timezone.utc)

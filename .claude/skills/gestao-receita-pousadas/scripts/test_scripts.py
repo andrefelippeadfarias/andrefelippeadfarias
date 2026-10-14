@@ -19,15 +19,59 @@ def item(**kw):
     return base
 
 
-def erros(itens, precos=None, hoje=HOJE):
-    v = Validador(CFG, hoje, precos or {})
+def ocup(quarto, dia, vendidas, total, preco=None, idade_h=1.0):
+    """Entrada de --precos para uma noite (com a idade do calendário do quarto)."""
+    return {(quarto, dia): {"preco": preco, "livres": total - vendidas, "vendidas": vendidas, "total": total},
+            "_meta": {"idade_h": {quarto: idade_h}}}
+
+
+def erros(itens, precos=None, hoje=HOJE, **kw):
+    v = Validador(CFG, hoje, dict(precos or {}), **kw)
     v.validar(itens)
     return v.erros
 
 
+def avisos(itens, precos=None, hoje=HOJE, **kw):
+    v = Validador(CFG, hoje, dict(precos or {}), **kw)
+    v.validar(itens)
+    return v.avisos
+
+
 class TestValidador(unittest.TestCase):
     def test_regra_i_valida(self):
-        self.assertEqual(erros([item(quarto="Q7", data="2026-10-08", preco=-35, price_type="percent", min_price=640)]), [])
+        self.assertEqual(erros([item(quarto="Q7", data="2026-10-08", preco=-35, price_type="percent", min_price=640)],
+                               ocup("Q7", "2026-10-08", 3, 7)), [])
+
+    def test_regra_i_exige_calendario_e_respeita_ocupacao_e_classe(self):
+        it = item(quarto="Q7", data="2026-10-08", preco=-35, price_type="percent", min_price=640)
+        self.assertTrue(any("exige --precos" in e for e in erros([it])))
+        self.assertTrue(any("esgotada" in e for e in erros([it], ocup("Q7", "2026-10-08", 7, 7))))
+        self.assertTrue(any("70%" in e for e in erros([it], ocup("Q7", "2026-10-08", 6, 7))))      # 86% a D2
+        it0 = item(quarto="Q7", data="2026-10-06", preco=-35, price_type="percent", min_price=640)
+        self.assertEqual(erros([it0], ocup("Q7", "2026-10-06", 6, 7)), [])                              # D0: só aviso
+        self.assertTrue(any("D0" in a for a in avisos([it0], ocup("Q7", "2026-10-06", 6, 7))))
+        alta = item(quarto="VK7", data="2026-10-08", preco=-50, price_type="percent", min_price=700)   # VK7 é alta
+        self.assertTrue(any("última unidade" in e for e in erros([alta], ocup("VK7", "2026-10-08", 3, 7))))
+        # em alta e com 7 unidades, a última unidade já passa de 70%: só em D0 o corte segue (aviso), nunca começa em D1+
+        alta0 = item(quarto="VK7", data="2026-10-06", preco=-50, price_type="percent", min_price=700)
+        self.assertEqual(erros([alta0], ocup("VK7", "2026-10-06", 6, 7)), [])
+        # calendário velho barra decisão por ocupação; --aceitar-velho rebaixa para aviso
+        self.assertTrue(any("calendário" in e for e in erros([it], ocup("Q7", "2026-10-08", 3, 7, idade_h=20))))
+        self.assertEqual(erros([it], ocup("Q7", "2026-10-08", 3, 7, idade_h=20), aceitar_velho=True), [])
+
+    def test_estadia_de_feriado_duplicata_e_queen2_sem_antes(self):
+        fin = item(quarto="Q7", data="2026-10-30", preco=0, price_type="percent", min_price=1905, min_stay=1)
+        self.assertTrue(any("estadia mínima 3" in e for e in erros([fin])))                           # Finados: 3 noites
+        dup = [item(quarto="Q7", data="2026-10-21", min_stay=1), item(quarto="Q7", data="2026-10-21", min_stay=2)]
+        self.assertTrue(any("duplicado" in e for e in erros(dup)))
+        q2 = item(quarto="Q2", data="2026-10-21", preco=0, price_type="percent", min_price=900)
+        self.assertTrue(any("preco_antes" in e for e in erros([q2])))
+        self.assertEqual(erros([dict(q2, preco_antes=900)]), [])
+
+    def test_balcony_teto_acima_da_suite(self):
+        itens = [item(quarto="VK2", data="2026-10-21", preco=-24, price_type="percent", min_price=765),
+                 item(quarto="Balcony", data="2026-10-21", preco=-31, price_type="percent", min_price=689, max_price=900)]
+        self.assertTrue(any("teto da Balcony" in e for e in erros(itens)))
 
     def test_regra_i_sem_min_price(self):
         self.assertTrue(erros([item(quarto="Q7", data="2026-10-08", preco=-35, price_type="percent")]))
@@ -278,7 +322,8 @@ class TestMesclar(unittest.TestCase):
         refresh = {"data": {"pricing_array": [
             {"date": "2026-10-16", "price": "1366", "user_price": "-1", "min_stay": "1", "mu_occupancy": "7/7", "uncustomized_price": "3060"},
             {"date": "2026-10-17", "price": "1553", "user_price": "1456", "min_stay": "1", "mu_occupancy": "6/7", "uncustomized_price": "3169"}]}}
-        m = mesclar_quarto(quarto, refresh)
+        m, n = mesclar_quarto(quarto, refresh)
+        self.assertEqual(n, 2)
         self.assertEqual(m["days"][0]["multi_unit_occupancy"], "7/7")
         self.assertEqual(m["days"][0]["user_price"], -1.0)
         self.assertEqual(m["days"][1]["min_stay"], 1)
@@ -289,11 +334,13 @@ class TestMesclar(unittest.TestCase):
         ra = {"data": {"pricing_array": [
             {"date": "2026-10-13", "price": "1728", "user_price": "-1", "min_stay": "1", "mu_occupancy": "-1", "num_bookings": "1"},
             {"date": "2026-10-16", "price": "2506", "user_price": "-1", "min_stay": "1", "mu_occupancy": "-1", "num_bookings": "0"}]}}
-        ma = mesclar_quarto(afro, ra)
+        ma, _ = mesclar_quarto(afro, ra)
         self.assertEqual([d["booking_status"] for d in ma["days"]], ["Booked", ""])
         self.assertIsNone(ma["days"][0]["multi_unit_occupancy"])
         agora = datetime(2026, 10, 13, 12, 0, tzinfo=timezone.utc)
-        self.assertEqual([c for c, _ in quartos_velhos({"rooms": {"VK7": quarto, "Q7": {"last_refreshed_at": "2026-10-13T11:00:00+00:00"}}}, 6, agora)], ["VK7"])
+        self.assertEqual([c for c, _ in quartos_velhos({"rooms": {"VK7": quarto, "Q7": {"last_refreshed_at": "2026-10-13T11:00:00Z"}}}, 6, agora)], ["VK7"])
+        # refresh vazio: zero trocados (o chamador não grava)
+        self.assertEqual(mesclar_quarto(quarto, {"success": False})[1], 0)
 
 
 class TestFaixas(unittest.TestCase):
@@ -324,6 +371,12 @@ class TestFaixas(unittest.TestCase):
         self.assertEqual(a(0, 2, 0.6, 0.7, False, 5)[1], 5)
         self.assertEqual(a(4, 2, 0.6, 0.7, False, 5)[1], -5)
         self.assertEqual(a(2, 2, 0.6, 0.7, False, 5)[1], 0)
+        # classe alta: na meta ainda sobe devagar até alvo+1 e, à frente, chega a alvo+2
+        self.assertEqual(a(2, 2, 0.6, 0.7, False, 5, "alta")[1], 5)
+        self.assertEqual(a(3, 2, 0.9, 0.7, False, 5, "alta")[1], 10)
+        # classe baixa: na meta desce devagar até alvo−1 (não abaixo de 'baixo' fora de D0-D3)
+        self.assertEqual(a(2, 2, 0.6, 0.7, False, 5, "baixa")[1], -5)
+        self.assertEqual(a(1, 1, 0.6, 0.7, False, 5, "baixa")[1], 0)
 
     def test_meta_da_janela(self):
         from faixas_de_preco import meta_da_janela
@@ -359,7 +412,7 @@ class TestClassificarQuartos(unittest.TestCase):
                                  "conjuntos": {"recanto": {"n": 50, "cortes": [330, 727, 1258, 1787], "mediana": 888}}}}
         linhas = classificar_quartos(coleta, tab, carregar(), CFG, date(2026, 10, 14), 21)
         por = {l["quarto"]: l for l in linhas}
-        self.assertEqual(por["Q2"]["passo"], 0)          # sem desconto: não desce mesmo atrás da meta
+        self.assertGreaterEqual(por["Q2"]["passo"], 0)   # sem desconto: nunca desce (2 unidades: usa a ocupação da pousada)
         self.assertEqual(por["Q2"]["faixa"], 2)          # 1519 × 0,61 = 927 → médio no conjunto do Recanto
         self.assertEqual(por["Q7"]["passo"], 0)          # esgotada
         self.assertTrue(por["Q7"]["acao"].startswith("esgotada"))
@@ -392,6 +445,15 @@ class TestFaixasBordas(unittest.TestCase):
         linhas = classificar_quartos(coleta, tab, carregar(), CFG, date(2026, 10, 14), 21)
         self.assertEqual(linhas[0]["passo"], 0)
         self.assertIn("feriado sem busca própria", linhas[0]["acao"])
+
+
+class TestDiaIsolado(unittest.TestCase):
+    def test_sabado_entre_esgotadas(self):
+        from ler_recalculo import dia_isolado
+        q = {"2026-10-16": {"mu_occupancy": "7/7"}, "2026-10-17": {"mu_occupancy": "6/7", "min_stay": "1"}, "2026-10-18": {"mu_occupancy": "7/7"}}
+        self.assertTrue(dia_isolado(q, "2026-10-17"))
+        q["2026-10-18"]["mu_occupancy"] = "5/7"
+        self.assertFalse(dia_isolado(q, "2026-10-17"))
 
 
 class TestSazonalidade(unittest.TestCase):

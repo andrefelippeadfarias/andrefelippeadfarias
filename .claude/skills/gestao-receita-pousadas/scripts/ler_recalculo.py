@@ -20,6 +20,8 @@ from __future__ import annotations
 import argparse
 import sys
 
+from datetime import date
+
 from comum import carregar_quartos, data, ler_json, periodo_feriado, reais
 
 
@@ -27,6 +29,21 @@ def ler_refresh(caminho: str) -> dict:
     j = ler_json(caminho)
     arr = (j.get("data") or {}).get("pricing_array") or []
     return {str(x.get("date"))[:10]: x for x in arr}
+
+
+def dia_isolado(quarto: dict, d: str) -> bool:
+    """Noite livre entre duas noites esgotadas: o PriceLabs mostra estadia 1 mesmo com a regra em 2 (Double 10/10,
+    VK7 17/10). Não é erro da rotina; não regravar."""
+    from datetime import timedelta
+    dd = date.fromisoformat(d)
+
+    def esgotada(k):
+        mu = str((quarto.get(k) or {}).get("mu_occupancy") or "")
+        if "/" not in mu:
+            return False
+        v, t = (int(s) for s in mu.split("/"))
+        return v >= t
+    return esgotada((dd - timedelta(days=1)).isoformat()) and esgotada((dd + timedelta(days=1)).isoformat())
 
 
 def regra_inativa(it: dict, x: dict) -> str:
@@ -66,6 +83,13 @@ def main(argv=None) -> int:
         print("| Quarto | Data | Planejado | Recalculado | Estadia (plano/recalc.) | Situação |")
         print("|---|---|---|---|---|---|")
         for it in plano.get("itens", []):
+            if it.get("tipo") == "apagar" and it["quarto"] in dados:
+                x = dados[it["quarto"]].get(it["data"]) or {}
+                sumiu = str(x.get("dso_flag")) != "1"
+                problemas += 0 if sumiu else 1
+                print(f"| {it['quarto']} | {it['data']} | apagar | {reais(x.get('price'))} | —/{x.get('min_stay')} | "
+                      f"{'✅ substituição removida' if sumiu else '❌ regra por data ainda viva (dso_flag 1)'} |")
+                continue
             if it.get("tipo") != "data" or it["quarto"] not in dados:
                 continue
             x = dados[it["quarto"]].get(it["data"])
@@ -92,10 +116,14 @@ def main(argv=None) -> int:
             if inativa:
                 ok = False
             ms_plan = it.get("min_stay")
-            if ms_plan is not None:
-                ok &= int(x.get("min_stay") or 0) == int(ms_plan)
+            orfao = False
+            if ms_plan is not None and int(x.get("min_stay") or 0) != int(ms_plan):
+                orfao = dia_isolado(dados[it["quarto"]], it["data"])
+                ok &= orfao
             problemas += 0 if ok else 1
             situacao = "✅" if ok else ("❌ regra por data INATIVA: " + inativa if inativa else "❌ diferente")
+            if ok and orfao:
+                situacao = "⚠️ dia isolado entre noites esgotadas (regra do PriceLabs; não regravar)"
             print(f"| {it['quarto']} | {it['data']} | {plan_txt} | {reais(x.get('price'))} | "
                   f"{ms_plan if ms_plan is not None else '—'}/{x.get('min_stay')} | {situacao} |")
         if all(k in dados for k in ("VK7", "VK2", "Balcony")):

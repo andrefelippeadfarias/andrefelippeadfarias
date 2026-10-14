@@ -1,0 +1,175 @@
+{
+ "nota": "Lista única de pendências. responsavel: dono | tela | skill. Fechar com resolvido_em e commit. O relatório traz os 3 itens mais urgentes do dono.",
+ "itens": [
+  {
+   "id": "padrao-qualidade-base",
+   "responsavel": "dono",
+   "desde": "2026-10-08",
+   "urgencia": 1,
+   "texto": "Confirmar a base dos R$ 1.000 do padrão de qualidade: preço enviado (hoje), vitrine da Booking (≈R$ 1.650 enviados) ou valor no bolso (≈R$ 2.500). Na Villa, R$ 1.000 enviados já são faixa 'alto' em sexta e sábado (vitrine R$ 660); para ficar no 'médio' o piso seria R$ 724 a R$ 867."
+  },
+  {
+   "id": "beds24-queen2-tarifa",
+   "responsavel": "dono",
+   "desde": "2026-10-07",
+   "urgencia": 1,
+   "texto": "Beds24: conferir o mapeamento de tarifa da Queen (2), que paga 20% a 34% do enviado (os outros quartos 42% a 55%); com 23% o piso de feriado de R$ 2.355 rende ≈R$ 542 no bolso."
+  },
+  {
+   "id": "beds24-canais-villa",
+   "responsavel": "dono",
+   "desde": "2026-10-06",
+   "urgencia": 2,
+   "texto": "Beds24: a Villa está na Expedia, Hoteis.com e Decolar com tarifa fixa de R$ 2.037 a R$ 4.075 (3 a 5 vezes a Booking); o Recanto 38% a 44% acima da Booking na Expedia; o site oficial 50% a 89% acima. Conferir mapeamento e criar tarifa direta igual ou menor que a Booking."
+  },
+  {
+   "id": "balcony-smoothing",
+   "responsavel": "tela",
+   "desde": "2026-10-08",
+   "urgencia": 2,
+   "caminho": "PriceLabs > Painel de preços > Balcony (350364___722814) > Revisar preços > Personalizações > All Customizations > Smoothing > ligado > 'Smooth weekdays vs. weekends' > Salvar",
+   "texto": "Ligar a suavização de dias de semana × fim de semana na Balcony (hoje junta a semana inteira e prende sexta e sábado no piso). Depois: refazer percentuais e pisos da Balcony."
+  },
+  {
+   "id": "sync-now",
+   "responsavel": "tela",
+   "desde": "2026-10-13",
+   "urgencia": 2,
+   "caminho": "PriceLabs > Multicalendário > marcar os quartos > Sync Now",
+   "texto": "Apertar Sync Now quando o relatório pedir (gravação de hoje ou amanhã depois do envio diário)."
+  },
+  {
+   "id": "orphan-days",
+   "responsavel": "tela",
+   "desde": "2026-10-13",
+   "urgencia": 3,
+   "texto": "Sábado isolado entre noites esgotadas aparece com estadia 1 (regra de dia órfão do PriceLabs). Decidir se desliga 'orphan days' em estadia mínima; o bloqueio de sábado sozinho do Beds24 protege enquanto isso."
+  },
+  {
+   "id": "booking-villa-hidro",
+   "responsavel": "dono",
+   "desde": "2026-10-06",
+   "urgencia": 3,
+   "texto": "Extranet da Booking, Villa: marcar hidromassagem/Jacuzzi, Wi-Fi e aquecimento (a Villa não aparece no filtro de hidro)."
+  },
+  {
+   "id": "visibilidade",
+   "responsavel": "dono",
+   "desde": "2026-10-06",
+   "urgencia": 3,
+   "texto": "Visibilidade e paridade: site oficial mais caro que revendedores no Google Hotels; Perfil do Google com categorias e endereço errados; anúncios antigos da Booking com notas melhores; anúncios do Airbnb com erros; duplicados no TripAdvisor e na Trivago; motores Omnibees antigos no ar (detalhes em mercado.md)."
+  },
+  {
+   "id": "beds24-outros",
+   "responsavel": "dono",
+   "desde": "2026-10-06",
+   "urgencia": 3,
+   "texto": "Beds24: reservas no canal 'outros' a R$ 320 a 450 por noite na VK7; Afrodite 12 a 15/11 indisponível sem reserva; lotes possivelmente duplicados."
+  },
+  {
+   "id": "market-research",
+   "responsavel": "dono",
+   "desde": "2026-10-13",
+   "urgencia": 3,
+   "texto": "Pedir ao suporte do PriceLabs para habilitar o market_research (grátis em beta)."
+  },
+  {
+   "id": "cron-1053",
+   "responsavel": "dono",
+   "desde": "2026-10-14",
+   "urgencia": 3,
+   "texto": "Proposta: mover a rotina leve das 10:53 para 11:23 BRT, porque a lista de reservas do PriceLabs é importada por volta das 10:59 (hoje a rotina quase sempre lê '0 reservas')."
+  },
+  {
+   "id": "balcony-min-690",
+   "responsavel": "skill",
+   "desde": "2026-10-14",
+   "urgencia": 1,
+   "texto": "Gravar update_listing_data Balcony min 690 (−9,8%) e atualizar quartos.json e referencia_semanal no mesmo commit; depois refazer os alvos da Regra G nos 60 dias (03–04/11 R$ 900; 08–12/11 R$ 968; 06–10/12 R$ 847; 11/12 R$ 1.775; 27–29/10 revisar)."
+  },
+  {
+   "id": "refazer-13-14-11",
+   "responsavel": "skill",
+   "desde": "2026-10-14",
+   "urgencia": 1,
+   "texto": "13 e 14/11/2026 saíram da lista de feriados: apagar e recriar as regras por data dos 7 quartos como sexta e sábado comuns (−15% com piso R$ 1.000 nas suítes com banheira; Balcony piso e teto 10% abaixo da VK2; Queen 2 sem percentual negativo; sábado 2 noites). 53 de 62 unidades-noite livres."
+  },
+  {
+   "id": "varredura-rodada-2",
+   "responsavel": "skill",
+   "desde": "2026-10-14",
+   "urgencia": 1,
+   "texto": "Retomar a varredura da concorrência para feriados (Finados, Proclamação, Consciência Negra, Natal, Réveillon) e última hora: Workflow varredura-concorrencia com args.rodada 2 (ou resumeFromRunId wf_f5234400-501), fora da sessão da rotina completa; gravar mercado_faixas.json."
+  },
+  {
+   "id": "natal-reveillon-pisos",
+   "responsavel": "skill",
+   "desde": "2026-10-14",
+   "urgencia": 1,
+   "texto": "Natal e Réveillon estão fora da janela de 60 dias da coleta: estender a leitura (get_listing_prices até 02/01) e gravar os pisos de feriado novo (R$ 1.000 reais: Q7/Double/Afrodite R$ 2.381, Q2 R$ 2.941, VK7/VK2 R$ 2.564, Balcony R$ 1.887) sem validade, com estadia 3 em 29 a 31/12 e 2 em 24 e 25/12."
+  },
+  {
+   "id": "q7-dias-uteis-25-29-10",
+   "responsavel": "skill",
+   "desde": "2026-10-14",
+   "urgencia": 2,
+   "texto": "Queen 7 de 25 a 29/10 está a R$ 919 sem substituição com 29 unidades-noite livres em semana fraca (eleição 25/10): percentual do bloco com piso R$ 800 (Regra F D9 a D13)."
+  },
+  {
+   "id": "recanto-23-24-10",
+   "responsavel": "skill",
+   "desde": "2026-10-14",
+   "urgencia": 2,
+   "texto": "Sexta 23 e sábado 24/10 do Recanto com 23 unidades-noite livres a 9 dias: Queen 7 e Double um degrau (−10% com piso R$ 1.000); Afrodite 23 a 27/10 com a Regra C (−30%, piso R$ 1.500), que está a 9 dias e não foi aplicada."
+  },
+  {
+   "id": "recanto-06-07-11",
+   "responsavel": "skill",
+   "desde": "2026-10-14",
+   "urgencia": 2,
+   "texto": "Sexta 06 e sábado 07/11 do Recanto com 27 de 32 livres em faixa 'alto' com alvo 'médio': um degrau (−15% com piso R$ 1.000; Afrodite piso R$ 1.500); a Villa está esgotada nessas noites."
+  },
+  {
+   "id": "consciencia-negra-vk7",
+   "responsavel": "skill",
+   "desde": "2026-10-14",
+   "urgencia": 2,
+   "texto": "Consciência Negra: VK7 0/7 nas 3 noites a vitrine 1,7× o corte 'muito alto' dos pares; só com cortes próprios da rodada 2 da varredura, e no máximo em 20/10 (D-30), descer um degrau (−15% com piso R$ 2.052); Balcony 10% abaixo. Subidas já permitidas: Queen 7 20–21/11 (57% ≥ meta+10) e Double 19/11."
+  },
+  {
+   "id": "finados-recanto",
+   "responsavel": "skill",
+   "desde": "2026-10-14",
+   "urgencia": 2,
+   "texto": "Finados: Queen 7 0/7 em 30 e 31/10 e King Spa 2 0/2 a R$ 3.190 (18% acima da mediana com hidro): com cortes próprios de feriado e reavaliação em 16/10 (D-14), um degrau sobre o +20% do dono, piso R$ 1.905 (Q7) / R$ 2.060 (VK2); registrar como mudança por cima da decisão do dono."
+  },
+  {
+   "id": "regra-h-sabados",
+   "responsavel": "skill",
+   "desde": "2026-10-14",
+   "urgencia": 3,
+   "texto": "Sábados do Recanto abaixo de 50% (24/10 31%, 07/11 25%, 14/11 12,5%): entre quarta e sexta antes, se seguir abaixo de 50%, sugerir ao dono liberar 1 noite (excecao regra_h) e gravar só com a decisão dele."
+  },
+  {
+   "id": "scripts-automacao",
+   "responsavel": "skill",
+   "desde": "2026-10-14",
+   "urgencia": 2,
+   "texto": "Scripts a criar (auditoria de 14/10): diferenca.py (coleta anterior × atual: vendas, cancelamentos, manuais, reservas novas), auditar_calendario.py (feriado abaixo de R$ 800 reais, estadia de sábado e feriado, Regra G 60 dias, lead_time_expiry, exceções vencidas), recalculos.py (ledger de 3 por quarto), rotina.py (preparar/medir/conferir) e relatorio.py (modo leve em 3 linhas); faixas_de_preco.py --alvos e percentual.py --plano."
+  },
+  {
+   "id": "fatores-19-10",
+   "responsavel": "skill",
+   "desde": "2026-10-14",
+   "urgencia": 2,
+   "texto": "Revisão de 19/10: fator_real do Recanto 0,42 → 0,45 se a semana de 13 a 19/10 confirmar o piso das 2 semanas (pisos de feriado R$ 1.905 → R$ 1.778); Villa 0,39 → 0,45 só se confirmar ≥0,45 em VK7 e VK2; testes com o fator fixo (0.42/0.39) passam a ler o JSON. Base da Double e da VK7 +5% se seguirem em alta em duas revisões."
+  },
+  {
+   "id": "aprendizados-por-tema",
+   "responsavel": "skill",
+   "desde": "2026-10-14",
+   "urgencia": 3,
+   "texto": "Reorganizar aprendizados.md por tema em princípios curtos (feito o começo em 14/10); fechar as células 'medir até' da tabela de efeito."
+  }
+ ]
+}

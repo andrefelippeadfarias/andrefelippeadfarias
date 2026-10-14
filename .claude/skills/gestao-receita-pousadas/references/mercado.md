@@ -53,21 +53,9 @@
 - **Sazonalidade:** Workflow `sazonalidade-campos` (`.claude/workflows/sazonalidade-campos.js`): quatro pesquisadores (feriados oficiais e férias escolares; eventos; estações e preços; mercado e histórico no PriceLabs) e um sintetizador que monta o calendário. Saída vai para `dados/sazonalidade.json` (validar com `sazonalidade.py validar`).
 - Fontes que funcionaram: Portaria MGI de feriados, ANBIMA 2027, Alesp (9 de Julho), TRT-15 (feriados municipais), SEDUC (férias), Prefeitura e Band Vale (ocupação declarada), KAYAK (preço por mês), PriceLabs `get_neighbourhood_data` (ocupação do mercado por dia e do ano anterior), `get_account_review_report`, `get_bookings_report`. `market_research` do PriceLabs não está habilitado na conta (pedir ao suporte, é grátis em beta).
 
-## Calendário 2026 (noites de feriado em `quartos.json`)
-- Nossa Senhora Aparecida: segunda 12/10; noites de 09 a 11/10.
-- Finados: segunda 02/11; noites de 30/10 a 01/11. O dono pôs +20% e 3 noites de 30/10 a 02/11. A Prefeitura de SP deu ponto facultativo em 30/10, e a rede estadual de SP folga em 28/10.
-- Proclamação da República: domingo 15/11; noites de 13 e 14/11.
-- Consciência Negra: sexta 20/11; noites de 19 a 21/11.
-- Natal (noites de 24 e 25/12) e Réveillon (noites de 30/12 a 01/01).
-- Segundo turno presidencial no domingo 25/10: a demanda do sábado 24/10 cai, porque o eleitor vota onde mora.
-
-## Eventos em Campos do Jordão já mapeados (outubro de 2026)
-- Oktoberfest no Parque Capivari, de 15 a 18/10.
-- Corrida WTR (trail, MTB e duathlon), 17 e 18/10.
-- Festival Curta, de 17 a 24/10.
-- Abertura do Natal em 30 e 31/10.
-- Recesso escolar da rede estadual de MG de 13 a 16/10.
-- Mackenzie e outras escolas de SP emendam a terça 13/10.
+## Calendário de feriados e eventos
+- A lista viva é `dados/quartos.json` → `feriados` (noites de feriado com piso) e `dados/sazonalidade.json` → `datas` (55 feriados, eventos, férias e temporadas até 2027). Não repita datas aqui.
+- Lembretes de leitura: Proclamação da República 2026 cai no domingo 15/11, então 13 e 14/11 são sexta e sábado comuns (faixa médio, padrão de qualidade R$ 1.000, sábado 2 noites); Natal e Réveillon são picos em qualquer dia da semana; o segundo turno presidencial (domingo 25/10/2026) derruba o sábado 24/10, porque o eleitor vota onde mora.
 
 ## Padrões de demanda observados
 - O feriado vende cedo. Nos últimos dias sobram unidades caras: com o preço acima do 2º mais caro, não vende.

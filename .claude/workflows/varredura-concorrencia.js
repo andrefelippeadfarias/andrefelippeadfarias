@@ -58,8 +58,14 @@ const DATAS = [
   { r: 'semana-01/12', tipo: 'semana', ci: '2026-12-01', co: '2026-12-03' },
 ]
 
+// args.rodada: 1 = semana, fim de semana e evento (+ cobertura e PriceLabs); 2 = feriado e última hora.
+// args.conjuntos: lista de rótulos (campo r) para refazer só alguns. Sem nada: tudo (cabe numa sessão só com folga de limite).
+const A = args || {}
+const RODADA = A.rodada ? Number(A.rodada) : null
+const TIPOS_RODADA = { 1: ['semana', 'fim de semana', 'evento'], 2: ['feriado', 'ultima hora'] }
+const DATAS_SEL = DATAS.filter(d => (!RODADA || TIPOS_RODADA[RODADA].includes(d.tipo)) && (!A.conjuntos || A.conjuntos.includes(d.r)))
 const jobs = []
-for (const d of DATAS) {
+for (const d of DATAS_SEL) {
   jobs.push({
     d, parte: 'baixa',
     prompt: `${FIXOS}\n\nTAREFA: datas ${d.ci} a ${d.co} (${d.tipo}). Use checkin_date "${d.ci}" e checkout_date "${d.co}". Varra a OFERTA DE PREÇO BAIXO E MÉDIO, em busca geral (sem filtro de facilities): faixas por noite de 1-400, 401-650 e 651-900 reais, dividindo ao meio sempre que uma faixa devolver 10. Devolva rotulo "${d.r}-baixa", as datas, noites (diferença entre checkin e checkout), o número de chamadas feitas e todas as propriedades únicas encontradas. Se uma faixa vier vazia, anote nas observações.`,
@@ -109,10 +115,11 @@ TAREFA: descubra tudo o que o PriceLabs oferece de dados de MERCADO de hotel par
 
 phase('Datas')
 const resDatas = await parallel(jobs.map(j => () => agent(j.prompt, { label: `${j.d.r}:${j.parte}`, phase: 'Datas', schema: SCHEMA_PROPS })))
+const soDatas = RODADA === 2 || !!A.conjuntos
 phase('Cobertura')
-const resCob = await parallel(jobsCob.map(j => () => agent(j.prompt, { label: j.x.r, phase: 'Cobertura', schema: SCHEMA_PROPS })))
+const resCob = soDatas ? [] : await parallel(jobsCob.map(j => () => agent(j.prompt, { label: j.x.r, phase: 'Cobertura', schema: SCHEMA_PROPS })))
 phase('PriceLabs')
-const resPL = await agent(promptPL, { label: 'pricelabs-mercado', phase: 'PriceLabs', schema: SCHEMA_PL })
+const resPL = soDatas ? null : await agent(promptPL, { label: 'pricelabs-mercado', phase: 'PriceLabs', schema: SCHEMA_PL })
 
 const falhas = resDatas.map((r, i) => r ? null : jobs[i].d.r + ':' + jobs[i].parte).filter(Boolean)
 log(`Datas: ${resDatas.filter(Boolean).length}/${jobs.length} agentes ok; falhas: ${falhas.join(', ') || 'nenhuma'}`)

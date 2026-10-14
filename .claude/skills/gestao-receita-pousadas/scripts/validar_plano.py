@@ -43,18 +43,40 @@ import json
 import re
 import sys
 from collections import defaultdict
-from datetime import date
+from datetime import date, datetime, timezone
 
-from comum import carregar_quartos, data, ler_json, periodo_feriado, reais, resultado_workflow
+from comum import carregar_quartos, data, hoje_brt, ler_instante, ler_json, periodo_feriado, reais, resultado_workflow
 
 TIPOS = {"data", "apagar", "anuncio", "personalizacao"}
 PALAVRAS_PROIBIDAS = ("ota", "oferta", "genius", "promo", "deal", "visibility")
 
 
+def estadia_exigida(cfg: dict, d: date, fer: dict | None) -> int | None:
+    """Estadia mínima que a data exige: 2 em sábado; em feriado, a do período em quartos.json, senão a do
+    calendário de sazonalidade, senão 2. None quando a data não exige nada."""
+    if fer:
+        if fer.get("estadia_minima"):
+            return int(fer["estadia_minima"])
+        try:
+            from sazonalidade import carregar, periodo
+            p = periodo(carregar(), d)
+            if p and p.get("estadia_minima"):
+                return int(p["estadia_minima"])
+        except Exception:
+            pass
+        return 2
+    if d.weekday() == 5:
+        return 2
+    return None
+
+
 class Validador:
-    def __init__(self, cfg: dict, hoje: date, precos: dict | None = None):
+    def __init__(self, cfg: dict, hoje: date, precos: dict | None = None, horas_max: float = 6, aceitar_velho: bool = False):
         self.cfg, self.hoje = cfg, hoje
-        self.precos = precos or {}          # (curto, "AAAA-MM-DD") -> {"preco", "livres"}
+        self.precos = precos or {}          # (curto, "AAAA-MM-DD") -> {"preco", "livres", "vendidas", "total"}
+        self.meta_precos = self.precos.pop("_meta", {}) if isinstance(self.precos, dict) else {}
+        self.horas_max, self.aceitar_velho = horas_max, aceitar_velho
+        self.tetos: dict = {}               # (curto, data) -> max_price
         self.erros: list[str] = []
         self.avisos: list[str] = []
         lim = cfg["limites_seguranca"]
@@ -84,12 +106,19 @@ class Validador:
         if not self.padrao or float(self.padrao) <= 0:
             self.erros.append("ERRO padrão de qualidade ausente ou zerado em dados/quartos.json "
                               "(limites_seguranca.padrao_qualidade_diaria): só o dono muda; não grave")
+        vistos: dict = {}
         for i, it in enumerate(itens, 1):
             tipo = it.get("tipo")
             texto = json.dumps(it, ensure_ascii=False).lower()
             if tipo not in TIPOS:
                 self.erro(i, it, f"tipo desconhecido '{tipo}'")
                 continue
+            if tipo in ("data", "apagar") and it.get("quarto") and it.get("data"):
+                chave = (it["quarto"], str(it["data"])[:10])
+                if chave in vistos:
+                    self.erro(i, it, f"item duplicado para {chave[0]} {chave[1]} (já há item {vistos[chave]}): "
+                                     "a API mescla campos e o último sobrescreve o primeiro sem registro")
+                vistos[chave] = i
             if any(p in str(it.get("campo", "")).lower() for p in PALAVRAS_PROIBIDAS) or \
                (tipo == "personalizacao" and any(p in texto for p in PALAVRAS_PROIBIDAS)):
                 self.erro(i, it, "mexe em desconto de OTA, oferta da Booking ou Genius: proibido")
@@ -109,6 +138,7 @@ class Validador:
             elif tipo == "personalizacao" and not it.get("como_desfazer"):
                 self.erro(i, it, "personalização sem 'como_desfazer'")
         self.validar_balcony(finais)
+        self.validar_excecoes()
 
     def validar_apagar(self, i, it, q):
         try:
@@ -118,9 +148,13 @@ class Validador:
             return
         if d < self.hoje:
             self.erro(i, it, "data no passado")
-        if d.weekday() == 5 and not periodo_feriado(self.cfg, d):
-            self.aviso(i, it, "apagar a substituição de um sábado remove a estadia mínima de 2 noites "
-                              "(Regra H); regrave min_stay 2 no mesmo plano")
+        fer = periodo_feriado(self.cfg, d)
+        if d.weekday() == 5 or fer:
+            exig = estadia_exigida(self.cfg, d, fer)
+            self.aviso(i, it, f"apagar a substituição de {'feriado' if fer else 'sábado'} remove a estadia mínima "
+                              f"({exig} noites); regrave min_stay {exig} no mesmo plano")
+        if fer:
+            self.aviso(i, it, f"apagar em feriado ({fer['nome']}) remove também o piso de proteção; só com piso regravado")
 
     def validar_data(self, i, it, q, finais):
         try:
@@ -178,6 +212,10 @@ class Validador:
                 self.pisos.add((q["curto"], d.isoformat()))
             if minimo < piso_abs:
                 self.erro(i, it, f"preço/piso {minimo:.0f} abaixo do limite de segurança {piso_abs:.0f}")
+            ocup = self.precos.get((q["curto"], d.isoformat())) or {}
+            depende_ocupacao = minimo < q["min"] or re.search(r"\+10|4c|flutua|regra g|saída|saida|esgot", str(it.get("motivo", "")).lower())
+            if depende_ocupacao:
+                self.calendario_fresco(i, it, q)
             if minimo < q["min"] and excecao != "dono":
                 limite_i = q["min"] * (1 - self.par["regra_i_desconto_max"])
                 if fer:
@@ -192,6 +230,21 @@ class Validador:
                 elif tipo_preco == "fixed" and (it.get("min_price") is None or float(it["min_price"]) > minimo):
                     self.erro(i, it, "abaixo do mínimo do anúncio sem min_price igual ao preço: "
                                      "o PriceLabs trava no mínimo")
+                elif ocup.get("total") is None:
+                    self.erro(i, it, "Regra I exige --precos com o calendário mesclado (unidades livres e vendidas da noite)")
+                else:
+                    livres, vend, tot = ocup["livres"], ocup["vendidas"], ocup["total"]
+                    frac = vend / tot if tot else 0
+                    if livres <= 0:
+                        self.erro(i, it, "Regra I em noite esgotada: não há unidade livre para cortar")
+                    elif frac > 0.70 and antecedencia >= 1:
+                        self.erro(i, it, f"Regra I não começa em data com mais de 70% vendida ({vend}/{tot}); "
+                                         "fica no mínimo (regras.md, Regra I)")
+                    elif frac > 0.70:
+                        self.aviso(i, it, f"Regra I em D0 com {vend}/{tot} vendidas: corte já aplicado segue só hoje")
+                    if q.get("demanda") == "alta" and livres > 1:
+                        self.erro(i, it, f"{q['nome']} em demanda alta: Regra I só para a última unidade "
+                                         f"({livres} livres)")
             if fer:
                 valor = minimo * self.fator_piso(q)
                 base = "vitrine" if q.get("piso_feriado_base") == "vitrine" else "real"
@@ -202,20 +255,39 @@ class Validador:
                 if piso and valor < piso - 1 and excecao != "dono":
                     self.erro(i, it, f"feriado: valor {base} estimado {valor:.0f} abaixo do piso do "
                                      f"período ({piso}); para mudar o piso, atualize dados/quartos.json")
+            if q.get("sem_desconto") and antes is None and excecao not in ("piso_feriado", "dono"):
+                self.erro(i, it, f"{q['nome']}: informe preco_antes ou rode com --precos (sem o preço atual não dá "
+                                 "para provar que não é desconto)")
             if q.get("sem_desconto") and antes and minimo < float(antes) - 1 and \
                excecao not in ("piso_feriado", "dono"):
                 self.erro(i, it, f"{q['nome']} não recebe desconto (de {antes} para {minimo:.0f})")
+            if antes and not fer and excecao != "dono" and minimo > float(antes) * 1.15 + 1 \
+               and "prote" not in str(it.get("motivo", "")).lower():
+                self.aviso(i, it, f"piso {minimo:.0f} é mais de 15% acima do preço atual ({float(antes):.0f}): "
+                                  "a flutuação dá um degrau por dia (regras.md 4c)")
+            if it.get("max_price") is not None:
+                self.tetos[(q["curto"], d.isoformat())] = float(it["max_price"])
+            if q["curto"] == "Balcony" and it.get("max_price") is None and ocup.get("total") is not None \
+               and ocup.get("livres", 1) <= 0:
+                self.aviso(i, it, "Balcony esgotada sem teto: ponha max_price ≈ alvo da Regra G para um "
+                                  "cancelamento não reabrir acima da suíte")
             self.padrao_qualidade(i, it, q, d, fer, minimo, excecao)
         elif it.get("max_price") is not None:
             # item só com teto: o teto é o preço mais alto possível, então também precisa respeitar os pisos
             teto = float(it["max_price"])
             if teto < piso_abs:
                 self.erro(i, it, f"max_price {teto:.0f} abaixo do limite de segurança {piso_abs:.0f}")
+            self.tetos[(q["curto"], d.isoformat())] = teto
             self.padrao_qualidade(i, it, q, d, fer, teto, excecao)
 
         ms = it.get("min_stay")
+        exig = estadia_exigida(self.cfg, d, fer)
+        if ms is None and exig and minimo is not None:
+            self.aviso(i, it, f"{'feriado' if fer else 'sábado'} sem min_stay no item: confira a estadia ({exig} noites) depois de gravar")
         if ms is not None:
             ms = int(ms)
+            if fer and exig and ms < exig and excecao != "dono":
+                self.erro(i, it, f"feriado ({fer['nome']}) exige estadia mínima {exig}; item com {ms}")
             if d.weekday() == 5 and ms < 2:
                 ok = (excecao == "regra_h" and not fer and it.get("ocupacao_sabado") is not None
                       and float(it["ocupacao_sabado"]) < 50 and self.hoje.weekday() in (2, 3, 4)
@@ -226,6 +298,26 @@ class Validador:
                                      "e ocupacao_sabado)")
             if ms < 1 or ms > 7:
                 self.erro(i, it, f"estadia mínima {ms} fora do razoável")
+
+    def calendario_fresco(self, i, it, q):
+        """Decisão que depende de ocupação precisa de calendário recalculado (aprendizado de 13/10)."""
+        idades = (self.meta_precos or {}).get("idade_h") or {}
+        h = idades.get(q["curto"])
+        if h is None or h <= self.horas_max:
+            return
+        msg = (f"calendário de {q['curto']} com {h:.0f} h (limite {self.horas_max:g} h): recalcule e use o arquivo "
+               "mesclado antes de decidir por ocupação")
+        if self.aceitar_velho:
+            self.aviso(i, it, msg + " (aceito sem saldo de recálculo)")
+        else:
+            self.erro(i, it, msg)
+
+    def validar_excecoes(self):
+        for ex in self.cfg.get("excecoes_mercado", []) or []:
+            rev = ex.get("revisar_em")
+            if rev and data(rev) < self.hoje:
+                self.avisos.append(f"aviso exceção de mercado vencida ({ex.get('quarto')} {ex.get('datas')}, revisar_em {rev}): "
+                                   "revalide com o dado do dia ou apague")
 
     def padrao_qualidade(self, i, it, q, d, fer, minimo, excecao):
         """Padrão de qualidade do dono (08/10): sexta, sábado e noites de feriado das suítes com banheira
@@ -286,6 +378,10 @@ class Validador:
                 continue  # no feriado a Balcony segue o piso de vitrine definido pelo dono
             menor, do_plano = min(refs)
             alvo = menor * (1 - desc)
+            teto = self.tetos.get(("Balcony", d))
+            if teto is not None and teto > menor + 1:
+                self.erros.append(f"ERRO Regra G {d}: teto da Balcony {teto:.0f} acima da suíte com banheira mais "
+                                  f"barata livre ({menor:.0f})")
             if balc > menor + 1:
                 # piso acima da suíte: o preço final só pode ser maior ainda, então é erro sempre
                 self.erros.append(f"ERRO Regra G {d}: Balcony {balc:.0f} acima da suíte com banheira mais "
@@ -302,17 +398,22 @@ class Validador:
                     self.erros.append(f"ERRO {msg}")
 
 
-def precos_da_coleta(res: dict) -> dict:
-    out = {}
+def precos_da_coleta(res: dict, agora: datetime | None = None) -> dict:
+    """(curto, data) -> preço, livres, vendidas, total; e _meta com a idade do calendário de cada quarto em horas."""
+    out: dict = {}
+    agora = agora or datetime.now(timezone.utc)
+    idade = {}
     for curto, sala in (res.get("rooms") or {}).items():
+        ts = ler_instante(sala.get("last_refreshed_at"))
+        idade[curto] = round((agora - ts).total_seconds() / 3600, 1) if ts else None
         for dia in sala.get("days") or []:
             mu = str(dia.get("multi_unit_occupancy") or "")
             if "/" in mu:
                 v, t = (int(x) for x in mu.split("/"))
-                livres = t - v
-            else:
-                livres = 0 if str(dia.get("booking_status") or "").strip() else 1
-            out[(curto, str(dia["date"])[:10])] = {"preco": dia.get("price"), "livres": livres}
+            else:  # unidade única: vendida quando há reserva
+                v, t = (1 if str(dia.get("booking_status") or "").strip() else 0), 1
+            out[(curto, str(dia["date"])[:10])] = {"preco": dia.get("price"), "livres": t - v, "vendidas": v, "total": t}
+    out["_meta"] = {"idade_h": idade, "hoje": res.get("hoje")}
     return out
 
 
@@ -352,11 +453,18 @@ def main(argv=None) -> int:
     ap.add_argument("plano")
     ap.add_argument("--precos", help="saída do workflow coleta-pricelabs (preços e unidades livres atuais)")
     ap.add_argument("--payload", action="store_true")
+    ap.add_argument("--horas", type=float, default=6, help="idade máxima do calendário (h) para decisões por ocupação")
+    ap.add_argument("--aceitar-velho", action="store_true", help="rebaixa calendário velho de ERRO para aviso")
+    ap.add_argument("--hoje", help="força a data de hoje (replay/testes); sem ela, o plano precisa ser de hoje em America/Sao_Paulo")
     a = ap.parse_args(argv)
     cfg = carregar_quartos()
     plano = ler_json(a.plano)
     precos = precos_da_coleta(resultado_workflow(ler_json(a.precos))) if a.precos else {}
-    v = Validador(cfg, data(plano["hoje"]), precos)
+    hoje = data(a.hoje) if a.hoje else hoje_brt(cfg)
+    if data(plano["hoje"]) != hoje:
+        print(f"ERRO plano de outro dia ({plano['hoje']}; hoje é {hoje}): refaça o plano com hoje = {hoje} ou passe --hoje")
+        return 1
+    v = Validador(cfg, hoje, precos, horas_max=a.horas, aceitar_velho=a.aceitar_velho)
     v.validar(plano.get("itens", []))
     for m in v.avisos:
         print(m)

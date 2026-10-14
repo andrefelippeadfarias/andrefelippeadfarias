@@ -1,6 +1,6 @@
 # Regras da operação (fonte única)
 
-Versão: 2026-10-08. Os números de máquina (mínimos, fatores, parâmetros, feriados) ficam em `../dados/quartos.json`. As regras abaixo dizem o que fazer com eles. Ao mudar qualquer regra: edite aqui, registre em `historico-da-skill.md` e faça commit.
+Versão: 2026-10-14 (consolidação). Os números de máquina (metas, limites, mínimos, fatores, parâmetros, feriados) ficam em `../dados/quartos.json`, que é a única fonte deles; pendências operacionais ficam em `../dados/pendencias.json`. As regras abaixo dizem o que fazer com eles. Ao mudar qualquer regra: edite aqui, registre em `historico-da-skill.md` e faça commit.
 
 Siglas usadas: D = dias de antecedência (D0 é hoje). "Suítes com banheira" são os 6 quartos sem a Balcony.
 
@@ -23,7 +23,7 @@ A Skill aplica sozinha, sem pedir aprovação:
 Toda gravação passa antes pelo `scripts/validar_plano.py`, é conferida depois no recálculo e fica no registro com antes, depois e como desfazer.
 
 ## 3. Metas e prioridade
-- Ocupação acumulada a partir de hoje: 7 dias 70% (o objetivo é 100%), 15 dias 50%, 30 dias 35%, 45 dias 25%, 60 dias 15%.
+- Ocupação acumulada a partir de hoje (`quartos.json` → `metas`, única fonte): 7 dias 70% (o objetivo é 100%), 15 dias 50%, 30 dias 35%, 45 dias 25%, 60 dias 15%. Cada noite é julgada pela meta da janela em que cai.
 - Medir no hotel todo, sem a Balcony (suítes com banheira) e por pousada.
 - Prioridade máxima: encher os próximos 7 dias.
 
@@ -47,25 +47,27 @@ Toda gravação passa antes pelo `scripts/validar_plano.py`, é conferida depois
   - o piso não desce abaixo do mínimo do quarto (a Regra I segue com os próprios limites);
   - datas a mais de 21 dias só pelo dado (a), com a busca da Booking daquelas noites.
 - **Registro das exceções:** cada exceção entra em `quartos.json` → `excecoes_mercado` (quarto, datas, piso, dado, `revisar_em`). A rotina completa lê a lista, confere com o dado do dia e volta ao padrão (piso R$ 1.000) quando o dado não se sustenta ou a data vendeu. Exceção vale só para as datas citadas. A `excecao: "dono"` também libera, com aviso.
-- **Acima do padrão continuam valendo:** os limites de segurança, o piso de feriado e a Regra G (a Balcony fica 10% abaixo da suíte com banheira mais barata e livre; enquanto a Balcony estiver presa em piso, o piso de sexta e sábado da VK7 e da VK2 fica acima do dela: R$ 1.020 em 16–17/10, porque o validador compara piso com piso).
+- **Acima do padrão continuam valendo:** os limites de segurança, o piso de feriado e a Regra G (a Balcony fica 10% abaixo da suíte com banheira mais barata e livre; enquanto a Balcony estiver presa em piso, o piso de sexta e sábado da VK7 e da VK2 fica pelo menos R$ 20 acima do dela, porque o validador compara piso com piso).
 - **A Regra I** (última hora, D0 a D3) pode ir abaixo do padrão numa sexta ou sábado com unidade livre, sempre com `mercado` no item.
-- **Exceções de mercado em vigor (08/10):** VK2 sexta 23 e sábado 24/10, piso R$ 860 (preço R$ 895 na coleta de 07:53). Em 08/10 a Villa vendeu mais uma noite em cada uma dessas datas, então a rotina de 13:53 revalida.
+- **Exceções em vigor:** a lista viva é `quartos.json` → `excecoes_mercado` (hoje vazia); o validador avisa quando `revisar_em` venceu; o histórico fica no registro.
 
 **Regra H, sábado (dono, 06/10)**
 - A diária de sábado sozinha não é vendida. O bloqueio é do dono, no Beds24/Booking; no PriceLabs, todo sábado fica com estadia mínima 2.
 - Exceção: na quarta a sexta antes, se a pousada estiver abaixo de 50% naquele sábado e não for feriado, volte o sábado para 1 noite (`excecao: "regra_h"`, com `ocupacao_sabado`) e avise o dono para liberar no Beds24.
 - Com o domingo esgotado, o sábado só vende junto com a sexta. As unidades de sábado acima das livres na sexta ficam presas: cite isso no relatório.
+- **Sábado isolado entre duas noites esgotadas:** o PriceLabs mostra estadia 1 mesmo com a regra por data em 2 (regra de dia órfão; Double 10/10, VK7 17/10). Não regrave; o `ler_recalculo.py` marca ⚠️ e o relatório diz "última unidade presa; o bloqueio de sábado sozinho do Beds24 protege". Desligar "orphan days" é só pela tela (pendência do dono).
 
 **Regra I, última hora (dono, 06/10)**
 - Vale para noites de D0 a D3 (`regra_i_dias`), fora de feriado, com unidade livre.
-- Até 20% (`regra_i_desconto_max`) abaixo do mínimo do quarto: percentual com `min_price` igual ao valor da Regra I, nunca abaixo do limite de segurança de 70% do mínimo de referência. Hoje: Queen (7) R$ 640, Double R$ 720; na Villa (novo mínimo desde 06/10 16h) Villa King Spa (7) R$ 700, Villa King Spa (2) R$ 630, Balcony R$ 700 (igual à Villa King Spa 7).
+- Até 20% (`regra_i_desconto_max`) abaixo do mínimo do quarto, travado em 70% do mínimo de referência (`limites_seguranca`); percentual com `min_price` igual ao valor da Regra I. Valores derivados de `quartos.json`: Queen (7) R$ 640, Double R$ 720, VK7 R$ 700, VK2 R$ 630, Balcony R$ 630 (trava de 70% × 900). O validador exige o calendário mesclado (`--precos`) e barra noite esgotada, data com mais de 70% vendida (fora de D0) e, em demanda alta, mais de uma unidade livre.
 - Queen (2) e Afrodite ficam fora.
-- **Data com mais de 70% vendida (esclarecido em 13/10):** a Regra I não **começa** um corte nela; a data fica no mínimo do quarto e sobe 10% por rodada pelo piso (`min_price`), mantendo o percentual do bloco. Um corte que já estava aplicado e passou de 70% por causa das vendas que ele mesmo gerou (Queen 7 em 13/10: de 4 para 6 de 7 em 3 h) **segue só no próprio dia (D0)**, para vender a última unidade; de D1 a D3 volta ao mínimo na rodada seguinte. Subir só o piso é de propósito: apagar a substituição (saída da escada pela letra) tiraria o percentual do bloco e levantaria as datas vizinhas com Regra I.
+- **Data com mais de 70% vendida (esclarecido em 13/10):** a Regra I não **começa** um corte nela; a data fica no mínimo do quarto e só sobe pelo gatilho único da flutuação (à frente da meta da janela, seção 4c), pelo piso (`min_price`), mantendo o percentual do bloco. Um corte que já estava aplicado e passou de 70% por causa das vendas que ele mesmo gerou (Queen 7 em 13/10: de 4 para 6 de 7 em 3 h) **segue só no próprio dia (D0)**, para vender a última unidade; de D1 a D3 volta ao mínimo na rodada seguinte. Subir só o piso é de propósito: apagar a substituição (saída da escada pela letra) tiraria o percentual do bloco e levantaria as datas vizinhas com Regra I.
 - **Demanda alta:** a Regra I vale só para a última unidade do dia (seção 4b). Uma data com várias unidades livres volta ao mínimo do quarto.
 
 **Regra A, estadia mínima**
 - 1 noite nas datas dos próximos 14 dias (`regra_a_janela_dias`) com unidade livre.
-- Exceções: sábados (Regra H); feriados mantêm 2 noites; Finados 3 noites (dono); Carnaval, Corpus Christi, 9 de Julho e Réveillon 3 noites (`sazonalidade.json`); vésperas com política de 2 diárias. Feriado nacional que cai em sábado ou domingo é fim de semana comum (sem piso nem estadia de feriado).
+- Exceções: sábados (Regra H); feriados mantêm 2 noites; Finados 3 noites (dono); Carnaval, Corpus Christi, 9 de Julho e Réveillon 3 noites (`sazonalidade.json`); vésperas com política de 2 diárias. Feriado nacional que cai em sábado ou domingo é fim de semana comum (sem piso nem estadia de feriado), **exceto Natal e Réveillon**, que são picos em qualquer dia da semana (Prefeitura: 70% a 95%).
+- **Feriado e feriadão:** a rotina não reduz sozinha a estadia do período. A 7 dias da noite, com a pousada abaixo de 50% nas noites do feriado, o relatório **sugere ao dono** liberar 1 noite (ou 2 nos de 3) e só grava com decisão dele (`excecao: "dono"`). O validador barra estadia abaixo da exigida (sábado 2; feriado pela lista de feriados ou pelo calendário).
 - Uma substituição nova feita pela tela apaga a anterior. Pela API os campos se juntam, mas confira a estadia mínima depois de gravar.
 
 **Regra F, escada por antecedência** (Queen 7, Double, Villa King Spa 7, Villa King Spa 2)
@@ -79,8 +81,8 @@ Toda gravação passa antes pelo `scripts/validar_plano.py`, é conferida depois
   - de D2 a D13, mantém o nível vigente ou desce para perto do mercado (ver seção 5).
   - Sexta e sábado formam um bloco de suavização: dê o mesmo percentual às duas noites. Para cortar uma noite só, use o piso e o teto da data.
   - Nas suítes com banheira, o piso de sexta e sábado é o padrão de qualidade (R$ 1.000), e não o mínimo do quarto; abaixo disso só com `mercado`.
-- Saída da escada: quarto com 50% ou mais vendido na data (`regra_f_saida_vendido`) apaga a substituição de preço e mantém a estadia mínima. Antes, confirme que é reserva e não bloqueio.
-- A saída da escada **não vale** para datas com preço por decisão do dono, como "perto do mercado" ou "domingo no mínimo para lotar" (motivo começando com "Dono"). Nelas o preço fica até a ocupação da data passar de 70%. Aí sobe no máximo 10% por rodada. Esclarecido em 06/10: a prioridade do dono é lotar.
+- **Saída da escada:** com 50% ou mais vendido na data (`regra_f_saida_vendido`), o percentual negativo da data vai a 0% (ou ao passo da flutuação 4c, se ela mandar subir), mantendo `min_price` e `min_stay`. **Nunca apagar a substituição:** apagar tira o percentual do bloco de suavização e levanta as datas vizinhas (13/10: a média do bloco da Queen 7 iria de R$ 595 para R$ 776). Apagar só quando todas as datas do bloco já saíram da escada e nenhuma tem piso de proteção. Antes, confirme que é reserva e não bloqueio.
+- A saída da escada **não vale** para datas com preço por decisão do dono, como "perto do mercado" ou "domingo no mínimo para lotar" (motivo começando com "Dono"). Nelas o preço fica até a noite ficar à frente da meta da janela (seção 4c). Aí sobe 10%, um passo por noite por dia. Esclarecido em 06/10: a prioridade do dono é lotar.
 
 **Regra C, Afrodite**
 - Noite livre a até 13 dias: −30% (`regra_c_desconto`) sobre o calculado, em percentual com piso de R$ 1.500.
@@ -91,12 +93,13 @@ Toda gravação passa antes pelo `scripts/validar_plano.py`, é conferida depois
   - Pedido do dono (07/10): "colocar uma diferença de 10% para a que não tem banheira".
 - Nunca fica acima da suíte com banheira livre (o validador barra).
 - Nunca fica abaixo do limite de segurança: R$ 630 (70% do mínimo de referência).
-- Abaixo do mínimo do anúncio (R$ 765) só com `excecao: "dono"`.
+- **Piso do anúncio e os 10%:** com o mínimo da Balcony igual ao da VK2 (R$ 765), os 10% abaixo são impossíveis em dia de semana (alvo R$ 689). Decisão de 14/10: o mínimo do anúncio da Balcony passa a **R$ 690** (−9,8%, dentro do ±15% semanal e acima dos R$ 630), a gravar na rotina completa de 14/10 com `quartos.json` e `referencia_semanal` no mesmo commit; a partir daí o alvo da Regra G vale até R$ 690 sem exceção.
+- **D0 a D7: piso e teto** iguais ao alvo (o ajuste de ocupação da própria Balcony sobe o preço acima do alvo: 08/10, R$ 689 → R$ 740). Esgotada: piso e teto sempre. Além de D7: piso; teto quando a suavização semanal a puxar acima da suíte.
 - Como a suavização da Balcony junta a semana inteira, o alvo de cada data vai no piso (`min_price`), com o percentual do bloco calculado no `percentual.py`. A cada rotina, refaça o alvo quando as suítes mudarem de preço.
 - No feriado, a Balcony segue o piso de vitrine (R$ 800 na vitrine = R$ 1.510) e nunca sobe por causa desta regra.
 - **Balcony esgotada na data (13/10):** o preço natural dela numa noite esgotada pode passar da suíte (16 e 17/10: R$ 1.459 e R$ 1.661 contra a VK7 a R$ 1.366 e R$ 1.553). Ponha piso e teto na data (cerca de 10% abaixo da suíte com banheira livre mais barata), para um cancelamento não reabrir a Balcony acima da suíte.
 - **Referência quando a VK2 está esgotada:** a VK7. Se a VK2 reabrir por cancelamento, ela volta ao piso (R$ 765 em dia útil) e a Balcony pode ficar acima dela até a rodada seguinte; refaça o alvo na rodada seguinte. O validador compara com a referência vigente.
-- **Piso do anúncio:** o alvo da Regra G não vai abaixo do mínimo do anúncio (R$ 765) sem `excecao: "dono"`, exceto nas datas D0 a D3 da Regra I (piso de segurança R$ 630). Em 18 a 22/10 o alvo calculado era R$ 760 e o piso gravado foi R$ 765.
+- **Varredura da Regra G:** em toda rotina completa, nos 60 dias inteiros (não só nos 21 dias das faixas), comparando com a suíte com banheira livre mais barata da data; o `ler_recalculo.py` avisa quando a Balcony passa da suíte.
 
 **Queen (2), sem desconto**
 - Anomalia: o hóspede paga cerca de 34% do preço enviado.
@@ -106,35 +109,32 @@ Toda gravação passa antes pelo `scripts/validar_plano.py`, é conferida depois
 
 **Feriados** (as noites e os pisos estão em `quartos.json` → `feriados`)
 - Piso de valor real por noite: preço × `fator_real`; na Balcony, preço × `fator_vitrine`.
-- Nossa Senhora Aparecida (noites de 09 a 11/10/2026): piso de R$ 800 reais nos 7 quartos.
-  - Histórico: R$ 1.000 (dono, 06/10); Villa a R$ 800 (dono, 06/10 16h); Recanto a R$ 800 (Skill, 07/10 08:20), depois de 24 h sem venda a 2 dias do feriado e 13% acima da mediana com hidro.
-  - 09 e 10/10, em percentual com piso: Queen (7) e Double R$ 1.905, Queen (2) R$ 2.355, Afrodite R$ 2.550, Villa King Spa (7) e (2) R$ 2.060, Balcony R$ 1.510.
-- Finados (30/10 a 02/11): +20% e 3 noites nos 7 quartos, feito pelo dono na tela em 03/10. Não sobrescrever sem motivo forte; se mudar, registre.
-- **Regras de proteção nunca levam validade (`lead_time_expiry`)** (10/10): a regra por data com validade de N dias deixa de valer a N dias da noite, e uma gravação em cima dela herda a validade. Em 11/10 e 19/11 existia a regra "Véspera de feriado: política de 2 diárias" (validade 3) nos 7 quartos; em 08/10 ela venceu e a Queen 7 caiu a R$ 949. Em 10/10 apaguei e recriei as duas datas nos 7 quartos sem validade (11/10: sem estadia mínima, que vale 1 por ser D1; 19/11 com 2 noites). Antes de gravar numa data a até 3 dias, leia a regra existente; se tiver `lead_time_expiry`, apague e recrie. O recálculo só confirma a proteção com `dso_flag 1` e `min_price` igual ao gravado.
-- **Pisos em 11/10 depois do ajuste de 10/10** (percentual com piso, noite esgotada nos 7 quartos): Queen (7) -40% e R$ 1.905; Double -59% e R$ 1.905; Afrodite 0% e R$ 2.550; Queen (2) 0% e R$ 2.355; VK7 -48% e R$ 2.060; VK2 -60% e R$ 2.060; Balcony 0% e R$ 1.510 (vitrine). O percentual negativo tira o peso da noite alta da média do bloco domingo-quinta, para que a reabertura não levante 12 a 15/10 (VK7 foi de R$ 850 a R$ 1.278 em 09/10).
-- Pisos de segurança acrescentados em 10/10 onde o piso de fim de semana do PriceLabs (150% da base) dá menos de R$ 800 reais: Queen (7) R$ 1.905 e VK2 R$ 2.060 em 30 e 31/10 (com o +20% do dono) e em 20 e 21/11; Queen (2) R$ 2.355 em 01/11 (com o +20% do dono).
+- **Pisos em preço enviado** (piso real ÷ `fator_real`; Balcony ÷ `fator_vitrine`), para não recalcular toda vez:
+
+  | Piso real | Queen 7, Double, Afrodite (0,42) | Queen (2) (0,34) | VK7 e VK2 (0,39) | Balcony (vitrine 0,53) |
+  |---|---|---|---|---|
+  | R$ 800 (limite) | R$ 1.905 | R$ 2.355 | R$ 2.052 | R$ 1.510 |
+  | R$ 1.000 (padrão de feriado novo) | R$ 2.381 | R$ 2.941 | R$ 2.564 | R$ 1.887 |
+
+- Cada feriado em `quartos.json` → `feriados` traz `piso_real` (null = só o limite de R$ 800) e uma `nota` com o motivo quando foge do padrão (Finados 2026: +20% e 3 noites do dono em 03/10; Consciência Negra 2026: R$ 800 porque em 10/10 o mercado estava a 23% a 36 dias e o Recanto já acima da mediana com hidro). O histórico dos feriados passados vai para `aprendizados.md`.
+- **Regras de proteção nunca levam validade (`lead_time_expiry`)** (10/10): a regra por data com validade de N dias deixa de valer a N dias da noite, e uma gravação em cima dela herda a validade (em 08/10 a Queen 7 caiu a R$ 949 por isso). **Antes de gravar em qualquer data**, leia a regra existente (`get_listing_date_overrides`, 7 chamadas na rotina completa); se tiver `lead_time_expiry`, apague e recrie sem validade. O recálculo só confirma a proteção com `dso_flag 1` e `min_price` igual ao gravado.
+- **Noites esgotadas também recebem piso** (um cancelamento reabre a noite); o percentual negativo nelas tira o peso da noite alta da média do bloco.
 - O piso padrão de um feriado novo é R$ 1.000 reais. A Skill pode mudar o piso pelos dados (concorrentes, ritmo de vendas), mas nunca abaixo de R$ 800 reais.
 
 ## 4b. Estratégia por pousada e por suíte, pela demanda (dono, 07/10)
 Pedido do dono: "ajustar o preço de acordo com a demanda que estamos recebendo em cada hotel separadamente, com uma estratégia bem definida para cada hotel e cada suíte".
 
-**Como classificar** (toda rotina completa; o resultado vai em `quartos.json` → `demanda`):
-- **Alta:** ocupação de 15 e de 30 dias acima da meta (50% e 35%) e ritmo forte nos últimos 14 dias.
+**Como classificar** (só na rotina completa, com calendário recalculado; o resultado vai em `quartos.json` → `demanda`):
+- **Alta:** ocupação de 15 e de 30 dias acima da meta (50% e 35%) e ritmo forte: diárias vendidas nos últimos 14 dias de pelo menos 1,5 vez o número de unidades do quarto.
 - **Baixa:** ocupação de 15 e de 30 dias abaixo de 60% da meta, ou semanas futuras com 0% a 12%.
 - **Média:** o resto.
+- **Histerese:** a classe só muda com o critério valendo em **duas rotinas completas seguidas** (saída de alta: 15 dias abaixo da meta em duas seguidas). A rotina leve nunca reclassifica, só anota "candidata" no relatório. A classe "alta" da VK7 (dada em 13/10 numa rotina leve) fica como candidata confirmada só se a rotina completa de 14/10 repetir o critério.
 
-**O que fazer em cada nível** (sempre em percentual com piso, por bloco de suavização):
-- **Alta: cobrar mais.**
-  - Base +5% a +10% por semana, dentro do limite de 15%.
-  - Datas com 67% ou mais vendido a até 14 dias: +10% por rodada.
-  - No feriado, a noite quase esgotada sobe e a fraca segura.
-  - A Regra I continua só para a última unidade do dia.
-- **Média: segurar e deixar o PriceLabs flutuar.** A saída da escada (Regra F) vale normalmente.
-- **Baixa: vender volume.**
-  - Base −10% a −15% por semana.
-  - Dias úteis no mínimo.
-  - Fim de semana perto da mediana do mercado, sem passar do padrão de qualidade (só com exceção de mercado).
-  - Regra I nos dias D0 a D3.
+**O que a classe faz** (complemento da seção 4c; a faixa alvo da noite vem só da sazonalidade):
+- **Alta:** o passo pode subir até a faixa alvo +1 mesmo "na meta" (+5%) e até alvo +2 à frente da meta; a Regra I vale só para a última unidade; no feriado, a noite quase esgotada sobe e a fraca segura. Base do anúncio +5% a +10% por semana na revisão de segunda, dentro do ±15%.
+- **Média:** segue a 4c sem deslocamento.
+- **Baixa:** o passo pode descer até a faixa alvo −1 já "na meta" (−5%), nunca abaixo de "baixo" fora de D0 a D3; fim de semana no padrão de qualidade (abaixo só com exceção de mercado). Base −10% a −15% por semana na revisão de segunda.
+- A Regra I vale para todos os quartos com `regra_i`, em qualquer classe (na alta, só a última unidade).
 - **Decisões do dono por data** ("perto do mercado", "domingo no mínimo") valem enquanto o quarto não estiver em demanda alta. Na alta, a demanda manda.
 
 **Perfil das pousadas (07/10):**
@@ -153,7 +153,7 @@ Pedido do dono: "qualificar os preços: muito baixo, baixo, médio, alto e muito
 - Medidas contra TODA a oferta disponível de Campos do Jordão na Booking para as mesmas noites (varredura por agentes de IA, workflow `varredura-concorrencia`: busca por faixa de preço até esgotar a lista, mais busca por tipo de acomodação). Preço por noite = total da estadia ÷ noites.
 - Em cada data e em cada conjunto de comparação, os cortes são os quintis do preço por noite: **muito baixo** abaixo do 20º percentil; **baixo** do 20º ao 40º; **médio** do 40º ao 60º; **alto** do 60º ao 80º; **muito alto** acima do 80º.
 - Conjuntos: `geral` (tudo), `recanto` (pares do Recanto: hidro ou spa e 4 a 5 estrelas ou nota 8,0 ou mais) e `villa` (pares da Villa: até 4 estrelas, nota de 7,0 a 9,2). O Recanto se compara com `recanto`; VK7, VK2 e Balcony com `villa`.
-- O nosso preço entra pelo que o hóspede vê (vitrine): enviado × `fator_vitrine` do quarto (Recanto 0,61; Villa 0,53).
+- O nosso preço entra pelo que o hóspede vê (vitrine): enviado × fator de vitrine do tipo de dia (`quartos.json`).
 - Noite sem busca própria usa os cortes típicos do tipo de dia (semana, fim de semana, feriado/evento), que são a mediana dos cortes das datas pesquisadas daquele tipo. Os cortes vigentes ficam em `dados/mercado_faixas.json` e são refeitos na revisão semanal (segunda, 07:53) rodando a varredura de novo.
 
 **Sazonalidade** (`dados/sazonalidade.json`, `scripts/sazonalidade.py`)
@@ -168,9 +168,9 @@ Pedido do dono: "qualificar os preços: muito baixo, baixo, médio, alto e muito
 - **Atrás da meta** (ocupação abaixo da meta menos 20 pontos): desce um degrau, −10% (−15% se já está em alto ou muito alto), **sem passar abaixo da faixa alvo menos uma** e nunca abaixo de "baixo" fora de D0 a D3.
 - **À frente da meta** (ocupação de meta mais 10 pontos para cima): sobe um degrau, +10%, até a faixa alvo mais uma; em muito alto, segura.
 - **Na meta:** aproxima do alvo devagar (+5% se duas faixas abaixo, −5% se duas acima); senão segura.
-- Os passos entram sempre em **percentual com piso**, por bloco de suavização (`percentual.py`), e por cima deles continuam valendo: limites de segurança, padrão de qualidade de R$ 1.000, piso de feriado (R$ 800 reais), Regras G, H e I e o ±15% por semana da base. Um passo por rodada, no máximo; a rodada seguinte mede o efeito antes do próximo.
+- Os passos entram sempre em **percentual com piso**, por bloco de suavização (`percentual.py`), e por cima deles continuam valendo: limites de segurança, padrão de qualidade de R$ 1.000, piso de feriado (R$ 800 reais), Regras G, H e I e o ±15% por semana da base.
 - **Combinação com a escada (Regra F):** a Regra F dá o patamar inicial de uma data que entra no plano (percentual por antecedência); a flutuação move um degrau por rodada a partir do preço vigente, dentro da faixa alvo ±1. Quando as duas discordam, vale o passo da flutuação (ele já olha ocupação e mercado); a escada só manda em data sem substituição ainda.
-- **Saída da escada (Regra F, 50% vendido) não apaga a substituição:** zera o percentual negativo e mantém piso e estadia mínima (apagar levanta o bloco inteiro: Queen 7, 13/10, média de R$ 595 para R$ 776). Gatilho de subida único: ocupação da noite de meta mais 10 pontos para cima (o "67% a até 14 dias" da demanda alta é esse gatilho na janela de 7 a 14 dias).
+- **Saída da escada (Regra F, 50% vendido) não apaga a substituição:** zera o percentual negativo e mantém piso e estadia mínima (apagar levanta o bloco inteiro: Queen 7, 13/10, média de R$ 595 para R$ 776). **Gatilho de subida único** (substitui os antigos 67% e 70%): ocupação da noite de meta mais 10 pontos para cima: 0 a 6 dias 80% (6 de 7, 5 de 6, 2 de 2); 7 a 14 dias 60% (5 de 7, 4 de 6); 15 a 29 dias 45% (4 de 7, 3 de 6); 30 a 44 dias 35%; 45 dias ou mais 25%. Quartos de 1 e 2 unidades usam a ocupação das suítes com banheira da pousada na noite (0, 50 e 100% enganam). O 70% continua só como o limiar de "não iniciar corte da Regra I".
 - **Um passo por noite por dia:** um passo só conta como medido depois de chegar aos canais (envio diário ou Sync Now, conferido na Booking, nunca pelo `user_price`) e de passar uma rodada; até lá a noite não recebe segundo passo na mesma direção. Em D0 a D1 o pedido de Sync Now sai na primeira linha do relatório.
 - **Sem classificação, sem passo:** noite sem faixa (script falhou, "sem dado de mercado", feriado ou evento sem busca própria, noite fora do calendário) não recebe passo de flutuação; valem travas, pisos de proteção, Regras A, G, H e I e as regras de feriado. Cortes com mais de 14 dias só permitem subir ou segurar.
 - **Classe de demanda com histerese:** classificada só na rotina completa com calendário recalculado; ritmo forte = diárias vendidas nos últimos 14 dias de pelo menos 1,5 vez o número de unidades; a classe só muda com o critério valendo em duas rotinas completas seguidas; rotina leve só anota "candidata".
@@ -178,66 +178,34 @@ Pedido do dono: "qualificar os preços: muito baixo, baixo, médio, alto e muito
 - **Evento estimado** (sem data confirmada em `sazonalidade.json`): usa a faixa do período de fundo até D-90; de D-90 em diante, sem confirmação, a rotina abre "confirmar evento" no relatório e não sobe a faixa por ele; com `confianca: baixa` o alvo do evento nunca passa de alvo+1 do fundo.
 - **Orçamento de recálculo** (3 por quarto por dia): 1 medir (07:53), 1 detalhar quando houver mudança, 1 conferir; rotina leve só recalcula quarto com reserva, cancelamento ou mudança manual, e só com saldo; sem saldo, sem passo (só travas e Regra I em D0 a D1 com dado da Booking), "não conferido (limite de recálculo)".
 - **Exceção de mercado não é um passo:** quando o passo bate no padrão de qualidade, a rotina para no padrão; a exceção só entra pelos critérios da seção de feriados, com `revisar_em` na rotina completa seguinte.
-- **Fator de vitrine da Villa:** 0,53 em dia de semana e feriado, 0,66 em sexta e sábado (`fator_vitrine_fds`, medido em 06 e 07/10); o script usa o de fim de semana nessas noites.
+- **Fator de vitrine por tipo de dia** (`fator_vitrine` e `fator_vitrine_fds` em `quartos.json`): Recanto 0,59 em dia de semana e feriado, 0,61 em sexta e sábado; Villa 0,53 e 0,66. Recalibrados na revisão semanal pela busca da Booking dos nossos hotéis.
 - **"Topo" e "base" da faixa:** o alvo de preço do Recanto é o corte superior da faixa alvo e o da Villa é o corte inferior; o passo percentual leva até lá, nunca além da faixa alvo mais uma.
 - Recanto (5 estrelas, nota 8,4) opera no topo da faixa alvo; Villa (3 estrelas, nota 8,1) opera na base.
 
-## 5. Posicionamento contra o mercado (Booking)
-- Nossas notas: Recanto 8,4; Villa 8,1. Fique abaixo dos hotéis de mesmo preço com nota de 9 ou mais. Referência: entre 10% e 25% abaixo da mediana dos hotéis 5 estrelas com nota 9 ou mais nas datas fortes, e perto da mediana nas fracas. Em sexta, sábado e feriado das suítes com banheira, o piso é o padrão de qualidade.
-- Se estivermos mais de 40% acima da mediana numa data com estoque sobrando a até 14 dias, desça para perto do mercado (feito em 06/10 para 16 e 17/10). Em sexta, sábado e feriado das suítes com banheira, a descida para no padrão de qualidade (R$ 1.000); abaixo disso só com o dado no campo `mercado`.
+## 5. Mediana da Booking: só para a exceção de mercado e para o relatório
+- O posicionamento de preço é o da seção 4c (faixa alvo da sazonalidade; topo para o Recanto, base para a Villa). Não existe outra régua.
+- A mediana da Booking (com hidro e nota 9 ou mais para o Recanto; geral para a Villa) serve só para (a) a exceção de mercado do padrão de qualidade (critérios na seção 4, feriados) e (b) o relatório ao dono. Nossas notas: Recanto 8,4; Villa 8,1.
 - Domingo e meio de semana fracos (mediana do mercado abaixo do nosso mínimo): mínimo do quarto e, de D0 a D3, Regra I.
 
-## 6. Decisões do dono em vigor (com data)
-- 13/10: preços qualificados em cinco faixas de mercado (muito baixo a muito alto), sazonalidade prevista para 2026 e 2027 e flutuação percentual por faixa e ocupação contra a meta; pesquisa de mercado feita por agentes de IA (seção 4c).
-- 08/10: padrão de qualidade. Sexta, sábado e feriado das suítes com banheira a partir de R$ 1.000 por diária, "mas de olho no mercado", e "sempre trabalhe com percentuais" (piso em `min_price`, nunca preço fixo). Aplicado em 16 datas (Queen 7, Double, VK7 e VK2 de 16/10 a 07/11).
-- 08/10: "Pode igualar a suavização da Balcony às outras suítes". A API não permite; só pela tela (seção 7). Aguardando o dono salvar.
-- 07/10 13h: Balcony 10% abaixo da suíte com banheira mais barata e livre (Regra G nova).
-- 07/10 11:46: estratégia por pousada e por suíte, de acordo com a demanda de cada uma (seção 4b).
-- 07/10: "Ajuste tudo que está lançado com preço fixo no PriceLabs para percentual, para usarmos as ferramentas do PriceLabs de flutuação de preços. Faça assim sempre." Feito às 08:10: 103 datas convertidas, conferidas no recálculo.
-- 06/10 16h: estratégia agressiva para lotar a Villa Dolce Amore de 06 a 25/10.
-  - Mínimos da Villa: R$ 850 / R$ 765 / R$ 765 (VK7 / VK2 / Balcony), com corte de 15%; nesta semana não se corta mais (limite semanal).
-  - Feriado da Villa com piso de R$ 800 reais (desde 07/10, o Recanto também).
-  - Dias úteis e domingos no mínimo.
-  - Fins de semana perto da mediana geral da Booking.
-  - Sexta 23/10 com 1 noite.
-- 25/09: ofertas da Booking obrigatórias; descontos de OTA intocáveis.
+## 6a. Decisões permanentes do dono
 - 26/09: modo automático. "Sempre apresente a análise e aplique a estratégia. Só pare de aplicar caso eu avise para parar."
-- 03/10: Finados com +20% e 3 noites.
-- 05/10: Regra G.
-- 06/10:
-  - lotar esta semana e a próxima;
-  - 16 e 17/10 perto do mercado;
-  - 24/10 a −20%;
-  - Regras H e I;
-  - feriado com piso de R$ 1.000;
-  - autonomia total, aprendizado automático e rotinas nesta conversa.
+- 25/09: ofertas da Booking obrigatórias; descontos de OTA intocáveis; Genius até o nível 3.
+- 06/10: autonomia total, aprendizado automático e rotinas nesta conversa; Regras H (sábado sozinho fechado) e I (última hora); feriado com piso padrão de R$ 1.000 reais, nunca abaixo de R$ 800.
+- 07/10: "Ajuste tudo que está lançado com preço fixo no PriceLabs para percentual, para usarmos as ferramentas do PriceLabs de flutuação de preços. Faça assim sempre." (feito em 07/10, 103 datas).
+- 07/10 11:46: estratégia por pousada e por suíte, de acordo com a demanda de cada uma (seção 4b).
+- 07/10 13h: Balcony 10% abaixo da suíte com banheira mais barata e livre (Regra G).
+- 08/10: padrão de qualidade. Sexta, sábado e feriado das suítes com banheira a partir de R$ 1.000 por diária, "mas de olho no mercado", e "sempre trabalhe com percentuais".
+- 08/10: "Pode igualar a suavização da Balcony às outras suítes" (só pela tela; pendência do dono).
+- 13/10: preços qualificados em cinco faixas de mercado, sazonalidade prevista para 2026 e 2027 e flutuação percentual por faixa e ocupação contra a meta; pesquisa de mercado feita por agentes de IA (seção 4c); estratégia consolidada em `estrategia.md` (14/10).
 - A regra de sábado com valor real de pelo menos R$ 800 (02/10) **não vale como regra geral**: as decisões de 06/10 a superaram.
 
-## 7. Pendências que dependem só da tela ou do dono
-- Personalizações próprias da Balcony (sazonalidade e demanda agressivas, última hora de 25%) diferem das do grupo e a deixam acima das suítes em datas futuras. Pela autonomia total, a Skill pode igualar ao grupo, registrando o que era antes.
-  - A suavização da Balcony junta a semana inteira num bloco só. Com percentual, a sexta e o sábado ficam presos no piso e não flutuam. O dono pediu em 08/10 para igualar ao grupo (blocos de domingo a quinta e de sexta a sábado).
-  - **Não dá pela API nem pelo MCP** (pesquisa de 08/10: `update_customizations` recusa `smoothing`; `update_listing_data` não tem o campo). Só pela tela, pelo dono: Painel de preços > linha da Balcony (350364___722814) > Revisar preços > Editar em Personalizações > aba "All Customizations" > Smoothing > ligado > **"Smooth weekdays vs. weekends"** > Salvar. Não escolher "Set week start" (é o modo atual, de 7 dias) nem "No Smoothing".
-  - Depois que ele salvar: no primeiro recálculo com `parse_reasons_json` da Balcony, confirmar os blocos (domingo a quinta e sexta a sábado), refazer os percentuais da Balcony com `percentual.py` e trocar os pisos de sexta e sábado presos pelo alvo da Regra G (cerca de 10% abaixo do preço da VK2; em 16–17/10, VK2 a R$ 1.178 dá alvo de cerca de R$ 1.060, hoje a Balcony está presa em R$ 1.016).
-- Só pela tela:
-  - Safety Minimum Price em "Do Not Apply";
-  - sincronização às 06:00 (e extras às 12:00 e 18:00, a US$ 1 por quarto por mês);
-  - tabela de ajuste por ocupação;
-  - piso de fim de semana (150% da base);
-  - Sync Now.
-- Extranet da Booking, Villa Dolce Amore: marcar hidromassagem/Jacuzzi, Wi-Fi e aquecimento.
-- **URGENTE, canais no Beds24 (06/10):**
-  - a Villa está na Expedia, Hoteis.com e Decolar com tarifa fixa de R$ 2.037 a R$ 4.075, 3 a 5 vezes a Booking: conferir o mapeamento do quarto e da tarifa;
-  - o Recanto está 38–44% acima da Booking na Expedia: baixar o acréscimo do canal para 10–15%;
-  - o site oficial está 50–89% acima da Booking: criar uma tarifa direta igual ou menor que a da Booking.
-- Visibilidade e paridade (auditoria de 06/10, detalhes em `mercado.md`):
-  - o site oficial está mais caro que os revendedores no Google Hotels;
-  - o Perfil do Google tem categorias e endereço errados;
-  - existem anúncios antigos da Booking com notas melhores;
-  - os anúncios do Airbnb têm erros;
-  - há duplicados no TripAdvisor e na Trivago;
-  - os motores Omnibees antigos seguem no ar.
-- Beds24:
-  - reservas no canal "outros" a R$ 320–450 por noite na Villa King Spa (7);
-  - Afrodite de 12 a 15/11 "indisponível" sem reserva;
-  - lotes de reservas que podem estar duplicados.
-- Queen (2): achar a causa do valor real baixo, por volta de 34% do enviado.
+## 6b. Decisões do dono por data (vencem; apagar quando passarem)
+| Decidida em | Datas alvo | O que vale | Vence em |
+|---|---|---|---|
+| 03/10 | Finados, 30/10 a 02/11/2026 | +20% e 3 noites nos 7 quartos (feito na tela). Não sobrescrever sem motivo forte; a flutuação só mexe por cima do +20% com registro | 02/11/2026 |
+| 06/10 16h | Villa, 06 a 25/10/2026 | estratégia agressiva: mínimos VK7 R$ 850, VK2 e Balcony R$ 765 (corte de 15%); dias úteis e domingos no mínimo; fins de semana perto da mediana geral; sexta 23/10 com 1 noite | 25/10/2026; depois vale a 4c salvo nova ordem |
+| 06/10 | Recanto, 24/10/2026 | "24/10 a −20%": substituído em 14/10 pela flutuação 4c (a noite segue a faixa alvo e a ocupação) | 24/10/2026 |
+| 06/10 | semana de 06 a 19/10 | "lotar esta semana e a próxima": dias úteis fracos no mínimo (Regra F D9 a D13). **Perguntar ao dono se é permanente**; até resposta, vale "mínimo do quarto quando a noite estiver atrás da meta (4c)" | 19/10/2026 |
+
+## 7. Pendências
+A lista única (dono, tela e Skill) é `dados/pendencias.json`; o relatório escolhe dali os 3 itens mais urgentes do dono. Não repita pendências aqui nem no `SKILL.md`.

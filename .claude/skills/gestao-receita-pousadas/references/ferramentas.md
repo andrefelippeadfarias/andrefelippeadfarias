@@ -16,7 +16,7 @@
 | `refresh_listing_pricing` com `parse_reasons_json: true` | detalhamento do preço por data (cerca de 2 milhões de caracteres) | Traz `reasons_json.listing_info.customized_price`, o recomendado sem a substituição, e os passos: ajustes de ocupação, substituição da data, suavização e piso/teto. Use para calcular o percentual (`scripts/percentual.py`). Conta no limite de 3 por quarto por dia. |
 | `refresh_listing_pricing` | recalcular para conferir | Só 3 por quarto a cada 24 h. A saída (cerca de 280 mil caracteres) vai para um arquivo; leia com `scripts/ler_recalculo.py`. Recalcular **não envia** aos canais. Use `exclude_reasons_json: true`. |
 | `get_listing_data` | `push_enabled`, `last_date_pushed`, min, base e max | Não use para buscar quarto. Alerta se o último envio tiver mais de 30 h. |
-| `get_pms_reservations` | reservas por data de criação (`booked_start_date`) ou por estadia | `check_out` é a última noite (inclusivo). `total_cost` é o valor pago. Comissão 0,0 é normal nos lotes. A lista só recebe as reservas novas por volta das 10:59 BRT (até cerca de um dia depois da venda): ao procurar vendas, use `booked_start_date` de 2 a 3 dias atrás e compare com o calendário. |
+| `get_pms_reservations` | reservas por data de criação (`booked_start_date`) ou por estadia | `check_out` é a última noite (inclusivo). `total_cost` é o valor pago. Comissão 0,0 é normal nos lotes. A lista só recebe as reservas novas por volta das 10:59 BRT (até cerca de um dia depois da venda): ao procurar vendas, use `booked_start_date` de 2 dias atrás e compare por ID com a coleta anterior e pelo calendário; cancelamento de reserva antiga só aparece no calendário. |
 | `get_user_logs` | mudanças nas últimas 24 h | Ação `api_*` com device "mcp" é nossa. O resto é manual (pela tela). |
 | `get_neighbourhood_data` | ocupação do mercado | Os números ficam aninhados em `data.data.occupancy.daily`. Os percentis por dia não vêm. |
 
@@ -27,7 +27,7 @@ Veja como pesquisar em `mercado.md`. Não serve para mudar nada.
 
 ## Workflow de coleta (`.claude/workflows/coleta-pricelabs.js`)
 - Chame `Workflow` com `name: "coleta-pricelabs"` e `args`:
-  `{"hoje": "AAAA-MM-DD", "fim": "<hoje+59>", "desde": "<data da última rotina>", "modo": "rotina" | "completo", "buscas": [{"label", "checkin", "checkout"}], "eventos": false}`.
+  `{"hoje": "AAAA-MM-DD", "fim": "<hoje+59>", "desde": "<hoje − 2 dias>", "modo": "rotina" | "completo", "buscas": [{"label", "checkin", "checkout"}], "eventos": false}` (a lista de reservas atrasa até um dia: compare por ID com a coleta anterior e pelo calendário).
 - Se o nome não for encontrado, use `scriptPath: ".claude/workflows/coleta-pricelabs.js"` (a partir da raiz do repositório).
 - Roda em segundo plano. Quando terminar, a notificação traz o caminho do arquivo de saída (`.../tasks/<id>.output`). Passe esse arquivo para `scripts/ocupacao.py` e `scripts/validar_plano.py --precos`.
 - O modo "completo" acrescenta o mercado e, se `buscas` vier preenchido, os concorrentes; `eventos: true` acrescenta a pesquisa web. É bem mais caro; use 1 vez ao dia (07:53) ou em pedido do dono.
@@ -50,3 +50,7 @@ Veja como pesquisar em `mercado.md`. Não serve para mudar nada.
 ## Padrão de qualidade e suavização (08/10)
 - `validar_plano.py`: o item de sexta, sábado ou feriado de suíte com banheira com preço ou piso abaixo de R$ 1.000 (`limites_seguranca.padrao_qualidade_diaria`, só o dono muda; ausente ou zerado dá ERRO) dá ERRO, a menos que leve o campo `mercado` (texto de pelo menos 20 caracteres com o dado de mercado). Com o campo, sai um aviso para o relatório. O campo não vai para o PriceLabs. O teto (`max_price`) sozinho também conta. A Balcony não entra. O `percentual.py` já usa o padrão como piso de sexta e sábado das suítes com banheira.
 - Suavização (Smoothing) não se lê nem se grava por nenhuma ferramenta. Só se enxerga pelos blocos de `price_smoothing` no `refresh_listing_pricing` com `parse_reasons_json`. Mudança só pela tela (ver `regras.md` seção 7).
+
+## O que os scripts leem de `quartos.json` (e o que é só regra de texto)
+- Lidos por script: `metas` (ocupacao.py, faixas_de_preco.py), `limites_seguranca` (validar_plano.py), `parametros.regra_i_dias`, `regra_i_desconto_max`, `regra_g_desconto` (validar_plano.py, ler_recalculo.py), `quartos[*].min/base/min_referencia/fator_real/fator_vitrine/fator_vitrine_fds/banheira/regra_i/sem_desconto/demanda/unidades/pousada` (validar_plano.py, faixas_de_preco.py), `feriados` (validar_plano.py, faixas_de_preco.py), `referencia_semanal` (validar_plano.py), `excecoes_mercado` (validar_plano.py avisa vencidas).
+- Só texto (regras.md): `regra_f_saida_vendido`, `regra_c_desconto`, `regra_a_janela_dias`, `piso_feriado_real_padrao`. Mudar o JSON não muda o validador nesses casos.

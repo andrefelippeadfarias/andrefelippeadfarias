@@ -143,12 +143,38 @@ Pedido do dono: "ajustar o preço de acordo com a demanda que estamos recebendo 
   - VK7 e VK2 com demanda média, já reagindo: 5 vendas da VK7 em 3 horas depois do envio de 07/10. **VK7 passou a alta em 13/10** (7 dias 74%, 15 dias 51%, 30 dias 45%): Regra I só na última unidade e +10% por rodada nas datas com 67% ou mais vendido a até 14 dias. VK2 é candidata (15d 60%, 30d 47%, mas só 2 unidades).
   - Balcony com demanda baixa: 10% abaixo da suíte com banheira mais barata e livre (Regra G).
 
+## 4c. Faixas de preço de mercado, sazonalidade e flutuação percentual (dono, 13/10)
+Pedido do dono: "qualificar os preços: muito baixo, baixo, médio, alto e muito alto, para fazer a flutuação e os ajustes percentuais de acordo com o planejado e manter o trabalho dentro da métrica", "prever as sazonalidades para estar sempre dentro do escopo da época, do ano, do feriado, de cada dia" e "usar a IA para pesquisar".
+
+**As cinco faixas** (`scripts/faixas_de_preco.py`)
+- Medidas contra TODA a oferta disponível de Campos do Jordão na Booking para as mesmas noites (varredura por agentes de IA, workflow `varredura-concorrencia`: busca por faixa de preço até esgotar a lista, mais busca por tipo de acomodação). Preço por noite = total da estadia ÷ noites.
+- Em cada data e em cada conjunto de comparação, os cortes são os quintis do preço por noite: **muito baixo** abaixo do 20º percentil; **baixo** do 20º ao 40º; **médio** do 40º ao 60º; **alto** do 60º ao 80º; **muito alto** acima do 80º.
+- Conjuntos: `geral` (tudo), `recanto` (pares do Recanto: hidro ou spa e 4 a 5 estrelas ou nota 8,0 ou mais) e `villa` (pares da Villa: até 4 estrelas, nota de 7,0 a 9,2). O Recanto se compara com `recanto`; VK7, VK2 e Balcony com `villa`.
+- O nosso preço entra pelo que o hóspede vê (vitrine): enviado × `fator_vitrine` do quarto (Recanto 0,61; Villa 0,53).
+- Noite sem busca própria usa os cortes típicos do tipo de dia (semana, fim de semana, feriado/evento), que são a mediana dos cortes das datas pesquisadas daquele tipo. Os cortes vigentes ficam em `dados/mercado_faixas.json` e são refeitos na revisão semanal (segunda, 07:53) rodando a varredura de novo.
+
+**Sazonalidade** (`dados/sazonalidade.json`, `scripts/sazonalidade.py`)
+- Calendário de 14/10/2026 a 31/12/2027 em períodos (cada noite cai em exatamente um; semana e fim de semana separados quando o nível difere), com **nível de demanda** (muito baixa, baixa, média, alta, muito alta), **faixa alvo**, estadia mínima e antecedência típica, cada um com motivo e evidência (feriados oficiais, eventos, ocupação do mercado no mesmo período do ano anterior pelo PriceLabs, balanços da Prefeitura).
+- Regra fixa: a faixa alvo segue o nível (muito baixa e baixa → baixo; média → médio; alta → alto; muito alta → muito alto). Nunca abaixo de "baixo" fora de D0 a D3 (Regra I).
+- Campos do Jordão é contra-sazonal ao estado: pico no inverno (junho a agosto, julho no topo: mercado 62% a 67%, Corpus Christi e 9 de Julho acima de 90%), segundo pico em dezembro (Réveillon 96%), vales em fevereiro e março (26% a 34%) e nas semanas de outubro, novembro e primeira quinzena de dezembro.
+- Revisão: todo mês na rotina completa de segunda (rodar o workflow `sazonalidade-campos`), e sempre que um evento marcado "estimado" for confirmado (Festival de Inverno 2027, Oktoberfest 2027, férias de julho de 2027).
+
+**Regra de flutuação por noite e por quarto** (`acao_sugerida` em `faixas_de_preco.py`; o validador continua barrando o que passar dos limites)
+- Entradas: faixa atual da vitrine, faixa alvo da sazonalidade, ocupação da noite (vendidas ÷ unidades) e meta da janela em que a noite cai (0 a 6 dias 70%, 7 a 14 dias 50%, 15 a 29 dias 35%, 30 a 44 dias 25%, 45 dias ou mais 15%).
+- **Esgotada:** nada muda; só o piso de proteção (um cancelamento não pode reabrir barato).
+- **Atrás da meta** (ocupação abaixo da meta menos 20 pontos): desce um degrau, −10% (−15% se já está em alto ou muito alto), **sem passar abaixo da faixa alvo menos uma** e nunca abaixo de "baixo" fora de D0 a D3.
+- **À frente da meta** (ocupação de meta mais 10 pontos para cima): sobe um degrau, +10%, até a faixa alvo mais uma; em muito alto, segura.
+- **Na meta:** aproxima do alvo devagar (+5% se duas faixas abaixo, −5% se duas acima); senão segura.
+- Os passos entram sempre em **percentual com piso**, por bloco de suavização (`percentual.py`), e por cima deles continuam valendo: limites de segurança, padrão de qualidade de R$ 1.000, piso de feriado (R$ 800 reais), Regras G, H e I e o ±15% por semana da base. Um passo por rodada, no máximo; a rodada seguinte mede o efeito antes do próximo.
+- Recanto (5 estrelas, nota 8,4) opera no topo da faixa alvo; Villa (3 estrelas, nota 8,0) opera na base.
+
 ## 5. Posicionamento contra o mercado (Booking)
 - Nossas notas: Recanto 8,4; Villa 8,1. Fique abaixo dos hotéis de mesmo preço com nota de 9 ou mais. Referência: entre 10% e 25% abaixo da mediana dos hotéis 5 estrelas com nota 9 ou mais nas datas fortes, e perto da mediana nas fracas. Em sexta, sábado e feriado das suítes com banheira, o piso é o padrão de qualidade.
 - Se estivermos mais de 40% acima da mediana numa data com estoque sobrando a até 14 dias, desça para perto do mercado (feito em 06/10 para 16 e 17/10). Em sexta, sábado e feriado das suítes com banheira, a descida para no padrão de qualidade (R$ 1.000); abaixo disso só com o dado no campo `mercado`.
 - Domingo e meio de semana fracos (mediana do mercado abaixo do nosso mínimo): mínimo do quarto e, de D0 a D3, Regra I.
 
 ## 6. Decisões do dono em vigor (com data)
+- 13/10: preços qualificados em cinco faixas de mercado (muito baixo a muito alto), sazonalidade prevista para 2026 e 2027 e flutuação percentual por faixa e ocupação contra a meta; pesquisa de mercado feita por agentes de IA (seção 4c).
 - 08/10: padrão de qualidade. Sexta, sábado e feriado das suítes com banheira a partir de R$ 1.000 por diária, "mas de olho no mercado", e "sempre trabalhe com percentuais" (piso em `min_price`, nunca preço fixo). Aplicado em 16 datas (Queen 7, Double, VK7 e VK2 de 16/10 a 07/11).
 - 08/10: "Pode igualar a suavização da Balcony às outras suítes". A API não permite; só pela tela (seção 7). Aguardando o dono salvar.
 - 07/10 13h: Balcony 10% abaixo da suíte com banheira mais barata e livre (Regra G nova).

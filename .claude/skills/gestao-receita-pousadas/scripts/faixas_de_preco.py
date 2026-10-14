@@ -147,26 +147,33 @@ def tipo_do_dia(d: date, feriados: set[date]) -> str:
     return "semana"
 
 
-def acao_sugerida(f: int, ocupacao: float, meta: float, esgotada: bool, dias_ate: int) -> tuple[str, int]:
-    """(texto, passo em %) pela faixa atual e pela ocupação da noite contra a meta da janela.
+def acao_sugerida(f: int, alvo: int, ocupacao: float, meta: float, esgotada: bool, dias_ate: int) -> tuple[str, int]:
+    """Regra de flutuação (dono, 13/10/2026). Devolve (texto, passo em %).
 
-    Situação da noite: atrás (menos de metade da meta... ver abaixo), na meta, à frente.
-      atrás:      ocupação < meta - 0,20
-      na meta:    meta - 0,20 <= ocupação < meta + 0,10
-      à frente:   ocupação >= meta + 0,10 (inclui esgotada)
-    Passo: descer 10% (15% se a faixa for alta ou muito alta) quando atrás; subir 10% quando à frente;
-    segurar na meta. Nas faixas muito baixa não se desce (o piso e a Regra I mandam); na muito alta não se sobe
-    (teto de mercado). Esgotada: nada a mudar agora, só proteger com piso."""
+    Entradas: f = faixa atual do nosso preço de vitrine (0 muito baixo ... 4 muito alto); alvo = faixa alvo da
+    sazonalidade; ocupacao e meta da janela em 0 a 1; dias_ate = dias até a noite.
+    Situação da noite: atrás (ocupação < meta - 0,20), na meta, à frente (ocupação >= meta + 0,10) ou esgotada.
+    - esgotada: nada a mudar, só proteger o piso;
+    - atrás: desce um degrau (-10%; -15% se já está em alto ou muito alto), mas não abaixo da faixa alvo menos um,
+      e nunca abaixo de "baixo" fora de D0 a D3 (aí vale a Regra I);
+    - à frente: sobe um degrau (+10%), até a faixa alvo mais um; em muito alto, segura;
+    - na meta: aproxima da faixa alvo devagar (+5% se está duas faixas abaixo do alvo, -5% se duas acima); senão segura.
+    Os limites de segurança, o padrão de qualidade, o piso de feriado, as Regras G e H e o ±15% por semana da base
+    continuam valendo por cima disto (o validador barra)."""
     if esgotada:
         return ("esgotada: manter piso de proteção", 0)
     if ocupacao < meta - 0.20:
-        if f == 0:
-            return ("atrás da meta, já na faixa mais baixa: só a Regra I (D0 a D3)", 0)
+        if f <= max(0, alvo - 1) or (f <= 1 and dias_ate > 3):
+            return ("atrás da meta, já no limite inferior da faixa alvo: segurar (D0 a D3: Regra I)", 0)
         return ("atrás da meta: descer uma faixa", -15 if f >= 3 else -10)
     if ocupacao >= meta + 0.10:
-        if f == 4:
-            return ("à frente da meta, já na faixa mais alta: segurar", 0)
+        if f >= min(4, alvo + 1):
+            return ("à frente da meta, já no limite superior da faixa alvo: segurar", 0)
         return ("à frente da meta: subir uma faixa", 10)
+    if f <= alvo - 2:
+        return ("na meta, mas duas faixas abaixo do alvo: subir devagar", 5)
+    if f >= alvo + 2:
+        return ("na meta, mas duas faixas acima do alvo: descer devagar", -5)
     return ("na meta: segurar", 0)
 
 
@@ -179,12 +186,74 @@ def meta_da_janela(cfg: dict, dias_ate: int) -> float:
     return float(m["60"]) / 100
 
 
+def cortes_da_noite(tab: dict, d: date, conj: str, tipo: str) -> tuple[list[float] | None, str]:
+    """Cortes do conjunto `conj` para a noite `d`: da busca que cobre a noite ou, sem busca, do tipo de dia."""
+    for rot, m in tab.items():
+        c = m["conjuntos"].get(conj)
+        if not c:
+            continue
+        ci = date.fromisoformat(m["checkin"])
+        if ci <= d < ci + timedelta(days=int(m["noites"])):
+            return c["cortes"], rot
+    por_tipo = cortes_por_tipo(tab, conj)
+    chave = {"feriado": "feriado", "fim de semana": "fim de semana", "semana": "semana"}[tipo]
+    if chave not in por_tipo and chave == "feriado":
+        chave = "evento" if "evento" in por_tipo else "fim de semana"
+    return por_tipo.get(chave), f"tipo:{chave}"
+
+
+def classificar_quartos(coleta: dict, tab: dict, cal: dict, cfg: dict, hoje: date, dias: int) -> list[dict]:
+    """Uma linha por quarto e noite: faixa atual, faixa alvo, ocupação, meta e ação sugerida."""
+    from sazonalidade import periodo, indice_faixa
+    feriados = set()
+    for fer in cfg.get("feriados", []):
+        d0, d1 = date.fromisoformat(fer["inicio"]), date.fromisoformat(fer["fim"])
+        while d0 <= d1:
+            feriados.add(d0); d0 += timedelta(days=1)
+    linhas = []
+    for curto, quarto in coleta["rooms"].items():
+        q = cfg["por_curto"][curto]
+        conj = "recanto" if q["pousada"] == "Recanto" else "villa"
+        for dia in quarto["days"]:
+            d = date.fromisoformat(dia["date"])
+            ate = (d - hoje).days
+            if ate < 0 or ate >= dias:
+                continue
+            mu = dia.get("multi_unit_occupancy") or ""
+            if "/" in mu:
+                vend, tot = (int(x) for x in mu.split("/"))
+            else:  # unidade única
+                vend, tot = (1 if dia.get("booking_status") else 0), 1
+            esgotada = vend >= tot
+            enviado = dia["user_price"] if dia["user_price"] and dia["user_price"] > 0 else dia["price"]
+            vitrine = enviado * q["fator_vitrine"]
+            tipo = tipo_do_dia(d, feriados)
+            cortes_, origem = cortes_da_noite(tab, d, conj, tipo)
+            per = periodo(cal, d)
+            alvo = indice_faixa(per["faixa_alvo"]) if per else 2
+            fx = faixa(vitrine, cortes_) if cortes_ else None
+            meta = meta_da_janela(cfg, ate)
+            ocup = vend / tot
+            texto, passo = acao_sugerida(fx if fx is not None else alvo, alvo, ocup, meta, esgotada, ate) if cortes_ else ("sem dado de mercado", 0)
+            linhas.append({"quarto": curto, "data": dia["date"], "dias_ate": ate, "tipo": tipo, "enviado": enviado,
+                           "vitrine": round(vitrine), "cortes": cortes_, "origem": origem, "faixa": fx, "faixa_alvo": alvo,
+                           "periodo": per["nome"][:50] if per else "", "vendidas": vend, "total": tot, "ocupacao": round(ocup, 2),
+                           "meta": meta, "acao": texto, "passo": passo})
+    return linhas
+
+
 def main(argv=None) -> int:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     sub = ap.add_subparsers(dest="cmd", required=True)
     m = sub.add_parser("mercado")
     m.add_argument("varredura")
     m.add_argument("--json")
+    qd = sub.add_parser("quartos")
+    qd.add_argument("coleta")
+    qd.add_argument("mercado")
+    qd.add_argument("--dias", type=int, default=21)
+    qd.add_argument("--hoje")
+    qd.add_argument("--json")
     a = ap.parse_args(argv)
     if a.cmd == "mercado":
         with open(a.varredura, encoding="utf-8") as f:
@@ -197,9 +266,29 @@ def main(argv=None) -> int:
             for nome, c in d["conjuntos"].items():
                 print(f"  {nome:8} n={c['n']:3}  cortes por noite {c['cortes']}  mediana {c['mediana']}")
             print(f"  nossos (por noite): {d['nossos']}")
+        for conj in ("geral", "recanto", "villa"):
+            print(f"cortes típicos por tipo de dia, {conj}: {cortes_por_tipo(tab, conj)}")
         if a.json:
             with open(a.json, "w", encoding="utf-8") as f:
                 json.dump(tab, f, ensure_ascii=False, indent=1)
+        return 0
+    from comum import carregar_quartos, ler_json, resultado_workflow
+    from sazonalidade import carregar
+    cfg = carregar_quartos()
+    coleta = resultado_workflow(ler_json(a.coleta))
+    with open(a.mercado, encoding="utf-8") as f:
+        tab = json.load(f)
+    hoje = date.fromisoformat(a.hoje) if a.hoje else date.today()
+    linhas = classificar_quartos(coleta, tab, carregar(), cfg, hoje, a.dias)
+    print("| Quarto | Noite | Tipo | Enviado | Vitrine | Faixa | Alvo | Vendidas | Meta | Ação |")
+    print("|---|---|---|---|---|---|---|---|---|---|")
+    for l in linhas:
+        fx = f"{EMOJI[l['faixa']]} {FAIXAS[l['faixa']]}" if l["faixa"] is not None else "—"
+        print(f"| {l['quarto']} | {l['data']} | {l['tipo']} | R$ {l['enviado']:.0f} | R$ {l['vitrine']} | {fx} | {FAIXAS[l['faixa_alvo']]} | "
+              f"{l['vendidas']}/{l['total']} | {int(l['meta']*100)}% | {l['acao']} ({l['passo']:+d}%) |")
+    if a.json:
+        with open(a.json, "w", encoding="utf-8") as f:
+            json.dump(linhas, f, ensure_ascii=False, indent=1)
     return 0
 
 

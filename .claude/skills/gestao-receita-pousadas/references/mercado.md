@@ -31,6 +31,18 @@
   - o fim de semana seguinte.
 - As páginas web da Booking, Expedia e Airbnb bloqueiam (erros 403, 429 e 410). Use só o conector.
 
+## Sazonalidade e faixas de preço (13/10/2026)
+- **Calendário de sazonalidade** em `dados/sazonalidade.json` (77 períodos de 14/10/2026 a 31/12/2027, 55 feriados e eventos, regras gerais e mercado mês a mês). Consulte com `python3 scripts/sazonalidade.py hoje --dias 60` ou `... data AAAA-MM-DD`.
+- **Mercado mês a mês** (ocupação do mercado no PriceLabs, vizinhança do Recanto | da Villa; ADR em R$): out/25 29|35 (571|516); nov 35|42 (640|547); dez 43|50 (733|703); jan/26 36|45 (645|583); fev 29|34 (652|573); mar 27|34 (563|511, o menor); abr 37|42 (696|651); mai 42|46 (691|659); jun 50|54 (834|788); **jul 62|67 (835|819, pico)**; ago 36|44 (691|637); set 37|40 (695|634). Mercado de fim de semana: sex/sáb têm cerca de 2 vezes a ocupação e o preço de dom a qui (quarta R$ 247 contra sábado R$ 511 no KAYAK). Julho vale 2 a 2,6 vezes o dia útil de março.
+- **Picos declarados pela Prefeitura:** Réveillon 95%, Corpus Christi 95%, Dia dos Namorados 95%, 9 de Julho 90% a 95%, Consciência Negra 80%, Natal 70% a 80%. Antecedência típica: 60 a 90 dias nos picos, 30 a 45 nos feriadões, 7 a 20 nos vales.
+- **Nossa posição (account review de 12 meses):** ocupação 40,3% contra 38,4% do mercado, com diária média 8% abaixo (R$ 632). Em setembro de 2026: Recanto 59,8% a R$ 635; Villa 49,8% a R$ 636.
+- **Faixas de preço de mercado** (`dados/mercado_faixas.json`, refeito na revisão semanal pela varredura): cortes dos quintis por data e por conjunto (geral, pares do Recanto, pares da Villa). Classificação dos nossos quartos: `python3 scripts/faixas_de_preco.py quartos <coleta> dados/mercado_faixas.json --dias 21`.
+
+## Pesquisa com agentes de IA (como refazer)
+- **Concorrência inteira:** Workflow `varredura-concorrencia` (script salvo em `.claude/workflows/varredura-concorrencia.js`): para cada conjunto de datas, dois agentes varrem a Booking por faixa de preço (dividindo a faixa ao meio sempre que vierem 10 resultados), mais a busca com hidro, a busca dos nossos hotéis e, em 3 datas de referência, a busca por tipo de acomodação; um agente lê o mercado e o compset do PriceLabs. Saída: `faixas_de_preco.py mercado <saida> --json dados/mercado_faixas.json`.
+- **Sazonalidade:** Workflow `sazonalidade-campos` (`.claude/workflows/sazonalidade-campos.js`): quatro pesquisadores (feriados oficiais e férias escolares; eventos; estações e preços; mercado e histórico no PriceLabs) e um sintetizador que monta o calendário. Saída vai para `dados/sazonalidade.json` (validar com `sazonalidade.py validar`).
+- Fontes que funcionaram: Portaria MGI de feriados, ANBIMA 2027, Alesp (9 de Julho), TRT-15 (feriados municipais), SEDUC (férias), Prefeitura e Band Vale (ocupação declarada), KAYAK (preço por mês), PriceLabs `get_neighbourhood_data` (ocupação do mercado por dia e do ano anterior), `get_account_review_report`, `get_bookings_report`. `market_research` do PriceLabs não está habilitado na conta (pedir ao suporte, é grátis em beta).
+
 ## Calendário 2026 (noites de feriado em `quartos.json`)
 - Nossa Senhora Aparecida: segunda 12/10; noites de 09 a 11/10.
 - Finados: segunda 02/11; noites de 30/10 a 01/11. O dono pôs +20% e 3 noites de 30/10 a 02/11. A Prefeitura de SP deu ponto facultativo em 30/10, e a rede estadual de SP folga em 28/10.

@@ -1,0 +1,1812 @@
+{
+ "versao": "2026-10-14T01",
+ "nota": "Calendário de sazonalidade de Campos do Jordão pesquisado por agentes de IA em 13/10/2026 (workflow sazonalidade-campos: web + PriceLabs) e sintetizado em períodos. Cada noite de 2026-10-14 a 2027-12-31 cai em exatamente um período (validado). `dias`: todos, sex-sab (sextas e sábados) ou dom-qui. `nivel` é a demanda esperada; `faixa_alvo` é a faixa de preço de mercado (quintis da Booking) em que devemos ficar para vender no ritmo da meta. Revisar todo mês na rotina completa de segunda (rodar o workflow de novo) e sempre que um evento marcado \"estimado\" for confirmado.",
+ "niveis": {
+  "muito baixa": "mercado abaixo de ~22% no mesmo período do ano anterior",
+  "baixa": "22% a 35%",
+  "média": "35% a 60%",
+  "alta": "60% a 80%",
+  "muito alta": "acima de 80% (ou 90-95% declarados pela Prefeitura)"
+ },
+ "regras_gerais": [
+  "Inverno (Corpus Christi ao 1º domingo de agosto): julho vale 2 a 2,6 vezes o preço de dia útil de baixa (KAYAK: hotéis R$ 688 em julho x R$ 264 em março; pousadas R$ 763 x R$ 304) e o mercado atinge 62-67% no mês com 92-93% nos picos; faixa 'alto' nos dias de semana e 'muito alto' nos fins de semana e feriadões (Corpus Christi, 9 de Julho), estadia mínima 2 (3 nos feriadões), antecedência 45-90 dias (lead time de julho 46 dias, guias pedem 3 meses). Não baixar de 'alto' antes de D-10 mesmo com pacing fraco.",
+  "Fim de semana x semana: fora do inverno, sex/sáb têm cerca de 2x a ocupação de dom-qui (mercado seg-qui 21-27% x sex/sáb 38-61%) e 2x o preço (KAYAK: sábado R$ 511 x quarta R$ 247). Regra: dom-qui sempre uma faixa abaixo de sex/sáb do mesmo período; dom-qui com estadia mínima 1 e promoções só a partir de D-3; nunca abaixo da faixa 'baixo'.",
+  "Feriadões de 3 ou mais noites (Finados, Consciência Negra em sexta, Natal em sexta, Carnaval, Páscoa, 7 de Setembro, 12 de Outubro, 15 de Novembro em segunda): faixa 'alto', estadia mínima 2 (3 no Carnaval), antecedência típica 30-45 dias; mercado sobe 12-36% nessas datas (PriceLabs: +35,8% em 1/11/2026, +28% no Carnaval 2027, +14,7% em 20/11/2026). Liberar 1 noite só de D-7 em diante se o pacing estiver abaixo de 50%.",
+  "Picos absolutos (Réveillon, Corpus Christi, 9 de Julho, Dia dos Namorados): faixa 'muito alto', estadia mínima 3 (2 no Dia dos Namorados), antecedência 60-90 dias (KAYAK recomenda 84-90 dias; mercado 96,2% em 30/12/2025, 92,9% em 9/7/2026, Prefeitura 95% no Réveillon, Corpus Christi e Dia dos Namorados 2026). Não dar desconto antes de D-10; se sobrar quarto em D-7, descer para 'alto', nunca para 'médio'.",
+  "Temporada de Natal FLMA (última sexta de outubro a ~20 de dezembro, padrão 2025/2026): só sex, sáb e dom têm programação; sex/sáb em faixa 'médio' (mercado 50-55%) com mínimo 1-2, dom-qui em 'baixo' (18-28% na 1ª quinzena de dezembro). Feriados dentro da temporada (Finados, 15/11, 20/11) sobem para 'alto'. Vender a temporada com 15-30 dias de antecedência; 1,48 milhão de visitantes em 2025/26.",
+  "Verão e vale (janeiro a março, exceto Réveillon, 25/1, Carnaval e Páscoa): meses de menor demanda do ano (mercado fev 29-34%, mar 27-34%, lead time 22 dias em março), inverso do litoral. Faixa 'baixo' em dom-qui e 'baixo' a 'médio' em sex/sáb, estadia mínima 1, antecedência 7-20 dias, pacotes família/casal e promoção de última hora (D-3). Nunca abaixo de 'baixo' antes de D-3.",
+  "Eventos confirmados de meio de semana e esportivos (Oktoberfest qui-dom, CBQ qua-sáb, L'Étape sex-dom, INDOMIT qui-sáb, WTR): tratar as noites do evento como 'alta' (faixa 'alto') mesmo em mês de baixa, mínimo 2 em sex/sáb, e abrir a tarifa 90 dias antes (inscrições esportivas e congressos reservam cedo). Converter 'estimado' em 'confirmado' monitorando NetCampos, Guia Campos, prefeituras e sites oficiais.",
+  "Feriados que não geram viagem: feriados municipais de Campos do Jordão (29/4 e 1/10) e feriados nacionais que caem em sábado ou domingo (15/11/2026, 1/5/2027, 20/11/2027, 25/12/2027): não subir faixa; tratar como fim de semana comum do período ('médio' em sex/sáb). Tiradentes isolado na quarta (21/4/2027) rende 1-2 noites em 'médio'.",
+  "Diferença entre as pousadas: Recanto dos Moinhos (5 estrelas, 8,4) opera no topo da faixa indicada e pode subir uma faixa em feriadões e no inverno; Villa Dolce Amore (3 estrelas, 8,0) opera na base da faixa. Hoje ambas vendem acima do mercado com ADR 8% abaixo (account review: 40,3% x 38,4%, ADR R$ 632 -8%), então em períodos 'alta'/'muito alta' priorizar preço e em 'baixa'/'muito baixa' priorizar ocupação.",
+  "Régua de pacing (70% em D-7, 50% em D-15, 35% em D-30, 25% em D-45, 15% em D-60): se o período está abaixo da meta, descer uma faixa (nunca abaixo de 'baixo'); se está acima, subir uma faixa e/ou aumentar a estadia mínima em 1 noite. Lembrar que o lead time médio do mercado é 35 dias (46 em julho, 22 em março, 40 no verão, 26 na primavera) e que out/nov/dez/jan de 2026/27 estão com 24/9/10/6% já reservados, em linha com o ano passado (23/12/11/6%): fora de julho e Réveillon a maior parte das reservas chega nos últimos 30-60 dias, então não derrubar preço antes de D-30."
+ ],
+ "periodos": [
+  {
+   "inicio": "2026-10-14",
+   "fim": "2026-10-14",
+   "dias": "todos",
+   "nome": "Quarta 14/10/2026 – última hora, véspera da Oktoberfest",
+   "nivel": "baixa",
+   "faixa_alvo": "baixo",
+   "estadia_minima": 1,
+   "antecedencia_dias": 3,
+   "motivos": "Dia de semana isolado logo após o feriado de 12/10, só vende de última hora; outubro é o mês de menor preço de mercado.",
+   "evidencia": "PriceLabs occupancy.daily: market_occupancy 14/10/2026 = 22% (Recanto) / 26,1% (Villa); out/2025 seg-qui 23,7% (pesquisa ESTAÇÕES); mediana pedida out/2026 R$ 629 (future_prices).",
+   "confianca": "alta"
+  },
+  {
+   "inicio": "2026-10-15",
+   "fim": "2026-10-15",
+   "dias": "todos",
+   "nome": "Oktoberfest 2026 – abertura (quinta 15/10) + Dia do Professor",
+   "nivel": "média",
+   "faixa_alvo": "médio",
+   "estadia_minima": 1,
+   "antecedencia_dias": 7,
+   "motivos": "Abertura confirmada da Oktoberfest no Parque Capivari e Dia do Professor (dia não letivo em muitas escolas) elevam a quinta acima de um dia de semana comum.",
+   "evidencia": "NetCampos 02/10/2026: Oktoberfest \"15 a 18 de outubro de 2026\"; PriceLabs market_occupancy 15/10/2026 = 26,1% (Recanto) / 27,2% (Villa) vs 22% em 13-14/10.",
+   "confianca": "média"
+  },
+  {
+   "inicio": "2026-10-16",
+   "fim": "2026-10-17",
+   "dias": "todos",
+   "nome": "Oktoberfest 2026 + WTR Campos do Jordão – sexta 16 e sábado 17/10",
+   "nivel": "alta",
+   "faixa_alvo": "alto",
+   "estadia_minima": 2,
+   "antecedencia_dias": 10,
+   "motivos": "Pico da Oktoberfest (cerca de 60 mil visitantes em 2025) somado ao WTR (trail run/MTB) no mesmo fim de semana; maior ocupação de mercado já reservada do outono.",
+   "evidencia": "PriceLabs market_occupancy OTB 16/10 = 33,3% e 17/10 = 32,6% (Recanto), maiores valores fora de Natal/Réveillon; Hoje em Dia: edição 2025 previa \"cerca de 60 mil visitantes\"; GoTrail: WTR \"17 and 18 October 2026\".",
+   "confianca": "alta"
+  },
+  {
+   "inicio": "2026-10-18",
+   "fim": "2026-10-29",
+   "dias": "dom-qui",
+   "nome": "Outubro 2026 pós-Oktoberfest (18 a 29/10), dias de semana: dom a qui",
+   "nivel": "baixa",
+   "faixa_alvo": "baixo",
+   "estadia_minima": 1,
+   "antecedencia_dias": 10,
+   "motivos": "Outubro é o mês de menor preço de mercado e as semanas ficam vazias; 28/10 é ponto facultativo só para servidores federais.",
+   "evidencia": "PriceLabs market_history out/2025: 29% (Recanto) / 35% (Villa), seg-qui 23,7%; mediana pedida out/2026 R$ 629 (menor dos 13 meses); Portaria MGI 11.460/2025 via Congresso em Foco (28/10 ponto facultativo).",
+   "confianca": "alta"
+  },
+  {
+   "inicio": "2026-10-18",
+   "fim": "2026-10-29",
+   "dias": "sex-sab",
+   "nome": "Outubro 2026 pós-Oktoberfest (18 a 29/10), sextas e sábados (23-24/10)",
+   "nivel": "média",
+   "faixa_alvo": "médio",
+   "estadia_minima": 1,
+   "antecedencia_dias": 14,
+   "motivos": "Fim de semana comum de baixa temporada, sem evento, mas sex/sáb ficam ~14 pontos acima da semana e nossa OTB já está em ~42%.",
+   "evidencia": "PriceLabs out/2025 sex/sáb 37,5% vs seg-qui 23,7%; get_bookings_report OTB 14-31/10: Recanto 41,7% (ADR R$ 532), Villa 41,9% (ADR R$ 553).",
+   "confianca": "alta"
+  },
+  {
+   "inicio": "2026-10-30",
+   "fim": "2026-11-01",
+   "dias": "todos",
+   "nome": "Finados 2026 (seg 2/11) + abertura do Natal FLMA (acendimento 30/10) – noites sex 30/10 a dom 1/11",
+   "nivel": "alta",
+   "faixa_alvo": "alto",
+   "estadia_minima": 2,
+   "antecedencia_dias": 30,
+   "motivos": "Feriado na segunda dá 3 noites e coincide com a carreata e o acendimento das luzes do Natal 'Fábrica de Biscoitos'; primeiro feriadão da temporada natalina.",
+   "evidencia": "PriceLabs fp_insights: preço de mercado +35,8% em 01/11/2026 e ocupação +12,7% em 31/10 vs datas vizinhas; market_occupancy OTB 31/10 = 23,3% (Recanto) / 27,0% (Villa); travel.com.br: abertura \"30 de outubro\"; Portaria MGI 11.460/2025: 2/11 feriado nacional.",
+   "confianca": "alta"
+  },
+  {
+   "inicio": "2026-11-02",
+   "fim": "2026-11-18",
+   "dias": "dom-qui",
+   "nome": "Novembro 2026 (2 a 18/11), dias de semana: dom a qui",
+   "nivel": "baixa",
+   "faixa_alvo": "baixo",
+   "estadia_minima": 1,
+   "antecedencia_dias": 10,
+   "motivos": "Semanas de novembro vazias; 15/11 cai no domingo e não gera feriadão.",
+   "evidencia": "PriceLabs nov/2025 seg-qui 26,7%; market_history nov/2025 35% (Recanto) / 42% (Villa); nov/2026 OTB 8,7%; Wagner Advogados: 15/11/2026 domingo.",
+   "confianca": "alta"
+  },
+  {
+   "inicio": "2026-11-02",
+   "fim": "2026-11-18",
+   "dias": "sex-sab",
+   "nome": "Novembro 2026 (2 a 18/11), sextas e sábados com Natal FLMA (6-7 e 13-14/11)",
+   "nivel": "média",
+   "faixa_alvo": "médio",
+   "estadia_minima": 1,
+   "antecedencia_dias": 14,
+   "motivos": "Sextas e sábados com programação do Natal FLMA ('Uma Noite de Luz' até 8/11; 'O Melhor Presente' a partir de 13/11); o fim de semana 13-14/11 antecede o 15/11 (domingo).",
+   "evidencia": "PriceLabs nov/2025 sex/sáb 55,4%; PriceLabs events: Proclamação 13-14/11; travel.com.br e Blablacar: blocos 07-09/11 e 14-23/11.",
+   "confianca": "alta"
+  },
+  {
+   "inicio": "2026-11-19",
+   "fim": "2026-11-21",
+   "dias": "todos",
+   "nome": "Consciência Negra 2026 (sex 20/11) + Natal FLMA – noites qui 19 a sáb 21/11",
+   "nivel": "alta",
+   "faixa_alvo": "alto",
+   "estadia_minima": 2,
+   "antecedencia_dias": 30,
+   "motivos": "Feriado nacional na sexta (Lei 14.759/2023) gera 3 noites em plena temporada de Natal; em 2025 o mesmo feriado teve 80% de ocupação hoteleira.",
+   "evidencia": "Prefeitura 21/11/2025 (camposdojordao.sp.gov.br/noticias/?c=21&i=2837): 80% de ocupação e até 100 mil turistas; PriceLabs occ_insights: +14,7% em 20/11/2026; market_occupancy OTB 20/11 = 23,5%, 21/11 = 22,9% (Recanto).",
+   "confianca": "alta"
+  },
+  {
+   "inicio": "2026-11-22",
+   "fim": "2026-12-17",
+   "dias": "dom-qui",
+   "nome": "Fim de novembro e 1ª quinzena de dezembro 2026 (22/11 a 17/12), dias de semana: dom a qui",
+   "nivel": "muito baixa",
+   "faixa_alvo": "baixo",
+   "estadia_minima": 1,
+   "antecedencia_dias": 7,
+   "motivos": "Período mais fraco do fim de ano em dias de semana, antes das férias escolares.",
+   "evidencia": "PriceLabs market_occupancy_ly dez/2025: 1ª quinzena 32,1%, com 01-03/12 em 25,3%, 20,1% e 18,0%; dez/2026 OTB 10,5%.",
+   "confianca": "média"
+  },
+  {
+   "inicio": "2026-11-22",
+   "fim": "2026-12-17",
+   "dias": "sex-sab",
+   "nome": "Fim de novembro e 1ª quinzena de dezembro 2026 (22/11 a 17/12), sextas e sábados com Natal FLMA (27-28/11, 4-5/12, 11-12/12)",
+   "nivel": "média",
+   "faixa_alvo": "médio",
+   "estadia_minima": 1,
+   "antecedencia_dias": 14,
+   "motivos": "Sextas e sábados com espetáculos do Natal FLMA no Campos Hall e decoração no Capivari; fins de semana de dezembro chegam a 50-55% no mercado.",
+   "evidencia": "PriceLabs market_occupancy_ly 05/12/2025 = 54,6% e 12/12/2025 = 50,7%; Blablacar: blocos 28/11 a 7/12 e 12 a 21/12.",
+   "confianca": "média"
+  },
+  {
+   "inicio": "2026-12-18",
+   "fim": "2026-12-23",
+   "dias": "todos",
+   "nome": "Pré-Natal 2026 (sex 18 a qua 23/12): último fim de semana do Natal FLMA, Corrida Iluminada (19/12), início das férias escolares",
+   "nivel": "média",
+   "faixa_alvo": "médio",
+   "estadia_minima": 1,
+   "antecedencia_dias": 14,
+   "motivos": "Último fim de semana da programação FLMA (até 20/12) com a Corrida Iluminada, e começo das férias (rede estadual encerra 18/12); 23/12 já tem chegadas de Natal.",
+   "evidencia": "PriceLabs market_occupancy_ly: 19/12 54,1%, 20/12 46,6%, 21/12 47,5%, 22/12 45,1%, 23/12 60,9%; BaresSP: Corrida Iluminada \"19 de dezembro\"; Resolução SEDUC 125/2025: aulas até 18/12/2026.",
+   "confianca": "média"
+  },
+  {
+   "inicio": "2026-12-24",
+   "fim": "2026-12-26",
+   "dias": "todos",
+   "nome": "Natal 2026 (sex 25/12) – noites qui 24 a sáb 26/12",
+   "nivel": "alta",
+   "faixa_alvo": "alto",
+   "estadia_minima": 2,
+   "antecedencia_dias": 30,
+   "motivos": "Natal na sexta rende 3 noites; a Prefeitura previu 70% em 2025 e o COMTUR reportou mais de 80% em 2024, abaixo do Réveillon.",
+   "evidencia": "Prefeitura 22/12/2025 (noticias/?i=2871&c=1): 70% de ocupação e 120 mil visitantes; Band 24/12/2024: \"mais de 80% da rede hoteleira\"; PriceLabs market_occupancy_ly 24-26/12/2025: 54,3%, 51,2%, 53,1%; OTB 24/12/2026 = 26,5%.",
+   "confianca": "alta"
+  },
+  {
+   "inicio": "2026-12-27",
+   "fim": "2026-12-28",
+   "dias": "todos",
+   "nome": "Entre Natal e Réveillon 2026 (dom 27 e seg 28/12)",
+   "nivel": "média",
+   "faixa_alvo": "médio",
+   "estadia_minima": 1,
+   "antecedencia_dias": 20,
+   "motivos": "Dias entre feriados com hóspedes de férias e chegadas antecipadas do Réveillon; o mercado já pede preço de alta, mas a ocupação de 26-27/12/2025 ficou em ~53%.",
+   "evidencia": "PriceLabs fp_insights: preço de mercado +30,2% de 27/12 a 01/01; market_occupancy_ly 27/12/2025 = 52,7%; events 'Holiday Season' 27-29/12.",
+   "confianca": "média"
+  },
+  {
+   "inicio": "2026-12-29",
+   "fim": "2027-01-02",
+   "dias": "todos",
+   "nome": "Réveillon 2026/2027 (1/1 sexta) – noites ter 29/12 a sáb 2/1",
+   "nivel": "muito alta",
+   "faixa_alvo": "muito alto",
+   "estadia_minima": 3,
+   "antecedencia_dias": 60,
+   "motivos": "Pico histórico da cidade; 1/1 na sexta permite pacotes de 3 a 4 noites; mercado STR beira 100% em 30-31/12.",
+   "evidencia": "Prefeitura (noticias/?i=2871&c=1): 95% de ocupação e 280 mil visitantes previstos no Ano Novo 2025; PriceLabs market_occupancy_ly 29/12 85,4%, 30/12 96,2%, 31/12 92%; occ_insights +21,1% em 30/12-01/01; OTB 31/12/2026 = 38,2% (Recanto) / 30,2% (Villa), maior do ano.",
+   "confianca": "alta"
+  },
+  {
+   "inicio": "2027-01-03",
+   "fim": "2027-01-21",
+   "dias": "dom-qui",
+   "nome": "Janeiro 2027 férias de verão (3 a 21/1), dias de semana: dom a qui",
+   "nivel": "baixa",
+   "faixa_alvo": "baixo",
+   "estadia_minima": 1,
+   "antecedencia_dias": 10,
+   "motivos": "Verão é baixa em Campos (concorre com a praia) apesar das férias escolares; mês mais chuvoso do ano.",
+   "evidencia": "PriceLabs market_history jan/2026 36% (Recanto) / 45% (Villa), seg-qui 30,2%; jan/2027 OTB 5,7%; Climatempo: janeiro 365 mm.",
+   "confianca": "alta"
+  },
+  {
+   "inicio": "2027-01-03",
+   "fim": "2027-01-21",
+   "dias": "sex-sab",
+   "nome": "Janeiro 2027 férias de verão (3 a 21/1), sextas e sábados (8-9 e 15-16/1)",
+   "nivel": "média",
+   "faixa_alvo": "médio",
+   "estadia_minima": 1,
+   "antecedencia_dias": 14,
+   "motivos": "Fins de semana de férias com perfil familiar (Férias no Museu Felícia Leirner), apenas ~10 pontos acima da semana; faixa 'médio' na base.",
+   "evidencia": "PriceLabs jan/2026 sex/sáb 39,9% vs seg-qui 30,2%; mediana pedida jan/2027 R$ 778; Liva Hotéis/Portal R3: programação de férias em janeiro.",
+   "confianca": "média"
+  },
+  {
+   "inicio": "2027-01-22",
+   "fim": "2027-01-24",
+   "dias": "todos",
+   "nome": "Aniversário de São Paulo 2027 (seg 25/1) – feriadão paulistano, noites sex 22 a dom 24/1",
+   "nivel": "média",
+   "faixa_alvo": "médio",
+   "estadia_minima": 2,
+   "antecedencia_dias": 20,
+   "motivos": "Feriado municipal da capital (maior emissor) na segunda dá 3 noites, mas em janeiro parte do público está em férias na praia.",
+   "evidencia": "BNews SP 2027: 25/01/2027 segunda-feira; FGV via Guia Campos 05/11/2025: 85,2% dos visitantes de julho vêm de SP.",
+   "confianca": "média"
+  },
+  {
+   "inicio": "2027-01-25",
+   "fim": "2027-02-04",
+   "dias": "dom-qui",
+   "nome": "Fim de janeiro e início de fevereiro 2027 (25/1 a 4/2), dias de semana: dom a qui",
+   "nivel": "muito baixa",
+   "faixa_alvo": "baixo",
+   "estadia_minima": 1,
+   "antecedencia_dias": 7,
+   "motivos": "Fevereiro é 'Low Season' no PriceLabs e o mês de menor receita no Airbnb; volta às aulas esvazia as semanas antes do Carnaval.",
+   "evidencia": "PriceLabs fp_insights: fevereiro 'Low Season'; market_history fev/2026 29% (Recanto) / 34% (Villa), seg-qui 22,9%; AirROI: fevereiro é o mês de menor receita.",
+   "confianca": "média"
+  },
+  {
+   "inicio": "2027-01-25",
+   "fim": "2027-02-04",
+   "dias": "sex-sab",
+   "nome": "Fim de janeiro e início de fevereiro 2027 (25/1 a 4/2), sextas e sábados (29-30/1)",
+   "nivel": "baixa",
+   "faixa_alvo": "baixo",
+   "estadia_minima": 1,
+   "antecedencia_dias": 10,
+   "motivos": "Único fim de semana do bloco, em plena volta às aulas e sem evento.",
+   "evidencia": "PriceLabs fev/2026 28,6% no mês; mar/2026 sex/sáb 38,8% como referência de fim de semana de verão tardio.",
+   "confianca": "média"
+  },
+  {
+   "inicio": "2027-02-05",
+   "fim": "2027-02-09",
+   "dias": "todos",
+   "nome": "Carnaval 2027 (seg 8 e ter 9/2) – noites sex 5 a ter 9/2, check-out qua 10/2",
+   "nivel": "alta",
+   "faixa_alvo": "alto",
+   "estadia_minima": 3,
+   "antecedencia_dias": 45,
+   "motivos": "Feriadão de 5 noites; Campos é destino 'anti-Carnaval' de famílias e casais, maior pico do verão depois do Réveillon.",
+   "evidencia": "PriceLabs fp_insights: preço de mercado +28,0% em 05-09/02/2027; Prefeitura 12/02/2026 (noticias/?c=7&i=2915): \"cerca de 200 mil\" turistas; 012news (via busca): até 80% de ocupação hoteleira no Carnaval 2026; ANBIMA 2027: 8 e 9/2 Carnaval.",
+   "confianca": "média"
+  },
+  {
+   "inicio": "2027-02-10",
+   "fim": "2027-03-17",
+   "dias": "dom-qui",
+   "nome": "Pós-Carnaval, fevereiro e março 2027 (10/2 a 17/3), dias de semana: dom a qui",
+   "nivel": "muito baixa",
+   "faixa_alvo": "baixo",
+   "estadia_minima": 1,
+   "antecedencia_dias": 7,
+   "motivos": "Vale do ano: março tem a menor ocupação e o menor preço de mercado; lead time mínimo (22 dias).",
+   "evidencia": "PriceLabs market_history mar/2026 27% (Recanto) / 34% (Villa), seg-qui 20,9%; KAYAK: março mais barato (hotéis R$ 264, pousadas R$ 304); AirROI: lead time de março 22 dias.",
+   "confianca": "alta"
+  },
+  {
+   "inicio": "2027-02-10",
+   "fim": "2027-03-17",
+   "dias": "sex-sab",
+   "nome": "Pós-Carnaval, fevereiro e março 2027 (10/2 a 17/3), sextas e sábados (Páscoa de Campos a partir de ~20/2; Meia Maratona ~13/3)",
+   "nivel": "baixa",
+   "faixa_alvo": "baixo",
+   "estadia_minima": 1,
+   "antecedencia_dias": 10,
+   "motivos": "Fins de semana de verão tardio; a programação 'Páscoa de Campos' (ovo gigante, se repetir 2026) e a Meia Maratona sustentam alguns sábados.",
+   "evidencia": "PriceLabs mar/2026 sex/sáb 38,8%; Jornal de Brasília 21/02/2026: 'As Páscoas de Campos' de 28/02 a 05/04/2026; regulamento minhasinscricoes: Meia Maratona 2026 em 15/03.",
+   "confianca": "média"
+  },
+  {
+   "inicio": "2027-03-18",
+   "fim": "2027-03-20",
+   "dias": "todos",
+   "nome": "INDOMIT Pedra do Baú 2027 (São Bento do Sapucaí, ultra trail) – transbordo para Campos, noites qui 18 a sáb 20/3",
+   "nivel": "média",
+   "faixa_alvo": "médio",
+   "estadia_minima": 1,
+   "antecedencia_dias": 30,
+   "motivos": "Prova confirmada atrai corredores de todo o Brasil (80K a 7K) e transborda hospedagem de SBS para Campos e SAP; inclui sexta e sábado.",
+   "evidencia": "GoTrail: \"de 18 a 20 de março de 2027\"; ITRA: edição 2026 em 27-28/03.",
+   "confianca": "média"
+  },
+  {
+   "inicio": "2027-03-21",
+   "fim": "2027-03-24",
+   "dias": "todos",
+   "nome": "Semana pré-Páscoa 2027 (dom 21 a qua 24/3)",
+   "nivel": "muito baixa",
+   "faixa_alvo": "baixo",
+   "estadia_minima": 1,
+   "antecedencia_dias": 7,
+   "motivos": "Dias de semana antes da Semana Santa, demanda represada para o feriado.",
+   "evidencia": "PriceLabs mar/2026 seg-qui 20,9%.",
+   "confianca": "média"
+  },
+  {
+   "inicio": "2027-03-25",
+   "fim": "2027-03-27",
+   "dias": "todos",
+   "nome": "Semana Santa / Páscoa 2027 (Sexta Santa 26/3, Páscoa 28/3) – noites qui 25 a sáb 27/3",
+   "nivel": "alta",
+   "faixa_alvo": "alto",
+   "estadia_minima": 2,
+   "antecedencia_dias": 30,
+   "motivos": "Sexta-feira Santa é feriado nacional e a Páscoa é tradicional em Campos (chocolates, ovo gigante, início do frio); em 2025 pousadas registraram ocupação total.",
+   "evidencia": "ANBIMA 2027: 26/03 Paixão de Cristo; SBT 20/04/2025: \"hotéis e pousadas registraram ocupação total\"; Sinhores 2026 ~60% com expectativa de 70% (via resumo de busca, confiança baixa); PriceLabs events: Easter 25-27/03/2027.",
+   "confianca": "média"
+  },
+  {
+   "inicio": "2027-03-28",
+   "fim": "2027-04-19",
+   "dias": "dom-qui",
+   "nome": "Abril 2027 outono (28/3 a 19/4), dias de semana: dom a qui",
+   "nivel": "baixa",
+   "faixa_alvo": "baixo",
+   "estadia_minima": 1,
+   "antecedencia_dias": 10,
+   "motivos": "Outono é baixa fora de feriados; em 2027 a Páscoa cai em março e abril perde esse impulso.",
+   "evidencia": "PriceLabs market_history abr/2026 37% (Recanto) / 42% (Villa) (abr/2025 48%, ano com Páscoa+Tiradentes em abril), seg-qui 27,7%; Climatempo abril 104 mm.",
+   "confianca": "média"
+  },
+  {
+   "inicio": "2027-03-28",
+   "fim": "2027-04-19",
+   "dias": "sex-sab",
+   "nome": "Abril 2027 outono (28/3 a 19/4), sextas e sábados (Festa da Truta e do Pinhão em SAP a partir de ~16/4)",
+   "nivel": "média",
+   "faixa_alvo": "médio",
+   "estadia_minima": 1,
+   "antecedencia_dias": 14,
+   "motivos": "Fins de semana de outono com o frio começando; a Festa da Truta e do Pinhão (Santo Antônio do Pinhal) ajuda o último fim de semana.",
+   "evidencia": "PriceLabs abr/2026 sex/sáb 55,1%; São Paulo Secreto: Festa da Truta 2026 \"17 de abril a 3 de maio\".",
+   "confianca": "média"
+  },
+  {
+   "inicio": "2027-04-20",
+   "fim": "2027-04-21",
+   "dias": "todos",
+   "nome": "Tiradentes 2027 (qua 21/4) – feriado isolado, noites ter 20 e qua 21/4",
+   "nivel": "média",
+   "faixa_alvo": "médio",
+   "estadia_minima": 1,
+   "antecedencia_dias": 14,
+   "motivos": "Feriado no meio da semana rende 1-2 noites sem feriadão; quem emenda estende até a sexta.",
+   "evidencia": "ANBIMA 2027: 21/04 quarta-feira; PriceLabs events: Tiradentes 20-22/04/2027; ocupação específica não encontrada.",
+   "confianca": "baixa"
+  },
+  {
+   "inicio": "2027-04-22",
+   "fim": "2027-04-29",
+   "dias": "dom-qui",
+   "nome": "Fim de abril 2027 (22 a 29/4), dias de semana: dom a qui (22/4 emenda de Tiradentes; 29/4 aniversário da cidade, feriado local)",
+   "nivel": "baixa",
+   "faixa_alvo": "baixo",
+   "estadia_minima": 1,
+   "antecedencia_dias": 10,
+   "motivos": "Semana comum de outono; 29/4 é feriado do destino (não gera viagem) e a emenda de Tiradentes atinge poucos.",
+   "evidencia": "PriceLabs abr/2026 seg-qui 27,7%; TRT-15 Portaria CR 06/2013: 29/4 feriado municipal (Lei 1980/1993); NetCampos: aniversário \"costuma ampliar o movimento\".",
+   "confianca": "média"
+  },
+  {
+   "inicio": "2027-04-22",
+   "fim": "2027-04-29",
+   "dias": "sex-sab",
+   "nome": "Fim de abril 2027 (22 a 29/4), sextas e sábados (23-24/4)",
+   "nivel": "média",
+   "faixa_alvo": "médio",
+   "estadia_minima": 1,
+   "antecedencia_dias": 14,
+   "motivos": "Fim de semana que recebe quem emendou Tiradentes; Festa da Truta e do Pinhão (SAP) em andamento.",
+   "evidencia": "PriceLabs abr/2026 sex/sáb 55,1%; Festa da Truta 2026 17/04 a 03/05 (São Paulo Secreto).",
+   "confianca": "média"
+  },
+  {
+   "inicio": "2027-04-30",
+   "fim": "2027-05-01",
+   "dias": "todos",
+   "nome": "1º de Maio 2027 (sábado, sem dia extra) + aniversário da cidade (qui 29/4) + Festa da Truta e do Pinhão SAP – noites sex 30/4 e sáb 1/5",
+   "nivel": "média",
+   "faixa_alvo": "médio",
+   "estadia_minima": 1,
+   "antecedencia_dias": 14,
+   "motivos": "Feriado no sábado não dá dia extra e fica muito abaixo de 2026 (sexta); vira fim de semana comum reforçado pela festa em SAP.",
+   "evidencia": "ANBIMA 2027: 01/05 sábado; 012news (via busca) 2026: 140 mil turistas e 85-90% projetados quando caiu na sexta; PriceLabs events 30/04-01/05/2027.",
+   "confianca": "média"
+  },
+  {
+   "inicio": "2027-05-02",
+   "fim": "2027-05-25",
+   "dias": "dom-qui",
+   "nome": "Maio 2027 pré-temporada de inverno (2 a 25/5), dias de semana: dom a qui",
+   "nivel": "baixa",
+   "faixa_alvo": "baixo",
+   "estadia_minima": 1,
+   "antecedencia_dias": 10,
+   "motivos": "O frio chega e a estação seca começa, mas as semanas seguem vazias.",
+   "evidencia": "PriceLabs market_history mai/2026 42% (Recanto) / 46% (Villa), seg-qui 27,8%; Climatempo maio 12/21°C, 70 mm.",
+   "confianca": "alta"
+  },
+  {
+   "inicio": "2027-05-02",
+   "fim": "2027-05-25",
+   "dias": "sex-sab",
+   "nome": "Maio 2027 pré-temporada (2 a 25/5), sextas e sábados (Festa do Pinhão ~7-8/5; Giro d'Italia ~15/5; Mountain Festival SBS ~21-22/5)",
+   "nivel": "média",
+   "faixa_alvo": "médio",
+   "estadia_minima": 1,
+   "antecedencia_dias": 20,
+   "motivos": "Fins de semana de pré-temporada já fortes, com três eventos estimados, e o mercado já pede preço de inverno.",
+   "evidencia": "PriceLabs mai/2026 sex/sáb 61,3%; mediana pedida mai/2027 R$ 835; Prefeitura (estudo técnico): 60ª Festa do Pinhão \"06 a 10 de maio de 2026\"; Giro 2026 \"17 de maio\"; Mountain Festival 2026 \"22 a 24 de maio\".",
+   "confianca": "média"
+  },
+  {
+   "inicio": "2027-05-26",
+   "fim": "2027-05-29",
+   "dias": "todos",
+   "nome": "Corpus Christi 2027 (qui 27/5) – abertura da temporada de inverno, noites qua 26 a sáb 29/5",
+   "nivel": "muito alta",
+   "faixa_alvo": "muito alto",
+   "estadia_minima": 3,
+   "antecedencia_dias": 60,
+   "motivos": "Feriado que abre a alta temporada; 2026 fechou com 95% de ocupação e mais de 250 mil visitantes.",
+   "evidencia": "Prefeitura 03/06/2026 (noticias/?c=21&i=3006) e Guia Campos 12/06/2026: 95% de ocupação, \"mais de 250 mil\" visitantes, +11,7% sobre 2025; ANBIMA 2027: 27/05 quinta; PriceLabs events 26-29/05/2027; guias: reservar com 2-3 meses.",
+   "confianca": "alta"
+  },
+  {
+   "inicio": "2027-05-30",
+   "fim": "2027-06-10",
+   "dias": "dom-qui",
+   "nome": "Início de junho 2027 (30/5 a 10/6), dias de semana: dom a qui",
+   "nivel": "média",
+   "faixa_alvo": "médio",
+   "estadia_minima": 1,
+   "antecedencia_dias": 14,
+   "motivos": "Temporada aberta: semanas em patamar médio, com frio e tempo seco.",
+   "evidencia": "PriceLabs market_history jun/2026 50% (Recanto) / 54% (Villa), seg-qui 39,7%; KAYAK rotula junho como 'Alta temporada'; Climatempo junho 11/21°C, 43 mm.",
+   "confianca": "alta"
+  },
+  {
+   "inicio": "2027-05-30",
+   "fim": "2027-06-10",
+   "dias": "sex-sab",
+   "nome": "Início de junho 2027 (30/5 a 10/6), sextas e sábados (4-5/6 Winter Festival do Tênis Clube)",
+   "nivel": "alta",
+   "faixa_alvo": "alto",
+   "estadia_minima": 2,
+   "antecedencia_dias": 30,
+   "motivos": "Fins de semana de junho chegam a 77% no mercado; shows pagos do Winter Festival no primeiro fim de semana.",
+   "evidencia": "PriceLabs jun/2026 sex/sáb 77,2%; KAYAK média de fim de semana de junho R$ 864; BaresSP: Winter Festival 2026 \"05 e 06 de Junho\".",
+   "confianca": "alta"
+  },
+  {
+   "inicio": "2027-06-11",
+   "fim": "2027-06-12",
+   "dias": "todos",
+   "nome": "Dia dos Namorados 2027 (sáb 12/6) – noites sex 11 e sáb 12/6",
+   "nivel": "muito alta",
+   "faixa_alvo": "muito alto",
+   "estadia_minima": 2,
+   "antecedencia_dias": 45,
+   "motivos": "Data de casais no inverno, com o 12/6 caindo no sábado; em 2026 a cidade registrou 95% de ocupação.",
+   "evidencia": "Guia Campos 12/06/2026: 95% de ocupação hoteleira no Dia dos Namorados (mesmo patamar de Corpus Christi); dia da semana calculado.",
+   "confianca": "média"
+  },
+  {
+   "inicio": "2027-06-13",
+   "fim": "2027-07-01",
+   "dias": "dom-qui",
+   "nome": "Segunda metade de junho 2027 (13/6 a 1/7), dias de semana: dom a qui (férias da Copa Feminina a partir de 24/6 se a Lei 15.421/2026 for mantida)",
+   "nivel": "média",
+   "faixa_alvo": "médio",
+   "estadia_minima": 1,
+   "antecedencia_dias": 20,
+   "motivos": "Semanas de junho em patamar médio; se as férias começarem em 24/6 pela lei da Copa, a última semana tende a subir.",
+   "evidencia": "PriceLabs jun/2026 seg-qui 39,7%; Lei 15.421/2026 art. 67 (férias cobrindo 24/06-25/07/2027); PL 3.481/2026 recebido no Senado em 01/09/2026 sem votação localizada (senado.leg.br/materia/175679).",
+   "confianca": "média"
+  },
+  {
+   "inicio": "2027-06-13",
+   "fim": "2027-07-01",
+   "dias": "sex-sab",
+   "nome": "Segunda metade de junho 2027 (13/6 a 1/7), sextas e sábados (18-19 e 25-26/6)",
+   "nivel": "alta",
+   "faixa_alvo": "alto",
+   "estadia_minima": 2,
+   "antecedencia_dias": 30,
+   "motivos": "Fins de semana de inverno próximos de 80%; a Prefeitura projetou 80-90% nos fins de semana da temporada 2026.",
+   "evidencia": "PriceLabs jun/2026 sex/sáb 77,2%; NetCampos jun/2026: 2,2 milhões de turistas na temporada e 80-90% nos fins de semana.",
+   "confianca": "alta"
+  },
+  {
+   "inicio": "2027-07-02",
+   "fim": "2027-07-03",
+   "dias": "todos",
+   "nome": "Abertura do 57º Festival de Inverno 2027 (sáb 3/7, data estimada) – noites sex 2 e sáb 3/7",
+   "nivel": "alta",
+   "faixa_alvo": "alto",
+   "estadia_minima": 2,
+   "antecedencia_dias": 45,
+   "motivos": "O Festival abre no 1º sábado de julho (padrão 2025/2026; 2027 não anunciado) e a abertura costuma esgotar.",
+   "evidencia": "Band Vale: 2026 \"4 de julho e 2 de agosto\"; 2025 05/07 a 03/08 (Viva); PriceLabs market_occupancy_ly 02/07/2026 = 54,9% e 03/07 = 61,3%.",
+   "confianca": "média"
+  },
+  {
+   "inicio": "2027-07-04",
+   "fim": "2027-07-07",
+   "dias": "todos",
+   "nome": "1ª semana do Festival de Inverno 2027 (dom 4 a qua 7/7)",
+   "nivel": "média",
+   "faixa_alvo": "médio",
+   "estadia_minima": 1,
+   "antecedencia_dias": 20,
+   "motivos": "Primeiros dias de semana do Festival, antes das férias tradicionais (7/7 em 2026), ficam médios; sobem se as férias começarem em 24/6.",
+   "evidencia": "PriceLabs market_occupancy_ly 04-07/07/2026 = 46-50%; Resolução SEDUC 125/2025: férias de julho 2026 de 7 a 23/7.",
+   "confianca": "média"
+  },
+  {
+   "inicio": "2027-07-08",
+   "fim": "2027-07-10",
+   "dias": "todos",
+   "nome": "Feriadão de 9 de Julho 2027 (sex, feriado estadual SP) + início das férias de julho – noites qui 8 a sáb 10/7",
+   "nivel": "muito alta",
+   "faixa_alvo": "muito alto",
+   "estadia_minima": 3,
+   "antecedencia_dias": 60,
+   "motivos": "Feriado estadual na sexta dentro do Festival e das férias: pico de ocupação e de preço do ano.",
+   "evidencia": "Alesp: Lei estadual 9.497/1997; Band Vale 08/07/2026: ocupação \"já ultrapassou 85%\", previsão \"entre 90% e 95%\"; PriceLabs market_occupancy_ly 09/07/2026 = 92,9%, 10/07 = 91,5%; mediana pedida jul/2027 R$ 867 (máxima).",
+   "confianca": "alta"
+  },
+  {
+   "inicio": "2027-07-11",
+   "fim": "2027-07-25",
+   "dias": "dom-qui",
+   "nome": "Pico de julho 2027 (11 a 25/7): férias escolares + Festival de Inverno, dias de semana: dom a qui",
+   "nivel": "alta",
+   "faixa_alvo": "alto",
+   "estadia_minima": 2,
+   "antecedencia_dias": 45,
+   "motivos": "Férias e Festival mantêm as semanas acima de 55% no mercado STR e 77,6% na rede hoteleira medida pela FGV.",
+   "evidencia": "PriceLabs jul/2026 61,9% (Recanto) / 67% (Villa), seg-qui 55,8%; FGV via Guia Campos 05/11/2025: ocupação média de julho 77,6%, permanência 3,6 dias; AirROI: lead time de julho 46 dias.",
+   "confianca": "alta"
+  },
+  {
+   "inicio": "2027-07-11",
+   "fim": "2027-07-25",
+   "dias": "sex-sab",
+   "nome": "Pico de julho 2027 (11 a 25/7), sextas e sábados (16-17 e 23-24/7; Festa da Cerejeira ~24/7)",
+   "nivel": "muito alta",
+   "faixa_alvo": "muito alto",
+   "estadia_minima": 2,
+   "antecedencia_dias": 60,
+   "motivos": "Sextas e sábados do pico passam de 80% no mercado; a Festa da Cerejeira em Flor começa no último fim de semana.",
+   "evidencia": "PriceLabs market_occupancy_ly 17/07/2026 = 92%, 24/07 = 82,8%; sex/sáb jul/2026 75,9%; Melhores Destinos: Cerejeira 2026 \"25 e 26 de julho, 1, 2, 8, 9, 15 e 16 de agosto\".",
+   "confianca": "alta"
+  },
+  {
+   "inicio": "2027-07-26",
+   "fim": "2027-07-29",
+   "dias": "todos",
+   "nome": "Última semana do Festival de Inverno 2027 (seg 26 a qui 29/7), fim das férias",
+   "nivel": "média",
+   "faixa_alvo": "médio",
+   "estadia_minima": 1,
+   "antecedencia_dias": 14,
+   "motivos": "O fim das férias (23/7 no padrão tradicional, 25/7 pela lei da Copa) esvazia a última semana do Festival.",
+   "evidencia": "PriceLabs market_occupancy_ly 27-29/07/2026 = 41-43%.",
+   "confianca": "média"
+  },
+  {
+   "inicio": "2027-07-30",
+   "fim": "2027-07-31",
+   "dias": "todos",
+   "nome": "Encerramento do Festival de Inverno (dom 1/8, estimado) + Festa da Cerejeira – noites sex 30 e sáb 31/7",
+   "nivel": "alta",
+   "faixa_alvo": "alto",
+   "estadia_minima": 2,
+   "antecedencia_dias": 30,
+   "motivos": "Último fim de semana do Festival (encerramento no 1º domingo de agosto) e 2º fim de semana da Festa da Cerejeira.",
+   "evidencia": "Band Vale: encerramento 2026 em 02/08; PriceLabs jul/2026 sex/sáb 75,9%.",
+   "confianca": "média"
+  },
+  {
+   "inicio": "2027-08-01",
+   "fim": "2027-08-15",
+   "dias": "dom-qui",
+   "nome": "1ª quinzena de agosto 2027 (1 a 15/8), dias de semana: dom a qui",
+   "nivel": "baixa",
+   "faixa_alvo": "baixo",
+   "estadia_minima": 1,
+   "antecedencia_dias": 10,
+   "motivos": "Queda pós-Festival nos dias de semana, embora ainda frio e seco.",
+   "evidencia": "PriceLabs market_history ago/2026 36% (Recanto) / 44% (Villa), seg-qui 27,2%; Climatempo agosto 11/22°C, 43 mm.",
+   "confianca": "média"
+  },
+  {
+   "inicio": "2027-08-01",
+   "fim": "2027-08-15",
+   "dias": "sex-sab",
+   "nome": "1ª quinzena de agosto 2027 (1 a 15/8), sextas e sábados (6-7/8 véspera do Dia dos Pais 8/8; 13-14/8 Festa da Cerejeira)",
+   "nivel": "média",
+   "faixa_alvo": "médio",
+   "estadia_minima": 1,
+   "antecedencia_dias": 14,
+   "motivos": "Dia dos Pais (domingo 8/8) e os fins de semana da Festa da Cerejeira sustentam sex/sáb.",
+   "evidencia": "PriceLabs ago/2026 sex/sáb 53,3%; Melhores Destinos: Cerejeira 2026 nos fins de semana até 16/08; mediana pedida ago/2027 R$ 750.",
+   "confianca": "média"
+  },
+  {
+   "inicio": "2027-08-16",
+   "fim": "2027-09-02",
+   "dias": "dom-qui",
+   "nome": "2ª quinzena de agosto e início de setembro 2027 (16/8 a 2/9), dias de semana: dom a qui",
+   "nivel": "baixa",
+   "faixa_alvo": "baixo",
+   "estadia_minima": 1,
+   "antecedencia_dias": 7,
+   "motivos": "Diárias de inverno mais baratas no fim de agosto e em dias de semana.",
+   "evidencia": "Melhores Destinos: Hotel Fazenda Golden Park R$ 170 (21-24/08) x R$ 441 nos fins de semana de julho; PriceLabs ago/2026 seg-qui 27,2%.",
+   "confianca": "média"
+  },
+  {
+   "inicio": "2027-08-16",
+   "fim": "2027-09-02",
+   "dias": "sex-sab",
+   "nome": "2ª quinzena de agosto e início de setembro 2027 (16/8 a 2/9), sextas e sábados (20-21/8; 27-28/8 Jazz na Serra SAP + Epic Race MTB)",
+   "nivel": "média",
+   "faixa_alvo": "médio",
+   "estadia_minima": 1,
+   "antecedencia_dias": 14,
+   "motivos": "Fins de semana de fim de inverno; 27-28/8 soma Jazz na Serra (Santo Antônio do Pinhal) e Epic Race (mountain bike no Horto).",
+   "evidencia": "PriceLabs ago/2026 sex/sáb 53,3%; Rolling Stone: Jazz na Serra 2026 \"28 e 29 de agosto\"; Agenda Viva SP: Epic Race 2026 \"28 a 30 de agosto\".",
+   "confianca": "média"
+  },
+  {
+   "inicio": "2027-09-03",
+   "fim": "2027-09-06",
+   "dias": "todos",
+   "nome": "7 de Setembro 2027 (ter) – ponte sex 3 a seg 6/9 + Mostra das Nações Mantiqueira",
+   "nivel": "alta",
+   "faixa_alvo": "alto",
+   "estadia_minima": 2,
+   "antecedencia_dias": 30,
+   "motivos": "Feriado na terça com ponte na segunda dá até 4 noites, com a Mostra das Nações no Capivari; dom/seg são mais fracos que sex/sáb.",
+   "evidencia": "ANBIMA 2027: 07/09 terça; PriceLabs events: Independência 03-06/09/2027; set/2026 sex/sáb 54,3%; BaresSP: Mostra das Nações 2026 \"4, 5 e 6 de setembro\"; ocupação de 7/9/2026 não encontrada.",
+   "confianca": "baixa"
+  },
+  {
+   "inicio": "2027-09-07",
+   "fim": "2027-09-14",
+   "dias": "dom-qui",
+   "nome": "Setembro 2027 pós-feriado (7 a 14/9), dias de semana: dom a qui (7/9 feriado; 14/9 chegadas antecipadas ao CBQ)",
+   "nivel": "baixa",
+   "faixa_alvo": "baixo",
+   "estadia_minima": 1,
+   "antecedencia_dias": 7,
+   "motivos": "Primavera de movimento baixo; a terça 14/9 pode receber congressistas que chegam na véspera do CBQ.",
+   "evidencia": "PriceLabs market_history set/2026 37% (Recanto) / 40% (Villa), seg-qui 24-26,5%; SBOT: CBQ 15 a 18/09/2027.",
+   "confianca": "alta"
+  },
+  {
+   "inicio": "2027-09-07",
+   "fim": "2027-09-14",
+   "dias": "sex-sab",
+   "nome": "Setembro 2027 (7 a 14/9), sextas e sábados (10-11/9)",
+   "nivel": "média",
+   "faixa_alvo": "médio",
+   "estadia_minima": 1,
+   "antecedencia_dias": 14,
+   "motivos": "Fim de semana comum de primavera, sem evento.",
+   "evidencia": "PriceLabs set/2026 sex/sáb 54,3%.",
+   "confianca": "média"
+  },
+  {
+   "inicio": "2027-09-15",
+   "fim": "2027-09-18",
+   "dias": "todos",
+   "nome": "XXII Congresso Brasileiro do Quadril – CBQ 2027 (Campos Hall, qua 15 a sáb 18/9, ~1.500 especialistas)",
+   "nivel": "alta",
+   "faixa_alvo": "alto",
+   "estadia_minima": 2,
+   "antecedencia_dias": 60,
+   "motivos": "Congresso confirmado de quarta a sábado, fora da alta temporada, com público corporativo de diária elevada e acompanhantes.",
+   "evidencia": "SBOT: \"15/09/2027 - 18/09/2027\"; NetCampos abr/2026: \"cerca de 1.500 especialistas, além de acompanhantes\", impacto \"aproximadamente R$ 2,5 milhões\".",
+   "confianca": "média"
+  },
+  {
+   "inicio": "2027-09-19",
+   "fim": "2027-09-23",
+   "dias": "todos",
+   "nome": "Setembro 2027 entre CBQ e L'Étape (dom 19 a qui 23/9)",
+   "nivel": "baixa",
+   "faixa_alvo": "baixo",
+   "estadia_minima": 1,
+   "antecedencia_dias": 7,
+   "motivos": "Dias de semana de primavera sem evento.",
+   "evidencia": "PriceLabs set/2026 seg-qui 24-26,5%; AirROI: lead time da primavera 26 dias.",
+   "confianca": "alta"
+  },
+  {
+   "inicio": "2027-09-24",
+   "fim": "2027-09-25",
+   "dias": "todos",
+   "nome": "L'Étape Campos do Jordão by Tour de France 2027 (prova dom 26/9) – noites sex 24 e sáb 25/9",
+   "nivel": "alta",
+   "faixa_alvo": "alto",
+   "estadia_minima": 2,
+   "antecedencia_dias": 60,
+   "motivos": "Prova confirmada com milhares de ciclistas e acompanhantes; retirada de kits e expo na sexta e no sábado.",
+   "evidencia": "camposdojordao.letapeseries.com: \"set 26 2027\"; edição 2025 com \"3,500 cyclists\"; 2026 foi 25 a 27/09.",
+   "confianca": "alta"
+  },
+  {
+   "inicio": "2027-09-26",
+   "fim": "2027-10-07",
+   "dias": "dom-qui",
+   "nome": "Fim de setembro e início de outubro 2027 (26/9 a 7/10), dias de semana: dom a qui (1/10 padroeira, feriado local)",
+   "nivel": "baixa",
+   "faixa_alvo": "baixo",
+   "estadia_minima": 1,
+   "antecedencia_dias": 7,
+   "motivos": "Semanas de primavera vazias; 1/10 (Santa Teresinha) é feriado só do destino e não gera viagem.",
+   "evidencia": "PriceLabs out/2025 seg-qui 23,7%; TRT-15 Portaria CR 06/2013 e Tupi 29/09/2026 (feriado da padroeira); mediana pedida out/2027 R$ 747 (provisória).",
+   "confianca": "média"
+  },
+  {
+   "inicio": "2027-09-26",
+   "fim": "2027-10-07",
+   "dias": "sex-sab",
+   "nome": "Fim de setembro e início de outubro 2027 (26/9 a 7/10), sextas e sábados (1-2/10)",
+   "nivel": "média",
+   "faixa_alvo": "médio",
+   "estadia_minima": 1,
+   "antecedencia_dias": 14,
+   "motivos": "Fim de semana comum, sem evento; sex/sáb de outubro ficam na base da faixa 'médio'.",
+   "evidencia": "PriceLabs out/2025 sex/sáb 37,5% vs seg-qui 23,7%.",
+   "confianca": "média"
+  },
+  {
+   "inicio": "2027-10-08",
+   "fim": "2027-10-11",
+   "dias": "todos",
+   "nome": "12 de Outubro 2027 (ter) + Dia das Crianças – ponte sex 8 a seg 11/10",
+   "nivel": "alta",
+   "faixa_alvo": "alto",
+   "estadia_minima": 2,
+   "antecedencia_dias": 30,
+   "motivos": "Feriado na terça com ponte na segunda e Dia das Crianças: forte para famílias, com 'semana do saco cheio' em escolas particulares.",
+   "evidencia": "ANBIMA 2027: 12/10 terça; NetCampos 08/10/2026: cerca de 80 mil turistas esperados no feriadão de 2026; PriceLabs events: Childrens Day 08-11/10/2027; guia elasviajando: \"difícil encontrar promoções\".",
+   "confianca": "média"
+  },
+  {
+   "inicio": "2027-10-12",
+   "fim": "2027-10-13",
+   "dias": "todos",
+   "nome": "Terça 12/10 (feriado) e quarta 13/10/2027 – pós-feriadão, 'semana do saco cheio'",
+   "nivel": "baixa",
+   "faixa_alvo": "baixo",
+   "estadia_minima": 1,
+   "antecedencia_dias": 5,
+   "motivos": "Noite do próprio feriado e quarta seguinte: só famílias que emendam a semana escolar.",
+   "evidencia": "PriceLabs market_occupancy 13-14/10/2026 (terça/quarta pós-12/10) = 22%; Quero Bolsa: semana do saco cheio até 15/10.",
+   "confianca": "média"
+  },
+  {
+   "inicio": "2027-10-14",
+   "fim": "2027-10-14",
+   "dias": "todos",
+   "nome": "Oktoberfest 2027 – abertura (qui 14/10, data estimada)",
+   "nivel": "média",
+   "faixa_alvo": "médio",
+   "estadia_minima": 1,
+   "antecedencia_dias": 7,
+   "motivos": "Se repetir o padrão de 2026 (qui a dom), a quinta de abertura fica acima de um dia de semana comum; data 2027 não anunciada.",
+   "evidencia": "NetCampos: Oktoberfest 2026 \"15 a 18 de outubro de 2026\" (qui-dom); Hoje em Dia: 2024 e 2025 em 24 a 27/10.",
+   "confianca": "baixa"
+  },
+  {
+   "inicio": "2027-10-15",
+   "fim": "2027-10-16",
+   "dias": "todos",
+   "nome": "Oktoberfest 2027 (estimada) + WTR + Dia do Professor (sex 15/10) – noites sex 15 e sáb 16/10",
+   "nivel": "alta",
+   "faixa_alvo": "alto",
+   "estadia_minima": 2,
+   "antecedencia_dias": 14,
+   "motivos": "Sexta e sábado da Oktoberfest com WTR e sexta sem aula em muitas escolas; se a Oktoberfest for 21-24/10, este fim de semana cai para 'média'.",
+   "evidencia": "PriceLabs OTB 16-17/10/2026 = 33,3%/32,6%; GoTrail: WTR 2026 17-18/10; BNews SP 2027: 15/10/2027 sexta.",
+   "confianca": "baixa"
+  },
+  {
+   "inicio": "2027-10-17",
+   "fim": "2027-10-28",
+   "dias": "dom-qui",
+   "nome": "Outubro 2027 pós-Oktoberfest (17 a 28/10), dias de semana: dom a qui (28/10 ponto facultativo do servidor)",
+   "nivel": "baixa",
+   "faixa_alvo": "baixo",
+   "estadia_minima": 1,
+   "antecedencia_dias": 7,
+   "motivos": "Repete o padrão de outubro: semanas vazias e menor preço de mercado do ano.",
+   "evidencia": "PriceLabs market_history out/2025 29% (Recanto) / 35% (Villa), seg-qui 23,7%; mediana pedida out/2027 R$ 747 (provisória, 10 reservas).",
+   "confianca": "média"
+  },
+  {
+   "inicio": "2027-10-17",
+   "fim": "2027-10-28",
+   "dias": "sex-sab",
+   "nome": "Outubro 2027 pós-Oktoberfest (17 a 28/10), sextas e sábados (22-23/10; alternativa de Oktoberfest em 21-24/10)",
+   "nivel": "média",
+   "faixa_alvo": "médio",
+   "estadia_minima": 1,
+   "antecedencia_dias": 14,
+   "motivos": "Fim de semana comum; vira 'alta' se a Oktoberfest voltar ao padrão 2024/2025 (24-27/10).",
+   "evidencia": "PriceLabs out/2025 sex/sáb 37,5%; Hoje em Dia: Oktoberfest 2025 em 24 a 27/10.",
+   "confianca": "média"
+  },
+  {
+   "inicio": "2027-10-29",
+   "fim": "2027-11-01",
+   "dias": "todos",
+   "nome": "Finados 2027 (ter 2/11) – ponte sex 29/10 a seg 1/11 + abertura do Natal FLMA (~29/10)",
+   "nivel": "alta",
+   "faixa_alvo": "alto",
+   "estadia_minima": 2,
+   "antecedencia_dias": 30,
+   "motivos": "Feriadão de até 4 noites combinado com a abertura da temporada de Natal (padrão: última sexta de outubro); a segunda 1/11 é mais fraca.",
+   "evidencia": "PriceLabs 2026: preço +35,8% em 01/11 e ocupação +12,7% em 31/10; Guia Campos 18/09/2026: temporada 2025/26 com 1,48 milhão de visitantes e ocupação hoteleira +18,46%; ANBIMA 2027: 02/11 terça.",
+   "confianca": "média"
+  },
+  {
+   "inicio": "2027-11-02",
+   "fim": "2027-11-11",
+   "dias": "dom-qui",
+   "nome": "Novembro 2027 (2 a 11/11), dias de semana: dom a qui (2/11 feriado)",
+   "nivel": "baixa",
+   "faixa_alvo": "baixo",
+   "estadia_minima": 1,
+   "antecedencia_dias": 10,
+   "motivos": "Semanas de novembro vazias após o feriadão.",
+   "evidencia": "PriceLabs nov/2025 seg-qui 26,7%; market_history nov/2025 35% / 42%.",
+   "confianca": "média"
+  },
+  {
+   "inicio": "2027-11-02",
+   "fim": "2027-11-11",
+   "dias": "sex-sab",
+   "nome": "Novembro 2027 (2 a 11/11), sextas e sábados com Natal FLMA (5-6/11)",
+   "nivel": "média",
+   "faixa_alvo": "médio",
+   "estadia_minima": 1,
+   "antecedencia_dias": 14,
+   "motivos": "Primeiro fim de semana da programação de Natal (sex-dom).",
+   "evidencia": "PriceLabs nov/2025 sex/sáb 55,4%; travel.com.br: Natal FLMA com programação sex, sáb e dom.",
+   "confianca": "média"
+  },
+  {
+   "inicio": "2027-11-12",
+   "fim": "2027-11-14",
+   "dias": "todos",
+   "nome": "Proclamação da República 2027 (seg 15/11) + Natal FLMA – noites sex 12 a dom 14/11",
+   "nivel": "alta",
+   "faixa_alvo": "alto",
+   "estadia_minima": 2,
+   "antecedencia_dias": 30,
+   "motivos": "Segunda-feira feriada gera 3 noites dentro da temporada de Natal; comparável aos feriadões de novembro com 80% em 2025.",
+   "evidencia": "ANBIMA 2027: 15/11 segunda; Prefeitura 21/11/2025: Consciência Negra 2025 com 80% de ocupação e até 100 mil turistas.",
+   "confianca": "média"
+  },
+  {
+   "inicio": "2027-11-15",
+   "fim": "2027-11-18",
+   "dias": "todos",
+   "nome": "Semana curta 15 a 18/11/2027 (seg a qui, entre dois feriados)",
+   "nivel": "baixa",
+   "faixa_alvo": "baixo",
+   "estadia_minima": 1,
+   "antecedencia_dias": 7,
+   "motivos": "Noite do feriado e três dias de semana entre dois fins de semana fortes.",
+   "evidencia": "PriceLabs nov/2025 seg-qui 26,7%.",
+   "confianca": "média"
+  },
+  {
+   "inicio": "2027-11-19",
+   "fim": "2027-11-20",
+   "dias": "todos",
+   "nome": "Consciência Negra 2027 (sáb 20/11, sem dia extra) + Natal FLMA – noites sex 19 e sáb 20/11",
+   "nivel": "média",
+   "faixa_alvo": "médio",
+   "estadia_minima": 1,
+   "antecedencia_dias": 14,
+   "motivos": "Feriado no sábado vira fim de semana forte de Natal, não feriadão (ao contrário de 2025 e 2026).",
+   "evidencia": "ANBIMA 2027: 20/11 sábado; PriceLabs nov/2025 sex/sáb 55,4%; occ_insights 2026: +14,7% em 20/11 quando caiu na sexta.",
+   "confianca": "média"
+  },
+  {
+   "inicio": "2027-11-21",
+   "fim": "2027-12-17",
+   "dias": "dom-qui",
+   "nome": "Fim de novembro e 1ª quinzena de dezembro 2027 (21/11 a 17/12), dias de semana: dom a qui",
+   "nivel": "muito baixa",
+   "faixa_alvo": "baixo",
+   "estadia_minima": 1,
+   "antecedencia_dias": 7,
+   "motivos": "Mesmo padrão de 2025: dias de semana entre 18% e 28% antes das férias.",
+   "evidencia": "PriceLabs market_occupancy_ly dez/2025: 1ª quinzena 32,1%, dias de semana 18-28%.",
+   "confianca": "média"
+  },
+  {
+   "inicio": "2027-11-21",
+   "fim": "2027-12-17",
+   "dias": "sex-sab",
+   "nome": "Fim de novembro e 1ª quinzena de dezembro 2027 (21/11 a 17/12), sextas e sábados com Natal FLMA (26-27/11, 3-4, 10-11 e 17/12)",
+   "nivel": "média",
+   "faixa_alvo": "médio",
+   "estadia_minima": 1,
+   "antecedencia_dias": 14,
+   "motivos": "Fins de semana de Natal com espetáculos e decoração chegam a 50-55% no mercado.",
+   "evidencia": "PriceLabs market_occupancy_ly 05/12/2025 = 54,6%, 12/12/2025 = 50,7%; travel.com.br: programação artística até ~20/12.",
+   "confianca": "média"
+  },
+  {
+   "inicio": "2027-12-18",
+   "fim": "2027-12-23",
+   "dias": "todos",
+   "nome": "Pré-Natal 2027 (sáb 18 a qui 23/12): Corrida Iluminada (~18/12), fim da programação FLMA, início das férias escolares",
+   "nivel": "média",
+   "faixa_alvo": "médio",
+   "estadia_minima": 1,
+   "antecedencia_dias": 14,
+   "motivos": "Último fim de semana da programação de Natal e começo das férias (calendário 2027 não publicado; padrão 2026: 18/12).",
+   "evidencia": "PriceLabs market_occupancy_ly 19-23/12/2025: 54,1%, 46,6%, 47,5%, 45,1%, 60,9%; BNews SP: calendário escolar 2027 não divulgado.",
+   "confianca": "média"
+  },
+  {
+   "inicio": "2027-12-24",
+   "fim": "2027-12-25",
+   "dias": "todos",
+   "nome": "Natal 2027 (sáb 25/12) – noites sex 24 e sáb 25/12",
+   "nivel": "alta",
+   "faixa_alvo": "alto",
+   "estadia_minima": 2,
+   "antecedencia_dias": 30,
+   "motivos": "Natal no sábado rende só 2 noites, com véspera na sexta (ponto facultativo após 13h no padrão federal); demanda hoteleira de 70-80%.",
+   "evidencia": "Prefeitura 22/12/2025: 70% de ocupação no Natal 2025; Band 24/12/2024: \"mais de 80%\"; ANBIMA 2027: 25/12 sábado.",
+   "confianca": "média"
+  },
+  {
+   "inicio": "2027-12-26",
+   "fim": "2027-12-28",
+   "dias": "todos",
+   "nome": "Entre Natal e Réveillon 2027 (dom 26 a ter 28/12)",
+   "nivel": "média",
+   "faixa_alvo": "médio",
+   "estadia_minima": 1,
+   "antecedencia_dias": 20,
+   "motivos": "Dias de férias entre os dois feriados, com chegadas antecipadas do Réveillon; mercado em ~53% nas datas equivalentes de 2025.",
+   "evidencia": "PriceLabs market_occupancy_ly 26/12/2025 = 53,1%, 27/12 = 52,7%; events 'Holiday Season' 27-29/12.",
+   "confianca": "média"
+  },
+  {
+   "inicio": "2027-12-29",
+   "fim": "2027-12-31",
+   "dias": "todos",
+   "nome": "Réveillon 2027/2028 (sex 31/12) – noites qua 29 a sex 31/12 (noite de sáb 1/1/2028 fora da janela, mesma estadia)",
+   "nivel": "muito alta",
+   "faixa_alvo": "muito alto",
+   "estadia_minima": 3,
+   "antecedencia_dias": 60,
+   "motivos": "Pico de Réveillon com virada na sexta e check-out no domingo 2/1: pacotes de 3 a 4 noites.",
+   "evidencia": "Prefeitura: 95% de ocupação e 280 mil visitantes previstos no Réveillon 2025; PriceLabs market_occupancy_ly 29/12 85,4%, 30/12 96,2%, 31/12 92%; BNews SP/ANBIMA: 31/12/2027 sexta, 01/01/2028 sábado.",
+   "confianca": "alta"
+  }
+ ],
+ "datas": [
+  {
+   "nome": "Oktoberfest de Campos do Jordão 2026 (Parque Capivari) – confirmado",
+   "inicio": "2026-10-15",
+   "fim": "2026-10-18",
+   "tipo": "evento"
+  },
+  {
+   "nome": "WTR Campos do Jordão 2026 (trail run/MTB) – confirmado",
+   "inicio": "2026-10-16",
+   "fim": "2026-10-17",
+   "tipo": "evento"
+  },
+  {
+   "nome": "11º Festival Curta Campos do Jordão – confirmado (nicho)",
+   "inicio": "2026-10-17",
+   "fim": "2026-10-24",
+   "tipo": "evento"
+  },
+  {
+   "nome": "Natal de Campos do Jordão 2026 – FLMA 'Fábrica de Biscoitos' (programação sex-dom) – confirmado",
+   "inicio": "2026-10-30",
+   "fim": "2026-12-20",
+   "tipo": "temporada"
+  },
+  {
+   "nome": "Finados 2026 (seg 2/11) – feriadão sex-dom",
+   "inicio": "2026-10-30",
+   "fim": "2026-11-01",
+   "tipo": "feriado"
+  },
+  {
+   "nome": "Proclamação da República 2026 (dom 15/11, sem prolongamento)",
+   "inicio": "2026-11-13",
+   "fim": "2026-11-14",
+   "tipo": "feriado"
+  },
+  {
+   "nome": "Consciência Negra 2026 (sex 20/11) – feriadão qui-sáb",
+   "inicio": "2026-11-19",
+   "fim": "2026-11-21",
+   "tipo": "feriado"
+  },
+  {
+   "nome": "Corrida Iluminada de Natal 2026 (19/12; Blablacar cita 20/12)",
+   "inicio": "2026-12-18",
+   "fim": "2026-12-19",
+   "tipo": "evento"
+  },
+  {
+   "nome": "Férias escolares de verão 2026/27 (rede estadual SP encerra 18/12; volta estimada ~1/2/2027)",
+   "inicio": "2026-12-19",
+   "fim": "2027-01-31",
+   "tipo": "ferias"
+  },
+  {
+   "nome": "Natal 2026 (sex 25/12) – noites qui-sáb",
+   "inicio": "2026-12-24",
+   "fim": "2026-12-26",
+   "tipo": "feriado"
+  },
+  {
+   "nome": "Réveillon 2026/2027 (1/1 sexta) – pacotes 3-4 noites",
+   "inicio": "2026-12-29",
+   "fim": "2027-01-02",
+   "tipo": "feriado"
+  },
+  {
+   "nome": "Aniversário de São Paulo 2027 (seg 25/1) – feriadão paulistano sex-dom",
+   "inicio": "2027-01-22",
+   "fim": "2027-01-24",
+   "tipo": "feriado"
+  },
+  {
+   "nome": "Carnaval 2027 (seg 8 e ter 9/2; Cinzas qua 10/2) – 5 noites",
+   "inicio": "2027-02-05",
+   "fim": "2027-02-09",
+   "tipo": "feriado"
+  },
+  {
+   "nome": "Carnaval 'Tem Folia na Montanha' – São Bento do Sapucaí (estimado)",
+   "inicio": "2027-02-06",
+   "fim": "2027-02-09",
+   "tipo": "evento"
+  },
+  {
+   "nome": "Páscoa de Campos 2027 – ovo gigante no Capivari e Páscoa Gastronômica (estimado pelo padrão 2026)",
+   "inicio": "2027-02-20",
+   "fim": "2027-03-28",
+   "tipo": "evento"
+  },
+  {
+   "nome": "Meia Maratona de Campos do Jordão 2027 (estimado: dom 14/3; noite de sáb 13/3)",
+   "inicio": "2027-03-13",
+   "fim": "2027-03-13",
+   "tipo": "evento"
+  },
+  {
+   "nome": "INDOMIT Pedra do Baú 2027 – São Bento do Sapucaí (confirmado)",
+   "inicio": "2027-03-18",
+   "fim": "2027-03-20",
+   "tipo": "evento"
+  },
+  {
+   "nome": "Semana Santa / Páscoa 2027 (Sexta Santa 26/3, Páscoa 28/3) – noites qui-sáb",
+   "inicio": "2027-03-25",
+   "fim": "2027-03-27",
+   "tipo": "feriado"
+  },
+  {
+   "nome": "Festa da Truta e do Pinhão 2027 – Santo Antônio do Pinhal (estimado)",
+   "inicio": "2027-04-16",
+   "fim": "2027-05-02",
+   "tipo": "evento"
+  },
+  {
+   "nome": "Tiradentes 2027 (qua 21/4) – feriado isolado",
+   "inicio": "2027-04-20",
+   "fim": "2027-04-21",
+   "tipo": "feriado"
+  },
+  {
+   "nome": "Aniversário de Campos do Jordão 2027 (qui 29/4) – feriado municipal, impacto baixo",
+   "inicio": "2027-04-28",
+   "fim": "2027-04-29",
+   "tipo": "feriado"
+  },
+  {
+   "nome": "Dia do Trabalho 2027 (sáb 1/5, sem prolongamento)",
+   "inicio": "2027-04-30",
+   "fim": "2027-05-01",
+   "tipo": "feriado"
+  },
+  {
+   "nome": "Festa do Pinhão de Campos do Jordão 2027 (estimado)",
+   "inicio": "2027-05-05",
+   "fim": "2027-05-09",
+   "tipo": "evento"
+  },
+  {
+   "nome": "Giro d'Italia Ride Like a Pro Brasil 2027 – etapa Campos do Jordão (estimado: dom 16/5)",
+   "inicio": "2027-05-14",
+   "fim": "2027-05-15",
+   "tipo": "evento"
+  },
+  {
+   "nome": "Mountain Festival 2027 – São Bento do Sapucaí (estimado)",
+   "inicio": "2027-05-21",
+   "fim": "2027-05-22",
+   "tipo": "evento"
+  },
+  {
+   "nome": "Corpus Christi 2027 (qui 27/5) – abertura da temporada de inverno, noites qua-sáb",
+   "inicio": "2027-05-26",
+   "fim": "2027-05-29",
+   "tipo": "feriado"
+  },
+  {
+   "nome": "Temporada de inverno 2027 (Corpus Christi a agosto; junho-julho mais lotados)",
+   "inicio": "2027-05-26",
+   "fim": "2027-08-31",
+   "tipo": "temporada"
+  },
+  {
+   "nome": "Festival Gastronômico Folha – Sabores da Montanha 2027 (estimado, sem pico próprio)",
+   "inicio": "2027-06-02",
+   "fim": "2027-08-01",
+   "tipo": "evento"
+  },
+  {
+   "nome": "Campos do Jordão Winter Festival 2027 – shows no Tênis Clube (estimado)",
+   "inicio": "2027-06-04",
+   "fim": "2027-06-05",
+   "tipo": "evento"
+  },
+  {
+   "nome": "Dia dos Namorados 2027 (sáb 12/6) – noites sex-sáb",
+   "inicio": "2027-06-11",
+   "fim": "2027-06-12",
+   "tipo": "evento"
+  },
+  {
+   "nome": "Férias escolares de julho 2027 (Lei 15.421/2026 art. 67: 24/6 a 25/7, cobrindo a Copa Feminina; padrão tradicional ~7 a 23/7 se o PL 3.481/2026 passar)",
+   "inicio": "2027-06-24",
+   "fim": "2027-07-25",
+   "tipo": "ferias"
+  },
+  {
+   "nome": "Festival de Inverno de Santo Antônio do Pinhal 2027 (estimado)",
+   "inicio": "2027-07-02",
+   "fim": "2027-07-25",
+   "tipo": "evento"
+  },
+  {
+   "nome": "57º Festival Internacional de Inverno de Campos do Jordão 2027 (estimado: 1º sábado de julho ao 1º domingo de agosto; datas não anunciadas)",
+   "inicio": "2027-07-03",
+   "fim": "2027-08-01",
+   "tipo": "evento"
+  },
+  {
+   "nome": "Revolução Constitucionalista 9 de Julho 2027 (sex) – feriado estadual SP, noites qui-sáb",
+   "inicio": "2027-07-08",
+   "fim": "2027-07-10",
+   "tipo": "feriado"
+  },
+  {
+   "nome": "56ª Festa da Cerejeira em Flor 2027 – fins de semana (estimado)",
+   "inicio": "2027-07-24",
+   "fim": "2027-08-15",
+   "tipo": "evento"
+  },
+  {
+   "nome": "Dia dos Pais 2027 (dom 8/8) – noites sex-sáb",
+   "inicio": "2027-08-06",
+   "fim": "2027-08-07",
+   "tipo": "evento"
+  },
+  {
+   "nome": "Aniversário de São Bento do Sapucaí (seg 16/8) – feriado municipal local",
+   "inicio": "2027-08-13",
+   "fim": "2027-08-15",
+   "tipo": "feriado"
+  },
+  {
+   "nome": "Jazz na Serra 2027 – Santo Antônio do Pinhal (estimado) + 7ª Epic Race MTB Campos do Jordão (estimado)",
+   "inicio": "2027-08-27",
+   "fim": "2027-08-28",
+   "tipo": "evento"
+  },
+  {
+   "nome": "Independência 7 de Setembro 2027 (ter) – ponte sex-seg",
+   "inicio": "2027-09-03",
+   "fim": "2027-09-06",
+   "tipo": "feriado"
+  },
+  {
+   "nome": "Mostra das Nações Mantiqueira 2027 – Praça do Capivari (estimado)",
+   "inicio": "2027-09-03",
+   "fim": "2027-09-05",
+   "tipo": "evento"
+  },
+  {
+   "nome": "XXII Congresso Brasileiro do Quadril – CBQ 2027, Campos Hall (confirmado)",
+   "inicio": "2027-09-15",
+   "fim": "2027-09-18",
+   "tipo": "evento"
+  },
+  {
+   "nome": "L'Étape Campos do Jordão by Tour de France 2027 (prova dom 26/9) – confirmado",
+   "inicio": "2027-09-24",
+   "fim": "2027-09-25",
+   "tipo": "evento"
+  },
+  {
+   "nome": "Padroeira de Campos do Jordão – Santa Teresinha (sex 1/10/2027) – feriado municipal, impacto baixo",
+   "inicio": "2027-09-30",
+   "fim": "2027-10-01",
+   "tipo": "feriado"
+  },
+  {
+   "nome": "Nossa Senhora Aparecida / Dia das Crianças 2027 (ter 12/10) – ponte sex-seg",
+   "inicio": "2027-10-08",
+   "fim": "2027-10-11",
+   "tipo": "feriado"
+  },
+  {
+   "nome": "Oktoberfest de Campos do Jordão 2027 (estimado qui-dom; alternativa 21-24/10)",
+   "inicio": "2027-10-14",
+   "fim": "2027-10-17",
+   "tipo": "evento"
+  },
+  {
+   "nome": "Dia do Professor 2027 (sex 15/10) – dia não letivo em muitas escolas, não é feriado trabalhista",
+   "inicio": "2027-10-14",
+   "fim": "2027-10-16",
+   "tipo": "feriado"
+  },
+  {
+   "nome": "WTR Campos do Jordão 2027 (estimado)",
+   "inicio": "2027-10-15",
+   "fim": "2027-10-16",
+   "tipo": "evento"
+  },
+  {
+   "nome": "Natal de Campos do Jordão 2027 – FLMA (estimado: última sexta de outubro a ~19/12)",
+   "inicio": "2027-10-29",
+   "fim": "2027-12-19",
+   "tipo": "temporada"
+  },
+  {
+   "nome": "Finados 2027 (ter 2/11) – ponte sex-seg",
+   "inicio": "2027-10-29",
+   "fim": "2027-11-01",
+   "tipo": "feriado"
+  },
+  {
+   "nome": "Proclamação da República 2027 (seg 15/11) – feriadão sex-dom",
+   "inicio": "2027-11-12",
+   "fim": "2027-11-14",
+   "tipo": "feriado"
+  },
+  {
+   "nome": "Consciência Negra 2027 (sáb 20/11, sem prolongamento)",
+   "inicio": "2027-11-19",
+   "fim": "2027-11-20",
+   "tipo": "feriado"
+  },
+  {
+   "nome": "Corrida Iluminada de Natal 2027 (estimado ~sáb 18/12)",
+   "inicio": "2027-12-17",
+   "fim": "2027-12-18",
+   "tipo": "evento"
+  },
+  {
+   "nome": "Férias escolares de verão 2027/28 (estimado pelo padrão 2026: a partir de ~18/12; segue até ~31/1/2028, fora da janela)",
+   "inicio": "2027-12-18",
+   "fim": "2027-12-31",
+   "tipo": "ferias"
+  },
+  {
+   "nome": "Natal 2027 (sáb 25/12) – noites sex-sáb",
+   "inicio": "2027-12-24",
+   "fim": "2027-12-25",
+   "tipo": "feriado"
+  },
+  {
+   "nome": "Réveillon 2027/2028 (sex 31/12; 1/1/2028 sáb) – noites qua-sex dentro da janela",
+   "inicio": "2027-12-29",
+   "fim": "2027-12-31",
+   "tipo": "feriado"
+  }
+ ],
+ "lacunas": "1) Festival de Inverno 2027 (57ª edição): datas não anunciadas (busca de hoje só retornou as edições de 2025 e 2026); a abertura em 3/7 e o encerramento em 1/8/2027 são inferência do padrão '1º sábado de julho ao 1º domingo de agosto'. 2) Férias escolares de julho 2027: Resolução SEDUC 2027 não publicada (busca de hoje confirma; só matrículas abertas em 1/9/2026); a janela 24/6-25/7 vem da Lei 15.421/2026 art. 67, mas o PL 3.481/2026 (torna o ajuste facultativo) foi aprovado na Câmara em 31/08/2026 e consta no Senado desde 01/09/2026 sem votação localizada — o período 'Segunda metade de junho' pode subir e a 'Última semana do Festival' pode mudar conforme a decisão. 3) Portaria MGI de pontos facultativos 2027 ainda não publicada: Carnaval, Corpus Christi, 28/10, 24/12 e 31/12/2027 seguem o padrão anterior; decreto estadual SP 2027 não localizado. 4) Eventos 2027 marcados 'estimado' (Oktoberfest, WTR, Natal FLMA, Páscoa de Campos, Meia Maratona, Festa da Truta, Festa do Pinhão, Giro, Mountain Festival, Winter Festival, Cerejeira, Jazz na Serra, Epic Race, Mostra das Nações, Corrida Iluminada): datas a confirmar; a Oktoberfest 2027 tem duas hipóteses (14-17/10 ou 21-24/10). 5) Programação oficial do Réveillon 2026/27 e data de fim da decoração natalina 2026 não encontradas. 6) Ocupação realizada específica não encontrada para: 12/10/2026, 7/9/2026, Tiradentes, 1º de Maio 2027 (só projeções), Carnaval 2026 e Páscoa 2026 (Sinhores ~60-70% via resumo de busca, confiança baixa), Dia dos Namorados 2027 (só 2026). 7) Nossos dados históricos no PriceLabs começam em 31/07/2026 (first_reservation_date), então a sazonalidade própria das pousadas (jul/2025 a jul/2026) não existe e os níveis foram calibrados pelo mercado STR (compset Airbnb Studio/1-2 quartos, não rede hoteleira) e por balanços da Prefeitura; o market_research do PriceLabs não está habilitado (ERR-MCP-FEATURE-NOT-ENABLED). 8) Faixa_alvo: não há tabela de quintis de preço da Booking por data nas pesquisas; a faixa foi derivada do nível de demanda (mapeamento declarado no resumo) e deve ser conferida contra os concorrentes da Booking na rotina diária. 9) Diferença Recanto x Villa: as pesquisas trazem compsets separados (ocupação da Villa 4-9 pontos acima da do Recanto), mas um único calendário foi pedido; a diferenciação ficou nas regras gerais (topo x base da faixa). 10) Dias da semana de 2027 foram calculados por mim (python em memória), não copiados de fonte, exceto os citados pela ANBIMA/BNews. 11) Páginas bloqueadas (HTTP 403/503) nas pesquisas de origem: planalto.gov.br, proximoferiado.net, gazetasp, brasilturis, 012news, meon, cbnvale, guiadasemana, mercadoeeventos — dados dessas fontes vieram só de resumos de busca. 12) Nada foi gravado em nenhum sistema; só leituras, três buscas web e cálculo de calendário em memória.",
+ "mercado_mensal": [
+  {
+   "pousada": "Recanto dos Moinhos",
+   "mes": "2025-10",
+   "ocupacao_mercado_media": 29,
+   "ocupacao_mercado_ano_passado": 37,
+   "adr_mercado": 571
+  },
+  {
+   "pousada": "Recanto dos Moinhos",
+   "mes": "2025-11",
+   "ocupacao_mercado_media": 35,
+   "ocupacao_mercado_ano_passado": 40,
+   "adr_mercado": 640
+  },
+  {
+   "pousada": "Recanto dos Moinhos",
+   "mes": "2025-12",
+   "ocupacao_mercado_media": 43,
+   "ocupacao_mercado_ano_passado": 46,
+   "adr_mercado": 733
+  },
+  {
+   "pousada": "Recanto dos Moinhos",
+   "mes": "2026-01",
+   "ocupacao_mercado_media": 36,
+   "ocupacao_mercado_ano_passado": 49,
+   "adr_mercado": 645
+  },
+  {
+   "pousada": "Recanto dos Moinhos",
+   "mes": "2026-02",
+   "ocupacao_mercado_media": 29,
+   "ocupacao_mercado_ano_passado": 34,
+   "adr_mercado": 652
+  },
+  {
+   "pousada": "Recanto dos Moinhos",
+   "mes": "2026-03",
+   "ocupacao_mercado_media": 27,
+   "ocupacao_mercado_ano_passado": 39,
+   "adr_mercado": 563
+  },
+  {
+   "pousada": "Recanto dos Moinhos",
+   "mes": "2026-04",
+   "ocupacao_mercado_media": 37,
+   "ocupacao_mercado_ano_passado": 48,
+   "adr_mercado": 696
+  },
+  {
+   "pousada": "Recanto dos Moinhos",
+   "mes": "2026-05",
+   "ocupacao_mercado_media": 42,
+   "ocupacao_mercado_ano_passado": 51,
+   "adr_mercado": 691
+  },
+  {
+   "pousada": "Recanto dos Moinhos",
+   "mes": "2026-06",
+   "ocupacao_mercado_media": 50,
+   "ocupacao_mercado_ano_passado": 54,
+   "adr_mercado": 834
+  },
+  {
+   "pousada": "Recanto dos Moinhos",
+   "mes": "2026-07",
+   "ocupacao_mercado_media": 62,
+   "ocupacao_mercado_ano_passado": 61,
+   "adr_mercado": 835
+  },
+  {
+   "pousada": "Recanto dos Moinhos",
+   "mes": "2026-08",
+   "ocupacao_mercado_media": 36,
+   "ocupacao_mercado_ano_passado": 43,
+   "adr_mercado": 691,
+   "nossa_ocupacao": 5,
+   "nosso_adr": 823,
+   "nossa_receita": 20587
+  },
+  {
+   "pousada": "Recanto dos Moinhos",
+   "mes": "2026-09",
+   "ocupacao_mercado_media": 37,
+   "ocupacao_mercado_ano_passado": 31,
+   "adr_mercado": 695,
+   "nossa_ocupacao": 59.8,
+   "nosso_adr": 635,
+   "nossa_receita": 182256
+  },
+  {
+   "pousada": "Recanto dos Moinhos",
+   "mes": "2026-10",
+   "ocupacao_mercado_media": 16.5,
+   "ocupacao_mercado_ano_passado": 29.5,
+   "adr_mercado": 599,
+   "nossa_ocupacao": 58.7,
+   "nosso_adr": 566,
+   "nossa_receita": 69073
+  },
+  {
+   "pousada": "Recanto dos Moinhos",
+   "mes": "2026-11",
+   "ocupacao_mercado_media": 8.7,
+   "ocupacao_mercado_ano_passado": 34.4,
+   "adr_mercado": 644,
+   "nossa_ocupacao": 19,
+   "nosso_adr": 721,
+   "nossa_receita": 65627
+  },
+  {
+   "pousada": "Recanto dos Moinhos",
+   "mes": "2026-12",
+   "ocupacao_mercado_media": 10.5,
+   "ocupacao_mercado_ano_passado": 44.1,
+   "adr_mercado": 819,
+   "nossa_ocupacao": 8.5,
+   "nosso_adr": 816,
+   "nossa_receita": 34257
+  },
+  {
+   "pousada": "Recanto dos Moinhos",
+   "mes": "2027-01",
+   "ocupacao_mercado_media": 5.7,
+   "ocupacao_mercado_ano_passado": 33,
+   "adr_mercado": 741,
+   "nossa_ocupacao": 5.4,
+   "nosso_adr": 782,
+   "nossa_receita": 21125
+  },
+  {
+   "pousada": "Recanto dos Moinhos",
+   "mes": "2027-02",
+   "ocupacao_mercado_media": 4,
+   "ocupacao_mercado_ano_passado": 28.6,
+   "adr_mercado": 718,
+   "nossa_ocupacao": 2,
+   "nosso_adr": 843,
+   "nossa_receita": 7588
+  },
+  {
+   "pousada": "Recanto dos Moinhos",
+   "mes": "2027-03",
+   "ocupacao_mercado_media": 2.4,
+   "ocupacao_mercado_ano_passado": 26,
+   "adr_mercado": 695,
+   "nossa_ocupacao": 2,
+   "nosso_adr": 527,
+   "nossa_receita": 5274
+  },
+  {
+   "pousada": "Recanto dos Moinhos",
+   "mes": "2027-04",
+   "ocupacao_mercado_media": 0.8,
+   "ocupacao_mercado_ano_passado": 37.7,
+   "adr_mercado": 757,
+   "nossa_ocupacao": 0.2,
+   "nosso_adr": 1202,
+   "nossa_receita": 1202
+  },
+  {
+   "pousada": "Recanto dos Moinhos",
+   "mes": "2027-05",
+   "ocupacao_mercado_media": 0.6,
+   "ocupacao_mercado_ano_passado": 39.7,
+   "adr_mercado": 781,
+   "nossa_ocupacao": 1.6,
+   "nosso_adr": 948,
+   "nossa_receita": 7586
+  },
+  {
+   "pousada": "Recanto dos Moinhos",
+   "mes": "2027-06",
+   "ocupacao_mercado_media": 0.4,
+   "ocupacao_mercado_ano_passado": 50.2,
+   "adr_mercado": 818,
+   "nossa_ocupacao": 2.5,
+   "nosso_adr": 1139,
+   "nossa_receita": 13668
+  },
+  {
+   "pousada": "Recanto dos Moinhos",
+   "mes": "2027-07",
+   "ocupacao_mercado_media": 0.3,
+   "ocupacao_mercado_ano_passado": 61.9,
+   "adr_mercado": 851,
+   "nossa_ocupacao": 0.8,
+   "nosso_adr": 393,
+   "nossa_receita": 1571
+  },
+  {
+   "pousada": "Recanto dos Moinhos",
+   "mes": "2027-08",
+   "ocupacao_mercado_media": 0,
+   "ocupacao_mercado_ano_passado": 35.1,
+   "adr_mercado": 751,
+   "nossa_ocupacao": 0,
+   "nossa_receita": 0
+  },
+  {
+   "pousada": "Recanto dos Moinhos",
+   "mes": "2027-09",
+   "ocupacao_mercado_media": 0.3,
+   "ocupacao_mercado_ano_passado": 36.8,
+   "adr_mercado": 754,
+   "nossa_ocupacao": 0.4,
+   "nosso_adr": 1392,
+   "nossa_receita": 2784
+  },
+  {
+   "pousada": "Recanto dos Moinhos",
+   "mes": "2027-10",
+   "ocupacao_mercado_media": 0,
+   "ocupacao_mercado_ano_passado": 26.9,
+   "adr_mercado": 770,
+   "nossa_ocupacao": 0,
+   "nossa_receita": 0
+  },
+  {
+   "pousada": "Villa Dolce Amore",
+   "mes": "2025-10",
+   "ocupacao_mercado_media": 35,
+   "ocupacao_mercado_ano_passado": 46,
+   "adr_mercado": 516
+  },
+  {
+   "pousada": "Villa Dolce Amore",
+   "mes": "2025-11",
+   "ocupacao_mercado_media": 42,
+   "ocupacao_mercado_ano_passado": 49,
+   "adr_mercado": 547
+  },
+  {
+   "pousada": "Villa Dolce Amore",
+   "mes": "2025-12",
+   "ocupacao_mercado_media": 50,
+   "ocupacao_mercado_ano_passado": 56,
+   "adr_mercado": 703
+  },
+  {
+   "pousada": "Villa Dolce Amore",
+   "mes": "2026-01",
+   "ocupacao_mercado_media": 45,
+   "ocupacao_mercado_ano_passado": 56,
+   "adr_mercado": 583
+  },
+  {
+   "pousada": "Villa Dolce Amore",
+   "mes": "2026-02",
+   "ocupacao_mercado_media": 34,
+   "ocupacao_mercado_ano_passado": 36,
+   "adr_mercado": 573
+  },
+  {
+   "pousada": "Villa Dolce Amore",
+   "mes": "2026-03",
+   "ocupacao_mercado_media": 34,
+   "ocupacao_mercado_ano_passado": 44,
+   "adr_mercado": 511
+  },
+  {
+   "pousada": "Villa Dolce Amore",
+   "mes": "2026-04",
+   "ocupacao_mercado_media": 42,
+   "ocupacao_mercado_ano_passado": 55,
+   "adr_mercado": 651
+  },
+  {
+   "pousada": "Villa Dolce Amore",
+   "mes": "2026-05",
+   "ocupacao_mercado_media": 46,
+   "ocupacao_mercado_ano_passado": 55,
+   "adr_mercado": 659
+  },
+  {
+   "pousada": "Villa Dolce Amore",
+   "mes": "2026-06",
+   "ocupacao_mercado_media": 54,
+   "ocupacao_mercado_ano_passado": 59,
+   "adr_mercado": 788
+  },
+  {
+   "pousada": "Villa Dolce Amore",
+   "mes": "2026-07",
+   "ocupacao_mercado_media": 67,
+   "ocupacao_mercado_ano_passado": 67,
+   "adr_mercado": 819,
+   "nossa_ocupacao": 0.2,
+   "nosso_adr": 1050,
+   "nossa_receita": 1050
+  },
+  {
+   "pousada": "Villa Dolce Amore",
+   "mes": "2026-08",
+   "ocupacao_mercado_media": 44,
+   "ocupacao_mercado_ano_passado": 48,
+   "adr_mercado": 637,
+   "nossa_ocupacao": 15.5,
+   "nosso_adr": 707,
+   "nossa_receita": 50925
+  },
+  {
+   "pousada": "Villa Dolce Amore",
+   "mes": "2026-09",
+   "ocupacao_mercado_media": 40,
+   "ocupacao_mercado_ano_passado": 38,
+   "adr_mercado": 634,
+   "nossa_ocupacao": 49.8,
+   "nosso_adr": 636,
+   "nossa_receita": 142357
+  },
+  {
+   "pousada": "Villa Dolce Amore",
+   "mes": "2026-10",
+   "ocupacao_mercado_media": 17.9,
+   "ocupacao_mercado_ano_passado": 36.3,
+   "adr_mercado": 542,
+   "nossa_ocupacao": 46.2,
+   "nosso_adr": 546,
+   "nossa_receita": 49120
+  },
+  {
+   "pousada": "Villa Dolce Amore",
+   "mes": "2026-11",
+   "ocupacao_mercado_media": 8.9,
+   "ocupacao_mercado_ano_passado": 40.6,
+   "adr_mercado": 581,
+   "nossa_ocupacao": 9.6,
+   "nosso_adr": 747,
+   "nossa_receita": 32136
+  },
+  {
+   "pousada": "Villa Dolce Amore",
+   "mes": "2026-12",
+   "ocupacao_mercado_media": 10.5,
+   "ocupacao_mercado_ano_passado": 51.1,
+   "adr_mercado": 741,
+   "nossa_ocupacao": 7.1,
+   "nosso_adr": 738,
+   "nossa_receita": 24342
+  },
+  {
+   "pousada": "Villa Dolce Amore",
+   "mes": "2027-01",
+   "ocupacao_mercado_media": 6.8,
+   "ocupacao_mercado_ano_passado": 42.5,
+   "adr_mercado": 634,
+   "nossa_ocupacao": 1.5,
+   "nosso_adr": 710,
+   "nossa_receita": 4970
+  },
+  {
+   "pousada": "Villa Dolce Amore",
+   "mes": "2027-02",
+   "ocupacao_mercado_media": 3.5,
+   "ocupacao_mercado_ano_passado": 33.7,
+   "adr_mercado": 666,
+   "nossa_ocupacao": 0.2,
+   "nosso_adr": 651,
+   "nossa_receita": 651
+  },
+  {
+   "pousada": "Villa Dolce Amore",
+   "mes": "2027-03",
+   "ocupacao_mercado_media": 2.5,
+   "ocupacao_mercado_ano_passado": 33.4,
+   "adr_mercado": 624,
+   "nossa_ocupacao": 0.4,
+   "nosso_adr": 571,
+   "nossa_receita": 1142
+  },
+  {
+   "pousada": "Villa Dolce Amore",
+   "mes": "2027-04",
+   "ocupacao_mercado_media": 1.2,
+   "ocupacao_mercado_ano_passado": 44.3,
+   "adr_mercado": 718,
+   "nossa_ocupacao": 1.6,
+   "nosso_adr": 452,
+   "nossa_receita": 3167
+  },
+  {
+   "pousada": "Villa Dolce Amore",
+   "mes": "2027-05",
+   "ocupacao_mercado_media": 0.8,
+   "ocupacao_mercado_ano_passado": 44.5,
+   "adr_mercado": 768,
+   "nossa_ocupacao": 1.1,
+   "nosso_adr": 455,
+   "nossa_receita": 2277
+  },
+  {
+   "pousada": "Villa Dolce Amore",
+   "mes": "2027-06",
+   "ocupacao_mercado_media": 0.4,
+   "ocupacao_mercado_ano_passado": 54.2,
+   "adr_mercado": 800,
+   "nossa_ocupacao": 1.6,
+   "nosso_adr": 961,
+   "nossa_receita": 6726
+  },
+  {
+   "pousada": "Villa Dolce Amore",
+   "mes": "2027-07",
+   "ocupacao_mercado_media": 0.2,
+   "ocupacao_mercado_ano_passado": 67.2,
+   "adr_mercado": 873,
+   "nossa_ocupacao": 0.2,
+   "nosso_adr": 789,
+   "nossa_receita": 789
+  },
+  {
+   "pousada": "Villa Dolce Amore",
+   "mes": "2027-08",
+   "ocupacao_mercado_media": 0,
+   "ocupacao_mercado_ano_passado": 42.5,
+   "adr_mercado": 700,
+   "nossa_ocupacao": 0,
+   "nossa_receita": 0
+  },
+  {
+   "pousada": "Villa Dolce Amore",
+   "mes": "2027-09",
+   "ocupacao_mercado_media": 0.2,
+   "ocupacao_mercado_ano_passado": 40.1,
+   "adr_mercado": 686,
+   "nossa_ocupacao": 0,
+   "nossa_receita": 0
+  },
+  {
+   "pousada": "Villa Dolce Amore",
+   "mes": "2027-10",
+   "ocupacao_mercado_media": 0,
+   "ocupacao_mercado_ano_passado": 28.6,
+   "adr_mercado": 703,
+   "nossa_ocupacao": 0,
+   "nossa_receita": 0
+  }
+ ],
+ "fontes": {
+  "feriados": "Levantamento (somente leitura) de feriados, pontes e férias escolares de 2026-10-13 a 2027-12-31 que movem turismo para Campos do Jordão. Convenção: \"inicio\" e \"fim\" são a PRIMEIRA e a ÚLTIMA NOITE de hospedagem afetadas (check-out no dia seguinte ao \"fim\"). Dias da semana conferidos por cálculo de calendário (python, só leitura). Fontes-chave: feriados/pontos facultativos federais 2026 = Portaria MGI nº 11.460, de 29/12/2025 (via Congresso em Foco e Wagner Advogados; o Planalto respondeu HTTP 503 em 3 tentativas); feriados 2027 = tabela ANBIMA 2027 + lista BNews SP 2027 (a portaria MGI de 2027 ainda não foi publicada — pontos facultativos 2027 seguem o padrão dos anos anteriores); 20/11 = Lei 14.759/2023 (Câmara); 9 de julho = Lei estadual 9.497/1997 (Alesp); feriados municipais de Campos do Jordão = Portaria CR 06/2013 do TRT-15 (29 de abril Aniversário da Cidade e 1º de outubro Padroeira, ambos Lei Municipal 1980/1993; 20 de novembro Lei Municipal 3028/2006) + notícia Tupi 29/09/2026 confirmando o feriado da padroeira Santa Teresinha em 1º/10/2026; férias escolares 2026 = Resolução SEDUC 125/2025 (DOE 25-26/09/2025: aulas 02/02 a 18/12/2026, férias de julho 7 a 23/7) e rede municipal SP capital (IN SME 49/2025: término 22/12/2026); férias de julho 2027 = Lei 15.421/2026, art. 67 (férias do 1º semestre devem cobrir a Copa do Mundo Feminina, 24/06 a 25/07/2027, redes pública e privada), com o PL 3.481/2026 (torna o ajuste facultativo) aprovado na Câmara em 31/08/2026 e autua",
+  "eventos": "Levantamento (somente leitura, 13/10/2026) de eventos que puxam hospedagem em Campos do Jordão, Santo Antônio do Pinhal (SAP) e São Bento do Sapucaí (SBS) de 13/10/2026 a 31/12/2027. Método: pesquisa com IA (WebSearch + WebFetch) em fontes oficiais (prefeituras, SBOT, site da L'Étape, FLMA via imprensa) e imprensa local/regional (NetCampos, Guia Campos, BaresSP, Band Vale, Hoje em Dia, Rolling Stone), com cruzamento de pelo menos duas fontes quando possível e registro das divergências; PDFs da prefeitura não puderam ser lidos pelas ferramentas (texto citado vem do trecho indexado pela busca).\n\nCONFIRMADOS no horizonte: Oktoberfest 15–18/10/2026 (Parque Capivari, qui–dom); WTR Campos do Jordão 17–18/10/2026; Festival Curta 17–24/10/2026; Natal FLMA \"Fábrica de Biscoitos\" de 30/10 a 20/12/2026 (fins de semana; Corrida Iluminada 19/12); INDOMIT Pedra do Baú (SBS) 18–20/03/2027; XXII Congresso Brasileiro do Quadril 15–18/09/2027 (Campos Hall, ~1.500 especialistas + acompanhantes, meio de semana); L'Étape Campos do Jordão by Tour de France 26/09/2027 (3.500 ciclistas em 2025).\n\nESTIMADOS pela edição anterior (2027 ainda não anunciado): Carnaval SBS \"Tem Folia na Montanha\" 06–09/02; Páscoa de Campos ~20/02 a 28/03 (pico Semana Santa 25–28/03); Meia Maratona ~14/03; Festa da Truta e do Pinhão (SAP) ~16/04 a 02/05; Aniversário da cidade 28–29/04 (feriado municipal qui 29/04); Festa do Pinhão ~05–09/05; Giro d'Italia Ride Like a Pro ~16/05; Mountain Festival (SBS) ~21–23/05; alta temp",
+  "estacoes": "Campos do Jordão tem sazonalidade forte e previsível, invertida em relação ao litoral: o pico é o inverno (Corpus Christi a início de agosto), com julho como mês de maior ocupação e preço. Dados de mercado do PriceLabs (vizinhança STR, 141 anúncios de 1 quarto, ocupação do mesmo mês do ano anterior): jul/2025 61% e jul/2026 62% (sex/sáb ~75%, seg-qui ~55%; dias de pico 09/07/2026 92,9% e 17/07/2026 92%); jun 54%/50%; mai 51%/42%; ago 43%/36%; set 31%/37%; out/2025 29%; nov/2025 35%; dez/2025 43% (1ª quinzena 32,1% x 2ª quinzena 55,4%; 30/12 96,2%); jan/2026 36%; fev/2026 29%; mar/2026 27% (mínimo do ano); abr/2026 37%. Fontes oficiais confirmam: Prefeitura previu 95% no Réveillon e 70% no Natal 2025 (400 mil visitantes); Corpus Christi 2026 fechou com 95% e 250 mil visitantes (+11,7%); feriado de 9/7/2026 85% indo a 90-95%; Consciência Negra 2025 80%; estudo FGV: ocupação média de julho 77,6%, gasto médio R$ 328,05/dia, permanência 3,6 dias. Preços: KAYAK aponta março como mês mais barato (hotéis R$ 264; pousadas R$ 304) e julho o mais caro (R$ 688; R$ 763), ou seja ~2,5-2,6x; dentro da semana a diferença é ~2x (quarta R$ 247 x sábado R$ 511); no mercado STR a mediana pedida vai de R$ 629 (out/2026) a R$ 865-867 (dez/2026 e jul/2027). Picos pontuais de preço de mercado detectados pelo PriceLabs: 01/11/2026 +35,8%; 27/12/2026-01/01/2027 +30,2%; 05-09/02/2027 (Carnaval) +28,0%. Clima (Climatempo, normais de 30 anos): seco e frio de maio a agosto (jul mín 10°C/máx 21°C, 43-47 mm",
+  "pricelabs": [
+   "mcp__PriceLabs__get_neighbourhood_data (listing 350362___722805 e 350364___722813, pms beds24, mode=detail, include_occupancy, include_prices): occupancy.daily {period, market_occupancy, market_occupancy_ly, market_occupancy_stly}, occupancy.monthly, initialize_detail.market_history, future_prices.{stay_dates, market_price, events}, occ_insights, summary_table — payloads de 221.085 e 236.467 caracteres lidos integralmente por jq/python a partir dos arquivos salvos",
+   "mcp__PriceLabs__get_listing_neighborhood_market (ambos os listings, pms beds24): 'Future Occ/New/Canc' (Occupancy, Occupancy_LY, Occupancy_STLY diários 2026-04-17..2027-10-08, categoria 1 BR/all) e 'Market KPI' — usados como contraprova das séries de mercado",
+   "mcp__PriceLabs__get_account_review_report (start_date 2025-10-14, end_date 2026-10-13, recommended_actions=false; session_token ar_a2bac4da14cffe41d330336b9f22f28a55153b69f00a08b87c3e179a6622a121, status COMPLETE): ocupação/ADR/RevPAR mensal do portfólio vs mercado",
+   "mcp__PriceLabs__get_bookings_report (pms beds24, booking_status booked; check-in 2025-10-01..2026-10-13 → 445 reservas, has_more=false; check-in 2026-10-14..2027-10-13 → 273 reservas, has_more=false): base da nossa ocupação/ADR/receita por pousada e mês (rental_revenue, noites rateadas por mês de estadia)",
+   "mcp__PriceLabs__get_listing_performance_metrics (7 listings beds24): total_available/60 dias → unidades por listing (722805=7, 722806=6, 722807=1, 722808=2; 722813=7, 722814=6, 722815=2), first_reservation_date, KPIs por janela DFD",
+   "mcp__PriceLabs__get_str_index (country=Brazil; country=Brazil + state='Sao Paulo', months 2025_10..2026_10): índice mensal nacional e estadual (occ, ADR, RevPAR em BRL)"
+  ]
+ }
+}

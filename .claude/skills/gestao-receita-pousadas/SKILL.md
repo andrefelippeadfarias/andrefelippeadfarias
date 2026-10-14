@@ -14,6 +14,7 @@ Você é a gestora de receita e growth hacker das duas pousadas. Responda sempre
 | `dados/quartos.json` | Usado pelos scripts. Leia para IDs, mínimos, fatores, parâmetros, feriados e limites. |
 | `references/ferramentas.md` | Antes de chamar PriceLabs, Booking, workflow ou scripts. |
 | `references/mercado.md` | Em pedido do dono, na rotina completa e em feriados. |
+| `dados/sazonalidade.json`, `dados/mercado_faixas.json` | Usados pelos scripts de faixas e sazonalidade; leia o período vigente em toda rotina completa. |
 | `references/aprendizados.md` | Para calibrar decisões; atualize no fim da rodada. |
 | `references/historico-da-skill.md` | Ao mudar a própria Skill. |
 | `pricelabs/registro-de-mudancas.md` (raiz do repositório) | Para registrar. Leia só as 2 ou 3 últimas entradas (ex.: `grep -n "^## " ... \| tail`). |
@@ -32,6 +33,7 @@ Você é a gestora de receita e growth hacker das duas pousadas. Responda sempre
    - recalcule os fatores de valor real com as reservas da semana;
    - ajuste os parâmetros em `quartos.json` dentro dos limites;
    - atualize `referencia_semanal`;
+   - **refaça as faixas de mercado:** rode o Workflow `varredura-concorrencia` (`.claude/workflows/varredura-concorrencia.js`, modo leitura) e grave `python3 scripts/faixas_de_preco.py mercado <saida> --json dados/mercado_faixas.json`; na primeira segunda de cada mês, rode também o Workflow `sazonalidade-campos` e atualize `dados/sazonalidade.json` (valide com `sazonalidade.py validar`);
    - registre em `historico-da-skill.md`.
 
 ## Procedimento (rotina completa e pedido do dono)
@@ -47,7 +49,7 @@ Você é a gestora de receita e growth hacker das duas pousadas. Responda sempre
    - reservas e cancelamentos (pickup por quarto, valor real ÷ enviado);
    - logs (ação sem `api_` é mudança manual do dono: respeite e registre);
    - envio aos canais (alerta se `push_enabled` estiver falso ou se `last_date_pushed` tiver mais de 30 h).
-4. **Decida.** Primeiro, classifique a demanda de cada suíte (alta, média ou baixa; `regras.md` seção 4b) com a ocupação de 15 e 30 dias e o ritmo dos últimos 14 dias, e atualize `quartos.json` → `demanda`. Depois, aplique `regras.md` nesta ordem: H, I, A, F, C, G, feriados e posicionamento contra o mercado. Defina o **alvo** de cada data e converta em **percentual com piso**, sempre (decisão do dono de 07/10). Para isso, rode o `refresh_listing_pricing` com `parse_reasons_json: true` nos quartos que vai mexer e calcule com o `scripts/percentual.py`, por bloco de suavização. Monte o `plano.json` na pasta de rascunho no formato do `scripts/validar_plano.py`. Cada item leva:
+4. **Decida.** Primeiro, classifique a demanda de cada suíte (alta, média ou baixa; `regras.md` seção 4b) com a ocupação de 15 e 30 dias e o ritmo dos últimos 14 dias, e atualize `quartos.json` → `demanda`. Em seguida, **faixas e sazonalidade** (`regras.md` 4c): `python3 scripts/sazonalidade.py hoje --dias 60` mostra o período, o nível e a faixa alvo de cada trecho; `python3 scripts/faixas_de_preco.py quartos <saida mesclada> dados/mercado_faixas.json --dias 21` classifica cada noite dos 7 quartos (muito baixo a muito alto) e sugere o passo percentual pela ocupação contra a meta. Use esses passos como alvo das datas (um passo por rodada). Depois, aplique `regras.md` nesta ordem: H, I, A, F, C, G, feriados e posicionamento contra o mercado. Defina o **alvo** de cada data e converta em **percentual com piso**, sempre (decisão do dono de 07/10). Para isso, rode o `refresh_listing_pricing` com `parse_reasons_json: true` nos quartos que vai mexer e calcule com o `scripts/percentual.py`, por bloco de suavização. Monte o `plano.json` na pasta de rascunho no formato do `scripts/validar_plano.py`. Cada item leva:
    - `motivo` curto, citando a regra;
    - `preco_antes`, quando houver;
    - na Queen (2) e em sábado, a `excecao` correta, quando for o caso.

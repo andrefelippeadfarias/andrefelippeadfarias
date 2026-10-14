@@ -296,5 +296,69 @@ class TestMesclar(unittest.TestCase):
         self.assertEqual([c for c, _ in quartos_velhos({"rooms": {"VK7": quarto, "Q7": {"last_refreshed_at": "2026-10-13T11:00:00+00:00"}}}, 6, agora)], ["VK7"])
 
 
+class TestFaixas(unittest.TestCase):
+    def test_cortes_e_faixa(self):
+        from faixas_de_preco import cortes, faixa, quantil
+        vals = [100, 200, 300, 400, 500, 600, 700, 800, 900, 1000]
+        self.assertEqual(cortes(vals), [280.0, 460.0, 640.0, 820.0])
+        self.assertEqual(quantil([5], 50), 5.0)
+        c = [200, 400, 600, 800]
+        self.assertEqual([faixa(p, c) for p in (100, 200, 399, 600, 799, 800, 5000)], [0, 1, 1, 3, 3, 4, 4])
+
+    def test_regra_de_flutuacao(self):
+        from faixas_de_preco import acao_sugerida as a
+        # esgotada: nada
+        self.assertEqual(a(2, 2, 1.0, 0.7, True, 5)[1], 0)
+        # atrás da meta: desce; em alto desce mais
+        self.assertEqual(a(2, 2, 0.2, 0.7, False, 5)[1], -10)
+        self.assertEqual(a(3, 2, 0.2, 0.7, False, 5)[1], -15)
+        # atrás, mas já uma faixa abaixo do alvo: segura (Regra I cuida de D0 a D3)
+        self.assertEqual(a(1, 2, 0.2, 0.7, False, 5)[1], 0)
+        # atrás, em "baixo", a mais de 3 dias: não desce abaixo de baixo
+        self.assertEqual(a(1, 3, 0.1, 0.5, False, 10)[1], 0)
+        # à frente: sobe até alvo+1
+        self.assertEqual(a(2, 2, 0.9, 0.7, False, 5)[1], 10)
+        self.assertEqual(a(3, 2, 0.9, 0.7, False, 5)[1], 0)
+        self.assertEqual(a(4, 4, 0.9, 0.7, False, 5)[1], 0)
+        # na meta: aproxima devagar
+        self.assertEqual(a(0, 2, 0.6, 0.7, False, 5)[1], 5)
+        self.assertEqual(a(4, 2, 0.6, 0.7, False, 5)[1], -5)
+        self.assertEqual(a(2, 2, 0.6, 0.7, False, 5)[1], 0)
+
+    def test_meta_da_janela(self):
+        from faixas_de_preco import meta_da_janela
+        self.assertEqual([meta_da_janela(CFG, d) for d in (0, 6, 7, 14, 15, 29, 30, 44, 45, 90)],
+                         [0.7, 0.7, 0.5, 0.5, 0.35, 0.35, 0.25, 0.25, 0.15, 0.15])
+
+    def test_juntar_varredura_e_conjuntos(self):
+        from faixas_de_preco import juntar_varredura, tabela_mercado, conjunto
+        res = {"datas": [
+            {"rotulo": "semana-20/10-baixa", "checkin": "2026-10-20", "checkout": "2026-10-22", "noites": 2, "tipo": "semana",
+             "props": [{"id": i, "name": f"h{i}", "stars": 3, "score": 8.5, "price_total": 400 * i, "jacuzzi": False, "spa": False, "pool": False} for i in range(1, 8)]},
+            {"rotulo": "semana-20/10-alta", "checkin": "2026-10-20", "checkout": "2026-10-22", "noites": 2, "tipo": "semana",
+             "props": [{"id": 7, "name": "h7", "stars": 3, "score": 8.5, "price_total": 2000, "jacuzzi": False, "spa": False, "pool": False},
+                       {"id": 15459723, "name": "Recanto", "stars": 5, "score": 8.4, "price_total": 1800, "jacuzzi": True, "spa": False, "pool": False, "nosso": True}]},
+        ]}
+        v = juntar_varredura(res)
+        self.assertEqual(set(v), {"semana-20/10"})
+        self.assertEqual(v["semana-20/10"]["props"][7]["noite"], 1000.0)  # duplicata: fica o menor preço
+        tab = tabela_mercado(v)
+        self.assertEqual(tab["semana-20/10"]["conjuntos"]["geral"]["n"], 7)  # os nossos ficam fora
+        self.assertEqual(tab["semana-20/10"]["nossos"], {"Recanto": 900.0})
+        self.assertEqual(len(conjunto(list(v["semana-20/10"]["props"].values()), "recanto")), 0)
+
+
+class TestSazonalidade(unittest.TestCase):
+    def test_calendario_cobre_cada_noite_uma_vez(self):
+        from sazonalidade import carregar, validar, periodo, datas_especiais
+        cal = carregar()
+        self.assertEqual(validar(cal), [])
+        p = periodo(cal, date(2027, 7, 9))
+        self.assertEqual((p["nivel"], p["faixa_alvo"], p["estadia_minima"]), ("muito alta", "muito alto", 3))
+        # sexta e quarta do mesmo intervalo caem em períodos diferentes
+        self.assertNotEqual(periodo(cal, date(2026, 11, 6))["nome"], periodo(cal, date(2026, 11, 4))["nome"])
+        self.assertTrue(any("Finados" in x["nome"] for x in datas_especiais(cal, date(2026, 10, 31))))
+
+
 if __name__ == "__main__":
     unittest.main()

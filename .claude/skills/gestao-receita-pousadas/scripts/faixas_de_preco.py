@@ -1,0 +1,207 @@
+"""Faixas de preço de mercado: muito baixo, baixo, médio, alto e muito alto.
+
+Pedido do dono (13/10/2026): qualificar os preços em cinco faixas, medidas contra toda a concorrência,
+para flutuar e ajustar em percentual conforme o plano e manter as metas de ocupação.
+
+Como funciona
+- A varredura da Booking (workflow `varredura-concorrencia`) devolve, por conjunto de datas, todas as
+  propriedades disponíveis com o preço total da estadia. O preço por noite é o total ÷ noites.
+- Em cada data e em cada conjunto de comparação, as faixas são os quintis do preço por noite:
+  muito baixo (abaixo do 20º percentil), baixo (20º a 40º), médio (40º a 60º), alto (60º a 80º),
+  muito alto (acima do 80º).
+- O preço NOSSO entra na comparação pelo que o hóspede vê na Booking (vitrine): enviado × razão
+  vitrine÷enviado de cada quarto (`quartos.json`, `fator_vitrine_*`). Para dias sem busca usa-se o
+  tipo de dia (semana, fim de semana, feriado/evento).
+
+Uso
+  python3 faixas_de_preco.py mercado <varredura.json>
+      tabela de cortes por data e por conjunto, e onde estão os nossos dois hotéis
+  python3 faixas_de_preco.py quartos <coleta.json> <mercado.json> [--dias 21]
+      faixa de cada noite de cada quarto e a ação sugerida (ver `acao_sugerida`)
+"""
+
+from __future__ import annotations
+
+import argparse
+import json
+import sys
+from datetime import date, timedelta
+
+FAIXAS = ["muito baixo", "baixo", "médio", "alto", "muito alto"]
+EMOJI = ["🟣", "🔵", "🟢", "🟠", "🔴"]
+PERCENTIS = (20, 40, 60, 80)
+NOSSOS = {15459723: "Recanto", 14824789: "Villa"}
+
+
+def quantil(valores: list[float], p: float) -> float:
+    """Percentil p (0 a 100) com interpolação linear. Lista vazia dá erro."""
+    v = sorted(valores)
+    if not v:
+        raise ValueError("sem valores")
+    if len(v) == 1:
+        return float(v[0])
+    k = (len(v) - 1) * p / 100
+    i = int(k)
+    f = k - i
+    return float(v[i] + (v[min(i + 1, len(v) - 1)] - v[i]) * f)
+
+
+def cortes(valores: list[float], percentis=PERCENTIS) -> list[float]:
+    return [round(quantil(valores, p), 2) for p in percentis]
+
+
+def faixa(preco: float, cortes_: list[float]) -> int:
+    """0 muito baixo, 1 baixo, 2 médio, 3 alto, 4 muito alto. Igual ao corte sobe para a faixa de cima."""
+    for i, c in enumerate(cortes_):
+        if preco < c:
+            return i
+    return 4
+
+
+# --- varredura -----------------------------------------------------------------------------------
+
+def juntar_varredura(resultado: dict) -> dict:
+    """Agrupa as partes (baixa/alta) de cada data e as buscas de cobertura.
+
+    Devolve {rotulo_da_data: {"checkin","checkout","noites","tipo","props":{id:{...,"noite":preço por noite}}}}.
+    Duplicatas pelo id: vale o menor preço (a Booking mostra o preço de entrada do hotel)."""
+    saida: dict = {}
+    for r in resultado.get("datas", []):
+        if not r:
+            continue
+        rot = r["rotulo"].rsplit("-", 1)[0]
+        d = saida.setdefault(rot, {"checkin": r["checkin"], "checkout": r["checkout"],
+                                   "noites": max(1, int(r.get("noites") or 1)), "tipo": r.get("tipo", ""), "props": {}})
+        _acumular(d, r)
+    # a cobertura por tipo de acomodação acrescenta propriedades (hostel, apartamento, casa) nas 3 datas de referência
+    mapa_cob = {"cobertura-semana-20/10": "semana-20/10", "cobertura-fds-23/10": "fimdesemana-23/10",
+                "cobertura-finados-30/10": "finados-30/10"}
+    for r in resultado.get("cobertura", []) or []:
+        if not r:
+            continue
+        rot = mapa_cob.get(r["rotulo"])
+        if rot and rot in saida:
+            _acumular(saida[rot], r)
+    return saida
+
+
+def _acumular(d: dict, r: dict) -> None:
+    n = d["noites"]
+    for p in r.get("props", []):
+        if not p.get("price_total") or p["price_total"] <= 0:
+            continue
+        noite = p["price_total"] / n
+        atual = d["props"].get(p["id"])
+        if atual is None or noite < atual["noite"]:
+            d["props"][p["id"]] = {**p, "noite": round(noite, 2)}
+
+
+def conjunto(props: list[dict], nome: str) -> list[dict]:
+    """Conjuntos de comparação.
+    - geral: todos (sem os nossos);
+    - recanto: pares do Recanto, com jacuzzi ou spa e 4 a 5 estrelas ou nota de 8,0 para cima;
+    - villa: pares da Villa, até 4 estrelas e nota de 7,0 a 9,2, com ou sem jacuzzi."""
+    sem_nos = [p for p in props if p["id"] not in NOSSOS]
+    if nome == "geral":
+        return sem_nos
+    if nome == "recanto":
+        return [p for p in sem_nos if (p["jacuzzi"] or p["spa"]) and (p["stars"] >= 4 or p["score"] >= 8.0)]
+    if nome == "villa":
+        return [p for p in sem_nos if 0 < p["stars"] <= 4 and 7.0 <= p["score"] <= 9.2]
+    raise ValueError(nome)
+
+
+def tabela_mercado(varr: dict) -> dict:
+    """{rotulo: {"tipo","noites","checkin","conjuntos":{nome:{"n","cortes","mediana"}},"nossos":{nome:preco por noite}}}"""
+    saida = {}
+    for rot, d in varr.items():
+        props = list(d["props"].values())
+        conj = {}
+        for nome in ("geral", "recanto", "villa"):
+            vals = [p["noite"] for p in conjunto(props, nome)]
+            if len(vals) >= 5:
+                conj[nome] = {"n": len(vals), "cortes": cortes(vals), "mediana": round(quantil(vals, 50), 2)}
+        nossos = {NOSSOS[p["id"]]: p["noite"] for p in props if p["id"] in NOSSOS}
+        saida[rot] = {"tipo": d["tipo"], "noites": d["noites"], "checkin": d["checkin"],
+                      "conjuntos": conj, "nossos": nossos}
+    return saida
+
+
+def cortes_por_tipo(tab: dict, conjunto_: str) -> dict:
+    """Cortes típicos por tipo de dia: mediana dos cortes das datas daquele tipo."""
+    por_tipo: dict[str, list[list[float]]] = {}
+    for d in tab.values():
+        c = d["conjuntos"].get(conjunto_)
+        if c:
+            por_tipo.setdefault(d["tipo"], []).append(c["cortes"])
+    return {t: [round(quantil([c[i] for c in lst], 50), 2) for i in range(4)] for t, lst in por_tipo.items()}
+
+
+# --- nossos quartos ------------------------------------------------------------------------------
+
+def tipo_do_dia(d: date, feriados: set[date]) -> str:
+    if d in feriados:
+        return "feriado"
+    if d.weekday() in (4, 5):
+        return "fim de semana"
+    return "semana"
+
+
+def acao_sugerida(f: int, ocupacao: float, meta: float, esgotada: bool, dias_ate: int) -> tuple[str, int]:
+    """(texto, passo em %) pela faixa atual e pela ocupação da noite contra a meta da janela.
+
+    Situação da noite: atrás (menos de metade da meta... ver abaixo), na meta, à frente.
+      atrás:      ocupação < meta - 0,20
+      na meta:    meta - 0,20 <= ocupação < meta + 0,10
+      à frente:   ocupação >= meta + 0,10 (inclui esgotada)
+    Passo: descer 10% (15% se a faixa for alta ou muito alta) quando atrás; subir 10% quando à frente;
+    segurar na meta. Nas faixas muito baixa não se desce (o piso e a Regra I mandam); na muito alta não se sobe
+    (teto de mercado). Esgotada: nada a mudar agora, só proteger com piso."""
+    if esgotada:
+        return ("esgotada: manter piso de proteção", 0)
+    if ocupacao < meta - 0.20:
+        if f == 0:
+            return ("atrás da meta, já na faixa mais baixa: só a Regra I (D0 a D3)", 0)
+        return ("atrás da meta: descer uma faixa", -15 if f >= 3 else -10)
+    if ocupacao >= meta + 0.10:
+        if f == 4:
+            return ("à frente da meta, já na faixa mais alta: segurar", 0)
+        return ("à frente da meta: subir uma faixa", 10)
+    return ("na meta: segurar", 0)
+
+
+def meta_da_janela(cfg: dict, dias_ate: int) -> float:
+    """Meta de ocupação (0 a 1) da janela em que a noite cai: 0-6 dias 70%, 7-14 50%, 15-29 35%, 30-44 25%, 45+ 15%."""
+    m = cfg["metas"]
+    for lim in (7, 15, 30, 45):
+        if dias_ate < lim:
+            return float(m[str(lim)]) / 100
+    return float(m["60"]) / 100
+
+
+def main(argv=None) -> int:
+    ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
+    sub = ap.add_subparsers(dest="cmd", required=True)
+    m = sub.add_parser("mercado")
+    m.add_argument("varredura")
+    m.add_argument("--json")
+    a = ap.parse_args(argv)
+    if a.cmd == "mercado":
+        with open(a.varredura, encoding="utf-8") as f:
+            texto = f.read()
+        dados = json.loads(texto[texto.find("{"):])
+        dados = dados.get("result", dados)
+        tab = tabela_mercado(juntar_varredura(dados))
+        for rot, d in sorted(tab.items(), key=lambda kv: kv[1]["checkin"]):
+            print(f"## {rot} ({d['tipo']}, {d['noites']} noite(s))")
+            for nome, c in d["conjuntos"].items():
+                print(f"  {nome:8} n={c['n']:3}  cortes por noite {c['cortes']}  mediana {c['mediana']}")
+            print(f"  nossos (por noite): {d['nossos']}")
+        if a.json:
+            with open(a.json, "w", encoding="utf-8") as f:
+                json.dump(tab, f, ensure_ascii=False, indent=1)
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())

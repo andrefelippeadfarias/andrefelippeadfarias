@@ -67,7 +67,7 @@ Festas de fim de ano = Natal + Réveillon + 8 noites de ombro (18 a 23 e 27 a 28
 
 ## 6. Metas do dono (14/10) e os três níveis de operação
 
-Você fixou as metas: **baixa temporada, Villa R$ 150 mil e Recanto R$ 220 mil; alta temporada, Villa no mínimo R$ 300 mil e Recanto R$ 350 mil.** Li como faturamento **mensal por pousada** (se for por temporada inteira, avise que refaço). Por decisão sua (14/10), a alta destes 6 meses é dezembro e janeiro e, no ano, também o inverno (junho a agosto); outubro, novembro, fevereiro, março e abril são baixa.
+Você fixou as metas: **baixa temporada, Villa R$ 150 mil e Recanto R$ 220 mil; alta temporada, Villa no mínimo R$ 300 mil e Recanto R$ 350 mil.** Li como faturamento **mensal por pousada** (confirmado por você em 14/10, inclusive o Recanto R$ 350 mil na alta: "Esse é o objetivo"). Por decisão sua (14/10), a alta destes 6 meses é dezembro e janeiro e, no ano, também o inverno (junho a agosto); outubro, novembro, fevereiro, março e abril são baixa.
 
 | Pousada e temporada | Mínimo (sua meta) | RevPAR exigido (R$ por unidade-noite) | Realista (estratégia atual a pleno, índice 1,70/1,50) | Máximo (índice 2,0/1,8: topo da faixa alvo e ocupação nas metas de ritmo) | Hoje (ritmo atual, índice 1,35/1,20) |
 |---|---|---|---|---|---|
@@ -86,6 +86,7 @@ Leitura honesta: na **Villa**, sua meta da baixa (R$ 150 mil) cabe no realista (
 - **Modo volume** (livro atrás do menor limiar, realista ou seu mínimo, no ritmo esperado): todos os quartos da pousada agem como classe baixa: a flutuação pode descer um degrau já na meta (até a faixa alvo −1), corte de última hora pleno em D0 a D3, dias úteis no mínimo do quarto, sábado abaixo de 50% vira sugestão de liberar 1 noite. Objetivo: diárias.
 - **Modo padrão** (entre os dois limiares; o menor deles é a linha de baixo e o maior a de cima: na Villa em baixa o seu mínimo fica abaixo do realista, nos outros casos acima): as regras de hoje, classe de cada quarto.
 - **Modo preço** (no seu mínimo ou acima): todos os quartos agem como classe alta: +5% já na meta até a faixa alvo +1, +10% à frente até alvo +2, corte de última hora só na última unidade, base do anúncio +5% a +10% na segunda. Objetivo: diária.
+- **De olho na lotação (sua decisão de 14/10):** o modo preço só vale com a pousada na meta de ocupação em pelo menos 2 das janelas de 7, 15 e 30 dias (70%, 50% e 35%); se não, fica em padrão. Noite atrás da meta de ocupação desce um degrau em qualquer modo.
 - As travas não mudam em nenhum modo: padrão de qualidade de R$ 1.000, pisos de feriado, descontos da Booking, sábado sozinho fechado, ±15% da base por semana. O modo nunca é mudado pela rotina leve.
 - **Ritmo esperado do livro** (referência inicial, recalibrada todo mês): 40% do realista no primeiro dia do mês, 65% no dia 15, 80% a 7 dias do fim; em setembro, 34% das diárias vieram com 0 a 1 dia de antecedência.
 

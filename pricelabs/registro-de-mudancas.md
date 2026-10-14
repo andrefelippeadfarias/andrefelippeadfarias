@@ -1466,6 +1466,12 @@ A Villa não aparece em nenhuma busca com filtro de hidro (falta a comodidade na
 - **Leitura:** pelo mercado do ano passado, janeiro tem realista de R$ 206 mil no Recanto e R$ 192 mil na Villa; a sua meta fica 45% e 30% acima do máximo. Livro de janeiro hoje: R$ 26 mil.
 - **Nada gravado no PriceLabs.**
 
+## 14/10/2026, 18:20 — Decisão sua: metas mantidas, de olho na lotação
+
+- **Você disse:** "Sim. Esse é o objetivo. Vamos trabalhar para isso. Porém devemos sempre ficar de olho na lotação." As metas ficam como estão, inclusive o Recanto R$ 350 mil na alta, acima do máximo calculado.
+- **Trava de lotação nova (`regras.md` 4c):** noite atrás da meta de ocupação da janela (7 dias 70%, 15 dias 50%, 30 dias 35%) desce um degrau em qualquer modo; o modo preço só vale com a pousada na meta de ocupação em pelo menos 2 das 3 janelas; a rotina completa confere todo dia e rebaixa para padrão quando falhar; o relatório abre com a ocupação antes do faturamento.
+- **Nada gravado no PriceLabs.** Hoje as duas pousadas estão em modo padrão.
+
 > **Regras em vigor:** desde 06/10/2026 elas ficam em `.claude/skills/gestao-receita-pousadas/references/regras.md`. Este arquivo guarda só o histórico das mudanças.
 
 ## O que só pode ser feito na tela (passo a passo para você)

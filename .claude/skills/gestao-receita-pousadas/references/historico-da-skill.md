@@ -176,3 +176,8 @@ Hora da ANÁLISE E AGENDA DIÁRIA do PriceLabs (rotina "Agenda diária PriceLabs
 - **Mudança:** `metas_faturamento.py` (`DONO.meses_alta` com 2027-01; temporadas: alta = dezembro e janeiro, festas como linha de detalhe, baixa = novembro, fevereiro e março; leitura de janeiro calculada na seção 6), `metas_faturamento.json` e o documento regenerados; `regras.md` 6a.
 - **Sem mudança:** `sazonalidade.json` (nível de demanda por noite) e travas.
 - **Como desfazer:** tirar 2027-01 de `meses_alta` e regenerar.
+
+## 14/10/2026, 18:20 — Metas mantidas e trava de lotação (dono)
+- **Decisão do dono:** "Sim . Esse é o objetivo . Vamos trabalhar para isso . Porém devemos sempre ficar de olho na lotação ."
+- **Mudança (texto):** `regras.md` 4c (trava de lotação) e 6a; `estrategia.md`; `SKILL.md` (revisão semanal e rotina completa); documento de metas (seção 6) regenerado.
+- **Como desfazer:** apagar o item "Trava de lotação" de `regras.md` 4c.

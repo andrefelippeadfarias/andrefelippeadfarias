@@ -203,6 +203,13 @@
    "desde": "2026-10-14",
    "urgencia": 3,
    "texto": "Natal: 24 a 26/12 aparecem com 3 noites no calendário (origem não identificada: personalização ou Beds24); a rotina gravou 2 noites em 24 e 25/12 pela sazonalidade. Conferir no recálculo se o PriceLabs respeitou 2 e se o Beds24 não impõe 3."
+  },
+  {
+   "id": "conferir-gravacao-1410",
+   "responsavel": "skill",
+   "desde": "2026-10-14",
+   "urgencia": 1,
+   "texto": "Rotina completa de 14/10: Queen 7, Double, VK7, VK2 e Balcony gravados (232 regras, API devolveu iguais) mas sem recálculo de conferência (429, janela móvel de 24 h). Conferir com get_listing_prices depois do envio da tarde (13:53/16:53): ler_recalculo.py --plano scratchpad/plano_1410.json; Queen 7 15/10 piso 640; Balcony 18–22/10 690/770; Double 19–21/10 945/990; VK7 23–24/10 1.243; Natal/Réveillon 2 e 3 noites."
   }
  ],
  "versao": "2026-10-14T15"

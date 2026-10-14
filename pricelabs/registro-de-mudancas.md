@@ -1519,6 +1519,18 @@ A Villa não aparece em nenhuma busca com filtro de hidro (falta a comodidade na
 
 - **Atenção à lotação:** a Queen 7 em 23/10 tem 1 de 7 vendida e em 24/10 tem 3 de 7, e o preço sobe de R$ 1.144 para R$ 1.396. A partir de agora a flutuação não desce abaixo desse piso; se o fim de semana não vender, a rotina avisa, mas não corta abaixo dos R$ 850 no preço final sem ordem sua.
 
+## 14/10/2026, 21:10 — Lembrete seu: correções sempre em percentual
+
+- **Você disse:** "Lembre-se tem ser correções percentuais". Todas as regras por data de hoje já estavam em percentual da base. A exceção era o mínimo do anúncio da VK7 e da King Spa 2, que eu tinha subido em reais na rodada das 20:00.
+- **O que fiz:** primeiro gravei 168 pisos por data em percentual nas noites de domingo a quinta, fora de feriado, que dependiam só do mínimo do anúncio. São 90 na VK7, de 05/11/2026 a 29/04/2027, e 78 na King Spa 2, de 03/01 a 29/04/2027. O piso é −36% na VK7, R$ 947, e −25% na King Spa 2, R$ 953. Em 20 a 23/12 e 27 e 28/12, a VK7 ficou no preço atual dela, para a Balcony seguir 10% abaixo. Depois voltei o mínimo do anúncio a R$ 850 e R$ 765. As 7 chamadas deram 200, sem divergência, e nenhuma dessas datas tinha regra antes.
+- **Trava nova:** o validador barra qualquer mudança de base, mínimo ou máximo do anúncio sem ordem sua. A partir de agora, toda correção é percentual por data.
+- **Pendência:** no dia 1 de cada mês, a rotina estende esses pisos por mais um mês.
+
+| Mudança | Onde | Antes | Depois | Como desfazer (pedir ao Claude) |
+|---|---|---|---|---|
+| Piso de R$ 500 no preço final em % por data | VK7 90 noites; King Spa 2 78 noites, até 29/04/2027 | mínimo do anúncio R$ 944 / R$ 879 | piso −36% / −25% da base | "Apague os pisos de semana de 2027 da VK7 e da King Spa 2" |
+| Mínimo do anúncio de volta | VK7; King Spa 2 | R$ 944; R$ 879 | R$ 850; R$ 765 | "Suba o mínimo do anúncio" (só com ordem sua) |
+
 > **Regras em vigor:** desde 06/10/2026 elas ficam em `.claude/skills/gestao-receita-pousadas/references/regras.md`. Este arquivo guarda só o histórico das mudanças.
 
 ## O que só pode ser feito na tela (passo a passo para você)

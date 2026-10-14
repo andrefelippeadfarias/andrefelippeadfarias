@@ -268,7 +268,9 @@
    "responsavel": "skill",
    "desde": "2026-10-14",
    "urgencia": 1,
-   "texto": "King Spa 2: mínimo do anúncio subiu de R$ 765 para R$ 879 em 14/10 (limite de +15% por semana). Na revisão de 21/10 ou depois, subir para R$ 944 (R$ 500 no preço final ÷ 0,53) e conferir a referência semanal. Até lá, os pisos por data até 02/01 garantem os R$ 500; depois de 02/01 vale R$ 879 (≈ R$ 466 na vitrine)."
+   "texto": "King Spa 2: mínimo do anúncio subiu de R$ 765 para R$ 879 em 14/10 (limite de +15% por semana). Na revisão de 21/10 ou depois, subir para R$ 944 (R$ 500 no preço final ÷ 0,53) e conferir a referência semanal. Até lá, os pisos por data até 02/01 garantem os R$ 500; depois de 02/01 vale R$ 879 (≈ R$ 466 na vitrine).",
+   "resolvido_em": "2026-10-15T00:10",
+   "resolucao": "Superada pela ordem do dono \"Lembre-se tem ser correções percentuais\": o mínimo do anúncio voltou a R$ 765 (VK7 R$ 850) e o piso de R$ 500 no preço final ficou em pisos por data em percentual até 30/04/2027."
   },
   {
    "id": "fator-vitrine-villa",
@@ -276,6 +278,13 @@
    "desde": "2026-10-14",
    "urgencia": 2,
    "texto": "O piso de R$ 500 no preço final usa vitrine ÷ enviado de 0,53 na Villa, medido na Balcony (R$ 446 ÷ 842). Medir VK7 e King Spa 2 na Booking em dia de semana (busca de 1 noite com cada uma como mais barata livre) e recalibrar parametros.fator_vitrine_semana na revisão de segunda; se for maior, os pisos descem."
+  },
+  {
+   "id": "pisos-semana-horizonte",
+   "responsavel": "skill",
+   "desde": "2026-10-14",
+   "urgencia": 2,
+   "texto": "VK7 e King Spa 2: o piso de R$ 500 no preço final de domingo a quinta está em pisos por data em percentual até 30/04/2027 (o mínimo do anúncio, R$ 850 e R$ 765, dá menos que isso). No dia 1 de cada mês, a rotina completa estende os pisos por mais um mês (gerador: varrer noites sem regra por data com piso abaixo de R$ 500 ÷ fator de vitrine)."
   }
  ],
  "versao": "2026-10-14T23"

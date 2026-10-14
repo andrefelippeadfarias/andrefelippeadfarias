@@ -194,3 +194,9 @@ Hora da ANÁLISE E AGENDA DIÁRIA do PriceLabs (rotina "Agenda diária PriceLabs
 - **Mudança (código, 46 testes):** `validar_plano.piso_vitrine_semana(fds=True)` em sexta e sábado fora de feriado; testes do padrão de qualidade atualizados.
 - **Mudança (dados):** `limites_seguranca.piso_vitrine_fds_suites` 850; `parametros.fator_vitrine_fds` Recanto 0,61 e Villa 0,66; pendência do padrão de qualidade fechada.
 - **Como desfazer:** só com ordem do dono; as regras por data têm o valor de antes no registro.
+
+## 14/10/2026, 21:10 — Correções só em percentual (dono)
+- **Decisão do dono:** "Lembre-se tem ser correções percentuais".
+- **Mudança (PriceLabs):** mínimo do anúncio da VK7 (944 → 850) e da King Spa 2 (879 → 765) voltou ao valor de antes; o piso de R$ 500 no preço final das noites de domingo a quinta sem regra por data foi para 168 pisos por data em percentual (VK7 90, King Spa 2 78) até 30/04/2027.
+- **Mudança (código):** `validar_plano.validar_anuncio` dá ERRO para mudar base, mínimo ou máximo do anúncio sem `excecao: "dono"`; teste atualizado; `regras.md` (forma de gravar, piso de semana, 6a) e documento de metas (modo preço sobe pisos por data, não a base).
+- **Como desfazer:** só com ordem do dono.

@@ -1,5 +1,5 @@
 {
- "versao": "2026-10-14T14",
+ "versao": "2026-10-14T17",
  "nota": "Fonte única dos dados de máquina da Skill. Os scripts leem daqui. Quem mudar base, mínimo ou máximo no PriceLabs atualiza este arquivo no mesmo commit.",
  "pms": "beds24",
  "grupo": {
@@ -247,24 +247,26 @@
   {
    "nome": "Natal",
    "inicio": "2026-12-24",
-   "fim": "2026-12-25",
+   "fim": "2026-12-26",
    "piso_real": 1000,
-   "nota": "Piso padrão R$ 1.000 reais (regras.md, feriado novo); a Skill pode ajustar pelos dados, nunca abaixo de R$ 800. Natal e Réveillon são picos em qualquer dia da semana (exceção à regra do feriado em fim de semana)."
+   "nota": "Piso padrão R$ 1.000 reais (regras.md, feriado novo); a Skill pode ajustar pelos dados, nunca abaixo de R$ 800. Natal e Réveillon são picos em qualquer dia da semana (exceção à regra do feriado em fim de semana). Janela alinhada à sazonalidade em 14/10: noites 24 a 26/12 (sábado 26/12 é alta no calendário), 2 noites.",
+   "estadia_minima": 2
   },
   {
    "nome": "Réveillon",
-   "inicio": "2026-12-30",
-   "fim": "2027-01-01",
+   "inicio": "2026-12-29",
+   "fim": "2027-01-02",
    "piso_real": 1000,
-   "nota": "Piso padrão R$ 1.000 reais (regras.md, feriado novo); a Skill pode ajustar pelos dados, nunca abaixo de R$ 800. Natal e Réveillon são picos em qualquer dia da semana (exceção à regra do feriado em fim de semana)."
+   "nota": "Piso padrão R$ 1.000 reais (regras.md, feriado novo); a Skill pode ajustar pelos dados, nunca abaixo de R$ 800. Natal e Réveillon são picos em qualquer dia da semana (exceção à regra do feriado em fim de semana). Janela alinhada à sazonalidade em 14/10: noites 29/12 a 2/1 (muito alta), 3 noites.",
+   "estadia_minima": 3
   },
   {
    "nome": "Aniversário de São Paulo (feriadão paulistano)",
    "inicio": "2027-01-22",
    "fim": "2027-01-24",
-   "piso_real": 1000,
+   "piso_real": 800,
    "fonte": "sazonalidade.json (pesquisa de 13/10/2026)",
-   "nota": "Piso padrão R$ 1.000 reais (regras.md, feriado novo); a Skill pode ajustar pelos dados, nunca abaixo de R$ 800."
+   "nota": "Piso R$ 800 reais (14/10): feriado fraco (mercado de janeiro = novembro, 36%/45%; Tiradentes isolado na quarta, nível médio na sazonalidade); dentro da regra (padrão R$ 1.000, ajustável pelos dados, nunca abaixo de R$ 800)."
   },
   {
    "nome": "Carnaval",
@@ -286,9 +288,9 @@
    "nome": "Tiradentes (isolado, quarta)",
    "inicio": "2027-04-20",
    "fim": "2027-04-21",
-   "piso_real": 1000,
+   "piso_real": 800,
    "fonte": "sazonalidade.json (pesquisa de 13/10/2026)",
-   "nota": "Piso padrão R$ 1.000 reais (regras.md, feriado novo); a Skill pode ajustar pelos dados, nunca abaixo de R$ 800."
+   "nota": "Piso R$ 800 reais (14/10): feriado fraco (mercado de janeiro = novembro, 36%/45%; Tiradentes isolado na quarta, nível médio na sazonalidade); dentro da regra (padrão R$ 1.000, ajustável pelos dados, nunca abaixo de R$ 800)."
   },
   {
    "nome": "Corpus Christi (abertura da temporada de inverno)",

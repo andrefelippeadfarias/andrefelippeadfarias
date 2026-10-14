@@ -1,66 +1,71 @@
 # Metas e previsão de faturamento: outubro de 2026 a abril de 2027
 
-Pedido do dono em 14/10/2026: "definir metas para faturamento da baixa e da alta temporada, já considerando os feriados dos próximos 6 meses", com as previsões "mantendo os números favoráveis aos ajustes que estamos fazendo no PriceLabs".
+Pedido do dono em 14/10/2026: metas de faturamento da baixa e da alta temporada, com os feriados dos próximos 6 meses, e previsões coerentes com os ajustes que estamos fazendo no PriceLabs. Versão 2 (revisada por três revisores independentes de IA; gerada por `scripts/metas_faturamento.py`).
 
-**Faturamento aqui = valor das diárias registrado no Beds24 e lido pelo PriceLabs (campo "revenue", o que o hóspede paga pela hospedagem, sem extras).** É o mesmo número do relatório do PriceLabs, então as metas podem ser conferidas lá todo mês.
+**O que chamamos de faturamento:** o valor das diárias de cada reserva como está no Beds24 (campo "revenue" do PriceLabs), **antes** da comissão da Booking e do Airbnb e sem extras. É o número do relatório "Revenue On The Books" do PriceLabs, por mês de estadia, e é por ele que a rotina vai acompanhar as metas. Atenção: nas reservas do Airbnb esse campo chega ao PriceLabs com cerca de 40% a menos do que o hóspede paga (mapeamento do Beds24; pendência sua).
 
 ## 1. De onde vêm os números
-- **Só temos histórico próprio desde agosto de 2026** (a conexão Beds24 → PriceLabs começou em 27/08). Setembro é o único mês cheio: **R$ 324.612**, 511 diárias de 930 (55%), diária média R$ 635. Outubro está em **R$ 238.221** no livro para o mês inteiro (1 a 31/10, lido em 14/10), com 48% de ocupação de 1 a 13/10 e diária média R$ 559.
-- **O mercado de Campos do Jordão** (PriceLabs, vizinhanças do Recanto e da Villa): ocupação e diária média realizadas em cada mês do ano passado, e o ritmo de reservas de hoje contra o mesmo ponto do ano passado (outubro e janeiro no ritmo; novembro e dezembro um pouco atrás).
-- **Nosso índice contra o mercado** (RevPAR nosso ÷ RevPAR do mercado no mesmo mês): Recanto 1,48 em setembro e 1,64 em outubro; Villa 1,25 e 1,29. Ou seja, com a estratégia atual faturamos por unidade cerca de 1,5 vez (Recanto) e 1,25 vez (Villa) o que o mercado fatura.
-- **Previsão de cada mês = RevPAR do mercado no mesmo mês do ano passado × 1,05 (o mercado anuncia 8% a 15% acima do ano passado; assumimos 5% realizado) × nosso índice × unidades × dias.** Três cenários: **piso** (índice 1,15 Recanto / 1,00 Villa: se a estratégia deixar de render), **previsão base** (1,45 / 1,25: o que estamos fazendo hoje) e **meta** (1,70 / 1,50: o que a flutuação por faixas e a ocupação nas metas de ritmo devem entregar). Nenhum cenário fica abaixo do que já está no livro.
-- Ajuste feito à mão: a Páscoa de 2027 cai em março (no ano passado caiu em abril); movi o efeito dela de abril para março.
-- Os feriados foram calculados à parte, por noites × 31 unidades × ocupação × diária real (o que o hóspede paga por noite, com os pisos de feriado da skill: R$ 800 a R$ 1.000 reais).
+- **Só há histórico nosso desde 27/08/2026** (início da conexão Beds24 → PriceLabs). Setembro é o único mês cheio: **R$ 324.612**, 511 diárias de 950 (54%), diária média R$ 635. De 1 a 14/10: 48% de ocupação, diária média R$ 559. Outubro inteiro já tem **R$ 238.221** no livro (realizado 1 a 13/10 R$ 118 mil + reservas de 14 a 31/10 R$ 120 mil).
+- **O mercado** é a vizinhança de cada pousada no PriceLabs (anúncios Studio/1 quarto do Airbnb, cerca de 200 por vizinhança): ocupação e diária média realizadas em cada mês do ano passado. O ritmo de reservas do mercado para os próximos meses está no nível do ano passado (outubro e janeiro iguais; novembro e dezembro um pouco atrás).
+- **Nosso índice contra o mercado** (nosso RevPAR ÷ RevPAR do mercado no mesmo mês do mesmo ano): setembro Recanto **1,48** e Villa **1,25**; de 1 a 14/10 o portfólio caiu para **1,25**. Ou seja: faturamos por unidade entre 1,25 e 1,5 vez o mercado. O cenário base usa 1,35 (Recanto) e 1,20 (Villa), entre setembro e a queda de outubro; a meta usa 1,70 e 1,50, que é o que a flutuação por faixas e as metas de ritmo de ocupação (70% a 7 dias, 50% a 15, 35% a 30) devem entregar; o piso usa 1,15 e 1,00.
+- **Previsão do mês = RevPAR do mercado no mesmo mês do ano passado × crescimento × índice × unidades × dias**, por pousada. Crescimento: 1,05 na base e na meta (o mercado pede hoje de 3% a 28% acima do ano passado; nas reservas já feitas, de −8% a +28% conforme o mês; o RevPAR do mercado oscilou de −37% a +35% contra o ano anterior nos últimos 12 meses), 1,00 no piso. Teto de 95% de ocupação nos meses com pico (novembro, dezembro, fevereiro e abril no Recanto). Nenhum mês fica abaixo do livro.
+- **Outubro:** livro do mês inteiro + última hora (setembro vendeu 6,6 diárias por dia com 0 a 1 dia de antecedência): base + R$ 27 mil (metade do ritmo de setembro), meta + R$ 60 mil (ritmo cheio).
+- **Páscoa:** em 2027 cai em março (no ano passado, abril): março recebe o efeito líquido da Páscoa da tabela de feriados (meta do feriado menos 3 noites comuns) e abril perde R$ 4 mil (o pouco que a Páscoa de 2026 pôs no mercado de abril).
+- **Feriados:** vendido até 14/10 + (ocupação-alvo × diárias − já vendidas) × diária real por noite (o que o hóspede paga), nunca abaixo do piso de feriado da skill (R$ 800 reais; R$ 1.000 no Natal, Réveillon, Carnaval e Páscoa). As metas de feriado fazem parte das metas do mês, não se somam a elas.
 
 ## 2. Previsão e metas por mês
 
 | Mês | Mercado no ano passado (ocupação Recanto/Villa × diária média) | Já no livro em 14/10 | Piso | **Previsão base** | **Meta** |
 |---|---|---|---|---|---|
-| Outubro (14 a 31, mais o já realizado) | 28%/35% × R$ 571/515 | R$ 238.221 | R$ 238.221 | **R$ 253.000** | **R$ 273.562** |
-| Novembro | 35%/42% × R$ 641/545 | R$ 142.741 | R$ 238.189 | **R$ 299.149** | **R$ 354.456** |
-| Dezembro | 43%/50% × R$ 734/702 | R$ 62.888 | R$ 360.407 | **R$ 452.563** | **R$ 536.501** |
-| Janeiro | 36%/45% × R$ 645/583 | R$ 22.771 | R$ 267.162 | **R$ 335.464** | **R$ 397.719** |
-| Fevereiro | 29%/34% × R$ 652/572 | R$ 7.019 | R$ 188.050 | **R$ 236.175** | **R$ 279.852** |
-| Março | 27%/34% × R$ 564/511 (+ Páscoa) | R$ 7.619 | R$ 216.032 | **R$ 271.031** | **R$ 322.065** |
-| Abril | 36%/42% × R$ 695/648 (− Páscoa) | R$ 3.690 | R$ 233.612 | **R$ 293.591** | **R$ 347.265** |
-| **Total (14/10/2026 a 30/04/2027)** | | R$ 484.950 | R$ 1.741.672 | **R$ 2.140.973** | **R$ 2.511.420** |
+| Outubro (mês inteiro) | 28%/35% × R$ 571/515 | R$ 238.221 | R$ 238.221 | **R$ 265.221** | **R$ 298.221** |
+| Novembro | 35%/42% × R$ 641/545 | R$ 97.762 | R$ 220.654 | **R$ 274.802** | **R$ 344.845** |
+| Dezembro | 43%/50% × R$ 734/702 | R$ 58.598 | R$ 334.243 | **R$ 416.462** | **R$ 522.529** |
+| Janeiro | 36%/45% × R$ 645/583 | R$ 26.096 | R$ 254.440 | **R$ 316.966** | **R$ 397.719** |
+| Fevereiro | 29%/34% × R$ 652/572 | R$ 8.239 | R$ 173.251 | **R$ 215.788** | **R$ 270.780** |
+| Março | 27%/34% × R$ 564/511 (+ Páscoa 2027) | R$ 6.416 | R$ 206.416 | **R$ 257.777** | **R$ 323.658** |
+| Abril | 36%/42% × R$ 695/648 (− Páscoa 2026) | R$ 4.370 | R$ 252.439 | **R$ 315.444** | **R$ 396.834** |
+| **Total (1/10/2026 a 30/04/2027)** | | R$ 439.702 | R$ 1.679.664 | **R$ 2.062.460** | **R$ 2.554.586** |
 
-Leitura: setembro fez R$ 324.612. A previsão base repete esse patamar em novembro, sobe forte em dezembro (Natal e Réveillon) e janeiro (férias), cai em fevereiro e março (vale do ano, com o Carnaval e a Páscoa segurando) e volta a subir em abril. Outubro vai fechar abaixo de setembro: o mercado em outubro é mais fraco (28% a 35% no ano passado) e o mês começou com 48% de ocupação e diária média menor; o que falta vender são as últimas horas da Queen 7 e da Villa.
+Leitura: setembro fez R$ 324.612. Outubro fecha abaixo de setembro (mercado mais fraco em outubro e primeira quinzena com 48% de ocupação e diária menor); novembro fica uns 15% abaixo de setembro (mercado parecido, mas o índice da base é menor que o de setembro); dezembro sobe forte (Natal e Réveillon); janeiro fica no nível de novembro (verão é vale em Campos: concorre com a praia); fevereiro e março são o fundo do ano, com o Carnaval e a Páscoa segurando; abril volta a subir. Nota sobre novembro: o calendário mostra 72 unidades-noite ocupadas sem reserva no PriceLabs (45 delas são a Villa inteira em 5, 6 e 7/11, marcada como indisponível): se for um grupo ou bloqueio seu, o faturamento real de novembro é maior do que o livro mostra; confirme no Beds24.
 
 ## 3. Metas por temporada
 
-| Temporada | Meses | Piso | **Previsão base** | **Meta** |
+Pelo calendário de demanda da skill, a alta destes 6 meses são as festas de fim de ano (18/12 a 2/1); o resto de dezembro, janeiro, fevereiro e março são vale, com os feriados como ilhas. A alta de verdade de Campos é o inverno (junho a agosto), fora deste horizonte: a meta dela entra na revisão de abril.
+
+| Temporada | Piso | **Previsão base** | **Meta** |
+|---|---|---|---|
+| **Alta: festas de fim de ano (18/12 a 2/1)** | R$ 237.383 | **R$ 321.695** | **R$ 395.313** |
+| **Baixa: novembro, janeiro (3 a 31), fevereiro e março** | R$ 808.757 | **R$ 1.002.575** | **R$ 1.261.642** |
+| **Transição: outubro e abril** | R$ 490.660 | **R$ 580.665** | **R$ 695.055** |
+
+Festas de fim de ano = Natal + Réveillon + 8 noites de ombro (18 a 23 e 27 a 28/12). Janeiro entra na baixa sem as duas noites de 1 e 2/1 (que estão no Réveillon).
+
+## 4. Metas por feriado
+
+| Feriado | Vendido em 14/10 | Piso | **Base** | **Meta** |
 |---|---|---|---|---|
-| **Alta** (segundo pico do ano em Campos: Natal, Réveillon e férias de verão) | dezembro e janeiro | R$ 627.568 | **R$ 788.027** | **R$ 934.220** |
-| **Baixa** (vales: novembro fora dos feriados, fevereiro e março) | novembro, fevereiro e março | R$ 642.271 | **R$ 806.355** | **R$ 956.373** |
-| Transição | outubro (resto) e abril | R$ 471.833 | **R$ 546.591** | **R$ 620.827** |
+| Finados (30/10 a 1/11, 3 noites) | 45 de 93 diárias (48%), R$ 30.932 | R$ 39.572 (60% × R$ 800) | **R$ 50.696** (72% × R$ 900) | **R$ 63.280** (85% × R$ 950) |
+| Consciência Negra (19 a 21/11, 3 noites) | 21 de 93 diárias (23%), R$ 18.989 | R$ 50.549 (65% × R$ 800) | **R$ 65.375** (78% × R$ 900) | **R$ 79.829** (88% × R$ 1000) |
+| Natal (24 a 26/12, 3 noites) | 2 de 93 diárias (2%), R$ 1.614 | R$ 55.414 (60% × R$ 1000) | **R$ 76.139** (75% × R$ 1100) | **R$ 94.074** (85% × R$ 1200) |
+| Réveillon (29/12 a 2/1, 5 noites) | 23 de 155 diárias (15%), R$ 20.959 | R$ 115.009 (70% × R$ 1100) | **R$ 156.896** (85% × R$ 1250) | **R$ 188.399** (92% × R$ 1400) |
+| Aniversário de SP (22 a 24/1, 3 noites) | 3 de 93 diárias (3%), R$ 2.521 | R$ 33.601 (45% × R$ 800) | **R$ 47.401** (60% × R$ 850) | **R$ 60.085** (72% × R$ 900) |
+| Carnaval (5 a 9/2, 5 noites) | 5 de 155 diárias (3%), R$ 5.603 | R$ 101.353 (65% × R$ 1000) | **R$ 122.416** (75% × R$ 1050) | **R$ 150.143** (88% × R$ 1100) |
+| Páscoa (25 a 27/3, 3 noites) | 0 de 93 diárias (0%), R$ 0 | R$ 55.800 (60% × R$ 1000) | **R$ 70.308** (72% × R$ 1050) | **R$ 86.955** (85% × R$ 1100) |
+| Tiradentes (20 a 21/4, 2 noites) | 2 de 62 diárias (3%), R$ 924 | R$ 21.644 (45% × R$ 800) | **R$ 28.209** (55% × R$ 850) | **R$ 35.394** (65% × R$ 900) |
+| **Soma dos 8 feriados** | | R$ 472.942 | **R$ 617.440** | **R$ 758.159** |
 
-A verdadeira alta temporada de Campos é o inverno (junho a agosto, julho no topo), fora destes 6 meses; a meta dela entra na revisão de abril.
-
-## 4. Metas por feriado (noites × 31 unidades × ocupação × diária real por noite)
-
-| Feriado | Diárias disponíveis | Piso | **Base** | **Meta** |
-|---|---|---|---|---|
-| Finados (30/10 a 1/11, 3 noites) | 93 | R$ 44.640 (60% × R$ 800) | **R$ 56.916** (72% × R$ 850) | **R$ 71.145** (85% × R$ 900) |
-| Consciência Negra (19 a 21/11, 3 noites) | 93 | R$ 38.363 (55% × R$ 750) | **R$ 52.080** (70% × R$ 800) | **R$ 63.240** (80% × R$ 850) |
-| Natal (24 a 26/12, 3 noites) | 93 | R$ 50.220 (60% × R$ 900) | **R$ 66.262** (75% × R$ 950) | **R$ 79.050** (85% × R$ 1000) |
-| Réveillon (29/12 a 2/1, 5 noites) | 155 | R$ 108.500 (70% × R$ 1000) | **R$ 144.925** (85% × R$ 1100) | **R$ 171.120** (92% × R$ 1200) |
-| Aniversário de SP (22 a 24/1, 3 noites) | 93 | R$ 27.202 (45% × R$ 650) | **R$ 39.060** (60% × R$ 700) | **R$ 50.220** (72% × R$ 750) |
-| Carnaval (5 a 9/2, 5 noites) | 155 | R$ 85.638 (65% × R$ 850) | **R$ 114.855** (78% × R$ 950) | **R$ 136.400** (88% × R$ 1000) |
-| Páscoa (25 a 27/3, 3 noites) | 93 | R$ 44.640 (60% × R$ 800) | **R$ 60.264** (72% × R$ 900) | **R$ 75.098** (85% × R$ 950) |
-| Tiradentes (20 a 21/4, 2 noites) | 62 | R$ 16.740 (45% × R$ 600) | **R$ 22.165** (55% × R$ 650) | **R$ 28.210** (65% × R$ 700) |
-| **Soma dos 8 feriados** | | R$ 415.942 | **R$ 556.528** | **R$ 674.482** |
-
-Como está hoje (14/10): Finados com cerca de 48% das diárias vendidas a 16 dias (Double e Villa King Spa 7 bem, Queen 7 e King Spa 2 em zero); Consciência Negra 25%; Natal 2%; Réveillon 21% (Balcony 5 de 6 em 31/12). Os pisos de feriado da skill garantem que o que vender renda pelo menos R$ 800 reais por noite (R$ 1.000 no Natal e no Réveillon).
+- Como está hoje (calendário de 14/10): Oktoberfest (16 e 17/10) já com 90% vendido (R$ 31 mil); Finados 48% (Queen 7 com 2 de 21 e King Spa 2 com 1 de 6; o que falta está carregado a R$ 1.095 reais por noite pelo +20% seu); Consciência Negra 27%; Natal 2%; Réveillon 17% nas 5 noites (31/12 com 42%; Balcony 5 de 6). 15/11 cai no domingo: fim de semana comum, sem meta própria.
+- Natal e Réveillon estão carregados hoje acima da diária da base (R$ 1.400 a 1.500 reais nas noites livres): a flutuação só desce um degrau quando a noite estiver atrás da meta de ritmo; a 7 dias, com sobra, pico desce para "alto", nunca para "médio".
+- Aniversário de São Paulo e Tiradentes são feriados fracos (mercado de janeiro igual ao de novembro; Tiradentes isolado na quarta): o piso deles em `quartos.json` passou de R$ 1.000 para R$ 800 reais, dentro do que a regra permite (nunca abaixo de R$ 800).
 
 ## 5. Como vamos acompanhar
-- **Toda segunda (revisão semanal):** o faturamento no livro de cada mês contra a meta do mês, com o ritmo esperado (quanto do mês costuma estar vendido a 30, 15 e 7 dias) e a leitura "no ritmo / atrás / à frente". Mês atrás da previsão base por duas semanas seguidas muda a tática (um degrau a mais para baixo nas noites fracas); mês à frente da meta libera subida.
-- **Todo dia 1:** mês fechado contra a meta, diária média e ocupação por quarto, e as metas dos 6 meses seguintes são recalibradas com o mês realizado (o índice contra o mercado é refeito).
-- **Nos feriados:** a 30, 15 e 7 dias, vendido contra a meta do feriado; abaixo do piso a 7 dias, a rotina sugere a você liberar 1 noite (Regra A) e desce um degrau.
-- Os números ficam em `.claude/skills/gestao-receita-pousadas/dados/metas_faturamento.json` e a rotina relata o acompanhamento no item "Faturamento" do relatório.
+- **Toda segunda (revisão semanal):** livro de cada mês (Report Builder por mês de estadia) contra piso, base e meta, com a leitura "no ritmo / atrás / à frente" pelo que o mês costuma ter vendido a 30, 15 e 7 dias (em setembro, 34% das diárias foram vendidas com 0 a 1 dia de antecedência e pelo menos 48% dentro de 7 dias). A revisão só relata; a reação por noite continua a da flutuação por faixas, um degrau por noite por dia.
+- **Primeiro dia útil do mês:** mês fechado contra a meta, diária média e ocupação por quarto; o índice contra o mercado é refeito com o mês realizado e as metas dos 6 meses seguintes são recalibradas (basta atualizar os insumos do script).
+- **Feriados:** vendido contra a meta a 30, 15 e 7 dias. A 7 dias com menos de 50% vendido, a rotina sugere a você liberar 1 noite (feriadões; o Réveillon não) e o preço desce um degrau, nunca para "baixo"; a decisão de liberar é sua.
+- Os números ficam em `.claude/skills/gestao-receita-pousadas/dados/metas_faturamento.json`; o relatório da rotina ganha o item "Faturamento".
 
 ## 6. O que pode mudar as previsões
-- É a primeira temporada com dados: o índice contra o mercado foi medido em um mês e meio. A cada mês fechado o índice é refeito e as metas, ajustadas.
-- Dezembro e janeiro dependem de vender Natal e Réveillon com 3 noites e R$ 1.000 reais de piso; hoje estão quase vazios (2% e 21%), o que é normal a 70 dias, mas é o ponto a vigiar de 15/11 em diante.
-- O mercado está anunciando 8% a 15% acima do ano passado; se isso virar diária realizada, a previsão sobe; se o mercado baixar na última hora, a Villa (que depende de última hora em dia de semana) sente primeiro.
-- A visibilidade dos anúncios (Google, Booking, canais fixos da Villa) é a pendência sua que mais pesa: a Queen 7 e a Balcony só vendem de última hora.
+- Primeira temporada com dados: o índice foi medido em um mês e meio; a cada mês fechado ele é refeito e as metas, ajustadas.
+- Dezembro depende de vender Natal com 2 noites e Réveillon com 3 noites a R$ 1.000 reais ou mais; hoje estão em 2% e 17%, normal a 70 dias, mas é o ponto a vigiar de 15/11 em diante.
+- O mercado perdeu de 11% a 37% de RevPAR em 5 dos 7 meses equivalentes do ano passado e ganhou 35% em setembro: a base assume +5%; se o mercado cair na última hora, a Villa (dias de semana de última hora) sente primeiro.
+- O que mais pesa e só você resolve: visibilidade dos anúncios (Google, Booking, canais fixos da Villa) e o mapeamento do Airbnb no Beds24; Queen 7 e Balcony só vendem de última hora.

@@ -224,6 +224,20 @@
    "desde": "2026-10-14",
    "urgencia": 3,
    "texto": "O PriceLabs só tem nossas reservas desde 27/08/2026. Se você exportar do Beds24 o faturamento mensal de out/2025 a jul/2026 (por quarto), as metas passam a usar o nosso histórico e não só o do mercado. Beds24 › Relatórios › Reservas (exportar CSV) e colocar em pricelabs/historico-beds24.csv."
+  },
+  {
+   "id": "villa-5-7-11-bloqueio",
+   "responsavel": "dono",
+   "desde": "2026-10-14",
+   "urgencia": 2,
+   "texto": "A Villa inteira (VK7 7/7, Balcony 6/6, VK2 2/2) aparece indisponível em 5, 6 e 7/11 sem nenhuma reserva no PriceLabs (45 unidades-noite). É grupo fechado ou bloqueio? Se for grupo, informe o valor para o acompanhamento do faturamento de novembro; se for bloqueio sem venda, libere no Beds24."
+  },
+  {
+   "id": "beds24-airbnb-revenue",
+   "responsavel": "dono",
+   "desde": "2026-10-14",
+   "urgencia": 2,
+   "texto": "Reservas do Airbnb chegam ao PriceLabs com rental_revenue ≈ 58% do total_cost (nas 39 futuras: R$ 33.060 contra R$ 57.052). O faturamento acompanhado pelo PriceLabs subconta o Airbnb em ~40%. Conferir no Beds24 o mapeamento de preço/taxas do canal Airbnb."
   }
  ],
  "versao": "2026-10-14T15"

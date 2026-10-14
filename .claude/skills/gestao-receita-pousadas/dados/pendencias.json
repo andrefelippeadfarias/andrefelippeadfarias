@@ -248,7 +248,9 @@
    "responsavel": "skill",
    "desde": "2026-10-14",
    "urgencia": 2,
-   "texto": "Natal (noites 24 a 26/12, 2 noites) e Réveillon (noites 29/12 a 02/01, 3 noites) com a janela nova de quartos.json (14/10 18h): as noites 26/12, 29/12 e 02/01 ainda não têm piso de feriado (R$ 1.000 reais, em percentual da base) e 02/01 está com estadia 2 em pelo menos a Balcony (o validador acusa \"Réveillon exige estadia mínima 3\"). Fazer na rotina completa de 15/10 nos 7 quartos; hoje os preços naturais dessas noites já passam do piso."
+   "texto": "Natal (noites 24 a 26/12, 2 noites) e Réveillon (noites 29/12 a 02/01, 3 noites) com a janela nova de quartos.json (14/10 18h): as noites 26/12, 29/12 e 02/01 ainda não têm piso de feriado (R$ 1.000 reais, em percentual da base) e 02/01 está com estadia 2 em pelo menos a Balcony (o validador acusa \"Réveillon exige estadia mínima 3\"). Fazer na rotina completa de 15/10 nos 7 quartos; hoje os preços naturais dessas noites já passam do piso.",
+   "resolvido_em": "2026-10-14T20:58",
+   "resolucao": "Pisos de feriado (mesmo percentual de 24/12) em 26/12, 29/12 e 02/01 nas 6 suítes com banheira; 02/01 com 3 noites nos 7 quartos; gravado às 17:57 BRT, API devolveu igual."
   },
   {
    "id": "q7-15-10-piso-percentual",

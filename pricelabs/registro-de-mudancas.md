@@ -1472,6 +1472,19 @@ A Villa não aparece em nenhuma busca com filtro de hidro (falta a comodidade na
 - **Trava de lotação nova (`regras.md` 4c):** noite atrás da meta de ocupação da janela (7 dias 70%, 15 dias 50%, 30 dias 35%) desce um degrau em qualquer modo; o modo preço só vale com a pousada na meta de ocupação em pelo menos 2 das 3 janelas; a rotina completa confere todo dia e rebaixa para padrão quando falhar; o relatório abre com a ocupação antes do faturamento.
 - **Nada gravado no PriceLabs.** Hoje as duas pousadas estão em modo padrão.
 
+## 14/10/2026, 18:00 — Pedido seu: "Vamos executar agora" (modo por faturamento com a trava de lotação e pisos de Natal e Réveillon)
+
+- **Modo por faturamento decidido agora** (em vez de segunda): **Recanto em padrão** (livro de outubro R$ 130 mil, acima do ritmo do realista e abaixo do ritmo da sua meta, que hoje seria R$ 139 mil). **Villa em padrão pela trava de lotação**: o livro (R$ 108 mil) já está no ritmo da sua meta e daria modo preço, mas a ocupação está atrás em 7 dias (67% contra 70%) e 15 dias (47% contra 50%). Gravado em `quartos.json` → `modo` e `modo_decisao`.
+- **Flutuação:** sem passo novo hoje; todas as noites já levaram o passo do dia nas rotinas de 12:10 e 17:24 (um passo por noite por dia).
+- **Pisos de Natal e Réveillon na janela nova** (19 itens validados, 0 erros; 7 chamadas, todas 200 e devolvidas iguais):
+
+| Mudança | Onde | Antes | Depois | Como desfazer (pedir ao Claude) |
+|---|---|---|---|---|
+| Piso de feriado R$ 1.000 reais (mesmo percentual de 24/12) | Queen 7 (+103%), Double (+61%), Afrodite (+20%), Queen 2 (+58%), VK7 (+74%), King Spa 2 (+102%) em 26/12, 29/12 e 02/01 | sem piso | piso em % da base (R$ 2.381 a R$ 2.955); preços naturais de hoje (R$ 2.651 a R$ 5.488) acima | "Tire os pisos de 26/12, 29/12 e 02/01" |
+| Estadia: Natal 2 noites; Réveillon 3 noites | 26/12 (2), 29/12 e 02/01 (3) nos 6 quartos; Balcony 02/01 de 2 para 3 | 2 ou sem regra | 2 e 3 noites | "Volte 02/01 para 2 noites" |
+
+- **Conferência:** a API devolveu as 19 datas iguais ao enviado; o calendário ainda não tinha recalculado às 18:00 (conferir na rotina das 19:53).
+
 > **Regras em vigor:** desde 06/10/2026 elas ficam em `.claude/skills/gestao-receita-pousadas/references/regras.md`. Este arquivo guarda só o histórico das mudanças.
 
 ## O que só pode ser feito na tela (passo a passo para você)

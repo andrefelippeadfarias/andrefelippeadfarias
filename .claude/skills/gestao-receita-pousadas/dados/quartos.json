@@ -362,8 +362,12 @@
  "excecoes_mercado": [],
  "modo": {
   "Recanto": "padrão",
-  "Villa": "padrão",
-  "nota": "Modo por faturamento (regras.md 4c; dono 14/10). A revisão de segunda compara o livro do mês com as metas do dono em metas_faturamento.json e grava: \"volume\" (atrás do realista: a flutuação age como classe baixa), \"padrão\" (entre realista e mínimo do dono) ou \"preco\" (no mínimo do dono ou acima: age como classe alta). Só a revisão de segunda e o dia 1 mudam; a rotina leve nunca.",
-  "desde": "2026-10-14"
+  "Villa": "padrão"
+ },
+ "modo_decisao": {
+  "em": "2026-10-14T17:50",
+  "pedido": "dono: \"Vamos executar agora\"",
+  "Recanto": "livro de outubro R$ 130.017 contra ritmo do dia 14 (63%): realista R$ 89 mil, meta do dono R$ 139 mil -> padrão; ocupação na meta em 7d (72%) e 30d (39%)",
+  "Villa": "livro de outubro R$ 108.201 já no ritmo da meta do dono (R$ 95 mil) -> preco pela receita, mas a trava de lotação segura em padrão: ocupação 7d 67% (meta 70%) e 15d 47% (meta 50%), só 30d na meta"
  }
 }

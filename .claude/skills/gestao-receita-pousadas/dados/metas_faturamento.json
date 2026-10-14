@@ -1,5 +1,5 @@
 {
- "versao": "2026-10-14T18",
+ "versao": "2026-10-14T21",
  "lido_em": "2026-10-14",
  "faturamento": "revenue do PriceLabs = rental_revenue do Beds24, antes da comissão da OTA e sem extras",
  "metodo": "(revisado por 3 revisores independentes em 14/10/2026):\n- Mês: RevPAR do mercado (vizinhança Airbnb do PriceLabs) no mesmo mês do ano passado × crescimento × nosso índice\n  × unidades × dias, por pousada; nunca abaixo do livro. Índice = nosso RevPAR ÷ RevPAR do mercado no MESMO mês do\n  MESMO ano (set/2026: Recanto 1,48, Villa 1,25; portfólio 1 a 14/10: 1,25). Teto de 95% de ocupação: desconto nos\n  meses com pico no Recanto. Páscoa: 2027 cai em março (ano passado, abril): março recebe o efeito líquido da Páscoa\n  da tabela de feriados e abril perde o pouco que a Páscoa de 2026 pôs no mercado de abril.\n- Outubro: livro do mês inteiro (1 a 31/10, lido em 14/10) + última hora (setembro vendeu 6,6 diárias/dia com 0 a 1 dia).\n- Feriado: vendido + (ocupação-alvo × diárias − vendidas) × diária real por noite (≥ piso de feriado da skill).",
@@ -342,15 +342,20 @@
   }
  },
  "temporadas": {
-  "Alta: festas de fim de ano (18/12 a 2/1)": {
+  "Alta (sua definição): dezembro e janeiro": {
+   "piso": 588683,
+   "base": 733428,
+   "meta": 920248
+  },
+  "dentro da alta: festas de fim de ano (18/12 a 2/1)": {
    "piso": 237383,
    "base": 321695,
    "meta": 395313
   },
-  "Baixa: novembro, janeiro (3 a 31), fevereiro e março": {
-   "piso": 808757,
-   "base": 1002575,
-   "meta": 1261642
+  "Baixa: novembro, fevereiro e março": {
+   "piso": 600321,
+   "base": 748367,
+   "meta": 939283
   },
   "Transição: outubro e abril": {
    "piso": 490660,
@@ -530,7 +535,8 @@
    "villa": 300000
   },
   "meses_alta": [
-   "2026-12"
+   "2026-12",
+   "2027-01"
   ],
   "indice_maximo": {
    "recanto": 2.0,
@@ -603,19 +609,19 @@
     "hoje": 163255,
     "realista": 205581,
     "maximo": 241860,
-    "minimo_dono": 220000,
-    "revpar_minimo_dono": 444,
-    "temporada": "baixa",
-    "minimo_dono_vs_realista": 0.07
+    "minimo_dono": 350000,
+    "revpar_minimo_dono": 706,
+    "temporada": "alta",
+    "minimo_dono_vs_realista": 0.7
    },
    "villa": {
     "hoje": 153711,
     "realista": 192139,
     "maximo": 230566,
-    "minimo_dono": 150000,
-    "revpar_minimo_dono": 323,
-    "temporada": "baixa",
-    "minimo_dono_vs_realista": -0.22
+    "minimo_dono": 300000,
+    "revpar_minimo_dono": 645,
+    "temporada": "alta",
+    "minimo_dono_vs_realista": 0.56
    }
   },
   "2027-02": {

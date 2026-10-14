@@ -170,3 +170,9 @@ Hora da ANÁLISE E AGENDA DIÁRIA do PriceLabs (rotina "Agenda diária PriceLabs
 - **Mudança (PriceLabs):** 332 de 343 regras por data dos 7 quartos convertidas (410 campos), conferidas antes × depois e por um verificador independente por quarto.
 - **Mudança (texto):** `regras.md` (forma de gravar e 6a), `SKILL.md` passo 6, `estrategia.md`, `ferramentas.md`, `aprendizados.md`.
 - **Como desfazer:** reverter os commits; as regras no PriceLabs voltam a reais com `pisos_percentual.py` invertido (o estado de antes dos 7 quartos está em `pricelabs/snapshot-regras-por-data-2026-10-14.json`).
+
+## 14/10/2026, 18:00 — Janeiro é alta temporada (dono)
+- **Decisão do dono:** "Sim janeiro é alta."
+- **Mudança:** `metas_faturamento.py` (`DONO.meses_alta` com 2027-01; temporadas: alta = dezembro e janeiro, festas como linha de detalhe, baixa = novembro, fevereiro e março; leitura de janeiro calculada na seção 6), `metas_faturamento.json` e o documento regenerados; `regras.md` 6a.
+- **Sem mudança:** `sazonalidade.json` (nível de demanda por noite) e travas.
+- **Como desfazer:** tirar 2027-01 de `meses_alta` e regenerar.

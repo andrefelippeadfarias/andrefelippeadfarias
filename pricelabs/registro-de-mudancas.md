@@ -1458,6 +1458,14 @@ A Villa não aparece em nenhuma busca com filtro de hidro (falta a comodidade na
 - **Pendências:** Natal e Réveillon na janela nova (noites 26/12, 29/12 e 02/01 com piso de feriado; 02/01 com 3 noites) ficam para a rotina completa de 15/10; os preços naturais dessas noites já passam do piso.
 - **Aprendi:** percentual do piso é variação sobre a base; piso em percentual acompanha a base (mudar a base muda todos os pisos por data); gravação pela API dispara recálculo em segundos. Detalhes em `aprendizados.md`.
 
+## 14/10/2026, 18:00 — Decisão sua: janeiro é alta temporada
+
+- **Você disse:** "Sim janeiro é alta." Janeiro de 2027 passa a ter a meta da alta: Recanto R$ 350 mil e Villa R$ 300 mil no mês, como dezembro.
+- **O que mudou:** metas (`metas_faturamento.py`, `metas_faturamento.json` e o documento `pricelabs/metas-de-faturamento-2026-2027.md`, seções 3 e 6) e `regras.md` 6a. A temporada da alta destes 6 meses agora é dezembro e janeiro; baixa é novembro, fevereiro e março; outubro e abril são transição.
+- **O que não mudou:** o calendário de demanda de cada noite (vem dos dados do mercado e vê as semanas de janeiro como vale) e as travas. O preço de cada noite segue a demanda; a sua temporada define a meta do mês e, pelo modo por faturamento, se a pousada trabalha para vender volume ou diária.
+- **Leitura:** pelo mercado do ano passado, janeiro tem realista de R$ 206 mil no Recanto e R$ 192 mil na Villa; a sua meta fica 45% e 30% acima do máximo. Livro de janeiro hoje: R$ 26 mil.
+- **Nada gravado no PriceLabs.**
+
 > **Regras em vigor:** desde 06/10/2026 elas ficam em `.claude/skills/gestao-receita-pousadas/references/regras.md`. Este arquivo guarda só o histórico das mudanças.
 
 ## O que só pode ser feito na tela (passo a passo para você)

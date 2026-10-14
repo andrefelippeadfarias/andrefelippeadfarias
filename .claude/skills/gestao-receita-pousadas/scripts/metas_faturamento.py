@@ -51,10 +51,12 @@ INSUMOS = {
         "Tiradentes (20 a 21/4, 2 noites)": {"vendidas": 2, "receita": 924, "diarias": 62, "ocupacao": (0.45, 0.55, 0.65), "diaria": (800, 850, 900), "piso_skill": 800}},
     "pascoa_noites_normais_marco": {"piso": 5678, "base": 7130, "meta": 8454},  # 1 noite comum de março pela fórmula, por cenário (31 unidades)
 }
-# Metas do dono (14/10/2026), lidas como faturamento MENSAL por pousada: baixa temporada (outubro, novembro, janeiro,
-# fevereiro, março e abril, pelo calendário de demanda) e alta temporada (dezembro; no inverno, junho a agosto).
+# Metas do dono (14/10/2026), lidas como faturamento MENSAL por pousada: alta temporada em dezembro e janeiro (dono,
+# 14/10: "Sim janeiro é alta"; no inverno, junho a agosto) e baixa nos outros meses (outubro, novembro, fevereiro, março
+# e abril). A temporada do dono define a meta do mês; o nível de demanda de cada noite continua vindo do calendário
+# de demanda (sazonalidade.json), que para janeiro mostra semanas de vale e fins de semana médios.
 DONO = {"baixa": {"recanto": 220000, "villa": 150000}, "alta": {"recanto": 300000 + 50000, "villa": 300000},
-        "meses_alta": ["2026-12"], "indice_maximo": {"recanto": 2.00, "villa": 1.80}}
+        "meses_alta": ["2026-12", "2027-01"], "indice_maximo": {"recanto": 2.00, "villa": 1.80}}
 CEN = ("piso", "base", "meta")
 MESES = list(INSUMOS["mercado_ano_passado"])
 NOME = {"2026-10": "Outubro (mês inteiro)", "2026-11": "Novembro", "2026-12": "Dezembro", "2027-01": "Janeiro",
@@ -126,9 +128,10 @@ def temporadas(res, fer):
     out = {}
     # festas de fim de ano = Natal + Réveillon + 8 noites de ombro (18 a 23 e 27 a 28/12) a 55% × R$ 650 (base)
     ombro = {"piso": round(8 * 31 * 0.45 * 600), "base": round(8 * 31 * 0.55 * 650), "meta": round(8 * 31 * 0.65 * 700)}
-    out["Alta: festas de fim de ano (18/12 a 2/1)"] = {c: natal[c] + rev[c] + ombro[c] for c in CEN}
-    jan_sem_festas = {c: res["2027-01"][c] - round(rev[c] * 2 / 5) for c in CEN}
-    out["Baixa: novembro, janeiro (3 a 31), fevereiro e março"] = {c: res["2026-11"][c] + jan_sem_festas[c] + res["2027-02"][c] + res["2027-03"][c] for c in CEN}
+    # dono (14/10): dezembro e janeiro são alta temporada; as festas ficam como linha de detalhe (estão dentro da alta)
+    out["Alta (sua definição): dezembro e janeiro"] = {c: res["2026-12"][c] + res["2027-01"][c] for c in CEN}
+    out["dentro da alta: festas de fim de ano (18/12 a 2/1)"] = {c: natal[c] + rev[c] + ombro[c] for c in CEN}
+    out["Baixa: novembro, fevereiro e março"] = {c: res["2026-11"][c] + res["2027-02"][c] + res["2027-03"][c] for c in CEN}
     out["Transição: outubro e abril"] = {c: res["2026-10"][c] + res["2027-04"][c] for c in CEN}
     return out
 
@@ -162,12 +165,12 @@ def documento(res, fer, temp):
     L.append(f"| **Total (1/10/2026 a 30/04/2027)** | | {R(tot['livro'])} | {R(tot['piso'])} | **{R(tot['base'])}** | **{R(tot['meta'])}** |\n")
     L.append("Leitura: setembro fez R$ 324.612. Outubro fecha abaixo de setembro (mercado mais fraco em outubro e primeira quinzena com 48% de ocupação e diária menor); novembro fica uns 15% abaixo de setembro (mercado parecido, mas o índice da base é menor que o de setembro); dezembro sobe forte (Natal e Réveillon); janeiro fica no nível de novembro (verão é vale em Campos: concorre com a praia); fevereiro e março são o fundo do ano, com o Carnaval e a Páscoa segurando; abril volta a subir. Nota sobre novembro: o calendário mostra 72 unidades-noite ocupadas sem reserva no PriceLabs (45 delas são a Villa inteira em 5, 6 e 7/11, marcada como indisponível): se for um grupo ou bloqueio seu, o faturamento real de novembro é maior do que o livro mostra; confirme no Beds24.\n")
     L.append("## 3. Metas por temporada\n")
-    L.append("Pelo calendário de demanda da skill, a alta destes 6 meses são as festas de fim de ano (18/12 a 2/1); o resto de dezembro, janeiro, fevereiro e março são vale, com os feriados como ilhas. A alta de verdade de Campos é o inverno (junho a agosto), fora deste horizonte: a meta dela entra na revisão de abril.\n")
+    L.append("Por decisão sua (14/10: \"Sim janeiro é alta\"), a alta destes 6 meses é **dezembro e janeiro**; novembro, fevereiro e março são baixa, e outubro e abril ficam como transição. A outra alta do ano é o inverno (junho a agosto), fora deste horizonte: a meta dela entra na revisão de abril. O calendário de demanda da skill, que vem dos dados do mercado, continua vendo janeiro como semanas de vale (3 a 21/1 e 25/1 a 4/2) com fins de semana médios: ele decide o preço de cada noite, e a sua temporada decide a meta do mês.\n")
     L.append("| Temporada | Piso | **Previsão base** | **Meta** |")
     L.append("|---|---|---|---|")
     for nome, v in temp.items():
         L.append(f"| **{nome}** | {R(v['piso'])} | **{R(v['base'])}** | **{R(v['meta'])}** |")
-    L.append("\nFestas de fim de ano = Natal + Réveillon + 8 noites de ombro (18 a 23 e 27 a 28/12). Janeiro entra na baixa sem as duas noites de 1 e 2/1 (que estão no Réveillon).\n")
+    L.append("\nFestas de fim de ano = Natal + Réveillon + 8 noites de ombro (18 a 23 e 27 a 28/12); elas já estão dentro da alta (não somar com a primeira linha).\n")
     L.append("## 4. Metas por feriado\n")
     L.append("| Feriado | Vendido em 14/10 | Piso | **Base** | **Meta** |")
     L.append("|---|---|---|---|---|")
@@ -184,15 +187,26 @@ def documento(res, fer, temp):
     L.append("- **Feriados:** vendido contra a meta a 30, 15 e 7 dias. A 7 dias com menos de 50% vendido, a rotina sugere a você liberar 1 noite (feriadões; o Réveillon não) e o preço desce um degrau, nunca para \"baixo\"; a decisão de liberar é sua.")
     L.append("- Os números ficam em `.claude/skills/gestao-receita-pousadas/dados/metas_faturamento.json`; o relatório da rotina ganha o item \"Faturamento\".\n")
     L.append("## 6. Metas do dono (14/10) e os três níveis de operação\n")
-    L.append("Você fixou as metas: **baixa temporada, Villa R$ 150 mil e Recanto R$ 220 mil; alta temporada, Villa no mínimo R$ 300 mil e Recanto R$ 350 mil.** Li como faturamento **mensal por pousada** (se for por temporada inteira, avise que refaço). Pelo calendário de demanda, a alta destes 6 meses é dezembro (festas) e, no ano, o inverno (junho a agosto); outubro, novembro, janeiro, fevereiro, março e abril são baixa.\n")
+    L.append("Você fixou as metas: **baixa temporada, Villa R$ 150 mil e Recanto R$ 220 mil; alta temporada, Villa no mínimo R$ 300 mil e Recanto R$ 350 mil.** Li como faturamento **mensal por pousada** (se for por temporada inteira, avise que refaço). Por decisão sua (14/10), a alta destes 6 meses é dezembro e janeiro e, no ano, também o inverno (junho a agosto); outubro, novembro, fevereiro, março e abril são baixa.\n")
     L.append("| Pousada e temporada | Mínimo (sua meta) | RevPAR exigido (R$ por unidade-noite) | Realista (estratégia atual a pleno, índice 1,70/1,50) | Máximo (índice 2,0/1,8: topo da faixa alvo e ocupação nas metas de ritmo) | Hoje (ritmo atual, índice 1,35/1,20) |")
     L.append("|---|---|---|---|---|---|")
     pp = por_pousada()
-    for m, nome in (("2026-11", "Recanto, baixa (novembro)"), ("2026-11", "Villa, baixa (novembro)"), ("2026-12", "Recanto, alta (dezembro)"), ("2026-12", "Villa, alta (dezembro)")):
+    for m, nome in (("2026-11", "Recanto, baixa (novembro)"), ("2026-11", "Villa, baixa (novembro)"), ("2026-12", "Recanto, alta (dezembro)"), ("2026-12", "Villa, alta (dezembro)"),
+                    ("2027-01", "Recanto, alta (janeiro)"), ("2027-01", "Villa, alta (janeiro)")):
         p = "recanto" if nome.startswith("Recanto") else "villa"; v = pp[m][p]
         L.append(f"| {nome} | **{R(v['minimo_dono'])}** | R$ {v['revpar_minimo_dono']} | {R(v['realista'])} | {R(v['maximo'])} | {R(v['hoje'])} |")
     L.append("")
-    L.append("Leitura honesta: na **Villa**, sua meta da baixa (R$ 150 mil) cabe no realista (R$ 162 mil em novembro) e a da alta (R$ 300 mil) está entre o realista e o máximo. No **Recanto**, a meta da baixa (R$ 220 mil) é 20% acima do realista e igual ao máximo; a da alta (R$ 350 mil) passa do máximo que o mercado do ano passado permite. Setembro, o melhor mês medido, fez R$ 182 mil no Recanto. Para o Recanto chegar lá é preciso subir ocupação **e** diária ao mesmo tempo: por exemplo, 60% de ocupação a R$ 765 reais por noite na baixa (hoje: 57% a R$ 667) e 70% a R$ 1.010 na alta.\n")
+    L.append("Leitura honesta: na **Villa**, sua meta da baixa (R$ 150 mil) cabe no realista (R$ 162 mil em novembro) e a da alta (R$ 300 mil) está entre o realista e o máximo em dezembro. No **Recanto**, a meta da baixa (R$ 220 mil) é 20% acima do realista e igual ao máximo; a da alta (R$ 350 mil) passa do máximo que o mercado do ano passado permite. Setembro, o melhor mês medido, fez R$ 182 mil no Recanto. Para o Recanto chegar lá é preciso subir ocupação **e** diária ao mesmo tempo: por exemplo, 60% de ocupação a R$ 765 reais por noite na baixa (hoje: 57% a R$ 667) e 70% a R$ 1.010 na alta.\n")
+    jr, jv = pp["2027-01"]["recanto"], pp["2027-01"]["villa"]
+    L.append(f"**Janeiro como alta:** a meta sobe para {R(jr['minimo_dono'])} no Recanto e {R(jv['minimo_dono'])} na Villa. "
+             f"Pelo mercado do ano passado (janeiro: {INSUMOS['mercado_ano_passado']['2027-01']['recanto'][0]}% de ocupação no Recanto e "
+             f"{INSUMOS['mercado_ano_passado']['2027-01']['villa'][0]}% na Villa), o realista é {R(jr['realista'])} e {R(jv['realista'])} e o máximo "
+             f"{R(jr['maximo'])} e {R(jv['maximo'])}: sua meta fica {jr['minimo_dono'] / jr['maximo'] - 1:.0%} acima do máximo no Recanto e "
+             f"{jv['minimo_dono'] / jv['maximo'] - 1:.0%} na Villa. Na prática, janeiro só chega lá se vender bem acima do mercado do ano passado "
+             f"(RevPAR de R$ {jr['revpar_minimo_dono']} no Recanto e R$ {jv['revpar_minimo_dono']} na Villa por unidade-noite, contra R$ "
+             f"{round(jr['realista'] / (16 * 31))} e R$ {round(jv['realista'] / (15 * 31))} no realista). Hoje o livro de janeiro tem "
+             f"{R(INSUMOS['livro']['2027-01'])} (as duas pousadas). O modo por faturamento cuida disso sem mexer nas travas: enquanto o livro de janeiro estiver abaixo do realista no ritmo esperado, "
+             "a pousada fica em modo volume (vender diárias); só passa a modo preço se alcançar a sua meta.\n")
     L.append("**O que muda na estratégia (modo por faturamento, regras.md 4c):** toda segunda a revisão compara o livro do mês com estes níveis e grava um modo por pousada em `quartos.json`, que a flutuação por faixas passa a obedecer:")
     L.append("- **Modo volume** (livro atrás do realista no ritmo esperado): todos os quartos da pousada agem como classe baixa: a flutuação pode descer um degrau já na meta (até a faixa alvo −1), corte de última hora pleno em D0 a D3, dias úteis no mínimo do quarto, sábado abaixo de 50% vira sugestão de liberar 1 noite. Objetivo: diárias.")
     L.append("- **Modo padrão** (entre os dois limiares; o menor deles é a linha de baixo, o maior é a de cima, porque na Villa o seu mínimo fica abaixo do realista e no Recanto acima): as regras de hoje, classe de cada quarto.")
@@ -215,7 +229,7 @@ def main(argv=None):
     doc = documento(res, fer, temp)
     if a.doc: Path(a.doc).write_text(doc, encoding="utf-8")
     if a.json:
-        Path(a.json).write_text(json.dumps({"versao": "2026-10-14T18", "lido_em": INSUMOS["lido_em"], "faturamento": "revenue do PriceLabs = rental_revenue do Beds24, antes da comissão da OTA e sem extras",
+        Path(a.json).write_text(json.dumps({"versao": "2026-10-14T21", "lido_em": INSUMOS["lido_em"], "faturamento": "revenue do PriceLabs = rental_revenue do Beds24, antes da comissão da OTA e sem extras",
             "metodo": __doc__.split("Método")[1].split("Uso:")[0].strip(), "insumos": INSUMOS, "meses": res, "temporadas": temp, "feriados": fer, "metas_dono": DONO, "por_pousada": por_pousada(),
             "acompanhamento": "segunda: livro × meta por mês (Report Builder por mês de estadia) e ritmo; dia 1: mês fechado e recalibração do índice; feriados a 30/15/7 dias"},
             ensure_ascii=False, indent=1), encoding="utf-8")

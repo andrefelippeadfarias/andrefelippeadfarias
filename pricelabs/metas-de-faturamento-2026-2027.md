@@ -30,15 +30,16 @@ Leitura: setembro fez R$ 324.612. Outubro fecha abaixo de setembro (mercado mais
 
 ## 3. Metas por temporada
 
-Pelo calendário de demanda da skill, a alta destes 6 meses são as festas de fim de ano (18/12 a 2/1); o resto de dezembro, janeiro, fevereiro e março são vale, com os feriados como ilhas. A alta de verdade de Campos é o inverno (junho a agosto), fora deste horizonte: a meta dela entra na revisão de abril.
+Por decisão sua (14/10: "Sim janeiro é alta"), a alta destes 6 meses é **dezembro e janeiro**; novembro, fevereiro e março são baixa, e outubro e abril ficam como transição. A outra alta do ano é o inverno (junho a agosto), fora deste horizonte: a meta dela entra na revisão de abril. O calendário de demanda da skill, que vem dos dados do mercado, continua vendo janeiro como semanas de vale (3 a 21/1 e 25/1 a 4/2) com fins de semana médios: ele decide o preço de cada noite, e a sua temporada decide a meta do mês.
 
 | Temporada | Piso | **Previsão base** | **Meta** |
 |---|---|---|---|
-| **Alta: festas de fim de ano (18/12 a 2/1)** | R$ 237.383 | **R$ 321.695** | **R$ 395.313** |
-| **Baixa: novembro, janeiro (3 a 31), fevereiro e março** | R$ 808.757 | **R$ 1.002.575** | **R$ 1.261.642** |
+| **Alta (sua definição): dezembro e janeiro** | R$ 588.683 | **R$ 733.428** | **R$ 920.248** |
+| **dentro da alta: festas de fim de ano (18/12 a 2/1)** | R$ 237.383 | **R$ 321.695** | **R$ 395.313** |
+| **Baixa: novembro, fevereiro e março** | R$ 600.321 | **R$ 748.367** | **R$ 939.283** |
 | **Transição: outubro e abril** | R$ 490.660 | **R$ 580.665** | **R$ 695.055** |
 
-Festas de fim de ano = Natal + Réveillon + 8 noites de ombro (18 a 23 e 27 a 28/12). Janeiro entra na baixa sem as duas noites de 1 e 2/1 (que estão no Réveillon).
+Festas de fim de ano = Natal + Réveillon + 8 noites de ombro (18 a 23 e 27 a 28/12); elas já estão dentro da alta (não somar com a primeira linha).
 
 ## 4. Metas por feriado
 
@@ -66,7 +67,7 @@ Festas de fim de ano = Natal + Réveillon + 8 noites de ombro (18 a 23 e 27 a 28
 
 ## 6. Metas do dono (14/10) e os três níveis de operação
 
-Você fixou as metas: **baixa temporada, Villa R$ 150 mil e Recanto R$ 220 mil; alta temporada, Villa no mínimo R$ 300 mil e Recanto R$ 350 mil.** Li como faturamento **mensal por pousada** (se for por temporada inteira, avise que refaço). Pelo calendário de demanda, a alta destes 6 meses é dezembro (festas) e, no ano, o inverno (junho a agosto); outubro, novembro, janeiro, fevereiro, março e abril são baixa.
+Você fixou as metas: **baixa temporada, Villa R$ 150 mil e Recanto R$ 220 mil; alta temporada, Villa no mínimo R$ 300 mil e Recanto R$ 350 mil.** Li como faturamento **mensal por pousada** (se for por temporada inteira, avise que refaço). Por decisão sua (14/10), a alta destes 6 meses é dezembro e janeiro e, no ano, também o inverno (junho a agosto); outubro, novembro, fevereiro, março e abril são baixa.
 
 | Pousada e temporada | Mínimo (sua meta) | RevPAR exigido (R$ por unidade-noite) | Realista (estratégia atual a pleno, índice 1,70/1,50) | Máximo (índice 2,0/1,8: topo da faixa alvo e ocupação nas metas de ritmo) | Hoje (ritmo atual, índice 1,35/1,20) |
 |---|---|---|---|---|---|
@@ -74,8 +75,12 @@ Você fixou as metas: **baixa temporada, Villa R$ 150 mil e Recanto R$ 220 mil; 
 | Villa, baixa (novembro) | **R$ 150.000** | R$ 333 | R$ 162.233 | R$ 194.679 | R$ 129.786 |
 | Recanto, alta (dezembro) | **R$ 350.000** | R$ 706 | R$ 265.465 | R$ 312.312 | R$ 210.811 |
 | Villa, alta (dezembro) | **R$ 300.000** | R$ 645 | R$ 257.064 | R$ 308.476 | R$ 205.651 |
+| Recanto, alta (janeiro) | **R$ 350.000** | R$ 706 | R$ 205.581 | R$ 241.860 | R$ 163.255 |
+| Villa, alta (janeiro) | **R$ 300.000** | R$ 645 | R$ 192.139 | R$ 230.566 | R$ 153.711 |
 
-Leitura honesta: na **Villa**, sua meta da baixa (R$ 150 mil) cabe no realista (R$ 162 mil em novembro) e a da alta (R$ 300 mil) está entre o realista e o máximo. No **Recanto**, a meta da baixa (R$ 220 mil) é 20% acima do realista e igual ao máximo; a da alta (R$ 350 mil) passa do máximo que o mercado do ano passado permite. Setembro, o melhor mês medido, fez R$ 182 mil no Recanto. Para o Recanto chegar lá é preciso subir ocupação **e** diária ao mesmo tempo: por exemplo, 60% de ocupação a R$ 765 reais por noite na baixa (hoje: 57% a R$ 667) e 70% a R$ 1.010 na alta.
+Leitura honesta: na **Villa**, sua meta da baixa (R$ 150 mil) cabe no realista (R$ 162 mil em novembro) e a da alta (R$ 300 mil) está entre o realista e o máximo em dezembro. No **Recanto**, a meta da baixa (R$ 220 mil) é 20% acima do realista e igual ao máximo; a da alta (R$ 350 mil) passa do máximo que o mercado do ano passado permite. Setembro, o melhor mês medido, fez R$ 182 mil no Recanto. Para o Recanto chegar lá é preciso subir ocupação **e** diária ao mesmo tempo: por exemplo, 60% de ocupação a R$ 765 reais por noite na baixa (hoje: 57% a R$ 667) e 70% a R$ 1.010 na alta.
+
+**Janeiro como alta:** a meta sobe para R$ 350.000 no Recanto e R$ 300.000 na Villa. Pelo mercado do ano passado (janeiro: 36% de ocupação no Recanto e 45% na Villa), o realista é R$ 205.581 e R$ 192.139 e o máximo R$ 241.860 e R$ 230.566: sua meta fica 45% acima do máximo no Recanto e 30% na Villa. Na prática, janeiro só chega lá se vender bem acima do mercado do ano passado (RevPAR de R$ 706 no Recanto e R$ 645 na Villa por unidade-noite, contra R$ 414 e R$ 413 no realista). Hoje o livro de janeiro tem R$ 26.096 (as duas pousadas). O modo por faturamento cuida disso sem mexer nas travas: enquanto o livro de janeiro estiver abaixo do realista no ritmo esperado, a pousada fica em modo volume (vender diárias); só passa a modo preço se alcançar a sua meta.
 
 **O que muda na estratégia (modo por faturamento, regras.md 4c):** toda segunda a revisão compara o livro do mês com estes níveis e grava um modo por pousada em `quartos.json`, que a flutuação por faixas passa a obedecer:
 - **Modo volume** (livro atrás do realista no ritmo esperado): todos os quartos da pousada agem como classe baixa: a flutuação pode descer um degrau já na meta (até a faixa alvo −1), corte de última hora pleno em D0 a D3, dias úteis no mínimo do quarto, sábado abaixo de 50% vira sugestão de liberar 1 noite. Objetivo: diárias.

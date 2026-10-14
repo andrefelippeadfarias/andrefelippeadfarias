@@ -74,10 +74,10 @@ class TestValidador(unittest.TestCase):
         it0 = item(quarto="Balcony", data="2026-10-06", preco=-35, price_type="percent", min_price=630)
         self.assertEqual(erros([it0], ocup("Balcony", "2026-10-06", 5, 6)), [])                         # D0: só aviso
         self.assertTrue(any("D0" in a for a in avisos([it0], ocup("Balcony", "2026-10-06", 5, 6))))
-        alta = item(quarto="VK7", data="2026-10-08", preco=-50, price_type="percent", min_price=700)   # VK7 é alta
+        alta = item(quarto="VK7", data="2026-10-08", preco=-50, price_type="percent", min_price=760)   # VK7 é alta
         self.assertTrue(any("última unidade" in e for e in erros([alta], ocup("VK7", "2026-10-08", 3, 7))))
         # em alta e com 7 unidades, a última unidade já passa de 70%: só em D0 o corte segue (aviso), nunca começa em D1+
-        alta0 = item(quarto="VK7", data="2026-10-06", preco=-50, price_type="percent", min_price=700)
+        alta0 = item(quarto="VK7", data="2026-10-06", preco=-50, price_type="percent", min_price=760)
         e0 = erros([alta0], ocup("VK7", "2026-10-06", 6, 7))
         self.assertTrue(e0 and all("piso de dia de semana" in x for x in e0))  # só a regra de R$ 500 barra (dono, 14/10)
         # calendário velho barra decisão por ocupação; --aceitar-velho rebaixa para aviso
@@ -201,7 +201,7 @@ class TestValidador(unittest.TestCase):
         self.assertEqual(erros([item(quarto="Afrodite", min_price=1500, **base)]), [])
 
     def test_padrao_de_qualidade_com_justificativa_de_mercado(self):
-        base = dict(quarto="VK2", data="2026-10-24", preco=-30, price_type="percent", min_price=765)
+        base = dict(quarto="VK2", data="2026-10-24", preco=-30, price_type="percent", min_price=879)
         # justificativa curta demais não vale
         self.assertTrue(erros([item(mercado="fraco", **base)]))
         just = "mediana Booking 23-25/10 R$ 1.015 e mercado a 13% de ocupação"
@@ -221,7 +221,7 @@ class TestValidador(unittest.TestCase):
         self.assertTrue(any("limite de segurança" in x for x in erros(
             [item(quarto="Q7", data="2026-10-21", max_price=400)])))
         # justificativa sem número, ou que não é texto, não vale
-        base = dict(quarto="VK2", data="2026-10-24", preco=-30, price_type="percent", min_price=765)
+        base = dict(quarto="VK2", data="2026-10-24", preco=-30, price_type="percent", min_price=879)
         self.assertTrue(erros([item(mercado="sem dado nenhum aqui ok mesmo", **base)]))
         self.assertTrue(erros([item(mercado=["mediana", "booking", 1015], **base)]))
         self.assertTrue(erros([item(mercado=12345678901234567890, **base)]))

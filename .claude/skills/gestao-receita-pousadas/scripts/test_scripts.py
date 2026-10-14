@@ -256,8 +256,11 @@ class TestValidador(unittest.TestCase):
                                      min_price=1905)]), [])
 
     def test_anuncio_limite_semanal(self):
-        self.assertTrue(erros([{"tipo": "anuncio", "quarto": "VK7", "campo": "min", "valor": 700, "motivo": "x"}]))
-        self.assertEqual(erros([{"tipo": "anuncio", "quarto": "VK7", "campo": "min", "valor": 900, "motivo": "x"}]), [])
+        # dono (14/10): correções só em percentual por data; mudar o anúncio exige a ordem do dono
+        self.assertTrue(any("correções percentuais" in e for e in erros(
+            [{"tipo": "anuncio", "quarto": "VK7", "campo": "min", "valor": 900, "motivo": "x"}])))
+        self.assertTrue(erros([{"tipo": "anuncio", "quarto": "VK7", "campo": "min", "valor": 700, "motivo": "x", "excecao": "dono"}]))
+        self.assertEqual(erros([{"tipo": "anuncio", "quarto": "VK7", "campo": "min", "valor": 900, "motivo": "x", "excecao": "dono"}]), [])
 
     def test_proibidos(self):
         self.assertTrue(erros([{"tipo": "personalizacao", "quarto": "VK7", "descricao": "tirar oferta Genius",

@@ -380,6 +380,10 @@ class Validador:
         if campo not in ("base", "min", "max"):
             self.erro(i, it, f"campo de anúncio '{campo}' não permitido")
             return
+        if it.get("excecao") != "dono":
+            self.erro(i, it, "dono (14/10): \"Lembre-se tem ser correções percentuais\": base, mínimo e máximo do anúncio "
+                             "não se usam para corrigir preço; use piso/teto/preço em percentual por data "
+                             "(mudar o anúncio só com excecao 'dono' e a ordem citada no motivo)")
         valor = float(valor)
         ref = self.cfg["referencia_semanal"]["valores"].get(q["curto"], {})
         if campo in ("base", "min") and ref.get(campo):

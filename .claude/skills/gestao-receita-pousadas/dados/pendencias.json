@@ -260,7 +260,21 @@
    "texto": "Queen 7 15/10: o piloto gravou piso 69 percent_base (= base +69% = R$ 1.982) às 19:27 UTC e foi corrigido para -31 (R$ 809) às 20:01 UTC; o recálculo da Queen 7 está no limite (429). Conferir no próximo calendário recalculado que 15/10 mostra min_price 809 e preço 809 (2 de 7 livres), e que nada foi enviado a R$ 1.982 (last_date_pushed da Queen 7).",
    "resolvido_em": "2026-10-14T20:27",
    "resolucao": "Calendário recalculado às 17:25 BRT: Queen 7 15/10 a R$ 809 (piso −31%), já enviado às 17:16 (user_price 809). O piso errado de R$ 1.982 nunca foi calculado nem enviado."
+  },
+  {
+   "id": "vk2-min-944",
+   "responsavel": "skill",
+   "desde": "2026-10-14",
+   "urgencia": 1,
+   "texto": "King Spa 2: mínimo do anúncio subiu de R$ 765 para R$ 879 em 14/10 (limite de +15% por semana). Na revisão de 21/10 ou depois, subir para R$ 944 (R$ 500 no preço final ÷ 0,53) e conferir a referência semanal. Até lá, os pisos por data até 02/01 garantem os R$ 500; depois de 02/01 vale R$ 879 (≈ R$ 466 na vitrine)."
+  },
+  {
+   "id": "fator-vitrine-villa",
+   "responsavel": "skill",
+   "desde": "2026-10-14",
+   "urgencia": 2,
+   "texto": "O piso de R$ 500 no preço final usa vitrine ÷ enviado de 0,53 na Villa, medido na Balcony (R$ 446 ÷ 842). Medir VK7 e King Spa 2 na Booking em dia de semana (busca de 1 noite com cada uma como mais barata livre) e recalibrar parametros.fator_vitrine_semana na revisão de segunda; se for maior, os pisos descem."
   }
  ],
- "versao": "2026-10-14T20"
+ "versao": "2026-10-14T23"
 }

@@ -1485,6 +1485,24 @@ A Villa não aparece em nenhuma busca com filtro de hidro (falta a comodidade na
 
 - **Conferência:** a API devolveu as 19 datas iguais ao enviado; o calendário ainda não tinha recalculado às 18:00 (conferir na rotina das 19:53).
 
+## 14/10/2026, 20:00 — Pedido seu: suítes com banheira de domingo a quinta a partir de R$ 500 no preço final (e rotina leve das 19:53)
+
+- **Você pediu:** "Vamos ajustar os valores das suítes com banheira para dia de semana, no mínimo de R$500. Preço final nas plataformas. Ajuste isso percentualmente para podermos termos a flutuação de preço natural do Price Labs."
+- **Como li:** as 6 suítes com banheira (a Balcony não), noites de domingo a quinta fora de feriado; "preço final" = vitrine da Booking, a mais descontada. Piso enviado = R$ 500 ÷ 0,63 = **R$ 794 no Recanto** e R$ 500 ÷ 0,53 = **R$ 943 na Villa**. Piso em percentual da base; o preço continua flutuando acima. Vale também para o corte de última hora.
+- **Quem mudou:** o Recanto já estava no piso (Queen 7 R$ 800 = R$ 504 na vitrine; Double, Afrodite e Queen 2 acima); só a Queen 7 de hoje (R$ 645 pelo corte de última hora) subiu. Na Villa, VK7 (R$ 850–858) e King Spa 2 (R$ 765–811) estavam em R$ 405 a R$ 455 na vitrine.
+
+| Mudança | Onde | Antes | Depois (conferido) | Como desfazer (pedir ao Claude) |
+|---|---|---|---|---|
+| Piso de dia de semana R$ 500 no preço final | VK7, 32 noites de 18/10 a 10/12 | piso R$ 850–858 | piso −36% = **R$ 947** ✅ (recálculo das 20:01) | "Volte os pisos de semana da VK7 para −42%" |
+| Idem | King Spa 2, 50 noites de 14/10 a 28/12 (tetos de 20 a 22/10 saem) | R$ 765–811 | piso −25% = **R$ 953** (API devolveu igual; recálculo no limite) | "Volte os pisos de semana da King Spa 2 para −39%" |
+| Idem (corte de última hora de hoje) | Queen 7 14/10 | piso R$ 645 | piso −32% = **R$ 798** | "Volte a Queen 7 de 14/10 para −45%" |
+| Mínimo do anúncio (âncora) | VK7; King Spa 2 | R$ 850; R$ 765 | **R$ 944**; **R$ 879** (+15%, limite da semana; R$ 944 na próxima) | "Volte o mínimo da VK7 e da King Spa 2" |
+| Regra G: Balcony 10% abaixo da suíte livre mais barata | Balcony, 43 noites de 19/10 a 28/12 | R$ 698–775 (out/nov); R$ 1.070–4.781 em 14 noites de dezembro, acima das suítes | **R$ 864** na maior parte; dezembro R$ 864 a R$ 2.578 ✅ (recálculo das 20:01, 43 de 43) | "Volte a Balcony para os pisos de antes" |
+
+- **Atenção:** a Balcony está fraca (33% em 7 dias) e subiu de R$ 698–775 para R$ 864 nos dias de semana por causa da Regra G. Nas suítes de dezembro (22, 23, 27 e 28/12), o piso da King Spa 2 ficou no preço atual dela (R$ 3.003 a 3.089) para a Balcony seguir 10% abaixo.
+- **Rotina das 19:53 (leve):** nenhuma reserva nova desde as 12:43; a Balcony 14 e 15/10 a R$ 635 já está nos canais (envio depois das 17:24).
+- **Plano:** 128 itens validados (0 erros), gravados em 6 chamadas de datas e 1 de anúncio, todas 200, 0 divergências.
+
 > **Regras em vigor:** desde 06/10/2026 elas ficam em `.claude/skills/gestao-receita-pousadas/references/regras.md`. Este arquivo guarda só o histórico das mudanças.
 
 ## O que só pode ser feito na tela (passo a passo para você)

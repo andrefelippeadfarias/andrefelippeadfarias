@@ -181,3 +181,10 @@ Hora da ANÁLISE E AGENDA DIÁRIA do PriceLabs (rotina "Agenda diária PriceLabs
 - **Decisão do dono:** "Sim . Esse é o objetivo . Vamos trabalhar para isso . Porém devemos sempre ficar de olho na lotação ."
 - **Mudança (texto):** `regras.md` 4c (trava de lotação) e 6a; `estrategia.md`; `SKILL.md` (revisão semanal e rotina completa); documento de metas (seção 6) regenerado.
 - **Como desfazer:** apagar o item "Trava de lotação" de `regras.md` 4c.
+
+## 14/10/2026, 20:00 — Piso de dia de semana das suítes com banheira: R$ 500 no preço final (dono)
+- **Decisão do dono:** "Vamos ajustar os valores das suítes com banheira para dia de semana, no mínimo de R$500. Preço final nas plataformas. Ajuste isso percentualmente para podermos termos a flutuação de preço natural do Price Labs."
+- **Mudança (código, 46 testes):** `validar_plano.py` (`piso_semana_enviado`, `piso_vitrine_semana`: ERRO de domingo a quinta fora de feriado nas suítes com banheira abaixo de R$ 500 ÷ fator de vitrine; vale para a Regra I); testes da Regra I passam a usar a Balcony.
+- **Mudança (dados):** `limites_seguranca.piso_vitrine_semana_suites` 500 (só o dono muda); `parametros.fator_vitrine_semana` Recanto 0,63 e Villa 0,53 (medição); mínimo do anúncio VK7 944 e King Spa 2 879.
+- **Mudança (texto):** `regras.md` 4 (regra nova), Regra I e 6a.
+- **Como desfazer:** zerar `piso_vitrine_semana_suites` só com ordem do dono; as regras por data voltam pelo snapshot da rodada.

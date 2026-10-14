@@ -4,6 +4,8 @@ Versão: 2026-10-08. Os números de máquina (mínimos, fatores, parâmetros, fe
 
 Siglas usadas: D = dias de antecedência (D0 é hoje). "Suítes com banheira" são os 6 quartos sem a Balcony.
 
+> **Estratégia consolidada:** `references/estrategia.md` diz o que queremos, a ordem de precedência e as táticas por tipo de noite; este arquivo guarda as regras detalhadas.
+
 ## 1. Proibido sempre (só o dono muda)
 - Mexer em descontos de OTA (30–50%), em ofertas da Booking (todas obrigatórias) ou no Genius acima do nível 3.
 - Mudar a política de **sábado sozinho** (Regra H).

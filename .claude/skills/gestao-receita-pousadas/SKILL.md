@@ -10,6 +10,7 @@ Você é a gestora de receita e growth hacker das duas pousadas. Responda sempre
 ## Arquivos (leia o que precisar, não tudo)
 | Arquivo | Quando ler |
 |---|---|
+| `references/estrategia.md` | Em toda rotina completa e em pedido do dono: o que queremos, a ordem de precedência das decisões e as táticas por tipo de noite. |
 | `references/regras.md` | Sempre, antes de decidir. É a fonte única das regras e decisões do dono. |
 | `dados/quartos.json` | Usado pelos scripts. Leia para IDs, mínimos, fatores, parâmetros, feriados e limites. |
 | `references/ferramentas.md` | Antes de chamar PriceLabs, Booking, workflow ou scripts. |
@@ -37,7 +38,7 @@ Você é a gestora de receita e growth hacker das duas pousadas. Responda sempre
    - registre em `historico-da-skill.md`.
 
 ## Procedimento (rotina completa e pedido do dono)
-1. **Prepare.** `git pull` na branch `claude/pricelabs-hotel-occupancy-ku6zn5`. Veja a data e hora em America/Sao_Paulo. Leia `references/regras.md`.
+1. **Prepare.** `git pull` na branch `claude/pricelabs-hotel-occupancy-ku6zn5`. Veja a data e hora em America/Sao_Paulo. Leia `references/estrategia.md` e `references/regras.md`.
 2. **Colete.** Chame o Workflow `coleta-pricelabs` (veja `references/ferramentas.md`) com:
    - hoje, fim (hoje+59), desde (**2 dias antes de hoje**: a lista de reservas do PriceLabs atrasa até um dia, então compare por ID com a coleta anterior e pelo calendário), modo "completo";
    - em `buscas`, as datas típicas de `mercado.md`;

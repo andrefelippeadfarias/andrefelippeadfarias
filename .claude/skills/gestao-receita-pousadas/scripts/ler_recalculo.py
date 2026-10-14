@@ -57,7 +57,7 @@ def regra_inativa(it: dict, x: dict) -> str:
         return ""
     if str(x.get("dso_flag")) != "1":
         return "dso_flag 0 (regra vencida por validade, ou fora do alcance)"
-    if it.get("min_price") is not None and abs(float(x.get("min_price") or 0) - float(it["min_price"])) > 1:
+    if it.get("min_price") is not None and abs(float(x.get("min_price") or 0) - float(it["min_price"])) > max(1.0, 0.015 * float(it["min_price"])):
         return f"piso recalculado {reais(x.get('min_price'))} diferente do gravado {reais(it['min_price'])}"
     return ""
 
@@ -109,7 +109,7 @@ def main(argv=None) -> int:
                 plan_txt = f"{float(it['preco']):+g}% ({faixa})"
                 p = float(x.get("price") or 0)
                 if it.get("min_price") is not None:
-                    ok &= p >= float(it["min_price"]) - 1
+                    ok &= p >= float(it["min_price"]) - max(1.0, 0.015 * float(it["min_price"]))
                 if it.get("max_price") is not None:
                     ok &= p <= float(it["max_price"]) + 1
             inativa = regra_inativa(it, x)

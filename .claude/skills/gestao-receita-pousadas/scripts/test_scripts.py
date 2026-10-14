@@ -5,6 +5,8 @@ from __future__ import annotations
 import unittest
 from datetime import date
 
+import os
+
 from comum import carregar_quartos, periodo_feriado
 from ocupacao import calcular
 from validar_plano import Validador, montar_payload
@@ -200,11 +202,12 @@ class TestValidador(unittest.TestCase):
         self.assertTrue(erros([item(mercado="sem dado nenhum aqui ok mesmo", **base)]))
         self.assertTrue(erros([item(mercado=["mediana", "booking", 1015], **base)]))
         self.assertTrue(erros([item(mercado=12345678901234567890, **base)]))
-        # fronteira: 999 passa (tolerância de 1), 998 não
+        # fronteira: o piso vai ao PriceLabs como variação % sobre a base (dono 14/10), então vale o valor efetivo:
+        # 998 vira -14% = R$ 1.009 e passa; 985 vira -16% = R$ 985 e não passa
         self.assertEqual(erros([item(quarto="Q7", data="2026-10-23", preco=-20, price_type="percent",
-                                     min_price=999)]), [])
+                                     min_price=998)]), [])
         self.assertTrue(erros([item(quarto="Q7", data="2026-10-23", preco=-20, price_type="percent",
-                                    min_price=998)]))
+                                    min_price=985)]))
 
     def test_padrao_de_qualidade_so_o_dono_muda(self):
         import copy
@@ -241,9 +244,33 @@ class TestValidador(unittest.TestCase):
         self.assertEqual(o["listing_id"], "350362___722805")
         self.assertEqual(o["overrides"][0]["price"], "-35")
         self.assertEqual(o["overrides"][0]["price_type"], "percent")
-        self.assertEqual(o["overrides"][0]["min_price"], "640")
-        self.assertEqual(o["overrides"][0]["min_price_type"], "fixed")
-        self.assertEqual(o["overrides"][0]["max_price"], "900")
+        # regra do dono (14/10): piso e teto sempre em percentual da base, como VARIAÇÃO sobre a base (Q7 base 1.173):
+        # piso 640 = base -45,4% arredonda para cima (-45% = R$ 645); teto 900 = base -23,3% arredonda para baixo (-24% = R$ 891)
+        self.assertEqual(o["overrides"][0]["min_price"], "-45")
+        self.assertEqual(o["overrides"][0]["min_price_type"], "percent_base")
+        self.assertEqual(o["overrides"][0]["max_price"], "-24")
+        self.assertEqual(o["overrides"][0]["max_price_type"], "percent_base")
+        self.assertEqual(o["overrides"][0]["currency"], "BRL")
+        self.assertNotIn("fixed", str(o["overrides"][0]))
+
+    def test_payload_teto_nunca_abaixo_do_piso_em_percentual(self):
+        from validar_plano import piso_pct, teto_pct, em_reais
+        q = CFG["por_curto"]["Q7"]
+        # convenção medida em 14/10 (VK2 18/10): -39 percent_base = base x 0,61 = R$ 775; 61 daria R$ 2.045
+        self.assertEqual(piso_pct(CFG["por_curto"]["VK2"], 765), -39)
+        self.assertEqual(em_reais(CFG["por_curto"]["VK2"], -39), 775)
+        self.assertEqual(piso_pct(q, 800), -31)       # 800/1173 = base -31,8% -> -31% (R$ 809, nunca abaixo do pedido)
+        self.assertGreaterEqual(em_reais(q, piso_pct(q, 800)), 800)
+        self.assertEqual(teto_pct(q, 1173), 0)
+        self.assertEqual(piso_pct(q, 1173), 0)
+        self.assertEqual(piso_pct(q, 2000), 71)       # acima da base o percentual é positivo
+        self.assertEqual(em_reais(q, 71), 2006)
+        # piso e teto iguais em reais: o teto em % nunca fica abaixo do piso em %
+        p = montar_payload(CFG, [item(quarto="Q7", data="2026-10-08", preco=-30, price_type="percent",
+                                      min_price=805, max_price=805)])
+        o = p["update_listing_date_overrides"][0]["overrides"][0]
+        self.assertEqual(o["min_price"], "-31")
+        self.assertEqual(o["max_price"], "-31")
 
 
 class TestOcupacao(unittest.TestCase):
@@ -481,3 +508,68 @@ class TestModoFaturamento(unittest.TestCase):
         self.assertEqual(fp.demanda_efetiva(q, {"modo": {"Villa": "preco"}}), "alta")
         self.assertEqual(fp.demanda_efetiva(q, {"modo": {"Recanto": "preco"}}), "media")
         self.assertEqual(fp.demanda_efetiva({"pousada": "Recanto", "demanda": "alta"}, {"modo": {"Recanto": "volume"}}), "baixa")
+
+
+class TestPisosPercentual(unittest.TestCase):
+    """Conversão das regras antigas (piso/teto em reais) para variação % sobre a base (dono, 14/10)."""
+    ANTES = [
+        {"date": "2026-10-21", "price": "-24", "price_type": "percent", "min_price": 765, "min_price_type": "fixed",
+         "currency": "BRL", "max_price": 765, "max_price_type": "fixed", "reason": "teto"},
+        {"date": "2026-10-30", "price": "20", "price_type": "percent", "min_stay": 3, "min_price": 2060,
+         "min_price_type": "fixed", "currency": "BRL", "reason": "feriado"},
+        {"date": "2026-11-06", "min_price": 1000, "min_price_type": "fixed", "currency": "BRL", "reason": "padrao"},
+        {"date": "2026-12-29", "min_stay": 3, "reason": "so estadia"},
+        {"date": "2026-10-18", "price": "-24", "price_type": "percent", "min_price": -39, "min_price_type": "percent_base"},
+    ]
+
+    def _arquivos(self, depois):
+        import json
+        import tempfile
+        d = tempfile.mkdtemp()
+        a, b = os.path.join(d, "antes.json"), os.path.join(d, "depois.json")
+        with open(a, "w") as f:
+            json.dump({"success": True, "data": {"overrides": self.ANTES}}, f)
+        with open(b, "w") as f:
+            json.dump(depois, f)
+        return a, b, os.path.join(d, "payload.json")
+
+    def test_gerar_converte_so_os_fixos(self):
+        import json
+        import pisos_percentual as pp
+        a, _, saida = self._arquivos([])
+        self.assertEqual(pp.main(["gerar", a, "VK2", "--saida", saida, "--lote", "2"]), 0)
+        p = json.load(open(saida))
+        self.assertEqual(p["listing_id"], "350364___722815")
+        lotes = p["lotes"]
+        self.assertEqual([len(l) for l in lotes], [2, 1])
+        o = {x["date"]: x for l in lotes for x in l}
+        self.assertEqual(set(o), {"2026-10-21", "2026-10-30", "2026-11-06"})
+        self.assertEqual(o["2026-10-21"], {"date": "2026-10-21", "min_price": "-39", "min_price_type": "percent_base",
+                                           "currency": "BRL", "max_price": "-39", "max_price_type": "percent_base"})
+        self.assertEqual(o["2026-10-30"]["min_price"], "63")     # 2060/1270 = +62,2% -> +63% = R$ 2.070
+        self.assertEqual(o["2026-11-06"]["min_price"], "-21")    # 1000/1270 = -21,3% -> -21% = R$ 1.003
+        for x in o.values():  # só piso/teto: a gravação junta campos e preço, estadia e motivo ficam
+            self.assertFalse({"price", "min_stay", "reason"} & set(x))
+
+    def test_conferir_aceita_a_conversao_certa_e_barra_a_errada(self):
+        import copy
+        import pisos_percentual as pp
+        certo = [
+            {"date": "2026-10-21", "price": "-24", "price_type": "percent", "min_price": -39,
+             "min_price_type": "percent_base", "max_price": -39, "max_price_type": "percent_base", "reason": "teto"},
+            {"date": "2026-10-30", "price": "20", "price_type": "percent", "min_stay": 3, "min_price": 63,
+             "min_price_type": "percent_base", "reason": "feriado"},
+            {"date": "2026-11-06", "min_price": -21, "min_price_type": "percent_base", "reason": "padrao"},
+            {"date": "2026-12-29", "min_stay": 3, "reason": "so estadia"},
+            {"date": "2026-10-18", "price": "-24", "price_type": "percent", "min_price": -39, "min_price_type": "percent_base"},
+        ]
+        a, b, _ = self._arquivos(certo)
+        self.assertEqual(pp.main(["conferir", a, b, "VK2"]), 0)
+        ruim = copy.deepcopy(certo)
+        ruim[0]["max_price"] = -45                 # teto abaixo do piso
+        ruim[1]["min_price"] = 62                  # piso efetivo abaixo do antigo
+        ruim[2]["price"] = "-10"                   # campo que mudou sem ser conversão
+        ruim[3].update(min_price=700, min_price_type="fixed")  # fixed que sobrou
+        del ruim[4]                                # regra que sumiu
+        a, b, _ = self._arquivos(ruim)
+        self.assertEqual(pp.main(["conferir", a, b, "VK2"]), 1)

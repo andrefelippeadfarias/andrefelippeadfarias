@@ -39,6 +39,7 @@ para update_listing_date_overrides, delete_listing_date_overrides e update_listi
 from __future__ import annotations
 
 import argparse
+import math
 import json
 import re
 import sys
@@ -193,6 +194,10 @@ class Validador:
             minimo = None
         if it.get("max_price") is not None and minimo is not None and float(it["max_price"]) < minimo:
             self.erro(i, it, f"max_price {it['max_price']} abaixo do piso {minimo:.0f}")
+        if tipo_preco != "fixed" and it.get("min_price") is not None:
+            # Dono (14/10): o piso vai ao PriceLabs como variação % sobre a base, arredondada para cima. O que
+            # vale nas travas é o valor efetivo desse percentual (nunca abaixo do pedido, até 1% da base acima).
+            minimo = em_reais(q, piso_pct(q, float(it["min_price"])))
 
         if tipo_preco == "percent":
             pct = float(preco)
@@ -266,7 +271,7 @@ class Validador:
                 self.aviso(i, it, f"piso {minimo:.0f} é mais de 15% acima do preço atual ({float(antes):.0f}): "
                                   "a flutuação dá um degrau por dia (regras.md 4c)")
             if it.get("max_price") is not None:
-                self.tetos[(q["curto"], d.isoformat())] = float(it["max_price"])
+                self.tetos[(q["curto"], d.isoformat())] = self.teto_efetivo(q, it)
             if q["curto"] == "Balcony" and it.get("max_price") is None and ocup.get("total") is not None \
                and ocup.get("livres", 1) <= 0:
                 self.aviso(i, it, "Balcony esgotada sem teto: ponha max_price ≈ alvo da Regra G para um "
@@ -274,7 +279,7 @@ class Validador:
             self.padrao_qualidade(i, it, q, d, fer, minimo, excecao)
         elif it.get("max_price") is not None:
             # item só com teto: o teto é o preço mais alto possível, então também precisa respeitar os pisos
-            teto = float(it["max_price"])
+            teto = self.teto_efetivo(q, it)
             if teto < piso_abs:
                 self.erro(i, it, f"max_price {teto:.0f} abaixo do limite de segurança {piso_abs:.0f}")
             self.tetos[(q["curto"], d.isoformat())] = teto
@@ -358,6 +363,15 @@ class Validador:
         if campo == "base" and valor < q["min"]:
             self.erro(i, it, "base abaixo do mínimo")
 
+    @staticmethod
+    def teto_efetivo(q: dict, it: dict) -> float:
+        """Teto como o PriceLabs vai calcular (dono 14/10): variação % sobre a base, arredondada para baixo e
+        nunca abaixo do piso em percentual (montar_payload faz o mesmo)."""
+        p = teto_pct(q, float(it["max_price"]))
+        if it.get("min_price") is not None and it.get("price_type") != "fixed":
+            p = max(p, piso_pct(q, float(it["min_price"])))
+        return em_reais(q, p)
+
     def validar_balcony(self, finais):
         """Regra G (dono, 07/10): a Balcony (sem banheira) fica cerca de 10% (`regra_g_desconto`) abaixo da
         suíte com banheira mais barata e livre da Villa. ERRO se ficar acima dessa suíte ou mais de 5 pontos
@@ -417,6 +431,23 @@ def precos_da_coleta(res: dict, agora: datetime | None = None) -> dict:
     return out
 
 
+# Convenção do PriceLabs, medida em 14/10 (VK2 18/10): "percent_base" é VARIAÇÃO sobre a base do anúncio,
+# como o price_type "percent": -39 = base x 0,61 (R$ 775 na VK2); 61 daria base x 1,61 (R$ 2.045). Nunca mandar a fração.
+def piso_pct(q: dict, reais: float) -> int:
+    """Piso como variação % sobre a base do anúncio, arredondado para cima (o piso efetivo nunca fica abaixo do alvo)."""
+    return int(math.ceil(reais / float(q["base"]) * 100 - 100 - 1e-9))
+
+
+def teto_pct(q: dict, reais: float) -> int:
+    """Teto como variação % sobre a base, arredondado para baixo (o teto efetivo nunca passa do alvo)."""
+    return int(math.floor(reais / float(q["base"]) * 100 - 100 + 1e-9))
+
+
+def em_reais(q: dict, pct: float) -> float:
+    """Valor em reais que o PriceLabs calcula para uma variação % sobre a base (arredonda ao real)."""
+    return round(float(q["base"]) * (1 + float(pct) / 100))
+
+
 def montar_payload(cfg: dict, itens: list[dict]) -> dict:
     gravar, apagar, anuncio = defaultdict(list), defaultdict(list), defaultdict(dict)
     for it in itens:
@@ -428,12 +459,18 @@ def montar_payload(cfg: dict, itens: list[dict]) -> dict:
                     else f"{float(it['preco']):g}"
                 o["price_type"] = it["price_type"]
                 o["currency"] = "BRL"
+            # Dono (14/10): nada em valor absoluto por data. Piso e teto vão como variação % sobre a base do anúncio
+            # (percent_base, ex.: -31 = base x 0,69): piso arredondado para cima (nunca abaixo do alvo), teto para
+            # baixo, nunca abaixo do piso. O plano continua em reais; a conversão é só na hora de montar o payload.
+            pmin = pmax = None
             if it.get("min_price") is not None:
-                o.update(min_price=str(int(round(float(it["min_price"])))), min_price_type="fixed",
-                         currency="BRL")
+                pmin = piso_pct(q, float(it["min_price"]))
+                o.update(min_price=str(pmin), min_price_type="percent_base", currency="BRL")
             if it.get("max_price") is not None:
-                o.update(max_price=str(int(round(float(it["max_price"])))), max_price_type="fixed",
-                         currency="BRL")
+                pmax = teto_pct(q, float(it["max_price"]))
+                if pmin is not None and pmax < pmin:
+                    pmax = pmin
+                o.update(max_price=str(pmax), max_price_type="percent_base", currency="BRL")
             if it.get("min_stay") is not None:
                 o["min_stay"] = str(int(it["min_stay"]))
             gravar[q["id"]].append(o)

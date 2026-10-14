@@ -238,7 +238,21 @@
    "desde": "2026-10-14",
    "urgencia": 2,
    "texto": "Reservas do Airbnb chegam ao PriceLabs com rental_revenue ≈ 58% do total_cost (nas 39 futuras: R$ 33.060 contra R$ 57.052). O faturamento acompanhado pelo PriceLabs subconta o Airbnb em ~40%. Conferir no Beds24 o mapeamento de preço/taxas do canal Airbnb."
+  },
+  {
+   "id": "reveillon-02-01-min-stay",
+   "responsavel": "skill",
+   "desde": "2026-10-14",
+   "urgencia": 2,
+   "texto": "Réveillon passou a 29/12–02/01 com 3 noites (quartos.json 18h), mas a Balcony 02/01 (e talvez outros quartos) ficou com min_stay 2 do plano da manhã: o validador acusa 'feriado (Réveillon) exige estadia mínima 3; item com 2'. Conferir 02/01 nos 7 quartos e regravar min_stay 3 na rotina das 19:53 ou na completa de 15/10."
+  },
+  {
+   "id": "q7-15-10-piso-percentual",
+   "responsavel": "skill",
+   "desde": "2026-10-14",
+   "urgencia": 1,
+   "texto": "Queen 7 15/10: o piloto gravou piso 69 percent_base (= base +69% = R$ 1.982) às 19:27 UTC e foi corrigido para -31 (R$ 809) às 20:01 UTC; o recálculo da Queen 7 está no limite (429). Conferir no próximo calendário recalculado que 15/10 mostra min_price 809 e preço 809 (2 de 7 livres), e que nada foi enviado a R$ 1.982 (last_date_pushed da Queen 7)."
   }
  ],
- "versao": "2026-10-14T15"
+ "versao": "2026-10-14T20"
 }

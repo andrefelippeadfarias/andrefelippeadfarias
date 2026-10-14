@@ -328,6 +328,8 @@ class Validador:
         """Padrão de qualidade do dono (08/10): sexta, sábado e noites de feriado das suítes com banheira
         a partir de limites_seguranca.padrao_qualidade_diaria (preço enviado). Para ir abaixo, o item
         precisa do campo 'mercado' com o dado (texto com número). A exceção do dono também libera, com aviso."""
+        if q.get("banheira") and d.weekday() not in (4, 5) and not fer:
+            self.piso_vitrine_semana(i, it, q, minimo, excecao)
         padrao = float(self.padrao or 0)
         if padrao <= 0 or not q.get("banheira") or not (d.weekday() in (4, 5) or fer):
             return
@@ -345,6 +347,29 @@ class Validador:
                              f"banheira ficam a partir de {reais(padrao)} (preço/piso/teto {reais(minimo)}). "
                              f"Ponha min_price >= {padrao:.0f} ou, para ir abaixo, cite o dado de mercado com "
                              f"número (mediana da Booking, ocupação do mercado, ritmo de vendas) no campo 'mercado'")
+
+    def piso_semana_enviado(self, q: dict) -> float | None:
+        """Piso enviado de dia de semana das suítes com banheira (dono, 14/10): R$ 500 na vitrine ÷ fator da pousada."""
+        alvo = (self.cfg.get("limites_seguranca") or {}).get("piso_vitrine_semana_suites")
+        fat = ((self.cfg.get("parametros") or {}).get("fator_vitrine_semana") or {}).get(q.get("pousada"))
+        if not alvo or not fat:
+            return None
+        return float(alvo) / float(fat)
+
+    def piso_vitrine_semana(self, i, it, q, minimo, excecao):
+        """Dono (14/10): domingo a quinta, fora de feriado, preço final nas plataformas a partir de R$ 500 nas suítes
+        com banheira (inclusive na Regra I). Sem exceção de mercado; só a ordem do dono libera."""
+        req = self.piso_semana_enviado(q)
+        if req is None:
+            self.erro(i, it, "piso de vitrine de dia de semana sem configuração (limites_seguranca/parametros)")
+            return
+        if minimo >= req - 1:
+            return
+        if excecao == "dono":
+            self.aviso(i, it, f"abaixo do piso de vitrine de dia de semana por ordem do dono")
+            return
+        self.erro(i, it, f"piso de dia de semana do dono (14/10): suíte com banheira a partir de R$ 500 no preço final "
+                         f"= {reais(req)} enviados ({q.get('pousada')}); preço/piso/teto {reais(minimo)}")
 
     def validar_anuncio(self, i, it, q):
         campo, valor = it.get("campo"), it.get("valor")

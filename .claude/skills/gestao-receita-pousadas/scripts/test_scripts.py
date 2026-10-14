@@ -41,25 +41,48 @@ def avisos(itens, precos=None, hoje=HOJE, **kw):
 
 class TestValidador(unittest.TestCase):
     def test_regra_i_valida(self):
-        self.assertEqual(erros([item(quarto="Q7", data="2026-10-08", preco=-35, price_type="percent", min_price=640)],
-                               ocup("Q7", "2026-10-08", 3, 7)), [])
+        # Regra I segue valendo na Balcony (sem banheira): 20% abaixo do mínimo, travado em 70% de R$ 900 = R$ 630
+        self.assertEqual(erros([item(quarto="Balcony", data="2026-10-08", preco=-35, price_type="percent", min_price=630)],
+                               ocup("Balcony", "2026-10-08", 3, 6)), [])
+        # nas suítes com banheira, dia de semana não desce abaixo de R$ 500 no preço final (dono, 14/10)
+        e = erros([item(quarto="Q7", data="2026-10-08", preco=-35, price_type="percent", min_price=640)],
+                  ocup("Q7", "2026-10-08", 3, 7))
+        self.assertTrue(any("piso de dia de semana" in x for x in e))
+
+    def test_piso_vitrine_dia_de_semana(self):
+        # Recanto: R$ 500 ÷ 0,63 = R$ 794 enviados; Villa: R$ 500 ÷ 0,53 = R$ 943
+        self.assertEqual(erros([item(quarto="Q7", data="2026-10-21", preco=-30, price_type="percent", min_price=800)]), [])
+        self.assertTrue(any("piso de dia de semana" in x for x in erros(
+            [item(quarto="VK7", data="2026-10-21", preco=-30, price_type="percent", min_price=850)])))
+        self.assertEqual(erros([item(quarto="VK7", data="2026-10-21", preco=-30, price_type="percent", min_price=944)]), [])
+        self.assertEqual(erros([item(quarto="VK2", data="2026-10-21", preco=-30, price_type="percent", min_price=944)]), [])
+        # sexta não entra (vale o padrão de qualidade); a Balcony não entra
+        self.assertEqual(erros([item(quarto="Balcony", data="2026-10-21", preco=-30, price_type="percent", min_price=690)]), [])
+        # teto abaixo do piso de semana também é barrado
+        self.assertTrue(any("piso de dia de semana" in x for x in erros(
+            [item(quarto="VK2", data="2026-10-21", max_price=800)])))
+        # ordem do dono libera com aviso
+        v = Validador(CFG, HOJE, {})
+        v.validar([item(quarto="VK7", data="2026-10-21", preco=-30, price_type="percent", min_price=850, excecao="dono")])
+        self.assertFalse(any("piso de dia de semana" in x for x in v.erros))
 
     def test_regra_i_exige_calendario_e_respeita_ocupacao_e_classe(self):
-        it = item(quarto="Q7", data="2026-10-08", preco=-35, price_type="percent", min_price=640)
+        it = item(quarto="Balcony", data="2026-10-08", preco=-35, price_type="percent", min_price=630)
         self.assertTrue(any("exige --precos" in e for e in erros([it])))
-        self.assertTrue(any("esgotada" in e for e in erros([it], ocup("Q7", "2026-10-08", 7, 7))))
-        self.assertTrue(any("70%" in e for e in erros([it], ocup("Q7", "2026-10-08", 6, 7))))      # 86% a D2
-        it0 = item(quarto="Q7", data="2026-10-06", preco=-35, price_type="percent", min_price=640)
-        self.assertEqual(erros([it0], ocup("Q7", "2026-10-06", 6, 7)), [])                              # D0: só aviso
-        self.assertTrue(any("D0" in a for a in avisos([it0], ocup("Q7", "2026-10-06", 6, 7))))
+        self.assertTrue(any("esgotada" in e for e in erros([it], ocup("Balcony", "2026-10-08", 6, 6))))
+        self.assertTrue(any("70%" in e for e in erros([it], ocup("Balcony", "2026-10-08", 5, 6))))      # 83% a D2
+        it0 = item(quarto="Balcony", data="2026-10-06", preco=-35, price_type="percent", min_price=630)
+        self.assertEqual(erros([it0], ocup("Balcony", "2026-10-06", 5, 6)), [])                         # D0: só aviso
+        self.assertTrue(any("D0" in a for a in avisos([it0], ocup("Balcony", "2026-10-06", 5, 6))))
         alta = item(quarto="VK7", data="2026-10-08", preco=-50, price_type="percent", min_price=700)   # VK7 é alta
         self.assertTrue(any("última unidade" in e for e in erros([alta], ocup("VK7", "2026-10-08", 3, 7))))
         # em alta e com 7 unidades, a última unidade já passa de 70%: só em D0 o corte segue (aviso), nunca começa em D1+
         alta0 = item(quarto="VK7", data="2026-10-06", preco=-50, price_type="percent", min_price=700)
-        self.assertEqual(erros([alta0], ocup("VK7", "2026-10-06", 6, 7)), [])
+        e0 = erros([alta0], ocup("VK7", "2026-10-06", 6, 7))
+        self.assertTrue(e0 and all("piso de dia de semana" in x for x in e0))  # só a regra de R$ 500 barra (dono, 14/10)
         # calendário velho barra decisão por ocupação; --aceitar-velho rebaixa para aviso
-        self.assertTrue(any("calendário" in e for e in erros([it], ocup("Q7", "2026-10-08", 3, 7, idade_h=20))))
-        self.assertEqual(erros([it], ocup("Q7", "2026-10-08", 3, 7, idade_h=20), aceitar_velho=True), [])
+        self.assertTrue(any("calendário" in e for e in erros([it], ocup("Balcony", "2026-10-08", 3, 6, idade_h=20))))
+        self.assertEqual(erros([it], ocup("Balcony", "2026-10-08", 3, 6, idade_h=20), aceitar_velho=True), [])
 
     def test_estadia_de_feriado_duplicata_e_queen2_sem_antes(self):
         fin = item(quarto="Q7", data="2026-10-30", preco=0, price_type="percent", min_price=1905, min_stay=1)
@@ -86,7 +109,7 @@ class TestValidador(unittest.TestCase):
 
     def test_percentual_piso_abaixo_do_minimo_longe(self):
         self.assertTrue(erros([item(quarto="VK7", data="2026-10-20", preco=-35, price_type="percent", min_price=700)]))
-        self.assertEqual(erros([item(quarto="VK7", data="2026-10-20", preco=-35, price_type="percent", min_price=850)]), [])
+        self.assertEqual(erros([item(quarto="VK7", data="2026-10-20", preco=-35, price_type="percent", min_price=944)]), [])
 
     def test_max_price_abaixo_do_piso(self):
         self.assertTrue(erros([item(quarto="Q7", data="2026-10-20", preco=-10, price_type="percent",

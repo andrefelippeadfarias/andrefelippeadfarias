@@ -197,6 +197,7 @@ Pedido do dono: "qualificar os preços: muito baixo, baixo, médio, alto e muito
 - 08/10: padrão de qualidade. Sexta, sábado e feriado das suítes com banheira a partir de R$ 1.000 por diária, "mas de olho no mercado", e "sempre trabalhe com percentuais".
 - 08/10: "Pode igualar a suavização da Balcony às outras suítes" (só pela tela; pendência do dono).
 - 13/10: preços qualificados em cinco faixas de mercado, sazonalidade prevista para 2026 e 2027 e flutuação percentual por faixa e ocupação contra a meta; pesquisa de mercado feita por agentes de IA (seção 4c); estratégia consolidada em `estrategia.md` (14/10).
+- 14/10: metas de faturamento por temporada e por feriado para os próximos 6 meses (`dados/metas_faturamento.json`, documento `pricelabs/metas-de-faturamento-2026-2027.md`); acompanhamento na revisão de segunda e no dia 1; só o dono muda as metas, a Skill recalibra a previsão.
 - A regra de sábado com valor real de pelo menos R$ 800 (02/10) **não vale como regra geral**: as decisões de 06/10 a superaram.
 
 ## 6b. Decisões do dono por data (vencem; apagar quando passarem)

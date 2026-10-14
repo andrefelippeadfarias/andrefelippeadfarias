@@ -1,0 +1,209 @@
+{
+ "versao": "2026-10-14T16",
+ "faturamento": "revenue do PriceLabs = valor das diárias no Beds24 (sem extras)",
+ "metodo": "RevPAR do mercado no mesmo mês do ano passado × 1,05 × índice (piso 1,15/1,00; base 1,45/1,25; meta 1,70/1,50 para Recanto/Villa) × unidades × dias; nunca abaixo do livro; Páscoa movida de abril para março; outubro base = livro + última hora",
+ "calibracao": {
+  "2026-09": {
+   "realizado": 324612,
+   "diarias": 511,
+   "ocupacao": 0.55,
+   "adr": 635,
+   "indice_recanto": 1.48,
+   "indice_villa": 1.25
+  },
+  "2026-10": {
+   "livro_mes_inteiro_em_14_10": 238221,
+   "indice_recanto": 1.64,
+   "indice_villa": 1.29
+  }
+ },
+ "meses": {
+  "2026-10": {
+   "livro_em_2026_10_14": 238221,
+   "piso": 238221,
+   "base": 253000,
+   "meta": 273562
+  },
+  "2026-11": {
+   "livro_em_2026_10_14": 142741,
+   "piso": 238189,
+   "base": 299149,
+   "meta": 354456
+  },
+  "2026-12": {
+   "livro_em_2026_10_14": 62888,
+   "piso": 360407,
+   "base": 452563,
+   "meta": 536501
+  },
+  "2027-01": {
+   "livro_em_2026_10_14": 22771,
+   "piso": 267162,
+   "base": 335464,
+   "meta": 397719
+  },
+  "2027-02": {
+   "livro_em_2026_10_14": 7019,
+   "piso": 188050,
+   "base": 236175,
+   "meta": 279852
+  },
+  "2027-03": {
+   "livro_em_2026_10_14": 7619,
+   "piso": 216032,
+   "base": 271031,
+   "meta": 322065
+  },
+  "2027-04": {
+   "livro_em_2026_10_14": 3690,
+   "piso": 233612,
+   "base": 293591,
+   "meta": 347265
+  }
+ },
+ "temporadas": {
+  "alta": {
+   "meses": [
+    "2026-12",
+    "2027-01"
+   ],
+   "piso": 627568,
+   "base": 788027,
+   "meta": 934220
+  },
+  "baixa": {
+   "meses": [
+    "2026-11",
+    "2027-02",
+    "2027-03"
+   ],
+   "piso": 642271,
+   "base": 806355,
+   "meta": 956373
+  }
+ },
+ "feriados": {
+  "Finados (30/10 a 1/11, 3 noites)": {
+   "piso": 44640,
+   "base": 56916,
+   "meta": 71145,
+   "ocupacao_piso_base_meta": [
+    0.6,
+    0.72,
+    0.85
+   ],
+   "diaria_real_piso_base_meta": [
+    800,
+    850,
+    900
+   ]
+  },
+  "Consciência Negra (19 a 21/11, 3 noites)": {
+   "piso": 38363,
+   "base": 52080,
+   "meta": 63240,
+   "ocupacao_piso_base_meta": [
+    0.55,
+    0.7,
+    0.8
+   ],
+   "diaria_real_piso_base_meta": [
+    750,
+    800,
+    850
+   ]
+  },
+  "Natal (24 a 26/12, 3 noites)": {
+   "piso": 50220,
+   "base": 66262,
+   "meta": 79050,
+   "ocupacao_piso_base_meta": [
+    0.6,
+    0.75,
+    0.85
+   ],
+   "diaria_real_piso_base_meta": [
+    900,
+    950,
+    1000
+   ]
+  },
+  "Réveillon (29/12 a 2/1, 5 noites)": {
+   "piso": 108500,
+   "base": 144925,
+   "meta": 171120,
+   "ocupacao_piso_base_meta": [
+    0.7,
+    0.85,
+    0.92
+   ],
+   "diaria_real_piso_base_meta": [
+    1000,
+    1100,
+    1200
+   ]
+  },
+  "Aniversário de SP (22 a 24/1, 3 noites)": {
+   "piso": 27202,
+   "base": 39060,
+   "meta": 50220,
+   "ocupacao_piso_base_meta": [
+    0.45,
+    0.6,
+    0.72
+   ],
+   "diaria_real_piso_base_meta": [
+    650,
+    700,
+    750
+   ]
+  },
+  "Carnaval (5 a 9/2, 5 noites)": {
+   "piso": 85638,
+   "base": 114855,
+   "meta": 136400,
+   "ocupacao_piso_base_meta": [
+    0.65,
+    0.78,
+    0.88
+   ],
+   "diaria_real_piso_base_meta": [
+    850,
+    950,
+    1000
+   ]
+  },
+  "Páscoa (25 a 27/3, 3 noites)": {
+   "piso": 44640,
+   "base": 60264,
+   "meta": 75098,
+   "ocupacao_piso_base_meta": [
+    0.6,
+    0.72,
+    0.85
+   ],
+   "diaria_real_piso_base_meta": [
+    800,
+    900,
+    950
+   ]
+  },
+  "Tiradentes (20 a 21/4, 2 noites)": {
+   "piso": 16740,
+   "base": 22165,
+   "meta": 28210,
+   "ocupacao_piso_base_meta": [
+    0.45,
+    0.55,
+    0.65
+   ],
+   "diaria_real_piso_base_meta": [
+    600,
+    650,
+    700
+   ]
+  }
+ },
+ "acompanhamento": "segunda: livro × meta por mês e ritmo; dia 1: mês fechado e recalibração do índice; feriados a 30/15/7 dias",
+ "fonte": "PriceLabs get_listing_performance_metrics, get_bookings_report, get_pms_reservations, get_neighbourhood_data em 14/10/2026 (dados_faturamento_1410.json)"
+}

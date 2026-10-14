@@ -1,4 +1,4 @@
-# Estratégia de receita (versão 1.2, 14/10/2026; revisada por 3 revisores independentes de IA)
+# Estratégia de receita (versão 1.3, 14/10/2026, com metas de faturamento; revisada por 3 revisores independentes de IA)
 
 Documento único da estratégia das duas pousadas, escrito para o dono e para a rotina autônoma. As regras detalhadas continuam em `regras.md`; este arquivo diz **o que queremos, em que ordem decidimos e como medimos**. Toda rotina completa lê este arquivo antes de decidir. Mudança de estratégia só com decisão do dono, registrada na seção 6 de `regras.md` e em `historico-da-skill.md`.
 
@@ -8,6 +8,7 @@ Documento único da estratégia das duas pousadas, escrito para o dono e para a 
 - **Objetivo:** lotação e lucro máximos, dentro do padrão de qualidade das suítes com banheira.
 - **Métrica mestra (ritmo de vendas):** ocupação acumulada a partir de hoje: 7 dias 70%, 15 dias 50%, 30 dias 35%, 45 dias 25%, 60 dias 15%. Cada noite é julgada pela meta da janela em que cai (até 6 dias 70%; 7 a 14 dias 50%; 15 a 29 dias 35%; 30 a 44 dias 25%; 45 dias ou mais 15%).
 - **Os três preços.** O preço que enviamos ao PriceLabs é a tabela cheia. O hóspede vê na Booking cerca de 59% dele no Recanto em dia de semana (61% em sexta e sábado) e 53% na Villa (66% em sexta e sábado), por causa dos descontos obrigatórios da Booking. O que cai na sua conta é cerca de 42% do enviado no Recanto, 39% na Villa e só 34% na Queen (2), anomalia em investigação (`aprendizados.md`, 28/09 a 05/10). Todos os pisos deste documento são no preço enviado, salvo quando dizemos "no bolso".
+- **Metas de faturamento (dono, 14/10):** por mês, por temporada (alta: dezembro e janeiro; baixa: novembro, fevereiro e março) e por feriado, em três cenários (piso, previsão base e meta), em `dados/metas_faturamento.json` e no documento `pricelabs/metas-de-faturamento-2026-2027.md`. Faturamento = valor das diárias registrado no Beds24 (campo "revenue" do PriceLabs). Previsão = RevPAR do mercado no mesmo mês do ano passado × 1,05 × nosso índice contra o mercado (base 1,45 Recanto / 1,25 Villa; meta 1,70 / 1,50). A revisão de segunda compara o livro de cada mês com a meta e o dia 1 recalibra o índice com o mês fechado. A ocupação continua sendo a métrica de ritmo; o faturamento é a métrica de resultado.
 - **Métricas de apoio:** valor pago ÷ enviado de cada reserva nova; faixa de preço de mercado de cada noite (seção 3); vendas nas 72 h depois de cada mudança (`aprendizados.md`, "Efeito das mudanças"); na revisão semanal, receita e diárias vendidas da semana.
 - **Padrão de qualidade (sua regra de 08/10):** em sexta, sábado e feriado, as 6 suítes com banheira nunca ficam abaixo de R$ 1.000 na tabela enviada (cerca de R$ 610 a R$ 660 para o hóspede; R$ 390 a R$ 420 no bolso). Abaixo disso só quando a pesquisa de mercado mostrar, com número, que estamos caros demais (exceção de mercado, seção 4b). Se você quis dizer o preço que o hóspede vê ou o que cai na conta, avise (seção 8, item 1).
 
@@ -72,7 +73,7 @@ Feriado nacional que cai em sábado ou domingo é fim de semana comum. Evento **
 - **Sempre**: decisão sua vira regra no mesmo dia; o que foi medido vai para `aprendizados.md`; tudo salvo no histórico (commit).
 
 ## 7. O que acompanhamos no relatório
-Semáforo da meta de 7 dias; tabela quarto × janelas; faixa atual × faixa desejada das próximas noites (com a origem dos cortes); o que mudou e quando chega aos canais; alertas (envio, cancelamentos, estadia mínima, mudanças manuais, noites sem classificação); itens que só você resolve (no máximo 3); o que aprendemos.
+Semáforo da meta de 7 dias; faturamento no livro do mês contra a meta (na revisão de segunda e no dia 1, e sempre que um feriado estiver a 30, 15 ou 7 dias); tabela quarto × janelas; faixa atual × faixa desejada das próximas noites (com a origem dos cortes); o que mudou e quando chega aos canais; alertas (envio, cancelamentos, estadia mínima, mudanças manuais, noites sem classificação); itens que só você resolve (no máximo 3); o que aprendemos.
 
 ## 8. O que só você resolve
 A lista completa e viva está em `dados/pendencias.json` (responsável "dono"); o relatório traz os 3 mais urgentes. Hoje, no topo: (1) confirmar o padrão de qualidade (R$ 1.000 enviados, vitrine ou no bolso; na Villa, R$ 1.000 enviados já são faixa "alto" em sexta e sábado); (2) Beds24: mapeamento de tarifa da Queen (2) e tarifas fixas da Villa na Expedia, Hoteis.com e Decolar; (3) PriceLabs, tela da Balcony: suavização "dias de semana × fim de semana".

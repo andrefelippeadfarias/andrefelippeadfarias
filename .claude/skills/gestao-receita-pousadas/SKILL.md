@@ -17,6 +17,7 @@ Você é a gestora de receita e growth hacker das duas pousadas. Responda sempre
 | `references/mercado.md` | Em pedido do dono, na rotina completa e em feriados. |
 | `dados/sazonalidade.json`, `dados/mercado_faixas.json` | Usados pelos scripts de faixas e sazonalidade; leia o período vigente em toda rotina completa. |
 | `dados/pendencias.json` | Lista única de pendências (dono, tela e Skill); leia no começo da rotina completa. |
+| `dados/metas_faturamento.json` | Metas de faturamento por mês, temporada e feriado (piso, base, meta); usado na revisão semanal e no dia 1. |
 | `references/aprendizados.md` | Para calibrar decisões; atualize no fim da rodada. |
 | `references/historico-da-skill.md` | Ao mudar a própria Skill. |
 | `pricelabs/registro-de-mudancas.md` (raiz do repositório) | Para registrar. Leia só as 2 ou 3 últimas entradas (ex.: `grep -n "^## " ... \| tail`). |
@@ -36,6 +37,7 @@ Você é a gestora de receita e growth hacker das duas pousadas. Responda sempre
    - ajuste os parâmetros em `quartos.json` dentro dos limites;
    - atualize `referencia_semanal`;
    - **refaça as faixas de mercado:** rode o Workflow `varredura-concorrencia` em duas rodadas em sessões diferentes (`args.rodada: 1` = semanas, fins de semana e eventos; `rodada: 2` = feriados e última hora, na terça), nunca na mesma sessão da rotina completa; se falhar por limite da sessão de IA, retome com `resumeFromRunId` depois das 00:50 BRT (`.claude/workflows/varredura-concorrencia.js`, modo leitura) e grave `python3 scripts/faixas_de_preco.py mercado <saida> --json dados/mercado_faixas.json`; na primeira segunda de cada mês, rode também o Workflow `sazonalidade-campos` e atualize `dados/sazonalidade.json` (valide com `sazonalidade.py validar`);
+   - **faturamento contra a meta:** leia `get_pms_reservations` (stay-date do mês em diante, status booked) e some `rental_revenue` por mês de check-in; compare com `dados/metas_faturamento.json` (piso, base, meta) e escreva no relatório "no ritmo / atrás / à frente" por mês e por feriado a até 30 dias; no primeiro dia útil do mês, feche o mês anterior com `get_listing_performance_metrics` e recalibre o índice contra o mercado (`metas_faturamento.json` → `calibracao`), ajustando as metas dos 6 meses seguintes;
    - registre em `historico-da-skill.md`.
 
 ## Procedimento (rotina completa e pedido do dono)
@@ -85,6 +87,7 @@ Você é a gestora de receita e growth hacker das duas pousadas. Responda sempre
 5. **Alertas:** mudanças manuais, envio, cancelamentos, conflitos e o feriado mais próximo. Liste também as noites de sexta, sábado e feriado das suítes com banheira abaixo do padrão de qualidade por exceção de mercado (`excecoes_mercado`), com o dado.
 6. **Só você pode fazer (tela/extranet/Beds24):** no máximo 3 itens, com o caminho no menu.
 7. **Aprendi:** 1 a 3 linhas, se houver.
+8. **Faturamento** (só na revisão de segunda, no dia 1 e com feriado a 30, 15 ou 7 dias): livro do mês × meta e leitura "no ritmo / atrás / à frente".
 
 Sem tabelas enormes nem jargão técnico. Valores em "R$ 1.234".
 

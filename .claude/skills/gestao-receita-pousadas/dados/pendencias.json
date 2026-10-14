@@ -210,6 +210,20 @@
    "desde": "2026-10-14",
    "urgencia": 1,
    "texto": "Rotina completa de 14/10: Queen 7, Double, VK7, VK2 e Balcony gravados (232 regras, API devolveu iguais) mas sem recálculo de conferência (429, janela móvel de 24 h). Conferir com get_listing_prices depois do envio da tarde (13:53/16:53): ler_recalculo.py --plano scratchpad/plano_1410.json; Queen 7 15/10 piso 640; Balcony 18–22/10 690/770; Double 19–21/10 945/990; VK7 23–24/10 1.243; Natal/Réveillon 2 e 3 noites."
+  },
+  {
+   "id": "faturamento-script",
+   "responsavel": "skill",
+   "desde": "2026-10-14",
+   "urgencia": 2,
+   "texto": "Criar scripts/faturamento.py: lê get_pms_reservations (stay-date, booked) e get_listing_performance_metrics, soma rental_revenue por mês de check-in e por feriado, compara com dados/metas_faturamento.json e imprime a tabela do item 8 do relatório; no dia 1, recalibra o índice contra o mercado (get_neighbourhood_data) e propõe as metas dos 6 meses seguintes."
+  },
+  {
+   "id": "historico-beds24-2025",
+   "responsavel": "dono",
+   "desde": "2026-10-14",
+   "urgencia": 3,
+   "texto": "O PriceLabs só tem nossas reservas desde 27/08/2026. Se você exportar do Beds24 o faturamento mensal de out/2025 a jul/2026 (por quarto), as metas passam a usar o nosso histórico e não só o do mercado. Beds24 › Relatórios › Reservas (exportar CSV) e colocar em pricelabs/historico-beds24.csv."
   }
  ],
  "versao": "2026-10-14T15"

@@ -1349,6 +1349,17 @@ A Villa não aparece em nenhuma busca com filtro de hidro (falta a comodidade na
 - **Balcony em 13/10** (6 livres, 20h): fica em R$ 630; a noite acaba em poucas horas.
 - **Pendências suas (nesta ordem):** (1) **Sync Now** da Queen 7, da King Spa 7 e da King Spa 2; (2) Beds24: última unidade da King Spa 7 no sábado 17/10; (3) salvar a suavização da Balcony na tela.
 
+## 14/10/2026, 02:20 — Pedido do dono (13/10): faixas de preço de mercado, sazonalidade e flutuação percentual
+
+- **O pedido:** qualificar os preços em cinco faixas (muito baixo, baixo, médio, alto e muito alto), prever a sazonalidade de cada época, feriado e dia, e flutuar em percentual para manter as metas; pesquisar a concorrência inteira com IA.
+- **Pesquisa feita por agentes de IA (só leitura):** (1) sazonalidade: 5 agentes leram feriados oficiais (Portaria MGI, ANBIMA 2027, Alesp, TRT-15), férias escolares (SEDUC), eventos (Festival de Inverno, Oktoberfest, Natal FLMA, provas esportivas, congressos), balanços da Prefeitura e os dados de mercado do PriceLabs mês a mês; (2) concorrência: 38 agentes varreram a Booking por faixa de preço em 17 conjuntos de datas; 16 concluíram (semanas e fins de semana de 20/10 a 10/12, 1.288 chamadas, 150 a 180 propriedades por data) e 22 falharam por limite da sessão de IA (feriados, Natal, Réveillon, última hora): retomo na rotina das 07:53.
+- **O que entrou na skill (sem mudar preço nenhum ainda):**
+  - calendário de sazonalidade de 14/10/2026 a 31/12/2027 (77 períodos, cada noite em um só; nível de demanda, faixa alvo, estadia e antecedência, com fonte) e 12 feriados de 2027 na lista de pisos de feriado;
+  - cortes das cinco faixas por conjunto de pares (tabela em `mercado.md`);
+  - regra de flutuação (regras.md 4c): por noite, faixa atual da vitrine contra a faixa alvo da sazonalidade e ocupação contra a meta da janela: atrás da meta desce um degrau (−10%, −15% em alto/muito alto, nunca abaixo de "baixo" fora de D0 a D3), à frente sobe +10% até o alvo mais um, na meta aproxima devagar (±5%); um passo por rodada; todos os limites atuais continuam por cima.
+- **Leitura dos nossos preços hoje (vitrine da Booking, próximos 21 dias):** Queen 7 em dia de semana está na faixa **baixo** dos pares do Recanto (R$ 390 a 561 por noite; corte do baixo R$ 727); Double, Afrodite e Queen 2 no **médio** (R$ 742, 1.002 e 927). Na Villa, VK7 (R$ 461), VK2 (R$ 442) e Balcony (R$ 405) estão no **médio** dos pares dela mesmo no mínimo do anúncio, porque metade da oferta comparável custa menos de R$ 480 por noite. Fins de semana: Recanto no médio/alto (R$ 1.162), Villa de alto a muito alto. A classificação sugeriu 5 subidas (Queen 7 18/10, Double 20, 21/10 e 01/11, Balcony 01/11: noites acima da meta) e descidas só onde o preço está acima do mínimo (fins de semana de 23 e 24/10, Finados do Recanto a 0 de 7 e Afrodite); as descidas nas noites já no mínimo ficam para a Regra I.
+- **Nada gravado no PriceLabs nesta rodada:** a regra começa a valer na rotina das 07:53 de 14/10, com o calendário recalculado e a varredura retomada. Pendências suas de ontem seguem (Sync Now; sábado 17/10 da VK7 no Beds24; suavização da Balcony).
+
 > **Regras em vigor:** desde 06/10/2026 elas ficam em `.claude/skills/gestao-receita-pousadas/references/regras.md`. Este arquivo guarda só o histórico das mudanças.
 
 ## O que só pode ser feito na tela (passo a passo para você)

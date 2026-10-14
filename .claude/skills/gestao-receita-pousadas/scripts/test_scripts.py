@@ -348,6 +348,23 @@ class TestFaixas(unittest.TestCase):
         self.assertEqual(len(conjunto(list(v["semana-20/10"]["props"].values()), "recanto")), 0)
 
 
+class TestClassificarQuartos(unittest.TestCase):
+    def test_sem_desconto_nao_desce_e_esgotada_segura(self):
+        from faixas_de_preco import classificar_quartos
+        from sazonalidade import carregar
+        coleta = {"rooms": {
+            "Q2": {"days": [{"date": "2026-10-27", "price": 1519, "user_price": 1519, "min_stay": 1, "multi_unit_occupancy": "0/2", "booking_status": ""}]},
+            "Q7": {"days": [{"date": "2026-10-27", "price": 919, "user_price": -1, "min_stay": 1, "multi_unit_occupancy": "7/7", "booking_status": "Booked"}]}}}
+        tab = {"semana-27/10": {"tipo": "semana", "noites": 2, "checkin": "2026-10-27", "completa": True, "nossos": {},
+                                 "conjuntos": {"recanto": {"n": 50, "cortes": [330, 727, 1258, 1787], "mediana": 888}}}}
+        linhas = classificar_quartos(coleta, tab, carregar(), CFG, date(2026, 10, 14), 21)
+        por = {l["quarto"]: l for l in linhas}
+        self.assertEqual(por["Q2"]["passo"], 0)          # sem desconto: não desce mesmo atrás da meta
+        self.assertEqual(por["Q2"]["faixa"], 2)          # 1519 × 0,61 = 927 → médio no conjunto do Recanto
+        self.assertEqual(por["Q7"]["passo"], 0)          # esgotada
+        self.assertTrue(por["Q7"]["acao"].startswith("esgotada"))
+
+
 class TestSazonalidade(unittest.TestCase):
     def test_calendario_cobre_cada_noite_uma_vez(self):
         from sazonalidade import carregar, validar, periodo, datas_especiais

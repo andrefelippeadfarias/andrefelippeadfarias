@@ -123,3 +123,12 @@ Hora da ANÁLISE E AGENDA DIÁRIA do PriceLabs (rotina "Agenda diária PriceLabs
 - **Mudança:** no merge, unidade única passa a contar como vendida quando `num_bookings` é maior que 0; teste novo em `TestMesclar` (28 testes ok).
 - **Como desfazer:** voltar `mesclar_recalculo.py` ao commit a3d14b7.
 
+## 14/10/2026, 02:20 — Faixas de preço de mercado, sazonalidade 2026-2027 e flutuação percentual (pedido do dono, 13/10)
+- **Motivo:** o dono pediu para qualificar os preços em cinco faixas (muito baixo a muito alto), prever a sazonalidade de cada época, feriado e dia, flutuar em percentual para ficar dentro das metas e usar a IA para pesquisar a concorrência inteira.
+- **Mudança:**
+  - `dados/sazonalidade.json` (novo): 77 períodos de 14/10/2026 a 31/12/2027 com nível, faixa alvo, estadia e antecedência, 55 feriados e eventos, regras gerais e mercado mês a mês; `scripts/sazonalidade.py` (consulta e validação). Pesquisa pelo workflow `sazonalidade-campos` (5 agentes: feriados, eventos, estações, PriceLabs, síntese).
+  - `dados/mercado_faixas.json` (novo): cortes dos quintis por data e por conjunto (geral, pares do Recanto, pares da Villa), da varredura `varredura-concorrencia` (16 de 38 agentes; o resto fica para a retomada).
+  - `scripts/faixas_de_preco.py`: `mercado` (calibra os cortes) e `quartos` (classifica cada noite dos 7 quartos e sugere o passo percentual pela regra de flutuação; respeita Queen 2 sem desconto e o mínimo do quarto). 35 testes ok.
+  - `quartos.json`: 12 feriados de 2027. `regras.md` 4c, `mercado.md`, `SKILL.md` (passo 4 e revisão semanal), `.claude/workflows/varredura-concorrencia.js` e `sazonalidade-campos.js`.
+- **Como desfazer:** apagar a seção 4c de `regras.md` e os dois arquivos novos em `dados/`; a rotina volta a decidir só pelas Regras A a I.
+

@@ -36,7 +36,17 @@
 - **Mercado mês a mês** (ocupação do mercado no PriceLabs, vizinhança do Recanto | da Villa; ADR em R$): out/25 29|35 (571|516); nov 35|42 (640|547); dez 43|50 (733|703); jan/26 36|45 (645|583); fev 29|34 (652|573); mar 27|34 (563|511, o menor); abr 37|42 (696|651); mai 42|46 (691|659); jun 50|54 (834|788); **jul 62|67 (835|819, pico)**; ago 36|44 (691|637); set 37|40 (695|634). Mercado de fim de semana: sex/sáb têm cerca de 2 vezes a ocupação e o preço de dom a qui (quarta R$ 247 contra sábado R$ 511 no KAYAK). Julho vale 2 a 2,6 vezes o dia útil de março.
 - **Picos declarados pela Prefeitura:** Réveillon 95%, Corpus Christi 95%, Dia dos Namorados 95%, 9 de Julho 90% a 95%, Consciência Negra 80%, Natal 70% a 80%. Antecedência típica: 60 a 90 dias nos picos, 30 a 45 nos feriadões, 7 a 20 nos vales.
 - **Nossa posição (account review de 12 meses):** ocupação 40,3% contra 38,4% do mercado, com diária média 8% abaixo (R$ 632). Em setembro de 2026: Recanto 59,8% a R$ 635; Villa 49,8% a R$ 636.
-- **Faixas de preço de mercado** (`dados/mercado_faixas.json`, refeito na revisão semanal pela varredura): cortes dos quintis por data e por conjunto (geral, pares do Recanto, pares da Villa). Classificação dos nossos quartos: `python3 scripts/faixas_de_preco.py quartos <coleta> dados/mercado_faixas.json --dias 21`.
+- **Faixas de preço de mercado** (`dados/mercado_faixas.json`, refeito na revisão semanal pela varredura): cortes dos quintis por data e por conjunto (geral, pares do Recanto, pares da Villa).
+  | Conjunto | Tipo de dia | muito baixo até | baixo até | médio até | alto até | muito alto acima de |
+  |---|---|---|---|---|---|---|
+  | Pares do Recanto | semana | R$ 329 | R$ 727 | R$ 1.258 | R$ 1.787 | R$ 1.787 |
+  | Pares do Recanto | sexta e sábado | R$ 530 | R$ 719 | R$ 1.165 | R$ 1.679 | R$ 1.679 |
+  | Pares da Villa | semana | R$ 221 | R$ 305 | R$ 480 | R$ 744 | R$ 744 |
+  | Pares da Villa | sexta e sábado | R$ 321 | R$ 478 | R$ 572 | R$ 931 | R$ 931 |
+  | Geral | semana | R$ 238 | R$ 431 | R$ 776 | R$ 1.683 | R$ 1.683 |
+  | Geral | sexta e sábado | R$ 322 | R$ 506 | R$ 724 | R$ 1.204 | R$ 1.204 |
+
+  Preço por noite na vitrine da Booking (2 adultos, quarto mais barato de cada propriedade), varredura de 13/10/2026 para datas de 20/10 a 10/12. Feriados, Natal, Réveillon e última hora ainda sem varredura própria (usam os cortes de fim de semana até a retomada). Classificação dos nossos quartos: `python3 scripts/faixas_de_preco.py quartos <coleta> dados/mercado_faixas.json --dias 21`.
 
 ## Pesquisa com agentes de IA (como refazer)
 - **Concorrência inteira:** Workflow `varredura-concorrencia` (script salvo em `.claude/workflows/varredura-concorrencia.js`): para cada conjunto de datas, dois agentes varrem a Booking por faixa de preço (dividindo a faixa ao meio sempre que vierem 10 resultados), mais a busca com hidro, a busca dos nossos hotéis e, em 3 datas de referência, a busca por tipo de acomodação; um agente lê o mercado e o compset do PriceLabs. Saída: `faixas_de_preco.py mercado <saida> --json dados/mercado_faixas.json`.

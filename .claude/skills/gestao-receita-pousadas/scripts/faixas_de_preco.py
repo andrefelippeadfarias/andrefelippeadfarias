@@ -71,7 +71,8 @@ def juntar_varredura(resultado: dict) -> dict:
             continue
         rot = r["rotulo"].rsplit("-", 1)[0]
         d = saida.setdefault(rot, {"checkin": r["checkin"], "checkout": r["checkout"],
-                                   "noites": max(1, int(r.get("noites") or 1)), "tipo": r.get("tipo", ""), "props": {}})
+                                   "noites": max(1, int(r.get("noites") or 1)), "tipo": r.get("tipo", ""), "props": {}, "partes": []})
+        d["partes"].append(r.get("parte") or r["rotulo"].rsplit("-", 1)[-1])
         _acumular(d, r)
     # a cobertura por tipo de acomodação acrescenta propriedades (hostel, apartamento, casa) nas 3 datas de referência
     mapa_cob = {"cobertura-semana-20/10": "semana-20/10", "cobertura-fds-23/10": "fimdesemana-23/10",
@@ -123,7 +124,9 @@ def tabela_mercado(varr: dict) -> dict:
                 conj[nome] = {"n": len(vals), "cortes": cortes(vals), "mediana": round(quantil(vals, 50), 2)}
         nossos = {NOSSOS[p["id"]]: p["noite"] for p in props if p["id"] in NOSSOS}
         saida[rot] = {"tipo": d["tipo"], "noites": d["noites"], "checkin": d["checkin"],
-                      "conjuntos": conj, "nossos": nossos}
+                      "conjuntos": conj, "nossos": nossos,
+                      # completa = as duas metades da varredura (baixa e alta) vieram; parcial só vale para a própria data
+                      "completa": {"baixa", "alta"} <= set(d.get("partes", []))}
     return saida
 
 
@@ -132,7 +135,7 @@ def cortes_por_tipo(tab: dict, conjunto_: str) -> dict:
     por_tipo: dict[str, list[list[float]]] = {}
     for d in tab.values():
         c = d["conjuntos"].get(conjunto_)
-        if c:
+        if c and d.get("completa", True):
             por_tipo.setdefault(d["tipo"], []).append(c["cortes"])
     return {t: [round(quantil([c[i] for c in lst], 50), 2) for i in range(4)] for t, lst in por_tipo.items()}
 
@@ -235,6 +238,10 @@ def classificar_quartos(coleta: dict, tab: dict, cal: dict, cfg: dict, hoje: dat
             meta = meta_da_janela(cfg, ate)
             ocup = vend / tot
             texto, passo = acao_sugerida(fx if fx is not None else alvo, alvo, ocup, meta, esgotada, ate) if cortes_ else ("sem dado de mercado", 0)
+            if passo < 0 and q.get("sem_desconto"):
+                texto, passo = ("quarto sem desconto (Queen 2): só segura ou sobe", 0)
+            elif passo < 0 and enviado <= q["min"] + 1:
+                texto, passo = ("já no mínimo do quarto: abaixo só pela Regra I (D0 a D3) ou exceção de mercado", 0)
             linhas.append({"quarto": curto, "data": dia["date"], "dias_ate": ate, "tipo": tipo, "enviado": enviado,
                            "vitrine": round(vitrine), "cortes": cortes_, "origem": origem, "faixa": fx, "faixa_alvo": alvo,
                            "periodo": per["nome"][:50] if per else "", "vendidas": vend, "total": tot, "ocupacao": round(ocup, 2),
@@ -262,7 +269,7 @@ def main(argv=None) -> int:
         dados = dados.get("result", dados)
         tab = tabela_mercado(juntar_varredura(dados))
         for rot, d in sorted(tab.items(), key=lambda kv: kv[1]["checkin"]):
-            print(f"## {rot} ({d['tipo']}, {d['noites']} noite(s))")
+            print(f"## {rot} ({d['tipo']}, {d['noites']} noite(s){'' if d.get('completa', True) else ', PARCIAL: só uma metade da varredura'})")
             for nome, c in d["conjuntos"].items():
                 print(f"  {nome:8} n={c['n']:3}  cortes por noite {c['cortes']}  mediana {c['mediana']}")
             print(f"  nossos (por noite): {d['nossos']}")

@@ -33,7 +33,7 @@ Você é a gestora de receita e growth hacker das duas pousadas. Responda sempre
    - recalcule os fatores de valor real com as reservas da semana;
    - ajuste os parâmetros em `quartos.json` dentro dos limites;
    - atualize `referencia_semanal`;
-   - **refaça as faixas de mercado:** rode o Workflow `varredura-concorrencia` (`.claude/workflows/varredura-concorrencia.js`, modo leitura) e grave `python3 scripts/faixas_de_preco.py mercado <saida> --json dados/mercado_faixas.json`; na primeira segunda de cada mês, rode também o Workflow `sazonalidade-campos` e atualize `dados/sazonalidade.json` (valide com `sazonalidade.py validar`);
+   - **refaça as faixas de mercado:** rode o Workflow `varredura-concorrencia` (se uma rodada falhar por limite da sessão de IA, retome com `resumeFromRunId`; a varredura de 13/10 ficou sem feriados, Natal, Réveillon e última hora: retomar `wf_f5234400-501` na rotina das 07:53 de 14/10) (`.claude/workflows/varredura-concorrencia.js`, modo leitura) e grave `python3 scripts/faixas_de_preco.py mercado <saida> --json dados/mercado_faixas.json`; na primeira segunda de cada mês, rode também o Workflow `sazonalidade-campos` e atualize `dados/sazonalidade.json` (valide com `sazonalidade.py validar`);
    - registre em `historico-da-skill.md`.
 
 ## Procedimento (rotina completa e pedido do dono)

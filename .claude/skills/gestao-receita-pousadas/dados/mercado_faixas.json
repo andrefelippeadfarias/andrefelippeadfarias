@@ -1,0 +1,383 @@
+{
+ "semana-20/10": {
+  "tipo": "semana",
+  "noites": 2,
+  "checkin": "2026-10-20",
+  "conjuntos": {
+   "geral": {
+    "n": 130,
+    "cortes": [
+     220.9,
+     431.35,
+     775.72,
+     1673.14
+    ],
+    "mediana": 608.51
+   },
+   "recanto": {
+    "n": 50,
+    "cortes": [
+     416.03,
+     729.82,
+     1134.53,
+     1783.77
+    ],
+    "mediana": 818.09
+   },
+   "villa": {
+    "n": 37,
+    "cortes": [
+     221.43,
+     338.41,
+     608.72,
+     818.7
+    ],
+    "mediana": 472.81
+   }
+  },
+  "nossos": {
+   "Villa": 404.84,
+   "Recanto": 473.04
+  },
+  "completa": true
+ },
+ "semana-27/10": {
+  "tipo": "semana",
+  "noites": 2,
+  "checkin": "2026-10-27",
+  "conjuntos": {
+   "geral": {
+    "n": 132,
+    "cortes": [
+     234.02,
+     446.55,
+     836.7,
+     1835.8
+    ],
+    "mediana": 631.8
+   },
+   "recanto": {
+    "n": 54,
+    "cortes": [
+     331.92,
+     726.73,
+     1289.2,
+     1835.4
+    ],
+    "mediana": 888.12
+   },
+   "villa": {
+    "n": 41,
+    "cortes": [
+     204.62,
+     314.69,
+     607.5,
+     1835.0
+    ],
+    "mediana": 480.0
+   }
+  },
+  "nossos": {
+   "Villa": 460.4,
+   "Recanto": 558.29
+  },
+  "completa": true
+ },
+ "semana-03/11": {
+  "tipo": "semana",
+  "noites": 2,
+  "checkin": "2026-11-03",
+  "conjuntos": {
+   "geral": {
+    "n": 132,
+    "cortes": [
+     245.9,
+     425.64,
+     732.88,
+     1524.36
+    ],
+    "mediana": 566.99
+   },
+   "recanto": {
+    "n": 52,
+    "cortes": [
+     308.48,
+     717.7,
+     1232.81,
+     1809.08
+    ],
+    "mediana": 902.15
+   },
+   "villa": {
+    "n": 40,
+    "cortes": [
+     212.05,
+     303.88,
+     456.42,
+     743.53
+    ],
+    "mediana": 310.41
+   }
+  },
+  "nossos": {
+   "Recanto": 510.91,
+   "Villa": 558.97
+  },
+  "completa": true
+ },
+ "semana-24/11": {
+  "tipo": "semana",
+  "noites": 2,
+  "checkin": "2026-11-24",
+  "conjuntos": {
+   "geral": {
+    "n": 137,
+    "cortes": [
+     256.37,
+     454.43,
+     827.23,
+     1682.64
+    ],
+    "mediana": 626.56
+   },
+   "recanto": {
+    "n": 57,
+    "cortes": [
+     328.93,
+     750.87,
+     1257.6,
+     1768.13
+    ],
+    "mediana": 950.0
+   },
+   "villa": {
+    "n": 41,
+    "cortes": [
+     232.56,
+     304.72,
+     480.0,
+     724.14
+    ],
+    "mediana": 378.0
+   }
+  },
+  "nossos": {
+   "Recanto": 497.55,
+   "Villa": 506.33
+  },
+  "completa": true
+ },
+ "semana-08/12": {
+  "tipo": "semana",
+  "noites": 2,
+  "checkin": "2026-12-08",
+  "conjuntos": {
+   "geral": {
+    "n": 115,
+    "cortes": [
+     237.96,
+     380.3,
+     712.71,
+     1717.15
+    ],
+    "mediana": 517.5
+   },
+   "recanto": {
+    "n": 45,
+    "cortes": [
+     315.34,
+     666.55,
+     1278.0,
+     1787.08
+    ],
+    "mediana": 858.0
+   },
+   "villa": {
+    "n": 34,
+    "cortes": [
+     228.52,
+     305.44,
+     378.65,
+     707.12
+    ],
+    "mediana": 326.71
+   }
+  },
+  "nossos": {
+   "Recanto": 538.25,
+   "Villa": 597.07
+  },
+  "completa": true
+ },
+ "fimdesemana-23/10": {
+  "tipo": "fim de semana",
+  "noites": 2,
+  "checkin": "2026-10-23",
+  "conjuntos": {
+   "geral": {
+    "n": 160,
+    "cortes": [
+     314.73,
+     475.28,
+     697.58,
+     1306.62
+    ],
+    "mediana": 583.36
+   },
+   "recanto": {
+    "n": 58,
+    "cortes": [
+     464.76,
+     638.5,
+     1224.62,
+     1582.91
+    ],
+    "mediana": 825.95
+   },
+   "villa": {
+    "n": 50,
+    "cortes": [
+     277.44,
+     413.55,
+     494.21,
+     933.46
+    ],
+    "mediana": 460.46
+   }
+  },
+  "nossos": {
+   "Villa": 637.02,
+   "Recanto": 742.98
+  },
+  "completa": true
+ },
+ "fimdesemana-06/11": {
+  "tipo": "fim de semana",
+  "noites": 2,
+  "checkin": "2026-11-06",
+  "conjuntos": {
+   "geral": {
+    "n": 175,
+    "cortes": [
+     328.54,
+     536.25,
+     750.96,
+     1101.76
+    ],
+    "mediana": 607.5
+   },
+   "recanto": {
+    "n": 58,
+    "cortes": [
+     596.2,
+     798.85,
+     1105.29,
+     1775.84
+    ],
+    "mediana": 990.1
+   },
+   "villa": {
+    "n": 53,
+    "cortes": [
+     365.0,
+     542.2,
+     649.01,
+     927.8
+    ],
+    "mediana": 602.1
+   }
+  },
+  "nossos": {
+   "Recanto": 1139.67
+  },
+  "completa": true
+ },
+ "fimdesemana-04/12": {
+  "tipo": "fim de semana",
+  "noites": 2,
+  "checkin": "2026-12-04",
+  "conjuntos": {
+   "geral": {
+    "n": 98,
+    "cortes": [
+     286.35,
+     404.0,
+     547.7,
+     685.79
+    ],
+    "mediana": 458.85
+   },
+   "recanto": {
+    "n": 9,
+    "cortes": [
+     636.08,
+     692.79,
+     721.62,
+     739.83
+    ],
+    "mediana": 713.0
+   },
+   "villa": {
+    "n": 23,
+    "cortes": [
+     437.74,
+     501.6,
+     592.07,
+     656.0
+    ],
+    "mediana": 554.96
+   }
+  },
+  "nossos": {},
+  "completa": false
+ },
+ "oktoberfest-16/10": {
+  "tipo": "evento",
+  "noites": 2,
+  "checkin": "2026-10-16",
+  "conjuntos": {
+   "geral": {
+    "n": 93,
+    "cortes": [
+     274.7,
+     396.16,
+     480.81,
+     653.63
+    ],
+    "mediana": 438.75
+   },
+   "recanto": {
+    "n": 11,
+    "cortes": [
+     540.0,
+     563.5,
+     639.73,
+     777.12
+    ],
+    "mediana": 580.23
+   },
+   "villa": {
+    "n": 27,
+    "cortes": [
+     301.88,
+     407.16,
+     520.0,
+     588.35
+    ],
+    "mediana": 473.85
+   }
+  },
+  "nossos": {},
+  "completa": false
+ },
+ "_meta": {
+  "versao": "2026-10-14T02",
+  "fonte": "workflow varredura-concorrencia de 13/10/2026 (16 de 38 agentes; faltam feriados, Natal, Réveillon, última hora, cobertura por tipo e PriceLabs, por limite da sessão de IA; retomar com resumeFromRunId wf_f5234400-501)",
+  "amostra": "150 a 180 propriedades por data completa; a oferta de R$ 100 a R$ 900 por noite não foi esgotada (3 níveis de divisão), então os cortes baixos são aproximados",
+  "conjuntos": {
+   "geral": "toda a oferta sem os nossos",
+   "recanto": "hidro ou spa e (4-5 estrelas ou nota 8,0+)",
+   "villa": "1 a 4 estrelas e nota 7,0 a 9,2"
+  }
+ }
+}

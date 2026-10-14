@@ -37,9 +37,13 @@ def mesclar_quarto(quarto: dict, refresh: dict) -> dict:
         d["price"] = float(x["price"])
         d["user_price"] = float(x["user_price"])
         d["min_stay"] = int(x["min_stay"])
-        d["multi_unit_occupancy"] = x["mu_occupancy"]
-        vendidas = int(str(x["mu_occupancy"]).split("/")[0])
-        d["booking_status"] = "Booked" if vendidas > 0 else ""
+        mu = str(x.get("mu_occupancy") or "")
+        if "/" in mu:
+            d["multi_unit_occupancy"] = mu
+            d["booking_status"] = "Booked" if int(mu.split("/")[0]) > 0 else ""
+        else:
+            # unidade única (Afrodite): mu_occupancy vem "-1"; vendida = tem reserva (num_bookings)
+            d["booking_status"] = "Booked" if int(x.get("num_bookings") or 0) > 0 else ""
         if x.get("uncustomized_price") is not None:
             d["uncustomized_price"] = float(x["uncustomized_price"])
         dias.append(d)

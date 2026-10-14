@@ -117,3 +117,9 @@ Hora da ANÁLISE E AGENDA DIÁRIA do PriceLabs (rotina "Agenda diária PriceLabs
 - **Motivo:** a coleta das 16:53 saiu idêntica à das 13:53 e o recálculo manual mostrou 8 noites vendidas e 1 cancelamento na Queen 7 (e vendas na Double e na Balcony). Uma rodada leve "sem mudança" era só calendário parado.
 - **Mudança:** `SKILL.md` (rotina leve): rodar `mesclar_recalculo.py --velhos --horas 2`, recalcular os quartos listados com unidade livre de D0 a D14 e mesclar antes de decidir. `aprendizados.md` e `quartos.json` (nota de demanda).
 - **Como desfazer:** apagar o bullet novo da rotina leve no `SKILL.md`.
+
+## 13/10/2026, 22:10 — `mesclar_recalculo.py` e a Afrodite
+- **Motivo:** o merge marcava a Afrodite (unidade única, `mu_occupancy` "-1" no recálculo) como 0% vendida e tirava a Afrodite do total do hotel.
+- **Mudança:** no merge, unidade única passa a contar como vendida quando `num_bookings` é maior que 0; teste novo em `TestMesclar` (28 testes ok).
+- **Como desfazer:** voltar `mesclar_recalculo.py` ao commit a3d14b7.
+

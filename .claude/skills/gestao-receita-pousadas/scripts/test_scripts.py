@@ -283,6 +283,15 @@ class TestMesclar(unittest.TestCase):
         self.assertEqual(m["days"][0]["user_price"], -1.0)
         self.assertEqual(m["days"][1]["min_stay"], 1)
         self.assertEqual(m["days"][2]["price"], 900)  # data fora do recálculo não muda
+        # unidade única (Afrodite): mu_occupancy "-1"; vendida pelo num_bookings
+        afro = {"days": [{"date": "2026-10-13", "price": 1546, "user_price": -1, "min_stay": 1, "multi_unit_occupancy": None, "booking_status": "Booked"},
+                         {"date": "2026-10-16", "price": 2288, "user_price": 2292, "min_stay": 1, "multi_unit_occupancy": None, "booking_status": ""}]}
+        ra = {"data": {"pricing_array": [
+            {"date": "2026-10-13", "price": "1728", "user_price": "-1", "min_stay": "1", "mu_occupancy": "-1", "num_bookings": "1"},
+            {"date": "2026-10-16", "price": "2506", "user_price": "-1", "min_stay": "1", "mu_occupancy": "-1", "num_bookings": "0"}]}}
+        ma = mesclar_quarto(afro, ra)
+        self.assertEqual([d["booking_status"] for d in ma["days"]], ["Booked", ""])
+        self.assertIsNone(ma["days"][0]["multi_unit_occupancy"])
         agora = datetime(2026, 10, 13, 12, 0, tzinfo=timezone.utc)
         self.assertEqual([c for c, _ in quartos_velhos({"rooms": {"VK7": quarto, "Q7": {"last_refreshed_at": "2026-10-13T11:00:00+00:00"}}}, 6, agora)], ["VK7"])
 

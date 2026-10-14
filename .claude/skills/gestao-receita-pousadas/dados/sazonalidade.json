@@ -1,5 +1,5 @@
 {
- "versao": "2026-10-14T01",
+ "versao": "2026-10-14T07",
  "nota": "Calendário de sazonalidade de Campos do Jordão pesquisado por agentes de IA em 13/10/2026 (workflow sazonalidade-campos: web + PriceLabs) e sintetizado em períodos. Cada noite de 2026-10-14 a 2027-12-31 cai em exatamente um período (validado). `dias`: todos, sex-sab (sextas e sábados) ou dom-qui. `nivel` é a demanda esperada; `faixa_alvo` é a faixa de preço de mercado (quintis da Booking) em que devemos ficar para vender no ritmo da meta. Revisar todo mês na rotina completa de segunda (rodar o workflow de novo) e sempre que um evento marcado \"estimado\" for confirmado.",
  "niveis": {
   "muito baixa": "mercado abaixo de ~22% no mesmo período do ano anterior",
@@ -93,9 +93,9 @@
    "nome": "Finados 2026 (seg 2/11) + abertura do Natal FLMA (acendimento 30/10) – noites sex 30/10 a dom 1/11",
    "nivel": "alta",
    "faixa_alvo": "alto",
-   "estadia_minima": 2,
+   "estadia_minima": 3,
    "antecedencia_dias": 30,
-   "motivos": "Feriado na segunda dá 3 noites e coincide com a carreata e o acendimento das luzes do Natal 'Fábrica de Biscoitos'; primeiro feriadão da temporada natalina.",
+   "motivos": "Feriado na segunda dá 3 noites e coincide com a carreata e o acendimento das luzes do Natal 'Fábrica de Biscoitos'; primeiro feriadão da temporada natalina. Estadia mínima 3 por decisão do dono (03/10, +20% e 3 noites nos 7 quartos).",
    "evidencia": "PriceLabs fp_insights: preço de mercado +35,8% em 01/11/2026 e ocupação +12,7% em 31/10 vs datas vizinhas; market_occupancy OTB 31/10 = 23,3% (Recanto) / 27,0% (Villa); travel.com.br: abertura \"30 de outubro\"; Portaria MGI 11.460/2025: 2/11 feriado nacional.",
    "confianca": "alta"
   },

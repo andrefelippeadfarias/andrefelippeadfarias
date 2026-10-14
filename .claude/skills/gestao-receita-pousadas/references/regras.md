@@ -65,7 +65,7 @@ Toda gravação passa antes pelo `scripts/validar_plano.py`, é conferida depois
 
 **Regra A, estadia mínima**
 - 1 noite nas datas dos próximos 14 dias (`regra_a_janela_dias`) com unidade livre.
-- Exceções: sábados (Regra H); feriados mantêm 2 noites; Finados 3 noites (dono); vésperas com política de 2 diárias.
+- Exceções: sábados (Regra H); feriados mantêm 2 noites; Finados 3 noites (dono); Carnaval, Corpus Christi, 9 de Julho e Réveillon 3 noites (`sazonalidade.json`); vésperas com política de 2 diárias. Feriado nacional que cai em sábado ou domingo é fim de semana comum (sem piso nem estadia de feriado).
 - Uma substituição nova feita pela tela apaga a anterior. Pela API os campos se juntam, mas confira a estadia mínima depois de gravar.
 
 **Regra F, escada por antecedência** (Queen 7, Double, Villa King Spa 7, Villa King Spa 2)
@@ -140,7 +140,7 @@ Pedido do dono: "ajustar o preço de acordo com a demanda que estamos recebendo 
 - **Recanto, duas velocidades.**
   - Double e Queen (2) com demanda alta.
   - Afrodite com demanda média; vale a Regra C.
-  - Queen 7 com demanda baixa: 7 unidades e vendas quase só de última hora (26 de 49 reservas com 0 a 1 dia de antecedência).
+  - Queen 7: era baixa em 07/10 e passou a **média** em 12/10 (classe viva em `quartos.json` → `demanda`); 7 unidades e vendas quase só de última hora (26 de 49 reservas com 0 a 1 dia de antecedência).
 - **Villa, agressiva desde 06/10.**
   - VK7 e VK2 com demanda média, já reagindo: 5 vendas da VK7 em 3 horas depois do envio de 07/10. **VK7 passou a alta em 13/10** (7 dias 74%, 15 dias 51%, 30 dias 45%): Regra I só na última unidade e +10% por rodada nas datas com 67% ou mais vendido a até 14 dias. VK2 é candidata (15d 60%, 30d 47%, mas só 2 unidades).
   - Balcony com demanda baixa: 10% abaixo da suíte com banheira mais barata e livre (Regra G).
@@ -168,7 +168,10 @@ Pedido do dono: "qualificar os preços: muito baixo, baixo, médio, alto e muito
 - **À frente da meta** (ocupação de meta mais 10 pontos para cima): sobe um degrau, +10%, até a faixa alvo mais uma; em muito alto, segura.
 - **Na meta:** aproxima do alvo devagar (+5% se duas faixas abaixo, −5% se duas acima); senão segura.
 - Os passos entram sempre em **percentual com piso**, por bloco de suavização (`percentual.py`), e por cima deles continuam valendo: limites de segurança, padrão de qualidade de R$ 1.000, piso de feriado (R$ 800 reais), Regras G, H e I e o ±15% por semana da base. Um passo por rodada, no máximo; a rodada seguinte mede o efeito antes do próximo.
-- Recanto (5 estrelas, nota 8,4) opera no topo da faixa alvo; Villa (3 estrelas, nota 8,0) opera na base.
+- **Combinação com a escada (Regra F):** a Regra F dá o patamar inicial de uma data que entra no plano (percentual por antecedência); a flutuação move um degrau por rodada a partir do preço vigente, dentro da faixa alvo ±1. Quando as duas discordam, vale o passo da flutuação (ele já olha ocupação e mercado); a escada só manda em data sem substituição ainda.
+- **Fator de vitrine da Villa:** 0,53 em dia de semana e feriado, 0,66 em sexta e sábado (`fator_vitrine_fds`, medido em 06 e 07/10); o script usa o de fim de semana nessas noites.
+- **"Topo" e "base" da faixa:** o alvo de preço do Recanto é o corte superior da faixa alvo e o da Villa é o corte inferior; o passo percentual leva até lá, nunca além da faixa alvo mais uma.
+- Recanto (5 estrelas, nota 8,4) opera no topo da faixa alvo; Villa (3 estrelas, nota 8,1) opera na base.
 
 ## 5. Posicionamento contra o mercado (Booking)
 - Nossas notas: Recanto 8,4; Villa 8,1. Fique abaixo dos hotéis de mesmo preço com nota de 9 ou mais. Referência: entre 10% e 25% abaixo da mediana dos hotéis 5 estrelas com nota 9 ou mais nas datas fortes, e perto da mediana nas fracas. Em sexta, sábado e feriado das suítes com banheira, o piso é o padrão de qualidade.

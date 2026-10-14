@@ -1,5 +1,5 @@
 {
-  "versao": "2026-10-14T01",
+  "versao": "2026-10-14T07",
   "nota": "Fonte única dos dados de máquina da Skill. Os scripts leem daqui. Quem mudar base, mínimo ou máximo no PriceLabs atualiza este arquivo no mesmo commit.",
   "pms": "beds24",
   "grupo": {
@@ -32,7 +32,8 @@
       "sem_desconto": false,
       "regra_i": true,
       "regra_f": true,
-      "demanda": "media"
+      "demanda": "media",
+      "fator_vitrine_fds": 0.61
     },
     {
       "curto": "Double",
@@ -51,7 +52,8 @@
       "sem_desconto": false,
       "regra_i": true,
       "regra_f": true,
-      "demanda": "alta"
+      "demanda": "alta",
+      "fator_vitrine_fds": 0.61
     },
     {
       "curto": "Afrodite",
@@ -70,7 +72,8 @@
       "sem_desconto": false,
       "regra_i": false,
       "regra_f": false,
-      "demanda": "media"
+      "demanda": "media",
+      "fator_vitrine_fds": 0.61
     },
     {
       "curto": "Q2",
@@ -89,7 +92,8 @@
       "sem_desconto": true,
       "regra_i": false,
       "regra_f": false,
-      "demanda": "alta"
+      "demanda": "alta",
+      "fator_vitrine_fds": 0.61
     },
     {
       "curto": "VK7",
@@ -108,7 +112,8 @@
       "sem_desconto": false,
       "regra_i": true,
       "regra_f": true,
-      "demanda": "alta"
+      "demanda": "alta",
+      "fator_vitrine_fds": 0.66
     },
     {
       "curto": "Balcony",
@@ -127,7 +132,8 @@
       "sem_desconto": false,
       "regra_i": true,
       "regra_f": false,
-      "demanda": "baixa"
+      "demanda": "baixa",
+      "fator_vitrine_fds": 0.66
     },
     {
       "curto": "VK2",
@@ -146,7 +152,8 @@
       "sem_desconto": false,
       "regra_i": true,
       "regra_f": true,
-      "demanda": "media"
+      "demanda": "media",
+      "fator_vitrine_fds": 0.66
     }
   ],
   "referencia_semanal": {
@@ -224,12 +231,6 @@
       "nota": "Dono pôs +20% e 3 noites nos 7 quartos de 30/10 a 02/11 pela tela (03/10)."
     },
     {
-      "nome": "Proclamação da República",
-      "inicio": "2026-11-13",
-      "fim": "2026-11-14",
-      "piso_real": null
-    },
-    {
       "nome": "Consciência Negra",
       "inicio": "2026-11-19",
       "fim": "2026-11-21",
@@ -239,100 +240,114 @@
       "nome": "Natal",
       "inicio": "2026-12-24",
       "fim": "2026-12-25",
-      "piso_real": null
+      "piso_real": 1000,
+      "nota": "Piso padrão R$ 1.000 reais (regras.md, feriado novo); a Skill pode ajustar pelos dados, nunca abaixo de R$ 800."
     },
     {
       "nome": "Réveillon",
       "inicio": "2026-12-30",
       "fim": "2027-01-01",
-      "piso_real": null
+      "piso_real": 1000,
+      "nota": "Piso padrão R$ 1.000 reais (regras.md, feriado novo); a Skill pode ajustar pelos dados, nunca abaixo de R$ 800."
     },
     {
       "nome": "Aniversário de São Paulo (feriadão paulistano)",
       "inicio": "2027-01-22",
       "fim": "2027-01-24",
-      "piso_real": null,
-      "fonte": "sazonalidade.json (pesquisa de 13/10/2026)"
+      "piso_real": 1000,
+      "fonte": "sazonalidade.json (pesquisa de 13/10/2026)",
+      "nota": "Piso padrão R$ 1.000 reais (regras.md, feriado novo); a Skill pode ajustar pelos dados, nunca abaixo de R$ 800."
     },
     {
       "nome": "Carnaval",
       "inicio": "2027-02-05",
       "fim": "2027-02-09",
-      "piso_real": null,
-      "fonte": "sazonalidade.json (pesquisa de 13/10/2026)"
+      "piso_real": 1000,
+      "fonte": "sazonalidade.json (pesquisa de 13/10/2026)",
+      "nota": "Piso padrão R$ 1.000 reais (regras.md, feriado novo); a Skill pode ajustar pelos dados, nunca abaixo de R$ 800."
     },
     {
       "nome": "Semana Santa / Páscoa",
       "inicio": "2027-03-25",
       "fim": "2027-03-27",
-      "piso_real": null,
-      "fonte": "sazonalidade.json (pesquisa de 13/10/2026)"
+      "piso_real": 1000,
+      "fonte": "sazonalidade.json (pesquisa de 13/10/2026)",
+      "nota": "Piso padrão R$ 1.000 reais (regras.md, feriado novo); a Skill pode ajustar pelos dados, nunca abaixo de R$ 800."
     },
     {
       "nome": "Tiradentes (isolado, quarta)",
       "inicio": "2027-04-20",
       "fim": "2027-04-21",
-      "piso_real": null,
-      "fonte": "sazonalidade.json (pesquisa de 13/10/2026)"
+      "piso_real": 1000,
+      "fonte": "sazonalidade.json (pesquisa de 13/10/2026)",
+      "nota": "Piso padrão R$ 1.000 reais (regras.md, feriado novo); a Skill pode ajustar pelos dados, nunca abaixo de R$ 800."
     },
     {
       "nome": "Corpus Christi (abertura da temporada de inverno)",
       "inicio": "2027-05-26",
       "fim": "2027-05-29",
-      "piso_real": null,
-      "fonte": "sazonalidade.json (pesquisa de 13/10/2026)"
+      "piso_real": 1000,
+      "fonte": "sazonalidade.json (pesquisa de 13/10/2026)",
+      "nota": "Piso padrão R$ 1.000 reais (regras.md, feriado novo); a Skill pode ajustar pelos dados, nunca abaixo de R$ 800."
     },
     {
       "nome": "Revolução Constitucionalista, 9 de Julho (feriado estadual SP)",
       "inicio": "2027-07-08",
       "fim": "2027-07-10",
-      "piso_real": null,
-      "fonte": "sazonalidade.json (pesquisa de 13/10/2026)"
+      "piso_real": 1000,
+      "fonte": "sazonalidade.json (pesquisa de 13/10/2026)",
+      "nota": "Piso padrão R$ 1.000 reais (regras.md, feriado novo); a Skill pode ajustar pelos dados, nunca abaixo de R$ 800."
     },
     {
       "nome": "Independência, 7 de Setembro (ponte)",
       "inicio": "2027-09-03",
       "fim": "2027-09-06",
-      "piso_real": null,
-      "fonte": "sazonalidade.json (pesquisa de 13/10/2026)"
+      "piso_real": 1000,
+      "fonte": "sazonalidade.json (pesquisa de 13/10/2026)",
+      "nota": "Piso padrão R$ 1.000 reais (regras.md, feriado novo); a Skill pode ajustar pelos dados, nunca abaixo de R$ 800."
     },
     {
       "nome": "Nossa Senhora Aparecida / Dia das Crianças (ponte)",
       "inicio": "2027-10-08",
       "fim": "2027-10-11",
-      "piso_real": null,
-      "fonte": "sazonalidade.json (pesquisa de 13/10/2026)"
+      "piso_real": 1000,
+      "fonte": "sazonalidade.json (pesquisa de 13/10/2026)",
+      "nota": "Piso padrão R$ 1.000 reais (regras.md, feriado novo); a Skill pode ajustar pelos dados, nunca abaixo de R$ 800."
     },
     {
       "nome": "Finados (ponte)",
       "inicio": "2027-10-29",
       "fim": "2027-11-01",
-      "piso_real": null,
-      "fonte": "sazonalidade.json (pesquisa de 13/10/2026)"
+      "piso_real": 1000,
+      "fonte": "sazonalidade.json (pesquisa de 13/10/2026)",
+      "nota": "Piso padrão R$ 1.000 reais (regras.md, feriado novo); a Skill pode ajustar pelos dados, nunca abaixo de R$ 800."
     },
     {
       "nome": "Proclamação da República (feriadão)",
       "inicio": "2027-11-12",
       "fim": "2027-11-14",
-      "piso_real": null,
-      "fonte": "sazonalidade.json (pesquisa de 13/10/2026)"
+      "piso_real": 1000,
+      "fonte": "sazonalidade.json (pesquisa de 13/10/2026)",
+      "nota": "Piso padrão R$ 1.000 reais (regras.md, feriado novo); a Skill pode ajustar pelos dados, nunca abaixo de R$ 800."
     },
     {
       "nome": "Natal",
       "inicio": "2027-12-24",
       "fim": "2027-12-25",
-      "piso_real": null,
-      "fonte": "sazonalidade.json (pesquisa de 13/10/2026)"
+      "piso_real": 1000,
+      "fonte": "sazonalidade.json (pesquisa de 13/10/2026)",
+      "nota": "Piso padrão R$ 1.000 reais (regras.md, feriado novo); a Skill pode ajustar pelos dados, nunca abaixo de R$ 800."
     },
     {
       "nome": "Réveillon",
       "inicio": "2027-12-29",
       "fim": "2027-12-31",
-      "piso_real": null,
-      "fonte": "sazonalidade.json (pesquisa de 13/10/2026)"
+      "piso_real": 1000,
+      "fonte": "sazonalidade.json (pesquisa de 13/10/2026)",
+      "nota": "Piso padrão R$ 1.000 reais (regras.md, feriado novo); a Skill pode ajustar pelos dados, nunca abaixo de R$ 800."
     }
   ],
-  "feriados_nota": "Cada período lista as NOITES de feriado (data de entrada da diária). piso_real null = sem piso do dono; vale só o limite de segurança. Feriados de 2027 acrescentados em 14/10/2026 a partir de dados/sazonalidade.json (noites de hospedagem; só os que geram viagem: feriados municipais e os que caem em sábado ou domingo ficam de fora). Eventos e temporadas ficam em sazonalidade.json → datas.",
+  "feriados_nota": "Cada período lista as NOITES de feriado (data de entrada da diária). piso_real null = sem piso do dono; vale só o limite de segurança. Feriados de 2027 acrescentados em 14/10/2026 a partir de dados/sazonalidade.json (noites de hospedagem; só os que geram viagem: feriados municipais e os que caem em sábado ou domingo ficam de fora). Eventos e temporadas ficam em sazonalidade.json → datas. 14/10: Proclamação 2026 (dom 15/11) saiu da lista: é fim de semana comum (noites 13 e 14/11 seguem o padrão de sexta e sábado); feriados de dezembro de 2026 em diante receberam o piso padrão de R$ 1.000 reais.",
   "demanda_nota": "Classificação de demanda por suíte (alta/media/baixa), revista em toda rotina completa pela ocupação 15/30 dias contra as metas e pelo ritmo de reservas dos últimos 14 dias. Última revisão: 2026-10-13 (rotina das 10:53; antes, 2026-10-12, rotina completa e revisão semanal; hoje o calendário traz o lote de 09/10 e 48 reservas novas desde 10/10). Q7 15d 34%/30d 21% sobe de baixa para MÉDIA (acima de 60% da meta nas duas janelas: 30% e 21%), com 47 diárias vendidas em 06–12/10; Double 56%/47% alta; Q2 70%/62% alta; Afrodite 60%/43% média, candidata a alta (1 unidade; 3 diárias na semana); VK7 sobe de média para ALTA em 13/10 (calendário recalculado às 12:44 BRT, 21 h mais novo que o da coleta: 7d 73,5%, 15d 51,4%, 30d 44,8%, 45d 32,7%, 60d 26,7% e 49 diárias vendidas em 06–12/10; margem pequena, 1,4 ponto no 15d: volta a média se o 15d ficar abaixo de 50% em dois recálculos seguidos); VK2 53%/45% média, candidata a alta (2 unidades; 10 diárias na semana); Balcony 18%/24% baixa. Atualização de 13/10 16:55: com os recálculos novos Double 15d 54%/30d 46% (volta a confirmar alta depois da queda das 13:53 pelo calendário velho), VK7 15d 60%/30d 49% alta, Q7 7d 74% mas 15d 42%/30d 25% (média, 15d abaixo da meta de 50%), VK2 15d 60%/30d 47% e Balcony 24%/28% baixa. Exceções de mercado: nenhuma em vigor.",
   "excecoes_mercado": []
 }

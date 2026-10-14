@@ -229,8 +229,10 @@ def classificar_quartos(coleta: dict, tab: dict, cal: dict, cfg: dict, hoje: dat
                 vend, tot = (1 if dia.get("booking_status") else 0), 1
             esgotada = vend >= tot
             enviado = dia["user_price"] if dia["user_price"] and dia["user_price"] > 0 else dia["price"]
-            vitrine = enviado * q["fator_vitrine"]
             tipo = tipo_do_dia(d, feriados)
+            # a Villa aparece mais cara na vitrine em sexta e sábado (0,66 contra 0,53 em semana e feriado)
+            fator = q.get("fator_vitrine_fds", q["fator_vitrine"]) if tipo == "fim de semana" else q["fator_vitrine"]
+            vitrine = enviado * fator
             cortes_, origem = cortes_da_noite(tab, d, conj, tipo)
             per = periodo(cal, d)
             alvo = indice_faixa(per["faixa_alvo"]) if per else 2

@@ -364,6 +364,18 @@ class TestClassificarQuartos(unittest.TestCase):
         self.assertEqual(por["Q7"]["passo"], 0)          # esgotada
         self.assertTrue(por["Q7"]["acao"].startswith("esgotada"))
 
+    def test_fator_de_vitrine_de_fim_de_semana_na_villa(self):
+        from faixas_de_preco import classificar_quartos
+        from sazonalidade import carregar
+        coleta = {"rooms": {"VK7": {"days": [
+            {"date": "2026-10-23", "price": 1101, "user_price": 1101, "min_stay": 1, "multi_unit_occupancy": "5/7", "booking_status": "Booked"},
+            {"date": "2026-10-21", "price": 850, "user_price": 850, "min_stay": 1, "multi_unit_occupancy": "2/7", "booking_status": "Booked"}]}}}
+        tab = {"x": {"tipo": "semana", "noites": 1, "checkin": "2026-10-21", "completa": True, "nossos": {},
+                     "conjuntos": {"villa": {"n": 40, "cortes": [221, 305, 480, 744], "mediana": 400}}}}
+        linhas = {l["data"]: l for l in classificar_quartos(coleta, tab, carregar(), CFG, date(2026, 10, 14), 21)}
+        self.assertEqual(linhas["2026-10-23"]["vitrine"], round(1101 * 0.66))   # sexta: fator de fim de semana
+        self.assertEqual(linhas["2026-10-21"]["vitrine"], round(850 * 0.53))    # quarta: fator de semana
+
 
 class TestSazonalidade(unittest.TestCase):
     def test_calendario_cobre_cada_noite_uma_vez(self):

@@ -1343,9 +1343,9 @@ A Villa não aparece em nenhuma busca com filtro de hidro (falta a comodidade na
 
 | Mudança | Onde | Antes | Depois | Como desfazer (pedir ao Claude) |
 |---|---|---|---|---|
-| Regra G: com a King Spa 2 esgotada, a referência passa a ser a King Spa 7 (R$ 935 calculado) | Balcony 14/10 | piso e teto R$ 630 (igual à King Spa 2 livre) | piso e teto **R$ 842** (10% abaixo; gravado e lido de volta; recálculo amanhã) | "Volte a Balcony de 14/10 para R$ 630" |
+| Regra G: com a King Spa 2 esgotada, a referência passa a ser a King Spa 7 (R$ 935 calculado) | Balcony 14/10 | piso e teto R$ 630 (igual à King Spa 2 livre) | piso e teto **R$ 842** (10% abaixo; recálculo das 21:55 conferido) | "Volte a Balcony de 14/10 para R$ 630" |
 
-- **Conferido no recálculo:** Queen 7 15/10 R$ 800 (flag da regra viva, piso R$ 800); VK7 14/10 R$ 935; Balcony 15/10 R$ 842 (vendeu 1 de 6), 18 a 22/10 R$ 765 e 25/10 R$ 780. Balcony 14/10 a R$ 842 não conferida (a conexão com o PriceLabs caiu depois da gravação); confiro na rotina das 07:53.
+- **Conferido no recálculo:** Queen 7 15/10 R$ 800 (flag da regra viva, piso R$ 800); VK7 14/10 R$ 935; Balcony 15/10 R$ 842 (vendeu 1 de 6), 18 a 22/10 R$ 765 e 25/10 R$ 780. Balcony 14/10 **R$ 842 conferido às 21:55** (flag da regra viva, piso e teto R$ 842); enviado amanhã.
 - **Balcony em 13/10** (6 livres, 20h): fica em R$ 630; a noite acaba em poucas horas.
 - **Pendências suas (nesta ordem):** (1) **Sync Now** da Queen 7, da King Spa 7 e da King Spa 2; (2) Beds24: última unidade da King Spa 7 no sábado 17/10; (3) salvar a suavização da Balcony na tela.
 

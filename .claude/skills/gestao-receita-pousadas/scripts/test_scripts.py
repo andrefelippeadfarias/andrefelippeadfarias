@@ -192,8 +192,11 @@ class TestValidador(unittest.TestCase):
         # sem min_price o piso é o mínimo do anúncio, também abaixo do padrão
         self.assertTrue(any("padrão de qualidade" in x for x in erros(
             [item(quarto="Double", data="2026-10-23", preco=-10, price_type="percent")])))
-        # piso de R$ 1.000 passa; dia útil, Balcony (sem banheira) e Afrodite (piso alto) não entram
-        self.assertEqual(erros([item(quarto="Q7", min_price=1000, **base)]), [])
+        # dono (14/10): sexta e sábado a partir de R$ 850 no preço final = R$ 1.394 enviados no Recanto (0,61) e
+        # R$ 1.288 na Villa (0,66); o R$ 1.000 enviado de antes já não basta
+        self.assertTrue(any("piso de fim de semana" in x for x in erros([item(quarto="Q7", min_price=1000, **base)])))
+        self.assertEqual(erros([item(quarto="Q7", min_price=1394, **base)]), [])
+        self.assertEqual(erros([item(quarto="VK2", data="2026-10-24", preco=-30, price_type="percent", min_price=1288)]), [])
         self.assertEqual(erros([item(quarto="Q7", data="2026-10-21", preco=-35, price_type="percent",
                                      min_price=800)]), [])
         self.assertEqual(erros([item(quarto="Balcony", data="2026-10-23", preco=-30, price_type="percent",
@@ -205,9 +208,10 @@ class TestValidador(unittest.TestCase):
         # justificativa curta demais não vale
         self.assertTrue(erros([item(mercado="fraco", **base)]))
         just = "mediana Booking 23-25/10 R$ 1.015 e mercado a 13% de ocupação"
+        # desde 14/10 o piso de R$ 850 no preço final de sexta e sábado não aceita exceção de mercado (só o dono)
         v = Validador(CFG, HOJE, {})
         v.validar([item(mercado=just, **base)])
-        self.assertEqual(v.erros, [])
+        self.assertTrue(any("piso de fim de semana" in e for e in v.erros))
         self.assertTrue(any("exceção de mercado" in a for a in v.avisos))
         # o campo 'mercado' não vai para o payload do PriceLabs
         pl = montar_payload(CFG, [item(mercado=just, **base)])
@@ -226,11 +230,11 @@ class TestValidador(unittest.TestCase):
         self.assertTrue(erros([item(mercado=["mediana", "booking", 1015], **base)]))
         self.assertTrue(erros([item(mercado=12345678901234567890, **base)]))
         # fronteira: o piso vai ao PriceLabs como variação % sobre a base (dono 14/10), então vale o valor efetivo:
-        # 998 vira -14% = R$ 1.009 e passa; 985 vira -16% = R$ 985 e não passa
+        # 1.385 vira +19% = R$ 1.396 e passa; 1.380 vira +18% = R$ 1.384 e não passa (piso R$ 1.393)
         self.assertEqual(erros([item(quarto="Q7", data="2026-10-23", preco=-20, price_type="percent",
-                                     min_price=998)]), [])
+                                     min_price=1385)]), [])
         self.assertTrue(erros([item(quarto="Q7", data="2026-10-23", preco=-20, price_type="percent",
-                                    min_price=985)]))
+                                    min_price=1380)]))
 
     def test_padrao_de_qualidade_so_o_dono_muda(self):
         import copy

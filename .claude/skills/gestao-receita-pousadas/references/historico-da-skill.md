@@ -188,3 +188,9 @@ Hora da ANÁLISE E AGENDA DIÁRIA do PriceLabs (rotina "Agenda diária PriceLabs
 - **Mudança (dados):** `limites_seguranca.piso_vitrine_semana_suites` 500 (só o dono muda); `parametros.fator_vitrine_semana` Recanto 0,63 e Villa 0,53 (medição); mínimo do anúncio VK7 944 e King Spa 2 879.
 - **Mudança (texto):** `regras.md` 4 (regra nova), Regra I e 6a.
 - **Como desfazer:** zerar `piso_vitrine_semana_suites` só com ordem do dono; as regras por data voltam pelo snapshot da rodada.
+
+## 14/10/2026, 20:45 — Piso de fim de semana das suítes com banheira: R$ 850 no preço final (dono)
+- **Decisão do dono:** "Para o fim de semana a diária. Mínima pra sweet, com banheira, deve ser na faixa de R$ 850,00".
+- **Mudança (código, 46 testes):** `validar_plano.piso_vitrine_semana(fds=True)` em sexta e sábado fora de feriado; testes do padrão de qualidade atualizados.
+- **Mudança (dados):** `limites_seguranca.piso_vitrine_fds_suites` 850; `parametros.fator_vitrine_fds` Recanto 0,61 e Villa 0,66; pendência do padrão de qualidade fechada.
+- **Como desfazer:** só com ordem do dono; as regras por data têm o valor de antes no registro.

@@ -211,7 +211,9 @@
    "pedir senha ou token no chat"
   ],
   "piso_vitrine_semana_suites": 500,
-  "piso_vitrine_semana_nota": "Dono, 14/10: \"Vamos ajustar os valores das suítes com banheira para dia de semana, no mínimo de R$500. Preço final nas plataformas. Ajuste isso percentualmente para podermos termos a flutuação de preço natural do Price Labs.\" Vale para as 6 suítes com banheira (não a Balcony), nas noites de domingo a quinta fora de feriado: piso enviado ≥ este valor ÷ parametros.fator_vitrine_semana da pousada (vitrine da Booking, a mais descontada). Vale também para a Regra I. Só o dono muda."
+  "piso_vitrine_semana_nota": "Dono, 14/10: \"Vamos ajustar os valores das suítes com banheira para dia de semana, no mínimo de R$500. Preço final nas plataformas. Ajuste isso percentualmente para podermos termos a flutuação de preço natural do Price Labs.\" Vale para as 6 suítes com banheira (não a Balcony), nas noites de domingo a quinta fora de feriado: piso enviado ≥ este valor ÷ parametros.fator_vitrine_semana da pousada (vitrine da Booking, a mais descontada). Vale também para a Regra I. Só o dono muda.",
+  "piso_vitrine_fds_suites": 850,
+  "piso_vitrine_fds_nota": "Dono, 14/10: \"Para o fim de semana a diária mínima pra suíte, com banheira, deve ser na faixa de R$ 850,00\" (lido como preço final nas plataformas, como o pedido anterior de R$ 500). Vale para as 6 suítes com banheira (não a Balcony) nas noites de sexta e sábado fora de feriado, inclusive na Regra I: piso enviado ≥ este valor ÷ parametros.fator_vitrine_fds da pousada. Responde a dúvida do padrão de qualidade (base = preço final). Só o dono muda."
  },
  "parametros": {
   "nota": "A Skill ajusta estes valores sozinha, dentro dos limites de segurança. Toda mudança vai para o historico-da-skill.md.",
@@ -226,6 +228,11 @@
    "Recanto": 0.63,
    "Villa": 0.53,
    "nota": "Vitrine da Booking ÷ preço enviado em dia de semana, medido em 14/10 (Recanto R$ 403 ÷ 640 e R$ 504 ÷ 800; Villa R$ 446 ÷ 842). A Skill recalibra na revisão de segunda com buscas novas; ao subir o fator, o piso enviado desce."
+  },
+  "fator_vitrine_fds": {
+   "Recanto": 0.61,
+   "Villa": 0.66,
+   "nota": "Vitrine da Booking ÷ preço enviado em sexta e sábado (regras.md, padrão de qualidade: Recanto 0,61, Villa 0,66). Recalibrar na revisão de segunda."
   }
  },
  "feriados": [

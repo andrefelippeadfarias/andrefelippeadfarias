@@ -1503,6 +1503,22 @@ A Villa não aparece em nenhuma busca com filtro de hidro (falta a comodidade na
 - **Rotina das 19:53 (leve):** nenhuma reserva nova desde as 12:43; a Balcony 14 e 15/10 a R$ 635 já está nos canais (envio depois das 17:24).
 - **Plano:** 128 itens validados (0 erros), gravados em 6 chamadas de datas e 1 de anúncio, todas 200, 0 divergências.
 
+## 14/10/2026, 20:45 — Pedido seu: suítes com banheira em sexta e sábado a partir de R$ 850 no preço final
+
+- **Você pediu:** "Para o fim de semana a diária. Mínima pra sweet, com banheira, deve ser na faixa de R$ 850,00". Li como preço final nas plataformas (vitrine da Booking), como o pedido de R$ 500 nos dias de semana.
+- **Piso enviado:** R$ 850 ÷ 0,61 = **R$ 1.394 no Recanto**; R$ 850 ÷ 0,66 = **R$ 1.288 na Villa**. Em percentual da base; o preço flutua acima. O antigo padrão de R$ 1.000 enviados dava R$ 610 a R$ 660 na vitrine; ele fica só nas noites de feriado (que têm pisos próprios mais altos). Isso fecha a dúvida pendente sobre a base do padrão.
+- **Plano:** 27 noites (0 erros), 5 chamadas, todas 200 e devolvidas iguais. Os outros fins de semana até 02/01 já estavam acima (pisos ou preços maiores, ou o piso de 150% da base sem regra na data).
+
+| Mudança | Onde | Antes | Depois | Como desfazer (pedir ao Claude) |
+|---|---|---|---|---|
+| Piso de fim de semana R$ 850 no preço final | Queen 7 16, 17, 23 e 24/10, 06, 07, 13 e 14/11, 04 e 05/12 | piso R$ 1.009 (preços R$ 1.144 a 1.784) | piso +19% = **R$ 1.396**; sobe hoje 16, 17, 23 e 24/10 | "Volte os pisos de sexta e sábado da Queen 7 para −14%" |
+| Idem | Double 23 e 24/10, 06, 07, 13 e 14/11 | piso R$ 1.006 | piso −5% = **R$ 1.406** (preços já acima) | "Volte a Double para −32%" |
+| Idem | VK7 23 e 24/10, 06 e 07/11 | piso R$ 1.006–1.243 | piso −12% = **R$ 1.302**; sobe 23 e 24/10 (eram R$ 1.243) | "Volte a VK7 para −16%" |
+| Idem | King Spa 2 16, 17, 23 e 24/10, 06 e 07/11 | piso R$ 1.003–1.283 | piso +2% = **R$ 1.295** (noites esgotadas ou preço acima) | "Volte a King Spa 2 para −21%" |
+| Regra G: proteção da Balcony esgotada | Balcony 17/10 | piso R$ 1.270, teto R$ 1.397 | piso e teto +18% = **R$ 1.499** (10% abaixo da VK7 livre) | "Volte a Balcony de 17/10" |
+
+- **Atenção à lotação:** a Queen 7 em 23/10 tem 1 de 7 vendida e em 24/10 tem 3 de 7, e o preço sobe de R$ 1.144 para R$ 1.396. A partir de agora a flutuação não desce abaixo desse piso; se o fim de semana não vender, a rotina avisa, mas não corta abaixo dos R$ 850 no preço final sem ordem sua.
+
 > **Regras em vigor:** desde 06/10/2026 elas ficam em `.claude/skills/gestao-receita-pousadas/references/regras.md`. Este arquivo guarda só o histórico das mudanças.
 
 ## O que só pode ser feito na tela (passo a passo para você)

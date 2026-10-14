@@ -362,7 +362,9 @@
  "excecoes_mercado": [],
  "modo": {
   "Recanto": "padrão",
-  "Villa": "padrão"
+  "Villa": "padrão",
+  "nota": "Modo por faturamento (regras.md 4c; dono 14/10). A revisão de segunda compara o livro do mês com as metas do dono em metas_faturamento.json e grava: \"volume\" (atrás do menor limiar: a flutuação age como classe baixa), \"padrão\" (entre os limiares) ou \"preco\" (na meta do dono ou acima: age como classe alta), este só com a pousada na meta de ocupação em 2 das janelas de 7, 15 e 30 dias (trava de lotação). A rotina completa pode rebaixar preco para padrão; a rotina leve nunca muda.",
+  "desde": "2026-10-14"
  },
  "modo_decisao": {
   "em": "2026-10-14T17:50",

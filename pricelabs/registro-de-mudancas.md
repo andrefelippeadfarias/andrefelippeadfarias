@@ -1561,6 +1561,13 @@ A Villa não aparece em nenhuma busca com filtro de hidro (falta a comodidade na
   - **VK7 em 23 e 24/10, +10%:** obrigaria a Balcony, com 5 de 6 livres, a subir 9% pela Regra G. Segurei pela trava de lotação.
   - **Queen 7 em 23/10, −10%:** travado no piso de R$ 850 no preço final.
 
+## 15/10/2026, 11:05 — Rotina das 10:53 (leve)
+
+- **Reservas e cancelamentos:** nenhum novo desde ontem às 12:43 (41 registros desde 13/10). **Mudanças manuais:** nenhuma nova.
+- **Envio do dia:** ainda não saiu; o último envio dos 7 quartos foi às 21:05 de ontem. Os ajustes das 08:20 não chegaram aos canais. Nenhum deles é de hoje ou amanhã: o mais próximo é a Balcony em 18/10 (D3).
+- **Conferência no recálculo:** Double 7 de 7 ✅; Balcony 13 de 13 ✅ (às 08:07). VK7 e Afrodite não conferidas: o PriceLabs respondeu "Beds24 appears to be temporarily unavailable or under high load". Queen 7 e King Spa 2 estão no limite de recálculo. A API devolveu iguais as 28 regras gravadas.
+- **Nada gravado nesta rodada.**
+
 > **Regras em vigor:** desde 06/10/2026 elas ficam em `.claude/skills/gestao-receita-pousadas/references/regras.md`. Este arquivo guarda só o histórico das mudanças.
 
 ## O que só pode ser feito na tela (passo a passo para você)

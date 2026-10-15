@@ -1531,6 +1531,36 @@ A Villa não aparece em nenhuma busca com filtro de hidro (falta a comodidade na
 | Piso de R$ 500 no preço final em % por data | VK7 90 noites; King Spa 2 78 noites, até 29/04/2027 | mínimo do anúncio R$ 944 / R$ 879 | piso −36% / −25% da base | "Apague os pisos de semana de 2027 da VK7 e da King Spa 2" |
 | Mínimo do anúncio de volta | VK7; King Spa 2 | R$ 944; R$ 879 | R$ 850; R$ 765 | "Suba o mínimo do anúncio" (só com ordem sua) |
 
+## 15/10/2026, 08:40 — Rotina das 07:53 (completa)
+
+- **Coleta completa** às 07:55 (preços até 13/12, reservas desde 13/10, logs, envio, mercado e concorrentes em 5 conjuntos de datas). Calendário dos 7 quartos de 21:05 de ontem.
+- **Reservas:** nenhuma nova desde 12:43 de ontem (a lista atualiza por volta das 10:59).
+- **Mudança manual pela tela (log via web, não API):** às 21:03 de ontem, o mínimo do anúncio da VK7 subiu de R$ 850 para R$ 944 e o da King Spa 2 de R$ 765 para R$ 879, depois de eu ter voltado os dois. Tratei como decisão sua e mantive (`quartos.json` atualizado). Se não foi você, avise que eu volto.
+- **Envio:** os 7 quartos foram enviados às 21:05 de ontem.
+- **Ocupação (7/15/30 dias):** hotel 66%, 45%, 39%; Recanto 69%, 48%, 38%; Villa 62%, 43%, 39%. A Balcony está fraca, com 36%, 20% e 26%.
+- **Classes:** a King Spa 2 passou para demanda alta, repetindo o critério nas duas rotinas completas (15 dias 70%, 30 dias 50%). O modo das duas pousadas segue padrão: a trava de lotação falha nas duas, com só a janela de 30 dias na meta.
+- **Concorrentes (Booking):** segunda 19/10, mediana R$ 272; Recanto R$ 532, Villa R$ 457. Fim de semana de 23 a 25/10, mediana R$ 948 em 2 noites; Recanto R$ 1.696, Villa R$ 1.475. Finados, mediana R$ 2.735 em 3 noites; Recanto R$ 4.144, Villa R$ 4.395. Com os seus pisos de R$ 500 e R$ 850 no preço final, as suítes ficam bem acima da mediana.
+- **Plano:** 28 itens validados (0 erros), em 6 chamadas, todas 200 e devolvidas iguais. A Balcony foi conferida no recálculo, 13 de 13; nos outros quartos o recálculo automático não veio, então confiro na rotina das 10:53.
+
+| Mudança (flutuação por faixas, tudo em %) | Onde | Antes | Depois |
+|---|---|---|---|
+| +10% à frente da meta | Queen 7 18/10 (6 de 7) | R$ 891 | piso −16% = R$ 985 |
+| +5% e +10% | Double 19 a 22/10 e 29/10 | R$ 947–1.347 | pisos −32% a +1% = R$ 1.006 a 1.495 |
+| −10% pelo teto, atrás da meta (1 de 6) | Double 23/10 | R$ 1.733 | teto +5% = R$ 1.554 |
+| +5% | Double 24/10 | R$ 1.733 | piso +23% = R$ 1.820 |
+| −15% e −5% | Afrodite 23/10 (teto) e 02/11 (piso) | R$ 2.447; R$ 2.200 | R$ 2.080; R$ 2.100 |
+| +10% e −5% | VK7 20/10 (6 de 7); VK7 02, 03 e 04/11 | R$ 947; R$ 1.806, 992, 1.110 | R$ 1.050; R$ 1.717, 947, 1.066 |
+| −5% | King Spa 2 02/11 | R$ 1.638 | R$ 1.562 |
+| Regra I em D3, sem suíte livre | Balcony 18/10 (6 de 6 livres) | R$ 775 | R$ 635 |
+| −10%, até o limite da Regra G | Balcony 19 a 22/10, 25 a 29/10, 03 e 04/11 | R$ 838–864 | R$ 813–826 |
+| −15%, até o limite da Regra G | Balcony 02/11 | R$ 1.473 | R$ 1.410 |
+
+- **Não mexi:**
+  - **Noites de hoje:** não sobem com só horas de venda (Queen 7, Double e Queen 2).
+  - **Cortes de dia de semana da VK7 e da King Spa 2:** travados no seu piso de R$ 500 no preço final.
+  - **VK7 em 23 e 24/10, +10%:** obrigaria a Balcony, com 5 de 6 livres, a subir 9% pela Regra G. Segurei pela trava de lotação.
+  - **Queen 7 em 23/10, −10%:** travado no piso de R$ 850 no preço final.
+
 > **Regras em vigor:** desde 06/10/2026 elas ficam em `.claude/skills/gestao-receita-pousadas/references/regras.md`. Este arquivo guarda só o histórico das mudanças.
 
 ## O que só pode ser feito na tela (passo a passo para você)

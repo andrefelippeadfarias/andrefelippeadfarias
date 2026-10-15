@@ -1568,6 +1568,19 @@ A Villa não aparece em nenhuma busca com filtro de hidro (falta a comodidade na
 - **Conferência no recálculo:** Double 7 de 7 ✅; Balcony 13 de 13 ✅ (às 08:07). VK7 e Afrodite não conferidas: o PriceLabs respondeu "Beds24 appears to be temporarily unavailable or under high load". Queen 7 e King Spa 2 estão no limite de recálculo. A API devolveu iguais as 28 regras gravadas.
 - **Nada gravado nesta rodada.**
 
+## 15/10/2026, 14:05 — Rotina das 13:53 (leve)
+
+- **Lote de reservas** importado às 11:05: 27 novas e 3 cancelamentos ou trocas de quarto. Os destaques:
+  - **Queen 7:** esgotou de 15 a 18/10. Vendeu também 30/12 a 01/01 por R$ 4.466, 04 a 07/11 por R$ 2.345, 06 a 09/11 (2 reservas, R$ 1.776 e R$ 1.783), 21 e 22/10, 25/10 e até 01 a 03/08/2027.
+  - **Double:** 19, 20 e 22/10; 05 e 06/12 (R$ 1.863); 07 e 08/12. O dia 20/10 esgotou.
+  - **VK7:** 20 a 24/10 pelo canal "outros" (R$ 2.200), 01/11, 08/11 e 22 a 24/11.
+  - **King Spa 2:** 18 e 19/10, 08/11 e 15/11.
+  - **Trocas de quarto:** a reserva da Afrodite de 16 e 17/10 veio da Queen 7, e a da Balcony de 14/10 passou para a VK7.
+- **Mudança sua pela tela:** às 12:19 e 12:26, Queen 7 e Double em 16/10 ficaram com preço, piso e teto **fixos de R$ 10.000**. As duas estão esgotadas nessa noite. Respeitei e não mexi.
+- **Envio:** Queen 7 e Double foram enviadas às 12:26, junto com a sua mudança. **Afrodite, Queen 2, VK7, Balcony e King Spa 2 seguem sem envio hoje** (último às 21:05 de ontem), e os ajustes das 08:20 desses quartos ainda não estão nos canais. O mais próximo é a Balcony em 18/10, a R$ 635 (D3).
+- **Recálculo** às 13:51: os 7 quartos foram recalculados pelo PriceLabs.
+- **Nada gravado:** as noites que venderam já levaram o passo de hoje (um passo por noite por dia), e os cortes da VK7 e da King Spa 2 seguem travados no piso de R$ 500 no preço final.
+
 > **Regras em vigor:** desde 06/10/2026 elas ficam em `.claude/skills/gestao-receita-pousadas/references/regras.md`. Este arquivo guarda só o histórico das mudanças.
 
 ## O que só pode ser feito na tela (passo a passo para você)

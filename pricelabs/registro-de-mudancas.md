@@ -1581,6 +1581,11 @@ A Villa não aparece em nenhuma busca com filtro de hidro (falta a comodidade na
 - **Recálculo** às 13:51: os 7 quartos foram recalculados pelo PriceLabs.
 - **Nada gravado:** as noites que venderam já levaram o passo de hoje (um passo por noite por dia), e os cortes da VK7 e da King Spa 2 seguem travados no piso de R$ 500 no preço final.
 
+## 15/10/2026, 17:00 — Rotina das 16:53 (leve)
+
+- Nenhuma reserva, cancelamento ou mudança manual nova desde as 13:53; ocupação igual. Nada gravado.
+- **Envio:** Afrodite, Queen 2, VK7, Balcony e King Spa 2 seguem sem envio desde as 21:05 de ontem (o recálculo das 14:30 não enviou). Os ajustes das 08:20 desses quartos não estão nos canais. Sync Now pedido de novo.
+
 > **Regras em vigor:** desde 06/10/2026 elas ficam em `.claude/skills/gestao-receita-pousadas/references/regras.md`. Este arquivo guarda só o histórico das mudanças.
 
 ## O que só pode ser feito na tela (passo a passo para você)

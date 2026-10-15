@@ -1586,6 +1586,12 @@ A Villa não aparece em nenhuma busca com filtro de hidro (falta a comodidade na
 - Nenhuma reserva, cancelamento ou mudança manual nova desde as 13:53; ocupação igual. Nada gravado.
 - **Envio:** Afrodite, Queen 2, VK7, Balcony e King Spa 2 seguem sem envio desde as 21:05 de ontem (o recálculo das 14:30 não enviou). Os ajustes das 08:20 desses quartos não estão nos canais. Sync Now pedido de novo.
 
+## 15/10/2026, 20:00 — Rotina das 19:53 (leve)
+
+- **Envio:** os 7 quartos foram enviados às 18:09. Com isso, os ajustes das 08:20 (Afrodite, Queen 2, VK7, Balcony e King Spa 2) chegaram aos canais.
+- **Calendário:** só trocas de quarto, sem reserva nova na lista: Queen 7 −1 e Queen 2 +1 em 15/10; Double +1 em 19/10 e −1 em 20/10; VK7 +1 em 20/10; Balcony −1 em 15/10 (6 de 6 livres hoje, a R$ 635 pela Regra I).
+- **Nada gravado:** a Queen 7 em 15/10 (1 livre, R$ 809) já está no piso de R$ 500 no preço final; as outras noites já levaram o passo de hoje.
+
 > **Regras em vigor:** desde 06/10/2026 elas ficam em `.claude/skills/gestao-receita-pousadas/references/regras.md`. Este arquivo guarda só o histórico das mudanças.
 
 ## O que só pode ser feito na tela (passo a passo para você)

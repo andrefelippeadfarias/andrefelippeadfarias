@@ -1,5 +1,5 @@
 {
- "versao": "2026-10-14T23",
+ "versao": "2026-10-15T08",
  "nota": "Fonte única dos dados de máquina da Skill. Os scripts leem daqui. Quem mudar base, mínimo ou máximo no PriceLabs atualiza este arquivo no mesmo commit.",
  "pms": "beds24",
  "grupo": {
@@ -103,7 +103,7 @@
    "nome": "Villa King Spa (7)",
    "pousada": "Villa",
    "unidades": 7,
-   "min": 850,
+   "min": 944,
    "base": 1480,
    "max": 5000,
    "min_referencia": 1000,
@@ -146,7 +146,7 @@
    "nome": "Villa King Spa (2)",
    "pousada": "Villa",
    "unidades": 2,
-   "min": 765,
+   "min": 879,
    "base": 1270,
    "max": 5000,
    "min_referencia": 900,
@@ -157,9 +157,9 @@
    "sem_desconto": false,
    "regra_i": true,
    "regra_f": true,
-   "demanda": "media",
+   "demanda": "alta",
    "fator_vitrine_fds": 0.66,
-   "demanda_nota": "candidata a alta desde 14/10 (15d 70%, 30d 50%); confirma em 15/10 se repetir"
+   "demanda_nota": "15/10: alta confirmada na segunda rotina completa seguida (15d 70%, 30d 50%; 14/10 15d 70%, 30d 50%)."
   }
  ],
  "referencia_semanal": {

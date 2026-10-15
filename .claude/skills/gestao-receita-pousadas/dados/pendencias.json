@@ -190,7 +190,9 @@
    "responsavel": "skill",
    "desde": "2026-10-14",
    "urgencia": 2,
-   "texto": "VK2 cumpriu o critério de demanda alta na rotina completa de 14/10 (15d 70%, 30d 50%, ritmo ≥3 diárias em 14 dias). Se repetir na rotina completa de 15/10, passar quartos.json → demanda para \"alta\" (Regra I só na última unidade; teto da subida alvo+2)."
+   "texto": "VK2 cumpriu o critério de demanda alta na rotina completa de 14/10 (15d 70%, 30d 50%, ritmo ≥3 diárias em 14 dias). Se repetir na rotina completa de 15/10, passar quartos.json → demanda para \"alta\" (Regra I só na última unidade; teto da subida alvo+2).",
+   "resolvido_em": "2026-10-15T08:10",
+   "resolucao": "Critério repetido na rotina completa de 15/10: King Spa 2 em demanda alta."
   },
   {
    "id": "push-q7-afrodite-vk2-1410",
@@ -285,6 +287,13 @@
    "desde": "2026-10-14",
    "urgencia": 2,
    "texto": "VK7 e King Spa 2: o piso de R$ 500 no preço final de domingo a quinta está em pisos por data em percentual até 30/04/2027 (o mínimo do anúncio, R$ 850 e R$ 765, dá menos que isso). No dia 1 de cada mês, a rotina completa estende os pisos por mais um mês (gerador: varrer noites sem regra por data com piso abaixo de R$ 500 ÷ fator de vitrine)."
+  },
+  {
+   "id": "min-anuncio-manual-1410",
+   "responsavel": "dono",
+   "desde": "2026-10-15",
+   "urgencia": 2,
+   "texto": "Às 21:03 de 14/10 o mínimo do anúncio da VK7 (R$ 850 → R$ 944) e da King Spa 2 (R$ 765 → R$ 879) foi mudado pela tela do PriceLabs (log via web, não API), depois de eu ter voltado os dois por causa da regra 'só percentuais'. Tratei como mudança sua e mantive. Se não foi você, avise que eu volto."
   }
  ],
  "versao": "2026-10-14T23"

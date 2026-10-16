@@ -1646,6 +1646,14 @@ A Villa não aparece em nenhuma busca com filtro de hidro (falta a comodidade na
 - **Conferência:** recálculo da Balcony às 16:58 mostra 17/10 a R$ 1.295 com estadia mínima 2. As demais datas da Balcony estão dentro da Regra G (varredura nos 60 dias).
 - **Validador:** 0 erros e 0 avisos.
 
+## 16/10/2026, 20:00 — Rotina das 19:53 (leve)
+
+- **Reservas, cancelamentos e mudanças manuais:** nenhuma reserva nova desde as 16:53 (as 14 reservas feitas hoje já estavam contabilizadas) e nenhuma mudança manual sua. O log só mostra as gravações do robô.
+- **Preços e ocupação:** sem variação nos 6 quartos recalculados às 15:27; só a Balcony foi recalculada de novo (19:58) por causa da minha gravação.
+- **Envio:** o último envio aos canais foi às 15:27, antes da correção da Balcony 17/10. Nos canais ela ainda aparece a R$ 1.499; o PriceLabs já calcula R$ 1.295 e deve enviar no próximo ciclo. Sync Now no PriceLabs adianta, já que 17/10 é amanhã.
+- **Regra G:** sem outros desvios. Finados e Regra H seguem nas pendências (20/10 e 21 a 23/10).
+- **Nada gravado nesta rodada.**
+
 > **Regras em vigor:** desde 06/10/2026 elas ficam em `.claude/skills/gestao-receita-pousadas/references/regras.md`. Este arquivo guarda só o histórico das mudanças.
 
 ## O que só pode ser feito na tela (passo a passo para você)

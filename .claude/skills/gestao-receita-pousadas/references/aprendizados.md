@@ -150,3 +150,7 @@ Cada item tem data e evidência. Para incluir um item novo: data, o fato, a evid
 | Villa agressiva de 06 a 25/10 (06/10 16h) | Mínimos −15%, dias úteis no mínimo, feriado a R$ 800 reais, fins de semana perto da mediana | 0 vendas até 19:56 de 06/10, mas os preços ainda não tinham chegado aos canais (só no envio de 07/10). Medir a partir do envio, até 09/10 e em 13/10. | |
 | Regra I de 06 a 08/10 (06/10) | R$ 800 → R$ 640 (Queen 7); Double R$ 1.132 → R$ 720 | 2 vendas para a mesma noite (06/10): Queen 7 R$ 320 (direto) e Double R$ 360 (Airbnb), 50% do enviado | última hora vende |
 | Domingo 18/10 no mínimo (06/10) | Double R$ 1.225 → R$ 900; Afrodite R$ 1.500 (piso) | 2 vendas: Double R$ 382 (Airbnb, 42%) e Afrodite R$ 675 (direto, 45%) | domingo no mínimo vende |
+
+## 16/10/2026 — Regra G também precisa baixar a Balcony
+- Quando uma suíte com banheira da Villa volta a ter vaga (cancelamento), o PriceLabs reduz o preço dela e a proteção que a Balcony recebeu na época em que estavam esgotadas passa a ficar acima. Em 17/10 a Balcony estava a R$ 1.499 contra R$ 1.439 da King Spa 2 livre.
+- Toda rodada leve deve rodar a varredura da Regra G nos dois sentidos (Balcony acima de 90% da suíte livre mais barata → baixar piso e teto). Correção em % (piso e teto +2%) e conferida no recálculo. Evidência: coleta das 16:53 e recálculo das 16:58.

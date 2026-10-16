@@ -1637,6 +1637,15 @@ A Villa não aparece em nenhuma busca com filtro de hidro (falta a comodidade na
 - **Mudanças manuais suas:** nenhuma nova.
 - **Nada gravado nesta rodada.**
 
+## 16/10/2026, 17:00 — Rotina das 16:53 (leve)
+
+- **Envio:** novo recálculo e envio dos 7 quartos às 15:27 (Brasília). Os preços variaram menos de 1% nas datas futuras; é a flutuação normal do PriceLabs dentro dos pisos.
+- **Reservas e mudanças manuais:** nenhuma reserva nova desde as 13:53 e nenhuma mudança manual sua. Três cancelamentos da Queen 7 em 16/10 já estavam contabilizados.
+- **Vagas que reapareceram na Villa:** VK7 liberou 1 unidade em 16 e 17/10 (agora 6/7 e 5/7) e a King Spa 2 liberou 1 em ambas (1/2). Os preços das duas desceram sozinhos para R$ 1.519 e R$ 1.439 em 17/10.
+- **Gravado (1 mudança, Regra G):** Balcony 17/10 estava a R$ 1.499, mais cara que as suítes com banheira livres (R$ 1.519 e R$ 1.439). A proteção de R$ 1.499 tinha sido posta quando elas estavam esgotadas. Passou a R$ 1.295, 10% abaixo da mais barata livre, com piso e teto em +2% da base. A ocupação (4/6) segue na meta. Antes: piso +18%. Para desfazer: min_price +18% percent_base.
+- **Conferência:** recálculo da Balcony às 16:58 mostra 17/10 a R$ 1.295 com estadia mínima 2. As demais datas da Balcony estão dentro da Regra G (varredura nos 60 dias).
+- **Validador:** 0 erros e 0 avisos.
+
 > **Regras em vigor:** desde 06/10/2026 elas ficam em `.claude/skills/gestao-receita-pousadas/references/regras.md`. Este arquivo guarda só o histórico das mudanças.
 
 ## O que só pode ser feito na tela (passo a passo para você)

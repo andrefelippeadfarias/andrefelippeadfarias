@@ -1628,6 +1628,15 @@ A Villa não aparece em nenhuma busca com filtro de hidro (falta a comodidade na
 - **Conferência no recálculo:** a VK7 recalculada às 10:55 confirmou as 2 gravações (02/11 a R$ 1.643 e 04/11 a R$ 1.021). Os outros 10 ajustes da Double, Afrodite, King Spa 2 e Balcony voltaram iguais da API e ficam para a rodada das 13:53. O recálculo automático das 08:04 foi anterior às gravações.
 - **Nada gravado nesta rodada.**
 
+## 16/10/2026, 14:00 — Rotina das 13:53 (leve)
+
+- **Envio do dia:** saiu. Os 7 quartos foram enviados às 11:26 (horário de Brasília) e o Sync Now não é mais necessário.
+- **Conferência no calendário:** 11 das 12 gravações da manhã batem (Double 20, 21, 22, 23, 24 e 29/10 e 05/11; Afrodite 23/10; VK7 02 e 04/11; King Spa 2 02/11). A Balcony 02/11 aparece a R$ 1.346 contra R$ 1.334 esperados; é arredondamento do percentual gravado (piso e teto +6%), não divergência.
+- **Reservas novas:** lote de 16 reservas, 25 noites e R$ 17,5 mil. Destaques: Finados na Queen 7 (30/10 a 01/11, R$ 3.310) e na Double (31/10 a 01/11, R$ 2.869), e Double 20 e 21/11 a R$ 2.476. Cancelamentos da Queen 7 em 16 e 17/10 foram repostos por novas reservas.
+- **Balcony em 16 e 17/10:** 4 de 6 vendidas em cada noite. Estão na meta, mantive o preço.
+- **Mudanças manuais suas:** nenhuma nova.
+- **Nada gravado nesta rodada.**
+
 > **Regras em vigor:** desde 06/10/2026 elas ficam em `.claude/skills/gestao-receita-pousadas/references/regras.md`. Este arquivo guarda só o histórico das mudanças.
 
 ## O que só pode ser feito na tela (passo a passo para você)

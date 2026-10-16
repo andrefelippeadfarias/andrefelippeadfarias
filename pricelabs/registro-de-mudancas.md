@@ -1621,6 +1621,13 @@ A Villa não aparece em nenhuma busca com filtro de hidro (falta a comodidade na
   - **Queen 7 em 19 e 23/10 e Balcony de 19 a 29/10:** já no limite do piso do dono ou da Regra G.
   - **Finados (30/10 a 02/11):** melhorou desde 14/10 (Queen 7 de 0 para 1 de 7 em 30 e 31/10; Double 3 e 6 de 6; VK7 3 e 4 de 7). Não cortei o seu +20%. Reavalio em 20/10, a 10 dias.
 
+## 16/10/2026, 11:00 — Rotina das 10:53 (leve)
+
+- **Reservas, cancelamentos e mudanças manuais:** nenhum novo desde ontem. O lote das 11:05 ainda não tinha chegado ao PriceLabs; a lista atualiza por volta das 10:59.
+- **Envio do dia:** ainda não saiu. O último envio dos 7 quartos foi ontem às 18:10, então as 12 mudanças das 08:20 e todo o calendário de hoje cedo não estão nos canais. Sync Now pedido de novo.
+- **Conferência no recálculo:** a VK7 recalculada às 10:55 confirmou as 2 gravações (02/11 a R$ 1.643 e 04/11 a R$ 1.021). Os outros 10 ajustes da Double, Afrodite, King Spa 2 e Balcony voltaram iguais da API e ficam para a rodada das 13:53. O recálculo automático das 08:04 foi anterior às gravações.
+- **Nada gravado nesta rodada.**
+
 > **Regras em vigor:** desde 06/10/2026 elas ficam em `.claude/skills/gestao-receita-pousadas/references/regras.md`. Este arquivo guarda só o histórico das mudanças.
 
 ## O que só pode ser feito na tela (passo a passo para você)

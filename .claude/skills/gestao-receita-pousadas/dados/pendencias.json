@@ -155,7 +155,7 @@
    "responsavel": "skill",
    "desde": "2026-10-14",
    "urgencia": 2,
-   "texto": "Finados: Queen 7 0/7 em 30 e 31/10 e King Spa 2 0/2 a R$ 3.190 (18% acima da mediana com hidro): com cortes próprios de feriado e reavaliação em 16/10 (D-14), um degrau sobre o +20% do dono, piso R$ 1.905 (Q7) / R$ 2.060 (VK2); registrar como mudança por cima da decisão do dono. Em 14/10: Queen 7 segue 0 de 7 em 30 e 31/10 (R$ 2.428) e VK2 0 de 2 (R$ 3.183); Double 3 e 5 de 6, VK7 3 e 4 de 7, Balcony 1 e 4 de 6. Reavaliar em 16/10 com a rodada 2 da varredura."
+   "texto": "Finados (30/10 a 02/11): em 16/10 (D-14) melhorou: Queen 7 1 de 7 em 30 e 31/10, King Spa 2 0 de 2, Double 3 e 6 de 6, VK7 3 e 4 de 7, Balcony 1 e 4 de 6. Booking, 3 noites: mediana R$ 2.496; Recanto R$ 4.312 (+73%); Villa R$ 4.395 (+76%). Não cortei o +20% do dono. Reavaliar em 20/10 (D-10): se Queen 7 tiver menos de 3 de 7 ou King Spa 2 0 de 2 em 30 ou 31/10, um degrau (−10%) pelo teto, piso de feriado R$ 1.905 (Q7) / R$ 2.060 (VK2); registrar como mudança por cima da decisão do dono."
   },
   {
    "id": "regra-h-sabados",
@@ -294,7 +294,14 @@
    "desde": "2026-10-15",
    "urgencia": 2,
    "texto": "Às 21:03 de 14/10 o mínimo do anúncio da VK7 (R$ 850 → R$ 944) e da King Spa 2 (R$ 765 → R$ 879) foi mudado pela tela do PriceLabs (log via web, não API), depois de eu ter voltado os dois por causa da regra 'só percentuais'. Tratei como mudança sua e mantive. Se não foi você, avise que eu volto."
+  },
+  {
+   "id": "regra-h-24-10",
+   "responsavel": "skill",
+   "desde": "2026-10-16",
+   "urgencia": 2,
+   "texto": "Sábado 24/10 do Recanto está em 6 de 16 (38%): abaixo de 50%. Na quarta (21/10) a sexta (23/10), se seguir abaixo de 50%, sugerir ao dono liberar 1 noite (excecao regra_h, o bloqueio é do Beds24) e só gravar com a decisão dele. O mercado de 23 e 24/10 está com 17% e 16% de ocupação, metade do ano passado, e o Recanto está a R$ 825 por noite na Booking contra mediana de R$ 420."
   }
  ],
- "versao": "2026-10-14T23"
+ "versao": "2026-10-16T08"
 }

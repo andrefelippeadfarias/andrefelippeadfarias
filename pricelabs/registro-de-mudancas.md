@@ -1592,6 +1592,35 @@ A Villa não aparece em nenhuma busca com filtro de hidro (falta a comodidade na
 - **Calendário:** só trocas de quarto, sem reserva nova na lista: Queen 7 −1 e Queen 2 +1 em 15/10; Double +1 em 19/10 e −1 em 20/10; VK7 +1 em 20/10; Balcony −1 em 15/10 (6 de 6 livres hoje, a R$ 635 pela Regra I).
 - **Nada gravado:** a Queen 7 em 15/10 (1 livre, R$ 809) já está no piso de R$ 500 no preço final; as outras noites já levaram o passo de hoje.
 
+## 16/10/2026, 08:25 — Rotina das 07:53 (completa)
+
+- **Coleta completa** às 07:55 (preços até 14/12, reservas desde 14/10, logs, envio, mercado e concorrentes em 5 conjuntos de datas). **O envio e o recálculo da madrugada não aconteceram**: o último envio dos 7 quartos foi ontem às 18:10. Recalculei os 7 quartos às 08:00. Seis dos sete falharam com erro vazio quando disparei juntos; um por vez deu certo.
+- **Reservas:** nenhuma nova nem cancelamento desde ontem às 19:53. **Mudanças manuais:** nenhuma nova (seguem as de 16/10 da Queen 7 e Double a R$ 10.000, esgotadas).
+- **Ocupação (7/15/30 dias):** hotel 63%, 45%, 40%; Recanto 70%, 49%, 42%; Villa 55%, 41%, 39%. Suítes com banheira 70%, 52%, 44%. Balcony 33%, 20%, 25%.
+- **Modo por faturamento:** segue padrão. O Recanto cumpre a trava de lotação (2 de 3 janelas), mas o livro de outubro não chegou à sua meta; a Villa não cumpre. Só a revisão de segunda (19/10) muda o modo.
+- **Concorrentes (Booking), mediana contra o nosso preço:**
+  - **Segunda 19/10, 1 noite:** mediana R$ 313; Recanto R$ 532, Villa R$ 430.
+  - **Quarta 21/10, 1 noite:** mediana R$ 313; Recanto R$ 532, Villa R$ 430.
+  - **23 a 25/10, 2 noites:** mediana R$ 840; Recanto R$ 1.651, Villa R$ 1.196.
+  - **Finados, 3 noites:** mediana R$ 2.496; Recanto R$ 4.312, Villa R$ 4.395.
+  - **Mercado:** o fim de semana de 23 e 24/10 está com 17% e 16% de ocupação, quase metade do ano passado.
+- **Plano:** 12 itens validados (0 erros), em 5 chamadas, todas 200 e devolvidas iguais. O calendário de 08:04 ainda não refletia a gravação; confiro na rodada das 10:53.
+
+| Mudança (flutuação por faixas, tudo em %) | Onde | Antes | Depois (piso/teto) |
+|---|---|---|---|
+| +10%, +5%, +5%, à frente da meta | Double 20, 21 e 22/10 | R$ 1.095; 1.051; 1.021 | piso −18%, −25%, −27% = R$ 1.214; 1.110; 1.080 |
+| −9% pelo teto, limitado ao piso de R$ 850 no preço final | Double 23/10 (1 de 6) | R$ 1.554 | teto −5% = R$ 1.406 |
+| +5% e +10% | Double 24/10 e 29/10 | R$ 1.820; 1.495 | piso +30% e +12% = R$ 1.924; 1.658 |
+| +5% | Double 05/11 | R$ 1.231 | piso −9% = R$ 1.347 |
+| −15% pelo teto, atrás da meta (0 de 1) | Afrodite 23/10 | R$ 2.080 | teto −12% = R$ 1.760 |
+| −5% | VK7 02/11 e 04/11; King Spa 2 02/11; Balcony 02/11 | R$ 1.717; 1.066; 1.562; 1.410 | R$ 1.643; 1.021; 1.486; 1.346 |
+
+- **Não mexi (e por quê):**
+  - **VK7 e King Spa 2 de 19 a 29/10, dias de semana:** os cortes pararam no piso de R$ 500 no preço final.
+  - **VK7 em 23 e 24/10, +10%:** a Regra G obrigaria a Balcony, com 1 e 2 de 6 vendidas, a subir 13%. Segurei pela trava de lotação.
+  - **Queen 7 em 19 e 23/10 e Balcony de 19 a 29/10:** já no limite do piso do dono ou da Regra G.
+  - **Finados (30/10 a 02/11):** melhorou desde 14/10 (Queen 7 de 0 para 1 de 7 em 30 e 31/10; Double 3 e 6 de 6; VK7 3 e 4 de 7). Não cortei o seu +20%. Reavalio em 20/10, a 10 dias.
+
 > **Regras em vigor:** desde 06/10/2026 elas ficam em `.claude/skills/gestao-receita-pousadas/references/regras.md`. Este arquivo guarda só o histórico das mudanças.
 
 ## O que só pode ser feito na tela (passo a passo para você)

@@ -1696,6 +1696,12 @@ A Villa não aparece em nenhuma busca com filtro de hidro (falta a comodidade na
 - **Recálculo:** não usei nenhum (saldo da VK7 e da Balcony esgotado por 24 h).
 - **Nada gravado nesta rodada.**
 
+## 17/10/2026, 20:00 — Rotina das 19:53 (leve)
+
+- **Reservas, cancelamentos e mudanças manuais:** nenhum novo desde as 16:53. O log só mostra as gravações do robô.
+- **Preços, ocupação e envio:** sem variação nos 7 quartos. O último envio segue o das 11:45.
+- **Nada gravado nesta rodada.** A rodada de amanhã às 07:53 é a completa de domingo; segunda (19/10) vem a revisão semanal.
+
 > **Regras em vigor:** desde 06/10/2026 elas ficam em `.claude/skills/gestao-receita-pousadas/references/regras.md`. Este arquivo guarda só o histórico das mudanças.
 
 ## O que só pode ser feito na tela (passo a passo para você)

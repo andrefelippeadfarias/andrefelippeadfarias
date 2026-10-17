@@ -1679,6 +1679,15 @@ A Villa não aparece em nenhuma busca com filtro de hidro (falta a comodidade na
 - **Barrei:** King Spa 2 em 20/10 (+10%) porque a Regra G obrigaria a Balcony, com 1 de 6 vendida, a subir.
 - **Validador:** 0 erros e 0 avisos no plano final (a primeira versão deu 8 erros por calendário velho da VK7 e da Balcony e pela Regra G; corrigi tirando esses itens).
 
+## 17/10/2026, 14:00 — Rotina das 13:53 (leve)
+
+- **Envio:** o PriceLabs enviou os 7 quartos às 11:45 (Brasília), levando as gravações da manhã e a Balcony 17/10 a R$ 1.295. O Sync Now pedido às 11:40 não é mais necessário.
+- **Reservas novas (8 desde a rodada anterior):** VK7 em 17/10 (R$ 2.600, canal "outros"), que esgotou a noite de hoje; King Spa 2 em 16/10, 20/10 e 29/10; Queen 7 em 18/10 (R$ 546); Double e Afrodite em 25/10 (R$ 1.053 e uma sem valor); VK7 em 12 a 14/01/2027 (R$ 1.485).
+- **Cancelamentos pelo calendário da VK7:** 1 em 19/10, 2 em 20/10 e 1 em 21/10. A VK7 fica em 19/10 4 de 7, 20/10 5 de 7 e 21/10 1 de 7, todas no piso do dono de R$ 943 de dia de semana. Nada a baixar.
+- **Mudanças manuais suas:** nenhuma nova (as 4 de 15/10 seguem registradas).
+- **Balcony hoje (D0):** com a VK7 e a King Spa 2 esgotadas, a Balcony é a única livre da Villa (4 de 6 vendidas). Não apliquei a Regra I de R$ 630: a gravação de hoje só chegaria aos canais amanhã e a mediana da Booking para a noite é R$ 540, com a noite já 67% vendida.
+- **Nada gravado nesta rodada.**
+
 > **Regras em vigor:** desde 06/10/2026 elas ficam em `.claude/skills/gestao-receita-pousadas/references/regras.md`. Este arquivo guarda só o histórico das mudanças.
 
 ## O que só pode ser feito na tela (passo a passo para você)

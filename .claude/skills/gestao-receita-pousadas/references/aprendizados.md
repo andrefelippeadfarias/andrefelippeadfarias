@@ -159,3 +159,6 @@ Cada item tem data e evidência. Para incluir um item novo: data, o fato, a evid
 - Em dia de rotina completa a VK7 e a Balcony já estavam sem saldo de recálculo (429): as rotinas de 16/10 usaram os 3 por 24 h. Sem saldo, a regra é não fazer passo de flutuação nesses quartos. Para não repetir, na rotina leve de 16:53 e 19:53 priorize o recálculo só onde houver mudança a conferir e reserve 1 por quarto para a manhã.
 - O PriceLabs não enviou o calendário na madrugada de 17/10 (último envio 16/10 15:27). É a segunda vez em uma semana (16/10 foi às 11:26). Mudanças em D0 a D3 dependem do Sync Now do dono; peça sempre no topo do relatório.
 - A Regra G também limita a subida das suítes com banheira quando a Balcony está fraca: subir a King Spa 2 em 20/10 obrigaria a Balcony (1 de 6) a subir; segurei a suíte.
+
+## 17/10/2026 (tarde) — Envio chegou às 11:45
+- O envio que faltava de madrugada saiu às 11:45 BRT (14:45 UTC), levando as gravações da manhã. Padrão da semana: 16/10 às 11:26, 17/10 às 11:45. Pedir Sync Now de manhã só vale para noites de D0; a partir das 12:00 conferir antes de pedir.

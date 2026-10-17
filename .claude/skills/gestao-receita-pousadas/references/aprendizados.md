@@ -154,3 +154,8 @@ Cada item tem data e evidência. Para incluir um item novo: data, o fato, a evid
 ## 16/10/2026 — Regra G também precisa baixar a Balcony
 - Quando uma suíte com banheira da Villa volta a ter vaga (cancelamento), o PriceLabs reduz o preço dela e a proteção que a Balcony recebeu na época em que estavam esgotadas passa a ficar acima. Em 17/10 a Balcony estava a R$ 1.499 contra R$ 1.439 da King Spa 2 livre.
 - Toda rodada leve deve rodar a varredura da Regra G nos dois sentidos (Balcony acima de 90% da suíte livre mais barata → baixar piso e teto). Correção em % (piso e teto +2%) e conferida no recálculo. Evidência: coleta das 16:53 e recálculo das 16:58.
+
+## 17/10/2026 — Orçamento de recálculo e envio atrasado
+- Em dia de rotina completa a VK7 e a Balcony já estavam sem saldo de recálculo (429): as rotinas de 16/10 usaram os 3 por 24 h. Sem saldo, a regra é não fazer passo de flutuação nesses quartos. Para não repetir, na rotina leve de 16:53 e 19:53 priorize o recálculo só onde houver mudança a conferir e reserve 1 por quarto para a manhã.
+- O PriceLabs não enviou o calendário na madrugada de 17/10 (último envio 16/10 15:27). É a segunda vez em uma semana (16/10 foi às 11:26). Mudanças em D0 a D3 dependem do Sync Now do dono; peça sempre no topo do relatório.
+- A Regra G também limita a subida das suítes com banheira quando a Balcony está fraca: subir a King Spa 2 em 20/10 obrigaria a Balcony (1 de 6) a subir; segurei a suíte.

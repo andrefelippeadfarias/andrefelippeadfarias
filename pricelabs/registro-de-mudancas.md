@@ -1688,6 +1688,14 @@ A Villa não aparece em nenhuma busca com filtro de hidro (falta a comodidade na
 - **Balcony hoje (D0):** com a VK7 e a King Spa 2 esgotadas, a Balcony é a única livre da Villa (4 de 6 vendidas). Não apliquei a Regra I de R$ 630: a gravação de hoje só chegaria aos canais amanhã e a mediana da Booking para a noite é R$ 540, com a noite já 67% vendida.
 - **Nada gravado nesta rodada.**
 
+## 17/10/2026, 17:00 — Rotina das 16:53 (leve)
+
+- **Reservas, cancelamentos e mudanças manuais:** nenhum novo desde as 13:53. O log só mostra as gravações do robô.
+- **Preços e ocupação:** sem variação nos 7 quartos desde o envio das 11:45. A Afrodite só mudou o formato do dado (agora vem com a contagem 0/1 ou 1/1), sem venda nova.
+- **Envio:** nenhum envio novo desde as 11:45; os 7 quartos seguem com envio ligado.
+- **Recálculo:** não usei nenhum (saldo da VK7 e da Balcony esgotado por 24 h).
+- **Nada gravado nesta rodada.**
+
 > **Regras em vigor:** desde 06/10/2026 elas ficam em `.claude/skills/gestao-receita-pousadas/references/regras.md`. Este arquivo guarda só o histórico das mudanças.
 
 ## O que só pode ser feito na tela (passo a passo para você)

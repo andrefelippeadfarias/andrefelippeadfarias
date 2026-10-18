@@ -1732,6 +1732,14 @@ A Villa não aparece em nenhuma busca com filtro de hidro (falta a comodidade na
 - **Regra G:** varredura nos 60 dias sem desvio em dias comuns; a Balcony ficou mais de 5% abaixo do alvo só em feriados (Finados, 13 a 15/11, 19/11), onde a regra não vale.
 - **Validador:** 0 erros e 1 aviso (estadia do sábado, já em 2 noites).
 
+## 18/10/2026, 11:00 — Rotina das 10:53 (leve)
+
+- **Envio:** o PriceLabs recalculou e enviou os 7 quartos às 10:28 (Brasília), levando as 15 gravações da manhã. O Sync Now pedido no relatório das 08:15 não é mais necessário.
+- **Conferência no calendário:** as 15 gravações batem com o planejado (dentro de 1%): Double 19, 20, 21, 22, 24, 25 e 29/10 e 06/11; Afrodite 23 e 24/10 e 06/11; VK7 02 e 04/11; King Spa 2 02/11; Balcony 02/11.
+- **Reservas e mudanças manuais:** nenhuma reserva nova na lista (21, todas conhecidas) e nenhuma mudança manual sua. Pelo calendário: Balcony vendeu 1 hoje (1 de 6), VK7 vendeu 1 em 28/10 e a King Spa 2 liberou 1 vaga hoje e amanhã (1 de 2 em 18 e 19/10), por cancelamento.
+- **Regra G:** a King Spa 2 voltou a ter vaga hoje e amanhã, então a Balcony (R$ 635 hoje e R$ 813 amanhã) fica no limite do alvo. Não mexi: para hoje à noite a gravação só chegaria amanhã e para 19/10 a diferença é de R$ 1.
+- **Nada gravado nesta rodada.**
+
 > **Regras em vigor:** desde 06/10/2026 elas ficam em `.claude/skills/gestao-receita-pousadas/references/regras.md`. Este arquivo guarda só o histórico das mudanças.
 
 ## O que só pode ser feito na tela (passo a passo para você)

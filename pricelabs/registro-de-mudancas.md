@@ -1702,6 +1702,36 @@ A Villa não aparece em nenhuma busca com filtro de hidro (falta a comodidade na
 - **Preços, ocupação e envio:** sem variação nos 7 quartos. O último envio segue o das 11:45.
 - **Nada gravado nesta rodada.** A rodada de amanhã às 07:53 é a completa de domingo; segunda (19/10) vem a revisão semanal.
 
+## 18/10/2026, 08:15 — Rotina das 07:53 (completa, domingo) e das 10:53
+
+- **Ocupação (domingo 18/10):** hotel 48% em 7 dias, 43% em 15 e 36% em 30. Recanto 49%, 48% e 38%; Villa 48%, 39% e 34%. Fora da meta de 7 e 15 dias: Queen 7 (29% e 30%), VK7 (65% e 49%) e Balcony (14% e 18%); Double e Afrodite abaixo só em 7 dias. Queen 2 e King Spa 2 na meta.
+- **Reservas e mudanças manuais:** nenhuma reserva nova na lista (21 reservas de 16 a 18/10, todas já conhecidas) e nenhuma mudança manual sua. Pelo calendário recalculado: VK7 esgotou em 23 e 24/10 (7 de 7), Balcony vendeu mais 1 em 24/10 (3 de 6), Queen 7 vendeu em 26 a 28/10, 31/10, 01/11, 13 e 14/11 e em 4 a 7/12 (2 de 7 em cada).
+- **Envio:** sem envio novo de madrugada de novo (último ontem às 11:45). Os 7 quartos foram recalculados por mim às 08:00 e as gravações de hoje saem no próximo envio.
+- **Mercado (Booking, mediana da noite):** segunda 19/10 R$ 272; quarta 21/10 R$ 272; 23–25/10 R$ 840 (2 noites); Finados 3 noites R$ 2.576. Ocupação do mercado em 19 e 20/10 de 19% e 15%.
+- **Gravado (15 datas, conferido no recálculo às 08:08, 0 diferença):**
+
+| Mudança | Onde | Antes | Depois | Como desfazer |
+|---|---|---|---|---|
+| Piso +10% (5 de 6) | Double 19/10 | R$ 1.006 | R$ 1.110 | piso −25% |
+| Piso +10% (5 de 6) | Double 20/10 | R$ 1.347 | R$ 1.495 | piso +1% |
+| Piso +5% (4 de 6) | Double 21/10 | R$ 1.169 | R$ 1.228 | piso −17% |
+| Piso +5% (3 de 6) | Double 22/10 | R$ 1.140 | R$ 1.199 | piso −19% |
+| Piso −15% (2 de 6), estadia 2 noites | Double 24/10 | R$ 2.028 | R$ 1.732 | piso +37% |
+| Piso +10% (4 de 6) | Double 25/10 | R$ 1.421 | R$ 1.569 | piso +6% |
+| Piso +10% (5 de 6) | Double 29/10 | R$ 1.835 | R$ 2.028 | piso +24% |
+| Teto −15% (0 de 6, só esta noite) | Double 06/11 | R$ 2.161 | R$ 1.835 | teto +46% |
+| Teto −10% (0 de 1) | Afrodite 23/10 | R$ 1.580 | R$ 1.500 | teto −21% |
+| Teto −15% (0 de 1) | Afrodite 24/10 | R$ 2.342 | R$ 1.980 | teto sem limite (remover) |
+| Teto −5% (0 de 1) | Afrodite 06/11 | R$ 3.826 | R$ 3.620 | teto +92% |
+| Piso −5% (2 de 7) | VK7 02/11 | R$ 1.643 | R$ 1.569 | piso +12% |
+| Piso −5% (2 de 7) | VK7 04/11 | R$ 1.021 | R$ 977 | piso −36% |
+| Piso −5% (1 de 2) | King Spa 2 02/11 | R$ 1.422 | R$ 1.359 | piso +12% |
+| Piso e teto −15% pela Regra G | Balcony 02/11 | R$ 1.346 | R$ 1.219 | piso e teto +6% |
+
+- **Double 24/10:** ontem subi o piso 5% (R$ 1.924 para R$ 2.028) com 2 de 6 vendidas. Hoje a janela de 7 dias passou a cobrir a noite, a meta é 70% e a noite ficou na faixa "alto" contra o mercado: voltou 15% (R$ 1.732). Mantém o piso de R$ 1.394 de sábado.
+- **Regra G:** varredura nos 60 dias sem desvio em dias comuns; a Balcony ficou mais de 5% abaixo do alvo só em feriados (Finados, 13 a 15/11, 19/11), onde a regra não vale.
+- **Validador:** 0 erros e 1 aviso (estadia do sábado, já em 2 noites).
+
 > **Regras em vigor:** desde 06/10/2026 elas ficam em `.claude/skills/gestao-receita-pousadas/references/regras.md`. Este arquivo guarda só o histórico das mudanças.
 
 ## O que só pode ser feito na tela (passo a passo para você)

@@ -162,3 +162,7 @@ Cada item tem data e evidência. Para incluir um item novo: data, o fato, a evid
 
 ## 17/10/2026 (tarde) — Envio chegou às 11:45
 - O envio que faltava de madrugada saiu às 11:45 BRT (14:45 UTC), levando as gravações da manhã. Padrão da semana: 16/10 às 11:26, 17/10 às 11:45. Pedir Sync Now de manhã só vale para noites de D0; a partir das 12:00 conferir antes de pedir.
+
+## 18/10/2026 — Sem envio de madrugada, 3º dia seguido; recálculo da manhã resolve a decisão
+- O PriceLabs não enviou nada de madrugada (último envio 17/10 11:45 BRT; 16/10 foi às 11:26). Sem envio o calendário de manhã vem com ~20 h. O saldo de 3 recálculos por 24 h volta a ser contado pela janela deslizante: depois das 08:00 BRT, o das 08:00 do dia anterior já saiu da conta. Recalcular os 7 quartos às 08:00 e guardar 1 recálculo para conferir as gravações funcionou (15 de 15 conferidos).
+- O alvo de ocupação da janela troca de 50% para 70% quando a noite entra em 7 dias. Por isso a Double 24/10 teve +5% ontem e −15% hoje. Antes de subir um piso em noite a 7 ou 8 dias, confira se ela já cai na janela de 70%.

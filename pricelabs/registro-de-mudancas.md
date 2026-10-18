@@ -1740,6 +1740,15 @@ A Villa não aparece em nenhuma busca com filtro de hidro (falta a comodidade na
 - **Regra G:** a King Spa 2 voltou a ter vaga hoje e amanhã, então a Balcony (R$ 635 hoje e R$ 813 amanhã) fica no limite do alvo. Não mexi: para hoje à noite a gravação só chegaria amanhã e para 19/10 a diferença é de R$ 1.
 - **Nada gravado nesta rodada.**
 
+## 18/10/2026, 14:00 — Rotina das 13:53 (leve)
+
+- **Envio:** sem envio novo desde as 10:28; os 7 quartos seguem com envio ligado.
+- **Reservas (lista atualizada, 33 de 16 a 18/10):** entraram na lista as vendas que o calendário já mostrava de manhã. Queen 7: lote da Booking de 17/10 à noite (17/10 R$ 907, 26 a 28/10 R$ 1.312, 31/10 R$ 2.143, 13/11 R$ 1.371 e 4 a 7/12 R$ 2.168, esta última aparece duas vezes e vai para a pendência de lotes duplicados do Beds24). VK7 28/10 R$ 563; Balcony hoje R$ 299; Afrodite 12 a 14/01/2027 R$ 2.373; King Spa 2 em 05/02/2027 R$ 2.809 e 19/10 R$ 291 (repôs o cancelamento do Airbnb). Double 18 a 20/10 no canal "outros" com valor R$ 1 (provável bloqueio, a conferir no Beds24).
+- **Cancelamento:** King Spa 2, reserva do Airbnb de 18/10 (cancelada hoje), já refletida na vaga de hoje.
+- **Mudanças manuais suas:** nenhuma. O log só mostra as gravações do robô.
+- **Calendário e preços:** sem variação desde as 10:53.
+- **Nada gravado nesta rodada.**
+
 > **Regras em vigor:** desde 06/10/2026 elas ficam em `.claude/skills/gestao-receita-pousadas/references/regras.md`. Este arquivo guarda só o histórico das mudanças.
 
 ## O que só pode ser feito na tela (passo a passo para você)

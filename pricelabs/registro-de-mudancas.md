@@ -1755,6 +1755,12 @@ A Villa não aparece em nenhuma busca com filtro de hidro (falta a comodidade na
 - **Preços, ocupação e envio:** sem variação em nenhum dos 7 quartos; o último envio segue o das 10:28.
 - **Nada gravado nesta rodada.**
 
+## 18/10/2026, 20:00 — Rotina das 19:53 (leve)
+
+- **Reservas, cancelamentos e mudanças manuais:** nenhum novo desde as 16:53. O log só mostra as gravações do robô.
+- **Preços, ocupação e envio:** sem variação nos 7 quartos; o último envio segue o das 10:28.
+- **Nada gravado nesta rodada.** Amanhã às 07:53 é a rotina completa de segunda, com a revisão semanal.
+
 > **Regras em vigor:** desde 06/10/2026 elas ficam em `.claude/skills/gestao-receita-pousadas/references/regras.md`. Este arquivo guarda só o histórico das mudanças.
 
 ## O que só pode ser feito na tela (passo a passo para você)

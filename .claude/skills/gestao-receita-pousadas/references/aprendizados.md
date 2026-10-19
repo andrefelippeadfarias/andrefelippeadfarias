@@ -195,3 +195,10 @@ Cada item tem data e evidência. Para incluir um item novo: data, o fato, a evid
 - **A busca da Booking não dá o preço do quarto com hidro:** a mediana da classe A é do quarto mais barato de cada hotel, então fica abaixo do preço real de uma suíte com hidro. O Recanto está 7% a 120% acima dela fora dos feriados e 10% abaixo na Consciência Negra.
 - **Villa fechada em 05-07/11:** o Beds24 mostra 1 a 2 reservas, mas o calendário está fechado; qualquer ajuste de preço nessas noites só vale se o dono reabrir.
 
+## 19/10/2026 (15:01 BRT) — Concorrência: quarto com hidro, não o mais barato
+- **Erro da manhã:** comparar a vitrine do Recanto (todo quarto com banheira) com o quarto mais barato dos concorrentes dá uma mediana 20% a 66% abaixo do quarto com hidro deles. O resultado foram cortes de até 15% em datas em que o Recanto já estava abaixo do mercado. Tudo desfeito no mesmo dia.
+- **Escada de preço mínimo:** o filtro `price.minimum` do conector faz cada hotel mostrar o próximo quarto acima do valor. Com a posição do quarto com hidro na lista de quartos (pergunta à Booking), dá para chegar ao preço dele. Certeza média: alguns degraus são variações de tarifa do mesmo quarto.
+- **Booking bloqueia navegador:** as páginas devolvem 403 com aviso de violação dos termos. Use só o conector.
+- **Posição do Recanto:** de 1% a 33% abaixo do quarto com hidro da classe A em todos os períodos medidos. Há espaço para subir onde a ocupação está na meta.
+- **Villa:** a vitrine estimada (VK7 × 0,66) fica 11% a 58% acima. A Villa não aparece na busca com hidro e tem nota 8,1, contra 8,8 a 9,8 da classe A.
+

@@ -1875,6 +1875,35 @@ A Villa não aparece em nenhuma busca com filtro de hidro (falta a comodidade na
 - **Regra G conferida (19 a 22/10):** a Balcony fica de 13% a 14% abaixo da suíte com banheira livre mais barata. Dentro da faixa.
 - **Nada gravado.** A VK7 está sem saldo de recálculo (429), então não recebe passo de flutuação nesta rodada. A Q7 já está no piso do dono.
 
+## 19/10/2026, 18:01 UTC (15:01 BRT) — Concorrência refeita pelo quarto com hidro (pedido do dono: "aplique os filtros dentro da Booking")
+
+- **O que estava errado:** a busca da manhã comparou o Recanto, em que todo quarto tem banheira, com o quarto mais barato de cada concorrente, que muitas vezes não tem hidro. As medianas ficaram 20% a 66% abaixo do quarto com hidro, e os cortes da manhã não se sustentam.
+- **Como medi agora:** o conector da Booking não tem os filtros de quarto do site, e as páginas da Booking bloqueiam robôs: houve um 403 com aviso dos termos de uso, então parei. Usei a escada de preço mínimo (sem mínimo, 500, 800, 1.100, 1.500 e acima) por hotel, cruzada com o nome e a posição do quarto com hidro informados pela Booking. Certeza média.
+- **Quarto com hidro × Recanto:** 23-25/10 R$ 935 × R$ 825; Finados R$ 1.604 × R$ 1.473; 06-08/11 R$ 1.171 × R$ 1.163; 11/11 R$ 954 × R$ 642; Consciência Negra R$ 1.604 × R$ 1.428; 04-06/12 R$ 1.255 × R$ 1.093. O Recanto está de 1% a 33% abaixo.
+
+| Quarto | Datas | Estado final (tudo em percentual) |
+|---|---|---|
+| Q7 | 30-31/10, 11/11 | cortes desfeitos (volta ao +20% com piso 63% em Finados; 11/11 sem regra) |
+| Q7 | 01/11; 04-05/12 | +10% pelo piso: 80% (R$ 2.111); 69% (R$ 1.982) |
+| Q7 | 20-21/11 | mantido +10% pelo piso 121% (R$ 2.592) |
+| Double | 30/10; 01/11; 11/11; 04-05/12 | +10% pelo piso: 135% (R$ 3.478); 42% (R$ 2.102); 4% (R$ 1.539); 75% (R$ 2.590) |
+| Double | 06-07/11 | cortes desfeitos (06/11 volta ao teto de 5% de 4c; 07/11 piso -5%) |
+| Double | 20-21/11 | mantido +10% pelo piso 117% (R$ 3.212) |
+| Q2 | 30/10 | +10% pelo piso 135% (R$ 4.395); só sobe, regra sem desconto respeitada |
+| Afrodite | 01/11, 06-07/11, 11/11, 04-05/12 | todos os cortes desfeitos (volta ao estado de antes) |
+| VK7 | 30-31/10 | teto 120% (R$ 3.256) mantido: Villa estimada 58% acima |
+| VK7 | 20-21/11 | teto 68% (R$ 2.486) mantido: 21% acima e 0/7 vendidas |
+| VK7 | 04-05/12 | piso e teto 28% (R$ 1.894), antes R$ 2.118; corte menor (-10%) que o da manhã |
+| VK7 | 06-07/11 | cortes desfeitos (estoque fechado no Beds24) |
+| VK2 | 30-31/10 | teto 110% (R$ 2.667) mantido |
+| VK2 | 04-05/12 | piso e teto 31% (R$ 1.664), antes R$ 1.863 |
+| VK2 | 06-07/11 | cortes desfeitos |
+| Balcony | 04-05/12 | piso e teto 19% (R$ 1.511), Regra G 10% abaixo da VK2 |
+
+- **Validador:** 25 itens, 0 erro.
+- **Recálculo:** não conferido, porque o limite de 3 recálculos por quarto em 24 h já foi usado. A conferência fica para a rotina das 07:53 de 20/10.
+- **Como desfazer:** as razões das regras citam o estado anterior. O plano está em `plano_comp_1910d.json` e a reversão em `reversao_1910.json` (rascunho da sessão).
+
 > **Regras em vigor:** desde 06/10/2026 elas ficam em `.claude/skills/gestao-receita-pousadas/references/regras.md`. Este arquivo guarda só o histórico das mudanças.
 
 ## O que só pode ser feito na tela (passo a passo para você)

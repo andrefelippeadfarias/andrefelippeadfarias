@@ -104,21 +104,16 @@
  ],
  "periodos": [
   {
-   "rotulo": "21/10",
-   "datas": [
-    "2026-10-21"
-   ],
-   "mediana_a": 253.94,
-   "recanto": 531.51
-  },
-  {
    "rotulo": "23-25/10",
    "datas": [
     "2026-10-23",
     "2026-10-24"
    ],
-   "mediana_a": 773.5,
-   "recanto": 825.46
+   "mediana_a": 935.28,
+   "recanto": 825.46,
+   "mediana_mais_barato": 715.0,
+   "n_hoteis": 11,
+   "fonte": "escada de preço mínimo, 19/10 tarde"
   },
   {
    "rotulo": "Finados",
@@ -127,8 +122,11 @@
     "2026-10-31",
     "2026-11-01"
    ],
-   "mediana_a": 1250.0,
-   "recanto": 1472.58
+   "mediana_a": 1603.63,
+   "recanto": 1472.58,
+   "mediana_mais_barato": 1250.0,
+   "n_hoteis": 9,
+   "fonte": "escada de preço mínimo, 19/10 tarde"
   },
   {
    "rotulo": "06-08/11",
@@ -136,16 +134,22 @@
     "2026-11-06",
     "2026-11-07"
    ],
-   "mediana_a": 715.0,
-   "recanto": 1162.76
+   "mediana_a": 1170.8,
+   "recanto": 1162.76,
+   "mediana_mais_barato": 1013.72,
+   "n_hoteis": 12,
+   "fonte": "escada de preço mínimo, 19/10 tarde"
   },
   {
    "rotulo": "11/11",
    "datas": [
     "2026-11-11"
    ],
-   "mediana_a": 295.0,
-   "recanto": 641.93
+   "mediana_a": 954.16,
+   "recanto": 641.93,
+   "mediana_mais_barato": 637.46,
+   "n_hoteis": 12,
+   "fonte": "escada de preço mínimo, 19/10 tarde"
   },
   {
    "rotulo": "Consciência Negra",
@@ -153,8 +157,11 @@
     "2026-11-20",
     "2026-11-21"
    ],
-   "mediana_a": 1578.97,
-   "recanto": 1428.23
+   "mediana_a": 1603.63,
+   "recanto": 1428.23,
+   "mediana_mais_barato": 1256.0,
+   "n_hoteis": 7,
+   "fonte": "escada de preço mínimo, 19/10 tarde"
   },
   {
    "rotulo": "04-06/12",
@@ -162,12 +169,30 @@
     "2026-12-04",
     "2026-12-05"
    ],
-   "mediana_a": 600.21,
-   "recanto": 1092.89
+   "mediana_a": 1255.0,
+   "recanto": 1092.89,
+   "mediana_mais_barato": 842.4,
+   "n_hoteis": 11,
+   "fonte": "escada de preço mínimo, 19/10 tarde"
   }
  ],
  "ressalvas": [
-  "Preço da busca = quarto mais barato de cada hotel (a Booking não dá o preço do quarto com hidro); a mediana tende a ficar abaixo do quarto com hidro.",
+  "Corrigido em 19/10 à tarde: a primeira leitura (manhã) usou o quarto mais barato de cada hotel e deu medianas 20% a 66% abaixo do quarto com hidro; os cortes feitos com ela foram desfeitos.",
   "A Villa não aparece na busca com filtro de hidro (a extranet não lista hidromassagem); a vitrine da Villa é estimada pela VK7 × fator_vitrine."
- ]
+ ],
+ "metodo_preco": "mediana_a = preço por noite do QUARTO COM HIDRO de cada hotel classe A, pela 'escada' do filtro de preço mínimo (sem mínimo, 500, 800, 1100, 1500 e acima; cada degrau revela o próximo quarto) cruzada com a ordem dos tipos de quarto e o quarto com hidro informados pela Booking (answer_property_qa_by_ids_v2). Busca por hotel_names (a busca por coordenadas com filtro de hidro só devolve 10). Certeza média: a ordem dos quartos vem da Booking sem preço e alguns degraus são variações de tarifa do mesmo quarto. mediana_mais_barato = quarto mais barato de cada hotel (só referência; não usar para cortar).",
+ "quartos_hidro": {
+  "303535": "Suite with Whirlpool (5º tipo)",
+  "6866038": "Deluxe Double/Twin with Spa Bath (4º)",
+  "304118": "King Suite with Spa Bath (4º)",
+  "1411330": "Suite with Spa Bath (4º)",
+  "348210": "Double Room with Spa Bath (2º)",
+  "7646879": "Deluxe Suite with Spa Bath (4º)",
+  "6881198": "Premium Suite with Spa Bath (3º; a Comfort Suite não tem hidro)",
+  "1881811": "Double Room with Spa Bath (5º)",
+  "11111842": "Deluxe Suite with Spa Bath (3º)",
+  "2280778": "Double Room with Spa Bath (1º: todos têm hidro)",
+  "13952548": "Double Room with Spa Bath (2º)",
+  "10075349": "One-Bedroom Chalet (único)"
+ }
 }

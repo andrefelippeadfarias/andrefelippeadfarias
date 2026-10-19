@@ -231,3 +231,9 @@ Hora da ANÁLISE E AGENDA DIÁRIA do PriceLabs (rotina "Agenda diária PriceLabs
 - **Mudança (texto):** `regras.md` seção 5 (régua nova: mediana da classe A, -15% no máximo por rodada pelo teto, +10% pelo piso, travas) e 6a; `mercado.md` (12 hotéis classe A, medianas, como refazer); `SKILL.md` (passo Decida e revisão de segunda); `ferramentas.md`.
 - **Mudança (dados e código, 52 testes):** `dados/concorrentes_hidro_vista.json`; `scripts/concorrencia_hidro_vista.py` (plano automático); `validar_plano.py` barra teto abaixo do preço atual na Queen (2) e teto abaixo do piso vigente da data; `ler_recalculo.py` confere item só de piso ou só de teto (antes passava como "—"); a coleta passa a trazer `min_price` e `max_price` do dia; `test_scripts.py` com o `unittest.main()` no fim (8 testes não rodavam com `python3 test_scripts.py`).
 - **Como desfazer:** voltar a seção 5 de `regras.md` ao texto anterior e apagar o script e o arquivo de dados.
+
+## 19/10/2026, 18:05 UTC (15:05 BRT) — Referência pelo quarto com hidro (dono: "aplique os filtros dentro da Booking")
+- **Mudança (texto):** `regras.md` seção 5: o alvo é a mediana do quarto com hidro, medida pela escada de preço mínimo; período sem escada não gera corte. `mercado.md`: o método da escada, os quartos com hidro de cada hotel e as medianas novas.
+- **Mudança (dados):** `dados/concorrentes_hidro_vista.json` com `mediana_a` do quarto com hidro, `mediana_mais_barato`, `quartos_hidro` e `metodo_preco`; o período de 21/10, sem escada, saiu.
+- **Como desfazer:** voltar `mediana_a` ao quarto mais barato (não recomendado).
+

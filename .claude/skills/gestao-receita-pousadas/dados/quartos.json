@@ -381,9 +381,9 @@
     "desde": "2026-10-14"
   },
   "modo_decisao": {
-    "em": "2026-10-19T12:00",
+    "em": "2026-10-19T14:30",
     "pedido": "revisão semanal de segunda",
-    "Recanto": "livro de outubro R$ 152 mil (número principal: rental_revenue + reservas sem valor pelo total_cost) no dia 19; ritmo esperado 70%: realista R$ 99 mil, meta do dono R$ 154 mil -> padrão; ocupação na meta só em 30d (35%)",
-    "Villa": "livro de outubro R$ 117 mil (número principal); ritmo 70%: realista R$ 92 mil, meta do dono R$ 105 mil -> preco pela receita, mas a trava de lotação segura em padrão (ocupação fora da meta em 7, 15 e 30 dias: 42%, 37%, 32%)"
+    "Recanto": "livro de outubro R$ 144 mil (rental_revenue + reservas sem valor pelo total_cost, noites por no_of_days) no dia 19; ritmo 70%: realista R$ 99 mil, meta do dono R$ 154 mil -> padrão; ocupação na meta só em 30d",
+    "Villa": "livro de outubro R$ 113 mil; ritmo 70%: realista R$ 92 mil, meta do dono R$ 105 mil -> preco pela receita, mas a trava de lotação segura em padrão (ocupação fora da meta em 7, 15 e 30 dias)"
   }
 }

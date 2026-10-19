@@ -302,6 +302,20 @@
    "desde": "2026-10-16",
    "urgencia": 2,
    "texto": "Sábado 24/10 do Recanto está em 6 de 16 (38%): abaixo de 50%. Na quarta (21/10) a sexta (23/10), se seguir abaixo de 50%, sugerir ao dono liberar 1 noite (excecao regra_h, o bloqueio é do Beds24) e só gravar com a decisão dele. O mercado de 23 e 24/10 está com 17% e 16% de ocupação, metade do ano passado, e o Recanto está a R$ 825 por noite na Booking contra mediana de R$ 420."
+  },
+  {
+   "id": "beds24-token",
+   "responsavel": "dono",
+   "desde": "2026-10-19",
+   "urgencia": 1,
+   "texto": "Criar no Beds24 (Configurações → Conta → API, API V2) um token só de leitura (reservas, financeiro das reservas, inventário e propriedades; sem dados de hóspedes) e cadastrar como BEDS24_REFRESH_TOKEN nos segredos do ambiente do Claude Code (menu do ambiente → Edit → Network secrets). Nunca colar no chat. Passo a passo em pricelabs/beds24-acesso-direto.md."
+  },
+  {
+   "id": "beds24-integrar",
+   "responsavel": "skill",
+   "desde": "2026-10-19",
+   "urgencia": 1,
+   "texto": "Com a credencial: rodar beds24.py teste e janelas, conferir contra o consolidado executivo de 19/10 (Confirmado: Recanto 205 U/N e R$ 134.141; Villa 115 U/N e R$ 66.618 em 60 noites), decidir com o dono se 'Novo' conta como ocupado, e trocar a fonte do faturamento e da ocupação real no relatório e na revisão de segunda."
   }
  ],
  "versao": "2026-10-16T08"

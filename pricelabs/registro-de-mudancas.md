@@ -1811,6 +1811,14 @@ A Villa não aparece em nenhuma busca com filtro de hidro (falta a comodidade na
 - **Ocupação:** sem variação nos 6 quartos lidos.
 - **Nada gravado nesta rodada.**
 
+## 19/10/2026, 14:30 — Pedido do dono: origem dos valores e leitura direta do Beds24
+
+- **Origem até hoje:** as reservas e os valores vinham do PriceLabs (cópia das reservas do Beds24). A ocupação vinha do calendário do PriceLabs.
+- **Contra o consolidado do Beds24 de 19/10:** o Beds24 conta só "Confirmado" e deixa fora 48 "Novo" e 19 "Inquiry"; por isso a ocupação dele é menor (60 noites: Recanto 205 contra 258 U/N; Villa 115 contra 133). A receita por noite é parecida (Recanto R$ 654 contra R$ 608; Villa R$ 579 contra R$ 522).
+- **Correção de cálculo:** o livro do mês passou a ratear as noites por `no_of_days` (o `check_out` do PriceLabs é a última noite). Outubro fica R$ 257 mil (Recanto R$ 144 mil, Villa R$ 113 mil), não os R$ 269 mil informados às 12:00; novembro R$ 132 mil; dezembro R$ 72 mil. O modo não muda.
+- **Leitura direta:** `scripts/beds24.py` pronto e testado; a API V2 do Beds24 responde daqui. Falta o token só de leitura do dono, cadastrado como `BEDS24_REFRESH_TOKEN` nos segredos do ambiente (passo a passo em `pricelabs/beds24-acesso-direto.md`).
+- **Nada gravado no PriceLabs.**
+
 > **Regras em vigor:** desde 06/10/2026 elas ficam em `.claude/skills/gestao-receita-pousadas/references/regras.md`. Este arquivo guarda só o histórico das mudanças.
 
 ## O que só pode ser feito na tela (passo a passo para você)

@@ -617,3 +617,29 @@ class TestPisosPercentual(unittest.TestCase):
         json.dump([{"date": "2026-10-16", "min_price": 0, "min_price_type": "percent_base", "max_price": 0,
                     "max_price_type": "percent_base"}], open(b, "w"))
         self.assertEqual(pp.main(["conferir", a, b, "Balcony"]), 0)
+
+
+class TestBeds24(unittest.TestCase):
+    """Contagem do beds24.py: checkout exclusivo, status separados, receita por itens de fatura."""
+
+    def test_janelas(self):
+        import beds24
+        lista = [{"propertyId": 350362, "status": "confirmed", "arrival": "2026-10-19", "departure": "2026-10-21", "price": 1000},
+                 {"propertyId": 350362, "status": "new", "arrival": "2026-10-20", "departure": "2026-10-21", "price": 600},
+                 {"propertyId": 350364, "status": "inquiry", "arrival": "2026-10-19", "departure": "2026-10-20", "price": 500},
+                 {"propertyId": 350364, "status": "confirmed", "arrival": "2026-10-19", "departure": "2026-10-20", "price": 0,
+                  "invoiceItems": [{"type": "charge", "amount": 450, "qty": 1}, {"type": "payment", "amount": 450}]}]
+        rec, villa = beds24.janelas(lista, date(2026, 10, 19), dias=(7,))
+        self.assertEqual((rec["un_confirmadas"], rec["un_novas"], rec["un_ocupadas"], rec["capacidade"]), (2, 1, 3, 112))
+        self.assertEqual(rec["receita"], 1600.0)
+        self.assertEqual((villa["un_ocupadas"], villa["receita"], villa["outros_status"]), (1, 450.0, {"inquiry": 1}))
+
+    def test_sem_credencial(self):
+        import beds24
+        antes = {k: os.environ.pop(k, None) for k in ("BEDS24_TOKEN", "BEDS24_REFRESH_TOKEN")}
+        try:
+            self.assertEqual(beds24.main(["teste"]), 2)
+        finally:
+            for k, v in antes.items():
+                if v is not None:
+                    os.environ[k] = v

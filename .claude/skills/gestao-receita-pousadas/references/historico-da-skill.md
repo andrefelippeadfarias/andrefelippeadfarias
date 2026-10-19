@@ -212,3 +212,10 @@ Hora da ANÁLISE E AGENDA DIÁRIA do PriceLabs (rotina "Agenda diária PriceLabs
 - **Decisão do dono:** "Sim" (à pergunta: passar a reportar como número principal a leitura com as reservas sem `rental_revenue` incluídas pelo `total_cost`).
 - **Mudança (texto e dados):** `regras.md` 4c ("Como medir o livro") e 6a; `metas_faturamento.json` → `faturamento`; `quartos.json` → `modo_decisao` refeito com o número principal (Recanto R$ 152 mil, Villa R$ 117 mil em outubro; modo segue padrão nas duas, a Villa pela trava de lotação); pendência `faturamento-script` atualizada.
 - **Como desfazer:** voltar o item "Como medir o livro" para só `rental_revenue`.
+
+## 19/10/2026, 14:30 — Leitura direta do Beds24 (dono)
+- **Pedido do dono:** verificar de onde vêm os valores das reservas e ler o Beds24 direto pela API, com o consolidado executivo do Beds24 de 19/10 como referência.
+- **Mudança (código, 48 testes):** `scripts/beds24.py` (API V2, só leitura, sem dados de hóspedes; `teste`, `reservas`, `janelas`) e 2 testes.
+- **Mudança (texto):** `regras.md` 4c (noites por `no_of_days`; Beds24 como fonte preferida do faturamento e da ocupação real); `ferramentas.md`; `pricelabs/beds24-acesso-direto.md`; pendências `beds24-token` (dono) e `beds24-integrar` (Skill).
+- **Correção:** livro do mês recalculado com `no_of_days` (outubro R$ 257 mil, não R$ 269 mil); modo segue padrão nas duas pousadas.
+- **Como desfazer:** apagar `scripts/beds24.py` e o item da fonte preferida em `regras.md`.

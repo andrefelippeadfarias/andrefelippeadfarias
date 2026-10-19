@@ -1768,7 +1768,7 @@ A Villa não aparece em nenhuma busca com filtro de hidro (falta a comodidade na
 - **Reservas e mudanças manuais:** 17 reservas novas desde sexta (lote da Booking e vendas diretas), nenhum cancelamento e nenhuma mudança manual sua. Pelo calendário: Double vendeu em 23 e 24/10 (1 e 2 para 3 de 6), Queen 2 teve cancelamentos em 19 a 21/10 e a King Spa 2 esgotou hoje.
 - **Mercado (Booking, mediana da noite):** quarta 21/10 R$ 313; 23–25/10 R$ 770 (2 noites); 6–8/11 R$ 1.529 (2 noites); Finados 3 noites R$ 3.036 (16 imóveis, de R$ 1.790 a R$ 5.370). Ocupação do mercado em 21 a 25/10 entre 9% e 17%.
 - **Eventos:** abertura do Natal em 30 ou 31/10 (data sem confirmação da Prefeitura), concerto "Uma Noite de Luz" de 30/10 a 08/11; nada novo em novembro.
-- **Gravado (13 datas, regra por data conferida na resposta da gravação; calendário a conferir, Beds24 instável):**
+- **Gravado (13 datas; conferido no recálculo às 08:25: Afrodite e VK7 5 de 5 sem diferença; Double 8 datas só pela regra por data, o recálculo bateu no limite de 3 por 24 h e fica para a rotina das 10:53):**
 
 | Mudança | Onde | Antes | Depois (calculado) | Como desfazer |
 |---|---|---|---|---|

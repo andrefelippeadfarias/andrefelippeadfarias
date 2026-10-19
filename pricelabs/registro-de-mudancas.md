@@ -1796,6 +1796,13 @@ A Villa não aparece em nenhuma busca com filtro de hidro (falta a comodidade na
 - **Finados (D-11):** Queen 7 com 1 e 2 de 7 em 30 e 31/10 e King Spa 2 com 0 de 2; mediana da Booking R$ 3.036 e o Recanto fica ~35% acima. A condição de corte de um degrau foi atingida e fica para a rodada completa de 20/10, como combinado.
 - **Não feito nesta sessão:** varredura de concorrência (rodada 2) e medição do fator de vitrine da VK7 e King Spa 2; ficam para uma sessão à parte.
 
+## 19/10/2026, 12:00 — Pedido do dono: livro do mês com as reservas sem valor
+
+- **Decisão:** o número principal do faturamento passa a somar as reservas que chegam ao PriceLabs sem valor (quase todas do canal "outros") pelo valor total da reserva. A leitura só com o valor do PriceLabs e a com o Airbnb pelo valor total vão numa linha de apoio.
+- **Livro por mês de estadia (número principal):** outubro R$ 269 mil (Recanto R$ 152 mil, Villa R$ 117 mil); novembro R$ 122 mil (Recanto R$ 90 mil, Villa R$ 32 mil); dezembro R$ 75 mil (Recanto R$ 50 mil, Villa R$ 25 mil).
+- **Modo:** segue padrão nas duas pousadas. A Villa já passa do ritmo da sua meta em outubro, mas a trava de lotação segura (ocupação fora da meta nas três janelas).
+- **Nada gravado no PriceLabs.**
+
 > **Regras em vigor:** desde 06/10/2026 elas ficam em `.claude/skills/gestao-receita-pousadas/references/regras.md`. Este arquivo guarda só o histórico das mudanças.
 
 ## O que só pode ser feito na tela (passo a passo para você)

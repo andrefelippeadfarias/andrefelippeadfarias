@@ -207,3 +207,8 @@ Hora da ANÁLISE E AGENDA DIÁRIA do PriceLabs (rotina "Agenda diária PriceLabs
 - **Fator de vitrine da Villa:** não medido nesta revisão (sem busca de dia de semana para VK7 e King Spa 2); fica para a semana de 26/10.
 - **Pendência encerrada:** base da Double e da VK7 +5%: por ordem do dono de 14/10, base só muda com ordem expressa dele.
 - **Varredura de concorrência (rodada 2):** não rodada nesta sessão (a Skill manda rodá-la em sessão à parte).
+
+## 19/10/2026, 12:00 — Livro do mês com as reservas sem valor (dono)
+- **Decisão do dono:** "Sim" (à pergunta: passar a reportar como número principal a leitura com as reservas sem `rental_revenue` incluídas pelo `total_cost`).
+- **Mudança (texto e dados):** `regras.md` 4c ("Como medir o livro") e 6a; `metas_faturamento.json` → `faturamento`; `quartos.json` → `modo_decisao` refeito com o número principal (Recanto R$ 152 mil, Villa R$ 117 mil em outubro; modo segue padrão nas duas, a Villa pela trava de lotação); pendência `faturamento-script` atualizada.
+- **Como desfazer:** voltar o item "Como medir o livro" para só `rental_revenue`.

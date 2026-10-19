@@ -225,7 +225,7 @@
    "responsavel": "skill",
    "desde": "2026-10-14",
    "urgencia": 2,
-   "texto": "Criar scripts/faturamento.py: lê get_pms_reservations (stay-date, booked) e get_listing_performance_metrics, soma rental_revenue por mês de check-in e por feriado, compara com dados/metas_faturamento.json e imprime a tabela do item 8 do relatório; no dia 1, recalibra o índice contra o mercado (get_neighbourhood_data) e propõe as metas dos 6 meses seguintes. Incluir as três leituras de 19/10 (só rental_revenue; com reservas sem valor pelo total_cost; com Airbnb pelo total_cost) e imprimir qual delas decide o modo; não comparar a soma da API com o Report Builder."
+   "texto": "Criar scripts/faturamento.py: lê get_pms_reservations (stay-date, booked) e get_listing_performance_metrics, soma rental_revenue por mês de check-in e por feriado, compara com dados/metas_faturamento.json e imprime a tabela do item 8 do relatório; no dia 1, recalibra o índice contra o mercado (get_neighbourhood_data) e propõe as metas dos 6 meses seguintes. Incluir as três leituras de 19/10 (só rental_revenue; com reservas sem valor pelo total_cost; com Airbnb pelo total_cost) e imprimir qual delas decide o modo; não comparar a soma da API com o Report Builder. Dono 19/10: o número principal é a leitura com as reservas sem valor pelo total_cost."
   },
   {
    "id": "historico-beds24-2025",

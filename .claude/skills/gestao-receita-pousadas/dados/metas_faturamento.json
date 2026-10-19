@@ -1,7 +1,7 @@
 {
  "versao": "2026-10-14T21",
  "lido_em": "2026-10-14",
- "faturamento": "revenue do PriceLabs = rental_revenue do Beds24, antes da comissão da OTA e sem extras",
+ "faturamento": "revenue do PriceLabs = rental_revenue do Beds24, antes da comissão da OTA e sem extras; desde 19/10 (dono), o livro inclui as reservas sem rental_revenue pelo total_cost",
  "metodo": "(revisado por 3 revisores independentes em 14/10/2026):\n- Mês: RevPAR do mercado (vizinhança Airbnb do PriceLabs) no mesmo mês do ano passado × crescimento × nosso índice\n  × unidades × dias, por pousada; nunca abaixo do livro. Índice = nosso RevPAR ÷ RevPAR do mercado no MESMO mês do\n  MESMO ano (set/2026: Recanto 1,48, Villa 1,25; portfólio 1 a 14/10: 1,25). Teto de 95% de ocupação: desconto nos\n  meses com pico no Recanto. Páscoa: 2027 cai em março (ano passado, abril): março recebe o efeito líquido da Páscoa\n  da tabela de feriados e abril perde o pouco que a Páscoa de 2026 pôs no mercado de abril.\n- Outubro: livro do mês inteiro (1 a 31/10, lido em 14/10) + última hora (setembro vendeu 6,6 diárias/dia com 0 a 1 dia).\n- Feriado: vendido + (ocupação-alvo × diárias − vendidas) × diária real por noite (≥ piso de feriado da skill).",
  "insumos": {
   "lido_em": "2026-10-14",

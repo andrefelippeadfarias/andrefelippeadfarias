@@ -182,3 +182,9 @@ Cada item tem data e evidência. Para incluir um item novo: data, o fato, a evid
 - No Beds24, "Novo" são reservas reais aguardando confirmação (todas com fatura; Booking, Airbnb e direto) e "Inquiry" são consultas do Airbnb sem fatura. Ocupação real = confirmadas + novas.
 - O livro pelo Beds24 (itens de fatura) e o livro corrigido pelo PriceLabs (`rental_revenue` + total_cost das reservas sem valor, noites por `no_of_days`) ficaram a menos de 1% em outubro (R$ 259 mil contra R$ 257 mil). O PriceLabs serve como reserva quando o Beds24 não responder.
 - O campo de quantidade da reserva no Beds24 é `roomQty`; a receita de hospedagem vem de `invoiceItems` com `type` "charge" (`lineTotal`).
+
+## 19/10/2026 (17:00) — Valor real exato pelo Beds24 e divergências de inventário
+- **Valor real ÷ preço enviado no dia da reserva** (reservas criadas de 13 a 19/10, receita da fatura do Beds24 contra o preço da coleta anterior à reserva): Recanto Booking mediana **0,49** (49 reservas; mínimo 0,18, a maioria 0,38–0,61), Airbnb **0,41**, direto 0,36; Villa Booking **0,46** (16), Airbnb **0,31** (9, todas entre 0,20 e 0,33), direto 0,45. `fator_real` mantido (Recanto 0,42, Villa 0,39) até a revisão de 26/10; o Airbnb da Villa abaixo de 0,39 virou pendência do dono (multiplicador do canal).
+- **Overbooking real:** King Spa 2 em 24/10 com 4 reservas confirmadas para 2 quartos (duas sem unidade, do lote da Booking de 08/10). O PriceLabs mostrava 2/2 e não acusava nada. Só a leitura direta do Beds24 pega isso.
+- **Bloqueios sem reserva:** Villa inteira fechada em 5–7/11 (disponível 0) com só 1–2 reservas; Balcony 24/10 com 2 unidades fechadas. O PriceLabs conta como vendidas, e a ocupação "vendida" do PriceLabs fica inflada nessas noites.
+- **Nomes no Beds24:** VK7 = "Suíte Panorâmica I — Villa", King Spa 2 = "Suíte Panorâmica II — Villa", Balcony = "Suíte Mansão — Villa".

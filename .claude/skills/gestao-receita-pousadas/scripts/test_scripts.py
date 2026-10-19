@@ -645,3 +645,30 @@ class TestBeds24(unittest.TestCase):
             for k, v in antes.items():
                 if v is not None:
                     os.environ[k] = v
+
+
+class TestBeds24Extra(unittest.TestCase):
+    def setUp(self):
+        self.lista = [{"propertyId": 350362, "roomId": 722805, "status": "confirmed", "arrival": "2026-10-30",
+                       "departure": "2026-11-02", "price": 3000, "channel": "booking"},
+                      {"propertyId": 350364, "roomId": 722815, "status": "new", "arrival": "2026-10-31",
+                       "departure": "2026-11-01", "price": 900, "channel": "airbnb"},
+                      {"propertyId": 350364, "roomId": 722813, "status": "inquiry", "arrival": "2026-10-31",
+                       "departure": "2026-11-01", "price": 900}]
+
+    def test_livro_por_mes(self):
+        import beds24
+        res = beds24.livro(self.lista, date(2026, 10, 1), date(2026, 12, 1))
+        por = {(r["mes"], r["pousada"]): r for r in res}
+        self.assertEqual(por[("2026-10", "Recanto")]["receita"], 2000.0)
+        self.assertEqual(por[("2026-11", "Recanto")]["unidades_noite"], 1)
+        self.assertEqual(por[("2026-10", "Villa")]["receita_confirmadas"], 0.0)
+        self.assertEqual(por[("2026-10", "Villa")]["por_canal"], {"airbnb": 900.0})
+
+    def test_comparar(self):
+        import beds24
+        coleta = {"rooms": {"Q7": {"days": [{"date": "2026-10-30", "multi_unit_occupancy": "1/7"},
+                                             {"date": "2026-10-31", "multi_unit_occupancy": "3/7"}]},
+                            "VK7": {"days": [{"date": "2026-10-31", "multi_unit_occupancy": "0/7"}]}}}
+        dif = beds24.comparar(self.lista, coleta, date(2026, 10, 30), date(2026, 11, 2))
+        self.assertEqual(dif, [{"quarto": "Q7", "data": "2026-10-31", "pricelabs": 3, "beds24": 1, "diferenca": 2}])

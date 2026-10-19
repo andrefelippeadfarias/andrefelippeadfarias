@@ -17,6 +17,9 @@ Uso:
   python3 beds24.py teste                      # confere a credencial e lista as propriedades
   python3 beds24.py reservas --de 2026-10-19 --ate 2026-12-18 [--json saida.json]
   python3 beds24.py janelas --hoje 2026-10-19 [--json saida.json]   # 7/15/30/45/60 noites, como o relatório
+  python3 beds24.py livro --de 2026-10-01 --ate 2027-03-01           # livro por mês de estadia e pousada
+  python3 beds24.py movimento --desde 2026-10-19T13:00:00Z           # novas, canceladas e alteradas desde
+  python3 beds24.py comparar --coleta <saida do workflow> --de 2026-10-19 --ate 2026-12-18
 
 Regras de contagem (iguais às do relatório do Beds24 de 19/10):
 - noites de arrival até departure (departure exclusivo); checkout excluído;
@@ -145,12 +148,105 @@ def janelas(lista, hoje, dias=(7, 15, 30, 45, 60)):
     return res
 
 
+def noites(lista, de, ate, status=STATUS_OCUPA):
+    """Unidades vendidas por quarto e noite: {(codigo, 'AAAA-MM-DD'): unidades}."""
+    out = defaultdict(int)
+    for b in lista:
+        if (b.get("status") or "").lower() not in status:
+            continue
+        codigo = QUARTOS.get(str(b.get("roomId")), (str(b.get("roomId")), 0))[0]
+        chegada, n, _ = receita_por_noite(b)
+        for k in range(n):
+            d = chegada + dt.timedelta(days=k)
+            if de <= d < ate:
+                out[(codigo, d.isoformat())] += int(b.get("roomQty") or 1)
+    return dict(out)
+
+
+def livro(lista, de, ate):
+    """Livro por mês de estadia e pousada: receita de hospedagem (confirmadas + novas), só confirmadas,
+    unidades-noite, ADR e receita por canal."""
+    nome = {k: v.split()[0] for k, v in PROPRIEDADES.items()}
+    acc = defaultdict(lambda: {"receita": 0.0, "receita_confirmadas": 0.0, "un": 0, "canais": defaultdict(float)})
+    for b in lista:
+        st = (b.get("status") or "").lower()
+        if st not in STATUS_OCUPA:
+            continue
+        chegada, n, total = receita_por_noite(b)
+        pous = nome.get(str(b.get("propertyId")), str(b.get("propertyId")))
+        canal = b.get("channel") or b.get("referer") or "outros"
+        for k in range(n):
+            d = chegada + dt.timedelta(days=k)
+            if not (de <= d < ate):
+                continue
+            x = acc[(d.strftime("%Y-%m"), pous)]
+            x["receita"] += total / n
+            x["un"] += int(b.get("roomQty") or 1)
+            x["canais"][canal] += total / n
+            if st == "confirmed":
+                x["receita_confirmadas"] += total / n
+    res = []
+    for (mes, pous), x in sorted(acc.items()):
+        res.append({"mes": mes, "pousada": pous, "receita": round(x["receita"], 2),
+                    "receita_confirmadas": round(x["receita_confirmadas"], 2), "unidades_noite": x["un"],
+                    "adr": round(x["receita"] / x["un"], 2) if x["un"] else None,
+                    "por_canal": {c: round(v, 2) for c, v in sorted(x["canais"].items())}})
+    return res
+
+
+def movimento(token, desde):
+    """Reservas novas, canceladas e alteradas desde o instante `desde` (ISO), sem dados de hóspedes."""
+    params = {"propertyId": list(PROPRIEDADES), "modifiedFrom": desde,
+              "status": ["confirmed", "new", "request", "cancelled", "black", "inquiry"]}
+    saida = []
+    for b in paginas("/bookings", params, token):
+        st = (b.get("status") or "").lower()
+        if st == "cancelled" and (b.get("cancelTime") or "") >= desde:
+            tipo = "cancelada"
+        elif (b.get("bookingTime") or "") >= desde:
+            tipo = "nova"
+        else:
+            tipo = "alterada"
+        chegada, n, total = receita_por_noite(b)
+        saida.append({"tipo": tipo, "id": b.get("id"), "quarto": QUARTOS.get(str(b.get("roomId")), (str(b.get("roomId")),))[0],
+                      "status": st, "chegada": b.get("arrival"), "noites": n, "receita": round(total, 2),
+                      "canal": b.get("channel") or b.get("referer"), "reservada_em": b.get("bookingTime"),
+                      "cancelada_em": b.get("cancelTime")})
+    return saida
+
+
+def comparar(lista, coleta, de, ate):
+    """Beds24 (confirmadas + novas) contra o calendário do PriceLabs (unidades vendidas por quarto e noite).
+    PriceLabs acima = bloqueio sem reserva ou reserva que o Beds24 não mostra; Beds24 acima = noite vendida
+    que o PriceLabs ainda trata como livre (risco de vender a mais ou preço errado)."""
+    b24 = noites(lista, de, ate)
+    dif = []
+    for codigo, r in (coleta.get("rooms") or {}).items():
+        for x in r.get("days") or []:
+            d = x["date"][:10]
+            if not (de.isoformat() <= d < ate.isoformat()):
+                continue
+            mu = str(x.get("multi_unit_occupancy") or "")
+            if "/" in mu:
+                pl = int(mu.split("/")[0])
+            else:
+                pl = 1 if str(x.get("booking_status") or "").strip() else 0
+            bb = b24.get((codigo, d), 0)
+            if pl != bb:
+                dif.append({"quarto": codigo, "data": d, "pricelabs": pl, "beds24": bb, "diferenca": pl - bb})
+    return dif
+
+
 def main(argv=None):
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     sub = ap.add_subparsers(dest="cmd", required=True)
     sub.add_parser("teste")
     r = sub.add_parser("reservas"); r.add_argument("--de", required=True); r.add_argument("--ate", required=True); r.add_argument("--json")
     j = sub.add_parser("janelas"); j.add_argument("--hoje", required=True); j.add_argument("--json")
+    lv = sub.add_parser("livro"); lv.add_argument("--de", required=True); lv.add_argument("--ate", required=True); lv.add_argument("--json")
+    mv = sub.add_parser("movimento"); mv.add_argument("--desde", required=True, help="AAAA-MM-DDTHH:MM:SSZ (UTC)"); mv.add_argument("--json")
+    cp = sub.add_parser("comparar"); cp.add_argument("--coleta", required=True); cp.add_argument("--de", required=True)
+    cp.add_argument("--ate", required=True); cp.add_argument("--json")
     a = ap.parse_args(argv)
     try:
         tok = token_de_acesso()
@@ -164,6 +260,18 @@ def main(argv=None):
                                              "price", "commission", "referer", "channel", "bookingTime", "cancelTime")} |
                      {"receita_hospedagem": round(receita_por_noite(b)[2], 2)} for b in lista]
             texto = json.dumps(saida, ensure_ascii=False, indent=1)
+        elif a.cmd == "livro":
+            de, ate = dt.date.fromisoformat(a.de), dt.date.fromisoformat(a.ate)
+            texto = json.dumps(livro(reservas(a.de, a.ate, tok), de, ate), ensure_ascii=False, indent=1)
+        elif a.cmd == "movimento":
+            texto = json.dumps(movimento(tok, a.desde), ensure_ascii=False, indent=1)
+        elif a.cmd == "comparar":
+            de, ate = dt.date.fromisoformat(a.de), dt.date.fromisoformat(a.ate)
+            coleta = json.load(open(a.coleta, encoding="utf-8"))
+            coleta = coleta.get("result", coleta) if isinstance(coleta, dict) else coleta
+            if isinstance(coleta, str):
+                coleta = json.loads(coleta)
+            texto = json.dumps(comparar(reservas(a.de, a.ate, tok), coleta, de, ate), ensure_ascii=False, indent=1)
         else:
             hoje = dt.date.fromisoformat(a.hoje)
             lista = reservas(a.hoje, (hoje + dt.timedelta(days=60)).isoformat(), tok)

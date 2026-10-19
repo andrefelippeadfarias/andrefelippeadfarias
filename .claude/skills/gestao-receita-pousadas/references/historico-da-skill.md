@@ -219,3 +219,9 @@ Hora da ANÁLISE E AGENDA DIÁRIA do PriceLabs (rotina "Agenda diária PriceLabs
 - **Mudança (texto):** `regras.md` 4c (noites por `no_of_days`; Beds24 como fonte preferida do faturamento e da ocupação real); `ferramentas.md`; `pricelabs/beds24-acesso-direto.md`; pendências `beds24-token` (dono) e `beds24-integrar` (Skill).
 - **Correção:** livro do mês recalculado com `no_of_days` (outubro R$ 257 mil, não R$ 269 mil); modo segue padrão nas duas pousadas.
 - **Como desfazer:** apagar `scripts/beds24.py` e o item da fonte preferida em `regras.md`.
+
+## 19/10/2026, 17:00 — Beds24 como fonte das reservas, da ocupação real e do faturamento (dono)
+- **Decisão do dono:** "Faça tudo que precisar para sermos o mais precisos possíveis e atingirmos nossos objetivos."
+- **Mudança (código, 50 testes):** `beds24.py` ganhou `livro`, `movimento` e `comparar` (overbooking, bloqueio sem reserva e venda que o PriceLabs não viu); `roomQty` e `lineTotal` conferidos no apiV2.yaml.
+- **Mudança (texto):** `SKILL.md` (rotina leve pelo `movimento`; Meça com `janelas` e `comparar`; faturamento pelo `livro`); `regras.md` 6a (ocupação real = Confirmado + Novo); pendências novas do dono (overbooking da King Spa 2 em 24/10, repasse do Airbnb, bloqueio da Balcony em 24/10) e atualização do bloqueio da Villa em 5–7/11.
+- **Como desfazer:** voltar os três trechos do `SKILL.md` para o PriceLabs.

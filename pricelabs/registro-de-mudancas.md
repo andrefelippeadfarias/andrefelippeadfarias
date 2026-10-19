@@ -1828,6 +1828,16 @@ A Villa não aparece em nenhuma busca com filtro de hidro (falta a comodidade na
 - **Livro por mês pelo Beds24 (confirmadas + novas):** outubro R$ 259 mil (Recanto R$ 145 mil, Villa R$ 115 mil); novembro R$ 137 mil; dezembro R$ 74 mil. Só confirmadas, outubro dá R$ 209 mil.
 - **Nada gravado no PriceLabs nem no Beds24.** O token tem escopo com dados de hóspedes; a Skill não guarda esses campos.
 
+## 19/10/2026, 17:00 — Pedido do dono: máxima precisão com o Beds24
+
+- **Decisão:** o Beds24 direto passa a ser a fonte das reservas, da ocupação real (Confirmado + Novo) e do faturamento em todas as rotinas; o PriceLabs segue para preço e calendário de venda.
+- **Achados da primeira varredura (Beds24 contra PriceLabs, 19/10 a 17/12):**
+  - **Overbooking:** King Spa 2 em 24/10 com 4 reservas confirmadas da Booking para 2 quartos; duas sem unidade atribuída (lote de 08/10). Precisa de ação do dono.
+  - **Villa fechada em 5, 6 e 7/11** sem reservas que justifiquem (só 1 a 2 na VK7): cerca de 37 unidades-noite paradas.
+  - **Balcony 24/10:** 2 unidades fechadas sem reserva.
+  - **Valor real ÷ enviado (exato, no dia da reserva):** Booking 0,49 (Recanto) e 0,46 (Villa); Airbnb 0,41 e 0,31; direto 0,36 e 0,45.
+- **Nada gravado no PriceLabs nem no Beds24.**
+
 > **Regras em vigor:** desde 06/10/2026 elas ficam em `.claude/skills/gestao-receita-pousadas/references/regras.md`. Este arquivo guarda só o histórico das mudanças.
 
 ## O que só pode ser feito na tela (passo a passo para você)

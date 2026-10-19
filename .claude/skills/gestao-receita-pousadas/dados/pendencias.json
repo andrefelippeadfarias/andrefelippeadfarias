@@ -239,7 +239,7 @@
    "responsavel": "dono",
    "desde": "2026-10-14",
    "urgencia": 2,
-   "texto": "A Villa inteira (VK7 7/7, Balcony 6/6, VK2 2/2) aparece indisponível em 5, 6 e 7/11 sem nenhuma reserva no PriceLabs (45 unidades-noite). É grupo fechado ou bloqueio? Se for grupo, informe o valor para o acompanhamento do faturamento de novembro; se for bloqueio sem venda, libere no Beds24."
+   "texto": "A Villa inteira (VK7 7/7, Balcony 6/6, VK2 2/2) aparece indisponível em 5, 6 e 7/11 sem nenhuma reserva no PriceLabs (45 unidades-noite). É grupo fechado ou bloqueio? Se for grupo, informe o valor para o acompanhamento do faturamento de novembro; se for bloqueio sem venda, libere no Beds24. 19/10 (Beds24 direto): o inventário da Villa está fechado à mão em 5, 6 e 7/11 (disponível 0 na Balcony e na King Spa 2; −1 na VK7) com só 1 a 2 reservas reais (VK7 05 a 08/11, R$ 3.761). São ~37 unidades-noite paradas, inclusive sexta e sábado."
   },
   {
    "id": "beds24-airbnb-revenue",
@@ -315,7 +315,29 @@
    "responsavel": "skill",
    "desde": "2026-10-19",
    "urgencia": 1,
-   "texto": "Com a credencial: rodar beds24.py teste e janelas, conferir contra o consolidado executivo de 19/10 (Confirmado: Recanto 205 U/N e R$ 134.141; Villa 115 U/N e R$ 66.618 em 60 noites), decidir com o dono se 'Novo' conta como ocupado, e trocar a fonte do faturamento e da ocupação real no relatório e na revisão de segunda. 19/10 tarde: leitura direta funcionando; confirmadas batem com o consolidado (Recanto exato, Villa +3 a 4 U/N por reservas novas). Falta a decisão do dono sobre contar 'Novo' como ocupado e ligar o Beds24 no relatório e na revisão."
+   "texto": "Com a credencial: rodar beds24.py teste e janelas, conferir contra o consolidado executivo de 19/10 (Confirmado: Recanto 205 U/N e R$ 134.141; Villa 115 U/N e R$ 66.618 em 60 noites), decidir com o dono se 'Novo' conta como ocupado, e trocar a fonte do faturamento e da ocupação real no relatório e na revisão de segunda. 19/10 tarde: leitura direta funcionando; confirmadas batem com o consolidado (Recanto exato, Villa +3 a 4 U/N por reservas novas). Falta a decisão do dono sobre contar 'Novo' como ocupado e ligar o Beds24 no relatório e na revisão. RESOLVIDO 19/10: dono autorizou (\"Faça tudo que precisar...\"); Beds24 ligado no SKILL.md (movimento, janelas, comparar, livro).",
+   "resolvido_em": "2026-10-19"
+  },
+  {
+   "id": "overbooking-vk2-24-10",
+   "responsavel": "dono",
+   "desde": "2026-10-19",
+   "urgencia": 0,
+   "texto": "URGENTE: King Spa 2 em 24/10 tem 4 reservas confirmadas da Booking para 2 quartos (IDs 94133691 e 94373324 com unidade; 94373325 de 23 a 25/10 e 94373326 de 24 a 26/10 sem unidade atribuída, ambas do lote de 08/10). Realocar no Beds24 (a VK7 está esgotada em 24/10) ou falar com a Booking; conferir se não é lote duplicado."
+  },
+  {
+   "id": "airbnb-repasse",
+   "responsavel": "dono",
+   "desde": "2026-10-19",
+   "urgencia": 2,
+   "texto": "No Beds24, o Airbnb paga 31% (Villa) e 41% (Recanto) do preço enviado pelo PriceLabs, contra 46% a 49% na Booking (reservas de 13 a 19/10, preço do dia da reserva). Conferir no Beds24 o multiplicador/preço do canal Airbnb e as taxas; o ideal é o Airbnb ficar no nível da Booking."
+  },
+  {
+   "id": "balcony-24-10-bloqueio",
+   "responsavel": "dono",
+   "desde": "2026-10-19",
+   "urgencia": 2,
+   "texto": "Balcony 24/10: o Beds24 mostra 3 disponíveis e só 1 reserva confirmada, mas o PriceLabs conta 3 vendidas (2 unidades fechadas sem reserva). Conferir se é bloqueio de propósito."
   }
  ],
  "versao": "2026-10-16T08"

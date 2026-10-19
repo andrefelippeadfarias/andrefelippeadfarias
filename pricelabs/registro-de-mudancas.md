@@ -1904,6 +1904,18 @@ A Villa não aparece em nenhuma busca com filtro de hidro (falta a comodidade na
 - **Recálculo:** não conferido, porque o limite de 3 recálculos por quarto em 24 h já foi usado. A conferência fica para a rotina das 07:53 de 20/10.
 - **Como desfazer:** as razões das regras citam o estado anterior. O plano está em `plano_comp_1910d.json` e a reversão em `reversao_1910.json` (rascunho da sessão).
 
+## 19/10/2026, 19:55 UTC (16:55 BRT) — Rotina leve das 16:53
+
+- **Beds24 (movimento desde 16:50 UTC):**
+  - 1 reserva nova direta: Double de 20 a 22/10, 3 noites, R$ 4.233 na fatura (R$ 1.411 por noite).
+  - 1 cancelamento da Booking: Double de 20 a 21/10, 2 noites, R$ 973.
+  - Q2 93847392 (chegada em 19/10, 3 noites) passou a constar como cancelada.
+  - O resto são mudanças de status em reservas antigas.
+- **Ocupação depois das mudanças:**
+  - Double com 5/6 em 20/10, 3/6 em 21/10 e 5/6 em 22/10.
+  - Q2 com 1/2 de 19 a 22/10, já no calendário das 16:53 UTC.
+- **Nada gravado.** O Double está sem saldo de recálculo (429), então fica sem passo de flutuação; a alta de 22/10 entra na rotina de 20/10. A Q2 não recebe desconto nem a Regra I.
+
 > **Regras em vigor:** desde 06/10/2026 elas ficam em `.claude/skills/gestao-receita-pousadas/references/regras.md`. Este arquivo guarda só o histórico das mudanças.
 
 ## O que só pode ser feito na tela (passo a passo para você)

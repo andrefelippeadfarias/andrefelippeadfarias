@@ -308,7 +308,7 @@
    "responsavel": "dono",
    "desde": "2026-10-19",
    "urgencia": 1,
-   "texto": "No Beds24 (https://beds24.com/control3.php?pagetype=apiv2; SETTINGS → APPS & INTEGRATIONS → API), gerar um Long Life Token da API V2 só de leitura (read:bookings, read:bookings-financial, read:inventory, read:properties; sem bookings-personal; 'Allow linked properties' se as pousadas forem vinculadas) e cadastrar como BEDS24_TOKEN nos segredos do ambiente do Claude Code (menu do ambiente → Edit → Network secrets). Nunca colar no chat."
+   "texto": "No Beds24 (Configurações → Marketplace → API): Generate invite code só com read em bookings, bookings-financial, inventory e properties; em seguida trocar em https://beds24.com/api/v2 (GET /authentication/setup → Try it out, campo code) e cadastrar o refreshToken como BEDS24_REFRESH_TOKEN nos segredos do ambiente do Claude Code. Não reaproveitar o token HotelClaw-v57 (acesso total). Nunca colar no chat. Passo a passo em pricelabs/beds24-acesso-direto.md."
   },
   {
    "id": "beds24-integrar",

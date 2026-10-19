@@ -25,11 +25,12 @@ Unidades-noite (U/N) e receita de hospedagem, noites de 19/10 em diante:
 ## 3. Como ler direto do Beds24 (API V2, só leitura)
 - **Teste de rede feito em 19/10:** `https://beds24.com/api/v2` responde daqui ("Token not valid" sem credencial). O acesso de rede está liberado; falta só a credencial.
 - **Script pronto:** `.claude/skills/gestao-receita-pousadas/scripts/beds24.py` (`teste`, `reservas`, `janelas`). Conta as noites com saída exclusiva, separa os status (confirmado, novo, pedido, inquiry, cancelado), usa os itens de fatura de diária quando vierem e não lê dados de hóspedes.
-- **O que o dono faz (uma vez), pelo caminho mais simples (token de longa duração, só leitura):**
-  1. Entrar no painel do Beds24 com o usuário dono da conta e abrir **https://beds24.com/control3.php?pagetype=apiv2** (no menu: CONFIGURAÇÕES/SETTINGS → APPS & INTEGRATIONS → API; em telas antigas, SETTINGS → MARKETPLACE → API).
-  2. Na área **API V2**, escolher gerar um **Long Life Token** (token de longa duração; o Beds24 só permite leitura nele).
-  3. Marcar os escopos: **read:bookings**, **read:bookings-financial**, **read:inventory** e **read:properties**. **Não** marcar bookings-personal (dados de hóspedes). Se o Recanto e a Villa estiverem em propriedades vinculadas, marcar **Allow linked properties**.
-  4. Copiar o token gerado e cadastrar no Claude Code: menu do ambiente na barra de título da sessão → **Edit** → **Network secrets** (ou "API credentials"; em app antigo, variável de ambiente) com o nome **`BEDS24_TOKEN`**. Uma sessão nova lê a variável.
-  5. **Nunca colar o token no chat.**
-  - Alternativa: código de convite (vale poucos minutos) trocado por um token de atualização; aí o nome da variável é `BEDS24_REFRESH_TOKEN`.
+- **O que o dono faz (uma vez).** Na tela de 19/10 (Marketplace → API) não há botão para "Long Life Token"; o caminho é o código de convite trocado por um token de atualização:
+  1. Em **https://beds24.com/control3.php?pagetype=apiv2** (Configurações → Marketplace → API), clicar em **Generate invite code**.
+  2. Marcar só **leitura** (read) em: **bookings**, **bookings-financial**, **inventory** e **properties**. **Não** marcar bookings-personal (hóspedes), accounts nem channels, e nada de write/all. Se a janela oferecer gerar um **long life token** em vez do convite, prefira ele: é só de leitura e não precisa de troca (variável `BEDS24_TOKEN`).
+  3. O convite vale poucos minutos. Logo em seguida, abrir **https://beds24.com/api/v2**, seção **Authentication → GET /authentication/setup → Try it out**, colar o convite no campo **code**, pôr em **deviceName** um nome como `Claude-leitura` e clicar em **Execute**.
+  4. Na resposta, copiar o valor de **`refreshToken`** (ele aparece também na lista "Refresh Tokens" da tela do Beds24).
+  5. No Claude Code: menu do ambiente na barra de título da sessão → **Edit** → **Network secrets** (ou "API credentials"; em app antigo, variável de ambiente) → criar **`BEDS24_REFRESH_TOKEN`** com esse valor. Uma sessão nova lê a variável. **Nunca colar no chat.**
+  6. O token de atualização não vence enquanto for usado ao menos uma vez a cada 30 dias (as rotinas usam todo dia).
+- **Não reaproveitar o token "HotelClaw-v57"** que já existe na tela: ele tem acesso total (leitura e escrita, dados de hóspedes, conta e canais). O nosso deve ser separado e só de leitura.
 - **Depois disso, a Skill:** roda `beds24.py teste`, compara com este relatório (as janelas devem bater com o "Confirmado" + "Novo") e passa a usar o Beds24 como fonte do faturamento e da ocupação real. O PriceLabs continua sendo a fonte de preço e de calendário de venda.

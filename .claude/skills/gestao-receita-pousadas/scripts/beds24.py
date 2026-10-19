@@ -22,8 +22,9 @@ Regras de contagem (iguais às do relatório do Beds24 de 19/10):
   confirmed + new (reserva real que ocupa o quarto) e mostram confirmed sozinho ao lado;
 - receita de hospedagem = itens de fatura de diária (invoiceItems type charge sem extras) quando vierem;
   sem itens, usa o campo price da reserva rateado pelas noites.
-Os endpoints e campos seguem a documentação pública da API V2 (https://beds24.com/api/v2); confira no
-primeiro uso com `teste` e ajuste aqui se o Beds24 devolver nomes diferentes.
+Endpoints e campos conferidos no apiV2.yaml oficial em 19/10/2026 (GET /authentication/setup com cabeçalho
+`code`; GET /authentication/token com `refreshToken`; GET /bookings com arrivalTo, departureFrom, status,
+includeInvoiceItems; reserva com roomQty, price, commission, invoiceItems[type, qty, amount, lineTotal]).
 """
 import argparse
 import datetime as dt
@@ -103,7 +104,8 @@ def receita_por_noite(b):
     itens = b.get("invoiceItems") or []
     diarias = [i for i in itens if (i.get("type") or "").lower() == "charge" and not i.get("invoiceeId")]
     if diarias:
-        total = sum(float(i.get("amount") or 0) * float(i.get("qty") or 1) for i in diarias)
+        total = sum(float(i["lineTotal"]) if i.get("lineTotal") is not None
+                    else float(i.get("amount") or 0) * float(i.get("qty") or 1) for i in diarias)
     else:
         total = float(b.get("price") or 0)
     return chegada, noites, total
@@ -119,7 +121,7 @@ def janelas(lista, hoje, dias=(7, 15, 30, 45, 60)):
             st = (b.get("status") or "").lower()
             prop = str(b.get("propertyId"))
             chegada, noites, total = receita_por_noite(b)
-            qtd = int(b.get("numRooms") or 1)
+            qtd = int(b.get("roomQty") or 1)
             for i in range(noites):
                 d = chegada + dt.timedelta(days=i)
                 if ini <= d < fim:
@@ -153,7 +155,7 @@ def main(argv=None):
             return 0
         if a.cmd == "reservas":
             lista = reservas(a.de, a.ate, tok)
-            saida = [{k: b.get(k) for k in ("id", "propertyId", "roomId", "status", "arrival", "departure", "numRooms",
+            saida = [{k: b.get(k) for k in ("id", "propertyId", "roomId", "status", "arrival", "departure", "roomQty",
                                              "price", "commission", "referer", "channel", "bookingTime", "cancelTime")} |
                      {"receita_hospedagem": round(receita_por_noite(b)[2], 2)} for b in lista]
             texto = json.dumps(saida, ensure_ascii=False, indent=1)

@@ -25,9 +25,11 @@ Unidades-noite (U/N) e receita de hospedagem, noites de 19/10 em diante:
 ## 3. Como ler direto do Beds24 (API V2, só leitura)
 - **Teste de rede feito em 19/10:** `https://beds24.com/api/v2` responde daqui ("Token not valid" sem credencial). O acesso de rede está liberado; falta só a credencial.
 - **Script pronto:** `.claude/skills/gestao-receita-pousadas/scripts/beds24.py` (`teste`, `reservas`, `janelas`). Conta as noites com saída exclusiva, separa os status (confirmado, novo, pedido, inquiry, cancelado), usa os itens de fatura de diária quando vierem e não lê dados de hóspedes.
-- **O que o dono faz (uma vez):**
-  1. No Beds24: Configurações → Conta → **API** (API V2) → gerar um **código de convite** com escopos **só de leitura**: reservas, financeiro das reservas, inventário e propriedades. **Sem** dados pessoais de hóspedes.
-  2. Trocar o código de convite pelo **token de atualização** (refresh token), na mesma tela do Beds24 ou pela ferramenta que já usa a API (a mesma que gerou o relatório de 19/10).
-  3. No Claude Code: menu do ambiente na barra de título da sessão → **Edit** → **Network secrets** (ou "API credentials"; em app antigo, variável de ambiente) → criar a variável **`BEDS24_REFRESH_TOKEN`** com esse token. Uma sessão nova lê a variável.
-  4. **Nunca colar o token no chat.**
+- **O que o dono faz (uma vez), pelo caminho mais simples (token de longa duração, só leitura):**
+  1. Entrar no painel do Beds24 com o usuário dono da conta e abrir **https://beds24.com/control3.php?pagetype=apiv2** (no menu: CONFIGURAÇÕES/SETTINGS → APPS & INTEGRATIONS → API; em telas antigas, SETTINGS → MARKETPLACE → API).
+  2. Na área **API V2**, escolher gerar um **Long Life Token** (token de longa duração; o Beds24 só permite leitura nele).
+  3. Marcar os escopos: **read:bookings**, **read:bookings-financial**, **read:inventory** e **read:properties**. **Não** marcar bookings-personal (dados de hóspedes). Se o Recanto e a Villa estiverem em propriedades vinculadas, marcar **Allow linked properties**.
+  4. Copiar o token gerado e cadastrar no Claude Code: menu do ambiente na barra de título da sessão → **Edit** → **Network secrets** (ou "API credentials"; em app antigo, variável de ambiente) com o nome **`BEDS24_TOKEN`**. Uma sessão nova lê a variável.
+  5. **Nunca colar o token no chat.**
+  - Alternativa: código de convite (vale poucos minutos) trocado por um token de atualização; aí o nome da variável é `BEDS24_REFRESH_TOKEN`.
 - **Depois disso, a Skill:** roda `beds24.py teste`, compara com este relatório (as janelas devem bater com o "Confirmado" + "Novo") e passa a usar o Beds24 como fonte do faturamento e da ocupação real. O PriceLabs continua sendo a fonte de preço e de calendário de venda.

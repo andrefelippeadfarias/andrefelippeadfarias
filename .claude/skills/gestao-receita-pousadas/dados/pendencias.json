@@ -308,7 +308,7 @@
    "responsavel": "dono",
    "desde": "2026-10-19",
    "urgencia": 1,
-   "texto": "Criar no Beds24 (Configurações → Conta → API, API V2) um token só de leitura (reservas, financeiro das reservas, inventário e propriedades; sem dados de hóspedes) e cadastrar como BEDS24_REFRESH_TOKEN nos segredos do ambiente do Claude Code (menu do ambiente → Edit → Network secrets). Nunca colar no chat. Passo a passo em pricelabs/beds24-acesso-direto.md."
+   "texto": "No Beds24 (https://beds24.com/control3.php?pagetype=apiv2; SETTINGS → APPS & INTEGRATIONS → API), gerar um Long Life Token da API V2 só de leitura (read:bookings, read:bookings-financial, read:inventory, read:properties; sem bookings-personal; 'Allow linked properties' se as pousadas forem vinculadas) e cadastrar como BEDS24_TOKEN nos segredos do ambiente do Claude Code (menu do ambiente → Edit → Network secrets). Nunca colar no chat."
   },
   {
    "id": "beds24-integrar",

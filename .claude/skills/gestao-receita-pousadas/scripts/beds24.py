@@ -5,9 +5,11 @@ Por que existe (dono, 19/10/2026): os valores das reservas que a Skill lia vinha
 Airbnb com ~60% do valor e status "Novo"/"Inquiry" misturados com confirmadas. O relatório do Beds24
 (Daily Financial Summary) traz a receita de hospedagem cadastrada. Este script lê o Beds24 direto.
 
-Credencial: variável de ambiente BEDS24_REFRESH_TOKEN (token de atualização da API V2, criado pelo dono
-no Beds24 com escopos só de leitura). Nunca colar token no chat; o dono cadastra nos segredos do ambiente.
-Opcional: BEDS24_TOKEN (token de acesso já emitido, vale 24 h).
+Credencial (nunca colar no chat; o dono cadastra nos segredos do ambiente):
+- BEDS24_TOKEN: "long life token" da API V2, só leitura, gerado direto no painel do Beds24
+  (SETTINGS > APPS & INTEGRATIONS > API, ou SETTINGS > MARKETPLACE > API; link direto
+  https://beds24.com/control3.php?pagetype=apiv2). É o caminho recomendado.
+- ou BEDS24_REFRESH_TOKEN: token de atualização (do código de convite), trocado aqui por um token de 24 h.
 
 Uso:
   python3 beds24.py teste                      # confere a credencial e lista as propriedades

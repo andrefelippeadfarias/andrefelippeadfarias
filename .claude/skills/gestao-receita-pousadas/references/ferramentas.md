@@ -39,7 +39,7 @@ Veja como pesquisar em `mercado.md`. Não serve para mudar nada.
 - `python3 validar_plano.py plano.json --precos <saida_do_workflow> --payload`: barra erros; com `--payload`, devolve os pedidos prontos por quarto.
 - `python3 ler_recalculo.py --plano plano.json Q7=<arq> VK7=<arq> ...`: compara o recalculado com o plano.
 - `python3 mesclar_recalculo.py <saida_do_workflow> --velhos [--horas 6]` lista os quartos com recálculo velho; `python3 mesclar_recalculo.py <saida> <mesclado.json> VK7=<arq> ...` junta os recálculos novos (preço, enviado, estadia e ocupação) no arquivo da coleta.
-- `python3 beds24.py teste | reservas --de --ate | janelas --hoje`: leitura direta do Beds24 (API V2, só leitura, sem dados de hóspedes), com `BEDS24_REFRESH_TOKEN` nos segredos do ambiente. Sem a variável, sai com ERRO e a Skill usa o PriceLabs.
+- `python3 beds24.py teste | reservas --de --ate | janelas --hoje`: leitura direta do Beds24 (API V2, só leitura, sem dados de hóspedes), com `BEDS24_TOKEN` (token de longa duração) ou `BEDS24_REFRESH_TOKEN` nos segredos do ambiente. Sem a variável, sai com ERRO e a Skill usa o PriceLabs.
 - `python3 -m unittest test_scripts`: testes dos scripts.
 - Rascunhos de plano e cópias de saída vão para a pasta de rascunho (scratchpad) da sessão, nunca para o repositório.
 

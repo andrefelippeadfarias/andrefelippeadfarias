@@ -1803,6 +1803,14 @@ A Villa não aparece em nenhuma busca com filtro de hidro (falta a comodidade na
 - **Modo:** segue padrão nas duas pousadas. A Villa já passa do ritmo da sua meta em outubro, mas a trava de lotação segura (ocupação fora da meta nas três janelas).
 - **Nada gravado no PriceLabs.**
 
+## 19/10/2026, 11:00 — Rotina das 10:53 (leve)
+
+- **Envio:** o PriceLabs enviou os 7 quartos às 08:45 (Brasília), já com as 13 gravações das 08:15. O Sync Now pedido no relatório da manhã não é mais necessário.
+- **Conferência no calendário:** Double 8 de 8 bate com o plano (20/10 R$ 1.658, 21/10 R$ 1.302, 22/10 R$ 1.273, 23/10 R$ 1.480, 24/10 R$ 1.820, 29/10 R$ 2.235, 06/11 R$ 1.554, 08/11 R$ 1.317); Afrodite 3 de 3 bate. A VK7 não veio nesta coleta (falha de leitura) e já tinha sido conferida no recálculo das 08:25.
+- **Reservas, cancelamentos e mudanças manuais:** nenhum novo desde as 07:53; o log só mostra as gravações do robô.
+- **Ocupação:** sem variação nos 6 quartos lidos.
+- **Nada gravado nesta rodada.**
+
 > **Regras em vigor:** desde 06/10/2026 elas ficam em `.claude/skills/gestao-receita-pousadas/references/regras.md`. Este arquivo guarda só o histórico das mudanças.
 
 ## O que só pode ser feito na tela (passo a passo para você)

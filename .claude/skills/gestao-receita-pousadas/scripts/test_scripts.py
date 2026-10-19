@@ -636,10 +636,12 @@ class TestBeds24(unittest.TestCase):
 
     def test_sem_credencial(self):
         import beds24
-        antes = {k: os.environ.pop(k, None) for k in ("BEDS24_TOKEN", "BEDS24_REFRESH_TOKEN")}
+        antes = {k: os.environ.pop(k, None) for k in ("BEDS24_TOKEN", "BEDS24_REFRESH_TOKEN", "BEDS24_REFRESH_TOKEN_FILE")}
+        os.environ["BEDS24_REFRESH_TOKEN_FILE"] = "/nao/existe"
         try:
             self.assertEqual(beds24.main(["teste"]), 2)
         finally:
+            os.environ.pop("BEDS24_REFRESH_TOKEN_FILE", None)
             for k, v in antes.items():
                 if v is not None:
                     os.environ[k] = v

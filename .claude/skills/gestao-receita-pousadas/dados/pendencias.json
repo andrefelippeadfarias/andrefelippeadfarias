@@ -308,14 +308,14 @@
    "responsavel": "dono",
    "desde": "2026-10-19",
    "urgencia": 1,
-   "texto": "No Beds24 (Configurações → Marketplace → API): Generate invite code só com read em bookings, bookings-financial, inventory e properties; em seguida trocar em https://beds24.com/api/v2 (GET /authentication/setup → Try it out, campo code) e cadastrar o refreshToken como BEDS24_REFRESH_TOKEN nos segredos do ambiente do Claude Code. Não reaproveitar o token HotelClaw-v57 (acesso total). Nunca colar no chat. Passo a passo em pricelabs/beds24-acesso-direto.md."
+   "texto": "No Beds24 (Configurações → Marketplace → API): Generate invite code só com read em bookings, bookings-financial, inventory e properties; em seguida trocar em https://beds24.com/api/v2 (GET /authentication/setup → Try it out, campo code) e cadastrar o refreshToken como BEDS24_REFRESH_TOKEN nos segredos do ambiente do Claude Code. Não reaproveitar o token HotelClaw-v57 (acesso total). Nunca colar no chat. Passo a passo em pricelabs/beds24-acesso-direto.md. 19/10 tarde: convite enviado no chat e trocado (já consumido); token guardado só no contêiner (/root/.beds24/refresh_token). Falta: cadastrar um token nos segredos do ambiente para não depender do contêiner e trocar por um sem dados de hóspedes (o atual devolve nome e e-mail)."
   },
   {
    "id": "beds24-integrar",
    "responsavel": "skill",
    "desde": "2026-10-19",
    "urgencia": 1,
-   "texto": "Com a credencial: rodar beds24.py teste e janelas, conferir contra o consolidado executivo de 19/10 (Confirmado: Recanto 205 U/N e R$ 134.141; Villa 115 U/N e R$ 66.618 em 60 noites), decidir com o dono se 'Novo' conta como ocupado, e trocar a fonte do faturamento e da ocupação real no relatório e na revisão de segunda."
+   "texto": "Com a credencial: rodar beds24.py teste e janelas, conferir contra o consolidado executivo de 19/10 (Confirmado: Recanto 205 U/N e R$ 134.141; Villa 115 U/N e R$ 66.618 em 60 noites), decidir com o dono se 'Novo' conta como ocupado, e trocar a fonte do faturamento e da ocupação real no relatório e na revisão de segunda. 19/10 tarde: leitura direta funcionando; confirmadas batem com o consolidado (Recanto exato, Villa +3 a 4 U/N por reservas novas). Falta a decisão do dono sobre contar 'Novo' como ocupado e ligar o Beds24 no relatório e na revisão."
   }
  ],
  "versao": "2026-10-16T08"

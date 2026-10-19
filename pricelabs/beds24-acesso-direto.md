@@ -34,3 +34,11 @@ Unidades-noite (U/N) e receita de hospedagem, noites de 19/10 em diante:
   6. O token de atualização não vence enquanto for usado ao menos uma vez a cada 30 dias (as rotinas usam todo dia).
 - **Não reaproveitar o token "HotelClaw-v57"** que já existe na tela: ele tem acesso total (leitura e escrita, dados de hóspedes, conta e canais). O nosso deve ser separado e só de leitura.
 - **Depois disso, a Skill:** roda `beds24.py teste`, compara com este relatório (as janelas devem bater com o "Confirmado" + "Novo") e passa a usar o Beds24 como fonte do faturamento e da ocupação real. O PriceLabs continua sendo a fonte de preço e de calendário de venda.
+
+## 4. Primeira leitura direta (19/10/2026, tarde)
+- **Credencial:** o dono gerou um código de convite e o enviou no chat; a Skill trocou o convite (uso único, já consumido) por um token de atualização guardado só neste contêiner, em `/root/.beds24/refresh_token` (permissão 600, fora do repositório). Para durar além deste contêiner, o dono ainda precisa cadastrar um token nos segredos do ambiente.
+- **Escopo:** o token devolve campos de dados pessoais dos hóspedes (nome, e-mail). A Skill não grava nem usa esses campos, mas o ideal é trocar por um token só de leitura sem `bookings-personal`.
+- **Conferência contra o consolidado das 10:58 (só "Confirmado"):** Recanto bate exatamente em todas as janelas (36, 76, 132, 183 e 205 U/N). Villa vem 3 a 4 U/N acima (40, 75, 90, 109, 119), por reservas confirmadas depois das 10:58.
+- **Status no Beds24 (334 reservas com noites de 19/10 a 17/12):** confirmadas 174 (Booking 139, direto 24, Airbnb 11); **novas 53** (Booking 23, Airbnb 20, direto 10), todas com itens de fatura, ou seja, reservas reais aguardando confirmação; **inquiry 23**, todas do Airbnb e sem fatura (consultas, não reservas); canceladas 84.
+- **Ocupação real (confirmadas + novas):** 7 noites Recanto 43,8% e Villa 44,8%; 15 noites 42,5% e 38,7%; 30 noites 36,2% e 23,8%. Só confirmadas: 32,1% e 38,1% em 7 noites.
+- **Livro por mês (receita de hospedagem dos itens de fatura, confirmadas + novas):** outubro R$ 259 mil (Recanto R$ 145 mil, Villa R$ 115 mil); novembro R$ 137 mil (R$ 99 mil e R$ 38 mil); dezembro R$ 74 mil; janeiro R$ 34 mil; fevereiro R$ 11 mil. Só confirmadas: outubro R$ 209 mil. A leitura corrigida pelo PriceLabs (R$ 257 mil em outubro) ficou a menos de 1% da do Beds24.

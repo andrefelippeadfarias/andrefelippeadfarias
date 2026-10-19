@@ -1819,6 +1819,15 @@ A Villa não aparece em nenhuma busca com filtro de hidro (falta a comodidade na
 - **Leitura direta:** `scripts/beds24.py` pronto e testado; a API V2 do Beds24 responde daqui. Falta o token só de leitura do dono, cadastrado como `BEDS24_REFRESH_TOKEN` nos segredos do ambiente (passo a passo em `pricelabs/beds24-acesso-direto.md`).
 - **Nada gravado no PriceLabs.**
 
+## 19/10/2026, 15:30 — Leitura direta do Beds24 ligada
+
+- **Acesso:** o convite enviado pelo dono foi trocado por um token de atualização guardado só neste contêiner (fora do repositório, nunca impresso). O convite já foi consumido e não serve mais.
+- **Conferência:** as reservas confirmadas batem com o consolidado das 10:58 (Recanto exato; Villa +3 a 4 unidades-noite de reservas confirmadas depois).
+- **O que o relatório do Beds24 deixava de fora:** 53 reservas "Novo" (Booking 23, Airbnb 20, direto 10), que têm fatura e ocupam o quarto, e 23 "Inquiry" do Airbnb, que são só consultas.
+- **Ocupação real (confirmadas + novas):** 7 noites Recanto 43,8%, Villa 44,8%; 15 noites 42,5% e 38,7%; 30 noites 36,2% e 23,8%.
+- **Livro por mês pelo Beds24 (confirmadas + novas):** outubro R$ 259 mil (Recanto R$ 145 mil, Villa R$ 115 mil); novembro R$ 137 mil; dezembro R$ 74 mil. Só confirmadas, outubro dá R$ 209 mil.
+- **Nada gravado no PriceLabs nem no Beds24.** O token tem escopo com dados de hóspedes; a Skill não guarda esses campos.
+
 > **Regras em vigor:** desde 06/10/2026 elas ficam em `.claude/skills/gestao-receita-pousadas/references/regras.md`. Este arquivo guarda só o histórico das mudanças.
 
 ## O que só pode ser feito na tela (passo a passo para você)

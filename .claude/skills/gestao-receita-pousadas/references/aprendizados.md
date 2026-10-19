@@ -177,3 +177,8 @@ Cada item tem data e evidência. Para incluir um item novo: data, o fato, a evid
 - A receita por noite é parecida (ADR do Beds24 R$ 654 no Recanto e R$ 579 na Villa em 60 noites; PriceLabs R$ 608 e R$ 522). O Beds24 é a fonte certa da receita de hospedagem; o PriceLabs perde reservas do canal "outros" e subconta o Airbnb.
 - **Erro corrigido:** no PriceLabs o `check_out` é a última noite. Ratear pela diferença de datas contava uma noite a menos por reserva. Com `no_of_days`, o livro de outubro fica R$ 257 mil (Recanto R$ 144 mil, Villa R$ 113 mil), não R$ 269 mil; novembro R$ 132 mil; dezembro R$ 72 mil.
 - A API V2 do Beds24 responde daqui (rede liberada); falta o token só de leitura do dono.
+
+## 19/10/2026 (15:30) — Primeira leitura direta do Beds24
+- No Beds24, "Novo" são reservas reais aguardando confirmação (todas com fatura; Booking, Airbnb e direto) e "Inquiry" são consultas do Airbnb sem fatura. Ocupação real = confirmadas + novas.
+- O livro pelo Beds24 (itens de fatura) e o livro corrigido pelo PriceLabs (`rental_revenue` + total_cost das reservas sem valor, noites por `no_of_days`) ficaram a menos de 1% em outubro (R$ 259 mil contra R$ 257 mil). O PriceLabs serve como reserva quando o Beds24 não responder.
+- O campo de quantidade da reserva no Beds24 é `roomQty`; a receita de hospedagem vem de `invoiceItems` com `type` "charge" (`lineTotal`).

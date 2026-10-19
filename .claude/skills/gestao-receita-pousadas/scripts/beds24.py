@@ -10,6 +10,8 @@ Credencial (nunca colar no chat; o dono cadastra nos segredos do ambiente):
   (SETTINGS > APPS & INTEGRATIONS > API, ou SETTINGS > MARKETPLACE > API; link direto
   https://beds24.com/control3.php?pagetype=apiv2). É o caminho recomendado.
 - ou BEDS24_REFRESH_TOKEN: token de atualização (do código de convite), trocado aqui por um token de 24 h.
+- ou o arquivo /root/.beds24/refresh_token (permissão 600, fora do repositório), criado em 19/10 na troca do
+  convite; vale só enquanto o contêiner desta sessão existir. Nunca versionar nem imprimir o token.
 
 Uso:
   python3 beds24.py teste                      # confere a credencial e lista as propriedades
@@ -67,6 +69,9 @@ def token_de_acesso():
     if tok:
         return tok
     ref = os.environ.get("BEDS24_REFRESH_TOKEN")
+    arq = os.environ.get("BEDS24_REFRESH_TOKEN_FILE", "/root/.beds24/refresh_token")
+    if not ref and os.path.exists(arq):
+        ref = open(arq, encoding="utf-8").read().strip()
     if not ref:
         raise ErroBeds24("Sem credencial: falta a variável BEDS24_REFRESH_TOKEN nos segredos do ambiente.")
     r = _get("/authentication/token", cabecalhos={"refreshToken": ref})

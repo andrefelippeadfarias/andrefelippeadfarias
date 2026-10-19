@@ -155,7 +155,7 @@
    "responsavel": "skill",
    "desde": "2026-10-14",
    "urgencia": 2,
-   "texto": "Finados (30/10 a 02/11): em 16/10 (D-14) melhorou: Queen 7 1 de 7 em 30 e 31/10, King Spa 2 0 de 2, Double 3 e 6 de 6, VK7 3 e 4 de 7, Balcony 1 e 4 de 6. Booking, 3 noites: mediana R$ 2.496; Recanto R$ 4.312 (+73%); Villa R$ 4.395 (+76%). Não cortei o +20% do dono. Reavaliar em 20/10 (D-10): se Queen 7 tiver menos de 3 de 7 ou King Spa 2 0 de 2 em 30 ou 31/10, um degrau (−10%) pelo teto, piso de feriado R$ 1.905 (Q7) / R$ 2.060 (VK2); registrar como mudança por cima da decisão do dono."
+   "texto": "Finados (30/10 a 02/11): em 16/10 (D-14) melhorou: Queen 7 1 de 7 em 30 e 31/10, King Spa 2 0 de 2, Double 3 e 6 de 6, VK7 3 e 4 de 7, Balcony 1 e 4 de 6. Booking, 3 noites: mediana R$ 2.496; Recanto R$ 4.312 (+73%); Villa R$ 4.395 (+76%). Não cortei o +20% do dono. Reavaliar em 20/10 (D-10): se Queen 7 tiver menos de 3 de 7 ou King Spa 2 0 de 2 em 30 ou 31/10, um degrau (−10%) pelo teto, piso de feriado R$ 1.905 (Q7) / R$ 2.060 (VK2); registrar como mudança por cima da decisão do dono. 19/10 (D-11): Queen 7 1 e 2 de 7 em 30 e 31/10, King Spa 2 0 de 2; Booking 3 noites mediana R$ 3.036 (16 imóveis, mínimo R$ 1.790); nosso Recanto fica cerca de 35% acima. Condição de corte atingida; executar na rodada completa de 20/10 (D-10)."
   },
   {
    "id": "regra-h-sabados",
@@ -176,7 +176,8 @@
    "responsavel": "skill",
    "desde": "2026-10-14",
    "urgencia": 2,
-   "texto": "Revisão de 19/10: fator_real do Recanto 0,42 → 0,45 se a semana de 13 a 19/10 confirmar o piso das 2 semanas (pisos de feriado R$ 1.905 → R$ 1.778); Villa 0,39 → 0,45 só se confirmar ≥0,45 em VK7 e VK2; testes com o fator fixo (0.42/0.39) passam a ler o JSON. Base da Double e da VK7 +5% se seguirem em alta em duas revisões."
+   "texto": "Revisão de 19/10: fator_real do Recanto 0,42 → 0,45 se a semana de 13 a 19/10 confirmar o piso das 2 semanas (pisos de feriado R$ 1.905 → R$ 1.778); Villa 0,39 → 0,45 só se confirmar ≥0,45 em VK7 e VK2; testes com o fator fixo (0.42/0.39) passam a ler o JSON. Base da Double e da VK7 +5% se seguirem em alta em duas revisões. RESOLVIDO em 19/10: não mudei fator_real. A semana não confirmou: Airbnb do Recanto 0,30–0,32 do enviado e Villa Airbnb 0,26–0,32 (Booking do Recanto 0,67 de mediana e p25 0,56). Segue 0,42 e 0,39; reavaliar em 26/10. Base da Double e da VK7 +5% não é mais permitida (base só com ordem do dono).",
+   "resolvido_em": "2026-10-19"
   },
   {
    "id": "aprendizados-por-tema",

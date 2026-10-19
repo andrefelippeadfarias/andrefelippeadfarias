@@ -1761,6 +1761,41 @@ A Villa não aparece em nenhuma busca com filtro de hidro (falta a comodidade na
 - **Preços, ocupação e envio:** sem variação nos 7 quartos; o último envio segue o das 10:28.
 - **Nada gravado nesta rodada.** Amanhã às 07:53 é a rotina completa de segunda, com a revisão semanal.
 
+## 19/10/2026, 08:15 — Rotina das 07:53 (completa, segunda) com revisão semanal
+
+- **Ocupação (segunda 19/10):** hotel 42% em 7 dias, 40% em 15 e 34% em 30. Recanto 42%, 42% e 35%; Villa 42%, 37% e 32%. Na meta: Double, Queen 2 e King Spa 2 em 15 e 30 dias; fora da meta de 7 dias: Queen 7 (20%), Double (62%), Afrodite (57%), Queen 2 (50%), VK7 (53%) e Balcony (14%).
+- **Envio e recálculo:** o PriceLabs recalculou os 7 quartos às 07:35 de hoje, mas o último envio aos canais ainda é o de 18/10 às 10:28. As gravações abaixo só chegam no próximo envio.
+- **Reservas e mudanças manuais:** 17 reservas novas desde sexta (lote da Booking e vendas diretas), nenhum cancelamento e nenhuma mudança manual sua. Pelo calendário: Double vendeu em 23 e 24/10 (1 e 2 para 3 de 6), Queen 2 teve cancelamentos em 19 a 21/10 e a King Spa 2 esgotou hoje.
+- **Mercado (Booking, mediana da noite):** quarta 21/10 R$ 313; 23–25/10 R$ 770 (2 noites); 6–8/11 R$ 1.529 (2 noites); Finados 3 noites R$ 3.036 (16 imóveis, de R$ 1.790 a R$ 5.370). Ocupação do mercado em 21 a 25/10 entre 9% e 17%.
+- **Eventos:** abertura do Natal em 30 ou 31/10 (data sem confirmação da Prefeitura), concerto "Uma Noite de Luz" de 30/10 a 08/11; nada novo em novembro.
+- **Gravado (13 datas, regra por data conferida na resposta da gravação; calendário a conferir, Beds24 instável):**
+
+| Mudança | Onde | Antes | Depois (calculado) | Como desfazer |
+|---|---|---|---|---|
+| Piso +10% (5 de 6) | Double 20/10 | R$ 1.495 | R$ 1.645 | piso −12% sobre a base |
+| Piso +5% (3 de 6) | Double 21/10 | R$ 1.228 | R$ 1.289 | piso −12% |
+| Piso +5% (4 de 6) | Double 22/10 | R$ 1.199 | R$ 1.259 | piso −14% |
+| Piso +5% (3 de 6) | Double 23/10 | R$ 1.406 | R$ 1.476 | piso 0% |
+| Piso +5% (3 de 6), estadia 2 | Double 24/10 | R$ 1.732 | R$ 1.819 | piso +17% |
+| Piso +10% (5 de 6) | Double 29/10 | R$ 2.028 | R$ 2.231 | piso +24% |
+| Teto −15% (0 de 6) | Double 06/11 | R$ 1.835 | R$ 1.560 | teto +24% |
+| Piso +5% (1 de 6) | Double 08/11 | R$ 1.251 | R$ 1.314 | piso −17% |
+| Teto −10% (0 de 1) | Afrodite 24/10 | R$ 1.980 | R$ 1.782 | teto −1% |
+| Piso −10% (0 de 1) | Afrodite 02/11 | R$ 2.100 | R$ 1.890 | piso 5% |
+| Teto −5% (0 de 1) | Afrodite 06/11 | R$ 3.620 | R$ 3.439 | teto +81% |
+| Piso −15% (2 de 7) | VK7 02/11 | R$ 1.569 | R$ 1.334 | piso +6% |
+| Piso −5% (2 de 7) | VK7 04/11 | R$ 977 | R$ 944 | piso −34% |
+
+- **Barrei:** VK7 e Balcony em 08/11 (o teto da VK7 cairia a R$ 932, abaixo do piso de R$ 943 do dono); Balcony em 02/11 (travada pela Regra G); Double 19/10 (hoje à noite não sobe).
+- **Validador:** 0 erros e 0 avisos no plano final (a primeira versão deu 1 erro, corrigido).
+
+### Revisão semanal
+- **Faturamento do mês (livro por estadia, lado dos canais "outros" sem valor):** outubro R$ 241 mil (Recanto R$ 139 mil, Villa R$ 102 mil), novembro R$ 113 mil, dezembro R$ 56 mil, janeiro R$ 29 mil. Ritmo do dia 19: ~70% do mês. Recanto a 63% da meta do dono (R$ 220 mil), pouco atrás do ritmo; Villa a 68% da meta do dono (R$ 150 mil), no ritmo.
+- **Modo por faturamento:** Recanto e Villa ficam em **padrão**; a trava de lotação não permite preço (Recanto na meta só em 30 dias, Villa em nenhuma janela).
+- **Fatores:** mantive `fator_real` 0,42 (Recanto) e 0,39 (Villa); Airbnb pagou 0,30 a 0,32 do enviado e a semana não confirmou a subida a 0,45.
+- **Finados (D-11):** Queen 7 com 1 e 2 de 7 em 30 e 31/10 e King Spa 2 com 0 de 2; mediana da Booking R$ 3.036 e o Recanto fica ~35% acima. A condição de corte de um degrau foi atingida e fica para a rodada completa de 20/10, como combinado.
+- **Não feito nesta sessão:** varredura de concorrência (rodada 2) e medição do fator de vitrine da VK7 e King Spa 2; ficam para uma sessão à parte.
+
 > **Regras em vigor:** desde 06/10/2026 elas ficam em `.claude/skills/gestao-receita-pousadas/references/regras.md`. Este arquivo guarda só o histórico das mudanças.
 
 ## O que só pode ser feito na tela (passo a passo para você)

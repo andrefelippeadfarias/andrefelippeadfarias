@@ -200,3 +200,10 @@ Hora da ANÁLISE E AGENDA DIÁRIA do PriceLabs (rotina "Agenda diária PriceLabs
 - **Mudança (PriceLabs):** mínimo do anúncio da VK7 (944 → 850) e da King Spa 2 (879 → 765) voltou ao valor de antes; o piso de R$ 500 no preço final das noites de domingo a quinta sem regra por data foi para 168 pisos por data em percentual (VK7 90, King Spa 2 78) até 30/04/2027.
 - **Mudança (código):** `validar_plano.validar_anuncio` dá ERRO para mudar base, mínimo ou máximo do anúncio sem `excecao: "dono"`; teste atualizado; `regras.md` (forma de gravar, piso de semana, 6a) e documento de metas (modo preço sobe pisos por data, não a base).
 - **Como desfazer:** só com ordem do dono.
+
+## 19/10/2026, 11:30 — Revisão semanal
+- **Modo por faturamento:** Recanto e Villa seguem em **padrão**. Outubro no dia 19 (ritmo esperado 70%): Recanto R$ 139 mil entre o realista (R$ 99 mil) e a meta do dono (R$ 154 mil); Villa R$ 102 mil entre R$ 92 mil e R$ 105 mil. Trava de lotação: Recanto na meta só em 30 dias (35%), Villa em nenhuma das três janelas.
+- **Fatores de valor real:** `fator_real` não mudou (Recanto 0,42, Villa 0,39). Proxy desta semana (valor real por diária ÷ preço do calendário, reservas de 12 a 19/10): Booking Recanto mediana 0,67 (p25 0,56), Airbnb Recanto 0,31; Booking Villa mediana 0,82, Airbnb Villa 0,32. O piso fica pelo pior caso (Airbnb). A proposta de subir o Recanto a 0,45 não foi aceita.
+- **Fator de vitrine da Villa:** não medido nesta revisão (sem busca de dia de semana para VK7 e King Spa 2); fica para a semana de 26/10.
+- **Pendência encerrada:** base da Double e da VK7 +5%: por ordem do dono de 14/10, base só muda com ordem expressa dele.
+- **Varredura de concorrência (rodada 2):** não rodada nesta sessão (a Skill manda rodá-la em sessão à parte).

@@ -1916,6 +1916,15 @@ A Villa não aparece em nenhuma busca com filtro de hidro (falta a comodidade na
   - Q2 com 1/2 de 19 a 22/10, já no calendário das 16:53 UTC.
 - **Nada gravado.** O Double está sem saldo de recálculo (429), então fica sem passo de flutuação; a alta de 22/10 entra na rotina de 20/10. A Q2 não recebe desconto nem a Regra I.
 
+## 19/10/2026, 22:55 UTC (19:55 BRT) — Rotina leve das 19:53
+
+- **Beds24 (movimento desde 19:50 UTC):**
+  - 1 reserva nova do Airbnb: VK2 em 20/10, 1 noite, R$ 357 na fatura, status "novo".
+  - 1 cancelamento do Airbnb: VK2 em 21/10, 1 noite, sem valor na fatura.
+- **Ocupação da VK2:** esgotada em 20/10 (2/2); 21/10 com 1/2.
+- **Regra G:** em 21/10 a Balcony (R$ 813) está 15% abaixo da VK2 livre (R$ 952), dentro da faixa. Em 20/10, com a VK2 esgotada, a referência passa a ser a VK7 (R$ 1.051, 1 unidade livre), e a Balcony (R$ 826, 1/6 vendida) fica 21% abaixo. Mantida assim: é D1, a Regra I vem antes da G e subir a Balcony com 5 unidades livres na véspera vai contra a trava de lotação. Também falta saldo de recálculo.
+- **Nada gravado.**
+
 > **Regras em vigor:** desde 06/10/2026 elas ficam em `.claude/skills/gestao-receita-pousadas/references/regras.md`. Este arquivo guarda só o histórico das mudanças.
 
 ## O que só pode ser feito na tela (passo a passo para você)

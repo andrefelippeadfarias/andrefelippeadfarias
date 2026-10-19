@@ -1868,6 +1868,13 @@ A Villa não aparece em nenhuma busca com filtro de hidro (falta a comodidade na
 - **Como desfazer:** apagar o `max_price` das datas acima (ou a regra da data, quando ela só tinha o teto) e voltar o piso da VK2 04-05/12 a 43% e o da Balcony a 29%.
 - **Sync Now:** não é preciso para o curto prazo (a data mais próxima é 30/10); o envio normal da madrugada leva.
 
+## 19/10/2026, 17:10 UTC (14:10 BRT) — Rotina leve das 13:53
+
+- **Beds24 (movimento desde 13:50 UTC):** 3 reservas novas da Booking, nenhum cancelamento. VK7 de 19 a 21/10 (3 noites, R$ 1.346 na fatura, confirmada); VK7 em 27/11 (1 noite, R$ 909); Q7 em 22/10 (1 noite, R$ 382, status "novo"). As 7 alterações são de estadias já iniciadas (mudança de status).
+- **Ocupação depois das vendas:** VK7 com 5/7 em 19/10, 6/7 em 20/10 e 2/7 em 21/10, pela soma com o calendário de 11:45 UTC. Q7 com 2/7 em 22/10, já no piso de dia de semana (R$ 809 enviados, cerca de R$ 510 na Booking).
+- **Regra G conferida (19 a 22/10):** a Balcony fica de 13% a 14% abaixo da suíte com banheira livre mais barata. Dentro da faixa.
+- **Nada gravado.** A VK7 está sem saldo de recálculo (429), então não recebe passo de flutuação nesta rodada. A Q7 já está no piso do dono.
+
 > **Regras em vigor:** desde 06/10/2026 elas ficam em `.claude/skills/gestao-receita-pousadas/references/regras.md`. Este arquivo guarda só o histórico das mudanças.
 
 ## O que só pode ser feito na tela (passo a passo para você)

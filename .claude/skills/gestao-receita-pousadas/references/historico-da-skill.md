@@ -225,3 +225,9 @@ Hora da ANÁLISE E AGENDA DIÁRIA do PriceLabs (rotina "Agenda diária PriceLabs
 - **Mudança (código, 50 testes):** `beds24.py` ganhou `livro`, `movimento` e `comparar` (overbooking, bloqueio sem reserva e venda que o PriceLabs não viu); `roomQty` e `lineTotal` conferidos no apiV2.yaml.
 - **Mudança (texto):** `SKILL.md` (rotina leve pelo `movimento`; Meça com `janelas` e `comparar`; faturamento pelo `livro`); `regras.md` 6a (ocupação real = Confirmado + Novo); pendências novas do dono (overbooking da King Spa 2 em 24/10, repasse do Airbnb, bloqueio da Balcony em 24/10) e atualização do bloqueio da Villa em 5–7/11.
 - **Como desfazer:** voltar os três trechos do `SKILL.md` para o PriceLabs.
+
+## 19/10/2026, 17:05 UTC (14:05 BRT) — Referência hidro+vista a até 3 km do Capivari (dono)
+- **Pedido do dono:** "vamos tentar nos aproximar mais dos Hotéis que tem Banheira de Hidromassagem e Vista para as Montanhas na Booking . e estão as menos de 3 km do Centro do Capivari . Faça essa busca para criar o plano de ajuste de preços."
+- **Mudança (texto):** `regras.md` seção 5 (régua nova: mediana da classe A, -15% no máximo por rodada pelo teto, +10% pelo piso, travas) e 6a; `mercado.md` (12 hotéis classe A, medianas, como refazer); `SKILL.md` (passo Decida e revisão de segunda); `ferramentas.md`.
+- **Mudança (dados e código, 52 testes):** `dados/concorrentes_hidro_vista.json`; `scripts/concorrencia_hidro_vista.py` (plano automático); `validar_plano.py` barra teto abaixo do preço atual na Queen (2) e teto abaixo do piso vigente da data; `ler_recalculo.py` confere item só de piso ou só de teto (antes passava como "—"); a coleta passa a trazer `min_price` e `max_price` do dia; `test_scripts.py` com o `unittest.main()` no fim (8 testes não rodavam com `python3 test_scripts.py`).
+- **Como desfazer:** voltar a seção 5 de `regras.md` ao texto anterior e apagar o script e o arquivo de dados.

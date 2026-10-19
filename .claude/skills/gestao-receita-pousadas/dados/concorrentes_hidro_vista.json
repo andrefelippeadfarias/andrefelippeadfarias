@@ -1,0 +1,173 @@
+{
+ "_doc": "Referência de preço do dono (19/10/2026): hotéis na Booking com banheira de hidromassagem no quarto e vista para as montanhas a até 3 km do centro do Capivari. Classe A = as duas coisas confirmadas na Booking (answer_property_qa_by_ids_v2). Atualizar na rotina completa de segunda (scripts/concorrencia_hidro_vista.py; procedimento em references/mercado.md).",
+ "criterio": {
+  "centro": [
+   -22.7288,
+   -45.5797
+  ],
+  "raio_km": 3.0,
+  "facilities": [
+   "HOT_TUB_JACUZZI"
+  ],
+  "image_themes": [
+   "MOUNTAIN_VIEW",
+   "JACUZZI_HOT_TUB"
+  ],
+  "adultos": 2,
+  "quartos": 1,
+  "moeda": "BRL"
+ },
+ "atualizado_em": "2026-10-19",
+ "classe_a": [
+  {
+   "id": 303535,
+   "nome": "Hotel Ascona",
+   "quarto_hidro": "Suite with Whirlpool",
+   "distancia_km": 0.41
+  },
+  {
+   "id": 6866038,
+   "nome": "Pousada das Lavandas",
+   "quarto_hidro": "Deluxe Double or Twin Room with Spa Bath",
+   "distancia_km": 0.44
+  },
+  {
+   "id": 304118,
+   "nome": "Villa Casato Residenza Boutique",
+   "quarto_hidro": "King Suite with Spa Bath",
+   "distancia_km": 0.86
+  },
+  {
+   "id": 1411330,
+   "nome": "Matsubara Pousada",
+   "quarto_hidro": "Suite with Spa Bath",
+   "distancia_km": 0.92
+  },
+  {
+   "id": 348210,
+   "nome": "L.A.H. Hostellerie",
+   "quarto_hidro": "Double Room with Spa Bath",
+   "distancia_km": 1.33
+  },
+  {
+   "id": 7646879,
+   "nome": "DOM Hotel",
+   "quarto_hidro": "Deluxe Suite with Spa Bath",
+   "distancia_km": 1.38
+  },
+  {
+   "id": 6881198,
+   "nome": "Secreto Boutique Hotel",
+   "quarto_hidro": "Comfort Suite",
+   "distancia_km": 1.46
+  },
+  {
+   "id": 1881811,
+   "nome": "Europa Hotel",
+   "quarto_hidro": "Double Room with Spa Bath",
+   "distancia_km": 1.48
+  },
+  {
+   "id": 11111842,
+   "nome": "Villa Belle Chalés",
+   "quarto_hidro": "Deluxe Suite with Spa Bath",
+   "distancia_km": 1.51
+  },
+  {
+   "id": 2280778,
+   "nome": "Pousada Cafe Poesia",
+   "quarto_hidro": "Double Room with Spa Bath",
+   "distancia_km": 1.86
+  },
+  {
+   "id": 13952548,
+   "nome": "Pousada Murano",
+   "quarto_hidro": "Double Room with Spa Bath",
+   "distancia_km": 2.21
+  },
+  {
+   "id": 10075349,
+   "nome": "Chalé Villa Nature",
+   "quarto_hidro": "One-Bedroom Chalet",
+   "distancia_km": 2.32
+  }
+ ],
+ "classe_b": [
+  {
+   "id": 285323,
+   "nome": "Pousada Big Bear"
+  },
+  {
+   "id": 236397,
+   "nome": "Pousada Villa Capivary Campos do Jordão"
+  }
+ ],
+ "periodos": [
+  {
+   "rotulo": "21/10",
+   "datas": [
+    "2026-10-21"
+   ],
+   "mediana_a": 253.94,
+   "recanto": 531.51
+  },
+  {
+   "rotulo": "23-25/10",
+   "datas": [
+    "2026-10-23",
+    "2026-10-24"
+   ],
+   "mediana_a": 773.5,
+   "recanto": 825.46
+  },
+  {
+   "rotulo": "Finados",
+   "datas": [
+    "2026-10-30",
+    "2026-10-31",
+    "2026-11-01"
+   ],
+   "mediana_a": 1250.0,
+   "recanto": 1472.58
+  },
+  {
+   "rotulo": "06-08/11",
+   "datas": [
+    "2026-11-06",
+    "2026-11-07"
+   ],
+   "mediana_a": 715.0,
+   "recanto": 1162.76
+  },
+  {
+   "rotulo": "11/11",
+   "datas": [
+    "2026-11-11"
+   ],
+   "mediana_a": 295.0,
+   "recanto": 641.93
+  },
+  {
+   "rotulo": "Consciência Negra",
+   "datas": [
+    "2026-11-20",
+    "2026-11-21"
+   ],
+   "mediana_a": 1578.97,
+   "recanto": 1428.23
+  },
+  {
+   "rotulo": "04-06/12",
+   "datas": [
+    "2026-12-04",
+    "2026-12-05"
+   ],
+   "mediana_a": 600.21,
+   "recanto": 1092.89
+  }
+ ],
+ "ressalvas": [
+  "Preço da busca = quarto mais barato de cada hotel (a Booking não dá o preço do quarto com hidro); a mediana tende a ficar abaixo do quarto com hidro.",
+  "A Villa não aparece na busca com filtro de hidro (a extranet não lista hidromassagem); a vitrine da Villa é estimada pela VK7 × fator_vitrine."
+ ]
+}

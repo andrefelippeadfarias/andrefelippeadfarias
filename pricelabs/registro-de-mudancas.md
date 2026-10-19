@@ -1838,6 +1838,36 @@ A Villa não aparece em nenhuma busca com filtro de hidro (falta a comodidade na
   - **Valor real ÷ enviado (exato, no dia da reserva):** Booking 0,49 (Recanto) e 0,46 (Villa); Airbnb 0,41 e 0,31; direto 0,36 e 0,45.
 - **Nada gravado no PriceLabs nem no Beds24.**
 
+## 19/10/2026, 17:05 UTC (14:05 BRT) — Pedido do dono: aproximar dos hotéis com hidro e vista a até 3 km do Capivari
+
+- **Pedido:** "vamos tentar nos aproximar mais dos Hotéis que tem Banheira de Hidromassagem e Vista para as Montanhas na Booking . e estão as menos de 3 km do Centro do Capivari . Faça essa busca para criar o plano de ajuste de preços."
+- **Busca na Booking** (raio de 3 km de -22.7288, -45.5797; filtro hidro; tema vista para as montanhas; hidro no quarto e vista confirmadas pela Booking): 12 hotéis classe A (Ascona, Lavandas, Villa Casato, Matsubara, L.A.H., DOM, Secreto, Europa, Villa Belle, Cafe Poesia, Murano, Villa Nature). A Villa não aparece nessa busca.
+- **Mediana da classe A por noite × Recanto na mesma busca:** 21/10 R$ 254 × R$ 532; 23-25/10 R$ 774 × R$ 825; Finados R$ 1.250 × R$ 1.473; 06-08/11 R$ 715 × R$ 1.163; 11/11 R$ 295 × R$ 642; Consciência Negra R$ 1.579 × R$ 1.428; 04-06/12 R$ 600 × R$ 1.093.
+- **Regra usada:** acima da mediana mais de 10% e noite fora da frente da meta → até -15% pelo teto, nunca abaixo dos pisos do dono; abaixo mais de 8% e noite na meta → +10% pelo piso. Tudo em `percent_base`.
+
+| Quarto | Datas | Antes (calendário) | Depois | Conferido no recálculo |
+|---|---|---|---|---|
+| Q7 | 30-31/10 | R$ 2.680 | teto 94% (R$ 2.276) | ✅ R$ 2.276 |
+| Q7 | 11/11 | R$ 951 | teto -32% (R$ 800) | ✅ R$ 800 |
+| Q7 | 20-21/11 | R$ 2.351 | piso 121% (R$ 2.592) | ✅ R$ 2.592 |
+| Double | 30/10; 06/11; 07/11 | R$ 3.156; R$ 1.554; R$ 2.453 | teto 81% (R$ 2.683); -5% (R$ 1.410); 40% (R$ 2.085) | não conferido (limite de recálculo) |
+| Double | 20-21/11 | R$ 2.919 | piso 117% (R$ 3.211) | não conferido (limite de recálculo) |
+| Afrodite | 01/11 | R$ 2.320 | teto -1% (R$ 1.980) | ✅ R$ 1.980 |
+| Afrodite | 06/11; 07/11 | R$ 3.420; R$ 3.939 | teto 45% (R$ 2.900); 67% (R$ 3.340) | ✅ |
+| Afrodite | 11/11 | R$ 1.642 | teto -25% (R$ 1.500) | ✅ R$ 1.500 |
+| Afrodite | 04-05/12 | R$ 3.453 | teto 46% (R$ 2.920) | ✅ R$ 2.920 |
+| VK7 | 30-31/10; 06/11; 07/11; 20-21/11; 04-05/12 | R$ 3.834; R$ 2.788; R$ 3.529; R$ 2.937; R$ 2.118 | teto 120%; 60%; 102%; 68%; 21% | não conferido (limite de recálculo) |
+| VK2 | 30-31/10 | R$ 3.143 | teto 110% (R$ 2.667) | ✅ R$ 2.667 |
+| VK2 | 06/11; 07/11 | R$ 2.521; R$ 3.161 | teto 68%; 111% | esgotada/fechada no calendário (vale se reabrir) |
+| VK2 | 04-05/12 | R$ 1.863 | teto 24% e **piso 43% → 23%** (R$ 1.575) | 1ª conferência: R$ 1.816 (o piso de 14/10 vencia o teto); piso corrigido às 16:56 UTC |
+| Balcony | 04-05/12 | R$ 1.638 | piso e teto 29% → **12%** (R$ 1.422), Regra G | gravado; conferir amanhã |
+| Q2 | 30/10; 04-05/12 | R$ 3.987; R$ 3.136 | tetos 81% e 42% **desfeitos** às 16:57 UTC | 30/10 recriado com +20%, 3 noites e piso 26% |
+
+- **Erro e correção:** a Queen (2) não recebe desconto, e o teto abaixo do preço atual é desconto. O validador não pegava isso nem o teto abaixo do piso vigente (fim de semana a 150% da base ou piso da data). Os dois casos agora dão ERRO; o leitor do recálculo passou a conferir item só de teto.
+- **Seguradas:** 21/10 e 23-24/10 (já perto do alvo ou no piso do dono); Q7 01/11 (piso do feriado); Villa 06-07/11 (estoque fechado no Beds24: os tetos só valem se o dono reabrir).
+- **Como desfazer:** apagar o `max_price` das datas acima (ou a regra da data, quando ela só tinha o teto) e voltar o piso da VK2 04-05/12 a 43% e o da Balcony a 29%.
+- **Sync Now:** não é preciso para o curto prazo (a data mais próxima é 30/10); o envio normal da madrugada leva.
+
 > **Regras em vigor:** desde 06/10/2026 elas ficam em `.claude/skills/gestao-receita-pousadas/references/regras.md`. Este arquivo guarda só o histórico das mudanças.
 
 ## O que só pode ser feito na tela (passo a passo para você)

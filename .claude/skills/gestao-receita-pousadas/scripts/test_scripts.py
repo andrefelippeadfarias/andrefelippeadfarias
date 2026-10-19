@@ -130,6 +130,20 @@ class TestValidador(unittest.TestCase):
         self.assertEqual(erros([item(quarto="Q2", data="2026-10-09", preco=-17, price_type="percent", min_price=2950,
                                      preco_antes=3550, excecao="piso_feriado")]), [])
 
+    def test_teto_e_desconto_e_piso_vigente(self):
+        # 19/10: teto abaixo do preço atual na Queen (2) é desconto
+        e = erros([item(quarto="Q2", data="2026-10-30", max_price=3389, preco_antes=3987)])
+        self.assertTrue(any("não recebe desconto" in x for x in e))
+        self.assertTrue(erros([item(quarto="Q2", data="2026-10-30", max_price=3389)]))
+        self.assertFalse(any("não recebe desconto" in x for x in
+                             erros([item(quarto="Q2", data="2026-10-30", max_price=4200, preco_antes=3987)])))
+        # piso vigente (personalização de fim de semana) acima do teto deixa o teto sem efeito
+        p = ocup("VK2", "2026-12-04", 0, 2, preco=1863)
+        p[("VK2", "2026-12-04")]["piso"] = 1816
+        self.assertTrue(any("piso vigente" in x for x in erros([item(quarto="VK2", data="2026-12-04", max_price=1584)], p)))
+        self.assertFalse(any("piso vigente" in x for x in erros(
+            [item(quarto="VK2", data="2026-12-04", min_price=1560, max_price=1584)], p)))
+
     def test_sabado_sozinho(self):
         self.assertTrue(erros([item(quarto="Double", data="2026-10-17", min_stay=1)]))
         quarta = date(2026, 10, 14)
@@ -525,8 +539,6 @@ class TestSazonalidade(unittest.TestCase):
         self.assertTrue(any("Finados" in x["nome"] for x in datas_especiais(cal, date(2026, 10, 31))))
 
 
-if __name__ == "__main__":
-    unittest.main()
 
 
 class TestModoFaturamento(unittest.TestCase):
@@ -672,3 +684,28 @@ class TestBeds24Extra(unittest.TestCase):
                             "VK7": {"days": [{"date": "2026-10-31", "multi_unit_occupancy": "0/7"}]}}}
         dif = beds24.comparar(self.lista, coleta, date(2026, 10, 30), date(2026, 11, 2))
         self.assertEqual(dif, [{"quarto": "Q7", "data": "2026-10-31", "pricelabs": 3, "beds24": 1, "diferenca": 2}])
+
+
+class TestConcorrenciaHidroVista(unittest.TestCase):
+    def test_corta_sem_q2_e_respeita_bloqueio(self):
+        import concorrencia_hidro_vista as c
+        dia = lambda d, p, mu: {"date": d, "price": p, "min_stay": 2, "multi_unit_occupancy": mu, "booking_status": ""}
+        coleta = {"rooms": {
+            "Q7": {"days": [dia("2026-12-04", 2000, "0/7")]},
+            "Q2": {"days": [dia("2026-12-04", 3000, "0/2")]},
+            "VK7": {"days": [dia("2026-12-04", 2100, "7/7")]},   # fechado no calendário
+            "VK2": {"days": [dia("2026-12-04", 1860, "0/2")], "overrides": [{"date": "2026-12-04", "min_price": 43}]},
+            "Balcony": {"days": [dia("2026-12-04", 1640, "0/6")]}}}
+        comp = {"periodos": [{"rotulo": "t", "datas": ["2026-12-04"], "mediana_a": 600, "recanto": 1100}]}
+        itens, _ = c.montar(CFG, comp, coleta, date(2026, 10, 19), {("VK7", "2026-12-04"): 1})
+        por = {i["quarto"]: i for i in itens}
+        self.assertNotIn("Q2", por)                      # sem desconto
+        self.assertNotIn("VK7", por)                     # bloqueado: não está à venda
+        self.assertEqual(por["Q7"]["max_price"], 1700)   # -15% no máximo
+        self.assertIn("min_price", por["VK2"])           # piso de 43% vigente baixa junto com o teto
+        self.assertLess(por["VK2"]["min_price"], por["VK2"]["max_price"])
+        self.assertLessEqual(por["Balcony"]["max_price"], round(por["VK2"]["max_price"] * 0.9))
+
+
+if __name__ == "__main__":
+    unittest.main()

@@ -41,6 +41,7 @@ const LISTING_SCHEMA = {
         properties: {
           date: { type: 'string' }, price: { type: 'number' }, user_price: { type: 'number' },
           uncustomized_price: { type: 'number' }, min_stay: { type: 'number' },
+          min_price: { type: 'number' }, max_price: { type: 'number' },
           multi_unit_occupancy: { type: 'string' }, booking_status: { type: 'string' },
           unbookable: { type: 'number' }, demand_desc: { type: 'string' },
         },
@@ -171,7 +172,7 @@ const tarefas = ROOMS.map(r => () => agent(
 Tarefa: dados do quarto "${r.name}" (listing_id "${r.id}", pms "beds24") no PriceLabs.
 1) mcp__PriceLabs__get_listing_prices com listing_id="${r.id}", pms_name="beds24", date_from="${HOJE}", date_to="${FIM}". Se vier LISTING_NO_DATA ou erro, tente mais uma vez; se persistir, devolva days vazio e explique em error.
 2) mcp__PriceLabs__get_listing_date_overrides com listing_id="${r.id}", pms="beds24", start_date="${HOJE}", end_date="${FIM}".
-Devolva TODOS os dias de ${HOJE} a ${FIM} com: date, price, user_price, uncustomized_price, min_stay, multi_unit_occupancy (string "vendidas/total"; vazia se nao existir), booking_status (pode ser vazia), unbookable, demand_desc. Em overrides: date, price (string), price_type, min_price, min_stay e reason (ate 80 caracteres). last_refreshed_at = campo do topo da resposta de precos.`,
+Devolva TODOS os dias de ${HOJE} a ${FIM} com: date, price, user_price, uncustomized_price, min_stay, min_price e max_price (piso e teto vigentes do dia, em reais), multi_unit_occupancy (string "vendidas/total"; vazia se nao existir), booking_status (pode ser vazia), unbookable, demand_desc. Em overrides: date, price (string), price_type, min_price, min_stay e reason (ate 80 caracteres). last_refreshed_at = campo do topo da resposta de precos.`,
   { label: `quarto:${r.short}`, phase: 'Coleta', schema: LISTING_SCHEMA, effort: 'low' }
 ))
 

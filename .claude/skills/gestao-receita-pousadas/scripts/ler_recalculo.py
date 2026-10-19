@@ -102,11 +102,12 @@ def main(argv=None) -> int:
             if it.get("price_type") == "fixed":
                 plan_txt = reais(it["preco"])
                 ok &= abs(float(x.get("price") or 0) - float(it["preco"])) <= 1
-            elif it.get("price_type") == "percent":
+            elif it.get("price_type") == "percent" or it.get("min_price") is not None or it.get("max_price") is not None:
+                # 19/10: item só de piso ou só de teto também é conferido (antes passava como "—")
                 faixa = f"piso {reais(it['min_price'])}" if it.get("min_price") is not None else "sem piso"
                 if it.get("max_price") is not None:
                     faixa += f", teto {reais(it['max_price'])}"
-                plan_txt = f"{float(it['preco']):+g}% ({faixa})"
+                plan_txt = f"{float(it['preco']):+g}% ({faixa})" if it.get("preco") is not None else faixa
                 p = float(x.get("price") or 0)
                 if it.get("min_price") is not None:
                     ok &= p >= float(it["min_price"]) - max(1.0, 0.015 * float(it["min_price"]))

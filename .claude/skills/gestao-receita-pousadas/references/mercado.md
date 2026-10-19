@@ -18,6 +18,16 @@
 | Pousada Nacional Inn | 9,1 | 3 estrelas, muita avaliação, barata |
 | Pousada Luis XV, Pousada Telhado de Ouro, Le Suisse Elegance | 9,1–9,6 | referência de meio de semana |
 
+## Referência hidro+vista a até 3 km do Capivari (dono, 19/10)
+- **Classe A (12 hotéis, varredura de 19/10):** Hotel Ascona (0,4 km), Pousada das Lavandas (0,4), Villa Casato Residenza Boutique (0,9), Matsubara Pousada (0,9), L.A.H. Hostellerie (1,3), DOM Hotel (1,4), Secreto Boutique Hotel (1,5), Europa Hotel (1,5), Villa Belle Chalés (1,5), Pousada Cafe Poesia (1,9), Pousada Murano (2,2), Chalé Villa Nature (2,3). Classe B (hidro só em algumas unidades, vista não confirmada no mesmo quarto): Pousada Big Bear, Pousada Villa Capivary. IDs e medianas por período em `dados/concorrentes_hidro_vista.json`.
+- **Mediana da classe A por noite × Recanto na mesma busca (19/10):** 21/10 R$ 254 × R$ 532; 23-25/10 R$ 774 × R$ 825; Finados R$ 1.250 × R$ 1.473; 06-08/11 R$ 715 × R$ 1.163; 11/11 R$ 295 × R$ 642; Consciência Negra R$ 1.579 × R$ 1.428; 04-06/12 R$ 600 × R$ 1.093.
+- **Como refazer (segunda, na rotina completa, ou em pedido do dono):**
+  1. `accommodations_search` com `latitude` -22.7288, `longitude` -45.5797, `radius` 3 (km), `facilities` ["HOT_TUB_JACUZZI"], `image_themes` ["MOUNTAIN_VIEW"], 2 adultos, 1 quarto, BRL, pt-br; uma busca por período (os mesmos de `periodos` no arquivo, mais o próximo feriado e o fim de semana seguinte). Com 10 resultados, repita com preço mínimo para ver o resto.
+  2. Confira a distância em linha reta (corte de 3,0 km) e, para hotel novo, pergunte à Booking (`answer_property_qa_by_ids_v2`) se o quarto tem banheira de hidromassagem privativa e vista para as montanhas; as duas confirmadas = classe A.
+  3. Grave a mediana da classe A e o preço do Recanto da mesma busca por período em `dados/concorrentes_hidro_vista.json` (`periodos`, `atualizado_em`).
+  4. `python3 scripts/concorrencia_hidro_vista.py --coleta <saida mesclada> --hoje <hoje> --saida <rascunho>/plano_comp.json`, junte ao plano e passe pelo `validar_plano.py`.
+- **A Villa não aparece nessa busca:** a extranet não lista hidromassagem (pendência do dono). Enquanto isso, a vitrine da Villa é estimada.
+
 ## Como pesquisar (MCP da Booking: accommodations_search)
 - Destino "Campos do Jordão, Brazil"; 2 adultos; `user_country_code` "br"; `user_locale` "pt-br"; moeda BRL.
 - Cada busca devolve no máximo 10 propriedades, então faça duas por data:

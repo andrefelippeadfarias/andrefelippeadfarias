@@ -188,3 +188,10 @@ Cada item tem data e evidência. Para incluir um item novo: data, o fato, a evid
 - **Overbooking real:** King Spa 2 em 24/10 com 4 reservas confirmadas para 2 quartos (duas sem unidade, do lote da Booking de 08/10). O PriceLabs mostrava 2/2 e não acusava nada. Só a leitura direta do Beds24 pega isso.
 - **Bloqueios sem reserva:** Villa inteira fechada em 5–7/11 (disponível 0) com só 1–2 reservas; Balcony 24/10 com 2 unidades fechadas. O PriceLabs conta como vendidas, e a ocupação "vendida" do PriceLabs fica inflada nessas noites.
 - **Nomes no Beds24:** VK7 = "Suíte Panorâmica I — Villa", King Spa 2 = "Suíte Panorâmica II — Villa", Balcony = "Suíte Mansão — Villa".
+
+## 19/10/2026 (14:05 BRT) — Referência hidro+vista: o que aprendi ao gravar
+- **Piso vigente vence teto:** um `max_price` abaixo do piso que já vale na data não faz nada. O piso pode vir da regra por data (VK2 04-05/12, 43% de 14/10) ou da personalização de fim de semana de 150% da base (Queen 2: R$ 2.805). Ao baixar por teto, confira o `min_price` do recálculo e baixe o piso junto.
+- **Teto também é desconto:** na Queen (2), o teto abaixo do preço atual corta o preço do mesmo jeito (30/10: R$ 3.987 → R$ 3.385). O validador agora barra.
+- **A busca da Booking não dá o preço do quarto com hidro:** a mediana da classe A é do quarto mais barato de cada hotel, então fica abaixo do preço real de uma suíte com hidro. O Recanto está 7% a 120% acima dela fora dos feriados e 10% abaixo na Consciência Negra.
+- **Villa fechada em 05-07/11:** o Beds24 mostra 1 a 2 reservas, mas o calendário está fechado; qualquer ajuste de preço nessas noites só vale se o dono reabrir.
+

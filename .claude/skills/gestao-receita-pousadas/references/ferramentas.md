@@ -40,7 +40,8 @@ Veja como pesquisar em `mercado.md`. Não serve para mudar nada.
 - `python3 ler_recalculo.py --plano plano.json Q7=<arq> VK7=<arq> ...`: compara o recalculado com o plano.
 - `python3 mesclar_recalculo.py <saida_do_workflow> --velhos [--horas 6]` lista os quartos com recálculo velho; `python3 mesclar_recalculo.py <saida> <mesclado.json> VK7=<arq> ...` junta os recálculos novos (preço, enviado, estadia e ocupação) no arquivo da coleta.
 - `python3 beds24.py teste | reservas --de --ate | janelas --hoje`: leitura direta do Beds24 (API V2, só leitura, sem dados de hóspedes), com `BEDS24_TOKEN` (token de longa duração) ou `BEDS24_REFRESH_TOKEN` nos segredos do ambiente. Sem a variável, sai com ERRO e a Skill usa o PriceLabs.
-- `python3 -m unittest test_scripts`: testes dos scripts.
+- `python3 concorrencia_hidro_vista.py --coleta <saida mesclada> --hoje <hoje> --saida plano_comp.json [--sem-beds24]`: plano de aproximação da referência hidro+vista (`regras.md` seção 5) a partir de `dados/concorrentes_hidro_vista.json`; ocupação pelo Beds24, noite bloqueada fora, Queen (2) sem corte, Balcony pela Regra G. Sempre validar depois.
+- `python3 -m unittest test_scripts` (ou `python3 test_scripts.py`): testes dos scripts.
 - Rascunhos de plano e cópias de saída vão para a pasta de rascunho (scratchpad) da sessão, nunca para o repositório.
 
 ## Git

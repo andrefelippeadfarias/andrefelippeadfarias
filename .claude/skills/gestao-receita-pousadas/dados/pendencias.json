@@ -52,7 +52,7 @@
    "responsavel": "dono",
    "desde": "2026-10-06",
    "urgencia": 3,
-   "texto": "Extranet da Booking, Villa: marcar hidromassagem/Jacuzzi, Wi-Fi e aquecimento (a Villa não aparece no filtro de hidro)."
+   "texto": "Extranet da Booking, Villa: marcar hidromassagem/Jacuzzi, Wi-Fi e aquecimento (a Villa não aparece no filtro de hidro). Desde 19/10 pesa mais: a referência de preço do dono é a busca com hidro e vista, e a Villa não aparece nela."
   },
   {
    "id": "visibilidade",
@@ -239,7 +239,7 @@
    "responsavel": "dono",
    "desde": "2026-10-14",
    "urgencia": 2,
-   "texto": "A Villa inteira (VK7 7/7, Balcony 6/6, VK2 2/2) aparece indisponível em 5, 6 e 7/11 sem nenhuma reserva no PriceLabs (45 unidades-noite). É grupo fechado ou bloqueio? Se for grupo, informe o valor para o acompanhamento do faturamento de novembro; se for bloqueio sem venda, libere no Beds24. 19/10 (Beds24 direto): o inventário da Villa está fechado à mão em 5, 6 e 7/11 (disponível 0 na Balcony e na King Spa 2; −1 na VK7) com só 1 a 2 reservas reais (VK7 05 a 08/11, R$ 3.761). São ~37 unidades-noite paradas, inclusive sexta e sábado."
+   "texto": "A Villa inteira (VK7 7/7, Balcony 6/6, VK2 2/2) aparece indisponível em 5, 6 e 7/11 sem nenhuma reserva no PriceLabs (45 unidades-noite). É grupo fechado ou bloqueio? Se for grupo, informe o valor para o acompanhamento do faturamento de novembro; se for bloqueio sem venda, libere no Beds24. 19/10 (Beds24 direto): o inventário da Villa está fechado à mão em 5, 6 e 7/11 (disponível 0 na Balcony e na King Spa 2; −1 na VK7) com só 1 a 2 reservas reais (VK7 05 a 08/11, R$ 3.761). São ~37 unidades-noite paradas, inclusive sexta e sábado. Os tetos de 19/10 (concorrência hidro+vista) em 06-07/11 na VK7 e na VK2 só valem se reabrir."
   },
   {
    "id": "beds24-airbnb-revenue",
@@ -338,6 +338,13 @@
    "desde": "2026-10-19",
    "urgencia": 2,
    "texto": "Balcony 24/10: o Beds24 mostra 3 disponíveis e só 1 reserva confirmada, mas o PriceLabs conta 3 vendidas (2 unidades fechadas sem reserva). Conferir se é bloqueio de propósito."
+  },
+  {
+   "id": "conferir-comp-1910",
+   "responsavel": "skill",
+   "desde": "2026-10-19",
+   "urgencia": 2,
+   "texto": "Conferir no recálculo de 20/10 o Double (30/10, 06-07/11, 20-21/11), a VK7 (30-31/10, 06-07/11, 20-21/11, 04-05/12), a VK2 04-05/12 (R$ 1.575) e a Balcony 04-05/12 (R$ 1.422); limite de recálculo esgotado em 19/10."
   }
  ],
  "versao": "2026-10-16T08"

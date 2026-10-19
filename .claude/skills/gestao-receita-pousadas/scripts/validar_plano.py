@@ -194,6 +194,18 @@ class Validador:
             minimo = None
         if it.get("max_price") is not None and minimo is not None and float(it["max_price"]) < minimo:
             self.erro(i, it, f"max_price {it['max_price']} abaixo do piso {minimo:.0f}")
+        if it.get("max_price") is not None and q.get("sem_desconto") and excecao not in ("piso_feriado", "dono"):
+            # 19/10: um teto abaixo do preço atual também é desconto (Queen 2 em 30/10 passou assim)
+            if antes is None:
+                self.erro(i, it, f"{q['nome']}: teto sem preco_antes nem --precos (não dá para provar que não é desconto)")
+            elif float(it["max_price"]) < float(antes) - 1:
+                self.erro(i, it, f"{q['nome']} não recebe desconto (teto {it['max_price']} abaixo do preço atual {antes})")
+        piso_vigente = (self.precos.get((q["curto"], d.isoformat())) or {}).get("piso")
+        if it.get("max_price") is not None and it.get("min_price") is None and piso_vigente \
+           and float(piso_vigente) > float(it["max_price"]) + 1:
+            # 19/10: o piso que já vale na data (regra por data ou personalização de fim de semana) vence o teto
+            self.erro(i, it, f"teto {it['max_price']} abaixo do piso vigente {float(piso_vigente):.0f}: o PriceLabs fica "
+                             "no piso; ponha min_price no item ou tire o teto")
         if tipo_preco != "fixed" and it.get("min_price") is not None:
             # Dono (14/10): o piso vai ao PriceLabs como variação % sobre a base, arredondada para cima. O que
             # vale nas travas é o valor efetivo desse percentual (nunca abaixo do pedido, até 1% da base acima).
@@ -459,7 +471,8 @@ def precos_da_coleta(res: dict, agora: datetime | None = None) -> dict:
                 v, t = (int(x) for x in mu.split("/"))
             else:  # unidade única: vendida quando há reserva
                 v, t = (1 if str(dia.get("booking_status") or "").strip() else 0), 1
-            out[(curto, str(dia["date"])[:10])] = {"preco": dia.get("price"), "livres": t - v, "vendidas": v, "total": t}
+            out[(curto, str(dia["date"])[:10])] = {"preco": dia.get("price"), "livres": t - v, "vendidas": v, "total": t,
+                                                   "piso": dia.get("min_price")}
     out["_meta"] = {"idade_h": idade, "hoje": res.get("hoje")}
     return out
 

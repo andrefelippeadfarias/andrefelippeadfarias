@@ -1,0 +1,261 @@
+{
+ "schema_version": 1,
+ "currency": "BRL",
+ "occupancy": {
+  "adults": 2,
+  "rooms": 1,
+  "children_ages": []
+ },
+ "hotels": [
+  {
+   "hotel_key": "recanto-moinhos",
+   "name": "Pousada Recanto dos Moinhos - Boutique (nós)",
+   "booking_url": "https://www.booking.com/hotel/br/pousada-vista-panoramica-campos-do-jordao.html",
+   "required_features": [
+    "Quarto com banheira de hidromassagem privativa",
+    "Café da manhã incluído"
+   ]
+  },
+  {
+   "hotel_key": "ascona",
+   "name": "Hotel Ascona",
+   "booking_url": "https://www.booking.com/hotel/br/ascona.html",
+   "required_features": [
+    "Quarto com banheira de hidromassagem privativa",
+    "Café da manhã incluído"
+   ]
+  },
+  {
+   "hotel_key": "lavandas",
+   "name": "Pousada das Lavandas",
+   "booking_url": "https://www.booking.com/hotel/br/pousada-das-lavandas.html",
+   "required_features": [
+    "Quarto com banheira de hidromassagem privativa",
+    "Café da manhã incluído"
+   ]
+  },
+  {
+   "hotel_key": "villa-casato",
+   "name": "Villa Casato Residenza Boutique",
+   "booking_url": "https://www.booking.com/hotel/br/villa-casato-residenza.html",
+   "required_features": [
+    "Quarto com banheira de hidromassagem privativa",
+    "Café da manhã incluído"
+   ]
+  },
+  {
+   "hotel_key": "matsubara",
+   "name": "Matsubara Pousada",
+   "booking_url": "https://www.booking.com/hotel/br/matsubara-pousada.html",
+   "required_features": [
+    "Quarto com banheira de hidromassagem privativa",
+    "Café da manhã incluído"
+   ]
+  },
+  {
+   "hotel_key": "lah",
+   "name": "L.A.H. Hostellerie",
+   "booking_url": "https://www.booking.com/hotel/br/l-a-h-hostellerie.html",
+   "required_features": [
+    "Quarto com banheira de hidromassagem privativa",
+    "Café da manhã incluído"
+   ]
+  },
+  {
+   "hotel_key": "dom",
+   "name": "DOM Hotel",
+   "booking_url": "https://www.booking.com/hotel/br/dom-boutique.html",
+   "required_features": [
+    "Quarto com banheira de hidromassagem privativa",
+    "Café da manhã incluído"
+   ]
+  },
+  {
+   "hotel_key": "secreto",
+   "name": "Secreto Boutique Hotel",
+   "booking_url": "https://www.booking.com/hotel/br/secreto-boutique.html",
+   "required_features": [
+    "Quarto com banheira de hidromassagem privativa",
+    "Café da manhã incluído"
+   ]
+  },
+  {
+   "hotel_key": "europa",
+   "name": "Europa Hotel",
+   "booking_url": "https://www.booking.com/hotel/br/europa-campos-do-jordao.html",
+   "required_features": [
+    "Quarto com banheira de hidromassagem privativa",
+    "Café da manhã incluído"
+   ]
+  },
+  {
+   "hotel_key": "villa-belle",
+   "name": "Villa Belle Chalés",
+   "booking_url": "https://www.booking.com/hotel/br/la-vie-pousada-de-charme.html",
+   "required_features": [
+    "Quarto com banheira de hidromassagem privativa",
+    "Café da manhã incluído"
+   ]
+  },
+  {
+   "hotel_key": "cafe-poesia",
+   "name": "Pousada Cafe Poesia",
+   "booking_url": "https://www.booking.com/hotel/br/pousada-cafe-poesia.html",
+   "required_features": [
+    "Quarto com banheira de hidromassagem privativa",
+    "Café da manhã incluído"
+   ]
+  },
+  {
+   "hotel_key": "murano",
+   "name": "Pousada Murano",
+   "booking_url": "https://www.booking.com/hotel/br/pousada-murano.html",
+   "required_features": [
+    "Quarto com banheira de hidromassagem privativa",
+    "Café da manhã incluído"
+   ]
+  },
+  {
+   "hotel_key": "villa-nature",
+   "name": "Chalé Villa Nature",
+   "booking_url": "https://www.booking.com/hotel/br/villa-nature-campos-do-jordao.html",
+   "required_features": [
+    "Quarto com banheira de hidromassagem privativa",
+    "Café da manhã incluído"
+   ]
+  },
+  {
+   "hotel_key": "bela-vista-chale",
+   "name": "Bela Vista Chalé",
+   "booking_url": "https://www.booking.com/hotel/br/linda-casa-em-campos-do-jordao-campos-do-jordao12345.html",
+   "required_features": [
+    "Quarto com banheira de hidromassagem privativa",
+    "Café da manhã incluído"
+   ]
+  },
+  {
+   "hotel_key": "geada",
+   "name": "Pousada Geada de Campos",
+   "booking_url": "https://www.booking.com/hotel/br/geada-de-campos.html",
+   "required_features": [
+    "Quarto com banheira de hidromassagem privativa",
+    "Café da manhã incluído"
+   ]
+  },
+  {
+   "hotel_key": "casa-redonda",
+   "name": "Pousada Casa Redonda",
+   "booking_url": "https://www.booking.com/hotel/br/pousada-casa-redonda-campos-do-jordao.html",
+   "required_features": [
+    "Quarto com banheira de hidromassagem privativa",
+    "Café da manhã incluído"
+   ]
+  },
+  {
+   "hotel_key": "charme-chales",
+   "name": "Charmê Chalés",
+   "booking_url": "https://www.booking.com/hotel/br/charme-chales.html",
+   "required_features": [
+    "Quarto com banheira de hidromassagem privativa",
+    "Café da manhã incluído"
+   ]
+  },
+  {
+   "hotel_key": "vila-grega",
+   "name": "vila grega hotel",
+   "booking_url": "https://www.booking.com/hotel/br/suite-privativa-com-aquecedor-decoracao-nova.html",
+   "required_features": [
+    "Quarto com banheira de hidromassagem privativa",
+    "Café da manhã incluído"
+   ]
+  },
+  {
+   "hotel_key": "champet",
+   "name": "Champet Boutique Hotel",
+   "booking_url": "https://www.booking.com/hotel/br/champet-boutique.html",
+   "required_features": [
+    "Quarto com banheira de hidromassagem privativa",
+    "Café da manhã incluído"
+   ]
+  },
+  {
+   "hotel_key": "euro-suit",
+   "name": "Euro Suit Campos do Jordão",
+   "booking_url": "https://www.booking.com/hotel/br/euro-suit-campos-do-jordao.html",
+   "required_features": [
+    "Quarto com banheira de hidromassagem privativa",
+    "Café da manhã incluído"
+   ]
+  },
+  {
+   "hotel_key": "big-bear",
+   "name": "Pousada Big Bear (classe B)",
+   "booking_url": "https://www.booking.com/hotel/br/pousada-big-bear.html",
+   "required_features": [
+    "Quarto com banheira de hidromassagem privativa",
+    "Café da manhã incluído"
+   ]
+  },
+  {
+   "hotel_key": "villa-capivary",
+   "name": "Pousada Villa Capivary (classe B)",
+   "booking_url": "https://www.booking.com/hotel/br/pousada-villa-capivary.html",
+   "required_features": [
+    "Quarto com banheira de hidromassagem privativa",
+    "Café da manhã incluído"
+   ]
+  },
+  {
+   "hotel_key": "benevento",
+   "name": "Pousada Benevento (classe B)",
+   "booking_url": "https://www.booking.com/hotel/br/pousada-benevento.html",
+   "required_features": [
+    "Quarto com banheira de hidromassagem privativa",
+    "Café da manhã incluído"
+   ]
+  }
+ ],
+ "stays": [
+  {
+   "checkin": "2026-10-23",
+   "checkout": "2026-10-25"
+  },
+  {
+   "checkin": "2026-10-30",
+   "checkout": "2026-11-02"
+  },
+  {
+   "checkin": "2026-11-06",
+   "checkout": "2026-11-08"
+  },
+  {
+   "checkin": "2026-11-11",
+   "checkout": "2026-11-12"
+  },
+  {
+   "checkin": "2026-11-13",
+   "checkout": "2026-11-15"
+  },
+  {
+   "checkin": "2026-11-20",
+   "checkout": "2026-11-22"
+  },
+  {
+   "checkin": "2026-11-27",
+   "checkout": "2026-11-29"
+  },
+  {
+   "checkin": "2026-11-30",
+   "checkout": "2026-12-02"
+  },
+  {
+   "checkin": "2026-12-04",
+   "checkout": "2026-12-06"
+  },
+  {
+   "checkin": "2026-12-11",
+   "checkout": "2026-12-13"
+  }
+ ],
+ "max_jobs": 500
+}

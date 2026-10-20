@@ -1990,6 +1990,13 @@ A Villa não aparece em nenhuma busca com filtro de hidro (falta a comodidade na
 - **Coleta:** o workflow completo não rodou. Os 6 recálculos e o Beds24 cobriram a medição; concorrência pela varredura do conector e pelos 3 PDFs do dono.
 - **Como desfazer os pisos:** voltar os fatores em `quartos.json` e regravar os pisos com o validador. As razões citam "Dono 20/10".
 
+## 20/10/2026, 13:00 UTC (10:00 BRT) — Skill booking-hotel-research adotada; 1ª rodada de concorrentes
+
+- **Pedido do dono:** "vamos usar essa Skill" (pacote `booking-hotel-research`). Conteúdo lido antes do uso, sem acesso à rede; instalado no projeto.
+- **Cadastro:** 23 hotéis com hidro no quarto a até 3 km: 19 classe A, 3 classe B e o Recanto como referência. 10 estadias de 23/10 a 13/12. Total de 230 combinações.
+- **1ª rodada:** 41 capturas vindas dos 3 PDFs do dono, com quarto com hidro e café incluído confirmados pelos filtros e vitrine Genius 3. Tabela em `pricelabs/pesquisa-booking/rodada-2026-10-20/resumo.md`. As outras 7 estadias seguem pendentes até chegarem novos PDFs.
+- **Nada gravado no PriceLabs nesta etapa.**
+
 > **Regras em vigor:** desde 06/10/2026 elas ficam em `.claude/skills/gestao-receita-pousadas/references/regras.md`. Este arquivo guarda só o histórico das mudanças.
 
 ## O que só pode ser feito na tela (passo a passo para você)

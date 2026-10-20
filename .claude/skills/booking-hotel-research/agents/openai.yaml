@@ -1,0 +1,4 @@
+interface:
+  display_name: "Pesquisa de concorrentes na Booking"
+  short_description: "Tarifas de concorrentes em várias datas e categorias"
+  default_prompt: "Use $booking-hotel-research para acompanhar meus hotéis concorrentes, respeitar as características de cada um e comparar tarifas em várias datas."

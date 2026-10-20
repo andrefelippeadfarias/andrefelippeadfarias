@@ -12,9 +12,13 @@ nossos. O preço é a vitrine de quem salvou o PDF (logado como Genius 3 no caso
 from __future__ import annotations
 
 import argparse
+import csv
 import json
+import os
 import re
 import statistics as st
+import unicodedata
+from datetime import date
 
 NOME, FINAL, RISCADO, NOTA = (10.0, 27876), (10.0, 1710618), (6.0, 13898014), (8.0, 11250603)
 NOSSOS = ("Pousada Recanto dos Moinhos", "Villa Dolce Amore")
@@ -95,17 +99,67 @@ def resumo(lista: list) -> dict:
     return r
 
 
+def _norm(t: str) -> str:
+    t = unicodedata.normalize("NFKD", t).encode("ascii", "ignore").decode().lower()
+    return re.sub(r"[^a-z0-9]+", " ", t).strip()
+
+
+def para_rodada(lista: list, plano: str, checkin: str, checkout: str, captado: str, evidencia: str) -> int:
+    """Grava as capturas do PDF no formato da skill booking-hotel-research (captures.csv ao lado do plan.json).
+    Casa cada hotel do plano pelo nome; os filtros da busca do dono (hidro no quarto, café incluído, <3 km, nota 8+)
+    confirmam os critérios. Hotel do plano ausente no PDF fica sem linha (segue pending)."""
+    p = json.load(open(plano))
+    noites = (date.fromisoformat(checkout) - date.fromisoformat(checkin)).days
+    pdf = {_norm(c["nome"]): c for c in lista}
+    destino = os.path.join(os.path.dirname(plano), "captures.csv")
+    colunas = open(os.path.join(os.path.dirname(plano), "capture-template.csv"), encoding="utf-8-sig").readline().strip().split(",")
+    novo = not os.path.exists(destino)
+    n = 0
+    with open(destino, "a", newline="", encoding="utf-8") as f:
+        w = csv.DictWriter(f, fieldnames=colunas)
+        if novo:
+            w.writeheader()
+        for j in p["jobs"]:
+            if j["checkin"] != checkin or j["checkout"] != checkout:
+                continue
+            alvo = _norm(re.sub(r"\(.*?\)", "", j["hotel_name"]))
+            c = next((v for k, v in pdf.items() if k.startswith(alvo) or alvo.startswith(k)), None)
+            if not c:
+                continue
+            total = round(c["noite"] * noites, 2)
+            w.writerow({"job_id": j["job_id"], "hotel_key": j["hotel_key"], "hotel_name": j["hotel_name"],
+                        "booking_url": j["booking_url"], "checkin": checkin, "checkout": checkout, "nights": noites,
+                        "adults": 2, "rooms": 1, "children_ages": "", "currency": "BRL", "status": "available",
+                        "captured_at": captado, "room_name": c["quarto"], "total_displayed": total,
+                        "total_all_in": total, "tax_status": "partial" if c["taxas"] else "unknown",
+                        "breakfast": "incluído (filtro da busca)", "price_raw": f"R$ {c['final']:.0f}" +
+                        (f" + R$ {c['taxas']:.0f} impostos" if c["taxas"] else ""), "price_basis": "estadia",
+                        "discount_eligibility": "vitrine Genius 3 (dono logado)", "source_type": "pdf_dono",
+                        "criteria_status": "hidro no quarto e café: confirmed (filtros roomfacility=20, mealplan=1)",
+                        "evidence_ref": evidencia, "notes": f"riscado R$ {c['riscado']}; nota {c['nota']}",
+                        "run_id": os.path.basename(os.path.dirname(plano))})
+            n += 1
+    return n
+
+
 def main(argv=None) -> int:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("pdf")
     ap.add_argument("--noites", type=int, required=True)
     ap.add_argument("--json")
+    ap.add_argument("--rodada", help="plan.json da skill booking-hotel-research para gravar as capturas")
+    ap.add_argument("--checkin")
+    ap.add_argument("--checkout")
+    ap.add_argument("--captado", help="horário da captura, ISO 8601 com fuso")
     a = ap.parse_args(argv)
     lista = cards(spans(a.pdf), a.noites)
     r = resumo(lista)
     print(json.dumps(r, ensure_ascii=False, indent=1))
     if a.json:
         json.dump({"resumo": r, "hoteis": lista}, open(a.json, "w"), ensure_ascii=False, indent=1)
+    if a.rodada:
+        n = para_rodada(lista, a.rodada, a.checkin, a.checkout, a.captado, os.path.basename(a.pdf))
+        print(f"{n} capturas gravadas em {os.path.join(os.path.dirname(a.rodada), 'captures.csv')}")
     return 0
 
 

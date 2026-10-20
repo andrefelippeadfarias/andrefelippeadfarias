@@ -1,0 +1,24 @@
+{
+  "schema_version": 1,
+  "currency": "BRL",
+  "occupancy": {"adults": 2, "rooms": 1, "children_ages": []},
+  "hotels": [
+    {
+      "hotel_key": "concorrente-a",
+      "name": "Exemplo fictício A - substituir",
+      "booking_url": "https://www.booking.com/hotel/br/exemplo-ficticio-a.html",
+      "required_features": ["Quarto casal standard", "Café da manhã incluído"]
+    },
+    {
+      "hotel_key": "concorrente-b",
+      "name": "Exemplo fictício B - substituir",
+      "booking_url": "https://www.booking.com/hotel/br/exemplo-ficticio-b.html",
+      "required_features": ["Suíte com hidromassagem", "Café da manhã incluído"]
+    }
+  ],
+  "stays": [
+    {"checkin": "2026-11-06", "checkout": "2026-11-08"},
+    {"checkin": "2026-11-13", "checkout": "2026-11-15"}
+  ],
+  "max_jobs": 500
+}

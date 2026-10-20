@@ -243,3 +243,8 @@ Hora da ANÁLISE E AGENDA DIÁRIA do PriceLabs (rotina "Agenda diária PriceLabs
 - **Mudança (PriceLabs):** 418 pisos por data até 30/04/2027 (Q7 166, Q2 122, Double 114, Afrodite 8, VK7 4, VK2 4); validador 0 erro.
 - **Como desfazer:** voltar os fatores e regravar os pisos com o validador.
 
+## 20/10/2026, 13:00 UTC — Skill booking-hotel-research adotada (dono: "vamos usar essa Skill")
+- **Origem:** pacote enviado pelo dono. Lido por inteiro antes de usar: o script `plan_matrix.py` usa só a biblioteca padrão, não acessa a rede e só cria arquivos novos. Instalado em `.claude/skills/booking-hotel-research/` sem mudanças.
+- **Integração:** cadastro `pricelabs/pesquisa-booking/brief.json` (23 hotéis, 10 estadias); 1ª rodada `rodada-2026-10-20` (230 combinações, 41 capturas dos 3 PDFs do dono, `resumo.md`); `base_booking_pdf.py --rodada`; `SKILL.md` (revisão de segunda); `ferramentas.md`.
+- **Fontes:** só o PDF do dono e o conector oficial. Sem navegador automático, como a própria skill pede quando há bloqueio.
+

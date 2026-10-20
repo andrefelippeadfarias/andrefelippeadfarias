@@ -1,0 +1,4384 @@
+{
+  "schema_version": 1,
+  "as_of_date": "2026-10-20",
+  "currency": "BRL",
+  "occupancy": {
+    "adults": 2,
+    "rooms": 1,
+    "children_ages": []
+  },
+  "max_jobs": 500,
+  "planned_jobs": 230,
+  "jobs": [
+    {
+      "job_id": "4963097921ab087694b9",
+      "hotel_key": "recanto-moinhos",
+      "hotel_name": "Pousada Recanto dos Moinhos - Boutique (nós)",
+      "booking_url": "https://www.booking.com/hotel/br/pousada-vista-panoramica-campos-do-jordao.html",
+      "required_features": [
+        "Quarto com banheira de hidromassagem privativa",
+        "Café da manhã incluído"
+      ],
+      "checkin": "2026-10-23",
+      "checkout": "2026-10-25",
+      "nights": 2,
+      "occupancy": {
+        "adults": 2,
+        "rooms": 1,
+        "children_ages": []
+      },
+      "currency": "BRL"
+    },
+    {
+      "job_id": "f654fcfd757b6d3c5368",
+      "hotel_key": "recanto-moinhos",
+      "hotel_name": "Pousada Recanto dos Moinhos - Boutique (nós)",
+      "booking_url": "https://www.booking.com/hotel/br/pousada-vista-panoramica-campos-do-jordao.html",
+      "required_features": [
+        "Quarto com banheira de hidromassagem privativa",
+        "Café da manhã incluído"
+      ],
+      "checkin": "2026-10-30",
+      "checkout": "2026-11-02",
+      "nights": 3,
+      "occupancy": {
+        "adults": 2,
+        "rooms": 1,
+        "children_ages": []
+      },
+      "currency": "BRL"
+    },
+    {
+      "job_id": "12f5f3a5155196fb16b9",
+      "hotel_key": "recanto-moinhos",
+      "hotel_name": "Pousada Recanto dos Moinhos - Boutique (nós)",
+      "booking_url": "https://www.booking.com/hotel/br/pousada-vista-panoramica-campos-do-jordao.html",
+      "required_features": [
+        "Quarto com banheira de hidromassagem privativa",
+        "Café da manhã incluído"
+      ],
+      "checkin": "2026-11-06",
+      "checkout": "2026-11-08",
+      "nights": 2,
+      "occupancy": {
+        "adults": 2,
+        "rooms": 1,
+        "children_ages": []
+      },
+      "currency": "BRL"
+    },
+    {
+      "job_id": "c2c6b3bc02ae0ef7f4e1",
+      "hotel_key": "recanto-moinhos",
+      "hotel_name": "Pousada Recanto dos Moinhos - Boutique (nós)",
+      "booking_url": "https://www.booking.com/hotel/br/pousada-vista-panoramica-campos-do-jordao.html",
+      "required_features": [
+        "Quarto com banheira de hidromassagem privativa",
+        "Café da manhã incluído"
+      ],
+      "checkin": "2026-11-11",
+      "checkout": "2026-11-12",
+      "nights": 1,
+      "occupancy": {
+        "adults": 2,
+        "rooms": 1,
+        "children_ages": []
+      },
+      "currency": "BRL"
+    },
+    {
+      "job_id": "fd5e1e3fa211f6c2d564",
+      "hotel_key": "recanto-moinhos",
+      "hotel_name": "Pousada Recanto dos Moinhos - Boutique (nós)",
+      "booking_url": "https://www.booking.com/hotel/br/pousada-vista-panoramica-campos-do-jordao.html",
+      "required_features": [
+        "Quarto com banheira de hidromassagem privativa",
+        "Café da manhã incluído"
+      ],
+      "checkin": "2026-11-13",
+      "checkout": "2026-11-15",
+      "nights": 2,
+      "occupancy": {
+        "adults": 2,
+        "rooms": 1,
+        "children_ages": []
+      },
+      "currency": "BRL"
+    },
+    {
+      "job_id": "7212d05297408218f0d8",
+      "hotel_key": "recanto-moinhos",
+      "hotel_name": "Pousada Recanto dos Moinhos - Boutique (nós)",
+      "booking_url": "https://www.booking.com/hotel/br/pousada-vista-panoramica-campos-do-jordao.html",
+      "required_features": [
+        "Quarto com banheira de hidromassagem privativa",
+        "Café da manhã incluído"
+      ],
+      "checkin": "2026-11-20",
+      "checkout": "2026-11-22",
+      "nights": 2,
+      "occupancy": {
+        "adults": 2,
+        "rooms": 1,
+        "children_ages": []
+      },
+      "currency": "BRL"
+    },
+    {
+      "job_id": "4499ef0e50f96d6c5a20",
+      "hotel_key": "recanto-moinhos",
+      "hotel_name": "Pousada Recanto dos Moinhos - Boutique (nós)",
+      "booking_url": "https://www.booking.com/hotel/br/pousada-vista-panoramica-campos-do-jordao.html",
+      "required_features": [
+        "Quarto com banheira de hidromassagem privativa",
+        "Café da manhã incluído"
+      ],
+      "checkin": "2026-11-27",
+      "checkout": "2026-11-29",
+      "nights": 2,
+      "occupancy": {
+        "adults": 2,
+        "rooms": 1,
+        "children_ages": []
+      },
+      "currency": "BRL"
+    },
+    {
+      "job_id": "7c6d155adf3ef8edfdbb",
+      "hotel_key": "recanto-moinhos",
+      "hotel_name": "Pousada Recanto dos Moinhos - Boutique (nós)",
+      "booking_url": "https://www.booking.com/hotel/br/pousada-vista-panoramica-campos-do-jordao.html",
+      "required_features": [
+        "Quarto com banheira de hidromassagem privativa",
+        "Café da manhã incluído"
+      ],
+      "checkin": "2026-11-30",
+      "checkout": "2026-12-02",
+      "nights": 2,
+      "occupancy": {
+        "adults": 2,
+        "rooms": 1,
+        "children_ages": []
+      },
+      "currency": "BRL"
+    },
+    {
+      "job_id": "3766c2c6164f58259b29",
+      "hotel_key": "recanto-moinhos",
+      "hotel_name": "Pousada Recanto dos Moinhos - Boutique (nós)",
+      "booking_url": "https://www.booking.com/hotel/br/pousada-vista-panoramica-campos-do-jordao.html",
+      "required_features": [
+        "Quarto com banheira de hidromassagem privativa",
+        "Café da manhã incluído"
+      ],
+      "checkin": "2026-12-04",
+      "checkout": "2026-12-06",
+      "nights": 2,
+      "occupancy": {
+        "adults": 2,
+        "rooms": 1,
+        "children_ages": []
+      },
+      "currency": "BRL"
+    },
+    {
+      "job_id": "c2428a0de6f1ddfb4c8f",
+      "hotel_key": "recanto-moinhos",
+      "hotel_name": "Pousada Recanto dos Moinhos - Boutique (nós)",
+      "booking_url": "https://www.booking.com/hotel/br/pousada-vista-panoramica-campos-do-jordao.html",
+      "required_features": [
+        "Quarto com banheira de hidromassagem privativa",
+        "Café da manhã incluído"
+      ],
+      "checkin": "2026-12-11",
+      "checkout": "2026-12-13",
+      "nights": 2,
+      "occupancy": {
+        "adults": 2,
+        "rooms": 1,
+        "children_ages": []
+      },
+      "currency": "BRL"
+    },
+    {
+      "job_id": "a0584bcefac0a30f0549",
+      "hotel_key": "ascona",
+      "hotel_name": "Hotel Ascona",
+      "booking_url": "https://www.booking.com/hotel/br/ascona.html",
+      "required_features": [
+        "Quarto com banheira de hidromassagem privativa",
+        "Café da manhã incluído"
+      ],
+      "checkin": "2026-10-23",
+      "checkout": "2026-10-25",
+      "nights": 2,
+      "occupancy": {
+        "adults": 2,
+        "rooms": 1,
+        "children_ages": []
+      },
+      "currency": "BRL"
+    },
+    {
+      "job_id": "61c4e6e41a79b5653101",
+      "hotel_key": "ascona",
+      "hotel_name": "Hotel Ascona",
+      "booking_url": "https://www.booking.com/hotel/br/ascona.html",
+      "required_features": [
+        "Quarto com banheira de hidromassagem privativa",
+        "Café da manhã incluído"
+      ],
+      "checkin": "2026-10-30",
+      "checkout": "2026-11-02",
+      "nights": 3,
+      "occupancy": {
+        "adults": 2,
+        "rooms": 1,
+        "children_ages": []
+      },
+      "currency": "BRL"
+    },
+    {
+      "job_id": "6d505131dd194370334a",
+      "hotel_key": "ascona",
+      "hotel_name": "Hotel Ascona",
+      "booking_url": "https://www.booking.com/hotel/br/ascona.html",
+      "required_features": [
+        "Quarto com banheira de hidromassagem privativa",
+        "Café da manhã incluído"
+      ],
+      "checkin": "2026-11-06",
+      "checkout": "2026-11-08",
+      "nights": 2,
+      "occupancy": {
+        "adults": 2,
+        "rooms": 1,
+        "children_ages": []
+      },
+      "currency": "BRL"
+    },
+    {
+      "job_id": "1424ab5dc159366e5f29",
+      "hotel_key": "ascona",
+      "hotel_name": "Hotel Ascona",
+      "booking_url": "https://www.booking.com/hotel/br/ascona.html",
+      "required_features": [
+        "Quarto com banheira de hidromassagem privativa",
+        "Café da manhã incluído"
+      ],
+      "checkin": "2026-11-11",
+      "checkout": "2026-11-12",
+      "nights": 1,
+      "occupancy": {
+        "adults": 2,
+        "rooms": 1,
+        "children_ages": []
+      },
+      "currency": "BRL"
+    },
+    {
+      "job_id": "cb876f2bace496cf5465",
+      "hotel_key": "ascona",
+      "hotel_name": "Hotel Ascona",
+      "booking_url": "https://www.booking.com/hotel/br/ascona.html",
+      "required_features": [
+        "Quarto com banheira de hidromassagem privativa",
+        "Café da manhã incluído"
+      ],
+      "checkin": "2026-11-13",
+      "checkout": "2026-11-15",
+      "nights": 2,
+      "occupancy": {
+        "adults": 2,
+        "rooms": 1,
+        "children_ages": []
+      },
+      "currency": "BRL"
+    },
+    {
+      "job_id": "c8e1a18f568643cebf0d",
+      "hotel_key": "ascona",
+      "hotel_name": "Hotel Ascona",
+      "booking_url": "https://www.booking.com/hotel/br/ascona.html",
+      "required_features": [
+        "Quarto com banheira de hidromassagem privativa",
+        "Café da manhã incluído"
+      ],
+      "checkin": "2026-11-20",
+      "checkout": "2026-11-22",
+      "nights": 2,
+      "occupancy": {
+        "adults": 2,
+        "rooms": 1,
+        "children_ages": []
+      },
+      "currency": "BRL"
+    },
+    {
+      "job_id": "e585092cea9587f6f316",
+      "hotel_key": "ascona",
+      "hotel_name": "Hotel Ascona",
+      "booking_url": "https://www.booking.com/hotel/br/ascona.html",
+      "required_features": [
+        "Quarto com banheira de hidromassagem privativa",
+        "Café da manhã incluído"
+      ],
+      "checkin": "2026-11-27",
+      "checkout": "2026-11-29",
+      "nights": 2,
+      "occupancy": {
+        "adults": 2,
+        "rooms": 1,
+        "children_ages": []
+      },
+      "currency": "BRL"
+    },
+    {
+      "job_id": "2ed7ecad1c7476db8b79",
+      "hotel_key": "ascona",
+      "hotel_name": "Hotel Ascona",
+      "booking_url": "https://www.booking.com/hotel/br/ascona.html",
+      "required_features": [
+        "Quarto com banheira de hidromassagem privativa",
+        "Café da manhã incluído"
+      ],
+      "checkin": "2026-11-30",
+      "checkout": "2026-12-02",
+      "nights": 2,
+      "occupancy": {
+        "adults": 2,
+        "rooms": 1,
+        "children_ages": []
+      },
+      "currency": "BRL"
+    },
+    {
+      "job_id": "d23b52f4de676bdf1ee4",
+      "hotel_key": "ascona",
+      "hotel_name": "Hotel Ascona",
+      "booking_url": "https://www.booking.com/hotel/br/ascona.html",
+      "required_features": [
+        "Quarto com banheira de hidromassagem privativa",
+        "Café da manhã incluído"
+      ],
+      "checkin": "2026-12-04",
+      "checkout": "2026-12-06",
+      "nights": 2,
+      "occupancy": {
+        "adults": 2,
+        "rooms": 1,
+        "children_ages": []
+      },
+      "currency": "BRL"
+    },
+    {
+      "job_id": "af938497938242adba0b",
+      "hotel_key": "ascona",
+      "hotel_name": "Hotel Ascona",
+      "booking_url": "https://www.booking.com/hotel/br/ascona.html",
+      "required_features": [
+        "Quarto com banheira de hidromassagem privativa",
+        "Café da manhã incluído"
+      ],
+      "checkin": "2026-12-11",
+      "checkout": "2026-12-13",
+      "nights": 2,
+      "occupancy": {
+        "adults": 2,
+        "rooms": 1,
+        "children_ages": []
+      },
+      "currency": "BRL"
+    },
+    {
+      "job_id": "f07b0388b9942c42bb30",
+      "hotel_key": "lavandas",
+      "hotel_name": "Pousada das Lavandas",
+      "booking_url": "https://www.booking.com/hotel/br/pousada-das-lavandas.html",
+      "required_features": [
+        "Quarto com banheira de hidromassagem privativa",
+        "Café da manhã incluído"
+      ],
+      "checkin": "2026-10-23",
+      "checkout": "2026-10-25",
+      "nights": 2,
+      "occupancy": {
+        "adults": 2,
+        "rooms": 1,
+        "children_ages": []
+      },
+      "currency": "BRL"
+    },
+    {
+      "job_id": "6f2d2a0fbb64296085c1",
+      "hotel_key": "lavandas",
+      "hotel_name": "Pousada das Lavandas",
+      "booking_url": "https://www.booking.com/hotel/br/pousada-das-lavandas.html",
+      "required_features": [
+        "Quarto com banheira de hidromassagem privativa",
+        "Café da manhã incluído"
+      ],
+      "checkin": "2026-10-30",
+      "checkout": "2026-11-02",
+      "nights": 3,
+      "occupancy": {
+        "adults": 2,
+        "rooms": 1,
+        "children_ages": []
+      },
+      "currency": "BRL"
+    },
+    {
+      "job_id": "a763f4729ef65c172a7f",
+      "hotel_key": "lavandas",
+      "hotel_name": "Pousada das Lavandas",
+      "booking_url": "https://www.booking.com/hotel/br/pousada-das-lavandas.html",
+      "required_features": [
+        "Quarto com banheira de hidromassagem privativa",
+        "Café da manhã incluído"
+      ],
+      "checkin": "2026-11-06",
+      "checkout": "2026-11-08",
+      "nights": 2,
+      "occupancy": {
+        "adults": 2,
+        "rooms": 1,
+        "children_ages": []
+      },
+      "currency": "BRL"
+    },
+    {
+      "job_id": "c3df428678e9ce832688",
+      "hotel_key": "lavandas",
+      "hotel_name": "Pousada das Lavandas",
+      "booking_url": "https://www.booking.com/hotel/br/pousada-das-lavandas.html",
+      "required_features": [
+        "Quarto com banheira de hidromassagem privativa",
+        "Café da manhã incluído"
+      ],
+      "checkin": "2026-11-11",
+      "checkout": "2026-11-12",
+      "nights": 1,
+      "occupancy": {
+        "adults": 2,
+        "rooms": 1,
+        "children_ages": []
+      },
+      "currency": "BRL"
+    },
+    {
+      "job_id": "3e9b0d982591bd1a9032",
+      "hotel_key": "lavandas",
+      "hotel_name": "Pousada das Lavandas",
+      "booking_url": "https://www.booking.com/hotel/br/pousada-das-lavandas.html",
+      "required_features": [
+        "Quarto com banheira de hidromassagem privativa",
+        "Café da manhã incluído"
+      ],
+      "checkin": "2026-11-13",
+      "checkout": "2026-11-15",
+      "nights": 2,
+      "occupancy": {
+        "adults": 2,
+        "rooms": 1,
+        "children_ages": []
+      },
+      "currency": "BRL"
+    },
+    {
+      "job_id": "0011d609454c9a4cde99",
+      "hotel_key": "lavandas",
+      "hotel_name": "Pousada das Lavandas",
+      "booking_url": "https://www.booking.com/hotel/br/pousada-das-lavandas.html",
+      "required_features": [
+        "Quarto com banheira de hidromassagem privativa",
+        "Café da manhã incluído"
+      ],
+      "checkin": "2026-11-20",
+      "checkout": "2026-11-22",
+      "nights": 2,
+      "occupancy": {
+        "adults": 2,
+        "rooms": 1,
+        "children_ages": []
+      },
+      "currency": "BRL"
+    },
+    {
+      "job_id": "7f213e9384b2a82c2ad4",
+      "hotel_key": "lavandas",
+      "hotel_name": "Pousada das Lavandas",
+      "booking_url": "https://www.booking.com/hotel/br/pousada-das-lavandas.html",
+      "required_features": [
+        "Quarto com banheira de hidromassagem privativa",
+        "Café da manhã incluído"
+      ],
+      "checkin": "2026-11-27",
+      "checkout": "2026-11-29",
+      "nights": 2,
+      "occupancy": {
+        "adults": 2,
+        "rooms": 1,
+        "children_ages": []
+      },
+      "currency": "BRL"
+    },
+    {
+      "job_id": "e53cdf4642381791cb20",
+      "hotel_key": "lavandas",
+      "hotel_name": "Pousada das Lavandas",
+      "booking_url": "https://www.booking.com/hotel/br/pousada-das-lavandas.html",
+      "required_features": [
+        "Quarto com banheira de hidromassagem privativa",
+        "Café da manhã incluído"
+      ],
+      "checkin": "2026-11-30",
+      "checkout": "2026-12-02",
+      "nights": 2,
+      "occupancy": {
+        "adults": 2,
+        "rooms": 1,
+        "children_ages": []
+      },
+      "currency": "BRL"
+    },
+    {
+      "job_id": "3c2ea51041099b14341d",
+      "hotel_key": "lavandas",
+      "hotel_name": "Pousada das Lavandas",
+      "booking_url": "https://www.booking.com/hotel/br/pousada-das-lavandas.html",
+      "required_features": [
+        "Quarto com banheira de hidromassagem privativa",
+        "Café da manhã incluído"
+      ],
+      "checkin": "2026-12-04",
+      "checkout": "2026-12-06",
+      "nights": 2,
+      "occupancy": {
+        "adults": 2,
+        "rooms": 1,
+        "children_ages": []
+      },
+      "currency": "BRL"
+    },
+    {
+      "job_id": "84d35d0038e840a5c656",
+      "hotel_key": "lavandas",
+      "hotel_name": "Pousada das Lavandas",
+      "booking_url": "https://www.booking.com/hotel/br/pousada-das-lavandas.html",
+      "required_features": [
+        "Quarto com banheira de hidromassagem privativa",
+        "Café da manhã incluído"
+      ],
+      "checkin": "2026-12-11",
+      "checkout": "2026-12-13",
+      "nights": 2,
+      "occupancy": {
+        "adults": 2,
+        "rooms": 1,
+        "children_ages": []
+      },
+      "currency": "BRL"
+    },
+    {
+      "job_id": "beae5a40a729c0336556",
+      "hotel_key": "villa-casato",
+      "hotel_name": "Villa Casato Residenza Boutique",
+      "booking_url": "https://www.booking.com/hotel/br/villa-casato-residenza.html",
+      "required_features": [
+        "Quarto com banheira de hidromassagem privativa",
+        "Café da manhã incluído"
+      ],
+      "checkin": "2026-10-23",
+      "checkout": "2026-10-25",
+      "nights": 2,
+      "occupancy": {
+        "adults": 2,
+        "rooms": 1,
+        "children_ages": []
+      },
+      "currency": "BRL"
+    },
+    {
+      "job_id": "6e0dd0cdd865aba632dc",
+      "hotel_key": "villa-casato",
+      "hotel_name": "Villa Casato Residenza Boutique",
+      "booking_url": "https://www.booking.com/hotel/br/villa-casato-residenza.html",
+      "required_features": [
+        "Quarto com banheira de hidromassagem privativa",
+        "Café da manhã incluído"
+      ],
+      "checkin": "2026-10-30",
+      "checkout": "2026-11-02",
+      "nights": 3,
+      "occupancy": {
+        "adults": 2,
+        "rooms": 1,
+        "children_ages": []
+      },
+      "currency": "BRL"
+    },
+    {
+      "job_id": "c42ffa92f8bb7e421028",
+      "hotel_key": "villa-casato",
+      "hotel_name": "Villa Casato Residenza Boutique",
+      "booking_url": "https://www.booking.com/hotel/br/villa-casato-residenza.html",
+      "required_features": [
+        "Quarto com banheira de hidromassagem privativa",
+        "Café da manhã incluído"
+      ],
+      "checkin": "2026-11-06",
+      "checkout": "2026-11-08",
+      "nights": 2,
+      "occupancy": {
+        "adults": 2,
+        "rooms": 1,
+        "children_ages": []
+      },
+      "currency": "BRL"
+    },
+    {
+      "job_id": "0b8fa3fbca3bb6e79638",
+      "hotel_key": "villa-casato",
+      "hotel_name": "Villa Casato Residenza Boutique",
+      "booking_url": "https://www.booking.com/hotel/br/villa-casato-residenza.html",
+      "required_features": [
+        "Quarto com banheira de hidromassagem privativa",
+        "Café da manhã incluído"
+      ],
+      "checkin": "2026-11-11",
+      "checkout": "2026-11-12",
+      "nights": 1,
+      "occupancy": {
+        "adults": 2,
+        "rooms": 1,
+        "children_ages": []
+      },
+      "currency": "BRL"
+    },
+    {
+      "job_id": "a908d6ac1bd103424787",
+      "hotel_key": "villa-casato",
+      "hotel_name": "Villa Casato Residenza Boutique",
+      "booking_url": "https://www.booking.com/hotel/br/villa-casato-residenza.html",
+      "required_features": [
+        "Quarto com banheira de hidromassagem privativa",
+        "Café da manhã incluído"
+      ],
+      "checkin": "2026-11-13",
+      "checkout": "2026-11-15",
+      "nights": 2,
+      "occupancy": {
+        "adults": 2,
+        "rooms": 1,
+        "children_ages": []
+      },
+      "currency": "BRL"
+    },
+    {
+      "job_id": "7ab5f9bdeb1cda0b1be1",
+      "hotel_key": "villa-casato",
+      "hotel_name": "Villa Casato Residenza Boutique",
+      "booking_url": "https://www.booking.com/hotel/br/villa-casato-residenza.html",
+      "required_features": [
+        "Quarto com banheira de hidromassagem privativa",
+        "Café da manhã incluído"
+      ],
+      "checkin": "2026-11-20",
+      "checkout": "2026-11-22",
+      "nights": 2,
+      "occupancy": {
+        "adults": 2,
+        "rooms": 1,
+        "children_ages": []
+      },
+      "currency": "BRL"
+    },
+    {
+      "job_id": "99a52dcf14770a6b4d5f",
+      "hotel_key": "villa-casato",
+      "hotel_name": "Villa Casato Residenza Boutique",
+      "booking_url": "https://www.booking.com/hotel/br/villa-casato-residenza.html",
+      "required_features": [
+        "Quarto com banheira de hidromassagem privativa",
+        "Café da manhã incluído"
+      ],
+      "checkin": "2026-11-27",
+      "checkout": "2026-11-29",
+      "nights": 2,
+      "occupancy": {
+        "adults": 2,
+        "rooms": 1,
+        "children_ages": []
+      },
+      "currency": "BRL"
+    },
+    {
+      "job_id": "567263758a146910cd83",
+      "hotel_key": "villa-casato",
+      "hotel_name": "Villa Casato Residenza Boutique",
+      "booking_url": "https://www.booking.com/hotel/br/villa-casato-residenza.html",
+      "required_features": [
+        "Quarto com banheira de hidromassagem privativa",
+        "Café da manhã incluído"
+      ],
+      "checkin": "2026-11-30",
+      "checkout": "2026-12-02",
+      "nights": 2,
+      "occupancy": {
+        "adults": 2,
+        "rooms": 1,
+        "children_ages": []
+      },
+      "currency": "BRL"
+    },
+    {
+      "job_id": "29531428a7d09d79cff2",
+      "hotel_key": "villa-casato",
+      "hotel_name": "Villa Casato Residenza Boutique",
+      "booking_url": "https://www.booking.com/hotel/br/villa-casato-residenza.html",
+      "required_features": [
+        "Quarto com banheira de hidromassagem privativa",
+        "Café da manhã incluído"
+      ],
+      "checkin": "2026-12-04",
+      "checkout": "2026-12-06",
+      "nights": 2,
+      "occupancy": {
+        "adults": 2,
+        "rooms": 1,
+        "children_ages": []
+      },
+      "currency": "BRL"
+    },
+    {
+      "job_id": "9fe4844d7af1ee19461d",
+      "hotel_key": "villa-casato",
+      "hotel_name": "Villa Casato Residenza Boutique",
+      "booking_url": "https://www.booking.com/hotel/br/villa-casato-residenza.html",
+      "required_features": [
+        "Quarto com banheira de hidromassagem privativa",
+        "Café da manhã incluído"
+      ],
+      "checkin": "2026-12-11",
+      "checkout": "2026-12-13",
+      "nights": 2,
+      "occupancy": {
+        "adults": 2,
+        "rooms": 1,
+        "children_ages": []
+      },
+      "currency": "BRL"
+    },
+    {
+      "job_id": "8996a3cf288f68ff9aab",
+      "hotel_key": "matsubara",
+      "hotel_name": "Matsubara Pousada",
+      "booking_url": "https://www.booking.com/hotel/br/matsubara-pousada.html",
+      "required_features": [
+        "Quarto com banheira de hidromassagem privativa",
+        "Café da manhã incluído"
+      ],
+      "checkin": "2026-10-23",
+      "checkout": "2026-10-25",
+      "nights": 2,
+      "occupancy": {
+        "adults": 2,
+        "rooms": 1,
+        "children_ages": []
+      },
+      "currency": "BRL"
+    },
+    {
+      "job_id": "d24cd40bccb5453c8a9d",
+      "hotel_key": "matsubara",
+      "hotel_name": "Matsubara Pousada",
+      "booking_url": "https://www.booking.com/hotel/br/matsubara-pousada.html",
+      "required_features": [
+        "Quarto com banheira de hidromassagem privativa",
+        "Café da manhã incluído"
+      ],
+      "checkin": "2026-10-30",
+      "checkout": "2026-11-02",
+      "nights": 3,
+      "occupancy": {
+        "adults": 2,
+        "rooms": 1,
+        "children_ages": []
+      },
+      "currency": "BRL"
+    },
+    {
+      "job_id": "24fa278c689206e3b489",
+      "hotel_key": "matsubara",
+      "hotel_name": "Matsubara Pousada",
+      "booking_url": "https://www.booking.com/hotel/br/matsubara-pousada.html",
+      "required_features": [
+        "Quarto com banheira de hidromassagem privativa",
+        "Café da manhã incluído"
+      ],
+      "checkin": "2026-11-06",
+      "checkout": "2026-11-08",
+      "nights": 2,
+      "occupancy": {
+        "adults": 2,
+        "rooms": 1,
+        "children_ages": []
+      },
+      "currency": "BRL"
+    },
+    {
+      "job_id": "8fc71373b29d8133bacc",
+      "hotel_key": "matsubara",
+      "hotel_name": "Matsubara Pousada",
+      "booking_url": "https://www.booking.com/hotel/br/matsubara-pousada.html",
+      "required_features": [
+        "Quarto com banheira de hidromassagem privativa",
+        "Café da manhã incluído"
+      ],
+      "checkin": "2026-11-11",
+      "checkout": "2026-11-12",
+      "nights": 1,
+      "occupancy": {
+        "adults": 2,
+        "rooms": 1,
+        "children_ages": []
+      },
+      "currency": "BRL"
+    },
+    {
+      "job_id": "b5729910f46aacaff36f",
+      "hotel_key": "matsubara",
+      "hotel_name": "Matsubara Pousada",
+      "booking_url": "https://www.booking.com/hotel/br/matsubara-pousada.html",
+      "required_features": [
+        "Quarto com banheira de hidromassagem privativa",
+        "Café da manhã incluído"
+      ],
+      "checkin": "2026-11-13",
+      "checkout": "2026-11-15",
+      "nights": 2,
+      "occupancy": {
+        "adults": 2,
+        "rooms": 1,
+        "children_ages": []
+      },
+      "currency": "BRL"
+    },
+    {
+      "job_id": "df57210e3b531702308c",
+      "hotel_key": "matsubara",
+      "hotel_name": "Matsubara Pousada",
+      "booking_url": "https://www.booking.com/hotel/br/matsubara-pousada.html",
+      "required_features": [
+        "Quarto com banheira de hidromassagem privativa",
+        "Café da manhã incluído"
+      ],
+      "checkin": "2026-11-20",
+      "checkout": "2026-11-22",
+      "nights": 2,
+      "occupancy": {
+        "adults": 2,
+        "rooms": 1,
+        "children_ages": []
+      },
+      "currency": "BRL"
+    },
+    {
+      "job_id": "4e378afc7e2792a0a4ce",
+      "hotel_key": "matsubara",
+      "hotel_name": "Matsubara Pousada",
+      "booking_url": "https://www.booking.com/hotel/br/matsubara-pousada.html",
+      "required_features": [
+        "Quarto com banheira de hidromassagem privativa",
+        "Café da manhã incluído"
+      ],
+      "checkin": "2026-11-27",
+      "checkout": "2026-11-29",
+      "nights": 2,
+      "occupancy": {
+        "adults": 2,
+        "rooms": 1,
+        "children_ages": []
+      },
+      "currency": "BRL"
+    },
+    {
+      "job_id": "3e61b521bab7d6fe694a",
+      "hotel_key": "matsubara",
+      "hotel_name": "Matsubara Pousada",
+      "booking_url": "https://www.booking.com/hotel/br/matsubara-pousada.html",
+      "required_features": [
+        "Quarto com banheira de hidromassagem privativa",
+        "Café da manhã incluído"
+      ],
+      "checkin": "2026-11-30",
+      "checkout": "2026-12-02",
+      "nights": 2,
+      "occupancy": {
+        "adults": 2,
+        "rooms": 1,
+        "children_ages": []
+      },
+      "currency": "BRL"
+    },
+    {
+      "job_id": "e4c23d88807f95d79dcc",
+      "hotel_key": "matsubara",
+      "hotel_name": "Matsubara Pousada",
+      "booking_url": "https://www.booking.com/hotel/br/matsubara-pousada.html",
+      "required_features": [
+        "Quarto com banheira de hidromassagem privativa",
+        "Café da manhã incluído"
+      ],
+      "checkin": "2026-12-04",
+      "checkout": "2026-12-06",
+      "nights": 2,
+      "occupancy": {
+        "adults": 2,
+        "rooms": 1,
+        "children_ages": []
+      },
+      "currency": "BRL"
+    },
+    {
+      "job_id": "c2c9494f6ef6e4fa3d60",
+      "hotel_key": "matsubara",
+      "hotel_name": "Matsubara Pousada",
+      "booking_url": "https://www.booking.com/hotel/br/matsubara-pousada.html",
+      "required_features": [
+        "Quarto com banheira de hidromassagem privativa",
+        "Café da manhã incluído"
+      ],
+      "checkin": "2026-12-11",
+      "checkout": "2026-12-13",
+      "nights": 2,
+      "occupancy": {
+        "adults": 2,
+        "rooms": 1,
+        "children_ages": []
+      },
+      "currency": "BRL"
+    },
+    {
+      "job_id": "6e29e6d752565dc5088b",
+      "hotel_key": "lah",
+      "hotel_name": "L.A.H. Hostellerie",
+      "booking_url": "https://www.booking.com/hotel/br/l-a-h-hostellerie.html",
+      "required_features": [
+        "Quarto com banheira de hidromassagem privativa",
+        "Café da manhã incluído"
+      ],
+      "checkin": "2026-10-23",
+      "checkout": "2026-10-25",
+      "nights": 2,
+      "occupancy": {
+        "adults": 2,
+        "rooms": 1,
+        "children_ages": []
+      },
+      "currency": "BRL"
+    },
+    {
+      "job_id": "f9b7eb5c69d8e04a1510",
+      "hotel_key": "lah",
+      "hotel_name": "L.A.H. Hostellerie",
+      "booking_url": "https://www.booking.com/hotel/br/l-a-h-hostellerie.html",
+      "required_features": [
+        "Quarto com banheira de hidromassagem privativa",
+        "Café da manhã incluído"
+      ],
+      "checkin": "2026-10-30",
+      "checkout": "2026-11-02",
+      "nights": 3,
+      "occupancy": {
+        "adults": 2,
+        "rooms": 1,
+        "children_ages": []
+      },
+      "currency": "BRL"
+    },
+    {
+      "job_id": "614439195b85bf065818",
+      "hotel_key": "lah",
+      "hotel_name": "L.A.H. Hostellerie",
+      "booking_url": "https://www.booking.com/hotel/br/l-a-h-hostellerie.html",
+      "required_features": [
+        "Quarto com banheira de hidromassagem privativa",
+        "Café da manhã incluído"
+      ],
+      "checkin": "2026-11-06",
+      "checkout": "2026-11-08",
+      "nights": 2,
+      "occupancy": {
+        "adults": 2,
+        "rooms": 1,
+        "children_ages": []
+      },
+      "currency": "BRL"
+    },
+    {
+      "job_id": "162eeb95b03f287baf9e",
+      "hotel_key": "lah",
+      "hotel_name": "L.A.H. Hostellerie",
+      "booking_url": "https://www.booking.com/hotel/br/l-a-h-hostellerie.html",
+      "required_features": [
+        "Quarto com banheira de hidromassagem privativa",
+        "Café da manhã incluído"
+      ],
+      "checkin": "2026-11-11",
+      "checkout": "2026-11-12",
+      "nights": 1,
+      "occupancy": {
+        "adults": 2,
+        "rooms": 1,
+        "children_ages": []
+      },
+      "currency": "BRL"
+    },
+    {
+      "job_id": "8f781bb7752cf71eeac0",
+      "hotel_key": "lah",
+      "hotel_name": "L.A.H. Hostellerie",
+      "booking_url": "https://www.booking.com/hotel/br/l-a-h-hostellerie.html",
+      "required_features": [
+        "Quarto com banheira de hidromassagem privativa",
+        "Café da manhã incluído"
+      ],
+      "checkin": "2026-11-13",
+      "checkout": "2026-11-15",
+      "nights": 2,
+      "occupancy": {
+        "adults": 2,
+        "rooms": 1,
+        "children_ages": []
+      },
+      "currency": "BRL"
+    },
+    {
+      "job_id": "692116b9b5c114c16175",
+      "hotel_key": "lah",
+      "hotel_name": "L.A.H. Hostellerie",
+      "booking_url": "https://www.booking.com/hotel/br/l-a-h-hostellerie.html",
+      "required_features": [
+        "Quarto com banheira de hidromassagem privativa",
+        "Café da manhã incluído"
+      ],
+      "checkin": "2026-11-20",
+      "checkout": "2026-11-22",
+      "nights": 2,
+      "occupancy": {
+        "adults": 2,
+        "rooms": 1,
+        "children_ages": []
+      },
+      "currency": "BRL"
+    },
+    {
+      "job_id": "26f6c1e99a4772faf4a4",
+      "hotel_key": "lah",
+      "hotel_name": "L.A.H. Hostellerie",
+      "booking_url": "https://www.booking.com/hotel/br/l-a-h-hostellerie.html",
+      "required_features": [
+        "Quarto com banheira de hidromassagem privativa",
+        "Café da manhã incluído"
+      ],
+      "checkin": "2026-11-27",
+      "checkout": "2026-11-29",
+      "nights": 2,
+      "occupancy": {
+        "adults": 2,
+        "rooms": 1,
+        "children_ages": []
+      },
+      "currency": "BRL"
+    },
+    {
+      "job_id": "e6913955fb09e60573b2",
+      "hotel_key": "lah",
+      "hotel_name": "L.A.H. Hostellerie",
+      "booking_url": "https://www.booking.com/hotel/br/l-a-h-hostellerie.html",
+      "required_features": [
+        "Quarto com banheira de hidromassagem privativa",
+        "Café da manhã incluído"
+      ],
+      "checkin": "2026-11-30",
+      "checkout": "2026-12-02",
+      "nights": 2,
+      "occupancy": {
+        "adults": 2,
+        "rooms": 1,
+        "children_ages": []
+      },
+      "currency": "BRL"
+    },
+    {
+      "job_id": "b687c1fbbb1c0f125c6b",
+      "hotel_key": "lah",
+      "hotel_name": "L.A.H. Hostellerie",
+      "booking_url": "https://www.booking.com/hotel/br/l-a-h-hostellerie.html",
+      "required_features": [
+        "Quarto com banheira de hidromassagem privativa",
+        "Café da manhã incluído"
+      ],
+      "checkin": "2026-12-04",
+      "checkout": "2026-12-06",
+      "nights": 2,
+      "occupancy": {
+        "adults": 2,
+        "rooms": 1,
+        "children_ages": []
+      },
+      "currency": "BRL"
+    },
+    {
+      "job_id": "1114aec44853992e6f21",
+      "hotel_key": "lah",
+      "hotel_name": "L.A.H. Hostellerie",
+      "booking_url": "https://www.booking.com/hotel/br/l-a-h-hostellerie.html",
+      "required_features": [
+        "Quarto com banheira de hidromassagem privativa",
+        "Café da manhã incluído"
+      ],
+      "checkin": "2026-12-11",
+      "checkout": "2026-12-13",
+      "nights": 2,
+      "occupancy": {
+        "adults": 2,
+        "rooms": 1,
+        "children_ages": []
+      },
+      "currency": "BRL"
+    },
+    {
+      "job_id": "ae764e25574a07e4458a",
+      "hotel_key": "dom",
+      "hotel_name": "DOM Hotel",
+      "booking_url": "https://www.booking.com/hotel/br/dom-boutique.html",
+      "required_features": [
+        "Quarto com banheira de hidromassagem privativa",
+        "Café da manhã incluído"
+      ],
+      "checkin": "2026-10-23",
+      "checkout": "2026-10-25",
+      "nights": 2,
+      "occupancy": {
+        "adults": 2,
+        "rooms": 1,
+        "children_ages": []
+      },
+      "currency": "BRL"
+    },
+    {
+      "job_id": "628f612f642d33e15abd",
+      "hotel_key": "dom",
+      "hotel_name": "DOM Hotel",
+      "booking_url": "https://www.booking.com/hotel/br/dom-boutique.html",
+      "required_features": [
+        "Quarto com banheira de hidromassagem privativa",
+        "Café da manhã incluído"
+      ],
+      "checkin": "2026-10-30",
+      "checkout": "2026-11-02",
+      "nights": 3,
+      "occupancy": {
+        "adults": 2,
+        "rooms": 1,
+        "children_ages": []
+      },
+      "currency": "BRL"
+    },
+    {
+      "job_id": "3253ba318eba8d9bb7a1",
+      "hotel_key": "dom",
+      "hotel_name": "DOM Hotel",
+      "booking_url": "https://www.booking.com/hotel/br/dom-boutique.html",
+      "required_features": [
+        "Quarto com banheira de hidromassagem privativa",
+        "Café da manhã incluído"
+      ],
+      "checkin": "2026-11-06",
+      "checkout": "2026-11-08",
+      "nights": 2,
+      "occupancy": {
+        "adults": 2,
+        "rooms": 1,
+        "children_ages": []
+      },
+      "currency": "BRL"
+    },
+    {
+      "job_id": "c19c1a1bf0333faea175",
+      "hotel_key": "dom",
+      "hotel_name": "DOM Hotel",
+      "booking_url": "https://www.booking.com/hotel/br/dom-boutique.html",
+      "required_features": [
+        "Quarto com banheira de hidromassagem privativa",
+        "Café da manhã incluído"
+      ],
+      "checkin": "2026-11-11",
+      "checkout": "2026-11-12",
+      "nights": 1,
+      "occupancy": {
+        "adults": 2,
+        "rooms": 1,
+        "children_ages": []
+      },
+      "currency": "BRL"
+    },
+    {
+      "job_id": "c6cf558f83a6e54661ee",
+      "hotel_key": "dom",
+      "hotel_name": "DOM Hotel",
+      "booking_url": "https://www.booking.com/hotel/br/dom-boutique.html",
+      "required_features": [
+        "Quarto com banheira de hidromassagem privativa",
+        "Café da manhã incluído"
+      ],
+      "checkin": "2026-11-13",
+      "checkout": "2026-11-15",
+      "nights": 2,
+      "occupancy": {
+        "adults": 2,
+        "rooms": 1,
+        "children_ages": []
+      },
+      "currency": "BRL"
+    },
+    {
+      "job_id": "ae124b1d7d9a39655a9f",
+      "hotel_key": "dom",
+      "hotel_name": "DOM Hotel",
+      "booking_url": "https://www.booking.com/hotel/br/dom-boutique.html",
+      "required_features": [
+        "Quarto com banheira de hidromassagem privativa",
+        "Café da manhã incluído"
+      ],
+      "checkin": "2026-11-20",
+      "checkout": "2026-11-22",
+      "nights": 2,
+      "occupancy": {
+        "adults": 2,
+        "rooms": 1,
+        "children_ages": []
+      },
+      "currency": "BRL"
+    },
+    {
+      "job_id": "034de99989803f07d884",
+      "hotel_key": "dom",
+      "hotel_name": "DOM Hotel",
+      "booking_url": "https://www.booking.com/hotel/br/dom-boutique.html",
+      "required_features": [
+        "Quarto com banheira de hidromassagem privativa",
+        "Café da manhã incluído"
+      ],
+      "checkin": "2026-11-27",
+      "checkout": "2026-11-29",
+      "nights": 2,
+      "occupancy": {
+        "adults": 2,
+        "rooms": 1,
+        "children_ages": []
+      },
+      "currency": "BRL"
+    },
+    {
+      "job_id": "c37f285414cf391658fa",
+      "hotel_key": "dom",
+      "hotel_name": "DOM Hotel",
+      "booking_url": "https://www.booking.com/hotel/br/dom-boutique.html",
+      "required_features": [
+        "Quarto com banheira de hidromassagem privativa",
+        "Café da manhã incluído"
+      ],
+      "checkin": "2026-11-30",
+      "checkout": "2026-12-02",
+      "nights": 2,
+      "occupancy": {
+        "adults": 2,
+        "rooms": 1,
+        "children_ages": []
+      },
+      "currency": "BRL"
+    },
+    {
+      "job_id": "c5e66915822228776de5",
+      "hotel_key": "dom",
+      "hotel_name": "DOM Hotel",
+      "booking_url": "https://www.booking.com/hotel/br/dom-boutique.html",
+      "required_features": [
+        "Quarto com banheira de hidromassagem privativa",
+        "Café da manhã incluído"
+      ],
+      "checkin": "2026-12-04",
+      "checkout": "2026-12-06",
+      "nights": 2,
+      "occupancy": {
+        "adults": 2,
+        "rooms": 1,
+        "children_ages": []
+      },
+      "currency": "BRL"
+    },
+    {
+      "job_id": "598cb826b4bdaa8d9429",
+      "hotel_key": "dom",
+      "hotel_name": "DOM Hotel",
+      "booking_url": "https://www.booking.com/hotel/br/dom-boutique.html",
+      "required_features": [
+        "Quarto com banheira de hidromassagem privativa",
+        "Café da manhã incluído"
+      ],
+      "checkin": "2026-12-11",
+      "checkout": "2026-12-13",
+      "nights": 2,
+      "occupancy": {
+        "adults": 2,
+        "rooms": 1,
+        "children_ages": []
+      },
+      "currency": "BRL"
+    },
+    {
+      "job_id": "6c04c6527461872aa113",
+      "hotel_key": "secreto",
+      "hotel_name": "Secreto Boutique Hotel",
+      "booking_url": "https://www.booking.com/hotel/br/secreto-boutique.html",
+      "required_features": [
+        "Quarto com banheira de hidromassagem privativa",
+        "Café da manhã incluído"
+      ],
+      "checkin": "2026-10-23",
+      "checkout": "2026-10-25",
+      "nights": 2,
+      "occupancy": {
+        "adults": 2,
+        "rooms": 1,
+        "children_ages": []
+      },
+      "currency": "BRL"
+    },
+    {
+      "job_id": "6f22dc0b548cc549399a",
+      "hotel_key": "secreto",
+      "hotel_name": "Secreto Boutique Hotel",
+      "booking_url": "https://www.booking.com/hotel/br/secreto-boutique.html",
+      "required_features": [
+        "Quarto com banheira de hidromassagem privativa",
+        "Café da manhã incluído"
+      ],
+      "checkin": "2026-10-30",
+      "checkout": "2026-11-02",
+      "nights": 3,
+      "occupancy": {
+        "adults": 2,
+        "rooms": 1,
+        "children_ages": []
+      },
+      "currency": "BRL"
+    },
+    {
+      "job_id": "d65eb808321039dd3e9a",
+      "hotel_key": "secreto",
+      "hotel_name": "Secreto Boutique Hotel",
+      "booking_url": "https://www.booking.com/hotel/br/secreto-boutique.html",
+      "required_features": [
+        "Quarto com banheira de hidromassagem privativa",
+        "Café da manhã incluído"
+      ],
+      "checkin": "2026-11-06",
+      "checkout": "2026-11-08",
+      "nights": 2,
+      "occupancy": {
+        "adults": 2,
+        "rooms": 1,
+        "children_ages": []
+      },
+      "currency": "BRL"
+    },
+    {
+      "job_id": "ed8dae4ea1329663f973",
+      "hotel_key": "secreto",
+      "hotel_name": "Secreto Boutique Hotel",
+      "booking_url": "https://www.booking.com/hotel/br/secreto-boutique.html",
+      "required_features": [
+        "Quarto com banheira de hidromassagem privativa",
+        "Café da manhã incluído"
+      ],
+      "checkin": "2026-11-11",
+      "checkout": "2026-11-12",
+      "nights": 1,
+      "occupancy": {
+        "adults": 2,
+        "rooms": 1,
+        "children_ages": []
+      },
+      "currency": "BRL"
+    },
+    {
+      "job_id": "7beeac8068c00e7c435a",
+      "hotel_key": "secreto",
+      "hotel_name": "Secreto Boutique Hotel",
+      "booking_url": "https://www.booking.com/hotel/br/secreto-boutique.html",
+      "required_features": [
+        "Quarto com banheira de hidromassagem privativa",
+        "Café da manhã incluído"
+      ],
+      "checkin": "2026-11-13",
+      "checkout": "2026-11-15",
+      "nights": 2,
+      "occupancy": {
+        "adults": 2,
+        "rooms": 1,
+        "children_ages": []
+      },
+      "currency": "BRL"
+    },
+    {
+      "job_id": "7076717c2c9f06a68174",
+      "hotel_key": "secreto",
+      "hotel_name": "Secreto Boutique Hotel",
+      "booking_url": "https://www.booking.com/hotel/br/secreto-boutique.html",
+      "required_features": [
+        "Quarto com banheira de hidromassagem privativa",
+        "Café da manhã incluído"
+      ],
+      "checkin": "2026-11-20",
+      "checkout": "2026-11-22",
+      "nights": 2,
+      "occupancy": {
+        "adults": 2,
+        "rooms": 1,
+        "children_ages": []
+      },
+      "currency": "BRL"
+    },
+    {
+      "job_id": "458145df3656fcf24a9f",
+      "hotel_key": "secreto",
+      "hotel_name": "Secreto Boutique Hotel",
+      "booking_url": "https://www.booking.com/hotel/br/secreto-boutique.html",
+      "required_features": [
+        "Quarto com banheira de hidromassagem privativa",
+        "Café da manhã incluído"
+      ],
+      "checkin": "2026-11-27",
+      "checkout": "2026-11-29",
+      "nights": 2,
+      "occupancy": {
+        "adults": 2,
+        "rooms": 1,
+        "children_ages": []
+      },
+      "currency": "BRL"
+    },
+    {
+      "job_id": "1e7b217756141bd9c0e8",
+      "hotel_key": "secreto",
+      "hotel_name": "Secreto Boutique Hotel",
+      "booking_url": "https://www.booking.com/hotel/br/secreto-boutique.html",
+      "required_features": [
+        "Quarto com banheira de hidromassagem privativa",
+        "Café da manhã incluído"
+      ],
+      "checkin": "2026-11-30",
+      "checkout": "2026-12-02",
+      "nights": 2,
+      "occupancy": {
+        "adults": 2,
+        "rooms": 1,
+        "children_ages": []
+      },
+      "currency": "BRL"
+    },
+    {
+      "job_id": "e1a7440f67131e21ca7a",
+      "hotel_key": "secreto",
+      "hotel_name": "Secreto Boutique Hotel",
+      "booking_url": "https://www.booking.com/hotel/br/secreto-boutique.html",
+      "required_features": [
+        "Quarto com banheira de hidromassagem privativa",
+        "Café da manhã incluído"
+      ],
+      "checkin": "2026-12-04",
+      "checkout": "2026-12-06",
+      "nights": 2,
+      "occupancy": {
+        "adults": 2,
+        "rooms": 1,
+        "children_ages": []
+      },
+      "currency": "BRL"
+    },
+    {
+      "job_id": "5327c6e914a80b178dde",
+      "hotel_key": "secreto",
+      "hotel_name": "Secreto Boutique Hotel",
+      "booking_url": "https://www.booking.com/hotel/br/secreto-boutique.html",
+      "required_features": [
+        "Quarto com banheira de hidromassagem privativa",
+        "Café da manhã incluído"
+      ],
+      "checkin": "2026-12-11",
+      "checkout": "2026-12-13",
+      "nights": 2,
+      "occupancy": {
+        "adults": 2,
+        "rooms": 1,
+        "children_ages": []
+      },
+      "currency": "BRL"
+    },
+    {
+      "job_id": "5a67250932cf093038b5",
+      "hotel_key": "europa",
+      "hotel_name": "Europa Hotel",
+      "booking_url": "https://www.booking.com/hotel/br/europa-campos-do-jordao.html",
+      "required_features": [
+        "Quarto com banheira de hidromassagem privativa",
+        "Café da manhã incluído"
+      ],
+      "checkin": "2026-10-23",
+      "checkout": "2026-10-25",
+      "nights": 2,
+      "occupancy": {
+        "adults": 2,
+        "rooms": 1,
+        "children_ages": []
+      },
+      "currency": "BRL"
+    },
+    {
+      "job_id": "f86b7dd9577f9efd9160",
+      "hotel_key": "europa",
+      "hotel_name": "Europa Hotel",
+      "booking_url": "https://www.booking.com/hotel/br/europa-campos-do-jordao.html",
+      "required_features": [
+        "Quarto com banheira de hidromassagem privativa",
+        "Café da manhã incluído"
+      ],
+      "checkin": "2026-10-30",
+      "checkout": "2026-11-02",
+      "nights": 3,
+      "occupancy": {
+        "adults": 2,
+        "rooms": 1,
+        "children_ages": []
+      },
+      "currency": "BRL"
+    },
+    {
+      "job_id": "b4a43b6c89bfda9f57ab",
+      "hotel_key": "europa",
+      "hotel_name": "Europa Hotel",
+      "booking_url": "https://www.booking.com/hotel/br/europa-campos-do-jordao.html",
+      "required_features": [
+        "Quarto com banheira de hidromassagem privativa",
+        "Café da manhã incluído"
+      ],
+      "checkin": "2026-11-06",
+      "checkout": "2026-11-08",
+      "nights": 2,
+      "occupancy": {
+        "adults": 2,
+        "rooms": 1,
+        "children_ages": []
+      },
+      "currency": "BRL"
+    },
+    {
+      "job_id": "8b62edb15ae7e7115f87",
+      "hotel_key": "europa",
+      "hotel_name": "Europa Hotel",
+      "booking_url": "https://www.booking.com/hotel/br/europa-campos-do-jordao.html",
+      "required_features": [
+        "Quarto com banheira de hidromassagem privativa",
+        "Café da manhã incluído"
+      ],
+      "checkin": "2026-11-11",
+      "checkout": "2026-11-12",
+      "nights": 1,
+      "occupancy": {
+        "adults": 2,
+        "rooms": 1,
+        "children_ages": []
+      },
+      "currency": "BRL"
+    },
+    {
+      "job_id": "6973318094ea2874c41b",
+      "hotel_key": "europa",
+      "hotel_name": "Europa Hotel",
+      "booking_url": "https://www.booking.com/hotel/br/europa-campos-do-jordao.html",
+      "required_features": [
+        "Quarto com banheira de hidromassagem privativa",
+        "Café da manhã incluído"
+      ],
+      "checkin": "2026-11-13",
+      "checkout": "2026-11-15",
+      "nights": 2,
+      "occupancy": {
+        "adults": 2,
+        "rooms": 1,
+        "children_ages": []
+      },
+      "currency": "BRL"
+    },
+    {
+      "job_id": "bb37cd5a2ebc58fcc477",
+      "hotel_key": "europa",
+      "hotel_name": "Europa Hotel",
+      "booking_url": "https://www.booking.com/hotel/br/europa-campos-do-jordao.html",
+      "required_features": [
+        "Quarto com banheira de hidromassagem privativa",
+        "Café da manhã incluído"
+      ],
+      "checkin": "2026-11-20",
+      "checkout": "2026-11-22",
+      "nights": 2,
+      "occupancy": {
+        "adults": 2,
+        "rooms": 1,
+        "children_ages": []
+      },
+      "currency": "BRL"
+    },
+    {
+      "job_id": "619387ccbef10ccef1ce",
+      "hotel_key": "europa",
+      "hotel_name": "Europa Hotel",
+      "booking_url": "https://www.booking.com/hotel/br/europa-campos-do-jordao.html",
+      "required_features": [
+        "Quarto com banheira de hidromassagem privativa",
+        "Café da manhã incluído"
+      ],
+      "checkin": "2026-11-27",
+      "checkout": "2026-11-29",
+      "nights": 2,
+      "occupancy": {
+        "adults": 2,
+        "rooms": 1,
+        "children_ages": []
+      },
+      "currency": "BRL"
+    },
+    {
+      "job_id": "4d2e1b96cff653a67ec9",
+      "hotel_key": "europa",
+      "hotel_name": "Europa Hotel",
+      "booking_url": "https://www.booking.com/hotel/br/europa-campos-do-jordao.html",
+      "required_features": [
+        "Quarto com banheira de hidromassagem privativa",
+        "Café da manhã incluído"
+      ],
+      "checkin": "2026-11-30",
+      "checkout": "2026-12-02",
+      "nights": 2,
+      "occupancy": {
+        "adults": 2,
+        "rooms": 1,
+        "children_ages": []
+      },
+      "currency": "BRL"
+    },
+    {
+      "job_id": "1ad617de1f0d4f22f6d6",
+      "hotel_key": "europa",
+      "hotel_name": "Europa Hotel",
+      "booking_url": "https://www.booking.com/hotel/br/europa-campos-do-jordao.html",
+      "required_features": [
+        "Quarto com banheira de hidromassagem privativa",
+        "Café da manhã incluído"
+      ],
+      "checkin": "2026-12-04",
+      "checkout": "2026-12-06",
+      "nights": 2,
+      "occupancy": {
+        "adults": 2,
+        "rooms": 1,
+        "children_ages": []
+      },
+      "currency": "BRL"
+    },
+    {
+      "job_id": "98fde1b9aa480849ab09",
+      "hotel_key": "europa",
+      "hotel_name": "Europa Hotel",
+      "booking_url": "https://www.booking.com/hotel/br/europa-campos-do-jordao.html",
+      "required_features": [
+        "Quarto com banheira de hidromassagem privativa",
+        "Café da manhã incluído"
+      ],
+      "checkin": "2026-12-11",
+      "checkout": "2026-12-13",
+      "nights": 2,
+      "occupancy": {
+        "adults": 2,
+        "rooms": 1,
+        "children_ages": []
+      },
+      "currency": "BRL"
+    },
+    {
+      "job_id": "7643126f952ed91f8dec",
+      "hotel_key": "villa-belle",
+      "hotel_name": "Villa Belle Chalés",
+      "booking_url": "https://www.booking.com/hotel/br/la-vie-pousada-de-charme.html",
+      "required_features": [
+        "Quarto com banheira de hidromassagem privativa",
+        "Café da manhã incluído"
+      ],
+      "checkin": "2026-10-23",
+      "checkout": "2026-10-25",
+      "nights": 2,
+      "occupancy": {
+        "adults": 2,
+        "rooms": 1,
+        "children_ages": []
+      },
+      "currency": "BRL"
+    },
+    {
+      "job_id": "5f7b853853889cddd0d6",
+      "hotel_key": "villa-belle",
+      "hotel_name": "Villa Belle Chalés",
+      "booking_url": "https://www.booking.com/hotel/br/la-vie-pousada-de-charme.html",
+      "required_features": [
+        "Quarto com banheira de hidromassagem privativa",
+        "Café da manhã incluído"
+      ],
+      "checkin": "2026-10-30",
+      "checkout": "2026-11-02",
+      "nights": 3,
+      "occupancy": {
+        "adults": 2,
+        "rooms": 1,
+        "children_ages": []
+      },
+      "currency": "BRL"
+    },
+    {
+      "job_id": "a6f31ab12a57a772e2ae",
+      "hotel_key": "villa-belle",
+      "hotel_name": "Villa Belle Chalés",
+      "booking_url": "https://www.booking.com/hotel/br/la-vie-pousada-de-charme.html",
+      "required_features": [
+        "Quarto com banheira de hidromassagem privativa",
+        "Café da manhã incluído"
+      ],
+      "checkin": "2026-11-06",
+      "checkout": "2026-11-08",
+      "nights": 2,
+      "occupancy": {
+        "adults": 2,
+        "rooms": 1,
+        "children_ages": []
+      },
+      "currency": "BRL"
+    },
+    {
+      "job_id": "1ca8a984914d105c12a7",
+      "hotel_key": "villa-belle",
+      "hotel_name": "Villa Belle Chalés",
+      "booking_url": "https://www.booking.com/hotel/br/la-vie-pousada-de-charme.html",
+      "required_features": [
+        "Quarto com banheira de hidromassagem privativa",
+        "Café da manhã incluído"
+      ],
+      "checkin": "2026-11-11",
+      "checkout": "2026-11-12",
+      "nights": 1,
+      "occupancy": {
+        "adults": 2,
+        "rooms": 1,
+        "children_ages": []
+      },
+      "currency": "BRL"
+    },
+    {
+      "job_id": "976d428a02d3c09afe79",
+      "hotel_key": "villa-belle",
+      "hotel_name": "Villa Belle Chalés",
+      "booking_url": "https://www.booking.com/hotel/br/la-vie-pousada-de-charme.html",
+      "required_features": [
+        "Quarto com banheira de hidromassagem privativa",
+        "Café da manhã incluído"
+      ],
+      "checkin": "2026-11-13",
+      "checkout": "2026-11-15",
+      "nights": 2,
+      "occupancy": {
+        "adults": 2,
+        "rooms": 1,
+        "children_ages": []
+      },
+      "currency": "BRL"
+    },
+    {
+      "job_id": "830d1ec784604004071b",
+      "hotel_key": "villa-belle",
+      "hotel_name": "Villa Belle Chalés",
+      "booking_url": "https://www.booking.com/hotel/br/la-vie-pousada-de-charme.html",
+      "required_features": [
+        "Quarto com banheira de hidromassagem privativa",
+        "Café da manhã incluído"
+      ],
+      "checkin": "2026-11-20",
+      "checkout": "2026-11-22",
+      "nights": 2,
+      "occupancy": {
+        "adults": 2,
+        "rooms": 1,
+        "children_ages": []
+      },
+      "currency": "BRL"
+    },
+    {
+      "job_id": "3bee84b3f47ecf0749eb",
+      "hotel_key": "villa-belle",
+      "hotel_name": "Villa Belle Chalés",
+      "booking_url": "https://www.booking.com/hotel/br/la-vie-pousada-de-charme.html",
+      "required_features": [
+        "Quarto com banheira de hidromassagem privativa",
+        "Café da manhã incluído"
+      ],
+      "checkin": "2026-11-27",
+      "checkout": "2026-11-29",
+      "nights": 2,
+      "occupancy": {
+        "adults": 2,
+        "rooms": 1,
+        "children_ages": []
+      },
+      "currency": "BRL"
+    },
+    {
+      "job_id": "bb3a092c192e4598c919",
+      "hotel_key": "villa-belle",
+      "hotel_name": "Villa Belle Chalés",
+      "booking_url": "https://www.booking.com/hotel/br/la-vie-pousada-de-charme.html",
+      "required_features": [
+        "Quarto com banheira de hidromassagem privativa",
+        "Café da manhã incluído"
+      ],
+      "checkin": "2026-11-30",
+      "checkout": "2026-12-02",
+      "nights": 2,
+      "occupancy": {
+        "adults": 2,
+        "rooms": 1,
+        "children_ages": []
+      },
+      "currency": "BRL"
+    },
+    {
+      "job_id": "216b90c42a8ea01baeb4",
+      "hotel_key": "villa-belle",
+      "hotel_name": "Villa Belle Chalés",
+      "booking_url": "https://www.booking.com/hotel/br/la-vie-pousada-de-charme.html",
+      "required_features": [
+        "Quarto com banheira de hidromassagem privativa",
+        "Café da manhã incluído"
+      ],
+      "checkin": "2026-12-04",
+      "checkout": "2026-12-06",
+      "nights": 2,
+      "occupancy": {
+        "adults": 2,
+        "rooms": 1,
+        "children_ages": []
+      },
+      "currency": "BRL"
+    },
+    {
+      "job_id": "a0c3e5bf0d9d38eb19a8",
+      "hotel_key": "villa-belle",
+      "hotel_name": "Villa Belle Chalés",
+      "booking_url": "https://www.booking.com/hotel/br/la-vie-pousada-de-charme.html",
+      "required_features": [
+        "Quarto com banheira de hidromassagem privativa",
+        "Café da manhã incluído"
+      ],
+      "checkin": "2026-12-11",
+      "checkout": "2026-12-13",
+      "nights": 2,
+      "occupancy": {
+        "adults": 2,
+        "rooms": 1,
+        "children_ages": []
+      },
+      "currency": "BRL"
+    },
+    {
+      "job_id": "b0fc708606d67333dc91",
+      "hotel_key": "cafe-poesia",
+      "hotel_name": "Pousada Cafe Poesia",
+      "booking_url": "https://www.booking.com/hotel/br/pousada-cafe-poesia.html",
+      "required_features": [
+        "Quarto com banheira de hidromassagem privativa",
+        "Café da manhã incluído"
+      ],
+      "checkin": "2026-10-23",
+      "checkout": "2026-10-25",
+      "nights": 2,
+      "occupancy": {
+        "adults": 2,
+        "rooms": 1,
+        "children_ages": []
+      },
+      "currency": "BRL"
+    },
+    {
+      "job_id": "ec102db7548fa65426d1",
+      "hotel_key": "cafe-poesia",
+      "hotel_name": "Pousada Cafe Poesia",
+      "booking_url": "https://www.booking.com/hotel/br/pousada-cafe-poesia.html",
+      "required_features": [
+        "Quarto com banheira de hidromassagem privativa",
+        "Café da manhã incluído"
+      ],
+      "checkin": "2026-10-30",
+      "checkout": "2026-11-02",
+      "nights": 3,
+      "occupancy": {
+        "adults": 2,
+        "rooms": 1,
+        "children_ages": []
+      },
+      "currency": "BRL"
+    },
+    {
+      "job_id": "65944f9b5f38715ac93e",
+      "hotel_key": "cafe-poesia",
+      "hotel_name": "Pousada Cafe Poesia",
+      "booking_url": "https://www.booking.com/hotel/br/pousada-cafe-poesia.html",
+      "required_features": [
+        "Quarto com banheira de hidromassagem privativa",
+        "Café da manhã incluído"
+      ],
+      "checkin": "2026-11-06",
+      "checkout": "2026-11-08",
+      "nights": 2,
+      "occupancy": {
+        "adults": 2,
+        "rooms": 1,
+        "children_ages": []
+      },
+      "currency": "BRL"
+    },
+    {
+      "job_id": "8e3804be1c6ad6b52c97",
+      "hotel_key": "cafe-poesia",
+      "hotel_name": "Pousada Cafe Poesia",
+      "booking_url": "https://www.booking.com/hotel/br/pousada-cafe-poesia.html",
+      "required_features": [
+        "Quarto com banheira de hidromassagem privativa",
+        "Café da manhã incluído"
+      ],
+      "checkin": "2026-11-11",
+      "checkout": "2026-11-12",
+      "nights": 1,
+      "occupancy": {
+        "adults": 2,
+        "rooms": 1,
+        "children_ages": []
+      },
+      "currency": "BRL"
+    },
+    {
+      "job_id": "1ba824ee468d14cbd706",
+      "hotel_key": "cafe-poesia",
+      "hotel_name": "Pousada Cafe Poesia",
+      "booking_url": "https://www.booking.com/hotel/br/pousada-cafe-poesia.html",
+      "required_features": [
+        "Quarto com banheira de hidromassagem privativa",
+        "Café da manhã incluído"
+      ],
+      "checkin": "2026-11-13",
+      "checkout": "2026-11-15",
+      "nights": 2,
+      "occupancy": {
+        "adults": 2,
+        "rooms": 1,
+        "children_ages": []
+      },
+      "currency": "BRL"
+    },
+    {
+      "job_id": "8ec5ce68992e6cebd5dc",
+      "hotel_key": "cafe-poesia",
+      "hotel_name": "Pousada Cafe Poesia",
+      "booking_url": "https://www.booking.com/hotel/br/pousada-cafe-poesia.html",
+      "required_features": [
+        "Quarto com banheira de hidromassagem privativa",
+        "Café da manhã incluído"
+      ],
+      "checkin": "2026-11-20",
+      "checkout": "2026-11-22",
+      "nights": 2,
+      "occupancy": {
+        "adults": 2,
+        "rooms": 1,
+        "children_ages": []
+      },
+      "currency": "BRL"
+    },
+    {
+      "job_id": "e8e0370387e11408ee56",
+      "hotel_key": "cafe-poesia",
+      "hotel_name": "Pousada Cafe Poesia",
+      "booking_url": "https://www.booking.com/hotel/br/pousada-cafe-poesia.html",
+      "required_features": [
+        "Quarto com banheira de hidromassagem privativa",
+        "Café da manhã incluído"
+      ],
+      "checkin": "2026-11-27",
+      "checkout": "2026-11-29",
+      "nights": 2,
+      "occupancy": {
+        "adults": 2,
+        "rooms": 1,
+        "children_ages": []
+      },
+      "currency": "BRL"
+    },
+    {
+      "job_id": "5e74aae21b89f549c3fa",
+      "hotel_key": "cafe-poesia",
+      "hotel_name": "Pousada Cafe Poesia",
+      "booking_url": "https://www.booking.com/hotel/br/pousada-cafe-poesia.html",
+      "required_features": [
+        "Quarto com banheira de hidromassagem privativa",
+        "Café da manhã incluído"
+      ],
+      "checkin": "2026-11-30",
+      "checkout": "2026-12-02",
+      "nights": 2,
+      "occupancy": {
+        "adults": 2,
+        "rooms": 1,
+        "children_ages": []
+      },
+      "currency": "BRL"
+    },
+    {
+      "job_id": "1479329644065e4887be",
+      "hotel_key": "cafe-poesia",
+      "hotel_name": "Pousada Cafe Poesia",
+      "booking_url": "https://www.booking.com/hotel/br/pousada-cafe-poesia.html",
+      "required_features": [
+        "Quarto com banheira de hidromassagem privativa",
+        "Café da manhã incluído"
+      ],
+      "checkin": "2026-12-04",
+      "checkout": "2026-12-06",
+      "nights": 2,
+      "occupancy": {
+        "adults": 2,
+        "rooms": 1,
+        "children_ages": []
+      },
+      "currency": "BRL"
+    },
+    {
+      "job_id": "349805e4e45544526240",
+      "hotel_key": "cafe-poesia",
+      "hotel_name": "Pousada Cafe Poesia",
+      "booking_url": "https://www.booking.com/hotel/br/pousada-cafe-poesia.html",
+      "required_features": [
+        "Quarto com banheira de hidromassagem privativa",
+        "Café da manhã incluído"
+      ],
+      "checkin": "2026-12-11",
+      "checkout": "2026-12-13",
+      "nights": 2,
+      "occupancy": {
+        "adults": 2,
+        "rooms": 1,
+        "children_ages": []
+      },
+      "currency": "BRL"
+    },
+    {
+      "job_id": "2ac979848c8f8f4d9c8b",
+      "hotel_key": "murano",
+      "hotel_name": "Pousada Murano",
+      "booking_url": "https://www.booking.com/hotel/br/pousada-murano.html",
+      "required_features": [
+        "Quarto com banheira de hidromassagem privativa",
+        "Café da manhã incluído"
+      ],
+      "checkin": "2026-10-23",
+      "checkout": "2026-10-25",
+      "nights": 2,
+      "occupancy": {
+        "adults": 2,
+        "rooms": 1,
+        "children_ages": []
+      },
+      "currency": "BRL"
+    },
+    {
+      "job_id": "aa5b0c3be7c80be7c0b1",
+      "hotel_key": "murano",
+      "hotel_name": "Pousada Murano",
+      "booking_url": "https://www.booking.com/hotel/br/pousada-murano.html",
+      "required_features": [
+        "Quarto com banheira de hidromassagem privativa",
+        "Café da manhã incluído"
+      ],
+      "checkin": "2026-10-30",
+      "checkout": "2026-11-02",
+      "nights": 3,
+      "occupancy": {
+        "adults": 2,
+        "rooms": 1,
+        "children_ages": []
+      },
+      "currency": "BRL"
+    },
+    {
+      "job_id": "8ef18c3a5308b1643dd9",
+      "hotel_key": "murano",
+      "hotel_name": "Pousada Murano",
+      "booking_url": "https://www.booking.com/hotel/br/pousada-murano.html",
+      "required_features": [
+        "Quarto com banheira de hidromassagem privativa",
+        "Café da manhã incluído"
+      ],
+      "checkin": "2026-11-06",
+      "checkout": "2026-11-08",
+      "nights": 2,
+      "occupancy": {
+        "adults": 2,
+        "rooms": 1,
+        "children_ages": []
+      },
+      "currency": "BRL"
+    },
+    {
+      "job_id": "6fdb27e9f0a83c6185b1",
+      "hotel_key": "murano",
+      "hotel_name": "Pousada Murano",
+      "booking_url": "https://www.booking.com/hotel/br/pousada-murano.html",
+      "required_features": [
+        "Quarto com banheira de hidromassagem privativa",
+        "Café da manhã incluído"
+      ],
+      "checkin": "2026-11-11",
+      "checkout": "2026-11-12",
+      "nights": 1,
+      "occupancy": {
+        "adults": 2,
+        "rooms": 1,
+        "children_ages": []
+      },
+      "currency": "BRL"
+    },
+    {
+      "job_id": "0a3bc71c5173cefe44c5",
+      "hotel_key": "murano",
+      "hotel_name": "Pousada Murano",
+      "booking_url": "https://www.booking.com/hotel/br/pousada-murano.html",
+      "required_features": [
+        "Quarto com banheira de hidromassagem privativa",
+        "Café da manhã incluído"
+      ],
+      "checkin": "2026-11-13",
+      "checkout": "2026-11-15",
+      "nights": 2,
+      "occupancy": {
+        "adults": 2,
+        "rooms": 1,
+        "children_ages": []
+      },
+      "currency": "BRL"
+    },
+    {
+      "job_id": "214f73ce9e7cf7c0b2db",
+      "hotel_key": "murano",
+      "hotel_name": "Pousada Murano",
+      "booking_url": "https://www.booking.com/hotel/br/pousada-murano.html",
+      "required_features": [
+        "Quarto com banheira de hidromassagem privativa",
+        "Café da manhã incluído"
+      ],
+      "checkin": "2026-11-20",
+      "checkout": "2026-11-22",
+      "nights": 2,
+      "occupancy": {
+        "adults": 2,
+        "rooms": 1,
+        "children_ages": []
+      },
+      "currency": "BRL"
+    },
+    {
+      "job_id": "18ab8b6c68d3acc3c781",
+      "hotel_key": "murano",
+      "hotel_name": "Pousada Murano",
+      "booking_url": "https://www.booking.com/hotel/br/pousada-murano.html",
+      "required_features": [
+        "Quarto com banheira de hidromassagem privativa",
+        "Café da manhã incluído"
+      ],
+      "checkin": "2026-11-27",
+      "checkout": "2026-11-29",
+      "nights": 2,
+      "occupancy": {
+        "adults": 2,
+        "rooms": 1,
+        "children_ages": []
+      },
+      "currency": "BRL"
+    },
+    {
+      "job_id": "41a2d0b69507665d66dd",
+      "hotel_key": "murano",
+      "hotel_name": "Pousada Murano",
+      "booking_url": "https://www.booking.com/hotel/br/pousada-murano.html",
+      "required_features": [
+        "Quarto com banheira de hidromassagem privativa",
+        "Café da manhã incluído"
+      ],
+      "checkin": "2026-11-30",
+      "checkout": "2026-12-02",
+      "nights": 2,
+      "occupancy": {
+        "adults": 2,
+        "rooms": 1,
+        "children_ages": []
+      },
+      "currency": "BRL"
+    },
+    {
+      "job_id": "f73bee9fe07b8d4da884",
+      "hotel_key": "murano",
+      "hotel_name": "Pousada Murano",
+      "booking_url": "https://www.booking.com/hotel/br/pousada-murano.html",
+      "required_features": [
+        "Quarto com banheira de hidromassagem privativa",
+        "Café da manhã incluído"
+      ],
+      "checkin": "2026-12-04",
+      "checkout": "2026-12-06",
+      "nights": 2,
+      "occupancy": {
+        "adults": 2,
+        "rooms": 1,
+        "children_ages": []
+      },
+      "currency": "BRL"
+    },
+    {
+      "job_id": "e8e18d6c58288980231e",
+      "hotel_key": "murano",
+      "hotel_name": "Pousada Murano",
+      "booking_url": "https://www.booking.com/hotel/br/pousada-murano.html",
+      "required_features": [
+        "Quarto com banheira de hidromassagem privativa",
+        "Café da manhã incluído"
+      ],
+      "checkin": "2026-12-11",
+      "checkout": "2026-12-13",
+      "nights": 2,
+      "occupancy": {
+        "adults": 2,
+        "rooms": 1,
+        "children_ages": []
+      },
+      "currency": "BRL"
+    },
+    {
+      "job_id": "69631fe7beb45a93d3b3",
+      "hotel_key": "villa-nature",
+      "hotel_name": "Chalé Villa Nature",
+      "booking_url": "https://www.booking.com/hotel/br/villa-nature-campos-do-jordao.html",
+      "required_features": [
+        "Quarto com banheira de hidromassagem privativa",
+        "Café da manhã incluído"
+      ],
+      "checkin": "2026-10-23",
+      "checkout": "2026-10-25",
+      "nights": 2,
+      "occupancy": {
+        "adults": 2,
+        "rooms": 1,
+        "children_ages": []
+      },
+      "currency": "BRL"
+    },
+    {
+      "job_id": "bd397404ab7d8074b744",
+      "hotel_key": "villa-nature",
+      "hotel_name": "Chalé Villa Nature",
+      "booking_url": "https://www.booking.com/hotel/br/villa-nature-campos-do-jordao.html",
+      "required_features": [
+        "Quarto com banheira de hidromassagem privativa",
+        "Café da manhã incluído"
+      ],
+      "checkin": "2026-10-30",
+      "checkout": "2026-11-02",
+      "nights": 3,
+      "occupancy": {
+        "adults": 2,
+        "rooms": 1,
+        "children_ages": []
+      },
+      "currency": "BRL"
+    },
+    {
+      "job_id": "750daa4b6cca513076e5",
+      "hotel_key": "villa-nature",
+      "hotel_name": "Chalé Villa Nature",
+      "booking_url": "https://www.booking.com/hotel/br/villa-nature-campos-do-jordao.html",
+      "required_features": [
+        "Quarto com banheira de hidromassagem privativa",
+        "Café da manhã incluído"
+      ],
+      "checkin": "2026-11-06",
+      "checkout": "2026-11-08",
+      "nights": 2,
+      "occupancy": {
+        "adults": 2,
+        "rooms": 1,
+        "children_ages": []
+      },
+      "currency": "BRL"
+    },
+    {
+      "job_id": "2e812091eed75fcd387a",
+      "hotel_key": "villa-nature",
+      "hotel_name": "Chalé Villa Nature",
+      "booking_url": "https://www.booking.com/hotel/br/villa-nature-campos-do-jordao.html",
+      "required_features": [
+        "Quarto com banheira de hidromassagem privativa",
+        "Café da manhã incluído"
+      ],
+      "checkin": "2026-11-11",
+      "checkout": "2026-11-12",
+      "nights": 1,
+      "occupancy": {
+        "adults": 2,
+        "rooms": 1,
+        "children_ages": []
+      },
+      "currency": "BRL"
+    },
+    {
+      "job_id": "b264eb564f700de58032",
+      "hotel_key": "villa-nature",
+      "hotel_name": "Chalé Villa Nature",
+      "booking_url": "https://www.booking.com/hotel/br/villa-nature-campos-do-jordao.html",
+      "required_features": [
+        "Quarto com banheira de hidromassagem privativa",
+        "Café da manhã incluído"
+      ],
+      "checkin": "2026-11-13",
+      "checkout": "2026-11-15",
+      "nights": 2,
+      "occupancy": {
+        "adults": 2,
+        "rooms": 1,
+        "children_ages": []
+      },
+      "currency": "BRL"
+    },
+    {
+      "job_id": "2e2299aad99fe91815c0",
+      "hotel_key": "villa-nature",
+      "hotel_name": "Chalé Villa Nature",
+      "booking_url": "https://www.booking.com/hotel/br/villa-nature-campos-do-jordao.html",
+      "required_features": [
+        "Quarto com banheira de hidromassagem privativa",
+        "Café da manhã incluído"
+      ],
+      "checkin": "2026-11-20",
+      "checkout": "2026-11-22",
+      "nights": 2,
+      "occupancy": {
+        "adults": 2,
+        "rooms": 1,
+        "children_ages": []
+      },
+      "currency": "BRL"
+    },
+    {
+      "job_id": "e47049846911bad3192c",
+      "hotel_key": "villa-nature",
+      "hotel_name": "Chalé Villa Nature",
+      "booking_url": "https://www.booking.com/hotel/br/villa-nature-campos-do-jordao.html",
+      "required_features": [
+        "Quarto com banheira de hidromassagem privativa",
+        "Café da manhã incluído"
+      ],
+      "checkin": "2026-11-27",
+      "checkout": "2026-11-29",
+      "nights": 2,
+      "occupancy": {
+        "adults": 2,
+        "rooms": 1,
+        "children_ages": []
+      },
+      "currency": "BRL"
+    },
+    {
+      "job_id": "bc7110d43e9b6a44b136",
+      "hotel_key": "villa-nature",
+      "hotel_name": "Chalé Villa Nature",
+      "booking_url": "https://www.booking.com/hotel/br/villa-nature-campos-do-jordao.html",
+      "required_features": [
+        "Quarto com banheira de hidromassagem privativa",
+        "Café da manhã incluído"
+      ],
+      "checkin": "2026-11-30",
+      "checkout": "2026-12-02",
+      "nights": 2,
+      "occupancy": {
+        "adults": 2,
+        "rooms": 1,
+        "children_ages": []
+      },
+      "currency": "BRL"
+    },
+    {
+      "job_id": "07eda53abb6e42af813e",
+      "hotel_key": "villa-nature",
+      "hotel_name": "Chalé Villa Nature",
+      "booking_url": "https://www.booking.com/hotel/br/villa-nature-campos-do-jordao.html",
+      "required_features": [
+        "Quarto com banheira de hidromassagem privativa",
+        "Café da manhã incluído"
+      ],
+      "checkin": "2026-12-04",
+      "checkout": "2026-12-06",
+      "nights": 2,
+      "occupancy": {
+        "adults": 2,
+        "rooms": 1,
+        "children_ages": []
+      },
+      "currency": "BRL"
+    },
+    {
+      "job_id": "08792f7d18cf7266b65a",
+      "hotel_key": "villa-nature",
+      "hotel_name": "Chalé Villa Nature",
+      "booking_url": "https://www.booking.com/hotel/br/villa-nature-campos-do-jordao.html",
+      "required_features": [
+        "Quarto com banheira de hidromassagem privativa",
+        "Café da manhã incluído"
+      ],
+      "checkin": "2026-12-11",
+      "checkout": "2026-12-13",
+      "nights": 2,
+      "occupancy": {
+        "adults": 2,
+        "rooms": 1,
+        "children_ages": []
+      },
+      "currency": "BRL"
+    },
+    {
+      "job_id": "f40791a20ba0ef086179",
+      "hotel_key": "bela-vista-chale",
+      "hotel_name": "Bela Vista Chalé",
+      "booking_url": "https://www.booking.com/hotel/br/linda-casa-em-campos-do-jordao-campos-do-jordao12345.html",
+      "required_features": [
+        "Quarto com banheira de hidromassagem privativa",
+        "Café da manhã incluído"
+      ],
+      "checkin": "2026-10-23",
+      "checkout": "2026-10-25",
+      "nights": 2,
+      "occupancy": {
+        "adults": 2,
+        "rooms": 1,
+        "children_ages": []
+      },
+      "currency": "BRL"
+    },
+    {
+      "job_id": "02104d98e87ec5b7c87a",
+      "hotel_key": "bela-vista-chale",
+      "hotel_name": "Bela Vista Chalé",
+      "booking_url": "https://www.booking.com/hotel/br/linda-casa-em-campos-do-jordao-campos-do-jordao12345.html",
+      "required_features": [
+        "Quarto com banheira de hidromassagem privativa",
+        "Café da manhã incluído"
+      ],
+      "checkin": "2026-10-30",
+      "checkout": "2026-11-02",
+      "nights": 3,
+      "occupancy": {
+        "adults": 2,
+        "rooms": 1,
+        "children_ages": []
+      },
+      "currency": "BRL"
+    },
+    {
+      "job_id": "3108eeb4242fcb24fc28",
+      "hotel_key": "bela-vista-chale",
+      "hotel_name": "Bela Vista Chalé",
+      "booking_url": "https://www.booking.com/hotel/br/linda-casa-em-campos-do-jordao-campos-do-jordao12345.html",
+      "required_features": [
+        "Quarto com banheira de hidromassagem privativa",
+        "Café da manhã incluído"
+      ],
+      "checkin": "2026-11-06",
+      "checkout": "2026-11-08",
+      "nights": 2,
+      "occupancy": {
+        "adults": 2,
+        "rooms": 1,
+        "children_ages": []
+      },
+      "currency": "BRL"
+    },
+    {
+      "job_id": "bd208932b0daa9198068",
+      "hotel_key": "bela-vista-chale",
+      "hotel_name": "Bela Vista Chalé",
+      "booking_url": "https://www.booking.com/hotel/br/linda-casa-em-campos-do-jordao-campos-do-jordao12345.html",
+      "required_features": [
+        "Quarto com banheira de hidromassagem privativa",
+        "Café da manhã incluído"
+      ],
+      "checkin": "2026-11-11",
+      "checkout": "2026-11-12",
+      "nights": 1,
+      "occupancy": {
+        "adults": 2,
+        "rooms": 1,
+        "children_ages": []
+      },
+      "currency": "BRL"
+    },
+    {
+      "job_id": "1e3405d23390a522fee0",
+      "hotel_key": "bela-vista-chale",
+      "hotel_name": "Bela Vista Chalé",
+      "booking_url": "https://www.booking.com/hotel/br/linda-casa-em-campos-do-jordao-campos-do-jordao12345.html",
+      "required_features": [
+        "Quarto com banheira de hidromassagem privativa",
+        "Café da manhã incluído"
+      ],
+      "checkin": "2026-11-13",
+      "checkout": "2026-11-15",
+      "nights": 2,
+      "occupancy": {
+        "adults": 2,
+        "rooms": 1,
+        "children_ages": []
+      },
+      "currency": "BRL"
+    },
+    {
+      "job_id": "65644fc0a57f336dc04c",
+      "hotel_key": "bela-vista-chale",
+      "hotel_name": "Bela Vista Chalé",
+      "booking_url": "https://www.booking.com/hotel/br/linda-casa-em-campos-do-jordao-campos-do-jordao12345.html",
+      "required_features": [
+        "Quarto com banheira de hidromassagem privativa",
+        "Café da manhã incluído"
+      ],
+      "checkin": "2026-11-20",
+      "checkout": "2026-11-22",
+      "nights": 2,
+      "occupancy": {
+        "adults": 2,
+        "rooms": 1,
+        "children_ages": []
+      },
+      "currency": "BRL"
+    },
+    {
+      "job_id": "e4a50c00896ed7fa84f6",
+      "hotel_key": "bela-vista-chale",
+      "hotel_name": "Bela Vista Chalé",
+      "booking_url": "https://www.booking.com/hotel/br/linda-casa-em-campos-do-jordao-campos-do-jordao12345.html",
+      "required_features": [
+        "Quarto com banheira de hidromassagem privativa",
+        "Café da manhã incluído"
+      ],
+      "checkin": "2026-11-27",
+      "checkout": "2026-11-29",
+      "nights": 2,
+      "occupancy": {
+        "adults": 2,
+        "rooms": 1,
+        "children_ages": []
+      },
+      "currency": "BRL"
+    },
+    {
+      "job_id": "ade52c6313420e5aba2f",
+      "hotel_key": "bela-vista-chale",
+      "hotel_name": "Bela Vista Chalé",
+      "booking_url": "https://www.booking.com/hotel/br/linda-casa-em-campos-do-jordao-campos-do-jordao12345.html",
+      "required_features": [
+        "Quarto com banheira de hidromassagem privativa",
+        "Café da manhã incluído"
+      ],
+      "checkin": "2026-11-30",
+      "checkout": "2026-12-02",
+      "nights": 2,
+      "occupancy": {
+        "adults": 2,
+        "rooms": 1,
+        "children_ages": []
+      },
+      "currency": "BRL"
+    },
+    {
+      "job_id": "d04ffaf0c20dc462f4e8",
+      "hotel_key": "bela-vista-chale",
+      "hotel_name": "Bela Vista Chalé",
+      "booking_url": "https://www.booking.com/hotel/br/linda-casa-em-campos-do-jordao-campos-do-jordao12345.html",
+      "required_features": [
+        "Quarto com banheira de hidromassagem privativa",
+        "Café da manhã incluído"
+      ],
+      "checkin": "2026-12-04",
+      "checkout": "2026-12-06",
+      "nights": 2,
+      "occupancy": {
+        "adults": 2,
+        "rooms": 1,
+        "children_ages": []
+      },
+      "currency": "BRL"
+    },
+    {
+      "job_id": "c7231c4710a439700b06",
+      "hotel_key": "bela-vista-chale",
+      "hotel_name": "Bela Vista Chalé",
+      "booking_url": "https://www.booking.com/hotel/br/linda-casa-em-campos-do-jordao-campos-do-jordao12345.html",
+      "required_features": [
+        "Quarto com banheira de hidromassagem privativa",
+        "Café da manhã incluído"
+      ],
+      "checkin": "2026-12-11",
+      "checkout": "2026-12-13",
+      "nights": 2,
+      "occupancy": {
+        "adults": 2,
+        "rooms": 1,
+        "children_ages": []
+      },
+      "currency": "BRL"
+    },
+    {
+      "job_id": "44c9f6d2ad60ee33f89b",
+      "hotel_key": "geada",
+      "hotel_name": "Pousada Geada de Campos",
+      "booking_url": "https://www.booking.com/hotel/br/geada-de-campos.html",
+      "required_features": [
+        "Quarto com banheira de hidromassagem privativa",
+        "Café da manhã incluído"
+      ],
+      "checkin": "2026-10-23",
+      "checkout": "2026-10-25",
+      "nights": 2,
+      "occupancy": {
+        "adults": 2,
+        "rooms": 1,
+        "children_ages": []
+      },
+      "currency": "BRL"
+    },
+    {
+      "job_id": "d2028456f02ae3c5e108",
+      "hotel_key": "geada",
+      "hotel_name": "Pousada Geada de Campos",
+      "booking_url": "https://www.booking.com/hotel/br/geada-de-campos.html",
+      "required_features": [
+        "Quarto com banheira de hidromassagem privativa",
+        "Café da manhã incluído"
+      ],
+      "checkin": "2026-10-30",
+      "checkout": "2026-11-02",
+      "nights": 3,
+      "occupancy": {
+        "adults": 2,
+        "rooms": 1,
+        "children_ages": []
+      },
+      "currency": "BRL"
+    },
+    {
+      "job_id": "21a1ba954c1083cbf490",
+      "hotel_key": "geada",
+      "hotel_name": "Pousada Geada de Campos",
+      "booking_url": "https://www.booking.com/hotel/br/geada-de-campos.html",
+      "required_features": [
+        "Quarto com banheira de hidromassagem privativa",
+        "Café da manhã incluído"
+      ],
+      "checkin": "2026-11-06",
+      "checkout": "2026-11-08",
+      "nights": 2,
+      "occupancy": {
+        "adults": 2,
+        "rooms": 1,
+        "children_ages": []
+      },
+      "currency": "BRL"
+    },
+    {
+      "job_id": "6a00c0c0458f3f316d0d",
+      "hotel_key": "geada",
+      "hotel_name": "Pousada Geada de Campos",
+      "booking_url": "https://www.booking.com/hotel/br/geada-de-campos.html",
+      "required_features": [
+        "Quarto com banheira de hidromassagem privativa",
+        "Café da manhã incluído"
+      ],
+      "checkin": "2026-11-11",
+      "checkout": "2026-11-12",
+      "nights": 1,
+      "occupancy": {
+        "adults": 2,
+        "rooms": 1,
+        "children_ages": []
+      },
+      "currency": "BRL"
+    },
+    {
+      "job_id": "f9117840e1353e26c5eb",
+      "hotel_key": "geada",
+      "hotel_name": "Pousada Geada de Campos",
+      "booking_url": "https://www.booking.com/hotel/br/geada-de-campos.html",
+      "required_features": [
+        "Quarto com banheira de hidromassagem privativa",
+        "Café da manhã incluído"
+      ],
+      "checkin": "2026-11-13",
+      "checkout": "2026-11-15",
+      "nights": 2,
+      "occupancy": {
+        "adults": 2,
+        "rooms": 1,
+        "children_ages": []
+      },
+      "currency": "BRL"
+    },
+    {
+      "job_id": "c80c40e7d2c34df88339",
+      "hotel_key": "geada",
+      "hotel_name": "Pousada Geada de Campos",
+      "booking_url": "https://www.booking.com/hotel/br/geada-de-campos.html",
+      "required_features": [
+        "Quarto com banheira de hidromassagem privativa",
+        "Café da manhã incluído"
+      ],
+      "checkin": "2026-11-20",
+      "checkout": "2026-11-22",
+      "nights": 2,
+      "occupancy": {
+        "adults": 2,
+        "rooms": 1,
+        "children_ages": []
+      },
+      "currency": "BRL"
+    },
+    {
+      "job_id": "2b1ab19360d75e33ec71",
+      "hotel_key": "geada",
+      "hotel_name": "Pousada Geada de Campos",
+      "booking_url": "https://www.booking.com/hotel/br/geada-de-campos.html",
+      "required_features": [
+        "Quarto com banheira de hidromassagem privativa",
+        "Café da manhã incluído"
+      ],
+      "checkin": "2026-11-27",
+      "checkout": "2026-11-29",
+      "nights": 2,
+      "occupancy": {
+        "adults": 2,
+        "rooms": 1,
+        "children_ages": []
+      },
+      "currency": "BRL"
+    },
+    {
+      "job_id": "87fe85cebafe6ad9c4d2",
+      "hotel_key": "geada",
+      "hotel_name": "Pousada Geada de Campos",
+      "booking_url": "https://www.booking.com/hotel/br/geada-de-campos.html",
+      "required_features": [
+        "Quarto com banheira de hidromassagem privativa",
+        "Café da manhã incluído"
+      ],
+      "checkin": "2026-11-30",
+      "checkout": "2026-12-02",
+      "nights": 2,
+      "occupancy": {
+        "adults": 2,
+        "rooms": 1,
+        "children_ages": []
+      },
+      "currency": "BRL"
+    },
+    {
+      "job_id": "8498eaffb05835184d7c",
+      "hotel_key": "geada",
+      "hotel_name": "Pousada Geada de Campos",
+      "booking_url": "https://www.booking.com/hotel/br/geada-de-campos.html",
+      "required_features": [
+        "Quarto com banheira de hidromassagem privativa",
+        "Café da manhã incluído"
+      ],
+      "checkin": "2026-12-04",
+      "checkout": "2026-12-06",
+      "nights": 2,
+      "occupancy": {
+        "adults": 2,
+        "rooms": 1,
+        "children_ages": []
+      },
+      "currency": "BRL"
+    },
+    {
+      "job_id": "84fae9eb3c1e69cc495d",
+      "hotel_key": "geada",
+      "hotel_name": "Pousada Geada de Campos",
+      "booking_url": "https://www.booking.com/hotel/br/geada-de-campos.html",
+      "required_features": [
+        "Quarto com banheira de hidromassagem privativa",
+        "Café da manhã incluído"
+      ],
+      "checkin": "2026-12-11",
+      "checkout": "2026-12-13",
+      "nights": 2,
+      "occupancy": {
+        "adults": 2,
+        "rooms": 1,
+        "children_ages": []
+      },
+      "currency": "BRL"
+    },
+    {
+      "job_id": "46410534ed012e078a20",
+      "hotel_key": "casa-redonda",
+      "hotel_name": "Pousada Casa Redonda",
+      "booking_url": "https://www.booking.com/hotel/br/pousada-casa-redonda-campos-do-jordao.html",
+      "required_features": [
+        "Quarto com banheira de hidromassagem privativa",
+        "Café da manhã incluído"
+      ],
+      "checkin": "2026-10-23",
+      "checkout": "2026-10-25",
+      "nights": 2,
+      "occupancy": {
+        "adults": 2,
+        "rooms": 1,
+        "children_ages": []
+      },
+      "currency": "BRL"
+    },
+    {
+      "job_id": "686ff4b20a84892ea6b5",
+      "hotel_key": "casa-redonda",
+      "hotel_name": "Pousada Casa Redonda",
+      "booking_url": "https://www.booking.com/hotel/br/pousada-casa-redonda-campos-do-jordao.html",
+      "required_features": [
+        "Quarto com banheira de hidromassagem privativa",
+        "Café da manhã incluído"
+      ],
+      "checkin": "2026-10-30",
+      "checkout": "2026-11-02",
+      "nights": 3,
+      "occupancy": {
+        "adults": 2,
+        "rooms": 1,
+        "children_ages": []
+      },
+      "currency": "BRL"
+    },
+    {
+      "job_id": "6737546f0a6b3fb9a5f1",
+      "hotel_key": "casa-redonda",
+      "hotel_name": "Pousada Casa Redonda",
+      "booking_url": "https://www.booking.com/hotel/br/pousada-casa-redonda-campos-do-jordao.html",
+      "required_features": [
+        "Quarto com banheira de hidromassagem privativa",
+        "Café da manhã incluído"
+      ],
+      "checkin": "2026-11-06",
+      "checkout": "2026-11-08",
+      "nights": 2,
+      "occupancy": {
+        "adults": 2,
+        "rooms": 1,
+        "children_ages": []
+      },
+      "currency": "BRL"
+    },
+    {
+      "job_id": "e7ca336d7fd7f1cc4509",
+      "hotel_key": "casa-redonda",
+      "hotel_name": "Pousada Casa Redonda",
+      "booking_url": "https://www.booking.com/hotel/br/pousada-casa-redonda-campos-do-jordao.html",
+      "required_features": [
+        "Quarto com banheira de hidromassagem privativa",
+        "Café da manhã incluído"
+      ],
+      "checkin": "2026-11-11",
+      "checkout": "2026-11-12",
+      "nights": 1,
+      "occupancy": {
+        "adults": 2,
+        "rooms": 1,
+        "children_ages": []
+      },
+      "currency": "BRL"
+    },
+    {
+      "job_id": "15e19852f57e820d6890",
+      "hotel_key": "casa-redonda",
+      "hotel_name": "Pousada Casa Redonda",
+      "booking_url": "https://www.booking.com/hotel/br/pousada-casa-redonda-campos-do-jordao.html",
+      "required_features": [
+        "Quarto com banheira de hidromassagem privativa",
+        "Café da manhã incluído"
+      ],
+      "checkin": "2026-11-13",
+      "checkout": "2026-11-15",
+      "nights": 2,
+      "occupancy": {
+        "adults": 2,
+        "rooms": 1,
+        "children_ages": []
+      },
+      "currency": "BRL"
+    },
+    {
+      "job_id": "dd7967e6de354b487ce5",
+      "hotel_key": "casa-redonda",
+      "hotel_name": "Pousada Casa Redonda",
+      "booking_url": "https://www.booking.com/hotel/br/pousada-casa-redonda-campos-do-jordao.html",
+      "required_features": [
+        "Quarto com banheira de hidromassagem privativa",
+        "Café da manhã incluído"
+      ],
+      "checkin": "2026-11-20",
+      "checkout": "2026-11-22",
+      "nights": 2,
+      "occupancy": {
+        "adults": 2,
+        "rooms": 1,
+        "children_ages": []
+      },
+      "currency": "BRL"
+    },
+    {
+      "job_id": "ad8648043a0b79f1d4a2",
+      "hotel_key": "casa-redonda",
+      "hotel_name": "Pousada Casa Redonda",
+      "booking_url": "https://www.booking.com/hotel/br/pousada-casa-redonda-campos-do-jordao.html",
+      "required_features": [
+        "Quarto com banheira de hidromassagem privativa",
+        "Café da manhã incluído"
+      ],
+      "checkin": "2026-11-27",
+      "checkout": "2026-11-29",
+      "nights": 2,
+      "occupancy": {
+        "adults": 2,
+        "rooms": 1,
+        "children_ages": []
+      },
+      "currency": "BRL"
+    },
+    {
+      "job_id": "e9b613c1b1bc9ac9d973",
+      "hotel_key": "casa-redonda",
+      "hotel_name": "Pousada Casa Redonda",
+      "booking_url": "https://www.booking.com/hotel/br/pousada-casa-redonda-campos-do-jordao.html",
+      "required_features": [
+        "Quarto com banheira de hidromassagem privativa",
+        "Café da manhã incluído"
+      ],
+      "checkin": "2026-11-30",
+      "checkout": "2026-12-02",
+      "nights": 2,
+      "occupancy": {
+        "adults": 2,
+        "rooms": 1,
+        "children_ages": []
+      },
+      "currency": "BRL"
+    },
+    {
+      "job_id": "34912b90f86ec091da21",
+      "hotel_key": "casa-redonda",
+      "hotel_name": "Pousada Casa Redonda",
+      "booking_url": "https://www.booking.com/hotel/br/pousada-casa-redonda-campos-do-jordao.html",
+      "required_features": [
+        "Quarto com banheira de hidromassagem privativa",
+        "Café da manhã incluído"
+      ],
+      "checkin": "2026-12-04",
+      "checkout": "2026-12-06",
+      "nights": 2,
+      "occupancy": {
+        "adults": 2,
+        "rooms": 1,
+        "children_ages": []
+      },
+      "currency": "BRL"
+    },
+    {
+      "job_id": "ecaac17eafab6706bfd7",
+      "hotel_key": "casa-redonda",
+      "hotel_name": "Pousada Casa Redonda",
+      "booking_url": "https://www.booking.com/hotel/br/pousada-casa-redonda-campos-do-jordao.html",
+      "required_features": [
+        "Quarto com banheira de hidromassagem privativa",
+        "Café da manhã incluído"
+      ],
+      "checkin": "2026-12-11",
+      "checkout": "2026-12-13",
+      "nights": 2,
+      "occupancy": {
+        "adults": 2,
+        "rooms": 1,
+        "children_ages": []
+      },
+      "currency": "BRL"
+    },
+    {
+      "job_id": "0cfb2af8dae072371e2a",
+      "hotel_key": "charme-chales",
+      "hotel_name": "Charmê Chalés",
+      "booking_url": "https://www.booking.com/hotel/br/charme-chales.html",
+      "required_features": [
+        "Quarto com banheira de hidromassagem privativa",
+        "Café da manhã incluído"
+      ],
+      "checkin": "2026-10-23",
+      "checkout": "2026-10-25",
+      "nights": 2,
+      "occupancy": {
+        "adults": 2,
+        "rooms": 1,
+        "children_ages": []
+      },
+      "currency": "BRL"
+    },
+    {
+      "job_id": "51257eb938dc63905467",
+      "hotel_key": "charme-chales",
+      "hotel_name": "Charmê Chalés",
+      "booking_url": "https://www.booking.com/hotel/br/charme-chales.html",
+      "required_features": [
+        "Quarto com banheira de hidromassagem privativa",
+        "Café da manhã incluído"
+      ],
+      "checkin": "2026-10-30",
+      "checkout": "2026-11-02",
+      "nights": 3,
+      "occupancy": {
+        "adults": 2,
+        "rooms": 1,
+        "children_ages": []
+      },
+      "currency": "BRL"
+    },
+    {
+      "job_id": "398184a442660237a756",
+      "hotel_key": "charme-chales",
+      "hotel_name": "Charmê Chalés",
+      "booking_url": "https://www.booking.com/hotel/br/charme-chales.html",
+      "required_features": [
+        "Quarto com banheira de hidromassagem privativa",
+        "Café da manhã incluído"
+      ],
+      "checkin": "2026-11-06",
+      "checkout": "2026-11-08",
+      "nights": 2,
+      "occupancy": {
+        "adults": 2,
+        "rooms": 1,
+        "children_ages": []
+      },
+      "currency": "BRL"
+    },
+    {
+      "job_id": "bd2b3cfa4517b81d5cfc",
+      "hotel_key": "charme-chales",
+      "hotel_name": "Charmê Chalés",
+      "booking_url": "https://www.booking.com/hotel/br/charme-chales.html",
+      "required_features": [
+        "Quarto com banheira de hidromassagem privativa",
+        "Café da manhã incluído"
+      ],
+      "checkin": "2026-11-11",
+      "checkout": "2026-11-12",
+      "nights": 1,
+      "occupancy": {
+        "adults": 2,
+        "rooms": 1,
+        "children_ages": []
+      },
+      "currency": "BRL"
+    },
+    {
+      "job_id": "7160faacf085c30be2d1",
+      "hotel_key": "charme-chales",
+      "hotel_name": "Charmê Chalés",
+      "booking_url": "https://www.booking.com/hotel/br/charme-chales.html",
+      "required_features": [
+        "Quarto com banheira de hidromassagem privativa",
+        "Café da manhã incluído"
+      ],
+      "checkin": "2026-11-13",
+      "checkout": "2026-11-15",
+      "nights": 2,
+      "occupancy": {
+        "adults": 2,
+        "rooms": 1,
+        "children_ages": []
+      },
+      "currency": "BRL"
+    },
+    {
+      "job_id": "7fe1eb1c5fe39acb6565",
+      "hotel_key": "charme-chales",
+      "hotel_name": "Charmê Chalés",
+      "booking_url": "https://www.booking.com/hotel/br/charme-chales.html",
+      "required_features": [
+        "Quarto com banheira de hidromassagem privativa",
+        "Café da manhã incluído"
+      ],
+      "checkin": "2026-11-20",
+      "checkout": "2026-11-22",
+      "nights": 2,
+      "occupancy": {
+        "adults": 2,
+        "rooms": 1,
+        "children_ages": []
+      },
+      "currency": "BRL"
+    },
+    {
+      "job_id": "2e7ca387bbf52ce14e82",
+      "hotel_key": "charme-chales",
+      "hotel_name": "Charmê Chalés",
+      "booking_url": "https://www.booking.com/hotel/br/charme-chales.html",
+      "required_features": [
+        "Quarto com banheira de hidromassagem privativa",
+        "Café da manhã incluído"
+      ],
+      "checkin": "2026-11-27",
+      "checkout": "2026-11-29",
+      "nights": 2,
+      "occupancy": {
+        "adults": 2,
+        "rooms": 1,
+        "children_ages": []
+      },
+      "currency": "BRL"
+    },
+    {
+      "job_id": "475628029691ac0aa076",
+      "hotel_key": "charme-chales",
+      "hotel_name": "Charmê Chalés",
+      "booking_url": "https://www.booking.com/hotel/br/charme-chales.html",
+      "required_features": [
+        "Quarto com banheira de hidromassagem privativa",
+        "Café da manhã incluído"
+      ],
+      "checkin": "2026-11-30",
+      "checkout": "2026-12-02",
+      "nights": 2,
+      "occupancy": {
+        "adults": 2,
+        "rooms": 1,
+        "children_ages": []
+      },
+      "currency": "BRL"
+    },
+    {
+      "job_id": "007977dd8c1205890d80",
+      "hotel_key": "charme-chales",
+      "hotel_name": "Charmê Chalés",
+      "booking_url": "https://www.booking.com/hotel/br/charme-chales.html",
+      "required_features": [
+        "Quarto com banheira de hidromassagem privativa",
+        "Café da manhã incluído"
+      ],
+      "checkin": "2026-12-04",
+      "checkout": "2026-12-06",
+      "nights": 2,
+      "occupancy": {
+        "adults": 2,
+        "rooms": 1,
+        "children_ages": []
+      },
+      "currency": "BRL"
+    },
+    {
+      "job_id": "bc00b65667af6d53983c",
+      "hotel_key": "charme-chales",
+      "hotel_name": "Charmê Chalés",
+      "booking_url": "https://www.booking.com/hotel/br/charme-chales.html",
+      "required_features": [
+        "Quarto com banheira de hidromassagem privativa",
+        "Café da manhã incluído"
+      ],
+      "checkin": "2026-12-11",
+      "checkout": "2026-12-13",
+      "nights": 2,
+      "occupancy": {
+        "adults": 2,
+        "rooms": 1,
+        "children_ages": []
+      },
+      "currency": "BRL"
+    },
+    {
+      "job_id": "2bbe02ba0242ee9cb4d8",
+      "hotel_key": "vila-grega",
+      "hotel_name": "vila grega hotel",
+      "booking_url": "https://www.booking.com/hotel/br/suite-privativa-com-aquecedor-decoracao-nova.html",
+      "required_features": [
+        "Quarto com banheira de hidromassagem privativa",
+        "Café da manhã incluído"
+      ],
+      "checkin": "2026-10-23",
+      "checkout": "2026-10-25",
+      "nights": 2,
+      "occupancy": {
+        "adults": 2,
+        "rooms": 1,
+        "children_ages": []
+      },
+      "currency": "BRL"
+    },
+    {
+      "job_id": "3b01643f7e25f50a67e7",
+      "hotel_key": "vila-grega",
+      "hotel_name": "vila grega hotel",
+      "booking_url": "https://www.booking.com/hotel/br/suite-privativa-com-aquecedor-decoracao-nova.html",
+      "required_features": [
+        "Quarto com banheira de hidromassagem privativa",
+        "Café da manhã incluído"
+      ],
+      "checkin": "2026-10-30",
+      "checkout": "2026-11-02",
+      "nights": 3,
+      "occupancy": {
+        "adults": 2,
+        "rooms": 1,
+        "children_ages": []
+      },
+      "currency": "BRL"
+    },
+    {
+      "job_id": "f163503d37b51c18e462",
+      "hotel_key": "vila-grega",
+      "hotel_name": "vila grega hotel",
+      "booking_url": "https://www.booking.com/hotel/br/suite-privativa-com-aquecedor-decoracao-nova.html",
+      "required_features": [
+        "Quarto com banheira de hidromassagem privativa",
+        "Café da manhã incluído"
+      ],
+      "checkin": "2026-11-06",
+      "checkout": "2026-11-08",
+      "nights": 2,
+      "occupancy": {
+        "adults": 2,
+        "rooms": 1,
+        "children_ages": []
+      },
+      "currency": "BRL"
+    },
+    {
+      "job_id": "ebe04128d73690f5bcb2",
+      "hotel_key": "vila-grega",
+      "hotel_name": "vila grega hotel",
+      "booking_url": "https://www.booking.com/hotel/br/suite-privativa-com-aquecedor-decoracao-nova.html",
+      "required_features": [
+        "Quarto com banheira de hidromassagem privativa",
+        "Café da manhã incluído"
+      ],
+      "checkin": "2026-11-11",
+      "checkout": "2026-11-12",
+      "nights": 1,
+      "occupancy": {
+        "adults": 2,
+        "rooms": 1,
+        "children_ages": []
+      },
+      "currency": "BRL"
+    },
+    {
+      "job_id": "8e0ffb6c0bc9a3f57361",
+      "hotel_key": "vila-grega",
+      "hotel_name": "vila grega hotel",
+      "booking_url": "https://www.booking.com/hotel/br/suite-privativa-com-aquecedor-decoracao-nova.html",
+      "required_features": [
+        "Quarto com banheira de hidromassagem privativa",
+        "Café da manhã incluído"
+      ],
+      "checkin": "2026-11-13",
+      "checkout": "2026-11-15",
+      "nights": 2,
+      "occupancy": {
+        "adults": 2,
+        "rooms": 1,
+        "children_ages": []
+      },
+      "currency": "BRL"
+    },
+    {
+      "job_id": "2c1c84d6ff0a141636ba",
+      "hotel_key": "vila-grega",
+      "hotel_name": "vila grega hotel",
+      "booking_url": "https://www.booking.com/hotel/br/suite-privativa-com-aquecedor-decoracao-nova.html",
+      "required_features": [
+        "Quarto com banheira de hidromassagem privativa",
+        "Café da manhã incluído"
+      ],
+      "checkin": "2026-11-20",
+      "checkout": "2026-11-22",
+      "nights": 2,
+      "occupancy": {
+        "adults": 2,
+        "rooms": 1,
+        "children_ages": []
+      },
+      "currency": "BRL"
+    },
+    {
+      "job_id": "aba5d7ae9895fa44e8d2",
+      "hotel_key": "vila-grega",
+      "hotel_name": "vila grega hotel",
+      "booking_url": "https://www.booking.com/hotel/br/suite-privativa-com-aquecedor-decoracao-nova.html",
+      "required_features": [
+        "Quarto com banheira de hidromassagem privativa",
+        "Café da manhã incluído"
+      ],
+      "checkin": "2026-11-27",
+      "checkout": "2026-11-29",
+      "nights": 2,
+      "occupancy": {
+        "adults": 2,
+        "rooms": 1,
+        "children_ages": []
+      },
+      "currency": "BRL"
+    },
+    {
+      "job_id": "ebe786cf3b07816b0df1",
+      "hotel_key": "vila-grega",
+      "hotel_name": "vila grega hotel",
+      "booking_url": "https://www.booking.com/hotel/br/suite-privativa-com-aquecedor-decoracao-nova.html",
+      "required_features": [
+        "Quarto com banheira de hidromassagem privativa",
+        "Café da manhã incluído"
+      ],
+      "checkin": "2026-11-30",
+      "checkout": "2026-12-02",
+      "nights": 2,
+      "occupancy": {
+        "adults": 2,
+        "rooms": 1,
+        "children_ages": []
+      },
+      "currency": "BRL"
+    },
+    {
+      "job_id": "434c1702ca0d0359b32a",
+      "hotel_key": "vila-grega",
+      "hotel_name": "vila grega hotel",
+      "booking_url": "https://www.booking.com/hotel/br/suite-privativa-com-aquecedor-decoracao-nova.html",
+      "required_features": [
+        "Quarto com banheira de hidromassagem privativa",
+        "Café da manhã incluído"
+      ],
+      "checkin": "2026-12-04",
+      "checkout": "2026-12-06",
+      "nights": 2,
+      "occupancy": {
+        "adults": 2,
+        "rooms": 1,
+        "children_ages": []
+      },
+      "currency": "BRL"
+    },
+    {
+      "job_id": "b78bf577f52c09067d6e",
+      "hotel_key": "vila-grega",
+      "hotel_name": "vila grega hotel",
+      "booking_url": "https://www.booking.com/hotel/br/suite-privativa-com-aquecedor-decoracao-nova.html",
+      "required_features": [
+        "Quarto com banheira de hidromassagem privativa",
+        "Café da manhã incluído"
+      ],
+      "checkin": "2026-12-11",
+      "checkout": "2026-12-13",
+      "nights": 2,
+      "occupancy": {
+        "adults": 2,
+        "rooms": 1,
+        "children_ages": []
+      },
+      "currency": "BRL"
+    },
+    {
+      "job_id": "04a61fbb2a1c2089c9ca",
+      "hotel_key": "champet",
+      "hotel_name": "Champet Boutique Hotel",
+      "booking_url": "https://www.booking.com/hotel/br/champet-boutique.html",
+      "required_features": [
+        "Quarto com banheira de hidromassagem privativa",
+        "Café da manhã incluído"
+      ],
+      "checkin": "2026-10-23",
+      "checkout": "2026-10-25",
+      "nights": 2,
+      "occupancy": {
+        "adults": 2,
+        "rooms": 1,
+        "children_ages": []
+      },
+      "currency": "BRL"
+    },
+    {
+      "job_id": "234d960f1c333545060b",
+      "hotel_key": "champet",
+      "hotel_name": "Champet Boutique Hotel",
+      "booking_url": "https://www.booking.com/hotel/br/champet-boutique.html",
+      "required_features": [
+        "Quarto com banheira de hidromassagem privativa",
+        "Café da manhã incluído"
+      ],
+      "checkin": "2026-10-30",
+      "checkout": "2026-11-02",
+      "nights": 3,
+      "occupancy": {
+        "adults": 2,
+        "rooms": 1,
+        "children_ages": []
+      },
+      "currency": "BRL"
+    },
+    {
+      "job_id": "c9939140b3bad110a516",
+      "hotel_key": "champet",
+      "hotel_name": "Champet Boutique Hotel",
+      "booking_url": "https://www.booking.com/hotel/br/champet-boutique.html",
+      "required_features": [
+        "Quarto com banheira de hidromassagem privativa",
+        "Café da manhã incluído"
+      ],
+      "checkin": "2026-11-06",
+      "checkout": "2026-11-08",
+      "nights": 2,
+      "occupancy": {
+        "adults": 2,
+        "rooms": 1,
+        "children_ages": []
+      },
+      "currency": "BRL"
+    },
+    {
+      "job_id": "1aa7de635f5835cbd19f",
+      "hotel_key": "champet",
+      "hotel_name": "Champet Boutique Hotel",
+      "booking_url": "https://www.booking.com/hotel/br/champet-boutique.html",
+      "required_features": [
+        "Quarto com banheira de hidromassagem privativa",
+        "Café da manhã incluído"
+      ],
+      "checkin": "2026-11-11",
+      "checkout": "2026-11-12",
+      "nights": 1,
+      "occupancy": {
+        "adults": 2,
+        "rooms": 1,
+        "children_ages": []
+      },
+      "currency": "BRL"
+    },
+    {
+      "job_id": "4e4056abd20a7d515e09",
+      "hotel_key": "champet",
+      "hotel_name": "Champet Boutique Hotel",
+      "booking_url": "https://www.booking.com/hotel/br/champet-boutique.html",
+      "required_features": [
+        "Quarto com banheira de hidromassagem privativa",
+        "Café da manhã incluído"
+      ],
+      "checkin": "2026-11-13",
+      "checkout": "2026-11-15",
+      "nights": 2,
+      "occupancy": {
+        "adults": 2,
+        "rooms": 1,
+        "children_ages": []
+      },
+      "currency": "BRL"
+    },
+    {
+      "job_id": "67fe82023865e302f46d",
+      "hotel_key": "champet",
+      "hotel_name": "Champet Boutique Hotel",
+      "booking_url": "https://www.booking.com/hotel/br/champet-boutique.html",
+      "required_features": [
+        "Quarto com banheira de hidromassagem privativa",
+        "Café da manhã incluído"
+      ],
+      "checkin": "2026-11-20",
+      "checkout": "2026-11-22",
+      "nights": 2,
+      "occupancy": {
+        "adults": 2,
+        "rooms": 1,
+        "children_ages": []
+      },
+      "currency": "BRL"
+    },
+    {
+      "job_id": "857dc8b3ad5e7acc43bf",
+      "hotel_key": "champet",
+      "hotel_name": "Champet Boutique Hotel",
+      "booking_url": "https://www.booking.com/hotel/br/champet-boutique.html",
+      "required_features": [
+        "Quarto com banheira de hidromassagem privativa",
+        "Café da manhã incluído"
+      ],
+      "checkin": "2026-11-27",
+      "checkout": "2026-11-29",
+      "nights": 2,
+      "occupancy": {
+        "adults": 2,
+        "rooms": 1,
+        "children_ages": []
+      },
+      "currency": "BRL"
+    },
+    {
+      "job_id": "b639e5f4390bba846259",
+      "hotel_key": "champet",
+      "hotel_name": "Champet Boutique Hotel",
+      "booking_url": "https://www.booking.com/hotel/br/champet-boutique.html",
+      "required_features": [
+        "Quarto com banheira de hidromassagem privativa",
+        "Café da manhã incluído"
+      ],
+      "checkin": "2026-11-30",
+      "checkout": "2026-12-02",
+      "nights": 2,
+      "occupancy": {
+        "adults": 2,
+        "rooms": 1,
+        "children_ages": []
+      },
+      "currency": "BRL"
+    },
+    {
+      "job_id": "dd0094bf30d479697fa4",
+      "hotel_key": "champet",
+      "hotel_name": "Champet Boutique Hotel",
+      "booking_url": "https://www.booking.com/hotel/br/champet-boutique.html",
+      "required_features": [
+        "Quarto com banheira de hidromassagem privativa",
+        "Café da manhã incluído"
+      ],
+      "checkin": "2026-12-04",
+      "checkout": "2026-12-06",
+      "nights": 2,
+      "occupancy": {
+        "adults": 2,
+        "rooms": 1,
+        "children_ages": []
+      },
+      "currency": "BRL"
+    },
+    {
+      "job_id": "69468d96e783426dfafb",
+      "hotel_key": "champet",
+      "hotel_name": "Champet Boutique Hotel",
+      "booking_url": "https://www.booking.com/hotel/br/champet-boutique.html",
+      "required_features": [
+        "Quarto com banheira de hidromassagem privativa",
+        "Café da manhã incluído"
+      ],
+      "checkin": "2026-12-11",
+      "checkout": "2026-12-13",
+      "nights": 2,
+      "occupancy": {
+        "adults": 2,
+        "rooms": 1,
+        "children_ages": []
+      },
+      "currency": "BRL"
+    },
+    {
+      "job_id": "379a4c194ce8698292ce",
+      "hotel_key": "euro-suit",
+      "hotel_name": "Euro Suit Campos do Jordão",
+      "booking_url": "https://www.booking.com/hotel/br/euro-suit-campos-do-jordao.html",
+      "required_features": [
+        "Quarto com banheira de hidromassagem privativa",
+        "Café da manhã incluído"
+      ],
+      "checkin": "2026-10-23",
+      "checkout": "2026-10-25",
+      "nights": 2,
+      "occupancy": {
+        "adults": 2,
+        "rooms": 1,
+        "children_ages": []
+      },
+      "currency": "BRL"
+    },
+    {
+      "job_id": "cd84b24b3d1bf6ade61b",
+      "hotel_key": "euro-suit",
+      "hotel_name": "Euro Suit Campos do Jordão",
+      "booking_url": "https://www.booking.com/hotel/br/euro-suit-campos-do-jordao.html",
+      "required_features": [
+        "Quarto com banheira de hidromassagem privativa",
+        "Café da manhã incluído"
+      ],
+      "checkin": "2026-10-30",
+      "checkout": "2026-11-02",
+      "nights": 3,
+      "occupancy": {
+        "adults": 2,
+        "rooms": 1,
+        "children_ages": []
+      },
+      "currency": "BRL"
+    },
+    {
+      "job_id": "18629ac5e07e090b196a",
+      "hotel_key": "euro-suit",
+      "hotel_name": "Euro Suit Campos do Jordão",
+      "booking_url": "https://www.booking.com/hotel/br/euro-suit-campos-do-jordao.html",
+      "required_features": [
+        "Quarto com banheira de hidromassagem privativa",
+        "Café da manhã incluído"
+      ],
+      "checkin": "2026-11-06",
+      "checkout": "2026-11-08",
+      "nights": 2,
+      "occupancy": {
+        "adults": 2,
+        "rooms": 1,
+        "children_ages": []
+      },
+      "currency": "BRL"
+    },
+    {
+      "job_id": "a80ac5c1fe8fa32d2289",
+      "hotel_key": "euro-suit",
+      "hotel_name": "Euro Suit Campos do Jordão",
+      "booking_url": "https://www.booking.com/hotel/br/euro-suit-campos-do-jordao.html",
+      "required_features": [
+        "Quarto com banheira de hidromassagem privativa",
+        "Café da manhã incluído"
+      ],
+      "checkin": "2026-11-11",
+      "checkout": "2026-11-12",
+      "nights": 1,
+      "occupancy": {
+        "adults": 2,
+        "rooms": 1,
+        "children_ages": []
+      },
+      "currency": "BRL"
+    },
+    {
+      "job_id": "47ca942ee0f6e88680f1",
+      "hotel_key": "euro-suit",
+      "hotel_name": "Euro Suit Campos do Jordão",
+      "booking_url": "https://www.booking.com/hotel/br/euro-suit-campos-do-jordao.html",
+      "required_features": [
+        "Quarto com banheira de hidromassagem privativa",
+        "Café da manhã incluído"
+      ],
+      "checkin": "2026-11-13",
+      "checkout": "2026-11-15",
+      "nights": 2,
+      "occupancy": {
+        "adults": 2,
+        "rooms": 1,
+        "children_ages": []
+      },
+      "currency": "BRL"
+    },
+    {
+      "job_id": "7bb8356e25cabf24ff2f",
+      "hotel_key": "euro-suit",
+      "hotel_name": "Euro Suit Campos do Jordão",
+      "booking_url": "https://www.booking.com/hotel/br/euro-suit-campos-do-jordao.html",
+      "required_features": [
+        "Quarto com banheira de hidromassagem privativa",
+        "Café da manhã incluído"
+      ],
+      "checkin": "2026-11-20",
+      "checkout": "2026-11-22",
+      "nights": 2,
+      "occupancy": {
+        "adults": 2,
+        "rooms": 1,
+        "children_ages": []
+      },
+      "currency": "BRL"
+    },
+    {
+      "job_id": "280520c4069734002621",
+      "hotel_key": "euro-suit",
+      "hotel_name": "Euro Suit Campos do Jordão",
+      "booking_url": "https://www.booking.com/hotel/br/euro-suit-campos-do-jordao.html",
+      "required_features": [
+        "Quarto com banheira de hidromassagem privativa",
+        "Café da manhã incluído"
+      ],
+      "checkin": "2026-11-27",
+      "checkout": "2026-11-29",
+      "nights": 2,
+      "occupancy": {
+        "adults": 2,
+        "rooms": 1,
+        "children_ages": []
+      },
+      "currency": "BRL"
+    },
+    {
+      "job_id": "7f4469b1f00369eaa805",
+      "hotel_key": "euro-suit",
+      "hotel_name": "Euro Suit Campos do Jordão",
+      "booking_url": "https://www.booking.com/hotel/br/euro-suit-campos-do-jordao.html",
+      "required_features": [
+        "Quarto com banheira de hidromassagem privativa",
+        "Café da manhã incluído"
+      ],
+      "checkin": "2026-11-30",
+      "checkout": "2026-12-02",
+      "nights": 2,
+      "occupancy": {
+        "adults": 2,
+        "rooms": 1,
+        "children_ages": []
+      },
+      "currency": "BRL"
+    },
+    {
+      "job_id": "8e901ecff876c08d5ede",
+      "hotel_key": "euro-suit",
+      "hotel_name": "Euro Suit Campos do Jordão",
+      "booking_url": "https://www.booking.com/hotel/br/euro-suit-campos-do-jordao.html",
+      "required_features": [
+        "Quarto com banheira de hidromassagem privativa",
+        "Café da manhã incluído"
+      ],
+      "checkin": "2026-12-04",
+      "checkout": "2026-12-06",
+      "nights": 2,
+      "occupancy": {
+        "adults": 2,
+        "rooms": 1,
+        "children_ages": []
+      },
+      "currency": "BRL"
+    },
+    {
+      "job_id": "b88b8dcf5ef52b002738",
+      "hotel_key": "euro-suit",
+      "hotel_name": "Euro Suit Campos do Jordão",
+      "booking_url": "https://www.booking.com/hotel/br/euro-suit-campos-do-jordao.html",
+      "required_features": [
+        "Quarto com banheira de hidromassagem privativa",
+        "Café da manhã incluído"
+      ],
+      "checkin": "2026-12-11",
+      "checkout": "2026-12-13",
+      "nights": 2,
+      "occupancy": {
+        "adults": 2,
+        "rooms": 1,
+        "children_ages": []
+      },
+      "currency": "BRL"
+    },
+    {
+      "job_id": "2ff299a992876544d91f",
+      "hotel_key": "big-bear",
+      "hotel_name": "Pousada Big Bear (classe B)",
+      "booking_url": "https://www.booking.com/hotel/br/pousada-big-bear.html",
+      "required_features": [
+        "Quarto com banheira de hidromassagem privativa",
+        "Café da manhã incluído"
+      ],
+      "checkin": "2026-10-23",
+      "checkout": "2026-10-25",
+      "nights": 2,
+      "occupancy": {
+        "adults": 2,
+        "rooms": 1,
+        "children_ages": []
+      },
+      "currency": "BRL"
+    },
+    {
+      "job_id": "179202b02f24f4d55b66",
+      "hotel_key": "big-bear",
+      "hotel_name": "Pousada Big Bear (classe B)",
+      "booking_url": "https://www.booking.com/hotel/br/pousada-big-bear.html",
+      "required_features": [
+        "Quarto com banheira de hidromassagem privativa",
+        "Café da manhã incluído"
+      ],
+      "checkin": "2026-10-30",
+      "checkout": "2026-11-02",
+      "nights": 3,
+      "occupancy": {
+        "adults": 2,
+        "rooms": 1,
+        "children_ages": []
+      },
+      "currency": "BRL"
+    },
+    {
+      "job_id": "efb2d44e459b1eecfd9b",
+      "hotel_key": "big-bear",
+      "hotel_name": "Pousada Big Bear (classe B)",
+      "booking_url": "https://www.booking.com/hotel/br/pousada-big-bear.html",
+      "required_features": [
+        "Quarto com banheira de hidromassagem privativa",
+        "Café da manhã incluído"
+      ],
+      "checkin": "2026-11-06",
+      "checkout": "2026-11-08",
+      "nights": 2,
+      "occupancy": {
+        "adults": 2,
+        "rooms": 1,
+        "children_ages": []
+      },
+      "currency": "BRL"
+    },
+    {
+      "job_id": "f93e59dc42f4be664833",
+      "hotel_key": "big-bear",
+      "hotel_name": "Pousada Big Bear (classe B)",
+      "booking_url": "https://www.booking.com/hotel/br/pousada-big-bear.html",
+      "required_features": [
+        "Quarto com banheira de hidromassagem privativa",
+        "Café da manhã incluído"
+      ],
+      "checkin": "2026-11-11",
+      "checkout": "2026-11-12",
+      "nights": 1,
+      "occupancy": {
+        "adults": 2,
+        "rooms": 1,
+        "children_ages": []
+      },
+      "currency": "BRL"
+    },
+    {
+      "job_id": "84bbb3da1e21bcea7595",
+      "hotel_key": "big-bear",
+      "hotel_name": "Pousada Big Bear (classe B)",
+      "booking_url": "https://www.booking.com/hotel/br/pousada-big-bear.html",
+      "required_features": [
+        "Quarto com banheira de hidromassagem privativa",
+        "Café da manhã incluído"
+      ],
+      "checkin": "2026-11-13",
+      "checkout": "2026-11-15",
+      "nights": 2,
+      "occupancy": {
+        "adults": 2,
+        "rooms": 1,
+        "children_ages": []
+      },
+      "currency": "BRL"
+    },
+    {
+      "job_id": "d2d19adc212b861b32d9",
+      "hotel_key": "big-bear",
+      "hotel_name": "Pousada Big Bear (classe B)",
+      "booking_url": "https://www.booking.com/hotel/br/pousada-big-bear.html",
+      "required_features": [
+        "Quarto com banheira de hidromassagem privativa",
+        "Café da manhã incluído"
+      ],
+      "checkin": "2026-11-20",
+      "checkout": "2026-11-22",
+      "nights": 2,
+      "occupancy": {
+        "adults": 2,
+        "rooms": 1,
+        "children_ages": []
+      },
+      "currency": "BRL"
+    },
+    {
+      "job_id": "d01f9c33f19b533f1e9a",
+      "hotel_key": "big-bear",
+      "hotel_name": "Pousada Big Bear (classe B)",
+      "booking_url": "https://www.booking.com/hotel/br/pousada-big-bear.html",
+      "required_features": [
+        "Quarto com banheira de hidromassagem privativa",
+        "Café da manhã incluído"
+      ],
+      "checkin": "2026-11-27",
+      "checkout": "2026-11-29",
+      "nights": 2,
+      "occupancy": {
+        "adults": 2,
+        "rooms": 1,
+        "children_ages": []
+      },
+      "currency": "BRL"
+    },
+    {
+      "job_id": "5a402faf7a09abe149f2",
+      "hotel_key": "big-bear",
+      "hotel_name": "Pousada Big Bear (classe B)",
+      "booking_url": "https://www.booking.com/hotel/br/pousada-big-bear.html",
+      "required_features": [
+        "Quarto com banheira de hidromassagem privativa",
+        "Café da manhã incluído"
+      ],
+      "checkin": "2026-11-30",
+      "checkout": "2026-12-02",
+      "nights": 2,
+      "occupancy": {
+        "adults": 2,
+        "rooms": 1,
+        "children_ages": []
+      },
+      "currency": "BRL"
+    },
+    {
+      "job_id": "aaa3f4ae3f222a9e0841",
+      "hotel_key": "big-bear",
+      "hotel_name": "Pousada Big Bear (classe B)",
+      "booking_url": "https://www.booking.com/hotel/br/pousada-big-bear.html",
+      "required_features": [
+        "Quarto com banheira de hidromassagem privativa",
+        "Café da manhã incluído"
+      ],
+      "checkin": "2026-12-04",
+      "checkout": "2026-12-06",
+      "nights": 2,
+      "occupancy": {
+        "adults": 2,
+        "rooms": 1,
+        "children_ages": []
+      },
+      "currency": "BRL"
+    },
+    {
+      "job_id": "2990fce98679e424f452",
+      "hotel_key": "big-bear",
+      "hotel_name": "Pousada Big Bear (classe B)",
+      "booking_url": "https://www.booking.com/hotel/br/pousada-big-bear.html",
+      "required_features": [
+        "Quarto com banheira de hidromassagem privativa",
+        "Café da manhã incluído"
+      ],
+      "checkin": "2026-12-11",
+      "checkout": "2026-12-13",
+      "nights": 2,
+      "occupancy": {
+        "adults": 2,
+        "rooms": 1,
+        "children_ages": []
+      },
+      "currency": "BRL"
+    },
+    {
+      "job_id": "5cec2b1c34dfa22b5f4f",
+      "hotel_key": "villa-capivary",
+      "hotel_name": "Pousada Villa Capivary (classe B)",
+      "booking_url": "https://www.booking.com/hotel/br/pousada-villa-capivary.html",
+      "required_features": [
+        "Quarto com banheira de hidromassagem privativa",
+        "Café da manhã incluído"
+      ],
+      "checkin": "2026-10-23",
+      "checkout": "2026-10-25",
+      "nights": 2,
+      "occupancy": {
+        "adults": 2,
+        "rooms": 1,
+        "children_ages": []
+      },
+      "currency": "BRL"
+    },
+    {
+      "job_id": "452845251748c1fbf6e8",
+      "hotel_key": "villa-capivary",
+      "hotel_name": "Pousada Villa Capivary (classe B)",
+      "booking_url": "https://www.booking.com/hotel/br/pousada-villa-capivary.html",
+      "required_features": [
+        "Quarto com banheira de hidromassagem privativa",
+        "Café da manhã incluído"
+      ],
+      "checkin": "2026-10-30",
+      "checkout": "2026-11-02",
+      "nights": 3,
+      "occupancy": {
+        "adults": 2,
+        "rooms": 1,
+        "children_ages": []
+      },
+      "currency": "BRL"
+    },
+    {
+      "job_id": "8b2e3128a0057553e51e",
+      "hotel_key": "villa-capivary",
+      "hotel_name": "Pousada Villa Capivary (classe B)",
+      "booking_url": "https://www.booking.com/hotel/br/pousada-villa-capivary.html",
+      "required_features": [
+        "Quarto com banheira de hidromassagem privativa",
+        "Café da manhã incluído"
+      ],
+      "checkin": "2026-11-06",
+      "checkout": "2026-11-08",
+      "nights": 2,
+      "occupancy": {
+        "adults": 2,
+        "rooms": 1,
+        "children_ages": []
+      },
+      "currency": "BRL"
+    },
+    {
+      "job_id": "4e5d1063e21f5337e492",
+      "hotel_key": "villa-capivary",
+      "hotel_name": "Pousada Villa Capivary (classe B)",
+      "booking_url": "https://www.booking.com/hotel/br/pousada-villa-capivary.html",
+      "required_features": [
+        "Quarto com banheira de hidromassagem privativa",
+        "Café da manhã incluído"
+      ],
+      "checkin": "2026-11-11",
+      "checkout": "2026-11-12",
+      "nights": 1,
+      "occupancy": {
+        "adults": 2,
+        "rooms": 1,
+        "children_ages": []
+      },
+      "currency": "BRL"
+    },
+    {
+      "job_id": "665a3759de3ac05077cc",
+      "hotel_key": "villa-capivary",
+      "hotel_name": "Pousada Villa Capivary (classe B)",
+      "booking_url": "https://www.booking.com/hotel/br/pousada-villa-capivary.html",
+      "required_features": [
+        "Quarto com banheira de hidromassagem privativa",
+        "Café da manhã incluído"
+      ],
+      "checkin": "2026-11-13",
+      "checkout": "2026-11-15",
+      "nights": 2,
+      "occupancy": {
+        "adults": 2,
+        "rooms": 1,
+        "children_ages": []
+      },
+      "currency": "BRL"
+    },
+    {
+      "job_id": "92e6ea40b58af37cd4e2",
+      "hotel_key": "villa-capivary",
+      "hotel_name": "Pousada Villa Capivary (classe B)",
+      "booking_url": "https://www.booking.com/hotel/br/pousada-villa-capivary.html",
+      "required_features": [
+        "Quarto com banheira de hidromassagem privativa",
+        "Café da manhã incluído"
+      ],
+      "checkin": "2026-11-20",
+      "checkout": "2026-11-22",
+      "nights": 2,
+      "occupancy": {
+        "adults": 2,
+        "rooms": 1,
+        "children_ages": []
+      },
+      "currency": "BRL"
+    },
+    {
+      "job_id": "fc01aac87750fca1373f",
+      "hotel_key": "villa-capivary",
+      "hotel_name": "Pousada Villa Capivary (classe B)",
+      "booking_url": "https://www.booking.com/hotel/br/pousada-villa-capivary.html",
+      "required_features": [
+        "Quarto com banheira de hidromassagem privativa",
+        "Café da manhã incluído"
+      ],
+      "checkin": "2026-11-27",
+      "checkout": "2026-11-29",
+      "nights": 2,
+      "occupancy": {
+        "adults": 2,
+        "rooms": 1,
+        "children_ages": []
+      },
+      "currency": "BRL"
+    },
+    {
+      "job_id": "71fe9c1408c993431260",
+      "hotel_key": "villa-capivary",
+      "hotel_name": "Pousada Villa Capivary (classe B)",
+      "booking_url": "https://www.booking.com/hotel/br/pousada-villa-capivary.html",
+      "required_features": [
+        "Quarto com banheira de hidromassagem privativa",
+        "Café da manhã incluído"
+      ],
+      "checkin": "2026-11-30",
+      "checkout": "2026-12-02",
+      "nights": 2,
+      "occupancy": {
+        "adults": 2,
+        "rooms": 1,
+        "children_ages": []
+      },
+      "currency": "BRL"
+    },
+    {
+      "job_id": "936e4d0cdc047df923eb",
+      "hotel_key": "villa-capivary",
+      "hotel_name": "Pousada Villa Capivary (classe B)",
+      "booking_url": "https://www.booking.com/hotel/br/pousada-villa-capivary.html",
+      "required_features": [
+        "Quarto com banheira de hidromassagem privativa",
+        "Café da manhã incluído"
+      ],
+      "checkin": "2026-12-04",
+      "checkout": "2026-12-06",
+      "nights": 2,
+      "occupancy": {
+        "adults": 2,
+        "rooms": 1,
+        "children_ages": []
+      },
+      "currency": "BRL"
+    },
+    {
+      "job_id": "6fb5c44821f5f33a381c",
+      "hotel_key": "villa-capivary",
+      "hotel_name": "Pousada Villa Capivary (classe B)",
+      "booking_url": "https://www.booking.com/hotel/br/pousada-villa-capivary.html",
+      "required_features": [
+        "Quarto com banheira de hidromassagem privativa",
+        "Café da manhã incluído"
+      ],
+      "checkin": "2026-12-11",
+      "checkout": "2026-12-13",
+      "nights": 2,
+      "occupancy": {
+        "adults": 2,
+        "rooms": 1,
+        "children_ages": []
+      },
+      "currency": "BRL"
+    },
+    {
+      "job_id": "abf2105e91cae29c3abe",
+      "hotel_key": "benevento",
+      "hotel_name": "Pousada Benevento (classe B)",
+      "booking_url": "https://www.booking.com/hotel/br/pousada-benevento.html",
+      "required_features": [
+        "Quarto com banheira de hidromassagem privativa",
+        "Café da manhã incluído"
+      ],
+      "checkin": "2026-10-23",
+      "checkout": "2026-10-25",
+      "nights": 2,
+      "occupancy": {
+        "adults": 2,
+        "rooms": 1,
+        "children_ages": []
+      },
+      "currency": "BRL"
+    },
+    {
+      "job_id": "596bef1ad5ed7df41317",
+      "hotel_key": "benevento",
+      "hotel_name": "Pousada Benevento (classe B)",
+      "booking_url": "https://www.booking.com/hotel/br/pousada-benevento.html",
+      "required_features": [
+        "Quarto com banheira de hidromassagem privativa",
+        "Café da manhã incluído"
+      ],
+      "checkin": "2026-10-30",
+      "checkout": "2026-11-02",
+      "nights": 3,
+      "occupancy": {
+        "adults": 2,
+        "rooms": 1,
+        "children_ages": []
+      },
+      "currency": "BRL"
+    },
+    {
+      "job_id": "8654b7634f5386b151e7",
+      "hotel_key": "benevento",
+      "hotel_name": "Pousada Benevento (classe B)",
+      "booking_url": "https://www.booking.com/hotel/br/pousada-benevento.html",
+      "required_features": [
+        "Quarto com banheira de hidromassagem privativa",
+        "Café da manhã incluído"
+      ],
+      "checkin": "2026-11-06",
+      "checkout": "2026-11-08",
+      "nights": 2,
+      "occupancy": {
+        "adults": 2,
+        "rooms": 1,
+        "children_ages": []
+      },
+      "currency": "BRL"
+    },
+    {
+      "job_id": "fb2ddfe022fe6a2ecda3",
+      "hotel_key": "benevento",
+      "hotel_name": "Pousada Benevento (classe B)",
+      "booking_url": "https://www.booking.com/hotel/br/pousada-benevento.html",
+      "required_features": [
+        "Quarto com banheira de hidromassagem privativa",
+        "Café da manhã incluído"
+      ],
+      "checkin": "2026-11-11",
+      "checkout": "2026-11-12",
+      "nights": 1,
+      "occupancy": {
+        "adults": 2,
+        "rooms": 1,
+        "children_ages": []
+      },
+      "currency": "BRL"
+    },
+    {
+      "job_id": "a2764c204b9062df0ba7",
+      "hotel_key": "benevento",
+      "hotel_name": "Pousada Benevento (classe B)",
+      "booking_url": "https://www.booking.com/hotel/br/pousada-benevento.html",
+      "required_features": [
+        "Quarto com banheira de hidromassagem privativa",
+        "Café da manhã incluído"
+      ],
+      "checkin": "2026-11-13",
+      "checkout": "2026-11-15",
+      "nights": 2,
+      "occupancy": {
+        "adults": 2,
+        "rooms": 1,
+        "children_ages": []
+      },
+      "currency": "BRL"
+    },
+    {
+      "job_id": "2c8aa9fb265b28ffde0a",
+      "hotel_key": "benevento",
+      "hotel_name": "Pousada Benevento (classe B)",
+      "booking_url": "https://www.booking.com/hotel/br/pousada-benevento.html",
+      "required_features": [
+        "Quarto com banheira de hidromassagem privativa",
+        "Café da manhã incluído"
+      ],
+      "checkin": "2026-11-20",
+      "checkout": "2026-11-22",
+      "nights": 2,
+      "occupancy": {
+        "adults": 2,
+        "rooms": 1,
+        "children_ages": []
+      },
+      "currency": "BRL"
+    },
+    {
+      "job_id": "e5976eaf3ebab68434f9",
+      "hotel_key": "benevento",
+      "hotel_name": "Pousada Benevento (classe B)",
+      "booking_url": "https://www.booking.com/hotel/br/pousada-benevento.html",
+      "required_features": [
+        "Quarto com banheira de hidromassagem privativa",
+        "Café da manhã incluído"
+      ],
+      "checkin": "2026-11-27",
+      "checkout": "2026-11-29",
+      "nights": 2,
+      "occupancy": {
+        "adults": 2,
+        "rooms": 1,
+        "children_ages": []
+      },
+      "currency": "BRL"
+    },
+    {
+      "job_id": "020b582a8cee1f2278dd",
+      "hotel_key": "benevento",
+      "hotel_name": "Pousada Benevento (classe B)",
+      "booking_url": "https://www.booking.com/hotel/br/pousada-benevento.html",
+      "required_features": [
+        "Quarto com banheira de hidromassagem privativa",
+        "Café da manhã incluído"
+      ],
+      "checkin": "2026-11-30",
+      "checkout": "2026-12-02",
+      "nights": 2,
+      "occupancy": {
+        "adults": 2,
+        "rooms": 1,
+        "children_ages": []
+      },
+      "currency": "BRL"
+    },
+    {
+      "job_id": "0d5cb5425b1382fac31f",
+      "hotel_key": "benevento",
+      "hotel_name": "Pousada Benevento (classe B)",
+      "booking_url": "https://www.booking.com/hotel/br/pousada-benevento.html",
+      "required_features": [
+        "Quarto com banheira de hidromassagem privativa",
+        "Café da manhã incluído"
+      ],
+      "checkin": "2026-12-04",
+      "checkout": "2026-12-06",
+      "nights": 2,
+      "occupancy": {
+        "adults": 2,
+        "rooms": 1,
+        "children_ages": []
+      },
+      "currency": "BRL"
+    },
+    {
+      "job_id": "c83c7f544d1464749ebb",
+      "hotel_key": "benevento",
+      "hotel_name": "Pousada Benevento (classe B)",
+      "booking_url": "https://www.booking.com/hotel/br/pousada-benevento.html",
+      "required_features": [
+        "Quarto com banheira de hidromassagem privativa",
+        "Café da manhã incluído"
+      ],
+      "checkin": "2026-12-11",
+      "checkout": "2026-12-13",
+      "nights": 2,
+      "occupancy": {
+        "adults": 2,
+        "rooms": 1,
+        "children_ages": []
+      },
+      "currency": "BRL"
+    }
+  ]
+}

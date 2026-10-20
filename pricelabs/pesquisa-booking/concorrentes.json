@@ -14,8 +14,9 @@
    "vista_montanha": true,
    "evidencia_vista": "QA: None available with hot tub/spa bath; Mountain View: Yes (some rooms); Breakfast: Yes",
    "classe": "A",
-   "r_hidro": 1.0,
-   "origem": "PDF do dono 20/10"
+   "r_hidro": null,
+   "origem": "PDF do dono 20/10",
+   "r_hidro_fonte": "não medido; usa r_hidro_padrao"
   },
   {
    "slug": "linda-casa-em-campos-do-jordao-campos-do-jordao12345",
@@ -29,8 +30,9 @@
    "vista_montanha": true,
    "evidencia_vista": "QA da Booking em 19-20/10 (varredura do conector)",
    "classe": "A",
-   "r_hidro": 1.0,
-   "origem": "PDF do dono 20/10"
+   "r_hidro": null,
+   "origem": "PDF do dono 20/10",
+   "r_hidro_fonte": "não medido; usa r_hidro_padrao"
   },
   {
    "slug": "casa-regaleira",
@@ -44,8 +46,9 @@
    "vista_montanha": true,
    "evidencia_vista": "Mountain View: Yes; Breakfast: Yes",
    "classe": "A",
-   "r_hidro": 1.0,
-   "origem": "PDF do dono 20/10"
+   "r_hidro": 1.075,
+   "origem": "PDF do dono 20/10",
+   "r_hidro_fonte": "escada 20/10 (k=2, certeza incerto)"
   },
   {
    "slug": "casablanca-boutique",
@@ -59,8 +62,9 @@
    "vista_montanha": true,
    "evidencia_vista": "Mountain View: Yes; Breakfast: Yes",
    "classe": "A",
-   "r_hidro": 1.0,
-   "origem": "PDF do dono 20/10"
+   "r_hidro": null,
+   "origem": "PDF do dono 20/10",
+   "r_hidro_fonte": "não medido; usa r_hidro_padrao"
   },
   {
    "slug": "villa-nature-campos-do-jordao",
@@ -74,7 +78,8 @@
    "vista_montanha": true,
    "classe": "A",
    "r_hidro": 1.0,
-   "origem": "varredura do conector 20/10"
+   "origem": "varredura do conector 20/10",
+   "r_hidro_fonte": "escada 20/10 (k=1, certeza alta)"
   },
   {
    "slug": "4-chales-de-luxo-monte-lorobell-campos-do-jordao-sp",
@@ -89,7 +94,8 @@
    "evidencia_vista": "Mountain View: Yes; Breakfast: Unknown",
    "classe": "A",
    "r_hidro": 1.0,
-   "origem": "PDF do dono 20/10"
+   "origem": "PDF do dono 20/10",
+   "r_hidro_fonte": "escada 20/10 (k=1, certeza alta)"
   },
   {
    "slug": "champet-boutique",
@@ -103,8 +109,9 @@
    "vista_montanha": true,
    "evidencia_vista": "QA da Booking em 19-20/10 (varredura do conector)",
    "classe": "A",
-   "r_hidro": 1.0,
-   "origem": "PDF do dono 20/10"
+   "r_hidro": 1.999,
+   "origem": "PDF do dono 20/10",
+   "r_hidro_fonte": "escada 20/10 (k=3, certeza incerto)"
   },
   {
    "slug": "charme-chales",
@@ -119,7 +126,8 @@
    "evidencia_vista": "Mountain View: Yes; Breakfast: Yes (à la carte)",
    "classe": "A",
    "r_hidro": 1.0,
-   "origem": "PDF do dono 20/10"
+   "origem": "PDF do dono 20/10",
+   "r_hidro_fonte": "escada 20/10 (k=1, certeza alta)"
   },
   {
    "slug": "dom-boutique",
@@ -133,8 +141,9 @@
    "vista_montanha": true,
    "evidencia_vista": "Mountain View: Yes; Breakfast: Yes",
    "classe": "A",
-   "r_hidro": 1.0,
-   "origem": "PDF do dono 20/10"
+   "r_hidro": null,
+   "origem": "PDF do dono 20/10",
+   "r_hidro_fonte": "não medido; usa r_hidro_padrao"
   },
   {
    "slug": "euro-suit-campos-do-jordao",
@@ -148,8 +157,9 @@
    "vista_montanha": true,
    "evidencia_vista": "QA da Booking em 19-20/10 (varredura do conector)",
    "classe": "A",
-   "r_hidro": 1.0,
-   "origem": "PDF do dono 20/10"
+   "r_hidro": null,
+   "origem": "PDF do dono 20/10",
+   "r_hidro_fonte": "não medido; usa r_hidro_padrao"
   },
   {
    "slug": "europa-campos-do-jordao",
@@ -163,8 +173,9 @@
    "vista_montanha": true,
    "evidencia_vista": "QA da Booking em 19-20/10 (varredura do conector)",
    "classe": "A",
-   "r_hidro": 1.0,
-   "origem": "PDF do dono 20/10"
+   "r_hidro": null,
+   "origem": "PDF do dono 20/10",
+   "r_hidro_fonte": "não medido; usa r_hidro_padrao"
   },
   {
    "slug": "ascona",
@@ -178,8 +189,9 @@
    "vista_montanha": true,
    "evidencia_vista": "QA da Booking em 19-20/10 (varredura do conector)",
    "classe": "A",
-   "r_hidro": 1.0,
-   "origem": "PDF do dono 20/10"
+   "r_hidro": 1.937,
+   "origem": "PDF do dono 20/10",
+   "r_hidro_fonte": "escada 20/10 (k=3, certeza incerto)"
   },
   {
    "slug": "l-a-h-hostellerie",
@@ -193,8 +205,9 @@
    "vista_montanha": true,
    "evidencia_vista": "Mountain View: Yes; Breakfast: Yes (buffet)",
    "classe": "A",
-   "r_hidro": 1.0,
-   "origem": "PDF do dono 20/10"
+   "r_hidro": 1.276,
+   "origem": "PDF do dono 20/10",
+   "r_hidro_fonte": "escada 20/10 (k=2, certeza incerto)"
   },
   {
    "slug": "mansao-austriaca",
@@ -208,8 +221,9 @@
    "vista_montanha": true,
    "evidencia_vista": "Mountain View: Yes; Breakfast: Yes",
    "classe": "A",
-   "r_hidro": 1.0,
-   "origem": "PDF do dono 20/10"
+   "r_hidro": 1.268,
+   "origem": "PDF do dono 20/10",
+   "r_hidro_fonte": "escada 20/10 (k=2, certeza media)"
   },
   {
    "slug": "matsubara-pousada",
@@ -223,8 +237,9 @@
    "vista_montanha": true,
    "evidencia_vista": "Mountain View: Yes; Breakfast: Yes",
    "classe": "A",
-   "r_hidro": 1.0,
-   "origem": "PDF do dono 20/10"
+   "r_hidro": null,
+   "origem": "PDF do dono 20/10",
+   "r_hidro_fonte": "não medido; usa r_hidro_padrao"
   },
   {
    "slug": "pousada-alpes-azul",
@@ -238,8 +253,9 @@
    "vista_montanha": true,
    "evidencia_vista": "QA: None available with hot tub/spa bath; Mountain View: Yes (some rooms); Breakfast: Yes",
    "classe": "A",
-   "r_hidro": 1.0,
-   "origem": "PDF do dono 20/10"
+   "r_hidro": null,
+   "origem": "PDF do dono 20/10",
+   "r_hidro_fonte": "não medido; usa r_hidro_padrao"
   },
   {
    "slug": "apple-house",
@@ -253,8 +269,9 @@
    "vista_montanha": true,
    "evidencia_vista": "Mountain View: Yes; Breakfast: Yes",
    "classe": "A",
-   "r_hidro": 1.0,
-   "origem": "PDF do dono 20/10"
+   "r_hidro": 2.107,
+   "origem": "PDF do dono 20/10",
+   "r_hidro_fonte": "escada 20/10 (k=3, certeza incerto)"
   },
   {
    "slug": "pousada-blue-village-campos-do-jordao",
@@ -268,8 +285,9 @@
    "vista_montanha": true,
    "evidencia_vista": "Mountain View: Yes; Breakfast: Yes",
    "classe": "A",
-   "r_hidro": 1.0,
-   "origem": "PDF do dono 20/10"
+   "r_hidro": null,
+   "origem": "PDF do dono 20/10",
+   "r_hidro_fonte": "não medido; usa r_hidro_padrao"
   },
   {
    "slug": "pousada-cafe-poesia",
@@ -284,7 +302,8 @@
    "evidencia_vista": "QA da Booking em 19-20/10 (varredura do conector)",
    "classe": "A",
    "r_hidro": 1.0,
-   "origem": "PDF do dono 20/10"
+   "origem": "PDF do dono 20/10",
+   "r_hidro_fonte": "escada 20/10 (k=1, certeza alta)"
   },
   {
    "slug": "pousada-cantinho-da-serra-campos-do-jordao",
@@ -298,8 +317,9 @@
    "vista_montanha": true,
    "evidencia_vista": "Mountain View: Yes; Breakfast: Yes",
    "classe": "A",
-   "r_hidro": 1.0,
-   "origem": "PDF do dono 20/10"
+   "r_hidro": null,
+   "origem": "PDF do dono 20/10",
+   "r_hidro_fonte": "não medido; usa r_hidro_padrao"
   },
   {
    "slug": "pousada-miraggio",
@@ -313,8 +333,9 @@
    "vista_montanha": true,
    "evidencia_vista": "Mountain View: Yes; Breakfast: Yes",
    "classe": "A",
-   "r_hidro": 1.0,
-   "origem": "PDF do dono 20/10"
+   "r_hidro": 1.1,
+   "origem": "PDF do dono 20/10",
+   "r_hidro_fonte": "escada 20/10 (k=2, certeza incerto)"
   },
   {
    "slug": "pousada-casa-redonda-campos-do-jordao",
@@ -328,8 +349,9 @@
    "vista_montanha": true,
    "evidencia_vista": "QA: no specific hot tub/spa bath mentioned; Mountain View: Yes; Breakfast: Yes",
    "classe": "A",
-   "r_hidro": 1.0,
-   "origem": "PDF do dono 20/10"
+   "r_hidro": 1.159,
+   "origem": "PDF do dono 20/10",
+   "r_hidro_fonte": "escada 20/10 (k=2, certeza incerto)"
   },
   {
    "slug": "araucaria-premium",
@@ -343,8 +365,9 @@
    "vista_montanha": true,
    "evidencia_vista": "Mountain View: Yes; Breakfast: Yes",
    "classe": "A",
-   "r_hidro": 1.0,
-   "origem": "PDF do dono 20/10"
+   "r_hidro": null,
+   "origem": "PDF do dono 20/10",
+   "r_hidro_fonte": "não medido; usa r_hidro_padrao"
   },
   {
    "slug": "pousada-confraria-da-terra",
@@ -359,7 +382,8 @@
    "evidencia_vista": "Mountain View: Yes; Breakfast: Yes (buffet)",
    "classe": "A",
    "r_hidro": 1.0,
-   "origem": "PDF do dono 20/10"
+   "origem": "PDF do dono 20/10",
+   "r_hidro_fonte": "escada 20/10 (k=1, certeza alta)"
   },
   {
    "slug": "villa-da-biagy-premium",
@@ -373,8 +397,9 @@
    "vista_montanha": true,
    "evidencia_vista": "Mountain View: Yes; Breakfast: Yes",
    "classe": "A",
-   "r_hidro": 1.0,
-   "origem": "PDF do dono 20/10"
+   "r_hidro": null,
+   "origem": "PDF do dono 20/10",
+   "r_hidro_fonte": "não medido; usa r_hidro_padrao"
   },
   {
    "slug": "geada-de-campos",
@@ -387,8 +412,9 @@
    "cafe": "a confirmar na busca diária (meal_plan)",
    "vista_montanha": true,
    "classe": "A",
-   "r_hidro": 1.0,
-   "origem": "varredura do conector 20/10"
+   "r_hidro": null,
+   "origem": "varredura do conector 20/10",
+   "r_hidro_fonte": "não medido; usa r_hidro_padrao"
   },
   {
    "slug": "casa-bicho-preguica-campos-do-jordao",
@@ -402,8 +428,9 @@
    "vista_montanha": true,
    "evidencia_vista": "QA: no specific hot tub/spa bath mentioned; Mountain View: Yes; Breakfast: Yes",
    "classe": "A",
-   "r_hidro": 1.0,
-   "origem": "PDF do dono 20/10"
+   "r_hidro": null,
+   "origem": "PDF do dono 20/10",
+   "r_hidro_fonte": "não medido; usa r_hidro_padrao"
   },
   {
    "slug": "pousada-murano",
@@ -417,8 +444,9 @@
    "vista_montanha": true,
    "evidencia_vista": "Mountain View: Yes; Breakfast: Yes",
    "classe": "A",
-   "r_hidro": 1.0,
-   "origem": "PDF do dono 20/10"
+   "r_hidro": 1.199,
+   "origem": "PDF do dono 20/10",
+   "r_hidro_fonte": "escada 20/10 (k=2, certeza incerto)"
   },
   {
    "slug": "pousada-santha-serra",
@@ -432,8 +460,9 @@
    "vista_montanha": true,
    "evidencia_vista": "Mountain View: Yes; Breakfast: Yes",
    "classe": "A",
-   "r_hidro": 1.0,
-   "origem": "PDF do dono 20/10"
+   "r_hidro": 2.8,
+   "origem": "PDF do dono 20/10",
+   "r_hidro_fonte": "escada 20/10 (k=4, certeza incerto)"
   },
   {
    "slug": "pousada-ville-le-mont-campos-do-jordao",
@@ -447,8 +476,9 @@
    "vista_montanha": true,
    "evidencia_vista": "Mountain View: Yes; Breakfast: Yes",
    "classe": "A",
-   "r_hidro": 1.0,
-   "origem": "PDF do dono 20/10"
+   "r_hidro": 1.921,
+   "origem": "PDF do dono 20/10",
+   "r_hidro_fonte": "escada 20/10 (k=4, certeza incerto)"
   },
   {
    "slug": "pousada-das-lavandas",
@@ -462,8 +492,9 @@
    "vista_montanha": true,
    "evidencia_vista": "Mountain View: Yes; Breakfast: Yes",
    "classe": "A",
-   "r_hidro": 1.0,
-   "origem": "PDF do dono 20/10"
+   "r_hidro": 1.522,
+   "origem": "PDF do dono 20/10",
+   "r_hidro_fonte": "escada 20/10 (k=3, certeza media)"
   },
   {
    "slug": "secreto-boutique",
@@ -477,8 +508,9 @@
    "vista_montanha": true,
    "evidencia_vista": "Mountain View: Yes; Breakfast: Yes",
    "classe": "A",
-   "r_hidro": 1.0,
-   "origem": "PDF do dono 20/10"
+   "r_hidro": null,
+   "origem": "PDF do dono 20/10",
+   "r_hidro_fonte": "não medido; usa r_hidro_padrao"
   },
   {
    "slug": "affeto-boutique-campos-do-jordao",
@@ -492,8 +524,9 @@
    "vista_montanha": true,
    "evidencia_vista": "Mountain View: Yes; Breakfast: Yes",
    "classe": "A",
-   "r_hidro": 1.0,
-   "origem": "PDF do dono 20/10"
+   "r_hidro": null,
+   "origem": "PDF do dono 20/10",
+   "r_hidro_fonte": "não medido; usa r_hidro_padrao"
   },
   {
    "slug": "estalagem-suites",
@@ -507,8 +540,9 @@
    "vista_montanha": true,
    "evidencia_vista": "Mountain View: Yes; Breakfast: Yes",
    "classe": "A",
-   "r_hidro": 1.0,
-   "origem": "PDF do dono 20/10"
+   "r_hidro": null,
+   "origem": "PDF do dono 20/10",
+   "r_hidro_fonte": "não medido; usa r_hidro_padrao"
   },
   {
    "slug": "la-vie-pousada-de-charme",
@@ -521,8 +555,9 @@
    "cafe": "a confirmar na busca diária (meal_plan)",
    "vista_montanha": true,
    "classe": "A",
-   "r_hidro": 1.0,
-   "origem": "varredura do conector 20/10"
+   "r_hidro": null,
+   "origem": "varredura do conector 20/10",
+   "r_hidro_fonte": "não medido; usa r_hidro_padrao"
   },
   {
    "slug": "villa-casato-residenza",
@@ -535,8 +570,9 @@
    "cafe": "a confirmar na busca diária (meal_plan)",
    "vista_montanha": true,
    "classe": "A",
-   "r_hidro": 1.0,
-   "origem": "varredura do conector 20/10"
+   "r_hidro": null,
+   "origem": "varredura do conector 20/10",
+   "r_hidro_fonte": "não medido; usa r_hidro_padrao"
   },
   {
    "slug": "casa-sabor-chocolate",
@@ -550,8 +586,9 @@
    "vista_montanha": true,
    "evidencia_vista": "Mountain View: Yes; Breakfast: Yes",
    "classe": "A",
-   "r_hidro": 1.0,
-   "origem": "PDF do dono 20/10"
+   "r_hidro": null,
+   "origem": "PDF do dono 20/10",
+   "r_hidro_fonte": "não medido; usa r_hidro_padrao"
   },
   {
    "slug": "ville-de-france",
@@ -565,8 +602,9 @@
    "vista_montanha": true,
    "evidencia_vista": "Mountain View: Yes; Breakfast: Yes",
    "classe": "A",
-   "r_hidro": 1.0,
-   "origem": "PDF do dono 20/10"
+   "r_hidro": null,
+   "origem": "PDF do dono 20/10",
+   "r_hidro_fonte": "não medido; usa r_hidro_padrao"
   },
   {
    "slug": "suite-privativa-com-aquecedor-decoracao-nova",
@@ -579,8 +617,9 @@
    "cafe": "a confirmar na busca diária (meal_plan)",
    "vista_montanha": true,
    "classe": "A",
-   "r_hidro": 1.0,
-   "origem": "varredura do conector 20/10"
+   "r_hidro": null,
+   "origem": "varredura do conector 20/10",
+   "r_hidro_fonte": "não medido; usa r_hidro_padrao"
   },
   {
    "slug": "a-nossa-casinha-na-montanha",
@@ -594,8 +633,9 @@
    "vista_montanha": null,
    "evidencia_vista": "QA: no specific hot tub/spa bath mentioned; Mountain View: Unknown; Breakfast: Unknown",
    "classe": "B",
-   "r_hidro": 1.0,
-   "origem": "PDF do dono 20/10"
+   "r_hidro": null,
+   "origem": "PDF do dono 20/10",
+   "r_hidro_fonte": "não medido; usa r_hidro_padrao"
   },
   {
    "slug": "araucaria-lodge",
@@ -609,8 +649,9 @@
    "vista_montanha": null,
    "evidencia_vista": "QA: not specified (no mention of hot tub/spa bath); Mountain View: Unknown; Breakfast: Yes",
    "classe": "B",
-   "r_hidro": 1.0,
-   "origem": "PDF do dono 20/10"
+   "r_hidro": null,
+   "origem": "PDF do dono 20/10",
+   "r_hidro_fonte": "não medido; usa r_hidro_padrao"
   },
   {
    "slug": "rancho-la-florida-campos-do-jordao",
@@ -624,8 +665,9 @@
    "vista_montanha": null,
    "evidencia_vista": "QA: not specified (no hot tub/spa bath mentioned); Mountain View: Unknown; Breakfast: Yes",
    "classe": "B",
-   "r_hidro": 1.0,
-   "origem": "PDF do dono 20/10"
+   "r_hidro": null,
+   "origem": "PDF do dono 20/10",
+   "r_hidro_fonte": "não medido; usa r_hidro_padrao"
   },
   {
    "slug": "pousada-caminho-das-pedras",
@@ -639,8 +681,9 @@
    "vista_montanha": null,
    "evidencia_vista": "QA: None available with hot tub/spa bath; Mountain View: N/A; Breakfast: Yes",
    "classe": "B",
-   "r_hidro": 1.0,
-   "origem": "PDF do dono 20/10"
+   "r_hidro": 1.205,
+   "origem": "PDF do dono 20/10",
+   "r_hidro_fonte": "escada 20/10 (k=2, certeza media)"
   },
   {
    "slug": "casa-tres-rios",
@@ -654,8 +697,9 @@
    "vista_montanha": null,
    "evidencia_vista": "Mountain View: Unknown; Breakfast: Yes",
    "classe": "B",
-   "r_hidro": 1.0,
-   "origem": "PDF do dono 20/10"
+   "r_hidro": 2.468,
+   "origem": "PDF do dono 20/10",
+   "r_hidro_fonte": "escada 20/10 (k=4, certeza incerto)"
   },
   {
    "slug": "center-suiasso-flats",
@@ -669,8 +713,9 @@
    "vista_montanha": null,
    "evidencia_vista": "QA: not specified if any room has a hot tub; Mountain View: Unknown; Breakfast: Yes",
    "classe": "B",
-   "r_hidro": 1.0,
-   "origem": "PDF do dono 20/10"
+   "r_hidro": 1.929,
+   "origem": "PDF do dono 20/10",
+   "r_hidro_fonte": "escada 20/10 (k=3, certeza media)"
   },
   {
    "slug": "chateau-campos-do-jordao-flats-premium-by-hostyn",
@@ -684,8 +729,9 @@
    "vista_montanha": null,
    "evidencia_vista": "QA: no specific mention of a hot tub/spa bath; Mountain View: Unknown; Breakfast: Yes (in the room)",
    "classe": "B",
-   "r_hidro": 1.0,
-   "origem": "PDF do dono 20/10"
+   "r_hidro": null,
+   "origem": "PDF do dono 20/10",
+   "r_hidro_fonte": "não medido; usa r_hidro_padrao"
   },
   {
    "slug": "chateau-la-villette",
@@ -700,7 +746,8 @@
    "evidencia_vista": "Mountain View: Unknown; Breakfast: Yes",
    "classe": "B",
    "r_hidro": 1.0,
-   "origem": "PDF do dono 20/10"
+   "origem": "PDF do dono 20/10",
+   "r_hidro_fonte": "escada 20/10 (k=1, certeza alta)"
   },
   {
    "slug": "bellavista-ltda",
@@ -714,8 +761,9 @@
    "vista_montanha": null,
    "evidencia_vista": "Mountain View: Unknown; Breakfast: Yes",
    "classe": "B",
-   "r_hidro": 1.0,
-   "origem": "PDF do dono 20/10"
+   "r_hidro": 1.216,
+   "origem": "PDF do dono 20/10",
+   "r_hidro_fonte": "escada 20/10 (k=2, certeza incerto)"
   },
   {
    "slug": "flat-no-capivari-campos-do-jordao12",
@@ -730,7 +778,8 @@
    "evidencia_vista": "Mountain View: Unknown; Breakfast: Unknown",
    "classe": "B",
    "r_hidro": 1.0,
-   "origem": "PDF do dono 20/10"
+   "origem": "PDF do dono 20/10",
+   "r_hidro_fonte": "escada 20/10 (k=1, certeza alta)"
   },
   {
    "slug": "chateau",
@@ -744,8 +793,9 @@
    "vista_montanha": null,
    "evidencia_vista": "Mountain View: Unknown; Breakfast: Yes",
    "classe": "B",
-   "r_hidro": 1.0,
-   "origem": "PDF do dono 20/10"
+   "r_hidro": 1.694,
+   "origem": "PDF do dono 20/10",
+   "r_hidro_fonte": "escada 20/10 (k=3, certeza media)"
   },
   {
    "slug": "estoril",
@@ -759,8 +809,9 @@
    "vista_montanha": null,
    "evidencia_vista": "QA: not specified to have a hot tub or spa bath; Mountain View: Not applicable; Breakfast: Yes",
    "classe": "B",
-   "r_hidro": 1.0,
-   "origem": "PDF do dono 20/10"
+   "r_hidro": null,
+   "origem": "PDF do dono 20/10",
+   "r_hidro_fonte": "não medido; usa r_hidro_padrao"
   },
   {
    "slug": "le-renard",
@@ -774,8 +825,9 @@
    "vista_montanha": null,
    "evidencia_vista": "Mountain View: Unknown; Breakfast: Yes",
    "classe": "B",
-   "r_hidro": 1.0,
-   "origem": "PDF do dono 20/10"
+   "r_hidro": 1.589,
+   "origem": "PDF do dono 20/10",
+   "r_hidro_fonte": "escada 20/10 (k=3, certeza media)"
   },
   {
    "slug": "savoy-campos-do-jordao",
@@ -789,8 +841,9 @@
    "vista_montanha": null,
    "evidencia_vista": "Mountain View: Unknown; Breakfast: Yes",
    "classe": "B",
-   "r_hidro": 1.0,
-   "origem": "PDF do dono 20/10"
+   "r_hidro": null,
+   "origem": "PDF do dono 20/10",
+   "r_hidro_fonte": "não medido; usa r_hidro_padrao"
   },
   {
    "slug": "solar-d-izabel",
@@ -804,8 +857,9 @@
    "vista_montanha": null,
    "evidencia_vista": "Mountain View: Unknown; Breakfast: Yes",
    "classe": "B",
-   "r_hidro": 1.0,
-   "origem": "PDF do dono 20/10"
+   "r_hidro": 1.31,
+   "origem": "PDF do dono 20/10",
+   "r_hidro_fonte": "escada 20/10 (k=2, certeza media)"
   },
   {
    "slug": "pousada-kaliman-campos-do-jordapso",
@@ -819,8 +873,9 @@
    "vista_montanha": null,
    "evidencia_vista": "QA: None available with a private hot tub/spa bath; Mountain View: N/A; Breakfast: Yes",
    "classe": "B",
-   "r_hidro": 1.0,
-   "origem": "PDF do dono 20/10"
+   "r_hidro": 1.395,
+   "origem": "PDF do dono 20/10",
+   "r_hidro_fonte": "escada 20/10 (k=2, certeza incerto)"
   },
   {
    "slug": "pousada-annecy",
@@ -834,8 +889,9 @@
    "vista_montanha": null,
    "evidencia_vista": "Mountain View: Unknown; Breakfast: Yes",
    "classe": "B",
-   "r_hidro": 1.0,
-   "origem": "PDF do dono 20/10"
+   "r_hidro": null,
+   "origem": "PDF do dono 20/10",
+   "r_hidro_fonte": "não medido; usa r_hidro_padrao"
   },
   {
    "slug": "araucaria-suites-campos-do-jordao",
@@ -849,8 +905,9 @@
    "vista_montanha": null,
    "evidencia_vista": "QA: not specified if any room has a hot tub; Mountain View: Unknown; Breakfast: Yes",
    "classe": "B",
-   "r_hidro": 1.0,
-   "origem": "PDF do dono 20/10"
+   "r_hidro": null,
+   "origem": "PDF do dono 20/10",
+   "r_hidro_fonte": "não medido; usa r_hidro_padrao"
   },
   {
    "slug": "recanto-dos-marcelinos-suites",
@@ -864,8 +921,9 @@
    "vista_montanha": null,
    "evidencia_vista": "Mountain View: Unknown; Breakfast: Yes",
    "classe": "B",
-   "r_hidro": 1.0,
-   "origem": "PDF do dono 20/10"
+   "r_hidro": 2.885,
+   "origem": "PDF do dono 20/10",
+   "r_hidro_fonte": "escada 20/10 (k=4, certeza incerto)"
   },
   {
    "slug": "pousada-benevento",
@@ -879,8 +937,9 @@
    "vista_montanha": null,
    "evidencia_vista": "Mountain View: Unknown; Breakfast: Yes",
    "classe": "B",
-   "r_hidro": 1.0,
-   "origem": "PDF do dono 20/10"
+   "r_hidro": 2.087,
+   "origem": "PDF do dono 20/10",
+   "r_hidro_fonte": "escada 20/10 (k=4, certeza incerto)"
   },
   {
    "slug": "pousada-big-bear",
@@ -894,8 +953,9 @@
    "vista_montanha": null,
    "evidencia_vista": "QA: not specified with a hot tub/spa bath; Mountain View: Unknown; Breakfast: Yes",
    "classe": "B",
-   "r_hidro": 1.0,
-   "origem": "PDF do dono 20/10"
+   "r_hidro": 2.008,
+   "origem": "PDF do dono 20/10",
+   "r_hidro_fonte": "escada 20/10 (k=3, certeza incerto)"
   },
   {
    "slug": "pousada-bliss-house-campos-do-jordao1",
@@ -909,8 +969,9 @@
    "vista_montanha": null,
    "evidencia_vista": "QA: not specified with a hot tub/spa bath; Mountain View: Unknown; Breakfast: Yes",
    "classe": "B",
-   "r_hidro": 1.0,
-   "origem": "PDF do dono 20/10"
+   "r_hidro": null,
+   "origem": "PDF do dono 20/10",
+   "r_hidro_fonte": "não medido; usa r_hidro_padrao"
   },
   {
    "slug": "pousada-casa-dos-sonhos-campos-do-jordao",
@@ -924,8 +985,9 @@
    "vista_montanha": null,
    "evidencia_vista": "QA: not specified with a hot tub/spa bath; Mountain View: Unknown; Breakfast: Yes",
    "classe": "B",
-   "r_hidro": 1.0,
-   "origem": "PDF do dono 20/10"
+   "r_hidro": null,
+   "origem": "PDF do dono 20/10",
+   "r_hidro_fonte": "não medido; usa r_hidro_padrao"
   },
   {
    "slug": "pousada-villa-d-biagy",
@@ -939,8 +1001,9 @@
    "vista_montanha": null,
    "evidencia_vista": "QA: not specified (no hot tub/spa bath mentioned); Mountain View: Unknown; Breakfast: Yes",
    "classe": "B",
-   "r_hidro": 1.0,
-   "origem": "PDF do dono 20/10"
+   "r_hidro": 1.726,
+   "origem": "PDF do dono 20/10",
+   "r_hidro_fonte": "escada 20/10 (k=4, certeza incerto)"
   },
   {
    "slug": "ilha-na-montanha",
@@ -954,8 +1017,9 @@
    "vista_montanha": null,
    "evidencia_vista": "QA: not specified if any room has a hot tub; Mountain View: Unknown; Breakfast: Yes",
    "classe": "B",
-   "r_hidro": 1.0,
-   "origem": "PDF do dono 20/10"
+   "r_hidro": null,
+   "origem": "PDF do dono 20/10",
+   "r_hidro_fonte": "não medido; usa r_hidro_padrao"
   },
   {
    "slug": "pousada-do-conde-campos-do-jordao",
@@ -969,8 +1033,9 @@
    "vista_montanha": null,
    "evidencia_vista": "Mountain View: Unknown; Breakfast: Yes",
    "classe": "B",
-   "r_hidro": 1.0,
-   "origem": "PDF do dono 20/10"
+   "r_hidro": null,
+   "origem": "PDF do dono 20/10",
+   "r_hidro_fonte": "não medido; usa r_hidro_padrao"
   },
   {
    "slug": "pousada-dom-alfredo-josa-c",
@@ -984,8 +1049,9 @@
    "vista_montanha": null,
    "evidencia_vista": "QA: not specified with a hot tub/spa bath; Mountain View: Unknown; Breakfast: Yes",
    "classe": "B",
-   "r_hidro": 1.0,
-   "origem": "PDF do dono 20/10"
+   "r_hidro": null,
+   "origem": "PDF do dono 20/10",
+   "r_hidro_fonte": "não medido; usa r_hidro_padrao"
   },
   {
    "slug": "pousada-moderna",
@@ -999,8 +1065,9 @@
    "vista_montanha": null,
    "evidencia_vista": "Mountain View: Unknown; Breakfast: Yes",
    "classe": "B",
-   "r_hidro": 1.0,
-   "origem": "PDF do dono 20/10"
+   "r_hidro": 2.4,
+   "origem": "PDF do dono 20/10",
+   "r_hidro_fonte": "escada 20/10 (k=3, certeza incerto)"
   },
   {
    "slug": "pousada-jardon",
@@ -1014,8 +1081,9 @@
    "vista_montanha": null,
    "evidencia_vista": "Mountain View: Unknown; Breakfast: Yes",
    "classe": "B",
-   "r_hidro": 1.0,
-   "origem": "PDF do dono 20/10"
+   "r_hidro": null,
+   "origem": "PDF do dono 20/10",
+   "r_hidro_fonte": "não medido; usa r_hidro_padrao"
   },
   {
    "slug": "pousada-la-sierra",
@@ -1029,8 +1097,9 @@
    "vista_montanha": null,
    "evidencia_vista": "QA: not specified if any room has a hot tub; Mountain View: Unknown; Breakfast: Yes",
    "classe": "B",
-   "r_hidro": 1.0,
-   "origem": "PDF do dono 20/10"
+   "r_hidro": null,
+   "origem": "PDF do dono 20/10",
+   "r_hidro_fonte": "não medido; usa r_hidro_padrao"
   },
   {
    "slug": "pousada-luis-xv",
@@ -1044,8 +1113,9 @@
    "vista_montanha": null,
    "evidencia_vista": "Mountain View: Unknown; Breakfast: Yes",
    "classe": "B",
-   "r_hidro": 1.0,
-   "origem": "PDF do dono 20/10"
+   "r_hidro": null,
+   "origem": "PDF do dono 20/10",
+   "r_hidro_fonte": "não medido; usa r_hidro_padrao"
   },
   {
    "slug": "pousada-recanto-feliz",
@@ -1059,8 +1129,9 @@
    "vista_montanha": null,
    "evidencia_vista": "QA: not specified (no mention of hot tub/spa bath); Mountain View: Unknown; Breakfast: Yes",
    "classe": "B",
-   "r_hidro": 1.0,
-   "origem": "PDF do dono 20/10"
+   "r_hidro": null,
+   "origem": "PDF do dono 20/10",
+   "r_hidro_fonte": "não medido; usa r_hidro_padrao"
   },
   {
    "slug": "pousada-villa-agi-campos-do-jordao",
@@ -1074,8 +1145,9 @@
    "vista_montanha": null,
    "evidencia_vista": "QA: None available with hot tub/spa bath; Mountain View: N/A; Breakfast: Yes",
    "classe": "B",
-   "r_hidro": 1.0,
-   "origem": "PDF do dono 20/10"
+   "r_hidro": null,
+   "origem": "PDF do dono 20/10",
+   "r_hidro_fonte": "não medido; usa r_hidro_padrao"
   },
   {
    "slug": "pousada-villa-capivary",
@@ -1089,8 +1161,9 @@
    "vista_montanha": null,
    "evidencia_vista": "QA: not specified (no hot tub/spa bath mentioned); Mountain View: Unknown; Breakfast: Yes",
    "classe": "B",
-   "r_hidro": 1.0,
-   "origem": "PDF do dono 20/10"
+   "r_hidro": null,
+   "origem": "PDF do dono 20/10",
+   "r_hidro_fonte": "não medido; usa r_hidro_padrao"
   },
   {
    "slug": "pousada-da-lua-campos-do-jordapso",
@@ -1104,8 +1177,9 @@
    "vista_montanha": null,
    "evidencia_vista": "QA: not specified if any room has a hot tub; Mountain View: Unknown; Breakfast: Yes",
    "classe": "B",
-   "r_hidro": 1.0,
-   "origem": "PDF do dono 20/10"
+   "r_hidro": null,
+   "origem": "PDF do dono 20/10",
+   "r_hidro_fonte": "não medido; usa r_hidro_padrao"
   },
   {
    "slug": "pousada-bella-locanda",
@@ -1119,8 +1193,9 @@
    "vista_montanha": null,
    "evidencia_vista": "Mountain View: Unknown; Breakfast: Yes",
    "classe": "B",
-   "r_hidro": 1.0,
-   "origem": "PDF do dono 20/10"
+   "r_hidro": 2.527,
+   "origem": "PDF do dono 20/10",
+   "r_hidro_fonte": "escada 20/10 (k=3, certeza incerto)"
   },
   {
    "slug": "pousada-chateau-do-luar",
@@ -1134,8 +1209,9 @@
    "vista_montanha": null,
    "evidencia_vista": "Mountain View: Unknown; Breakfast: Yes",
    "classe": "B",
-   "r_hidro": 1.0,
-   "origem": "PDF do dono 20/10"
+   "r_hidro": null,
+   "origem": "PDF do dono 20/10",
+   "r_hidro_fonte": "não medido; usa r_hidro_padrao"
   },
   {
    "slug": "pousada-charme-vila-natal-campos-do-jordao",
@@ -1149,8 +1225,11 @@
    "vista_montanha": null,
    "evidencia_vista": "Mountain View: Unknown; Breakfast: Yes",
    "classe": "B",
-   "r_hidro": 1.0,
-   "origem": "PDF do dono 20/10"
+   "r_hidro": null,
+   "origem": "PDF do dono 20/10",
+   "r_hidro_fonte": "não medido; usa r_hidro_padrao"
   }
- ]
+ ],
+ "r_hidro_padrao": 1.395,
+ "r_hidro_padrao_fonte": "mediana dos 33 medidos na escada de 20/10"
 }

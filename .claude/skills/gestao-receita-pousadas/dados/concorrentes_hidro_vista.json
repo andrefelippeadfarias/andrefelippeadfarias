@@ -104,77 +104,77 @@
  ],
  "periodos": [
   {
+   "sem_corte": true,
    "rotulo": "2026-10-21→2026-10-22",
    "datas": [
     "2026-10-21"
    ],
-   "mediana_a": 347.42,
+   "mediana_a": 569.72,
    "recanto": 531.51,
    "n": 69,
-   "fonte": "busca diária 2026-10-20 (conector, menor quarto com café × r_hidro)",
-   "sem_corte": true
+   "fonte": "busca diária 2026-10-20 (conector, menor quarto com café × r_hidro)"
   },
   {
+   "sem_corte": true,
    "rotulo": "2026-10-23→2026-10-25",
    "datas": [
     "2026-10-23",
     "2026-10-24"
    ],
-   "mediana_a": 582.78,
+   "mediana_a": 881.85,
    "recanto": 825.46,
    "n": 66,
-   "fonte": "busca diária 2026-10-20 (conector, menor quarto com café × r_hidro)",
-   "sem_corte": true
+   "fonte": "busca diária 2026-10-20 (conector, menor quarto com café × r_hidro)"
   },
   {
+   "sem_corte": true,
    "rotulo": "2026-10-30→2026-11-02",
    "datas": [
     "2026-10-30",
     "2026-10-31",
     "2026-11-01"
    ],
-   "mediana_a": 899.31,
+   "mediana_a": 1326.14,
    "recanto": 1566.34,
    "n": 64,
-   "fonte": "busca diária 2026-10-20 (conector, menor quarto com café × r_hidro)",
-   "sem_corte": true
+   "fonte": "busca diária 2026-10-20 (conector, menor quarto com café × r_hidro)"
   },
   {
+   "sem_corte": true,
    "rotulo": "2026-11-06→2026-11-08",
    "datas": [
     "2026-11-06",
     "2026-11-07"
    ],
-   "mediana_a": 801.12,
+   "mediana_a": 1273.65,
    "recanto": 1199.2,
    "n": 67,
-   "fonte": "busca diária 2026-10-20 (conector, menor quarto com café × r_hidro)",
-   "sem_corte": true
+   "fonte": "busca diária 2026-10-20 (conector, menor quarto com café × r_hidro)"
   },
   {
+   "sem_corte": true,
    "rotulo": "2026-11-13→2026-11-15",
    "datas": [
     "2026-11-13",
     "2026-11-14"
    ],
-   "mediana_a": 859.62,
+   "mediana_a": 1308.93,
    "recanto": 1181.59,
    "n": 67,
-   "fonte": "busca diária 2026-10-20 (conector, menor quarto com café × r_hidro)",
-   "sem_corte": true
+   "fonte": "busca diária 2026-10-20 (conector, menor quarto com café × r_hidro)"
   },
   {
+   "sem_corte": true,
    "rotulo": "2026-11-19→2026-11-22",
    "datas": [
     "2026-11-19",
     "2026-11-20",
     "2026-11-21"
    ],
-   "mediana_a": 1066.11,
+   "mediana_a": 1518.14,
    "recanto": 1436.94,
    "n": 65,
-   "fonte": "busca diária 2026-10-20 (conector, menor quarto com café × r_hidro)",
-   "sem_corte": true
+   "fonte": "busca diária 2026-10-20 (conector, menor quarto com café × r_hidro)"
   }
  ],
  "ressalvas": [

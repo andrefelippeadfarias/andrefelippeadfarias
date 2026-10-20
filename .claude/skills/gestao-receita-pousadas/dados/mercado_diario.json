@@ -10,18 +10,18 @@
      "checkout": "2026-10-22",
      "noites": 1,
      "n": 69,
-     "mediana": 347.42,
-     "p25": 256.57,
-     "p75": 787.1,
+     "mediana": 569.72,
+     "p25": 379.39,
+     "p75": 1098.0,
      "recanto": {
       "noite": 531.51,
-      "percentil": 65,
-      "vs_mediana": 0.53
+      "percentil": 46,
+      "vs_mediana": -0.067
      },
      "villa": {
       "noite": 430.24,
-      "percentil": 57,
-      "vs_mediana": 0.238
+      "percentil": 33,
+      "vs_mediana": -0.245
      }
     },
     {
@@ -29,18 +29,18 @@
      "checkout": "2026-10-25",
      "noites": 2,
      "n": 66,
-     "mediana": 582.78,
-     "p25": 426.59,
-     "p75": 1055.73,
+     "mediana": 881.85,
+     "p25": 718.58,
+     "p75": 1423.19,
      "recanto": {
       "noite": 825.46,
-      "percentil": 68,
-      "vs_mediana": 0.416
+      "percentil": 41,
+      "vs_mediana": -0.064
      },
      "villa": {
       "noite": 598.0,
-      "percentil": 53,
-      "vs_mediana": 0.026
+      "percentil": 18,
+      "vs_mediana": -0.322
      }
     },
     {
@@ -48,18 +48,18 @@
      "checkout": "2026-11-02",
      "noites": 3,
      "n": 64,
-     "mediana": 899.31,
-     "p25": 635.65,
-     "p75": 1349.94,
+     "mediana": 1326.14,
+     "p25": 921.61,
+     "p75": 1914.38,
      "recanto": {
       "noite": 1566.34,
-      "percentil": 84,
-      "vs_mediana": 0.742
+      "percentil": 59,
+      "vs_mediana": 0.181
      },
      "villa": {
       "noite": 1464.91,
-      "percentil": 81,
-      "vs_mediana": 0.629
+      "percentil": 56,
+      "vs_mediana": 0.105
      }
     },
     {
@@ -67,13 +67,13 @@
      "checkout": "2026-11-08",
      "noites": 2,
      "n": 67,
-     "mediana": 801.12,
-     "p25": 610.28,
-     "p75": 1260.0,
+     "mediana": 1273.65,
+     "p25": 839.93,
+     "p75": 1676.23,
      "recanto": {
       "noite": 1199.2,
-      "percentil": 73,
-      "vs_mediana": 0.497
+      "percentil": 45,
+      "vs_mediana": -0.058
      }
     },
     {
@@ -81,18 +81,18 @@
      "checkout": "2026-11-15",
      "noites": 2,
      "n": 67,
-     "mediana": 859.62,
-     "p25": 640.0,
-     "p75": 1290.0,
+     "mediana": 1308.93,
+     "p25": 881.36,
+     "p75": 1898.95,
      "recanto": {
       "noite": 1181.59,
-      "percentil": 69,
-      "vs_mediana": 0.375
+      "percentil": 45,
+      "vs_mediana": -0.097
      },
      "villa": {
       "noite": 1144.14,
-      "percentil": 69,
-      "vs_mediana": 0.331
+      "percentil": 42,
+      "vs_mediana": -0.126
      }
     },
     {
@@ -100,18 +100,18 @@
      "checkout": "2026-11-22",
      "noites": 3,
      "n": 65,
-     "mediana": 1066.11,
-     "p25": 731.51,
-     "p75": 1394.22,
+     "mediana": 1518.14,
+     "p25": 1017.25,
+     "p75": 2007.81,
      "recanto": {
       "noite": 1436.94,
-      "percentil": 78,
-      "vs_mediana": 0.348
+      "percentil": 46,
+      "vs_mediana": -0.053
      },
      "villa": {
       "noite": 1236.6,
-      "percentil": 69,
-      "vs_mediana": 0.16
+      "percentil": 37,
+      "vs_mediana": -0.185
      }
     }
    ]

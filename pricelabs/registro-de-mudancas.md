@@ -2015,6 +2015,24 @@ A Villa não aparece em nenhuma busca com filtro de hidro (falta a comodidade na
 - **Preços nossos na busca:** ainda sem os pisos novos, que a Booking só recebe no envio da madrugada.
 - **Nada gravado no PriceLabs.**
 
+## 20/10/2026, 15:30 UTC (12:30 BRT) — r_hidro calibrado em 33 concorrentes; busca diária refeita
+
+- **Escada de preço mínimo (conector, com café, 13-15/11 e 25/11):** r_hidro medido em 33 dos 77 concorrentes. Em 7 deles o menor quarto já tem hidro. Mediana 1,395, usada como padrão para os 44 sem medida. Arquivo `pricelabs/pesquisa-booking/calibracao-r_hidro-2026-10-20.json`.
+- **Busca de hoje com o quarto com hidro estimado (por noite):**
+
+| Estadia | Mediana | Recanto (percentil) | Villa (percentil) |
+|---|---|---|---|
+| 21/10 | R$ 570 | R$ 532 (46) | R$ 430 (33) |
+| 23-25/10 | R$ 882 | R$ 825 (41) | R$ 598 (18) |
+| Finados | R$ 1.326 | R$ 1.566 (59) | R$ 1.465 (56) |
+| 06-08/11 | R$ 1.274 | R$ 1.199 (45) | fechada |
+| 13-15/11 | R$ 1.309 | R$ 1.182 (45) | R$ 1.144 (42) |
+| Consciência Negra | R$ 1.518 | R$ 1.437 (46) | R$ 1.237 (37) |
+
+- **Leitura:** bate com os PDFs do dono. Finados dá percentil 59 aqui e 44 a 50 no PDF. O Recanto está no meio do mercado e a Villa abaixo dele. Os preços nossos ainda são os de antes dos pisos novos.
+- **Trava:** segue ligada (33 de 77 medidos; precisa de 39). A revisão de segunda mede os que faltam.
+- **Nada gravado no PriceLabs.**
+
 > **Regras em vigor:** desde 06/10/2026 elas ficam em `.claude/skills/gestao-receita-pousadas/references/regras.md`. Este arquivo guarda só o histórico das mudanças.
 
 ## O que só pode ser feito na tela (passo a passo para você)

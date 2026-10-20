@@ -1,0 +1,1881 @@
+{
+ "metodo": "Conector oficial Booking.com (somente leitura), 20/10/2026. k = posicao do 1o quarto com hot tub/spa bath/hidro privativo na lista de tipos de quarto 'do mais barato ao mais caro' devolvida por answer_property_qa_by_ids_v2 (lotes de ate 6 ids ja vistos em busca; quartos com ocupacao max. 1 ignorados). Escada: accommodations_search com hotel_names (lotes ate 7), destination 'Campos do Jordao, Brazil', 2 adultos, 1 quarto, BRL, meal_plan breakfast_included, br/pt-br, estadias 2026-11-13->15 (2 noites) e 2026-11-25->26 (1 noite), price.minimum por noite em {sem minimo,500,800,1100,1500,2000,2500,3000}; preco/noite = price.book / noites; resultado casado pelo slug da URL. Degrau so foi pedido a hotel com menos de k degraus distintos, pulando minimos <= ultimo preco ja visto (o resultado seria o mesmo) e parando quando o hotel some da vitrine (nao ha quarto mais caro com cafe). Degraus com diferenca <4% fundidos (mesmo quarto). r = k-esimo degrau distinto / 1o degrau; r_hidro = mediana das estadias com valor; k=1 -> r_hidro=1,0 (certeza alta). Certeza: media = k>=2 e as duas estadias medidas com divergencia <=15%; incerto = so uma estadia, divergencia >15%, sem medida ou k nulo. Limites: a escada pode pular tipos de quarto cujo preco cai entre dois minimos (isso subestima a posicao real e pode trocar o k-esimo degrau), a ordem da QA nem sempre e por preco, e o filtro de minimo do conector as vezes devolve preco um pouco abaixo do minimo (provavel filtro sobre tarifa antes de taxas). Nenhum valor estimado: null quando nao medido.",
+ "gerado_em": "2026-10-20",
+ "fonte": "mcp Booking_com (accommodations_search, answer_property_qa_by_ids_v2)",
+ "hoteis": [
+  {
+   "slug": "alma-hotel",
+   "nome": "Alma Hotel",
+   "id": 421189,
+   "quarto_hidro": "Suíte King Deluxe",
+   "k": null,
+   "quarto_hidro_qa": "QA: Suite, Deluxe King Suite, Loft, Presidential Suite, Deluxe Suite; nenhum com hidro (Booking diz que nenhum quarto tem hot tub/spa bath)",
+   "degraus": {
+    "2026-11-13": [
+     1851.78
+    ],
+    "2026-11-25": [
+     1077.7
+    ]
+   },
+   "r": {
+    "2026-11-13": null,
+    "2026-11-25": null
+   },
+   "r_hidro": null,
+   "certeza": "incerto",
+   "motivo": "Booking (QA) nao aponta nenhum quarto com hot tub/spa bath/hidro; PDF do dono indicava \"Suíte King Deluxe\"."
+  },
+  {
+   "slug": "linda-casa-em-campos-do-jordao-campos-do-jordao12345",
+   "nome": "Bela Vista Chalé",
+   "id": 7601403,
+   "quarto_hidro": "Suíte com Cama Queen-size",
+   "k": 5,
+   "quarto_hidro_qa": "QA: Standard Suite, Queen Suite, Queen Suite, Superior Suite, King Suite with Spa Bath (5o)",
+   "degraus": {
+    "2026-11-13": [
+     489.3,
+     629.3,
+     874.3,
+     1249.0
+    ],
+    "2026-11-25": [
+     381.5,
+     528.5,
+     1006.0,
+     1091.0
+    ]
+   },
+   "r": {
+    "2026-11-13": null,
+    "2026-11-25": null
+   },
+   "r_hidro": null,
+   "certeza": "incerto",
+   "motivo": "escada nao alcancou o 5o degrau distinto"
+  },
+  {
+   "slug": "casa-regaleira",
+   "nome": "Casa Regaleira Hotel Boutique",
+   "id": 1354703,
+   "quarto_hidro": "Suíte Deluxe com Banheira de Hidromassagem",
+   "k": 2,
+   "quarto_hidro_qa": "QA: Suite, Deluxe Suite with Spa Bath (2o)",
+   "degraus": {
+    "2026-11-13": [
+     1450.8,
+     1560.0
+    ],
+    "2026-11-25": []
+   },
+   "r": {
+    "2026-11-13": 1.075,
+    "2026-11-25": null
+   },
+   "r_hidro": 1.075,
+   "certeza": "incerto"
+  },
+  {
+   "slug": "casablanca-boutique",
+   "nome": "Casablanca Hotel Boutique",
+   "id": 2421651,
+   "quarto_hidro": "Quarto com Cama King-size e Banheira de Hidromassagem",
+   "k": 4,
+   "quarto_hidro_qa": "QA: Standard Double, Deluxe Queen, King Room, King Room with Spa Bath (4o)",
+   "degraus": {
+    "2026-11-13": [
+     1085.0,
+     1188.0,
+     1529.0
+    ],
+    "2026-11-25": [
+     858.0,
+     1185.0
+    ]
+   },
+   "r": {
+    "2026-11-13": null,
+    "2026-11-25": null
+   },
+   "r_hidro": null,
+   "certeza": "incerto",
+   "motivo": "escada nao alcancou o 4o degrau distinto"
+  },
+  {
+   "slug": "villa-nature-campos-do-jordao",
+   "nome": "Chalé Villa Nature",
+   "id": null,
+   "quarto_hidro": null,
+   "k": 1,
+   "quarto_hidro_qa": "QA: One-Bedroom Chalet com hot tub privativo (unico tipo)",
+   "degraus": {
+    "2026-11-13": [],
+    "2026-11-25": []
+   },
+   "r": {
+    "2026-11-13": null,
+    "2026-11-25": null
+   },
+   "r_hidro": 1.0,
+   "certeza": "alta",
+   "nota": "Nenhuma tarifa com cafe apareceu na vitrine do conector nas duas estadias (so tarifa sem cafe em 25/11); r_hidro=1,0 vem do k=1 (unico tipo de quarto ja tem hidro)."
+  },
+  {
+   "slug": "4-chales-de-luxo-monte-lorobell-campos-do-jordao-sp",
+   "nome": "Chalés de Luxo Monte Lorobell A- Frame",
+   "id": 11532196,
+   "quarto_hidro": "Chalé de 1 Quarto",
+   "k": 1,
+   "quarto_hidro_qa": "QA: One-Bedroom Chalet com hot tub privativo (unico tipo)",
+   "degraus": {
+    "2026-11-13": [
+     1379.0
+    ],
+    "2026-11-25": [
+     999.0
+    ]
+   },
+   "r": {
+    "2026-11-13": 1.0,
+    "2026-11-25": 1.0
+   },
+   "r_hidro": 1.0,
+   "certeza": "alta"
+  },
+  {
+   "slug": "champet-boutique",
+   "nome": "Champet Boutique Hotel",
+   "id": 13970463,
+   "quarto_hidro": "Quarto Master com varanda, banheira de hidromassagem e cama king-size",
+   "k": 3,
+   "quarto_hidro_qa": "QA: Superior Queen, Deluxe Queen Varanda, Master Varanda Hidromassagem King (3o), Imperial Suite",
+   "degraus": {
+    "2026-11-13": [
+     1336.34,
+     1606.15,
+     2134.41
+    ],
+    "2026-11-25": [
+     537.81,
+     863.59,
+     1291.29
+    ]
+   },
+   "r": {
+    "2026-11-13": 1.597,
+    "2026-11-25": 2.401
+   },
+   "r_hidro": 1.999,
+   "certeza": "incerto"
+  },
+  {
+   "slug": "charme-chales",
+   "nome": "Charmê Chalés",
+   "id": 14828889,
+   "quarto_hidro": "Suíte com Cama King-size e Banheira de Hidromassagem",
+   "k": 1,
+   "quarto_hidro_qa": "QA: King Suite with Spa Bath (unico tipo)",
+   "degraus": {
+    "2026-11-13": [
+     810.0
+    ],
+    "2026-11-25": []
+   },
+   "r": {
+    "2026-11-13": 1.0,
+    "2026-11-25": null
+   },
+   "r_hidro": 1.0,
+   "certeza": "alta"
+  },
+  {
+   "slug": "dom-boutique",
+   "nome": "DOM Hotel",
+   "id": 7646879,
+   "quarto_hidro": "Suíte Deluxe com Banheira de Hidromassagem",
+   "k": 4,
+   "quarto_hidro_qa": "QA: Deluxe Queen, Deluxe Double Balcony, Deluxe Double/Twin, Deluxe Suite with Spa Bath (4o)",
+   "degraus": {
+    "2026-11-13": [
+     631.8,
+     858.0,
+     1158.3
+    ],
+    "2026-11-25": [
+     312.74,
+     546.0
+    ]
+   },
+   "r": {
+    "2026-11-13": null,
+    "2026-11-25": null
+   },
+   "r_hidro": null,
+   "certeza": "incerto",
+   "motivo": "escada nao alcancou o 4o degrau distinto"
+  },
+  {
+   "slug": "euro-suit-campos-do-jordao",
+   "nome": "Euro Suit Campos do Jordão - 950 m da Vila Capivari",
+   "id": 4686715,
+   "quarto_hidro": "Suíte com Banheira de Hidromassagem",
+   "k": 7,
+   "quarto_hidro_qa": "QA: Budget Double, Standard Double, Superior Double, Luxury Triple, Standard Triple, Superior Family, Suite with Spa Bath (7o), Deluxe Double with Bath",
+   "degraus": {
+    "2026-11-13": [
+     740.05,
+     822.28,
+     1113.31,
+     1433.73
+    ],
+    "2026-11-25": [
+     253.19,
+     554.18,
+     809.48,
+     1044.9
+    ]
+   },
+   "r": {
+    "2026-11-13": null,
+    "2026-11-25": null
+   },
+   "r_hidro": null,
+   "certeza": "incerto",
+   "motivo": "escada nao alcancou o 7o degrau distinto"
+  },
+  {
+   "slug": "europa-campos-do-jordao",
+   "nome": "Europa Hotel",
+   "id": 1881811,
+   "quarto_hidro": "Quarto Duplo com Banheira de Hidromassagem",
+   "k": 9,
+   "quarto_hidro_qa": "QA: Double, Double Balcony, Triple, Triple Balcony, Comfort Quadruple, Quadruple Disability, Duplex Quadruple, Triple Disability, Double Room with Spa Bath (9o; ordem duvidosa, quarto hidro de 13 m2 listado por ultimo)",
+   "degraus": {
+    "2026-11-13": [
+     660.0
+    ],
+    "2026-11-25": [
+     385.0
+    ]
+   },
+   "r": {
+    "2026-11-13": null,
+    "2026-11-25": null
+   },
+   "r_hidro": null,
+   "certeza": "incerto",
+   "motivo": "k=9 maior que os 8 degraus possiveis da escada",
+   "nota": "Ordem da QA duvidosa (quarto hidro de 13 m2 listado por ultimo)."
+  },
+  {
+   "slug": "ascona",
+   "nome": "Hotel Ascona",
+   "id": 303535,
+   "quarto_hidro": "Chalé",
+   "k": 3,
+   "quarto_hidro_qa": "QA: Standard Double, Suite with Balcony, Suite with Whirlpool (3o)",
+   "degraus": {
+    "2026-11-13": [
+     588.67,
+     826.2,
+     1140.15
+    ],
+    "2026-11-25": [
+     253.94,
+     534.6
+    ]
+   },
+   "r": {
+    "2026-11-13": 1.937,
+    "2026-11-25": null
+   },
+   "r_hidro": 1.937,
+   "certeza": "incerto"
+  },
+  {
+   "slug": "l-a-h-hostellerie",
+   "nome": "L.A.H. Hostellerie",
+   "id": 348210,
+   "quarto_hidro": "Quarto Duplo com Banheira de Hidromassagem",
+   "k": 2,
+   "quarto_hidro_qa": "QA: Double with Balcony, Double with Spa Bath (2o)",
+   "degraus": {
+    "2026-11-13": [
+     1600.0,
+     2300.0
+    ],
+    "2026-11-25": [
+     1401.0,
+     1560.0
+    ]
+   },
+   "r": {
+    "2026-11-13": 1.438,
+    "2026-11-25": 1.113
+   },
+   "r_hidro": 1.276,
+   "certeza": "incerto"
+  },
+  {
+   "slug": "mansao-austriaca",
+   "nome": "Mansão Austríaca Guesthouse",
+   "id": 5288096,
+   "quarto_hidro": "Suíte Queen com Banheira de Hidromassagem",
+   "k": 2,
+   "quarto_hidro_qa": "QA: Single shared bath (max 1, ignorado p/ 2 adultos), Suite Mountain View, Queen Suite with Spa Bath (2o entre quartos p/ 2)",
+   "degraus": {
+    "2026-11-13": [
+     1529.1,
+     2023.88
+    ],
+    "2026-11-25": [
+     1699.0,
+     2059.0
+    ]
+   },
+   "r": {
+    "2026-11-13": 1.324,
+    "2026-11-25": 1.212
+   },
+   "r_hidro": 1.268,
+   "certeza": "media",
+   "nota": "Single com banheiro compartilhado (max 1) ignorado na contagem de k."
+  },
+  {
+   "slug": "matsubara-pousada",
+   "nome": "Matsubara Pousada",
+   "id": 1411330,
+   "quarto_hidro": "Suíte com Banheira de Hidromassagem",
+   "k": 4,
+   "quarto_hidro_qa": "QA: Standard Double, Apartment Mountain View, Double/Twin Disability, Suite with Spa Bath (4o)",
+   "degraus": {
+    "2026-11-13": [
+     820.0,
+     1310.0
+    ],
+    "2026-11-25": [
+     332.0,
+     548.0
+    ]
+   },
+   "r": {
+    "2026-11-13": null,
+    "2026-11-25": null
+   },
+   "r_hidro": null,
+   "certeza": "incerto",
+   "motivo": "escada nao alcancou o 4o degrau distinto"
+  },
+  {
+   "slug": "pousada-alpes-azul",
+   "nome": "Pousada Alpes Azul",
+   "id": 8170701,
+   "quarto_hidro": "Suíte com Cama King-size e Banheira de Hidromassagem",
+   "k": 7,
+   "quarto_hidro_qa": "QA: Triple Balcony, Suite Mountain View, Family Suite, Double, Suite Garden View, Superior Suite, King Suite with Spa Bath (7o)",
+   "degraus": {
+    "2026-11-13": [
+     554.4,
+     800.8
+    ],
+    "2026-11-25": [
+     209.66
+    ]
+   },
+   "r": {
+    "2026-11-13": null,
+    "2026-11-25": null
+   },
+   "r_hidro": null,
+   "certeza": "incerto",
+   "motivo": "escada nao alcancou o 7o degrau distinto"
+  },
+  {
+   "slug": "apple-house",
+   "nome": "Pousada Apple House Campos do Jordao",
+   "id": 1092370,
+   "quarto_hidro": "Master Suite with Spa Bath and Fireplace",
+   "k": 3,
+   "quarto_hidro_qa": "QA: Standard Suite, Classic Suite, Premium Suite with Spa Bath and Fireplace (3o)",
+   "degraus": {
+    "2026-11-13": [
+     938.81,
+     1140.12,
+     1562.38
+    ],
+    "2026-11-25": [
+     317.48,
+     508.73,
+     810.0
+    ]
+   },
+   "r": {
+    "2026-11-13": 1.664,
+    "2026-11-25": 2.551
+   },
+   "r_hidro": 2.107,
+   "certeza": "incerto"
+  },
+  {
+   "slug": "pousada-blue-village-campos-do-jordao",
+   "nome": "Pousada Blue Village by Concavus",
+   "id": 13784447,
+   "quarto_hidro": "Quarto com Cama Queen-size e Banheira de Hidromassagem",
+   "k": 5,
+   "quarto_hidro_qa": "QA: Deluxe Room, Deluxe Suite, Deluxe Triple, Comfort Triple, Queen Room with Spa Bath (5o)",
+   "degraus": {
+    "2026-11-13": [],
+    "2026-11-25": [
+     203.01
+    ]
+   },
+   "r": {
+    "2026-11-13": null,
+    "2026-11-25": null
+   },
+   "r_hidro": null,
+   "certeza": "incerto",
+   "motivo": "escada nao alcancou o 5o degrau distinto"
+  },
+  {
+   "slug": "pousada-cafe-poesia",
+   "nome": "Pousada Cafe Poesia",
+   "id": 2280778,
+   "quarto_hidro": "Quarto Duplo com Banheira de Hidromassagem",
+   "k": 1,
+   "quarto_hidro_qa": "QA: Double Room with Spa Bath (1o), Deluxe Suite with Spa Bath",
+   "degraus": {
+    "2026-11-13": [],
+    "2026-11-25": [
+     330.0
+    ]
+   },
+   "r": {
+    "2026-11-13": null,
+    "2026-11-25": 1.0
+   },
+   "r_hidro": 1.0,
+   "certeza": "alta"
+  },
+  {
+   "slug": "pousada-cantinho-da-serra-campos-do-jordao",
+   "nome": "Pousada Cantinho da Serra",
+   "id": 3810467,
+   "quarto_hidro": "Quarto com Cama King-size e Banheira de Hidromassagem",
+   "k": 4,
+   "quarto_hidro_qa": "QA: Standard Double, King Room, King Room Balcony, King Room with Spa Bath (4o), ...",
+   "degraus": {
+    "2026-11-13": [],
+    "2026-11-25": []
+   },
+   "r": {
+    "2026-11-13": null,
+    "2026-11-25": null
+   },
+   "r_hidro": null,
+   "certeza": "incerto",
+   "motivo": "sem tarifa com cafe na vitrine",
+   "nota": "Nenhuma tarifa com cafe apareceu na vitrine nas duas estadias."
+  },
+  {
+   "slug": "pousada-miraggio",
+   "nome": "Pousada Casa Pinha em Campos do Jordão",
+   "id": 1343695,
+   "quarto_hidro": "Quarto Deluxe com Banheira de Hidromassagem",
+   "k": 2,
+   "quarto_hidro_qa": "QA: Double Room, Deluxe Room with Hot Tub (2o), Double with Spa Bath, Deluxe Double, Suite with Spa Bath",
+   "degraus": {
+    "2026-11-13": [
+     783.96,
+     862.36
+    ],
+    "2026-11-25": [
+     632.8
+    ]
+   },
+   "r": {
+    "2026-11-13": 1.1,
+    "2026-11-25": null
+   },
+   "r_hidro": 1.1,
+   "certeza": "incerto"
+  },
+  {
+   "slug": "pousada-casa-redonda-campos-do-jordao",
+   "nome": "Pousada Casa Redonda",
+   "id": 7550569,
+   "quarto_hidro": "Suíte Deluxe com Banheira de Hidromassagem",
+   "k": 2,
+   "quarto_hidro_qa": "QA: Standard Suite, Deluxe Suite with Spa Bath (2o), Deluxe Suite Spa Bath Balcony, Family Suite, Triple",
+   "degraus": {
+    "2026-11-13": [
+     640.0,
+     800.0
+    ],
+    "2026-11-25": [
+     480.0,
+     512.0
+    ]
+   },
+   "r": {
+    "2026-11-13": 1.25,
+    "2026-11-25": 1.067
+   },
+   "r_hidro": 1.159,
+   "certeza": "incerto"
+  },
+  {
+   "slug": "araucaria-premium",
+   "nome": "Pousada Chateau Elegance",
+   "id": 15926146,
+   "quarto_hidro": "Quarto Duplo com Banheira de Hidromassagem",
+   "k": 10,
+   "quarto_hidro_qa": "QA: Standard Double, Standard Triple, Standard Quadruple, Double Mountain View, Double Patio, Triple Balcony, Quadruple Balcony, Two-Room Apt, Two-Bedroom Apt, Double Room with Spa Bath (10o)",
+   "degraus": {
+    "2026-11-13": [
+     885.5
+    ],
+    "2026-11-25": [
+     281.75
+    ]
+   },
+   "r": {
+    "2026-11-13": null,
+    "2026-11-25": null
+   },
+   "r_hidro": null,
+   "certeza": "incerto",
+   "motivo": "k=10 maior que os 8 degraus possiveis da escada"
+  },
+  {
+   "slug": "pousada-confraria-da-terra",
+   "nome": "Pousada Confraria da Terra",
+   "id": 295314,
+   "quarto_hidro": "Quarto Duplo com Banheira de Hidromassagem",
+   "k": 1,
+   "quarto_hidro_qa": "QA: Double Room with Spa Bath (1o), Double Mountain View, Superior Double, ...",
+   "degraus": {
+    "2026-11-13": [
+     708.5
+    ],
+    "2026-11-25": [
+     292.5
+    ]
+   },
+   "r": {
+    "2026-11-13": 1.0,
+    "2026-11-25": 1.0
+   },
+   "r_hidro": 1.0,
+   "certeza": "alta"
+  },
+  {
+   "slug": "villa-da-biagy-premium",
+   "nome": "Pousada D'Biagy Premium",
+   "id": 461243,
+   "quarto_hidro": "Suíte Deluxe com Banheira de Hidromassagem",
+   "k": 6,
+   "quarto_hidro_qa": "QA: Alpine Luxury Suite, Luxury Double, Luxury Triple Balcony, Deluxe Triple Balcony, Presidential Suite, Luxury with Hydromassage (6o)",
+   "degraus": {
+    "2026-11-13": [
+     1885.0,
+     2047.51,
+     2559.38,
+     3120.0
+    ],
+    "2026-11-25": [
+     1235.0,
+     1535.63,
+     2042.38,
+     2625.92
+    ]
+   },
+   "r": {
+    "2026-11-13": null,
+    "2026-11-25": null
+   },
+   "r_hidro": null,
+   "certeza": "incerto",
+   "motivo": "escada nao alcancou o 6o degrau distinto"
+  },
+  {
+   "slug": "geada-de-campos",
+   "nome": "Pousada Geada de Campos",
+   "id": null,
+   "quarto_hidro": null,
+   "k": null,
+   "quarto_hidro_qa": "QA: Standard Triple, Triple, Triple with Bath, Triple Balcony, Family, Luxury Triple; Booking diz que nenhum tem hot tub",
+   "degraus": {
+    "2026-11-13": [
+     552.15
+    ],
+    "2026-11-25": [
+     403.65
+    ]
+   },
+   "r": {
+    "2026-11-13": null,
+    "2026-11-25": null
+   },
+   "r_hidro": null,
+   "certeza": "incerto",
+   "motivo": "Booking (QA) nao aponta nenhum quarto com hot tub/spa bath/hidro; PDF do dono indicava \"None\"."
+  },
+  {
+   "slug": "casa-bicho-preguica-campos-do-jordao",
+   "nome": "Pousada Hortelã Village",
+   "id": 4883669,
+   "quarto_hidro": "Quarto Triplo Luxo",
+   "k": null,
+   "quarto_hidro_qa": "QA: Double, Triple, Deluxe Family, Chalet, One-Bedroom Chalet; Booking diz que nenhum tem hot tub",
+   "degraus": {
+    "2026-11-13": [
+     835.99
+    ],
+    "2026-11-25": [
+     313.49
+    ]
+   },
+   "r": {
+    "2026-11-13": null,
+    "2026-11-25": null
+   },
+   "r_hidro": null,
+   "certeza": "incerto",
+   "motivo": "Booking (QA) nao aponta nenhum quarto com hot tub/spa bath/hidro; PDF do dono indicava \"Quarto Triplo Luxo\"."
+  },
+  {
+   "slug": "pousada-murano",
+   "nome": "Pousada Murano",
+   "id": 13952548,
+   "quarto_hidro": "Quarto Duplo com Banheira de Hidromassagem",
+   "k": 2,
+   "quarto_hidro_qa": "QA: Superior Double, Double Room with Spa Bath (2o), Deluxe King",
+   "degraus": {
+    "2026-11-13": [
+     1189.48,
+     1529.68
+    ],
+    "2026-11-25": [
+     1092.29,
+     1213.65
+    ]
+   },
+   "r": {
+    "2026-11-13": 1.286,
+    "2026-11-25": 1.111
+   },
+   "r_hidro": 1.199,
+   "certeza": "incerto"
+  },
+  {
+   "slug": "pousada-santha-serra",
+   "nome": "Pousada Victoria Villa By Nacional Inn - A 800 metros da Vila Capivari",
+   "id": 295236,
+   "quarto_hidro": "Suíte Master com Banheira de Hidromassagem",
+   "k": 4,
+   "quarto_hidro_qa": "QA: Standard, Standard Triple, Luxury Double Ground Floor, Master Suite with Hot Tub (4o), Luxury Quadruple",
+   "degraus": {
+    "2026-11-13": [
+     1011.42,
+     1110.61,
+     1639.38,
+     2832.47
+    ],
+    "2026-11-25": [
+     362.58,
+     507.91,
+     804.0
+    ]
+   },
+   "r": {
+    "2026-11-13": 2.8,
+    "2026-11-25": null
+   },
+   "r_hidro": 2.8,
+   "certeza": "incerto"
+  },
+  {
+   "slug": "pousada-ville-le-mont-campos-do-jordao",
+   "nome": "Pousada Ville Le Mont - Campos do Jordao",
+   "id": 9797293,
+   "quarto_hidro": "Suíte com Banheira de Hidromassagem",
+   "k": 4,
+   "quarto_hidro_qa": "QA: Classic Suite, Deluxe Room, Master Suite Balcony, Suite with Hot Tub (4o), Premium Suite Balcony",
+   "degraus": {
+    "2026-11-13": [
+     791.1,
+     830.65,
+     1113.15,
+     1519.45
+    ],
+    "2026-11-25": [
+     332.1,
+     637.88
+    ]
+   },
+   "r": {
+    "2026-11-13": 1.921,
+    "2026-11-25": null
+   },
+   "r_hidro": 1.921,
+   "certeza": "incerto"
+  },
+  {
+   "slug": "pousada-das-lavandas",
+   "nome": "Pousada das Lavandas",
+   "id": 6866038,
+   "quarto_hidro": "Quarto Deluxe com Cama de Casal ou 2 de Solteiro e Banheira de Hidromassagem",
+   "k": 3,
+   "quarto_hidro_qa": "QA: Standard Double/Twin, Superior Mountain View, Deluxe Double/Twin with Spa Bath (3o), ...",
+   "degraus": {
+    "2026-11-13": [
+     1089.44,
+     1143.92,
+     1579.7
+    ],
+    "2026-11-25": [
+     947.38,
+     1105.28,
+     1511.08
+    ]
+   },
+   "r": {
+    "2026-11-13": 1.45,
+    "2026-11-25": 1.595
+   },
+   "r_hidro": 1.522,
+   "certeza": "media"
+  },
+  {
+   "slug": "secreto-boutique",
+   "nome": "Secreto Boutique Hotel",
+   "id": 6881198,
+   "quarto_hidro": "Casa Família",
+   "k": 7,
+   "quarto_hidro_qa": "QA: Comfort Deluxe Suite, Comfort Suite, Luxury Suite, Luxury Suite Balcony, Premium Suite, Master Suite, Premium Suite with Spa Bath (7o), Family House",
+   "degraus": {
+    "2026-11-13": [
+     1923.56,
+     2126.04,
+     2545.12,
+     2999.7
+    ],
+    "2026-11-25": [
+     889.91,
+     1112.39,
+     1499.85,
+     1999.8,
+     2499.75,
+     2999.7
+    ]
+   },
+   "r": {
+    "2026-11-13": null,
+    "2026-11-25": null
+   },
+   "r_hidro": null,
+   "certeza": "incerto",
+   "motivo": "escada nao alcancou o 7o degrau distinto",
+   "nota": "A partir de 1.100/noite os precos devolvidos acompanham o minimo do filtro (1.499,85; 1.999,80; 2.499,75; 2.999,70), padrao suspeito de tarifa dinamica/pacote."
+  },
+  {
+   "slug": "affeto-boutique-campos-do-jordao",
+   "nome": "Ti Voglio Bene",
+   "id": 8043221,
+   "quarto_hidro": "Quarto Duplo Deluxe com Banheira",
+   "k": 5,
+   "quarto_hidro_qa": "QA: Double, Deluxe, Double Patio, Standard Double, Deluxe Double Room with Bath (5o, spa bath), ...",
+   "degraus": {
+    "2026-11-13": [
+     876.15,
+     1149.52,
+     1610.26
+    ],
+    "2026-11-25": [
+     540.0,
+     866.1,
+     1114.88,
+     1626.37
+    ]
+   },
+   "r": {
+    "2026-11-13": null,
+    "2026-11-25": null
+   },
+   "r_hidro": null,
+   "certeza": "incerto",
+   "motivo": "escada nao alcancou o 5o degrau distinto"
+  },
+  {
+   "slug": "estalagem-suites",
+   "nome": "Vila de Charme Suítes",
+   "id": 302158,
+   "quarto_hidro": "Suíte com Cama King-size e Banheira de Hidromassagem",
+   "k": 5,
+   "quarto_hidro_qa": "QA: Deluxe Double Ground Floor, Superior Double City View, Luxury Triple, Triple Fireplace, King Suite with Spa Bath (5o), Triple Balcony",
+   "degraus": {
+    "2026-11-13": [],
+    "2026-11-25": [
+     277.97
+    ]
+   },
+   "r": {
+    "2026-11-13": null,
+    "2026-11-25": null
+   },
+   "r_hidro": null,
+   "certeza": "incerto",
+   "motivo": "escada nao alcancou o 5o degrau distinto"
+  },
+  {
+   "slug": "la-vie-pousada-de-charme",
+   "nome": "Villa Belle Chalés",
+   "id": null,
+   "quarto_hidro": null,
+   "k": 4,
+   "quarto_hidro_qa": "QA: Double, Deluxe King Suite, Standard Studio, Deluxe Suite with Spa Bath (4o), ...",
+   "degraus": {
+    "2026-11-13": [
+     401.55,
+     503.2
+    ],
+    "2026-11-25": [
+     284.64,
+     568.94
+    ]
+   },
+   "r": {
+    "2026-11-13": null,
+    "2026-11-25": null
+   },
+   "r_hidro": null,
+   "certeza": "incerto",
+   "motivo": "escada nao alcancou o 4o degrau distinto"
+  },
+  {
+   "slug": "villa-casato-residenza",
+   "nome": "Villa Casato Residenza Boutique",
+   "id": null,
+   "quarto_hidro": null,
+   "k": 6,
+   "quarto_hidro_qa": "QA: Standard Suite, King Suite, King Suite Balcony, Superior King Suite, Deluxe King Suite, King Suite with Spa Bath (6o)",
+   "degraus": {
+    "2026-11-13": [
+     1290.0,
+     2350.0
+    ],
+    "2026-11-25": [
+     950.0,
+     1150.0,
+     1980.0,
+     2178.0
+    ]
+   },
+   "r": {
+    "2026-11-13": null,
+    "2026-11-25": null
+   },
+   "r_hidro": null,
+   "certeza": "incerto",
+   "motivo": "escada nao alcancou o 6o degrau distinto"
+  },
+  {
+   "slug": "casa-sabor-chocolate",
+   "nome": "Villa du Chocolat",
+   "id": 4786199,
+   "quarto_hidro": "Quarto com Cama Queen-size e Banheira de Hidromassagem",
+   "k": 5,
+   "quarto_hidro_qa": "QA: Double Garden View x3, Deluxe Double, Queen Room with Spa Bath (5o), King Room with Spa Bath x2",
+   "degraus": {
+    "2026-11-13": [],
+    "2026-11-25": [
+     338.0,
+     520.52,
+     686.14
+    ]
+   },
+   "r": {
+    "2026-11-13": null,
+    "2026-11-25": null
+   },
+   "r_hidro": null,
+   "certeza": "incerto",
+   "motivo": "escada nao alcancou o 5o degrau distinto"
+  },
+  {
+   "slug": "ville-de-france",
+   "nome": "Ville de France",
+   "id": 2697127,
+   "quarto_hidro": "Suíte Deluxe com Banheira de Hidromassagem",
+   "k": 4,
+   "quarto_hidro_qa": "QA: Double/Twin Balcony, Triple Balcony, Family Balcony, Deluxe Suite with Spa Bath (4o), Deluxe Family Suite",
+   "degraus": {
+    "2026-11-13": [
+     542.88
+    ],
+    "2026-11-25": []
+   },
+   "r": {
+    "2026-11-13": null,
+    "2026-11-25": null
+   },
+   "r_hidro": null,
+   "certeza": "incerto",
+   "motivo": "escada nao alcancou o 4o degrau distinto"
+  },
+  {
+   "slug": "suite-privativa-com-aquecedor-decoracao-nova",
+   "nome": "vila grega hotel",
+   "id": null,
+   "quarto_hidro": null,
+   "k": null,
+   "quarto_hidro_qa": "QA: Superior Chalet, Executive Suite, King Suite Balcony, Suite Balcony, Superior Suite, Superior King Suite; Booking diz que nenhum tem hot tub",
+   "degraus": {
+    "2026-11-13": [
+     1361.26
+    ],
+    "2026-11-25": [
+     1187.14
+    ]
+   },
+   "r": {
+    "2026-11-13": null,
+    "2026-11-25": null
+   },
+   "r_hidro": null,
+   "certeza": "incerto",
+   "motivo": "Booking (QA) nao aponta nenhum quarto com hot tub/spa bath/hidro; PDF do dono indicava \"None\"."
+  },
+  {
+   "slug": "a-nossa-casinha-na-montanha",
+   "nome": "ANC Montanha - 7 minutos do Capivari",
+   "id": 13282110,
+   "quarto_hidro": "Suíte com Banheira de Hidromassagem",
+   "k": 4,
+   "quarto_hidro_qa": "QA: One-Bedroom Apt, Double Balcony, Studio Lake View, Suite with Spa Bath (4o)",
+   "degraus": {
+    "2026-11-13": [
+     392.7,
+     499.8
+    ],
+    "2026-11-25": [
+     187.55
+    ]
+   },
+   "r": {
+    "2026-11-13": null,
+    "2026-11-25": null
+   },
+   "r_hidro": null,
+   "certeza": "incerto",
+   "motivo": "escada nao alcancou o 4o degrau distinto"
+  },
+  {
+   "slug": "araucaria-lodge",
+   "nome": "Araucária Lodge - 800 metros do Capivari",
+   "id": 12807440,
+   "quarto_hidro": "Apartamento Loft de 2 Quartos",
+   "k": null,
+   "quarto_hidro_qa": "QA: Deluxe Queen Suite, King Suite Balcony, Two-Bedroom Studio, Two-Bedroom Loft, Deluxe King Studio; Booking diz que nenhum tem hot tub",
+   "degraus": {
+    "2026-11-13": [],
+    "2026-11-25": [
+     337.5
+    ]
+   },
+   "r": {
+    "2026-11-13": null,
+    "2026-11-25": null
+   },
+   "r_hidro": null,
+   "certeza": "incerto",
+   "motivo": "Booking (QA) nao aponta nenhum quarto com hot tub/spa bath/hidro; PDF do dono indicava \"Apartamento Loft de 2 Quartos\"."
+  },
+  {
+   "slug": "rancho-la-florida-campos-do-jordao",
+   "nome": "Art Lodge",
+   "id": 4963253,
+   "quarto_hidro": "Chalé Superior",
+   "k": null,
+   "quarto_hidro_qa": "QA: Suite, Deluxe Suite, Chalet, Superior Chalet, King Room Garden View; Booking diz que nenhum tem hot tub",
+   "degraus": {
+    "2026-11-13": [
+     762.01
+    ],
+    "2026-11-25": [
+     553.01
+    ]
+   },
+   "r": {
+    "2026-11-13": null,
+    "2026-11-25": null
+   },
+   "r_hidro": null,
+   "certeza": "incerto",
+   "motivo": "Booking (QA) nao aponta nenhum quarto com hot tub/spa bath/hidro; PDF do dono indicava \"Chalé Superior\"."
+  },
+  {
+   "slug": "pousada-caminho-das-pedras",
+   "nome": "Caminho das Pedras Pousada de Charme",
+   "id": 390598,
+   "quarto_hidro": "Suíte Deluxe com Banheira de Hidromassagem",
+   "k": 2,
+   "quarto_hidro_qa": "QA: Luxury Double, King Room with Spa Bath (2o), Master Double Spa Bath, Queen Suite Spa Bath",
+   "degraus": {
+    "2026-11-13": [
+     661.2,
+     834.0
+    ],
+    "2026-11-25": [
+     472.8,
+     543.72
+    ]
+   },
+   "r": {
+    "2026-11-13": 1.261,
+    "2026-11-25": 1.15
+   },
+   "r_hidro": 1.205,
+   "certeza": "media"
+  },
+  {
+   "slug": "casa-tres-rios",
+   "nome": "Casa Três Rios - Campos do Jordão",
+   "id": 8775714,
+   "quarto_hidro": "Suíte com Terraço",
+   "k": 4,
+   "quarto_hidro_qa": "QA: Double/Twin Garden View, Queen Suite, Suite Garden View, Deluxe Suite with Spa Bath (4o), Deluxe King Suite",
+   "degraus": {
+    "2026-11-13": [
+     820.47,
+     1140.75,
+     1690.65
+    ],
+    "2026-11-25": [
+     463.32,
+     509.65,
+     828.75,
+     1143.68
+    ]
+   },
+   "r": {
+    "2026-11-13": null,
+    "2026-11-25": 2.468
+   },
+   "r_hidro": 2.468,
+   "certeza": "incerto"
+  },
+  {
+   "slug": "center-suiasso-flats",
+   "nome": "Center Suiço Flats",
+   "id": 348764,
+   "quarto_hidro": "Quarto Quádruplo Comfort",
+   "k": 3,
+   "quarto_hidro_qa": "QA: Standard Double, Large Double, Deluxe Double Room (3o, hot tub available), Luxury Quadruple, ...",
+   "degraus": {
+    "2026-11-13": [
+     1550.0,
+     2190.0,
+     2990.0
+    ],
+    "2026-11-25": [
+     1550.0,
+     2190.0,
+     2990.0
+    ]
+   },
+   "r": {
+    "2026-11-13": 1.929,
+    "2026-11-25": 1.929
+   },
+   "r_hidro": 1.929,
+   "certeza": "media"
+  },
+  {
+   "slug": "chateau-campos-do-jordao-flats-premium-by-hostyn",
+   "nome": "Chateau Campos do Jordão - Flats Premium - By Hostyn",
+   "id": 15903868,
+   "quarto_hidro": "Apartamento Deluxe",
+   "k": null,
+   "quarto_hidro_qa": "QA: Standard Family, Deluxe Family, Superior Family, Deluxe Room; Booking nao aponta hot tub em nenhum",
+   "degraus": {
+    "2026-11-13": [
+     1189.74
+    ],
+    "2026-11-25": []
+   },
+   "r": {
+    "2026-11-13": null,
+    "2026-11-25": null
+   },
+   "r_hidro": null,
+   "certeza": "incerto",
+   "motivo": "Booking (QA) nao aponta nenhum quarto com hot tub/spa bath/hidro; PDF do dono indicava \"Apartamento Deluxe\"."
+  },
+  {
+   "slug": "chateau-la-villette",
+   "nome": "Chateau La Villette",
+   "id": 266611,
+   "quarto_hidro": "Suíte com Banheira de Hidromassagem",
+   "k": 1,
+   "quarto_hidro_qa": "QA: Deluxe Room (1o, hot tub available), Double Balcony, Suite with Hot Tub, King Suite with Spa Bath, Chalet",
+   "degraus": {
+    "2026-11-13": [
+     1650.26
+    ],
+    "2026-11-25": [
+     1103.85
+    ]
+   },
+   "r": {
+    "2026-11-13": 1.0,
+    "2026-11-25": 1.0
+   },
+   "r_hidro": 1.0,
+   "certeza": "alta",
+   "nota": "QA marcou o Deluxe Room (o mais barato) com \"hot tub available\"; vale conferir."
+  },
+  {
+   "slug": "bellavista-ltda",
+   "nome": "Chris Wellness Resort Hotel",
+   "id": 263584,
+   "quarto_hidro": "Quarto Duplo com Banheira de Hidromassagem Individual",
+   "k": 2,
+   "quarto_hidro_qa": "QA: Standard Double, Double Room with Individual Spa Bath (2o), Family Mountain View, Presidential Suite",
+   "degraus": {
+    "2026-11-13": [
+     1378.47,
+     1516.32
+    ],
+    "2026-11-25": [
+     835.44,
+     1113.92
+    ]
+   },
+   "r": {
+    "2026-11-13": 1.1,
+    "2026-11-25": 1.333
+   },
+   "r_hidro": 1.216,
+   "certeza": "incerto"
+  },
+  {
+   "slug": "flat-no-capivari-campos-do-jordao12",
+   "nome": "Flat Centro de Capivari",
+   "id": 8481688,
+   "quarto_hidro": "Apartamento Estúdio",
+   "k": 1,
+   "quarto_hidro_qa": "QA: Studio Apartment com spa bath (unico tipo)",
+   "degraus": {
+    "2026-11-13": [
+     1000.0
+    ],
+    "2026-11-25": [
+     680.0
+    ]
+   },
+   "r": {
+    "2026-11-13": 1.0,
+    "2026-11-25": 1.0
+   },
+   "r_hidro": 1.0,
+   "certeza": "alta"
+  },
+  {
+   "slug": "chateau",
+   "nome": "Hotel Chateau",
+   "id": 461864,
+   "quarto_hidro": "Suíte Premium com Banheira de Hidromassagem",
+   "k": 3,
+   "quarto_hidro_qa": "QA: Standard Double, Deluxe Double, Premium Suite with Spa Bath (3o)",
+   "degraus": {
+    "2026-11-13": [
+     1327.24,
+     1510.62,
+     2174.37
+    ],
+    "2026-11-25": [
+     469.54,
+     516.5,
+     822.05
+    ]
+   },
+   "r": {
+    "2026-11-13": 1.638,
+    "2026-11-25": 1.751
+   },
+   "r_hidro": 1.694,
+   "certeza": "media"
+  },
+  {
+   "slug": "estoril",
+   "nome": "Hotel Estoril",
+   "id": 336912,
+   "quarto_hidro": "Suíte de Lua de Mel",
+   "k": null,
+   "quarto_hidro_qa": "QA: Standard Double/Twin, Standard Triple, Standard Quadruple, Honeymoon Suite, Premium Double View, Premium Triple View; Booking nao aponta hot tub em nenhum",
+   "degraus": {
+    "2026-11-13": [
+     1000.43
+    ],
+    "2026-11-25": [
+     619.3
+    ]
+   },
+   "r": {
+    "2026-11-13": null,
+    "2026-11-25": null
+   },
+   "r_hidro": null,
+   "certeza": "incerto",
+   "motivo": "Booking (QA) nao aponta nenhum quarto com hot tub/spa bath/hidro; PDF do dono indicava \"Suíte de Lua de Mel\"."
+  },
+  {
+   "slug": "le-renard",
+   "nome": "Hotel Le Renard - Campos do Jordao",
+   "id": 266851,
+   "quarto_hidro": "Quarto Duplo com Banheira de Hidromassagem",
+   "k": 3,
+   "quarto_hidro_qa": "QA: Classic Double/Twin, Deluxe Suite, Duplex Suite with Hot Tub (3o), Double with Spa Bath, Presidential, Duplex Spa Bath Fireplace",
+   "degraus": {
+    "2026-11-13": [
+     1331.0,
+     1597.2,
+     2141.7
+    ],
+    "2026-11-25": [
+     977.9,
+     1197.9,
+     1534.5
+    ]
+   },
+   "r": {
+    "2026-11-13": 1.609,
+    "2026-11-25": 1.569
+   },
+   "r_hidro": 1.589,
+   "certeza": "media"
+  },
+  {
+   "slug": "savoy-campos-do-jordao",
+   "nome": "Hotel Savoy Excellence",
+   "id": 356662,
+   "quarto_hidro": "Quarto Duplo com Banheira de Hidromassagem",
+   "k": 4,
+   "quarto_hidro_qa": "QA: Superior Suite, Chalet, Deluxe Room Balcony, King Room with Spa Bath (4o), Double Room with Spa Bath",
+   "degraus": {
+    "2026-11-13": [
+     1757.0,
+     2023.0
+    ],
+    "2026-11-25": [
+     643.0,
+     829.0,
+     1173.0
+    ]
+   },
+   "r": {
+    "2026-11-13": null,
+    "2026-11-25": null
+   },
+   "r_hidro": null,
+   "certeza": "incerto",
+   "motivo": "escada nao alcancou o 4o degrau distinto"
+  },
+  {
+   "slug": "solar-d-izabel",
+   "nome": "Hotel Solar d'Izabel",
+   "id": 2179520,
+   "quarto_hidro": "Quarto Duplo com Banheira de Hidromassagem",
+   "k": 2,
+   "quarto_hidro_qa": "QA: Deluxe Room, Double Room with Spa Bath (2o)",
+   "degraus": {
+    "2026-11-13": [
+     999.18,
+     1302.66
+    ],
+    "2026-11-25": [
+     425.88,
+     560.56
+    ]
+   },
+   "r": {
+    "2026-11-13": 1.304,
+    "2026-11-25": 1.316
+   },
+   "r_hidro": 1.31,
+   "certeza": "media"
+  },
+  {
+   "slug": "pousada-kaliman-campos-do-jordapso",
+   "nome": "Kaliman Pousada Campos do Jordão",
+   "id": 428933,
+   "quarto_hidro": "Quarto Duplo Premium com Banheira de Hidromassagem",
+   "k": 2,
+   "quarto_hidro_qa": "QA: Master Double, Premium Double Room with Spa Bath (2o), ...",
+   "degraus": {
+    "2026-11-13": [
+     742.58,
+     824.26
+    ],
+    "2026-11-25": [
+     300.73,
+     505.08
+    ]
+   },
+   "r": {
+    "2026-11-13": 1.11,
+    "2026-11-25": 1.68
+   },
+   "r_hidro": 1.395,
+   "certeza": "incerto"
+  },
+  {
+   "slug": "pousada-annecy",
+   "nome": "Pousada Annecy - CAPIVARI Fácil acesso ao centrinho e Baden Bar",
+   "id": 319979,
+   "quarto_hidro": "Quarto Duplo com Banheira de Hidromassagem",
+   "k": 6,
+   "quarto_hidro_qa": "QA: Standard Double, Master Double, Standard Triple, Deluxe Double, Superior Double, Double Room with Spa Bath (6o), Chalet",
+   "degraus": {
+    "2026-11-13": [
+     1260.0,
+     1527.0,
+     3380.0
+    ],
+    "2026-11-25": [
+     979.0,
+     1188.0,
+     2613.0
+    ]
+   },
+   "r": {
+    "2026-11-13": null,
+    "2026-11-25": null
+   },
+   "r_hidro": null,
+   "certeza": "incerto",
+   "motivo": "escada nao alcancou o 6o degrau distinto"
+  },
+  {
+   "slug": "araucaria-suites-campos-do-jordao",
+   "nome": "Pousada Araucária Suítes",
+   "id": 8988633,
+   "quarto_hidro": "Quarto Duplo Superior",
+   "k": null,
+   "quarto_hidro_qa": "QA: Standard Double, Superior Double, Standard Quadruple, Double Patio, Triple Balcony, Standard Triple; Booking nao aponta hot tub em nenhum",
+   "degraus": {
+    "2026-11-13": [],
+    "2026-11-25": [
+     186.76
+    ]
+   },
+   "r": {
+    "2026-11-13": null,
+    "2026-11-25": null
+   },
+   "r_hidro": null,
+   "certeza": "incerto",
+   "motivo": "Booking (QA) nao aponta nenhum quarto com hot tub/spa bath/hidro; PDF do dono indicava \"Quarto Duplo Superior\"."
+  },
+  {
+   "slug": "recanto-dos-marcelinos-suites",
+   "nome": "Pousada Araucária Village",
+   "id": 2304283,
+   "quarto_hidro": "Suíte com Banheira de Hidromassagem",
+   "k": 4,
+   "quarto_hidro_qa": "QA: Standard Suite, Standard Triple, Superior Suite, Suite with Spa Bath (4o), Two-Bedroom House",
+   "degraus": {
+    "2026-11-13": [
+     398.71,
+     528.0,
+     843.03,
+     1150.24
+    ],
+    "2026-11-25": [
+     186.68,
+     508.01
+    ]
+   },
+   "r": {
+    "2026-11-13": 2.885,
+    "2026-11-25": null
+   },
+   "r_hidro": 2.885,
+   "certeza": "incerto"
+  },
+  {
+   "slug": "pousada-benevento",
+   "nome": "Pousada Benevento",
+   "id": 263588,
+   "quarto_hidro": "Suíte com Banheira de Hidromassagem",
+   "k": 4,
+   "quarto_hidro_qa": "QA: Standard Double/Twin, Standard Triple, Double Garden View, Suite with Spa Bath (4o), Standard Quadruple",
+   "degraus": {
+    "2026-11-13": [
+     737.05,
+     827.38,
+     1103.68,
+     1537.97
+    ],
+    "2026-11-25": [
+     216.61,
+     522.87
+    ]
+   },
+   "r": {
+    "2026-11-13": 2.087,
+    "2026-11-25": null
+   },
+   "r_hidro": 2.087,
+   "certeza": "incerto"
+  },
+  {
+   "slug": "pousada-big-bear",
+   "nome": "Pousada Big Bear",
+   "id": 285323,
+   "quarto_hidro": "Suíte Superior",
+   "k": 3,
+   "quarto_hidro_qa": "QA: Deluxe Suite, Executive Suite, Superior Suite (3o, 'algumas suites tem spa bath')",
+   "degraus": {
+    "2026-11-13": [
+     1282.5,
+     1500.0
+    ],
+    "2026-11-25": [
+     423.23,
+     581.4,
+     850.0
+    ]
+   },
+   "r": {
+    "2026-11-13": null,
+    "2026-11-25": 2.008
+   },
+   "r_hidro": 2.008,
+   "certeza": "incerto"
+  },
+  {
+   "slug": "pousada-bliss-house-campos-do-jordao1",
+   "nome": "Pousada Bliss House - Opções de suites com hidromassagem",
+   "id": 9221250,
+   "quarto_hidro": "Suíte com Banheira de Hidromassagem",
+   "k": 3,
+   "quarto_hidro_qa": "QA: Superior Suite, Triple, Queen Suite with Spa Bath (3o), Studio Spa Bath, Deluxe Suite Spa Bath, Superior Family",
+   "degraus": {
+    "2026-11-13": [
+     595.0,
+     810.0
+    ],
+    "2026-11-25": [
+     260.0,
+     520.0
+    ]
+   },
+   "r": {
+    "2026-11-13": null,
+    "2026-11-25": null
+   },
+   "r_hidro": null,
+   "certeza": "incerto",
+   "motivo": "escada nao alcancou o 3o degrau distinto"
+  },
+  {
+   "slug": "pousada-casa-dos-sonhos-campos-do-jordao",
+   "nome": "Pousada Casa dos Sonhos",
+   "id": 3309402,
+   "quarto_hidro": "Chalé Superior",
+   "k": null,
+   "quarto_hidro_qa": "QA: Family Room, Deluxe Suite, Family Suite Balcony, Standard Suite, Deluxe Double, Suite Balcony, Superior Chalet, One-Bedroom Chalet, Chalet, Luxury Triple; Booking nao aponta hot tub em nenhum",
+   "degraus": {
+    "2026-11-13": [
+     550.62
+    ],
+    "2026-11-25": [
+     323.03
+    ]
+   },
+   "r": {
+    "2026-11-13": null,
+    "2026-11-25": null
+   },
+   "r_hidro": null,
+   "certeza": "incerto",
+   "motivo": "Booking (QA) nao aponta nenhum quarto com hot tub/spa bath/hidro; PDF do dono indicava \"Chalé Superior\"."
+  },
+  {
+   "slug": "pousada-villa-d-biagy",
+   "nome": "Pousada D'Biagy Raízes",
+   "id": 282062,
+   "quarto_hidro": "Suíte Deluxe com Banheira de Hidromassagem",
+   "k": 4,
+   "quarto_hidro_qa": "QA: Deluxe Balcony, Deluxe Balcony Fireplace, Deluxe Ground Floor, Deluxe Suite with Spa Bath (4o), ...",
+   "degraus": {
+    "2026-11-13": [
+     1495.0,
+     1560.0,
+     2047.5,
+     2579.85
+    ],
+    "2026-11-25": [
+     975.0,
+     1105.0,
+     1528.8
+    ]
+   },
+   "r": {
+    "2026-11-13": 1.726,
+    "2026-11-25": null
+   },
+   "r_hidro": 1.726,
+   "certeza": "incerto"
+  },
+  {
+   "slug": "ilha-na-montanha",
+   "nome": "Pousada Di Oliva",
+   "id": 14525119,
+   "quarto_hidro": "Estúdio Deluxe com Cama King-size",
+   "k": 5,
+   "quarto_hidro_qa": "QA: Deluxe King Studio, Deluxe Studio, One-Bedroom Chalet, Family Studio, Suite (5o, hot tub)",
+   "degraus": {
+    "2026-11-13": [
+     690.0,
+     862.5,
+     1322.5
+    ],
+    "2026-11-25": [
+     690.0,
+     862.5,
+     1322.5
+    ]
+   },
+   "r": {
+    "2026-11-13": null,
+    "2026-11-25": null
+   },
+   "r_hidro": null,
+   "certeza": "incerto",
+   "motivo": "escada nao alcancou o 5o degrau distinto"
+  },
+  {
+   "slug": "pousada-do-conde-campos-do-jordao",
+   "nome": "Pousada Do Conde",
+   "id": 284411,
+   "quarto_hidro": "Quarto com Cama Queen-size e Banheira de Hidromassagem",
+   "k": 4,
+   "quarto_hidro_qa": "QA: Suite, Suite (3 Adults), Deluxe Room, Queen Room with Spa Bath (4o), ...",
+   "degraus": {
+    "2026-11-13": [
+     634.37,
+     813.4,
+     1196.52
+    ],
+    "2026-11-25": [
+     269.98,
+     508.82
+    ]
+   },
+   "r": {
+    "2026-11-13": null,
+    "2026-11-25": null
+   },
+   "r_hidro": null,
+   "certeza": "incerto",
+   "motivo": "escada nao alcancou o 4o degrau distinto"
+  },
+  {
+   "slug": "pousada-dom-alfredo-josa-c",
+   "nome": "Pousada Dom Alfredo José",
+   "id": 330727,
+   "quarto_hidro": "Quarto Duplo Deluxe com Banheira",
+   "k": 10,
+   "quarto_hidro_qa": "QA: Standard Double, Superior Double Fireplace, Double Fireplace, Standard Triple, Superior Quadruple, Double Balcony, King Mountain View, Deluxe King, Deluxe Double Room with Bath (9o, sem hidro segundo a QA), Suite with Hot Tub (10o)",
+   "degraus": {
+    "2026-11-13": [
+     859.62
+    ],
+    "2026-11-25": [
+     327.75
+    ]
+   },
+   "r": {
+    "2026-11-13": null,
+    "2026-11-25": null
+   },
+   "r_hidro": null,
+   "certeza": "incerto",
+   "motivo": "k=10 maior que os 8 degraus possiveis da escada",
+   "nota": "QA so aponta hot tub na Suite with Hot Tub (10a); o quarto do PDF (Quarto Duplo Deluxe com Banheira) aparece em 9o sem hidro segundo a QA."
+  },
+  {
+   "slug": "pousada-moderna",
+   "nome": "Pousada Itália Moderna",
+   "id": 1099879,
+   "quarto_hidro": "Quarto Duplo Deluxe com Hidromassagem",
+   "k": 3,
+   "quarto_hidro_qa": "QA: Superior Double/Twin, Superior Triple, Premium Double Room with Spa Bath (3o), ...",
+   "degraus": {
+    "2026-11-13": [
+     626.75,
+     874.0,
+     1184.5
+    ],
+    "2026-11-25": [
+     288.3,
+     544.87,
+     839.04
+    ]
+   },
+   "r": {
+    "2026-11-13": 1.89,
+    "2026-11-25": 2.91
+   },
+   "r_hidro": 2.4,
+   "certeza": "incerto"
+  },
+  {
+   "slug": "pousada-jardon",
+   "nome": "Pousada Jardon Campos do Jordão - Exclusiva para Adultos",
+   "id": 379227,
+   "quarto_hidro": "Suíte Luxo com Banheira de Hidromassagem",
+   "k": 3,
+   "quarto_hidro_qa": "QA: Double/Twin, Superior Double, Luxury Suite with Spa Bath (3o)",
+   "degraus": {
+    "2026-11-13": [
+     671.41,
+     805.7
+    ],
+    "2026-11-25": [
+     241.3
+    ]
+   },
+   "r": {
+    "2026-11-13": null,
+    "2026-11-25": null
+   },
+   "r_hidro": null,
+   "certeza": "incerto",
+   "motivo": "escada nao alcancou o 3o degrau distinto"
+  },
+  {
+   "slug": "pousada-la-sierra",
+   "nome": "Pousada La Sierra",
+   "id": 568623,
+   "quarto_hidro": "Quarto Duplo com Banheira de Hidromassagem",
+   "k": 3,
+   "quarto_hidro_qa": "QA: Junior Double, Triple, Double Room with Spa Bath (3o), Deluxe Double with Bath",
+   "degraus": {
+    "2026-11-13": [
+     699.0
+    ],
+    "2026-11-25": [
+     250.0
+    ]
+   },
+   "r": {
+    "2026-11-13": null,
+    "2026-11-25": null
+   },
+   "r_hidro": null,
+   "certeza": "incerto",
+   "motivo": "escada nao alcancou o 3o degrau distinto"
+  },
+  {
+   "slug": "pousada-luis-xv",
+   "nome": "Pousada Luis XV",
+   "id": 586142,
+   "quarto_hidro": "Suíte com Cama King-size e Banheira de Hidromassagem",
+   "k": 4,
+   "quarto_hidro_qa": "QA: Superior Double/Twin, Deluxe Double/Twin, Premium Double/Twin, King Suite with Spa Bath (4o), Presidential Suite",
+   "degraus": {
+    "2026-11-13": [],
+    "2026-11-25": [
+     719.1,
+     809.19,
+     1118.0
+    ]
+   },
+   "r": {
+    "2026-11-13": null,
+    "2026-11-25": null
+   },
+   "r_hidro": null,
+   "certeza": "incerto",
+   "motivo": "escada nao alcancou o 4o degrau distinto"
+  },
+  {
+   "slug": "pousada-recanto-feliz",
+   "nome": "Pousada Recanto Feliz",
+   "id": 786418,
+   "quarto_hidro": "Quarto Master",
+   "k": null,
+   "quarto_hidro_qa": "QA: Standard Double, Master Room, Premium Room, Queen Disability, Standard Room; Booking nao aponta hot tub em nenhum",
+   "degraus": {
+    "2026-11-13": [
+     599.04
+    ],
+    "2026-11-25": [
+     307.2
+    ]
+   },
+   "r": {
+    "2026-11-13": null,
+    "2026-11-25": null
+   },
+   "r_hidro": null,
+   "certeza": "incerto",
+   "motivo": "Booking (QA) nao aponta nenhum quarto com hot tub/spa bath/hidro; PDF do dono indicava \"Quarto Master\"."
+  },
+  {
+   "slug": "pousada-villa-agi-campos-do-jordao",
+   "nome": "Pousada Vila Tio Lé",
+   "id": 1526492,
+   "quarto_hidro": "Quarto Duplo Deluxe com Banheira",
+   "k": null,
+   "quarto_hidro_qa": "QA: Standard Double, Superior Double, Junior Suite, Basic Triple, Family, Deluxe Double Room with Bath, Deluxe Queen Studio; Booking nao aponta hot tub em nenhum",
+   "degraus": {
+    "2026-11-13": [
+     975.0
+    ],
+    "2026-11-25": [
+     300.0
+    ]
+   },
+   "r": {
+    "2026-11-13": null,
+    "2026-11-25": null
+   },
+   "r_hidro": null,
+   "certeza": "incerto",
+   "motivo": "Booking (QA) nao aponta nenhum quarto com hot tub/spa bath/hidro; PDF do dono indicava \"Quarto Duplo Deluxe com Banheira\"."
+  },
+  {
+   "slug": "pousada-villa-capivary",
+   "nome": "Pousada Villa Capivary Campos do Jordão",
+   "id": 236397,
+   "quarto_hidro": "Loft - Clássico",
+   "k": null,
+   "quarto_hidro_qa": "QA: Double, Triple, Quadruple, Superior Loft, Luxury Suite; Booking diz que nenhum tem hot tub",
+   "degraus": {
+    "2026-11-13": [
+     1055.0
+    ],
+    "2026-11-25": [
+     780.0
+    ]
+   },
+   "r": {
+    "2026-11-13": null,
+    "2026-11-25": null
+   },
+   "r_hidro": null,
+   "certeza": "incerto",
+   "motivo": "Booking (QA) nao aponta nenhum quarto com hot tub/spa bath/hidro; PDF do dono indicava \"Loft - Clássico\"."
+  },
+  {
+   "slug": "pousada-da-lua-campos-do-jordapso",
+   "nome": "Pousada da Lua",
+   "id": 542153,
+   "quarto_hidro": "Suíte com Banheira de Hidromassagem",
+   "k": 6,
+   "quarto_hidro_qa": "QA: Suite, Suite Balcony, Triple Balcony, Classic Triple, Classic Quadruple, Suite with Spa Bath (6o), ...",
+   "degraus": {
+    "2026-11-13": [
+     377.0,
+     510.4
+    ],
+    "2026-11-25": [
+     173.54
+    ]
+   },
+   "r": {
+    "2026-11-13": null,
+    "2026-11-25": null
+   },
+   "r_hidro": null,
+   "certeza": "incerto",
+   "motivo": "escada nao alcancou o 6o degrau distinto"
+  },
+  {
+   "slug": "pousada-bella-locanda",
+   "nome": "Smart Hotel Reserva Campos do Jordão",
+   "id": 9181484,
+   "quarto_hidro": "Suíte Deluxe com Banheira de Hidromassagem",
+   "k": 3,
+   "quarto_hidro_qa": "QA: Family Room Garden View, Deluxe Suite, Deluxe Suite with Spa Bath (3o), ...",
+   "degraus": {
+    "2026-11-13": [
+     916.99,
+     1112.61,
+     1598.65
+    ],
+    "2026-11-25": [
+     272.25,
+     517.28,
+     901.8
+    ]
+   },
+   "r": {
+    "2026-11-13": 1.743,
+    "2026-11-25": 3.312
+   },
+   "r_hidro": 2.527,
+   "certeza": "incerto"
+  },
+  {
+   "slug": "pousada-chateau-do-luar",
+   "nome": "VELINN Pousada Chateau do Luar Prime",
+   "id": 466251,
+   "quarto_hidro": "Quarto Duplo Superior com Banheira de Hidromassagem",
+   "k": 6,
+   "quarto_hidro_qa": "QA: Deluxe Room, Double, Triple, Quadruple, Quintuple, Superior Double Room with Spa Bath (6o)",
+   "degraus": {
+    "2026-11-13": [
+     681.51,
+     934.86
+    ],
+    "2026-11-25": [
+     202.95,
+     507.6,
+     814.8
+    ]
+   },
+   "r": {
+    "2026-11-13": null,
+    "2026-11-25": null
+   },
+   "r_hidro": null,
+   "certeza": "incerto",
+   "motivo": "escada nao alcancou o 6o degrau distinto"
+  },
+  {
+   "slug": "pousada-charme-vila-natal-campos-do-jordao",
+   "nome": "Villa Montserrat",
+   "id": 3005921,
+   "quarto_hidro": "Suíte Deluxe com Banheira de Hidromassagem",
+   "k": 5,
+   "quarto_hidro_qa": "QA: Budget Double, Executive Suite, Suite Mountain View, Executive Triple, Deluxe Suite with Spa Bath (5o), ...",
+   "degraus": {
+    "2026-11-13": [
+     564.49,
+     837.0,
+     1140.0,
+     1676.7
+    ],
+    "2026-11-25": [
+     216.0,
+     526.39
+    ]
+   },
+   "r": {
+    "2026-11-13": null,
+    "2026-11-25": null
+   },
+   "r_hidro": null,
+   "certeza": "incerto",
+   "motivo": "escada nao alcancou o 5o degrau distinto"
+  }
+ ]
+}

@@ -80,7 +80,9 @@ def _pct(v, x):
 
 
 def consolidar(hoje: dt.date, respostas: str, captado: str) -> dict:
-    cad = {h["slug"]: h for h in json.load(open(CADASTRO))["hoteis"]}
+    cadj = json.load(open(CADASTRO))
+    cad = {h["slug"]: h for h in cadj["hoteis"]}
+    padrao = float(cadj.get("r_hidro_padrao") or 1.0)   # 20/10: hotel sem escada usa a mediana dos medidos
     resp = json.load(open(respostas))
     pasta = os.path.join(REPO, "pricelabs", "pesquisa-booking", f"diaria-{hoje.isoformat()}")
     os.makedirs(pasta, exist_ok=True)
@@ -114,7 +116,7 @@ def consolidar(hoje: dt.date, respostas: str, captado: str) -> dict:
                 if slug in NOSSOS:
                     nossos[NOSSOS[slug]] = round(noite, 2)
                 elif ref:
-                    comp.append(noite * float(ref.get("r_hidro") or 1.0))
+                    comp.append(noite * float(ref.get("r_hidro") or padrao))
             comp.sort()
             q = st.quantiles(comp, n=4) if len(comp) >= 4 else [None, None, None]
             r = {"checkin": e["checkin"], "checkout": e["checkout"], "noites": n, "n": len(comp),
@@ -129,7 +131,7 @@ def consolidar(hoje: dt.date, respostas: str, captado: str) -> dict:
     json.dump(hist, open(HIST, "w"), ensure_ascii=False, indent=1)
     # referência do plano: mediana do dia e o preço do Recanto na mesma vitrine
     ref = json.load(open(REF))
-    calibrados = sum(1 for h in cad.values() if float(h.get("r_hidro") or 1.0) != 1.0)
+    calibrados = sum(1 for h in cad.values() if h.get("r_hidro"))
     sem_corte = calibrados < len(cad) / 2   # 20/10: sem r_hidro, o menor quarto subestima o concorrente; só sobe
     ref["periodos"] = [{"sem_corte": sem_corte, "rotulo": f"{r['checkin']}→{r['checkout']}", "datas": [(dt.date.fromisoformat(r["checkin"]) + dt.timedelta(days=i)).isoformat() for i in range(r["noites"])],
                         "mediana_a": r["mediana"], "recanto": (r.get("recanto") or {}).get("noite"), "n": r["n"],

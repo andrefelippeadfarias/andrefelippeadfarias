@@ -216,3 +216,8 @@ Cada item tem data e evidência. Para incluir um item novo: data, o fato, a evid
 - **Reservas diretas de madrugada com valor simbólico** (VK7 20-21/11 por R$ 1,10): entram como "confirmado" e ocupam o quarto. Tratar como bloqueio até o dono confirmar e apontar no relatório.
 - **Uma gravação grande pode ir por agente:** 418 regras em 11 lotes de até 60, conferidas na própria resposta da API (`verification`). Levou cerca de 80 minutos; vale para mudanças em massa.
 
+## 20/10/2026 — Busca diária: o menor quarto engana, o r_hidro corrige
+- **Sem r_hidro:** o Recanto aparecia nos percentis 65 a 84, porque se comparava o nosso quarto com hidro com o menor quarto dos concorrentes.
+- **Com r_hidro:** medido em 33 hotéis, mediana 1,395. O Recanto passa aos percentis 41 a 59, como no PDF do dono (hidro contra hidro). O r_hidro é a peça que torna a busca diária usável para preço.
+- **Custo:** a busca diária de 6 estadias para cerca de 79 hotéis levou 48 chamadas e cerca de 6 minutos. A escada para calibrar levou cerca de 120 chamadas e cerca de 12 minutos, então fica para a revisão semanal, uma vez por semana.
+

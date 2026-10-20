@@ -2079,6 +2079,17 @@ A Villa não aparece em nenhuma busca com filtro de hidro (falta a comodidade na
 - **Envio:** os pisos novos ainda não chegaram ao Beds24 (Q7 a R$ 809 em 21-22/10). Sync Now segue pendente; senão, sai no envio da madrugada.
 - **Nada gravado.**
 
+## 20/10/2026, 22:58 UTC (19:58 BRT) — Rotina leve das 19:53
+
+- **Envio:** os pisos de 20/10 chegaram ao Beds24 (Q7 com price1 de R$ 1.232 em 21-22/10 e R$ 2.018 em 23-24/10).
+- **Reserva direta abaixo do limite do dono:** VK7, reserva 94999600, Finados de 30/10 a 02/11 (3 noites), R$ 1.800 ("600 por noite").
+  - Criada à mão no painel pelo usuário "VillaRecep1" às 20:37 UTC.
+  - O price1 do Beds24 nessas noites é R$ 3.256 + R$ 3.256 + R$ 2.294 = R$ 8.806; a reserva entrou a **20% da tabela**.
+  - R$ 600 por noite fica abaixo do limite de segurança do dono para feriado (R$ 800 reais por noite).
+  - A VK7 fica esgotada em 01/11.
+- **Cancelamentos:** 2 da Booking no Double em 18/10, estadia passada, sem efeito.
+- **Nada gravado.**
+
 > **Regras em vigor:** desde 06/10/2026 elas ficam em `.claude/skills/gestao-receita-pousadas/references/regras.md`. Este arquivo guarda só o histórico das mudanças.
 
 ## O que só pode ser feito na tela (passo a passo para você)

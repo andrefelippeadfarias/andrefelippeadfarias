@@ -1936,6 +1936,16 @@ A Villa não aparece em nenhuma busca com filtro de hidro (falta a comodidade na
 - **Nada gravado no PriceLabs:** os dois achados mudam a base dos pisos e as promoções, e só o dono decide.
 - **Arquivos:** `dados/base_booking_dono.json`; método em `mercado.md`.
 
+## 20/10/2026, 10:30 UTC (07:30 BRT) — 2º PDF do dono: fim de semana de 27 a 29/11
+
+- **Datas:** o PDF não traz as datas. Pelo riscado do Recanto ÷ enviado da Q7 (0,81, igual a 30/11), é o fim de semana de 27 a 29/11.
+- **59 concorrentes com hidro no quarto, menos de 3 km, nota 8+ e café incluído (por noite, vitrine Genius 3):** mediana R$ 1.022; nota 9+ R$ 1.229; nota 8 a 8,9 R$ 721. Recanto R$ 749 (percentil 29). Villa R$ 995 (percentil 46).
+- **Regra da seção 5 (mediana geral):**
+  - Recanto: 27% abaixo do mercado, mas com 1/7 vendida em 27 e 28/11, abaixo da meta de 15% a 38 dias. Segura, sem subida.
+  - Villa: 3% abaixo do mercado, dentro da faixa. Segura.
+- **Nada gravado.** O ganho maior está nas duas decisões do dono abertas desde o 1º PDF: a base do piso de R$ 500 / R$ 850 e o desconto empilhado de 47% a 50% no Recanto.
+- **Código:** `scripts/base_booking_pdf.py`, que leu os dois PDFs; ele reproduz a leitura manual do 1º (70 concorrentes, mediana R$ 645,50).
+
 > **Regras em vigor:** desde 06/10/2026 elas ficam em `.claude/skills/gestao-receita-pousadas/references/regras.md`. Este arquivo guarda só o histórico das mudanças.
 
 ## O que só pode ser feito na tela (passo a passo para você)

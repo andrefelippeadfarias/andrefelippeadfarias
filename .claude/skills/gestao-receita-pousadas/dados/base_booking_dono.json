@@ -589,6 +589,509 @@
      "taxas": 0.0
     }
    ]
+  },
+  {
+   "checkin": "2026-11-27",
+   "checkout": "2026-11-29",
+   "noites": 2,
+   "tipo": "sexta e sábado",
+   "datas_inferidas": "PDF sem datas; riscado do Recanto R$ 1.425/noite = 0,81 do enviado da Q7 em 27-28/11 (R$ 1.760), igual à relação de 30/11 (0,82)",
+   "n": 59,
+   "mediana": 1022.0,
+   "p25": 721.0,
+   "p75": 1550.0,
+   "mediana_nota_9": 1229.25,
+   "mediana_nota_8": 721.0,
+   "recanto": {
+    "noite": 748.5,
+    "quarto": "Quarto Duplo com Banheira de Hidromassagem",
+    "nota": 8.3,
+    "percentil": 29,
+    "desconto": 0.475,
+    "enviado_q7": 1760
+   },
+   "villa": {
+    "noite": 994.5,
+    "quarto": "Suíte com Cama King-size e Banheira de Hidromassagem",
+    "nota": 8.2,
+    "percentil": 46,
+    "desconto": 0.32
+   },
+   "desconto_mediano_concorrentes": 0.1946692051404093,
+   "hoteis": [
+    {
+     "nome": "Pousada Blue Village by Concavus",
+     "nota": 9.0,
+     "quarto": "Quarto com Cama Queen-size e Banheira de Hidromassagem",
+     "noite": 502.0,
+     "riscado": 1304.0,
+     "taxas": 87.0
+    },
+    {
+     "nome": "Pousada da Lua",
+     "nota": 8.6,
+     "quarto": "Suíte com Banheira de Hidromassagem",
+     "noite": 510.5,
+     "riscado": null,
+     "taxas": 0.0
+    },
+    {
+     "nome": "Pousada Casa Pinha em Campos do Jordão",
+     "nota": 9.6,
+     "quarto": "Quarto Deluxe com Banheira de Hidromassagem",
+     "noite": 537.0,
+     "riscado": 1263.0,
+     "taxas": 0.0
+    },
+    {
+     "nome": "Villa Vintage Campos - Piscina e opções de suites com hidromassagem",
+     "nota": 8.3,
+     "quarto": "Quarto Família Superior",
+     "noite": 570.5,
+     "riscado": 1020.0,
+     "taxas": 223.0
+    },
+    {
+     "nome": "Pousada Casa Mantiqueira - Próxima ao Capivarí e opções de Hidromassagem",
+     "nota": 8.2,
+     "quarto": "Quarto Família Deluxe",
+     "noite": 570.5,
+     "riscado": 1020.0,
+     "taxas": 223.0
+    },
+    {
+     "nome": "Pousada Casa dos Sonhos",
+     "nota": 8.7,
+     "quarto": "Chalé Superior",
+     "noite": 572.5,
+     "riscado": 1652.0,
+     "taxas": 0.0
+    },
+    {
+     "nome": "Pousada Araucária Village",
+     "nota": 8.9,
+     "quarto": "Suíte com Banheira de Hidromassagem",
+     "noite": 584.0,
+     "riscado": null,
+     "taxas": 2.0
+    },
+    {
+     "nome": "Pousada Jardon Campos do Jordão - Exclusiva para Adultos",
+     "nota": 9.2,
+     "quarto": "Suíte Luxo com Banheira de Hidromassagem",
+     "noite": 584.5,
+     "riscado": 1375.0,
+     "taxas": 0.0
+    },
+    {
+     "nome": "Pousada Bliss House - Opções de suites com hidromassagem",
+     "nota": 8.4,
+     "quarto": "Suíte Queen com Banheira de Hidromassagem",
+     "noite": 637.0,
+     "riscado": null,
+     "taxas": 254.0
+    },
+    {
+     "nome": "Pousada Cafe Poesia",
+     "nota": 8.8,
+     "quarto": "Quarto Duplo com Banheira de Hidromassagem",
+     "noite": 643.5,
+     "riscado": 1430.0,
+     "taxas": 0.0
+    },
+    {
+     "nome": "Pousada Confraria da Terra",
+     "nota": 9.4,
+     "quarto": "Quarto Duplo com Banheira de Hidromassagem",
+     "noite": 676.0,
+     "riscado": null,
+     "taxas": 0.0
+    },
+    {
+     "nome": "VELINN Pousada Chateau do Luar Prime",
+     "nota": 8.1,
+     "quarto": "Quarto Duplo Superior com Banheira de Hidromassagem",
+     "noite": 675.0,
+     "riscado": 1514.0,
+     "taxas": 123.0
+    },
+    {
+     "nome": "Pousada Cantinho da Serra",
+     "nota": 9.3,
+     "quarto": "Quarto Triplo com Banheira",
+     "noite": 697.0,
+     "riscado": 1765.0,
+     "taxas": 0.0
+    },
+    {
+     "nome": "Pousada La Sierra",
+     "nota": 9.2,
+     "quarto": "Quarto Duplo com Banheira de Hidromassagem",
+     "noite": 699.0,
+     "riscado": null,
+     "taxas": 0.0
+    },
+    {
+     "nome": "Europa Hotel",
+     "nota": 8.8,
+     "quarto": "Quarto Duplo com Banheira de Hidromassagem",
+     "noite": 726.0,
+     "riscado": null,
+     "taxas": 132.0
+    },
+    {
+     "nome": "Pousada Serra do Jordão by Concavus",
+     "nota": 8.7,
+     "quarto": "Suíte",
+     "noite": 721.0,
+     "riscado": 2146.0,
+     "taxas": 0.0
+    },
+    {
+     "nome": "Pousada Di Oliva",
+     "nota": 8.6,
+     "quarto": "Estúdio Deluxe com Cama King-size",
+     "noite": 759.0,
+     "riscado": 1725.0,
+     "taxas": 0.0
+    },
+    {
+     "nome": "DOM Hotel",
+     "nota": 9.2,
+     "quarto": "Suíte Deluxe com Banheira de Hidromassagem",
+     "noite": 821.5,
+     "riscado": 2106.0,
+     "taxas": 0.0
+    },
+    {
+     "nome": "Pousada Casa Redonda",
+     "nota": 9.2,
+     "quarto": "Suíte Deluxe com Banheira de Hidromassagem",
+     "noite": 731.5,
+     "riscado": 2300.0,
+     "taxas": 0.0
+    },
+    {
+     "nome": "Pousada Benevento",
+     "nota": 9.3,
+     "quarto": "Suíte com Banheira de Hidromassagem",
+     "noite": 823.0,
+     "riscado": 2211.0,
+     "taxas": 143.0
+    },
+    {
+     "nome": "Pousada Recanto Feliz",
+     "nota": 8.8,
+     "quarto": "Quarto Master",
+     "noite": 752.5,
+     "riscado": 2153.0,
+     "taxas": 137.0
+    },
+    {
+     "nome": "Pousada Itália Moderna",
+     "nota": 9.2,
+     "quarto": "Quarto Duplo Premium com Banheira de Hidromassagem",
+     "noite": 874.0,
+     "riscado": 3496.0,
+     "taxas": 0.0
+    },
+    {
+     "nome": "Pousada Alpes Azul",
+     "nota": 9.5,
+     "quarto": "Suíte com Cama King-size e Banheira de Hidromassagem",
+     "noite": 895.0,
+     "riscado": null,
+     "taxas": 0.0
+    },
+    {
+     "nome": "Caminho das Pedras Pousada de Charme",
+     "nota": 9.0,
+     "quarto": "Suíte Júnior Deluxe",
+     "noite": 932.5,
+     "riscado": 2914.0,
+     "taxas": 0.0
+    },
+    {
+     "nome": "Smart Hotel Reserva Campos do Jordão",
+     "nota": 8.7,
+     "quarto": "Chalé Superior",
+     "noite": 792.5,
+     "riscado": 2547.0,
+     "taxas": 0.0
+    },
+    {
+     "nome": "Hotel Ascona",
+     "nota": 8.9,
+     "quarto": "Chalé",
+     "noite": 975.0,
+     "riscado": 2052.0,
+     "taxas": 0.0
+    },
+    {
+     "nome": "Pousada Victoria Villa By Nacional Inn - A 800 metros da Vila Capivari",
+     "nota": 9.3,
+     "quarto": "Suíte Master com Banheira de Hidromassagem",
+     "noite": 1020.5,
+     "riscado": 2761.0,
+     "taxas": 186.0
+    },
+    {
+     "nome": "Pousada Apple House Campos do Jordao",
+     "nota": 9.0,
+     "quarto": "Master Suite with Spa Bath and Fireplace",
+     "noite": 1022.0,
+     "riscado": 3014.0,
+     "taxas": 97.0
+    },
+    {
+     "nome": "Pousada Dom Alfredo José",
+     "nota": 9.5,
+     "quarto": "Suíte com Banheira de Hidromassagem",
+     "noite": 1029.5,
+     "riscado": null,
+     "taxas": 0.0
+    },
+    {
+     "nome": "Euro Suit Campos do Jordão - 950 m da Vila Capivari",
+     "nota": 9.0,
+     "quarto": "Suíte com Banheira de Hidromassagem",
+     "noite": 1043.0,
+     "riscado": 2687.0,
+     "taxas": 280.0
+    },
+    {
+     "nome": "Pousada das Lavandas",
+     "nota": 9.7,
+     "quarto": "Quarto Deluxe com Cama de Casal ou 2 de Solteiro e Banheira de Hidromassagem",
+     "noite": 1078.5,
+     "riscado": 2397.0,
+     "taxas": 0.0
+    },
+    {
+     "nome": "Ti Voglio Bene",
+     "nota": 9.1,
+     "quarto": "Quarto Duplo Deluxe com Banheira",
+     "noite": 1131.0,
+     "riscado": 2661.0,
+     "taxas": 0.0
+    },
+    {
+     "nome": "Pousada Ville Le Mont - Campos do Jordao",
+     "nota": 9.6,
+     "quarto": "Suíte com Banheira de Hidromassagem",
+     "noite": 1189.5,
+     "riscado": 2937.0,
+     "taxas": 0.0
+    },
+    {
+     "nome": "Araucária Lodge - 800 metros do Capivari",
+     "nota": 9.1,
+     "quarto": "Apartamento Loft de 2 Quartos",
+     "noite": 1269.0,
+     "riscado": 2563.0,
+     "taxas": 231.0
+    },
+    {
+     "nome": "Matsubara Pousada",
+     "nota": 9.1,
+     "quarto": "Suíte com Banheira de Hidromassagem",
+     "noite": 932.5,
+     "riscado": 2590.0,
+     "taxas": 0.0
+    },
+    {
+     "nome": "Hotel Solar d'Izabel",
+     "nota": 9.5,
+     "quarto": "Quarto Duplo com Banheira de Hidromassagem",
+     "noite": 1322.0,
+     "riscado": 3110.0,
+     "taxas": 0.0
+    },
+    {
+     "nome": "Pousada Boutique Figueira da Serra",
+     "nota": 9.2,
+     "quarto": "Quarto Deluxe com Cama Queen-size",
+     "noite": 1012.5,
+     "riscado": 2998.0,
+     "taxas": 193.0
+    },
+    {
+     "nome": "Pousada Annecy - CAPIVARI Fácil acesso ao centrinho e Baden Bar",
+     "nota": 8.8,
+     "quarto": "Quarto Duplo com Banheira de Hidromassagem",
+     "noite": 1390.0,
+     "riscado": null,
+     "taxas": 0.0
+    },
+    {
+     "nome": "Pousada Vila Tio Lé",
+     "nota": 9.2,
+     "quarto": "Quarto Duplo Deluxe com Banheira",
+     "noite": 1434.5,
+     "riscado": 3375.0,
+     "taxas": 0.0
+    },
+    {
+     "nome": "Casa Regaleira Hotel Boutique",
+     "nota": 9.8,
+     "quarto": "Suíte Deluxe com Banheira de Hidromassagem",
+     "noite": 1459.0,
+     "riscado": 3648.0,
+     "taxas": 0.0
+    },
+    {
+     "nome": "Hotel Chateau",
+     "nota": 9.0,
+     "quarto": "Suíte Premium com Banheira de Hidromassagem",
+     "noite": 1459.5,
+     "riscado": 3739.0,
+     "taxas": 265.0
+    },
+    {
+     "nome": "Center Suiço Flats",
+     "nota": 9.3,
+     "quarto": "Quarto Quádruplo Comfort",
+     "noite": 1521.5,
+     "riscado": 3580.0,
+     "taxas": 0.0
+    },
+    {
+     "nome": "Casablanca Hotel Boutique",
+     "nota": 9.6,
+     "quarto": "Apartamento com Vista das Montanhas",
+     "noite": 1529.0,
+     "riscado": null,
+     "taxas": 0.0
+    },
+    {
+     "nome": "Pousada Villa Capivary Campos do Jordão",
+     "nota": 9.7,
+     "quarto": "Loft - Clássico",
+     "noite": 1550.0,
+     "riscado": null,
+     "taxas": 0.0
+    },
+    {
+     "nome": "Pousada Murano",
+     "nota": 9.7,
+     "quarto": "Quarto Duplo com Banheira de Hidromassagem",
+     "noite": 1585.5,
+     "riscado": 3524.0,
+     "taxas": 0.0
+    },
+    {
+     "nome": "Hotel Savoy Excellence",
+     "nota": 9.5,
+     "quarto": "Quarto Duplo com Banheira de Hidromassagem",
+     "noite": 1613.0,
+     "riscado": null,
+     "taxas": 0.0
+    },
+    {
+     "nome": "Pousada Chateau Elegance",
+     "nota": 9.0,
+     "quarto": "Quarto Duplo com Banheira de Hidromassagem",
+     "noite": 1630.0,
+     "riscado": 5175.0,
+     "taxas": 0.0
+    },
+    {
+     "nome": "Hotel Le Renard - Campos do Jordao",
+     "nota": 9.3,
+     "quarto": "Quarto Duplo com Banheira de Hidromassagem",
+     "noite": 1692.0,
+     "riscado": 3894.0,
+     "taxas": 308.0
+    },
+    {
+     "nome": "Pousada D'Biagy Raízes",
+     "nota": 9.6,
+     "quarto": "Suíte Deluxe com Banheira de Hidromassagem",
+     "noite": 1521.0,
+     "riscado": 4225.0,
+     "taxas": 0.0
+    },
+    {
+     "nome": "Champet Boutique Hotel",
+     "nota": 9.6,
+     "quarto": "Quarto Master com varanda, banheira de hidromassagem e cama king-size",
+     "noite": 1814.0,
+     "riscado": 4269.0,
+     "taxas": 0.0
+    },
+    {
+     "nome": "Carballo Hotel & Spa",
+     "nota": 9.7,
+     "quarto": "Suíte Alpine",
+     "noite": 1748.5,
+     "riscado": 3798.0,
+     "taxas": 318.0
+    },
+    {
+     "nome": "Chateau La Villette",
+     "nota": 9.5,
+     "quarto": "Suíte com Banheira de Hidromassagem",
+     "noite": 1947.5,
+     "riscado": 4783.0,
+     "taxas": 20.0
+    },
+    {
+     "nome": "L.A.H. Hostellerie",
+     "nota": 9.8,
+     "quarto": "Quarto Duplo com Banheira de Hidromassagem",
+     "noite": 1943.5,
+     "riscado": null,
+     "taxas": 0.0
+    },
+    {
+     "nome": "Chris Wellness Resort Hotel",
+     "nota": 8.3,
+     "quarto": "Quarto Duplo com Banheira de Hidromassagem Individual",
+     "noite": 1981.5,
+     "riscado": 4010.0,
+     "taxas": 354.0
+    },
+    {
+     "nome": "Secreto Boutique Hotel",
+     "nota": 9.1,
+     "quarto": "Casa Família",
+     "noite": 2002.0,
+     "riscado": 4758.0,
+     "taxas": 364.0
+    },
+    {
+     "nome": "Alma Hotel",
+     "nota": 9.1,
+     "quarto": "Suíte King Deluxe",
+     "noite": 2251.0,
+     "riscado": 5296.0,
+     "taxas": 0.0
+    },
+    {
+     "nome": "Hotel Estoril",
+     "nota": 8.8,
+     "quarto": "Suíte de Lua de Mel",
+     "noite": 2298.0,
+     "riscado": 4643.0,
+     "taxas": 418.0
+    },
+    {
+     "nome": "Pousada D'Biagy Premium",
+     "nota": 9.2,
+     "quarto": "Suíte Deluxe com Banheira de Hidromassagem",
+     "noite": 2223.0,
+     "riscado": 6175.0,
+     "taxas": 0.0
+    },
+    {
+     "nome": "Bendito Cacao Resort & Spa",
+     "nota": 9.0,
+     "quarto": "Suíte com Vista para a Montanha",
+     "noite": 5359.5,
+     "riscado": null,
+     "taxas": 0.0
+    }
+   ]
   }
  ]
 }

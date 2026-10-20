@@ -2063,6 +2063,12 @@ A Villa não aparece em nenhuma busca com filtro de hidro (falta a comodidade na
 - **Envio aos canais:** os pisos de 20/10 ainda não chegaram ao Beds24. O price1 da Q7 segue em R$ 809 de 21 a 29/10 (piso novo R$ 1.232) e o do Double em R$ 1.480 em 23/10 (piso novo R$ 2.028). As reservas de hoje entraram pelo preço antigo. Pedido ao dono: **Sync Now** no PriceLabs, porque não há API para isso.
 - **Nada gravado.**
 
+## 20/10/2026, 16:56 UTC (13:56 BRT) — Rotina leve das 13:53
+
+- **Beds24 (desde 13:50 UTC):** nenhuma reserva nova e nenhum cancelamento; só uma alteração de status de estadia em andamento.
+- **Envio:** os pisos novos ainda não chegaram. O price1 da Q7 segue em R$ 809 de 21 a 22/10 e R$ 1.396 em 23-24/10; o do Double, R$ 1.480 em 23/10. Sync Now continua pendente com o dono.
+- **Nada gravado.**
+
 > **Regras em vigor:** desde 06/10/2026 elas ficam em `.claude/skills/gestao-receita-pousadas/references/regras.md`. Este arquivo guarda só o histórico das mudanças.
 
 ## O que só pode ser feito na tela (passo a passo para você)

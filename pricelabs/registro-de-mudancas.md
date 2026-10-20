@@ -2033,6 +2033,18 @@ A Villa não aparece em nenhuma busca com filtro de hidro (falta a comodidade na
 - **Trava:** segue ligada (33 de 77 medidos; precisa de 39). A revisão de segunda mede os que faltam.
 - **Nada gravado no PriceLabs.**
 
+## 20/10/2026, 16:00 UTC (13:00 BRT) — Reserva de feriado por R$ 1.100: lançamento manual no Beds24
+
+- **Pedido do dono:** "verifique os valores corretos; acabamos de receber uma reserva para o feriado do dia 20 de novembro de 2 diárias por apenas 1100 reais".
+- **Achado:** VK7, reserva 94953589 (20-22/11), R$ 1.096,20 na fatura. Foi criada à mão no painel do Beds24 (usuário "isaacmiguel", canal direto) em 20/10 às 01:18 UTC. A descrição da tarifa traz os preços de 19 e 20/10 (R$ 947 e R$ 1.051): a reserva foi aberta com as datas do dia, depois as datas foram trocadas e o preço não foi recalculado.
+- **Mesmo padrão nas outras reservas da mesma noite:**
+  - 94953814: Finados, 2 noites contra a mínima de 3, R$ 1.096.
+  - 94953197: 13-15/11, R$ 1.190.
+  - 94953351: 07/12, R$ 450.
+  - Preço do Beds24 por noite: R$ 3.000 (20/11), R$ 3.663 (30/10), R$ 2.220 (13/11). As 4 juntas: cerca de R$ 16 mil pela tabela, lançadas por R$ 3,8 mil.
+- **PriceLabs e Booking:** os preços estão certos; as reservas da Booking de hoje entraram coerentes.
+- **Nada alterado.** Reservas ficam com o dono e a equipe.
+
 > **Regras em vigor:** desde 06/10/2026 elas ficam em `.claude/skills/gestao-receita-pousadas/references/regras.md`. Este arquivo guarda só o histórico das mudanças.
 
 ## O que só pode ser feito na tela (passo a passo para você)

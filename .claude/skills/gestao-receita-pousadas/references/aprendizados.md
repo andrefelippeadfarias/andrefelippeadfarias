@@ -221,3 +221,7 @@ Cada item tem data e evidência. Para incluir um item novo: data, o fato, a evid
 - **Com r_hidro:** medido em 33 hotéis, mediana 1,395. O Recanto passa aos percentis 41 a 59, como no PDF do dono (hidro contra hidro). O r_hidro é a peça que torna a busca diária usável para preço.
 - **Custo:** a busca diária de 6 estadias para cerca de 79 hotéis levou 48 chamadas e cerca de 6 minutos. A escada para calibrar levou cerca de 120 chamadas e cerca de 12 minutos, então fica para a revisão semanal, uma vez por semana.
 
+## 20/10/2026 — Reserva manual no Beds24 com preço das datas erradas
+- Reserva criada no painel (referer = usuário da equipe, canal direto, `apiSource` Direct) puxa o preço das datas abertas na hora da criação. Trocar as datas depois não recalcula o preço. Sinais: `rateDescription` com datas diferentes da estadia e estadia mínima ignorada.
+- Na rotina, toda reserva direta com valor por noite abaixo de 60% do `price1` do Beds24 vai ao topo do relatório (`/inventory/rooms/calendar?includePrices=true`).
+

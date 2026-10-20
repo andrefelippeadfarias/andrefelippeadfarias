@@ -345,6 +345,13 @@
    "desde": "2026-10-19",
    "urgencia": 2,
    "texto": "Conferir no recálculo de 20/10 (07:53) todas as datas da concorrência refeita às 15:01 BRT de 19/10: Q7 01/11 e 04-05/12; Double 30/10, 01/11, 06/11, 11/11, 04-05/12; Q2 30/10; Afrodite 01/11, 06-07/11, 04-05/12; VK7 30-31/10, 20-21/11, 04-05/12; VK2 30-31/10, 04-05/12; Balcony 04-05/12. Mais: VK2 30-31/10 teto 78% (R$ 2.261), gravado em 20/10 às 10:16 UTC."
+  },
+  {
+   "id": "reservas-manuais-vk7-2010",
+   "responsavel": "dono",
+   "desde": "2026-10-20",
+   "urgencia": 0,
+   "texto": "4 reservas diretas da VK7 lançadas à mão no Beds24 (usuário isaacmiguel, 19/10 à noite) com preço das datas de 19-20/10: 94953589 (20-22/11, R$ 1.096), 94953814 (Finados, R$ 1.096, 2 noites contra a mínima de 3), 94953197 (13-15/11, R$ 1.190) e 94953351 (07/12, R$ 450). Pela tabela do Beds24 valeriam cerca de R$ 16 mil. Confirmar se foram combinadas ou corrigir antes da confirmação ao hóspede."
   }
  ],
  "versao": "2026-10-16T08"

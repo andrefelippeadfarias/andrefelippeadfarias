@@ -2069,6 +2069,16 @@ A Villa não aparece em nenhuma busca com filtro de hidro (falta a comodidade na
 - **Envio:** os pisos novos ainda não chegaram. O price1 da Q7 segue em R$ 809 de 21 a 22/10 e R$ 1.396 em 23-24/10; o do Double, R$ 1.480 em 23/10. Sync Now continua pendente com o dono.
 - **Nada gravado.**
 
+## 20/10/2026, 19:57 UTC (16:57 BRT) — Rotina leve das 16:53
+
+- **Reserva direta nova:** Afrodite, reserva 94997273, de 18 a 21/01/2027 (3 noites), R$ 2.335,50 (R$ 778/noite), status "novo".
+  - Veio pela API (`referer` API, sem oferta e sem descrição de tarifa), não foi digitada no painel.
+  - O price1 do Beds24 para essas noites é R$ 1.730, então ela entrou a **45% da tabela**; o alerta é abaixo de 60%.
+  - É coerente com o valor real ÷ enviado já medido no canal direto (0,36 no Recanto, 19/10): o canal direto vende a cerca de 40% do preço do PriceLabs. Verificar no Beds24 (motor de reservas ou a integração que usa a API) se há multiplicador ou desconto no canal direto.
+- **Outras mudanças:** alterações de status em estadias de hoje.
+- **Envio:** os pisos novos ainda não chegaram ao Beds24 (Q7 a R$ 809 em 21-22/10). Sync Now segue pendente; senão, sai no envio da madrugada.
+- **Nada gravado.**
+
 > **Regras em vigor:** desde 06/10/2026 elas ficam em `.claude/skills/gestao-receita-pousadas/references/regras.md`. Este arquivo guarda só o histórico das mudanças.
 
 ## O que só pode ser feito na tela (passo a passo para você)

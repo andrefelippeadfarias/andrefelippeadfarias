@@ -352,6 +352,13 @@
    "desde": "2026-10-20",
    "urgencia": 0,
    "texto": "4 reservas diretas da VK7 lançadas à mão no Beds24 (usuário isaacmiguel, 19/10 à noite) com preço das datas de 19-20/10: 94953589 (20-22/11, R$ 1.096), 94953814 (Finados, R$ 1.096, 2 noites contra a mínima de 3), 94953197 (13-15/11, R$ 1.190) e 94953351 (07/12, R$ 450). Pela tabela do Beds24 valeriam cerca de R$ 16 mil. Confirmar se foram combinadas ou corrigir antes da confirmação ao hóspede."
+  },
+  {
+   "id": "canal-direto-45pct",
+   "responsavel": "dono",
+   "desde": "2026-10-20",
+   "urgencia": 1,
+   "texto": "O canal direto vende a cerca de 40-45% do preço do PriceLabs: Afrodite 18-21/01 por R$ 778/noite com price1 de R$ 1.730; valor real ÷ enviado de 0,36 no Recanto. Verificar no Beds24 o multiplicador ou desconto do canal direto (motor de reservas ou a integração pela API, possivelmente o Hotel Claw)."
   }
  ],
  "versao": "2026-10-16T08"

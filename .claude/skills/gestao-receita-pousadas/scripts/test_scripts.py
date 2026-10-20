@@ -710,5 +710,16 @@ class TestConcorrenciaHidroVista(unittest.TestCase):
         self.assertLessEqual(por["Balcony"]["max_price"], round(por["VK2"]["max_price"] * 0.9))
 
 
+class TestMercadoDiario(unittest.TestCase):
+    def test_estadias_do_dia(self):
+        import mercado_diario as m
+        e = m.estadias(date(2026, 10, 20), CFG)
+        datas = [(a.isoformat(), b.isoformat()) for a, b, _ in e]
+        self.assertIn(("2026-10-23", "2026-10-25"), datas)          # próxima sexta a domingo
+        self.assertIn(("2026-10-21", "2026-10-22"), datas)          # próxima quarta
+        self.assertIn(("2026-10-30", "2026-11-02"), datas)          # Finados (feriado a até 60 dias)
+        self.assertEqual(len([1 for _, _, t in e if t == "fim de semana"]), 3)
+
+
 if __name__ == "__main__":
     unittest.main()

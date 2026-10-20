@@ -43,6 +43,7 @@ Veja como pesquisar em `mercado.md`. Não serve para mudar nada.
 - `python3 concorrencia_hidro_vista.py --coleta <saida mesclada> --hoje <hoje> --saida plano_comp.json [--sem-beds24]`: plano de aproximação da referência hidro+vista (`regras.md` seção 5) a partir de `dados/concorrentes_hidro_vista.json`; ocupação pelo Beds24, noite bloqueada fora, Queen (2) sem corte, Balcony pela Regra G. Sempre validar depois.
 - `python3 -I base_booking_pdf.py ARQUIVO.pdf --noites N [--json saida.json] [--rodada plan.json --checkin AAAA-MM-DD --checkout AAAA-MM-DD --captado ISO8601]`: com `--rodada`, acrescenta as capturas ao `captures.csv` da rodada da skill `booking-hotel-research` (uma linha por hotel do cadastro encontrado no PDF).
 - (antes) `python3 -I base_booking_pdf.py ARQUIVO.pdf --noites N [--json saida.json]`: lê o PDF da busca filtrada da Booking que o dono manda (`mercado.md`) e devolve a mediana do quarto com hidro dos concorrentes e o percentil do Recanto e da Villa. Precisa de pymupdf.
+- `python3 mercado_diario.py planejar|consolidar --hoje AAAA-MM-DD ...`: busca diária dos concorrentes do perfil (`mercado-diario.md`).
 - `python3 -m unittest test_scripts` (ou `python3 test_scripts.py`): testes dos scripts.
 - Rascunhos de plano e cópias de saída vão para a pasta de rascunho (scratchpad) da sessão, nunca para o repositório.
 

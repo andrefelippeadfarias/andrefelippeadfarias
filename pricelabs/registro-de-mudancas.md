@@ -2045,6 +2045,24 @@ A Villa não aparece em nenhuma busca com filtro de hidro (falta a comodidade na
 - **PriceLabs e Booking:** os preços estão certos; as reservas da Booking de hoje entraram coerentes.
 - **Nada alterado.** Reservas ficam com o dono e a equipe.
 
+## 20/10/2026, 13:58 UTC (10:58 BRT) — Rotina leve das 10:53
+
+- **Beds24, reservas desde 11:40 UTC:** 7 novas da Booking, todas confirmadas, entre 12:27 e 12:43 UTC.
+
+| Quarto | Chegada | Noites | Valor |
+|---|---|---|---|
+| Q7 | 21/10 | 2 | R$ 847 |
+| Q7 | 25/10 | 6 | R$ 3.519 |
+| Q7 | 13/11 | 2 | R$ 1.571 |
+| Q7 | 17/11 | 2 | R$ 1.153 |
+| Double | 21/11 | 3 | R$ 3.362 |
+| Balcony | 23/10 | 2 | R$ 891 |
+| VK2 | 09/11 | 1 | R$ 553 |
+
+- **Reservas diretas:** nenhuma nova. A checagem "valor por noite abaixo de 60% do price1" não pegou nada.
+- **Envio aos canais:** os pisos de 20/10 ainda não chegaram ao Beds24. O price1 da Q7 segue em R$ 809 de 21 a 29/10 (piso novo R$ 1.232) e o do Double em R$ 1.480 em 23/10 (piso novo R$ 2.028). As reservas de hoje entraram pelo preço antigo. Pedido ao dono: **Sync Now** no PriceLabs, porque não há API para isso.
+- **Nada gravado.**
+
 > **Regras em vigor:** desde 06/10/2026 elas ficam em `.claude/skills/gestao-receita-pousadas/references/regras.md`. Este arquivo guarda só o histórico das mudanças.
 
 ## O que só pode ser feito na tela (passo a passo para você)

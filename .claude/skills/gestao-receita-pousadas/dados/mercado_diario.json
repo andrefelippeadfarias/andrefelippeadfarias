@@ -1,0 +1,120 @@
+{
+ "_doc": "Histórico da busca diária (mercado_diario.py)",
+ "dias": [
+  {
+   "hoje": "2026-10-20",
+   "captado": "2026-10-20T11:30-03:00",
+   "estadias": [
+    {
+     "checkin": "2026-10-21",
+     "checkout": "2026-10-22",
+     "noites": 1,
+     "n": 69,
+     "mediana": 347.42,
+     "p25": 256.57,
+     "p75": 787.1,
+     "recanto": {
+      "noite": 531.51,
+      "percentil": 65,
+      "vs_mediana": 0.53
+     },
+     "villa": {
+      "noite": 430.24,
+      "percentil": 57,
+      "vs_mediana": 0.238
+     }
+    },
+    {
+     "checkin": "2026-10-23",
+     "checkout": "2026-10-25",
+     "noites": 2,
+     "n": 66,
+     "mediana": 582.78,
+     "p25": 426.59,
+     "p75": 1055.73,
+     "recanto": {
+      "noite": 825.46,
+      "percentil": 68,
+      "vs_mediana": 0.416
+     },
+     "villa": {
+      "noite": 598.0,
+      "percentil": 53,
+      "vs_mediana": 0.026
+     }
+    },
+    {
+     "checkin": "2026-10-30",
+     "checkout": "2026-11-02",
+     "noites": 3,
+     "n": 64,
+     "mediana": 899.31,
+     "p25": 635.65,
+     "p75": 1349.94,
+     "recanto": {
+      "noite": 1566.34,
+      "percentil": 84,
+      "vs_mediana": 0.742
+     },
+     "villa": {
+      "noite": 1464.91,
+      "percentil": 81,
+      "vs_mediana": 0.629
+     }
+    },
+    {
+     "checkin": "2026-11-06",
+     "checkout": "2026-11-08",
+     "noites": 2,
+     "n": 67,
+     "mediana": 801.12,
+     "p25": 610.28,
+     "p75": 1260.0,
+     "recanto": {
+      "noite": 1199.2,
+      "percentil": 73,
+      "vs_mediana": 0.497
+     }
+    },
+    {
+     "checkin": "2026-11-13",
+     "checkout": "2026-11-15",
+     "noites": 2,
+     "n": 67,
+     "mediana": 859.62,
+     "p25": 640.0,
+     "p75": 1290.0,
+     "recanto": {
+      "noite": 1181.59,
+      "percentil": 69,
+      "vs_mediana": 0.375
+     },
+     "villa": {
+      "noite": 1144.14,
+      "percentil": 69,
+      "vs_mediana": 0.331
+     }
+    },
+    {
+     "checkin": "2026-11-19",
+     "checkout": "2026-11-22",
+     "noites": 3,
+     "n": 65,
+     "mediana": 1066.11,
+     "p25": 731.51,
+     "p75": 1394.22,
+     "recanto": {
+      "noite": 1436.94,
+      "percentil": 78,
+      "vs_mediana": 0.348
+     },
+     "villa": {
+      "noite": 1236.6,
+      "percentil": 69,
+      "vs_mediana": 0.16
+     }
+    }
+   ]
+  }
+ ]
+}

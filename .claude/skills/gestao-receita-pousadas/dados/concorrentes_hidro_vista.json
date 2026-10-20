@@ -17,7 +17,7 @@
   "quartos": 1,
   "moeda": "BRL"
  },
- "atualizado_em": "2026-10-19",
+ "atualizado_em": "2026-10-20",
  "classe_a": [
   {
    "id": 303535,
@@ -104,76 +104,77 @@
  ],
  "periodos": [
   {
-   "rotulo": "23-25/10",
+   "rotulo": "2026-10-21→2026-10-22",
+   "datas": [
+    "2026-10-21"
+   ],
+   "mediana_a": 347.42,
+   "recanto": 531.51,
+   "n": 69,
+   "fonte": "busca diária 2026-10-20 (conector, menor quarto com café × r_hidro)",
+   "sem_corte": true
+  },
+  {
+   "rotulo": "2026-10-23→2026-10-25",
    "datas": [
     "2026-10-23",
     "2026-10-24"
    ],
-   "mediana_a": 935.28,
+   "mediana_a": 582.78,
    "recanto": 825.46,
-   "mediana_mais_barato": 715.0,
-   "n_hoteis": 11,
-   "fonte": "escada de preço mínimo, 19/10 tarde"
+   "n": 66,
+   "fonte": "busca diária 2026-10-20 (conector, menor quarto com café × r_hidro)",
+   "sem_corte": true
   },
   {
-   "rotulo": "Finados",
+   "rotulo": "2026-10-30→2026-11-02",
    "datas": [
     "2026-10-30",
     "2026-10-31",
     "2026-11-01"
    ],
-   "mediana_a": 1603.63,
-   "recanto": 1472.58,
-   "mediana_mais_barato": 1250.0,
-   "n_hoteis": 9,
-   "fonte": "escada de preço mínimo, 19/10 tarde"
+   "mediana_a": 899.31,
+   "recanto": 1566.34,
+   "n": 64,
+   "fonte": "busca diária 2026-10-20 (conector, menor quarto com café × r_hidro)",
+   "sem_corte": true
   },
   {
-   "rotulo": "06-08/11",
+   "rotulo": "2026-11-06→2026-11-08",
    "datas": [
     "2026-11-06",
     "2026-11-07"
    ],
-   "mediana_a": 1170.8,
-   "recanto": 1162.76,
-   "mediana_mais_barato": 1013.72,
-   "n_hoteis": 12,
-   "fonte": "escada de preço mínimo, 19/10 tarde"
+   "mediana_a": 801.12,
+   "recanto": 1199.2,
+   "n": 67,
+   "fonte": "busca diária 2026-10-20 (conector, menor quarto com café × r_hidro)",
+   "sem_corte": true
   },
   {
-   "rotulo": "11/11",
+   "rotulo": "2026-11-13→2026-11-15",
    "datas": [
-    "2026-11-11"
+    "2026-11-13",
+    "2026-11-14"
    ],
-   "mediana_a": 954.16,
-   "recanto": 641.93,
-   "mediana_mais_barato": 637.46,
-   "n_hoteis": 12,
-   "fonte": "escada de preço mínimo, 19/10 tarde"
+   "mediana_a": 859.62,
+   "recanto": 1181.59,
+   "n": 67,
+   "fonte": "busca diária 2026-10-20 (conector, menor quarto com café × r_hidro)",
+   "sem_corte": true
   },
   {
-   "rotulo": "Consciência Negra",
+   "rotulo": "2026-11-19→2026-11-22",
    "datas": [
+    "2026-11-19",
     "2026-11-20",
     "2026-11-21"
    ],
-   "mediana_a": 1603.63,
-   "recanto": 1428.23,
-   "mediana_mais_barato": 1256.0,
-   "n_hoteis": 7,
-   "fonte": "escada de preço mínimo, 19/10 tarde"
-  },
-  {
-   "rotulo": "04-06/12",
-   "datas": [
-    "2026-12-04",
-    "2026-12-05"
-   ],
-   "mediana_a": 1255.0,
-   "recanto": 1092.89,
-   "mediana_mais_barato": 842.4,
-   "n_hoteis": 11,
-   "fonte": "escada de preço mínimo, 19/10 tarde"
+   "mediana_a": 1066.11,
+   "recanto": 1436.94,
+   "n": 65,
+   "fonte": "busca diária 2026-10-20 (conector, menor quarto com café × r_hidro)",
+   "sem_corte": true
   }
  ],
  "ressalvas": [

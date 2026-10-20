@@ -1997,6 +1997,24 @@ A Villa não aparece em nenhuma busca com filtro de hidro (falta a comodidade na
 - **1ª rodada:** 41 capturas vindas dos 3 PDFs do dono, com quarto com hidro e café incluído confirmados pelos filtros e vitrine Genius 3. Tabela em `pricelabs/pesquisa-booking/rodada-2026-10-20/resumo.md`. As outras 7 estadias seguem pendentes até chegarem novos PDFs.
 - **Nada gravado no PriceLabs nesta etapa.**
 
+## 20/10/2026, 14:45 UTC (11:45 BRT) — 1ª busca diária dos 77 concorrentes do perfil
+
+- **Cobertura:** 48 buscas pelo conector oficial (café incluído, 2 adultos), com preço para 64 a 69 concorrentes por estadia.
+
+| Estadia | Concorrentes | Mediana/noite | 25%-75% | Recanto (percentil) | Villa (percentil) |
+|---|---|---|---|---|---|
+| 21/10 (1 noite) | 69 | R$ 347 | R$ 257-787 | R$ 532 (65) | R$ 430 (57) |
+| 23-25/10 | 66 | R$ 583 | R$ 427-1.056 | R$ 825 (68) | R$ 598 (53) |
+| Finados (3 noites) | 64 | R$ 899 | R$ 636-1.350 | R$ 1.566 (84) | R$ 1.465 (81) |
+| 06-08/11 | 67 | R$ 801 | R$ 610-1.260 | R$ 1.199 (73) | fechada |
+| 13-15/11 | 67 | R$ 860 | R$ 640-1.290 | R$ 1.182 (69) | R$ 1.144 (69) |
+| Consciência Negra (3 noites) | 65 | R$ 1.066 | R$ 732-1.394 | R$ 1.437 (78) | R$ 1.237 (69) |
+
+- **Leitura:** os concorrentes entram pelo menor quarto com café, que nem sempre tem hidro, e nós entramos com quarto com hidro. Por isso parecemos mais caros: em Finados o Recanto está no percentil 84 nesta busca e no percentil 44 no PDF do dono (hidro contra hidro).
+- **Trava:** enquanto o `r_hidro` não estiver medido em pelo menos metade dos concorrentes, a busca diária não gera corte, só subida e tendência. Calibração dos 77 em andamento pela escada.
+- **Preços nossos na busca:** ainda sem os pisos novos, que a Booking só recebe no envio da madrugada.
+- **Nada gravado no PriceLabs.**
+
 > **Regras em vigor:** desde 06/10/2026 elas ficam em `.claude/skills/gestao-receita-pousadas/references/regras.md`. Este arquivo guarda só o histórico das mudanças.
 
 ## O que só pode ser feito na tela (passo a passo para você)

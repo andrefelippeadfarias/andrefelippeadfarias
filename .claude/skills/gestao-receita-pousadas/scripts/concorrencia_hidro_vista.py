@@ -107,7 +107,7 @@ def montar(cfg, comp, coleta, hoje, vendidas=None):
                     fv = P["fator_vitrine_fds"]["Villa"] if (fds or fer) else P["fator_vitrine_semana"]["Villa"]
                     gap = float((cal.get(("VK7", s)) or x)["price"]) * fv / alvo_ef - 1
                 ocup, mt = vend / cap, meta(hoje, d)
-                if gap > 0.10 and ocup < mt + 0.10 and not q.get("sem_desconto"):
+                if gap > 0.10 and ocup < mt + 0.10 and not q.get("sem_desconto") and not per.get("sem_corte"):
                     passo = max(-0.15, 1 / (1 + gap) - 1)
                     novo = round(max(preco * (1 + passo), piso_dono(k, d)))
                     if novo >= preco * 0.98:

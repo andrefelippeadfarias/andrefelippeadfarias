@@ -129,7 +129,9 @@ def consolidar(hoje: dt.date, respostas: str, captado: str) -> dict:
     json.dump(hist, open(HIST, "w"), ensure_ascii=False, indent=1)
     # referência do plano: mediana do dia e o preço do Recanto na mesma vitrine
     ref = json.load(open(REF))
-    ref["periodos"] = [{"rotulo": f"{r['checkin']}→{r['checkout']}", "datas": [(dt.date.fromisoformat(r["checkin"]) + dt.timedelta(days=i)).isoformat() for i in range(r["noites"])],
+    calibrados = sum(1 for h in cad.values() if float(h.get("r_hidro") or 1.0) != 1.0)
+    sem_corte = calibrados < len(cad) / 2   # 20/10: sem r_hidro, o menor quarto subestima o concorrente; só sobe
+    ref["periodos"] = [{"sem_corte": sem_corte, "rotulo": f"{r['checkin']}→{r['checkout']}", "datas": [(dt.date.fromisoformat(r["checkin"]) + dt.timedelta(days=i)).isoformat() for i in range(r["noites"])],
                         "mediana_a": r["mediana"], "recanto": (r.get("recanto") or {}).get("noite"), "n": r["n"],
                         "fonte": f"busca diária {hoje.isoformat()} (conector, menor quarto com café × r_hidro)"}
                        for r in resumo if r["mediana"]]

@@ -35,6 +35,7 @@
 - **Atenção:** o PDF mostra a vitrine de quem está logado como Genius nível 3, a mais descontada. Compare com o nosso preço na mesma página, nunca com o preço do conector.
 - **30/11 a 02/12 (segunda e terça), 70 concorrentes:** mediana R$ 646/noite (25% a 75%: R$ 423 a R$ 1.094); nota 9+ R$ 736; nota 8 a 8,9 R$ 389. Recanto R$ 350 (percentil 10; Q7 enviado R$ 852, vitrine 0,41 do enviado). Villa R$ 522 (percentil 37).
 - **27 a 29/11 (sexta e sábado), 59 concorrentes:** mediana R$ 1.022/noite (25% a 75%: R$ 721 a R$ 1.550); nota 9+ R$ 1.229; nota 8 a 8,9 R$ 721. Recanto R$ 749 (percentil 29; desconto de 47,5%). Villa R$ 995 (percentil 46; desconto de 32%). Concorrentes com 19,5% de desconto na mediana.
+- **Finados, 30/10 a 02/11 (3 diárias), 48 concorrentes:** mediana R$ 1.100/noite (25% a 75%: R$ 871 a R$ 1.516); nota 9+ R$ 1.272; nota 8 a 8,9 R$ 922. Recanto R$ 1.036 (percentil 44; desconto de 46%). Villa R$ 1.586 (percentil 81; desconto de 30%).
 - **Desconto do riscado ao final:** concorrentes 15% na mediana; Recanto 50% (R$ 1.395 → R$ 700 nas 2 noites); Villa 35% (R$ 1.611 → R$ 1.045). O empilhamento de promoções da Booking no Recanto é mais que o triplo do mercado.
 
 ## Como pesquisar (MCP da Booking: accommodations_search)

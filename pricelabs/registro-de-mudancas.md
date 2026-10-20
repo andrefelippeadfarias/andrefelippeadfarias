@@ -1946,6 +1946,24 @@ A Villa não aparece em nenhuma busca com filtro de hidro (falta a comodidade na
 - **Nada gravado.** O ganho maior está nas duas decisões do dono abertas desde o 1º PDF: a base do piso de R$ 500 / R$ 850 e o desconto empilhado de 47% a 50% no Recanto.
 - **Código:** `scripts/base_booking_pdf.py`, que leu os dois PDFs; ele reproduz a leitura manual do 1º (70 concorrentes, mediana R$ 645,50).
 
+## 20/10/2026, 10:16 UTC (07:16 BRT) — 3º PDF do dono: Finados (30/10 a 02/11)
+
+- **Datas:** o PDF mostra 3 diárias e não traz as datas. O riscado do Recanto ÷ enviado médio da Q7 dá 0,79, como nos outros PDFs, então é Finados.
+- **48 concorrentes (por noite):** mediana R$ 1.100; nota 9+ R$ 1.272; nota 8 a 8,9 R$ 922. Recanto R$ 1.036 (percentil 44). Villa R$ 1.586 (percentil 81).
+- **Gravado (validador: 2 itens, 0 erro):**
+
+| Quarto | Datas | Antes | Depois |
+|---|---|---|---|
+| VK2 | 30-31/10 | teto 110% (R$ 2.667, conferido no recálculo de 10:15 UTC) | teto 78% (R$ 2.261); piso 63% e 3 noites mantidos |
+
+- **Por quê:** mesmo com o teto de 19/10, a vitrine da Villa fica cerca de 28% acima da mediana, e a VK2 está com 0/2 vendidas. A VK2 é o quarto que aparece na vitrine.
+- **Seguradas:**
+  - Recanto: 6% abaixo do mercado, dentro da faixa.
+  - VK7: 31/10 já está na meta (4/7), e não é o quarto da vitrine.
+  - VK2 em 01/11: esgotada (2/2).
+- **Recálculo:** não conferido, porque o limite de recálculo da VK2 acabou (429). Confiro às 07:53.
+- **Como desfazer:** voltar `max_price` a 110 (`percent_base`) na VK2 em 30-31/10.
+
 > **Regras em vigor:** desde 06/10/2026 elas ficam em `.claude/skills/gestao-receita-pousadas/references/regras.md`. Este arquivo guarda só o histórico das mudanças.
 
 ## O que só pode ser feito na tela (passo a passo para você)

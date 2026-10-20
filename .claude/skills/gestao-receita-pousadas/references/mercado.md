@@ -29,6 +29,13 @@
   4. `python3 scripts/concorrencia_hidro_vista.py --coleta <saida mesclada> --hoje <hoje> --saida <rascunho>/plano_comp.json`, junte ao plano e passe pelo `validar_plano.py`.
 - **A Villa não aparece nessa busca:** a extranet não lista hidromassagem (pendência do dono). Enquanto isso, a vitrine da Villa é estimada.
 
+## Base do dono pela busca filtrada da Booking (20/10, a fonte mais precisa)
+- **Como chega:** o dono abre no navegador dele a URL de `dados/base_booking_dono.json` → `url_filtros` (hidro no quarto, menos de 3 km, nota 8+, café incluído), troca `checkin` e `checkout`, salva a página em PDF e manda. A Skill **não** abre a Booking por navegador nem Playwright: a Booking bloqueia robôs e proíbe isso nos termos (403 de 19/10).
+- **Extração:** `pip install pymupdf`; ler os spans (nome do hotel: fonte 10, cor 27876; preço final: fonte 10, cor 1710618; riscado: fonte 6, cor 13898014; "+R$ X em impostos" somar; nota: fonte 8, cor 11250603). Juntar nome quebrado em duas linhas e cards partidos entre páginas. O preço vem por estadia: dividir pelas noites.
+- **Atenção:** o PDF mostra a vitrine de quem está logado como Genius nível 3, a mais descontada. Compare com o nosso preço na mesma página, nunca com o preço do conector.
+- **30/11 a 02/12 (segunda e terça), 70 concorrentes:** mediana R$ 646/noite (25% a 75%: R$ 423 a R$ 1.094); nota 9+ R$ 736; nota 8 a 8,9 R$ 389. Recanto R$ 350 (percentil 10; Q7 enviado R$ 852, vitrine 0,41 do enviado). Villa R$ 522 (percentil 37).
+- **Desconto do riscado ao final:** concorrentes 15% na mediana; Recanto 50% (R$ 1.395 → R$ 700 nas 2 noites); Villa 35% (R$ 1.611 → R$ 1.045). O empilhamento de promoções da Booking no Recanto é mais que o triplo do mercado.
+
 ## Como pesquisar (MCP da Booking: accommodations_search)
 - Destino "Campos do Jordão, Brazil"; 2 adultos; `user_country_code` "br"; `user_locale` "pt-br"; moeda BRL.
 - Cada busca devolve no máximo 10 propriedades, então faça duas por data:

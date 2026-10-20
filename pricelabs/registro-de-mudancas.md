@@ -1925,6 +1925,17 @@ A Villa não aparece em nenhuma busca com filtro de hidro (falta a comodidade na
 - **Regra G:** em 21/10 a Balcony (R$ 813) está 15% abaixo da VK2 livre (R$ 952), dentro da faixa. Em 20/10, com a VK2 esgotada, a referência passa a ser a VK7 (R$ 1.051, 1 unidade livre), e a Balcony (R$ 826, 1/6 vendida) fica 21% abaixo. Mantida assim: é D1, a Regra I vem antes da G e subir a Balcony com 5 unidades livres na véspera vai contra a trava de lotação. Também falta saldo de recálculo.
 - **Nada gravado.**
 
+## 20/10/2026, 10:10 UTC (07:10 BRT) — Base do dono pela busca filtrada da Booking (PDF)
+
+- **Pedido do dono:** fazer a busca no navegador com os filtros da Booking. Ele mandou a URL e o PDF da busca de 30/11 a 02/12: hidro no quarto, menos de 3 km, nota 8+ e café incluído.
+- **Navegador:** não usado. A Booking bloqueia robôs e avisou em 19/10 que isso viola os termos. O PDF do dono traz exatamente os dados.
+- **Leitura dos 70 concorrentes (por noite, vitrine Genius 3):** mediana R$ 646; nota 9+ R$ 736; nota 8 a 8,9 R$ 389. Recanto R$ 350 (percentil 10). Villa R$ 522 (percentil 37).
+- **Achados para o dono:**
+  1. A vitrine Genius 3 do Recanto é 0,41 do enviado (Q7 R$ 852 → R$ 350), abaixo do piso de R$ 500 no preço final de semana.
+  2. O desconto empilhado do riscado ao final é de 50% no Recanto e 35% na Villa, contra 15% nos concorrentes.
+- **Nada gravado no PriceLabs:** os dois achados mudam a base dos pisos e as promoções, e só o dono decide.
+- **Arquivos:** `dados/base_booking_dono.json`; método em `mercado.md`.
+
 > **Regras em vigor:** desde 06/10/2026 elas ficam em `.claude/skills/gestao-receita-pousadas/references/regras.md`. Este arquivo guarda só o histórico das mudanças.
 
 ## O que só pode ser feito na tela (passo a passo para você)

@@ -202,3 +202,9 @@ Cada item tem data e evidência. Para incluir um item novo: data, o fato, a evid
 - **Posição do Recanto:** de 1% a 33% abaixo do quarto com hidro da classe A em todos os períodos medidos. Há espaço para subir onde a ocupação está na meta.
 - **Villa:** a vitrine estimada (VK7 × 0,66) fica 11% a 58% acima. A Villa não aparece na busca com hidro e tem nota 8,1, contra 8,8 a 9,8 da classe A.
 
+## 20/10/2026 — Busca filtrada do dono (PDF): 70 concorrentes com hidro no quarto
+- **Fonte:** PDF da Booking com o dono logado (Genius 3), para 30/11 a 02/12, com os filtros hidro no quarto, menos de 3 km, nota 8+ e café incluído. É a base mais precisa até agora: mostra o preço do quarto com hidro de cada hotel.
+- **Posição:** o Recanto, a R$ 350 por noite na vitrine, é mais barato que 90% dos 70 concorrentes. A mediana é R$ 646, e só entre os de nota 8 a 8,9 é R$ 389. A Villa, a R$ 522, fica no percentil 37.
+- **Vitrine ÷ enviado para quem é Genius 3:** Q7 0,41 (R$ 350 ÷ R$ 852) e VK2 cerca de 0,55. O `fator_vitrine` de semana em uso (Recanto 0,63) foi medido sem login e superestima a vitrine para esse público. Com 0,41, o piso de R$ 500 no preço final de semana pediria R$ 1.220 enviados na Q7. Decisão do dono.
+- **Empilhamento de descontos:** do riscado ao final, o Recanto perde 50% e a Villa 35%, contra 15% na mediana dos concorrentes. Explica o valor real de cerca de 0,49 do enviado medido no Beds24. Mudar promoção da Booking é só com o dono.
+

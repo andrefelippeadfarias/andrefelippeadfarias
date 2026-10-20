@@ -38,6 +38,10 @@
 - **Finados, 30/10 a 02/11 (3 diárias), 48 concorrentes:** mediana R$ 1.100/noite (25% a 75%: R$ 871 a R$ 1.516); nota 9+ R$ 1.272; nota 8 a 8,9 R$ 922. Recanto R$ 1.036 (percentil 44; desconto de 46%). Villa R$ 1.586 (percentil 81; desconto de 30%).
 - **Desconto do riscado ao final:** concorrentes 15% na mediana; Recanto 50% (R$ 1.395 → R$ 700 nas 2 noites); Villa 35% (R$ 1.611 → R$ 1.045). O empilhamento de promoções da Booking no Recanto é mais que o triplo do mercado.
 
+## Base ampliada pelo conector (20/10, sem login)
+- 32 hotéis com hidro no quarto a até 3 km (19 classe A, 13 classe B; 34 descartados por não ter hidro no quarto ou ser casa inteira). Detalhe em `dados/escada_conector_2010.json`.
+- Quarto com hidro (mediana A+B, por noite) × Recanto, de 23/10 a 13/12: o Recanto fica de 28% a 53% abaixo em todos os 10 períodos (por exemplo, 13-15/11: R$ 1.835 × R$ 1.182; 25/11: R$ 1.291 × R$ 608). A vitrine é sem login, mais cara que a Genius 3 do PDF do dono; use como tendência.
+
 ## Como pesquisar (MCP da Booking: accommodations_search)
 - Destino "Campos do Jordão, Brazil"; 2 adultos; `user_country_code` "br"; `user_locale` "pt-br"; moeda BRL.
 - Cada busca devolve no máximo 10 propriedades, então faça duas por data:

@@ -12,6 +12,9 @@ from ocupacao import calcular
 from validar_plano import Validador, montar_payload
 
 CFG = carregar_quartos()
+# os testes conferem a lógica, não a calibração do dia: fatores de vitrine fixos (medição de 14/10)
+CFG["parametros"]["fator_vitrine_semana"].update({"Recanto": 0.63, "Villa": 0.53})
+CFG["parametros"]["fator_vitrine_fds"].update({"Recanto": 0.61, "Villa": 0.66})
 HOJE = date(2026, 10, 6)  # terça
 
 

@@ -237,3 +237,9 @@ Hora da ANÁLISE E AGENDA DIÁRIA do PriceLabs (rotina "Agenda diária PriceLabs
 - **Mudança (dados):** `dados/concorrentes_hidro_vista.json` com `mediana_a` do quarto com hidro, `mediana_mais_barato`, `quartos_hidro` e `metodo_preco`; o período de 21/10, sem escada, saiu.
 - **Como desfazer:** voltar `mediana_a` ao quarto mais barato (não recomendado).
 
+## 20/10/2026, 10:45 UTC — Pisos para o hóspede Genius 3 (dono: "Serve para todo o piso")
+- **Mudança (dados):** `quartos.json` → `fator_vitrine_semana` Recanto 0,63 → 0,41; `fator_vitrine_fds` Recanto 0,61 → 0,425 e Villa 0,66 → 0,575 (PDFs do dono de 20/10).
+- **Mudança (texto):** `regras.md` (pisos de semana e de fim de semana; 6a).
+- **Mudança (PriceLabs):** 418 pisos por data até 30/04/2027 (Q7 166, Q2 122, Double 114, Afrodite 8, VK7 4, VK2 4); validador 0 erro.
+- **Como desfazer:** voltar os fatores e regravar os pisos com o validador.
+

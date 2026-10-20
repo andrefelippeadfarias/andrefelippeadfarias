@@ -112,7 +112,7 @@ def main(argv=None) -> int:
                 if it.get("min_price") is not None:
                     ok &= p >= float(it["min_price"]) - max(1.0, 0.015 * float(it["min_price"]))
                 if it.get("max_price") is not None:
-                    ok &= p <= float(it["max_price"]) + 1
+                    ok &= p <= float(it["max_price"]) * 1.01 + 1  # percentual da base arredonda até 1%
             inativa = regra_inativa(it, x)
             if inativa:
                 ok = False

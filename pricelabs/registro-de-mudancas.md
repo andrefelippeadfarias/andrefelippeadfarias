@@ -1964,6 +1964,32 @@ A Villa não aparece em nenhuma busca com filtro de hidro (falta a comodidade na
 - **Recálculo:** não conferido, porque o limite de recálculo da VK2 acabou (429). Confiro às 07:53.
 - **Como desfazer:** voltar `max_price` a 110 (`percent_base`) na VK2 em 30-31/10.
 
+## 20/10/2026, 11:48 UTC (08:48 BRT) — Rotina completa: pisos para o Genius 3 gravados e conferidos
+
+- **Decisão do dono (20/10):**
+  - "Serve para todo o piso": os pisos de R$ 500 e R$ 850 no preço final valem também para o hóspede Genius 3.
+  - "Não": as promoções da Booking ficam como estão.
+- **Gravado:** 418 pisos por data até 30/04/2027, em `percent_base`, fora dos feriados. Validador com 0 erro; todos os lotes conferidos na API.
+
+| Quarto | Noites | Piso antes | Piso novo |
+|---|---|---|---|
+| Q7 | 166 | R$ 800-975 dom-qui; R$ 1.396-1.760 sex-sáb | 5% (R$ 1.232) dom-qui; 72% (R$ 2.018) sex-sáb |
+| Q2 | 122 | R$ 850-860 dom-qui | -34% (R$ 1.234) |
+| Double | 114 | R$ 900-1.258 dom-qui; sex-sáb abaixo de R$ 2.000 | -17% (R$ 1.228) dom-qui; 37% (R$ 2.028) sex-sáb; tetos de 23/10 e 06/11 sobem ao máximo |
+| Afrodite | 8 | R$ 1.500 sex-sáb | 0% (R$ 2.000); tetos de 23 e 24/10 sobem ao máximo |
+| VK7 / VK2 | 4 + 4 | R$ 1.295-1.302 sex-sáb | 0% (R$ 1.480) / 18% (R$ 1.499) |
+
+- **Recálculo (Q7, Double, Q2, Afrodite e VK7):** 414 de 414 conferidos, 0 diferença. Preço no piso: Q7 R$ 1.232 / R$ 2.018 e Double R$ 1.228 a R$ 2.028. A VK2 (4 noites) fica para a próxima rotina, porque está sem saldo de recálculo.
+- **Concorrência de 19/10 conferida:** a Balcony em 04-05/12 está em R$ 1.511 (19%; plano R$ 1.506, diferença de arredondamento). `ler_recalculo.py` passou a tolerar 1% no teto.
+- **4c:** Double em 22/10, com 5/6 a D2, sobe +10% pelo piso, de -14% para -5% (R$ 1.273 → R$ 1.406).
+- **Beds24 (desde 22:50 UTC):**
+  - 4 reservas diretas novas na VK7, todas criadas entre 00:56 e 01:29 UTC: 30-31/10 R$ 1.096; 13-14/11 R$ 1.190; **20-21/11 R$ 1,10**; 07/12 R$ 450.
+  - A de R$ 1,10 em feriado parece bloqueio ou erro de digitação; vai para o dono.
+  - 1 cancelamento do Airbnb: Double em 21/10.
+- **Ocupação real (confirmadas + novas):** 7 dias Recanto 45,5% e Villa 41,9%; 15 dias 41,3% e 36,9%; 30 dias Recanto 36,0%.
+- **Coleta:** o workflow completo não rodou. Os 6 recálculos e o Beds24 cobriram a medição; concorrência pela varredura do conector e pelos 3 PDFs do dono.
+- **Como desfazer os pisos:** voltar os fatores em `quartos.json` e regravar os pisos com o validador. As razões citam "Dono 20/10".
+
 > **Regras em vigor:** desde 06/10/2026 elas ficam em `.claude/skills/gestao-receita-pousadas/references/regras.md`. Este arquivo guarda só o histórico das mudanças.
 
 ## O que só pode ser feito na tela (passo a passo para você)

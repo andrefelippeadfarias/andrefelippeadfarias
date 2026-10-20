@@ -211,3 +211,8 @@ Cada item tem data e evidência. Para incluir um item novo: data, o fato, a evid
 - **Finados (3º PDF do dono, 48 concorrentes):** mediana R$ 1.100/noite; nota 8 a 8,9 R$ 922. Recanto R$ 1.036 (percentil 44), 6% abaixo do mercado. Villa R$ 1.586 (percentil 81), 44% acima. A VK2 é o quarto da vitrine da Villa (o mais barato com hidro), então é ela que define a posição da Villa na busca.
 - **Nas três datas:** o Recanto fica entre os percentis 10 e 44 e a Villa entre 37 e 81. O desconto empilhado do Recanto (46% a 50%) é 2,5 a 3 vezes o dos concorrentes (15% a 19,5%).
 
+## 20/10/2026 — Pisos do Genius 3 e reservas diretas suspeitas
+- **Os pisos dominam o preço:** com os pisos novos, o PriceLabs ficou exatamente no piso em quase todas as noites (Q7 R$ 1.232 de semana e R$ 2.018 sexta e sábado). O algoritmo recomendava menos. Acompanhar o ritmo de vendas de dia de semana do Recanto nas próximas 2 semanas (trava de lotação) e medir de novo a vitrine Genius 3 com PDF do dono.
+- **Reservas diretas de madrugada com valor simbólico** (VK7 20-21/11 por R$ 1,10): entram como "confirmado" e ocupam o quarto. Tratar como bloqueio até o dono confirmar e apontar no relatório.
+- **Uma gravação grande pode ir por agente:** 418 regras em 11 lotes de até 60, conferidas na própria resposta da API (`verification`). Levou cerca de 80 minutos; vale para mudanças em massa.
+

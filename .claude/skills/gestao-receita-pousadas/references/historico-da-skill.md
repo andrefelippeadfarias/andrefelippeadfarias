@@ -248,3 +248,10 @@ Hora da ANÁLISE E AGENDA DIÁRIA do PriceLabs (rotina "Agenda diária PriceLabs
 - **Integração:** cadastro `pricelabs/pesquisa-booking/brief.json` (23 hotéis, 10 estadias); 1ª rodada `rodada-2026-10-20` (230 combinações, 41 capturas dos 3 PDFs do dono, `resumo.md`); `base_booking_pdf.py --rodada`; `SKILL.md` (revisão de segunda); `ferramentas.md`.
 - **Fontes:** só o PDF do dono e o conector oficial. Sem navegador automático, como a própria skill pede quando há bloqueio.
 
+## 20/10/2026, 14:00 UTC — Cadastro de 77 concorrentes do perfil e busca diária (dono)
+- **Pedido do dono:** "vamos buscar ao menos 50 hotéis que estão no nosso perfil, banheira, vista, café da manhã, a 3 km do centro. Diariamente quando formos fazer a busca de valores. Para usar essa base para fazermos ajustes mais dentro do mercado. Vamos incorporar ele em nossa skill".
+- **Cadastro** (`pricelabs/pesquisa-booking/concorrentes.json`): 77 hotéis, 39 de classe A (vista confirmada) e 38 de classe B (vista não confirmada).
+  - Origem: os links dos 3 PDFs do dono (80 hotéis; saem 5 a mais de 3 km, 1 não encontrado e os nossos 2) mais a classe A da varredura do conector.
+  - Hidro no quarto e café: confirmados pelos filtros do PDF.
+- **Código:** `scripts/mercado_diario.py` (`planejar` e `consolidar`) e 1 teste; `references/mercado-diario.md` (roteiro do agente); `SKILL.md` (passo diário antes de Decida); `regras.md` seção 5 (base diária).
+

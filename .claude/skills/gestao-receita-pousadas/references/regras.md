@@ -115,17 +115,22 @@ Toda gravação passa antes pelo `scripts/validar_plano.py`, é conferida depois
 - **Referência quando a VK2 está esgotada:** a VK7. Se a VK2 reabrir por cancelamento, ela volta ao piso (R$ 765 em dia útil) e a Balcony pode ficar acima dela até a rodada seguinte; refaça o alvo na rodada seguinte. O validador compara com a referência vigente.
 - **Varredura da Regra G:** em toda rotina completa, nos 60 dias inteiros (não só nos 21 dias das faixas), comparando com a suíte com banheira livre mais barata da data; o `ler_recalculo.py` avisa quando a Balcony passa da suíte.
 
-**Queen (2), sem desconto**
-- Anomalia: o hóspede paga cerca de 34% do preço enviado.
-- Não entra nas regras F e I e não recebe percentual negativo.
-- Enquanto a anomalia dura: pisos com `fator_real` 0,34; cada reserva nova entra no relatório com valor real ÷ enviado e canal; três reservas seguidas acima de 0,42 mudam o fator em `quartos.json` e fecham a investigação; a conferência do mapeamento de tarifa no Beds24 fica com o dono.
-- Só baixa para acompanhar o piso de feriado (`excecao: "piso_feriado"`) ou por ordem do dono.
+**Queen (2) = Suíte Panorâmica II: sempre entre a Moinhos e a Panorâmica I (dono, 21/10)**
+- Ordem do dono: "Os valores da Suíte Panorâmica II devem sempre estar entre a Moinhos e a Panorâmica I." No PriceLabs: Moinhos = Queen (7), Panorâmica I = Double, Panorâmica II = Queen (2).
+- Noite a noite, o preço da Queen (2) fica entre o menor e o maior dos dois, pelo `scripts/ordem_recanto.py`:
+  - piso da data = o maior entre o piso da regra (dono ou feriado) e o menor dos dois;
+  - teto = 75% do caminho do menor para o maior, perto da Panorâmica I.
+  - Tudo em `percent_base`.
+- Em toda rotina completa, `ordem_recanto.py auditar` com os recálculos do dia; noite fora da faixa (tolerância de R$ 5) é regravada no mesmo dia. **Esta regra vence as outras na Queen (2):** flutuação 4c, concorrência hidro+vista e +10% pelo piso não mexem na Queen (2) fora da faixa.
+- Substitui a regra antiga de "sem desconto" (19/10). Aquela regra nasceu da "anomalia de 0,34", que em 21/10 se viu ser a tarifa fixa 50067466 na Booking (pendência do dono). O `fator_real` da Queen (2) volta a 0,42, como o resto do Recanto.
+- A base do anúncio da Queen (2) (R$ 1.870, acima da Double, R$ 1.480) só muda por ordem do dono. A sugestão está no relatório: levar a cerca de R$ 1.330 em dois passos de até 15% por semana, para a faixa precisar de menos teto.
+- Continua fora das Regras F e I.
 
 **Feriados** (as noites e os pisos estão em `quartos.json` → `feriados`)
 - Piso de valor real por noite: preço × `fator_real`; na Balcony, preço × `fator_vitrine`.
 - **Pisos em preço enviado** (piso real ÷ `fator_real`; Balcony ÷ `fator_vitrine`), para não recalcular toda vez:
 
-  | Piso real | Queen 7, Double, Afrodite (0,42) | Queen (2) (0,34) | VK7 e VK2 (0,39) | Balcony (vitrine 0,53) |
+  | Piso real | Queen 7, Double, Afrodite e Queen (2) (0,42; Queen 2 desde 21/10) | (antes Queen 2 a 0,34) | VK7 e VK2 (0,39) | Balcony (vitrine 0,53) |
   |---|---|---|---|---|
   | R$ 800 (limite) | R$ 1.905 | R$ 2.355 | R$ 2.052 | R$ 1.510 |
   | R$ 1.000 (padrão de feriado novo) | R$ 2.381 | R$ 2.941 | R$ 2.564 | R$ 1.887 |
@@ -236,6 +241,7 @@ Pedido do dono: "qualificar os preços: muito baixo, baixo, médio, alto e muito
 - 21/10: "Temos que sempre levar em consideração a precificação do mercado como um todo também. Vamos continuar fazendo como planejamos nas skills." O histórico próprio (2024, `dados/historico_proprio.json`) mostra potencial e serve de referência, mas o preço de cada noite continua ancorado no mercado (faixas 4c, referência hidro+vista da seção 5 e busca diária), nunca em "repetir 2024". Plano de 12 meses em `references/plano-12-meses.md`.
 - 21/10: "Vamos rodar o plano agora e já atualizar tudo para os próximos 12 meses e manter tudo em monitoramento. Inclusive restrições de permissão de check-in e check-outs, mínimo de dias da estadia." Pisos do dono e de feriado e estadia mínima (sábado 2; feriados pela lista) gravados em percentual até 31/12/2027 e auditados todo dia pelo `calendario_12m.py` (horizonte rolante de 12 meses). As restrições de chegada e saída do sábado (Regra H) seguem no Beds24, com o dono: o PriceLabs recusa chegada/saída por data sem a personalização ligada na tela ("Enable check-in/check-out customization first"); a skill audita o Beds24 e aponta os sábados a estender.
 - 21/10: "A cada 15 dias sempre faça a análise dos 12 meses futuros." Revisão quinzenal pelo `revisao_12m.py` (SKILL.md 4c), na rotina completa do dia em que vencer; fotografias em `dados/revisao_12m.json`, relatórios em `pricelabs/revisao-12-meses/`.
+- 21/10: "Os valores da Suíte Panorâmica II devem sempre estar entre a Moinhos e a Panorâmica I. Faça a verificação se isso está correto na Recanto." Na verificação, a Panorâmica II estava acima da Panorâmica I em 435 de 437 noites. Regra nova na seção da Queen (2), aplicada pelo `ordem_recanto.py`.
 - A regra de sábado com valor real de pelo menos R$ 800 (02/10) **não vale como regra geral**: as decisões de 06/10 a superaram.
 
 ## 6b. Decisões do dono por data (vencem; apagar quando passarem)

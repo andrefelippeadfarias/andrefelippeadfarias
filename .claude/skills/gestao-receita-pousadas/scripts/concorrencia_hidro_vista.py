@@ -92,6 +92,8 @@ def montar(cfg, comp, coleta, hoje, vendidas=None):
             fds, fer = d.weekday() in (4, 5), periodo_feriado(cfg, d)
             alvo_ef = max(alvo, 0 if fer else (L["piso_vitrine_fds_suites"] if fds else L["piso_vitrine_semana_suites"]))
             for k in SUITES:
+                if k == "Q2":
+                    continue   # dono 21/10: a Queen (2) segue a faixa entre a Queen 7 e a Double (ordem_recanto.py)
                 q, x = Q[k], cal.get((k, s))
                 if not x:
                     continue

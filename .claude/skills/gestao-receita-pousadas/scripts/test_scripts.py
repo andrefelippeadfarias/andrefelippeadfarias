@@ -15,6 +15,9 @@ CFG = carregar_quartos()
 # os testes conferem a lógica, não a calibração do dia: fatores de vitrine fixos (medição de 14/10)
 CFG["parametros"]["fator_vitrine_semana"].update({"Recanto": 0.63, "Villa": 0.53})
 CFG["parametros"]["fator_vitrine_fds"].update({"Recanto": 0.61, "Villa": 0.66})
+# o mecanismo "sem desconto" do validador continua testado na Queen (2) como antes; no arquivo real ela saiu dessa regra
+# em 21/10 (ordem do dono: entre a Queen 7 e a Double, ordem_recanto.py)
+CFG["por_curto"]["Q2"].update({"sem_desconto": True, "fator_real": 0.34})
 HOJE = date(2026, 10, 6)  # terça
 
 
@@ -800,6 +803,24 @@ class TestRevisao12m(unittest.TestCase):
         self.assertTrue(r.devida(dt.date(2026, 11, 5), h)[0])      # 15 dias
         m = r.meses(dt.date(2026, 10, 21))
         self.assertEqual((m[0], m[-1], len(m)), ("2026-10", "2027-10", 13))
+
+
+class TestOrdemRecanto(unittest.TestCase):
+    def test_faixa(self):
+        import datetime as dt
+        import ordem_recanto as o
+        d = dt.date(2027, 5, 4)   # terça comum
+        f = o.faixa(CFG, d, {"price": "1232"}, {"price": "1302"}, {"price": "1613", "min_price": "1232"})
+        self.assertTrue(f["fora"])
+        self.assertGreaterEqual(f["teto"], f["piso"])
+        self.assertTrue(1232 <= f["teto"] <= 1302)
+        f = o.faixa(CFG, d, {"price": "1232"}, {"price": "1302"}, {"price": "1290", "min_price": "1232"})
+        self.assertFalse(f["fora"])
+        p = o.montar_plano([{"data": "2027-05-04", "moinhos": 1232, "panoramica_1": 1302, "panoramica_2": 1613,
+                             "piso": 1232, "teto": 1284}], dt.date(2026, 10, 21))
+        v = Validador(CFG, dt.date(2026, 10, 21))
+        v.validar(p["itens"])
+        self.assertEqual(v.erros, [])
 
 
 if __name__ == "__main__":

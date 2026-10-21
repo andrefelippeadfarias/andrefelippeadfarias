@@ -285,3 +285,6 @@ Hora da ANÁLISE E AGENDA DIÁRIA do PriceLabs (rotina "Agenda diária PriceLabs
 
 ## 21/10/2026 — Revisão quinzenal dos 12 meses (pedido do dono)
 - `scripts/revisao_12m.py` (`devida` e `rodar`): 13 meses por pousada, com vendido contra o mínimo, entrada em 15 dias, ocupação vendida contra o mercado (PriceLabs), diária e preço médio das suítes; fotografias em `dados/revisao_12m.json`. SKILL.md passo 4c; 1ª revisão (base) em 21/10, a próxima vence em 05/11. 1 teste novo (60 no total).
+
+## 21/10/2026 — Ordem de preço do Recanto (pedido do dono)
+- `scripts/ordem_recanto.py`: a Panorâmica II (Queen 2) fica entre a Moinhos (Queen 7) e a Panorâmica I (Double) noite a noite (piso e teto em percent_base). Passo 4b2 do SKILL.md; regras.md seção da Queen (2) reescrita (sai o "sem desconto"; `fator_real` de 0,34 para 0,42). A concorrência hidro+vista deixa de mexer na Queen (2). 1 teste novo.

@@ -73,6 +73,9 @@ Você é a gestora de receita e growth hacker das duas pousadas. Responda sempre
     - noite abaixo da regra (piso do dono de R$ 500/850, piso de feriado, estadia de sábado ou feriado): rode `plano` com a mesma linha e junte os itens ao plano do dia. Nada desce, só sobe o que falta;
     - Beds24: a auditoria lista os sábados sem o bloqueio da Regra H e os que têm padrão diferente. Isso vai para o item 6 do relatório (o dono estende no Beds24; o acesso da skill é só leitura);
     - com "AVISO: a lista de feriados termina em...", acrescente os feriados do ano seguinte em `quartos.json` e `sazonalidade.json` (pesquisa `sazonalidade-campos`) antes da revisão de outubro.
+4b2. **Ordem do Recanto (dono, 21/10).** Com os recálculos do dia, rode `python3 scripts/ordem_recanto.py auditar --hoje <hoje> Q7=<rec> Double=<rec> Q2=<rec>`.
+    - Noite com a Panorâmica II (Queen 2) fora da faixa entre a Moinhos (Queen 7) e a Panorâmica I (Double): rode `plano` e junte ao plano do dia, depois das mudanças da Queen 7 e da Double. Se a Queen 7 ou a Double mudarem de preço na rodada, refaça com o recálculo novo.
+    - Nenhuma outra regra mexe na Queen (2) fora dessa faixa.
 4c. **Revisão quinzenal dos 12 meses (dono, 21/10: "A cada 15 dias sempre faça a análise dos 12 meses futuros").** Em toda rotina completa, rode `python3 scripts/revisao_12m.py devida --hoje <hoje>`. Com "VENCIDA" (15 dias ou mais desde a última):
     - chame `get_neighbourhood_data` (Q7, `include_occupancy: true`, `include_prices: true`);
     - rode `python3 scripts/revisao_12m.py rodar --hoje <hoje> --vizinhanca <arquivo> --md pricelabs/revisao-12-meses/<hoje>.md` com os recálculos do dia (`Q7=<rec> ...`).

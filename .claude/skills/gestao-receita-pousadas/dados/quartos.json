@@ -1,5 +1,5 @@
 {
- "versao": "2026-10-21T16",
+ "versao": "2026-10-21T17",
  "nota": "Fonte única dos dados de máquina da Skill. Os scripts leem daqui. Quem mudar base, mínimo ou máximo no PriceLabs atualiza este arquivo no mesmo commit.",
  "pms": "beds24",
  "grupo": {
@@ -88,14 +88,19 @@
    "max": 5000,
    "min_referencia": 850,
    "banheira": true,
-   "fator_real": 0.34,
+   "fator_real": 0.42,
    "fator_vitrine": 0.59,
    "piso_feriado_base": "real",
-   "sem_desconto": true,
+   "sem_desconto": false,
    "regra_i": false,
    "regra_f": false,
    "demanda": "alta",
-   "fator_vitrine_fds": 0.61
+   "fator_vitrine_fds": 0.61,
+   "entre": [
+    "Q7",
+    "Double"
+   ],
+   "ordem_nota": "Dono 21/10: 'Os valores da Suíte Panorâmica II devem sempre estar entre a Moinhos e a Panorâmica I' (Q2 entre Q7 e Double, noite a noite; scripts/ordem_recanto.py). Substitui a regra antiga de 'sem desconto' (19/10), criada quando se achava que o hóspede pagava 34% do enviado; em 21/10 viu-se que era a tarifa fixa 50067466 na Booking (pendência do dono). fator_real volta a 0,42 como o resto do Recanto, para o piso de feriado da Q2 não passar o da Double."
   },
   {
    "curto": "VK7",

@@ -265,3 +265,6 @@ Hora da ANÁLISE E AGENDA DIÁRIA do PriceLabs (rotina "Agenda diária PriceLabs
 ## 21/10/2026 — desempenho_mes.py (pedido do dono)
 - Novo `scripts/desempenho_mes.py`: reservas feitas no mês (por pousada, canal, quarto, semana e mês da estadia), cancelamentos do mês e estadias do mês contra o mínimo do dono, com a diária necessária nas noites livres. Sem nomes. Entra na revisão semanal; relatório em `pricelabs/desempenho/`.
 - Cancelamento sem `cancelTime` (35 de 80 em outubro) usa a data da última alteração.
+
+## 21/10/2026 — Painel semanal (pedido do dono)
+- Painel "Desempenho Semanal das Pousadas" (https://claude.ai/artifact/HzGExqdFhYp3CnTe6pvWBf) e `scripts/painel_semanal.py`, que gera os 5 arquivos do painel a partir do Beds24. Atualizado toda segunda na revisão semanal (SKILL.md, modo 4; ferramentas.md, "Painel semanal").

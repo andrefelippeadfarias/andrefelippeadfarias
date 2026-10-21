@@ -60,3 +60,11 @@ Veja como pesquisar em `mercado.md`. Não serve para mudar nada.
 ## O que os scripts leem de `quartos.json` (e o que é só regra de texto)
 - Lidos por script: `metas` (ocupacao.py, faixas_de_preco.py), `limites_seguranca` (validar_plano.py), `parametros.regra_i_dias`, `regra_i_desconto_max`, `regra_g_desconto` (validar_plano.py, ler_recalculo.py), `quartos[*].min/base/min_referencia/fator_real/fator_vitrine/fator_vitrine_fds/banheira/regra_i/sem_desconto/demanda/unidades/pousada` (validar_plano.py, faixas_de_preco.py), `feriados` (validar_plano.py, faixas_de_preco.py), `referencia_semanal` (validar_plano.py), `excecoes_mercado` (validar_plano.py avisa vencidas).
 - Só texto (regras.md): `regra_f_saida_vendido`, `regra_c_desconto`, `regra_a_janela_dias`, `piso_feriado_real_padrao`. Mudar o JSON não muda o validador nesses casos.
+
+## Painel semanal (painel "Desempenho Semanal das Pousadas", desde 21/10/2026)
+- Link: https://claude.ai/artifact/HzGExqdFhYp3CnTe6pvWBf (tipo Dashboard; privado até o dono compartilhar pelo menu Share).
+- Toda segunda, na revisão semanal: `python3 scripts/painel_semanal.py --saida <rascunho>/painel` gera `semanas.json`, `estadias.json`, `metas.json`, `canais.json` e `quartos.json` (sem nomes de hóspedes).
+- Para cada arquivo, faça o upload com `Artifact` (`url` do painel, `file_path`, `asset: true`; um arquivo por chamada). Depois, num `ArtifactData` batch, faça `update` em `datasets/<nome>` com `source.url` = a url devolvida, `source.name` e `updated: {at, by}`, sempre com o `if_version` lido antes.
+- Apague os uploads antigos (`Artifact` `delete` com `url` e `path` = id do asset) só depois de gravar os novos.
+- A página (`files/index.html`) não muda a cada semana; ela lê os arquivos. Mudou a página? Leia `data/users/me/check` (até 5 leituras).
+- O Beds24 não é conector do painel: os dados são arquivos, e por isso o painel mostra a data da última atualização (fica "velho" depois de 336 h).

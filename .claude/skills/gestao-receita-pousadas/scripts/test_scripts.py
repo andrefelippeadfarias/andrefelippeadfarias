@@ -740,5 +740,24 @@ class TestDesempenhoMes(unittest.TestCase):
         self.assertEqual(r["cancelamentos_no_mes"]["Recanto"]["quantidade"], 1)
 
 
+class TestPainelSemanal(unittest.TestCase):
+    def test_semanas_e_estadias(self):
+        import datetime as dt
+        import painel_semanal as ps
+        b = lambda i, st, chegada, saida, preco, feita: {"id": i, "propertyId": 350364, "roomId": 722813, "status": st,
+                                                          "channel": "booking", "arrival": chegada, "departure": saida,
+                                                          "price": preco, "bookingTime": feita}
+        L = [b(1, "confirmed", "2026-10-20", "2026-10-22", 1200, "2026-10-13T15:00:00Z"),
+             b(2, "confirmed", "2026-10-24", "2026-10-25", 900, "2026-10-20T15:00:00Z")]
+        r = ps.montar(L, dt.datetime(2026, 10, 21, 14, tzinfo=dt.timezone.utc))
+        s = {(x["semana"], x["pousada"]): x for x in r["semanas"]}
+        self.assertTrue(s[("2026-10-12", "Villa")]["completa"])
+        self.assertEqual(s[("2026-10-12", "Villa")]["receita"], 1200)
+        self.assertFalse(s[("2026-10-19", "Villa")]["completa"])
+        e = {(x["semana"], x["pousada"]): x for x in r["estadias"]}
+        self.assertEqual(e[("2026-10-19", "Villa")]["diarias"], 3)   # 20, 21 e 24/10
+        self.assertEqual(e[("2026-10-19", "Villa")]["momento"], "atual")
+
+
 if __name__ == "__main__":
     unittest.main()

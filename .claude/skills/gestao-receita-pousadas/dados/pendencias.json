@@ -373,7 +373,91 @@
    "desde": "2026-10-20",
    "urgencia": 1,
    "texto": "O canal direto vende a cerca de 40-45% do preço do PriceLabs: Afrodite 18-21/01 por R$ 778/noite com price1 de R$ 1.730; valor real ÷ enviado de 0,36 no Recanto. Verificar no Beds24 o multiplicador ou desconto do canal direto (motor de reservas ou a integração pela API, possivelmente o Hotel Claw)."
+  },
+  {
+   "id": "metas-mai-out-2027",
+   "responsavel": "dono",
+   "desde": "2026-10-21",
+   "urgencia": 1,
+   "texto": "Confirmar as metas de maio a outubro de 2027 gravadas em 21/10 como estimativa (metas_faturamento.json): mínimo pela temporada do dono (jun-ago alta R$ 350/300 mil; mai, set e out R$ 220/150 mil) e realista pelo método de mercado. Agosto: o realista do mercado (R$ 234/194 mil) fica abaixo do mínimo."
+  },
+  {
+   "id": "motor-reservas-direto",
+   "responsavel": "dono",
+   "desde": "2026-10-21",
+   "urgencia": 1,
+   "texto": "Plano de 12 meses, pilar C0: instalar o motor de reservas do Beds24 no site das duas pousadas com pagamento ou Pix na reserva. Em 2024 o site trouxe 35% da receita do Recanto e cancelou 18% (Booking 42%). É o pré-requisito do Google Hotel Center."
+  },
+  {
+   "id": "google-hotel-center",
+   "responsavel": "dono",
+   "desde": "2026-10-21",
+   "urgencia": 1,
+   "texto": "Plano C1: ativar os links gratuitos de reserva do Google pelo Beds24 (Hotel Center) e completar o Perfil da Empresa no Google com nome e endereço idênticos aos do Beds24; Google Hotel Ads pago só nos dias úteis do vale (orçamento do dono)."
+  },
+  {
+   "id": "tarifa-nao-reembolsavel",
+   "responsavel": "dono",
+   "desde": "2026-10-21",
+   "urgencia": 2,
+   "texto": "Plano B3: criar na Booking a tarifa não reembolsável (7% a 10% abaixo da flexível) ao lado da flexível; em feriado e pico, pré-pagamento ao fim da janela grátis e cancelamento grátis até 7 dias. Depois a Skill recalibra fator_canal."
+  },
+  {
+   "id": "whatsapp-crm-vales",
+   "responsavel": "dono",
+   "desde": "2026-10-21",
+   "urgencia": 2,
+   "texto": "Plano C3 a C5: WhatsApp Business com catálogo de pacotes e Pix; captar e-mail, WhatsApp e data especial no check-in; vale-presente de Natal (01/11 a 24/12) e Dia dos Namorados (01/05 a 12/06) para uso de domingo a quinta."
+  },
+  {
+   "id": "pacotes-dias-uteis",
+   "responsavel": "dono",
+   "desde": "2026-10-21",
+   "urgencia": 2,
+   "texto": "Plano pilar D: pacotes de domingo a quinta (Leve 3 pague 2, 50+, workation, fondue, detox a dois) vendidos no direto com a diária da tabela; a Skill só garante os pisos."
+  },
+  {
+   "id": "reputacao-villa",
+   "responsavel": "dono",
+   "desde": "2026-10-21",
+   "urgencia": 2,
+   "texto": "Plano pilar E: Villa de 8,2 para 8,5 em abril/27 (responder 100% em 48 h, QR code no check-out, tratar as 3 queixas mais citadas de 2026)."
+  },
+  {
+   "id": "travel-proud-page-score",
+   "responsavel": "dono",
+   "desde": "2026-10-21",
+   "urgencia": 3,
+   "texto": "Plano B4 e B5: Property Page Score a 100% nas duas pousadas e selo Travel Proud da Booking (curso gratuito)."
+  },
+  {
+   "id": "ritmo-dia-util-recanto-0311",
+   "responsavel": "skill",
+   "desde": "2026-10-21",
+   "urgencia": 1,
+   "texto": "Plano A1: em 03/11, medir o ritmo de reservas de dia útil do Recanto depois dos pisos de 20/10 (meta: 6 ou mais reservas por dia, contra 10,4 na 2ª semana de outubro). Se continuar abaixo, levar ao dono proposta de piso de dia útil por janela (D0 a D3), sem mudar o limite sozinha."
+  },
+  {
+   "id": "ferias-escolares-2027",
+   "responsavel": "skill",
+   "desde": "2026-10-21",
+   "urgencia": 2,
+   "texto": "Plano A3: na revisão de março/27, confirmar a Lei 15.421/2026 (recesso de 24/06 a 25/07/2027) e o PL 3481/2026; se valer, subir 24/06 a 01/07 para alta em sazonalidade.json."
+  },
+  {
+   "id": "estadia-inverno",
+   "responsavel": "skill",
+   "desde": "2026-10-21",
+   "urgencia": 2,
+   "texto": "Plano A3: alinhar sazonalidade.json à estrategia.md (2 noites em sexta, sábado e julho inteiro) e ver Tiradentes (1 noite na sazonalidade contra a Regra A) e Finados 2027 (2 contra 3 em 2026)."
+  },
+  {
+   "id": "estrategia-desatualizada",
+   "responsavel": "skill",
+   "desde": "2026-10-21",
+   "urgencia": 2,
+   "texto": "estrategia.md v1.3 ainda cita o padrão de R$ 1.000 enviados em sexta e sábado, vitrine de 0,59/0,61, mínimo da Balcony de R$ 765 e mexer na base por semana; atualizar para regras.md (pisos de R$ 500/850 no preço final, Genius 3, Balcony R$ 690, base só por ordem do dono)."
   }
  ],
- "versao": "2026-10-16T08"
+ "versao": "2026-10-21T15"
 }

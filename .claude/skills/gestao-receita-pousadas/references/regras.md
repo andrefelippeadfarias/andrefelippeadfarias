@@ -233,6 +233,7 @@ Pedido do dono: "qualificar os preços: muito baixo, baixo, médio, alto e muito
 - 14/10 (noite): suítes com banheira de domingo a quinta a partir de R$ 500 no preço final, em percentual (seção 4, "Piso de dia de semana"); vale para a Regra I.
 - 14/10 (noite): metas confirmadas pelo dono, inclusive o Recanto R$ 350 mil na alta acima do máximo calculado ("Sim . Esse é o objetivo . Vamos trabalhar para isso . Porém devemos sempre ficar de olho na lotação ."): metas mantidas e trava de lotação (4c).
 - 14/10 (noite): "Trabalhe sempre com percentuais nunca com valores absolutos no pricelabs." Piso e teto por data saem como variação % sobre a base (`percent_base`), nunca em reais; preço já era percentual desde 07/10. Base, mínimo e máximo do anúncio seguem em reais como âncora (premissa dita ao dono). Todas as regras por data existentes foram convertidas em 14/10 (seção 4, "Forma de gravar").
+- 21/10: "Temos que sempre levar em consideração a precificação do mercado como um todo também. Vamos continuar fazendo como planejamos nas skills." O histórico próprio (2024, `dados/historico_proprio.json`) mostra potencial e serve de referência, mas o preço de cada noite continua ancorado no mercado (faixas 4c, referência hidro+vista da seção 5 e busca diária), nunca em "repetir 2024". Plano de 12 meses em `references/plano-12-meses.md`.
 - A regra de sábado com valor real de pelo menos R$ 800 (02/10) **não vale como regra geral**: as decisões de 06/10 a superaram.
 
 ## 6b. Decisões do dono por data (vencem; apagar quando passarem)

@@ -1,5 +1,5 @@
 {
- "versao": "2026-10-14T21",
+ "versao": "2026-10-21T15",
  "lido_em": "2026-10-14",
  "faturamento": "revenue do PriceLabs = rental_revenue do Beds24, antes da comissão da OTA e sem extras; desde 19/10 (dono), o livro inclui as reservas sem rental_revenue pelo total_cost",
  "metodo": "(revisado por 3 revisores independentes em 14/10/2026):\n- Mês: RevPAR do mercado (vizinhança Airbnb do PriceLabs) no mesmo mês do ano passado × crescimento × nosso índice\n  × unidades × dias, por pousada; nunca abaixo do livro. Índice = nosso RevPAR ÷ RevPAR do mercado no MESMO mês do\n  MESMO ano (set/2026: Recanto 1,48, Villa 1,25; portfólio 1 a 14/10: 1,25). Teto de 95% de ocupação: desconto nos\n  meses com pico no Recanto. Páscoa: 2027 cai em março (ano passado, abril): março recebe o efeito líquido da Páscoa\n  da tabela de feriados e abril perde o pouco que a Páscoa de 2026 pôs no mercado de abril.\n- Outubro: livro do mês inteiro (1 a 31/10, lido em 14/10) + última hora (setembro vendeu 6,6 diárias/dia com 0 a 1 dia).\n- Feriado: vendido + (ocupação-alvo × diárias − vendidas) × diária real por noite (≥ piso de feriado da skill).",
@@ -536,7 +536,10 @@
   },
   "meses_alta": [
    "2026-12",
-   "2027-01"
+   "2027-01",
+   "2027-06",
+   "2027-07",
+   "2027-08"
   ],
   "indice_maximo": {
    "recanto": 2.0,
@@ -683,6 +686,114 @@
     "temporada": "baixa",
     "minimo_dono_vs_realista": -0.22
    }
+  },
+  "2027-05": {
+   "recanto": {
+    "hoje": 237000,
+    "realista": 299000,
+    "maximo": 351000,
+    "minimo_dono": 220000,
+    "temporada": "baixa",
+    "referencia_2024": 328000
+   },
+   "villa": {
+    "hoje": 198000,
+    "realista": 247000,
+    "maximo": 297000,
+    "minimo_dono": 150000,
+    "temporada": "baixa"
+   },
+   "_origem": "estimado em 21/10/2026 pelo método do arquivo (ocupação do mercado no ano passado e mediana de preço futuro do PriceLabs, ajustada pela razão de novembro 641/691; crescimento 1,05; índices dos cenários); mínimo pela temporada do dono (regras.md 6a, 14/10: inverno de junho a agosto = alta); a confirmar com o dono (pendência metas-mai-out-2027)"
+  },
+  "2027-06": {
+   "recanto": {
+    "hoje": 275000,
+    "realista": 347000,
+    "maximo": 408000,
+    "minimo_dono": 350000,
+    "temporada": "alta",
+    "referencia_2024": 303000
+   },
+   "villa": {
+    "hoje": 229000,
+    "realista": 287000,
+    "maximo": 344000,
+    "minimo_dono": 300000,
+    "temporada": "alta"
+   },
+   "_origem": "estimado em 21/10/2026 pelo método do arquivo (ocupação do mercado no ano passado e mediana de preço futuro do PriceLabs, ajustada pela razão de novembro 641/691; crescimento 1,05; índices dos cenários); mínimo pela temporada do dono (regras.md 6a, 14/10: inverno de junho a agosto = alta); a confirmar com o dono (pendência metas-mai-out-2027)"
+  },
+  "2027-07": {
+   "recanto": {
+    "hoje": 355000,
+    "realista": 447000,
+    "maximo": 526000,
+    "minimo_dono": 350000,
+    "temporada": "alta",
+    "referencia_2024": 540000
+   },
+   "villa": {
+    "hoje": 296000,
+    "realista": 370000,
+    "maximo": 444000,
+    "minimo_dono": 300000,
+    "temporada": "alta"
+   },
+   "_origem": "estimado em 21/10/2026 pelo método do arquivo (ocupação do mercado no ano passado e mediana de preço futuro do PriceLabs, ajustada pela razão de novembro 641/691; crescimento 1,05; índices dos cenários); mínimo pela temporada do dono (regras.md 6a, 14/10: inverno de junho a agosto = alta); a confirmar com o dono (pendência metas-mai-out-2027)"
+  },
+  "2027-08": {
+   "recanto": {
+    "hoje": 186000,
+    "realista": 234000,
+    "maximo": 276000,
+    "minimo_dono": 350000,
+    "temporada": "alta",
+    "referencia_2024": 372000
+   },
+   "villa": {
+    "hoje": 155000,
+    "realista": 194000,
+    "maximo": 233000,
+    "minimo_dono": 300000,
+    "temporada": "alta"
+   },
+   "_origem": "estimado em 21/10/2026 pelo método do arquivo (ocupação do mercado no ano passado e mediana de preço futuro do PriceLabs, ajustada pela razão de novembro 641/691; crescimento 1,05; índices dos cenários); mínimo pela temporada do dono (regras.md 6a, 14/10: inverno de junho a agosto = alta); a confirmar com o dono (pendência metas-mai-out-2027)"
+  },
+  "2027-09": {
+   "recanto": {
+    "hoje": 172000,
+    "realista": 217000,
+    "maximo": 255000,
+    "minimo_dono": 220000,
+    "temporada": "baixa",
+    "referencia_2024": 260000
+   },
+   "villa": {
+    "hoje": 144000,
+    "realista": 180000,
+    "maximo": 216000,
+    "minimo_dono": 150000,
+    "temporada": "baixa"
+   },
+   "_origem": "estimado em 21/10/2026 pelo método do arquivo (ocupação do mercado no ano passado e mediana de preço futuro do PriceLabs, ajustada pela razão de novembro 641/691; crescimento 1,05; índices dos cenários); mínimo pela temporada do dono (regras.md 6a, 14/10: inverno de junho a agosto = alta); a confirmar com o dono (pendência metas-mai-out-2027)"
+  },
+  "2027-10": {
+   "recanto": {
+    "hoje": 141000,
+    "realista": 178000,
+    "maximo": 209000,
+    "minimo_dono": 220000,
+    "temporada": "baixa",
+    "referencia_2024": 259000
+   },
+   "villa": {
+    "hoje": 118000,
+    "realista": 147000,
+    "maximo": 176000,
+    "minimo_dono": 150000,
+    "temporada": "baixa"
+   },
+   "_origem": "estimado em 21/10/2026 pelo método do arquivo (ocupação do mercado no ano passado e mediana de preço futuro do PriceLabs, ajustada pela razão de novembro 641/691; crescimento 1,05; índices dos cenários); mínimo pela temporada do dono (regras.md 6a, 14/10: inverno de junho a agosto = alta); a confirmar com o dono (pendência metas-mai-out-2027)"
   }
  },
  "acompanhamento": "segunda: livro × meta por mês (Report Builder por mês de estadia) e ritmo; dia 1: mês fechado e recalibração do índice; feriados a 30/15/7 dias"

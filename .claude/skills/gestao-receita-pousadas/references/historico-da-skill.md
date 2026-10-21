@@ -268,3 +268,10 @@ Hora da ANÁLISE E AGENDA DIÁRIA do PriceLabs (rotina "Agenda diária PriceLabs
 
 ## 21/10/2026 — Painel semanal (pedido do dono)
 - Painel "Desempenho Semanal das Pousadas" (https://claude.ai/artifact/HzGExqdFhYp3CnTe6pvWBf) e `scripts/painel_semanal.py`, que gera os 5 arquivos do painel a partir do Beds24. Atualizado toda segunda na revisão semanal (SKILL.md, modo 4; ferramentas.md, "Painel semanal").
+
+## 21/10/2026 — Plano de 12 meses e histórico próprio (pedidos do dono)
+- `references/plano-12-meses.md` (nov/26 a out/27): diagnóstico, histórico de 2024, metas, 5 pilares (preço e estadia, canais, direto, demanda de dia útil, reputação), calendário de execução e governança. Pesquisa de mercado com fontes na seção 11.
+- `dados/historico_proprio.json`: totais das planilhas do sistema anterior (2024 e jan-mar/2026), sem dados de hóspedes.
+- `dados/metas_faturamento.json`: maio a outubro de 2027 estimados pelo mesmo método, com o mínimo pela temporada do dono (jun-ago = alta), a confirmar.
+- `regras.md` §6a: decisão do dono de 21/10 (preço sempre ancorado no mercado como um todo).
+- 12 pendências novas do plano em `dados/pendencias.json`.

@@ -1,0 +1,481 @@
+{
+ "_doc": "Histórico próprio exportado do sistema anterior (HITS/Omnibees) e enviado pelo dono em 21/10/2026. Só totais, sem dados de hóspedes. 'com_valor' = reservas com diária > 0 (as sem valor são, na maioria, canceladas ou não comparecimento). Ocupação sobre 16 quartos (Recanto) e 15 (Villa); em 20 noites de 2024 o Recanto passa de 16 (troca de quarto ou day use), então a ocupação pode estar até cerca de 2 pontos acima. A Villa abriu em maio de 2024. Faltam 2025 inteiro e abril a agosto de 2026 (pendência historico-beds24-2025).",
+ "fonte_arquivos": [
+  "Todas_as_Reservas_de_2024.xlsx",
+  "Reservas_no_Periodo (01/01 a 27/03/2026).xlsx (as duas versões são iguais)",
+  "Reservas_Hits_-_2026-03-11.xlsx (carteira de 27/05 a 28/06/2026 em 11/03/2026)"
+ ],
+ "estadias_2024": {
+  "reservas": 4171,
+  "com_valor": 2637,
+  "mensal": {
+   "Recanto 2024-01": {
+    "receita": 256973,
+    "diarias": 364,
+    "ocup": 0.734,
+    "adr": 706
+   },
+   "Recanto 2024-02": {
+    "receita": 217741,
+    "diarias": 320,
+    "ocup": 0.69,
+    "adr": 680
+   },
+   "Recanto 2024-03": {
+    "receita": 269109,
+    "diarias": 368,
+    "ocup": 0.742,
+    "adr": 731
+   },
+   "Recanto 2024-04": {
+    "receita": 270403,
+    "diarias": 326,
+    "ocup": 0.679,
+    "adr": 829
+   },
+   "Recanto 2024-05": {
+    "receita": 327978,
+    "diarias": 365,
+    "ocup": 0.736,
+    "adr": 899
+   },
+   "Recanto 2024-06": {
+    "receita": 303220,
+    "diarias": 235,
+    "ocup": 0.49,
+    "adr": 1290
+   },
+   "Recanto 2024-07": {
+    "receita": 539648,
+    "diarias": 433,
+    "ocup": 0.873,
+    "adr": 1246
+   },
+   "Recanto 2024-08": {
+    "receita": 372321,
+    "diarias": 448,
+    "ocup": 0.903,
+    "adr": 831
+   },
+   "Recanto 2024-09": {
+    "receita": 260345,
+    "diarias": 337,
+    "ocup": 0.702,
+    "adr": 773
+   },
+   "Recanto 2024-10": {
+    "receita": 258527,
+    "diarias": 389,
+    "ocup": 0.784,
+    "adr": 665
+   },
+   "Recanto 2024-11": {
+    "receita": 261685,
+    "diarias": 356,
+    "ocup": 0.742,
+    "adr": 735
+   },
+   "Recanto 2024-12": {
+    "receita": 253178,
+    "diarias": 319,
+    "ocup": 0.643,
+    "adr": 794
+   },
+   "Villa 2024-05": {
+    "receita": 41138,
+    "diarias": 47,
+    "ocup": 0.101,
+    "adr": 875
+   },
+   "Villa 2024-06": {
+    "receita": 104899,
+    "diarias": 113,
+    "ocup": 0.251,
+    "adr": 928
+   },
+   "Villa 2024-07": {
+    "receita": 199129,
+    "diarias": 190,
+    "ocup": 0.409,
+    "adr": 1048
+   },
+   "Villa 2024-08": {
+    "receita": 116354,
+    "diarias": 146,
+    "ocup": 0.314,
+    "adr": 797
+   },
+   "Villa 2024-09": {
+    "receita": 78073,
+    "diarias": 159,
+    "ocup": 0.353,
+    "adr": 491
+   },
+   "Villa 2024-10": {
+    "receita": 88646,
+    "diarias": 192,
+    "ocup": 0.413,
+    "adr": 462
+   },
+   "Villa 2024-11": {
+    "receita": 105002,
+    "diarias": 206,
+    "ocup": 0.458,
+    "adr": 510
+   },
+   "Villa 2024-12": {
+    "receita": 131151,
+    "diarias": 233,
+    "ocup": 0.501,
+    "adr": 563
+   }
+  },
+  "canais": {
+   "Recanto | Agências/operadoras": {
+    "reservas": 27,
+    "com_valor": 23,
+    "receita": 45836
+   },
+   "Recanto | Balcão/sem canal": {
+    "reservas": 15,
+    "com_valor": 12,
+    "receita": 80080
+   },
+   "Recanto | Booking": {
+    "reservas": 2051,
+    "com_valor": 1188,
+    "receita": 2192198
+   },
+   "Recanto | Expedia": {
+    "reservas": 84,
+    "com_valor": 66,
+    "receita": 77464
+   },
+   "Recanto | Site (motor)": {
+    "reservas": 793,
+    "com_valor": 650,
+    "receita": 1224803
+   },
+   "Villa | Agências/operadoras": {
+    "reservas": 14,
+    "com_valor": 14,
+    "receita": 15966
+   },
+   "Villa | Balcão/sem canal": {
+    "reservas": 38,
+    "com_valor": 30,
+    "receita": 79153
+   },
+   "Villa | Booking": {
+    "reservas": 907,
+    "com_valor": 455,
+    "receita": 541741
+   },
+   "Villa | Site (motor)": {
+    "reservas": 242,
+    "com_valor": 199,
+    "receita": 239271
+   }
+  },
+  "antecedencia": {
+   "mediana": 3,
+   "p10_p90": [
+    0,
+    0,
+    1,
+    2,
+    3,
+    6,
+    11,
+    24,
+    50
+   ],
+   "ate_3d": 0.522,
+   "ate_14d": 0.743,
+   "mais_60d": 0.081
+  },
+  "estadia_media": 2.05,
+  "semana_fds": {
+   "Recanto fds": {
+    "ocup": 0.773,
+    "adr": 1111
+   },
+   "Recanto semana": {
+    "ocup": 0.635,
+    "adr": 717
+   },
+   "Villa fds": {
+    "ocup": 0.427,
+    "adr": 812
+   },
+   "Villa semana": {
+    "ocup": 0.268,
+    "adr": 587
+   }
+  }
+ },
+ "estadias_2026_t1": {
+  "reservas": 1156,
+  "com_valor": 706,
+  "mensal": {
+   "Recanto 2026-01": {
+    "receita": 214715,
+    "diarias": 292,
+    "ocup": 0.589,
+    "adr": 735
+   },
+   "Recanto 2026-02": {
+    "receita": 155011,
+    "diarias": 195,
+    "ocup": 0.435,
+    "adr": 795
+   },
+   "Recanto 2026-03": {
+    "receita": 134068,
+    "diarias": 253,
+    "ocup": 0.51,
+    "adr": 530
+   },
+   "Villa 2026-01": {
+    "receita": 118636,
+    "diarias": 195,
+    "ocup": 0.419,
+    "adr": 608
+   },
+   "Villa 2026-02": {
+    "receita": 115321,
+    "diarias": 168,
+    "ocup": 0.4,
+    "adr": 686
+   },
+   "Villa 2026-03": {
+    "receita": 63973,
+    "diarias": 151,
+    "ocup": 0.325,
+    "adr": 424
+   }
+  },
+  "canais": {
+   "Recanto | Agências/operadoras": {
+    "reservas": 14,
+    "com_valor": 12,
+    "receita": 4765
+   },
+   "Recanto | Airbnb": {
+    "reservas": 2,
+    "com_valor": 2,
+    "receita": 889
+   },
+   "Recanto | Balcão/sem canal": {
+    "reservas": 582,
+    "com_valor": 354,
+    "receita": 424913
+   },
+   "Recanto | Booking": {
+    "reservas": 79,
+    "com_valor": 30,
+    "receita": 35563
+   },
+   "Recanto | Expedia": {
+    "reservas": 17,
+    "com_valor": 9,
+    "receita": 8128
+   },
+   "Recanto | Site (motor)": {
+    "reservas": 28,
+    "com_valor": 19,
+    "receita": 29538
+   },
+   "Villa | Agências/operadoras": {
+    "reservas": 9,
+    "com_valor": 8,
+    "receita": 9194
+   },
+   "Villa | Balcão/sem canal": {
+    "reservas": 251,
+    "com_valor": 167,
+    "receita": 191277
+   },
+   "Villa | Booking": {
+    "reservas": 94,
+    "com_valor": 56,
+    "receita": 55306
+   },
+   "Villa | Expedia": {
+    "reservas": 36,
+    "com_valor": 28,
+    "receita": 16021
+   },
+   "Villa | Site (motor)": {
+    "reservas": 44,
+    "com_valor": 21,
+    "receita": 26132
+   }
+  },
+  "antecedencia": {
+   "mediana": 4.0,
+   "p10_p90": [
+    0,
+    0,
+    1,
+    2,
+    4,
+    6,
+    9,
+    15,
+    26
+   ],
+   "ate_3d": 0.486,
+   "ate_14d": 0.792,
+   "mais_60d": 0.024
+  },
+  "estadia_media": 1.76,
+  "semana_fds": {
+   "Recanto fds": {
+    "ocup": 0.709,
+    "adr": 894
+   },
+   "Recanto semana": {
+    "ocup": 0.435,
+    "adr": 540
+   },
+   "Villa fds": {
+    "ocup": 0.603,
+    "adr": 728
+   },
+   "Villa semana": {
+    "ocup": 0.291,
+    "adr": 455
+   }
+  }
+ },
+ "feriados_2024_recanto_villa": {
+  "Carnaval (09-13/02)": {
+   "recanto": [
+    0.61,
+    1206
+   ]
+  },
+  "Páscoa (28-30/03)": {
+   "recanto": [
+    0.88,
+    1242
+   ]
+  },
+  "Tiradentes (19-20/04)": {
+   "recanto": [
+    1.0,
+    1181
+   ]
+  },
+  "Corpus Christi (29/05-01/06)": {
+   "recanto": [
+    0.88,
+    1720
+   ],
+   "villa": [
+    0.4,
+    1398
+   ]
+  },
+  "9 de Julho (06-08/07)": {
+   "recanto": [
+    0.98,
+    1425
+   ],
+   "villa": [
+    0.56,
+    1014
+   ]
+  },
+  "Sábados do Festival (13 e 20/07)": {
+   "recanto": [
+    1.0,
+    2002
+   ],
+   "villa": [
+    0.6,
+    1413
+   ]
+  },
+  "7 de Setembro (06-07/09)": {
+   "recanto": [
+    0.69,
+    1261
+   ],
+   "villa": [
+    0.2,
+    961
+   ]
+  },
+  "12 de Outubro (11-12/10)": {
+   "recanto": [
+    0.84,
+    855
+   ],
+   "villa": [
+    0.63,
+    573
+   ]
+  },
+  "Finados (01-02/11)": {
+   "recanto": [
+    0.78,
+    1360
+   ],
+   "villa": [
+    0.6,
+    504
+   ]
+  },
+  "Consciência Negra (19-20/11)": {
+   "recanto": [
+    0.94,
+    587
+   ],
+   "villa": [
+    0.4,
+    429
+   ]
+  },
+  "Natal (24-25/12)": {
+   "recanto": [
+    0.69,
+    712
+   ],
+   "villa": [
+    0.53,
+    596
+   ]
+  },
+  "Réveillon (29-31/12)": {
+   "recanto": [
+    0.9,
+    1329
+   ],
+   "villa": [
+    0.76,
+    994
+   ]
+  },
+  "_formato": "[ocupação, diária média recebida em R$]"
+ },
+ "carteira_11_03_2026": {
+  "Recanto Corpus Christi (03-07/06/2026)": {
+   "reservas": 11,
+   "noites": 27,
+   "valor": 13853
+  },
+  "Recanto Namorados (11-13/06/2026)": {
+   "reservas": 14,
+   "noites": 28,
+   "valor": 41600
+  },
+  "Villa Namorados": {
+   "reservas": 8,
+   "noites": 16,
+   "valor": 14798
+  },
+  "_nota": "carteira 85 dias antes de Corpus Christi; 46 das 67 reservas no Recanto; Expedia e operadoras pesam na Villa (12 de 21)"
+ }
+}

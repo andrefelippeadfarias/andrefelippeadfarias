@@ -476,6 +476,22 @@
    "noites": 16,
    "valor": 14798
   },
-  "_nota": "carteira 85 dias antes de Corpus Christi; 46 das 67 reservas no Recanto; Expedia e operadoras pesam na Villa (12 de 21)"
+  "_nota": "carteira 85 dias antes de Corpus Christi; 46 das 67 reservas no Recanto; Expedia e operadoras pesam na Villa (12 de 21)",
+  "Recanto outras datas": {
+   "reservas": 21,
+   "noites": 57,
+   "valor": 29196
+  },
+  "Villa outras datas": {
+   "reservas": 13,
+   "noites": 36,
+   "valor": 16325
+  },
+  "_total": {
+   "reservas": 67,
+   "valor": 115771,
+   "recanto": 84649,
+   "villa": 31123
+  }
  }
 }

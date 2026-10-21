@@ -790,5 +790,17 @@ class TestCalendario12m(unittest.TestCase):
         self.assertFalse(any("chegada" in e or "check_in" in e for e in v.erros))
 
 
+class TestRevisao12m(unittest.TestCase):
+    def test_devida_e_meses(self):
+        import datetime as dt
+        import revisao_12m as r
+        self.assertTrue(r.devida(dt.date(2026, 10, 21), {"revisoes": []})[0])
+        h = {"revisoes": [{"hoje": "2026-10-21", "linhas": []}]}
+        self.assertFalse(r.devida(dt.date(2026, 11, 4), h)[0])     # 14 dias
+        self.assertTrue(r.devida(dt.date(2026, 11, 5), h)[0])      # 15 dias
+        m = r.meses(dt.date(2026, 10, 21))
+        self.assertEqual((m[0], m[-1], len(m)), ("2026-10", "2027-10", 13))
+
+
 if __name__ == "__main__":
     unittest.main()

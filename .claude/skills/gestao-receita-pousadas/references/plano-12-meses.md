@@ -327,6 +327,7 @@ Parcerias: restaurantes de fondue, vinícolas e cervejarias da Mantiqueira, Aman
 - **Toda segunda:**
   - revisão semanal, painel semanal (`painel_semanal.py`) e `desempenho_mes.py`;
   - no relatório, a linha "plano de 12 meses: no ritmo / atrás" do mês.
+- **A cada 15 dias (dono, 21/10):** revisão dos 12 meses futuros (`revisao_12m.py`, SKILL.md 4c): vendido contra o mínimo, o que entrou em 15 dias, ritmo contra o mercado e preço médio por mês e pousada. Mês atrás do mercado em duas revisões seguidas vira pendência do dono com proposta.
 - **Primeira segunda do mês:**
   - revisar este plano (seção 9);
   - sazonalidade (`sazonalidade-campos`) e metas dos 6 meses seguintes;

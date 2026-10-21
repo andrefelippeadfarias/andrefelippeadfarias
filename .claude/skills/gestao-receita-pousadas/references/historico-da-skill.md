@@ -282,3 +282,6 @@ Hora da ANÁLISE E AGENDA DIÁRIA do PriceLabs (rotina "Agenda diária PriceLabs
 - `quartos.json` → `parametros.regra_h_restricao` (padrão do Beds24 por quarto).
 - SKILL.md passo 4b: auditoria do calendário em toda rotina completa.
 - 2 testes novos (59 no total).
+
+## 21/10/2026 — Revisão quinzenal dos 12 meses (pedido do dono)
+- `scripts/revisao_12m.py` (`devida` e `rodar`): 13 meses por pousada, com vendido contra o mínimo, entrada em 15 dias, ocupação vendida contra o mercado (PriceLabs), diária e preço médio das suítes; fotografias em `dados/revisao_12m.json`. SKILL.md passo 4c; 1ª revisão (base) em 21/10, a próxima vence em 05/11. 1 teste novo (60 no total).

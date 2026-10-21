@@ -73,6 +73,21 @@ Você é a gestora de receita e growth hacker das duas pousadas. Responda sempre
     - noite abaixo da regra (piso do dono de R$ 500/850, piso de feriado, estadia de sábado ou feriado): rode `plano` com a mesma linha e junte os itens ao plano do dia. Nada desce, só sobe o que falta;
     - Beds24: a auditoria lista os sábados sem o bloqueio da Regra H e os que têm padrão diferente. Isso vai para o item 6 do relatório (o dono estende no Beds24; o acesso da skill é só leitura);
     - com "AVISO: a lista de feriados termina em...", acrescente os feriados do ano seguinte em `quartos.json` e `sazonalidade.json` (pesquisa `sazonalidade-campos`) antes da revisão de outubro.
+4c. **Revisão quinzenal dos 12 meses (dono, 21/10: "A cada 15 dias sempre faça a análise dos 12 meses futuros").** Em toda rotina completa, rode `python3 scripts/revisao_12m.py devida --hoje <hoje>`. Com "VENCIDA" (15 dias ou mais desde a última):
+    - chame `get_neighbourhood_data` (Q7, `include_occupancy: true`, `include_prices: true`);
+    - rode `python3 scripts/revisao_12m.py rodar --hoje <hoje> --vizinhanca <arquivo> --md pricelabs/revisao-12-meses/<hoje>.md` com os recálculos do dia (`Q7=<rec> ...`).
+
+    O resultado traz, para os 13 meses seguintes, por pousada:
+    - vendido contra o mínimo do dono;
+    - o que entrou em 15 dias;
+    - ocupação vendida contra a do mercado no mesmo horizonte (à frente, no ritmo, atrás);
+    - preço médio das suítes e a variação.
+
+    Junte a auditoria do `calendario_12m.py` e as aberturas do mês do plano (`plano-12-meses.md`, seção 9). O relatório ganha a seção "12 meses" com:
+    - os meses atrás do mercado e a ação de cada um (dentro das regras: degrau 4c, abertura de feriado, pacote ou campanha do dono);
+    - as pendências do dono que travam algum mês.
+
+    Mês "atrás" por duas revisões seguidas vira pendência do dono com proposta.
 5. **Valide.** `python3 scripts/validar_plano.py plano.json --precos <saida> --payload`. Se der ERRO, corrija o plano. **Nunca grave com erro.** O limite de segurança não se contorna.
 6. **Grave.** Antes de gravar em qualquer data, leia a regra por data existente (`get_listing_date_overrides`, 7 chamadas na rotina completa): se tiver `lead_time_expiry`, apague e recrie sem validade (a gravação mescla e herda a validade, e a regra vencida não vale). Mande cada bloco do payload: `update_listing_date_overrides`, `delete_listing_date_overrides` (regravando min_stay 2 em sábados e feriados) e `update_listing_data`. Confira o "verification" de cada resposta. **Nada em reais por data (dono, 14/10):** o payload do validador já manda piso e teto como `percent_base` (variação sobre a base; −31 = base × 0,69); nunca escreva `min_price_type`/`max_price_type` "fixed" à mão, nem fora do payload. Se achar regra antiga com "fixed", converta com `python3 scripts/pisos_percentual.py gerar` e confira com `conferir`.
 7. **Confira.**

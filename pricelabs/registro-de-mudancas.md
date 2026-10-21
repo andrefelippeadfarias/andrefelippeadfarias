@@ -2090,6 +2090,27 @@ A Villa não aparece em nenhuma busca com filtro de hidro (falta a comodidade na
 - **Cancelamentos:** 2 da Booking no Double em 18/10, estadia passada, sem efeito.
 - **Nada gravado.**
 
+## 21/10/2026, 11:30 UTC (08:30 BRT) — Rotina completa
+
+- **Conferência no recálculo dos 7 quartos:**
+  - 418 pisos de 20/10: 0 diferença, incluindo as 4 noites da VK2.
+  - Concorrência refeita em 19/10: 0 diferença.
+  - VK2 em Finados (teto 78%): conferido.
+  - Double em 22/10: conferido.
+- **ALERTA: o Recanto sumiu da busca da Booking.** O conector oficial não acha a propriedade (`hotel_names_not_resolved`) em 28/10, 13-15/11 e 08-10/12, nem por coordenadas. Ontem aparecia em todas as estadias, e a Villa aparece normalmente. No Beds24 a disponibilidade, as estadias mínimas e o price1 estão normais. A última reserva da Booking no Recanto entrou em 21/10 às 00:02 UTC. Pedido ao dono: conferir na extranet se o Recanto está aberto e visível.
+- **Q2 com tarifa errada na Booking:** reservas 95003950 e 95003949 (20-22/11) a R$ 412,50 e R$ 495 por noite, com price1 de R$ 4.433 e R$ 4.213. A tarifa 50067466 tem valor fixo; na tarifa padrão a Q2 recebe cerca de 0,20 do price1, como se estivesse ligada ao preço da Q7. Os outros quartos estão entre 0,28 e 0,44 (normal). Pendência urgente do dono: mapeamento no Beds24.
+- **Busca diária:** 63 a 68 concorrentes por estadia, sem o Recanto. A Villa fica nos percentis 19 a 56; mediana de R$ 894 em 23-25/10, R$ 1.344 em Finados e R$ 1.309 em 13-15/11. Trava de corte ligada.
+- **Ocupação real (confirmadas + novas):**
+
+| Janela | Recanto | Villa |
+|---|---|---|
+| 7 dias | 49,1% | 39,1% |
+| 15 dias | 43,8% | 36,4% |
+| 30 dias | 38,3% | 23,3% |
+
+- **Reservas da madrugada:** 2 da Q2 (acima), Double em 23-25/10 pelo Airbnb (R$ 1.724) e 2 da VK2 pelo Airbnb; o resto são consultas.
+- **Nada gravado no PriceLabs:** sem o Recanto na vitrine e com a trava de corte ligada, nenhum passo de concorrência; a Villa está abaixo da meta, então nada sobe.
+
 > **Regras em vigor:** desde 06/10/2026 elas ficam em `.claude/skills/gestao-receita-pousadas/references/regras.md`. Este arquivo guarda só o histórico das mudanças.
 
 ## O que só pode ser feito na tela (passo a passo para você)

@@ -2,6 +2,13 @@
  "nota": "Lista única de pendências. responsavel: dono | tela | skill. Fechar com resolvido_em e commit. O relatório traz os 3 itens mais urgentes do dono.",
  "itens": [
   {
+   "id": "recanto-fora-booking-2110",
+   "responsavel": "dono",
+   "desde": "2026-10-21",
+   "urgencia": 0,
+   "texto": "O Recanto não aparece na busca da Booking desde 21/10 de manhã: o conector não acha a propriedade pelo nome nem por coordenadas, em várias datas, e a Villa aparece. O Beds24 está normal. Conferir na extranet da Booking se o Recanto está aberto para reservas e visível (status, avisos, pagamento de comissão, conteúdo pendente)."
+  },
+  {
    "id": "q2-tarifa-booking-fixa",
    "responsavel": "dono",
    "desde": "2026-10-21",

@@ -115,6 +115,91 @@
      }
     }
    ]
+  },
+  {
+   "hoje": "2026-10-21",
+   "captado": "2026-10-21T08:10-03:00",
+   "estadias": [
+    {
+     "checkin": "2026-10-23",
+     "checkout": "2026-10-25",
+     "noites": 2,
+     "n": 67,
+     "mediana": 894.31,
+     "p25": 715.49,
+     "p75": 1353.96,
+     "villa": {
+      "noite": 598.0,
+      "percentil": 19,
+      "vs_mediana": -0.331
+     }
+    },
+    {
+     "checkin": "2026-10-28",
+     "checkout": "2026-10-29",
+     "noites": 1,
+     "n": 68,
+     "mediana": 580.95,
+     "p25": 382.46,
+     "p75": 1043.37,
+     "villa": {
+      "noite": 430.24,
+      "percentil": 31,
+      "vs_mediana": -0.259
+     }
+    },
+    {
+     "checkin": "2026-10-30",
+     "checkout": "2026-11-02",
+     "noites": 3,
+     "n": 63,
+     "mediana": 1343.81,
+     "p25": 899.94,
+     "p75": 1919.53,
+     "villa": {
+      "noite": 1464.91,
+      "percentil": 56,
+      "vs_mediana": 0.09
+     }
+    },
+    {
+     "checkin": "2026-11-06",
+     "checkout": "2026-11-08",
+     "noites": 2,
+     "n": 67,
+     "mediana": 1274.77,
+     "p25": 862.36,
+     "p75": 1693.8
+    },
+    {
+     "checkin": "2026-11-13",
+     "checkout": "2026-11-15",
+     "noites": 2,
+     "n": 67,
+     "mediana": 1308.93,
+     "p25": 862.36,
+     "p75": 1938.9,
+     "villa": {
+      "noite": 1144.14,
+      "percentil": 42,
+      "vs_mediana": -0.126
+     }
+    },
+    {
+     "checkin": "2026-11-19",
+     "checkout": "2026-11-22",
+     "noites": 3,
+     "n": 65,
+     "mediana": 1518.14,
+     "p25": 1042.61,
+     "p75": 2002.92,
+     "villa": {
+      "noite": 1306.88,
+      "percentil": 38,
+      "vs_mediana": -0.139
+     }
+    }
+   ]
   }
  ]
 }

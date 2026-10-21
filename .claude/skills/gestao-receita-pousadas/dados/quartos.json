@@ -233,7 +233,21 @@
    "Recanto": 0.425,
    "Villa": 0.575,
    "nota": "Vitrine Genius 3 ÷ enviado em sexta e sábado (PDF do dono, 27-28/11): Recanto 0,425 (Q7 R$ 749 ÷ R$ 1.760); Villa 0,575 (VK2 R$ 995 ÷ R$ 1.729). Dono 20/10: o piso de R$ 850 vale para todos."
-  }
+  },
+  "fator_canal": {
+   "Recanto": {
+    "booking": 0.49,
+    "airbnb": 0.41,
+    "direct": 1.0
+   },
+   "Villa": {
+    "booking": 0.46,
+    "airbnb": 0.31,
+    "direct": 1.0
+   },
+   "nota": "Valor que chega ÷ price1 do Beds24 por canal (Beds24, reservas de 13 a 19/10), depois dos descontos das plataformas (dono, 21/10: 'Considere o valor de desconto nas plataformas'). Direto = 1,0: não há desconto de plataforma. Recalibrar na revisão de segunda."
+  },
+  "alerta_reserva": 0.7
  },
  "feriados": [
   {

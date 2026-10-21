@@ -255,3 +255,9 @@ Hora da ANÁLISE E AGENDA DIÁRIA do PriceLabs (rotina "Agenda diária PriceLabs
   - Hidro no quarto e café: confirmados pelos filtros do PDF.
 - **Código:** `scripts/mercado_diario.py` (`planejar` e `consolidar`) e 1 teste; `references/mercado-diario.md` (roteiro do agente); `SKILL.md` (passo diário antes de Decida); `regras.md` seção 5 (base diária).
 
+## 21/10/2026, 12:30 UTC — Levantamento diário de reservas abaixo do planejado (dono)
+- **Pedido do dono:** "Faça diariamente esse levantamento para não termos reservas abaixo do que planejamos" e "Considere o valor de desconto nas plataformas".
+- **Código:** `scripts/reservas_abaixo.py`. Esperado = price1 do Beds24 × `fator_canal` (Booking: Recanto 0,49, Villa 0,46; Airbnb: 0,41 e 0,31; direto 1,0); alerta abaixo de 70%. Em `quartos.json` → `parametros`: `fator_canal` e `alerta_reserva`.
+- **Rotina:** passo em toda rotina, leve e completa (`SKILL.md`), com o resultado no topo do relatório. Nomes de hóspedes só na tela, para o dono.
+- **1º levantamento (desde 19/10):** 8 reservas graves, de 17% a 45% do esperado (5 manuais na VK7, 2 da Q2 na Booking e 1 direta da Afrodite), e 3 leves (63% a 66%), feitas antes da alta dos pisos.
+

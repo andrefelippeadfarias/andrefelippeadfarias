@@ -2233,6 +2233,12 @@ A Villa não aparece em nenhuma busca com filtro de hidro (falta a comodidade na
 - **Recanto:** continua fora da busca da Booking às 19:54 UTC.
 - **Nada gravado.** A Q7, a Double e a Q2 estão sem saldo de recálculo até amanhã; a conferência da ordem do Recanto e a reversão da Double em 25/10 ficam para a rotina das 07:53.
 
+## 21/10/2026, 22:55 UTC (19:55 BRT) — Rotina leve das 19:53
+
+- **Beds24 (desde 19:50 UTC):** nenhuma reserva nova e nenhum cancelamento; 1 alteração de status (check-in da Afrodite).
+- **Reservas abaixo do planejado:** nenhuma.
+- **Nada gravado.** As regras gravadas hoje (calendário de 12 meses e ordem do Recanto) chegam aos canais no envio desta madrugada; conferência na rotina completa das 07:53.
+
 > **Regras em vigor:** desde 06/10/2026 elas ficam em `.claude/skills/gestao-receita-pousadas/references/regras.md`. Este arquivo guarda só o histórico das mudanças.
 
 ## O que só pode ser feito na tela (passo a passo para você)

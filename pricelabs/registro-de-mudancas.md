@@ -2111,6 +2111,32 @@ A Villa não aparece em nenhuma busca com filtro de hidro (falta a comodidade na
 - **Reservas da madrugada:** 2 da Q2 (acima), Double em 23-25/10 pelo Airbnb (R$ 1.724) e 2 da VK2 pelo Airbnb; o resto são consultas.
 - **Nada gravado no PriceLabs:** sem o Recanto na vitrine e com a trava de corte ligada, nenhum passo de concorrência; a Villa está abaixo da meta, então nada sobe.
 
+## 21/10/2026, 14:00 UTC (11:00 BRT) — Rotina leve das 10:53: 7 cancelamentos da Booking; 2 subidas de piso revertidas
+
+- **Beds24 (movimento desde 11:00 UTC):**
+  - 9 reservas novas da Booking na Villa, todas importadas às 11:06 UTC com números de reserva diferentes (sem duplicata). São 6 na VK7 (21-22/10, 29/10, 20-21/11 e 22/11) e 3 na Balcony (21/10, 22/10 e 01/11), de R$ 318 a R$ 1.359 por noite.
+  - **7 cancelamentos da Booking.** No Recanto foram 4, entre 12:28 e 12:30 UTC: Double em 22-23/10, Q7 em 24-25/10, Q7 em 31/10-01/11 e Q7 em 01/11. Na Villa foram 3, entre 13:37 e 13:42 UTC: VK7 em 23-24/10 (2 reservas) e VK2 em 23-24/10.
+  - O Recanto continua fora da busca da Booking (`unresolved_hotel_names` às 13:59 UTC), enquanto a Villa aparece a R$ 430 em 28/10.
+- **Reservas abaixo do planejado (`reservas_abaixo.py`):** só a Double em 25/10 (Booking 6255306720), a 50%. Foi feita em 09/09 a R$ 387, antes da subida dos pisos; não é erro de lançamento.
+- **Sem overbooking:** a soma das noites no Beds24 fica dentro das unidades de 21/10 a 03/11.
+- **Ocupação real (confirmadas + novas):**
+
+| Janela | Recanto | Villa |
+|---|---|---|
+| 7 dias | 46,4% | 40,0% |
+| 15 dias | 41,2% | 37,8% |
+| 30 dias | 37,1% | 24,0% |
+
+- **Q7 no Finados:** 2/7 em 30/10, 1/7 em 31/10 e 2/7 em 01/11.
+
+| Mudança | Onde | Antes | Depois (recalculado e conferido às 14:00) | Como desfazer (pedir ao Claude) |
+|---|---|---|---|---|
+| 4c revertido (cancelamento: 4/6, meta 70%) | Double 22/10 | piso −5% (R$ 1.406) | piso −13% (R$ 1.288) ✅ | voltar o piso a −5% |
+| Concorrência revertida (2/7, meta 50%) | Q7 01/11 | piso 80% (R$ 2.111) | piso 64% (R$ 1.924), estadia 3 ✅ | voltar o piso a 80% |
+
+- **Envio:** o envio da madrugada chegou (Q7 com price1 de R$ 1.232 / R$ 2.018). As duas mudanças só chegam ao canal no envio desta noite; a Double 22/10 é D1, então pedi o Sync Now.
+- **Sem corte no Finados:** a trava sem_corte segue ligada, e o Recanto não aparece na Booking, então cortar não traria venda.
+
 > **Regras em vigor:** desde 06/10/2026 elas ficam em `.claude/skills/gestao-receita-pousadas/references/regras.md`. Este arquivo guarda só o histórico das mudanças.
 
 ## O que só pode ser feito na tela (passo a passo para você)

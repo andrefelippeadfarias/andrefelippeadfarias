@@ -230,3 +230,8 @@ Cada item tem data e evidência. Para incluir um item novo: data, o fato, a evid
 - Como checar qualquer quarto: comparar o `rateDescription` das reservas da Booking (valor por noite) com o price1 do calendário do Beds24 nas mesmas noites. Valor igual em noites com price1 diferente indica tarifa desligada.
 - Até o dono corrigir, o fator_real de 0,34 da Q2 não é desconto: é preço fixo. Subir piso da Q2 não muda nada na Booking.
 
+
+## 21/10/2026 — Cancelamento em bloco e importação em lote da Booking
+- O Beds24 recebeu 9 reservas da Booking da Villa no mesmo segundo (11:06 UTC), com números de reserva distintos e sem duplicata: é entrega em lote do canal, não erro. Confira pelo `apiReference` antes de tratar como duplicata (reserva de 2 quartos repete o número, e isso é normal).
+- 4 cancelamentos da Booking no Recanto em 2 minutos, com a propriedade fora da busca da Booking desde 21/10: sinal de problema na extranet (propriedade fechada ou suspensa), não de demanda. Nesse caso, segure os cortes, porque eles não trazem venda sem vitrine, e escale ao dono.
+- Cancelamento que derruba a ocupação abaixo da meta reverte o +10% pelo piso no mesmo dia (Double 22/10, Q7 01/11): 2 de 2 conferidos no recálculo.

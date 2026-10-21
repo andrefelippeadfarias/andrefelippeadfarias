@@ -721,5 +721,24 @@ class TestMercadoDiario(unittest.TestCase):
         self.assertEqual(len([1 for _, _, t in e if t == "fim de semana"]), 3)
 
 
+class TestDesempenhoMes(unittest.TestCase):
+    def test_feitas_e_estadias(self):
+        import datetime as dt
+        import desempenho_mes as m
+        b = lambda i, st, ch, chegada, saida, preco, feita, canc=None: {
+            "id": i, "propertyId": 350362, "roomId": 722805, "status": st, "channel": ch, "referer": "x",
+            "arrival": chegada, "departure": saida, "price": preco, "bookingTime": feita, "cancelTime": canc}
+        L = [b(1, "confirmed", "booking", "2026-10-10", "2026-10-12", 1000, "2026-10-02T12:00:00Z"),
+             b(2, "cancelled", "airbnb", "2026-10-25", "2026-10-26", 500, "2026-10-03T12:00:00Z", "2026-10-05T12:00:00Z"),
+             b(3, "confirmed", "booking", "2026-10-30", "2026-11-01", 2000, "2026-09-20T12:00:00Z")]
+        r = m.calcular(L, "2026-10", dt.datetime(2026, 10, 21, 14, tzinfo=dt.timezone.utc))
+        g = r["feitas"]["Recanto"]["geral"]
+        self.assertEqual((g["reservas"], g["canceladas"], g["ativas"], g["diarias"], g["adr"]), (2, 1, 1, 2, 500))
+        e = r["estadias"]["Recanto"]
+        self.assertEqual(e["realizado"]["receita"], 1000)          # 10 e 11/10, antes de hoje
+        self.assertEqual(e["vendido_ate_o_fim"]["receita"], 2000)  # 30 e 31/10, reserva feita em setembro
+        self.assertEqual(r["cancelamentos_no_mes"]["Recanto"]["quantidade"], 1)
+
+
 if __name__ == "__main__":
     unittest.main()

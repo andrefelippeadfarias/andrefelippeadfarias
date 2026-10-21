@@ -261,3 +261,7 @@ Hora da ANÁLISE E AGENDA DIÁRIA do PriceLabs (rotina "Agenda diária PriceLabs
 - **Rotina:** passo em toda rotina, leve e completa (`SKILL.md`), com o resultado no topo do relatório. Nomes de hóspedes só na tela, para o dono.
 - **1º levantamento (desde 19/10):** 8 reservas graves, de 17% a 45% do esperado (5 manuais na VK7, 2 da Q2 na Booking e 1 direta da Afrodite), e 3 leves (63% a 66%), feitas antes da alta dos pisos.
 
+
+## 21/10/2026 — desempenho_mes.py (pedido do dono)
+- Novo `scripts/desempenho_mes.py`: reservas feitas no mês (por pousada, canal, quarto, semana e mês da estadia), cancelamentos do mês e estadias do mês contra o mínimo do dono, com a diária necessária nas noites livres. Sem nomes. Entra na revisão semanal; relatório em `pricelabs/desempenho/`.
+- Cancelamento sem `cancelTime` (35 de 80 em outubro) usa a data da última alteração.

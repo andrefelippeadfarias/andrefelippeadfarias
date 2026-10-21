@@ -2224,6 +2224,15 @@ A Villa não aparece em nenhuma busca com filtro de hidro (falta a comodidade na
 - **Na Booking:** a Queen (2) segue presa à tarifa fixa 50067466 (R$ 412 a R$ 495) até o dono corrigir o mapeamento. A faixa vale para o price1 do Beds24 e para os demais canais.
 - **Sugestão ao dono:** baixar a base do anúncio da Queen (2) de R$ 1.870 para cerca de R$ 1.330, em dois passos de até 15% por semana, para a faixa depender menos do teto.
 
+## 21/10/2026, 19:55 UTC (16:55 BRT) — Rotina leve das 16:53
+
+- **Beds24 (desde 16:55 UTC):** nenhuma reserva nova e nenhum cancelamento; 7 alterações de status em estadias em curso (check-in de hoje).
+- **Reservas abaixo do planejado:**
+  - Q2 de 21 a 23/10 (Booking 5449340417), a 54% do esperado: feita em 24/09 na tarifa fixa da Booking (R$ 423 por noite), não é erro de lançamento.
+  - Double 94878118 (direta, estadia de 18 a 21/10) lançada a R$ 1,92: provável erro de digitação; conferir a fatura.
+- **Recanto:** continua fora da busca da Booking às 19:54 UTC.
+- **Nada gravado.** A Q7, a Double e a Q2 estão sem saldo de recálculo até amanhã; a conferência da ordem do Recanto e a reversão da Double em 25/10 ficam para a rotina das 07:53.
+
 > **Regras em vigor:** desde 06/10/2026 elas ficam em `.claude/skills/gestao-receita-pousadas/references/regras.md`. Este arquivo guarda só o histórico das mudanças.
 
 ## O que só pode ser feito na tela (passo a passo para você)

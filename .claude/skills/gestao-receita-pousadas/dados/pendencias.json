@@ -500,6 +500,20 @@
    "desde": "2026-10-21",
    "urgencia": 3,
    "texto": "Na revisão de março/27, confirmar as datas da Festa da Cerejeira 2027 (em 2026: fins de semana de 25/07 a 16/08) e do Festival de Inverno 2027 e ajustar sazonalidade.json (fins de semana de agosto como alta, se confirmado)."
+  },
+  {
+   "id": "q2-base-ordem",
+   "responsavel": "dono",
+   "desde": "2026-10-21",
+   "urgencia": 2,
+   "texto": "Base do anúncio da Queen (2)/Panorâmica II em R$ 1.870, acima da Double/Panorâmica I (R$ 1.480). Para ficar entre a Moinhos (R$ 1.173) e a Panorâmica I sem depender do teto por data, baixar para cerca de R$ 1.330 em dois passos de até 15% por semana (limite de segurança). Base só muda com ordem do dono."
+  },
+  {
+   "id": "ordem-recanto-conferir-2210",
+   "responsavel": "skill",
+   "desde": "2026-10-21",
+   "urgencia": 1,
+   "texto": "Rotina completa de 22/10: recalcular a Queen (2) e rodar ordem_recanto.py auditar (em 21/10 o recálculo deu 429 depois da gravação das 435 noites)."
   }
  ],
  "versao": "2026-10-21T15"

@@ -2208,6 +2208,22 @@ A Villa não aparece em nenhuma busca com filtro de hidro (falta a comodidade na
   - Ficam com 1 noite as sextas de junho.
 - **Tarifários:** o PriceLabs envia preço e restrições para um único plano em cada quarto ("Melhor tarifa disponível", p1, `update_type` "price and restrictions"). No Beds24 há uma regra de preço e uma oferta por quarto. As outras tarifas da Booking (não reembolsável e as tarifas 64070790, 65710721 e 50067466) são mapeadas no canal. Pisos, estadia e bloqueios do Beds24 valem por quarto. Restrições criadas direto na extranet por tarifa não aparecem nem no PriceLabs nem no Beds24: precisam ser conferidas pelo dono.
 
+## 21/10/2026, 18:00 UTC (15:00 BRT) — Pedido do dono: Panorâmica II sempre entre a Moinhos e a Panorâmica I
+
+- **Pedido:** "Os valores da Suíte Panorâmica II devem sempre estar entre a Moinhos e a Panorâmica I. Faça a verificação se isso está correto na Recanto." No PriceLabs: Moinhos = Queen (7); Panorâmica I = Double; Panorâmica II = Queen (2).
+- **Verificação (recálculo de 21/10, 16:4x UTC):** a Panorâmica II estava acima da Panorâmica I em 435 de 437 noites até 31/12/2027, 27% acima em média. Nenhuma noite abaixo da Moinhos.
+  - Exemplos: 21/10 Moinhos R$ 1.232, Panorâmica II R$ 1.613, Panorâmica I R$ 1.302; Finados 30/10 R$ 2.620, R$ 4.394 e R$ 3.478.
+  - Causas: base do anúncio da Queen (2) em R$ 1.870 (Double R$ 1.480, Q7 R$ 1.173); regra antiga de "sem desconto"; pisos de feriado com fator 0,34.
+
+| Mudança | Onde | Antes | Depois (lido de volta; recálculo na rotina de 22/10, o PriceLabs devolveu 429) | Como desfazer (pedir ao Claude) |
+|---|---|---|---|---|
+| Faixa por noite: piso = maior entre o piso da regra e o menor dos dois; teto = 75% do caminho até o maior (`percent_base`) | Queen (2), 435 noites de 21/10/2026 a 31/12/2027 | acima da Panorâmica I | entre a Moinhos e a Panorâmica I (21/10: R$ 1.232 a R$ 1.284; 23/10: R$ 2.018 a R$ 2.026) | apagar piso e teto com motivo "Dono 21/10: Panorâmica II entre…" |
+| Regra da Queen (2) | `regras.md` e `quartos.json` | "sem desconto"; fator 0,34 | entre Q7 e Double (`ordem_recanto.py`, passo 4b2 de toda rotina completa); fator 0,42 | voltar o texto e o fator |
+
+- **O que não mudou:** estadia mínima e percentuais de outras regras (o +20% do dono no Finados continua; o teto segura).
+- **Na Booking:** a Queen (2) segue presa à tarifa fixa 50067466 (R$ 412 a R$ 495) até o dono corrigir o mapeamento. A faixa vale para o price1 do Beds24 e para os demais canais.
+- **Sugestão ao dono:** baixar a base do anúncio da Queen (2) de R$ 1.870 para cerca de R$ 1.330, em dois passos de até 15% por semana, para a faixa depender menos do teto.
+
 > **Regras em vigor:** desde 06/10/2026 elas ficam em `.claude/skills/gestao-receita-pousadas/references/regras.md`. Este arquivo guarda só o histórico das mudanças.
 
 ## O que só pode ser feito na tela (passo a passo para você)

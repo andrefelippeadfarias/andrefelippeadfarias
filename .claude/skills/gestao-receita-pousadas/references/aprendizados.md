@@ -225,3 +225,8 @@ Cada item tem data e evidência. Para incluir um item novo: data, o fato, a evid
 - Reserva criada no painel (referer = usuário da equipe, canal direto, `apiSource` Direct) puxa o preço das datas abertas na hora da criação. Trocar as datas depois não recalcula o preço. Sinais: `rateDescription` com datas diferentes da estadia e estadia mínima ignorada.
 - Na rotina, toda reserva direta com valor por noite abaixo de 60% do `price1` do Beds24 vai ao topo do relatório (`/inventory/rooms/calendar?includePrices=true`).
 
+## 21/10/2026 — A "anomalia" da Queen (2) é tarifa fixa na Booking
+- As reservas da Booking na Q2 trazem `rateDescription` "Rate (50067466) BRL 412.50" com o mesmo valor em todas as noites, enquanto o price1 do Beds24 muda por dia (R$ 4.433 e R$ 4.213 em 20-21/11). A tarifa da Q2 na Booking não está ligada ao preço do Beds24.
+- Como checar qualquer quarto: comparar o `rateDescription` das reservas da Booking (valor por noite) com o price1 do calendário do Beds24 nas mesmas noites. Valor igual em noites com price1 diferente indica tarifa desligada.
+- Até o dono corrigir, o fator_real de 0,34 da Q2 não é desconto: é preço fixo. Subir piso da Q2 não muda nada na Booking.
+

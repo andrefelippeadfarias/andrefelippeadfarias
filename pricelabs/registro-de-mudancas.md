@@ -2191,6 +2191,23 @@ A Villa não aparece em nenhuma busca com filtro de hidro (falta a comodidade na
   - sem vitrine na Booking, cortar preço não traz venda.
 - **Urgente para o dono:** extranet da Booking do Recanto (pendência `recanto-fora-booking-2110`).
 
+## 21/10/2026, 17:15 UTC (14:15 BRT) — Pergunta do dono: tarifários, feriados e datas comemorativas
+
+- **Pergunta do dono:** "fez também as restrições dos tarifários? Feriados e datas comemorativas?"
+- **Feriados:** os 16 feriados de `quartos.json` até o Réveillon de 2027 têm piso de feriado e estadia mínima (gravação de 21/10, 14:00 BRT).
+- **Dia dos Namorados 2027:** entrou como pico em `quartos.json` (noites 11 e 12/06, R$ 1.000 no bolso, 2 noites; `estrategia.md` §3).
+
+| Mudança | Onde | Antes | Depois (lido de volta às 17:14 UTC; recálculo amanhã) | Como desfazer (pedir ao Claude) |
+|---|---|---|---|---|
+| Piso de pico e 2 noites | Q7, Double, Q2, VK7 e VK2, 11 e 12/06/2027 | piso do dono (R$ 2.006 na Q7) | Q7 R$ 2.381; Double R$ 2.383; Q2 R$ 2.955; VK7 R$ 2.575; VK2 R$ 2.565 | voltar ao piso do dono (motivo "12m 21/10") |
+
+- **Afrodite e Balcony:** já estavam acima do piso nas noites dos Namorados.
+- **Outras datas comemorativas e eventos:** abertura e pico do Festival, junho, CBQ, L'Étape e Oktoberfest 2027.
+  - Seguem com os pisos do dono, a estadia de sábado e a faixa alta ou muito alta da sazonalidade na flutuação diária.
+  - O PriceLabs já mostra 2 noites em julho e nos eventos.
+  - Ficam com 1 noite as sextas de junho.
+- **Tarifários:** o PriceLabs envia preço e restrições para um único plano em cada quarto ("Melhor tarifa disponível", p1, `update_type` "price and restrictions"). No Beds24 há uma regra de preço e uma oferta por quarto. As outras tarifas da Booking (não reembolsável e as tarifas 64070790, 65710721 e 50067466) são mapeadas no canal. Pisos, estadia e bloqueios do Beds24 valem por quarto. Restrições criadas direto na extranet por tarifa não aparecem nem no PriceLabs nem no Beds24: precisam ser conferidas pelo dono.
+
 > **Regras em vigor:** desde 06/10/2026 elas ficam em `.claude/skills/gestao-receita-pousadas/references/regras.md`. Este arquivo guarda só o histórico das mudanças.
 
 ## O que só pode ser feito na tela (passo a passo para você)

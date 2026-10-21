@@ -339,6 +339,15 @@
    "nota": "Piso padrão R$ 1.000 reais (regras.md, feriado novo); a Skill pode ajustar pelos dados, nunca abaixo de R$ 800."
   },
   {
+   "nome": "Dia dos Namorados 2027 (pico)",
+   "inicio": "2027-06-11",
+   "fim": "2027-06-12",
+   "piso_real": 1000,
+   "estadia_minima": 2,
+   "fonte": "sazonalidade.json (muito alta) e estrategia.md §3 (picos: Réveillon, Corpus Christi, 9 de Julho e Namorados)",
+   "nota": "Data comemorativa tratada como pico (21/10, pergunta do dono sobre datas comemorativas): noites sex 11 e sáb 12/06/2027, 2 noites, piso padrão de feriado R$ 1.000 no bolso. Não é feriado: os pisos de R$ 500/850 do dono continuam valendo por baixo. A skill pode ajustar pelos dados, nunca abaixo de R$ 800."
+  },
+  {
    "nome": "Revolução Constitucionalista, 9 de Julho (feriado estadual SP)",
    "inicio": "2027-07-08",
    "fim": "2027-07-10",

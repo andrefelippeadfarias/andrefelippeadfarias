@@ -479,6 +479,27 @@
    "desde": "2026-10-21",
    "urgencia": 3,
    "texto": "Opcional: ligar no PriceLabs a personalização de check-in/check-out (tela; a API não tem a chave) para a skill gravar a restrição de sábado por data (--restricoes-pricelabs). Antes, confirmar com o suporte do PriceLabs se a integração com o Beds24 envia essas restrições e se não apaga os bloqueios do Beds24."
+  },
+  {
+   "id": "booking-tarifas-restricoes",
+   "responsavel": "dono",
+   "desde": "2026-10-21",
+   "urgencia": 2,
+   "texto": "Conferir na extranet da Booking (Tarifas e disponibilidade → Planos de tarifas) se algum plano das duas pousadas tem restrição própria (estadia mínima, antecedência mínima ou máxima, chegada fechada) diferente do Beds24, principalmente o não reembolsável e a tarifa fixa 50067466 da Queen 2. O PriceLabs e o Beds24 só enxergam a tarifa principal (p1); as outras são mapeadas no canal."
+  },
+  {
+   "id": "sextas-junho-2-noites",
+   "responsavel": "dono",
+   "desde": "2026-10-21",
+   "urgencia": 2,
+   "texto": "Proposta: sextas de junho e de julho (alta ou muito alta na sazonalidade) com 2 noites, para não sobrar sábado preso no Recanto (lá o sábado fecha só a chegada). Conflita com a Regra A (1 noite a até 14 dias), então precisa da decisão do dono."
+  },
+  {
+   "id": "festa-cerejeira-2027",
+   "responsavel": "skill",
+   "desde": "2026-10-21",
+   "urgencia": 3,
+   "texto": "Na revisão de março/27, confirmar as datas da Festa da Cerejeira 2027 (em 2026: fins de semana de 25/07 a 16/08) e do Festival de Inverno 2027 e ajustar sazonalidade.json (fins de semana de agosto como alta, se confirmado)."
   }
  ],
  "versao": "2026-10-21T15"

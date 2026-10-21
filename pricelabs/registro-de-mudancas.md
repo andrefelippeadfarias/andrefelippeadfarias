@@ -2174,6 +2174,23 @@ A Villa não aparece em nenhuma busca com filtro de hidro (falta a comodidade na
 - **Monitoramento:** SKILL.md, passo 4b. A rotina completa roda a auditoria de 12 meses todo dia, com horizonte rolante. Nota abaixo da regra vira plano no mesmo dia; sábado sem bloqueio no Beds24 vai para o relatório.
 - **Envio:** as regras chegam aos canais no envio desta madrugada.
 
+## 21/10/2026, 17:00 UTC (14:00 BRT) — Rotina leve das 13:53: mais 4 cancelamentos da Booking no Recanto
+
+- **Cancelamentos entre 14:05 e 16:08 UTC, todos do Recanto pela Booking:**
+  - Q7, 21–23/10, 2 noites (chegada hoje);
+  - Q7, 24–28/10, 4 noites;
+  - Double, 25/10;
+  - Q7, 25–31/10, 6 noites, R$ 3.519.
+
+  No dia são 8 cancelamentos da Booking no Recanto. A propriedade continua fora da busca da Booking às 17:00 UTC (`hotel_names_not_resolved`), e a Villa não teve nenhum desde as 13:42.
+- **Ocupação:** Recanto em 37,5% nos próximos 7 dias (era 46,4% às 10:53); Villa em 40,0%. A Q7 tem só 1 ou 2 de 7 vendidas de 21/10 a 01/11, e 0 em 29/10.
+- **Reservas abaixo do planejado:** nenhuma nova.
+- **Nada gravado:**
+  - a Q7 já está no piso do dono (R$ 1.232 enviados de domingo a quinta; R$ 2.018 em sexta e sábado), que não desce;
+  - a Q7 e a Double estão sem recálculo até amanhã cedo (3 de 3 usados hoje); a reversão do +10% da Double em 25/10 (agora com 3 de 6 vendidas) fica para a rotina das 07:53;
+  - sem vitrine na Booking, cortar preço não traz venda.
+- **Urgente para o dono:** extranet da Booking do Recanto (pendência `recanto-fora-booking-2110`).
+
 > **Regras em vigor:** desde 06/10/2026 elas ficam em `.claude/skills/gestao-receita-pousadas/references/regras.md`. Este arquivo guarda só o histórico das mudanças.
 
 ## O que só pode ser feito na tela (passo a passo para você)

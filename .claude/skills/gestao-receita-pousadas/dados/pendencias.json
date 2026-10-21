@@ -6,7 +6,7 @@
    "responsavel": "dono",
    "desde": "2026-10-21",
    "urgencia": 0,
-   "texto": "O Recanto não aparece na busca da Booking desde 21/10 de manhã: o conector não acha a propriedade pelo nome nem por coordenadas, em várias datas, e a Villa aparece. O Beds24 está normal. Conferir na extranet da Booking se o Recanto está aberto para reservas e visível (status, avisos, pagamento de comissão, conteúdo pendente). 21/10 10:53: segue fora da busca; 4 cancelamentos da Booking no Recanto em 2 minutos (12:28-12:30 UTC: Double 22-23/10, Q7 24-25/10, 31/10-01/11 e 01/11) podem estar ligados (propriedade fechada ou suspensa na Booking)."
+   "texto": "O Recanto não aparece na busca da Booking desde 21/10 de manhã: o conector não acha a propriedade pelo nome nem por coordenadas, em várias datas, e a Villa aparece. O Beds24 está normal. Conferir na extranet da Booking se o Recanto está aberto para reservas e visível (status, avisos, pagamento de comissão, conteúdo pendente). 21/10 10:53: segue fora da busca; 4 cancelamentos da Booking no Recanto em 2 minutos (12:28-12:30 UTC: Double 22-23/10, Q7 24-25/10, 31/10-01/11 e 01/11) podem estar ligados (propriedade fechada ou suspensa na Booking). 21/10 13:53: mais 4 cancelamentos da Booking no Recanto entre 14:05 e 16:08 UTC (8 no dia); Recanto em 37,5% nos próximos 7 dias; segue fora da busca."
   },
   {
    "id": "q2-tarifa-booking-fixa",

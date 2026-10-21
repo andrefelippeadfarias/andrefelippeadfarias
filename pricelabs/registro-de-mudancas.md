@@ -2137,6 +2137,43 @@ A Villa não aparece em nenhuma busca com filtro de hidro (falta a comodidade na
 - **Envio:** o envio da madrugada chegou (Q7 com price1 de R$ 1.232 / R$ 2.018). As duas mudanças só chegam ao canal no envio desta noite; a Double 22/10 é D1, então pedi o Sync Now.
 - **Sem corte no Finados:** a trava sem_corte segue ligada, e o Recanto não aparece na Booking, então cortar não traria venda.
 
+## 21/10/2026, 17:00 UTC (14:00 BRT) — Pedido do dono: plano de 12 meses em execução (pisos, estadia mínima e restrições até 31/12/2027)
+
+- **Pedido:** "Vamos rodar o plano agora e já atualizar tudo para os próximos 12 meses e manter tudo em monitoramento. Inclusive restrições de permissão de check-in e check-outs, mínimo de dias da estadia."
+- **Como:** `calendario_12m.py` comparou cada noite de 25/10/2026 a 31/12/2027 dos 7 quartos com as regras, usando o recálculo do PriceLabs (piso, estadia e chegada/saída efetivos). Só subiu o que faltava. Passou no validador (966 itens, 0 erro, 0 aviso) e foi gravado em 16 lotes, todos com sucesso.
+
+| Mudança | Onde | Antes | Depois (recalculado e conferido às 16:50 UTC) | Como desfazer (pedir ao Claude) |
+|---|---|---|---|---|
+| Piso do dono (R$ 500 dom-qui / R$ 850 sex-sáb no preço final do Genius 3), em percentual | 6 suítes com banheira, 01/05 a 31/12/2027 (Q7 247, Double 188, Q2 189, VK2 190, VK7 25, Afrodite 12 noites) | sem regra por data (piso do anúncio ou fim de semana a 150% da base) | piso por data em `percent_base`; Q7 R$ 2.000 sex-sáb e R$ 1.220 dom-qui | apagar as regras com motivo "12m 21/10" |
+| Piso de feriado | Aniversário de SP, Carnaval, Páscoa, Tiradentes, Corpus Christi, 9 de Julho, 7 de Setembro, 12 de Outubro, Finados 2027, Proclamação, Natal e Réveillon 2027, nos 7 quartos | sem piso de feriado depois de 60 dias | piso de feriado de `quartos.json` (R$ 800 a R$ 1.000 no bolso ÷ fator; suítes com pelo menos R$ 1.000 enviados) | idem |
+| Estadia mínima | sábados (2) e feriados (2 ou 3), 7 quartos | 1 em vários sábados e feriados de 2027 | 2 nos sábados; 3 em Carnaval, Corpus Christi, 9 de Julho e Réveillon; 2 nos outros | idem |
+
+- **Conferência (1 recálculo por quarto):** `calendario_12m.py auditar` deu **0 noites abaixo da regra** nos 7 quartos até 31/12/2027. Nenhum piso e nenhuma estadia gravados desceram. A véspera do Carnaval (04/02/2027) passou de 3 para 1 noite na Afrodite, na VK7 e na VK2 por cálculo automático do PriceLabs; Q7, Double e Q2 já tinham 1. A regra não exige estadia nessa noite, então ficou assim.
+- **Preço médio de maio a dezembro de 2027 (efeito dos pisos):**
+
+  | Quarto | Antes | Depois |
+  |---|---|---|
+  | Q7 | R$ 1.646 | R$ 1.725 |
+  | Double | R$ 2.077 | R$ 2.096 |
+  | Q2 | R$ 2.624 | R$ 2.645 |
+  | VK7 | R$ 2.004 | R$ 2.047 |
+  | VK2 | R$ 1.720 | R$ 1.790 |
+- **Restrições de chegada e saída:** o PriceLabs recusou a gravação por data ("Enable check-in/check-out customization first"); a personalização é só pela tela e a API não tem a chave. Elas seguem no Beds24, com o dono (Regra H). Auditoria do Beds24 até 31/12/2027:
+
+  | Quarto | Sábados sem bloqueio de chegada | Padrão misturado |
+  |---|---|---|
+  | Q2 | 48, a partir de 30/01/2027 | — |
+  | Q7 | 39, a partir de 03/04/2027 | noCheckInOrCheckOut de 30/01 a 27/03 (o resto do Recanto usa noCheckIn) |
+  | Afrodite | 39, a partir de 03/04/2027 | — |
+  | VK2 | 39, a partir de 03/04/2027 | — |
+  | Double | 17, a partir de 04/09/2027 | — |
+  | VK7 | 17, a partir de 04/09/2027 | noCheckIn de 03/04 a 28/08 (a Villa usa noCheckInOrCheckOut) |
+  | Balcony | 17, a partir de 04/09/2027 | noCheckIn de 03/04 a 28/08 |
+
+  Pendência do dono: `beds24-sabados-12m`.
+- **Monitoramento:** SKILL.md, passo 4b. A rotina completa roda a auditoria de 12 meses todo dia, com horizonte rolante. Nota abaixo da regra vira plano no mesmo dia; sábado sem bloqueio no Beds24 vai para o relatório.
+- **Envio:** as regras chegam aos canais no envio desta madrugada.
+
 > **Regras em vigor:** desde 06/10/2026 elas ficam em `.claude/skills/gestao-receita-pousadas/references/regras.md`. Este arquivo guarda só o histórico das mudanças.
 
 ## O que só pode ser feito na tela (passo a passo para você)

@@ -235,3 +235,9 @@ Cada item tem data e evidência. Para incluir um item novo: data, o fato, a evid
 - O Beds24 recebeu 9 reservas da Booking da Villa no mesmo segundo (11:06 UTC), com números de reserva distintos e sem duplicata: é entrega em lote do canal, não erro. Confira pelo `apiReference` antes de tratar como duplicata (reserva de 2 quartos repete o número, e isso é normal).
 - 4 cancelamentos da Booking no Recanto em 2 minutos, com a propriedade fora da busca da Booking desde 21/10: sinal de problema na extranet (propriedade fechada ou suspensa), não de demanda. Nesse caso, segure os cortes, porque eles não trazem venda sem vitrine, e escale ao dono.
 - Cancelamento que derruba a ocupação abaixo da meta reverte o +10% pelo piso no mesmo dia (Double 22/10, Q7 01/11): 2 de 2 conferidos no recálculo.
+
+## 21/10/2026 — Calendário de 12 meses
+- Até 21/10, as regras por data cobriam só até 30/04/2027, e os feriados de 2027 só ganhavam piso na varredura de 60 dias. Antes desta data, de maio a dezembro de 2027 os quartos ficavam no piso do anúncio, com sábados de 1 noite (Q7 e Balcony). O recálculo do PriceLabs (541 noites, com `min_price`, `min_stay`, `check_in` e `check_out` efetivos) é a fonte certa para auditar o horizonte inteiro sem ler as regras uma a uma.
+- O PriceLabs recusa `check_in`/`check_out` por data sem a personalização ligada na tela (erro 400, o lote inteiro é recusado). As restrições de sábado moram no Beds24, configuradas pelo dono, com horizontes e padrões diferentes por quarto.
+- A gravação de regra por data junta campos: uma data que recebe só estadia mantém o piso anterior.
+- Recalcular 7 quartos de uma vez esbarra no limite de consultas do Beds24 ("rate limits on their side"). Esperar alguns minutos e recalcular um quarto por vez resolve.

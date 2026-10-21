@@ -1,5 +1,5 @@
 {
- "versao": "2026-10-15T08",
+ "versao": "2026-10-21T16",
  "nota": "Fonte única dos dados de máquina da Skill. Os scripts leem daqui. Quem mudar base, mínimo ou máximo no PriceLabs atualiza este arquivo no mesmo commit.",
  "pms": "beds24",
  "grupo": {
@@ -247,7 +247,17 @@
    },
    "nota": "Valor que chega ÷ price1 do Beds24 por canal (Beds24, reservas de 13 a 19/10), depois dos descontos das plataformas (dono, 21/10: 'Considere o valor de desconto nas plataformas'). Direto = 1,0: não há desconto de plataforma. Recalibrar na revisão de segunda."
   },
-  "alerta_reserva": 0.7
+  "alerta_reserva": 0.7,
+  "regra_h_restricao": {
+   "Q7": "chegada",
+   "Double": "chegada",
+   "Q2": "chegada",
+   "Afrodite": "chegada_saida",
+   "VK7": "chegada_saida",
+   "Balcony": "chegada_saida",
+   "VK2": "chegada_saida",
+   "nota": "Bloqueio de sábado da Regra H no Beds24, lido em 21/10/2026 (o dono configura lá; o PriceLabs só aceitaria chegada/saída por data com a personalização ligada na tela). Padrão esperado por quarto, pelo uso mais recente do dono: Recanto (Queen 7, Double, Queen 2) 'noCheckIn'; Afrodite e Villa 'noCheckInOrCheckOut'. Em 21/10 o Beds24 tinha padrões misturados (Q7 com noCheckInOrCheckOut de 30/01 a 27/03; VK7 e Balcony com noCheckIn de 03/04 a 28/08) e horizontes diferentes (Q2 até 23/01; Q7, Afrodite e VK2 até 27/03; Double, VK7 e Balcony até 28/08). O calendario_12m.py audita todo dia; estender ou unificar é com o dono."
+  }
  },
  "feriados": [
   {

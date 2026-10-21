@@ -275,3 +275,10 @@ Hora da ANÁLISE E AGENDA DIÁRIA do PriceLabs (rotina "Agenda diária PriceLabs
 - `dados/metas_faturamento.json`: maio a outubro de 2027 estimados pelo mesmo método, com o mínimo pela temporada do dono (jun-ago = alta), a confirmar.
 - `regras.md` §6a: decisão do dono de 21/10 (preço sempre ancorado no mercado como um todo).
 - 12 pendências novas do plano em `dados/pendencias.json`.
+
+## 21/10/2026 — Calendário de 12 meses e monitoramento (pedido do dono)
+- `scripts/calendario_12m.py` (`plano` e `auditar`): pisos do dono e de feriado e estadia mínima por noite, horizonte rolante de 12 meses, a partir do recálculo do PriceLabs; auditoria das restrições de sábado no Beds24.
+- `validar_plano.py`: aceita `check_in`/`check_out` (7 caracteres, só sábado fechado pela Regra H, ou `excecao: "dono"`) e põe no payload.
+- `quartos.json` → `parametros.regra_h_restricao` (padrão do Beds24 por quarto).
+- SKILL.md passo 4b: auditoria do calendário em toda rotina completa.
+- 2 testes novos (59 no total).

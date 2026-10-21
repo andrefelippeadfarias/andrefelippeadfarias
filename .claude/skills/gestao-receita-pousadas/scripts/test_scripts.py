@@ -759,5 +759,36 @@ class TestPainelSemanal(unittest.TestCase):
         self.assertEqual(e[("2026-10-19", "Villa")]["momento"], "atual")
 
 
+class TestCalendario12m(unittest.TestCase):
+    def test_exigencias_e_comparacao(self):
+        import datetime as dt
+        import calendario_12m as c12
+        # sábado comum de maio/27 na Queen 7: piso de fim de semana (850 ÷ 0,425 = 2.000) e 2 noites
+        ex = c12.exigencias(CFG, CFG["por_curto"]["Q7"], dt.date(2027, 5, 1))
+        self.assertEqual(ex["min_stay"], 2)
+        fat = CFG["parametros"]["fator_vitrine_fds"]["Recanto"]
+        self.assertEqual(ex["piso"], round(max(CFG["por_curto"]["Q7"]["min"], CFG["limites_seguranca"]["piso_vitrine_fds_suites"] / fat)))
+        # Balcony fora de feriado: sem piso de vitrine
+        self.assertIsNone(c12.exigencias(CFG, CFG["por_curto"]["Balcony"], dt.date(2027, 5, 4))["piso"])
+        cal = {"2027-05-01": {"min_price": "900", "min_stay": "1", "price": "2179", "check_in": "-1", "check_out": "-1"},
+               "2027-05-04": {"min_price": "1300", "min_stay": "1", "price": "1400", "check_in": "-1", "check_out": "-1"}}
+        dif = c12.comparar(CFG, "Q7", cal, dt.date(2027, 5, 1), dt.date(2027, 5, 4))
+        datas = {x["data"]: x for x in dif}
+        self.assertIn("2027-05-01", datas)                         # piso e estadia abaixo da regra
+        self.assertEqual(datas["2027-05-01"]["item"]["min_stay"], 2)
+        self.assertNotIn("2027-05-04", datas)                      # terça com piso acima de 1.220: nada a fazer
+        self.assertIn("sem dado de preço no recálculo", datas["2027-05-02"]["falta"])
+
+    def test_validador_chegada_saida(self):
+        from datetime import date
+        v = Validador(CFG, date(2026, 10, 21))
+        v.validar([{"tipo": "data", "quarto": "Double", "data": "2027-05-04", "check_in": "1011111", "motivo": "teste"}])
+        self.assertTrue(any("não é sábado" in e for e in v.erros))
+        v = Validador(CFG, date(2026, 10, 21))
+        v.validar([{"tipo": "data", "quarto": "Double", "data": "2027-05-01", "check_in": "1111101", "min_stay": 2,
+                    "motivo": "teste"}])
+        self.assertFalse(any("chegada" in e or "check_in" in e for e in v.erros))
+
+
 if __name__ == "__main__":
     unittest.main()

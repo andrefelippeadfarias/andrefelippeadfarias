@@ -169,6 +169,7 @@ class Validador:
         excecao = it.get("excecao")
         fer = periodo_feriado(self.cfg, d)
         antecedencia = (d - self.hoje).days
+        self.validar_chegada_saida(i, it, q, d, excecao)
         piso_abs = self.piso_absoluto(q)
         tipo_preco = it.get("price_type")
         preco = it.get("preco")
@@ -315,6 +316,30 @@ class Validador:
                                      "e ocupacao_sabado)")
             if ms < 1 or ms > 7:
                 self.erro(i, it, f"estadia mínima {ms} fora do razoável")
+
+    def validar_chegada_saida(self, i, it, q, d, excecao):
+        """Chegada e saída por data (dono, 21/10): strings de 7 caracteres 0/1, de segunda a domingo. Fechar a noite só
+        vale no sábado, espelhando o bloqueio da Regra H que o dono usa no Beds24 (parametros.regra_h_restricao);
+        fora disso só com excecao "dono"."""
+        if it.get("check_in") is None and it.get("check_out") is None:
+            return
+        regra = ((self.cfg.get("parametros") or {}).get("regra_h_restricao") or {}).get(q["curto"])
+        for campo in ("check_in", "check_out"):
+            s = str(it.get(campo) or "1111111")
+            if len(s) != 7 or set(s) - {"0", "1"}:
+                self.erro(i, it, f"{campo} '{s}' precisa ter 7 caracteres 0/1 (segunda a domingo)")
+                return
+            if s == "0000000":
+                self.erro(i, it, f"{campo} com todos os dias fechados: o PriceLabs recusa")
+                return
+            if s[d.weekday()] == "0" and excecao != "dono":
+                if d.weekday() != 5:
+                    self.erro(i, it, f"{campo} fecha uma noite que não é sábado: só o dono decide (excecao 'dono')")
+                elif campo == "check_out" and regra != "chegada_saida":
+                    self.erro(i, it, f"{q['nome']}: o Beds24 do dono fecha só a chegada no sábado; saída fechada só com "
+                                     "excecao 'dono'")
+                elif not regra:
+                    self.erro(i, it, f"{q['nome']} sem parametros.regra_h_restricao: restrição de sábado não configurada")
 
     def calendario_fresco(self, i, it, q):
         """Decisão que depende de ocupação precisa de calendário recalculado (aprendizado de 13/10)."""
@@ -519,6 +544,9 @@ def montar_payload(cfg: dict, itens: list[dict]) -> dict:
                 o.update(max_price=str(pmax), max_price_type="percent_base", currency="BRL")
             if it.get("min_stay") is not None:
                 o["min_stay"] = str(int(it["min_stay"]))
+            if it.get("check_in") is not None or it.get("check_out") is not None:
+                o.update(check_in_check_out_enabled="1", check_in=str(it.get("check_in") or "1111111"),
+                         check_out=str(it.get("check_out") or "1111111"))
             gravar[q["id"]].append(o)
         elif it["tipo"] == "apagar":
             apagar[q["id"]].append({"date": it["data"]})

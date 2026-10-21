@@ -301,7 +301,8 @@
    "responsavel": "skill",
    "desde": "2026-10-14",
    "urgencia": 2,
-   "texto": "VK7 e King Spa 2: o piso de R$ 500 no preço final de domingo a quinta está em pisos por data em percentual até 30/04/2027 (o mínimo do anúncio, R$ 850 e R$ 765, dá menos que isso). No dia 1 de cada mês, a rotina completa estende os pisos por mais um mês (gerador: varrer noites sem regra por data com piso abaixo de R$ 500 ÷ fator de vitrine)."
+   "texto": "VK7 e King Spa 2: o piso de R$ 500 no preço final de domingo a quinta está em pisos por data em percentual até 30/04/2027 (o mínimo do anúncio, R$ 850 e R$ 765, dá menos que isso). No dia 1 de cada mês, a rotina completa estende os pisos por mais um mês (gerador: varrer noites sem regra por data com piso abaixo de R$ 500 ÷ fator de vitrine). Resolvido em 21/10: calendario_12m.py grava e audita todo dia o horizonte rolante de 12 meses.",
+   "resolvido_em": "2026-10-21"
   },
   {
    "id": "min-anuncio-manual-1410",
@@ -464,6 +465,20 @@
    "desde": "2026-10-21",
    "urgencia": 2,
    "texto": "Plano A3: antes de testar piso acima do padrão nos picos (Corpus Christi, Namorados, 9 de Julho, sábados do Festival), pôr Namorados e sábados do Festival em quartos.json → feriados (revendo estadia e Regra I) ou usar piso por data, e ampliar mercado_diario.py para buscar os picos a até 90 dias. Só testar se o piso convertido para vitrine ficar ≤ 1,10 × mediana hidro+vista da mesma noite; voltar ao padrão quando a noite ficar atrás da meta da janela."
+  },
+  {
+   "id": "beds24-sabados-12m",
+   "responsavel": "dono",
+   "desde": "2026-10-21",
+   "urgencia": 1,
+   "texto": "Regra H no Beds24 até 31/12/2027 (auditoria de 21/10): sábados SEM bloqueio de chegada: Queen 2 de 30/01/2027 em diante; Queen 7, Afrodite e VK2 de 03/04/2027; Double, VK7 e Balcony de 04/09/2027. Padrões misturados: Queen 7 com noCheckInOrCheckOut de 30/01 a 27/03 (o resto do Recanto usa noCheckIn); VK7 e Balcony com noCheckIn de 03/04 a 28/08 (a Villa usa noCheckInOrCheckOut). Estender o bloqueio até dez/2027 e escolher um padrão por pousada. O calendario_12m.py audita todo dia."
+  },
+  {
+   "id": "pricelabs-checkin-customizacao",
+   "responsavel": "dono",
+   "desde": "2026-10-21",
+   "urgencia": 3,
+   "texto": "Opcional: ligar no PriceLabs a personalização de check-in/check-out (tela; a API não tem a chave) para a skill gravar a restrição de sábado por data (--restricoes-pricelabs). Antes, confirmar com o suporte do PriceLabs se a integração com o Beds24 envia essas restrições e se não apaga os bloqueios do Beds24."
   }
  ],
  "versao": "2026-10-21T15"

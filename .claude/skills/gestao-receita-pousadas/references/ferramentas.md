@@ -68,3 +68,11 @@ Veja como pesquisar em `mercado.md`. Não serve para mudar nada.
 - Apague os uploads antigos (`Artifact` `delete` com `url` e `path` = id do asset) só depois de gravar os novos.
 - A página (`files/index.html`) não muda a cada semana; ela lê os arquivos. Mudou a página? Leia `data/users/me/check` (até 5 leituras).
 - O Beds24 não é conector do painel: os dados são arquivos, e por isso o painel mostra a data da última atualização (fica "velho" depois de 336 h).
+
+## Calendário de 12 meses (`calendario_12m.py`, 21/10/2026)
+- Fonte: o recálculo do PriceLabs (`refresh_listing_pricing`), que traz 541 noites por quarto com `min_price`, `min_stay`, `check_in` e `check_out` efetivos e `dso_flag`. Não precisa ler as regras por data uma a uma.
+- `auditar` compara cada noite com a regra; `plano` gera os itens só do que falta, no formato do `validar_plano.py`. A Queen (2) vai com `excecao: "dono"` nos pisos (ordem de 20/10, "Serve para todo o piso"): o piso protege, não é desconto.
+- O plano começa em hoje + 4, para não mexer no que a rotina decide de D0 a D3.
+- **Chegada e saída no PriceLabs:** a gravação por data (`check_in_check_out_enabled`, `check_in`, `check_out`, 7 caracteres de segunda a domingo) só é aceita com a personalização de check-in/check-out ligada na tela. Sem ela: erro 400 e o lote inteiro é recusado. A API de personalizações não tem essa chave. Por isso a restrição fica no Beds24, e `--restricoes-pricelabs` só deve ser usado se o dono ligar a personalização.
+- **Beds24:** `/inventory/rooms/calendar` com `includeOverride=true` dá `noCheckIn`, `noCheckOut` e `noCheckInOrCheckOut` por noite. Um quarto pode vir em várias páginas: junte por quarto.
+- Gravação grande: lotes de até 70 noites por chamada, por quarto. Depois, 1 recálculo por quarto e `calendario_12m.py auditar` deve dar 0 noites.

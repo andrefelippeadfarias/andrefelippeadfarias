@@ -2295,6 +2295,20 @@ A Villa não aparece em nenhuma busca com filtro de hidro (falta a comodidade na
 - **Afrodite 25/10:** já vendida, fica como está.
 - **Recálculo de conferência:** Q2 com 429 e Afrodite com "Beds24 temporarily unavailable"; fica para a próxima rotina (pendência `recalculo-q2-afrodite-2210`).
 
+## 22/10/2026, 22:58 UTC (19:58 BRT) — Rotina leve das 19:53
+
+- **Beds24 (desde 19:50 UTC):**
+  - 6 reservas novas da Booking na Villa, todas às 22:10 UTC (entrega em lote): VK7 22/10 (3 noites, R$ 2.155), 23/10 (2, R$ 1.313) e 26/10 (3, R$ 1.346); VK2 23/10 (1, R$ 707), 12/12 (1, R$ 1.083) e 30/12 (2, R$ 3.197).
+  - 2 cancelamentos: VK7 24/10 (Booking, 2 noites, R$ 983) e VK2 02/11 (Airbnb, sem valor).
+- **Reservas abaixo do planejado** (check-in de hoje, status alterado): Q7 22/10 Booking a 63% do esperado e Double 22/10 Airbnb a 70%. O price1 de agora é o do piso novo; não parece erro de lançamento.
+- **Recálculo:** Afrodite, VK7 (2×) e VK2. A Q2 deu 429 de novo.
+- **Afrodite conferida:** 29/10 R$ 2.360, 24/01 R$ 2.020 e 25/03 R$ 2.520 (a mais cara do Recanto).
+- **Calendário de 12 meses (VK7, VK2, Afrodite):** 0 noites abaixo da regra.
+
+| Mudança | Onde | Antes | Depois (recálculo) | Como desfazer (pedir ao Claude) |
+|---|---|---|---|---|
+| 4c: à frente da meta (6 de 7; Villa 8 de 9 com banheira, D2) | VK7 24/10 | R$ 1.480 | piso +10%: **R$ 1.628** ✅ | voltar o piso a 0% |
+
 > **Regras em vigor:** desde 06/10/2026 elas ficam em `.claude/skills/gestao-receita-pousadas/references/regras.md`. Este arquivo guarda só o histórico das mudanças.
 
 ## O que só pode ser feito na tela (passo a passo para você)

@@ -529,7 +529,7 @@
    "responsavel": "skill",
    "desde": "2026-10-22",
    "urgencia": 1,
-   "texto": "Rotina das 22:53 UTC ou completa de 23/10: recalcular Q2 e Afrodite (às 21:20 UTC deu 429 e 'Beds24 temporarily unavailable') e rodar ordem_recanto.py auditar com os 4 quartos do Recanto. Esperado: Q2 23-24/10 R$ 2.019; 19/11 e 24/01 R$ 1.908; feriados de R$ 2.381 em R$ 2.385; Afrodite 29/10 R$ 2.360, 24/01 R$ 2.020, 25/03 R$ 2.520."
+   "texto": "Rotina das 22:53 UTC ou completa de 23/10: recalcular Q2 e Afrodite (às 21:20 UTC deu 429 e 'Beds24 temporarily unavailable') e rodar ordem_recanto.py auditar com os 4 quartos do Recanto. Esperado: Q2 23-24/10 R$ 2.019; 19/11 e 24/01 R$ 1.908; feriados de R$ 2.381 em R$ 2.385; Afrodite 29/10 R$ 2.360, 24/01 R$ 2.020, 25/03 R$ 2.520. 22/10 22:56 UTC: Afrodite conferida (3 de 3); falta só a Q2 (429 de novo)."
   }
  ],
  "versao": "2026-10-21T15"

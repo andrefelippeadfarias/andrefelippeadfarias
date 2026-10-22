@@ -2268,6 +2268,33 @@ A Villa não aparece em nenhuma busca com filtro de hidro (falta a comodidade na
 
 - **Revisão quinzenal dos 12 meses:** em dia (próxima em 05/11).
 
+## 22/10/2026, 16:55 UTC (13:55 BRT) — Rotina leve das 13:53
+
+- **Beds24:** 2 cancelamentos: Expedia VK7 de 21 a 23/10 (R$ 2.156) e Airbnb Double 25/10 (sem valor). Nenhuma reserva nova.
+- **Reservas abaixo do planejado:** nenhuma.
+- **Nada gravado** além da base da Q2 (abaixo).
+
+## 22/10/2026, 19:55 UTC (16:55 BRT) — Rotina leve das 16:53
+
+- **Beds24:** nenhuma reserva nova abaixo do planejado desde as 13:55 BRT.
+- **Nada gravado** nesta rotina; a conversão da Q2 seguiu em lotes (abaixo).
+
+## 22/10/2026, 21:20 UTC (18:20 BRT) — Pedido do dono: base da Panorâmica II (Q2), 1º passo
+
+- **Pedido do dono (22/10):** "3. Pode fazer." Base da Q2 de **R$ 1.870 para R$ 1.590** (−15%, o máximo semanal do limite de segurança). 2º passo em 29/10: R$ 1.590 → R$ 1.352 (pendência `q2-base-passo-2`).
+- **Conversão das regras por data:** 436 regras da Q2 (pisos e tetos em percentual da base, até 31/12/2027) regravadas em 7 lotes com os mesmos valores em reais: piso arredondado para cima e teto para baixo. **Conferência: 436 de 436, nenhuma diferença.**
+- **Recálculo da Q2 (20:45 UTC):** ordem do Recanto com 15 noites fora da tolerância e 2 fora da ordem estrita em 23 e 24/10, todas pelo degrau de 1% da base nova (R$ 15,90). Regravei:
+
+| Mudança | Onde | Antes | Depois (lido de volta; recálculo deu 429) | Como desfazer (pedir ao Claude) |
+|---|---|---|---|---|
+| Faixa da Panorâmica II | Q2 23 e 24/10 | R$ 2.035 (acima da Panorâmica I, R$ 2.028) | R$ 2.019 (27%), entre a Moinhos (R$ 2.018) e a Panorâmica I | voltar a 28% |
+| Faixa da Panorâmica II | Q2 19/11 e 24/01 | R$ 1.940 | R$ 1.908 (20%), acima do piso de feriado (R$ 1.905) | voltar a 22% |
+| Faixa da Panorâmica II | Q2 07-09/02, 25/03, 26-27/05, 08/07, 05-06/09, 08-11/10/2027 | R$ 2.401 | R$ 2.385 (50%), o mais perto possível de Moinhos R$ 2.381 / Panorâmica I R$ 2.383 | voltar a 51% |
+| Afrodite a mais cara | Afrodite 29/10, 24/01, 25/03 | R$ 1.500 / R$ 1.920 / R$ 2.400 | piso R$ 2.360 / R$ 2.020 / R$ 2.520 (5% sobre a mais cara das outras) | apagar o piso com motivo "Dono 22/10" |
+
+- **Afrodite 25/10:** já vendida, fica como está.
+- **Recálculo de conferência:** Q2 com 429 e Afrodite com "Beds24 temporarily unavailable"; fica para a próxima rotina (pendência `recalculo-q2-afrodite-2210`).
+
 > **Regras em vigor:** desde 06/10/2026 elas ficam em `.claude/skills/gestao-receita-pousadas/references/regras.md`. Este arquivo guarda só o histórico das mudanças.
 
 ## O que só pode ser feito na tela (passo a passo para você)

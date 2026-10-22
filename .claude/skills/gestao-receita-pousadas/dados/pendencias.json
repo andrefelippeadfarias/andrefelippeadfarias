@@ -506,14 +506,15 @@
    "responsavel": "dono",
    "desde": "2026-10-21",
    "urgencia": 2,
-   "texto": "Base do anúncio da Queen (2)/Panorâmica II em R$ 1.870, acima da Double/Panorâmica I (R$ 1.480). Para ficar entre a Moinhos (R$ 1.173) e a Panorâmica I sem depender do teto por data, baixar para cerca de R$ 1.330 em dois passos de até 15% por semana (limite de segurança). Base só muda com ordem do dono. 22/10: dono autorizou ('Pode fazer'). 1º passo feito em 22/10 (1.870 → 1.590, com os 436 pisos e tetos por data convertidos para manter os reais)."
+   "texto": "Base do anúncio da Queen (2)/Panorâmica II em R$ 1.870, acima da Double/Panorâmica I (R$ 1.480). Para ficar entre a Moinhos (R$ 1.173) e a Panorâmica I sem depender do teto por data, baixar para cerca de R$ 1.330 em dois passos de até 15% por semana (limite de segurança). Base só muda com ordem do dono. 22/10: dono autorizou ('Pode fazer'). 1º passo feito em 22/10 (1.870 → 1.590, com os 436 pisos e tetos por data convertidos para manter os reais). Conferido em 22/10: 436 de 436 regras convertidas, sem diferença; no recálculo, 23/10 subiu de R$ 2.020 para R$ 2.035 pelo arredondamento e foi corrigido (27% = R$ 2.019)."
   },
   {
    "id": "ordem-recanto-conferir-2210",
    "responsavel": "skill",
    "desde": "2026-10-21",
    "urgencia": 1,
-   "texto": "Rotina completa de 22/10: recalcular a Queen (2) e rodar ordem_recanto.py auditar (em 21/10 o recálculo deu 429 depois da gravação das 435 noites)."
+   "texto": "Rotina completa de 22/10: recalcular a Queen (2) e rodar ordem_recanto.py auditar (em 21/10 o recálculo deu 429 depois da gravação das 435 noites). Feito em 22/10 (noite): recálculo da Q2 depois da base nova; 17 noites da Q2 e 3 da Afrodite regravadas; o resto dentro do degrau de 1% da base.",
+   "resolvido_em": "2026-10-22"
   },
   {
    "id": "q2-base-passo-2",
@@ -522,6 +523,13 @@
    "urgencia": 1,
    "revisar_em": "2026-10-29",
    "texto": "Autorizado pelo dono em 22/10 ('Pode fazer'). Em 29/10 ou depois (7 dias do 1º passo): base da Queen (2)/Panorâmica II de R$ 1.590 para R$ 1.352 (−15%). Antes, ler todas as regras por data da Q2 (get_listing_date_overrides) e converter piso/teto em percent_base para manter os reais (mesmo método de 22/10: plano com excecao 'dono', validar, gravar a base e logo os lotes, conferir no recálculo e no ordem_recanto.py). Atualizar quartos.json e a referencia_semanal."
+  },
+  {
+   "id": "recalculo-q2-afrodite-2210",
+   "responsavel": "skill",
+   "desde": "2026-10-22",
+   "urgencia": 1,
+   "texto": "Rotina das 22:53 UTC ou completa de 23/10: recalcular Q2 e Afrodite (às 21:20 UTC deu 429 e 'Beds24 temporarily unavailable') e rodar ordem_recanto.py auditar com os 4 quartos do Recanto. Esperado: Q2 23-24/10 R$ 2.019; 19/11 e 24/01 R$ 1.908; feriados de R$ 2.381 em R$ 2.385; Afrodite 29/10 R$ 2.360, 24/01 R$ 2.020, 25/03 R$ 2.520."
   }
  ],
  "versao": "2026-10-21T15"

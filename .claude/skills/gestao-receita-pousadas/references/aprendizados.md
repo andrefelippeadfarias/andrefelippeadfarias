@@ -241,3 +241,8 @@ Cada item tem data e evidência. Para incluir um item novo: data, o fato, a evid
 - O PriceLabs recusa `check_in`/`check_out` por data sem a personalização ligada na tela (erro 400, o lote inteiro é recusado). As restrições de sábado moram no Beds24, configuradas pelo dono, com horizontes e padrões diferentes por quarto.
 - A gravação de regra por data junta campos: uma data que recebe só estadia mantém o piso anterior.
 - Recalcular 7 quartos de uma vez esbarra no limite de consultas do Beds24 ("rate limits on their side"). Esperar alguns minutos e recalcular um quarto por vez resolve.
+
+## 22/10/2026 — Mudar a base desloca todos os pisos e tetos em percentual
+- Piso e teto por data em `percent_base` acompanham a base: baixar a base da Q2 de R$ 1.870 para R$ 1.590 baixaria todas as 436 regras na mesma proporção. Por isso a base muda junto com a conversão de todas as regras (piso arredondado para cima, teto para baixo), em lotes de até 70, conferidos na `verification` da própria resposta.
+- O degrau de 1% da base nova (R$ 15,90) desloca até R$ 16 em reais. Em noites com Moinhos e Panorâmica I a poucos reais uma da outra, isso tira a Q2 da faixa (23/10: R$ 2.020 → R$ 2.035, acima da Panorâmica I a R$ 2.028). Depois de converter, rode `ordem_recanto.py` e confira também a ordem estrita nas noites dos próximos 7 dias.
+- Agentes em segundo plano para gravações longas podem parar no meio sem avisar. Antes de gravar o próximo lote, confira o estado com `get_listing_date_overrides` e o diff contra os lotes esperados.

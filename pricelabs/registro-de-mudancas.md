@@ -2239,6 +2239,35 @@ A Villa não aparece em nenhuma busca com filtro de hidro (falta a comodidade na
 - **Reservas abaixo do planejado:** nenhuma.
 - **Nada gravado.** As regras gravadas hoje (calendário de 12 meses e ordem do Recanto) chegam aos canais no envio desta madrugada; conferência na rotina completa das 07:53.
 
+## 22/10/2026, 12:35 UTC (09:35 BRT) — Rotina completa + pedido do dono: Afrodite a mais cara do Recanto
+
+- **Reservas abaixo do planejado (lançadas à mão pela VillaRecep1 ontem, de 23:40 a 23:46 UTC):**
+  - VK7 em 02/11, 1 noite, R$ 412 (31% do esperado);
+  - VK7 em 22/10, 1 noite, R$ 430 (45%).
+
+  Também entrou uma nova pela Expedia: VK7 de 21 a 23/10, R$ 2.156.
+- **Ocupação real (confirmadas + novas):**
+
+| Janela | Recanto | Villa |
+|---|---|---|
+| 7 dias | 36,6% | 37,1% |
+| 15 dias | 35,8% | 36,4% |
+| 30 dias | 35,2% | 24,0% |
+
+- **Recálculo:** Q7, Double, Q2, Afrodite, VK7 e Balcony às 11:58–12:30 UTC. A VK2 não recalculou ("Beds24 temporarily unavailable"); usei o recálculo dela de ontem, com regras sem mudança desde então.
+- **Calendário de 12 meses:** 0 noites abaixo da regra, fora as 2 noites dos Namorados na VK2, que foram gravadas ontem depois do arquivo usado. Beds24 com os mesmos sábados sem bloqueio (pendência `beds24-sabados-12m`).
+- **Ordem do Recanto (21/10):** 395 das 435 noites dentro da faixa. Das 40 restantes, 30 estavam dentro do degrau de 1% da base (R$ 18,70 na Q2); a tolerância passou a ser essa. As outras 10 foram regravadas.
+- **Pedido do dono (22/10):** "A Suíte Afrodite tem que ser a mais cara, com valor mais alto da Recanto, pois ela é considerada super luxo." Regra nova: Afrodite pelo menos 5% acima da mais cara das outras três, toda noite (`ordem_recanto.py`). Ela já era a mais cara em todas as noites, menos 5.
+
+| Mudança | Onde | Antes | Depois (lido de volta; recálculo na rotina das 10:53, o PriceLabs devolveu 429) | Como desfazer (pedir ao Claude) |
+|---|---|---|---|---|
+| 4c revertido (cancelamento: 3/6, meta 70%) | Double 25/10 | piso R$ 1.569 | piso R$ 1.421 (−3%) | voltar o piso a +6% |
+| Afrodite a mais cara | Afrodite 25/10, 29/10, 24/01, 25/03, 14/11/2027 | R$ 1.500 a R$ 2.415 | piso 5% sobre a mais cara das outras (R$ 1.647 a R$ 2.514) | apagar o piso com motivo "Dono 22/10" |
+| Faixa da Panorâmica II | Q2 15-16/01, 05-06/02, 04-05/06, 11-12/06, 18-19/06/2027 | acima da Panorâmica I | entre a Moinhos e a Panorâmica I | idem |
+| Regra G (Finados) | Balcony 30 e 31/10 | R$ 2.616, acima da VK2 livre (R$ 2.261) | teto R$ 2.035 (10% abaixo), piso de feriado R$ 1.510 | tirar o teto |
+
+- **Revisão quinzenal dos 12 meses:** em dia (próxima em 05/11).
+
 > **Regras em vigor:** desde 06/10/2026 elas ficam em `.claude/skills/gestao-receita-pousadas/references/regras.md`. Este arquivo guarda só o histórico das mudanças.
 
 ## O que só pode ser feito na tela (passo a passo para você)

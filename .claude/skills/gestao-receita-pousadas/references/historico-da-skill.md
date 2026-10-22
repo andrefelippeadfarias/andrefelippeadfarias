@@ -288,3 +288,6 @@ Hora da ANÁLISE E AGENDA DIÁRIA do PriceLabs (rotina "Agenda diária PriceLabs
 
 ## 21/10/2026 — Ordem de preço do Recanto (pedido do dono)
 - `scripts/ordem_recanto.py`: a Panorâmica II (Queen 2) fica entre a Moinhos (Queen 7) e a Panorâmica I (Double) noite a noite (piso e teto em percent_base). Passo 4b2 do SKILL.md; regras.md seção da Queen (2) reescrita (sai o "sem desconto"; `fator_real` de 0,34 para 0,42). A concorrência hidro+vista deixa de mexer na Queen (2). 1 teste novo.
+
+## 22/10/2026 — Afrodite a mais cara do Recanto (pedido do dono)
+- `ordem_recanto.py` passa a garantir também a Afrodite pelo menos 5% acima da mais cara das outras três (piso por data) e usa tolerância de 1% da base (o percentual inteiro do PriceLabs dá degraus de cerca de R$ 19 na Queen 2). regras.md: seção "Suíte Afrodite"; quartos.json: `acima_de` e `premio_minimo`; SKILL.md 4b2. 1 teste novo.

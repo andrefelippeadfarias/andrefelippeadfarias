@@ -816,11 +816,22 @@ class TestOrdemRecanto(unittest.TestCase):
         self.assertTrue(1232 <= f["teto"] <= 1302)
         f = o.faixa(CFG, d, {"price": "1232"}, {"price": "1302"}, {"price": "1290", "min_price": "1232"})
         self.assertFalse(f["fora"])
-        p = o.montar_plano([{"data": "2027-05-04", "moinhos": 1232, "panoramica_1": 1302, "panoramica_2": 1613,
+        p = o.montar_plano([{"data": "2027-05-04", "quarto": "Q2", "moinhos": 1232, "panoramica_1": 1302, "panoramica_2": 1613,
                              "piso": 1232, "teto": 1284}], dt.date(2026, 10, 21))
         v = Validador(CFG, dt.date(2026, 10, 21))
         v.validar(p["itens"])
         self.assertEqual(v.erros, [])
+
+
+class TestOrdemAfrodite(unittest.TestCase):
+    def test_afrodite_mais_cara(self):
+        import datetime as dt
+        import ordem_recanto as o
+        g = o.faixa_afrodite(CFG, dt.date(2027, 5, 4), {"price": "1232"}, {"price": "2235"}, 1300, {"price": "1500"})
+        self.assertTrue(g["fora"])
+        self.assertGreaterEqual(g["piso"], round(2235 * 1.05))
+        g = o.faixa_afrodite(CFG, dt.date(2027, 5, 4), {"price": "1232"}, {"price": "1288"}, 1274, {"price": "1500"})
+        self.assertFalse(g["fora"])
 
 
 if __name__ == "__main__":

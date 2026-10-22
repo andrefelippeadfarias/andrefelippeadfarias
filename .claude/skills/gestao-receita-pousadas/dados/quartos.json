@@ -75,7 +75,14 @@
    "regra_i": false,
    "regra_f": false,
    "demanda": "media",
-   "fator_vitrine_fds": 0.61
+   "fator_vitrine_fds": 0.61,
+   "acima_de": [
+    "Q7",
+    "Double",
+    "Q2"
+   ],
+   "premio_minimo": 0.05,
+   "ordem_nota": "Dono 22/10: 'A Suíte Afrodite tem que ser a mais cara, com valor mais alto da Recanto, pois ela é considerada super luxo.' Toda noite pelo menos 5% acima da mais cara das outras três suítes do Recanto (ordem_recanto.py). A Regra C (−30% a até 13 dias, piso R$ 1.500) só vale se a Afrodite continuar acima das outras."
   },
   {
    "curto": "Q2",

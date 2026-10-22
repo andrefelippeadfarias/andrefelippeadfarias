@@ -506,7 +506,7 @@
    "responsavel": "dono",
    "desde": "2026-10-21",
    "urgencia": 2,
-   "texto": "Base do anúncio da Queen (2)/Panorâmica II em R$ 1.870, acima da Double/Panorâmica I (R$ 1.480). Para ficar entre a Moinhos (R$ 1.173) e a Panorâmica I sem depender do teto por data, baixar para cerca de R$ 1.330 em dois passos de até 15% por semana (limite de segurança). Base só muda com ordem do dono."
+   "texto": "Base do anúncio da Queen (2)/Panorâmica II em R$ 1.870, acima da Double/Panorâmica I (R$ 1.480). Para ficar entre a Moinhos (R$ 1.173) e a Panorâmica I sem depender do teto por data, baixar para cerca de R$ 1.330 em dois passos de até 15% por semana (limite de segurança). Base só muda com ordem do dono. 22/10: dono autorizou ('Pode fazer'). 1º passo feito em 22/10 (1.870 → 1.590, com os 436 pisos e tetos por data convertidos para manter os reais)."
   },
   {
    "id": "ordem-recanto-conferir-2210",
@@ -514,6 +514,14 @@
    "desde": "2026-10-21",
    "urgencia": 1,
    "texto": "Rotina completa de 22/10: recalcular a Queen (2) e rodar ordem_recanto.py auditar (em 21/10 o recálculo deu 429 depois da gravação das 435 noites)."
+  },
+  {
+   "id": "q2-base-passo-2",
+   "responsavel": "skill",
+   "desde": "2026-10-22",
+   "urgencia": 1,
+   "revisar_em": "2026-10-29",
+   "texto": "Autorizado pelo dono em 22/10 ('Pode fazer'). Em 29/10 ou depois (7 dias do 1º passo): base da Queen (2)/Panorâmica II de R$ 1.590 para R$ 1.352 (−15%). Antes, ler todas as regras por data da Q2 (get_listing_date_overrides) e converter piso/teto em percent_base para manter os reais (mesmo método de 22/10: plano com excecao 'dono', validar, gravar a base e logo os lotes, conferir no recálculo e no ordem_recanto.py). Atualizar quartos.json e a referencia_semanal."
   }
  ],
  "versao": "2026-10-21T15"

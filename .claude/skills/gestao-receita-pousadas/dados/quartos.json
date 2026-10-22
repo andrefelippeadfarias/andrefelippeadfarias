@@ -91,7 +91,7 @@
    "pousada": "Recanto",
    "unidades": 2,
    "min": 850,
-   "base": 1870,
+   "base": 1590,
    "max": 5000,
    "min_referencia": 850,
    "banheira": true,
@@ -107,7 +107,9 @@
     "Q7",
     "Double"
    ],
-   "ordem_nota": "Dono 21/10: 'Os valores da Suíte Panorâmica II devem sempre estar entre a Moinhos e a Panorâmica I' (Q2 entre Q7 e Double, noite a noite; scripts/ordem_recanto.py). Substitui a regra antiga de 'sem desconto' (19/10), criada quando se achava que o hóspede pagava 34% do enviado; em 21/10 viu-se que era a tarifa fixa 50067466 na Booking (pendência do dono). fator_real volta a 0,42 como o resto do Recanto, para o piso de feriado da Q2 não passar o da Double."
+   "ordem_nota": "Dono 21/10: 'Os valores da Suíte Panorâmica II devem sempre estar entre a Moinhos e a Panorâmica I' (Q2 entre Q7 e Double, noite a noite; scripts/ordem_recanto.py). Substitui a regra antiga de 'sem desconto' (19/10), criada quando se achava que o hóspede pagava 34% do enviado; em 21/10 viu-se que era a tarifa fixa 50067466 na Booking (pendência do dono). fator_real volta a 0,42 como o resto do Recanto, para o piso de feriado da Q2 não passar o da Double.",
+   "base_antes_2210": 1870,
+   "base_nota": "Dono 22/10 ('Pode fazer'): base de R$ 1.870 para R$ 1.590 (1º passo); 2º passo em 29/10 para R$ 1.352 (limite de 15% por semana)."
   },
   {
    "curto": "VK7",

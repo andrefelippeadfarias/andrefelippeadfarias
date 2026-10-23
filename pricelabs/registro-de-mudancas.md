@@ -2363,6 +2363,20 @@ A Villa não aparece em nenhuma busca com filtro de hidro (falta a comodidade na
 - **Validador:** item com excecao "dono" passa a liberar o sábado de 1 noite fora de feriado (`historico-da-skill.md`, 23/10).
 - **Sync Now:** Moinhos (D0 e D1).
 
+## 23/10/2026, 14:05 UTC (11:05 BRT) — Rotina leve das 10:53: mudanças de hoje ainda não chegaram ao Beds24
+
+- **Beds24 (desde 10:50 UTC):**
+  - 7 novas: 6 da Booking em lote às 12:23 UTC (3 Balcony 23-25/10 a R$ 831 cada; VK7 20/11 e 11-15/12; VK2 25/10) e 1 pedido do Airbnb (VK2 25/10).
+  - 4 canceladas: VK2 23/10, Balcony 23-25/10 (2) e VK7 23-25/10.
+  - Saldo no fim de semana da Villa: VK7 6/7, Balcony 3/6 e VK2 1/2 em 23/10. No Recanto, sem mudança: a Moinhos segue em 1/7.
+- **Reservas abaixo do planejado:** nenhuma.
+- **Envio:** o Beds24 ainda mostra os preços antigos, ou seja, o Sync Now não foi feito:
+  - Moinhos 23 e 24/10 a R$ 2.018, quando deveria estar a R$ 1.666, e sábado com 2 noites e bloqueio de chegada;
+  - Afrodite a R$ 2.325, quando deveria estar a R$ 2.140 e R$ 2.360;
+  - VK7 24/10 a R$ 1.480, quando deveria estar a R$ 1.628.
+- **Recálculo:** VK7, VK2 e Balcony. A Double deu 429 de novo; o +10% de 24/10 segue pendente.
+- **Nada gravado.** A VK7 em 24/10 segue em 6/7, e o +10% fica. A Balcony em 23/10 está abaixo do alvo da Regra G (R$ 1.332) e fica, pela trava de lotação (3/6).
+
 > **Regras em vigor:** desde 06/10/2026 elas ficam em `.claude/skills/gestao-receita-pousadas/references/regras.md`. Este arquivo guarda só o histórico das mudanças.
 
 ## O que só pode ser feito na tela (passo a passo para você)

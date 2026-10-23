@@ -291,3 +291,6 @@ Hora da ANÁLISE E AGENDA DIÁRIA do PriceLabs (rotina "Agenda diária PriceLabs
 
 ## 22/10/2026 — Afrodite a mais cara do Recanto (pedido do dono)
 - `ordem_recanto.py` passa a garantir também a Afrodite pelo menos 5% acima da mais cara das outras três (piso por data) e usa tolerância de 1% da base (o percentual inteiro do PriceLabs dá degraus de cerca de R$ 19 na Queen 2). regras.md: seção "Suíte Afrodite"; quartos.json: `acima_de` e `premio_minimo`; SKILL.md 4b2. 1 teste novo.
+
+## 23/10/2026 — Ordem do dono libera sábado de 1 noite no validador
+- `validar_plano.py`: um item com excecao "dono" passa a liberar o sábado de 1 noite fora de feriado. A política de não vender sábado sozinho é do dono; antes, só a excecao "regra_h" liberava, e um item não podia levar as duas. Teste novo em `test_sabado_sozinho`. Uso: Moinhos 24/10 (dono, 23/10).

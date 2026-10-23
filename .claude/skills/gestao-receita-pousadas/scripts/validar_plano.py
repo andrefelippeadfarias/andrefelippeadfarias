@@ -307,9 +307,11 @@ class Validador:
             if fer and exig and ms < exig and excecao != "dono":
                 self.erro(i, it, f"feriado ({fer['nome']}) exige estadia mínima {exig}; item com {ms}")
             if d.weekday() == 5 and ms < 2:
-                ok = (excecao == "regra_h" and not fer and it.get("ocupacao_sabado") is not None
-                      and float(it["ocupacao_sabado"]) < 50 and self.hoje.weekday() in (2, 3, 4)
-                      and antecedencia <= 3)
+                # A política de não vender sábado sozinho é do dono: ordem expressa dele (excecao "dono") também libera.
+                ok = (excecao == "dono" and not fer) or (
+                    excecao == "regra_h" and not fer and it.get("ocupacao_sabado") is not None
+                    and float(it["ocupacao_sabado"]) < 50 and self.hoje.weekday() in (2, 3, 4)
+                    and antecedencia <= 3)
                 if not ok:
                     self.erro(i, it, "sábado com 1 noite: a Regra H só libera na quarta a sexta antes, "
                                      "fora de feriado e com o sábado abaixo de 50% (excecao 'regra_h' "

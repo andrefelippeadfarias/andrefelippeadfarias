@@ -251,3 +251,7 @@ Cada item tem data e evidência. Para incluir um item novo: data, o fato, a evid
 - O PriceLabs recusou o lote inteiro da Double ("Pricing data for this date isn't available yet. Please refresh the listing") com o recálculo dela bloqueado (429 e Beds24 instável). Mande à parte as datas de D0 a D1 de um quarto sem recálculo do dia: o resto do lote passou quando mandei sem 24/10.
 - O envio desta madrugada saiu só para 4 quartos (Q7, Double, Balcony e VK2 às 02:29 UTC). Afrodite, Q2 e VK7, justamente os que tiveram gravações à noite, ficaram com o envio de 22/10 05:35 UTC. Conferir o `last_date_pushed` por quarto, não só de um.
 - O Recanto voltou à busca da Booking em 23/10 (sumiu em 21/10, com 8 cancelamentos). Os cortes segurados pela vitrine fechada podem voltar a valer a partir de hoje.
+
+## 23/10/2026 — Moinhos encalhada colada na Panorâmica I
+- No fim de semana de 23-24/10, a Moinhos (Queen 7) tinha 1 de 7 vendida e a Panorâmica I (Double) 4 e 5 de 6, com R$ 10 de diferença (R$ 2.018 contra R$ 2.028 enviados, as duas presas no piso de R$ 850 do dono). Com quase o mesmo preço, o hóspede leva a vista. Hipótese a medir: a Moinhos precisa de pelo menos 15% de distância da Panorâmica I nos fins de semana. Teste: dono, 23/10, Moinhos a R$ 700 no preço final em 23 e 24/10; medir as vendas até domingo.
+- Na Booking (2 noites, 23 a 25/10): Recanto R$ 1.656; 5 estrelas de R$ 2.274 a R$ 3.200 (Telhado de Ouro R$ 1.680); pousadas com hidro e nota 8+ de R$ 770 a R$ 1.440. Reservas do fim de semana pagaram de R$ 700 a R$ 790 por noite.

@@ -158,6 +158,11 @@ class TestValidador(unittest.TestCase):
         # feriado nunca libera sábado sozinho
         self.assertTrue(erros([item(quarto="Double", data="2026-10-10", min_stay=1, excecao="regra_h",
                                     ocupacao_sabado=10)], hoje=date(2026, 10, 7)))
+        # ordem expressa do dono libera fora de feriado (dono, 23/10: Moinhos em 24/10)
+        self.assertFalse(any("sábado com 1 noite" in x for x in erros(
+            [item(quarto="Double", data="2026-10-17", min_stay=1, excecao="dono")], hoje=quarta)))
+        self.assertTrue(any("sábado com 1 noite" in x for x in erros(
+            [item(quarto="Double", data="2026-10-10", min_stay=1, excecao="dono")], hoje=date(2026, 10, 7))))
 
     def test_piso_feriado(self):
         piso = CFG["feriados"][0]["piso_real"]

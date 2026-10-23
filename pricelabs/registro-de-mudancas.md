@@ -2342,6 +2342,27 @@ A Villa não aparece em nenhuma busca com filtro de hidro (falta a comodidade na
 
 - **Revisão quinzenal dos 12 meses:** em dia (próxima em 05/11).
 
+## 23/10/2026, 12:50 UTC (09:50 BRT) — Pedido do dono: lotar o fim de semana do Recanto
+
+- **Pedido do dono (23/10):** "Verifique a lotação para esse final de semana da Recanto dos Moinhos e vamos fazer uma estratégia para lotarmos dentro de um escopo aceitável de valor de estadia." Escolhas dele: piso da Moinhos de **R$ 700** no preço final e **sábado com 1 noite**, só na Moinhos e só neste fim de semana.
+- **Lotação (Beds24, 09:40 BRT):**
+
+| Noite | Recanto | Moinhos | Panorâmica I | Panorâmica II | Afrodite |
+|---|---|---|---|---|---|
+| Sex 23/10 | 7/16 (44%) | 1/7 | 4/6 | 2/2 | 0/1 |
+| Sáb 24/10 | 8/16 (50%) | 1/7 | 5/6 | 2/2 | 0/1 |
+| Dom 25/10 | 5/16 (31%) | 1/7 | 2/6 | 1/2 | 1/1 |
+
+- **Mercado:** 23,5% de ocupação no fim de semana (34% no ano passado). Booking, 2 noites: Recanto R$ 1.656; 5 estrelas de R$ 2.274 a R$ 3.200; pousadas com hidro e nota 8+ de R$ 770 a R$ 1.440.
+
+| Mudança | Onde | Antes | Depois (recalculado e conferido às 12:45 UTC) | Como desfazer (pedir ao Claude) |
+|---|---|---|---|---|
+| Piso do dono do fim de semana | Moinhos (Q7) 23 e 24/10 | piso 72% (R$ 2.018, R$ 850 final) | **piso 42% (R$ 1.666, cerca de R$ 700 final) ✅** | voltar o piso a 72% |
+| Regra H liberada pelo dono | Moinhos 24/10 | estadia mínima 2 | **1 noite ✅** (no Beds24 ainda há bloqueio de chegada no sábado: pendência do dono) | voltar a 2 noites |
+
+- **Validador:** item com excecao "dono" passa a liberar o sábado de 1 noite fora de feriado (`historico-da-skill.md`, 23/10).
+- **Sync Now:** Moinhos (D0 e D1).
+
 > **Regras em vigor:** desde 06/10/2026 elas ficam em `.claude/skills/gestao-receita-pousadas/references/regras.md`. Este arquivo guarda só o histórico das mudanças.
 
 ## O que só pode ser feito na tela (passo a passo para você)

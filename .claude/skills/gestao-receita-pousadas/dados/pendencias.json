@@ -546,6 +546,21 @@
    "desde": "2026-10-23",
    "urgencia": 2,
    "texto": "Na Booking, a busca de 30/10 a 02/11 (Finados, 3 noites) deu 'sem disponibilidade' para o Recanto e para a Villa, com quartos livres no PriceLabs (Q7 6 de 7, Double 3, VK7 2, VK2 2, Balcony 5 em 30/10). Conferir na extranet as restrições do plano de tarifa nessas datas (chegada fechada, estadia mínima ou máxima, ou estoque fechado). A Villa também não aparece em 06-08/11 (estoque fechado no Beds24, já conhecido)."
+  },
+  {
+   "id": "moinhos-fds-2310-medir",
+   "responsavel": "skill",
+   "desde": "2026-10-23",
+   "urgencia": 1,
+   "revisar_em": "2026-10-26",
+   "texto": "Medir o teste do dono (23/10): Moinhos a R$ 700 no preço final em 23 e 24/10 (antes R$ 850), sábado com 1 noite. Contar as vendas da Moinhos de 23/10 09:45 BRT até 25/10 e o valor por noite. Na revisão de segunda (26/10), levar ao dono a proposta de uma distância fixa (cerca de 15%) entre a Moinhos e a Panorâmica I nos fins de semana fracos. As regras vencem sozinhas em 25/10."
+  },
+  {
+   "id": "beds24-moinhos-sabado-2410",
+   "responsavel": "dono",
+   "desde": "2026-10-23",
+   "urgencia": 3,
+   "texto": "Beds24: tirar o bloqueio de chegada (noCheckIn) da Suíte Moinhos em 24/10, para valer o sábado de 1 noite autorizado em 23/10. O PriceLabs já está com estadia mínima de 1 noite; o acesso da skill ao Beds24 é só leitura. Caminho: Beds24 → Calendário → Suíte Moinhos → 24/10 → restrições → desmarcar 'Sem check-in'."
   }
  ],
  "versao": "2026-10-21T15"

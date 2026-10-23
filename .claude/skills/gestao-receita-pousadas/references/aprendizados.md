@@ -255,3 +255,7 @@ Cada item tem data e evidência. Para incluir um item novo: data, o fato, a evid
 ## 23/10/2026 — Moinhos encalhada colada na Panorâmica I
 - No fim de semana de 23-24/10, a Moinhos (Queen 7) tinha 1 de 7 vendida e a Panorâmica I (Double) 4 e 5 de 6, com R$ 10 de diferença (R$ 2.018 contra R$ 2.028 enviados, as duas presas no piso de R$ 850 do dono). Com quase o mesmo preço, o hóspede leva a vista. Hipótese a medir: a Moinhos precisa de pelo menos 15% de distância da Panorâmica I nos fins de semana. Teste: dono, 23/10, Moinhos a R$ 700 no preço final em 23 e 24/10; medir as vendas até domingo.
 - Na Booking (2 noites, 23 a 25/10): Recanto R$ 1.656; 5 estrelas de R$ 2.274 a R$ 3.200 (Telhado de Ouro R$ 1.680); pousadas com hidro e nota 8+ de R$ 770 a R$ 1.440. Reservas do fim de semana pagaram de R$ 700 a R$ 790 por noite.
+
+## 23/10/2026 — Recálculo que falha também gasta o saldo
+- A Double ficou o dia todo em 429 depois de várias tentativas que falharam com "Beds24 temporarily unavailable" (07:55 a 08:10 BRT). Tudo indica que a tentativa que falha também conta no limite de 3 por 24 h. Com o Beds24 instável, espere alguns minutos antes de tentar o mesmo quarto de novo e não repita em sequência. Sem recálculo do dia, o PriceLabs também recusa gravar D0 e D1 ("Pricing data for this date isn't available yet").
+- Reserva direta lançada pela equipe pode mudar de datas e de valor depois (Q2 95126778: de R$ 4.040 em 23-25/10 para R$ 983 em 24-26/10). O `reservas_abaixo.py` pega pela alteração.

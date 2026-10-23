@@ -2377,6 +2377,17 @@ A Villa não aparece em nenhuma busca com filtro de hidro (falta a comodidade na
 - **Recálculo:** VK7, VK2 e Balcony. A Double deu 429 de novo; o +10% de 24/10 segue pendente.
 - **Nada gravado.** A VK7 em 24/10 segue em 6/7, e o +10% fica. A Balcony em 23/10 está abaixo do alvo da Regra G (R$ 1.332) e fica, pela trava de lotação (3/6).
 
+## 23/10/2026, 17:00 UTC (14:00 BRT) — Rotina leve das 13:53: Moinhos ainda sem Sync Now; 2 reservas manuais abaixo da tabela
+
+- **Reservas abaixo do planejado:**
+  - Q2 95126778 (direta, lançada por isaacmiguel): era 23-25/10 por R$ 4.040 e foi alterada para 24-26/10 por **R$ 983** (30% do esperado);
+  - VK7 95134237 (direta, VillaRecep1, 11:57 BRT): 23-25/10 por **R$ 960** (R$ 480 por noite, 31%).
+- **Beds24 (desde 13:50 UTC):** 3 novas (VK7 acima; VK2 11/11 no Airbnb, R$ 952; pedido do Airbnb na VK2 em 09/11). Sem cancelamentos.
+- **Envio da tarde:** Q2 (R$ 2.019) e VK7 24/10 (R$ 1.628) chegaram ao Beds24. **Moinhos (R$ 2.018 no lugar de R$ 1.666, sábado ainda com 2 noites e bloqueio de chegada) e Afrodite (R$ 2.325) não chegaram:** falta o Sync Now.
+- **Lotação de 23 e 24/10:** VK7 esgotada nas duas noites. Livres: Moinhos 6 e 6, Panorâmica I 2 e 1, Afrodite 1 e 1, Balcony 3 e 3, VK2 1 e 0.
+- **Double 24/10 (+10%):** recusado de novo ("Pricing data for this date isn't available yet"); o recálculo da Double segue em 429 desde as 07:55 BRT.
+- **Nada gravado.**
+
 > **Regras em vigor:** desde 06/10/2026 elas ficam em `.claude/skills/gestao-receita-pousadas/references/regras.md`. Este arquivo guarda só o histórico das mudanças.
 
 ## O que só pode ser feito na tela (passo a passo para você)

@@ -2388,6 +2388,14 @@ A Villa não aparece em nenhuma busca com filtro de hidro (falta a comodidade na
 - **Double 24/10 (+10%):** recusado de novo ("Pricing data for this date isn't available yet"); o recálculo da Double segue em 429 desde as 07:55 BRT.
 - **Nada gravado.**
 
+## 23/10/2026, 20:00 UTC (17:00 BRT) — Rotina leve das 16:53: Moinhos no ar a R$ 700; sábado ainda com bloqueio de chegada
+
+- **Envio:** agora o Beds24 mostra a Moinhos a R$ 1.666 em 23 e 24/10, com o sábado de 1 noite, e a Afrodite a R$ 2.140 / R$ 2.360 (Sync Now feito). **O sábado 24/10 da Moinhos ainda tem "noCheckIn" no Beds24:** chegada no sábado bloqueada (pendência do dono `beds24-moinhos-sabado-2410`).
+- **Beds24 (desde 16:50 UTC):** 2 novas (VK7 15-18/12 na Booking, R$ 1.275; VK2 02/11 no Airbnb, R$ 544). Sem cancelamentos. A Moinhos segue com 6 livres em 23 e 24/10 (sem venda desde a mudança).
+- **Reserva abaixo do planejado:** VK7 94847819 (direta pela API, feita em 18/10), 23-25/10 por R$ 1.302 (42%); apareceu pela mudança de status no check-in.
+- **Double 24/10 (+10%):** recálculo ainda em 429; não gravado (1 livre a R$ 2.028).
+- **Nada gravado.**
+
 > **Regras em vigor:** desde 06/10/2026 elas ficam em `.claude/skills/gestao-receita-pousadas/references/regras.md`. Este arquivo guarda só o histórico das mudanças.
 
 ## O que só pode ser feito na tela (passo a passo para você)

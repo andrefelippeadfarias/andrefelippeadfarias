@@ -259,3 +259,7 @@ Cada item tem data e evidência. Para incluir um item novo: data, o fato, a evid
 ## 23/10/2026 — Recálculo que falha também gasta o saldo
 - A Double ficou o dia todo em 429 depois de várias tentativas que falharam com "Beds24 temporarily unavailable" (07:55 a 08:10 BRT). Tudo indica que a tentativa que falha também conta no limite de 3 por 24 h. Com o Beds24 instável, espere alguns minutos antes de tentar o mesmo quarto de novo e não repita em sequência. Sem recálculo do dia, o PriceLabs também recusa gravar D0 e D1 ("Pricing data for this date isn't available yet").
 - Reserva direta lançada pela equipe pode mudar de datas e de valor depois (Q2 95126778: de R$ 4.040 em 23-25/10 para R$ 983 em 24-26/10). O `reservas_abaixo.py` pega pela alteração.
+
+## 23/10/2026 — Pedido de última hora: gravar na mesma resposta
+- O plano "vender até domingo" foi validado às 17h e só foi gravado às 20h, porque a gravação não saiu na mesma resposta da validação. Em pedido de D0 a D2, valide e grave na mesma resposta e só então relate: cada hora parada é venda perdida.
+- Com piso e teto iguais por data, o PriceLabs aceitou gravar a Double em D0 e D1 mesmo sem recálculo do dia (de manhã, só com piso, recusou).

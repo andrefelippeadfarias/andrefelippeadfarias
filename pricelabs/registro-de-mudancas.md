@@ -2396,6 +2396,25 @@ A Villa não aparece em nenhuma busca com filtro de hidro (falta a comodidade na
 - **Double 24/10 (+10%):** recálculo ainda em 429; não gravado (1 livre a R$ 2.028).
 - **Nada gravado.**
 
+## 23/10/2026, 23:10 UTC (20:10 BRT) — Pedido do dono: preços para vender até domingo + rotina leve das 19:53
+
+- **Pedido do dono (17h BRT):** "Vamos colocar valores que vão vender essas suítes entre hoje e domingo." O plano foi validado às 17h (16 itens, 0 erros), mas **só foi gravado às 20:05 BRT**: a gravação não foi feita na hora, e 3 horas de venda de última hora se perderam.
+- **Referência de mercado (Booking, 2 noites, 23-25/10):** pousadas com hidro e nota 8+ de R$ 285 a R$ 720 por noite; 5 estrelas a partir de R$ 444 (Casa Gialla, sem hidro) e R$ 840 (Telhado de Ouro).
+
+| Mudança (preço final aproximado, Genius 3) | Onde | Antes (enviado) | Depois (piso = teto, enviado) | Conferido |
+|---|---|---|---|---|
+| Moinhos | Q7 23 e 24/10 / 25/10 | R$ 1.666 / R$ 1.232 | R$ 1.302 (~R$ 553) / R$ 938 (~R$ 385) | lido de volta |
+| Panorâmica I | Double 23 e 24/10 / 25/10 | R$ 2.028 / R$ 1.436 | R$ 1.539 (~R$ 654) / R$ 1.036 (~R$ 425) | lido de volta (recálculo em 429) |
+| Panorâmica II (esgotada; ordem) | Q2 23 e 24/10 / 25/10 | R$ 2.019 / R$ 1.240 | R$ 1.431 / R$ 1.002 | lido de volta |
+| Afrodite (5% acima) | 23 e 24/10 | R$ 2.140 / R$ 2.360 | R$ 1.780 (~R$ 756) | lido de volta |
+| Balcony (Regra G) | 24/10 / 25/10 | R$ 1.130 / R$ 813 | **R$ 737 (~R$ 424) / R$ 635 (~R$ 336) ✅** | recálculo |
+| VK2 | 23/10 (1 livre) | R$ 1.499 | R$ 838 (~R$ 482) | lido de volta |
+| VK7 | 25/10 | R$ 947 | **R$ 710 (~R$ 376), limite de segurança ✅** | recálculo |
+
+- A Balcony em 23/10 esgotou antes da gravação e ficou como estava. Como desfazer: apagar as regras de 23 a 25/10 com motivo "Dono 23/10 17h" e regravar as anteriores (registro de hoje). Elas vencem sozinhas depois de 25/10.
+- **Rotina leve (desde 19:50 UTC):** 2 novas (VK2 04/11 e 22/11, Airbnb). Sem cancelamentos. Reserva abaixo do planejado: Double 94085266 (direta pela API, feita em 02/10), 23-25/10 por R$ 1.576 (39%); apareceu pela mudança de status no check-in.
+- **Sync Now nos 7 quartos** (D0 a D2).
+
 > **Regras em vigor:** desde 06/10/2026 elas ficam em `.claude/skills/gestao-receita-pousadas/references/regras.md`. Este arquivo guarda só o histórico das mudanças.
 
 ## O que só pode ser feito na tela (passo a passo para você)

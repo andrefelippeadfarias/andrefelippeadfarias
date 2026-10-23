@@ -2309,6 +2309,39 @@ A Villa não aparece em nenhuma busca com filtro de hidro (falta a comodidade na
 |---|---|---|---|---|
 | 4c: à frente da meta (6 de 7; Villa 8 de 9 com banheira, D2) | VK7 24/10 | R$ 1.480 | piso +10%: **R$ 1.628** ✅ | voltar o piso a 0% |
 
+## 23/10/2026, 11:20 UTC (08:20 BRT) — Rotina completa das 07:53: Recanto de volta à Booking; Double e Afrodite sobem, ordem do Recanto regravada
+
+- **Reserva abaixo do planejado:** VK7 em 02/11, 1 noite, direta (95102304), lançada à mão pela VillaRecep1 às 22:57 UTC de 22/10: R$ 300 de R$ 1.347 esperados (22%).
+- **Beds24 desde 22:50 UTC:** 1 nova (a de cima) e 1 cancelamento (VK2 08/11, Airbnb, sem valor).
+- **Ocupação real (Beds24, confirmadas + novas):**
+
+| Janela | Recanto | Villa |
+|---|---|---|
+| 7 dias | 33,9% | 37,1% |
+| 15 dias | 34,2% | 36,4% |
+| 30 dias | 35,6% | 24,9% |
+
+- **Booking (conector):**
+  - **o Recanto voltou à busca** (fds 23-25/10 a R$ 1.656 por 2 noites, 7º com hidro; 1º com hidro em 26 e 27/10);
+  - **Finados (30/10 a 02/11) sem disponibilidade para as duas pousadas** na Booking, com quartos livres (pendência do dono `booking-finados-sem-disponibilidade`);
+  - mediana dos concorrentes: fds R$ 736 (2 noites), dia de semana R$ 260, Finados R$ 3.492 (3 noites), fds 06-08/11 R$ 1.706.
+- **Envio:** Afrodite, Q2 e VK7 com último envio em 22/10 05:35 UTC; não saíram no envio desta madrugada (os outros saíram às 02:29 UTC).
+- **Recálculo:** Q7, Q2, Afrodite, Balcony e VK2. A Double deu 429 e Beds24 indisponível; usei o calendário da coleta (02:29 UTC). A VK7 está sem saldo até 12:30 UTC; ficou sem passo (sem calendário do dia).
+- **Faixas 4c:** cortes de 14/10 (9 dias). As descidas sugeridas no Recanto e na Villa caem quase todas no piso do dono (R$ 500 / R$ 850 no preço final) e ficam paradas.
+- **Calendário de 12 meses:** 0 noites abaixo da regra (6 quartos; Double sem recálculo do dia). Beds24 com os mesmos sábados sem bloqueio.
+- **Ordem do Recanto:** 10 noites da Panorâmica II e 3 da Afrodite fora; regravadas (a Afrodite de 30/10 está vendida e ficou como está).
+
+| Mudança | Onde | Antes | Depois (recalculado e conferido às 11:10 UTC, salvo indicação) | Como desfazer (pedir ao Claude) |
+|---|---|---|---|---|
+| 4c: à frente da meta (5/6, D1) | Double 24/10 | R$ 2.028 | **recusado pelo PriceLabs** (pede recálculo); refazer às 10:53 | — |
+| 4c: à frente da meta (3/6 a 17-19 dias) | Double 09-10/11 e 11/11 | R$ 1.383 / R$ 1.530 | piso R$ 1.524 / R$ 1.687 (lido de volta; recálculo deu 429) | voltar o piso a −6% / +4% |
+| Afrodite a mais cara | Afrodite 23/10, 24/10, 11/11 e 19/11 | R$ 2.000 / R$ 2.325 / R$ 1.665 / R$ 1.950 | piso R$ 2.140 (lido de volta) / **R$ 2.360 ✅** / **R$ 1.780 ✅** / R$ 2.020 (lido de volta) | apagar o piso com motivo "Dono 22/10" |
+| Faixa da Panorâmica II | Q2 03-04/11, 06-07/11, 13-14/11, 18-21/12 | R$ 1.288 / R$ 2.337 / R$ 2.051 / R$ 2.242 a R$ 2.385 | entre a Moinhos e a Panorâmica I (R$ 1.240; R$ 2.019 a R$ 2.194; R$ 2.019; R$ 1.797 a R$ 2.162; lido de volta) | idem, motivo "Dono 21/10" |
+| 4c: na meta, acima da classe (1/2) | VK2 02/11 | R$ 1.359 | **R$ 1.295 ✅** | voltar o piso a +7% |
+| Regra G (10% abaixo da VK2 livre) | Balcony 02/11 | R$ 1.219 | **R$ 1.168 ✅** (piso e teto) | voltar piso e teto a −4% |
+
+- **Revisão quinzenal dos 12 meses:** em dia (próxima em 05/11).
+
 > **Regras em vigor:** desde 06/10/2026 elas ficam em `.claude/skills/gestao-receita-pousadas/references/regras.md`. Este arquivo guarda só o histórico das mudanças.
 
 ## O que só pode ser feito na tela (passo a passo para você)

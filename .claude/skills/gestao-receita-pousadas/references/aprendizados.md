@@ -246,3 +246,8 @@ Cada item tem data e evidência. Para incluir um item novo: data, o fato, a evid
 - Piso e teto por data em `percent_base` acompanham a base: baixar a base da Q2 de R$ 1.870 para R$ 1.590 baixaria todas as 436 regras na mesma proporção. Por isso a base muda junto com a conversão de todas as regras (piso arredondado para cima, teto para baixo), em lotes de até 70, conferidos na `verification` da própria resposta.
 - O degrau de 1% da base nova (R$ 15,90) desloca até R$ 16 em reais. Em noites com Moinhos e Panorâmica I a poucos reais uma da outra, isso tira a Q2 da faixa (23/10: R$ 2.020 → R$ 2.035, acima da Panorâmica I a R$ 2.028). Depois de converter, rode `ordem_recanto.py` e confira também a ordem estrita nas noites dos próximos 7 dias.
 - Agentes em segundo plano para gravações longas podem parar no meio sem avisar. Antes de gravar o próximo lote, confira o estado com `get_listing_date_overrides` e o diff contra os lotes esperados.
+
+## 23/10/2026 — Gravação recusada sem recálculo e envio que pula quartos
+- O PriceLabs recusou o lote inteiro da Double ("Pricing data for this date isn't available yet. Please refresh the listing") com o recálculo dela bloqueado (429 e Beds24 instável). Mande à parte as datas de D0 a D1 de um quarto sem recálculo do dia: o resto do lote passou quando mandei sem 24/10.
+- O envio desta madrugada saiu só para 4 quartos (Q7, Double, Balcony e VK2 às 02:29 UTC). Afrodite, Q2 e VK7, justamente os que tiveram gravações à noite, ficaram com o envio de 22/10 05:35 UTC. Conferir o `last_date_pushed` por quarto, não só de um.
+- O Recanto voltou à busca da Booking em 23/10 (sumiu em 21/10, com 8 cancelamentos). Os cortes segurados pela vitrine fechada podem voltar a valer a partir de hoje.

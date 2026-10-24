@@ -263,3 +263,6 @@ Cada item tem data e evidência. Para incluir um item novo: data, o fato, a evid
 ## 23/10/2026 — Pedido de última hora: gravar na mesma resposta
 - O plano "vender até domingo" foi validado às 17h e só foi gravado às 20h, porque a gravação não saiu na mesma resposta da validação. Em pedido de D0 a D2, valide e grave na mesma resposta e só então relate: cada hora parada é venda perdida.
 - Com piso e teto iguais por data, o PriceLabs aceitou gravar a Double em D0 e D1 mesmo sem recálculo do dia (de manhã, só com piso, recusou).
+
+## 24/10/2026 — Sem recálculo depois da gravação, não há envio
+- As regras gravadas às 20:04 BRT de 23/10 não saíram no envio da madrugada. O PriceLabs não recalcula sozinho depois de uma gravação por API: o `last_refreshed_at` ficou nas 18:24 BRT, e o último envio foi o Sync Now das 18:24. Depois de toda gravação de D0 a D2, chame `refresh_listing_pricing` em cada quarto alterado (é ele que gera o preço novo) e só então peça o Sync Now. O Beds24 (`price1`) é a prova de que chegou.

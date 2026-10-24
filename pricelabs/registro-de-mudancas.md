@@ -2415,6 +2415,21 @@ A Villa não aparece em nenhuma busca com filtro de hidro (falta a comodidade na
 - **Rotina leve (desde 19:50 UTC):** 2 novas (VK2 04/11 e 22/11, Airbnb). Sem cancelamentos. Reserva abaixo do planejado: Double 94085266 (direta pela API, feita em 02/10), 23-25/10 por R$ 1.576 (39%); apareceu pela mudança de status no check-in.
 - **Sync Now nos 7 quartos** (D0 a D2).
 
+## 24/10/2026, 11:40 UTC (08:40 BRT) — Rotina completa das 07:53: preços de última hora não foram enviados; recalculados
+
+- **Envio:** o último envio aos canais foi em 23/10 às 21:24 UTC (Sync Now do dono). As regras do pedido "vender até domingo" foram gravadas às 23:04 UTC e o PriceLabs não recalculou os quartos depois disso. **O envio da madrugada não aconteceu, e o Beds24 segue com os preços antigos** (Moinhos R$ 1.666, Panorâmica I R$ 2.028, Afrodite R$ 2.360, Balcony R$ 1.130).
+- **Recalculei às 11:30 UTC:** Moinhos 24/10 R$ 1.302 e 25/10 R$ 938; Panorâmica I R$ 1.539 e R$ 1.036; Afrodite 24/10 R$ 1.780; VK7 25/10 R$ 710 ✅. Panorâmica II e Balcony deram 429 (a Balcony já tinha recalculado às 23:06 UTC com R$ 737 / R$ 635). **Falta o Sync Now do dono** para chegar aos canais.
+- **Beds24 (desde 22:50 UTC):** 1 venda na Moinhos para hoje (direta 95150099, 1 noite, R$ 3.332); 1 cancelamento (VK2 03/11, Airbnb, sem valor); 2 pedidos do Airbnb na VK2 em novembro. Nenhuma reserva abaixo do planejado.
+- **Ocupação real (Beds24):** 7 dias Recanto 36,6% / Villa 34,3%; 15 dias 36,7% / 33,3%; 30 dias 36,0% / 24,9%.
+- **Booking (conector):** sábado 24/10, 1 noite: mediana R$ 383, máximo R$ 909. Dias de semana 26-27/10: mediana R$ 250. Finados, 3 noites: mediana R$ 2.079 (o Recanto voltou a aparecer na busca com hidro). Fds 06-08/11: mediana R$ 1.086.
+- **Calendário de 12 meses:** 0 noites abaixo da regra.
+- **Ordem do Recanto:** 3 noites da Afrodite regravadas (10/11, 26-27/05/2027). As faixas da Panorâmica II ficam para quando ela recalcular (429; o arquivo dela é de 23/10).
+
+| Mudança | Onde | Antes | Depois (lido de volta) | Como desfazer (pedir ao Claude) |
+|---|---|---|---|---|
+| Afrodite a mais cara | Afrodite 10/11 | R$ 1.500 | piso R$ 1.600 | apagar o piso "Dono 22/10" |
+| Afrodite a mais cara | Afrodite 26-27/05/2027 | R$ 2.400 | piso R$ 2.520 | idem |
+
 > **Regras em vigor:** desde 06/10/2026 elas ficam em `.claude/skills/gestao-receita-pousadas/references/regras.md`. Este arquivo guarda só o histórico das mudanças.
 
 ## O que só pode ser feito na tela (passo a passo para você)

@@ -561,6 +561,13 @@
    "desde": "2026-10-23",
    "urgencia": 3,
    "texto": "Beds24: tirar o bloqueio de chegada (noCheckIn) da Suíte Moinhos em 24/10, para valer o sábado de 1 noite autorizado em 23/10. O PriceLabs já está com estadia mínima de 1 noite; o acesso da skill ao Beds24 é só leitura. Caminho: Beds24 → Calendário → Suíte Moinhos → 24/10 → restrições → desmarcar 'Sem check-in'."
+  },
+  {
+   "id": "q2-faixa-2410",
+   "responsavel": "skill",
+   "desde": "2026-10-24",
+   "urgencia": 1,
+   "texto": "Recalcular a Panorâmica II (Q2; 429 em 24/10 de manhã) e rodar ordem_recanto.py: em 03-04/11 a Panorâmica I caiu para R$ 1.228, abaixo da Moinhos (R$ 1.232), e a Q2 está a R$ 1.240; 06/11 R$ 2.337 contra R$ 2.254; 1%-degrau nas demais."
   }
  ],
  "versao": "2026-10-21T15"

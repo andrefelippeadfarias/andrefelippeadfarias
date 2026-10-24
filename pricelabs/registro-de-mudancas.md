@@ -2436,6 +2436,12 @@ A Villa não aparece em nenhuma busca com filtro de hidro (falta a comodidade na
 - **Beds24 (desde 10:50 UTC):** só alterações de status (check-ins). Nada novo, nada cancelado, nenhuma reserva abaixo do planejado. Livres hoje: Moinhos 5, Panorâmica I 1, Afrodite 1, Balcony 3. Amanhã: Moinhos 6, Panorâmica I 4, VK7 6, Balcony 6.
 - **Ordem do Recanto:** Panorâmica II recalculada; 27 noites fora da faixa, regravadas e lidas de volta sem divergência: 20-31/12/2026, 14-18/02, 20-21/04, 23-25/05 e 01-05/08/2027. Como desfazer: regravar o piso e o teto anteriores, motivo "Dono 21/10".
 
+## 24/10/2026, 17:00 UTC (14:00 BRT) — Rotina leve das 13:53
+
+- **Reserva abaixo do planejado:** VK2 em 03/11, 1 noite, direta (95175599), lançada pela VillaRecep1 às 11:40 BRT por **R$ 280** (29% de R$ 952).
+- **Beds24 (desde 13:50 UTC):** 2 novas (a de cima e VK2 29/11 no Airbnb, R$ 357). Sem cancelamentos. Os quartos com preço de última hora ainda não venderam: hoje seguem livres Moinhos 5, Panorâmica I 1, Afrodite 1 e Balcony 3; amanhã Moinhos 6, Panorâmica I 4, VK7 6 e Balcony 6.
+- **Nada gravado.**
+
 > **Regras em vigor:** desde 06/10/2026 elas ficam em `.claude/skills/gestao-receita-pousadas/references/regras.md`. Este arquivo guarda só o histórico das mudanças.
 
 ## O que só pode ser feito na tela (passo a passo para você)

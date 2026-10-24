@@ -2442,6 +2442,15 @@ A Villa não aparece em nenhuma busca com filtro de hidro (falta a comodidade na
 - **Beds24 (desde 13:50 UTC):** 2 novas (a de cima e VK2 29/11 no Airbnb, R$ 357). Sem cancelamentos. Os quartos com preço de última hora ainda não venderam: hoje seguem livres Moinhos 5, Panorâmica I 1, Afrodite 1 e Balcony 3; amanhã Moinhos 6, Panorâmica I 4, VK7 6 e Balcony 6.
 - **Nada gravado.**
 
+## 24/10/2026, 20:00 UTC (17:00 BRT) — Rotina leve das 16:53
+
+- **Beds24 (desde 16:50 UTC):**
+  - nova: Moinhos 31/10, **1 noite** pela Booking, R$ 1.701, numa noite de Finados com estadia mínima de 3 no PriceLabs. Conferir as restrições do plano de tarifa na Booking (pendência `booking-finados-sem-disponibilidade`);
+  - a Airbnb 94439616 da Panorâmica I passou de 3 para 4 noites (até 25/10);
+  - a Q2 95126778 segue abaixo do planejado (R$ 983 por 2 noites, 40%), já relatada.
+- **Moinhos 24/10:** o dono tirou o "noCheckIn" no Beds24. Agora o sábado de 1 noite está aberto a R$ 1.302 (~R$ 553). Seguem 5 livres hoje e 6 amanhã.
+- **Nada gravado.** Preços de última hora mantidos até domingo.
+
 > **Regras em vigor:** desde 06/10/2026 elas ficam em `.claude/skills/gestao-receita-pousadas/references/regras.md`. Este arquivo guarda só o histórico das mudanças.
 
 ## O que só pode ser feito na tela (passo a passo para você)

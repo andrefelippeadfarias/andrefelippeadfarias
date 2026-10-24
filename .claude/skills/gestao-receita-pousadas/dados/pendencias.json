@@ -538,7 +538,8 @@
    "responsavel": "skill",
    "desde": "2026-10-23",
    "urgencia": 1,
-   "texto": "Rotina das 10:53 de 23/10: (1) gravar Double 24/10 +10% pelo piso (min_price 51% = R$ 2.235; 5/6 vendidas a D1); a gravação de 07:58 foi recusada ('Pricing data for this date isn't available yet', pede recálculo, e o recálculo da Double deu 429). Depois, confirmar que a Afrodite 24/10 (R$ 2.360) fica 5% acima. (2) Recalcular Double, Q2 e Afrodite e conferir: Double 09-10/11 R$ 1.524 e 11/11 R$ 1.687; Q2 03-04/11 R$ 1.240, 06-07/11 R$ 2.019 a 2.194, 13-14/11 R$ 2.019, 18-19/12 R$ 2.019 a 2.162, 20-21/12 R$ 1.797 a 2.162; Afrodite 23/10 R$ 2.140 e 19/11 R$ 2.020. (3) ordem_recanto.py com a Double fresca."
+   "texto": "Rotina das 10:53 de 23/10: (1) gravar Double 24/10 +10% pelo piso (min_price 51% = R$ 2.235; 5/6 vendidas a D1); a gravação de 07:58 foi recusada ('Pricing data for this date isn't available yet', pede recálculo, e o recálculo da Double deu 429). Depois, confirmar que a Afrodite 24/10 (R$ 2.360) fica 5% acima. (2) Recalcular Double, Q2 e Afrodite e conferir: Double 09-10/11 R$ 1.524 e 11/11 R$ 1.687; Q2 03-04/11 R$ 1.240, 06-07/11 R$ 2.019 a 2.194, 13-14/11 R$ 2.019, 18-19/12 R$ 2.019 a 2.162, 20-21/12 R$ 1.797 a 2.162; Afrodite 23/10 R$ 2.140 e 19/11 R$ 2.020. (3) ordem_recanto.py com a Double fresca. 24/10: resolvido (Q2 recalculada e 27 noites regravadas; a Double 24/10 ficou com o preço de última hora do dono).",
+   "resolvido_em": "2026-10-24"
   },
   {
    "id": "booking-finados-sem-disponibilidade",
@@ -567,7 +568,8 @@
    "responsavel": "skill",
    "desde": "2026-10-24",
    "urgencia": 1,
-   "texto": "Recalcular a Panorâmica II (Q2; 429 em 24/10 de manhã) e rodar ordem_recanto.py: em 03-04/11 a Panorâmica I caiu para R$ 1.228, abaixo da Moinhos (R$ 1.232), e a Q2 está a R$ 1.240; 06/11 R$ 2.337 contra R$ 2.254; 1%-degrau nas demais."
+   "texto": "Recalcular a Panorâmica II (Q2; 429 em 24/10 de manhã) e rodar ordem_recanto.py: em 03-04/11 a Panorâmica I caiu para R$ 1.228, abaixo da Moinhos (R$ 1.232), e a Q2 está a R$ 1.240; 06/11 R$ 2.337 contra R$ 2.254; 1%-degrau nas demais. 24/10: resolvido (Q2 recalculada e 27 noites regravadas; a Double 24/10 ficou com o preço de última hora do dono).",
+   "resolvido_em": "2026-10-24"
   }
  ],
  "versao": "2026-10-21T15"

@@ -2430,6 +2430,12 @@ A Villa não aparece em nenhuma busca com filtro de hidro (falta a comodidade na
 | Afrodite a mais cara | Afrodite 10/11 | R$ 1.500 | piso R$ 1.600 | apagar o piso "Dono 22/10" |
 | Afrodite a mais cara | Afrodite 26-27/05/2027 | R$ 2.400 | piso R$ 2.520 | idem |
 
+## 24/10/2026, 14:10 UTC (11:10 BRT) — Rotina leve das 10:53: preços de última hora no ar; ordem da Panorâmica II
+
+- **Envio:** o Beds24 agora mostra os preços de última hora (Sync Now do dono): Moinhos R$ 1.302 / R$ 938, Panorâmica I R$ 1.539 / R$ 1.036, Afrodite R$ 1.780, Balcony R$ 737 / R$ 635, VK7 25/10 R$ 710. Na Villa, os sábados 24/10 ficaram sem bloqueio de chegada. Na Moinhos 24/10 o "noCheckIn" continua.
+- **Beds24 (desde 10:50 UTC):** só alterações de status (check-ins). Nada novo, nada cancelado, nenhuma reserva abaixo do planejado. Livres hoje: Moinhos 5, Panorâmica I 1, Afrodite 1, Balcony 3. Amanhã: Moinhos 6, Panorâmica I 4, VK7 6, Balcony 6.
+- **Ordem do Recanto:** Panorâmica II recalculada; 27 noites fora da faixa, regravadas e lidas de volta sem divergência: 20-31/12/2026, 14-18/02, 20-21/04, 23-25/05 e 01-05/08/2027. Como desfazer: regravar o piso e o teto anteriores, motivo "Dono 21/10".
+
 > **Regras em vigor:** desde 06/10/2026 elas ficam em `.claude/skills/gestao-receita-pousadas/references/regras.md`. Este arquivo guarda só o histórico das mudanças.
 
 ## O que só pode ser feito na tela (passo a passo para você)

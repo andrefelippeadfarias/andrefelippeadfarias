@@ -2451,6 +2451,12 @@ A Villa não aparece em nenhuma busca com filtro de hidro (falta a comodidade na
 - **Moinhos 24/10:** o dono tirou o "noCheckIn" no Beds24. Agora o sábado de 1 noite está aberto a R$ 1.302 (~R$ 553). Seguem 5 livres hoje e 6 amanhã.
 - **Nada gravado.** Preços de última hora mantidos até domingo.
 
+## 24/10/2026, 23:00 UTC (20:00 BRT) — Rotina leve das 19:53
+
+- **Beds24 (desde 19:50 UTC):** 1 pedido do Airbnb (VK2 17/11) e 1 alteração de status (check-in da Double). Sem vendas nem cancelamentos; nenhuma reserva abaixo do planejado.
+- **Preços de última hora:** sem venda desde ontem. Hoje à noite seguem livres Moinhos 5, Panorâmica I 1, Afrodite 1 e Balcony 3. Domingo: Moinhos 6, Panorâmica I 3, VK7 6 e Balcony 6. A medição do teste fica para a revisão de segunda (`moinhos-fds-2310-medir`).
+- **Nada gravado.**
+
 > **Regras em vigor:** desde 06/10/2026 elas ficam em `.claude/skills/gestao-receita-pousadas/references/regras.md`. Este arquivo guarda só o histórico das mudanças.
 
 ## O que só pode ser feito na tela (passo a passo para você)

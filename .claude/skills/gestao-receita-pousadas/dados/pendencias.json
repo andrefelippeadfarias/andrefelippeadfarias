@@ -577,6 +577,14 @@
    "desde": "2026-10-25",
    "urgencia": 3,
    "texto": "O ambiente reiniciou em 25/10 e o token do Beds24 (arquivo /root/.beds24/refresh_token) se perdeu. Cadastrar o token só de leitura do Beds24 nos segredos do ambiente: menu do ambiente na barra de título da sessão → Editar → Network secrets (ou variável de ambiente) com o nome BEDS24_REFRESH_TOKEN. Vale a partir de uma sessão nova. Nunca colar o token no chat. Até lá, as reservas vêm só do PriceLabs (com atraso) e as reservas manuais abaixo da tabela não são detectadas."
+  },
+  {
+   "id": "lotar-2-semanas-2510",
+   "responsavel": "skill",
+   "desde": "2026-10-25",
+   "urgencia": 1,
+   "revisar_em": "2026-10-28",
+   "texto": "Pedido do dono 25/10 (lotar 26/10 a 08/11): recalcular Balcony e VK2 (Beds24 indisponível às 17:00 UTC) e conferir R$ 660 / R$ 737. Medir as vendas por quarto e noite a cada rotina (base: 290 diárias livres em 25/10) e relatar no balanço de segunda; se uma noite passar de 70% vendida, devolver a regra 4c (subir pelo piso)."
   }
  ],
  "versao": "2026-10-21T15"

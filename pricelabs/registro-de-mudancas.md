@@ -2481,6 +2481,27 @@ A Villa não aparece em nenhuma busca com filtro de hidro (falta a comodidade na
 - **PriceLabs (reservas feitas de 24 a 25/10):** nenhuma nova desde as 12:59 BRT de ontem (a lista do dia só entra por volta das 10:59 BRT).
 - **Nada gravado.** Os preços de última hora de hoje seguem no ar até o fim do dia.
 
+## 25/10/2026, 17:05 UTC (14:05 BRT) — Pedido do dono: lotar as diárias em aberto das próximas 2 semanas
+
+- **Pedido do dono:** "Verifique uma estratégia de precificação para lotarmos as diárias em aberto nas próximas 2 semanas." Diagnóstico: 290 diárias livres de 26/10 a 08/11 (Moinhos 70, Panorâmica I 51, Panorâmica II 14, Afrodite 10, VK7 58, Balcony 73, VK2 14). Encalhe principal nos dias de semana: Recanto e Villa a ~R$ 500 (piso do dono), contra mediana ~R$ 340 das pousadas com hidro e nota 8+ (Booking, 28/10: DOM R$ 337, Canada Lodge R$ 394, Serra da Estrela R$ 579). Fds 06-08/11: mediana ~R$ 770 por noite.
+- **Escolhas do dono:** dias de semana com Recanto ~R$ 420 e Villa ~R$ 380; **Finados mantido** (+20%); fds 06-07/11 com Panorâmica I ~R$ 760 e Moinhos ~R$ 720 na sexta.
+
+| Mudança (preço final aproximado, Genius 3) | Onde | Depois (piso = teto, enviado) | Conferido |
+|---|---|---|---|
+| Dias de semana 26-29/10, 02-05/11 e 08/11 | Moinhos | R$ 1.032 (~R$ 423) | ✅ recálculo |
+| idem | Panorâmica I (fora 29/10, 5/6 vendidas) | R$ 1.110 (~R$ 455) | ✅ |
+| idem | Panorâmica II (entre as duas; fora 29/10) | R$ 1.081 (~R$ 443) | ✅ |
+| idem | Afrodite (5% acima; fora 29/10 e as noites vendidas) | R$ 1.180 (~R$ 484) | ✅ |
+| idem | VK7 (limite de segurança R$ 700) | R$ 725 (~R$ 384) | ✅ |
+| idem | VK2 (noites livres) | R$ 737 (~R$ 390) | lido de volta (recálculo: Beds24 indisponível) |
+| idem | Balcony (Regra G abaixo da VK7) | R$ 660 (~R$ 350) | lido de volta (idem) |
+| Fds 06/11 | Moinhos | R$ 1.713 (~R$ 728) | ✅ |
+| Fds 06-07/11 | Panorâmica I | R$ 1.806 (~R$ 767) | ✅ |
+| Fds 06/11 e 07/11 | Panorâmica II (ordem) | R$ 1.749 / R$ 1.892 | ✅ |
+
+- **Sem mudança:** Finados (30/10 a 01/11), Moinhos 07/11 (6/7) e as noites esgotadas. As regras com motivo "Dono 25/10" vencem sozinhas depois de 08/11.
+- **Recálculo feito** para os preços saírem no próximo envio. **Sync Now** pedido ao dono (26/10 é D1).
+
 > **Regras em vigor:** desde 06/10/2026 elas ficam em `.claude/skills/gestao-receita-pousadas/references/regras.md`. Este arquivo guarda só o histórico das mudanças.
 
 ## O que só pode ser feito na tela (passo a passo para você)

@@ -2522,6 +2522,24 @@ A Villa não aparece em nenhuma busca com filtro de hidro (falta a comodidade na
 - **Booking, Villa (id 14824789):** 03, 04 e 08/11 R$ 430,77 = Balcony R$ 660 × 0,653 ✅. 26 a 28/10 R$ 349,27 = cerca de 20% abaixo disso: indica uma oferta de última hora ativa na extranet da Villa.
 - **Leitura:** o preço público da Booking é cerca de 65,8% do enviado. Os "valores finais" do plano (R$ 423 / R$ 384) são do Genius 3 (fator 0,41 / 0,53). O hóspede sem Genius vê R$ 679 na Moinhos e R$ 434 na Balcony, e os concorrentes da busca também aparecem no preço público (mediana com hidro ~R$ 340).
 
+## 25/10/2026, 17:40 UTC (14:40 BRT) — Pedido do dono: preço público da Booking ~R$ 450 nos dias de semana
+
+- **Escolha do dono:** "Público ~R$ 450": a Moinhos aparece por ~R$ 450 na Booking sem Genius (fator 0,658 do enviado); os outros quartos seguem a ordem do Recanto e a Regra G. Datas: 26-29/10, 02-05/11 e 08/11, só nas noites com quarto livre.
+
+| Quarto | Antes (enviado) | Depois (piso = teto, enviado) | Público Booking | Genius 3 (aprox.) |
+|---|---|---|---|---|
+| Moinhos | R$ 1.032 | R$ 692 | ~R$ 455 | ~R$ 284 |
+| Panorâmica II (fora 29/10 e 08/11) | R$ 1.081 | R$ 731 | ~R$ 481 | ~R$ 300 |
+| Panorâmica I (fora 29/10) | R$ 1.110 | R$ 740 | ~R$ 487 | ~R$ 303 |
+| Afrodite (fora 26/10, 29/10 e 08/11) | R$ 1.180 | R$ 1.060 (limite de segurança) | ~R$ 697 | ~R$ 435 |
+| VK7 | R$ 725 | R$ 710 (limite de segurança) | ~R$ 467 | ~R$ 376 |
+| VK2 (noites livres) | R$ 737 | R$ 711 | ~R$ 465 | ~R$ 377 |
+| Balcony | R$ 660 a R$ 1.003 | R$ 635 (limite de segurança) | ~R$ 415 | ~R$ 337 |
+
+- **Validação:** 53 itens, 0 erros. As 7 gravações foram lidas de volta ✅.
+- **Recálculo:** Panorâmica II ✅ (R$ 731). Os outros 6 deram 429 ou Beds24 indisponível; nova tentativa na próxima rotina. Sem recálculo o envio sai com o preço antigo, então o **Sync Now do dono** é necessário.
+- **Sem mudança:** fds 06-07/11 e Finados.
+
 > **Regras em vigor:** desde 06/10/2026 elas ficam em `.claude/skills/gestao-receita-pousadas/references/regras.md`. Este arquivo guarda só o histórico das mudanças.
 
 ## O que só pode ser feito na tela (passo a passo para você)

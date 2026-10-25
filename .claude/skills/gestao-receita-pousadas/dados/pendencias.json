@@ -585,6 +585,20 @@
    "urgencia": 1,
    "revisar_em": "2026-10-28",
    "texto": "Pedido do dono 25/10 (lotar 26/10 a 08/11): recalcular Balcony e VK2 (Beds24 indisponível às 17:00 UTC) e conferir R$ 660 / R$ 737. Medir as vendas por quarto e noite a cada rotina (base: 290 diárias livres em 25/10) e relatar no balanço de segunda; se uma noite passar de 70% vendida, devolver a regra 4c (subir pelo piso)."
+  },
+  {
+   "id": "booking-listagem-duplicada-recanto",
+   "responsavel": "dono",
+   "desde": "2026-10-25",
+   "urgencia": 3,
+   "texto": "Há duas propriedades do Recanto ativas na Booking: id 7562933 (pousada-recanto-dos-moinhos, ligada ao Beds24) e id 15459723 (pousada-vista-panoramica-campos-do-jordao, preços antigos, R$ 560 a R$ 607 em dia de semana, sem Beds24). A segunda pode vender com preço errado e gerar overbooking. Decidir: fechar a 15459723 na extranet ou ligá-la ao Beds24."
+  },
+  {
+   "id": "villa-oferta-ultima-hora",
+   "responsavel": "dono",
+   "desde": "2026-10-25",
+   "urgencia": 2,
+   "texto": "A Villa na Booking (id 14824789) aparece ~20% abaixo do fator normal em 26-28/10 (R$ 349 contra ~R$ 430). Indica oferta de última hora ou outra promoção ativa na extranet (Promoções). A regra do dono é não usar promoções da Booking: conferir e desligar, se for o caso."
   }
  ],
  "versao": "2026-10-21T15"

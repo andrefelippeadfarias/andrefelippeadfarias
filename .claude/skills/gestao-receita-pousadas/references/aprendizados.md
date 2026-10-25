@@ -266,3 +266,8 @@ Cada item tem data e evidência. Para incluir um item novo: data, o fato, a evid
 
 ## 24/10/2026 — Sem recálculo depois da gravação, não há envio
 - As regras gravadas às 20:04 BRT de 23/10 não saíram no envio da madrugada. O PriceLabs não recalcula sozinho depois de uma gravação por API: o `last_refreshed_at` ficou nas 18:24 BRT, e o último envio foi o Sync Now das 18:24. Depois de toda gravação de D0 a D2, chame `refresh_listing_pricing` em cada quarto alterado (é ele que gera o preço novo) e só então peça o Sync Now. O Beds24 (`price1`) é a prova de que chegou.
+
+## 25/10/2026 — Qual propriedade da Booking recebe o Beds24, e o fator do preço público
+- **Recanto na Booking = id 7562933** (`pousada-recanto-dos-moinhos`, dono 25/10). A busca por nome ("Pousada Recanto dos Moinhos") devolve outra propriedade, id 15459723 (`pousada-vista-panoramica-campos-do-jordao`), que segue ativa com preços antigos e não recebe o Beds24. Para conferir o Recanto, busque por coordenadas (-22.728453, -45.556345, raio 0,3 km) e leia o id 7562933.
+- **Preço público na Booking (sem Genius) ÷ enviado = 0,658** no Recanto (dias de semana e fds 06-08/11) e ~0,653 na Villa. Os fatores 0,41 / 0,425 (Recanto) e 0,53 / 0,575 (Villa) são do hóspede Genius 3. As buscas do conector mostram o preço público, nosso e dos concorrentes: compare sempre público com público.
+- A Villa em 26-28/10 aparece ~20% abaixo do fator público: oferta de última hora ativa na extranet da Villa.

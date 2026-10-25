@@ -2511,6 +2511,17 @@ A Villa não aparece em nenhuma busca com filtro de hidro (falta a comodidade na
 - **Recálculo:** VK2 ✅ (R$ 737 nos dias de semana). Balcony em 429; as regras dela estão lidas de volta.
 - **Nada gravado.**
 
+## 25/10/2026, 17:50 UTC (14:50 BRT) — Pedido do dono: validar os valores finais depois do Sync Now
+
+- **Envio:** os 7 quartos foram enviados às 17:23 UTC (14:23 BRT), depois das gravações e do recálculo.
+- **Propriedade certa na Booking (dono, 25/10):** `pousada-recanto-dos-moinhos` (**id 7562933**, "Recanto dos Moinhos - Boutique Hotel") é a que recebe os preços do Beds24. A `pousada-vista-panoramica-campos-do-jordao` (id 15459723, "Pousada Recanto dos Moinhos - Boutique") **continua ativa com os preços antigos** (R$ 560 a R$ 607 nos dias de semana). Era ela que as buscas por nome encontravam.
+- **Booking, id 7562933 (preço público, sem Genius):**
+  - dias de semana 26, 28 e 29/10, 03 e 08/11: R$ 679,06 = Moinhos R$ 1.032 × 0,658 ✅ (preço novo);
+  - fds 06-08/11 (2 noites): R$ 2.376,70 = Panorâmica I R$ 1.806 × 2 × 0,658 ✅;
+  - Finados 30/10-02/11: R$ 4.428 (3 noites), mantido.
+- **Booking, Villa (id 14824789):** 03, 04 e 08/11 R$ 430,77 = Balcony R$ 660 × 0,653 ✅. 26 a 28/10 R$ 349,27 = cerca de 20% abaixo disso: indica uma oferta de última hora ativa na extranet da Villa.
+- **Leitura:** o preço público da Booking é cerca de 65,8% do enviado. Os "valores finais" do plano (R$ 423 / R$ 384) são do Genius 3 (fator 0,41 / 0,53). O hóspede sem Genius vê R$ 679 na Moinhos e R$ 434 na Balcony, e os concorrentes da busca também aparecem no preço público (mediana com hidro ~R$ 340).
+
 > **Regras em vigor:** desde 06/10/2026 elas ficam em `.claude/skills/gestao-receita-pousadas/references/regras.md`. Este arquivo guarda só o histórico das mudanças.
 
 ## O que só pode ser feito na tela (passo a passo para você)

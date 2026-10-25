@@ -2502,6 +2502,15 @@ A Villa não aparece em nenhuma busca com filtro de hidro (falta a comodidade na
 - **Sem mudança:** Finados (30/10 a 01/11), Moinhos 07/11 (6/7) e as noites esgotadas. As regras com motivo "Dono 25/10" vencem sozinhas depois de 08/11.
 - **Recálculo feito** para os preços saírem no próximo envio. **Sync Now** pedido ao dono (26/10 é D1).
 
+## 25/10/2026, 17:15 UTC (14:15 BRT) — Rotina leve das 13:53 (sem Beds24)
+
+- **PriceLabs (reservas feitas em 25/10):**
+  - VK7 25-26/10, direta, 2 noites por R$ 696 (R$ 348 por noite; ~49% do preço de hoje). É lançamento manual; conferir com a recepção;
+  - VK7 08-10/11 pela Booking, 3 noites, R$ 1.240 (R$ 413 por noite), já no preço novo;
+  - VK2 29/11 pelo Airbnb (R$ 357).
+- **Recálculo:** VK2 ✅ (R$ 737 nos dias de semana). Balcony em 429; as regras dela estão lidas de volta.
+- **Nada gravado.**
+
 > **Regras em vigor:** desde 06/10/2026 elas ficam em `.claude/skills/gestao-receita-pousadas/references/regras.md`. Este arquivo guarda só o histórico das mudanças.
 
 ## O que só pode ser feito na tela (passo a passo para você)

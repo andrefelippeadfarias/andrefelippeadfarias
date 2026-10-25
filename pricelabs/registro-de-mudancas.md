@@ -2457,6 +2457,24 @@ A Villa não aparece em nenhuma busca com filtro de hidro (falta a comodidade na
 - **Preços de última hora:** sem venda desde ontem. Hoje à noite seguem livres Moinhos 5, Panorâmica I 1, Afrodite 1 e Balcony 3. Domingo: Moinhos 6, Panorâmica I 3, VK7 6 e Balcony 6. A medição do teste fica para a revisão de segunda (`moinhos-fds-2310-medir`).
 - **Nada gravado.**
 
+## 25/10/2026, 12:05 UTC (09:05 BRT) — Rotina completa das 07:53
+
+- **Beds24 (desde 22:50 UTC):** 1 pedido do Airbnb (Moinhos 22/11) e 1 cancelamento (VK2 22/11, sem valor). Nenhuma reserva abaixo do planejado. Preços de última hora de domingo no ar e sem venda (Moinhos 6, Panorâmica I 3, VK7 6 e Balcony 6 livres hoje).
+- **Ocupação real (Beds24):** 7 dias Recanto 39,3% / Villa 32,4%; 15 dias 36,3% / 29,3%; 30 dias 36,3% / 22,4%.
+- **Envio:** último envio em 24/10 14:48 UTC (os 7 quartos).
+- **Booking:** domingo, mediana R$ 254 (máx. R$ 463); dias de semana 26-27/10, R$ 253; **Finados (3 noites), mediana R$ 2.312, mínimo R$ 1.231**, com o Recanto na busca com hidro; fds 06-08/11, R$ 1.086. Mercado no Finados: 23,5% / 37,3% / 41,0% (no ano passado, 16% / 22% / 10%).
+- **Finados:** a Moinhos está com 1 de 7 em 30 e 31/10 a R$ 2.359 (cerca de R$ 1.000 no preço final, acima da mediana de R$ 771 por noite). O +20% do dono segue valendo (regras 6b); fica a proposta ao dono.
+- **Calendário de 12 meses:** 3 sábados da Moinhos em março/2027 tinham caído para 1 noite (PriceLabs automático); voltaram a 2. **Ordem do Recanto:** 11 noites da Panorâmica II regravadas.
+- **4c:** as descidas de dia de semana no Recanto, na VK7 e na VK2 param no piso do dono (R$ 500). Desci a Balcony, que não tem piso do dono, e a Panorâmica I e a Afrodite no fds de 06-07/11.
+
+| Mudança | Onde | Antes | Depois (recalculado e conferido às 12:02 UTC) | Como desfazer (pedir ao Claude) |
+|---|---|---|---|---|
+| 4c: atrás da meta (0/6) | Balcony 26-29/10, 02/11, 03/11 | R$ 813 / R$ 1.168 / R$ 826 | **R$ 737 / R$ 1.003 / R$ 749 ✅** (piso e teto) | voltar a −36% / −8% / −35% |
+| 4c: atrás da meta (0-1/6) | Panorâmica I 06-07/11 | R$ 2.175 | **R$ 2.028 ✅** (teto no piso do dono) | voltar o teto a 237% |
+| 4c: −5% | Afrodite 06-07/11 | R$ 3.322 | **R$ 3.140 ✅** (teto) | tirar o teto |
+| Ordem do Recanto | Panorâmica II 06-07/11, 01-02/01, 21-25/02, 28-29/05/2027 | R$ 2.337 / R$ 3.641 / R$ 1.272 / R$ 2.687 | **R$ 2.019 / R$ 3.355 / R$ 1.240 / R$ 2.480 ✅** | motivo "Dono 21/10" |
+| Sábado com 2 noites (Regra H) | Moinhos 06, 13 e 20/03/2027 | 1 noite | **2 noites ✅** | — |
+
 > **Regras em vigor:** desde 06/10/2026 elas ficam em `.claude/skills/gestao-receita-pousadas/references/regras.md`. Este arquivo guarda só o histórico das mudanças.
 
 ## O que só pode ser feito na tela (passo a passo para você)

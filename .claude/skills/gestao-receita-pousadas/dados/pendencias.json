@@ -570,6 +570,13 @@
    "urgencia": 1,
    "texto": "Recalcular a Panorâmica II (Q2; 429 em 24/10 de manhã) e rodar ordem_recanto.py: em 03-04/11 a Panorâmica I caiu para R$ 1.228, abaixo da Moinhos (R$ 1.232), e a Q2 está a R$ 1.240; 06/11 R$ 2.337 contra R$ 2.254; 1%-degrau nas demais. 24/10: resolvido (Q2 recalculada e 27 noites regravadas; a Double 24/10 ficou com o preço de última hora do dono).",
    "resolvido_em": "2026-10-24"
+  },
+  {
+   "id": "beds24-credencial-ambiente",
+   "responsavel": "dono",
+   "desde": "2026-10-25",
+   "urgencia": 3,
+   "texto": "O ambiente reiniciou em 25/10 e o token do Beds24 (arquivo /root/.beds24/refresh_token) se perdeu. Cadastrar o token só de leitura do Beds24 nos segredos do ambiente: menu do ambiente na barra de título da sessão → Editar → Network secrets (ou variável de ambiente) com o nome BEDS24_REFRESH_TOKEN. Vale a partir de uma sessão nova. Nunca colar o token no chat. Até lá, as reservas vêm só do PriceLabs (com atraso) e as reservas manuais abaixo da tabela não são detectadas."
   }
  ],
  "versao": "2026-10-21T15"

@@ -2475,6 +2475,12 @@ A Villa não aparece em nenhuma busca com filtro de hidro (falta a comodidade na
 | Ordem do Recanto | Panorâmica II 06-07/11, 01-02/01, 21-25/02, 28-29/05/2027 | R$ 2.337 / R$ 3.641 / R$ 1.272 / R$ 2.687 | **R$ 2.019 / R$ 3.355 / R$ 1.240 / R$ 2.480 ✅** | motivo "Dono 21/10" |
 | Sábado com 2 noites (Regra H) | Moinhos 06, 13 e 20/03/2027 | 1 noite | **2 noites ✅** | — |
 
+## 25/10/2026, 14:05 UTC (11:05 BRT) — Rotina leve das 10:53: sem acesso ao Beds24
+
+- **Beds24:** o ambiente reiniciou e o arquivo `/root/.beds24/refresh_token` sumiu; não há `BEDS24_REFRESH_TOKEN` nos segredos. Usei a lista do PriceLabs, que atrasa até um dia. **`reservas_abaixo.py` e o movimento do Beds24 ficaram sem rodar.**
+- **PriceLabs (reservas feitas de 24 a 25/10):** nenhuma nova desde as 12:59 BRT de ontem (a lista do dia só entra por volta das 10:59 BRT).
+- **Nada gravado.** Os preços de última hora de hoje seguem no ar até o fim do dia.
+
 > **Regras em vigor:** desde 06/10/2026 elas ficam em `.claude/skills/gestao-receita-pousadas/references/regras.md`. Este arquivo guarda só o histórico das mudanças.
 
 ## O que só pode ser feito na tela (passo a passo para você)

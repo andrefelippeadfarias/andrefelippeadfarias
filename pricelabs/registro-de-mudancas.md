@@ -2546,6 +2546,12 @@ A Villa não aparece em nenhuma busca com filtro de hidro (falta a comodidade na
 - **Recálculo:** Moinhos ainda em 429. O último recálculo dos 6 quartos sem a mudança do "público ~R$ 450" segue sendo o de 17:23 UTC, e não houve Sync Now depois disso. Sem o Sync do dono, o preço novo só sai no envio automático da madrugada.
 - **Nada gravado.**
 
+## 25/10/2026, 22:55 UTC (19:55 BRT) — Rotina leve das 19:53 (sem Beds24)
+
+- **PriceLabs (reservas feitas em 25/10):** nenhuma nova desde as 13:53.
+- **Recálculo:** os 6 quartos ainda em 429; o último recálculo continua sendo o das 17:23 UTC, sem Sync Now depois disso. O preço "público ~R$ 450" (exceto a Panorâmica II) só sai no envio automático da madrugada ou no Sync do dono. Conferir às 07:53 de 26/10 (rotina completa e revisão semanal).
+- **Nada gravado.**
+
 > **Regras em vigor:** desde 06/10/2026 elas ficam em `.claude/skills/gestao-receita-pousadas/references/regras.md`. Este arquivo guarda só o histórico das mudanças.
 
 ## O que só pode ser feito na tela (passo a passo para você)

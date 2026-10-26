@@ -281,6 +281,11 @@
    "Balcony": "chegada_saida",
    "VK2": "chegada_saida",
    "nota": "Bloqueio de sábado da Regra H no Beds24, lido em 21/10/2026 (o dono configura lá; o PriceLabs só aceitaria chegada/saída por data com a personalização ligada na tela). Padrão esperado por quarto, pelo uso mais recente do dono: Recanto (Queen 7, Double, Queen 2) 'noCheckIn'; Afrodite e Villa 'noCheckInOrCheckOut'. Em 21/10 o Beds24 tinha padrões misturados (Q7 com noCheckInOrCheckOut de 30/01 a 27/03; VK7 e Balcony com noCheckIn de 03/04 a 28/08) e horizontes diferentes (Q2 até 23/01; Q7, Afrodite e VK2 até 27/03; Double, VK7 e Balcony até 28/08). O calendario_12m.py audita todo dia; estender ou unificar é com o dono."
+  },
+  "escada": {
+   "passo": 0.07,
+   "fator_balcony": 0.9,
+   "nota": "Dono, 26/10: a cada reserva, subir o preço gradualmente do mínimo atual até o alto padrão (teto = piso do dono de R$ 500 dom-qui / R$ 850 sex-sáb no Genius 3; Balcony 90% do teto da VK2). Um degrau de 7% por reserva no quarto e nas noites da estadia (scripts/escada_reservas.py)."
   }
  },
  "feriados": [

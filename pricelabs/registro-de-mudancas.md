@@ -2623,6 +2623,21 @@ A Villa não aparece em nenhuma busca com filtro de hidro (falta a comodidade na
 - **Reservas feitas em 26/10:** só a Balcony 26/10 (R$ 248), já relatada às 13:53. Recanto sem vendas novas.
 - **Nada gravado.**
 
+## 26/10/2026, 20:30 UTC (17:30 BRT) — Pedido do dono: escada de subida por reserva até o alto padrão
+
+- **Pedido:** "a cada reserva que entrar, vamos aumentando o preço gradualmente até chegarmos no nível de médio-alto padrão [...] começar com esse mínimo [...] e alavancar até chegar no valor de alto padrão [...]. Faça uma análise 4 vezes ao dia."
+- **Regra nova (regras.md 6b; `scripts/escada_reservas.py`):**
+  - cada reserva nova sobe 7% o piso = teto do quarto nas noites da estadia;
+  - teto de alto padrão: R$ 500 no Genius 3 de domingo a quinta (Recanto R$ 1.220 enviados; Villa R$ 943) e R$ 850 na sexta e no sábado (Recanto R$ 2.000; Villa R$ 1.478); Balcony 90% do teto da VK2;
+  - a noite de hoje não sobe; lote do Beds24 e edição da equipe não contam; cancelamento desce um degrau;
+  - no Recanto, a ordem é refeita na mesma noite.
+- **Análise:** nas 4 rotinas leves (10:53, 13:53, 16:53 e 19:53) e na completa das 07:53, que já estão na agenda.
+- **Reservas desde as regras de mínimo (25/10, 17:40 UTC):**
+  - Balcony 26/10, R$ 248: noite de hoje, não sobe;
+  - VK2 22/11 pelo Airbnb: fora da janela da escada;
+  - VK2 25/10, VK2 25-27/10 e Balcony 30-31/10, lançadas no mesmo segundo: lote do Beds24, não contam.
+- **Nada gravado:** nenhum degrau devido agora.
+
 > **Regras em vigor:** desde 06/10/2026 elas ficam em `.claude/skills/gestao-receita-pousadas/references/regras.md`. Este arquivo guarda só o histórico das mudanças.
 
 ## O que só pode ser feito na tela (passo a passo para você)

@@ -139,6 +139,20 @@ class TestValidador(unittest.TestCase):
         v.validar([dict(it, data="2026-11-10")])  # fora do período: o limite normal volta
         self.assertTrue(any("segurança" in x for x in v.erros))
 
+    def test_escada_por_reserva(self):
+        from escada_reservas import passo, ordem, teto
+        hoje = date(2026, 10, 26)
+        self.assertEqual(passo(CFG, "Q7", date(2026, 10, 27), 739, 1, hoje)["novo"], 791)
+        # D0 não sobe; o teto segura; cancelamento desce
+        self.assertEqual(passo(CFG, "Q7", hoje, 739, 1, hoje)["novo"], 739)
+        lim = teto(CFG, "Q7", date(2026, 10, 27))
+        self.assertLessEqual(passo(CFG, "Q7", date(2026, 10, 27), lim - 5, 3, hoje)["novo"], lim)
+        self.assertLess(passo(CFG, "Q7", date(2026, 10, 27), 791, -1, hoje)["novo"], 791)
+        # fim de semana usa o teto de sexta e sábado; Balcony fica abaixo da VK2
+        self.assertGreater(teto(CFG, "Q7", date(2026, 11, 6)), lim)
+        self.assertLess(teto(CFG, "Balcony", date(2026, 10, 27)), teto(CFG, "VK2", date(2026, 10, 27)))
+        self.assertEqual(ordem(791, 747, 755, 800), {"Q7": 791, "Q2": 791, "Double": 791, "Afrodite": 831})
+
     def test_afrodite_fora_da_regra_i(self):
         self.assertTrue(erros([item(quarto="Afrodite", data="2026-10-07", preco=-30, price_type="percent", min_price=1300)]))
 

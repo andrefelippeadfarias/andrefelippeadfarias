@@ -297,3 +297,6 @@ Hora da ANÁLISE E AGENDA DIÁRIA do PriceLabs (rotina "Agenda diária PriceLabs
 
 ## 26/10/2026 — Exceção do dono ao limite de segurança, por quarto e período
 - `validar_plano.py`: `piso_absoluto(q, d)` lê `limites_seguranca.excecoes_dono` em `quartos.json` (quarto, de, até, limite, ordem citada) e usa esse limite dentro do período; fora dele volta 70% do mínimo de referência. Só o dono abre exceção. Uso: Afrodite R$ 800 de 26/10 a 08/11 (dono, 26/10: "Seguir a ordem"). Teste novo `test_limite_seguranca_com_excecao_do_dono` (61 testes OK).
+
+## 26/10/2026 — Escada de subida por reserva (pedido do dono)
+- `scripts/escada_reservas.py` (novo): `passo` sobe 7% por reserva o enviado de um quarto numa noite, até o teto de alto padrão (pisos do dono no Genius 3; Balcony 90% da VK2); a noite de hoje não sobe; com reservas negativas, desce. `ordem` refaz Moinhos ≤ Panorâmica II ≤ Panorâmica I < Afrodite (+5%). `quartos.json` → `parametros.escada`. SKILL.md (rotina leve) e regras.md (6b e decisões). Teste novo `test_escada_por_reserva` (62 testes OK).

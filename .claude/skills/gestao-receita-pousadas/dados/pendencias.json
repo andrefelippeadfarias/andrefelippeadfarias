@@ -607,7 +607,7 @@
    "responsavel": "dono",
    "desde": "2026-10-26",
    "urgencia": 1,
-   "texto": "Com o mínimo de R$ 300 para o Genius 3 (fator 0,41), o preço público do Recanto na Booking não desce de ~R$ 486 em dia de semana, contra mediana de ~R$ 235 a R$ 250 dos concorrentes e máximo de R$ 394 (coleta de 26/10). Conferir na extranet (Promoções e Genius) quais descontos se somam no Genius 3 (público ÷ Genius = 0,62, ou seja, ~38% de desconto). Com um Genius menor, o público pode descer sem ninguém pagar menos de R$ 300. Decisão do dono."
+   "texto": "Com o mínimo de R$ 300 para o Genius 3 (fator 0,41), o preço público do Recanto na Booking não desce de ~R$ 486 em dia de semana, contra mediana de ~R$ 235 a R$ 250 dos concorrentes e máximo de R$ 394 (coleta de 26/10). Conferir na extranet (Promoções e Genius) quais descontos se somam no Genius 3 (público ÷ Genius = 0,62, ou seja, ~38% de desconto). Com um Genius menor, o público pode descer sem ninguém pagar menos de R$ 300. Decisão do dono. Dono, 26/10: \"1. Sim\". Falta ele mudar na extranet e informar o novo desconto (ou mandar print da página de Promoções e Genius); a Skill então recalcula o enviado dos dias úteis."
   },
   {
    "id": "airbnb-vk2-2911-duplicada",

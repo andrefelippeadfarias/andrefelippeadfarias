@@ -2569,6 +2569,12 @@ A Villa não aparece em nenhuma busca com filtro de hidro (falta a comodidade na
 - **Recálculo:** 429 nos quartos testados (Moinhos, Panorâmica I e Afrodite); o saldo volta por volta das 16-17 UTC. **Sync Now do dono** pedido.
 - **Como desfazer:** voltar às regras "Dono 25/10" (Moinhos −41%, Panorâmica II −54%, Panorâmica I −50%, Afrodite −47%).
 
+## 26/10/2026, 11:10 UTC (08:10 BRT) — Pedido do dono: conferir se o mínimo de R$ 300 propagou
+
+- **PriceLabs:** recálculo automático às 10:57 UTC (Moinhos R$ 739, Panorâmica II R$ 747, Panorâmica I R$ 755) e **envio às 10:57:52 UTC** ✅.
+- **Booking, id 7562933 (preço público):** 27-28/10 e 03-04/11 a **R$ 486,26** = Moinhos R$ 739 × 0,658 ✅. O Genius 3 (~R$ 303) não aparece no conector.
+- **Anúncio antigo (id 15459723) continua no ar** com os preços antigos: R$ 500,83 (27/10) e R$ 607,27 (03/11). Pendência do dono.
+
 > **Regras em vigor:** desde 06/10/2026 elas ficam em `.claude/skills/gestao-receita-pousadas/references/regras.md`. Este arquivo guarda só o histórico das mudanças.
 
 ## O que só pode ser feito na tela (passo a passo para você)

@@ -2601,6 +2601,12 @@ A Villa não aparece em nenhuma busca com filtro de hidro (falta a comodidade na
   - varredura de concorrência (roda em outra sessão).
 - **Nada gravado** além do pedido do dono das 11:00 UTC: os dias úteis até 08/11 e o fds 06-07/11 estão sob ordens do dono.
 
+## 26/10/2026, 14:00 UTC (11:00 BRT) — Rotina leve das 10:53 (sem Beds24)
+
+- **Envio do dia:** feito às 10:57-10:58 UTC nos 7 quartos ✅. Booking (id 7562933): Moinhos a R$ 486,26 em 27/10 e 03/11 ✅ (conferido às 11:10 UTC).
+- **Reservas feitas em 26/10:** a lista do PriceLabs ainda não foi importada (chega por volta das 10:59 BRT), e o calendário segue o recálculo das 10:57 UTC. Fica para a rotina das 13:53.
+- **Nada gravado.** Esperando o dono rever Genius e promoções na extranet (pendência genius-alavanca-2610).
+
 > **Regras em vigor:** desde 06/10/2026 elas ficam em `.claude/skills/gestao-receita-pousadas/references/regras.md`. Este arquivo guarda só o histórico das mudanças.
 
 ## O que só pode ser feito na tela (passo a passo para você)

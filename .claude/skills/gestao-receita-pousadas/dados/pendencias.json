@@ -554,7 +554,9 @@
    "desde": "2026-10-23",
    "urgencia": 1,
    "revisar_em": "2026-10-26",
-   "texto": "Medir o teste do dono (23/10): Moinhos a R$ 700 no preço final em 23 e 24/10 (antes R$ 850), sábado com 1 noite. Contar as vendas da Moinhos de 23/10 09:45 BRT até 25/10 e o valor por noite. Na revisão de segunda (26/10), levar ao dono a proposta de uma distância fixa (cerca de 15%) entre a Moinhos e a Panorâmica I nos fins de semana fracos. As regras vencem sozinhas em 25/10."
+   "texto": "Medir o teste do dono (23/10): Moinhos a R$ 700 no preço final em 23 e 24/10 (antes R$ 850), sábado com 1 noite. Contar as vendas da Moinhos de 23/10 09:45 BRT até 25/10 e o valor por noite. Na revisão de segunda (26/10), levar ao dono a proposta de uma distância fixa (cerca de 15%) entre a Moinhos e a Panorâmica I nos fins de semana fracos. As regras vencem sozinhas em 25/10.",
+   "resolvido_em": "2026-10-26",
+   "resultado": "Nenhuma venda pela Booking na Moinhos para 23-25/10 depois do teste (piso R$ 700 e sábado de 1 noite). Entrou só uma reserva direta (canal \"others\") de 1 noite em 24/10, lançada às 21:19 BRT de 23/10, por R$ 3.332, valor fora do padrão de uma noite (conferir com a recepção). Proposta de distância fixa Moinhos x Panorâmica I levada ao dono no relatório de 26/10."
   },
   {
    "id": "beds24-moinhos-sabado-2410",
@@ -599,6 +601,27 @@
    "desde": "2026-10-25",
    "urgencia": 2,
    "texto": "A Villa na Booking (id 14824789) aparece ~20% abaixo do fator normal em 26-28/10 (R$ 349 contra ~R$ 430). Indica oferta de última hora ou outra promoção ativa na extranet (Promoções). A regra do dono é não usar promoções da Booking: conferir e desligar, se for o caso."
+  },
+  {
+   "id": "genius-alavanca-2610",
+   "responsavel": "dono",
+   "desde": "2026-10-26",
+   "urgencia": 1,
+   "texto": "Com o mínimo de R$ 300 para o Genius 3 (fator 0,41), o preço público do Recanto na Booking não desce de ~R$ 486 em dia de semana, contra mediana de ~R$ 235 a R$ 250 dos concorrentes e máximo de R$ 394 (coleta de 26/10). Conferir na extranet (Promoções e Genius) quais descontos se somam no Genius 3 (público ÷ Genius = 0,62, ou seja, ~38% de desconto). Com um Genius menor, o público pode descer sem ninguém pagar menos de R$ 300. Decisão do dono."
+  },
+  {
+   "id": "airbnb-vk2-2911-duplicada",
+   "responsavel": "dono",
+   "desde": "2026-10-26",
+   "urgencia": 2,
+   "texto": "Duas reservas do Airbnb na VK2 para 29/11 com os mesmos dados (R$ 357, 1 noite): 95178345 (feita em 24/10) e 95210620 (25/10). Conferir no Beds24 se é a mesma reserva importada duas vezes ou duas reservas reais (a VK2 tem 2 unidades)."
+  },
+  {
+   "id": "q7-2410-direta-3332",
+   "responsavel": "dono",
+   "desde": "2026-10-26",
+   "urgencia": 3,
+   "texto": "Reserva direta 95150099 na Moinhos (canal others), 24/10, 1 noite, R$ 3.332, lançada às 21:19 BRT de 23/10. O valor é alto demais para uma noite: conferir com a recepção se foi lançamento de grupo, pacote ou erro de digitação."
   }
  ],
  "versao": "2026-10-21T15"

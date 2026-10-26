@@ -2575,6 +2575,32 @@ A Villa não aparece em nenhuma busca com filtro de hidro (falta a comodidade na
 - **Booking, id 7562933 (preço público):** 27-28/10 e 03-04/11 a **R$ 486,26** = Moinhos R$ 739 × 0,658 ✅. O Genius 3 (~R$ 303) não aparece no conector.
 - **Anúncio antigo (id 15459723) continua no ar** com os preços antigos: R$ 500,83 (27/10) e R$ 607,27 (03/11). Pendência do dono.
 
+## 26/10/2026, 11:40 UTC (08:40 BRT) — Rotina das 07:53 (segunda): coleta completa, nada gravado além do pedido do dono
+
+- **Envio:** os 7 quartos foram enviados entre 10:57 e 10:58 UTC, com o mínimo de R$ 300 do Recanto ✅.
+- **Ocupação (calendário do PriceLabs):**
+  - Hotel: 47% em 7 dias, 45% em 15 dias e 35% em 30 dias.
+  - Recanto: 41% / 38% / 36%.
+  - Villa: 53% / 53% / 35%.
+  - Atrás da meta de 7 dias (70%): todos os quartos menos a VK7 (71%).
+- **Reservas (24 a 26/10):** 7, sem cancelamentos. No Recanto: direta na Moinhos 24/10 (R$ 3.332 por 1 noite, a conferir) e Booking na Moinhos 31/10 (R$ 1.500). Duas reservas do Airbnb iguais na VK2 em 29/11 (possível duplicata).
+- **Mercado (Booking, preço público por estadia):**
+
+  | Período | Mediana | Máximo | Recanto (id 7562933) | Villa |
+  |---|---|---|---|---|
+  | 27-28/10 | R$ 250 | R$ 394 | ~R$ 486 | R$ 336 |
+  | fds 06-08/11 (2 noites) | R$ 1.100 | R$ 2.160 | R$ 2.377 | sem disponibilidade |
+  | Consciência Negra 20-22/11 (2 noites) | R$ 1.571 | R$ 3.157 | R$ 3.411 | R$ 2.934 |
+
+  O agente de concorrentes leu o anúncio antigo (id 15459723) nas datas úteis (R$ 501 e R$ 560); os valores do Recanto acima são do anúncio certo.
+- **Ocupação do mercado (PriceLabs):** 26/10 a 05/11 de 6% a 18% nos dias úteis e 27% a 44% em Finados; novembro em 13% (14% no ano passado).
+- **Teste da Moinhos de 23-25/10 (piso R$ 700 e sábado de 1 noite):** nenhuma venda pela Booking depois do teste.
+- **Não feito hoje:**
+  - recálculo e conferência por quarto, auditoria de 12 meses e da ordem do Recanto (429: saldo de recálculo usado em 25/10);
+  - painel semanal, desempenho do mês, faturamento e `reservas_abaixo.py` (sem o segredo do Beds24);
+  - varredura de concorrência (roda em outra sessão).
+- **Nada gravado** além do pedido do dono das 11:00 UTC: os dias úteis até 08/11 e o fds 06-07/11 estão sob ordens do dono.
+
 > **Regras em vigor:** desde 06/10/2026 elas ficam em `.claude/skills/gestao-receita-pousadas/references/regras.md`. Este arquivo guarda só o histórico das mudanças.
 
 ## O que só pode ser feito na tela (passo a passo para você)

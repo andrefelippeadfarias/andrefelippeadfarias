@@ -2618,6 +2618,11 @@ A Villa não aparece em nenhuma busca com filtro de hidro (falta a comodidade na
 - **Abaixo de 70% do esperado:** nenhuma (conta pelo fator do canal, sem o Beds24).
 - **Nada gravado:** nenhuma noite cruzou o gatilho da 4c. Dias úteis e fds 06-07/11 seguem sob ordens do dono.
 
+## 26/10/2026, 19:55 UTC (16:55 BRT) — Rotina leve das 16:53 (sem Beds24)
+
+- **Reservas feitas em 26/10:** só a Balcony 26/10 (R$ 248), já relatada às 13:53. Recanto sem vendas novas.
+- **Nada gravado.**
+
 > **Regras em vigor:** desde 06/10/2026 elas ficam em `.claude/skills/gestao-receita-pousadas/references/regras.md`. Este arquivo guarda só o histórico das mudanças.
 
 ## O que só pode ser feito na tela (passo a passo para você)

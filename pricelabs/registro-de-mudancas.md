@@ -2607,6 +2607,17 @@ A Villa não aparece em nenhuma busca com filtro de hidro (falta a comodidade na
 - **Reservas feitas em 26/10:** a lista do PriceLabs ainda não foi importada (chega por volta das 10:59 BRT), e o calendário segue o recálculo das 10:57 UTC. Fica para a rotina das 13:53.
 - **Nada gravado.** Esperando o dono rever Genius e promoções na extranet (pendência genius-alavanca-2610).
 
+## 26/10/2026, 17:00 UTC (14:00 BRT) — Rotina leve das 13:53 (sem Beds24)
+
+- **Reservas novas na lista do PriceLabs (todas da Villa):**
+  - Balcony 26/10, Booking, 1 noite, R$ 248 (feita às 09:54 BRT de hoje; 85% do esperado, R$ 635 × 0,46);
+  - Balcony 30-31/10 (Finados), Booking, **2 noites**, R$ 1.383 (R$ 691 por noite). Finados tem estadia mínima de 3 noites: a recepção alterou ou o canal deixou passar;
+  - VK2 25/10 (R$ 394) e 25-27/10 (R$ 1.296), Booking. As duas foram lançadas juntas com a Balcony de Finados às 16:49 BRT de 25/10: lote do Beds24 (edição da equipe), não conta como ritmo de venda;
+  - VK2 pelo Airbnb: 08/11 (R$ 380) e 22/11 (R$ 476).
+- **Recanto:** nenhuma reserva nova desde o mínimo de R$ 300 (público ~R$ 486).
+- **Abaixo de 70% do esperado:** nenhuma (conta pelo fator do canal, sem o Beds24).
+- **Nada gravado:** nenhuma noite cruzou o gatilho da 4c. Dias úteis e fds 06-07/11 seguem sob ordens do dono.
+
 > **Regras em vigor:** desde 06/10/2026 elas ficam em `.claude/skills/gestao-receita-pousadas/references/regras.md`. Este arquivo guarda só o histórico das mudanças.
 
 ## O que só pode ser feito na tela (passo a passo para você)

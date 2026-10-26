@@ -2552,6 +2552,23 @@ A Villa não aparece em nenhuma busca com filtro de hidro (falta a comodidade na
 - **Recálculo:** os 6 quartos ainda em 429; o último recálculo continua sendo o das 17:23 UTC, sem Sync Now depois disso. O preço "público ~R$ 450" (exceto a Panorâmica II) só sai no envio automático da madrugada ou no Sync do dono. Conferir às 07:53 de 26/10 (rotina completa e revisão semanal).
 - **Nada gravado.**
 
+## 26/10/2026, 11:00 UTC (08:00 BRT) — Pedido do dono: completar os dias de semana do Recanto, mínimo de R$ 300
+
+- **Pedido:** "Vamos ajustar o valor da recanto dos moinhos. Estamos praticamente sem reservas durante a semana para essas duas semanas. Vamos completar as reservas. Valor minimo de diária de 300 reais."
+- **Escolhas do dono:** R$ 300 é o mínimo que qualquer hóspede paga, inclusive o Genius 3 ("Ninguém paga menos de 300"). A Afrodite segue a ordem do Recanto (5% acima da Panorâmica I), abaixo do limite de segurança dela por ordem expressa (exceção registrada em `quartos.json`, até 08/11).
+- **Noites:** 26-29/10, 02-05/11 e 08/11, só as que têm quarto livre (fora Panorâmica I, Panorâmica II e Afrodite em 29/10; Panorâmica II e Afrodite em 08/11; Afrodite em 26/10). Fds 06-07/11 e Finados sem mudança. Villa sem mudança.
+
+| Quarto | Antes (enviado) | Depois (piso = teto) | Genius 3 | Público Booking |
+|---|---|---|---|---|
+| Moinhos | R$ 692 | R$ 739 (−37%) | ~R$ 303 | ~R$ 486 |
+| Panorâmica II | R$ 731 | R$ 747 (−53%) | ~R$ 306 | ~R$ 492 |
+| Panorâmica I | R$ 740 | R$ 755 (−49%) | ~R$ 310 | ~R$ 497 |
+| Afrodite | R$ 1.060 | R$ 800 (−60%) | ~R$ 328 | ~R$ 526 |
+
+- **Validação:** 30 itens, 0 erros (validador com a exceção nova do dono). As 4 gravações foram lidas de volta ✅.
+- **Recálculo:** 429 nos quartos testados (Moinhos, Panorâmica I e Afrodite); o saldo volta por volta das 16-17 UTC. **Sync Now do dono** pedido.
+- **Como desfazer:** voltar às regras "Dono 25/10" (Moinhos −41%, Panorâmica II −54%, Panorâmica I −50%, Afrodite −47%).
+
 > **Regras em vigor:** desde 06/10/2026 elas ficam em `.claude/skills/gestao-receita-pousadas/references/regras.md`. Este arquivo guarda só o histórico das mudanças.
 
 ## O que só pode ser feito na tela (passo a passo para você)

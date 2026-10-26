@@ -128,6 +128,17 @@ class TestValidador(unittest.TestCase):
         e = erros([item(quarto="Q7", data="2026-10-07", preco=-50, price_type="percent", min_price=500)])
         self.assertTrue(any("segurança" in x for x in e))
 
+    def test_limite_seguranca_com_excecao_do_dono(self):
+        cfg = dict(CFG, limites_seguranca=dict(CFG["limites_seguranca"], excecoes_dono=[
+            {"quarto": "Afrodite", "de": "2026-10-26", "ate": "2026-11-08", "limite": 800}]))
+        it = dict(tipo="data", motivo="teste", quarto="Afrodite", min_price=800, max_price=800, excecao="dono")
+        v = Validador(cfg, date(2026, 10, 26), {})
+        v.validar([dict(it, data="2026-10-27")])
+        self.assertFalse(any("segurança" in x for x in v.erros))
+        v = Validador(cfg, date(2026, 10, 26), {})
+        v.validar([dict(it, data="2026-11-10")])  # fora do período: o limite normal volta
+        self.assertTrue(any("segurança" in x for x in v.erros))
+
     def test_afrodite_fora_da_regra_i(self):
         self.assertTrue(erros([item(quarto="Afrodite", data="2026-10-07", preco=-30, price_type="percent", min_price=1300)]))
 

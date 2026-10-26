@@ -95,7 +95,12 @@ class Validador:
     def aviso(self, i, item, msg):
         self.avisos.append(f"aviso item {i} ({item.get('quarto')} {item.get('data', '')}): {msg}")
 
-    def piso_absoluto(self, q) -> float:
+    def piso_absoluto(self, q, d: date | None = None) -> float:
+        # Só o dono abre exceção ao limite, por quarto e período, em limites_seguranca.excecoes_dono (quartos.json).
+        if d is not None:
+            for ex in self.cfg["limites_seguranca"].get("excecoes_dono", []) or []:
+                if ex.get("quarto") == q["curto"] and data(ex["de"]) <= d <= data(ex["ate"]):
+                    return float(ex["limite"])
         return round(self.fracao * q["min_referencia"], 2)
 
     def fator_piso(self, q) -> float:
@@ -170,7 +175,7 @@ class Validador:
         fer = periodo_feriado(self.cfg, d)
         antecedencia = (d - self.hoje).days
         self.validar_chegada_saida(i, it, q, d, excecao)
-        piso_abs = self.piso_absoluto(q)
+        piso_abs = self.piso_absoluto(q, d)
         tipo_preco = it.get("price_type")
         preco = it.get("preco")
         if preco is not None and tipo_preco not in ("fixed", "percent"):

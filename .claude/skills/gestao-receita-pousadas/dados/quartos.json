@@ -227,7 +227,17 @@
   "piso_vitrine_semana_suites": 500,
   "piso_vitrine_semana_nota": "Dono, 14/10: \"Vamos ajustar os valores das suítes com banheira para dia de semana, no mínimo de R$500. Preço final nas plataformas. Ajuste isso percentualmente para podermos termos a flutuação de preço natural do Price Labs.\" Vale para as 6 suítes com banheira (não a Balcony), nas noites de domingo a quinta fora de feriado: piso enviado ≥ este valor ÷ parametros.fator_vitrine_semana da pousada (vitrine da Booking, a mais descontada). Vale também para a Regra I. Só o dono muda.",
   "piso_vitrine_fds_suites": 850,
-  "piso_vitrine_fds_nota": "Dono, 14/10: \"Para o fim de semana a diária mínima pra suíte, com banheira, deve ser na faixa de R$ 850,00\" (lido como preço final nas plataformas, como o pedido anterior de R$ 500). Vale para as 6 suítes com banheira (não a Balcony) nas noites de sexta e sábado fora de feriado, inclusive na Regra I: piso enviado ≥ este valor ÷ parametros.fator_vitrine_fds da pousada. Responde a dúvida do padrão de qualidade (base = preço final). Só o dono muda."
+  "piso_vitrine_fds_nota": "Dono, 14/10: \"Para o fim de semana a diária mínima pra suíte, com banheira, deve ser na faixa de R$ 850,00\" (lido como preço final nas plataformas, como o pedido anterior de R$ 500). Vale para as 6 suítes com banheira (não a Balcony) nas noites de sexta e sábado fora de feriado, inclusive na Regra I: piso enviado ≥ este valor ÷ parametros.fator_vitrine_fds da pousada. Responde a dúvida do padrão de qualidade (base = preço final). Só o dono muda.",
+  "excecoes_dono": [
+   {
+    "quarto": "Afrodite",
+    "de": "2026-10-26",
+    "ate": "2026-11-08",
+    "limite": 800,
+    "ordem": "Dono, 26/10: \"Vamos completar as reservas. Valor mínimo de diária de 300 reais\"; R$ 300 = o que o hóspede Genius 3 paga (\"Ninguém paga menos de 300\"); Afrodite \"Seguir a ordem\" (5% acima da Panorâmica I). Dias de semana em aberto até 08/11."
+   }
+  ],
+  "excecoes_dono_nota": "Exceção ao limite de segurança por quarto e período, só por ordem expressa do dono (cite a ordem). O validador usa o 'limite' no lugar de 70% do mínimo de referência dentro do período; fora dele volta o limite normal."
  },
  "parametros": {
   "nota": "A Skill ajusta estes valores sozinha, dentro dos limites de segurança. Toda mudança vai para o historico-da-skill.md.",

@@ -294,3 +294,6 @@ Hora da ANÁLISE E AGENDA DIÁRIA do PriceLabs (rotina "Agenda diária PriceLabs
 
 ## 23/10/2026 — Ordem do dono libera sábado de 1 noite no validador
 - `validar_plano.py`: um item com excecao "dono" passa a liberar o sábado de 1 noite fora de feriado. A política de não vender sábado sozinho é do dono; antes, só a excecao "regra_h" liberava, e um item não podia levar as duas. Teste novo em `test_sabado_sozinho`. Uso: Moinhos 24/10 (dono, 23/10).
+
+## 26/10/2026 — Exceção do dono ao limite de segurança, por quarto e período
+- `validar_plano.py`: `piso_absoluto(q, d)` lê `limites_seguranca.excecoes_dono` em `quartos.json` (quarto, de, até, limite, ordem citada) e usa esse limite dentro do período; fora dele volta 70% do mínimo de referência. Só o dono abre exceção. Uso: Afrodite R$ 800 de 26/10 a 08/11 (dono, 26/10: "Seguir a ordem"). Teste novo `test_limite_seguranca_com_excecao_do_dono` (61 testes OK).

@@ -2706,7 +2706,7 @@ A Villa não aparece em nenhuma busca com filtro de hidro (falta a comodidade na
 | +15% (3/7) | VK7 20/11 | R$ 2.486 | **R$ 2.871 ✅** (teto do corte de 19/10 levantado) |
 | +15% (1/2) | VK2 20 e 21/11 | R$ 3.079 | **R$ 3.543 ✅** |
 | +15% (4-5/7 e 3/7) | Moinhos 30/12, 31/12 e 01/01 | R$ 2.602 / R$ 3.083 | **R$ 3.003 / R$ 3.554 ✅** |
-| +15% (3/6 e 2/6) | Panorâmica I 31/12, 01/01 e 02/01 | R$ 3.283 / R$ 3.890 | R$ 3.789 / R$ 4.494 (gravado; recálculo amanhã, sem saldo) |
+| +15% (3/6 e 2/6) | Panorâmica I 31/12, 01/01 e 02/01 | R$ 3.283 / R$ 3.890 | R$ 3.789 / R$ 4.484 (gravado; recálculo amanhã, sem saldo) |
 | +15% e ordem | Panorâmica II 31/12 e 01/01 | R$ 3.021 / R$ 3.355 | **R$ 3.482 / R$ 3.562 ✅** |
 | +15% (2/7) | VK7 31/12 | R$ 3.280 | **R$ 3.774 ✅** |
 | +15% (1/2) | VK2 30 e 31/12 | R$ 2.815 | **R$ 3.238 ✅** |

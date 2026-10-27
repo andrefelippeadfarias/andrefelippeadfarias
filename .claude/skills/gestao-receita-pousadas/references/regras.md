@@ -146,6 +146,16 @@ Toda gravação passa antes pelo `scripts/validar_plano.py`, é conferida depois
 - **Noites esgotadas também recebem piso** (um cancelamento reabre a noite); o percentual negativo nelas tira o peso da noite alta da média do bloco.
 - O piso padrão de um feriado novo é R$ 1.000 reais. A Skill pode mudar o piso pelos dados (concorrentes, ritmo de vendas), mas nunca abaixo de R$ 800 reais.
 
+**Regra J, lotação e overbooking → topo do mercado (dono, 27/10: "quando estivermos com overbooking assim, ou a pousada lotada, essa suíte, suba o valor para o top de mercado para que possamos evitar que entrem reservas, e se entrar a reserva, que entre com o valor mais alto do mercado. Coloque isso dentro da nossa skill para sempre executarmos diariamente essas regras.")**
+- **Gatilhos**, noite a noite, de amanhã em diante, em toda rotina (leve e completa):
+  - a suíte está esgotada no calendário (vendidas ≥ unidades);
+  - há overbooking na lista de reservas (reservas confirmadas na noite > unidades), mesmo que o calendário não acuse (ele mostra no máximo a lotação);
+  - a pousada está lotada: ≥ 90% das unidades vendidas na noite (`parametros.regra_j.limiar_pousada`). Aí as suítes que ainda têm unidade livre também vão ao topo.
+- **Topo do mercado** = maior preço público por noite do quarto com hidro da classe A no período (`dados/concorrentes_hidro_vista.json` → `maximo_a`). Sem esse dado: o maior preço das buscas de concorrentes da coleta que cobrem a noite. Sem nenhum dado: o preço atual × 1,5. Enviado = topo ÷ fator público da Booking da pousada (Recanto 0,59; Villa 0,589), nunca abaixo do preço atual nem acima do máximo do anúncio; piso = teto.
+- **Precedência:** vence a escada por reserva, a flutuação 4c, a ordem do Recanto e a Regra G naquela suíte e noite. A suíte esgotada sai da ordem do Recanto e da Regra G, que seguem valendo entre as suítes que ainda vendem.
+- **Quando a noite reabre** (cancelamento ou overbooking resolvido): `topo_mercado.py restaurar` devolve o preço de antes (guardado no motivo) como piso, com o teto no máximo do anúncio; a partir daí valem as outras regras.
+- **Overbooking** vai sempre para o topo do relatório, com as noites e o número de reservas. A Skill não cancela nem move reserva: o dono decide.
+
 ## 4b. Estratégia por pousada e por suíte, pela demanda (dono, 07/10)
 Pedido do dono: "ajustar o preço de acordo com a demanda que estamos recebendo em cada hotel separadamente, com uma estratégia bem definida para cada hotel e cada suíte".
 
@@ -235,6 +245,7 @@ Pedido do dono: "qualificar os preços: muito baixo, baixo, médio, alto e muito
 - 19/10: o livro do mês inclui as reservas sem valor no PriceLabs pelo valor total da reserva ("Sim"); detalhe em 4c, "Como medir o livro".
 - 19/10 (tarde): "Faça tudo que precisar para sermos o mais precisos possíveis e atingirmos nossos objetivos." O Beds24 direto passa a ser a fonte das reservas, da ocupação real e do faturamento; ocupação real = "Confirmado" + "Novo" (as novas têm fatura e ocupam o quarto), com as confirmadas mostradas ao lado; "Inquiry" (consulta do Airbnb) fica fora. O PriceLabs segue como fonte de preço e do calendário de venda.
 - 20/10: "Serve para todo o piso": os pisos de R$ 500 (domingo a quinta) e R$ 850 (sexta e sábado) no preço final valem para todos os hóspedes, inclusive o Genius 3. "Não": as promoções da Booking ficam como estão. Pisos por data regravados até 30/04/2027 (418 noites).
+- 27/10: Regra J. Suíte lotada ou com overbooking, ou pousada lotada, vai ao topo do mercado, em toda rotina (seção 4, `scripts/topo_mercado.py`).
 - 26/10 (tarde): escada de subida por reserva até o alto padrão (tabela da seção 6b; `scripts/escada_reservas.py`, `parametros.escada` em `quartos.json`).
 - 26/10: "1. Sim" à proposta de rever Genius e promoções da Booking: o dono revisa na extranet o que se soma ao Genius 3 (~38% sobre o público), para o público descer até perto do mercado (~R$ 340 em dia útil) sem ninguém pagar menos de R$ 300. Substitui o "Não" de 20/10 sobre as promoções. A mudança é do dono na extranet (a Skill não mexe em Genius nem em promoções); depois dela, a Skill recalcula o enviado pelo novo fator do hóspede mais descontado.
 - 20/10: buscas na Booking só pelo conector ou pelo PDF que o dono salva no navegador dele; nada de navegador automático, Playwright ou browser-harness (a Booking bloqueia e proíbe nos termos).

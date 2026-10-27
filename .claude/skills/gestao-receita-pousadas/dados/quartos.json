@@ -286,6 +286,15 @@
    "passo": 0.07,
    "fator_balcony": 0.9,
    "nota": "Dono, 26/10: a cada reserva, subir o preço gradualmente do mínimo atual até o alto padrão (teto = piso do dono de R$ 500 dom-qui / R$ 850 sex-sáb no Genius 3; Balcony 90% do teto da VK2). Um degrau de 7% por reserva no quarto e nas noites da estadia (scripts/escada_reservas.py)."
+  },
+  "regra_j": {
+   "fator_publico": {
+    "Recanto": 0.59,
+    "Villa": 0.589
+   },
+   "limiar_pousada": 0.9,
+   "sem_dado_mult": 1.5,
+   "nota": "Dono, 27/10: suíte lotada ou com overbooking, ou pousada lotada (≥ 90% vendida), vai ao topo do mercado: maior preço do quarto com hidro da classe A no período (concorrentes_hidro_vista.json → maximo_a) ÷ fator público da Booking (Recanto 0,59 no anúncio 15459723; Villa 0,589). Sem dado do período: preço atual × 1,5. scripts/topo_mercado.py."
   }
  },
  "feriados": [

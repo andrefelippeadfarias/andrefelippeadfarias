@@ -160,7 +160,8 @@
    "mediana_a": 2066.13,
    "recanto": 1311,
    "n": 4,
-   "fonte": "escada de preço mínimo 27/10 (5 agentes, conector oficial); quarto com hidro da classe A; Recanto = anúncio 15459723, menor quarto"
+   "fonte": "escada de preço mínimo 27/10 (5 agentes, conector oficial); quarto com hidro da classe A; Recanto = anúncio 15459723, menor quarto",
+   "maximo_a": 2600.0
   },
   {
    "rotulo": "2026-11-19→2026-11-22",
@@ -172,7 +173,8 @@
    "mediana_a": 2078.09,
    "recanto": 1437,
    "n": 4,
-   "fonte": "escada de preço mínimo 27/10 (5 agentes, conector oficial); quarto com hidro da classe A; Recanto = anúncio 15459723, menor quarto"
+   "fonte": "escada de preço mínimo 27/10 (5 agentes, conector oficial); quarto com hidro da classe A; Recanto = anúncio 15459723, menor quarto",
+   "maximo_a": 3058.77
   },
   {
    "rotulo": "2026-12-24→2026-12-26",
@@ -183,7 +185,8 @@
    "mediana_a": 1800.0,
    "recanto": 1505,
    "n": 3,
-   "fonte": "escada de preço mínimo 27/10 (5 agentes, conector oficial); quarto com hidro da classe A; Recanto = anúncio 15459723, menor quarto"
+   "fonte": "escada de preço mínimo 27/10 (5 agentes, conector oficial); quarto com hidro da classe A; Recanto = anúncio 15459723, menor quarto",
+   "maximo_a": 2173.65
   },
   {
    "rotulo": "2026-12-29→2027-01-02",
@@ -196,7 +199,8 @@
    "mediana_a": 2536.05,
    "recanto": 1632,
    "n": 4,
-   "fonte": "escada de preço mínimo 27/10 (5 agentes, conector oficial); quarto com hidro da classe A; Recanto = anúncio 15459723, menor quarto"
+   "fonte": "escada de preço mínimo 27/10 (5 agentes, conector oficial); quarto com hidro da classe A; Recanto = anúncio 15459723, menor quarto",
+   "maximo_a": 3112.76
   },
   {
    "rotulo": "2027-01-22→2027-01-25",
@@ -208,7 +212,8 @@
    "mediana_a": 1643.93,
    "recanto": 1162,
    "n": 7,
-   "fonte": "escada de preço mínimo 27/10 (5 agentes, conector oficial); quarto com hidro da classe A; Recanto = anúncio 15459723, menor quarto"
+   "fonte": "escada de preço mínimo 27/10 (5 agentes, conector oficial); quarto com hidro da classe A; Recanto = anúncio 15459723, menor quarto",
+   "maximo_a": 2520.11
   }
  ],
  "ressalvas": [

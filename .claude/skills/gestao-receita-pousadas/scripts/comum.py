@@ -78,3 +78,25 @@ def ler_instante(texto) -> datetime | None:
     except ValueError:
         return None
     return dt if dt.tzinfo else dt.replace(tzinfo=timezone.utc)
+
+
+def vendidas_total(r: dict, unidades: int) -> tuple[int, int]:
+    """(vendidas, total) de uma noite do recálculo do PriceLabs. Unidade única (Afrodite): mu_occupancy vem "-1" e a
+    venda aparece em num_bookings."""
+    mu = str(r.get("mu_occupancy") or "")
+    if "/" in mu:
+        v, t = mu.split("/", 1)
+        try:
+            return int(v), int(t)
+        except ValueError:
+            pass
+    try:
+        nb = int(float(r.get("num_bookings") or 0))
+    except ValueError:
+        nb = 0
+    return (min(nb, unidades), unidades)
+
+
+def esgotado(r: dict, unidades: int) -> bool:
+    v, t = vendidas_total(r, unidades)
+    return t > 0 and v >= t

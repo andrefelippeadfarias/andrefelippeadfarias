@@ -153,6 +153,30 @@ class TestValidador(unittest.TestCase):
         self.assertLess(teto(CFG, "Balcony", date(2026, 10, 27)), teto(CFG, "VK2", date(2026, 10, 27)))
         self.assertEqual(ordem(791, 747, 755, 800), {"Q7": 791, "Q2": 791, "Double": 791, "Afrodite": 831})
 
+    def test_regra_j_topo_do_mercado(self):
+        import topo_mercado as tm
+        from datetime import date as D
+        cal = {"Q7": {"2026-10-31": {"date": "2026-10-31", "price": "2471", "mu_occupancy": "7/7"},
+                      "2026-11-03": {"date": "2026-11-03", "price": "739", "mu_occupancy": "2/7"}},
+               "VK7": {"2026-11-01": {"date": "2026-11-01", "price": "2294", "mu_occupancy": "6/7"}}}
+        per = [("Finados", {"2026-10-31", "2026-11-01"}, 2600.0, "classe A")]
+        res = [{"listing_id": "350364___722813", "booking_status": "booked", "check_in": "2026-11-01", "no_of_days": 1}] * 8
+        over = tm.overbooking(res, CFG)
+        self.assertEqual(over, {("VK7", "2026-11-01"): 8})
+        itens = tm.plano(CFG, cal, D(2026, 10, 27), 10, per, over)
+        por = {(i["quarto"], i["data"]): i for i in itens}
+        self.assertIn(("Q7", "2026-10-31"), por)          # esgotada
+        self.assertIn(("VK7", "2026-11-01"), por)         # overbooking pela lista
+        self.assertNotIn(("Q7", "2026-11-03"), por)       # 2/7: não lotada
+        q = por[("Q7", "2026-10-31")]
+        self.assertEqual(q["min_price"], q["max_price"])
+        self.assertGreater(q["min_price"], 2471)
+        self.assertIn("antes R$ 2471", q["motivo"])
+        # reabriu: restaurar volta ao preço de antes como piso
+        cal2 = {"Q7": {"2026-10-31": {"date": "2026-10-31", "price": "4400", "mu_occupancy": "6/7"}}}
+        r = tm.restaurar(CFG, cal2, {"Q7": [{"date": "2026-10-31", "reason": q["motivo"]}]}, D(2026, 10, 27))
+        self.assertEqual(r[0]["min_price"], 2471)
+
     def test_afrodite_fora_da_regra_i(self):
         self.assertTrue(erros([item(quarto="Afrodite", data="2026-10-07", preco=-30, price_type="percent", min_price=1300)]))
 

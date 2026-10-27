@@ -290,10 +290,6 @@ class Validador:
                                   "a flutuação dá um degrau por dia (regras.md 4c)")
             if it.get("max_price") is not None:
                 self.tetos[(q["curto"], d.isoformat())] = self.teto_efetivo(q, it)
-            if q["curto"] == "Balcony" and it.get("max_price") is None and ocup.get("total") is not None \
-               and ocup.get("livres", 1) <= 0:
-                self.aviso(i, it, "Balcony esgotada sem teto: ponha max_price ≈ alvo da Regra G para um "
-                                  "cancelamento não reabrir acima da suíte")
             self.padrao_qualidade(i, it, q, d, fer, minimo, excecao)
         elif it.get("max_price") is not None:
             # item só com teto: o teto é o preço mais alto possível, então também precisa respeitar os pisos
@@ -463,8 +459,8 @@ class Validador:
                 return (self.precos.get((k, d)) or {}).get("livres", 1) > 0
             balc = preco("Balcony")
             refs = [(preco(k), (k, d) in finais) for k in ("VK7", "VK2") if preco(k) is not None and livre(k)]
-            if balc is None or not refs:
-                continue
+            if balc is None or not refs or not livre("Balcony"):
+                continue  # Balcony esgotada: Regra J (topo do mercado), fora da Regra G
             if periodo_feriado(self.cfg, data(d)):
                 continue  # no feriado a Balcony segue o piso de vitrine definido pelo dono
             menor, do_plano = min(refs)

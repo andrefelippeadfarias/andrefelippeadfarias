@@ -28,7 +28,7 @@ import sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from calendario_12m import exigencias, ler_recalculo  # noqa: E402
-from comum import carregar_quartos  # noqa: E402
+from comum import carregar_quartos, esgotado  # noqa: E402
 
 POSICAO = 0.75
 PREMIO_AFRODITE = 0.05
@@ -65,11 +65,19 @@ def comparar(cfg, cal7, caldb, cal2, de, ate, calaf=None):
     while d <= ate:
         s = d.isoformat()
         if s in cal7 and s in caldb and s in cal2:
+            # Regra J (dono, 27/10): suíte esgotada vai ao topo do mercado e sai da ordem; a ordem vale entre as que vendem
+            esg = {k: esgotado(c[s], cfg["por_curto"][k]["unidades"]) for k, c in (("Q7", cal7), ("Double", caldb), ("Q2", cal2))}
             f = faixa(cfg, d, cal7[s], caldb[s], cal2[s])
-            if f["fora"]:
+            if f["fora"] and not any(esg.values()):
                 out.append({"data": s, "quarto": "Q2", **f})
-            if calaf and s in calaf:
-                g = faixa_afrodite(cfg, d, cal7[s], caldb[s], f["q2_final"], calaf[s])
+            if calaf and s in calaf and not esgotado(calaf[s], 1):
+                abertos = [c[s] for k, c in (("Q7", cal7), ("Double", caldb)) if not esg[k]]
+                if not abertos:
+                    d += dt.timedelta(days=1)
+                    continue
+                f = dict(f, q2_final=(f["q2_final"] if not esg["Q2"] else 0))
+                ref = max(abertos, key=lambda r: float(r["price"]))
+                g = faixa_afrodite(cfg, d, ref, ref, f["q2_final"], calaf[s])
                 if g["fora"]:
                     out.append({"data": s, "quarto": "Afrodite", **g})
         d += dt.timedelta(days=1)

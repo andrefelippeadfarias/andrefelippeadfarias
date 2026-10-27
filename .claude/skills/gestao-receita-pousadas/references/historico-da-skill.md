@@ -303,3 +303,6 @@ Hora da ANÁLISE E AGENDA DIÁRIA do PriceLabs (rotina "Agenda diária PriceLabs
 
 ## 27/10/2026 — Beds24 pelo segredo de rede do ambiente
 - `beds24.py`: sem BEDS24_TOKEN, BEDS24_REFRESH_TOKEN nem arquivo, chama a API sem o cabeçalho `token` e conta com o segredo de rede do ambiente (Network secrets: cabeçalho `token`, sem prefixo, site beds24.com), que o proxy injeta. 401/403 nesse modo dá a mensagem de como cadastrar. `test_sem_credencial` cobre os dois modos.
+
+## 27/10/2026 — Regra J: lotação e overbooking no topo do mercado (pedido do dono)
+- `scripts/topo_mercado.py` (novo): `plano` acha suíte esgotada, overbooking pela lista de reservas e pousada lotada (≥ 90%) e põe piso = teto no topo do mercado (`maximo_a` da classe A, ou o maior preço da coleta, ou o atual × 1,5) ÷ fator público da Booking; `restaurar` devolve o preço de antes quando a noite reabre. `comum.vendidas_total` e `comum.esgotado` (novos). `ordem_recanto.py`: suíte esgotada sai da ordem. `validar_plano.py`: Balcony esgotada sai da Regra G; saiu o aviso "Balcony esgotada sem teto". `quartos.json` → `parametros.regra_j`; `concorrentes_hidro_vista.json` → `maximo_a` nos 5 feriados. regras.md (Regra J e 6a), SKILL.md (rotina leve). Teste novo `test_regra_j_topo_do_mercado` (63 testes OK).

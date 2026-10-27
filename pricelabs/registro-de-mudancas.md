@@ -2684,6 +2684,37 @@ A Villa não aparece em nenhuma busca com filtro de hidro (falta a comodidade na
 - **Resumo:** Recanto ~R$ 1,13 milhão em 6 meses (71% do mínimo de R$ 1,58 milhão); Villa ~R$ 913 mil (76% de R$ 1,2 milhão). Os maiores buracos são dezembro e janeiro. Novembro da Villa fica acima do mínimo.
 - **Nada gravado.**
 
+## 27/10/2026, 13:40 UTC (10:40 BRT) — Pedido do dono: feriados até janeiro pelos preços da Booking
+
+- **Pedido:** "Vamos fazer os ajustes para todos os feriados de acordo com os valores encontrados no booking até o fim de janeiro."
+- **Mercado (escada de preço mínimo, quarto com hidro da classe A, por noite, preço público):**
+
+| Feriado | Mediana hidro | n | Recanto (15459723) | Diferença | Concorrentes esgotados |
+|---|---|---|---|---|---|
+| Finados 30/10-01/11 | R$ 2.066 | 4 | R$ 1.311 | −37% | 2 de 12 |
+| Consciência Negra 19-21/11 | R$ 2.078 | 4 | R$ 1.437 | −31% | 3 de 12 |
+| Natal 24-25/12 | R$ 1.800 | 3 | R$ 1.505 | −16% | 7 de 12 |
+| Réveillon 29/12-01/01 | R$ 2.536 | 4 | R$ 1.632 | −36% | 3 de 12 |
+| Aniversário de SP 22-24/01 | R$ 1.644 | 7 | R$ 1.162 | −29% | 1 de 12 |
+
+- **Regra aplicada (seção 5):** abaixo da mediana e com a noite na meta da janela → sobe pelo piso (+15% onde está mais de 25% abaixo; +10% no resto). Noite atrás da meta segura: Natal (0 vendas), Aniversário de SP (1/7), Finados com quarto livre a D3 e a véspera de 19/11.
+
+| Mudança | Onde | Antes | Depois (recalculado e conferido às 13:38 UTC) |
+|---|---|---|---|
+| +10% (6/7) | VK7 01/11 | R$ 2.294 | **R$ 2.531 ✅** |
+| +15% (4/7) | Moinhos 20 e 21/11 | R$ 2.592 | **R$ 2.991 ✅** |
+| +15% (3/7) | VK7 20/11 | R$ 2.486 | **R$ 2.871 ✅** (teto do corte de 19/10 levantado) |
+| +15% (1/2) | VK2 20 e 21/11 | R$ 3.079 | **R$ 3.543 ✅** |
+| +15% (4-5/7 e 3/7) | Moinhos 30/12, 31/12 e 01/01 | R$ 2.602 / R$ 3.083 | **R$ 3.003 / R$ 3.554 ✅** |
+| +15% (3/6 e 2/6) | Panorâmica I 31/12, 01/01 e 02/01 | R$ 3.283 / R$ 3.890 | R$ 3.789 / R$ 4.494 (gravado; recálculo amanhã, sem saldo) |
+| +15% e ordem | Panorâmica II 31/12 e 01/01 | R$ 3.021 / R$ 3.355 | **R$ 3.482 / R$ 3.562 ✅** |
+| +15% (2/7) | VK7 31/12 | R$ 3.280 | **R$ 3.774 ✅** |
+| +15% (1/2) | VK2 30 e 31/12 | R$ 2.815 | **R$ 3.238 ✅** |
+| Regra G (5/6) | Balcony 31/12 | R$ 2.756 | **R$ 2.921 ✅** |
+
+- **Validação:** 18 itens, 0 erros. Envio: no próximo envio automático (nada em D0 a D3). `dados/concorrentes_hidro_vista.json` atualizado com os 5 períodos.
+- **Ressalvas:** a escada achou o quarto com hidro em só 3 a 7 dos 12 hotéis por período (os outros esgotados ou com a escada incompleta), então a mediana tem certeza média. Natal: 7 de 12 esgotados, um sinal forte de procura, mas a Recanto ainda não vendeu nenhuma noite.
+
 > **Regras em vigor:** desde 06/10/2026 elas ficam em `.claude/skills/gestao-receita-pousadas/references/regras.md`. Este arquivo guarda só o histórico das mudanças.
 
 ## O que só pode ser feito na tela (passo a passo para você)

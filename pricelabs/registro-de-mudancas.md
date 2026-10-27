@@ -2726,6 +2726,12 @@ A Villa não aparece em nenhuma busca com filtro de hidro (falta a comodidade na
 - **Pacotes do canal direto (rascunho para o dono):** `pricelabs/pacotes/natal-2026.md` e `pricelabs/pacotes/reveillon-2026.md`.
 - **Conferir na rotina de 28/10:** recálculo da Panorâmica I (Réveillon), Panorâmica II e Balcony (Natal).
 
+## 27/10/2026, 14:05 UTC (11:05 BRT) — Rotina leve das 10:53 (sem Beds24)
+
+- **Envio do dia:** 11:56 UTC ✅ (aumentos de 26-27/10 da Panorâmica I e da Afrodite no ar). Os ajustes de feriados de 13:34 e 13:46 UTC saem no próximo envio.
+- **Lista de reservas do PriceLabs (feitas em 26-27/10):** só a Balcony de 26/10. A lista ainda não traz as vendas que o calendário mostrou (Panorâmica I de 13 a 22/11); a escada lê o calendário na rotina de amanhã, com o saldo de recálculo renovado.
+- **Nada gravado.**
+
 > **Regras em vigor:** desde 06/10/2026 elas ficam em `.claude/skills/gestao-receita-pousadas/references/regras.md`. Este arquivo guarda só o histórico das mudanças.
 
 ## O que só pode ser feito na tela (passo a passo para você)

@@ -686,9 +686,13 @@ class TestBeds24(unittest.TestCase):
         import beds24
         antes = {k: os.environ.pop(k, None) for k in ("BEDS24_TOKEN", "BEDS24_REFRESH_TOKEN", "BEDS24_REFRESH_TOKEN_FILE")}
         os.environ["BEDS24_REFRESH_TOKEN_FILE"] = "/nao/existe"
+        os.environ["BEDS24_SEM_SEGREDO_DE_REDE"] = "1"
         try:
             self.assertEqual(beds24.main(["teste"]), 2)
+            os.environ.pop("BEDS24_SEM_SEGREDO_DE_REDE")
+            self.assertIsNone(beds24.token_de_acesso())  # modo segredo de rede: o proxy põe o token
         finally:
+            os.environ.pop("BEDS24_SEM_SEGREDO_DE_REDE", None)
             os.environ.pop("BEDS24_REFRESH_TOKEN_FILE", None)
             for k, v in antes.items():
                 if v is not None:

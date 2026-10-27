@@ -300,3 +300,6 @@ Hora da ANÁLISE E AGENDA DIÁRIA do PriceLabs (rotina "Agenda diária PriceLabs
 
 ## 26/10/2026 — Escada de subida por reserva (pedido do dono)
 - `scripts/escada_reservas.py` (novo): `passo` sobe 7% por reserva o enviado de um quarto numa noite, até o teto de alto padrão (pisos do dono no Genius 3; Balcony 90% da VK2); a noite de hoje não sobe; com reservas negativas, desce. `ordem` refaz Moinhos ≤ Panorâmica II ≤ Panorâmica I < Afrodite (+5%). `quartos.json` → `parametros.escada`. SKILL.md (rotina leve) e regras.md (6b e decisões). Teste novo `test_escada_por_reserva` (62 testes OK).
+
+## 27/10/2026 — Beds24 pelo segredo de rede do ambiente
+- `beds24.py`: sem BEDS24_TOKEN, BEDS24_REFRESH_TOKEN nem arquivo, chama a API sem o cabeçalho `token` e conta com o segredo de rede do ambiente (Network secrets: cabeçalho `token`, sem prefixo, site beds24.com), que o proxy injeta. 401/403 nesse modo dá a mensagem de como cadastrar. `test_sem_credencial` cobre os dois modos.

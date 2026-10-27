@@ -12,6 +12,10 @@ Credencial (nunca colar no chat; o dono cadastra nos segredos do ambiente):
 - ou BEDS24_REFRESH_TOKEN: token de atualização (do código de convite), trocado aqui por um token de 24 h.
 - ou o arquivo /root/.beds24/refresh_token (permissão 600, fora do repositório), criado em 19/10 na troca do
   convite; vale só enquanto o contêiner desta sessão existir. Nunca versionar nem imprimir o token.
+- ou (27/10) o segredo de rede do ambiente: o dono cadastra o long life token em "Network secrets" com o
+  cabeçalho `token` (sem prefixo) para o site beds24.com, e o proxy o injeta em cada chamada. Sem nenhuma das
+  variáveis acima, o script chama a API sem cabeçalho de token e conta com essa injeção; um 401 diz que falta o
+  segredo. BEDS24_SEM_SEGREDO_DE_REDE=1 desliga esse modo (usado nos testes).
 
 Uso:
   python3 beds24.py teste                      # confere a credencial e lista as propriedades
@@ -64,6 +68,9 @@ def _get(caminho, params=None, cabecalhos=None):
             return json.loads(r.read().decode("utf-8"))
     except urllib.error.HTTPError as e:
         corpo = e.read().decode("utf-8", "replace")[:300]
+        if e.code in (401, 403) and "token" not in (cabecalhos or {}) and "refreshToken" not in (cabecalhos or {}):
+            raise ErroBeds24(f"HTTP {e.code} em {caminho}: sem credencial. Cadastre o long life token do Beds24 em "
+                             "Network secrets (cabeçalho `token`, sem prefixo, site beds24.com) ou BEDS24_TOKEN.") from None
         raise ErroBeds24(f"HTTP {e.code} em {caminho}: {corpo}") from None
 
 
@@ -76,6 +83,8 @@ def token_de_acesso():
     if not ref and os.path.exists(arq):
         ref = open(arq, encoding="utf-8").read().strip()
     if not ref:
+        if not os.environ.get("BEDS24_SEM_SEGREDO_DE_REDE"):
+            return None  # segredo de rede: o proxy põe o cabeçalho `token`
         raise ErroBeds24("Sem credencial: falta a variável BEDS24_REFRESH_TOKEN nos segredos do ambiente.")
     r = _get("/authentication/token", cabecalhos={"refreshToken": ref})
     if not r.get("token"):
@@ -88,7 +97,7 @@ def paginas(caminho, params, token):
     pagina = 1
     while True:
         params["page"] = pagina
-        r = _get(caminho, params, {"token": token})
+        r = _get(caminho, params, {"token": token} if token else None)
         for item in r.get("data") or []:
             yield item
         if not (r.get("pages") or {}).get("nextPageExists"):
@@ -251,7 +260,7 @@ def main(argv=None):
     try:
         tok = token_de_acesso()
         if a.cmd == "teste":
-            props = _get("/properties", {"id": list(PROPRIEDADES)}, {"token": tok})
+            props = _get("/properties", {"id": list(PROPRIEDADES)}, {"token": tok} if tok else None)
             print(json.dumps([{"id": p.get("id"), "nome": p.get("name")} for p in props.get("data") or []], ensure_ascii=False))
             return 0
         if a.cmd == "reservas":

@@ -2677,6 +2677,13 @@ A Villa não aparece em nenhuma busca com filtro de hidro (falta a comodidade na
 - **Mercado (preço público por estadia):** dia útil 28/10 mediana R$ 248 e máximo R$ 446; 03/11 mediana R$ 275 e máximo R$ 394; fds 06-08/11 mediana R$ 1.062; fds 13-15/11 mediana R$ 1.317. Villa: R$ 336 nos dias úteis (4ª mais cara de 19); R$ 2.288 no fds 13-15/11 (3ª mais cara).
 - **Nada gravado.**
 
+## 27/10/2026, 12:00 UTC (09:00 BRT) — Pedido do dono: previsão realista dos próximos 6 meses
+
+- **Pedido:** "De acordo com a curva de reservas dos meses passados, qual a previsão de reservas de acordo com o ticket médio [...] para os próximos 6 meses. [...] Preciso dos números mês a mês."
+- **Arquivo:** `pricelabs/previsao/previsao-6-meses-2026-10-27.md` (método, três leituras por mês e limites).
+- **Resumo:** Recanto ~R$ 1,13 milhão em 6 meses (71% do mínimo de R$ 1,58 milhão); Villa ~R$ 913 mil (76% de R$ 1,2 milhão). Os maiores buracos são dezembro e janeiro. Novembro da Villa fica acima do mínimo.
+- **Nada gravado.**
+
 > **Regras em vigor:** desde 06/10/2026 elas ficam em `.claude/skills/gestao-receita-pousadas/references/regras.md`. Este arquivo guarda só o histórico das mudanças.
 
 ## O que só pode ser feito na tela (passo a passo para você)

@@ -2754,6 +2754,12 @@ A Villa não aparece em nenhuma busca com filtro de hidro (falta a comodidade na
 - **Envio:** o último é de 11:56 UTC; os ajustes de feriados de 13:34 e 13:46 UTC ainda não saíram.
 - **Nada gravado.** Pendência do dono `overbooking-importacao-2710`.
 
+## 27/10/2026, 19:58 UTC (16:58 BRT) — Rotina leve das 16:53 (sem Beds24)
+
+- **Reservas:** nenhuma nova nem cancelada desde as 13:53. O possível overbooking (VK7 01/11; Panorâmica I 20-21/11; Balcony 30-31/10 em duplicata) segue em aberto com o dono.
+- **Envio:** o último é de 11:57 UTC; os ajustes de feriados e da VK7 29/10 esperam o envio automático da manhã ou o Sync Now do dono.
+- **Nada gravado.**
+
 > **Regras em vigor:** desde 06/10/2026 elas ficam em `.claude/skills/gestao-receita-pousadas/references/regras.md`. Este arquivo guarda só o histórico das mudanças.
 
 ## O que só pode ser feito na tela (passo a passo para você)

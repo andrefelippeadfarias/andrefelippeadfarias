@@ -2643,6 +2643,28 @@ A Villa não aparece em nenhuma busca com filtro de hidro (falta a comodidade na
 - **Reservas feitas em 26/10:** só a Balcony 26/10 (R$ 248, noite de hoje). Nenhuma nova desde as 13:53.
 - **Escada por reserva:** nenhum degrau devido. **Nada gravado.**
 
+## 27/10/2026, 00:35 UTC (26/10, 21:35 BRT) — Pedido do dono: subir os preços onde já vendeu e chegar perto das metas
+
+- **Pedido:** "Verifique novamente e vamos ajustar os valores para cima. Pois já temos datas vendidas e preciso que cheguemos perto dos nossos objetivos."
+- **Vendas vistas no recálculo dos 7 quartos (00:18 UTC; a lista de reservas do PriceLabs ainda não as traz):**
+  - Panorâmica I: +1 em 01, 02 e 08/11, +2 em 07/11, +3 em 13/11, +4 em 14/11, +2 em 18 e 19/11, +3 em 20/11, +1 em 21 e 22/11. Em 28, 29 e 30/10, −1 em cada (cancelamento ou troca de quarto);
+  - Moinhos: +2 em 31/10 e 01/11 (Finados);
+  - VK2: +1 em 29/10, 04/11 e 10/11;
+  - **cancelamentos em Finados:** Panorâmica II de 30/10 a 01/11 ficou com as 2 livres; VK7 −1 em cada noite. Finados fica como está (dono, 25/10).
+
+| Mudança | Onde | Antes | Depois (recalculado e conferido às 00:30 UTC) | Como desfazer |
+|---|---|---|---|---|
+| Escada por reserva | Panorâmica I 02/11 e 08/11 | R$ 755 | **R$ 814 ✅** (piso = teto) | voltar a −49% |
+| Escada (+2) e ordem | Panorâmica I 07/11 | R$ 1.806 | **R$ 2.028 ✅** (alto padrão, ≥ Moinhos R$ 2.018) | voltar a +22% |
+| Ordem do Recanto | Afrodite 02/11 | R$ 800 | **R$ 860 ✅** | voltar a −60% |
+| 4c: à frente da meta | Panorâmica I 13 e 14/11 (4/6) | R$ 2.193 | **R$ 2.412 ✅** (piso) | piso +37% |
+| 4c: à frente da meta | Panorâmica I 19/11 (5/6) | R$ 1.909 | **R$ 2.102 ✅** | piso +29% |
+| 4c: à frente da meta | Panorâmica I 22/11 (4/6) | R$ 1.228 | **R$ 1.362 ✅** | piso −17% |
+| Ordem do Recanto | Afrodite 19/11 | R$ 2.020 | **R$ 2.220 ✅** | piso +1% |
+
+- **Validação:** 9 itens, 0 erros. Envio: no envio automático da madrugada (todas as datas a partir de 02/11).
+- **Novembro contra o mínimo do dono (reservas na lista do PriceLabs, sem as vendas de hoje):** Recanto ~R$ 99 mil de R$ 220 mil (45%); Villa ~R$ 47 mil de R$ 150 mil (31%). Ritmo esperado no dia 1: 40%. Recanto no ritmo, Villa atrás. Para fechar o mínimo, as noites livres precisam render ~R$ 390 (Recanto) e ~R$ 350 (Villa) por noite já com o desconto das plataformas, ou seja, ~R$ 800 e ~R$ 765 enviados em média.
+
 > **Regras em vigor:** desde 06/10/2026 elas ficam em `.claude/skills/gestao-receita-pousadas/references/regras.md`. Este arquivo guarda só o histórico das mudanças.
 
 ## O que só pode ser feito na tela (passo a passo para você)

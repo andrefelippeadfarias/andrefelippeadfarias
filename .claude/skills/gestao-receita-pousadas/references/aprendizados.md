@@ -280,3 +280,7 @@ Cada item tem data e evidência. Para incluir um item novo: data, o fato, a evid
 - **O agente de concorrentes procura o Recanto por nome e cai no anúncio antigo (id 15459723).** Na próxima rotina, peça no prompt o id 7562933 (busca por coordenadas) e ignore o 15459723.
 - **Teste da Moinhos de 23-25/10 (R$ 700 e sábado de 1 noite): 0 vendas na Booking.** O corte de fim de semana em cima da hora, sozinho, não trouxe venda pela Booking.
 - **O calendário vê a venda antes da lista de reservas (26-27/10):** o recálculo das 00:18 UTC mostrou 25 noites com ocupação diferente da coleta das 07:53 (inclusive vendas grandes na Panorâmica I de 13 a 22/11) e a lista do PriceLabs não tinha nenhuma delas. Sem o Beds24, a escada por reserva deve ler a **diferença de ocupação do calendário** entre as rodadas, não só a lista.
+
+## 27/10/2026 — O Recanto na Booking passou a ser o anúncio 15459723
+- A 7562933 saiu do ar e a 15459723 (a de 226 avaliações) passou a receber os preços do Beds24, com público ≈ 0,59 do enviado. Para conferir, busque por coordenadas (-22.728453, -45.556345, raio 0,3) e leia a 15459723. Até o dono confirmar o Genius desse anúncio, o fator 0,41 do Genius 3 pode estar errado. Se o Genius estiver com o mesmo desconto de antes, o hóspede mais descontado pagaria ~R$ 272 com R$ 739 enviados.
+- Às 07:53 o PriceLabs pode estar refazendo os dados (LISTING_NO_DATA em get_listing_prices); o recálculo por quarto funciona e devolve o calendário.

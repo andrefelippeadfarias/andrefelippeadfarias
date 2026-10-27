@@ -2665,6 +2665,18 @@ A Villa não aparece em nenhuma busca com filtro de hidro (falta a comodidade na
 - **Validação:** 9 itens, 0 erros. Envio: no envio automático da madrugada (todas as datas a partir de 02/11).
 - **Novembro contra o mínimo do dono (reservas na lista do PriceLabs, sem as vendas de hoje):** Recanto ~R$ 99 mil de R$ 220 mil (45%); Villa ~R$ 47 mil de R$ 150 mil (31%). Ritmo esperado no dia 1: 40%. Recanto no ritmo, Villa atrás. Para fechar o mínimo, as noites livres precisam render ~R$ 390 (Recanto) e ~R$ 350 (Villa) por noite já com o desconto das plataformas, ou seja, ~R$ 800 e ~R$ 765 enviados em média.
 
+## 27/10/2026, 11:10 UTC (08:10 BRT) — Rotina das 07:53: troca do anúncio do Recanto na Booking, nada gravado
+
+- **Coleta:** o workflow pegou reservas, logs, mercado e concorrentes, mas os 7 calendários vieram vazios (LISTING_NO_DATA: o PriceLabs estava refazendo os dados). Recalculei os 7 quartos às 11:01 UTC ✅.
+- **Envio:** o último é de 26/10 às 20:57 UTC. As gravações de 00:24 UTC (Panorâmica I e Afrodite, de 02 a 22/11) estão recalculadas (R$ 814, R$ 2.028, R$ 2.412, R$ 2.102, R$ 860, R$ 2.220), mas ainda não foram enviadas. Sync Now pedido ao dono.
+- **Vendas desde 00:18 UTC (pelo calendário):** só a Panorâmica I de hoje (27/10, +1). Noite de hoje não sobe: **nenhum degrau devido**.
+- **Ocupação:**
+  - Recanto: 40% em 7 dias, 39% em 15 dias e 40% em 30 dias;
+  - Villa: 51% / 52% / 35%.
+- **Booking: o Recanto mudou de anúncio.** A 7562933 não aparece mais (sem disponibilidade, por nome e por coordenadas). A 15459723 (5 estrelas, 226 avaliações, nota 8,4) agora segue o Beds24: Moinhos a R$ 436,97 em 28/10 e 03/11 (R$ 739 × 0,591) e R$ 2.194,29 no fds 06-08/11 (R$ 3.731 × 0,588). O fator público ÷ enviado caiu de 0,658 para ~0,59. O desconto do Genius 3 nesse anúncio é desconhecido.
+- **Mercado (preço público por estadia):** dia útil 28/10 mediana R$ 248 e máximo R$ 446; 03/11 mediana R$ 275 e máximo R$ 394; fds 06-08/11 mediana R$ 1.062; fds 13-15/11 mediana R$ 1.317. Villa: R$ 336 nos dias úteis (4ª mais cara de 19); R$ 2.288 no fds 13-15/11 (3ª mais cara).
+- **Nada gravado.**
+
 > **Regras em vigor:** desde 06/10/2026 elas ficam em `.claude/skills/gestao-receita-pousadas/references/regras.md`. Este arquivo guarda só o histórico das mudanças.
 
 ## O que só pode ser feito na tela (passo a passo para você)

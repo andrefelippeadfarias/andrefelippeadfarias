@@ -2760,6 +2760,20 @@ A Villa não aparece em nenhuma busca com filtro de hidro (falta a comodidade na
 - **Envio:** o último é de 11:57 UTC; os ajustes de feriados e da VK7 29/10 esperam o envio automático da manhã ou o Sync Now do dono.
 - **Nada gravado.**
 
+## 27/10/2026, 20:10 UTC (17:10 BRT) — Pedido do dono: Regra J (lotação e overbooking no topo do mercado)
+
+- **Pedido:** "quando estivermos com overbooking assim, ou a pousada lotada, essa suíte, suba o valor para o top de mercado para que possamos evitar que entrem reservas, e se entrar a reserva, que entre com o valor mais alto do mercado. Coloque isso dentro da nossa skill para sempre executarmos diariamente essas regras."
+- **Na skill:** Regra J em regras.md, passo na rotina (SKILL.md), `scripts/topo_mercado.py` (plano e restaurar), `parametros.regra_j`, `maximo_a` dos feriados. A ordem do Recanto e a Regra G ignoram a suíte esgotada. 63 testes OK.
+- **Aplicada agora (próximos 90 dias, calendário de 10:35-08:01 BRT e lista de reservas das 17:05 BRT):** 51 noites com piso = teto no topo do mercado, gravadas e lidas de volta ✅.
+
+| Gatilho | Noites |
+|---|---|
+| Overbooking | VK7 01/11 (8 para 7) → R$ 4.425; Panorâmica I 20 e 21/11 (7 para 6) → R$ 5.002 |
+| Suíte esgotada, feriado (topo da classe A) | Panorâmica I 31/10 e 01/11 → R$ 4.410; Afrodite 30-31/10 → R$ 4.420; Balcony e VK2 01/11 → R$ 4.420; VK2 19/11 → R$ 5.004; Panorâmica II 20-21/11 → R$ 5.008 |
+| Suíte esgotada, sem dado de mercado (preço atual × 1,5) | Afrodite (19 noites até 20/01), VK2 (8), Panorâmica II (6), Panorâmica I 18/11, VK7 e Balcony 05/11 |
+
+- **Recálculo:** sem saldo hoje; o recálculo automático da manhã de 28/10 carrega. Na rotina das 07:53: conferir e rodar `restaurar` nas noites que tiverem reaberto (o calendário usado tinha até 9 h).
+
 > **Regras em vigor:** desde 06/10/2026 elas ficam em `.claude/skills/gestao-receita-pousadas/references/regras.md`. Este arquivo guarda só o histórico das mudanças.
 
 ## O que só pode ser feito na tela (passo a passo para você)

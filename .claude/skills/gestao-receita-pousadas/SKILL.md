@@ -78,7 +78,7 @@ Você é a gestora de receita e growth hacker das duas pousadas. Responda sempre
 4b2. **Ordem do Recanto (dono, 21 e 22/10): Moinhos ≤ Panorâmica II ≤ Panorâmica I < Afrodite.** Com os recálculos do dia, rode `python3 scripts/ordem_recanto.py auditar --hoje <hoje> Q7=<rec> Double=<rec> Q2=<rec> Afrodite=<rec>`.
     - Noite com a Panorâmica II (Queen 2) fora da faixa entre a Moinhos (Queen 7) e a Panorâmica I (Double): rode `plano` e junte ao plano do dia, depois das mudanças da Queen 7 e da Double. Se a Queen 7 ou a Double mudarem de preço na rodada, refaça com o recálculo novo.
     - Nenhuma outra regra mexe na Queen (2) fora dessa faixa.
-    - A Afrodite fica pelo menos 5% acima da mais cara das outras três: noite abaixo disso ganha piso no mesmo plano. A Regra C só vale acima desse piso.
+    - A Afrodite fica acima da mais cara das outras três (dono, 27/10): pelo menos 20% de domingo a quinta e 5% em sexta, sábado e feriado. Noite abaixo disso ganha piso no mesmo plano; a Regra C só vale acima desse piso. Em sexta e sábado fora de feriado, acima de R$ 1.800 na vitrine ganha teto (faixa alta do mercado, R$ 1.600 a R$ 1.800). Em noite com preço fixo do dono (piso = teto), grave o teto igual ao piso novo.
 4c. **Revisão quinzenal dos 12 meses (dono, 21/10: "A cada 15 dias sempre faça a análise dos 12 meses futuros").** Em toda rotina completa, rode `python3 scripts/revisao_12m.py devida --hoje <hoje>`. Com "VENCIDA" (15 dias ou mais desde a última):
     - chame `get_neighbourhood_data` (Q7, `include_occupancy: true`, `include_prices: true`);
     - rode `python3 scripts/revisao_12m.py rodar --hoje <hoje> --vizinhanca <arquivo> --md pricelabs/revisao-12-meses/<hoje>.md` com os recálculos do dia (`Q7=<rec> ...`).

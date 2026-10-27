@@ -82,7 +82,8 @@
     "Q2"
    ],
    "premio_minimo": 0.05,
-   "ordem_nota": "Dono 22/10: 'A Suíte Afrodite tem que ser a mais cara, com valor mais alto da Recanto, pois ela é considerada super luxo.' Toda noite pelo menos 5% acima da mais cara das outras três suítes do Recanto (ordem_recanto.py). A Regra C (−30% a até 13 dias, piso R$ 1.500) só vale se a Afrodite continuar acima das outras."
+   "premio_minimo_semana": 0.2,
+   "ordem_nota": "Dono 27/10 ('Pode ser', reposicionamento da Afrodite): de domingo a quinta fora de feriado pelo menos 20% acima da mais cara das outras três (premio_minimo_semana); sexta, sábado e feriado pelo menos 5% (premio_minimo); sexta e sábado fora de feriado na faixa alta do mercado, R$ 1.600 a R$ 1.800 na vitrine (parametros.afrodite_fds_publico). Antes, dono 22/10: 'A Suíte Afrodite tem que ser a mais cara, com valor mais alto da Recanto, pois ela é considerada super luxo.' Toda noite pelo menos 5% acima da mais cara das outras três suítes do Recanto (ordem_recanto.py). A Regra C (−30% a até 13 dias, piso R$ 1.500) só vale se a Afrodite continuar acima das outras."
   },
   {
    "curto": "Q2",
@@ -287,6 +288,8 @@
    "fator_balcony": 0.9,
    "nota": "Dono, 26/10: a cada reserva, subir o preço gradualmente do mínimo atual até o alto padrão (teto = piso do dono de R$ 500 dom-qui / R$ 850 sex-sáb no Genius 3; Balcony 90% do teto da VK2). Um degrau de 7% por reserva no quarto e nas noites da estadia (scripts/escada_reservas.py)."
   },
+  "afrodite_fds_publico": [1600, 1800],
+  "afrodite_fds_nota": "Dono 27/10 ('Pode ser'): Afrodite no fim de semana fora de feriado na faixa alta do mercado sem passar do topo (classe A com hidro: mediana ~R$ 1.270-1.310, topo ~R$ 2.000 na vitrine). Enviado = vitrine ÷ regra_j.fator_publico do Recanto. Aplicado pelo ordem_recanto.py.",
   "regra_j": {
    "fator_publico": {
     "Recanto": 0.59,

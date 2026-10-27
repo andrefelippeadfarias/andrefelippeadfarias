@@ -2774,6 +2774,29 @@ A Villa não aparece em nenhuma busca com filtro de hidro (falta a comodidade na
 
 - **Recálculo:** sem saldo hoje; o recálculo automático da manhã de 28/10 carrega. Na rotina das 07:53: conferir e rodar `restaurar` nas noites que tiverem reaberto (o calendário usado tinha até 9 h).
 
+## 27/10/2026, 22:10 UTC (19:10 BRT) — Pedido do dono: reposicionamento da Afrodite ("Pode ser")
+
+- **Diagnóstico (enviado ao dono):** ADR realizado da Afrodite R$ 535, abaixo da Panorâmica I (R$ 601); ocupação de 30% em 30 dias; no fim de semana a vitrine estava em ~R$ 2.100, contra a mediana da classe A com hidro de ~R$ 1.270 a 1.310 e o topo de ~R$ 2.000. Nos dias de semana ela ficava só 5% acima da Panorâmica I.
+- **Regra nova (regras.md, "Suíte Afrodite"; `ordem_recanto.py`; 65 testes OK):** domingo a quinta fora de feriado, 20% acima da mais cara das outras do Recanto; sexta e sábado fora de feriado, faixa alta do mercado (vitrine R$ 1.600 a 1.800, enviado ~R$ 2.712 a 3.051); feriados no topo (Regra J).
+- **Gravado e lido de volta ✅ (16 noites, preços do PriceLabs de 17:34 BRT):**
+
+| Noite | Antes (enviado) | Depois (enviado) | Vitrine ~ |
+|---|---|---|---|
+| 29/10 (qui) | R$ 2.360 | piso R$ 2.700 (Panorâmica I R$ 2.235) | R$ 1.593 |
+| 02/11 | R$ 860 | R$ 980 fixo (Panorâmica I R$ 814) | R$ 578 |
+| 03, 04 e 05/11 | R$ 800 | R$ 920 fixo (Panorâmica I R$ 755; Genius 3 ~R$ 377) | R$ 543 |
+| 10/11 | R$ 1.600 | piso R$ 1.840 | R$ 1.086 |
+| 11/11 | R$ 1.780 | piso R$ 2.040 | R$ 1.204 |
+| 22/11 | R$ 1.536 | piso R$ 1.640 | R$ 968 |
+| 06 e 07/01 | R$ 1.514 | piso R$ 1.700 | R$ 1.003 |
+| 06 e 07/11 (fds) | R$ 3.140 | faixa R$ 2.720 a 3.040 | R$ 1.605 a 1.794 |
+| 04 e 05/12 (fds) | R$ 3.523 | faixa R$ 2.720 a 3.040 | R$ 1.605 a 1.794 |
+| 18 e 19/12 (fds) | R$ 3.432 | faixa R$ 2.720 a 3.040 | R$ 1.605 a 1.794 |
+
+- **Sem mudança:** os outros dias de semana já estavam 20% acima; os fins de semana de 27-28/11, 08-09/01 e 29-30/01 já estavam na faixa (~R$ 1.770 a 1.810 na vitrine); feriados e noites vendidas ou com a Regra J.
+- **Validação:** 16 itens, 0 erros; avisos: calendário de 11 h (sem saldo de recálculo), noites de 02-05/11 abaixo do piso de vitrine por ordem do dono (`excecoes_dono`).
+- **Recálculo:** a Afrodite já usou os 3 de 24 h; recálculo e envio na rotina das 07:53 de 28/10 (envio automático da manhã).
+
 > **Regras em vigor:** desde 06/10/2026 elas ficam em `.claude/skills/gestao-receita-pousadas/references/regras.md`. Este arquivo guarda só o histórico das mudanças.
 
 ## O que só pode ser feito na tela (passo a passo para você)

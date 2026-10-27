@@ -6,7 +6,11 @@ Uso:
   python3 ordem_recanto.py plano   --hoje AAAA-MM-DD Q7=<recalculo> Double=<recalculo> Q2=<recalculo> --saida plano.json
 
 E a Suíte Afrodite (dono, 22/10: "A Suíte Afrodite tem que ser a mais cara, com valor mais alto da Recanto, pois ela é
-considerada super luxo"): toda noite acima das outras três, com pelo menos 5% sobre a mais cara delas.
+considerada super luxo"): toda noite acima das outras três. Dono 27/10 ("Pode ser", reposicionamento da Afrodite):
+  - domingo a quinta fora de feriado: pelo menos 20% sobre a mais cara das outras (Afrodite.premio_minimo_semana);
+  - sexta, sábado e feriado: pelo menos 5% (Afrodite.premio_minimo);
+  - sexta e sábado fora de feriado: faixa alta do mercado, sem passar do topo, R$ 1.600 a R$ 1.800 por noite na vitrine
+    da Booking (parametros.afrodite_fds_publico ÷ regra_j.fator_publico do Recanto): acima disso o plano põe o teto.
 
 Para cada noite, com os preços do recálculo do PriceLabs: menor = min(Q7, Double), maior = max(Q7, Double). A Q2 precisa
 ficar entre os dois. Tolerância: 1% da base do quarto + R$ 1 (o PriceLabs só aceita piso e teto em percentual inteiro da
@@ -28,10 +32,9 @@ import sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from calendario_12m import exigencias, ler_recalculo  # noqa: E402
-from comum import carregar_quartos, esgotado  # noqa: E402
+from comum import carregar_quartos, esgotado, periodo_feriado  # noqa: E402
 
 POSICAO = 0.75
-PREMIO_AFRODITE = 0.05
 
 
 def tol(cfg: dict, quarto: str) -> float:
@@ -50,14 +53,43 @@ def faixa(cfg: dict, d: dt.date, q7: dict, db: dict, q2: dict) -> dict:
     return {"moinhos": a, "panoramica_1": b, "panoramica_2": c, "piso": piso, "teto": teto, "fora": fora, "q2_final": final}
 
 
+def premio_afrodite(cfg: dict, d: dt.date) -> float:
+    q = cfg["por_curto"]["Afrodite"]
+    if d.weekday() in (4, 5) or periodo_feriado(cfg, d):
+        return float(q["premio_minimo"])
+    return float(q.get("premio_minimo_semana", q["premio_minimo"]))
+
+
+def faixa_fds_afrodite(cfg: dict, d: dt.date):
+    """(piso, teto) enviados da faixa de fim de semana, ou None em dia de semana e feriado."""
+    if d.weekday() not in (4, 5) or periodo_feriado(cfg, d):
+        return None
+    par = cfg["parametros"]
+    fat = par["regra_j"]["fator_publico"]["Recanto"]
+    lo, hi = par["afrodite_fds_publico"]
+    return round(lo / fat), round(hi / fat)
+
+
 def faixa_afrodite(cfg: dict, d: dt.date, q7: dict, db: dict, q2_final: float, af: dict) -> dict:
-    """Afrodite acima das outras três: piso = o maior entre o piso da regra e a mais cara das outras × 1,05."""
+    """Afrodite acima das outras três: piso = o maior entre o piso da regra e a mais cara das outras × (1 + prêmio).
+    Fim de semana fora de feriado: teto na faixa alta do mercado, nunca abaixo do piso da ordem."""
     outras = max(float(q7["price"]), float(db["price"]), float(q2_final))
+    premio = premio_afrodite(cfg, d)
     piso_regra = exigencias(cfg, cfg["por_curto"]["Afrodite"], d)["piso"] or 0
-    piso = round(max(piso_regra, outras * (1 + PREMIO_AFRODITE)))
+    for ex in cfg["limites_seguranca"].get("excecoes_dono", []) or []:
+        # piso menor aberto pelo dono (26/10: R$ 300 no Genius 3 até 08/11) vale também aqui
+        if ex.get("quarto") == "Afrodite" and ex["de"] <= d.isoformat() <= ex["ate"]:
+            piso_regra = min(piso_regra, float(ex["limite"]))
+    piso = round(max(piso_regra, outras * (1 + premio)))
     preco = float(af["price"])
-    fora = preco < outras * (1 + PREMIO_AFRODITE) - tol(cfg, "Afrodite")
-    return {"outras": outras, "afrodite": preco, "piso": piso, "fora": fora}
+    abaixo = preco < outras * (1 + premio) - tol(cfg, "Afrodite")
+    teto = None
+    fds = faixa_fds_afrodite(cfg, d)
+    if fds and preco > fds[1] + tol(cfg, "Afrodite"):
+        teto = max(fds[1], piso)
+        piso = max(piso, min(fds[0], round(preco)))
+    return {"outras": outras, "afrodite": preco, "piso": piso, "teto": teto, "premio": premio,
+            "fora": abaixo or teto is not None}
 
 
 def comparar(cfg, cal7, caldb, cal2, de, ate, calaf=None):
@@ -93,10 +125,15 @@ def montar_plano(fora: list[dict], hoje: dt.date) -> dict:
                           "motivo": (f"Dono 21/10: Panorâmica II entre a Moinhos (R$ {x['moinhos']:.0f}) e a Panorâmica I "
                                      f"(R$ {x['panoramica_1']:.0f}); estava R$ {x['panoramica_2']:.0f}")})
         else:
-            itens.append({"tipo": "data", "quarto": "Afrodite", "data": x["data"], "min_price": x["piso"],
-                          "preco_antes": x["afrodite"],
-                          "motivo": (f"Dono 22/10: Afrodite a mais cara do Recanto (5% sobre a mais cara das outras, "
-                                     f"R$ {x['outras']:.0f}); estava R$ {x['afrodite']:.0f}")})
+            it = {"tipo": "data", "quarto": "Afrodite", "data": x["data"], "min_price": x["piso"],
+                  "preco_antes": x["afrodite"],
+                  "motivo": (f"Dono 22 e 27/10: Afrodite a mais cara do Recanto ({x['premio']:.0%} sobre a mais cara "
+                             f"das outras, R$ {x['outras']:.0f}); estava R$ {x['afrodite']:.0f}")}
+            if x.get("teto"):
+                it["max_price"] = x["teto"]
+                it["motivo"] = (f"Dono 27/10: Afrodite no fim de semana na faixa alta do mercado, sem passar do topo "
+                                f"(vitrine R$ 1.600 a 1.800); estava R$ {x['afrodite']:.0f}")
+            itens.append(it)
     return {"hoje": hoje.isoformat(), "itens": itens}
 
 
@@ -123,9 +160,9 @@ def main(argv=None) -> int:
         print(f"  {x['data']}: Moinhos R$ {x['moinhos']:.0f} | Panorâmica II R$ {x['panoramica_2']:.0f} | "
               f"Panorâmica I R$ {x['panoramica_1']:.0f} -> piso R$ {x['piso']} / teto R$ {x['teto']}")
     if rec.get("Afrodite"):
-        print(f"{len(af)} noites com a Afrodite abaixo de 5% sobre a mais cara das outras suítes do Recanto")
+        print(f"{len(af)} noites com a Afrodite fora da ordem (20% dom-qui, 5% sex-sáb e feriado) ou acima da faixa do fds")
         for x in af[:5]:
-            print(f"  {x['data']}: Afrodite R$ {x['afrodite']:.0f} | mais cara das outras R$ {x['outras']:.0f} -> piso R$ {x['piso']}")
+            print(f"  {x['data']}: Afrodite R$ {x['afrodite']:.0f} | mais cara das outras R$ {x['outras']:.0f} -> piso R$ {x['piso']} / teto R$ {x.get('teto') or '-'}")
     if a.modo == "plano":
         json.dump(montar_plano(fora, hoje), open(a.saida, "w"), ensure_ascii=False, indent=1)
         print(f"plano em {a.saida}")

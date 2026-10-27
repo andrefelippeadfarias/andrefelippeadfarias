@@ -151,7 +151,8 @@ class TestValidador(unittest.TestCase):
         # fim de semana usa o teto de sexta e sábado; Balcony fica abaixo da VK2
         self.assertGreater(teto(CFG, "Q7", date(2026, 11, 6)), lim)
         self.assertLess(teto(CFG, "Balcony", date(2026, 10, 27)), teto(CFG, "VK2", date(2026, 10, 27)))
-        self.assertEqual(ordem(791, 747, 755, 800), {"Q7": 791, "Q2": 791, "Double": 791, "Afrodite": 831})
+        self.assertEqual(ordem(791, 747, 755, 800), {"Q7": 791, "Q2": 791, "Double": 791, "Afrodite": 950})
+        self.assertEqual(ordem(791, 747, 755, 800, premio=0.05)["Afrodite"], 831)
 
     def test_regra_j_topo_do_mercado(self):
         import topo_mercado as tm
@@ -887,9 +888,44 @@ class TestOrdemAfrodite(unittest.TestCase):
         import ordem_recanto as o
         g = o.faixa_afrodite(CFG, dt.date(2027, 5, 4), {"price": "1232"}, {"price": "2235"}, 1300, {"price": "1500"})
         self.assertTrue(g["fora"])
-        self.assertGreaterEqual(g["piso"], round(2235 * 1.05))
+        self.assertGreaterEqual(g["piso"], round(2235 * 1.20))
+        # dono 27/10: de domingo a quinta 20% acima da mais cara das outras
         g = o.faixa_afrodite(CFG, dt.date(2027, 5, 4), {"price": "1232"}, {"price": "1288"}, 1274, {"price": "1500"})
+        self.assertTrue(g["fora"])
+        self.assertEqual(g["piso"], round(1288 * 1.20))
+        g = o.faixa_afrodite(CFG, dt.date(2027, 5, 4), {"price": "1232"}, {"price": "1288"}, 1274, {"price": "1560"})
         self.assertFalse(g["fora"])
+
+    def test_afrodite_respeita_excecao_do_dono(self):
+        import copy
+        import datetime as dt
+        import ordem_recanto as o
+        cfg = copy.deepcopy(CFG)
+        cfg["limites_seguranca"]["excecoes_dono"] = [{"quarto": "Afrodite", "de": "2026-10-26", "ate": "2026-11-08", "limite": 800}]
+        g = o.faixa_afrodite(cfg, dt.date(2026, 11, 3), {"price": "739"}, {"price": "755"}, 747, {"price": "800"})
+        self.assertEqual(g["piso"], round(755 * 1.20))
+
+    def test_afrodite_fim_de_semana_e_feriado(self):
+        import datetime as dt
+        import ordem_recanto as o
+        sab = dt.date(2027, 5, 8)
+        # fim de semana fora de feriado: 5% basta; acima da faixa do mercado vai teto de R$ 1.800 ÷ 0,59
+        g = o.faixa_afrodite(CFG, sab, {"price": "2018"}, {"price": "2028"}, 1900, {"price": "3523"})
+        self.assertTrue(g["fora"])
+        self.assertEqual(g["teto"], round(1800 / 0.59))
+        self.assertEqual(g["piso"], round(1600 / 0.59))
+        g = o.faixa_afrodite(CFG, sab, {"price": "2018"}, {"price": "2028"}, 1900, {"price": "2969"})
+        self.assertFalse(g["fora"])
+        # a ordem vence a faixa: outra suíte cara, o teto não fica abaixo do piso da ordem
+        g = o.faixa_afrodite(CFG, sab, {"price": "2018"}, {"price": "3100"}, 1900, {"price": "3600"})
+        self.assertGreaterEqual(g["teto"], round(3100 * 1.05))
+        # feriado (Réveillon): 5%, sem teto de fim de semana
+        g = o.faixa_afrodite(CFG, dt.date(2026, 12, 31), {"price": "3190"}, {"price": "3789"}, 3000, {"price": "4369"})
+        self.assertFalse(g["fora"])
+        self.assertIsNone(g["teto"])
+        p = o.montar_plano([{"data": "2027-05-08", "quarto": "Afrodite", **o.faixa_afrodite(
+            CFG, sab, {"price": "2018"}, {"price": "2028"}, 1900, {"price": "3523"})}], dt.date(2027, 5, 1))
+        self.assertEqual(p["itens"][0]["max_price"], round(1800 / 0.59))
 
 
 if __name__ == "__main__":

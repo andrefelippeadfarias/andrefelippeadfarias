@@ -128,7 +128,11 @@ Toda gravação passa antes pelo `scripts/validar_plano.py`, é conferida depois
 
 **Suíte Afrodite: sempre a mais cara do Recanto (dono, 22/10)**
 - Ordem do dono: "A Suíte Afrodite tem que ser a mais cara, com valor mais alto da Recanto, pois ela é considerada super luxo."
-- Toda noite, a Afrodite fica pelo menos 5% acima da mais cara das outras três (Moinhos/Queen 7, Panorâmica I/Double, Panorâmica II/Queen 2). Isso é garantido pelo piso da data, em `percent_base`, no `ordem_recanto.py`, junto com a faixa da Panorâmica II.
+- Toda noite, a Afrodite fica acima da mais cara das outras três (Moinhos/Queen 7, Panorâmica I/Double, Panorâmica II/Queen 2). Isso é garantido pelo piso da data, em `percent_base`, no `ordem_recanto.py`, junto com a faixa da Panorâmica II. Distância (dono, 27/10, "Pode ser"):
+  - domingo a quinta fora de feriado: pelo menos **20%** (`Afrodite.premio_minimo_semana`; antes 5%);
+  - sexta, sábado e feriado: pelo menos 5% (`Afrodite.premio_minimo`).
+- **Fim de semana fora de feriado (dono, 27/10):** a Afrodite fica na faixa alta do mercado sem passar do topo, R$ 1.600 a R$ 1.800 por noite na vitrine da Booking (`parametros.afrodite_fds_publico`; enviado = vitrine ÷ 0,59, ~R$ 2.712 a R$ 3.051). Acima disso o `ordem_recanto.py` põe teto de R$ 1.800 na vitrine e piso de R$ 1.600; a ordem vence a faixa (o teto nunca fica abaixo de 5% sobre a mais cara das outras). Motivo: ADR realizado da Afrodite (R$ 535) abaixo da Panorâmica I (R$ 601), ocupação de 30% em 30 dias e vitrine de fds ~R$ 2.100 contra mediana da classe A com hidro de ~R$ 1.270 a 1.310 e topo ~R$ 2.000.
+- Feriados: a Afrodite segue a Regra J e as faixas de feriado (topo do mercado), sem a faixa de fim de semana.
 - A Regra C (−30% a até 13 dias, piso R$ 1.500) e qualquer corte só valem acima desse piso.
 - Ordem completa do Recanto: Moinhos ≤ Panorâmica II ≤ Panorâmica I < Afrodite.
 
@@ -262,6 +266,7 @@ Pedido do dono: "qualificar os preços: muito baixo, baixo, médio, alto e muito
 - 21/10: "A cada 15 dias sempre faça a análise dos 12 meses futuros." Revisão quinzenal pelo `revisao_12m.py` (SKILL.md 4c), na rotina completa do dia em que vencer; fotografias em `dados/revisao_12m.json`, relatórios em `pricelabs/revisao-12-meses/`.
 - 21/10: "Os valores da Suíte Panorâmica II devem sempre estar entre a Moinhos e a Panorâmica I. Faça a verificação se isso está correto na Recanto." Na verificação, a Panorâmica II estava acima da Panorâmica I em 435 de 437 noites. Regra nova na seção da Queen (2), aplicada pelo `ordem_recanto.py`.
 - 22/10: "A Suíte Afrodite tem que ser a mais cara, com valor mais alto da Recanto, pois ela é considerada super luxo." Regra na seção "Suíte Afrodite"; aplicada pelo `ordem_recanto.py` (5% sobre a mais cara das outras).
+- 27/10: "Pode ser" (proposta de reposicionamento da Afrodite): dias de semana 20% acima da mais cara das outras do Recanto (antes 5%); fim de semana fora de feriado na faixa alta do mercado, sem passar do topo (vitrine R$ 1.600 a R$ 1.800); feriados no topo. Regra na seção "Suíte Afrodite"; aplicada pelo `ordem_recanto.py`.
 - A regra de sábado com valor real de pelo menos R$ 800 (02/10) **não vale como regra geral**: as decisões de 06/10 a superaram.
 
 ## 6b. Decisões do dono por data (vencem; apagar quando passarem)

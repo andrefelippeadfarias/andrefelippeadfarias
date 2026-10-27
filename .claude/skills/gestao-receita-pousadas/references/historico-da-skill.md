@@ -306,3 +306,9 @@ Hora da ANÁLISE E AGENDA DIÁRIA do PriceLabs (rotina "Agenda diária PriceLabs
 
 ## 27/10/2026 — Regra J: lotação e overbooking no topo do mercado (pedido do dono)
 - `scripts/topo_mercado.py` (novo): `plano` acha suíte esgotada, overbooking pela lista de reservas e pousada lotada (≥ 90%) e põe piso = teto no topo do mercado (`maximo_a` da classe A, ou o maior preço da coleta, ou o atual × 1,5) ÷ fator público da Booking; `restaurar` devolve o preço de antes quando a noite reabre. `comum.vendidas_total` e `comum.esgotado` (novos). `ordem_recanto.py`: suíte esgotada sai da ordem. `validar_plano.py`: Balcony esgotada sai da Regra G; saiu o aviso "Balcony esgotada sem teto". `quartos.json` → `parametros.regra_j`; `concorrentes_hidro_vista.json` → `maximo_a` nos 5 feriados. regras.md (Regra J e 6a), SKILL.md (rotina leve). Teste novo `test_regra_j_topo_do_mercado` (63 testes OK).
+
+## 27/10/2026 — Afrodite reposicionada (dono: "Pode ser")
+- `ordem_recanto.py`: o prêmio da Afrodite sobre a mais cara das outras depende da noite (`premio_afrodite`): 20% de domingo a quinta fora de feriado (`premio_minimo_semana`), 5% em sexta, sábado e feriado. `faixa_fds_afrodite`: em sexta e sábado fora de feriado, acima de `parametros.afrodite_fds_publico[1]` ÷ fator público põe teto (e piso na ponta de baixo da faixa), sem ficar abaixo da ordem. O piso aberto pelo dono em `limites_seguranca.excecoes_dono` também vale no piso da Afrodite (antes o piso da regra subia as noites de R$ 800 para R$ 1.500).
+- `escada_reservas.ordem`: prêmio padrão de 20% (passe 0,05 em fds e feriado).
+- `quartos.json`: `Afrodite.premio_minimo_semana` 0,2 e `parametros.afrodite_fds_publico` [1600, 1800].
+- Testes: `test_afrodite_mais_cara` (20%), `test_afrodite_respeita_excecao_do_dono`, `test_afrodite_fim_de_semana_e_feriado`; 65 testes OK.

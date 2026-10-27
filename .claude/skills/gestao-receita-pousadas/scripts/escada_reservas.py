@@ -52,8 +52,9 @@ def passo(cfg: dict, curto: str, d: date, atual: float, reservas: int = 1, hoje:
     return {"novo": novo, "teto": lim, "motivo": f"{reservas:+d} degrau(s)"}
 
 
-def ordem(q7: float, q2: float, double: float, afrodite: float, premio: float = 0.05) -> dict:
-    """Ordem do Recanto: Moinhos ≤ Panorâmica II ≤ Panorâmica I < Afrodite (+5%). Só sobe, nunca desce."""
+def ordem(q7: float, q2: float, double: float, afrodite: float, premio: float = 0.20) -> dict:
+    """Ordem do Recanto: Moinhos ≤ Panorâmica II ≤ Panorâmica I < Afrodite (+20% de domingo a quinta, dono 27/10;
+    passe premio=0.05 em sexta, sábado e feriado). Só sobe, nunca desce."""
     q2n = max(q2, q7)
     dn = max(double, q2n)
     an = max(afrodite, math.ceil(dn * (1 + premio)))

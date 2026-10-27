@@ -2715,6 +2715,17 @@ A Villa não aparece em nenhuma busca com filtro de hidro (falta a comodidade na
 - **Validação:** 18 itens, 0 erros. Envio: no próximo envio automático (nada em D0 a D3). `dados/concorrentes_hidro_vista.json` atualizado com os 5 períodos.
 - **Ressalvas:** a escada achou o quarto com hidro em só 3 a 7 dos 12 hotéis por período (os outros esgotados ou com a escada incompleta), então a mediana tem certeza média. Natal: 7 de 12 esgotados, um sinal forte de procura, mas a Recanto ainda não vendeu nenhuma noite.
 
+## 27/10/2026, 13:50 UTC (10:50 BRT) — Pedido do dono: "pode fazer tudo" (Natal corrigido e pacotes)
+
+| Mudança | Onde | Antes | Depois (gravado e lido de volta; recálculo amanhã, sem saldo hoje) |
+|---|---|---|---|
+| Ordem do Recanto | Panorâmica II 25 e 26/12 | teto R$ 3.434 (acima da Panorâmica I) | teto R$ 3.323 (piso R$ 2.878 mantido) |
+| Regra G | Balcony 24/12 | R$ 2.565 (= VK2) | R$ 2.311 (10% abaixo da VK2) |
+| Regra G | Balcony 25 e 26/12 | R$ 3.048 (acima da VK2) | R$ 2.553 (10% abaixo da VK2 R$ 2.824) |
+
+- **Pacotes do canal direto (rascunho para o dono):** `pricelabs/pacotes/natal-2026.md` e `pricelabs/pacotes/reveillon-2026.md`.
+- **Conferir na rotina de 28/10:** recálculo da Panorâmica I (Réveillon), Panorâmica II e Balcony (Natal).
+
 > **Regras em vigor:** desde 06/10/2026 elas ficam em `.claude/skills/gestao-receita-pousadas/references/regras.md`. Este arquivo guarda só o histórico das mudanças.
 
 ## O que só pode ser feito na tela (passo a passo para você)

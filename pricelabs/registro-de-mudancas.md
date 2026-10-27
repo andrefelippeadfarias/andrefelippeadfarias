@@ -2797,6 +2797,13 @@ A Villa não aparece em nenhuma busca com filtro de hidro (falta a comodidade na
 - **Validação:** 16 itens, 0 erros; avisos: calendário de 11 h (sem saldo de recálculo), noites de 02-05/11 abaixo do piso de vitrine por ordem do dono (`excecoes_dono`).
 - **Recálculo:** a Afrodite já usou os 3 de 24 h; recálculo e envio na rotina das 07:53 de 28/10 (envio automático da manhã).
 
+## 27/10/2026, 22:56 UTC (19:56 BRT) — Rotina leve das 19:53 (sem Beds24)
+
+- **Reservas:** nenhuma nova nem cancelada desde a lista das 17:05 BRT (as 15 reservas feitas em 27/10 são as mesmas já vistas, inclusive os lotes de 15:03 UTC). O possível overbooking (VK7 01/11; Panorâmica I 20-21/11; Balcony 30-31/10 em duplicata) segue em aberto com o dono.
+- **Mudanças manuais:** nenhuma; os logs do dia só trazem as gravações da skill (a última, Afrodite às 22:09 UTC).
+- **Envio:** os ajustes de feriados, da VK7 29/10, da Regra J e da Afrodite saem no recálculo e envio automáticos da manhã de 28/10 (recálculos de hoje esgotados).
+- **Nada gravado.**
+
 > **Regras em vigor:** desde 06/10/2026 elas ficam em `.claude/skills/gestao-receita-pousadas/references/regras.md`. Este arquivo guarda só o histórico das mudanças.
 
 ## O que só pode ser feito na tela (passo a passo para você)

@@ -2732,6 +2732,17 @@ A Villa não aparece em nenhuma busca com filtro de hidro (falta a comodidade na
 - **Lista de reservas do PriceLabs (feitas em 26-27/10):** só a Balcony de 26/10. A lista ainda não traz as vendas que o calendário mostrou (Panorâmica I de 13 a 22/11); a escada lê o calendário na rotina de amanhã, com o saldo de recálculo renovado.
 - **Nada gravado.**
 
+## 27/10/2026, 14:10 UTC (11:10 BRT) — Pedido do dono: "Faça agora" (escada por reserva)
+
+- **Vendas pelo calendário (recálculo das 13:38 contra o das 11:01 UTC):** VK7 29/10 +1 (agora 3/7). Os outros quartos sem mudança; Panorâmica I e Afrodite sem recálculo novo (sem saldo).
+
+| Mudança | Onde | Antes | Depois (gravado e lido de volta) |
+|---|---|---|---|
+| Escada por reserva (+7%) | VK7 29/10 | R$ 710 | **R$ 770** (piso = teto) |
+| Regra G | Balcony 29/10 | R$ 635 | **R$ 699** (10% abaixo da VK7) |
+
+- **Validação:** 2 itens, 0 erros. Recálculo e envio no recálculo automático de 28/10 de manhã (29/10 ainda é D1 nessa hora). Os recálculos de hoje acabaram (3 por quarto em 24 h).
+
 > **Regras em vigor:** desde 06/10/2026 elas ficam em `.claude/skills/gestao-receita-pousadas/references/regras.md`. Este arquivo guarda só o histórico das mudanças.
 
 ## O que só pode ser feito na tela (passo a passo para você)

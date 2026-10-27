@@ -2743,6 +2743,17 @@ A Villa não aparece em nenhuma busca com filtro de hidro (falta a comodidade na
 
 - **Validação:** 2 itens, 0 erros. Recálculo e envio no recálculo automático de 28/10 de manhã (29/10 ainda é D1 nessa hora). Os recálculos de hoje acabaram (3 por quarto em 24 h).
 
+## 27/10/2026, 17:10 UTC (14:10 BRT) — Rotina leve das 13:53: possível overbooking por importação de reservas
+
+- **A lista de reservas do PriceLabs trouxe dois lotes lançados no mesmo segundo:** 12 reservas da Panorâmica I em 26/10 às 13:25 UTC (estadias de 31/10 a 31/12) e 9 da Villa em 27/10 às 15:03 UTC (VK7 28/10, 01/11, 01-02/11, 08/11 e 10/12; Balcony 30-31/10). Todas da Booking, com comissão zerada e valores baixos (preço antigo). Hipótese: são reservas do anúncio antigo do Recanto (15459723) e da Villa, importadas quando o anúncio passou a seguir o Beds24.
+- **⚠️ Possível overbooking (contagem das reservas confirmadas):**
+  - VK7 01/11: 8 reservas para 7 unidades;
+  - Panorâmica I 20/11 e 21/11: 7 reservas para 6 unidades;
+  - Balcony 30-31/10: duas reservas iguais (R$ 1.383 cada), provável duplicata.
+- **Outras reservas novas:** Panorâmica I 27/10 (Airbnb ×2), Afrodite 27/10 e 28/10, VK2 28/10, Balcony 29/10 (Airbnb), VK7 29/10 (já com a escada às 14:06 UTC). Nenhum degrau novo: noites de hoje, esgotadas ou já ajustadas.
+- **Envio:** o último é de 11:56 UTC; os ajustes de feriados de 13:34 e 13:46 UTC ainda não saíram.
+- **Nada gravado.** Pendência do dono `overbooking-importacao-2710`.
+
 > **Regras em vigor:** desde 06/10/2026 elas ficam em `.claude/skills/gestao-receita-pousadas/references/regras.md`. Este arquivo guarda só o histórico das mudanças.
 
 ## O que só pode ser feito na tela (passo a passo para você)

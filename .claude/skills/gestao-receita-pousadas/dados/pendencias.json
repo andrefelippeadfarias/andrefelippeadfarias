@@ -622,6 +622,13 @@
    "desde": "2026-10-26",
    "urgencia": 3,
    "texto": "Reserva direta 95150099 na Moinhos (canal others), 24/10, 1 noite, R$ 3.332, lançada às 21:19 BRT de 23/10. O valor é alto demais para uma noite: conferir com a recepção se foi lançamento de grupo, pacote ou erro de digitação."
+  },
+  {
+   "id": "overbooking-importacao-2710",
+   "responsavel": "dono",
+   "desde": "2026-10-27",
+   "urgencia": 1,
+   "texto": "Lotes de reservas lançados no mesmo segundo no Beds24 (26/10 13:25 UTC, 12 na Panorâmica I; 27/10 15:03 UTC, 9 na Villa), provavelmente vindos do anúncio antigo da Booking (15459723) quando ele passou a seguir o Beds24. Contagem pela lista do PriceLabs (status booked): VK7 01/11 com 8 reservas para 7 unidades; Panorâmica I 20/11 e 21/11 com 7 reservas para 6 unidades. Balcony 30-31/10 com duas reservas iguais (95226861 e 95314101, R$ 1.383 cada): provável duplicata. Conferir no Beds24 e na extranet: duplicatas, realocação ou cancelamento (a Skill não altera reservas)."
   }
  ],
  "versao": "2026-10-21T15"

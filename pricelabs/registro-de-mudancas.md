@@ -2901,6 +2901,13 @@ A Villa não aparece em nenhuma busca com filtro de hidro (falta a comodidade na
 - **Recálculo:** Recanto 16:55 UTC (último do saldo até 00:20 UTC); Villa sem saldo. Overbooking pela lista: VK7 01/11 (8/7), Panorâmica I 20-21/11 (7/6).
 - **Validação:** 2 itens, 0 erros.
 
+## 28/10/2026, 19:56 UTC (16:56 BRT) — Rotina leve das 16:53
+
+- **Reservas:** nenhuma nova nem cancelada desde a rodada das 13:53 (as 11 de 28/10 são as mesmas). **Mudanças manuais:** nenhuma; os logs só trazem as gravações da skill (a última, Afrodite às 14:09 BRT).
+- **Recálculo:** sem saldo nos 7 quartos até ~21:20 BRT; nada a medir pelo calendário nesta rodada.
+- **Pendentes com o dono:** anúncio antigo 7562933 na Booking; lote de 7 reservas das 09:27 BRT; overbooking VK7 01/11 e Panorâmica I 20-21/11; VK7 01/11 "others" R$ 500.
+- **Nada gravado.**
+
 > **Regras em vigor:** desde 06/10/2026 elas ficam em `.claude/skills/gestao-receita-pousadas/references/regras.md`. Este arquivo guarda só o histórico das mudanças.
 
 ## O que só pode ser feito na tela (passo a passo para você)

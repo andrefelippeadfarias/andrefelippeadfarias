@@ -629,7 +629,8 @@
    "responsavel": "dono",
    "desde": "2026-10-27",
    "urgencia": 1,
-   "texto": "Lotes de reservas lançados no mesmo segundo no Beds24 (26/10 13:25 UTC, 12 na Panorâmica I; 27/10 15:03 UTC, 9 na Villa), provavelmente vindos do anúncio antigo da Booking (15459723) quando ele passou a seguir o Beds24. Contagem pela lista do PriceLabs (status booked): VK7 01/11 com 8 reservas para 7 unidades; Panorâmica I 20/11 e 21/11 com 7 reservas para 6 unidades. Balcony 30-31/10 com duas reservas iguais (95226861 e 95314101, R$ 1.383 cada): provável duplicata. Conferir no Beds24 e na extranet: duplicatas, realocação ou cancelamento (a Skill não altera reservas)."
+   "texto": "Lotes de reservas lançados no mesmo segundo no Beds24 (26/10 13:25 UTC, 12 na Panorâmica I; 27/10 15:03 UTC, 9 na Villa), provavelmente vindos do anúncio antigo da Booking (15459723) quando ele passou a seguir o Beds24. Contagem pela lista do PriceLabs (status booked): VK7 01/11 com 8 reservas para 7 unidades; Panorâmica I 20/11 e 21/11 com 7 reservas para 6 unidades. Balcony 30-31/10 com duas reservas iguais (95226861 e 95314101, R$ 1.383 cada): provável duplicata. Conferir no Beds24 e na extranet: duplicatas, realocação ou cancelamento (a Skill não altera reservas). | 28/10 09:27 BRT: novo lote de 7 reservas da Booking no mesmo segundo, logo depois do sync do dono (Moinhos 30-31/10 R$ 2.770, 05-06/11 R$ 1.096 = R$ 548/noite, 09-10/11 R$ 1.332; Panorâmica I 28/10 R$ 325, 02/11 R$ 428, 24/12 R$ 1.068, 25-26/12 R$ 3.380), com valores abaixo da escada: provável anúncio antigo 7562933. Também 'others' na VK7 01/11 (R$ 500, 09:41 BRT) com a noite já em overbooking e na Regra J (R$ 4.425): conferir quem lançou.",
+   "atualizado_em": "2026-10-28"
   }
  ],
  "versao": "2026-10-21T15"

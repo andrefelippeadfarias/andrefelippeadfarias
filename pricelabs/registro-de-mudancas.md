@@ -2887,6 +2887,20 @@ A Villa não aparece em nenhuma busca com filtro de hidro (falta a comodidade na
 - **Reservas:** a lista do PriceLabs ainda não trouxe nada de 28/10. VK7 e Balcony sem mudança de ocupação desde as 07:23 BRT.
 - **Booking:** Recanto segue no anúncio antigo 7562933 (pendência urgente do dono).
 
+## 28/10/2026, 17:10 UTC (14:10 BRT) — Rotina leve das 13:53
+
+- **Reservas feitas em 28/10 (lista):** 11. **Lote de 7 da Booking às 09:27 BRT** (mesmo segundo, logo depois do sync): Moinhos 30-31/10 R$ 2.770, 05-06/11 R$ 1.096 (R$ 548/noite, abaixo da escada de R$ 1.537), 09-10/11 R$ 1.332; Panorâmica I 28/10 R$ 325, 02/11 R$ 428, 24/12 R$ 1.068, 25-26/12 R$ 3.380. Provável anúncio antigo 7562933 (pendência do dono). Diretas ("others"): Panorâmica I 27-28/11 R$ 2.262 e VK7 27-28/11 R$ 1.320 (já na escada das 07:53); VK7 28/10 R$ 250; **VK7 01/11 R$ 500** com a noite já em overbooking (Regra J R$ 4.425): conferir quem lançou.
+- **Afrodite:** reservas de 27/10 18:02 BRT (Booking) entraram no calendário: 31/10-01/11 R$ 2.882 e 02-03/11 R$ 684 (R$ 342/noite, no mínimo do dono de 26/10). Esgotada 31/10 a 03/11.
+- **Escada:** nenhuma noite nova (vendas do lote não contam).
+
+| Mudança | Onde | Antes | Depois (gravado e lido de volta) |
+|---|---|---|---|
+| Regra J (esgotada) | Afrodite 01/11 (Finados) | R$ 3.340 | R$ 4.420 |
+| Regra J (esgotada) | Afrodite 02/11 | R$ 1.300 | R$ 1.960 |
+
+- **Recálculo:** Recanto 16:55 UTC (último do saldo até 00:20 UTC); Villa sem saldo. Overbooking pela lista: VK7 01/11 (8/7), Panorâmica I 20-21/11 (7/6).
+- **Validação:** 2 itens, 0 erros.
+
 > **Regras em vigor:** desde 06/10/2026 elas ficam em `.claude/skills/gestao-receita-pousadas/references/regras.md`. Este arquivo guarda só o histórico das mudanças.
 
 ## O que só pode ser feito na tela (passo a passo para você)

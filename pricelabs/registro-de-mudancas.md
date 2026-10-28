@@ -2908,6 +2908,12 @@ A Villa não aparece em nenhuma busca com filtro de hidro (falta a comodidade na
 - **Pendentes com o dono:** anúncio antigo 7562933 na Booking; lote de 7 reservas das 09:27 BRT; overbooking VK7 01/11 e Panorâmica I 20-21/11; VK7 01/11 "others" R$ 500.
 - **Nada gravado.**
 
+## 28/10/2026, 22:56 UTC (19:56 BRT) — Rotina leve das 19:53
+
+- **Reservas:** nenhuma nova nem cancelada desde as 13:53 (as mesmas 11 de 28/10). **Recálculo:** sem saldo até ~21:20 BRT; o recálculo automático da manhã leva o que está gravado (inclusive a VK2, ainda não enviada).
+- **Pendentes com o dono:** anúncio antigo 7562933; lote das 09:27 BRT; overbooking VK7 01/11 e Panorâmica I 20-21/11; VK7 01/11 "others" R$ 500.
+- **Nada gravado.**
+
 > **Regras em vigor:** desde 06/10/2026 elas ficam em `.claude/skills/gestao-receita-pousadas/references/regras.md`. Este arquivo guarda só o histórico das mudanças.
 
 ## O que só pode ser feito na tela (passo a passo para você)

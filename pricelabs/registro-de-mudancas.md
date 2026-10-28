@@ -2874,6 +2874,19 @@ A Villa não aparece em nenhuma busca com filtro de hidro (falta a comodidade na
 - **Recanto ⚠️:** depois do sync, o anúncio ativo 15459723 sumiu e só o antigo 7562933 aparece, por ~R$ 490, sem seguir a escada (às 07:52 o 15459723 estava a R$ 638 em 03/11, certo). Pendência do dono (urgência 1): conferir no Beds24 qual anúncio da Booking está ligado ao Recanto.
 - **Nada gravado.**
 
+## 28/10/2026, 14:06 UTC (11:06 BRT) — Rotina leve das 10:53
+
+- **Recálculo da Villa (13:59 UTC) ✅.** VK2 agora com a Regra J de 28/10 (R$ 762) e do Finados no PriceLabs; o envio da VK2 sai no próximo recálculo automático ou no sync do dono (os 3 recálculos de 24 h da VK2 acabaram).
+- **Cancelamento:** VK2 no Finados (30 e 31/10) voltou de 2 para 1 vendida. A Regra J (R$ 4.420) foi desfeita e a noite segue a escada proporcional: 1 de 2 vendidas, metade do caminho do preço de antes até o alvo do Finados (R$ 3.810 = R$ 2.244 ÷ 0,589).
+
+| Mudança | Onde | Antes | Depois (gravado e lido de volta) |
+|---|---|---|---|
+| Regra J desfeita + escada | VK2 30/10 | R$ 4.420 | piso R$ 2.959 (antes da Regra J: R$ 2.092) |
+| Regra J desfeita + escada | VK2 31/10 | R$ 4.420 | piso R$ 3.048 (antes: R$ 2.261) |
+
+- **Reservas:** a lista do PriceLabs ainda não trouxe nada de 28/10. VK7 e Balcony sem mudança de ocupação desde as 07:23 BRT.
+- **Booking:** Recanto segue no anúncio antigo 7562933 (pendência urgente do dono).
+
 > **Regras em vigor:** desde 06/10/2026 elas ficam em `.claude/skills/gestao-receita-pousadas/references/regras.md`. Este arquivo guarda só o histórico das mudanças.
 
 ## O que só pode ser feito na tela (passo a passo para você)

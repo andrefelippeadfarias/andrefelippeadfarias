@@ -2862,6 +2862,18 @@ A Villa não aparece em nenhuma busca com filtro de hidro (falta a comodidade na
 - **Mercado (busca da coleta, total da estadia):** dia útil 03-04/11 mediana R$ 275 (máx. 394); fds 06-08/11 R$ 1.317; Consciência Negra 20-22/11 R$ 1.613; 24-25/11 R$ 302.
 - **Validação:** 6 itens, 0 erros. Overbooking (VK7 01/11; Panorâmica I 20-21/11) segue com o dono.
 
+## 28/10/2026, 13:25 UTC (10:25 BRT) — Conferência na Booking 30 min depois do sync do dono
+
+| Data (1 noite) | Recanto 15459723 | Recanto antigo 7562933 | Esperado (Moinhos enviado × 0,59) | Villa 14824789 | Esperado Villa |
+|---|---|---|---|---|---|
+| 29-30/10 | não aparece | R$ 486 | R$ 1.760 → ~R$ 1.038 | — | — |
+| 03-04/11 | sem disponibilidade | R$ 497 | R$ 1.079 → ~R$ 637 | R$ 504 | Balcony R$ 953 × 0,53 = R$ 505 ✅ |
+| 27-28/11 | sem disponibilidade | não aparece | — | R$ 1.544 | VK7 ~R$ 2.620 × 0,589 ✅ |
+
+- **Villa ✅:** a vitrine segue o envio (o mais barato é a Balcony em 03/11 e a VK7 em 27/11).
+- **Recanto ⚠️:** depois do sync, o anúncio ativo 15459723 sumiu e só o antigo 7562933 aparece, por ~R$ 490, sem seguir a escada (às 07:52 o 15459723 estava a R$ 638 em 03/11, certo). Pendência do dono (urgência 1): conferir no Beds24 qual anúncio da Booking está ligado ao Recanto.
+- **Nada gravado.**
+
 > **Regras em vigor:** desde 06/10/2026 elas ficam em `.claude/skills/gestao-receita-pousadas/references/regras.md`. Este arquivo guarda só o histórico das mudanças.
 
 ## O que só pode ser feito na tela (passo a passo para você)

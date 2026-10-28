@@ -2828,6 +2828,24 @@ A Villa não aparece em nenhuma busca com filtro de hidro (falta a comodidade na
 - **Correção na skill:** a Regra J recalculava o "sem dado × 1,5" sobre o preço já subido (Afrodite 08/11 ia de R$ 2.460 para R$ 3.690). `topo_mercado.py plano --regras` agora parte do preço de antes; 38 noites deixaram de subir de novo. Teste novo; 65 OK.
 - **Validação:** 30 itens, 0 erros (2 erros da Regra G corrigidos com a Balcony). **Envio:** os recálculos de 24 h acabaram; o recálculo automático da manhã (~07:50 BRT) leva tudo à Booking. Overbooking (VK7 01/11; Panorâmica I 20-21/11) segue com o dono.
 
+## 28/10/2026, 10:20 UTC (07:20 BRT) — Pedido do dono: escada proporcional ao topo do mercado
+
+- **Pedido:** "Ajuste a escada de aumento de preço de forma proporcional sempre para chegarmos ao valor da média dos tops do mercado com nossas características sempre."
+- **Alvo (média dos 3 maiores preços do quarto com hidro da classe A, vitrine por noite; 4 agentes pelo conector oficial em 28/10 + feriados de 27/10):** semana R$ 1.839 (03/11 e 24/11; mediana R$ 1.302 a 1.467); fds R$ 1.989 (06-08/11) e R$ 2.084 (27-29/11); Finados R$ 2.244; Consciência Negra R$ 2.405; Natal R$ 1.775; Réveillon R$ 2.728; Aniversário de SP R$ 2.251. Enviado = ÷ 0,59 (Recanto) e ÷ 0,589 (Villa): semana ~R$ 3.117/3.122.
+- **Regra:** cada venda leva o preço na reta até o alvo, na proporção das unidades (a última chega ao alvo); só sobe; cancelamento desce até o piso do dono. Toda noite futura, todos os quartos (regras.md 6a; `escada_reservas.py plano`; 66 testes OK).
+- **Aplicada às vendas do calendário entre 27/10 13:35 e 28/10 00:19 UTC (sem o lote das 15:03), gravada e lida de volta ✅ (49 noites; substitui o +7% da madrugada):**
+
+| Suíte | Noites (antes → depois, enviado) |
+|---|---|
+| Moinhos | 29/10 739 → 1.759 (3 de 7); 02 e 03/11 739 → 1.079; 04/11 739 → 1.691; 05/11 739 → 1.532; 06/11 1.713 → 2.266; Finados 01/11 1.924 → piso 3.178; Consciência 20-21/11 2.991 → piso 3.353; 11/01 1.232 → piso 1.502 |
+| Panorâmica II e I (ordem) | acompanham a Moinhos em 29/10 (II), 02-06/11 e 11/01; II 31/10 3.304 → piso 3.554 e 01/11 → 3.178; I 27-28/11 2.220 → piso 2.486 e 13/12 1.228 → piso 1.614 |
+| Afrodite (ordem, 20% em dia de semana) | 02-03/11 → 1.300; 04/11 → 2.040; 05/11 → 1.840; 01/11 → piso 3.340; 11/01 → piso 1.820 |
+| VK7 | 03/11 710 → 1.066; 27/11 2.003 → piso 2.265; 28/11 2.116 → 2.324; 12/12 2.178 → 2.459; 13/12 970 → 1.406; 30/01 2.252 → 2.472; 31/01 1.297 → 1.570 |
+| Balcony (Regra G) | 03/11 635 → 953; 27/11 1.460 → 1.639; 12/12 1.727 → 1.791 |
+
+- **Correção às 07:18 BRT:** o plano saiu com hoje = 27/10 e subiu também a noite de 28/10, que já era hoje. Voltou ao valor da madrugada (Moinhos R$ 798, Panorâmica II R$ 795, Panorâmica I R$ 799, VK7 R$ 770, Balcony R$ 699). O script agora recusa `--hoje` diferente do relógio.
+- **Validação:** 50 itens, 0 erros (calendário aceito com `--aceitar-velho`: recálculos de 00:19-00:25 UTC). **Envio:** recálculo automático da manhã.
+
 > **Regras em vigor:** desde 06/10/2026 elas ficam em `.claude/skills/gestao-receita-pousadas/references/regras.md`. Este arquivo guarda só o histórico das mudanças.
 
 ## O que só pode ser feito na tela (passo a passo para você)

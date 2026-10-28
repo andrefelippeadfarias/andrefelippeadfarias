@@ -290,3 +290,6 @@ Cada item tem data e evidência. Para incluir um item novo: data, o fato, a evid
 - **O calendário recalculado mostrou ~35 noites vendidas que a lista de reservas não trazia horas depois** (Moinhos 16, VK7 10, VK2 Finados). A escada e a Regra J leem o calendário (diferença entre dois recálculos); a lista só confirma canal e valor depois.
 - **Regra J em toda rodada precisa das regras gravadas** (`--regras`): sem elas, as noites "sem dado de mercado" sobem 1,5× de novo a cada rodada.
 - **Cancelamento abre noite de feriado com Regra J:** rode `restaurar` em toda rodada com recálculo (Afrodite 30-31/10 reabriu).
+- **"Hoje" vem do relógio na hora de gravar** (28/10): o plano montado à 00:30 UTC com `--hoje 27/10` foi gravado às 07:15 BRT de 28/10 e subiu a noite de hoje (Moinhos R$ 739 → R$ 1.215; VK7, Panorâmica I e II, Balcony). Desfeito às 07:18 BRT. Antes de validar, rode `date -u` e use a data BRT; plano velho se refaz.
+- **Lote do Beds24 cai em segundos seguidos** (27/10 15:03:02 a 15:03:04): agrupe por minuto, não por segundo.
+- **Mercado de classe A com hidro está muito acima do Recanto em dia de semana** (28/10): média dos 3 mais caros R$ 1.839 e mediana R$ 1.302 a 1.467 na vitrine, contra R$ 437 do Recanto em 03/11. Com o alvo proporcional, cada venda de 1 em 7 sobe ~R$ 340 enviados num quarto a R$ 739; acompanhar se o ritmo de vendas cai.

@@ -315,3 +315,9 @@ Hora da ANÁLISE E AGENDA DIÁRIA do PriceLabs (rotina "Agenda diária PriceLabs
 
 ## 28/10/2026 — Regra J sem acúmulo
 - `topo_mercado.py plano` aceita `--regras Q7=<overrides.json> ...` (no fim da linha, depois dos recálculos): a noite que já tem a Regra J usa o "antes R$ X" do motivo como base do "sem dado × 1,5", e o motivo novo guarda o mesmo preço de antes. Sem isso o multiplicador se acumulava a cada rodada. `ler_regras` serve ao `plano` e ao `restaurar`. Teste em `test_regra_j_topo_do_mercado`.
+
+## 28/10/2026 — Escada proporcional ao topo do mercado (dono)
+- `escada_reservas.py`: `alvo` (média dos `escada.top_n` maiores preços do quarto com hidro da classe A ÷ fator público; feriado pelo `topo_a` do período, fora dele pela referência mais próxima do mesmo tipo), `proporcional` (reta até o alvo pelas unidades vendidas), `piso_dono` (piso do cancelamento), `lotes` (3+ reservas no mesmo minuto), `plano` (diferença entre dois recálculos → itens, com a ordem do Recanto e a Regra G em `acompanhar`; Balcony com teto da Regra G). O degrau fixo de 7% fica só sem dado de mercado.
+- `concorrentes_hidro_vista.json`: `topo_a` e `topo_a_hoteis` nos 5 feriados; `referencias_topo` (semana 03/11 e 24/11, fds 06-08/11 e 27-29/11; 4 agentes, conector oficial, escada de preço mínimo).
+- `quartos.json`: `escada.top_n` 3, `escada.piso_genius` (R$ 300 até 08/11), `nota_proporcional`.
+- Teste `test_escada_proporcional_ao_topo`; 66 OK.

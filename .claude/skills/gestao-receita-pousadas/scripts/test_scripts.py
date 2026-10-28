@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import math
 import unittest
 from datetime import date
 
@@ -153,6 +154,47 @@ class TestValidador(unittest.TestCase):
         self.assertLess(teto(CFG, "Balcony", date(2026, 10, 27)), teto(CFG, "VK2", date(2026, 10, 27)))
         self.assertEqual(ordem(791, 747, 755, 800), {"Q7": 791, "Q2": 791, "Double": 791, "Afrodite": 950})
         self.assertEqual(ordem(791, 747, 755, 800, premio=0.05)["Afrodite"], 831)
+
+    def test_escada_proporcional_ao_topo(self):
+        import escada_reservas as e
+        from datetime import date as D
+        # reta: 0/7 a R$ 739, alvo R$ 3117; 3 vendas -> 3117 - 2378*4/7
+        self.assertAlmostEqual(e.proporcional(739, 3117, 7, 0, 3), 3117 - 2378 * 4 / 7)
+        # a última unidade chega ao alvo; vendas em passos somam o mesmo que de uma vez
+        self.assertAlmostEqual(e.proporcional(739, 3117, 7, 0, 7), 3117)
+        um = e.proporcional(739, 3117, 7, 0, 1)
+        self.assertAlmostEqual(e.proporcional(um, 3117, 7, 1, 3), e.proporcional(739, 3117, 7, 0, 3))
+        hidro = {"periodos": [{"rotulo": "Finados", "datas": ["2026-10-31"], "topo_a": 2244}],
+                 "referencias_topo": [{"tipo": "semana", "data": "2026-11-03", "rotulo": "s", "topo_a": 1839},
+                                      {"tipo": "fds", "data": "2026-11-06", "rotulo": "f", "topo_a": 1989}]}
+        self.assertEqual(e.alvo(CFG, hidro, "Q7", D(2026, 11, 4))[0], round(1839 / 0.59, 2))
+        self.assertEqual(e.alvo(CFG, hidro, "Q7", D(2026, 11, 7))[0], round(1989 / 0.59, 2))
+        self.assertEqual(e.alvo(CFG, hidro, "Q7", D(2026, 10, 31))[0], round(2244 / 0.59, 2))
+        self.assertEqual(e.alvo(CFG, hidro, "Balcony", D(2026, 11, 4))[0], round(0.9 * round(1839 / 0.589, 2), 2))
+        r = lambda p, v, fixo=True: {"price": str(p), "mu_occupancy": f"{v}/7",  # noqa: E731
+                                     "min_price": str(p) if fixo else None, "max_price": str(p) if fixo else None}
+        antes = {"Q7": {"2026-11-04": r(739, 0), "2026-11-05": r(739, 2), "2026-11-10": r(1232, 6)},
+                 "Q2": {"2026-11-04": {"price": "747", "mu_occupancy": "0/2", "min_price": "747", "max_price": "747"}},
+                 "Double": {"2026-11-04": {"price": "755", "mu_occupancy": "0/6", "min_price": "755", "max_price": "755"}},
+                 "Afrodite": {"2026-11-04": {"price": "920", "num_bookings": 0, "min_price": "920", "max_price": "920"}}}
+        depois = {"Q7": {"2026-11-04": r(739, 2), "2026-11-05": r(739, 1), "2026-11-10": r(1232, 7)},
+                  "Q2": antes["Q2"], "Double": antes["Double"], "Afrodite": antes["Afrodite"]}
+        it = {(i["quarto"], i["data"]): i for i in e.plano(CFG, hidro, antes, depois, D(2026, 10, 27))}
+        q = it[("Q7", "2026-11-04")]
+        self.assertEqual(q["min_price"], q["max_price"])
+        self.assertEqual(q["min_price"], math.ceil(e.proporcional(739, round(1839 / 0.59, 2), 7, 0, 2)))
+        self.assertNotIn(("Q7", "2026-11-10"), it)            # esgotou: Regra J
+        self.assertGreaterEqual(it[("Q2", "2026-11-04")]["min_price"], q["min_price"])     # ordem
+        self.assertGreaterEqual(it[("Double", "2026-11-04")]["min_price"], q["min_price"])
+        self.assertGreaterEqual(it[("Afrodite", "2026-11-04")]["min_price"], round(q["min_price"] * 1.2))
+        # cancelamento desce, mas não abaixo do piso do dono (R$ 300 no Genius 3 até 08/11)
+        c = it[("Q7", "2026-11-05")]
+        self.assertLessEqual(c["min_price"], 739)
+        self.assertGreaterEqual(c["min_price"], math.ceil(min(e.piso_dono(CFG, "Q7", D(2026, 11, 5)), 739)))
+        # lote do Beds24 (3+ no mesmo segundo) não conta
+        lote = {("Q7", "2026-11-04"): 2}
+        self.assertNotIn(("Q7", "2026-11-04"),
+                         {(i["quarto"], i["data"]) for i in e.plano(CFG, hidro, antes, depois, D(2026, 10, 27), lote)})
 
     def test_regra_j_topo_do_mercado(self):
         import topo_mercado as tm

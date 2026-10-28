@@ -286,7 +286,10 @@
   "escada": {
    "passo": 0.07,
    "fator_balcony": 0.9,
-   "nota": "Dono, 26/10: a cada reserva, subir o preço gradualmente do mínimo atual até o alto padrão (teto = piso do dono de R$ 500 dom-qui / R$ 850 sex-sáb no Genius 3; Balcony 90% do teto da VK2). Um degrau de 7% por reserva no quarto e nas noites da estadia (scripts/escada_reservas.py)."
+   "top_n": 3,
+   "piso_genius": {"valor": 300, "ate": "2026-11-08"},
+   "nota_proporcional": "Dono, 28/10: 'Ajuste a escada de aumento de preço de forma proporcional sempre para chegarmos ao valor da média dos tops do mercado com nossas características sempre.' Alvo = média dos top_n maiores preços do quarto com hidro da classe A (hidro + vista, até 3 km do Capivari; concorrentes_hidro_vista.json: topo_a dos feriados e referencias_topo de semana e fds) ÷ regra_j.fator_publico. Cada venda move o preço na reta até o alvo, na proporção das unidades: novo = alvo − (alvo − atual) × livres_depois ÷ livres_antes; a última unidade chega ao alvo. Cancelamento desce pela mesma reta, até o piso_genius (R$ 300 no Genius 3 até 08/11; depois os pisos de vitrine do dono). 'passo' (7%) só sem dado de mercado.",
+   "nota": "Dono, 26/10 (substituída em 28/10 pela nota_proporcional): a cada reserva, subir o preço gradualmente do mínimo atual até o alto padrão (teto = piso do dono de R$ 500 dom-qui / R$ 850 sex-sáb no Genius 3; Balcony 90% do teto da VK2). Um degrau de 7% por reserva no quarto e nas noites da estadia (scripts/escada_reservas.py)."
   },
   "afrodite_fds_publico": [1600, 1800],
   "afrodite_fds_nota": "Dono 27/10 ('Pode ser'): Afrodite no fim de semana fora de feriado na faixa alta do mercado sem passar do topo (classe A com hidro: mediana ~R$ 1.270-1.310, topo ~R$ 2.000 na vitrine). Enviado = vitrine ÷ regra_j.fator_publico do Recanto. Aplicado pelo ordem_recanto.py.",

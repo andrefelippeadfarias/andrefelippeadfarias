@@ -159,6 +159,8 @@ def plano(cfg: dict, hidro: dict, antes: dict, depois: dict, hoje: date, lote: d
             vd_real = vd - lote.get((curto, noite), 0)
             if vd_real == va or va >= u or vd >= u:
                 continue  # sem venda nova; esgotada antes ou agora: Regra J
+            if curto == "Balcony" and vd_real < va:
+                continue  # cancelamento na Balcony: quem manda é a Regra G (10% abaixo da suíte livre), não a escada
             atual = float(r["price"])
             meta, fonte = alvo(cfg, hidro, curto, d)
             if meta is None:

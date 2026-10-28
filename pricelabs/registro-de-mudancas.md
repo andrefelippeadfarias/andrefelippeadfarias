@@ -2846,6 +2846,22 @@ A Villa não aparece em nenhuma busca com filtro de hidro (falta a comodidade na
 - **Correção às 07:18 BRT:** o plano saiu com hoje = 27/10 e subiu também a noite de 28/10, que já era hoje. Voltou ao valor da madrugada (Moinhos R$ 798, Panorâmica II R$ 795, Panorâmica I R$ 799, VK7 R$ 770, Balcony R$ 699). O script agora recusa `--hoje` diferente do relógio.
 - **Validação:** 50 itens, 0 erros (calendário aceito com `--aceitar-velho`: recálculos de 00:19-00:25 UTC). **Envio:** recálculo automático da manhã.
 
+## 28/10/2026, 11:10 UTC (08:10 BRT) — Rotina completa das 07:53
+
+- **Envio:** Q7, Panorâmica I, Afrodite, Panorâmica II, VK7 e Balcony recalculados e enviados às 10:22-10:23 UTC ✅ (já com a escada proporcional e a correção da noite de hoje). **VK2 não recalculou nem enviou** (último envio 27/10 20:34 UTC): as Regras J de 28/10 e do Finados esperam o recálculo das 10:35 BRT (saldo de 24 h). Na Booking (anúncio 15459723), 03-04/11 a R$ 638 = Moinhos R$ 1.079 × 0,59 ✅.
+- **⚠️ Anúncio antigo do Recanto 7562933 voltou:** com disponibilidade e mais barato (03-04/11 R$ 497 contra R$ 638; 06-08/11 R$ 2.523 contra R$ 2.617). Vende fora da escada e pode repetir o overbooking. Pendência do dono (urgência 1).
+- **Recálculo:** Recanto às 11:02 UTC ✅; Villa recusado (Beds24 sobrecarregado), calendário da coleta (10:23 UTC).
+- **Vendas novas pelo calendário (desde 00:19 UTC):** Panorâmica I 27 e 28/11 (+1 cada), VK7 27/11 e 28/11 (+1 cada); Balcony 29/10 cancelou 1 (Regra G mantém R$ 699). A lista de reservas não trouxe nada novo.
+
+| Mudança | Onde | Antes | Depois (gravado e lido de volta) |
+|---|---|---|---|
+| Escada proporcional | Panorâmica I 27 e 28/11 (3 de 6) | R$ 2.486 | piso R$ 2.753 |
+| Escada proporcional | VK7 27/11 (3 de 7) / 28/11 (2 de 7) | R$ 2.264 / 2.324 | piso R$ 2.531 |
+| Regra J (esgotada) | Afrodite 13 e 14/11 | R$ 3.288 / 3.889 | R$ 4.940 / 5.840 |
+
+- **Mercado (busca da coleta, total da estadia):** dia útil 03-04/11 mediana R$ 275 (máx. 394); fds 06-08/11 R$ 1.317; Consciência Negra 20-22/11 R$ 1.613; 24-25/11 R$ 302.
+- **Validação:** 6 itens, 0 erros. Overbooking (VK7 01/11; Panorâmica I 20-21/11) segue com o dono.
+
 > **Regras em vigor:** desde 06/10/2026 elas ficam em `.claude/skills/gestao-receita-pousadas/references/regras.md`. Este arquivo guarda só o histórico das mudanças.
 
 ## O que só pode ser feito na tela (passo a passo para você)

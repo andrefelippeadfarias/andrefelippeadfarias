@@ -238,6 +238,7 @@ Pedido do dono: "qualificar os preços: muito baixo, baixo, médio, alto e muito
 
 ## 6a. Decisões permanentes do dono
 - 26/09: modo automático. "Sempre apresente a análise e aplique a estratégia. Só pare de aplicar caso eu avise para parar."
+- 28/10: "Essa busca que você está fazendo agora na Booking deve ser feita geralmente uns 30 minutos depois que eu falar que fiz o sync." A conferência dos preços na Booking fica para ~30 min depois do aviso de sync do dono (agendada com `send_later`) ou, sem aviso, 30 min ou mais depois do último envio do PriceLabs.
 - 25/09: ofertas da Booking obrigatórias; descontos de OTA intocáveis; Genius até o nível 3.
 - 06/10: autonomia total, aprendizado automático e rotinas nesta conversa; Regras H (sábado sozinho fechado) e I (última hora); feriado com piso padrão de R$ 1.000 reais, nunca abaixo de R$ 800.
 - 07/10: "Ajuste tudo que está lançado com preço fixo no PriceLabs para percentual, para usarmos as ferramentas do PriceLabs de flutuação de preços. Faça assim sempre." (feito em 07/10, 103 datas).

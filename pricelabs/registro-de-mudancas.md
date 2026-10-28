@@ -2804,6 +2804,30 @@ A Villa não aparece em nenhuma busca com filtro de hidro (falta a comodidade na
 - **Envio:** os ajustes de feriados, da VK7 29/10, da Regra J e da Afrodite saem no recálculo e envio automáticos da manhã de 28/10 (recálculos de hoje esgotados).
 - **Nada gravado.**
 
+## 28/10/2026, 00:30 UTC (27/10, 21:30 BRT) — "Ok continue": recálculo da noite, escada, Regra J e relatório de reservas
+
+- **Recálculo dos 7 quartos** (00:19 a 00:25 UTC, saldo liberado pelos de 00:17-00:24 de 27/10). Afrodite conferida: 29/10 R$ 2.700, 03-05/11 R$ 920, fds 06-07/11, 04-05/12 e 18-19/12 na faixa R$ 2.720-3.040 ✅.
+- **Vendas pelo calendário (contra o das 13:35 UTC; a lista de reservas ainda não traz):** Moinhos ~16 noites (3 em 29/10; 02-05/11; Finados; 06-07/11; 20-21/11); VK7 ~10 fora do lote (28/10, 02-03/11, 27-28/11, 12-13/12, 30-31/01); VK2 esgotou 28/10 e Finados (30-31/10); Panorâmica II 31/10, 01/11 e 10/11; Panorâmica I 27-28/11 e 13/12. **Cancelamento:** Afrodite 30-31/10 (Finados) reabriu.
+- **Reservas feitas em 27/10 BRT (lista):** 11 reservas, 13 noites, R$ 5.962 — Booking 8 (R$ 5.235; todas do lote das 12:03 BRT, VK7 e Balcony), Airbnb 2 (R$ 480 líquidos, comissão R$ 107), direto 1 (R$ 247). Em 26 e 27/10: 37 reservas, 56 noites, R$ 38.315 (Booking 78%, direto 16% com a maior diária, R$ 874; Airbnb 6% a R$ 270).
+
+| Mudança | Onde | Antes | Depois (gravado e lido de volta) |
+|---|---|---|---|
+| Escada (+7% por venda) | Moinhos 28/10, 02, 03 e 05/11 | R$ 739 | R$ 798 (piso = teto) |
+| Escada (+7% ×3) | Moinhos 29/10 | R$ 739 | R$ 915 |
+| Escada (+7% ×2) | Moinhos 04/11 | R$ 739 | R$ 856 |
+| Escada | VK7 28/10 e 03/11 | R$ 710 | R$ 770 |
+| Ordem do Recanto | Panorâmica II 28/10, 02, 03 e 05/11 / 04/11 | R$ 747 | R$ 795 / R$ 859 |
+| Ordem do Recanto | Panorâmica I 28/10, 03 e 05/11 / 04/11 | R$ 755 | R$ 799 / R$ 858 |
+| Afrodite 20% acima | 03 e 05/11 / 04/11 | R$ 920 | R$ 960 / R$ 1.020 |
+| Regra G | Balcony 28/10 e 03/11 | R$ 635 | R$ 699 |
+| Regra J (esgotada) | VK2 28/10 | R$ 711 | R$ 762 (maior preço da busca do dia) |
+| Regra J (esgotada, Finados) | VK2 30 e 31/10; Balcony 31/10 | R$ 2.092 / 2.261 / 1.511 | R$ 4.419 |
+| Regra J (esgotada) | VK7 02/11; Panorâmica II 10/11 | R$ 710 / R$ 1.240 | R$ 1.066 / R$ 1.860 |
+| Regra J desfeita (reabriu) | Afrodite 30 e 31/10 | R$ 4.420 | piso R$ 4.360 (preço de antes), teto do anúncio |
+
+- **Correção na skill:** a Regra J recalculava o "sem dado × 1,5" sobre o preço já subido (Afrodite 08/11 ia de R$ 2.460 para R$ 3.690). `topo_mercado.py plano --regras` agora parte do preço de antes; 38 noites deixaram de subir de novo. Teste novo; 65 OK.
+- **Validação:** 30 itens, 0 erros (2 erros da Regra G corrigidos com a Balcony). **Envio:** os recálculos de 24 h acabaram; o recálculo automático da manhã (~07:50 BRT) leva tudo à Booking. Overbooking (VK7 01/11; Panorâmica I 20-21/11) segue com o dono.
+
 > **Regras em vigor:** desde 06/10/2026 elas ficam em `.claude/skills/gestao-receita-pousadas/references/regras.md`. Este arquivo guarda só o histórico das mudanças.
 
 ## O que só pode ser feito na tela (passo a passo para você)

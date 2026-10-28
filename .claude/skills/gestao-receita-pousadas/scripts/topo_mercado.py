@@ -21,7 +21,8 @@ com o teto no máximo do anúncio.
 
 Uso:
   python3 topo_mercado.py plano --hoje AAAA-MM-DD Q7=<recálculo> Double=<recálculo> ... [--reservas reservas.json]
-      [--coleta coleta.json] [--dias 90] [--saida plano_topo.json]
+      [--coleta coleta.json] [--dias 90] [--saida plano_topo.json] [--regras Q7=<overrides.json> ...]
+      (com --regras, a noite que já tem a Regra J usa o preço de antes como base: o × 1,5 não se acumula)
   python3 topo_mercado.py restaurar --hoje AAAA-MM-DD Q7=<recálculo> ... --regras Q7=<overrides.json> ... [--saida ...]
 """
 
@@ -82,8 +83,22 @@ def overbooking(reservas: list[dict], cfg: dict) -> dict:
     return {k: v for k, v in cont.items() if v > cfg["por_curto"][k[0]]["unidades"]}
 
 
-def plano(cfg, cal: dict, hoje: dt.date, dias: int, periodos, over: dict) -> list[dict]:
+def antes_regra_j(regras: dict | None) -> dict:
+    """(curto, noite) -> preço de antes, das noites que já têm a Regra J gravada."""
+    out = {}
+    for curto, lista in (regras or {}).items():
+        for o in lista:
+            m = re.search(r"Regra J.*antes R\$ (\d+)", str(o.get("reason", "")))
+            if m and o.get("date"):
+                out[(curto, o["date"])] = float(m.group(1))
+    return out
+
+
+def plano(cfg, cal: dict, hoje: dt.date, dias: int, periodos, over: dict, regras: dict | None = None) -> list[dict]:
+    """regras (overrides atuais por quarto): noite que já tem a Regra J usa o preço de antes como base do
+    'sem dado de mercado', para o multiplicador não se acumular a cada rodada."""
     rj = cfg["parametros"]["regra_j"]
+    ja = antes_regra_j(regras)
     itens = []
     for k in range(1, dias + 1):
         noite = (hoje + dt.timedelta(days=k)).isoformat()
@@ -106,11 +121,12 @@ def plano(cfg, cal: dict, hoje: dt.date, dias: int, periodos, over: dict) -> lis
             if not (esgotado(r, q["unidades"]) or ob or lotada_pousada):
                 continue
             atual = float(r["price"])
+            base = ja.get((curto, noite), atual)
             pub, fonte = topo_publico(periodos, noite)
             if pub:
                 alvo = pub / rj["fator_publico"][q["pousada"]]
             else:
-                alvo, fonte = atual * rj["sem_dado_mult"], "sem dado de mercado: preço atual × " + str(rj["sem_dado_mult"])
+                alvo, fonte = base * rj["sem_dado_mult"], "sem dado de mercado: preço atual × " + str(rj["sem_dado_mult"])
             alvo = min(max(alvo, atual), float(q["max"]))
             alvo = math.floor(alvo)
             if alvo <= atual + 1:
@@ -119,7 +135,7 @@ def plano(cfg, cal: dict, hoje: dt.date, dias: int, periodos, over: dict) -> lis
                    "suíte esgotada" if esgotado(r, q["unidades"]) else f"pousada lotada ({v}/{t})")
             itens.append({"tipo": "data", "quarto": curto, "data": noite, "min_price": alvo, "max_price": alvo,
                           "preco_antes": atual, "excecao": "dono",
-                          "motivo": f"Regra J (dono 27/10): {gat}; topo do mercado ({fonte}); antes R$ {atual:.0f}"})
+                          "motivo": f"Regra J (dono 27/10): {gat}; topo do mercado ({fonte}); antes R$ {base:.0f}"})
     return itens
 
 
@@ -139,6 +155,15 @@ def restaurar(cfg, cal: dict, regras: dict, hoje: dt.date) -> list[dict]:
                           "max_price": float(q["max"]), "preco_antes": float(r["price"]),
                           "motivo": f"Regra J desfeita: a noite reabriu; volta ao preço de antes (R$ {m.group(1)}) como piso"})
     return itens
+
+
+def ler_regras(pares: list[str]) -> dict:
+    regras = {}
+    for x in pares:
+        k, v = x.split("=", 1)
+        d = ler_json(v)
+        regras[k] = ((d.get("data") or {}).get("overrides")) or d.get("overrides") or []
+    return regras
 
 
 def main(argv=None) -> int:
@@ -163,16 +188,11 @@ def main(argv=None) -> int:
             d = ler_json(a.reservas)
             res = ((d.get("data") or {}).get("data")) or d.get("data") or []
         over = overbooking(res, cfg)
-        itens = plano(cfg, cal, hoje, a.dias, periodos_mercado(hidro, coleta), over)
+        itens = plano(cfg, cal, hoje, a.dias, periodos_mercado(hidro, coleta), over, ler_regras(a.regras))
         for (curto, noite), n in sorted(over.items()):
             print(f"OVERBOOKING {curto} {noite}: {n} reservas para {cfg['por_curto'][curto]['unidades']} unidades")
     else:
-        regras = {}
-        for x in a.regras:
-            k, v = x.split("=", 1)
-            d = ler_json(v)
-            regras[k] = ((d.get("data") or {}).get("overrides")) or d.get("overrides") or []
-        itens = restaurar(cfg, cal, regras, hoje)
+        itens = restaurar(cfg, cal, ler_regras(a.regras), hoje)
     json.dump({"hoje": hoje.isoformat(), "itens": itens}, open(a.saida, "w"), ensure_ascii=False, indent=1)
     print(f"{len(itens)} itens em {a.saida}")
     for it in itens[:15]:

@@ -177,6 +177,12 @@ class TestValidador(unittest.TestCase):
         cal2 = {"Q7": {"2026-10-31": {"date": "2026-10-31", "price": "4400", "mu_occupancy": "6/7"}}}
         r = tm.restaurar(CFG, cal2, {"Q7": [{"date": "2026-10-31", "reason": q["motivo"]}]}, D(2026, 10, 27))
         self.assertEqual(r[0]["min_price"], 2471)
+        # já com a Regra J: o × 1,5 parte do preço de antes e não se acumula
+        cal3 = {"Q7": {"2026-11-04": {"date": "2026-11-04", "price": "1500", "mu_occupancy": "7/7"}}}
+        regras = {"Q7": [{"date": "2026-11-04", "reason": "Regra J (dono 27/10): suíte esgotada; antes R$ 1000"}]}
+        self.assertEqual(tm.plano(CFG, cal3, D(2026, 10, 27), 10, [], {}, regras), [])
+        sem = tm.plano(CFG, cal3, D(2026, 10, 27), 10, [], {})
+        self.assertEqual(sem[0]["min_price"], 2250)
 
     def test_afrodite_fora_da_regra_i(self):
         self.assertTrue(erros([item(quarto="Afrodite", data="2026-10-07", preco=-30, price_type="percent", min_price=1300)]))

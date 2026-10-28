@@ -285,3 +285,8 @@ Cada item tem data e evidência. Para incluir um item novo: data, o fato, a evid
 - A 7562933 saiu do ar e a 15459723 (a de 226 avaliações) passou a receber os preços do Beds24, com público ≈ 0,59 do enviado. Para conferir, busque por coordenadas (-22.728453, -45.556345, raio 0,3) e leia a 15459723. Até o dono confirmar o Genius desse anúncio, o fator 0,41 do Genius 3 pode estar errado. Se o Genius estiver com o mesmo desconto de antes, o hóspede mais descontado pagaria ~R$ 272 com R$ 739 enviados.
 - Às 07:53 o PriceLabs pode estar refazendo os dados (LISTING_NO_DATA em get_listing_prices); o recálculo por quarto funciona e devolve o calendário.
 - **Troca de anúncio na Booking traz reservas antigas em lote (26-27/10):** quando o anúncio 15459723 passou a seguir o Beds24, entraram lotes de reservas no mesmo segundo, com valores do preço antigo, e a contagem por noite passou da lotação (VK7 01/11 8/7; Panorâmica I 20-21/11 7/6). Em toda rotina, conte as reservas confirmadas por noite nos lotes novos e leve overbooking ao topo do relatório; o calendário do PriceLabs (que mostra no máximo a lotação) não acusa.
+
+## 28/10/2026 — Calendário à frente da lista e Regra J repetida
+- **O calendário recalculado mostrou ~35 noites vendidas que a lista de reservas não trazia horas depois** (Moinhos 16, VK7 10, VK2 Finados). A escada e a Regra J leem o calendário (diferença entre dois recálculos); a lista só confirma canal e valor depois.
+- **Regra J em toda rodada precisa das regras gravadas** (`--regras`): sem elas, as noites "sem dado de mercado" sobem 1,5× de novo a cada rodada.
+- **Cancelamento abre noite de feriado com Regra J:** rode `restaurar` em toda rodada com recálculo (Afrodite 30-31/10 reabriu).

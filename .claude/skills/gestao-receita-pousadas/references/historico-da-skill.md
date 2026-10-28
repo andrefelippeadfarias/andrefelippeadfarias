@@ -312,3 +312,6 @@ Hora da ANÁLISE E AGENDA DIÁRIA do PriceLabs (rotina "Agenda diária PriceLabs
 - `escada_reservas.ordem`: prêmio padrão de 20% (passe 0,05 em fds e feriado).
 - `quartos.json`: `Afrodite.premio_minimo_semana` 0,2 e `parametros.afrodite_fds_publico` [1600, 1800].
 - Testes: `test_afrodite_mais_cara` (20%), `test_afrodite_respeita_excecao_do_dono`, `test_afrodite_fim_de_semana_e_feriado`; 65 testes OK.
+
+## 28/10/2026 — Regra J sem acúmulo
+- `topo_mercado.py plano` aceita `--regras Q7=<overrides.json> ...` (no fim da linha, depois dos recálculos): a noite que já tem a Regra J usa o "antes R$ X" do motivo como base do "sem dado × 1,5", e o motivo novo guarda o mesmo preço de antes. Sem isso o multiplicador se acumulava a cada rodada. `ler_regras` serve ao `plano` e ao `restaurar`. Teste em `test_regra_j_topo_do_mercado`.

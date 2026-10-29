@@ -2973,6 +2973,21 @@ A Villa não aparece em nenhuma busca com filtro de hidro (falta a comodidade na
 - **Sexta 30/10:** preço de mercado no ar; a estadia de 1 noite depende do dono no Beds24 (mínimo de 3 noites do Finados e saída de sábado fechada na Afrodite e na Villa).
 - **Nada gravado.**
 
+## 29/10/2026, 17:00 UTC (14:00 BRT) — Rotina leve das 13:53: escada na Panorâmica I de maio/2027
+
+- **Reservas novas (lista):** Panorâmica I 21-24/05/2027, 2 unidades (3 noites, canal "others", R$ 8.560 no total, ~R$ 1.427 por quarto e noite), feitas às 09:02 e 09:15 BRT. Não apareciam na rodada das 10:53 (a lista chega com atraso). A do Airbnb de 08/11 já tinha entrado na rodada das 07:53. Nenhum cancelamento.
+- **Recálculo:** Panorâmica I recusado (limite do Beds24). Valores do calendário das 11:10 UTC.
+
+| Regra | Quarto e data | Antes | Depois (piso) |
+|---|---|---|---|
+| Escada proporcional (0→2 de 6) | Panorâmica I 21 e 22/05/2027 | R$ 2.353 | R$ 2.753 (alvo R$ 3.532) |
+| Escada proporcional (0→2 de 6) | Panorâmica I 23/05/2027 | R$ 1.938 | R$ 2.338 (alvo R$ 3.117) |
+| Ordem Afrodite (domingo, +20%) | Afrodite 23/05/2027 | R$ 2.619 | R$ 2.820 |
+
+- **Ordem conferida:** Panorâmica II entre Moinhos e Panorâmica I nas 3 noites; Afrodite 21-22/05 (R$ 3.179) já 5% acima.
+- **Gravado e lido de volta ✅.** Vai aos canais no próximo recálculo ou no Sync do dono (datas distantes, sem pressa).
+- **Validação:** 4 itens, 0 erros.
+
 > **Regras em vigor:** desde 06/10/2026 elas ficam em `.claude/skills/gestao-receita-pousadas/references/regras.md`. Este arquivo guarda só o histórico das mudanças.
 
 ## O que só pode ser feito na tela (passo a passo para você)

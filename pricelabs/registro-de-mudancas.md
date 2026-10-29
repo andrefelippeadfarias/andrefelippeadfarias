@@ -2960,6 +2960,12 @@ A Villa não aparece em nenhuma busca com filtro de hidro (falta a comodidade na
 - **⚠️ Afrodite e Villa:** o Beds24 bloqueia saída no sábado (Regra H, "noCheckInOrCheckOut"); com isso a estadia só de sexta não fecha nelas. Elas vendem sexta a domingo (2 noites). Liberar a saída de sábado 31/10 no Beds24 é com o dono.
 - **Validação:** 7 itens, 0 erros (excecao "dono" na estadia mínima de feriado).
 
+## 29/10/2026, 11:45 UTC (08:45 BRT) — Conferência na Booking 30 min depois do sync do dono
+
+- **Sexta 30/10, 1 noite:** Recanto (7562933) e Villa **sem disponibilidade**. **30/10 a 02/11 (3 noites):** Recanto disponível por R$ 5.449,50 (~R$ 1.817/noite; a sexta a ~R$ 1.205 + sábado e domingo). Ou seja, o preço novo chegou, mas a Booking ainda exige 3 noites a partir de sexta: a estadia mínima de 1 noite do PriceLabs não foi para o canal (estadia mínima no Beds24 ou envio de estadia mínima desligado no PriceLabs). Ajuste com o dono.
+- **03-04/11:** Recanto R$ 679,77 = Moinhos R$ 1.079 × 0,63 ✅ (anúncio 7562933; o 15459723 não aparece).
+- **Nada gravado.**
+
 > **Regras em vigor:** desde 06/10/2026 elas ficam em `.claude/skills/gestao-receita-pousadas/references/regras.md`. Este arquivo guarda só o histórico das mudanças.
 
 ## O que só pode ser feito na tela (passo a passo para você)

@@ -2940,6 +2940,26 @@ A Villa não aparece em nenhuma busca com filtro de hidro (falta a comodidade na
 - **Mercado (total da estadia, conector oficial):** dia útil 03-04/11 mediana R$ 313 (máx. R$ 1.401); 10-11/11 R$ 459 (máx. R$ 1.455); fds 06-08/11 R$ 1.727 (máx. R$ 3.140); 27-29/11 R$ 2.110 (máx. R$ 3.402).
 - **Previsão até terça 03/11 (pedido do dono):** reservado R$ 66,3 mil (R$ 64,4 mil sem o overbooking e a duplicata); com as vendas prováveis, R$ 75 a 88 mil (centro ~R$ 81 mil). Maior chance na sexta 30/10 (20 unidades livres).
 
+## 29/10/2026, 11:10 UTC (08:10 BRT) — Pedido do dono: sexta 30/10 com 1 diária e valor de mercado
+
+- **Pedido:** "Então vamos liberar 1 diária para sexta feira e fazer o valor de mercado para vendermos todas as suítes de sexta."
+- **Mercado de 30-31/10, 1 noite (conector oficial, 29/10):** hotéis com hidro: mediana R$ 1.102 (de R$ 512 a R$ 1.750; Lavandas R$ 1.390, Murano R$ 1.457, L.A.H. R$ 1.750); oferta geral: mediana ~R$ 342.
+- **Alvo:** ~R$ 1.200 na vitrine, perto da mediana com hidro e respeitando o piso de feriado de R$ 800 de valor real (Recanto R$ 800 ÷ 0,42; Villa ÷ 0,39). Estadia mínima 1 noite na sexta (a de 3 noites do Finados segue no sábado e no domingo).
+
+| Suíte (livres) | Antes (enviado) | Depois (piso = teto) | Vitrine ~ |
+|---|---|---|---|
+| Moinhos (5) | R$ 2.625 | R$ 1.912 | R$ 1.205 (anúncio 7562933, fator 0,63) |
+| Panorâmica I (5) | R$ 3.404 | R$ 1.909 | R$ 1.203 |
+| Panorâmica II (2) | R$ 3.244 | R$ 1.908 | R$ 1.202 |
+| Afrodite (1) | R$ 4.360 | R$ 2.000 (5% acima) | R$ 1.260 |
+| VK7 (3) | R$ 3.138 | R$ 2.057 | R$ 1.212 |
+| VK2 (1) | R$ 2.959 | R$ 2.057 | R$ 1.212 |
+| Balcony (3) | R$ 1.511 | R$ 1.854 (Regra G) | R$ 983 |
+
+- **Gravado e lido de volta ✅.** Recálculo: Moinhos e Panorâmica I ✅; Afrodite, Panorâmica II e Villa recusados (Beds24 sobrecarregado; recálculos de 24 h acabaram): pedir Sync Now ao dono.
+- **⚠️ Afrodite e Villa:** o Beds24 bloqueia saída no sábado (Regra H, "noCheckInOrCheckOut"); com isso a estadia só de sexta não fecha nelas. Elas vendem sexta a domingo (2 noites). Liberar a saída de sábado 31/10 no Beds24 é com o dono.
+- **Validação:** 7 itens, 0 erros (excecao "dono" na estadia mínima de feriado).
+
 > **Regras em vigor:** desde 06/10/2026 elas ficam em `.claude/skills/gestao-receita-pousadas/references/regras.md`. Este arquivo guarda só o histórico das mudanças.
 
 ## O que só pode ser feito na tela (passo a passo para você)

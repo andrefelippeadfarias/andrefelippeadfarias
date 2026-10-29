@@ -2966,6 +2966,13 @@ A Villa não aparece em nenhuma busca com filtro de hidro (falta a comodidade na
 - **03-04/11:** Recanto R$ 679,77 = Moinhos R$ 1.079 × 0,63 ✅ (anúncio 7562933; o 15459723 não aparece).
 - **Nada gravado.**
 
+## 29/10/2026, 14:10 UTC (11:10 BRT) — Rotina leve das 10:53
+
+- **Reservas:** a lista do PriceLabs não trouxe nenhuma feita em 29/10 (lista importada ~10:59 BRT; pode estar atrasada). Nenhum cancelamento novo.
+- **Recálculo:** Recanto sem saldo até ~13:55 BRT (3 em 24 h, um recusado pelo Beds24); Villa com 1 de reserva para conferir à tarde.
+- **Sexta 30/10:** preço de mercado no ar; a estadia de 1 noite depende do dono no Beds24 (mínimo de 3 noites do Finados e saída de sábado fechada na Afrodite e na Villa).
+- **Nada gravado.**
+
 > **Regras em vigor:** desde 06/10/2026 elas ficam em `.claude/skills/gestao-receita-pousadas/references/regras.md`. Este arquivo guarda só o histórico das mudanças.
 
 ## O que só pode ser feito na tela (passo a passo para você)

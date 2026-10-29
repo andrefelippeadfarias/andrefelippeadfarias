@@ -2988,6 +2988,24 @@ A Villa não aparece em nenhuma busca com filtro de hidro (falta a comodidade na
 - **Gravado e lido de volta ✅.** Vai aos canais no próximo recálculo ou no Sync do dono (datas distantes, sem pressa).
 - **Validação:** 4 itens, 0 erros.
 
+## 29/10/2026, 17:35 UTC (14:35 BRT) — Conferência na Booking 30 min depois do sync do dono
+
+- **Sync:** recálculo dos 4 quartos do Recanto às 17:01 UTC. A escada de 21-23/05/2027 entrou (Panorâmica I R$ 2.753 / R$ 2.338; ocupação 2/6).
+- **Anúncio:** só o 7562933 aparece (busca por coordenadas); pelo nome, "sem disponibilidade" em todas as datas (o nome cai no 15459723).
+
+| Datas (2 adultos) | Booking (total) | Mais barato enviado | Fator |
+|---|---|---|---|
+| 30-31/10 (1 noite) | sem disponibilidade | — | estadia mínima de 1 noite ainda não chegou |
+| 30/10-02/11 | R$ 5.044,68 | Panorâmica II R$ 8.650 (Moinhos esgotada em 01/11) | 0,58 |
+| 03-04/11 | R$ 568,09 | Moinhos R$ 1.079 | **0,53** (de manhã 0,63) |
+| 06-08/11 | R$ 2.725,04 | Panorâmica I R$ 4.307 (Moinhos e Panorâmica II esgotadas em 07/11) | 0,63 |
+| 10-11/11 | R$ 738,46 | Moinhos R$ 1.232 | 0,60 (de manhã 0,63) |
+| 27-29/11 | R$ 2.353,80 | Moinhos R$ 4.036 | 0,58 |
+| 21-23/05/2027 | R$ 2.372,30 | Moinhos R$ 4.012 | 0,59 |
+
+- **Leitura:** o fator caiu nas datas próximas (03/11 0,53), sinal de promoção da Booking por data (oferta de última hora ou similar) somada ao Genius. Mudar promoção é com o dono.
+- **Nada gravado.**
+
 > **Regras em vigor:** desde 06/10/2026 elas ficam em `.claude/skills/gestao-receita-pousadas/references/regras.md`. Este arquivo guarda só o histórico das mudanças.
 
 ## O que só pode ser feito na tela (passo a passo para você)

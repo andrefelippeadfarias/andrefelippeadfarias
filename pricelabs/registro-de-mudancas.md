@@ -3006,6 +3006,13 @@ A Villa não aparece em nenhuma busca com filtro de hidro (falta a comodidade na
 - **Leitura:** o fator caiu nas datas próximas (03/11 0,53), sinal de promoção da Booking por data (oferta de última hora ou similar) somada ao Genius. Mudar promoção é com o dono.
 - **Nada gravado.**
 
+## 29/10/2026, 19:58 UTC (16:58 BRT) — Rotina leve das 16:53
+
+- **Reservas:** nenhuma nova desde as 13:53 (as 3 feitas em 29/10 são as mesmas: Panorâmica I 08/11 pelo Airbnb e 2 da Panorâmica I em 21-24/05/2027). **Cancelamentos:** só os já tratados (Panorâmica I 29/10 a 02/11; VK7 01/11; VK2 30/10 e 10/11; Balcony 29/10), lista de estadias até 30/11 lida inteira.
+- **Envio:** o sync do dono das 14:01 BRT levou tudo (inclusive a escada de maio/2027 da Panorâmica I).
+- **Sexta 30/10:** preço de mercado no ar; a estadia de 1 noite segue dependendo do dono no Beds24.
+- **Nada gravado.**
+
 > **Regras em vigor:** desde 06/10/2026 elas ficam em `.claude/skills/gestao-receita-pousadas/references/regras.md`. Este arquivo guarda só o histórico das mudanças.
 
 ## O que só pode ser feito na tela (passo a passo para você)

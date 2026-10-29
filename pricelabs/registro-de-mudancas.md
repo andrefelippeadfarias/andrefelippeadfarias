@@ -2914,6 +2914,25 @@ A Villa não aparece em nenhuma busca com filtro de hidro (falta a comodidade na
 - **Pendentes com o dono:** anúncio antigo 7562933; lote das 09:27 BRT; overbooking VK7 01/11 e Panorâmica I 20-21/11; VK7 01/11 "others" R$ 500.
 - **Nada gravado.**
 
+## 29/10/2026, 11:00 UTC (08:00 BRT) — Rotina completa das 07:53
+
+- **Recálculo dos 7 quartos** às 10:56 UTC ✅ (inclusive a VK2, que agora leva a Regra J e a escada do Finados).
+- **Vendas pelo calendário (desde 28/10 13:59-16:55 UTC):** Moinhos 31/10 (6/7) e 01/11 (esgotada); Panorâmica I 08/11 e 27-28/11 (+1 cada); VK7 29/10 (+2, hoje), 08/11 e 09/11; Balcony 02/11. **Cancelamentos:** Panorâmica I 30/10, 31/10 (6→4), 01/11 (6→4) e 02/11; na lista, VK7 01/11 (Booking, de 15/10), VK2 10/11 e 30/10, Balcony 29/10.
+
+| Mudança | Onde | Antes | Depois (gravado e lido de volta) |
+|---|---|---|---|
+| Escada proporcional | Moinhos 31/10 (6 de 7) | R$ 2.625 | piso R$ 3.226 |
+| Regra J (esgotada) | Moinhos 01/11 | R$ 3.179 | R$ 4.411 |
+| Regra J desfeita (reabriu) | Panorâmica I 31/10 / 01/11 | R$ 4.410 | piso R$ 4.026 / R$ 3.271 (escada a 4 de 6) |
+| Escada (cancelamento) | Panorâmica I 30/10 (1 de 6) | R$ 3.478 | piso R$ 3.404 |
+| Escada proporcional | Panorâmica I 08/11 / 27-28/11 | R$ 814 / R$ 2.753 | R$ 1.391 / piso R$ 3.019 |
+| Ordem (5% fds) | Afrodite 27-28/11 | R$ 2.826 | piso R$ 3.180 |
+| Escada proporcional | VK7 08/11 / 09/11 | R$ 710 / R$ 947 | R$ 1.524 / piso R$ 1.391 |
+| Escada + Regra G | Balcony 02/11 / 08/11 | R$ 635 | R$ 1.003 / R$ 1.372 |
+
+- **Overbooking pela lista:** VK7 01/11 (8 para 7) e Panorâmica I 20-21/11 (7 para 6) seguem.
+- **Validação:** 14 itens, 0 erros (calendário aceito com `--aceitar-velho`: recálculos de 10:56 UTC).
+
 > **Regras em vigor:** desde 06/10/2026 elas ficam em `.claude/skills/gestao-receita-pousadas/references/regras.md`. Este arquivo guarda só o histórico das mudanças.
 
 ## O que só pode ser feito na tela (passo a passo para você)

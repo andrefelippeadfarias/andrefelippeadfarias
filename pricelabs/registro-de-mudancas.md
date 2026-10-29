@@ -2933,6 +2933,13 @@ A Villa não aparece em nenhuma busca com filtro de hidro (falta a comodidade na
 - **Overbooking pela lista:** VK7 01/11 (8 para 7) e Panorâmica I 20-21/11 (7 para 6) seguem.
 - **Validação:** 14 itens, 0 erros (calendário aceito com `--aceitar-velho`: recálculos de 10:56 UTC).
 
+## 29/10/2026, 11:20 UTC (08:20 BRT) — Rotina completa: coleta e Booking
+
+- **Booking:** o Recanto aparece só no anúncio 7562933, agora seguindo os preços enviados (03-04/11 R$ 680 = Moinhos R$ 1.079 × 0,63; 10-11/11 R$ 776); o 15459723 sem disponibilidade nas 4 datas. Fator público do 7562933 ≈ 0,63 (o do 15459723 era 0,59).
+- **Envio:** o último registrado é o sync do dono de 28/10 08:59 BRT (os 7 quartos). O recálculo das 07:56 BRT de hoje ainda não aparece como enviado; conferir na rotina das 10:53 e, se continuar, pedir Sync Now ao dono.
+- **Mercado (total da estadia, conector oficial):** dia útil 03-04/11 mediana R$ 313 (máx. R$ 1.401); 10-11/11 R$ 459 (máx. R$ 1.455); fds 06-08/11 R$ 1.727 (máx. R$ 3.140); 27-29/11 R$ 2.110 (máx. R$ 3.402).
+- **Previsão até terça 03/11 (pedido do dono):** reservado R$ 66,3 mil (R$ 64,4 mil sem o overbooking e a duplicata); com as vendas prováveis, R$ 75 a 88 mil (centro ~R$ 81 mil). Maior chance na sexta 30/10 (20 unidades livres).
+
 > **Regras em vigor:** desde 06/10/2026 elas ficam em `.claude/skills/gestao-receita-pousadas/references/regras.md`. Este arquivo guarda só o histórico das mudanças.
 
 ## O que só pode ser feito na tela (passo a passo para você)

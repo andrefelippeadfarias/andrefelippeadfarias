@@ -3013,6 +3013,12 @@ A Villa não aparece em nenhuma busca com filtro de hidro (falta a comodidade na
 - **Sexta 30/10:** preço de mercado no ar; a estadia de 1 noite segue dependendo do dono no Beds24.
 - **Nada gravado.**
 
+## 29/10/2026, 22:56 UTC (19:56 BRT) — Rotina leve das 19:53
+
+- **Reservas:** nenhuma nova desde as 16:53 (as 3 de 29/10 são as mesmas). **Cancelamentos:** nenhum novo (lista de estadias de 30/10 a 30/11 lida inteira, 232 registros).
+- **Sexta 30/10:** preço de mercado no ar; estadia de 1 noite ainda depende do dono no Beds24.
+- **Nada gravado.**
+
 > **Regras em vigor:** desde 06/10/2026 elas ficam em `.claude/skills/gestao-receita-pousadas/references/regras.md`. Este arquivo guarda só o histórico das mudanças.
 
 ## O que só pode ser feito na tela (passo a passo para você)

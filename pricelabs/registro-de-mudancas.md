@@ -3019,6 +3019,24 @@ A Villa não aparece em nenhuma busca com filtro de hidro (falta a comodidade na
 - **Sexta 30/10:** preço de mercado no ar; estadia de 1 noite ainda depende do dono no Beds24.
 - **Nada gravado.**
 
+## 30/10/2026, 14:45 UTC (11:45 BRT) — Rotina completa das 07:53 (retomada depois da reinicialização da sessão; vale também pela rotina leve das 10:53)
+
+- **Coleta** (workflow, modo completo, 10:55-11:04 UTC) e **recálculo dos 7 quartos** às 10:55-10:57 UTC ✅ (Panorâmica I na 2ª tentativa: limite de pedidos).
+- **Reservas:** nenhuma nova desde a rodada das 19:53 de ontem (nenhuma feita em 30/10 até 11:30 BRT). Cancelamentos: só os já tratados.
+- **Mudança manual do dono (29/10, 14:57 a 14:59 BRT, pela tela):** Moinhos e Panorâmica I em 30/10 (−15%) e 31/10 (+5% sobre o mínimo). Hoje a Moinhos está em R$ 1.496 (30/10) e R$ 2.071 (31/10); a Panorâmica I em R$ 2.609 nas duas noites. **Respeitado:** a Skill não mexe nessas 4 regras.
+- **Envio:** os 7 quartos com envio ligado; último envio 29/10 17:17 BRT.
+
+| Regra | Onde | Antes | Depois (gravado, lido de volta e recalculado) |
+|---|---|---|---|
+| Ordem do Recanto (dono 21/10) | Panorâmica II 31/10 | R$ 3.562 | R$ 2.464 (entre Moinhos R$ 2.071 e Panorâmica I R$ 2.609, depois da mudança do dono) |
+| Ordem do Recanto | Panorâmica II, 29 noites de 25/12/2026 a 31/10/2027 | acima da Panorâmica I | entre as duas (ex.: 25/12 R$ 3.323 → R$ 2.798) |
+| Afrodite no fim de semana (dono 27/10) | 27-28/11 | R$ 3.180 | R$ 3.180 (piso = teto, 5% acima da Panorâmica I) |
+| Afrodite no fim de semana | 48 noites de sexta e sábado, de 15/01 a 23/10/2027 | R$ 3.101 a R$ 4.567 | teto R$ 3.040 (vitrine R$ 1.800); onde a outra suíte está mais cara, piso 5% acima dela (junho e julho R$ 3.200 a R$ 3.560) |
+
+- **Não gravado:** Afrodite 30/10 (hoje; nunca subir o dia de hoje, e a noite está fechada para chegada).
+- **Mercado (total da estadia, conector oficial):** semana 03-04/11 mediana R$ 313 (Recanto R$ 568, Villa R$ 504); fds 06-08/11 R$ 1.409 (Recanto R$ 2.688; Villa sem disponibilidade); 10-11/11 R$ 384 (R$ 738 / R$ 564); fds 13-15/11 R$ 1.797 (R$ 2.419 / R$ 2.288); Consciência Negra 20-22/11 R$ 2.385 (R$ 3.913 / R$ 2.934); fds 27-29/11 R$ 1.790 (R$ 2.354 / R$ 2.138).
+- **Validação:** 82 itens, 0 erros.
+
 > **Regras em vigor:** desde 06/10/2026 elas ficam em `.claude/skills/gestao-receita-pousadas/references/regras.md`. Este arquivo guarda só o histórico das mudanças.
 
 ## O que só pode ser feito na tela (passo a passo para você)

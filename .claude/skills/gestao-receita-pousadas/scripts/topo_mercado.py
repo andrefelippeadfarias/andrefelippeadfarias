@@ -134,7 +134,7 @@ def plano(cfg, cal: dict, hoje: dt.date, dias: int, periodos, over: dict, regras
             gat = (f"overbooking ({ob} reservas para {q['unidades']})" if ob else
                    "suíte esgotada" if esgotado(r, q["unidades"]) else f"pousada lotada ({v}/{t})")
             itens.append({"tipo": "data", "quarto": curto, "data": noite, "min_price": alvo, "max_price": alvo,
-                          "preco_antes": atual, "excecao": "dono",
+                          "preco_antes": atual, "excecao": "dono", "ordem_id": "dono-2026-10-27-regra-j",
                           "motivo": f"Regra J (dono 27/10): {gat}; topo do mercado ({fonte}); antes R$ {base:.0f}"})
     return itens
 

@@ -47,6 +47,7 @@ from collections import defaultdict
 from datetime import date, datetime, timezone
 
 from comum import carregar_quartos, data, hoje_brt, ler_instante, ler_json, periodo_feriado, reais, resultado_workflow
+from ordens import carregar_ordens, congelada, ordem_valida
 
 TIPOS = {"data", "apagar", "anuncio", "personalizacao"}
 PALAVRAS_PROIBIDAS = ("ota", "oferta", "genius", "promo", "deal", "visibility")
@@ -72,7 +73,8 @@ def estadia_exigida(cfg: dict, d: date, fer: dict | None) -> int | None:
 
 
 class Validador:
-    def __init__(self, cfg: dict, hoje: date, precos: dict | None = None, horas_max: float = 6, aceitar_velho: bool = False):
+    def __init__(self, cfg: dict, hoje: date, precos: dict | None = None, horas_max: float = 6, aceitar_velho: bool = False,
+                 ordens: dict | None = None):
         self.cfg, self.hoje = cfg, hoje
         self.precos = precos or {}          # (curto, "AAAA-MM-DD") -> {"preco", "livres", "vendidas", "total"}
         self.meta_precos = self.precos.pop("_meta", {}) if isinstance(self.precos, dict) else {}
@@ -87,6 +89,8 @@ class Validador:
         self.padrao = lim.get("padrao_qualidade_diaria")  # só o dono muda; sem ele, nada passa
         self.par = cfg["parametros"]
         self.pisos: set = set()             # (curto, data) cujo valor em "finais" é piso de percentual
+        # 30/10: excecao "dono" só com ordem_id de dados/ordens_dono.json vigente para o quarto e a noite
+        self.ordens = ordens if isinstance(ordens, dict) else carregar_ordens(ordens)
 
     # ---------- utilidades
     def erro(self, i, item, msg):
@@ -172,6 +176,17 @@ class Validador:
             self.erro(i, it, "data no passado")
             return
         excecao = it.get("excecao")
+        if excecao == "dono":
+            # Dono (07/10, 14/10) + auditoria de 30/10: a exceção do dono precisa apontar a ordem literal dele, vigente
+            # para o quarto e a noite; sem isso, os scripts não podem carimbar "dono" sozinhos.
+            if not ordem_valida(self.ordens, it.get("ordem_id"), q["curto"], d):
+                self.erro(i, it, f"excecao 'dono' sem ordem_id vigente para {q['curto']} em {d} (dados/ordens_dono.json; "
+                                 f"ordem_id={it.get('ordem_id')!r}): registre a ordem do dono com validade ou tire a exceção")
+                excecao = None
+        cong = congelada(self.ordens, q["curto"], d)
+        if cong and (cong["id"] != it.get("ordem_id")):
+            self.erro(i, it, f"noite com mudança manual do dono pela tela ({cong['id']}, até {cong['ate']}): respeite e registre; "
+                             "nenhum script mexe nela")
         fer = periodo_feriado(self.cfg, d)
         antecedencia = (d - self.hoje).days
         self.validar_chegada_saida(i, it, q, d, excecao)

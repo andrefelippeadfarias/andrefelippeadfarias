@@ -10,21 +10,32 @@ import os
 
 from comum import carregar_quartos, periodo_feriado
 from ocupacao import calcular
+from ordens import carregar_ordens
 from validar_plano import Validador, montar_payload
 
 CFG = carregar_quartos()
+# 30/10: excecao "dono" exige ordem_id vigente. Os testes conferem a lógica, não o calendário das ordens: as ordens reais
+# valem para todos os quartos e datas aqui, e "teste-dono" é a ordem genérica dos itens de teste.
+ORDENS = {k: dict(v, quartos=["*"], de="2020-01-01", ate="2030-12-31") for k, v in carregar_ordens().items()
+          if v.get("tipo") != "manual"}
+ORDENS["teste-dono"] = {"id": "teste-dono", "quartos": ["*"], "de": "2020-01-01", "ate": "2030-12-31", "tipo": "regra", "libera": []}
 # os testes conferem a lógica, não a calibração do dia: fatores de vitrine fixos (medição de 14/10)
 CFG["parametros"]["fator_vitrine_semana"].update({"Recanto": 0.63, "Villa": 0.53})
 CFG["parametros"]["fator_vitrine_fds"].update({"Recanto": 0.61, "Villa": 0.66})
 # o mecanismo "sem desconto" do validador continua testado na Queen (2) como antes; no arquivo real ela saiu dessa regra
 # em 21/10 (ordem do dono: entre a Queen 7 e a Double, ordem_recanto.py)
 CFG["por_curto"]["Q2"].update({"sem_desconto": True, "fator_real": 0.34})
+# escada e Afrodite foram calibradas com o fator público de 15459723 (0,59); o arquivo real passou a 0,63/0,65 em 30/10
+CFG["parametros"]["regra_j"]["fator_publico"] = {"Recanto": 0.59, "Villa": 0.589}
+CFG["parametros"]["fator_publico"] = {"Recanto": 0.59, "Villa": 0.589}
 HOJE = date(2026, 10, 6)  # terça
 
 
 def item(**kw):
     base = {"tipo": "data", "motivo": "teste"}
     base.update(kw)
+    if base.get("excecao") == "dono" and not base.get("ordem_id"):
+        base["ordem_id"] = "teste-dono"
     return base
 
 
@@ -35,12 +46,14 @@ def ocup(quarto, dia, vendidas, total, preco=None, idade_h=1.0):
 
 
 def erros(itens, precos=None, hoje=HOJE, **kw):
+    kw.setdefault("ordens", ORDENS)
     v = Validador(CFG, hoje, dict(precos or {}), **kw)
     v.validar(itens)
     return v.erros
 
 
 def avisos(itens, precos=None, hoje=HOJE, **kw):
+    kw.setdefault("ordens", ORDENS)
     v = Validador(CFG, hoje, dict(precos or {}), **kw)
     v.validar(itens)
     return v.avisos
@@ -69,7 +82,7 @@ class TestValidador(unittest.TestCase):
         self.assertTrue(any("piso de dia de semana" in x for x in erros(
             [item(quarto="VK2", data="2026-10-21", max_price=800)])))
         # ordem do dono libera com aviso
-        v = Validador(CFG, HOJE, {})
+        v = Validador(CFG, HOJE, {}, ordens=ORDENS)
         v.validar([item(quarto="VK7", data="2026-10-21", preco=-30, price_type="percent", min_price=850, excecao="dono")])
         self.assertFalse(any("piso de dia de semana" in x for x in v.erros))
 
@@ -133,10 +146,10 @@ class TestValidador(unittest.TestCase):
         cfg = dict(CFG, limites_seguranca=dict(CFG["limites_seguranca"], excecoes_dono=[
             {"quarto": "Afrodite", "de": "2026-10-26", "ate": "2026-11-08", "limite": 800}]))
         it = dict(tipo="data", motivo="teste", quarto="Afrodite", min_price=800, max_price=800, excecao="dono")
-        v = Validador(cfg, date(2026, 10, 26), {})
+        v = Validador(cfg, date(2026, 10, 26), {}, ordens=ORDENS)
         v.validar([dict(it, data="2026-10-27")])
         self.assertFalse(any("segurança" in x for x in v.erros))
-        v = Validador(cfg, date(2026, 10, 26), {})
+        v = Validador(cfg, date(2026, 10, 26), {}, ordens=ORDENS)
         v.validar([dict(it, data="2026-11-10")])  # fora do período: o limite normal volta
         self.assertTrue(any("segurança" in x for x in v.erros))
 
@@ -297,7 +310,7 @@ class TestValidador(unittest.TestCase):
                   item(quarto="Balcony", data="2026-10-12", preco=-35, price_type="percent", min_price=800)]
         self.assertTrue(any("Regra G" in x for x in erros(barato, precos)))
         # a mesma Balcony contra a VK2 fora do plano: só aviso (o preço final pode subir)
-        v = Validador(CFG, HOJE, precos)
+        v = Validador(CFG, HOJE, precos, ordens=ORDENS)
         v.validar([item(quarto="Balcony", data="2026-10-12", preco=-35, price_type="percent", min_price=800)])
         self.assertEqual(v.erros, [])
         self.assertTrue(any("Regra G" in x for x in v.avisos))
@@ -332,7 +345,7 @@ class TestValidador(unittest.TestCase):
         self.assertTrue(erros([item(mercado="fraco", **base)]))
         just = "mediana Booking 23-25/10 R$ 1.015 e mercado a 13% de ocupação"
         # desde 14/10 o piso de R$ 850 no preço final de sexta e sábado não aceita exceção de mercado (só o dono)
-        v = Validador(CFG, HOJE, {})
+        v = Validador(CFG, HOJE, {}, ordens=ORDENS)
         v.validar([item(mercado=just, **base)])
         self.assertTrue(any("piso de fim de semana" in e for e in v.erros))
         self.assertTrue(any("exceção de mercado" in a for a in v.avisos))
@@ -363,11 +376,11 @@ class TestValidador(unittest.TestCase):
         import copy
         cfg = copy.deepcopy(CFG)
         cfg["limites_seguranca"]["padrao_qualidade_diaria"] = 0
-        v = Validador(cfg, HOJE, {})
+        v = Validador(cfg, HOJE, {}, ordens=ORDENS)
         v.validar([item(quarto="Q7", data="2026-10-21", preco=-35, price_type="percent", min_price=800)])
         self.assertTrue(any("padrão de qualidade ausente" in x for x in v.erros))
         # ordem do dono libera, mas avisa
-        v = Validador(CFG, HOJE, {})
+        v = Validador(CFG, HOJE, {}, ordens=ORDENS)
         v.validar([item(quarto="Q7", data="2026-10-23", preco=900, price_type="fixed", min_price=900,
                         excecao="dono")])
         self.assertFalse(any("padrão de qualidade" in x for x in v.erros))
@@ -974,7 +987,185 @@ class TestOrdemAfrodite(unittest.TestCase):
         p = o.montar_plano([{"data": "2027-05-08", "quarto": "Afrodite", **o.faixa_afrodite(
             CFG, sab, {"price": "2018"}, {"price": "2028"}, 1900, {"price": "3523"})}], dt.date(2027, 5, 1))
         self.assertEqual(p["itens"][0]["max_price"], round(1800 / 0.59))
+        # 30/10: o teto do fds vale só até hoje + 95 dias (a faixa é do mercado de out/26); fora dele, só a ordem
+        hoje = dt.date(2026, 10, 30)
+        self.assertEqual(o.horizonte_teto_fds(CFG, hoje), dt.date(2027, 2, 2))
+        g = o.faixa_afrodite(CFG, sab, {"price": "2018"}, {"price": "2028"}, 1900, {"price": "3523"}, o.horizonte_teto_fds(CFG, hoje))
+        self.assertFalse(g["fora"])
+        self.assertIsNone(g["teto"])
+        g = o.faixa_afrodite(CFG, dt.date(2026, 11, 7), {"price": "2018"}, {"price": "2028"}, 1900, {"price": "3523"}, o.horizonte_teto_fds(CFG, hoje))
+        self.assertEqual(g["teto"], round(1800 / 0.59))
+        # pelo comparar (um fds de 2027 com a Afrodite a R$ 3.523): nenhum item de teto
+        cal = lambda pr: {"2027-05-08": {"date": "2027-05-08", "price": pr, "mu_occupancy": "0/7", "min_price": "800"}}
+        fora = o.comparar(CFG, cal("2018"), cal("2028"), cal("1900"), hoje, dt.date(2027, 5, 9), cal("3523"))
+        self.assertEqual([x for x in fora if x["quarto"] == "Afrodite"], [])
 
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class TestOrdensDono(unittest.TestCase):
+    """30/10: excecao 'dono' só com ordem_id vigente; mudança manual do dono congela a noite."""
+
+    def test_dono_sem_ordem_e_barrado_e_com_ordem_passa(self):
+        it = {"tipo": "data", "quarto": "Q7", "data": "2026-10-20", "preco": 900, "price_type": "fixed", "excecao": "dono", "motivo": "t"}
+        self.assertTrue(any("ordem_id" in x for x in erros([it])))
+        self.assertEqual(erros([dict(it, ordem_id="teste-dono")]), [])
+        ordens = dict(ORDENS, vencida={"id": "vencida", "quartos": ["*"], "de": "2026-01-01", "ate": "2026-10-10", "tipo": "regra", "libera": []})
+        self.assertTrue(any("ordem_id" in x for x in erros([dict(it, ordem_id="vencida")], ordens=ordens)))
+
+    def test_noite_congelada_por_mudanca_manual(self):
+        ordens = dict(ORDENS, manual1={"id": "manual1", "quartos": ["Q7"], "de": "2026-10-20", "ate": "2026-10-21", "tipo": "manual", "libera": []})
+        it = item(quarto="Q7", data="2026-10-20", preco=-10, price_type="percent", min_price=900)
+        self.assertTrue(any("mudança manual" in x for x in erros([it], ordens=ordens)))
+        self.assertEqual(erros([item(quarto="Q7", data="2026-10-22", preco=-10, price_type="percent", min_price=900)], ordens=ordens), [])
+
+    def test_scripts_nao_carimbam_dono_sem_ordem_id(self):
+        import glob
+        import re as _re
+        for f in glob.glob(os.path.join(os.path.dirname(__file__), "*.py")):
+            if os.path.basename(f) in ("validar_plano.py", "test_scripts.py", "ordens.py"):
+                continue
+            for linha in open(f, encoding="utf-8"):
+                if '"excecao": "dono"' in linha or "'excecao': 'dono'" in linha:
+                    self.assertTrue(_re.search(r"ordem_id", linha), f"{os.path.basename(f)}: excecao dono sem ordem_id: {linha.strip()}")
+
+
+class TestAncoraMercado(unittest.TestCase):
+    def test_percentis_da_busca_e_posicao(self):
+        from ancora_mercado import percentil_de, percentis_da_busca, valor_percentil
+        s = {"checkin": "2026-11-06", "checkout": "2026-11-08", "properties_found": 18, "price_total_min": 518,
+             "price_total_median": 1301.88, "hidro_median": 1306.89, "hidro_max": 2288.97,
+             "comparables": [{"name": "A", "price_total": 2288.97, "hydro_or_spa": "Jacuzzi"}, {"name": "B", "price_total": 2268, "hydro_or_spa": "Sem hidro/spa listado"},
+                             {"name": "C", "price_total": 2160, "hydro_or_spa": "Jacuzzi"}, {"name": "D", "price_total": 1326.78, "hydro_or_spa": "Jacuzzi + sauna"},
+                             {"name": "E", "price_total": 1287, "hydro_or_spa": "ofurô"}, {"name": "F", "price_total": 1100, "hydro_or_spa": "não listado"}]}
+        p = percentis_da_busca(s)
+        self.assertEqual((p["p50"], p["max"]), (653, 1144))
+        self.assertTrue(p["p50"] <= p["p75"] <= p["p90"] <= p["max"])
+        self.assertTrue(p["p25"] < p["p50"])
+        self.assertEqual(p["n_comparaveis"], 4)  # B e F não têm hidro
+        self.assertAlmostEqual(percentil_de(p["p50"], p), 50.0)
+        self.assertAlmostEqual(percentil_de(p["max"], p), 100.0)
+        self.assertAlmostEqual(valor_percentil(p, 50), p["p50"])
+        self.assertTrue(p["p75"] <= valor_percentil(p, 82) <= p["p90"])
+        # sem mediana com hidro, vale a mediana geral, nunca a dos comparáveis (metade de cima)
+        s2 = dict(s); s2.pop("hidro_median"); s2.pop("hidro_max")
+        self.assertEqual(percentis_da_busca(s2)["p50"], 651)
+
+
+class TestPace(unittest.TestCase):
+    def setUp(self):
+        import copy
+        self.cfg = copy.deepcopy(CFG)
+        self.cfg["parametros"]["fator_publico"] = {"Recanto": 0.63, "Villa": 0.65}
+
+    def test_curva_status_alvo_passo(self):
+        import pace
+        self.assertEqual(pace.curva(self.cfg, "semana", 0), 100)
+        self.assertEqual(pace.curva(self.cfg, "fds", 7), 50)
+        self.assertAlmostEqual(pace.curva(self.cfg, "fds", 10), 50 + (32 - 50) * 3 / 7, places=6)
+        self.assertEqual(pace.curva(self.cfg, "feriado", 90), 12)
+        # 2 de 7 vendidas a D30 em dia de semana: 29% contra 8% esperados = à frente
+        self.assertEqual(pace.status_da_noite(self.cfg, "semana", 30, 2, 7)[0], "frente")
+        # 1 de 7 a D3 em fds: 14% contra 68% = muito atrás; 3 de 7 (43%) = atrás; 4 de 7 (57%) = no ritmo
+        self.assertEqual(pace.status_da_noite(self.cfg, "fds", 3, 1, 7)[0], "muito_atras")
+        self.assertEqual(pace.status_da_noite(self.cfg, "fds", 3, 3, 7)[0], "atras")
+        self.assertEqual(pace.status_da_noite(self.cfg, "fds", 3, 4, 7)[0], "ritmo")
+        # zero vendida perto da noite é sempre muito atrás
+        self.assertEqual(pace.status_da_noite(self.cfg, "semana", 5, 0, 7)[0], "muito_atras")
+        self.assertEqual(pace.percentil_alvo(self.cfg, "Recanto", "frente", 5), 90)
+        self.assertEqual(pace.percentil_alvo(self.cfg, "Recanto", "frente", 20), 75)
+        self.assertEqual(pace.percentil_alvo(self.cfg, "Villa", "ritmo", 20), 50)
+        # passo: k=0,5 da distância, limitado por D (D20: 10%; D2: 20%)
+        self.assertAlmostEqual(pace.passo(self.cfg, 1000, 1100, 20), 1050)
+        self.assertAlmostEqual(pace.passo(self.cfg, 2000, 1000, 20), 1800)   # −25% pedido, limitado a −10%
+        self.assertAlmostEqual(pace.passo(self.cfg, 2000, 1000, 2), 1600)    # D2: −20%
+        self.assertAlmostEqual(pace.passo(self.cfg, 2000, 1000, 2, fraco=True), 1800)  # âncora fraca: metade
+
+    def test_pisos_enviados(self):
+        import pace
+        # dia de semana fora de feriado: R$ 500 Genius ÷ 0,63 (CFG do teste) = R$ 794 > mínimo R$ 800? não: vale o mínimo
+        piso, origem = pace.pisos_enviados(self.cfg, "Q7", date(2026, 11, 10))
+        self.assertAlmostEqual(piso, max(800, 500 / 0.63), places=0)
+        # fds: R$ 850 ÷ 0,61 = R$ 1.393
+        piso, origem = pace.pisos_enviados(self.cfg, "Q7", date(2026, 11, 13))
+        self.assertAlmostEqual(piso, 850 / 0.61, places=0)
+        # feriado (Finados): piso real R$ 800 ÷ 0,42 = R$ 1.905
+        piso, origem = pace.pisos_enviados(self.cfg, "Q7", date(2026, 11, 1))
+        self.assertAlmostEqual(piso, 800 / 0.42, places=0)
+        self.assertIn("feriado", origem)
+
+    def _cal(self, preco, vend, u, noite="2026-11-24", piso=None):
+        return {noite: {"date": noite, "price": str(preco), "mu_occupancy": f"{vend}/{u}", "num_bookings": str(vend),
+                        "min_price": str(piso if piso is not None else preco), "max_price": "5000", "min_stay": "1"}}
+
+    def test_plano_desce_quando_atras_e_sobe_quando_a_frente(self):
+        import pace
+        hoje = date(2026, 10, 30)
+        anc = {"noites": {"2026-11-04": {"p25": 302, "p50": 388, "p75": 600, "p90": 745, "max": 846, "n": 20, "busca_em": "2026-10-30", "tipo": "semana"},
+                          "2026-11-24": {"p25": 286, "p50": 348, "p75": 373, "p90": 579, "max": 724, "n": 19, "busca_em": "2026-10-30", "tipo": "semana"}}, "por_tipo": {}}
+        ordens = {}
+        passos = {"passos": []}
+        # Moinhos a R$ 1.232 (público R$ 776), 0 de 7 vendidas a D5: muito atrás → alvo p40 R$ 345 público = R$ 548
+        # enviados; passo limitado a −15% (D4-7) → R$ 1.047, acima do piso do dono (R$ 500 ÷ 0,63 = R$ 794) e do mínimo
+        cals = {"Q7": self._cal(1232, 0, 7, noite="2026-11-04")}
+        res = pace.plano(self.cfg, anc, cals, hoje, ordens, passos, dias=30, regra_j_ativa=True)
+        it = [x for x in res["itens"] if x["quarto"] == "Q7"][0]
+        self.assertEqual(it["min_price"], 1047)
+        self.assertNotIn("max_price", it)  # preço preso no piso: basta baixar o piso, sem teto
+        # com o algoritmo acima do piso vigente (R$ 1.232 contra piso R$ 900), a descida vai com teto no novo valor
+        cals = {"Q7": self._cal(1232, 0, 7, noite="2026-11-04", piso=900)}
+        res = pace.plano(self.cfg, anc, cals, hoje, ordens, passos, dias=30, regra_j_ativa=True)
+        it = [x for x in res["itens"] if x["quarto"] == "Q7"][0]
+        self.assertEqual((it["min_price"], it["max_price"]), (1047, 1047))
+        # 1 de 7 a D25 (14% contra ~10%): no ritmo; alvo p65 (R$ 576 enviados) bem abaixo de R$ 1.232 → desce o passo
+        # máximo de D8-30 (−10%) = R$ 1.108, ainda longe do piso do dono (R$ 800)
+        res = pace.plano(self.cfg, anc, {"Q7": self._cal(1232, 1, 7)}, hoje, ordens, passos, dias=30)
+        it = [x for x in res["itens"] if x["quarto"] == "Q7"][0]
+        self.assertEqual((it["pace"]["direcao"], it["min_price"]), ("desce", 1108))
+        self.assertEqual(res["linhas"][0]["novo"], 1108)
+        # já no piso do dono (R$ 800 = mínimo do anúncio): o alvo pede menos, o piso segura → sem item, presa no piso
+        res = pace.plano(self.cfg, anc, {"Q7": self._cal(800, 1, 7)}, hoje, ordens, passos, dias=30)
+        self.assertEqual(res["itens"], [])
+        self.assertTrue(res["linhas"][0]["preso_no_piso"])
+        # VK7 à frente (5 de 7 a D25 contra 10%) em dia de semana: o alvo p65 (R$ 558 enviados) está abaixo do preço,
+        # e à frente nunca desce → segura, sem item (e com R$ 2.500 também segura)
+        res = pace.plano(self.cfg, anc, {"VK7": self._cal(947, 5, 7)}, hoje, ordens, passos, dias=30)
+        self.assertEqual(res["itens"], [])
+        self.assertEqual((res["linhas"][0]["status"], res["linhas"][0]["direcao"]), ("frente", None))
+        res = pace.plano(self.cfg, anc, {"VK7": self._cal(2500, 5, 7)}, hoje, ordens, passos, dias=30)
+        self.assertEqual([x for x in res["itens"] if x["quarto"] == "VK7"], [])
+        # Moinhos à frente numa sexta a D7 (5 de 7 contra curva 50%): alvo p90 do Recanto (R$ 1.080 público = R$ 1.714
+        # enviados), passo limitado a +15% → R$ 1.417 pelo piso, teto solto no máximo do anúncio
+        anc_fds = {"noites": {"2026-11-06": {"p25": 456, "p50": 653, "p75": 653, "p90": 1080, "max": 1144, "n": 24,
+                                             "busca_em": "2026-10-30", "tipo": "fds"}}, "por_tipo": {}}
+        res = pace.plano(self.cfg, anc_fds, {"Q7": self._cal(1232, 5, 7, noite="2026-11-06")}, hoje, ordens, passos, dias=30)
+        it = [x for x in res["itens"] if x["quarto"] == "Q7"][0]
+        self.assertEqual((it["pace"]["direcao"], it["min_price"], it["max_price"]), ("sobe", 1417, 5000))
+        # noite esgotada fica fora (Regra J)
+        cals = {"VK7": self._cal(947, 7, 7)}
+        res = pace.plano(self.cfg, anc, cals, hoje, ordens, passos, dias=30)
+        self.assertEqual(res["itens"], [])
+        self.assertTrue(any("esgotada" in x["motivo"] for x in res["fora"]))
+
+    def test_plano_respeita_ordem_do_dono_cadencia_e_quarto_fora(self):
+        import pace
+        hoje = date(2026, 10, 30)
+        anc = {"noites": {"2026-11-24": {"p25": 286, "p50": 348, "p75": 373, "p90": 579, "max": 724, "n": 19, "busca_em": "2026-10-30", "tipo": "semana"}}, "por_tipo": {}}
+        cals = {"Q7": self._cal(1232, 1, 7)}
+        ordens = {"o1": {"id": "o1", "quartos": ["Q7"], "de": "2026-11-24", "ate": "2026-11-24", "tipo": "preco_por_data", "libera": ["fixo"]}}
+        res = pace.plano(self.cfg, anc, cals, hoje, ordens, {"passos": []}, dias=30)
+        self.assertEqual(res["itens"], [])
+        self.assertIn("ordem do dono por data", res["fora"][0]["motivo"])
+        # passo recente na mesma direção ainda não chegado ao canal: segura
+        passos = {"passos": [{"quarto": "Q7", "noite": "2026-11-24", "direcao": "desce", "gravado_em": "2026-10-30T10:00+00:00", "chegou_ao_canal": False}]}
+        import datetime as _dt
+        res = pace.plano(self.cfg, anc, cals, hoje, {}, passos, dias=30, agora=_dt.datetime(2026, 10, 30, 14, tzinfo=_dt.timezone.utc))
+        self.assertEqual(res["itens"], [])
+        self.assertTrue(any(x.get("cadencia") for x in res["linhas"]))
+        # Panorâmica II fora do motor (tarifa fixa na Booking)
+        cfg = self.cfg
+        cfg["por_curto"]["Q2"]["fora_do_motor"] = True
+        res = pace.plano(cfg, anc, {"Q2": self._cal(1240, 0, 2)}, hoje, {}, {"passos": []}, dias=30)
+        self.assertEqual(res["itens"], [])

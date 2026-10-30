@@ -1,0 +1,117 @@
+{
+ "_doc": "Ordens literais do dono que liberam exceção no validador (excecao 'dono' exige ordem_id daqui, vigente para o quarto e a noite). Uma ordem vale só no período 'de'..'ate'; vencida, o validador barra o item e o script que a implementa deixa de gravar. 'quartos': lista de curtos ou ['*']. 'tipo': preco_por_data (piso/teto fixados pelo dono em noites), regra (regra permanente do dono aplicada por script), manual (mudança feita pela tela do PriceLabs; congela a noite por 7 dias). 'libera': o que a ordem permite ao validador: fixo (piso = teto), abaixo_piso (abaixo dos pisos de vitrine/padrão), acima_15 (piso mais de 15% acima do preço atual), estadia (estadia abaixo da exigida), teto_q2 (teto abaixo do preço atual da Panorâmica II), anuncio (base/mín/máx do anúncio). Criado em 30/10/2026 (auditoria: os scripts carimbavam 'dono' sozinhos).",
+ "ordens": [
+  {
+   "id": "dono-2026-10-03-finados-mais-20",
+   "data": "2026-10-03",
+   "texto": "+20% e 3 noites nos 7 quartos de 30/10 a 02/11 (feito na tela).",
+   "quartos": ["*"],
+   "de": "2026-10-30",
+   "ate": "2026-11-02",
+   "tipo": "preco_por_data",
+   "libera": ["estadia"]
+  },
+  {
+   "id": "dono-2026-10-07-regra-g",
+   "data": "2026-10-07",
+   "texto": "Colocar uma diferença de 10% para a que não tem banheira (Balcony 10% abaixo da suíte com banheira mais barata e livre da Villa).",
+   "quartos": ["Balcony"],
+   "de": "2026-10-07",
+   "ate": "2027-12-31",
+   "tipo": "regra",
+   "libera": ["fixo"]
+  },
+  {
+   "id": "dono-2026-10-21-ordem-recanto",
+   "data": "2026-10-21",
+   "texto": "Os valores da Suíte Panorâmica II devem sempre estar entre a Moinhos e a Panorâmica I.",
+   "quartos": ["Q2"],
+   "de": "2026-10-21",
+   "ate": "2027-12-31",
+   "tipo": "regra",
+   "libera": ["teto_q2", "fixo"]
+  },
+  {
+   "id": "dono-2026-10-22-afrodite-mais-cara",
+   "data": "2026-10-22",
+   "texto": "A Suíte Afrodite tem que ser a mais cara, com valor mais alto da Recanto, pois ela é considerada super luxo. 27/10 ('Pode ser'): 20% acima de domingo a quinta, 5% em sexta, sábado e feriado; fim de semana fora de feriado na faixa alta do mercado (vitrine R$ 1.600 a 1.800).",
+   "quartos": ["Afrodite"],
+   "de": "2026-10-22",
+   "ate": "2027-12-31",
+   "tipo": "regra",
+   "libera": ["acima_15", "fixo"]
+  },
+  {
+   "id": "dono-2026-10-25-publico-450",
+   "data": "2026-10-25",
+   "texto": "Lotarmos as diárias em aberto nas próximas 2 semanas; público ~R$ 450 (dias de semana 26-29/10, 02-05/11 e 08/11; fds 06-07/11).",
+   "quartos": ["*"],
+   "de": "2026-10-26",
+   "ate": "2026-11-08",
+   "tipo": "preco_por_data",
+   "libera": ["fixo", "abaixo_piso"]
+  },
+  {
+   "id": "dono-2026-10-26-genius-300",
+   "data": "2026-10-26",
+   "texto": "Vamos completar as reservas. Valor mínimo de diária de 300 reais (Genius 3; 'Ninguém paga menos de 300'); Afrodite 5% acima da Panorâmica I.",
+   "quartos": ["Q7", "Double", "Q2", "Afrodite"],
+   "de": "2026-10-26",
+   "ate": "2026-11-08",
+   "tipo": "preco_por_data",
+   "libera": ["fixo", "abaixo_piso"]
+  },
+  {
+   "id": "dono-2026-10-26-escada",
+   "data": "2026-10-26",
+   "texto": "A cada reserva que entrar, vamos aumentando o preço gradualmente [...] até chegar no valor de alto padrão. 28/10: Ajuste a escada de aumento de preço de forma proporcional sempre para chegarmos ao valor da média dos tops do mercado com nossas características sempre.",
+   "quartos": ["*"],
+   "de": "2026-10-26",
+   "ate": "2026-12-31",
+   "tipo": "regra",
+   "libera": ["fixo", "acima_15"],
+   "nota": "Proposta da skill de 30/10 (decisão D3 ao dono): a escada passa a subir só quando a noite estiver à frente da curva de pace e o alvo passa a ser percentil do mercado com hidro (p75-p90), não a média dos 3 maiores. Até a resposta, a ordem vale como está."
+  },
+  {
+   "id": "dono-2026-10-27-regra-j",
+   "data": "2026-10-27",
+   "texto": "Quando estivermos com overbooking assim, ou a pousada lotada, essa suíte, suba o valor para o top de mercado para que possamos evitar que entrem reservas, e se entrar a reserva, que entre com o valor mais alto do mercado.",
+   "quartos": ["*"],
+   "de": "2026-10-27",
+   "ate": "2026-12-31",
+   "tipo": "regra",
+   "libera": ["fixo", "acima_15"],
+   "nota": "Proposta da skill de 30/10 (decisão D3): suíte esgotada e overbooking recebem PISO de proteção no p90 do mercado com teto livre (nunca piso = teto); 'pousada lotada' = 100%, não 90%; sem dado de mercado, p90 da âncora do tipo de noite, nunca × 1,5."
+  },
+  {
+   "id": "dono-2026-10-29-sexta-mercado",
+   "data": "2026-10-29",
+   "texto": "Então vamos liberar 1 diária para sexta feira e fazer o valor de mercado para vendermos todas as suítes de sexta.",
+   "quartos": ["*"],
+   "de": "2026-10-30",
+   "ate": "2026-10-30",
+   "tipo": "preco_por_data",
+   "libera": ["fixo", "estadia"]
+  },
+  {
+   "id": "dono-2026-10-30-finados-menos-10",
+   "data": "2026-10-30",
+   "texto": "Vamos abaixar o valor em 10% para este feriado. Fazer uma baixa de 10% para que possamos exibir mais nas plataformas.",
+   "quartos": ["*"],
+   "de": "2026-10-30",
+   "ate": "2026-11-01",
+   "tipo": "preco_por_data",
+   "libera": ["fixo"]
+  },
+  {
+   "id": "manual-2026-10-29-moinhos-panoramica1",
+   "data": "2026-10-29",
+   "texto": "Mudança pela tela do PriceLabs (log sem api_, 14:57-14:59 BRT): Moinhos e Panorâmica I em 30/10 (-15%) e 31/10 (+5% sobre o mínimo).",
+   "quartos": ["Q7", "Double"],
+   "de": "2026-10-30",
+   "ate": "2026-10-31",
+   "tipo": "manual",
+   "libera": []
+  }
+ ]
+}

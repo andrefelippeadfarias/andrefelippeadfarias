@@ -253,8 +253,9 @@
    "id": "villa-5-7-11-bloqueio",
    "responsavel": "dono",
    "desde": "2026-10-14",
-   "urgencia": 2,
-   "texto": "A Villa inteira (VK7 7/7, Balcony 6/6, VK2 2/2) aparece indisponível em 5, 6 e 7/11 sem nenhuma reserva no PriceLabs (45 unidades-noite). É grupo fechado ou bloqueio? Se for grupo, informe o valor para o acompanhamento do faturamento de novembro; se for bloqueio sem venda, libere no Beds24. 19/10 (Beds24 direto): o inventário da Villa está fechado à mão em 5, 6 e 7/11 (disponível 0 na Balcony e na King Spa 2; −1 na VK7) com só 1 a 2 reservas reais (VK7 05 a 08/11, R$ 3.761). São ~37 unidades-noite paradas, inclusive sexta e sábado. Os tetos de 19/10 (concorrência hidro+vista) em 06-07/11 na VK7 e na VK2 só valem se reabrir."
+   "urgencia": 1,
+   "texto": "A Villa inteira (VK7 7/7, Balcony 6/6, VK2 2/2) aparece indisponível em 5, 6 e 7/11 sem nenhuma reserva no PriceLabs (45 unidades-noite). É grupo fechado ou bloqueio? Se for grupo, informe o valor para o acompanhamento do faturamento de novembro; se for bloqueio sem venda, libere no Beds24. 19/10 (Beds24 direto): o inventário da Villa está fechado à mão em 5, 6 e 7/11 (disponível 0 na Balcony e na King Spa 2; −1 na VK7) com só 1 a 2 reservas reais (VK7 05 a 08/11, R$ 3.761). São ~37 unidades-noite paradas, inclusive sexta e sábado. Os tetos de 19/10 (concorrência hidro+vista) em 06-07/11 na VK7 e na VK2 só valem se reabrir. 30/10 (D6 a D8): a Villa inteira segue bloqueada em 05, 06 e 07/11 sem reserva no PriceLabs; se não for um grupo confirmado, liberar no Beds24 esta semana (quinta a sábado da semana que vem).",
+   "atualizado_em": "2026-10-30"
   },
   {
    "id": "beds24-airbnb-revenue",
@@ -323,8 +324,9 @@
    "id": "beds24-token",
    "responsavel": "dono",
    "desde": "2026-10-19",
-   "urgencia": 1,
-   "texto": "No Beds24 (Configurações → Marketplace → API): Generate invite code só com read em bookings, bookings-financial, inventory e properties; em seguida trocar em https://beds24.com/api/v2 (GET /authentication/setup → Try it out, campo code) e cadastrar o refreshToken como BEDS24_REFRESH_TOKEN nos segredos do ambiente do Claude Code. Não reaproveitar o token HotelClaw-v57 (acesso total). Nunca colar no chat. Passo a passo em pricelabs/beds24-acesso-direto.md. 19/10 tarde: convite enviado no chat e trocado (já consumido); token guardado só no contêiner (/root/.beds24/refresh_token). Falta: cadastrar um token nos segredos do ambiente para não depender do contêiner e trocar por um sem dados de hóspedes (o atual devolve nome e e-mail)."
+   "urgencia": 0,
+   "texto": "No Beds24 (Configurações → Marketplace → API): Generate invite code só com read em bookings, bookings-financial, inventory e properties; em seguida trocar em https://beds24.com/api/v2 (GET /authentication/setup → Try it out, campo code) e cadastrar o refreshToken como BEDS24_REFRESH_TOKEN nos segredos do ambiente do Claude Code. Não reaproveitar o token HotelClaw-v57 (acesso total). Nunca colar no chat. Passo a passo em pricelabs/beds24-acesso-direto.md. 19/10 tarde: convite enviado no chat e trocado (já consumido); token guardado só no contêiner (/root/.beds24/refresh_token). Falta: cadastrar um token nos segredos do ambiente para não depender do contêiner e trocar por um sem dados de hóspedes (o atual devolve nome e e-mail). 30/10: passa a URGENTE: a decisão D2 (restrições no Beds24) e a medição de estadias/cancelamentos do motor de pace dependem do token só-leitura; a lista do PriceLabs atrasa até um dia e não mostra estadia mínima nem noCheckIn.",
+   "atualizado_em": "2026-10-30"
   },
   {
    "id": "beds24-integrar",
@@ -458,7 +460,10 @@
    "responsavel": "skill",
    "desde": "2026-10-21",
    "urgencia": 2,
-   "texto": "estrategia.md v1.3 ainda cita o padrão de R$ 1.000 enviados em sexta e sábado, vitrine de 0,59/0,61, mínimo da Balcony de R$ 765 e mexer na base por semana; atualizar para regras.md (pisos de R$ 500/850 no preço final, Genius 3, Balcony R$ 690, base só por ordem do dono)."
+   "texto": "estrategia.md v1.3 ainda cita o padrão de R$ 1.000 enviados em sexta e sábado, vitrine de 0,59/0,61, mínimo da Balcony de R$ 765 e mexer na base por semana; atualizar para regras.md (pisos de R$ 500/850 no preço final, Genius 3, Balcony R$ 690, base só por ordem do dono).",
+   "resolvido_em": "2026-10-30",
+   "atualizado_em": "2026-10-30",
+   "resolucao": "estrategia.md reescrita (v2.0, 30/10): motor de pace, três preços com fatores de 29-30/10, precedência única, decisões D1-D3"
   },
   {
    "id": "teste-piso-picos",
@@ -631,7 +636,57 @@
    "urgencia": 1,
    "texto": "Lotes de reservas lançados no mesmo segundo no Beds24 (26/10 13:25 UTC, 12 na Panorâmica I; 27/10 15:03 UTC, 9 na Villa), provavelmente vindos do anúncio antigo da Booking (15459723) quando ele passou a seguir o Beds24. Contagem pela lista do PriceLabs (status booked): VK7 01/11 com 8 reservas para 7 unidades; Panorâmica I 20/11 e 21/11 com 7 reservas para 6 unidades. Balcony 30-31/10 com duas reservas iguais (95226861 e 95314101, R$ 1.383 cada): provável duplicata. Conferir no Beds24 e na extranet: duplicatas, realocação ou cancelamento (a Skill não altera reservas). | 28/10 09:27 BRT: novo lote de 7 reservas da Booking no mesmo segundo, logo depois do sync do dono (Moinhos 30-31/10 R$ 2.770, 05-06/11 R$ 1.096 = R$ 548/noite, 09-10/11 R$ 1.332; Panorâmica I 28/10 R$ 325, 02/11 R$ 428, 24/12 R$ 1.068, 25-26/12 R$ 3.380), com valores abaixo da escada: provável anúncio antigo 7562933. Também 'others' na VK7 01/11 (R$ 500, 09:41 BRT) com a noite já em overbooking e na Regra J (R$ 4.425): conferir quem lançou.",
    "atualizado_em": "2026-10-28"
+  },
+  {
+   "id": "decisao-d1-booking-pilha-piso-semana",
+   "responsavel": "dono",
+   "urgencia": 0,
+   "texto": "D1 (30/10): o piso de R$ 500 no Genius 3 vira R$ 1.220 enviados e ~R$ 768 públicos no Recanto, acima do MÁXIMO do mercado de dia de semana (mediana dos hotéis com hidro R$ 353 a 388). Na sombra de 30/10 o motor de pace queria descer 74 noites e 94 ficaram presas nesse piso; nenhuma pedia subida. Proposta: na extranet da Booking, reduzir a pilha de descontos (hoje 46% a 50% sobre a tabela; concorrentes 15% a 19%) para no máximo 25% a 30%: com o mesmo R$ 500 no Genius 3 o público cairia para ~R$ 617 e o enviado para ~R$ 980, sem ninguém pagar menos de R$ 500. Alternativa: autorizar pisos de última hora menores de domingo a quinta (D0 a D3), em percent_base, pelo validador. A skill não mexe em Genius nem em promoções e não muda pisos sem a sua ordem (quartos.json → limites_seguranca / ordens_dono.json).",
+   "desde": "2026-10-30",
+   "atualizado_em": "2026-10-30"
+  },
+  {
+   "id": "decisao-d2-beds24-restricoes",
+   "responsavel": "dono",
+   "urgencia": 1,
+   "texto": "D2 (30/10): a estadia mínima gravada no PriceLabs NÃO chega à Booking (vive no Beds24). Tabela proposta para o Beds24: sábado é o único dia com bloqueio de chegada (noCheckIn, Regra H); sexta e domingo a quinta com 1 noite; sábado liberado para 1 noite na quarta-feira anterior quando a pousada estiver abaixo de 60% nesse sábado; feriados com 2 noites (3 em Finados, Carnaval, Corpus Christi, 9 de Julho e Réveillon) e as pontas liberadas para 1 noite a 7 e a 3 dias quando sobrar; sincronizar a estadia mínima PriceLabs → Beds24 (ou gravar só no Beds24). Para a skill medir reservas, estadias e restrições: cadastrar o token só-leitura do Beds24 (pendência beds24-token). Confirmar a tabela ou ajustar; a skill não altera o Beds24.",
+   "desde": "2026-10-30",
+   "atualizado_em": "2026-10-30"
+  },
+  {
+   "id": "decisao-d3-ligar-motor-pace",
+   "responsavel": "dono",
+   "urgencia": 0,
+   "texto": "D3 (30/10): ligar o motor de pace (regras.md 4d; estrategia.md v2.0) no lugar da escada por reserva (ordens de 26 e 28/10) e da Regra J a 90% × 1,5 (27/10). O que muda: uma régua só (percentis do preço público dos hotéis com hidro), uma curva de venda por tipo de noite, um passo por noite por dia proporcional à distância do alvo; noite à frente nunca desce; esgotada e overbooking recebem piso de proteção no p90 com teto livre (nunca piso = teto); 'pousada lotada' = 100%. Até a resposta, o motor fica em sombra (relatório diário em pricelabs/pace-sombra/) e as ordens de 26 a 28/10 valem como estão. Para ligar: responder 'pode ligar' (a skill muda parametros.motor.modo para 'ligado', regra_j_ativa para false, e registra em regras.md 6a). Sombra de 30/10: 282 noites, 74 descidas, 0 subidas, 94 presas no piso.",
+   "desde": "2026-10-30",
+   "atualizado_em": "2026-10-30"
+  },
+  {
+   "id": "recanto-natal-invisivel-booking",
+   "responsavel": "dono",
+   "urgencia": 1,
+   "texto": "Na busca da Booking de 30/10 o Recanto (id 7562933) não aparece para o Natal (24 a 26/12, 2 noites), e também não para 2 noites no Finados; a Villa aparece. Conferir na extranet: restrições de estadia mínima/fechamento no Natal, plano de tarifas sem disponibilidade carregada pelo Beds24 e o anúncio duplicado 15459723 (pousada-vista-panoramica-campos-do-jordao) que segue ativo sem receber o Beds24 (pendência booking-listagem-duplicada-recanto).",
+   "desde": "2026-10-30",
+   "atualizado_em": "2026-10-30"
+  },
+  {
+   "id": "balcony-min-690-600",
+   "responsavel": "dono",
+   "urgencia": 2,
+   "texto": "Proposta (30/10): a Balcony vende 18% das noites e fica presa no mínimo do anúncio (R$ 690 = ~R$ 449 públicos), 10% abaixo da King Spa livre pela Regra G. Para o motor de pace poder posicioná-la no p25 a p40 do mercado da Villa em dia de semana, propor mínimo do anúncio de R$ 600 (só o dono muda base/mín/máx do anúncio). Sem a mudança, a Balcony segue no piso e a Regra G continua valendo.",
+   "desde": "2026-10-30",
+   "atualizado_em": "2026-10-30"
+  },
+  {
+   "id": "afrodite-teto-horizonte-3010",
+   "responsavel": "skill",
+   "urgencia": 2,
+   "texto": "Erro da skill em 30/10 11:41 BRT: o ordem_recanto.py (horizonte padrão 366 dias) copiou a faixa de fim de semana da Afrodite (R$ 1.600 a 1.800 públicos, medida em out/26) para 50 fins de semana de 2027, cortando o inverno de 2027 de R$ 4.100 a 4.570 para R$ 3.050. Desfeito às 19:22 BRT (50 noites: teto apagado, piso regravado, sábados com 2 noites); parametros.afrodite_fds_horizonte_dias = 95 e teste. Conferir no recálculo da Afrodite em 31/10 07:53 (regra por data viva sem max_price).",
+   "resolvido_em": "2026-10-30",
+   "resolucao": "teto removido e horizonte de 95 dias no código (commit de 30/10)",
+   "desde": "2026-10-30",
+   "atualizado_em": "2026-10-30"
   }
  ],
- "versao": "2026-10-21T15"
+ "versao": "2026-10-30T23"
 }

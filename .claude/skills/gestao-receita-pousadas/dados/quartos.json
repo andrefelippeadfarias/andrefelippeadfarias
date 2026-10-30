@@ -1,5 +1,5 @@
 {
- "versao": "2026-10-21T17",
+ "versao": "2026-10-30T23",
  "nota": "Fonte única dos dados de máquina da Skill. Os scripts leem daqui. Quem mudar base, mínimo ou máximo no PriceLabs atualiza este arquivo no mesmo commit.",
  "pms": "beds24",
  "grupo": {
@@ -110,7 +110,9 @@
    ],
    "ordem_nota": "Dono 21/10: 'Os valores da Suíte Panorâmica II devem sempre estar entre a Moinhos e a Panorâmica I' (Q2 entre Q7 e Double, noite a noite; scripts/ordem_recanto.py). Substitui a regra antiga de 'sem desconto' (19/10), criada quando se achava que o hóspede pagava 34% do enviado; em 21/10 viu-se que era a tarifa fixa 50067466 na Booking (pendência do dono). fator_real volta a 0,42 como o resto do Recanto, para o piso de feriado da Q2 não passar o da Double.",
    "base_antes_2210": 1870,
-   "base_nota": "Dono 22/10 ('Pode fazer'): base de R$ 1.870 para R$ 1.590 (1º passo); 2º passo em 29/10 para R$ 1.352 (limite de 15% por semana)."
+   "base_nota": "Dono 22/10 ('Pode fazer'): base de R$ 1.870 para R$ 1.590 (1º passo); 2º passo em 29/10 para R$ 1.352 (limite de 15% por semana).",
+   "fora_do_motor": true,
+   "fora_do_motor_nota": "tarifa fixa na Booking (Rate 50067466, R$ 412-495) desde 21/10: o preço do PriceLabs não chega ao hóspede; só pisos de segurança e ordem do Recanto até o dono corrigir o mapeamento (pendência q2-tarifa-booking-fixa)"
   },
   {
    "curto": "VK7",
@@ -287,21 +289,103 @@
    "passo": 0.07,
    "fator_balcony": 0.9,
    "top_n": 3,
-   "piso_genius": {"valor": 300, "ate": "2026-11-08"},
+   "piso_genius": {
+    "valor": 300,
+    "ate": "2026-11-08"
+   },
    "nota_proporcional": "Dono, 28/10: 'Ajuste a escada de aumento de preço de forma proporcional sempre para chegarmos ao valor da média dos tops do mercado com nossas características sempre.' Alvo = média dos top_n maiores preços do quarto com hidro da classe A (hidro + vista, até 3 km do Capivari; concorrentes_hidro_vista.json: topo_a dos feriados e referencias_topo de semana e fds) ÷ regra_j.fator_publico. Cada venda move o preço na reta até o alvo, na proporção das unidades: novo = alvo − (alvo − atual) × livres_depois ÷ livres_antes; a última unidade chega ao alvo. Cancelamento desce pela mesma reta, até o piso_genius (R$ 300 no Genius 3 até 08/11; depois os pisos de vitrine do dono). 'passo' (7%) só sem dado de mercado.",
    "nota": "Dono, 26/10 (substituída em 28/10 pela nota_proporcional): a cada reserva, subir o preço gradualmente do mínimo atual até o alto padrão (teto = piso do dono de R$ 500 dom-qui / R$ 850 sex-sáb no Genius 3; Balcony 90% do teto da VK2). Um degrau de 7% por reserva no quarto e nas noites da estadia (scripts/escada_reservas.py)."
   },
-  "afrodite_fds_publico": [1600, 1800],
-  "afrodite_fds_nota": "Dono 27/10 ('Pode ser'): Afrodite no fim de semana fora de feriado na faixa alta do mercado sem passar do topo (classe A com hidro: mediana ~R$ 1.270-1.310, topo ~R$ 2.000 na vitrine). Enviado = vitrine ÷ regra_j.fator_publico do Recanto. Aplicado pelo ordem_recanto.py.",
+  "afrodite_fds_publico": [
+   1600,
+   1800
+  ],
+  "afrodite_fds_nota": "Dono 27/10 ('Pode ser'): Afrodite no fim de semana fora de feriado na faixa alta do mercado sem passar do topo (classe A com hidro: mediana ~R$ 1.270-1.310, topo ~R$ 2.000 na vitrine). Enviado = vitrine ÷ regra_j.fator_publico do Recanto. Aplicado pelo ordem_recanto.py. | 30/10: o teto de fim de semana vale só até hoje + afrodite_fds_horizonte_dias (95 dias): a faixa R$ 1.600-1.800 foi medida em out/26 e não serve para o inverno de 2027 (50 fins de semana de 2027 receberam teto e foram desfeitos em 30/10).",
   "regra_j": {
    "fator_publico": {
-    "Recanto": 0.59,
-    "Villa": 0.589
+    "Recanto": 0.63,
+    "Villa": 0.65
    },
    "limiar_pousada": 0.9,
    "sem_dado_mult": 1.5,
-   "nota": "Dono, 27/10: suíte lotada ou com overbooking, ou pousada lotada (≥ 90% vendida), vai ao topo do mercado: maior preço do quarto com hidro da classe A no período (concorrentes_hidro_vista.json → maximo_a) ÷ fator público da Booking (Recanto 0,59 no anúncio 15459723; Villa 0,589). Sem dado do período: preço atual × 1,5. scripts/topo_mercado.py."
-  }
+   "nota": "Dono, 27/10: suíte lotada ou com overbooking, ou pousada lotada (≥ 90% vendida), vai ao topo do mercado: maior preço do quarto com hidro da classe A no período (concorrentes_hidro_vista.json → maximo_a) ÷ fator público da Booking (Recanto 0,59 no anúncio 15459723; Villa 0,589). Sem dado do período: preço atual × 1,5. scripts/topo_mercado.py. 30/10: fator público unificado em parametros.fator_publico (0,63/0,65); limiar_pousada 0,9 e sem_dado_mult 1,5 ficam até a resposta do dono à decisão D3 (proposta: lotada = 100%; sem dado = p90 da âncora)."
+  },
+  "fator_publico": {
+   "Recanto": 0.63,
+   "Villa": 0.65,
+   "medido_em": "2026-10-29",
+   "fonte": "preço público na Booking ÷ enviado: Recanto anúncio 7562933 (0,53-0,63 por data, 29/10 pós-sync; 0,658 em 25/10), Villa 14824789 (~0,65). Único fator de comparação com o mercado (motor de pace e âncora); os fatores do Genius 3 (fator_vitrine_semana/fds) só convertem os pisos do dono e o fator_real só o piso de feriado. Recalibrar toda rotina completa pela busca dos nossos anúncios; abaixo de 0,55 é promoção ativa a confirmar com o dono.",
+   "nota": "30/10/2026: criado na reformulação da estratégia (motor de pace)."
+  },
+  "pace": {
+   "curvas": {
+    "semana": {
+     "60": 3,
+     "30": 8,
+     "14": 15,
+     "7": 28,
+     "3": 42,
+     "1": 55,
+     "0": 100
+    },
+    "fds": {
+     "60": 8,
+     "30": 18,
+     "14": 32,
+     "7": 50,
+     "3": 68,
+     "1": 85,
+     "0": 100
+    },
+    "feriado": {
+     "60": 12,
+     "30": 30,
+     "14": 50,
+     "7": 68,
+     "3": 82,
+     "1": 92,
+     "0": 100
+    }
+   },
+   "banda": 20,
+   "muito_atras": 30,
+   "alvo": {
+    "Recanto": {
+     "frente_perto": 90,
+     "frente": 75,
+     "ritmo": 65,
+     "atras": 50,
+     "muito_atras": 40
+    },
+    "Villa": {
+     "frente_perto": 75,
+     "frente": 65,
+     "ritmo": 50,
+     "atras": 40,
+     "muito_atras": 25
+    }
+   },
+   "frente_perto_dias": 7,
+   "k": 0.5,
+   "pmax": {
+    "31+": 5,
+    "8-30": 10,
+    "4-7": 15,
+    "0-3": 20
+   },
+   "min_n": 6,
+   "idade_max_dias": 10,
+   "tolerancia": 0.03,
+   "nota": "Motor de pace (30/10/2026, pedido do dono: maior valor com os 2 hotéis lotados). curvas = % vendido esperado a D dias da noite, por tipo (dom-qui, sex-sáb, feriado), calibradas no histórico de 01/09 a 30/10 (39-50% das reservas com 0-1 dia; Booking mediana 10 d) e na janela do mercado do PriceLabs (nov 0-8/0-10 d; dez 0-24 d); recalibrar na revisão de segunda só com n >= 10 por célula e no máximo 5 pontos por ponto. banda = pontos de diferença vendido − curva para sair de 'no ritmo'; muito_atras = pontos para 'muito atrás'. alvo = percentil do preço PÚBLICO dos hotéis com hidro na Booking (dados/ancora_mercado.json) por status e pousada (Recanto um degrau acima da Villa; frente_perto = à frente a até frente_perto_dias). passo = k × distância relativa até o alvo, limitado por pmax conforme D (pela metade com âncora com n < min_n ou mais velha que idade_max_dias). tolerancia = variação mínima para gerar passo."
+  },
+  "motor": {
+   "modo": "sombra",
+   "desde": "2026-10-30",
+   "regra_j_ativa": true,
+   "ligar": "com a resposta do dono à decisão D3 (30/10): substituir a escada por reserva e a Regra J ≥ 90%/×1,5 pelo motor de pace; até então, o motor só relata (sombra) e as ordens de 26-28/10 seguem valendo.",
+   "nota": "modo: sombra (calcula e relata, não grava) | ligado (grava D0-D60). regra_j_ativa: enquanto True, noite esgotada e overbooking ficam com a Regra J; False = piso de proteção p90 com teto livre."
+  },
+  "afrodite_fds_horizonte_dias": 95
  },
  "feriados": [
   {

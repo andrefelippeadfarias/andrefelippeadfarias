@@ -181,7 +181,7 @@ def plano(cfg: dict, hidro: dict, antes: dict, depois: dict, hoje: date, lote: d
                 continue
             fixo = r.get("min_price") is not None and str(r.get("min_price")) == str(r.get("max_price"))
             it = {"tipo": "data", "quarto": curto, "data": noite, "min_price": novo, "preco_antes": atual,
-                  "excecao": "dono",
+                  "excecao": "dono", "ordem_id": "dono-2026-10-26-escada",
                   "motivo": (f"Escada proporcional (dono 26 e 28/10): {va}→{vd_real} de {u} vendidas; alvo R$ "
                              f"{meta:.0f} = média dos tops com hidro e vista ({fonte}); antes R$ {atual:.0f}"
                              if meta else f"Escada por reserva (dono 26/10): {fonte}; antes R$ {atual:.0f}")}
@@ -218,7 +218,7 @@ def acompanhar(cfg: dict, cal: dict, finais: dict) -> list[dict]:
                 return
             novo = math.ceil(alvo_k)
             it = {"tipo": "data", "quarto": k, "data": noite, "min_price": novo, "preco_antes": float(r["price"]),
-                  "excecao": "dono", "motivo": f"{motivo}; antes R$ {float(r['price']):.0f}"}
+                  "excecao": "dono", "ordem_id": "dono-2026-10-26-escada", "motivo": f"{motivo}; antes R$ {float(r['price']):.0f}"}
             if r.get("min_price") is not None and str(r.get("min_price")) == str(r.get("max_price")):
                 it["max_price"] = novo
             finais[(k, noite)] = novo

@@ -2,6 +2,19 @@
 
 Cada mudança feita na própria Skill (regras, parâmetros, scripts, fluxo) entra aqui: data, o que mudou, por quê (evidência) e como desfazer. A entrada mais nova fica em cima.
 
+## 30/10/2026 19:30: reformulação da estratégia (v2.0), ordens do dono com validade, âncora de mercado e motor de pace em sombra
+- **O quê (pedido do dono: "Melhore nossas estratégias ... maior valor de estadia porém ... os 2 hotéis lotados ... melhore nossa skill"):**
+  - `dados/ordens_dono.json` (novo) e `scripts/ordens.py` (novo): ordens literais do dono com id, quartos, período, tipo (`preco_por_data`, `regra`, `manual`) e o que liberam. `validar_plano.py`: `excecao: "dono"` exige `ordem_id` vigente (ERRO sem ele); noite congelada por mudança manual dá ERRO. `escada_reservas.py`, `topo_mercado.py` e `ordem_recanto.py` passam o `ordem_id` da ordem que implementam.
+  - `scripts/ancora_mercado.py` (novo) e `dados/ancora_mercado.json` (novo): percentis p25/p50/p75/p90/máx do preço público por noite dos hotéis com hidro (30 noites com busca própria em 30/10; `por_tipo` por mês para as demais).
+  - `scripts/pace.py` (novo): curvas por tipo de noite, status, percentil-alvo por pousada, passo proporcional limitado por antecedência, pisos do dono como trava ("presa no piso"), "à frente nunca desce", "D0 nunca sobe", cadência com `dados/passos.json`, coerência (Panorâmica II, Afrodite, Balcony), modo sombra. Sombra de 30/10 em `pricelabs/pace-sombra/2026-10-30.md`.
+  - `quartos.json` (versão 2026-10-30T23): `parametros.fator_publico` (Recanto 0,63; Villa 0,65), `parametros.pace`, `parametros.motor` (modo sombra, `regra_j_ativa`), `regra_j.fator_publico` atualizado, Queen 2 `fora_do_motor`, `afrodite_fds_horizonte_dias` 95.
+  - `ordem_recanto.py`: teto de fim de semana da Afrodite só até hoje + 95 dias (`horizonte_teto_fds`; `faixa_afrodite(..., teto_ate)`); no PriceLabs, os 50 tetos de 2027 gravados às 11:41 BRT foram apagados e os pisos regravados às 19:22 BRT (sábados com `min_stay` 2).
+  - `pace.py`: `novo` da linha do relatório usa o mesmo arredondamento do item (teto para baixo, piso para cima).
+  - Docs: `estrategia.md` v2.0 (reescrita), `regras.md` (versão 30/10, precedência no topo, seção 4d, 6a), `SKILL.md` (arquivos, rotina leve, pedido do dono, passo 4d, relatório 3b, revisão semanal), `aprendizados.md`, `pendencias.json` (D1, D2, D3, Natal na Booking, Balcony R$ 600, Beds24 token).
+  - Testes: `TestOrdensDono`, `TestAncoraMercado`, `TestPace`, horizonte da Afrodite em `test_afrodite_fim_de_semana_e_feriado`; 74 testes OK.
+- **Por quê:** diagnóstico de 30 dias (ocupação 53% contra 34% do mercado, diária média 16% abaixo, 80% a 96% dos dias no piso, regras sobrepostas e dominadas pelos pisos; detalhes em `estrategia.md` seção 2 e `aprendizados.md` 30/10). Painel de 3 desenhos independentes com juízes; síntese = uma régua, uma curva, um passo, pisos como trava explícita.
+- **Como desfazer:** `parametros.motor.modo` já é "sombra" (nada gravado pelo motor); para voltar o validador ao comportamento antigo, remova a checagem de `ordem_id` em `validar_plano.validar_data` (não recomendado: a trava "preço fixo só com ordem do dono" deixa de ser verificável). Tetos da Afrodite em 2027: `ordem_recanto.py plano` com `afrodite_fds_horizonte_dias` 366 regrava.
+
 ## 08/10/2026 10:20: padrão de qualidade de R$ 1.000 em sexta, sábado e feriado
 - **O quê:**
   - `quartos.json`: `limites_seguranca.padrao_qualidade_diaria` = 1000 (só o dono muda) e lista `excecoes_mercado`.

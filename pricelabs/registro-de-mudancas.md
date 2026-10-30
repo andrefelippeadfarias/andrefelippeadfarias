@@ -3070,6 +3070,17 @@ A Villa não aparece em nenhuma busca com filtro de hidro (falta a comodidade na
 - **Envio:** sem recálculo disponível hoje para Panorâmica I e II (3 em 24 h); vão no recálculo automático da noite ou no Sync do dono (datas de 11 a 14/11, sem pressa).
 - **Validação:** 6 itens, 0 erros.
 
+## 30/10/2026, 19:30 — Pedido do dono (estratégia): reformulação da skill, motor de pace em sombra e Afrodite 2027 sem teto
+
+Pedido: "Melhore nossas estratégias para atingirmos o maior valor de estadia porém estar sempre com os 2 hotéis lotados. Faça uma análise completa e melhore nossa skill." Diagnóstico de 30 dias, estratégia v2.0 e motor de pace em **modo sombra** (nada gravado pelo motor; relatório em `pricelabs/pace-sombra/2026-10-30.md`: 282 noites, 74 descidas, 0 subidas, 94 presas no piso). Três decisões abertas ao dono (D1 pilha de descontos da Booking e piso de dia de semana; D2 restrições no Beds24; D3 ligar o motor no lugar da escada por reserva e da Regra J); até a resposta valem as ordens de 26 a 28/10.
+
+Rotinas leves das 16:53 e 19:53 (lista do PriceLabs até 19:15 BRT): sem mudança manual (todos os logs do dia são `api_`); reservas feitas em 30/10: Panorâmica II 13-14/11 (Booking, 2 noites, R$ 2.040), King Spa 2 11-12/11 (Airbnb, 2 noites, R$ 622), Moinhos 10/11 (Booking) feita e cancelada no mesmo dia; a lista pode estar incompleta até a importação de 31/10. Nenhum preço de D0 a D60 alterado nesta rodada.
+
+| Mudança | Onde | Antes | Depois (gravado às 19:22 BRT; conferência no recálculo em 31/10 07:53, saldo de recálculo do dia gasto) | Como desfazer (pedir ao Claude) |
+|---|---|---|---|---|
+| Teto de fim de semana da Afrodite fora do horizonte (erro da skill de 30/10 11:41) | Suíte Afrodite, 50 noites de sex/sáb de 15/01 a 23/10/2027 | piso 36% a 78% e **teto 52% a 78%** da base (R$ 3.040 a 3.560; algoritmo estava R$ 3.100 a 4.570) | regra apagada e regravada só com o piso (mesmos 36% a 78%, R$ 2.720 a 3.560), sem teto; sábados com `min_stay` 2 (Regra H). Código: teto da faixa de fds só até hoje + 95 dias | "Volte o teto de fim de semana da Afrodite em 2027" (plano `ordem_recanto.py` com horizonte 366) |
+| Validador: exceção "dono" exige ordem | `validar_plano.py`, `dados/ordens_dono.json` | scripts carimbavam "dono" sozinhos | item com `excecao: "dono"` só passa com `ordem_id` vigente; noite com mudança manual congelada 7 dias | reverter o commit de 30/10 |
+
 > **Regras em vigor:** desde 06/10/2026 elas ficam em `.claude/skills/gestao-receita-pousadas/references/regras.md`. Este arquivo guarda só o histórico das mudanças.
 
 ## O que só pode ser feito na tela (passo a passo para você)

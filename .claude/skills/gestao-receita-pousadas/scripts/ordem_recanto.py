@@ -10,7 +10,10 @@ considerada super luxo"): toda noite acima das outras três. Dono 27/10 ("Pode s
   - domingo a quinta fora de feriado: pelo menos 20% sobre a mais cara das outras (Afrodite.premio_minimo_semana);
   - sexta, sábado e feriado: pelo menos 5% (Afrodite.premio_minimo);
   - sexta e sábado fora de feriado: faixa alta do mercado, sem passar do topo, R$ 1.600 a R$ 1.800 por noite na vitrine
-    da Booking (parametros.afrodite_fds_publico ÷ regra_j.fator_publico do Recanto): acima disso o plano põe o teto.
+    da Booking (parametros.afrodite_fds_publico ÷ regra_j.fator_publico do Recanto): acima disso o plano põe o teto,
+    **só até hoje + parametros.afrodite_fds_horizonte_dias (95)**: a faixa foi medida no mercado de outubro de 2026 e não
+    vale para o inverno de 2027 (30/10: 50 fins de semana de 2027 receberam teto de R$ 3.050 com o algoritmo a R$ 4.100
+    a 4.570; desfeito no mesmo dia). Fora do horizonte vale só a ordem (piso acima das outras).
 
 Para cada noite, com os preços do recálculo do PriceLabs: menor = min(Q7, Double), maior = max(Q7, Double). A Q2 precisa
 ficar entre os dois. Tolerância: 1% da base do quarto + R$ 1 (o PriceLabs só aceita piso e teto em percentual inteiro da
@@ -70,9 +73,11 @@ def faixa_fds_afrodite(cfg: dict, d: dt.date):
     return round(lo / fat), round(hi / fat)
 
 
-def faixa_afrodite(cfg: dict, d: dt.date, q7: dict, db: dict, q2_final: float, af: dict) -> dict:
+def faixa_afrodite(cfg: dict, d: dt.date, q7: dict, db: dict, q2_final: float, af: dict,
+                   teto_ate: dt.date | None = None) -> dict:
     """Afrodite acima das outras três: piso = o maior entre o piso da regra e a mais cara das outras × (1 + prêmio).
-    Fim de semana fora de feriado: teto na faixa alta do mercado, nunca abaixo do piso da ordem."""
+    Fim de semana fora de feriado: teto na faixa alta do mercado, nunca abaixo do piso da ordem, e só até `teto_ate`
+    (hoje + afrodite_fds_horizonte_dias; None = sem limite, para testes)."""
     outras = max(float(q7["price"]), float(db["price"]), float(q2_final))
     premio = premio_afrodite(cfg, d)
     piso_regra = exigencias(cfg, cfg["por_curto"]["Afrodite"], d)["piso"] or 0
@@ -84,7 +89,7 @@ def faixa_afrodite(cfg: dict, d: dt.date, q7: dict, db: dict, q2_final: float, a
     preco = float(af["price"])
     abaixo = preco < outras * (1 + premio) - tol(cfg, "Afrodite")
     teto = None
-    fds = faixa_fds_afrodite(cfg, d)
+    fds = faixa_fds_afrodite(cfg, d) if teto_ate is None or d <= teto_ate else None
     if fds and preco > fds[1] + tol(cfg, "Afrodite"):
         teto = max(fds[1], piso)
         piso = max(piso, min(fds[0], round(preco)))
@@ -92,8 +97,14 @@ def faixa_afrodite(cfg: dict, d: dt.date, q7: dict, db: dict, q2_final: float, a
             "fora": abaixo or teto is not None}
 
 
+def horizonte_teto_fds(cfg: dict, hoje: dt.date) -> dt.date:
+    """Última noite que pode receber o teto de fim de semana da Afrodite (dono 27/10, faixa medida em out/26)."""
+    return hoje + dt.timedelta(days=int(cfg["parametros"].get("afrodite_fds_horizonte_dias", 95)))
+
+
 def comparar(cfg, cal7, caldb, cal2, de, ate, calaf=None):
     out, d = [], de
+    teto_ate = horizonte_teto_fds(cfg, de)
     while d <= ate:
         s = d.isoformat()
         if s in cal7 and s in caldb and s in cal2:
@@ -109,7 +120,7 @@ def comparar(cfg, cal7, caldb, cal2, de, ate, calaf=None):
                     continue
                 f = dict(f, q2_final=(f["q2_final"] if not esg["Q2"] else 0))
                 ref = max(abertos, key=lambda r: float(r["price"]))
-                g = faixa_afrodite(cfg, d, ref, ref, f["q2_final"], calaf[s])
+                g = faixa_afrodite(cfg, d, ref, ref, f["q2_final"], calaf[s], teto_ate)
                 if g["fora"]:
                     out.append({"data": s, "quarto": "Afrodite", **g})
         d += dt.timedelta(days=1)
@@ -121,7 +132,7 @@ def montar_plano(fora: list[dict], hoje: dt.date) -> dict:
     for x in fora:
         if x["quarto"] == "Q2":
             itens.append({"tipo": "data", "quarto": "Q2", "data": x["data"], "min_price": x["piso"], "max_price": x["teto"],
-                          "preco_antes": x["panoramica_2"], "excecao": "dono",
+                          "preco_antes": x["panoramica_2"], "excecao": "dono", "ordem_id": "dono-2026-10-21-ordem-recanto",
                           "motivo": (f"Dono 21/10: Panorâmica II entre a Moinhos (R$ {x['moinhos']:.0f}) e a Panorâmica I "
                                      f"(R$ {x['panoramica_1']:.0f}); estava R$ {x['panoramica_2']:.0f}")})
         else:

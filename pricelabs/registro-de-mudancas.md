@@ -3037,6 +3037,24 @@ A Villa não aparece em nenhuma busca com filtro de hidro (falta a comodidade na
 - **Mercado (total da estadia, conector oficial):** semana 03-04/11 mediana R$ 313 (Recanto R$ 568, Villa R$ 504); fds 06-08/11 R$ 1.409 (Recanto R$ 2.688; Villa sem disponibilidade); 10-11/11 R$ 384 (R$ 738 / R$ 564); fds 13-15/11 R$ 1.797 (R$ 2.419 / R$ 2.288); Consciência Negra 20-22/11 R$ 2.385 (R$ 3.913 / R$ 2.934); fds 27-29/11 R$ 1.790 (R$ 2.354 / R$ 2.138).
 - **Validação:** 82 itens, 0 erros.
 
+## 30/10/2026, 14:50 UTC (11:50 BRT) — Pedido do dono: baixa de 10% no Finados
+
+- **Pedido:** "Vamos abaixar o valor em 10% para este feriado. Fazer uma baixa de 10% para que possamos exibir mais nas plataformas."
+- **Como:** piso = teto a 90% do preço vigente, só nas noites do feriado com suíte livre (01/11 da Moinhos, VK7, VK2 e Balcony e 31/10-01/11 da Balcony e da Afrodite estão esgotadas).
+
+| Suíte | 30/10 (sexta) | 31/10 (sábado) | 01/11 (domingo) |
+|---|---|---|---|
+| Moinhos | R$ 1.496 (mudança do dono; já abaixo do piso, mantida) | R$ 2.071 → **R$ 1.912** (parou no piso de R$ 800 real, −8%) | esgotada |
+| Panorâmica I | R$ 2.609 → **R$ 2.353** | R$ 2.609 → **R$ 2.353** | R$ 3.271 → **R$ 2.945** |
+| Panorâmica II | R$ 1.908 (no piso, mantida) | R$ 2.464 → **R$ 2.226** | R$ 3.180 → **R$ 2.862** |
+| VK7 | R$ 2.057 (no piso, mantida) | R$ 3.004 → **R$ 2.708** | esgotada (overbooking) |
+| VK2 | R$ 2.057 (no piso, mantida) | R$ 3.048 → **R$ 2.743** | esgotada |
+| Balcony | R$ 1.854 → **R$ 1.676** | esgotada | esgotada |
+| Afrodite | fechada para chegada (Regra H) | ocupada | ocupada |
+
+- **Travado pelo validador:** 5 noites cairiam abaixo do piso de segurança do feriado (R$ 800 real; Recanto ÷ 0,42, Villa ÷ 0,39). Só o dono abre exceção (`excecoes_dono`).
+- **Gravado, lido de volta e recalculado ✅** (Moinhos na 2ª tentativa: Beds24 sobrecarregado). Validação: 9 itens, 0 erros.
+
 > **Regras em vigor:** desde 06/10/2026 elas ficam em `.claude/skills/gestao-receita-pousadas/references/regras.md`. Este arquivo guarda só o histórico das mudanças.
 
 ## O que só pode ser feito na tela (passo a passo para você)

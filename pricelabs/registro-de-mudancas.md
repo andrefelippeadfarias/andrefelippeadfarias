@@ -3055,6 +3055,21 @@ A Villa não aparece em nenhuma busca com filtro de hidro (falta a comodidade na
 - **Travado pelo validador:** 5 noites cairiam abaixo do piso de segurança do feriado (R$ 800 real; Recanto ÷ 0,42, Villa ÷ 0,39). Só o dono abre exceção (`excecoes_dono`).
 - **Gravado, lido de volta e recalculado ✅** (Moinhos na 2ª tentativa: Beds24 sobrecarregado). Validação: 9 itens, 0 erros.
 
+## 30/10/2026, 17:40 UTC (14:40 BRT) — Rotina leve das 13:53 (atrasada pela reinicialização da sessão)
+
+- **Reservas novas (lista):** Panorâmica II 13-14/11 (Booking, 2 noites, R$ 2.312 total, ~R$ 1.156/noite, feita 08:55 BRT); VK2 11-12/11 (Airbnb, 2 noites, R$ 761 total, feita 01:17 BRT). Moinhos 10/11 (Booking) entrou e foi cancelada no mesmo dia. **Cancelamento pelo calendário:** Moinhos 30 e 31/10 (2→1 e 6→5 de 7) entre 10:55 e 14:47 UTC.
+- **Mudanças manuais:** nenhuma hoje (só gravações da Skill).
+
+| Regra | Onde | Antes | Depois (gravado e lido de volta) |
+|---|---|---|---|
+| Escada proporcional (0→1 de 2) | Panorâmica II 13-14/11 | R$ 2.019 | R$ 2.703 (alvo R$ 3.370) |
+| Ordem do Recanto | Panorâmica I 13-14/11 | R$ 2.412 | piso R$ 2.708 |
+| Regra J (esgotada 2/2) | VK2 11-12/11 | R$ 952 | R$ 1.435 (sem dado de mercado: × 1,5) |
+
+- **Não aplicado:** a escada desceria a Moinhos de 31/10 para R$ 706 pelo cancelamento; fica no piso de segurança do feriado (R$ 1.912), que já é a baixa de 10% pedida pelo dono.
+- **Envio:** sem recálculo disponível hoje para Panorâmica I e II (3 em 24 h); vão no recálculo automático da noite ou no Sync do dono (datas de 11 a 14/11, sem pressa).
+- **Validação:** 6 itens, 0 erros.
+
 > **Regras em vigor:** desde 06/10/2026 elas ficam em `.claude/skills/gestao-receita-pousadas/references/regras.md`. Este arquivo guarda só o histórico das mudanças.
 
 ## O que só pode ser feito na tela (passo a passo para você)

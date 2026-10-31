@@ -254,8 +254,8 @@
    "responsavel": "dono",
    "desde": "2026-10-14",
    "urgencia": 1,
-   "texto": "A Villa inteira (VK7 7/7, Balcony 6/6, VK2 2/2) aparece indisponível em 5, 6 e 7/11 sem nenhuma reserva no PriceLabs (45 unidades-noite). É grupo fechado ou bloqueio? Se for grupo, informe o valor para o acompanhamento do faturamento de novembro; se for bloqueio sem venda, libere no Beds24. 19/10 (Beds24 direto): o inventário da Villa está fechado à mão em 5, 6 e 7/11 (disponível 0 na Balcony e na King Spa 2; −1 na VK7) com só 1 a 2 reservas reais (VK7 05 a 08/11, R$ 3.761). São ~37 unidades-noite paradas, inclusive sexta e sábado. Os tetos de 19/10 (concorrência hidro+vista) em 06-07/11 na VK7 e na VK2 só valem se reabrir. 30/10 (D6 a D8): a Villa inteira segue bloqueada em 05, 06 e 07/11 sem reserva no PriceLabs; se não for um grupo confirmado, liberar no Beds24 esta semana (quinta a sábado da semana que vem).",
-   "atualizado_em": "2026-10-30"
+   "texto": "A Villa inteira (VK7 7/7, Balcony 6/6, VK2 2/2) aparece indisponível em 5, 6 e 7/11 sem nenhuma reserva no PriceLabs (45 unidades-noite). É grupo fechado ou bloqueio? Se for grupo, informe o valor para o acompanhamento do faturamento de novembro; se for bloqueio sem venda, libere no Beds24. 19/10 (Beds24 direto): o inventário da Villa está fechado à mão em 5, 6 e 7/11 (disponível 0 na Balcony e na King Spa 2; −1 na VK7) com só 1 a 2 reservas reais (VK7 05 a 08/11, R$ 3.761). São ~37 unidades-noite paradas, inclusive sexta e sábado. Os tetos de 19/10 (concorrência hidro+vista) em 06-07/11 na VK7 e na VK2 só valem se reabrir. 30/10 (D6 a D8): a Villa inteira segue bloqueada em 05, 06 e 07/11 sem reserva no PriceLabs; se não for um grupo confirmado, liberar no Beds24 esta semana (quinta a sábado da semana que vem). 31/10 (dono perguntou por que estamos fechados de 6 a 8/11): a Booking confirma a Villa indisponível em 06-08/11; o PriceLabs segue com VK7 7/7, Balcony 6/6 e VK2 2/2 em 05, 06 e 07/11 sem reservas. Liberar no Beds24 (inventário dos 3 quartos) se não for grupo; o motor de pace precifica as noites assim que reabrirem.",
+   "atualizado_em": "2026-10-31"
   },
   {
    "id": "beds24-airbnb-revenue",
@@ -690,7 +690,15 @@
    "resolucao": "teto removido e horizonte de 95 dias no código (commit de 30/10)",
    "desde": "2026-10-30",
    "atualizado_em": "2026-10-30"
+  },
+  {
+   "id": "recanto-0611-sexta-e-chegada-sabado",
+   "responsavel": "dono",
+   "desde": "2026-10-31",
+   "urgencia": 1,
+   "texto": "Booking em 31/10 (17:00 BRT, conector oficial, id 7562933 pelas coordenadas): o Recanto vende 06-08/11 (sexta e sábado, R$ 2.291 pela Panorâmica I), mas fica indisponível para só a sexta 06-07/11 e para chegada no sábado 07-09/11. Calendário: Panorâmica I 0/6 na sexta e 3/6 no sábado e no domingo; Afrodite livre na sexta e no sábado; Moinhos 6/7 e 7/7; Panorâmica II 1/2 e 2/2. Causas prováveis: estadia mínima de 2 na sexta (Beds24; a do PriceLabs não chega à Booking) e chegada de sábado fechada no Beds24 (noCheckIn), mais restrita que a Regra H (só proíbe o sábado sozinho). Propostas: liberar 1 noite na sexta 06/11 na Panorâmica I e permitir chegada no sábado com 2 noites (sábado + domingo) no Beds24.",
+   "atualizado_em": "2026-10-31"
   }
  ],
- "versao": "2026-10-31T01"
+ "versao": "2026-10-31T02"
 }

@@ -3120,6 +3120,17 @@ Processo: recálculo de 5 quartos às 00:29 BRT (Afrodite e Panorâmica II de 30
 | Motor de pace (pace desce) | Balcony, 08/11 | R$ 1372 | piso R$ 952 / teto R$ 952 | "Volte a Balcony de 08/11 para a regra de 30/10" |
 | Motor de pace (33 descidas, 0 subidas, 0 proteções, 0 coerência) | Balcony, 33 noites de 09/11 a 25/12 | regras de 30/10 (escada, Regra J, pisos do dono) | ver `pricelabs/pace/2026-10-31.md` e o plano | "Volte a Balcony de 09/11 a 25/12 para as regras de 30/10" |
 
+## 31/10/2026, 08:01 — Rotina das 07:53: conferência do motor de pace e Afrodite reaberta no Finados
+
+**Conferência da gravação de 05:29 no recálculo de 07:55-07:58:** 104 de 104 noites ✅ na Afrodite, Panorâmica II, King Spa 7, Balcony e King Spa 2 (regra viva, piso e teto iguais aos gravados, preço dentro da faixa). Moinhos e Panorâmica I deram 429 (limite de 3 recálculos em 24 h: os de 30/10 à tarde e o de 00:29 ainda contam); conferência delas na rotina das 13:53. A resposta da gravação já mostrava as regras vivas nas 19 noites desses dois quartos.
+
+**Cancelamento:** a reserva da Afrodite de 31/10 a 01/11 (Booking, 2 noites, R$ 2.882, lançada em 27/10 no lote do mesmo segundo) foi cancelada; a noite de 02/11 segue vendida. A Afrodite reabriu hoje (D0) a R$ 5.861 e amanhã a R$ 4.420 (piso = teto da Regra J). Aplicada a ordem do dono de 30/10 (Finados −10% nas suítes livres): piso = teto a 90% do vigente. Estadia mínima 3 mantida (ordem de 03/10); com 02/11 vendida, só cabe estadia de 1 ou 2 noites, o que a estadia mínima de 3 bloqueia.
+
+| Mudança | Onde | Antes | Depois (recalculado e conferido às 08:01) | Como desfazer (pedir ao Claude) |
+|---|---|---|---|---|
+| Finados −10% (ordem do dono de 30/10) na suíte que reabriu | Afrodite, 31/10 (hoje) | R$ 5.861 (piso R$ 4.360, teto R$ 10.000) | R$ 5.280 (piso = teto, 164% da base) ✅ | "Volte a Afrodite de 31/10 para piso R$ 4.360 e teto R$ 10.000" |
+| Finados −10% (ordem do dono de 30/10) na suíte que reabriu | Afrodite, 01/11 | R$ 4.420 (piso = teto da Regra J) | R$ 3.980 (piso = teto, 99% da base) ✅ | "Volte a Afrodite de 01/11 para R$ 4.420" |
+
 > **Regras em vigor:** desde 06/10/2026 elas ficam em `.claude/skills/gestao-receita-pousadas/references/regras.md`. Este arquivo guarda só o histórico das mudanças.
 
 ## O que só pode ser feito na tela (passo a passo para você)

@@ -182,6 +182,15 @@ def regra_afrodite(cfg: dict, cals: dict, finais: dict, d: date, hoje: date) -> 
     return piso, teto
 
 
+def efetivo(cfg: dict, curto: str, reais: float, para_baixo: bool = False) -> float:
+    """Valor que o PriceLabs aplica para um piso (para cima) ou teto (para baixo) gravado em percent_base: a base do
+    anúncio × (1 + p/100), p inteiro (validar_plano.piso_pct/teto_pct). A coerência compara valores efetivos."""
+    base = float(cfg["por_curto"][curto]["base"])
+    pct = reais / base * 100 - 100
+    p = math.floor(pct + 1e-9) if para_baixo else math.ceil(pct - 1e-9)
+    return round(base * (1 + p / 100), 2)
+
+
 def limite_seguranca(cfg: dict, curto: str, d: date) -> float:
     """Limite de segurança do quarto na noite (só o dono muda): fração do mínimo de referência, ou a exceção do dono."""
     q, lim = cfg["por_curto"][curto], cfg["limites_seguranca"]
@@ -380,10 +389,13 @@ def plano(cfg: dict, ancora: dict, cals: dict, hoje: date, ordens: dict, passos:
             piso, origem_piso, ordem_piso = piso_com_ordem(cfg, curto, d, ordens)
             po = (piso, ordem_piso) if ordem_piso else None
             teto_af = None
+            regra_af = False
             if curto == "Afrodite":
                 piso_af, teto_af = regra_afrodite(cfg, cals, finais, d, hoje)
-                if teto_af and piso_af > piso:
-                    piso, origem_piso = piso_af, "faixa de fim de semana da Afrodite (dono 27/10)"
+                if piso_af > piso:  # toda noite: acima da mais cara das outras (+20%/+5%); sex/sáb também a faixa
+                    piso, regra_af = piso_af, True
+                    origem_piso = ("faixa de fim de semana da Afrodite (dono 27/10)" if teto_af
+                                   else "Afrodite acima da mais cara das outras (dono 22 e 27/10)")
                 if teto_af:
                     novo = min(novo, max(teto_af, piso))
             preso = None
@@ -411,19 +423,22 @@ def plano(cfg: dict, ancora: dict, cals: dict, hoje: date, ordens: dict, passos:
                              f"R$ {alvo_pub:.0f} público = R$ {alvo_env:.0f} enviados ({origem}); antes R$ {atual:.0f}"),
                   "pace": {"status": st, "direcao": direcao, "atual": atual, "novo": novo_r, "alvo_enviado": round(alvo_env)}}
             if direcao == "sobe":
-                it["max_price"] = float(q["max"])  # sobe pelo piso e solta o teto
+                # revisão de 31/10: teto solto deixava o algoritmo pular além do passo (VK7 04/11: R$ 710 → R$ 1.100+);
+                # sobe pelo piso com o teto no alvo do motor (nunca abaixo do piso novo)
+                it["max_price"] = float(max(novo_r, math.floor(min(alvo_env, float(q["max"])))))
             elif atual > novo_r + 1 and (atual > piso_vig + 1 or teto_vig < float(q["max"]) - 1):
                 # o algoritmo está acima do alvo, ou a noite tem teto (escada/Regra J antigas: piso = teto): o teto desce
                 # junto, senão o preço fica preso no teto antigo ou no algoritmo
                 it["max_price"] = novo_r
             if po:
                 it["excecao"], it["ordem_id"] = "dono", po[1]["id"]
-            if teto_af:
+            if teto_af or regra_af:
                 it["excecao"], it["ordem_id"] = "dono", "dono-2026-10-22-afrodite-mais-cara"
+            if teto_af:
                 if it.get("max_price") is None or it["max_price"] > teto_af:
                     it["max_price"] = math.floor(max(teto_af, it["min_price"]))  # teto da faixa; descida com teto menor fica
             itens.append(it)
-            finais[(curto, noite)] = float(novo_r)
+            finais[(curto, noite)] = efetivo(cfg, curto, float(it["min_price"]))
     itens = coerencia(cfg, cals, finais, itens, hoje, ordens)
     return {"hoje": hoje.isoformat(), "itens": itens, "linhas": linhas, "fora": fora}
 
@@ -512,14 +527,22 @@ def coerencia(cfg: dict, cals: dict, finais: dict, itens: list[dict], hoje: date
         it = por_chave.get((k, noite))
         if it is None and (piso is None or atual >= piso - 1) and (teto is None or atual <= teto + 1):
             return  # regra já cumprida: não mexe (31/10: um item novo baixava o piso vigente da Afrodite de R$ 2.720 para R$ 1.810)
+        po = piso_da_ordem(ordens, k, d)
+        if po:
+            # a ordem por data do dono é a que libera piso abaixo dos pisos padrão naquela noite (validador: 'abaixo_piso')
+            ordem_id = po[1]["id"]
         if it is None:
             it = {"tipo": "data", "quarto": k, "data": noite, "preco_antes": float(r["price"]), "motivo": motivo}
             if ordem_id:
                 it["excecao"], it["ordem_id"] = "dono", ordem_id
             por_chave[(k, noite)] = it
             itens.append(it)
+        elif po and it.get("ordem_id") != po[1]["id"]:
+            it["excecao"], it["ordem_id"] = "dono", po[1]["id"]
         if piso is not None and piso > (it.get("min_price") or 0):
             it["min_price"] = math.ceil(piso)
+            if efetivo(cfg, k, it["min_price"]) < piso - 0.01:  # nunca abaixo depois do arredondamento
+                it["min_price"] = math.ceil(efetivo(cfg, k, piso))
             if it.get("max_price") is not None and it["max_price"] < it["min_price"]:
                 it["max_price"] = it["min_price"]
         if teto is not None and (it.get("max_price") is None or teto < it["max_price"]):
@@ -529,15 +552,18 @@ def coerencia(cfg: dict, cals: dict, finais: dict, itens: list[dict], hoje: date
                 it["min_price"] = min(math.floor(float(r.get("min_price") or teto)), it["max_price"])
         if motivo and motivo not in it["motivo"]:
             it["motivo"] = (it["motivo"] + "; " + motivo)[:250]
-        finais[(k, noite)] = float(it.get("min_price") or atual)
+        finais[(k, noite)] = efetivo(cfg, k, float(it["min_price"])) if it.get("min_price") else float(atual)
 
     for noite in sorted({n for (_, n) in finais}):
         d = data(noite)
-        if any((k, noite) in finais for k in ("Q7", "Double", "Q2")):
+        if any((k, noite) in finais for k in ("Q7", "Double", "Q2", "Afrodite")):
             a, b = preco("Q7", noite), preco("Double", noite)
             if a is not None and b is not None and livre("Q2", noite):
                 menor, maior = min(a, b), max(a, b)
-                ajustar("Q2", noite, piso=menor, teto=menor + 0.75 * (maior - menor),
+                # revisão de 31/10: o piso da Panorâmica II nunca fica abaixo do piso dela (dono ou ordem por data)
+                piso_q2, _, _ = piso_com_ordem(cfg, "Q2", d, ordens)
+                lo_q2 = max(menor, piso_q2)
+                ajustar("Q2", noite, piso=lo_q2, teto=max(lo_q2, menor + 0.75 * (maior - menor)),
                         motivo=f"Ordem do Recanto: Panorâmica II entre Moinhos (R$ {a:.0f}) e Panorâmica I (R$ {b:.0f})",
                         ordem_id="dono-2026-10-21-ordem-recanto")
             # a última unidade da Moinhos (preço de fim de estoque) não puxa a Panorâmica I para cima (31/10)
@@ -546,7 +572,7 @@ def coerencia(cfg: dict, cals: dict, finais: dict, itens: list[dict], hoje: date
             outras = [preco(k, noite) for k in ("Q7", "Q2", "Double") if livre(k, noite) and preco(k, noite) is not None]
             if outras and livre("Afrodite", noite):
                 pr = premio_afrodite(cfg, d)
-                ajustar("Afrodite", noite, piso=max(outras) * (1 + pr),
+                ajustar("Afrodite", noite, piso=max(outras) * (1 + pr) + 0.5,
                         motivo=f"Afrodite {pr:.0%} acima da mais cara das outras (R$ {max(outras):.0f})",
                         ordem_id="dono-2026-10-22-afrodite-mais-cara")
         if any((k, noite) in finais for k in ("VK7", "VK2", "Balcony")) and livre("Balcony", noite) and not periodo_feriado(cfg, d):
@@ -563,7 +589,12 @@ def coerencia(cfg: dict, cals: dict, finais: dict, itens: list[dict], hoje: date
                 it = por_chave.get(("Balcony", noite))
                 atual_b = preco("Balcony", noite)
                 base_b = float(it["min_price"]) if it is not None and it.get("min_price") is not None else atual_b
-                novo_b = min(max(base_b, lo), max(hi, lo))
+                # escolhe o piso em % inteiro da base (como o PriceLabs aplica) dentro de [lo, hi]
+                bb = float(cfg["por_curto"]["Balcony"]["base"])
+                p_lo = math.ceil((lo / bb - 1) * 100 - 1e-9)
+                p_hi = math.floor((hi / bb - 1) * 100 + 1e-9)
+                p_b = min(max(math.ceil((base_b / bb - 1) * 100 - 1e-9), p_lo), max(p_hi, p_lo))
+                novo_b = round(bb * (1 + p_b / 100), 2)
                 mot = f"Regra G: Balcony {desc:.0%} abaixo da suíte com banheira livre mais barata (R$ {ref:.0f})"
                 if it is None and atual_b is not None and lo <= atual_b <= hi + 1:
                     pass  # já na faixa da Regra G
@@ -576,7 +607,7 @@ def coerencia(cfg: dict, cals: dict, finais: dict, itens: list[dict], hoje: date
                         itens.append(it)
                     elif mot not in it["motivo"]:
                         it["motivo"] = (it["motivo"] + "; " + mot)[:250]
-                    it["min_price"] = it["max_price"] = int(novo_b)
+                    it["min_price"] = it["max_price"] = novo_b
                     it.setdefault("excecao", "dono")
                     it.setdefault("ordem_id", "dono-2026-10-07-regra-g")
                     finais[("Balcony", noite)] = float(novo_b)

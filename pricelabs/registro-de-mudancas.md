@@ -3081,6 +3081,45 @@ Rotinas leves das 16:53 e 19:53 (lista do PriceLabs até 19:15 BRT): sem mudanç
 | Teto de fim de semana da Afrodite fora do horizonte (erro da skill de 30/10 11:41) | Suíte Afrodite, 50 noites de sex/sáb de 15/01 a 23/10/2027 | piso 36% a 78% e **teto 52% a 78%** da base (R$ 3.040 a 3.560; algoritmo estava R$ 3.100 a 4.570) | regra apagada e regravada só com o piso (mesmos 36% a 78%, R$ 2.720 a 3.560), sem teto; sábados com `min_stay` 2 (Regra H). Código: teto da faixa de fds só até hoje + 95 dias | "Volte o teto de fim de semana da Afrodite em 2027" (plano `ordem_recanto.py` com horizonte 366) |
 | Validador: exceção "dono" exige ordem | `validar_plano.py`, `dados/ordens_dono.json` | scripts carimbavam "dono" sozinhos | item com `excecao: "dono"` só passa com `ordem_id` vigente; noite com mudança manual congelada 7 dias | reverter o commit de 30/10 |
 
+## 31/10/2026, 05:29 — Pedido do dono: motor de pace LIGADO ("Pode ligar o motor de pace. Pode fazer tudo também conforme planejado. Tudo que você verificou está correto. Vamos vender.")
+
+Decisão D3 do dono. Escada por reserva e Regra J encerradas em 30/10; noites esgotadas passam ao piso de proteção do motor (p90 do mercado com hidro, nunca abaixo dos pisos padrão do quarto, teto livre; Afrodite pela faixa e pela ordem do Recanto). As ordens de 25 e 26/10 viraram piso do motor nas noites de 02 a 08/11. Finados (31/10 a 02/11) e a Villa de 05 a 07/11 (bloqueada sem reserva) ficaram fora; nenhuma noite de hoje ou amanhã mudou. D1 (pilha de descontos da Booking / piso de dia de semana) e D2 (Beds24) seguem com o dono: os pisos de R$ 500/850 no Genius 3 continuam valendo (105 noites presas neles).
+
+Processo: recálculo de 5 quartos às 00:29 BRT (Afrodite e Panorâmica II de 30/10, sem reservas novas desde então); regras por data lidas (D0-D60); plano validado (0 erros nos dois planos); **revisão independente por 3 revisores + verificação** (11 agentes): 4 achados graves confirmados e corrigidos antes de gravar (Afrodite abaixo do prêmio em 11/11 e 19/11; Panorâmica II abaixo do piso de fim de semana em 06/11; King Spa 7 de 04/11 subindo com teto solto; ledger de passos ausente); verificador próprio do estado final sem problemas. Gravação: 23 regras antigas apagadas (Afrodite 12, King Spa 2 8, Panorâmica I 3) e 123 noites gravadas (Moinhos 3, Panorâmica I 16, Panorâmica II 9, Afrodite 25, King Spa 7 12, King Spa 2 22, Balcony 36), todas conferidas na resposta da API (min_stay 2 mantido em sábados e feriados). Recálculo de conferência: não feito agora (5 quartos com os 3 do dia gastos; tentativa que falha conta no limite e bloquearia a rotina das 07:53); o envio diário do PriceLabs já leva os pisos novos. Ledger `dados/passos.json`: 84 passos (83 descidas, 1 subida), `chegou_ao_canal` falso até o envio.
+
+| Mudança | Onde | Antes | Depois (gravado 05:26-05:29 BRT; conferência no recálculo das 07:53) | Como desfazer (pedir ao Claude) |
+|---|---|---|---|---|
+| Motor de pace (pace desce) | Moinhos, 03/11 | R$ 1079 | piso R$ 868 / teto R$ 868 | "Volte a Moinhos de 03/11 para a regra de 30/10" |
+| Motor de pace (pace desce) | Moinhos, 04/11 | R$ 1701 | piso R$ 1455 / teto R$ 1455 | "Volte a Moinhos de 04/11 para a regra de 30/10" |
+| Motor de pace (1 descidas, 0 subidas, 0 proteções, 0 coerência) | Moinhos, 1 noites de 25/12 a 25/12 | regras de 30/10 (escada, Regra J, pisos do dono) | ver `pricelabs/pace/2026-10-31.md` e o plano | "Volte a Moinhos de 09/11 a 25/12 para as regras de 30/10" |
+| Motor de pace (pace desce) | Panorâmica I, 03/11 | R$ 1080 | piso R$ 962 / teto R$ 962 | "Volte a Panorâmica I de 03/11 para a regra de 30/10" |
+| Motor de pace (pace desce) | Panorâmica I, 04/11 | R$ 1702 | piso R$ 1465 / teto R$ 1465 | "Volte a Panorâmica I de 04/11 para a regra de 30/10" |
+| Motor de pace (pace desce) | Panorâmica I, 05/11 | R$ 1539 | piso R$ 1436 / teto R$ 1436 | "Volte a Panorâmica I de 05/11 para a regra de 30/10" |
+| Motor de pace (pace desce) | Panorâmica I, 06/11 | R$ 2279 | piso R$ 1939 / teto R$ 1939 | "Volte a Panorâmica I de 06/11 para a regra de 30/10" |
+| Motor de pace (pace desce) | Panorâmica I, 07/11 | R$ 2028 | piso R$ 1732 / teto R$ 1732 | "Volte a Panorâmica I de 07/11 para a regra de 30/10" |
+| Motor de pace (7 descidas, 0 subidas, 3 proteções, 1 coerência) | Panorâmica I, 11 noites de 15/11 a 25/12 | regras de 30/10 (escada, Regra J, pisos do dono) | ver `pricelabs/pace/2026-10-31.md` e o plano | "Volte a Panorâmica I de 09/11 a 25/12 para as regras de 30/10" |
+| Motor de pace (coerência) | Panorâmica II, 03/11 | R$ 1081 | piso R$ 875 / teto R$ 922 | "Volte a Panorâmica II de 03/11 para a regra de 30/10" |
+| Motor de pace (coerência) | Panorâmica II, 04/11 | R$ 1701 | piso R$ 1463 / teto R$ 1463 | "Volte a Panorâmica II de 04/11 para a regra de 30/10" |
+| Motor de pace (coerência) | Panorâmica II, 05/11 | R$ 1542 | piso R$ 1447 / teto R$ 1510 | "Volte a Panorâmica II de 05/11 para a regra de 30/10" |
+| Motor de pace (coerência) | Panorâmica II, 06/11 | R$ 2274 | piso R$ 2003 / teto R$ 2178 | "Volte a Panorâmica II de 06/11 para a regra de 30/10" |
+| Motor de pace (0 descidas, 0 subidas, 0 proteções, 5 coerência) | Panorâmica II, 5 noites de 15/11 a 24/12 | regras de 30/10 (escada, Regra J, pisos do dono) | ver `pricelabs/pace/2026-10-31.md` e o plano | "Volte a Panorâmica II de 09/11 a 25/12 para as regras de 30/10" |
+| Motor de pace (proteção) | Afrodite, 03/11 | R$ 1300 | piso R$ 1300 / sem teto | "Volte a Afrodite de 03/11 para a regra de 30/10" |
+| Motor de pace (coerência) | Afrodite, 05/11 | R$ 1840 | piso R$ 1860 / sem teto | "Volte a Afrodite de 05/11 para a regra de 30/10" |
+| Motor de pace (pace desce) | Afrodite, 06/11 | R$ 3040 | piso R$ 2600 / teto R$ 2600 | "Volte a Afrodite de 06/11 para a regra de 30/10" |
+| Motor de pace (pace desce) | Afrodite, 07/11 | R$ 3040 | piso R$ 2860 / teto R$ 2860 | "Volte a Afrodite de 07/11 para a regra de 30/10" |
+| Motor de pace (proteção) | Afrodite, 08/11 | R$ 2460 | piso R$ 1680 / sem teto | "Volte a Afrodite de 08/11 para a regra de 30/10" |
+| Motor de pace (7 descidas, 0 subidas, 13 proteções, 0 coerência) | Afrodite, 20 noites de 09/11 a 25/12 | regras de 30/10 (escada, Regra J, pisos do dono) | ver `pricelabs/pace/2026-10-31.md` e o plano | "Volte a Afrodite de 09/11 a 25/12 para as regras de 30/10" |
+| Motor de pace (pace desce) | King Spa 7, 03/11 | R$ 1066 | piso R$ 858 / teto R$ 858 | "Volte a King Spa 7 de 03/11 para a regra de 30/10" |
+| Motor de pace (pace sobe) | King Spa 7, 04/11 | R$ 710 | piso R$ 829 / teto R$ 918 | "Volte a King Spa 7 de 04/11 para a regra de 30/10" |
+| Motor de pace (10 descidas, 0 subidas, 0 proteções, 0 coerência) | King Spa 7, 10 noites de 09/11 a 25/12 | regras de 30/10 (escada, Regra J, pisos do dono) | ver `pricelabs/pace/2026-10-31.md` e o plano | "Volte a King Spa 7 de 09/11 a 25/12 para as regras de 30/10" |
+| Motor de pace (proteção) | King Spa 2, 03/11 | R$ 952 | piso R$ 1156 / sem teto | "Volte a King Spa 2 de 03/11 para a regra de 30/10" |
+| Motor de pace (proteção) | King Spa 2, 04/11 | R$ 1067 | piso R$ 1156 / sem teto | "Volte a King Spa 2 de 04/11 para a regra de 30/10" |
+| Motor de pace (13 descidas, 0 subidas, 7 proteções, 0 coerência) | King Spa 2, 20 noites de 11/11 a 21/12 | regras de 30/10 (escada, Regra J, pisos do dono) | ver `pricelabs/pace/2026-10-31.md` e o plano | "Volte a King Spa 2 de 09/11 a 25/12 para as regras de 30/10" |
+| Motor de pace (pace desce) | Balcony, 03/11 | R$ 952 | piso R$ 762 / teto R$ 762 | "Volte a Balcony de 03/11 para a regra de 30/10" |
+| Motor de pace (coerência) | Balcony, 04/11 | R$ 635 | piso R$ 724 / teto R$ 724 | "Volte a Balcony de 04/11 para a regra de 30/10" |
+| Motor de pace (pace desce) | Balcony, 08/11 | R$ 1372 | piso R$ 952 / teto R$ 952 | "Volte a Balcony de 08/11 para a regra de 30/10" |
+| Motor de pace (33 descidas, 0 subidas, 0 proteções, 0 coerência) | Balcony, 33 noites de 09/11 a 25/12 | regras de 30/10 (escada, Regra J, pisos do dono) | ver `pricelabs/pace/2026-10-31.md` e o plano | "Volte a Balcony de 09/11 a 25/12 para as regras de 30/10" |
+
 > **Regras em vigor:** desde 06/10/2026 elas ficam em `.claude/skills/gestao-receita-pousadas/references/regras.md`. Este arquivo guarda só o histórico das mudanças.
 
 ## O que só pode ser feito na tela (passo a passo para você)

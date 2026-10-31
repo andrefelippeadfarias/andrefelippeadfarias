@@ -425,6 +425,12 @@ class Validador:
         if minimo >= req - 1:
             return
         if excecao == "dono":
+            # revisão de 31/10: a ordem citada precisa liberar 'abaixo_piso' (a ordem do Recanto, por exemplo, não libera)
+            ordem = (self.ordens or {}).get(it.get("ordem_id") or "") or {}
+            if "abaixo_piso" not in (ordem.get("libera") or []):
+                self.erro(i, it, f"abaixo do piso de vitrine de {nome} ({reais(req)} enviados) e a ordem citada "
+                                 f"({it.get('ordem_id')}) não libera 'abaixo_piso'")
+                return
             self.aviso(i, it, f"abaixo do piso de vitrine de {nome} por ordem do dono")
             return
         self.erro(i, it, f"piso de {nome} do dono (14/10): suíte com banheira a partir de {valor} no preço final "

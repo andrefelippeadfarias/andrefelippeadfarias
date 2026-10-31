@@ -280,6 +280,23 @@ def ocupacao_pousada(cfg: dict, cals: dict, noite: str) -> dict:
     return out
 
 
+def vigente(cfg: dict, curto: str, r: dict, regra: dict | None, campo: str) -> float | None:
+    """Piso (`min_price`) ou teto (`max_price`) vigente da noite em R$: o do recálculo; sem ele (a coleta resumida não
+    traz piso nem teto, 31/10), o da regra por data vigente (percent_base = base × (1 + p/100); fixed em R$); senão None."""
+    v = r.get(campo)
+    if v not in (None, "") and float(v) > 0:
+        return float(v)
+    v = (regra or {}).get(campo)
+    if v in (None, ""):
+        return None
+    tipo = (regra or {}).get(f"{campo}_type") or "percent_base"
+    if tipo == "percent_base":
+        return round(float(cfg["por_curto"][curto]["base"]) * (1 + float(v) / 100), 2)
+    if tipo == "fixed":
+        return float(v)
+    return None
+
+
 def protecao_esgotada(cfg: dict, p: dict, anc: dict, origem: str, curto: str, d: date, r: dict, v: int, u: int,
                       regra: dict | None = None, piso_extra: float | None = None,
                       teto_regra: float | None = None) -> dict | None:
@@ -297,16 +314,12 @@ def protecao_esgotada(cfg: dict, p: dict, anc: dict, origem: str, curto: str, d:
     piso = min(max(pub / fp, piso_dono, float(piso_extra or 0)), teto)
     atual = float(r["price"])
     base = float(q["base"])
-
-    def da_regra(campo: str) -> float | None:
-        # a coleta resumida não traz min_price/max_price do recálculo: vale a regra vigente em percent_base
-        v_ = (regra or {}).get(campo)
-        if v_ in (None, ""):
-            return None
-        return round(base * (1 + float(v_) / 100), 2) if (regra or {}).get(f"{campo}_type", "percent_base") == "percent_base" else float(v_)
-
-    atual_min = float(r.get("min_price") or da_regra("min_price") or q["min"])
-    teto_cal = float(r.get("max_price") or da_regra("max_price") or q["max"])
+    atual_min = vigente(cfg, curto, r, regra, "min_price")
+    if atual_min is None:
+        # sem piso no calendário (coleta resumida) nem regra na data, o piso efetivo é desconhecido (o PriceLabs pode ter
+        # piso de fim de semana próprio, ex.: Panorâmica I a 150% da base): não grava; a rodada com recálculo protege
+        return None
+    teto_cal = vigente(cfg, curto, r, regra, "max_price") or float(q["max"])
     tem_teto = teto_cal < float(q["max"]) - 1 or bool(regra and regra.get("max_price") not in (None, ""))
     # 31/10 (revisão da rotina das 07:53): a proteção só SOBE o piso; piso vigente igual ou acima (com tolerância) e sem
     # teto a soltar fica como está (noite vendida com piso mais alto não perde nada e evita regravar todo dia)
@@ -335,19 +348,9 @@ def sem_efeito(cfg: dict, itens: list[dict], cals: dict, regras: dict, apagar: s
         if it.get("max_price") in (None, "") or k in apagar or it.get("min_stay") is not None:
             fica.append(it)
             continue
-        q = cfg["por_curto"][it["quarto"]]
-        base = float(q["base"])
         r = (cals.get(it["quarto"]) or {}).get(it["data"]) or {}
-        rg = (regras.get(it["quarto"]) or {}).get(it["data"]) or {}
-
-        def vig(campo: str) -> float | None:
-            if r.get(campo) not in (None, ""):
-                return float(r[campo])
-            if rg.get(campo) not in (None, "") and rg.get(f"{campo}_type", "percent_base") == "percent_base":
-                return round(base * (1 + float(rg[campo]) / 100), 2)
-            return None
-
-        cur_min, cur_max = vig("min_price"), vig("max_price")
+        rg = (regras.get(it["quarto"]) or {}).get(it["data"])
+        cur_min, cur_max = vigente(cfg, it["quarto"], r, rg, "min_price"), vigente(cfg, it["quarto"], r, rg, "max_price")
         novo = max(efetivo(cfg, it["quarto"], float(it["min_price"])),
                    efetivo(cfg, it["quarto"], float(it["max_price"]), para_baixo=True))
         if cur_min is not None and cur_max is not None and abs(novo - cur_min) <= 1 and abs(novo - cur_max) <= 1:
@@ -383,8 +386,10 @@ def plano(cfg: dict, ancora: dict, cals: dict, hoje: date, ordens: dict, passos:
             u = q["unidades"]
             v, t = vendidas_total(r, u)
             atual = float(r["price"])
-            piso_vig = float(r.get("min_price") or 0)
-            teto_vig = float(r.get("max_price") or q["max"])
+            regra_n = (regras.get(curto) or {}).get(noite)
+            # coleta resumida sem piso/teto: vale a regra vigente; sem regra, o mínimo do anúncio (nunca 0, revisão 31/10)
+            piso_vig = vigente(cfg, curto, r, regra_n, "min_price") or float(q["min"])
+            teto_vig = vigente(cfg, curto, r, regra_n, "max_price") or float(q["max"])
             motivo_fora = None
             if q.get("fora_do_motor"):
                 motivo_fora = f"quarto fora do motor ({q.get('fora_do_motor_nota', 'ver quartos.json')})"
@@ -483,7 +488,7 @@ def plano(cfg: dict, ancora: dict, cals: dict, hoje: date, ordens: dict, passos:
                     it["max_price"] = math.floor(max(teto_af, it["min_price"]))  # teto da faixa; descida com teto menor fica
             itens.append(it)
             finais[(curto, noite)] = efetivo(cfg, curto, float(it["min_price"]))
-    itens = coerencia(cfg, cals, finais, itens, hoje, ordens)
+    itens = coerencia(cfg, cals, finais, itens, hoje, ordens, bloqueios, dias)
     return {"hoje": hoje.isoformat(), "itens": itens, "linhas": linhas, "fora": fora}
 
 
@@ -539,9 +544,13 @@ def ler_regras(pares: list[str]) -> dict:
     return out
 
 
-def coerencia(cfg: dict, cals: dict, finais: dict, itens: list[dict], hoje: date, ordens: dict) -> list[dict]:
-    """Depois do motor: Panorâmica II entre Moinhos e Panorâmica I; Afrodite acima das outras; Balcony 10% abaixo da suíte
-    com banheira livre (Regra G). Só mexe nas noites em que o motor mexeu e nas suítes que estão à venda."""
+def coerencia(cfg: dict, cals: dict, finais: dict, itens: list[dict], hoje: date, ordens: dict,
+              bloqueios: set | None = None, dias: int = 60) -> list[dict]:
+    """Depois do motor: Panorâmica II entre Moinhos e Panorâmica I; Afrodite acima das outras (só nas noites em que o
+    motor mexeu no Recanto); Balcony 10% abaixo da suíte com banheira livre (Regra G) em TODAS as noites de D0 a `dias`
+    (regras.md: varredura de 60 dias; revisão de 31/10: Balcony a 99% da King Spa 7 em 14 e 17/12, noites que o motor
+    não mexeu). No feriado a Regra G só baixa a Balcony (nunca sobe por causa dela), sem passar do piso de feriado."""
+    bloqueios = bloqueios or set()
     from ordem_recanto import premio_afrodite
     por_chave = {(it["quarto"], it["data"]): it for it in itens}
     desc = cfg["parametros"].get("regra_g_desconto", 0.10)
@@ -598,7 +607,11 @@ def coerencia(cfg: dict, cals: dict, finais: dict, itens: list[dict], hoje: date
             it["motivo"] = (it["motivo"] + "; " + motivo)[:250]
         finais[(k, noite)] = efetivo(cfg, k, float(it["min_price"])) if it.get("min_price") else float(atual)
 
-    for noite in sorted({n for (_, n) in finais}):
+    def livre_v(k, noite):
+        return livre(k, noite) and (k, noite) not in bloqueios
+
+    noites = {n for (_, n) in finais} | {n for n in (cals.get("Balcony") or {}) if 0 <= (data(n) - hoje).days <= dias}
+    for noite in sorted(noites):
         d = data(noite)
         if any((k, noite) in finais for k in ("Q7", "Double", "Q2", "Afrodite")):
             a, b = preco("Q7", noite), preco("Double", noite)
@@ -619,8 +632,9 @@ def coerencia(cfg: dict, cals: dict, finais: dict, itens: list[dict], hoje: date
                 ajustar("Afrodite", noite, piso=max(outras) * (1 + pr) + 0.5,
                         motivo=f"Afrodite {pr:.0%} acima da mais cara das outras (R$ {max(outras):.0f})",
                         ordem_id="dono-2026-10-22-afrodite-mais-cara")
-        if any((k, noite) in finais for k in ("VK7", "VK2", "Balcony")) and livre("Balcony", noite) and not periodo_feriado(cfg, d):
-            refs = [preco(k, noite) for k in ("VK7", "VK2") if livre(k, noite) and preco(k, noite) is not None]
+        fer = bool(periodo_feriado(cfg, d))
+        if livre_v("Balcony", noite):
+            refs = [preco(k, noite) for k in ("VK7", "VK2") if livre_v(k, noite) and preco(k, noite) is not None]
             if refs:
                 # Regra G (dono 07/10: "diferença de 10%"): a Balcony fica entre 95% do alvo e o alvo (10% abaixo da suíte
                 # com banheira livre mais barata), como o validador exige; o passo de pace da Balcony só escolhe DENTRO
@@ -638,10 +652,20 @@ def coerencia(cfg: dict, cals: dict, finais: dict, itens: list[dict], hoje: date
                 p_lo = math.ceil((lo / bb - 1) * 100 - 1e-9)
                 p_hi = math.floor((hi / bb - 1) * 100 + 1e-9)
                 p_b = min(max(math.ceil((base_b / bb - 1) * 100 - 1e-9), p_lo), max(p_hi, p_lo))
+                if fer:
+                    # feriado: só o lado de cima (até 90% da suíte), nunca abaixo do piso de feriado da Balcony
+                    p_b = max(p_hi, math.ceil((piso_b / bb - 1) * 100 - 1e-9))
                 novo_b = round(bb * (1 + p_b / 100), 2)
                 mot = f"Regra G: Balcony {desc:.0%} abaixo da suíte com banheira livre mais barata (R$ {ref:.0f})"
-                if it is None and atual_b is not None and lo <= atual_b <= hi + 1:
-                    pass  # já na faixa da Regra G
+                # noite sem item do motor: só mexe fora da faixa do validador (85,5% a 90% + um degrau de 1% da base),
+                # para não regravar a Balcony todo dia por arredondamento (31/10: 864 = 90,8% da King Spa 7 de R$ 952)
+                ok_lo, ok_hi = 0.95 * (1 - desc) * ref, ref * (1 - desc) + 0.01 * bb + 1
+                if it is None and atual_b is not None and (atual_b <= ok_hi if fer else ok_lo <= atual_b <= ok_hi):
+                    pass  # já na faixa da Regra G (no feriado, basta não passar dos 90%)
+                elif fer and it is not None and float(it.get("min_price") or atual_b or 0) <= hi + 1:
+                    pass  # feriado: item do motor já abaixo dos 90%, a Regra G não sobe a Balcony
+                elif fer and novo_b >= (atual_b or 0) - 1:
+                    pass  # feriado: o piso de feriado não deixa baixar
                 elif livre("Balcony", noite) and not congelada(ordens, "Balcony", d) and not ordens_por_data(ordens, "Balcony", d):
                     if it is None:
                         r = cals["Balcony"][noite]
@@ -753,12 +777,16 @@ def main(argv=None) -> int:
               "sem elas o motor não sabe que teto soltar nem que min_stay preservar")
         return 1
     res = plano(cfg, ancora, cals, hoje, ordens, passos, bloq, a.dias, regra_j_ativa=motor.get("regra_j_ativa", True), regras=regras)
-    md = relatorio_md(cfg, res, sombra)
+    itens, apagar = ajustar_tetos(cfg, res["itens"], regras) if regras else (res["itens"], [])
+    itens, nulos = sem_efeito(cfg, itens, cals, regras, {(x["quarto"], x["data"]) for x in apagar})
+    # o relatório conta só o que vai para a gravação (revisão de 31/10: dizia 9 itens com 8 gravados)
+    md = relatorio_md(cfg, dict(res, itens=itens), sombra)
+    if nulos:
+        md += "\n## Sem efeito (já vigentes, fora do plano e do ledger)\n\n" + "".join(
+            f"- {x['quarto']} {x['data']}: piso/teto R$ {x['min_price']}\n" for x in nulos)
     print(md)
     if a.md:
         Path(a.md).write_text(md, encoding="utf-8")
-    itens, apagar = ajustar_tetos(cfg, res["itens"], regras) if regras else (res["itens"], [])
-    itens, nulos = sem_efeito(cfg, itens, cals, regras, {(x["quarto"], x["data"]) for x in apagar})
     for x in nulos:
         print(f"sem efeito (já vigente): {x['quarto']} {x['data']} piso/teto R$ {x['min_price']}")
     if a.saida:

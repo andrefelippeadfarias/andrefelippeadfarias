@@ -8,9 +8,10 @@ Cada mudança feita na própria Skill (regras, parâmetros, scripts, fluxo) entr
   - `scripts/ancora_mercado.py`: `substitui()` — busca sem mediana com hidro medida não troca a medida enquanto ela tiver até `pace.idade_max_dias` (10) dias; medida nova sempre entra.
   - `scripts/pace.py`: `protecao_esgotada` só sobe o piso, lê piso/teto da regra vigente quando o calendário não traz e compara o teto com folga de 1% da base; `sem_efeito()` tira do plano e do ledger o item igual ao vigente.
   - `scripts/comum.py`: `vendidas_total` aceita `multi_unit_occupancy` (calendário da coleta).
-  - Testes novos: âncora (medida x geral), proteção só sobe e regra vigente, `sem_efeito`, ocupação da coleta; 82 OK.
+  - Testes novos: âncora (medida x geral), proteção só sobe e regra vigente, `sem_efeito`, ocupação da coleta.
   - Docs: `regras.md` (âncora, proteção, item sem efeito), `aprendizados.md` (31/10).
-- **Resultado:** âncora sem mudança; 8 passos novos gravados (registro de 31/10 08:40); conferência da gravação de 05:29 completa (123/123).
+- **Revisão independente (09:00, 3 revisores + verificação):** 3 falhas confirmadas e corrigidas: `pace.vigente()` (piso/teto vigentes da regra quando o calendário não traz, usado no passo de descida, na proteção e em `sem_efeito`; sem nenhum dos dois a proteção não grava); `coerencia` varre a Regra G nas 60 noites (com `bloqueios`) e aplica no feriado só o lado de cima, sem passar do piso de feriado; faixa sem item = a do validador (85,5% a 90% + 1% da base). `validar_plano.validar_balcony` avisa Balcony acima de 90% também no feriado. Relatório do motor gerado depois de `sem_efeito`. Teste novo `test_revisao_rotina_3110_coleta_resumida_e_regra_g_em_todas_as_noites`; 83 OK.
+- **Resultado:** âncora sem mudança; 8 passos novos gravados (registro de 31/10 08:40) e 6 noites da Balcony na Regra G (registro de 31/10 09:10); conferência da gravação de 05:29 completa (123/123).
 - **Como desfazer:** reverter o commit; a âncora volta a aceitar a busca mais nova mesmo sem hidro medida.
 
 ## 31/10/2026 01:00: motor de pace LIGADO (dono: "Pode ligar o motor de pace ... Vamos vender.")

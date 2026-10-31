@@ -3147,6 +3147,23 @@ Processo: recálculo de 5 quartos às 00:29 BRT (Afrodite e Panorâmica II de 30
 | Motor de pace (ritmo 0-2/7, D15-D18; presa no piso do dono R$ 500 Genius 3) | King Spa 7, 15 a 18/11 | R$ 976 (piso R$ 947, sem teto) | R$ 947 (piso = teto, −36% da base) | "Tire o teto do King Spa 7 de 15 a 18/11" |
 | Motor de pace (ritmo 0/2, D55; passo de 5%, piso de feriado R$ 1.000 reais) | King Spa 2, 25/12 (Natal) | R$ 2.706 (piso R$ 2.565) | R$ 2.578 (piso = teto, +103% da base); estadia mínima 2 mantida | "Tire o teto do King Spa 2 de 25/12" |
 
+## 31/10/2026, 09:10 — Rotina das 07:53 (fim): revisão independente e Regra G da Balcony em 6 noites
+
+**Revisão independente do motor** (3 revisores + verificação de cada achado, 9 agentes, somente leitura): os 8 passos gravados às 08:24-08:31 conferem com as regras do dono (Afrodite 20% a 26% acima da Panorâmica I; King Spa 7 no piso de R$ 500 no Genius 3; King Spa 2 no piso de Natal de R$ 1.000 reais; passos dentro do máximo por antecedência). Três falhas confirmadas, corrigidas antes desta gravação:
+1. Com a coleta resumida (Moinhos e Panorâmica I sem recálculo), o motor tratava o piso vigente como zero e a descida sairia com piso = teto (Panorâmica I 04, 11 e 12/12 amanhã). Agora lê o piso e o teto da regra vigente (`pace.vigente`).
+2. A Regra G não valia no feriado: depois do passo da King Spa 2 no Natal, a Balcony de 25/12 ficou a 94% dela, e em 29/12 a Balcony estava ACIMA da King Spa 2 livre (105%).
+3. A Regra G só era conferida nas noites que o motor mexia: a Balcony de 14 e 17/12 estava a 99% da King Spa 7 livre. A coerência agora varre as 60 noites; no feriado a Regra G só baixa a Balcony e nunca abaixo do piso de feriado (R$ 1.887).
+
+Sem passo de pace novo (o ledger segue com 92 passos); itens de coerência não entram na cadência. Validador: 6 itens, 0 erros. Gravação conferida na resposta da API (6 de 6; estadia mínima 2 no Natal e 3 no Réveillon mantidas).
+
+| Mudança | Onde | Antes | Depois (gravado 09:07 BRT) | Como desfazer (pedir ao Claude) |
+|---|---|---|---|---|
+| Regra G (ordem do dono de 07/10): 90% da King Spa 7 livre (R$ 947) | Balcony, 14/12 (seg) e 17/12 (qui), 0/6 | R$ 940 (piso = teto, 99% da suíte) | R$ 850,90 (piso = teto, −33% da base) | "Volte a Balcony de 14 e 17/12 para −26%" |
+| Regra G no Natal: 90% da King Spa 2 livre (R$ 2.578) | Balcony, 25/12, 0/6 | R$ 2.425,70 (94% da suíte) | R$ 2.311,40 (piso = teto, +82% da base) | "Volte a Balcony de 25/12 para +91%" |
+| Regra G no Natal: 90% da King Spa 2 livre (R$ 2.706) | Balcony, 26/12, 0/6 | R$ 2.552,70 (94% da suíte) | R$ 2.425,70 (piso = teto, +91% da base) | "Volte a Balcony de 26/12 para +101%" |
+| Regra G no Réveillon: 90% da King Spa 2 livre (R$ 2.621) | Balcony, 29/12, 0/6 | R$ 2.755,90 (105%, acima da suíte) | R$ 2.349,50 (piso = teto, +85% da base) | "Volte a Balcony de 29/12 para +117%" |
+| Regra G no Réveillon: 90% da King Spa 7 livre (R$ 2.981) | Balcony, 30/12, 1/6 | R$ 2.755,90 (92% da suíte) | R$ 2.679,70 (piso = teto, +111% da base) | "Volte a Balcony de 30/12 para +117%" |
+
 > **Regras em vigor:** desde 06/10/2026 elas ficam em `.claude/skills/gestao-receita-pousadas/references/regras.md`. Este arquivo guarda só o histórico das mudanças.
 
 ## O que só pode ser feito na tela (passo a passo para você)

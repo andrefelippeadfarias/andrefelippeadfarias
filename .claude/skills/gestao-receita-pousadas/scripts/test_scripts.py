@@ -1198,7 +1198,8 @@ class TestPace(unittest.TestCase):
         cal4 = {"2026-11-24": {k: v for k, v in cal["2026-11-24"].items() if k not in ("min_price", "max_price")}}
         rg = {"Q7": {"2026-11-24": {"date": "2026-11-24", "min_price": -21, "min_price_type": "percent_base"}}}
         self.assertEqual(pace.plano(self.cfg, anc, {"Q7": cal4}, hoje, {}, {"passos": []}, dias=30, regra_j_ativa=False, regras=rg)["itens"], [])
-        self.assertEqual(len(pace.plano(self.cfg, anc, {"Q7": cal4}, hoje, {}, {"passos": []}, dias=30, regra_j_ativa=False)["itens"]), 1)
+        # sem piso no calendário e sem regra: piso efetivo desconhecido (o PriceLabs pode ter piso de fds próprio), não grava
+        self.assertEqual(pace.plano(self.cfg, anc, {"Q7": cal4}, hoje, {}, {"passos": []}, dias=30, regra_j_ativa=False)["itens"], [])
         # ajustar_tetos: regra vigente com teto → apagar + item sem max_price herdando min_stay; sem teto → só tira o max_price
         regras = {"Q7": {"2026-11-24": {"date": "2026-11-24", "min_price": "57", "max_price": "57", "min_stay": 2}}}
         itens, apagar = pace.ajustar_tetos(self.cfg, [it, {"tipo": "data", "quarto": "Q7", "data": "2026-11-25", "min_price": 1000, "max_price": 5000.0, "motivo": "x"}], regras)
@@ -1217,6 +1218,42 @@ class TestPace(unittest.TestCase):
         self.assertEqual(vendidas_total({"multi_unit_occupancy": "4/7"}, 7), (4, 7))
         self.assertEqual(vendidas_total({"mu_occupancy": "2/6", "multi_unit_occupancy": "4/6"}, 6), (2, 6))
         self.assertEqual(vendidas_total({"mu_occupancy": "-1", "num_bookings": "1"}, 1), (1, 1))
+
+    def test_revisao_rotina_3110_coleta_resumida_e_regra_g_em_todas_as_noites(self):
+        import pace
+        hoje = date(2026, 10, 31)
+        # (1) coleta resumida (sem min/max): o piso vigente vem da regra; preço no piso → desce só com piso, sem teto
+        noite = "2026-12-04"
+        anc = {"noites": {noite: {"p25": 400, "p50": 554, "p75": 650, "p90": 789, "max": 900, "n": 18, "busca_em": "2026-10-30",
+                                  "tipo": "fds", "p50_medido": True}}, "por_tipo": {}}
+        base = {"date": noite, "price": "2472", "num_bookings": "0", "multi_unit_occupancy": "1/6"}
+        regras = {"Double": {noite: {"date": noite, "min_price": 67, "min_price_type": "percent_base"}}}
+        for cal in ({"Double": {noite: dict(base)}}, {"Double": {noite: dict(base, min_price="2472", max_price="5000")}}):
+            its = pace.plano(self.cfg, anc, cal, hoje, {}, {"passos": []}, dias=40, regra_j_ativa=False, regras=regras)["itens"]
+            self.assertEqual([(i["min_price"], i.get("max_price")) for i in its if i["quarto"] == "Double"], [(2348, None)])
+        # (2) Regra G em noite que o motor não mexeu: Balcony a 99% da King Spa 7 livre desce a 90% (−33% = R$ 850,90)
+        n2 = "2026-12-14"
+        cals = {"VK7": {n2: {"price": "947", "min_price": "947", "max_price": "5000", "mu_occupancy": "1/7"}},
+                "VK2": {n2: {"price": "1041", "min_price": "1041", "max_price": "5000", "mu_occupancy": "1/2"}},
+                "Balcony": {n2: {"price": "940", "min_price": "940", "max_price": "940", "mu_occupancy": "0/6"}}}
+        its = pace.coerencia(self.cfg, cals, {}, [], hoje, {})
+        self.assertEqual([(i["quarto"], i["min_price"], i["max_price"], i["ordem_id"]) for i in its],
+                         [("Balcony", 850.9, 850.9, "dono-2026-10-07-regra-g")])
+        # noite bloqueada sem reserva fica de fora
+        self.assertEqual(pace.coerencia(self.cfg, cals, {}, [], hoje, {}, bloqueios={("Balcony", n2)}), [])
+        # (3) feriado: a Regra G só baixa (25/12: VK2 R$ 2.578 → Balcony até 90%, sem passar do piso de feriado)
+        n3 = "2026-12-25"
+        cal3 = {"VK7": {n3: {"price": "3000", "mu_occupancy": "0/7"}}, "VK2": {n3: {"price": "2578.1", "mu_occupancy": "0/2"}},
+                "Balcony": {n3: {"price": "2425.7", "min_price": "2425.7", "max_price": "2425.7", "mu_occupancy": "0/6"}}}
+        its = pace.coerencia(self.cfg, cal3, {}, [], hoje, {})
+        self.assertEqual(len(its), 1)
+        piso_fer = pace.piso_com_ordem(self.cfg, "Balcony", date(2026, 12, 25), {})[0]
+        self.assertTrue(its[0]["min_price"] == its[0]["max_price"] <= max(2578.1 * 0.9, piso_fer + 13))
+        self.assertTrue(its[0]["min_price"] >= piso_fer - 0.01)
+        # feriado com a Balcony já abaixo dos 90%: não sobe
+        cal4 = {k: {n3: dict(v[n3])} for k, v in cal3.items()}
+        cal4["Balcony"][n3].update(price="2000", min_price="2000", max_price="2000")
+        self.assertEqual(pace.coerencia(self.cfg, cal4, {}, [], hoje, {}), [])
 
     def test_sem_efeito_tira_item_igual_ao_vigente(self):
         import pace

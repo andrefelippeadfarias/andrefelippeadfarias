@@ -469,7 +469,8 @@ class Validador:
     def validar_balcony(self, finais):
         """Regra G (dono, 07/10): a Balcony (sem banheira) fica cerca de 10% (`regra_g_desconto`) abaixo da
         suíte com banheira mais barata e livre da Villa. ERRO se ficar acima dessa suíte ou mais de 5 pontos
-        abaixo do alvo. Com percentual, compara o piso; contra suíte fora do plano, vira aviso."""
+        abaixo do alvo (fora do feriado); aviso acima dos 90% (também no feriado, revisão de 31/10). Com percentual,
+        compara o piso; contra suíte fora do plano, vira aviso."""
         desc = self.par.get("regra_g_desconto", 0.10)
         datas = {d for (k, d) in finais if k in ("Balcony", "VK7", "VK2")}
         for d in sorted(datas):
@@ -482,8 +483,7 @@ class Validador:
             refs = [(preco(k), (k, d) in finais) for k in ("VK7", "VK2") if preco(k) is not None and livre(k)]
             if balc is None or not refs or not livre("Balcony"):
                 continue  # Balcony esgotada: Regra J (topo do mercado), fora da Regra G
-            if periodo_feriado(self.cfg, data(d)):
-                continue  # no feriado a Balcony segue o piso de vitrine definido pelo dono
+            fer = bool(periodo_feriado(self.cfg, data(d)))
             menor, do_plano = min(refs)
             alvo = menor * (1 - desc)
             teto = self.tetos.get(("Balcony", d))
@@ -495,6 +495,13 @@ class Validador:
                 self.erros.append(f"ERRO Regra G {d}: Balcony {balc:.0f} acima da suíte com banheira mais "
                                   f"barata livre ({menor:.0f})")
                 continue
+            folga = 0.01 * float(self.cfg["por_curto"]["Balcony"]["base"]) + 1  # percentual inteiro da base
+            if balc > alvo + folga:
+                # revisão de 31/10: acima dos 90% a Balcony perde para a suíte com banheira (vale também no feriado)
+                self.avisos.append(f"aviso Regra G {d}: Balcony {balc:.0f} acima de {1 - desc:.0%} da suíte com banheira "
+                                   f"mais barata livre ({menor:.0f}; alvo {alvo:.0f})")
+            if fer:
+                continue  # no feriado a Regra G só baixa a Balcony: o piso de feriado pode deixá-la abaixo do alvo
             msg = None
             if balc < alvo * 0.95:
                 msg = (f"Regra G {d}: Balcony {balc:.0f} mais de 5% abaixo do alvo {alvo:.0f} "

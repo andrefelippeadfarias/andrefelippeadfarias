@@ -82,8 +82,8 @@ def ler_instante(texto) -> datetime | None:
 
 def vendidas_total(r: dict, unidades: int) -> tuple[int, int]:
     """(vendidas, total) de uma noite do recálculo do PriceLabs. Unidade única (Afrodite): mu_occupancy vem "-1" e a
-    venda aparece em num_bookings."""
-    mu = str(r.get("mu_occupancy") or "")
+    venda aparece em num_bookings. A coleta resumida traz a ocupação em multi_unit_occupancy (31/10)."""
+    mu = str(r.get("mu_occupancy") or r.get("multi_unit_occupancy") or "")
     if "/" in mu:
         v, t = mu.split("/", 1)
         try:

@@ -99,8 +99,29 @@ def percentis_da_busca(s: dict) -> dict | None:
             "n": n, "n_comparaveis": len(comps), "p50_medido": medido}
 
 
+def substitui(novo: dict, velho: dict, hoje: date, idade_max: int) -> bool:
+    """A busca nova entra no lugar da que já está na noite? (31/10/2026)
+
+    Mediana COM HIDRO medida vale mais que a mediana geral (que traz quartos sem hidro e ficou até 34% abaixo em
+    31/10: dom-qui 257 x 388). Então uma busca sem hidro medida não troca uma com hidro medida enquanto esta tiver até
+    `idade_max` dias (pace.idade_max_dias); entre buscas do mesmo tipo vence a mais nova, e no empate a de maior n."""
+    def fresca(x: dict) -> bool:
+        try:
+            return (hoje - data(str(x.get("busca_em", ""))[:10])).days <= idade_max
+        except (ValueError, TypeError):
+            return False
+
+    med_n, med_v = bool(novo.get("p50_medido")), bool(velho.get("p50_medido"))
+    if med_v and not med_n and fresca(velho):
+        return False
+    if med_n and not med_v and fresca(novo):
+        return True
+    return (novo.get("busca_em", ""), novo.get("n") or 0) >= (velho.get("busca_em", ""), velho.get("n") or 0)
+
+
 def construir(cfg: dict, arquivos: list[str], hoje: date, anterior: dict | None = None) -> dict:
     noites = dict((anterior or {}).get("noites") or {})
+    idade_max = int(((cfg.get("parametros") or {}).get("pace") or {}).get("idade_max_dias", 10))
     for arq in arquivos:
         for s in buscas_do_arquivo(ler_json(arq)):
             try:
@@ -116,9 +137,7 @@ def construir(cfg: dict, arquivos: list[str], hoje: date, anterior: dict | None 
                 k = d.isoformat()
                 novo = dict(pct, tipo=tipo_noite(cfg, d), fonte=str(s.get("label") or f"{ci}→{co}"), busca_em=busca_em)
                 velho = noites.get(k)
-                melhor = (busca_em, int(pct.get("p50_medido", False)), pct["n"])
-                atual_ = (velho.get("busca_em", ""), int(velho.get("p50_medido", False)), velho.get("n") or 0) if velho else None
-                if atual_ is None or melhor >= atual_:
+                if velho is None or substitui(novo, velho, hoje, idade_max):
                     noites[k] = novo
                 d += timedelta(days=1)
     # referência por tipo de noite e mês (mediana dos percentis das noites com busca própria), para noite sem busca

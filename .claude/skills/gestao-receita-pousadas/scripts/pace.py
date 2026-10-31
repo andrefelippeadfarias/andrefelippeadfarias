@@ -296,10 +296,21 @@ def protecao_esgotada(cfg: dict, p: dict, anc: dict, origem: str, curto: str, d:
     teto = float(teto_regra) if teto_regra else float(q["max"])
     piso = min(max(pub / fp, piso_dono, float(piso_extra or 0)), teto)
     atual = float(r["price"])
-    atual_min = float(r.get("min_price") or 0)
-    teto_cal = float(r.get("max_price") or q["max"])
+    base = float(q["base"])
+
+    def da_regra(campo: str) -> float | None:
+        # a coleta resumida não traz min_price/max_price do recálculo: vale a regra vigente em percent_base
+        v_ = (regra or {}).get(campo)
+        if v_ in (None, ""):
+            return None
+        return round(base * (1 + float(v_) / 100), 2) if (regra or {}).get(f"{campo}_type", "percent_base") == "percent_base" else float(v_)
+
+    atual_min = float(r.get("min_price") or da_regra("min_price") or q["min"])
+    teto_cal = float(r.get("max_price") or da_regra("max_price") or q["max"])
     tem_teto = teto_cal < float(q["max"]) - 1 or bool(regra and regra.get("max_price") not in (None, ""))
-    if abs(atual_min - piso) <= p["tolerancia"] * piso and not tem_teto:
+    # 31/10 (revisão da rotina das 07:53): a proteção só SOBE o piso; piso vigente igual ou acima (com tolerância) e sem
+    # teto a soltar fica como está (noite vendida com piso mais alto não perde nada e evita regravar todo dia)
+    if atual_min >= piso * (1 - p["tolerancia"]) and not tem_teto:
         return None
     it = {"tipo": "data", "quarto": curto, "data": d.isoformat(), "min_price": math.ceil(piso), "max_price": float(q["max"]),
             "preco_antes": atual, "protecao": True,
@@ -308,9 +319,42 @@ def protecao_esgotada(cfg: dict, p: dict, anc: dict, origem: str, curto: str, d:
     if teto_regra:
         it["max_price"] = math.floor(max(teto, it["min_price"]))
         it["motivo"] = it["motivo"].replace("teto livre", f"teto da faixa do dono R$ {it['max_price']}")
-    if teto_regra and abs(atual_min - piso) <= p["tolerancia"] * piso and abs(teto_cal - it["max_price"]) <= 1:
+    # o teto vai em percent_base arredondado para baixo em 1% da base: diferença menor que 1% da base já é o mesmo teto
+    if teto_regra and atual_min >= piso * (1 - p["tolerancia"]) and abs(teto_cal - it["max_price"]) <= base * 0.01 + 1:
         return None
     return it
+
+
+def sem_efeito(cfg: dict, itens: list[dict], cals: dict, regras: dict, apagar: set) -> tuple[list[dict], list[dict]]:
+    """(itens, nulos): tira o item que trava piso = teto num valor que já é o vigente (31/10: a Balcony de 04/11 desceu
+    pelo pace e voltou a R$ 723,90 pela Regra G, o mesmo de antes). Gravar não muda nada e o ledger registraria um passo
+    que não houve, travando o passo verdadeiro do dia. Só vale para item com piso e teto, sem apagar nem min_stay novo."""
+    fica, nulos = [], []
+    for it in itens:
+        k = (it["quarto"], it["data"])
+        if it.get("max_price") in (None, "") or k in apagar or it.get("min_stay") is not None:
+            fica.append(it)
+            continue
+        q = cfg["por_curto"][it["quarto"]]
+        base = float(q["base"])
+        r = (cals.get(it["quarto"]) or {}).get(it["data"]) or {}
+        rg = (regras.get(it["quarto"]) or {}).get(it["data"]) or {}
+
+        def vig(campo: str) -> float | None:
+            if r.get(campo) not in (None, ""):
+                return float(r[campo])
+            if rg.get(campo) not in (None, "") and rg.get(f"{campo}_type", "percent_base") == "percent_base":
+                return round(base * (1 + float(rg[campo]) / 100), 2)
+            return None
+
+        cur_min, cur_max = vig("min_price"), vig("max_price")
+        novo = max(efetivo(cfg, it["quarto"], float(it["min_price"])),
+                   efetivo(cfg, it["quarto"], float(it["max_price"]), para_baixo=True))
+        if cur_min is not None and cur_max is not None and abs(novo - cur_min) <= 1 and abs(novo - cur_max) <= 1:
+            nulos.append(it)
+        else:
+            fica.append(it)
+    return fica, nulos
 
 
 def plano(cfg: dict, ancora: dict, cals: dict, hoje: date, ordens: dict, passos: dict, bloqueios: set | None = None,
@@ -714,6 +758,9 @@ def main(argv=None) -> int:
     if a.md:
         Path(a.md).write_text(md, encoding="utf-8")
     itens, apagar = ajustar_tetos(cfg, res["itens"], regras) if regras else (res["itens"], [])
+    itens, nulos = sem_efeito(cfg, itens, cals, regras, {(x["quarto"], x["data"]) for x in apagar})
+    for x in nulos:
+        print(f"sem efeito (já vigente): {x['quarto']} {x['data']} piso/teto R$ {x['min_price']}")
     if a.saida:
         with open(a.saida, "w", encoding="utf-8") as f:
             json.dump({"hoje": res["hoje"], "itens": itens, "sombra": sombra}, f, ensure_ascii=False, indent=1)

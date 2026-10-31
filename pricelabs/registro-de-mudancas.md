@@ -3131,6 +3131,22 @@ Processo: recálculo de 5 quartos às 00:29 BRT (Afrodite e Panorâmica II de 30
 | Finados −10% (ordem do dono de 30/10) na suíte que reabriu | Afrodite, 31/10 (hoje) | R$ 5.861 (piso R$ 4.360, teto R$ 10.000) | R$ 5.280 (piso = teto, 164% da base) ✅ | "Volte a Afrodite de 31/10 para piso R$ 4.360 e teto R$ 10.000" |
 | Finados −10% (ordem do dono de 30/10) na suíte que reabriu | Afrodite, 01/11 | R$ 4.420 (piso = teto da Regra J) | R$ 3.980 (piso = teto, 99% da base) ✅ | "Volte a Afrodite de 01/11 para R$ 4.420" |
 
+## 31/10/2026, 08:40 — Rotina das 07:53 (continuação): conferência 123/123, âncora mantida e 8 passos do motor de pace
+
+**Conferência da gravação de 05:29 (Moinhos e Panorâmica I):** o PriceLabs recalculou e enviou os 7 quartos sozinho às 05:33-05:34 BRT (last_date_pushed 08:34 UTC); as 19 noites desses dois quartos estão com o preço dentro do piso e teto gravados ✅. Com as 104 de antes: **123 de 123 noites conferidas**, e todas já chegaram ao canal no envio das 05:34 (ledger `dados/passos.json`: 84 passos marcados com `chegou_ao_canal` 08:34 UTC). A Afrodite de 31/10 e 01/11 (Finados −10%, gravada às 08:00) é posterior ao envio: precisa do Sync Now para chegar à Booking hoje.
+
+**Âncora de mercado mantida:** as 10 buscas de concorrentes de hoje vieram sem a mediana dos hotéis com hidro (só a mediana geral, que inclui quartos sem hidro: dom-qui 257 contra 388 medidos em 30/10; Natal 838 contra 1.100). O código passou a preferir a mediana com hidro medida enquanto ela tiver até 10 dias (`ancora_mercado.substitui`); `dados/ancora_mercado.json` ficou igual (nenhuma noite trocada).
+
+**Motor de pace (cadência diária):** plano com os recálculos de hoje e as regras vigentes lidas às 08:20; as noites que já tiveram passo às 05:29 ficaram de fora (um passo por noite por dia). Duas correções antes de gravar: a proteção da noite esgotada só sobe o piso (a sombra repropunha baixar 9 proteções já gravadas e "soltar" tetos que só diferiam pelo arredondamento de 1% da base) e item que repete o piso/teto vigente sai do plano (Balcony de 04/11: o pace desceria a R$ 635, a Regra G devolveu a R$ 723,90, o mesmo de antes). Validador: 8 itens, 0 erros. Gravação conferida na resposta da API (8 de 8; min_stay 2 do Natal mantido). Sem recálculo agora (King Spa 7 e King Spa 2 têm 1 recálculo restante em 24 h, guardado para noite que esgotar ou reabrir em D0-D1); o envio automático de amanhã (05:34) ou o Sync Now leva ao canal.
+
+| Mudança | Onde | Antes | Depois (gravado 08:24-08:31 BRT) | Como desfazer (pedir ao Claude) |
+|---|---|---|---|---|
+| Motor de pace (ritmo 0/1, D4; Afrodite 20% acima da Panorâmica I de R$ 1.465) | Afrodite, 04/11 (qua) | R$ 2.040 (piso = teto) | R$ 1.760 (piso = teto, −12% da base) | "Volte a Afrodite de 04/11 para R$ 2.040" |
+| Motor de pace (ritmo 0/1, D16; passo de 10%) | Afrodite, 16/11 (seg) | R$ 1.741 (sem regra) | R$ 1.660 (piso = teto, −17% da base) | "Apague a regra da Afrodite de 16/11" |
+| Motor de pace (ritmo 0/1, D17; passo de 10%) | Afrodite, 17/11 (ter) | R$ 1.741 (sem regra) | R$ 1.580 (piso = teto, −21% da base) | "Apague a regra da Afrodite de 17/11" |
+| Motor de pace (ritmo 0-2/7, D15-D18; presa no piso do dono R$ 500 Genius 3) | King Spa 7, 15 a 18/11 | R$ 976 (piso R$ 947, sem teto) | R$ 947 (piso = teto, −36% da base) | "Tire o teto do King Spa 7 de 15 a 18/11" |
+| Motor de pace (ritmo 0/2, D55; passo de 5%, piso de feriado R$ 1.000 reais) | King Spa 2, 25/12 (Natal) | R$ 2.706 (piso R$ 2.565) | R$ 2.578 (piso = teto, +103% da base); estadia mínima 2 mantida | "Tire o teto do King Spa 2 de 25/12" |
+
 > **Regras em vigor:** desde 06/10/2026 elas ficam em `.claude/skills/gestao-receita-pousadas/references/regras.md`. Este arquivo guarda só o histórico das mudanças.
 
 ## O que só pode ser feito na tela (passo a passo para você)

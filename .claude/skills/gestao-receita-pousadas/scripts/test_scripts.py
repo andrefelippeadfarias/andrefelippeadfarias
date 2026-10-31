@@ -1053,6 +1053,30 @@ class TestAncoraMercado(unittest.TestCase):
         s2 = dict(s); s2.pop("hidro_median"); s2.pop("hidro_max")
         self.assertEqual(percentis_da_busca(s2)["p50"], 651)
 
+    def test_busca_sem_hidro_medida_nao_troca_medida_recente(self):
+        """31/10: as buscas do dia vieram sem mediana com hidro (dom-qui 257 x 388 medido em 30/10); a âncora fica com a
+        medida enquanto ela tiver até idade_max_dias, e a nova medida sempre entra."""
+        import json
+        import tempfile
+        from ancora_mercado import construir
+        def busca(ci, co, med, hidro, em):
+            b = {"checkin": ci, "checkout": co, "price_total_median": med, "price_total_min": med * 0.5,
+                 "properties_found": 10, "busca_em": em, "comparables": []}
+            if hidro:
+                b["hidro_median"] = med
+            return b
+        with tempfile.TemporaryDirectory() as t:
+            a1, a2 = os.path.join(t, "a1.json"), os.path.join(t, "a2.json")
+            json.dump({"buscas": [busca("2026-11-03", "2026-11-04", 388, True, "2026-10-30")]}, open(a1, "w"))
+            json.dump({"buscas": [busca("2026-11-03", "2026-11-04", 257, False, "2026-10-31"),
+                                  busca("2026-11-10", "2026-11-11", 300, False, "2026-10-31")]}, open(a2, "w"))
+            base = construir(CFG, [a1], date(2026, 10, 30))
+            nova = construir(CFG, [a2], date(2026, 10, 31), anterior=base)
+            self.assertEqual(nova["noites"]["2026-11-03"]["p50"], 388)  # a medida fica
+            self.assertEqual(nova["noites"]["2026-11-10"]["p50"], 300)  # noite sem busca recebe a nova
+            velha = construir(CFG, [a2], date(2026, 11, 20), anterior=base)  # medida com 21 dias: perde
+            self.assertEqual(velha["noites"]["2026-11-03"]["p50"], 257)
+
 
 class TestPace(unittest.TestCase):
     def setUp(self):
@@ -1167,6 +1191,14 @@ class TestPace(unittest.TestCase):
         cal2 = {"2026-11-24": dict(cal["2026-11-24"], min_price="920", max_price="5000")}
         res = pace.plano(self.cfg, anc, {"Q7": cal2}, hoje, {}, {"passos": []}, dias=30, regra_j_ativa=False)
         self.assertEqual(res["itens"], [])
+        # 31/10: a proteção só sobe o piso (piso vigente mais alto e sem teto fica) e, sem min_price no calendário
+        # (coleta resumida), lê o piso da regra vigente em percent_base (Q7 base 1173: -21% = R$ 926,67)
+        cal3 = {"2026-11-24": dict(cal["2026-11-24"], min_price="1100", max_price="5000")}
+        self.assertEqual(pace.plano(self.cfg, anc, {"Q7": cal3}, hoje, {}, {"passos": []}, dias=30, regra_j_ativa=False)["itens"], [])
+        cal4 = {"2026-11-24": {k: v for k, v in cal["2026-11-24"].items() if k not in ("min_price", "max_price")}}
+        rg = {"Q7": {"2026-11-24": {"date": "2026-11-24", "min_price": -21, "min_price_type": "percent_base"}}}
+        self.assertEqual(pace.plano(self.cfg, anc, {"Q7": cal4}, hoje, {}, {"passos": []}, dias=30, regra_j_ativa=False, regras=rg)["itens"], [])
+        self.assertEqual(len(pace.plano(self.cfg, anc, {"Q7": cal4}, hoje, {}, {"passos": []}, dias=30, regra_j_ativa=False)["itens"]), 1)
         # ajustar_tetos: regra vigente com teto → apagar + item sem max_price herdando min_stay; sem teto → só tira o max_price
         regras = {"Q7": {"2026-11-24": {"date": "2026-11-24", "min_price": "57", "max_price": "57", "min_stay": 2}}}
         itens, apagar = pace.ajustar_tetos(self.cfg, [it, {"tipo": "data", "quarto": "Q7", "data": "2026-11-25", "min_price": 1000, "max_price": 5000.0, "motivo": "x"}], regras)
@@ -1179,6 +1211,27 @@ class TestPace(unittest.TestCase):
         regras = {"Q7": {"2026-11-25": {"date": "2026-11-25", "min_price": "10", "lead_time_expiry": 5}}}
         itens, apagar = pace.ajustar_tetos(self.cfg, [{"tipo": "data", "quarto": "Q7", "data": "2026-11-25", "min_price": 1000, "max_price": 5000.0, "motivo": "x"}], regras)
         self.assertEqual([x["data"] for x in apagar], ["2026-11-25"])
+
+    def test_vendidas_total_aceita_formato_da_coleta(self):
+        from comum import vendidas_total
+        self.assertEqual(vendidas_total({"multi_unit_occupancy": "4/7"}, 7), (4, 7))
+        self.assertEqual(vendidas_total({"mu_occupancy": "2/6", "multi_unit_occupancy": "4/6"}, 6), (2, 6))
+        self.assertEqual(vendidas_total({"mu_occupancy": "-1", "num_bookings": "1"}, 1), (1, 1))
+
+    def test_sem_efeito_tira_item_igual_ao_vigente(self):
+        import pace
+        cal = {"Balcony": {"2026-11-04": {"price": "724", "min_price": "724", "max_price": "724"}}}
+        it = {"tipo": "data", "quarto": "Balcony", "data": "2026-11-04", "min_price": 723.9, "max_price": 723.9, "pace": {"direcao": "desce"}}
+        fica, nulos = pace.sem_efeito(self.cfg, [it], cal, {}, set())
+        self.assertEqual((fica, len(nulos)), ([], 1))
+        # sem min/max no calendário, vale a regra vigente em percent_base (-43% de 1270 = 723,90)
+        rg = {"Balcony": {"2026-11-04": {"min_price": -43, "max_price": -43}}}
+        self.assertEqual(pace.sem_efeito(self.cfg, [it], {"Balcony": {"2026-11-04": {"price": "724"}}}, rg, set())[0], [])
+        # valor diferente, noite a apagar ou min_stay novo: fica
+        it2 = dict(it, min_price=635, max_price=635)
+        self.assertEqual(pace.sem_efeito(self.cfg, [it2], cal, {}, set())[0], [it2])
+        self.assertEqual(pace.sem_efeito(self.cfg, [it], cal, {}, {("Balcony", "2026-11-04")})[0], [it])
+        self.assertEqual(pace.sem_efeito(self.cfg, [dict(it, min_stay=2)], cal, {}, set())[0][0]["min_stay"], 2)
 
     def test_piso_da_ordem_teto_vigente_e_ultima_unidade(self):
         import pace

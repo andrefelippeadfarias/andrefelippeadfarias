@@ -2,6 +2,17 @@
 
 Cada mudança feita na própria Skill (regras, parâmetros, scripts, fluxo) entra aqui: data, o que mudou, por quê (evidência) e como desfazer. A entrada mais nova fica em cima.
 
+## 31/10/2026 08:40: ajustes do motor na primeira rotina das 07:53 com ele ligado
+- **Por quê:** as buscas de concorrentes do dia vieram sem a mediana dos hotéis com hidro (a mediana geral ficou 9% a 34% abaixo) e, ao rodar o plano de novo com as regras gravadas às 05:29, a proteção repropunha baixar pisos de noites vendidas e "soltar" tetos que só diferiam pelo arredondamento; a Balcony de 04/11 virava um passo sem efeito.
+- **O que mudou:**
+  - `scripts/ancora_mercado.py`: `substitui()` — busca sem mediana com hidro medida não troca a medida enquanto ela tiver até `pace.idade_max_dias` (10) dias; medida nova sempre entra.
+  - `scripts/pace.py`: `protecao_esgotada` só sobe o piso, lê piso/teto da regra vigente quando o calendário não traz e compara o teto com folga de 1% da base; `sem_efeito()` tira do plano e do ledger o item igual ao vigente.
+  - `scripts/comum.py`: `vendidas_total` aceita `multi_unit_occupancy` (calendário da coleta).
+  - Testes novos: âncora (medida x geral), proteção só sobe e regra vigente, `sem_efeito`, ocupação da coleta; 82 OK.
+  - Docs: `regras.md` (âncora, proteção, item sem efeito), `aprendizados.md` (31/10).
+- **Resultado:** âncora sem mudança; 8 passos novos gravados (registro de 31/10 08:40); conferência da gravação de 05:29 completa (123/123).
+- **Como desfazer:** reverter o commit; a âncora volta a aceitar a busca mais nova mesmo sem hidro medida.
+
 ## 31/10/2026 01:00: motor de pace LIGADO (dono: "Pode ligar o motor de pace ... Vamos vender.")
 - **O quê:**
   - `quartos.json`: `parametros.motor.modo` = "ligado", `regra_j_ativa` = false, `ordem` dono-2026-10-31-ligar-motor; `pace.protecao_percentil` 90.

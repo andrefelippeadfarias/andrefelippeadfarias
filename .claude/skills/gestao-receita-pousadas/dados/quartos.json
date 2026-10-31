@@ -1,5 +1,5 @@
 {
- "versao": "2026-10-30T23",
+ "versao": "2026-10-31T00",
  "nota": "Fonte única dos dados de máquina da Skill. Os scripts leem daqui. Quem mudar base, mínimo ou máximo no PriceLabs atualiza este arquivo no mesmo commit.",
  "pms": "beds24",
  "grupo": {
@@ -376,14 +376,17 @@
    "min_n": 6,
    "idade_max_dias": 10,
    "tolerancia": 0.03,
-   "nota": "Motor de pace (30/10/2026, pedido do dono: maior valor com os 2 hotéis lotados). curvas = % vendido esperado a D dias da noite, por tipo (dom-qui, sex-sáb, feriado), calibradas no histórico de 01/09 a 30/10 (39-50% das reservas com 0-1 dia; Booking mediana 10 d) e na janela do mercado do PriceLabs (nov 0-8/0-10 d; dez 0-24 d); recalibrar na revisão de segunda só com n >= 10 por célula e no máximo 5 pontos por ponto. banda = pontos de diferença vendido − curva para sair de 'no ritmo'; muito_atras = pontos para 'muito atrás'. alvo = percentil do preço PÚBLICO dos hotéis com hidro na Booking (dados/ancora_mercado.json) por status e pousada (Recanto um degrau acima da Villa; frente_perto = à frente a até frente_perto_dias). passo = k × distância relativa até o alvo, limitado por pmax conforme D (pela metade com âncora com n < min_n ou mais velha que idade_max_dias). tolerancia = variação mínima para gerar passo."
+   "nota": "Motor de pace (30/10/2026, pedido do dono: maior valor com os 2 hotéis lotados). curvas = % vendido esperado a D dias da noite, por tipo (dom-qui, sex-sáb, feriado), calibradas no histórico de 01/09 a 30/10 (39-50% das reservas com 0-1 dia; Booking mediana 10 d) e na janela do mercado do PriceLabs (nov 0-8/0-10 d; dez 0-24 d); recalibrar na revisão de segunda só com n >= 10 por célula e no máximo 5 pontos por ponto. banda = pontos de diferença vendido − curva para sair de 'no ritmo'; muito_atras = pontos para 'muito atrás'. alvo = percentil do preço PÚBLICO dos hotéis com hidro na Booking (dados/ancora_mercado.json) por status e pousada (Recanto um degrau acima da Villa; frente_perto = à frente a até frente_perto_dias). passo = k × distância relativa até o alvo, limitado por pmax conforme D (pela metade com âncora com n < min_n ou mais velha que idade_max_dias). tolerancia = variação mínima para gerar passo. | protecao_percentil: percentil da âncora usado como piso de proteção da noite esgotada/overbooking com a Regra J desligada (31/10).",
+   "protecao_percentil": 90
   },
   "motor": {
-   "modo": "sombra",
+   "modo": "ligado",
    "desde": "2026-10-30",
-   "regra_j_ativa": true,
-   "ligar": "com a resposta do dono à decisão D3 (30/10): substituir a escada por reserva e a Regra J ≥ 90%/×1,5 pelo motor de pace; até então, o motor só relata (sombra) e as ordens de 26-28/10 seguem valendo.",
-   "nota": "modo: sombra (calcula e relata, não grava) | ligado (grava D0-D60). regra_j_ativa: enquanto True, noite esgotada e overbooking ficam com a Regra J; False = piso de proteção p90 com teto livre."
+   "ligado_em": "2026-10-31T00:30-03:00",
+   "regra_j_ativa": false,
+   "ordem": "dono-2026-10-31-ligar-motor",
+   "resposta_do_dono": "Pode ligar o motor de pace. Pode fazer tudo também conforme planejado. Tudo que você verificou está correto. Vamos vender.",
+   "nota": "modo: sombra (calcula e relata, não grava) | ligado (grava D0-D60 pelo validador). regra_j_ativa False: noite esgotada e overbooking recebem piso de proteção no p90 da âncora com teto livre (pace.protecao_percentil), nunca piso = teto; 'pousada lotada' deixa de existir como gatilho. A escada por reserva (26 e 28/10) e a Regra J (27/10) encerraram em 30/10 (ordens_dono.json)."
   },
   "afrodite_fds_horizonte_dias": 95
  },

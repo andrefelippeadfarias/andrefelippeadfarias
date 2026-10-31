@@ -2,6 +2,17 @@
 
 Cada mudança feita na própria Skill (regras, parâmetros, scripts, fluxo) entra aqui: data, o que mudou, por quê (evidência) e como desfazer. A entrada mais nova fica em cima.
 
+## 31/10/2026 01:00: motor de pace LIGADO (dono: "Pode ligar o motor de pace ... Vamos vender.")
+- **O quê:**
+  - `quartos.json`: `parametros.motor.modo` = "ligado", `regra_j_ativa` = false, `ordem` dono-2026-10-31-ligar-motor; `pace.protecao_percentil` 90.
+  - `ordens_dono.json`: escada (26/10) e Regra J (27/10) com `ate` 30/10 (encerradas); ordens de 25/10 ("público ~R$ 450") e 26/10 ("R$ 300 no Genius 3") de `preco_por_data` para `piso_por_data` com `pisos_enviados` e `noites` (02-05/11 e 08/11; fds 06-07/11 da Moinhos e da Panorâmica I numa ordem separada); ordem nova dono-2026-10-31-ligar-motor.
+  - `ordens.py`: `piso_da_ordem` (tipo piso_por_data; o menor se houver mais de uma).
+  - `pace.py`: `piso_com_ordem` (o piso da ordem substitui os pisos padrão, nunca abaixo de `limite_seguranca`); `protecao_esgotada` (p90, nunca abaixo dos pisos PADRÃO, `piso_extra`/`teto_regra`); `regra_afrodite` (mais cara das outras +20%/+5%; faixa de fds R$ 1.600-1.800 públicos até 95 dias, no motor e na proteção); descida com teto vigente leva o teto junto; `ajustar_tetos` (teto livre = sem max_price; regra com teto ou validade vai para o plano `_apagar`, gravado antes, e o item herda min_stay); `ler_regras` e `--regras` (obrigatório fora da sombra); coerência com a Panorâmica II, sem puxar a Panorâmica I pela última unidade da Moinhos, sem item quando a regra já está cumprida, Balcony dentro da faixa da Regra G (85,5% a 90%); ledger só com itens de pace.
+  - Testes novos: `test_protecao_esgotada_e_ajuste_de_tetos`, `test_piso_da_ordem_teto_vigente_e_ultima_unidade`, `test_coerencia_ultima_unidade_e_panoramica_2`, `test_protecao_ignora_piso_de_venda_e_respeita_afrodite` (78 OK).
+  - Docs: `regras.md` (versão 31/10, precedência, Regra J encerrada, 4d "Ligado em 31/10", 6a), `estrategia.md` (motor ligado, D3 decidida), `SKILL.md` (escada e Regra J encerradas; passo 4d em modo ligado; rotina leve), `pendencias.json` (D3 resolvida; D1 com proposta de R$ 350 no Genius 3 de D0 a D3; D2 no Beds24; Balcony R$ 600 não aplicado: abaixo do limite de segurança e sem efeito com a Regra G).
+- **Por quê:** ordem do dono (D3). Os ajustes vieram da primeira rodada real: as noites de 02 a 08/11 estavam fora do motor e presas no piso = teto da escada; a proteção usava o piso de venda (Afrodite de 08/11 iria a R$ 937); a coerência criava item que baixava o piso vigente da Afrodite; a Balcony descia abaixo do que a Regra G permite.
+- **Como desfazer:** `motor.modo` = "sombra" (o motor só relata) e `regra_j_ativa` = true; as ordens de 25 e 26/10 voltam a `preco_por_data` em `ordens_dono.json`; os preços gravados se desfazem pela tabela do registro de 31/10.
+
 ## 30/10/2026 19:30: reformulação da estratégia (v2.0), ordens do dono com validade, âncora de mercado e motor de pace em sombra
 - **O quê (pedido do dono: "Melhore nossas estratégias ... maior valor de estadia porém ... os 2 hotéis lotados ... melhore nossa skill"):**
   - `dados/ordens_dono.json` (novo) e `scripts/ordens.py` (novo): ordens literais do dono com id, quartos, período, tipo (`preco_por_data`, `regra`, `manual`) e o que liberam. `validar_plano.py`: `excecao: "dono"` exige `ordem_id` vigente (ERRO sem ele); noite congelada por mudança manual dá ERRO. `escada_reservas.py`, `topo_mercado.py` e `ordem_recanto.py` passam o `ordem_id` da ordem que implementam.

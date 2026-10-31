@@ -641,17 +641,17 @@
    "id": "decisao-d1-booking-pilha-piso-semana",
    "responsavel": "dono",
    "urgencia": 0,
-   "texto": "D1 (30/10): o piso de R$ 500 no Genius 3 vira R$ 1.220 enviados e ~R$ 768 públicos no Recanto, acima do MÁXIMO do mercado de dia de semana (mediana dos hotéis com hidro R$ 353 a 388). Na sombra de 30/10 o motor de pace queria descer 74 noites e 94 ficaram presas nesse piso; nenhuma pedia subida. Proposta: na extranet da Booking, reduzir a pilha de descontos (hoje 46% a 50% sobre a tabela; concorrentes 15% a 19%) para no máximo 25% a 30%: com o mesmo R$ 500 no Genius 3 o público cairia para ~R$ 617 e o enviado para ~R$ 980, sem ninguém pagar menos de R$ 500. Alternativa: autorizar pisos de última hora menores de domingo a quinta (D0 a D3), em percent_base, pelo validador. A skill não mexe em Genius nem em promoções e não muda pisos sem a sua ordem (quartos.json → limites_seguranca / ordens_dono.json).",
+   "texto": "D1 (30/10): o piso de R$ 500 no Genius 3 vira R$ 1.220 enviados e ~R$ 768 públicos no Recanto, acima do MÁXIMO do mercado de dia de semana (mediana dos hotéis com hidro R$ 353 a 388). Na sombra de 30/10 o motor de pace queria descer 74 noites e 94 ficaram presas nesse piso; nenhuma pedia subida. Proposta: na extranet da Booking, reduzir a pilha de descontos (hoje 46% a 50% sobre a tabela; concorrentes 15% a 19%) para no máximo 25% a 30%: com o mesmo R$ 500 no Genius 3 o público cairia para ~R$ 617 e o enviado para ~R$ 980, sem ninguém pagar menos de R$ 500. Alternativa: autorizar pisos de última hora menores de domingo a quinta (D0 a D3), em percent_base, pelo validador. A skill não mexe em Genius nem em promoções e não muda pisos sem a sua ordem (quartos.json → limites_seguranca / ordens_dono.json). 31/10: o dono respondeu 'pode fazer tudo conforme planejado', mas a D1 tinha duas saídas e nenhum número: a pilha de descontos é na extranet (só o dono) e o piso menor precisa de valor. Proposta concreta para responder com 'sim': de D0 a D3, domingo a quinta, piso de R$ 350 no Genius 3 nas suítes com banheira (Recanto ~R$ 854 enviados, público ~R$ 538; Villa ~R$ 660 enviados, público ~R$ 429), só com unidade livre; fora disso seguem R$ 500/850. Até a resposta, valem R$ 500/850 (no primeiro plano do motor, 99 noites ficaram presas nesse piso).",
    "desde": "2026-10-30",
-   "atualizado_em": "2026-10-30"
+   "atualizado_em": "2026-10-31"
   },
   {
    "id": "decisao-d2-beds24-restricoes",
    "responsavel": "dono",
    "urgencia": 1,
-   "texto": "D2 (30/10): a estadia mínima gravada no PriceLabs NÃO chega à Booking (vive no Beds24). Tabela proposta para o Beds24: sábado é o único dia com bloqueio de chegada (noCheckIn, Regra H); sexta e domingo a quinta com 1 noite; sábado liberado para 1 noite na quarta-feira anterior quando a pousada estiver abaixo de 60% nesse sábado; feriados com 2 noites (3 em Finados, Carnaval, Corpus Christi, 9 de Julho e Réveillon) e as pontas liberadas para 1 noite a 7 e a 3 dias quando sobrar; sincronizar a estadia mínima PriceLabs → Beds24 (ou gravar só no Beds24). Para a skill medir reservas, estadias e restrições: cadastrar o token só-leitura do Beds24 (pendência beds24-token). Confirmar a tabela ou ajustar; a skill não altera o Beds24.",
+   "texto": "D2 (30/10): a estadia mínima gravada no PriceLabs NÃO chega à Booking (vive no Beds24). Tabela proposta para o Beds24: sábado é o único dia com bloqueio de chegada (noCheckIn, Regra H); sexta e domingo a quinta com 1 noite; sábado liberado para 1 noite na quarta-feira anterior quando a pousada estiver abaixo de 60% nesse sábado; feriados com 2 noites (3 em Finados, Carnaval, Corpus Christi, 9 de Julho e Réveillon) e as pontas liberadas para 1 noite a 7 e a 3 dias quando sobrar; sincronizar a estadia mínima PriceLabs → Beds24 (ou gravar só no Beds24). Para a skill medir reservas, estadias e restrições: cadastrar o token só-leitura do Beds24 (pendência beds24-token). Confirmar a tabela ou ajustar; a skill não altera o Beds24. 31/10: 'pode fazer tudo conforme planejado' não alcança o Beds24 (o acesso da skill é só leitura e o token não está cadastrado): a tabela continua para o dono aplicar na tela do Beds24 (Preços → Regras de estadia / Restrições de chegada).",
    "desde": "2026-10-30",
-   "atualizado_em": "2026-10-30"
+   "atualizado_em": "2026-10-31"
   },
   {
    "id": "decisao-d3-ligar-motor-pace",
@@ -659,7 +659,9 @@
    "urgencia": 0,
    "texto": "D3 (30/10): ligar o motor de pace (regras.md 4d; estrategia.md v2.0) no lugar da escada por reserva (ordens de 26 e 28/10) e da Regra J a 90% × 1,5 (27/10). O que muda: uma régua só (percentis do preço público dos hotéis com hidro), uma curva de venda por tipo de noite, um passo por noite por dia proporcional à distância do alvo; noite à frente nunca desce; esgotada e overbooking recebem piso de proteção no p90 com teto livre (nunca piso = teto); 'pousada lotada' = 100%. Até a resposta, o motor fica em sombra (relatório diário em pricelabs/pace-sombra/) e as ordens de 26 a 28/10 valem como estão. Para ligar: responder 'pode ligar' (a skill muda parametros.motor.modo para 'ligado', regra_j_ativa para false, e registra em regras.md 6a). Sombra de 30/10: 282 noites, 74 descidas, 0 subidas, 94 presas no piso.",
    "desde": "2026-10-30",
-   "atualizado_em": "2026-10-30"
+   "atualizado_em": "2026-10-31",
+   "resolvido_em": "2026-10-31",
+   "resolucao": "Dono 31/10: 'Pode ligar o motor de pace. Pode fazer tudo também conforme planejado. Tudo que você verificou está correto. Vamos vender.' Motor ligado (quartos.json motor.modo = ligado, regra_j_ativa = false); escada e Regra J encerradas em 30/10; primeiro plano gravado em 31/10."
   },
   {
    "id": "recanto-natal-invisivel-booking",
@@ -675,7 +677,9 @@
    "urgencia": 2,
    "texto": "Proposta (30/10): a Balcony vende 18% das noites e fica presa no mínimo do anúncio (R$ 690 = ~R$ 449 públicos), 10% abaixo da King Spa livre pela Regra G. Para o motor de pace poder posicioná-la no p25 a p40 do mercado da Villa em dia de semana, propor mínimo do anúncio de R$ 600 (só o dono muda base/mín/máx do anúncio). Sem a mudança, a Balcony segue no piso e a Regra G continua valendo.",
    "desde": "2026-10-30",
-   "atualizado_em": "2026-10-30"
+   "atualizado_em": "2026-10-31",
+   "resolvido_em": "2026-10-31",
+   "resolucao": "Não aplicado em 31/10, com o 'pode fazer tudo' do dono: R$ 600 fica abaixo do limite de segurança da Balcony (70% de R$ 900 = R$ 630, só o dono muda) e, hoje, o mínimo do anúncio não segura a Balcony: a Regra G a mantém entre 85,5% e 90% da suíte com banheira livre mais barata (pisos de R$ 943 a 1.478 nas suítes), ou seja, acima de R$ 800. Volta a valer a pena se a D1 baixar o piso das suítes da Villa."
   },
   {
    "id": "afrodite-teto-horizonte-3010",
@@ -688,5 +692,5 @@
    "atualizado_em": "2026-10-30"
   }
  ],
- "versao": "2026-10-30T23"
+ "versao": "2026-10-31T01"
 }

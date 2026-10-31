@@ -313,3 +313,11 @@ Cada item tem data e evidência. Para incluir um item novo: data, o fato, a evid
 - **Apagar e regravar a mesma noite são dois planos:** o validador barra item duplicado por noite (a API mescla campos). Para tirar um teto, plano 1 = `apagar`, plano 2 = `data` só com o piso (e `min_stay` 2 nos sábados, Regra H). 50 noites da Afrodite em 2027 em 19:22 BRT; a conferência no recálculo fica para 31/10 07:53 (limite de recálculo do dia gasto).
 - **Reservas de 30/10 pela lista do PriceLabs (até 19:15 BRT):** Panorâmica II 13-14/11 (Booking, 2 noites, R$ 1.020/noite), King Spa 2 11-12/11 (Airbnb, R$ 311/noite), Moinhos 10/11 (Booking) feita e cancelada no mesmo dia. A lista pode estar incompleta até a importação de 31/10.
 
+## 31/10/2026 — Ligar o motor: o que a primeira rodada real mostrou
+- **Ordem "para vender" não pode virar trava:** as ordens de 25 e 26/10 (público ~R$ 450; R$ 300 no Genius 3) tiravam 02-08/11 do motor como preço por data, e a escada tinha subido essas noites para piso = teto depois das vendas (Panorâmica I 06/11 a R$ 2.279 com 0 de 6; 04/11 a R$ 1.702 com 1 de 6). Viraram piso do motor (`piso_por_data`): a noite vazia desce em direção ao mercado, com o piso do dono por baixo.
+- **Piso = teto antigo bloqueia a descida:** baixar só o piso deixa o teto antigo (a API mescla campos). Descida em noite com teto leva o teto junto; subida e proteção apagam a regra e regravam sem teto (plano `_apagar` antes, min_stay herdado).
+- **Proteção não usa piso de venda:** sem essa trava, a proteção da Afrodite vendida em 08/11 iria a R$ 937 (piso de R$ 300 no Genius da ordem de 26/10). Proteção = p90 do mercado, nunca abaixo dos pisos padrão do quarto e das regras de ordem do Recanto.
+- **Regra cumprida não gera item:** a coerência criava item com piso menor que o vigente (Afrodite 07/11: de R$ 2.720 para R$ 1.810). Só mexe quando a regra está violada.
+- **Regra G limita o motor na Balcony:** a Balcony só pode ficar entre 85,5% e 90% da suíte com banheira livre mais barata. Quando a Villa está cara (King Spa 2 a R$ 2.453 em 13/11), a Balcony vazia não desce sozinha: desce junto com as suítes.
+- **Os pisos de R$ 500/850 no Genius 3 seguram 99 noites** no primeiro plano real: sem a D1 (pilha de descontos ou piso de última hora), o Recanto em dia de semana continua acima do máximo do mercado.
+

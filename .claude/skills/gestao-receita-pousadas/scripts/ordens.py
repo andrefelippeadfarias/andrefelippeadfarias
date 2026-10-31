@@ -8,6 +8,9 @@ Uso:
   python3 ordens.py listar [--hoje AAAA-MM-DD]
   python3 ordens.py manual --quarto Q7 --de AAAA-MM-DD --ate AAAA-MM-DD --texto "..." [--dias-congelados 7]
       (registra uma mudança feita pela tela do PriceLabs; a noite fica congelada para os scripts por 7 dias)
+
+Tipos de ordem: preco_por_data (o motor não mexe na noite), piso_por_data (o motor trata a noite com o piso do dono no
+lugar dos pisos padrão; 31/10), regra (regra permanente aplicada por script), manual (congela a noite por 7 dias).
 """
 
 from __future__ import annotations
@@ -58,6 +61,22 @@ def congelada(ordens: dict, quarto: str, d: date) -> dict | None:
 def ordens_por_data(ordens: dict, quarto: str, d: date) -> list[dict]:
     """Ordens de preço por data do dono (6b) que cobrem a noite: o motor de pace não mexe nessas noites."""
     return [o for o in ordens.values() if o.get("tipo") == "preco_por_data" and cobre(o, quarto, d)]
+
+
+def piso_da_ordem(ordens: dict, quarto: str, d: date) -> tuple[float, dict] | None:
+    """Ordem do dono do tipo piso_por_data (31/10): o piso enviado que o dono fixou para o quarto naquelas noites
+    (`pisos_enviados` {curto: reais}, opcionalmente só nas `noites` listadas). O motor de pace TRATA a noite, com esse
+    valor no lugar dos pisos padrão do dono; se houver mais de uma, vale o menor. None sem ordem."""
+    achados = []
+    for o in ordens.values():
+        if o.get("tipo") != "piso_por_data" or not cobre(o, quarto, d):
+            continue
+        if o.get("noites") and d.isoformat() not in o["noites"]:
+            continue
+        v = (o.get("pisos_enviados") or {}).get(quarto)
+        if v is not None:
+            achados.append((float(v), o))
+    return min(achados, key=lambda x: x[0]) if achados else None
 
 
 def registrar_manual(quarto: str, de: str, ate: str, texto: str, dias_congelados: int = 7,

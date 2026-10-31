@@ -1149,6 +1149,110 @@ class TestPace(unittest.TestCase):
         self.assertEqual(res["itens"], [])
         self.assertTrue(any("esgotada" in x["motivo"] for x in res["fora"]))
 
+    def test_protecao_esgotada_e_ajuste_de_tetos(self):
+        import pace
+        hoje = date(2026, 10, 30)
+        anc = {"noites": {"2026-11-24": {"p25": 286, "p50": 348, "p75": 373, "p90": 579, "max": 724, "n": 19, "busca_em": "2026-10-30", "tipo": "semana"}}, "por_tipo": {}}
+        # Regra J ativa: esgotada fica fora, sem item
+        cal = {"2026-11-24": {"date": "2026-11-24", "price": "1848", "mu_occupancy": "7/7", "num_bookings": "7", "min_price": "1848", "max_price": "1848", "min_stay": "1"}}
+        res = pace.plano(self.cfg, anc, {"Q7": cal}, hoje, {}, {"passos": []}, dias=30, regra_j_ativa=True)
+        self.assertEqual(res["itens"], [])
+        # Regra J desligada: piso de proteção p90 (R$ 579 ÷ 0,63 = R$ 919 < piso do dono R$ 800? não: 919 > 800 → 919) e teto livre
+        res = pace.plano(self.cfg, anc, {"Q7": cal}, hoje, {}, {"passos": []}, dias=30, regra_j_ativa=False)
+        it = res["itens"][0]
+        self.assertTrue(it["protecao"])
+        self.assertEqual((it["min_price"], it["max_price"]), (920, 5000.0))
+        # já protegida (piso igual, sem teto): sem item
+        cal2 = {"2026-11-24": dict(cal["2026-11-24"], min_price="920", max_price="5000")}
+        res = pace.plano(self.cfg, anc, {"Q7": cal2}, hoje, {}, {"passos": []}, dias=30, regra_j_ativa=False)
+        self.assertEqual(res["itens"], [])
+        # ajustar_tetos: regra vigente com teto → apagar + item sem max_price herdando min_stay; sem teto → só tira o max_price
+        regras = {"Q7": {"2026-11-24": {"date": "2026-11-24", "min_price": "57", "max_price": "57", "min_stay": 2}}}
+        itens, apagar = pace.ajustar_tetos(self.cfg, [it, {"tipo": "data", "quarto": "Q7", "data": "2026-11-25", "min_price": 1000, "max_price": 5000.0, "motivo": "x"}], regras)
+        self.assertEqual(len(apagar), 1)
+        self.assertEqual(apagar[0]["data"], "2026-11-24")
+        self.assertNotIn("max_price", itens[0])
+        self.assertEqual(itens[0]["min_stay"], 2)
+        self.assertNotIn("max_price", itens[1])
+        # regra com validade também é apagada e regravada
+        regras = {"Q7": {"2026-11-25": {"date": "2026-11-25", "min_price": "10", "lead_time_expiry": 5}}}
+        itens, apagar = pace.ajustar_tetos(self.cfg, [{"tipo": "data", "quarto": "Q7", "data": "2026-11-25", "min_price": 1000, "max_price": 5000.0, "motivo": "x"}], regras)
+        self.assertEqual([x["data"] for x in apagar], ["2026-11-25"])
+
+    def test_piso_da_ordem_teto_vigente_e_ultima_unidade(self):
+        import pace
+        hoje = date(2026, 10, 31)
+        anc = {"noites": {"2026-11-03": {"p25": 290, "p50": 388, "p75": 600, "p90": 745, "max": 846, "n": 20, "busca_em": "2026-10-30", "tipo": "semana"}}, "por_tipo": {}}
+        ordem = {"o25": {"id": "o25", "quartos": ["Q7"], "de": "2026-11-02", "ate": "2026-11-08", "tipo": "piso_por_data",
+                         "noites": ["2026-11-03"], "pisos_enviados": {"Q7": 739}, "libera": ["fixo", "abaixo_piso"]}}
+        # Moinhos 1/7 a D3 com piso = teto da escada (R$ 1.079): atrás → −20% = R$ 863, acima do piso da ordem (R$ 739);
+        # o teto antigo desce junto e o item leva a ordem do dono
+        cal = {"2026-11-03": {"date": "2026-11-03", "price": "1079", "mu_occupancy": "1/7", "num_bookings": "1",
+                              "min_price": "1079", "max_price": "1079", "min_stay": "1"}}
+        res = pace.plano(self.cfg, anc, {"Q7": cal}, hoje, ordem, {"passos": []}, dias=10)
+        it = [x for x in res["itens"] if x["quarto"] == "Q7"][0]
+        self.assertEqual((it["min_price"], it["max_price"]), (863, 863))
+        self.assertEqual((it["excecao"], it["ordem_id"]), ("dono", "o25"))
+        # ordem do tipo piso_por_data não tira a noite do motor (preco_por_data tira)
+        from ordens import ordens_por_data, piso_da_ordem
+        self.assertEqual(ordens_por_data(ordem, "Q7", date(2026, 11, 3)), [])
+        self.assertEqual(piso_da_ordem(ordem, "Q7", date(2026, 11, 3))[0], 739)
+        self.assertIsNone(piso_da_ordem(ordem, "Q7", date(2026, 11, 4)))  # fora das noites listadas
+        # sem a ordem, o item não leva exceção do dono; com o piso da ordem acima do passo, a noite fica presa nele
+        res = pace.plano(self.cfg, anc, {"Q7": cal}, hoje, {}, {"passos": []}, dias=10)
+        self.assertNotIn("excecao", res["itens"][0])
+        ordem["o25"]["pisos_enviados"]["Q7"] = 950
+        res = pace.plano(self.cfg, anc, {"Q7": cal}, hoje, ordem, {"passos": []}, dias=10)
+        self.assertEqual(res["itens"][0]["min_price"], 950)
+        self.assertIn("ordem do dono o25", res["linhas"][0]["preso_no_piso"])
+
+    def test_protecao_ignora_piso_de_venda_e_respeita_afrodite(self):
+        import pace
+        hoje = date(2026, 10, 31)
+        cfg = self.cfg
+        cfg["parametros"]["regra_j"]["fator_publico"] = {"Recanto": 0.63, "Villa": 0.65}
+        anc = {"noites": {"2026-11-08": {"p25": 300, "p50": 380, "p75": 450, "p90": 590, "max": 700, "n": 20, "busca_em": "2026-10-30", "tipo": "semana"},
+                          "2026-11-14": {"p25": 456, "p50": 653, "p75": 653, "p90": 1080, "max": 1144, "n": 24, "busca_em": "2026-10-30", "tipo": "fds"}}, "por_tipo": {}}
+        ordem = {"g300": {"id": "g300", "quartos": ["Afrodite", "Q7"], "de": "2026-11-02", "ate": "2026-11-08", "tipo": "piso_por_data",
+                          "pisos_enviados": {"Afrodite": 800, "Q7": 739}, "libera": ["fixo", "abaixo_piso"]}}
+        row = lambda noite, pr, nb, mn=None, mx=None, mu="-1": {"date": noite, "price": str(pr), "mu_occupancy": mu, "num_bookings": str(nb),
+                                                                "min_price": str(mn if mn is not None else pr), "max_price": str(mx if mx is not None else pr), "min_stay": "1"}
+        # Afrodite vendida no domingo 08/11 com a Regra J (R$ 2.460): a proteção não usa o piso de venda (R$ 800) e fica
+        # acima da mais cara das outras à venda (+20%) e do mínimo do anúncio
+        cals = {"Afrodite": {"2026-11-08": row("2026-11-08", 2460, 1)}, "Double": {"2026-11-08": row("2026-11-08", 1391, 3, mu="3/6")}}
+        res = pace.plano(cfg, anc, cals, hoje, ordem, {"passos": []}, dias=10, regra_j_ativa=False)
+        it = [x for x in res["itens"] if x["quarto"] == "Afrodite"][0]
+        self.assertGreaterEqual(it["min_price"], round(1391 * 1.2))
+        self.assertEqual(it["ordem_id"], "dono-2026-10-22-afrodite-mais-cara")
+        # sábado 14/11 dentro de 95 dias: faixa R$ 1.600-1.800 públicos ÷ 0,63 = R$ 2.540-2.857, piso e teto da faixa
+        cals = {"Afrodite": {"2026-11-14": row("2026-11-14", 5840, 1)}}
+        res = pace.plano(cfg, anc, cals, hoje, ordem, {"passos": []}, dias=20, regra_j_ativa=False)
+        it = [x for x in res["itens"] if x["quarto"] == "Afrodite"][0]
+        self.assertEqual((it["min_price"], it["max_price"]), (round(1600 / 0.63), 2857))
+
+    def test_coerencia_ultima_unidade_e_panoramica_2(self):
+        import pace
+        hoje = date(2026, 10, 31)
+        noite = "2026-11-24"
+        anc = {"noites": {noite: {"p25": 286, "p50": 348, "p75": 373, "p90": 579, "max": 724, "n": 19, "busca_em": "2026-10-30", "tipo": "semana"}}, "por_tipo": {}}
+        row = lambda pr, v, u, mn=None, mx="5000": {"date": noite, "price": str(pr), "mu_occupancy": f"{v}/{u}", "num_bookings": str(v),
+                                                   "min_price": str(mn if mn is not None else pr), "max_price": mx, "min_stay": "1"}
+        # Moinhos com a última unidade a R$ 2.000 (6/7, à frente: segura); Panorâmica I 3/6 a R$ 1.500 desce; a
+        # última unidade da Moinhos NÃO puxa a Panorâmica I de volta para R$ 2.000
+        cals = {"Q7": {noite: row(2000, 6, 7)}, "Double": {noite: row(1500, 1, 6, mn=1100)}, "Q2": {noite: row(1950, 0, 2)}}
+        res = pace.plano(self.cfg, anc, cals, hoje, {}, {"passos": []}, dias=30)
+        db = [x for x in res["itens"] if x["quarto"] == "Double"][0]
+        self.assertLess(db["min_price"], 1500)
+        # a Panorâmica II (fora do passo de pace) entra na coerência: entre a Panorâmica I nova e a Moinhos
+        q2 = [x for x in res["itens"] if x["quarto"] == "Q2"][0]  # R$ 1.950 acima do teto da faixa (75% do caminho)
+        self.assertEqual(q2["ordem_id"], "dono-2026-10-21-ordem-recanto")
+        self.assertGreaterEqual(q2["min_price"], db["min_price"])
+        self.assertLessEqual(q2["max_price"], 2000)
+        # Panorâmica II já dentro da faixa: a coerência não cria item (não mexe no piso vigente)
+        cals["Q2"] = {noite: row(1700, 0, 2)}
+        res = pace.plano(self.cfg, anc, cals, hoje, {}, {"passos": []}, dias=30)
+        self.assertEqual([x for x in res["itens"] if x["quarto"] == "Q2"], [])
+
     def test_plano_respeita_ordem_do_dono_cadencia_e_quarto_fora(self):
         import pace
         hoje = date(2026, 10, 30)

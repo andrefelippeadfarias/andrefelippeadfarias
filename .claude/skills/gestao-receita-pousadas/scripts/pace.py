@@ -38,6 +38,7 @@ from __future__ import annotations
 import argparse
 import datetime as dt
 import json
+import re
 import math
 import sys
 from collections import defaultdict
@@ -48,7 +49,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 from ancora_mercado import ARQ_ANCORA, ancora_da_noite, percentil_de, tipo_noite, valor_percentil  # noqa: E402
 from calendario_12m import ler_recalculo  # noqa: E402
 from comum import PASTA_SKILL, carregar_quartos, data, esgotado, hoje_brt, ler_json, periodo_feriado, vendidas_total  # noqa: E402
-from ordens import ARQ_ORDENS, carregar_ordens, congelada, ordens_por_data  # noqa: E402
+from ordens import ARQ_ORDENS, carregar_ordens, congelada, ordens_por_data, piso_da_ordem  # noqa: E402
 
 ARQ_PASSOS = PASTA_SKILL / "dados" / "passos.json"
 STATUS = ("frente", "ritmo", "atras", "muito_atras")
@@ -162,6 +163,45 @@ def pisos_enviados(cfg: dict, curto: str, d: date) -> tuple[float, str]:
     return round(piso, 2), origem
 
 
+def regra_afrodite(cfg: dict, cals: dict, finais: dict, d: date, hoje: date) -> tuple[float, float | None]:
+    """(piso, teto) da ordem do dono para a Afrodite na noite: acima da mais cara das outras suítes do Recanto à venda
+    (+20% dom-qui, +5% sex-sáb e feriado) e, em sexta e sábado fora de feriado até hoje + 95 dias, na faixa alta do
+    mercado (vitrine R$ 1.600 a 1.800 ÷ fator público). teto None = sem teto pela regra."""
+    from ordem_recanto import faixa_fds_afrodite, horizonte_teto_fds, premio_afrodite
+    noite = d.isoformat()
+    outras = []
+    for k in ("Q7", "Double", "Q2"):
+        r = (cals.get(k) or {}).get(noite)
+        if r is not None and not esgotado(r, cfg["por_curto"][k]["unidades"]):
+            outras.append(finais.get((k, noite), float(r["price"])))
+    piso = max(outras) * (1 + premio_afrodite(cfg, d)) if outras else 0.0
+    teto = None
+    fx = faixa_fds_afrodite(cfg, d) if d <= horizonte_teto_fds(cfg, hoje) else None
+    if fx:
+        piso, teto = max(piso, float(fx[0])), float(fx[1])
+    return piso, teto
+
+
+def limite_seguranca(cfg: dict, curto: str, d: date) -> float:
+    """Limite de segurança do quarto na noite (só o dono muda): fração do mínimo de referência, ou a exceção do dono."""
+    q, lim = cfg["por_curto"][curto], cfg["limites_seguranca"]
+    v = float(lim["fracao_min_referencia"]) * float(q["min_referencia"])
+    for ex in lim.get("excecoes_dono", []) or []:
+        if ex.get("quarto") == curto and data(ex["de"]) <= d <= data(ex["ate"]):
+            v = min(v, float(ex["limite"]))
+    return v
+
+
+def piso_com_ordem(cfg: dict, curto: str, d: date, ordens: dict) -> tuple[float, str, dict | None]:
+    """Piso do motor na noite: com ordem do dono do tipo piso_por_data, o piso dela SUBSTITUI os pisos padrão (nunca
+    abaixo do limite de segurança); sem ordem, pisos_enviados."""
+    po = piso_da_ordem(ordens, curto, d)
+    if po:
+        return max(po[0], limite_seguranca(cfg, curto, d)), f"piso da ordem do dono {po[1]['id']}", po[1]
+    piso, origem = pisos_enviados(cfg, curto, d)
+    return piso, origem, None
+
+
 # ---------- ledger de passos
 def carregar_passos(caminho=None) -> dict:
     p = Path(caminho or ARQ_PASSOS)
@@ -231,10 +271,46 @@ def ocupacao_pousada(cfg: dict, cals: dict, noite: str) -> dict:
     return out
 
 
+def protecao_esgotada(cfg: dict, p: dict, anc: dict, origem: str, curto: str, d: date, r: dict, v: int, u: int,
+                      regra: dict | None = None, piso_extra: float | None = None,
+                      teto_regra: float | None = None) -> dict | None:
+    """Noite esgotada (ou com overbooking) com a Regra J desligada (dono, 31/10): piso de proteção no percentil
+    `pace.protecao_percentil` (90) da âncora, nunca abaixo dos pisos do dono, com o teto livre (nunca piso = teto).
+    Devolve o item só quando o piso vigente difere ou quando há teto (Regra J ou outro) a soltar."""
+    q = cfg["por_curto"][curto]
+    fp = fator_publico(cfg, q["pousada"])
+    pct = float(p.get("protecao_percentil", 90))
+    pub = valor_percentil(anc, pct)
+    # pisos PADRÃO do quarto: o piso de venda das ordens por data (R$ 300 no Genius 3) é para vender noite vazia, não
+    # para proteger noite vendida (31/10: a Afrodite de 08/11 iria a R$ 937)
+    piso_dono, _ = pisos_enviados(cfg, curto, d)
+    teto = float(teto_regra) if teto_regra else float(q["max"])
+    piso = min(max(pub / fp, piso_dono, float(piso_extra or 0)), teto)
+    atual = float(r["price"])
+    atual_min = float(r.get("min_price") or 0)
+    teto_cal = float(r.get("max_price") or q["max"])
+    tem_teto = teto_cal < float(q["max"]) - 1 or bool(regra and regra.get("max_price") not in (None, ""))
+    if abs(atual_min - piso) <= p["tolerancia"] * piso and not tem_teto:
+        return None
+    it = {"tipo": "data", "quarto": curto, "data": d.isoformat(), "min_price": math.ceil(piso), "max_price": float(q["max"]),
+            "preco_antes": atual, "protecao": True,
+            "motivo": (f"Proteção da noite esgotada ({v}/{u}; Regra J desligada pelo dono em 31/10): piso no p{pct:.0f} do "
+                       f"mercado com hidro, R$ {pub:.0f} público = R$ {piso:.0f} enviados ({origem}); teto livre")}
+    if teto_regra:
+        it["max_price"] = math.floor(max(teto, it["min_price"]))
+        it["motivo"] = it["motivo"].replace("teto livre", f"teto da faixa do dono R$ {it['max_price']}")
+    if teto_regra and abs(atual_min - piso) <= p["tolerancia"] * piso and abs(teto_cal - it["max_price"]) <= 1:
+        return None
+    return it
+
+
 def plano(cfg: dict, ancora: dict, cals: dict, hoje: date, ordens: dict, passos: dict, bloqueios: set | None = None,
-          dias: int = 60, agora: dt.datetime | None = None, regra_j_ativa: bool = True) -> dict:
-    """Itens de preço (formato do validar_plano.py) e o diagnóstico por noite para o relatório."""
+          dias: int = 60, agora: dt.datetime | None = None, regra_j_ativa: bool = True,
+          regras: dict | None = None) -> dict:
+    """Itens de preço (formato do validar_plano.py) e o diagnóstico por noite para o relatório.
+    `regras`: {curto: {data: override vigente}} (get_listing_date_overrides), usado pela proteção da noite esgotada."""
     p = par_pace(cfg)
+    regras = regras or {}
     agora = agora or dt.datetime.now(dt.timezone.utc)
     bloqueios = bloqueios or set()
     itens, linhas, fora = [], [], []
@@ -255,6 +331,7 @@ def plano(cfg: dict, ancora: dict, cals: dict, hoje: date, ordens: dict, passos:
             v, t = vendidas_total(r, u)
             atual = float(r["price"])
             piso_vig = float(r.get("min_price") or 0)
+            teto_vig = float(r.get("max_price") or q["max"])
             motivo_fora = None
             if q.get("fora_do_motor"):
                 motivo_fora = f"quarto fora do motor ({q.get('fora_do_motor_nota', 'ver quartos.json')})"
@@ -265,7 +342,21 @@ def plano(cfg: dict, ancora: dict, cals: dict, hoje: date, ordens: dict, passos:
             elif ordens_por_data(ordens, curto, d):
                 motivo_fora = "ordem do dono por data (" + ", ".join(o["id"] for o in ordens_por_data(ordens, curto, d)) + ")"
             elif esgotado(r, u):
-                motivo_fora = "esgotada: Regra J (proteção)" if regra_j_ativa else "esgotada: piso de proteção p90"
+                if regra_j_ativa:
+                    motivo_fora = "esgotada: Regra J (proteção)"
+                elif anc is None:
+                    motivo_fora = "esgotada sem âncora de mercado (sem piso de proteção novo)"
+                else:
+                    extra = teto_r = None
+                    if curto == "Afrodite":
+                        extra, teto_r = regra_afrodite(cfg, cals, finais, d, hoje)
+                    it = protecao_esgotada(cfg, p, anc, origem, curto, d, r, v, u, (regras.get(curto) or {}).get(noite),
+                                           extra, teto_r)
+                    if it and curto == "Afrodite":
+                        it["excecao"], it["ordem_id"] = "dono", "dono-2026-10-22-afrodite-mais-cara"
+                    if it:
+                        itens.append(it)
+                    motivo_fora = "esgotada: piso de proteção p90" + (" (item)" if it else " (já protegida)")
             if motivo_fora:
                 fora.append({"quarto": curto, "data": noite, "motivo": motivo_fora, "atual": atual, "vendidas": v, "unidades": u})
                 continue
@@ -286,7 +377,15 @@ def plano(cfg: dict, ancora: dict, cals: dict, hoje: date, ordens: dict, passos:
             if st == "frente":
                 alvo_env = max(alvo_env, atual)  # noite vendendo à frente da curva nunca desce: segura ou sobe (RevPAR)
             novo = passo(cfg, atual, alvo_env, k, fraco)
-            piso, origem_piso = pisos_enviados(cfg, curto, d)
+            piso, origem_piso, ordem_piso = piso_com_ordem(cfg, curto, d, ordens)
+            po = (piso, ordem_piso) if ordem_piso else None
+            teto_af = None
+            if curto == "Afrodite":
+                piso_af, teto_af = regra_afrodite(cfg, cals, finais, d, hoje)
+                if teto_af and piso_af > piso:
+                    piso, origem_piso = piso_af, "faixa de fim de semana da Afrodite (dono 27/10)"
+                if teto_af:
+                    novo = min(novo, max(teto_af, piso))
             preso = None
             if novo < piso:
                 novo, preso = piso, f"presa no piso ({origem_piso} = R$ {piso:.0f} enviados, público ~R$ {piso * fp:.0f}, percentil {percentil_de(piso * fp, anc):.0f})"
@@ -313,12 +412,72 @@ def plano(cfg: dict, ancora: dict, cals: dict, hoje: date, ordens: dict, passos:
                   "pace": {"status": st, "direcao": direcao, "atual": atual, "novo": novo_r, "alvo_enviado": round(alvo_env)}}
             if direcao == "sobe":
                 it["max_price"] = float(q["max"])  # sobe pelo piso e solta o teto
-            elif atual > piso_vig + 1 and atual > novo_r + 1:
-                it["max_price"] = novo_r  # o algoritmo está acima do alvo: o teto desce o preço; o piso vai junto
+            elif atual > novo_r + 1 and (atual > piso_vig + 1 or teto_vig < float(q["max"]) - 1):
+                # o algoritmo está acima do alvo, ou a noite tem teto (escada/Regra J antigas: piso = teto): o teto desce
+                # junto, senão o preço fica preso no teto antigo ou no algoritmo
+                it["max_price"] = novo_r
+            if po:
+                it["excecao"], it["ordem_id"] = "dono", po[1]["id"]
+            if teto_af:
+                it["excecao"], it["ordem_id"] = "dono", "dono-2026-10-22-afrodite-mais-cara"
+                if it.get("max_price") is None or it["max_price"] > teto_af:
+                    it["max_price"] = math.floor(max(teto_af, it["min_price"]))  # teto da faixa; descida com teto menor fica
             itens.append(it)
             finais[(curto, noite)] = float(novo_r)
     itens = coerencia(cfg, cals, finais, itens, hoje, ordens)
     return {"hoje": hoje.isoformat(), "itens": itens, "linhas": linhas, "fora": fora}
+
+
+def ajustar_tetos(cfg: dict, itens: list[dict], regras: dict) -> tuple[list[dict], list[dict]]:
+    """Teto livre no PriceLabs = item SEM max_price (a API mescla campos e um max_price "igual ao máximo do anúncio"
+    seria um percentual enorme e inútil). Para cada item com max_price no máximo do anúncio: se a regra vigente da
+    noite tem teto ou validade (lead_time_expiry), a noite vai para a lista `apagar` (plano separado, gravado antes) e
+    o item herda min_stay e check-in/out da regra apagada; senão o max_price só sai do item. Devolve (itens, apagar)."""
+    apagar, saida = [], []
+    for it in itens:
+        it = dict(it)
+        q = cfg["por_curto"][it["quarto"]]
+        reg = (regras.get(it["quarto"]) or {}).get(it.get("data")) if it.get("tipo") == "data" else None
+        teto_reg = None
+        if reg and reg.get("max_price") not in (None, ""):
+            try:
+                teto_reg = float(q["base"]) * (1 + float(reg["max_price"]) / 100)
+            except (TypeError, ValueError):
+                teto_reg = None
+        solta = it.get("max_price") is not None and float(it["max_price"]) >= float(q["max"]) - 1
+        if not solta and it.get("max_price") is None and it.get("min_price") is not None and teto_reg is not None \
+                and float(it["min_price"]) > teto_reg + 1:
+            solta = True  # piso novo acima do teto vigente: o teto antigo sai (senão piso > teto no PriceLabs)
+            it["max_price"] = float(q["max"])
+        if solta:
+            it.pop("max_price")
+            if reg and (reg.get("max_price") not in (None, "") or reg.get("lead_time_expiry")):
+                apagar.append({"tipo": "apagar", "quarto": it["quarto"], "data": it["data"],
+                               "motivo": f"solta o teto (R$ {em_reais_pct(q, reg.get('max_price'))}) antes de regravar o piso: {it.get('motivo', '')[:120]}"})
+                for campo in ("min_stay", "check_in", "check_out"):
+                    if reg.get(campo) not in (None, "") and it.get(campo) is None:
+                        it[campo] = int(reg[campo]) if campo == "min_stay" else reg[campo]
+        saida.append(it)
+    return saida, apagar
+
+
+def em_reais_pct(q: dict, pct) -> str:
+    try:
+        return f"{float(q['base']) * (1 + float(pct) / 100):.0f}"
+    except (TypeError, ValueError):
+        return "?"
+
+
+def ler_regras(pares: list[str]) -> dict:
+    """{curto: {data: override}} a partir de Q7=overrides.json ... (saída de get_listing_date_overrides)."""
+    out = {}
+    for x in pares:
+        k, v = x.split("=", 1)
+        d = ler_json(v)
+        lst = ((d.get("data") or {}).get("overrides")) if isinstance(d.get("data"), dict) else None
+        lst = lst or d.get("overrides") or (d if isinstance(d, list) else [])
+        out[k] = {o["date"]: o for o in lst if o.get("date")}
+    return out
 
 
 def coerencia(cfg: dict, cals: dict, finais: dict, itens: list[dict], hoje: date, ordens: dict) -> list[dict]:
@@ -333,8 +492,16 @@ def coerencia(cfg: dict, cals: dict, finais: dict, itens: list[dict], hoje: date
         return None if r is None else finais.get((k, noite), float(r["price"]))
 
     def livre(k, noite):
+        # fora_do_motor tira o quarto do PASSO de pace, não das regras de ordem do dono (Panorâmica II segue entre as duas)
         r = cals.get(k, {}).get(noite)
-        return r is not None and not esgotado(r, cfg["por_curto"][k]["unidades"]) and not cfg["por_curto"][k].get("fora_do_motor")
+        return r is not None and not esgotado(r, cfg["por_curto"][k]["unidades"])
+
+    def sobra(k, noite):
+        r = cals.get(k, {}).get(noite)
+        if r is None:
+            return 0
+        v, t = vendidas_total(r, cfg["por_curto"][k]["unidades"])
+        return max(0, t - v)
 
     def ajustar(k, noite, piso=None, teto=None, motivo="", ordem_id=None):
         d = data(noite)
@@ -343,6 +510,8 @@ def coerencia(cfg: dict, cals: dict, finais: dict, itens: list[dict], hoje: date
         r = cals[k][noite]
         atual = preco(k, noite)
         it = por_chave.get((k, noite))
+        if it is None and (piso is None or atual >= piso - 1) and (teto is None or atual <= teto + 1):
+            return  # regra já cumprida: não mexe (31/10: um item novo baixava o piso vigente da Afrodite de R$ 2.720 para R$ 1.810)
         if it is None:
             it = {"tipo": "data", "quarto": k, "data": noite, "preco_antes": float(r["price"]), "motivo": motivo}
             if ordem_id:
@@ -355,6 +524,9 @@ def coerencia(cfg: dict, cals: dict, finais: dict, itens: list[dict], hoje: date
                 it["max_price"] = it["min_price"]
         if teto is not None and (it.get("max_price") is None or teto < it["max_price"]):
             it["max_price"] = math.floor(max(teto, it.get("min_price") or 0))
+            if it.get("min_price") is None:
+                # piso vigente acima do teto novo deixaria piso > teto no PriceLabs (a API mescla os campos)
+                it["min_price"] = min(math.floor(float(r.get("min_price") or teto)), it["max_price"])
         if motivo and motivo not in it["motivo"]:
             it["motivo"] = (it["motivo"] + "; " + motivo)[:250]
         finais[(k, noite)] = float(it.get("min_price") or atual)
@@ -368,7 +540,8 @@ def coerencia(cfg: dict, cals: dict, finais: dict, itens: list[dict], hoje: date
                 ajustar("Q2", noite, piso=menor, teto=menor + 0.75 * (maior - menor),
                         motivo=f"Ordem do Recanto: Panorâmica II entre Moinhos (R$ {a:.0f}) e Panorâmica I (R$ {b:.0f})",
                         ordem_id="dono-2026-10-21-ordem-recanto")
-            if a is not None and b is not None and a > b + 1 and livre("Double", noite):
+            # a última unidade da Moinhos (preço de fim de estoque) não puxa a Panorâmica I para cima (31/10)
+            if a is not None and b is not None and a > b + 1 and livre("Double", noite) and sobra("Q7", noite) >= 2:
                 ajustar("Double", noite, piso=a, motivo=f"Ordem do Recanto: Panorâmica I não fica abaixo da Moinhos (R$ {a:.0f})")
             outras = [preco(k, noite) for k in ("Q7", "Q2", "Double") if livre(k, noite) and preco(k, noite) is not None]
             if outras and livre("Afrodite", noite):
@@ -379,13 +552,34 @@ def coerencia(cfg: dict, cals: dict, finais: dict, itens: list[dict], hoje: date
         if any((k, noite) in finais for k in ("VK7", "VK2", "Balcony")) and livre("Balcony", noite) and not periodo_feriado(cfg, d):
             refs = [preco(k, noite) for k in ("VK7", "VK2") if livre(k, noite) and preco(k, noite) is not None]
             if refs:
-                alvo_b = min(refs) * (1 - desc)
+                # Regra G (dono 07/10: "diferença de 10%"): a Balcony fica entre 95% do alvo e o alvo (10% abaixo da suíte
+                # com banheira livre mais barata), como o validador exige; o passo de pace da Balcony só escolhe DENTRO
+                # dessa faixa (31/10: o motor queria a Balcony 0/6 bem abaixo, a regra do dono não deixa)
+                ref = min(refs)
+                hi = math.floor(ref * (1 - desc))
+                lo = math.ceil(0.95 * (1 - desc) * (ref + 15)) + 1  # +15: arredondamento do percentual sobre a base
+                piso_b, _, _ = piso_com_ordem(cfg, "Balcony", d, ordens)
+                lo = max(lo, math.ceil(piso_b))
                 it = por_chave.get(("Balcony", noite))
-                if it is not None:
-                    it["min_price"] = min(it.get("min_price") or alvo_b, math.floor(alvo_b))
-                ajustar("Balcony", noite, teto=alvo_b,
-                        motivo=f"Regra G: Balcony {desc:.0%} abaixo da suíte com banheira livre mais barata (R$ {min(refs):.0f})",
-                        ordem_id="dono-2026-10-07-regra-g")
+                atual_b = preco("Balcony", noite)
+                base_b = float(it["min_price"]) if it is not None and it.get("min_price") is not None else atual_b
+                novo_b = min(max(base_b, lo), max(hi, lo))
+                mot = f"Regra G: Balcony {desc:.0%} abaixo da suíte com banheira livre mais barata (R$ {ref:.0f})"
+                if it is None and atual_b is not None and lo <= atual_b <= hi + 1:
+                    pass  # já na faixa da Regra G
+                elif livre("Balcony", noite) and not congelada(ordens, "Balcony", d) and not ordens_por_data(ordens, "Balcony", d):
+                    if it is None:
+                        r = cals["Balcony"][noite]
+                        it = {"tipo": "data", "quarto": "Balcony", "data": noite, "preco_antes": float(r["price"]),
+                              "motivo": mot, "excecao": "dono", "ordem_id": "dono-2026-10-07-regra-g"}
+                        por_chave[("Balcony", noite)] = it
+                        itens.append(it)
+                    elif mot not in it["motivo"]:
+                        it["motivo"] = (it["motivo"] + "; " + mot)[:250]
+                    it["min_price"] = it["max_price"] = int(novo_b)
+                    it.setdefault("excecao", "dono")
+                    it.setdefault("ordem_id", "dono-2026-10-07-regra-g")
+                    finais[("Balcony", noite)] = float(novo_b)
     return itens
 
 
@@ -442,6 +636,8 @@ def main(argv=None) -> int:
     pl.add_argument("--saida")
     pl.add_argument("--md")
     pl.add_argument("--sombra", action="store_true")
+    pl.add_argument("--regras", nargs="*", default=[], help="Q7=overrides.json ... (get_listing_date_overrides, D0-D60); obrigatório fora da sombra")
+    pl.add_argument("--saida-apagar", help="plano separado com as noites cujo teto/validade precisa ser apagado antes (padrão: <saida> com sufixo _apagar)")
     cv = sub.add_parser("curva")
     cv.add_argument("--tipo", default="semana")
     cv.add_argument("--dias", type=int, required=True)
@@ -476,17 +672,29 @@ def main(argv=None) -> int:
         bloq = {(x["quarto"], x["data"]) for x in ler_json(a.bloqueios).get("bloqueios", [])} if isinstance(ler_json(a.bloqueios), dict) else set()
     motor = cfg["parametros"].get("motor") or {}
     sombra = a.sombra or motor.get("modo", "sombra") == "sombra"
-    res = plano(cfg, ancora, cals, hoje, ordens, passos, bloq, a.dias, regra_j_ativa=motor.get("regra_j_ativa", True))
+    regras = ler_regras(a.regras) if a.regras else {}
+    if not sombra and not regras:
+        print("ERRO: fora da sombra o plano exige --regras Q7=<overrides.json> ... (regras por data vigentes, D0-D60): "
+              "sem elas o motor não sabe que teto soltar nem que min_stay preservar")
+        return 1
+    res = plano(cfg, ancora, cals, hoje, ordens, passos, bloq, a.dias, regra_j_ativa=motor.get("regra_j_ativa", True), regras=regras)
     md = relatorio_md(cfg, res, sombra)
     print(md)
     if a.md:
         Path(a.md).write_text(md, encoding="utf-8")
+    itens, apagar = ajustar_tetos(cfg, res["itens"], regras) if regras else (res["itens"], [])
     if a.saida:
         with open(a.saida, "w", encoding="utf-8") as f:
-            json.dump({"hoje": res["hoje"], "itens": res["itens"], "sombra": sombra}, f, ensure_ascii=False, indent=1)
-        print(f"{len(res['itens'])} itens em {a.saida}{' (SOMBRA: não grave)' if sombra else ''}")
-    if not sombra and res["itens"]:
-        registrar_passos(passos, res["itens"], dt.datetime.now(dt.timezone.utc), a.passos)
+            json.dump({"hoje": res["hoje"], "itens": itens, "sombra": sombra}, f, ensure_ascii=False, indent=1)
+        print(f"{len(itens)} itens em {a.saida}{' (SOMBRA: não grave)' if sombra else ''}")
+        if apagar:
+            sa = a.saida_apagar or re.sub(r"\.json$", "", a.saida) + "_apagar.json"
+            with open(sa, "w", encoding="utf-8") as f:
+                json.dump({"hoje": res["hoje"], "itens": apagar, "sombra": sombra}, f, ensure_ascii=False, indent=1)
+            print(f"{len(apagar)} noites com teto/validade a apagar ANTES, em {sa} (valide e grave este plano primeiro)")
+    de_pace = [x for x in itens if x.get("pace")]
+    if not sombra and de_pace:
+        registrar_passos(passos, de_pace, dt.datetime.now(dt.timezone.utc), a.passos)
     return 0
 
 

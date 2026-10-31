@@ -1,6 +1,6 @@
 # Estratégia de receita (versão 2.0, 30/10/2026: motor de pace ancorado no mercado com hidro)
 
-> **30/10/2026:** esta versão substitui a 1.3 (14/10). O motor de pace (seção 5) roda em **modo sombra** (calcula e relata, não grava) até o dono responder à decisão D3 (seção 13). Enquanto isso valem as ordens literais dele de 26 a 28/10 (escada por reserva e Regra J). Regras detalhadas em `regras.md` (seção 4d para o motor); parâmetros em `dados/quartos.json` → `parametros.pace`, `parametros.motor`, `parametros.fator_publico`; ordens do dono em `dados/ordens_dono.json`. Onde este texto divergir de `regras.md`, vale `regras.md`.
+> **31/10/2026: motor LIGADO pelo dono** ("Pode ligar o motor de pace. Pode fazer tudo também conforme planejado. Tudo que você verificou está correto. Vamos vender."). A escada por reserva e a Regra J encerraram em 30/10; as noites esgotadas recebem o piso de proteção do motor. Ajustes feitos ao ligar em `regras.md` 4d. D1 e D2 seguem com o dono (seção 13). Esta versão substitui a 1.3 (14/10). Regras detalhadas em `regras.md` (seção 4d para o motor); parâmetros em `dados/quartos.json` → `parametros.pace`, `parametros.motor`, `parametros.fator_publico`; ordens do dono em `dados/ordens_dono.json`. Onde este texto divergir de `regras.md`, vale `regras.md`.
 
 Documento único da estratégia das duas pousadas, escrito para o dono e para a rotina autônoma. Diz **o que queremos, com que régua medimos, em que ordem decidimos e o que só o dono resolve**.
 
@@ -58,7 +58,7 @@ O mercado se compara **público com público**: nossa posição é o percentil d
 ## 7. Em que ordem decidimos (lista única)
 1. **Limites de segurança e proibições** (`quartos.json` → `limites_seguranca`; `regras.md` seção 1): descontos da Booking e OTAs, Genius acima do 3, sábado sozinho, nada em reais por data, nunca abaixo de 70% do mínimo de referência.
 2. **Pisos e ordens do dono com validade** (`dados/ordens_dono.json`): pisos de 14 e 20/10, piso de feriado, ordens por data (6b), regras permanentes (Regra G, ordem do Recanto, Afrodite), mudanças feitas pela tela (congelam a noite por 7 dias). Toda exceção do validador exige `ordem_id` vigente.
-3. **Motor de pace** (seção 5). Enquanto em sombra: escada por reserva e Regra J (ordens de 26 a 28/10).
+3. **Motor de pace** (seção 5), ligado desde 31/10.
 4. **Coerência entre quartos** (Panorâmica II, Afrodite, Balcony).
 5. **Cadência e validador:** um passo por noite por dia; nada é gravado sem `validar_plano.py`; tudo conferido no recálculo, registrado com antes, depois e como desfazer.
 
@@ -94,7 +94,7 @@ Semáforo e ocupação dos próximos 7 dias; tabela quarto × janelas; **pace:**
 ## 13. O que só você resolve (hoje)
 - **D1. Pilha de descontos da Booking e o piso de dia de semana.** Com Genius 3 a 0,41 do enviado e público a 0,63, o piso de R$ 500 vira R$ 768 público, acima do máximo do mercado de dia de semana. Proposta: reduzir a pilha de descontos da Booking para no máximo 25% a 30% (com o mesmo R$ 500 no Genius, o público cairia para ~R$ 617) **ou** autorizar pisos de última hora menores de domingo a quinta. A skill não mexe em Genius nem em promoções: é na extranet.
 - **D2. Restrições no Beds24** (a estadia mínima do PriceLabs não chega à Booking): sábado é o único dia com bloqueio de chegada; sexta e domingo a quinta com 1 noite; sábado liberado para 1 noite na quarta-feira anterior se a pousada estiver abaixo de 60%; feriados com 2 noites e as pontas liberadas para 1 noite a 7 e a 3 dias quando sobrar; cadastrar o token só-leitura do Beds24 para a skill medir reservas e estadias.
-- **D3. Ligar o motor de pace** no lugar da escada por reserva (26 e 28/10) e da Regra J a 90% × 1,5 (27/10): esgotada e overbooking passam a ter piso de proteção p90 com teto livre; "pousada lotada" = 100%. Até a resposta, as ordens valem como estão e o motor fica em sombra.
+- **D3. Ligar o motor de pace: DECIDIDA em 31/10** ("Pode ligar o motor de pace"). Motor ligado; escada por reserva e Regra J encerradas; esgotada e overbooking com piso de proteção p90 (nunca abaixo dos pisos padrão do quarto) e teto livre.
 - Também: tarifa fixa da Panorâmica II na Booking; o Recanto invisível na Booking para o Natal (24 a 26/12) e para 2 noites no Finados; bloqueio da Villa em 05 a 07/11; mínimo da Balcony de R$ 690 para R$ 600 (proposta); Genius restrito às suítes de entrada; política de cancelamento (66% dos cancelamentos no dia ou véspera); conteúdo do anúncio da Villa (hidro não listada). Lista viva em `dados/pendencias.json`.
 
 ## Palavras que usamos

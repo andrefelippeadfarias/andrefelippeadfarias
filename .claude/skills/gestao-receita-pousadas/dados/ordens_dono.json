@@ -235,6 +235,26 @@
     "anuncio"
    ],
    "nota": "Decisão D3 (ligar o motor no lugar da escada por reserva e da Regra J) e 'tudo conforme planejado' no relatório de 30/10 19:31: proteção p90 com teto livre nas esgotadas, coerência entre quartos, mínimo do anúncio da Balcony de R$ 690 para R$ 600 (proposta com número). NÃO cobre: pisos do dono de R$ 500/850 no Genius 3 (decisão D1 continua dele), Genius/promoções da Booking e o Beds24 (D2)."
+  },
+  {
+   "id": "dono-2026-10-31-villa-reabrir-0507",
+   "data": "2026-10-31",
+   "texto": "Sim",
+   "contexto": "Resposta à proposta de 31/10 (~17:30 BRT), depois de o dono perguntar por que a Villa estava fechada de 6 a 8/11: gravar já os preços de reabertura da Villa em 05-07/11 (inventário fechado à mão no Beds24; reabrir é com o dono): sexta 06 e sábado 07/11 King Spa 7 e King Spa 2 no piso do dono de fim de semana (R$ 850 no Genius 3 = R$ 1.478 enviados, ~R$ 960 públicos), Balcony 10% abaixo (~R$ 1.330); quinta 05/11 no piso da ordem de 25/10 (R$ 710/711/635).",
+   "quartos": [
+    "VK7",
+    "VK2",
+    "Balcony"
+   ],
+   "de": "2026-11-05",
+   "ate": "2026-11-07",
+   "tipo": "regra",
+   "libera": [
+    "acima_15",
+    "fixo",
+    "abaixo_piso"
+   ],
+   "nota": "Não muda o Beds24. Enquanto as noites seguirem fechadas, os preços só valem quando o dono reabrir; depois de reaberta, a noite volta ao motor de pace (pisos padrão por baixo)."
   }
  ]
 }

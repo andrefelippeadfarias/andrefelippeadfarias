@@ -3164,6 +3164,19 @@ Sem passo de pace novo (o ledger segue com 92 passos); itens de coerência não 
 | Regra G no Réveillon: 90% da King Spa 2 livre (R$ 2.621) | Balcony, 29/12, 0/6 | R$ 2.755,90 (105%, acima da suíte) | R$ 2.349,50 (piso = teto, +85% da base) | "Volte a Balcony de 29/12 para +117%" |
 | Regra G no Réveillon: 90% da King Spa 7 livre (R$ 2.981) | Balcony, 30/12, 1/6 | R$ 2.755,90 (92% da suíte) | R$ 2.679,70 (piso = teto, +111% da base) | "Volte a Balcony de 30/12 para +117%" |
 
+## 31/10/2026, 19:10 — Villa: preços de reabertura de 5 a 7/11 (dono: "Sim")
+
+O dono perguntou por que a Villa estava fechada de 6 a 8/11 na Booking. A causa é o inventário fechado à mão no Beds24 em 5, 6 e 7/11 (pendência desde 14/10), com só 1 reserva real (King Spa 7, direta, R$ 3.761). Propus gravar os preços de reabertura e o dono respondeu "Sim" (ordem `dono-2026-10-31-villa-reabrir-0507`). No recálculo de validação (19:0x BRT), **a sexta e o sábado já estavam reabertos**: King Spa 7 com 3/7 e 2/7, Balcony 0/6 e King Spa 2 0/2, a R$ 2.525, R$ 2.096-2.896 e R$ 2.166 (muito acima do mercado com hidro do fim de semana, R$ 653 a R$ 1.144 públicos). A quinta 05/11 segue fechada (7/7, 6/6, 2/2).
+
+Validador: 9 itens, 0 erros (calendário da Villa recalculado às 19:0x BRT; 2 avisos de piso de vitrine na quinta, liberado pela ordem de 25/10). Gravação conferida na resposta da API (9 de 9; estadia mínima 2 no sábado mantida). **Chega à Booking só com Sync Now do PriceLabs ou no envio de 01/11 às 05:34.**
+
+| Mudança | Onde | Antes | Depois (gravado 19:09 BRT) | Como desfazer (pedir ao Claude) |
+|---|---|---|---|---|
+| Reabertura no piso do dono de fds (R$ 850 no Genius 3) | King Spa 7, 06 e 07/11 | R$ 2.525 (piso R$ 1.480, sem teto) | R$ 1.480 (piso = teto, 0% da base) | "Tire o teto da King Spa 7 de 06 e 07/11" |
+| Reabertura no piso do dono de fds | King Spa 2, 06 e 07/11 | R$ 2.166 (piso R$ 1.499) | R$ 1.485,90 (piso = teto, +17%) | "Tire o teto da King Spa 2 de 06 e 07/11" |
+| Regra G: 10% abaixo da King Spa 7 | Balcony, 06 e 07/11 | R$ 2.096 / R$ 2.896 (piso = teto) | R$ 1.320,80 (piso = teto, +4%) | "Volte a Balcony de 06 e 07/11 para +65% e +128%" |
+| Quinta no piso da ordem de 25/10 (público ~R$ 450); noite ainda fechada no Beds24 | King Spa 7 / King Spa 2 / Balcony, 05/11 | R$ 1.066 / R$ 1.067 / R$ 952 (piso = teto da Regra J antiga) | R$ 710,40 / R$ 711,20 / R$ 635 (piso = teto) | "Volte a Villa de 05/11 para −28% / −16% / −25%" |
+
 > **Regras em vigor:** desde 06/10/2026 elas ficam em `.claude/skills/gestao-receita-pousadas/references/regras.md`. Este arquivo guarda só o histórico das mudanças.
 
 ## O que só pode ser feito na tela (passo a passo para você)

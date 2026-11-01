@@ -530,7 +530,11 @@ def plano(cfg: dict, ancora: dict, cals: dict, hoje: date, ordens: dict, passos:
             piso, origem_piso, ordem_piso = piso_com_ordem(cfg, curto, d, ordens if usa_ordem or not ao else sem_alvo(ordens))
             reta = None
             if escada_ordem:
-                piso_pad, _, _ = piso_com_ordem(cfg, curto, d, sem_alvo(ordens))
+                # topo da rampa (dono 01/11; revisão 01/11): o piso padrão do dono (R$ 500/850 no Genius 3), mesmo quando
+                # uma ordem piso_por_data da semana o suspende (senão piso = topo e a escada fica plana: King Spa 7 05/11),
+                # ou o `topo_enviados` da ordem (festas da Villa: do alvo de hoje ao preço de antes, pelas vendas)
+                piso_pad = max(piso_com_ordem(cfg, curto, d, sem_alvo(ordens))[0], pisos_enviados(cfg, curto, d)[0],
+                               float((ao.get("topo_enviados") or {}).get(curto) or 0))
                 reta = max(alvo_env, piso_com_vendas(piso, piso_pad, oc))
                 if reta >= atual:
                     # sobe aos poucos: no máximo o limite de passo da antecedência (pmax) por vez; cada reserva nova

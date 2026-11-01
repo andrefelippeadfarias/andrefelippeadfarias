@@ -3385,6 +3385,40 @@ Como desfazer (pedir ao Claude): "Tire a Villa da base do mercado e volte as noi
 
 **King Spa 7 05/11 (2→3/7) não subiu:** a ordem de 25/10 ("público ~R$ 450") fixa o piso dessa noite em R$ 710, e o motor usa o mesmo valor como topo da rampa. Correção com teste na rotina das 07:53 (pendência escada-piso-por-data). Recálculo da King Spa 7: 1 usado nesta rodada.
 
+## 01/11/2026, 20:20 — Dezembro: Natal do Recanto liberado, Villa das festas na mediana e gatilhos (dono: "Sim")
+
+**Pedido:** "Sim" às propostas 1, 2 e 3 do relatório de dezembro (`pricelabs/analise-dezembro-2026.md`).
+
+**1. Natal do Recanto (20:15 BRT, Beds24 relido; Afrodite também no PriceLabs, conferido na API):**
+- O sábado 26/12 dos 4 quartos do Recanto passou de "sem saída" para livre.
+- O sábado 02/01 da Afrodite também.
+- A estadia mínima ficou: 2 noites em 24-26/12 e 3 em 29/12-02/01.
+- O pacote 24→26/12 passa a vender. A sexta e o sábado sozinhos continuam barrados pela estadia mínima.
+- Como desfazer (pedir ao Claude): "Feche de novo a saída do sábado 26/12 no Recanto".
+
+**2. Villa nas noites em que estava cara e atrás do mercado (20:19 BRT; validado com 0 erros; conferido na API):**
+- **Regra de preço:** cada noite fica no alvo com 0 vendida e sobe, pela escada, até o preço de antes, que vale com a última unidade. A Balcony fica 10% abaixo da suíte livre mais barata (Regra G).
+- **Pisos antigos:** os de 14/10, que prendiam o preço, saíram.
+
+| Noite | King Spa 7 (vendidas) | King Spa 2 | Balcony |
+|---|---|---|---|
+| 21/12 | R$ 2.871 → R$ 1.695 (1/7) ≈ R$ 1.102 público | esgotada | R$ 2.578 → R$ 1.524 ≈ R$ 991 |
+| 22-23/12 | R$ 2.871 → R$ 1.695 (1/7) | R$ 3.099 → R$ 1.855 (Villa 2/9) ≈ R$ 1.206 | R$ 2.578 → R$ 1.524 |
+| 27/12 | R$ 3.493 → R$ 2.077 (0/7) ≈ R$ 1.350 | R$ 3.010 → R$ 2.077 | R$ 2.718 → R$ 1.867 |
+| 28/12 | R$ 3.493 → R$ 2.279 (1/7) ≈ R$ 1.481 | R$ 3.010 → R$ 2.180 | R$ 2.718 → R$ 1.956 |
+
+- **Alvo de referência:** mediana dos quartos com hidro na Booking de R$ 868 (21-23/12) e R$ 1.348 (26-28/12).
+- **Ordens:** `dono-2026-11-01-villa-pre-natal-mediana` e `-villa-27-28-mediana`.
+- Como desfazer: "Volte a Villa de 21-23 e 27-28/12 ao preço de antes".
+
+**3. Gatilhos de ritmo nas festas (24/12 a 01/01):**
+- Toda rotina completa compara cada noite com o mercado.
+- Noite mais de 5 pontos atrás em 2 rotinas seguidas: desce um degrau (5-10%), até o piso de feriado.
+- Noite à frente: a escada sobe.
+- Ordem `dono-2026-11-01-gatilhos-festas`.
+
+**Motor:** o topo da rampa da escada passou a ser o piso padrão do dono, ou o `topo_enviados` da ordem. A King Spa 7 de 05/11 (2→3/7) e outras noites da semana com ordem de piso sobem na rotina das 07:53.
+
 > **Regras em vigor:** desde 06/10/2026 elas ficam em `.claude/skills/gestao-receita-pousadas/references/regras.md`. Este arquivo guarda só o histórico das mudanças.
 
 ## O que só pode ser feito na tela (passo a passo para você)

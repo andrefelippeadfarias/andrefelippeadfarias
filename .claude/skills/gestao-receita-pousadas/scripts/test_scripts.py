@@ -1541,6 +1541,44 @@ class TestPace(unittest.TestCase):
         self.assertTrue(it)
         self.assertEqual(it[0]["pace"]["direcao"], "sobe")
 
+    def test_escada_topo_da_rampa(self):
+        """Revisão 01/11 (19:53): com ordem piso_por_data na noite, o topo da rampa é o piso padrão do dono (a escada não
+        fica plana); com `topo_enviados`, a rampa vai do alvo da ordem ao preço de antes, pelas vendas."""
+        import pace
+        self.cfg["parametros"]["pace"]["escada_vendas"]["ativa"] = True
+        n = "2026-11-24"
+        d = date(2026, 11, 24)
+        an = {"p25": 200, "p50": 250, "p75": 300, "p90": 350, "max": 400, "n": 19, "busca_em": "2026-10-30", "tipo": "semana",
+              "p50_medido": True}
+        esc = {"id": "o-esc", "tipo": "alvo_por_data", "quartos": ["VK7"], "de": n, "ate": n, "percentil": 50,
+               "passo_livre": True, "noites": [n], "escada_vendas": True, "pisos_enviados": {"VK7": 710},
+               "libera": ["abaixo_piso", "acima_15"], "ocupacao_max": 0.7, "frente_ocupacao": 0.5}
+        pisod = {"id": "o-piso", "tipo": "piso_por_data", "quartos": ["VK7"], "de": n, "ate": n, "noites": [n],
+                 "pisos_enviados": {"VK7": 710}, "libera": ["fixo", "abaixo_piso"]}
+        padrao = pace.pisos_enviados(self.cfg, "VK7", d)[0]
+        self.assertGreater(padrao, 710)
+
+        def item(mu, preco, ordens):
+            cal = {"VK7": {n: {"price": str(preco), "min_price": str(preco), "max_price": str(preco), "mu_occupancy": mu}}}
+            res = pace.plano(self.cfg, {"noites": {n: an}, "por_tipo": {}}, cal, date(2026, 11, 1), ordens, {"passos": []},
+                             dias=30, regra_j_ativa=False)
+            its = [i for i in res["itens"] if i["quarto"] == "VK7" and i["data"] == n]
+            return its[0] if its else None
+        # piso_por_data + escada: 3/7 vendidas a R$ 710 sobe (antes ficava plana em 710)
+        i = item("3/7", 710, {"o-esc": esc, "o-piso": pisod})
+        self.assertIsNotNone(i)
+        self.assertEqual(i["pace"]["direcao"], "sobe")
+        self.assertGreater(i["min_price"], 710)
+        # topo_enviados: alvo 1500, topo 2871; 2/7 vendidas a R$ 2871 desce para a reta 1500 + 1371 × 2/7
+        fest = dict(esc, pisos_enviados={"VK7": 1500}, topo_enviados={"VK7": 2871})
+        i = item("2/7", 2871, {"o-esc": fest})
+        self.assertEqual(i["pace"]["direcao"], "desce")
+        self.assertAlmostEqual(i["min_price"], 1500 + 1371 * 2 / 7, delta=2)
+        # e cada venda nova sobe pela mesma reta (3/7 a partir de 1892)
+        i = item("3/7", 1892, {"o-esc": fest})
+        self.assertEqual(i["pace"]["direcao"], "sobe")
+        self.assertAlmostEqual(i["min_price"], min(1500 + 1371 * 3 / 7, 1892 * 1.10), delta=2)
+
     def test_pisos_enviados(self):
         import pace
         # dia de semana fora de feriado: R$ 500 Genius ÷ 0,63 (CFG do teste) = R$ 794 > mínimo R$ 800? não: vale o mínimo

@@ -541,6 +541,109 @@
    "nota": "Recanto só na quinta 19/11 (20 e 21/11 vendem bem e ficam com o motor). Piso de feriado R$ 1.905 enviados (≈ R$ 1.200 público); Afrodite segue acima das outras. Só desce (so_desce): o p75 é teto do pedido, não alvo de subida; a noite que passa a vender bem sai da ordem e segue o motor (com a escada de vendas).",
    "so_desce": true,
    "criada_em": "2026-11-01T20:55+00:00"
+  },
+  {
+   "data": "2026-11-01",
+   "criada_em": "2026-11-01T23:25+00:00",
+   "texto": "Sim",
+   "contexto": "Resposta à proposta 2 da análise de dezembro (pricelabs/analise-dezembro-2026.md, 20:30 BRT): Villa nas noites em que está cara e atrás do mercado, suítes com banheira perto da mediana dos quartos com hidro na Booking, a Balcony 10% abaixo pela Regra G, a escada subindo a cada venda.",
+   "quartos": [
+    "VK7",
+    "VK2"
+   ],
+   "tipo": "alvo_por_data",
+   "percentil": 50,
+   "passo_livre": true,
+   "escada_vendas": true,
+   "libera": [
+    "acima_15"
+   ],
+   "ocupacao_max": 0.7,
+   "frente_ocupacao": 0.5,
+   "id": "dono-2026-11-01-villa-pre-natal-mediana",
+   "de": "2026-12-21",
+   "ate": "2026-12-23",
+   "noites": [
+    "2026-12-21",
+    "2026-12-22",
+    "2026-12-23"
+   ],
+   "pisos_enviados": {
+    "VK7": 1500,
+    "VK2": 1500
+   },
+   "topo_enviados": {
+    "VK7": 2871,
+    "VK2": 3099
+   },
+   "nota": "Alvo R$ 1.500 enviados (~R$ 975 público; mediana com hidro de 21-23/12 na Booking R$ 868, p75 R$ 1.373). A rampa da escada vai do alvo (0 vendida) ao preço de antes (VK7 R$ 2.871, VK2 R$ 3.099, pisos de 14/10 que saem) pela ocupação; com as vendas de hoje, a noite fica entre os dois. A régua do motor (dia de semana genérico de dezembro) não serve a essas noites. Validade 23/12."
+  },
+  {
+   "data": "2026-11-01",
+   "criada_em": "2026-11-01T23:25+00:00",
+   "texto": "Sim",
+   "contexto": "Resposta à proposta 2 da análise de dezembro (pricelabs/analise-dezembro-2026.md, 20:30 BRT): Villa nas noites em que está cara e atrás do mercado, suítes com banheira perto da mediana dos quartos com hidro na Booking, a Balcony 10% abaixo pela Regra G, a escada subindo a cada venda.",
+   "quartos": [
+    "VK7",
+    "VK2"
+   ],
+   "tipo": "alvo_por_data",
+   "percentil": 50,
+   "passo_livre": true,
+   "escada_vendas": true,
+   "libera": [
+    "acima_15"
+   ],
+   "ocupacao_max": 0.7,
+   "frente_ocupacao": 0.5,
+   "id": "dono-2026-11-01-villa-27-28-mediana",
+   "de": "2026-12-27",
+   "ate": "2026-12-28",
+   "noites": [
+    "2026-12-27",
+    "2026-12-28"
+   ],
+   "pisos_enviados": {
+    "VK7": 2077,
+    "VK2": 2077
+   },
+   "topo_enviados": {
+    "VK7": 3493,
+    "VK2": 3010
+   },
+   "nota": "Alvo R$ 2.077 enviados (~R$ 1.350 público; mediana com hidro de 26-28/12 R$ 1.348). Rampa até o preço de antes (VK7 R$ 3.493, VK2 R$ 3.010). Validade 28/12."
+  },
+  {
+   "id": "dono-2026-11-01-gatilhos-festas",
+   "data": "2026-11-01",
+   "criada_em": "2026-11-01T23:25+00:00",
+   "texto": "Sim",
+   "contexto": "Resposta à proposta 3 da análise de dezembro: gatilhos de ritmo nas festas.",
+   "tipo": "acompanhamento",
+   "quartos": [
+    "Q7",
+    "Double",
+    "Afrodite",
+    "Q2",
+    "VK7",
+    "VK2",
+    "Balcony"
+   ],
+   "de": "2026-12-24",
+   "ate": "2027-01-01",
+   "noites": [
+    "2026-12-24",
+    "2026-12-25",
+    "2026-12-26",
+    "2026-12-27",
+    "2026-12-28",
+    "2026-12-29",
+    "2026-12-30",
+    "2026-12-31",
+    "2027-01-01"
+   ],
+   "libera": [],
+   "nota": "Rotina completa (07:53): para cada noite de festa, compare nosso vendido (Beds24) com o já reservado do mercado (PriceLabs get_neighbourhood_data/get_listing_neighborhood_market, apartamentos e categoria R). Mais de 5 pontos atrás nas 2 rotinas completas seguidas: desce um degrau (5-10%) a noite da pousada atrás, até o piso de feriado (nunca abaixo). À frente: a escada de vendas sobe. Registra a comparação no relatório. Validade 01/01/2027."
   }
  ]
 }

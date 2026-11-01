@@ -771,15 +771,23 @@
    "responsavel": "skill",
    "desde": "2026-11-01",
    "urgencia": 1,
-   "texto": "Escada de vendas plana nas noites com ordem piso_por_data (25/10 'público ~R$ 450' na Villa e 26/10 'R$ 300 no Genius 3' no Recanto: 02-05/11 e 08/11): o topo da rampa (piso padrão) é calculado com sem_alvo(ordens), que mantém a ordem piso_por_data; piso e topo ficam iguais (VK7 05/11: 2→3/7 às 18:33 e o preço ficou em R$ 710). Corrigir na rotina das 07:53 de 02/11 com teste: topo = pisos_enviados padrão do dono (R$ 500/850 no Genius 3) quando a noite tem ordem de escada."
+   "texto": "Escada de vendas plana nas noites com ordem piso_por_data (25/10 'público ~R$ 450' na Villa e 26/10 'R$ 300 no Genius 3' no Recanto: 02-05/11 e 08/11): o topo da rampa (piso padrão) é calculado com sem_alvo(ordens), que mantém a ordem piso_por_data; piso e topo ficam iguais (VK7 05/11: 2→3/7 às 18:33 e o preço ficou em R$ 710). Corrigir na rotina das 07:53 de 02/11 com teste: topo = pisos_enviados padrão do dono (R$ 500/850 no Genius 3) quando a noite tem ordem de escada. RESOLVIDA em 01/11 20:20 BRT: topo da rampa = max(piso com ordens sem alvo, pisos padrão do dono, topo_enviados da ordem); teste test_escada_topo_da_rampa. Os degraus que estavam presos (ex.: King Spa 7 05/11 R$ 710 → 811; King Spa 2 05/11 R$ 711 → 789; King Spa 7 03/11 R$ 710 → 744) saem na rotina das 07:53.",
+   "resolvida_em": "2026-11-01"
   },
   {
    "id": "dezembro-2026-propostas",
    "responsavel": "dono",
    "desde": "2026-11-01",
    "urgencia": 1,
-   "texto": "Análise de dezembro (pricelabs/analise-dezembro-2026.md): esperando o dono nas propostas 1 (Natal do Recanto: tirar 'sem saída' de 26/12 nos 4 quartos e de 02/01 na Afrodite, estadia 2 mantida), 3 (Villa 21-23/12 e 27-28/12: ordem só para baixar, suítes perto da mediana com hidro, pisos de 14/10 saem) e 7 (gatilhos de ritmo nas festas), e nas ações de extranet do item 8 (avaliações do Recanto, selo de hidro da Villa, tarifa não reembolsável nas festas, pacotes). Régua do motor: sombra com a varredura de 01/11 na revisão de 09/11."
+   "texto": "Análise de dezembro (pricelabs/analise-dezembro-2026.md): esperando o dono nas propostas 1 (Natal do Recanto: tirar 'sem saída' de 26/12 nos 4 quartos e de 02/01 na Afrodite, estadia 2 mantida), 3 (Villa 21-23/12 e 27-28/12: ordem só para baixar, suítes perto da mediana com hidro, pisos de 14/10 saem) e 7 (gatilhos de ritmo nas festas), e nas ações de extranet do item 8 (avaliações do Recanto, selo de hidro da Villa, tarifa não reembolsável nas festas, pacotes). Régua do motor: sombra com a varredura de 01/11 na revisão de 09/11. Dono 01/11 20:15 BRT: \"Sim\" às propostas 1, 3 e 7 (aplicadas às 20:15-20:20; ordens dono-2026-11-01-villa-pre-natal-mediana, -villa-27-28-mediana e -gatilhos-festas). Falta o item 8 (extranet) e a régua do motor em sombra em 09/11."
+  },
+  {
+   "id": "villa-trava-sabado-booking",
+   "responsavel": "skill",
+   "desde": "2026-11-01",
+   "urgencia": 0,
+   "texto": "A Booking da Villa não aplica o 'sem saída' de sábado do Beds24 (vende 24→26/12, 17→19/12 e 30/12→02/01 com noCheckOut em 19/12, 26/12 e 02/01), e a do Recanto aplica. Descobrir por quê (mapeamento de restrições do canal no Beds24) e dizer ao dono se a sexta sozinha da Villa está protegida só pela estadia mínima."
   }
  ],
- "versao": "2026-11-01T23"
+ "versao": "2026-11-01T23b"
 }

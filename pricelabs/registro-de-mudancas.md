@@ -3260,6 +3260,13 @@ Resultado: os 364 sábados do ano (7 quartos) aceitam chegada; nenhuma estadia m
 - 284 quarto-noites de domingo a quinta com estadia 2 ou 3 onde o calendário pede 1 (dezembro 01-23 e 27-28, janeiro na Villa, 31/01, 10-11/02, 22/04, 01-07/07 e 26-29/07). Proposta: 1 noite.
 - King Spa 7: 2 unidades fechadas sem reserva na sexta 06/11 e 1 no sábado 07/11.
 
+## 01/11/2026, 13:53 — Rotina leve: 4 reservas novas, 1 lançada a R$ 1,72; nenhuma gravação
+
+- **Reservas desde 10:50 BRT (Beds24):** Panorâmica I 05-08/11 (Booking, 3 noites, R$ 1.725,76); Panorâmica I 15/11 (Airbnb, 1 noite, R$ 270,30); King Spa 2 06-08/11 (Airbnb, 2 noites, R$ 1.159,08); King Spa 7 04-06/12 (direta, lançada à mão por VillaRecep1, **R$ 1,72** contra ~R$ 3.434 esperados: pendência `reserva-vk7-0412-r172`). As "alteradas" são estadias já encerradas (Finados). Nenhum cancelamento.
+- **Mudanças manuais no PriceLabs:** nenhuma (só as gravações da skill pela API de manhã).
+- **Inventário do Beds24 (60 dias):** nenhum sábado com a chegada fechada; seguem só os achados já levados ao dono (King Spa 7 com 2 e 1 unidades fechadas sem reserva em 06 e 07/11; Afrodite com a chegada de sexta fechada).
+- **Sem gravação:** nenhuma venda em D0 a D3 nem noite esgotada nova (a proteção e o passo do motor ficam para as 07:53); sem recálculo (orçamento guardado).
+
 > **Regras em vigor:** desde 06/10/2026 elas ficam em `.claude/skills/gestao-receita-pousadas/references/regras.md`. Este arquivo guarda só o histórico das mudanças.
 
 ## O que só pode ser feito na tela (passo a passo para você)

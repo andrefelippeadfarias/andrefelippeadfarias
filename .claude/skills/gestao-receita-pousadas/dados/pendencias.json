@@ -725,7 +725,14 @@
    "desde": "2026-11-01",
    "urgencia": 2,
    "texto": "Revisão de 365 dias (Beds24): 284 quarto-noites de domingo a quinta, fora de feriado, com estadia mínima 2 ou 3 onde o calendário de sazonalidade pede 1 (1.196 unidades-noite livres hoje): 01-23/12 e 27-28/12 (7 quartos), 03-21/01 e 25-28/01 (Villa), 31/01, 10-11/02 (Cinzas), 22/04, 01-07/07 e 26-29/07 (7 quartos). Quem busca 1 noite nessas datas vê 'indisponível'. Proposta: 1 noite em todas (o pico de julho, 11-25/07, fica com 2 pelo calendário). Lote pronto (só minStay) para aplicar com o 'sim' do dono; sem o sim, a Regra A (1 noite a até 14 dias) segue valendo só no PriceLabs, que não envia estadia ao Beds24."
+  },
+  {
+   "id": "reserva-vk7-0412-r172",
+   "responsavel": "dono",
+   "desde": "2026-11-01",
+   "urgencia": 0,
+   "texto": "Reserva direta 95546158 na King Spa 7, 04 a 06/12 (2 noites), lançada à mão no Beds24 pelo usuário VillaRecep1 em 01/11 às 12:30 BRT com valor de R$ 1,72 (esperado ~R$ 3.434 pela tabela). Confirmar se é bloqueio, cortesia ou erro de lançamento e corrigir o valor antes da confirmação ao hóspede. A skill não altera reservas."
   }
  ],
- "versao": "2026-11-01T02"
+ "versao": "2026-11-01T03"
 }

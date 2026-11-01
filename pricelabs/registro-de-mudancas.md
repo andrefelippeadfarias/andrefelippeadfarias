@@ -3209,6 +3209,21 @@ Validador: 3 itens, 0 erros. Gravado às 07:39 BRT, depois do Sync Now do dono (
 | Fica com os pisos do dono (vende bem: 1/2, à frente) | Panorâmica II, 22/11 (dom) | R$ 604,20 (base) | R$ 1.224,30 (piso = teto, piso do dono) | "Volte a Panorâmica II de 22/11 para −62%" |
 | Ordem do Recanto (Panorâmica I ≥ Panorâmica II e Moinhos) | Panorâmica I, 23/11 | piso R$ 1.228,40 | piso R$ 1.243,20 (−16%) | "Volte a Panorâmica I de 23/11 para −17%" |
 
+## 01/11/2026, 08:15 — Rotina das 07:53: motor de pace na Villa (55 noites) e vendas da King Spa 2
+
+Coleta completa às 07:55-08:05 (recálculo e envio dos 7 quartos às 07:22 pelo Sync Now do dono). Mudanças desde ontem: King Spa 2 vendeu 08, 09 e 10/11 (08 e 09 esgotadas) e 30/11 (Airbnb); Villa 06-07/11 reaberta (05/11 segue fechada); Moinhos de hoje (Finados) com 1 unidade livre (estadia mínima de 3 noites do Finados; não mexida). Sem mudança manual. Buscas de concorrentes de novo sem mediana com hidro: âncora de 30/10 mantida. Recanto: sem passo novo (descido às 07:05 pela ordem da base do mercado; cadência).
+
+Plano do motor com as regras vigentes lidas às 08:00; validador: apagar 1 + 55 itens, 0 erros. Gravação 08:09-08:12 BRT conferida na resposta da API (56 de 56; estadia mínima de sábados, Consciência Negra, Natal e Réveillon mantida). Ledger: 52 passos. Vai ao canal no Sync Now ou no envio automático de amanhã.
+
+| Mudança | Onde | Antes | Depois | Como desfazer (pedir ao Claude) |
+|---|---|---|---|---|
+| Proteção da noite esgotada (2/2): teto antigo apagado e piso p90 | King Spa 2, 08/11 | R$ 1.067 (piso = teto) | piso R$ 952,50, teto livre | "Volte a King Spa 2 de 08/11 para R$ 1.067" |
+| Motor (muito atrás 1/7, D2) | King Spa 7, 03/11 | R$ 858 | R$ 710,40 (piso da ordem de 25/10) | "Volte a King Spa 7 de 03/11 para R$ 858" |
+| Motor (à frente 5/7, D3): sobe | King Spa 7, 04/11 | R$ 829 | piso R$ 888 / teto R$ 917,60 | "Volte a King Spa 7 de 04/11 para R$ 829" |
+| Motor (passo de 10% em D8-30; 5% em 31+) | King Spa 7 09, 20-21, 28/11 e 04-05, 11, 18-19, 25/12; King Spa 2 13-14, 20-21, 27-28/11 e 04-05, 11, 15-16, 18-19/12 | ver plano | −5% a −10% por noite | "Desfaça os passos da Villa de 01/11" |
+| Regra G (10% abaixo da suíte com banheira livre mais barata) | Balcony 04, 08, 09/11 (sobe: King Spa 2 esgotada, referência passa a King Spa 7) | R$ 724 / R$ 952 / R$ 838 | R$ 774,70 / R$ 1.320,80 / R$ 1.104,90 | "Volte a Balcony de 04, 08 e 09/11" |
+| Motor + Regra G | Balcony 03, 06-07, 13-18, 20-21, 27-29/11 e 04-05, 11-12, 15-16, 18-19, 24-25, 29-30/12 | ver plano | −2% a −16% (dentro da faixa da Regra G) | "Desfaça os passos da Balcony de 01/11" |
+
 > **Regras em vigor:** desde 06/10/2026 elas ficam em `.claude/skills/gestao-receita-pousadas/references/regras.md`. Este arquivo guarda só o histórico das mudanças.
 
 ## O que só pode ser feito na tela (passo a passo para você)

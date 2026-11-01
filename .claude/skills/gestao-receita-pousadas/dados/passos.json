@@ -1350,6 +1350,526 @@
    "status": "ritmo",
    "gravado_em": "2026-11-01T10:04+00:00",
    "chegou_ao_canal": "2026-11-01T10:22+00:00"
+  },
+  {
+   "quarto": "VK7",
+   "noite": "2026-11-03",
+   "de": 858.0,
+   "para": 710,
+   "direcao": "desce",
+   "status": "muito_atras",
+   "gravado_em": "2026-11-01T11:06+00:00",
+   "chegou_ao_canal": false
+  },
+  {
+   "quarto": "Balcony",
+   "noite": "2026-11-03",
+   "de": 762.0,
+   "para": 635,
+   "direcao": "desce",
+   "status": "muito_atras",
+   "gravado_em": "2026-11-01T11:06+00:00",
+   "chegou_ao_canal": false
+  },
+  {
+   "quarto": "VK7",
+   "noite": "2026-11-04",
+   "de": 829.0,
+   "para": 877,
+   "direcao": "sobe",
+   "status": "frente",
+   "gravado_em": "2026-11-01T11:06+00:00",
+   "chegou_ao_canal": false
+  },
+  {
+   "quarto": "Balcony",
+   "noite": "2026-11-04",
+   "de": 724.0,
+   "para": 635,
+   "direcao": "desce",
+   "status": "atras",
+   "gravado_em": "2026-11-01T11:06+00:00",
+   "chegou_ao_canal": false
+  },
+  {
+   "quarto": "Balcony",
+   "noite": "2026-11-06",
+   "de": 1321.0,
+   "para": 1122,
+   "direcao": "desce",
+   "status": "muito_atras",
+   "gravado_em": "2026-11-01T11:06+00:00",
+   "chegou_ao_canal": false
+  },
+  {
+   "quarto": "Balcony",
+   "noite": "2026-11-07",
+   "de": 1321.0,
+   "para": 1122,
+   "direcao": "desce",
+   "status": "muito_atras",
+   "gravado_em": "2026-11-01T11:06+00:00",
+   "chegou_ao_canal": false
+  },
+  {
+   "quarto": "Balcony",
+   "noite": "2026-11-08",
+   "de": 952.0,
+   "para": 880,
+   "direcao": "desce",
+   "status": "muito_atras",
+   "gravado_em": "2026-11-01T11:06+00:00",
+   "chegou_ao_canal": false
+  },
+  {
+   "quarto": "VK7",
+   "noite": "2026-11-09",
+   "de": 1332.0,
+   "para": 1265,
+   "direcao": "desce",
+   "status": "ritmo",
+   "gravado_em": "2026-11-01T11:06+00:00",
+   "chegou_ao_canal": false
+  },
+  {
+   "quarto": "Balcony",
+   "noite": "2026-11-09",
+   "de": 838.0,
+   "para": 796,
+   "direcao": "desce",
+   "status": "atras",
+   "gravado_em": "2026-11-01T11:06+00:00",
+   "chegou_ao_canal": false
+  },
+  {
+   "quarto": "VK2",
+   "noite": "2026-11-13",
+   "de": 2210.0,
+   "para": 1989,
+   "direcao": "desce",
+   "status": "ritmo",
+   "gravado_em": "2026-11-01T11:06+00:00",
+   "chegou_ao_canal": false
+  },
+  {
+   "quarto": "Balcony",
+   "noite": "2026-11-13",
+   "de": 1905.0,
+   "para": 1714,
+   "direcao": "desce",
+   "status": "muito_atras",
+   "gravado_em": "2026-11-01T11:06+00:00",
+   "chegou_ao_canal": false
+  },
+  {
+   "quarto": "VK2",
+   "noite": "2026-11-14",
+   "de": 2210.0,
+   "para": 1989,
+   "direcao": "desce",
+   "status": "ritmo",
+   "gravado_em": "2026-11-01T11:06+00:00",
+   "chegou_ao_canal": false
+  },
+  {
+   "quarto": "Balcony",
+   "noite": "2026-11-14",
+   "de": 1905.0,
+   "para": 1714,
+   "direcao": "desce",
+   "status": "muito_atras",
+   "gravado_em": "2026-11-01T11:06+00:00",
+   "chegou_ao_canal": false
+  },
+  {
+   "quarto": "Balcony",
+   "noite": "2026-11-15",
+   "de": 838.0,
+   "para": 796,
+   "direcao": "desce",
+   "status": "ritmo",
+   "gravado_em": "2026-11-01T11:06+00:00",
+   "chegou_ao_canal": false
+  },
+  {
+   "quarto": "Balcony",
+   "noite": "2026-11-16",
+   "de": 838.0,
+   "para": 796,
+   "direcao": "desce",
+   "status": "ritmo",
+   "gravado_em": "2026-11-01T11:06+00:00",
+   "chegou_ao_canal": false
+  },
+  {
+   "quarto": "Balcony",
+   "noite": "2026-11-17",
+   "de": 838.0,
+   "para": 754,
+   "direcao": "desce",
+   "status": "ritmo",
+   "gravado_em": "2026-11-01T11:06+00:00",
+   "chegou_ao_canal": false
+  },
+  {
+   "quarto": "Balcony",
+   "noite": "2026-11-18",
+   "de": 838.0,
+   "para": 754,
+   "direcao": "desce",
+   "status": "ritmo",
+   "gravado_em": "2026-11-01T11:06+00:00",
+   "chegou_ao_canal": false
+  },
+  {
+   "quarto": "VK7",
+   "noite": "2026-11-20",
+   "de": 3256.0,
+   "para": 2930,
+   "direcao": "desce",
+   "status": "ritmo",
+   "gravado_em": "2026-11-01T11:06+00:00",
+   "chegou_ao_canal": false
+  },
+  {
+   "quarto": "VK2",
+   "noite": "2026-11-20",
+   "de": 3442.0,
+   "para": 3097,
+   "direcao": "desce",
+   "status": "ritmo",
+   "gravado_em": "2026-11-01T11:06+00:00",
+   "chegou_ao_canal": false
+  },
+  {
+   "quarto": "Balcony",
+   "noite": "2026-11-20",
+   "de": 2032.0,
+   "para": 1828,
+   "direcao": "desce",
+   "status": "ritmo",
+   "gravado_em": "2026-11-01T11:06+00:00",
+   "chegou_ao_canal": false
+  },
+  {
+   "quarto": "VK7",
+   "noite": "2026-11-21",
+   "de": 2250.0,
+   "para": 2051,
+   "direcao": "desce",
+   "status": "ritmo",
+   "gravado_em": "2026-11-01T11:06+00:00",
+   "chegou_ao_canal": false
+  },
+  {
+   "quarto": "VK2",
+   "noite": "2026-11-21",
+   "de": 3442.0,
+   "para": 3097,
+   "direcao": "desce",
+   "status": "ritmo",
+   "gravado_em": "2026-11-01T11:06+00:00",
+   "chegou_ao_canal": false
+  },
+  {
+   "quarto": "Balcony",
+   "noite": "2026-11-21",
+   "de": 2032.0,
+   "para": 1828,
+   "direcao": "desce",
+   "status": "ritmo",
+   "gravado_em": "2026-11-01T11:06+00:00",
+   "chegou_ao_canal": false
+  },
+  {
+   "quarto": "VK2",
+   "noite": "2026-11-27",
+   "de": 1778.0,
+   "para": 1600,
+   "direcao": "desce",
+   "status": "ritmo",
+   "gravado_em": "2026-11-01T11:06+00:00",
+   "chegou_ao_canal": false
+  },
+  {
+   "quarto": "Balcony",
+   "noite": "2026-11-27",
+   "de": 1537.0,
+   "para": 1383,
+   "direcao": "desce",
+   "status": "atras",
+   "gravado_em": "2026-11-01T11:06+00:00",
+   "chegou_ao_canal": false
+  },
+  {
+   "quarto": "VK7",
+   "noite": "2026-11-28",
+   "de": 2279.0,
+   "para": 2051,
+   "direcao": "desce",
+   "status": "ritmo",
+   "gravado_em": "2026-11-01T11:06+00:00",
+   "chegou_ao_canal": false
+  },
+  {
+   "quarto": "VK2",
+   "noite": "2026-11-28",
+   "de": 1778.0,
+   "para": 1600,
+   "direcao": "desce",
+   "status": "ritmo",
+   "gravado_em": "2026-11-01T11:06+00:00",
+   "chegou_ao_canal": false
+  },
+  {
+   "quarto": "Balcony",
+   "noite": "2026-11-28",
+   "de": 1537.0,
+   "para": 1383,
+   "direcao": "desce",
+   "status": "atras",
+   "gravado_em": "2026-11-01T11:06+00:00",
+   "chegou_ao_canal": false
+  },
+  {
+   "quarto": "Balcony",
+   "noite": "2026-11-29",
+   "de": 851.0,
+   "para": 808,
+   "direcao": "desce",
+   "status": "ritmo",
+   "gravado_em": "2026-11-01T11:06+00:00",
+   "chegou_ao_canal": false
+  },
+  {
+   "quarto": "VK7",
+   "noite": "2026-12-04",
+   "de": 1806.0,
+   "para": 1715,
+   "direcao": "desce",
+   "status": "ritmo",
+   "gravado_em": "2026-11-01T11:06+00:00",
+   "chegou_ao_canal": false
+  },
+  {
+   "quarto": "VK2",
+   "noite": "2026-12-04",
+   "de": 1588.0,
+   "para": 1508,
+   "direcao": "desce",
+   "status": "ritmo",
+   "gravado_em": "2026-11-01T11:06+00:00",
+   "chegou_ao_canal": false
+  },
+  {
+   "quarto": "Balcony",
+   "noite": "2026-12-04",
+   "de": 1422.0,
+   "para": 1350,
+   "direcao": "desce",
+   "status": "ritmo",
+   "gravado_em": "2026-11-01T11:06+00:00",
+   "chegou_ao_canal": false
+  },
+  {
+   "quarto": "VK7",
+   "noite": "2026-12-05",
+   "de": 1806.0,
+   "para": 1715,
+   "direcao": "desce",
+   "status": "ritmo",
+   "gravado_em": "2026-11-01T11:06+00:00",
+   "chegou_ao_canal": false
+  },
+  {
+   "quarto": "VK2",
+   "noite": "2026-12-05",
+   "de": 1588.0,
+   "para": 1508,
+   "direcao": "desce",
+   "status": "ritmo",
+   "gravado_em": "2026-11-01T11:06+00:00",
+   "chegou_ao_canal": false
+  },
+  {
+   "quarto": "Balcony",
+   "noite": "2026-12-05",
+   "de": 1422.0,
+   "para": 1350,
+   "direcao": "desce",
+   "status": "ritmo",
+   "gravado_em": "2026-11-01T11:06+00:00",
+   "chegou_ao_canal": false
+  },
+  {
+   "quarto": "VK7",
+   "noite": "2026-12-11",
+   "de": 2087.0,
+   "para": 1982,
+   "direcao": "desce",
+   "status": "ritmo",
+   "gravado_em": "2026-11-01T11:06+00:00",
+   "chegou_ao_canal": false
+  },
+  {
+   "quarto": "VK2",
+   "noite": "2026-12-11",
+   "de": 1867.0,
+   "para": 1773,
+   "direcao": "desce",
+   "status": "ritmo",
+   "gravado_em": "2026-11-01T11:06+00:00",
+   "chegou_ao_canal": false
+  },
+  {
+   "quarto": "Balcony",
+   "noite": "2026-12-11",
+   "de": 1651.0,
+   "para": 1568,
+   "direcao": "desce",
+   "status": "ritmo",
+   "gravado_em": "2026-11-01T11:06+00:00",
+   "chegou_ao_canal": false
+  },
+  {
+   "quarto": "Balcony",
+   "noite": "2026-12-12",
+   "de": 1702.0,
+   "para": 1616,
+   "direcao": "desce",
+   "status": "ritmo",
+   "gravado_em": "2026-11-01T11:06+00:00",
+   "chegou_ao_canal": false
+  },
+  {
+   "quarto": "VK2",
+   "noite": "2026-12-15",
+   "de": 991.0,
+   "para": 943,
+   "direcao": "desce",
+   "status": "ritmo",
+   "gravado_em": "2026-11-01T11:06+00:00",
+   "chegou_ao_canal": false
+  },
+  {
+   "quarto": "Balcony",
+   "noite": "2026-12-15",
+   "de": 851.0,
+   "para": 808,
+   "direcao": "desce",
+   "status": "ritmo",
+   "gravado_em": "2026-11-01T11:06+00:00",
+   "chegou_ao_canal": false
+  },
+  {
+   "quarto": "VK2",
+   "noite": "2026-12-16",
+   "de": 991.0,
+   "para": 943,
+   "direcao": "desce",
+   "status": "ritmo",
+   "gravado_em": "2026-11-01T11:06+00:00",
+   "chegou_ao_canal": false
+  },
+  {
+   "quarto": "Balcony",
+   "noite": "2026-12-16",
+   "de": 851.0,
+   "para": 808,
+   "direcao": "desce",
+   "status": "ritmo",
+   "gravado_em": "2026-11-01T11:06+00:00",
+   "chegou_ao_canal": false
+  },
+  {
+   "quarto": "VK7",
+   "noite": "2026-12-18",
+   "de": 2116.0,
+   "para": 2010,
+   "direcao": "desce",
+   "status": "ritmo",
+   "gravado_em": "2026-11-01T11:06+00:00",
+   "chegou_ao_canal": false
+  },
+  {
+   "quarto": "VK2",
+   "noite": "2026-12-18",
+   "de": 1816.0,
+   "para": 1725,
+   "direcao": "desce",
+   "status": "ritmo",
+   "gravado_em": "2026-11-01T11:06+00:00",
+   "chegou_ao_canal": false
+  },
+  {
+   "quarto": "Balcony",
+   "noite": "2026-12-18",
+   "de": 1626.0,
+   "para": 1544,
+   "direcao": "desce",
+   "status": "ritmo",
+   "gravado_em": "2026-11-01T11:06+00:00",
+   "chegou_ao_canal": false
+  },
+  {
+   "quarto": "VK7",
+   "noite": "2026-12-19",
+   "de": 2116.0,
+   "para": 2010,
+   "direcao": "desce",
+   "status": "ritmo",
+   "gravado_em": "2026-11-01T11:06+00:00",
+   "chegou_ao_canal": false
+  },
+  {
+   "quarto": "VK2",
+   "noite": "2026-12-19",
+   "de": 1816.0,
+   "para": 1725,
+   "direcao": "desce",
+   "status": "ritmo",
+   "gravado_em": "2026-11-01T11:06+00:00",
+   "chegou_ao_canal": false
+  },
+  {
+   "quarto": "Balcony",
+   "noite": "2026-12-19",
+   "de": 1626.0,
+   "para": 1544,
+   "direcao": "desce",
+   "status": "ritmo",
+   "gravado_em": "2026-11-01T11:06+00:00",
+   "chegou_ao_canal": false
+  },
+  {
+   "quarto": "Balcony",
+   "noite": "2026-12-24",
+   "de": 2197.0,
+   "para": 2087,
+   "direcao": "desce",
+   "status": "ritmo",
+   "gravado_em": "2026-11-01T11:06+00:00",
+   "chegou_ao_canal": false
+  },
+  {
+   "quarto": "VK7",
+   "noite": "2026-12-25",
+   "de": 2812.0,
+   "para": 2671,
+   "direcao": "desce",
+   "status": "ritmo",
+   "gravado_em": "2026-11-01T11:06+00:00",
+   "chegou_ao_canal": false
+  },
+  {
+   "quarto": "Balcony",
+   "noite": "2026-12-25",
+   "de": 2311.0,
+   "para": 2195,
+   "direcao": "desce",
+   "status": "ritmo",
+   "gravado_em": "2026-11-01T11:06+00:00",
+   "chegou_ao_canal": false
   }
  ]
 }

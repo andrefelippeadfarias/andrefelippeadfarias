@@ -772,7 +772,14 @@
    "desde": "2026-11-01",
    "urgencia": 1,
    "texto": "Escada de vendas plana nas noites com ordem piso_por_data (25/10 'público ~R$ 450' na Villa e 26/10 'R$ 300 no Genius 3' no Recanto: 02-05/11 e 08/11): o topo da rampa (piso padrão) é calculado com sem_alvo(ordens), que mantém a ordem piso_por_data; piso e topo ficam iguais (VK7 05/11: 2→3/7 às 18:33 e o preço ficou em R$ 710). Corrigir na rotina das 07:53 de 02/11 com teste: topo = pisos_enviados padrão do dono (R$ 500/850 no Genius 3) quando a noite tem ordem de escada."
+  },
+  {
+   "id": "dezembro-2026-propostas",
+   "responsavel": "dono",
+   "desde": "2026-11-01",
+   "urgencia": 1,
+   "texto": "Análise de dezembro (pricelabs/analise-dezembro-2026.md): esperando o dono nas propostas 1 (Natal do Recanto: tirar 'sem saída' de 26/12 nos 4 quartos e de 02/01 na Afrodite, estadia 2 mantida), 3 (Villa 21-23/12 e 27-28/12: ordem só para baixar, suítes perto da mediana com hidro, pisos de 14/10 saem) e 7 (gatilhos de ritmo nas festas), e nas ações de extranet do item 8 (avaliações do Recanto, selo de hidro da Villa, tarifa não reembolsável nas festas, pacotes). Régua do motor: sombra com a varredura de 01/11 na revisão de 09/11."
   }
  ],
- "versao": "2026-11-01T22"
+ "versao": "2026-11-01T23"
 }

@@ -1,147 +1,212 @@
-# Dezembro de 2026: análise completa e estratégia para bater a meta com a menor lotação
+# Dezembro de 2026: análise completa e estratégia para chegar à meta com a menor lotação
 
-Feita em 01/11/2026 (19:00-19:45 BRT), a pedido do dono: "refinar a estratégia para dezembro ... análise completa do mês de forma que possamos superar o objetivo e fazer ainda uma comparação com o mercado com o objetivo de atingir o faturamento desejado de cada hotel com o mínimo de lotação".
+Feita em 01/11/2026 (19:00-20:30 BRT), a pedido do dono: "refinar a estratégia para dezembro ... análise completa do mês de forma que possamos superar o objetivo e fazer ainda uma comparação com o mercado com o objetivo de atingir o faturamento desejado de cada hotel com o mínimo de lotação". Revisada por 3 críticos independentes (números, regras e estratégia) antes de ir ao dono.
 
-**Fontes (todas somente leitura):** livro do Beds24 (receita de hospedagem, confirmadas + novas); calendários do PriceLabs recalculados em 01/11 20:40 UTC; mercado do PriceLabs (`get_neighbourhood_data` e `get_listing_neighborhood_market`, conjunto Airbnb, e a categoria R de quartos); varredura da Booking pelo conector oficial em 01/11 (77 concorrentes do perfil, com hidro, vista e café, até 3 km do Capivari, 10 estadias de dezembro, 80 buscas; o Recanto pelas coordenadas, id 7562933); histórico próprio de 2024 (sistema anterior). O PriceLabs não tem o nosso dezembro de 2025 (as reservas só existem a partir de 31/07/2026).
+**Fontes (todas somente leitura):**
+- livro do Beds24 (receita de hospedagem, confirmadas + novas);
+- calendários do PriceLabs recalculados em 01/11 20:40 UTC;
+- mercado do PriceLabs, conjunto de apartamentos do Airbnb e categoria R (quartos);
+- varredura da Booking pelo conector oficial em 01/11: 77 concorrentes do perfil (hidro, vista e café, até 3 km do Capivari), 10 estadias de dezembro, 47 a 70 hotéis com preço por estadia, Recanto pelas coordenadas (id 7562933);
+- restrições do Beds24;
+- histórico próprio de 2024 (sistema anterior).
+
+O PriceLabs não tem o nosso dezembro de 2025: as reservas só existem a partir de 31/07/2026.
 
 ## 1. Resumo
 
-1. **Meta:** Recanto R$ 350 mil e Villa R$ 300 mil. **Vendido hoje:** R$ 53,9 mil e R$ 46,7 mil (13% das diárias nas duas, igual ao mercado: 13-14%).
-2. **No ritmo atual não se chega à meta.** Com a ocupação final do mercado de 2025 e os preços de hoje, o Recanto fecha entre R$ 242 mil e R$ 329 mil (69 a 94%) e a Villa entre R$ 236 mil e R$ 268 mil (79 a 89%).
-3. **Começo de dezembro à frente do mercado, festas atrás.** Estamos à frente em 01-17/12 (dias de semana 11% contra 7%; fins de semana 25% e 18% contra 9%). Estamos atrás onde está o dinheiro: no Natal (Recanto 6% e Villa 4% contra 26-27% do mercado), em 27-28/12 (0% e 3% contra 16-19%) e, no Recanto, também no pré-Natal e no Réveillon.
-4. **Três travas fora do preço explicam parte do atraso:**
-   - o Recanto não vende o pacote de Natal 24→26/12 (sábado com "sem saída");
-   - o anúncio ativo do Recanto na Booking aparece sem nota de avaliações;
-   - a Villa não tem o selo de hidromassagem na Booking.
-5. **Menor lotação para a meta:** com diária média de R$ 1.300 bastam 59% no Recanto e 55% na Villa. Com R$ 900 seriam 80% e 74%. A meta se faz com diária alta nas festas, não enchendo dia de semana barato.
-6. **Com a estratégia abaixo:** o Recanto chega a cerca de R$ 338 mil (97%) e a Villa a cerca de R$ 285 mil (95%), com 58% e 52% de ocupação. Para superar a meta faltam alavancas do dono: avaliações do Recanto, pacotes com ceia e festa nas festas, canal direto.
+1. **Meta e vendido:**
+   - Recanto: meta R$ 350 mil, vendido R$ 53,9 mil.
+   - Villa: meta R$ 300 mil, vendido R$ 46,7 mil.
+   - Já vendemos 13% das diárias de dezembro. Os apartamentos do Airbnb estão em 13-14% e os quartos (categoria R, a mais parecida com pousada) em 17%.
+2. **No ritmo de hoje, não chegamos.** Mantendo o ritmo de cada segmento contra o mercado, o Recanto fecha entre R$ 200 mil e R$ 226 mil (57-65%) e a Villa entre R$ 197 mil e R$ 242 mil (66-81%).
+3. **O mês se decide nas festas, e é nelas que estamos atrás:**
+   - No começo do mês estamos à frente dos apartamentos: dias de semana 11% contra 7%, fins de semana 18-25% contra 9%. Contra os quartos, estamos iguais.
+   - De 18 a 31/12, nosso ritmo é de 0,0 a 0,8× o mercado no Recanto e de 0,2 a 1,0× na Villa.
+   - Natal: Recanto 6% e Villa 4%, contra 26-31% do mercado.
+   - Noites de 27 e 28/12: Recanto 0% e Villa 3%, contra 16-21%.
+4. **Por que as festas estão atrás:**
+   - o Recanto não vende o pacote de Natal 24→26/12 (sábado 26/12 com "sem saída");
+   - o anúncio ativo do Recanto na Booking aparece sem nota;
+   - a Villa tem nota 8,2 contra 8,8 a 9,8 da concorrência e não tem o selo de hidromassagem;
+   - as suítes da Villa estão caras em 21-23/12 (p86 dos quartos com hidro) e em 26-28/12 (p62), com 3 a 12% vendido.
+5. **A menor lotação que bate a meta**, vendendo primeiro as diárias livres mais caras: Recanto 54-65% e Villa 46-55%. Isso significa encher praticamente todas as noites de 18 a 31/12 (Natal, 27-28/12 e Réveillon perto de 100%). Com os preços de hoje, não existe caminho de baixa lotação. Cortar preço em dia de semana não compensa.
+6. **Se as festas venderem no ritmo do mercado:** Recanto R$ 272-311 mil (78-89%) e Villa R$ 250-311 mil (83-104%). **Superar a meta exige festas acima do mercado** (1,2×): Recanto R$ 298-342 mil e Villa R$ 277-345 mil. Isso depende das ações de conversão do dono (avaliações, selo de hidro, pacotes), não só de preço.
 
 ## 2. Meta, vendido e o que falta
 
 | | Recanto | Villa |
 |---|---|---|
 | Meta do dono (alta temporada) | R$ 350.000 | R$ 300.000 |
-| Vendido (Beds24, confirmadas + novas) | R$ 53.857 (66 diárias, diária média R$ 816) | R$ 46.666 (62 diárias, R$ 753) |
+| Vendido (Beds24, confirmadas + novas) | R$ 53.857 (66 diárias; R$ 8,3 mil ainda "novas", não confirmadas) | R$ 46.666 (62 diárias; R$ 3,7 mil "novas") |
 | Falta | R$ 296.143 | R$ 253.334 |
 | Diárias livres | 430 de 496 | 403 de 465 |
 | Dezembro de 2024 (sistema anterior) | R$ 253.178, 64%, diária média R$ 794 | R$ 131.151, 50%, R$ 563 |
 | Natal 2024 / Réveillon 2024 | 69% a R$ 712 / 90% a R$ 1.329 | 53% a R$ 596 / 76% a R$ 994 |
 
-A meta pede +38% sobre dezembro de 2024 no Recanto e +129% na Villa.
+A meta pede +38% sobre dezembro de 2024 no Recanto e +129% na Villa. Na Villa, isso quer dizer diária média de cerca de R$ 1.180, mais que o dobro da de 2024 (R$ 563).
 
 ## 3. A menor lotação que bate a meta
 
-A receita por diária é estimada como o preço público × 0,92 (Genius e celular). Por esse critério, as diárias de 01-17/12 do Recanto saíram a R$ 699, com o quarto mais barato a R$ 748.
+**Receita por diária:** fica entre 0,78 do preço público (fator da Booking medido em outubro: Recanto 0,49 ÷ 0,63; Villa 0,46 ÷ 0,65 dá 0,71) e 0,92 (teto, com mais venda direta).
 
-| Diária média das vendas que faltam | Recanto: diárias a vender (ocupação final do mês) | Villa: diárias a vender (ocupação final do mês) |
+| Diária média das vendas que faltam | Recanto: diárias a vender (ocupação final) | Villa: diárias a vender (ocupação final) |
 |---|---|---|
-| R$ 700 | 423 (99%) | 362 (91%) |
 | R$ 900 | 329 (80%) | 281 (74%) |
 | R$ 1.100 | 269 (68%) | 230 (63%) |
 | R$ 1.300 | 228 (59%) | 195 (55%) |
 | R$ 1.500 | 197 (53%) | 169 (50%) |
-| R$ 1.800 | 165 (46%) | 141 (44%) |
 
-**Leitura:** a meta só cabe numa lotação possível com diária média de R$ 1.100 a R$ 1.300. Isso só existe de 18 a 31/12 e nos fins de semana. Dia de semana barato no começo do mês quase não move a meta.
+**Aos preços de hoje**, vendendo primeiro as diárias livres mais caras (festas e suítes maiores):
+- com receita de 0,78 do público: Recanto 65% (257 diárias, média R$ 1.154); Villa 55% (193 diárias, média R$ 1.315);
+- com receita de 0,92: Recanto 54% e Villa 46%.
 
-**Ponto de equilíbrio nos dias de semana:** a R$ 748, 25% de ocupação rende o mesmo que 42% a R$ 450. Baixar para R$ 450 (a base do mercado de novembro) só compensa se a ocupação quase dobrar. Em 2025 o mercado fechou os dias de semana de 01-17/12 em 26-32%.
+As linhas de R$ 1.500 do Recanto exigiriam subir preço. Nos dois casos é preciso encher de 18 a 31/12 quase por inteiro, acima dos 52-85% do mercado em 2025.
+
+**Dias de semana de 01-17/12:** a R$ 748, 25% de ocupação rende o mesmo que 42% a R$ 450.
+- Cortar preço só compensa se a ocupação quase dobrar.
+- No preço de hoje, eles respondem por cerca de R$ 39 mil (Recanto) e R$ 22 mil (Villa) do que falta, 9 a 13%.
+- As suítes com banheira já estão no piso do dono (R$ 500 no Genius 3 = R$ 1.220 enviados no Recanto e R$ 943 na Villa). Baixar exigiria o dono suspender esse piso, como nas ordens de novembro.
 
 ## 4. Mercado
 
 ### 4a. Booking: concorrentes do perfil (preço por noite, com café, 2 adultos)
 
-O preço do quarto com hidro é o menor quarto × `r_hidro`, que está medido em 33 dos 77 hotéis; os demais usam o padrão de 1,395. A coluna "mediana crua" é o menor quarto, sem o fator.
+**Como ler:**
+- **Mediana com hidro:** o menor quarto × `r_hidro`, medido em 33 dos 77 hotéis; os demais usam 1,395.
+- **Mediana crua:** o menor quarto, sem ajuste.
+- **Recanto:** o quarto mais barato (Moinhos, com banheira), contra a mediana com hidro.
+- **Villa:** a Booking mostra a Balcony, que não tem banheira. A suíte com hidro (King Spa 7 ou 2, a mais barata livre, público × 0,95) é comparada aos quartos com hidro e a Balcony à mediana crua.
 
-| Estadia | Hotéis | p25 | Mediana (hidro) | p75 | p90 | Mediana crua | Recanto (percentil) | Villa (percentil) |
-|---|---|---|---|---|---|---|---|---|
-| 02-03/12 (qua) | 68 | 472 | 702 | 1.180 | 1.567 | 449 | 748 (p53) | 518 (p35) |
-| 04-06/12 (fds) | 66 | 923 | 1.261 | 1.803 | 2.342 | 855 | 1.229 (p50) | 839 (p21) |
-| 09-10/12 (qua) | 68 | 475 | 702 | 1.180 | 1.687 | 432 | 748 (p54) | 534 (p40) |
-| 11-13/12 (fds) | 64 | 964 | 1.272 | 1.811 | 2.176 | 834 | 1.229 (p50) | 1.016 (p31) |
-| 16-17/12 (qua) | 67 | 463 | 713 | 1.210 | 1.750 | 470 | 748 (p52) | 526 (p39) |
-| 18-20/12 (fds, férias) | 70 | 953 | 1.212 | 1.657 | 2.574 | 825 | 1.229 (p51) | 957 (p24) |
-| 21-23/12 (seg-qua) | 64 | 577 | 868 | 1.373 | 1.969 | 562 | 978 (p56) | **1.416 (p78)** |
-| 24-26/12 (Natal) | 48 | 1.300 | 1.749 | 2.981 | 4.098 | 1.321 | **não vende** | 1.326 (p25) |
-| 26-28/12 (fds pós-Natal) | 47 | 994 | 1.348 | 2.089 | 3.567 | 894 | 1.412 (p57) | 1.588 (p57) |
-| 30/12-02/01 (Réveillon, 3 noites) | 55 | 1.554 | 2.358 | 3.401 | 4.460 | 1.526 | 1.941 (p40) | 1.838 (p38) |
+| Estadia | Hotéis | Mediana com hidro (p75) | Mediana crua | Recanto | Suíte da Villa | Balcony contra a crua |
+|---|---|---|---|---|---|---|
+| 02-03/12 (qua) | 68 | 702 (1.180) | 449 | 748 (p53) | 588 (p43) | 518 (+15%) |
+| 04-06/12 (fds) | 66 | 1.261 (1.803) | 855 | 1.229 (p50) | 933 (p24) | 839 (−2%) |
+| 09-10/12 (qua) | 68 | 702 (1.180) | 432 | 748 (p54) | 588 (p46) | 534 (+24%) |
+| 11-13/12 (fds) | 64 | 1.272 (1.811) | 834 | 1.229 (p50) | 1.163 (p44) | 1.016 (+22%) |
+| 16-17/12 (qua) | 67 | 713 (1.210) | 470 | 748 (p52) | 585 (p45) | 526 (+12%) |
+| 18-20/12 (fds, férias) | 70 | 1.212 (1.657) | 825 | 1.229 (p51) | 1.067 (p36) | 957 (+16%) |
+| 21-23/12 (seg-qua) | 64 | 868 (1.373) | 562 | 978 (p56) | **1.773 (p86)** | 1.416 (+152%) |
+| 24→26/12 (Natal) | 48 | 1.749 (2.981) | 1.321 | **não vende** | 1.588 (p40) | 1.326 (0%) |
+| 26→28/12 (sáb de Natal + dom) | 47 | 1.348 (2.089) | 894 | 1.412 (p57) | 1.748 (p62) | 1.588 (+78%) |
+| 30/12→02/01 (Réveillon, 3 noites) | 55 | 2.358 (3.401) | 1.526 | 1.941 (p40) | ~2.000 (~p40) | 1.838 (+20%) |
 
-Recanto no Natal, pelas coordenadas:
-- 24→27/12 (3 noites): R$ 1.450 por noite.
-- 25→27/12: R$ 1.450 por noite.
-- 24→26/12: não vende.
+- **Recanto no Natal, pelas coordenadas:** 24→27 e 25→27/12 a R$ 1.450 por noite; 24→26/12 não vende.
+- **Noites de 27 e 28/12 (dom-seg), público de hoje:** Moinhos R$ 1.421, Balcony R$ 1.767, King Spa 7 R$ 2.270.
+- **Duas leituras do Recanto:**
+  - pela mediana com hidro, fica no p50-57;
+  - pela crua, fica 27 a 74% acima.
+  - O `r_hidro` está medido em só 43% dos hotéis, e a verdade fica entre as duas leituras.
 
-### 4b. PriceLabs: ritmo do mercado (Airbnb) e o nosso, por segmento
+### 4b. PriceLabs: ritmo do mercado e o nosso, por segmento
 
-Ocupação: já reservado hoje / mesma época de 2025 / final de 2025. Preço do mercado: p50 / p90 (público, Airbnb).
+**Mercado:** já reservado hoje / mesma época de 2025 / final de 2025. **Quartos (R):** já reservado hoje.
 
-| Segmento | Mercado (conjunto do Recanto) | Recanto hoje | Mercado (conjunto da Villa) | Villa hoje |
-|---|---|---|---|---|
-| 01-17/12 dom-qui | 6,6 / 8,5 / 26,2%; 649 / 1.054 | **11%** | 7,4 / 9,6 / 31,8%; 557 / 1.096 | **11%** |
-| 01-17/12 sex-sáb | 8,8 / 14,8 / 45,1%; 806 / 1.324 | **25%** | 9,2 / 13,2 / 54,2%; 700 / 1.459 | **18%** |
-| 18-23/12 | 14,5 / 13,8 / 47,3%; 887 / 1.313 | 11% | 13,4 / 17,6 / 57,0%; 801 / 1.378 | 12% |
-| 24-26/12 (Natal) | 27,1 / 15,1 / 51,6%; 1.105 / 1.580 | **6%** | 25,6 / 23,5 / 61,3%; 1.062 / 1.713 | **4%** |
-| 27-28/12 | 18,8 / 15,2 / 55,0%; 1.062 / 1.577 | **0%** | 16,2 / 19,4 / 65,8%; 1.023 / 1.772 | **3%** |
-| 29/12-01/01 (Réveillon) | 35,8 / 32,1 / 85,0%; 1.243 / 1.802 | 27% | 32,1 / 29,4 / 90,1%; 1.205 / 1.996 | 33% |
-| Dezembro inteiro | 13,8 / 13,9 / 43,2% | 13% | 13,4 / 15,7 / 50,5% | 13% |
+| Segmento | Apartamentos (conj. Recanto) | Quartos R (Recanto) | Recanto hoje | Apartamentos (conj. Villa) | Quartos R (Villa) | Villa hoje |
+|---|---|---|---|---|---|---|
+| 01-17/12 dom-qui | 6,6 / 8,5 / 26,2% | 9,6% | 11% | 7,4 / 9,6 / 31,8% | 10,8% | 11% |
+| 01-17/12 sex-sáb | 8,8 / 14,8 / 45,1% | 25,2% | 25% | 9,2 / 13,2 / 54,2% | 19,2% | 18% |
+| 18-23/12 | 14,5 / 13,8 / 47,3% | — | 11% | 13,4 / 17,6 / 57,0% | — | 12% |
+| 24-26/12 (Natal) | 27,1 / 15,1 / 51,6% | 31,1% | **6%** | 25,6 / 23,5 / 61,3% | 30,4% | **4%** |
+| 27-28/12 | 18,8 / 15,2 / 55,0% | 17,2% | **0%** | 16,2 / 19,4 / 65,8% | 20,7% | **3%** |
+| 29/12-01/01 (Réveillon) | 35,8 / 32,1 / 85,0% | — | 28% | 32,1 / 29,4 / 90,1% | — | 30% |
+| Dezembro inteiro | 13,8 / 13,9 / 43,2% | 17,0% | 13% | 13,4 / 15,7 / 50,5% | 17,4% | 13% |
 
-- **A oferta do mercado cresceu ~60% contra dezembro de 2025 e a procura acompanhou.** Por isso a ocupação está igual à do ano passado.
-- **O Natal do mercado está 12 pontos acima da mesma época de 2025** (27% contra 15%). A procura do Natal existe, e nós não a estamos pegando.
-- **O PriceLabs aponta preços do mercado 35% mais altos em 27-31/12** e ocupação 18-21% maior no Réveillon.
-- **Q7 nos próximos 30 dias:** 37% contra 17% do mercado (MPI 2,16). Nos próximos 60 dias, MPI 1,41.
+**Réveillon por noite (vendido nas duas pousadas, Beds24):**
+
+| Noite | Recanto | Villa | Mercado |
+|---|---|---|---|
+| 29/12 | 0% | 13% | 24-26% |
+| 30/12 | 25% | 27% | 31-35% |
+| 31/12 | **56%** | **60%** | 38-41% |
+| 01/01 | 31% | 20% | 35-41% |
+
+**Leitura do ritmo:**
+- **Conjunto do Recanto:** a ocupação está igual à de 2025 (13,8% contra 13,9%), e o Natal está 12 pontos acima de 2025 (27% contra 15%).
+- **Conjunto da Villa:** está 2 pontos abaixo de 2025, e o Natal está 2 pontos acima.
+- **Oferta:** cresceu cerca de 60% contra dezembro de 2025.
+- **Quartos (R):** a categoria já está com 2,6× o ritmo de 2025.
+- **Q7 nos próximos 30 dias:** 37% contra 17% do mercado (MPI 2,16).
 
 ## 5. Diagnóstico
 
-1. **Natal do Recanto travado.** Os 7 quartos têm "sem saída" no sábado 26/12 no Beds24 (a trava de sábado da Regra H, contra a sexta sozinha). Na Booking isso impede o pacote 24→26/12 no Recanto. A Villa, com a mesma trava no Beds24, vende 24→26/12. A estadia mínima de 2 noites em 24-26/12 já impede a sexta 25→26 sozinha, então a trava de saída não tem função no Natal.
-2. **Recanto sem nota na Booking.** O anúncio ativo (id 7562933) não mostra nota nem número de avaliações. O anúncio antigo (15459723) tinha 226. Isso pesa na conversão em todas as datas e explica parte do atraso do Recanto nas festas, mesmo com preço na mediana.
-3. **Villa sem selo de hidromassagem na Booking** (pendência do dono). A Villa fica fora do filtro "banheira de hidromassagem", justamente o do nosso perfil de concorrência.
-4. **Preço acima da curva onde estamos atrás:**
-   - Villa 21-23/12 a R$ 1.416 (p78, 2,5× a mediana crua);
-   - 27-28/12 a R$ 1.412 (Recanto) e R$ 1.588 (Villa), no p57, com 0 e 1 diária vendida contra 16-19% do mercado.
-5. **Preço abaixo da curva onde a procura é certa:**
-   - Réveillon no p38-40 dos quartos com hidro (Recanto R$ 1.941, Villa R$ 1.838, contra a mediana de R$ 2.358);
-   - fins de semana de 01-17/12 da Villa no p21-31, já vendendo o dobro do mercado.
-6. **Dias de semana de 01-17/12:** Recanto no p53 e Villa no p35-40, já à frente do mercado (11% contra 7%). Pelo ponto de equilíbrio (seção 3), baixar aqui não vale a pena.
+1. **Natal do Recanto.**
+   - Os 4 quartos do Recanto têm "sem saída" no sábado 26/12 no Beds24, e a Booking do Recanto aplica a trava: 24→26 e também 17→19/12 (quinta a sábado) não vendem.
+   - A Villa tem a mesma trava no Beds24 (19/12, 26/12 e 02/01), mas a Booking da Villa não a aplica: vende 24→26, 17→19 e 30/12→02/01.
+   - A estadia mínima de 2 em 25 e 26/12 já barra a sexta e o sábado sozinhos. A trava hoje obriga toda estadia de Natal no Recanto a incluir o sábado (24→27 ou 25→27).
+   - Sem ela, o 24→26 vende, mas cada venda deixa o sábado 26/12 só para quem chega no sábado (26→28), o trecho mais fraco. Na Afrodite e na Panorâmica II, o sábado pode ficar vazio.
+   - A trava explica a falta do pacote no Recanto, não todo o atraso: a Villa vende 24→26 e está tão atrás quanto (4% contra 26%).
+2. **Conversão.**
+   - O Recanto aparece sem nota (anúncio 7562933; o antigo, 15459723, tinha 226 avaliações).
+   - A Villa tem 8,2 contra 8,8-9,8 da concorrência e está fora do filtro de hidromassagem.
+   - Com o mesmo anúncio sem nota, o Recanto vende 1,7 a 2,8× os apartamentos em 01-17/12. O peso da nota está nas festas, onde o hóspede compara mais.
+3. **Villa cara onde está atrás.**
+   - **21-23/12:** King Spa 7 a R$ 1.866 público (p86), com 2 de 7 vendidas por noite. O motor a classifica "à frente da curva" a 50 dias e não desce.
+   - **27-28/12:** King Spa 7 a R$ 2.270 (p62-72), King Spa 2 a R$ 1.956. Os dois têm pisos de 14/10 ("Regra G: piso igual ao preço atual") que prendem o preço.
+4. **Réveillon.**
+   - 31/12 está à frente (56-60% contra 38-41%).
+   - 29/12, 30/12 e 01/01 estão atrás. O Recanto de 29/12 está 0/16 no piso de feriado.
+   - Subir o Réveillon em bloco não se sustenta.
+5. **Dias de semana e fins de semana de 01-17/12.**
+   - Estamos à frente dos apartamentos e iguais aos quartos.
+   - As suítes com banheira estão no piso do dono.
+   - A escada de vendas já sobe a cada reserva.
+6. **Régua do motor.** A âncora de dezembro (30/10, 17-20 hotéis) mede preços bem abaixo da varredura de hoje (02/12: p50 R$ 288 contra mediana crua de R$ 449 e com hidro de R$ 702). Trocar a régua agora faria o motor subir sozinho o Natal, 27-28/12 e os dias de semana, que são justamente noites atrás do mercado.
 
 ## 6. Cenários (receita de dezembro)
 
-Premissas:
-- **Ocupação de cada segmento:** a final do mercado em 2025 × um índice. Recanto 1,4 (2024: 64% contra 45% do mercado); Villa 0,9 (2024: 50% contra 56%). Teto de 95%.
-- **Preço das vendas que faltam:** o preço público médio das diárias livres × 0,92.
+**Premissas:**
+- **Ocupação de cada segmento:** a final do mercado em 2025 × um índice, com teto de 95%.
+- **Receita por diária:** preço público de hoje × 0,78 (Booking) a 0,92 (teto); na Villa, 0,71 a 0,92.
+- **O modelo não reduz a ocupação quando o preço sobe.**
+- **O índice de 2024** veio com diária 1,12× (Recanto) e 0,86× (Villa) a do mercado; hoje a nossa diária planejada é 1,45-1,56× a do mercado.
 
 | Cenário | Recanto | Villa |
 |---|---|---|
-| A. Como está, ocupação = mercado 2025 | R$ 242 mil (69%), 43% | R$ 268 mil (89%), 51% |
-| A. Como está, índice histórico | R$ 329 mil (94%), 58% | R$ 236 mil (79%), 45% |
-| B. + Natal vendável e selo de hidromassagem (Villa no índice 1,0) | R$ 329 mil (94%) | R$ 268 mil (89%) |
-| B. + Réveillon na mediana com hidro (Recanto +20%, Villa +25%) | R$ 341 mil (97%) | R$ 279 mil (93%) |
-| B. + fins de semana 01-17/12 e Natal da Villa no p40 (+10%) | — | R$ 285 mil (95%) |
-| B. + 27-28/12 e 21-23/12 na mediana (−5 a −10%, mais ocupação) | R$ 336-338 mil (96-97%) | R$ 285 mil (95%) |
+| A1. Índice de 2024 (Recanto 1,4; Villa 0,9) | R$ 287-329 mil (82-94%), 58% | R$ 193-236 mil (64-79%), 45% |
+| A2. Ritmo de hoje contra o mercado, segmento a segmento | R$ 200-226 mil (57-65%), 45% | R$ 197-242 mil (66-81%), 54% |
+| B. Festas (18-31/12) no ritmo do mercado; 01-17 no ritmo de hoje | R$ 272-311 mil (78-89%), 57% | R$ 250-311 mil (83-104%), 63% |
+| B+. Festas a 1,2× o mercado; 01-17 no ritmo de hoje | R$ 298-342 mil (85-98%), 61% | R$ 277-345 mil (92-115%), 68% |
 
-**Para superar a meta (R$ 12-15 mil a mais em cada pousada), o que está fora do PriceLabs:**
-- **Avaliações do Recanto:** subir o índice de 1,4 para 1,5 vale cerca de R$ 16 mil e leva o Recanto a ~R$ 354 mil (101%). Sem as avaliações (índice 1,0), mesmo com a estratégia, fica em ~R$ 261 mil (74%).
-- **Pacotes de Natal (24→26 ou 24→27) e de Réveillon (29/12→02/01) com ceia ou festa:** sobem a diária média sem pedir lotação. Os modelos estão em `pricelabs/pacotes`.
-- **Canal direto e Airbnb** com os multiplicadores certos (pendência do dono).
+**Índice de ritmo de hoje (nós ÷ mercado), por segmento:**
+
+| Segmento | Recanto | Villa |
+|---|---|---|
+| Dias de semana 01-17/12 | 1,68 | 1,52 |
+| Fins de semana 01-17/12 | 2,84 | 1,99 |
+| 18-23/12 | 0,79 | 0,91 |
+| Natal | 0,23 | 0,17 |
+| 27-28/12 | 0,00 | 0,21 |
+| Réveillon | 0,76 | 1,04 |
+
+**O que muda o resultado:**
+- O que separa A2 de B são as festas: cerca de R$ 70-85 mil no Recanto e R$ 53-69 mil na Villa.
+- Na Villa, o cenário B usa os preços de hoje das festas (suítes no p62-86 em 21-23 e 26-28/12). Vender no ritmo do mercado com esses preços é otimista, e o modelo não mede esse efeito.
 
 ## 7. Estratégia proposta
 
-| # | Segmento | O que fazer | Quem |
-|---|---|---|---|
-| 1 | Natal 24-26/12 | Tirar "sem saída" do sábado 26/12 nos 7 quartos (Beds24 e PriceLabs), mantendo a estadia mínima de 2. O pacote 24→26 passa a vender no Recanto. | Skill, com o "sim" do dono (exceção à trava de sábado) |
-| 2 | Réveillon 29-31/12 | Subir o quarto mais barato do Recanto e da Villa para a mediana dos quartos com hidro (~R$ 2.350 público por noite, hoje R$ 1.941 e R$ 1.838), com a escada de vendas por cima e a estadia mínima de 3 mantida. Revisar a cada rotina: se o ritmo cair abaixo do mercado, voltar. | Skill, com o "sim" do dono |
-| 3 | 27-28/12 e Villa 21-23/12 | Levar para perto da mediana com hidro: 27-28/12 Recanto ~R$ 1.300 e Villa ~R$ 1.350 (hoje R$ 1.412 e R$ 1.588); Villa 21-23/12 ~R$ 950 (hoje R$ 1.416). A escada sobe de novo a cada venda. | Skill, com o "sim" do dono |
-| 4 | Fins de semana 01-17/12 | Manter. A escada de vendas sobe a cada reserva, e já estamos com o dobro do mercado. | Automático (motor) |
-| 5 | Dias de semana 01-17/12 | Manter os preços, sem base do mercado, e usar só a oferta de última hora (D0-D3). | Automático (motor) |
-| 6 | Régua do motor para dezembro | Atualizar a âncora de mercado das noites de dezembro com a varredura de hoje (64-70 hotéis por estadia, contra 17-20 em 30/10). | Skill, na rotina das 07:53 |
-| 7 | Extranet | (a) Pedir à Booking a migração das 226 avaliações para o anúncio 7562933; (b) selo de hidromassagem da Villa; (c) pacotes de Natal e Réveillon; (d) multiplicadores do direto e do Airbnb; (e) Sync Now depois de cada mudança. | Dono |
+| # | O que fazer | Quem |
+|---|---|---|
+| 1 | **Natal do Recanto:** tirar "sem saída" do sábado 26/12 nos 4 quartos do Recanto (Beds24). Na Afrodite, liberar antes a saída de 26/12 por data no PriceLabs, porque o envio diário fecharia de novo. Manter a estadia mínima de 2 em 25 e 26/12. Fazer o mesmo no sábado 02/01/2027 na Afrodite, onde a trava barra o pacote 30/12→02/01; na Villa, a Booking não aplica a trava. | Skill, com o "sim" do dono |
+| 2 | **Réveillon, noite a noite:** 31/12, à frente do mercado, sobe pela escada a cada venda (automático). 29/12, 30/12 e 01/01, atrás, ficam no piso de feriado, sem subir. A 7 dias, se 29/12 seguir abaixo de 50%, propor ao dono estadia de 2 noites nessa noite (Regra A). | Automático + dono a 7 dias |
+| 3 | **Villa 21-23/12 e 27-28/12:** ordem do dono só para baixar (como a da Consciência Negra). King Spa 7 e 2 vão para perto da mediana dos quartos com hidro (21-23: ~R$ 950-1.000 público, hoje R$ 1.866; 27-28: ~R$ 1.300-1.400, hoje R$ 1.956-2.270), e a Balcony fica 10% abaixo pela Regra G. Os pisos de 14/10 dessas noites saem. A escada sobe de novo a cada venda. O impacto não foi medido pelo modelo. | Skill, com o "sim" do dono |
+| 4 | **Recanto 27-28/12** (0/32, Moinhos a R$ 1.421 público): manter e rever a 10 dias pelo ritmo. No modelo, cortar 8% só compensa se a noite passar de 81% de ocupação. | Automático (revisão a 10 dias) |
+| 5 | **01-17/12 (dias de semana e fins de semana):** manter. Suítes no piso do dono, escada sobe a cada reserva, Regra I só na Balcony. A oferta de última hora da Booking é do dono. | Automático |
+| 6 | **Régua do motor:** não trocar a âncora de dezembro agora. Guardar a varredura como fonte nova e rodar o motor em sombra com ela na revisão de segunda (09/11). Natal, 27-28/12 e dias de semana não podem subir só pela troca de régua. | Skill |
+| 7 | **Gatilhos de acompanhamento**, como ordem do dono com validade: noite de festa mais de 5 pontos atrás do mercado por 2 rotinas desce um degrau (5-10%) até o piso de feriado; noite à frente, a escada sobe. Valem do Natal a 01/01, em 29-30/12 e em 01/01. | Skill, com o "sim" do dono |
+| 8 | **Extranet (dono):**<br>(a) pedir à Booking a migração das 226 avaliações para o anúncio 7562933;<br>(b) selo de hidromassagem da Villa;<br>(c) tarifa não reembolsável com pré-pagamento no Natal e no Réveillon (31% das reservas são canceladas; Booking 42% no Recanto em 2024);<br>(d) pacotes de Natal e Réveillon com ceia ou festa (`pricelabs/pacotes`);<br>(e) multiplicadores do direto e do Airbnb;<br>(f) a reserva de R$ 1 da King Spa 7 de 04-06/12. | Dono |
 
-**Acompanhamento:** toda rotina completa compara nosso ritmo com o do mercado por segmento (tabela 4b). Na segunda de manhã, o faturamento de dezembro contra a meta. Gatilhos:
-- segmento das festas mais de 5 pontos atrás do mercado por 2 rotinas seguidas: baixar até a mediana com hidro;
-- segmento à frente: a escada sobe.
+**Acompanhamento:** toda rotina completa compara nosso ritmo com o do mercado por segmento e por noite de festa (tabela 4b). Na segunda de manhã, o faturamento de dezembro contra a meta.
 
 ## 8. Riscos e premissas
 
-- **O índice de 1,4 do Recanto vem de 2024**, quando o anúncio tinha avaliações. Sem elas, o índice pode ficar perto de 1,0 (cenário de R$ 242 mil).
-- **O fator `r_hidro` está medido em 43% dos concorrentes.** Pela mediana crua (menor quarto), o Recanto fica 27 a 74% acima do mercado, e não na mediana. A verdade fica entre as duas leituras.
-- **O mercado do PriceLabs é só Airbnb** (apartamentos e casas). A categoria de quartos (R) tem ocupação menor (Recanto 34%, Villa 27% no dezembro de 2025).
-- **52% das nossas reservas entram até 3 dias antes** (2024). Dezembro ainda vai mudar muito, e o Réveillon é a exceção (vende antes).
-- **A receita do Beds24 é a de hospedagem** (confirmadas + novas). Uma reserva da Villa de 04-06/12 tem valor de R$ 1 (pendência do dono).
+- **Receita por diária:** o fator vai de 0,78 (Booking) a 0,92. Se a Booking dominar as vendas que faltam, os cenários ficam no limite de baixo.
+- **Concorrência:** o `r_hidro` está medido em 43% dos concorrentes. A posição do Recanto vai do p50 (com hidro) a 27-74% acima (crua).
+- **Conjunto do PriceLabs:**
+  - o principal é de apartamentos do Airbnb;
+  - a categoria de quartos (R) fecha mais baixo (34% e 27% em dezembro de 2025), mas hoje está à frente de nós (17% contra 13%), com 2,6× o ritmo de 2025;
+  - a oferta cresceu 60%, e a ocupação final pode ficar abaixo da de 2025.
+- **Cancelamento:**
+  - 31% das reservas são canceladas, 66% delas no dia ou na véspera;
+  - o vendido inclui R$ 8,3 mil (Recanto) e R$ 3,7 mil (Villa) em reservas ainda "novas".
+- **Antecedência:** 52% das nossas reservas entram até 3 dias antes (2024). Dezembro ainda muda muito, e o Réveillon é a exceção.
+- **Elasticidade:** o modelo não reduz a ocupação quando o preço sobe, nem a aumenta quando o preço desce. Os cenários servem para ordenar alavancas, não como previsão.

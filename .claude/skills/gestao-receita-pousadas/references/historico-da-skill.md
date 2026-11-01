@@ -7,6 +7,11 @@ Cada mudança feita na própria Skill (regras, parâmetros, scripts, fluxo) entr
 - **O que mudou:** `scripts/beds24.py`: `inventario` (GET /inventory/rooms/calendar: numAvail, minStay, override) e `editar` (POST, simulação por padrão, `--aplicar` grava e relê; só disponibilidade, estadia mínima e chegada/saída; trava preço e valores fora do intervalo); credencial de escrita por `BEDS24_INVITE_CODE` → refresh token em /root/.beds24 (600) ou `BEDS24_REFRESH_TOKEN`. Testes `TestBeds24Edicao`. `SKILL.md`: inventário em toda rotina. Ordem `dono-2026-11-01-beds24-edicao`.
 - **Como desfazer:** apagar a ordem e os comandos `inventario`/`editar`; a skill volta a só ler reservas.
 
+## 01/11/2026 17:05: ordem do dono libera a Regra G por data
+- `validar_plano.validar_balcony`: Balcony mais de 5% abaixo do alvo da Regra G vira aviso (não erro) quando uma ordem do dono que cobre a noite traz `regra_g` em `libera` (dono 01/11: "Pode baixar a Balcony de 08 e 09/11"). Acima da suíte com banheira segue erro. O motor já não mexe em noite com `preco_por_data`.
+- `beds24.editar_lote`: conferência de numAvail pelo valor líquido (`num_avail_esperado`); `calendario_12m.classificar_beds24` com `semana_estadia_acima` (dom-qui fora de feriado pela estadia do calendário).
+- Testes: `test_regra_g_balcony` (ordem que libera), `test_conferencia_num_avail_liquido`, `test_beds24_semana_estadia_pelo_calendario`. 90 OK.
+
 ## 01/11/2026 12:25: revisão de 365 dias (dono: "revise tudo para os próximos 365 dias")
 - Regra H no Beds24: `quartos.json` → `parametros.regra_h_beds24` (troca do sábado: noCheckIn → none, noCheckInOrCheckOut → noCheckOut; estadia de sábado 2) substitui `regra_h_restricao` (21/10, sábado com chegada fechada).
 - `calendario_12m.py`: `classificar_beds24` e `plano_beds24_sabados` (`--plano-beds24`, lote do `beds24.py editar-lote`); auditoria do Beds24 pelo `beds24.inventario` (estadia e override); ordens do dono (`piso_por_data`/`alvo_por_data`) e dia órfão saem como `info`, sem item; `--restricoes-pricelabs` e o padrão de chegada/saída do PriceLabs saíram.

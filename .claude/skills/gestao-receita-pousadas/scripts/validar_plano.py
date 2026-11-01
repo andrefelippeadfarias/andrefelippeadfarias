@@ -47,7 +47,7 @@ from collections import defaultdict
 from datetime import date, datetime, timezone
 
 from comum import carregar_quartos, data, hoje_brt, ler_instante, ler_json, periodo_feriado, reais, resultado_workflow
-from ordens import carregar_ordens, congelada, ordem_valida
+from ordens import carregar_ordens, cobre, congelada, ordem_valida
 
 TIPOS = {"data", "apagar", "anuncio", "personalizacao"}
 PALAVRAS_PROIBIDAS = ("ota", "oferta", "genius", "promo", "deal", "visibility")
@@ -500,6 +500,14 @@ class Validador:
                                    f"mais barata livre ({menor:.0f}; alvo {alvo:.0f})")
             if fer:
                 continue  # no feriado a Regra G só baixa a Balcony: o piso de feriado pode deixá-la abaixo do alvo
+            libera_g = [o.get("id") for o in (self.ordens or {}).values()
+                        if cobre(o, "Balcony", data(d)) and "regra_g" in (o.get("libera") or [])
+                        and (not o.get("noites") or d in o["noites"])]
+            if libera_g and balc < alvo * 0.95:
+                # dono 01/11 ("Pode baixar a Balcony de 08 e 09/11"): ordem por data libera a Balcony abaixo da Regra G
+                self.avisos.append(f"aviso Regra G {d}: Balcony {balc:.0f} abaixo do alvo {alvo:.0f} pela ordem "
+                                   f"{libera_g[0]} (libera regra_g)")
+                continue
             msg = None
             if balc < alvo * 0.95:
                 msg = (f"Regra G {d}: Balcony {balc:.0f} mais de 5% abaixo do alvo {alvo:.0f} "

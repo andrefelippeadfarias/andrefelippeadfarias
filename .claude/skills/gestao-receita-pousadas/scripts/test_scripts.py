@@ -317,6 +317,15 @@ class TestValidador(unittest.TestCase):
         # VK2 esgotada: a referência vira a VK7 (1100 -> alvo 990)
         precos[("VK2", "2026-10-12")]["livres"] = 0
         self.assertTrue(any("Regra G" in x for x in erros(ok, precos)))
+        # dono 01/11 ("Pode baixar a Balcony de 08 e 09/11"): ordem que libera regra_g tira o erro de "muito abaixo"
+        precos[("VK2", "2026-10-12")]["livres"] = 1
+        ordens = dict(ORDENS)
+        ordens["o-balc"] = {"id": "o-balc", "tipo": "preco_por_data", "quartos": ["Balcony"], "de": "2026-10-12",
+                            "ate": "2026-10-12", "libera": ["regra_g", "abaixo_piso", "fixo"]}
+        v = Validador(CFG, HOJE, precos, ordens=ordens)
+        v.validar(barato)
+        self.assertFalse(any("Regra G" in x for x in v.erros))
+        self.assertTrue(any("o-balc" in x for x in v.avisos))
 
     def test_padrao_de_qualidade(self):
         # sexta 23/10 e sábado 24/10 (fora de feriado), suítes com banheira: a partir de R$ 1.000

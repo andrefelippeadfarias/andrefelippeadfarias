@@ -396,6 +396,24 @@
     "beds24_inventario"
    ],
    "nota": "Feito às 15:00 BRT (só override noCheckInOrCheckOut → noCheckOut; estadia do feriado mantida). Vigilância: se entrar chegada na sexta de um desses feriados, a quinta de feriado anterior fica órfã; a rotina abre a saída dessa sexta e põe 1 noite na quinta para vendê-la (pendência afrodite-quinta-orfa-feriado)."
+  },
+  {
+   "id": "dono-2026-11-01-balcony-0809",
+   "data": "2026-11-01",
+   "texto": "Pode baixar a Balcony de 08 e 09/11",
+   "contexto": "Resposta à oferta das 15:00 BRT: a Balcony vazia (0/6) de 08 e 09/11 tinha subido pela Regra G para R$ 1.321 e R$ 1.105 porque a King Spa 2 esgotou e a referência passou a ser a King Spa 7 (5/7 e 3/7 vendidas). O motor queria R$ 431 e R$ 495 (p25/p40 do mercado com hidro ÷ 0,65).",
+   "quartos": [
+    "Balcony"
+   ],
+   "de": "2026-11-08",
+   "ate": "2026-11-09",
+   "tipo": "preco_por_data",
+   "libera": [
+    "regra_g",
+    "abaixo_piso",
+    "fixo"
+   ],
+   "nota": "Gravado no piso de R$ 635 (−50% da base de R$ 1.270, o mesmo da ordem de 25/10 'público ~R$ 450' nos dias de semana da Villa), acima do limite de segurança de R$ 630; o preço de mercado puro (R$ 431 a 538) fica abaixo dele. Fora do motor e da Regra G até as noites passarem."
   }
  ]
 }

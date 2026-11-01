@@ -3288,6 +3288,15 @@ Antes de gravar, 3 revisores independentes conferiram os lotes item a item contr
 
 Lote relido e conferido (6 de 6). Com isso as 52 sextas da Afrodite aceitam chegada. Risco aceito pelo dono: uma chegada na sexta de feriado deixa órfã a quinta de feriado anterior (1 unidade); a rotina vigia e, se acontecer, abre a saída da sexta e põe 1 noite na quinta (pendência `afrodite-quinta-orfa-feriado`).
 
+## 01/11/2026, 17:10 — Balcony de 08 e 09/11 no preço do mercado (dono: "Pode baixar a Balcony de 08 e 09/11")
+
+| Quarto e noite | Antes | Agora (enviado / público ~0,65 / Genius 3 ~0,53) | Como desfazer (pedir ao Claude) |
+|---|---|---|---|
+| Balcony, domingo 08/11 (0/6) | R$ 1.321 (Regra G pela King Spa 7) | **R$ 635** / ~R$ 413 / ~R$ 337 | "Volte a Balcony de 08/11 para a Regra G" |
+| Balcony, segunda 09/11 (0/6) | R$ 1.105 (Regra G pela King Spa 7) | **R$ 635** / ~R$ 413 / ~R$ 337 | "Volte a Balcony de 09/11 para a Regra G" |
+
+Piso = teto em −50% da base (R$ 1.270). O motor queria R$ 431 e R$ 495 (p25/p40 do mercado com hidro ÷ 0,65); R$ 635 é o mais perto disso acima do limite de segurança (R$ 630) e é o piso do dono de 25/10 para os dias de semana da Villa. Validado (0 erros; a Regra G vira aviso pela ordem `dono-2026-11-01-balcony-0809`), gravado às 17:08 BRT e conferido no recálculo da Balcony às 17:09 (08 e 09/11 a R$ 635, regra ativa). Vai à Booking no próximo envio (Sync Now hoje ou automático de madrugada).
+
 > **Regras em vigor:** desde 06/10/2026 elas ficam em `.claude/skills/gestao-receita-pousadas/references/regras.md`. Este arquivo guarda só o histórico das mudanças.
 
 ## O que só pode ser feito na tela (passo a passo para você)

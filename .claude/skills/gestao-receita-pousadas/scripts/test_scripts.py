@@ -16,8 +16,11 @@ from validar_plano import Validador, montar_payload
 CFG = carregar_quartos()
 # 30/10: excecao "dono" exige ordem_id vigente. Os testes conferem a lógica, não o calendário das ordens: as ordens reais
 # valem para todos os quartos e datas aqui, e "teste-dono" é a ordem genérica dos itens de teste.
-ORDENS = {k: dict(v, quartos=["*"], de="2020-01-01", ate="2030-12-31") for k, v in carregar_ordens().items()
-          if v.get("tipo") != "manual"}
+# A liberação da Regra G (`regra_g`) é por noite e por quarto (dono 01/11, Balcony 08-09/11): ampliada a todas as datas
+# ela tiraria o erro de "Balcony muito abaixo" de todo teste; os testes que precisam dela criam a própria ordem.
+ORDENS = {k: dict(v, quartos=["*"], de="2020-01-01", ate="2030-12-31",
+                  libera=[x for x in (v.get("libera") or []) if x != "regra_g"])
+          for k, v in carregar_ordens().items() if v.get("tipo") != "manual"}
 ORDENS["teste-dono"] = {"id": "teste-dono", "quartos": ["*"], "de": "2020-01-01", "ate": "2030-12-31", "tipo": "regra", "libera": []}
 # os testes conferem a lógica, não a calibração do dia: fatores de vitrine fixos (medição de 14/10)
 CFG["parametros"]["fator_vitrine_semana"].update({"Recanto": 0.63, "Villa": 0.53})

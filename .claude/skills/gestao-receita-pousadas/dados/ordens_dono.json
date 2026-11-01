@@ -331,6 +331,22 @@
     "estadia"
    ],
    "nota": "Execução no Beds24 pelo dono. A skill confere na Booking depois que o dono avisar (06-07/11 Recanto 1 noite; 07-09/11 Recanto chegada no sábado; Villa 05-06/11)."
+  },
+  {
+   "id": "dono-2026-11-01-beds24-edicao",
+   "data": "2026-11-01",
+   "texto": "Guarde esse token para acessar o beds24 e verificar sempre o inventário e editar sempre que precisar .",
+   "quartos": [
+    "*"
+   ],
+   "de": "2026-11-01",
+   "ate": "2027-12-31",
+   "tipo": "regra",
+   "libera": [
+    "beds24_inventario",
+    "estadia"
+   ],
+   "nota": "O dono mandou um token do Beds24 no chat (não guardado em arquivo do repositório). O Beds24 respondeu 'Token not valid' como long life token, refresh token e código de convite; o arquivo temporário foi apagado. Fica autorizado: ler o inventário sempre e EDITAR no Beds24 disponibilidade (abrir/fechar), estadia mínima e chegada/saída quando precisar, sempre com registro e conferência; nunca reservas (a skill não cancela nem altera reservas) e nunca preço (preço só pelo PriceLabs). Falta um token válido nos segredos do ambiente (Network secrets, cabeçalho `token`, site beds24.com; ou BEDS24_TOKEN) com escopo de leitura e de escrita de inventário, sem restrição de IP."
   }
  ]
 }

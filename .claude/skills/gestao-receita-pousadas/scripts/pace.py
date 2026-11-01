@@ -432,6 +432,7 @@ def plano(cfg: dict, ancora: dict, cals: dict, hoje: date, ordens: dict, passos:
     seria gravado ficava no ledger e travava a cadência da noite)."""
     p = par_pace(cfg)
     regras = regras or {}
+    cals = preco_no_vigente(cfg, cals, regras)
     agora = agora or dt.datetime.now(dt.timezone.utc)
     bloqueios = bloqueios or set()
     itens, linhas, fora = [], [], []
@@ -559,7 +560,10 @@ def plano(cfg: dict, ancora: dict, cals: dict, hoje: date, ordens: dict, passos:
             novo = min(novo, float(q["max"]))
             if k == 0 and novo > atual:
                 novo = atual  # hoje nunca sobe
-            direcao = "sobe" if novo > atual * (1 + p["tolerancia"]) else ("desce" if novo < atual * (1 - p["tolerancia"]) else None)
+            novo_cmp = efetivo(cfg, curto, novo) if escada_ordem and novo > atual else novo
+            # escada (revisão 01/11): o degrau compara o valor que o PriceLabs aplica (piso arredondado para cima em 1% da
+            # base); com o valor cru, o degrau de uma reserva (ex.: R$ 755 → 777, 2,9%) ficava abaixo da tolerância e sumia
+            direcao = "sobe" if novo_cmp > atual * (1 + p["tolerancia"]) else ("desce" if novo < atual * (1 - p["tolerancia"]) else None)
             novo_r = math.ceil(novo) if direcao == "sobe" else (math.floor(novo) if direcao == "desce" else round(novo))
             linha = {"quarto": curto, "data": noite, "D": k, "tipo": tipo, "vendidas": v, "unidades": u, "vendido_pct": round(vend_pct),
                      "curva_pct": round(esp), "status": st, "percentil_alvo": pct, "alvo_publico": round(alvo_pub),
@@ -606,9 +610,42 @@ def plano(cfg: dict, ancora: dict, cals: dict, hoje: date, ordens: dict, passos:
                     it["max_price"] = math.floor(max(teto_af, it["min_price"]))  # teto da faixa; descida com teto menor fica
             itens.append(it)
             finais[(curto, noite)] = efetivo(cfg, curto, float(it["min_price"]))
-    itens = coerencia(cfg, cals, finais, itens, hoje, ordens, bloqueios, dias, ancora)
+    itens = coerencia(cfg, cals, finais, itens, hoje, ordens, bloqueios, dias, ancora, noites_filtro)
     sincronizar_pace(itens, p["tolerancia"])
     return {"hoje": hoje.isoformat(), "itens": itens, "linhas": linhas, "fora": fora}
+
+
+def preco_no_vigente(cfg: dict, cals: dict, regras: dict) -> dict:
+    """Calendário velho (ex.: o da manhã na rotina leve) com o preço dentro do piso/teto das regras por data VIGENTES
+    (get_listing_date_overrides): o preço do recálculo antigo não vê o que foi gravado depois dele (revisão 01/11: a Regra
+    G com a King Spa de antes das 21:03 desfazia as descidas da Balcony). Com recálculo novo não muda nada."""
+    if not regras:
+        return cals
+    out = {}
+    for k, cal in cals.items():
+        rk = regras.get(k) or {}
+        if not rk or not cal:
+            out[k] = cal
+            continue
+        novo = {}
+        for noite, r in cal.items():
+            g = rk.get(noite)
+            if not g or r is None:
+                novo[noite] = r
+                continue
+            preco = float(r["price"])
+            lo = vigente(cfg, k, {}, g, "min_price")
+            hi = vigente(cfg, k, {}, g, "max_price")
+            x = preco
+            if lo is not None and x < lo - 0.5:
+                x = lo
+            if hi is not None and x > hi + 0.5:
+                x = max(hi, lo or 0)
+            if abs(x - preco) >= 0.5:
+                r = dict(r, price=x, preco_recalculo=preco)
+            novo[noite] = r
+        out[k] = novo
+    return out
 
 
 def sincronizar_pace(itens: list[dict], tol: float) -> None:
@@ -680,7 +717,8 @@ def ler_regras(pares: list[str]) -> dict:
 
 
 def coerencia(cfg: dict, cals: dict, finais: dict, itens: list[dict], hoje: date, ordens: dict,
-              bloqueios: set | None = None, dias: int = 60, ancora: dict | None = None) -> list[dict]:
+              bloqueios: set | None = None, dias: int = 60, ancora: dict | None = None,
+              noites_filtro: set | None = None) -> list[dict]:
     """Depois do motor: Panorâmica II entre Moinhos e Panorâmica I; Afrodite acima das outras (só nas noites em que o
     motor mexeu no Recanto); Balcony 10% abaixo da suíte com banheira livre (Regra G) em TODAS as noites de D0 a `dias`
     (regras.md: varredura de 60 dias; revisão de 31/10: Balcony a 99% da King Spa 7 em 14 e 17/12, noites que o motor
@@ -736,8 +774,9 @@ def coerencia(cfg: dict, cals: dict, finais: dict, itens: list[dict], hoje: date
             if it.get("max_price") is not None and it["max_price"] < it["min_price"]:
                 it["max_price"] = it["min_price"]
             ao_k = alvo_da_ordem(ordens, k, d)
-            if esc_on and ao_k and ao_k.get("escada_vendas") and it.get("max_price") is None:
-                # noite na escada de vendas (dono 01/11): teto no degrau, senão o algoritmo do PriceLabs pula a escada
+            if esc_on and ao_k and ao_k.get("escada_vendas") and it.get("max_price") is None and teto is None:
+                # noite na escada de vendas (dono 01/11): teto no degrau, senão o algoritmo do PriceLabs pula a escada;
+                # com teto informado (Panorâmica II), vale o teto (revisão 01/11: a trava prendia a Q2 na Moinhos)
                 it["max_price"] = it["min_price"]
         if teto is not None and (it.get("max_price") is None or teto < it["max_price"]):
             it["max_price"] = math.floor(max(teto, it.get("min_price") or 0))
@@ -752,6 +791,9 @@ def coerencia(cfg: dict, cals: dict, finais: dict, itens: list[dict], hoje: date
         return livre(k, noite) and (k, noite) not in bloqueios
 
     noites = {n for (_, n) in finais} | {n for n in (cals.get("Balcony") or {}) if 0 <= (data(n) - hoje).days <= dias}
+    if noites_filtro is not None:
+        # rotina leve (revisão 01/11): só as noites do filtro; a varredura de 60 noites da Regra G fica com a rodada completa
+        noites = {n for (_, n) in finais} | {n for (_, n) in noites_filtro}
     for noite in sorted(noites):
         d = data(noite)
         if any((k, noite) in finais for k in ("Q7", "Double", "Q2", "Afrodite")):
@@ -761,12 +803,18 @@ def coerencia(cfg: dict, cals: dict, finais: dict, itens: list[dict], hoje: date
             if a is not None and b is not None and a > b + 1 and livre("Double", noite) and sobra("Q7", noite) >= 2:
                 ajustar("Double", noite, piso=a, motivo=f"Ordem do Recanto: Panorâmica I não fica abaixo da Moinhos (R$ {a:.0f})")
                 b = preco("Double", noite)
-            if a is not None and b is not None and livre("Q2", noite):
-                menor, maior = min(a, b), max(a, b)
+            refs_q2 = [x for k2, x in (("Q7", a), ("Double", b)) if x is not None and livre(k2, noite)]
+            if refs_q2 and livre("Q2", noite):
+                # só as suítes que ainda vendem (regras.md: a esgotada sai da ordem do Recanto; revisão 01/11: o preço velho
+                # da Panorâmica I esgotada puxava a Panorâmica II para baixo da Moinhos)
+                menor, maior = min(refs_q2), max(refs_q2)
+                a = a if livre("Q7", noite) else None
+                b = b if livre("Double", noite) else None
                 # revisão de 31/10: o piso da Panorâmica II nunca fica abaixo do piso dela (dono ou ordem por data)
                 ao_q2 = alvo_da_ordem(ordens, "Q2", d)
                 escada_q2 = esc_on and bool(ao_q2) and bool(ao_q2.get("escada_vendas"))
                 oc2 = 0.0
+                forte_q2 = False
                 if ao_q2:
                     # revisão 01/11: a Panorâmica II só vai à base (e ao piso da ordem) na noite fraca, como no motor
                     rq2 = cals["Q2"][noite]
@@ -778,7 +826,8 @@ def coerencia(cfg: dict, cals: dict, finais: dict, itens: list[dict], hoje: date
                         vv2, tt2 = op
                     oc2 = (vv2 / tt2) if tt2 else 0.0
                     st_q2 = status_da_noite(cfg, tipo_noite(cfg, d), (d - hoje).days, vv2, tt2)[0]
-                    if not escada_q2 and not noite_fraca(ao_q2, st_q2, vq2, uq2):
+                    forte_q2 = not noite_fraca(ao_q2, st_q2, vq2, uq2)
+                    if not escada_q2 and forte_q2:
                         ao_q2 = None
                 piso_q2, _, _ = piso_com_ordem(cfg, "Q2", d, ordens if ao_q2 else sem_alvo(ordens))
                 # escada de vendas (dono 01/11; revisão 01/11): a Panorâmica II não sai da ordem quando a pousada vende bem
@@ -795,8 +844,13 @@ def coerencia(cfg: dict, cals: dict, finais: dict, itens: list[dict], hoje: date
                             pct_q2 = percentil_com_vendas(pct_q2, oc2, float(esc.get("p_topo", 90)))
                         base_q2 = valor_percentil(anc_q2, pct_q2) / fator_publico(cfg, "Recanto")
                         teto_q2 = min(teto_q2, base_q2)
+                if escada_q2 and forte_q2:
+                    # noite que já vende bem nunca desce para a reta (escada): só corta o que passar da Panorâmica I
+                    teto_q2 = max(teto_q2, min(float(cals["Q2"][noite]["price"]), maior))
+                ma = f"R$ {a:.0f}" if a is not None else "esgotada"
+                mb = f"R$ {b:.0f}" if b is not None else "esgotada"
                 ajustar("Q2", noite, piso=lo_q2, teto=max(lo_q2, teto_q2),
-                        motivo=f"Ordem do Recanto: Panorâmica II entre Moinhos (R$ {a:.0f}) e Panorâmica I (R$ {b:.0f})",
+                        motivo=f"Ordem do Recanto: Panorâmica II entre Moinhos ({ma}) e Panorâmica I ({mb})",
                         ordem_id="dono-2026-10-21-ordem-recanto")
             outras = [preco(k, noite) for k in ("Q7", "Q2", "Double") if livre(k, noite) and preco(k, noite) is not None]
             if outras and livre("Afrodite", noite):
@@ -911,8 +965,8 @@ def main(argv=None) -> int:
     pl.add_argument("--saida-apagar", help="plano separado com as noites cujo teto/validade precisa ser apagado antes (padrão: <saida> com sufixo _apagar)")
     pl.add_argument("--noites", nargs="*", help="rotina leve: só estas noites recebem passo de pace (Q7=2026-11-10 ou "
                     "Q7=2026-11-10..2026-11-12; noites da reserva, sem a de saída); os outros calendários servem à coerência")
-    pl.add_argument("--sem-registro", action="store_true", help="não grava o ledger (use quando for gravar só parte do "
-                    "plano; depois rode `pace.py registrar --plano <itens gravados>`)")
+    pl.add_argument("--sem-registro", action="store_true", help="(padrão desde 01/11: o plano nunca grava o ledger; "
+                    "depois de gravar no PriceLabs, rode `pace.py registrar --plano <itens gravados>`)")
     rg = sub.add_parser("registrar", help="grava no ledger os passos de pace de um plano JÁ gravado no PriceLabs")
     rg.add_argument("--plano", required=True)
     rg.add_argument("--passos", default=str(ARQ_PASSOS))
@@ -994,10 +1048,11 @@ def main(argv=None) -> int:
                 json.dump({"hoje": res["hoje"], "itens": apagar, "sombra": sombra}, f, ensure_ascii=False, indent=1)
             print(f"{len(apagar)} noites com teto/validade a apagar ANTES, em {sa} (valide e grave este plano primeiro)")
     de_pace = [x for x in itens if (x.get("pace") or {}).get("direcao")]
-    if not sombra and de_pace and not a.sem_registro:
-        registrar_passos(passos, de_pace, dt.datetime.now(dt.timezone.utc), a.passos)
-    elif not sombra and de_pace:
-        print(f"ledger NÃO gravado (--sem-registro): depois de gravar, rode pace.py registrar --plano <itens gravados>")
+    if not sombra and de_pace:
+        # revisão 01/11: o ledger só recebe o que chegou ao PriceLabs (plano barrado no validador, API com erro ou plano
+        # refeito no mesmo dia deixavam passo fantasma travando a cadência)
+        print(f"{len(de_pace)} passos de pace NÃO registrados ainda: depois de gravar, rode "
+              f"`pace.py registrar --plano <itens gravados>` (ou o próprio {a.saida or 'plano'} se gravou tudo)")
     return 0
 
 

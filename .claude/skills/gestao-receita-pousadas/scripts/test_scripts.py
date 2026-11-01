@@ -1450,6 +1450,85 @@ class TestPace(unittest.TestCase):
         self.assertTrue(pace.cadencia_permite(novo, "VK2", "2026-11-10", "sobe", agora, 5, "pousada")[0])
         self.assertFalse(pace.cadencia_permite(novo, "VK2", "2026-11-10", "sobe", agora, 3, "pousada")[0])
 
+    def test_rotina_leve_coerencia_so_no_filtro_e_preco_vigente(self):
+        """Revisão 01/11 (2ª): com --noites a Regra G não varre as 60 noites, e o preço do calendário velho fica dentro do
+        piso/teto vigente das regras (o recálculo da manhã não vê o que foi gravado depois)."""
+        import pace
+        n1, n2 = "2026-11-24", "2026-11-25"
+
+        def r(preco, mu):
+            return {"price": str(preco), "min_price": str(preco), "max_price": str(preco), "mu_occupancy": mu}
+        anc = {"noites": {n: {"p25": 286, "p50": 388, "p75": 500, "p90": 579, "max": 724, "n": 19, "busca_em": "2026-10-30",
+                              "tipo": "semana", "p50_medido": True} for n in (n1, n2)}, "por_tipo": {}}
+        cal = {"VK7": {n1: r(947, "1/7"), n2: r(947, "1/7")}, "VK2": {n1: r(952, "0/2"), n2: r(952, "0/2")},
+               "Balcony": {n1: r(500, "0/6"), n2: r(500, "0/6")}}
+        res = pace.plano(self.cfg, anc, cal, date(2026, 11, 1), {}, {"passos": []}, dias=30, regra_j_ativa=False,
+                         noites_filtro={("VK7", n1)})
+        balc = sorted(i["data"] for i in res["itens"] if i["quarto"] == "Balcony")
+        self.assertNotIn(n2, balc)                                   # fora do filtro: fica para a rodada completa
+        sem = pace.plano(self.cfg, anc, cal, date(2026, 11, 1), {}, {"passos": []}, dias=30, regra_j_ativa=False)
+        self.assertIn(n2, [i["data"] for i in sem["itens"] if i["quarto"] == "Balcony"])   # a completa varre
+        # preço velho da King Spa 2 (1600) com regra vigente piso = teto −12% da base: vale o da regra
+        base = float(self.cfg["por_curto"]["VK2"]["base"])
+        regras = {"VK2": {n1: {"date": n1, "min_price": -12, "min_price_type": "percent_base", "max_price": -12,
+                               "max_price_type": "percent_base"}}}
+        aj = pace.preco_no_vigente(self.cfg, {"VK2": {n1: r(1600, "0/2")}}, regras)
+        self.assertAlmostEqual(float(aj["VK2"][n1]["price"]), round(base * 0.88, 2), delta=0.01)
+        self.assertEqual(aj["VK2"][n1]["preco_recalculo"], 1600.0)
+        self.assertIs(pace.preco_no_vigente(self.cfg, cal, {}), cal)
+
+    def test_panoramica_ii_esgotada_e_noite_forte(self):
+        """Revisão 01/11 (2ª): a Panorâmica I esgotada não puxa a Panorâmica II para baixo da Moinhos; na noite forte a
+        Panorâmica II com escada não desce para a reta (só o que passar da Panorâmica I)."""
+        import pace
+        self.cfg["parametros"]["pace"]["escada_vendas"]["ativa"] = True
+        n = "2026-11-10"
+        anc, ordens, cal = self._recanto_forte(n, q7="4/7", dbl="6/6", q2="1/2")
+        cal["Double"][n]["price"] = "636"
+        res = pace.plano(self.cfg, anc, cal, date(2026, 11, 1), ordens, {"passos": []}, dias=12, regra_j_ativa=False)
+        its = {i["quarto"]: i for i in res["itens"] if i["data"] == n}
+        q7 = float(its["Q7"]["min_price"]) if "Q7" in its else 650.0
+        if "Q2" in its:
+            self.assertGreaterEqual(float(its["Q2"]["min_price"]), q7 - 1)
+        # noite forte (pousada à frente), Panorâmica II já entre as duas: não é cortada para a Moinhos
+        anc, ordens, cal = self._recanto_forte(n, q7="5/7", dbl="4/6", q2="1/2")
+        cal["Double"][n].update(price="1400", min_price="1400", max_price="1400")
+        cal["Q2"][n].update(price="1100", min_price="1100", max_price="1100")
+        res = pace.plano(self.cfg, anc, cal, date(2026, 11, 1), ordens, {"passos": []}, dias=12, regra_j_ativa=False)
+        q2 = [i for i in res["itens"] if i["quarto"] == "Q2" and i["data"] == n]
+        if q2:
+            self.assertGreaterEqual(float(q2[0].get("max_price") or 1e9), 1100 - 1)
+            self.assertLessEqual(float(q2[0]["min_price"]), 1100 + 1)
+
+    def test_escada_degrau_pelo_valor_efetivo(self):
+        """Revisão 01/11 (2ª): o degrau de uma reserva compara o valor que o PriceLabs aplica (piso arredondado para cima
+        em 1% da base); com o valor cru, 2,9% acima ficava na tolerância e a reserva não subia a noite."""
+        import pace
+        self.cfg["parametros"]["pace"]["escada_vendas"]["ativa"] = True
+        n = "2026-11-24"
+        d = date(2026, 11, 24)
+        an = {"p25": 286, "p50": 388, "p75": 500, "p90": 579, "max": 724, "n": 19, "busca_em": "2026-10-30",
+              "tipo": "semana", "p50_medido": True}
+        ordem = {"id": "o-v", "tipo": "alvo_por_data", "quartos": ["VK7"], "de": "2026-11-02", "ate": "2026-11-30",
+                 "percentil": 50, "passo_livre": True, "noites": [n], "escada_vendas": True,
+                 "pisos_enviados": {"VK7": 710}, "libera": ["abaixo_piso", "acima_15"], "ocupacao_max": 0.7,
+                 "frente_ocupacao": 0.5}
+        ordens = {"o-v": ordem}
+        oc = 2 / 7
+        piso = pace.piso_com_ordem(self.cfg, "VK7", d, ordens)[0]
+        piso_pad = pace.piso_com_ordem(self.cfg, "VK7", d, pace.sem_alvo(ordens))[0]
+        alvo = pace.valor_percentil(an, pace.percentil_com_vendas(50, oc, 90)) / 0.65
+        reta = max(alvo, pace.piso_com_vendas(piso, piso_pad, oc))
+        atual = round(reta / 1.029, 2)
+        if pace.efetivo(self.cfg, "VK7", reta) <= atual * 1.03:
+            self.skipTest("reta cai exatamente num degrau de 1% da base")
+        cal = {"VK7": {n: {"price": str(atual), "min_price": str(atual), "max_price": str(atual), "mu_occupancy": "2/7"}}}
+        res = pace.plano(self.cfg, {"noites": {n: an}, "por_tipo": {}}, cal, date(2026, 11, 1), ordens, {"passos": []},
+                         dias=30, regra_j_ativa=False)
+        it = [i for i in res["itens"] if i["quarto"] == "VK7" and i["data"] == n]
+        self.assertTrue(it)
+        self.assertEqual(it[0]["pace"]["direcao"], "sobe")
+
     def test_pisos_enviados(self):
         import pace
         # dia de semana fora de feriado: R$ 500 Genius ÷ 0,63 (CFG do teste) = R$ 794 > mínimo R$ 800? não: vale o mínimo

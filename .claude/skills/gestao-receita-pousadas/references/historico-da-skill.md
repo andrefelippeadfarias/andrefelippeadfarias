@@ -2,6 +2,17 @@
 
 Cada mudança feita na própria Skill (regras, parâmetros, scripts, fluxo) entra aqui: data, o que mudou, por quê (evidência) e como desfazer. A entrada mais nova fica em cima.
 
+## 01/11/2026 07:10: ordem `alvo_por_data` (dono: Recanto na base do mercado)
+- **Por quê:** pedido do dono "Estamos saindo muitos dias sem reserva na Recanto. Vamos baixar o valor para a base do mercado para forçar as reservas".
+- **O que mudou:**
+  - `scripts/ordens.py`: `alvo_da_ordem()`; `piso_da_ordem` aceita também `alvo_por_data` (o piso da ordem substitui os pisos padrão).
+  - `scripts/pace.py`: com a ordem, a noite fraca do quarto usa o percentil da ordem (p50), desce direto ao alvo (`passo_livre`) com piso = teto; noite que vende bem (`ocupacao_max` 70%, ou à frente com `frente_ocupacao` 50%) fica com o motor; coerência: a Panorâmica II também na base com a ordem e a regra "Panorâmica I não fica abaixo da Moinhos" roda antes da Panorâmica II.
+  - `dados/ordens_dono.json`: ordem `dono-2026-11-01-recanto-base-mercado` (Q7, Double, Q2; 25 noites de novembro; pisos = limites de segurança).
+  - Teste `test_ordem_alvo_por_data_base_do_mercado`; 84 OK.
+  - Docs: `regras.md` (6b e 4d), `aprendizados.md` (01/11).
+- **Resultado:** 64 noites gravadas (registro de 01/11 07:10).
+- **Como desfazer:** apagar a ordem em `ordens_dono.json` (o motor volta aos pisos do dono no plano seguinte) e regravar as noites (pedir ao Claude).
+
 ## 31/10/2026 08:40: ajustes do motor na primeira rotina das 07:53 com ele ligado
 - **Por quê:** as buscas de concorrentes do dia vieram sem a mediana dos hotéis com hidro (a mediana geral ficou 9% a 34% abaixo) e, ao rodar o plano de novo com as regras gravadas às 05:29, a proteção repropunha baixar pisos de noites vendidas e "soltar" tetos que só diferiam pelo arredondamento; a Balcony de 04/11 virava um passo sem efeito.
 - **O que mudou:**

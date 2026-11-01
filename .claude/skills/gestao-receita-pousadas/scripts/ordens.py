@@ -69,7 +69,8 @@ def piso_da_ordem(ordens: dict, quarto: str, d: date) -> tuple[float, dict] | No
     valor no lugar dos pisos padrão do dono; se houver mais de uma, vale o menor. None sem ordem."""
     achados = []
     for o in ordens.values():
-        if o.get("tipo") != "piso_por_data" or not cobre(o, quarto, d):
+        # alvo_por_data (dono, 01/11) também traz o piso dele (o limite de segurança) no lugar dos pisos padrão
+        if o.get("tipo") not in ("piso_por_data", "alvo_por_data") or not cobre(o, quarto, d):
             continue
         if o.get("noites") and d.isoformat() not in o["noites"]:
             continue
@@ -77,6 +78,22 @@ def piso_da_ordem(ordens: dict, quarto: str, d: date) -> tuple[float, dict] | No
         if v is not None:
             achados.append((float(v), o))
     return min(achados, key=lambda x: x[0]) if achados else None
+
+
+def alvo_da_ordem(ordens: dict, quarto: str, d: date) -> dict | None:
+    """Ordem do dono do tipo alvo_por_data (01/11: "baixar o valor para a base do mercado para forçar as reservas"):
+    nas noites cobertas (opcionalmente só as `noites` listadas), o motor de pace usa no máximo o percentil `percentil` da
+    âncora como alvo (noite à frente da curva não desce) e, com `passo_livre`, desce direto ao alvo, sem o limite de
+    passo por antecedência; o piso é o `pisos_enviados` da ordem (piso_da_ordem). Com mais de uma, vale a de menor
+    percentil. None sem ordem."""
+    achados = []
+    for o in ordens.values():
+        if o.get("tipo") != "alvo_por_data" or not cobre(o, quarto, d):
+            continue
+        if o.get("noites") and d.isoformat() not in o["noites"]:
+            continue
+        achados.append(o)
+    return min(achados, key=lambda o: float(o.get("percentil", 50))) if achados else None
 
 
 def registrar_manual(quarto: str, de: str, ate: str, texto: str, dias_congelados: int = 7,

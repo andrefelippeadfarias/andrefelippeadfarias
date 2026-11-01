@@ -255,6 +255,60 @@
     "abaixo_piso"
    ],
    "nota": "Não muda o Beds24. Enquanto as noites seguirem fechadas, os preços só valem quando o dono reabrir; depois de reaberta, a noite volta ao motor de pace (pisos padrão por baixo)."
+  },
+  {
+   "id": "dono-2026-11-01-recanto-base-mercado",
+   "data": "2026-11-01",
+   "texto": "Estamos saindo muitos dias sem reserva na Recanto \n\nVamos baixar o valor para a base do mercado para forçar as reservas",
+   "quartos": [
+    "Q7",
+    "Double",
+    "Q2"
+   ],
+   "de": "2026-11-01",
+   "ate": "2026-11-30",
+   "tipo": "alvo_por_data",
+   "percentil": 50,
+   "passo_livre": true,
+   "noites": [
+    "2026-11-03",
+    "2026-11-04",
+    "2026-11-05",
+    "2026-11-06",
+    "2026-11-07",
+    "2026-11-08",
+    "2026-11-09",
+    "2026-11-10",
+    "2026-11-11",
+    "2026-11-12",
+    "2026-11-13",
+    "2026-11-14",
+    "2026-11-15",
+    "2026-11-16",
+    "2026-11-17",
+    "2026-11-18",
+    "2026-11-22",
+    "2026-11-23",
+    "2026-11-24",
+    "2026-11-25",
+    "2026-11-26",
+    "2026-11-27",
+    "2026-11-28",
+    "2026-11-29",
+    "2026-11-30"
+   ],
+   "pisos_enviados": {
+    "Q7": 560,
+    "Double": 630,
+    "Q2": 595
+   },
+   "libera": [
+    "abaixo_piso",
+    "acima_15"
+   ],
+   "nota": "Interpretação (01/11 07:10 BRT): 'base do mercado' = mediana (p50) do preço PÚBLICO dos hotéis com hidro na Booking (dados/ancora_mercado.json), convertida em enviado ÷ 0,63. Vale para Moinhos, Panorâmica I e Panorâmica II nas noites fracas de novembro (fica com o motor a noite que vende bem: 70% ou mais do quarto vendido, ou à frente da curva com metade ou mais vendida); desce direto à base, sem o limite de passo diário. Suspende no Recanto, nessas noites, os pisos do dono de R$ 500/850 no Genius 3 (D1): o piso passa a ser o limite de segurança (70% do mínimo de referência: Q7 R$ 560, Double R$ 630, Q2 R$ 595). Ficam de fora: Finados (01-02/11, ordens por data), Consciência Negra (19-21/11, pisos de feriado) e a Afrodite (segue a ordem do Recanto: 20% acima da mais cara das outras em dia de semana e a faixa de R$ 1.600-1.800 públicos em sexta e sábado). Validade até 30/11; estender ou desfazer só com o dono.",
+   "ocupacao_max": 0.7,
+   "frente_ocupacao": 0.5
   }
  ]
 }

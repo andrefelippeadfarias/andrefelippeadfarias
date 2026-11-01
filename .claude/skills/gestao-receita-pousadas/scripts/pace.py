@@ -49,7 +49,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 from ancora_mercado import ARQ_ANCORA, ancora_da_noite, percentil_de, tipo_noite, valor_percentil  # noqa: E402
 from calendario_12m import ler_recalculo  # noqa: E402
 from comum import PASTA_SKILL, carregar_quartos, data, esgotado, hoje_brt, ler_json, periodo_feriado, vendidas_total  # noqa: E402
-from ordens import ARQ_ORDENS, carregar_ordens, congelada, ordens_por_data, piso_da_ordem  # noqa: E402
+from ordens import ARQ_ORDENS, alvo_da_ordem, carregar_ordens, congelada, ordens_por_data, piso_da_ordem  # noqa: E402
 
 ARQ_PASSOS = PASTA_SKILL / "dados" / "passos.json"
 STATUS = ("frente", "ritmo", "atras", "muito_atras")
@@ -428,13 +428,24 @@ def plano(cfg: dict, ancora: dict, cals: dict, hoje: date, ordens: dict, passos:
             st, vend_pct, esp = status_da_noite(cfg, tipo, k, vv, tt)
             fp = fator_publico(cfg, q["pousada"])
             pct = percentil_alvo(cfg, q["pousada"], st, k)
+            ao = alvo_da_ordem(ordens, curto, d)
+            # ordem do dono (01/11, base do mercado): vale para a noite fraca do quarto. Fica com o motor a noite que vende
+            # bem: `ocupacao_max` (70%) ou mais vendido, ou à frente da curva com `frente_ocupacao` (50%) ou mais vendido
+            # (Panorâmica I 13/11 com 4/6 a ~R$ 1.700 públicos não cai 62%; Moinhos 3/7 a D24 "à frente" desce)
+            oc = v / u if u > 0 else 0.0
+            usa_ordem = bool(ao) and not (oc >= float(ao.get("ocupacao_max", 0.7))
+                                          or (st == "frente" and oc >= float(ao.get("frente_ocupacao", 0.5))))
+            if usa_ordem:
+                pct = float(ao.get("percentil", 50))  # a base do mercado (p50), nem acima nem abaixo
             alvo_pub = valor_percentil(anc, pct)
             alvo_env = alvo_pub / fp
             idade = (hoje - data(anc.get("busca_em", hoje.isoformat()))).days
             fraco = int(anc.get("n") or 0) < p["min_n"] or idade > p["idade_max_dias"]
-            if st == "frente":
+            if st == "frente" and not usa_ordem:
                 alvo_env = max(alvo_env, atual)  # noite vendendo à frente da curva nunca desce: segura ou sobe (RevPAR)
             novo = passo(cfg, atual, alvo_env, k, fraco)
+            if usa_ordem and ao.get("passo_livre") and alvo_env < atual:
+                novo = alvo_env  # ordem do dono (01/11): direto à base do mercado, sem o limite de passo diário
             piso, origem_piso, ordem_piso = piso_com_ordem(cfg, curto, d, ordens)
             po = (piso, ordem_piso) if ordem_piso else None
             teto_af = None
@@ -479,6 +490,8 @@ def plano(cfg: dict, ancora: dict, cals: dict, hoje: date, ordens: dict, passos:
                 # o algoritmo está acima do alvo, ou a noite tem teto (escada/Regra J antigas: piso = teto): o teto desce
                 # junto, senão o preço fica preso no teto antigo ou no algoritmo
                 it["max_price"] = novo_r
+            if usa_ordem and ao.get("passo_livre") and direcao == "desce":
+                it["max_price"] = novo_r  # ordem do dono: preço travado na base (sem teto o algoritmo volta a subir)
             if po:
                 it["excecao"], it["ordem_id"] = "dono", po[1]["id"]
             if teto_af or regra_af:
@@ -488,7 +501,7 @@ def plano(cfg: dict, ancora: dict, cals: dict, hoje: date, ordens: dict, passos:
                     it["max_price"] = math.floor(max(teto_af, it["min_price"]))  # teto da faixa; descida com teto menor fica
             itens.append(it)
             finais[(curto, noite)] = efetivo(cfg, curto, float(it["min_price"]))
-    itens = coerencia(cfg, cals, finais, itens, hoje, ordens, bloqueios, dias)
+    itens = coerencia(cfg, cals, finais, itens, hoje, ordens, bloqueios, dias, ancora)
     return {"hoje": hoje.isoformat(), "itens": itens, "linhas": linhas, "fora": fora}
 
 
@@ -545,7 +558,7 @@ def ler_regras(pares: list[str]) -> dict:
 
 
 def coerencia(cfg: dict, cals: dict, finais: dict, itens: list[dict], hoje: date, ordens: dict,
-              bloqueios: set | None = None, dias: int = 60) -> list[dict]:
+              bloqueios: set | None = None, dias: int = 60, ancora: dict | None = None) -> list[dict]:
     """Depois do motor: Panorâmica II entre Moinhos e Panorâmica I; Afrodite acima das outras (só nas noites em que o
     motor mexeu no Recanto); Balcony 10% abaixo da suíte com banheira livre (Regra G) em TODAS as noites de D0 a `dias`
     (regras.md: varredura de 60 dias; revisão de 31/10: Balcony a 99% da King Spa 7 em 14 e 17/12, noites que o motor
@@ -615,17 +628,27 @@ def coerencia(cfg: dict, cals: dict, finais: dict, itens: list[dict], hoje: date
         d = data(noite)
         if any((k, noite) in finais for k in ("Q7", "Double", "Q2", "Afrodite")):
             a, b = preco("Q7", noite), preco("Double", noite)
+            # a última unidade da Moinhos (preço de fim de estoque) não puxa a Panorâmica I para cima (31/10); antes da
+            # Panorâmica II, que fica entre as duas já ajustadas (01/11: a Panorâmica II ficava abaixo das duas)
+            if a is not None and b is not None and a > b + 1 and livre("Double", noite) and sobra("Q7", noite) >= 2:
+                ajustar("Double", noite, piso=a, motivo=f"Ordem do Recanto: Panorâmica I não fica abaixo da Moinhos (R$ {a:.0f})")
+                b = preco("Double", noite)
             if a is not None and b is not None and livre("Q2", noite):
                 menor, maior = min(a, b), max(a, b)
                 # revisão de 31/10: o piso da Panorâmica II nunca fica abaixo do piso dela (dono ou ordem por data)
                 piso_q2, _, _ = piso_com_ordem(cfg, "Q2", d, ordens)
                 lo_q2 = max(menor, piso_q2)
-                ajustar("Q2", noite, piso=lo_q2, teto=max(lo_q2, menor + 0.75 * (maior - menor)),
+                teto_q2 = menor + 0.75 * (maior - menor)
+                ao_q2 = alvo_da_ordem(ordens, "Q2", d)
+                if ao_q2 and ancora:
+                    # ordem do dono (01/11, base do mercado): a Panorâmica II também vai à base, entre as duas
+                    anc_q2, _ = ancora_da_noite(ancora, cfg, d)
+                    if anc_q2:
+                        base_q2 = valor_percentil(anc_q2, float(ao_q2.get("percentil", 50))) / fator_publico(cfg, "Recanto")
+                        teto_q2 = min(teto_q2, base_q2)
+                ajustar("Q2", noite, piso=lo_q2, teto=max(lo_q2, teto_q2),
                         motivo=f"Ordem do Recanto: Panorâmica II entre Moinhos (R$ {a:.0f}) e Panorâmica I (R$ {b:.0f})",
                         ordem_id="dono-2026-10-21-ordem-recanto")
-            # a última unidade da Moinhos (preço de fim de estoque) não puxa a Panorâmica I para cima (31/10)
-            if a is not None and b is not None and a > b + 1 and livre("Double", noite) and sobra("Q7", noite) >= 2:
-                ajustar("Double", noite, piso=a, motivo=f"Ordem do Recanto: Panorâmica I não fica abaixo da Moinhos (R$ {a:.0f})")
             outras = [preco(k, noite) for k in ("Q7", "Q2", "Double") if livre(k, noite) and preco(k, noite) is not None]
             if outras and livre("Afrodite", noite):
                 pr = premio_afrodite(cfg, d)

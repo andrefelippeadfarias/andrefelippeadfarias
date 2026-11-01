@@ -849,7 +849,7 @@
    "direcao": "desce",
    "status": "ritmo",
    "gravado_em": "2026-10-31T11:14+00:00",
-   "chegou_ao_canal": false
+   "chegou_ao_canal": "2026-11-01T06:44+00:00"
   },
   {
    "quarto": "VK7",
@@ -859,7 +859,7 @@
    "direcao": "desce",
    "status": "ritmo",
    "gravado_em": "2026-10-31T11:14+00:00",
-   "chegou_ao_canal": false
+   "chegou_ao_canal": "2026-11-01T06:44+00:00"
   },
   {
    "quarto": "Afrodite",
@@ -869,7 +869,7 @@
    "direcao": "desce",
    "status": "ritmo",
    "gravado_em": "2026-10-31T11:14+00:00",
-   "chegou_ao_canal": false
+   "chegou_ao_canal": "2026-11-01T06:44+00:00"
   },
   {
    "quarto": "VK7",
@@ -879,7 +879,7 @@
    "direcao": "desce",
    "status": "ritmo",
    "gravado_em": "2026-10-31T11:14+00:00",
-   "chegou_ao_canal": false
+   "chegou_ao_canal": "2026-11-01T06:44+00:00"
   },
   {
    "quarto": "Afrodite",
@@ -889,7 +889,7 @@
    "direcao": "desce",
    "status": "ritmo",
    "gravado_em": "2026-10-31T11:14+00:00",
-   "chegou_ao_canal": false
+   "chegou_ao_canal": "2026-11-01T06:44+00:00"
   },
   {
    "quarto": "VK7",
@@ -899,7 +899,7 @@
    "direcao": "desce",
    "status": "ritmo",
    "gravado_em": "2026-10-31T11:14+00:00",
-   "chegou_ao_canal": false
+   "chegou_ao_canal": "2026-11-01T06:44+00:00"
   },
   {
    "quarto": "VK7",
@@ -909,7 +909,7 @@
    "direcao": "desce",
    "status": "ritmo",
    "gravado_em": "2026-10-31T11:14+00:00",
-   "chegou_ao_canal": false
+   "chegou_ao_canal": "2026-11-01T06:44+00:00"
   },
   {
    "quarto": "VK2",
@@ -919,6 +919,436 @@
    "direcao": "desce",
    "status": "ritmo",
    "gravado_em": "2026-10-31T11:14+00:00",
+   "chegou_ao_canal": "2026-11-01T06:44+00:00"
+  },
+  {
+   "quarto": "Q7",
+   "noite": "2026-11-03",
+   "de": 868.0,
+   "para": 615,
+   "direcao": "desce",
+   "status": "muito_atras",
+   "gravado_em": "2026-11-01T10:04+00:00",
+   "chegou_ao_canal": false
+  },
+  {
+   "quarto": "Double",
+   "noite": "2026-11-03",
+   "de": 962.0,
+   "para": 630,
+   "direcao": "desce",
+   "status": "ritmo",
+   "gravado_em": "2026-11-01T10:04+00:00",
+   "chegou_ao_canal": false
+  },
+  {
+   "quarto": "Q7",
+   "noite": "2026-11-04",
+   "de": 1455.0,
+   "para": 615,
+   "direcao": "desce",
+   "status": "ritmo",
+   "gravado_em": "2026-11-01T10:04+00:00",
+   "chegou_ao_canal": false
+  },
+  {
+   "quarto": "Double",
+   "noite": "2026-11-04",
+   "de": 1465.0,
+   "para": 630,
+   "direcao": "desce",
+   "status": "atras",
+   "gravado_em": "2026-11-01T10:04+00:00",
+   "chegou_ao_canal": false
+  },
+  {
+   "quarto": "Double",
+   "noite": "2026-11-05",
+   "de": 1436.0,
+   "para": 630,
+   "direcao": "desce",
+   "status": "atras",
+   "gravado_em": "2026-11-01T10:04+00:00",
+   "chegou_ao_canal": false
+  },
+  {
+   "quarto": "Double",
+   "noite": "2026-11-06",
+   "de": 1939.0,
+   "para": 1036,
+   "direcao": "desce",
+   "status": "muito_atras",
+   "gravado_em": "2026-11-01T10:04+00:00",
+   "chegou_ao_canal": false
+  },
+  {
+   "quarto": "Double",
+   "noite": "2026-11-07",
+   "de": 1732.0,
+   "para": 1036,
+   "direcao": "desce",
+   "status": "ritmo",
+   "gravado_em": "2026-11-01T10:04+00:00",
+   "chegou_ao_canal": false
+  },
+  {
+   "quarto": "Q7",
+   "noite": "2026-11-08",
+   "de": 739.0,
+   "para": 560,
+   "direcao": "desce",
+   "status": "ritmo",
+   "gravado_em": "2026-11-01T10:04+00:00",
+   "chegou_ao_canal": false
+  },
+  {
+   "quarto": "Q7",
+   "noite": "2026-11-10",
+   "de": 1232.0,
+   "para": 560,
+   "direcao": "desce",
+   "status": "ritmo",
+   "gravado_em": "2026-11-01T10:04+00:00",
+   "chegou_ao_canal": false
+  },
+  {
+   "quarto": "Q7",
+   "noite": "2026-11-11",
+   "de": 1232.0,
+   "para": 560,
+   "direcao": "desce",
+   "status": "atras",
+   "gravado_em": "2026-11-01T10:04+00:00",
+   "chegou_ao_canal": false
+  },
+  {
+   "quarto": "Q7",
+   "noite": "2026-11-12",
+   "de": 1232.0,
+   "para": 560,
+   "direcao": "desce",
+   "status": "atras",
+   "gravado_em": "2026-11-01T10:04+00:00",
+   "chegou_ao_canal": false
+  },
+  {
+   "quarto": "Double",
+   "noite": "2026-11-12",
+   "de": 1228.0,
+   "para": 630,
+   "direcao": "desce",
+   "status": "ritmo",
+   "gravado_em": "2026-11-01T10:04+00:00",
+   "chegou_ao_canal": false
+  },
+  {
+   "quarto": "Q7",
+   "noite": "2026-11-13",
+   "de": 2018.0,
+   "para": 1031,
+   "direcao": "desce",
+   "status": "ritmo",
+   "gravado_em": "2026-11-01T10:04+00:00",
+   "chegou_ao_canal": false
+  },
+  {
+   "quarto": "Q7",
+   "noite": "2026-11-14",
+   "de": 2018.0,
+   "para": 1031,
+   "direcao": "desce",
+   "status": "ritmo",
+   "gravado_em": "2026-11-01T10:04+00:00",
+   "chegou_ao_canal": false
+  },
+  {
+   "quarto": "Q7",
+   "noite": "2026-11-15",
+   "de": 1232.0,
+   "para": 560,
+   "direcao": "desce",
+   "status": "frente",
+   "gravado_em": "2026-11-01T10:04+00:00",
+   "chegou_ao_canal": false
+  },
+  {
+   "quarto": "Double",
+   "noite": "2026-11-15",
+   "de": 1317.0,
+   "para": 630,
+   "direcao": "desce",
+   "status": "ritmo",
+   "gravado_em": "2026-11-01T10:04+00:00",
+   "chegou_ao_canal": false
+  },
+  {
+   "quarto": "Q7",
+   "noite": "2026-11-16",
+   "de": 1232.0,
+   "para": 560,
+   "direcao": "desce",
+   "status": "ritmo",
+   "gravado_em": "2026-11-01T10:04+00:00",
+   "chegou_ao_canal": false
+  },
+  {
+   "quarto": "Double",
+   "noite": "2026-11-16",
+   "de": 1317.0,
+   "para": 630,
+   "direcao": "desce",
+   "status": "ritmo",
+   "gravado_em": "2026-11-01T10:04+00:00",
+   "chegou_ao_canal": false
+  },
+  {
+   "quarto": "Q7",
+   "noite": "2026-11-17",
+   "de": 1232.0,
+   "para": 560,
+   "direcao": "desce",
+   "status": "ritmo",
+   "gravado_em": "2026-11-01T10:04+00:00",
+   "chegou_ao_canal": false
+  },
+  {
+   "quarto": "Double",
+   "noite": "2026-11-17",
+   "de": 1258.0,
+   "para": 630,
+   "direcao": "desce",
+   "status": "ritmo",
+   "gravado_em": "2026-11-01T10:04+00:00",
+   "chegou_ao_canal": false
+  },
+  {
+   "quarto": "Q7",
+   "noite": "2026-11-18",
+   "de": 1232.0,
+   "para": 560,
+   "direcao": "desce",
+   "status": "ritmo",
+   "gravado_em": "2026-11-01T10:04+00:00",
+   "chegou_ao_canal": false
+  },
+  {
+   "quarto": "Q7",
+   "noite": "2026-11-22",
+   "de": 1232.0,
+   "para": 560,
+   "direcao": "desce",
+   "status": "ritmo",
+   "gravado_em": "2026-11-01T10:04+00:00",
+   "chegou_ao_canal": false
+  },
+  {
+   "quarto": "Q7",
+   "noite": "2026-11-24",
+   "de": 1232.0,
+   "para": 560,
+   "direcao": "desce",
+   "status": "ritmo",
+   "gravado_em": "2026-11-01T10:04+00:00",
+   "chegou_ao_canal": false
+  },
+  {
+   "quarto": "Double",
+   "noite": "2026-11-24",
+   "de": 1228.0,
+   "para": 630,
+   "direcao": "desce",
+   "status": "ritmo",
+   "gravado_em": "2026-11-01T10:04+00:00",
+   "chegou_ao_canal": false
+  },
+  {
+   "quarto": "Q7",
+   "noite": "2026-11-25",
+   "de": 1232.0,
+   "para": 560,
+   "direcao": "desce",
+   "status": "frente",
+   "gravado_em": "2026-11-01T10:04+00:00",
+   "chegou_ao_canal": false
+  },
+  {
+   "quarto": "Double",
+   "noite": "2026-11-25",
+   "de": 1228.0,
+   "para": 630,
+   "direcao": "desce",
+   "status": "ritmo",
+   "gravado_em": "2026-11-01T10:04+00:00",
+   "chegou_ao_canal": false
+  },
+  {
+   "quarto": "Q7",
+   "noite": "2026-11-26",
+   "de": 1232.0,
+   "para": 560,
+   "direcao": "desce",
+   "status": "ritmo",
+   "gravado_em": "2026-11-01T10:04+00:00",
+   "chegou_ao_canal": false
+  },
+  {
+   "quarto": "Double",
+   "noite": "2026-11-26",
+   "de": 1228.0,
+   "para": 630,
+   "direcao": "desce",
+   "status": "ritmo",
+   "gravado_em": "2026-11-01T10:04+00:00",
+   "chegou_ao_canal": false
+  },
+  {
+   "quarto": "Q7",
+   "noite": "2026-11-27",
+   "de": 2018.0,
+   "para": 1022,
+   "direcao": "desce",
+   "status": "ritmo",
+   "gravado_em": "2026-11-01T10:04+00:00",
+   "chegou_ao_canal": false
+  },
+  {
+   "quarto": "Q7",
+   "noite": "2026-11-28",
+   "de": 2018.0,
+   "para": 1022,
+   "direcao": "desce",
+   "status": "ritmo",
+   "gravado_em": "2026-11-01T10:04+00:00",
+   "chegou_ao_canal": false
+  },
+  {
+   "quarto": "Q7",
+   "noite": "2026-11-29",
+   "de": 1232.0,
+   "para": 560,
+   "direcao": "desce",
+   "status": "ritmo",
+   "gravado_em": "2026-11-01T10:04+00:00",
+   "chegou_ao_canal": false
+  },
+  {
+   "quarto": "Double",
+   "noite": "2026-11-29",
+   "de": 1243.0,
+   "para": 630,
+   "direcao": "desce",
+   "status": "frente",
+   "gravado_em": "2026-11-01T10:04+00:00",
+   "chegou_ao_canal": false
+  },
+  {
+   "quarto": "Q7",
+   "noite": "2026-11-30",
+   "de": 1232.0,
+   "para": 560,
+   "direcao": "desce",
+   "status": "ritmo",
+   "gravado_em": "2026-11-01T10:04+00:00",
+   "chegou_ao_canal": false
+  },
+  {
+   "quarto": "Double",
+   "noite": "2026-11-30",
+   "de": 1228.0,
+   "para": 630,
+   "direcao": "desce",
+   "status": "ritmo",
+   "gravado_em": "2026-11-01T10:04+00:00",
+   "chegou_ao_canal": false
+  },
+  {
+   "quarto": "Double",
+   "noite": "2026-12-04",
+   "de": 2472.0,
+   "para": 2348,
+   "direcao": "desce",
+   "status": "ritmo",
+   "gravado_em": "2026-11-01T10:04+00:00",
+   "chegou_ao_canal": false
+  },
+  {
+   "quarto": "Afrodite",
+   "noite": "2026-12-04",
+   "de": 2860.0,
+   "para": 2717,
+   "direcao": "desce",
+   "status": "ritmo",
+   "gravado_em": "2026-11-01T10:04+00:00",
+   "chegou_ao_canal": false
+  },
+  {
+   "quarto": "Double",
+   "noite": "2026-12-11",
+   "de": 2516.0,
+   "para": 2390,
+   "direcao": "desce",
+   "status": "ritmo",
+   "gravado_em": "2026-11-01T10:04+00:00",
+   "chegou_ao_canal": false
+  },
+  {
+   "quarto": "Double",
+   "noite": "2026-12-12",
+   "de": 2516.0,
+   "para": 2390,
+   "direcao": "desce",
+   "status": "ritmo",
+   "gravado_em": "2026-11-01T10:04+00:00",
+   "chegou_ao_canal": false
+  },
+  {
+   "quarto": "Afrodite",
+   "noite": "2026-12-18",
+   "de": 2860.0,
+   "para": 2717,
+   "direcao": "desce",
+   "status": "ritmo",
+   "gravado_em": "2026-11-01T10:04+00:00",
+   "chegou_ao_canal": false
+  },
+  {
+   "quarto": "Afrodite",
+   "noite": "2026-12-19",
+   "de": 2860.0,
+   "para": 2717,
+   "direcao": "desce",
+   "status": "ritmo",
+   "gravado_em": "2026-11-01T10:04+00:00",
+   "chegou_ao_canal": false
+  },
+  {
+   "quarto": "Afrodite",
+   "noite": "2026-12-24",
+   "de": 3000.0,
+   "para": 2850,
+   "direcao": "desce",
+   "status": "ritmo",
+   "gravado_em": "2026-11-01T10:04+00:00",
+   "chegou_ao_canal": false
+  },
+  {
+   "quarto": "Double",
+   "noite": "2026-12-25",
+   "de": 2975.0,
+   "para": 2826,
+   "direcao": "desce",
+   "status": "ritmo",
+   "gravado_em": "2026-11-01T10:04+00:00",
+   "chegou_ao_canal": false
+  },
+  {
+   "quarto": "Afrodite",
+   "noite": "2026-12-25",
+   "de": 4360.0,
+   "para": 4142,
+   "direcao": "desce",
+   "status": "ritmo",
+   "gravado_em": "2026-11-01T10:04+00:00",
    "chegou_ao_canal": false
   }
  ]

@@ -3177,6 +3177,26 @@ Validador: 9 itens, 0 erros (calendário da Villa recalculado às 19:0x BRT; 2 a
 | Regra G: 10% abaixo da King Spa 7 | Balcony, 06 e 07/11 | R$ 2.096 / R$ 2.896 (piso = teto) | R$ 1.320,80 (piso = teto, +4%) | "Volte a Balcony de 06 e 07/11 para +65% e +128%" |
 | Quinta no piso da ordem de 25/10 (público ~R$ 450); noite ainda fechada no Beds24 | King Spa 7 / King Spa 2 / Balcony, 05/11 | R$ 1.066 / R$ 1.067 / R$ 952 (piso = teto da Regra J antiga) | R$ 710,40 / R$ 711,20 / R$ 635 (piso = teto) | "Volte a Villa de 05/11 para −28% / −16% / −25%" |
 
+## 01/11/2026, 07:10 — Recanto na base do mercado (dono: "Vamos baixar o valor para a base do mercado para forçar as reservas")
+
+Pedido do dono (01/11, ~07:00): "Estamos saindo muitos dias sem reserva na Recanto. Vamos baixar o valor para a base do mercado para forçar as reservas". Ordem `dono-2026-11-01-recanto-base-mercado` (tipo novo `alvo_por_data`, até 30/11):
+- **Base do mercado** = mediana (p50) do preço PÚBLICO dos hotéis com hidro na Booking (âncora de 30/10), ÷ 0,63 = enviado.
+- **Quartos:** Moinhos, Panorâmica I e Panorâmica II (esta entre as duas). A Afrodite segue a ordem do Recanto (20%/5% acima da mais cara das outras; faixa de fim de semana) e o passo normal do motor.
+- **Noites:** novembro, fora Finados (01-02/11) e Consciência Negra (19-21/11, piso de feriado mantido). A noite que vende bem fica com o motor: 70% ou mais vendido, ou à frente da curva com metade ou mais vendida (Panorâmica I 13-14/11 e 27-28/11 com 4/6; Moinhos 05-07/11, 09/11 e 23/11).
+- **Pisos:** os do dono de R$ 500/850 no Genius 3 ficam suspensos nessas noites; vale o limite de segurança (Moinhos R$ 560, Panorâmica I R$ 630, Panorâmica II R$ 595). Desce direto à base, sem o limite de passo diário, com piso = teto.
+
+Processo: preços e regras do Recanto lidos às 07:00 (recálculo e envio automáticos às 03:44 BRT); plano do motor com a ordem, conferido em simulação (3 ajustes antes de gravar: alvo exato no p50, teto travado no alvo, Panorâmica II na base); validador: 64 itens, 0 erros. Gravação 07:05-07:06 BRT conferida na resposta da API (64 de 64; estadia mínima de sábados e feriados mantida). Ledger: 43 passos de hoje (Recanto). **Chega à Booking com Sync Now do PriceLabs ou no envio automático de amanhã de madrugada.**
+
+| Mudança | Onde | Antes (enviado) | Depois (enviado / público / Genius 3) | Como desfazer (pedir ao Claude) |
+|---|---|---|---|---|
+| Base do mercado, dia de semana | Moinhos, 03-04/11 | R$ 868 / R$ 1.455 | R$ 622 / R$ 392 / R$ 255 | "Volte a Moinhos de novembro para as regras de 31/10" |
+| Base do mercado, dia de semana (no limite de segurança) | Moinhos, 08, 10-12, 15-18, 22, 24-26, 29-30/11 | R$ 739 a R$ 1.232 | R$ 563 / R$ 355 / R$ 231 | idem |
+| Base do mercado, sexta e sábado | Moinhos, 13-14 e 27-28/11 | R$ 2.018 | R$ 1.032 / R$ 650 / R$ 439 | idem |
+| Base do mercado, dia de semana (no limite de segurança) | Panorâmica I, 03-05, 12, 15-17, 24-26, 29-30/11 | R$ 962 a R$ 1.465 | R$ 636 / R$ 401 / R$ 261 | "Volte a Panorâmica I de novembro para as regras de 31/10" |
+| Base do mercado, sexta e sábado | Panorâmica I, 06-07/11 (0/6 e 3/6) | R$ 1.939 / R$ 1.732 | R$ 1.036 / R$ 653 / R$ 440 | idem |
+| Entre Moinhos e Panorâmica I, na base | Panorâmica II, 03-06, 13-18, 22, 24-30/11 | R$ 922 a R$ 2.703 | R$ 604 a R$ 1.049 (dia de semana ~R$ 381-411 públicos; sexta/sábado ~R$ 651-661) | "Volte a Panorâmica II de novembro para as regras de 31/10" |
+| Passo normal do motor (fora da ordem) | Panorâmica I 04, 11-12 e 25/12; Panorâmica II 11-12 e 25/12; Afrodite 04, 18-19, 24-25/12 | ver plano | −5% a −10% (passo de 31+ dias), ordem do Recanto mantida | "Desfaça os passos de dezembro de 01/11" |
+
 > **Regras em vigor:** desde 06/10/2026 elas ficam em `.claude/skills/gestao-receita-pousadas/references/regras.md`. Este arquivo guarda só o histórico das mudanças.
 
 ## O que só pode ser feito na tela (passo a passo para você)

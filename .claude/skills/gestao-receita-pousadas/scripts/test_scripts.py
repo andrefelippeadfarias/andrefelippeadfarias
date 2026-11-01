@@ -1255,6 +1255,42 @@ class TestPace(unittest.TestCase):
         cal4["Balcony"][n3].update(price="2000", min_price="2000", max_price="2000")
         self.assertEqual(pace.coerencia(self.cfg, cal4, {}, [], hoje, {}), [])
 
+    def test_ordem_alvo_por_data_base_do_mercado(self):
+        """Dono 01/11: 'baixar o valor para a base do mercado para forçar as reservas' (Recanto)."""
+        import pace
+        hoje = date(2026, 11, 1)
+        n = "2026-11-10"  # terça, D9
+        anc = {"noites": {n: {"p25": 286, "p50": 388, "p75": 500, "p90": 579, "max": 724, "n": 19, "busca_em": "2026-10-30",
+                              "tipo": "semana", "p50_medido": True}}, "por_tipo": {}}
+        ordem = {"id": "dono-teste-base", "tipo": "alvo_por_data", "quartos": ["Q7", "Double", "Q2"], "de": "2026-11-01",
+                 "ate": "2026-11-30", "percentil": 50, "passo_livre": True, "noites": [n],
+                 "pisos_enviados": {"Q7": 560, "Double": 630, "Q2": 595}, "libera": ["abaixo_piso", "acima_15"]}
+        ordens = {ordem["id"]: ordem}
+        cal = {"Q7": {n: {"price": "1232", "min_price": "1232", "max_price": "5000", "mu_occupancy": "3/7"}},
+               "Double": {n: {"price": "1300", "min_price": "1220", "max_price": "5000", "mu_occupancy": "1/6"}},
+               "Q2": {n: {"price": "1260", "min_price": "1260", "max_price": "1260", "mu_occupancy": "0/2"}}}
+        res = pace.plano(self.cfg, anc, cal, hoje, ordens, {"passos": []}, dias=12, regra_j_ativa=False)
+        its = {(i["quarto"], i["data"]): i for i in res["itens"]}
+        q7 = its[("Q7", n)]
+        # p50 R$ 388 público ÷ 0,63 = R$ 616 enviados, direto (sem o limite de 10% a D9), com a ordem citada
+        self.assertEqual(q7["min_price"], 615)
+        self.assertEqual(q7["ordem_id"], "dono-teste-base")
+        self.assertEqual(q7["excecao"], "dono")
+        # Panorâmica I no piso de segurança (R$ 630), Panorâmica II entre as duas pelo piso da ordem (não pelo R$ 500 Genius)
+        self.assertEqual(its[("Double", n)]["min_price"], 630)
+        self.assertTrue(615 <= its[("Q2", n)]["min_price"] <= 630)
+        # sem a ordem: passo limitado (10% a D9) e piso do dono (R$ 500 no Genius 3 = R$ 1.220)
+        sem = {(i["quarto"], i["data"]): i for i in pace.plano(self.cfg, anc, cal, hoje, {}, {"passos": []}, dias=12, regra_j_ativa=False)["itens"]}
+        self.assertGreaterEqual(sem[("Q7", n)]["min_price"], 1108)
+        # noite que vende bem (70% ou mais, ou à frente com metade ou mais) não desce mesmo com a ordem
+        cal_f = {"Q7": {n: dict(cal["Q7"][n], mu_occupancy="5/7")}}
+        res_f = pace.plano(self.cfg, anc, cal_f, hoje, ordens, {"passos": []}, dias=12, regra_j_ativa=False)
+        self.assertFalse([i for i in res_f["itens"] if i["quarto"] == "Q7" and (i.get("pace") or {}).get("direcao") == "desce"])
+        # noite fora da lista `noites` (feriado) não entra na ordem
+        ordem2 = dict(ordem, noites=["2026-11-11"])
+        sem2 = {(i["quarto"], i["data"]): i for i in pace.plano(self.cfg, anc, cal, hoje, {ordem2["id"]: ordem2}, {"passos": []}, dias=12, regra_j_ativa=False)["itens"]}
+        self.assertEqual(sem2[("Q7", n)]["min_price"], sem[("Q7", n)]["min_price"])
+
     def test_sem_efeito_tira_item_igual_ao_vigente(self):
         import pace
         cal = {"Balcony": {"2026-11-04": {"price": "724", "min_price": "724", "max_price": "724"}}}

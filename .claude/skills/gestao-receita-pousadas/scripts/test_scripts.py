@@ -1286,6 +1286,18 @@ class TestPace(unittest.TestCase):
         cal_f = {"Q7": {n: dict(cal["Q7"][n], mu_occupancy="5/7")}}
         res_f = pace.plano(self.cfg, anc, cal_f, hoje, ordens, {"passos": []}, dias=12, regra_j_ativa=False)
         self.assertFalse([i for i in res_f["itens"] if i["quarto"] == "Q7" and (i.get("pace") or {}).get("direcao") == "desce"])
+        # revisão 01/11: noite que vende bem (5/7 = 71%) fica com o motor E com os pisos do dono (R$ 500 no Genius 3 =
+        # R$ 1.220), sem citar a ordem da base; a D1 o status cai para ritmo e o motor desce, mas nunca abaixo do piso
+        n9 = "2026-11-09"
+        anc9 = {"noites": {n9: dict(anc["noites"][n])}, "por_tipo": {}}
+        ordem9 = dict(ordem, noites=[n9])
+        cal9 = {"Q7": {n9: {"price": "1232", "min_price": "1232", "max_price": "5000", "mu_occupancy": "5/7"}}}
+        res9 = pace.plano(self.cfg, anc9, cal9, date(2026, 11, 8), {ordem9["id"]: ordem9}, {"passos": []}, dias=3, regra_j_ativa=False)
+        piso_dono = pace.pisos_enviados(self.cfg, "Q7", date(2026, 11, 9))[0]
+        self.assertGreater(piso_dono, 560)
+        for i in res9["itens"]:
+            self.assertGreaterEqual(i["min_price"], math.floor(piso_dono))
+            self.assertNotEqual(i.get("ordem_id"), "dono-teste-base")
         # noite fora da lista `noites` (feriado) não entra na ordem
         ordem2 = dict(ordem, noites=["2026-11-11"])
         sem2 = {(i["quarto"], i["data"]): i for i in pace.plano(self.cfg, anc, cal, hoje, {ordem2["id"]: ordem2}, {"passos": []}, dias=12, regra_j_ativa=False)["itens"]}

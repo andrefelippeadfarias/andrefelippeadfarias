@@ -3197,6 +3197,18 @@ Processo: preços e regras do Recanto lidos às 07:00 (recálculo e envio autom�
 | Entre Moinhos e Panorâmica I, na base | Panorâmica II, 03-06, 13-18, 22, 24-30/11 | R$ 922 a R$ 2.703 | R$ 604 a R$ 1.049 (dia de semana ~R$ 381-411 públicos; sexta/sábado ~R$ 651-661) | "Volte a Panorâmica II de novembro para as regras de 31/10" |
 | Passo normal do motor (fora da ordem) | Panorâmica I 04, 11-12 e 25/12; Panorâmica II 11-12 e 25/12; Afrodite 04, 18-19, 24-25/12 | ver plano | −5% a −10% (passo de 31+ dias), ordem do Recanto mantida | "Desfaça os passos de dezembro de 01/11" |
 
+## 01/11/2026, 07:40 — Revisão independente da base do mercado: 3 correções pequenas
+
+Revisão por 3 lentes + verificação (8 agentes, somente leitura): os 64 itens gravados às 07:05 conferem com a ordem e com as regras (mesmo plano reproduzido; regras vivas iguais ao payload; limites de segurança, ordem do Recanto, Finados, Consciência Negra e estadia mínima preservados). Dois achados confirmados no código, corrigidos (`pace.noite_fraca`, `pace.sem_alvo`): o piso da ordem (limite de segurança) valia também na noite que vende bem (a partir de 08/11 a Moinhos de 09/11, 5/7, poderia ir a R$ 1.108 = ~R$ 454 no Genius 3); e a Panorâmica II ia à base mesmo vendendo bem. Achados refutados (sem mudança): a ordem nova substitui a de 26/10 ("R$ 300 no Genius 3") nas noites dela, como decidido; o público em D0-D3 fica ~15% abaixo da base por causa da oferta de última hora da Booking; a Panorâmica I de 09-11/11 e dos fins de semana com 4/6 segue acima do mercado por vender bem (decisão do dono se quiser mudar).
+
+Validador: 3 itens, 0 erros. Gravado às 07:39 BRT, depois do Sync Now do dono (07:21): vai no próximo envio.
+
+| Mudança | Onde | Antes | Depois | Como desfazer (pedir ao Claude) |
+|---|---|---|---|---|
+| Fica com os pisos do dono (vende bem: 1/2, à frente) | Panorâmica II, 14/11 (sáb) | R$ 1.033,50 (base, gravado às 07:06) | piso R$ 2.003 / teto R$ 2.273 (entre Moinhos R$ 1.032 e Panorâmica I R$ 2.708, piso de fds) | "Volte a Panorâmica II de 14/11 para −35%" |
+| Fica com os pisos do dono (vende bem: 1/2, à frente) | Panorâmica II, 22/11 (dom) | R$ 604,20 (base) | R$ 1.224,30 (piso = teto, piso do dono) | "Volte a Panorâmica II de 22/11 para −62%" |
+| Ordem do Recanto (Panorâmica I ≥ Panorâmica II e Moinhos) | Panorâmica I, 23/11 | piso R$ 1.228,40 | piso R$ 1.243,20 (−16%) | "Volte a Panorâmica I de 23/11 para −17%" |
+
 > **Regras em vigor:** desde 06/10/2026 elas ficam em `.claude/skills/gestao-receita-pousadas/references/regras.md`. Este arquivo guarda só o histórico das mudanças.
 
 ## O que só pode ser feito na tela (passo a passo para você)

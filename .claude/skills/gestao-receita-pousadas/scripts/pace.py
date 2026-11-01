@@ -297,6 +297,19 @@ def vigente(cfg: dict, curto: str, r: dict, regra: dict | None, campo: str) -> f
     return None
 
 
+def noite_fraca(ao: dict, st: str, vendidas: int, unidades: int) -> bool:
+    """Ordem alvo_por_data (dono, 01/11): a noite do quarto entra na base do mercado só se for fraca. Fica com o motor
+    (e com os pisos padrão do dono) a noite com `ocupacao_max` (70%) ou mais vendido, ou à frente da curva com
+    `frente_ocupacao` (50%) ou mais."""
+    oc = vendidas / unidades if unidades > 0 else 0.0
+    return not (oc >= float(ao.get("ocupacao_max", 0.7)) or (st == "frente" and oc >= float(ao.get("frente_ocupacao", 0.5))))
+
+
+def sem_alvo(ordens: dict) -> dict:
+    """As ordens sem as do tipo alvo_por_data: o piso da ordem de base do mercado só vale na noite fraca (revisão 01/11)."""
+    return {k: o for k, o in ordens.items() if o.get("tipo") != "alvo_por_data"}
+
+
 def protecao_esgotada(cfg: dict, p: dict, anc: dict, origem: str, curto: str, d: date, r: dict, v: int, u: int,
                       regra: dict | None = None, piso_extra: float | None = None,
                       teto_regra: float | None = None) -> dict | None:
@@ -432,9 +445,7 @@ def plano(cfg: dict, ancora: dict, cals: dict, hoje: date, ordens: dict, passos:
             # ordem do dono (01/11, base do mercado): vale para a noite fraca do quarto. Fica com o motor a noite que vende
             # bem: `ocupacao_max` (70%) ou mais vendido, ou à frente da curva com `frente_ocupacao` (50%) ou mais vendido
             # (Panorâmica I 13/11 com 4/6 a ~R$ 1.700 públicos não cai 62%; Moinhos 3/7 a D24 "à frente" desce)
-            oc = v / u if u > 0 else 0.0
-            usa_ordem = bool(ao) and not (oc >= float(ao.get("ocupacao_max", 0.7))
-                                          or (st == "frente" and oc >= float(ao.get("frente_ocupacao", 0.5))))
+            usa_ordem = bool(ao) and noite_fraca(ao, st, v, u)
             if usa_ordem:
                 pct = float(ao.get("percentil", 50))  # a base do mercado (p50), nem acima nem abaixo
             alvo_pub = valor_percentil(anc, pct)
@@ -446,7 +457,8 @@ def plano(cfg: dict, ancora: dict, cals: dict, hoje: date, ordens: dict, passos:
             novo = passo(cfg, atual, alvo_env, k, fraco)
             if usa_ordem and ao.get("passo_livre") and alvo_env < atual:
                 novo = alvo_env  # ordem do dono (01/11): direto à base do mercado, sem o limite de passo diário
-            piso, origem_piso, ordem_piso = piso_com_ordem(cfg, curto, d, ordens)
+            # noite que vende bem fica com os pisos padrão (ou piso_por_data): o piso da base do mercado é só da noite fraca
+            piso, origem_piso, ordem_piso = piso_com_ordem(cfg, curto, d, ordens if usa_ordem or not ao else sem_alvo(ordens))
             po = (piso, ordem_piso) if ordem_piso else None
             teto_af = None
             regra_af = False
@@ -636,10 +648,22 @@ def coerencia(cfg: dict, cals: dict, finais: dict, itens: list[dict], hoje: date
             if a is not None and b is not None and livre("Q2", noite):
                 menor, maior = min(a, b), max(a, b)
                 # revisão de 31/10: o piso da Panorâmica II nunca fica abaixo do piso dela (dono ou ordem por data)
-                piso_q2, _, _ = piso_com_ordem(cfg, "Q2", d, ordens)
+                ao_q2 = alvo_da_ordem(ordens, "Q2", d)
+                if ao_q2:
+                    # revisão 01/11: a Panorâmica II só vai à base (e ao piso da ordem) na noite fraca, como no motor
+                    rq2 = cals["Q2"][noite]
+                    uq2 = cfg["por_curto"]["Q2"]["unidades"]
+                    vq2, _ = vendidas_total(rq2, uq2)
+                    vv2, tt2 = (vq2, uq2)
+                    op = ocupacao_pousada(cfg, cals, noite)["Recanto"]
+                    if uq2 <= 2 and op[1]:
+                        vv2, tt2 = op
+                    st_q2 = status_da_noite(cfg, tipo_noite(cfg, d), (d - hoje).days, vv2, tt2)[0]
+                    if not noite_fraca(ao_q2, st_q2, vq2, uq2):
+                        ao_q2 = None
+                piso_q2, _, _ = piso_com_ordem(cfg, "Q2", d, ordens if ao_q2 else sem_alvo(ordens))
                 lo_q2 = max(menor, piso_q2)
                 teto_q2 = menor + 0.75 * (maior - menor)
-                ao_q2 = alvo_da_ordem(ordens, "Q2", d)
                 if ao_q2 and ancora:
                     # ordem do dono (01/11, base do mercado): a Panorâmica II também vai à base, entre as duas
                     anc_q2, _ = ancora_da_noite(ancora, cfg, d)

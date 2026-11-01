@@ -10,7 +10,8 @@ Cada mudança feita na própria Skill (regras, parâmetros, scripts, fluxo) entr
   - `dados/ordens_dono.json`: ordem `dono-2026-11-01-recanto-base-mercado` (Q7, Double, Q2; 25 noites de novembro; pisos = limites de segurança).
   - Teste `test_ordem_alvo_por_data_base_do_mercado`; 84 OK.
   - Docs: `regras.md` (6b e 4d), `aprendizados.md` (01/11).
-- **Resultado:** 64 noites gravadas (registro de 01/11 07:10).
+- **Revisão independente (07:40):** `pace.noite_fraca()` e `pace.sem_alvo()`: o piso e a base da ordem só valem na noite fraca (também para a Panorâmica II na coerência); teste de regressão (noite 5/7 a D1 não desce abaixo do piso do dono).
+- **Resultado:** 64 noites gravadas (registro de 01/11 07:10) e 3 correções (registro de 01/11 07:40).
 - **Como desfazer:** apagar a ordem em `ordens_dono.json` (o motor volta aos pisos do dono no plano seguinte) e regravar as noites (pedir ao Claude).
 
 ## 31/10/2026 08:40: ajustes do motor na primeira rotina das 07:53 com ele ligado

@@ -306,9 +306,10 @@
     "abaixo_piso",
     "acima_15"
    ],
-   "nota": "Interpretação (01/11 07:10 BRT): 'base do mercado' = mediana (p50) do preço PÚBLICO dos hotéis com hidro na Booking (dados/ancora_mercado.json), convertida em enviado ÷ 0,63. Vale para Moinhos, Panorâmica I e Panorâmica II nas noites fracas de novembro (fica com o motor a noite que vende bem: 70% ou mais do quarto vendido, ou à frente da curva com metade ou mais vendida); desce direto à base, sem o limite de passo diário. Suspende no Recanto, nessas noites, os pisos do dono de R$ 500/850 no Genius 3 (D1): o piso passa a ser o limite de segurança (70% do mínimo de referência: Q7 R$ 560, Double R$ 630, Q2 R$ 595). Ficam de fora: Finados (01-02/11, ordens por data), Consciência Negra (19-21/11, pisos de feriado) e a Afrodite (segue a ordem do Recanto: 20% acima da mais cara das outras em dia de semana e a faixa de R$ 1.600-1.800 públicos em sexta e sábado). Validade até 30/11; estender ou desfazer só com o dono.",
+   "nota": "Interpretação (01/11 07:10 BRT): 'base do mercado' = mediana (p50) do preço PÚBLICO dos hotéis com hidro na Booking (dados/ancora_mercado.json), convertida em enviado ÷ 0,63. Vale para Moinhos, Panorâmica I e Panorâmica II nas noites fracas de novembro (fica com o motor a noite que vende bem: 70% ou mais do quarto vendido, ou à frente da curva com metade ou mais vendida); desce direto à base, sem o limite de passo diário. Suspende no Recanto, nessas noites, os pisos do dono de R$ 500/850 no Genius 3 (D1): o piso passa a ser o limite de segurança (70% do mínimo de referência: Q7 R$ 560, Double R$ 630, Q2 R$ 595). Ficam de fora: Finados (01-02/11, ordens por data), Consciência Negra (19-21/11, pisos de feriado) e a Afrodite (segue a ordem do Recanto: 20% acima da mais cara das outras em dia de semana e a faixa de R$ 1.600-1.800 públicos em sexta e sábado). Validade até 30/11; estender ou desfazer só com o dono. 01/11 18:00 (dono: 'vamos aumentando o valor gradualmente de acordo com que as datas que estão feitas as reservas forem entrando'): escada_vendas ligada; a noite não sai mais da ordem de uma vez (salto para o piso padrão): sobe uma reta por reserva, do p50 e do piso da ordem ao p90 e ao piso padrão do dono.",
    "ocupacao_max": 0.7,
-   "frente_ocupacao": 0.5
+   "frente_ocupacao": 0.5,
+   "escada_vendas": true
   },
   {
    "id": "dono-2026-11-01-beds24-fds-e-villa-0511",
@@ -414,6 +415,19 @@
     "fixo"
    ],
    "nota": "Gravado no piso de R$ 635 (−50% da base de R$ 1.270, o mesmo da ordem de 25/10 'público ~R$ 450' nos dias de semana da Villa), acima do limite de segurança de R$ 630; o preço de mercado puro (R$ 431 a 538) fica abaixo dele. Fora do motor e da Regra G até as noites passarem."
+  },
+  {
+   "id": "dono-2026-11-01-subir-com-reservas",
+   "data": "2026-11-01",
+   "texto": "Agora vamos aumentando o valor gradualmente de acordo com qué as datas que estão feitas as reservas forem entrando . Para que possamos atingir nossos objetivos .",
+   "quartos": [
+    "*"
+   ],
+   "de": "2026-11-01",
+   "ate": "2027-12-31",
+   "tipo": "regra",
+   "libera": [],
+   "nota": "Escada de vendas no motor de pace (quartos.json parametros.pace.escada_vendas; ordem de base do mercado com escada_vendas). Não muda pisos, limites de segurança nem descontos."
   }
  ]
 }

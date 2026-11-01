@@ -375,7 +375,12 @@
    "idade_max_dias": 10,
    "tolerancia": 0.03,
    "nota": "Motor de pace (30/10/2026, pedido do dono: maior valor com os 2 hotéis lotados). curvas = % vendido esperado a D dias da noite, por tipo (dom-qui, sex-sáb, feriado), calibradas no histórico de 01/09 a 30/10 (39-50% das reservas com 0-1 dia; Booking mediana 10 d) e na janela do mercado do PriceLabs (nov 0-8/0-10 d; dez 0-24 d); recalibrar na revisão de segunda só com n >= 10 por célula e no máximo 5 pontos por ponto. banda = pontos de diferença vendido − curva para sair de 'no ritmo'; muito_atras = pontos para 'muito atrás'. alvo = percentil do preço PÚBLICO dos hotéis com hidro na Booking (dados/ancora_mercado.json) por status e pousada (Recanto um degrau acima da Villa; frente_perto = à frente a até frente_perto_dias). passo = k × distância relativa até o alvo, limitado por pmax conforme D (pela metade com âncora com n < min_n ou mais velha que idade_max_dias). tolerancia = variação mínima para gerar passo. | protecao_percentil: percentil da âncora usado como piso de proteção da noite esgotada/overbooking com a Regra J desligada (31/10).",
-   "protecao_percentil": 90
+   "protecao_percentil": 90,
+   "escada_vendas": {
+    "ativa": true,
+    "p_topo": 90,
+    "nota": "Dono 01/11: 'Agora vamos aumentando o valor gradualmente de acordo com que as datas que estão feitas as reservas forem entrando. Para que possamos atingir nossos objetivos.' O percentil alvo de cada noite sobe com a ocupação dela: p_status + (p_topo − p_status) × vendidas/unidades (quartos de 1-2 unidades pela ocupação das suítes com banheira da pousada). Reserva nova libera mais um passo para cima no mesmo dia (cadência por venda); cancelamento desce pela mesma reta. Nas noites da ordem de base do mercado com escada_vendas, o piso sai do piso da ordem e sobe com a ocupação até o piso padrão do dono, sem salto; noite que já vende bem nunca desce para a reta."
+   }
   },
   "motor": {
    "modo": "ligado",

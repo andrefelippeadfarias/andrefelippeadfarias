@@ -7,6 +7,14 @@ Cada mudança feita na própria Skill (regras, parâmetros, scripts, fluxo) entr
 - **O que mudou:** `scripts/beds24.py`: `inventario` (GET /inventory/rooms/calendar: numAvail, minStay, override) e `editar` (POST, simulação por padrão, `--aplicar` grava e relê; só disponibilidade, estadia mínima e chegada/saída; trava preço e valores fora do intervalo); credencial de escrita por `BEDS24_INVITE_CODE` → refresh token em /root/.beds24 (600) ou `BEDS24_REFRESH_TOKEN`. Testes `TestBeds24Edicao`. `SKILL.md`: inventário em toda rotina. Ordem `dono-2026-11-01-beds24-edicao`.
 - **Como desfazer:** apagar a ordem e os comandos `inventario`/`editar`; a skill volta a só ler reservas.
 
+## 01/11/2026 18:00: escada de vendas no motor de pace (dono: "aumentando o valor gradualmente ... as reservas forem entrando")
+- `pace.py`: `percentil_com_vendas` (percentil alvo sobe com a ocupação da noite até `p_topo` 90) e `piso_com_vendas` (reta do piso da ordem ao piso padrão); `par_pace.escada_vendas` (`quartos.json` → `parametros.pace.escada_vendas`, ligada).
+- Ordem `alvo_por_data` com `escada_vendas` (base do mercado do Recanto): a noite não sai mais da ordem de uma vez; sobe pela reta, no máximo `pmax(D)` por passo, com teto no degrau; noite fraca desce direto à reta (cancelamento); noite que vende bem nunca desce. A coerência trava o teto no degrau quando outra regra sobe o piso numa noite da escada.
+- `cadencia_permite(..., vendidas)`: venda nova desde o último passo libera outro passo para cima no mesmo dia (cancelamento, outro para baixo); o ledger guarda `vendidas`.
+- SKILL.md (rotina leve): passo para cima na hora em toda noite com reserva nova. regras.md 6b.
+- Testes: `test_escada_vendas_percentil_e_cadencia`, `test_escada_vendas_na_base_do_mercado`; os testes antigos do motor rodam com a escada desligada. 91 OK.
+- Executado 18:00: 27 passos de subida (Moinhos 17 noites, Panorâmica I 10), 14 da Panorâmica II pela ordem do Recanto, 4 proteções de noite esgotada (Panorâmica I 05 e 07/11, King Spa 2 06 e 07/11). Revisão adversarial do código rodando.
+
 ## 01/11/2026 17:35: estadia e chegada/saída nos dois lados (PriceLabs e Beds24)
 - SKILL.md (inventário do Beds24) e regras.md (Regra A no Beds24): o envio do PriceLabs sobrescreve a estadia mínima de todos os quartos e a chegada/saída da Afrodite no Beds24; toda mudança dessas vai também ao PriceLabs por data.
 - Executado: 389 regras por data no PriceLabs (estadia 1 em 285 quarto-noites; chegada liberada em 104 sextas e sábados da Afrodite, saída fechada), conferidas na resposta da API; 367 itens regravados no Beds24 e conferidos.

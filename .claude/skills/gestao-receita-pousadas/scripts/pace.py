@@ -72,6 +72,9 @@ def par_pace(cfg: dict) -> dict:
         "pmax": p.get("pmax") or {"31+": 5, "8-30": 10, "4-7": 15, "0-3": 20},
         "min_n": p.get("min_n", 6), "idade_max_dias": p.get("idade_max_dias", 10),
         "tolerancia": p.get("tolerancia", 0.03),
+        # dono 01/11: "vamos aumentando o valor gradualmente de acordo com que as datas que estão feitas as reservas forem
+        # entrando": o percentil alvo sobe com a ocupação da noite (p_status + (p_topo − p_status) × vendidas/unidades)
+        "escada_vendas": p.get("escada_vendas") or {"ativa": False, "p_topo": 90},
     }
 
 
@@ -225,10 +228,16 @@ def ultimo_passo(passos: dict, curto: str, noite: str) -> dict | None:
     return max(xs, key=lambda x: x["gravado_em"]) if xs else None
 
 
-def cadencia_permite(passos: dict, curto: str, noite: str, direcao: str, agora: dt.datetime) -> tuple[bool, str]:
+def cadencia_permite(passos: dict, curto: str, noite: str, direcao: str, agora: dt.datetime,
+                     vendidas: int | None = None) -> tuple[bool, str]:
     u = ultimo_passo(passos, curto, noite)
     if not u or u["direcao"] != direcao:
         return True, ""
+    # escada de vendas (dono, 01/11): reserva nova na noite libera mais um passo para cima no mesmo dia (e cancelamento,
+    # mais um para baixo), sem esperar as 24 h nem o envio do passo anterior
+    if vendidas is not None and u.get("vendidas") is not None:
+        if (direcao == "sobe" and vendidas > int(u["vendidas"])) or (direcao == "desce" and vendidas < int(u["vendidas"])):
+            return True, ""
     gravado = dt.datetime.fromisoformat(u["gravado_em"].replace("Z", "+00:00"))
     if gravado.tzinfo is None:
         gravado = gravado.replace(tzinfo=dt.timezone.utc)
@@ -246,7 +255,8 @@ def registrar_passos(passos: dict, itens: list[dict], agora: dt.datetime, caminh
             continue
         passos.setdefault("passos", []).append({
             "quarto": it["quarto"], "noite": it["data"], "de": pc["atual"], "para": pc["novo"], "direcao": pc["direcao"],
-            "status": pc["status"], "gravado_em": agora.isoformat(timespec="minutes"), "chegou_ao_canal": False})
+            "status": pc["status"], "vendidas": pc.get("vendidas"), "gravado_em": agora.isoformat(timespec="minutes"),
+            "chegou_ao_canal": False})
     with open(caminho or ARQ_PASSOS, "w", encoding="utf-8") as f:
         json.dump(passos, f, ensure_ascii=False, indent=1)
         f.write("\n")
@@ -303,6 +313,20 @@ def noite_fraca(ao: dict, st: str, vendidas: int, unidades: int) -> bool:
     `frente_ocupacao` (50%) ou mais."""
     oc = vendidas / unidades if unidades > 0 else 0.0
     return not (oc >= float(ao.get("ocupacao_max", 0.7)) or (st == "frente" and oc >= float(ao.get("frente_ocupacao", 0.5))))
+
+
+def percentil_com_vendas(pct: float, oc: float, topo: float) -> float:
+    """Escada de vendas (dono, 01/11): cada reserva na noite aproxima o percentil alvo do topo, na proporção vendida.
+    0% vendido = percentil do status; 100% = topo (p90, o mesmo da proteção da noite esgotada). Nunca desce o percentil."""
+    oc = max(0.0, min(1.0, oc))
+    return pct + (topo - pct) * oc if topo > pct else pct
+
+
+def piso_com_vendas(piso_ordem: float, piso_padrao: float, oc: float) -> float:
+    """Ordem de base do mercado com `escada_vendas` (dono, 01/11): o piso sai do piso da ordem (limite de segurança) e
+    sobe com a ocupação até o piso padrão do dono, sem salto quando a noite passa a vender bem."""
+    oc = max(0.0, min(1.0, oc))
+    return piso_ordem + (max(piso_padrao, piso_ordem) - piso_ordem) * oc
 
 
 def sem_alvo(ordens: dict) -> dict:
@@ -442,12 +466,22 @@ def plano(cfg: dict, ancora: dict, cals: dict, hoje: date, ordens: dict, passos:
             fp = fator_publico(cfg, q["pousada"])
             pct = percentil_alvo(cfg, q["pousada"], st, k)
             ao = alvo_da_ordem(ordens, curto, d)
-            # ordem do dono (01/11, base do mercado): vale para a noite fraca do quarto. Fica com o motor a noite que vende
-            # bem: `ocupacao_max` (70%) ou mais vendido, ou à frente da curva com `frente_ocupacao` (50%) ou mais vendido
-            # (Panorâmica I 13/11 com 4/6 a ~R$ 1.700 públicos não cai 62%; Moinhos 3/7 a D24 "à frente" desce)
-            usa_ordem = bool(ao) and noite_fraca(ao, st, v, u)
-            if usa_ordem:
-                pct = float(ao.get("percentil", 50))  # a base do mercado (p50), nem acima nem abaixo
+            esc = p["escada_vendas"]
+            oc = (vv / tt) if tt else 0.0
+            escada_ordem = bool(ao) and bool(ao.get("escada_vendas"))
+            if escada_ordem:
+                # dono 01/11 ("aumentando o valor gradualmente ... as reservas forem entrando"): a noite fica na ordem e
+                # sobe uma reta por reserva, da base do mercado (p50, piso da ordem) ao p90 e ao piso padrão do dono
+                usa_ordem = True
+                pct = percentil_com_vendas(float(ao.get("percentil", 50)), oc, float(esc.get("p_topo", 90)))
+            else:
+                # ordem do dono (01/11, base do mercado): vale para a noite fraca do quarto. Fica com o motor a noite que
+                # vende bem: `ocupacao_max` (70%) ou mais vendido, ou à frente da curva com `frente_ocupacao` (50%) ou mais
+                usa_ordem = bool(ao) and noite_fraca(ao, st, v, u)
+                if usa_ordem:
+                    pct = float(ao.get("percentil", 50))  # a base do mercado (p50), nem acima nem abaixo
+                elif esc.get("ativa"):
+                    pct = percentil_com_vendas(pct, oc, float(esc.get("p_topo", 90)))
             alvo_pub = valor_percentil(anc, pct)
             alvo_env = alvo_pub / fp
             idade = (hoje - data(anc.get("busca_em", hoje.isoformat()))).days
@@ -455,10 +489,24 @@ def plano(cfg: dict, ancora: dict, cals: dict, hoje: date, ordens: dict, passos:
             if st == "frente" and not usa_ordem:
                 alvo_env = max(alvo_env, atual)  # noite vendendo à frente da curva nunca desce: segura ou sobe (RevPAR)
             novo = passo(cfg, atual, alvo_env, k, fraco)
-            if usa_ordem and ao.get("passo_livre") and alvo_env < atual:
+            if usa_ordem and ao.get("passo_livre") and alvo_env < atual and not escada_ordem:
                 novo = alvo_env  # ordem do dono (01/11): direto à base do mercado, sem o limite de passo diário
             # noite que vende bem fica com os pisos padrão (ou piso_por_data): o piso da base do mercado é só da noite fraca
             piso, origem_piso, ordem_piso = piso_com_ordem(cfg, curto, d, ordens if usa_ordem or not ao else sem_alvo(ordens))
+            reta = None
+            if escada_ordem:
+                piso_pad, _, _ = piso_com_ordem(cfg, curto, d, sem_alvo(ordens))
+                reta = max(alvo_env, piso_com_vendas(piso, piso_pad, oc))
+                if reta >= atual:
+                    # sobe aos poucos: no máximo o limite de passo da antecedência (pmax) por vez; cada reserva nova
+                    # libera mais um passo no mesmo dia (cadência por venda)
+                    novo = min(reta, atual * (1 + pmax(cfg, k) / 100.0))
+                elif noite_fraca(ao, st, v, u):
+                    novo = reta  # cancelamento ou noite fraca: direto à reta (passo livre da ordem)
+                else:
+                    novo = atual  # a noite que já vende bem nunca desce para a reta
+                origem_piso = (f"escada de vendas da ordem {ao['id']} ({vv}/{tt} vendidas; reta R$ {reta:.0f}, piso "
+                               f"padrão R$ {piso_pad:.0f})")
             po = (piso, ordem_piso) if ordem_piso else None
             teto_af = None
             regra_af = False
@@ -486,14 +534,18 @@ def plano(cfg: dict, ancora: dict, cals: dict, hoje: date, ordens: dict, passos:
             linhas.append(linha)
             if not direcao:
                 continue
-            ok, por_que = cadencia_permite(passos, curto, noite, direcao, agora)
+            ok, por_que = cadencia_permite(passos, curto, noite, direcao, agora, v)
             if not ok:
                 linha["cadencia"] = por_que
                 continue
             it = {"tipo": "data", "quarto": curto, "data": noite, "min_price": novo_r, "preco_antes": atual,
                   "motivo": (f"Pace ({st.replace('_', ' ')}: {v}/{u} vendidas, curva {esp:.0f}% a D{k}); alvo p{pct:.0f} "
                              f"R$ {alvo_pub:.0f} público = R$ {alvo_env:.0f} enviados ({origem}); antes R$ {atual:.0f}"),
-                  "pace": {"status": st, "direcao": direcao, "atual": atual, "novo": novo_r, "alvo_enviado": round(alvo_env)}}
+                  "pace": {"status": st, "direcao": direcao, "atual": atual, "novo": novo_r, "alvo_enviado": round(alvo_env),
+                           "vendidas": v}}
+            if escada_ordem:
+                it["motivo"] = (f"Escada de vendas (dono 01/11): {vv}/{tt} vendidas; reta R$ {reta:.0f} (p{pct:.0f} R$ "
+                                f"{alvo_pub:.0f} público); degrau até R$ {novo_r}; antes R$ {atual:.0f}")
             if direcao == "sobe":
                 # revisão de 31/10: teto solto deixava o algoritmo pular além do passo (VK7 04/11: R$ 710 → R$ 1.100+);
                 # sobe pelo piso com o teto no alvo do motor (nunca abaixo do piso novo)
@@ -502,8 +554,8 @@ def plano(cfg: dict, ancora: dict, cals: dict, hoje: date, ordens: dict, passos:
                 # o algoritmo está acima do alvo, ou a noite tem teto (escada/Regra J antigas: piso = teto): o teto desce
                 # junto, senão o preço fica preso no teto antigo ou no algoritmo
                 it["max_price"] = novo_r
-            if usa_ordem and ao.get("passo_livre") and direcao == "desce":
-                it["max_price"] = novo_r  # ordem do dono: preço travado na base (sem teto o algoritmo volta a subir)
+            if usa_ordem and ao.get("passo_livre") and (direcao == "desce" or escada_ordem):
+                it["max_price"] = novo_r  # ordem do dono: preço travado no degrau (sem teto o algoritmo pula a escada)
             if po:
                 it["excecao"], it["ordem_id"] = "dono", po[1]["id"]
             if teto_af or regra_af:
@@ -622,6 +674,10 @@ def coerencia(cfg: dict, cals: dict, finais: dict, itens: list[dict], hoje: date
             if efetivo(cfg, k, it["min_price"]) < piso - 0.01:  # nunca abaixo depois do arredondamento
                 it["min_price"] = math.ceil(efetivo(cfg, k, piso))
             if it.get("max_price") is not None and it["max_price"] < it["min_price"]:
+                it["max_price"] = it["min_price"]
+            ao_k = alvo_da_ordem(ordens, k, d)
+            if ao_k and ao_k.get("escada_vendas") and it.get("max_price") is None:
+                # noite na escada de vendas (dono 01/11): teto no degrau, senão o algoritmo do PriceLabs pula a escada
                 it["max_price"] = it["min_price"]
         if teto is not None and (it.get("max_price") is None or teto < it["max_price"]):
             it["max_price"] = math.floor(max(teto, it.get("min_price") or 0))

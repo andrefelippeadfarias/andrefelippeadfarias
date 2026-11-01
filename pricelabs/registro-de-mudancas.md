@@ -3311,6 +3311,28 @@ Conferido: 389 regras por data na resposta da API do PriceLabs (motivos antigos 
 
 **Reservas da rodada (16:53):** Panorâmica I recebeu mais 4 reservas da Booking para 04-08/11 (todas de hóspedes diferentes, referências diferentes: não são duplicadas); King Spa 2 06-08/11 (Airbnb, R$ 1.159,08); cancelamento da King Spa 2 em 17/11 (Airbnb). Sem mudança manual no PriceLabs. Panorâmica I esgotada em 05 e 07/11; as noites fortes saem da base do mercado na rotina das 07:53 (a ordem só vale para noite fraca).
 
+## 01/11/2026, 18:00 — Escada de vendas: o preço sobe conforme as reservas entram (dono: "Agora vamos aumentando o valor gradualmente...")
+
+**Regra nova (motor de pace):** cada reserva numa noite sobe o preço dela um degrau, no máximo 10% por vez a 8-30 dias (15% a 4-7, 20% a 0-3, 5% a 31+), até a "reta" da ocupação: na base do mercado do Recanto, do p50 do mercado e do limite de segurança (0 vendida) ao p90 e ao piso padrão do dono (última unidade). Reserva nova libera outro degrau no mesmo dia; cancelamento devolve. A noite não salta mais de uma vez para o piso padrão quando passa a vender bem.
+
+**Gravado às 17:46 BRT (validado: 0 erros; conferido na resposta da API):**
+
+| Quarto | Noites | Antes | Agora (enviado) |
+|---|---|---|---|
+| Moinhos | 03/11 (1/7) | R$ 622 | R$ 693 |
+| Moinhos | 04/11 (4/7) | R$ 622 | R$ 747 |
+| Moinhos | 08/11 (2/7) | R$ 563 | R$ 612 |
+| Moinhos | 10, 15, 16, 17, 18, 22, 24, 25, 26 e 30/11 (1 a 3/7) | R$ 563 | R$ 620 |
+| Moinhos | 13 e 14/11 (2 e 3/7) | R$ 1.032 | R$ 1.135 e 1.136 |
+| Moinhos | 27 e 28/11 (1/7) | R$ 1.032 | R$ 1.102 |
+| Panorâmica I | 03 e 04/11 (2/6) | R$ 636 | R$ 764 |
+| Panorâmica I | 06/11 (4/6) | R$ 1.036 | R$ 1.112 |
+| Panorâmica I | 12, 15, 16, 17, 24, 29 e 30/11 (1 a 3/6) | R$ 636 | R$ 700 |
+| Panorâmica II | 14 noites de novembro (ordem do Recanto, entre Moinhos e Panorâmica I) | R$ 604 a 1.049 | R$ 622 a 1.138 |
+| Proteção de esgotada | Panorâmica I 05/11 e 07/11; King Spa 2 06 e 07/11 | teto antigo (R$ 636 / 1.036 / 1.486) | piso R$ 1.220 / 2.000 / 1.662, teto livre |
+
+Como desfazer (pedir ao Claude): "Desligue a escada de vendas e volte as noites ao preço de antes".
+
 > **Regras em vigor:** desde 06/10/2026 elas ficam em `.claude/skills/gestao-receita-pousadas/references/regras.md`. Este arquivo guarda só o histórico das mudanças.
 
 ## O que só pode ser feito na tela (passo a passo para você)

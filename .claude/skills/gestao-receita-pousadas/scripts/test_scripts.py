@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import math
+import datetime as dt
 import unittest
 from datetime import date
 
@@ -1209,8 +1210,85 @@ class TestPace(unittest.TestCase):
         import copy
         self.cfg = copy.deepcopy(CFG)
         self.cfg["parametros"]["fator_publico"] = {"Recanto": 0.63, "Villa": 0.65}
+        # os testes do motor conferem a lógica de 31/10; a escada de vendas (dono 01/11) tem testes próprios
+        self.cfg["parametros"].setdefault("pace", {})["escada_vendas"] = {"ativa": False, "p_topo": 90}
 
-    def test_curva_status_alvo_passo(self):
+    def test_escada_vendas_percentil_e_cadencia(self):
+        """Dono 01/11: 'aumentando o valor gradualmente de acordo com que as datas ... reservas forem entrando'."""
+        import pace
+        self.assertEqual(pace.percentil_com_vendas(50, 0, 90), 50)
+        self.assertAlmostEqual(pace.percentil_com_vendas(50, 3 / 7, 90), 50 + 40 * 3 / 7)
+        self.assertEqual(pace.percentil_com_vendas(90, 0.5, 90), 90)          # nunca desce o percentil
+        self.assertAlmostEqual(pace.piso_com_vendas(560, 1220, 3 / 7), 560 + 660 * 3 / 7)
+        # cadência: passo para cima no mesmo dia só com reserva nova desde o último passo
+        agora = dt.datetime(2026, 11, 1, 20, 0, tzinfo=dt.timezone.utc)
+        led = {"passos": [{"quarto": "Q7", "noite": "2026-11-10", "direcao": "sobe", "gravado_em": "2026-11-01T15:00",
+                           "chegou_ao_canal": False, "vendidas": 2}]}
+        self.assertFalse(pace.cadencia_permite(led, "Q7", "2026-11-10", "sobe", agora, 2)[0])
+        self.assertTrue(pace.cadencia_permite(led, "Q7", "2026-11-10", "sobe", agora, 3)[0])
+        self.assertFalse(pace.cadencia_permite(led, "Q7", "2026-11-10", "sobe", agora)[0])   # sem a contagem: regra antiga
+        # motor fora de ordem: com a escada ligada, a noite com reservas mira mais alto
+        hoje = date(2026, 11, 1)
+        n = "2026-11-24"
+        anc = {"noites": {n: {"p25": 286, "p50": 388, "p75": 500, "p90": 579, "max": 724, "n": 19, "busca_em": "2026-10-30",
+                              "tipo": "semana"}}, "por_tipo": {}}
+        cal = {"VK7": {n: {"price": "947", "min_price": "947", "max_price": "5000", "mu_occupancy": "4/7"}}}
+        sem = pace.plano(self.cfg, anc, cal, hoje, {}, {"passos": []}, dias=30, regra_j_ativa=False)["linhas"][0]
+        self.cfg["parametros"]["pace"]["escada_vendas"]["ativa"] = True
+        com = pace.plano(self.cfg, anc, cal, hoje, {}, {"passos": []}, dias=30, regra_j_ativa=False)["linhas"][0]
+        self.assertGreater(com["percentil_alvo"], sem["percentil_alvo"])
+        self.assertGreaterEqual(com["alvo_enviado"], sem["alvo_enviado"])
+
+    def test_escada_vendas_na_base_do_mercado(self):
+        """A noite da ordem de base do mercado sobe uma reta por reserva, sem o salto para o piso padrão."""
+        import pace
+        hoje = date(2026, 11, 1)
+        n = "2026-11-10"  # terça, D9
+        anc = {"noites": {n: {"p25": 286, "p50": 388, "p75": 500, "p90": 579, "max": 724, "n": 19, "busca_em": "2026-10-30",
+                              "tipo": "semana", "p50_medido": True}}, "por_tipo": {}}
+        ordem = {"id": "o-esc", "tipo": "alvo_por_data", "quartos": ["Q7"], "de": "2026-11-01", "ate": "2026-11-30",
+                 "percentil": 50, "passo_livre": True, "noites": [n], "escada_vendas": True,
+                 "pisos_enviados": {"Q7": 560}, "libera": ["abaixo_piso", "acima_15"], "ocupacao_max": 0.7,
+                 "frente_ocupacao": 0.5}
+        piso_pad = pace.pisos_enviados(self.cfg, "Q7", date(2026, 11, 10))[0]
+
+        def item(mu, preco):
+            cal = {"Q7": {n: {"price": str(preco), "min_price": str(preco), "max_price": str(preco), "mu_occupancy": mu}}}
+            res = pace.plano(self.cfg, anc, cal, hoje, {"o-esc": ordem}, {"passos": []}, dias=12, regra_j_ativa=False)
+            its = [i for i in res["itens"] if i["quarto"] == "Q7"]
+            return its[0] if its else None
+        an = anc["noites"][n]
+
+        def esperado(vend):
+            oc = vend / 7
+            alvo = pace.valor_percentil(an, pace.percentil_com_vendas(50, oc, 90)) / 0.63
+            return max(alvo, pace.piso_com_vendas(560, piso_pad, oc))
+        lim = pace.pmax(self.cfg, 9) / 100.0  # D9: degrau de no máximo 10% por vez
+
+        def degrau(atual, vend):
+            return min(esperado(vend), atual * (1 + lim))
+        # 0/7 na base (p50): nada muda; cada reserva sobe a noite um degrau em direção à reta (percentil e piso
+        # proporcionais), sem passar do limite de passo da antecedência
+        self.assertIsNone(item("0/7", round(esperado(0))))
+        i1 = item("1/7", 616)
+        self.assertEqual(i1["pace"]["direcao"], "sobe")
+        self.assertAlmostEqual(i1["min_price"], degrau(616, 1), delta=1.5)
+        self.assertEqual(i1["max_price"], i1["min_price"])                    # teto no degrau: o algoritmo não pula
+        self.assertEqual(i1["ordem_id"], "o-esc")
+        i3 = item("3/7", i1["min_price"])
+        self.assertAlmostEqual(i3["min_price"], degrau(i1["min_price"], 3), delta=1.5)
+        self.assertLessEqual(i3["min_price"], i1["min_price"] * (1 + lim) + 1)    # gradual: nunca mais que o limite
+        # 6/7 (vende bem) a R$ 563: sobe só um degrau, sem o salto de uma vez para o piso padrão
+        i6 = item("6/7", 563)
+        self.assertAlmostEqual(i6["min_price"], 563 * (1 + lim), delta=1.5)
+        self.assertLess(i6["min_price"], piso_pad)
+        # noite que já vende bem e está acima da reta não desce
+        self.assertIsNone(item("5/7", 1500))
+        # cancelamento numa noite fraca: desce direto à reta
+        i_c = item("1/7", 900)
+        self.assertEqual(i_c["pace"]["direcao"], "desce")
+        self.assertAlmostEqual(i_c["min_price"], esperado(1), delta=1.5)
+
         import pace
         self.assertEqual(pace.curva(self.cfg, "semana", 0), 100)
         self.assertEqual(pace.curva(self.cfg, "fds", 7), 50)

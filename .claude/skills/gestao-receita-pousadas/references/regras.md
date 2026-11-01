@@ -67,7 +67,7 @@ Toda gravação passa antes pelo `scripts/validar_plano.py`, é conferida depois
 - **Exceções em vigor:** a lista viva é `quartos.json` → `excecoes_mercado` (hoje vazia); o validador avisa quando `revisar_em` venceu; o histórico fica no registro.
 
 **Regra H, sábado (dono, 06/10)**
-- A diária de sábado sozinha não é vendida. O bloqueio é do dono, no Beds24/Booking; no PriceLabs, todo sábado fica com estadia mínima 2.
+- A diária de sábado sozinha não é vendida. O bloqueio é do dono, no Beds24/Booking; no PriceLabs, todo sábado fica com estadia mínima 2. **Chegada no sábado é permitida com 2 noites (sábado + domingo)** (dono, 01/11: "Sim ."); o Beds24 não deve ter "sem check-in" no sábado.
 - Exceção: na quarta a sexta antes, se a pousada estiver abaixo de 50% naquele sábado e não for feriado, volte o sábado para 1 noite (`excecao: "regra_h"`, com `ocupacao_sabado`) e avise o dono para liberar no Beds24.
 - Com o domingo esgotado, o sábado só vende junto com a sexta. As unidades de sábado acima das livres na sexta ficam presas: cite isso no relatório.
 - **Sábado isolado entre duas noites esgotadas:** o PriceLabs mostra estadia 1 mesmo com a regra por data em 2 (regra de dia órfão; Double 10/10, VK7 17/10). Não regrave; o `ler_recalculo.py` marca ⚠️ e o relatório diz "última unidade presa; o bloqueio de sábado sozinho do Beds24 protege". Desligar "orphan days" é só pela tela (pendência do dono).
@@ -320,6 +320,7 @@ Pedido do dono (30/10): "Melhore nossas estratégias para atingirmos o maior val
 ## 6b. Decisões do dono por data (vencem; apagar quando passarem)
 | Decidida em | Datas alvo | O que vale | Vence em |
 |---|---|---|---|
+| 01/11 08:20 | Recanto sexta 06/11 (Panorâmica I); sábados dos 2 hotéis; Villa 05/11 | **"Sim ."** às três mudanças no Beds24 (dono executa): 1 noite na sexta 06/11 na Panorâmica I; **chegada no sábado permitida com 2 noites** (sábado + domingo), o sábado sozinho segue bloqueado (Regra H); Villa reaberta em 05/11. Ordem `dono-2026-11-01-beds24-fds-e-villa-0511` | sábados: permanente (Regra H ajustada); demais, quando as noites passarem |
 | 01/11 07:00 | Recanto (Moinhos, Panorâmica I, Panorâmica II), noites de novembro fora Finados e Consciência Negra | **Base do mercado:** "Estamos saindo muitos dias sem reserva na Recanto. Vamos baixar o valor para a base do mercado para forçar as reservas". Ordem `dono-2026-11-01-recanto-base-mercado` (`alvo_por_data`): a noite fraca (menos de 70% vendido e, se à frente da curva, menos da metade) vai direto à mediana (p50) do preço público dos hotéis com hidro ÷ 0,63, com piso = teto; os pisos de R$ 500/850 no Genius 3 ficam suspensos nessas noites e vale o limite de segurança (Q7 R$ 560, Double R$ 630, Q2 R$ 595). Ordem do Recanto mantida; Afrodite fora (segue a ordem do Recanto e o passo normal) | 30/11/2026 (estender só com o dono) |
 | 03/10 | Finados, 30/10 a 02/11/2026 | +20% e 3 noites nos 7 quartos (feito na tela). Não sobrescrever sem motivo forte; a flutuação só mexe por cima do +20% com registro | 02/11/2026 |
 | 06/10 16h | Villa, 06 a 25/10/2026 | estratégia agressiva: mínimos VK7 R$ 850, VK2 e Balcony R$ 765 (corte de 15%); dias úteis e domingos no mínimo; fins de semana perto da mediana geral; sexta 23/10 com 1 noite | 25/10/2026; depois vale a 4c salvo nova ordem |

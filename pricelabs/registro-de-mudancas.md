@@ -3297,6 +3297,20 @@ Lote relido e conferido (6 de 6). Com isso as 52 sextas da Afrodite aceitam cheg
 
 Piso = teto em −50% da base (R$ 1.270). O motor queria R$ 431 e R$ 495 (p25/p40 do mercado com hidro ÷ 0,65); R$ 635 é o mais perto disso acima do limite de segurança (R$ 630) e é o piso do dono de 25/10 para os dias de semana da Villa. Validado (0 erros; a Regra G vira aviso pela ordem `dono-2026-11-01-balcony-0809`), gravado às 17:08 BRT e conferido no recálculo da Balcony às 17:09 (08 e 09/11 a R$ 635, regra ativa). Vai à Booking no próximo envio (Sync Now hoje ou automático de madrugada).
 
+## 01/11/2026, 17:35 — Rotina das 16:53: o envio do PriceLabs tinha desfeito o Beds24; PriceLabs alinhado e Beds24 regravado
+
+**O que aconteceu:** por volta das 16h, um envio do PriceLabs ao Beds24 sobrescreveu a estadia mínima de todos os quartos e a chegada/saída da Afrodite com os valores do PriceLabs. Voltaram 280 noites de semana a 2 ou 3 noites, 02/11 a 3 noites (inclusive a Moinhos) e as 46 sextas e 52 sábados da Afrodite a "sem chegada e sem saída". Os sábados dos outros quartos, a King Spa 7 de 06-07/11 e as 6 sextas de feriado da Afrodite (gravadas depois) ficaram.
+
+| Mudança | Onde | Antes | Depois | Como desfazer (pedir ao Claude) |
+|---|---|---|---|---|
+| Estadia 1 por data no PriceLabs | 285 quarto-noites (dias de semana aprovados, 02/11 nos 7 quartos, Panorâmica I 06/11) | 2 ou 3 (personalização do PriceLabs) | 1 | "Volte a estadia dos dias de semana para 2 no PriceLabs e no Beds24" |
+| Chegada/saída por data no PriceLabs | Afrodite, 104 sextas e sábados de 06/11/2026 a 30/10/2027 | personalização "1111001" (sexta e sábado sem chegada e sem saída) | chegada liberada todos os dias; saída fechada na sexta e no sábado | "Feche de novo a chegada de sexta e sábado da Afrodite" |
+| Beds24 regravado | 269 estadias + 98 sextas/sábados da Afrodite | valores do PriceLabs | 1 noite; noCheckOut | (idem) |
+
+Conferido: 389 regras por data na resposta da API do PriceLabs (motivos antigos preservados nas datas que já tinham regra); 367 itens relidos no Beds24; auditoria do ano com 0 sábado com chegada fechada, 0 dia de semana acima do calendário e 0 outra restrição. Conferência agendada depois do envio da madrugada (04:10 BRT).
+
+**Reservas da rodada (16:53):** Panorâmica I recebeu mais 4 reservas da Booking para 04-08/11 (todas de hóspedes diferentes, referências diferentes: não são duplicadas); King Spa 2 06-08/11 (Airbnb, R$ 1.159,08); cancelamento da King Spa 2 em 17/11 (Airbnb). Sem mudança manual no PriceLabs. Panorâmica I esgotada em 05 e 07/11; as noites fortes saem da base do mercado na rotina das 07:53 (a ordem só vale para noite fraca).
+
 > **Regras em vigor:** desde 06/10/2026 elas ficam em `.claude/skills/gestao-receita-pousadas/references/regras.md`. Este arquivo guarda só o histórico das mudanças.
 
 ## O que só pode ser feito na tela (passo a passo para você)

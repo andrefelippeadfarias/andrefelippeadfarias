@@ -7,6 +7,10 @@ Cada mudança feita na própria Skill (regras, parâmetros, scripts, fluxo) entr
 - **O que mudou:** `scripts/beds24.py`: `inventario` (GET /inventory/rooms/calendar: numAvail, minStay, override) e `editar` (POST, simulação por padrão, `--aplicar` grava e relê; só disponibilidade, estadia mínima e chegada/saída; trava preço e valores fora do intervalo); credencial de escrita por `BEDS24_INVITE_CODE` → refresh token em /root/.beds24 (600) ou `BEDS24_REFRESH_TOKEN`. Testes `TestBeds24Edicao`. `SKILL.md`: inventário em toda rotina. Ordem `dono-2026-11-01-beds24-edicao`.
 - **Como desfazer:** apagar a ordem e os comandos `inventario`/`editar`; a skill volta a só ler reservas.
 
+## 01/11/2026 17:35: estadia e chegada/saída nos dois lados (PriceLabs e Beds24)
+- SKILL.md (inventário do Beds24) e regras.md (Regra A no Beds24): o envio do PriceLabs sobrescreve a estadia mínima de todos os quartos e a chegada/saída da Afrodite no Beds24; toda mudança dessas vai também ao PriceLabs por data.
+- Executado: 389 regras por data no PriceLabs (estadia 1 em 285 quarto-noites; chegada liberada em 104 sextas e sábados da Afrodite, saída fechada), conferidas na resposta da API; 367 itens regravados no Beds24 e conferidos.
+
 ## 01/11/2026 17:05: ordem do dono libera a Regra G por data
 - `validar_plano.validar_balcony`: Balcony mais de 5% abaixo do alvo da Regra G vira aviso (não erro) quando uma ordem do dono que cobre a noite traz `regra_g` em `libera` (dono 01/11: "Pode baixar a Balcony de 08 e 09/11"). Acima da suíte com banheira segue erro. O motor já não mexe em noite com `preco_por_data`.
 - `beds24.editar_lote`: conferência de numAvail pelo valor líquido (`num_avail_esperado`); `calendario_12m.classificar_beds24` com `semana_estadia_acima` (dom-qui fora de feriado pela estadia do calendário).

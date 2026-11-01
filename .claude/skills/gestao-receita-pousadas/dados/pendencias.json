@@ -750,7 +750,15 @@
    "desde": "2026-11-01",
    "urgencia": 2,
    "texto": "Vigiar as sextas de feriado da Afrodite (20/11, 25/12, 01/01, 26/03, 28/05, 09/07): se entrar reserva com chegada na sexta, a quinta (ou quarta e quinta, em Corpus Christi) de feriado anterior fica órfã, porque a saída de sexta segue fechada. Nesse caso, abrir a saída da sexta (override none) e pôr estadia 1 na quinta órfã no Beds24, registrar e avisar o dono. No Réveillon, uma chegada em 01/01 deixa 29, 30 e 31/12 sem venda possível: avisar o dono no topo do relatório."
+  },
+  {
+   "id": "conferir-envio-pricelabs-beds24-0211",
+   "responsavel": "skill",
+   "desde": "2026-11-01",
+   "urgencia": 1,
+   "revisar_em": "2026-11-02",
+   "texto": "Depois do envio automático do PriceLabs da madrugada de 02/11, conferir que o Beds24 manteve a estadia 1 nos dias de semana aprovados (285 quarto-noites), 1 noite em 02/11 e a chegada liberada nas sextas e sábados da Afrodite (noCheckOut). O PriceLabs foi alinhado por data em 01/11 17:35. Conferência agendada para 04:10 BRT; se algo voltar, achar a origem (regra por data ou personalização) e corrigir nos dois lados."
   }
  ],
- "versao": "2026-11-01T05"
+ "versao": "2026-11-01T06"
 }

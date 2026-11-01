@@ -17,8 +17,22 @@ Credencial (nunca colar no chat; o dono cadastra nos segredos do ambiente):
   variáveis acima, o script chama a API sem cabeçalho de token e conta com essa injeção; um 401 diz que falta o
   segredo. BEDS24_SEM_SEGREDO_DE_REDE=1 desliga esse modo (usado nos testes).
 
+Edição do inventário (dono, 01/11/2026: "verificar sempre o inventário e editar sempre que precisar"):
+- ESCRITA só por código de convite (o Beds24 só dá long life token de LEITURA): o dono gera um "invite code" com
+  READ+WRITE em inventory e cadastra como BEDS24_INVITE_CODE nos segredos/variáveis do ambiente. Na primeira escrita
+  o código é trocado (GET /authentication/setup, cabeçalho `code`) por um refresh token, guardado em
+  /root/.beds24/refresh_token (600, fora do repositório) ou lido de BEDS24_REFRESH_TOKEN; cada escrita usa um token
+  de 24 h tirado dele. Nunca versionar nem imprimir token ou código.
+- Só disponibilidade (numAvail, override blackout/none), estadia mínima (minStay) e chegada/saída (override
+  noCheckIn/noCheckOut/noCheckInOrCheckOut/none). NUNCA preço (price1..16: preço só pelo PriceLabs) e NUNCA reservas.
+- `editar` é simulação por padrão (mostra antes e depois); com --aplicar grava e relê para conferir.
+  Endpoint e campos: POST/GET /inventory/rooms/calendar (apiV2.yaml oficial, conferido em 01/11/2026).
+
 Uso:
   python3 beds24.py teste                      # confere a credencial e lista as propriedades
+  python3 beds24.py inventario --de 2026-11-05 --ate 2026-11-08 [--quarto VK7 ...] [--json saida.json]
+  python3 beds24.py editar --quarto Double --de 2026-11-06 --ate 2026-11-06 --min-stay 1 --motivo "..." [--aplicar]
+  python3 beds24.py editar --quarto VK7 --de 2026-11-05 --ate 2026-11-05 --override none --motivo "..." [--aplicar]
   python3 beds24.py reservas --de 2026-10-19 --ate 2026-12-18 [--json saida.json]
   python3 beds24.py janelas --hoje 2026-10-19 [--json saida.json]   # 7/15/30/45/60 noites, como o relatório
   python3 beds24.py livro --de 2026-10-01 --ate 2027-03-01           # livro por mês de estadia e pousada
@@ -72,6 +86,99 @@ def _get(caminho, params=None, cabecalhos=None):
             raise ErroBeds24(f"HTTP {e.code} em {caminho}: sem credencial. Cadastre o long life token do Beds24 em "
                              "Network secrets (cabeçalho `token`, sem prefixo, site beds24.com) ou BEDS24_TOKEN.") from None
         raise ErroBeds24(f"HTTP {e.code} em {caminho}: {corpo}") from None
+
+
+def _post(caminho, corpo, cabecalhos):
+    req = urllib.request.Request(f"{BASE}{caminho}", data=json.dumps(corpo).encode("utf-8"), method="POST",
+                                 headers={"accept": "application/json", "content-type": "application/json", **cabecalhos})
+    try:
+        with urllib.request.urlopen(req, timeout=60) as r:
+            return json.loads(r.read().decode("utf-8"))
+    except urllib.error.HTTPError as e:
+        raise ErroBeds24(f"HTTP {e.code} em POST {caminho}: {e.read().decode('utf-8', 'replace')[:300]}") from None
+
+
+ARQ_REFRESH = os.environ.get("BEDS24_REFRESH_TOKEN_FILE", "/root/.beds24/refresh_token")
+ID_DO_CURTO = {curto: int(rid) for rid, (curto, _) in QUARTOS.items()}
+UNIDADES = {curto: u for _, (curto, u) in QUARTOS.items()}
+OVERRIDES = ("none", "blackout", "noCheckIn", "noCheckOut", "noCheckInOrCheckOut")
+
+
+def refresh_token_escrita():
+    """Refresh token com escopo de escrita: variável, arquivo fora do repositório ou troca do código de convite."""
+    ref = os.environ.get("BEDS24_REFRESH_TOKEN")
+    if ref:
+        return ref
+    if os.path.exists(ARQ_REFRESH):
+        return open(ARQ_REFRESH, encoding="utf-8").read().strip()
+    code = os.environ.get("BEDS24_INVITE_CODE")
+    if not code:
+        raise ErroBeds24("Sem credencial de escrita: o dono gera um invite code (READ+WRITE em inventory) no Beds24 e "
+                         "cadastra como BEDS24_INVITE_CODE nas variáveis do ambiente (vale a partir da próxima sessão).")
+    r = _get("/authentication/setup", cabecalhos={"code": code})
+    ref = r.get("refreshToken")
+    if not ref:
+        raise ErroBeds24("O Beds24 não trocou o código de convite (já usado ou vencido): gere outro.")
+    os.makedirs(os.path.dirname(ARQ_REFRESH), mode=0o700, exist_ok=True)
+    antigo = os.umask(0o077)
+    try:
+        with open(ARQ_REFRESH, "w", encoding="utf-8") as f:
+            f.write(ref)
+    finally:
+        os.umask(antigo)
+    return ref
+
+
+def token_escrita():
+    r = _get("/authentication/token", cabecalhos={"refreshToken": refresh_token_escrita()})
+    if not r.get("token"):
+        raise ErroBeds24("O Beds24 não devolveu token de escrita a partir do refresh token.")
+    return r["token"]
+
+
+def inventario(token, de, ate, quartos=None):
+    """{curto: {data: {numAvail, minStay, override}}} do calendário do Beds24 (só os valores postos no calendário;
+    minStay cai para o do quarto quando o dia não tem)."""
+    ids = [ID_DO_CURTO[q] for q in (quartos or ID_DO_CURTO)]
+    params = {"roomId": ids, "startDate": de, "endDate": ate, "includeNumAvail": "true", "includeMinStay": "true",
+              "includeOverride": "true"}
+    out = {}
+    for item in paginas("/inventory/rooms/calendar", params, token):
+        curto = QUARTOS.get(str(item.get("roomId")), (str(item.get("roomId")), 0))[0]
+        dias = out.setdefault(curto, {})
+        for faixa in item.get("calendar") or []:
+            d, fim = dt.date.fromisoformat(faixa["from"]), dt.date.fromisoformat(faixa.get("to") or faixa["from"])
+            while d <= fim:
+                if de <= d.isoformat() <= ate:
+                    dias[d.isoformat()] = {k: faixa.get(k) for k in ("numAvail", "minStay", "override")}
+                d += dt.timedelta(days=1)
+    return out
+
+
+def corpo_edicao(curto, de, ate, min_stay=None, override=None, num_avail=None):
+    """Corpo do POST /inventory/rooms/calendar com as travas da skill (sem preço, valores no intervalo)."""
+    if curto not in ID_DO_CURTO:
+        raise ErroBeds24(f"quarto desconhecido: {curto}")
+    if dt.date.fromisoformat(ate) < dt.date.fromisoformat(de):
+        raise ErroBeds24("--ate antes de --de")
+    faixa = {"from": de, "to": ate}
+    if min_stay is not None:
+        if not 1 <= int(min_stay) <= 30:
+            raise ErroBeds24("estadia mínima fora de 1 a 30")
+        faixa["minStay"] = int(min_stay)
+    if override is not None:
+        if override not in OVERRIDES:
+            raise ErroBeds24(f"override inválido: {override} (use {', '.join(OVERRIDES)})")
+        faixa["override"] = override
+    if num_avail is not None:
+        if not 0 <= int(num_avail) <= UNIDADES[curto]:
+            raise ErroBeds24(f"disponibilidade fora de 0 a {UNIDADES[curto]} para {curto}")
+        faixa["numAvail"] = int(num_avail)
+    if len(faixa) == 2:
+        raise ErroBeds24("nada a mudar: informe --min-stay, --override ou --num-avail")
+    if any(k.startswith("price") for k in faixa):
+        raise ErroBeds24("preço não se muda pelo Beds24 (só pelo PriceLabs)")
+    return [{"roomId": ID_DO_CURTO[curto], "calendar": [faixa]}]
 
 
 def token_de_acesso():
@@ -256,7 +363,29 @@ def main(argv=None):
     mv = sub.add_parser("movimento"); mv.add_argument("--desde", required=True, help="AAAA-MM-DDTHH:MM:SSZ (UTC)"); mv.add_argument("--json")
     cp = sub.add_parser("comparar"); cp.add_argument("--coleta", required=True); cp.add_argument("--de", required=True)
     cp.add_argument("--ate", required=True); cp.add_argument("--json")
+    iv = sub.add_parser("inventario"); iv.add_argument("--de", required=True); iv.add_argument("--ate", required=True)
+    iv.add_argument("--quarto", nargs="*"); iv.add_argument("--json")
+    ed = sub.add_parser("editar"); ed.add_argument("--quarto", required=True); ed.add_argument("--de", required=True)
+    ed.add_argument("--ate", required=True); ed.add_argument("--min-stay", type=int); ed.add_argument("--override")
+    ed.add_argument("--num-avail", type=int); ed.add_argument("--motivo", required=True)
+    ed.add_argument("--aplicar", action="store_true", help="grava no Beds24 (sem isto, só simula)")
     a = ap.parse_args(argv)
+    if a.cmd == "editar":
+        try:
+            corpo = corpo_edicao(a.quarto, a.de, a.ate, a.min_stay, a.override, a.num_avail)
+            antes = inventario(token_de_acesso(), a.de, a.ate, [a.quarto]).get(a.quarto, {})
+            print(json.dumps({"quarto": a.quarto, "motivo": a.motivo, "antes": antes, "mudanca": corpo[0]["calendar"][0],
+                              "aplicar": a.aplicar}, ensure_ascii=False, indent=1))
+            if not a.aplicar:
+                print("SIMULAÇÃO: nada gravado (use --aplicar)")
+                return 0
+            r = _post("/inventory/rooms/calendar", corpo, {"token": token_escrita()})
+            depois = inventario(token_de_acesso(), a.de, a.ate, [a.quarto]).get(a.quarto, {})
+            print(json.dumps({"resposta": r, "depois": depois}, ensure_ascii=False, indent=1))
+            return 0
+        except ErroBeds24 as e:
+            print(f"ERRO: {e}", file=sys.stderr)
+            return 2
     try:
         tok = token_de_acesso()
         if a.cmd == "teste":
@@ -274,6 +403,8 @@ def main(argv=None):
             texto = json.dumps(livro(reservas(a.de, a.ate, tok), de, ate), ensure_ascii=False, indent=1)
         elif a.cmd == "movimento":
             texto = json.dumps(movimento(tok, a.desde), ensure_ascii=False, indent=1)
+        elif a.cmd == "inventario":
+            texto = json.dumps(inventario(tok, a.de, a.ate, a.quarto), ensure_ascii=False, indent=1)
         elif a.cmd == "comparar":
             de, ate = dt.date.fromisoformat(a.de), dt.date.fromisoformat(a.ate)
             coleta = json.load(open(a.coleta, encoding="utf-8"))

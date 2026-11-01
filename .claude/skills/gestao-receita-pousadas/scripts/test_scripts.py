@@ -1032,6 +1032,35 @@ class TestOrdensDono(unittest.TestCase):
                     self.assertTrue(_re.search(r"ordem_id", linha), f"{os.path.basename(f)}: excecao dono sem ordem_id: {linha.strip()}")
 
 
+class TestBeds24Edicao(unittest.TestCase):
+    """Dono 01/11: editar o inventário do Beds24 quando precisar, nunca preço nem reserva."""
+    def test_corpo_edicao_e_travas(self):
+        import beds24
+        c = beds24.corpo_edicao("Double", "2026-11-06", "2026-11-06", min_stay=1)
+        self.assertEqual(c, [{"roomId": 722806, "calendar": [{"from": "2026-11-06", "to": "2026-11-06", "minStay": 1}]}])
+        c = beds24.corpo_edicao("VK7", "2026-11-05", "2026-11-05", override="none", num_avail=6)
+        self.assertEqual(c[0]["calendar"][0], {"from": "2026-11-05", "to": "2026-11-05", "override": "none", "numAvail": 6})
+        for kw in ({"num_avail": 8}, {"min_stay": 0}, {"override": "fechado"}, {}):
+            with self.assertRaises(beds24.ErroBeds24):
+                beds24.corpo_edicao("VK7", "2026-11-05", "2026-11-05", **kw)
+        with self.assertRaises(beds24.ErroBeds24):
+            beds24.corpo_edicao("VK7", "2026-11-06", "2026-11-05", min_stay=2)
+
+    def test_escrita_sem_credencial_explica(self):
+        import beds24
+        antes = {k: os.environ.pop(k, None) for k in ("BEDS24_REFRESH_TOKEN", "BEDS24_INVITE_CODE")}
+        arq, beds24.ARQ_REFRESH = beds24.ARQ_REFRESH, "/nao/existe/refresh_token"
+        try:
+            with self.assertRaises(beds24.ErroBeds24) as e:
+                beds24.refresh_token_escrita()
+            self.assertIn("BEDS24_INVITE_CODE", str(e.exception))
+        finally:
+            beds24.ARQ_REFRESH = arq
+            for k, v in antes.items():
+                if v is not None:
+                    os.environ[k] = v
+
+
 class TestAncoraMercado(unittest.TestCase):
     def test_percentis_da_busca_e_posicao(self):
         from ancora_mercado import percentil_de, percentis_da_busca, valor_percentil

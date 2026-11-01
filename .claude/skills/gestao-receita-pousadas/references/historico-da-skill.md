@@ -2,6 +2,11 @@
 
 Cada mudança feita na própria Skill (regras, parâmetros, scripts, fluxo) entra aqui: data, o que mudou, por quê (evidência) e como desfazer. A entrada mais nova fica em cima.
 
+## 01/11/2026 11:30: Beds24 com leitura do inventário e edição (dono)
+- **Por quê:** dono: "Guarde esse token para acessar o beds24 e verificar sempre o inventário e editar sempre que precisar". O token enviado no chat foi recusado pelo Beds24 (apagado; nada no repositório). O painel do Beds24 só gera long life token de leitura; escrita só por código de convite.
+- **O que mudou:** `scripts/beds24.py`: `inventario` (GET /inventory/rooms/calendar: numAvail, minStay, override) e `editar` (POST, simulação por padrão, `--aplicar` grava e relê; só disponibilidade, estadia mínima e chegada/saída; trava preço e valores fora do intervalo); credencial de escrita por `BEDS24_INVITE_CODE` → refresh token em /root/.beds24 (600) ou `BEDS24_REFRESH_TOKEN`. Testes `TestBeds24Edicao`. `SKILL.md`: inventário em toda rotina. Ordem `dono-2026-11-01-beds24-edicao`.
+- **Como desfazer:** apagar a ordem e os comandos `inventario`/`editar`; a skill volta a só ler reservas.
+
 ## 01/11/2026 07:10: ordem `alvo_por_data` (dono: Recanto na base do mercado)
 - **Por quê:** pedido do dono "Estamos saindo muitos dias sem reserva na Recanto. Vamos baixar o valor para a base do mercado para forçar as reservas".
 - **O que mudou:**

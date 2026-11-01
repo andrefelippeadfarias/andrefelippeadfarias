@@ -1242,6 +1242,7 @@ class TestPace(unittest.TestCase):
     def test_escada_vendas_na_base_do_mercado(self):
         """A noite da ordem de base do mercado sobe uma reta por reserva, sem o salto para o piso padrão."""
         import pace
+        self.cfg["parametros"]["pace"]["escada_vendas"]["ativa"] = True
         hoje = date(2026, 11, 1)
         n = "2026-11-10"  # terça, D9
         anc = {"noites": {n: {"p25": 286, "p50": 388, "p75": 500, "p90": 579, "max": 724, "n": 19, "busca_em": "2026-10-30",
@@ -1289,6 +1290,7 @@ class TestPace(unittest.TestCase):
         self.assertEqual(i_c["pace"]["direcao"], "desce")
         self.assertAlmostEqual(i_c["min_price"], esperado(1), delta=1.5)
 
+    def test_curva_status_alvo_passo(self):
         import pace
         self.assertEqual(pace.curva(self.cfg, "semana", 0), 100)
         self.assertEqual(pace.curva(self.cfg, "fds", 7), 50)
@@ -1349,6 +1351,104 @@ class TestPace(unittest.TestCase):
         sem = dict(ordem)
         sem.pop("criada_em")
         self.assertIsNone(item(1500, passo("2026-11-01T10:04+00:00"), sem))
+
+    def _recanto_forte(self, n, q7="5/7", dbl="4/6", q2="1/2"):
+        anc = {"noites": {n: {"p25": 286, "p50": 388, "p75": 500, "p90": 579, "max": 724, "n": 19, "busca_em": "2026-10-30",
+                              "tipo": "semana", "p50_medido": True}}, "por_tipo": {}}
+        ordem = {"id": "o-esc", "tipo": "alvo_por_data", "quartos": ["Q7", "Double", "Q2"], "de": "2026-11-01",
+                 "ate": "2026-11-30", "percentil": 50, "passo_livre": True, "noites": [n], "escada_vendas": True,
+                 "pisos_enviados": {"Q7": 560, "Double": 630, "Q2": 595}, "libera": ["abaixo_piso", "acima_15"],
+                 "ocupacao_max": 0.7, "frente_ocupacao": 0.5}
+
+        def r(preco, mu):
+            return {"price": str(preco), "min_price": str(preco), "max_price": str(preco), "mu_occupancy": mu}
+        cal = {"Q7": {n: r(650, q7)}, "Double": {n: r(700, dbl)}, "Q2": {n: r(660, q2)}, "Afrodite": {n: r(1600, "0/1")}}
+        return anc, {"o-esc": ordem}, cal
+
+    def test_escada_panoramica_ii_sem_salto(self):
+        """Revisão 01/11: com a escada, a Panorâmica II (fora do motor, só coerência) fica entre Moinhos e Panorâmica I
+        mesmo quando a pousada vende bem (antes saltava para o piso padrão de R$ 1.220, acima das duas)."""
+        import pace
+        self.cfg["parametros"]["pace"]["escada_vendas"]["ativa"] = True
+        n = "2026-11-10"
+        anc, ordens, cal = self._recanto_forte(n)
+        res = pace.plano(self.cfg, anc, cal, date(2026, 11, 1), ordens, {"passos": []}, dias=12, regra_j_ativa=False)
+        its = {i["quarto"]: i for i in res["itens"] if i["data"] == n}
+        q7 = float(its["Q7"]["min_price"]) if "Q7" in its else 650.0
+        dbl = float(its["Double"]["min_price"]) if "Double" in its else 700.0
+        self.assertIn("Q2", its)
+        q2 = float(its["Q2"]["min_price"])
+        self.assertLessEqual(q2, max(q7, dbl) + 1)
+        self.assertGreaterEqual(q2, min(q7, dbl) - 1)
+        self.assertLess(q2, 1000)                                   # sem o salto para o piso padrão
+        self.assertLessEqual(float(its["Q2"]["max_price"]), max(q7, dbl) + 1)
+
+    def test_escada_desligada_nao_age(self):
+        """Revisão 01/11: com parametros.pace.escada_vendas.ativa = false a ordem com escada não gera degrau de escada
+        e a cadência volta à regra das 24 h."""
+        import pace
+        n = "2026-11-10"
+        anc, ordens, cal = self._recanto_forte(n, q7="3/7")
+        res = pace.plano(self.cfg, anc, cal, date(2026, 11, 1), ordens, {"passos": []}, dias=12, regra_j_ativa=False)
+        self.assertFalse(any(i.get("motivo", "").startswith("Escada de vendas") for i in res["itens"]))
+        agora = dt.datetime(2026, 11, 1, 20, 0, tzinfo=dt.timezone.utc)
+        led = {"passos": [{"quarto": "Q7", "noite": n, "de": 563, "para": 620, "direcao": "sobe", "status": "atras",
+                           "vendidas": 2, "gravado_em": "2026-11-01T15:00", "chegou_ao_canal": False}]}
+        cal["Q7"][n]["price"] = cal["Q7"][n]["min_price"] = cal["Q7"][n]["max_price"] = "560"
+        res = pace.plano(self.cfg, anc, cal, date(2026, 11, 1), ordens, led, dias=12, agora=agora, regra_j_ativa=False)
+        self.assertFalse(any(i["quarto"] == "Q7" and i["data"] == n and (i.get("pace") or {}).get("direcao") == "sobe"
+                             for i in res["itens"]))
+
+    def test_filtro_de_noites_e_registro(self):
+        """Revisão 01/11: na rotina leve só as noites com venda nova recebem passo (o resto não vai ao ledger), a
+        coerência segue com os outros calendários, e `registrar` grava o valor final do plano gravado."""
+        import pace, tempfile, os, json
+        self.cfg["parametros"]["pace"]["escada_vendas"]["ativa"] = True
+        self.assertEqual(pace.ler_filtro_noites(["Q7=2026-11-10..2026-11-12", "VK7=2026-11-20"]),
+                         {("Q7", "2026-11-10"), ("Q7", "2026-11-11"), ("Q7", "2026-11-12"), ("VK7", "2026-11-20")})
+        n1, n2 = "2026-11-10", "2026-11-11"
+        anc, ordens, cal = self._recanto_forte(n1)
+        anc["noites"][n2] = dict(anc["noites"][n1])
+        ordens["o-esc"]["noites"] = [n1, n2]
+        for k in list(cal):
+            cal[k][n2] = dict(cal[k][n1])
+        res = pace.plano(self.cfg, anc, cal, date(2026, 11, 1), ordens, {"passos": []}, dias=12, regra_j_ativa=False,
+                         noites_filtro={("Q7", n1)})
+        com_pace = [(i["quarto"], i["data"]) for i in res["itens"] if (i.get("pace") or {}).get("direcao")]
+        self.assertEqual(com_pace, [("Q7", n1)])
+        # a coerência continua: a Panorâmica II da noite filtrada fica entre as duas
+        q2 = [i for i in res["itens"] if i["quarto"] == "Q2" and i["data"] == n1]
+        self.assertTrue(q2)
+        # registrar: o ledger recebe o valor final (aqui editado à mão para 700) e a base da contagem
+        it = [i for i in res["itens"] if i["quarto"] == "Q7" and i["data"] == n1][0]
+        it["min_price"] = it["max_price"] = 700
+        with tempfile.TemporaryDirectory() as tmp:
+            pl, led = os.path.join(tmp, "p.json"), os.path.join(tmp, "l.json")
+            with open(pl, "w", encoding="utf-8") as f:
+                json.dump({"hoje": "2026-11-01", "itens": [it], "sombra": False}, f)
+            self.assertEqual(pace.main(["registrar", "--plano", pl, "--passos", led, "--agora", "2026-11-01T21:00Z"]), 0)
+            with open(led, encoding="utf-8") as f:
+                x = json.load(f)["passos"][-1]
+        self.assertEqual((x["quarto"], x["noite"], x["para"], x["direcao"], x["base"]), ("Q7", n1, 700.0, "sobe", "quarto"))
+
+    def test_pace_sincronizado_com_a_coerencia_e_base_da_contagem(self):
+        """Revisão 01/11: o ledger registra o que a coerência deixou (Panorâmica I subida pela Moinhos não é 'desce'); a
+        contagem da cadência só compara com a do mesmo tipo (quarto x pousada)."""
+        import pace
+        its = [{"quarto": "Double", "data": "2026-11-10", "min_price": 786,
+                "pace": {"status": "atras", "direcao": "desce", "atual": 693.0, "novo": 630}},
+               {"quarto": "Q7", "data": "2026-11-10", "min_price": 700,
+                "pace": {"status": "atras", "direcao": "desce", "atual": 701.0, "novo": 650}}]
+        pace.sincronizar_pace(its, 0.03)
+        self.assertEqual((its[0]["pace"]["direcao"], its[0]["pace"]["novo"]), ("sobe", 786.0))
+        self.assertIsNone(its[1]["pace"]["direcao"])                   # sem mudança real: fora do ledger
+        agora = dt.datetime(2026, 11, 1, 20, 0, tzinfo=dt.timezone.utc)
+        velho = {"passos": [{"quarto": "VK2", "noite": "2026-11-10", "direcao": "sobe", "gravado_em": "2026-11-01T15:00",
+                             "chegou_ao_canal": False, "vendidas": 0}]}           # passo antigo: contagem do quarto
+        self.assertFalse(pace.cadencia_permite(velho, "VK2", "2026-11-10", "sobe", agora, 5, "pousada")[0])
+        novo = {"passos": [dict(velho["passos"][0], vendidas=3, base="pousada")]}
+        self.assertTrue(pace.cadencia_permite(novo, "VK2", "2026-11-10", "sobe", agora, 5, "pousada")[0])
+        self.assertFalse(pace.cadencia_permite(novo, "VK2", "2026-11-10", "sobe", agora, 3, "pousada")[0])
 
     def test_pisos_enviados(self):
         import pace

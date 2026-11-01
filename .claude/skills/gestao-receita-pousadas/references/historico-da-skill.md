@@ -2,6 +2,12 @@
 
 Cada mudança feita na própria Skill (regras, parâmetros, scripts, fluxo) entra aqui: data, o que mudou, por quê (evidência) e como desfazer. A entrada mais nova fica em cima.
 
+## 01/11/2026 18:40: revisão independente da escada de vendas (6 achados corrigidos)
+- **Por quê:** revisão adversarial (3 revisores, cenários com config, ordens e âncora reais) da escada de 01/11.
+- **O que mudou (`pace.py`):** (1) a Panorâmica II não sai mais da ordem quando o Recanto vende bem (saltava para o piso padrão de R$ 1.220/2.000, acima das outras duas): piso na Moinhos e teto pelo percentil da escada, sempre entre as duas; (2) o ledger só recebe o que é gravado: `--noites` (rotina leve: passo só nas noites com venda nova, os outros calendários servem à coerência), `--sem-registro` e o comando `registrar --plano`; (3) `sincronizar_pace`: depois da coerência o passo registrado é o valor final (a Panorâmica I subida pela Moinhos não vira "desce"); (4) `escada_vendas.ativa` desligada desliga a escada, a trava de teto e a liberação por venda; (5) nas suítes de 1-2 unidades a contagem da cadência é a da pousada (a mesma da reta), com `base` no ledger; (6) o teste `test_curva_status_alvo_passo` voltou a existir. A liberação da cadência por "ordem criada hoje" já tinha sido limitada a uma vez por noite (`criada_em`, 18:05). Testes novos: Panorâmica II sem salto (falha no código anterior), escada desligada, filtro e registro, sincronização e base da contagem (97 OK).
+- **SKILL.md:** rotina leve com todos os calendários da pousada e `--noites`; plano gravado inteiro (ou `--sem-registro` + `registrar`).
+- **Como desfazer:** reverter o commit; nenhum preço gravado mudou por causa destas correções.
+
 ## 01/11/2026 18:05: ordem só para baixar e ordem nova uma vez por noite (dono: "1 . Sim / 2. Sim")
 - **Por quê:** a ordem da Consciência Negra (p75) subiria noites que estavam abaixo do p75 (Balcony 19-21/11, Moinhos e Panorâmica II 19/11) e as noites com passo do motor de manhã ficariam presas na cadência até amanhã; mas liberar a cadência para toda ordem criada hoje daria mais um passo a cada nova rodada do dia.
 - **O que mudou:** `pace.py`: `so_desce` na ordem (a ordem nunca sobe a noite) e `ordem_nova_sem_passo` (a ordem criada hoje passa pela cadência só se a noite não teve passo depois de `criada_em`). `ordens_dono.json`: `criada_em` nas 3 ordens novas. Teste `test_ordem_so_desce_e_ordem_nova_uma_vez` (92 OK).

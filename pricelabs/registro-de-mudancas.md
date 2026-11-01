@@ -3365,6 +3365,12 @@ Como desfazer (pedir ao Claude): "Desligue a escada de vendas e volte as noites 
 
 Como desfazer (pedir ao Claude): "Tire a Villa da base do mercado e volte as noites de novembro ao preço de antes" e/ou "Volte a Consciência Negra da Villa ao preço de antes".
 
+## 01/11/2026, 18:40 — Revisão independente da escada de vendas: 6 correções no motor (nenhum preço mudou)
+
+- **Panorâmica II:** com a escada, ela saltava para o piso padrão (R$ 1.220 em dia de semana, R$ 2.000 no fim de semana) quando o Recanto vendia bem, acima da Moinhos e da Panorâmica I. Agora fica sempre entre as duas (piso na Moinhos, teto pela escada). Nas noites já gravadas não houve caso (as 14 noites de novembro estão entre as duas).
+- **Registro dos passos:** a rotina leve passa a gerar passo só nas noites com reserva nova (`--noites`) e o registro guarda só o que foi gravado; antes, passos não gravados travavam a escada um degrau abaixo.
+- **Outros:** o passo registrado é o valor final depois da Regra G e da ordem do Recanto; a chave da escada (`ativa`) desliga tudo; nas suítes de 1-2 unidades a contagem de vendas é a da pousada; a liberação por "ordem nova do dono" vale uma vez por noite.
+
 > **Regras em vigor:** desde 06/10/2026 elas ficam em `.claude/skills/gestao-receita-pousadas/references/regras.md`. Este arquivo guarda só o histórico das mudanças.
 
 ## O que só pode ser feito na tela (passo a passo para você)

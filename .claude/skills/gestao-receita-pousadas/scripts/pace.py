@@ -28,7 +28,10 @@ Modo sombra (parametros.motor.modo = "sombra" ou --sombra): calcula e relata, n�
 Uso:
   python3 pace.py plano --hoje AAAA-MM-DD Q7=<rec> Double=<rec> ... [--ancora dados/ancora_mercado.json]
       [--ordens dados/ordens_dono.json] [--passos dados/passos.json] [--bloqueios bloqueios.json] [--dias 60]
-      [--saida plano.json] [--md relatorio.md] [--sombra]
+      [--saida plano.json] [--md relatorio.md] [--sombra] [--noites Q7=2026-11-10..2026-11-11 ...] [--sem-registro]
+      (fora da sombra o plano grava no ledger os passos que traz: grave no PriceLabs o plano inteiro; para gravar só
+      parte, use --sem-registro e depois `registrar`; na rotina leve, --noites limita os passos às noites com venda nova)
+  python3 pace.py registrar --plano <itens gravados.json> [--agora AAAA-MM-DDTHH:MMZ]
   python3 pace.py curva --tipo fds --dias 7
   python3 pace.py marcar-envio --ate AAAA-MM-DDTHH:MM  (marca como chegados ao canal os passos gravados antes do envio)
 """
@@ -229,13 +232,15 @@ def ultimo_passo(passos: dict, curto: str, noite: str) -> dict | None:
 
 
 def cadencia_permite(passos: dict, curto: str, noite: str, direcao: str, agora: dt.datetime,
-                     vendidas: int | None = None) -> tuple[bool, str]:
+                     vendidas: int | None = None, base: str = "quarto") -> tuple[bool, str]:
     u = ultimo_passo(passos, curto, noite)
     if not u or u["direcao"] != direcao:
         return True, ""
     # escada de vendas (dono, 01/11): reserva nova na noite libera mais um passo para cima no mesmo dia (e cancelamento,
-    # mais um para baixo), sem esperar as 24 h nem o envio do passo anterior
-    if vendidas is not None and u.get("vendidas") is not None:
+    # mais um para baixo), sem esperar as 24 h nem o envio do passo anterior. A contagem só compara com a do mesmo tipo
+    # (`base`: "quarto", ou "pousada" nas suítes de 1-2 unidades, cuja reta anda com a ocupação da pousada); passo
+    # antigo sem `base` conta como "quarto" (revisão 01/11: comparar 2/9 da Villa com 0/2 da King Spa 2 liberava passo falso)
+    if vendidas is not None and u.get("vendidas") is not None and (u.get("base") or "quarto") == base:
         if (direcao == "sobe" and vendidas > int(u["vendidas"])) or (direcao == "desce" and vendidas < int(u["vendidas"])):
             return True, ""
     gravado = dt.datetime.fromisoformat(u["gravado_em"].replace("Z", "+00:00"))
@@ -275,8 +280,8 @@ def registrar_passos(passos: dict, itens: list[dict], agora: dt.datetime, caminh
             continue
         passos.setdefault("passos", []).append({
             "quarto": it["quarto"], "noite": it["data"], "de": pc["atual"], "para": pc["novo"], "direcao": pc["direcao"],
-            "status": pc["status"], "vendidas": pc.get("vendidas"), "gravado_em": agora.isoformat(timespec="minutes"),
-            "chegou_ao_canal": False})
+            "status": pc["status"], "vendidas": pc.get("vendidas"), "base": pc.get("base", "quarto"),
+            "gravado_em": agora.isoformat(timespec="minutes"), "chegou_ao_canal": False})
     with open(caminho or ARQ_PASSOS, "w", encoding="utf-8") as f:
         json.dump(passos, f, ensure_ascii=False, indent=1)
         f.write("\n")
@@ -419,9 +424,12 @@ def sem_efeito(cfg: dict, itens: list[dict], cals: dict, regras: dict, apagar: s
 
 def plano(cfg: dict, ancora: dict, cals: dict, hoje: date, ordens: dict, passos: dict, bloqueios: set | None = None,
           dias: int = 60, agora: dt.datetime | None = None, regra_j_ativa: bool = True,
-          regras: dict | None = None) -> dict:
+          regras: dict | None = None, noites_filtro: set | None = None) -> dict:
     """Itens de preço (formato do validar_plano.py) e o diagnóstico por noite para o relatório.
-    `regras`: {curto: {data: override vigente}} (get_listing_date_overrides), usado pela proteção da noite esgotada."""
+    `regras`: {curto: {data: override vigente}} (get_listing_date_overrides), usado pela proteção da noite esgotada.
+    `noites_filtro`: {(quarto, data)} da rotina leve (noites com reserva nova ou cancelamento): só elas recebem passo de
+    pace e proteção; os outros quartos e noites seguem nos calendários para a coerência (revisão 01/11: passo que não
+    seria gravado ficava no ledger e travava a cadência da noite)."""
     p = par_pace(cfg)
     regras = regras or {}
     agora = agora or dt.datetime.now(dt.timezone.utc)
@@ -467,11 +475,15 @@ def plano(cfg: dict, ancora: dict, cals: dict, hoje: date, ordens: dict, passos:
                         extra, teto_r = regra_afrodite(cfg, cals, finais, d, hoje)
                     it = protecao_esgotada(cfg, p, anc, origem, curto, d, r, v, u, (regras.get(curto) or {}).get(noite),
                                            extra, teto_r)
+                    filtrada = noites_filtro is not None and (curto, noite) not in noites_filtro
+                    if filtrada:
+                        it = None  # rotina leve: a proteção desta noite fica para a rodada completa
                     if it and curto == "Afrodite":
                         it["excecao"], it["ordem_id"] = "dono", "dono-2026-10-22-afrodite-mais-cara"
                     if it:
                         itens.append(it)
-                    motivo_fora = "esgotada: piso de proteção p90" + (" (item)" if it else " (já protegida)")
+                    motivo_fora = "esgotada: piso de proteção p90" + (" (item)" if it else (" (fora do filtro --noites)"
+                                                                                           if filtrada else " (já protegida)"))
             if motivo_fora:
                 fora.append({"quarto": curto, "data": noite, "motivo": motivo_fora, "atual": atual, "vendidas": v, "unidades": u})
                 continue
@@ -488,7 +500,8 @@ def plano(cfg: dict, ancora: dict, cals: dict, hoje: date, ordens: dict, passos:
             ao = alvo_da_ordem(ordens, curto, d)
             esc = p["escada_vendas"]
             oc = (vv / tt) if tt else 0.0
-            escada_ordem = bool(ao) and bool(ao.get("escada_vendas"))
+            esc_on = bool(esc.get("ativa"))
+            escada_ordem = esc_on and bool(ao) and bool(ao.get("escada_vendas"))
             if escada_ordem:
                 # dono 01/11 ("aumentando o valor gradualmente ... as reservas forem entrando"): a noite fica na ordem e
                 # sobe uma reta por reserva, da base do mercado (p50, piso da ordem) ao p90 e ao piso padrão do dono
@@ -556,7 +569,11 @@ def plano(cfg: dict, ancora: dict, cals: dict, hoje: date, ordens: dict, passos:
             linhas.append(linha)
             if not direcao:
                 continue
-            ok, por_que = cadencia_permite(passos, curto, noite, direcao, agora, v)
+            if noites_filtro is not None and (curto, noite) not in noites_filtro:
+                linha["cadencia"] = "fora do filtro da rotina leve (--noites)"
+                continue
+            base_cont = "pousada" if (vv, tt) != (v, u) else "quarto"
+            ok, por_que = cadencia_permite(passos, curto, noite, direcao, agora, vv if esc_on else None, base_cont)
             if not ok and usa_ordem and ordem_nova_sem_passo(passos, curto, noite, ao, hoje):
                 ok, por_que = True, ""  # ordem nova do dono vale na hora (01/11: "1 . Sim / 2. Sim"), uma vez por noite
             if not ok:
@@ -566,7 +583,7 @@ def plano(cfg: dict, ancora: dict, cals: dict, hoje: date, ordens: dict, passos:
                   "motivo": (f"Pace ({st.replace('_', ' ')}: {v}/{u} vendidas, curva {esp:.0f}% a D{k}); alvo p{pct:.0f} "
                              f"R$ {alvo_pub:.0f} público = R$ {alvo_env:.0f} enviados ({origem}); antes R$ {atual:.0f}"),
                   "pace": {"status": st, "direcao": direcao, "atual": atual, "novo": novo_r, "alvo_enviado": round(alvo_env),
-                           "vendidas": v}}
+                           "vendidas": vv, "base": base_cont}}
             if escada_ordem:
                 it["motivo"] = (f"Escada de vendas (dono 01/11): {vv}/{tt} vendidas; reta R$ {reta:.0f} (p{pct:.0f} R$ "
                                 f"{alvo_pub:.0f} público); degrau até R$ {novo_r}; antes R$ {atual:.0f}")
@@ -590,7 +607,24 @@ def plano(cfg: dict, ancora: dict, cals: dict, hoje: date, ordens: dict, passos:
             itens.append(it)
             finais[(curto, noite)] = efetivo(cfg, curto, float(it["min_price"]))
     itens = coerencia(cfg, cals, finais, itens, hoje, ordens, bloqueios, dias, ancora)
+    sincronizar_pace(itens, p["tolerancia"])
     return {"hoje": hoje.isoformat(), "itens": itens, "linhas": linhas, "fora": fora}
+
+
+def sincronizar_pace(itens: list[dict], tol: float) -> None:
+    """Depois da coerência (ordem do Recanto, Regra G, Afrodite), o `pace` do item passa a dizer o que vai ser gravado:
+    `novo` = piso final e `direcao` pelo preço de antes. Sem mudança real, o passo sai do ledger (revisão 01/11: a
+    Panorâmica I subia pela Moinhos e o ledger registrava 'desce', travando a descida dela por 24 h)."""
+    for it in itens:
+        pc = it.get("pace")
+        if not pc or it.get("min_price") is None:
+            continue
+        final, atual = float(it["min_price"]), float(pc["atual"])
+        if abs(final - float(pc["novo"])) < 0.5:
+            continue
+        pc["novo_motor"] = pc["novo"]
+        pc["novo"] = final
+        pc["direcao"] = "sobe" if final > atual * (1 + tol) else ("desce" if final < atual * (1 - tol) else None)
 
 
 def ajustar_tetos(cfg: dict, itens: list[dict], regras: dict) -> tuple[list[dict], list[dict]]:
@@ -653,6 +687,8 @@ def coerencia(cfg: dict, cals: dict, finais: dict, itens: list[dict], hoje: date
     não mexeu). No feriado a Regra G só baixa a Balcony (nunca sobe por causa dela), sem passar do piso de feriado."""
     bloqueios = bloqueios or set()
     from ordem_recanto import premio_afrodite
+    esc = par_pace(cfg)["escada_vendas"]
+    esc_on = bool(esc.get("ativa"))
     por_chave = {(it["quarto"], it["data"]): it for it in itens}
     desc = cfg["parametros"].get("regra_g_desconto", 0.10)
 
@@ -700,7 +736,7 @@ def coerencia(cfg: dict, cals: dict, finais: dict, itens: list[dict], hoje: date
             if it.get("max_price") is not None and it["max_price"] < it["min_price"]:
                 it["max_price"] = it["min_price"]
             ao_k = alvo_da_ordem(ordens, k, d)
-            if ao_k and ao_k.get("escada_vendas") and it.get("max_price") is None:
+            if esc_on and ao_k and ao_k.get("escada_vendas") and it.get("max_price") is None:
                 # noite na escada de vendas (dono 01/11): teto no degrau, senão o algoritmo do PriceLabs pula a escada
                 it["max_price"] = it["min_price"]
         if teto is not None and (it.get("max_price") is None or teto < it["max_price"]):
@@ -729,6 +765,8 @@ def coerencia(cfg: dict, cals: dict, finais: dict, itens: list[dict], hoje: date
                 menor, maior = min(a, b), max(a, b)
                 # revisão de 31/10: o piso da Panorâmica II nunca fica abaixo do piso dela (dono ou ordem por data)
                 ao_q2 = alvo_da_ordem(ordens, "Q2", d)
+                escada_q2 = esc_on and bool(ao_q2) and bool(ao_q2.get("escada_vendas"))
+                oc2 = 0.0
                 if ao_q2:
                     # revisão 01/11: a Panorâmica II só vai à base (e ao piso da ordem) na noite fraca, como no motor
                     rq2 = cals["Q2"][noite]
@@ -738,17 +776,24 @@ def coerencia(cfg: dict, cals: dict, finais: dict, itens: list[dict], hoje: date
                     op = ocupacao_pousada(cfg, cals, noite)["Recanto"]
                     if uq2 <= 2 and op[1]:
                         vv2, tt2 = op
+                    oc2 = (vv2 / tt2) if tt2 else 0.0
                     st_q2 = status_da_noite(cfg, tipo_noite(cfg, d), (d - hoje).days, vv2, tt2)[0]
-                    if not noite_fraca(ao_q2, st_q2, vq2, uq2):
+                    if not escada_q2 and not noite_fraca(ao_q2, st_q2, vq2, uq2):
                         ao_q2 = None
                 piso_q2, _, _ = piso_com_ordem(cfg, "Q2", d, ordens if ao_q2 else sem_alvo(ordens))
+                # escada de vendas (dono 01/11; revisão 01/11): a Panorâmica II não sai da ordem quando a pousada vende bem
+                # (antes saltava para o piso padrão, acima das duas): o piso é a Moinhos, que já sobe pela escada, e o
+                # teto anda com o percentil da escada (abaixo), sempre entre Moinhos e Panorâmica I
                 lo_q2 = max(menor, piso_q2)
                 teto_q2 = menor + 0.75 * (maior - menor)
                 if ao_q2 and ancora:
                     # ordem do dono (01/11, base do mercado): a Panorâmica II também vai à base, entre as duas
                     anc_q2, _ = ancora_da_noite(ancora, cfg, d)
                     if anc_q2:
-                        base_q2 = valor_percentil(anc_q2, float(ao_q2.get("percentil", 50))) / fator_publico(cfg, "Recanto")
+                        pct_q2 = float(ao_q2.get("percentil", 50))
+                        if escada_q2:
+                            pct_q2 = percentil_com_vendas(pct_q2, oc2, float(esc.get("p_topo", 90)))
+                        base_q2 = valor_percentil(anc_q2, pct_q2) / fator_publico(cfg, "Recanto")
                         teto_q2 = min(teto_q2, base_q2)
                 ajustar("Q2", noite, piso=lo_q2, teto=max(lo_q2, teto_q2),
                         motivo=f"Ordem do Recanto: Panorâmica II entre Moinhos (R$ {a:.0f}) e Panorâmica I (R$ {b:.0f})",
@@ -864,6 +909,14 @@ def main(argv=None) -> int:
     pl.add_argument("--sombra", action="store_true")
     pl.add_argument("--regras", nargs="*", default=[], help="Q7=overrides.json ... (get_listing_date_overrides, D0-D60); obrigatório fora da sombra")
     pl.add_argument("--saida-apagar", help="plano separado com as noites cujo teto/validade precisa ser apagado antes (padrão: <saida> com sufixo _apagar)")
+    pl.add_argument("--noites", nargs="*", help="rotina leve: só estas noites recebem passo de pace (Q7=2026-11-10 ou "
+                    "Q7=2026-11-10..2026-11-12; noites da reserva, sem a de saída); os outros calendários servem à coerência")
+    pl.add_argument("--sem-registro", action="store_true", help="não grava o ledger (use quando for gravar só parte do "
+                    "plano; depois rode `pace.py registrar --plano <itens gravados>`)")
+    rg = sub.add_parser("registrar", help="grava no ledger os passos de pace de um plano JÁ gravado no PriceLabs")
+    rg.add_argument("--plano", required=True)
+    rg.add_argument("--passos", default=str(ARQ_PASSOS))
+    rg.add_argument("--agora", help="instante UTC da gravação (padrão: agora)")
     cv = sub.add_parser("curva")
     cv.add_argument("--tipo", default="semana")
     cv.add_argument("--dias", type=int, required=True)
@@ -874,6 +927,19 @@ def main(argv=None) -> int:
     cfg = carregar_quartos()
     if a.cmd == "curva":
         print(f"{a.tipo} D{a.dias}: {curva(cfg, a.tipo, a.dias):.0f}% vendido esperado")
+        return 0
+    if a.cmd == "registrar":
+        pl_g = ler_json(a.plano)
+        de_pace = [x for x in pl_g.get("itens", []) if (x.get("pace") or {}).get("direcao")]
+        if pl_g.get("sombra"):
+            print("ERRO: plano em modo sombra não vai para o ledger")
+            return 1
+        agora = dt.datetime.fromisoformat(a.agora.replace("Z", "+00:00")) if a.agora else dt.datetime.now(dt.timezone.utc)
+        if agora.tzinfo is None:
+            agora = agora.replace(tzinfo=dt.timezone.utc)
+        sincronizar_pace(de_pace, par_pace(cfg)["tolerancia"])  # plano editado à mão: o ledger fica com o valor gravado
+        registrar_passos(carregar_passos(a.passos), de_pace, agora, a.passos)
+        print(f"{len([x for x in de_pace if (x.get('pace') or {}).get('direcao')])} passos registrados em {a.passos}")
         return 0
     if a.cmd == "marcar-envio":
         ate = dt.datetime.fromisoformat(a.ate.replace("Z", "+00:00"))
@@ -903,7 +969,9 @@ def main(argv=None) -> int:
         print("ERRO: fora da sombra o plano exige --regras Q7=<overrides.json> ... (regras por data vigentes, D0-D60): "
               "sem elas o motor não sabe que teto soltar nem que min_stay preservar")
         return 1
-    res = plano(cfg, ancora, cals, hoje, ordens, passos, bloq, a.dias, regra_j_ativa=motor.get("regra_j_ativa", True), regras=regras)
+    filtro = ler_filtro_noites(a.noites) if a.noites else None
+    res = plano(cfg, ancora, cals, hoje, ordens, passos, bloq, a.dias, regra_j_ativa=motor.get("regra_j_ativa", True), regras=regras,
+                noites_filtro=filtro)
     itens, apagar = ajustar_tetos(cfg, res["itens"], regras) if regras else (res["itens"], [])
     itens, nulos = sem_efeito(cfg, itens, cals, regras, {(x["quarto"], x["data"]) for x in apagar})
     # o relatório conta só o que vai para a gravação (revisão de 31/10: dizia 9 itens com 8 gravados)
@@ -925,10 +993,26 @@ def main(argv=None) -> int:
             with open(sa, "w", encoding="utf-8") as f:
                 json.dump({"hoje": res["hoje"], "itens": apagar, "sombra": sombra}, f, ensure_ascii=False, indent=1)
             print(f"{len(apagar)} noites com teto/validade a apagar ANTES, em {sa} (valide e grave este plano primeiro)")
-    de_pace = [x for x in itens if x.get("pace")]
-    if not sombra and de_pace:
+    de_pace = [x for x in itens if (x.get("pace") or {}).get("direcao")]
+    if not sombra and de_pace and not a.sem_registro:
         registrar_passos(passos, de_pace, dt.datetime.now(dt.timezone.utc), a.passos)
+    elif not sombra and de_pace:
+        print(f"ledger NÃO gravado (--sem-registro): depois de gravar, rode pace.py registrar --plano <itens gravados>")
     return 0
+
+
+def ler_filtro_noites(pares: list[str]) -> set:
+    """Q7=2026-11-10 ou Q7=2026-11-10..2026-11-12 (inclusive) → {(quarto, data)}."""
+    out = set()
+    for par in pares:
+        k, v = par.split("=", 1)
+        for pedaco in v.split(","):
+            de, _, ate = pedaco.partition("..")
+            d0, d1 = data(de), data(ate or de)
+            while d0 <= d1:
+                out.add((k, d0.isoformat()))
+                d0 += dt.timedelta(days=1)
+    return out
 
 
 if __name__ == "__main__":

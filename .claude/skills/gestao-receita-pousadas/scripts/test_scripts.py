@@ -1449,6 +1449,18 @@ class TestPace(unittest.TestCase):
         novo = {"passos": [dict(velho["passos"][0], vendidas=3, base="pousada")]}
         self.assertTrue(pace.cadencia_permite(novo, "VK2", "2026-11-10", "sobe", agora, 5, "pousada")[0])
         self.assertFalse(pace.cadencia_permite(novo, "VK2", "2026-11-10", "sobe", agora, 3, "pousada")[0])
+        # contagem com calendários parciais (total diferente) não libera passo (2ª revisão de 01/11)
+        led_t = {"passos": [dict(velho["passos"][0], direcao="desce", vendidas=6, base="pousada", total=16)]}
+        self.assertFalse(pace.cadencia_permite(led_t, "VK2", "2026-11-10", "desce", agora, 4, "pousada", 8)[0])
+        self.assertTrue(pace.cadencia_permite(led_t, "VK2", "2026-11-10", "desce", agora, 4, "pousada", 16)[0])
+        # registrar recusa o payload do validador; --noites vazio desliga os passos
+        import tempfile, os, json
+        with tempfile.TemporaryDirectory() as tmp:
+            pl = os.path.join(tmp, "payload.json")
+            with open(pl, "w", encoding="utf-8") as f:
+                json.dump({"update_listing_date_overrides": []}, f)
+            self.assertEqual(pace.main(["registrar", "--plano", pl, "--passos", os.path.join(tmp, "l.json")]), 1)
+        self.assertEqual(pace.ler_filtro_noites([]), set())
 
     def test_rotina_leve_coerencia_so_no_filtro_e_preco_vigente(self):
         """Revisão 01/11 (2ª): com --noites a Regra G não varre as 60 noites, e o preço do calendário velho fica dentro do

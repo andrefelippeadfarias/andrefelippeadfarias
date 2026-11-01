@@ -232,7 +232,7 @@ def ultimo_passo(passos: dict, curto: str, noite: str) -> dict | None:
 
 
 def cadencia_permite(passos: dict, curto: str, noite: str, direcao: str, agora: dt.datetime,
-                     vendidas: int | None = None, base: str = "quarto") -> tuple[bool, str]:
+                     vendidas: int | None = None, base: str = "quarto", total: int | None = None) -> tuple[bool, str]:
     u = ultimo_passo(passos, curto, noite)
     if not u or u["direcao"] != direcao:
         return True, ""
@@ -240,7 +240,8 @@ def cadencia_permite(passos: dict, curto: str, noite: str, direcao: str, agora: 
     # mais um para baixo), sem esperar as 24 h nem o envio do passo anterior. A contagem só compara com a do mesmo tipo
     # (`base`: "quarto", ou "pousada" nas suítes de 1-2 unidades, cuja reta anda com a ocupação da pousada); passo
     # antigo sem `base` conta como "quarto" (revisão 01/11: comparar 2/9 da Villa com 0/2 da King Spa 2 liberava passo falso)
-    if vendidas is not None and u.get("vendidas") is not None and (u.get("base") or "quarto") == base:
+    mesmo_total = total is None or u.get("total") is None or int(u["total"]) == int(total)  # calendários parciais (2ª revisão)
+    if vendidas is not None and u.get("vendidas") is not None and (u.get("base") or "quarto") == base and mesmo_total:
         if (direcao == "sobe" and vendidas > int(u["vendidas"])) or (direcao == "desce" and vendidas < int(u["vendidas"])):
             return True, ""
     gravado = dt.datetime.fromisoformat(u["gravado_em"].replace("Z", "+00:00"))
@@ -280,7 +281,7 @@ def registrar_passos(passos: dict, itens: list[dict], agora: dt.datetime, caminh
             continue
         passos.setdefault("passos", []).append({
             "quarto": it["quarto"], "noite": it["data"], "de": pc["atual"], "para": pc["novo"], "direcao": pc["direcao"],
-            "status": pc["status"], "vendidas": pc.get("vendidas"), "base": pc.get("base", "quarto"),
+            "status": pc["status"], "vendidas": pc.get("vendidas"), "base": pc.get("base", "quarto"), "total": pc.get("total"),
             "gravado_em": agora.isoformat(timespec="minutes"), "chegou_ao_canal": False})
     with open(caminho or ARQ_PASSOS, "w", encoding="utf-8") as f:
         json.dump(passos, f, ensure_ascii=False, indent=1)
@@ -577,7 +578,7 @@ def plano(cfg: dict, ancora: dict, cals: dict, hoje: date, ordens: dict, passos:
                 linha["cadencia"] = "fora do filtro da rotina leve (--noites)"
                 continue
             base_cont = "pousada" if (vv, tt) != (v, u) else "quarto"
-            ok, por_que = cadencia_permite(passos, curto, noite, direcao, agora, vv if esc_on else None, base_cont)
+            ok, por_que = cadencia_permite(passos, curto, noite, direcao, agora, vv if esc_on else None, base_cont, tt)
             if not ok and usa_ordem and ordem_nova_sem_passo(passos, curto, noite, ao, hoje):
                 ok, por_que = True, ""  # ordem nova do dono vale na hora (01/11: "1 . Sim / 2. Sim"), uma vez por noite
             if not ok:
@@ -587,7 +588,7 @@ def plano(cfg: dict, ancora: dict, cals: dict, hoje: date, ordens: dict, passos:
                   "motivo": (f"Pace ({st.replace('_', ' ')}: {v}/{u} vendidas, curva {esp:.0f}% a D{k}); alvo p{pct:.0f} "
                              f"R$ {alvo_pub:.0f} público = R$ {alvo_env:.0f} enviados ({origem}); antes R$ {atual:.0f}"),
                   "pace": {"status": st, "direcao": direcao, "atual": atual, "novo": novo_r, "alvo_enviado": round(alvo_env),
-                           "vendidas": vv, "base": base_cont}}
+                           "vendidas": vv, "base": base_cont, "total": tt}}
             if escada_ordem:
                 it["motivo"] = (f"Escada de vendas (dono 01/11): {vv}/{tt} vendidas; reta R$ {reta:.0f} (p{pct:.0f} R$ "
                                 f"{alvo_pub:.0f} público); degrau até R$ {novo_r}; antes R$ {atual:.0f}")
@@ -984,6 +985,9 @@ def main(argv=None) -> int:
         return 0
     if a.cmd == "registrar":
         pl_g = ler_json(a.plano)
+        if not isinstance(pl_g, dict) or not isinstance(pl_g.get("itens"), list):
+            print("ERRO: --plano tem de ser o plano do pace.py (com 'itens'), não o payload do validar_plano")
+            return 1
         de_pace = [x for x in pl_g.get("itens", []) if (x.get("pace") or {}).get("direcao")]
         if pl_g.get("sombra"):
             print("ERRO: plano em modo sombra não vai para o ledger")
@@ -1023,7 +1027,7 @@ def main(argv=None) -> int:
         print("ERRO: fora da sombra o plano exige --regras Q7=<overrides.json> ... (regras por data vigentes, D0-D60): "
               "sem elas o motor não sabe que teto soltar nem que min_stay preservar")
         return 1
-    filtro = ler_filtro_noites(a.noites) if a.noites else None
+    filtro = ler_filtro_noites(a.noites) if a.noites is not None else None  # --noites sem valor: nenhuma noite recebe passo
     res = plano(cfg, ancora, cals, hoje, ordens, passos, bloq, a.dias, regra_j_ativa=motor.get("regra_j_ativa", True), regras=regras,
                 noites_filtro=filtro)
     itens, apagar = ajustar_tetos(cfg, res["itens"], regras) if regras else (res["itens"], [])

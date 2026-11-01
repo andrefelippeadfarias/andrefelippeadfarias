@@ -3419,6 +3419,22 @@ Como desfazer (pedir ao Claude): "Tire a Villa da base do mercado e volte as noi
 
 **Motor:** o topo da rampa da escada passou a ser o piso padrão do dono, ou o `topo_enviados` da ordem. A King Spa 7 de 05/11 (2→3/7) e outras noites da semana com ordem de piso sobem na rotina das 07:53.
 
+## 01/11/2026, 20:40 — Conferência na Booking 30 min depois do Sync Now (envio às 20:06 BRT)
+
+Pelo conector oficial (Recanto pelas coordenadas, id 7562933; Villa pelo nome), com café, 2 adultos. A Booking mostra o quarto mais barato: a Balcony na Villa e a Moinhos no Recanto.
+
+| Estadia | Booking por noite | Enviado | Razão |
+|---|---|---|---|
+| Villa 04→05/11 (D3) | R$ 490,57 | Balcony R$ 927,1 | 0,529 (oferta de última hora) |
+| Villa 06→08/11 (D5) | R$ 477,34 | Balcony R$ 901,7 | 0,529 (oferta de última hora) |
+| Villa 10→11/11 (D9) | R$ 430,77 | Balcony R$ 660,4 | 0,652 |
+| Villa 20→22/11 (Consciência Negra) | R$ 1.193,76 | Balcony R$ 1.829 | 0,653 |
+| Recanto 03→04/11 (D2) | R$ 391,25 | Moinhos R$ 693 | 0,565 (oferta de última hora) |
+| Recanto 10→11/11 (D9) | R$ 393,54 | Moinhos R$ 620 | 0,635 |
+| Recanto Natal 24→26/12 | R$ 1.450,32 (antes: não vendia) | — | pacote liberado às 20:15, já à venda às 20:40 |
+
+Todos os preços gravados hoje chegaram ao canal. Os fatores públicos seguem 0,63 (Recanto) e 0,65 (Villa) fora da oferta de última hora; de D2 a D5, 0,53 a 0,57.
+
 > **Regras em vigor:** desde 06/10/2026 elas ficam em `.claude/skills/gestao-receita-pousadas/references/regras.md`. Este arquivo guarda só o histórico das mudanças.
 
 ## O que só pode ser feito na tela (passo a passo para você)

@@ -59,7 +59,7 @@ import urllib.parse
 import urllib.request
 from collections import defaultdict
 
-BASE = "https://beds24.com/api/v2"
+BASE = "https://api.beds24.com/v2"  # 01/11: beds24.com/api/v2 deixou de aceitar o cabeçalho `token` a partir deste ambiente
 # Propriedades e quartos do Beds24, pelos IDs que o PriceLabs usa (propriedade___quarto).
 PROPRIEDADES = {"350362": "Recanto dos Moinhos", "350364": "Villa Dolce Amore"}
 QUARTOS = {"722805": ("Q7", 7), "722806": ("Double", 6), "722807": ("Afrodite", 1), "722808": ("Q2", 2),
@@ -181,10 +181,15 @@ def corpo_edicao(curto, de, ate, min_stay=None, override=None, num_avail=None):
     return [{"roomId": ID_DO_CURTO[curto], "calendar": [faixa]}]
 
 
+ARQ_LEITURA = os.environ.get("BEDS24_TOKEN_FILE", "/root/.beds24/token_leitura")
+
+
 def token_de_acesso():
     tok = os.environ.get("BEDS24_TOKEN")
     if tok:
         return tok
+    if os.path.exists(ARQ_LEITURA):  # long life token de leitura guardado fora do repositório (600), 01/11
+        return open(ARQ_LEITURA, encoding="utf-8").read().strip()
     ref = os.environ.get("BEDS24_REFRESH_TOKEN")
     arq = os.environ.get("BEDS24_REFRESH_TOKEN_FILE", "/root/.beds24/refresh_token")
     if not ref and os.path.exists(arq):
@@ -353,6 +358,41 @@ def comparar(lista, coleta, de, ate):
     return dif
 
 
+def editar_lote(plano, aplicar=False):
+    """Plano = [{quarto, de, ate, min_stay?, override?, num_avail?, motivo}]. Um POST com todas as faixas (agrupadas por
+    quarto), depois relê o inventário e confere item a item. Sem --aplicar só mostra antes e mudança."""
+    por_quarto, linhas = {}, []
+    for it in plano:
+        c = corpo_edicao(it["quarto"], it["de"], it["ate"], it.get("min_stay"), it.get("override"), it.get("num_avail"))
+        por_quarto.setdefault(c[0]["roomId"], []).extend(c[0]["calendar"])
+        linhas.append(it)
+    de = min(i["de"] for i in plano)
+    ate = max(i["ate"] for i in plano)
+    quartos = sorted({i["quarto"] for i in plano})
+    antes = inventario(token_de_acesso(), de, ate, quartos)
+    resumo = {"itens": len(plano), "quartos": quartos, "aplicar": aplicar}
+    if not aplicar:
+        resumo["amostra"] = [{"quarto": i["quarto"], "de": i["de"], "antes": antes.get(i["quarto"], {}).get(i["de"]),
+                              "mudanca": {k: i[k] for k in ("min_stay", "override", "num_avail") if i.get(k) is not None}}
+                             for i in plano[:12]]
+        return resumo
+    corpo = [{"roomId": rid, "calendar": cal} for rid, cal in por_quarto.items()]
+    resp = _post("/inventory/rooms/calendar", corpo, {"token": token_escrita()})
+    depois = inventario(token_de_acesso(), de, ate, quartos)
+    erros = []
+    for i in plano:
+        d = dt.date.fromisoformat(i["de"])
+        while d <= dt.date.fromisoformat(i["ate"]):
+            v = depois.get(i["quarto"], {}).get(d.isoformat(), {})
+            for campo, chave in (("min_stay", "minStay"), ("override", "override"), ("num_avail", "numAvail")):
+                if i.get(campo) is not None and v.get(chave) != i[campo]:
+                    erros.append(f"{i['quarto']} {d}: {chave} {v.get(chave)} (esperado {i[campo]})")
+            d += dt.timedelta(days=1)
+    resumo.update({"resposta_ok": all((r or {}).get("success", True) for r in (resp if isinstance(resp, list) else [resp])),
+                   "conferidos": len(plano) - len({e.split(':')[0] for e in erros}), "erros": erros})
+    return resumo
+
+
 def main(argv=None):
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     sub = ap.add_subparsers(dest="cmd", required=True)
@@ -369,7 +409,15 @@ def main(argv=None):
     ed.add_argument("--ate", required=True); ed.add_argument("--min-stay", type=int); ed.add_argument("--override")
     ed.add_argument("--num-avail", type=int); ed.add_argument("--motivo", required=True)
     ed.add_argument("--aplicar", action="store_true", help="grava no Beds24 (sem isto, só simula)")
+    el = sub.add_parser("editar-lote"); el.add_argument("--plano", required=True); el.add_argument("--aplicar", action="store_true")
     a = ap.parse_args(argv)
+    if a.cmd == "editar-lote":
+        try:
+            print(json.dumps(editar_lote(json.load(open(a.plano, encoding="utf-8")), a.aplicar), ensure_ascii=False, indent=1))
+            return 0
+        except ErroBeds24 as e:
+            print(f"ERRO: {e}", file=sys.stderr)
+            return 2
     if a.cmd == "editar":
         try:
             corpo = corpo_edicao(a.quarto, a.de, a.ate, a.min_stay, a.override, a.num_avail)

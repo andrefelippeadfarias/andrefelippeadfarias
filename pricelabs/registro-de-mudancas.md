@@ -3224,6 +3224,20 @@ Plano do motor com as regras vigentes lidas às 08:00; validador: apagar 1 + 55 
 | Regra G (10% abaixo da suíte com banheira livre mais barata) | Balcony 04, 08, 09/11 (sobe: King Spa 2 esgotada, referência passa a King Spa 7) | R$ 724 / R$ 952 / R$ 838 | R$ 774,70 / R$ 1.320,80 / R$ 1.104,90 | "Volte a Balcony de 04, 08 e 09/11" |
 | Motor + Regra G | Balcony 03, 06-07, 13-18, 20-21, 27-29/11 e 04-05, 11-12, 15-16, 18-19, 24-25, 29-30/12 | ver plano | −2% a −16% (dentro da faixa da Regra G) | "Desfaça os passos da Balcony de 01/11" |
 
+## 01/11/2026, 12:20 — Beds24: sábados, sexta 06/11 e Villa 05/11 (dono: "Sim" e "faça você mesmo tudo")
+
+Acesso ao Beds24 resolvido: o endereço `beds24.com/api/v2` não aceitava o cabeçalho `token` a partir deste ambiente; o oficial `api.beds24.com/v2` aceita (script trocado). Credenciais do dono (token de leitura e código de convite trocado por credencial de edição) guardadas só em /root/.beds24 (600), fora do repositório. Inventário lido de 01/11 a 31/12: todos os sábados dos 7 quartos com "sem chegada e sem saída" (noCheckInOrCheckOut) e estadia mínima 2.
+
+Lote de 60 ajustes, simulado e depois gravado (POST /inventory/rooms/calendar), relido e conferido:
+
+| Mudança | Onde | Antes | Depois | Como desfazer (pedir ao Claude) |
+|---|---|---|---|---|
+| Chegada no sábado com 2 noites (sábado sozinho segue bloqueado) | 7 quartos, sábados 07/11 a 26/12 (56 noites) | sem chegada e sem saída; mínimo 2 | **sem saída no sábado**; chegada liberada; mínimo 2 | "Volte os sábados para sem chegada e sem saída" |
+| 1 noite na sexta (dono) | Panorâmica I, 06/11 | mínimo 2; sábado 07/11 sem saída | mínimo 1; sábado 07/11 com saída liberada (mínimo 2 para quem chega no sábado) | "Volte a Panorâmica I de 06/11 para mínimo 2" |
+| Villa reaberta (dono) | King Spa 7, Balcony, King Spa 2, 05/11 | disponibilidade −1 / 0 / 0 | 5 / 6 / 2 livres (King Spa 7 tem 2 reservas nessa noite) | "Feche a Villa de novo em 05/11" |
+
+Sexta sozinha nos outros quartos segue bloqueada (sábado sem saída), como antes. Conferência na Booking agendada para 30 min depois.
+
 > **Regras em vigor:** desde 06/10/2026 elas ficam em `.claude/skills/gestao-receita-pousadas/references/regras.md`. Este arquivo guarda só o histórico das mudanças.
 
 ## O que só pode ser feito na tela (passo a passo para você)

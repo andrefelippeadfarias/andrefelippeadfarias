@@ -1311,6 +1311,45 @@ class TestPace(unittest.TestCase):
         self.assertAlmostEqual(pace.passo(self.cfg, 2000, 1000, 2), 1600)    # D2: −20%
         self.assertAlmostEqual(pace.passo(self.cfg, 2000, 1000, 2, fraco=True), 1800)  # âncora fraca: metade
 
+    def test_ordem_so_desce_e_ordem_nova_uma_vez(self):
+        """Ordem só para baixar (Consciência Negra, 01/11) nunca sobe a noite; ordem criada hoje passa pela cadência
+        uma vez só por noite (passo gravado depois de `criada_em` volta a valer a cadência)."""
+        import pace
+        hoje = date(2026, 11, 1)
+        n = "2026-11-10"  # terça, D9
+        anc = {"noites": {n: {"p25": 286, "p50": 388, "p75": 500, "p90": 579, "max": 724, "n": 19, "busca_em": "2026-10-30",
+                              "tipo": "semana", "p50_medido": True}}, "por_tipo": {}}
+        ordem = {"id": "o-cn", "data": "2026-11-01", "criada_em": "2026-11-01T20:55+00:00", "tipo": "alvo_por_data",
+                 "quartos": ["Q7"], "de": n, "ate": n, "percentil": 75, "passo_livre": True, "escada_vendas": False,
+                 "so_desce": True, "noites": [n], "pisos_enviados": {"Q7": 560}, "libera": ["abaixo_piso", "acima_15"],
+                 "ocupacao_max": 0.7, "frente_ocupacao": 0.5}
+        agora = dt.datetime(2026, 11, 1, 21, 30, tzinfo=dt.timezone.utc)
+
+        def item(preco, passos=None, o=ordem):
+            cal = {"Q7": {n: {"price": str(preco), "min_price": str(preco), "max_price": str(preco), "mu_occupancy": "1/7"}}}
+            res = pace.plano(self.cfg, anc, cal, hoje, {o["id"]: o}, passos or {"passos": []}, dias=12,
+                             agora=agora, regra_j_ativa=False)
+            its = [i for i in res["itens"] if i["quarto"] == "Q7"]
+            return its[0] if its else None
+        # abaixo do p75 a ordem não sobe a noite
+        self.assertIsNone(item(600))
+        # acima, desce
+        i = item(1500)
+        self.assertEqual(i["pace"]["direcao"], "desce")
+        self.assertEqual(i["ordem_id"], "o-cn")
+
+        def passo(quando):
+            return {"passos": [{"quarto": "Q7", "noite": n, "de": 1600, "para": 1500, "direcao": "desce", "status": "atras",
+                                "vendidas": 1, "gravado_em": quando, "chegou_ao_canal": False}]}
+        # passo do motor de manhã (antes da ordem): a ordem nova vale na hora
+        self.assertIsNotNone(item(1500, passo("2026-11-01T10:04+00:00")))
+        # passo já gravado pela ordem: nova rodada no mesmo dia segue a cadência
+        self.assertIsNone(item(1500, passo("2026-11-01T21:03+00:00")))
+        # sem criada_em: cadência normal
+        sem = dict(ordem)
+        sem.pop("criada_em")
+        self.assertIsNone(item(1500, passo("2026-11-01T10:04+00:00"), sem))
+
     def test_pisos_enviados(self):
         import pace
         # dia de semana fora de feriado: R$ 500 Genius ÷ 0,63 (CFG do teste) = R$ 794 > mínimo R$ 800? não: vale o mínimo

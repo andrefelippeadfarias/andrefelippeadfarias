@@ -3333,6 +3333,38 @@ Conferido: 389 regras por data na resposta da API do PriceLabs (motivos antigos 
 
 Como desfazer (pedir ao Claude): "Desligue a escada de vendas e volte as noites ao preço de antes".
 
+## 01/11/2026, 18:05 — Villa na base do mercado com escada de vendas e Consciência Negra rumo ao p75 (dono: "1 . Sim / 2. Sim")
+
+**Pedido:** resposta às 2 propostas do diagnóstico das metas de novembro. (1) A base do mercado e a escada de vendas valem também na Villa nas noites fracas de novembro (ordem `dono-2026-11-01-villa-base-mercado`, p50 do mercado com hidro, piso da ordem de 25/10: King Spa R$ 710/711 e Balcony R$ 635 enviados, ~R$ 450 público). (2) Consciência Negra 19-21/11 da Villa e 19/11 do Recanto em direção ao p75 do mercado (R$ 1.260 público), sem passar do piso de feriado de R$ 800 reais (ordens `dono-2026-11-01-consciencia-negra-p75` e `-recanto`, só descem).
+
+**Gravado às 18:03 BRT (validado: 0 erros; conferido na resposta da API; estadia mínima dos sábados mantida):**
+
+| Quarto | Noites (vendidas) | Antes | Agora (enviado) | Público aprox. (× 0,65) |
+|---|---|---|---|---|
+| King Spa 7 | 04/11 (5/7) | R$ 888 | R$ 977 ↑ | R$ 635 |
+| King Spa 7 | sex/sáb 06-07/11 (1/7) | R$ 1.480 | R$ 1.004 | R$ 653 |
+| King Spa 7 | 09/11 (3/7) | R$ 1.273 | R$ 810 | R$ 527 |
+| King Spa 7 | 10, 12, 16, 18, 23, 24 e 26/11 (1/7) | R$ 947 | R$ 743 | R$ 483 |
+| King Spa 7 | 11, 15 e 25/11 (0/7) | R$ 947 | R$ 710 | R$ 462 |
+| King Spa 7 | 17/11 e 29-30/11 (2/7) | R$ 947 / 959 | R$ 776 | R$ 504 |
+| King Spa 7 | sex 27/11 (3/7) e sáb 28/11 (2/7) | R$ 2.531 / 2.057 | R$ 1.220 / 1.144 | R$ 793 / 744 |
+| King Spa 2 | 10, 16, 17, 18 e 23/11 | R$ 952 | R$ 762 | R$ 495 |
+| King Spa 2 | 24 e 26/11; 25/11 | R$ 952 | R$ 736; R$ 711 | R$ 478; R$ 462 |
+| King Spa 2 | sex/sáb 13-14/11 | R$ 1.994 | R$ 1.154 | R$ 750 |
+| King Spa 2 | sex/sáb 27-28/11 | R$ 1.600 | R$ 1.169 / 1.110 | R$ 760 / 722 |
+| Balcony | 04/11 (1/6) | R$ 775 | R$ 864 ↑ (Regra G: King Spa 7 subiu) | R$ 561 |
+| Balcony | sex/sáb 06-07/11 (0/6) | R$ 1.283 | R$ 902 | R$ 586 |
+| Balcony | 13 noites de semana de 10 a 30/11 (0/6) | R$ 826 / 838 | R$ 635 a 686 | R$ 413 a 446 |
+| Balcony | sex/sáb 13-14/11 e 27-28/11 (0/6) | R$ 1.727 / 1.384 | R$ 1.003 / 1.029 / 991 | R$ 644 a 669 |
+| King Spa 7 | Consciência Negra 20/11 (3/7) | R$ 2.930 | R$ 2.051 (piso de feriado) | R$ 1.333 |
+| King Spa 2 | Consciência Negra 20 e 21/11 (1/2) | R$ 3.099 | R$ 2.051 (piso de feriado) | R$ 1.333 |
+
+**O que não mudou e por quê:** King Spa 7 19 e 21/11 e Recanto 19/11 já estavam no piso de feriado (R$ 800 reais = King Spa R$ 2.051, Recanto R$ 1.905, ~R$ 1.200-1.333 público); Balcony 20-21/11 já estava abaixo do p75 (~R$ 1.189 público) e a ordem só desce; King Spa 2 19/11 esgotada. As noites do Recanto já tinham a escada desde as 17:46. Para a King Spa no feriado ficar abaixo de ~R$ 1.333 público, só com o dono mudando o piso de feriado (limite de segurança).
+
+**Regra G na Balcony:** a Balcony fica 10% abaixo da suíte com banheira livre mais barata; por isso, em 17 das 20 noites ela parou um pouco acima da escada (ex.: 10/11 R$ 660 em vez de R$ 635) e em 04/11 subiu junto com a King Spa 7.
+
+Como desfazer (pedir ao Claude): "Tire a Villa da base do mercado e volte as noites de novembro ao preço de antes" e/ou "Volte a Consciência Negra da Villa ao preço de antes".
+
 > **Regras em vigor:** desde 06/10/2026 elas ficam em `.claude/skills/gestao-receita-pousadas/references/regras.md`. Este arquivo guarda só o histórico das mudanças.
 
 ## O que só pode ser feito na tela (passo a passo para você)

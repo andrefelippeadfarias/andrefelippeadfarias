@@ -428,6 +428,119 @@
    "tipo": "regra",
    "libera": [],
    "nota": "Escada de vendas no motor de pace (quartos.json parametros.pace.escada_vendas; ordem de base do mercado com escada_vendas). Não muda pisos, limites de segurança nem descontos."
+  },
+  {
+   "id": "dono-2026-11-01-villa-base-mercado",
+   "data": "2026-11-01",
+   "texto": "1 . Sim",
+   "contexto": "Resposta à proposta 1 do diagnóstico das metas de novembro (17:50 BRT): base do mercado + escada de vendas também na Villa nas noites fracas de novembro (King Spa ~R$ 460 público em dia de semana, Balcony ~R$ 415; fim de semana ~R$ 650; sobe a cada reserva).",
+   "quartos": [
+    "VK7",
+    "VK2",
+    "Balcony"
+   ],
+   "de": "2026-11-02",
+   "ate": "2026-11-30",
+   "tipo": "alvo_por_data",
+   "percentil": 50,
+   "passo_livre": true,
+   "escada_vendas": true,
+   "noites": [
+    "2026-11-02",
+    "2026-11-03",
+    "2026-11-04",
+    "2026-11-05",
+    "2026-11-06",
+    "2026-11-07",
+    "2026-11-08",
+    "2026-11-09",
+    "2026-11-10",
+    "2026-11-11",
+    "2026-11-12",
+    "2026-11-13",
+    "2026-11-14",
+    "2026-11-15",
+    "2026-11-16",
+    "2026-11-17",
+    "2026-11-18",
+    "2026-11-22",
+    "2026-11-23",
+    "2026-11-24",
+    "2026-11-25",
+    "2026-11-26",
+    "2026-11-27",
+    "2026-11-28",
+    "2026-11-29",
+    "2026-11-30"
+   ],
+   "pisos_enviados": {
+    "VK7": 710,
+    "VK2": 711,
+    "Balcony": 635
+   },
+   "libera": [
+    "abaixo_piso",
+    "acima_15"
+   ],
+   "ocupacao_max": 0.7,
+   "frente_ocupacao": 0.5,
+   "nota": "Como a ordem do Recanto: alvo no p50 do mercado com hidro (÷ 0,65), piso no limite da ordem de 25/10 (público ~R$ 450), escada de vendas (sobe a cada reserva até o p90 e o piso padrão do dono); Consciência Negra (19-21/11) fora (ordem própria). Suspende na Villa, nessas noites, os pisos de R$ 500/850 no Genius 3. Validade 30/11.",
+   "criada_em": "2026-11-01T20:55+00:00"
+  },
+  {
+   "id": "dono-2026-11-01-consciencia-negra-p75",
+   "data": "2026-11-01",
+   "texto": "2. Sim",
+   "contexto": "Resposta à proposta 2: Consciência Negra 19-21/11 da Villa e a noite de 19/11 do Recanto em direção ao p75 do mercado (~R$ 1.000-1.260 público), sem passar do piso de feriado de R$ 800 reais.",
+   "quartos": [
+    "VK7",
+    "VK2",
+    "Balcony"
+   ],
+   "de": "2026-11-19",
+   "ate": "2026-11-21",
+   "tipo": "alvo_por_data",
+   "percentil": 75,
+   "passo_livre": true,
+   "escada_vendas": false,
+   "noites": [
+    "2026-11-19",
+    "2026-11-20",
+    "2026-11-21"
+   ],
+   "libera": [],
+   "ocupacao_max": 0.7,
+   "frente_ocupacao": 0.5,
+   "nota": "Sem pisos_enviados: vale o piso de feriado (R$ 800 reais ÷ fator real: King Spa R$ 2.051 enviados ≈ R$ 1.333 público; Balcony R$ 1.509 ≈ R$ 981; Recanto R$ 1.905 ≈ R$ 1.200). Validade 21/11. Recanto 19/11: ordem dono-2026-11-01-consciencia-negra-p75-recanto. Só desce (so_desce): o p75 é teto do pedido, não alvo de subida; a noite que passa a vender bem sai da ordem e segue o motor (com a escada de vendas).",
+   "so_desce": true,
+   "criada_em": "2026-11-01T20:55+00:00"
+  },
+  {
+   "id": "dono-2026-11-01-consciencia-negra-p75-recanto",
+   "data": "2026-11-01",
+   "texto": "2. Sim",
+   "contexto": "Resposta à proposta 2: Consciência Negra 19-21/11 da Villa e a noite de 19/11 do Recanto em direção ao p75 do mercado (~R$ 1.000-1.260 público), sem passar do piso de feriado de R$ 800 reais.",
+   "quartos": [
+    "Q7",
+    "Double",
+    "Q2",
+    "Afrodite"
+   ],
+   "de": "2026-11-19",
+   "ate": "2026-11-19",
+   "tipo": "alvo_por_data",
+   "percentil": 75,
+   "passo_livre": true,
+   "escada_vendas": false,
+   "noites": [
+    "2026-11-19"
+   ],
+   "libera": [],
+   "ocupacao_max": 0.7,
+   "frente_ocupacao": 0.5,
+   "nota": "Recanto só na quinta 19/11 (20 e 21/11 vendem bem e ficam com o motor). Piso de feriado R$ 1.905 enviados (≈ R$ 1.200 público); Afrodite segue acima das outras. Só desce (so_desce): o p75 é teto do pedido, não alvo de subida; a noite que passa a vender bem sai da ordem e segue o motor (com a escada de vendas).",
+   "so_desce": true,
+   "criada_em": "2026-11-01T20:55+00:00"
   }
  ]
 }

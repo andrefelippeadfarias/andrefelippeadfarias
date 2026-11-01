@@ -2,6 +2,11 @@
 
 Cada mudança feita na própria Skill (regras, parâmetros, scripts, fluxo) entra aqui: data, o que mudou, por quê (evidência) e como desfazer. A entrada mais nova fica em cima.
 
+## 01/11/2026 18:05: ordem só para baixar e ordem nova uma vez por noite (dono: "1 . Sim / 2. Sim")
+- **Por quê:** a ordem da Consciência Negra (p75) subiria noites que estavam abaixo do p75 (Balcony 19-21/11, Moinhos e Panorâmica II 19/11) e as noites com passo do motor de manhã ficariam presas na cadência até amanhã; mas liberar a cadência para toda ordem criada hoje daria mais um passo a cada nova rodada do dia.
+- **O que mudou:** `pace.py`: `so_desce` na ordem (a ordem nunca sobe a noite) e `ordem_nova_sem_passo` (a ordem criada hoje passa pela cadência só se a noite não teve passo depois de `criada_em`). `ordens_dono.json`: `criada_em` nas 3 ordens novas. Teste `test_ordem_so_desce_e_ordem_nova_uma_vez` (92 OK).
+- **Como desfazer:** tirar `so_desce`/`criada_em` das ordens; sem `criada_em` vale a cadência normal.
+
 ## 01/11/2026 11:30: Beds24 com leitura do inventário e edição (dono)
 - **Por quê:** dono: "Guarde esse token para acessar o beds24 e verificar sempre o inventário e editar sempre que precisar". O token enviado no chat foi recusado pelo Beds24 (apagado; nada no repositório). O painel do Beds24 só gera long life token de leitura; escrita só por código de convite.
 - **O que mudou:** `scripts/beds24.py`: `inventario` (GET /inventory/rooms/calendar: numAvail, minStay, override) e `editar` (POST, simulação por padrão, `--aplicar` grava e relê; só disponibilidade, estadia mínima e chegada/saída; trava preço e valores fora do intervalo); credencial de escrita por `BEDS24_INVITE_CODE` → refresh token em /root/.beds24 (600) ou `BEDS24_REFRESH_TOKEN`. Testes `TestBeds24Edicao`. `SKILL.md`: inventário em toda rotina. Ordem `dono-2026-11-01-beds24-edicao`.

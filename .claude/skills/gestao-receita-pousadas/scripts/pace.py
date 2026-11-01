@@ -248,6 +248,26 @@ def cadencia_permite(passos: dict, curto: str, noite: str, direcao: str, agora: 
     return True, ""
 
 
+def ordem_nova_sem_passo(passos: dict, curto: str, noite: str, ordem: dict, hoje: dt.date) -> bool:
+    """Ordem do dono criada hoje vale na hora, mesmo com passo do motor hoje na noite (dono, 01/11) — mas uma vez só:
+    exige `criada_em` (instante UTC) na ordem e nenhum passo da noite gravado depois dele. Sem `criada_em`, a
+    cadência normal manda (evita que toda rodada do dia dê mais um passo pela mesma ordem)."""
+    if not ordem or ordem.get("data") != hoje.isoformat() or not ordem.get("criada_em"):
+        return False
+    criada = dt.datetime.fromisoformat(str(ordem["criada_em"]).replace("Z", "+00:00"))
+    if criada.tzinfo is None:
+        criada = criada.replace(tzinfo=dt.timezone.utc)
+    for x in passos.get("passos", []):
+        if x.get("quarto") != curto or x.get("noite") != noite:
+            continue
+        g = dt.datetime.fromisoformat(str(x["gravado_em"]).replace("Z", "+00:00"))
+        if g.tzinfo is None:
+            g = g.replace(tzinfo=dt.timezone.utc)
+        if g >= criada:
+            return False
+    return True
+
+
 def registrar_passos(passos: dict, itens: list[dict], agora: dt.datetime, caminho=None) -> None:
     for it in itens:
         pc = it.get("pace") or {}
@@ -518,6 +538,8 @@ def plano(cfg: dict, ancora: dict, cals: dict, hoje: date, ordens: dict, passos:
                                    else "Afrodite acima da mais cara das outras (dono 22 e 27/10)")
                 if teto_af:
                     novo = min(novo, max(teto_af, piso))
+            if usa_ordem and ao.get("so_desce") and novo > atual:
+                novo = atual  # ordem do dono só para baixar (01/11, Consciência Negra): nunca sobe a noite por ela
             preso = None
             if novo < piso:
                 novo, preso = piso, f"presa no piso ({origem_piso} = R$ {piso:.0f} enviados, público ~R$ {piso * fp:.0f}, percentil {percentil_de(piso * fp, anc):.0f})"
@@ -535,6 +557,8 @@ def plano(cfg: dict, ancora: dict, cals: dict, hoje: date, ordens: dict, passos:
             if not direcao:
                 continue
             ok, por_que = cadencia_permite(passos, curto, noite, direcao, agora, v)
+            if not ok and usa_ordem and ordem_nova_sem_passo(passos, curto, noite, ao, hoje):
+                ok, por_que = True, ""  # ordem nova do dono vale na hora (01/11: "1 . Sim / 2. Sim"), uma vez por noite
             if not ok:
                 linha["cadencia"] = por_que
                 continue

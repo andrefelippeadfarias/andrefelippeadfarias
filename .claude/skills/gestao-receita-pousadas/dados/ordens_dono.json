@@ -363,6 +363,23 @@
     "beds24_inventario"
    ],
    "nota": "Executado em 01/11: a Regra H aprovada ('Sim .', chegada no sábado com 2 noites) foi estendida a todos os sábados até 31/10/2027 no Beds24 (179 quarto-sábados, só a parte da chegada; estadia e disponibilidade intactas). Pisos e estadias do PriceLabs auditados nos 12 meses (0 noites abaixo da regra). Fora da regra aprovada e levado ao dono como proposta: chegada de sexta na Afrodite (52 sextas fechadas), 1 noite em 02/11 e dias de semana com estadia acima do calendário."
+  },
+  {
+   "id": "dono-2026-11-01-beds24-semana-afrodite-vk7",
+   "data": "2026-11-01",
+   "texto": "Sim",
+   "contexto": "Resposta ao relatório da rotina das 13:53 de 01/11, que pedia 'Sim' ou 'Não' para 4 itens: (1) liberar a chegada de sexta na Afrodite (52 sextas, estadia 2 mantida); (2) 1 noite na segunda 02/11; (3) 1 noite nos dias de semana fora de feriado em que o Beds24 pede 2 ou 3 e o calendário pede 1 (284 quarto-noites: dezembro 01-23 e 27-28, janeiro na Villa, 31/01, 10-11/02, 22/04, 01-07/07 e 26-29/07); (4) reabrir as unidades da King Spa 7 fechadas sem reserva em 06 e 07/11. 'Sim' sem ressalva lido como sim aos 4.",
+   "quartos": [
+    "*"
+   ],
+   "de": "2026-11-01",
+   "ate": "2027-10-31",
+   "tipo": "regra",
+   "libera": [
+    "beds24_inventario",
+    "estadia"
+   ],
+   "nota": "Execução no Beds24 pela skill (só override, estadia mínima e disponibilidade; nunca preço nem reservas), com revisão independente antes, releitura e conferência na Booking."
   }
  ]
 }

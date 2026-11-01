@@ -942,6 +942,22 @@ class TestCalendario12m(unittest.TestCase):
                          {("Afrodite", "2027-01-09", "noCheckOut"), ("Double", "2027-01-09", "none")})
         self.assertFalse(any("min_stay" in i or "num_avail" in i for i in lote))   # só a restrição; nada de preço
 
+    def test_beds24_semana_estadia_pelo_calendario(self):
+        """Dono 01/11 ('Sim'): domingo a quinta fora de feriado seguem a estadia do calendário no Beds24; feriado, sexta
+        e o pico de julho (calendário 2) ficam; Afrodite com sexta noCheckOut não é mais 'outra noite bloqueada'."""
+        import datetime as dt
+        import calendario_12m as c12
+        inv = {"Q7": {"2026-12-01": {"numAvail": 7, "minStay": 2, "override": "none"},      # terça, calendário 1
+                      "2026-12-04": {"numAvail": 7, "minStay": 2, "override": "none"},      # sexta: fica
+                      "2026-12-29": {"numAvail": 7, "minStay": 3, "override": "none"},      # Réveillon: fica
+                      "2027-07-13": {"numAvail": 7, "minStay": 2, "override": "none"}},     # pico de julho (2): fica
+               "Afrodite": {"2026-12-04": {"numAvail": 1, "minStay": 2, "override": "noCheckOut"}}}
+        cl = {x["quarto"]: x for x in c12.classificar_beds24(CFG, inv, dt.date(2026, 11, 1), dt.date(2027, 10, 31))}
+        self.assertEqual(cl["Q7"]["semana_estadia_acima"], [{"data": "2026-12-01", "min_stay": 2, "calendario": 1}])
+        self.assertEqual(cl["Afrodite"]["outras_noites_bloqueadas"], [])
+        lote = c12.plano_beds24_sabados(list(cl.values()), "sáb", "semana")
+        self.assertEqual([(i["quarto"], i["de"], i["min_stay"]) for i in lote], [("Q7", "2026-12-01", 1)])
+
     def test_calendario_ordem_do_dono_e_dia_orfao_viram_informacao(self):
         """01/11: piso abaixo do padrão pela ordem 'base do mercado' e o dia órfão (estadia 1 entre noites esgotadas)
         não são falta: saem como informação, sem item no plano."""

@@ -14,8 +14,9 @@ cada noite com o que as regras da skill exigem. Nunca desce nada; só sobe o que
   - estadia mínima: sábado 2 (Regra H) e feriado pela lista de feriados ou pelo calendário (validar_plano.estadia_exigida);
   - chegada e saída no sábado (Regra H, dono 01/11: "Sim ."): ficam no Beds24. A chegada no sábado é LIBERADA com a
     estadia mínima da noite (2, ou a do feriado); o sábado sozinho segue bloqueado pela estadia. O script lê o Beds24 e
-    lista os sábados com a chegada fechada (noCheckIn/noCheckInOrCheckOut), os sábados com estadia 1 e as outras noites
-    com restrição; `--plano-beds24` gera o lote do `beds24.py editar-lote` que tira só a parte da chegada
+    lista os sábados com a chegada fechada (noCheckIn/noCheckInOrCheckOut), os sábados com estadia 1, as noites de
+    domingo a quinta fora de feriado com estadia acima do calendário de sazonalidade (dono 01/11: "Sim") e as outras
+    noites com restrição; `--plano-beds24` gera o lote do `beds24.py editar-lote` que tira só a parte da chegada
     (`parametros.regra_h_beds24.troca_sabado`), mantendo a saída como o dono deixou.
   - ordens do dono (`dados/ordens_dono.json`, piso_por_data e alvo_por_data): piso abaixo do padrão numa noite coberta
     por ordem, e não abaixo do piso da ordem, sai como informação, não como falta. Dia órfão (noites vizinhas esgotadas)
@@ -127,32 +128,49 @@ def classificar_beds24(cfg: dict, inv: dict, de: dt.date, ate: dt.date) -> list[
     rh = (cfg.get("parametros") or {}).get("regra_h_beds24") or {}
     troca = rh.get("troca_sabado") or {"noCheckIn": "none", "noCheckInOrCheckOut": "noCheckOut"}
     ms_sab = int(rh.get("estadia_minima_sabado", 2))
+    try:
+        from sazonalidade import carregar as _carregar_saz, periodo as _periodo_saz
+        saz = _carregar_saz()
+    except Exception:
+        saz = None
     out = []
     for q in sorted(inv):
-        chegada, estadia, outras = [], [], []
+        chegada, estadia, outras, semana = [], [], [], []
         for ds, v in sorted(inv[q].items()):
             d = dt.date.fromisoformat(ds)
             if not de <= d <= ate:
                 continue
             o = (v or {}).get("override") or "none"
+            ms = int((v or {}).get("minStay") or 1)
             if d.weekday() == 5:
                 if o in troca:
                     chegada.append({"data": ds, "override": o, "troca": troca[o]})
                 elif o != "none" and o != "noCheckOut":
                     outras.append(f"{ds} {o}")
-                if int((v or {}).get("minStay") or 1) < ms_sab:
+                if ms < ms_sab:
                     estadia.append(ds)
-            elif o != "none":
+                continue
+            if o != "none" and not (q == "Afrodite" and d.weekday() == 4 and o == "noCheckOut"):
                 outras.append(f"{ds} {o}")
+            # domingo a quinta fora de feriado: estadia do calendário de sazonalidade (dono, 01/11: "Sim")
+            if d.weekday() != 4 and saz is not None and not periodo_feriado(cfg, d):
+                cal = int(((_periodo_saz(saz, d) or {}).get("estadia_minima")) or 1)
+                if ms > cal:
+                    semana.append({"data": ds, "min_stay": ms, "calendario": cal})
         out.append({"quarto": q, "sabados_chegada_fechada": chegada, "sabados_estadia_abaixo": estadia,
-                    "outras_noites_bloqueadas": outras})
+                    "outras_noites_bloqueadas": outras, "semana_estadia_acima": semana})
     return out
 
 
-def plano_beds24_sabados(classif: list[dict], motivo: str) -> list[dict]:
-    """Lote do `beds24.py editar-lote` que libera a chegada nos sábados (tira só a parte da chegada do override)."""
-    return [{"quarto": x["quarto"], "de": s["data"], "ate": s["data"], "override": s["troca"], "motivo": motivo}
+def plano_beds24_sabados(classif: list[dict], motivo: str, motivo_semana: str | None = None) -> list[dict]:
+    """Lote do `beds24.py editar-lote`: libera a chegada nos sábados (tira só a parte da chegada do override) e, com
+    `motivo_semana`, devolve ao calendário a estadia de domingo a quinta fora de feriado (dono, 01/11)."""
+    lote = [{"quarto": x["quarto"], "de": s["data"], "ate": s["data"], "override": s["troca"], "motivo": motivo}
             for x in classif for s in x["sabados_chegada_fechada"]]
+    if motivo_semana:
+        lote += [{"quarto": x["quarto"], "de": s["data"], "ate": s["data"], "min_stay": s["calendario"],
+                  "motivo": motivo_semana} for x in classif for s in x.get("semana_estadia_acima", [])]
+    return lote
 
 
 def auditar_beds24(cfg: dict, de: dt.date, ate: dt.date, token=None) -> list[dict]:
@@ -230,13 +248,17 @@ def main(argv=None) -> int:
         b24 = auditar_beds24(cfg, de, ate)
         for x in b24:
             ch, es, ou = x["sabados_chegada_fechada"], x["sabados_estadia_abaixo"], x["outras_noites_bloqueadas"]
+            se = x.get("semana_estadia_acima") or []
             print(f"Beds24 {x['quarto']:9} sábados com chegada fechada: {len(ch)}" +
                   (f" (de {ch[0]['data']} a {ch[-1]['data']})" if ch else "") +
+                  (f"; dom-qui com estadia acima do calendário: {len(se)} ({se[0]['data']} a {se[-1]['data']})" if se else "") +
                   (f"; sábados com estadia abaixo de 2: {', '.join(es[:5])}" if es else "") +
                   (f"; outras noites com restrição: {len(ou)} ({', '.join(ou[:3])}...)" if ou else ""))
         if a.plano_beds24:
             lote = plano_beds24_sabados(b24, "Regra H (dono 01/11, 'Sim .'): chegada no sábado liberada com a estadia "
-                                             "mínima da noite; sábado sozinho segue bloqueado; saída mantida")
+                                             "mínima da noite; sábado sozinho segue bloqueado; saída mantida",
+                                        "Regra A no Beds24 (dono 01/11, 'Sim'): domingo a quinta fora de feriado com a "
+                                        "estadia do calendário de sazonalidade")
             json.dump(lote, open(a.plano_beds24, "w"), ensure_ascii=False, indent=1)
             print(f"{len(lote)} sábados no lote do Beds24 em {a.plano_beds24}")
     if a.json:

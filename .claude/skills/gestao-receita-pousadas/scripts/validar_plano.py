@@ -336,12 +336,12 @@ class Validador:
                 self.erro(i, it, f"estadia mínima {ms} fora do razoável")
 
     def validar_chegada_saida(self, i, it, q, d, excecao):
-        """Chegada e saída por data (dono, 21/10): strings de 7 caracteres 0/1, de segunda a domingo. Fechar a noite só
-        vale no sábado, espelhando o bloqueio da Regra H que o dono usa no Beds24 (parametros.regra_h_restricao);
-        fora disso só com excecao "dono"."""
+        """Chegada e saída por data (dono, 21/10): strings de 7 caracteres 0/1, de segunda a domingo. Regra H (dono,
+        01/11: "Sim ."): a chegada no sábado fica LIBERADA (o sábado sozinho é barrado pela estadia mínima 2); fechar a
+        saída no sábado é permitido (barra a sexta sozinha, como o noCheckOut do Beds24). Fechar outra noite, ou a
+        chegada no sábado, só com excecao "dono"."""
         if it.get("check_in") is None and it.get("check_out") is None:
             return
-        regra = ((self.cfg.get("parametros") or {}).get("regra_h_restricao") or {}).get(q["curto"])
         for campo in ("check_in", "check_out"):
             s = str(it.get(campo) or "1111111")
             if len(s) != 7 or set(s) - {"0", "1"}:
@@ -353,11 +353,9 @@ class Validador:
             if s[d.weekday()] == "0" and excecao != "dono":
                 if d.weekday() != 5:
                     self.erro(i, it, f"{campo} fecha uma noite que não é sábado: só o dono decide (excecao 'dono')")
-                elif campo == "check_out" and regra != "chegada_saida":
-                    self.erro(i, it, f"{q['nome']}: o Beds24 do dono fecha só a chegada no sábado; saída fechada só com "
-                                     "excecao 'dono'")
-                elif not regra:
-                    self.erro(i, it, f"{q['nome']} sem parametros.regra_h_restricao: restrição de sábado não configurada")
+                elif campo == "check_in":
+                    self.erro(i, it, f"{q['nome']}: chegada no sábado fechada contra a Regra H (dono 01/11: chegada "
+                                     "liberada com 2 noites); só com excecao 'dono'")
 
     def calendario_fresco(self, i, it, q):
         """Decisão que depende de ocupação precisa de calendário recalculado (aprendizado de 13/10)."""

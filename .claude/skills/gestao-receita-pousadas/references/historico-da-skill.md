@@ -7,6 +7,13 @@ Cada mudança feita na própria Skill (regras, parâmetros, scripts, fluxo) entr
 - **O que mudou:** `scripts/beds24.py`: `inventario` (GET /inventory/rooms/calendar: numAvail, minStay, override) e `editar` (POST, simulação por padrão, `--aplicar` grava e relê; só disponibilidade, estadia mínima e chegada/saída; trava preço e valores fora do intervalo); credencial de escrita por `BEDS24_INVITE_CODE` → refresh token em /root/.beds24 (600) ou `BEDS24_REFRESH_TOKEN`. Testes `TestBeds24Edicao`. `SKILL.md`: inventário em toda rotina. Ordem `dono-2026-11-01-beds24-edicao`.
 - **Como desfazer:** apagar a ordem e os comandos `inventario`/`editar`; a skill volta a só ler reservas.
 
+## 01/11/2026 12:25: revisão de 365 dias (dono: "revise tudo para os próximos 365 dias")
+- Regra H no Beds24: `quartos.json` → `parametros.regra_h_beds24` (troca do sábado: noCheckIn → none, noCheckInOrCheckOut → noCheckOut; estadia de sábado 2) substitui `regra_h_restricao` (21/10, sábado com chegada fechada).
+- `calendario_12m.py`: `classificar_beds24` e `plano_beds24_sabados` (`--plano-beds24`, lote do `beds24.py editar-lote`); auditoria do Beds24 pelo `beds24.inventario` (estadia e override); ordens do dono (`piso_por_data`/`alvo_por_data`) e dia órfão saem como `info`, sem item; `--restricoes-pricelabs` e o padrão de chegada/saída do PriceLabs saíram.
+- `validar_plano.py`: chegada fechada no sábado é erro (Regra H de 01/11); saída fechada no sábado é permitida.
+- Executado: 179 quarto-sábados de 2027 com a chegada liberada no Beds24; `bloqueios_villa.json` vazio (05/11 reaberta).
+- Testes: `test_beds24_regra_h_sabado_liberado_365`, `test_calendario_ordem_do_dono_e_dia_orfao_viram_informacao`; `test_validador_chegada_saida` com a regra nova. 88 OK.
+
 ## 01/11/2026 07:10: ordem `alvo_por_data` (dono: Recanto na base do mercado)
 - **Por quê:** pedido do dono "Estamos saindo muitos dias sem reserva na Recanto. Vamos baixar o valor para a base do mercado para forçar as reservas".
 - **O que mudou:**

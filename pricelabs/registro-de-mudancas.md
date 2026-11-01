@@ -3238,6 +3238,28 @@ Lote de 60 ajustes, simulado e depois gravado (POST /inventory/rooms/calendar), 
 
 Sexta sozinha nos outros quartos segue bloqueada (sábado sem saída), como antes. Conferência na Booking agendada para 30 min depois.
 
+## 01/11/2026, 12:25 — Revisão dos próximos 365 dias (dono: "revise tudo para os próximos 365 dias")
+
+Lido no Beds24 o inventário dos 7 quartos de 01/11/2026 a 31/10/2027 (estadia mínima, chegada/saída, disponibilidade) contra as reservas, e recalculados os 7 quartos no PriceLabs (541 noites cada) para auditar pisos e estadias.
+
+**Conferência na Booking das mudanças de 12:20** (conector oficial, ~15 min depois): Recanto sexta 06-07/11 (1 noite) R$ 646,62; Recanto chegada no sábado 07-09/11 R$ 1.514,82 e 14-16/11 R$ 956,04; sexta + sábado 13-15/11 R$ 1.237,16; Villa 07-09/11 R$ 1.562,40; sábado sozinho 07-08/11 segue indisponível. Funciona.
+
+**Gravado no Beds24 às 12:15 BRT (1 lote, relido e conferido, 179 de 179):**
+
+| Mudança | Onde | Antes | Depois | Como desfazer (pedir ao Claude) |
+|---|---|---|---|---|
+| Chegada no sábado liberada (Regra H, "Sim ." de 01/11) | 179 quarto-sábados de 02/01 a 30/10/2027: Afrodite 44, Double 35, VK7 35, Balcony 35, Q7 13, VK2 13, Q2 4 | sem chegada (noCheckIn) ou sem chegada e sem saída (noCheckInOrCheckOut) | só a chegada liberada: "nenhuma" ou "sem saída"; estadia mínima mantida (2, ou 3 nos feriados) | "Volte os sábados de 2027 para sem chegada" |
+
+Resultado: os 364 sábados do ano (7 quartos) aceitam chegada; nenhuma estadia mínima nem disponibilidade mudou.
+
+**PriceLabs, 12 meses (`calendario_12m.py`):** 0 noites abaixo da regra de 05/11/2026 a 31/10/2027 (pisos do dono, pisos de feriado, estadia de sábado e feriado). As 47 noites de novembro abaixo do padrão estão nas ordens do dono (base do mercado no Recanto; Villa 05/11 pela ordem de 25/10), e a Panorâmica I em 19/11 tem 1 noite por ser dia órfão (18 e 20/11 esgotadas). Revisão de 12 meses de vendas contra o mercado em `pricelabs/revisao-12-meses/2026-11-01.md` (só a Villa em janeiro de 2027 atrás do mercado).
+
+**Achados que ficam com o dono (não alterados):**
+- Afrodite: as 52 sextas do ano com chegada e saída fechadas (só 2 chegadas de sexta no livro). Proposta: liberar a chegada de sexta (estadia 2 mantida).
+- Segunda 02/11 (amanhã): estadia 3 em 6 quartos (Panorâmica I 3 livres, Balcony 3, Panorâmica II 1), pela regra do Finados do dono. Proposta: 1 noite.
+- 284 quarto-noites de domingo a quinta com estadia 2 ou 3 onde o calendário pede 1 (dezembro 01-23 e 27-28, janeiro na Villa, 31/01, 10-11/02, 22/04, 01-07/07 e 26-29/07). Proposta: 1 noite.
+- King Spa 7: 2 unidades fechadas sem reserva na sexta 06/11 e 1 no sábado 07/11.
+
 > **Regras em vigor:** desde 06/10/2026 elas ficam em `.claude/skills/gestao-receita-pousadas/references/regras.md`. Este arquivo guarda só o histórico das mudanças.
 
 ## O que só pode ser feito na tela (passo a passo para você)

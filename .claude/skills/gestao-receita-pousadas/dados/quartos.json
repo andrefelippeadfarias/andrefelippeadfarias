@@ -275,15 +275,13 @@
    "nota": "Valor que chega ÷ price1 do Beds24 por canal (Beds24, reservas de 13 a 19/10), depois dos descontos das plataformas (dono, 21/10: 'Considere o valor de desconto nas plataformas'). Direto = 1,0: não há desconto de plataforma. Recalibrar na revisão de segunda."
   },
   "alerta_reserva": 0.7,
-  "regra_h_restricao": {
-   "Q7": "chegada",
-   "Double": "chegada",
-   "Q2": "chegada",
-   "Afrodite": "chegada_saida",
-   "VK7": "chegada_saida",
-   "Balcony": "chegada_saida",
-   "VK2": "chegada_saida",
-   "nota": "Bloqueio de sábado da Regra H no Beds24, lido em 21/10/2026 (o dono configura lá; o PriceLabs só aceitaria chegada/saída por data com a personalização ligada na tela). Padrão esperado por quarto, pelo uso mais recente do dono: Recanto (Queen 7, Double, Queen 2) 'noCheckIn'; Afrodite e Villa 'noCheckInOrCheckOut'. Em 21/10 o Beds24 tinha padrões misturados (Q7 com noCheckInOrCheckOut de 30/01 a 27/03; VK7 e Balcony com noCheckIn de 03/04 a 28/08) e horizontes diferentes (Q2 até 23/01; Q7, Afrodite e VK2 até 27/03; Double, VK7 e Balcony até 28/08). O calendario_12m.py audita todo dia; estender ou unificar é com o dono."
+  "regra_h_beds24": {
+   "troca_sabado": {
+    "noCheckIn": "none",
+    "noCheckInOrCheckOut": "noCheckOut"
+   },
+   "estadia_minima_sabado": 2,
+   "nota": "Regra H no Beds24 (dono 01/11: 'Sim .' e 'revise tudo para os próximos 365 dias'): a chegada no sábado fica liberada com a estadia mínima da noite (2, ou a do feriado); o sábado sozinho segue bloqueado pela estadia mínima. Nenhum sábado fica com noCheckIn ou noCheckInOrCheckOut: a troca tira só a parte da chegada e mantém a saída como o dono deixou (o noCheckOut no sábado barra a sexta sozinha). Substitui regra_h_restricao (21/10, quando o sábado tinha a chegada fechada). Auditoria: calendario_12m.py (--plano-beds24)."
   },
   "escada": {
    "passo": 0.07,

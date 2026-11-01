@@ -909,10 +909,60 @@ class TestCalendario12m(unittest.TestCase):
         v = Validador(CFG, date(2026, 10, 21))
         v.validar([{"tipo": "data", "quarto": "Double", "data": "2027-05-04", "check_in": "1011111", "motivo": "teste"}])
         self.assertTrue(any("não é sábado" in e for e in v.erros))
+        # Regra H (dono 01/11): chegada no sábado liberada; fechar a chegada no sábado é erro, fechar a saída não
         v = Validador(CFG, date(2026, 10, 21))
         v.validar([{"tipo": "data", "quarto": "Double", "data": "2027-05-01", "check_in": "1111101", "min_stay": 2,
                     "motivo": "teste"}])
-        self.assertFalse(any("chegada" in e or "check_in" in e for e in v.erros))
+        self.assertTrue(any("Regra H" in e for e in v.erros))
+        v = Validador(CFG, date(2026, 10, 21))
+        v.validar([{"tipo": "data", "quarto": "Double", "data": "2027-05-01", "check_out": "1111101", "min_stay": 2,
+                    "motivo": "teste"}])
+        self.assertFalse(any("chegada" in e or "check_" in e for e in v.erros))
+
+    def test_beds24_regra_h_sabado_liberado_365(self):
+        """Revisão de 365 dias (01/11): sábado com chegada fechada vira a troca que só tira a chegada; outras noites
+        com restrição (Afrodite às sextas) vão ao relatório, sem item."""
+        import datetime as dt
+        import calendario_12m as c12
+        inv = {"Afrodite": {"2027-01-08": {"numAvail": 1, "minStay": 2, "override": "noCheckInOrCheckOut"},
+                            "2027-01-09": {"numAvail": 1, "minStay": 2, "override": "noCheckInOrCheckOut"}},
+               "Double": {"2027-01-09": {"numAvail": 6, "minStay": 2, "override": "noCheckIn"},
+                          "2027-01-16": {"numAvail": 6, "minStay": 1, "override": "none"},
+                          "2026-11-07": {"numAvail": 3, "minStay": 2, "override": "none"}},
+               "VK7": {"2026-11-14": {"numAvail": 7, "minStay": 2, "override": "noCheckOut"}}}
+        cl = {x["quarto"]: x for x in c12.classificar_beds24(CFG, inv, dt.date(2026, 11, 1), dt.date(2027, 10, 31))}
+        self.assertEqual(cl["Afrodite"]["sabados_chegada_fechada"],
+                         [{"data": "2027-01-09", "override": "noCheckInOrCheckOut", "troca": "noCheckOut"}])
+        self.assertEqual(cl["Afrodite"]["outras_noites_bloqueadas"], ["2027-01-08 noCheckInOrCheckOut"])
+        self.assertEqual([s["troca"] for s in cl["Double"]["sabados_chegada_fechada"]], ["none"])
+        self.assertEqual(cl["Double"]["sabados_estadia_abaixo"], ["2027-01-16"])
+        self.assertEqual(cl["VK7"]["sabados_chegada_fechada"], [])          # noCheckOut no sábado é o padrão novo
+        lote = c12.plano_beds24_sabados(list(cl.values()), "teste")
+        self.assertEqual({(i["quarto"], i["de"], i["override"]) for i in lote},
+                         {("Afrodite", "2027-01-09", "noCheckOut"), ("Double", "2027-01-09", "none")})
+        self.assertFalse(any("min_stay" in i or "num_avail" in i for i in lote))   # só a restrição; nada de preço
+
+    def test_calendario_ordem_do_dono_e_dia_orfao_viram_informacao(self):
+        """01/11: piso abaixo do padrão pela ordem 'base do mercado' e o dia órfão (estadia 1 entre noites esgotadas)
+        não são falta: saem como informação, sem item no plano."""
+        import datetime as dt
+        import calendario_12m as c12
+        ordens = {"o1": {"id": "o1", "tipo": "alvo_por_data", "quartos": ["Q7"], "de": "2026-11-10",
+                         "ate": "2026-11-12", "pisos_enviados": {"Q7": 560}}}
+        cal = {"2026-11-10": {"min_price": "563", "min_stay": "1", "price": "563", "mu_occupancy": "1/7"},
+               "2026-11-11": {"min_price": "540", "min_stay": "1", "price": "540", "mu_occupancy": "1/7"},
+               "2026-11-12": {"min_price": "563", "min_stay": "1", "price": "563", "mu_occupancy": "1/7"}}
+        dif = {x["data"]: x for x in c12.comparar(CFG, "Q7", cal, dt.date(2026, 11, 10), dt.date(2026, 11, 12), ordens)}
+        self.assertEqual(dif["2026-11-10"]["falta"], [])
+        self.assertIn("pela ordem o1", dif["2026-11-10"]["info"][0])
+        self.assertTrue(dif["2026-11-11"]["falta"])                          # abaixo do piso da própria ordem: falta
+        orfa = {"2026-11-18": {"min_price": "1228", "min_stay": "1", "price": "1228", "mu_occupancy": "6/6"},
+                "2026-11-19": {"min_price": "2102", "min_stay": "1", "price": "2102", "mu_occupancy": "5/6"},
+                "2026-11-20": {"min_price": "2161", "min_stay": "2", "price": "4156", "mu_occupancy": "6/6"}}
+        dif = {x["data"]: x for x in c12.comparar(CFG, "Double", orfa, dt.date(2026, 11, 19), dt.date(2026, 11, 19), {})}
+        self.assertEqual(dif["2026-11-19"]["falta"], [])
+        self.assertIn("dia órfão", dif["2026-11-19"]["info"][0])
+        self.assertNotIn("item", dif["2026-11-19"])
 
 
 class TestRevisao12m(unittest.TestCase):

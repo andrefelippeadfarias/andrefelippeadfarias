@@ -380,6 +380,22 @@
     "estadia"
    ],
    "nota": "Execução no Beds24 pela skill (só override, estadia mínima e disponibilidade; nunca preço nem reservas), com revisão independente antes, releitura e conferência na Booking."
+  },
+  {
+   "id": "dono-2026-11-01-afrodite-sextas-feriado",
+   "data": "2026-11-01",
+   "texto": "Pode implementar tudo",
+   "contexto": "Resposta à pergunta das 14:41 BRT: liberar também as 6 sextas de feriado da Afrodite (20/11, 25/12, 01/01, 26/03, 28/05 e 09/07), seguradas pela revisão independente por risco de quinta de feriado órfã (quarto de 1 unidade).",
+   "quartos": [
+    "Afrodite"
+   ],
+   "de": "2026-11-20",
+   "ate": "2027-07-09",
+   "tipo": "regra",
+   "libera": [
+    "beds24_inventario"
+   ],
+   "nota": "Feito às 15:00 BRT (só override noCheckInOrCheckOut → noCheckOut; estadia do feriado mantida). Vigilância: se entrar chegada na sexta de um desses feriados, a quinta de feriado anterior fica órfã; a rotina abre a saída dessa sexta e põe 1 noite na quinta para vendê-la (pendência afrodite-quinta-orfa-feriado)."
   }
  ]
 }

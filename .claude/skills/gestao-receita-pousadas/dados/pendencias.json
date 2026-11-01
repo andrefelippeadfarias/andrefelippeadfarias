@@ -712,7 +712,9 @@
    "desde": "2026-11-01",
    "urgencia": 2,
    "texto": "Afrodite (Recanto): no Beds24, TODAS as 52 sextas de 06/11/2026 a 29/10/2027 estão com chegada e saída fechadas (noCheckInOrCheckOut). Com o sábado também sem saída, a Afrodite só vende fim de semana para quem chega até quinta: no livro há só 2 chegadas de sexta (uma direta). Proposta: tirar só a parte da chegada (noCheckInOrCheckOut → noCheckOut, estadia 2 mantida), para vender sexta + sábado. Lote pronto (52 itens, só override) para aplicar com o 'sim' do dono: beds24.py editar-lote (plano gerado de inv_365_depois, sextas da Afrodite). 01/11 14:12 BRT (dono 'Sim'): chegada liberada em 46 das 52 sextas (só a parte da chegada; estadia mantida). SEGURADAS por revisão independente, para o dono decidir: as 6 sextas de feriado no meio de um pacote, 20/11, 25/12, 01/01, 26/03, 28/05 e 09/07: com 1 unidade, uma chegada na sexta deixa órfã a quinta de feriado anterior (no Réveillon, uma reserva de 01 a 03/01 trava 29, 30 e 31/12).",
-   "atualizado_em": "2026-11-01"
+   "atualizado_em": "2026-11-01",
+   "resolvido_em": "2026-11-01",
+   "resolucao": "Dono 01/11 ('Sim' e 'Pode implementar tudo'): chegada liberada nas 52 sextas da Afrodite (46 às 14:12 e as 6 de feriado às 15:00 BRT), só a parte da chegada; estadia mantida (2, ou 3 nos feriados). Conferido no Beds24."
   },
   {
    "id": "finados-0211-estadia3",
@@ -741,7 +743,14 @@
    "desde": "2026-11-01",
    "urgencia": 0,
    "texto": "Reserva direta 95546158 na King Spa 7, 04 a 06/12 (2 noites), lançada à mão no Beds24 pelo usuário VillaRecep1 em 01/11 às 12:30 BRT com valor de R$ 1,72 (esperado ~R$ 3.434 pela tabela). Confirmar se é bloqueio, cortesia ou erro de lançamento e corrigir o valor antes da confirmação ao hóspede. A skill não altera reservas."
+  },
+  {
+   "id": "afrodite-quinta-orfa-feriado",
+   "responsavel": "skill",
+   "desde": "2026-11-01",
+   "urgencia": 2,
+   "texto": "Vigiar as sextas de feriado da Afrodite (20/11, 25/12, 01/01, 26/03, 28/05, 09/07): se entrar reserva com chegada na sexta, a quinta (ou quarta e quinta, em Corpus Christi) de feriado anterior fica órfã, porque a saída de sexta segue fechada. Nesse caso, abrir a saída da sexta (override none) e pôr estadia 1 na quinta órfã no Beds24, registrar e avisar o dono. No Réveillon, uma chegada em 01/01 deixa 29, 30 e 31/12 sem venda possível: avisar o dono no topo do relatório."
   }
  ],
- "versao": "2026-11-01T04"
+ "versao": "2026-11-01T05"
 }

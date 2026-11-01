@@ -3280,6 +3280,14 @@ Antes de gravar, 3 revisores independentes conferiram os lotes item a item contr
 
 **Seguradas para o dono:** as sextas de feriado da Afrodite 20/11, 25/12, 01/01, 26/03, 28/05 e 09/07 (com 1 unidade, a chegada na sexta deixaria órfã a quinta de feriado; no Réveillon, uma reserva de 01 a 03/01 travaria 29, 30 e 31/12). Conferência na Booking agendada para 14:41 BRT.
 
+## 01/11/2026, 15:00 — Beds24: chegada de sexta nas 6 sextas de feriado da Afrodite (dono: "Pode implementar tudo")
+
+| Mudança | Onde | Antes | Depois | Como desfazer (pedir ao Claude) |
+|---|---|---|---|---|
+| Chegada de sexta liberada | Afrodite, 20/11, 25/12, 01/01, 26/03, 28/05 e 09/07 | sem chegada e sem saída | só sem saída; estadia do feriado mantida (2 em 20/11, 25/12 e 26/03; 3 em 01/01, 28/05 e 09/07) | "Feche de novo a chegada nas sextas de feriado da Afrodite" |
+
+Lote relido e conferido (6 de 6). Com isso as 52 sextas da Afrodite aceitam chegada. Risco aceito pelo dono: uma chegada na sexta de feriado deixa órfã a quinta de feriado anterior (1 unidade); a rotina vigia e, se acontecer, abre a saída da sexta e põe 1 noite na quinta (pendência `afrodite-quinta-orfa-feriado`).
+
 > **Regras em vigor:** desde 06/10/2026 elas ficam em `.claude/skills/gestao-receita-pousadas/references/regras.md`. Este arquivo guarda só o histórico das mudanças.
 
 ## O que só pode ser feito na tela (passo a passo para você)

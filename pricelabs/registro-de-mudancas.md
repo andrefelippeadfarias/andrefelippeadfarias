@@ -3372,6 +3372,19 @@ Como desfazer (pedir ao Claude): "Tire a Villa da base do mercado e volte as noi
 - **Outros:** o passo registrado é o valor final depois da Regra G e da ordem do Recanto; a chave da escada (`ativa`) desliga tudo; nas suítes de 1-2 unidades a contagem de vendas é a da pousada; a liberação por "ordem nova do dono" vale uma vez por noite.
 - **Segunda revisão (19:15, das correções acima):** mais 5 ajustes antes da rotina das 19:53. Na rotina leve, a coerência roda só nas noites com venda nova e usa o piso/teto vigente: sem isso, o calendário da manhã desfaria as descidas da Balcony de hoje. O registro dos passos passa a ser feito só depois da gravação. A Panorâmica II não é puxada para baixo por suíte esgotada nem cortada em noite forte. Um degrau pequeno de reserva (2,9%) não se perde mais no arredondamento. Nenhum preço mudou.
 
+## 01/11/2026, 19:56 — Rotina das 19:53: King Spa 7 sobe em 04/11 pela escada (reserva nova)
+
+**Reservas desde as 16:53 (Beds24):** 1 nova, King Spa 7 de 04 a 06/11 (direta, 2 noites, R$ 696). A alteração da Panorâmica I em 29/11 é de reserva antiga do Airbnb. Sem cancelamento e sem mudança manual (todos os logs do dia são da skill).
+
+**Gravado às 19:55 BRT (fluxo novo da rotina leve: só as noites da reserva, regras vigentes, validado com 0 erros, conferido na resposta da API, ledger registrado depois da gravação):**
+
+| Quarto | Noite | Vendidas | Antes | Agora (enviado) | Público aprox. |
+|---|---|---|---|---|---|
+| King Spa 7 | qua 04/11 | 6/7 | R$ 992 | R$ 1.062 (reta da escada) | R$ 690 |
+| Balcony | qua 04/11 | 1/6 | R$ 864 | R$ 927 (Regra G: 10% abaixo da King Spa 7) | R$ 603 |
+
+**King Spa 7 05/11 (2→3/7) não subiu:** a ordem de 25/10 ("público ~R$ 450") fixa o piso dessa noite em R$ 710, e o motor usa o mesmo valor como topo da rampa. Correção com teste na rotina das 07:53 (pendência escada-piso-por-data). Recálculo da King Spa 7: 1 usado nesta rodada.
+
 > **Regras em vigor:** desde 06/10/2026 elas ficam em `.claude/skills/gestao-receita-pousadas/references/regras.md`. Este arquivo guarda só o histórico das mudanças.
 
 ## O que só pode ser feito na tela (passo a passo para você)

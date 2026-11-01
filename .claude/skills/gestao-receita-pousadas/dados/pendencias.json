@@ -765,7 +765,14 @@
    "desde": "2026-11-01",
    "urgencia": 0,
    "texto": "Metas de novembro (livro do Beds24 em 01/11 ~17:50 BRT, confirmadas + novas): Recanto R$ 149,9 mil de R$ 220 mil (faltam R$ 70 mil; 264 unidades-noite livres de 02 a 30/11); Villa R$ 66,3 mil de R$ 150 mil (faltam R$ 83,7 mil; 334 livres). A Villa está presa nos pisos do dono (R$ 500/850 no Genius 3): as noites livres estão ~75% acima da mediana do mercado com hidro (King Spa 7 em dia de semana R$ 615 público contra R$ 347; fim de semana R$ 1.296 contra R$ 649; Consciência Negra R$ 1.479 contra R$ 829) e a ocupação vendida é 26%. Propostas ao dono: (1) base do mercado + escada de vendas também na Villa nas noites fracas de novembro (piso = limite de segurança, como a ordem de 25/10: King Spa R$ 710 enviados ≈ R$ 460 público; Balcony R$ 635); (2) Consciência Negra 19-21/11 da Villa e da noite de 19/11 do Recanto em direção ao p75 do mercado (≈ R$ 1.000-1.260 público), mantendo o piso de feriado de R$ 800 reais; (3) extranet: hidromassagem na Villa, tarifa fixa da Panorâmica II, multiplicadores do direto e do Airbnb, reserva de R$ 1,72. Dono 01/11 (\"1 . Sim / 2. Sim\"): (1) e (2) aplicadas às 18:03 BRT (54 noites da Villa; ordens dono-2026-11-01-villa-base-mercado e dono-2026-11-01-consciencia-negra-p75; registro de 01/11 18:05). Na Consciência Negra só a King Spa 7 20/11 e a King Spa 2 20-21/11 desceram (ao piso de feriado, ~R$ 1.333 público); o resto já estava no piso ou abaixo do p75. Falta só o (3), na extranet, com o dono. Acompanhar o faturamento de novembro nas rotinas completas."
+  },
+  {
+   "id": "escada-piso-por-data",
+   "responsavel": "skill",
+   "desde": "2026-11-01",
+   "urgencia": 1,
+   "texto": "Escada de vendas plana nas noites com ordem piso_por_data (25/10 'público ~R$ 450' na Villa e 26/10 'R$ 300 no Genius 3' no Recanto: 02-05/11 e 08/11): o topo da rampa (piso padrão) é calculado com sem_alvo(ordens), que mantém a ordem piso_por_data; piso e topo ficam iguais (VK7 05/11: 2→3/7 às 18:33 e o preço ficou em R$ 710). Corrigir na rotina das 07:53 de 02/11 com teste: topo = pisos_enviados padrão do dono (R$ 500/850 no Genius 3) quando a noite tem ordem de escada."
   }
  ],
- "versao": "2026-11-01T21"
+ "versao": "2026-11-01T22"
 }

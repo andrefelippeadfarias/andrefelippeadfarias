@@ -1114,6 +1114,23 @@ class TestBeds24Edicao(unittest.TestCase):
         with self.assertRaises(beds24.ErroBeds24):
             beds24.corpo_edicao("VK7", "2026-11-06", "2026-11-05", min_stay=2)
 
+    def test_conferencia_num_avail_liquido(self):
+        """01/11: gravar 7 na King Spa 7 com 1 reserva relê 6; com num_avail_esperado 6 é sucesso, e ler 7 é erro."""
+        import beds24
+        orig = (beds24.inventario, beds24._post, beds24.token_escrita, beds24.token_de_acesso)
+        leituras = iter([{"VK7": {"2026-11-06": {"numAvail": 4}}}, {"VK7": {"2026-11-06": {"numAvail": 6}}},
+                         {"VK7": {"2026-11-06": {"numAvail": 4}}}, {"VK7": {"2026-11-06": {"numAvail": 7}}}])
+        beds24.inventario = lambda *a, **k: next(leituras)
+        beds24._post = lambda *a, **k: [{"success": True}]
+        beds24.token_escrita = beds24.token_de_acesso = lambda: "x"
+        try:
+            item = {"quarto": "VK7", "de": "2026-11-06", "ate": "2026-11-06", "num_avail": 7, "num_avail_esperado": 6,
+                    "motivo": "teste"}
+            self.assertEqual(beds24.editar_lote([item], aplicar=True)["erros"], [])
+            self.assertTrue(beds24.editar_lote([item], aplicar=True)["erros"])
+        finally:
+            beds24.inventario, beds24._post, beds24.token_escrita, beds24.token_de_acesso = orig
+
     def test_escrita_sem_credencial_explica(self):
         import beds24
         antes = {k: os.environ.pop(k, None) for k in ("BEDS24_REFRESH_TOKEN", "BEDS24_INVITE_CODE")}

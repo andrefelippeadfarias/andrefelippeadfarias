@@ -359,8 +359,9 @@ def comparar(lista, coleta, de, ate):
 
 
 def editar_lote(plano, aplicar=False):
-    """Plano = [{quarto, de, ate, min_stay?, override?, num_avail?, motivo}]. Um POST com todas as faixas (agrupadas por
-    quarto), depois relê o inventário e confere item a item. Sem --aplicar só mostra antes e mudança."""
+    """Plano = [{quarto, de, ate, min_stay?, override?, num_avail?, num_avail_esperado?, motivo}]. Um POST com todas as
+    faixas (agrupadas por quarto), depois relê o inventário e confere item a item (`num_avail_esperado` = o numAvail
+    líquido que deve voltar; sem ele, o gravado). Sem --aplicar só mostra antes e mudança."""
     por_quarto, linhas = {}, []
     for it in plano:
         c = corpo_edicao(it["quarto"], it["de"], it["ate"], it.get("min_stay"), it.get("override"), it.get("num_avail"))
@@ -385,8 +386,13 @@ def editar_lote(plano, aplicar=False):
         while d <= dt.date.fromisoformat(i["ate"]):
             v = depois.get(i["quarto"], {}).get(d.isoformat(), {})
             for campo, chave in (("min_stay", "minStay"), ("override", "override"), ("num_avail", "numAvail")):
-                if i.get(campo) is not None and v.get(chave) != i[campo]:
-                    erros.append(f"{i['quarto']} {d}: {chave} {v.get(chave)} (esperado {i[campo]})")
+                if i.get(campo) is None:
+                    continue
+                # numAvail volta LÍQUIDO das reservas (gravar 7 com 1 reserva lê 6, 01/11): confira contra
+                # `num_avail_esperado` (unidades − reservas da noite) quando o item trouxer
+                alvo = i.get("num_avail_esperado", i[campo]) if campo == "num_avail" else i[campo]
+                if v.get(chave) != alvo:
+                    erros.append(f"{i['quarto']} {d}: {chave} {v.get(chave)} (esperado {alvo})")
             d += dt.timedelta(days=1)
     resumo.update({"resposta_ok": all((r or {}).get("success", True) for r in (resp if isinstance(resp, list) else [resp])),
                    "conferidos": len(plano) - len({e.split(':')[0] for e in erros}), "erros": erros})

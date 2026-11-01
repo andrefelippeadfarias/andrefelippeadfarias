@@ -3267,6 +3267,19 @@ Resultado: os 364 sábados do ano (7 quartos) aceitam chegada; nenhuma estadia m
 - **Inventário do Beds24 (60 dias):** nenhum sábado com a chegada fechada; seguem só os achados já levados ao dono (King Spa 7 com 2 e 1 unidades fechadas sem reserva em 06 e 07/11; Afrodite com a chegada de sexta fechada).
 - **Sem gravação:** nenhuma venda em D0 a D3 nem noite esgotada nova (a proteção e o passo do motor ficam para as 07:53); sem recálculo (orçamento guardado).
 
+## 01/11/2026, 14:15 — Beds24: "Sim" aos 4 itens (02/11, dias de semana, sextas da Afrodite, King Spa 7)
+
+Antes de gravar, 3 revisores independentes conferiram os lotes item a item contra o inventário, as regras e o calendário: escopo exato (52 + 6 + 278 + 2), sem sábado, sem feriado, sem preço. Ressalva acatada: as sextas de feriado da Afrodite no meio de um pacote ficam fechadas até o dono decidir. Gravação em 4 lotes menores, cada um relido e conferido; depois, o ano inteiro relido e comparado com o de antes (mudou só o planejado).
+
+| Mudança | Onde | Antes | Depois | Como desfazer (pedir ao Claude) |
+|---|---|---|---|---|
+| 1 noite na segunda 02/11 (exceção do dono à regra do Finados) | Panorâmica I, Afrodite, Panorâmica II, King Spa 7, Balcony, King Spa 2 | estadia mínima 3 | 1 | "Volte 02/11 para 3 noites" |
+| Estadia do calendário nos dias de semana fora de feriado | 278 quarto-noites: 01-23 e 27-28/12 (7 quartos), 03-21 e 25-28/01 (Villa), 31/01, 10-11/02, 22/04, 01-07/07 e 26-29/07/2027 | 2 (261) ou 3 (17) | 1 | "Volte os dias de semana para 2 noites" |
+| Chegada de sexta na Afrodite | 46 sextas de 06/11/2026 a 29/10/2027 | sem chegada e sem saída | só sem saída (estadia da noite mantida: 2, ou 3 nos feriados) | "Feche de novo a chegada de sexta na Afrodite" |
+| King Spa 7 reaberta | sexta 06/11 e sábado 07/11 | 4 e 5 livres (2 e 1 fechadas sem reserva) | 6 livres nas duas (7 menos 1 reserva) | "Feche de novo 2 unidades da King Spa 7 em 06/11 e 1 em 07/11" |
+
+**Seguradas para o dono:** as sextas de feriado da Afrodite 20/11, 25/12, 01/01, 26/03, 28/05 e 09/07 (com 1 unidade, a chegada na sexta deixaria órfã a quinta de feriado; no Réveillon, uma reserva de 01 a 03/01 travaria 29, 30 e 31/12). Conferência na Booking agendada para 14:41 BRT.
+
 > **Regras em vigor:** desde 06/10/2026 elas ficam em `.claude/skills/gestao-receita-pousadas/references/regras.md`. Este arquivo guarda só o histórico das mudanças.
 
 ## O que só pode ser feito na tela (passo a passo para você)

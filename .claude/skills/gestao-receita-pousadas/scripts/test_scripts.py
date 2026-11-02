@@ -922,37 +922,39 @@ class TestCalendario12m(unittest.TestCase):
         v = Validador(CFG, date(2026, 10, 21))
         v.validar([{"tipo": "data", "quarto": "Double", "data": "2027-05-04", "check_in": "1011111", "motivo": "teste"}])
         self.assertTrue(any("não é sábado" in e for e in v.erros))
-        # Regra H (dono 01/11): chegada no sábado liberada; fechar a chegada no sábado é erro, fechar a saída não
+        # dono 02/11: sábado fechado para entrada e saída, sempre; abrir qualquer um dos dois no sábado é erro
+        for campo, s in (("check_in", "1111111"), ("check_out", "1111111")):
+            v = Validador(CFG, date(2026, 10, 21))
+            v.validar([{"tipo": "data", "quarto": "Double", "data": "2027-05-01", campo: s, "min_stay": 2, "motivo": "teste"}])
+            self.assertTrue(any("abre o sábado" in e for e in v.erros), campo)
         v = Validador(CFG, date(2026, 10, 21))
-        v.validar([{"tipo": "data", "quarto": "Double", "data": "2027-05-01", "check_in": "1111101", "min_stay": 2,
-                    "motivo": "teste"}])
-        self.assertTrue(any("Regra H" in e for e in v.erros))
-        v = Validador(CFG, date(2026, 10, 21))
-        v.validar([{"tipo": "data", "quarto": "Double", "data": "2027-05-01", "check_out": "1111101", "min_stay": 2,
-                    "motivo": "teste"}])
-        self.assertFalse(any("chegada" in e or "check_" in e for e in v.erros))
+        v.validar([{"tipo": "data", "quarto": "Double", "data": "2027-05-01", "check_in": "1111101", "check_out": "1111100",
+                    "min_stay": 2, "motivo": "teste"}])
+        self.assertFalse(any("sábado" in e or "check_" in e for e in v.erros))
 
-    def test_beds24_regra_h_sabado_liberado_365(self):
-        """Revisão de 365 dias (01/11): sábado com chegada fechada vira a troca que só tira a chegada; outras noites
-        com restrição (Afrodite às sextas) vão ao relatório, sem item."""
+    def test_beds24_sabados_fechados_365(self):
+        """Dono 02/11: todo sábado noCheckInOrCheckOut, sempre (inclusive feriado); o que estiver diferente vira item do
+        lote; outras noites com restrição (Afrodite às sextas) vão ao relatório, sem item."""
         import datetime as dt
         import calendario_12m as c12
         inv = {"Afrodite": {"2027-01-08": {"numAvail": 1, "minStay": 2, "override": "noCheckInOrCheckOut"},
-                            "2027-01-09": {"numAvail": 1, "minStay": 2, "override": "noCheckInOrCheckOut"}},
+                            "2027-01-09": {"numAvail": 1, "minStay": 2, "override": "noCheckInOrCheckOut"},
+                            "2027-01-02": {"numAvail": 1, "minStay": 3, "override": "none"}},
                "Double": {"2027-01-09": {"numAvail": 6, "minStay": 2, "override": "noCheckIn"},
                           "2027-01-16": {"numAvail": 6, "minStay": 1, "override": "none"},
-                          "2026-11-07": {"numAvail": 3, "minStay": 2, "override": "none"}},
+                          "2026-12-26": {"numAvail": 5, "minStay": 2, "override": "none"}},
                "VK7": {"2026-11-14": {"numAvail": 7, "minStay": 2, "override": "noCheckOut"}}}
         cl = {x["quarto"]: x for x in c12.classificar_beds24(CFG, inv, dt.date(2026, 11, 1), dt.date(2027, 10, 31))}
-        self.assertEqual(cl["Afrodite"]["sabados_chegada_fechada"],
-                         [{"data": "2027-01-09", "override": "noCheckInOrCheckOut", "troca": "noCheckOut"}])
+        self.assertEqual(cl["Afrodite"]["sabados_fora_da_regra"],
+                         [{"data": "2027-01-02", "override": "none", "troca": "noCheckInOrCheckOut"}])
         self.assertEqual(cl["Afrodite"]["outras_noites_bloqueadas"], ["2027-01-08 noCheckInOrCheckOut"])
-        self.assertEqual([s["troca"] for s in cl["Double"]["sabados_chegada_fechada"]], ["none"])
+        self.assertEqual(sorted(s["data"] for s in cl["Double"]["sabados_fora_da_regra"]),
+                         ["2026-12-26", "2027-01-09", "2027-01-16"])
         self.assertEqual(cl["Double"]["sabados_estadia_abaixo"], ["2027-01-16"])
-        self.assertEqual(cl["VK7"]["sabados_chegada_fechada"], [])          # noCheckOut no sábado é o padrão novo
+        self.assertEqual([s["troca"] for s in cl["VK7"]["sabados_fora_da_regra"]], ["noCheckInOrCheckOut"])
         lote = c12.plano_beds24_sabados(list(cl.values()), "teste")
-        self.assertEqual({(i["quarto"], i["de"], i["override"]) for i in lote},
-                         {("Afrodite", "2027-01-09", "noCheckOut"), ("Double", "2027-01-09", "none")})
+        self.assertTrue(all(i["override"] == "noCheckInOrCheckOut" for i in lote))
+        self.assertEqual(len(lote), 5)
         self.assertFalse(any("min_stay" in i or "num_avail" in i for i in lote))   # só a restrição; nada de preço
 
     def test_beds24_semana_estadia_pelo_calendario(self):

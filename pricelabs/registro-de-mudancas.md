@@ -3435,6 +3435,28 @@ Pelo conector oficial (Recanto pelas coordenadas, id 7562933; Villa pelo nome), 
 
 Todos os preços gravados hoje chegaram ao canal. Os fatores públicos seguem 0,63 (Recanto) e 0,65 (Villa) fora da oferta de última hora; de D2 a D5, 0,53 a 0,57.
 
+## 01/11/2026, 21:15 — Todos os sábados fechados para entrada e saída, sempre (dono)
+
+**Pedido do dono:** "Preciso que mantenha todos os sábados fechados sempre, tanto para a entrada quanto para a saída."
+
+| Mudança | Onde | Antes | Depois | Como desfazer (pedir ao Claude) |
+|---|---|---|---|---|
+| Sábado fechado (chegada e saída) | Beds24, 7 quartos, 52 sábados de 07/11/2026 a 30/10/2027 (364) | 222 sem trava e 142 só "sem saída" | noCheckInOrCheckOut | "Libere de novo a chegada no sábado" |
+| Sábado fechado na Afrodite | PriceLabs por data, 52 sábados | chegada liberada; 26/12 e 02/01 abertos | check_in e check_out com o sábado fechado | (idem) |
+
+- **Conferência:**
+  - PriceLabs: os 52 sábados da Afrodite confirmados na resposta da API, com a estadia mínima preservada.
+  - Beds24: 364 de 364 relidos.
+  - Nova auditoria: 0 sábado fora da regra nos 7 quartos.
+- **Na Booking**, a mudança leva de 15 a 25 minutos; a conferência está agendada para 21:46.
+- **Efeito nos feriados:**
+  - **Natal:** volta a vender só 24→27/12 ou 25→27/12. O 24→26, liberado ontem, fecha.
+  - **Réveillon:** vende 29/12→01/01 ou 30/12→03/01. O 30/12→02/01 fecha.
+  - **Consciência Negra:** vende 20→22/11; o 19→21 fecha.
+  - Exceção só com nova ordem do dono.
+
+**Código:** a regra nova está em `quartos.json` (`sabado_override`). A auditoria anual fecha o sábado que aparecer aberto, e o validador barra plano que abra o sábado (101 testes OK). A ordem é `dono-2026-11-02-sabados-fechados`.
+
 > **Regras em vigor:** desde 06/10/2026 elas ficam em `.claude/skills/gestao-receita-pousadas/references/regras.md`. Este arquivo guarda só o histórico das mudanças.
 
 ## O que só pode ser feito na tela (passo a passo para você)

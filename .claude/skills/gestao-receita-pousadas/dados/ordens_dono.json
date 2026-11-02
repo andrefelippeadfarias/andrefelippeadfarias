@@ -644,6 +644,26 @@
    ],
    "libera": [],
    "nota": "Rotina completa (07:53): para cada noite de festa, compare nosso vendido (Beds24) com o já reservado do mercado (PriceLabs get_neighbourhood_data/get_listing_neighborhood_market, apartamentos e categoria R). Mais de 5 pontos atrás nas 2 rotinas completas seguidas: desce um degrau (5-10%) a noite da pousada atrás, até o piso de feriado (nunca abaixo). À frente: a escada de vendas sobe. Registra a comparação no relatório. Validade 01/01/2027."
+  },
+  {
+   "id": "dono-2026-11-02-sabados-fechados",
+   "data": "2026-11-02",
+   "criada_em": "2026-11-02T00:10+00:00",
+   "texto": "Preciso que mantenha todos os sábados fechados sempre, tanto para a entrada quanto para a saída.",
+   "tipo": "restricao",
+   "quartos": [
+    "Q7",
+    "Double",
+    "Afrodite",
+    "Q2",
+    "VK7",
+    "VK2",
+    "Balcony"
+   ],
+   "de": "2026-11-02",
+   "ate": "2099-12-31",
+   "libera": [],
+   "nota": "Todo sábado noCheckInOrCheckOut no Beds24 nos 7 quartos (Afrodite também no PriceLabs por data, check_in e check_out com o sábado fechado), inclusive em feriado. Substitui a Regra H de 01/11 e as exceções de 01/11 (Natal 26/12 no Recanto, 02/01 na Afrodite). Permanente; exceção só com nova ordem do dono."
   }
  ]
 }

@@ -336,8 +336,9 @@ class Validador:
                 self.erro(i, it, f"estadia mínima {ms} fora do razoável")
 
     def validar_chegada_saida(self, i, it, q, d, excecao):
-        """Chegada e saída por data (dono, 21/10): strings de 7 caracteres 0/1, de segunda a domingo. Regra H (dono,
-        01/11: "Sim ."): a chegada no sábado fica LIBERADA (o sábado sozinho é barrado pela estadia mínima 2); fechar a
+        """Chegada e saída por data (dono, 21/10): strings de 7 caracteres 0/1, de segunda a domingo. Desde 02/11 (dono:
+        "todos os sábados fechados sempre, tanto para a entrada quanto para a saída", `regra_h_beds24.sabado_override`):
+        abrir a entrada ou a saída num sábado é erro sem excecao "dono". Antes (Regra H de 01/11): a chegada no sábado ficava LIBERADA (o sábado sozinho é barrado pela estadia mínima 2); fechar a
         saída no sábado é permitido (barra a sexta sozinha, como o noCheckOut do Beds24). Fechar outra noite, ou a
         chegada no sábado, só com excecao "dono"."""
         if it.get("check_in") is None and it.get("check_out") is None:
@@ -350,6 +351,14 @@ class Validador:
             if s == "0000000":
                 self.erro(i, it, f"{campo} com todos os dias fechados: o PriceLabs recusa")
                 return
+            sab_fechado = ((self.cfg.get("parametros") or {}).get("regra_h_beds24") or {}).get("sabado_override") == \
+                "noCheckInOrCheckOut"
+            if d.weekday() == 5 and sab_fechado:
+                # dono 02/11: "mantenha todos os sábados fechados sempre, tanto para a entrada quanto para a saída"
+                if s[5] == "1" and excecao != "dono":
+                    self.erro(i, it, f"{q['nome']}: {campo} abre o sábado contra a ordem do dono de 02/11 (sábado fechado "
+                                     "para entrada e saída, sempre); só com nova ordem do dono (excecao 'dono')")
+                continue
             if s[d.weekday()] == "0" and excecao != "dono":
                 if d.weekday() != 5:
                     self.erro(i, it, f"{campo} fecha uma noite que não é sábado: só o dono decide (excecao 'dono')")

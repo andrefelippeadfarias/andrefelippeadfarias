@@ -2,6 +2,11 @@
 
 Cada mudança feita na própria Skill (regras, parâmetros, scripts, fluxo) entra aqui: data, o que mudou, por quê (evidência) e como desfazer. A entrada mais nova fica em cima.
 
+## 01/11/2026 21:25: sábados fechados para entrada e saída, sempre (dono, 02/11)
+- **Por quê:** dono: "Preciso que mantenha todos os sábados fechados sempre, tanto para a entrada quanto para a saída."
+- **O que mudou:** `quartos.json` → `regra_h_beds24.sabado_override` = noCheckInOrCheckOut (nota nova); `calendario_12m.classificar_beds24` lista `sabados_fora_da_regra` (qualquer override diferente do alvo) e o lote fecha o sábado; `validar_plano.validar_chegada_saida` dá erro em item que abra entrada ou saída no sábado (sem excecao dono). Testes `test_beds24_sabados_fechados_365` e `test_validador_chegada_saida` reescritos (101 OK). Ordem `dono-2026-11-02-sabados-fechados`.
+- **Como desfazer:** tirar `sabado_override` de `quartos.json` (volta a Regra H de 01/11) e regravar os sábados pelo `--plano-beds24`.
+
 ## 01/11/2026 20:20: topo da rampa da escada (rotina das 19:53 e "Sim" de dezembro)
 - **Por quê:** a King Spa 7 de 05/11 vendeu (2→3/7) e não subiu: com ordem piso_por_data na noite, o topo da rampa (piso padrão) saía igual ao piso da ordem. E o dono aprovou a Villa das festas "perto da mediana, com a escada subindo a cada venda", o que pede um topo acima do piso padrão.
 - **O que mudou:** `pace.py`, caminho da escada: `piso_pad = max(piso com as ordens sem alvo, pisos_enviados padrão do dono, topo_enviados[quarto] da ordem)`. Teste `test_escada_topo_da_rampa` (falha no código anterior; 101 OK). Ordens novas com `topo_enviados` (Villa 21-23/12 e 27-28/12) e a de gatilhos (tipo `acompanhamento`).

@@ -3510,6 +3510,49 @@ Pelo conector oficial, com café e 2 adultos. Recanto pelas coordenadas (id 7562
   - O Beds24 tem a trava certa na King Spa 7. O que falha é o envio das restrições dessa acomodação, ou das tarifas dela, para a Booking.
 - **Dono:** conferir no Beds24 (Channel Manager, Booking.com, mapeamento da King Spa 7 e das tarifas ligadas a ela) ou na extranet da Booking se o "fechado para chegada/saída" está ligado nessa acomodação. Enquanto isso, a Booking da Villa vende chegada e saída no sábado na King Spa 7. Pendência `villa-trava-sabado-booking` atualizada.
 
+## 01/11/2026, 22:00 a 22:40 — Propostas de fins de semana e feriados aplicadas (dono: "Pode fazer")
+
+**Pedido do dono:** "Pode fazer. Vou fazer o sync aqui" (resposta às 4 propostas de `pricelabs/fins-de-semana-feriados-3-meses.md`).
+
+| Mudança | Onde | Antes | Depois | Como desfazer (pedir ao Claude) |
+|---|---|---|---|---|
+| 1. Sexta órfã de 06/11 (o sábado 07/11 esgotou) | Beds24, sábado 07/11 na Moinhos, Panorâmica I e Panorâmica II (22:00 BRT) | noCheckInOrCheckOut | noCheckIn: a saída no sábado fica aberta, a chegada continua fechada | "Feche de novo o sábado 07/11" |
+| 1. Estadia da sexta órfã | PriceLabs, Panorâmica II 06/11 (22:23) | 2 noites | 1 noite; piso e teto da ordem do Recanto preservados | "Volte a estadia de 2 noites na sexta 06/11" |
+| 1. Regra permanente | `quartos.json` (`regra_h_beds24.orfas`), auditoria do Beds24 e validador | sábado sempre fechado | o lado órfão abre só no quarto em que o outro lado esgotou; quando reabrir, o sábado fecha de novo | "Desligue a regra do sábado órfão" |
+| 2. Sábados de festa | Beds24: 26/12 e 02/01 nos 7 quartos (22:00). PriceLabs: Afrodite nessas datas (22:23) | noCheckInOrCheckOut; Afrodite com chegada e saída 1111101 | none; Afrodite com chegada e saída 1111111. Estadia mínima mantida: 2 em 26/12 e 3 em 02/01 | "Feche de novo os sábados de 26/12 e 02/01" |
+| 3. Régua de novembro | `ancora_mercado.json`, noites 13-14/11 e 27-28/11 | p50 R$ 650 e R$ 644 (16-18 hotéis, 30/10) | p50 R$ 827 e R$ 816 (62-65 hotéis, 01/11). O valor antigo fica em `antes` | "Volte a régua antiga de novembro" |
+| 3. Ponto de partida da escada | Ordem `dono-2026-11-02-nov-fds-regua-lista` (`vendidas_base`) | a escada contava todas as vendidas | parte do p50 e sobe só com as reservas novas | (idem) |
+| 4. Gatilho do Aniversário de SP | Ordem `dono-2026-11-02-aniv-sp-gatilho` | — | conferido na rotina completa de 01/01/2027 | "Cancele o gatilho de 24/01" |
+
+**Conferências:**
+- Beds24: 17 de 17 itens relidos.
+- PriceLabs: as duas gravações foram confirmadas na resposta da API. O plano equivalente passou no validador (0 erro, depois de registrar as ordens).
+- O Sync do dono chegou: às 22:30 a Panorâmica II já estava com estadia de 1 noite no Beds24.
+- Auditoria do Beds24 de 06/11/2026 a 31/10/2027 com a regra nova: 0 sábado fora da regra.
+
+**Booking às 22:36, 36 min depois:**
+
+| Estadia | Recanto | Esperado |
+|---|---|---|
+| sexta→sábado 06→07/11 | vende, R$ 646,62 | vender |
+| Natal 24→26/12 | vende, R$ 2.900,63 | vender |
+| Natal 26→28/12 | vende, R$ 2.823,88 | vender |
+| Réveillon 30/12→02/01 | vende, R$ 5.823,19 | vender |
+| chegada no sábado 14→16/11 (controle) | não vende | não vender |
+
+**Preço de novembro (proposta 3):** nada foi gravado agora. A rotina das 07:53 sobe pelo motor, até 10% por dia, rumo ao p50 da régua nova:
+- Moinhos e Panorâmica II: cerca de R$ 1.313 enviados em 13-14/11 e R$ 1.295 em 27-28/11;
+- King Spa 7 e King Spa 2: cerca de R$ 1.272 em 13-14/11 e R$ 1.255 em 27-28/11;
+- cada reserva nova sobe mais um degrau;
+- Panorâmica I e King Spa 7 de 13-14/11, que já vendem bem, não descem.
+
+**Código:**
+- `calendario_12m`: sábado de festa e lado órfão, mais a lista `orfas_estadia`.
+- `validar_plano`: a ordem do sábado órfão exige o campo `orfa`.
+- `ordens.vendidas_base_escada` e `pace`: a escada parte da base.
+- `ancora_mercado`: a régua do dono não é trocada por amostra menor.
+- 105 testes OK.
+
 > **Regras em vigor:** desde 06/10/2026 elas ficam em `.claude/skills/gestao-receita-pousadas/references/regras.md`. Este arquivo guarda só o histórico das mudanças.
 
 ## O que só pode ser feito na tela (passo a passo para você)

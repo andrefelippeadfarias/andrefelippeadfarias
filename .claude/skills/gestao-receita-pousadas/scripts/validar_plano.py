@@ -358,6 +358,18 @@ class Validador:
                 if s[5] == "1" and excecao != "dono":
                     self.erro(i, it, f"{q['nome']}: {campo} abre o sábado contra a ordem do dono de 02/11 (sábado fechado "
                                      "para entrada e saída, sempre); só com nova ordem do dono (excecao 'dono')")
+                elif s[5] == "1":
+                    # exceção do dono de 02/11 ("Pode fazer"): o lado órfão abre só com o motivo (que lado esgotou)
+                    rh = (self.cfg.get("parametros") or {}).get("regra_h_beds24") or {}
+                    ordem_orfa = (rh.get("orfas") or {}).get("ordem_id")
+                    if ordem_orfa and it.get("ordem_id") == ordem_orfa:
+                        lado = it.get("orfa")
+                        if lado not in ("sexta", "sábado"):
+                            self.erro(i, it, f"{q['nome']}: abrir o sábado pela ordem {ordem_orfa} exige o campo 'orfa' "
+                                             "('sexta' = sábado esgotado e sexta livre; 'sábado' = sexta esgotada)")
+                        elif (lado == "sexta" and campo == "check_in") or (lado == "sábado" and campo == "check_out"):
+                            self.erro(i, it, f"{q['nome']}: a ordem {ordem_orfa} abre só o lado órfão ({'saída' if lado == 'sexta' else 'entrada'} "
+                                             f"do sábado); {campo} aberto vai além dela")
                 continue
             if s[d.weekday()] == "0" and excecao != "dono":
                 if d.weekday() != 5:

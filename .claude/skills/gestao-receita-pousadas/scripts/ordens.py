@@ -63,6 +63,20 @@ def ordens_por_data(ordens: dict, quarto: str, d: date) -> list[dict]:
     return [o for o in ordens.values() if o.get("tipo") == "preco_por_data" and cobre(o, quarto, d)]
 
 
+def vendidas_base_escada(ordens: dict, quarto: str, d: date) -> tuple[int, dict] | None:
+    """Ponto de partida da escada de vendas (dono 02/11, "Pode fazer": a base do mercado passa à mediana da lista medida
+    em 01/11 e "a escada continua subindo a cada reserva"): uma ordem com `vendidas_base` {curto: {noite: n}} diz quantas
+    vendidas a noite já tinha quando a régua mudou; a escada conta só as reservas que entrarem depois. Na suíte de 1-2
+    unidades, n é o da pousada (a mesma contagem que move a reta). None sem ordem."""
+    for o in ordens.values():
+        if not cobre(o, quarto, d):
+            continue
+        v = ((o.get("vendidas_base") or {}).get(quarto) or {}).get(d.isoformat())
+        if v is not None:
+            return int(v), o
+    return None
+
+
 def piso_da_ordem(ordens: dict, quarto: str, d: date) -> tuple[float, dict] | None:
     """Ordem do dono do tipo piso_por_data (31/10): o piso enviado que o dono fixou para o quarto naquelas noites
     (`pisos_enviados` {curto: reais}, opcionalmente só nas `noites` listadas). O motor de pace TRATA a noite, com esse

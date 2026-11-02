@@ -793,8 +793,26 @@
    "responsavel": "dono",
    "desde": "2026-11-01",
    "urgencia": 2,
-   "texto": "Propostas da análise de fins de semana e feriados (pricelabs/fins-de-semana-feriados-3-meses.md), aguardando o sim do dono: (1) sábado esgotado abre a saída só naquele quarto e sexta esgotada abre a entrada do sábado, a começar pela sexta 06/11 (Moinhos 1, Panorâmica I 2, Panorâmica II 1, com estadia mínima 1 na Panorâmica II); (2) exceção nos sábados 26/12 e 02/01 (entrada e saída), para vender 24→26/12, 26→28/12 e 30/12→02/01; (3) ordem de base do mercado de novembro mirando a mediana da lista de hoje nas sextas e sábados de 13-14/11 e 27-28/11 (cerca de R$ 1.300 enviados na Moinhos, Panorâmica II e King Spa 2); (4) gatilho em 01/01: com 22-24/01 abaixo de 20%, o domingo 24/01 sai do feriado (preço de domingo, estadia mínima 1); (5) a varredura entra na revisão em sombra de 09/11 (skill). A proposta 1 vence na sexta 06/11 (D4)."
+   "texto": "Propostas da análise de fins de semana e feriados (pricelabs/fins-de-semana-feriados-3-meses.md), aguardando o sim do dono: (1) sábado esgotado abre a saída só naquele quarto e sexta esgotada abre a entrada do sábado, a começar pela sexta 06/11 (Moinhos 1, Panorâmica I 2, Panorâmica II 1, com estadia mínima 1 na Panorâmica II); (2) exceção nos sábados 26/12 e 02/01 (entrada e saída), para vender 24→26/12, 26→28/12 e 30/12→02/01; (3) ordem de base do mercado de novembro mirando a mediana da lista de hoje nas sextas e sábados de 13-14/11 e 27-28/11 (cerca de R$ 1.300 enviados na Moinhos, Panorâmica II e King Spa 2); (4) gatilho em 01/01: com 22-24/01 abaixo de 20%, o domingo 24/01 sai do feriado (preço de domingo, estadia mínima 1); (5) a varredura entra na revisão em sombra de 09/11 (skill). A proposta 1 vence na sexta 06/11 (D4). RESOLVIDA 02/11 (dono: 'Pode fazer'): (1) sexta 06/11 liberada (Beds24 noCheckIn no sábado 07/11 em Q7, Double, Q2; Q2 estadia 1 no PriceLabs) e regra permanente na auditoria; (2) 26/12 e 02/01 abertos (Beds24 + Afrodite no PriceLabs); (3) régua de 13-14/11 e 27-28/11 trocada pela varredura de 01/11 com vendidas_base (motor sobe às 07:53); (4) gatilho de 01/01 registrado. Booking conferida às 22:36 BRT.",
+   "status": "resolvida",
+   "resolvida_em": "2026-11-02"
+  },
+  {
+   "id": "aniv-sp-gatilho-0101",
+   "responsavel": "skill",
+   "desde": "2026-11-02",
+   "urgencia": 0,
+   "data_alvo": "2027-01-01",
+   "texto": "Rotina completa de 01/01/2027: gatilho da ordem dono-2026-11-02-aniv-sp-gatilho (22-24/01 abaixo de 20% vendido na pousada → domingo 24/01 sai do feriado naquela pousada: preço de domingo e estadia 1). Relatar."
+  },
+  {
+   "id": "nov-fds-regua-conferir",
+   "responsavel": "skill",
+   "desde": "2026-11-02",
+   "urgencia": 1,
+   "data_alvo": "2026-11-02",
+   "texto": "Rotina das 07:53 de 02/11: conferir no plano que 13-14/11 e 27-28/11 sobem rumo ao p50 da régua nova (Moinhos/Panorâmica II ~R$ 1.313/1.295, King Spa ~R$ 1.272/1.255, até 10% por dia) sem descer Panorâmica I e King Spa 7 de 13-14/11, e que a âncora dessas noites continua a de 01/11 depois do construir --mesclar."
   }
  ],
- "versao": "2026-11-01T23d"
+ "versao": "2026-11-02T01"
 }

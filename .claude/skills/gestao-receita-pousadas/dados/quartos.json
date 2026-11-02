@@ -283,7 +283,19 @@
    },
    "estadia_minima_sabado": 2,
    "nota": "Dono 02/11/2026: 'Preciso que mantenha todos os sábados fechados sempre, tanto para a entrada quanto para a saída.' Todo sábado fica noCheckInOrCheckOut no Beds24 nos 7 quartos, em todo o horizonte, inclusive em feriado (a Afrodite também no PriceLabs por data, porque o envio dela leva chegada/saída). O fim de semana vende de sexta a domingo ou mais. Substitui a Regra H de 01/11 (chegada no sábado liberada) e as exceções de 01/11 (Natal 26/12 no Recanto e 02/01 na Afrodite). Exceção só com nova ordem do dono. Auditoria: calendario_12m.py (--plano-beds24).",
-   "sabado_override": "noCheckInOrCheckOut"
+   "sabado_override": "noCheckInOrCheckOut",
+   "sabados_excecao": {
+    "2026-12-26": "none",
+    "2027-01-02": "none"
+   },
+   "sabados_excecao_nota": "Dono 02/11 ('Pode fazer', proposta 2; ordem dono-2026-11-02-festas-sabado-aberto): nos sábados de festa 26/12 e 02/01, entrada e saída abertas nos 7 quartos (Afrodite também no PriceLabs, check_in/check_out 1111111).",
+   "orfas": {
+    "ativa": true,
+    "sabado_esgotado": "noCheckIn",
+    "sexta_esgotada": "noCheckOut",
+    "ordem_id": "dono-2026-11-02-sabado-orfao",
+    "nota": "Dono 02/11 ('Pode fazer', proposta 1): sábado esgotado no quarto (numAvail 0) com a sexta livre abre a saída do sábado só nesse quarto (noCheckIn); sexta esgotada com o sábado livre abre a entrada do sábado (noCheckOut). A noite órfã leva estadia mínima 1 (PriceLabs por data). Quando o lado esgotado reabre, o sábado volta a fechar."
+   }
   },
   "escada": {
    "passo": 0.07,

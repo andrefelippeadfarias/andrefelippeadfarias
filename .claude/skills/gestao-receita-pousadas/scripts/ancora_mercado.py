@@ -111,6 +111,10 @@ def substitui(novo: dict, velho: dict, hoje: date, idade_max: int) -> bool:
         except (ValueError, TypeError):
             return False
 
+    # dono 02/11 ("Pode fazer", ordem dono-2026-11-02-nov-fds-regua-lista): noite com régua fixada por ordem do dono só
+    # sai para uma busca com amostra pelo menos do mesmo tamanho (a busca da coleta, ~10 hotéis, não troca 62-65)
+    if velho.get("ordem_id") and int(novo.get("n") or 0) < int(velho.get("n") or 0):
+        return False
     med_n, med_v = bool(novo.get("p50_medido")), bool(velho.get("p50_medido"))
     if med_v and not med_n and fresca(velho):
         return False

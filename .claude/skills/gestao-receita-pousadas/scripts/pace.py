@@ -52,7 +52,8 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 from ancora_mercado import ARQ_ANCORA, ancora_da_noite, percentil_de, tipo_noite, valor_percentil  # noqa: E402
 from calendario_12m import ler_recalculo  # noqa: E402
 from comum import PASTA_SKILL, carregar_quartos, data, esgotado, hoje_brt, ler_json, periodo_feriado, vendidas_total  # noqa: E402
-from ordens import ARQ_ORDENS, alvo_da_ordem, carregar_ordens, congelada, ordens_por_data, piso_da_ordem  # noqa: E402
+from ordens import (ARQ_ORDENS, alvo_da_ordem, carregar_ordens, congelada, ordens_por_data, piso_da_ordem,  # noqa: E402
+                    vendidas_base_escada)
 
 ARQ_PASSOS = PASTA_SKILL / "dados" / "passos.json"
 STATUS = ("frente", "ritmo", "atras", "muito_atras")
@@ -508,7 +509,13 @@ def plano(cfg: dict, ancora: dict, cals: dict, hoje: date, ordens: dict, passos:
                 # dono 01/11 ("aumentando o valor gradualmente ... as reservas forem entrando"): a noite fica na ordem e
                 # sobe uma reta por reserva, da base do mercado (p50, piso da ordem) ao p90 e ao piso padrão do dono
                 usa_ordem = True
-                pct = percentil_com_vendas(float(ao.get("percentil", 50)), oc, float(esc.get("p_topo", 90)))
+                oc_esc = oc
+                vb = vendidas_base_escada(ordens, curto, d)
+                if vb and tt:
+                    # régua nova (dono 02/11): a escada parte da base do mercado e sobe só com as reservas que entraram
+                    # depois da troca; as vendidas de antes já estavam no preço (cancelamento abaixo da base: fica no p50)
+                    oc_esc = max(0, vv - vb[0]) / max(1, tt - vb[0])
+                pct = percentil_com_vendas(float(ao.get("percentil", 50)), oc_esc, float(esc.get("p_topo", 90)))
             else:
                 # ordem do dono (01/11, base do mercado): vale para a noite fraca do quarto. Fica com o motor a noite que
                 # vende bem: `ocupacao_max` (70%) ou mais vendido, ou à frente da curva com `frente_ocupacao` (50%) ou mais

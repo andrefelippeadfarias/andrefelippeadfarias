@@ -664,6 +664,162 @@
    "ate": "2099-12-31",
    "libera": [],
    "nota": "Todo sábado noCheckInOrCheckOut no Beds24 nos 7 quartos (Afrodite também no PriceLabs por data, check_in e check_out com o sábado fechado), inclusive em feriado. Substitui a Regra H de 01/11 e as exceções de 01/11 (Natal 26/12 no Recanto, 02/01 na Afrodite). Permanente; exceção só com nova ordem do dono."
+  },
+  {
+   "id": "dono-2026-11-02-sabado-orfao",
+   "data": "2026-11-02",
+   "criada_em": "2026-11-02T01:00+00:00",
+   "texto": "Pode fazer.",
+   "contexto": "Resposta ('Pode fazer', 02/11 ~01:00 UTC) às 4 propostas da análise de fins de semana e feriados (pricelabs/fins-de-semana-feriados-3-meses.md). Proposta 1: sábado esgotado abre a saída só naquele quarto; sexta esgotada abre a entrada do sábado.",
+   "tipo": "regra",
+   "quartos": [
+    "Q7",
+    "Double",
+    "Afrodite",
+    "Q2",
+    "VK7",
+    "VK2",
+    "Balcony"
+   ],
+   "de": "2026-11-02",
+   "ate": "2099-12-31",
+   "libera": [
+    "beds24_inventario",
+    "sabado_aberto_orfao",
+    "estadia_1_orfa"
+   ],
+   "nota": "Exceção à ordem dono-2026-11-02-sabados-fechados, quarto a quarto: com o sábado do quarto esgotado (numAvail 0) e a sexta livre, o sábado fica noCheckIn (a sexta sozinha vende, saindo no sábado); com a sexta esgotada e o sábado livre, noCheckOut (o sábado vende com entrada no sábado). Na noite órfã, estadia mínima 1 (no PriceLabs por data, porque o envio leva a estadia ao Beds24). Quando o lado esgotado reabrir (cancelamento), o sábado volta a fechar. Aplicada pela auditoria do Beds24 (calendario_12m.classificar_beds24, regra_h_beds24.orfas). Primeiro caso: sexta 06/11 (Moinhos 1, Panorâmica I 2, Panorâmica II 1; sábado 07/11 esgotado)."
+  },
+  {
+   "id": "dono-2026-11-02-festas-sabado-aberto",
+   "data": "2026-11-02",
+   "criada_em": "2026-11-02T01:00+00:00",
+   "texto": "Pode fazer.",
+   "contexto": "Resposta ('Pode fazer', 02/11 ~01:00 UTC) às 4 propostas da análise de fins de semana e feriados (pricelabs/fins-de-semana-feriados-3-meses.md). Proposta 2: exceção nos sábados de festa 26/12 e 02/01, entrada e saída abertas.",
+   "tipo": "regra",
+   "quartos": [
+    "Q7",
+    "Double",
+    "Afrodite",
+    "Q2",
+    "VK7",
+    "VK2",
+    "Balcony"
+   ],
+   "de": "2026-12-26",
+   "ate": "2027-01-02",
+   "noites": [
+    "2026-12-26",
+    "2027-01-02"
+   ],
+   "libera": [
+    "beds24_inventario",
+    "sabado_aberto"
+   ],
+   "nota": "Beds24 override none em 26/12 e 02/01 nos 7 quartos (01:00 UTC) e Afrodite check_in/check_out 1111111 nessas datas no PriceLabs (01:23 UTC). Estadia mínima mantida (26/12: 2; 02/01: 3). Volta a vender 24→26/12, 26→28/12 e 30/12→02/01. regra_h_beds24.sabados_excecao."
+  },
+  {
+   "id": "dono-2026-11-02-nov-fds-regua-lista",
+   "data": "2026-11-02",
+   "criada_em": "2026-11-02T01:30+00:00",
+   "texto": "Pode fazer.",
+   "contexto": "Resposta ('Pode fazer', 02/11 ~01:00 UTC) às 4 propostas da análise de fins de semana e feriados (pricelabs/fins-de-semana-feriados-3-meses.md). Proposta 3: a ordem de base do mercado de novembro mira a mediana da lista medida em 01/11 nas sextas e sábados de 13-14/11 e 27-28/11 (Moinhos, Panorâmica II e King Spa 2 por volta de R$ 1.300 enviados); a escada continua subindo a cada reserva.",
+   "tipo": "regra",
+   "quartos": [
+    "Q7",
+    "Double",
+    "Afrodite",
+    "Q2",
+    "VK7",
+    "VK2",
+    "Balcony"
+   ],
+   "de": "2026-11-13",
+   "ate": "2026-11-28",
+   "noites": [
+    "2026-11-13",
+    "2026-11-14",
+    "2026-11-27",
+    "2026-11-28"
+   ],
+   "libera": [],
+   "nota": "Feito pela âncora (dados/ancora_mercado.json): as 4 noites passam a usar a lista da varredura de 01/11 (62-65 concorrentes; p50 R$ 827 em 13-14/11 e R$ 816 em 27-28/11, antes R$ 650/644, guardado em 'antes'). As ordens dono-2026-11-01-recanto-base-mercado e dono-2026-11-01-villa-base-mercado seguem valendo (alvo p50, escada de vendas, passo de até 10% por dia de D8 a D30). Não reconstruir a âncora dessas noites com busca mais velha que 01/11. vendidas_base (Beds24, 02/11 01:35 UTC; nas suítes de 1-2 unidades, a contagem da pousada nas suítes com banheira: Recanto de 16, Villa de 9): a escada parte do p50 da régua nova e sobe só com as reservas que entrarem depois (pace.py, ordens.vendidas_base_escada). Sem isso, a régua nova levaria a reta ao percentil da ocupação já existente (Moinhos 14/11 a ~R$ 1.804; Panorâmica II 27/11 a ~R$ 1.616 sem reserva nova), além do que foi proposto ao dono (~R$ 1.300).",
+   "vendidas_base": {
+    "Q7": {
+     "2026-11-13": 2,
+     "2026-11-14": 3,
+     "2026-11-27": 1,
+     "2026-11-28": 1
+    },
+    "Double": {
+     "2026-11-13": 4,
+     "2026-11-14": 4,
+     "2026-11-27": 4,
+     "2026-11-28": 4
+    },
+    "VK7": {
+     "2026-11-13": 4,
+     "2026-11-14": 4,
+     "2026-11-27": 3,
+     "2026-11-28": 2
+    },
+    "Balcony": {
+     "2026-11-13": 0,
+     "2026-11-14": 0,
+     "2026-11-27": 0,
+     "2026-11-28": 0
+    },
+    "Q2": {
+     "2026-11-13": 8,
+     "2026-11-14": 9,
+     "2026-11-27": 5,
+     "2026-11-28": 5
+    },
+    "Afrodite": {
+     "2026-11-13": 8,
+     "2026-11-14": 9,
+     "2026-11-27": 5,
+     "2026-11-28": 5
+    },
+    "VK2": {
+     "2026-11-13": 4,
+     "2026-11-14": 4,
+     "2026-11-27": 3,
+     "2026-11-28": 2
+    }
+   }
+  },
+  {
+   "id": "dono-2026-11-02-aniv-sp-gatilho",
+   "data": "2026-11-02",
+   "criada_em": "2026-11-02T01:30+00:00",
+   "texto": "Pode fazer.",
+   "contexto": "Resposta ('Pode fazer', 02/11 ~01:00 UTC) às 4 propostas da análise de fins de semana e feriados (pricelabs/fins-de-semana-feriados-3-meses.md). Proposta 4: gatilho em 01/01 para o Aniversário de SP.",
+   "tipo": "acompanhamento",
+   "quartos": [
+    "Q7",
+    "Double",
+    "Afrodite",
+    "Q2",
+    "VK7",
+    "VK2",
+    "Balcony"
+   ],
+   "de": "2027-01-01",
+   "ate": "2027-01-24",
+   "noites": [
+    "2027-01-24"
+   ],
+   "libera": [
+    "estadia_1_domingo_24_01",
+    "domingo_24_01_fora_do_feriado"
+   ],
+   "gatilho": {
+    "data": "2027-01-01",
+    "condicao": "noites 22, 23 e 24/01 com menos de 20% vendido na pousada (Beds24, suítes)",
+    "acao": "o domingo 24/01 sai do feriado do Aniversário de SP naquela pousada: preço de domingo comum (pisos de semana do dono, sem o piso de feriado de R$ 800 reais) e estadia mínima 1"
+   },
+   "nota": "Rotina completa de 01/01/2027 (07:53): conferir a condição por pousada; se valer, tirar o domingo 24/01 do feriado (quartos.json feriados[Aniversário de SP] fim 2027-01-23 para aquela pousada, ou piso_real_por_quarto) e gravar min_stay 1 e o piso de domingo no PriceLabs; se não valer, nada muda. Relatar no relatório do dia."
   }
  ]
 }

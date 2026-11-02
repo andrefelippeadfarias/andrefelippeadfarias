@@ -945,17 +945,77 @@ class TestCalendario12m(unittest.TestCase):
                           "2026-12-26": {"numAvail": 5, "minStay": 2, "override": "none"}},
                "VK7": {"2026-11-14": {"numAvail": 7, "minStay": 2, "override": "noCheckOut"}}}
         cl = {x["quarto"]: x for x in c12.classificar_beds24(CFG, inv, dt.date(2026, 11, 1), dt.date(2027, 10, 31))}
-        self.assertEqual(cl["Afrodite"]["sabados_fora_da_regra"],
-                         [{"data": "2027-01-02", "override": "none", "troca": "noCheckInOrCheckOut"}])
+        # 26/12 e 02/01 são os sábados de festa abertos (dono 02/11, "Pode fazer"): "none" está certo neles
+        self.assertEqual(cl["Afrodite"]["sabados_fora_da_regra"], [])
         self.assertEqual(cl["Afrodite"]["outras_noites_bloqueadas"], ["2027-01-08 noCheckInOrCheckOut"])
-        self.assertEqual(sorted(s["data"] for s in cl["Double"]["sabados_fora_da_regra"]),
-                         ["2026-12-26", "2027-01-09", "2027-01-16"])
+        self.assertEqual(sorted(s["data"] for s in cl["Double"]["sabados_fora_da_regra"]), ["2027-01-09", "2027-01-16"])
         self.assertEqual(cl["Double"]["sabados_estadia_abaixo"], ["2027-01-16"])
         self.assertEqual([s["troca"] for s in cl["VK7"]["sabados_fora_da_regra"]], ["noCheckInOrCheckOut"])
         lote = c12.plano_beds24_sabados(list(cl.values()), "teste")
         self.assertTrue(all(i["override"] == "noCheckInOrCheckOut" for i in lote))
-        self.assertEqual(len(lote), 5)
+        self.assertEqual(len(lote), 3)
         self.assertFalse(any("min_stay" in i or "num_avail" in i for i in lote))   # só a restrição; nada de preço
+
+    def test_beds24_sabado_orfao_e_festas(self):
+        """Dono 02/11 ("Pode fazer"): sábado esgotado com sexta livre abre só a saída do sábado naquele quarto; sexta
+        esgotada com sábado livre abre só a entrada; a noite órfã com estadia acima de 1 sai em orfas_estadia (fora de
+        feriado); com o lado esgotado reaberto, o sábado volta a fechar; 26/12 e 02/01 ficam abertos."""
+        import datetime as dt
+        import calendario_12m as c12
+        f = "noCheckInOrCheckOut"
+        inv = {"Q7": {"2026-11-06": {"numAvail": 1, "minStay": 1, "override": "none"},
+                      "2026-11-07": {"numAvail": 0, "minStay": 2, "override": f}},
+               "Q2": {"2026-11-06": {"numAvail": 1, "minStay": 2, "override": "none"},
+                      "2026-11-07": {"numAvail": 0, "minStay": 2, "override": f}},
+               "Double": {"2026-11-13": {"numAvail": 0, "minStay": 1, "override": "none"},     # sexta esgotada
+                          "2026-11-14": {"numAvail": 3, "minStay": 2, "override": f},
+                          "2026-11-27": {"numAvail": 0, "minStay": 1, "override": "none"},
+                          "2026-11-28": {"numAvail": 2, "minStay": 1, "override": "noCheckOut"},  # já aberto, estadia 1 ok
+                          "2026-12-04": {"numAvail": 2, "minStay": 1, "override": "none"},
+                          "2026-12-05": {"numAvail": 1, "minStay": 2, "override": "noCheckIn"},   # reabriu: volta a fechar
+                          "2026-12-25": {"numAvail": 5, "minStay": 2, "override": "none"},
+                          "2026-12-26": {"numAvail": 5, "minStay": 2, "override": f}},           # festa: abre
+               "VK7": {"2026-11-20": {"numAvail": 2, "minStay": 2, "override": "none"},        # sexta de feriado
+                       "2026-11-21": {"numAvail": 0, "minStay": 2, "override": f},
+                       "2027-01-08": {"numAvail": 0, "minStay": 2, "override": "none"},
+                       "2027-01-09": {"numAvail": 0, "minStay": 2, "override": f}}}             # os dois esgotados: fecha
+        cl = {x["quarto"]: x for x in c12.classificar_beds24(CFG, inv, dt.date(2026, 11, 2), dt.date(2027, 10, 31))}
+        self.assertEqual([(s["data"], s["troca"]) for s in cl["Q7"]["sabados_fora_da_regra"]], [("2026-11-07", "noCheckIn")])
+        self.assertIn("sábado esgotado", cl["Q7"]["sabados_fora_da_regra"][0]["motivo"])
+        self.assertEqual(cl["Q7"]["orfas_estadia"], [])
+        self.assertEqual(cl["Q2"]["orfas_estadia"], [{"data": "2026-11-06", "min_stay": 2, "alvo": 1, "lado": "sexta"}])
+        self.assertEqual([(s["data"], s["troca"]) for s in cl["Double"]["sabados_fora_da_regra"]],
+                         [("2026-11-14", "noCheckOut"), ("2026-12-05", f), ("2026-12-26", "none")])
+        self.assertEqual(cl["Double"]["orfas_estadia"], [{"data": "2026-11-14", "min_stay": 2, "alvo": 1, "lado": "sábado"}])
+        self.assertEqual(cl["Double"]["sabados_estadia_abaixo"], [])   # sábado órfão com estadia 1 não é falta
+        # sexta de feriado (Consciência Negra): a saída do sábado abre, mas a estadia do feriado fica com o dono
+        self.assertEqual([(s["data"], s["troca"]) for s in cl["VK7"]["sabados_fora_da_regra"]], [("2026-11-21", "noCheckIn")])
+        self.assertEqual(cl["VK7"]["orfas_estadia"], [])
+        lote = c12.plano_beds24_sabados(list(cl.values()), "teste")
+        self.assertEqual(sorted((i["quarto"], i["de"], i["override"]) for i in lote),
+                         [("Double", "2026-11-14", "noCheckOut"), ("Double", "2026-12-05", f), ("Double", "2026-12-26", "none"),
+                          ("Q2", "2026-11-07", "noCheckIn"), ("Q7", "2026-11-07", "noCheckIn"), ("VK7", "2026-11-21", "noCheckIn")])
+        self.assertTrue(all("min_stay" not in i for i in lote))
+
+    def test_validador_sabado_orfao(self):
+        """A ordem do sábado órfão abre só o lado órfão e exige o campo 'orfa'."""
+        from datetime import date
+        base = {"tipo": "data", "quarto": "Afrodite", "data": "2026-11-14", "min_stay": 2, "motivo": "teste",
+                "excecao": "dono", "ordem_id": "dono-2026-11-02-sabado-orfao"}
+        v = Validador(CFG, date(2026, 11, 2))
+        v.validar([dict(base, check_in="1111101", check_out="1111111", orfa="sexta")])
+        self.assertFalse(any("sábado" in e for e in v.erros), v.erros)
+        v = Validador(CFG, date(2026, 11, 2))
+        v.validar([dict(base, check_in="1111111", check_out="1111111", orfa="sexta")])
+        self.assertTrue(any("vai além" in e for e in v.erros))
+        v = Validador(CFG, date(2026, 11, 2))
+        v.validar([dict(base, check_in="1111101", check_out="1111111")])
+        self.assertTrue(any("campo 'orfa'" in e for e in v.erros))
+        # sábado de festa (ordem dono-2026-11-02-festas-sabado-aberto): entrada e saída abertas
+        v = Validador(CFG, date(2026, 11, 2))
+        v.validar([{"tipo": "data", "quarto": "Afrodite", "data": "2026-12-26", "check_in": "1111111", "check_out": "1111111",
+                    "min_stay": 2, "motivo": "teste", "excecao": "dono", "ordem_id": "dono-2026-11-02-festas-sabado-aberto"}])
+        self.assertFalse(any("sábado" in e or "ordem_id" in e for e in v.erros), v.erros)
 
     def test_beds24_semana_estadia_pelo_calendario(self):
         """Dono 01/11 ('Sim'): domingo a quinta fora de feriado seguem a estadia do calendário no Beds24; feriado, sexta
@@ -1580,6 +1640,54 @@ class TestPace(unittest.TestCase):
         i = item("3/7", 1892, {"o-esc": fest})
         self.assertEqual(i["pace"]["direcao"], "sobe")
         self.assertAlmostEqual(i["min_price"], min(1500 + 1371 * 3 / 7, 1892 * 1.10), delta=2)
+
+    def test_ancora_noite_do_dono_nao_cai_para_amostra_menor(self):
+        """Dono 02/11: a régua fixada por ordem (62 hotéis) não é trocada pela busca da coleta (10), mesmo mais nova."""
+        from ancora_mercado import substitui
+        velho = {"p50": 827, "n": 62, "p50_medido": True, "busca_em": "2026-11-01", "ordem_id": "o"}
+        self.assertFalse(substitui({"p50": 650, "n": 10, "p50_medido": True, "busca_em": "2026-11-02"}, velho, date(2026, 11, 2), 10))
+        self.assertTrue(substitui({"p50": 840, "n": 70, "p50_medido": True, "busca_em": "2026-11-05"}, velho, date(2026, 11, 5), 10))
+        sem = dict(velho); sem.pop("ordem_id")
+        self.assertTrue(substitui({"p50": 650, "n": 10, "p50_medido": True, "busca_em": "2026-11-02"}, sem, date(2026, 11, 2), 10))
+
+    def test_escada_vendidas_base(self):
+        """Dono 02/11 ("Pode fazer", régua nova de novembro): com `vendidas_base` na ordem, a escada parte do p50 da régua
+        e sobe só com as reservas que entrarem depois; sem ela, a reta já sai no percentil da ocupação existente."""
+        import pace
+        from ancora_mercado import valor_percentil
+        self.cfg["parametros"]["pace"]["escada_vendas"]["ativa"] = True
+        n = "2026-11-24"
+        an = {"p25": 800, "p50": 1000, "p75": 1200, "p90": 1400, "max": 1600, "n": 62, "busca_em": "2026-10-30",
+              "tipo": "semana", "p50_medido": True}
+        esc = {"id": "o-esc", "tipo": "alvo_por_data", "quartos": ["VK7"], "de": n, "ate": n, "percentil": 50,
+               "passo_livre": True, "noites": [n], "escada_vendas": True, "pisos_enviados": {"VK7": 710},
+               "libera": ["abaixo_piso", "acima_15"], "ocupacao_max": 0.7, "frente_ocupacao": 0.5}
+        regua = {"id": "o-regua", "tipo": "regra", "quartos": ["VK7"], "de": n, "ate": n, "noites": [n], "libera": [],
+                 "vendidas_base": {"VK7": {n: 3}}}
+        fp = pace.fator_publico(self.cfg, "Villa")
+
+        def item(mu, preco, ordens):
+            cal = {"VK7": {n: {"price": str(preco), "min_price": str(preco), "max_price": str(preco), "mu_occupancy": mu}}}
+            res = pace.plano(self.cfg, {"noites": {n: an}, "por_tipo": {}}, cal, date(2026, 11, 1), ordens, {"passos": []},
+                             dias=30, regra_j_ativa=False)
+            its = [i for i in res["itens"] if i["quarto"] == "VK7" and i["data"] == n]
+            return its[0] if its else None
+        p50 = valor_percentil(an, 50) / fp
+        atual = round(p50 * 0.95)
+        # com a base: 3/7 já vendidas na troca -> alvo no p50 da régua (sobe até ele, dentro do passo de 10%)
+        i = item("3/7", atual, {"o-esc": esc, "o-regua": regua})
+        self.assertEqual(i["pace"]["direcao"], "sobe")
+        self.assertAlmostEqual(i["min_price"], min(p50, atual * 1.10), delta=2)
+        # sem a base: a reta sai no percentil da ocupação (p67) e o passo vai até o limite de 10%
+        i = item("3/7", atual, {"o-esc": esc})
+        self.assertAlmostEqual(i["min_price"], min(valor_percentil(an, 50 + 40 * 3 / 7) / fp, atual * 1.10), delta=2)
+        # reserva nova depois da troca (4/7): sobe pela escada a partir da base (1 de 4 restantes -> p60)
+        i = item("4/7", round(p50), {"o-esc": esc, "o-regua": regua})
+        self.assertEqual(i["pace"]["direcao"], "sobe")
+        self.assertAlmostEqual(i["min_price"], min(valor_percentil(an, 60) / fp, round(p50) * 1.10), delta=2)
+        # cancelamento abaixo da base (2/7): fica no p50, nunca abaixo dele pela escada
+        i = item("2/7", round(p50), {"o-esc": esc, "o-regua": regua})
+        self.assertTrue(i is None or i["pace"]["direcao"] is None or i["min_price"] >= round(p50) - 2)
 
     def test_pisos_enviados(self):
         import pace

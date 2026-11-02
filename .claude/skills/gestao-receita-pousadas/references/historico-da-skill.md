@@ -2,6 +2,17 @@
 
 Cada mudança feita na própria Skill (regras, parâmetros, scripts, fluxo) entra aqui: data, o que mudou, por quê (evidência) e como desfazer. A entrada mais nova fica em cima.
 
+## 02/11/2026 09:00 BRT: conferência do recálculo com a folga do percentual inteiro (rotina das 07:53, segunda)
+- **Por quê:** o payload grava piso e teto em percent_base inteiro e arredonda o piso para cima; o erro chega a 1% da base do quarto. Na conferência da Villa, King Spa 7 03/11 (plano R$ 744, gravado −49% = R$ 755) e King Spa 2 05/11 (R$ 789 → R$ 800) saíram "❌ diferente" com a regra certa.
+- **O que mudou:** `ler_recalculo.py`: `tolerancia_percentual(valor, base)` = 1% do maior entre o valor e a base do quarto + R$ 1 (nunca menos que 1,5% do valor), no piso e no teto. Teste `test_tolerancia_do_percentual_inteiro_usa_a_base` (R$ 11 acima passa; R$ 40 continua ❌); 110 OK.
+- **Correção de datas:** as duas entradas de 22:30 e 23:20 abaixo eram de 01/11 (estavam com 02/11).
+- **Como desfazer:** reverter o commit.
+
+## 02/11/2026 07:50 BRT: sexta da Afrodite com saída fechada na auditoria do Beds24
+- **Por quê:** o alinhamento de 01/11 gravou `check_out` 1111100 nas sextas da Afrodite no PriceLabs (abre a sexta; a sexta é o 5º caractere de segunda a domingo) e o envio levou ao Beds24 a saída de sexta liberada nas 52 sextas.
+- **O que mudou:** `quartos.json` → `regra_h_beds24.sexta_override_por_quarto` (Afrodite: noCheckOut); `calendario_12m.classificar_beds24` devolve a sexta fora do alvo com `pricelabs_tambem`. Teste `test_sexta_da_afrodite_com_saida_fechada`.
+- **Como desfazer:** tirar `sexta_override_por_quarto` e regravar as sextas.
+
 ## 01/11/2026 21:25: sábados fechados para entrada e saída, sempre (dono, 02/11)
 - **Por quê:** dono: "Preciso que mantenha todos os sábados fechados sempre, tanto para a entrada quanto para a saída."
 - **O que mudou:** `quartos.json` → `regra_h_beds24.sabado_override` = noCheckInOrCheckOut (nota nova); `calendario_12m.classificar_beds24` lista `sabados_fora_da_regra` (qualquer override diferente do alvo) e o lote fecha o sábado; `validar_plano.validar_chegada_saida` dá erro em item que abra entrada ou saída no sábado (sem excecao dono). Testes `test_beds24_sabados_fechados_365` e `test_validador_chegada_saida` reescritos (101 OK). Ordem `dono-2026-11-02-sabados-fechados`.
@@ -34,7 +45,7 @@ Cada mudança feita na própria Skill (regras, parâmetros, scripts, fluxo) entr
 - **O que mudou:** `scripts/beds24.py`: `inventario` (GET /inventory/rooms/calendar: numAvail, minStay, override) e `editar` (POST, simulação por padrão, `--aplicar` grava e relê; só disponibilidade, estadia mínima e chegada/saída; trava preço e valores fora do intervalo); credencial de escrita por `BEDS24_INVITE_CODE` → refresh token em /root/.beds24 (600) ou `BEDS24_REFRESH_TOKEN`. Testes `TestBeds24Edicao`. `SKILL.md`: inventário em toda rotina. Ordem `dono-2026-11-01-beds24-edicao`.
 - **Como desfazer:** apagar a ordem e os comandos `inventario`/`editar`; a skill volta a só ler reservas.
 
-## 02/11/2026 23:20 BRT: revisão independente das mudanças de 22:30 (19 agentes, 13 achados confirmados, todos corrigidos)
+## 01/11/2026 23:20 BRT: revisão independente das mudanças de 22:30 (19 agentes, 13 achados confirmados, todos corrigidos)
 - `calendario_12m.comparar`: sábado órfão com estadia 1 (sexta esgotada, sábado livre, fora de feriado, ordem vigente) vira `info`. Antes o plano de 12 meses devolvia a estadia 2, e os dois lados se desfaziam a cada rotina.
 - `calendario_12m.main`: o Beds24 é auditado desde hoje, porque o lado órfão muda de D0 a D3. O PriceLabs segue de hoje + 4.
 - O lote leva `pricelabs_tambem` da Afrodite e o motivo do item. O motivo-base desatualizado ("chegada no sábado liberada") foi trocado. O console mostra o que vai também ao PriceLabs.
@@ -54,7 +65,7 @@ Cada mudança feita na própria Skill (regras, parâmetros, scripts, fluxo) entr
   - `test_revisao_0211_panoramica_ii_com_vendidas_base`.
 - 108 testes OK. Refutados 3: a ordem nova não abre estadia de feriado; o piso da reta segue a ocupação total (de propósito); a proteção da régua usa o `n` real.
 
-## 02/11/2026 22:30 BRT: propostas de fins de semana e feriados aprovadas (dono: "Pode fazer")
+## 01/11/2026 22:30 BRT: propostas de fins de semana e feriados aprovadas (dono: "Pode fazer")
 - `calendario_12m.classificar_beds24`: o alvo do sábado deixa de ser sempre `noCheckInOrCheckOut`. `regra_h_beds24.sabados_excecao` (26/12 e 02/01: `none`) e `regra_h_beds24.orfas` (sábado esgotado com sexta livre → `noCheckIn`; sexta esgotada com sábado livre → `noCheckOut`, quarto a quarto; o lado esgotado reaberto volta a fechar). Lista nova `orfas_estadia` (noite órfã com estadia acima de 1, fora de feriado) para o PriceLabs por data; sábado órfão com estadia 1 não é falta; Afrodite sai com `pricelabs_tambem`. `auditar_beds24` lê também a sexta anterior ao primeiro dia; o lote leva o motivo do item.
 - `validar_plano.validar_chegada_saida`: com `ordem_id` da ordem do sábado órfão, abrir o sábado exige `orfa` ("sexta" abre só a saída; "sábado" só a entrada).
 - `ordens.vendidas_base_escada` e `pace.plano`: ordem com `vendidas_base` faz a escada da ordem de base do mercado partir do p50 e contar só as reservas depois da troca da régua (sem isso, a régua nova levaria a reta ao percentil da ocupação existente: Moinhos 14/11 a ~R$ 1.804 sem reserva nova).

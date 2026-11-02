@@ -62,6 +62,12 @@ def regra_inativa(it: dict, x: dict) -> str:
     return ""
 
 
+def tolerancia_percentual(valor: float, base: float) -> float:
+    """Folga da conferência de piso/teto gravados em percent_base inteiro: 1% do maior entre o valor e a base do
+    quarto, + R$ 1 (02/11/2026). Nunca menos que 1,5% do valor (a folga antiga do piso)."""
+    return max(0.015 * valor, 0.01 * max(valor, base) + 1.0, 1.0)
+
+
 def main(argv=None) -> int:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("arquivos", nargs="+", help="CURTO=arquivo do refresh_listing_pricing")
@@ -109,10 +115,14 @@ def main(argv=None) -> int:
                     faixa += f", teto {reais(it['max_price'])}"
                 plan_txt = f"{float(it['preco']):+g}% ({faixa})" if it.get("preco") is not None else faixa
                 p = float(x.get("price") or 0)
+                # 02/11: o payload grava percent_base INTEIRO e arredonda o piso para cima; o erro chega a 1% da BASE do
+                # quarto (King Spa 7 03/11: plano R$ 744, gravado -49% = R$ 755, base R$ 1.480). Tolerância = 1% do maior
+                # entre o valor e a base, + R$ 1 (a mesma do ordem_recanto.py); antes era 1% do valor e dava ❌ falso.
+                base = float(cfg["por_curto"].get(it["quarto"], {}).get("base") or 0)
                 if it.get("min_price") is not None:
-                    ok &= p >= float(it["min_price"]) - max(1.0, 0.015 * float(it["min_price"]))
+                    ok &= p >= float(it["min_price"]) - tolerancia_percentual(float(it["min_price"]), base)
                 if it.get("max_price") is not None:
-                    ok &= p <= float(it["max_price"]) * 1.01 + 1  # percentual da base arredonda até 1%
+                    ok &= p <= float(it["max_price"]) + tolerancia_percentual(float(it["max_price"]), base)
             inativa = regra_inativa(it, x)
             if inativa:
                 ok = False

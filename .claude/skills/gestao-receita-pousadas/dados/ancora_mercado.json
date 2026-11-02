@@ -2,8 +2,7 @@
  "_doc": "Âncora de mercado do motor de pace: percentis do preço público por noite dos hotéis com hidro na Booking (2 adultos). p50 e max medidos; p75/p90/p25 aproximados (ver ancora_mercado.py). Noite sem busca própria usa `por_tipo` do mesmo tipo e mês.",
  "atualizado_em": "2026-11-02",
  "fontes": [
-  "/tmp/claude-0/-home-user-andrefelippeadfarias/02bd5933-6de8-57dc-9e2b-aeb0b12a4913/tasks/ww3bilxnm.output",
-  "/tmp/claude-0/-home-user-andrefelippeadfarias/02bd5933-6de8-57dc-9e2b-aeb0b12a4913/scratchpad/mercado60_3010.json"
+  "/tmp/claude-0/-home-user-andrefelippeadfarias/02bd5933-6de8-57dc-9e2b-aeb0b12a4913/scratchpad/r0211/coleta.json"
  ],
  "noites": {
   "2026-10-31": {
@@ -438,6 +437,35 @@
   }
  },
  "por_tipo": {
+  "feriado": {
+   "2026-10": {
+    "p25": 743,
+    "p50": 956,
+    "p75": 1084,
+    "p90": 1390,
+    "max": 1750,
+    "n_noites": 1,
+    "busca_em": "2026-10-30"
+   },
+   "2026-11": {
+    "p25": 680,
+    "p50": 829,
+    "p75": 1260,
+    "p90": 1355,
+    "max": 1361,
+    "n_noites": 3,
+    "busca_em": "2026-10-30"
+   },
+   "2026-12": {
+    "p25": 757,
+    "p50": 1100,
+    "p75": 1105,
+    "p90": 1316,
+    "max": 1956,
+    "n_noites": 2,
+    "busca_em": "2026-10-30"
+   }
+  },
   "semana": {
    "2026-11": {
     "p25": 280,
@@ -460,13 +488,13 @@
   },
   "fds": {
    "2026-11": {
-    "p25": 460,
-    "p50": 650,
-    "p75": 791,
-    "p90": 1080,
-    "max": 1189,
+    "p25": 600,
+    "p50": 816,
+    "p75": 1220,
+    "p90": 1498,
+    "max": 1885,
     "n_noites": 6,
-    "busca_em": "2026-10-30"
+    "busca_em": "2026-11-01"
    },
    "2026-12": {
     "p25": 470,
@@ -475,35 +503,6 @@
     "p90": 789,
     "max": 850,
     "n_noites": 6,
-    "busca_em": "2026-10-30"
-   }
-  },
-  "feriado": {
-   "2026-11": {
-    "p25": 680,
-    "p50": 829,
-    "p75": 1260,
-    "p90": 1355,
-    "max": 1361,
-    "n_noites": 3,
-    "busca_em": "2026-10-30"
-   },
-   "2026-10": {
-    "p25": 743,
-    "p50": 956,
-    "p75": 1084,
-    "p90": 1390,
-    "max": 1750,
-    "n_noites": 1,
-    "busca_em": "2026-10-30"
-   },
-   "2026-12": {
-    "p25": 757,
-    "p50": 1100,
-    "p75": 1105,
-    "p90": 1316,
-    "max": 1956,
-    "n_noites": 2,
     "busca_em": "2026-10-30"
    }
   }

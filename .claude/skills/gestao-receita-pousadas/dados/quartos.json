@@ -331,7 +331,8 @@
    "Villa": 0.65,
    "medido_em": "2026-10-29",
    "fonte": "preço público na Booking ÷ enviado: Recanto anúncio 7562933 (0,53-0,63 por data, 29/10 pós-sync; 0,658 em 25/10), Villa 14824789 (~0,65). Único fator de comparação com o mercado (motor de pace e âncora); os fatores do Genius 3 (fator_vitrine_semana/fds) só convertem os pisos do dono e o fator_real só o piso de feriado. Recalibrar toda rotina completa pela busca dos nossos anúncios; abaixo de 0,55 é promoção ativa a confirmar com o dono.",
-   "nota": "30/10/2026: criado na reformulação da estratégia (motor de pace)."
+   "nota": "30/10/2026: criado na reformulação da estratégia (motor de pace).",
+   "revisao_semanal_2026-11-02": "Mantidos 0,63 (Recanto) e 0,65 (Villa). Medição de 01/11 pela Booking (conector oficial, nossos anúncios): novembro 0,633 (Recanto 13/11) e 0,653 (Villa 13/11), batendo com os fatores; dezembro e janeiro 0,61-0,62 nas duas pousadas (a mais de 30 dias). O motor usa um fator só: nas noites de dezembro em diante o alvo enviado sai ~3% abaixo do que a vitrine pede. Nenhuma promoção nova abaixo de 0,55 encontrada; a reserva Genius de última hora da King Spa 7 (06-08/11) pagou 0,38 do enviado."
   },
   "pace": {
    "curvas": {

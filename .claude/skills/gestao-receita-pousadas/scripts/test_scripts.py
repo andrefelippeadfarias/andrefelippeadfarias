@@ -516,6 +516,35 @@ class TestRecalculo(unittest.TestCase):
         # item só de estadia mínima não entra na checagem
         self.assertEqual(regra_inativa({"tipo": "data", "quarto": "Q7", "data": "2026-10-11", "min_stay": 2}, {"dso_flag": "0"}), "")
 
+    def test_tolerancia_do_percentual_inteiro_usa_a_base(self):
+        """02/11: King Spa 7 03/11 planejada a R$ 744 (piso = teto) foi gravada -49% da base de R$ 1.480 = R$ 755 (o
+        payload arredonda o percentual para cima). A conferência dava ❌ por 1% do valor (R$ 8,44); a folga certa é 1%
+        da base (R$ 14,80) + R$ 1. Um desvio de verdade (R$ 40) continua ❌."""
+        import json
+        import tempfile
+        import io
+        import contextlib
+        from ler_recalculo import main, tolerancia_percentual
+        self.assertGreaterEqual(tolerancia_percentual(744, 1480), 11)
+        self.assertLess(tolerancia_percentual(744, 1480), 40)
+        with tempfile.TemporaryDirectory() as tmp:
+            plano = os.path.join(tmp, "plano.json")
+            rec = os.path.join(tmp, "rec.json")
+            with open(plano, "w", encoding="utf-8") as f:
+                json.dump({"hoje": "2026-11-02", "itens": [
+                    {"tipo": "data", "quarto": "VK7", "data": "2026-11-03", "min_price": 744, "max_price": 744},
+                    {"tipo": "data", "quarto": "VK7", "data": "2026-11-04", "min_price": 744, "max_price": 744}]}, f)
+            with open(rec, "w", encoding="utf-8") as f:
+                json.dump({"data": {"pricing_array": [
+                    {"date": "2026-11-03", "price": "755", "min_price": "755", "max_price": "755", "dso_flag": "1", "min_stay": "1"},
+                    {"date": "2026-11-04", "price": "784", "min_price": "784", "max_price": "784", "dso_flag": "1", "min_stay": "1"}]}}, f)
+            out = io.StringIO()
+            with contextlib.redirect_stdout(out):
+                main(["--plano", plano, f"VK7={rec}"])
+            linhas = {l.split("|")[2].strip(): l for l in out.getvalue().splitlines() if l.startswith("| VK7")}
+            self.assertIn("✅", linhas["2026-11-03"])
+            self.assertIn("❌", linhas["2026-11-04"])
+
 
 class TestMesclar(unittest.TestCase):
     def test_mescla_ocupacao_e_preco_do_recalculo(self):

@@ -295,7 +295,11 @@
     "sexta_esgotada": "noCheckOut",
     "ordem_id": "dono-2026-11-02-sabado-orfao",
     "nota": "Dono 02/11 ('Pode fazer', proposta 1): sábado esgotado no quarto (numAvail 0) com a sexta livre abre a saída do sábado só nesse quarto (noCheckIn); sexta esgotada com o sábado livre abre a entrada do sábado (noCheckOut). A noite órfã leva estadia mínima 1 (PriceLabs por data). Quando o lado esgotado reabre, o sábado volta a fechar."
-   }
+   },
+   "sexta_override_por_quarto": {
+    "Afrodite": "noCheckOut"
+   },
+   "sexta_override_nota": "Dono 01/11 14:10 ('Sim'; ordens dono-2026-11-01-beds24-semana-afrodite-vk7 e dono-2026-11-01-afrodite-sextas-feriado): Afrodite com chegada de sexta liberada e saída de sexta fechada em todas as sextas, inclusive de feriado. No PriceLabs por data: check_in 1111111 e check_out 1111011 (a sexta é o 5º caractere, segunda a domingo)."
   },
   "escada": {
    "passo": 0.07,

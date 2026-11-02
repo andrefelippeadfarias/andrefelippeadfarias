@@ -946,14 +946,15 @@ class TestCalendario12m(unittest.TestCase):
                "VK7": {"2026-11-14": {"numAvail": 7, "minStay": 2, "override": "noCheckOut"}}}
         cl = {x["quarto"]: x for x in c12.classificar_beds24(CFG, inv, dt.date(2026, 11, 1), dt.date(2027, 10, 31))}
         # 26/12 e 02/01 são os sábados de festa abertos (dono 02/11, "Pode fazer"): "none" está certo neles
-        self.assertEqual(cl["Afrodite"]["sabados_fora_da_regra"], [])
-        self.assertEqual(cl["Afrodite"]["outras_noites_bloqueadas"], ["2027-01-08 noCheckInOrCheckOut"])
+        # sexta 08/01 da Afrodite com a chegada fechada: a auditoria devolve a sexta ao alvo do dono (só a saída fechada)
+        self.assertEqual([(s["data"], s["troca"]) for s in cl["Afrodite"]["sabados_fora_da_regra"]], [("2027-01-08", "noCheckOut")])
+        self.assertEqual(cl["Afrodite"]["outras_noites_bloqueadas"], [])
         self.assertEqual(sorted(s["data"] for s in cl["Double"]["sabados_fora_da_regra"]), ["2027-01-09", "2027-01-16"])
         self.assertEqual(cl["Double"]["sabados_estadia_abaixo"], ["2027-01-16"])
         self.assertEqual([s["troca"] for s in cl["VK7"]["sabados_fora_da_regra"]], ["noCheckInOrCheckOut"])
         lote = c12.plano_beds24_sabados(list(cl.values()), "teste")
-        self.assertTrue(all(i["override"] == "noCheckInOrCheckOut" for i in lote))
-        self.assertEqual(len(lote), 3)
+        self.assertTrue(all(i["override"] == "noCheckInOrCheckOut" for i in lote if i["quarto"] != "Afrodite"))
+        self.assertEqual(len(lote), 4)
         self.assertFalse(any("min_stay" in i or "num_avail" in i for i in lote))   # só a restrição; nada de preço
 
     def test_beds24_sabado_orfao_e_festas(self):
@@ -1024,10 +1025,25 @@ class TestCalendario12m(unittest.TestCase):
         self.assertEqual(cl["VK7"]["sabados_estadia_abaixo"], ["2027-01-23"])
         self.assertEqual(cl["VK7"]["orfas_estadia"], [])
         lote = c12.plano_beds24_sabados(list(cl.values()), "base")
-        afro = [i for i in lote if i["quarto"] == "Afrodite"]
+        afro = [i for i in lote if i["quarto"] == "Afrodite" and i["de"] == "2026-11-14"]
         self.assertEqual(len(afro), 1)
         self.assertTrue(afro[0].get("pricelabs_tambem"))
         self.assertIn("sábado esgotado", afro[0]["motivo"])
+
+    def test_sexta_da_afrodite_com_saida_fechada(self):
+        """02/11: a auditoria confere a sexta da Afrodite (dono 01/11: chegada liberada, saída fechada); o envio do
+        PriceLabs tinha aberto as 52 sextas por um check_out 1111100 gravado por engano."""
+        import datetime as dt
+        import calendario_12m as c12
+        inv = {"Afrodite": {"2026-11-06": {"numAvail": 1, "minStay": 1, "override": "none"},
+                            "2026-11-13": {"numAvail": 1, "minStay": 1, "override": "noCheckOut"}}}
+        cl = c12.classificar_beds24(CFG, inv, dt.date(2026, 11, 2), dt.date(2027, 10, 31))[0]
+        self.assertEqual([(s["data"], s["troca"]) for s in cl["sabados_fora_da_regra"]], [("2026-11-06", "noCheckOut")])
+        self.assertEqual(cl["outras_noites_bloqueadas"], [])
+        lote = c12.plano_beds24_sabados([cl], "base")
+        self.assertTrue(lote[0]["pricelabs_tambem"])
+        # e o check_out da sexta no PriceLabs fecha a sexta (5º caractere, segunda a domingo)
+        self.assertEqual("1111011"[dt.date(2026, 11, 6).weekday()], "0")
 
     def test_revisao_0211_validador_ordens_do_sabado(self):
         """Revisão de 02/11: só ordem que libera abrir o sábado abre; ordem de acompanhamento e noite fora de `noites`

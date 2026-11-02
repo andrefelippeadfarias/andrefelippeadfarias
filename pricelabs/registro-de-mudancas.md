@@ -3571,6 +3571,28 @@ Pelo conector oficial, com café e 2 adultos. Recanto pelas coordenadas (id 7562
 
 108 testes OK. Auditoria do Beds24 de 02/11/2026 a 31/10/2027: 0 sábado fora da regra.
 
+## 02/11/2026, 07:50 — Conferência do Beds24 depois do envio do PriceLabs: as sextas da Afrodite tinham voltado a ter saída
+
+**O que voltou:** as 52 sextas da Afrodite, de 06/11/2026 a 29/10/2027, estavam com a saída liberada no Beds24 (`none`). O dono decidiu em 01/11 "chegada de sexta liberada, saída de sexta fechada" (`noCheckOut`). O resto bateu: 2.548 noites comparadas, com as mudanças aprovadas ontem descontadas.
+
+**Origem:** o alinhamento de 01/11 17:35 gravou no PriceLabs, por data, `check_out` 1111100 nas sextas da Afrodite. Como a ordem é de segunda a domingo, esse texto abre a sexta e fecha sábado e domingo, ao contrário do motivo escrito ("saída de sexta e sábado segue fechada"). O validador aceitou porque abrir um dia que não é sábado não era conferido. O Sync de ontem à noite levou isso ao Beds24.
+
+| Mudança | Onde | Antes | Depois | Como desfazer (pedir ao Claude) |
+|---|---|---|---|---|
+| Saída de sexta da Afrodite | PriceLabs por data, 52 sextas (07:48-07:49 BRT; preço, piso, teto e motivo preservados) | check_out 1111100 | check_out 1111011 (só a sexta fechada) | "Libere a saída de sexta na Afrodite" |
+| (idem) | Beds24, 52 sextas (52 relidas) | none | noCheckOut | (idem) |
+| Sábado 07/11 da Panorâmica I | Beds24 | noCheckIn (sábado órfão) | noCheckInOrCheckOut: o sábado reabriu (1 livre) e, pela regra do dono, volta a fechar | "Abra de novo a saída do sábado 07/11 na Panorâmica I" |
+
+**Prevenção:** `quartos.json` ganhou `regra_h_beds24.sexta_override_por_quarto` (Afrodite: `noCheckOut`). A auditoria do Beds24 passa a devolver a sexta da Afrodite fora do alvo, com `pricelabs_tambem`. Teste `test_sexta_da_afrodite_com_saida_fechada`; 109 testes OK. Nova auditoria de 02/11/2026 a 31/10/2027: tudo zerado.
+
+**Reserva nova na Booking (King Spa 7, 06→08/11, Genius):**
+- Valor: R$ 762,88 por 2 noites (R$ 381 por noite). Comissão de R$ 175,46 (23%); líquido de R$ 587,42 (R$ 294 por noite).
+- Preço enviado: R$ 1.006 por noite, pela ordem de base do mercado da Villa (régua antiga, p50 de R$ 653 público).
+- A Booking somou a oferta de última hora (D4-D5) e o Genius. O hóspede pagou 38% do enviado, igual à média histórica da King Spa 7 na Booking (38-41%).
+- Ficou acima do piso Genius de R$ 300 da ordem de 26/10, que vale até 08/11.
+- Mercado nesse fim de semana: mediana da lista de R$ 784 e com hidro de R$ 1.235.
+- Levado ao dono.
+
 > **Regras em vigor:** desde 06/10/2026 elas ficam em `.claude/skills/gestao-receita-pousadas/references/regras.md`. Este arquivo guarda só o histórico das mudanças.
 
 ## O que só pode ser feito na tela (passo a passo para você)

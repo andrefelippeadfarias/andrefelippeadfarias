@@ -142,6 +142,9 @@ def classificar_beds24(cfg: dict, inv: dict, de: dt.date, ate: dt.date) -> list[
     # (sábado esgotado com a sexta livre, ou sexta esgotada com o sábado livre) abre só naquele quarto
     excecoes = rh.get("sabados_excecao") or {}
     orfas = rh.get("orfas") or {}
+    # dono 01/11 ("Sim"): Afrodite com a saída de sexta fechada (02/11: o envio do PriceLabs tinha aberto as 52 sextas
+    # por um check_out 1111100 gravado por engano; a auditoria passa a conferir a sexta desse quarto)
+    sexta_alvo = rh.get("sexta_override_por_quarto") or {}
     try:
         from sazonalidade import carregar as _carregar_saz, periodo as _periodo_saz
         saz = _carregar_saz()
@@ -195,7 +198,12 @@ def classificar_beds24(cfg: dict, inv: dict, de: dt.date, ate: dt.date) -> list[
                 if ms < ms_sab and not (lado_orfao == "sábado" and not periodo_feriado(cfg, d)):
                     estadia.append(ds)
                 continue
-            if o != "none" and not (q == "Afrodite" and d.weekday() == 4 and o == "noCheckOut"):
+            if d.weekday() == 4 and q in sexta_alvo:
+                if o != sexta_alvo[q]:
+                    chegada.append({"data": ds, "override": o, "troca": sexta_alvo[q],
+                                    "motivo": "sexta da Afrodite: chegada liberada, saída fechada (dono 01/11)",
+                                    "pricelabs_tambem": True})
+            elif o != "none" and not (q == "Afrodite" and d.weekday() == 4 and o == "noCheckOut"):
                 outras.append(f"{ds} {o}")
             # domingo a quinta fora de feriado: estadia do calendário de sazonalidade (dono, 01/11: "Sim")
             if d.weekday() != 4 and saz is not None and not periodo_feriado(cfg, d):

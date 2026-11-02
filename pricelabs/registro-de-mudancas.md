@@ -3593,6 +3593,111 @@ Pelo conector oficial, com café e 2 adultos. Recanto pelas coordenadas (id 7562
 - Mercado nesse fim de semana: mediana da lista de R$ 784 e com hidro de R$ 1.235.
 - Levado ao dono.
 
+## 02/11/2026, 07:53 a 09:00 — Rotina completa de segunda (motor, ordem do Recanto e revisão semanal)
+
+**Coleta:** recálculo dos 7 quartos às 11:06 UTC; Beds24 com 2 reservas novas, 2 consultas e 1 cancelamento desde a rodada anterior; âncora mesclada (as noites do dono de 13-14 e 27-28/11 ficaram com a varredura de 01/11).
+
+**Gravado às 11:51-11:53 UTC:** 84 noites em 6 quartos (a Moinhos não mudou). Validador com 0 erro.
+- Motor (escada e pace): 57 noites.
+  - King Spa 7 13/11 de R$ 2.575 para R$ 1.906 (desfeito à tarde pelo pedido do dono).
+  - Descidas de 5% em dezembro e no Natal.
+  - Afrodite 04/11 de R$ 1.760 para R$ 1.408.
+- Ordem do Recanto:
+  - Panorâmica II 05/11 de R$ 652 para R$ 1.228-1.460 (a Moinhos estava em R$ 1.537 com 6/7 e a Panorâmica I em R$ 1.228 com 5/6).
+  - 18 noites da Panorâmica II em 2027.
+  - Afrodite em 6 sextas e sábados de janeiro com teto de R$ 2.857 (vitrine R$ 1.800).
+
+**Conferência:**
+- Villa no recálculo das 11:53: 39 de 39 ✅. As 2 "diferenças" do conferidor eram o arredondamento do percentual inteiro; o conferidor foi corrigido e tem teste novo (110 OK).
+- Recanto às 17:47 UTC (o recálculo deu 429 de manhã): 47 de 47 ✅.
+
+**Revisão independente (3 agentes, somente leitura):**
+- Nenhuma das 84 gravações viola ordem do dono.
+- Dois problemas antigos, corrigidos à tarde:
+  - Moinhos 30/12 acima da Panorâmica I.
+  - Balcony 02/01 a 124% da King Spa 2.
+- Achados menores levados ao dono e às pendências:
+  - arredondamento acima do pmax de 10% em 4 noites (R$ 2 a R$ 11);
+  - Afrodite 27-28/11 presa pela Panorâmica I de R$ 3.019, herança da escada de 28/10;
+  - Balcony além de D60 acima da King Spa 2 no piso de fim de semana de 150% da base.
+
+**Revisão semanal:**
+- Painel atualizado: https://claude.ai/artifact/HzGExqdFhYp3CnTe6pvWBf. Dois arquivos antigos de 21/10 não foram apagados (permissão negada).
+- Faturamento de novembro: Recanto R$ 148.479 de R$ 220.000 (67%) e Villa R$ 67.017 de R$ 150.000 (45%), à frente e no ritmo do dia 2.
+- RevPAR de 05/10 a 01/11: Recanto R$ 327, Villa R$ 311.
+- Vendido de novembro: Recanto 3,2 vezes o mercado; Villa 1,7 vez no total e só 1,2 vez no fim de semana.
+- Fator público mantido em 0,63 e 0,65 (de dezembro em diante a razão é 0,61-0,62).
+- Gatilhos das festas (1ª rotina): Recanto atrás em 24-29/12 e Villa atrás em 24-29/12 e 01/01. Nada muda antes da 2ª rotina seguida. A categoria R do PriceLabs não atualizou desde 01/11.
+
+## 02/11/2026, 09:20 a 10:35 — Pedido do dono: Villa no valor de mercado nos fins de semana
+
+**Pedido:** "preciso que aumente o valor da vila, pois está com valor muito baixo para os finais de semana. Devemos estar no valor de mercado compatível com o que nossos hotéis oferecem. Estamos no valor de sábado muito baixo."
+
+**Diagnóstico:** a Villa seguia a régua da LISTA da Booking. Nos fins de semana de novembro e começo de dezembro, as suítes com banheira estavam entre o p6 e o p33 dos quartos com hidro:
+- King Spa 7 em 06-08/11 a R$ 654 público, contra mediana com hidro de R$ 1.235;
+- King Spa 2 em 13-15/11 a R$ 754.
+
+**Ordens:** 7 ordens `dono-2026-11-02-villa-fds-hidro-MMDD`, uma por fim de semana de 06/11 a 19/12, com a Consciência Negra incluída.
+- King Spa 7 e King Spa 2: com 0 vendida, a mediana dos quartos com hidro (varredura de 01/11, ÷ razão Booking/enviado da Villa, 0,65 em novembro e 0,618 em dezembro). Sobe pela escada até o p90, conforme as vendas.
+- Balcony: Regra G, entre 85,5% e 90% da suíte com banheira livre mais barata. Na Consciência Negra e quando as suítes esgotam, vale a lista: mediana a p75.
+- As sextas e sábados saíram da ordem de base do mercado da Villa (dias de semana seguem nela).
+- Janeiro já estava entre o p48 e o p69 com hidro e ficou de fora.
+
+| Fim de semana | King Spa 7 (sexta / sábado) | King Spa 2 | Balcony |
+|---|---|---|---|
+| 06-07/11 | R$ 1.006 → R$ 2.175 (às 17:02 R$ 2.502 / esgotada) | esgotada | R$ 902 → R$ 1.880 |
+| 13-14/11 | R$ 1.909 / R$ 2.575 → R$ 2.856 | R$ 1.283 → R$ 2.642 | R$ 1.118 → R$ 2.273 |
+| 20-21/11 (Consciência Negra) | R$ 2.057 → R$ 3.463 / R$ 3.167 | R$ 2.057 → R$ 3.493 / R$ 3.264 (às 17:02 esgotada) | R$ 1.829 → R$ 1.943 |
+| 27-28/11 | R$ 1.228 / R$ 1.258 → R$ 2.620 / R$ 2.412 | R$ 1.257 / R$ 1.232 → R$ 2.477 / R$ 2.324 | R$ 1.105 / R$ 1.092 → R$ 2.134 / R$ 2.007 |
+| 04-05/12 | R$ 1.643 / R$ 1.717 → R$ 2.294 / R$ 2.797 | R$ 1.511 → R$ 2.248 / R$ 2.629 | R$ 1.308 → R$ 1.943 / R$ 2.273 |
+| 11-12/12 | R$ 1.894 / R$ 2.457 → R$ 2.279 / R$ 2.694 | R$ 1.689 / R$ 1.918 → R$ 2.223 / R$ 2.718 | R$ 1.499 / R$ 1.664 → R$ 1.918 / R$ 2.324 |
+| 18-19/12 | R$ 1.924 → R$ 1.968 / R$ 2.279 | R$ 1.651 → R$ 1.969 / R$ 2.210 | R$ 1.473 → R$ 1.702 / R$ 1.905 |
+
+- **Validação e simulação:** 43 itens com 0 erro. A simulação do motor do dia seguinte não desfaz as suítes. A Balcony foi gravada direto no valor que o motor escolheria.
+- **Gravação:** 12:23-13:35 UTC.
+- **Conferência:** Balcony e King Spa 2 ✅ no recálculo das 17:47 UTC. A King Spa 7 deu 429 e foi conferida pela leitura da API.
+- **Correções da revisão independente (17:46 UTC):**
+  - Panorâmica I 30/12: piso R$ 3.004.
+  - Panorâmica II 30/12: R$ 2.989.
+  - Balcony 02/01: de R$ 3.391 para R$ 2.451.
+- **Como desfazer:** pedir "Volte a Villa dos fins de semana à régua da lista".
+
+## 02/11/2026, 14:45 a 17:05 — Rotinas leves das 13:53 e 16:53 (a das 10:53 não rodou: reinício da sessão)
+
+**Beds24:** dois lotes de reservas da Booking entraram na Villa, às 09:40 BRT (19) e às 16:37 BRT (6).
+- O lote das 09:40 trouxe a reserva da King Spa 7 de 06-08/11 (R$ 762,88) que faltava no Beds24.
+- Outros movimentos no dia:
+  - Airbnb: 8 reservas novas, 2 canceladas no mesmo minuto e 5 consultas;
+  - 2 cancelamentos da Booking em 02-04/11: Moinhos e Panorâmica II;
+  - 1 reserva direta da King Spa 7 de 2027 a R$ 1,67.
+
+**Possíveis duplicatas (dono confere):**
+- Balcony 02/11 R$ 472,40: 95588783 às 09:40 e 95607404 às 16:37.
+- Balcony 06-08/11 R$ 609,94: 95607400 e 95607405, no mesmo lote.
+- King Spa 2 13-15/11 Airbnb R$ 1.026,40: 95593981 e 95604441.
+- King Spa 2 06-08/11 Airbnb R$ 1.159,08: 95545670 e 95554391.
+
+**Overbooking no Beds24:**
+- King Spa 2 06 e 07/11: 3 reservas para 2 unidades.
+- Panorâmica I 20 e 21/11: 7 para 6.
+
+**Gravado às 20:02 UTC:** 24 noites, mais 6 regras apagadas antes (proteção de esgotada sem teto). Validador com 0 erro.
+- King Spa 7 06/11 (4/7) a R$ 2.502; esgotadas 04 e 07/11.
+- King Spa 7 27-28/11 a R$ 2.812 / R$ 2.654.
+- King Spa 7 05/12 a R$ 2.938 e 12/12 a R$ 2.829.
+- King Spa 2: esgotada em 16, 18, 20 e 21/11; 04-05/12 a R$ 2.361 / R$ 2.761.
+- Balcony 06/11 a R$ 2.172.
+- Moinhos 03/11 a R$ 615 (0/7 depois do cancelamento) e 08/11 a R$ 716.
+- Panorâmica I 03/11 a R$ 924 (3/6).
+
+**Fora do plano de propósito:**
+- Balcony 07/11: o motor desceria de R$ 1.880 para R$ 1.451 porque as suítes esgotaram. Fica, pelo pedido do dono.
+- King Spa 2 e Balcony 13-14/11: a King Spa 2 "esgotada" depende da possível duplicata do Airbnb.
+
+**Conferência:** sem recálculo (saldo do dia gasto); conferido pela leitura da API.
+
+**Sync:** as mudanças de 03 a 08/11 só chegam à Booking com o Sync Now do dono ou no envio da madrugada.
+
 > **Regras em vigor:** desde 06/10/2026 elas ficam em `.claude/skills/gestao-receita-pousadas/references/regras.md`. Este arquivo guarda só o histórico das mudanças.
 
 ## O que só pode ser feito na tela (passo a passo para você)

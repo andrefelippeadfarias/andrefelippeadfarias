@@ -3457,6 +3457,39 @@ Todos os preços gravados hoje chegaram ao canal. Os fatores públicos seguem 0,
 
 **Código:** a regra nova está em `quartos.json` (`sabado_override`). A auditoria anual fecha o sábado que aparecer aberto, e o validador barra plano que abra o sábado (101 testes OK). A ordem é `dono-2026-11-02-sabados-fechados`.
 
+## 01/11/2026, 21:30 — Fins de semana e feriados de novembro a janeiro contra a concorrência (análise, nada gravado)
+
+**Pedido do dono:** "verifique o valor médio para os finais de semana dos próximos 3 meses e feriados, para que possamos estar à altura dos concorrentes e não perder oportunidades."
+
+**O que foi lido:**
+- Booking: 13 estadias, de 06/11 a 31/01, com 77 concorrentes com hidro e vista (53 a 70 com preço por estadia) e as nossas duas pousadas.
+- PriceLabs: preços dos 7 quartos.
+- Beds24: inventário de 05/11 a 31/01.
+- Análise completa em `pricelabs/fins-de-semana-feriados-3-meses.md`.
+
+**Resultado:**
+
+| Estadia | Média da lista (mediana) | Mediana com hidro | Recanto na Booking | Villa na Booking |
+|---|---|---|---|---|
+| Fim de semana comum, nov a jan | R$ 870-930 (R$ 795-855) | R$ 1.180-1.310 | dez-jan R$ 1.229 (p50-p59 com hidro); nov R$ 635-720 | dez R$ 839-1.016; jan R$ 1.176 (Balcony, p74 da lista) |
+| Consciência Negra | R$ 1.197 (R$ 1.129) | R$ 1.679 | R$ 2.065, 81% vendido | R$ 1.194, 37% (no piso de feriado) |
+| Natal 24-27/12 | R$ 1.325 (R$ 1.248) | R$ 1.772 | R$ 1.450, 6% | R$ 1.383, 4% |
+| Réveillon 30/12-03/01 | R$ 1.591 (R$ 1.563) | R$ 2.348 | R$ 1.910, 32% | R$ 1.880, 28% |
+| Aniversário de SP 22-25/01 | R$ 791 (R$ 699) | R$ 1.023 | R$ 1.181 (p80 da lista) | R$ 1.095 (p78) |
+
+**Conclusões:**
+- Nos fins de semana de dezembro e janeiro estamos à altura: as suítes ficam na mediana de quem tem hidro.
+- Em novembro estamos baratos. A régua do motor, a âncora de 30/10, tem p50 de fim de semana de R$ 650, abaixo até da lista crua de hoje.
+- No Natal e no Réveillon o preço está na mediana. O que trava são as datas: com o sábado fechado, 24→26/12, 26→28/12 e 30/12→02/01 não vendem, e o mercado vende esses pacotes.
+- Sexta 06/11 tem 4 diárias órfãs: Moinhos 1, Panorâmica I 2 e Panorâmica II 1. O sábado 07/11 esgotou e a saída de sábado está fechada.
+
+**Propostas ao dono** (pendência `fds-feriados-3m-propostas`):
+1. Sábado esgotado abre a saída só naquele quarto, e sexta esgotada abre a entrada do sábado. Começa por 06/11.
+2. Exceção nos sábados 26/12 e 02/01.
+3. Ordem de base do mercado de novembro mirando a mediana da lista medida hoje.
+4. Gatilho do domingo 24/01.
+5. Esta varredura entra na revisão em sombra de 09/11.
+
 > **Regras em vigor:** desde 06/10/2026 elas ficam em `.claude/skills/gestao-receita-pousadas/references/regras.md`. Este arquivo guarda só o histórico das mudanças.
 
 ## O que só pode ser feito na tela (passo a passo para você)

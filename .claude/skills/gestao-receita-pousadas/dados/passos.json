@@ -4191,6 +4191,58 @@
    "total": 7,
    "gravado_em": "2026-11-02T20:02+00:00",
    "chegou_ao_canal": false
+  },
+  {
+   "quarto": "Double",
+   "noite": "2026-11-04",
+   "de": 770.0,
+   "para": 924,
+   "direcao": "sobe",
+   "status": "ritmo",
+   "vendidas": 3,
+   "base": "quarto",
+   "total": 6,
+   "gravado_em": "2026-11-02T22:55+00:00",
+   "chegou_ao_canal": false
+  },
+  {
+   "quarto": "VK2",
+   "noite": "2026-11-26",
+   "de": 737.0,
+   "para": 763,
+   "direcao": "sobe",
+   "status": "ritmo",
+   "vendidas": 2,
+   "base": "pousada",
+   "total": 9,
+   "gravado_em": "2026-11-02T22:55+00:00",
+   "chegou_ao_canal": false
+  },
+  {
+   "quarto": "VK2",
+   "noite": "2026-11-27",
+   "de": 2476.0,
+   "para": 2724,
+   "direcao": "sobe",
+   "status": "frente",
+   "vendidas": 5,
+   "base": "pousada",
+   "total": 9,
+   "gravado_em": "2026-11-02T22:55+00:00",
+   "chegou_ao_canal": false
+  },
+  {
+   "quarto": "VK2",
+   "noite": "2026-11-28",
+   "de": 2324.0,
+   "para": 2557,
+   "direcao": "sobe",
+   "status": "frente",
+   "vendidas": 6,
+   "base": "pousada",
+   "total": 9,
+   "gravado_em": "2026-11-02T22:55+00:00",
+   "chegou_ao_canal": false
   }
  ]
 }

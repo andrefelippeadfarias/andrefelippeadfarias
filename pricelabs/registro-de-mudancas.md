@@ -3698,6 +3698,26 @@ Pelo conector oficial, com café e 2 adultos. Recanto pelas coordenadas (id 7562
 
 **Sync:** as mudanças de 03 a 08/11 só chegam à Booking com o Sync Now do dono ou no envio da madrugada.
 
+## 02/11/2026, 19:55 — Rotina leve das 19:53
+
+**Beds24 desde 16:50:**
+- 2 reservas novas do Airbnb: Panorâmica I 04/11 (1 noite) e King Spa 2 26-29/11 (3 noites).
+- 3 consultas.
+- Check-ins de hoje.
+- As 4 possíveis duplicatas seguem ativas: Balcony 02/11 e 06-08/11; King Spa 2 13-15/11 e 06-08/11.
+- Overbooking igual: King Spa 2 06-07/11 (3 para 2) e Panorâmica I 20-21/11 (7 para 6).
+
+**Gravado às 22:55 UTC (validador 0 erro; conferido pela leitura da API, sem saldo de recálculo):**
+
+| Mudança | Onde | Antes | Depois |
+|---|---|---|---|
+| Escada (3/6) | Panorâmica I 04/11 | R$ 770 | R$ 924 |
+| Escada (Villa 2/9) | King Spa 2 26/11 | R$ 737 | R$ 763 |
+| Escada (ordem do dono de 02/11, 5/9 e 6/9) | King Spa 2 27-28/11 | R$ 2.476 / R$ 2.324 | R$ 2.724 / R$ 2.557 |
+| Regra G | Balcony 27-28/11 | R$ 2.134 / R$ 2.007 | R$ 2.350 / R$ 2.210 |
+
+Com a Panorâmica I a R$ 924 em 04/11, a ordem do Recanto continua de pé: Afrodite a R$ 1.408 (mais de 20% acima) e Panorâmica II entre as duas. Nenhum item de coerência.
+
 > **Regras em vigor:** desde 06/10/2026 elas ficam em `.claude/skills/gestao-receita-pousadas/references/regras.md`. Este arquivo guarda só o histórico das mudanças.
 
 ## O que só pode ser feito na tela (passo a passo para você)

@@ -45,9 +45,14 @@ def cobre(ordem: dict, quarto: str, d: date) -> bool:
 
 
 def ordem_valida(ordens: dict, ordem_id: str | None, quarto: str, d: date) -> dict | None:
-    """A ordem, se existe e cobre o quarto e a noite; senão None."""
+    """A ordem, se existe e cobre o quarto e a noite; senão None. Revisão 02/11: ordem com `noites` só vale nessas
+    noites, e ordem de acompanhamento (gatilho a conferir) não libera exceção nenhuma por si."""
     o = ordens.get(ordem_id or "")
-    return o if o and cobre(o, quarto, d) else None
+    if not o or not cobre(o, quarto, d) or o.get("tipo") == "acompanhamento":
+        return None
+    if o.get("noites") and d.isoformat() not in o["noites"]:
+        return None
+    return o
 
 
 def congelada(ordens: dict, quarto: str, d: date) -> dict | None:

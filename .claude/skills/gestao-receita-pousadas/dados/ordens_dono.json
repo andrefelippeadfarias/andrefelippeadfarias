@@ -743,7 +743,7 @@
     "2026-11-28"
    ],
    "libera": [],
-   "nota": "Feito pela âncora (dados/ancora_mercado.json): as 4 noites passam a usar a lista da varredura de 01/11 (62-65 concorrentes; p50 R$ 827 em 13-14/11 e R$ 816 em 27-28/11, antes R$ 650/644, guardado em 'antes'). As ordens dono-2026-11-01-recanto-base-mercado e dono-2026-11-01-villa-base-mercado seguem valendo (alvo p50, escada de vendas, passo de até 10% por dia de D8 a D30). Não reconstruir a âncora dessas noites com busca mais velha que 01/11. vendidas_base (Beds24, 02/11 01:35 UTC; nas suítes de 1-2 unidades, a contagem da pousada nas suítes com banheira: Recanto de 16, Villa de 9): a escada parte do p50 da régua nova e sobe só com as reservas que entrarem depois (pace.py, ordens.vendidas_base_escada). Sem isso, a régua nova levaria a reta ao percentil da ocupação já existente (Moinhos 14/11 a ~R$ 1.804; Panorâmica II 27/11 a ~R$ 1.616 sem reserva nova), além do que foi proposto ao dono (~R$ 1.300).",
+   "nota": "Feito pela âncora (dados/ancora_mercado.json): as 4 noites passam a usar a lista da varredura de 01/11 (62-65 concorrentes; p50 R$ 827 em 13-14/11 e R$ 816 em 27-28/11, antes R$ 650/644, guardado em 'antes'). As ordens dono-2026-11-01-recanto-base-mercado e dono-2026-11-01-villa-base-mercado seguem valendo (alvo p50, escada de vendas, passo de até 10% por dia de D8 a D30). Não reconstruir a âncora dessas noites com busca mais velha que 01/11. vendidas_base (Beds24, 02/11 01:35 UTC; nas suítes de 1-2 unidades, a contagem da pousada nas suítes com banheira: Recanto de 16, Villa de 9): a escada parte do p50 da régua nova e sobe só com as reservas que entrarem depois (pace.py, ordens.vendidas_base_escada). Sem isso, a régua nova levaria a reta ao percentil da ocupação já existente (Moinhos 14/11 a ~R$ 1.804; Panorâmica II 27/11 a ~R$ 1.616 sem reserva nova), além do que foi proposto ao dono (~R$ 1.300). Revisão independente de 02/11: vendidas_base só nas noites que estavam na reta ou abaixo dela na troca (Moinhos, Panorâmica II, King Spa 2, Balcony e King Spa 7 de 27-28/11). Panorâmica I (4/6) e King Spa 7 de 13-14/11 (4/7, R$ 2.643) ficam sem base: com ela, a noite fraca iria direto ao p50 (King Spa 7 a R$ 1.272, -52%); sem ela, a escada usa a ocupação inteira (reta ~p73).",
    "vendidas_base": {
     "Q7": {
      "2026-11-13": 2,
@@ -751,15 +751,7 @@
      "2026-11-27": 1,
      "2026-11-28": 1
     },
-    "Double": {
-     "2026-11-13": 4,
-     "2026-11-14": 4,
-     "2026-11-27": 4,
-     "2026-11-28": 4
-    },
     "VK7": {
-     "2026-11-13": 4,
-     "2026-11-14": 4,
      "2026-11-27": 3,
      "2026-11-28": 2
     },
@@ -770,12 +762,6 @@
      "2026-11-28": 0
     },
     "Q2": {
-     "2026-11-13": 8,
-     "2026-11-14": 9,
-     "2026-11-27": 5,
-     "2026-11-28": 5
-    },
-    "Afrodite": {
      "2026-11-13": 8,
      "2026-11-14": 9,
      "2026-11-27": 5,

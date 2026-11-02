@@ -37,7 +37,7 @@ import sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from comum import carregar_quartos, periodo_feriado  # noqa: E402
-from ordens import carregar_ordens, piso_da_ordem  # noqa: E402
+from ordens import carregar_ordens, ordem_valida, piso_da_ordem  # noqa: E402
 from validar_plano import estadia_exigida  # noqa: E402
 
 
@@ -104,8 +104,15 @@ def comparar(cfg: dict, quarto: str, cal: dict, de: dt.date, ate: dt.date, orden
         ms_ef = int(float(r.get("min_stay") or 1))
         if ex["min_stay"] and ms_ef < ex["min_stay"]:
             um = dt.timedelta(days=1)
-            if ms_ef == 1 and _cheia(cal.get((d - um).isoformat())) and _cheia(cal.get((d + um).isoformat())):
+            ant = cal.get((d - um).isoformat())
+            orf = ((cfg.get("parametros") or {}).get("regra_h_beds24") or {}).get("orfas") or {}
+            if ms_ef == 1 and _cheia(ant) and _cheia(cal.get((d + um).isoformat())):
                 info.append(f"estadia {ms_ef} < {ex['min_stay']}: dia órfão (noites vizinhas esgotadas)")
+            elif (ms_ef == 1 and d.weekday() == 5 and not ex["feriado"] and orf.get("ativa") and _cheia(ant)
+                  and not _cheia(r) and ordem_valida(ordens or {}, orf.get("ordem_id"), quarto, d)):
+                # dono 02/11 ("Pode fazer"): sexta esgotada com o sábado livre, o sábado órfão vende com estadia 1;
+                # sem isto o plano de 12 meses devolvia a estadia 2 que a auditoria do Beds24 manda tirar (revisão 02/11)
+                info.append(f"estadia 1 < {ex['min_stay']}: sábado órfão (sexta esgotada), ordem {orf.get('ordem_id')}")
             else:
                 falta.append(f"estadia {ms_ef} < {ex['min_stay']}")
                 item["min_stay"] = ex["min_stay"]
@@ -185,7 +192,7 @@ def classificar_beds24(cfg: dict, inv: dict, de: dt.date, ate: dt.date) -> list[
                     chegada.append({"data": ds, "override": o, "troca": troca[o]})
                 elif o != "none" and o != "noCheckOut":
                     outras.append(f"{ds} {o}")
-                if ms < ms_sab and lado_orfao != "sábado":
+                if ms < ms_sab and not (lado_orfao == "sábado" and not periodo_feriado(cfg, d)):
                     estadia.append(ds)
                 continue
             if o != "none" and not (q == "Afrodite" and d.weekday() == 4 and o == "noCheckOut"):
@@ -201,11 +208,16 @@ def classificar_beds24(cfg: dict, inv: dict, de: dt.date, ate: dt.date) -> list[
 
 
 def plano_beds24_sabados(classif: list[dict], motivo: str, motivo_semana: str | None = None) -> list[dict]:
-    """Lote do `beds24.py editar-lote`: libera a chegada nos sábados (tira só a parte da chegada do override) e, com
+    """Lote do `beds24.py editar-lote`: acerta o override do sábado (fechado; exceções do dono de 02/11) e, com
     `motivo_semana`, devolve ao calendário a estadia de domingo a quinta fora de feriado (dono, 01/11)."""
-    lote = [{"quarto": x["quarto"], "de": s["data"], "ate": s["data"], "override": s["troca"],
-             "motivo": motivo + (f" ({s['motivo']})" if s.get("motivo") else "")}
-            for x in classif for s in x["sabados_fora_da_regra"]]
+    lote = []
+    for x in classif:
+        for s in x["sabados_fora_da_regra"]:
+            it = {"quarto": x["quarto"], "de": s["data"], "ate": s["data"], "override": s["troca"],
+                  "motivo": s.get("motivo") or motivo}
+            if s.get("pricelabs_tambem"):
+                it["pricelabs_tambem"] = True  # Afrodite: grave também no PriceLabs por data, senão o envio desfaz
+            lote.append(it)
     if motivo_semana:
         lote += [{"quarto": x["quarto"], "de": s["data"], "ate": s["data"], "min_stay": s["calendario"],
                   "motivo": motivo_semana} for x in classif for s in x.get("semana_estadia_acima", [])]
@@ -244,11 +256,12 @@ def main(argv=None) -> int:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("modo", choices=["plano", "auditar"])
     ap.add_argument("--hoje", required=True)
-    ap.add_argument("--de", help="primeira noite (padrão: hoje + 4, para não mexer no que a rotina decide de D0 a D3)")
+    ap.add_argument("--de", help="primeira noite (padrão: hoje + 4 no PriceLabs, para não mexer no que a rotina decide de "
+                                 "D0 a D3; o Beds24 é auditado desde hoje)")
     ap.add_argument("--ate", help="última noite (padrão: hoje + 366 dias, horizonte rolante de 12 meses)")
     ap.add_argument("--saida", default="plano_12m.json")
     ap.add_argument("--json")
-    ap.add_argument("--plano-beds24", help="grava o lote do beds24.py editar-lote que libera a chegada nos sábados")
+    ap.add_argument("--plano-beds24", help="grava o lote do beds24.py editar-lote que acerta a chegada/saída dos sábados")
     ap.add_argument("--sem-beds24", action="store_true", help="não conferir as restrições no Beds24")
     ap.add_argument("recalculos", nargs="+", help="QUARTO=arquivo do refresh_listing_pricing")
     a = ap.parse_args(argv)
@@ -285,7 +298,10 @@ def main(argv=None) -> int:
         print(f"{len(plano['itens'])} itens em {a.saida}")
     b24 = []
     if not a.sem_beds24:
-        b24 = auditar_beds24(cfg, de, ate)
+        # Beds24 desde hoje (revisão 02/11): o lado órfão do sábado muda com reserva e cancelamento de D0 a D3 também;
+        # o corte em hoje + 4 vale só para os pisos e estadias do PriceLabs
+        de_b24 = dt.date.fromisoformat(a.de) if a.de else hoje
+        b24 = auditar_beds24(cfg, de_b24, ate)
         for x in b24:
             ch, es, ou = x["sabados_fora_da_regra"], x["sabados_estadia_abaixo"], x["outras_noites_bloqueadas"]
             se = x.get("semana_estadia_acima") or []
@@ -297,9 +313,12 @@ def main(argv=None) -> int:
                   (f"; outras noites com restrição: {len(ou)} ({', '.join(ou[:3])}...)" if ou else "") +
                   (f"; noites órfãs com estadia acima de 1 (PriceLabs por data, ordem dono-2026-11-02-sabado-orfao): "
                    f"{', '.join(o['data'] for o in oe)}" if oe else ""))
+            for s_ in ch:
+                if s_.get("pricelabs_tambem"):
+                    print(f"  PriceLabs também ({x['quarto']}): {s_['data']} -> {s_['troca']} (check_in/check_out por data)")
         if a.plano_beds24:
-            lote = plano_beds24_sabados(b24, "Regra H (dono 01/11, 'Sim .'): chegada no sábado liberada com a estadia "
-                                             "mínima da noite; sábado sozinho segue bloqueado; saída mantida",
+            lote = plano_beds24_sabados(b24, "Dono 02/11: sábado fechado para entrada e saída, sempre (noCheckInOrCheckOut); "
+                                             "exceções do dono de 02/11 vão com o motivo próprio",
                                         "Regra A no Beds24 (dono 01/11, 'Sim'): domingo a quinta fora de feriado com a "
                                         "estadia do calendário de sazonalidade")
             json.dump(lote, open(a.plano_beds24, "w"), ensure_ascii=False, indent=1)

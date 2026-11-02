@@ -34,6 +34,26 @@ Cada mudança feita na própria Skill (regras, parâmetros, scripts, fluxo) entr
 - **O que mudou:** `scripts/beds24.py`: `inventario` (GET /inventory/rooms/calendar: numAvail, minStay, override) e `editar` (POST, simulação por padrão, `--aplicar` grava e relê; só disponibilidade, estadia mínima e chegada/saída; trava preço e valores fora do intervalo); credencial de escrita por `BEDS24_INVITE_CODE` → refresh token em /root/.beds24 (600) ou `BEDS24_REFRESH_TOKEN`. Testes `TestBeds24Edicao`. `SKILL.md`: inventário em toda rotina. Ordem `dono-2026-11-01-beds24-edicao`.
 - **Como desfazer:** apagar a ordem e os comandos `inventario`/`editar`; a skill volta a só ler reservas.
 
+## 02/11/2026 23:20 BRT: revisão independente das mudanças de 22:30 (19 agentes, 13 achados confirmados, todos corrigidos)
+- `calendario_12m.comparar`: sábado órfão com estadia 1 (sexta esgotada, sábado livre, fora de feriado, ordem vigente) vira `info`. Antes o plano de 12 meses devolvia a estadia 2, e os dois lados se desfaziam a cada rotina.
+- `calendario_12m.main`: o Beds24 é auditado desde hoje, porque o lado órfão muda de D0 a D3. O PriceLabs segue de hoje + 4.
+- O lote leva `pricelabs_tambem` da Afrodite e o motivo do item. O motivo-base desatualizado ("chegada no sábado liberada") foi trocado. O console mostra o que vai também ao PriceLabs.
+- Sábado de feriado com estadia 1 continua em `sabados_estadia_abaixo` mesmo com a sexta esgotada.
+- `ordens.ordem_valida`:
+  - ordem com `noites` só vale nessas noites;
+  - ordem de acompanhamento não libera exceção.
+- `validar_plano`:
+  - só ordem com `libera` "sabado_aberto"/"sabado_aberto_orfao" abre o sábado;
+  - a estadia 1 da ordem do órfão vale só na noite órfã e fora de feriado.
+- `pace.coerencia`: o teto da Panorâmica II pela escada também usa `vendidas_base`. Antes ia a ~R$ 1.616-1.956 sem reserva nova.
+- `vendidas_base` saiu da Panorâmica I e da King Spa 7 de 13-14/11, que estavam acima da reta. Com a base, a noite fraca iria direto ao p50 (King Spa 7 a R$ 1.272, -52%).
+- O teste do cancelamento abaixo da base ficou estrito.
+- Testes novos:
+  - `test_revisao_0211_sabado_orfao_no_plano_12m_e_feriado`;
+  - `test_revisao_0211_validador_ordens_do_sabado`;
+  - `test_revisao_0211_panoramica_ii_com_vendidas_base`.
+- 108 testes OK. Refutados 3: a ordem nova não abre estadia de feriado; o piso da reta segue a ocupação total (de propósito); a proteção da régua usa o `n` real.
+
 ## 02/11/2026 22:30 BRT: propostas de fins de semana e feriados aprovadas (dono: "Pode fazer")
 - `calendario_12m.classificar_beds24`: o alvo do sábado deixa de ser sempre `noCheckInOrCheckOut`. `regra_h_beds24.sabados_excecao` (26/12 e 02/01: `none`) e `regra_h_beds24.orfas` (sábado esgotado com sexta livre → `noCheckIn`; sexta esgotada com sábado livre → `noCheckOut`, quarto a quarto; o lado esgotado reaberto volta a fechar). Lista nova `orfas_estadia` (noite órfã com estadia acima de 1, fora de feriado) para o PriceLabs por data; sábado órfão com estadia 1 não é falta; Afrodite sai com `pricelabs_tambem`. `auditar_beds24` lê também a sexta anterior ao primeiro dia; o lote leva o motivo do item.
 - `validar_plano.validar_chegada_saida`: com `ordem_id` da ordem do sábado órfão, abrir o sábado exige `orfa` ("sexta" abre só a saída; "sábado" só a entrada).

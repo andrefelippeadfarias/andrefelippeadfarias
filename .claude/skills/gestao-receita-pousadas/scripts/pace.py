@@ -853,7 +853,12 @@ def coerencia(cfg: dict, cals: dict, finais: dict, itens: list[dict], hoje: date
                     if anc_q2:
                         pct_q2 = float(ao_q2.get("percentil", 50))
                         if escada_q2:
-                            pct_q2 = percentil_com_vendas(pct_q2, oc2, float(esc.get("p_topo", 90)))
+                            oc_q2 = oc2
+                            vb2 = vendidas_base_escada(ordens, "Q2", d)
+                            if vb2 and tt2:
+                                # régua nova (dono 02/11): como no motor, só as reservas depois da troca sobem a escada
+                                oc_q2 = max(0, vv2 - vb2[0]) / max(1, tt2 - vb2[0])
+                            pct_q2 = percentil_com_vendas(pct_q2, oc_q2, float(esc.get("p_topo", 90)))
                         base_q2 = valor_percentil(anc_q2, pct_q2) / fator_publico(cfg, "Recanto")
                         teto_q2 = min(teto_q2, base_q2)
                 if escada_q2 and forte_q2:

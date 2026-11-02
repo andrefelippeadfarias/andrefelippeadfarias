@@ -320,6 +320,13 @@ class Validador:
             self.aviso(i, it, f"{'feriado' if fer else 'sábado'} sem min_stay no item: confira a estadia ({exig} noites) depois de gravar")
         if ms is not None:
             ms = int(ms)
+            ordem_orfa = (((self.cfg.get("parametros") or {}).get("regra_h_beds24") or {}).get("orfas") or {}).get("ordem_id")
+            if ordem_orfa and it.get("ordem_id") == ordem_orfa and ms < 2:
+                # dono 02/11: a estadia 1 da ordem do sábado órfão vale só na noite órfã (sexta ou sábado), fora de feriado
+                lado = it.get("orfa")
+                if fer or lado not in ("sexta", "sábado") or d.weekday() != (4 if lado == "sexta" else 5):
+                    self.erro(i, it, f"{q['nome']}: estadia {ms} pela ordem {ordem_orfa} só na noite órfã (campo 'orfa' "
+                                     "'sexta' numa sexta ou 'sábado' num sábado) e fora de feriado")
             if fer and exig and ms < exig and excecao != "dono":
                 self.erro(i, it, f"feriado ({fer['nome']}) exige estadia mínima {exig}; item com {ms}")
             if d.weekday() == 5 and ms < 2:
@@ -359,10 +366,15 @@ class Validador:
                     self.erro(i, it, f"{q['nome']}: {campo} abre o sábado contra a ordem do dono de 02/11 (sábado fechado "
                                      "para entrada e saída, sempre); só com nova ordem do dono (excecao 'dono')")
                 elif s[5] == "1":
-                    # exceção do dono de 02/11 ("Pode fazer"): o lado órfão abre só com o motivo (que lado esgotou)
+                    # exceção do dono de 02/11 ("Pode fazer"): só ordem que libera abrir o sábado (revisão 02/11: antes
+                    # qualquer ordem vigente abria); o lado órfão abre só com o motivo (que lado esgotou)
                     rh = (self.cfg.get("parametros") or {}).get("regra_h_beds24") or {}
                     ordem_orfa = (rh.get("orfas") or {}).get("ordem_id")
-                    if ordem_orfa and it.get("ordem_id") == ordem_orfa:
+                    lib = ((self.ordens or {}).get(it.get("ordem_id") or "") or {}).get("libera") or []
+                    if "sabado_aberto" not in lib and "sabado_aberto_orfao" not in lib:
+                        self.erro(i, it, f"{q['nome']}: {campo} abre o sábado e a ordem citada ({it.get('ordem_id')}) não "
+                                         "libera 'sabado_aberto' nem 'sabado_aberto_orfao'")
+                    elif ordem_orfa and it.get("ordem_id") == ordem_orfa:
                         lado = it.get("orfa")
                         if lado not in ("sexta", "sábado"):
                             self.erro(i, it, f"{q['nome']}: abrir o sábado pela ordem {ordem_orfa} exige o campo 'orfa' "

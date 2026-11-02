@@ -3544,7 +3544,10 @@ Pelo conector oficial, com café e 2 adultos. Recanto pelas coordenadas (id 7562
 - Moinhos e Panorâmica II: cerca de R$ 1.313 enviados em 13-14/11 e R$ 1.295 em 27-28/11;
 - King Spa 7 e King Spa 2: cerca de R$ 1.272 em 13-14/11 e R$ 1.255 em 27-28/11;
 - cada reserva nova sobe mais um degrau;
-- Panorâmica I e King Spa 7 de 13-14/11, que já vendem bem, não descem.
+- **Corrigido às 23:20 pela revisão independente:** a Panorâmica I e a King Spa 7 de 13-14/11 ficam sem `vendidas_base`, e a escada delas usa a ocupação inteira.
+  - Panorâmica I: está à frente da curva (4/6) e não desce.
+  - King Spa 7 sábado 14/11: também à frente, não desce.
+  - King Spa 7 sexta 13/11: 4/7, D11, "no ritmo", e a ordem de base do mercado da Villa conta a noite como fraca. Na rodada das 07:53, ela desce de R$ 2.643 para a reta da escada, R$ 1.907 enviados (p73 da lista, ~R$ 1.245 na Booking). Com a régua antiga, iria a ~R$ 1.198.
 
 **Código:**
 - `calendario_12m`: sábado de festa e lado órfão, mais a lista `orfas_estadia`.
@@ -3552,6 +3555,21 @@ Pelo conector oficial, com café e 2 adultos. Recanto pelas coordenadas (id 7562
 - `ordens.vendidas_base_escada` e `pace`: a escada parte da base.
 - `ancora_mercado`: a régua do dono não é trocada por amostra menor.
 - 105 testes OK.
+
+## 01/11/2026, 23:20 — Revisão independente das mudanças de 22:30 (13 achados confirmados, todos corrigidos; nada novo gravado no PriceLabs nem no Beds24)
+
+| Achado | Correção |
+|---|---|
+| O plano de 12 meses devolvia a estadia 2 ao sábado órfão (os dois lados se desfazendo) | `comparar` aceita a estadia 1 do sábado órfão como informação |
+| A auditoria do Beds24 começava em D4: sábados de D0 a D3 não abriam nem voltavam a fechar | o Beds24 é auditado desde hoje; a rotina leve audita quando uma sexta ou um sábado de D0 a D7 muda |
+| Afrodite: `pricelabs_tambem` não chegava ao lote; motivo do lote desatualizado | o lote leva o campo e o motivo do item |
+| Sábado de feriado com estadia 1 sumia da lista quando a sexta esgotava | volta a aparecer |
+| Qualquer ordem vigente abria o sábado; ordem de acompanhamento e noite fora de `noites` valiam como exceção | só ordem que libera abrir o sábado abre; as outras duas não valem mais |
+| A Panorâmica II ia a ~R$ 1.616-1.956 pela coerência, sem reserva nova | o teto dela também parte de `vendidas_base` |
+| Panorâmica I e King Spa 7 de 13-14/11 iriam ao p50 (King Spa 7 a R$ 1.272) | `vendidas_base` saiu dessas noites |
+| Teste fraco do cancelamento | asserção estrita |
+
+108 testes OK. Auditoria do Beds24 de 02/11/2026 a 31/10/2027: 0 sábado fora da regra.
 
 > **Regras em vigor:** desde 06/10/2026 elas ficam em `.claude/skills/gestao-receita-pousadas/references/regras.md`. Este arquivo guarda só o histórico das mudanças.
 

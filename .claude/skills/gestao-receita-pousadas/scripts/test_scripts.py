@@ -997,6 +997,59 @@ class TestCalendario12m(unittest.TestCase):
                           ("Q2", "2026-11-07", "noCheckIn"), ("Q7", "2026-11-07", "noCheckIn"), ("VK7", "2026-11-21", "noCheckIn")])
         self.assertTrue(all("min_stay" not in i for i in lote))
 
+    def test_revisao_0211_sabado_orfao_no_plano_12m_e_feriado(self):
+        """Revisão de 02/11: (1) o plano de 12 meses aceita a estadia 1 do sábado órfão (sexta esgotada, sábado livre,
+        fora de feriado) como informação, sem devolver a estadia 2; (2) sábado de FERIADO com estadia 1 continua falta
+        mesmo com a sexta esgotada; (3) o lote leva `pricelabs_tambem` da Afrodite e o motivo do item."""
+        import datetime as dt
+        import calendario_12m as c12
+        from ordens import carregar_ordens
+        ordens = carregar_ordens()
+        cal = {"2026-11-13": {"min_price": "3000", "min_stay": "1", "price": "3000", "mu_occupancy": "6/6"},
+               "2026-11-14": {"min_price": "3000", "min_stay": "1", "price": "3000", "mu_occupancy": "4/6"},
+               "2026-11-15": {"min_price": "1300", "min_stay": "1", "price": "1300", "mu_occupancy": "1/6"}}
+        dif = {x["data"]: x for x in c12.comparar(CFG, "Double", cal, dt.date(2026, 11, 13), dt.date(2026, 11, 15), ordens)}
+        self.assertEqual(dif["2026-11-14"]["falta"], [])
+        self.assertIn("sábado órfão", dif["2026-11-14"]["info"][0])
+        # sexta livre: a estadia 1 do sábado volta a ser falta (o sábado volta a fechar)
+        cal["2026-11-13"]["mu_occupancy"] = "5/6"
+        dif = {x["data"]: x for x in c12.comparar(CFG, "Double", cal, dt.date(2026, 11, 13), dt.date(2026, 11, 15), ordens)}
+        self.assertEqual(dif["2026-11-14"]["item"]["min_stay"], 2)
+        f = "noCheckInOrCheckOut"
+        inv = {"VK7": {"2027-01-22": {"numAvail": 0, "minStay": 2, "override": "none"},
+                       "2027-01-23": {"numAvail": 3, "minStay": 1, "override": f}},
+               "Afrodite": {"2026-11-13": {"numAvail": 1, "minStay": 1, "override": "none"},
+                            "2026-11-14": {"numAvail": 0, "minStay": 2, "override": f}}}
+        cl = {x["quarto"]: x for x in c12.classificar_beds24(CFG, inv, dt.date(2026, 11, 2), dt.date(2027, 10, 31))}
+        self.assertEqual(cl["VK7"]["sabados_estadia_abaixo"], ["2027-01-23"])
+        self.assertEqual(cl["VK7"]["orfas_estadia"], [])
+        lote = c12.plano_beds24_sabados(list(cl.values()), "base")
+        afro = [i for i in lote if i["quarto"] == "Afrodite"]
+        self.assertEqual(len(afro), 1)
+        self.assertTrue(afro[0].get("pricelabs_tambem"))
+        self.assertIn("sábado esgotado", afro[0]["motivo"])
+
+    def test_revisao_0211_validador_ordens_do_sabado(self):
+        """Revisão de 02/11: só ordem que libera abrir o sábado abre; ordem de acompanhamento e noite fora de `noites`
+        não valem como exceção; a estadia 1 da ordem do órfão só na noite órfã, fora de feriado."""
+        from datetime import date
+        v = Validador(CFG, date(2026, 11, 2))
+        v.validar([{"tipo": "data", "quarto": "Afrodite", "data": "2026-11-14", "check_in": "1111111", "check_out": "1111111",
+                    "min_stay": 2, "motivo": "t", "excecao": "dono", "ordem_id": "dono-2026-11-02-nov-fds-regua-lista"}])
+        self.assertTrue(any("não libera 'sabado_aberto'" in e for e in v.erros), v.erros)
+        v = Validador(CFG, date(2026, 11, 2))
+        v.validar([{"tipo": "data", "quarto": "VK7", "data": "2027-01-22", "min_stay": 1, "motivo": "t", "excecao": "dono",
+                    "ordem_id": "dono-2026-11-02-aniv-sp-gatilho"}])
+        self.assertTrue(any("sem ordem_id vigente" in e for e in v.erros), v.erros)
+        v = Validador(CFG, date(2026, 11, 2))
+        v.validar([{"tipo": "data", "quarto": "Q7", "data": "2026-11-20", "min_stay": 1, "motivo": "t", "excecao": "dono",
+                    "ordem_id": "dono-2026-11-02-sabado-orfao", "orfa": "sexta"}])
+        self.assertTrue(any("só na noite órfã" in e for e in v.erros), v.erros)
+        v = Validador(CFG, date(2026, 11, 2))
+        v.validar([{"tipo": "data", "quarto": "Q2", "data": "2026-11-06", "min_stay": 1, "motivo": "t", "excecao": "dono",
+                    "ordem_id": "dono-2026-11-02-sabado-orfao", "orfa": "sexta"}])
+        self.assertFalse(any("órfã" in e or "ordem_id" in e for e in v.erros), v.erros)
+
     def test_validador_sabado_orfao(self):
         """A ordem do sábado órfão abre só o lado órfão e exige o campo 'orfa'."""
         from datetime import date
@@ -1445,6 +1498,29 @@ class TestPace(unittest.TestCase):
         self.assertLess(q2, 1000)                                   # sem o salto para o piso padrão
         self.assertLessEqual(float(its["Q2"]["max_price"]), max(q7, dbl) + 1)
 
+    def test_revisao_0211_panoramica_ii_com_vendidas_base(self):
+        """Revisão de 02/11: na coerência, o teto da Panorâmica II pela escada também parte da base (vendidas_base da
+        pousada), como no motor: sem reserva nova, fica no p50, não no percentil da ocupação existente."""
+        import pace
+        self.cfg["parametros"]["pace"]["escada_vendas"]["ativa"] = True
+        n = "2026-11-10"
+        anc, ordens, cal = self._recanto_forte(n, q7="2/7", dbl="2/6", q2="0/2")
+        cal["Double"][n].update(price="2000", min_price="2000", max_price="2000")
+        cal["Q7"][n].update(price="400", min_price="400", max_price="400")
+        cal["Q2"][n].update(price="1900", min_price="1900", max_price="1900")
+
+        def teto_q2(ords):
+            res = pace.plano(self.cfg, anc, cal, date(2026, 11, 1), ords, {"passos": []}, dias=12, regra_j_ativa=False)
+            its = [i for i in res["itens"] if i["quarto"] == "Q2" and i["data"] == n]
+            return float(its[0]["max_price"]) if its else None
+        sem = teto_q2(ordens)
+        base = dict(ordens, **{"o-regua": {"id": "o-regua", "tipo": "regra", "quartos": ["Q2"], "de": n, "ate": n,
+                                           "noites": [n], "libera": [], "vendidas_base": {"Q2": {n: 4}}}})
+        com = teto_q2(base)
+        self.assertIsNotNone(sem)
+        self.assertIsNotNone(com)
+        self.assertLess(com, sem)   # sem a base, a ocupação da pousada (4/16) já subia o teto acima do p50
+
     def test_escada_desligada_nao_age(self):
         """Revisão 01/11: com parametros.pace.escada_vendas.ativa = false a ordem com escada não gera degrau de escada
         e a cadência volta à regra das 24 h."""
@@ -1687,7 +1763,7 @@ class TestPace(unittest.TestCase):
         self.assertAlmostEqual(i["min_price"], min(valor_percentil(an, 60) / fp, round(p50) * 1.10), delta=2)
         # cancelamento abaixo da base (2/7): fica no p50, nunca abaixo dele pela escada
         i = item("2/7", round(p50), {"o-esc": esc, "o-regua": regua})
-        self.assertTrue(i is None or i["pace"]["direcao"] is None or i["min_price"] >= round(p50) - 2)
+        self.assertTrue(i is None or i["pace"]["direcao"] is None, i and (i["pace"]["direcao"], i["min_price"]))
 
     def test_pisos_enviados(self):
         import pace

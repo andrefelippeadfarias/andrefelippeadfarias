@@ -3490,6 +3490,26 @@ Todos os preços gravados hoje chegaram ao canal. Os fatores públicos seguem 0,
 4. Gatilho do domingo 24/01.
 5. Esta varredura entra na revisão em sombra de 09/11.
 
+## 01/11/2026, 21:47 — Conferência na Booking dos sábados fechados (34 min depois da gravação no Beds24)
+
+Pelo conector oficial, com café e 2 adultos. Recanto pelas coordenadas (id 7562933), Villa pelo nome (id 14824789). O Beds24 foi relido na mesma hora: os sábados 14/11 e 26/12 estão com noCheckInOrCheckOut nos 7 quartos.
+
+| Teste | Deve | Recanto | Villa |
+|---|---|---|---|
+| (1) Chegada no sábado, 14→16/11 | não vender | **não vende** (às 21:31 ainda vendia, R$ 1.009) | **vende**: R$ 1.863,69 (às 21:31, R$ 2.188,44) |
+| (2) Saída no sábado, 12→14/11 | não vender | **não vende** | **vende**: R$ 2.217,81 |
+| (3) Natal 24→26/12 | não vender | **não vende** | — |
+| (4) Sexta→domingo, 13→15/11 | vender | vende, R$ 1.440,03 | vende, R$ 1.309,27 |
+
+- **Recanto: a trava chegou à Booking por completo.** A saída fechada já valia aos 18 minutos; a chegada fechada levou entre 18 e 34 minutos.
+- **Villa: a trava não chega à Booking na King Spa 7.**
+  - A Balcony respeita a trava. Em 13→15/11 a Booking mostra a Balcony (R$ 1.309 = R$ 2.006 enviados × 0,653).
+  - Nos testes (1) e (2), a Balcony some e aparece a King Spa 7: R$ 2.217,81 = (R$ 755 + R$ 2.643) × 0,653, e R$ 2.188,44 = (R$ 2.643 + R$ 710) × 0,653.
+  - Os R$ 1.863,69 de 21:47 dão 0,85 desse valor, provavelmente outra tarifa da mesma King Spa 7.
+  - A King Spa 2 não pôde ser testada nessas datas, porque está esgotada em 12/11 e 15/11.
+  - O Beds24 tem a trava certa na King Spa 7. O que falha é o envio das restrições dessa acomodação, ou das tarifas dela, para a Booking.
+- **Dono:** conferir no Beds24 (Channel Manager, Booking.com, mapeamento da King Spa 7 e das tarifas ligadas a ela) ou na extranet da Booking se o "fechado para chegada/saída" está ligado nessa acomodação. Enquanto isso, a Booking da Villa vende chegada e saída no sábado na King Spa 7. Pendência `villa-trava-sabado-booking` atualizada.
+
 > **Regras em vigor:** desde 06/10/2026 elas ficam em `.claude/skills/gestao-receita-pousadas/references/regras.md`. Este arquivo guarda só o histórico das mudanças.
 
 ## O que só pode ser feito na tela (passo a passo para você)

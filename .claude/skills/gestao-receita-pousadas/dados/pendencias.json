@@ -783,10 +783,10 @@
   },
   {
    "id": "villa-trava-sabado-booking",
-   "responsavel": "skill",
+   "responsavel": "dono",
    "desde": "2026-11-01",
-   "urgencia": 0,
-   "texto": "A Booking da Villa não aplica o 'sem saída' de sábado do Beds24 (vende 24→26/12, 17→19/12 e 30/12→02/01 com noCheckOut em 19/12, 26/12 e 02/01), e a do Recanto aplica. Descobrir por quê (mapeamento de restrições do canal no Beds24) e dizer ao dono se a sexta sozinha da Villa está protegida só pela estadia mínima."
+   "urgencia": 2,
+   "texto": "A Booking da Villa não aplica a trava de sábado do Beds24 NA KING SPA 7 (conferência de 01/11 21:47 BRT, 34 min depois de gravar noCheckInOrCheckOut nos 364 sábados): chegada no sábado 14→16/11 e saída no sábado 12→14/11 vendem a King Spa 7 (preço = enviado × 0,653), enquanto a Balcony respeita a trava (some nesses testes e aparece em 13→15/11). O Recanto aplica a trava por completo (chegada e saída). O Beds24 tem a trava certa na King Spa 7; falta o envio das restrições dessa acomodação/tarifas para a Booking. Dono: conferir no Beds24 (Channel Manager > Booking.com > mapeamento da King Spa 7 e tarifas ligadas) ou na extranet se o fechado para chegada/saída está ligado; a King Spa 2 não pôde ser testada (esgotada em 12/11 e 15/11). Skill: reconferir na Booking depois que o dono mexer."
   },
   {
    "id": "fds-feriados-3m-propostas",
@@ -796,5 +796,5 @@
    "texto": "Propostas da análise de fins de semana e feriados (pricelabs/fins-de-semana-feriados-3-meses.md), aguardando o sim do dono: (1) sábado esgotado abre a saída só naquele quarto e sexta esgotada abre a entrada do sábado, a começar pela sexta 06/11 (Moinhos 1, Panorâmica I 2, Panorâmica II 1, com estadia mínima 1 na Panorâmica II); (2) exceção nos sábados 26/12 e 02/01 (entrada e saída), para vender 24→26/12, 26→28/12 e 30/12→02/01; (3) ordem de base do mercado de novembro mirando a mediana da lista de hoje nas sextas e sábados de 13-14/11 e 27-28/11 (cerca de R$ 1.300 enviados na Moinhos, Panorâmica II e King Spa 2); (4) gatilho em 01/01: com 22-24/01 abaixo de 20%, o domingo 24/01 sai do feriado (preço de domingo, estadia mínima 1); (5) a varredura entra na revisão em sombra de 09/11 (skill). A proposta 1 vence na sexta 06/11 (D4)."
   }
  ],
- "versao": "2026-11-01T23c"
+ "versao": "2026-11-01T23d"
 }

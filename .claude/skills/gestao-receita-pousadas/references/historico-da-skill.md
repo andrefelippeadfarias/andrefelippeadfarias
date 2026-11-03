@@ -2,6 +2,11 @@
 
 Cada mudança feita na própria Skill (regras, parâmetros, scripts, fluxo) entra aqui: data, o que mudou, por quê (evidência) e como desfazer. A entrada mais nova fica em cima.
 
+## 03/11/2026 16:30 BRT: Booking fechada pelo limite do canal no Beds24 (dono)
+- **Por quê:** dono, 03/11: "Vamos fechar as disponibilidades dos 2 hoteis . Tanto recanto e villa dolce amore na booking apensa s." (extranet invadida).
+- **O que mudou:** `beds24.py`: `corpo_edicao(..., canais_max={"booking": 0|None})` grava `channels.booking.maxBookings` (o 0 vai como texto "0", porque a API ignora o 0 numérico); `inventario` lê `canais_max`; `editar_lote` aceita e confere `canais_max`. Teste `TestBeds24LimiteCanal`; 117 OK. Gravado nos 7 quartos de 03/11/2026 a 02/11/2028 e conferido.
+- **Como desfazer:** `editar-lote` com `canais_max` {"booking": null} no mesmo período.
+
 ## 03/11/2026 14:30 BRT: vigilância de segurança (dono: Booking invadida)
 - **Por quê:** dono, 03/11: "A nossa bokking .com foi invadida ." e "Precisamos proteger nossas propriedades".
 - **O que mudou:** `scripts/vigia_seguranca.py` (somente leitura no Beds24: origem desconhecida, rajada de 3+ cancelamentos do mesmo canal em 3 h, reserva sem valor; saída sem nomes de hóspedes); `quartos.json` → `parametros.seguranca` (origens conhecidas, limites, id e endereço das duas propriedades na Booking, faixa da razão Booking ÷ enviado); `SKILL.md` (vigilância em toda rotina e conferência das propriedades na Booking às 10:53); pendência `booking-invadida-2026-11-03`. Teste `TestVigiaSeguranca`.

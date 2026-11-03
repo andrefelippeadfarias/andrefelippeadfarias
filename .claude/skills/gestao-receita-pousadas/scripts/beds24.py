@@ -142,7 +142,7 @@ def inventario(token, de, ate, quartos=None):
     minStay cai para o do quarto quando o dia não tem)."""
     ids = [ID_DO_CURTO[q] for q in (quartos or ID_DO_CURTO)]
     params = {"roomId": ids, "startDate": de, "endDate": ate, "includeNumAvail": "true", "includeMinStay": "true",
-              "includeMaxStay": "true", "includeOverride": "true"}
+              "includeMaxStay": "true", "includeOverride": "true", "includeChannels": "true"}
     out = {}
     for item in paginas("/inventory/rooms/calendar", params, token):
         curto = QUARTOS.get(str(item.get("roomId")), (str(item.get("roomId")), 0))[0]
@@ -152,11 +152,18 @@ def inventario(token, de, ate, quartos=None):
             while d <= fim:
                 if de <= d.isoformat() <= ate:
                     dias[d.isoformat()] = {k: faixa.get(k) for k in ("numAvail", "minStay", "maxStay", "override")}
+                    canais = {c: (v or {}).get("maxBookings") for c, v in (faixa.get("channels") or {}).items()
+                              if isinstance(v, dict) and (v or {}).get("maxBookings") is not None}
+                    if canais:
+                        dias[d.isoformat()]["canais_max"] = canais
                 d += dt.timedelta(days=1)
     return out
 
 
-def corpo_edicao(curto, de, ate, min_stay=None, override=None, num_avail=None, max_stay=None):
+CANAIS_LIMITE = ("booking", "expedia", "airbnb")
+
+
+def corpo_edicao(curto, de, ate, min_stay=None, override=None, num_avail=None, max_stay=None, canais_max=None):
     """Corpo do POST /inventory/rooms/calendar com as travas da skill (sem preço, valores no intervalo)."""
     if curto not in ID_DO_CURTO:
         raise ErroBeds24(f"quarto desconhecido: {curto}")
@@ -183,8 +190,20 @@ def corpo_edicao(curto, de, ate, min_stay=None, override=None, num_avail=None, m
         if not 0 <= int(num_avail) <= UNIDADES[curto]:
             raise ErroBeds24(f"disponibilidade fora de 0 a {UNIDADES[curto]} para {curto}")
         faixa["numAvail"] = int(num_avail)
+    if canais_max:
+        # dono 03/11 ("Vamos fechar as disponibilidades dos 2 hoteis ... na booking apenas"): limite de reservas por canal
+        # no calendário (0 fecha só aquele canal; None tira o limite e reabre). Não mexe no numAvail dos outros canais.
+        ch = {}
+        for canal, v in canais_max.items():
+            if canal not in CANAIS_LIMITE:
+                raise ErroBeds24(f"canal inválido: {canal} (use {', '.join(CANAIS_LIMITE)})")
+            if v is not None and not 0 <= int(v) <= UNIDADES[curto]:
+                raise ErroBeds24(f"limite do canal fora de 0 a {UNIDADES[curto]} para {curto}")
+            # 03/11: a API ignora maxBookings 0 numérico (responde success sem gravar) e grava o texto "0"; manda texto
+            ch[canal] = {"maxBookings": None if v is None else str(int(v))}
+        faixa["channels"] = ch
     if len(faixa) == 2:
-        raise ErroBeds24("nada a mudar: informe --min-stay, --max-stay, --override ou --num-avail")
+        raise ErroBeds24("nada a mudar: informe --min-stay, --max-stay, --override, --num-avail ou o limite do canal")
     if any(k.startswith("price") for k in faixa):
         raise ErroBeds24("preço não se muda pelo Beds24 (só pelo PriceLabs)")
     return [{"roomId": ID_DO_CURTO[curto], "calendar": [faixa]}]
@@ -374,7 +393,7 @@ def editar_lote(plano, aplicar=False):
     por_quarto, linhas = {}, []
     for it in plano:
         c = corpo_edicao(it["quarto"], it["de"], it["ate"], it.get("min_stay"), it.get("override"), it.get("num_avail"),
-                         it.get("max_stay"))
+                         it.get("max_stay"), it.get("canais_max"))
         por_quarto.setdefault(c[0]["roomId"], []).extend(c[0]["calendar"])
         linhas.append(it)
     de = min(i["de"] for i in plano)
@@ -384,7 +403,7 @@ def editar_lote(plano, aplicar=False):
     resumo = {"itens": len(plano), "quartos": quartos, "aplicar": aplicar}
     if not aplicar:
         resumo["amostra"] = [{"quarto": i["quarto"], "de": i["de"], "antes": antes.get(i["quarto"], {}).get(i["de"]),
-                              "mudanca": {k: i[k] for k in ("min_stay", "max_stay", "override", "num_avail")
+                              "mudanca": {k: i[k] for k in ("min_stay", "max_stay", "override", "num_avail", "canais_max")
                                           if i.get(k) is not None}}
                              for i in plano[:12]]
         return resumo
@@ -405,6 +424,10 @@ def editar_lote(plano, aplicar=False):
                 alvo = i.get("num_avail_esperado", i[campo]) if campo == "num_avail" else i[campo]
                 if v.get(chave) != alvo:
                     erros.append(f"{i['quarto']} {d}: {chave} {v.get(chave)} (esperado {alvo})")
+            for canal, alvo in (i.get("canais_max") or {}).items():
+                lido = (v.get("canais_max") or {}).get(canal)
+                if lido != alvo:
+                    erros.append(f"{i['quarto']} {d}: limite {canal} {lido} (esperado {alvo})")
             d += dt.timedelta(days=1)
     resumo.update({"resposta_ok": all((r or {}).get("success", True) for r in (resp if isinstance(resp, list) else [resp])),
                    "conferidos": len(plano) - len({e.split(':')[0] for e in erros}), "erros": erros})

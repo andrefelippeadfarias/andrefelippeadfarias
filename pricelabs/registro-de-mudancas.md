@@ -3976,6 +3976,17 @@ Preço enviado. Na Booking: ~R$ 685 a até 7 dias e ~R$ 790-920 de 8 dias em dia
 **Resultado (4 pesquisas em documentação pública e 1 verificação cruzada; sem senha, sem painel, sem Booking):** a API do Beds24 não cria, lê, altera nem desliga promoções da Booking. Isso só se faz no painel do Beds24 ou na extranet. Há alternativas programáveis de preço, sem selo de promoção, que exigiriam mexer em preço no Beds24 (hoje proibido). Detalhes em `references/ferramentas.md`; proposta na pendência `promocoes-booking-integracao`.
 **Nada gravado.**
 
+## 03/11/2026, 16:15 a 16:35 — Dono: fechar a Booking nas duas pousadas
+
+**Pedido:** "Vamos fechar as disponibilidades dos 2 hoteis . Tanto recanto e villa dolce amore na booking apensa s. Vc consegue fazer isso ?" (extranet da Booking invadida).
+**Feito no Beds24 (API, gravado e conferido na leitura):**
+- Limite de reservas do canal Booking = 0 nos 7 quartos (Moinhos, Panorâmica I, Afrodite, Panorâmica II, King Spa 7, Balcony, King Spa 2), todos os dias de 03/11/2026 a 02/11/2028.
+- Teste antes em 1 quarto e 1 noite: a API aceitou o 0 numérico com "success" mas não gravou; o texto "0" gravou.
+- Airbnb, Expedia e venda direta seguem abertos (disponibilidade intacta). Reservas já feitas pela Booking continuam valendo.
+**Booking:** 1 min depois ainda mostrava as duas pousadas (a Booking leva de 15 a 35 min). Conferência agendada para 35 min depois.
+**PriceLabs:** nada muda; o preço segue indo aos outros canais.
+**Como reabrir:** pedir "Reabra a Booking".
+
 > **Regras em vigor:** desde 06/10/2026 elas ficam em `.claude/skills/gestao-receita-pousadas/references/regras.md`. Este arquivo guarda só o histórico das mudanças.
 
 ## O que só pode ser feito na tela (passo a passo para você)

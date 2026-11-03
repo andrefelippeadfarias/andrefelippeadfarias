@@ -2436,6 +2436,22 @@
    "tipo": "regra",
    "libera": [],
    "nota": "A Panorâmica II flutua pelo PriceLabs como os outros quartos: volta ao motor de pace (sem fora_do_motor) e segue entre a Moinhos e a Panorâmica I. A pendência q2-tarifa-booking-fixa foi encerrada e o relatório não a cita mais."
+  },
+  {
+   "id": "dono-2026-11-03-booking-fechada",
+   "data": "2026-11-03",
+   "texto": "Vamos fechar as disponibilidades dos 2 hoteis . Tanto recanto e villa dolce amore na booking apensa s. Vc consegue fazer isso ?",
+   "contexto": "Extranet da Booking invadida em 03/11 ('A nossa bokking .com foi invadida .').",
+   "quartos": [
+    "*"
+   ],
+   "de": "2026-11-03",
+   "ate": "2028-11-02",
+   "tipo": "regra",
+   "libera": [
+    "beds24_inventario"
+   ],
+   "nota": "Beds24: limite de reservas do canal Booking = 0 (channels.booking.maxBookings, texto \"0\") nos 7 quartos de 03/11/2026 a 02/11/2028, gravado e conferido às 19:31 UTC de 03/11. Airbnb, Expedia e venda direta seguem abertos; reservas já feitas não mudam. O motor de pace segue precificando (o preço vale para os outros canais). Desfazer: pedir 'Reabra a Booking' (editar-lote com canais_max {\"booking\": null} no mesmo período)."
   }
  ]
 }

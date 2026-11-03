@@ -1305,6 +1305,22 @@ class TestOrdemAfrodite(unittest.TestCase):
         self.assertEqual([x for x in fora if x["quarto"] == "Afrodite"], [])
 
 
+class TestBeds24LimiteCanal(unittest.TestCase):
+    """Dono 03/11: fechar só a Booking pelo limite de reservas do canal (maxBookings 0)."""
+
+    def test_corpo_fecha_e_reabre_so_a_booking(self):
+        import beds24
+        c = beds24.corpo_edicao("Q7", "2026-11-03", "2028-11-02", canais_max={"booking": 0})
+        self.assertEqual(c, [{"roomId": 722805, "calendar": [{"from": "2026-11-03", "to": "2028-11-02",
+                                                              "channels": {"booking": {"maxBookings": "0"}}}]}])
+        r = beds24.corpo_edicao("VK2", "2026-11-03", "2026-11-03", canais_max={"booking": None})
+        self.assertEqual(r[0]["calendar"][0]["channels"], {"booking": {"maxBookings": None}})
+        with self.assertRaises(beds24.ErroBeds24):
+            beds24.corpo_edicao("Q7", "2026-11-03", "2026-11-04", canais_max={"decolar": 0})
+        with self.assertRaises(beds24.ErroBeds24):
+            beds24.corpo_edicao("Q2", "2026-11-03", "2026-11-04", canais_max={"booking": 3})
+
+
 class TestVigiaSeguranca(unittest.TestCase):
     """Dono 03/11: Booking invadida; vigilância em toda rotina."""
 

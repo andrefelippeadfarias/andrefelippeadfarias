@@ -4005,6 +4005,10 @@ Preço enviado. Na Booking: ~R$ 685 a até 7 dias e ~R$ 790-920 de 8 dias em dia
 
 **Conferência:** as 2 respostas da API conferidas. **Ledger:** 6 passos.
 
+## 03/11/2026, 17:08 — Conferência da Booking fechada
+
+Conector oficial da Booking: "sem disponibilidade" para Recanto e Villa em 04-05/11, 13-15/11 (às 17:00) e 24-25/11. Antes do fechamento as mesmas buscas mostravam preço (04-05/11: Villa R$ 363 e Recanto R$ 381). O limite 0 do canal Booking no Beds24 fechou a Booking nas duas pousadas.
+
 > **Regras em vigor:** desde 06/10/2026 elas ficam em `.claude/skills/gestao-receita-pousadas/references/regras.md`. Este arquivo guarda só o histórico das mudanças.
 
 ## O que só pode ser feito na tela (passo a passo para você)

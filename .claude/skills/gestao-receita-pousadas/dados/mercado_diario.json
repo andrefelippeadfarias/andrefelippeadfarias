@@ -200,6 +200,138 @@
      }
     }
    ]
+  },
+  {
+   "hoje": "2026-11-03",
+   "captado": "2026-11-03T11:14+00:00",
+   "estadias": [
+    {
+     "checkin": "2026-11-04",
+     "checkout": "2026-11-05",
+     "noites": 1,
+     "n": 66,
+     "mediana": 623.16,
+     "p25": 396.06,
+     "p75": 1136.91,
+     "villa": {
+      "noite": 490.57,
+      "percentil": 36,
+      "vs_mediana": -0.213
+     }
+    },
+    {
+     "checkin": "2026-11-06",
+     "checkout": "2026-11-08",
+     "noites": 2,
+     "n": 62,
+     "mediana": 1240.15,
+     "p25": 848.25,
+     "p75": 1961.38,
+     "villa": {
+      "noite": 1072.16,
+      "percentil": 44,
+      "vs_mediana": -0.135
+     }
+    },
+    {
+     "checkin": "2026-11-13",
+     "checkout": "2026-11-15",
+     "noites": 2,
+     "n": 62,
+     "mediana": 1230.21,
+     "p25": 855.68,
+     "p75": 1793.01,
+     "villa": {
+      "noite": 1447.62,
+      "percentil": 63,
+      "vs_mediana": 0.177
+     }
+    },
+    {
+     "checkin": "2026-11-19",
+     "checkout": "2026-11-22",
+     "noites": 3,
+     "n": 63,
+     "mediana": 1449.01,
+     "p25": 1069.04,
+     "p75": 1927.93,
+     "villa": {
+      "noite": 1174.17,
+      "percentil": 35,
+      "vs_mediana": -0.19
+     }
+    },
+    {
+     "checkin": "2026-11-27",
+     "checkout": "2026-11-29",
+     "noites": 2,
+     "n": 65,
+     "mediana": 1324.09,
+     "p25": 797.05,
+     "p75": 1829.87,
+     "villa": {
+      "noite": 1368.53,
+      "percentil": 51,
+      "vs_mediana": 0.034
+     }
+    },
+    {
+     "checkin": "2026-12-23",
+     "checkout": "2026-12-25",
+     "noites": 2,
+     "n": 48,
+     "mediana": 1618.51,
+     "p25": 1126.24,
+     "p75": 2782.65,
+     "villa": {
+      "noite": 1086.33,
+      "percentil": 23,
+      "vs_mediana": -0.329
+     }
+    },
+    {
+     "checkin": "2026-12-25",
+     "checkout": "2026-12-27",
+     "noites": 2,
+     "n": 46,
+     "mediana": 1425.49,
+     "p25": 1276.17,
+     "p75": 2413.02,
+     "villa": {
+      "noite": 1372.88,
+      "percentil": 48,
+      "vs_mediana": -0.037
+     }
+    },
+    {
+     "checkin": "2026-12-29",
+     "checkout": "2026-12-30",
+     "noites": 1,
+     "n": 47,
+     "mediana": 999.0,
+     "p25": 771.45,
+     "p75": 1471.52,
+     "villa": {
+      "noite": 1419.81,
+      "percentil": 74,
+      "vs_mediana": 0.421
+     }
+    },
+    {
+     "checkin": "2026-12-30",
+     "checkout": "2027-01-03",
+     "noites": 4,
+     "n": 66,
+     "mediana": 2347.82,
+     "p25": 1508.02,
+     "p75": 3329.14,
+     "villa": {
+      "noite": 1597.99,
+      "percentil": 27,
+      "vs_mediana": -0.319
+     }
+    }
+   ]
   }
  ]
 }

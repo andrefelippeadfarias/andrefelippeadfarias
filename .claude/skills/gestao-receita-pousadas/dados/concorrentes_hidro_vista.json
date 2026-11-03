@@ -17,7 +17,7 @@
   "quartos": 1,
   "moeda": "BRL"
  },
- "atualizado_em": "2026-10-27",
+ "atualizado_em": "2026-11-03",
  "classe_a": [
   {
    "id": 303535,
@@ -105,26 +105,14 @@
  "periodos": [
   {
    "sem_corte": true,
-   "rotulo": "2026-10-23→2026-10-25",
+   "rotulo": "2026-11-04→2026-11-05",
    "datas": [
-    "2026-10-23",
-    "2026-10-24"
+    "2026-11-04"
    ],
-   "mediana_a": 894.31,
+   "mediana_a": 623.16,
    "recanto": null,
-   "n": 67,
-   "fonte": "busca diária 2026-10-21 (conector, menor quarto com café × r_hidro)"
-  },
-  {
-   "sem_corte": true,
-   "rotulo": "2026-10-28→2026-10-29",
-   "datas": [
-    "2026-10-28"
-   ],
-   "mediana_a": 580.95,
-   "recanto": null,
-   "n": 68,
-   "fonte": "busca diária 2026-10-21 (conector, menor quarto com café × r_hidro)"
+   "n": 66,
+   "fonte": "busca diária 2026-11-03 (conector, menor quarto com café × r_hidro)"
   },
   {
    "sem_corte": true,
@@ -133,10 +121,10 @@
     "2026-11-06",
     "2026-11-07"
    ],
-   "mediana_a": 1274.77,
+   "mediana_a": 1240.15,
    "recanto": null,
-   "n": 67,
-   "fonte": "busca diária 2026-10-21 (conector, menor quarto com café × r_hidro)"
+   "n": 62,
+   "fonte": "busca diária 2026-11-03 (conector, menor quarto com café × r_hidro)"
   },
   {
    "sem_corte": true,
@@ -145,112 +133,84 @@
     "2026-11-13",
     "2026-11-14"
    ],
-   "mediana_a": 1308.93,
+   "mediana_a": 1230.21,
    "recanto": null,
-   "n": 67,
-   "fonte": "busca diária 2026-10-21 (conector, menor quarto com café × r_hidro)"
+   "n": 62,
+   "fonte": "busca diária 2026-11-03 (conector, menor quarto com café × r_hidro)"
   },
   {
-   "rotulo": "2026-10-30→2026-11-02",
-   "datas": [
-    "2026-10-30",
-    "2026-10-31",
-    "2026-11-01"
-   ],
-   "mediana_a": 2066.13,
-   "recanto": 1311,
-   "n": 4,
-   "fonte": "escada de preço mínimo 27/10 (5 agentes, conector oficial); quarto com hidro da classe A; Recanto = anúncio 15459723, menor quarto",
-   "maximo_a": 2600.0,
-   "topo_a": 2244.08,
-   "topo_a_hoteis": [
-    2600,
-    2528.62,
-    1603.63,
-    1538.81
-   ]
-  },
-  {
+   "sem_corte": true,
    "rotulo": "2026-11-19→2026-11-22",
    "datas": [
     "2026-11-19",
     "2026-11-20",
     "2026-11-21"
    ],
-   "mediana_a": 2078.09,
-   "recanto": 1437,
-   "n": 4,
-   "fonte": "escada de preço mínimo 27/10 (5 agentes, conector oficial); quarto com hidro da classe A; Recanto = anúncio 15459723, menor quarto",
-   "maximo_a": 3058.77,
-   "topo_a": 2404.98,
-   "topo_a_hoteis": [
-    3058.77,
-    2552.55,
-    1603.63,
-    825.0
-   ]
+   "mediana_a": 1449.01,
+   "recanto": null,
+   "n": 63,
+   "fonte": "busca diária 2026-11-03 (conector, menor quarto com café × r_hidro)"
   },
   {
-   "rotulo": "2026-12-24→2026-12-26",
+   "sem_corte": true,
+   "rotulo": "2026-11-27→2026-11-29",
    "datas": [
-    "2026-12-24",
-    "2026-12-25"
+    "2026-11-27",
+    "2026-11-28"
    ],
-   "mediana_a": 1800.0,
-   "recanto": 1505,
-   "n": 3,
-   "fonte": "escada de preço mínimo 27/10 (5 agentes, conector oficial); quarto com hidro da classe A; Recanto = anúncio 15459723, menor quarto",
-   "maximo_a": 2173.65,
-   "topo_a": 1774.55,
-   "topo_a_hoteis": [
-    2173.65,
-    1800.0,
-    1350.0
-   ]
+   "mediana_a": 1324.09,
+   "recanto": null,
+   "n": 65,
+   "fonte": "busca diária 2026-11-03 (conector, menor quarto com café × r_hidro)"
   },
   {
-   "rotulo": "2026-12-29→2027-01-02",
+   "sem_corte": true,
+   "rotulo": "2026-12-23→2026-12-25",
    "datas": [
-    "2026-12-29",
+    "2026-12-23",
+    "2026-12-24"
+   ],
+   "mediana_a": 1618.51,
+   "recanto": null,
+   "n": 48,
+   "fonte": "busca diária 2026-11-03 (conector, menor quarto com café × r_hidro)"
+  },
+  {
+   "sem_corte": true,
+   "rotulo": "2026-12-25→2026-12-27",
+   "datas": [
+    "2026-12-25",
+    "2026-12-26"
+   ],
+   "mediana_a": 1425.49,
+   "recanto": null,
+   "n": 46,
+   "fonte": "busca diária 2026-11-03 (conector, menor quarto com café × r_hidro)"
+  },
+  {
+   "sem_corte": true,
+   "rotulo": "2026-12-29→2026-12-30",
+   "datas": [
+    "2026-12-29"
+   ],
+   "mediana_a": 999.0,
+   "recanto": null,
+   "n": 47,
+   "fonte": "busca diária 2026-11-03 (conector, menor quarto com café × r_hidro)"
+  },
+  {
+   "sem_corte": true,
+   "rotulo": "2026-12-30→2027-01-03",
+   "datas": [
     "2026-12-30",
     "2026-12-31",
-    "2027-01-01"
+    "2027-01-01",
+    "2027-01-02"
    ],
-   "mediana_a": 2536.05,
-   "recanto": 1632,
-   "n": 4,
-   "fonte": "escada de preço mínimo 27/10 (5 agentes, conector oficial); quarto com hidro da classe A; Recanto = anúncio 15459723, menor quarto",
-   "maximo_a": 3112.76,
-   "topo_a": 2728.29,
-   "topo_a_hoteis": [
-    3112.76,
-    2999.7,
-    2072.4,
-    1641.67
-   ]
-  },
-  {
-   "rotulo": "2027-01-22→2027-01-25",
-   "datas": [
-    "2027-01-22",
-    "2027-01-23",
-    "2027-01-24"
-   ],
-   "mediana_a": 1643.93,
-   "recanto": 1162,
-   "n": 7,
-   "fonte": "escada de preço mínimo 27/10 (5 agentes, conector oficial); quarto com hidro da classe A; Recanto = anúncio 15459723, menor quarto",
-   "maximo_a": 2520.11,
-   "topo_a": 2250.92,
-   "topo_a_hoteis": [
-    2520.11,
-    2136.94,
-    2095.7,
-    1643.93,
-    907.8,
-    816.67,
-    513.33
-   ]
+   "mediana_a": 2347.82,
+   "recanto": null,
+   "n": 66,
+   "fonte": "busca diária 2026-11-03 (conector, menor quarto com café × r_hidro)"
   }
  ],
  "ressalvas": [

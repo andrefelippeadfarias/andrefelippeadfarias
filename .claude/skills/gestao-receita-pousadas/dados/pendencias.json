@@ -14,7 +14,10 @@
    "responsavel": "dono",
    "desde": "2026-10-21",
    "urgencia": 0,
-   "texto": "URGENTE: a Queen (2) vende na Booking por tarifa fixa (Rate 50067466) de R$ 412,50 a R$ 495 por noite, igual em todas as noites, sem receber o preço do Beds24/PriceLabs. Exemplos: 95003950 e 95003949, 20-22/11 (feriado), com price1 de R$ 4.433 e R$ 4.213; 93965380, 22-25/11, R$ 490/noite. Conferir no Beds24 (Channel Manager → Booking.com) o mapeamento do quarto e da tarifa da Q2 (room/rate ID 50067466) e o valor fixo na extranet da Booking. Enquanto isso, a Q2 vende a cerca de 10% da tabela. É a origem da 'anomalia de 34%' da Q2 (fator_real 0,34)."
+   "texto": "URGENTE: a Queen (2) vende na Booking por tarifa fixa (Rate 50067466) de R$ 412,50 a R$ 495 por noite, igual em todas as noites, sem receber o preço do Beds24/PriceLabs. Exemplos: 95003950 e 95003949, 20-22/11 (feriado), com price1 de R$ 4.433 e R$ 4.213; 93965380, 22-25/11, R$ 490/noite. Conferir no Beds24 (Channel Manager → Booking.com) o mapeamento do quarto e da tarifa da Q2 (room/rate ID 50067466) e o valor fixo na extranet da Booking. Enquanto isso, a Q2 vende a cerca de 10% da tabela. É a origem da 'anomalia de 34%' da Q2 (fator_real 0,34).",
+   "status": "resolvida",
+   "resolvido_em": "2026-11-03",
+   "resolucao": "Dono 03/11: 'Não precisa fazer mais isso não ela deve flutuar como o planejado'. Conferido no Beds24: a tarifa 50067466 só aparece nas 2 reservas de 21/10 (20-22/11); as outras reservas da Q2 na Booking vêm pelo preço do dia. Q2 de volta ao motor de pace (quartos.json sem fora_do_motor)."
   },
   {
    "id": "padrao-qualidade-base",
@@ -496,7 +499,7 @@
    "responsavel": "dono",
    "desde": "2026-10-21",
    "urgencia": 2,
-   "texto": "Conferir na extranet da Booking (Tarifas e disponibilidade → Planos de tarifas) se algum plano das duas pousadas tem restrição própria (estadia mínima, antecedência mínima ou máxima, chegada fechada) diferente do Beds24, principalmente o não reembolsável e a tarifa fixa 50067466 da Queen 2. O PriceLabs e o Beds24 só enxergam a tarifa principal (p1); as outras são mapeadas no canal."
+   "texto": "Conferir na extranet da Booking (Tarifas e disponibilidade → Planos de tarifas) se algum plano das duas pousadas tem restrição própria (estadia mínima, antecedência mínima ou máxima, chegada fechada) diferente do Beds24, principalmente o não reembolsável. O PriceLabs e o Beds24 só enxergam a tarifa principal (p1); as outras são mapeadas no canal."
   },
   {
    "id": "sextas-junho-2-noites",

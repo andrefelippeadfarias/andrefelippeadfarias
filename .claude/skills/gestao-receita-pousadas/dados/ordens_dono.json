@@ -2422,6 +2422,20 @@
    "ocupacao_max": 0.7,
    "frente_ocupacao": 0.5,
    "nota": "Régua com hidro de dia de semana (varredura de 03/11, 69 concorrentes, 1 noite, menor quarto com café × r_hidro do hotel): p50 R$ 625, p65 R$ 836, p90 R$ 1604 públicos. Moinhos, Panorâmica II e Panorâmica I do p65 ÷ 0.6156 (razão Booking/enviado do Recanto nesta noite, medida contra o preço no canal, D27) com 0 venda nova ao p90 pelas reservas novas (vendidas_base = vendas de 03/11). A até 7 dias sem venda nova: p50 ÷ 0.5557 (razão a até 7 dias), nunca abaixo do piso do dono de dia de semana (R$ 500 no Genius 3 = R$ 1.219,51 enviados; dono 03/11, '1. Sim'). Noite com mais vendidas não fica com piso abaixo de noite com menos vendidas da mesma semana. Q7: piso R$ 1359 → R$ 1398 (1 vendidas; não fica abaixo de 29/11, com 0). Substitui, nesta noite, a ordem dono-2026-11-01-recanto-base-mercado. Como desfazer: pedir 'Volte a Recanto dos dias de semana de novembro à base do mercado'."
+  },
+  {
+   "id": "dono-2026-11-03-q2-flutua",
+   "data": "2026-11-03",
+   "texto": "Não precisa fazer mais isso não ela deve flutuar como o planejado ...",
+   "contexto": "Resposta ao relatório da rotina das 10:53, que de novo apontava a Panorâmica II 'na tarifa fixa de R$ 412 a R$ 495' na Booking.",
+   "quartos": [
+    "Q2"
+   ],
+   "de": "2026-11-03",
+   "ate": "2099-12-31",
+   "tipo": "regra",
+   "libera": [],
+   "nota": "A Panorâmica II flutua pelo PriceLabs como os outros quartos: volta ao motor de pace (sem fora_do_motor) e segue entre a Moinhos e a Panorâmica I. A pendência q2-tarifa-booking-fixa foi encerrada e o relatório não a cita mais."
   }
  ]
 }

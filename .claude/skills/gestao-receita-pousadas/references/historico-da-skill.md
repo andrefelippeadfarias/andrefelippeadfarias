@@ -2,6 +2,11 @@
 
 Cada mudança feita na própria Skill (regras, parâmetros, scripts, fluxo) entra aqui: data, o que mudou, por quê (evidência) e como desfazer. A entrada mais nova fica em cima.
 
+## 03/11/2026 12:00 BRT: Panorâmica II de volta ao motor (dono: "ela deve flutuar como o planejado")
+- **Por quê:** a Q2 estava fora do motor desde 30/10 por uma "tarifa fixa" na Booking (50067466) vista em 2 reservas de 21/10. As reservas da Booking da Q2 no Beds24 mostram preço do dia nas demais tarifas (60962482, 50068135), inclusive em 30/10 e 03/11. O dono pediu que ela flutue como o planejado.
+- **O que mudou:** `quartos.json` (Q2 sem `fora_do_motor`; `motor_nota`), `pendencias.json` (q2-tarifa-booking-fixa resolvida), ordem `dono-2026-11-03-q2-flutua`, `SKILL.md`, `regras.md`, `estrategia.md`, `plano-12-meses.md`. O código de `fora_do_motor` fica (vale para outro quarto no futuro). Testes 115 OK.
+- **Como desfazer:** devolver `"fora_do_motor": true` à Q2 em `quartos.json` (só com o dono).
+
 ## 03/11/2026 10:50 BRT: gatilho de 7 dias e régua com hidro nos dias de semana de novembro (dono: "1. Sim 2. Aplique a regua com Hidro . 3. Sim")
 - **Por quê:** o dono aprovou a descida ao p50 a 7 dias sem venda nova e pediu a régua com hidro também nos dias de semana de novembro da Recanto (estava perto do p25 pela ordem de 01/11 de forçar reservas).
 - **O que mudou:**

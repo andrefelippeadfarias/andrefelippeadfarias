@@ -97,7 +97,7 @@ Leituras (o mercado continua mandando no preço; o histórico mostra potencial):
 ### 1c. O que bloqueia o crescimento hoje (pendências do dono, urgência 0)
 
 1. **Recanto fora da busca da Booking** desde 21/10, com 4 cancelamentos em 2 minutos.
-2. **Q2 na Booking com tarifa fixa** de R$ 412 a R$ 495.
+2. ~~**Q2 na Booking com tarifa fixa** de R$ 412 a R$ 495.~~ Encerrada em 03/11: só 2 reservas de 21/10; a Q2 flutua (dono: "ela deve flutuar como o planejado").
 3. **Reservas lançadas à mão abaixo da tabela:** 8 graves, de 17% a 45% do esperado.
 4. **Overbooking na VK2 em 24/10.**
 
@@ -211,7 +211,6 @@ O preço de cada noite segue a ordem de `estrategia.md` §4 e `regras.md` §4c e
 Em ordem de retorno:
 1. **Recanto de volta na busca da Booking** (urgência 0): extranet → status, avisos, comissão em aberto, conteúdo pendente.
 2. **Mapeamentos do Beds24:**
-   - Q2 na Booking (Rate 50067466 fixa);
    - Villa na Expedia, no Hoteis.com e na Decolar;
    - repasse do Airbnb da Villa (R$ 300 de diária);
    - **preço do motor de reservas direto** (36%–45% do price1).

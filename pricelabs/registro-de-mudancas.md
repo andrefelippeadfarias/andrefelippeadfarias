@@ -3932,6 +3932,14 @@ Preço enviado. Na Booking: ~R$ 685 a até 7 dias e ~R$ 790-920 de 8 dias em dia
 **Conferência:** as 2 respostas da API conferidas, piso e teto gravados. **Ledger:** 3 passos.
 **Sync:** 03 a 05/11 são de 0 a 2 dias: chegam à Booking no próximo envio ou com o Sync Now.
 
+## 03/11/2026, 12:00 — Dono: a Panorâmica II flutua como o planejado
+
+**Pedido:** "Não precisa fazer mais isso não ela deve flutuar como o planejado ..." (sobre o aviso de "tarifa fixa de R$ 412 a R$ 495" na Booking).
+**Conferido no Beds24 (reservas da Panorâmica II na Booking, outubro a janeiro):**
+- A tarifa 50067466 aparece só nas 2 reservas feitas em 21/10 para 20-22/11 (R$ 412,50 e R$ 495 por noite).
+- Todas as outras vêm com o preço do dia: tarifa 60962482, de R$ 321 a R$ 1.610 por noite; tarifa 50068135, R$ 1.156 em 13-14/11 (reserva de 30/10) e R$ 409 em 15/11 (reserva de 03/11).
+**Mudado:** a Panorâmica II voltou ao motor de pace (`quartos.json` sem `fora_do_motor`), como os outros quartos, sempre entre a Moinhos e a Panorâmica I. Pendência encerrada; ordem `dono-2026-11-03-q2-flutua`. Nada gravado no PriceLabs agora: a partir da próxima rodada o motor dá passo nela pelas vendas, como nas outras.
+
 > **Regras em vigor:** desde 06/10/2026 elas ficam em `.claude/skills/gestao-receita-pousadas/references/regras.md`. Este arquivo guarda só o histórico das mudanças.
 
 ## O que só pode ser feito na tela (passo a passo para você)

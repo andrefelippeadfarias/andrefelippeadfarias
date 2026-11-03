@@ -108,11 +108,10 @@
     "Q7",
     "Double"
    ],
-   "ordem_nota": "Dono 21/10: 'Os valores da Suíte Panorâmica II devem sempre estar entre a Moinhos e a Panorâmica I' (Q2 entre Q7 e Double, noite a noite; scripts/ordem_recanto.py). Substitui a regra antiga de 'sem desconto' (19/10), criada quando se achava que o hóspede pagava 34% do enviado; em 21/10 viu-se que era a tarifa fixa 50067466 na Booking (pendência do dono). fator_real volta a 0,42 como o resto do Recanto, para o piso de feriado da Q2 não passar o da Double.",
+   "ordem_nota": "Dono 21/10: 'Os valores da Suíte Panorâmica II devem sempre estar entre a Moinhos e a Panorâmica I' (Q2 entre Q7 e Double, noite a noite; scripts/ordem_recanto.py). Substitui a regra antiga de 'sem desconto' (19/10), criada quando se achava que o hóspede pagava 34% do enviado; em 21/10 achou-se que era uma tarifa fixa 50067466 na Booking; em 03/11 viu-se que foram só 2 reservas de 21/10 e que a Q2 flutua. fator_real volta a 0,42 como o resto do Recanto, para o piso de feriado da Q2 não passar o da Double.",
    "base_antes_2210": 1870,
    "base_nota": "Dono 22/10 ('Pode fazer'): base de R$ 1.870 para R$ 1.590 (1º passo); 2º passo em 29/10 para R$ 1.352 (limite de 15% por semana).",
-   "fora_do_motor": true,
-   "fora_do_motor_nota": "tarifa fixa na Booking (Rate 50067466, R$ 412-495) desde 21/10: o preço do PriceLabs não chega ao hóspede; só pisos de segurança e ordem do Recanto até o dono corrigir o mapeamento (pendência q2-tarifa-booking-fixa)"
+   "motor_nota": "Dono 03/11: 'ela deve flutuar como o planejado'. Volta ao motor de pace como os outros quartos. A 'tarifa fixa' 50067466 apareceu só em 2 reservas de 21/10 (20-22/11, R$ 412,50 e R$ 495); as demais reservas da Booking da Q2 (tarifas 60962482 e 50068135) vêm com o preço do dia (R$ 321 a R$ 1.610 por noite)."
   },
   {
    "curto": "VK7",

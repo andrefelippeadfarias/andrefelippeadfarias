@@ -2,6 +2,14 @@
 
 Cada mudança feita na própria Skill (regras, parâmetros, scripts, fluxo) entra aqui: data, o que mudou, por quê (evidência) e como desfazer. A entrada mais nova fica em cima.
 
+## 03/11/2026 10:50 BRT: gatilho de 7 dias e régua com hidro nos dias de semana de novembro (dono: "1. Sim 2. Aplique a regua com Hidro . 3. Sim")
+- **Por quê:** o dono aprovou a descida ao p50 a 7 dias sem venda nova e pediu a régua com hidro também nos dias de semana de novembro da Recanto (estava perto do p25 pela ordem de 01/11 de forçar reservas).
+- **O que mudou:**
+  - `pace.py`: `piso_atras_da_ordem` (ordem `alvo_por_data` com `piso_atras` e `gatilho_dias`): a até `gatilho_dias` da noite e sem venda acima de `vendidas_base`, o piso da ordem desce ao `piso_atras`, nunca abaixo do piso padrão sem `abaixo_piso`; vale na escada e na coerência da Panorâmica II. Teste `test_gatilho_d7_sem_venda_nova`; 115 OK.
+  - `ordens_dono.json`: 16 ordens `dono-2026-11-03-recanto-semana-hidro-MMDD` (sem `abaixo_piso`; `gatilho_dias` 9 em 11 e 12/11); as 8 de fim de semana ganharam `piso_atras` e `gatilho_dias` 7; as 16 noites saíram da `dono-2026-11-01-recanto-base-mercado` e 08/11 da `dono-2026-10-26-genius-300`.
+- **Pendência de código (antes de 08/11):** o gatilho é por noite. Quando uma noite da semana chega aos 7 dias antes das outras, ela desce ao p50 e as noites com menos vendas da mesma semana seguem no p65 (inversão de 2-3 dias). Caminho proposto: ao disparar o gatilho, as noites da mesma semana com menos vendidas ganham piso no máximo igual ao dela.
+- **Como desfazer:** tirar `piso_atras`/`gatilho_dias` das ordens (o código só age com eles) e pedir ao dono para voltar a Recanto dos dias de semana à base do mercado.
+
 ## 03/11/2026 07:30 BRT: pacotes fechados de Natal e Ano Novo (dono)
 - **Por quê:** dono: "Natal de 23 a 25 ... apenas tenhamos reservas nessas datas. Ano Novo ... de 30 a 01 prefixado. Podendo o hóspede estender até o dia 03 apenas."
 - **O que mudou:**

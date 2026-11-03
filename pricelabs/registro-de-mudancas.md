@@ -3860,6 +3860,62 @@ Com a Panorâmica I a R$ 924 em 04/11, a ordem do Recanto continua de pé: Afrod
 
 **Sync:** as mudanças de 04 a 06/11 (D1 a D3) só chegam à Booking no envio da madrugada ou com o Sync Now.
 
+## 03/11/2026, 10:00 a 10:55 — Decisões do dono: gatilho de 7 dias, régua com hidro nos dias de semana de novembro e Afrodite 27-28/11
+
+**Pedido (resposta às 3 perguntas do relatório da manhã):** "1. Sim 2. Aplique a regua com Hidro . 3. Sim"
+1. **Gatilho de 7 dias (Sim):** noite com régua com hidro que chega a 7 dias sem venda nova desce do p65 ao p50. Código em `pace.py` (`piso_atras_da_ordem`); `piso_atras` e `gatilho_dias` nas 8 ordens de fim de semana. Hoje nenhum fim de semana está a 7 dias ou menos (13-14/11 está a 10).
+2. **Régua com hidro nos dias de semana de novembro (Aplique):** detalhes abaixo.
+3. **Afrodite 27-28/11 acima da faixa da vitrine (Sim):** fica em ~R$ 1.844 público; registrado na nota da regra da Afrodite.
+
+**Varredura de 03/11 (conector oficial da Booking, 1 noite, 16 noites de semana):**
+- 64 a 69 concorrentes por noite; preço do menor quarto com café × r_hidro de cada hotel.
+- Régua pública do quarto com hidro: p50 R$ 582-696, p65 R$ 792-942, p90 R$ 1.508-1.776.
+- A Recanto aparecia a R$ 346-758 por noite (Moinhos a R$ 346-404 na maioria), abaixo do p25, pela ordem de 01/11 de forçar reservas.
+- Razão Booking/enviado do Recanto, medida contra o preço que está no canal: 0,5557 a até 7 dias, 0,6327 de 8 a 14 dias e 0,6156 de 15 dias em diante (oferta de última hora e outra de antecedência ativas na Booking).
+
+**Ordens `dono-2026-11-03-recanto-semana-hidro-MMDD` (16 noites: 08-12, 15-18, 22-26 e 29-30/11):**
+- Moinhos, Panorâmica II e Panorâmica I no p65 ÷ razão da noite com 0 venda nova; sobem pela escada de vendas até o p90 (`vendidas_base` = vendas de 03/11 10:14 BRT).
+- Sem venda nova a até 7 dias: p50 ÷ 0,5557, nunca abaixo do piso do dono de dia de semana (R$ 500 no Genius 3 = R$ 1.220 enviados).
+- 11 e 12/11 nasceram a 8-9 dias: gatilho a 9 dias, para não subir ao p65 e descer ao p50 em 1-2 dias.
+- Noite com mais vendidas não fica com piso abaixo de noite com menos vendidas da mesma semana (domingo a quinta).
+- Quarto já acima da régua com venda fica como está: Panorâmica I 10/11 (R$ 1.524) e 11/11 (R$ 1.687); Moinhos 09/11 (6/7, R$ 1.232).
+- As 16 noites saíram da ordem `dono-2026-11-01-recanto-base-mercado` (fica com 03-07/11); 08/11 saiu da `dono-2026-10-26-genius-300` (o menor piso entre ordens vale e derrubaria a régua).
+- Feriado 19-21/11 e 03-07/11 (hoje a 4 dias) ficaram de fora.
+
+**Gravado às 10:52 BRT (45 itens e 3 tetos da Afrodite apagados antes; validador 0 erro, 0 aviso):**
+
+| Noite | Moinhos | Panorâmica II | Panorâmica I | Afrodite |
+|---|---|---|---|---|
+| 08/11 (5/7, 2/2, 3/6, 1/1) | R$ 845 → 1.232 | esgotada | R$ 932 → 1.243 | esgotada |
+| 09/11 | 6/7, fica R$ 1.232 | esgotada | R$ 932 → 1.243 | esgotada |
+| 10/11 | R$ 727 → 1.232 | esgotada | fica R$ 1.524 (3/6) | fica R$ 1.840 |
+| 11/11 | R$ 563 → 1.232 (0/7) | esgotada | fica R$ 1.687 (3/6) | fica R$ 2.040 |
+| 12/11 | R$ 563 → 1.232 (0/7) | esgotada | R$ 784 → 1.243 | esgotada |
+| 15/11 | R$ 692 → 1.490 | R$ 700 → 1.495 | R$ 784 → 1.495 | esgotada |
+| 16/11 | R$ 657 → 1.408 | R$ 668 → 1.415 | R$ 740 → 1.421 | R$ 1.580 → 1.720 |
+| 17/11 | R$ 657 → 1.255 | R$ 668 → 1.256 | R$ 740 → 1.258 | R$ 1.500 → 1.520 |
+| 18/11 | R$ 692 → 1.408 | R$ 700 → 1.415 | esgotada | fica R$ 1.871 |
+| 22/11 | R$ 657 → 1.408 | R$ 1.224 → 1.479 | R$ 1.362 → 1.480 | R$ 1.640 → 1.780 |
+| 23/11 | R$ 1.232 → 1.478 | R$ 1.240 → 1.479 | R$ 1.243 → 1.480 | R$ 1.524 → 1.780 |
+| 24/11 | R$ 692 → 1.455 | esgotada | R$ 740 → 1.480 | R$ 1.524 → 1.780 |
+| 25/11 | R$ 692 → 1.478 | R$ 700 → 1.479 | R$ 696 → 1.480 | esgotada |
+| 26/11 | R$ 657 → 1.443 | R$ 668 → 1.447 | R$ 666 → 1.450 | R$ 1.524 → 1.760 |
+| 29/11 | R$ 563 → 1.408 | R$ 604 → 1.415 | R$ 784 → 1.421 | R$ 1.520 → 1.720 |
+| 30/11 | R$ 657 → 1.408 | R$ 668 → 1.415 | R$ 740 → 1.421 | esgotada |
+
+Preço enviado. Na Booking: ~R$ 685 a até 7 dias e ~R$ 790-920 de 8 dias em diante (≈ p65). Genius 3: ~R$ 505 a 610.
+
+**Revisão independente antes de gravar (2 rodadas, 3 agentes):**
+- Pegou a razão de 0,583 medida contra o `price` (já com a gravação das 08:13, ainda não enviada à Booking): os pisos de 8 dias em diante sairiam 5-8% altos e os de até 7 dias 5% baixos. Corrigido.
+- Pegou a subida e descida em 1-2 dias de 11-12/11, noites com mais vendas mais baratas que noites vazias na mesma semana (23/11), a Panorâmica II acima da Panorâmica I pelo arredondamento de 1% (17 e 25/11) e a Panorâmica I de 09/11 abaixo da de 12/11. Tudo corrigido.
+- Ficou para o código: quando uma noite chega aos 7 dias antes das outras da mesma semana, ela desce ao p50 enquanto noites com menos vendas seguem no p65 (inversão de 2-3 dias). Precisa estar resolvido antes de 08/11, quando 15/11 chega aos 7 dias.
+
+**Conferência:** as 4 respostas da API conferidas (15 + 13 + 10 + 7 noites, piso e teto gravados); os 3 tetos velhos da Afrodite (16, 17 e 29/11) apagados antes.
+**Ledger:** 28 passos registrados.
+**Sync:** chegam à Booking no envio da madrugada ou com o Sync Now.
+**Pendente com o dono:** a Panorâmica II vende na Booking pela tarifa fixa 50067466 (R$ 412-495): agora fica a menos da metade da Moinhos na Booking.
+**Como desfazer:** pedir "Volte a Recanto dos dias de semana de novembro à base do mercado".
+
 > **Regras em vigor:** desde 06/10/2026 elas ficam em `.claude/skills/gestao-receita-pousadas/references/regras.md`. Este arquivo guarda só o histórico das mudanças.
 
 ## O que só pode ser feito na tela (passo a passo para você)

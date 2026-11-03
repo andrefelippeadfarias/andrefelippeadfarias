@@ -476,3 +476,10 @@ Hora da ANÁLISE E AGENDA DIÁRIA do PriceLabs (rotina "Agenda diária PriceLabs
 - `concorrentes_hidro_vista.json`: `topo_a` e `topo_a_hoteis` nos 5 feriados; `referencias_topo` (semana 03/11 e 24/11, fds 06-08/11 e 27-29/11; 4 agentes, conector oficial, escada de preço mínimo).
 - `quartos.json`: `escada.top_n` 3, `escada.piso_genius` (R$ 300 até 08/11), `nota_proporcional`.
 - Teste `test_escada_proporcional_ao_topo`; 66 OK.
+
+## 03/11/2026 — Escada com base de vendas na reta e teto da Afrodite na coerência (revisão independente)
+- `pace.py`: a reta da escada (`piso_com_vendas`) usa `oc_esc`, a mesma ocupação depois de `vendidas_base` que já movia o percentil. Antes, uma noite que entrava numa ordem nova com vendas antigas subia um passo por dia até a reta sem reserva nova.
+- `pace.py` (coerência): a Afrodite em sexta e sábado dentro do horizonte da faixa recebe o teto da faixa (`regra_afrodite`) junto com o piso. Antes, `ajustar_tetos` apagava o teto e o PriceLabs levava a Afrodite ao preço do algoritmo.
+- Teste `test_escada_reta_usa_vendidas_base`; 114 OK.
+- Ordens `dono-2026-11-03-recanto-fds-hidro-MMDD` (8) com `vendidas_base`; a `-1106` foi apagada e a sexta 06/11 volta às ordens de 25/10 e 01/11.
+- Pendências de código: a proteção da noite esgotada ignora o piso das ordens `alvo_por_data`; a busca diária não acha o Recanto por nome (só pelas coordenadas).

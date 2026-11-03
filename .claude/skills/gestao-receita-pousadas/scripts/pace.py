@@ -542,7 +542,10 @@ def plano(cfg: dict, ancora: dict, cals: dict, hoje: date, ordens: dict, passos:
                 # ou o `topo_enviados` da ordem (festas da Villa: do alvo de hoje ao preço de antes, pelas vendas)
                 piso_pad = max(piso_com_ordem(cfg, curto, d, sem_alvo(ordens))[0], pisos_enviados(cfg, curto, d)[0],
                                float((ao.get("topo_enviados") or {}).get(curto) or 0))
-                reta = max(alvo_env, piso_com_vendas(piso, piso_pad, oc))
+                # revisão de 03/11: a reta usa a mesma ocupação da escada (oc_esc: só as reservas depois de
+                # `vendidas_base`); com a ocupação inteira, a noite que entrava numa ordem nova com vendas antigas subia
+                # um passo por dia até a reta sem nenhuma venda nova (Panorâmica I 13-14/11: R$ 2.708 -> 2.979 -> 3.340)
+                reta = max(alvo_env, piso_com_vendas(piso, piso_pad, oc_esc))
                 if reta >= atual:
                     # sobe aos poucos: no máximo o limite de passo da antecedência (pmax) por vez; cada reserva nova
                     # libera mais um passo no mesmo dia (cadência por venda)
@@ -872,7 +875,12 @@ def coerencia(cfg: dict, cals: dict, finais: dict, itens: list[dict], hoje: date
             outras = [preco(k, noite) for k in ("Q7", "Q2", "Double") if livre(k, noite) and preco(k, noite) is not None]
             if outras and livre("Afrodite", noite):
                 pr = premio_afrodite(cfg, d)
-                ajustar("Afrodite", noite, piso=max(outras) * (1 + pr) + 0.5,
+                piso_af = max(outras) * (1 + pr) + 0.5
+                # revisão de 03/11: em sexta e sábado dentro do horizonte da faixa (vitrine R$ 1.600-1.800), o piso vem com o
+                # teto da faixa (nunca abaixo do piso); sem ele, ajustar_tetos apagava o teto e a Afrodite ia ao preço do
+                # algoritmo (04/12: R$ 3.491, ~R$ 2.126 na vitrine)
+                _, teto_fx = regra_afrodite(cfg, cals, finais, d, hoje)
+                ajustar("Afrodite", noite, piso=piso_af, teto=(max(teto_fx, piso_af) if teto_fx else None),
                         motivo=f"Afrodite {pr:.0%} acima da mais cara das outras (R$ {max(outras):.0f})",
                         ordem_id="dono-2026-10-22-afrodite-mais-cara")
         fer = bool(periodo_feriado(cfg, d))

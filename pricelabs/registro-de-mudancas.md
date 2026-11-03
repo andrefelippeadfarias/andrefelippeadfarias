@@ -3763,19 +3763,19 @@ Com a Panorâmica I a R$ 924 em 04/11, a ordem do Recanto continua de pé: Afrod
 
 **Diagnóstico (preço público ÷ razão Booking/enviado; percentil dos quartos com hidro da varredura de 01/11, 53-70 concorrentes):**
 - Booking 27-29/11 hoje: Villa R$ 1.369 por noite, Recanto R$ 643.
-- Fins de semana de novembro: Moinhos e Panorâmica II no p5 a p11 (R$ 640 a R$ 725), contra King Spa no p72-77 (régua com hidro desde 02/11). A Panorâmica I e a Panorâmica II de 06/11 estavam a R$ 709-711 (p10).
-- Dezembro e janeiro: Recanto no p50-p60 (Moinhos presa no piso do dono de R$ 2.018), e a King Spa 7 no p51-p76. A Recanto também ficava abaixo da Villa.
+- Fins de semana de novembro: Moinhos e Panorâmica II no p5 a p10 (R$ 640 a R$ 725), contra King Spa no p66-77 (régua com hidro desde 02/11; p66-74 com a razão medida na Villa). A Panorâmica I e a Panorâmica II de 06/11 estavam a R$ 709-711 (p10).
+- Dezembro e janeiro: Moinhos e Panorâmica II no p50-p60 (Moinhos presa no piso do dono de R$ 2.018), Panorâmica I no p52-p70, Afrodite no p70-p77; King Spa 7 no p51-p76.
 - Feriados: Consciência Negra no p70-p94 (ok); Natal p39-49 e Réveillon p33-62, iguais à Villa (seguem os pacotes e os gatilhos das festas); Aniversário de SP p59-66 (ok).
-- Dias de semana (aprox., lista × 1,395): novembro Moinhos ~p41 e King Spa 7 ~p62 (ordem de base do mercado de 01/11, mantida); dezembro Recanto ~p84 (pisos do dono).
-- Achado: o `user_price` do PriceLabs da Villa ainda mostra o valor de antes de 02/11, mas a Booking já mostra os preços novos. Comparação feita com o `price`.
+- Dias de semana (aprox., lista × 1,395): novembro Moinhos na mediana p25 (11 de 20 noites no p25 ou abaixo) e King Spa 7 ~p65 (ordem de base do mercado de 01/11, mantida); dezembro Recanto p79-85 em 01-17/12 e acima do p90 em 9-10 de 20 noites (pisos do dono).
+- Achado: o `user_price` do PriceLabs fica atrás do `price` em todos os quartos (Villa nas noites mudadas em 02/11, Recanto nas mudadas pelas rotinas); a Booking já mostra os preços novos. Toda comparação usa o `price`.
 
 **Ordens:** 9 ordens `dono-2026-11-03-recanto-fds-hidro-MMDD`, uma por fim de semana de 06/11 a 30/01, fora feriados e pacotes.
 - Moinhos, Panorâmica II e Panorâmica I: com 0 vendida, o p65 dos quartos com hidro (um degrau acima do p50 da Villa, `estrategia.md` seção 8). A escada sobe pelas vendas até o p90.
 - Razão Booking/enviado: 0,63 em novembro, 0,58 em 27-28/11 (medida duas vezes), 0,609-0,618 em dezembro e janeiro.
-- Quarto que já estava acima fica no preço de hoje: Panorâmica I em 13-14/11 e 27-28/11.
+- Quarto que já estava acima: o piso da ordem ficou no preço de hoje (Panorâmica I R$ 2.708 em 13-14/11 e R$ 3.019 em 27-28/11), mas a escada subiu 10% na gravação das 07:57 (desfeito às 08:29, abaixo).
 - A ordem não desce a noite abaixo do piso. A Afrodite segue a regra dela (5% acima da mais cara).
 - Sextas e sábados de 06-07, 13-14 e 27-28/11 saíram da ordem de base do mercado do Recanto (dias de semana seguem nela).
-- A ordem de 25/10 do fim de semana 06-07/11 foi encerrada (sábado esgotado; o objetivo de lotar foi cumprido).
+- A ordem de 25/10 do fim de semana 06-07/11 foi encerrada às 07:57 (sábado esgotado). Errado: a sexta tinha 4 suítes livres. Reaberta às 08:29 (abaixo).
 
 | Fim de semana | Moinhos | Panorâmica II | Panorâmica I | Afrodite | King Spa 7 (Villa) |
 |---|---|---|---|---|---|
@@ -3796,6 +3796,69 @@ Com a Panorâmica I a R$ 924 em 04/11, a ordem do Recanto continua de pé: Afrod
 - **Conferência pelo recálculo:** fica para a rotina das 07:53 (saldo de recálculo).
 - **Sync:** as mudanças chegam à Booking no envio da madrugada ou com o Sync Now do dono.
 - **Como desfazer:** "Volte a Recanto dos fins de semana à régua anterior".
+
+**Revisão independente (3 revisores, 08:00-08:25 BRT) e correções gravadas às 08:29 BRT (11:29 UTC):**
+- **Sexta 06/11 (D3, órfã: sábado esgotado, 4 suítes livres):** a ordem `-1106` foi apagada; a sexta volta à ordem de 25/10 ("lotar") e à base do mercado de 01/11. Moinhos R$ 2.733 → R$ 2.276, Panorâmica I R$ 2.634 → R$ 1.125, Panorâmica II R$ 2.639 → R$ 1.129, Afrodite R$ 2.880 → R$ 2.600 (os valores de antes).
+- **A escada subia sem venda nova** (`pace.py` usava a ocupação inteira na reta; as `vendidas_base` só entravam no percentil). Desfeito: Panorâmica I 13-14/11 R$ 2.990 → R$ 2.708, 27-28/11 R$ 3.330 → R$ 3.019, 05/12 R$ 2.723 → R$ 2.590; Afrodite 27-28/11 R$ 3.500 → R$ 3.180. As 8 ordens restantes ganharam `vendidas_base` com as vendas das 07:45; o motor agora usa a mesma base na reta (só reserva nova sobe a escada).
+- **Afrodite em sexta e sábado:** a coerência passou a gravar o teto da faixa (R$ 1.600-1.800 públicos) junto com o piso; antes ele era apagado e a Afrodite ia ao preço do algoritmo (04/12: R$ 3.491).
+- **Ficaram como estão, para o dono decidir:** o p65 é piso duro (não desce se a noite ficar atrás perto da data); em 13-14/11 e 27-28/11 a régua nova passa por cima das ordens de 01/11 e 02/11 (~R$ 1.300 enviados); a Afrodite de 27-28/11 fica a ~R$ 1.844 públicos (acima da faixa) para ficar 5% acima da Panorâmica I; a Panorâmica II na Booking segue na tarifa fixa 50067466 (R$ 412-495), sem receber o preço do PriceLabs.
+- **Arredondamento:** em janeiro a Panorâmica II ficou R$ 5 a R$ 15 acima da Panorâmica I (degrau de 1% da base da Panorâmica II = R$ 15,90; Moinhos e Panorâmica I a R$ 1-7 uma da outra, sem percentual inteiro entre elas).
+
+## 03/11/2026, 08:00 a 08:30 — Rotina das 07:53 (terça)
+
+**Ocupação (PriceLabs com recálculo das 08:01):** hotel 58% em 7 dias e 44% em 15 dias. Recanto 62% / 49%, Villa 52% / 38%. King Spa 2 com 86-87%, Balcony com 17% / 8%.
+
+**Beds24 (desde 19:00 BRT de 02/11):**
+- 15 reservas novas: 10 confirmadas ou novas e 5 consultas do Airbnb.
+- Lote de reservas da Booking às 20:15 BRT: King Spa 7 05-07/11, 06/11, 15/11 e 28/11; Balcony 24/12.
+- Panorâmica I 06-08/11 (Booking, R$ 663 por noite) entrou antes da subida.
+- Overbooking segue sem solução: Panorâmica I 20-21/11 (7 de 6) e King Spa 2 06-07/11 (3 de 2).
+
+**Beds24 gravado e conferido (5 de 5):**
+- Sábado 07/11 com a saída liberada na Panorâmica I e na King Spa 7 (sábado esgotado, sexta livre).
+- Estadia 1 em 04/02 (Balcony) e 11/02 (King Spa 7 e King Spa 2).
+
+**Recálculo:** 5 quartos às 08:01. Balcony e King Spa 2 deram 429 (limite de 3 em 24 h); usei o recálculo das 19:53 de 02/11 só para coerência, com o validador avisado.
+
+**Motor de pace (60 dias):** 69 itens. Ficaram fora de propósito:
+- Balcony 07/11, que desceria de R$ 1.880 para R$ 1.451 porque as suítes esgotaram (pedido do dono de 02/11).
+- 6 proteções de noite esgotada da King Spa 2, que baixariam o piso de noites vendidas (pendência de código: a proteção ignora o piso das ordens).
+
+**Gatilhos das festas (2ª rotina completa seguida):** comparação com a categoria R do PriceLabs (já reservado do mercado).
+
+| Noite | Mercado (R) | Recanto | Villa |
+|---|---|---|---|
+| 24/12 | 33% | 6% (−27) | 27% (−6) |
+| 25/12 | 33% | 6% (−27) | 7% (−26) |
+| 26/12 | 28% | 6% (−22) | 0% (−28) |
+| 27/12 | 25% | 0% (−25) | 0% (−25) |
+| 28/12 | 11% | 0% (−11) | 7% (−4) |
+| 29/12 | 13% | 0% (−13) | 13% (0) |
+| 30/12 | 25% | 25% (0) | 27% (+2) |
+| 31/12 | 31% | 56% (+25) | 60% (+29) |
+| 01/01 | 25% | 31% (+6) | 20% (−5) |
+
+- **Degraus de 5%:** 24 noites que estavam atrás nas duas rotinas: Recanto 24-29/12 e Villa 24-27/12. Exemplos: Panorâmica I 25/12 R$ 2.694 → R$ 2.559; Afrodite 26/12 R$ 4.373 → R$ 4.160; King Spa 7 26/12 R$ 2.924 → R$ 2.782.
+- **Presas no piso de feriado (não descem):** 11 noites. Moinhos 24, 25, 26 e 29/12 (R$ 2.381), King Spa 7 24-25/12 (R$ 2.575) e King Spa 2 25/12.
+- **Noites à frente do mercado (31/12 e 01/01):** a escada sobe com as vendas.
+
+**Outras mudanças gravadas (08:13-08:14 BRT; validador 92 itens, 0 erro):**
+- Natal 23/12, primeira noite do pacote, no piso de feriado: Moinhos R$ 1.754 → R$ 2.381, Panorâmica I → R$ 2.383, Panorâmica II → R$ 2.385, King Spa 7 R$ 1.702 → R$ 2.575, King Spa 2 R$ 1.867 → R$ 2.565, Balcony → R$ 1.892, Afrodite com piso R$ 2.400. King Spa 7 e King Spa 2 estavam abaixo do limite de segurança de feriado desde a criação do pacote.
+- King Spa 7 06/11 (sexta órfã, 6/7): R$ 2.516 → R$ 2.893 (+15%), com estadia 1. Balcony 06/11: R$ 2.172 → R$ 2.603 (90% da King Spa 7).
+- Escada de vendas nos dias de semana de novembro (ordem de base do mercado): Moinhos 04, 08, 10, 15-18, 22, 24-26 e 30/11 (R$ 622 → R$ 655-847), Panorâmica I 12, 15-17, 24 e 30/11 (R$ 710 → R$ 729-782), King Spa 7 05 e 15/11, King Spa 2 05 e 10/11.
+- Descidas do motor: Panorâmica I 09/11 R$ 1.524 → R$ 924 (3/6, base do mercado); Balcony 04/11 R$ 927 → R$ 683 (D1); 03/12 (Panorâmica I, Afrodite, King Spa 7, King Spa 2, Balcony).
+- Regra G na Balcony nos fins de semana: 13-14/11 R$ 2.464, 28/11 R$ 2.438, 12/12 R$ 2.451.
+- Teto da faixa da Afrodite (vitrine R$ 1.800): 04/12 R$ 3.491 → R$ 2.658-2.840; 18-19/12 R$ 2.916 → R$ 2.840.
+- Panorâmica II 04-05/06/2027 entre Moinhos e Panorâmica I.
+
+**Conferência:** as 7 respostas da API conferidas, piso e teto gravados em todas as noites. O recálculo fica para a rotina leve (saldo do dia usado).
+**Ledger:** 44 passos registrados.
+
+**Busca diária dos concorrentes (79 do cadastro, 72 buscas):**
+- O Recanto não volta pela busca por nome (só pelas coordenadas): ficou sem percentil.
+- Villa: 04/11 p36, 06-08/11 p44, 13-15/11 p63, Consciência Negra p35, 27-29/11 p51, Natal 23-25/12 p23, 25-27/12 p48, Réveillon p27.
+
+**Sync:** as mudanças de 04 a 06/11 (D1 a D3) só chegam à Booking no envio da madrugada ou com o Sync Now.
 
 > **Regras em vigor:** desde 06/10/2026 elas ficam em `.claude/skills/gestao-receita-pousadas/references/regras.md`. Este arquivo guarda só o histórico das mudanças.
 

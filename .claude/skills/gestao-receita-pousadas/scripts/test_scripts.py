@@ -1873,6 +1873,38 @@ class TestPace(unittest.TestCase):
         i = item("2/7", round(p50), {"o-esc": esc, "o-regua": regua})
         self.assertTrue(i is None or i["pace"]["direcao"] is None, i and (i["pace"]["direcao"], i["min_price"]))
 
+    def test_escada_reta_usa_vendidas_base(self):
+        """Revisão de 03/11: com `vendidas_base` igual às vendas de hoje, a noite na régua com hidro (piso e topo da ordem)
+        fica no piso e só sobe com reserva nova; sem a base, a reta sai pela ocupação inteira e a noite sobe sem venda."""
+        import pace
+        self.cfg["parametros"]["pace"]["escada_vendas"]["ativa"] = True
+        n = "2026-11-24"
+        an = {"p25": 300, "p50": 400, "p75": 500, "p90": 600, "max": 700, "n": 62, "busca_em": "2026-10-30",
+              "tipo": "semana", "p50_medido": True}
+        esc = {"id": "o-hidro", "tipo": "alvo_por_data", "quartos": ["VK7"], "de": n, "ate": n, "percentil": 65,
+               "passo_livre": True, "noites": [n], "escada_vendas": True, "pisos_enviados": {"VK7": 2400},
+               "topo_enviados": {"VK7": 3600}, "libera": ["acima_15"], "ocupacao_max": 0.7, "frente_ocupacao": 0.5}
+        base = dict(esc, vendidas_base={"VK7": {n: 4}})
+
+        def item(mu, ordens):
+            cal = {"VK7": {n: {"price": "2400", "min_price": "2400", "max_price": "2400", "mu_occupancy": mu}}}
+            res = pace.plano(self.cfg, {"noites": {n: an}, "por_tipo": {}}, cal, date(2026, 11, 1), ordens, {"passos": []},
+                             dias=30, regra_j_ativa=False)
+            its = [i for i in res["itens"] if i["quarto"] == "VK7" and i["data"] == n]
+            return its[0] if its else None
+        # sem a base: 4/7 vendidas antes da ordem -> reta acima do piso e um passo para cima sem venda nova
+        i = item("4/7", {"o-hidro": esc})
+        self.assertIsNotNone(i)
+        self.assertEqual(i["pace"]["direcao"], "sobe")
+        # com a base (4 vendidas na troca): fica no piso
+        i = item("4/7", {"o-hidro": base})
+        self.assertTrue(i is None or i["pace"]["direcao"] is None, i and (i["pace"]["direcao"], i["min_price"]))
+        # reserva nova (5/7): sobe pela reta das vendas depois da troca
+        i = item("5/7", {"o-hidro": base})
+        self.assertIsNotNone(i)
+        self.assertEqual(i["pace"]["direcao"], "sobe")
+        self.assertLessEqual(i["min_price"], 2400 + (3600 - 2400) * (1 / 3) + 2)
+
     def test_pisos_enviados(self):
         import pace
         # dia de semana fora de feriado: R$ 500 Genius ÷ 0,63 (CFG do teste) = R$ 794 > mínimo R$ 800? não: vale o mínimo

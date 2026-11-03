@@ -3970,6 +3970,12 @@ Preço enviado. Na Booking: ~R$ 685 a até 7 dias e ~R$ 790-920 de 8 dias em dia
 **Feito:** vigilância de segurança em toda rotina (`scripts/vigia_seguranca.py` e conferência das propriedades na Booking às 10:53); pendência `booking-invadida-2026-11-03` com o passo a passo do dono (extranet, Beds24, PriceLabs, Airbnb, e-mail, computadores, aviso aos hóspedes, boletim de ocorrência).
 **Nada gravado** no PriceLabs nem no Beds24 neste passo. A skill não entra na extranet nem altera reservas.
 
+## 03/11/2026, 14:40 a 15:10 — Pedido do dono: promoções da Booking pela API do Beds24 (só pesquisa)
+
+**Dono:** link do painel de promoções da Booking no Beds24; "Pela api da Beds24 conseguimos fazer os anuncios das Booking . Vamos criar uma forma de integrar isso em nossos planos para conseguirmos performar melhor nossos anuncios." e "Verificar na documentação a api ."
+**Resultado (4 pesquisas em documentação pública e 1 verificação cruzada; sem senha, sem painel, sem Booking):** a API do Beds24 não cria, lê, altera nem desliga promoções da Booking. Isso só se faz no painel do Beds24 ou na extranet. Há alternativas programáveis de preço, sem selo de promoção, que exigiriam mexer em preço no Beds24 (hoje proibido). Detalhes em `references/ferramentas.md`; proposta na pendência `promocoes-booking-integracao`.
+**Nada gravado.**
+
 > **Regras em vigor:** desde 06/10/2026 elas ficam em `.claude/skills/gestao-receita-pousadas/references/regras.md`. Este arquivo guarda só o histórico das mudanças.
 
 ## O que só pode ser feito na tela (passo a passo para você)

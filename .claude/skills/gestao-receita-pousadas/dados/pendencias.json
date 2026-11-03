@@ -9,6 +9,13 @@
    "texto": "URGENTE (dono 03/11: 'A nossa bokking .com foi invadida .'): na extranet das duas propriedades (Recanto 7562933, Villa 14824789): trocar senhas e ligar verificação em duas etapas; apagar usuários desconhecidos e encerrar sessões; apagar modelos de mensagem e mensagens programadas que não forem da equipe; conferir dados bancários (Finanças), promoções novas e o Beds24 como provedor de conectividade; abrir chamado de conta comprometida no Partner Hub. Beds24, PriceLabs, Airbnb e e-mail: senha nova e verificação em duas etapas; antivírus nos computadores da recepção; sem senha salva no navegador. Avisar os hóspedes das próximas chegadas que a pousada não pede pagamento por link ou PIX. Confirmar com a recepção as 2 reservas diretas de 03/11 (VillaRecep1) e com os hóspedes os 3 cancelamentos da Booking de 03/11 (08:53 a 11:37 BRT). Boletim de ocorrência na Delegacia Eletrônica."
   },
   {
+   "id": "promocoes-booking-integracao",
+   "responsavel": "dono",
+   "desde": "2026-11-03",
+   "urgencia": 1,
+   "texto": "Promoções da Booking (dono 03/11: 'Vamos criar uma forma de integrar isso em nossos planos'): a API do Beds24 não gerencia promoções (documentação verificada; ferramentas.md). Proposta: (1) cadastro das promoções ativas em dados/promocoes_booking.json, preenchido pela equipe a partir do painel, para o motor usar a razão certa por antecedência e por estadia; (2) a skill propõe no relatório quais promoções ligar ou desligar, com o passo a passo no painel; (3) pedir ao suporte do Beds24 acesso às promoções pela API. Aguardando decisão do dono."
+  },
+  {
    "id": "recanto-fora-booking-2110",
    "responsavel": "dono",
    "desde": "2026-10-21",

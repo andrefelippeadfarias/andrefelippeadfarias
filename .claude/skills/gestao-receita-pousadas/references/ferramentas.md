@@ -78,3 +78,17 @@ Veja como pesquisar em `mercado.md`. Não serve para mudar nada.
 - **Regra H no Beds24 (01/11):** `classificar_beds24` lista por quarto os sábados com a chegada fechada (com a troca de `parametros.regra_h_beds24.troca_sabado`: noCheckIn → none, noCheckInOrCheckOut → noCheckOut), os sábados com estadia abaixo de 2 e as outras noites com restrição. `--plano-beds24 <arquivo>` grava o lote para `beds24.py editar-lote` (só `override`, nunca estadia, disponibilidade ou preço).
 - **Ordens do dono e dia órfão (01/11):** piso abaixo do padrão numa noite coberta por ordem `piso_por_data`/`alvo_por_data`, e não abaixo do piso da ordem, sai como `info` (sem item); estadia 1 entre duas noites esgotadas (dia órfão do PriceLabs) também. Só `falta` gera item no `plano`.
 - Gravação grande: lotes de até 70 noites por chamada, por quarto. Depois, 1 recálculo por quarto e `calendario_12m.py auditar` deve dar 0 noites.
+
+## Promoções da Booking pelo Beds24 (verificado em 03/11/2026)
+Pedido do dono (03/11): integrar as promoções da Booking (painel do Beds24, `pagetype=syncroniserbookingcomxmlpromotions`) aos planos; "Verificar na documentação a api". Pesquisa em 4 fontes públicas, com verificação cruzada:
+- **A API do Beds24 não gerencia promoções da Booking** (v2, v1 JSON/XML, wiki e changelogs). A spec v2 (`api.beds24.com/v2/apiV2.yaml`) não cita "promot" em lugar nenhum. `POST /channels/booking` só faz reportInvalidCard, reportNoShow e reportCancel; `/channels/settings` só aceita Airbnb, Vrbo e iCal.
+- A Promotions API da Booking existe, mas só para channel manager certificado (o Beds24 a usa por trás do painel). A Booking não aceita conexão direta de propriedade.
+- **Só no painel do Beds24 ou na extranet:** criar, ler, alterar e desligar promoções (Basic, Last minute, Early booker, Mobile, Country), Genius, mapeamento de quartos e tarifas, criar rate plans e o multiplicador do canal Booking.
+- **Alternativas programáveis (efeito parecido no preço, sem selo de promoção):**
+  - preço por data numa linha de Daily Price mapeada a um rate plan da Booking;
+  - multiplicador diário do calendário (vale para todos os canais);
+  - linha de Daily Price só da Booking ligada à base com `offsetMultiplier`, alterável por `POST /properties` (a regra precisa ser criada antes no painel);
+  - regras com `min/maxDaysUntilCheckin` em rate plan separado.
+  Todas mexem em preço no Beds24, o que hoje é proibido (preço só pelo PriceLabs): só com ordem do dono.
+- **Razões medidas hoje no Recanto, efeito das promoções ativas:** 0,5557 a até 7 dias, 0,6327 de 8 a 14 dias, 0,6156 de 15 dias em diante e cerca de 5% a menos em estadia de 2 noites. Isso sugere Last minute de cerca de 12% (até 7 dias), Early booker de cerca de 3% (15 dias ou mais) e desconto de cerca de 5% para 2 noites ou mais. A confirmar no painel.
+

@@ -2446,12 +2446,12 @@
     "*"
    ],
    "de": "2026-11-03",
-   "ate": "2028-11-02",
+   "ate": "2026-11-03",
    "tipo": "regra",
    "libera": [
     "beds24_inventario"
    ],
-   "nota": "Beds24: limite de reservas do canal Booking = 0 (channels.booking.maxBookings, texto \"0\") nos 7 quartos de 03/11/2026 a 02/11/2028, gravado e conferido às 19:31 UTC de 03/11. Airbnb, Expedia e venda direta seguem abertos; reservas já feitas não mudam. O motor de pace segue precificando (o preço vale para os outros canais). Desfazer: pedir 'Reabra a Booking' (editar-lote com canais_max {\"booking\": null} no mesmo período)."
+   "nota": "Beds24: limite de reservas do canal Booking = 0 (channels.booking.maxBookings, texto \"0\") nos 7 quartos de 03/11/2026 a 02/11/2028, gravado e conferido às 19:31 UTC de 03/11. Airbnb, Expedia e venda direta seguem abertos; reservas já feitas não mudam. O motor de pace segue precificando (o preço vale para os outros canais). Desfazer: pedir 'Reabra a Booking' (editar-lote com canais_max {\"booking\": null} no mesmo período). Encerrada em 03/11 às 20:05 BRT (dono: 'Reabra a Booking'): limite tirado (null) nos 7 quartos e conferido."
   }
  ]
 }

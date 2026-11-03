@@ -4009,6 +4009,15 @@ Preço enviado. Na Booking: ~R$ 685 a até 7 dias e ~R$ 790-920 de 8 dias em dia
 
 Conector oficial da Booking: "sem disponibilidade" para Recanto e Villa em 04-05/11, 13-15/11 (às 17:00) e 24-25/11. Antes do fechamento as mesmas buscas mostravam preço (04-05/11: Villa R$ 363 e Recanto R$ 381). O limite 0 do canal Booking no Beds24 fechou a Booking nas duas pousadas.
 
+## 03/11/2026, 19:55 a 20:10 — Rotina leve das 19:53 e Booking reaberta (dono)
+
+**Rotina leve:**
+- Beds24 desde 16:50 BRT: King Spa 7 25/11 com 2 reservas diretas da recepção a R$ 300 cada (42% do esperado de R$ 710; topo do relatório); King Spa 2 17/11 esgotou pelo Airbnb (proteção na rotina da manhã); 1 consulta do Airbnb na Balcony (sem reserva); 1 reserva direta antiga da King Spa 7 (09/11) alterada.
+- Vigilância de segurança: 6 reservas criadas ou alteradas, 0 alerta.
+- Gravado: King Spa 7 25/11 R$ 710 → R$ 784 (escada de vendas, 2/7; validador 0 erro; conferido). Ledger: 1 passo.
+
+**Dono: "Reabra a Booking".** Às 20:05 BRT tirei o limite de reservas do canal Booking (null) nos 7 quartos, de 03/11/2026 a 02/11/2028; conferido na leitura (nenhuma noite com limite). A Booking leva de 15 a 35 min para voltar a mostrar as pousadas; conferência agendada. A ordem `dono-2026-11-03-booking-fechada` foi encerrada.
+
 > **Regras em vigor:** desde 06/10/2026 elas ficam em `.claude/skills/gestao-receita-pousadas/references/regras.md`. Este arquivo guarda só o histórico das mudanças.
 
 ## O que só pode ser feito na tela (passo a passo para você)

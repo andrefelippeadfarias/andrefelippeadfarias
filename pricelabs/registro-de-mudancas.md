@@ -3916,6 +3916,22 @@ Preço enviado. Na Booking: ~R$ 685 a até 7 dias e ~R$ 790-920 de 8 dias em dia
 **Pendente com o dono:** a Panorâmica II vende na Booking pela tarifa fixa 50067466 (R$ 412-495): agora fica a menos da metade da Moinhos na Booking.
 **Como desfazer:** pedir "Volte a Recanto dos dias de semana de novembro à base do mercado".
 
+## 03/11/2026, 10:55 a 11:50 — Rotina leve das 10:53
+
+**Beds24 desde a rotina da manhã:** 1 reserva nova (Moinhos 03/11, hoje: o preço de hoje nunca sobe) e 1 cancelamento (Panorâmica I 03 a 05/11, 3 noites). Desde as 10:14 BRT, só uma alteração de status da Balcony (estadia de 02/11, já passada). Nenhuma reserva abaixo de 70% do esperado.
+**Inventário do Beds24 (03/11 a 02/01):** a única mudança foi a estadia mínima 1 da King Spa 7 em 06/11 (sexta órfã), que chegou pelo envio do PriceLabs.
+**Envio:** último envio do PriceLabs às 10:43 BRT, com as mudanças das 08:13. As da régua com hidro de dias de semana (10:52) vão no próximo envio.
+**Conferência na Booking (conector oficial, 1 hora depois do envio):** Recanto 13-15/11 a R$ 1.434 por noite (Moinhos a R$ 2.393 enviados; p61 do mercado com hidro, régua no p65). A razão de estadia de 2 noites ficou em 0,599, cerca de 5% abaixo da de 1 noite (0,633 de 8 a 14 dias).
+
+**Escada de vendas depois do cancelamento (recálculo automático do PriceLabs das 10:43, sem gastar o limite; validador 0 erro, 4 avisos da ordem de 01/11 que suspende o piso do dono nessas noites):**
+- Panorâmica I 03/11 (2/6, hoje): R$ 932 → R$ 829.
+- Panorâmica I 04/11 (2/6): R$ 932 → R$ 858 (não fica abaixo da Moinhos, R$ 856).
+- Panorâmica I 05/11 (4/6, reabriu com 2 livres no piso de proteção): R$ 1.228 → R$ 1.036.
+- Panorâmica II 05/11: R$ 1.240 → R$ 1.033 (até a Panorâmica I; a Moinhos, na última unidade, fica em R$ 1.537).
+
+**Conferência:** as 2 respostas da API conferidas, piso e teto gravados. **Ledger:** 3 passos.
+**Sync:** 03 a 05/11 são de 0 a 2 dias: chegam à Booking no próximo envio ou com o Sync Now.
+
 > **Regras em vigor:** desde 06/10/2026 elas ficam em `.claude/skills/gestao-receita-pousadas/references/regras.md`. Este arquivo guarda só o histórico das mudanças.
 
 ## O que só pode ser feito na tela (passo a passo para você)

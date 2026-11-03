@@ -3757,6 +3757,46 @@ Com a Panorâmica I a R$ 924 em 04/11, a ordem do Recanto continua de pé: Afrod
 
 **Como desfazer:** "Abra o Natal e o Ano Novo como antes".
 
+## 03/11/2026, 07:40 a 08:00 — Pedido do dono: Recanto no escopo dos concorrentes com hidro
+
+**Pedido:** "A Villa Está com valor muito acima que a recanto. Verifique os valores da Recanto e Compare aos concorrentes para os proximos 3 meses. Pois na recanto temos todos os quartos que com banheira de hidro e precisamos estar no escopo dos nossos concorrentes de acordo com nossas estratégia já montada."
+
+**Diagnóstico (preço público ÷ razão Booking/enviado; percentil dos quartos com hidro da varredura de 01/11, 53-70 concorrentes):**
+- Booking 27-29/11 hoje: Villa R$ 1.369 por noite, Recanto R$ 643.
+- Fins de semana de novembro: Moinhos e Panorâmica II no p5 a p11 (R$ 640 a R$ 725), contra King Spa no p72-77 (régua com hidro desde 02/11). A Panorâmica I e a Panorâmica II de 06/11 estavam a R$ 709-711 (p10).
+- Dezembro e janeiro: Recanto no p50-p60 (Moinhos presa no piso do dono de R$ 2.018), e a King Spa 7 no p51-p76. A Recanto também ficava abaixo da Villa.
+- Feriados: Consciência Negra no p70-p94 (ok); Natal p39-49 e Réveillon p33-62, iguais à Villa (seguem os pacotes e os gatilhos das festas); Aniversário de SP p59-66 (ok).
+- Dias de semana (aprox., lista × 1,395): novembro Moinhos ~p41 e King Spa 7 ~p62 (ordem de base do mercado de 01/11, mantida); dezembro Recanto ~p84 (pisos do dono).
+- Achado: o `user_price` do PriceLabs da Villa ainda mostra o valor de antes de 02/11, mas a Booking já mostra os preços novos. Comparação feita com o `price`.
+
+**Ordens:** 9 ordens `dono-2026-11-03-recanto-fds-hidro-MMDD`, uma por fim de semana de 06/11 a 30/01, fora feriados e pacotes.
+- Moinhos, Panorâmica II e Panorâmica I: com 0 vendida, o p65 dos quartos com hidro (um degrau acima do p50 da Villa, `estrategia.md` seção 8). A escada sobe pelas vendas até o p90.
+- Razão Booking/enviado: 0,63 em novembro, 0,58 em 27-28/11 (medida duas vezes), 0,609-0,618 em dezembro e janeiro.
+- Quarto que já estava acima fica no preço de hoje: Panorâmica I em 13-14/11 e 27-28/11.
+- A ordem não desce a noite abaixo do piso. A Afrodite segue a regra dela (5% acima da mais cara).
+- Sextas e sábados de 06-07, 13-14 e 27-28/11 saíram da ordem de base do mercado do Recanto (dias de semana seguem nela).
+- A ordem de 25/10 do fim de semana 06-07/11 foi encerrada (sábado esgotado; o objetivo de lotar foi cumprido).
+
+| Fim de semana | Moinhos | Panorâmica II | Panorâmica I | Afrodite | King Spa 7 (Villa) |
+|---|---|---|---|---|---|
+| 06-07/11 | R$ 2.276 → R$ 2.732 / esgotada | R$ 1.129 → R$ 2.635 / esgotada | R$ 1.125 → R$ 2.627 / esgotada | R$ 2.600 → R$ 2.871 / sem mudança | R$ 2.516 / R$ 2.890 |
+| 13-14/11 | R$ 1.138 → R$ 2.388 | R$ 1.145 → R$ 2.393 / R$ 2.274 → R$ 2.393 | R$ 2.708 → R$ 2.979 | esgotada | R$ 2.856 |
+| 27-28/11 | R$ 1.103 → R$ 2.628 | R$ 1.113 → R$ 2.640 | R$ 3.019 → R$ 3.321 | R$ 3.180 → R$ 3.497 | R$ 2.812 / R$ 2.664 |
+| 04-05/12 | R$ 2.018 → R$ 2.513 | R$ 2.178 → R$ 2.522 / R$ 2.417 → R$ 2.522 | R$ 2.250 → R$ 2.522 / R$ 2.590 → R$ 2.720 | R$ 2.600 → R$ 2.658 / sem mudança | R$ 2.294 / R$ 2.945 |
+| 11-12/12 | R$ 2.018 → R$ 2.524 | R$ 2.247 → R$ 2.534 | R$ 2.338 → R$ 2.534 | esgotada | R$ 2.279 / R$ 2.842 |
+| 18-19/12 | R$ 2.018 → R$ 2.475 | R$ 2.162 → R$ 2.476 | R$ 2.220 → R$ 2.475 | R$ 2.600 → R$ 2.612 | R$ 1.968 / R$ 2.279 |
+| 08-09/01 | R$ 2.018 → R$ 2.534 | R$ 2.162 → R$ 2.546 | R$ 2.220 → R$ 2.534 | sem mudança | R$ 2.220 |
+| 15-16/01 | R$ 2.018 → R$ 2.398 | R$ 2.162 → R$ 2.405 | R$ 2.368 → R$ 2.405 | sem mudança | R$ 2.421 |
+| 29-30/01 | R$ 2.018 → R$ 2.491 | R$ 2.157 → R$ 2.499 | R$ 2.220 → R$ 2.491 | sem mudança | R$ 2.310 / R$ 2.472 |
+
+- **Recálculo:** Moinhos, Panorâmica I, Panorâmica II e Afrodite às 10:50 UTC (sem 429).
+- **Plano:** `pace.py` com as regras por data atuais e `--noites` só nesses fins de semana. Saiu 57 itens (35 passos de pace e 22 de coerência) e 3 tetos da Afrodite a apagar antes.
+- **Validação:** 0 erro e 26 avisos (estadia de sábado mantida pela regra que já existia).
+- **Gravação:** 10:57 UTC. As 4 respostas da API conferidas, com piso e teto novos nas 57 noites. Ledger com 35 passos.
+- **Conferência pelo recálculo:** fica para a rotina das 07:53 (saldo de recálculo).
+- **Sync:** as mudanças chegam à Booking no envio da madrugada ou com o Sync Now do dono.
+- **Como desfazer:** "Volte a Recanto dos fins de semana à régua anterior".
+
 > **Regras em vigor:** desde 06/10/2026 elas ficam em `.claude/skills/gestao-receita-pousadas/references/regras.md`. Este arquivo guarda só o histórico das mudanças.
 
 ## O que só pode ser feito na tela (passo a passo para você)

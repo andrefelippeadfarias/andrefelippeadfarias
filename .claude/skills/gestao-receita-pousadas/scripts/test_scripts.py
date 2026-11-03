@@ -1905,6 +1905,37 @@ class TestPace(unittest.TestCase):
         self.assertEqual(i["pace"]["direcao"], "sobe")
         self.assertLessEqual(i["min_price"], 2400 + (3600 - 2400) * (1 / 3) + 2)
 
+    def test_gatilho_d7_sem_venda_nova(self):
+        """Dono 03/11 ("1. Sim"): na régua com hidro, a noite a até 7 dias sem reserva nova desce do piso da ordem (p65)
+        ao `piso_atras` (p50); longe da data, ou com reserva nova, fica no piso da ordem."""
+        import pace
+        self.cfg["parametros"]["pace"]["escada_vendas"]["ativa"] = True
+        an = {"p25": 300, "p50": 400, "p75": 500, "p90": 600, "max": 700, "n": 62, "busca_em": "2026-10-30",
+              "tipo": "semana", "p50_medido": True}
+
+        def item(n, mu, vb):
+            o = {"id": "o-hidro", "tipo": "alvo_por_data", "quartos": ["VK7"], "de": n, "ate": n, "percentil": 65,
+                 "passo_livre": True, "noites": [n], "escada_vendas": True, "pisos_enviados": {"VK7": 2400},
+                 "topo_enviados": {"VK7": 3600}, "piso_atras": {"VK7": 2000}, "gatilho_dias": 7,
+                 "vendidas_base": {"VK7": {n: vb}}, "libera": ["acima_15", "abaixo_piso"], "ocupacao_max": 0.7,
+                 "frente_ocupacao": 0.5}
+            cal = {"VK7": {n: {"price": "2400", "min_price": "2400", "max_price": "2400", "mu_occupancy": mu}}}
+            res = pace.plano(self.cfg, {"noites": {n: an}, "por_tipo": {}}, cal, date(2026, 11, 3), {"o-hidro": o},
+                             {"passos": []}, dias=30, regra_j_ativa=False)
+            its = [i for i in res["itens"] if i["quarto"] == "VK7" and i["data"] == n]
+            return its[0] if its else None
+        # a 5 dias, sem venda nova (1/7 com base 1): desce ao p50
+        i = item("2026-11-08", "1/7", 1)
+        self.assertIsNotNone(i)
+        self.assertEqual(i["pace"]["direcao"], "desce")
+        self.assertAlmostEqual(i["min_price"], 2000, delta=2)
+        # a 12 dias, sem venda nova: fica no piso da ordem (sem item)
+        i = item("2026-11-15", "1/7", 1)
+        self.assertTrue(i is None or i["pace"]["direcao"] is None, i and (i["pace"]["direcao"], i["min_price"]))
+        # a 5 dias com reserva nova (2/7, base 1): não desce
+        i = item("2026-11-08", "2/7", 1)
+        self.assertTrue(i is None or i["pace"]["direcao"] != "desce", i and (i["pace"]["direcao"], i["min_price"]))
+
     def test_pisos_enviados(self):
         import pace
         # dia de semana fora de feriado: R$ 500 Genius ÷ 0,63 (CFG do teste) = R$ 794 > mínimo R$ 800? não: vale o mínimo

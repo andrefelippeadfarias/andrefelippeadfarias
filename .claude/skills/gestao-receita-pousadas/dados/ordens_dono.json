@@ -57,7 +57,8 @@
    "libera": [
     "acima_15",
     "fixo"
-   ]
+   ],
+   "nota": " 03/11 (dono: '3. Sim'): em 27-28/11 a Afrodite fica acima da faixa de R$ 1.600-1.800 públicos (~R$ 1.844) para seguir 5% acima da Panorâmica I (R$ 3.019); a regra dos 5% vence a faixa quando as duas conflitam."
   },
   {
    "id": "dono-2026-10-25-publico-450",
@@ -1147,7 +1148,7 @@
    ],
    "ocupacao_max": 0.7,
    "frente_ocupacao": 0.5,
-   "nota": "Régua da Recanto um degrau acima da régua da Villa (estrategia.md seção 8: Recanto p65 'no ritmo' contra p50 da Villa): Moinhos, Panorâmica II e Panorâmica I do p65 (R$ 1511 público, 0 vendida) ao p90 (R$ 2314) dos quartos com hidro na Booking (varredura de 01/11, 62 concorrentes) ÷ razão Booking/enviado do Recanto 0.633 = R$ 2388 a R$ 3656 enviados. O piso é a régua com 0 vendida; a escada sobe pela ocupação até o topo (Panorâmica II pela ocupação da pousada, 16 suítes com banheira). Esta ordem não desce a noite abaixo do piso; a Panorâmica II fica entre a Moinhos e a Panorâmica I e a Afrodite segue a regra dela (5% acima da mais cara em sexta e sábado). Double já acima da régua (R$ 2708, 2708): piso no preço de hoje, R$ 2708 Substitui, nestas noites, a régua da lista. Como desfazer: pedir 'Volte a Recanto dos fins de semana à régua anterior'. Revisão de 03/11: vendidas_base = vendas às 10:45 UTC (Moinhos e Panorâmica I por quarto; Panorâmica II pela pousada, 16 suítes): a escada parte do piso e sobe só com reserva nova (pace.py usa a mesma base na reta).",
+   "nota": "Régua da Recanto um degrau acima da régua da Villa (estrategia.md seção 8: Recanto p65 'no ritmo' contra p50 da Villa): Moinhos, Panorâmica II e Panorâmica I do p65 (R$ 1511 público, 0 vendida) ao p90 (R$ 2314) dos quartos com hidro na Booking (varredura de 01/11, 62 concorrentes) ÷ razão Booking/enviado do Recanto 0.633 = R$ 2388 a R$ 3656 enviados. O piso é a régua com 0 vendida; a escada sobe pela ocupação até o topo (Panorâmica II pela ocupação da pousada, 16 suítes com banheira). Esta ordem não desce a noite abaixo do piso; a Panorâmica II fica entre a Moinhos e a Panorâmica I e a Afrodite segue a regra dela (5% acima da mais cara em sexta e sábado). Double já acima da régua (R$ 2708, 2708): piso no preço de hoje, R$ 2708 Substitui, nestas noites, a régua da lista. Como desfazer: pedir 'Volte a Recanto dos fins de semana à régua anterior'. Revisão de 03/11: vendidas_base = vendas às 10:45 UTC (Moinhos e Panorâmica I por quarto; Panorâmica II pela pousada, 16 suítes): a escada parte do piso e sobe só com reserva nova (pace.py usa a mesma base na reta). Dono 03/11 ('1. Sim'): a até 7 dias da noite, sem reserva nova desde a ordem, o piso desce ao p50 com hidro (R$ 1247 público = R$ 1970 enviados), nunca abaixo do piso padrão do dono (pace.py, piso_atras_da_ordem).",
    "vendidas_base": {
     "Q7": {
      "2026-11-13": 2,
@@ -1161,7 +1162,13 @@
      "2026-11-13": 8,
      "2026-11-14": 9
     }
-   }
+   },
+   "piso_atras": {
+    "Q7": 1970,
+    "Q2": 1970,
+    "Double": 1970
+   },
+   "gatilho_dias": 7
   },
   {
    "id": "dono-2026-11-03-recanto-fds-hidro-1127",
@@ -1199,7 +1206,7 @@
    ],
    "ocupacao_max": 0.7,
    "frente_ocupacao": 0.5,
-   "nota": "Régua da Recanto um degrau acima da régua da Villa (estrategia.md seção 8: Recanto p65 'no ritmo' contra p50 da Villa): Moinhos, Panorâmica II e Panorâmica I do p65 (R$ 1524 público, 0 vendida) ao p90 (R$ 2233) dos quartos com hidro na Booking (varredura de 01/11, 65 concorrentes) ÷ razão Booking/enviado do Recanto 0.580 = R$ 2628 a R$ 3850 enviados. O piso é a régua com 0 vendida; a escada sobe pela ocupação até o topo (Panorâmica II pela ocupação da pousada, 16 suítes com banheira). Esta ordem não desce a noite abaixo do piso; a Panorâmica II fica entre a Moinhos e a Panorâmica I e a Afrodite segue a regra dela (5% acima da mais cara em sexta e sábado). Double já acima da régua (R$ 3019, 3019): piso no preço de hoje, R$ 3019 Substitui, nestas noites, a régua da lista. Como desfazer: pedir 'Volte a Recanto dos fins de semana à régua anterior'. Revisão de 03/11: vendidas_base = vendas às 10:45 UTC (Moinhos e Panorâmica I por quarto; Panorâmica II pela pousada, 16 suítes): a escada parte do piso e sobe só com reserva nova (pace.py usa a mesma base na reta). O piso enviado usa a razão Booking/enviado de 0,58 medida em 01/11 e 03/11; se a razão voltar a 0,63, refazer o piso (R$ 2.420).",
+   "nota": "Régua da Recanto um degrau acima da régua da Villa (estrategia.md seção 8: Recanto p65 'no ritmo' contra p50 da Villa): Moinhos, Panorâmica II e Panorâmica I do p65 (R$ 1524 público, 0 vendida) ao p90 (R$ 2233) dos quartos com hidro na Booking (varredura de 01/11, 65 concorrentes) ÷ razão Booking/enviado do Recanto 0.580 = R$ 2628 a R$ 3850 enviados. O piso é a régua com 0 vendida; a escada sobe pela ocupação até o topo (Panorâmica II pela ocupação da pousada, 16 suítes com banheira). Esta ordem não desce a noite abaixo do piso; a Panorâmica II fica entre a Moinhos e a Panorâmica I e a Afrodite segue a regra dela (5% acima da mais cara em sexta e sábado). Double já acima da régua (R$ 3019, 3019): piso no preço de hoje, R$ 3019 Substitui, nestas noites, a régua da lista. Como desfazer: pedir 'Volte a Recanto dos fins de semana à régua anterior'. Revisão de 03/11: vendidas_base = vendas às 10:45 UTC (Moinhos e Panorâmica I por quarto; Panorâmica II pela pousada, 16 suítes): a escada parte do piso e sobe só com reserva nova (pace.py usa a mesma base na reta). O piso enviado usa a razão Booking/enviado de 0,58 medida em 01/11 e 03/11; se a razão voltar a 0,63, refazer o piso (R$ 2.420). Dono 03/11 ('1. Sim'): a até 7 dias da noite, sem reserva nova desde a ordem, o piso desce ao p50 com hidro (R$ 1306 público = R$ 2252 enviados), nunca abaixo do piso padrão do dono (pace.py, piso_atras_da_ordem).",
    "vendidas_base": {
     "Q7": {
      "2026-11-27": 1,
@@ -1213,7 +1220,13 @@
      "2026-11-27": 5,
      "2026-11-28": 5
     }
-   }
+   },
+   "piso_atras": {
+    "Q7": 2252,
+    "Q2": 2252,
+    "Double": 2252
+   },
+   "gatilho_dias": 7
   },
   {
    "id": "dono-2026-11-03-recanto-fds-hidro-1204",
@@ -1251,7 +1264,7 @@
    ],
    "ocupacao_max": 0.7,
    "frente_ocupacao": 0.5,
-   "nota": "Régua da Recanto um degrau acima da régua da Villa (estrategia.md seção 8: Recanto p65 'no ritmo' contra p50 da Villa): Moinhos, Panorâmica II e Panorâmica I do p65 (R$ 1530 público, 0 vendida) ao p90 (R$ 2342) dos quartos com hidro na Booking (varredura de 01/11, 66 concorrentes) ÷ razão Booking/enviado do Recanto 0.609 = R$ 2513 a R$ 3846 enviados. O piso é a régua com 0 vendida; a escada sobe pela ocupação até o topo (Panorâmica II pela ocupação da pousada, 16 suítes com banheira). Esta ordem não desce a noite abaixo do piso; a Panorâmica II fica entre a Moinhos e a Panorâmica I e a Afrodite segue a regra dela (5% acima da mais cara em sexta e sábado). Substitui, nestas noites, a régua da lista. Como desfazer: pedir 'Volte a Recanto dos fins de semana à régua anterior'. Revisão de 03/11: vendidas_base = vendas às 10:45 UTC (Moinhos e Panorâmica I por quarto; Panorâmica II pela pousada, 16 suítes): a escada parte do piso e sobe só com reserva nova (pace.py usa a mesma base na reta).",
+   "nota": "Régua da Recanto um degrau acima da régua da Villa (estrategia.md seção 8: Recanto p65 'no ritmo' contra p50 da Villa): Moinhos, Panorâmica II e Panorâmica I do p65 (R$ 1530 público, 0 vendida) ao p90 (R$ 2342) dos quartos com hidro na Booking (varredura de 01/11, 66 concorrentes) ÷ razão Booking/enviado do Recanto 0.609 = R$ 2513 a R$ 3846 enviados. O piso é a régua com 0 vendida; a escada sobe pela ocupação até o topo (Panorâmica II pela ocupação da pousada, 16 suítes com banheira). Esta ordem não desce a noite abaixo do piso; a Panorâmica II fica entre a Moinhos e a Panorâmica I e a Afrodite segue a regra dela (5% acima da mais cara em sexta e sábado). Substitui, nestas noites, a régua da lista. Como desfazer: pedir 'Volte a Recanto dos fins de semana à régua anterior'. Revisão de 03/11: vendidas_base = vendas às 10:45 UTC (Moinhos e Panorâmica I por quarto; Panorâmica II pela pousada, 16 suítes): a escada parte do piso e sobe só com reserva nova (pace.py usa a mesma base na reta). Dono 03/11 ('1. Sim'): a até 7 dias da noite, sem reserva nova desde a ordem, o piso desce ao p50 com hidro (R$ 1261 público = R$ 2071 enviados), nunca abaixo do piso padrão do dono (pace.py, piso_atras_da_ordem).",
    "vendidas_base": {
     "Q7": {
      "2026-12-04": 2,
@@ -1265,7 +1278,13 @@
      "2026-12-04": 4,
      "2026-12-05": 6
     }
-   }
+   },
+   "piso_atras": {
+    "Q7": 2071,
+    "Q2": 2071,
+    "Double": 2071
+   },
+   "gatilho_dias": 7
   },
   {
    "id": "dono-2026-11-03-recanto-fds-hidro-1211",
@@ -1303,7 +1322,7 @@
    ],
    "ocupacao_max": 0.7,
    "frente_ocupacao": 0.5,
-   "nota": "Régua da Recanto um degrau acima da régua da Villa (estrategia.md seção 8: Recanto p65 'no ritmo' contra p50 da Villa): Moinhos, Panorâmica II e Panorâmica I do p65 (R$ 1537 público, 0 vendida) ao p90 (R$ 2176) dos quartos com hidro na Booking (varredura de 01/11, 64 concorrentes) ÷ razão Booking/enviado do Recanto 0.609 = R$ 2524 a R$ 3573 enviados. O piso é a régua com 0 vendida; a escada sobe pela ocupação até o topo (Panorâmica II pela ocupação da pousada, 16 suítes com banheira). Esta ordem não desce a noite abaixo do piso; a Panorâmica II fica entre a Moinhos e a Panorâmica I e a Afrodite segue a regra dela (5% acima da mais cara em sexta e sábado). Substitui, nestas noites, a régua da lista. Como desfazer: pedir 'Volte a Recanto dos fins de semana à régua anterior'. Revisão de 03/11: vendidas_base = vendas às 10:45 UTC (Moinhos e Panorâmica I por quarto; Panorâmica II pela pousada, 16 suítes): a escada parte do piso e sobe só com reserva nova (pace.py usa a mesma base na reta).",
+   "nota": "Régua da Recanto um degrau acima da régua da Villa (estrategia.md seção 8: Recanto p65 'no ritmo' contra p50 da Villa): Moinhos, Panorâmica II e Panorâmica I do p65 (R$ 1537 público, 0 vendida) ao p90 (R$ 2176) dos quartos com hidro na Booking (varredura de 01/11, 64 concorrentes) ÷ razão Booking/enviado do Recanto 0.609 = R$ 2524 a R$ 3573 enviados. O piso é a régua com 0 vendida; a escada sobe pela ocupação até o topo (Panorâmica II pela ocupação da pousada, 16 suítes com banheira). Esta ordem não desce a noite abaixo do piso; a Panorâmica II fica entre a Moinhos e a Panorâmica I e a Afrodite segue a regra dela (5% acima da mais cara em sexta e sábado). Substitui, nestas noites, a régua da lista. Como desfazer: pedir 'Volte a Recanto dos fins de semana à régua anterior'. Revisão de 03/11: vendidas_base = vendas às 10:45 UTC (Moinhos e Panorâmica I por quarto; Panorâmica II pela pousada, 16 suítes): a escada parte do piso e sobe só com reserva nova (pace.py usa a mesma base na reta). Dono 03/11 ('1. Sim'): a até 7 dias da noite, sem reserva nova desde a ordem, o piso desce ao p50 com hidro (R$ 1272 público = R$ 2089 enviados), nunca abaixo do piso padrão do dono (pace.py, piso_atras_da_ordem).",
    "vendidas_base": {
     "Q7": {
      "2026-12-11": 0,
@@ -1317,7 +1336,13 @@
      "2026-12-11": 3,
      "2026-12-12": 3
     }
-   }
+   },
+   "piso_atras": {
+    "Q7": 2089,
+    "Q2": 2089,
+    "Double": 2089
+   },
+   "gatilho_dias": 7
   },
   {
    "id": "dono-2026-11-03-recanto-fds-hidro-1218",
@@ -1355,7 +1380,7 @@
    ],
    "ocupacao_max": 0.7,
    "frente_ocupacao": 0.5,
-   "nota": "Régua da Recanto um degrau acima da régua da Villa (estrategia.md seção 8: Recanto p65 'no ritmo' contra p50 da Villa): Moinhos, Panorâmica II e Panorâmica I do p65 (R$ 1507 público, 0 vendida) ao p90 (R$ 2574) dos quartos com hidro na Booking (varredura de 01/11, 70 concorrentes) ÷ razão Booking/enviado do Recanto 0.609 = R$ 2475 a R$ 4227 enviados. O piso é a régua com 0 vendida; a escada sobe pela ocupação até o topo (Panorâmica II pela ocupação da pousada, 16 suítes com banheira). Esta ordem não desce a noite abaixo do piso; a Panorâmica II fica entre a Moinhos e a Panorâmica I e a Afrodite segue a regra dela (5% acima da mais cara em sexta e sábado). Substitui, nestas noites, a régua da lista. Como desfazer: pedir 'Volte a Recanto dos fins de semana à régua anterior'. Revisão de 03/11: vendidas_base = vendas às 10:45 UTC (Moinhos e Panorâmica I por quarto; Panorâmica II pela pousada, 16 suítes): a escada parte do piso e sobe só com reserva nova (pace.py usa a mesma base na reta).",
+   "nota": "Régua da Recanto um degrau acima da régua da Villa (estrategia.md seção 8: Recanto p65 'no ritmo' contra p50 da Villa): Moinhos, Panorâmica II e Panorâmica I do p65 (R$ 1507 público, 0 vendida) ao p90 (R$ 2574) dos quartos com hidro na Booking (varredura de 01/11, 70 concorrentes) ÷ razão Booking/enviado do Recanto 0.609 = R$ 2475 a R$ 4227 enviados. O piso é a régua com 0 vendida; a escada sobe pela ocupação até o topo (Panorâmica II pela ocupação da pousada, 16 suítes com banheira). Esta ordem não desce a noite abaixo do piso; a Panorâmica II fica entre a Moinhos e a Panorâmica I e a Afrodite segue a regra dela (5% acima da mais cara em sexta e sábado). Substitui, nestas noites, a régua da lista. Como desfazer: pedir 'Volte a Recanto dos fins de semana à régua anterior'. Revisão de 03/11: vendidas_base = vendas às 10:45 UTC (Moinhos e Panorâmica I por quarto; Panorâmica II pela pousada, 16 suítes): a escada parte do piso e sobe só com reserva nova (pace.py usa a mesma base na reta). Dono 03/11 ('1. Sim'): a até 7 dias da noite, sem reserva nova desde a ordem, o piso desce ao p50 com hidro (R$ 1212 público = R$ 1991 enviados), nunca abaixo do piso padrão do dono (pace.py, piso_atras_da_ordem).",
    "vendidas_base": {
     "Q7": {
      "2026-12-18": 0,
@@ -1369,7 +1394,13 @@
      "2026-12-18": 2,
      "2026-12-19": 2
     }
-   }
+   },
+   "piso_atras": {
+    "Q7": 1991,
+    "Q2": 1991,
+    "Double": 1991
+   },
+   "gatilho_dias": 7
   },
   {
    "id": "dono-2026-11-03-recanto-fds-hidro-0108",
@@ -1407,7 +1438,7 @@
    ],
    "ocupacao_max": 0.7,
    "frente_ocupacao": 0.5,
-   "nota": "Régua da Recanto um degrau acima da régua da Villa (estrategia.md seção 8: Recanto p65 'no ritmo' contra p50 da Villa): Moinhos, Panorâmica II e Panorâmica I do p65 (R$ 1543 público, 0 vendida) ao p90 (R$ 2442) dos quartos com hidro na Booking (varredura de 01/11, 65 concorrentes) ÷ razão Booking/enviado do Recanto 0.609 = R$ 2534 a R$ 4010 enviados. O piso é a régua com 0 vendida; a escada sobe pela ocupação até o topo (Panorâmica II pela ocupação da pousada, 16 suítes com banheira). Esta ordem não desce a noite abaixo do piso; a Panorâmica II fica entre a Moinhos e a Panorâmica I e a Afrodite segue a regra dela (5% acima da mais cara em sexta e sábado). Substitui, nestas noites, a régua da lista. Como desfazer: pedir 'Volte a Recanto dos fins de semana à régua anterior'. Revisão de 03/11: vendidas_base = vendas às 10:45 UTC (Moinhos e Panorâmica I por quarto; Panorâmica II pela pousada, 16 suítes): a escada parte do piso e sobe só com reserva nova (pace.py usa a mesma base na reta).",
+   "nota": "Régua da Recanto um degrau acima da régua da Villa (estrategia.md seção 8: Recanto p65 'no ritmo' contra p50 da Villa): Moinhos, Panorâmica II e Panorâmica I do p65 (R$ 1543 público, 0 vendida) ao p90 (R$ 2442) dos quartos com hidro na Booking (varredura de 01/11, 65 concorrentes) ÷ razão Booking/enviado do Recanto 0.609 = R$ 2534 a R$ 4010 enviados. O piso é a régua com 0 vendida; a escada sobe pela ocupação até o topo (Panorâmica II pela ocupação da pousada, 16 suítes com banheira). Esta ordem não desce a noite abaixo do piso; a Panorâmica II fica entre a Moinhos e a Panorâmica I e a Afrodite segue a regra dela (5% acima da mais cara em sexta e sábado). Substitui, nestas noites, a régua da lista. Como desfazer: pedir 'Volte a Recanto dos fins de semana à régua anterior'. Revisão de 03/11: vendidas_base = vendas às 10:45 UTC (Moinhos e Panorâmica I por quarto; Panorâmica II pela pousada, 16 suítes): a escada parte do piso e sobe só com reserva nova (pace.py usa a mesma base na reta). Dono 03/11 ('1. Sim'): a até 7 dias da noite, sem reserva nova desde a ordem, o piso desce ao p50 com hidro (R$ 1199 público = R$ 1969 enviados), nunca abaixo do piso padrão do dono (pace.py, piso_atras_da_ordem).",
    "vendidas_base": {
     "Q7": {
      "2027-01-08": 0,
@@ -1421,7 +1452,13 @@
      "2027-01-08": 0,
      "2027-01-09": 0
     }
-   }
+   },
+   "piso_atras": {
+    "Q7": 1969,
+    "Q2": 1969,
+    "Double": 1969
+   },
+   "gatilho_dias": 7
   },
   {
    "id": "dono-2026-11-03-recanto-fds-hidro-0115",
@@ -1459,7 +1496,7 @@
    ],
    "ocupacao_max": 0.7,
    "frente_ocupacao": 0.5,
-   "nota": "Régua da Recanto um degrau acima da régua da Villa (estrategia.md seção 8: Recanto p65 'no ritmo' contra p50 da Villa): Moinhos, Panorâmica II e Panorâmica I do p65 (R$ 1460 público, 0 vendida) ao p90 (R$ 2399) dos quartos com hidro na Booking (varredura de 01/11, 64 concorrentes) ÷ razão Booking/enviado do Recanto 0.609 = R$ 2398 a R$ 3939 enviados. O piso é a régua com 0 vendida; a escada sobe pela ocupação até o topo (Panorâmica II pela ocupação da pousada, 16 suítes com banheira). Esta ordem não desce a noite abaixo do piso; a Panorâmica II fica entre a Moinhos e a Panorâmica I e a Afrodite segue a regra dela (5% acima da mais cara em sexta e sábado). Substitui, nestas noites, a régua da lista. Como desfazer: pedir 'Volte a Recanto dos fins de semana à régua anterior'. Revisão de 03/11: vendidas_base = vendas às 10:45 UTC (Moinhos e Panorâmica I por quarto; Panorâmica II pela pousada, 16 suítes): a escada parte do piso e sobe só com reserva nova (pace.py usa a mesma base na reta).",
+   "nota": "Régua da Recanto um degrau acima da régua da Villa (estrategia.md seção 8: Recanto p65 'no ritmo' contra p50 da Villa): Moinhos, Panorâmica II e Panorâmica I do p65 (R$ 1460 público, 0 vendida) ao p90 (R$ 2399) dos quartos com hidro na Booking (varredura de 01/11, 64 concorrentes) ÷ razão Booking/enviado do Recanto 0.609 = R$ 2398 a R$ 3939 enviados. O piso é a régua com 0 vendida; a escada sobe pela ocupação até o topo (Panorâmica II pela ocupação da pousada, 16 suítes com banheira). Esta ordem não desce a noite abaixo do piso; a Panorâmica II fica entre a Moinhos e a Panorâmica I e a Afrodite segue a regra dela (5% acima da mais cara em sexta e sábado). Substitui, nestas noites, a régua da lista. Como desfazer: pedir 'Volte a Recanto dos fins de semana à régua anterior'. Revisão de 03/11: vendidas_base = vendas às 10:45 UTC (Moinhos e Panorâmica I por quarto; Panorâmica II pela pousada, 16 suítes): a escada parte do piso e sobe só com reserva nova (pace.py usa a mesma base na reta). Dono 03/11 ('1. Sim'): a até 7 dias da noite, sem reserva nova desde a ordem, o piso desce ao p50 com hidro (R$ 1189 público = R$ 1953 enviados), nunca abaixo do piso padrão do dono (pace.py, piso_atras_da_ordem).",
    "vendidas_base": {
     "Q7": {
      "2027-01-15": 1,
@@ -1473,7 +1510,13 @@
      "2027-01-15": 1,
      "2027-01-16": 1
     }
-   }
+   },
+   "piso_atras": {
+    "Q7": 1953,
+    "Q2": 1953,
+    "Double": 1953
+   },
+   "gatilho_dias": 7
   },
   {
    "id": "dono-2026-11-03-recanto-fds-hidro-0129",
@@ -1511,7 +1554,7 @@
    ],
    "ocupacao_max": 0.7,
    "frente_ocupacao": 0.5,
-   "nota": "Régua da Recanto um degrau acima da régua da Villa (estrategia.md seção 8: Recanto p65 'no ritmo' contra p50 da Villa): Moinhos, Panorâmica II e Panorâmica I do p65 (R$ 1539 público, 0 vendida) ao p90 (R$ 2442) dos quartos com hidro na Booking (varredura de 01/11, 65 concorrentes) ÷ razão Booking/enviado do Recanto 0.618 = R$ 2491 a R$ 3951 enviados. O piso é a régua com 0 vendida; a escada sobe pela ocupação até o topo (Panorâmica II pela ocupação da pousada, 16 suítes com banheira). Esta ordem não desce a noite abaixo do piso; a Panorâmica II fica entre a Moinhos e a Panorâmica I e a Afrodite segue a regra dela (5% acima da mais cara em sexta e sábado). Substitui, nestas noites, a régua da lista. Como desfazer: pedir 'Volte a Recanto dos fins de semana à régua anterior'. Revisão de 03/11: vendidas_base = vendas às 10:45 UTC (Moinhos e Panorâmica I por quarto; Panorâmica II pela pousada, 16 suítes): a escada parte do piso e sobe só com reserva nova (pace.py usa a mesma base na reta).",
+   "nota": "Régua da Recanto um degrau acima da régua da Villa (estrategia.md seção 8: Recanto p65 'no ritmo' contra p50 da Villa): Moinhos, Panorâmica II e Panorâmica I do p65 (R$ 1539 público, 0 vendida) ao p90 (R$ 2442) dos quartos com hidro na Booking (varredura de 01/11, 65 concorrentes) ÷ razão Booking/enviado do Recanto 0.618 = R$ 2491 a R$ 3951 enviados. O piso é a régua com 0 vendida; a escada sobe pela ocupação até o topo (Panorâmica II pela ocupação da pousada, 16 suítes com banheira). Esta ordem não desce a noite abaixo do piso; a Panorâmica II fica entre a Moinhos e a Panorâmica I e a Afrodite segue a regra dela (5% acima da mais cara em sexta e sábado). Substitui, nestas noites, a régua da lista. Como desfazer: pedir 'Volte a Recanto dos fins de semana à régua anterior'. Revisão de 03/11: vendidas_base = vendas às 10:45 UTC (Moinhos e Panorâmica I por quarto; Panorâmica II pela pousada, 16 suítes): a escada parte do piso e sobe só com reserva nova (pace.py usa a mesma base na reta). Dono 03/11 ('1. Sim'): a até 7 dias da noite, sem reserva nova desde a ordem, o piso desce ao p50 com hidro (R$ 1179 público = R$ 1908 enviados), nunca abaixo do piso padrão do dono (pace.py, piso_atras_da_ordem).",
    "vendidas_base": {
     "Q7": {
      "2027-01-29": 0,
@@ -1525,7 +1568,13 @@
      "2027-01-29": 0,
      "2027-01-30": 0
     }
-   }
+   },
+   "piso_atras": {
+    "Q7": 1908,
+    "Q2": 1908,
+    "Double": 1908
+   },
+   "gatilho_dias": 7
   }
  ]
 }

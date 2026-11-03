@@ -356,6 +356,24 @@ def piso_com_vendas(piso_ordem: float, piso_padrao: float, oc: float) -> float:
     return piso_ordem + (max(piso_padrao, piso_ordem) - piso_ordem) * oc
 
 
+def piso_atras_da_ordem(cfg: dict, ao: dict | None, curto: str, d: date, k: int, vendidas: int,
+                        base: int | None) -> float | None:
+    """Dono 03/11 ("1. Sim"): ordem de régua com hidro com `piso_atras` {curto: reais} e `gatilho_dias` (7). A noite a até
+    `gatilho_dias` dias sem reserva nova desde a ordem (`vendidas_base`; sem base, nenhuma vendida) desce do piso da
+    ordem (p65 com hidro) ao `piso_atras` (p50 com hidro), nunca abaixo do piso padrão do dono, salvo ordem que libera
+    `abaixo_piso` (dias de semana de novembro, ordem de 01/11). None quando o gatilho não vale."""
+    if not ao or curto not in (ao.get("piso_atras") or {}):
+        return None
+    if k > int(ao.get("gatilho_dias", 7)):
+        return None
+    if vendidas > (base if base is not None else 0):
+        return None
+    pa = float(ao["piso_atras"][curto])
+    if "abaixo_piso" not in (ao.get("libera") or []):
+        pa = max(pa, pisos_enviados(cfg, curto, d)[0])
+    return pa
+
+
 def sem_alvo(ordens: dict) -> dict:
     """As ordens sem as do tipo alvo_por_data: o piso da ordem de base do mercado só vale na noite fraca (revisão 01/11)."""
     return {k: o for k, o in ordens.items() if o.get("tipo") != "alvo_por_data"}
@@ -537,6 +555,12 @@ def plano(cfg: dict, ancora: dict, cals: dict, hoje: date, ordens: dict, passos:
             piso, origem_piso, ordem_piso = piso_com_ordem(cfg, curto, d, ordens if usa_ordem or not ao else sem_alvo(ordens))
             reta = None
             if escada_ordem:
+                pa = piso_atras_da_ordem(cfg, ao, curto, d, k, vv, vb[0] if vb else None)
+                if pa is not None and pa < piso:
+                    piso, ordem_piso = pa, ordem_piso or ao
+                    origem_atras = f"gatilho de D{int(ao.get('gatilho_dias', 7))} sem venda nova (dono 03/11): p50 com hidro"
+                else:
+                    origem_atras = None
                 # topo da rampa (dono 01/11; revisão 01/11): o piso padrão do dono (R$ 500/850 no Genius 3), mesmo quando
                 # uma ordem piso_por_data da semana o suspende (senão piso = topo e a escada fica plana: King Spa 7 05/11),
                 # ou o `topo_enviados` da ordem (festas da Villa: do alvo de hoje ao preço de antes, pelas vendas)
@@ -555,7 +579,7 @@ def plano(cfg: dict, ancora: dict, cals: dict, hoje: date, ordens: dict, passos:
                 else:
                     novo = atual  # a noite que já vende bem nunca desce para a reta
                 origem_piso = (f"escada de vendas da ordem {ao['id']} ({vv}/{tt} vendidas; reta R$ {reta:.0f}, piso "
-                               f"padrão R$ {piso_pad:.0f})")
+                               f"padrão R$ {piso_pad:.0f})" + (f"; {origem_atras}" if origem_atras else ""))
             po = (piso, ordem_piso) if ordem_piso else None
             teto_af = None
             regra_af = False
@@ -845,6 +869,12 @@ def coerencia(cfg: dict, cals: dict, finais: dict, itens: list[dict], hoje: date
                     if not escada_q2 and forte_q2:
                         ao_q2 = None
                 piso_q2, _, _ = piso_com_ordem(cfg, "Q2", d, ordens if ao_q2 else sem_alvo(ordens))
+                if ao_q2 and escada_q2:
+                    # dono 03/11 ("1. Sim"): o gatilho de D7 sem venda nova vale também para a Panorâmica II (pela pousada)
+                    vb_q2 = vendidas_base_escada(ordens, "Q2", d)
+                    pa_q2 = piso_atras_da_ordem(cfg, ao_q2, "Q2", d, (d - hoje).days, vv2, vb_q2[0] if vb_q2 else None)
+                    if pa_q2 is not None:
+                        piso_q2 = min(piso_q2, pa_q2)
                 # escada de vendas (dono 01/11; revisão 01/11): a Panorâmica II não sai da ordem quando a pousada vende bem
                 # (antes saltava para o piso padrão, acima das duas): o piso é a Moinhos, que já sobe pela escada, e o
                 # teto anda com o percentil da escada (abaixo), sempre entre Moinhos e Panorâmica I

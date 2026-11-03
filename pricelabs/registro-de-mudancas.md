@@ -3987,6 +3987,24 @@ Preço enviado. Na Booking: ~R$ 685 a até 7 dias e ~R$ 790-920 de 8 dias em dia
 **PriceLabs:** nada muda; o preço segue indo aos outros canais.
 **Como reabrir:** pedir "Reabra a Booking".
 
+## 03/11/2026, 16:55 a 17:05 — Rotina leve das 16:53
+
+**Booking fechada (pedido do dono das 16:30):** às 17:00 BRT a Booking já respondia "sem disponibilidade" para as duas pousadas em 13-15/11 (à tarde: Villa R$ 2.895 e Recanto R$ 2.869). Beds24 com limite 0 da Booking em todas as noites até 02/01 (conferido no inventário).
+**Vigilância de segurança:** 20 reservas criadas ou alteradas desde 13:50 BRT, 0 alerta.
+**Beds24 desde 13:50 BRT:**
+- Lote de 7 reservas da Booking às 14:17 BRT, antes do fechamento: King Spa 7 10-12/11, 20/11, 26/11, 28/11 (esgota) e 29-30/11; King Spa 2 12/12 (esgota) e 11-12/01.
+- Airbnb: Panorâmica I hoje (03/11).
+- Cancelamento: Panorâmica I 06/11 (a reserva de 13:08 BRT).
+- Reservas abaixo de 70%: 8 reservas antigas da Booking alteradas hoje, todas por causa da alta de preço de hoje (o price1 é o de agora). Não são erro de lançamento.
+
+**Gravado no PriceLabs (12 itens; recálculo automático das 16:29 BRT; validador 0 erro):**
+- King Spa 7, escada de vendas: 10/11 R$ 858 → R$ 888; 11/11 R$ 755 → R$ 784; feriado 20/11 R$ 3.463 → R$ 3.759; 26/11 R$ 755 → R$ 784; 29/11 R$ 858 → R$ 888; 30/11 R$ 784 → R$ 814.
+- Balcony, Regra G (10% abaixo da suíte com banheira livre mais barata): 11/11 R$ 686; 26/11 R$ 686; 29/11 R$ 775; 30/11 R$ 711; 11 e 12/01 R$ 1.397 → R$ 978 (estava acima da King Spa 2, R$ 1.087).
+- Panorâmica I 06/11 segue em R$ 1.347 (acima da Moinhos, R$ 1.325).
+- King Spa 7 28/11 e King Spa 2 12/12 esgotaram: proteção na rotina da manhã.
+
+**Conferência:** as 2 respostas da API conferidas. **Ledger:** 6 passos.
+
 > **Regras em vigor:** desde 06/10/2026 elas ficam em `.claude/skills/gestao-receita-pousadas/references/regras.md`. Este arquivo guarda só o histórico das mudanças.
 
 ## O que só pode ser feito na tela (passo a passo para você)

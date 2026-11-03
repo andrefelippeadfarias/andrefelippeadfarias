@@ -3940,6 +3940,26 @@ Preço enviado. Na Booking: ~R$ 685 a até 7 dias e ~R$ 790-920 de 8 dias em dia
 - Todas as outras vêm com o preço do dia: tarifa 60962482, de R$ 321 a R$ 1.610 por noite; tarifa 50068135, R$ 1.156 em 13-14/11 (reserva de 30/10) e R$ 409 em 15/11 (reserva de 03/11).
 **Mudado:** a Panorâmica II voltou ao motor de pace (`quartos.json` sem `fora_do_motor`), como os outros quartos, sempre entre a Moinhos e a Panorâmica I. Pendência encerrada; ordem `dono-2026-11-03-q2-flutua`. Nada gravado no PriceLabs agora: a partir da próxima rodada o motor dá passo nela pelas vendas, como nas outras.
 
+## 03/11/2026, 13:55 a 14:05 — Rotina leve das 13:53
+
+**Beds24 desde as 10:53:** 4 reservas novas e 2 cancelamentos.
+- Cancelamentos (Booking): Moinhos 04-07/11 (4 noites) e 05-07/11 (3 noites). O sábado 07/11 reabriu (5/7).
+- Reservas novas: Moinhos 03/11 (hoje, Booking), Panorâmica I 06/11 (Booking, 5/6), King Spa 7 09-11/11 (direta, lançada pela recepção) e Balcony 24/12 (direta, lançada pela recepção, 1 noite).
+- **Abaixo do planejado (topo do relatório):** King Spa 7 09-11/11 a 38% do esperado (R$ 923 por 3 noites, contra R$ 2.412) e Balcony 24/12 a 48% (R$ 912, contra R$ 1.905). A Balcony de 24/12 também fica fora do pacote do Natal (só 23→25): por ser direta, não passou pela trava do canal. A skill não altera reservas: o dono decide.
+
+**Beds24 gravado e conferido (1 de 1):** Moinhos sábado 07/11 de volta a fechado para entrada e saída (`noCheckInOrCheckOut`). Estava `noCheckIn` pelo lado órfão (sábado esgotado com a sexta livre); com os cancelamentos o sábado tem 2 livres.
+
+**Gravado no PriceLabs (11 itens; recálculo automático do PriceLabs das 13:11 BRT, sem gastar o limite; validador 0 erro, avisos das ordens de novembro):**
+- Moinhos (cancelamentos, ordem de base do mercado de 01/11, que desce direto): 04/11 R$ 856 → R$ 774, 05/11 R$ 1.537 → R$ 938 e sexta 06/11 R$ 2.276 → R$ 1.325.
+- Panorâmica I 06/11 (reserva nova, 5/6): R$ 1.125 → R$ 1.347 (subida limitada a 20% a 3 dias); a Moinhos ficou em R$ 1.325 para a ordem do Recanto caber.
+- Panorâmica II entre as duas: 04/11 R$ 779, 05/11 R$ 954 e 06/11 R$ 1.336.
+- King Spa 7 (reserva nova): 09/11 R$ 888 → R$ 918, 10/11 R$ 814 → R$ 858 e 11/11 R$ 710 → R$ 755.
+- Balcony 11/11 (Regra G): R$ 635 → R$ 660.
+- Sem item: Moinhos sábado 07/11 (5/7, segue no piso de R$ 2.018) e Balcony 24/12 (pacote do Natal, ordem por data).
+
+**Conferência:** as 5 respostas da API conferidas, piso e teto gravados. **Ledger:** 7 passos.
+**Sync:** 04 a 06/11 são de 1 a 3 dias: chegam à Booking no próximo envio ou com o Sync Now.
+
 > **Regras em vigor:** desde 06/10/2026 elas ficam em `.claude/skills/gestao-receita-pousadas/references/regras.md`. Este arquivo guarda só o histórico das mudanças.
 
 ## O que só pode ser feito na tela (passo a passo para você)

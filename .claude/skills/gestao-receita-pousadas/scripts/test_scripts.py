@@ -974,17 +974,80 @@ class TestCalendario12m(unittest.TestCase):
                           "2026-12-26": {"numAvail": 5, "minStay": 2, "override": "none"}},
                "VK7": {"2026-11-14": {"numAvail": 7, "minStay": 2, "override": "noCheckOut"}}}
         cl = {x["quarto"]: x for x in c12.classificar_beds24(CFG, inv, dt.date(2026, 11, 1), dt.date(2027, 10, 31))}
-        # 26/12 e 02/01 são os sábados de festa abertos (dono 02/11, "Pode fazer"): "none" está certo neles
+        # 26/12 segue sábado de festa aberto (dono 02/11); 02/01 fechou de novo pelo pacote do Ano Novo (dono 03/11)
         # sexta 08/01 da Afrodite com a chegada fechada: a auditoria devolve a sexta ao alvo do dono (só a saída fechada)
-        self.assertEqual([(s["data"], s["troca"]) for s in cl["Afrodite"]["sabados_fora_da_regra"]], [("2027-01-08", "noCheckOut")])
+        self.assertEqual([(s["data"], s["troca"]) for s in cl["Afrodite"]["sabados_fora_da_regra"]],
+                         [("2027-01-02", "noCheckInOrCheckOut"), ("2027-01-08", "noCheckOut")])
         self.assertEqual(cl["Afrodite"]["outras_noites_bloqueadas"], [])
         self.assertEqual(sorted(s["data"] for s in cl["Double"]["sabados_fora_da_regra"]), ["2027-01-09", "2027-01-16"])
         self.assertEqual(cl["Double"]["sabados_estadia_abaixo"], ["2027-01-16"])
         self.assertEqual([s["troca"] for s in cl["VK7"]["sabados_fora_da_regra"]], ["noCheckInOrCheckOut"])
         lote = c12.plano_beds24_sabados(list(cl.values()), "teste")
-        self.assertTrue(all(i["override"] == "noCheckInOrCheckOut" for i in lote if i["quarto"] != "Afrodite"))
-        self.assertEqual(len(lote), 4)
+        self.assertTrue(all(i.get("override") == "noCheckInOrCheckOut" for i in lote
+                            if i["quarto"] != "Afrodite" and "max_stay" not in i))
+        # 5 de chegada/saída + a estadia máxima 4 do pacote do Ano Novo na Afrodite em 02/01 (dono 03/11)
+        self.assertEqual(len(lote), 6)
+        self.assertEqual([(i["de"], i["max_stay"]) for i in lote if "max_stay" in i], [("2027-01-02", 4)])
         self.assertFalse(any("min_stay" in i or "num_avail" in i for i in lote))   # só a restrição; nada de preço
+
+    def test_pacotes_festas_beds24(self):
+        """Dono 03/11: Natal só 23→25 e Ano Novo só 30→01 ou 30→03. A auditoria do Beds24 leva cada quarto à chegada/saída
+        por data (acima da sexta da Afrodite e do sábado) e à estadia mínima/máxima por data (stayThrough); o lote leva
+        min_stay também ao PriceLabs e max_stay só ao Beds24; 24/12 fechado não vai a 'outras noites'."""
+        import datetime as dt
+        import calendario_12m as c12
+        f = "noCheckInOrCheckOut"
+        inv = {"Afrodite": {"2026-12-25": {"numAvail": 1, "minStay": 2, "override": "noCheckOut"},   # sexta: saída abre
+                            "2027-01-01": {"numAvail": 1, "minStay": 3, "override": "noCheckOut"}},  # sexta: só chegada fechada
+               "Double": {"2026-12-23": {"numAvail": 6, "minStay": 1, "override": "none"},
+                          "2026-12-24": {"numAvail": 5, "minStay": 2, "override": "none"},
+                          "2026-12-26": {"numAvail": 5, "minStay": 2, "override": "none"},              # festa (02/11) segue aberta
+                          "2026-12-29": {"numAvail": 6, "minStay": 3, "maxStay": 365, "override": "none"},
+                          "2026-12-31": {"numAvail": 3, "minStay": 3, "maxStay": 4, "override": "none"},
+                          "2027-01-02": {"numAvail": 4, "minStay": 3, "maxStay": 4, "override": "none"}}}
+        cl = {x["quarto"]: x for x in c12.classificar_beds24(CFG, inv, dt.date(2026, 11, 3), dt.date(2027, 1, 31))}
+        self.assertEqual([(s["data"], s["troca"]) for s in cl["Afrodite"]["sabados_fora_da_regra"]],
+                         [("2026-12-25", "none"), ("2027-01-01", "noCheckIn")])
+        self.assertTrue(all(s.get("pricelabs_tambem") for s in cl["Afrodite"]["sabados_fora_da_regra"]))
+        self.assertEqual([(s["data"], s["troca"]) for s in cl["Double"]["sabados_fora_da_regra"]],
+                         [("2026-12-24", f), ("2026-12-31", f), ("2027-01-02", f)])
+        self.assertEqual(cl["Double"]["outras_noites_bloqueadas"], [])
+        est = {s["data"]: s for s in cl["Double"]["estadia_por_data"]}
+        self.assertEqual((est["2026-12-23"]["min_alvo"], est["2026-12-23"]["max_alvo"]), (2, 2))
+        self.assertEqual((est["2026-12-29"]["min_alvo"], est["2026-12-29"]["max_alvo"]), (1, 2))
+        self.assertEqual(est["2026-12-31"]["min_alvo"], 2)            # 3 barrava o 30→01 (stayThrough)
+        self.assertNotIn("max_alvo", est["2026-12-31"])                # já 4
+        self.assertNotIn("2027-01-02", est)                            # mínima 3 e máxima 4: certo
+        lote = c12.plano_beds24_sabados(list(cl.values()), "teste")
+        l29 = [i for i in lote if i["quarto"] == "Double" and i["de"] == "2026-12-29"][0]
+        self.assertEqual((l29["min_stay"], l29["max_stay"], l29.get("pricelabs_tambem")), (1, 2, True))
+        self.assertFalse(any(k.startswith("price") and k != "pricelabs_tambem" for i in lote for k in i))
+
+    def test_beds24_estadia_maxima_no_corpo(self):
+        """Dono 03/11: o beds24.py grava maxStay (1 a 30) e recusa mínima acima da máxima (a noite ficaria sem venda)."""
+        import beds24
+        c = beds24.corpo_edicao("VK7", "2026-12-29", "2026-12-29", min_stay=1, max_stay=2)
+        self.assertEqual(c[0]["calendar"][0], {"from": "2026-12-29", "to": "2026-12-29", "minStay": 1, "maxStay": 2})
+        with self.assertRaises(beds24.ErroBeds24):
+            beds24.corpo_edicao("VK7", "2026-12-29", "2026-12-29", min_stay=3, max_stay=2)
+        with self.assertRaises(beds24.ErroBeds24):
+            beds24.corpo_edicao("VK7", "2026-12-29", "2026-12-29", max_stay=0)
+
+    def test_validador_pacotes_festas_pricelabs(self):
+        """Dono 03/11: fechar a chegada/saída de 24/12 e 31/12 (quinta) e a chegada de 01/01 na Afrodite passa com a ordem
+        do dono; estadia 1 em 29/12 passa (véspera fora do pacote) e estadia 1 em 30/12 não (Réveillon, 2 noites)."""
+        v = Validador(CFG, date(2026, 11, 3))
+        v.validar([{"tipo": "data", "quarto": "Afrodite", "data": "2026-12-24", "check_in_check_out_enabled": "1",
+                    "check_in": "1110111", "check_out": "1110111", "min_stay": 2, "excecao": "dono",
+                    "ordem_id": "dono-2026-11-03-festas-pacotes", "motivo": "teste"},
+                   {"tipo": "data", "quarto": "Afrodite", "data": "2027-01-01", "check_in_check_out_enabled": "1",
+                    "check_in": "1111011", "check_out": "1111111", "excecao": "dono",
+                    "ordem_id": "dono-2026-11-03-festas-pacotes", "motivo": "teste"},
+                   {"tipo": "data", "quarto": "Q7", "data": "2026-12-29", "min_stay": 1, "motivo": "teste"}])
+        self.assertEqual([e for e in v.erros if "check_" in e or "estadia" in e], [])
+        v = Validador(CFG, date(2026, 11, 3))
+        v.validar([{"tipo": "data", "quarto": "Q7", "data": "2026-12-30", "min_stay": 1, "motivo": "teste"}])
+        self.assertTrue(v.erros)
 
     def test_beds24_sabado_orfao_e_festas(self):
         """Dono 02/11 ("Pode fazer"): sábado esgotado com sexta livre abre só a saída do sábado naquele quarto; sexta
@@ -1122,7 +1185,7 @@ class TestCalendario12m(unittest.TestCase):
         import calendario_12m as c12
         inv = {"Q7": {"2026-12-01": {"numAvail": 7, "minStay": 2, "override": "none"},      # terça, calendário 1
                       "2026-12-04": {"numAvail": 7, "minStay": 2, "override": "none"},      # sexta: fica
-                      "2026-12-29": {"numAvail": 7, "minStay": 3, "override": "none"},      # Réveillon: fica
+                      "2026-11-19": {"numAvail": 7, "minStay": 2, "override": "none"},      # feriado: fica
                       "2027-07-13": {"numAvail": 7, "minStay": 2, "override": "none"}},     # pico de julho (2): fica
                "Afrodite": {"2026-12-04": {"numAvail": 1, "minStay": 2, "override": "noCheckOut"}}}
         cl = {x["quarto"]: x for x in c12.classificar_beds24(CFG, inv, dt.date(2026, 11, 1), dt.date(2027, 10, 31))}

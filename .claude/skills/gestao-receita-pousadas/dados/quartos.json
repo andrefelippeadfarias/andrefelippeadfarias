@@ -285,10 +285,9 @@
    "nota": "Dono 02/11/2026: 'Preciso que mantenha todos os sábados fechados sempre, tanto para a entrada quanto para a saída.' Todo sábado fica noCheckInOrCheckOut no Beds24 nos 7 quartos, em todo o horizonte, inclusive em feriado (a Afrodite também no PriceLabs por data, porque o envio dela leva chegada/saída). O fim de semana vende de sexta a domingo ou mais. Substitui a Regra H de 01/11 (chegada no sábado liberada) e as exceções de 01/11 (Natal 26/12 no Recanto e 02/01 na Afrodite). Exceção só com nova ordem do dono. Auditoria: calendario_12m.py (--plano-beds24).",
    "sabado_override": "noCheckInOrCheckOut",
    "sabados_excecao": {
-    "2026-12-26": "none",
-    "2027-01-02": "none"
+    "2026-12-26": "none"
    },
-   "sabados_excecao_nota": "Dono 02/11 ('Pode fazer', proposta 2; ordem dono-2026-11-02-festas-sabado-aberto): nos sábados de festa 26/12 e 02/01, entrada e saída abertas nos 7 quartos (Afrodite também no PriceLabs, check_in/check_out 1111111).",
+   "sabados_excecao_nota": "Dono 02/11 ('Pode fazer', proposta 2; ordem dono-2026-11-02-festas-sabado-aberto): nos sábados de festa 26/12 e 02/01, entrada e saída abertas nos 7 quartos (Afrodite também no PriceLabs, check_in/check_out 1111111). 03/11: o sábado 02/01 saiu da exceção e fica fechado (pacote fechado do Ano Novo, dono 03/11).",
    "orfas": {
     "ativa": true,
     "sabado_esgotado": "noCheckIn",
@@ -299,7 +298,35 @@
    "sexta_override_por_quarto": {
     "Afrodite": "noCheckOut"
    },
-   "sexta_override_nota": "Dono 01/11 14:10 ('Sim'; ordens dono-2026-11-01-beds24-semana-afrodite-vk7 e dono-2026-11-01-afrodite-sextas-feriado): Afrodite com chegada de sexta liberada e saída de sexta fechada em todas as sextas, inclusive de feriado. No PriceLabs por data: check_in 1111111 e check_out 1111011 (a sexta é o 5º caractere, segunda a domingo)."
+   "sexta_override_nota": "Dono 01/11 14:10 ('Sim'; ordens dono-2026-11-01-beds24-semana-afrodite-vk7 e dono-2026-11-01-afrodite-sextas-feriado): Afrodite com chegada de sexta liberada e saída de sexta fechada em todas as sextas, inclusive de feriado. No PriceLabs por data: check_in 1111111 e check_out 1111011 (a sexta é o 5º caractere, segunda a domingo).",
+   "override_por_data": {
+    "2026-12-23": "none",
+    "2026-12-24": "noCheckInOrCheckOut",
+    "2026-12-25": "none",
+    "2026-12-30": "none",
+    "2026-12-31": "noCheckInOrCheckOut",
+    "2027-01-01": "noCheckIn",
+    "2027-01-02": "noCheckInOrCheckOut",
+    "2027-01-03": "none"
+   },
+   "estadia_minima_por_data": {
+    "2026-12-23": 2,
+    "2026-12-24": 2,
+    "2026-12-29": 1,
+    "2026-12-30": 2,
+    "2026-12-31": 2
+   },
+   "estadia_maxima_por_data": {
+    "2026-12-23": 2,
+    "2026-12-24": 2,
+    "2026-12-29": 2,
+    "2026-12-30": 4,
+    "2026-12-31": 4,
+    "2027-01-01": 4,
+    "2027-01-02": 4
+   },
+   "override_por_data_motivo": "Dono 03/11: pacotes fechados (Natal 23→25; Ano Novo 30→01 ou 30→03)",
+   "override_por_data_nota": "Dono 03/11: 'Natal de 23 a 25. Vamos deixar esse período pré-definido para que apenas tenhamos reservas nessas datas. Ano Novo, altíssima temporada, de 30 a 01 prefixado. Podendo o hóspede estender até o dia 03 apenas.' Chegada/saída por data valem para todos os quartos, acima da regra do sábado e da sexta da Afrodite (25/12 e 01/01 abrem a saída da Afrodite). Os quartos do Beds24 usam restrictionStrategy 'stayThrough': estadia mínima e máxima valem em cada noite da reserva. Estadia mínima 2 em 31/12 (antes 3) para o 30→01 caber; máxima 2 em 29/12 barra 28→01 e 29→01. A mínima vai também ao PriceLabs por data (o envio dele leva ao Beds24); a máxima só existe no Beds24. Reservas já feitas fora dos pacotes ficam como estão (a skill nunca mexe em reserva). Ordem dono-2026-11-03-festas-pacotes."
   },
   "escada": {
    "passo": 0.07,
@@ -437,19 +464,48 @@
   },
   {
    "nome": "Natal",
-   "inicio": "2026-12-24",
+   "inicio": "2026-12-23",
+   "fim": "2026-12-24",
+   "piso_real": 1000,
+   "nota": "Piso padrão R$ 1.000 reais (regras.md, feriado novo); a Skill pode ajustar pelos dados, nunca abaixo de R$ 800. Natal e Réveillon são picos em qualquer dia da semana (exceção à regra do feriado em fim de semana). Janela alinhada à sazonalidade em 14/10: noites 24 a 26/12 (sábado 26/12 é alta no calendário), 2 noites. Dono 03/11: 'Natal de 23 a 25 ... pré-definido para que apenas tenhamos reservas nessas datas': pacote fechado, chegada 23/12 e saída 25/12 (noites 23 e 24); 24/12 sem chegada nem saída; estadia máxima 2 nas noites 23 e 24 no Beds24 (stayThrough). Ordem dono-2026-11-03-festas-pacotes.",
+   "estadia_minima": 2,
+   "pacote": {
+    "chegada": "2026-12-23",
+    "saidas": [
+     "2026-12-25"
+    ]
+   }
+  },
+  {
+   "nome": "Natal (25 e 26/12, depois do pacote)",
+   "inicio": "2026-12-25",
    "fim": "2026-12-26",
    "piso_real": 1000,
-   "nota": "Piso padrão R$ 1.000 reais (regras.md, feriado novo); a Skill pode ajustar pelos dados, nunca abaixo de R$ 800. Natal e Réveillon são picos em qualquer dia da semana (exceção à regra do feriado em fim de semana). Janela alinhada à sazonalidade em 14/10: noites 24 a 26/12 (sábado 26/12 é alta no calendário), 2 noites.",
-   "estadia_minima": 2
+   "estadia_minima": 2,
+   "nota": "Dono 03/11: o pacote de Natal passou a 23→25. As noites 25 e 26/12 eram do Natal (janela de 14/10) e seguem com o mesmo piso de feriado e estadia 2; o dono não mexeu no preço delas. Sábado 26/12 continua aberto para entrada e saída (exceção do dono de 02/11)."
+  },
+  {
+   "nome": "Réveillon (véspera 29/12)",
+   "inicio": "2026-12-29",
+   "fim": "2026-12-29",
+   "piso_real": 1000,
+   "estadia_minima": 1,
+   "nota": "Dono 03/11: o pacote do Ano Novo passou a 30→01 ou 30→03. A noite 29/12 sai do pacote e fica com o mesmo piso de feriado; estadia mínima 1 e máxima 2 no Beds24 (stayThrough): vende 29→30 e 28→30, e barra 28→01 e 29→01."
   },
   {
    "nome": "Réveillon",
-   "inicio": "2026-12-29",
+   "inicio": "2026-12-30",
    "fim": "2027-01-02",
    "piso_real": 1000,
-   "nota": "Piso padrão R$ 1.000 reais (regras.md, feriado novo); a Skill pode ajustar pelos dados, nunca abaixo de R$ 800. Natal e Réveillon são picos em qualquer dia da semana (exceção à regra do feriado em fim de semana). Janela alinhada à sazonalidade em 14/10: noites 29/12 a 2/1 (muito alta), 3 noites.",
-   "estadia_minima": 3
+   "nota": "Piso padrão R$ 1.000 reais (regras.md, feriado novo); a Skill pode ajustar pelos dados, nunca abaixo de R$ 800. Natal e Réveillon são picos em qualquer dia da semana (exceção à regra do feriado em fim de semana). Janela alinhada à sazonalidade em 14/10: noites 29/12 a 2/1 (muito alta), 3 noites. Dono 03/11: 'Ano Novo, altíssima temporada, de 30 a 01 prefixado. Podendo o hóspede estender até o dia 03 apenas': pacote fechado, chegada só em 30/12 e saída em 01/01 ou 03/01; 31/12 e 02/01 sem chegada nem saída, 01/01 sem chegada; estadia mínima 2 em 30 e 31/12; máxima 4 nas noites 30/12 a 02/01 no Beds24 (stayThrough). Ordem dono-2026-11-03-festas-pacotes.",
+   "estadia_minima": 2,
+   "pacote": {
+    "chegada": "2026-12-30",
+    "saidas": [
+     "2027-01-01",
+     "2027-01-03"
+    ]
+   }
   },
   {
    "nome": "Aniversário de São Paulo (feriadão paulistano)",

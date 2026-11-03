@@ -3718,6 +3718,45 @@ Pelo conector oficial, com café e 2 adultos. Recanto pelas coordenadas (id 7562
 
 Com a Panorâmica I a R$ 924 em 04/11, a ordem do Recanto continua de pé: Afrodite a R$ 1.408 (mais de 20% acima) e Panorâmica II entre as duas. Nenhum item de coerência.
 
+## 03/11/2026, 07:15 a 07:40 — Pedido do dono: pacotes fechados de Natal e Ano Novo
+
+**Pedido:** "Natal de 23 a 25. Vamos deixar esse período pre definido para que apenas tenhamos reservas nessas datas para esse período. Ano Novo, altíssima temporada, de 30 a 01 prefixado. Podendo o hóspede estender até o dia 03 apenas. Ou seja os períodos possíveis de 30 a 01 de Janeiro ou de 30 a 03 de janeiros."
+
+**Leitura:** "de X a Y" = chegada X e saída Y. Natal: só 23→25 (noites 23 e 24). Ano Novo: só 30→01 ou 30→03.
+
+**Beds24, os 7 quartos (50 de 50 relidos e conferidos; `restrictionStrategy` "stayThrough"):**
+
+| Data | Chegada/saída | Estadia mínima | Estadia máxima |
+|---|---|---|---|
+| 23/12 | abertas | 1 → 2 | 7 → 2 |
+| 24/12 | → fechadas | 2 | 7 → 2 |
+| 25/12 | Afrodite: saída fechada → aberta | 2 | 7 |
+| 29/12 | abertas | 3 → 1 | 7 → 2 (barra 28→01 e 29→01) |
+| 30/12 | abertas | 3 → 2 | 7 → 4 |
+| 31/12 | → fechadas | 3 → 2 (o 30→01 não cabia) | 7 → 4 |
+| 01/01 | → sem chegada; Afrodite: saída aberta | 3 | 7 → 4 |
+| 02/01 | abertas (exceção de 02/11) → fechadas | 3 | 7 → 4 |
+
+**PriceLabs (o envio dele leva a estadia mínima e a chegada/saída da Afrodite ao Beds24):**
+- `min_stay` por data nos 7 quartos: 23/12 = 2, 29/12 = 1, 30/12 = 2, 31/12 = 2.
+- Afrodite, chegada/saída: 24/12 e 31/12 fechadas; 25/12 aberta; 01/01 com a saída aberta e sem chegada; 02/01 fechada.
+- Validador: 32 itens, 0 erro. Conferido na leitura da API; os pisos de preço não mudaram.
+
+**Preço:** nada muda por esta ordem. As noites 25-26/12 e 29/12 seguem com o piso de feriado em entradas próprias de `quartos.json`.
+
+**Auditoria do Beds24 de 03/11/2026 a 31/10/2027 depois da gravação:** 0 pendência nas festas. Restam 2 itens de rotina: o sábado 07/11 órfão na Panorâmica I e na King Spa 7, que fica para a rotina das 07:53.
+
+**Reservas já feitas fora dos pacotes (ficam como estão; a skill não mexe em reserva):**
+- Natal (9): King Spa 7 20→24 e 23→26; King Spa 2 20→24; Panorâmica I 23→24 e 24→25; Balcony 24→25 (3).
+- Ano Novo (13): King Spa 7 29→02 e 31→03; Moinhos 30→02 (2) e 31→03; Panorâmica I 31→01 e 31→03 (2); Panorâmica II 31→01; Balcony 31→02 e 31→01 (3).
+- Dentro do pacote do Ano Novo: 5 reservas 30→01.
+
+**Código:** `beds24.py` com estadia máxima; `calendario_12m.py` com chegada/saída e estadia por data; 113 testes OK.
+
+**Ordem:** `dono-2026-11-03-festas-pacotes`.
+
+**Como desfazer:** "Abra o Natal e o Ano Novo como antes".
+
 > **Regras em vigor:** desde 06/10/2026 elas ficam em `.claude/skills/gestao-receita-pousadas/references/regras.md`. Este arquivo guarda só o histórico das mudanças.
 
 ## O que só pode ser feito na tela (passo a passo para você)

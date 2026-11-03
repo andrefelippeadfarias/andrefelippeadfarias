@@ -701,16 +701,15 @@
     "Balcony"
    ],
    "de": "2026-12-26",
-   "ate": "2027-01-02",
+   "ate": "2026-12-26",
    "noites": [
-    "2026-12-26",
-    "2027-01-02"
+    "2026-12-26"
    ],
    "libera": [
     "beds24_inventario",
     "sabado_aberto"
    ],
-   "nota": "Beds24 override none em 26/12 e 02/01 nos 7 quartos (01:00 UTC) e Afrodite check_in/check_out 1111111 nessas datas no PriceLabs (01:23 UTC). Estadia mínima mantida (26/12: 2; 02/01: 3). Volta a vender 24→26/12, 26→28/12 e 30/12→02/01. regra_h_beds24.sabados_excecao."
+   "nota": "Beds24 override none em 26/12 e 02/01 nos 7 quartos (01:00 UTC) e Afrodite check_in/check_out 1111111 nessas datas no PriceLabs (01:23 UTC). Estadia mínima mantida (26/12: 2; 02/01: 3). Volta a vender 24→26/12, 26→28/12 e 30/12→02/01. regra_h_beds24.sabados_excecao. 03/11: o sábado 02/01 saiu desta ordem; fica fechado pelo pacote do Ano Novo (dono-2026-11-03-festas-pacotes)."
   },
   {
    "id": "dono-2026-11-02-nov-fds-regua-lista",
@@ -1066,6 +1065,55 @@
    "ocupacao_max": 0.7,
    "frente_ocupacao": 0.5,
    "nota": "Régua: King Spa 7 e King Spa 2 (banheira) da mediana (p50) ao p90 dos quartos com hidro na Booking; Balcony (sem banheira) da mediana ao p75 da lista; preço público da varredura de 01/11 (62-70 concorrentes) ÷ razão Booking/enviado da Villa medida na mesma busca. O piso é a régua com 0 vendida; a escada sobe pela ocupação (suítes de 2 unidades: as 9 suítes com banheira da Villa) até o topo. Esta ordem não desce a noite abaixo do piso; quarto que já estava acima da régua fica com piso no menor preço de hoje das duas noites (a outra noite pode descer até ele se não vender). Balcony já acima da régua (R$ 1.473, R$ 1.473): piso no preço de hoje, R$ 1.473. Substitui, nestas noites, a ordem dono-2026-11-01-villa-base-mercado (régua da lista). Como desfazer: pedir 'Volte a Villa dos fins de semana à régua da lista'."
+  },
+  {
+   "id": "dono-2026-11-03-festas-pacotes",
+   "data": "2026-11-03",
+   "criada_em": "2026-11-03T10:30+00:00",
+   "texto": "Natal de 23 a 25. Vamos deixar esse período pre definido para que apenas tenhamos reservas nessas datas para esse período. Ano Novo, altíssima temporada, de 30 a 01 prefixado. Podendo o hóspede estender até o dia 03 apenas. Ou seja os períodos possíveis de 30 a 01 de Janeiro ou de 30 a 03 de janeiros.",
+   "tipo": "restricao",
+   "quartos": [
+    "Q7",
+    "Double",
+    "Afrodite",
+    "Q2",
+    "VK7",
+    "VK2",
+    "Balcony"
+   ],
+   "de": "2026-12-23",
+   "ate": "2027-01-03",
+   "noites": [
+    "2026-12-23",
+    "2026-12-24",
+    "2026-12-25",
+    "2026-12-29",
+    "2026-12-30",
+    "2026-12-31",
+    "2027-01-01",
+    "2027-01-02",
+    "2027-01-03"
+   ],
+   "libera": [
+    "chegada_saida_por_data",
+    "estadia_por_data"
+   ],
+   "pacotes": {
+    "natal": {
+     "chegada": "2026-12-23",
+     "saidas": [
+      "2026-12-25"
+     ]
+    },
+    "ano_novo": {
+     "chegada": "2026-12-30",
+     "saidas": [
+      "2027-01-01",
+      "2027-01-03"
+     ]
+    }
+   },
+   "nota": "Interpretação: 'de X a Y' = chegada X e saída Y (o próprio dono: 'de 30 a 01 ou de 30 a 03'). Natal: só 23→25. Ano Novo: só 30→01 ou 30→03. Feito no Beds24 (7 quartos; stayThrough) e no PriceLabs (estadia mínima por data nos 7 quartos e chegada/saída da Afrodite, que o envio leva ao Beds24): 24/12, 31/12 e 02/01 sem chegada nem saída; 01/01 sem chegada; estadia máxima 2 em 23, 24 e 29/12 e 4 de 30/12 a 02/01; estadia mínima 2 em 23, 24, 30 e 31/12 e 1 em 29/12. Config em quartos.json (feriados Natal 23-24 e Réveillon 30/12-02/01; regra_h_beds24.override_por_data, estadia_minima_por_data, estadia_maxima_por_data), que a auditoria diária do Beds24 confere. Preço: nada muda por esta ordem (25-26 e 29/12 seguem com o piso de feriado). Reservas já feitas fora dos pacotes (9 no Natal, 13 no Ano Novo, 03/11) ficam como estão. Desfazer: pedir 'Abra o Natal e o Ano Novo como antes'."
   }
  ]
 }

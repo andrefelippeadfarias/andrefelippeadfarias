@@ -391,3 +391,8 @@ Cada item tem data e evidência. Para incluir um item novo: data, o fato, a evid
 - **Noite "esgotada" por possível duplicata não ganha proteção:** a proteção tira o teto e baixa o piso para o p90. Se a reserva for duplicata, a noite volta à venda abaixo do preço. Segure a noite e pergunte ao dono.
 - **Conferidor e percentual inteiro:** o payload arredonda o piso para cima em percentual inteiro da base, o que dá até 1% da base, ou R$ 15. A folga do `ler_recalculo.py` passou a ser 1% da base + R$ 1. Antes, ele marcava "❌" falso em noites baratas.
 - **Reinício da sessão perde a rodada:** a rotina das 10:53 não rodou e o plano das 13:53 ficou sem gravar. Depois de cada gravação, faça o commit logo (ordens e ledger), antes de relatar.
+
+## 03/11/2026 — Pacotes fechados de Natal e Ano Novo
+- **Beds24 com "stayThrough":** os 7 quartos usam `restrictionStrategy` "stayThrough". A estadia mínima e a máxima valem em cada noite coberta pela reserva, não só na de chegada. Isso simplifica pacote fechado: a máxima de 2 nas noites 23 e 24 barra 22→25 e 23→26. Também é uma armadilha: com a mínima de 3 em 31/12 (a antiga do Réveillon), o 30→01 pedido pelo dono não cabia. Antes de mudar estadia de feriado, confira a mínima de todas as noites do pacote.
+- **Estadia máxima já existia:** todo dia dos 7 quartos tem máxima de 7 noites no Beds24, uma regra antiga que não estava no `inventario`. A leitura passou a trazer `maxStay`.
+- **Pacote novo não desfaz reserva antiga:** em 03/11, 9 reservas do Natal e 13 do Ano Novo já estavam fora dos pacotes, por exemplo 3 Balcony de 24 para 25/12 e chegadas em 31/12. A trava vale para as próximas vendas; as reservas já feitas o dono decide.

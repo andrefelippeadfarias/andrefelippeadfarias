@@ -23,7 +23,8 @@ Edição do inventário (dono, 01/11/2026: "verificar sempre o inventário e edi
   o código é trocado (GET /authentication/setup, cabeçalho `code`) por um refresh token, guardado em
   /root/.beds24/refresh_token (600, fora do repositório) ou lido de BEDS24_REFRESH_TOKEN; cada escrita usa um token
   de 24 h tirado dele. Nunca versionar nem imprimir token ou código.
-- Só disponibilidade (numAvail, override blackout/none), estadia mínima (minStay) e chegada/saída (override
+- Só disponibilidade (numAvail, override blackout/none), estadia mínima (minStay), estadia máxima (maxStay; dono 03/11,
+  pacotes fechados de Natal e Ano Novo) e chegada/saída (override
   noCheckIn/noCheckOut/noCheckInOrCheckOut/none). NUNCA preço (price1..16: preço só pelo PriceLabs) e NUNCA reservas.
 - `editar` é simulação por padrão (mostra antes e depois); com --aplicar grava e relê para conferir.
   Endpoint e campos: POST/GET /inventory/rooms/calendar (apiV2.yaml oficial, conferido em 01/11/2026).
@@ -141,7 +142,7 @@ def inventario(token, de, ate, quartos=None):
     minStay cai para o do quarto quando o dia não tem)."""
     ids = [ID_DO_CURTO[q] for q in (quartos or ID_DO_CURTO)]
     params = {"roomId": ids, "startDate": de, "endDate": ate, "includeNumAvail": "true", "includeMinStay": "true",
-              "includeOverride": "true"}
+              "includeMaxStay": "true", "includeOverride": "true"}
     out = {}
     for item in paginas("/inventory/rooms/calendar", params, token):
         curto = QUARTOS.get(str(item.get("roomId")), (str(item.get("roomId")), 0))[0]
@@ -150,12 +151,12 @@ def inventario(token, de, ate, quartos=None):
             d, fim = dt.date.fromisoformat(faixa["from"]), dt.date.fromisoformat(faixa.get("to") or faixa["from"])
             while d <= fim:
                 if de <= d.isoformat() <= ate:
-                    dias[d.isoformat()] = {k: faixa.get(k) for k in ("numAvail", "minStay", "override")}
+                    dias[d.isoformat()] = {k: faixa.get(k) for k in ("numAvail", "minStay", "maxStay", "override")}
                 d += dt.timedelta(days=1)
     return out
 
 
-def corpo_edicao(curto, de, ate, min_stay=None, override=None, num_avail=None):
+def corpo_edicao(curto, de, ate, min_stay=None, override=None, num_avail=None, max_stay=None):
     """Corpo do POST /inventory/rooms/calendar com as travas da skill (sem preço, valores no intervalo)."""
     if curto not in ID_DO_CURTO:
         raise ErroBeds24(f"quarto desconhecido: {curto}")
@@ -166,6 +167,14 @@ def corpo_edicao(curto, de, ate, min_stay=None, override=None, num_avail=None):
         if not 1 <= int(min_stay) <= 30:
             raise ErroBeds24("estadia mínima fora de 1 a 30")
         faixa["minStay"] = int(min_stay)
+    if max_stay is not None:
+        # dono 03/11 (pacotes fechados de Natal e Ano Novo): estadia máxima por dia de chegada, para nenhuma reserva
+        # entrar nas noites do pacote fora das datas dele
+        if not 1 <= int(max_stay) <= 30:
+            raise ErroBeds24("estadia máxima fora de 1 a 30")
+        if min_stay is not None and int(min_stay) > int(max_stay):
+            raise ErroBeds24("estadia mínima maior que a máxima: a noite fica sem venda")
+        faixa["maxStay"] = int(max_stay)
     if override is not None:
         if override not in OVERRIDES:
             raise ErroBeds24(f"override inválido: {override} (use {', '.join(OVERRIDES)})")
@@ -175,7 +184,7 @@ def corpo_edicao(curto, de, ate, min_stay=None, override=None, num_avail=None):
             raise ErroBeds24(f"disponibilidade fora de 0 a {UNIDADES[curto]} para {curto}")
         faixa["numAvail"] = int(num_avail)
     if len(faixa) == 2:
-        raise ErroBeds24("nada a mudar: informe --min-stay, --override ou --num-avail")
+        raise ErroBeds24("nada a mudar: informe --min-stay, --max-stay, --override ou --num-avail")
     if any(k.startswith("price") for k in faixa):
         raise ErroBeds24("preço não se muda pelo Beds24 (só pelo PriceLabs)")
     return [{"roomId": ID_DO_CURTO[curto], "calendar": [faixa]}]
@@ -364,7 +373,8 @@ def editar_lote(plano, aplicar=False):
     líquido que deve voltar; sem ele, o gravado). Sem --aplicar só mostra antes e mudança."""
     por_quarto, linhas = {}, []
     for it in plano:
-        c = corpo_edicao(it["quarto"], it["de"], it["ate"], it.get("min_stay"), it.get("override"), it.get("num_avail"))
+        c = corpo_edicao(it["quarto"], it["de"], it["ate"], it.get("min_stay"), it.get("override"), it.get("num_avail"),
+                         it.get("max_stay"))
         por_quarto.setdefault(c[0]["roomId"], []).extend(c[0]["calendar"])
         linhas.append(it)
     de = min(i["de"] for i in plano)
@@ -374,7 +384,8 @@ def editar_lote(plano, aplicar=False):
     resumo = {"itens": len(plano), "quartos": quartos, "aplicar": aplicar}
     if not aplicar:
         resumo["amostra"] = [{"quarto": i["quarto"], "de": i["de"], "antes": antes.get(i["quarto"], {}).get(i["de"]),
-                              "mudanca": {k: i[k] for k in ("min_stay", "override", "num_avail") if i.get(k) is not None}}
+                              "mudanca": {k: i[k] for k in ("min_stay", "max_stay", "override", "num_avail")
+                                          if i.get(k) is not None}}
                              for i in plano[:12]]
         return resumo
     corpo = [{"roomId": rid, "calendar": cal} for rid, cal in por_quarto.items()]
@@ -385,7 +396,8 @@ def editar_lote(plano, aplicar=False):
         d = dt.date.fromisoformat(i["de"])
         while d <= dt.date.fromisoformat(i["ate"]):
             v = depois.get(i["quarto"], {}).get(d.isoformat(), {})
-            for campo, chave in (("min_stay", "minStay"), ("override", "override"), ("num_avail", "numAvail")):
+            for campo, chave in (("min_stay", "minStay"), ("max_stay", "maxStay"), ("override", "override"),
+                                 ("num_avail", "numAvail")):
                 if i.get(campo) is None:
                     continue
                 # numAvail volta LÍQUIDO das reservas (gravar 7 com 1 reserva lê 6, 01/11): confira contra
@@ -413,6 +425,7 @@ def main(argv=None):
     iv.add_argument("--quarto", nargs="*"); iv.add_argument("--json")
     ed = sub.add_parser("editar"); ed.add_argument("--quarto", required=True); ed.add_argument("--de", required=True)
     ed.add_argument("--ate", required=True); ed.add_argument("--min-stay", type=int); ed.add_argument("--override")
+    ed.add_argument("--max-stay", type=int, help="estadia máxima por dia de chegada (pacotes fechados do dono, 03/11)")
     ed.add_argument("--num-avail", type=int); ed.add_argument("--motivo", required=True)
     ed.add_argument("--aplicar", action="store_true", help="grava no Beds24 (sem isto, só simula)")
     el = sub.add_parser("editar-lote"); el.add_argument("--plano", required=True); el.add_argument("--aplicar", action="store_true")
@@ -426,7 +439,7 @@ def main(argv=None):
             return 2
     if a.cmd == "editar":
         try:
-            corpo = corpo_edicao(a.quarto, a.de, a.ate, a.min_stay, a.override, a.num_avail)
+            corpo = corpo_edicao(a.quarto, a.de, a.ate, a.min_stay, a.override, a.num_avail, a.max_stay)
             antes = inventario(token_de_acesso(), a.de, a.ate, [a.quarto]).get(a.quarto, {})
             print(json.dumps({"quarto": a.quarto, "motivo": a.motivo, "antes": antes, "mudanca": corpo[0]["calendar"][0],
                               "aplicar": a.aplicar}, ensure_ascii=False, indent=1))

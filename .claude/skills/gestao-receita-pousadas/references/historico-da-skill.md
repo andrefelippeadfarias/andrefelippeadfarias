@@ -2,6 +2,16 @@
 
 Cada mudança feita na própria Skill (regras, parâmetros, scripts, fluxo) entra aqui: data, o que mudou, por quê (evidência) e como desfazer. A entrada mais nova fica em cima.
 
+## 03/11/2026 07:30 BRT: pacotes fechados de Natal e Ano Novo (dono)
+- **Por quê:** dono: "Natal de 23 a 25 ... apenas tenhamos reservas nessas datas. Ano Novo ... de 30 a 01 prefixado. Podendo o hóspede estender até o dia 03 apenas."
+- **O que mudou:**
+  - `beds24.py`: lê e grava `maxStay` (estadia máxima, 1 a 30; recusa mínima acima da máxima), no `editar` (`--max-stay`) e no `editar-lote` (`max_stay`, relido e conferido).
+  - `calendario_12m.classificar_beds24`: `regra_h_beds24.override_por_data` (chegada/saída por data em todos os quartos, acima do sábado e da sexta da Afrodite), `estadia_minima_por_data` e `estadia_maxima_por_data` (saem em `estadia_por_data`; o lote leva `min_stay` com `pricelabs_tambem` e `max_stay` só no Beds24).
+  - `quartos.json`: feriados Natal 23-24/12 e Réveillon 30/12-02/01 (25-26 e 29/12 seguem com o piso de feriado em entradas próprias); 02/01 sai de `sabados_excecao`.
+  - `ordens_dono.json`: ordem `dono-2026-11-03-festas-pacotes`; a ordem dos sábados de festa fica só com 26/12.
+  - Testes: `test_pacotes_festas_beds24`, `test_beds24_estadia_maxima_no_corpo`, `test_validador_pacotes_festas_pricelabs` e 2 ajustados; 113 OK.
+- **Como desfazer:** tirar as três chaves por data de `regra_h_beds24`, voltar os feriados de Natal (24-26/12, 2 noites) e Réveillon (29/12-02/01, 3 noites) e regravar o Beds24 (estadia máxima 7) e o PriceLabs.
+
 ## 02/11/2026 09:00 BRT: conferência do recálculo com a folga do percentual inteiro (rotina das 07:53, segunda)
 - **Por quê:** o payload grava piso e teto em percent_base inteiro e arredonda o piso para cima; o erro chega a 1% da base do quarto. Na conferência da Villa, King Spa 7 03/11 (plano R$ 744, gravado −49% = R$ 755) e King Spa 2 05/11 (R$ 789 → R$ 800) saíram "❌ diferente" com a regra certa.
 - **O que mudou:** `ler_recalculo.py`: `tolerancia_percentual(valor, base)` = 1% do maior entre o valor e a base do quarto + R$ 1 (nunca menos que 1,5% do valor), no piso e no teto. Teste `test_tolerancia_do_percentual_inteiro_usa_a_base` (R$ 11 acima passa; R$ 40 continua ❌); 110 OK.

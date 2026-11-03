@@ -152,7 +152,7 @@ def classificar_beds24(cfg: dict, inv: dict, de: dt.date, ate: dt.date) -> list[
         saz = None
     out = []
     for q in sorted(inv):
-        chegada, estadia, outras, semana, orfa_estadia = [], [], [], [], []
+        chegada, estadia, outras, semana, orfa_estadia, por_data = [], [], [], [], [], []
         for ds, v in sorted(inv[q].items()):
             d = dt.date.fromisoformat(ds)
             if not de <= d <= ate:
@@ -160,6 +160,31 @@ def classificar_beds24(cfg: dict, inv: dict, de: dt.date, ate: dt.date) -> list[
             o = (v or {}).get("override") or "none"
             ms = int((v or {}).get("minStay") or 1)
             lado_orfao = None
+            # dono 03/11 (pacotes fechados): estadia mínima e máxima por data em todos os quartos. Os quartos do Beds24 usam
+            # restrictionStrategy "stayThrough": a estadia vale para TODA noite coberta pela reserva, não só a de chegada
+            mn_alvo = (rh.get("estadia_minima_por_data") or {}).get(ds)
+            mx_alvo = (rh.get("estadia_maxima_por_data") or {}).get(ds)
+            mx = int((v or {}).get("maxStay") or 365)
+            if (mn_alvo is not None and ms != int(mn_alvo)) or (mx_alvo is not None and mx != int(mx_alvo)):
+                it_e = {"data": ds, "motivo": rh.get("override_por_data_motivo") or "estadia por data do dono"}
+                if mn_alvo is not None and ms != int(mn_alvo):
+                    it_e.update({"min_stay": ms, "min_alvo": int(mn_alvo)})
+                if mx_alvo is not None and mx != int(mx_alvo):
+                    it_e.update({"max_stay": mx, "max_alvo": int(mx_alvo)})
+                por_data.append(it_e)
+            # dono 03/11 (pacotes fechados: Natal 23→25, Ano Novo 30→01 ou 30→03): chegada/saída por data em todos os
+            # quartos, acima da regra do sábado e da sexta da Afrodite; a estadia máxima fica no Beds24 (maxStay)
+            alvo_data = (rh.get("override_por_data") or {}).get(ds)
+            if alvo_data:
+                if o != alvo_data:
+                    it = {"data": ds, "override": o, "troca": alvo_data,
+                          "motivo": rh.get("override_por_data_motivo") or "chegada/saída por data do dono"}
+                    if q == "Afrodite":
+                        it["pricelabs_tambem"] = True
+                    chegada.append(it)
+                if d.weekday() == 5 and ms < ms_sab and mn_alvo is None:
+                    estadia.append(ds)
+                continue
             if d.weekday() == 5:
                 if alvo_sab:
                     alvo, por_que = alvo_sab, None
@@ -211,7 +236,8 @@ def classificar_beds24(cfg: dict, inv: dict, de: dt.date, ate: dt.date) -> list[
                 if ms > cal:
                     semana.append({"data": ds, "min_stay": ms, "calendario": cal})
         out.append({"quarto": q, "sabados_fora_da_regra": chegada, "sabados_estadia_abaixo": estadia,
-                    "outras_noites_bloqueadas": outras, "semana_estadia_acima": semana, "orfas_estadia": orfa_estadia})
+                    "outras_noites_bloqueadas": outras, "semana_estadia_acima": semana, "orfas_estadia": orfa_estadia,
+                    "estadia_por_data": por_data})
     return out
 
 
@@ -229,6 +255,17 @@ def plano_beds24_sabados(classif: list[dict], motivo: str, motivo_semana: str | 
     if motivo_semana:
         lote += [{"quarto": x["quarto"], "de": s["data"], "ate": s["data"], "min_stay": s["calendario"],
                   "motivo": motivo_semana} for x in classif for s in x.get("semana_estadia_acima", [])]
+    # dono 03/11 (pacotes fechados de Natal e Ano Novo): estadia mínima e máxima por data. A mínima vai também ao
+    # PriceLabs por data (o envio dele leva a estadia mínima ao Beds24); a máxima só existe no Beds24
+    for x in classif:
+        for s in x.get("estadia_por_data", []):
+            it = {"quarto": x["quarto"], "de": s["data"], "ate": s["data"], "motivo": s.get("motivo") or "estadia por data"}
+            if "min_alvo" in s:
+                it["min_stay"] = s["min_alvo"]
+                it["pricelabs_tambem"] = True
+            if "max_alvo" in s:
+                it["max_stay"] = s["max_alvo"]
+            lote.append(it)
     return lote
 
 
@@ -324,6 +361,10 @@ def main(argv=None) -> int:
             for s_ in ch:
                 if s_.get("pricelabs_tambem"):
                     print(f"  PriceLabs também ({x['quarto']}): {s_['data']} -> {s_['troca']} (check_in/check_out por data)")
+            for s_ in x.get("estadia_por_data") or []:
+                print(f"  estadia por data do dono ({x['quarto']} {s_['data']}): " +
+                      ", ".join(f"{k} {s_[k]} -> {s_[a_]}" for k, a_ in (("min_stay", "min_alvo"), ("max_stay", "max_alvo"))
+                                if a_ in s_) + (" (mínima também no PriceLabs por data)" if "min_alvo" in s_ else ""))
         if a.plano_beds24:
             lote = plano_beds24_sabados(b24, "Dono 02/11: sábado fechado para entrada e saída, sempre (noCheckInOrCheckOut); "
                                              "exceções do dono de 02/11 vão com o motivo próprio",

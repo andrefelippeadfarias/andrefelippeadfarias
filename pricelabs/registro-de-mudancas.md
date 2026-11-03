@@ -4018,6 +4018,12 @@ Conector oficial da Booking: "sem disponibilidade" para Recanto e Villa em 04-05
 
 **Dono: "Reabra a Booking".** Às 20:05 BRT tirei o limite de reservas do canal Booking (null) nos 7 quartos, de 03/11/2026 a 02/11/2028; conferido na leitura (nenhuma noite com limite). A Booking leva de 15 a 35 min para voltar a mostrar as pousadas; conferência agendada. A ordem `dono-2026-11-03-booking-fechada` foi encerrada.
 
+## 03/11/2026, 20:42 — Conferência da Booking reaberta: ainda fechada no site
+
+- Booking (conector oficial), 37 min depois da reabertura: "sem disponibilidade" para as duas pousadas em 04/11, 13-15/11, 24/11 e 15/12 (data nunca buscada antes, sem cache).
+- Beds24: sem limite do canal Booking em nenhuma noite (leitura bruta do calendário) e disponibilidade normal. Escrever o limite igual às unidades do quarto (7, 6, 1, 2...) para forçar um reenvio: o Beds24 grava como null (sem limite), o mesmo estado.
+- Conclusão: o Beds24 não reenviou a abertura à Booking ao tirar o limite. Nova conferência às 21:22 BRT; se seguir fechada, o dono precisa usar o reenvio/sincronização da Booking no painel do Beds24 (Channel Manager > Booking.com) ou abrir os quartos no calendário da extranet.
+
 > **Regras em vigor:** desde 06/10/2026 elas ficam em `.claude/skills/gestao-receita-pousadas/references/regras.md`. Este arquivo guarda só o histórico das mudanças.
 
 ## O que só pode ser feito na tela (passo a passo para você)

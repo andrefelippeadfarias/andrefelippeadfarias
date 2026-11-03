@@ -3960,6 +3960,16 @@ Preço enviado. Na Booking: ~R$ 685 a até 7 dias e ~R$ 790-920 de 8 dias em dia
 **Conferência:** as 5 respostas da API conferidas, piso e teto gravados. **Ledger:** 7 passos.
 **Sync:** 04 a 06/11 são de 1 a 3 dias: chegam à Booking no próximo envio ou com o Sync Now.
 
+## 03/11/2026, 14:15 a 14:35 — Incidente: extranet da Booking invadida (dono)
+
+**Dono:** "Acabamos de ser raqueados ...", "A nossa bokking .com foi invadida ." e "Precisamos proteger nossas propriedades".
+**Conferido (só leitura):**
+- PriceLabs: nenhuma mudança manual de preço, mínimo, máximo ou base em 03/11 (log da conta); só as gravações da skill pela integração.
+- Booking (conector oficial, 04-05/11): as duas propriedades com id, nome e endereço certos (Recanto 7562933, Rua Januário Pereira 575; Villa 14824789, R. das Candelas 79). Villa a R$ 363 por noite (razão 0,53, normal a 1 dia); Recanto a R$ 381 (razão 0,45 a 0,49, um pouco abaixo do esperado): conferir promoção nova na extranet.
+- Beds24: 191 reservas ativas da Booking com chegada até 31/01 (80 nos próximos 14 dias); 3 cancelamentos da Booking em 03/11 em menos de 3 h; 2 reservas diretas do usuário VillaRecep1 em 03/11, abaixo do esperado.
+**Feito:** vigilância de segurança em toda rotina (`scripts/vigia_seguranca.py` e conferência das propriedades na Booking às 10:53); pendência `booking-invadida-2026-11-03` com o passo a passo do dono (extranet, Beds24, PriceLabs, Airbnb, e-mail, computadores, aviso aos hóspedes, boletim de ocorrência).
+**Nada gravado** no PriceLabs nem no Beds24 neste passo. A skill não entra na extranet nem altera reservas.
+
 > **Regras em vigor:** desde 06/10/2026 elas ficam em `.claude/skills/gestao-receita-pousadas/references/regras.md`. Este arquivo guarda só o histórico das mudanças.
 
 ## O que só pode ser feito na tela (passo a passo para você)

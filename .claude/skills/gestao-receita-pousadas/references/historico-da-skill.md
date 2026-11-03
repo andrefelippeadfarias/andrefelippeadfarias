@@ -2,6 +2,12 @@
 
 Cada mudança feita na própria Skill (regras, parâmetros, scripts, fluxo) entra aqui: data, o que mudou, por quê (evidência) e como desfazer. A entrada mais nova fica em cima.
 
+## 03/11/2026 14:30 BRT: vigilância de segurança (dono: Booking invadida)
+- **Por quê:** dono, 03/11: "A nossa bokking .com foi invadida ." e "Precisamos proteger nossas propriedades".
+- **O que mudou:** `scripts/vigia_seguranca.py` (somente leitura no Beds24: origem desconhecida, rajada de 3+ cancelamentos do mesmo canal em 3 h, reserva sem valor; saída sem nomes de hóspedes); `quartos.json` → `parametros.seguranca` (origens conhecidas, limites, id e endereço das duas propriedades na Booking, faixa da razão Booking ÷ enviado); `SKILL.md` (vigilância em toda rotina e conferência das propriedades na Booking às 10:53); pendência `booking-invadida-2026-11-03`. Teste `TestVigiaSeguranca`.
+- **Primeira rodada (01 a 03/11):** 123 reservas lidas; 1 alerta: 3 cancelamentos da Booking em 3 h em 03/11 (08:53 a 11:37 BRT).
+- **Como desfazer:** tirar o passo do `SKILL.md` (o script só lê).
+
 ## 03/11/2026 12:00 BRT: Panorâmica II de volta ao motor (dono: "ela deve flutuar como o planejado")
 - **Por quê:** a Q2 estava fora do motor desde 30/10 por uma "tarifa fixa" na Booking (50067466) vista em 2 reservas de 21/10. As reservas da Booking da Q2 no Beds24 mostram preço do dia nas demais tarifas (60962482, 50068135), inclusive em 30/10 e 03/11. O dono pediu que ela flutue como o planejado.
 - **O que mudou:** `quartos.json` (Q2 sem `fora_do_motor`; `motor_nota`), `pendencias.json` (q2-tarifa-booking-fixa resolvida), ordem `dono-2026-11-03-q2-flutua`, `SKILL.md`, `regras.md`, `estrategia.md`, `plano-12-meses.md`. O código de `fora_do_motor` fica (vale para outro quarto no futuro). Testes 115 OK.

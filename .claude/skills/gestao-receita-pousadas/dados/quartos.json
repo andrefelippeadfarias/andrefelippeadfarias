@@ -436,7 +436,39 @@
    "resposta_do_dono": "Pode ligar o motor de pace. Pode fazer tudo também conforme planejado. Tudo que você verificou está correto. Vamos vender.",
    "nota": "modo: sombra (calcula e relata, não grava) | ligado (grava D0-D60 pelo validador). regra_j_ativa False: noite esgotada e overbooking recebem piso de proteção no p90 da âncora com teto livre (pace.protecao_percentil), nunca piso = teto; 'pousada lotada' deixa de existir como gatilho. A escada por reserva (26 e 28/10) e a Regra J (27/10) encerraram em 30/10 (ordens_dono.json)."
   },
-  "afrodite_fds_horizonte_dias": 95
+  "afrodite_fds_horizonte_dias": 95,
+  "seguranca": {
+   "_nota": "Dono 03/11: 'A nossa bokking .com foi invadida .' / 'Precisamos proteger nossas propriedades'. scripts/vigia_seguranca.py em toda rotina (topo do relatório). Origem nova da equipe ou integração: incluir aqui depois de confirmar com o dono.",
+   "origens_conhecidas": [
+    "Booking.com",
+    "Airbnb",
+    "Expedia",
+    "Expedia Affiliate Network",
+    "google",
+    "setBooking JSON",
+    "API",
+    "VillaRecep1",
+    "RecRecep2",
+    "isaacmiguel",
+    "andrefelippe"
+   ],
+   "rajada_cancelamentos": 3,
+   "rajada_horas": 3,
+   "booking_propriedades": {
+    "Recanto dos Moinhos": {
+     "id": 7562933,
+     "endereco": "575 Rua Januário Pereira"
+    },
+    "Villa Dolce Amore": {
+     "id": 14824789,
+     "endereco": "R. das Candelas, 79"
+    }
+   },
+   "booking_razao_alerta": [
+    0.42,
+    0.72
+   ]
+  }
  },
  "feriados": [
   {

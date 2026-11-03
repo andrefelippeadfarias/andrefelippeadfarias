@@ -1305,6 +1305,37 @@ class TestOrdemAfrodite(unittest.TestCase):
         self.assertEqual([x for x in fora if x["quarto"] == "Afrodite"], [])
 
 
+class TestVigiaSeguranca(unittest.TestCase):
+    """Dono 03/11: Booking invadida; vigilância em toda rotina."""
+
+    def test_origem_desconhecida_rajada_e_valor_zero(self):
+        import vigia_seguranca as vs
+        par = dict(vs.PADRAO)
+        base = {"roomId": "722805", "arrival": "2026-11-10", "departure": "2026-11-11", "price": 500}
+        rs = [
+            dict(base, id=1, status="confirmed", channel="direct", referer="Desconhecido9",
+                 bookingTime="2026-11-03T16:00:00Z", modifiedTime="2026-11-03T16:00:00Z"),
+            dict(base, id=2, status="new", channel="direct", referer="VillaRecep1", price=0,
+                 bookingTime="2026-11-03T16:10:00Z", modifiedTime="2026-11-03T16:10:00Z"),
+            dict(base, id=3, status="cancelled", channel="booking", referer="Booking.com",
+                 bookingTime="2026-10-01T10:00:00Z", cancelTime="2026-11-03T11:53:00Z", modifiedTime="2026-11-03T11:53:00Z"),
+            dict(base, id=4, status="cancelled", channel="booking", referer="Booking.com",
+                 bookingTime="2026-10-01T10:00:00Z", cancelTime="2026-11-03T14:25:00Z", modifiedTime="2026-11-03T14:25:00Z"),
+            dict(base, id=5, status="cancelled", channel="booking", referer="Booking.com",
+                 bookingTime="2026-10-01T10:00:00Z", cancelTime="2026-11-03T14:37:00Z", modifiedTime="2026-11-03T14:37:00Z"),
+            dict(base, id=6, status="confirmed", channel="booking", referer="Booking.com",
+                 bookingTime="2026-10-01T10:00:00Z", modifiedTime="2026-10-02T10:00:00Z"),
+        ]
+        al = vs.classificar(rs, "2026-11-03T00:00:00Z", par, {"722805": "Q7"})
+        tipos = sorted(a["alerta"] for a in al)
+        self.assertEqual(tipos, ["origem desconhecida", "rajada de cancelamentos", "reserva sem valor"])
+        raj = next(a for a in al if a["alerta"] == "rajada de cancelamentos")
+        self.assertEqual(raj["reservas"], [3, 4, 5])
+        # 2 cancelamentos só não são rajada; fora da janela de 3 h também não
+        al2 = vs.classificar(rs[2:4], "2026-11-03T00:00:00Z", par)
+        self.assertEqual(al2, [])
+
+
 if __name__ == "__main__":
     unittest.main()
 

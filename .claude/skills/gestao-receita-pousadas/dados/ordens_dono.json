@@ -136,8 +136,7 @@
     "2026-11-02",
     "2026-11-03",
     "2026-11-04",
-    "2026-11-05",
-    "2026-11-08"
+    "2026-11-05"
    ],
    "pisos_enviados": {
     "Q7": 739,
@@ -145,7 +144,7 @@
     "Double": 755,
     "Afrodite": 800
    },
-   "nota": "31/10 (motor ligado pelo dono): de preco_por_data para piso_por_data. 'Ninguém paga menos de 300' no Genius 3 vira o piso do motor nos dias de semana 02-05/11 e 08/11 (Moinhos R$ 739, Panorâmica II R$ 747, Panorâmica I R$ 755, Afrodite R$ 800 enviados); o motor sobe ou desce a partir dali pelo ritmo de vendas."
+   "nota": "31/10 (motor ligado pelo dono): de preco_por_data para piso_por_data. 'Ninguém paga menos de 300' no Genius 3 vira o piso do motor nos dias de semana 02-05/11 e 08/11 (Moinhos R$ 739, Panorâmica II R$ 747, Panorâmica I R$ 755, Afrodite R$ 800 enviados); o motor sobe ou desce a partir dali pelo ritmo de vendas. 03/11 13:20 UTC: 08/11 saiu desta ordem e passou à dono-2026-11-03-recanto-semana-hidro-1108 (dono: '2. Aplique a regua com Hidro .'); o menor piso entre ordens vale (ordens.piso_da_ordem) e o piso de R$ 300 no Genius 3 derrubaria a régua com hidro. A régua fica acima dos R$ 300 no Genius 3."
   },
   {
    "id": "dono-2026-10-26-escada",
@@ -276,23 +275,7 @@
     "2026-11-04",
     "2026-11-05",
     "2026-11-06",
-    "2026-11-07",
-    "2026-11-08",
-    "2026-11-09",
-    "2026-11-10",
-    "2026-11-11",
-    "2026-11-12",
-    "2026-11-15",
-    "2026-11-16",
-    "2026-11-17",
-    "2026-11-18",
-    "2026-11-22",
-    "2026-11-23",
-    "2026-11-24",
-    "2026-11-25",
-    "2026-11-26",
-    "2026-11-29",
-    "2026-11-30"
+    "2026-11-07"
    ],
    "pisos_enviados": {
     "Q7": 560,
@@ -303,7 +286,7 @@
     "abaixo_piso",
     "acima_15"
    ],
-   "nota": "Interpretação (01/11 07:10 BRT): 'base do mercado' = mediana (p50) do preço PÚBLICO dos hotéis com hidro na Booking (dados/ancora_mercado.json), convertida em enviado ÷ 0,63. Vale para Moinhos, Panorâmica I e Panorâmica II nas noites fracas de novembro (fica com o motor a noite que vende bem: 70% ou mais do quarto vendido, ou à frente da curva com metade ou mais vendida); desce direto à base, sem o limite de passo diário. Suspende no Recanto, nessas noites, os pisos do dono de R$ 500/850 no Genius 3 (D1): o piso passa a ser o limite de segurança (70% do mínimo de referência: Q7 R$ 560, Double R$ 630, Q2 R$ 595). Ficam de fora: Finados (01-02/11, ordens por data), Consciência Negra (19-21/11, pisos de feriado) e a Afrodite (segue a ordem do Recanto: 20% acima da mais cara das outras em dia de semana e a faixa de R$ 1.600-1.800 públicos em sexta e sábado). Validade até 30/11; estender ou desfazer só com o dono. 01/11 18:00 (dono: 'vamos aumentando o valor gradualmente de acordo com que as datas que estão feitas as reservas forem entrando'): escada_vendas ligada; a noite não sai mais da ordem de uma vez (salto para o piso padrão): sobe uma reta por reserva, do p50 e do piso da ordem ao p90 e ao piso padrão do dono. 03/11 11:00 UTC (dono: 'A Villa Está com valor muito acima que a recanto ... precisamos estar no escopo dos nossos concorrentes'): saíram desta ordem as sextas e sábados 13-14 e 27-28/11 (06-07/11 voltaram na revisão de 03/11), que passam às ordens dono-2026-11-03-recanto-fds-hidro-MMDD (régua dos quartos com hidro, p65 ao p90). Dias de semana seguem aqui. Atenção: esta ordem não pode ser estendida a sextas e sábados das ordens dono-2026-11-03-recanto-fds-hidro-MMDD: o menor piso entre ordens vale (ordens.piso_da_ordem) e derrubaria o piso da régua com hidro.",
+   "nota": "Interpretação (01/11 07:10 BRT): 'base do mercado' = mediana (p50) do preço PÚBLICO dos hotéis com hidro na Booking (dados/ancora_mercado.json), convertida em enviado ÷ 0,63. Vale para Moinhos, Panorâmica I e Panorâmica II nas noites fracas de novembro (fica com o motor a noite que vende bem: 70% ou mais do quarto vendido, ou à frente da curva com metade ou mais vendida); desce direto à base, sem o limite de passo diário. Suspende no Recanto, nessas noites, os pisos do dono de R$ 500/850 no Genius 3 (D1): o piso passa a ser o limite de segurança (70% do mínimo de referência: Q7 R$ 560, Double R$ 630, Q2 R$ 595). Ficam de fora: Finados (01-02/11, ordens por data), Consciência Negra (19-21/11, pisos de feriado) e a Afrodite (segue a ordem do Recanto: 20% acima da mais cara das outras em dia de semana e a faixa de R$ 1.600-1.800 públicos em sexta e sábado). Validade até 30/11; estender ou desfazer só com o dono. 01/11 18:00 (dono: 'vamos aumentando o valor gradualmente de acordo com que as datas que estão feitas as reservas forem entrando'): escada_vendas ligada; a noite não sai mais da ordem de uma vez (salto para o piso padrão): sobe uma reta por reserva, do p50 e do piso da ordem ao p90 e ao piso padrão do dono. 03/11 11:00 UTC (dono: 'A Villa Está com valor muito acima que a recanto ... precisamos estar no escopo dos nossos concorrentes'): saíram desta ordem as sextas e sábados 13-14 e 27-28/11 (06-07/11 voltaram na revisão de 03/11), que passam às ordens dono-2026-11-03-recanto-fds-hidro-MMDD (régua dos quartos com hidro, p65 ao p90). Dias de semana seguem aqui. Atenção: esta ordem não pode ser estendida a sextas e sábados das ordens dono-2026-11-03-recanto-fds-hidro-MMDD: o menor piso entre ordens vale (ordens.piso_da_ordem) e derrubaria o piso da régua com hidro. 03/11 13:20 UTC (dono: '2. Aplique a regua com Hidro .'): saíram desta ordem os 16 dias de semana 08-12, 15-18, 22-26 e 29-30/11, que passam às ordens dono-2026-11-03-recanto-semana-hidro-MMDD (régua dos quartos com hidro de dia de semana, p65 ao p90, p50 a até 7 dias sem venda nova). Ficam aqui só 03-07/11.",
    "ocupacao_max": 0.7,
    "frente_ocupacao": 0.5,
    "escada_vendas": true
@@ -1575,6 +1558,886 @@
     "Double": 1908
    },
    "gatilho_dias": 7
+  },
+  {
+   "id": "dono-2026-11-03-recanto-semana-hidro-1108",
+   "data": "2026-11-03",
+   "criada_em": "2026-11-03T13:20+00:00",
+   "texto": "2. Aplique a regua com Hidro .",
+   "contexto": "Resposta do dono (03/11) à pergunta: 'Dias de semana de novembro: a Recanto está perto do p25 do mercado com hidro, pela sua ordem de forçar reservas. Mantenho, ou aplico a régua com hidro também?'",
+   "quartos": [
+    "Q7",
+    "Q2",
+    "Double"
+   ],
+   "de": "2026-11-08",
+   "ate": "2026-11-08",
+   "noites": [
+    "2026-11-08"
+   ],
+   "tipo": "alvo_por_data",
+   "percentil": 65,
+   "passo_livre": true,
+   "escada_vendas": true,
+   "pisos_enviados": {
+    "Q7": 1543,
+    "Q2": 1940,
+    "Double": 1543
+   },
+   "topo_enviados": {
+    "Q7": 2901,
+    "Q2": 2901,
+    "Double": 2901
+   },
+   "piso_atras": {
+    "Q7": 1148,
+    "Q2": 1148,
+    "Double": 1148
+   },
+   "gatilho_dias": 7,
+   "vendidas_base": {
+    "Q7": {
+     "2026-11-08": 5
+    },
+    "Double": {
+     "2026-11-08": 3
+    },
+    "Q2": {
+     "2026-11-08": 11
+    }
+   },
+   "libera": [
+    "acima_15",
+    "abaixo_piso"
+   ],
+   "ocupacao_max": 0.7,
+   "frente_ocupacao": 0.5,
+   "nota": "Régua com hidro de dia de semana (varredura de 03/11, 67 concorrentes, 1 noite, menor quarto com café × r_hidro do hotel): p50 R$ 669, p65 R$ 899, p90 R$ 1691 públicos ÷ razão Booking/enviado do Recanto 0.583 (medida pelas coordenadas na mesma varredura). Moinhos, Panorâmica II e Panorâmica I do p65 (0 vendida) ao p90 pelas reservas novas (vendidas_base = vendas de 03/11); a até 7 dias sem venda nova, p50 (dono 03/11, '1. Sim'). Pisos do dono de dia de semana seguem suspensos em novembro (ordem de 01/11). Q2 já acima da régua (R$ 1940, 2 vendida(s)): piso no preço de hoje. Substitui, nesta noite, a ordem dono-2026-11-01-recanto-base-mercado. Como desfazer: pedir 'Volte a Recanto dos dias de semana de novembro à base do mercado'."
+  },
+  {
+   "id": "dono-2026-11-03-recanto-semana-hidro-1109",
+   "data": "2026-11-03",
+   "criada_em": "2026-11-03T13:20+00:00",
+   "texto": "2. Aplique a regua com Hidro .",
+   "contexto": "Resposta do dono (03/11) à pergunta: 'Dias de semana de novembro: a Recanto está perto do p25 do mercado com hidro, pela sua ordem de forçar reservas. Mantenho, ou aplico a régua com hidro também?'",
+   "quartos": [
+    "Q7",
+    "Q2",
+    "Double"
+   ],
+   "de": "2026-11-09",
+   "ate": "2026-11-09",
+   "noites": [
+    "2026-11-09"
+   ],
+   "tipo": "alvo_por_data",
+   "percentil": 65,
+   "passo_livre": true,
+   "escada_vendas": true,
+   "pisos_enviados": {
+    "Q7": 1548,
+    "Q2": 2003,
+    "Double": 1548
+   },
+   "topo_enviados": {
+    "Q7": 2850,
+    "Q2": 2850,
+    "Double": 2850
+   },
+   "piso_atras": {
+    "Q7": 1095,
+    "Q2": 1095,
+    "Double": 1095
+   },
+   "gatilho_dias": 7,
+   "vendidas_base": {
+    "Q7": {
+     "2026-11-09": 6
+    },
+    "Double": {
+     "2026-11-09": 3
+    },
+    "Q2": {
+     "2026-11-09": 12
+    }
+   },
+   "libera": [
+    "acima_15",
+    "abaixo_piso"
+   ],
+   "ocupacao_max": 0.7,
+   "frente_ocupacao": 0.5,
+   "nota": "Régua com hidro de dia de semana (varredura de 03/11, 67 concorrentes, 1 noite, menor quarto com café × r_hidro do hotel): p50 R$ 638, p65 R$ 902, p90 R$ 1661 públicos ÷ razão Booking/enviado do Recanto 0.583 (medida pelas coordenadas na mesma varredura). Moinhos, Panorâmica II e Panorâmica I do p65 (0 vendida) ao p90 pelas reservas novas (vendidas_base = vendas de 03/11); a até 7 dias sem venda nova, p50 (dono 03/11, '1. Sim'). Pisos do dono de dia de semana seguem suspensos em novembro (ordem de 01/11). Q2 já acima da régua (R$ 2003, 2 vendida(s)): piso no preço de hoje. Substitui, nesta noite, a ordem dono-2026-11-01-recanto-base-mercado. Como desfazer: pedir 'Volte a Recanto dos dias de semana de novembro à base do mercado'."
+  },
+  {
+   "id": "dono-2026-11-03-recanto-semana-hidro-1110",
+   "data": "2026-11-03",
+   "criada_em": "2026-11-03T13:20+00:00",
+   "texto": "2. Aplique a regua com Hidro .",
+   "contexto": "Resposta do dono (03/11) à pergunta: 'Dias de semana de novembro: a Recanto está perto do p25 do mercado com hidro, pela sua ordem de forçar reservas. Mantenho, ou aplico a régua com hidro também?'",
+   "quartos": [
+    "Q7",
+    "Q2",
+    "Double"
+   ],
+   "de": "2026-11-10",
+   "ate": "2026-11-10",
+   "noites": [
+    "2026-11-10"
+   ],
+   "tipo": "alvo_por_data",
+   "percentil": 65,
+   "passo_livre": true,
+   "escada_vendas": true,
+   "pisos_enviados": {
+    "Q7": 1488,
+    "Q2": 1860,
+    "Double": 1524
+   },
+   "topo_enviados": {
+    "Q7": 2779,
+    "Q2": 2779,
+    "Double": 2779
+   },
+   "piso_atras": {
+    "Q7": 1014,
+    "Q2": 1014,
+    "Double": 1014
+   },
+   "gatilho_dias": 7,
+   "vendidas_base": {
+    "Q7": {
+     "2026-11-10": 4
+    },
+    "Double": {
+     "2026-11-10": 3
+    },
+    "Q2": {
+     "2026-11-10": 9
+    }
+   },
+   "libera": [
+    "acima_15",
+    "abaixo_piso"
+   ],
+   "ocupacao_max": 0.7,
+   "frente_ocupacao": 0.5,
+   "nota": "Régua com hidro de dia de semana (varredura de 03/11, 67 concorrentes, 1 noite, menor quarto com café × r_hidro do hotel): p50 R$ 591, p65 R$ 867, p90 R$ 1620 públicos ÷ razão Booking/enviado do Recanto 0.583 (medida pelas coordenadas na mesma varredura). Moinhos, Panorâmica II e Panorâmica I do p65 (0 vendida) ao p90 pelas reservas novas (vendidas_base = vendas de 03/11); a até 7 dias sem venda nova, p50 (dono 03/11, '1. Sim'). Pisos do dono de dia de semana seguem suspensos em novembro (ordem de 01/11). Q2 já acima da régua (R$ 1860, 2 vendida(s)): piso no preço de hoje Double já acima da régua (R$ 1524, 3 vendida(s)): piso no preço de hoje. Substitui, nesta noite, a ordem dono-2026-11-01-recanto-base-mercado. Como desfazer: pedir 'Volte a Recanto dos dias de semana de novembro à base do mercado'."
+  },
+  {
+   "id": "dono-2026-11-03-recanto-semana-hidro-1111",
+   "data": "2026-11-03",
+   "criada_em": "2026-11-03T13:20+00:00",
+   "texto": "2. Aplique a regua com Hidro .",
+   "contexto": "Resposta do dono (03/11) à pergunta: 'Dias de semana de novembro: a Recanto está perto do p25 do mercado com hidro, pela sua ordem de forçar reservas. Mantenho, ou aplico a régua com hidro também?'",
+   "quartos": [
+    "Q7",
+    "Q2",
+    "Double"
+   ],
+   "de": "2026-11-11",
+   "ate": "2026-11-11",
+   "noites": [
+    "2026-11-11"
+   ],
+   "tipo": "alvo_por_data",
+   "percentil": 65,
+   "passo_livre": true,
+   "escada_vendas": true,
+   "pisos_enviados": {
+    "Q7": 1529,
+    "Q2": 1860,
+    "Double": 1687
+   },
+   "topo_enviados": {
+    "Q7": 2760,
+    "Q2": 2760,
+    "Double": 2760
+   },
+   "piso_atras": {
+    "Q7": 1020,
+    "Q2": 1020,
+    "Double": 1020
+   },
+   "gatilho_dias": 7,
+   "vendidas_base": {
+    "Q7": {
+     "2026-11-11": 0
+    },
+    "Double": {
+     "2026-11-11": 3
+    },
+    "Q2": {
+     "2026-11-11": 5
+    }
+   },
+   "libera": [
+    "acima_15",
+    "abaixo_piso"
+   ],
+   "ocupacao_max": 0.7,
+   "frente_ocupacao": 0.5,
+   "nota": "Régua com hidro de dia de semana (varredura de 03/11, 68 concorrentes, 1 noite, menor quarto com café × r_hidro do hotel): p50 R$ 594, p65 R$ 891, p90 R$ 1609 públicos ÷ razão Booking/enviado do Recanto 0.583 (medida pelas coordenadas na mesma varredura). Moinhos, Panorâmica II e Panorâmica I do p65 (0 vendida) ao p90 pelas reservas novas (vendidas_base = vendas de 03/11); a até 7 dias sem venda nova, p50 (dono 03/11, '1. Sim'). Pisos do dono de dia de semana seguem suspensos em novembro (ordem de 01/11). Q2 já acima da régua (R$ 1860, 2 vendida(s)): piso no preço de hoje Double já acima da régua (R$ 1687, 3 vendida(s)): piso no preço de hoje. Substitui, nesta noite, a ordem dono-2026-11-01-recanto-base-mercado. Como desfazer: pedir 'Volte a Recanto dos dias de semana de novembro à base do mercado'."
+  },
+  {
+   "id": "dono-2026-11-03-recanto-semana-hidro-1112",
+   "data": "2026-11-03",
+   "criada_em": "2026-11-03T13:20+00:00",
+   "texto": "2. Aplique a regua com Hidro .",
+   "contexto": "Resposta do dono (03/11) à pergunta: 'Dias de semana de novembro: a Recanto está perto do p25 do mercado com hidro, pela sua ordem de forçar reservas. Mantenho, ou aplico a régua com hidro também?'",
+   "quartos": [
+    "Q7",
+    "Q2",
+    "Double"
+   ],
+   "de": "2026-11-12",
+   "ate": "2026-11-12",
+   "noites": [
+    "2026-11-12"
+   ],
+   "tipo": "alvo_por_data",
+   "percentil": 65,
+   "passo_livre": true,
+   "escada_vendas": true,
+   "pisos_enviados": {
+    "Q7": 1617,
+    "Q2": 1860,
+    "Double": 1617
+   },
+   "topo_enviados": {
+    "Q7": 2841,
+    "Q2": 2841,
+    "Double": 2841
+   },
+   "piso_atras": {
+    "Q7": 1014,
+    "Q2": 1014,
+    "Double": 1014
+   },
+   "gatilho_dias": 7,
+   "vendidas_base": {
+    "Q7": {
+     "2026-11-12": 0
+    },
+    "Double": {
+     "2026-11-12": 2
+    },
+    "Q2": {
+     "2026-11-12": 5
+    }
+   },
+   "libera": [
+    "acima_15",
+    "abaixo_piso"
+   ],
+   "ocupacao_max": 0.7,
+   "frente_ocupacao": 0.5,
+   "nota": "Régua com hidro de dia de semana (varredura de 03/11, 69 concorrentes, 1 noite, menor quarto com café × r_hidro do hotel): p50 R$ 591, p65 R$ 942, p90 R$ 1656 públicos ÷ razão Booking/enviado do Recanto 0.583 (medida pelas coordenadas na mesma varredura). Moinhos, Panorâmica II e Panorâmica I do p65 (0 vendida) ao p90 pelas reservas novas (vendidas_base = vendas de 03/11); a até 7 dias sem venda nova, p50 (dono 03/11, '1. Sim'). Pisos do dono de dia de semana seguem suspensos em novembro (ordem de 01/11). Q2 já acima da régua (R$ 1860, 2 vendida(s)): piso no preço de hoje. Substitui, nesta noite, a ordem dono-2026-11-01-recanto-base-mercado. Como desfazer: pedir 'Volte a Recanto dos dias de semana de novembro à base do mercado'."
+  },
+  {
+   "id": "dono-2026-11-03-recanto-semana-hidro-1115",
+   "data": "2026-11-03",
+   "criada_em": "2026-11-03T13:20+00:00",
+   "texto": "2. Aplique a regua com Hidro .",
+   "contexto": "Resposta do dono (03/11) à pergunta: 'Dias de semana de novembro: a Recanto está perto do p25 do mercado com hidro, pela sua ordem de forçar reservas. Mantenho, ou aplico a régua com hidro também?'",
+   "quartos": [
+    "Q7",
+    "Q2",
+    "Double"
+   ],
+   "de": "2026-11-15",
+   "ate": "2026-11-15",
+   "noites": [
+    "2026-11-15"
+   ],
+   "tipo": "alvo_por_data",
+   "percentil": 65,
+   "passo_livre": true,
+   "escada_vendas": true,
+   "pisos_enviados": {
+    "Q7": 1611,
+    "Q2": 1611,
+    "Double": 1611
+   },
+   "topo_enviados": {
+    "Q7": 3047,
+    "Q2": 3047,
+    "Double": 3047
+   },
+   "piso_atras": {
+    "Q7": 1195,
+    "Q2": 1195,
+    "Double": 1195
+   },
+   "gatilho_dias": 7,
+   "vendidas_base": {
+    "Q7": {
+     "2026-11-15": 3
+    },
+    "Double": {
+     "2026-11-15": 3
+    },
+    "Q2": {
+     "2026-11-15": 8
+    }
+   },
+   "libera": [
+    "acima_15",
+    "abaixo_piso"
+   ],
+   "ocupacao_max": 0.7,
+   "frente_ocupacao": 0.5,
+   "nota": "Régua com hidro de dia de semana (varredura de 03/11, 66 concorrentes, 1 noite, menor quarto com café × r_hidro do hotel): p50 R$ 696, p65 R$ 939, p90 R$ 1776 públicos ÷ razão Booking/enviado do Recanto 0.583 (medida pelas coordenadas na mesma varredura). Moinhos, Panorâmica II e Panorâmica I do p65 (0 vendida) ao p90 pelas reservas novas (vendidas_base = vendas de 03/11); a até 7 dias sem venda nova, p50 (dono 03/11, '1. Sim'). Pisos do dono de dia de semana seguem suspensos em novembro (ordem de 01/11). Substitui, nesta noite, a ordem dono-2026-11-01-recanto-base-mercado. Como desfazer: pedir 'Volte a Recanto dos dias de semana de novembro à base do mercado'."
+  },
+  {
+   "id": "dono-2026-11-03-recanto-semana-hidro-1116",
+   "data": "2026-11-03",
+   "criada_em": "2026-11-03T13:20+00:00",
+   "texto": "2. Aplique a regua com Hidro .",
+   "contexto": "Resposta do dono (03/11) à pergunta: 'Dias de semana de novembro: a Recanto está perto do p25 do mercado com hidro, pela sua ordem de forçar reservas. Mantenho, ou aplico a régua com hidro também?'",
+   "quartos": [
+    "Q7",
+    "Q2",
+    "Double"
+   ],
+   "de": "2026-11-16",
+   "ate": "2026-11-16",
+   "noites": [
+    "2026-11-16"
+   ],
+   "tipo": "alvo_por_data",
+   "percentil": 65,
+   "passo_livre": true,
+   "escada_vendas": true,
+   "pisos_enviados": {
+    "Q7": 1526,
+    "Q2": 1526,
+    "Double": 1526
+   },
+   "topo_enviados": {
+    "Q7": 2752,
+    "Q2": 2752,
+    "Double": 2752
+   },
+   "piso_atras": {
+    "Q7": 1148,
+    "Q2": 1148,
+    "Double": 1148
+   },
+   "gatilho_dias": 7,
+   "vendidas_base": {
+    "Q7": {
+     "2026-11-16": 1
+    },
+    "Double": {
+     "2026-11-16": 1
+    },
+    "Q2": {
+     "2026-11-16": 2
+    }
+   },
+   "libera": [
+    "acima_15",
+    "abaixo_piso"
+   ],
+   "ocupacao_max": 0.7,
+   "frente_ocupacao": 0.5,
+   "nota": "Régua com hidro de dia de semana (varredura de 03/11, 69 concorrentes, 1 noite, menor quarto com café × r_hidro do hotel): p50 R$ 669, p65 R$ 889, p90 R$ 1604 públicos ÷ razão Booking/enviado do Recanto 0.583 (medida pelas coordenadas na mesma varredura). Moinhos, Panorâmica II e Panorâmica I do p65 (0 vendida) ao p90 pelas reservas novas (vendidas_base = vendas de 03/11); a até 7 dias sem venda nova, p50 (dono 03/11, '1. Sim'). Pisos do dono de dia de semana seguem suspensos em novembro (ordem de 01/11). Substitui, nesta noite, a ordem dono-2026-11-01-recanto-base-mercado. Como desfazer: pedir 'Volte a Recanto dos dias de semana de novembro à base do mercado'."
+  },
+  {
+   "id": "dono-2026-11-03-recanto-semana-hidro-1117",
+   "data": "2026-11-03",
+   "criada_em": "2026-11-03T13:20+00:00",
+   "texto": "2. Aplique a regua com Hidro .",
+   "contexto": "Resposta do dono (03/11) à pergunta: 'Dias de semana de novembro: a Recanto está perto do p25 do mercado com hidro, pela sua ordem de forçar reservas. Mantenho, ou aplico a régua com hidro também?'",
+   "quartos": [
+    "Q7",
+    "Q2",
+    "Double"
+   ],
+   "de": "2026-11-17",
+   "ate": "2026-11-17",
+   "noites": [
+    "2026-11-17"
+   ],
+   "tipo": "alvo_por_data",
+   "percentil": 65,
+   "passo_livre": true,
+   "escada_vendas": true,
+   "pisos_enviados": {
+    "Q7": 1359,
+    "Q2": 1359,
+    "Double": 1359
+   },
+   "topo_enviados": {
+    "Q7": 2587,
+    "Q2": 2587,
+    "Double": 2587
+   },
+   "piso_atras": {
+    "Q7": 1056,
+    "Q2": 1056,
+    "Double": 1056
+   },
+   "gatilho_dias": 7,
+   "vendidas_base": {
+    "Q7": {
+     "2026-11-17": 1
+    },
+    "Double": {
+     "2026-11-17": 1
+    },
+    "Q2": {
+     "2026-11-17": 2
+    }
+   },
+   "libera": [
+    "acima_15",
+    "abaixo_piso"
+   ],
+   "ocupacao_max": 0.7,
+   "frente_ocupacao": 0.5,
+   "nota": "Régua com hidro de dia de semana (varredura de 03/11, 68 concorrentes, 1 noite, menor quarto com café × r_hidro do hotel): p50 R$ 615, p65 R$ 792, p90 R$ 1508 públicos ÷ razão Booking/enviado do Recanto 0.583 (medida pelas coordenadas na mesma varredura). Moinhos, Panorâmica II e Panorâmica I do p65 (0 vendida) ao p90 pelas reservas novas (vendidas_base = vendas de 03/11); a até 7 dias sem venda nova, p50 (dono 03/11, '1. Sim'). Pisos do dono de dia de semana seguem suspensos em novembro (ordem de 01/11). Substitui, nesta noite, a ordem dono-2026-11-01-recanto-base-mercado. Como desfazer: pedir 'Volte a Recanto dos dias de semana de novembro à base do mercado'."
+  },
+  {
+   "id": "dono-2026-11-03-recanto-semana-hidro-1118",
+   "data": "2026-11-03",
+   "criada_em": "2026-11-03T13:20+00:00",
+   "texto": "2. Aplique a regua com Hidro .",
+   "contexto": "Resposta do dono (03/11) à pergunta: 'Dias de semana de novembro: a Recanto está perto do p25 do mercado com hidro, pela sua ordem de forçar reservas. Mantenho, ou aplico a régua com hidro também?'",
+   "quartos": [
+    "Q7",
+    "Q2",
+    "Double"
+   ],
+   "de": "2026-11-18",
+   "ate": "2026-11-18",
+   "noites": [
+    "2026-11-18"
+   ],
+   "tipo": "alvo_por_data",
+   "percentil": 65,
+   "passo_livre": true,
+   "escada_vendas": true,
+   "pisos_enviados": {
+    "Q7": 1359,
+    "Q2": 1359,
+    "Double": 1359
+   },
+   "topo_enviados": {
+    "Q7": 2675,
+    "Q2": 2675,
+    "Double": 2675
+   },
+   "piso_atras": {
+    "Q7": 999,
+    "Q2": 999,
+    "Double": 999
+   },
+   "gatilho_dias": 7,
+   "vendidas_base": {
+    "Q7": {
+     "2026-11-18": 2
+    },
+    "Double": {
+     "2026-11-18": 6
+    },
+    "Q2": {
+     "2026-11-18": 8
+    }
+   },
+   "libera": [
+    "acima_15",
+    "abaixo_piso"
+   ],
+   "ocupacao_max": 0.7,
+   "frente_ocupacao": 0.5,
+   "nota": "Régua com hidro de dia de semana (varredura de 03/11, 68 concorrentes, 1 noite, menor quarto com café × r_hidro do hotel): p50 R$ 582, p65 R$ 792, p90 R$ 1559 públicos ÷ razão Booking/enviado do Recanto 0.583 (medida pelas coordenadas na mesma varredura). Moinhos, Panorâmica II e Panorâmica I do p65 (0 vendida) ao p90 pelas reservas novas (vendidas_base = vendas de 03/11); a até 7 dias sem venda nova, p50 (dono 03/11, '1. Sim'). Pisos do dono de dia de semana seguem suspensos em novembro (ordem de 01/11). Substitui, nesta noite, a ordem dono-2026-11-01-recanto-base-mercado. Como desfazer: pedir 'Volte a Recanto dos dias de semana de novembro à base do mercado'."
+  },
+  {
+   "id": "dono-2026-11-03-recanto-semana-hidro-1122",
+   "data": "2026-11-03",
+   "criada_em": "2026-11-03T13:20+00:00",
+   "texto": "2. Aplique a regua com Hidro .",
+   "contexto": "Resposta do dono (03/11) à pergunta: 'Dias de semana de novembro: a Recanto está perto do p25 do mercado com hidro, pela sua ordem de forçar reservas. Mantenho, ou aplico a régua com hidro também?'",
+   "quartos": [
+    "Q7",
+    "Q2",
+    "Double"
+   ],
+   "de": "2026-11-22",
+   "ate": "2026-11-22",
+   "noites": [
+    "2026-11-22"
+   ],
+   "tipo": "alvo_por_data",
+   "percentil": 65,
+   "passo_livre": true,
+   "escada_vendas": true,
+   "pisos_enviados": {
+    "Q7": 1479,
+    "Q2": 1479,
+    "Double": 1479
+   },
+   "topo_enviados": {
+    "Q7": 2709,
+    "Q2": 2709,
+    "Double": 2709
+   },
+   "piso_atras": {
+    "Q7": 1177,
+    "Q2": 1177,
+    "Double": 1177
+   },
+   "gatilho_dias": 7,
+   "vendidas_base": {
+    "Q7": {
+     "2026-11-22": 1
+    },
+    "Double": {
+     "2026-11-22": 4
+    },
+    "Q2": {
+     "2026-11-22": 6
+    }
+   },
+   "libera": [
+    "acima_15",
+    "abaixo_piso"
+   ],
+   "ocupacao_max": 0.7,
+   "frente_ocupacao": 0.5,
+   "nota": "Régua com hidro de dia de semana (varredura de 03/11, 64 concorrentes, 1 noite, menor quarto com café × r_hidro do hotel): p50 R$ 686, p65 R$ 862, p90 R$ 1579 públicos ÷ razão Booking/enviado do Recanto 0.583 (medida pelas coordenadas na mesma varredura). Moinhos, Panorâmica II e Panorâmica I do p65 (0 vendida) ao p90 pelas reservas novas (vendidas_base = vendas de 03/11); a até 7 dias sem venda nova, p50 (dono 03/11, '1. Sim'). Pisos do dono de dia de semana seguem suspensos em novembro (ordem de 01/11). Substitui, nesta noite, a ordem dono-2026-11-01-recanto-base-mercado. Como desfazer: pedir 'Volte a Recanto dos dias de semana de novembro à base do mercado'."
+  },
+  {
+   "id": "dono-2026-11-03-recanto-semana-hidro-1123",
+   "data": "2026-11-03",
+   "criada_em": "2026-11-03T13:20+00:00",
+   "texto": "2. Aplique a regua com Hidro .",
+   "contexto": "Resposta do dono (03/11) à pergunta: 'Dias de semana de novembro: a Recanto está perto do p25 do mercado com hidro, pela sua ordem de forçar reservas. Mantenho, ou aplico a régua com hidro também?'",
+   "quartos": [
+    "Q7",
+    "Q2",
+    "Double"
+   ],
+   "de": "2026-11-23",
+   "ate": "2026-11-23",
+   "noites": [
+    "2026-11-23"
+   ],
+   "tipo": "alvo_por_data",
+   "percentil": 65,
+   "passo_livre": true,
+   "escada_vendas": true,
+   "pisos_enviados": {
+    "Q7": 1390,
+    "Q2": 1390,
+    "Double": 1390
+   },
+   "topo_enviados": {
+    "Q7": 2779,
+    "Q2": 2779,
+    "Double": 2779
+   },
+   "piso_atras": {
+    "Q7": 1020,
+    "Q2": 1020,
+    "Double": 1020
+   },
+   "gatilho_dias": 7,
+   "vendidas_base": {
+    "Q7": {
+     "2026-11-23": 4
+    },
+    "Double": {
+     "2026-11-23": 3
+    },
+    "Q2": {
+     "2026-11-23": 8
+    }
+   },
+   "libera": [
+    "acima_15",
+    "abaixo_piso"
+   ],
+   "ocupacao_max": 0.7,
+   "frente_ocupacao": 0.5,
+   "nota": "Régua com hidro de dia de semana (varredura de 03/11, 66 concorrentes, 1 noite, menor quarto com café × r_hidro do hotel): p50 R$ 594, p65 R$ 810, p90 R$ 1620 públicos ÷ razão Booking/enviado do Recanto 0.583 (medida pelas coordenadas na mesma varredura). Moinhos, Panorâmica II e Panorâmica I do p65 (0 vendida) ao p90 pelas reservas novas (vendidas_base = vendas de 03/11); a até 7 dias sem venda nova, p50 (dono 03/11, '1. Sim'). Pisos do dono de dia de semana seguem suspensos em novembro (ordem de 01/11). Substitui, nesta noite, a ordem dono-2026-11-01-recanto-base-mercado. Como desfazer: pedir 'Volte a Recanto dos dias de semana de novembro à base do mercado'."
+  },
+  {
+   "id": "dono-2026-11-03-recanto-semana-hidro-1124",
+   "data": "2026-11-03",
+   "criada_em": "2026-11-03T13:20+00:00",
+   "texto": "2. Aplique a regua com Hidro .",
+   "contexto": "Resposta do dono (03/11) à pergunta: 'Dias de semana de novembro: a Recanto está perto do p25 do mercado com hidro, pela sua ordem de forçar reservas. Mantenho, ou aplico a régua com hidro também?'",
+   "quartos": [
+    "Q7",
+    "Q2",
+    "Double"
+   ],
+   "de": "2026-11-24",
+   "ate": "2026-11-24",
+   "noites": [
+    "2026-11-24"
+   ],
+   "tipo": "alvo_por_data",
+   "percentil": 65,
+   "passo_livre": true,
+   "escada_vendas": true,
+   "pisos_enviados": {
+    "Q7": 1536,
+    "Q2": 1536,
+    "Double": 1536
+   },
+   "topo_enviados": {
+    "Q7": 2700,
+    "Q2": 2700,
+    "Double": 2700
+   },
+   "piso_atras": {
+    "Q7": 1167,
+    "Q2": 1167,
+    "Double": 1167
+   },
+   "gatilho_dias": 7,
+   "vendidas_base": {
+    "Q7": {
+     "2026-11-24": 2
+    },
+    "Double": {
+     "2026-11-24": 1
+    },
+    "Q2": {
+     "2026-11-24": 5
+    }
+   },
+   "libera": [
+    "acima_15",
+    "abaixo_piso"
+   ],
+   "ocupacao_max": 0.7,
+   "frente_ocupacao": 0.5,
+   "nota": "Régua com hidro de dia de semana (varredura de 03/11, 65 concorrentes, 1 noite, menor quarto com café × r_hidro do hotel): p50 R$ 680, p65 R$ 895, p90 R$ 1574 públicos ÷ razão Booking/enviado do Recanto 0.583 (medida pelas coordenadas na mesma varredura). Moinhos, Panorâmica II e Panorâmica I do p65 (0 vendida) ao p90 pelas reservas novas (vendidas_base = vendas de 03/11); a até 7 dias sem venda nova, p50 (dono 03/11, '1. Sim'). Pisos do dono de dia de semana seguem suspensos em novembro (ordem de 01/11). Substitui, nesta noite, a ordem dono-2026-11-01-recanto-base-mercado. Como desfazer: pedir 'Volte a Recanto dos dias de semana de novembro à base do mercado'."
+  },
+  {
+   "id": "dono-2026-11-03-recanto-semana-hidro-1125",
+   "data": "2026-11-03",
+   "criada_em": "2026-11-03T13:20+00:00",
+   "texto": "2. Aplique a regua com Hidro .",
+   "contexto": "Resposta do dono (03/11) à pergunta: 'Dias de semana de novembro: a Recanto está perto do p25 do mercado com hidro, pela sua ordem de forçar reservas. Mantenho, ou aplico a régua com hidro também?'",
+   "quartos": [
+    "Q7",
+    "Q2",
+    "Double"
+   ],
+   "de": "2026-11-25",
+   "ate": "2026-11-25",
+   "noites": [
+    "2026-11-25"
+   ],
+   "tipo": "alvo_por_data",
+   "percentil": 65,
+   "passo_livre": true,
+   "escada_vendas": true,
+   "pisos_enviados": {
+    "Q7": 1560,
+    "Q2": 1560,
+    "Double": 1560
+   },
+   "topo_enviados": {
+    "Q7": 2752,
+    "Q2": 2752,
+    "Double": 2752
+   },
+   "piso_atras": {
+    "Q7": 1095,
+    "Q2": 1095,
+    "Double": 1095
+   },
+   "gatilho_dias": 7,
+   "vendidas_base": {
+    "Q7": {
+     "2026-11-25": 3
+    },
+    "Double": {
+     "2026-11-25": 0
+    },
+    "Q2": {
+     "2026-11-25": 5
+    }
+   },
+   "libera": [
+    "acima_15",
+    "abaixo_piso"
+   ],
+   "ocupacao_max": 0.7,
+   "frente_ocupacao": 0.5,
+   "nota": "Régua com hidro de dia de semana (varredura de 03/11, 69 concorrentes, 1 noite, menor quarto com café × r_hidro do hotel): p50 R$ 638, p65 R$ 909, p90 R$ 1604 públicos ÷ razão Booking/enviado do Recanto 0.583 (medida pelas coordenadas na mesma varredura). Moinhos, Panorâmica II e Panorâmica I do p65 (0 vendida) ao p90 pelas reservas novas (vendidas_base = vendas de 03/11); a até 7 dias sem venda nova, p50 (dono 03/11, '1. Sim'). Pisos do dono de dia de semana seguem suspensos em novembro (ordem de 01/11). Substitui, nesta noite, a ordem dono-2026-11-01-recanto-base-mercado. Como desfazer: pedir 'Volte a Recanto dos dias de semana de novembro à base do mercado'."
+  },
+  {
+   "id": "dono-2026-11-03-recanto-semana-hidro-1126",
+   "data": "2026-11-03",
+   "criada_em": "2026-11-03T13:20+00:00",
+   "texto": "2. Aplique a regua com Hidro .",
+   "contexto": "Resposta do dono (03/11) à pergunta: 'Dias de semana de novembro: a Recanto está perto do p25 do mercado com hidro, pela sua ordem de forçar reservas. Mantenho, ou aplico a régua com hidro também?'",
+   "quartos": [
+    "Q7",
+    "Q2",
+    "Double"
+   ],
+   "de": "2026-11-26",
+   "ate": "2026-11-26",
+   "noites": [
+    "2026-11-26"
+   ],
+   "tipo": "alvo_por_data",
+   "percentil": 65,
+   "passo_livre": true,
+   "escada_vendas": true,
+   "pisos_enviados": {
+    "Q7": 1514,
+    "Q2": 1514,
+    "Double": 1514
+   },
+   "topo_enviados": {
+    "Q7": 2760,
+    "Q2": 2760,
+    "Double": 2760
+   },
+   "piso_atras": {
+    "Q7": 1062,
+    "Q2": 1062,
+    "Double": 1062
+   },
+   "gatilho_dias": 7,
+   "vendidas_base": {
+    "Q7": {
+     "2026-11-26": 1
+    },
+    "Double": {
+     "2026-11-26": 0
+    },
+    "Q2": {
+     "2026-11-26": 2
+    }
+   },
+   "libera": [
+    "acima_15",
+    "abaixo_piso"
+   ],
+   "ocupacao_max": 0.7,
+   "frente_ocupacao": 0.5,
+   "nota": "Régua com hidro de dia de semana (varredura de 03/11, 68 concorrentes, 1 noite, menor quarto com café × r_hidro do hotel): p50 R$ 619, p65 R$ 882, p90 R$ 1609 públicos ÷ razão Booking/enviado do Recanto 0.583 (medida pelas coordenadas na mesma varredura). Moinhos, Panorâmica II e Panorâmica I do p65 (0 vendida) ao p90 pelas reservas novas (vendidas_base = vendas de 03/11); a até 7 dias sem venda nova, p50 (dono 03/11, '1. Sim'). Pisos do dono de dia de semana seguem suspensos em novembro (ordem de 01/11). Substitui, nesta noite, a ordem dono-2026-11-01-recanto-base-mercado. Como desfazer: pedir 'Volte a Recanto dos dias de semana de novembro à base do mercado'."
+  },
+  {
+   "id": "dono-2026-11-03-recanto-semana-hidro-1129",
+   "data": "2026-11-03",
+   "criada_em": "2026-11-03T13:20+00:00",
+   "texto": "2. Aplique a regua com Hidro .",
+   "contexto": "Resposta do dono (03/11) à pergunta: 'Dias de semana de novembro: a Recanto está perto do p25 do mercado com hidro, pela sua ordem de forçar reservas. Mantenho, ou aplico a régua com hidro também?'",
+   "quartos": [
+    "Q7",
+    "Q2",
+    "Double"
+   ],
+   "de": "2026-11-29",
+   "ate": "2026-11-29",
+   "noites": [
+    "2026-11-29"
+   ],
+   "tipo": "alvo_por_data",
+   "percentil": 65,
+   "passo_livre": true,
+   "escada_vendas": true,
+   "pisos_enviados": {
+    "Q7": 1476,
+    "Q2": 1476,
+    "Double": 1476
+   },
+   "topo_enviados": {
+    "Q7": 2779,
+    "Q2": 2779,
+    "Double": 2779
+   },
+   "piso_atras": {
+    "Q7": 1181,
+    "Q2": 1181,
+    "Double": 1181
+   },
+   "gatilho_dias": 7,
+   "vendidas_base": {
+    "Q7": {
+     "2026-11-29": 0
+    },
+    "Double": {
+     "2026-11-29": 4
+    },
+    "Q2": {
+     "2026-11-29": 4
+    }
+   },
+   "libera": [
+    "acima_15",
+    "abaixo_piso"
+   ],
+   "ocupacao_max": 0.7,
+   "frente_ocupacao": 0.5,
+   "nota": "Régua com hidro de dia de semana (varredura de 03/11, 67 concorrentes, 1 noite, menor quarto com café × r_hidro do hotel): p50 R$ 688, p65 R$ 860, p90 R$ 1620 públicos ÷ razão Booking/enviado do Recanto 0.583 (medida pelas coordenadas na mesma varredura). Moinhos, Panorâmica II e Panorâmica I do p65 (0 vendida) ao p90 pelas reservas novas (vendidas_base = vendas de 03/11); a até 7 dias sem venda nova, p50 (dono 03/11, '1. Sim'). Pisos do dono de dia de semana seguem suspensos em novembro (ordem de 01/11). Substitui, nesta noite, a ordem dono-2026-11-01-recanto-base-mercado. Como desfazer: pedir 'Volte a Recanto dos dias de semana de novembro à base do mercado'."
+  },
+  {
+   "id": "dono-2026-11-03-recanto-semana-hidro-1130",
+   "data": "2026-11-03",
+   "criada_em": "2026-11-03T13:20+00:00",
+   "texto": "2. Aplique a regua com Hidro .",
+   "contexto": "Resposta do dono (03/11) à pergunta: 'Dias de semana de novembro: a Recanto está perto do p25 do mercado com hidro, pela sua ordem de forçar reservas. Mantenho, ou aplico a régua com hidro também?'",
+   "quartos": [
+    "Q7",
+    "Q2",
+    "Double"
+   ],
+   "de": "2026-11-30",
+   "ate": "2026-11-30",
+   "noites": [
+    "2026-11-30"
+   ],
+   "tipo": "alvo_por_data",
+   "percentil": 65,
+   "passo_livre": true,
+   "escada_vendas": true,
+   "pisos_enviados": {
+    "Q7": 1435,
+    "Q2": 1435,
+    "Double": 1435
+   },
+   "topo_enviados": {
+    "Q7": 2752,
+    "Q2": 2752,
+    "Double": 2752
+   },
+   "piso_atras": {
+    "Q7": 1073,
+    "Q2": 1073,
+    "Double": 1073
+   },
+   "gatilho_dias": 7,
+   "vendidas_base": {
+    "Q7": {
+     "2026-11-30": 1
+    },
+    "Double": {
+     "2026-11-30": 1
+    },
+    "Q2": {
+     "2026-11-30": 4
+    }
+   },
+   "libera": [
+    "acima_15",
+    "abaixo_piso"
+   ],
+   "ocupacao_max": 0.7,
+   "frente_ocupacao": 0.5,
+   "nota": "Régua com hidro de dia de semana (varredura de 03/11, 69 concorrentes, 1 noite, menor quarto com café × r_hidro do hotel): p50 R$ 625, p65 R$ 836, p90 R$ 1604 públicos ÷ razão Booking/enviado do Recanto 0.583 (medida pelas coordenadas na mesma varredura). Moinhos, Panorâmica II e Panorâmica I do p65 (0 vendida) ao p90 pelas reservas novas (vendidas_base = vendas de 03/11); a até 7 dias sem venda nova, p50 (dono 03/11, '1. Sim'). Pisos do dono de dia de semana seguem suspensos em novembro (ordem de 01/11). Substitui, nesta noite, a ordem dono-2026-11-01-recanto-base-mercado. Como desfazer: pedir 'Volte a Recanto dos dias de semana de novembro à base do mercado'."
   }
  ]
 }

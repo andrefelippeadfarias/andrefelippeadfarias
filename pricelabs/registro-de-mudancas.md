@@ -4024,6 +4024,13 @@ Conector oficial da Booking: "sem disponibilidade" para Recanto e Villa em 04-05
 - Beds24: sem limite do canal Booking em nenhuma noite (leitura bruta do calendário) e disponibilidade normal. Escrever o limite igual às unidades do quarto (7, 6, 1, 2...) para forçar um reenvio: o Beds24 grava como null (sem limite), o mesmo estado.
 - Conclusão: o Beds24 não reenviou a abertura à Booking ao tirar o limite. Nova conferência às 21:22 BRT; se seguir fechada, o dono precisa usar o reenvio/sincronização da Booking no painel do Beds24 (Channel Manager > Booking.com) ou abrir os quartos no calendário da extranet.
 
+## 03/11/2026, 21:25 — Segunda conferência da Booking reaberta: só em parte
+
+Conector oficial da Booking, 1 h 20 depois da reabertura no Beds24:
+- 05-06/11: as duas pousadas de volta com preço (Villa R$ 383,14; Recanto R$ 417,88).
+- 20-22/11 (feriado) e 25-26/11: ainda "sem disponibilidade" (no Beds24 há quartos livres e nenhum limite do canal).
+A reabertura chegou à Booking só nas datas mais próximas. Pedido ao dono: usar no painel do Beds24 (Channel Manager > Booking.com) o reenvio de toda a disponibilidade, ou abrir os quartos no calendário da extranet. Nada mais mexido no Beds24. Conferir de novo na rotina das 07:53.
+
 > **Regras em vigor:** desde 06/10/2026 elas ficam em `.claude/skills/gestao-receita-pousadas/references/regras.md`. Este arquivo guarda só o histórico das mudanças.
 
 ## O que só pode ser feito na tela (passo a passo para você)

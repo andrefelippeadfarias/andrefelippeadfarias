@@ -507,10 +507,24 @@ def pagina(fx: dict, cfg: dict, precos: dict, hoje: date, modelo: Path, saida: P
 
 
 # --- Regra de faixas do dono (04/11/2026) → ordens alvo_por_data por noite -----------------------------------------
-QUARTOS_ORDEM = {"Recanto": ["Q7", "Q2", "Double"], "Villa": ["VK7", "VK2"]}   # Afrodite e Balcony seguem as regras delas
+# revisão de 04/11: Afrodite e Balcony também, como na tabela que o dono viu (Afrodite +5% sex/sáb/feriado e +20% de
+# domingo a quinta; Balcony 10% abaixo, Regra G). Sem elas, no Natal a Afrodite ficava presa a 5% acima das outras
+# (limitadas ao máximo do anúncio) e a Balcony ficava fora da F5 dos feriados (a Regra G no feriado só baixa).
+QUARTOS_ORDEM = {"Recanto": ["Q7", "Q2", "Double", "Afrodite"], "Villa": ["VK7", "VK2", "Balcony"]}
 RAZAO = {"Recanto": 0.62, "Villa": 0.65}   # Booking ÷ enviado longe da data (medido: Recanto 0,61-0,63; Villa 0,62-0,65)
 RAZAO_ULTIMA_SEMANA = 0.9                  # a até 7 dias a Booking mostra ~10% menos (Recanto: 0,5557 contra 0,6156)
 PCT = {n: p for n, _, p in FAIXAS}
+
+
+def fator_quarto(cfg: dict, q: str, d: date) -> float:
+    """Valor do quarto em relação à faixa (suíte de referência): Afrodite pelo prêmio dela (dono 22 e 27/10), Balcony
+    pela Regra G (dono 07/10), as outras no valor da faixa."""
+    if q == "Afrodite":
+        from ordem_recanto import premio_afrodite
+        return 1 + float(premio_afrodite(cfg, d))
+    if q == "Balcony":
+        return 1 - float(cfg["parametros"].get("regra_g_desconto", 0.1))
+    return 1.0
 
 
 def regua_noite(fx: dict, d: date, tipo: str) -> tuple[dict, str]:
@@ -552,7 +566,7 @@ def gerar_ordens(fx: dict, cfg: dict, regra: dict, inv: dict, hoje: date, dias: 
     o gatilho de D7 (F2/F3: desce uma faixa sem venda nova) ou a descida gradual (F5: degraus F4, F3, F2, F1 em D7, D5,
     D3 e D1 com o vendido abaixo da curva). Pula noites que já têm ordem desta regra (`id_base`), noites a D0-D1 e,
     por quarto, noites com ordem do dono mais nova que a regra (ela vence)."""
-    from pace import pisos_enviados
+    from pace import limite_seguranca, pisos_enviados
     pc = cfg["por_curto"]
     base_id = regra["id_base"]
     ja = {(o.get("pousada_faixa"), n) for o in existentes.values() if o["id"].startswith(base_id)
@@ -563,7 +577,10 @@ def gerar_ordens(fx: dict, cfg: dict, regra: dict, inv: dict, hoje: date, dias: 
         """Ordem antiga que a faixa substitui na noite e no quarto (regras.md 4e)."""
         if x["id"].startswith(base_id):
             return False
-        if not (x.get("tipo") in ("alvo_por_data", "piso_por_data", "acompanhamento")
+        # acompanhamento só os de preço listados na regra (ex.: gatilhos das festas); o de estadia/calendário fica
+        # (revisão de 04/11: dono-2026-11-02-aniv-sp-gatilho perderia as suítes quando 24/01 entrasse na janela)
+        acomp = x.get("tipo") == "acompanhamento" and x["id"] in (regra.get("substitui_acompanhamento") or [])
+        if not (x.get("tipo") in ("alvo_por_data", "piso_por_data") or acomp
                 or n in ((x.get("vendidas_base") or {}).get(q) or {})):
             return False
         return cobre(x, q, d) and (not x.get("noites") or n in x["noites"])
@@ -589,31 +606,52 @@ def gerar_ordens(fx: dict, cfg: dict, regra: dict, inv: dict, hoje: date, dias: 
             if not qs:
                 continue
             rz, rz7 = razao(pous, i), razao(pous, 0)
-            pisos, topo, atras, degraus, vb, limitado, suspenso = {}, {}, {}, {}, {}, [], []
+            pisos, topo, atras, degraus, vb, limitado, suspenso, los = {}, {}, {}, {}, {}, [], [], {}
             tot = sum(vendidas_inv(inv, q, n, int(pc[q]["unidades"])) for q in QUARTOS[pous] if q != "Balcony")
             for q in qs:
-                mx, mn = float(pc[q]["max"]), float(pc[q]["min"])
+                mx = float(pc[q]["max"])
+                fac = fator_quarto(cfg, q, d)
                 dono = pisos_enviados(cfg, q, d)[0]
-                # piso do dono suspenso na noite por ordem anterior dele que a faixa substitui (ex.: "Valor mínimo de
-                # diária de 300 reais", 26/10, e base do mercado de 01/11, com 'abaixo_piso'): vale o menor
+                # piso do dono suspenso na noite por ordem anterior dele que a faixa substitui (ex.: base do mercado da
+                # Villa de 01/11, com 'abaixo_piso'): vale o menor, sem o mínimo do anúncio, até o limite de segurança
                 abaixo = [float(x["pisos_enviados"][q]) for x in existentes.values()
                           if "abaixo_piso" in (x.get("libera") or []) and (x.get("pisos_enviados") or {}).get(q)
                           and (x.get("data") or "") <= regra["data"] and pega(x, q, n, d)]
                 if abaixo and min(abaixo) < dono:
                     dono = min(abaixo)
                     suspenso.append(q)
-                v = reg[str(PCT[f])] / rz
+                    lo = max(dono, limite_seguranca(cfg, q, d))
+                else:
+                    lo = max(dono, float(pc[q]["min"]))
+                los[q] = lo
+                v = reg[str(PCT[f])] * fac / rz
                 if v > mx:
                     limitado.append(q)
-                pisos[q] = round(min(mx, max(v, dono, mn)), 2)
-                topo[q] = round(min(mx, max(reg["90"] / rz, pisos[q])), 2)
+                pisos[q] = round(min(mx, max(v, lo)), 2)
+                topo[q] = round(min(mx, max(reg["90"] * fac / rz, pisos[q])), 2)
+                # degraus e piso de trás sempre com o piso do quarto (a ordem pode levar 'abaixo_piso' por outro quarto)
                 if r.get("descida_gradual"):
-                    degraus[q] = [round(min(mx, max(reg[str(PCT[x])] / rz7, mn, dono if suspenso else 0)), 2)
+                    degraus[q] = [round(min(pisos[q], max(reg[str(PCT[x])] * fac / rz7, lo)), 2)
                                   for x in range(f - 1, 0, -1)]
-                elif f > 2:  # dono 03/11 ("1. Sim"): a até 7 dias sem venda nova desce uma faixa, até o p50 (F2)
-                    atras[q] = round(min(pisos[q], max(reg[str(PCT[f - 1])] / rz7, dono)), 2)
+                elif f > 1:
+                    # página e tabela que o dono leu ("Como pedir"): a 7 dias sem reserva nova desde o pedido, o piso
+                    # desce à faixa de baixo ou ao piso dele (gatilho do dono de 03/11)
+                    atras[q] = round(min(pisos[q], max(reg[str(PCT[f - 1])] * fac / rz7, lo)), 2)
                 u = int(pc[q]["unidades"])
                 vb[q] = {n: tot if u <= 2 else vendidas_inv(inv, q, n, u)}
+            ks = [x for x in ("VK7", "VK2") if x in qs]
+            if "Balcony" in qs and ks:
+                # Regra G (dono 07/10): a Balcony nunca acima de 90% da King Spa mais barata, também quando as King Spa
+                # param no máximo do anúncio (Réveillon) ou descem pelo gatilho; nunca abaixo do piso da Balcony
+                g = 1 - float(cfg["parametros"].get("regra_g_desconto", 0.1))
+                lb = los["Balcony"]
+                pisos["Balcony"] = round(max(lb, min(pisos["Balcony"], g * min(pisos[x] for x in ks))), 2)
+                topo["Balcony"] = round(max(pisos["Balcony"], min(topo["Balcony"], g * min(topo[x] for x in ks))), 2)
+                if "Balcony" in degraus:
+                    degraus["Balcony"] = [round(max(lb, min(v, g * min(degraus[x][j] for x in ks))), 2)
+                                          for j, v in enumerate(degraus["Balcony"])]
+                if "Balcony" in atras:
+                    atras["Balcony"] = round(max(lb, min(atras["Balcony"], g * min(atras[x] for x in ks))), 2)
             o = {"id": f"{base_id}-{pous.lower()}-{n.replace('-', '')}", "data": regra["data"], "criada_em": criada_em,
                  "texto": regra["texto"], "contexto": regra.get("contexto", ""), "pousada_faixa": pous,
                  "quartos": qs, "de": n, "ate": n, "noites": [n], "tipo": "alvo_por_data", "percentil": PCT[f],
@@ -631,8 +669,10 @@ def gerar_ordens(fx: dict, cfg: dict, regra: dict, inv: dict, hoje: date, dias: 
                              f"D{dd} F{f - j - 1}" for j, dd in enumerate(o.get("degraus_dias", []))) + ". "
                             if degraus else ("Gatilho de D7 sem venda nova: F" + str(f - 1) + " (ou o piso do dono). "
                                              if atras else ""))
-                         + (f"Limitado ao máximo do anúncio (R$ 5.000) em {', '.join(NOMES[q] for q in limitado)}. "
-                            if limitado else "")
+                         + ("Afrodite pelo prêmio dela e Balcony 10% abaixo (Regra G). "
+                            if any(q in qs for q in ("Afrodite", "Balcony")) else "")
+                         + (f"Limitado ao máximo do anúncio em {', '.join(NOMES[q] for q in limitado)} (subir o máximo "
+                            f"é do dono). " if limitado else "")
                          + (f"Piso do dono suspenso nesta noite por ordem anterior dele (abaixo_piso) em "
                             f"{', '.join(NOMES[q] for q in suspenso)}: vale o menor piso dessas ordens. " if suspenso else "")
                          + "Como desfazer: pedir 'Volte às ordens anteriores de " + dm(n) + "'.")

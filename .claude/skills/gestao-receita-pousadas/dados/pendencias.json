@@ -874,6 +874,22 @@
    "urgencia": 2,
    "data_alvo": "2026-12-07",
    "texto": "Régua de faixas (dados/faixas_dono.json, regras.md 4e): remedir cada período uns 60 dias antes com a lista dos 77 concorrentes (faixas_dono.py construir). Próximos: Carnaval (05-09/02) e dias de semana de fevereiro no início de dezembro; Páscoa em meados de janeiro; inverno (Corpus Christi, junho e julho) em abril. Tipos com 'amostra pequena': entre festas, Réveillon, inverno. Republicar a página 'Régua de Preços das Pousadas' (faixas_dono.py pagina) e a tabela .md a cada remedição."
+  },
+  {
+   "id": "faixas-confirmar-leituras",
+   "responsavel": "dono",
+   "desde": "2026-11-04",
+   "urgencia": 2,
+   "data_alvo": "2026-11-12",
+   "texto": "Ordem das faixas (04/11): confirmar 5 leituras. (1) 20-21/11 (Consciência Negra) na F5 de feriado ou na F3 dos 'dois últimos fins de semana'? (2) 13-14/11 também na F3? (3) 27-28/12 na F2 e 29/12 na F5, ou como está (ordens anteriores)? (4) Inverno de dia de semana (jun-jul) na F2 (baixaria a Villa de ~R$ 1.382 para ~R$ 1.056)? Hoje fora; entra na janela em 31/03/2027. (5) Aniversário de SP (22-23/01) como fim de semana (tabela) ou F5 de feriado? Atualizar dados/faixas_dono_regra.json com a resposta."
+  },
+  {
+   "id": "maximo-anuncio-festas",
+   "responsavel": "dono",
+   "desde": "2026-11-04",
+   "urgencia": 2,
+   "data_alvo": "2026-12-01",
+   "texto": "F5 de Natal e Réveillon passa do máximo do anúncio (R$ 5.000 nos 6 quartos; Afrodite R$ 10.000): a F5 pede ~R$ 5.650 (Natal) e ~R$ 6.350 (Réveillon) enviados no Recanto, ~R$ 5.400 e ~R$ 6.070 na Villa. Hoje as noites param em ~R$ 4.974-4.991 (Booking ~R$ 3.100-3.250), entre F4 e F5 no Natal e entre F3 e F4 no Réveillon, e o 1º degrau da descida (D7) não muda nada. Subir o máximo é só do dono: responder 'suba o máximo para R$ X' para a skill regerar as ordens das festas."
   }
  ],
  "versao": "2026-11-02T01"

@@ -231,6 +231,10 @@ class Validador:
             # Dono (14/10): o piso vai ao PriceLabs como variação % sobre a base, arredondada para cima. O que
             # vale nas travas é o valor efetivo desse percentual (nunca abaixo do pedido, até 1% da base acima).
             minimo = em_reais(q, piso_pct(q, float(it["min_price"])))
+            if minimo > float(q["max"]) + 0.5:
+                # revisão de 04/11: piso acima do máximo do anúncio deixa piso > teto no PriceLabs (Natal a R$ 5.024)
+                self.erro(i, it, f"piso efetivo R$ {minimo:.0f} acima do máximo do anúncio R$ {float(q['max']):.0f}: "
+                                 "limite ao máximo (pace.teto_anuncio) ou peça ao dono para subir o máximo")
 
         if tipo_preco == "percent":
             pct = float(preco)

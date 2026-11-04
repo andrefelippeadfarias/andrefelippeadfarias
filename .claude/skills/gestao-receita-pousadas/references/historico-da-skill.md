@@ -2,6 +2,19 @@
 
 Cada mudança feita na própria Skill (regras, parâmetros, scripts, fluxo) entra aqui: data, o que mudou, por quê (evidência) e como desfazer. A entrada mais nova fica em cima.
 
+## 04/11/2026 11:50 BRT: faixas do dono por tipo de noite viram regra permanente (dono)
+- **Por quê:** dono, 04/11: "Para feriados, vamos aplicar o F5 e baixar gradualmente caso a lotação esteja abaixo da expectativa 7 dias antes. Para Natal, aplicar F5, Réveillon F5, inverno e final de semana F5. Para dias de semana, vamos aplicar F2 e fins de semana do mês de dezembro e os últimos dois de novembro, vamos aplicar F3."
+- **O que mudou:**
+  - `dados/faixas_dono_regra.json`: a regra (tipos, faixa, leituras, acompanhamento substituído).
+  - `scripts/faixas_dono.py ordens`: uma ordem `alvo_por_data` por noite e pousada, de D2 a D60, nos 7 quartos (Afrodite e Balcony pelo fator da tabela, `fator_quarto`; Balcony limitada a 90% das King Spa); piso suspenso por ordem anterior com `abaixo_piso` vale (sem o mínimo do anúncio); ordem mais nova do dono vence; acompanhamento só por lista.
+  - `scripts/pace.py`: `degrau_atras_da_ordem` (descida gradual em D7/D5/D3/D1, também com 70% ou mais vendido), `limite_volta_degrau` (volta à faixa no passo da antecedência), `teto_anuncio` e `limitar_ao_maximo` (piso efetivo nunca acima do máximo do anúncio, em cadeia no Recanto), Regra G com piso de ordem acima de 90% da King Spa livre.
+  - `scripts/ordens.py`: `noites_fora` por quarto.
+  - `scripts/validar_plano.py`: ERRO para piso efetivo acima do máximo do anúncio.
+  - `regras.md` 4e e 6b; `SKILL.md` (passo da rotina completa); pendência do gatilho semanal fechada (superada).
+  - Testes novos (123 OK).
+- **Revisões independentes:** a 1ª (2 revisores) achou o piso acima de R$ 5.000 no Natal/Réveillon por arredondamento, a Afrodite presa abaixo da F5, a Balcony fora da F5 dos feriados, o degrau que não descia com 70% vendido e voltava de uma vez, a King Spa 7 presa no mínimo do anúncio, o gatilho da F2 divergente da página e o acompanhamento do Aniversário de SP perdendo noites. Tudo corrigido antes de gravar.
+- **Como desfazer:** apagar as ordens `dono-2026-11-04-faixa-*` de `dados/ordens_dono.json` e as anotações "passaram às ordens dono-2026-11-04-faixa" (`noites_fora`) das ordens antigas (cópia em `pricelabs/pace/ordens_dono_antes_faixas_2026-11-04.json`); reverter os scripts pelo git.
+
 ## 04/11/2026 10:45 BRT: régua de faixas F1 a F5 por hotel e tipo de noite (dono)
 - **Por quê:** dono, 04/11: "Crie uma tabela para cada hotel ... para que eu possa sempre orientar em qual faixa vamos flutuar."
 - **O que mudou:**

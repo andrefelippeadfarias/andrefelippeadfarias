@@ -368,6 +368,12 @@ def piso_atras_da_ordem(cfg: dict, ao: dict | None, curto: str, d: date, k: int,
         return None
     if vendidas > (base if base is not None else 0):
         return None
+    if ao.get("gatilho_min_dias") and ao.get("criada_em"):
+        # revisão de 04/11 (ordens de faixa): só depois de `gatilho_min_dias` dias de ordem; a noite criada a D7 ou
+        # menos não cai na hora para a faixa de baixo (King Spa 7 11/11 iria de R$ 814 a 710 à frente da curva)
+        criada = dt.datetime.fromisoformat(str(ao["criada_em"]).replace("Z", "+00:00")).date()
+        if ((d - dt.timedelta(days=k)) - criada).days < int(ao["gatilho_min_dias"]):
+            return None
     pa = float(ao["piso_atras"][curto])
     if "abaixo_piso" not in (ao.get("libera") or []):
         pa = max(pa, pisos_enviados(cfg, curto, d)[0])
@@ -375,7 +381,7 @@ def piso_atras_da_ordem(cfg: dict, ao: dict | None, curto: str, d: date, k: int,
 
 
 def degrau_atras_da_ordem(cfg: dict, ao: dict | None, curto: str, d: date, k: int, vend_pct: float,
-                          esp: float) -> tuple[float, int] | None:
+                          esp: float, atual: float | None = None) -> tuple[float, int] | None:
     """Dono 04/11 ("Para feriados, vamos aplicar o F5 e baixar gradualmente caso a lotação esteja abaixo da expectativa
     7 dias antes"): ordem com `degraus_atras` {curto: [piso F4, F3, F2, F1 enviados]} e `degraus_dias` [7, 5, 3, 1].
     A partir de D7, com o vendido abaixo da curva esperada da noite, o piso desce um degrau por marco atingido (D7 → 1º,
@@ -387,10 +393,16 @@ def degrau_atras_da_ordem(cfg: dict, ao: dict | None, curto: str, d: date, k: in
     n = sum(1 for x in dias if k <= x)
     if n == 0 or vend_pct >= esp:
         return None
-    v = float(dg[min(n, len(dg)) - 1])
+    n = min(n, len(dg))
+    if atual is not None:
+        # revisão de 04/11: um degrau por vez (a noite que fica abaixo da curva só perto da data não pula da F5 à F1);
+        # o degrau atual é o último que o preço já alcançou (2% de folga do arredondamento)
+        ja = sum(1 for x in dg if float(x) >= float(atual) * 0.98)
+        n = min(n, ja + 1)
+    v = float(dg[n - 1])
     if "abaixo_piso" not in (ao.get("libera") or []):
         v = max(v, pisos_enviados(cfg, curto, d)[0])
-    return v, min(n, len(dg))
+    return v, n
 
 
 def limite_volta_degrau(cfg: dict, ao: dict | None, curto: str, d: date, k: int, atual: float,
@@ -433,10 +445,12 @@ def limitar_ao_maximo(cfg: dict, itens: list[dict]) -> None:
         if efetivo(cfg, k, float(it["min_price"])) > t + 0.01:
             it["min_price"] = math.floor(t)
             it["motivo"] = (it.get("motivo", "") + f"; no máximo do anúncio (R$ {t:.0f} efetivos)")[:250]
-        if it.get("max_price") not in (None, ""):
-            it["max_price"] = min(float(it["max_price"]), float(cfg["por_curto"][k]["max"]))
-            if float(it["max_price"]) < float(it["min_price"]):
-                it["max_price"] = float(it["min_price"])
+        no_topo = efetivo(cfg, k, float(it["min_price"])) >= t - 0.01 * float(cfg["por_curto"][k]["base"])
+        if no_topo and not it.get("protecao") and it.get("max_price") not in (None, "") \
+                and float(it["max_price"]) > t + 0.01:
+            # piso no topo da cadeia: o teto vai junto (Panorâmica II no Natal: com teto no máximo do anúncio, o teto
+            # era solto e o algoritmo a levava a R$ 5.000, acima da Panorâmica I); proteção de esgotada segue livre
+            it["max_price"] = float(max(math.floor(t), float(it["min_price"])))
 
 
 def sem_alvo(ordens: dict) -> dict:
@@ -633,7 +647,7 @@ def plano(cfg: dict, ancora: dict, cals: dict, hoje: date, ordens: dict, passos:
                     origem_atras = f"gatilho de D{int(ao.get('gatilho_dias', 7))} sem venda nova (dono 03/11): p50 com hidro"
                 else:
                     origem_atras = None
-                dga = degrau_atras_da_ordem(cfg, ao, curto, d, k, vend_pct, esp)
+                dga = degrau_atras_da_ordem(cfg, ao, curto, d, k, vend_pct, esp, atual)
                 degrau_on = False
                 if dga is not None and dga[0] < piso:
                     piso, ordem_piso = dga[0], ordem_piso or ao
@@ -660,7 +674,9 @@ def plano(cfg: dict, ancora: dict, cals: dict, hoje: date, ordens: dict, passos:
                     # sobe aos poucos: no máximo o limite de passo da antecedência (pmax) por vez; cada reserva nova
                     # libera mais um passo no mesmo dia (cadência por venda)
                     novo = min(reta, atual * (1 + pmax(cfg, k) / 100.0))
-                elif noite_fraca(ao, st, v, u) or degrau_on:
+                elif noite_fraca(ao, st, vv, tt) or degrau_on:
+                    # revisão de 04/11: na suíte de 1-2 unidades, a ocupação da pousada (a mesma do status); com a do
+                    # quarto (0/1) a Afrodite era sempre "fraca" e caía com o Recanto à frente da curva
                     # cancelamento, noite fraca ou descida gradual do feriado (dono 04/11: "baixar gradualmente caso a
                     # lotação esteja abaixo da expectativa", mesmo com 70% ou mais vendido): direto à reta
                     novo = reta
@@ -957,7 +973,7 @@ def coerencia(cfg: dict, cals: dict, finais: dict, itens: list[dict], hoje: date
                         vv2, tt2 = op
                     oc2 = (vv2 / tt2) if tt2 else 0.0
                     st_q2 = status_da_noite(cfg, tipo_noite(cfg, d), (d - hoje).days, vv2, tt2)[0]
-                    forte_q2 = not noite_fraca(ao_q2, st_q2, vq2, uq2)
+                    forte_q2 = not noite_fraca(ao_q2, st_q2, vv2, tt2)  # revisão 04/11: ocupação da pousada
                     if not escada_q2 and forte_q2:
                         ao_q2 = None
                 piso_q2, _, _ = piso_com_ordem(cfg, "Q2", d, ordens if ao_q2 else sem_alvo(ordens))
@@ -968,7 +984,8 @@ def coerencia(cfg: dict, cals: dict, finais: dict, itens: list[dict], hoje: date
                     if pa_q2 is not None:
                         piso_q2 = min(piso_q2, pa_q2)
                     _, vp2, esp2 = status_da_noite(cfg, tipo_noite(cfg, d), (d - hoje).days, vv2, tt2)
-                    dg_q2 = degrau_atras_da_ordem(cfg, ao_q2, "Q2", d, (d - hoje).days, vp2, esp2)
+                    dg_q2 = degrau_atras_da_ordem(cfg, ao_q2, "Q2", d, (d - hoje).days, vp2, esp2,
+                                                  float(cals["Q2"][noite]["price"]))
                     if dg_q2 is not None:
                         piso_q2 = min(piso_q2, dg_q2[0])
                         forte_q2 = False  # descida gradual (dono 04/11) vale mesmo com a pousada vendendo bem
@@ -1028,11 +1045,16 @@ def coerencia(cfg: dict, cals: dict, finais: dict, itens: list[dict], hoje: date
                 piso_b, _, ordem_b = piso_com_ordem(cfg, "Balcony", d, ordens)
                 if ordem_b and piso_b > hi:
                     # revisão de 04/11: piso de ordem (faixa do dono) acima de 90% da suíte livre mais barata, que desceu
-                    # pelo gatilho ou pelo degrau, ou parou no máximo do anúncio: vale a Regra G, sem passar do piso da
-                    # Balcony (o padrão, ou o limite de segurança se a ordem libera 'abaixo_piso')
-                    lo_b = (limite_seguranca(cfg, "Balcony", d) if "abaixo_piso" in (ordem_b.get("libera") or [])
-                            else pisos_enviados(cfg, "Balcony", d)[0])
-                    piso_b = max(hi, lo_b)
+                    # pelo gatilho ou pelo degrau, ou parou no máximo do anúncio: vale a Regra G (85,5% a 90%), sem
+                    # passar do piso da própria Balcony (o padrão; com 'abaixo_piso', o menor valor dela na ordem)
+                    if "abaixo_piso" in (ordem_b.get("libera") or []):
+                        vals = [float(piso_b)] + [float(x) for x in ((ordem_b.get("degraus_atras") or {}).get("Balcony") or [])]
+                        if (ordem_b.get("piso_atras") or {}).get("Balcony"):
+                            vals.append(float(ordem_b["piso_atras"]["Balcony"]))
+                        lo_b = max(min(vals), limite_seguranca(cfg, "Balcony", d))
+                    else:
+                        lo_b = pisos_enviados(cfg, "Balcony", d)[0]
+                    piso_b = lo_b
                 lo = max(lo, math.ceil(piso_b))
                 it = por_chave.get(("Balcony", noite))
                 atual_b = preco("Balcony", noite)
@@ -1209,11 +1231,14 @@ def main(argv=None) -> int:
         with open(a.saida, "w", encoding="utf-8") as f:
             json.dump({"hoje": res["hoje"], "itens": itens, "sombra": sombra}, f, ensure_ascii=False, indent=1)
         print(f"{len(itens)} itens em {a.saida}{' (SOMBRA: não grave)' if sombra else ''}")
+        sa = a.saida_apagar or re.sub(r"\.json$", "", a.saida) + "_apagar.json"
         if apagar:
-            sa = a.saida_apagar or re.sub(r"\.json$", "", a.saida) + "_apagar.json"
             with open(sa, "w", encoding="utf-8") as f:
                 json.dump({"hoje": res["hoje"], "itens": apagar, "sombra": sombra}, f, ensure_ascii=False, indent=1)
             print(f"{len(apagar)} noites com teto/validade a apagar ANTES, em {sa} (valide e grave este plano primeiro)")
+        elif Path(sa).exists():
+            Path(sa).unlink()  # revisão de 04/11: um plano de apagar de rodada anterior não pode sobrar para ser gravado
+            print(f"nenhuma noite a apagar (plano de apagar antigo removido: {sa})")
     de_pace = [x for x in itens if (x.get("pace") or {}).get("direcao")]
     if not sombra and de_pace:
         # revisão 01/11: o ledger só recebe o que chegou ao PriceLabs (plano barrado no validador, API com erro ou plano

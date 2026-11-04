@@ -20,7 +20,7 @@
     "semana"
    ],
    "faixa": 2,
-   "leitura": "Dias de semana (domingo a quinta) na F2. Gatilho de D7 sem reserva nova desde a ordem (dono 03/11; página 'Como pedir'): F1 ou o piso do dono. Inverno de dia de semana (30/05-31/07) fica fora até o dono confirmar (alta temporada: a F2 baixaria a Villa de ~R$ 1.382 para ~R$ 1.056); entra na janela só em 31/03/2027."
+   "leitura": "Dias de semana (domingo a quinta) na F2, nunca abaixo do piso do dono. Gatilho de D7 sem reserva nova desde a ordem (dono 03/11; página 'Como pedir'): F1 ou o piso do dono, a semana inteira junto (quando o domingo chega a D7) e só depois de 2 dias de ordem. Inverno de dia de semana (30/05-31/07) fica fora até o dono confirmar (F2 como os dias de semana ou F5 como o inverno); entra na janela só em 31/03/2027."
   },
   {
    "tipos": [
@@ -34,13 +34,19 @@
     "2026-11-27",
     "2026-11-28"
    ],
-   "leitura": "Fins de semana de dezembro de 2026 e o último de novembro (27-28/11) na F3, com o gatilho de D7 para a F2. 20-21/11 é a Consciência Negra: vale a F5 dos feriados (a confirmar com o dono; 13-14/11 seguem nas ordens de 02-03/11)."
+   "leitura": "Fins de semana de dezembro de 2026 e 27-28/11 na F3, com o gatilho de D7 para a F2 (o fim de semana desce junto, depois de 2 dias de ordem). 20-21/11 (Consciência Negra) e 13-14/11 ficam nas ordens anteriores até o dono dizer se 'os últimos dois' são 20-21 e 27-28 (F3) ou se a Consciência Negra vai à F5 de feriado."
   }
  ],
- "fora_da_regra": "Entre Natal e Réveillon (27-29/12), fins de semana de janeiro a novembro de 2027 fora do inverno, inverno de dia de semana (a confirmar), 06-07/11 e 13-14/11, e noites a D0-D1 quando a ordem é criada: seguem as ordens que já existiam.",
+ "fora_da_regra": "Consciência Negra 19-21/11 e 13-14/11 (até o dono confirmar), 06-07/11, entre Natal e Réveillon (27-29/12), fins de semana de janeiro a novembro de 2027 fora do inverno, inverno de dia de semana (a confirmar), noites a D0-D1 na criação, e quartos com preço por data, mudança manual, acompanhamento aberto (24/01) ou ordem do dono mais nova: seguem as ordens que já existiam.",
  "nota": "Ordens geradas por scripts/faixas_dono.py ordens a cada rotina completa para as noites que entram na janela de 60 dias (regras.md 4e).",
  "quartos": "Recanto: Moinhos, Panorâmica II e Panorâmica I no valor da faixa; Afrodite pelo prêmio dela (+5% sexta, sábado e feriado; +20% domingo a quinta). Villa: King Spa 7 e King Spa 2 no valor da faixa; Balcony 10% abaixo (Regra G).",
  "substitui_acompanhamento": [
   "dono-2026-11-01-gatilhos-festas"
+ ],
+ "criada_em": "2026-11-04T14:00+00:00",
+ "noites_fora": [
+  "2026-11-19",
+  "2026-11-20",
+  "2026-11-21"
  ]
 }

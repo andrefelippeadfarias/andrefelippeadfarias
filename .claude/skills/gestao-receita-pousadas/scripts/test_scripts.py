@@ -2021,9 +2021,15 @@ class TestPace(unittest.TestCase):
         # a 6 dias, 1/7 vendido (14%, curva bem acima): 1º degrau (F4)
         i = item(n, "1/7", date(2026, 11, 14))
         self.assertAlmostEqual(i["min_price"], 3600, delta=2)
-        # a 4 dias: 2º degrau (F3)
+        # a 4 dias ainda na F5: um degrau por vez (F4), não dois de uma vez
         i = item(n, "1/7", date(2026, 11, 16))
-        self.assertAlmostEqual(i["min_price"], 3200, delta=2)
+        self.assertAlmostEqual(i["min_price"], 3600, delta=2)
+        # a 4 dias já na F4: 2º degrau (F3)
+        self.assertEqual(pace.degrau_atras_da_ordem(self.cfg, {"degraus_atras": {"VK7": [3600, 3200, 2800, 2400]}},
+                                                    "VK7", date(2026, 11, 20), 4, 10, 60, 3600)[1], 2)
+        # a 2 dias na F5, abaixo da curva: só o 1º degrau (antes pulava direto para a F2)
+        self.assertEqual(pace.degrau_atras_da_ordem(self.cfg, {"degraus_atras": {"VK7": [3600, 3200, 2800, 2400]}},
+                                                    "VK7", date(2026, 11, 20), 2, 80, 87, 4000)[1], 1)
         # a 6 dias com a noite quase cheia (6/7, acima da curva): fica na F5
         i = item(n, "6/7", date(2026, 11, 14))
         self.assertTrue(i is None or i["min_price"] >= 3999, i and i["min_price"])
@@ -2485,7 +2491,8 @@ class TestFaixasDono(unittest.TestCase):
         o2 = por[("Recanto", sem.isoformat())]
         piso_dono = pisos_enviados(cfg, "Q7", sem)[0]
         self.assertGreaterEqual(o2["pisos_enviados"]["Q7"], piso_dono)                      # nunca abaixo do piso do dono
-        self.assertEqual(o2["gatilho_dias"], 7)                    # a 7 dias sem venda nova: F1 ou o piso do dono
+        # gatilho por semana: terça 17/11 dispara quando o domingo 15/11 chega a D7 (7 + 2), depois de 2 dias de ordem
+        self.assertEqual((o2["gatilho_dias"], o2["gatilho_min_dias"]), (9, 2))
         self.assertGreaterEqual(o2["piso_atras"]["Q7"], piso_dono)
         self.assertNotIn("abaixo_piso", o2["libera"])
         # Afrodite (+5% no feriado) e Balcony (-10%) entram como na tabela; tudo dentro do máximo do anúncio
@@ -2505,24 +2512,42 @@ class TestFaixasDono(unittest.TestCase):
         noites = ["2026-11-17", "2026-11-18", "2026-11-19", "2026-11-20"]   # 18/11 semana; 19-20/11 Consciência Negra
         self.assertEqual(fora["velha"], {"Q7": noites, "VK7": noites[1:]})
         self.assertNotIn(("Recanto", "2026-11-21"), por)                                    # sábado comum de nov: fora da regra
-        # F3 (fim de semana): gatilho de D7 desce à F2; ordem anterior com 'abaixo_piso' deixa o piso dela valer
+        # F3 (sexta 27/11): gatilho de D7 desce à F2, mas nunca abaixo do piso do dono, nem herdando a suspensão de
+        # piso ('abaixo_piso') da ordem antiga substituída (página "Como pedir": "Nunca abaixo do seu piso")
         regra3 = dict(regra, regras=[{"tipos": ["fds"], "faixa": 3, "noites": ["2026-11-27"]}])
         sus = {"id": "sus", "data": "2026-11-01", "tipo": "alvo_por_data", "quartos": ["Q7"], "de": "2026-11-27",
                "ate": "2026-11-27", "libera": ["abaixo_piso"], "pisos_enviados": {"Q7": 500}}
-        n3, _ = f.gerar_ordens(fx, cfg, regra3, {}, hoje, 30, {"sus": sus}, "2026-11-04T14:00+00:00")
+        n3, f3s = f.gerar_ordens(fx, cfg, regra3, {}, hoje, 30, {"sus": sus}, "2026-11-04T14:00+00:00")
         o3 = [o for o in n3 if o["pousada_faixa"] == "Recanto"][0]
-        self.assertEqual(o3["gatilho_dias"], 7)
-        self.assertEqual(o3["piso_atras"]["Q7"], round(hid["50"] / f.razao("Recanto", 0), 2))
-        self.assertEqual(o3["piso_atras"]["Q2"], o3["pisos_enviados"]["Q2"])       # Q2 sem ordem: piso do dono manda
-        self.assertIn("abaixo_piso", o3["libera"])
+        self.assertEqual(o3["gatilho_dias"], 7)                                      # sexta abre o bloco do fds
+        piso_fds = pisos_enviados(cfg, "Q7", date(2026, 11, 27))[0]
+        self.assertEqual(o3["piso_atras"]["Q7"], round(max(hid["50"] / f.razao("Recanto", 0), piso_fds), 2))
+        self.assertNotIn("abaixo_piso", o3["libera"])
+        self.assertEqual(f3s["sus"], {"Q7": ["2026-11-27"]})
+        # noites fora da regra (Consciência Negra até o dono confirmar) e preço por data do dono: sem ordem de faixa
+        regra_f = dict(regra, noites_fora=[fer.isoformat()])
+        ppd = {"id": "ppd", "data": "2026-11-01", "tipo": "preco_por_data", "quartos": ["Balcony"], "de": sem.isoformat(),
+               "ate": sem.isoformat()}
+        nf, _ = f.gerar_ordens(fx, cfg, regra_f, {}, hoje, 16, {"ppd": ppd}, "x")
+        self.assertFalse(any(o["de"] == fer.isoformat() for o in nf))
+        self.assertNotIn("Balcony", [o for o in nf if o["de"] == sem.isoformat() and o["pousada_faixa"] == "Villa"][0]["quartos"])
+        # ordem do dono no mesmo dia da regra, mas depois dela, também vence
+        mesma = {"id": "mesma", "data": "2026-11-04", "criada_em": "2026-11-04T20:00+00:00", "tipo": "alvo_por_data",
+                 "quartos": ["Q7"], "de": sem.isoformat(), "ate": sem.isoformat()}
+        nm, fm = f.gerar_ordens(fx, cfg, dict(regra, criada_em="2026-11-04T14:00+00:00"), {}, hoje, 16, {"mesma": mesma}, "x")
+        self.assertNotIn("Q7", [o for o in nm if o["de"] == sem.isoformat() and o["pousada_faixa"] == "Recanto"][0]["quartos"])
+        self.assertNotIn("mesma", fm)
         # acompanhamento: só o de preço listado na regra perde a noite (o de estadia/calendário fica)
         ac = {"id": "acomp-cal", "data": "2026-11-01", "tipo": "acompanhamento", "quartos": ["*"], "de": "2026-11-27",
               "ate": "2026-11-27"}
         ap = dict(ac, id="acomp-preco")
-        _, f3 = f.gerar_ordens(fx, cfg, dict(regra3, substitui_acompanhamento=["acomp-preco"]), {}, hoje, 30,
-                               {"acomp-cal": ac, "acomp-preco": ap}, "x")
-        self.assertNotIn("acomp-cal", f3)
+        r3a = dict(regra3, substitui_acompanhamento=["acomp-preco"])
+        _, f3 = f.gerar_ordens(fx, cfg, r3a, {}, hoje, 30, {"acomp-preco": ap}, "x")
         self.assertIn("Q7", f3["acomp-preco"])
+        # o de calendário (ex.: gatilho do Aniversário de SP) segura a noite fora da faixa até ser resolvido
+        n3c, f3c = f.gerar_ordens(fx, cfg, r3a, {}, hoje, 30, {"acomp-cal": ac}, "x")
+        self.assertNotIn("acomp-cal", f3c)
+        self.assertFalse(any(o["de"] == "2026-11-27" for o in n3c))
 
     def test_construir_mes_fator_incerto_e_valores_por_quarto(self):
         import json as _json

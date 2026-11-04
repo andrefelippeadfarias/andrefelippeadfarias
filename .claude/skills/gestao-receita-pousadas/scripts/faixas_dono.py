@@ -528,12 +528,26 @@ def fator_quarto(cfg: dict, q: str, d: date) -> float:
 
 
 def regua_noite(fx: dict, d: date, tipo: str) -> tuple[dict, str]:
-    """Percentis da régua com hidro na noite: mediana das estadias medidas do mesmo tipo que contêm a noite; sem
-    medição, o valor da tabela do tipo. ({"25": v, ...}, origem)."""
-    es = [e for e in fx["estadias"] if e["tipo"] == tipo and _d(e["checkin"]) <= d < _d(e["checkout"])]
+    """Percentis da régua com hidro na noite (revisão de 04/11): mediana das estadias medidas do mesmo tipo que começam
+    na noite; sem elas, das que contêm a noite (25/12: a estadia 25->26, não as que começam em 24/12, fora do pacote);
+    sem nenhuma, das estadias do mesmo tipo mais perto (até 3 dias: 20/12 usa 21-23/12, o Pré-Natal, e não a mediana
+    de 10 meses de baixa temporada); por fim, o valor da tabela do tipo. ({"25": v, ...}, origem)."""
+    mesmas = [e for e in fx["estadias"] if e["tipo"] == tipo]
+    es = [e for e in mesmas if _d(e["checkin"]) == d]
+    origem = "medida na noite"
+    if not es:
+        es = [e for e in mesmas if _d(e["checkin"]) <= d < _d(e["checkout"])]
+    if not es:
+        dist = {id(e): min(abs((_d(e["checkin"]) - d).days), abs((_d(e["checkout"]) - timedelta(days=1) - d).days))
+                for e in mesmas}
+        perto = [e for e in mesmas if dist[id(e)] <= 3]
+        if perto:
+            m = min(dist[id(e)] for e in perto)
+            es = [e for e in perto if dist[id(e)] == m]
+            origem = f"medida em noite vizinha ({es[0]['checkin'][8:10]}/{es[0]['checkin'][5:7]}, {m} dia{'s' if m > 1 else ''})"
     if es:
         return ({str(p): round(st.median(e["hidro"][str(p)] for e in es)) for p in PCTS},
-                f"medida na noite ({len(es)} estadia{'s' if len(es) > 1 else ''})")
+                f"{origem} ({len(es)} estadia{'s' if len(es) > 1 else ''})")
     return dict(fx["por_tipo"][tipo]["hidro"]), "tabela do tipo"
 
 
@@ -566,7 +580,7 @@ def gerar_ordens(fx: dict, cfg: dict, regra: dict, inv: dict, hoje: date, dias: 
     o gatilho de D7 (F2/F3: desce uma faixa sem venda nova) ou a descida gradual (F5: degraus F4, F3, F2, F1 em D7, D5,
     D3 e D1 com o vendido abaixo da curva). Pula noites que já têm ordem desta regra (`id_base`), noites a D0-D1 e,
     por quarto, noites com ordem do dono mais nova que a regra (ela vence)."""
-    from pace import limite_seguranca, pisos_enviados
+    from pace import pisos_enviados
     pc = cfg["por_curto"]
     base_id = regra["id_base"]
     ja = {(o.get("pousada_faixa"), n) for o in existentes.values() if o["id"].startswith(base_id)
@@ -585,6 +599,25 @@ def gerar_ordens(fx: dict, cfg: dict, regra: dict, inv: dict, hoje: date, dias: 
             return False
         return cobre(x, q, d) and (not x.get("noites") or n in x["noites"])
 
+    def mais_nova(x: dict) -> bool:
+        """Ordem do dono dada depois da regra (data maior, ou mesma data e criada_em posterior): vence a faixa."""
+        dx, dr = x.get("data") or "", regra["data"]
+        return dx > dr or (dx == dr and bool(x.get("criada_em")) and bool(regra.get("criada_em"))
+                           and str(x["criada_em"]) > str(regra["criada_em"]))
+
+    def bloqueia(x: dict, q: str, n: str, d: date) -> bool:
+        """A noite do quarto fica fora da faixa: ordem do dono mais nova que a regra; preço por data ou mudança manual
+        do dono (específicas, vencem a regra geral: Balcony 08-09/11); acompanhamento de estadia/calendário ainda
+        aberto (domingo 24/01, gatilho do Aniversário de SP)."""
+        if x["id"].startswith(base_id) or not cobre(x, q, d) or (x.get("noites") and n not in x["noites"]):
+            return False
+        if x.get("tipo") in ("preco_por_data", "manual"):
+            return True
+        if x.get("tipo") == "acompanhamento" and x["id"] not in (regra.get("substitui_acompanhamento") or []):
+            return True
+        return mais_nova(x) and pega(x, q, n, d)
+
+    fora_regra = set(regra.get("noites_fora") or [])
     novas, fora = [], {}
     # a partir de D2: a véspera já está decidida e no canal (a ordem nova não sobe nem derruba a noite de amanhã; nas
     # rotinas seguintes a noite já tem a ordem desde D60)
@@ -593,36 +626,29 @@ def gerar_ordens(fx: dict, cfg: dict, regra: dict, inv: dict, hoje: date, dias: 
         n = d.isoformat()
         t = tipo_da_noite(d, cfg)
         r = regra_da_noite(regra, d, t)
-        if not r:
+        if not r or n in fora_regra:
             continue
         f = int(r["faixa"])
         reg, origem = regua_noite(fx, d, t)
         for pous, qs_todos in QUARTOS_ORDEM.items():
             if (pous, n) in ja:
                 continue
-            # ordem do dono mais nova que a regra vence a faixa na noite e no quarto (a regra não a desfaz)
-            qs = [q for q in qs_todos if not any((x.get("data") or "") > regra["data"] and pega(x, q, n, d)
-                                                 for x in existentes.values())]
+            # ordem do dono mais nova, preço por data, mudança manual ou acompanhamento aberto: o quarto fica fora
+            qs = [q for q in qs_todos if not any(bloqueia(x, q, n, d) for x in existentes.values())]
             if not qs:
                 continue
-            rz, rz7 = razao(pous, i), razao(pous, 0)
-            pisos, topo, atras, degraus, vb, limitado, suspenso, los = {}, {}, {}, {}, {}, [], [], {}
+            # revisão de 04/11: piso e topo com a razão de longe em todas as noites (antes a noite criada a D7 ou menos
+            # ganhava ÷0,9 e ficava 11% acima da vizinha); degraus e piso de trás com a razão da última semana
+            rz, rz7 = razao(pous, 60), razao(pous, 0)
+            pisos, topo, atras, degraus, vb, limitado, los = {}, {}, {}, {}, {}, [], {}
             tot = sum(vendidas_inv(inv, q, n, int(pc[q]["unidades"])) for q in QUARTOS[pous] if q != "Balcony")
             for q in qs:
                 mx = float(pc[q]["max"])
                 fac = fator_quarto(cfg, q, d)
+                # nunca abaixo do piso do dono (página "Como pedir": "Nunca abaixo do seu piso"); a suspensão de piso
+                # das ordens antigas substituídas (ex.: base do mercado da Villa, 01/11) não passa para a faixa
                 dono = pisos_enviados(cfg, q, d)[0]
-                # piso do dono suspenso na noite por ordem anterior dele que a faixa substitui (ex.: base do mercado da
-                # Villa de 01/11, com 'abaixo_piso'): vale o menor, sem o mínimo do anúncio, até o limite de segurança
-                abaixo = [float(x["pisos_enviados"][q]) for x in existentes.values()
-                          if "abaixo_piso" in (x.get("libera") or []) and (x.get("pisos_enviados") or {}).get(q)
-                          and (x.get("data") or "") <= regra["data"] and pega(x, q, n, d)]
-                if abaixo and min(abaixo) < dono:
-                    dono = min(abaixo)
-                    suspenso.append(q)
-                    lo = max(dono, limite_seguranca(cfg, q, d))
-                else:
-                    lo = max(dono, float(pc[q]["min"]))
+                lo = max(dono, float(pc[q]["min"]))
                 los[q] = lo
                 v = reg[str(PCT[f])] * fac / rz
                 if v > mx:
@@ -657,14 +683,17 @@ def gerar_ordens(fx: dict, cfg: dict, regra: dict, inv: dict, hoje: date, dias: 
                  "quartos": qs, "de": n, "ate": n, "noites": [n], "tipo": "alvo_por_data", "percentil": PCT[f],
                  "faixa": f, "passo_livre": True, "escada_vendas": True, "pisos_enviados": pisos, "topo_enviados": topo,
                  "vendidas_base": vb, "libera": ["acima_15"], "ocupacao_max": 0.7, "frente_ocupacao": 0.5}
-            if suspenso:  # o motor e o validador só aceitam piso abaixo do padrão com 'abaixo_piso' na ordem
-                o["libera"] = ["acima_15", "abaixo_piso"]
             if degraus:
                 o["degraus_atras"], o["degraus_dias"] = degraus, [7, 5, 3, 1][:f - 1]
             elif atras:
-                o["piso_atras"], o["gatilho_dias"] = atras, 7
+                # gatilho por bloco (revisão de 04/11, como as ordens de 03/11): a semana (dom-qui) ou o fim de semana
+                # (sex-sáb) desce junto quando a 1ª noite do bloco chega a D7, sem a mais vendida ficar mais barata;
+                # e só depois de 2 dias de ordem (a F2 recebe a chance de vender antes de cair)
+                ini = 6 if t == "semana" else 4
+                o["piso_atras"], o["gatilho_dias"] = atras, 7 + (d.weekday() - ini) % 7
+                o["gatilho_min_dias"] = 2
             o["nota"] = (f"F{f} ({TIPOS[t]}): régua com hidro {origem}, p{PCT[f]} R$ {reg[str(PCT[f])]} público, p90 "
-                         f"R$ {reg['90']}; ÷ {rz:.3f} (Booking/enviado, D{i}); nunca abaixo do piso do dono. "
+                         f"R$ {reg['90']}; ÷ {rz:.3f} (Booking/enviado; ÷ {rz7:.3f} nos degraus de D7 ou menos); nunca abaixo do piso do dono. "
                          + ("Descida gradual a partir de D7 com o vendido abaixo da curva: " + ", ".join(
                              f"D{dd} F{f - j - 1}" for j, dd in enumerate(o.get("degraus_dias", []))) + ". "
                             if degraus else ("Gatilho de D7 sem venda nova: F" + str(f - 1) + " (ou o piso do dono). "
@@ -673,8 +702,6 @@ def gerar_ordens(fx: dict, cfg: dict, regra: dict, inv: dict, hoje: date, dias: 
                             if any(q in qs for q in ("Afrodite", "Balcony")) else "")
                          + (f"Limitado ao máximo do anúncio em {', '.join(NOMES[q] for q in limitado)} (subir o máximo "
                             f"é do dono). " if limitado else "")
-                         + (f"Piso do dono suspenso nesta noite por ordem anterior dele (abaixo_piso) em "
-                            f"{', '.join(NOMES[q] for q in suspenso)}: vale o menor piso dessas ordens. " if suspenso else "")
                          + "Como desfazer: pedir 'Volte às ordens anteriores de " + dm(n) + "'.")
             novas.append(o)
             for oid, x in existentes.items():

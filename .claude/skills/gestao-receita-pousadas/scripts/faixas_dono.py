@@ -527,16 +527,22 @@ def fator_quarto(cfg: dict, q: str, d: date) -> float:
     return 1.0
 
 
+MIN_N_NOITE = 40   # hotéis mínimos na busca para a estadia que começa na noite valer sozinha
+
+
 def regua_noite(fx: dict, d: date, tipo: str) -> tuple[dict, str]:
     """Percentis da régua com hidro na noite (revisão de 04/11): mediana das estadias medidas do mesmo tipo que começam
     na noite; sem elas, das que contêm a noite (25/12: a estadia 25->26, não as que começam em 24/12, fora do pacote);
     sem nenhuma, das estadias do mesmo tipo mais perto (até 3 dias: 20/12 usa 21-23/12, o Pré-Natal, e não a mediana
     de 10 meses de baixa temporada); por fim, o valor da tabela do tipo. ({"25": v, ...}, origem)."""
     mesmas = [e for e in fx["estadias"] if e["tipo"] == tipo]
-    es = [e for e in mesmas if _d(e["checkin"]) == d]
+    # revisão de 04/11: a estadia que começa na noite só vale com amostra boa (25/12: 25->26 com 24 hotéis, diária
+    # avulsa que não vendemos, contra 48-67 nas estadias que contêm a noite)
+    es = [e for e in mesmas if _d(e["checkin"]) == d and int(e.get("n") or 0) >= MIN_N_NOITE]
     origem = "medida na noite"
     if not es:
         es = [e for e in mesmas if _d(e["checkin"]) <= d < _d(e["checkout"])]
+        origem = "medida nas estadias que contêm a noite"
     if not es:
         dist = {id(e): min(abs((_d(e["checkin"]) - d).days), abs((_d(e["checkout"]) - timedelta(days=1) - d).days))
                 for e in mesmas}
@@ -633,9 +639,10 @@ def gerar_ordens(fx: dict, cfg: dict, regra: dict, inv: dict, hoje: date, dias: 
 
     def mais_nova(x: dict) -> bool:
         """Ordem do dono dada depois da regra (data maior, ou mesma data e criada_em posterior): vence a faixa."""
+        from comum import ler_instante
         dx, dr = x.get("data") or "", regra["data"]
-        return dx > dr or (dx == dr and bool(x.get("criada_em")) and bool(regra.get("criada_em"))
-                           and str(x["criada_em"]) > str(regra["criada_em"]))
+        cx, cr = ler_instante(x.get("criada_em")), ler_instante(regra.get("criada_em"))
+        return dx > dr or (dx == dr and cx is not None and cr is not None and cx > cr)
 
     def bloqueia(x: dict, q: str, n: str, d: date) -> bool:
         """A noite do quarto fica fora da faixa: ordem do dono mais nova que a regra; preço por data ou mudança manual

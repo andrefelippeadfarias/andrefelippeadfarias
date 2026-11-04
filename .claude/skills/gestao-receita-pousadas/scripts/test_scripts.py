@@ -1352,10 +1352,6 @@ class TestVigiaSeguranca(unittest.TestCase):
         self.assertEqual(al2, [])
 
 
-if __name__ == "__main__":
-    unittest.main()
-
-
 class TestOrdensDono(unittest.TestCase):
     """30/10: excecao 'dono' só com ordem_id vigente; mudança manual do dono congela a noite."""
 
@@ -2027,6 +2023,12 @@ class TestPace(unittest.TestCase):
         # a 4 dias já na F4: 2º degrau (F3)
         self.assertEqual(pace.degrau_atras_da_ordem(self.cfg, {"degraus_atras": {"VK7": [3600, 3200, 2800, 2400]}},
                                                     "VK7", date(2026, 11, 20), 4, 10, 60, 3600)[1], 2)
+        # com venda nova depois da ordem o preço fica na reta (acima do degrau): o degrau alcançado é medido pela reta
+        # (revisão de 04/11: sem isso a descida travava no 1º degrau)
+        dg4 = {"degraus_atras": {"VK7": [3600, 3200, 2800, 2400]}}
+        self.assertEqual(pace.degrau_atras_da_ordem(self.cfg, dg4, "VK7", date(2026, 11, 20), 4, 10, 60, 4100,
+                                                    reta=lambda x: x + 500)[1], 2)
+        self.assertEqual(pace.degrau_atras_da_ordem(self.cfg, dg4, "VK7", date(2026, 11, 20), 4, 10, 60, 4100)[1], 1)
         # a 2 dias na F5, abaixo da curva: só o 1º degrau (antes pulava direto para a F2)
         self.assertEqual(pace.degrau_atras_da_ordem(self.cfg, {"degraus_atras": {"VK7": [3600, 3200, 2800, 2400]}},
                                                     "VK7", date(2026, 11, 20), 2, 80, 87, 4000)[1], 1)
@@ -2592,3 +2594,7 @@ class TestFaixasDono(unittest.TestCase):
         self.assertEqual(f.nome_curto("Réveillon (véspera 29/12)"), "véspera do Réveillon, 29/12")
         self.assertEqual(f.nome_curto("Revolução Constitucionalista, 9 de Julho (feriado estadual SP)"), "9 de Julho")
         self.assertEqual(f.nome_curto("Dia dos Namorados 2027 (pico)"), "Dia dos Namorados")
+
+
+if __name__ == "__main__":
+    unittest.main()

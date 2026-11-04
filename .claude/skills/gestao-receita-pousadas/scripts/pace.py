@@ -371,7 +371,11 @@ def piso_atras_da_ordem(cfg: dict, ao: dict | None, curto: str, d: date, k: int,
     if ao.get("gatilho_min_dias") and ao.get("criada_em"):
         # revisão de 04/11 (ordens de faixa): só depois de `gatilho_min_dias` dias de ordem; a noite criada a D7 ou
         # menos não cai na hora para a faixa de baixo (King Spa 7 11/11 iria de R$ 814 a 710 à frente da curva)
-        criada = dt.datetime.fromisoformat(str(ao["criada_em"]).replace("Z", "+00:00")).date()
+        from zoneinfo import ZoneInfo
+        criada = dt.datetime.fromisoformat(str(ao["criada_em"]).replace("Z", "+00:00"))
+        if criada.tzinfo is None:
+            criada = criada.replace(tzinfo=dt.timezone.utc)
+        criada = criada.astimezone(ZoneInfo("America/Sao_Paulo")).date()  # dia da ordem no fuso de hoje (BRT)
         if ((d - dt.timedelta(days=k)) - criada).days < int(ao["gatilho_min_dias"]):
             return None
     pa = float(ao["piso_atras"][curto])
@@ -381,7 +385,7 @@ def piso_atras_da_ordem(cfg: dict, ao: dict | None, curto: str, d: date, k: int,
 
 
 def degrau_atras_da_ordem(cfg: dict, ao: dict | None, curto: str, d: date, k: int, vend_pct: float,
-                          esp: float, atual: float | None = None) -> tuple[float, int] | None:
+                          esp: float, atual: float | None = None, reta=None) -> tuple[float, int] | None:
     """Dono 04/11 ("Para feriados, vamos aplicar o F5 e baixar gradualmente caso a lotação esteja abaixo da expectativa
     7 dias antes"): ordem com `degraus_atras` {curto: [piso F4, F3, F2, F1 enviados]} e `degraus_dias` [7, 5, 3, 1].
     A partir de D7, com o vendido abaixo da curva esperada da noite, o piso desce um degrau por marco atingido (D7 → 1º,
@@ -397,7 +401,7 @@ def degrau_atras_da_ordem(cfg: dict, ao: dict | None, curto: str, d: date, k: in
     if atual is not None:
         # revisão de 04/11: um degrau por vez (a noite que fica abaixo da curva só perto da data não pula da F5 à F1);
         # o degrau atual é o último que o preço já alcançou (2% de folga do arredondamento)
-        ja = sum(1 for x in dg if float(x) >= float(atual) * 0.98)
+        ja = sum(1 for x in dg if float(reta(float(x)) if reta else x) >= float(atual) * 0.98)
         n = min(n, ja + 1)
     v = float(dg[n - 1])
     if "abaixo_piso" not in (ao.get("libera") or []):
@@ -647,7 +651,12 @@ def plano(cfg: dict, ancora: dict, cals: dict, hoje: date, ordens: dict, passos:
                     origem_atras = f"gatilho de D{int(ao.get('gatilho_dias', 7))} sem venda nova (dono 03/11): p50 com hidro"
                 else:
                     origem_atras = None
-                dga = degrau_atras_da_ordem(cfg, ao, curto, d, k, vend_pct, esp, atual)
+                # topo da rampa calculado antes (revisão de 04/11): o degrau já alcançado é medido contra a reta de cada
+                # degrau (o preço fica na reta, acima do degrau, quando entra venda depois da ordem)
+                piso_pad = max(piso_com_ordem(cfg, curto, d, sem_alvo(ordens))[0], pisos_enviados(cfg, curto, d)[0],
+                               float((ao.get("topo_enviados") or {}).get(curto) or 0))
+                dga = degrau_atras_da_ordem(cfg, ao, curto, d, k, vend_pct, esp, atual,
+                                            reta=lambda x: max(alvo_env, piso_com_vendas(x, piso_pad, oc_esc)))
                 degrau_on = False
                 if dga is not None and dga[0] < piso:
                     piso, ordem_piso = dga[0], ordem_piso or ao
@@ -664,8 +673,6 @@ def plano(cfg: dict, ancora: dict, cals: dict, hoje: date, ordens: dict, passos:
                 # topo da rampa (dono 01/11; revisão 01/11): o piso padrão do dono (R$ 500/850 no Genius 3), mesmo quando
                 # uma ordem piso_por_data da semana o suspende (senão piso = topo e a escada fica plana: King Spa 7 05/11),
                 # ou o `topo_enviados` da ordem (festas da Villa: do alvo de hoje ao preço de antes, pelas vendas)
-                piso_pad = max(piso_com_ordem(cfg, curto, d, sem_alvo(ordens))[0], pisos_enviados(cfg, curto, d)[0],
-                               float((ao.get("topo_enviados") or {}).get(curto) or 0))
                 # revisão de 03/11: a reta usa a mesma ocupação da escada (oc_esc: só as reservas depois de
                 # `vendidas_base`); com a ocupação inteira, a noite que entrava numa ordem nova com vendas antigas subia
                 # um passo por dia até a reta sem nenhuma venda nova (Panorâmica I 13-14/11: R$ 2.708 -> 2.979 -> 3.340)
@@ -984,8 +991,8 @@ def coerencia(cfg: dict, cals: dict, finais: dict, itens: list[dict], hoje: date
                     if pa_q2 is not None:
                         piso_q2 = min(piso_q2, pa_q2)
                     _, vp2, esp2 = status_da_noite(cfg, tipo_noite(cfg, d), (d - hoje).days, vv2, tt2)
-                    dg_q2 = degrau_atras_da_ordem(cfg, ao_q2, "Q2", d, (d - hoje).days, vp2, esp2,
-                                                  float(cals["Q2"][noite]["price"]))
+                    # sem limite de um degrau aqui: a Panorâmica II fica >= Moinhos, que já desce um degrau por vez
+                    dg_q2 = degrau_atras_da_ordem(cfg, ao_q2, "Q2", d, (d - hoje).days, vp2, esp2)
                     if dg_q2 is not None:
                         piso_q2 = min(piso_q2, dg_q2[0])
                         forte_q2 = False  # descida gradual (dono 04/11) vale mesmo com a pousada vendendo bem

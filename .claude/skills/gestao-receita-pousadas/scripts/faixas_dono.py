@@ -506,6 +506,165 @@ def pagina(fx: dict, cfg: dict, precos: dict, hoje: date, modelo: Path, saida: P
     return dados
 
 
+# --- Regra de faixas do dono (04/11/2026) → ordens alvo_por_data por noite -----------------------------------------
+QUARTOS_ORDEM = {"Recanto": ["Q7", "Q2", "Double"], "Villa": ["VK7", "VK2"]}   # Afrodite e Balcony seguem as regras delas
+RAZAO = {"Recanto": 0.62, "Villa": 0.65}   # Booking ÷ enviado longe da data (medido: Recanto 0,61-0,63; Villa 0,62-0,65)
+RAZAO_ULTIMA_SEMANA = 0.9                  # a até 7 dias a Booking mostra ~10% menos (Recanto: 0,5557 contra 0,6156)
+PCT = {n: p for n, _, p in FAIXAS}
+
+
+def regua_noite(fx: dict, d: date, tipo: str) -> tuple[dict, str]:
+    """Percentis da régua com hidro na noite: mediana das estadias medidas do mesmo tipo que contêm a noite; sem
+    medição, o valor da tabela do tipo. ({"25": v, ...}, origem)."""
+    es = [e for e in fx["estadias"] if e["tipo"] == tipo and _d(e["checkin"]) <= d < _d(e["checkout"])]
+    if es:
+        return ({str(p): round(st.median(e["hidro"][str(p)] for e in es)) for p in PCTS},
+                f"medida na noite ({len(es)} estadia{'s' if len(es) > 1 else ''})")
+    return dict(fx["por_tipo"][tipo]["hidro"]), "tabela do tipo"
+
+
+def razao(pous: str, k: int) -> float:
+    return RAZAO[pous] * (RAZAO_ULTIMA_SEMANA if k <= 7 else 1.0)
+
+
+def regra_da_noite(regra: dict, d: date, tipo: str) -> dict | None:
+    for r in regra.get("regras") or []:
+        if tipo not in (r.get("tipos") or []):
+            continue
+        if (r.get("meses") or r.get("noites")) and d.isoformat()[:7] not in (r.get("meses") or []) \
+                and d.isoformat() not in (r.get("noites") or []):
+            continue
+        return r
+    return None
+
+
+def vendidas_inv(inv: dict, q: str, n: str, unidades: int) -> int:
+    x = (inv.get(q) or {}).get(n) or {}
+    if x.get("numAvail") is None:
+        return 0
+    return max(0, min(unidades, unidades - int(x["numAvail"])))
+
+
+def gerar_ordens(fx: dict, cfg: dict, regra: dict, inv: dict, hoje: date, dias: int, existentes: dict,
+                 criada_em: str) -> tuple[list[dict], dict]:
+    """(ordens novas, {ordem_id antiga: [noites que saem dela]}). Uma ordem por noite e pousada, como as de 02 e 03/11:
+    pisos na faixa (÷ razão; nunca abaixo do piso do dono nem acima do máximo do anúncio), topo na F5, e perto da data
+    o gatilho de D7 (F2/F3: desce uma faixa sem venda nova) ou a descida gradual (F5: degraus F4, F3, F2, F1 em D7, D5,
+    D3 e D1 com o vendido abaixo da curva). Pula noites que já têm ordem desta regra (`id_base`), noites a D0-D1 e,
+    por quarto, noites com ordem do dono mais nova que a regra (ela vence)."""
+    from pace import pisos_enviados
+    pc = cfg["por_curto"]
+    base_id = regra["id_base"]
+    ja = {(o.get("pousada_faixa"), n) for o in existentes.values() if o["id"].startswith(base_id)
+          for n in o.get("noites") or []}
+    from ordens import cobre
+
+    def pega(x: dict, q: str, n: str, d: date) -> bool:
+        """Ordem antiga que a faixa substitui na noite e no quarto (regras.md 4e)."""
+        if x["id"].startswith(base_id):
+            return False
+        if not (x.get("tipo") in ("alvo_por_data", "piso_por_data", "acompanhamento")
+                or n in ((x.get("vendidas_base") or {}).get(q) or {})):
+            return False
+        return cobre(x, q, d) and (not x.get("noites") or n in x["noites"])
+
+    novas, fora = [], {}
+    # a partir de D2: a véspera já está decidida e no canal (a ordem nova não sobe nem derruba a noite de amanhã; nas
+    # rotinas seguintes a noite já tem a ordem desde D60)
+    for i in range(2, dias + 1):
+        d = hoje + timedelta(days=i)
+        n = d.isoformat()
+        t = tipo_da_noite(d, cfg)
+        r = regra_da_noite(regra, d, t)
+        if not r:
+            continue
+        f = int(r["faixa"])
+        reg, origem = regua_noite(fx, d, t)
+        for pous, qs_todos in QUARTOS_ORDEM.items():
+            if (pous, n) in ja:
+                continue
+            # ordem do dono mais nova que a regra vence a faixa na noite e no quarto (a regra não a desfaz)
+            qs = [q for q in qs_todos if not any((x.get("data") or "") > regra["data"] and pega(x, q, n, d)
+                                                 for x in existentes.values())]
+            if not qs:
+                continue
+            rz, rz7 = razao(pous, i), razao(pous, 0)
+            pisos, topo, atras, degraus, vb, limitado, suspenso = {}, {}, {}, {}, {}, [], []
+            tot = sum(vendidas_inv(inv, q, n, int(pc[q]["unidades"])) for q in QUARTOS[pous] if q != "Balcony")
+            for q in qs:
+                mx, mn = float(pc[q]["max"]), float(pc[q]["min"])
+                dono = pisos_enviados(cfg, q, d)[0]
+                # piso do dono suspenso na noite por ordem anterior dele que a faixa substitui (ex.: "Valor mínimo de
+                # diária de 300 reais", 26/10, e base do mercado de 01/11, com 'abaixo_piso'): vale o menor
+                abaixo = [float(x["pisos_enviados"][q]) for x in existentes.values()
+                          if "abaixo_piso" in (x.get("libera") or []) and (x.get("pisos_enviados") or {}).get(q)
+                          and (x.get("data") or "") <= regra["data"] and pega(x, q, n, d)]
+                if abaixo and min(abaixo) < dono:
+                    dono = min(abaixo)
+                    suspenso.append(q)
+                v = reg[str(PCT[f])] / rz
+                if v > mx:
+                    limitado.append(q)
+                pisos[q] = round(min(mx, max(v, dono, mn)), 2)
+                topo[q] = round(min(mx, max(reg["90"] / rz, pisos[q])), 2)
+                if r.get("descida_gradual"):
+                    degraus[q] = [round(min(mx, max(reg[str(PCT[x])] / rz7, mn, dono if suspenso else 0)), 2)
+                                  for x in range(f - 1, 0, -1)]
+                elif f > 2:  # dono 03/11 ("1. Sim"): a até 7 dias sem venda nova desce uma faixa, até o p50 (F2)
+                    atras[q] = round(min(pisos[q], max(reg[str(PCT[f - 1])] / rz7, dono)), 2)
+                u = int(pc[q]["unidades"])
+                vb[q] = {n: tot if u <= 2 else vendidas_inv(inv, q, n, u)}
+            o = {"id": f"{base_id}-{pous.lower()}-{n.replace('-', '')}", "data": regra["data"], "criada_em": criada_em,
+                 "texto": regra["texto"], "contexto": regra.get("contexto", ""), "pousada_faixa": pous,
+                 "quartos": qs, "de": n, "ate": n, "noites": [n], "tipo": "alvo_por_data", "percentil": PCT[f],
+                 "faixa": f, "passo_livre": True, "escada_vendas": True, "pisos_enviados": pisos, "topo_enviados": topo,
+                 "vendidas_base": vb, "libera": ["acima_15"], "ocupacao_max": 0.7, "frente_ocupacao": 0.5}
+            if suspenso:  # o motor e o validador só aceitam piso abaixo do padrão com 'abaixo_piso' na ordem
+                o["libera"] = ["acima_15", "abaixo_piso"]
+            if degraus:
+                o["degraus_atras"], o["degraus_dias"] = degraus, [7, 5, 3, 1][:f - 1]
+            elif atras:
+                o["piso_atras"], o["gatilho_dias"] = atras, 7
+            o["nota"] = (f"F{f} ({TIPOS[t]}): régua com hidro {origem}, p{PCT[f]} R$ {reg[str(PCT[f])]} público, p90 "
+                         f"R$ {reg['90']}; ÷ {rz:.3f} (Booking/enviado, D{i}); nunca abaixo do piso do dono. "
+                         + ("Descida gradual a partir de D7 com o vendido abaixo da curva: " + ", ".join(
+                             f"D{dd} F{f - j - 1}" for j, dd in enumerate(o.get("degraus_dias", []))) + ". "
+                            if degraus else ("Gatilho de D7 sem venda nova: F" + str(f - 1) + " (ou o piso do dono). "
+                                             if atras else ""))
+                         + (f"Limitado ao máximo do anúncio (R$ 5.000) em {', '.join(NOMES[q] for q in limitado)}. "
+                            if limitado else "")
+                         + (f"Piso do dono suspenso nesta noite por ordem anterior dele (abaixo_piso) em "
+                            f"{', '.join(NOMES[q] for q in suspenso)}: vale o menor piso dessas ordens. " if suspenso else "")
+                         + "Como desfazer: pedir 'Volte às ordens anteriores de " + dm(n) + "'.")
+            novas.append(o)
+            for oid, x in existentes.items():
+                for q in qs:
+                    if pega(x, q, n, d):
+                        fora.setdefault(oid, {}).setdefault(q, set()).add(n)
+    return novas, {k: {q: sorted(v) for q, v in qd.items()} for k, qd in fora.items()}
+
+
+def aplicar_ordens(arquivo: Path, novas: list[dict], fora: dict, regra: dict) -> None:
+    d = json.load(open(arquivo))
+    ids = {o["id"] for o in d["ordens"]}
+    for o in d["ordens"]:
+        if o["id"] in fora:
+            nf = o.get("noites_fora") or {}
+            if isinstance(nf, list):  # lista antiga vale para todos os quartos da ordem
+                nf = {q: list(nf) for q in o.get("quartos") or []}
+            for q, ns in fora[o["id"]].items():
+                nf[q] = sorted(set(nf.get(q) or []) | set(ns))
+            o["noites_fora"] = nf
+            todas = sorted({n for ns in fora[o["id"]].values() for n in ns})
+            quem = ", ".join(NOMES.get(q, q) for q in fora[o["id"]])
+            o["nota"] = (o.get("nota") or "") + (f" {regra['data']}: noites {', '.join(dm(n) for n in todas)} de {quem} "
+                                                 f"passaram às ordens {regra['id_base']} (dono: faixas).")
+    for o in novas:
+        if o["id"] not in ids:
+            d["ordens"].append(o)
+    Path(arquivo).write_text(json.dumps(d, ensure_ascii=False, indent=1))
+
+
 def ler_precos(pares: list[str]) -> dict:
     out = {}
     for x in pares or []:
@@ -536,6 +695,15 @@ def main(argv=None) -> int:
     pg.add_argument("--hoje", default=date.today().isoformat())
     pg.add_argument("--modelo", default=str(AQUI / "faixas_pagina.html"))
     pg.add_argument("--saida", required=True)
+    od = sub.add_parser("ordens", help="ordens por faixa da regra do dono nas noites de hoje+1 a hoje+dias")
+    od.add_argument("--regra", default=str(RAIZ / "dados/faixas_dono_regra.json"))
+    od.add_argument("--faixas", default=str(RAIZ / "dados/faixas_dono.json"))
+    od.add_argument("--inv", required=True, help="beds24.py inventario --json")
+    od.add_argument("--hoje", default=date.today().isoformat())
+    od.add_argument("--dias", type=int, default=60)
+    od.add_argument("--criada-em", required=True)
+    od.add_argument("--saida", required=True)
+    od.add_argument("--aplicar", action="store_true", help="grava em dados/ordens_dono.json")
     n = sub.add_parser("noite")
     n.add_argument("--data", required=True)
     n.add_argument("--faixa", type=int)
@@ -560,6 +728,17 @@ def main(argv=None) -> int:
         if a.md:
             Path(a.md).write_text(md)
         print(md)
+        return 0
+    if a.cmd == "ordens":
+        from ordens import carregar_ordens
+        regra = json.load(open(a.regra))
+        existentes = carregar_ordens()
+        novas, fora = gerar_ordens(fx, cfg, regra, json.load(open(a.inv)), _d(a.hoje), a.dias, existentes, a.criada_em)
+        Path(a.saida).write_text(json.dumps({"novas": novas, "fora": fora}, ensure_ascii=False, indent=1))
+        print(f"{len(novas)} ordens novas; noites tiradas de {len(fora)} ordens antigas")
+        if a.aplicar:
+            aplicar_ordens(RAIZ / "dados/ordens_dono.json", novas, fora, regra)
+            print("gravado em dados/ordens_dono.json")
         return 0
     if a.cmd == "pagina":
         dados = pagina(fx, cfg, ler_precos(a.precos), _d(a.hoje), Path(a.modelo), Path(a.saida))

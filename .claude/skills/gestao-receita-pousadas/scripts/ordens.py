@@ -38,8 +38,17 @@ def carregar_ordens(caminho: Path | str | None = None) -> dict:
 
 
 def cobre(ordem: dict, quarto: str, d: date) -> bool:
+    """A ordem cobre o quarto e a noite. `noites_fora` (04/11): noites que passaram para uma ordem mais nova do dono
+    (ex.: faixas de 04/11), em lista (todos os quartos) ou {quarto: [noites]}; a ordem antiga fica no arquivo como
+    registro, mas não vale mais nelas."""
     quartos = ordem.get("quartos") or []
     if "*" not in quartos and quarto not in quartos:
+        return False
+    nf = ordem.get("noites_fora") or []
+    if isinstance(nf, dict):  # {quarto: [noites]}: só esses quartos saem (ex.: suítes; a Balcony fica na ordem dela)
+        if d.isoformat() in (nf.get(quarto) or []):
+            return False
+    elif d.isoformat() in nf:
         return False
     return data(ordem["de"]) <= d <= data(ordem["ate"])
 

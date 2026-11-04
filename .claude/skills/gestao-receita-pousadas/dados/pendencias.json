@@ -863,7 +863,9 @@
    "desde": "2026-11-03",
    "urgencia": 1,
    "data_alvo": "2026-11-07",
-   "texto": "Antes da rotina de 08/11 (15/11 chega a D7): em pace.py, quando uma noite da semana (dom-qui) dispara o gatilho de D7, as noites da mesma semana com menos ou o mesmo número de vendidas e sem venda nova também vão ao piso_atras, para não ficar a noite mais vendida mais barata. Teste e revisão independente."
+   "texto": "Antes da rotina de 08/11 (15/11 chega a D7): em pace.py, quando uma noite da semana (dom-qui) dispara o gatilho de D7, as noites da mesma semana com menos ou o mesmo número de vendidas e sem venda nova também vão ao piso_atras, para não ficar a noite mais vendida mais barata. Teste e revisão independente.",
+   "resolvido_em": "2026-11-04",
+   "resolucao": "Superada pela ordem do dono de 04/11 (faixas por tipo de noite): os dias de semana de 08-30/11 saíram das ordens de régua com hidro de 03/11 e foram para a F2 (p50), sem gatilho de D7 (a F2 já é o nível do gatilho). Não há mais gatilho em noites de dia de semana."
   },
   {
    "id": "faixas-remedir",

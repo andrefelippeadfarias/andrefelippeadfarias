@@ -1,0 +1,43 @@
+{
+ "id_base": "dono-2026-11-04-faixa",
+ "data": "2026-11-04",
+ "texto": "Para feriados, vamos aplicar o F5 e baixar gradualmente caso a lotação esteja abaixo da expectativa 7 dias antes. Para Natal, aplicar F5, Réveillon F5, inverno e final de semana F5. Para dias de semana, vamos aplicar F2 e fins de semana do mês de dezembro e os últimos dois de novembro, vamos aplicar F3.",
+ "contexto": "Resposta do dono à régua de faixas (página 'Régua de Preços das Pousadas', 04/11/2026).",
+ "regras": [
+  {
+   "tipos": [
+    "feriado",
+    "natal",
+    "reveillon",
+    "inverno_fds"
+   ],
+   "faixa": 5,
+   "descida_gradual": true,
+   "leitura": "Feriados, Natal, Réveillon e a linha 'Inverno, fim de semana e feriadões' na F5. A descida gradual (a partir de D7, com o vendido abaixo da curva esperada) vale para todos os de F5."
+  },
+  {
+   "tipos": [
+    "semana",
+    "inverno_semana"
+   ],
+   "faixa": 2,
+   "leitura": "Dias de semana (dom-qui) na F2, inclusive no inverno. Gatilho de D7 sem venda nova (dono 03/11) para a F1 ou o piso do dono."
+  },
+  {
+   "tipos": [
+    "fds"
+   ],
+   "faixa": 3,
+   "meses": [
+    "2026-12"
+   ],
+   "noites": [
+    "2026-11-27",
+    "2026-11-28"
+   ],
+   "leitura": "Fins de semana de dezembro de 2026 e o último de novembro (27-28/11) na F3. O penúltimo (20-21/11) é a Consciência Negra: vale a F5 dos feriados."
+  }
+ ],
+ "fora_da_regra": "Entre Natal e Réveillon (27-29/12), fins de semana de janeiro a novembro de 2027 fora do inverno e 06-07/11 e 13-14/11: seguem as ordens que já existiam.",
+ "nota": "Ordens geradas por scripts/faixas_dono.py ordens a cada rotina completa para as noites que entram na janela de 60 dias (regras.md 4e)."
+}

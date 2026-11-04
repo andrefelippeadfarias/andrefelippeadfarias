@@ -1359,6 +1359,18 @@ if __name__ == "__main__":
 class TestOrdensDono(unittest.TestCase):
     """30/10: excecao 'dono' só com ordem_id vigente; mudança manual do dono congela a noite."""
 
+    def test_noites_fora_tira_a_noite_da_ordem(self):
+        import ordens
+        o = {"id": "x", "tipo": "alvo_por_data", "quartos": ["Q7"], "de": "2026-11-10", "ate": "2026-11-12",
+             "percentil": 65, "noites_fora": ["2026-11-11"], "vendidas_base": {"Q7": {"2026-11-11": 2}}}
+        self.assertTrue(ordens.cobre(o, "Q7", date(2026, 11, 10)))
+        self.assertFalse(ordens.cobre(o, "Q7", date(2026, 11, 11)))
+        self.assertIsNone(ordens.alvo_da_ordem({"x": o}, "Q7", date(2026, 11, 11)))
+        self.assertIsNone(ordens.vendidas_base_escada({"x": o}, "Q7", date(2026, 11, 11)))
+        o2 = dict(o, quartos=["VK7", "Balcony"], noites_fora={"VK7": ["2026-11-11"]})
+        self.assertFalse(ordens.cobre(o2, "VK7", date(2026, 11, 11)))
+        self.assertTrue(ordens.cobre(o2, "Balcony", date(2026, 11, 11)))
+
     def test_dono_sem_ordem_e_barrado_e_com_ordem_passa(self):
         it = {"tipo": "data", "quarto": "Q7", "data": "2026-10-20", "preco": 900, "price_type": "fixed", "excecao": "dono", "motivo": "t"}
         self.assertTrue(any("ordem_id" in x for x in erros([it])))
@@ -1983,6 +1995,45 @@ class TestPace(unittest.TestCase):
         i = item("2026-11-08", "2/7", 1)
         self.assertTrue(i is None or i["pace"]["direcao"] != "desce", i and (i["pace"]["direcao"], i["min_price"]))
 
+    def test_descida_gradual_do_feriado(self):
+        """Dono 04/11 ("Para feriados, vamos aplicar o F5 e baixar gradualmente caso a lotação esteja abaixo da
+        expectativa 7 dias antes"): piso na F5; a partir de D7, abaixo da curva, desce um degrau por marco (7, 5, 3, 1)."""
+        import pace
+        self.cfg["parametros"]["pace"]["escada_vendas"]["ativa"] = True
+        an = {"p25": 300, "p50": 400, "p75": 500, "p90": 600, "max": 700, "n": 62, "busca_em": "2026-10-30",
+              "tipo": "semana", "p50_medido": True}
+
+        def item(n, mu, hoje):
+            o = {"id": "o-f5", "tipo": "alvo_por_data", "quartos": ["VK7"], "de": n, "ate": n, "percentil": 90,
+                 "passo_livre": True, "noites": [n], "escada_vendas": True, "pisos_enviados": {"VK7": 4000},
+                 "topo_enviados": {"VK7": 4000}, "degraus_atras": {"VK7": [3600, 3200, 2800, 2400]},
+                 "degraus_dias": [7, 5, 3, 1], "vendidas_base": {"VK7": {n: 1}}, "libera": ["acima_15"],
+                 "ocupacao_max": 0.7, "frente_ocupacao": 0.5}
+            cal = {"VK7": {n: {"price": "4000", "min_price": "4000", "max_price": "4000", "mu_occupancy": mu}}}
+            res = pace.plano(self.cfg, {"noites": {n: an}, "por_tipo": {}}, cal, hoje, {"o-f5": o},
+                             {"passos": []}, dias=30, regra_j_ativa=False)
+            its = [i for i in res["itens"] if i["quarto"] == "VK7" and i["data"] == n]
+            return its[0] if its else None
+        n = "2026-11-20"
+        # a 10 dias: fica na F5 (sem item)
+        i = item(n, "1/7", date(2026, 11, 10))
+        self.assertTrue(i is None or i["pace"]["direcao"] is None, i and i["min_price"])
+        # a 6 dias, 1/7 vendido (14%, curva bem acima): 1º degrau (F4)
+        i = item(n, "1/7", date(2026, 11, 14))
+        self.assertAlmostEqual(i["min_price"], 3600, delta=2)
+        # a 4 dias: 2º degrau (F3)
+        i = item(n, "1/7", date(2026, 11, 16))
+        self.assertAlmostEqual(i["min_price"], 3200, delta=2)
+        # a 6 dias com a noite quase cheia (6/7, acima da curva): fica na F5
+        i = item(n, "6/7", date(2026, 11, 14))
+        self.assertTrue(i is None or i["min_price"] >= 3999, i and i["min_price"])
+        # nunca abaixo do piso do dono
+        cfg = self.cfg
+        v = pace.degrau_atras_da_ordem(cfg, {"degraus_atras": {"VK7": [10, 10, 10, 10]}}, "VK7", date(2026, 11, 10), 1, 0, 50)
+        self.assertGreaterEqual(v[0], pace.pisos_enviados(cfg, "VK7", date(2026, 11, 10))[0])
+        self.assertIsNone(pace.degrau_atras_da_ordem(cfg, {"degraus_atras": {"VK7": [1, 1, 1, 1]}}, "VK7",
+                                                     date(2026, 11, 10), 9, 0, 50))
+
     def test_pisos_enviados(self):
         import pace
         # dia de semana fora de feriado: R$ 500 Genius ÷ 0,63 (CFG do teste) = R$ 794 > mínimo R$ 800? não: vale o mínimo
@@ -2354,6 +2405,52 @@ class TestFaixasDono(unittest.TestCase):
                  date(2027, 4, 21): "feriado"}
         for d, t in casos.items():
             self.assertEqual(f.tipo_da_noite(d, cfg), t, d)
+
+    def test_gerar_ordens_por_faixa(self):
+        """Ordem do dono de 04/11: F5 no feriado com descida gradual, F2 na semana com gatilho de D7, piso do dono e
+        máximo do anúncio; a ordem antiga perde a noite por quarto e a ordem do dono mais nova vence a regra."""
+        import faixas_dono as f
+        from comum import carregar_quartos
+        from pace import pisos_enviados
+        cfg = carregar_quartos()
+        hid = {"25": 600, "50": 700, "65": 900, "75": 1100, "90": 5000}
+        fx = {"estadias": [], "por_tipo": {t: {"hidro": dict(hid)} for t in f.TIPOS}}
+        regra = {"id_base": "t-faixa", "data": "2026-11-04", "texto": "t",
+                 "regras": [{"tipos": ["feriado"], "faixa": 5, "descida_gradual": True},
+                            {"tipos": ["semana"], "faixa": 2}]}
+        hoje, fer, sem = date(2026, 11, 4), date(2026, 11, 20), date(2026, 11, 17)
+        velha = {"id": "velha", "data": "2026-11-01", "tipo": "alvo_por_data", "quartos": ["Q7", "VK7"],
+                 "de": "2026-11-17", "ate": "2026-11-20"}
+        nova = {"id": "nova", "data": "2026-11-05", "tipo": "alvo_por_data", "quartos": ["VK7"],
+                "de": "2026-11-17", "ate": "2026-11-17"}
+        novas, fora = f.gerar_ordens(fx, cfg, regra, {}, hoje, 16, {"velha": velha, "nova": nova}, "2026-11-04T14:00+00:00")
+        por = {(o["pousada_faixa"], o["de"]): o for o in novas}
+        o5 = por[("Recanto", fer.isoformat())]
+        self.assertEqual(o5["faixa"], 5)
+        self.assertEqual(o5["pisos_enviados"]["Q7"], float(cfg["por_curto"]["Q7"]["max"]))   # F5 acima do máximo
+        self.assertEqual(o5["degraus_dias"], [7, 5, 3, 1])
+        self.assertEqual(len(o5["degraus_atras"]["Q7"]), 4)                                 # F4, F3, F2, F1
+        o2 = por[("Recanto", sem.isoformat())]
+        piso_dono = pisos_enviados(cfg, "Q7", sem)[0]
+        self.assertGreaterEqual(o2["pisos_enviados"]["Q7"], piso_dono)                      # nunca abaixo do piso do dono
+        self.assertNotIn("piso_atras", o2)          # F2 já é o p50 do gatilho de 03/11: não desce à F1 sozinha
+        self.assertNotIn("abaixo_piso", o2["libera"])
+        # a ordem do dono de 05/11 (mais nova que a regra) fica com a King Spa 7 em 17/11; a King Spa 2 entra na faixa
+        self.assertEqual(por[("Villa", sem.isoformat())]["quartos"], ["VK2"])
+        self.assertNotIn("nova", fora)
+        noites = ["2026-11-17", "2026-11-18", "2026-11-19", "2026-11-20"]   # 18/11 semana; 19-20/11 Consciência Negra
+        self.assertEqual(fora["velha"], {"Q7": noites, "VK7": noites[1:]})
+        self.assertNotIn(("Recanto", "2026-11-21"), por)                                    # sábado comum de nov: fora da regra
+        # F3 (fim de semana): gatilho de D7 desce à F2; ordem anterior com 'abaixo_piso' deixa o piso dela valer
+        regra3 = dict(regra, regras=[{"tipos": ["fds"], "faixa": 3, "noites": ["2026-11-27"]}])
+        sus = {"id": "sus", "data": "2026-11-01", "tipo": "alvo_por_data", "quartos": ["Q7"], "de": "2026-11-27",
+               "ate": "2026-11-27", "libera": ["abaixo_piso"], "pisos_enviados": {"Q7": 500}}
+        n3, _ = f.gerar_ordens(fx, cfg, regra3, {}, hoje, 30, {"sus": sus}, "2026-11-04T14:00+00:00")
+        o3 = [o for o in n3 if o["pousada_faixa"] == "Recanto"][0]
+        self.assertEqual(o3["gatilho_dias"], 7)
+        self.assertEqual(o3["piso_atras"]["Q7"], round(hid["50"] / f.razao("Recanto", 0), 2))
+        self.assertEqual(o3["piso_atras"]["Q2"], o3["pisos_enviados"]["Q2"])       # Q2 sem ordem: piso do dono manda
+        self.assertIn("abaixo_piso", o3["libera"])
 
     def test_construir_mes_fator_incerto_e_valores_por_quarto(self):
         import json as _json

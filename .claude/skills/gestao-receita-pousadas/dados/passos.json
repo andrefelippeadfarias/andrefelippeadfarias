@@ -6271,6 +6271,45 @@
    "total": 16,
    "gravado_em": "2026-11-04T11:27+00:00",
    "chegou_ao_canal": false
+  },
+  {
+   "quarto": "VK7",
+   "noite": "2026-11-05",
+   "de": 858.0,
+   "para": 878,
+   "direcao": "sobe",
+   "status": "ritmo",
+   "vendidas": 5,
+   "base": "quarto",
+   "total": 7,
+   "gravado_em": "2026-11-04T13:58+00:00",
+   "chegou_ao_canal": false
+  },
+  {
+   "quarto": "VK2",
+   "noite": "2026-11-15",
+   "de": 1226.0,
+   "para": 788,
+   "direcao": "desce",
+   "status": "ritmo",
+   "vendidas": 3,
+   "base": "pousada",
+   "total": 9,
+   "gravado_em": "2026-11-04T13:58+00:00",
+   "chegou_ao_canal": false
+  },
+  {
+   "quarto": "VK2",
+   "noite": "2026-11-16",
+   "de": 1226.0,
+   "para": 762,
+   "direcao": "desce",
+   "status": "ritmo",
+   "vendidas": 2,
+   "base": "pousada",
+   "total": 9,
+   "gravado_em": "2026-11-04T13:58+00:00",
+   "chegou_ao_canal": false
   }
  ]
 }

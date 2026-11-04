@@ -4120,6 +4120,26 @@ A reabertura chegou à Booking só nas datas mais próximas. Pedido ao dono: usa
 **Como usar:** o dono diz "Recanto, fins de semana de dezembro, faixa 4". A skill mede a régua das noites, grava os pisos na faixa (nunca abaixo do piso do dono), a escada sobe até a F5 com as vendas e, a 7 dias sem reserva nova desde o pedido, o piso desce uma faixa (regras.md 4e).
 **Como desfazer:** nada foi gravado nos canais. Apagar `dados/faixas_dono*.json`, `scripts/faixas_dono.py`, `scripts/faixas_pagina.html` e a seção 4e.
 
+## 04/11/2026, 10:53 a 11:05 — Rotina leve das 10:53
+
+**Beds24 desde 07:50 BRT** (vigilância: 0 alerta; nenhuma reserva abaixo de 70%; sem limite do canal Booking):
+- **Overbooking na King Spa 7 hoje (04/11):** às 10:53 BRT entrou uma reserva direta de 2 noites (04-05/11, R$ 2.012) com a suíte já esgotada. O Beds24 mostra −1 em 04/11. Avisado ao dono.
+- **Panorâmica I esgotou hoje:** 3 reservas (2 pela Booking a R$ 325, 1 pelo Airbnb a R$ 365).
+- **King Spa 2, 15-16/11:** cancelamento do Airbnb (2 noites) reabriu 1 unidade.
+- **Balcony 04/11:** −1 unidade.
+- **Sábados órfãos:** King Spa 7 28/11 e King Spa 2 12/12 confirmados no Beds24 com a saída do sábado aberta (lote da manhã).
+
+**Gravado no PriceLabs** (validador 0 erro; conferido na resposta da API; recálculos das 10:54 BRT da King Spa 7 e da King Spa 2):
+- King Spa 7 05/11 (D1, venda nova, 5/7): R$ 858 → R$ 878 (escada).
+- King Spa 2 15/11: R$ 1.226 → R$ 788 (escada da ordem de 01/11, depois do cancelamento; 3/9 na pousada).
+- King Spa 2 16/11: R$ 1.226 → R$ 762 (2/9 na pousada).
+
+**Ledger:** 3 passos.
+
+**Conferências:**
+- Envio do PriceLabs: `last_date_pushed` segue em 03/11 19:29 UTC; nenhum envio hoje. Sync Now pedido de novo ao dono.
+- Booking: a Villa segue fora da busca (15-16/11, raio de 400 m do endereço: os vizinhos aparecem, a Villa não).
+
 > **Regras em vigor:** desde 06/10/2026 elas ficam em `.claude/skills/gestao-receita-pousadas/references/regras.md`. Este arquivo guarda só o histórico das mudanças.
 
 ## O que só pode ser feito na tela (passo a passo para você)

@@ -4140,6 +4140,25 @@ A reabertura chegou à Booking só nas datas mais próximas. Pedido ao dono: usa
 - Envio do PriceLabs: `last_date_pushed` segue em 03/11 19:29 UTC; nenhum envio hoje. Sync Now pedido de novo ao dono.
 - Booking: a Villa segue fora da busca (15-16/11, raio de 400 m do endereço: os vizinhos aparecem, a Villa não).
 
+## 04/11/2026, 12:30 a 15:35 BRT — Faixas do dono por tipo de noite gravadas (dono: "Gravar agora")
+
+**Pedido do dono:** "Para feriados, vamos aplicar o F5 e baixar gradualmente caso a lotação esteja abaixo da expectativa 7 dias antes. Para Natal, aplicar F5, Réveillon F5, inverno e final de semana F5. Para dias de semana, vamos aplicar F2 e fins de semana do mês de dezembro e os últimos dois de novembro, vamos aplicar F3." Depois: "Gravar agora".
+
+**Gravado no PriceLabs** (percent_base; conferido campo a campo na resposta da API; estadia mínima e chegada/saída preservadas):
+- 202 regras por data: Moinhos 25, Panorâmica I 25, Panorâmica II 23, Afrodite 23, King Spa 7 34, King Spa 2 32, Balcony 40 (Recanto 15:30-15:35 UTC; Villa e Afrodite 18:32-18:34 UTC, depois de reinício do processo).
+- 98 ordens `dono-2026-11-04-faixa-*` (uma por noite e pousada, D2 a D60, nos 7 quartos); 29 ordens antigas perderam as noites por quarto (`noites_fora`).
+- Principais efeitos (enviado): Natal e Réveillon 23-26/12 e 30/12-02/01 no máximo do anúncio (R$ 4.974-4.991; Afrodite R$ 5.920-6.700 na F5 dela; Balcony R$ 4.483); fins de semana de dezembro e 27-28/11 na F3 (R$ 2.334-2.433 Recanto, R$ 2.225-2.324 Villa); dias de semana: Recanto no piso do dono R$ 1.220-1.228, Villa na F2 ou no piso de R$ 944; 20-22/12 pela régua medida do Pré-Natal (R$ 1.335-1.421).
+- Fora: Consciência Negra 19-21/11 e 13-14/11 (a confirmar com o dono), 06-07/11, 27-29/12, 05/11 (D1), 25/12 (régua em correção).
+- Ajuste manual validado: Panorâmica I 11-12/12 a R$ 2.442 (acima da Moinhos e da Panorâmica II no valor efetivo).
+
+**Revisões antes de gravar:** 3 rodadas independentes (2 + 3 + 2 revisores). Corrigido: piso acima do máximo do anúncio por arredondamento, Afrodite/Balcony fora da F5, descida gradual parada com 70% vendido, gatilho de D7 disparando no dia da ordem, inversão semanal, Afrodite "fraca" por ter 1 unidade, régua de 20/12 e 25/12, plano de apagar velho.
+
+**Ledger:** 190 passos registrados.
+
+**Rotina leve das 13:53 (Beds24 desde 10:50 BRT):** 4 reservas diretas novas na Villa para a Consciência Negra (King Spa 7 e King Spa 2, 20-21/11) entre 13% e 33% do valor esperado (lançadas pela recepção); cancelada a reserva direta da King Spa 7 de 04-05/11 (a do overbooking da manhã); 1 reserva da Afrodite de 17/11 criada e cancelada em 1 minuto pela Booking. Vigilância: 0 alerta. Inventário do Beds24 não lido (limite de créditos da API, HTTP 429). King Spa 7 e King Spa 2 sem recálculo hoje (limite de 3).
+
+**Como desfazer:** apagar as regras por data das noites listadas em `pricelabs/pace/2026-11-04-faixas-plano-gravado.json` e restaurar `dados/ordens_dono.json` de `pricelabs/pace/ordens_dono_antes_faixas_2026-11-04.json`.
+
 > **Regras em vigor:** desde 06/10/2026 elas ficam em `.claude/skills/gestao-receita-pousadas/references/regras.md`. Este arquivo guarda só o histórico das mudanças.
 
 ## O que só pode ser feito na tela (passo a passo para você)

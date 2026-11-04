@@ -865,7 +865,7 @@
    "data_alvo": "2026-11-07",
    "texto": "Antes da rotina de 08/11 (15/11 chega a D7): em pace.py, quando uma noite da semana (dom-qui) dispara o gatilho de D7, as noites da mesma semana com menos ou o mesmo número de vendidas e sem venda nova também vão ao piso_atras, para não ficar a noite mais vendida mais barata. Teste e revisão independente.",
    "resolvido_em": "2026-11-04",
-   "resolucao": "Superada pela ordem do dono de 04/11 (faixas por tipo de noite): os dias de semana de 08-30/11 saíram das ordens de régua com hidro de 03/11 e foram para a F2 (p50), sem gatilho de D7 (a F2 já é o nível do gatilho). Não há mais gatilho em noites de dia de semana."
+   "resolucao": "Resolvido em 04/11 no gerador das ordens de faixa (faixas_dono.gerar_ordens): gatilho por bloco (a semana dom-qui desce junto quando o domingo chega a D7; sexta e sábado juntos) e só depois de 2 dias de ordem (gatilho_min_dias, pace.piso_atras_da_ordem). Uma noite com reserva nova fica na F2 enquanto as outras descem (isso é o gatilho funcionando)."
   },
   {
    "id": "faixas-remedir",
@@ -880,8 +880,8 @@
    "responsavel": "dono",
    "desde": "2026-11-04",
    "urgencia": 2,
-   "data_alvo": "2026-11-12",
-   "texto": "Ordem das faixas (04/11): confirmar 5 leituras. (1) 20-21/11 (Consciência Negra) na F5 de feriado ou na F3 dos 'dois últimos fins de semana'? (2) 13-14/11 também na F3? (3) 27-28/12 na F2 e 29/12 na F5, ou como está (ordens anteriores)? (4) Inverno de dia de semana (jun-jul) na F2 (baixaria a Villa de ~R$ 1.382 para ~R$ 1.056)? Hoje fora; entra na janela em 31/03/2027. (5) Aniversário de SP (22-23/01) como fim de semana (tabela) ou F5 de feriado? Atualizar dados/faixas_dono_regra.json com a resposta."
+   "data_alvo": "2026-11-09",
+   "texto": "Ordem das faixas (04/11): confirmar. (1) Consciência Negra 19-21/11: F5 de feriado ou F3 dos 'dois últimos fins de semana'? Até a resposta fica nas ordens de 01/11 (p75, só desce). (2) 13-14/11 também na F3? (3) 27-28/12 na F2 e 29/12 na F5, ou como está? (4) Inverno de domingo a quinta: F2 como os dias de semana ou F5 como o inverno? Entra na janela em 31/03/2027. (5) Aniversário de SP (22-24/01): fim de semana (tabela) ou F5 de feriado? O domingo 24/01 fica fora da faixa até o gatilho de 01/01. (6) Fins de semana de janeiro em diante, fora do inverno: F3 como dezembro ou como estão? 08-09/01 entra na janela em 09/11. (7) Recanto em dia de semana: a F2 (R$ 648 público) fica abaixo do seu piso (R$ 768): mantenho o piso? (8) Villa em dia de semana de novembro: voltou ao piso de R$ 944 (a ordem de 01/11 deixava R$ 710); quer o piso mais baixo de volta? Atualizar dados/faixas_dono_regra.json com as respostas."
   },
   {
    "id": "maximo-anuncio-festas",

@@ -2393,3 +2393,8 @@ class TestFaixasDono(unittest.TestCase):
         self.assertEqual(f.valores_quartos(cfg, "Recanto", 1000, "fds")["Afrodite"]["publico"], 1050)
         self.assertEqual(f.valores_quartos(cfg, "Recanto", 1000, "fds", True)["Afrodite"]["publico"], 1600)  # faixa 27/10
         self.assertEqual(f.valores_quartos(cfg, "Recanto", 2000, "fds", True)["Afrodite"]["publico"], 2100)
+        self.assertEqual(f.valores_quartos(cfg, "Recanto", 1000, "entre_festas")["Afrodite"]["publico"], 1200)
+        self.assertIn("acima da sua faixa", f.valores_quartos(cfg, "Recanto", 2000, "fds", True)["Afrodite"]["nota"])
+        self.assertEqual(f.nome_curto("Réveillon (véspera 29/12)"), "véspera do Réveillon, 29/12")
+        self.assertEqual(f.nome_curto("Revolução Constitucionalista, 9 de Julho (feriado estadual SP)"), "9 de Julho")
+        self.assertEqual(f.nome_curto("Dia dos Namorados 2027 (pico)"), "Dia dos Namorados")

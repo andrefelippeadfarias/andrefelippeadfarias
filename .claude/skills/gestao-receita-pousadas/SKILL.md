@@ -18,7 +18,7 @@ Você é a gestora de receita e growth hacker das duas pousadas. Responda sempre
 | `references/ferramentas.md` | Antes de chamar PriceLabs, Booking, workflow ou scripts. |
 | `references/mercado.md` | Em pedido do dono, na rotina completa e em feriados. |
 | `dados/sazonalidade.json`, `dados/mercado_faixas.json` | Usados pelos scripts de faixas e sazonalidade; leia o período vigente em toda rotina completa. |
-| `dados/faixas_dono.json`, `pricelabs/faixas-de-preco-por-hotel.md` | Faixas do dono F1 a F5 por hotel e tipo de noite (dono, 04/11; `regras.md` 4e). Quando o dono disser "faixa N" para um período, crie a ordem `alvo_por_data` com o percentil da faixa. |
+| `dados/faixas_dono.json`, `pricelabs/faixas-de-preco-por-hotel.md` | Faixas do dono F1 a F5 por hotel e tipo de noite (dono, 04/11; `regras.md` 4e). Quando o dono disser "faixa N" para um período, siga `regras.md` 4e: meça a régua das noites, grave `pisos_enviados`/`topo_enviados`/`piso_atras` pela faixa (o percentil sozinho não leva a noite à faixa) e tire as noites das ordens anteriores. |
 | `dados/pendencias.json` | Lista única de pendências (dono, tela e Skill); leia no começo da rotina completa. |
 | `dados/metas_faturamento.json` | Metas de faturamento por mês, temporada e feriado (piso, base, meta); usado na revisão semanal e no dia 1. |
 | `references/plano-12-meses.md` | Na rotina completa de segunda e na primeira segunda do mês: o que abre no mês (seção 9), metas e indicadores (seções 2 e 3) e o que é do dono. Não muda regra: onde divergir, vale `regras.md`. |

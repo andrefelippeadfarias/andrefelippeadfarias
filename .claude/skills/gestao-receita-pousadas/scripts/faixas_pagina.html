@@ -64,7 +64,9 @@ td.v { padding: 4px; min-width: 88px; }
 .cell { font: inherit; width: 100%; border: 0; border-radius: 8px; padding: 8px 6px; cursor: pointer; text-align: center;
   font-weight: 600; font-variant-numeric: tabular-nums; white-space: nowrap; }
 .cell.blocked { background: var(--blocked); color: var(--blocked-ink); text-decoration: line-through; font-weight: 500; }
-.cell.part { outline: 2px dashed var(--warn); outline-offset: -4px; }
+.cell.part { outline: 2px dashed var(--ink); outline-offset: -4px; padding-inline: 10px; }
+.cell.part::after { content: " ◐"; font-weight: 500; }
+.c4.part, .c5.part { outline-color: var(--f-ink-light); }
 .cell.sel { box-shadow: inset 0 0 0 2px var(--ink); }
 td.piso { color: var(--warn); font-weight: 600; min-width: 110px; max-width: 200px; font-size: 13.5px; }
 td.hoje { white-space: nowrap; }
@@ -74,10 +76,11 @@ td.hoje span { font-size: 12.5px; color: var(--muted); }
 .keys { display: flex; flex-wrap: wrap; gap: 6px 16px; font-size: 12.5px; color: var(--muted); }
 .key { display: inline-flex; align-items: center; gap: 6px; }
 .sw { width: 26px; height: 16px; border-radius: 4px; display: inline-block; }
-.calc { display: grid; gap: 16px; background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 18px; }
+.calc { display: grid; grid-template-columns: minmax(0, 1fr); gap: 16px; background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 18px; min-width: 0; }
+.calc > * { min-width: 0; }
 .controls { display: flex; flex-wrap: wrap; gap: 12px; }
-.controls label { display: grid; gap: 4px; font-size: 12px; font-weight: 600; color: var(--muted); min-width: 0; }
-select { font: inherit; color: var(--ink); background: var(--bg); border: 1px solid var(--line); border-radius: 8px; padding: 8px 10px; max-width: 100%; }
+.controls label { display: grid; gap: 4px; font-size: 12px; font-weight: 600; color: var(--muted); min-width: 0; flex: 1 1 200px; }
+select { font: inherit; color: var(--ink); background: var(--bg); border: 1px solid var(--line); border-radius: 8px; padding: 8px 10px; width: 100%; min-width: 0; max-width: 100%; }
 .rooms { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px; }
 .room { border: 1px solid var(--line); border-radius: 10px; padding: 12px; display: grid; gap: 2px; background: var(--bg); align-content: start; }
 .room .nm { font-weight: 600; }
@@ -118,11 +121,11 @@ select { font: inherit; color: var(--ink); background: var(--bg); border: 1px so
   <section aria-labelledby="t-hotel">
     <h2 id="t-hotel">Tabela por hotel</h2>
     <div class="tabs" role="tablist" id="tabs"></div>
-    <div class="scroll"><table id="tab"><thead></thead><tbody></tbody></table></div>
+    <div class="scroll" role="tabpanel" id="painel" aria-labelledby="tab-Recanto"><table id="tab"><thead></thead><tbody></tbody></table></div>
     <div class="keys">
       <span class="key"><span class="sw c3"></span>faixa que pode ser usada</span>
-      <span class="key"><span class="sw" style="background: var(--blocked)"></span>abaixo do seu piso em todas as noites</span>
-      <span class="key"><span class="sw c3" style="outline: 2px dashed var(--warn); outline-offset: -3px"></span>abaixo do piso em parte das noites (feriados com piso maior)</span>
+      <span class="key"><span class="sw" style="background: var(--blocked); color: var(--blocked-ink); font-size: 10px; text-decoration: line-through; text-align: center; line-height: 16px; width: 34px">R$ 0</span>abaixo do seu piso em todas as noites</span>
+      <span class="key"><span class="sw c3" style="outline: 2px dashed var(--ink); outline-offset: -3px"></span>◐ abaixo do piso em parte das noites (feriados com piso maior)</span>
     </div>
     <p class="note" id="tabnote"></p>
   </section>
@@ -174,7 +177,8 @@ function head() {
 
 function tabs() {
   const t = document.getElementById("tabs");
-  t.innerHTML = Object.keys(HOTEL).map(h => `<button class="tab" role="tab" id="tab-${h}" aria-selected="${h === hotel}">${HOTEL[h]}</button>`).join("");
+  t.innerHTML = Object.keys(HOTEL).map(h => `<button class="tab" role="tab" id="tab-${h}" aria-controls="painel" aria-selected="${h === hotel}">${HOTEL[h]}</button>`).join("");
+  document.getElementById("painel").setAttribute("aria-labelledby", "tab-" + hotel);
   t.querySelectorAll(".tab").forEach(b => b.addEventListener("click", () => { hotel = b.id.slice(4); try { localStorage.setItem("faixas-hotel", hotel); } catch (e) {} render(); }));
 }
 
@@ -187,14 +191,15 @@ function table() {
   tb.innerHTML = linhas.map(ln => {
     const meses = ln.meses.length;
     const info = `${ln.estadias} ${ln.estadias === 1 ? "estadia" : "estadias"} em ${meses} ${meses === 1 ? "mês" : "meses"}, ${ln.concorrentes} concorrentes`;
-    const warn = ln.amostra_pequena ? `<span class="warnbadge">amostra pequena</span>` : "";
+    const warn = (ln.amostra_pequena ? `<span class="warnbadge">amostra pequena</span>` : "") + (ln.nota_medicao ? `<small>${ln.nota_medicao}</small>` : "");
     const cells = Object.entries(ln.faixas).map(([k, v]) => {
       const n = +k.slice(1), blocked = ln.abaixo_do_piso.includes(k), part = ln.abaixo_em_parte.includes(k), isSel = sel.tipo === ln.tipo && sel.faixa === k;
       const cls = blocked ? "cell blocked" : `cell c${n}${part ? " part" : ""}`;
       const title = blocked ? `${brl(v)}: abaixo do seu piso de ${pisoTxt(ln)}` : part ? `${brl(v)}: abaixo do piso em parte das noites (${pisoTxt(ln)})` : `${brl(v)} na ${k}`;
-      return `<td class="v"><button class="${cls}${isSel ? " sel" : ""}" data-tipo="${ln.tipo}" data-faixa="${k}" title="${title}" aria-label="${ln.nome}, ${title}">${brl(v)}</button></td>`;
+      return `<td class="v"><button id="c-${ln.tipo}-${k}" class="${cls}${isSel ? " sel" : ""}" data-tipo="${ln.tipo}" data-faixa="${k}" title="${title}" aria-label="${ln.nome}, ${title}">${brl(v)}</button></td>`;
     }).join("");
-    const hoje = ln.hoje_publico ? `<b>${brl(ln.hoje_publico)}</b><span>${ln.hoje_posicao}</span>` : `<span>sem noite medida à frente</span>`;
+    const abx = ln.hoje_abaixo_do_piso ? `<span>${ln.hoje_abaixo_do_piso} ${ln.hoje_abaixo_do_piso === 1 ? "noite" : "noites"} abaixo do piso (ordem sua)</span>` : "";
+    const hoje = ln.hoje_publico ? `<b>${brl(ln.hoje_publico)}</b><span>${ln.hoje_posicao}</span>${abx ? "<br>" + abx : ""}` : `<span>sem noite medida à frente</span>`;
     return `<tr><th class="tipo sticky" scope="row">${ln.nome}<small>${info}</small>${warn}</th>${cells}<td class="piso">${pisoTxt(ln)}</td><td class="hoje">${hoje}</td></tr>`;
   }).join("");
   tb.querySelectorAll(".cell").forEach(b => b.addEventListener("click", () => { sel = { tipo: b.dataset.tipo, faixa: b.dataset.faixa }; render(); document.getElementById("t-calc").scrollIntoView({ block: "start", behavior: "smooth" }); }));
@@ -203,12 +208,24 @@ function table() {
     : "A King Spa 2 fica no mesmo valor da King Spa 7 e a Balcony, que não tem banheira, 10% abaixo. Toque num valor para ver todos os quartos.";
 }
 
+const EXEMPLO = { semana: "terças a quintas de março", fds: "fins de semana de dezembro", feriado: "Carnaval",
+  natal: "Natal", entre_festas: "27 a 29/12", reveillon: "Réveillon", inverno_semana: "dias de semana de julho",
+  inverno_fds: "fins de semana de julho" };
 function orderText(ln, f) {
-  const n = f.n, val = brl(ln.faixas["F" + n]);
+  const n = f.n, k = "F" + n, val = brl(ln.faixas[k]);
+  const pedido = `<span class="note">Como pedir</span><span><q>${CURTO[hotel]}, ${EXEMPLO[ln.tipo] || "período"}, faixa ${n}</q></span>`;
+  if (ln.abaixo_do_piso.includes(k)) {
+    return pedido + `<span>A ${k} fica abaixo do seu piso em todas as noites deste tipo. Eu só uso esta faixa se você liberar o piso nessas noites; sem isso, a noite fica no seu piso (${pisoTxt(ln)} na ${REFQ[hotel]}).</span>`;
+  }
   const sobe = n < 5 ? " A noite sobe com as vendas até a F5 (só 10% dos concorrentes acima)." : " A F5 já é o teto: a noite fica nela.";
-  const desce = n > 1 ? ` A partir de 7 dias antes da data, se não entrou nenhuma reserva desde o seu pedido, o piso desce para a F${n - 1}.` : " A F1 é a mais baixa: perto da data ela não desce mais.";
-  return `<span class="note">Como pedir</span><span><q>${CURTO[hotel]}, ${ln.nome.split(" (")[0].toLowerCase()}, faixa ${n}</q> e o período (ex.: "fins de semana de dezembro").</span>
-    <span>Eu gravo o piso de cada noite perto de ${val} na ${REFQ[hotel]} (o valor exato sai da medição de cada noite) e tiro essas noites das ordens anteriores.${sobe}${desce} Nunca abaixo do seu piso.</span>
+  let desce = "";
+  if (n > 1) {
+    const baixo = "F" + (n - 1);
+    desce = ln.abaixo_do_piso.includes(baixo)
+      ? ` A partir de 7 dias antes da data, se não entrou nenhuma reserva desde o seu pedido, o piso desce até o seu piso (${pisoTxt(ln)}), porque a ${baixo} fica abaixo dele.`
+      : ` A partir de 7 dias antes da data, se não entrou nenhuma reserva desde o seu pedido, o piso desce para a ${baixo}, ou até o seu piso se ele for maior.`;
+  } else desce = " A F1 é a mais baixa: perto da data ela não desce mais.";
+  return pedido + `<span>Eu gravo o piso de cada noite perto de ${val} na ${REFQ[hotel]} (o valor exato sai da medição de cada noite) e tiro essas noites das ordens anteriores.${sobe}${desce} Nunca abaixo do seu piso.</span>
     <span class="note">O motor grava de hoje a 60 dias à frente: um pedido para mais longe fica guardado e passa a valer quando a data entra nessa janela.</span>`;
 }
 
@@ -221,10 +238,13 @@ function calc() {
   sf.innerHTML = DATA.faixas.map(f => `<option value="F${f.n}"${"F" + f.n === sel.faixa ? " selected" : ""}>F${f.n} ${f.nome}</option>`).join("");
   const ln = linhas.find(l => l.tipo === sel.tipo), q = ln.quartos[sel.faixa], f = DATA.faixas.find(x => "F" + x.n === sel.faixa);
   const piso = ln.pisos_quartos || {};
+  const fp = DATA.fator_publico[hotel];
   document.getElementById("rooms").innerHTML = Object.entries(q).map(([c, v]) => {
     const p = piso[c], below = p && v.publico < p;
-    const extra = v.nota ? `<span class="rn">${v.nota}, até ${dm(ln.afrodite_fds_ate)}</span>` : below ? `<span class="rn">abaixo do piso de ${brl(p)}</span>` : "";
-    return `<div class="room${below ? " below" : ""}"><span class="nm">${DATA.nomes[c]}</span><span class="pub">${brl(v.publico)}</span><span class="env">gravo cerca de ${brl(v.enviado)} no PriceLabs</span>${extra}</div>`;
+    const pub = below ? p : v.publico, env = below ? Math.round(p / fp) : v.enviado;
+    const extra = below ? `<span class="rn">fica no seu piso (a faixa daria ${brl(v.publico)})</span>`
+      : v.nota ? `<span class="rn">${v.nota}${ln.afrodite_fds_ate && sel.tipo === "fds" ? ", até " + dm(ln.afrodite_fds_ate) : ""}</span>` : "";
+    return `<div class="room${below ? " below" : ""}"><span class="nm">${DATA.nomes[c]}</span><span class="pub">${brl(pub)}</span><span class="env">gravo cerca de ${brl(env)} no PriceLabs</span>${extra}</div>`;
   }).join("");
   const al = document.getElementById("calc-alert");
   if (ln.abaixo_do_piso.includes(sel.faixa)) { al.hidden = false; al.textContent = `Nesta faixa a ${REFQ[hotel]} ficaria abaixo do seu piso (${pisoTxt(ln)} na Booking) em todas as noites deste tipo. Só uso se você liberar o piso nessas noites.`; }
@@ -247,6 +267,10 @@ function cal() {
 
 function method() { document.getElementById("method").innerHTML = DATA.metodo.map(m => `<li>${m}</li>`).join(""); }
 
-function render() { tabs(); table(); calc(); }
+function render() {
+  const foco = document.activeElement && document.activeElement.id;
+  tabs(); table(); calc();
+  if (foco) { const el = document.getElementById(foco); if (el) el.focus({ preventScroll: true }); }
+}
 if (DATA) { head(); render(); cal(); method(); }
 </script>

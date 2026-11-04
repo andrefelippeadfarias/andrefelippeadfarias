@@ -70,7 +70,7 @@ TIPOS = {
     "entre_festas": "Entre Natal e Réveillon (27-29/12)",
     "reveillon": "Réveillon (30/12-02/01)",
     "inverno_semana": "Inverno, dia de semana (30/05-31/07)",
-    "inverno_fds": "Inverno, fim de semana e feriadões (30/05-31/07)",
+    "inverno_fds": "Inverno, fim de semana e feriadões (Corpus Christi a 31/07)",
 }
 QUARTOS = {"Recanto": ["Q7", "Q2", "Double", "Afrodite"], "Villa": ["VK7", "VK2", "Balcony"]}
 NOMES = {"Q7": "Moinhos", "Q2": "Panorâmica II", "Double": "Panorâmica I", "Afrodite": "Afrodite",
@@ -264,6 +264,8 @@ def nome_curto(n: str | None) -> str:
         return "outras noites"
     if "9 de julho" in n.lower():
         return "9 de Julho"
+    if "véspera 29/12" in n.lower():
+        return "véspera do Réveillon, 29/12"
     base = n.split(" (")[0].split(",")[0].strip()
     return base[:-5] if base[-5:-4] == " " and base[-4:].isdigit() else base
 
@@ -291,9 +293,11 @@ def valores_quartos(cfg: dict, pous: str, publico_ref: float, tipo: str, afrodit
     for q in QUARTOS[pous]:
         nota = None
         if q == "Afrodite":
-            pub = publico_ref * (1.20 if tipo in ("semana", "inverno_semana") else 1.05)
+            pub = publico_ref * (1.20 if tipo in ("semana", "inverno_semana", "entre_festas") else 1.05)
             if afrodite_fds and pub < float(faixa_af[0]):
-                pub, nota = float(faixa_af[0]), f"sua faixa da Afrodite no fim de semana (R$ {faixa_af[0]:.0f}-{faixa_af[1]:.0f})"
+                pub, nota = float(faixa_af[0]), f"sua faixa da Afrodite no fim de semana ({brl(faixa_af[0])} a {brl(faixa_af[1])})"
+            elif afrodite_fds and pub > float(faixa_af[1]):
+                nota = f"acima da sua faixa de {brl(faixa_af[1])} porque fica 5% acima da Moinhos"
         elif q == "Balcony":
             pub = publico_ref * (1 - g)
         else:
@@ -337,7 +341,14 @@ def tabela(fx: dict, cfg: dict, precos: dict | None = None, hoje: date | None = 
                 pub = st.mean(ps) * float(fp[pous])
                 hoje_es.append({"checkin": e["checkin"], "publico": round(pub),
                                 "percentil": round(percentil_de(pub, e["valores_hidro"]))})
-            hoje_pub = round(st.median(h["publico"] for h in hoje_es)) if hoje_es else None
+            if hoje_es:  # mediana por mês e depois entre os meses (como as faixas)
+                meses_h = {}
+                for h in hoje_es:
+                    meses_h.setdefault(h["checkin"][:7], []).append(h["publico"])
+                hoje_pub = round(st.median(st.median(v) for v in meses_h.values()))
+            else:
+                hoje_pub = None
+            abaixo_piso_n = sum(1 for h in hoje_es if h["publico"] < pr["min"] * 0.98)
             no_piso = bool(hoje_es) and any(abs(hoje_pub - v) <= 0.02 * max(v, 1) for v in {pr["modal"], pr["min"], pr["max"]})
             af_fds = t == "fds"
             linhas.append({
@@ -348,10 +359,13 @@ def tabela(fx: dict, cfg: dict, precos: dict | None = None, hoje: date | None = 
                 "hoje_publico": hoje_pub, "hoje_posicao": ("no seu piso" if no_piso else posicao(hoje_pub, vals))
                 if hoje_es else None,
                 "hoje_percentil": round(st.median(h["percentil"] for h in hoje_es)) if hoje_es else None,
-                "hoje_estadias": hoje_es, "estadias": pt["estadias"], "meses": pt.get("meses", []),
+                "hoje_estadias": hoje_es, "hoje_abaixo_do_piso": abaixo_piso_n,
+                "estadias": pt["estadias"], "meses": pt.get("meses", []),
+                "nota_medicao": ("medido em feriadões de 2 a 4 noites; Tiradentes (feriado isolado, terça e quarta) não foi "
+                                 "medido") if t == "feriado" else None,
                 "concorrentes": pt["concorrentes"], "amostra_pequena": pt.get("amostra_pequena", False),
                 "quartos": {f"F{n}": valores_quartos(cfg, pous, pt["hidro"][str(p)], t, af_fds) for n, _, p in FAIXAS},
-                "afrodite_fds_ate": horiz_af.isoformat() if (af_fds and pous == "Recanto") else None})
+                "afrodite_fds_ate": horiz_af.isoformat() if pous == "Recanto" else None})
         out[pous] = linhas
     return out
 
@@ -403,14 +417,17 @@ def markdown(tab: dict, fx: dict, hoje: date) -> str:
          "| F4 Premium | p75 | 75% cobram menos |", "| F5 Topo | p90 | só 10% cobram mais |", "",
          "**Como pedir:** \"Recanto, fins de semana de dezembro, faixa 4\". Eu gravo os pisos de cada noite no valor da "
          "faixa (medido na noite, perto do valor da tabela), a noite sobe com as vendas até a F5 e, a partir de 7 dias "
-         "antes da data, se não entrou reserva desde o pedido, o piso desce para a faixa de baixo. Nunca abaixo do seu "
-         "piso. O motor grava de hoje a 60 dias: pedido para mais longe passa a valer quando a data entra nessa janela.",
+         "antes da data, se não entrou reserva desde o pedido, o piso desce para a faixa de baixo ou até o seu piso, o "
+         "que for maior. Nunca abaixo do seu piso. O motor grava de hoje a 60 dias: pedido para mais longe passa a valer quando a data entra nessa janela.",
          "",
-         "**O que já vale hoje:** " + JA_VALE, ""]
+         "**O que já vale hoje:** " + JA_VALE, "",
+         "A régua de mercado é a mesma nas duas pousadas; mudam o seu piso, o preço de hoje e a relação entre os quartos.",
+         ""]
     for pous, linhas in tab.items():
         ref = NOMES[REF[pous]]
         regra = ("Panorâmica I e Panorâmica II no mesmo valor da Moinhos; Afrodite +20% de domingo a quinta e +5% na "
-                 "sexta, no sábado e no feriado (no fim de semana, nunca abaixo de R$ 1.600, sua faixa de 27/10)."
+                 "sexta, no sábado e no feriado (no fim de semana, até " + dm(linhas[0].get("afrodite_fds_ate") or
+                 hoje.isoformat()) + ", nunca abaixo de R$ 1.600, sua faixa de 27/10)."
                  if pous == "Recanto" else "King Spa 2 no mesmo valor da King Spa 7; Balcony 10% abaixo (não tem banheira).")
         L += [f"## {'Pousada Recanto dos Moinhos' if pous == 'Recanto' else 'Villa Dolce Amore'} (valor da {ref})", "",
               regra, "",
@@ -426,6 +443,13 @@ def markdown(tab: dict, fx: dict, hoje: date) -> str:
             nome = ln["nome"] + (" ⚠ amostra pequena" if ln["amostra_pequena"] else "")
             L.append(f"| {nome} | " + " | ".join(cel) + f" | {piso} | {hoje_t} |")
         L.append("")
+        for ln in linhas:
+            if ln.get("nota_medicao"):
+                L.append(f"- {ln['nome']}: {ln['nota_medicao']}.")
+            if ln.get("hoje_abaixo_do_piso"):
+                L.append(f"- {ln['nome']}: hoje {ln['hoje_abaixo_do_piso']} noite(s) medida(s) abaixo do seu piso, por ordem "
+                         "sua que suspende o piso nelas.")
+        L.append("")
     L += ["✗ = abaixo do seu piso em todas as noites do tipo (não usamos sem você liberar). ◐ = abaixo do piso em parte "
           "das noites (10% ou mais; ex.: feriados com piso de R$ 1.000 líquidos contra R$ 800 em outros). ⚠ amostra pequena = menos "
           f"de {AMOSTRA_MIN_ESTADIAS} estadias ou menos de {AMOSTRA_MIN_CONCORRENTES} concorrentes com preço: refazer "
@@ -433,28 +457,32 @@ def markdown(tab: dict, fx: dict, hoje: date) -> str:
     return "\n".join(L)
 
 
-JA_VALE = ("Recanto na F3 nos dias de semana de 08 a 30/11 e em 8 fins de semana de 13/11 a 30/01 (régua com hidro, "
-           "03/11); Villa na F2 nos fins de semana de 06/11 a 19/12 (02/11); Consciência Negra no p75 (≈F4). A Villa nos "
-           "dias de semana de novembro e a Recanto em 03-07/11 seguem a base do mercado geral (01/11), abaixo da F1 desta "
-           "régua. Nas outras noites o motor usa o mercado geral e os seus pisos, sem faixa.")
+JA_VALE = ("Recanto: dias de semana de 08 a 30/11 e 8 fins de semana de 13/11 a 30/01 seguem a régua com hidro que você "
+           "aprovou em 03/11 (perto da F3; 08 a 12/11 já desceram ao seu piso pelo gatilho de 7 dias). Villa: fins de semana "
+           "de 06/11 a 19/12 seguem a régua com hidro de 02/11 (entre F2 e F3); os dias de semana de novembro seguem a sua "
+           "ordem de 01/11 pelo mercado geral (entre F1 e F2, abaixo do seu piso em algumas noites). Consciência Negra: "
+           "ordem de 01/11 pelo mercado geral do motor, que fica abaixo desta régua. Nas outras noites o motor usa o mercado "
+           "geral e os seus pisos, sem faixa.")
 
 
 METODO = [
     "Busca pelo conector oficial da Booking: 1 quarto, 2 adultos, café da manhã, nos 77 concorrentes com hidromassagem "
     "e vista da sua lista (sem a Recanto, a Villa e a Vista Panorâmica).",
     "A Booking mostra o quarto mais barato de cada hotel. O quarto com hidro é estimado por um fator de cada hotel "
-    "(medido em {medidos} dos {total}; nos outros, 1,395; fator incerto acima de 2,0 limitado a 2,0). Estadias de 2 a 4 "
-    "noites viram preço por noite.",
+    "(medido em {medidos} dos {total}; nos outros, 1,395; fator incerto acima de 2,0 limitado a 2,0). Estadias de 1 a 4 "
+    "noites: o total é dividido pelo número de noites.",
     "Cada faixa é a mediana do mesmo percentil nas estadias medidas daquele tipo de noite (primeiro por mês, depois "
     "entre os meses).",
     "Valor gravado no PriceLabs ≈ preço na Booking ÷ 0,63 na Recanto e ÷ 0,65 na Villa. A ordem de cada noite usa a "
     "razão medida pela antecedência (na última semana a Booking dá desconto de última hora e o hóspede vê cerca de 10% "
     "menos).",
     "Seu piso: R$ 500 no Genius 3 de domingo a quinta, R$ 850 na sexta e no sábado, R$ 1.000 líquidos no feriado (R$ 800 "
-    "na Consciência Negra e em Tiradentes), convertidos para o preço da Booking. Ordens suas que suspendem o piso em "
+    "na Consciência Negra, no Aniversário de SP e em Tiradentes), convertidos para o preço da Booking. Ordens suas que suspendem o piso em "
     "algumas noites (ex.: Villa nos dias de semana de novembro) valem por cima desta tabela.",
-    "Hoje: preço de hoje da suíte de referência na Booking (gravado × fator), mediana das estadias medidas daquele tipo "
-    "que ainda não passaram.",
+    "Hoje: preço de hoje da suíte de referência na Booking (gravado × fator) nas noites medidas daquele tipo que ainda não "
+    "passaram, mediana por mês e depois entre os meses.",
+    "A régua de mercado é a mesma nas duas pousadas (os mesmos 77 concorrentes); mudam o seu piso, o preço de hoje e a "
+    "relação entre os quartos.",
     "Preços de 2027 medidos com 3 a 11 meses de antecedência: menos hotéis com preço aberto (20 a 57) e alguns com tarifa "
     "de balcão. Refazemos a medição de cada período uns 60 dias antes.",
 ]
@@ -470,7 +498,9 @@ def pagina(fx: dict, cfg: dict, precos: dict, hoje: date, modelo: Path, saida: P
              "calendario": calendario(cfg, saz, hoje),
              "metodo": [m.format(medidos=rh.get("medidos"), total=rh.get("total")) for m in METODO],
              "medido_em": fx.get("medido_em") or fx.get("versao"), "n_estadias": len(es),
-             "n_lista": rh.get("total", 77), "r_hidro_medidos": rh.get("medidos"), "ja_vale": JA_VALE}
+             "n_lista": rh.get("total", 77), "r_hidro_medidos": rh.get("medidos"), "ja_vale": JA_VALE,
+             "fator_publico": {k: float(v) for k, v in cfg["parametros"]["fator_publico"].items()
+                               if k in ("Recanto", "Villa")}}
     html = modelo.read_text().replace("/*DATA*/null", json.dumps(dados, ensure_ascii=False))
     saida.write_text(html)
     return dados
@@ -546,7 +576,9 @@ def main(argv=None) -> int:
         if a.faixa and nf != a.faixa:
             continue
         for pous in QUARTOS:
-            v = valores_quartos(cfg, pous, pt["hidro"][str(p)], t2, t2 == "fds")
+            af = t2 == "fds" and feriado_de(d, cfg) is None and d <= date.today() + timedelta(
+                days=int(cfg["parametros"].get("afrodite_fds_horizonte_dias", 95)))
+            v = valores_quartos(cfg, pous, pt["hidro"][str(p)], t2, af)
             print(f"F{nf} {nome} (p{p}) {pous}: " + "; ".join(f"{NOMES[q]} {brl(x['publico'])} público / "
                                                           f"{brl(x['enviado'])} gravado" for q, x in v.items()))
     return 0

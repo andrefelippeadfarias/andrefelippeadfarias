@@ -4103,6 +4103,18 @@ A reabertura chegou à Booking só nas datas mais próximas. Pedido ao dono: usa
   - primeira coluna fixa no celular;
   - contraste.
 
+**Verificação final (2 revisores independentes, depois das correções):**
+- Números conferidos em ±R$ 1.
+- Ajustes finais:
+  - calculadora no celular;
+  - caixa "O que já vale hoje" alinhada aos preços de hoje;
+  - "Como pedir" sem prometer faixa abaixo do piso;
+  - SKILL.md e 4e com a receita completa da ordem (escada_vendas, passo_livre, criada_em, vendidas_base da pousada na Panorâmica II e na King Spa 2; apagar a ordem antiga que ficar sem noites e tirar as noites de ordens "regra" com vendidas_base);
+  - Afrodite +20% entre as festas;
+  - Tiradentes marcado como não medido;
+  - foco do teclado e contraste das marcas.
+- Página publicada: https://claude.ai/artifact/7E6bfCdzkx3dE2hTm6sefq (privada).
+
 **Código:** `scripts/faixas_dono.py` (construir, tabela, pagina, noite), modelo `scripts/faixas_pagina.html`, testes `TestFaixasDono` (119 testes OK). Dados em `dados/faixas_dono.json` e `dados/faixas_dono_tipos.json`.
 
 **Como usar:** o dono diz "Recanto, fins de semana de dezembro, faixa 4". A skill mede a régua das noites, grava os pisos na faixa (nunca abaixo do piso do dono), a escada sobe até a F5 com as vendas e, a 7 dias sem reserva nova desde o pedido, o piso desce uma faixa (regras.md 4e).

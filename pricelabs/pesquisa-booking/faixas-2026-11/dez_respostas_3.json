@@ -1,0 +1,1737 @@
+{
+ "estadias": [
+  {
+   "checkin": "2026-12-24",
+   "checkout": "2026-12-26",
+   "tipo": "Natal",
+   "noites": 2,
+   "hoteis": [
+    {
+     "slug": "alma-hotel",
+     "nome": "Alma Hotel",
+     "id": 421189,
+     "preco_total": 6014.82,
+     "quarto": null
+    },
+    {
+     "slug": "linda-casa-em-campos-do-jordao-campos-do-jordao12345",
+     "nome": "Bela Vista Chalé",
+     "id": null,
+     "preco_total": null,
+     "quarto": null
+    },
+    {
+     "slug": "casa-regaleira",
+     "nome": "Casa Regaleira Hotel Boutique",
+     "id": null,
+     "preco_total": null,
+     "quarto": null
+    },
+    {
+     "slug": "casablanca-boutique",
+     "nome": "Casablanca Hotel Boutique",
+     "id": 2421651,
+     "preco_total": 3092.0,
+     "quarto": null
+    },
+    {
+     "slug": "villa-nature-campos-do-jordao",
+     "nome": "Chalé Villa Nature",
+     "id": 10075349,
+     "preco_total": 2700.0,
+     "quarto": null
+    },
+    {
+     "slug": "4-chales-de-luxo-monte-lorobell-campos-do-jordao-sp",
+     "nome": "Chalés de Luxo Monte Lorobell A- Frame",
+     "id": 11532196,
+     "preco_total": 3258.0,
+     "quarto": null
+    },
+    {
+     "slug": "champet-boutique",
+     "nome": "Champet Boutique Hotel",
+     "id": 13970463,
+     "preco_total": 4964.05,
+     "quarto": null
+    },
+    {
+     "slug": "charme-chales",
+     "nome": "Charmê Chalés",
+     "id": null,
+     "preco_total": null,
+     "quarto": null
+    },
+    {
+     "slug": "dom-boutique",
+     "nome": "DOM Hotel",
+     "id": null,
+     "preco_total": null,
+     "quarto": null
+    },
+    {
+     "slug": "euro-suit-campos-do-jordao",
+     "nome": "Euro Suit Campos do Jordão - 950 m da Vila Capivari",
+     "id": 4686715,
+     "preco_total": 2444.66,
+     "quarto": null
+    },
+    {
+     "slug": "europa-campos-do-jordao",
+     "nome": "Europa Hotel",
+     "id": null,
+     "preco_total": null,
+     "quarto": null
+    },
+    {
+     "slug": "ascona",
+     "nome": "Hotel Ascona",
+     "id": 303535,
+     "preco_total": 1523.61,
+     "quarto": null
+    },
+    {
+     "slug": "l-a-h-hostellerie",
+     "nome": "L.A.H. Hostellerie",
+     "id": 348210,
+     "preco_total": 6450.0,
+     "quarto": null
+    },
+    {
+     "slug": "mansao-austriaca",
+     "nome": "Mansão Austríaca Guesthouse",
+     "id": 5288096,
+     "preco_total": 3058.2,
+     "quarto": null
+    },
+    {
+     "slug": "matsubara-pousada",
+     "nome": "Matsubara Pousada",
+     "id": 1411330,
+     "preco_total": 1848.0,
+     "quarto": null
+    },
+    {
+     "slug": "pousada-alpes-azul",
+     "nome": "Pousada Alpes Azul",
+     "id": 8170701,
+     "preco_total": 2816.35,
+     "quarto": null
+    },
+    {
+     "slug": "apple-house",
+     "nome": "Pousada Apple House Campos do Jordao",
+     "id": null,
+     "preco_total": null,
+     "quarto": null
+    },
+    {
+     "slug": "pousada-blue-village-campos-do-jordao",
+     "nome": "Pousada Blue Village by Concavus",
+     "id": null,
+     "preco_total": null,
+     "quarto": null
+    },
+    {
+     "slug": "pousada-cafe-poesia",
+     "nome": "Pousada Cafe Poesia",
+     "id": null,
+     "preco_total": null,
+     "quarto": null
+    },
+    {
+     "slug": "pousada-cantinho-da-serra-campos-do-jordao",
+     "nome": "Pousada Cantinho da Serra",
+     "id": 3810467,
+     "preco_total": 1958.58,
+     "quarto": null
+    },
+    {
+     "slug": "pousada-miraggio",
+     "nome": "Pousada Casa Pinha em Campos do Jordão",
+     "id": null,
+     "preco_total": null,
+     "quarto": null
+    },
+    {
+     "slug": "pousada-casa-redonda-campos-do-jordao",
+     "nome": "Pousada Casa Redonda",
+     "id": 7550569,
+     "preco_total": 2368.0,
+     "quarto": null
+    },
+    {
+     "slug": "araucaria-premium",
+     "nome": "Pousada Chateau Elegance",
+     "id": 15926146,
+     "preco_total": 3059.0,
+     "quarto": null
+    },
+    {
+     "slug": "pousada-confraria-da-terra",
+     "nome": "Pousada Confraria da Terra",
+     "id": 295314,
+     "preco_total": 2340.0,
+     "quarto": null
+    },
+    {
+     "slug": "villa-da-biagy-premium",
+     "nome": "Pousada D'Biagy Premium",
+     "id": null,
+     "preco_total": null,
+     "quarto": null
+    },
+    {
+     "slug": "geada-de-campos",
+     "nome": "Pousada Geada de Campos",
+     "id": 8663470,
+     "preco_total": 1698.3,
+     "quarto": null
+    },
+    {
+     "slug": "casa-bicho-preguica-campos-do-jordao",
+     "nome": "Pousada Hortelã Village",
+     "id": 4883669,
+     "preco_total": 5104.29,
+     "quarto": null
+    },
+    {
+     "slug": "pousada-murano",
+     "nome": "Pousada Murano",
+     "id": 13952548,
+     "preco_total": 4884.57,
+     "quarto": null
+    },
+    {
+     "slug": "pousada-santha-serra",
+     "nome": "Pousada Victoria Villa By Nacional Inn - A 800 metros da Vila Capivari",
+     "id": 295236,
+     "preco_total": 2925.43,
+     "quarto": null
+    },
+    {
+     "slug": "pousada-ville-le-mont-campos-do-jordao",
+     "nome": "Pousada Ville Le Mont - Campos do Jordao",
+     "id": 9797293,
+     "preco_total": 1845.59,
+     "quarto": null
+    },
+    {
+     "slug": "pousada-das-lavandas",
+     "nome": "Pousada das Lavandas",
+     "id": null,
+     "preco_total": null,
+     "quarto": null
+    },
+    {
+     "slug": "secreto-boutique",
+     "nome": "Secreto Boutique Hotel",
+     "id": null,
+     "preco_total": null,
+     "quarto": null
+    },
+    {
+     "slug": "affeto-boutique-campos-do-jordao",
+     "nome": "Ti Voglio Bene",
+     "id": 8043221,
+     "preco_total": 2372.9,
+     "quarto": null
+    },
+    {
+     "slug": "estalagem-suites",
+     "nome": "Vila de Charme Suítes",
+     "id": null,
+     "preco_total": null,
+     "quarto": null
+    },
+    {
+     "slug": "la-vie-pousada-de-charme",
+     "nome": "Villa Belle Chalés",
+     "id": 11111842,
+     "preco_total": 1676.7,
+     "quarto": null
+    },
+    {
+     "slug": "villa-casato-residenza",
+     "nome": "Villa Casato Residenza Boutique",
+     "id": 304118,
+     "preco_total": 5800.0,
+     "quarto": null
+    },
+    {
+     "slug": "casa-sabor-chocolate",
+     "nome": "Villa du Chocolat",
+     "id": null,
+     "preco_total": null,
+     "quarto": null
+    },
+    {
+     "slug": "ville-de-france",
+     "nome": "Ville de France",
+     "id": null,
+     "preco_total": null,
+     "quarto": null
+    },
+    {
+     "slug": "suite-privativa-com-aquecedor-decoracao-nova",
+     "nome": "vila grega hotel",
+     "id": 8681352,
+     "preco_total": 4892.5,
+     "quarto": null
+    },
+    {
+     "slug": "a-nossa-casinha-na-montanha",
+     "nome": "ANC Montanha - 7 minutos do Capivari",
+     "id": 13282110,
+     "preco_total": 1193.4,
+     "quarto": null
+    },
+    {
+     "slug": "araucaria-lodge",
+     "nome": "Araucária Lodge - 800 metros do Capivari",
+     "id": 12807440,
+     "preco_total": 1987.2,
+     "quarto": null
+    },
+    {
+     "slug": "rancho-la-florida-campos-do-jordao",
+     "nome": "Art Lodge",
+     "id": null,
+     "preco_total": null,
+     "quarto": null
+    },
+    {
+     "slug": "pousada-caminho-das-pedras",
+     "nome": "Caminho das Pedras Pousada de Charme",
+     "id": 390598,
+     "preco_total": 1469.09,
+     "quarto": null
+    },
+    {
+     "slug": "casa-tres-rios",
+     "nome": "Casa Três Rios - Campos do Jordão",
+     "id": null,
+     "preco_total": null,
+     "quarto": null
+    },
+    {
+     "slug": "center-suiasso-flats",
+     "nome": "Center Suiço Flats",
+     "id": 348764,
+     "preco_total": 3100.0,
+     "quarto": null
+    },
+    {
+     "slug": "chateau-campos-do-jordao-flats-premium-by-hostyn",
+     "nome": "Chateau Campos do Jordão - Flats Premium - By Hostyn",
+     "id": 15903868,
+     "preco_total": 4236.87,
+     "quarto": null
+    },
+    {
+     "slug": "chateau-la-villette",
+     "nome": "Chateau La Villette",
+     "id": null,
+     "preco_total": null,
+     "quarto": null
+    },
+    {
+     "slug": "bellavista-ltda",
+     "nome": "Chris Wellness Resort Hotel",
+     "id": null,
+     "preco_total": null,
+     "quarto": null
+    },
+    {
+     "slug": "flat-no-capivari-campos-do-jordao12",
+     "nome": "Flat Centro de Capivari",
+     "id": null,
+     "preco_total": null,
+     "quarto": null
+    },
+    {
+     "slug": "chateau",
+     "nome": "Hotel Chateau",
+     "id": null,
+     "preco_total": null,
+     "quarto": null
+    },
+    {
+     "slug": "estoril",
+     "nome": "Hotel Estoril",
+     "id": 336912,
+     "preco_total": 4958.92,
+     "quarto": null
+    },
+    {
+     "slug": "le-renard",
+     "nome": "Hotel Le Renard - Campos do Jordao",
+     "id": null,
+     "preco_total": null,
+     "quarto": null
+    },
+    {
+     "slug": "savoy-campos-do-jordao",
+     "nome": "Hotel Savoy Excellence",
+     "id": 356662,
+     "preco_total": 4757.0,
+     "quarto": null
+    },
+    {
+     "slug": "solar-d-izabel",
+     "nome": "Hotel Solar d'Izabel",
+     "id": 2179520,
+     "preco_total": 3908.45,
+     "quarto": null
+    },
+    {
+     "slug": "pousada-kaliman-campos-do-jordapso",
+     "nome": "Kaliman Pousada Campos do Jordão",
+     "id": 428933,
+     "preco_total": 1819.17,
+     "quarto": null
+    },
+    {
+     "slug": "pousada-annecy",
+     "nome": "Pousada Annecy - CAPIVARI Fácil acesso ao centrinho e Baden Bar",
+     "id": 319979,
+     "preco_total": 3640.0,
+     "quarto": null
+    },
+    {
+     "slug": "araucaria-suites-campos-do-jordao",
+     "nome": "Pousada Araucária Suítes",
+     "id": 8988633,
+     "preco_total": 1196.56,
+     "quarto": null
+    },
+    {
+     "slug": "recanto-dos-marcelinos-suites",
+     "nome": "Pousada Araucária Village",
+     "id": 2304283,
+     "preco_total": 1196.1,
+     "quarto": null
+    },
+    {
+     "slug": "pousada-benevento",
+     "nome": "Pousada Benevento",
+     "id": 263588,
+     "preco_total": 3277.53,
+     "quarto": null
+    },
+    {
+     "slug": "pousada-big-bear",
+     "nome": "Pousada Big Bear",
+     "id": null,
+     "preco_total": null,
+     "quarto": null
+    },
+    {
+     "slug": "pousada-bliss-house-campos-do-jordao1",
+     "nome": "Pousada Bliss House - Opções de suites com hidromassagem",
+     "id": 9221250,
+     "preco_total": 2640.0,
+     "quarto": null
+    },
+    {
+     "slug": "pousada-casa-dos-sonhos-campos-do-jordao",
+     "nome": "Pousada Casa dos Sonhos",
+     "id": 3309402,
+     "preco_total": 3441.37,
+     "quarto": null
+    },
+    {
+     "slug": "pousada-villa-d-biagy",
+     "nome": "Pousada D'Biagy Raízes",
+     "id": null,
+     "preco_total": null,
+     "quarto": null
+    },
+    {
+     "slug": "ilha-na-montanha",
+     "nome": "Pousada Di Oliva",
+     "id": 14525119,
+     "preco_total": 2645.0,
+     "quarto": null
+    },
+    {
+     "slug": "pousada-do-conde-campos-do-jordao",
+     "nome": "Pousada Do Conde",
+     "id": 284411,
+     "preco_total": 1911.6,
+     "quarto": null
+    },
+    {
+     "slug": "pousada-dom-alfredo-josa-c",
+     "nome": "Pousada Dom Alfredo José",
+     "id": null,
+     "preco_total": null,
+     "quarto": null
+    },
+    {
+     "slug": "pousada-moderna",
+     "nome": "Pousada Itália Moderna",
+     "id": 1099879,
+     "preco_total": 3496.0,
+     "quarto": null
+    },
+    {
+     "slug": "pousada-jardon",
+     "nome": "Pousada Jardon Campos do Jordão - Exclusiva para Adultos",
+     "id": null,
+     "preco_total": null,
+     "quarto": null
+    },
+    {
+     "slug": "pousada-la-sierra",
+     "nome": "Pousada La Sierra",
+     "id": 568623,
+     "preco_total": 1780.0,
+     "quarto": null
+    },
+    {
+     "slug": "pousada-luis-xv",
+     "nome": "Pousada Luis XV",
+     "id": null,
+     "preco_total": null,
+     "quarto": null
+    },
+    {
+     "slug": "pousada-recanto-feliz",
+     "nome": "Pousada Recanto Feliz",
+     "id": 786418,
+     "preco_total": 1658.88,
+     "quarto": null
+    },
+    {
+     "slug": "pousada-villa-agi-campos-do-jordao",
+     "nome": "Pousada Vila Tio Lé",
+     "id": 1526492,
+     "preco_total": 1848.75,
+     "quarto": null
+    },
+    {
+     "slug": "pousada-villa-capivary",
+     "nome": "Pousada Villa Capivary Campos do Jordão",
+     "id": null,
+     "preco_total": null,
+     "quarto": null
+    },
+    {
+     "slug": "pousada-da-lua-campos-do-jordapso",
+     "nome": "Pousada da Lua",
+     "id": 542153,
+     "preco_total": 1067.2,
+     "quarto": null
+    },
+    {
+     "slug": "pousada-bella-locanda",
+     "nome": "Smart Hotel Reserva Campos do Jordão",
+     "id": null,
+     "preco_total": null,
+     "quarto": null
+    },
+    {
+     "slug": "pousada-chateau-do-luar",
+     "nome": "VELINN Pousada Chateau do Luar Prime",
+     "id": 466251,
+     "preco_total": 2302.04,
+     "quarto": null
+    },
+    {
+     "slug": "pousada-charme-vila-natal-campos-do-jordao",
+     "nome": "Villa Montserrat",
+     "id": 3005921,
+     "preco_total": 2025.0,
+     "quarto": null
+    },
+    {
+     "slug": "pousada-vista-panoramica-campos-do-jordao",
+     "nome": "Pousada Recanto dos Moinhos",
+     "id": null,
+     "preco_total": null,
+     "quarto": null,
+     "proprio": true
+    },
+    {
+     "slug": "villa-dolce-amore-boutique-panoramica",
+     "nome": "Villa Dolce Amore",
+     "id": 14824789,
+     "preco_total": 2651.27,
+     "quarto": null,
+     "proprio": true
+    }
+   ]
+  },
+  {
+   "checkin": "2026-12-26",
+   "checkout": "2026-12-28",
+   "tipo": "fds pós-Natal",
+   "noites": 2,
+   "hoteis": [
+    {
+     "slug": "alma-hotel",
+     "nome": "Alma Hotel",
+     "id": 421189,
+     "preco_total": 6014.82,
+     "quarto": null
+    },
+    {
+     "slug": "linda-casa-em-campos-do-jordao-campos-do-jordao12345",
+     "nome": "Bela Vista Chalé",
+     "id": null,
+     "preco_total": null,
+     "quarto": null
+    },
+    {
+     "slug": "casa-regaleira",
+     "nome": "Casa Regaleira Hotel Boutique",
+     "id": null,
+     "preco_total": null,
+     "quarto": null
+    },
+    {
+     "slug": "casablanca-boutique",
+     "nome": "Casablanca Hotel Boutique",
+     "id": 2421651,
+     "preco_total": 2835.0,
+     "quarto": null
+    },
+    {
+     "slug": "villa-nature-campos-do-jordao",
+     "nome": "Chalé Villa Nature",
+     "id": 10075349,
+     "preco_total": 2700.0,
+     "quarto": null
+    },
+    {
+     "slug": "4-chales-de-luxo-monte-lorobell-campos-do-jordao-sp",
+     "nome": "Chalés de Luxo Monte Lorobell A- Frame",
+     "id": 11532196,
+     "preco_total": 2698.0,
+     "quarto": null
+    },
+    {
+     "slug": "champet-boutique",
+     "nome": "Champet Boutique Hotel",
+     "id": 13970463,
+     "preco_total": 2659.93,
+     "quarto": null
+    },
+    {
+     "slug": "charme-chales",
+     "nome": "Charmê Chalés",
+     "id": null,
+     "preco_total": null,
+     "quarto": null
+    },
+    {
+     "slug": "dom-boutique",
+     "nome": "DOM Hotel",
+     "id": null,
+     "preco_total": null,
+     "quarto": null
+    },
+    {
+     "slug": "euro-suit-campos-do-jordao",
+     "nome": "Euro Suit Campos do Jordão - 950 m da Vila Capivari",
+     "id": 4686715,
+     "preco_total": 1425.67,
+     "quarto": null
+    },
+    {
+     "slug": "europa-campos-do-jordao",
+     "nome": "Europa Hotel",
+     "id": null,
+     "preco_total": null,
+     "quarto": null
+    },
+    {
+     "slug": "ascona",
+     "nome": "Hotel Ascona",
+     "id": 303535,
+     "preco_total": 1269.68,
+     "quarto": null
+    },
+    {
+     "slug": "l-a-h-hostellerie",
+     "nome": "L.A.H. Hostellerie",
+     "id": 348210,
+     "preco_total": 5858.0,
+     "quarto": null
+    },
+    {
+     "slug": "mansao-austriaca",
+     "nome": "Mansão Austríaca Guesthouse",
+     "id": 5288096,
+     "preco_total": 3058.2,
+     "quarto": null
+    },
+    {
+     "slug": "matsubara-pousada",
+     "nome": "Matsubara Pousada",
+     "id": 1411330,
+     "preco_total": 1442.0,
+     "quarto": null
+    },
+    {
+     "slug": "pousada-alpes-azul",
+     "nome": "Pousada Alpes Azul",
+     "id": null,
+     "preco_total": null,
+     "quarto": null
+    },
+    {
+     "slug": "apple-house",
+     "nome": "Pousada Apple House Campos do Jordao",
+     "id": null,
+     "preco_total": null,
+     "quarto": null
+    },
+    {
+     "slug": "pousada-blue-village-campos-do-jordao",
+     "nome": "Pousada Blue Village by Concavus",
+     "id": null,
+     "preco_total": null,
+     "quarto": null
+    },
+    {
+     "slug": "pousada-cafe-poesia",
+     "nome": "Pousada Cafe Poesia",
+     "id": null,
+     "preco_total": null,
+     "quarto": null
+    },
+    {
+     "slug": "pousada-cantinho-da-serra-campos-do-jordao",
+     "nome": "Pousada Cantinho da Serra",
+     "id": 3810467,
+     "preco_total": 1286.28,
+     "quarto": null
+    },
+    {
+     "slug": "pousada-miraggio",
+     "nome": "Pousada Casa Pinha em Campos do Jordão",
+     "id": null,
+     "preco_total": null,
+     "quarto": null
+    },
+    {
+     "slug": "pousada-casa-redonda-campos-do-jordao",
+     "nome": "Pousada Casa Redonda",
+     "id": 7550569,
+     "preco_total": 2368.0,
+     "quarto": null
+    },
+    {
+     "slug": "araucaria-premium",
+     "nome": "Pousada Chateau Elegance",
+     "id": 15926146,
+     "preco_total": 1932.0,
+     "quarto": null
+    },
+    {
+     "slug": "pousada-confraria-da-terra",
+     "nome": "Pousada Confraria da Terra",
+     "id": null,
+     "preco_total": null,
+     "quarto": null
+    },
+    {
+     "slug": "villa-da-biagy-premium",
+     "nome": "Pousada D'Biagy Premium",
+     "id": null,
+     "preco_total": null,
+     "quarto": null
+    },
+    {
+     "slug": "geada-de-campos",
+     "nome": "Pousada Geada de Campos",
+     "id": 8663470,
+     "preco_total": 1374.3,
+     "quarto": null
+    },
+    {
+     "slug": "casa-bicho-preguica-campos-do-jordao",
+     "nome": "Pousada Hortelã Village",
+     "id": 4883669,
+     "preco_total": 5104.29,
+     "quarto": null
+    },
+    {
+     "slug": "pousada-murano",
+     "nome": "Pousada Murano",
+     "id": 13952548,
+     "preco_total": 3183.57,
+     "quarto": null
+    },
+    {
+     "slug": "pousada-santha-serra",
+     "nome": "Pousada Victoria Villa By Nacional Inn - A 800 metros da Vila Capivari",
+     "id": 295236,
+     "preco_total": 1492.19,
+     "quarto": null
+    },
+    {
+     "slug": "pousada-ville-le-mont-campos-do-jordao",
+     "nome": "Pousada Ville Le Mont - Campos do Jordao",
+     "id": 9797293,
+     "preco_total": 1754.87,
+     "quarto": null
+    },
+    {
+     "slug": "pousada-das-lavandas",
+     "nome": "Pousada das Lavandas",
+     "id": null,
+     "preco_total": null,
+     "quarto": null
+    },
+    {
+     "slug": "secreto-boutique",
+     "nome": "Secreto Boutique Hotel",
+     "id": null,
+     "preco_total": null,
+     "quarto": null
+    },
+    {
+     "slug": "affeto-boutique-campos-do-jordao",
+     "nome": "Ti Voglio Bene",
+     "id": 8043221,
+     "preco_total": 1787.83,
+     "quarto": null
+    },
+    {
+     "slug": "estalagem-suites",
+     "nome": "Vila de Charme Suítes",
+     "id": null,
+     "preco_total": null,
+     "quarto": null
+    },
+    {
+     "slug": "la-vie-pousada-de-charme",
+     "nome": "Villa Belle Chalés",
+     "id": 11111842,
+     "preco_total": 1506.6,
+     "quarto": null
+    },
+    {
+     "slug": "villa-casato-residenza",
+     "nome": "Villa Casato Residenza Boutique",
+     "id": 304118,
+     "preco_total": 5150.0,
+     "quarto": null
+    },
+    {
+     "slug": "casa-sabor-chocolate",
+     "nome": "Villa du Chocolat",
+     "id": null,
+     "preco_total": null,
+     "quarto": null
+    },
+    {
+     "slug": "ville-de-france",
+     "nome": "Ville de France",
+     "id": null,
+     "preco_total": null,
+     "quarto": null
+    },
+    {
+     "slug": "suite-privativa-com-aquecedor-decoracao-nova",
+     "nome": "vila grega hotel",
+     "id": 8681352,
+     "preco_total": 3515.0,
+     "quarto": null
+    },
+    {
+     "slug": "a-nossa-casinha-na-montanha",
+     "nome": "ANC Montanha - 7 minutos do Capivari",
+     "id": 13282110,
+     "preco_total": 1023.6,
+     "quarto": null
+    },
+    {
+     "slug": "araucaria-lodge",
+     "nome": "Araucária Lodge - 800 metros do Capivari",
+     "id": 12807440,
+     "preco_total": 1366.2,
+     "quarto": null
+    },
+    {
+     "slug": "rancho-la-florida-campos-do-jordao",
+     "nome": "Art Lodge",
+     "id": null,
+     "preco_total": null,
+     "quarto": null
+    },
+    {
+     "slug": "pousada-caminho-das-pedras",
+     "nome": "Caminho das Pedras Pousada de Charme",
+     "id": 390598,
+     "preco_total": 1469.09,
+     "quarto": null
+    },
+    {
+     "slug": "casa-tres-rios",
+     "nome": "Casa Três Rios - Campos do Jordão",
+     "id": null,
+     "preco_total": null,
+     "quarto": null
+    },
+    {
+     "slug": "center-suiasso-flats",
+     "nome": "Center Suiço Flats",
+     "id": 348764,
+     "preco_total": 3100.0,
+     "quarto": null
+    },
+    {
+     "slug": "chateau-campos-do-jordao-flats-premium-by-hostyn",
+     "nome": "Chateau Campos do Jordão - Flats Premium - By Hostyn",
+     "id": 15903868,
+     "preco_total": 4035.04,
+     "quarto": null
+    },
+    {
+     "slug": "chateau-la-villette",
+     "nome": "Chateau La Villette",
+     "id": null,
+     "preco_total": null,
+     "quarto": null
+    },
+    {
+     "slug": "bellavista-ltda",
+     "nome": "Chris Wellness Resort Hotel",
+     "id": null,
+     "preco_total": null,
+     "quarto": null
+    },
+    {
+     "slug": "flat-no-capivari-campos-do-jordao12",
+     "nome": "Flat Centro de Capivari",
+     "id": null,
+     "preco_total": null,
+     "quarto": null
+    },
+    {
+     "slug": "chateau",
+     "nome": "Hotel Chateau",
+     "id": null,
+     "preco_total": null,
+     "quarto": null
+    },
+    {
+     "slug": "estoril",
+     "nome": "Hotel Estoril",
+     "id": 336912,
+     "preco_total": 2341.03,
+     "quarto": null
+    },
+    {
+     "slug": "le-renard",
+     "nome": "Hotel Le Renard - Campos do Jordao",
+     "id": null,
+     "preco_total": null,
+     "quarto": null
+    },
+    {
+     "slug": "savoy-campos-do-jordao",
+     "nome": "Hotel Savoy Excellence",
+     "id": 356662,
+     "preco_total": 3514.0,
+     "quarto": null
+    },
+    {
+     "slug": "solar-d-izabel",
+     "nome": "Hotel Solar d'Izabel",
+     "id": 2179520,
+     "preco_total": 1873.69,
+     "quarto": null
+    },
+    {
+     "slug": "pousada-kaliman-campos-do-jordapso",
+     "nome": "Kaliman Pousada Campos do Jordão",
+     "id": 428933,
+     "preco_total": 1597.32,
+     "quarto": null
+    },
+    {
+     "slug": "pousada-annecy",
+     "nome": "Pousada Annecy - CAPIVARI Fácil acesso ao centrinho e Baden Bar",
+     "id": 319979,
+     "preco_total": 2799.0,
+     "quarto": null
+    },
+    {
+     "slug": "araucaria-suites-campos-do-jordao",
+     "nome": "Pousada Araucária Suítes",
+     "id": 8988633,
+     "preco_total": 796.37,
+     "quarto": null
+    },
+    {
+     "slug": "recanto-dos-marcelinos-suites",
+     "nome": "Pousada Araucária Village",
+     "id": 2304283,
+     "preco_total": 815.41,
+     "quarto": null
+    },
+    {
+     "slug": "pousada-benevento",
+     "nome": "Pousada Benevento",
+     "id": 263588,
+     "preco_total": 1280.94,
+     "quarto": null
+    },
+    {
+     "slug": "pousada-big-bear",
+     "nome": "Pousada Big Bear",
+     "id": null,
+     "preco_total": null,
+     "quarto": null
+    },
+    {
+     "slug": "pousada-bliss-house-campos-do-jordao1",
+     "nome": "Pousada Bliss House - Opções de suites com hidromassagem",
+     "id": 9221250,
+     "preco_total": 1330.0,
+     "quarto": null
+    },
+    {
+     "slug": "pousada-casa-dos-sonhos-campos-do-jordao",
+     "nome": "Pousada Casa dos Sonhos",
+     "id": 3309402,
+     "preco_total": 2867.81,
+     "quarto": null
+    },
+    {
+     "slug": "pousada-villa-d-biagy",
+     "nome": "Pousada D'Biagy Raízes",
+     "id": null,
+     "preco_total": null,
+     "quarto": null
+    },
+    {
+     "slug": "ilha-na-montanha",
+     "nome": "Pousada Di Oliva",
+     "id": 14525119,
+     "preco_total": 2645.0,
+     "quarto": null
+    },
+    {
+     "slug": "pousada-do-conde-campos-do-jordao",
+     "nome": "Pousada Do Conde",
+     "id": 284411,
+     "preco_total": 1593.0,
+     "quarto": null
+    },
+    {
+     "slug": "pousada-dom-alfredo-josa-c",
+     "nome": "Pousada Dom Alfredo José",
+     "id": null,
+     "preco_total": null,
+     "quarto": null
+    },
+    {
+     "slug": "pousada-moderna",
+     "nome": "Pousada Itália Moderna",
+     "id": 1099879,
+     "preco_total": 3496.0,
+     "quarto": null
+    },
+    {
+     "slug": "pousada-jardon",
+     "nome": "Pousada Jardon Campos do Jordão - Exclusiva para Adultos",
+     "id": null,
+     "preco_total": null,
+     "quarto": null
+    },
+    {
+     "slug": "pousada-la-sierra",
+     "nome": "Pousada La Sierra",
+     "id": 568623,
+     "preco_total": 849.0,
+     "quarto": null
+    },
+    {
+     "slug": "pousada-luis-xv",
+     "nome": "Pousada Luis XV",
+     "id": 586142,
+     "preco_total": 3238.2,
+     "quarto": null
+    },
+    {
+     "slug": "pousada-recanto-feliz",
+     "nome": "Pousada Recanto Feliz",
+     "id": 786418,
+     "preco_total": 1327.1,
+     "quarto": null
+    },
+    {
+     "slug": "pousada-villa-agi-campos-do-jordao",
+     "nome": "Pousada Vila Tio Lé",
+     "id": 1526492,
+     "preco_total": 1338.75,
+     "quarto": null
+    },
+    {
+     "slug": "pousada-villa-capivary",
+     "nome": "Pousada Villa Capivary Campos do Jordão",
+     "id": null,
+     "preco_total": null,
+     "quarto": null
+    },
+    {
+     "slug": "pousada-da-lua-campos-do-jordapso",
+     "nome": "Pousada da Lua",
+     "id": 542153,
+     "preco_total": 823.6,
+     "quarto": null
+    },
+    {
+     "slug": "pousada-bella-locanda",
+     "nome": "Smart Hotel Reserva Campos do Jordão",
+     "id": null,
+     "preco_total": null,
+     "quarto": null
+    },
+    {
+     "slug": "pousada-chateau-do-luar",
+     "nome": "VELINN Pousada Chateau do Luar Prime",
+     "id": 466251,
+     "preco_total": 1609.63,
+     "quarto": null
+    },
+    {
+     "slug": "pousada-charme-vila-natal-campos-do-jordao",
+     "nome": "Villa Montserrat",
+     "id": 3005921,
+     "preco_total": 1485.0,
+     "quarto": null
+    },
+    {
+     "slug": "pousada-vista-panoramica-campos-do-jordao",
+     "nome": "Pousada Recanto dos Moinhos",
+     "id": null,
+     "preco_total": null,
+     "quarto": null,
+     "proprio": true
+    },
+    {
+     "slug": "villa-dolce-amore-boutique-panoramica",
+     "nome": "Villa Dolce Amore",
+     "id": 14824789,
+     "preco_total": 3176.83,
+     "quarto": null,
+     "proprio": true
+    }
+   ]
+  },
+  {
+   "checkin": "2026-12-30",
+   "checkout": "2027-01-02",
+   "tipo": "Réveillon 3 noites",
+   "noites": 3,
+   "hoteis": [
+    {
+     "slug": "alma-hotel",
+     "nome": "Alma Hotel",
+     "id": 421189,
+     "preco_total": 9906.04,
+     "quarto": null
+    },
+    {
+     "slug": "linda-casa-em-campos-do-jordao-campos-do-jordao12345",
+     "nome": "Bela Vista Chalé",
+     "id": 7601403,
+     "preco_total": 2303.0,
+     "quarto": null
+    },
+    {
+     "slug": "casa-regaleira",
+     "nome": "Casa Regaleira Hotel Boutique",
+     "id": null,
+     "preco_total": null,
+     "quarto": null
+    },
+    {
+     "slug": "casablanca-boutique",
+     "nome": "Casablanca Hotel Boutique",
+     "id": 2421651,
+     "preco_total": 5682.0,
+     "quarto": null
+    },
+    {
+     "slug": "villa-nature-campos-do-jordao",
+     "nome": "Chalé Villa Nature",
+     "id": null,
+     "preco_total": null,
+     "quarto": null
+    },
+    {
+     "slug": "4-chales-de-luxo-monte-lorobell-campos-do-jordao-sp",
+     "nome": "Chalés de Luxo Monte Lorobell A- Frame",
+     "id": 11532196,
+     "preco_total": 4797.0,
+     "quarto": null
+    },
+    {
+     "slug": "champet-boutique",
+     "nome": "Champet Boutique Hotel",
+     "id": 13970463,
+     "preco_total": 10750.74,
+     "quarto": null
+    },
+    {
+     "slug": "charme-chales",
+     "nome": "Charmê Chalés",
+     "id": 14828889,
+     "preco_total": 9880.5,
+     "quarto": null
+    },
+    {
+     "slug": "dom-boutique",
+     "nome": "DOM Hotel",
+     "id": 7646879,
+     "preco_total": 4254.12,
+     "quarto": null
+    },
+    {
+     "slug": "euro-suit-campos-do-jordao",
+     "nome": "Euro Suit Campos do Jordão - 950 m da Vila Capivari",
+     "id": 4686715,
+     "preco_total": 3651.75,
+     "quarto": null
+    },
+    {
+     "slug": "europa-campos-do-jordao",
+     "nome": "Europa Hotel",
+     "id": null,
+     "preco_total": null,
+     "quarto": null
+    },
+    {
+     "slug": "ascona",
+     "nome": "Hotel Ascona",
+     "id": 303535,
+     "preco_total": 3012.59,
+     "quarto": null
+    },
+    {
+     "slug": "l-a-h-hostellerie",
+     "nome": "L.A.H. Hostellerie",
+     "id": 348210,
+     "preco_total": 9321.0,
+     "quarto": null
+    },
+    {
+     "slug": "mansao-austriaca",
+     "nome": "Mansão Austríaca Guesthouse",
+     "id": 5288096,
+     "preco_total": 4332.45,
+     "quarto": null
+    },
+    {
+     "slug": "matsubara-pousada",
+     "nome": "Matsubara Pousada",
+     "id": null,
+     "preco_total": null,
+     "quarto": null
+    },
+    {
+     "slug": "pousada-alpes-azul",
+     "nome": "Pousada Alpes Azul",
+     "id": null,
+     "preco_total": null,
+     "quarto": null
+    },
+    {
+     "slug": "apple-house",
+     "nome": "Pousada Apple House Campos do Jordao",
+     "id": 1092370,
+     "preco_total": 4578.63,
+     "quarto": null
+    },
+    {
+     "slug": "pousada-blue-village-campos-do-jordao",
+     "nome": "Pousada Blue Village by Concavus",
+     "id": null,
+     "preco_total": null,
+     "quarto": null
+    },
+    {
+     "slug": "pousada-cafe-poesia",
+     "nome": "Pousada Cafe Poesia",
+     "id": null,
+     "preco_total": null,
+     "quarto": null
+    },
+    {
+     "slug": "pousada-cantinho-da-serra-campos-do-jordao",
+     "nome": "Pousada Cantinho da Serra",
+     "id": null,
+     "preco_total": null,
+     "quarto": null
+    },
+    {
+     "slug": "pousada-miraggio",
+     "nome": "Pousada Casa Pinha em Campos do Jordão",
+     "id": null,
+     "preco_total": null,
+     "quarto": null
+    },
+    {
+     "slug": "pousada-casa-redonda-campos-do-jordao",
+     "nome": "Pousada Casa Redonda",
+     "id": 7550569,
+     "preco_total": 3752.0,
+     "quarto": null
+    },
+    {
+     "slug": "araucaria-premium",
+     "nome": "Pousada Chateau Elegance",
+     "id": 15926146,
+     "preco_total": 5071.5,
+     "quarto": null
+    },
+    {
+     "slug": "pousada-confraria-da-terra",
+     "nome": "Pousada Confraria da Terra",
+     "id": 295314,
+     "preco_total": 5070.0,
+     "quarto": null
+    },
+    {
+     "slug": "villa-da-biagy-premium",
+     "nome": "Pousada D'Biagy Premium",
+     "id": 461243,
+     "preco_total": 9477.0,
+     "quarto": null
+    },
+    {
+     "slug": "geada-de-campos",
+     "nome": "Pousada Geada de Campos",
+     "id": 8663470,
+     "preco_total": 2791.8,
+     "quarto": null
+    },
+    {
+     "slug": "casa-bicho-preguica-campos-do-jordao",
+     "nome": "Pousada Hortelã Village",
+     "id": 4883669,
+     "preco_total": 7860.58,
+     "quarto": null
+    },
+    {
+     "slug": "pousada-murano",
+     "nome": "Pousada Murano",
+     "id": 13952548,
+     "preco_total": 6233.36,
+     "quarto": null
+    },
+    {
+     "slug": "pousada-santha-serra",
+     "nome": "Pousada Victoria Villa By Nacional Inn - A 800 metros da Vila Capivari",
+     "id": 295236,
+     "preco_total": 5395.0,
+     "quarto": null
+    },
+    {
+     "slug": "pousada-ville-le-mont-campos-do-jordao",
+     "nome": "Pousada Ville Le Mont - Campos do Jordao",
+     "id": 9797293,
+     "preco_total": 4149.0,
+     "quarto": null
+    },
+    {
+     "slug": "pousada-das-lavandas",
+     "nome": "Pousada das Lavandas",
+     "id": null,
+     "preco_total": null,
+     "quarto": null
+    },
+    {
+     "slug": "secreto-boutique",
+     "nome": "Secreto Boutique Hotel",
+     "id": null,
+     "preco_total": null,
+     "quarto": null
+    },
+    {
+     "slug": "affeto-boutique-campos-do-jordao",
+     "nome": "Ti Voglio Bene",
+     "id": 8043221,
+     "preco_total": 4101.72,
+     "quarto": null
+    },
+    {
+     "slug": "estalagem-suites",
+     "nome": "Vila de Charme Suítes",
+     "id": null,
+     "preco_total": null,
+     "quarto": null
+    },
+    {
+     "slug": "la-vie-pousada-de-charme",
+     "nome": "Villa Belle Chalés",
+     "id": 11111842,
+     "preco_total": 3244.07,
+     "quarto": null
+    },
+    {
+     "slug": "villa-casato-residenza",
+     "nome": "Villa Casato Residenza Boutique",
+     "id": null,
+     "preco_total": null,
+     "quarto": null
+    },
+    {
+     "slug": "casa-sabor-chocolate",
+     "nome": "Villa du Chocolat",
+     "id": null,
+     "preco_total": null,
+     "quarto": null
+    },
+    {
+     "slug": "ville-de-france",
+     "nome": "Ville de France",
+     "id": null,
+     "preco_total": null,
+     "quarto": null
+    },
+    {
+     "slug": "suite-privativa-com-aquecedor-decoracao-nova",
+     "nome": "vila grega hotel",
+     "id": 8681352,
+     "preco_total": 7315.0,
+     "quarto": null
+    },
+    {
+     "slug": "a-nossa-casinha-na-montanha",
+     "nome": "ANC Montanha - 7 minutos do Capivari",
+     "id": 13282110,
+     "preco_total": 2496.0,
+     "quarto": null
+    },
+    {
+     "slug": "araucaria-lodge",
+     "nome": "Araucária Lodge - 800 metros do Capivari",
+     "id": 12807440,
+     "preco_total": 4789.45,
+     "quarto": null
+    },
+    {
+     "slug": "rancho-la-florida-campos-do-jordao",
+     "nome": "Art Lodge",
+     "id": null,
+     "preco_total": null,
+     "quarto": null
+    },
+    {
+     "slug": "pousada-caminho-das-pedras",
+     "nome": "Caminho das Pedras Pousada de Charme",
+     "id": 390598,
+     "preco_total": 4108.52,
+     "quarto": null
+    },
+    {
+     "slug": "casa-tres-rios",
+     "nome": "Casa Três Rios - Campos do Jordão",
+     "id": 8775714,
+     "preco_total": 5519.48,
+     "quarto": null
+    },
+    {
+     "slug": "center-suiasso-flats",
+     "nome": "Center Suiço Flats",
+     "id": 348764,
+     "preco_total": 5370.0,
+     "quarto": null
+    },
+    {
+     "slug": "chateau-campos-do-jordao-flats-premium-by-hostyn",
+     "nome": "Chateau Campos do Jordão - Flats Premium - By Hostyn",
+     "id": 15903868,
+     "preco_total": 8425.47,
+     "quarto": null
+    },
+    {
+     "slug": "chateau-la-villette",
+     "nome": "Chateau La Villette",
+     "id": null,
+     "preco_total": null,
+     "quarto": null
+    },
+    {
+     "slug": "bellavista-ltda",
+     "nome": "Chris Wellness Resort Hotel",
+     "id": null,
+     "preco_total": null,
+     "quarto": null
+    },
+    {
+     "slug": "flat-no-capivari-campos-do-jordao12",
+     "nome": "Flat Centro de Capivari",
+     "id": null,
+     "preco_total": null,
+     "quarto": null
+    },
+    {
+     "slug": "chateau",
+     "nome": "Hotel Chateau",
+     "id": 461864,
+     "preco_total": 5024.98,
+     "quarto": null
+    },
+    {
+     "slug": "estoril",
+     "nome": "Hotel Estoril",
+     "id": 336912,
+     "preco_total": 8862.17,
+     "quarto": null
+    },
+    {
+     "slug": "le-renard",
+     "nome": "Hotel Le Renard - Campos do Jordao",
+     "id": null,
+     "preco_total": null,
+     "quarto": null
+    },
+    {
+     "slug": "savoy-campos-do-jordao",
+     "nome": "Hotel Savoy Excellence",
+     "id": 356662,
+     "preco_total": 6514.0,
+     "quarto": null
+    },
+    {
+     "slug": "solar-d-izabel",
+     "nome": "Hotel Solar d'Izabel",
+     "id": 2179520,
+     "preco_total": 6481.02,
+     "quarto": null
+    },
+    {
+     "slug": "pousada-kaliman-campos-do-jordapso",
+     "nome": "Kaliman Pousada Campos do Jordão",
+     "id": 428933,
+     "preco_total": 5211.01,
+     "quarto": null
+    },
+    {
+     "slug": "pousada-annecy",
+     "nome": "Pousada Annecy - CAPIVARI Fácil acesso ao centrinho e Baden Bar",
+     "id": 319979,
+     "preco_total": 7170.0,
+     "quarto": null
+    },
+    {
+     "slug": "araucaria-suites-campos-do-jordao",
+     "nome": "Pousada Araucária Suítes",
+     "id": 8988633,
+     "preco_total": 2394.42,
+     "quarto": null
+    },
+    {
+     "slug": "recanto-dos-marcelinos-suites",
+     "nome": "Pousada Araucária Village",
+     "id": 2304283,
+     "preco_total": 2406.68,
+     "quarto": null
+    },
+    {
+     "slug": "pousada-benevento",
+     "nome": "Pousada Benevento",
+     "id": 263588,
+     "preco_total": 3785.23,
+     "quarto": null
+    },
+    {
+     "slug": "pousada-big-bear",
+     "nome": "Pousada Big Bear",
+     "id": 285323,
+     "preco_total": 5296.73,
+     "quarto": null
+    },
+    {
+     "slug": "pousada-bliss-house-campos-do-jordao1",
+     "nome": "Pousada Bliss House - Opções de suites com hidromassagem",
+     "id": 9221250,
+     "preco_total": 3400.0,
+     "quarto": null
+    },
+    {
+     "slug": "pousada-casa-dos-sonhos-campos-do-jordao",
+     "nome": "Pousada Casa dos Sonhos",
+     "id": 3309402,
+     "preco_total": 4315.37,
+     "quarto": null
+    },
+    {
+     "slug": "pousada-villa-d-biagy",
+     "nome": "Pousada D'Biagy Raízes",
+     "id": 282062,
+     "preco_total": 8104.24,
+     "quarto": null
+    },
+    {
+     "slug": "ilha-na-montanha",
+     "nome": "Pousada Di Oliva",
+     "id": 14525119,
+     "preco_total": 2584.4,
+     "quarto": null
+    },
+    {
+     "slug": "pousada-do-conde-campos-do-jordao",
+     "nome": "Pousada Do Conde",
+     "id": 284411,
+     "preco_total": 3039.68,
+     "quarto": null
+    },
+    {
+     "slug": "pousada-dom-alfredo-josa-c",
+     "nome": "Pousada Dom Alfredo José",
+     "id": 330727,
+     "preco_total": 3174.0,
+     "quarto": null
+    },
+    {
+     "slug": "pousada-moderna",
+     "nome": "Pousada Itália Moderna",
+     "id": 1099879,
+     "preco_total": 3760.5,
+     "quarto": null
+    },
+    {
+     "slug": "pousada-jardon",
+     "nome": "Pousada Jardon Campos do Jordão - Exclusiva para Adultos",
+     "id": 379227,
+     "preco_total": 2847.15,
+     "quarto": null
+    },
+    {
+     "slug": "pousada-la-sierra",
+     "nome": "Pousada La Sierra",
+     "id": 568623,
+     "preco_total": 2550.0,
+     "quarto": null
+    },
+    {
+     "slug": "pousada-luis-xv",
+     "nome": "Pousada Luis XV",
+     "id": 586142,
+     "preco_total": 8045.73,
+     "quarto": null
+    },
+    {
+     "slug": "pousada-recanto-feliz",
+     "nome": "Pousada Recanto Feliz",
+     "id": 786418,
+     "preco_total": 3737.09,
+     "quarto": null
+    },
+    {
+     "slug": "pousada-villa-agi-campos-do-jordao",
+     "nome": "Pousada Vila Tio Lé",
+     "id": null,
+     "preco_total": null,
+     "quarto": null
+    },
+    {
+     "slug": "pousada-villa-capivary",
+     "nome": "Pousada Villa Capivary Campos do Jordão",
+     "id": 236397,
+     "preco_total": 6870.69,
+     "quarto": null
+    },
+    {
+     "slug": "pousada-da-lua-campos-do-jordapso",
+     "nome": "Pousada da Lua",
+     "id": 542153,
+     "preco_total": 2296.8,
+     "quarto": null
+    },
+    {
+     "slug": "pousada-bella-locanda",
+     "nome": "Smart Hotel Reserva Campos do Jordão",
+     "id": null,
+     "preco_total": null,
+     "quarto": null
+    },
+    {
+     "slug": "pousada-chateau-do-luar",
+     "nome": "VELINN Pousada Chateau do Luar Prime",
+     "id": 466251,
+     "preco_total": 3341.66,
+     "quarto": null
+    },
+    {
+     "slug": "pousada-charme-vila-natal-campos-do-jordao",
+     "nome": "Villa Montserrat",
+     "id": 3005921,
+     "preco_total": 3240.0,
+     "quarto": null
+    },
+    {
+     "slug": "pousada-vista-panoramica-campos-do-jordao",
+     "nome": "Pousada Recanto dos Moinhos",
+     "id": null,
+     "preco_total": null,
+     "quarto": null,
+     "proprio": true
+    },
+    {
+     "slug": "villa-dolce-amore-boutique-panoramica",
+     "nome": "Villa Dolce Amore",
+     "id": 14824789,
+     "preco_total": 5513.76,
+     "quarto": null,
+     "proprio": true
+    }
+   ]
+  }
+ ],
+ "falhas": [],
+ "fonte": "mcp__Booking_com__accommodations_search",
+ "coletado_em": "2026-11-01",
+ "resumo": [
+  {
+   "checkin": "2026-12-24",
+   "checkout": "2026-12-26",
+   "tipo": "Natal",
+   "noites": 2,
+   "concorrentes_com_preco": 48,
+   "concorrentes_no_mapa": 77,
+   "mediana_noite_concorrentes": 1321.25,
+   "p25_noite": 923.1,
+   "p75_noite": 1802.0,
+   "recanto_noite": "indisponível",
+   "villa_noite": 1325.63
+  },
+  {
+   "checkin": "2026-12-26",
+   "checkout": "2026-12-28",
+   "tipo": "fds pós-Natal",
+   "noites": 2,
+   "concorrentes_com_preco": 47,
+   "concorrentes_no_mapa": 77,
+   "mediana_noite_concorrentes": 893.91,
+   "p25_noite": 683.1,
+   "p75_noite": 1529.1,
+   "recanto_noite": "indisponível",
+   "villa_noite": 1588.41
+  },
+  {
+   "checkin": "2026-12-30",
+   "checkout": "2027-01-02",
+   "tipo": "Réveillon 3 noites",
+   "noites": 3,
+   "concorrentes_com_preco": 55,
+   "concorrentes_no_mapa": 77,
+   "mediana_noite_concorrentes": 1526.21,
+   "p25_noite": 1081.36,
+   "p75_noite": 2171.33,
+   "recanto_noite": "indisponível",
+   "villa_noite": 1837.92
+  }
+ ]
+}

@@ -864,6 +864,14 @@
    "urgencia": 1,
    "data_alvo": "2026-11-07",
    "texto": "Antes da rotina de 08/11 (15/11 chega a D7): em pace.py, quando uma noite da semana (dom-qui) dispara o gatilho de D7, as noites da mesma semana com menos ou o mesmo número de vendidas e sem venda nova também vão ao piso_atras, para não ficar a noite mais vendida mais barata. Teste e revisão independente."
+  },
+  {
+   "id": "faixas-remedir",
+   "responsavel": "skill",
+   "desde": "2026-11-04",
+   "urgencia": 2,
+   "data_alvo": "2026-12-07",
+   "texto": "Régua de faixas (dados/faixas_dono.json, regras.md 4e): remedir cada período uns 60 dias antes com a lista dos 77 concorrentes (faixas_dono.py construir). Próximos: Carnaval (05-09/02) e dias de semana de fevereiro no início de dezembro; Páscoa em meados de janeiro; inverno (Corpus Christi, junho e julho) em abril. Tipos com 'amostra pequena': entre festas, Réveillon, inverno. Republicar a página 'Régua de Preços das Pousadas' (faixas_dono.py pagina) e a tabela .md a cada remedição."
   }
  ],
  "versao": "2026-11-02T01"

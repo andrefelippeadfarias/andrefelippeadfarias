@@ -1,0 +1,1572 @@
+{
+ "estadias": [
+  {
+   "checkin": "2027-07-08",
+   "checkout": "2027-07-11",
+   "tipo": "feriado_9_julho",
+   "hoteis": [
+    {
+     "slug": "alma-hotel",
+     "id": null,
+     "preco_total": null
+    },
+    {
+     "slug": "linda-casa-em-campos-do-jordao-campos-do-jordao12345",
+     "id": null,
+     "preco_total": null
+    },
+    {
+     "slug": "casa-regaleira",
+     "id": 1354703,
+     "preco_total": 5280.0
+    },
+    {
+     "slug": "casablanca-boutique",
+     "id": null,
+     "preco_total": null
+    },
+    {
+     "slug": "villa-nature-campos-do-jordao",
+     "id": 10075349,
+     "preco_total": 3870.0
+    },
+    {
+     "slug": "4-chales-de-luxo-monte-lorobell-campos-do-jordao-sp",
+     "id": null,
+     "preco_total": null
+    },
+    {
+     "slug": "champet-boutique",
+     "id": null,
+     "preco_total": null
+    },
+    {
+     "slug": "charme-chales",
+     "id": null,
+     "preco_total": null
+    },
+    {
+     "slug": "dom-boutique",
+     "id": null,
+     "preco_total": null
+    },
+    {
+     "slug": "euro-suit-campos-do-jordao",
+     "id": 4686715,
+     "preco_total": 3455.33
+    },
+    {
+     "slug": "europa-campos-do-jordao",
+     "id": null,
+     "preco_total": null
+    },
+    {
+     "slug": "ascona",
+     "id": 303535,
+     "preco_total": 2575.8
+    },
+    {
+     "slug": "l-a-h-hostellerie",
+     "id": 348210,
+     "preco_total": 6317.0
+    },
+    {
+     "slug": "mansao-austriaca",
+     "id": 5288096,
+     "preco_total": 4332.45
+    },
+    {
+     "slug": "matsubara-pousada",
+     "id": null,
+     "preco_total": null
+    },
+    {
+     "slug": "pousada-alpes-azul",
+     "id": null,
+     "preco_total": null
+    },
+    {
+     "slug": "apple-house",
+     "id": 1092370,
+     "preco_total": 3616.57
+    },
+    {
+     "slug": "pousada-blue-village-campos-do-jordao",
+     "id": null,
+     "preco_total": null
+    },
+    {
+     "slug": "pousada-cafe-poesia",
+     "id": 2280778,
+     "preco_total": 4015.0
+    },
+    {
+     "slug": "pousada-cantinho-da-serra-campos-do-jordao",
+     "id": null,
+     "preco_total": null
+    },
+    {
+     "slug": "pousada-miraggio",
+     "id": 1343695,
+     "preco_total": 2981.31
+    },
+    {
+     "slug": "pousada-casa-redonda-campos-do-jordao",
+     "id": 7550569,
+     "preco_total": 3510.0
+    },
+    {
+     "slug": "araucaria-premium",
+     "id": 15926146,
+     "preco_total": 3622.5
+    },
+    {
+     "slug": "pousada-confraria-da-terra",
+     "id": null,
+     "preco_total": null
+    },
+    {
+     "slug": "villa-da-biagy-premium",
+     "id": null,
+     "preco_total": null
+    },
+    {
+     "slug": "geada-de-campos",
+     "id": null,
+     "preco_total": null
+    },
+    {
+     "slug": "casa-bicho-preguica-campos-do-jordao",
+     "id": 4883669,
+     "preco_total": 3413.99
+    },
+    {
+     "slug": "pousada-murano",
+     "id": null,
+     "preco_total": null
+    },
+    {
+     "slug": "pousada-santha-serra",
+     "id": 295236,
+     "preco_total": 4703.35
+    },
+    {
+     "slug": "pousada-ville-le-mont-campos-do-jordao",
+     "id": null,
+     "preco_total": null
+    },
+    {
+     "slug": "pousada-das-lavandas",
+     "id": 6866038,
+     "preco_total": 3783.56
+    },
+    {
+     "slug": "secreto-boutique",
+     "id": null,
+     "preco_total": null
+    },
+    {
+     "slug": "affeto-boutique-campos-do-jordao",
+     "id": null,
+     "preco_total": null
+    },
+    {
+     "slug": "estalagem-suites",
+     "id": null,
+     "preco_total": null
+    },
+    {
+     "slug": "la-vie-pousada-de-charme",
+     "id": null,
+     "preco_total": null
+    },
+    {
+     "slug": "villa-casato-residenza",
+     "id": null,
+     "preco_total": null
+    },
+    {
+     "slug": "casa-sabor-chocolate",
+     "id": 4786199,
+     "preco_total": 4043.0
+    },
+    {
+     "slug": "ville-de-france",
+     "id": null,
+     "preco_total": null
+    },
+    {
+     "slug": "suite-privativa-com-aquecedor-decoracao-nova",
+     "id": null,
+     "preco_total": null
+    },
+    {
+     "slug": "a-nossa-casinha-na-montanha",
+     "id": null,
+     "preco_total": null
+    },
+    {
+     "slug": "araucaria-lodge",
+     "id": 12807440,
+     "preco_total": 2980.8
+    },
+    {
+     "slug": "rancho-la-florida-campos-do-jordao",
+     "id": null,
+     "preco_total": null
+    },
+    {
+     "slug": "pousada-caminho-das-pedras",
+     "id": null,
+     "preco_total": null
+    },
+    {
+     "slug": "casa-tres-rios",
+     "id": 8775714,
+     "preco_total": 3269.57
+    },
+    {
+     "slug": "center-suiasso-flats",
+     "id": null,
+     "preco_total": null
+    },
+    {
+     "slug": "chateau-campos-do-jordao-flats-premium-by-hostyn",
+     "id": null,
+     "preco_total": null
+    },
+    {
+     "slug": "chateau-la-villette",
+     "id": 266611,
+     "preco_total": 6169.31
+    },
+    {
+     "slug": "bellavista-ltda",
+     "id": null,
+     "preco_total": null
+    },
+    {
+     "slug": "flat-no-capivari-campos-do-jordao12",
+     "id": null,
+     "preco_total": null
+    },
+    {
+     "slug": "chateau",
+     "id": 461864,
+     "preco_total": 3979.84
+    },
+    {
+     "slug": "estoril",
+     "id": 336912,
+     "preco_total": 5337.99
+    },
+    {
+     "slug": "le-renard",
+     "id": null,
+     "preco_total": null
+    },
+    {
+     "slug": "savoy-campos-do-jordao",
+     "id": 356662,
+     "preco_total": 6553.0
+    },
+    {
+     "slug": "solar-d-izabel",
+     "id": 2179520,
+     "preco_total": 3952.13
+    },
+    {
+     "slug": "pousada-kaliman-campos-do-jordapso",
+     "id": 428933,
+     "preco_total": 4430.11
+    },
+    {
+     "slug": "pousada-annecy",
+     "id": null,
+     "preco_total": null
+    },
+    {
+     "slug": "araucaria-suites-campos-do-jordao",
+     "id": null,
+     "preco_total": null
+    },
+    {
+     "slug": "recanto-dos-marcelinos-suites",
+     "id": 2304283,
+     "preco_total": 1764.15
+    },
+    {
+     "slug": "pousada-benevento",
+     "id": 263588,
+     "preco_total": 3260.09
+    },
+    {
+     "slug": "pousada-big-bear",
+     "id": null,
+     "preco_total": null
+    },
+    {
+     "slug": "pousada-bliss-house-campos-do-jordao1",
+     "id": null,
+     "preco_total": null
+    },
+    {
+     "slug": "pousada-casa-dos-sonhos-campos-do-jordao",
+     "id": 3309402,
+     "preco_total": 2622.0
+    },
+    {
+     "slug": "pousada-villa-d-biagy",
+     "id": null,
+     "preco_total": null
+    },
+    {
+     "slug": "ilha-na-montanha",
+     "id": null,
+     "preco_total": null
+    },
+    {
+     "slug": "pousada-do-conde-campos-do-jordao",
+     "id": null,
+     "preco_total": null
+    },
+    {
+     "slug": "pousada-dom-alfredo-josa-c",
+     "id": null,
+     "preco_total": null
+    },
+    {
+     "slug": "pousada-moderna",
+     "id": null,
+     "preco_total": null
+    },
+    {
+     "slug": "pousada-jardon",
+     "id": null,
+     "preco_total": null
+    },
+    {
+     "slug": "pousada-la-sierra",
+     "id": null,
+     "preco_total": null
+    },
+    {
+     "slug": "pousada-luis-xv",
+     "id": null,
+     "preco_total": null
+    },
+    {
+     "slug": "pousada-recanto-feliz",
+     "id": 786418,
+     "preco_total": 2975.4
+    },
+    {
+     "slug": "pousada-villa-agi-campos-do-jordao",
+     "id": 1526492,
+     "preco_total": 3450.0
+    },
+    {
+     "slug": "pousada-villa-capivary",
+     "id": 236397,
+     "preco_total": 5700.0
+    },
+    {
+     "slug": "pousada-da-lua-campos-do-jordapso",
+     "id": 542153,
+     "preco_total": 3132.0
+    },
+    {
+     "slug": "pousada-bella-locanda",
+     "id": 9181484,
+     "preco_total": 1949.22
+    },
+    {
+     "slug": "pousada-chateau-do-luar",
+     "id": 466251,
+     "preco_total": 3018.06
+    },
+    {
+     "slug": "pousada-charme-vila-natal-campos-do-jordao",
+     "id": 3005921,
+     "preco_total": 2767.5
+    }
+   ]
+  },
+  {
+   "checkin": "2027-07-13",
+   "checkout": "2027-07-14",
+   "tipo": "semana_julho",
+   "hoteis": [
+    {
+     "slug": "alma-hotel",
+     "id": null,
+     "preco_total": null
+    },
+    {
+     "slug": "linda-casa-em-campos-do-jordao-campos-do-jordao12345",
+     "id": null,
+     "preco_total": null
+    },
+    {
+     "slug": "casa-regaleira",
+     "id": null,
+     "preco_total": null
+    },
+    {
+     "slug": "casablanca-boutique",
+     "id": null,
+     "preco_total": null
+    },
+    {
+     "slug": "villa-nature-campos-do-jordao",
+     "id": 10075349,
+     "preco_total": 1700.0
+    },
+    {
+     "slug": "4-chales-de-luxo-monte-lorobell-campos-do-jordao-sp",
+     "id": null,
+     "preco_total": null
+    },
+    {
+     "slug": "champet-boutique",
+     "id": null,
+     "preco_total": null
+    },
+    {
+     "slug": "charme-chales",
+     "id": null,
+     "preco_total": null
+    },
+    {
+     "slug": "dom-boutique",
+     "id": null,
+     "preco_total": null
+    },
+    {
+     "slug": "euro-suit-campos-do-jordao",
+     "id": 4686715,
+     "preco_total": 540.22
+    },
+    {
+     "slug": "europa-campos-do-jordao",
+     "id": null,
+     "preco_total": null
+    },
+    {
+     "slug": "ascona",
+     "id": 303535,
+     "preco_total": 534.6
+    },
+    {
+     "slug": "l-a-h-hostellerie",
+     "id": 348210,
+     "preco_total": 1870.55
+    },
+    {
+     "slug": "mansao-austriaca",
+     "id": 5288096,
+     "preco_total": 1699.0
+    },
+    {
+     "slug": "matsubara-pousada",
+     "id": null,
+     "preco_total": null
+    },
+    {
+     "slug": "pousada-alpes-azul",
+     "id": null,
+     "preco_total": null
+    },
+    {
+     "slug": "apple-house",
+     "id": 1092370,
+     "preco_total": 1354.46
+    },
+    {
+     "slug": "pousada-blue-village-campos-do-jordao",
+     "id": null,
+     "preco_total": null
+    },
+    {
+     "slug": "pousada-cafe-poesia",
+     "id": 2280778,
+     "preco_total": 825.0
+    },
+    {
+     "slug": "pousada-cantinho-da-serra-campos-do-jordao",
+     "id": null,
+     "preco_total": null
+    },
+    {
+     "slug": "pousada-miraggio",
+     "id": 1343695,
+     "preco_total": 570.77
+    },
+    {
+     "slug": "pousada-casa-redonda-campos-do-jordao",
+     "id": 7550569,
+     "preco_total": 1170.0
+    },
+    {
+     "slug": "araucaria-premium",
+     "id": 15926146,
+     "preco_total": 644.0
+    },
+    {
+     "slug": "pousada-confraria-da-terra",
+     "id": null,
+     "preco_total": null
+    },
+    {
+     "slug": "villa-da-biagy-premium",
+     "id": null,
+     "preco_total": null
+    },
+    {
+     "slug": "geada-de-campos",
+     "id": null,
+     "preco_total": null
+    },
+    {
+     "slug": "casa-bicho-preguica-campos-do-jordao",
+     "id": 4883669,
+     "preco_total": 705.37
+    },
+    {
+     "slug": "pousada-murano",
+     "id": null,
+     "preco_total": null
+    },
+    {
+     "slug": "pousada-santha-serra",
+     "id": 295236,
+     "preco_total": 575.86
+    },
+    {
+     "slug": "pousada-ville-le-mont-campos-do-jordao",
+     "id": 9797293,
+     "preco_total": 909.0
+    },
+    {
+     "slug": "pousada-das-lavandas",
+     "id": 6866038,
+     "preco_total": 1201.12
+    },
+    {
+     "slug": "secreto-boutique",
+     "id": null,
+     "preco_total": null
+    },
+    {
+     "slug": "affeto-boutique-campos-do-jordao",
+     "id": null,
+     "preco_total": null
+    },
+    {
+     "slug": "estalagem-suites",
+     "id": null,
+     "preco_total": null
+    },
+    {
+     "slug": "la-vie-pousada-de-charme",
+     "id": null,
+     "preco_total": null
+    },
+    {
+     "slug": "villa-casato-residenza",
+     "id": null,
+     "preco_total": null
+    },
+    {
+     "slug": "casa-sabor-chocolate",
+     "id": 4786199,
+     "preco_total": 663.0
+    },
+    {
+     "slug": "ville-de-france",
+     "id": null,
+     "preco_total": null
+    },
+    {
+     "slug": "suite-privativa-com-aquecedor-decoracao-nova",
+     "id": null,
+     "preco_total": null
+    },
+    {
+     "slug": "a-nossa-casinha-na-montanha",
+     "id": null,
+     "preco_total": null
+    },
+    {
+     "slug": "araucaria-lodge",
+     "id": 12807440,
+     "preco_total": 540.0
+    },
+    {
+     "slug": "rancho-la-florida-campos-do-jordao",
+     "id": null,
+     "preco_total": null
+    },
+    {
+     "slug": "pousada-caminho-das-pedras",
+     "id": null,
+     "preco_total": null
+    },
+    {
+     "slug": "casa-tres-rios",
+     "id": 8775714,
+     "preco_total": 616.01
+    },
+    {
+     "slug": "center-suiasso-flats",
+     "id": null,
+     "preco_total": null
+    },
+    {
+     "slug": "chateau-campos-do-jordao-flats-premium-by-hostyn",
+     "id": null,
+     "preco_total": null
+    },
+    {
+     "slug": "chateau-la-villette",
+     "id": 266611,
+     "preco_total": 1582.19
+    },
+    {
+     "slug": "bellavista-ltda",
+     "id": null,
+     "preco_total": null
+    },
+    {
+     "slug": "flat-no-capivari-campos-do-jordao12",
+     "id": null,
+     "preco_total": null
+    },
+    {
+     "slug": "chateau",
+     "id": 461864,
+     "preco_total": 807.5
+    },
+    {
+     "slug": "estoril",
+     "id": 336912,
+     "preco_total": 1220.23
+    },
+    {
+     "slug": "le-renard",
+     "id": 266851,
+     "preco_total": 1540.0
+    },
+    {
+     "slug": "savoy-campos-do-jordao",
+     "id": 356662,
+     "preco_total": 967.0
+    },
+    {
+     "slug": "solar-d-izabel",
+     "id": 2179520,
+     "preco_total": 829.92
+    },
+    {
+     "slug": "pousada-kaliman-campos-do-jordapso",
+     "id": null,
+     "preco_total": null
+    },
+    {
+     "slug": "pousada-annecy",
+     "id": null,
+     "preco_total": null
+    },
+    {
+     "slug": "araucaria-suites-campos-do-jordao",
+     "id": null,
+     "preco_total": null
+    },
+    {
+     "slug": "recanto-dos-marcelinos-suites",
+     "id": 2304283,
+     "preco_total": 398.01
+    },
+    {
+     "slug": "pousada-benevento",
+     "id": 263588,
+     "preco_total": 584.11
+    },
+    {
+     "slug": "pousada-big-bear",
+     "id": null,
+     "preco_total": null
+    },
+    {
+     "slug": "pousada-bliss-house-campos-do-jordao1",
+     "id": null,
+     "preco_total": null
+    },
+    {
+     "slug": "pousada-casa-dos-sonhos-campos-do-jordao",
+     "id": 3309402,
+     "preco_total": 575.0
+    },
+    {
+     "slug": "pousada-villa-d-biagy",
+     "id": null,
+     "preco_total": null
+    },
+    {
+     "slug": "ilha-na-montanha",
+     "id": null,
+     "preco_total": null
+    },
+    {
+     "slug": "pousada-do-conde-campos-do-jordao",
+     "id": null,
+     "preco_total": null
+    },
+    {
+     "slug": "pousada-dom-alfredo-josa-c",
+     "id": null,
+     "preco_total": null
+    },
+    {
+     "slug": "pousada-moderna",
+     "id": null,
+     "preco_total": null
+    },
+    {
+     "slug": "pousada-jardon",
+     "id": null,
+     "preco_total": null
+    },
+    {
+     "slug": "pousada-la-sierra",
+     "id": null,
+     "preco_total": null
+    },
+    {
+     "slug": "pousada-luis-xv",
+     "id": null,
+     "preco_total": null
+    },
+    {
+     "slug": "pousada-recanto-feliz",
+     "id": 786418,
+     "preco_total": 718.2
+    },
+    {
+     "slug": "pousada-villa-agi-campos-do-jordao",
+     "id": 1526492,
+     "preco_total": 750.0
+    },
+    {
+     "slug": "pousada-villa-capivary",
+     "id": 236397,
+     "preco_total": 1200.0
+    },
+    {
+     "slug": "pousada-da-lua-campos-do-jordapso",
+     "id": 542153,
+     "preco_total": 1044.0
+    },
+    {
+     "slug": "pousada-bella-locanda",
+     "id": null,
+     "preco_total": null
+    },
+    {
+     "slug": "pousada-chateau-do-luar",
+     "id": 466251,
+     "preco_total": 503.01
+    },
+    {
+     "slug": "pousada-charme-vila-natal-campos-do-jordao",
+     "id": 3005921,
+     "preco_total": 472.5
+    }
+   ]
+  },
+  {
+   "checkin": "2027-07-16",
+   "checkout": "2027-07-18",
+   "tipo": "fds_julho",
+   "hoteis": [
+    {
+     "slug": "alma-hotel",
+     "id": null,
+     "preco_total": null
+    },
+    {
+     "slug": "linda-casa-em-campos-do-jordao-campos-do-jordao12345",
+     "id": null,
+     "preco_total": null
+    },
+    {
+     "slug": "casa-regaleira",
+     "id": 1354703,
+     "preco_total": 3720.0
+    },
+    {
+     "slug": "casablanca-boutique",
+     "id": null,
+     "preco_total": null
+    },
+    {
+     "slug": "villa-nature-campos-do-jordao",
+     "id": 10075349,
+     "preco_total": 2700.0
+    },
+    {
+     "slug": "4-chales-de-luxo-monte-lorobell-campos-do-jordao-sp",
+     "id": null,
+     "preco_total": null
+    },
+    {
+     "slug": "champet-boutique",
+     "id": null,
+     "preco_total": null
+    },
+    {
+     "slug": "charme-chales",
+     "id": null,
+     "preco_total": null
+    },
+    {
+     "slug": "dom-boutique",
+     "id": null,
+     "preco_total": null
+    },
+    {
+     "slug": "euro-suit-campos-do-jordao",
+     "id": 4686715,
+     "preco_total": 2325.22
+    },
+    {
+     "slug": "europa-campos-do-jordao",
+     "id": null,
+     "preco_total": null
+    },
+    {
+     "slug": "ascona",
+     "id": 303535,
+     "preco_total": 2041.2
+    },
+    {
+     "slug": "l-a-h-hostellerie",
+     "id": 348210,
+     "preco_total": 4408.0
+    },
+    {
+     "slug": "mansao-austriaca",
+     "id": 5288096,
+     "preco_total": 3058.2
+    },
+    {
+     "slug": "matsubara-pousada",
+     "id": null,
+     "preco_total": null
+    },
+    {
+     "slug": "pousada-alpes-azul",
+     "id": null,
+     "preco_total": null
+    },
+    {
+     "slug": "apple-house",
+     "id": 1092370,
+     "preco_total": 2544.99
+    },
+    {
+     "slug": "pousada-blue-village-campos-do-jordao",
+     "id": null,
+     "preco_total": null
+    },
+    {
+     "slug": "pousada-cafe-poesia",
+     "id": 2280778,
+     "preco_total": 2860.0
+    },
+    {
+     "slug": "pousada-cantinho-da-serra-campos-do-jordao",
+     "id": null,
+     "preco_total": null
+    },
+    {
+     "slug": "pousada-miraggio",
+     "id": 1343695,
+     "preco_total": 1933.39
+    },
+    {
+     "slug": "pousada-casa-redonda-campos-do-jordao",
+     "id": 7550569,
+     "preco_total": 2340.0
+    },
+    {
+     "slug": "araucaria-premium",
+     "id": 15926146,
+     "preco_total": 2978.5
+    },
+    {
+     "slug": "pousada-confraria-da-terra",
+     "id": null,
+     "preco_total": null
+    },
+    {
+     "slug": "villa-da-biagy-premium",
+     "id": null,
+     "preco_total": null
+    },
+    {
+     "slug": "geada-de-campos",
+     "id": null,
+     "preco_total": null
+    },
+    {
+     "slug": "casa-bicho-preguica-campos-do-jordao",
+     "id": 4883669,
+     "preco_total": 2708.62
+    },
+    {
+     "slug": "pousada-murano",
+     "id": null,
+     "preco_total": null
+    },
+    {
+     "slug": "pousada-santha-serra",
+     "id": 295236,
+     "preco_total": 2460.54
+    },
+    {
+     "slug": "pousada-ville-le-mont-campos-do-jordao",
+     "id": 9797293,
+     "preco_total": 3276.0
+    },
+    {
+     "slug": "pousada-das-lavandas",
+     "id": 6866038,
+     "preco_total": 2648.47
+    },
+    {
+     "slug": "secreto-boutique",
+     "id": null,
+     "preco_total": null
+    },
+    {
+     "slug": "affeto-boutique-campos-do-jordao",
+     "id": null,
+     "preco_total": null
+    },
+    {
+     "slug": "estalagem-suites",
+     "id": null,
+     "preco_total": null
+    },
+    {
+     "slug": "la-vie-pousada-de-charme",
+     "id": null,
+     "preco_total": null
+    },
+    {
+     "slug": "villa-casato-residenza",
+     "id": null,
+     "preco_total": null
+    },
+    {
+     "slug": "casa-sabor-chocolate",
+     "id": 4786199,
+     "preco_total": 2366.0
+    },
+    {
+     "slug": "ville-de-france",
+     "id": null,
+     "preco_total": null
+    },
+    {
+     "slug": "suite-privativa-com-aquecedor-decoracao-nova",
+     "id": null,
+     "preco_total": null
+    },
+    {
+     "slug": "a-nossa-casinha-na-montanha",
+     "id": null,
+     "preco_total": null
+    },
+    {
+     "slug": "araucaria-lodge",
+     "id": 12807440,
+     "preco_total": 2484.0
+    },
+    {
+     "slug": "rancho-la-florida-campos-do-jordao",
+     "id": null,
+     "preco_total": null
+    },
+    {
+     "slug": "pousada-caminho-das-pedras",
+     "id": null,
+     "preco_total": null
+    },
+    {
+     "slug": "casa-tres-rios",
+     "id": 8775714,
+     "preco_total": 2653.56
+    },
+    {
+     "slug": "center-suiasso-flats",
+     "id": null,
+     "preco_total": null
+    },
+    {
+     "slug": "chateau-campos-do-jordao-flats-premium-by-hostyn",
+     "id": null,
+     "preco_total": null
+    },
+    {
+     "slug": "chateau-la-villette",
+     "id": 266611,
+     "preco_total": 4587.12
+    },
+    {
+     "slug": "bellavista-ltda",
+     "id": null,
+     "preco_total": null
+    },
+    {
+     "slug": "flat-no-capivari-campos-do-jordao12",
+     "id": null,
+     "preco_total": null
+    },
+    {
+     "slug": "chateau",
+     "id": 461864,
+     "preco_total": 2307.14
+    },
+    {
+     "slug": "estoril",
+     "id": 336912,
+     "preco_total": 4117.76
+    },
+    {
+     "slug": "le-renard",
+     "id": 266851,
+     "preco_total": 3803.8
+    },
+    {
+     "slug": "savoy-campos-do-jordao",
+     "id": 356662,
+     "preco_total": 3526.0
+    },
+    {
+     "slug": "solar-d-izabel",
+     "id": 2179520,
+     "preco_total": 2897.44
+    },
+    {
+     "slug": "pousada-kaliman-campos-do-jordapso",
+     "id": 428933,
+     "preco_total": 2974.72
+    },
+    {
+     "slug": "pousada-annecy",
+     "id": null,
+     "preco_total": null
+    },
+    {
+     "slug": "araucaria-suites-campos-do-jordao",
+     "id": null,
+     "preco_total": null
+    },
+    {
+     "slug": "recanto-dos-marcelinos-suites",
+     "id": 2304283,
+     "preco_total": 1396.12
+    },
+    {
+     "slug": "pousada-benevento",
+     "id": 263588,
+     "preco_total": 2226.51
+    },
+    {
+     "slug": "pousada-big-bear",
+     "id": null,
+     "preco_total": null
+    },
+    {
+     "slug": "pousada-bliss-house-campos-do-jordao1",
+     "id": null,
+     "preco_total": null
+    },
+    {
+     "slug": "pousada-casa-dos-sonhos-campos-do-jordao",
+     "id": 3309402,
+     "preco_total": 1840.0
+    },
+    {
+     "slug": "pousada-villa-d-biagy",
+     "id": null,
+     "preco_total": null
+    },
+    {
+     "slug": "ilha-na-montanha",
+     "id": null,
+     "preco_total": null
+    },
+    {
+     "slug": "pousada-do-conde-campos-do-jordao",
+     "id": null,
+     "preco_total": null
+    },
+    {
+     "slug": "pousada-dom-alfredo-josa-c",
+     "id": null,
+     "preco_total": null
+    },
+    {
+     "slug": "pousada-moderna",
+     "id": null,
+     "preco_total": null
+    },
+    {
+     "slug": "pousada-jardon",
+     "id": null,
+     "preco_total": null
+    },
+    {
+     "slug": "pousada-la-sierra",
+     "id": null,
+     "preco_total": null
+    },
+    {
+     "slug": "pousada-luis-xv",
+     "id": null,
+     "preco_total": null
+    },
+    {
+     "slug": "pousada-recanto-feliz",
+     "id": 786418,
+     "preco_total": 2052.0
+    },
+    {
+     "slug": "pousada-villa-agi-campos-do-jordao",
+     "id": 1526492,
+     "preco_total": 2700.0
+    },
+    {
+     "slug": "pousada-villa-capivary",
+     "id": 236397,
+     "preco_total": 3780.38
+    },
+    {
+     "slug": "pousada-da-lua-campos-do-jordapso",
+     "id": 542153,
+     "preco_total": 2088.0
+    },
+    {
+     "slug": "pousada-bella-locanda",
+     "id": 9181484,
+     "preco_total": 1485.12
+    },
+    {
+     "slug": "pousada-chateau-do-luar",
+     "id": 466251,
+     "preco_total": 1710.23
+    },
+    {
+     "slug": "pousada-charme-vila-natal-campos-do-jordao",
+     "id": 3005921,
+     "preco_total": 2295.0
+    }
+   ]
+  },
+  {
+   "checkin": "2027-08-10",
+   "checkout": "2027-08-11",
+   "tipo": "semana_agosto",
+   "hoteis": [
+    {
+     "slug": "alma-hotel",
+     "id": 421189,
+     "preco_total": 1317.18
+    },
+    {
+     "slug": "linda-casa-em-campos-do-jordao-campos-do-jordao12345",
+     "id": null,
+     "preco_total": null
+    },
+    {
+     "slug": "casa-regaleira",
+     "id": null,
+     "preco_total": null
+    },
+    {
+     "slug": "casablanca-boutique",
+     "id": null,
+     "preco_total": null
+    },
+    {
+     "slug": "villa-nature-campos-do-jordao",
+     "id": 10075349,
+     "preco_total": 1500.0
+    },
+    {
+     "slug": "4-chales-de-luxo-monte-lorobell-campos-do-jordao-sp",
+     "id": null,
+     "preco_total": null
+    },
+    {
+     "slug": "champet-boutique",
+     "id": 13970463,
+     "preco_total": 650.65
+    },
+    {
+     "slug": "charme-chales",
+     "id": null,
+     "preco_total": null
+    },
+    {
+     "slug": "dom-boutique",
+     "id": null,
+     "preco_total": null
+    },
+    {
+     "slug": "euro-suit-campos-do-jordao",
+     "id": 4686715,
+     "preco_total": 258.36
+    },
+    {
+     "slug": "europa-campos-do-jordao",
+     "id": null,
+     "preco_total": null
+    },
+    {
+     "slug": "ascona",
+     "id": 303535,
+     "preco_total": 315.9
+    },
+    {
+     "slug": "l-a-h-hostellerie",
+     "id": 348210,
+     "preco_total": 1513.0
+    },
+    {
+     "slug": "mansao-austriaca",
+     "id": 5288096,
+     "preco_total": 1699.0
+    },
+    {
+     "slug": "matsubara-pousada",
+     "id": null,
+     "preco_total": null
+    },
+    {
+     "slug": "pousada-alpes-azul",
+     "id": null,
+     "preco_total": null
+    },
+    {
+     "slug": "apple-house",
+     "id": 1092370,
+     "preco_total": 374.63
+    },
+    {
+     "slug": "pousada-blue-village-campos-do-jordao",
+     "id": null,
+     "preco_total": null
+    },
+    {
+     "slug": "pousada-cafe-poesia",
+     "id": 2280778,
+     "preco_total": 440.0
+    },
+    {
+     "slug": "pousada-cantinho-da-serra-campos-do-jordao",
+     "id": 3810467,
+     "preco_total": 379.89
+    },
+    {
+     "slug": "pousada-miraggio",
+     "id": 1343695,
+     "preco_total": 530.16
+    },
+    {
+     "slug": "pousada-casa-redonda-campos-do-jordao",
+     "id": 7550569,
+     "preco_total": 1170.0
+    },
+    {
+     "slug": "araucaria-premium",
+     "id": 15926146,
+     "preco_total": 483.0
+    },
+    {
+     "slug": "pousada-confraria-da-terra",
+     "id": null,
+     "preco_total": null
+    },
+    {
+     "slug": "villa-da-biagy-premium",
+     "id": null,
+     "preco_total": null
+    },
+    {
+     "slug": "geada-de-campos",
+     "id": null,
+     "preco_total": null
+    },
+    {
+     "slug": "casa-bicho-preguica-campos-do-jordao",
+     "id": 4883669,
+     "preco_total": 507.86
+    },
+    {
+     "slug": "pousada-murano",
+     "id": 13952548,
+     "preco_total": 1364.54
+    },
+    {
+     "slug": "pousada-santha-serra",
+     "id": 295236,
+     "preco_total": 428.45
+    },
+    {
+     "slug": "pousada-ville-le-mont-campos-do-jordao",
+     "id": 9797293,
+     "preco_total": 680.0
+    },
+    {
+     "slug": "pousada-das-lavandas",
+     "id": 6866038,
+     "preco_total": 1201.12
+    },
+    {
+     "slug": "secreto-boutique",
+     "id": null,
+     "preco_total": null
+    },
+    {
+     "slug": "affeto-boutique-campos-do-jordao",
+     "id": null,
+     "preco_total": null
+    },
+    {
+     "slug": "estalagem-suites",
+     "id": null,
+     "preco_total": null
+    },
+    {
+     "slug": "la-vie-pousada-de-charme",
+     "id": null,
+     "preco_total": null
+    },
+    {
+     "slug": "villa-casato-residenza",
+     "id": null,
+     "preco_total": null
+    },
+    {
+     "slug": "casa-sabor-chocolate",
+     "id": 4786199,
+     "preco_total": 494.0
+    },
+    {
+     "slug": "ville-de-france",
+     "id": null,
+     "preco_total": null
+    },
+    {
+     "slug": "suite-privativa-com-aquecedor-decoracao-nova",
+     "id": null,
+     "preco_total": null
+    },
+    {
+     "slug": "a-nossa-casinha-na-montanha",
+     "id": null,
+     "preco_total": null
+    },
+    {
+     "slug": "araucaria-lodge",
+     "id": 12807440,
+     "preco_total": 405.0
+    },
+    {
+     "slug": "rancho-la-florida-campos-do-jordao",
+     "id": null,
+     "preco_total": null
+    },
+    {
+     "slug": "pousada-caminho-das-pedras",
+     "id": null,
+     "preco_total": null
+    },
+    {
+     "slug": "casa-tres-rios",
+     "id": null,
+     "preco_total": null
+    },
+    {
+     "slug": "center-suiasso-flats",
+     "id": null,
+     "preco_total": null
+    },
+    {
+     "slug": "chateau-campos-do-jordao-flats-premium-by-hostyn",
+     "id": null,
+     "preco_total": null
+    },
+    {
+     "slug": "chateau-la-villette",
+     "id": 266611,
+     "preco_total": 1238.77
+    },
+    {
+     "slug": "bellavista-ltda",
+     "id": null,
+     "preco_total": null
+    },
+    {
+     "slug": "flat-no-capivari-campos-do-jordao12",
+     "id": null,
+     "preco_total": null
+    },
+    {
+     "slug": "chateau",
+     "id": 461864,
+     "preco_total": 634.46
+    },
+    {
+     "slug": "estoril",
+     "id": 336912,
+     "preco_total": 729.94
+    },
+    {
+     "slug": "le-renard",
+     "id": 266851,
+     "preco_total": 1468.5
+    },
+    {
+     "slug": "savoy-campos-do-jordao",
+     "id": 356662,
+     "preco_total": 873.0
+    },
+    {
+     "slug": "solar-d-izabel",
+     "id": 2179520,
+     "preco_total": 381.29
+    },
+    {
+     "slug": "pousada-kaliman-campos-do-jordapso",
+     "id": null,
+     "preco_total": null
+    },
+    {
+     "slug": "pousada-annecy",
+     "id": null,
+     "preco_total": null
+    },
+    {
+     "slug": "araucaria-suites-campos-do-jordao",
+     "id": null,
+     "preco_total": null
+    },
+    {
+     "slug": "recanto-dos-marcelinos-suites",
+     "id": 2304283,
+     "preco_total": 220.0
+    },
+    {
+     "slug": "pousada-benevento",
+     "id": 263588,
+     "preco_total": 395.35
+    },
+    {
+     "slug": "pousada-big-bear",
+     "id": null,
+     "preco_total": null
+    },
+    {
+     "slug": "pousada-bliss-house-campos-do-jordao1",
+     "id": null,
+     "preco_total": null
+    },
+    {
+     "slug": "pousada-casa-dos-sonhos-campos-do-jordao",
+     "id": 3309402,
+     "preco_total": 402.5
+    },
+    {
+     "slug": "pousada-villa-d-biagy",
+     "id": null,
+     "preco_total": null
+    },
+    {
+     "slug": "ilha-na-montanha",
+     "id": null,
+     "preco_total": null
+    },
+    {
+     "slug": "pousada-do-conde-campos-do-jordao",
+     "id": null,
+     "preco_total": null
+    },
+    {
+     "slug": "pousada-dom-alfredo-josa-c",
+     "id": null,
+     "preco_total": null
+    },
+    {
+     "slug": "pousada-moderna",
+     "id": null,
+     "preco_total": null
+    },
+    {
+     "slug": "pousada-jardon",
+     "id": null,
+     "preco_total": null
+    },
+    {
+     "slug": "pousada-la-sierra",
+     "id": null,
+     "preco_total": null
+    },
+    {
+     "slug": "pousada-luis-xv",
+     "id": null,
+     "preco_total": null
+    },
+    {
+     "slug": "pousada-recanto-feliz",
+     "id": 786418,
+     "preco_total": 513.0
+    },
+    {
+     "slug": "pousada-villa-agi-campos-do-jordao",
+     "id": 1526492,
+     "preco_total": 450.0
+    },
+    {
+     "slug": "pousada-villa-capivary",
+     "id": 236397,
+     "preco_total": 890.0
+    },
+    {
+     "slug": "pousada-da-lua-campos-do-jordapso",
+     "id": 542153,
+     "preco_total": 1044.0
+    },
+    {
+     "slug": "pousada-bella-locanda",
+     "id": 9181484,
+     "preco_total": 313.27
+    },
+    {
+     "slug": "pousada-chateau-do-luar",
+     "id": 466251,
+     "preco_total": 230.95
+    },
+    {
+     "slug": "pousada-charme-vila-natal-campos-do-jordao",
+     "id": 3005921,
+     "preco_total": 243.0
+    }
+   ]
+  }
+ ]
+}

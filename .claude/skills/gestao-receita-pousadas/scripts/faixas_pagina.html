@@ -1,0 +1,252 @@
+<title>Régua de Preços das Pousadas</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Spectral:wght@500;600&family=Public+Sans:wght@400;500;600;700&display=swap">
+<style>
+/* Layout: uma coluna de leitura (faixas → tabela por hotel → valor por quarto → calendário → método); tabelas com rolagem própria e primeira coluna fixa */
+:root {
+  --bg: #f4f6f5; --surface: #ffffff; --ink: #17201e; --muted: #56645f; --line: #d6dfdb;
+  --accent: #1d6656; --accent-soft: #e0ede8; --warn: #8a4f0c; --warn-soft: #faedd8;
+  --f1: #e1eee8; --f2: #c0ddd1; --f3: #8cc3af; --f4: #2f7a64; --f5: #17574a;
+  --f-ink-dark: #17201e; --f-ink-light: #ffffff; --blocked: #e9ecea; --blocked-ink: #5f6a66; --part: #f3e3c6;
+  --display: "Spectral", Georgia, "Times New Roman", serif;
+  --body: "Public Sans", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #101715; --surface: #17201e; --ink: #e5eeea; --muted: #a0afaa; --line: #2b3935;
+  --accent: #6cc4aa; --accent-soft: #1c3832; --warn: #e6ad62; --warn-soft: #39291a;
+  --f1: #1c2b27; --f2: #224237; --f3: #2c5e4f; --f4: #4f9e86; --f5: #7fd0b6;
+  --f-ink-dark: #e5eeea; --f-ink-light: #0e1513; --blocked: #1b2220; --blocked-ink: #8d9a96; --part: #3a2f1d; color-scheme: dark; } }
+:root[data-theme="dark"] {
+  --bg: #101715; --surface: #17201e; --ink: #e5eeea; --muted: #a0afaa; --line: #2b3935;
+  --accent: #6cc4aa; --accent-soft: #1c3832; --warn: #e6ad62; --warn-soft: #39291a;
+  --f1: #1c2b27; --f2: #224237; --f3: #2c5e4f; --f4: #4f9e86; --f5: #7fd0b6;
+  --f-ink-dark: #e5eeea; --f-ink-light: #0e1513; --blocked: #1b2220; --blocked-ink: #8d9a96; --part: #3a2f1d; color-scheme: dark; }
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--ink); font-family: var(--body); font-size: 15px; line-height: 1.5; }
+.wrap { max-width: 1100px; margin: 0 auto; padding-block: 28px 56px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px));
+  display: grid; gap: 34px; }
+h1, h2 { font-family: var(--display); font-weight: 600; text-wrap: balance; margin: 0; letter-spacing: -0.01em; }
+h1 { font-size: clamp(28px, 4.2vw, 40px); line-height: 1.1; }
+h2 { font-size: 23px; }
+p { margin: 0; max-width: 70ch; }
+.eyebrow { font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); }
+.lead { color: var(--muted); }
+header, section { display: grid; gap: 12px; min-width: 0; }
+.meta { display: flex; flex-wrap: wrap; gap: 6px 18px; font-size: 13px; color: var(--muted); }
+.meta b { color: var(--ink); font-weight: 600; }
+.box { background: var(--accent-soft); border-radius: 12px; padding: 12px 16px; font-size: 14px; display: grid; gap: 4px; }
+.box b { font-weight: 600; }
+.legend { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 8px; }
+.chip { border-radius: 10px; padding: 10px 12px; display: grid; gap: 2px; min-width: 0; }
+.chip .n { font-weight: 700; font-size: 14px; }
+.chip .u { font-size: 12.5px; line-height: 1.35; }
+.c1 { background: var(--f1); color: var(--f-ink-dark); } .c2 { background: var(--f2); color: var(--f-ink-dark); }
+.c3 { background: var(--f3); color: var(--f-ink-dark); } .c4 { background: var(--f4); color: var(--f-ink-light); }
+.c5 { background: var(--f5); color: var(--f-ink-light); }
+.tabs { display: flex; gap: 6px; flex-wrap: wrap; }
+.tab { font: inherit; font-weight: 600; border: 1px solid var(--line); background: var(--surface); color: var(--ink);
+  padding: 8px 14px; border-radius: 999px; cursor: pointer; }
+.tab[aria-selected="true"] { background: var(--accent); border-color: var(--accent); color: var(--surface); }
+.tab:focus-visible, .cell:focus-visible, select:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.scroll { overflow-x: auto; border: 1px solid var(--line); border-radius: 12px; background: var(--surface); }
+table { border-collapse: separate; border-spacing: 0; width: 100%; font-variant-numeric: tabular-nums; }
+th, td { padding: 9px 10px; text-align: left; border-bottom: 1px solid var(--line); vertical-align: middle; }
+thead th { font-size: 12px; font-weight: 600; color: var(--muted); letter-spacing: 0.02em; white-space: nowrap; background: var(--surface); }
+tbody tr:last-child td, tbody tr:last-child th { border-bottom: 0; }
+.sticky { position: sticky; left: 0; z-index: 1; background: var(--surface); box-shadow: 1px 0 0 var(--line); }
+th.tipo { font-weight: 600; min-width: 168px; max-width: 220px; }
+th.tipo small { display: block; font-weight: 400; color: var(--muted); font-size: 12px; line-height: 1.35; }
+.warnbadge { display: inline-block; margin-top: 3px; font-size: 11.5px; font-weight: 600; color: var(--warn); background: var(--warn-soft); border-radius: 6px; padding: 1px 6px; }
+td.v { padding: 4px; min-width: 88px; }
+.cell { font: inherit; width: 100%; border: 0; border-radius: 8px; padding: 8px 6px; cursor: pointer; text-align: center;
+  font-weight: 600; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.cell.blocked { background: var(--blocked); color: var(--blocked-ink); text-decoration: line-through; font-weight: 500; }
+.cell.part { outline: 2px dashed var(--warn); outline-offset: -4px; }
+.cell.sel { box-shadow: inset 0 0 0 2px var(--ink); }
+td.piso { color: var(--warn); font-weight: 600; min-width: 110px; max-width: 200px; font-size: 13.5px; }
+td.hoje { white-space: nowrap; }
+td.hoje b { display: block; }
+td.hoje span { font-size: 12.5px; color: var(--muted); }
+.note { font-size: 13px; color: var(--muted); }
+.keys { display: flex; flex-wrap: wrap; gap: 6px 16px; font-size: 12.5px; color: var(--muted); }
+.key { display: inline-flex; align-items: center; gap: 6px; }
+.sw { width: 26px; height: 16px; border-radius: 4px; display: inline-block; }
+.calc { display: grid; gap: 16px; background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 18px; }
+.controls { display: flex; flex-wrap: wrap; gap: 12px; }
+.controls label { display: grid; gap: 4px; font-size: 12px; font-weight: 600; color: var(--muted); min-width: 0; }
+select { font: inherit; color: var(--ink); background: var(--bg); border: 1px solid var(--line); border-radius: 8px; padding: 8px 10px; max-width: 100%; }
+.rooms { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px; }
+.room { border: 1px solid var(--line); border-radius: 10px; padding: 12px; display: grid; gap: 2px; background: var(--bg); align-content: start; }
+.room .nm { font-weight: 600; }
+.room .pub { font-family: var(--display); font-size: 26px; font-weight: 600; font-variant-numeric: tabular-nums; }
+.room .env { font-size: 12.5px; color: var(--muted); font-variant-numeric: tabular-nums; }
+.room .rn { font-size: 12.5px; color: var(--warn); }
+.room.below .pub { color: var(--warn); }
+.order { background: var(--accent-soft); border-radius: 10px; padding: 12px 14px; display: grid; gap: 6px; font-size: 14px; }
+.order q { font-weight: 600; }
+.alert { background: var(--warn-soft); color: var(--ink); border-radius: 10px; padding: 10px 14px; font-size: 13.5px; }
+.cal th, .cal td { font-size: 13.5px; }
+.cal td.when { color: var(--muted); min-width: 120px; }
+.cal .tags { display: flex; flex-wrap: wrap; gap: 4px; }
+.tag { font-size: 12px; font-weight: 600; border-radius: 6px; padding: 1px 7px; background: var(--accent-soft); color: var(--ink); white-space: nowrap; }
+.lvl { font-size: 12px; font-weight: 600; white-space: nowrap; color: var(--muted); }
+.method { display: grid; gap: 6px; font-size: 13.5px; color: var(--muted); margin: 0; padding-left: 18px; }
+@media (max-width: 720px) {
+  .legend { grid-template-columns: repeat(2, minmax(0, 1fr)); } .legend .chip:last-child { grid-column: span 2; }
+  th.tipo { min-width: 132px; max-width: 150px; }
+}
+@media (prefers-reduced-motion: no-preference) { .cell { transition: box-shadow .12s ease; } }
+</style>
+
+<div class="wrap">
+  <header>
+    <span class="eyebrow">Recanto dos Moinhos · Villa Dolce Amore · Campos do Jordão</span>
+    <h1>Régua de preços das pousadas</h1>
+    <p class="lead" id="lead"></p>
+    <div class="meta" id="meta"></div>
+    <div class="box" id="javale"></div>
+  </header>
+
+  <section aria-labelledby="t-faixas">
+    <h2 id="t-faixas">As cinco faixas</h2>
+    <div class="legend" id="legend"></div>
+  </section>
+
+  <section aria-labelledby="t-hotel">
+    <h2 id="t-hotel">Tabela por hotel</h2>
+    <div class="tabs" role="tablist" id="tabs"></div>
+    <div class="scroll"><table id="tab"><thead></thead><tbody></tbody></table></div>
+    <div class="keys">
+      <span class="key"><span class="sw c3"></span>faixa que pode ser usada</span>
+      <span class="key"><span class="sw" style="background: var(--blocked)"></span>abaixo do seu piso em todas as noites</span>
+      <span class="key"><span class="sw c3" style="outline: 2px dashed var(--warn); outline-offset: -3px"></span>abaixo do piso em parte das noites (feriados com piso maior)</span>
+    </div>
+    <p class="note" id="tabnote"></p>
+  </section>
+
+  <section aria-labelledby="t-calc">
+    <h2 id="t-calc">Valor de cada quarto na faixa</h2>
+    <div class="calc">
+      <div class="controls">
+        <label for="s-hotel">Pousada<select id="s-hotel"></select></label>
+        <label for="s-tipo">Tipo de noite<select id="s-tipo"></select></label>
+        <label for="s-faixa">Faixa<select id="s-faixa"></select></label>
+      </div>
+      <div class="rooms" id="rooms"></div>
+      <div class="alert" id="calc-alert" hidden></div>
+      <div class="order" id="order"></div>
+    </div>
+  </section>
+
+  <section aria-labelledby="t-cal">
+    <h2 id="t-cal">Próximos 12 meses: qual linha da tabela vale em cada período</h2>
+    <div class="scroll"><table class="cal" id="cal"><thead><tr><th class="sticky">Período</th><th>Linha da tabela</th><th>Noites</th><th>Demanda</th></tr></thead><tbody></tbody></table></div>
+  </section>
+
+  <section aria-labelledby="t-met">
+    <h2 id="t-met">Como os números foram medidos</h2>
+    <ul class="method" id="method"></ul>
+  </section>
+</div>
+
+<script>
+const DATA = /*DATA*/null;
+const brl = v => "R$ " + Math.round(v).toLocaleString("pt-BR");
+const dm = s => { const [y, m, d] = s.split("-"); return `${d}/${m}/${y.slice(2)}`; };
+const HOTEL = { Recanto: "Recanto dos Moinhos", Villa: "Villa Dolce Amore" };
+const CURTO = { Recanto: "Recanto", Villa: "Villa" };
+const REFQ = { Recanto: "Moinhos", Villa: "King Spa 7" };
+const LEITURA = ["25% dos concorrentes cobram menos", "metade cobra menos", "65% cobram menos", "75% cobram menos", "só 10% cobram mais"];
+const NIVEL = { "muito baixa": "Muito baixa", "baixa": "Baixa", "média": "Média", "alta": "Alta", "muito alta": "Muito alta" };
+let hotel = "Recanto", sel = { tipo: "fds", faixa: "F3" };
+try { const h = localStorage.getItem("faixas-hotel"); if (h && HOTEL[h]) hotel = h; } catch (e) {}
+
+function head() {
+  document.getElementById("lead").textContent = `Cinco faixas de preço por tipo de noite, tiradas dos ${DATA.n_lista} concorrentes com hidromassagem e vista da sua lista na Booking. Você escolhe a faixa de um período e eu gravo os pisos de cada noite nela: a noite sobe com as vendas e, perto da data, desce para a faixa de baixo se não vender. Nunca abaixo dos seus pisos.`;
+  document.getElementById("meta").innerHTML = `<span>Mercado medido em <b>${DATA.medido_em}</b> (${DATA.n_estadias} estadias)</span><span>Coluna "Hoje" com os preços de <b>${dm(DATA.hoje)}</b></span><span>Valores por noite que o hóspede vê na Booking, quarto com hidro, café, 2 adultos</span>`;
+  document.getElementById("javale").innerHTML = `<b>O que já vale hoje</b><span>${DATA.ja_vale}</span>`;
+  document.getElementById("legend").innerHTML = DATA.faixas.map((f, i) =>
+    `<div class="chip c${f.n}"><span class="n">F${f.n} ${f.nome}</span><span class="u">${LEITURA[i]}</span></div>`).join("");
+}
+
+function tabs() {
+  const t = document.getElementById("tabs");
+  t.innerHTML = Object.keys(HOTEL).map(h => `<button class="tab" role="tab" id="tab-${h}" aria-selected="${h === hotel}">${HOTEL[h]}</button>`).join("");
+  t.querySelectorAll(".tab").forEach(b => b.addEventListener("click", () => { hotel = b.id.slice(4); try { localStorage.setItem("faixas-hotel", hotel); } catch (e) {} render(); }));
+}
+
+function pisoTxt(ln) { return ln.piso_texto; }
+
+function table() {
+  const linhas = DATA.hoteis[hotel];
+  document.querySelector("#tab thead").innerHTML = `<tr><th class="sticky">Tipo de noite (${REFQ[hotel]})</th>${DATA.faixas.map(f => `<th>F${f.n} ${f.nome}</th>`).join("")}<th>Seu piso</th><th>Hoje</th></tr>`;
+  const tb = document.querySelector("#tab tbody");
+  tb.innerHTML = linhas.map(ln => {
+    const meses = ln.meses.length;
+    const info = `${ln.estadias} ${ln.estadias === 1 ? "estadia" : "estadias"} em ${meses} ${meses === 1 ? "mês" : "meses"}, ${ln.concorrentes} concorrentes`;
+    const warn = ln.amostra_pequena ? `<span class="warnbadge">amostra pequena</span>` : "";
+    const cells = Object.entries(ln.faixas).map(([k, v]) => {
+      const n = +k.slice(1), blocked = ln.abaixo_do_piso.includes(k), part = ln.abaixo_em_parte.includes(k), isSel = sel.tipo === ln.tipo && sel.faixa === k;
+      const cls = blocked ? "cell blocked" : `cell c${n}${part ? " part" : ""}`;
+      const title = blocked ? `${brl(v)}: abaixo do seu piso de ${pisoTxt(ln)}` : part ? `${brl(v)}: abaixo do piso em parte das noites (${pisoTxt(ln)})` : `${brl(v)} na ${k}`;
+      return `<td class="v"><button class="${cls}${isSel ? " sel" : ""}" data-tipo="${ln.tipo}" data-faixa="${k}" title="${title}" aria-label="${ln.nome}, ${title}">${brl(v)}</button></td>`;
+    }).join("");
+    const hoje = ln.hoje_publico ? `<b>${brl(ln.hoje_publico)}</b><span>${ln.hoje_posicao}</span>` : `<span>sem noite medida à frente</span>`;
+    return `<tr><th class="tipo sticky" scope="row">${ln.nome}<small>${info}</small>${warn}</th>${cells}<td class="piso">${pisoTxt(ln)}</td><td class="hoje">${hoje}</td></tr>`;
+  }).join("");
+  tb.querySelectorAll(".cell").forEach(b => b.addEventListener("click", () => { sel = { tipo: b.dataset.tipo, faixa: b.dataset.faixa }; render(); document.getElementById("t-calc").scrollIntoView({ block: "start", behavior: "smooth" }); }));
+  document.getElementById("tabnote").textContent = hotel === "Recanto"
+    ? "Panorâmica I e Panorâmica II ficam no mesmo valor da Moinhos. A Afrodite fica 20% acima de domingo a quinta e 5% acima na sexta, no sábado e no feriado; no fim de semana, até fevereiro, nunca abaixo de R$ 1.600 (sua faixa de R$ 1.600 a R$ 1.800). Toque num valor para ver todos os quartos."
+    : "A King Spa 2 fica no mesmo valor da King Spa 7 e a Balcony, que não tem banheira, 10% abaixo. Toque num valor para ver todos os quartos.";
+}
+
+function orderText(ln, f) {
+  const n = f.n, val = brl(ln.faixas["F" + n]);
+  const sobe = n < 5 ? " A noite sobe com as vendas até a F5 (só 10% dos concorrentes acima)." : " A F5 já é o teto: a noite fica nela.";
+  const desce = n > 1 ? ` A partir de 7 dias antes da data, se não entrou nenhuma reserva desde o seu pedido, o piso desce para a F${n - 1}.` : " A F1 é a mais baixa: perto da data ela não desce mais.";
+  return `<span class="note">Como pedir</span><span><q>${CURTO[hotel]}, ${ln.nome.split(" (")[0].toLowerCase()}, faixa ${n}</q> e o período (ex.: "fins de semana de dezembro").</span>
+    <span>Eu gravo o piso de cada noite perto de ${val} na ${REFQ[hotel]} (o valor exato sai da medição de cada noite) e tiro essas noites das ordens anteriores.${sobe}${desce} Nunca abaixo do seu piso.</span>
+    <span class="note">O motor grava de hoje a 60 dias à frente: um pedido para mais longe fica guardado e passa a valer quando a data entra nessa janela.</span>`;
+}
+
+function calc() {
+  const sh = document.getElementById("s-hotel"), st = document.getElementById("s-tipo"), sf = document.getElementById("s-faixa");
+  sh.innerHTML = Object.keys(HOTEL).map(h => `<option value="${h}"${h === hotel ? " selected" : ""}>${HOTEL[h]}</option>`).join("");
+  const linhas = DATA.hoteis[hotel];
+  if (!linhas.some(l => l.tipo === sel.tipo)) sel.tipo = linhas[0].tipo;
+  st.innerHTML = linhas.map(l => `<option value="${l.tipo}"${l.tipo === sel.tipo ? " selected" : ""}>${l.nome}</option>`).join("");
+  sf.innerHTML = DATA.faixas.map(f => `<option value="F${f.n}"${"F" + f.n === sel.faixa ? " selected" : ""}>F${f.n} ${f.nome}</option>`).join("");
+  const ln = linhas.find(l => l.tipo === sel.tipo), q = ln.quartos[sel.faixa], f = DATA.faixas.find(x => "F" + x.n === sel.faixa);
+  const piso = ln.pisos_quartos || {};
+  document.getElementById("rooms").innerHTML = Object.entries(q).map(([c, v]) => {
+    const p = piso[c], below = p && v.publico < p;
+    const extra = v.nota ? `<span class="rn">${v.nota}, até ${dm(ln.afrodite_fds_ate)}</span>` : below ? `<span class="rn">abaixo do piso de ${brl(p)}</span>` : "";
+    return `<div class="room${below ? " below" : ""}"><span class="nm">${DATA.nomes[c]}</span><span class="pub">${brl(v.publico)}</span><span class="env">gravo cerca de ${brl(v.enviado)} no PriceLabs</span>${extra}</div>`;
+  }).join("");
+  const al = document.getElementById("calc-alert");
+  if (ln.abaixo_do_piso.includes(sel.faixa)) { al.hidden = false; al.textContent = `Nesta faixa a ${REFQ[hotel]} ficaria abaixo do seu piso (${pisoTxt(ln)} na Booking) em todas as noites deste tipo. Só uso se você liberar o piso nessas noites.`; }
+  else if (ln.abaixo_em_parte.includes(sel.faixa)) { al.hidden = false; al.textContent = `Em parte das noites deste tipo o seu piso é maior que esta faixa (${pisoTxt(ln)}): nelas a noite fica no piso.`; }
+  else al.hidden = true;
+  document.getElementById("order").innerHTML = orderText(ln, f);
+  sh.onchange = () => { hotel = sh.value; render(); };
+  st.onchange = () => { sel.tipo = st.value; render(); };
+  sf.onchange = () => { sel.faixa = sf.value; render(); };
+}
+
+function cal() {
+  const tnames = DATA.tipos;
+  document.querySelector("#cal tbody").innerHTML = DATA.calendario.map(c => {
+    const dias = c.dias === "dom-qui" ? "dom a qui" : c.dias === "sex-sab" ? "sex e sáb" : "todas as noites";
+    const tags = c.tipos.map(t => `<span class="tag">${tnames[t.tipo].split(" (")[0]}${c.tipos.length > 1 ? ` · ${t.noites}` : ""}</span>`).join("");
+    return `<tr><th class="sticky tipo" scope="row" style="font-weight:500">${c.nome}</th><td><div class="tags">${tags}</div></td><td class="when">${dm(c.inicio)} a ${dm(c.fim)}, ${dias}</td><td class="lvl">${NIVEL[c.nivel] || c.nivel}</td></tr>`;
+  }).join("");
+}
+
+function method() { document.getElementById("method").innerHTML = DATA.metodo.map(m => `<li>${m}</li>`).join(""); }
+
+function render() { tabs(); table(); calc(); }
+if (DATA) { head(); render(); cal(); method(); }
+</script>

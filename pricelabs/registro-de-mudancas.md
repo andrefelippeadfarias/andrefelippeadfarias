@@ -4062,6 +4062,52 @@ A reabertura chegou à Booking só nas datas mais próximas. Pedido ao dono: usa
 **Ledger:** 32 passos registrados. **Revisão de 12 meses:** em dia (01/11).
 **Como desfazer:** pedir "Desfaça a rotina de 04/11" (as regras anteriores estão no rascunho da sessão).
 
+## 04/11/2026, 09:00 a 10:45 — Régua de faixas de preço por hotel (pedido do dono)
+
+**Pedido do dono:** "Então, vamos graduar os valores de acordo com o mercado. Crie uma tabela para cada hotel para que possamos fazer uma graduação de valores de acordo com os preços de mercado para que eu possa sempre orientar em qual faixa vamos flutuar."
+
+**O que foi feito (só leitura nos canais; nenhum preço mudou):**
+- Cinco faixas por tipo de noite, nos 77 concorrentes com hidro e vista da lista do dono: F1 Ocupar (p25), F2 Mercado (p50), F3 Acima do mercado (p65), F4 Premium (p75), F5 Topo (p90). Valor por noite que o hóspede vê na Booking, quarto com hidro, café, 2 adultos.
+- Medição: 65 estadias de 06/11/2026 a 21/09/2027. Varreduras de 01/11 (fins de semana, feriados e dezembro) e de 03/11 (dias de semana de novembro), mais duas varreduras novas pelo conector oficial em 04/11: 16 estadias de fevereiro a outubro de 2027 e 15 complementares (pacotes de Natal e Réveillon, 27-29/12, dias de semana do ano e do inverno). Brutos em `pricelabs/pesquisa-booking/faixas-2026-11/`.
+- Tipos de noite: dia de semana, fim de semana, feriado, Natal (23-26/12), entre Natal e Réveillon (27-29/12), Réveillon (30/12-02/01), inverno dia de semana e inverno fim de semana com feriadões.
+- Tabelas: `pricelabs/faixas-de-preco-por-hotel.md` e a página "Régua de Preços das Pousadas", com uma calculadora que mostra o valor de cada quarto na faixa escolhida e o calendário de 12 meses.
+
+**Recanto (Moinhos; Panorâmica I e II no mesmo valor; Afrodite +20% dom-qui e +5% sex-sáb-feriado):**
+
+| Tipo | F1 | F2 | F3 | F4 | F5 | Piso do dono | Hoje |
+|---|---|---|---|---|---|---|---|
+| Dia de semana | 488 ✗ | 648 ✗ | 990 | 1.266 | 1.784 | 768 | 797 |
+| Fim de semana | 907 ✗ | 1.192 ✗ | 1.488 | 1.697 | 2.158 | 1.260 | 1.537 |
+| Feriado | 1.151 ✗ | 1.488 ◐ | 1.821 | 2.013 | 2.810 | 1.500 (1.200 na Consciência Negra e em Tiradentes) | 1.516 |
+| Natal | 1.244 ✗ | 1.652 | 2.182 | 2.679 | 3.503 | 1.500 | 1.500 |
+| Réveillon | 1.520 | 2.293 | 2.857 | 3.318 | 3.946 | 1.500 | 1.918 |
+
+**Villa (King Spa 7; King Spa 2 no mesmo valor; Balcony −10%):** as mesmas faixas; pisos de R$ 614 (dia de semana), R$ 961 (fim de semana) e R$ 1.667 (feriado; R$ 1.333 na Consciência Negra e em Tiradentes). Hoje: dia de semana R$ 616 (no piso), fim de semana R$ 1.554 (≈F3), Natal R$ 1.674 (no piso), Réveillon R$ 2.155 (entre F1 e F2).
+
+**Revisão independente antes de entregar (3 revisores e 1 verificação):**
+- A conta estava certa: 50 estadias, zero divergências.
+- **Classificação:** 27-29/12, 02/01 e o Aniversário de SP estavam no tipo errado. O mercado precifica o Aniversário de SP como um fim de semana comum.
+- **Medição:**
+  - Natal, Réveillon e inverno tinham poucas estadias (varredura complementar feita).
+  - Novembro dominava o dia de semana. Agora a mediana sai por mês e depois entre os meses.
+  - 8 fatores de hidro "incertos", acima de 2,0, inflavam as faixas em até 18%. Agora ficam limitados a 2,0.
+- **Pisos:** o piso de feriado e o dos feriadões de inverno saíam de uma noite só. Agora o piso é de cada noite, com as exceções pelo nome.
+- **Tradução "faixa N" em ordem:**
+  - o `percentil` da ordem é lido na âncora geral do motor, por isso a faixa entra pelos `pisos_enviados` e pelo `topo_enviados`;
+  - a ordem nova tem que tirar as noites das ordens anteriores;
+  - regras.md 4e foi reescrita.
+- **Página e textos:**
+  - Afrodite no fim de semana com o mínimo de R$ 1.600;
+  - "Hoje" em reais;
+  - textos sem jargão;
+  - primeira coluna fixa no celular;
+  - contraste.
+
+**Código:** `scripts/faixas_dono.py` (construir, tabela, pagina, noite), modelo `scripts/faixas_pagina.html`, testes `TestFaixasDono` (119 testes OK). Dados em `dados/faixas_dono.json` e `dados/faixas_dono_tipos.json`.
+
+**Como usar:** o dono diz "Recanto, fins de semana de dezembro, faixa 4". A skill mede a régua das noites, grava os pisos na faixa (nunca abaixo do piso do dono), a escada sobe até a F5 com as vendas e, a 7 dias sem reserva nova desde o pedido, o piso desce uma faixa (regras.md 4e).
+**Como desfazer:** nada foi gravado nos canais. Apagar `dados/faixas_dono*.json`, `scripts/faixas_dono.py`, `scripts/faixas_pagina.html` e a seção 4e.
+
 > **Regras em vigor:** desde 06/10/2026 elas ficam em `.claude/skills/gestao-receita-pousadas/references/regras.md`. Este arquivo guarda só o histórico das mudanças.
 
 ## O que só pode ser feito na tela (passo a passo para você)

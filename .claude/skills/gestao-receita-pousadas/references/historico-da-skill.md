@@ -2,6 +2,17 @@
 
 Cada mudança feita na própria Skill (regras, parâmetros, scripts, fluxo) entra aqui: data, o que mudou, por quê (evidência) e como desfazer. A entrada mais nova fica em cima.
 
+## 04/11/2026 10:45 BRT: régua de faixas F1 a F5 por hotel e tipo de noite (dono)
+- **Por quê:** dono, 04/11: "Crie uma tabela para cada hotel ... para que eu possa sempre orientar em qual faixa vamos flutuar."
+- **O que mudou:**
+  - `scripts/faixas_dono.py`: medição por tipo de noite (mediana por mês), pisos por noite com exceções, posição de hoje, calendário e página.
+  - Também `scripts/faixas_pagina.html`, `dados/faixas_dono.json` e `dados/faixas_dono_tipos.json`.
+  - `regras.md` 4e: faixas e tradução "faixa N" em ordem `alvo_por_data` pelos pisos.
+  - SKILL.md: linha dos arquivos.
+  - Testes `TestFaixasDono`.
+  - Varreduras brutas em `pricelabs/pesquisa-booking/faixas-2026-11/`.
+- **Como desfazer:** apagar esses arquivos e a seção 4e; nada foi gravado no PriceLabs nem no Beds24.
+
 ## 04/11/2026 08:20 BRT: proteção da noite esgotada não fica abaixo do piso da ordem por data
 - **Por quê:** rotina de 04/11. Com a Panorâmica II de volta ao motor, a proteção das noites esgotadas de 08-12/11 iria a R$ 1.220 (p90 da âncora geral de dia de semana, R$ 446-590 públicos), abaixo do piso da régua com hidro dessas noites (R$ 1.409-1.624; dono 03/11, "Aplique a regua com Hidro"). King Spa 2 12/12: R$ 1.479 contra R$ 2.059 da régua da Villa.
 - **O que mudou:** `pace.py` (chamada de `protecao_esgotada`): o piso extra passa a incluir `pisos_enviados[quarto]` da ordem `alvo_por_data` da noite, só com `max` (o piso baixo das ordens de base do mercado não muda nada). Teste em `test_protecao_esgotada_e_ajuste_de_tetos`.

@@ -426,4 +426,12 @@ Cada item tem data e evidência. Para incluir um item novo: data, o fato, a evid
 - **PriceLabs pode ficar sem enviar sem avisar.** `last_date_pushed` parado em 03/11 19:30 UTC e nenhum `push_price` nos logs, com o envio ligado e os dados de volta. Toda rotina completa confere o `last_date_pushed` (get_listing_data de um quarto por pousada) e pede o Sync Now se passar de 18 h.
 - **Reservas em lote no mesmo segundo merecem conferência em tempo de invasão.** Três reservas da Booking na King Spa 7 com o mesmo `bookingTime` (07:22:46 BRT) vieram na hora em que a Villa sumiu da busca. Podem ser legítimas (preço coerente), mas com a extranet invadida o dono confere na extranet.
 - **Busca da Booking por nome falha até para a nossa pousada.** `hotel_names` não achou nem a Recanto nem a Villa; a busca por coordenadas (raio de 400 m) acha os vizinhos e mostra quem sumiu.
+- **Régua de faixas (pedido do dono):**
+  - **O `percentil` de uma ordem `alvo_por_data` é lido na âncora geral do motor, não na régua com hidro.** A âncora fica em 33% a 73% da régua. Para levar a noite a uma faixa, o valor entra pelos `pisos_enviados` e pelo `topo_enviados`.
+  - **Uma ordem nova só vale se as noites saírem das anteriores.** Em ordens sobrepostas, vencem o menor percentil e o menor piso, e o `vendidas_base` vem da primeira ordem do arquivo.
+  - **Feriado no calendário não é feriado no mercado:**
+    - o Aniversário de SP é precificado como um fim de semana comum (mediana por noite R$ 1.023 contra R$ 1.240);
+    - a véspera do Réveillon (29/12) fica no preço de 27-28/12, perto de R$ 1.000, e não no do pacote (cerca de R$ 2.300).
+  - **A medição de longe tem menos hotéis.** Com 6 a 11 meses de antecedência, só 20 a 48 dos 77 concorrentes têm preço com café, e alguns mostram tarifa fixa de balcão. Remedir cada período uns 60 dias antes.
+  - **Fatores r_hidro "incertos" de 2,0 a 2,9** transformavam pousadas baratas em topo de mercado. Com o limite de 2,0, as faixas caem até 18% em alguns tipos.
 

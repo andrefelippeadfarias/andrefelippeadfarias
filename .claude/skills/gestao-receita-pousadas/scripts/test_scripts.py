@@ -2330,3 +2330,66 @@ class TestPace(unittest.TestCase):
         cfg["por_curto"]["Q2"]["fora_do_motor"] = True
         res = pace.plano(cfg, anc, {"Q2": self._cal(1240, 0, 2)}, hoje, {}, {"passos": []}, dias=30)
         self.assertEqual(res["itens"], [])
+
+
+class TestFaixasDono(unittest.TestCase):
+    """Faixas de preço do dono (pedido de 04/11/2026): percentis do mercado com hidro por tipo de noite."""
+
+    def test_quantil_posicao_e_tipo(self):
+        import faixas_dono as f
+        from comum import carregar_quartos
+        cfg = carregar_quartos()
+        self.assertEqual(f.quantil([100, 200, 300, 400, 500], 50), 300)
+        self.assertEqual(f.quantil([100, 200], 25), 125)
+        fx = {"F1": 400, "F2": 650, "F3": 880, "F4": 1100, "F5": 1570}
+        self.assertEqual(f.posicao(300, fx), "abaixo da F1")
+        self.assertEqual(f.posicao(660, fx), "≈F2")
+        self.assertEqual(f.posicao(770, fx), "entre F2 e F3")
+        self.assertEqual(f.posicao(2000, fx), "acima da F5")
+        casos = {date(2026, 11, 17): "semana", date(2026, 11, 28): "fds", date(2026, 11, 20): "feriado",
+                 date(2026, 12, 23): "natal", date(2026, 12, 27): "entre_festas", date(2026, 12, 28): "entre_festas",
+                 date(2026, 12, 29): "entre_festas", date(2026, 12, 30): "reveillon", date(2027, 1, 2): "reveillon",
+                 date(2027, 1, 23): "fds",              # Aniversário de SP: o mercado trata como fim de semana
+                 date(2027, 7, 13): "inverno_semana", date(2027, 5, 27): "inverno_fds", date(2027, 7, 9): "inverno_fds",
+                 date(2027, 4, 21): "feriado"}
+        for d, t in casos.items():
+            self.assertEqual(f.tipo_da_noite(d, cfg), t, d)
+
+    def test_construir_mes_fator_incerto_e_valores_por_quarto(self):
+        import json as _json
+        import tempfile
+        import faixas_dono as f
+        from comum import carregar_quartos
+        cfg = carregar_quartos()
+        cad = {"r_hidro_padrao": 1.5, "hoteis": [{"slug": f"h{i}", "r_hidro": None} for i in range(20)]
+               + [{"slug": "villa-dolce-amore-boutique-panoramica"}]}
+        cad["hoteis"][0] = {"slug": "h0", "r_hidro": 2.8, "r_hidro_fonte": "escada 20/10 (k=4, certeza incerto)"}
+        self.assertEqual(f.r_hidro(cad["hoteis"][0], 1.5), 2.0)           # fator incerto limitado a 2,0
+        self.assertEqual(f.r_hidro({"r_hidro": 2.8, "r_hidro_fonte": "medido"}, 1.5), 2.8)
+
+        def est(ci, co, base):
+            return {"checkin": ci, "checkout": co,
+                    "hoteis": [{"slug": f"h{i}", "preco_total": base + 10 * i} for i in range(20)]
+                    + [{"slug": "villa-dolce-amore-boutique-panoramica", "preco_total": 5}, {"slug": "fora", "preco_total": 9}]}
+        # 3 noites de novembro (mesmo nível) e 1 de março (mais cara): a mediana por mês não deixa novembro dominar
+        es = [est("2026-11-17", "2026-11-18", 100), est("2026-11-18", "2026-11-19", 100), est("2026-11-24", "2026-11-25", 100),
+              est("2027-03-03", "2027-03-04", 300)]
+        with tempfile.NamedTemporaryFile("w", suffix=".json", delete=False) as t:
+            _json.dump({"estadias": es}, t)
+        fx = f.construir([t.name], cad, {})
+        pt = fx["por_tipo"]["semana"]
+        self.assertEqual(pt["concorrentes"], 20)          # sem a Villa e sem hotel fora do cadastro
+        self.assertEqual(pt["meses"], ["2026-11", "2027-03"])
+        self.assertTrue(pt["amostra_pequena"])            # 4 estadias mas só 20 concorrentes
+        nov = fx["estadias"][0]["hidro"]["50"]
+        mar = fx["estadias"][-1]["hidro"]["50"]
+        self.assertEqual(pt["hidro"]["50"], round((nov + mar) / 2))
+        fx2 = f.construir([t.name], cad, {"2027-03-03/2027-03-04": "ignorar"})
+        self.assertEqual(fx2["por_tipo"]["semana"]["estadias"], 3)
+        v = f.valores_quartos(cfg, "Recanto", 1000, "semana")
+        self.assertEqual(v["Afrodite"]["publico"], 1200)  # +20% de domingo a quinta
+        self.assertEqual(v["Q7"]["enviado"], round(1000 / cfg["parametros"]["fator_publico"]["Recanto"]))
+        self.assertEqual(f.valores_quartos(cfg, "Villa", 1000, "fds")["Balcony"]["publico"], 900)    # Regra G
+        self.assertEqual(f.valores_quartos(cfg, "Recanto", 1000, "fds")["Afrodite"]["publico"], 1050)
+        self.assertEqual(f.valores_quartos(cfg, "Recanto", 1000, "fds", True)["Afrodite"]["publico"], 1600)  # faixa 27/10
+        self.assertEqual(f.valores_quartos(cfg, "Recanto", 2000, "fds", True)["Afrodite"]["publico"], 2100)

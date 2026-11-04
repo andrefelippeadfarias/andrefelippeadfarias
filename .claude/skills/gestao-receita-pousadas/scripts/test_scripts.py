@@ -2088,6 +2088,18 @@ class TestPace(unittest.TestCase):
         regras = {"Q7": {"2026-11-25": {"date": "2026-11-25", "min_price": "10", "lead_time_expiry": 5}}}
         itens, apagar = pace.ajustar_tetos(self.cfg, [{"tipo": "data", "quarto": "Q7", "data": "2026-11-25", "min_price": 1000, "max_price": 5000.0, "motivo": "x"}], regras)
         self.assertEqual([x["data"] for x in apagar], ["2026-11-25"])
+        # 04/11: noite esgotada numa ordem de régua (alvo_por_data com pisos_enviados) não fica abaixo do piso da ordem
+        ordem = {"id": "dono-teste-regua", "tipo": "alvo_por_data", "quartos": ["Q7"], "de": "2026-11-24", "ate": "2026-11-24",
+                 "noites": ["2026-11-24"], "percentil": 65, "escada_vendas": True, "pisos_enviados": {"Q7": 1400},
+                 "piso_atras": {"Q7": 1220}, "gatilho_dias": 7}
+        res = pace.plano(self.cfg, anc, {"Q7": cal}, hoje, {"dono-teste-regua": ordem}, {"passos": []}, dias=30,
+                         regra_j_ativa=False)
+        self.assertEqual(res["itens"][0]["min_price"], 1400)
+        # piso de ordem menor que a proteção (base do mercado): fica a proteção p90
+        ordem2 = dict(ordem, pisos_enviados={"Q7": 600})
+        res = pace.plano(self.cfg, anc, {"Q7": cal}, hoje, {"dono-teste-regua": ordem2}, {"passos": []}, dias=30,
+                         regra_j_ativa=False)
+        self.assertEqual(res["itens"][0]["min_price"], 920)
 
     def test_vendidas_total_aceita_formato_da_coleta(self):
         from comum import vendidas_total

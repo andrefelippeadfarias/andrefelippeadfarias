@@ -78,9 +78,10 @@
    "id": "sync-now",
    "responsavel": "tela",
    "desde": "2026-10-13",
-   "urgencia": 2,
+   "urgencia": 0,
    "caminho": "PriceLabs > Multicalendário > marcar os quartos > Sync Now",
-   "texto": "Apertar Sync Now quando o relatório pedir (gravação de hoje ou amanhã depois do envio diário)."
+   "texto": "04/11: PriceLabs sem envio ao Beds24 desde 03/11 19:30 UTC (last_date_pushed; nenhum push_price nos logs; envio ligado). Dono: clicar Sync Now no PriceLabs (os 7 quartos) e, se não andar, abrir chamado no suporte do PriceLabs. Antes: Apertar Sync Now quando o relatório pedir (gravação de hoje ou amanhã depois do envio diário).",
+   "status": "aberta"
   },
   {
    "id": "orphan-days",
@@ -839,6 +840,30 @@
    "urgencia": 1,
    "data_alvo": "2026-11-02",
    "texto": "Rotina das 07:53 de 02/11: conferir no plano que 13-14/11 e 27-28/11 sobem rumo ao p50 da régua nova (Moinhos/Panorâmica II ~R$ 1.313/1.295, King Spa 2 ~R$ 1.272/1.255, King Spa 7 de 27-28/11 ~R$ 1.255; até 10% por dia), que a Panorâmica I (à frente) e a King Spa 7 de 14/11 (à frente) não descem, que a King Spa 7 de 13/11 (4/7, no ritmo, noite fraca pela ordem da Villa) desce no máximo à reta ~R$ 1.907, e que a âncora dessas noites continua a de 01/11 depois do construir --mesclar. Relatar ao dono."
+  },
+  {
+   "id": "villa-fora-booking-2026-11-04",
+   "responsavel": "dono",
+   "desde": "2026-11-04",
+   "urgencia": 0,
+   "data_alvo": "2026-11-04",
+   "texto": "A Villa Dolce Amore não aparece na Booking desde 07:22-08:10 BRT de 04/11 (conector oficial; busca por coordenadas em 10-11/11 mostra os vizinhos e não a Villa). Beds24 aberto, sem limite do canal. Dono: conferir na extranet da Villa se a propriedade está ativa e se há aviso, e falar com o suporte da Booking. 3 reservas da King Spa 7 no mesmo segundo (07:22:46 BRT; 09/11, 15/11, 18/11) para conferir na extranet. A skill confere a busca em toda rotina."
+  },
+  {
+   "id": "afrodite-sexta-horizonte",
+   "responsavel": "dono",
+   "desde": "2026-11-04",
+   "urgencia": 2,
+   "data_alvo": "2026-11-30",
+   "texto": "A ordem dono-2026-11-01-beds24-semana-afrodite-vk7 (sexta da Afrodite com chegada liberada e saída fechada) vale até 31/10/2027. O horizonte de 12 meses já tem a sexta 05/11/2027, que ficou com a regra antiga. Pergunta ao dono: a regra vale para todas as sextas futuras? Com 'Sim', a skill aplica toda sexta nova no Beds24 e no PriceLabs."
+  },
+  {
+   "id": "gatilho-semana-inversao",
+   "responsavel": "skill",
+   "desde": "2026-11-03",
+   "urgencia": 1,
+   "data_alvo": "2026-11-07",
+   "texto": "Antes da rotina de 08/11 (15/11 chega a D7): em pace.py, quando uma noite da semana (dom-qui) dispara o gatilho de D7, as noites da mesma semana com menos ou o mesmo número de vendidas e sem venda nova também vão ao piso_atras, para não ficar a noite mais vendida mais barata. Teste e revisão independente."
   }
  ],
  "versao": "2026-11-02T01"

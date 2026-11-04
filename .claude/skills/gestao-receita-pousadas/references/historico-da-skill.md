@@ -2,6 +2,11 @@
 
 Cada mudança feita na própria Skill (regras, parâmetros, scripts, fluxo) entra aqui: data, o que mudou, por quê (evidência) e como desfazer. A entrada mais nova fica em cima.
 
+## 04/11/2026 08:20 BRT: proteção da noite esgotada não fica abaixo do piso da ordem por data
+- **Por quê:** rotina de 04/11. Com a Panorâmica II de volta ao motor, a proteção das noites esgotadas de 08-12/11 iria a R$ 1.220 (p90 da âncora geral de dia de semana, R$ 446-590 públicos), abaixo do piso da régua com hidro dessas noites (R$ 1.409-1.624; dono 03/11, "Aplique a regua com Hidro"). King Spa 2 12/12: R$ 1.479 contra R$ 2.059 da régua da Villa.
+- **O que mudou:** `pace.py` (chamada de `protecao_esgotada`): o piso extra passa a incluir `pisos_enviados[quarto]` da ordem `alvo_por_data` da noite, só com `max` (o piso baixo das ordens de base do mercado não muda nada). Teste em `test_protecao_esgotada_e_ajuste_de_tetos`.
+- **Como desfazer:** tirar o bloco "04/11 (Panorâmica II 08-12/11 ...)" em `pace.py` e o trecho correspondente do teste.
+
 ## 03/11/2026 16:30 BRT: Booking fechada pelo limite do canal no Beds24 (dono)
 - **Por quê:** dono, 03/11: "Vamos fechar as disponibilidades dos 2 hoteis . Tanto recanto e villa dolce amore na booking apensa s." (extranet invadida).
 - **O que mudou:** `beds24.py`: `corpo_edicao(..., canais_max={"booking": 0|None})` grava `channels.booking.maxBookings` (o 0 vai como texto "0", porque a API ignora o 0 numérico); `inventario` lê `canais_max`; `editar_lote` aceita e confere `canais_max`. Teste `TestBeds24LimiteCanal`; 117 OK. Gravado nos 7 quartos de 03/11/2026 a 02/11/2028 e conferido.

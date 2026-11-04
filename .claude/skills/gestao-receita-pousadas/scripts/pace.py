@@ -494,6 +494,13 @@ def plano(cfg: dict, ancora: dict, cals: dict, hoje: date, ordens: dict, passos:
                     extra = teto_r = None
                     if curto == "Afrodite":
                         extra, teto_r = regra_afrodite(cfg, cals, finais, d, hoje)
+                    # 04/11 (Panorâmica II 08-12/11 esgotada a R$ 1.220 com a régua com hidro em R$ 1.409-1.624; King Spa 2
+                    # 12/12 a R$ 1.479 com a régua da Villa em R$ 2.059): a proteção não fica abaixo do piso da ordem por
+                    # data da noite (o p90 da âncora geral pode ser menor que o p65 com hidro); só sobe (max), então o
+                    # piso baixo das ordens de base do mercado não muda nada
+                    ao_p = alvo_da_ordem(ordens, curto, d)
+                    if ao_p and (ao_p.get("pisos_enviados") or {}).get(curto):
+                        extra = max(float(extra or 0), float(ao_p["pisos_enviados"][curto]))
                     it = protecao_esgotada(cfg, p, anc, origem, curto, d, r, v, u, (regras.get(curto) or {}).get(noite),
                                            extra, teto_r)
                     filtrada = noites_filtro is not None and (curto, noite) not in noites_filtro

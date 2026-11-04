@@ -4031,6 +4031,37 @@ Conector oficial da Booking, 1 h 20 depois da reabertura no Beds24:
 - 20-22/11 (feriado) e 25-26/11: ainda "sem disponibilidade" (no Beds24 há quartos livres e nenhum limite do canal).
 A reabertura chegou à Booking só nas datas mais próximas. Pedido ao dono: usar no painel do Beds24 (Channel Manager > Booking.com) o reenvio de toda a disponibilidade, ou abrir os quartos no calendário da extranet. Nada mais mexido no Beds24. Conferir de novo na rotina das 07:53.
 
+## 04/11/2026, 07:53 a 08:45 — Rotina completa de quarta (motor, Panorâmica II de volta ao motor, Villa fora da Booking)
+
+**Alertas do topo:**
+- **Villa Dolce Amore fora da Booking.** Conector oficial da Booking: a Villa não aparece nas buscas desde 07:22-08:10 BRT; às 08:40 BRT, busca de 10-11/11 num raio de 400 m do endereço mostra os vizinhos (Blue Village, Casa Redonda) e não a Villa. No Beds24 a Villa está aberta, sem limite do canal e com quartos livres. Pedido ao dono: conferir a extranet da Villa (propriedade ativa? aviso da Booking?) e falar com o suporte da Booking.
+- **3 reservas da Booking na King Spa 7 no mesmo segundo (07:22:46 BRT):** 09/11 (3 noites, R$ 1.382), 15/11 (R$ 354) e 18/11 (R$ 359), na mesma hora em que a Villa sumiu da busca. Valores coerentes com o preço do dia; a vigilância não acusou origem estranha. Pedido ao dono: confirmar na extranet que são hóspedes reais.
+- **PriceLabs sem envio desde 03/11 16:30 BRT** (`last_date_pushed` 2026-11-03T19:30Z nos quartos; nenhum `push_price` nos logs de 03-04/11; envio ligado). Os dados do PriceLabs voltaram (o LISTING_NO_DATA da madrugada sumiu depois do recálculo das 08:02). O que foi gravado ontem à noite e hoje ainda não chegou ao Beds24 nem à Booking: pedido ao dono o Sync Now.
+
+**Beds24 desde ontem 20:10 BRT:** 6 reservas novas (King Spa 7 ×5 pela Booking: 09/11 3 noites, 15/11, 18/11, 05/12 3 noites e 10/12; Panorâmica I 04-05/11 pela Booking), 2 consultas do Airbnb sem reserva, 1 cancelamento direto (King Spa 2 03/11, noite passada); King Spa 2 19-21/11 reabriu 1 unidade. Vigilância: 0 alerta. Esgotaram: King Spa 7 09/11 (7/7) e Panorâmica I 18/11 (6/6).
+
+**Gravado no PriceLabs (81 itens; validador 0 erro; apagadas antes 17 regras antigas com teto; conferido no recálculo das 08:27: 63 de 63 noites com o piso e o teto certos):**
+- Panorâmica II de volta ao motor (dono 03/11): as travas antigas da Regra J (piso = teto, "preço × 1,5") saíram das 10 noites esgotadas e entrou a proteção normal com teto livre: 07/11 R$ 2.000; 08-12/11 R$ 1.409-1.624 (piso da régua com hidro); 20-21/11 R$ 2.151; 24/11 R$ 1.454; 01/12 R$ 1.220.
+- Escada de vendas: Moinhos 06/11 R$ 1.325 → R$ 1.384; Panorâmica I 05/11 R$ 1.036 → R$ 1.125 e 12/11 R$ 1.243 → R$ 1.495; Panorâmica II 06/11 R$ 1.336 → R$ 1.399; King Spa 7 10, 11, 15, 18/11 (+3-4%), 20/11 R$ 3.759 → R$ 4.040, 21/11 R$ 3.167 → R$ 3.463, 05/12 R$ 2.945 → R$ 3.093; King Spa 2 10/11, 20/11 R$ 3.555 → R$ 3.912, 25-26/11, 28/11 R$ 2.832 → R$ 3.124, 05/12 R$ 2.769 → R$ 2.908.
+- Gatilho de D7 da régua com hidro: Panorâmica I 10/11 R$ 1.524 → R$ 1.243 (D6, 3/6, sem venda nova desde 03/11).
+- Descidas do motor: Afrodite 04/11 (D0) R$ 1.420 → R$ 1.140, 05/11 R$ 1.860 → R$ 1.500, 07/11 R$ 2.860 → R$ 2.540, 05/12 R$ 2.860 → R$ 2.720; King Spa 7 02/12 R$ 1.084 → R$ 977; Panorâmica II 25/12 R$ 2.480 → R$ 2.385 (piso de feriado).
+- Balcony pela escada e pela Regra G: 06/11 R$ 2.604 → R$ 2.502; 07/11 R$ 1.880 → R$ 1.575; 10, 11, 15, 18 e 25/11 R$ 686-787; 28/11 R$ 2.438 → R$ 2.692; 05/12 R$ 2.388 → R$ 2.502; 03/01 R$ 1.238 → R$ 978.
+- Proteção das noites esgotadas (piso sobe, teto livre): Afrodite 12, 25 e 30/11 e 03/01; King Spa 7 09/11 e 28/11; King Spa 2 06-07/11, 13-14/11, 17/11, 12/12 e 21/12; Panorâmica I 18/11.
+- Sextas órfãs (dono 02/11): King Spa 7 27/11 e King Spa 2 11/12 com estadia 1 (sábado seguinte esgotado).
+- Ordem do Recanto (12 meses): Panorâmica II entre Moinhos e Panorâmica I em 03-07/01, 10-11/02, 25-29/07 e 22-26/08/2027.
+- Ficaram de fora: Afrodite 27-28/11 (dono 03/11, "3. Sim": fica acima da faixa); King Spa 7 e King Spa 2 23/12 (a ordem pré-Natal as levaria a R$ 1.891-2.033, abaixo do limite de segurança de feriado; o validador barrou e elas seguem no piso de feriado do pacote de Natal).
+
+**Código (`pace.py`):** a proteção da noite esgotada não fica abaixo do piso da ordem por data da noite (`pisos_enviados`). Antes, a Panorâmica II de 08-12/11 iria a R$ 1.220 (p90 da âncora geral de dia de semana) com a régua com hidro em R$ 1.409-1.624. Teste novo; 117 testes OK.
+
+**Beds24 (lote aplicado e relido, 5 de 5):** King Spa 7 28/11 e King Spa 2 12/12 com saída do sábado aberta (noCheckIn; sábado esgotado e sexta livre); estadia 1 na Balcony 04/02/2027 e nas King Spa 7 e 2 em 11/02/2027 (Regra A). A sexta 05/11/2027 da Afrodite (nova no horizonte de 12 meses) ficou de fora: a ordem de 01/11 cobre as sextas até 31/10/2027; pergunta ao dono.
+
+**Gatilhos das festas (3ª rotina completa):** categoria R do PriceLabs igual à de ontem (24-25/12 33%, 26/12 28%, 27/12 25%, 28/12 11%, 29/12 13%, 30/12 25%, 31/12 30%, 01/01 25%). Recanto segue 11 a 27 pontos atrás em 24-29/12; Villa 25-28 pontos atrás em 25-27/12 (24/12 empatou com uma venda nova); 31/12 à frente nas duas. Sem degrau hoje: o degrau de 03/11 usou as rotinas de 02 e 03/11; o próximo vale se as noites seguirem atrás em 04 e 05/11.
+
+**Âncora de mercado:** 6 buscas próprias da coleta de hoje (05/11, 09/11, 06-08/11, 13-15/11, 19-22/11, 27-29/11) mescladas em `ancora_mercado.json`.
+
+**Ledger:** 32 passos registrados. **Revisão de 12 meses:** em dia (01/11).
+**Como desfazer:** pedir "Desfaça a rotina de 04/11" (as regras anteriores estão no rascunho da sessão).
+
 > **Regras em vigor:** desde 06/10/2026 elas ficam em `.claude/skills/gestao-receita-pousadas/references/regras.md`. Este arquivo guarda só o histórico das mudanças.
 
 ## O que só pode ser feito na tela (passo a passo para você)

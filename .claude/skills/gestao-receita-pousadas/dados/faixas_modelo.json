@@ -1,0 +1,78 @@
+{
+ "versao": "2026-11-04",
+ "nota": "Parâmetros do modelo de receita por faixa da tabela de estratégia (scripts/estrategia_faixas.py; dono 04/11: \"aumentar o faturamento sempre ao máximo, tudo de forma evolutiva\"). Começam por premissas (abaixo, com a fonte) e são recalibrados pelo comando `calibrar` com o que cada período vendeu de fato (dados/faixas_resultados.json): a skill propõe o ajuste no relatório de segunda e grava aqui com a data e o motivo em `calibracoes`.",
+ "ocupacao_mercado_por_nivel": {
+  "muito baixa": 0.15,
+  "baixa": 0.28,
+  "média": 0.47,
+  "alta": 0.7,
+  "muito alta": 0.88,
+  "_fonte": "ponto médio das faixas de nível de dados/sazonalidade.json (ocupação do mercado no mesmo período do ano anterior)"
+ },
+ "indice_hotel": {
+  "Recanto": 1.35,
+  "Villa": 1.2,
+  "_fonte": "cenário base de dados/metas_faturamento.json (nossa ocupação ÷ a do mercado; 53% contra 34% nos 30 dias de outubro)"
+ },
+ "ocupacao_max": 0.97,
+ "elasticidade_por_nivel": {
+  "muito baixa": 1.3,
+  "baixa": 1.2,
+  "média": 1.0,
+  "alta": 0.7,
+  "muito alta": 0.5,
+  "_fonte": "premissa (suítes com hidro são produto diferenciado: menos sensíveis a preço que a média); demanda fraca troca de hotel por preço, feriado e festas pagam. Histórico: Recanto 2024 Tiradentes 100% a R$ 1.181, Páscoa 88% a R$ 1.242, 9 de Julho 98% a R$ 1.425; dia de semana 2026 43,5% a R$ 540 (historico_proprio.json). A calibrar com `calibrar`."
+ },
+ "antecedencia_cdf": [
+  [
+   0,
+   0.2
+  ],
+  [
+   1,
+   0.3
+  ],
+  [
+   2,
+   0.4
+  ],
+  [
+   4,
+   0.5
+  ],
+  [
+   6,
+   0.6
+  ],
+  [
+   9,
+   0.7
+  ],
+  [
+   15,
+   0.8
+  ],
+  [
+   26,
+   0.9
+  ],
+  [
+   60,
+   0.976
+  ],
+  [
+   120,
+   1.0
+  ]
+ ],
+ "antecedencia_fonte": "historico_proprio.json, estadias de 2026 (jan-mar): mediana de 4 dias, 49% com até 3 dias, 79% com até 14, 2% com mais de 60",
+ "antecedencia_pico_fator": 2.5,
+ "antecedencia_pico_nota": "feriado e festas (nível alta ou muito alta) vendem mais cedo: a antecedência é esticada 2,5 vezes (premissa a calibrar)",
+ "peso_ritmo": 0.5,
+ "peso_ritmo_nota": "quanto o nosso vendido de hoje (contra o esperado na antecedência) puxa a ocupação prevista do período: 0 = só o nível do mercado; 1 = só o nosso ritmo",
+ "empate": 0.03,
+ "empate_nota": "receitas a menos de 3% da maior contam como empate; no empate vale a faixa do meio das empatadas (menor arrependimento se a elasticidade real fugir da premissa; entre duas, a mais alta)",
+ "pergunta_min_reais": 500,
+ "pergunta_horizonte_dias": 90,
+ "calibracoes": []
+}

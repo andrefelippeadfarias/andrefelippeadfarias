@@ -555,15 +555,47 @@ def razao(pous: str, k: int) -> float:
     return RAZAO[pous] * (RAZAO_ULTIMA_SEMANA if k <= 7 else 1.0)
 
 
-def regra_da_noite(regra: dict, d: date, tipo: str) -> dict | None:
+DIAS = {"dom-qui": (6, 0, 1, 2, 3), "sex-sab": (4, 5), "todos": (0, 1, 2, 3, 4, 5, 6)}
+
+
+def regra_da_noite(regra: dict, d: date, tipo: str, pous: str | None = None) -> dict | None:
+    """Sub-regra da decisão que vale na noite (e na pousada): filtra por `pousadas` (da decisão e da sub-regra),
+    `tipos`, período `de`/`ate`, `dias` (dom-qui, sex-sab, todos) e `meses`/`noites`. None quando não cobre."""
+    if pous and regra.get("pousadas") and pous not in regra["pousadas"]:
+        return None
+    n = d.isoformat()
     for r in regra.get("regras") or []:
-        if tipo not in (r.get("tipos") or []):
+        if pous and r.get("pousadas") and pous not in r["pousadas"]:
             continue
-        if (r.get("meses") or r.get("noites")) and d.isoformat()[:7] not in (r.get("meses") or []) \
-                and d.isoformat() not in (r.get("noites") or []):
+        if r.get("tipos") and tipo not in r["tipos"]:
+            continue
+        if (r.get("de") and n < r["de"]) or (r.get("ate") and n > r["ate"]):
+            continue
+        if r.get("dias") and d.weekday() not in DIAS.get(r["dias"], DIAS["todos"]):
+            continue
+        if (r.get("meses") or r.get("noites")) and n[:7] not in (r.get("meses") or []) \
+                and n not in (r.get("noites") or []):
             continue
         return r
     return None
+
+
+def decisoes_de(arq: dict) -> list[dict]:
+    """Lista de decisões do dono (dados/faixas_decisoes.json → `decisoes`), da mais antiga para a mais nova.
+    Aceita o formato antigo (uma regra só no topo do arquivo)."""
+    ds = arq.get("decisoes") if "decisoes" in arq else [arq]
+    return sorted(ds, key=lambda x: (x.get("data") or "", str(x.get("criada_em") or "")))
+
+
+def decisao_da_noite(decisoes: list[dict], d: date, tipo: str, pous: str) -> tuple[dict, dict] | tuple[None, None]:
+    """A decisão mais nova que cobre a noite na pousada (fora as `noites_fora` dela) e a sub-regra que vale."""
+    for dec in reversed(decisoes):
+        if d.isoformat() in (dec.get("noites_fora") or []):
+            continue
+        r = regra_da_noite(dec, d, tipo, pous)
+        if r:
+            return dec, r
+    return None, None
 
 
 def vendidas_inv(inv: dict, q: str, n: str, unidades: int) -> int:
@@ -574,7 +606,7 @@ def vendidas_inv(inv: dict, q: str, n: str, unidades: int) -> int:
 
 
 def gerar_ordens(fx: dict, cfg: dict, regra: dict, inv: dict, hoje: date, dias: int, existentes: dict,
-                 criada_em: str) -> tuple[list[dict], dict]:
+                 criada_em: str, vale=None) -> tuple[list[dict], dict]:
     """(ordens novas, {ordem_id antiga: [noites que saem dela]}). Uma ordem por noite e pousada, como as de 02 e 03/11:
     pisos na faixa (÷ razão; nunca abaixo do piso do dono nem acima do máximo do anúncio), topo na F5, e perto da data
     o gatilho de D7 (F2/F3: desce uma faixa sem venda nova) ou a descida gradual (F5: degraus F4, F3, F2, F1 em D7, D5,
@@ -583,13 +615,13 @@ def gerar_ordens(fx: dict, cfg: dict, regra: dict, inv: dict, hoje: date, dias: 
     from pace import pisos_enviados
     pc = cfg["por_curto"]
     base_id = regra["id_base"]
-    ja = {(o.get("pousada_faixa"), n) for o in existentes.values() if o["id"].startswith(base_id)
+    ja = {(o.get("pousada_faixa"), n) for o in existentes.values() if o["id"].startswith(base_id + "-")
           for n in o.get("noites") or []}
     from ordens import cobre
 
     def pega(x: dict, q: str, n: str, d: date) -> bool:
         """Ordem antiga que a faixa substitui na noite e no quarto (regras.md 4e)."""
-        if x["id"].startswith(base_id):
+        if x["id"].startswith(base_id + "-"):
             return False
         # acompanhamento só os de preço listados na regra (ex.: gatilhos das festas); o de estadia/calendário fica
         # (revisão de 04/11: dono-2026-11-02-aniv-sp-gatilho perderia as suítes quando 24/01 entrasse na janela)
@@ -609,7 +641,7 @@ def gerar_ordens(fx: dict, cfg: dict, regra: dict, inv: dict, hoje: date, dias: 
         """A noite do quarto fica fora da faixa: ordem do dono mais nova que a regra; preço por data ou mudança manual
         do dono (específicas, vencem a regra geral: Balcony 08-09/11); acompanhamento de estadia/calendário ainda
         aberto (domingo 24/01, gatilho do Aniversário de SP)."""
-        if x["id"].startswith(base_id) or not cobre(x, q, d) or (x.get("noites") and n not in x["noites"]):
+        if x["id"].startswith(base_id + "-") or not cobre(x, q, d) or (x.get("noites") and n not in x["noites"]):
             return False
         if x.get("tipo") in ("preco_por_data", "manual"):
             return True
@@ -625,14 +657,14 @@ def gerar_ordens(fx: dict, cfg: dict, regra: dict, inv: dict, hoje: date, dias: 
         d = hoje + timedelta(days=i)
         n = d.isoformat()
         t = tipo_da_noite(d, cfg)
-        r = regra_da_noite(regra, d, t)
-        if not r or n in fora_regra:
+        if n in fora_regra or not any(regra_da_noite(regra, d, t, p) for p in QUARTOS_ORDEM):
             continue
-        f = int(r["faixa"])
         reg, origem = regua_noite(fx, d, t)
         for pous, qs_todos in QUARTOS_ORDEM.items():
-            if (pous, n) in ja:
+            r = regra_da_noite(regra, d, t, pous)
+            if not r or (pous, n) in ja or (vale is not None and not vale(pous, n)):
                 continue
+            f = int(r["faixa"])
             # ordem do dono mais nova, preço por data, mudança manual ou acompanhamento aberto: o quarto fica fora
             qs = [q for q in qs_todos if not any(bloqueia(x, q, n, d) for x in existentes.values())]
             if not qs:
@@ -711,6 +743,31 @@ def gerar_ordens(fx: dict, cfg: dict, regra: dict, inv: dict, hoje: date, dias: 
     return novas, {k: {q: sorted(v) for q, v in qd.items()} for k, qd in fora.items()}
 
 
+def gerar_todas(fx: dict, cfg: dict, decisoes: list[dict], inv: dict, hoje: date, dias: int, existentes: dict,
+                criada_em: str) -> tuple[list[dict], dict, dict]:
+    """Todas as decisões do dono (dono 04/11: faixa por hotel e período): em cada noite e pousada vale a decisão mais
+    nova que a cobre; cada decisão gera as ordens das noites em que vale e tira essas noites das ordens anteriores
+    (inclusive ordens de faixa de decisões mais velhas). (novas, fora, {id da decisão: nº de ordens})."""
+    efetiva = {}
+    for i in range(2, dias + 1):
+        d = hoje + timedelta(days=i)
+        t = tipo_da_noite(d, cfg)
+        for pous in QUARTOS_ORDEM:
+            dec, _ = decisao_da_noite(decisoes, d, t, pous)
+            if dec:
+                efetiva[(pous, d.isoformat())] = dec["id_base"]
+    novas, fora, cont = [], {}, {}
+    for dec in decisoes:
+        ns, fr = gerar_ordens(fx, cfg, dec, inv, hoje, dias, existentes, criada_em,
+                              vale=lambda p, n, b=dec["id_base"]: efetiva.get((p, n)) == b)
+        novas += ns
+        cont[dec["id_base"]] = len(ns)
+        for oid, qd in fr.items():
+            for q, nn in qd.items():
+                fora.setdefault(oid, {}).setdefault(q, set()).update(nn)
+    return novas, {k: {q: sorted(v) for q, v in qd.items()} for k, qd in fora.items()}, cont
+
+
 def aplicar_ordens(arquivo: Path, novas: list[dict], fora: dict, regra: dict) -> None:
     d = json.load(open(arquivo))
     ids = {o["id"] for o in d["ordens"]}
@@ -725,7 +782,7 @@ def aplicar_ordens(arquivo: Path, novas: list[dict], fora: dict, regra: dict) ->
             todas = sorted({n for ns in fora[o["id"]].values() for n in ns})
             quem = ", ".join(NOMES.get(q, q) for q in fora[o["id"]])
             o["nota"] = (o.get("nota") or "") + (f" {regra['data']}: noites {', '.join(dm(n) for n in todas)} de {quem} "
-                                                 f"passaram às ordens {regra['id_base']} (dono: faixas).")
+                                                 f"passaram às ordens de faixa {regra['id_base']} (dono: faixas).")
     for o in novas:
         if o["id"] not in ids:
             d["ordens"].append(o)
@@ -763,7 +820,7 @@ def main(argv=None) -> int:
     pg.add_argument("--modelo", default=str(AQUI / "faixas_pagina.html"))
     pg.add_argument("--saida", required=True)
     od = sub.add_parser("ordens", help="ordens por faixa da regra do dono nas noites de hoje+1 a hoje+dias")
-    od.add_argument("--regra", default=str(RAIZ / "dados/faixas_dono_regra.json"))
+    od.add_argument("--regra", default=str(RAIZ / "dados/faixas_decisoes.json"), help="decisões do dono por faixa")
     od.add_argument("--faixas", default=str(RAIZ / "dados/faixas_dono.json"))
     od.add_argument("--inv", required=True, help="beds24.py inventario --json")
     od.add_argument("--hoje", default=date.today().isoformat())
@@ -798,13 +855,17 @@ def main(argv=None) -> int:
         return 0
     if a.cmd == "ordens":
         from ordens import carregar_ordens
-        regra = json.load(open(a.regra))
+        decisoes = decisoes_de(json.load(open(a.regra)))
         existentes = carregar_ordens()
-        novas, fora = gerar_ordens(fx, cfg, regra, json.load(open(a.inv)), _d(a.hoje), a.dias, existentes, a.criada_em)
-        Path(a.saida).write_text(json.dumps({"novas": novas, "fora": fora}, ensure_ascii=False, indent=1))
-        print(f"{len(novas)} ordens novas; noites tiradas de {len(fora)} ordens antigas")
+        novas, fora, cont = gerar_todas(fx, cfg, decisoes, json.load(open(a.inv)), _d(a.hoje), a.dias, existentes,
+                                        a.criada_em)
+        Path(a.saida).write_text(json.dumps({"novas": novas, "fora": fora, "por_decisao": cont}, ensure_ascii=False,
+                                            indent=1))
+        print(f"{len(novas)} ordens novas ({', '.join(f'{k}: {v}' for k, v in cont.items() if v) or 'nenhuma'}); "
+              f"noites tiradas de {len(fora)} ordens antigas")
         if a.aplicar:
-            aplicar_ordens(RAIZ / "dados/ordens_dono.json", novas, fora, regra)
+            aplicar_ordens(RAIZ / "dados/ordens_dono.json", novas, fora, {"data": _d(a.hoje).isoformat(),
+                                                                        "id_base": "dono-*-faixa"})
             print("gravado em dados/ordens_dono.json")
         return 0
     if a.cmd == "pagina":

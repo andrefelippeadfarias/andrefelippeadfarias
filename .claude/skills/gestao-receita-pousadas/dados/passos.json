@@ -9027,6 +9027,58 @@
    "total": 6,
    "gravado_em": "2026-11-05T12:53+00:00",
    "chegou_ao_canal": false
+  },
+  {
+   "quarto": "Q7",
+   "noite": "2026-11-05",
+   "de": 938.0,
+   "para": 842,
+   "direcao": "desce",
+   "status": "muito_atras",
+   "vendidas": 3,
+   "base": "quarto",
+   "total": 7,
+   "gravado_em": "2026-11-05T13:57+00:00",
+   "chegou_ao_canal": false
+  },
+  {
+   "quarto": "Q7",
+   "noite": "2026-11-06",
+   "de": 1384.0,
+   "para": 1177,
+   "direcao": "desce",
+   "status": "muito_atras",
+   "vendidas": 3,
+   "base": "quarto",
+   "total": 7,
+   "gravado_em": "2026-11-05T13:57+00:00",
+   "chegou_ao_canal": false
+  },
+  {
+   "quarto": "Q7",
+   "noite": "2026-11-07",
+   "de": 2018.0,
+   "para": 1382,
+   "direcao": "desce",
+   "status": "ritmo",
+   "vendidas": 4,
+   "base": "quarto",
+   "total": 7,
+   "gravado_em": "2026-11-05T13:57+00:00",
+   "chegou_ao_canal": false
+  },
+  {
+   "quarto": "Q7",
+   "noite": "2026-12-06",
+   "de": 1232.0,
+   "para": 1294,
+   "direcao": "sobe",
+   "status": "frente",
+   "vendidas": 3,
+   "base": "quarto",
+   "total": 7,
+   "gravado_em": "2026-11-05T13:57+00:00",
+   "chegou_ao_canal": false
   }
  ]
 }

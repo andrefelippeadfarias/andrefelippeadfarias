@@ -4218,6 +4218,28 @@ A reabertura chegou à Booking só nas datas mais próximas. Pedido ao dono: usa
 
 **Como desfazer a estadia:** regravar `min_stay` 1 nas segundas, quartas e sextas pelos arquivos de fatias (`estadia/grava2/fatias`, trocando 2 por 1) e os lotes do Beds24 com `min_stay_antes`.
 
+## 05/11/2026, 10:53 a 11:05 BRT — Rotina leve das 10:53
+
+**Beds24 desde 07:50 BRT** (vigilância: 0 alerta; nenhuma reserva abaixo de 70%):
+- Novas pela Booking: Moinhos 06/12 (1 noite, R$ 771) e Panorâmica I 06/11 (1 noite, R$ 709; a sexta órfã de 1 diária vendeu).
+- Canceladas: reserva direta da Moinhos 05-07/11 (3 noites, R$ 2.034, a que estava a 47% do esperado); Panorâmica I 05-06/11 pela Booking (criada e cancelada em 25 minutos); duas da King Spa 7 de 04/11 (noite passada).
+
+**Gravado no PriceLabs** (validador 0 erro; conferido na resposta da API; recálculos das 10:54 da Moinhos e da Panorâmica I):
+| Mudança | Onde | Antes | Depois | Como desfazer |
+|---|---|---|---|---|
+| Escada (cancelamento, D0) | Moinhos 05/11 | R$ 938 | R$ 842 | piso/teto -28% → anterior |
+| Escada (cancelamento, D1) | Moinhos 06/11 | R$ 1.384 | R$ 1.177 | 1% |
+| Escada (cancelamento, D2, sábado) | Moinhos 07/11 | R$ 2.018 | R$ 1.382 | 18% |
+| Escada (venda) | Moinhos 06/12 | R$ 1.232 | R$ 1.294 | 11% |
+| Ordem do Recanto | Panorâmica II 05/11 | R$ 986 | R$ 845 | -46% |
+| Ordem do Recanto | Panorâmica I, Panorâmica II e Afrodite 06/12 | — | R$ 1.303, R$ 1.303 e R$ 1.582 | -11%, -18%, -20% |
+
+Panorâmica I 06/11: o motor queria subir a R$ 1.670, mas o passo anterior ainda não chegou ao canal (cadência). **Ledger:** 4 passos.
+
+**Conferências:**
+- Booking (segurança das 10:53): as duas propriedades aparecem com id, nome e endereço certos (Recanto 7562933, Rua Januário Pereira 575; Villa 14824789, R. das Candelas 79). Razão Booking ÷ preço enviado do quarto livre mais barato em 10/11: Recanto 0,58, Villa 0,58 (faixa de alerta 0,42 a 0,72): sem alerta. A Villa voltou a aparecer na busca.
+- Envio: último em 04/11 17:46 UTC; o de hoje sai à tarde (as mudanças desta manhã, inclusive a estadia, vão nele).
+
 > **Regras em vigor:** desde 06/10/2026 elas ficam em `.claude/skills/gestao-receita-pousadas/references/regras.md`. Este arquivo guarda só o histórico das mudanças.
 
 ## O que só pode ser feito na tela (passo a passo para você)

@@ -8871,6 +8871,19 @@
    "total": 6,
    "gravado_em": "2026-11-05T00:24+00:00",
    "chegou_ao_canal": false
+  },
+  {
+   "quarto": "Q2",
+   "noite": "2026-11-05",
+   "de": 938.0,
+   "para": 986,
+   "direcao": "sobe",
+   "status": "ritmo",
+   "vendidas": 10,
+   "base": "pousada",
+   "total": 16,
+   "gravado_em": "2026-11-05T00:42+00:00",
+   "chegou_ao_canal": false
   }
  ]
 }

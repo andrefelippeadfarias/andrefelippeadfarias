@@ -4159,6 +4159,27 @@ A reabertura chegou à Booking só nas datas mais próximas. Pedido ao dono: usa
 
 **Como desfazer:** apagar as regras por data das noites listadas em `pricelabs/pace/2026-11-04-faixas-plano-gravado.json` e restaurar `dados/ordens_dono.json` de `pricelabs/pace/ordens_dono_antes_faixas_2026-11-04.json`.
 
+## 04/11/2026, 16:53 e 19:53 (feitas juntas às 21:25-21:45 BRT) — Rotinas leves da tarde e da noite
+
+**Beds24 desde 15:35 BRT** (24 movimentos; vigilância: 0 alerta):
+- **Novas:** Panorâmica II 05-06/11 (direta, 2 noites, R$ 1.258, 54% do esperado); King Spa 7 20-21/11 (direta da recepção, 2 noites, R$ 1.723, **23% do esperado**, Consciência Negra); Panorâmica II e Moinhos 04/11 (Booking, D0); King Spa 2 05/11 (Airbnb).
+- **Canceladas:** Afrodite 06-07/11 (Booking, 2 noites); King Spa 7 19-21/11 (Booking, 3 noites, R$ 3.838,70).
+- Consultas sem reserva: King Spa 2 25/11 e Panorâmica I 08/11 (Airbnb).
+- Abaixo de 70% do esperado (topo do relatório): a da King Spa 7 de 20/11 e a da Panorâmica II de 05/11; a direta da Moinhos de 05/11 (47%) voltou como alterada.
+
+**Gravado no PriceLabs** (validador 0 erro; conferido na resposta da API; recálculos das 21:30 BRT da Panorâmica II e da Afrodite):
+- Panorâmica II 05/11 (D1, venda nova, 10/16 na pousada): R$ 938 → R$ 986 (escada; continua entre a Moinhos e a Panorâmica I).
+- Panorâmica II 06/11 (esgotou, 2/2): teto solto e piso de proteção de R$ 2.000 (p90 com hidro), estadia mínima 1 mantida.
+
+**Sem passo:**
+- Afrodite 06-07/11 (cancelamento): o motor manteve R$ 2.600 e R$ 2.540, presa no piso da faixa de fim de semana da Afrodite (dono 27/10). Sexta e sábado ficaram livres juntos: nenhuma noite órfã, sábado segue fechado para entrada e saída.
+- King Spa 7 (20/11 e 19-21/11) e King Spa 2 (05/11): não conferido (limite de recálculo; 3 de 3 usados hoje). A Consciência Negra 19-21/11 segue nas ordens de festas (fora das faixas do dono).
+- Moinhos e Panorâmica II 04/11: D0, nunca sobe.
+
+**Ledger:** 1 passo.
+
+**Como desfazer:** Panorâmica II 05/11 de volta a −41% (piso e teto, percent_base); 06/11 de volta a −12% (piso e teto) com estadia mínima 1.
+
 > **Regras em vigor:** desde 06/10/2026 elas ficam em `.claude/skills/gestao-receita-pousadas/references/regras.md`. Este arquivo guarda só o histórico das mudanças.
 
 ## O que só pode ser feito na tela (passo a passo para você)

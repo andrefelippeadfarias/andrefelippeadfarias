@@ -4257,6 +4257,15 @@ Panorâmica I 06/11: o motor queria subir a R$ 1.670, mas o passo anterior ainda
 
 **Como desfazer:** sextas da Afrodite com check_out 1111011 no PriceLabs e noCheckOut no Beds24; quartas de volta a 1; as órfãs de feriado de volta a 2.
 
+## 05/11/2026, 13:53 a 14:05 BRT — Rotina leve das 13:53
+
+**Beds24 desde 10:50 BRT** (vigilância: 0 alerta; nenhuma reserva abaixo de 70%):
+- Nova: King Spa 2 17/11 (Airbnb, 1 noite, R$ 383): a noite esgotou (2/2).
+- Reserva direta da Moinhos 07-08/12 criada às 11:38 e cancelada às 11:47 (sem efeito).
+- As demais "alteradas" são reservas antigas (mudança de status).
+
+**Sem gravação:** o motor só propôs a proteção da noite esgotada da King Spa 2 em 17/11 (D12), que pela regra entra no plano da manhã seguinte. Recálculo da King Spa 2 às 13:55 (3 de 3 hoje).
+
 > **Regras em vigor:** desde 06/10/2026 elas ficam em `.claude/skills/gestao-receita-pousadas/references/regras.md`. Este arquivo guarda só o histórico das mudanças.
 
 ## O que só pode ser feito na tela (passo a passo para você)

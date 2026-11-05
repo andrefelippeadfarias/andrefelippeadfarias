@@ -4240,6 +4240,23 @@ Panorâmica I 06/11: o motor queria subir a R$ 1.670, mas o passo anterior ainda
 - Booking (segurança das 10:53): as duas propriedades aparecem com id, nome e endereço certos (Recanto 7562933, Rua Januário Pereira 575; Villa 14824789, R. das Candelas 79). Razão Booking ÷ preço enviado do quarto livre mais barato em 10/11: Recanto 0,58, Villa 0,58 (faixa de alerta 0,42 a 0,72): sem alerta. A Villa voltou a aparecer na busca.
 - Envio: último em 04/11 17:46 UTC; o de hoje sai à tarde (as mudanças desta manhã, inclusive a estadia, vão nele).
 
+## 05/11/2026, 12:05 a 13:15 BRT — Decisões do dono: saída de sexta da Afrodite aberta e noites órfãs de feriado liberadas
+
+**Dono (literal):** "Isso, pode abrir Afrodite, saída de sexta. As faixas por dia, eu acho que está dentro do escopo por enquanto. As noites órfãs do feriado, a gente pode abrir." Ordem `dono-2026-11-05-afrodite-sexta-orfas-feriado` (tipo regra). Faixas: nada muda.
+
+**Gravado no PriceLabs** (validador 0 erro; conferido data a data):
+- Afrodite: 50 sextas com entrada e saída abertas (check_out 1111011 → 1111111; 05/11/2027, sem regra por data, abriu o padrão do anúncio 1111001 → 1111101) e 45 quartas de 1 para 2 noites (mais 2 explícitas no pico de julho). Pacotes de 25/12 e 01/01 intocados.
+- Noites órfãs de feriado com 1 diária: Panorâmica II e King Spa 7 em 19/11 (véspera da Consciência Negra, 20/11 esgotado); King Spa 7 em 21/11 (sábado com a sexta esgotada). King Spa 7 11/02/2027 (quinta) de 3 para 1.
+- King Spa 2 (19 e 21/11) não gravou: o PriceLabs recusou ("pricing data isn't available") e a leitura de preços dela e da Balcony volta vazia (LISTING_NO_DATA). Na prática as duas noites já estão em 1 (efetiva do PriceLabs e Beds24).
+
+**Beds24** (relido e conferido): sextas da Afrodite de noCheckOut para none (51); quartas da Afrodite de 1 para 2 (44) e 18/11; Panorâmica II e King Spa 7 19/11 de 2 para 1; King Spa 7 e King Spa 2 21/11 noCheckInOrCheckOut → noCheckOut (entrada do sábado órfão); Panorâmica II 07/11 de volta a fechado (sexta e sábado esgotados).
+
+**Código:** 157 testes OK; revisão em 2 lentes e correções (sexta abre entrada e saída; padrão do anúncio da Afrodite fecha sexta e sábado e a rotina reabre; sábado de feriado com 1 noite só com prova; get_listing_prices com erro não vale como efetiva).
+
+**Overbookings levados ao dono** (lista para a equipe): King Spa 2 06-07/11 (3 reservas, 2 unidades) e Panorâmica I 20-21/11 (7 reservas, 6 unidades; hóspede com duas reservas iguais, Airbnb e direta).
+
+**Como desfazer:** sextas da Afrodite com check_out 1111011 no PriceLabs e noCheckOut no Beds24; quartas de volta a 1; as órfãs de feriado de volta a 2.
+
 > **Regras em vigor:** desde 06/10/2026 elas ficam em `.claude/skills/gestao-receita-pousadas/references/regras.md`. Este arquivo guarda só o histórico das mudanças.
 
 ## O que só pode ser feito na tela (passo a passo para você)

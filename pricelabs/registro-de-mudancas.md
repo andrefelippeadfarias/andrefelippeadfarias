@@ -4180,6 +4180,44 @@ A reabertura chegou à Booking só nas datas mais próximas. Pedido ao dono: usa
 
 **Como desfazer:** Panorâmica II 05/11 de volta a −41% (piso e teto, percent_base); 06/11 de volta a −12% (piso e teto) com estadia mínima 1.
 
+## 05/11/2026, 07:53 a 10:10 BRT — Rotina das 07:53 e estadia mínima por dia de chegada (dono 04/11)
+
+**Ordem do dono (04/11, ~21:00):** "Abriremos apenas para uma diária. A diária de domingo, a diária de terça e a diária de quinta. Todas as outras deverão ser com no mínimo 2 dias." Resposta às perguntas: "Sim, mantém feriados e pacotes; libera órfã; começa amanhã". Regra em `regras.md` (Regra A e 6a/6b); ordem `dono-2026-11-04-estadia-dia-chegada` (tipo regra).
+
+**Estadia gravada (12 meses, 06/11/2026 a 05/11/2027):**
+- PriceLabs: 962 datas por regra por data nos 7 quartos (25 chamadas em fatias de até 70; só `date` e `min_stay`, mais reason onde não havia regra), todas conferidas na resposta da API. Segundas, quartas e sextas em 2 (também onde o padrão do PriceLabs já dava 2, porque ele muda sozinho); Balcony 04/02/2027 e Panorâmica II 11/02/2027 (quintas) de 3 para 1; quintas do CBQ (16/09/2027) e o pico de julho em 2 pela temporada.
+- Beds24: 638 noites só de `minStay` (lotes urgentes de 06 a 18/11 primeiro, depois um por quarto), relidas e conferidas; a Balcony bateu no limite de créditos (HTTP 429) e foi refeita depois.
+- Fora de propósito: feriados, vésperas, pacotes e sábados (estadia própria); noites órfãs em 1 (Panorâmica I 06/11, King Spa 7 06/11 e 27/11, Panorâmica II 23/11 e 30/11, King Spa 2 11/12, Afrodite 11/01); **quartas da Afrodite** (48) mantidas como estavam até o dono decidir sobre a saída de sexta fechada (`estadia_por_dia_chegada.aguardando_dono`).
+- Código: `calendario_12m.py plano --so-estadia --regras --efetiva --inventario --lotes-estadia`, `validar_plano.py --fatias`, `fatiar_payload.py`, `beds24.py editar-lote` em blocos (150 testes OK). Revisão adversarial em 3 lentes e verificação em 2, antes de gravar.
+
+**Rotina das 07:53 (atrasada: o processo reiniciou às 00:05 e a rodada só retomou às 07:54):**
+- Beds24 desde 21:25 de 04/11: novas King Spa 2 10/11 e 16/11 (Airbnb), Balcony 08-09/11 (Airbnb); canceladas King Spa 2 16-18/11 (Airbnb, 3 noites), Panorâmica II e Panorâmica I de 04/11 (Booking). Vigilância: 0 alerta. Nenhuma reserva abaixo de 70%.
+- **Overbooking no Beds24:** King Spa 2 06 e 07/11 (3 reservas para 2 unidades) e Panorâmica I 20 e 21/11 (7 para 6). Balcony 07/11 com 1 unidade bloqueada sem reserva (PriceLabs 3, Beds24 2).
+- Ocupação (Beds24, confirmadas + novas): 7 dias Recanto 62%, Villa 57%; 15 dias 50% e 40%; 30 dias 42% e 34%.
+- Envio do PriceLabs: `push_enabled` nos 7, último envio 04/11 17:46 UTC. Nenhuma mudança manual nos logs.
+- Âncora de mercado atualizada com as 6 buscas do dia; 2 ordens de faixa novas para 04/01/2027 (Recanto e Villa, dias de semana na F2).
+
+**Gravado no PriceLabs pelo motor** (validador 0 erro; conferido na resposta da API; recálculos das 07:56-08:03 BRT, King Spa 2 de novo às 09:53):
+| Mudança | Onde | Antes | Depois | Como desfazer |
+|---|---|---|---|---|
+| Escada (sem venda nova, D0) | King Spa 7 05/11 | R$ 888 | R$ 810 | piso/teto -45% → valor anterior |
+| Escada (D0) | King Spa 2 05/11 | R$ 851 | R$ 814 | -35% |
+| Escada + Regra G (D0) | Balcony 05/11 | R$ 749 | R$ 711 | -44% |
+| Escada | Panorâmica I 11/11 | R$ 1.687 | R$ 1.232 | -16% |
+| Escada | Afrodite 11/11 | R$ 2.040 | R$ 1.500 | -25% |
+| Escada | King Spa 2 17 e 18/11 | R$ 1.128 | R$ 943 | -25% |
+| Escada (venda) | King Spa 7 21/11 | R$ 3.463 | R$ 3.746 | 154% |
+| Escada (venda) | King Spa 2 21/11 | R$ 3.234 | R$ 3.558 | 181% |
+| Escada | King Spa 7 04/01 | R$ 1.140 | R$ 996 | -32% |
+| Escada + Regra G | Balcony 04/01 | R$ 1.101 | R$ 902 | -29% |
+| Proteção de noite esgotada (teto solto, piso p90) | King Spa 2 10, 12, 15, 16 e 20/11; King Spa 7 20/11; Afrodite 04/01 | teto antigo | piso R$ 943 a R$ 2.572, teto livre | regravar o teto anterior |
+
+**Ledger:** 11 passos.
+
+**Tabela de estratégia de faixas:** gerada (124 linhas hotel × período); 8 perguntas ao dono no relatório (fins de semana de 06-07 e 13-14/11, Consciência Negra, 27-28/12 e fins de semana de janeiro, por hotel).
+
+**Como desfazer a estadia:** regravar `min_stay` 1 nas segundas, quartas e sextas pelos arquivos de fatias (`estadia/grava2/fatias`, trocando 2 por 1) e os lotes do Beds24 com `min_stay_antes`.
+
 > **Regras em vigor:** desde 06/10/2026 elas ficam em `.claude/skills/gestao-receita-pousadas/references/regras.md`. Este arquivo guarda só o histórico das mudanças.
 
 ## O que só pode ser feito na tela (passo a passo para você)

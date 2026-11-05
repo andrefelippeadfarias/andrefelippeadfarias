@@ -4266,6 +4266,20 @@ Panorâmica I 06/11: o motor queria subir a R$ 1.670, mas o passo anterior ainda
 
 **Sem gravação:** o motor só propôs a proteção da noite esgotada da King Spa 2 em 17/11 (D12), que pela regra entra no plano da manhã seguinte. Recálculo da King Spa 2 às 13:55 (3 de 3 hoje).
 
+## 05/11/2026, 16:53 a 17:05 BRT — Rotina leve das 16:53
+
+**Beds24 desde 13:50 BRT** (vigilância: 0 alerta):
+- **Abaixo do planejado:** King Spa 7 09/11, reserva direta 95752571 lançada pela VillaRecep1, R$ 280 de R$ 1.274 esperados (22%); a noite esgotou (7/7).
+- Cancelada: King Spa 7 05-06/11 (Booking, 2 noites, R$ 729). Nova: King Spa 2 05/11 (Airbnb). Consulta da Balcony 08-09/11 (Airbnb).
+
+**Gravado no PriceLabs** (validador 0 erro; conferido na resposta da API; recálculo da King Spa 7 às 16:54):
+| Mudança | Onde | Antes | Depois | Como desfazer |
+|---|---|---|---|---|
+| Escada (cancelamento, D0) | King Spa 7 05/11 | R$ 814 | R$ 743 | piso/teto -49% → -45% |
+| Regra G (D0) | Balcony 05/11 | R$ 711 | R$ 673 | -47% → -44% |
+
+King Spa 7 06/11: o motor queria subir (5/7), mas o passo anterior ainda não chegou ao canal. King Spa 7 09/11 esgotada: proteção no plano da manhã. King Spa 2: sem recálculo (3 de 3 hoje). **Ledger:** 1 passo.
+
 > **Regras em vigor:** desde 06/10/2026 elas ficam em `.claude/skills/gestao-receita-pousadas/references/regras.md`. Este arquivo guarda só o histórico das mudanças.
 
 ## O que só pode ser feito na tela (passo a passo para você)

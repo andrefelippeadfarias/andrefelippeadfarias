@@ -4280,6 +4280,21 @@ Panorâmica I 06/11: o motor queria subir a R$ 1.670, mas o passo anterior ainda
 
 King Spa 7 06/11: o motor queria subir (5/7), mas o passo anterior ainda não chegou ao canal. King Spa 7 09/11 esgotada: proteção no plano da manhã. King Spa 2: sem recálculo (3 de 3 hoje). **Ledger:** 1 passo.
 
+## 05/11/2026, 19:53 a 20:05 BRT — Rotina leve das 19:53
+
+**Beds24 desde 16:50 BRT:**
+- **Overbooking novo na King Spa 7:** 09/11 e 10/11 com 8 reservas para 7 unidades. Nos dois casos a reserva que excedeu foi lançada direto pela recepção (VillaRecep1): 95752571 (09/11, R$ 280, 22%) e 95762093 (10/11, R$ 300, 32%), com a noite já cheia.
+- **Vigilância (1 alerta):** reserva sem valor, Afrodite 19-22/11 (Consciência Negra), direta 95759734 lançada por RecRecep2, R$ 0.
+- Abaixo de 70%: as duas da recepção acima e a Balcony 05/11 (direta, R$ 355, 50%).
+- Novas pela Booking: King Spa 7 em 4 reservas criadas no mesmo segundo (05/11, 10-12/11, 16-17/11 e 23/11), Moinhos 06-07/12 (R$ 1.587) e Panorâmica I 06/11 (esgotou).
+
+**Gravado no PriceLabs** (validador 0 erro; conferido na resposta da API; recálculos das 19:54 da King Spa 7, Moinhos e Panorâmica I):
+- Escada pelas vendas: King Spa 7 11 e 12/11 de R$ 947 para R$ 1.090; 16, 17 e 23/11 de R$ 947 para R$ 1.042; Moinhos 06/12 de R$ 1.302 para R$ 1.368 e 07/12 de R$ 1.232 para R$ 1.294.
+- Proteção de noite esgotada (teto solto, piso p90): Panorâmica I 06/11 (D1, R$ 2.000) e King Spa 7 10/11 (R$ 944).
+- Coerência: Balcony 11, 12, 16 e 17/11 (Regra G, 10% abaixo da King Spa 7); Panorâmica I, Panorâmica II e Afrodite 06-07/12 (ordem do Recanto).
+
+**Ledger:** 7 passos. Moinhos, Panorâmica I e King Spa 7 usaram o 3º recálculo do dia.
+
 > **Regras em vigor:** desde 06/10/2026 elas ficam em `.claude/skills/gestao-receita-pousadas/references/regras.md`. Este arquivo guarda só o histórico das mudanças.
 
 ## O que só pode ser feito na tela (passo a passo para você)

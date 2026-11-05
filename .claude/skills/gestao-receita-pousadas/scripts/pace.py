@@ -50,7 +50,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from ancora_mercado import ARQ_ANCORA, ancora_da_noite, percentil_de, tipo_noite, valor_percentil  # noqa: E402
-from calendario_12m import ler_recalculo  # noqa: E402
+from calendario_12m import estadia_da_noite, ler_recalculo  # noqa: E402
 from comum import PASTA_SKILL, carregar_quartos, data, esgotado, hoje_brt, ler_json, periodo_feriado, vendidas_total  # noqa: E402
 from ordens import (ARQ_ORDENS, alvo_da_ordem, carregar_ordens, congelada, ordens_por_data, piso_da_ordem,  # noqa: E402
                     vendidas_base_escada)
@@ -818,11 +818,14 @@ def sincronizar_pace(itens: list[dict], tol: float) -> None:
         pc["direcao"] = "sobe" if final > atual * (1 + tol) else ("desce" if final < atual * (1 - tol) else None)
 
 
-def ajustar_tetos(cfg: dict, itens: list[dict], regras: dict) -> tuple[list[dict], list[dict]]:
+def ajustar_tetos(cfg: dict, itens: list[dict], regras: dict, cals: dict | None = None) -> tuple[list[dict], list[dict]]:
     """Teto livre no PriceLabs = item SEM max_price (a API mescla campos e um max_price "igual ao máximo do anúncio"
     seria um percentual enorme e inútil). Para cada item com max_price no máximo do anúncio: se a regra vigente da
     noite tem teto ou validade (lead_time_expiry), a noite vai para a lista `apagar` (plano separado, gravado antes) e
-    o item herda min_stay e check-in/out da regra apagada; senão o max_price só sai do item. Devolve (itens, apagar)."""
+    o item herda min_stay e check-in/out da regra apagada; senão o max_price só sai do item. Devolve (itens, apagar).
+    Dono 04/11 (desde 05/11), com `cals` (recálculos): onde a regra do dia de chegada decide a noite (fora de feriado,
+    pacote e sábado), a estadia regravada é a dela (calendario_12m.estadia_da_noite), não a herdada: em 04/11 a
+    proteção da sexta 06/11 da Panorâmica II regravou a estadia 1 antiga; a regra sem estadia voltaria à do PriceLabs."""
     apagar, saida = [], []
     for it in itens:
         it = dict(it)
@@ -847,6 +850,13 @@ def ajustar_tetos(cfg: dict, itens: list[dict], regras: dict) -> tuple[list[dict
                 for campo in ("min_stay", "check_in", "check_out"):
                     if reg.get(campo) not in (None, "") and it.get(campo) is None:
                         it[campo] = int(reg[campo]) if campo == "min_stay" else reg[campo]
+                if cals is not None:
+                    novo, orfa, prova = estadia_da_noite(cfg, it["quarto"], data(it["data"]), cals.get(it["quarto"]) or {},
+                                                         it.get("min_stay"))
+                    if novo is not None:
+                        it["min_stay"] = novo
+                        if orfa and novo == 1:
+                            it.update(orfa=orfa, orfa_prova=prova)
         saida.append(it)
     return saida, apagar
 
@@ -1222,7 +1232,7 @@ def main(argv=None) -> int:
     filtro = ler_filtro_noites(a.noites) if a.noites is not None else None  # --noites sem valor: nenhuma noite recebe passo
     res = plano(cfg, ancora, cals, hoje, ordens, passos, bloq, a.dias, regra_j_ativa=motor.get("regra_j_ativa", True), regras=regras,
                 noites_filtro=filtro)
-    itens, apagar = ajustar_tetos(cfg, res["itens"], regras) if regras else (res["itens"], [])
+    itens, apagar = ajustar_tetos(cfg, res["itens"], regras, cals) if regras else (res["itens"], [])
     itens, nulos = sem_efeito(cfg, itens, cals, regras, {(x["quarto"], x["data"]) for x in apagar})
     # o relatório conta só o que vai para a gravação (revisão de 31/10: dizia 9 itens com 8 gravados)
     md = relatorio_md(cfg, dict(res, itens=itens), sombra)

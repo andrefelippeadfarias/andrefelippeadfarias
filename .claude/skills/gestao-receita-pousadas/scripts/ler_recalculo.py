@@ -22,7 +22,7 @@ import sys
 
 from datetime import date
 
-from comum import carregar_quartos, data, ler_json, periodo_feriado, reais
+from comum import carregar_quartos, data, esgotado, ler_json, periodo_feriado, reais
 
 
 def ler_refresh(caminho: str) -> dict:
@@ -31,18 +31,16 @@ def ler_refresh(caminho: str) -> dict:
     return {str(x.get("date"))[:10]: x for x in arr}
 
 
-def dia_isolado(quarto: dict, d: str) -> bool:
+def dia_isolado(quarto: dict, d: str, unidades: int = 1) -> bool:
     """Noite livre entre duas noites esgotadas: o PriceLabs mostra estadia 1 mesmo com a regra em 2 (Double 10/10,
-    VK7 17/10). Não é erro da rotina; não regravar."""
+    VK7 17/10). Não é erro da rotina; não regravar. `quarto` = {data: noite do recálculo}. Na Afrodite (1 unidade) o
+    mu_occupancy vem "-1" e a venda está em num_bookings (comum.esgotado; revisão de 05/11: antes nunca era isolado)."""
     from datetime import timedelta
     dd = date.fromisoformat(d)
 
     def esgotada(k):
-        mu = str((quarto.get(k) or {}).get("mu_occupancy") or "")
-        if "/" not in mu:
-            return False
-        v, t = (int(s) for s in mu.split("/"))
-        return v >= t
+        r = quarto.get(k)
+        return bool(r) and esgotado(r, unidades)
     return esgotada((dd - timedelta(days=1)).isoformat()) and esgotada((dd + timedelta(days=1)).isoformat())
 
 
@@ -129,7 +127,8 @@ def main(argv=None) -> int:
             ms_plan = it.get("min_stay")
             orfao = False
             if ms_plan is not None and int(x.get("min_stay") or 0) != int(ms_plan):
-                orfao = dia_isolado(dados[it["quarto"]], it["data"])
+                orfao = dia_isolado(dados[it["quarto"]], it["data"],
+                                    int(cfg["por_curto"][it["quarto"]].get("unidades") or 1))
                 ok &= orfao
             problemas += 0 if ok else 1
             situacao = "✅" if ok else ("❌ regra por data INATIVA: " + inativa if inativa else "❌ diferente")

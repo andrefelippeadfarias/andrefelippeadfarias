@@ -53,6 +53,40 @@ def dias(inicio: date, n: int) -> list[date]:
 
 
 DIAS_SEMANA = ["seg", "ter", "qua", "qui", "sex", "sáb", "dom"]
+# chaves de `parametros.estadia_por_dia_chegada.por_dia` (sem acento, segunda a domingo como date.weekday())
+DIAS_CHAVE = ("seg", "ter", "qua", "qui", "sex", "sab", "dom")
+
+
+def regra_dia_chegada(cfg: dict, d: date) -> dict | None:
+    """Ordem do dono de 04/11/2026 21:00 BRT (`parametros.estadia_por_dia_chegada`): estadia mínima pelo DIA DE CHEGADA
+    ("Abriremos apenas para uma diária. A diária de domingo, a diária de terça e a diária de quinta. Todas as outras
+    deverão ser com no mínimo 2 dias"; "começa amanhã"). Devolve a regra se ativa e vigente na noite `d`; senão None."""
+    r = (cfg.get("parametros") or {}).get("estadia_por_dia_chegada") or {}
+    if not r.get("ativa") or (r.get("desde") and d < data(r["desde"])) or (r.get("ate") and d > data(r["ate"])):
+        return None
+    return r
+
+
+def estadia_do_dia(cfg: dict, d: date) -> int | None:
+    """Estadia mínima do dia da semana pela ordem de 04/11 (seg 2, ter 1, qua 2, qui 1, sex 2, sáb 2, dom 1), sem
+    feriado, pacote nem temporada (isso é `validar_plano.estadia_exigida`); None fora da vigência da regra."""
+    v = ((regra_dia_chegada(cfg, d) or {}).get("por_dia") or {}).get(DIAS_CHAVE[d.weekday()])
+    return int(v) if v is not None else None
+
+
+def estadia_pacote(cfg: dict, d: date) -> int | None:
+    """Estadia mínima por data dos pacotes fechados do dono (03/11: Natal 23→25, Ano Novo 30→01 ou 30→03), em
+    `regra_h_beds24.estadia_minima_por_data`; None fora deles."""
+    v = (((cfg.get("parametros") or {}).get("regra_h_beds24") or {}).get("estadia_minima_por_data") or {}).get(d.isoformat())
+    return int(v) if v is not None else None
+
+
+def data_de_pacote(cfg: dict, d: date) -> bool:
+    """A noite tem restrição por data de pacote do dono (03/11): estadia mínima, máxima ou chegada/saída por data
+    (`regra_h_beds24`). A estadia dessas noites é do pacote: a regra do dia de chegada (04/11) não mexe nelas."""
+    rh = ((cfg.get("parametros") or {}).get("regra_h_beds24") or {})
+    ds = d.isoformat()
+    return any(ds in (rh.get(k) or {}) for k in ("estadia_minima_por_data", "estadia_maxima_por_data", "override_por_data"))
 
 
 def reais(v) -> str:

@@ -192,16 +192,16 @@ O preço de cada noite segue a ordem de `estrategia.md` §4 e `regras.md` §4c e
    - junho: médio de domingo a quinta e alto em sexta e sábado;
    - 11 a 25/07: alto de domingo a quinta e muito alto em sexta e sábado;
    - agosto: baixo de domingo a quinta e médio em sexta e sábado.
-   - A estadia mínima do inverno precisa ser alinhada: `estrategia.md` pede 2 noites, mas há trechos de `sazonalidade.json` com 1 (pendência `estadia-inverno`).
+   - Estadia do inverno (dono 04/11, desde 05/11): vale a estadia pelo dia de chegada, como no resto do ano. Segunda, quarta, sexta e sábado 2; domingo, terça e quinta 1, salvo onde a sazonalidade pede mais (pico de julho, 11 a 25/07, com 2). Feriadões com a estadia própria. **(Substituído em 05/11:** o alinhamento da pendência `estadia-inverno`, que pedia 2 noites pela `estrategia.md` contra trechos de 1 na sazonalidade.)
    - Se a lei do recesso escolar valer, 24/06 a 01/07 sobe para alta na revisão de março (pendência `ferias-escolares-2027`).
 5. **Vales** (fevereiro e março depois do Carnaval, agosto, setembro a novembro de domingo a quinta):
    - escada (Regra F), degrau 4c e Regra I;
    - Balcony pela Regra G como porta de entrada da Villa.
    - Preço sozinho não cria demanda de dia útil: os pilares C e D é que mudam o vale.
-6. **Noites órfãs:** a ferramenta "Orphan Day Prices" do PriceLabs, que vende buracos de 1 a 2 noites, fica com o dono (pendência de tela `orphan-days`).
+6. **Noites órfãs:** desde 05/11 (dono, 04/11: "libera órfã"), a noite livre com a noite seguinte esgotada no quarto leva 1 noite por regra nossa, fora de feriado, pacote e sábado; a skill grava no Beds24 e no PriceLabs por data (`regras.md`, Regra A). O sábado órfão segue a ordem de 02/11. O "orphan days" de estadia do PriceLabs e a ferramenta "Orphan Day Prices", que vende buracos de 1 a 2 noites, seguem com o dono (pendência de tela `orphan-days`): o de estadia solta até noite de feriado (05/11: Double e King Spa 2 em 19/11).
    - Ela conflita com a Regra H (sábado sozinho) e com os pisos do dono (R$ 500 e R$ 850 no preço final, não o mínimo do anúncio).
    - Se o dono quiser, a proposta é só para buracos de domingo a quinta e sempre acima do piso de dia útil.
-   - Há um conflito em `regras.md`: o §2 deixa personalizações com a skill, mas a Regra H põe noites órfãs só na tela. Fica com o dono.
+   - Há um conflito em `regras.md`: o §2 deixa personalizações com a skill, mas a Regra H põe noites órfãs só na tela. Fica com o dono. **(Resolvido em parte em 05/11:** a estadia da noite órfã é regra do dono e vai por data; o preço órfão e o "orphan days" da tela seguem com o dono.)
 7. **Reservas abaixo do planejado:** `reservas_abaixo.py` em toda rotina, no topo do relatório (já em vigor).
 
 ## 5. Pilar B: canais e OTAs (decisões e telas do dono)
@@ -246,7 +246,7 @@ Objetivo: de 8% e 11% para 25% de receita direta sem lançamento à mão, **com 
 1. **Google (pendência `google-hotel-center`):**
    - links gratuitos de reserva pelo Hotel Center no Beds24. Exigem o motor do Beds24, Perfil da Empresa com nome e endereço iguais e preço para 2 pessoas;
    - completar o Perfil da Empresa: fotos por suíte e da hidro com vista, atributos e post semanal;
-   - pela Wiki do Beds24, o Google consulta 1 noite por data, então datas com estadia mínima de 2 aparecem fechadas. É o custo da Regra H.
+   - pela Wiki do Beds24, o Google consulta 1 noite por data, então datas com estadia mínima de 2 aparecem fechadas. É o custo da Regra H e, desde 05/11, da estadia 2 de segunda, quarta e sexta (dono 04/11).
 2. **Google Hotel Ads pago, só no vale** (dias úteis de fevereiro, março e agosto a novembro):
    - no estudo de Cornell CHR-2025-07, com 26 hotéis boutique, o link grátis somado ao anúncio pago deu +41% de reservas pelo Google, e 4 em 5 das reservas extras foram diretas;
    - desligar com a demanda forte;

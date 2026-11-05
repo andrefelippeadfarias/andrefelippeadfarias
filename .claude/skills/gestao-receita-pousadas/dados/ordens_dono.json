@@ -9153,6 +9153,30 @@
     1
    ],
    "nota": "F5 (Natal (23-26/12)): régua com hidro medida nas estadias que contêm a noite (3 estadias), p90 R$ 3491 público, p90 R$ 3491; ÷ 0.650 (Booking/enviado; ÷ 0.585 nos degraus de D7 ou menos); nunca abaixo do piso do dono. Descida gradual a partir de D7 com o vendido abaixo da curva: D7 F4, D5 F3, D3 F2, D1 F1. Afrodite pelo prêmio dela e Balcony 10% abaixo (Regra G). Limitado ao máximo do anúncio em King Spa 7, King Spa 2 (subir o máximo é do dono). Como desfazer: pedir 'Volte às ordens anteriores de 25/12/26'."
+  },
+  {
+   "id": "dono-2026-11-04-estadia-dia-chegada",
+   "data": "2026-11-04",
+   "criada_em": "2026-11-05T00:00+00:00",
+   "texto": "Vamos ajustar aqui uma estratégia que eu sempre usei. Abriremos apenas para uma diária. A diária de domingo, a diária de terça e a diária de quinta. Todas as outras deverão ser com no mínimo 2 dias.",
+   "contexto": "Ordem de 04/11 ~21:00 BRT. Perguntado (1) se feriados e pacotes seguem com as regras próprias, (2) se noite órfã e última hora (hoje/amanhã) liberam 1 diária e (3) se começa em 05/11, o dono respondeu: 'Sim, mantém feriados e pacotes; libera órfã; começa amanhã'.",
+   "tipo": "regra",
+   "quartos": [
+    "Q7",
+    "Double",
+    "Afrodite",
+    "Q2",
+    "VK7",
+    "VK2",
+    "Balcony"
+   ],
+   "de": "2026-11-05",
+   "ate": "2099-12-31",
+   "libera": [
+    "beds24_inventario",
+    "estadia_1_orfa"
+   ],
+   "nota": "Regra permanente aplicada por script (quartos.json parametros.estadia_por_dia_chegada): validar_plano.estadia_exigida/estadia_alvo/estadia_planejada, calendario_12m (plano do PriceLabs por data e lote do Beds24 só de min_stay, nos dois sentidos) e pace.ajustar_tetos. Domingo, terça e quinta 1; segunda, quarta e sexta 2; sábado 2 (Regra H). Feriado, véspera e pacote com a estadia própria, inclusive na noite órfã; temporada acima do dia vale. Noite órfã (livre com a seguinte esgotada no quarto) com 1, provada por 'orfa_prova'. Última hora não libera. Tipo 'regra' de propósito: não congela noite (manual), não tira a noite do motor (preco_por_data) nem das faixas do dono (faixas_dono só cede a alvo/piso por data mais novos), e não é acompanhamento. Não libera 'estadia': abaixo ou acima da estadia do dia só com ordem do dono mais nova que libere 'estadia'; as liberações de estadia de 01/11 (dono-2026-11-01-beds24-edicao, dono-2026-11-01-beds24-fds-e-villa-0511) são anteriores e não valem contra esta regra."
   }
  ]
 }

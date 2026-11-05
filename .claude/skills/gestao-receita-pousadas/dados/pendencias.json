@@ -88,7 +88,10 @@
    "responsavel": "tela",
    "desde": "2026-10-13",
    "urgencia": 3,
-   "texto": "Sábado isolado entre noites esgotadas aparece com estadia 1 (regra de dia órfão do PriceLabs). Decidir se desliga 'orphan days' em estadia mínima; o bloqueio de sábado sozinho do Beds24 protege enquanto isso."
+   "texto": "Sábado isolado entre noites esgotadas aparece com estadia 1 (regra de dia órfão do PriceLabs). Decidir se desliga 'orphan days' em estadia mínima; o bloqueio de sábado sozinho do Beds24 protege enquanto isso.",
+   "resolvido_em": "2026-11-05",
+   "atualizado_em": "2026-11-05",
+   "resolucao": "Passou à pendência pricelabs-estadia-dia-semana-tela (05/11), com o achado novo: o 'orphan days' do PriceLabs solta qualquer dia entre noites esgotadas, inclusive noite de feriado (Double 19/11, King Spa 2 19/11 e 21/11, com a regra por data em 2, foram ao Beds24 com 1). A noite órfã do dono (04/11, 'libera órfã') a skill já grava por data."
   },
   {
    "id": "booking-villa-hidro",
@@ -483,7 +486,10 @@
    "responsavel": "skill",
    "desde": "2026-10-21",
    "urgencia": 2,
-   "texto": "Plano A3: alinhar sazonalidade.json à estrategia.md (2 noites em sexta, sábado e julho inteiro) e ver Tiradentes (1 noite na sazonalidade contra a Regra A) e Finados 2027 (2 contra 3 em 2026). Mai/27: a sazonalidade tem médio em sexta e sábado; não subir faixa sem mudar sazonalidade.json."
+   "texto": "Plano A3: alinhar sazonalidade.json à estrategia.md (2 noites em sexta, sábado e julho inteiro) e ver Tiradentes (1 noite na sazonalidade contra a Regra A) e Finados 2027 (2 contra 3 em 2026). Mai/27: a sazonalidade tem médio em sexta e sábado; não subir faixa sem mudar sazonalidade.json.",
+   "resolvido_em": "2026-11-05",
+   "atualizado_em": "2026-11-05",
+   "resolucao": "A parte de estadia foi resolvida pela ordem do dono de 04/11: estadia pelo dia de chegada o ano todo (segunda, quarta, sexta e sábado 2; domingo, terça e quinta 1), com a temporada acima do dia valendo (pico de julho 11-25/07 com 2, ordem de 01/11 14:10). O validador usa o maior dos dois, então o 1 da sazonalidade em sexta não manda mais. Tiradentes e Finados 2027 passaram à pendência do dono estadia-feriados-2027-acima. A nota de maio/2027 (médio em sexta e sábado; não subir faixa sem mudar sazonalidade.json) não é de estadia e segue na revisão mensal da sazonalidade."
   },
   {
    "id": "estrategia-desatualizada",
@@ -531,7 +537,10 @@
    "responsavel": "dono",
    "desde": "2026-10-21",
    "urgencia": 2,
-   "texto": "Proposta: sextas de junho e de julho (alta ou muito alta na sazonalidade) com 2 noites, para não sobrar sábado preso no Recanto (lá o sábado fecha só a chegada). Conflita com a Regra A (1 noite a até 14 dias), então precisa da decisão do dono."
+   "texto": "Proposta: sextas de junho e de julho (alta ou muito alta na sazonalidade) com 2 noites, para não sobrar sábado preso no Recanto (lá o sábado fecha só a chegada). Conflita com a Regra A (1 noite a até 14 dias), então precisa da decisão do dono.",
+   "resolvido_em": "2026-11-05",
+   "atualizado_em": "2026-11-05",
+   "resolucao": "Superada pela ordem do dono de 04/11 21:00 BRT ('Todas as outras deverão ser com no mínimo 2 dias'): toda sexta fica com 2 noites, o ano todo, desde 05/11 (1 só como noite órfã, com o sábado esgotado no quarto). A Regra A antiga (1 noite a até 14 dias), que era o conflito, saiu. Aplicada pela auditoria de 12 meses (calendario_12m.py) no Beds24 e no PriceLabs por data."
   },
   {
    "id": "festa-cerejeira-2027",
@@ -684,7 +693,9 @@
    "urgencia": 1,
    "texto": "D2 (30/10): a estadia mínima gravada no PriceLabs NÃO chega à Booking (vive no Beds24). Tabela proposta para o Beds24: sábado é o único dia com bloqueio de chegada (noCheckIn, Regra H); sexta e domingo a quinta com 1 noite; sábado liberado para 1 noite na quarta-feira anterior quando a pousada estiver abaixo de 60% nesse sábado; feriados com 2 noites (3 em Finados, Carnaval, Corpus Christi, 9 de Julho e Réveillon) e as pontas liberadas para 1 noite a 7 e a 3 dias quando sobrar; sincronizar a estadia mínima PriceLabs → Beds24 (ou gravar só no Beds24). Para a skill medir reservas, estadias e restrições: cadastrar o token só-leitura do Beds24 (pendência beds24-token). Confirmar a tabela ou ajustar; a skill não altera o Beds24. 31/10: 'pode fazer tudo conforme planejado' não alcança o Beds24 (o acesso da skill é só leitura e o token não está cadastrado): a tabela continua para o dono aplicar na tela do Beds24 (Preços → Regras de estadia / Restrições de chegada). 01/11: com a edição do Beds24 liberada, a parte do sábado foi feita (Regra H nova, chegada liberada com 2 noites, em todos os sábados até 31/10/2027). Seguem com o dono: sexta com 1 noite (hoje 2 na maioria dos quartos; só a Panorâmica I em 06/11 foi liberada) e os dias de semana com estadia acima do calendário (pendência beds24-semana-estadia).",
    "desde": "2026-10-30",
-   "atualizado_em": "2026-11-01"
+   "atualizado_em": "2026-11-05",
+   "resolvido_em": "2026-11-05",
+   "resolucao": "Decidida pelo dono: sábados fechados para entrada e saída (02/11) e estadia pelo dia de chegada (dono 04/11 21:00 BRT: 'Vamos ajustar aqui uma estratégia que eu sempre usei. Abriremos apenas para uma diária. A diária de domingo, a diária de terça e a diária de quinta. Todas as outras deverão ser com no mínimo 2 dias.'; 'Sim, mantém feriados e pacotes; libera órfã; começa amanhã'). Desde 05/11: domingo, terça e quinta 1; segunda, quarta e sexta 2; sábado 2 e fechado; feriados, vésperas e pacotes com a estadia própria; noite órfã (noite seguinte esgotada no quarto) 1; última hora não libera. A skill grava no Beds24 e no PriceLabs por data, em 12 meses (regras.md, Regra A; ordem dono-2026-11-04-estadia-dia-chegada). A tabela proposta em 30/10 (sexta e domingo a quinta com 1, sábado liberado na quarta-feira, pontas de feriado liberadas) foi substituída."
   },
   {
    "id": "decisao-d3-ligar-motor-pace",
@@ -777,7 +788,8 @@
    "responsavel": "skill",
    "desde": "2026-11-01",
    "urgencia": 2,
-   "texto": "Vigiar as sextas de feriado da Afrodite (20/11, 25/12, 01/01, 26/03, 28/05, 09/07): se entrar reserva com chegada na sexta, a quinta (ou quarta e quinta, em Corpus Christi) de feriado anterior fica órfã, porque a saída de sexta segue fechada. Nesse caso, abrir a saída da sexta (override none) e pôr estadia 1 na quinta órfã no Beds24, registrar e avisar o dono. No Réveillon, uma chegada em 01/01 deixa 29, 30 e 31/12 sem venda possível: avisar o dono no topo do relatório."
+   "texto": "Vigiar as sextas de feriado da Afrodite (20/11, 25/12, 01/01, 26/03, 28/05, 09/07): se entrar reserva com chegada na sexta, a quinta (ou quarta e quinta, em Corpus Christi) de feriado anterior fica órfã, porque a saída de sexta segue fechada. Nesse caso, abrir a saída da sexta (override none) e pôr estadia 1 na quinta órfã no Beds24, registrar e avisar o dono. No Réveillon, uma chegada em 01/01 deixa 29, 30 e 31/12 sem venda possível: avisar o dono no topo do relatório. 05/11 (ordem do dono de 04/11, 'mantém feriados e pacotes'): a quinta de feriado órfã NÃO desce a 1 sozinha; a estadia própria do feriado vale também na noite órfã. Abrir a saída da sexta segue valendo; a estadia 1 na quinta vai ao topo do relatório como pedido ao dono.",
+   "atualizado_em": "2026-11-05"
   },
   {
    "id": "conferir-envio-pricelabs-beds24-0211",
@@ -890,7 +902,21 @@
    "urgencia": 2,
    "data_alvo": "2026-12-01",
    "texto": "F5 de Natal e Réveillon passa do máximo do anúncio (R$ 5.000 nos 6 quartos; Afrodite R$ 10.000): a F5 pede ~R$ 5.650 (Natal) e ~R$ 6.350 (Réveillon) enviados no Recanto, ~R$ 5.400 e ~R$ 6.070 na Villa. Hoje as noites param em ~R$ 4.974-4.991 (Booking ~R$ 3.100-3.250), entre F4 e F5 no Natal e entre F3 e F4 no Réveillon, e o 1º degrau da descida (D7) não muda nada. Subir o máximo é só do dono: responder 'suba o máximo para R$ X' para a skill regerar as ordens das festas."
+  },
+  {
+   "id": "estadia-feriados-2027-acima",
+   "responsavel": "dono",
+   "desde": "2026-11-05",
+   "urgencia": 2,
+   "texto": "Estadia de feriado acima da regra no Beds24 (inventário de 05/11): 7 de Setembro 03-06/09/2027 com 3 noites nos 7 quartos; 12 de Outubro 08-09/10/2027 e Finados 29-30/10/2027 com 3 em 6 quartos (King Spa 2 com 2). As regras dão 2 (quartos.json e sazonalidade; o Finados com 3 noites foi a ordem do dono de 03/10 para 2026). Tiradentes 20-21/04/2027 (terça e quarta, feriado isolado): 2 no Beds24, contra 1 na sazonalidade (e terça com 1 pela regra do dia). A skill não reduz estadia de feriado sozinha (ordem de 04/11: 'mantém feriados'). Manter ou baixar? Responder, por exemplo, 'feriados de 2027 com 2' ou 'mantém 3'."
+  },
+  {
+   "id": "pricelabs-estadia-dia-semana-tela",
+   "responsavel": "dono",
+   "desde": "2026-11-05",
+   "urgencia": 2,
+   "texto": "Na tela do PriceLabs, no grupo Recanto dos Moinhos (124405, os 7 quartos): configurar a estadia mínima por dia da semana (dom 1, seg 2, ter 1, qua 2, qui 1, sex 2, sáb 2) como rede de segurança. Hoje a estadia padrão é a 'PriceLabs Recommended', que a API não lê nem grava ('Unknown customization(s): min_stay') e que varia mês a mês (Moinhos sem regra por data: 1 em 213 noites, 2 em 44). A skill grava a estadia por data nos 12 meses; noite sem regra por data (a nova do fim do horizonte, ou regra apagada) cai nesse padrão até a rotina completa. Decidir também o 'orphan days' do PriceLabs: ele solta qualquer dia entre noites esgotadas, inclusive noite de feriado (05/11: Double 19/11, King Spa 2 19/11 e 21/11 foram ao Beds24 com 1, com a regra por data em 2). A noite órfã do dono (04/11) a skill já faz por data. Substitui a pendência orphan-days."
   }
  ],
- "versao": "2026-11-02T01"
+ "versao": "2026-11-05T00"
 }

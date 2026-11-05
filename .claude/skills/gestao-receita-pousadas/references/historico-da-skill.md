@@ -2,6 +2,32 @@
 
 Cada mudança feita na própria Skill (regras, parâmetros, scripts, fluxo) entra aqui: data, o que mudou, por quê (evidência) e como desfazer. A entrada mais nova fica em cima.
 
+## 05/11/2026: estadia mínima pelo dia de chegada (dono, 04/11 21:00 BRT)
+- **Por quê:** dono, 04/11: "Vamos ajustar aqui uma estratégia que eu sempre usei. Abriremos apenas para uma diária. A diária de domingo, a diária de terça e a diária de quinta. Todas as outras deverão ser com no mínimo 2 dias." Perguntado sobre feriados e pacotes, órfã e última hora, e início: "Sim, mantém feriados e pacotes; libera órfã; começa amanhã".
+- **A regra:** domingo, terça e quinta 1 noite; segunda, quarta e sexta 2; sábado 2 e fechado (Regra H). Feriados, vésperas e pacotes com a estadia própria, inclusive na noite órfã; temporada acima do dia vale (pico de julho 2). Noite órfã (livre com a noite seguinte esgotada no quarto) com 1. Última hora não libera. Nos 7 quartos, desde as noites de 05/11, em 12 meses, no Beds24 e no PriceLabs por data.
+- **Achados da fase de entendimento que o código resolve:**
+  - (a) `classificar_beds24` devolvia segunda e quarta a 1 (`semana_estadia_acima`) e não auditava a sexta;
+  - (b) `validar_plano.estadia_exigida` não tinha regra por dia;
+  - (c) `calendario_12m.comparar`: item com piso faltando levava max(exigida, efetiva) e desfazia a órfã;
+  - (d) `_cheia` e `ler_recalculo.dia_isolado` usavam só `mu_occupancy`, que vem "-1" na Afrodite (1 unidade);
+  - (e) `pace.ajustar_tetos` herdava o `min_stay` da regra apagada (Panorâmica II, sexta 06/11, regravada com 1 em 04/11);
+  - (f) a exceção "dono" de feriado e sábado no validador aceitava qualquer ordem válida, mesmo sem liberar estadia;
+  - (g) a ordem nova tem de ser tipo "regra" (acompanhamento, manual ou preço por data tirariam as noites do motor ou das faixas).
+- **O que mudou:**
+  - `dados/quartos.json`: `parametros.estadia_por_dia_chegada` (`por_dia` dom 1, seg 2, ter 1, qua 2, qui 1, sex 2, sáb 2; `desde` 05/11; `orfa_noite_seguinte`; `ordem_id`); nota em `regra_a_janela_dias` (fora de uso).
+  - `dados/ordens_dono.json`: ordem `dono-2026-11-04-estadia-dia-chegada` (tipo "regra"; libera `estadia`, `estadia_1_orfa` e `beds24_inventario`).
+  - `scripts/comum.py`: `regra_dia_chegada`, `estadia_do_dia` e `estadia_pacote`.
+  - `scripts/validar_plano.py`: `estadia_exigida` por dia de chegada (pacote, feriado, dia, temporada acima); `estadia_alvo` e `orfa_seguinte` (1 na noite órfã, com `orfa` "seguinte" e `orfa_prova`, conferida contra `--precos`); ERRO para estadia abaixo ou acima da do dia sem órfã provada nem ordem que libere `estadia`; a exceção `regra_h` de última hora sai; a exceção "dono" em feriado e sábado só com ordem que libere `estadia`; aviso ao apagar a substituição de qualquer dia com estadia.
+  - `scripts/calendario_12m.py`: órfã pela noite seguinte (`estadia_da_noite`; o inventário do Beds24 é lido até `--ate` + 1); `classificar_beds24` devolve `estadia_dia_chegada` (segunda, quarta e sexta 2; domingo, terça e quinta 1; órfã 1; feriado e pacote fora); a sexta órfã sai de `orfas_estadia` (fica só o sábado órfão de 02/11); `comparar` não regrava a estadia exigida na noite órfã com 1; dia isolado entre noites esgotadas fica como informação.
+  - Lote do Beds24 por pousada: leva o `min_stay` da estadia do dia e da órfã, com `pricelabs_tambem` (a mesma estadia vai ao PriceLabs por data, senão o envio desfaz o Beds24).
+  - `scripts/pace.py`: `ajustar_tetos` recebe os calendários e, na noite da regra do dia (fora de feriado, pacote e sábado), põe a estadia da regra (ou 1 na órfã), não a herdada da regra apagada.
+  - `_cheia` da Afrodite: esgotada por `num_bookings` (`comum.vendidas_total`), não por `mu_occupancy`.
+  - Testes novos da regra do dia, da órfã, do lote e do `ajustar_tetos`.
+  - Documentos: `regras.md` (Regra A reescrita; Regra H com a órfã geral e o fim do sábado de última hora; 6a; 6b com a linha nova e os trechos substituídos), `SKILL.md` (auditoria do Beds24, estadia de 60 dias, plano de 12 meses, gatilho da rotina leve em qualquer noite de D0 a D7), `ferramentas.md`, `aprendizados.md`, `estrategia.md` (D2 decidida), `plano-12-meses.md` e `dados/pendencias.json`.
+- **Tamanho:** 684 quarto-noites no Beds24 e ~654 no PriceLabs por data, quase todas segunda, quarta e sexta de 1 para 2; 72 noites de feriado e pacote protegidas.
+- **Pendências para o dono:** feriadões de 2027 com estadia 3 no Beds24 contra 2 nas regras (7 de Setembro, 12 de Outubro e Finados) e Tiradentes 20-21/04 (a skill não reduz estadia de feriado sozinha); estadia mínima por dia da semana na tela do PriceLabs, no grupo Recanto dos Moinhos, como rede de segurança, e a decisão sobre o "orphan days", que hoje solta noite de feriado.
+- **Como desfazer:** `parametros.estadia_por_dia_chegada.ativa` = false (o validador volta a exigir só sábado 2 e feriados); apagar a ordem `dono-2026-11-04-estadia-dia-chegada`; reverter os scripts pelo git; regravar a estadia de antes no Beds24 e no PriceLabs com um lote reverso, a partir do inventário lido antes da gravação.
+
 ## 04/11/2026 11:50 BRT: faixas do dono por tipo de noite viram regra permanente (dono)
 - **Por quê:** dono, 04/11: "Para feriados, vamos aplicar o F5 e baixar gradualmente caso a lotação esteja abaixo da expectativa 7 dias antes. Para Natal, aplicar F5, Réveillon F5, inverno e final de semana F5. Para dias de semana, vamos aplicar F2 e fins de semana do mês de dezembro e os últimos dois de novembro, vamos aplicar F3."
 - **O que mudou:**

@@ -27,6 +27,8 @@ Edição do inventário (dono, 01/11/2026: "verificar sempre o inventário e edi
   pacotes fechados de Natal e Ano Novo) e chegada/saída (override
   noCheckIn/noCheckOut/noCheckInOrCheckOut/none). NUNCA preço (price1..16: preço só pelo PriceLabs) e NUNCA reservas.
 - `editar` é simulação por padrão (mostra antes e depois); com --aplicar grava e relê para conferir.
+- `editar-lote` (revisão de 05/11): item com `min_stay_antes` cujo minStay lido na hora diverge é pulado e relatado
+  (`pulados`); o resto vai em blocos de até 100 faixas por POST (`--max-faixas`), cada bloco relido e conferido.
   Endpoint e campos: POST/GET /inventory/rooms/calendar (apiV2.yaml oficial, conferido em 01/11/2026).
 
 Uso:
@@ -386,35 +388,23 @@ def comparar(lista, coleta, de, ate):
     return dif
 
 
-def editar_lote(plano, aplicar=False):
-    """Plano = [{quarto, de, ate, min_stay?, override?, num_avail?, num_avail_esperado?, motivo}]. Um POST com todas as
-    faixas (agrupadas por quarto), depois relê o inventário e confere item a item (`num_avail_esperado` = o numAvail
-    líquido que deve voltar; sem ele, o gravado). Sem --aplicar só mostra antes e mudança."""
-    por_quarto, linhas = {}, []
-    for it in plano:
-        c = corpo_edicao(it["quarto"], it["de"], it["ate"], it.get("min_stay"), it.get("override"), it.get("num_avail"),
-                         it.get("max_stay"), it.get("canais_max"))
-        por_quarto.setdefault(c[0]["roomId"], []).extend(c[0]["calendar"])
-        linhas.append(it)
-    de = min(i["de"] for i in plano)
-    ate = max(i["ate"] for i in plano)
-    quartos = sorted({i["quarto"] for i in plano})
-    antes = inventario(token_de_acesso(), de, ate, quartos)
-    resumo = {"itens": len(plano), "quartos": quartos, "aplicar": aplicar}
-    if not aplicar:
-        resumo["amostra"] = [{"quarto": i["quarto"], "de": i["de"], "antes": antes.get(i["quarto"], {}).get(i["de"]),
-                              "mudanca": {k: i[k] for k in ("min_stay", "max_stay", "override", "num_avail", "canais_max")
-                                          if i.get(k) is not None}}
-                             for i in plano[:12]]
-        return resumo
-    corpo = [{"roomId": rid, "calendar": cal} for rid, cal in por_quarto.items()]
-    resp = _post("/inventory/rooms/calendar", corpo, {"token": token_escrita()})
-    depois = inventario(token_de_acesso(), de, ate, quartos)
-    erros = []
-    for i in plano:
-        d = dt.date.fromisoformat(i["de"])
-        while d <= dt.date.fromisoformat(i["ate"]):
-            v = depois.get(i["quarto"], {}).get(d.isoformat(), {})
+MAX_FAIXAS_POST = 100
+
+
+def _datas(i):
+    d, fim = dt.date.fromisoformat(i["de"]), dt.date.fromisoformat(i["ate"])
+    while d <= fim:
+        yield d.isoformat()
+        d += dt.timedelta(days=1)
+
+
+def _conferir(itens, depois):
+    """(erros, itens com erro) da releitura: cada campo gravado contra o que o inventário devolve."""
+    erros, com_erro = [], 0
+    for i in itens:
+        n0 = len(erros)
+        for ds in _datas(i):
+            v = depois.get(i["quarto"], {}).get(ds, {})
             for campo, chave in (("min_stay", "minStay"), ("max_stay", "maxStay"), ("override", "override"),
                                  ("num_avail", "numAvail")):
                 if i.get(campo) is None:
@@ -423,14 +413,85 @@ def editar_lote(plano, aplicar=False):
                 # `num_avail_esperado` (unidades − reservas da noite) quando o item trouxer
                 alvo = i.get("num_avail_esperado", i[campo]) if campo == "num_avail" else i[campo]
                 if v.get(chave) != alvo:
-                    erros.append(f"{i['quarto']} {d}: {chave} {v.get(chave)} (esperado {alvo})")
+                    erros.append(f"{i['quarto']} {ds}: {chave} {v.get(chave)} (esperado {alvo})")
             for canal, alvo in (i.get("canais_max") or {}).items():
                 lido = (v.get("canais_max") or {}).get(canal)
                 if lido != alvo:
-                    erros.append(f"{i['quarto']} {d}: limite {canal} {lido} (esperado {alvo})")
-            d += dt.timedelta(days=1)
-    resumo.update({"resposta_ok": all((r or {}).get("success", True) for r in (resp if isinstance(resp, list) else [resp])),
-                   "conferidos": len(plano) - len({e.split(':')[0] for e in erros}), "erros": erros})
+                    erros.append(f"{i['quarto']} {ds}: limite {canal} {lido} (esperado {alvo})")
+        com_erro += len(erros) > n0
+    return erros, com_erro
+
+
+def editar_lote(plano, aplicar=False, max_faixas=MAX_FAIXAS_POST):
+    """Plano = [{quarto, de, ate, min_stay?, min_stay_antes?, override?, num_avail?, num_avail_esperado?, motivo}].
+    Lê o inventário antes; item com `min_stay_antes` cujo minStay lido diverge (em qualquer noite da faixa) é PULADO e
+    relatado (revisão de 05/11: o lote é feito com a leitura de horas antes; reserva, cancelamento, o envio do PriceLabs
+    ou a equipe podem ter mudado a noite, e gravar por cima desfaria isso). Os itens que ficam vão em blocos de até
+    `max_faixas` faixas por POST (agrupadas por quarto dentro do bloco), e cada bloco é relido e conferido item a item
+    (`num_avail_esperado` = o numAvail líquido que deve voltar; sem ele, o gravado) antes do próximo; um bloco com erro de
+    gravação para o lote. Sem --aplicar só mostra antes, mudança, pulados e blocos."""
+    if not plano:
+        return {"itens": 0, "aplicar": aplicar, "pulados": [], "blocos": [], "erros": [], "conferidos": 0}
+    corpos = []
+    for it in plano:
+        c = corpo_edicao(it["quarto"], it["de"], it["ate"], it.get("min_stay"), it.get("override"), it.get("num_avail"),
+                         it.get("max_stay"), it.get("canais_max"))
+        corpos.append((it, c[0]["roomId"], c[0]["calendar"]))
+    de = min(i["de"] for i in plano)
+    ate = max(i["ate"] for i in plano)
+    quartos = sorted({i["quarto"] for i in plano})
+    antes = inventario(token_de_acesso(), de, ate, quartos)
+    pulados, ficam = [], []
+    for it, rid, cal in corpos:
+        if it.get("min_stay_antes") is not None:
+            lidos = {ds: (antes.get(it["quarto"], {}).get(ds) or {}).get("minStay") for ds in _datas(it)}
+            difere = {ds: v for ds, v in lidos.items() if v != it["min_stay_antes"]}
+            if difere:
+                pulados.append({"quarto": it["quarto"], "de": it["de"], "ate": it["ate"],
+                                "min_stay_antes": it["min_stay_antes"], "min_stay": it.get("min_stay"), "lido": difere,
+                                "por_que": ("já no alvo" if all(v == it.get("min_stay") for v in difere.values())
+                                            else "minStay mudou desde o plano: refaça com o inventário novo")})
+                continue
+        ficam.append((it, rid, cal))
+    blocos = [ficam[k:k + max(1, int(max_faixas))] for k in range(0, len(ficam), max(1, int(max_faixas)))]
+    resumo = {"itens": len(plano), "quartos": quartos, "aplicar": aplicar, "pulados": pulados,
+              "a_gravar": len(ficam), "max_faixas_por_post": max_faixas, "n_blocos": len(blocos)}
+    if not aplicar:
+        resumo["amostra"] = [{"quarto": i["quarto"], "de": i["de"], "antes": antes.get(i["quarto"], {}).get(i["de"]),
+                              "mudanca": {k: i[k] for k in ("min_stay", "max_stay", "override", "num_avail", "canais_max")
+                                          if i.get(k) is not None}}
+                             for i, _, _ in ficam[:12]]
+        return resumo
+    tok = token_escrita()
+    erros, saida_blocos, conferidos = [], [], 0
+    for n, bloco in enumerate(blocos, 1):
+        por_quarto = {}
+        for _, rid, cal in bloco:
+            por_quarto.setdefault(rid, []).extend(cal)
+        itens = [it for it, _, _ in bloco]
+        info = {"bloco": n, "faixas": sum(len(c) for _, _, c in bloco), "de": min(i["de"] for i in itens),
+                "ate": max(i["ate"] for i in itens)}
+        try:
+            resp = _post("/inventory/rooms/calendar", [{"roomId": rid, "calendar": cal} for rid, cal in por_quarto.items()],
+                         {"token": tok})
+        except ErroBeds24 as e:
+            info.update(resposta_ok=False, erro=str(e))
+            saida_blocos.append(info)
+            erros.append(f"bloco {n}: {e}")
+            resumo["parou_no_bloco"] = n
+            break
+        info["resposta_ok"] = all((r or {}).get("success", True) for r in (resp if isinstance(resp, list) else [resp]))
+        depois = inventario(token_de_acesso(), info["de"], info["ate"], sorted({i["quarto"] for i in itens}))
+        e_bloco, com_erro = _conferir(itens, depois)
+        info.update(erros=e_bloco, conferidos=len(itens) - com_erro)
+        conferidos += info["conferidos"]
+        erros += e_bloco
+        saida_blocos.append(info)
+        if not info["resposta_ok"]:
+            resumo["parou_no_bloco"] = n
+            break
+    resumo.update({"resposta_ok": all(b.get("resposta_ok") for b in saida_blocos), "blocos": saida_blocos,
+                   "conferidos": conferidos, "erros": erros})
     return resumo
 
 
@@ -452,10 +513,12 @@ def main(argv=None):
     ed.add_argument("--num-avail", type=int); ed.add_argument("--motivo", required=True)
     ed.add_argument("--aplicar", action="store_true", help="grava no Beds24 (sem isto, só simula)")
     el = sub.add_parser("editar-lote"); el.add_argument("--plano", required=True); el.add_argument("--aplicar", action="store_true")
+    el.add_argument("--max-faixas", type=int, default=MAX_FAIXAS_POST, help="faixas por POST (padrão 100); cada bloco é relido")
     a = ap.parse_args(argv)
     if a.cmd == "editar-lote":
         try:
-            print(json.dumps(editar_lote(json.load(open(a.plano, encoding="utf-8")), a.aplicar), ensure_ascii=False, indent=1))
+            print(json.dumps(editar_lote(json.load(open(a.plano, encoding="utf-8")), a.aplicar, a.max_faixas),
+                             ensure_ascii=False, indent=1))
             return 0
         except ErroBeds24 as e:
             print(f"ERRO: {e}", file=sys.stderr)
@@ -494,7 +557,9 @@ def main(argv=None):
         elif a.cmd == "movimento":
             texto = json.dumps(movimento(tok, a.desde), ensure_ascii=False, indent=1)
         elif a.cmd == "inventario":
-            texto = json.dumps(inventario(tok, a.de, a.ate, a.quarto), ensure_ascii=False, indent=1)
+            inv = inventario(tok, a.de, a.ate, a.quarto)
+            inv["_lido_em"] = dt.datetime.now(dt.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")  # prova da órfã (05/11)
+            texto = json.dumps(inv, ensure_ascii=False, indent=1)
         elif a.cmd == "comparar":
             de, ate = dt.date.fromisoformat(a.de), dt.date.fromisoformat(a.ate)
             coleta = json.load(open(a.coleta, encoding="utf-8"))

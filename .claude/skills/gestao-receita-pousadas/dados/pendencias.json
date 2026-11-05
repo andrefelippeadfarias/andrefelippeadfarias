@@ -916,7 +916,36 @@
    "desde": "2026-11-05",
    "urgencia": 2,
    "texto": "Na tela do PriceLabs, no grupo Recanto dos Moinhos (124405, os 7 quartos): configurar a estadia mínima por dia da semana (dom 1, seg 2, ter 1, qua 2, qui 1, sex 2, sáb 2) como rede de segurança. Hoje a estadia padrão é a 'PriceLabs Recommended', que a API não lê nem grava ('Unknown customization(s): min_stay') e que varia mês a mês (Moinhos sem regra por data: 1 em 213 noites, 2 em 44). A skill grava a estadia por data nos 12 meses; noite sem regra por data (a nova do fim do horizonte, ou regra apagada) cai nesse padrão até a rotina completa. Decidir também o 'orphan days' do PriceLabs: ele solta qualquer dia entre noites esgotadas, inclusive noite de feriado (05/11: Double 19/11, King Spa 2 19/11 e 21/11 foram ao Beds24 com 1, com a regra por data em 2). A noite órfã do dono (04/11) a skill já faz por data. Substitui a pendência orphan-days."
+  },
+  {
+   "id": "afrodite-saida-sexta-dia-chegada",
+   "responsavel": "dono",
+   "desde": "2026-11-05",
+   "urgencia": 2,
+   "texto": "Afrodite com a estadia pelo dia de chegada (ordem de 04/11): a saída de sexta está fechada (regra_h_beds24.sexta_override_por_quarto, dono 01/11) e o sábado fechado (dono 02/11). Com isso a diária de quinta (1 noite, qui→sex) não sai, e a quarta com 2 noites (qua→sex) também não: a chegada de quarta só cabe com 4 noites (qua→dom). Abrir a saída de sexta da Afrodite para a diária de quinta e a quarta de 2 noites funcionarem, ou manter como está? Até a decisão, as quartas da Afrodite ficam fora da regra do dia (parametros.estadia_por_dia_chegada.aguardando_dono: nem sobem nem descem; o validador não acusa); segundas (seg→qua) e sextas (sex→dom) seguem a regra. Responder, por exemplo, 'abre a saída de sexta da Afrodite' ou 'mantém a sexta fechada e a quarta com 1'."
+  },
+  {
+   "id": "pricelabs-orphan-days-feriado",
+   "responsavel": "dono",
+   "desde": "2026-11-05",
+   "urgencia": 2,
+   "texto": "O 'orphan days' do PriceLabs (estadia mínima de dia órfão, ligado na tela) solta noite de feriado: Double 19/11 e King Spa 2 19/11 e 21/11 (Consciência Negra) estão com estadia efetiva 1 contra a regra 2 do feriado, e o envio leva o 1 ao Beds24 (inventário de 05/11: minStay 1 nas três). A skill não desliga pela API e não reduz estadia de feriado sozinha ('mantém feriados'). Desligar o 'orphan days' na tela do PriceLabs (a API não lê nem grava a estadia mínima das personalizações) ou aceitar o 1 nessas noites? A noite órfã do dono (04/11) a skill já grava por data, sem precisar dele."
+  },
+  {
+   "id": "nove-de-julho-quarta-0707",
+   "responsavel": "dono",
+   "desde": "2026-11-05",
+   "urgencia": 1,
+   "data_alvo": "2027-05-01",
+   "texto": "Quarta 07/07/2027, véspera do feriadão de 9 de Julho (noites qui 08 a sáb 10/07 com 3 noites, sazonalidade). Pela regra de 04/11 a quarta fica com 2, mas no Beds24 (restrictionStrategy 'stayThrough') a estadia que entra na quinta 08/07 precisa cumprir as 3 noites dela e o sábado está fechado para saída: a chegada de quarta passa a exigir 4 noites (qua→dom). Manter assim, abrir a quarta com estadia própria do feriado ou incluir a quarta no pacote do 9 de Julho?"
+  },
+  {
+   "id": "overbooking-beds24-vk2-double-nov",
+   "responsavel": "dono",
+   "desde": "2026-11-05",
+   "urgencia": 3,
+   "texto": "Overbooking no Beds24 (inventário lido em 04/11 21:47 BRT): King Spa 2 em 06 e 07/11 e Panorâmica I (Double) em 20 e 21/11 com numAvail -1 (uma reserva a mais que as unidades). Confirmar com a recepção se são reservas reais duplicadas, bloqueio lançado por cima de reserva ou erro de sincronização, e realocar ou cancelar. A skill não altera reservas; para a estadia ela conta essas noites como esgotadas."
   }
  ],
- "versao": "2026-11-05T00"
+ "versao": "2026-11-05T03"
 }

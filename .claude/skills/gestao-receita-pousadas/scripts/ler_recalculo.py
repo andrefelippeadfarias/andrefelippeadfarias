@@ -34,14 +34,17 @@ def ler_refresh(caminho: str) -> dict:
 def dia_isolado(quarto: dict, d: str, unidades: int = 1) -> bool:
     """Noite livre entre duas noites esgotadas: o PriceLabs mostra estadia 1 mesmo com a regra em 2 (Double 10/10,
     VK7 17/10). Não é erro da rotina; não regravar. `quarto` = {data: noite do recálculo}. Na Afrodite (1 unidade) o
-    mu_occupancy vem "-1" e a venda está em num_bookings (comum.esgotado; revisão de 05/11: antes nunca era isolado)."""
+    mu_occupancy vem "-1" e a venda está em num_bookings (comum.esgotado; revisão de 05/11: antes nunca era isolado). A
+    própria noite tem de estar livre (revisão de 05/11, a mesma regra do calendario_12m: três noites esgotadas seguidas
+    não são dia isolado)."""
     from datetime import timedelta
     dd = date.fromisoformat(d)
 
     def esgotada(k):
         r = quarto.get(k)
         return bool(r) and esgotado(r, unidades)
-    return esgotada((dd - timedelta(days=1)).isoformat()) and esgotada((dd + timedelta(days=1)).isoformat())
+    livre = bool(quarto.get(d)) and not esgotada(d)
+    return livre and esgotada((dd - timedelta(days=1)).isoformat()) and esgotada((dd + timedelta(days=1)).isoformat())
 
 
 def regra_inativa(it: dict, x: dict) -> str:

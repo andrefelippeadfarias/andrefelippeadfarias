@@ -262,6 +262,12 @@
     "dom": 1
    },
    "orfa_noite_seguinte": true,
+   "aguardando_dono": {
+    "Afrodite": [
+     "qua"
+    ],
+    "motivo": "Pendência do dono (05/11, afrodite-saida-sexta-dia-chegada): a Afrodite tem a saída de sexta fechada (regra_h_beds24.sexta_override_por_quarto, dono 01/11) e o sábado fechado (dono 02/11); com a quarta em 2, a chegada de quarta só caberia com 4 noites (qua→dom). Até o dono decidir, as quartas da Afrodite ficam fora da regra do dia de chegada (nem sobe nem desce; o validador não acusa). Segundas (seg→qua) e sextas (sex→dom) seguem a regra. Quando o dono decidir, apague esta chave."
+   },
    "ordem_id": "dono-2026-11-04-estadia-dia-chegada",
    "nota": "Dono 04/11/2026 21:00 BRT: 'Vamos ajustar aqui uma estratégia que eu sempre usei. Abriremos apenas para uma diária. A diária de domingo, a diária de terça e a diária de quinta. Todas as outras deverão ser com no mínimo 2 dias.' Perguntado (1) se feriados e pacotes seguem com as regras próprias, (2) se noite órfã e última hora liberam 1 diária e (3) se começa em 05/11: 'Sim, mantém feriados e pacotes; libera órfã; começa amanhã'. Estadia mínima pelo DIA DE CHEGADA, nos 7 quartos, desde as noites de 05/11, no Beds24 e no PriceLabs por data (o envio do PriceLabs leva a estadia ao Beds24; no Beds24 'stayThrough', com valores 1 e 2, dá o mesmo que pela chegada). Sábado: Regra H (2 e fechado para entrada e saída), intacta. Feriado, véspera e pacote ficam com a estadia própria (feriados; regra_h_beds24.estadia_minima_por_data), inclusive quando a noite seria órfã; temporada do calendário acima do dia vale (pico de julho 11-25/07/2027 e CBQ 16/09/2027 com 2). Noite órfã (livre no quarto com a noite seguinte esgotada nele) com 1, fora de feriado, pacote e sábado (o sábado órfão segue regra_h_beds24.orfas, ordem de 02/11; a sexta órfã passou a esta regra). Última hora não libera: saem a Regra A de 14 dias (regra_a_janela_dias) e a exceção 'regra_h' de sábado de última hora. Abaixo da estadia do dia só a noite órfã ou ordem do dono mais nova que libere 'estadia'. Aplicada por validar_plano (estadia_exigida, estadia_alvo, estadia_planejada), calendario_12m (plano do PriceLabs e lote do Beds24, nos dois sentidos) e pace.ajustar_tetos. Estadia de feriado acima da regra não se reduz sozinha (pendência do dono)."
   },

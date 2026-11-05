@@ -50,7 +50,8 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from ancora_mercado import ARQ_ANCORA, ancora_da_noite, percentil_de, tipo_noite, valor_percentil  # noqa: E402
-from calendario_12m import estadia_da_noite, ler_recalculo  # noqa: E402
+from calendario_12m import estadia_da_noite, ler_recalculo, prova_sabado_orfao  # noqa: E402
+from validar_plano import estadia_exigida  # noqa: E402
 from comum import PASTA_SKILL, carregar_quartos, data, esgotado, hoje_brt, ler_json, periodo_feriado, vendidas_total  # noqa: E402
 from ordens import (ARQ_ORDENS, alvo_da_ordem, carregar_ordens, congelada, ordens_por_data, piso_da_ordem,  # noqa: E402
                     vendidas_base_escada)
@@ -825,7 +826,10 @@ def ajustar_tetos(cfg: dict, itens: list[dict], regras: dict, cals: dict | None 
     o item herda min_stay e check-in/out da regra apagada; senão o max_price só sai do item. Devolve (itens, apagar).
     Dono 04/11 (desde 05/11), com `cals` (recálculos): onde a regra do dia de chegada decide a noite (fora de feriado,
     pacote e sábado), a estadia regravada é a dela (calendario_12m.estadia_da_noite), não a herdada: em 04/11 a
-    proteção da sexta 06/11 da Panorâmica II regravou a estadia 1 antiga; a regra sem estadia voltaria à do PriceLabs."""
+    proteção da sexta 06/11 da Panorâmica II regravou a estadia 1 antiga; a regra sem estadia voltaria à do PriceLabs.
+    Sábado (revisão de 05/11, Regra H): estadia herdada abaixo de 2 (ou nenhuma) volta a 2 (ou à do feriado), salvo o
+    sábado órfão provado pelo recálculo (sexta esgotada e sábado livre, `regra_h_beds24.orfas`), que mantém o 1 com
+    `orfa` "sábado" e `orfa_prova` (o validador aceita com a ordem da escada ou da faixa no item)."""
     apagar, saida = [], []
     for it in itens:
         it = dict(it)
@@ -857,6 +861,13 @@ def ajustar_tetos(cfg: dict, itens: list[dict], regras: dict, cals: dict | None 
                         it["min_stay"] = novo
                         if orfa and novo == 1:
                             it.update(orfa=orfa, orfa_prova=prova)
+                d_ = data(it["data"])
+                if d_.weekday() == 5 and (it.get("min_stay") is None or int(it["min_stay"]) < 2):
+                    prova_sab = prova_sabado_orfao(cfg, it["quarto"], d_, (cals or {}).get(it["quarto"]))
+                    if prova_sab is None:
+                        it["min_stay"] = max(2, int(estadia_exigida(cfg, d_, periodo_feriado(cfg, d_)) or 2))
+                    elif it.get("min_stay") is not None:
+                        it.update(orfa="sábado", orfa_prova=prova_sab)
         saida.append(it)
     return saida, apagar
 

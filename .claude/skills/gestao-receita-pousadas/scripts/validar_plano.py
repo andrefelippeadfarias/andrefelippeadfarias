@@ -1,7 +1,9 @@
 """Trava da autonomia: confere um plano de mudanças antes de gravar no PriceLabs.
 
 Uso:
-  python3 validar_plano.py plano.json [--precos SAIDA_WORKFLOW.json] [--payload]
+  python3 validar_plano.py plano.json [--precos SAIDA_WORKFLOW.json] [--payload] [--fatias PASTA [--max-datas 70]]
+  --fatias grava o payload em chamadas de até 70 datas por quarto, com D0 e D1 em chamadas separadas
+  (scripts/fatiar_payload.py; revisão de 05/11: lote de 12 meses numa chamada só é arriscado)
 
 Formato do plano (JSON):
   {"hoje": "AAAA-MM-DD",
@@ -27,13 +29,19 @@ expressa do dono (excecao "dono"). "excecao" aceita:
   "dono"         ordem explícita do dono nesta conversa; cite no motivo. Nunca passa por cima
                  dos limites de segurança. É a única forma de gravar preço fixo. Para a estadia mínima, a ordem
                  citada precisa liberar 'estadia' (e, desde 05/11, ser mais nova que a regra do dia de chegada).
+                 A ordem da própria regra (dono-2026-11-04-estadia-dia-chegada) não serve de exceção "dono".
 
 Estadia mínima (dono 04/11, desde as noites de 05/11; `parametros.estadia_por_dia_chegada`): domingo, terça e quinta 1;
 segunda, quarta e sexta 2; sábado 2 (Regra H); feriado, véspera e pacote com a estadia própria; temporada acima do dia
-vale. Noite órfã (livre no quarto com a noite seguinte esgotada nele, fora de feriado, pacote e sábado) com 1: o item leva
-"orfa": "seguinte" e "orfa_prova" {noite_vendidas, noite_total, seguinte_vendidas, seguinte_total} do recálculo; com
---precos, o calendário confere. "manter_reason": true (item só de estadia numa data que já tem regra por data) faz o
-payload sair sem reason, para não apagar o da regra.
+vale (o período da sazonalidade que é o próprio feriado não conta). Noite órfã (livre no quarto com a noite seguinte
+esgotada nele, fora de feriado, pacote e sábado) com 1: o item leva "orfa": "seguinte" e "orfa_prova", do inventário do
+Beds24 quando a rotina o leu ({fonte: "beds24", unidades, noite_numAvail, seguinte_numAvail, lido_em}: vale por si com
+a data da leitura, de hoje ou de ontem) ou do recálculo ({noite_vendidas, noite_total, seguinte_vendidas,
+seguinte_total}); com --precos, o calendário confere o que souber. Sábado órfão (sexta esgotada, sábado livre; regra
+de 02/11, `regra_h_beds24.orfas.ativa`): "orfa": "sábado" com "orfa_prova" (anterior_* = a sexta), qualquer que seja a
+ordem do item, ou excecao "dono" com a ordem de 02/11. Noite aguardando o dono (`estadia_por_dia_chegada.aguardando_dono`:
+quartas da Afrodite) fica fora da regra do dia. "manter_reason": true (item só de estadia numa data cuja regra por data
+tem preço, piso, teto ou chegada/saída, ou reason da Regra J) faz o payload sair sem reason, para não apagar o da regra.
 
 Padrão de qualidade (dono, 08/10): sexta, sábado e noites de feriado das suítes com banheira (todas menos
 a Balcony) ficam a partir de R$ 1.000 (limites_seguranca.padrao_qualidade_diaria), no preço ou no piso da data. Para
@@ -42,7 +50,9 @@ ritmo de vendas; texto com número, mínimo de 20 caracteres). Sem ele, ERRO. Co
 relatório. Vale também para o teto (max_price) do item. O valor fica em limites_seguranca (só o dono muda).
 
 Sai com código 0 se tudo passou e 1 se houve ERRO. Com --payload, imprime os pedidos prontos
-para update_listing_date_overrides, delete_listing_date_overrides e update_listing_data.
+para update_listing_date_overrides, delete_listing_date_overrides e update_listing_data; com --fatias, grava cada
+chamada num arquivo (até --max-datas datas por quarto; D0 e D1 em chamadas próprias) e imprime a lista na ordem de
+gravação (apagar antes; depois D0, D1 e o resto, quarto a quarto).
 """
 
 from __future__ import annotations
@@ -56,8 +66,8 @@ from collections import defaultdict
 from datetime import date, datetime, timedelta, timezone
 from functools import lru_cache
 
-from comum import (DIAS_SEMANA, carregar_quartos, data, data_de_pacote, estadia_do_dia, estadia_pacote, hoje_brt,
-                   ler_instante, ler_json, periodo_feriado, reais, regra_dia_chegada, resultado_workflow)
+from comum import (DIAS_SEMANA, aguardando_dono, carregar_quartos, data, data_de_pacote, estadia_do_dia, estadia_pacote,
+                   hoje_brt, ler_instante, ler_json, periodo_feriado, reais, regra_dia_chegada, resultado_workflow)
 from ordens import carregar_ordens, cobre, congelada, ordem_valida
 
 TIPOS = {"data", "apagar", "anuncio", "personalizacao"}
@@ -75,7 +85,8 @@ def _sazonalidade() -> dict | None:
 
 
 def estadia_temporada(d: date) -> int | None:
-    """Estadia mínima do período de sazonalidade da noite (ex.: pico de julho 2, CBQ 16/09/2027 2), ou None."""
+    """Estadia mínima do período de sazonalidade da noite (ex.: pico de julho 2, CBQ 16/09/2027 2), ou None. É a do
+    feriado sem estadia própria em quartos.json (Carnaval 3); fora de feriado vale `estadia_temporada_dia`."""
     cal = _sazonalidade()
     if not cal:
         return None
@@ -84,12 +95,37 @@ def estadia_temporada(d: date) -> int | None:
     return int(p["estadia_minima"]) if p and p.get("estadia_minima") else None
 
 
+def periodo_temporada(cfg: dict, d: date) -> dict | None:
+    """Período de sazonalidade da noite que é TEMPORADA, não o próprio feriado: o período que se sobrepõe a um feriado de
+    quartos.json não conta (revisão de 05/11, ordem dono-2026-11-02-aniv-sp-gatilho: com o gatilho de 01/01 tirando o
+    domingo 24/01 do feriado do Aniversário de SP, o período "noites sex 22 a dom 24/1" da sazonalidade ainda dava 2 ao
+    domingo, que tem de poder ir a 1). Pico de julho (11-25/07) e CBQ (15-18/09) não tocam feriado e contam."""
+    cal = _sazonalidade()
+    if not cal:
+        return None
+    from sazonalidade import periodo
+    p = periodo(cal, d)
+    if not p or not p.get("estadia_minima"):
+        return None
+    ini, fim = data(p["inicio"]), data(p["fim"])
+    if any(data(f["inicio"]) <= fim and ini <= data(f["fim"]) for f in cfg.get("feriados", []) or []):
+        return None
+    return p
+
+
+def estadia_temporada_dia(cfg: dict, d: date) -> int | None:
+    """Estadia da temporada fora de feriado (piso da regra do dia de chegada), sem o período do próprio feriado."""
+    p = periodo_temporada(cfg, d)
+    return int(p["estadia_minima"]) if p else None
+
+
 def estadia_exigida(cfg: dict, d: date, fer: dict | None) -> int | None:
     """Estadia mínima que a data exige. Pacote fechado do dono (03/11): a estadia por data. Feriado: a do período em
     quartos.json, senão a do calendário de sazonalidade, senão 2. Fora de feriado, com a ordem do dono de 04/11
     (`parametros.estadia_por_dia_chegada`, desde as noites de 05/11): a do dia de chegada (domingo, terça e quinta 1;
-    segunda, quarta, sexta e sábado 2), nunca abaixo da temporada (sazonalidade: pico de julho 2). Antes dela: 2 no
-    sábado. None quando a data não exige nada. A noite órfã é exceção à exigida (estadia_alvo), não muda a exigida."""
+    segunda, quarta, sexta e sábado 2), nunca abaixo da temporada (sazonalidade: pico de julho 2; o período que é o
+    próprio feriado não conta, `periodo_temporada`). Antes dela: 2 no sábado. None quando a data não exige nada. A noite
+    órfã é exceção à exigida (estadia_alvo), não muda a exigida."""
     pac = estadia_pacote(cfg, d)
     if pac is not None:
         return pac
@@ -102,51 +138,91 @@ def estadia_exigida(cfg: dict, d: date, fer: dict | None) -> int | None:
         return 2 if d.weekday() == 5 else None
     if d.weekday() == 5:
         base = max(base, 2)
-    return max(base, estadia_temporada(d) or 1)
+    return max(base, estadia_temporada_dia(cfg, d) or 1)
 
 
-def regra_do_dia_decide(cfg: dict, d: date, fer: dict | None = None) -> bool:
+def regra_do_dia_decide(cfg: dict, d: date, fer: dict | None = None, quarto: str | None = None) -> bool:
     """A estadia da noite é a do dia de chegada (ordem de 04/11): regra vigente, fora de feriado, de pacote e do sábado
-    (sábado é a Regra H e o sábado órfão de 02/11; feriado, véspera e pacote ficam com a estadia própria)."""
+    (sábado é a Regra H e o sábado órfão de 02/11; feriado, véspera e pacote ficam com a estadia própria). Com `quarto`,
+    a noite aguardando o dono (`estadia_por_dia_chegada.aguardando_dono`: quartas da Afrodite) também fica de fora."""
     fer = fer if fer is not None else periodo_feriado(cfg, d)
+    if quarto and aguardando_dono(cfg, quarto, d):
+        return False
     return bool(regra_dia_chegada(cfg, d)) and not fer and not data_de_pacote(cfg, d) and d.weekday() != 5
 
 
-def orfa_seguinte(cfg: dict, d: date, fer: dict | None, livre: bool, seguinte_esgotada: bool) -> bool:
+def orfa_seguinte(cfg: dict, d: date, fer: dict | None, livre: bool, seguinte_esgotada: bool,
+                  quarto: str | None = None) -> bool:
     """Noite órfã da ordem de 04/11 ("libera órfã"): a noite tem unidade livre no quarto e a noite seguinte está esgotada
     nele, então a chegada nela só cabe com 1 noite. Só onde a regra do dia decide (fora de feriado, de pacote e do
     sábado: o sábado órfão é a regra de 02/11, regra_h_beds24.orfas) e com `orfa_noite_seguinte` ligada."""
     r = regra_dia_chegada(cfg, d)
-    if not r or not r.get("orfa_noite_seguinte") or not regra_do_dia_decide(cfg, d, fer):
+    if not r or not r.get("orfa_noite_seguinte") or not regra_do_dia_decide(cfg, d, fer, quarto):
         return False
     return bool(livre) and bool(seguinte_esgotada)
 
 
 def estadia_alvo(cfg: dict, d: date, fer: dict | None, livre: bool = False,
-                 seguinte_esgotada: bool = False) -> tuple[int | None, str | None]:
+                 seguinte_esgotada: bool = False, quarto: str | None = None) -> tuple[int | None, str | None]:
     """(estadia alvo, 'seguinte' se for noite órfã): a exigida, ou 1 na noite órfã da ordem de 04/11."""
     exig = estadia_exigida(cfg, d, fer)
-    if exig and exig > 1 and orfa_seguinte(cfg, d, fer, livre, seguinte_esgotada):
+    if exig and exig > 1 and orfa_seguinte(cfg, d, fer, livre, seguinte_esgotada, quarto):
         return 1, "seguinte"
     return exig, None
 
 
 def estadia_planejada(cfg: dict, d: date, atual: int | None, livre: bool = False,
-                      seguinte_esgotada: bool = False) -> tuple[int | None, str | None]:
+                      seguinte_esgotada: bool = False, quarto: str | None = None) -> tuple[int | None, str | None]:
     """(estadia que a noite deve ter, 'seguinte' na noite órfã) pela ordem de 04/11, partindo da `atual` (None = sem
-    estadia por data); (None, None) onde a regra do dia não decide (antes de 05/11, feriado, pacote, sábado: nem sobe nem
-    desce). Sobe ao alvo o que está abaixo dele; desce só a 1 (domingo, terça e quinta fora de temporada, e a noite
-    órfã); acima de um alvo de 2 (temporada, segunda/quarta/sexta com 3) fica como está. O dia órfão do PriceLabs (1
-    entre noites esgotadas) é decisão de quem chama: ele sabe a noite anterior."""
+    estadia por data); (None, None) onde a regra do dia não decide (antes de 05/11, feriado, pacote, sábado e, com
+    `quarto`, a noite aguardando o dono: nem sobe nem desce). Sobe ao alvo o que está abaixo dele; desce só a 1
+    (domingo, terça e quinta fora de temporada, e a noite órfã); acima de um alvo de 2 (temporada, segunda/quarta/sexta
+    com 3) fica como está. O dia órfão do PriceLabs (1 entre noites esgotadas) é decisão de quem chama: ele sabe a noite
+    anterior."""
     fer = periodo_feriado(cfg, d)
-    if not regra_do_dia_decide(cfg, d, fer):
+    if not regra_do_dia_decide(cfg, d, fer, quarto):
         return None, None
-    alvo, orfa = estadia_alvo(cfg, d, fer, livre, seguinte_esgotada)
+    alvo, orfa = estadia_alvo(cfg, d, fer, livre, seguinte_esgotada, quarto)
     if not alvo:
         return None, None
     if atual is None or int(atual) < alvo or (alvo == 1 and int(atual) > 1):
         return alvo, orfa
     return int(atual), orfa
+
+
+def checar_prova_orfa(prova, vizinha: str, hoje: date, fuso: str = "America/Sao_Paulo") -> str | None:
+    """None quando `orfa_prova` prova a órfã; senão o porquê. `vizinha` é a noite que esgotou: "seguinte" (noite órfã da
+    ordem de 04/11) ou "anterior" (sábado órfão da ordem de 02/11: a sexta). Duas fontes (revisão de 05/11, fonte única):
+      - Beds24 (a do inventário, quando a rotina o leu): {"fonte": "beds24", "unidades", "noite_numAvail",
+        "<vizinha>_numAvail", "lido_em"}: noite com numAvail > 0 e a vizinha com numAvail <= 0; vale por si com a data da
+        leitura (lido_em de hoje ou de ontem, no fuso das pousadas);
+      - recálculo do PriceLabs (sem inventário): {"noite_vendidas", "noite_total", "<vizinha>_vendidas",
+        "<vizinha>_total"}: noite com unidade livre e a vizinha toda vendida."""
+    if not isinstance(prova, dict) or not prova:
+        return "sem orfa_prova"
+    if prova.get("fonte") == "beds24":
+        try:
+            u, n, s = int(prova["unidades"]), int(prova["noite_numAvail"]), int(prova[f"{vizinha}_numAvail"])
+        except (KeyError, TypeError, ValueError):
+            return f"prova do Beds24 incompleta (unidades, noite_numAvail, {vizinha}_numAvail)"
+        if not (u > 0 and n > 0 and s <= 0):
+            return f"prova do Beds24 não mostra a noite livre ({n}) com a {vizinha} esgotada ({s})"
+        lido = ler_instante(prova.get("lido_em"))
+        if lido is None:
+            return "prova do Beds24 sem lido_em (data e hora da leitura do inventário)"
+        from zoneinfo import ZoneInfo
+        dl = lido.astimezone(ZoneInfo(fuso)).date()
+        if not (hoje - timedelta(days=1) <= dl <= hoje):
+            return f"prova do Beds24 lida em {dl.isoformat()}: leia o inventário de novo"
+        return None
+    try:
+        nv, nt = int(prova.get("noite_vendidas")), int(prova.get("noite_total"))
+        sv, st = int(prova.get(f"{vizinha}_vendidas")), int(prova.get(f"{vizinha}_total"))
+    except (TypeError, ValueError):
+        return f"prova incompleta (noite_vendidas, noite_total, {vizinha}_vendidas, {vizinha}_total)"
+    if not (st > 0 and sv >= st and nt > 0 and nv < nt):
+        return f"prova não mostra a noite livre ({nv}/{nt}) com a {vizinha} esgotada ({sv}/{st})"
+    return None
 
 
 def ordem_mais_nova(o: dict, ref: dict) -> bool:
@@ -245,7 +321,8 @@ class Validador:
             self.erro(i, it, "data no passado")
         fer = periodo_feriado(self.cfg, d)
         exig = estadia_exigida(self.cfg, d, fer)
-        if d.weekday() == 5 or fer or (exig and exig > 1):
+        espera = not fer and d.weekday() != 5 and aguardando_dono(self.cfg, q["curto"], d)
+        if (d.weekday() == 5 or fer or (exig and exig > 1)) and not espera:
             # dono 04/11: segunda, quarta e sexta também exigem 2; apagar a data cai na estadia padrão do PriceLabs (1)
             self.aviso(i, it, f"apagar a substituição de {'feriado' if fer else DIAS_SEMANA[d.weekday()]} remove a "
                               f"estadia mínima ({exig} noites); regrave min_stay {exig} no mesmo plano")
@@ -262,12 +339,23 @@ class Validador:
             self.erro(i, it, "data no passado")
             return
         excecao = it.get("excecao")
+        dono_valida = False  # excecao "dono" com ordem vigente (a estadia confere à parte o que a ordem libera)
         if excecao == "dono":
             # Dono (07/10, 14/10) + auditoria de 30/10: a exceção do dono precisa apontar a ordem literal dele, vigente
             # para o quarto e a noite; sem isso, os scripts não podem carimbar "dono" sozinhos.
-            if not ordem_valida(self.ordens, it.get("ordem_id"), q["curto"], d):
+            dono_valida = ordem_valida(self.ordens, it.get("ordem_id"), q["curto"], d)
+            if not dono_valida:
                 self.erro(i, it, f"excecao 'dono' sem ordem_id vigente para {q['curto']} em {d} (dados/ordens_dono.json; "
                                  f"ordem_id={it.get('ordem_id')!r}): registre a ordem do dono com validade ou tire a exceção")
+                excecao = None
+            elif it.get("ordem_id") in self.ordens_regra_estadia():
+                # revisão de 05/11: a ordem da estadia pelo dia de chegada (tipo "regra") vale para todo quarto e toda
+                # noite e não libera nada além da noite órfã; carimbada como exceção "dono" ela abriria preço fixo, Regra
+                # I, chegada/saída e piso de feriado em qualquer noite. Fora da estadia ela não é exceção
+                if any(it.get(k) is not None for k in CAMPOS_PRECO) or it.get("price_type") == "fixed":
+                    self.erro(i, it, f"a ordem {it.get('ordem_id')} é a regra da estadia pelo dia de chegada (dono 04/11): "
+                                     "não serve de exceção 'dono' para preço fixo, Regra I, chegada/saída nem piso de "
+                                     "feriado; cite a ordem do dono que libera isso")
                 excecao = None
         cong = congelada(self.ordens, q["curto"], d)
         if cong and (cong["id"] != it.get("ordem_id")):
@@ -407,7 +495,9 @@ class Validador:
         ms = it.get("min_stay")
         exig = estadia_exigida(self.cfg, d, fer)
         regra_dia = regra_dia_chegada(self.cfg, d)
-        decide_dia = regra_do_dia_decide(self.cfg, d, fer)
+        decide_dia = regra_do_dia_decide(self.cfg, d, fer, q["curto"])
+        # revisão de 05/11: noite fora da regra do dia até o dono decidir (quartas da Afrodite): o validador não acusa
+        espera = aguardando_dono(self.cfg, q["curto"], d) if regra_do_dia_decide(self.cfg, d, fer) else None
         pacote = data_de_pacote(self.cfg, d)
         if ms is None and exig and minimo is not None and (fer or d.weekday() == 5):
             # segunda, quarta e sexta (dono 04/11) não avisam: o item sem min_stay mescla com a regra da data e a estadia
@@ -419,8 +509,11 @@ class Validador:
         if ms is not None:
             ms = int(ms)
             orfa_ok = False
-            lib_est = self.libera_estadia(it, excecao, d)
-            ordem_orfa = (((self.cfg.get("parametros") or {}).get("regra_h_beds24") or {}).get("orfas") or {}).get("ordem_id")
+            lib_est, por_que = self.libera_estadia(it, "dono" if dono_valida else None, d)
+            nao_libera = f" ({por_que})" if por_que else ""
+            orfas = (((self.cfg.get("parametros") or {}).get("regra_h_beds24") or {}).get("orfas") or {})
+            ordem_orfa = orfas.get("ordem_id")
+            fuso = self.cfg.get("fuso") or "America/Sao_Paulo"
             if ordem_orfa and it.get("ordem_id") == ordem_orfa and ms < 2:
                 # dono 02/11: a estadia 1 da ordem do sábado órfão vale só na noite órfã (sexta ou sábado), fora de feriado
                 lado = it.get("orfa")
@@ -431,26 +524,48 @@ class Validador:
                     # dono 04/11 ("libera órfã"): a sexta órfã passou à noite órfã geral, com prova da noite seguinte
                     self.erro(i, it, f"{q['nome']}: desde 05/11 a sexta órfã é a noite órfã geral (dono 04/11): item com "
                                      "orfa 'seguinte' e orfa_prova, não pela ordem de 02/11")
+                elif not orfas.get("ativa"):
+                    self.erro(i, it, f"{q['nome']}: sábado órfão com a regra de 02/11 desligada "
+                                     "(regra_h_beds24.orfas.ativa)")
+                elif excecao == "dono":
+                    orfa_ok = True  # como antes de 05/11: a ordem de 02/11 citada como exceção do dono, já conferida
+                elif it.get("orfa_prova") is None:
+                    # revisão de 05/11: sem excecao 'dono' (que confere a ordem) nem prova, o sábado órfão não passa
+                    self.erro(i, it, f"{q['nome']}: sábado com 1 noite pela ordem {ordem_orfa} sem excecao 'dono' nem "
+                                     "orfa_prova (sexta esgotada e sábado livre)")
+            if it.get("orfa") == "sábado" and ms < 2 and not orfa_ok and it.get("orfa_prova") is not None:
+                # revisão de 05/11 (pace.ajustar_tetos): o sábado órfão provado (sexta esgotada no quarto, sábado livre)
+                # mantém 1 qualquer que seja a ordem do item (a da escada ou da faixa), com a regra de 02/11 ligada
+                falha = checar_prova_orfa(it.get("orfa_prova"), "anterior", self.hoje, fuso)
+                ant = self.precos.get((q["curto"], (d - timedelta(days=1)).isoformat())) or {}
+                noite = self.precos.get((q["curto"], d.isoformat())) or {}
+                if d.weekday() != 5 or fer:
+                    self.erro(i, it, f"{q['nome']}: orfa 'sábado' só num sábado fora de feriado")
+                elif not orfas.get("ativa"):
+                    self.erro(i, it, f"{q['nome']}: sábado órfão com a regra de 02/11 desligada "
+                                     "(regra_h_beds24.orfas.ativa)")
+                elif falha:
+                    self.erro(i, it, f"{q['nome']}: sábado órfão sem prova ({falha})")
+                elif (ant.get("livres") is not None and int(ant["livres"]) > 0) or \
+                        (noite.get("livres") is not None and int(noite["livres"]) <= 0):
+                    self.erro(i, it, f"{q['nome']}: o calendário de --precos desmente o sábado órfão (sábado com "
+                                     f"{noite.get('livres', '?')} livre(s), sexta com {ant.get('livres', '?')}): refaça "
+                                     "com a leitura nova")
                 else:
                     orfa_ok = True
             if it.get("orfa") == "seguinte" and ms < (exig or 1):
                 # dono 04/11 ("libera órfã"): 1 diária na noite livre com a noite seguinte esgotada no quarto. É regra
-                # permanente (não exceção): o item prova a ocupação em `orfa_prova` (do recálculo); com --precos, confere.
-                prova = it.get("orfa_prova") or {}
+                # permanente (não exceção): o item prova a ocupação em `orfa_prova` (do inventário do Beds24 quando a
+                # rotina o leu, senão do recálculo); com --precos, o calendário confere o que souber.
+                falha = checar_prova_orfa(it.get("orfa_prova"), "seguinte", self.hoje, fuso)
                 seg = self.precos.get((q["curto"], (d + timedelta(days=1)).isoformat())) or {}
                 noite = self.precos.get((q["curto"], d.isoformat())) or {}
-                try:
-                    nv, nt = int(prova.get("noite_vendidas")), int(prova.get("noite_total"))
-                    sv, st = int(prova.get("seguinte_vendidas")), int(prova.get("seguinte_total"))
-                    provada = st > 0 and sv >= st and nt > 0 and nv < nt
-                except (TypeError, ValueError):
-                    provada = False
                 if not regra_dia or not regra_dia.get("orfa_noite_seguinte") or not decide_dia or ms != 1:
                     self.erro(i, it, f"{q['nome']}: noite órfã (dono 04/11) só com estadia 1, fora de feriado, pacote e "
-                                     "sábado, desde 05/11")
-                elif not provada:
-                    self.erro(i, it, f"{q['nome']}: noite órfã sem prova (orfa_prova: noite livre e a seguinte esgotada no "
-                                     "quarto, do recálculo)")
+                                     "sábado, desde 05/11" + (f" (noite aguardando o dono: {espera[:80]})" if espera else ""))
+                elif falha:
+                    self.erro(i, it, f"{q['nome']}: noite órfã sem prova ({falha}; orfa_prova: noite livre e a seguinte "
+                                     "esgotada no quarto, do inventário do Beds24 ou do recálculo)")
                 elif (seg.get("livres") is not None and int(seg["livres"]) > 0) or \
                         (noite.get("livres") is not None and int(noite["livres"]) <= 0):
                     self.erro(i, it, f"{q['nome']}: o calendário de --precos desmente a noite órfã (noite com "
@@ -460,28 +575,29 @@ class Validador:
                     orfa_ok = True
             if (fer or pacote) and exig and ms < exig and not lib_est:
                 self.erro(i, it, f"{'feriado (' + fer['nome'] + ')' if fer else 'pacote do dono (03/11)'} exige estadia "
-                                 f"mínima {exig}; item com {ms}" +
-                                 (f" (a ordem {it.get('ordem_id')} não libera 'estadia')" if excecao == "dono" else ""))
+                                 f"mínima {exig}; item com {ms}" + nao_libera)
             if decide_dia and exig:
                 # dono 04/11: "Abriremos apenas para uma diária. A diária de domingo, a diária de terça e a diária de
                 # quinta. Todas as outras deverão ser com no mínimo 2 dias" (última hora não libera)
                 if ms < exig and not orfa_ok and not lib_est:
                     self.erro(i, it, f"{q['nome']}: chegada de {DIAS_SEMANA[d.weekday()]} exige estadia mínima {exig} "
                                      f"(dono 04/11: 1 diária só domingo, terça e quinta; noite órfã com 'orfa' e "
-                                     f"'orfa_prova'); item com {ms}")
+                                     f"'orfa_prova'); item com {ms}" + nao_libera)
                 elif ms > exig and not lib_est:
                     if exig == 1:
                         self.erro(i, it, f"{q['nome']}: {DIAS_SEMANA[d.weekday()]} abre 1 diária (dono 04/11); item com "
-                                         f"{ms} (acima só com ordem do dono mais nova que libere 'estadia')")
+                                         f"{ms} (acima só com ordem do dono mais nova que libere 'estadia')" + nao_libera)
                     else:
                         self.aviso(i, it, f"{q['nome']}: estadia {ms} acima da do dia ({exig}, dono 04/11: no mínimo 2)")
             if d.weekday() == 5 and ms < 2:
                 if regra_dia:
-                    # dono 04/11: última hora não libera (sai a exceção 'regra_h'); só o sábado órfão de 02/11 ou ordem do
-                    # dono mais nova que libere 'estadia'
+                    # dono 04/11: última hora não libera (sai a exceção 'regra_h'); só o sábado órfão (ordem de 02/11 com
+                    # excecao 'dono', ou provado com orfa 'sábado' e orfa_prova) ou ordem do dono mais nova que libere
+                    # 'estadia'
                     ok = not fer and (orfa_ok or lib_est)
                     msg = ("sábado com 1 noite: desde 05/11 (dono 04/11, última hora não libera) só o sábado órfão de 02/11 "
-                           f"(ordem {ordem_orfa}, orfa 'sábado') ou ordem do dono mais nova que libere 'estadia', fora de feriado")
+                           f"(orfa 'sábado' com orfa_prova, ou excecao 'dono' com a ordem {ordem_orfa}) ou ordem do dono "
+                           "mais nova que libere 'estadia', fora de feriado" + nao_libera)
                 else:
                     # A política de não vender sábado sozinho é do dono: ordem expressa dele que libere 'estadia' também.
                     ok = (not fer and (lib_est or orfa_ok)) or (
@@ -495,26 +611,39 @@ class Validador:
             if ms < 1 or ms > 7:
                 self.erro(i, it, f"estadia mínima {ms} fora do razoável")
 
-    def libera_estadia(self, it: dict, excecao: str | None, d: date) -> bool:
-        """Exceção do dono à estadia mínima (revisão de 05/11: antes qualquer ordem válida liberava a estadia do feriado e
-        do sábado, até uma ordem de preço). A ordem citada (já conferida por ordem_valida) precisa liberar 'estadia' e,
-        onde vale a regra do dia de chegada (desde 05/11), ser mais nova que a ordem dela: as liberações de estadia de
-        01/11 (Beds24) são anteriores e não passam por cima de "Todas as outras deverão ser com no mínimo 2 dias"."""
+    def ordens_regra_estadia(self) -> set:
+        """Ids das ordens que SÃO a regra da estadia pelo dia de chegada (tipo "regra", dono 04/11): não servem de
+        exceção "dono" fora da estadia nem abrem exceção contra si mesmas."""
+        oid = ((self.cfg.get("parametros") or {}).get("estadia_por_dia_chegada") or {}).get("ordem_id")
+        return {oid} if oid else set()
+
+    def libera_estadia(self, it: dict, excecao: str | None, d: date) -> tuple[bool, str | None]:
+        """(libera, por que não) da exceção do dono à estadia mínima (revisão de 05/11: antes qualquer ordem válida
+        liberava a estadia do feriado e do sábado, até uma ordem de preço). A ordem citada (já conferida por
+        ordem_valida) precisa liberar 'estadia' e, onde vale a regra do dia de chegada (desde 05/11), ser mais nova que a
+        ordem dela: as liberações de estadia de 01/11 (Beds24) são anteriores e não passam por cima de "Todas as outras
+        deverão ser com no mínimo 2 dias". O motivo distingue "não libera estadia", "a própria regra" e "anterior à regra
+        de 04/11"; None quando não há exceção do dono no item."""
         if excecao != "dono":
-            return False
-        o = (self.ordens or {}).get(it.get("ordem_id") or "") or {}
-        if "estadia" not in (o.get("libera") or []):
-            return False
+            return False, None
+        oid = it.get("ordem_id")
+        o = (self.ordens or {}).get(oid or "") or {}
         regra = regra_dia_chegada(self.cfg, d)
+        if regra and oid == regra.get("ordem_id"):
+            return False, (f"a ordem {oid} é a própria regra do dia de chegada: não abre exceção contra si mesma "
+                           "(libera só a noite órfã)")
+        if "estadia" not in (o.get("libera") or []):
+            return False, f"a ordem {oid} não libera 'estadia'"
         if not regra:
-            return True
-        if o.get("id") == regra.get("ordem_id"):
-            return False
+            return True, None
         ref = (self.ordens or {}).get(regra.get("ordem_id") or "")
         if not ref:
             desde = regra.get("desde")
             ref = {"data": (data(desde) - timedelta(days=1)).isoformat() if desde else ""}
-        return ordem_mais_nova(o, ref)
+        if ordem_mais_nova(o, ref):
+            return True, None
+        return False, (f"a ordem {oid} ({o.get('data') or '?'}) é anterior à regra de 04/11 da estadia pelo dia de "
+                       "chegada: só ordem do dono mais nova que ela libera")
 
     def validar_chegada_saida(self, i, it, q, d, excecao):
         """Chegada e saída por data (dono, 21/10): strings de 7 caracteres 0/1, de segunda a domingo. Desde 02/11 (dono:
@@ -646,6 +775,9 @@ class Validador:
         if campo not in ("base", "min", "max"):
             self.erro(i, it, f"campo de anúncio '{campo}' não permitido")
             return
+        if it.get("excecao") == "dono" and it.get("ordem_id") in self.ordens_regra_estadia():
+            self.erro(i, it, f"a ordem {it.get('ordem_id')} é a regra de estadia por dia de chegada (04/11): não vale "
+                             "como exceção 'dono' em item de anúncio")
         if it.get("excecao") != "dono":
             self.erro(i, it, "dono (14/10): \"Lembre-se tem ser correções percentuais\": base, mínimo e máximo do anúncio "
                              "não se usam para corrigir preço; use piso/teto/preço em percentual por data "
@@ -816,6 +948,9 @@ def main(argv=None) -> int:
     ap.add_argument("--horas", type=float, default=6, help="idade máxima do calendário (h) para decisões por ocupação")
     ap.add_argument("--aceitar-velho", action="store_true", help="rebaixa calendário velho de ERRO para aviso")
     ap.add_argument("--hoje", help="força a data de hoje (replay/testes); sem ela, o plano precisa ser de hoje em America/Sao_Paulo")
+    ap.add_argument("--fatias", metavar="PASTA", help="grava o payload fatiado (fatiar_payload.py): uma chamada por arquivo, "
+                                                      "até --max-datas datas por quarto, D0 e D1 em chamadas próprias")
+    ap.add_argument("--max-datas", type=int, default=70, help="datas por chamada no payload fatiado (padrão 70)")
     a = ap.parse_args(argv)
     cfg = carregar_quartos()
     plano = ler_json(a.plano)
@@ -837,6 +972,11 @@ def main(argv=None) -> int:
     print("OK para gravar.")
     if a.payload:
         print(json.dumps(montar_payload(cfg, plano["itens"]), ensure_ascii=False, indent=1))
+    if a.fatias:
+        from fatiar_payload import fatiar, gravar_fatias
+        fatias = fatiar(cfg, montar_payload(cfg, plano["itens"]), hoje, a.max_datas)
+        for linha in gravar_fatias(fatias, a.fatias):
+            print(linha)
     return 0
 
 

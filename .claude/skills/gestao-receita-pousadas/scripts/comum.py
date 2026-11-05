@@ -67,6 +67,18 @@ def regra_dia_chegada(cfg: dict, d: date) -> dict | None:
     return r
 
 
+def aguardando_dono(cfg: dict, quarto: str | None, d: date) -> str | None:
+    """Noite fora da regra do dia de chegada até o dono decidir (`estadia_por_dia_chegada.aguardando_dono`, ex.:
+    {"Afrodite": ["qua"], "motivo": "..."}): nem sobe nem desce no plano, no lote do Beds24 nem no validador. Devolve o
+    motivo, ou None. Revisão de 05/11: a Afrodite tem a saída de sexta fechada (dono 01/11) e a chegada de quarta com 2
+    noites só caberia com 4 (qua→dom); quando o dono decidir, basta apagar a chave."""
+    r = regra_dia_chegada(cfg, d)
+    esp = (r or {}).get("aguardando_dono") or {}
+    if not quarto or not isinstance(esp.get(quarto), list) or DIAS_CHAVE[d.weekday()] not in esp[quarto]:
+        return None
+    return str(esp.get("motivo") or "aguardando decisão do dono")
+
+
 def estadia_do_dia(cfg: dict, d: date) -> int | None:
     """Estadia mínima do dia da semana pela ordem de 04/11 (seg 2, ter 1, qua 2, qui 1, sex 2, sáb 2, dom 1), sem
     feriado, pacote nem temporada (isso é `validar_plano.estadia_exigida`); None fora da vigência da regra."""

@@ -1,8 +1,8 @@
 {
  "_doc": "Âncora de mercado do motor de pace: percentis do preço público por noite dos hotéis com hidro na Booking (2 adultos). p50 e max medidos; p75/p90/p25 aproximados (ver ancora_mercado.py). Noite sem busca própria usa `por_tipo` do mesmo tipo e mês.",
- "atualizado_em": "2026-11-04",
+ "atualizado_em": "2026-11-05",
  "fontes": [
-  "/tmp/claude-0/-home-user-andrefelippeadfarias/02bd5933-6de8-57dc-9e2b-aeb0b12a4913/scratchpad/r0411/mesclado.json"
+  "/tmp/claude-0/-home-user-andrefelippeadfarias/02bd5933-6de8-57dc-9e2b-aeb0b12a4913/scratchpad/r0511/coleta.json"
  ],
  "noites": {
   "2026-10-31": {
@@ -135,6 +135,19 @@
    "fonte": "semana 10-12/11",
    "busca_em": "2026-10-30"
   },
+  "2026-11-12": {
+   "p25": 262,
+   "p50": 305,
+   "p75": 394,
+   "p90": 724,
+   "max": 859,
+   "n": 18,
+   "n_comparaveis": 6,
+   "p50_medido": false,
+   "tipo": "semana",
+   "fonte": "quinta 12/11",
+   "busca_em": "2026-11-05"
+  },
   "2026-11-13": {
    "p25": 638,
    "p50": 827,
@@ -208,17 +221,17 @@
    "busca_em": "2026-10-30"
   },
   "2026-11-19": {
-   "p25": 687,
-   "p50": 844,
-   "p75": 850,
-   "p90": 1133,
-   "max": 1615,
-   "n": 20,
-   "n_comparaveis": 7,
+   "p25": 596,
+   "p50": 841,
+   "p75": 846,
+   "p90": 1112,
+   "max": 1469,
+   "n": 17,
+   "n_comparaveis": 6,
    "p50_medido": false,
    "tipo": "feriado",
    "fonte": "Consciência Negra 19-22/11",
-   "busca_em": "2026-11-04"
+   "busca_em": "2026-11-05"
   },
   "2026-11-20": {
    "p25": 680,
@@ -487,13 +500,13 @@
     "busca_em": "2026-10-30"
    },
    "2026-11": {
-    "p25": 684,
-    "p50": 836,
+    "p25": 680,
+    "p50": 835,
     "p75": 1172,
     "p90": 1355,
-    "max": 1488,
+    "max": 1415,
     "n_noites": 4,
-    "busca_em": "2026-11-04"
+    "busca_em": "2026-11-05"
    },
    "2026-12": {
     "p25": 757,
@@ -510,10 +523,10 @@
     "p25": 274,
     "p50": 348,
     "p75": 373,
-    "p90": 590,
+    "p90": 600,
     "max": 724,
-    "n_noites": 10,
-    "busca_em": "2026-11-04"
+    "n_noites": 11,
+    "busca_em": "2026-11-05"
    },
    "2026-12": {
     "p25": 258,

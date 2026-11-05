@@ -8050,170 +8050,6 @@
    "nota": "F5 (Natal (23-26/12)): régua com hidro medida na noite (2 estadias), p90 R$ 3503 público, p90 R$ 3503; ÷ 0.650 (Booking/enviado; ÷ 0.585 nos degraus de D7 ou menos); nunca abaixo do piso do dono. Descida gradual a partir de D7 com o vendido abaixo da curva: D7 F4, D5 F3, D3 F2, D1 F1. Afrodite pelo prêmio dela e Balcony 10% abaixo (Regra G). Limitado ao máximo do anúncio em King Spa 7, King Spa 2 (subir o máximo é do dono). Como desfazer: pedir 'Volte às ordens anteriores de 24/12/26'."
   },
   {
-   "id": "dono-2026-11-04-faixa-recanto-20261225",
-   "data": "2026-11-04",
-   "criada_em": "2026-11-04T15:13+00:00",
-   "texto": "Para feriados, vamos aplicar o F5 e baixar gradualmente caso a lotação esteja abaixo da expectativa 7 dias antes. Para Natal, aplicar F5, Réveillon F5, inverno e final de semana F5. Para dias de semana, vamos aplicar F2 e fins de semana do mês de dezembro e os últimos dois de novembro, vamos aplicar F3.",
-   "contexto": "Resposta do dono à régua de faixas (página 'Régua de Preços das Pousadas', 04/11/2026).",
-   "pousada_faixa": "Recanto",
-   "quartos": [
-    "Q7",
-    "Q2",
-    "Double",
-    "Afrodite"
-   ],
-   "de": "2026-12-25",
-   "ate": "2026-12-25",
-   "noites": [
-    "2026-12-25"
-   ],
-   "tipo": "alvo_por_data",
-   "percentil": 90,
-   "faixa": 5,
-   "passo_livre": true,
-   "escada_vendas": true,
-   "pisos_enviados": {
-    "Q7": 4079.03,
-    "Q2": 4079.03,
-    "Double": 4079.03,
-    "Afrodite": 4282.98
-   },
-   "topo_enviados": {
-    "Q7": 4079.03,
-    "Q2": 4079.03,
-    "Double": 4079.03,
-    "Afrodite": 4282.98
-   },
-   "vendidas_base": {
-    "Q7": {
-     "2026-12-25": 0
-    },
-    "Q2": {
-     "2026-12-25": 1
-    },
-    "Double": {
-     "2026-12-25": 1
-    },
-    "Afrodite": {
-     "2026-12-25": 1
-    }
-   },
-   "libera": [
-    "acima_15"
-   ],
-   "ocupacao_max": 0.7,
-   "frente_ocupacao": 0.5,
-   "degraus_atras": {
-    "Q7": [
-     3867.38,
-     3025.09,
-     2471.33,
-     2380.95
-    ],
-    "Q2": [
-     3867.38,
-     3025.09,
-     2471.33,
-     2380.95
-    ],
-    "Double": [
-     3867.38,
-     3025.09,
-     2471.33,
-     2380.95
-    ],
-    "Afrodite": [
-     4060.75,
-     3176.34,
-     2594.89,
-     2380.95
-    ]
-   },
-   "degraus_dias": [
-    7,
-    5,
-    3,
-    1
-   ],
-   "nota": "F5 (Natal (23-26/12)): régua com hidro medida na noite (1 estadia), p90 R$ 2529 público, p90 R$ 2529; ÷ 0.620 (Booking/enviado; ÷ 0.558 nos degraus de D7 ou menos); nunca abaixo do piso do dono. Descida gradual a partir de D7 com o vendido abaixo da curva: D7 F4, D5 F3, D3 F2, D1 F1. Afrodite pelo prêmio dela e Balcony 10% abaixo (Regra G). Como desfazer: pedir 'Volte às ordens anteriores de 25/12/26'."
-  },
-  {
-   "id": "dono-2026-11-04-faixa-villa-20261225",
-   "data": "2026-11-04",
-   "criada_em": "2026-11-04T15:13+00:00",
-   "texto": "Para feriados, vamos aplicar o F5 e baixar gradualmente caso a lotação esteja abaixo da expectativa 7 dias antes. Para Natal, aplicar F5, Réveillon F5, inverno e final de semana F5. Para dias de semana, vamos aplicar F2 e fins de semana do mês de dezembro e os últimos dois de novembro, vamos aplicar F3.",
-   "contexto": "Resposta do dono à régua de faixas (página 'Régua de Preços das Pousadas', 04/11/2026).",
-   "pousada_faixa": "Villa",
-   "quartos": [
-    "VK7",
-    "VK2",
-    "Balcony"
-   ],
-   "de": "2026-12-25",
-   "ate": "2026-12-25",
-   "noites": [
-    "2026-12-25"
-   ],
-   "tipo": "alvo_por_data",
-   "percentil": 90,
-   "faixa": 5,
-   "passo_livre": true,
-   "escada_vendas": true,
-   "pisos_enviados": {
-    "VK7": 3890.77,
-    "VK2": 3890.77,
-    "Balcony": 3501.69
-   },
-   "topo_enviados": {
-    "VK7": 3890.77,
-    "VK2": 3890.77,
-    "Balcony": 3501.69
-   },
-   "vendidas_base": {
-    "VK7": {
-     "2026-12-25": 1
-    },
-    "VK2": {
-     "2026-12-25": 1
-    },
-    "Balcony": {
-     "2026-12-25": 0
-    }
-   },
-   "libera": [
-    "acima_15"
-   ],
-   "ocupacao_max": 0.7,
-   "frente_ocupacao": 0.5,
-   "degraus_atras": {
-    "VK7": [
-     3688.89,
-     2885.47,
-     2564.1,
-     2564.1
-    ],
-    "VK2": [
-     3688.89,
-     2885.47,
-     2564.1,
-     2564.1
-    ],
-    "Balcony": [
-     3320.0,
-     2596.92,
-     2121.54,
-     1886.79
-    ]
-   },
-   "degraus_dias": [
-    7,
-    5,
-    3,
-    1
-   ],
-   "nota": "F5 (Natal (23-26/12)): régua com hidro medida na noite (1 estadia), p90 R$ 2529 público, p90 R$ 2529; ÷ 0.650 (Booking/enviado; ÷ 0.585 nos degraus de D7 ou menos); nunca abaixo do piso do dono. Descida gradual a partir de D7 com o vendido abaixo da curva: D7 F4, D5 F3, D3 F2, D1 F1. Afrodite pelo prêmio dela e Balcony 10% abaixo (Regra G). Como desfazer: pedir 'Volte às ordens anteriores de 25/12/26'."
-  },
-  {
    "id": "dono-2026-11-04-faixa-recanto-20261226",
    "data": "2026-11-04",
    "criada_em": "2026-11-04T15:13+00:00",
@@ -9153,6 +8989,170 @@
    "gatilho_dias": 7,
    "gatilho_min_dias": 2,
    "nota": "F2 (Dia de semana (dom-qui)): régua com hidro tabela do tipo, p50 R$ 648 público, p90 R$ 1784; ÷ 0.650 (Booking/enviado; ÷ 0.585 nos degraus de D7 ou menos); nunca abaixo do piso do dono. Gatilho de D7 sem venda nova: F1 (ou o piso do dono). Afrodite pelo prêmio dela e Balcony 10% abaixo (Regra G). Como desfazer: pedir 'Volte às ordens anteriores de 03/01/27'."
+  },
+  {
+   "id": "dono-2026-11-04-faixa-recanto-20261225",
+   "data": "2026-11-04",
+   "criada_em": "2026-11-04T18:36+00:00",
+   "texto": "Para feriados, vamos aplicar o F5 e baixar gradualmente caso a lotação esteja abaixo da expectativa 7 dias antes. Para Natal, aplicar F5, Réveillon F5, inverno e final de semana F5. Para dias de semana, vamos aplicar F2 e fins de semana do mês de dezembro e os últimos dois de novembro, vamos aplicar F3.",
+   "contexto": "Resposta do dono à régua de faixas (página 'Régua de Preços das Pousadas', 04/11/2026).",
+   "pousada_faixa": "Recanto",
+   "quartos": [
+    "Q7",
+    "Q2",
+    "Double",
+    "Afrodite"
+   ],
+   "de": "2026-12-25",
+   "ate": "2026-12-25",
+   "noites": [
+    "2026-12-25"
+   ],
+   "tipo": "alvo_por_data",
+   "percentil": 90,
+   "faixa": 5,
+   "passo_livre": true,
+   "escada_vendas": true,
+   "pisos_enviados": {
+    "Q7": 5000.0,
+    "Q2": 5000.0,
+    "Double": 5000.0,
+    "Afrodite": 5912.18
+   },
+   "topo_enviados": {
+    "Q7": 5000.0,
+    "Q2": 5000.0,
+    "Double": 5000.0,
+    "Afrodite": 5912.18
+   },
+   "vendidas_base": {
+    "Q7": {
+     "2026-12-25": 0
+    },
+    "Q2": {
+     "2026-12-25": 1
+    },
+    "Double": {
+     "2026-12-25": 1
+    },
+    "Afrodite": {
+     "2026-12-25": 1
+    }
+   },
+   "libera": [
+    "acima_15"
+   ],
+   "ocupacao_max": 0.7,
+   "frente_ocupacao": 0.5,
+   "degraus_atras": {
+    "Q7": [
+     5000.0,
+     3921.15,
+     3021.51,
+     2380.95
+    ],
+    "Q2": [
+     5000.0,
+     3921.15,
+     3021.51,
+     2380.95
+    ],
+    "Double": [
+     5000.0,
+     3921.15,
+     3021.51,
+     2380.95
+    ],
+    "Afrodite": [
+     5261.29,
+     4117.2,
+     3172.58,
+     2382.26
+    ]
+   },
+   "degraus_dias": [
+    7,
+    5,
+    3,
+    1
+   ],
+   "nota": "F5 (Natal (23-26/12)): régua com hidro medida nas estadias que contêm a noite (3 estadias), p90 R$ 3491 público, p90 R$ 3491; ÷ 0.620 (Booking/enviado; ÷ 0.558 nos degraus de D7 ou menos); nunca abaixo do piso do dono. Descida gradual a partir de D7 com o vendido abaixo da curva: D7 F4, D5 F3, D3 F2, D1 F1. Afrodite pelo prêmio dela e Balcony 10% abaixo (Regra G). Limitado ao máximo do anúncio em Moinhos, Panorâmica II, Panorâmica I (subir o máximo é do dono). Como desfazer: pedir 'Volte às ordens anteriores de 25/12/26'."
+  },
+  {
+   "id": "dono-2026-11-04-faixa-villa-20261225",
+   "data": "2026-11-04",
+   "criada_em": "2026-11-04T18:36+00:00",
+   "texto": "Para feriados, vamos aplicar o F5 e baixar gradualmente caso a lotação esteja abaixo da expectativa 7 dias antes. Para Natal, aplicar F5, Réveillon F5, inverno e final de semana F5. Para dias de semana, vamos aplicar F2 e fins de semana do mês de dezembro e os últimos dois de novembro, vamos aplicar F3.",
+   "contexto": "Resposta do dono à régua de faixas (página 'Régua de Preços das Pousadas', 04/11/2026).",
+   "pousada_faixa": "Villa",
+   "quartos": [
+    "VK7",
+    "VK2",
+    "Balcony"
+   ],
+   "de": "2026-12-25",
+   "ate": "2026-12-25",
+   "noites": [
+    "2026-12-25"
+   ],
+   "tipo": "alvo_por_data",
+   "percentil": 90,
+   "faixa": 5,
+   "passo_livre": true,
+   "escada_vendas": true,
+   "pisos_enviados": {
+    "VK7": 5000.0,
+    "VK2": 5000.0,
+    "Balcony": 4500.0
+   },
+   "topo_enviados": {
+    "VK7": 5000.0,
+    "VK2": 5000.0,
+    "Balcony": 4500.0
+   },
+   "vendidas_base": {
+    "VK7": {
+     "2026-12-25": 1
+    },
+    "VK2": {
+     "2026-12-25": 1
+    },
+    "Balcony": {
+     "2026-12-25": 0
+    }
+   },
+   "libera": [
+    "acima_15"
+   ],
+   "ocupacao_max": 0.7,
+   "frente_ocupacao": 0.5,
+   "degraus_atras": {
+    "VK7": [
+     4779.49,
+     3740.17,
+     2882.05,
+     2564.1
+    ],
+    "VK2": [
+     4779.49,
+     3740.17,
+     2882.05,
+     2564.1
+    ],
+    "Balcony": [
+     4301.54,
+     3366.15,
+     2593.85,
+     1947.69
+    ]
+   },
+   "degraus_dias": [
+    7,
+    5,
+    3,
+    1
+   ],
+   "nota": "F5 (Natal (23-26/12)): régua com hidro medida nas estadias que contêm a noite (3 estadias), p90 R$ 3491 público, p90 R$ 3491; ÷ 0.650 (Booking/enviado; ÷ 0.585 nos degraus de D7 ou menos); nunca abaixo do piso do dono. Descida gradual a partir de D7 com o vendido abaixo da curva: D7 F4, D5 F3, D3 F2, D1 F1. Afrodite pelo prêmio dela e Balcony 10% abaixo (Regra G). Limitado ao máximo do anúncio em King Spa 7, King Spa 2 (subir o máximo é do dono). Como desfazer: pedir 'Volte às ordens anteriores de 25/12/26'."
   }
  ]
 }

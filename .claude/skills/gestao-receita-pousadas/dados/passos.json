@@ -8780,6 +8780,97 @@
    "total": 6,
    "gravado_em": "2026-11-04T18:35+00:00",
    "chegou_ao_canal": false
+  },
+  {
+   "quarto": "Q7",
+   "noite": "2026-12-25",
+   "de": 2381.0,
+   "para": 4973,
+   "direcao": "sobe",
+   "status": "ritmo",
+   "vendidas": 0,
+   "base": "quarto",
+   "total": 7,
+   "gravado_em": "2026-11-05T00:24+00:00",
+   "chegou_ao_canal": false
+  },
+  {
+   "quarto": "Double",
+   "noite": "2026-12-25",
+   "de": 2560.0,
+   "para": 4987,
+   "direcao": "sobe",
+   "status": "ritmo",
+   "vendidas": 1,
+   "base": "quarto",
+   "total": 6,
+   "gravado_em": "2026-11-05T00:24+00:00",
+   "chegou_ao_canal": false
+  },
+  {
+   "quarto": "Q2",
+   "noite": "2026-12-25",
+   "de": 2385.0,
+   "para": 4976,
+   "direcao": "sobe",
+   "status": "ritmo",
+   "vendidas": 1,
+   "base": "pousada",
+   "total": 16,
+   "gravado_em": "2026-11-05T00:24+00:00",
+   "chegou_ao_canal": false
+  },
+  {
+   "quarto": "Afrodite",
+   "noite": "2026-12-25",
+   "de": 3780.0,
+   "para": 5913,
+   "direcao": "sobe",
+   "status": "ritmo",
+   "vendidas": 1,
+   "base": "pousada",
+   "total": 16,
+   "gravado_em": "2026-11-05T00:24+00:00",
+   "chegou_ao_canal": false
+  },
+  {
+   "quarto": "VK7",
+   "noite": "2026-12-25",
+   "de": 2575.0,
+   "para": 4987,
+   "direcao": "sobe",
+   "status": "ritmo",
+   "vendidas": 1,
+   "base": "quarto",
+   "total": 7,
+   "gravado_em": "2026-11-05T00:24+00:00",
+   "chegou_ao_canal": false
+  },
+  {
+   "quarto": "VK2",
+   "noite": "2026-12-25",
+   "de": 2578.0,
+   "para": 4991,
+   "direcao": "sobe",
+   "status": "ritmo",
+   "vendidas": 1,
+   "base": "pousada",
+   "total": 9,
+   "gravado_em": "2026-11-05T00:24+00:00",
+   "chegou_ao_canal": false
+  },
+  {
+   "quarto": "Balcony",
+   "noite": "2026-12-25",
+   "de": 1994.0,
+   "para": 4483.1,
+   "direcao": "sobe",
+   "status": "ritmo",
+   "vendidas": 0,
+   "base": "quarto",
+   "total": 6,
+   "gravado_em": "2026-11-05T00:24+00:00",
+   "chegou_ao_canal": false
   }
  ]
 }

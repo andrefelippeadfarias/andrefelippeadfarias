@@ -258,9 +258,15 @@ def perguntas(tab: dict, mod: dict, maximo: int = 8) -> list[dict]:
     return out[:maximo]
 
 
+def _por_faixa(d: dict) -> dict:
+    """Chaves de faixa como int (a tabela lida de JSON traz "1".."5")."""
+    return {int(k): v for k, v in (d or {}).items()}
+
+
 def texto_pergunta(i: int, ln: dict) -> str:
     rec, vig = ln["recomendada"], ln["em_vigor"]
-    pr = ln["previsto"]
+    pr = _por_faixa(ln["previsto"])
+    ln = dict(ln, faixas=_por_faixa(ln["faixas"]))
     base = (f"{i}. {ln['pousada']} · {ln['nome'].split(' – ')[0].split(':')[0]} ({dm(ln['de'])} a {dm(ln['ate'])}, "
             f"{ln['noites']} noites): vendido {ln['vendido_pct']}% (esperado {ln['curva_pct']}%). ")
     if vig is None:

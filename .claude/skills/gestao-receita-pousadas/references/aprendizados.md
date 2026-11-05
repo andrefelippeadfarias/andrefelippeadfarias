@@ -15,7 +15,7 @@
 12. **Corte de última hora que não chegou ao canal e vendeu ao preço antigo era desnecessário** (VK2 13 e 14/10): em demanda alta, Regra I só na última unidade.
 13. **Cancelamento derruba o gatilho de subida**: reconferir todo +10% na rodada seguinte com calendário recalculado.
 14. **Varreduras grandes em duas rodadas** e em sessões diferentes da rotina (38 agentes esgotaram o limite da sessão em 13/10); retomar com `resumeFromRunId` depois das 00:50 BRT.
-15. **Dia órfão do PriceLabs** (qualquer dia entre duas noites esgotadas, não só o sábado) mostra estadia 1 por regra do PriceLabs, mesmo com a regra por data em 2 e até em feriado (05/11: Double 19/11, King Spa 2 19/11 e 21/11): não regravar; o "orphan days" é decisão do dono na tela. **Revisto em 05/11:** a **noite órfã do dono** (04/11, "libera órfã": noite livre com a noite seguinte esgotada no quarto) é outra regra, nossa: leva 1 por data, fora de feriado, pacote e sábado.
+15. **Dia órfão do PriceLabs** (qualquer dia entre duas noites esgotadas, não só o sábado) mostra estadia 1 por regra do PriceLabs, mesmo com a regra por data em 2 e até em feriado (05/11: Double 19/11, King Spa 2 19/11 e 21/11): não regravar; o "orphan days" é decisão do dono na tela. **Revisto em 05/11:** a **noite órfã do dono** (04/11, "libera órfã": noite livre com a noite seguinte esgotada no quarto) é outra regra, nossa: leva 1 por data, fora de pacote e sábado (em feriado e véspera desde 05/11, por decisão do dono; o dia isolado de feriado com 1 passou a ser aceito).
 16. **Unidade única no recálculo**: `mu_occupancy` "-1"; vendida é `num_bookings` > 0 (não `user_price` -1, que também marca bloqueio).
 17. **Feriado caro demais não vende cedo**: Recanto a R$ 1.200 reais de piso ficou 3 dias sem venda; a R$ 800 reais vendeu. O piso padrão de R$ 1.000 reais se ajusta pelo dado, nunca abaixo de R$ 800.
 18. **A Balcony só obedece à Regra G com teto** quando a suavização semanal ou a própria venda a puxam acima do alvo; e o alvo de 10% abaixo exige mínimo da Balcony abaixo do da VK2 (decisão de 14/10: R$ 690).
@@ -448,3 +448,6 @@ Cada item tem data e evidência. Para incluir um item novo: data, o fato, a evid
 - **Beds24:** 6 lotes seguidos (534 noites) passaram; o 7º deu "Credit limit exceeded" (429). Espere 5 minutos e refaça; o `editar-lote` pula item com `minStay` diferente do lido no plano.
 - **A API do PriceLabs junta os campos:** mandar só `date` e `min_stay` manteve preço, piso, teto, chegada/saída e o reason das regras existentes (conferido nas respostas).
 
+
+## 05/11/2026 — Saída de sexta da Afrodite e órfãs de feriado (decisão do dono)
+- **Restrição que tira a venda de uma diária se leva ao dono com a conta em noites:** a saída de sexta fechada deixava a quarta da Afrodite com 4 noites efetivas e a quinta sem venda; mostrado assim, o dono abriu na hora ("Isso, pode abrir Afrodite, saída de sexta"; "As noites órfãs do feriado, a gente pode abrir"). Na Afrodite a mudança vai aos dois sistemas: o envio do PriceLabs leva o `check_out` por data ao Beds24.

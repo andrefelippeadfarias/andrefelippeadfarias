@@ -789,7 +789,10 @@
    "desde": "2026-11-01",
    "urgencia": 2,
    "texto": "Vigiar as sextas de feriado da Afrodite (20/11, 25/12, 01/01, 26/03, 28/05, 09/07): se entrar reserva com chegada na sexta, a quinta (ou quarta e quinta, em Corpus Christi) de feriado anterior fica órfã, porque a saída de sexta segue fechada. Nesse caso, abrir a saída da sexta (override none) e pôr estadia 1 na quinta órfã no Beds24, registrar e avisar o dono. No Réveillon, uma chegada em 01/01 deixa 29, 30 e 31/12 sem venda possível: avisar o dono no topo do relatório. 05/11 (ordem do dono de 04/11, 'mantém feriados e pacotes'): a quinta de feriado órfã NÃO desce a 1 sozinha; a estadia própria do feriado vale também na noite órfã. Abrir a saída da sexta segue valendo; a estadia 1 na quinta vai ao topo do relatório como pedido ao dono.",
-   "atualizado_em": "2026-11-05"
+   "atualizado_em": "2026-11-05",
+   "status": "resolvida",
+   "resolvido_em": "2026-11-05",
+   "resolucao": "Superada pela decisão do dono de 05/11 ~12:05 BRT (ordem dono-2026-11-05-afrodite-sexta-orfas-feriado): a saída de sexta da Afrodite está aberta, então uma chegada na sexta de feriado não deixa mais a quinta presa pela sexta fechada; e a noite órfã de feriado (noite seguinte esgotada) leva 1 diária sozinha, pela regra. No Réveillon valem os pacotes fechados (01/01 sem chegada; dono 03/11)."
   },
   {
    "id": "conferir-envio-pricelabs-beds24-0211",
@@ -922,14 +925,20 @@
    "responsavel": "dono",
    "desde": "2026-11-05",
    "urgencia": 2,
-   "texto": "Afrodite com a estadia pelo dia de chegada (ordem de 04/11): a saída de sexta está fechada (regra_h_beds24.sexta_override_por_quarto, dono 01/11) e o sábado fechado (dono 02/11). Com isso a diária de quinta (1 noite, qui→sex) não sai, e a quarta com 2 noites (qua→sex) também não: a chegada de quarta só cabe com 4 noites (qua→dom). Abrir a saída de sexta da Afrodite para a diária de quinta e a quarta de 2 noites funcionarem, ou manter como está? Até a decisão, as quartas da Afrodite ficam fora da regra do dia (parametros.estadia_por_dia_chegada.aguardando_dono: nem sobem nem descem; o validador não acusa); segundas (seg→qua) e sextas (sex→dom) seguem a regra. Responder, por exemplo, 'abre a saída de sexta da Afrodite' ou 'mantém a sexta fechada e a quarta com 1'."
+   "texto": "Afrodite com a estadia pelo dia de chegada (ordem de 04/11): a saída de sexta está fechada (regra_h_beds24.sexta_override_por_quarto, dono 01/11) e o sábado fechado (dono 02/11). Com isso a diária de quinta (1 noite, qui→sex) não sai, e a quarta com 2 noites (qua→sex) também não: a chegada de quarta só cabe com 4 noites (qua→dom). Abrir a saída de sexta da Afrodite para a diária de quinta e a quarta de 2 noites funcionarem, ou manter como está? Até a decisão, as quartas da Afrodite ficam fora da regra do dia (parametros.estadia_por_dia_chegada.aguardando_dono: nem sobem nem descem; o validador não acusa); segundas (seg→qua) e sextas (sex→dom) seguem a regra. Responder, por exemplo, 'abre a saída de sexta da Afrodite' ou 'mantém a sexta fechada e a quarta com 1'.",
+   "status": "resolvida",
+   "resolvido_em": "2026-11-05",
+   "resolucao": "Dono 05/11 ~12:05 BRT: 'Isso, pode abrir Afrodite, saída de sexta.' (ordem dono-2026-11-05-afrodite-sexta-orfas-feriado). A sexta da Afrodite volta à regra geral: sem override de sexta, entrada e saída abertas (regra_h_beds24.sexta_override_por_quarto sem a Afrodite; sexta_reaberta_por_quarto faz a auditoria devolver o noCheckOut a 'none' no Beds24 e gerar o item do PriceLabs por data com check_out da sexta em 1, check_in e reason mantidos). As quartas da Afrodite seguem a regra do dia (2 noites); estadia_por_dia_chegada.aguardando_dono apagada. Pacotes (25/12, 01/01) e sábados não mudam. Falta gravar nos dois sistemas na próxima rotina (calendario_12m com --regras e o lote do Beds24 sem --so-estadia)."
   },
   {
    "id": "pricelabs-orphan-days-feriado",
    "responsavel": "dono",
    "desde": "2026-11-05",
    "urgencia": 2,
-   "texto": "O 'orphan days' do PriceLabs (estadia mínima de dia órfão, ligado na tela) solta noite de feriado: Double 19/11 e King Spa 2 19/11 e 21/11 (Consciência Negra) estão com estadia efetiva 1 contra a regra 2 do feriado, e o envio leva o 1 ao Beds24 (inventário de 05/11: minStay 1 nas três). A skill não desliga pela API e não reduz estadia de feriado sozinha ('mantém feriados'). Desligar o 'orphan days' na tela do PriceLabs (a API não lê nem grava a estadia mínima das personalizações) ou aceitar o 1 nessas noites? A noite órfã do dono (04/11) a skill já grava por data, sem precisar dele."
+   "texto": "O 'orphan days' do PriceLabs (estadia mínima de dia órfão, ligado na tela) solta noite de feriado: Double 19/11 e King Spa 2 19/11 e 21/11 (Consciência Negra) estão com estadia efetiva 1 contra a regra 2 do feriado, e o envio leva o 1 ao Beds24 (inventário de 05/11: minStay 1 nas três). A skill não desliga pela API e não reduz estadia de feriado sozinha ('mantém feriados'). Desligar o 'orphan days' na tela do PriceLabs (a API não lê nem grava a estadia mínima das personalizações) ou aceitar o 1 nessas noites? A noite órfã do dono (04/11) a skill já grava por data, sem precisar dele.",
+   "status": "resolvida",
+   "resolvido_em": "2026-11-05",
+   "resolucao": "Dono 05/11 ~12:05 BRT: 'As noites órfãs do feriado, a gente pode abrir.' (ordem dono-2026-11-05-afrodite-sexta-orfas-feriado). A estadia 1 do dia isolado de feriado (Double e King Spa 2 em 19/11, King Spa 2 em 21/11) fica aceita como informação; o 'orphan days' da tela fica como está. Além disso, a noite órfã do dono (noite seguinte esgotada, 1 diária) e o sábado órfão (sexta esgotada: entrada do sábado aberta e estadia 1) valem também em feriado e véspera (estadia_por_dia_chegada.orfa_em_feriado, regra_h_beds24.orfas.em_feriado), nunca em noite de pacote (Natal e Ano Novo) nem no sábado de festa (26/12). Casos vivos: King Spa 7 e Panorâmica II em 19/11 (20/11 esgotado); King Spa 7 e King Spa 2 em 21/11 (sexta esgotada)."
   },
   {
    "id": "nove-de-julho-quarta-0707",
@@ -947,5 +956,5 @@
    "texto": "Overbooking no Beds24 (inventário lido em 04/11 21:47 BRT): King Spa 2 em 06 e 07/11 e Panorâmica I (Double) em 20 e 21/11 com numAvail -1 (uma reserva a mais que as unidades). Confirmar com a recepção se são reservas reais duplicadas, bloqueio lançado por cima de reserva ou erro de sincronização, e realocar ou cancelar. A skill não altera reservas; para a estadia ela conta essas noites como esgotadas."
   }
  ],
- "versao": "2026-11-05T03"
+ "versao": "2026-11-05T15"
 }

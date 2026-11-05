@@ -70,8 +70,8 @@ def regra_dia_chegada(cfg: dict, d: date) -> dict | None:
 def aguardando_dono(cfg: dict, quarto: str | None, d: date) -> str | None:
     """Noite fora da regra do dia de chegada até o dono decidir (`estadia_por_dia_chegada.aguardando_dono`, ex.:
     {"Afrodite": ["qua"], "motivo": "..."}): nem sobe nem desce no plano, no lote do Beds24 nem no validador. Devolve o
-    motivo, ou None. Revisão de 05/11: a Afrodite tem a saída de sexta fechada (dono 01/11) e a chegada de quarta com 2
-    noites só caberia com 4 (qua→dom); quando o dono decidir, basta apagar a chave."""
+    motivo, ou None. Criada na revisão de 05/11 para as quartas da Afrodite (saída de sexta fechada); o dono decidiu em
+    05/11 ~12:05 BRT ("pode abrir Afrodite, saída de sexta") e a chave foi apagada: hoje nenhuma noite aguarda."""
     r = regra_dia_chegada(cfg, d)
     esp = (r or {}).get("aguardando_dono") or {}
     if not quarto or not isinstance(esp.get(quarto), list) or DIAS_CHAVE[d.weekday()] not in esp[quarto]:
@@ -99,6 +99,51 @@ def data_de_pacote(cfg: dict, d: date) -> bool:
     rh = ((cfg.get("parametros") or {}).get("regra_h_beds24") or {})
     ds = d.isoformat()
     return any(ds in (rh.get(k) or {}) for k in ("estadia_minima_por_data", "estadia_maxima_por_data", "override_por_data"))
+
+
+def orfa_permitida(cfg: dict, d: date, sabado: bool = False) -> bool:
+    """A liberação da órfã cabe na noite `d` quanto a pacote, festa e feriado. Nunca em noite de pacote do dono (Natal e
+    Ano Novo, `data_de_pacote`) e, no sábado órfão (`sabado`), nunca no sábado de festa com exceção própria
+    (`regra_h_beds24.sabados_excecao`, 26/12). Em feriado e véspera só com a decisão do dono de 05/11 ("As noites órfãs
+    do feriado, a gente pode abrir"): `estadia_por_dia_chegada.orfa_em_feriado` para a noite órfã pela seguinte (ordem de
+    04/11) e `regra_h_beds24.orfas.em_feriado` para o sábado órfão (ordem de 02/11). Fora disso, True. Quem chama confere
+    o resto (regra ligada, dia da semana, noite livre e vizinha esgotada)."""
+    if data_de_pacote(cfg, d):
+        return False
+    par = cfg.get("parametros") or {}
+    rh = par.get("regra_h_beds24") or {}
+    if sabado and d.isoformat() in (rh.get("sabados_excecao") or {}):
+        return False
+    if not periodo_feriado(cfg, d):
+        return True
+    if sabado:
+        return bool((rh.get("orfas") or {}).get("em_feriado"))
+    return bool((par.get("estadia_por_dia_chegada") or {}).get("orfa_em_feriado"))
+
+
+def sexta_reaberta(cfg: dict, quarto: str | None, d: date) -> str | None:
+    """Override de sexta que o dono tirou do quarto (`regra_h_beds24.sexta_reaberta_por_quarto`; dono 05/11: "Isso, pode
+    abrir Afrodite, saída de sexta" tirou o noCheckOut da Afrodite de `sexta_override_por_quarto`): numa sexta fora de
+    pacote devolve o override antigo, que a auditoria reabre ("none" no Beds24; no PriceLabs por data, check_out com a
+    sexta em 1); senão None. Noite de pacote (25/12, 01/01) segue `override_por_data`."""
+    if not quarto or d.weekday() != 4 or data_de_pacote(cfg, d):
+        return None
+    rh = (cfg.get("parametros") or {}).get("regra_h_beds24") or {}
+    if quarto in (rh.get("sexta_override_por_quarto") or {}):
+        return None  # ordem mais nova do dono pôs o quarto de volta no override de sexta: vale ela
+    return (rh.get("sexta_reaberta_por_quarto") or {}).get(quarto)
+
+
+def mascara_valida(s) -> bool:
+    """Máscara de chegada/saída do PriceLabs por data: 7 caracteres 0/1, de segunda a domingo."""
+    return isinstance(s, str) and len(s) == 7 and not set(s) - {"0", "1"}
+
+
+def abrir_dia(mascara: str, d: date) -> str:
+    """A máscara (segunda a domingo) com o dia da semana de `d` em 1 e o resto como estava (ex.: check_out 1111011 de uma
+    sexta vira 1111111)."""
+    i = d.weekday()
+    return mascara[:i] + "1" + mascara[i + 1:]
 
 
 def reais(v) -> str:

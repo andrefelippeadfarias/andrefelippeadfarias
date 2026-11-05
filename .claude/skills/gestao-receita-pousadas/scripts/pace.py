@@ -52,7 +52,8 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 from ancora_mercado import ARQ_ANCORA, ancora_da_noite, percentil_de, tipo_noite, valor_percentil  # noqa: E402
 from calendario_12m import estadia_da_noite, ler_recalculo, prova_sabado_orfao  # noqa: E402
 from validar_plano import estadia_exigida  # noqa: E402
-from comum import PASTA_SKILL, carregar_quartos, data, esgotado, hoje_brt, ler_json, periodo_feriado, vendidas_total  # noqa: E402
+from comum import (PASTA_SKILL, abrir_dia, carregar_quartos, data, esgotado, hoje_brt, ler_json,  # noqa: E402
+                   mascara_valida, periodo_feriado, sexta_reaberta, vendidas_total)
 from ordens import (ARQ_ORDENS, alvo_da_ordem, carregar_ordens, congelada, ordens_por_data, piso_da_ordem,  # noqa: E402
                     vendidas_base_escada)
 
@@ -825,11 +826,14 @@ def ajustar_tetos(cfg: dict, itens: list[dict], regras: dict, cals: dict | None 
     noite tem teto ou validade (lead_time_expiry), a noite vai para a lista `apagar` (plano separado, gravado antes) e
     o item herda min_stay e check-in/out da regra apagada; senão o max_price só sai do item. Devolve (itens, apagar).
     Dono 04/11 (desde 05/11), com `cals` (recálculos): onde a regra do dia de chegada decide a noite (fora de feriado,
-    pacote e sábado), a estadia regravada é a dela (calendario_12m.estadia_da_noite), não a herdada: em 04/11 a
+    pacote e sábado; e na noite órfã de feriado e véspera, dono 05/11), a estadia regravada é a dela
+    (calendario_12m.estadia_da_noite), não a herdada: em 04/11 a
     proteção da sexta 06/11 da Panorâmica II regravou a estadia 1 antiga; a regra sem estadia voltaria à do PriceLabs.
     Sábado (revisão de 05/11, Regra H): estadia herdada abaixo de 2 (ou nenhuma) volta a 2 (ou à do feriado), salvo o
-    sábado órfão provado pelo recálculo (sexta esgotada e sábado livre, `regra_h_beds24.orfas`), que mantém o 1 com
-    `orfa` "sábado" e `orfa_prova` (o validador aceita com a ordem da escada ou da faixa no item)."""
+    sábado órfão provado pelo recálculo (sexta esgotada e sábado livre, `regra_h_beds24.orfas`; em feriado também desde
+    05/11), que mantém o 1 com `orfa` "sábado" e `orfa_prova` (o validador aceita com a ordem da escada ou da faixa no
+    item). Dono 05/11 ("Isso, pode abrir Afrodite, saída de sexta"): na sexta da Afrodite (`sexta_reaberta_por_quarto`,
+    fora de pacote), o check_out herdado que fecha a sexta volta com a sexta em 1 (o resto da máscara fica)."""
     apagar, saida = [], []
     for it in itens:
         it = dict(it)
@@ -854,6 +858,10 @@ def ajustar_tetos(cfg: dict, itens: list[dict], regras: dict, cals: dict | None 
                 for campo in ("min_stay", "check_in", "check_out"):
                     if reg.get(campo) not in (None, "") and it.get(campo) is None:
                         it[campo] = int(reg[campo]) if campo == "min_stay" else reg[campo]
+                co, d_ = str(it.get("check_out") or ""), data(it["data"])
+                if sexta_reaberta(cfg, it["quarto"], d_) and mascara_valida(co) and co[d_.weekday()] == "0":
+                    # dono 05/11: a regra apagada trazia a saída de sexta fechada (01/11); regrava com a sexta aberta
+                    it["check_out"] = abrir_dia(co, d_)
                 if cals is not None:
                     novo, orfa, prova = estadia_da_noite(cfg, it["quarto"], data(it["data"]), cals.get(it["quarto"]) or {},
                                                          it.get("min_stay"))

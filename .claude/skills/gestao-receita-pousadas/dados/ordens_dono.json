@@ -368,7 +368,15 @@
     "beds24_inventario",
     "estadia"
    ],
-   "nota": "Execução no Beds24 pela skill (só override, estadia mínima e disponibilidade; nunca preço nem reservas), com revisão independente antes, releitura e conferência na Booking."
+   "nota": "Execução no Beds24 pela skill (só override, estadia mínima e disponibilidade; nunca preço nem reservas), com revisão independente antes, releitura e conferência na Booking. (05/11: a parte 'saída de sexta da Afrodite fechada' foi SUBSTITUÍDA pela ordem dono-2026-11-05-afrodite-sexta-orfas-feriado, 'Isso, pode abrir Afrodite, saída de sexta.'; o resto da ordem segue.)",
+   "substituida_em_parte": [
+    {
+     "em": "2026-11-05",
+     "por": "dono-2026-11-05-afrodite-sexta-orfas-feriado",
+     "parte": "saída de sexta da Afrodite fechada (Beds24 noCheckOut; PriceLabs por data check_out 1111011)",
+     "texto": "Dono 05/11: 'Isso, pode abrir Afrodite, saída de sexta.' A sexta da Afrodite fica com entrada e saída abertas; o resto desta ordem segue."
+    }
+   ]
   },
   {
    "id": "dono-2026-11-01-afrodite-sextas-feriado",
@@ -384,7 +392,15 @@
    "libera": [
     "beds24_inventario"
    ],
-   "nota": "Feito às 15:00 BRT (só override noCheckInOrCheckOut → noCheckOut; estadia do feriado mantida). Vigilância: se entrar chegada na sexta de um desses feriados, a quinta de feriado anterior fica órfã; a rotina abre a saída dessa sexta e põe 1 noite na quinta para vendê-la (pendência afrodite-quinta-orfa-feriado)."
+   "nota": "Feito às 15:00 BRT (só override noCheckInOrCheckOut → noCheckOut; estadia do feriado mantida). Vigilância: se entrar chegada na sexta de um desses feriados, a quinta de feriado anterior fica órfã; a rotina abre a saída dessa sexta e põe 1 noite na quinta para vendê-la (pendência afrodite-quinta-orfa-feriado). (05/11: a parte 'saída de sexta da Afrodite fechada' foi SUBSTITUÍDA pela ordem dono-2026-11-05-afrodite-sexta-orfas-feriado, 'Isso, pode abrir Afrodite, saída de sexta.'; o resto da ordem segue.)",
+   "substituida_em_parte": [
+    {
+     "em": "2026-11-05",
+     "por": "dono-2026-11-05-afrodite-sexta-orfas-feriado",
+     "parte": "saída de sexta da Afrodite fechada (Beds24 noCheckOut; PriceLabs por data check_out 1111011)",
+     "texto": "Dono 05/11: 'Isso, pode abrir Afrodite, saída de sexta.' A sexta da Afrodite fica com entrada e saída abertas; o resto desta ordem segue."
+    }
+   ]
   },
   {
    "id": "dono-2026-11-01-balcony-0809",
@@ -9298,6 +9314,31 @@
    "gatilho_dias": 8,
    "gatilho_min_dias": 2,
    "nota": "F2 (Dia de semana (dom-qui)): régua com hidro tabela do tipo, p50 R$ 648 público, p90 R$ 1784; ÷ 0.650 (Booking/enviado; ÷ 0.585 nos degraus de D7 ou menos); nunca abaixo do piso do dono. Gatilho de D7 sem venda nova: F1 (ou o piso do dono). Afrodite pelo prêmio dela e Balcony 10% abaixo (Regra G). Como desfazer: pedir 'Volte às ordens anteriores de 04/01/27'."
+  },
+  {
+   "id": "dono-2026-11-05-afrodite-sexta-orfas-feriado",
+   "data": "2026-11-05",
+   "criada_em": "2026-11-05T15:05+00:00",
+   "texto": "Isso, pode abrir Afrodite, saída de sexta. As faixas por dia, eu acho que está dentro do escopo por enquanto. As noites órfãs do feriado, a gente pode abrir.",
+   "contexto": "Resposta (05/11 ~12:05 BRT) às pendências afrodite-saida-sexta-dia-chegada (abrir a saída de sexta da Afrodite para a diária de quinta e a quarta de 2 noites funcionarem, ou manter) e pricelabs-orphan-days-feriado (aceitar a estadia 1 da noite órfã e do dia isolado em feriado), e à pergunta sobre as faixas por dia. Na mesma mensagem o dono pediu a lista dos overbookings para a equipe (pedido à parte, sem regra).",
+   "tipo": "regra",
+   "quartos": [
+    "Q7",
+    "Double",
+    "Afrodite",
+    "Q2",
+    "VK7",
+    "VK2",
+    "Balcony"
+   ],
+   "de": "2026-11-05",
+   "ate": "2099-12-31",
+   "libera": [
+    "beds24_inventario",
+    "chegada_saida_afrodite_sexta",
+    "estadia_1_orfa_feriado"
+   ],
+   "nota": "Regra permanente aplicada por script. (1) Afrodite (só nela): a saída de sexta abre; a sexta volta à regra geral (sem override de sexta: entrada e saída abertas; Beds24 'none'; PriceLabs por data check_out com a sexta, 5º caractere, em 1, mantendo o resto da máscara e o check_in). quartos.json: regra_h_beds24.sexta_override_por_quarto sem a Afrodite; sexta_reaberta_por_quarto {'Afrodite': 'noCheckOut'} faz a auditoria (calendario_12m.classificar_beds24 e comparar com --regras; pace.ajustar_tetos ao herdar a regra apagada) reabrir as sextas fora de pacote. As quartas da Afrodite passam à regra do dia (2 noites, qua→sex): estadia_por_dia_chegada.aguardando_dono apagada. (2) Os 7 quartos: a noite órfã (livre com a noite seguinte esgotada no quarto, 1 diária; ordem de 04/11) e o sábado órfão (sexta esgotada com o sábado livre: entrada do sábado aberta, noCheckOut, e estadia 1; ordem de 02/11) valem também em feriado e véspera (estadia_por_dia_chegada.orfa_em_feriado e regra_h_beds24.orfas.em_feriado); o dia isolado do feriado com estadia 1 é informação aceita. Continua fora: noites de pacote (Natal 23→25/12 e Ano Novo 30/12→01 e 30/12→03/01) e o sábado de festa com exceção própria (26/12). No feriado, quando a noite seguinte reabre, a estadia volta à do feriado pelo plano completo (calendario_12m sem --so-estadia). Sábados seguem fechados (Regra H). (3) Faixas por dia: nada muda ('dentro do escopo por enquanto'). Tipo 'regra': não serve de exceção 'dono' para preço fixo, Regra I, chegada/saída nem piso de feriado (validar_plano.ordens_regra); fechar de novo a saída de sexta da Afrodite só com ordem do dono mais nova que esta. Substitui em parte as ordens dono-2026-11-01-beds24-semana-afrodite-vk7 e dono-2026-11-01-afrodite-sextas-feriado (saída de sexta fechada). Primeiros casos: King Spa 7 e Panorâmica II em 19/11 (véspera da Consciência Negra, 20/11 esgotado); King Spa 7 e King Spa 2 em 21/11 (sábado com a sexta esgotada); Panorâmica I e King Spa 2 em 19/11 (dia isolado)."
   }
  ]
 }

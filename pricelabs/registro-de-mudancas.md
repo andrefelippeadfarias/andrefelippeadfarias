@@ -4414,6 +4414,14 @@ King Spa 7 (hoje R$ 2.901 com 3 livres; domingo com 4 livres) fica para o recál
 
 **Como desfazer:** King Spa 7 08/11 de volta a piso/teto +3% (R$ 1.524).
 
+## 06/11/2026, 19:54 a 20:00 BRT — Rotina leve das 19:53
+
+**Beds24 desde 16:50 BRT** (vigilância: 0 alerta):
+- Novas: Moinhos 06-08/11 (Booking 95804213, R$ 1.119; igual em noites e valor à 95800380 das 14:54: pedir à recepção que confira se não é duplicada); Balcony 08-10/11 (Airbnb, R$ 486); King Spa 7 23-25/11 (direta, VillaRecep1, R$ 600 de R$ 1.998 esperados, 30%).
+- Abaixo de 70% do esperado: a King Spa 7 23/11 (direta, 30%) e duas antigas alteradas (Panorâmica I 06/11, Booking, 58%; King Spa 2 06/11, Airbnb, 70%).
+
+**Sem gravação** (só Beds24 nesta rodada: 4 leituras, nenhuma ao PriceLabs). A escada pediria subida na Moinhos 06-07/11 e na Balcony 08-09/11 pelas vendas novas, mas o dono pediu hoje reduções para vender todas as suítes de 06 a 10/11: os preços ficam. A subida da King Spa 7 23-24/11 fica para a rotina das 07:53 (recálculo da King Spa 7 já usado 3 vezes em 24 h). Estadia de D0 a D7: nenhuma noite esgotou ou reabriu.
+
 > **Regras em vigor:** desde 06/10/2026 elas ficam em `.claude/skills/gestao-receita-pousadas/references/regras.md`. Este arquivo guarda só o histórico das mudanças.
 
 ## O que só pode ser feito na tela (passo a passo para você)

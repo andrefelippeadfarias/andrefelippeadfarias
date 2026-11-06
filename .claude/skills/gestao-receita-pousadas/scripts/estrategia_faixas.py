@@ -313,10 +313,11 @@ def registrar(tab: dict, arq: Path = ARQ_RESULTADOS) -> int:
     d["fotos"] = [x for x in d["fotos"] if x["dia"] != tab["hoje"]]
     for ln in tab["linhas"]:
         f = ln["em_vigor"] or ln["recomendada"]
+        pr, fx = _por_faixa(ln["previsto"]), _por_faixa(ln["faixas"])  # tabela lida de JSON: chaves "1".."5"
         d["fotos"].append({"dia": tab["hoje"], "pousada": ln["pousada"], "periodo": ln["periodo"], "nivel": ln["nivel"],
                            "antecedencia": ln["antecedencia"], "vendidas": ln["vendidas"], "capacidade": ln["capacidade"],
                            "faixa": f, "em_vigor": ln["em_vigor"], "recomendada": ln["recomendada"],
-                           "previsto_ocupacao": ln["previsto"][f]["ocupacao"], "preco_publico": ln["faixas"][f],
+                           "previsto_ocupacao": pr[f]["ocupacao"], "preco_publico": fx[f],
                            "hoje_publico": ln["hoje_publico"]})
     Path(arq).write_text(json.dumps(d, ensure_ascii=False, indent=1) + "\n")
     return len(tab["linhas"])
@@ -366,6 +367,7 @@ def markdown(tab: dict, pergs: list[dict]) -> str:
         for ln in tab["linhas"]:
             if ln["pousada"] != pous:
                 continue
+            ln = dict(ln, faixas=_por_faixa(ln["faixas"]), previsto=_por_faixa(ln["previsto"]))
             fx = " | ".join(("~~" + brl(ln["faixas"][f]) + "~~") if f in ln["abaixo_piso"] else brl(ln["faixas"][f])
                             for f in range(1, 6))
             vig = f"F{ln['em_vigor']}" if ln["em_vigor"] else "—"

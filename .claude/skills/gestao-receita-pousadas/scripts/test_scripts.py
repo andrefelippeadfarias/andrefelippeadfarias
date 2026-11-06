@@ -3899,5 +3899,37 @@ class TestFaixasDono(unittest.TestCase):
         self.assertEqual(f.nome_curto("Dia dos Namorados 2027 (pico)"), "Dia dos Namorados")
 
 
+class TestEstrategiaFaixasJson(unittest.TestCase):
+    """06/11: `registrar` (e a tabela em markdown) com a tabela lida de JSON, que traz as faixas como "1".."5"
+    (KeyError 2 na rotina de 06/11; o mesmo de `texto_pergunta` em 05/11)."""
+
+    def _tabela_json(self):
+        import json as _json
+        ln = {"pousada": "Recanto", "periodo": "p1", "nivel": "alta", "antecedencia": 3, "vendidas": 10,
+              "capacidade": 16, "em_vigor": None, "recomendada": 2, "hoje_publico": 1200,
+              "previsto": {f: {"ocupacao": 50 + f, "receita": 1000.0 * f} for f in range(1, 6)},
+              "faixas": {f: 900 + 100 * f for f in range(1, 6)}, "abaixo_piso": [],
+              "nome": "Novembro 2026", "de": "2026-11-06", "ate": "2026-11-07", "noites": 2,
+              "vendido_pct": 62, "curva_pct": 71}
+        return _json.loads(_json.dumps({"hoje": "2026-11-06", "linhas": [ln]}))
+
+    def test_registrar_e_markdown_com_chaves_texto(self):
+        import json
+        import tempfile
+        from pathlib import Path
+        import estrategia_faixas as ef
+        tab = self._tabela_json()
+        self.assertIn("2", tab["linhas"][0]["faixas"])
+        with tempfile.TemporaryDirectory() as d:
+            arq = Path(d) / "res.json"
+            self.assertEqual(ef.registrar(tab, arq), 1)
+            foto = json.loads(arq.read_text())["fotos"][0]
+        self.assertEqual(foto["preco_publico"], 1100)
+        self.assertEqual(foto["previsto_ocupacao"], 52)
+        md = ef.markdown(tab, [])
+        self.assertIn("F2", md)
+        self.assertIn("1.100", md)
+
+
 if __name__ == "__main__":
     unittest.main()

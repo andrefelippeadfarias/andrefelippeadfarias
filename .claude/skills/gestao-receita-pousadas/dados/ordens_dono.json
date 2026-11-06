@@ -9339,6 +9339,127 @@
     "estadia_1_orfa_feriado"
    ],
    "nota": "Regra permanente aplicada por script. (1) Afrodite (só nela): a saída de sexta abre; a sexta volta à regra geral (sem override de sexta: entrada e saída abertas; Beds24 'none'; PriceLabs por data check_out com a sexta, 5º caractere, em 1, mantendo o resto da máscara e o check_in). quartos.json: regra_h_beds24.sexta_override_por_quarto sem a Afrodite; sexta_reaberta_por_quarto {'Afrodite': 'noCheckOut'} faz a auditoria (calendario_12m.classificar_beds24 e comparar com --regras; pace.ajustar_tetos ao herdar a regra apagada) reabrir as sextas fora de pacote. As quartas da Afrodite passam à regra do dia (2 noites, qua→sex): estadia_por_dia_chegada.aguardando_dono apagada. (2) Os 7 quartos: a noite órfã (livre com a noite seguinte esgotada no quarto, 1 diária; ordem de 04/11) e o sábado órfão (sexta esgotada com o sábado livre: entrada do sábado aberta, noCheckOut, e estadia 1; ordem de 02/11) valem também em feriado e véspera (estadia_por_dia_chegada.orfa_em_feriado e regra_h_beds24.orfas.em_feriado); o dia isolado do feriado com estadia 1 é informação aceita. Continua fora: noites de pacote (Natal 23→25/12 e Ano Novo 30/12→01 e 30/12→03/01) e o sábado de festa com exceção própria (26/12). No feriado, quando a noite seguinte reabre, a estadia volta à do feriado pelo plano completo (calendario_12m sem --so-estadia). Sábados seguem fechados (Regra H). (3) Faixas por dia: nada muda ('dentro do escopo por enquanto'). Tipo 'regra': não serve de exceção 'dono' para preço fixo, Regra I, chegada/saída nem piso de feriado (validar_plano.ordens_regra); fechar de novo a saída de sexta da Afrodite só com ordem do dono mais nova que esta. Substitui em parte as ordens dono-2026-11-01-beds24-semana-afrodite-vk7 e dono-2026-11-01-afrodite-sextas-feriado (saída de sexta fechada). Primeiros casos: King Spa 7 e Panorâmica II em 19/11 (véspera da Consciência Negra, 20/11 esgotado); King Spa 7 e King Spa 2 em 21/11 (sábado com a sexta esgotada); Panorâmica I e King Spa 2 em 19/11 (dia isolado)."
+  },
+  {
+   "id": "dono-2026-11-04-faixa-recanto-20270105",
+   "data": "2026-11-04",
+   "criada_em": "2026-11-06T10:59:59Z",
+   "texto": "Para feriados, vamos aplicar o F5 e baixar gradualmente caso a lotação esteja abaixo da expectativa 7 dias antes. Para Natal, aplicar F5, Réveillon F5, inverno e final de semana F5. Para dias de semana, vamos aplicar F2 e fins de semana do mês de dezembro e os últimos dois de novembro, vamos aplicar F3.",
+   "contexto": "Resposta do dono à régua de faixas (página 'Régua de Preços das Pousadas', 04/11/2026).",
+   "pousada_faixa": "Recanto",
+   "quartos": [
+    "Q7",
+    "Q2",
+    "Double",
+    "Afrodite"
+   ],
+   "de": "2027-01-05",
+   "ate": "2027-01-05",
+   "noites": [
+    "2027-01-05"
+   ],
+   "tipo": "alvo_por_data",
+   "percentil": 50,
+   "faixa": 2,
+   "passo_livre": true,
+   "escada_vendas": true,
+   "pisos_enviados": {
+    "Q7": 1219.51,
+    "Q2": 1219.51,
+    "Double": 1219.51,
+    "Afrodite": 1500.0
+   },
+   "topo_enviados": {
+    "Q7": 2877.42,
+    "Q2": 2877.42,
+    "Double": 2877.42,
+    "Afrodite": 3452.9
+   },
+   "vendidas_base": {
+    "Q7": {
+     "2027-01-05": 0
+    },
+    "Q2": {
+     "2027-01-05": 2
+    },
+    "Double": {
+     "2027-01-05": 1
+    },
+    "Afrodite": {
+     "2027-01-05": 2
+    }
+   },
+   "libera": [
+    "acima_15"
+   ],
+   "ocupacao_max": 0.7,
+   "frente_ocupacao": 0.5,
+   "piso_atras": {
+    "Q7": 1219.51,
+    "Q2": 1219.51,
+    "Double": 1219.51,
+    "Afrodite": 1500.0
+   },
+   "gatilho_dias": 9,
+   "gatilho_min_dias": 2,
+   "nota": "F2 (Dia de semana (dom-qui)): régua com hidro tabela do tipo, p50 R$ 648 público, p90 R$ 1784; ÷ 0.620 (Booking/enviado; ÷ 0.558 nos degraus de D7 ou menos); nunca abaixo do piso do dono. Gatilho de D7 sem venda nova: F1 (ou o piso do dono). Afrodite pelo prêmio dela e Balcony 10% abaixo (Regra G). Como desfazer: pedir 'Volte às ordens anteriores de 05/01/27'."
+  },
+  {
+   "id": "dono-2026-11-04-faixa-villa-20270105",
+   "data": "2026-11-04",
+   "criada_em": "2026-11-06T10:59:59Z",
+   "texto": "Para feriados, vamos aplicar o F5 e baixar gradualmente caso a lotação esteja abaixo da expectativa 7 dias antes. Para Natal, aplicar F5, Réveillon F5, inverno e final de semana F5. Para dias de semana, vamos aplicar F2 e fins de semana do mês de dezembro e os últimos dois de novembro, vamos aplicar F3.",
+   "contexto": "Resposta do dono à régua de faixas (página 'Régua de Preços das Pousadas', 04/11/2026).",
+   "pousada_faixa": "Villa",
+   "quartos": [
+    "VK7",
+    "VK2",
+    "Balcony"
+   ],
+   "de": "2027-01-05",
+   "ate": "2027-01-05",
+   "noites": [
+    "2027-01-05"
+   ],
+   "tipo": "alvo_por_data",
+   "percentil": 50,
+   "faixa": 2,
+   "passo_livre": true,
+   "escada_vendas": true,
+   "pisos_enviados": {
+    "VK7": 996.92,
+    "VK2": 996.92,
+    "Balcony": 897.23
+   },
+   "topo_enviados": {
+    "VK7": 2744.62,
+    "VK2": 2744.62,
+    "Balcony": 2470.15
+   },
+   "vendidas_base": {
+    "VK7": {
+     "2027-01-05": 1
+    },
+    "VK2": {
+     "2027-01-05": 1
+    },
+    "Balcony": {
+     "2027-01-05": 0
+    }
+   },
+   "libera": [
+    "acima_15"
+   ],
+   "ocupacao_max": 0.7,
+   "frente_ocupacao": 0.5,
+   "piso_atras": {
+    "VK7": 944.0,
+    "VK2": 943.4,
+    "Balcony": 750.77
+   },
+   "gatilho_dias": 9,
+   "gatilho_min_dias": 2,
+   "nota": "F2 (Dia de semana (dom-qui)): régua com hidro tabela do tipo, p50 R$ 648 público, p90 R$ 1784; ÷ 0.650 (Booking/enviado; ÷ 0.585 nos degraus de D7 ou menos); nunca abaixo do piso do dono. Gatilho de D7 sem venda nova: F1 (ou o piso do dono). Afrodite pelo prêmio dela e Balcony 10% abaixo (Regra G). Como desfazer: pedir 'Volte às ordens anteriores de 05/01/27'."
   }
  ]
 }

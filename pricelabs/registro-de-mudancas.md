@@ -4381,6 +4381,25 @@ King Spa 7 (hoje R$ 2.901 com 3 livres; domingo com 4 livres) fica para o recál
 
 **Como desfazer:** Moinhos 06/11 de volta a piso/teto +1% (R$ 1.185) e 07/11 a +18% (R$ 1.384).
 
+## 06/11/2026, 16:00 a 16:10 BRT — Reduções de 06 a 10/11 pela escala programada (dono)
+
+**Dono, 06/11 ~16:00 BRT:** "Perfeito, agora vamos aplicar as reduções de preço para hoje, amanhã, segunda e terça, para vendermos todas as suítes, de acordo com a escala programada."
+
+**Leitura:** escala programada = faixas do dono de 04/11 (dias de semana na F2, com gatilho de D7 para a F1; piso do Recanto R$ 1.219,51 enviados) mais a escada de vendas. Uma ordem nova com o alvo antigo de 01/11 (mediana geral, piso de segurança R$ 560) foi registrada e **retirada antes de gravar**: levava a Moinhos e a Panorâmica II de terça a R$ 560/595, fora da escala.
+
+**Reserva nova às 14:54 BRT:** Moinhos 06-08/11 (Booking, R$ 1.119), depois da descida da Moinhos.
+
+**Gravado no PriceLabs** (validador 0 erro; conferido na resposta da API; recálculos da Moinhos, Panorâmica II e Afrodite às 16:05):
+
+| Mudança | Onde | Antes | Depois |
+|---|---|---|---|
+| Descida pela escala (piso da faixa) | Panorâmica II 10/11 | R$ 1.574 | R$ 1.232 |
+| Proteção de noite esgotada | Afrodite 08/11 | — | piso R$ 1.794 |
+
+**Fica como está pela escala:** Moinhos 08-10/11 e Panorâmica I 08-10/11 já no piso da faixa (~R$ 1.220-1.232 de Moinhos; a Panorâmica I subiu hoje pela venda nova); Moinhos 06/11 R$ 1.044 (reta da escada); Afrodite 06-07/11 na faixa de fim de semana do dono (R$ 2.540-2.600) e 10/11 pela ordem do Recanto. **Não subiu:** Moinhos 07/11 (a escada pedia R$ 1.383 pela venda nova; mantida em R$ 1.185 pelo pedido de redução). **Villa** (King Spa 7 hoje e domingo, Balcony sexta e sábado pela Regra G) na rodada das 16:53, com o recálculo da King Spa 7. **Ledger:** 1 passo.
+
+**Como desfazer:** Panorâmica II 10/11 de volta ao piso -1% (R$ 1.574).
+
 > **Regras em vigor:** desde 06/10/2026 elas ficam em `.claude/skills/gestao-receita-pousadas/references/regras.md`. Este arquivo guarda só o histórico das mudanças.
 
 ## O que só pode ser feito na tela (passo a passo para você)

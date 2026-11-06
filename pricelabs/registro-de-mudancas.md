@@ -4400,6 +4400,20 @@ King Spa 7 (hoje R$ 2.901 com 3 livres; domingo com 4 livres) fica para o recál
 
 **Como desfazer:** Panorâmica II 10/11 de volta ao piso -1% (R$ 1.574).
 
+## 06/11/2026, 16:54 a 17:00 BRT — Rotina leve das 16:53 (Villa pela escala programada)
+
+**Beds24 desde 16:00 BRT** (vigilância: 0 alerta): só alterações de status e o cancelamento de uma reserva de R$ 0 do Airbnb (King Spa 2 26-29/11). Inventário de hoje a 13/11 igual ao das 16:04.
+
+**Gravado no PriceLabs** (validador 0 erro; conferido na resposta da API; recálculo da King Spa 7 às 16:56):
+
+| Mudança | Onde | Antes | Depois |
+|---|---|---|---|
+| Descida pela escala (piso da faixa F2 de dia de semana) | King Spa 7 08/11 | R$ 1.524 | R$ 944 |
+
+**Já na escala programada:** King Spa 7 06/11 R$ 2.901 (ordem do dono de 02/11 para o fim de semana da Villa: escada de R$ 1.900 com 0 vendidas a R$ 3.754 com 7; com 4 de 7, a reta está em ~R$ 2.900); Balcony 06-07/11 pela Regra G (85,5% a 90% da suíte com banheira livre mais barata); Balcony 08-10/11 no piso (R$ 635 a R$ 698); King Spa 7 07, 09 e 10/11 e King Spa 2 06-10/11 esgotadas. Balcony sem recálculo (3 de 3 em 24 h). **Ledger:** 1 passo.
+
+**Como desfazer:** King Spa 7 08/11 de volta a piso/teto +3% (R$ 1.524).
+
 > **Regras em vigor:** desde 06/10/2026 elas ficam em `.claude/skills/gestao-receita-pousadas/references/regras.md`. Este arquivo guarda só o histórico das mudanças.
 
 ## O que só pode ser feito na tela (passo a passo para você)

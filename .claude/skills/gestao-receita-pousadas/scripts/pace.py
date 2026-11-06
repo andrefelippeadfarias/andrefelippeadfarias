@@ -34,6 +34,7 @@ Uso:
   python3 pace.py registrar --plano <itens gravados.json> [--agora AAAA-MM-DDTHH:MMZ]
   python3 pace.py curva --tipo fds --dias 7
   python3 pace.py marcar-envio --ate AAAA-MM-DDTHH:MM  (marca como chegados ao canal os passos gravados antes do envio)
+  python3 pace.py marcar-envio --coleta <saída da coleta>  (o mesmo, por quarto, pelo last_date_pushed; rotina completa)
 """
 
 from __future__ import annotations
@@ -291,19 +292,43 @@ def registrar_passos(passos: dict, itens: list[dict], agora: dt.datetime, caminh
         f.write("\n")
 
 
-def marcar_envio(passos: dict, ate: dt.datetime, caminho=None) -> int:
+def marcar_envio(passos: dict, ate, caminho=None) -> int:
+    """`ate`: um instante (todos os quartos) ou {curto: instante do último envio do quarto} (revisão de 06/11: o
+    `marcar-envio` ficou sem rodar de 01/11 a 06/11 e 493 passos seguiram "não chegou ao canal", travando a escada;
+    a coleta traz `last_date_pushed` por quarto, então a rotina completa marca por quarto, sem depender de lembrar)."""
     n = 0
     for x in passos.get("passos", []):
+        lim = ate.get(x.get("quarto")) if isinstance(ate, dict) else ate
+        if lim is None:
+            continue
         g = dt.datetime.fromisoformat(x["gravado_em"].replace("Z", "+00:00"))
         if g.tzinfo is None:
             g = g.replace(tzinfo=dt.timezone.utc)
-        if not x.get("chegou_ao_canal") and g <= ate:
-            x["chegou_ao_canal"] = ate.isoformat(timespec="minutes")
+        if not x.get("chegou_ao_canal") and g <= lim:
+            x["chegou_ao_canal"] = lim.isoformat(timespec="minutes")
             n += 1
     with open(caminho or ARQ_PASSOS, "w", encoding="utf-8") as f:
         json.dump(passos, f, ensure_ascii=False, indent=1)
         f.write("\n")
     return n
+
+
+def envios_da_coleta(cfg: dict, coleta: dict) -> dict:
+    """{curto: último envio ao canal} a partir de `contexto.sync[].last_date_pushed` da coleta (aceita o embrulho do
+    workflow, com `result`). Quarto sem envio, com push desligado ou fora do quartos.json fica de fora."""
+    r = coleta.get("result", coleta) if isinstance(coleta, dict) else {}
+    sync = ((r or {}).get("contexto") or {}).get("sync") or []
+    out = {}
+    for s in sync:
+        q = cfg["por_id"].get(str(s.get("listing_id")))
+        lp = s.get("last_date_pushed")
+        if not q or not lp or s.get("push_enabled") is False:
+            continue
+        t = dt.datetime.fromisoformat(str(lp).replace("Z", "+00:00"))
+        if t.tzinfo is None:
+            t = t.replace(tzinfo=dt.timezone.utc)
+        out[q["curto"]] = t
+    return out
 
 
 # ---------- o plano
@@ -1197,7 +1222,8 @@ def main(argv=None) -> int:
     cv.add_argument("--tipo", default="semana")
     cv.add_argument("--dias", type=int, required=True)
     me = sub.add_parser("marcar-envio")
-    me.add_argument("--ate", required=True)
+    me.add_argument("--ate", help="instante UTC do envio (todos os quartos)")
+    me.add_argument("--coleta", help="saída da coleta: usa o last_date_pushed de cada quarto (contexto.sync)")
     me.add_argument("--passos", default=str(ARQ_PASSOS))
     a = ap.parse_args(argv)
     cfg = carregar_quartos()
@@ -1221,6 +1247,18 @@ def main(argv=None) -> int:
         print(f"{len([x for x in de_pace if (x.get('pace') or {}).get('direcao')])} passos registrados em {a.passos}")
         return 0
     if a.cmd == "marcar-envio":
+        if bool(a.ate) == bool(a.coleta):
+            print("ERRO: passe --ate (um instante) ou --coleta (último envio de cada quarto), um dos dois")
+            return 1
+        if a.coleta:
+            ate = envios_da_coleta(cfg, ler_json(a.coleta))
+            if not ate:
+                print("ERRO: a coleta não traz contexto.sync com last_date_pushed; use --ate com o envio conferido")
+                return 1
+            n = marcar_envio(carregar_passos(a.passos), ate, a.passos)
+            print(f"{n} passos marcados como chegados ao canal (último envio por quarto: "
+                  + ", ".join(f"{k} {v.isoformat(timespec='minutes')}" for k, v in sorted(ate.items())) + ")")
+            return 0
         ate = dt.datetime.fromisoformat(a.ate.replace("Z", "+00:00"))
         if ate.tzinfo is None:
             ate = ate.replace(tzinfo=dt.timezone.utc)

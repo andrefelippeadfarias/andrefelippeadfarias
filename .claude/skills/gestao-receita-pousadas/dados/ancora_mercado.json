@@ -1,8 +1,8 @@
 {
  "_doc": "Âncora de mercado do motor de pace: percentis do preço público por noite dos hotéis com hidro na Booking (2 adultos). p50 e max medidos; p75/p90/p25 aproximados (ver ancora_mercado.py). Noite sem busca própria usa `por_tipo` do mesmo tipo e mês.",
- "atualizado_em": "2026-11-05",
+ "atualizado_em": "2026-11-06",
  "fontes": [
-  "/tmp/claude-0/-home-user-andrefelippeadfarias/02bd5933-6de8-57dc-9e2b-aeb0b12a4913/scratchpad/r0511/coleta.json"
+  "/tmp/claude-0/-home-user-andrefelippeadfarias/02bd5933-6de8-57dc-9e2b-aeb0b12a4913/scratchpad/r0611/coleta.json"
  ],
  "noites": {
   "2026-10-31": {
@@ -136,17 +136,17 @@
    "busca_em": "2026-10-30"
   },
   "2026-11-12": {
-   "p25": 262,
-   "p50": 305,
+   "p25": 266,
+   "p50": 311,
    "p75": 394,
-   "p90": 724,
+   "p90": 672,
    "max": 859,
    "n": 18,
-   "n_comparaveis": 6,
+   "n_comparaveis": 7,
    "p50_medido": false,
    "tipo": "semana",
    "fonte": "quinta 12/11",
-   "busca_em": "2026-11-05"
+   "busca_em": "2026-11-06"
   },
   "2026-11-13": {
    "p25": 638,
@@ -221,17 +221,17 @@
    "busca_em": "2026-10-30"
   },
   "2026-11-19": {
-   "p25": 596,
-   "p50": 841,
-   "p75": 846,
-   "p90": 1112,
+   "p25": 734,
+   "p50": 909,
+   "p75": 909,
+   "p90": 1100,
    "max": 1469,
-   "n": 17,
+   "n": 18,
    "n_comparaveis": 6,
    "p50_medido": false,
    "tipo": "feriado",
    "fonte": "Consciência Negra 19-22/11",
-   "busca_em": "2026-11-05"
+   "busca_em": "2026-11-06"
   },
   "2026-11-20": {
    "p25": 680,
@@ -500,13 +500,13 @@
     "busca_em": "2026-10-30"
    },
    "2026-11": {
-    "p25": 680,
-    "p50": 835,
+    "p25": 707,
+    "p50": 869,
     "p75": 1172,
     "p90": 1355,
     "max": 1415,
     "n_noites": 4,
-    "busca_em": "2026-11-05"
+    "busca_em": "2026-11-06"
    },
    "2026-12": {
     "p25": 757,
@@ -526,7 +526,7 @@
     "p90": 600,
     "max": 724,
     "n_noites": 11,
-    "busca_em": "2026-11-05"
+    "busca_em": "2026-11-06"
    },
    "2026-12": {
     "p25": 258,

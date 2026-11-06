@@ -954,6 +954,22 @@
    "desde": "2026-11-05",
    "urgencia": 3,
    "texto": "Overbooking no Beds24 (inventário lido em 04/11 21:47 BRT): King Spa 2 em 06 e 07/11 e Panorâmica I (Double) em 20 e 21/11 com numAvail -1 (uma reserva a mais que as unidades). Confirmar com a recepção se são reservas reais duplicadas, bloqueio lançado por cima de reserva ou erro de sincronização, e realocar ou cancelar. A skill não altera reservas; para a estadia ela conta essas noites como esgotadas."
+  },
+  {
+   "id": "afrodite-reserva-r0-1922",
+   "responsavel": "dono",
+   "desde": "2026-11-05",
+   "urgencia": 3,
+   "data_alvo": "2026-11-12",
+   "texto": "Afrodite 19-22/11 (Consciência Negra): reserva direta 95759734 lançada pela recepção (RecRecep2) com R$ 0. O Beds24 a conta (numAvail 0), o PriceLabs não (0 vendidas). Enquanto o dono não decidir: o motor fica fora da Afrodite 19/11 (queria baixar o feriado de R$ 2.820 para R$ 2.208) e a véspera 18/11 não é liberada como órfã (o validador barra porque o PriceLabs a vê livre). Se a reserva for válida, lançar o valor no Beds24; se não, cancelar (só o dono/equipe)."
+  },
+  {
+   "id": "bloqueio-sem-reserva-q7-balcony-nov",
+   "responsavel": "dono",
+   "desde": "2026-11-06",
+   "urgencia": 2,
+   "data_alvo": "2026-11-07",
+   "texto": "PriceLabs com 1 unidade a mais ocupada do que reservas no Beds24 (beds24.py comparar, 06/11): Moinhos 20 e 21/11 (PriceLabs 6, Beds24 5; numAvail caiu de 2 para 1 entre 05 e 06/11) e Balcony 07/11 (3 contra 2). Pode ser bloqueio manual sem reserva: confirmar com a equipe e reabrir se não for de propósito."
   }
  ],
  "versao": "2026-11-05T15"

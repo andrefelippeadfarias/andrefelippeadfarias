@@ -4295,6 +4295,44 @@ King Spa 7 06/11: o motor queria subir (5/7), mas o passo anterior ainda não ch
 
 **Ledger:** 7 passos. Moinhos, Panorâmica I e King Spa 7 usaram o 3º recálculo do dia.
 
+## 06/11/2026, 07:53 a 08:25 BRT — Rotina completa das 07:53 (sexta)
+
+**Beds24 desde 05/11 19:50 BRT** (vigilância: 0 alerta novo; 0 abaixo do planejado):
+- Nova: King Spa 7 21-22/12 (Booking, 2 noites, R$ 1.677).
+- Cancelada: King Spa 7 08-11/11 (Booking, 3 noites). Desfez o overbooking da King Spa 7 em 09 e 10/11.
+- Consultas (Airbnb): Panorâmica I 08/11 e King Spa 2 26/11.
+
+**Overbooking que segue no Beds24:** King Spa 2 06 e 07/11 (3 reservas para 2 unidades, começa hoje) e Panorâmica I 20-21/11 (7 para 6). **PriceLabs × Beds24:** Moinhos 20-21/11 e Balcony 07/11 com 1 unidade a mais ocupada no PriceLabs do que reservas no Beds24 (bloqueio sem reserva?); Afrodite 19-21/11 ocupada no Beds24 pela reserva direta de R$ 0, que o PriceLabs não vê.
+
+**Ocupação vendida (PriceLabs recalculado):** Recanto 59% / 52% / 42% e Villa 56% / 44% / 36% em 7 / 15 / 30 dias. Panorâmica I esgotada hoje e amanhã.
+
+**Recálculos:** os 7 quartos (King Spa 7 e King Spa 2 às 08:04, depois de abrir a janela de 24 h); Afrodite de novo às 08:19 para gravar 05/01/2027 e conferir.
+
+**Envio ao canal (erro da skill, corrigido):** o `marcar-envio` não rodava desde 01/11; 485 passos de 01 a 05/11 seguiam como "não chegou ao canal" e a escada segurava o passo seguinte dessas noites. Marcados agora pelo último envio de cada quarto (05/11, 18:15 a 19:59 UTC). Daqui em diante a rotina completa marca por quarto antes do plano (`marcar-envio --coleta`).
+
+**Gravado no PriceLabs** (validador 0 erro; conferido na resposta da API; a Afrodite também no recálculo):
+
+| Mudança | Onde | Antes | Depois |
+|---|---|---|---|
+| Apagado (solta o teto antes da proteção) | King Spa 2 17/11; Afrodite 05/01/2027 | regra antiga | sem regra |
+| Proteção de noite esgotada (piso p90, teto solto) | King Spa 2 17/11; Afrodite 05/01/2027 | — | piso R$ 944; R$ 1.500 |
+| Escada para baixo (sem venda) | Moinhos 13/11; Panorâmica I 13/11; Panorâmica II 13/11 | R$ 2.393; R$ 2.708; R$ 2.401 | R$ 2.000; R$ 2.000; R$ 2.006 |
+| Escada para baixo | Panorâmica I 12/11; Afrodite 10/11 e 15-17/12; Balcony 10/11 | R$ 1.495; R$ 1.840 e R$ 1.549; R$ 826 | R$ 1.232; R$ 1.500; R$ 690 |
+| Escada para baixo (noite nova, D60) | King Spa 7 05/01/2027; Balcony 05/01/2027 | R$ 1.143; R$ 1.191 | R$ 996; R$ 902 |
+| Escada para cima (vendas) | King Spa 7 21-22/12; King Spa 2 22/12 e 23/11; Panorâmica II e Afrodite 06/12; Balcony 23/11 | R$ 1.347; R$ 1.346 e R$ 952; R$ 1.383 e R$ 1.680; R$ 826 | R$ 1.415; R$ 1.414 e R$ 1.048; R$ 1.445 e R$ 1.764; R$ 914 |
+| Coerência (ordem do Recanto, Regra G) | Panorâmica II 19/11; Panorâmica I 07/12 e 15-17/12; Balcony 21-22/12 | — | R$ 1.912; R$ 1.302 e R$ 1.232; R$ 1.232 |
+| Estadia (órfã em feriado, dono 05/11) | King Spa 2 19/11 (PriceLabs e Beds24) | 2 noites | 1 noite |
+
+**Fora do plano:** Afrodite 19/11 (o motor queria R$ 2.820 → R$ 2.208 lendo a noite como livre; no Beds24 está ocupada) e a órfã da Afrodite 18/11 (o validador barrou: o PriceLabs não vê a reserva de 19/11). Ficam até o dono decidir a reserva de R$ 0.
+
+**Beds24** (lido e conferido): sábados novos 06/11/2027 fechados para entrada e saída (Moinhos, Panorâmica I, Panorâmica II, King Spa 7, King Spa 2, Balcony); Panorâmica I 07/11 de noCheckIn para noCheckInOrCheckOut (sexta e sábado esgotados); Panorâmica I 06/11 estadia 1 → 2 (sexta, esgotada).
+
+**Faixas:** 2 ordens de faixa da noite nova 05/01/2027 (Recanto e Villa, regra do dono de 04/11); tabela de estratégia com 8 perguntas ao dono; foto diária gravada (124 linhas). Nenhuma ordem nova de faixa por período (dono 05/11).
+
+**Código:** `estrategia_faixas.py` (registrar e markdown com a tabela lida de JSON) e `pace.py marcar-envio --coleta`; 159 testes OK. **Ledger:** 18 passos.
+
+**Como desfazer:** pedir ao Claude para voltar cada noite ao valor "Antes" da tabela; King Spa 2 19/11 de volta a 2 noites nos dois sistemas.
+
 > **Regras em vigor:** desde 06/10/2026 elas ficam em `.claude/skills/gestao-receita-pousadas/references/regras.md`. Este arquivo guarda só o histórico das mudanças.
 
 ## O que só pode ser feito na tela (passo a passo para você)

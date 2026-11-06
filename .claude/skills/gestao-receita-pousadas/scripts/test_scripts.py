@@ -3931,5 +3931,43 @@ class TestEstrategiaFaixasJson(unittest.TestCase):
         self.assertIn("1.100", md)
 
 
+class TestMarcarEnvioPorQuarto(unittest.TestCase):
+    """06/11: o marcar-envio não rodou de 01/11 a 06/11 (493 passos presos em "não chegou ao canal"). A coleta traz o
+    last_date_pushed por quarto; `marcar-envio --coleta` marca cada quarto pelo próprio envio."""
+
+    def test_marca_por_quarto_pelo_envio_de_cada_um(self):
+        import datetime as _dt
+        import tempfile
+        from pathlib import Path
+        import pace
+        cfg = carregar_quartos()
+        idq = {q["curto"]: q["id"] for q in cfg["quartos"]}
+        coleta = {"result": {"contexto": {"sync": [
+            {"listing_id": idq["Q7"], "push_enabled": True, "last_date_pushed": "2026-11-05T19:52:25.000Z"},
+            {"listing_id": idq["Balcony"], "push_enabled": True, "last_date_pushed": "2026-11-05T18:15:48.000Z"},
+            {"listing_id": idq["VK2"], "push_enabled": False, "last_date_pushed": "2026-11-05T18:15:48.000Z"}]}}}
+        env = pace.envios_da_coleta(cfg, coleta)
+        self.assertEqual(sorted(env), ["Balcony", "Q7"])
+        passos = {"passos": [
+            {"quarto": "Q7", "gravado_em": "2026-11-05T19:00+00:00"},
+            {"quarto": "Balcony", "gravado_em": "2026-11-05T19:00+00:00"},   # depois do envio da Balcony
+            {"quarto": "Balcony", "gravado_em": "2026-11-05T12:00+00:00"},
+            {"quarto": "VK2", "gravado_em": "2026-11-05T12:00+00:00"},       # push desligado: fica
+            {"quarto": "Q7", "gravado_em": "2026-11-04T12:00+00:00", "chegou_ao_canal": "2026-11-04T19:00+00:00"}]}
+        with tempfile.TemporaryDirectory() as d:
+            n = pace.marcar_envio(passos, env, Path(d) / "p.json")
+        self.assertEqual(n, 2)
+        self.assertTrue(passos["passos"][0]["chegou_ao_canal"].startswith("2026-11-05T19:52"))
+        self.assertFalse(passos["passos"][1].get("chegou_ao_canal"))
+        self.assertTrue(passos["passos"][2]["chegou_ao_canal"].startswith("2026-11-05T18:15"))
+        self.assertFalse(passos["passos"][3].get("chegou_ao_canal"))
+        self.assertEqual(passos["passos"][4]["chegou_ao_canal"], "2026-11-04T19:00+00:00")
+        # instante único continua valendo
+        p2 = {"passos": [{"quarto": "VK2", "gravado_em": "2026-11-05T12:00+00:00"}]}
+        with tempfile.TemporaryDirectory() as d:
+            self.assertEqual(pace.marcar_envio(p2, _dt.datetime(2026, 11, 5, 13, tzinfo=_dt.timezone.utc),
+                                               Path(d) / "p.json"), 1)
+
+
 if __name__ == "__main__":
     unittest.main()

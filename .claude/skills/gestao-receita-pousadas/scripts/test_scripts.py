@@ -3968,6 +3968,56 @@ class TestMarcarEnvioPorQuarto(unittest.TestCase):
             self.assertEqual(pace.marcar_envio(p2, _dt.datetime(2026, 11, 5, 13, tzinfo=_dt.timezone.utc),
                                                Path(d) / "p.json"), 1)
 
+    def test_revisao_0611_data_ilegivel_mesmo_minuto_e_envio_desligado(self):
+        import contextlib
+        import datetime as _dt
+        import io
+        import json
+        import tempfile
+        from pathlib import Path
+        import pace
+        cfg = carregar_quartos()
+        idq = {q["curto"]: q["id"] for q in cfg["quartos"]}
+        # data ilegível pula só aquele quarto (antes: ValueError e nada marcado)
+        fora = []
+        env = pace.envios_da_coleta(cfg, {"contexto": {"sync": [
+            {"listing_id": idq["Q7"], "push_enabled": True, "last_date_pushed": "2026-11-05T19:52:25.000Z"},
+            {"listing_id": idq["Double"], "push_enabled": True, "last_date_pushed": "null"},
+            {"listing_id": idq["Q2"], "push_enabled": True, "last_date_pushed": "05/11/2026 19:52"}]}}, fora)
+        self.assertEqual(sorted(env), ["Q7"])
+        self.assertEqual(len(fora), 2)
+        # passo gravado no mesmo minuto do envio (ledger só com minutos) não conta como enviado; com segundos, compara certo
+        lim = {"Q7": _dt.datetime(2026, 11, 5, 19, 52, 25, tzinfo=_dt.timezone.utc)}
+        passos = {"passos": [{"quarto": "Q7", "gravado_em": "2026-11-05T19:52+00:00"},
+                             {"quarto": "Q7", "gravado_em": "2026-11-05T19:51+00:00"},
+                             {"quarto": "Q7", "gravado_em": "2026-11-05T19:52:10+00:00"},
+                             {"quarto": "Q7", "gravado_em": "2026-11-05T19:52:40+00:00"}]}
+        with tempfile.TemporaryDirectory() as d:
+            self.assertEqual(pace.marcar_envio(passos, lim, Path(d) / "p.json"), 2)
+        self.assertEqual([bool(x.get("chegou_ao_canal")) for x in passos["passos"]], [False, True, True, False])
+        # registrar grava com segundos
+        with tempfile.TemporaryDirectory() as d:
+            led = {"passos": []}
+            pace.registrar_passos(led, [{"quarto": "Q7", "data": "2026-11-10", "pace": {
+                "direcao": "sobe", "atual": 1, "novo": 2, "status": "ritmo"}}],
+                _dt.datetime(2026, 11, 6, 11, 14, 33, tzinfo=_dt.timezone.utc), Path(d) / "p.json")
+        self.assertEqual(led["passos"][0]["gravado_em"], "2026-11-06T11:14:33+00:00")
+        # todos com envio desligado: erro claro, sem sugerir --ate, nada marcado
+        with tempfile.TemporaryDirectory() as d:
+            col = Path(d) / "c.json"
+            col.write_text(json.dumps({"result": {"contexto": {"sync": [
+                {"listing_id": i, "push_enabled": False, "last_date_pushed": "2026-11-05T19:52:25.000Z"}
+                for i in idq.values()]}}}))
+            led = Path(d) / "p.json"
+            led.write_text(json.dumps({"passos": [{"quarto": "Q7", "gravado_em": "2026-11-05T10:00+00:00"}]}))
+            out = io.StringIO()
+            with contextlib.redirect_stdout(out):
+                rc = pace.main(["marcar-envio", "--coleta", str(col), "--passos", str(led)])
+            self.assertEqual(rc, 1)
+            self.assertIn("envio desligado", out.getvalue())
+            self.assertIn("Não use --ate", out.getvalue())
+            self.assertFalse(json.loads(led.read_text())["passos"][0].get("chegou_ao_canal"))
+
 
 if __name__ == "__main__":
     unittest.main()

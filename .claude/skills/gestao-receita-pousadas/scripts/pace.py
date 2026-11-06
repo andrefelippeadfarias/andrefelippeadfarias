@@ -286,7 +286,7 @@ def registrar_passos(passos: dict, itens: list[dict], agora: dt.datetime, caminh
         passos.setdefault("passos", []).append({
             "quarto": it["quarto"], "noite": it["data"], "de": pc["atual"], "para": pc["novo"], "direcao": pc["direcao"],
             "status": pc["status"], "vendidas": pc.get("vendidas"), "base": pc.get("base", "quarto"), "total": pc.get("total"),
-            "gravado_em": agora.isoformat(timespec="minutes"), "chegou_ao_canal": False})
+            "gravado_em": agora.isoformat(timespec="seconds"), "chegou_ao_canal": False})  # segundos: comparar com o envio (06/11)
     with open(caminho or ARQ_PASSOS, "w", encoding="utf-8") as f:
         json.dump(passos, f, ensure_ascii=False, indent=1)
         f.write("\n")
@@ -301,9 +301,14 @@ def marcar_envio(passos: dict, ate, caminho=None) -> int:
         lim = ate.get(x.get("quarto")) if isinstance(ate, dict) else ate
         if lim is None:
             continue
-        g = dt.datetime.fromisoformat(x["gravado_em"].replace("Z", "+00:00"))
+        txt = str(x["gravado_em"])
+        g = dt.datetime.fromisoformat(txt.replace("Z", "+00:00"))
         if g.tzinfo is None:
             g = g.replace(tzinfo=dt.timezone.utc)
+        if len(txt) < 19 or txt[16] != ":":
+            # gravado só com minutos (ledger até 06/11): o passo pode ter sido gravado em qualquer segundo do minuto;
+            # só conta como enviado se o minuto inteiro acabou antes do envio (revisão de 06/11)
+            g = g + dt.timedelta(seconds=59)
         if not x.get("chegou_ao_canal") and g <= lim:
             x["chegou_ao_canal"] = lim.isoformat(timespec="minutes")
             n += 1
@@ -313,21 +318,34 @@ def marcar_envio(passos: dict, ate, caminho=None) -> int:
     return n
 
 
-def envios_da_coleta(cfg: dict, coleta: dict) -> dict:
+def envios_da_coleta(cfg: dict, coleta: dict, fora: list | None = None) -> dict:
     """{curto: último envio ao canal} a partir de `contexto.sync[].last_date_pushed` da coleta (aceita o embrulho do
-    workflow, com `result`). Quarto sem envio, com push desligado ou fora do quartos.json fica de fora."""
+    workflow, com `result`). Quarto sem envio, com push desligado, com data ilegível ou fora do quartos.json fica de
+    fora; o motivo vai para `fora` (revisão de 06/11: "null"/"N/A" na coleta derrubava o comando inteiro). Com o mesmo
+    quarto duas vezes, vale o envio mais antigo."""
     r = coleta.get("result", coleta) if isinstance(coleta, dict) else {}
     sync = ((r or {}).get("contexto") or {}).get("sync") or []
+    fora = fora if fora is not None else []
     out = {}
     for s in sync:
         q = cfg["por_id"].get(str(s.get("listing_id")))
         lp = s.get("last_date_pushed")
-        if not q or not lp or s.get("push_enabled") is False:
+        if not q:
+            fora.append(f"{s.get('listing_id')}: fora do quartos.json")
             continue
-        t = dt.datetime.fromisoformat(str(lp).replace("Z", "+00:00"))
+        if s.get("push_enabled") is False:
+            fora.append(f"{q['curto']}: envio desligado no PriceLabs")
+            continue
+        try:
+            t = dt.datetime.fromisoformat(str(lp).strip().replace("Z", "+00:00")) if lp else None
+        except ValueError:
+            t = None
+        if t is None:
+            fora.append(f"{q['curto']}: sem data de envio legível ({lp!r})")
+            continue
         if t.tzinfo is None:
             t = t.replace(tzinfo=dt.timezone.utc)
-        out[q["curto"]] = t
+        out[q["curto"]] = min(t, out[q["curto"]]) if q["curto"] in out else t
     return out
 
 
@@ -1251,13 +1269,17 @@ def main(argv=None) -> int:
             print("ERRO: passe --ate (um instante) ou --coleta (último envio de cada quarto), um dos dois")
             return 1
         if a.coleta:
-            ate = envios_da_coleta(cfg, ler_json(a.coleta))
+            fora: list = []
+            ate = envios_da_coleta(cfg, ler_json(a.coleta), fora)
+            for m in fora:
+                print(f"aviso: {m} (passos desse quarto ficam como estão)")
             if not ate:
-                print("ERRO: a coleta não traz contexto.sync com last_date_pushed; use --ate com o envio conferido")
+                print("ERRO: nenhum quarto com envio ao canal legível na coleta; nada marcado. Não use --ate para "
+                      "contornar (ele marca todos os quartos): confira o envio de cada quarto no PriceLabs")
                 return 1
             n = marcar_envio(carregar_passos(a.passos), ate, a.passos)
             print(f"{n} passos marcados como chegados ao canal (último envio por quarto: "
-                  + ", ".join(f"{k} {v.isoformat(timespec='minutes')}" for k, v in sorted(ate.items())) + ")")
+                  + ", ".join(f"{k} {v.isoformat(timespec='seconds')}" for k, v in sorted(ate.items())) + ")")
             return 0
         ate = dt.datetime.fromisoformat(a.ate.replace("Z", "+00:00"))
         if ate.tzinfo is None:

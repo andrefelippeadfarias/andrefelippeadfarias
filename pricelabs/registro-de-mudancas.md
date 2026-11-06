@@ -4329,7 +4329,7 @@ King Spa 7 06/11: o motor queria subir (5/7), mas o passo anterior ainda não ch
 
 **Faixas:** 2 ordens de faixa da noite nova 05/01/2027 (Recanto e Villa, regra do dono de 04/11); tabela de estratégia com 8 perguntas ao dono; foto diária gravada (124 linhas). Nenhuma ordem nova de faixa por período (dono 05/11).
 
-**Código:** `estrategia_faixas.py` (registrar e markdown com a tabela lida de JSON) e `pace.py marcar-envio --coleta`; 159 testes OK. **Ledger:** 18 passos.
+**Código:** `estrategia_faixas.py` (registrar e markdown com a tabela lida de JSON) e `pace.py marcar-envio --coleta`. Revisão independente (2 lentes, achados verificados) pediu 3 ajustes, feitos: data de envio ilegível pula só aquele quarto; passo gravado no mesmo minuto do envio não conta como enviado (o ledger passa a gravar segundos); envio desligado em todos os quartos dá erro claro sem sugerir `--ate`. Nenhuma marcação de hoje mudou. 160 testes OK. **Ledger:** 18 passos.
 
 **Como desfazer:** pedir ao Claude para voltar cada noite ao valor "Antes" da tabela; King Spa 2 19/11 de volta a 2 noites nos dois sistemas.
 

@@ -4358,6 +4358,12 @@ King Spa 7 06/11: o motor queria subir (5/7), mas o passo anterior ainda não ch
 
 **Como desfazer:** Panorâmica I 08-10/11 e Afrodite 10/11 de volta aos valores "Antes".
 
+## 06/11/2026, 13:54 a 14:00 BRT — Rotina leve das 13:53
+
+**Beds24 desde 12:15 BRT** (vigilância: 0 alerta): só 4 alterações de status de reservas que chegaram em 05/11 (King Spa 7, King Spa 2 ×2, Balcony); nenhuma reserva nova nem cancelamento. Inventário de hoje a 14/11 igual ao das 12:20. **PriceLabs:** só as 15 gravações da skill no log de hoje; nenhuma mudança manual.
+
+**Sem gravação.** As descidas por cancelamento continuam seguradas até a recepção confirmar a onda de 15 cancelamentos da Booking (rotina das 10:53). Sem recálculo (nenhum quarto com movimento; calendários de 11:47 UTC, menos de 6 h).
+
 > **Regras em vigor:** desde 06/10/2026 elas ficam em `.claude/skills/gestao-receita-pousadas/references/regras.md`. Este arquivo guarda só o histórico das mudanças.
 
 ## O que só pode ser feito na tela (passo a passo para você)

@@ -4333,6 +4333,31 @@ King Spa 7 06/11: o motor queria subir (5/7), mas o passo anterior ainda não ch
 
 **Como desfazer:** pedir ao Claude para voltar cada noite ao valor "Antes" da tabela; King Spa 2 19/11 de volta a 2 noites nos dois sistemas.
 
+## 06/11/2026, 10:54 a 12:25 BRT — Rotina leve das 10:53
+
+**Alerta de segurança (vigia):** 15 cancelamentos da Booking hoje, em ondas encadeadas de 08:26 a 11:51 BRT: King Spa 7 (6, quase todos às 08:26-08:51), Moinhos 06-08/11 (10:36), Panorâmica I 25/07/2027 (10:47) e, entre 11:42 e 11:51, Moinhos 15/11 e 20-21/11, Panorâmica II 10/11, Panorâmica I 12, 12-13, 13-14, 15/11 e 05-06/12. Também: reserva 95217196 (cancelada às 00:01) voltou confirmada na Balcony 08-11/11 com R$ 0. Pedido ao dono: confirmar com a recepção e com os hóspedes. Aviso enviado ao celular.
+
+**Beds24 desde 07:50 BRT:**
+- King Spa 2 06-07/11: overbooking resolvido (a reserva 95588789 foi para a King Spa 7; duas do mesmo grupo canceladas).
+- Novas: Panorâmica I 08-11/11 (Booking, R$ 1.875) e King Spa 2 25-27/11 (Airbnb, R$ 952).
+- Balcony 07/11: a unidade bloqueada sem reserva voltou a ficar livre.
+
+**Envio do dia:** saiu às 08:47 BRT nos 7 quartos (depois das gravações das 08:14-08:20); os limites dos anúncios (mín./base/máx.) não mudaram. **Busca de segurança na Booking:** Villa (id 14824789, R. das Candelas, 79) R$ 458 em 10/11, razão 0,66 sobre a Balcony; Recanto (id 7562933, Rua Januário Pereira, 575) R$ 719, razão 0,58 sobre a Moinhos. Ids e endereços conferem; o Recanto aparece como "Recanto dos Moinhos - Boutique Hotel".
+
+**Gravado no PriceLabs** (validador 0 erro; conferido na resposta da API; recálculos da Moinhos e da Panorâmica I às 10:56):
+
+| Mudança | Onde | Antes | Depois |
+|---|---|---|---|
+| Escada para cima (venda nova) | Panorâmica I 08, 09 e 10/11 | R$ 1.243 | R$ 1.492, R$ 1.492, R$ 1.430 |
+| Coerência (Afrodite 20% acima) | Afrodite 10/11 | R$ 1.500 | R$ 1.724 |
+| Descida por cancelamento, **desfeita por segurança** | Moinhos 06/11 (D0) | R$ 1.185 | gravada R$ 1.036 às 12:15 e voltou a R$ 1.185 às 12:19, antes do envio |
+
+**Segurado até a recepção confirmar:** descidas por cancelamento (Moinhos 07/11 e as noites que os cancelamentos reabriram). Se o cancelamento não foi do hóspede, revender mais barato vira overbooking quando a reserva voltar. King Spa 7 sem recálculo (3 de 3 em 24 h). Estadia D0-D7 pelo inventário das 12:20: 0 noites fora da regra.
+
+**Código:** `vigia_seguranca.py` passa a listar todas as rajadas (antes só a primeira, com 3 dos 15) e a apontar reserva antiga reativada com R$ 0; 161 testes OK. **Ledger:** 3 passos.
+
+**Como desfazer:** Panorâmica I 08-10/11 e Afrodite 10/11 de volta aos valores "Antes".
+
 > **Regras em vigor:** desde 06/10/2026 elas ficam em `.claude/skills/gestao-receita-pousadas/references/regras.md`. Este arquivo guarda só o histórico das mudanças.
 
 ## O que só pode ser feito na tela (passo a passo para você)

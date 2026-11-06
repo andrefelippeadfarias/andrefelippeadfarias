@@ -2654,6 +2654,31 @@ class TestVigiaSeguranca(unittest.TestCase):
         al2 = vs.classificar(rs[2:4], "2026-11-03T00:00:00Z", par)
         self.assertEqual(al2, [])
 
+    def test_revisao_0611_todas_as_rajadas_e_reserva_reativada_sem_valor(self):
+        import vigia_seguranca as vs
+        par = dict(vs.PADRAO)
+        base = {"roomId": "722813", "arrival": "2026-11-08", "departure": "2026-11-09", "price": 400,
+                "status": "cancelled", "channel": "booking", "referer": "Booking.com", "bookingTime": "2026-10-01T10:00:00Z"}
+        horas = ["11:26", "11:45", "11:45", "11:48", "11:51", "14:42", "14:43", "14:44", "14:51", "21:00"]
+        rs = [dict(base, id=100 + n, cancelTime=f"2026-11-06T{h}:00Z", modifiedTime=f"2026-11-06T{h}:00Z")
+              for n, h in enumerate(horas)]
+        # reserva antiga reativada com R$ 0 (criada antes da rodada, alterada nela)
+        rs.append({"id": 95217196, "roomId": "722814", "arrival": "2026-11-08", "departure": "2026-11-11", "price": 0,
+                   "status": "confirmed", "channel": "booking", "referer": "Booking.com",
+                   "bookingTime": "2026-10-25T15:15:29Z", "modifiedTime": "2026-11-06T13:00:00Z"})
+        al = vs.classificar(rs, "2026-11-06T10:50:00Z", par)
+        raj = [a for a in al if a["alerta"] == "rajada de cancelamentos"]
+        # 11:26-14:51 cabem em janelas encadeadas de 3 h: uma onda só com os 9; o das 21:00 fica sozinho (não é rajada)
+        self.assertEqual(len(raj), 1)
+        self.assertEqual(len(raj[0]["reservas"]), 9)
+        self.assertNotIn(109, raj[0]["reservas"])
+        self.assertEqual([a["id"] for a in al if a["alerta"] == "reserva alterada sem valor"], [95217196])
+        # duas ondas separadas por mais de 3 h viram dois alertas
+        rs2 = [dict(base, id=200 + n, cancelTime=f"2026-11-06T{h}:00Z", modifiedTime=f"2026-11-06T{h}:00Z")
+               for n, h in enumerate(["08:00", "08:10", "08:20", "15:00", "15:05", "15:10"])]
+        al2 = vs.classificar(rs2, "2026-11-06T00:00:00Z", par)
+        self.assertEqual([len(a["reservas"]) for a in al2], [3, 3])
+
 
 class TestOrdensDono(unittest.TestCase):
     """30/10: excecao 'dono' só com ordem_id vigente; mudança manual do dono congela a noite."""

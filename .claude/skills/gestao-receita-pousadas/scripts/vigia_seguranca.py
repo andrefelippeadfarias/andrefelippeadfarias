@@ -69,28 +69,45 @@ def classificar(reservas: list[dict], desde: str, par: dict, quartos: dict | Non
             tc = _t(b.get("cancelTime"))
             if tc and (not t0 or tc >= t0):
                 cancel.setdefault(b.get("channel") or "?", []).append((tc, base))
-        elif st in ("confirmed", "new") and criada and (not t0 or criada >= t0):
+        elif st in ("confirmed", "new"):
             try:
                 preco = float(b.get("price") or 0)
             except (TypeError, ValueError):
                 preco = 0.0
-            if preco <= 0:
+            if preco <= 0 and criada and (not t0 or criada >= t0):
                 alertas.append(dict(base, alerta="reserva sem valor", detalhe="reserva confirmada ou nova com preço 0"))
+            elif preco <= 0:
+                # 06/11: reserva cancelada de madrugada voltou confirmada, em outro quarto, com R$ 0 (criada antes da
+                # rodada, só alterada nela): antes passava sem alerta
+                alertas.append(dict(base, alerta="reserva alterada sem valor",
+                                    detalhe="reserva antiga alterada ou reativada na rodada, confirmada com preço 0"))
     janela = dt.timedelta(hours=float(par["rajada_horas"]))
+    n_min = int(par["rajada_cancelamentos"])
     for canal, lst in cancel.items():
         lst.sort(key=lambda x: x[0])
-        i = 0
+        # 06/11: todas as rajadas da rodada, não só a primeira (eram 16 cancelamentos da Booking em 3 ondas e o alerta
+        # listava 3). Marca cada cancelamento que cai numa janela com N ou mais e junta os marcados em grupos
+        # separados por mais que a janela.
+        marc, i = set(), 0
         for j in range(len(lst)):
             while lst[j][0] - lst[i][0] > janela:
                 i += 1
-            if j - i + 1 >= int(par["rajada_cancelamentos"]):
-                grupo = [x[1] for x in lst[i:j + 1]]
-                alertas.append({"alerta": "rajada de cancelamentos", "canal": canal,
-                                "detalhe": (f"{len(grupo)} cancelamentos em até {par['rajada_horas']} h "
-                                            f"({lst[i][0]:%d/%m %H:%M} a {lst[j][0]:%d/%m %H:%M} UTC): confirme com os "
-                                            f"hóspedes se foram eles"),
-                                "reservas": [g["id"] for g in grupo]})
-                break
+            if j - i + 1 >= n_min:
+                marc.update(range(i, j + 1))
+        grupos, atual = [], []
+        for k in sorted(marc):
+            if atual and lst[k][0] - lst[atual[-1]][0] > janela:
+                grupos.append(atual)
+                atual = []
+            atual.append(k)
+        if atual:
+            grupos.append(atual)
+        for g in grupos:
+            alertas.append({"alerta": "rajada de cancelamentos", "canal": canal,
+                            "detalhe": (f"{len(g)} cancelamentos em até {par['rajada_horas']} h entre um e outro "
+                                        f"({lst[g[0]][0]:%d/%m %H:%M} a {lst[g[-1]][0]:%d/%m %H:%M} UTC): confirme com "
+                                        f"a recepção e com os hóspedes se foram eles"),
+                            "reservas": [lst[k][1]["id"] for k in g]})
     return alertas
 
 

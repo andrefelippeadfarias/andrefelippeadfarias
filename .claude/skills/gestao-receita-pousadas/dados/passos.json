@@ -9456,6 +9456,32 @@
    "total": 6,
    "gravado_em": "2026-11-06T15:19:43+00:00",
    "chegou_ao_canal": false
+  },
+  {
+   "quarto": "Q7",
+   "noite": "2026-11-06",
+   "de": 1185.0,
+   "para": 1036,
+   "direcao": "desce",
+   "status": "muito_atras",
+   "vendidas": 2,
+   "base": "quarto",
+   "total": 7,
+   "gravado_em": "2026-11-06T17:19:24+00:00",
+   "chegou_ao_canal": false
+  },
+  {
+   "quarto": "Q7",
+   "noite": "2026-11-07",
+   "de": 1384.0,
+   "para": 1177,
+   "direcao": "desce",
+   "status": "muito_atras",
+   "vendidas": 3,
+   "base": "quarto",
+   "total": 7,
+   "gravado_em": "2026-11-06T17:19:24+00:00",
+   "chegou_ao_canal": false
   }
  ]
 }

@@ -4364,6 +4364,23 @@ King Spa 7 06/11: o motor queria subir (5/7), mas o passo anterior ainda não ch
 
 **Sem gravação.** As descidas por cancelamento continuam seguradas até a recepção confirmar a onda de 15 cancelamentos da Booking (rotina das 10:53). Sem recálculo (nenhum quarto com movimento; calendários de 11:47 UTC, menos de 6 h).
 
+## 06/11/2026, 14:05 a 14:25 BRT — Revisão das reservas de 06 a 10/11 e descidas liberadas (dono: "Sim")
+
+**Pedido do dono:** "Revise as reservas desses próximos 4 dias, pois tivemos muitos cancelamentos de hoje à terça." Revisão no Beds24 (cruzada com o PriceLabs): sem overbooking de 06 a 10/11; 7 cancelamentos de hoje atingem o período (R$ 4.741, 8 diárias; 5 na King Spa 7, de ajuste de grupo da Booking e de um par de reservas, mais Moinhos 06-08/11 e Panorâmica II 10/11). Pontos levados à equipe: 95217196 (Balcony 08-11/11) com R$ 0, porque o valor de R$ 1.240 ficou no registro antigo da King Spa 7; King Spa 7 09/11 (R$ 280) e 10/11 (R$ 300) da recepção; reservas ainda com status "novo".
+
+**Dono, 06/11 ~14:15 BRT: "Sim"** (liberar as descidas por cancelamento seguradas desde as 10:53).
+
+**Gravado no PriceLabs** (validador 0 erro na rotina das 10:53; conferido na resposta da API):
+
+| Mudança | Onde | Antes | Depois |
+|---|---|---|---|
+| Escada para baixo (cancelamento) | Moinhos 06/11 (D0) | R$ 1.185 | R$ 1.036 |
+| Escada para baixo (cancelamento) | Moinhos 07/11 (D1) | R$ 1.384 | R$ 1.177 |
+
+King Spa 7 (hoje R$ 2.901 com 3 livres; domingo com 4 livres) fica para o recálculo das 16:53 (3 de 3 em 24 h). Balcony: recálculo recusado duas vezes ("Beds24 temporariamente indisponível"); nova tentativa em seguida. **Ledger:** 2 passos.
+
+**Como desfazer:** Moinhos 06/11 de volta a piso/teto +1% (R$ 1.185) e 07/11 a +18% (R$ 1.384).
+
 > **Regras em vigor:** desde 06/10/2026 elas ficam em `.claude/skills/gestao-receita-pousadas/references/regras.md`. Este arquivo guarda só o histórico das mudanças.
 
 ## O que só pode ser feito na tela (passo a passo para você)

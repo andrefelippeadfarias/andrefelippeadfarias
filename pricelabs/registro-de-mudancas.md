@@ -4422,6 +4422,22 @@ King Spa 7 (hoje R$ 2.901 com 3 livres; domingo com 4 livres) fica para o recál
 
 **Sem gravação** (só Beds24 nesta rodada: 4 leituras, nenhuma ao PriceLabs). A escada pediria subida na Moinhos 06-07/11 e na Balcony 08-09/11 pelas vendas novas, mas o dono pediu hoje reduções para vender todas as suítes de 06 a 10/11: os preços ficam. A subida da King Spa 7 23-24/11 fica para a rotina das 07:53 (recálculo da King Spa 7 já usado 3 vezes em 24 h). Estadia de D0 a D7: nenhuma noite esgotou ou reabriu.
 
+## 07/11/2026, 07:54 a 08:10 BRT — Rotina completa das 07:53 (sábado)
+
+**Beds24 desde 19:50 BRT de 06/11** (vigilância: **1 alerta**): reserva direta 95810144 na King Spa 7 (06/11, 1 noite) com R$ 0, criada às 21:22 BRT. Cancelada uma reserva de R$ 0 da Booking na Moinhos (07-09/11) 42 min depois de feita. Overbooking que segue: Panorâmica I 20-21/11 (7 para 6). PriceLabs × Beds24: Afrodite 19-21/11 (reserva de R$ 0 que o PriceLabs não vê) e Moinhos 20-21/11 (o PriceLabs ainda conta uma reserva cancelada em 06/11).
+
+**Ocupação vendida:** Recanto 55% / 51% / 39% e Villa 55% / 44% / 36% em 7 / 15 / 30 dias; Balcony 24% em 7 dias.
+
+**Menos chamadas (plano de 06/11):** recálculo dos 7 quartos em série, respeitando 3 por quarto em 24 h; estadia efetiva dos 12 meses tirada do próprio recálculo (7 leituras a menos); regras de 12 meses lidas uma vez por quarto; Booking só com 2 datas (fim de semana 13-15/11 e feriado 20-22/11) em vez de 6; a coleta falhou na Moinhos e na Afrodite e os dois quartos saíram do recálculo, sem repetir chamadas.
+
+**Gravado no PriceLabs** (validador 0 erro; conferido na resposta da API; 9 chamadas):
+- Descidas: Balcony 07/11 (D0) R$ 1.575 → R$ 1.451; fim de semana 14/11 Moinhos R$ 2.393 → R$ 2.000, Panorâmica I R$ 2.708 → R$ 2.000, Panorâmica II R$ 2.401 → R$ 2.006; 15/11 Panorâmica I e II → R$ 1.220; Moinhos 20/11 (feriado) piso R$ 3.355 → R$ 3.019 (teto livre); King Spa 2 27/11 R$ 2.730 → R$ 2.303; Balcony 27/11 R$ 2.350 → R$ 2.083; noite nova 06/01/2027 (King Spa 7 R$ 996, Balcony R$ 889, Afrodite R$ 1.500).
+- Subidas por venda: King Spa 7 11, 12, 16, 17, 23 e 24/11; King Spa 2 21, 23 e 24/11; Moinhos 06-07/12; Afrodite 07/12; Balcony 11-24/11 junto com a King Spa 7 (Regra G).
+- Coerência: Panorâmica I e II 06-07/12; Afrodite 06/12; Panorâmica I 06/01; Balcony 24/11.
+- Proteção: King Spa 2 25/11 (apagado e regravado, estadia 2).
+
+**Fora do plano:** Balcony 10/11 (subida; o dono pediu reduções até terça) e Afrodite 19/11 (reserva de R$ 0). **Estadia:** o sábado de hoje da Moinhos e da King Spa 7 fica aberto para entrada (dono quer vender tudo hoje); a órfã da Afrodite 18/11 segue presa à reserva de R$ 0; a segunda nova (08/11/2027, 2 noites nos 7 quartos) vai na próxima gravação de cada quarto. **Ledger:** passos do plano registrados.
+
 > **Regras em vigor:** desde 06/10/2026 elas ficam em `.claude/skills/gestao-receita-pousadas/references/regras.md`. Este arquivo guarda só o histórico das mudanças.
 
 ## O que só pode ser feito na tela (passo a passo para você)

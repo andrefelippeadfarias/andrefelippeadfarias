@@ -9460,6 +9460,127 @@
    "gatilho_dias": 9,
    "gatilho_min_dias": 2,
    "nota": "F2 (Dia de semana (dom-qui)): régua com hidro tabela do tipo, p50 R$ 648 público, p90 R$ 1784; ÷ 0.650 (Booking/enviado; ÷ 0.585 nos degraus de D7 ou menos); nunca abaixo do piso do dono. Gatilho de D7 sem venda nova: F1 (ou o piso do dono). Afrodite pelo prêmio dela e Balcony 10% abaixo (Regra G). Como desfazer: pedir 'Volte às ordens anteriores de 05/01/27'."
+  },
+  {
+   "id": "dono-2026-11-04-faixa-recanto-20270106",
+   "data": "2026-11-04",
+   "criada_em": "2026-11-07T10:57:11Z",
+   "texto": "Para feriados, vamos aplicar o F5 e baixar gradualmente caso a lotação esteja abaixo da expectativa 7 dias antes. Para Natal, aplicar F5, Réveillon F5, inverno e final de semana F5. Para dias de semana, vamos aplicar F2 e fins de semana do mês de dezembro e os últimos dois de novembro, vamos aplicar F3.",
+   "contexto": "Resposta do dono à régua de faixas (página 'Régua de Preços das Pousadas', 04/11/2026).",
+   "pousada_faixa": "Recanto",
+   "quartos": [
+    "Q7",
+    "Q2",
+    "Double",
+    "Afrodite"
+   ],
+   "de": "2027-01-06",
+   "ate": "2027-01-06",
+   "noites": [
+    "2027-01-06"
+   ],
+   "tipo": "alvo_por_data",
+   "percentil": 50,
+   "faixa": 2,
+   "passo_livre": true,
+   "escada_vendas": true,
+   "pisos_enviados": {
+    "Q7": 1219.51,
+    "Q2": 1219.51,
+    "Double": 1219.51,
+    "Afrodite": 1500.0
+   },
+   "topo_enviados": {
+    "Q7": 2877.42,
+    "Q2": 2877.42,
+    "Double": 2877.42,
+    "Afrodite": 3452.9
+   },
+   "vendidas_base": {
+    "Q7": {
+     "2027-01-06": 0
+    },
+    "Q2": {
+     "2027-01-06": 1
+    },
+    "Double": {
+     "2027-01-06": 1
+    },
+    "Afrodite": {
+     "2027-01-06": 1
+    }
+   },
+   "libera": [
+    "acima_15"
+   ],
+   "ocupacao_max": 0.7,
+   "frente_ocupacao": 0.5,
+   "piso_atras": {
+    "Q7": 1219.51,
+    "Q2": 1219.51,
+    "Double": 1219.51,
+    "Afrodite": 1500.0
+   },
+   "gatilho_dias": 10,
+   "gatilho_min_dias": 2,
+   "nota": "F2 (Dia de semana (dom-qui)): régua com hidro tabela do tipo, p50 R$ 648 público, p90 R$ 1784; ÷ 0.620 (Booking/enviado; ÷ 0.558 nos degraus de D7 ou menos); nunca abaixo do piso do dono. Gatilho de D7 sem venda nova: F1 (ou o piso do dono). Afrodite pelo prêmio dela e Balcony 10% abaixo (Regra G). Como desfazer: pedir 'Volte às ordens anteriores de 06/01/27'."
+  },
+  {
+   "id": "dono-2026-11-04-faixa-villa-20270106",
+   "data": "2026-11-04",
+   "criada_em": "2026-11-07T10:57:11Z",
+   "texto": "Para feriados, vamos aplicar o F5 e baixar gradualmente caso a lotação esteja abaixo da expectativa 7 dias antes. Para Natal, aplicar F5, Réveillon F5, inverno e final de semana F5. Para dias de semana, vamos aplicar F2 e fins de semana do mês de dezembro e os últimos dois de novembro, vamos aplicar F3.",
+   "contexto": "Resposta do dono à régua de faixas (página 'Régua de Preços das Pousadas', 04/11/2026).",
+   "pousada_faixa": "Villa",
+   "quartos": [
+    "VK7",
+    "VK2",
+    "Balcony"
+   ],
+   "de": "2027-01-06",
+   "ate": "2027-01-06",
+   "noites": [
+    "2027-01-06"
+   ],
+   "tipo": "alvo_por_data",
+   "percentil": 50,
+   "faixa": 2,
+   "passo_livre": true,
+   "escada_vendas": true,
+   "pisos_enviados": {
+    "VK7": 996.92,
+    "VK2": 996.92,
+    "Balcony": 897.23
+   },
+   "topo_enviados": {
+    "VK7": 2744.62,
+    "VK2": 2744.62,
+    "Balcony": 2470.15
+   },
+   "vendidas_base": {
+    "VK7": {
+     "2027-01-06": 0
+    },
+    "VK2": {
+     "2027-01-06": 0
+    },
+    "Balcony": {
+     "2027-01-06": 0
+    }
+   },
+   "libera": [
+    "acima_15"
+   ],
+   "ocupacao_max": 0.7,
+   "frente_ocupacao": 0.5,
+   "piso_atras": {
+    "VK7": 944.0,
+    "VK2": 943.4,
+    "Balcony": 750.77
+   },
+   "gatilho_dias": 10,
+   "gatilho_min_dias": 2,
+   "nota": "F2 (Dia de semana (dom-qui)): régua com hidro tabela do tipo, p50 R$ 648 público, p90 R$ 1784; ÷ 0.650 (Booking/enviado; ÷ 0.585 nos degraus de D7 ou menos); nunca abaixo do piso do dono. Gatilho de D7 sem venda nova: F1 (ou o piso do dono). Afrodite pelo prêmio dela e Balcony 10% abaixo (Regra G). Como desfazer: pedir 'Volte às ordens anteriores de 06/01/27'."
   }
  ]
 }

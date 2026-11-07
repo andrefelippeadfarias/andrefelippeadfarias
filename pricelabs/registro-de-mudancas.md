@@ -4456,6 +4456,27 @@ King Spa 7 (hoje R$ 2.901 com 3 livres; domingo com 4 livres) fica para o recál
 
 **Sem mudança pela escala:** King Spa 7 09-10/11 (6 de 7 vendidas, à frente da curva) e King Spa 2 09/11 (1 de 2, à frente); Balcony no piso. A subida da Balcony 10/11 pela Regra G ficou de fora (pedido de redução até terça). Estadia de D0 a D7: a Panorâmica II de hoje já está com 1 noite (sábado órfão: domingo esgotado). Para valer hoje, falta o Sync Now.
 
+## 07/11/2026, 13:54 a 19:59 BRT — Rotinas leves das 13:53, 16:53 e 19:53
+
+**Rodadas das 13:53 e 16:53 incompletas (erro meu):** nas duas, o processo reiniciou no meio e a rodada foi encerrada sem terminar. A descida da Panorâmica I de hoje (noite reaberta pela troca da 95618215 para a Afrodite; R$ 3.118 → R$ 1.199 pela ordem do Recanto) passou no validador às 13:54 e **não foi gravada**. Às 19:58 ficou de fora: o calendário da Panorâmica I tinha mais de 6 h, um novo recálculo seria o 3º do quarto em 24 h (o da rotina de amanhã ficaria em risco) e o preço de hoje só chega aos canais com o Sync Now.
+
+**Beds24 desde 10:50 BRT** (vigilância: 0 alerta nas três leituras):
+- Novas: Balcony 08/11 (Airbnb, R$ 238); King Spa 7 14-17/01/2027 (Booking, R$ 2.183); King Spa 7 08/11, duas diretas de R$ 300 cada (95840010 às 16:31 e 95841935 às 18:00 BRT; ~32% dos R$ 944 da faixa: conferir valor e se não é duplicada).
+- Alteradas: 95618215 trocada da Panorâmica I para a Afrodite (06-08/11): a Afrodite esgotou hoje e a Panorâmica I reabriu 1; o resto são mudanças de status das chegadas de hoje. Reservas antigas da Booking na Panorâmica I aparecem com 44% a 70% do preço atual (feitas antes das subidas; sem ação).
+- Hoje às 19:57: livres Moinhos 2, Panorâmica I 1, Panorâmica II 1 e Balcony 4; King Spa 7, King Spa 2 e Afrodite esgotadas.
+
+**Gravado no Beds24 (19:58 BRT, relido):**
+
+| Mudança | Onde | Antes | Depois |
+|---|---|---|---|
+| Entrada aberta no sábado de hoje (sábado órfão: a sexta 06/11 já passou e não vende) | Panorâmica II, Panorâmica I e Balcony 07/11 | `noCheckInOrCheckOut` | `noCheckOut` |
+
+Exceção do sábado órfão (dono 02/11: sexta esgotada e sábado livre, entrada no sábado) e pedido de 06/11 de vender todas as suítes até terça. As descidas da Panorâmica II (10:53) e da Balcony (07:53) não vendiam a noite com a entrada fechada. Moinhos e King Spa 7 já estavam abertas desde a manhã. Estadia sem mudança (Panorâmica II 1; Panorâmica I e Balcony 2, com o domingo livre).
+
+**Sem gravação no PriceLabs:** as subidas da escada pelas vendas de 08/11 (King Spa 7 com 5 de 7; Balcony) ficam de fora pelo pedido de redução até terça. A escada da King Spa 7 de 14-16/01/2027 fica para a rotina das 07:53.
+
+**Como desfazer:** sábado 07/11 da Panorâmica II, Panorâmica I e Balcony de volta a `noCheckInOrCheckOut` no Beds24.
+
 > **Regras em vigor:** desde 06/10/2026 elas ficam em `.claude/skills/gestao-receita-pousadas/references/regras.md`. Este arquivo guarda só o histórico das mudanças.
 
 ## O que só pode ser feito na tela (passo a passo para você)

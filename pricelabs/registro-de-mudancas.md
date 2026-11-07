@@ -4438,6 +4438,24 @@ King Spa 7 (hoje R$ 2.901 com 3 livres; domingo com 4 livres) fica para o recál
 
 **Fora do plano:** Balcony 10/11 (subida; o dono pediu reduções até terça) e Afrodite 19/11 (reserva de R$ 0). **Estadia:** o sábado de hoje da Moinhos e da King Spa 7 fica aberto para entrada (dono quer vender tudo hoje); a órfã da Afrodite 18/11 segue presa à reserva de R$ 0; a segunda nova (08/11/2027, 2 noites nos 7 quartos) vai na próxima gravação de cada quarto. **Ledger:** passos do plano registrados.
 
+## 07/11/2026, 10:54 a 11:05 BRT — Rotina leve das 10:53
+
+**Beds24 desde 07:50 BRT** (vigilância: 2 alertas):
+- **Rajada de 5 cancelamentos da Booking (09:43 a 10:07 BRT)**, com cara de no-show e limpeza da recepção: Panorâmica II 06-08/11 (cancelada depois da chegada), King Spa 7 07/11 (uma do grupo de 02/11), Balcony 95217196 (a de R$ 0, saiu), King Spa 7 09-11/11 e King Spa 2 09/11.
+- Reserva antiga com R$ 0: King Spa 7 06-08/11 (95810144, direta) — segue com R$ 0.
+- Novas: King Spa 7 15/11 (direta, VillaRecep1, R$ 400 de R$ 1.021 esperados, 39%); Balcony 05-09/02/2027 (Expedia Affiliate Network, R$ 1.288 de R$ 7.748 esperados, 18% — conferir).
+- Reabriram: Panorâmica II hoje (1 livre), King Spa 7 09 e 10/11 (1 livre cada), King Spa 2 09/11 (1 livre), Balcony 08-10/11 (+1 cada).
+
+**Envio do dia:** 10:31-10:32 BRT nos 7 quartos, depois das gravações das 08:04 (passos marcados). **Busca de segurança na Booking:** Recanto (id 7562933, endereço confere) R$ 719 em 10/11, razão 0,58; Villa (id 14824789) R$ 439, razão 0,63. Normal.
+
+**Gravado no PriceLabs** (validador 0 erro; conferido na resposta da API; recálculos da Panorâmica II, King Spa 7 e King Spa 2 às 10:54):
+
+| Mudança | Onde | Antes | Depois |
+|---|---|---|---|
+| Noite reaberta: sai a proteção de noite esgotada; ordem do Recanto (junto da Moinhos) | Panorâmica II 07/11 (D0) | R$ 2.758 | R$ 1.192 |
+
+**Sem mudança pela escala:** King Spa 7 09-10/11 (6 de 7 vendidas, à frente da curva) e King Spa 2 09/11 (1 de 2, à frente); Balcony no piso. A subida da Balcony 10/11 pela Regra G ficou de fora (pedido de redução até terça). Estadia de D0 a D7: a Panorâmica II de hoje já está com 1 noite (sábado órfão: domingo esgotado). Para valer hoje, falta o Sync Now.
+
 > **Regras em vigor:** desde 06/10/2026 elas ficam em `.claude/skills/gestao-receita-pousadas/references/regras.md`. Este arquivo guarda só o histórico das mudanças.
 
 ## O que só pode ser feito na tela (passo a passo para você)

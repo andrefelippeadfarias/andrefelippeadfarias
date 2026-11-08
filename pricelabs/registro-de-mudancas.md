@@ -4516,6 +4516,14 @@ Exceção do sábado órfão (dono 02/11: sexta esgotada e sábado livre, entrad
 
 **Como desfazer:** pedir "volte a King Spa 7 e a Balcony de 11/11 ao preço anterior" (R$ 1.273 e R$ 1.105) ou "Moinhos 20-21/11 de volta a R$ 3.026 / 3.355".
 
+## 08/11/2026, 16:54 a 17:05 BRT — Rotina leve das 16:53
+
+**Beds24 desde 13:38 BRT** (vigilância: **1 alerta**): 3 reservas de R$ 0 do Airbnb na Panorâmica I para hoje (95766424, 95714927, 95662776) canceladas no mesmo segundo (16:40 BRT); a disponibilidade não mudou (eram registros sem quarto: limpeza de duplicadas, pelo jeito). Cancelada também a 92157728 da Moinhos (08-09/11, Booking, de 27/08). Nova: Balcony hoje (Airbnb, R$ 238). Troca de quarto: a reserva direta 94524247 (3 noites, 09-11/11) foi para a Afrodite; a Panorâmica I ganhou 1 vaga em 09, 10 e 11/11 e a Afrodite reabriu hoje (R$ 1.800, ordem do Recanto). **Abaixo de 70%:** 95372197 King Spa 7 08-09/11 (direta, VillaRecep1, R$ 550 de R$ 1.991, 28%); 94524247 Afrodite 09-11/11 (direta, R$ 1.503 de R$ 5.080, 30%); 95385186 Panorâmica I hoje (Airbnb, R$ 333 de R$ 613, 54%).
+
+**Sem gravação:** as noites que mudaram estão no período de redução do dono (até terça: nada sobe) e as descidas por cancelamento esperam a recepção (onda de cancelamentos; aprendizado de 06/11); a Afrodite de hoje já está no piso da ordem do Recanto. Estadia de D0 a D7: a Afrodite de hoje é órfã (amanhã esgotada) e já está com 1 noite; sem outra órfã nova. Envio diário de hoje ainda não saiu (último 07/11 10:31 BRT).
+
+**Em sombra (passo 2):** `rodada` de acordo (22 reservas, 1 alerta, as mesmas 3 abaixo); `inventario --precos` igual (0 diferença).
+
 > **Regras em vigor:** desde 06/10/2026 elas ficam em `.claude/skills/gestao-receita-pousadas/references/regras.md`. Este arquivo guarda só o histórico das mudanças.
 
 ## O que só pode ser feito na tela (passo a passo para você)

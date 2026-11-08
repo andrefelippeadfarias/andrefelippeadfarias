@@ -2,7 +2,12 @@
 
 Pedido do dono, 06/11/2026: "preciso que melhore essa forma de comunicar as coisas lá para diminuirmos a quantidade de chamadas que temos que fazer. Para quando fizermos com o número mínimo de chamadas necessárias. Vamos criar um plano para isso." / "E vamos verificar os limites da API lá, da Prace Labs."
 
-Status: **proposta, aguardando aprovação do dono.** Nada foi mudado na rotina ainda.
+Status (07/11/2026, noite):
+- **Aprovado pelo dono em 06/11** ("Perfeito").
+- **Passo 1 aplicado em 07/11** (só texto: SKILL.md, references/ferramentas.md, references/regras.md e coleta-pricelabs.js), com a correção do item (c) e sem o item (g), que espera o dono (ver "Precisa do dono"). Vale desde a rotina de 08/11, 07:53.
+- **Passo 2 e travas implementados em 07/11.** O passo 2 roda **em sombra em 08/11**: os comandos atuais continuam decidindo e gravando, o novo roda ao lado e as saídas são comparadas; a troca só vem depois de um dia inteiro de acordo e nunca antes de 10/11 (2 dias medidos do passo 1, 08 e 09/11, como manda "Como implantar"; as chamadas da sombra contam à parte) (SKILL.md, "Em sombra a partir de 08/11"; ferramentas.md, "Comandos em sombra (08/11)"). A trava do recálculo (`cota_recalculo.py pode` antes e `registrar` depois de todo `refresh_listing_pricing`) vale já, porque só acrescenta uma trava.
+- **Correção do sábado de D0 (07/11), vale já** (é correção de regra do dono, não sombra): no sábado, a sexta já passou e conta como esgotada; o sábado de hoje livre vira sábado órfão (`noCheckOut` e estadia 1 no Beds24, `orfa` "sábado" com `orfa_prova` no PriceLabs). O `pace.ajustar_tetos` recebe `hoje` desde a conferência final de 07/11 (o teste do caminho do pace deixou de ser pulado).
+- Passos 3 a 7: não começados. Medir as chamadas de 08/11 e 09/11 antes do passo 3.
 
 ## Limites oficiais do PriceLabs (documentação, 06/11)
 
@@ -29,8 +34,9 @@ Status: **proposta, aguardando aprovação do dono.** Nada foi mudado na rotina 
 ### 1. Só texto, sem código: tirar as leituras repetidas e as chamadas sem uso (economia estimada: 16 chamadas/dia)
 
 (a) As linhas 82 e 83 do SKILL.md passam a rodar o calendario_12m auditar e plano com --inventario <inv.json>, o inventário de 12 meses do passo 4b. Sem isso, o main (calendario_12m.py, ~811-814) lê o Beds24 ao vivo, porque a linha não passa --sem-beds24. Na rotina completa, a conferência de D0 a D60 (SKILL.md:44) sai do mesmo arquivo.
-(b) O get_pms_reservations sai da coleta (coleta-pricelabs.js:183). Conferi com grep: nenhum script lê contexto.bookings nem contexto.logs; só o pace.py:327 lê contexto.sync. Ele fica como plano B, para quando o Beds24 não responder.
+(b) O get_pms_reservations sai da coleta (coleta-pricelabs.js:183). Conferi com grep: nenhum script lê contexto.bookings nem contexto.logs; só o pace.py:327 lê contexto.sync. Ele fica como plano B, para quando o Beds24 não responder. (Conferido de novo em 07/11, antes de tirar: o mesmo resultado; os logs continuam na coleta, porque a sessão os lê.)
 (c) Uma só leitura de status, o get_listings, às 07:53 e às 10:53, no lugar do get_listing_data (js:185; SKILL.md:40, 73 e 120). Isso atende a instrução do servidor MCP ('get_listings first') sem chamada extra. Se a primeira resposta não trouxer last_date_pushed, push_enabled e last_refreshed_at, use o get_listing_data no lugar; a contagem é a mesma.
+**Corrigido ao aplicar (07/11):** conferido hoje, o get_listings traz só listing_id, pms_name, nomes, parent_key, group_id e push_enabled, sem last_date_pushed nem last_refreshed_at, e o pace.py marcar-envio --coleta depende do last_date_pushed do contexto.sync. A leitura única de status ficou sendo o **get_listing_data** (1 na coleta das 07:53 e 1 às 10:53, sem get_listings antes); a coleta passou a pedir aos agentes que não chamem o get_listings.
 (d) Recálculo:
 - sempre em série, com 1 tentativa por quarto por rotina;
 - com 400 ou 429, parar (aprendizados.md:260, 278 e 446);
@@ -41,7 +47,7 @@ Status: **proposta, aguardando aprovação do dono.** Nada foi mudado na rotina 
 - às 13:53, 16:53 e 19:53, sem reserva, cancelamento ou alerta, nenhuma chamada ao PriceLabs nem à Booking;
 - o get_user_logs vem sempre antes de qualquer gravação, com desde = início da rodada anterior menos 15 min.
 (f) Às 10:53, a segurança e a vitrine usam as mesmas 2 buscas, na data alterada: o Recanto por coordenadas (pelo nome cai no id 15459723) e a Villa por hotel_names.
-(g) O mercado_diario passa para a revisão de segunda, com OK do dono (ordem de 20/10). Isso evita 72 buscas prescritas por dia, que ficam fora da conta porque não rodaram em 06/11.
+(g) O mercado_diario passa para a revisão de segunda, com OK do dono (ordem de 20/10). Isso evita 72 buscas prescritas por dia, que ficam fora da conta porque não rodaram em 06/11. **Não aplicado em 07/11: precisa do OK do dono** (continua em "Precisa do dono"); o SKILL.md segue com a busca diária.
 
 **Risco e mitigação:** Riscos:
 - Uma mudança manual do dono depois das 10:53 só aparece no relatório da próxima rotina que gravar.
@@ -248,7 +254,8 @@ A conta, as checagens e os riscos que não dá para medir offline. Nada no repos
 - Os cabeçalhos de crédito existem no apiV2.yaml.
 
 **O que não deu para provar offline (confirmar na primeira chamada)**
-- Se o get_listings traz last_refreshed_at e push_enabled (o aprendizado de 07/10 confirma o last_date_pushed).
+- Se o get_listings traz last_refreshed_at e push_enabled (o aprendizado de 07/10 confirma o last_date_pushed). **Respondido em 07/11:** traz push_enabled, mas não last_date_pushed nem last_refreshed_at; a leitura de status fica com o get_listing_data.
+- (07/11) Os cabeçalhos de crédito do Beds24 na resposta real são X-Five-Min-Limit-Remaining (decimal, ~20 créditos às 22:5x UTC), X-Five-Min-Limit-Resets-In e X-Request-Cost (1 no calendário, 1.1 no /bookings), não os nomes do apiV2.yaml; o código aceita os dois. Medir na sombra se a espera pelo crédito aparece na rotina.
 - O formato da verification: guardar a primeira resposta.
 - O significado do percent_max: o teste em data distante decide.
 - O expiresIn real do token do Beds24: o exemplo da spec é 3600 s, então não supor 24 h.
@@ -260,7 +267,7 @@ A conta, as checagens e os riscos que não dá para medir offline. Nada no repos
 - A conferência prescrita depois de gravar não foi feita em 6 dos 7 quartos em 06/11; o passo 7 a torna barata.
 
 **Precisa do dono**
-- Levar o mercado_diario para a segunda (ordem de 20/10).
+- Levar o mercado_diario para a segunda (ordem de 20/10). Pendente: não aplicado no passo 1.
 - O inventário continua em toda rotina, então a ordem de 01/11 fica como está.
 - As mudanças manuais passam a ser relatadas na rotina seguinte que gravar, e não mais em toda leve. Vale avisar o dono.
 

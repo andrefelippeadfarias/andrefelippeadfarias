@@ -1,13 +1,14 @@
 export const meta = {
   name: 'coleta-pricelabs',
-  description: 'Coleta somente leitura para a skill gestao-receita-pousadas: precos e ocupacao dos 7 quartos, reservas, logs, envio; no modo completo tambem mercado, concorrentes da Booking e eventos',
+  description: 'Coleta somente leitura para a skill gestao-receita-pousadas: precos e ocupacao dos 7 quartos, logs, envio; no modo completo tambem mercado, concorrentes da Booking e eventos',
   whenToUse: 'Chamado pela skill gestao-receita-pousadas no inicio de uma rotina completa ou de um pedido do dono.',
   phases: [
     { title: 'Coleta', detail: 'quartos, contexto e (modo completo) mercado, concorrentes e eventos em paralelo' },
   ],
 }
 
-// args: { hoje: 'AAAA-MM-DD', fim: 'AAAA-MM-DD' (hoje+59), desde: 'AAAA-MM-DD' (reservas feitas desde),
+// args: { hoje: 'AAAA-MM-DD', fim: 'AAAA-MM-DD' (hoje+59), desde: 'AAAA-MM-DD' (logs desde: data UTC do inicio da rodada
+//         anterior menos 15 min, em geral ontem),
 //         modo: 'rotina' | 'completo', buscas: [{label, checkin, checkout}], eventos: bool, rooms?: [...] }
 const A = args || {}
 const HOJE = A.hoje
@@ -26,7 +27,7 @@ const ROOMS = A.rooms || [
 
 if (!HOJE || !FIM) throw new Error('args.hoje e args.fim sao obrigatorios')
 
-const READONLY = `REGRA ABSOLUTA: somente leitura. Use apenas ferramentas get_* do PriceLabs e a busca do Booking.com. NUNCA chame update_*, delete_*, refresh_listing_pricing, accept_nudge, update_customizations, map/unmap ou set_*. Carregue as ferramentas MCP com ToolSearch (ex.: "select:mcp__PriceLabs__get_listing_prices"). Se o servidor MCP estiver desconectado, chame ToolSearch de novo (ele espera reconectar) e tente ate 3 vezes. Copie numeros exatamente como vieram; nao invente.`
+const READONLY = `REGRA ABSOLUTA: somente leitura. Use apenas ferramentas get_* do PriceLabs e a busca do Booking.com. NUNCA chame update_*, delete_*, refresh_listing_pricing, accept_nudge, update_customizations, map/unmap ou set_*. Carregue as ferramentas MCP com ToolSearch (ex.: "select:mcp__PriceLabs__get_listing_prices"). Se o servidor MCP estiver desconectado, chame ToolSearch de novo (ele espera reconectar) e tente ate 3 vezes. Copie numeros exatamente como vieram; nao invente. NAO chame get_listings: os listing_id e o pms (beds24) ja estao neste pedido (plano de reducao de chamadas, 07/11: o get_listings nao traz last_date_pushed nem last_refreshed_at, entao nao serve de leitura de status).`
 
 const LISTING_SCHEMA = {
   type: 'object',
@@ -63,22 +64,12 @@ const LISTING_SCHEMA = {
   required: ['listing_id', 'days', 'overrides'],
 }
 
+// Passo 1 do plano de reducao de chamadas (aprovado pelo dono em 06/11, aplicado em 07/11): o get_pms_reservations
+// saiu da coleta (nenhum script le contexto.bookings; as reservas vem do Beds24 direto, beds24.py). Ele fica como
+// plano B na sessao, so quando o Beds24 nao responder (SKILL.md, "Quando algo falhar").
 const CONTEXTO_SCHEMA = {
   type: 'object',
   properties: {
-    bookings: {
-      type: 'array',
-      items: {
-        type: 'object',
-        properties: {
-          listing_id: { type: 'string' }, reservation_id: { type: 'string' }, check_in: { type: 'string' },
-          check_out: { type: 'string' }, no_of_days: { type: 'number' }, rental_revenue: { type: 'string' },
-          total_cost: { type: 'string' }, ota_commission: { type: 'string' }, channel: { type: 'string' },
-          booked_date: { type: 'string' }, status: { type: 'string' }, cancelled_on: { type: 'string' },
-        },
-        required: ['listing_id', 'check_in', 'check_out', 'status', 'booked_date'],
-      },
-    },
     logs: {
       type: 'array',
       items: {
@@ -103,7 +94,7 @@ const CONTEXTO_SCHEMA = {
     },
     notes: { type: 'string' },
   },
-  required: ['bookings', 'logs', 'sync'],
+  required: ['logs', 'sync'],
 }
 
 const COMP_SCHEMA = {
@@ -179,11 +170,10 @@ Devolva TODOS os dias de ${HOJE} a ${FIM} com: date, price, user_price, uncustom
 tarefas.push(() => agent(
   `${READONLY}
 
-Tarefa: contexto operacional no PriceLabs (pms "beds24").
-A) mcp__PriceLabs__get_pms_reservations com pms="beds24", booked_start_date="${DESDE}", booked_end_date="${HOJE}" (reservas FEITAS nesse periodo; pagine se next_page=true). Cada reserva em "bookings": listing_id, reservation_id, check_in, check_out, no_of_days, rental_revenue, total_cost, ota_commission, channel=booking_channel, booked_date, status=booking_status, cancelled_on.
-B) mcp__PriceLabs__get_user_logs com log_type="listing", start_date="${DESDE}", end_date="${HOJE}", limit=200. Em "logs": created_at, action, listing_id (entity.listing_id), device_type (metadata.device_type) e via_api (true se a action comecar com "api_"). NAO copie e-mails.
-C) mcp__PriceLabs__get_listing_data (question qualquer). Em "sync", para cada um dos 7 quartos: listing_id, push_enabled, last_date_pushed, last_refreshed_at, min, base, max.
-Em notes: quantas reservas e cancelamentos, e qualquer erro.`,
+Tarefa: contexto operacional no PriceLabs (pms "beds24"). Sao so 2 chamadas, uma de cada: NAO chame get_pms_reservations (as reservas vem do Beds24 direto) nem get_listings.
+A) mcp__PriceLabs__get_user_logs com log_type="listing", start_date="${DESDE}", end_date="${HOJE}", limit=200. Em "logs": created_at, action, listing_id (entity.listing_id), device_type (metadata.device_type) e via_api (true se a action comecar com "api_"). NAO copie e-mails.
+B) mcp__PriceLabs__get_listing_data (question qualquer, sem listing_id: 1 chamada traz os 7 quartos); e a unica leitura de status da rotina. Em "sync", para cada um dos 7 quartos: listing_id, push_enabled, last_date_pushed, last_refreshed_at, min, base, max.
+Em notes: qualquer erro.`,
   { label: 'contexto', phase: 'Coleta', schema: CONTEXTO_SCHEMA, effort: 'low' }
 ))
 

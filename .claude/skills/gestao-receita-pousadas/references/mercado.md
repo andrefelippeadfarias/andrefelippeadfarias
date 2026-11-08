@@ -47,7 +47,7 @@
 - Cada busca devolve no máximo 10 propriedades, então faça duas por data:
   1. uma geral;
   2. uma com `facilities` ["HOT_TUB_JACUZZI"].
-- Para os nossos hotéis, busque com `hotel_names` e o mesmo destino. A resposta "hotel_names_no_availability" quer dizer indisponível para aquelas datas, e costuma ser restrição de estadia ou de chegada. O preço que vem é o total da estadia, sem informar quarto, Genius ou taxas.
+- Para os nossos hotéis (passo 1f do plano de chamadas, 07/11): o **Recanto por coordenadas** (`coordinates` -22.728453, -45.556345, raio 0,3 km; pelo nome a busca cai no id 15459723, sem disponibilidade) e a **Villa com `hotel_names`** e o mesmo destino. A resposta "hotel_names_no_availability" quer dizer indisponível para aquelas datas, e costuma ser restrição de estadia ou de chegada. O preço que vem é o total da estadia, sem informar quarto, Genius ou taxas.
 - Datas típicas por rotina completa:
   - os próximos 2 dias úteis;
   - o próximo fim de semana (sexta a domingo);

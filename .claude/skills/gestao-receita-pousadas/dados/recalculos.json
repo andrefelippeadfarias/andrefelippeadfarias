@@ -1,0 +1,71 @@
+{
+ "_doc": "Tentativas de refresh_listing_pricing feitas pela rotina (scripts/cota_recalculo.py registrar). 'em' em UTC com segundos. Toda tentativa conta na cota de 3 por quarto em 24 h (janela móvel), inclusive falha e 429; o recálculo do envio diário do PriceLabs não entra. Sem nomes de hóspedes.",
+ "tentativas": [
+  {
+   "quarto": "Double",
+   "em": "2026-11-07T10:55:40Z",
+   "resultado": "ok",
+   "registrado_em": "2026-11-08T00:13:18Z"
+  },
+  {
+   "quarto": "Q2",
+   "em": "2026-11-07T10:55:50Z",
+   "resultado": "ok",
+   "registrado_em": "2026-11-08T00:13:18Z"
+  },
+  {
+   "quarto": "VK7",
+   "em": "2026-11-07T10:55:59Z",
+   "resultado": "ok",
+   "registrado_em": "2026-11-08T00:13:18Z"
+  },
+  {
+   "quarto": "VK2",
+   "em": "2026-11-07T10:56:09Z",
+   "resultado": "ok",
+   "registrado_em": "2026-11-08T00:13:18Z"
+  },
+  {
+   "quarto": "Q7",
+   "em": "2026-11-07T10:56:25Z",
+   "resultado": "ok",
+   "registrado_em": "2026-11-08T00:13:18Z"
+  },
+  {
+   "quarto": "Afrodite",
+   "em": "2026-11-07T10:56:33Z",
+   "resultado": "ok",
+   "registrado_em": "2026-11-08T00:13:19Z"
+  },
+  {
+   "quarto": "Balcony",
+   "em": "2026-11-07T10:56:42Z",
+   "resultado": "ok",
+   "registrado_em": "2026-11-08T00:13:19Z"
+  },
+  {
+   "quarto": "Q2",
+   "em": "2026-11-07T13:54:18Z",
+   "resultado": "ok",
+   "registrado_em": "2026-11-08T00:13:19Z"
+  },
+  {
+   "quarto": "VK7",
+   "em": "2026-11-07T13:54:29Z",
+   "resultado": "ok",
+   "registrado_em": "2026-11-08T00:13:19Z"
+  },
+  {
+   "quarto": "VK2",
+   "em": "2026-11-07T13:54:36Z",
+   "resultado": "ok",
+   "registrado_em": "2026-11-08T00:13:19Z"
+  },
+  {
+   "quarto": "Double",
+   "em": "2026-11-07T16:54:14Z",
+   "resultado": "ok",
+   "registrado_em": "2026-11-08T00:13:19Z"
+  }
+ ]
+}

@@ -2,6 +2,7 @@
 
 Uso:
   python3 concorrencia_hidro_vista.py --coleta SAIDA_WORKFLOW.json --hoje AAAA-MM-DD [--saida plano.json] [--sem-beds24]
+  python3 concorrencia_hidro_vista.py ... --reservas reservas.json   # `beds24.py reservas --json` da rotina, sem nova leitura
 
 Lê dados/concorrentes_hidro_vista.json (mediana da classe A por período e a vitrine do Recanto na mesma busca) e o
 calendário da coleta. Para cada noite livre das suítes com banheira (regras.md, seção 5):
@@ -13,7 +14,9 @@ calendário da coleta. Para cada noite livre das suítes com banheira (regras.md
   - senão, segura.
 A Queen (2) (sem_desconto) só sobe. Na Villa, a vitrine é estimada pela VK7 × fator_vitrine (a Villa não aparece na
 busca com hidro). Para cada data com corte na VK7 ou VK2, a Balcony volta a 10% abaixo da suíte livre mais barata
-(Regra G). A ocupação vem do Beds24 (confirmadas + novas); com --sem-beds24, do calendário do PriceLabs.
+(Regra G). A ocupação vem do Beds24 (confirmadas + novas); com --sem-beds24, do calendário do PriceLabs. Com
+--reservas (passo 2 do plano de redução de chamadas, 07/11), as reservas vêm do arquivo do `beds24.py reservas --json`
+já lido na rotina (a janela dele precisa cobrir de hoje até 2 dias depois da última data dos períodos).
 Sempre passe a saída pelo validar_plano.py antes de gravar.
 """
 
@@ -158,7 +161,9 @@ def main(argv=None) -> int:
     ap.add_argument("--hoje", required=True)
     ap.add_argument("--saida", default="plano_concorrencia.json")
     ap.add_argument("--comp", default=os.path.join(RAIZ, "dados", "concorrentes_hidro_vista.json"))
-    ap.add_argument("--sem-beds24", action="store_true")
+    fonte = ap.add_mutually_exclusive_group()
+    fonte.add_argument("--sem-beds24", action="store_true")
+    fonte.add_argument("--reservas", help="beds24.py reservas --json da rotina (sem nova leitura no Beds24)")
     a = ap.parse_args(argv)
     hoje = dt.date.fromisoformat(a.hoje)
     cfg, comp, coleta = carregar_quartos(), json.load(open(a.comp)), carrega(a.coleta)
@@ -166,7 +171,15 @@ def main(argv=None) -> int:
     if not a.sem_beds24:
         import beds24
         fim = max(dt.date.fromisoformat(s) for p in comp["periodos"] for s in p["datas"]) + dt.timedelta(days=2)
-        vendidas = beds24.noites(beds24.reservas(hoje.isoformat(), fim.isoformat(), beds24.token_de_acesso()), hoje, fim)
+        if a.reservas:
+            try:
+                lista = beds24.ler_reservas_arquivo(a.reservas, hoje.isoformat(), fim.isoformat())
+            except beds24.ErroBeds24 as e:  # janela curta ou arquivo errado: diz qual leitura refazer
+                print(f"ERRO: {e}", file=sys.stderr)
+                return 2
+        else:
+            lista = beds24.reservas(hoje.isoformat(), fim.isoformat(), beds24.token_de_acesso())
+        vendidas = beds24.noites(lista, hoje, fim)
     itens, notas = montar(cfg, comp, coleta, hoje, vendidas)
     json.dump({"hoje": a.hoje, "itens": itens}, open(a.saida, "w"), ensure_ascii=False, indent=1)
     for i in itens:

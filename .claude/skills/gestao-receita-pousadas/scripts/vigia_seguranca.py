@@ -11,6 +11,12 @@ Saída sem nomes de hóspedes (só id da reserva no Beds24, quarto, datas e orig
 
 Uso:
   python3 vigia_seguranca.py --desde AAAA-MM-DDTHH:MM:SSZ [--json saida.json]
+  python3 vigia_seguranca.py --desde AAAA-MM-DDTHH:MM:SSZ --arquivo rodada.json   # sem nova leitura no Beds24
+Na rotina, o vigia roda dentro do `beds24.py rodada` (passo 2 do plano de redução de chamadas, 07/11: uma leitura só para
+o movimento, o vigia e as reservas abaixo). O --arquivo reaproveita a resposta crua salva do `beds24.py rodada --json`
+para uso avulso: só esse arquivo, com o desde dele até o --desde pedido e o --desde até o lido_em (revisão de 07/11: o
+`reservas --json` é leitura por janela de estadia e não traz o cancelamento de estadia fora dela; o vigia diria
+"0 alerta" sem ter olhado). Fora disso, código 2. O que mudou depois do lido_em não entra (aviso no stderr).
 """
 from __future__ import annotations
 
@@ -111,25 +117,40 @@ def classificar(reservas: list[dict], desde: str, par: dict, quartos: dict | Non
     return alertas
 
 
+def imprimir(lidas: int, desde: str, alertas: list[dict]) -> None:
+    """Resumo na tela (o mesmo do comando avulso e da `beds24.py rodada`)."""
+    print(f"{lidas} reservas criadas ou alteradas desde {desde}; {len(alertas)} alerta(s) de segurança")
+    for x in alertas:
+        print(f"- {x['alerta']}: {x.get('detalhe')} | reserva {x.get('id', x.get('reservas'))} "
+              f"{x.get('quarto', '')} {x.get('chegada', '')} canal {x.get('canal')}")
+
+
 def main(argv=None) -> int:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--desde", required=True)
     ap.add_argument("--json")
+    ap.add_argument("--arquivo", help="resposta crua salva do beds24.py rodada --json (desde do arquivo <= --desde <= "
+                                      "lido_em): sem nova leitura no Beds24; outro arquivo dá código 2")
     a = ap.parse_args(argv)
     import beds24
-    tok = beds24.token_de_acesso()
-    params = {"propertyId": list(beds24.PROPRIEDADES), "modifiedFrom": a.desde,
-              "status": ["confirmed", "new", "request", "cancelled", "black", "inquiry"]}
-    reservas = list(beds24.paginas("/bookings", params, tok))
+    if a.arquivo:
+        try:
+            reservas = [b for b in beds24.ler_reservas_arquivo(a.arquivo, desde=a.desde)
+                        if beds24.alterada_desde(b, a.desde)]
+        except beds24.ErroBeds24 as e:
+            print(f"ERRO: {e}", file=sys.stderr)
+            return 2
+    else:
+        tok = beds24.token_de_acesso()
+        params = {"propertyId": list(beds24.PROPRIEDADES), "modifiedFrom": a.desde,
+                  "status": ["confirmed", "new", "request", "cancelled", "black", "inquiry"]}
+        reservas = list(beds24.paginas("/bookings", params, tok))
     quartos = {k: v[0] for k, v in beds24.QUARTOS.items()}
     alertas = classificar(reservas, a.desde, parametros(), quartos)
     if a.json:
         Path(a.json).write_text(json.dumps({"desde": a.desde, "lidas": len(reservas), "alertas": alertas},
                                            ensure_ascii=False, indent=1))
-    print(f"{len(reservas)} reservas criadas ou alteradas desde {a.desde}; {len(alertas)} alerta(s) de segurança")
-    for x in alertas:
-        print(f"- {x['alerta']}: {x.get('detalhe')} | reserva {x.get('id', x.get('reservas'))} "
-              f"{x.get('quarto', '')} {x.get('chegada', '')} canal {x.get('canal')}")
+    imprimir(len(reservas), a.desde, alertas)
     return 0
 
 

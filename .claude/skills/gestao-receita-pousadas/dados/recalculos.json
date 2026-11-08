@@ -66,6 +66,13 @@
    "em": "2026-11-07T16:54:14Z",
    "resultado": "ok",
    "registrado_em": "2026-11-08T00:13:19Z"
+  },
+  {
+   "quarto": "Q7",
+   "em": "2026-11-08T10:56:35Z",
+   "resultado": "falha",
+   "erro": "400 Beds24 appears to be temporarily unavailable or under high load",
+   "registrado_em": "2026-11-08T10:56:35Z"
   }
  ]
 }

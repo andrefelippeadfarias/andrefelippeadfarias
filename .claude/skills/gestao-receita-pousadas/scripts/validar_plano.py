@@ -41,8 +41,9 @@ a data da leitura, de hoje ou de ontem) ou do recálculo ({noite_vendidas, noite
 seguinte_total}); com --precos, o calendário confere o que souber. Sábado órfão (sexta esgotada, sábado livre; regra
 de 02/11, `regra_h_beds24.orfas.ativa`; em feriado desde 05/11, `orfas.em_feriado`; nunca em pacote nem no sábado de
 festa): "orfa": "sábado" com "orfa_prova" (anterior_* = a sexta), qualquer que seja a ordem do item, ou excecao "dono"
-com a ordem de 02/11. Noite aguardando o dono (`estadia_por_dia_chegada.aguardando_dono`; nenhuma desde 05/11) fica
-fora da regra do dia. "manter_reason": true (item sem preço, piso nem teto, só de estadia e/ou chegada/saída, numa data
+com a ordem de 02/11; no sábado de hoje, a sexta que já passou conta como esgotada (correção de 07/11: "orfa_prova"
+com "anterior_passada" = a data da sexta, anterior a hoje; o sábado livre e o lido_em se conferem). Noite aguardando
+o dono (`estadia_por_dia_chegada.aguardando_dono`; nenhuma desde 05/11) fica fora da regra do dia. "manter_reason": true (item sem preço, piso nem teto, só de estadia e/ou chegada/saída, numa data
 cuja regra por data tem preço, piso, teto ou chegada/saída, ou reason da Regra J) faz o payload sair sem reason, para
 não apagar o da regra.
 
@@ -221,16 +222,66 @@ def estadia_planejada(cfg: dict, d: date, atual: int | None, livre: bool = False
     return int(atual), orfa
 
 
-def checar_prova_orfa(prova, vizinha: str, hoje: date, fuso: str = "America/Sao_Paulo") -> str | None:
+def _falha_lido_em(prova: dict, hoje: date, fuso: str) -> str | None:
+    """None quando o `lido_em` da prova do Beds24 é de hoje ou de ontem (no fuso das pousadas); senão o porquê."""
+    lido = ler_instante(prova.get("lido_em"))
+    if lido is None:
+        return "prova do Beds24 sem lido_em (data e hora da leitura do inventário)"
+    from zoneinfo import ZoneInfo
+    dl = lido.astimezone(ZoneInfo(fuso)).date()
+    if not (hoje - timedelta(days=1) <= dl <= hoje):
+        return f"prova do Beds24 lida em {dl.isoformat()}: leia o inventário de novo"
+    return None
+
+
+def _checar_sexta_passada(prova: dict, hoje: date, fuso: str, noite: date | None) -> str | None:
+    """Prova do sábado de hoje com a sexta já passada (correção de 07/11; dono 02/11, sábado órfão): `anterior_passada` é
+    a sexta (noite − 1), anterior a hoje, e o sábado é de hoje em diante (na prática, hoje); a sexta não vende mais e
+    conta como esgotada, então só o sábado livre (e o lido_em, na fonte do Beds24) se confere."""
+    try:
+        sexta = data(prova["anterior_passada"])
+    except (KeyError, TypeError, ValueError):
+        return f"anterior_passada inválida ({prova.get('anterior_passada')})"
+    if noite is None or noite.weekday() != 5 or sexta != noite - timedelta(days=1):
+        return f"anterior_passada {sexta.isoformat()} não é a sexta do sábado do item"
+    if sexta >= hoje:
+        return (f"a sexta {sexta.isoformat()} ainda não passou (hoje {hoje.isoformat()}): a prova precisa da sexta "
+                "esgotada")
+    if noite < hoje:
+        return f"o sábado {noite.isoformat()} já passou"
+    if prova.get("fonte") == "beds24":
+        try:
+            u, n = int(prova["unidades"]), int(prova["noite_numAvail"])
+        except (KeyError, TypeError, ValueError):
+            return "prova do Beds24 incompleta (unidades, noite_numAvail)"
+        if not (u > 0 and n > 0):
+            return f"prova do Beds24 não mostra o sábado livre ({n})"
+        return _falha_lido_em(prova, hoje, fuso)
+    try:
+        nv, nt = int(prova.get("noite_vendidas")), int(prova.get("noite_total"))
+    except (TypeError, ValueError):
+        return "prova incompleta (noite_vendidas, noite_total)"
+    if not (nt > 0 and nv < nt):
+        return f"prova não mostra o sábado livre ({nv}/{nt})"
+    return None
+
+
+def checar_prova_orfa(prova, vizinha: str, hoje: date, fuso: str = "America/Sao_Paulo",
+                      noite: date | None = None) -> str | None:
     """None quando `orfa_prova` prova a órfã; senão o porquê. `vizinha` é a noite que esgotou: "seguinte" (noite órfã da
     ordem de 04/11) ou "anterior" (sábado órfão da ordem de 02/11: a sexta). Duas fontes (revisão de 05/11, fonte única):
       - Beds24 (a do inventário, quando a rotina o leu): {"fonte": "beds24", "unidades", "noite_numAvail",
         "<vizinha>_numAvail", "lido_em"}: noite com numAvail > 0 e a vizinha com numAvail <= 0; vale por si com a data da
         leitura (lido_em de hoje ou de ontem, no fuso das pousadas);
       - recálculo do PriceLabs (sem inventário): {"noite_vendidas", "noite_total", "<vizinha>_vendidas",
-        "<vizinha>_total"}: noite com unidade livre e a vizinha toda vendida."""
+        "<vizinha>_total"}: noite com unidade livre e a vizinha toda vendida.
+    Correção de 07/11: no sábado órfão, `anterior_passada` (a data da sexta) no lugar da sexta esgotada vale só com
+    `noite` (o sábado do item), a sexta anterior a hoje e o sábado de hoje (`_checar_sexta_passada`): o inventário do
+    Beds24 não traz noite passada, e a sexta que passou não vende mais."""
     if not isinstance(prova, dict) or not prova:
         return "sem orfa_prova"
+    if vizinha == "anterior" and prova.get("anterior_passada") is not None:
+        return _checar_sexta_passada(prova, hoje, fuso, noite)
     if prova.get("fonte") == "beds24":
         try:
             u, n, s = int(prova["unidades"]), int(prova["noite_numAvail"]), int(prova[f"{vizinha}_numAvail"])
@@ -238,14 +289,7 @@ def checar_prova_orfa(prova, vizinha: str, hoje: date, fuso: str = "America/Sao_
             return f"prova do Beds24 incompleta (unidades, noite_numAvail, {vizinha}_numAvail)"
         if not (u > 0 and n > 0 and s <= 0):
             return f"prova do Beds24 não mostra a noite livre ({n}) com a {vizinha} esgotada ({s})"
-        lido = ler_instante(prova.get("lido_em"))
-        if lido is None:
-            return "prova do Beds24 sem lido_em (data e hora da leitura do inventário)"
-        from zoneinfo import ZoneInfo
-        dl = lido.astimezone(ZoneInfo(fuso)).date()
-        if not (hoje - timedelta(days=1) <= dl <= hoje):
-            return f"prova do Beds24 lida em {dl.isoformat()}: leia o inventário de novo"
-        return None
+        return _falha_lido_em(prova, hoje, fuso)
     try:
         nv, nt = int(prova.get("noite_vendidas")), int(prova.get("noite_total"))
         sv, st = int(prova.get(f"{vizinha}_vendidas")), int(prova.get(f"{vizinha}_total"))
@@ -575,8 +619,11 @@ class Validador:
             if it.get("orfa") == "sábado" and ms < 2 and not orfa_ok and it.get("orfa_prova") is not None:
                 # revisão de 05/11 (pace.ajustar_tetos): o sábado órfão provado (sexta esgotada no quarto, sábado livre)
                 # mantém 1 qualquer que seja a ordem do item (a da escada ou da faixa), com a regra de 02/11 ligada
-                falha = checar_prova_orfa(it.get("orfa_prova"), "anterior", self.hoje, fuso)
-                ant = self.precos.get((q["curto"], (d - timedelta(days=1)).isoformat())) or {}
+                falha = checar_prova_orfa(it.get("orfa_prova"), "anterior", self.hoje, fuso, noite=d)
+                # correção de 07/11: com a sexta já passada (prova com anterior_passada), o calendário da sexta não
+                # desmente o sábado: a sexta não vende mais
+                passada = isinstance(it.get("orfa_prova"), dict) and it["orfa_prova"].get("anterior_passada") is not None
+                ant = {} if passada else (self.precos.get((q["curto"], (d - timedelta(days=1)).isoformat())) or {})
                 noite = self.precos.get((q["curto"], d.isoformat())) or {}
                 if d.weekday() != 5 or not orfa_permitida(self.cfg, d, sabado=True):
                     self.erro(i, it, f"{q['nome']}: orfa 'sábado' só num sábado fora de pacote e do sábado de festa (em "

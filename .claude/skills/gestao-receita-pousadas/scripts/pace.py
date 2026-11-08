@@ -863,7 +863,8 @@ def sincronizar_pace(itens: list[dict], tol: float) -> None:
         pc["direcao"] = "sobe" if final > atual * (1 + tol) else ("desce" if final < atual * (1 - tol) else None)
 
 
-def ajustar_tetos(cfg: dict, itens: list[dict], regras: dict, cals: dict | None = None) -> tuple[list[dict], list[dict]]:
+def ajustar_tetos(cfg: dict, itens: list[dict], regras: dict, cals: dict | None = None,
+                  hoje: dt.date | None = None) -> tuple[list[dict], list[dict]]:
     """Teto livre no PriceLabs = item SEM max_price (a API mescla campos e um max_price "igual ao máximo do anúncio"
     seria um percentual enorme e inútil). Para cada item com max_price no máximo do anúncio: se a regra vigente da
     noite tem teto ou validade (lead_time_expiry), a noite vai para a lista `apagar` (plano separado, gravado antes) e
@@ -875,7 +876,7 @@ def ajustar_tetos(cfg: dict, itens: list[dict], regras: dict, cals: dict | None 
     Sábado (revisão de 05/11, Regra H): estadia herdada abaixo de 2 (ou nenhuma) volta a 2 (ou à do feriado), salvo o
     sábado órfão provado pelo recálculo (sexta esgotada e sábado livre, `regra_h_beds24.orfas`; em feriado também desde
     05/11), que mantém o 1 com `orfa` "sábado" e `orfa_prova` (o validador aceita com a ordem da escada ou da faixa no
-    item). Dono 05/11 ("Isso, pode abrir Afrodite, saída de sexta"): na sexta da Afrodite (`sexta_reaberta_por_quarto`,
+    item); com `hoje` (correção de 07/11), o sábado de hoje com a sexta já passada também é órfão. Dono 05/11 ("Isso, pode abrir Afrodite, saída de sexta"): na sexta da Afrodite (`sexta_reaberta_por_quarto`,
     fora de pacote), o check_out herdado que fecha a sexta volta com a sexta em 1 (o resto da máscara fica)."""
     apagar, saida = [], []
     for it in itens:
@@ -914,7 +915,7 @@ def ajustar_tetos(cfg: dict, itens: list[dict], regras: dict, cals: dict | None 
                             it.update(orfa=orfa, orfa_prova=prova)
                 d_ = data(it["data"])
                 if d_.weekday() == 5 and (it.get("min_stay") is None or int(it["min_stay"]) < 2):
-                    prova_sab = prova_sabado_orfao(cfg, it["quarto"], d_, (cals or {}).get(it["quarto"]))
+                    prova_sab = prova_sabado_orfao(cfg, it["quarto"], d_, (cals or {}).get(it["quarto"]), hoje=hoje)
                     if prova_sab is None:
                         it["min_stay"] = max(2, int(estadia_exigida(cfg, d_, periodo_feriado(cfg, d_)) or 2))
                     elif it.get("min_stay") is not None:
@@ -1311,7 +1312,7 @@ def main(argv=None) -> int:
     filtro = ler_filtro_noites(a.noites) if a.noites is not None else None  # --noites sem valor: nenhuma noite recebe passo
     res = plano(cfg, ancora, cals, hoje, ordens, passos, bloq, a.dias, regra_j_ativa=motor.get("regra_j_ativa", True), regras=regras,
                 noites_filtro=filtro)
-    itens, apagar = ajustar_tetos(cfg, res["itens"], regras, cals) if regras else (res["itens"], [])
+    itens, apagar = ajustar_tetos(cfg, res["itens"], regras, cals, hoje=hoje) if regras else (res["itens"], [])
     itens, nulos = sem_efeito(cfg, itens, cals, regras, {(x["quarto"], x["data"]) for x in apagar})
     # o relatório conta só o que vai para a gravação (revisão de 31/10: dizia 9 itens com 8 gravados)
     md = relatorio_md(cfg, dict(res, itens=itens), sombra)

@@ -4524,6 +4524,16 @@ Exceção do sábado órfão (dono 02/11: sexta esgotada e sábado livre, entrad
 
 **Em sombra (passo 2):** `rodada` de acordo (22 reservas, 1 alerta, as mesmas 3 abaixo); `inventario --precos` igual (0 diferença).
 
+## 08/11/2026, 19:54 a 20:05 BRT — Rotina leve das 19:53
+
+**Overbooking: Balcony hoje (08/11) com numAvail −1** (7 reservas para 6 quartos) depois da reserva direta 95880629 (08-09/11, R$ 1.224, criada às 17:20 BRT). A skill não mexe em reservas: avisado ao dono para a recepção resolver.
+
+**Beds24 desde 16:38 BRT** (vigilância: o mesmo alerta das 16:53, as 3 reservas de R$ 0 do Airbnb canceladas juntas): canceladas na noite de chegada a 93420793 da Panorâmica I (08-10/11, Booking, de 20/09) e a 92157748 da Panorâmica II (08-09/11, Booking, de 27/08), com cara de no-show. Panorâmica II reabriu hoje e amanhã (1 cada); Panorâmica I com +1 de hoje a 10/11. A reserva 95551299 da Panorâmica I (de 05/11, 3 noites) aparece agora em **22/10/2027**: conferir com a recepção se a data foi mudada por engano. **Abaixo de 70%:** 95841935 King Spa 7 hoje (direta, R$ 300, 32%; já apontada em 07/11), 95616713 Moinhos hoje (59%) e 95551299 Panorâmica I 22/10/2027 (59%).
+
+**Sem gravação:** descidas por cancelamento esperam a recepção (no-shows na noite de chegada); as noites de hoje a 10/11 estão no período de redução do dono e o envio diário de hoje não saiu (último 07/11 10:31 BRT). Estadia de D0 a D7: sem órfã nova (a Panorâmica II reabriu duas noites seguidas).
+
+**Em sombra (passo 2):** `rodada` com a mesma janela de 16:38 de acordo (25 reservas, 1 alerta, as mesmas 3 abaixo); com a janela de −5 min ela pegou 3 reservas e 1 alerta a mais, que já eram da rodada anterior (a comparação só vale com a mesma janela).
+
 > **Regras em vigor:** desde 06/10/2026 elas ficam em `.claude/skills/gestao-receita-pousadas/references/regras.md`. Este arquivo guarda só o histórico das mudanças.
 
 ## O que só pode ser feito na tela (passo a passo para você)

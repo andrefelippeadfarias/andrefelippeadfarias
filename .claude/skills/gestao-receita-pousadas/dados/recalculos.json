@@ -73,6 +73,55 @@
    "resultado": "falha",
    "erro": "400 Beds24 appears to be temporarily unavailable or under high load",
    "registrado_em": "2026-11-08T10:56:35Z"
+  },
+  {
+   "quarto": "Q7",
+   "em": "2026-11-08T13:54:35Z",
+   "resultado": "ok",
+   "id_ms": 1794146075806,
+   "registrado_em": "2026-11-08T13:54:41Z"
+  },
+  {
+   "quarto": "Double",
+   "em": "2026-11-08T13:54:52Z",
+   "resultado": "ok",
+   "id_ms": 1794146092363,
+   "registrado_em": "2026-11-08T13:54:56Z"
+  },
+  {
+   "quarto": "Afrodite",
+   "em": "2026-11-08T13:55:06Z",
+   "resultado": "ok",
+   "id_ms": 1794146106209,
+   "registrado_em": "2026-11-08T13:55:10Z"
+  },
+  {
+   "quarto": "Q2",
+   "em": "2026-11-08T13:55:20Z",
+   "resultado": "ok",
+   "id_ms": 1794146120062,
+   "registrado_em": "2026-11-08T13:55:24Z"
+  },
+  {
+   "quarto": "VK7",
+   "em": "2026-11-08T13:55:33Z",
+   "resultado": "ok",
+   "id_ms": 1794146133733,
+   "registrado_em": "2026-11-08T13:55:37Z"
+  },
+  {
+   "quarto": "Balcony",
+   "em": "2026-11-08T13:55:46Z",
+   "resultado": "ok",
+   "id_ms": 1794146146498,
+   "registrado_em": "2026-11-08T13:55:50Z"
+  },
+  {
+   "quarto": "VK2",
+   "em": "2026-11-08T13:56:00Z",
+   "resultado": "ok",
+   "id_ms": 1794146160566,
+   "registrado_em": "2026-11-08T13:56:09Z"
   }
  ]
 }

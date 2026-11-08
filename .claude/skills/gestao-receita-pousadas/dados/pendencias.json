@@ -978,6 +978,14 @@
    "urgencia": 2,
    "data_alvo": "2026-11-09",
    "texto": "Qual anúncio da Booking é o Recanto hoje? A busca de segurança de 07/11 10:53 (por coordenadas) achou o 7562933 com o endereço certo e preço; o aprendizado de 27/10 diz que o 7562933 saiu do ar e o 15459723 recebe os preços do Beds24, e o scripts/faixas_de_preco.py (linha 33) e o .claude/workflows/varredura-concorrencia.js (linha 14) tratam o 15459723 como Recanto. O SKILL.md e o references/mercado.md dizem que pelo nome a busca cai no 15459723, sem disponibilidade. Na busca de segurança de 09/11 (10:53), anotar os dois ids, avaliações e preço; alinhar scripts e textos ao que estiver ativo (achado da revisão final de 07/11)."
+  },
+  {
+   "id": "estadia-2027-11-08-recanto",
+   "responsavel": "skill",
+   "desde": "2026-11-08",
+   "urgencia": 1,
+   "data_alvo": "2026-11-09",
+   "texto": "Estadia por dia de chegada da segunda 08/11/2027 (2 noites) gravada em 08/11 na Moinhos, King Spa 7, Balcony e King Spa 2 (PriceLabs e Beds24). Falta na Panorâmica I, Panorâmica II e Afrodite: o PriceLabs recusou a data às 15:04 ('Pricing data for this date isn't available yet'). Gravar min_stay 2 por data depois do recálculo da manhã de 09/11 (chamada só com essa data) e o lote do Beds24 dos três (calendario_12m plano --so-estadia dá os itens)."
   }
  ],
  "versao": "2026-11-05T15"

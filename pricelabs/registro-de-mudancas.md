@@ -4489,6 +4489,33 @@ Exceção do sábado órfão (dono 02/11: sexta esgotada e sábado livre, entrad
 
 **Em sombra (passo 2):** `inventario --precos` igual ao inventário atual em 427 noites (0 diferença, price1 em todas); `rodada` com as mesmas 5 reservas, 0 alerta e 0 abaixo; `janelas --reservas` igual. Chamadas da sombra: 3 ao Beds24.
 
+## 08/11/2026, 10:54 a 15:30 BRT — Rotina completa adiada (feita na rodada das 10:53) e rotina leve das 13:53
+
+**Rodada das 10:53 interrompida (erro meu):** o processo reiniciou três vezes durante as gravações; depois do terceiro reinício (~12:05 BRT) encerrei o turno sem terminar. Panorâmica I, Panorâmica II e Afrodite, o lote do Beds24 e o registro ficaram para as 13:53 (gravados às 15:04-15:25 BRT, depois de reler o Beds24 desde 10:38).
+
+**PriceLabs:** os 7 recálculos passaram às 10:54-10:56 (cota: Moinhos e Panorâmica I com 2 de 3 em 24 h; os outros com 1). Regras por data de 12 meses relidas (7 leituras); estadia efetiva tirada do próprio recálculo; calendário do dia montado do recálculo (a coleta das 07:53 veio sem quartos). **Envio diário de hoje ainda não saiu às 15:26 BRT** (último 07/11 10:31 BRT, ~29 h): tudo o que foi gravado hoje só chega aos canais no próximo envio ou com o Sync Now.
+
+**Beds24 desde 07:38 BRT** (vigilância: 1 alerta já conhecido, a 95810144 da King Spa 7 com R$ 0, alterada na saída): vendas novas King Spa 7 hoje 2× Booking R$ 520 (esgotou hoje) e King Spa 2 09/11 Airbnb R$ 357 (esgotou amanhã); abaixo de 70%: 95616713 Moinhos 08/11 (Booking, R$ 356 de R$ 604, 59%; reserva de 03/11 alterada hoje). Estadia de D0 a D7: a noite anterior a cada uma que esgotou já estava esgotada ou passou (sem órfã nova).
+
+**Gravado no PriceLabs** (validador 0 erro; conferido na resposta da API, data a data; 7 chamadas, uma por quarto):
+
+| Mudança | Onde | Antes | Depois |
+|---|---|---|---|
+| Descida da escada (0-3 vendidas) | King Spa 7 11/11 | R$ 1.273 | R$ 944 |
+| Descida da escada + Regra G | Balcony 11/11 | R$ 1.105 | R$ 826 |
+| Pace do feriado (piso; Recanto o mais caro da Booking) | Moinhos 20 e 21/11 | piso R$ 3.026 / 3.355 | R$ 2.723 / 3.019 (teto livre) |
+| Subidas da escada por venda | King Spa 7 15, 17, 23, 24/11 e 21-22/12; King Spa 2 23-24/11 e 22/12; Moinhos, Panorâmica I e II e Afrodite 06-07/12 | — | +3% a +15% |
+| Regra G (junto da King Spa 7) | Balcony 15, 17, 23, 24/11 e 21-22/12 | — | 10% abaixo da suíte com banheira livre mais barata |
+| Descidas da escada (0-1 vendidas) | King Spa 2 04-07/01/2027; King Spa 7, Balcony e Afrodite 07/01/2027 | — | reta do p50 |
+| Ordem do Recanto | Panorâmica I 07/01/2027 | — | R$ 1.232 (= Moinhos) |
+| Estadia por dia de chegada (segunda) | 08/11/2027: Moinhos, King Spa 7, Balcony, King Spa 2 (PriceLabs e Beds24, relido) | 1 | 2 |
+
+**Fora do plano:** subidas em 08-10/11 (Panorâmica I 09 e 10/11, Afrodite 09 e 10/11, Balcony 10/11 pela Regra G) pelo pedido do dono de reduções até terça; Afrodite 19/11 e a órfã 18/11 (reserva de R$ 0 que o PriceLabs não vê). **Recusado:** a estadia de 08/11/2027 da Panorâmica I ("Pricing data for this date isn't available yet"; a chamada inteira voltou) — gravadas as datas de preço sem ela; Panorâmica I, Panorâmica II e Afrodite 08/11/2027 ficam para a próxima gravação depois do recálculo (pendência `estadia-2027-11-08-recanto`). **Ledger:** 32 passos.
+
+**Em sombra (passo 2):** `rodada` de acordo (7 reservas, mesmo alerta); lote único com os mesmos 8 itens do lote atual; `comparar --reservas` saiu vazio (arquivo de reservas lido havia mais de 3 h: recusado pela trava de idade, como previsto; não é diferença de resultado).
+
+**Como desfazer:** pedir "volte a King Spa 7 e a Balcony de 11/11 ao preço anterior" (R$ 1.273 e R$ 1.105) ou "Moinhos 20-21/11 de volta a R$ 3.026 / 3.355".
+
 > **Regras em vigor:** desde 06/10/2026 elas ficam em `.claude/skills/gestao-receita-pousadas/references/regras.md`. Este arquivo guarda só o histórico das mudanças.
 
 ## O que só pode ser feito na tela (passo a passo para você)

@@ -4477,6 +4477,18 @@ Exceção do sábado órfão (dono 02/11: sexta esgotada e sábado livre, entrad
 
 **Como desfazer:** sábado 07/11 da Panorâmica II, Panorâmica I e Balcony de volta a `noCheckInOrCheckOut` no Beds24.
 
+## 08/11/2026, 07:54 a 08:15 BRT — Rotina completa das 07:53 (domingo): sem gravação, decisões para as 10:53
+
+**PriceLabs fora de dados:** o recálculo da Moinhos às 07:56 voltou 400 ("Beds24 appears to be temporarily unavailable or under high load") e a coleta deu LISTING_NO_DATA nos 7 quartos (2 tentativas cada). Pela trava nova (`cota_recalculo.py`, passo das travas do plano de chamadas), a falha foi registrada e nenhum outro quarto foi recalculado nesta rodada. Sem recálculo, o PriceLabs recusa gravação por data antes do envio diário; as decisões de preço e de estadia ficam para a rodada das 10:53, com os 7 recálculos (o gravado depois de ~08:40 só chega aos canais com o Sync Now ou no envio de amanhã).
+
+**Beds24 desde 19:38 BRT de 07/11** (vigilância: 0 alerta; abaixo de 70%: nenhuma): pedido do Airbnb (inquiry) na King Spa 2 18-20/11 (R$ 997); cancelada a 92157749 da Moinhos para 07/11 (noite já passada, às 22:02 BRT); o resto são mudanças de status de estadias passadas. **Ocupação real:** Recanto 51% / 48% / 37% e Villa 47% / 40% / 34% em 7 / 15 / 30 dias. **Livres hoje:** Moinhos 2, Panorâmica I 2, King Spa 7 2, Balcony 2; Afrodite, Panorâmica II e King Spa 2 esgotadas.
+
+**Envio:** último envio de 07/11 às 10:31 BRT nos 7 quartos (`push_enabled` ligado). A Panorâmica II de 07/11 (gravada às 11:03 BRT) não foi ao canal sem o Sync Now.
+
+**Mercado (PriceLabs):** feriado 20-21/11 com 46-47% já reservado (38% no ano passado); próximos 7 dias de 12% a 25%. **Booking (2 buscas):** 10-12/11 mediana R$ 566 por 2 noites (19 hotéis), Recanto R$ 1.437 e Villa R$ 831; 20-22/11 mediana R$ 2.277 (16 hotéis), Recanto R$ 3.825 (o mais caro, 26,6% acima do máximo) e Villa R$ 2.536. O Recanto apareceu como 7562933 (por coordenadas e na busca com hidro); o 15459723 não apareceu (pendência `recanto-id-booking-7562933-15459723`).
+
+**Em sombra (passo 2):** `inventario --precos` igual ao inventário atual em 427 noites (0 diferença, price1 em todas); `rodada` com as mesmas 5 reservas, 0 alerta e 0 abaixo; `janelas --reservas` igual. Chamadas da sombra: 3 ao Beds24.
+
 > **Regras em vigor:** desde 06/10/2026 elas ficam em `.claude/skills/gestao-receita-pousadas/references/regras.md`. Este arquivo guarda só o histórico das mudanças.
 
 ## O que só pode ser feito na tela (passo a passo para você)

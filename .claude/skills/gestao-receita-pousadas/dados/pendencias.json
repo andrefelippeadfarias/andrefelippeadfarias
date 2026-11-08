@@ -970,6 +970,14 @@
    "urgencia": 2,
    "data_alvo": "2026-11-07",
    "texto": "PriceLabs com 1 unidade a mais ocupada do que reservas no Beds24 (beds24.py comparar, 06/11): Moinhos 20 e 21/11 (PriceLabs 6, Beds24 5; numAvail caiu de 2 para 1 entre 05 e 06/11) e Balcony 07/11 (3 contra 2). Pode ser bloqueio manual sem reserva: confirmar com a equipe e reabrir se não for de propósito."
+  },
+  {
+   "id": "recanto-id-booking-7562933-15459723",
+   "responsavel": "skill",
+   "desde": "2026-11-07",
+   "urgencia": 2,
+   "data_alvo": "2026-11-09",
+   "texto": "Qual anúncio da Booking é o Recanto hoje? A busca de segurança de 07/11 10:53 (por coordenadas) achou o 7562933 com o endereço certo e preço; o aprendizado de 27/10 diz que o 7562933 saiu do ar e o 15459723 recebe os preços do Beds24, e o scripts/faixas_de_preco.py (linha 33) e o .claude/workflows/varredura-concorrencia.js (linha 14) tratam o 15459723 como Recanto. O SKILL.md e o references/mercado.md dizem que pelo nome a busca cai no 15459723, sem disponibilidade. Na busca de segurança de 09/11 (10:53), anotar os dois ids, avaliações e preço; alinhar scripts e textos ao que estiver ativo (achado da revisão final de 07/11)."
   }
  ],
  "versao": "2026-11-05T15"

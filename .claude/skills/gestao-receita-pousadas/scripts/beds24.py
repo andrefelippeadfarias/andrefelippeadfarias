@@ -914,12 +914,17 @@ def _com_espera(resumo, e0):
 CAMPOS_LOTE = ("min_stay", "max_stay", "override", "num_avail")
 
 
+# campos que fazem dois itens de lote serem o mesmo item (igual ao calendario_12m.CAMPOS_ITEM_LOTE)
+CAMPOS_ITEM_LOTE_UNICO = ("quarto", "de", "ate", "min_stay", "min_stay_antes", "max_stay", "override", "num_avail",
+                          "num_avail_esperado", "canais_max")
+
+
 def juntar_planos(planos):
     """Junta vários planos do editar-lote numa lista só, na ordem dada (o urgente primeiro), para irem nos mesmos blocos
     de POST. `planos` = [(nome, [itens])]. A mesma noite e o mesmo campo com valores diferentes em planos diferentes é
     ERRO antes de qualquer leitura ou gravação (o último gravado venceria sem ninguém decidir); dentro de um plano só
     nada muda em relação a antes. Devolve (itens, [{arquivo, itens}])."""
-    vistos, conflitos, itens, resumo = {}, [], [], []
+    vistos, conflitos, itens, resumo, itens_vistos = {}, [], [], [], {}
     for nome, plano in planos:
         if not isinstance(plano, list):
             raise ErroBeds24(f"{nome}: o plano do editar-lote é uma lista de itens")
@@ -932,12 +937,14 @@ def juntar_planos(planos):
                 it["quarto"]
             except (KeyError, TypeError, ValueError):
                 raise ErroBeds24(f"{nome}: item sem quarto, de ou ate válidos: {str(it)[:120]}") from None
-            # conferência de 07/11: o mesmo item (mesmas noites, campos e valores) já trazido por um plano anterior não
-            # vai de novo ao POST (iria duas vezes e o `conferidos` contaria em dobro), como no calendario_12m.lote_unico
-            ja_visto = bool(valores) and all(
-                (it["quarto"], ds, campo) in vistos and vistos[(it["quarto"], ds, campo)][0] == v
-                and vistos[(it["quarto"], ds, campo)][1] != nome
-                for ds in datas for campo, v in valores)
+            # conferência de 07/11: o item IDÊNTICO (todos os campos do item de lote, inclusive a faixa de/ate e as
+            # guardas min_stay_antes e num_avail_esperado) já trazido por um plano anterior não vai de novo ao POST
+            # (iria duas vezes e o `conferidos` contaria em dobro). Mesma chave do calendario_12m.lote_unico: item com
+            # guarda, faixa ou valor diferente segue no lote (revisão final de 07/11).
+            chave_item = json.dumps({k: it.get(k) for k in CAMPOS_ITEM_LOTE_UNICO}, sort_keys=True, ensure_ascii=False,
+                                    default=str)
+            ja_visto = chave_item in itens_vistos and itens_vistos[chave_item] != nome
+            itens_vistos.setdefault(chave_item, nome)
             for ds in datas:
                 for campo, v in valores:
                     chave = (it["quarto"], ds, campo)

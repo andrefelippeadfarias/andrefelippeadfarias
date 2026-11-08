@@ -1037,6 +1037,35 @@ class TestConferenciaFinal0711(unittest.TestCase):
         itens, _ = beds24.juntar_planos([("urgente", a), ("Q2", b)])
         self.assertEqual(len(itens), 2)
 
+    def test_guarda_diferente_nao_some(self):
+        a = [{"quarto": "Q7", "de": "2026-11-14", "ate": "2026-11-14", "min_stay": 1, "min_stay_antes": 2}]
+        b = [{"quarto": "Q7", "de": "2026-11-14", "ate": "2026-11-14", "min_stay": 1, "min_stay_antes": 3}]
+        itens, resumo = beds24.juntar_planos([("urgente", a), ("Q7", b)])
+        self.assertEqual(len(itens), 2)
+        self.assertNotIn("repetidos_ignorados", resumo[1])
+
+    def test_faixa_menor_coberta_nao_some(self):
+        a = [{"quarto": "Q7", "de": "2026-11-14", "ate": "2026-11-16", "min_stay": 1, "min_stay_antes": 2}]
+        b = [{"quarto": "Q7", "de": "2026-11-14", "ate": "2026-11-14", "min_stay": 1, "min_stay_antes": 2}]
+        itens, _ = beds24.juntar_planos([("urgente", a), ("Q7", b)])
+        self.assertEqual(len(itens), 2)
+
+    def test_sem_guarda_depois_de_com_guarda_nao_some(self):
+        a = [{"quarto": "Q7", "de": "2026-11-14", "ate": "2026-11-14", "min_stay": 1, "min_stay_antes": 2}]
+        b = [{"quarto": "Q7", "de": "2026-11-14", "ate": "2026-11-14", "min_stay": 1}]
+        itens, _ = beds24.juntar_planos([("urgente", a), ("Q7", b)])
+        self.assertEqual(len(itens), 2)
+
+    def test_num_avail_esperado_diferente_nao_some(self):
+        a = [{"quarto": "Q7", "de": "2026-11-14", "ate": "2026-11-14", "num_avail": 0, "num_avail_esperado": 1}]
+        b = [{"quarto": "Q7", "de": "2026-11-14", "ate": "2026-11-14", "num_avail": 0, "num_avail_esperado": 2}]
+        itens, _ = beds24.juntar_planos([("urgente", a), ("Q7", b)])
+        self.assertEqual(len(itens), 2)
+
+    def test_campos_iguais_ao_lote_unico(self):
+        import calendario_12m
+        self.assertEqual(beds24.CAMPOS_ITEM_LOTE_UNICO, calendario_12m.CAMPOS_ITEM_LOTE)
+
     def test_mesmo_plano_nao_deduplica(self):
         a = [{"quarto": "Q2", "de": "2026-11-14", "ate": "2026-11-14", "override": "noCheckOut"}] * 2
         itens, _ = beds24.juntar_planos([("urgente", a)])

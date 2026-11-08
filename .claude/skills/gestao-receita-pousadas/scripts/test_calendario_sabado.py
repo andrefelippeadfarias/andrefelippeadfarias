@@ -384,20 +384,11 @@ class TestLoteUnico(unittest.TestCase):
             self.assertFalse(os.path.exists(os.path.join(tmp, "u.json")))
 
 
-def pace_aceita_hoje() -> bool:
-    """O pace.ajustar_tetos já recebe `hoje` (correção da sessão principal, achado da revisão de 07/11)?"""
-    import inspect
-    import pace
-    return "hoje" in inspect.signature(pace.ajustar_tetos).parameters
-
-
 class TestPaceSabadoDeHoje(unittest.TestCase):
-    """Achado da revisão de 07/11: a prova do sábado de hoje com a sexta passada não chegava ao pace. O
-    pace.ajustar_tetos (pace.py, fora deste passo) chama calendario_12m.prova_sabado_orfao sem `hoje`: quando a descida
-    do dia solta o teto do sábado de hoje, a estadia 1 gravada pela correção volta a 2 e o envio leva o 2 ao Beds24. A
-    correção é da sessão principal (dar `hoje` ao ajustar_tetos, que o main do pace já tem, e repassar à
-    prova_sabado_orfao); o teste do caminho do pace roda assim que o ajustar_tetos aceitar `hoje` e, até lá, fica pulado
-    com o motivo na saída. O item que o pace corrigido devolve já passa no validador (teste que roda sempre)."""
+    """Achado da revisão de 07/11: a prova do sábado de hoje com a sexta passada não chegava ao pace (quando a descida
+    do dia soltava o teto do sábado de hoje, a estadia 1 voltava a 2 e o envio levava o 2 ao Beds24). Corrigido na
+    conferência final de 07/11: o pace.ajustar_tetos recebe `hoje` e o repassa ao prova_sabado_orfao. O teste roda
+    sempre: tirar o `hoje` do ajustar_tetos é falha, não teste pulado."""
 
     # recálculo da manhã de 07/11: o sábado com 1 de 2 vendido; a sexta 06/11 já passou e não vem
     REC = {SAB: noite(1, "1/2", "1200"), "2026-11-08": noite(1, "0/2", "1200")}
@@ -419,8 +410,6 @@ class TestPaceSabadoDeHoje(unittest.TestCase):
         # sem a prova, o sábado com 1 continua barrado
         self.assertTrue(erros([dict(it, min_stay=1, orfa="sábado")]))
 
-    @unittest.skipUnless(pace_aceita_hoje(), "pace.ajustar_tetos ainda sem `hoje`: correção da sessão principal em "
-                                             "pace.py (achado da revisão de 07/11, sábado de hoje com a sexta passada)")
     def test_ajustar_tetos_mantem_1_no_sabado_de_hoje(self):
         import pace
         c = cfg()

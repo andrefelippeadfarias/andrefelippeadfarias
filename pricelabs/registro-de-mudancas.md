@@ -4636,6 +4636,19 @@ Valores antigos para desfazer: `pricelabs/personalizacoes-balcony-antes-2026-11-
 
 **Sem mudança:** Moinhos 10/11 (D1) já no piso de dia de semana (R$ 1.232); hoje (D0) não sobe. Os preços de 20-21/11 vão no envio de amanhã.
 
+## 09/11/2026, 19:54 a 20:05 BRT — Rotina leve das 19:53
+
+**Beds24 desde 16:53 BRT** (vigilância: 0 alerta de segurança):
+- Nova: King Spa 7 12-14/12 (sábado e domingo; direta, lançada pela recepção, R$ 2.299, **59% do esperado**: abaixo de 70%, vai ao dono). Chegada de sábado lançada direto pela recepção (o Beds24 tem o sábado fechado para entrada; venda direta passa por cima).
+- Pedido do Airbnb (status inquiry, não é reserva) na King Spa 2 10/11, R$ 292.
+- Cancelada: King Spa 2 09-12/11 (direta, R$ 923, a que estava abaixo do esperado às 16:53). As noites 09, 10 e 11/11 da King Spa 2 reabriram (1 de 2 livre).
+- Alteradas: entradas de hoje e amanhã (King Spa 2, Moinhos, Panorâmica II).
+- Sombra do passo 2 (`rodada`): de acordo.
+
+**PriceLabs:** logs só da API. Recálculo da King Spa 2 às 19:55 (2º de 3 em 24 h): 09, 10 e 11/11 já a R$ 952, no piso de dia de semana (R$ 944 + arredondamento do percentual); nada a gravar. A venda da King Spa 7 de 12-13/12 (D33) fica para a rotina das 07:53, antes do envio de amanhã: o último recálculo do dia da King Spa 7 fica guardado para a conferência (travas do recálculo).
+
+**Regra G:** Balcony 10/11 R$ 698 (ordem de redução até terça) e 11/11 R$ 826, abaixo de 90% da King Spa 2 livre (R$ 857). Sem mudança.
+
 > **Regras em vigor:** desde 06/10/2026 elas ficam em `.claude/skills/gestao-receita-pousadas/references/regras.md`. Este arquivo guarda só o histórico das mudanças.
 
 ## O que só pode ser feito na tela (passo a passo para você)

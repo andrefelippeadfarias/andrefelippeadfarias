@@ -10561,6 +10561,32 @@
    "total": 6,
    "gravado_em": "2026-11-09T14:03:48+00:00",
    "chegou_ao_canal": false
+  },
+  {
+   "quarto": "VK7",
+   "noite": "2026-11-20",
+   "de": 3866.0,
+   "para": 4253,
+   "direcao": "sobe",
+   "status": "frente",
+   "vendidas": 6,
+   "base": "quarto",
+   "total": 7,
+   "gravado_em": "2026-11-09T19:59:14+00:00",
+   "chegou_ao_canal": false
+  },
+  {
+   "quarto": "VK7",
+   "noite": "2026-11-21",
+   "de": 3759.0,
+   "para": 3451,
+   "direcao": "desce",
+   "status": "ritmo",
+   "vendidas": 3,
+   "base": "quarto",
+   "total": 7,
+   "gravado_em": "2026-11-09T19:59:14+00:00",
+   "chegou_ao_canal": false
   }
  ]
 }

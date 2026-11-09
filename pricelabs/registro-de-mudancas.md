@@ -4614,6 +4614,28 @@ Valores antigos para desfazer: `pricelabs/personalizacoes-balcony-antes-2026-11-
 
 **PriceLabs:** sem venda, cancelamento ou alerta, nenhuma chamada (plano de redução de chamadas). Nada gravado.
 
+## 09/11/2026, 16:54 a 17:05 BRT — Rotina leve das 16:53
+
+**Beds24 desde 13:53 BRT** (vigilância: 0 alerta de segurança):
+- Nova: Moinhos hoje (09/11, 1 noite), direta, lançada pela recepção, R$ 442.
+- Canceladas: King Spa 7 20-22/11 (direta, R$ 1.521; feriado) e Moinhos 09-10/11 (Booking, R$ 736).
+- Alteradas: entradas de hoje e de amanhã atualizadas pela recepção (King Spa 7, King Spa 2, Afrodite, Moinhos).
+- **Reservas abaixo de 70% do esperado (7):** Moinhos hoje R$ 442 (36%, nova, direta); King Spa 7 09/11 R$ 280 e 10/11 R$ 300 (direta, já apontadas antes); Afrodite 09-12/11 R$ 1.503 (31%, direta, feita em 11/10, já apontada); King Spa 2 09-12/11 R$ 923 (32%, direta); King Spa 7 09-11/11 R$ 686 (33%, direta); King Spa 7 09/11 R$ 387 (37%, API). O preço comparado é o de agora; as antigas podem ter sido vendidas no piso de R$ 300 da ordem de 26/10.
+- Sombra do passo 2 (`rodada`): de acordo.
+
+**Logs do PriceLabs:** só ações da API. **Recálculo:** King Spa 7 às 16:55 (2º de 3 em 24 h).
+
+**Gravado no PriceLabs** (validador 0 erro; conferido na resposta da API; `pace.py registrar` feito):
+
+| Mudança | Onde | Antes (nos canais) | Depois (enviado / público / Genius 3) |
+|---|---|---|---|
+| Escada de vendas: a noite reabriu (6 de 7 vendidas), sai a proteção de esgotada | King Spa 7 sex 20/11 (feriado) | R$ 4.417 | R$ 4.262 / R$ 2.771 / R$ 2.451, estadia 2 |
+| Escada de vendas: 3 de 7 vendidas (era 4) | King Spa 7 sáb 21/11 (feriado) | R$ 3.759 | R$ 3.463 / R$ 2.251 / R$ 1.991, estadia 2 |
+
+**Beds24** (relido e conferido): King Spa 7 sáb 21/11 de `noCheckOut` e estadia 1 para `noCheckInOrCheckOut` e 2. O sábado tinha virado órfão em 05/11 com a sexta esgotada; com a sexta reaberta, voltou a regra do sábado fechado (dono 02/11) e a estadia de feriado. Sem isso, o sábado sozinho ficaria vendável (proibido, Regra H).
+
+**Sem mudança:** Moinhos 10/11 (D1) já no piso de dia de semana (R$ 1.232); hoje (D0) não sobe. Os preços de 20-21/11 vão no envio de amanhã.
+
 > **Regras em vigor:** desde 06/10/2026 elas ficam em `.claude/skills/gestao-receita-pousadas/references/regras.md`. Este arquivo guarda só o histórico das mudanças.
 
 ## O que só pode ser feito na tela (passo a passo para você)

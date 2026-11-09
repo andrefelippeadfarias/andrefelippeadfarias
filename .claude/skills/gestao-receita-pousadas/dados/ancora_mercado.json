@@ -1,8 +1,8 @@
 {
  "_doc": "Âncora de mercado do motor de pace: percentis do preço público por noite dos hotéis com hidro na Booking (2 adultos). p50 e max medidos; p75/p90/p25 aproximados (ver ancora_mercado.py). Noite sem busca própria usa `por_tipo` do mesmo tipo e mês.",
- "atualizado_em": "2026-11-08",
+ "atualizado_em": "2026-11-09",
  "fontes": [
-  "/tmp/claude-0/-home-user-andrefelippeadfarias/02bd5933-6de8-57dc-9e2b-aeb0b12a4913/scratchpad/r0811/coleta_completa.json"
+  "/tmp/claude-0/-home-user-andrefelippeadfarias/02bd5933-6de8-57dc-9e2b-aeb0b12a4913/scratchpad/r0911/coleta.json"
  ],
  "noites": {
   "2026-10-31": {

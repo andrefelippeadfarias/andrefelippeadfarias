@@ -985,7 +985,9 @@
    "desde": "2026-11-08",
    "urgencia": 1,
    "data_alvo": "2026-11-09",
-   "texto": "Estadia por dia de chegada da segunda 08/11/2027 (2 noites) gravada em 08/11 na Moinhos, King Spa 7, Balcony e King Spa 2 (PriceLabs e Beds24). Falta na Panorâmica I, Panorâmica II e Afrodite: o PriceLabs recusou a data às 15:04 ('Pricing data for this date isn't available yet'). Gravar min_stay 2 por data depois do recálculo da manhã de 09/11 (chamada só com essa data) e o lote do Beds24 dos três (calendario_12m plano --so-estadia dá os itens)."
+   "texto": "Estadia por dia de chegada da segunda 08/11/2027 (2 noites) gravada em 08/11 na Moinhos, King Spa 7, Balcony e King Spa 2 (PriceLabs e Beds24). Falta na Panorâmica I, Panorâmica II e Afrodite: o PriceLabs recusou a data às 15:04 ('Pricing data for this date isn't available yet'). Gravar min_stay 2 por data depois do recálculo da manhã de 09/11 (chamada só com essa data) e o lote do Beds24 dos três (calendario_12m plano --so-estadia dá os itens).",
+   "resolvido_em": "2026-11-09",
+   "resolucao": "Gravado em 09/11 às 08:12 BRT (PriceLabs, conferido na resposta) e no Beds24 (editar-lote, relido)."
   }
  ],
  "versao": "2026-11-05T15"

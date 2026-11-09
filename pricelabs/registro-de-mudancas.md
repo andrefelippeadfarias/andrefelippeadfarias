@@ -4534,6 +4534,29 @@ Exceção do sábado órfão (dono 02/11: sexta esgotada e sábado livre, entrad
 
 **Em sombra (passo 2):** `rodada` com a mesma janela de 16:38 de acordo (25 reservas, 1 alerta, as mesmas 3 abaixo); com a janela de −5 min ela pegou 3 reservas e 1 alerta a mais, que já eram da rodada anterior (a comparação só vale com a mesma janela).
 
+## 09/11/2026, 07:54 a 08:20 BRT — Rotina completa das 07:53 (segunda, com revisão semanal)
+
+**Beds24 desde 19:38 BRT de 08/11** (vigilância: **1 alerta**, reserva direta 95887183 na King Spa 7, 12-14/12, com R$ 0, lançada às 21:27 BRT): overbooking da Balcony de 08/11 resolvido (a recepção cancelou a 95877271 do Airbnb). Novas: Panorâmica I 24/11 (Airbnb, R$ 614); King Spa 7 07-10/12 (direta, VillaRecep1: preço R$ 3.000, fatura de hospedagem R$ 1.000, 33% do esperado; a tarifa copiada traz datas de novembro: conferir). **Abaixo de 70%:** também 95762093 King Spa 7 10/11 (direta, R$ 300, 28%) — terceira reserva direta de R$ 300 da VillaRecep1 na King Spa 7 desde 05/11.
+
+**PriceLabs:** os 7 recálculos passaram às 07:54-07:56 (cota: 2 de 3 em 24 h em todos). Envio de 08/11 saiu às 18:14 BRT (32 passos marcados como chegados ao canal). Coleta completa com os 7 quartos.
+
+**Gravado no PriceLabs** (validador 0 erro; conferido na resposta da API; 16 chamadas, em série a partir da 6ª):
+
+| Mudança | Onde | Antes | Depois |
+|---|---|---|---|
+| Escala do dono (reduções até terça), noites reabertas pelos no-shows de 08/11 | Panorâmica I hoje e amanhã; Panorâmica II hoje; Afrodite amanhã | R$ 1.495 / 1.436; R$ 1.638; R$ 1.740 | R$ 1.243 / 1.243; R$ 1.240; R$ 1.500 |
+| Ordem do Recanto (ajuste à mão sobre o motor) | Panorâmica I e II hoje | motor: R$ 1.219 / 1.229 (abaixo da Moinhos, R$ 1.232) | R$ 1.243 / 1.240 |
+| Subidas da escada por venda | Panorâmica I e Afrodite 24/11; King Spa 7 07, 08, 09 e 13/12; King Spa 2 07, 08, 09 e 13/12 | — | +5% a +10% |
+| Descida da escada | King Spa 2 10/12 | R$ 1.010 | R$ 952 |
+| Regra G | Balcony 07, 08, 09, 13/12 e 08/01/2027 | — | 10% abaixo da suíte com banheira livre mais barata |
+| Estadia por dia de chegada | 10/11/2027 nos 7 quartos; 08/11/2027 na Panorâmica I, Panorâmica II e Afrodite (pendência de 08/11); Afrodite 11/11 (de 1 para 2, noite já vendida) | 1 | 2 (PriceLabs e Beds24, 11 itens relidos) |
+
+**Fora do plano:** Balcony 10/11 (subida pela Regra G no período de redução); Afrodite 18/11 (órfã da reserva de R$ 0 que o PriceLabs não vê). **Ledger:** 15 passos.
+
+**Revisão semanal:** faturamento de novembro (Beds24) Recanto R$ 132,9 mil e Villa R$ 98,6 mil contra o mínimo do dono de R$ 220 mil e R$ 150 mil (faltam R$ 87 mil e R$ 51 mil: diária média de R$ 409 e R$ 244 nas livres); dezembro R$ 117,7 mil vendidos. Semana 02-08/11: Recanto 27 reservas ativas (R$ 18,7 mil, diária R$ 445) e 32 cancelamentos na semana; Villa 83 ativas (R$ 67,8 mil, R$ 498) e 23 cancelamentos. Painel semanal atualizado (5 arquivos; 3 dos 5 antigos apagados, 2 recusados pela permissão). Desempenho do mês em `pricelabs/desempenho/2026-11_ate_2026-11-09.md`. Não feitos nesta rotina: varredura da concorrência (rodada 1, sessão própria), fatores de valor real e público, referência hidro+vista e a rodada da `booking-hotel-research`.
+
+**Em sombra (passo 2):** lote único com os mesmos 12 itens do lote atual.
+
 > **Regras em vigor:** desde 06/10/2026 elas ficam em `.claude/skills/gestao-receita-pousadas/references/regras.md`. Este arquivo guarda só o histórico das mudanças.
 
 ## O que só pode ser feito na tela (passo a passo para você)

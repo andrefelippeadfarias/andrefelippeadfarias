@@ -4608,6 +4608,12 @@ Valores antigos para desfazer: `pricelabs/personalizacoes-balcony-antes-2026-11-
 
 **3. Semana em paralelo (sombra da flutuação), de 10/11 a 16/11:** `scripts/sombra_flutuacao.py` (novo) grava na rotina das 07:53 a foto do preço travado × o preço que o PriceLabs cobraria solto, com o mínimo no piso do dono; nada é gravado no PriceLabs. Na revisão de 16/11, o resumo decide o teste da King Spa 7 (2 a 3 semanas, dias de semana com só piso).
 
+## 09/11/2026, 13:54 a 14:00 BRT — Rotina leve das 13:53
+
+**Beds24 desde 10:53 BRT** (vigilância: 0 alerta; 0 reserva abaixo de 70%): nenhuma reserva nova e nenhum cancelamento novo. As 21 "alteradas" são reservas antigas (quase todas canceladas entre setembro e 06/11, e estadias já passadas de 08/11): edição de cadastro, sem efeito no inventário. Inventário de D0 a D60 igual ao das 10:53. Sombra do passo 2 (`rodada` e `inventario --precos`): de acordo.
+
+**PriceLabs:** sem venda, cancelamento ou alerta, nenhuma chamada (plano de redução de chamadas). Nada gravado.
+
 > **Regras em vigor:** desde 06/10/2026 elas ficam em `.claude/skills/gestao-receita-pousadas/references/regras.md`. Este arquivo guarda só o histórico das mudanças.
 
 ## O que só pode ser feito na tela (passo a passo para você)

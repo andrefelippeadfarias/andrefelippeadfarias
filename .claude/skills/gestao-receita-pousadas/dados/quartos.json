@@ -179,8 +179,8 @@
   }
  ],
  "referencia_semanal": {
-  "data": "2026-10-12",
-  "nota": "Base e mínimo de cada quarto no início da semana. A revisão de segunda atualiza. O validador barra mudança acima do limite semanal contra estes valores. Mínimo da Balcony gravado em 690 na rotina completa de 14/10 (de 765, −9,8%; Regra G: 10% abaixo da VK2 no mínimo); a referência segue 765 até a revisão de 19/10.",
+  "data": "2026-11-09",
+  "nota": "Base e mínimo de cada quarto no início da semana (lidos do PriceLabs na coleta de 09/11 07:53, antes dos passos do dia). A revisão de segunda atualiza. O validador barra mudança acima do limite semanal contra estes valores. A referência estava parada em 12/10 (Q2 base 1870, VK7 mín. 850, Balcony 765, VK2 765); atualizada em 09/11 para o passo 1 da ordem dono-2026-11-09-minimo-piso-semana.",
   "valores": {
    "Q7": {
     "min": 800,
@@ -196,18 +196,18 @@
    },
    "Q2": {
     "min": 850,
-    "base": 1870
+    "base": 1590
    },
    "VK7": {
-    "min": 850,
+    "min": 944,
     "base": 1480
    },
    "Balcony": {
-    "min": 765,
+    "min": 690,
     "base": 1270
    },
    "VK2": {
-    "min": 765,
+    "min": 879,
     "base": 1270
    }
   }

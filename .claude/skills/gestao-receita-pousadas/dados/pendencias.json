@@ -990,6 +990,22 @@
    "texto": "Estadia por dia de chegada da segunda 08/11/2027 (2 noites) gravada em 08/11 na Moinhos, King Spa 7, Balcony e King Spa 2 (PriceLabs e Beds24). Falta na Panorâmica I, Panorâmica II e Afrodite: o PriceLabs recusou a data às 15:04 ('Pricing data for this date isn't available yet'). Gravar min_stay 2 por data depois do recálculo da manhã de 09/11 (chamada só com essa data) e o lote do Beds24 dos três (calendario_12m plano --so-estadia dá os itens).",
    "resolvido_em": "2026-11-09",
    "resolucao": "Gravado em 09/11 às 08:12 BRT (PriceLabs, conferido na resposta) e no Beds24 (editar-lote, relido)."
+  },
+  {
+   "id": "minimo-piso-semana-passos",
+   "responsavel": "skill",
+   "desde": "2026-11-09",
+   "urgencia": 2,
+   "data_alvo": "2026-11-16",
+   "texto": "Ordem dono-2026-11-09-minimo-piso-semana ('2 Sim'): mínimo do anúncio rumo ao piso de dia de semana, até 15% por semana, na revisão de segunda. Passo 1 em 09/11 (Moinhos 800→920, Panorâmica I 900→1.035, Panorâmica II 850→977, King Spa 2 879→944 = alvo). Faltam: 16/11 Moinhos 1.058, Panorâmica I 1.190, Panorâmica II 1.123; 23/11 Moinhos 1.216, Panorâmica I e II 1.220; 30/11 Moinhos 1.220. Em cada passo: atualizar referencia_semanal, validar (tipo anuncio, excecao dono), conferir as noites sem regra por data abaixo do novo mínimo (nenhuma subida em D0/D1 nem contra ordem com prazo), gravar com update_listing_data, conferir na leitura seguinte e atualizar quartos.json."
+  },
+  {
+   "id": "sombra-flutuacao-teste-vk7",
+   "responsavel": "skill",
+   "desde": "2026-11-09",
+   "urgencia": 2,
+   "data_alvo": "2026-11-16",
+   "texto": "Ordem dono-2026-11-09-sombra-flutuacao-vk7 ('1. Sim'): semana em paralelo de 10/11 a 16/11 (scripts/sombra_flutuacao.py registrar na rotina das 07:53, sem gravar). Na revisão de 16/11: resumo da semana (sombra_flutuacao.py resumo --de 2026-11-10 --ate 2026-11-16) e, com ele, o desenho do teste da King Spa 7 (2 a 3 semanas, dias de semana fora de feriado com só piso de R$ 944 e teto livre; feriados, pacotes, sábados, estadia e ordens com prazo seguem por data), com o motor de pace sem travar essas noites. Estender aos outros quartos só com novo 'sim' do dono depois do resultado."
   }
  ],
  "versao": "2026-11-05T15"

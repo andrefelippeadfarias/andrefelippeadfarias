@@ -9702,6 +9702,85 @@
    "gatilho_dias": 11,
    "gatilho_min_dias": 2,
    "nota": "F2 (Dia de semana (dom-qui)): régua com hidro tabela do tipo, p50 R$ 648 público, p90 R$ 1784; ÷ 0.650 (Booking/enviado; ÷ 0.585 nos degraus de D7 ou menos); nunca abaixo do piso do dono. Gatilho de D7 sem venda nova: F1 (ou o piso do dono). Afrodite pelo prêmio dela e Balcony 10% abaixo (Regra G). Como desfazer: pedir 'Volte às ordens anteriores de 07/01/27'."
+  },
+  {
+   "id": "dono-2026-11-09-minimo-piso-semana",
+   "data": "2026-11-09",
+   "criada_em": "2026-11-09T14:45:00Z",
+   "texto": "2 Sim",
+   "contexto": "Resposta do dono (09/11 ~11:40 BRT: '1. Sim / 2 Sim / 3. Sim') às 3 perguntas da análise de min/base/máx do PriceLabs (09/11 10:17 BRT), repetidas no relatório da rotina das 10:53. Pergunta 2: 'Posso subir o mínimo de cada suíte até o piso de dia de semana (cerca de R$ 1.220 na Moinhos, Panorâmica I e Panorâmica II; cerca de R$ 943 na King Spa 2), no máximo 15% por semana?'",
+   "quartos": [
+    "Q7",
+    "Double",
+    "Q2",
+    "VK2"
+   ],
+   "de": "2026-11-09",
+   "ate": "2026-12-07",
+   "tipo": "regra",
+   "libera": [
+    "anuncio"
+   ],
+   "alvos": {
+    "Q7": 1220,
+    "Double": 1220,
+    "Q2": 1220,
+    "VK2": 944
+   },
+   "passos": {
+    "2026-11-09": {
+     "Q7": 920,
+     "Double": 1035,
+     "Q2": 977,
+     "VK2": 944
+    },
+    "2026-11-16": {
+     "Q7": 1058,
+     "Double": 1190,
+     "Q2": 1123
+    },
+    "2026-11-23": {
+     "Q7": 1216,
+     "Double": 1220,
+     "Q2": 1220
+    },
+    "2026-11-30": {
+     "Q7": 1220
+    }
+   },
+   "nota": "Só o mínimo do anúncio (update_listing_data), em passos de até 15% por semana contra referencia_semanal, na revisão de segunda (16/11, 23/11, 30/11). Alvo = piso de dia de semana do dono: R$ 500 ÷ fator_vitrine_semana (Recanto 0,41 → R$ 1.220; Villa 0,53 → R$ 944, igual à King Spa 7). King Spa 7 (944) e Afrodite (1.500) já estão no piso; Balcony fica fora (sem banheira, Regra G). Base e máximo não mudam. Em 09/11 nenhum preço dos 541 dias lidos fica abaixo do passo 1, e a regra por data (min=máx) prevalece sobre o mínimo do anúncio (Balcony 09/11 a R$ 635 com mínimo de R$ 690). Antes de cada passo, conferir as noites sem regra por data abaixo do novo mínimo (Moinhos tem 72 noites de jan-mai/2028 abaixo de R$ 1.220, longe e sem regra)."
+  },
+  {
+   "id": "dono-2026-11-09-sombra-flutuacao-vk7",
+   "data": "2026-11-09",
+   "criada_em": "2026-11-09T14:45:00Z",
+   "texto": "1. Sim",
+   "contexto": "Resposta do dono (09/11 ~11:40 BRT: '1. Sim / 2 Sim / 3. Sim') às 3 perguntas da análise de min/base/máx do PriceLabs (09/11 10:17 BRT), repetidas no relatório da rotina das 10:53. Pergunta 1: 'Autoriza a semana em paralelo e, depois, o teste na King Spa 7?' (semana em paralelo sem gravar nada, comparando o preço travado com o do PriceLabs dia a dia; depois só a King Spa 7, por 2 a 3 semanas, destravando os dias de semana; só estende aos outros quartos se vender melhor).",
+   "quartos": [
+    "VK7"
+   ],
+   "de": "2026-11-10",
+   "ate": "2026-12-07",
+   "tipo": "regra",
+   "libera": [],
+   "nota": "Sombra de 10/11 a 16/11 (scripts/sombra_flutuacao.py na rotina das 07:53, sem gravar). Na revisão de 16/11, com o resumo da sombra, a skill prepara o teste da King Spa 7: dias de semana fora de feriado com só piso (o do dono, R$ 944) e teto livre, para o PriceLabs flutuar; feriados, pacotes, sábados, estadia e ordens com prazo seguem por data. O teste dura 2 a 3 semanas e só se estende aos outros quartos com o 'sim' do dono depois do resultado."
+  },
+  {
+   "id": "dono-2026-11-09-balcony-personalizacao",
+   "data": "2026-11-09",
+   "criada_em": "2026-11-09T14:45:00Z",
+   "texto": "3. Sim",
+   "contexto": "Resposta do dono (09/11 ~11:40 BRT: '1. Sim / 2 Sim / 3. Sim') às 3 perguntas da análise de min/base/máx do PriceLabs (09/11 10:17 BRT), repetidas no relatório da rotina das 10:53. Pergunta 3: 'Posso fazer uma gravação pequena nas personalizações para confirmar a permissão? Por exemplo, igualar a configuração da Balcony à das outras suítes. Hoje ela está bem mais agressiva (até 35% de desconto perto da data), e essa proposta de 05/10 ainda espera sua resposta.'",
+   "quartos": [
+    "Balcony"
+   ],
+   "de": "2026-11-09",
+   "ate": "2026-11-09",
+   "tipo": "regra",
+   "libera": [
+    "personalizacao"
+   ],
+   "nota": "Uma gravação de personalização (update_customizations, nível listing) na Balcony, só com as chaves que diferem das outras suítes, guardando os valores antigos no registro para desfazer."
   }
  ]
 }

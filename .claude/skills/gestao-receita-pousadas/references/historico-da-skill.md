@@ -2,6 +2,15 @@
 
 Cada mudança feita na própria Skill (regras, parâmetros, scripts, fluxo) entra aqui: data, o que mudou, por quê (evidência) e como desfazer. A entrada mais nova fica em cima.
 
+## 09/11/2026 (~11:40-13:00 BRT): decisões do dono sobre mínimo, flutuação e Balcony ("1. Sim / 2 Sim / 3. Sim")
+- **Por quê:** respostas às 3 perguntas da análise de mínimo, base e máximo do PriceLabs (09/11 10:17 BRT).
+- **O que mudou:**
+  - Ordens `dono-2026-11-09-minimo-piso-semana`, `dono-2026-11-09-sombra-flutuacao-vk7` e `dono-2026-11-09-balcony-personalizacao` em `dados/ordens_dono.json`; regras.md 6a; pendências `minimo-piso-semana-passos` e `sombra-flutuacao-teste-vk7` (16/11).
+  - `quartos.json`: `referencia_semanal` atualizada para 09/11 (estava em 12/10) e `min` de Q7 920, Double 1035, Q2 977, VK2 944 (passo 1 gravado no PriceLabs).
+  - PriceLabs: Balcony com sazonalidade, demanda, última hora e ocupação iguais ao grupo (antes: aggressive / aggressive / aggressive / tabela até −35%).
+  - `scripts/sombra_flutuacao.py` (novo, com `test_sombra_flutuacao.py`): foto diária do preço gravado × preço solto estimado; `resumo` para a revisão de 16/11. SKILL.md 4 (revisão semanal: passos do mínimo e resumo da sombra) e 4d (registrar a foto de 10/11 a 16/11).
+- **Como desfazer:** mínimo: `update_listing_data` com Q7 800, Double 900, Q2 850, VK2 879 (e `quartos.json`); Balcony: `update_customizations` com as 4 chaves de `pricelabs/personalizacoes-balcony-antes-2026-11-09.json`; sombra: apagar o passo do SKILL.md (o script não grava nada no PriceLabs).
+
 ## 07/11/2026 (noite): passo 1 do plano de redução de chamadas (só texto, vale desde 08/11)
 - **Por quê:** dono, 06/11: "preciso que melhore essa forma de comunicar as coisas lá para diminuirmos a quantidade de chamadas que temos que fazer". Plano em `pricelabs/plano-reducao-chamadas.md`, aprovado pelo dono em 06/11 ("Perfeito"). Passo 1: tirar as leituras repetidas e as chamadas sem uso (estimativa: 16 chamadas por dia).
 - **O que mudou:**

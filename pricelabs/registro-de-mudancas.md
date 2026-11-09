@@ -4580,6 +4580,34 @@ Exceção do sábado órfão (dono 02/11: sexta esgotada e sábado livre, entrad
 - Recanto: id 7562933, "Recanto dos Moinhos - Boutique Hotel", 575 Rua Januário Pereira, R$ 711,50 (razão 0,583 sobre a Moinhos, R$ 1.220). Normal. Por coordenadas e também pelo nome volta o 7562933; o anúncio antigo 15459723 não aparece mais (pendência `recanto-id-booking-7562933-15459723` fechada; scripts e textos alinhados).
 - Villa: id 14824789, R. das Candelas, 79, nota 8,3 (215 avaliações). R$ 422,94 em 24/11: razão 0,416 sobre a Balcony (R$ 1.016), **um pouco abaixo do alerta de 0,42**. Em 25/11, R$ 414,45: razão 0,50 sobre R$ 826. O normal longe da data é ~0,62. Id, nome e endereço conferem, então não parece invasão; parece promoção da Villa nessas datas. Anotado na pendência do dono `villa-oferta-ultima-hora`: conferir em Promoções na extranet. A skill não mexe em promoções.
 
+## 09/11/2026, 11:40 a 13:00 BRT — Decisões do dono: mínimo ao piso, Balcony igual às outras e semana em paralelo
+
+**Ordem do dono** ("1. Sim / 2 Sim / 3. Sim", respostas às 3 perguntas de 09/11 10:17 sobre mínimo, base e máximo): ordens `dono-2026-11-09-minimo-piso-semana`, `dono-2026-11-09-balcony-personalizacao` e `dono-2026-11-09-sombra-flutuacao-vk7`.
+
+**1. Mínimo do anúncio, passo 1** (`update_listing_data`; validador 0 erro com a `referencia_semanal` de 09/11; base e máximo sem mudança, conferidos na resposta):
+
+| Suíte | Mínimo antes | Mínimo agora | Variação | Alvo (piso de dia de semana) |
+|---|---|---|---|---|
+| Moinhos | R$ 800 | R$ 920 | +15% | R$ 1.220 (16/11 1.058; 23/11 1.216; 30/11 1.220) |
+| Panorâmica I | R$ 900 | R$ 1.035 | +15% | R$ 1.220 (16/11 1.190; 23/11 1.220) |
+| Panorâmica II | R$ 850 | R$ 977 | +14,9% | R$ 1.220 (16/11 1.123; 23/11 1.220) |
+| King Spa 2 | R$ 879 | R$ 944 | +7,4% | R$ 944 (alvo atingido) |
+
+King Spa 7 (R$ 944) e Afrodite (R$ 1.500) já estavam no piso; a Balcony fica fora (sem banheira). Nenhum preço mudou: nas 541 noites lidas não havia noite abaixo do novo mínimo, e a regra por data com piso = teto prevalece sobre o mínimo do anúncio.
+
+**2. Balcony com a configuração do grupo** (`update_customizations`, nível listing; a permissão de gravar personalização está confirmada):
+
+| Personalização | Antes (só a Balcony) | Agora (igual ao grupo) |
+|---|---|---|
+| Sazonalidade | Aggressive | Recommended |
+| Desconto de última hora | Aggressive (até 20% no mesmo dia) | Sem desconto (ligado, tipo none) |
+| Fator de demanda | Aggressive | Recommended (conjunto de hotéis: PriceLabs Default) |
+| Ajuste por ocupação | Tabela própria, até −35% (0-15 dias) | Market Driven |
+
+Valores antigos para desfazer: `pricelabs/personalizacoes-balcony-antes-2026-11-09.json`. A gravação não recalculou sozinha; recálculo da Balcony às 12:28 (2º de 3 em 24 h): **nenhuma noite dos próximos 60 dias mudou** (todas presas por regra por data; hoje R$ 635, amanhã R$ 698 e 19/11 R$ 1.511 iguais). Mudaram 364 noites de 10/01/2027 em diante: julho/2027 −16%, junho −12%, maio −6,5%, março/2027 +8%, março/2028 +11%. A Regra G nessas noites longe já não valia antes (271 noites acima da suíte com banheira mais barata; agora 318), sobretudo pela suavização semanal da Balcony, que só muda pela tela (pendência `balcony-smoothing`); o motor aplica a Regra G por data quando a noite entra nos 60 dias. A leitura de 05/11 em arquivo estava com Balcony e King Spa 7 trocadas; a de hoje bate com os preços (a King Spa 7 segue o grupo).
+
+**3. Semana em paralelo (sombra da flutuação), de 10/11 a 16/11:** `scripts/sombra_flutuacao.py` (novo) grava na rotina das 07:53 a foto do preço travado × o preço que o PriceLabs cobraria solto, com o mínimo no piso do dono; nada é gravado no PriceLabs. Na revisão de 16/11, o resumo decide o teste da King Spa 7 (2 a 3 semanas, dias de semana com só piso).
+
 > **Regras em vigor:** desde 06/10/2026 elas ficam em `.claude/skills/gestao-receita-pousadas/references/regras.md`. Este arquivo guarda só o histórico das mudanças.
 
 ## O que só pode ser feito na tela (passo a passo para você)

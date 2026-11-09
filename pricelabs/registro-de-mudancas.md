@@ -4546,7 +4546,7 @@ Exceção do sábado órfão (dono 02/11: sexta esgotada e sábado livre, entrad
 |---|---|---|---|
 | Escala do dono (reduções até terça), noites reabertas pelos no-shows de 08/11 | Panorâmica I hoje e amanhã; Panorâmica II hoje; Afrodite amanhã | R$ 1.495 / 1.436; R$ 1.638; R$ 1.740 | R$ 1.243 / 1.243; R$ 1.240; R$ 1.500 |
 | Ordem do Recanto (ajuste à mão sobre o motor) | Panorâmica I e II hoje | motor: R$ 1.219 / 1.229 (abaixo da Moinhos, R$ 1.232) | R$ 1.243 / 1.240 |
-| Subidas da escada por venda | Panorâmica I e Afrodite 24/11; King Spa 7 07, 08, 09 e 13/12; King Spa 2 07, 08, 09 e 13/12 | — | +5% a +10% |
+| Subidas da escada por venda | Panorâmica I e Afrodite 24/11; King Spa 7 07, 08, 09 e 13/12; King Spa 2 07, 08, 09 e 13/12 | — | +5% a +11% (o PriceLabs grava em percentual inteiro da base) |
 | Descida da escada | King Spa 2 10/12 | R$ 1.010 | R$ 952 |
 | Regra G | Balcony 07, 08, 09, 13/12 e 08/01/2027 | — | 10% abaixo da suíte com banheira livre mais barata |
 | Estadia por dia de chegada | 10/11/2027 nos 7 quartos; 08/11/2027 na Panorâmica I, Panorâmica II e Afrodite (pendência de 08/11); Afrodite 11/11 (de 1 para 2, noite já vendida) | 1 | 2 (PriceLabs e Beds24, 11 itens relidos) |

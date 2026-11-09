@@ -36,6 +36,10 @@ CFG["por_curto"]["Q2"].update({"sem_desconto": True, "fator_real": 0.34})
 # escada e Afrodite foram calibradas com o fator público de 15459723 (0,59); o arquivo real passou a 0,63/0,65 em 30/10
 CFG["parametros"]["regra_j"]["fator_publico"] = {"Recanto": 0.59, "Villa": 0.589}
 CFG["parametros"]["fator_publico"] = {"Recanto": 0.59, "Villa": 0.589}
+# mínimos do anúncio de antes do passo 1 da ordem do dono de 09/11 (dono-2026-11-09-minimo-piso-semana): os testes
+# conferem a lógica com os preços de outubro, escritos com estes mínimos; o arquivo real sobe até o piso em passos
+for _q, _m in {"Q7": 800, "Double": 900, "Q2": 850, "VK2": 879}.items():
+    CFG["por_curto"][_q]["min"] = _m
 HOJE = date(2026, 10, 6)  # terça
 
 

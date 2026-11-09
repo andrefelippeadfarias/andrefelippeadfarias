@@ -10535,6 +10535,32 @@
    "total": 9,
    "gravado_em": "2026-11-09T11:13:37+00:00",
    "chegou_ao_canal": false
+  },
+  {
+   "quarto": "Double",
+   "noite": "2026-11-24",
+   "de": 1362.0,
+   "para": 1499,
+   "direcao": "sobe",
+   "status": "frente",
+   "vendidas": 3,
+   "base": "quarto",
+   "total": 6,
+   "gravado_em": "2026-11-09T14:03:48+00:00",
+   "chegou_ao_canal": false
+  },
+  {
+   "quarto": "Double",
+   "noite": "2026-11-25",
+   "de": 1228.0,
+   "para": 1351,
+   "direcao": "sobe",
+   "status": "ritmo",
+   "vendidas": 1,
+   "base": "quarto",
+   "total": 6,
+   "gravado_em": "2026-11-09T14:03:48+00:00",
+   "chegou_ao_canal": false
   }
  ]
 }

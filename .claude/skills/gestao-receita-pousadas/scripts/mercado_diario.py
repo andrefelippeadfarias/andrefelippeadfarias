@@ -35,7 +35,8 @@ REPO = os.path.dirname(os.path.dirname(os.path.dirname(SKILL)))
 CADASTRO = os.path.join(REPO, "pricelabs", "pesquisa-booking", "concorrentes.json")
 HIST = os.path.join(SKILL, "dados", "mercado_diario.json")
 REF = os.path.join(SKILL, "dados", "concorrentes_hidro_vista.json")
-NOSSOS = {"pousada-vista-panoramica-campos-do-jordao": "Recanto", "villa-dolce-amore-boutique-panoramica": "Villa"}
+NOSSOS = {"pousada-recanto-dos-moinhos": "Recanto", "pousada-vista-panoramica-campos-do-jordao": "Recanto",
+          "villa-dolce-amore-boutique-panoramica": "Villa"}  # o primeiro é o anúncio ativo (09/11)
 
 
 def estadias(hoje: dt.date, cfg) -> list:

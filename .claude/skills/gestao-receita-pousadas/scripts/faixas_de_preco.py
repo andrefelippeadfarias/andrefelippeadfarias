@@ -30,7 +30,7 @@ from datetime import date, timedelta
 FAIXAS = ["muito baixo", "baixo", "médio", "alto", "muito alto"]
 EMOJI = ["🟣", "🔵", "🟢", "🟠", "🔴"]
 PERCENTIS = (20, 40, 60, 80)
-NOSSOS = {15459723: "Recanto", 14824789: "Villa"}
+NOSSOS = {7562933: "Recanto", 15459723: "Recanto", 14824789: "Villa"}  # 7562933 é o anúncio ativo (09/11); 15459723 é o antigo
 
 
 def quantil(valores: list[float], p: float) -> float:

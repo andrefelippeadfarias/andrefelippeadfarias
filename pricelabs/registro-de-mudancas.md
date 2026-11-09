@@ -4557,6 +4557,29 @@ Exceção do sábado órfão (dono 02/11: sexta esgotada e sábado livre, entrad
 
 **Em sombra (passo 2):** lote único com os mesmos 12 itens do lote atual.
 
+## 09/11/2026, 10:54 a 11:40 BRT — Rotina leve das 10:53
+
+**Beds24 desde 07:38 BRT** (vigilância: 0 alerta; 0 reserva abaixo de 70%):
+- Nova: Panorâmica I 24-26/11 (Airbnb, R$ 1.043,80 nas 2 noites).
+- Alteradas: Panorâmica I 95273889 e Panorâmica II 92960463, as duas de 07-09/11 (Booking, estadias já passadas).
+- Sombra do passo 2 (`beds24.py rodada`): bateu com a leitura de reservas.
+
+**Logs do PriceLabs:** só ações da API; nenhuma mudança manual.
+
+**Envio do dia:** 09:53 BRT nos 7 quartos. As gravações abaixo (D15-D16) vão no envio de amanhã.
+
+**Gravado no PriceLabs** (recálculo da Panorâmica I às 10:56, 2º de 3 em 24 h; validador 0 erro; conferido na resposta da API):
+
+| Mudança | Onde | Antes | Depois (enviado / público / Genius 3) |
+|---|---|---|---|
+| Escada de vendas: subiu com a venda (3 de 6 vendidas) | Panorâmica I 24/11 | R$ 1.362 | R$ 1.510 / R$ 951 / R$ 619 |
+| Escada de vendas: 1 de 6 vendidas, à frente da curva | Panorâmica I 25/11 | R$ 1.228 | R$ 1.362 / R$ 858 / R$ 558 |
+| Ordem do Recanto: Afrodite 20% acima da mais cara (Panorâmica I) | Afrodite 24/11 | R$ 1.640 | R$ 1.820 / R$ 1.147 / R$ 746 |
+
+**Busca de segurança na Booking** (conector oficial, 24-25/11; Villa também 25-26/11):
+- Recanto: id 7562933, "Recanto dos Moinhos - Boutique Hotel", 575 Rua Januário Pereira, R$ 711,50 (razão 0,583 sobre a Moinhos, R$ 1.220). Normal. Por coordenadas e também pelo nome volta o 7562933; o anúncio antigo 15459723 não aparece mais (pendência `recanto-id-booking-7562933-15459723` fechada; scripts e textos alinhados).
+- Villa: id 14824789, R. das Candelas, 79, nota 8,3 (215 avaliações). R$ 422,94 em 24/11: razão 0,416 sobre a Balcony (R$ 1.016), **um pouco abaixo do alerta de 0,42**. Em 25/11, R$ 414,45: razão 0,50 sobre R$ 826. O normal longe da data é ~0,62. Id, nome e endereço conferem, então não parece invasão; parece promoção da Villa nessas datas. Anotado na pendência do dono `villa-oferta-ultima-hora`: conferir em Promoções na extranet. A skill não mexe em promoções.
+
 > **Regras em vigor:** desde 06/10/2026 elas ficam em `.claude/skills/gestao-receita-pousadas/references/regras.md`. Este arquivo guarda só o histórico das mudanças.
 
 ## O que só pode ser feito na tela (passo a passo para você)

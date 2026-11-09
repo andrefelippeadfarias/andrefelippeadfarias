@@ -46,7 +46,7 @@ Status (07/11/2026, noite):
 - as vendas vêm do movimento do Beds24; sai a 'diferença de ocupação do calendário' do PriceLabs (SKILL.md:33), que podia virar 7 get_listing_prices por rotina;
 - às 13:53, 16:53 e 19:53, sem reserva, cancelamento ou alerta, nenhuma chamada ao PriceLabs nem à Booking;
 - o get_user_logs vem sempre antes de qualquer gravação, com desde = início da rodada anterior menos 15 min.
-(f) Às 10:53, a segurança e a vitrine usam as mesmas 2 buscas, na data alterada: o Recanto por coordenadas (pelo nome cai no id 15459723) e a Villa por hotel_names.
+(f) Às 10:53, a segurança e a vitrine usam as mesmas 2 buscas, na data alterada: o Recanto por coordenadas (desde 09/11 o nome também devolve o 7562933) e a Villa por hotel_names.
 (g) O mercado_diario passa para a revisão de segunda, com OK do dono (ordem de 20/10). Isso evita 72 buscas prescritas por dia, que ficam fora da conta porque não rodaram em 06/11. **Não aplicado em 07/11: precisa do OK do dono** (continua em "Precisa do dono"); o SKILL.md segue com a busca diária.
 
 **Risco e mitigação:** Riscos:

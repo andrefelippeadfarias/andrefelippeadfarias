@@ -648,7 +648,7 @@
    "responsavel": "dono",
    "desde": "2026-10-25",
    "urgencia": 2,
-   "texto": "A Villa na Booking (id 14824789) aparece ~20% abaixo do fator normal em 26-28/10 (R$ 349 contra ~R$ 430). Indica oferta de última hora ou outra promoção ativa na extranet (Promoções). A regra do dono é não usar promoções da Booking: conferir e desligar, se for o caso."
+   "texto": "A Villa na Booking (id 14824789) aparece ~20% abaixo do fator normal em 26-28/10 (R$ 349 contra ~R$ 430). Indica oferta de última hora ou outra promoção ativa na extranet (Promoções). A regra do dono é não usar promoções da Booking: conferir e desligar, se for o caso. 09/11 (busca de segurança das 10:53): a Villa a R$ 422,94 em 24-25/11 (razão 0,416 sobre a Balcony, R$ 1.016 enviados; abaixo do alerta de 0,42) e R$ 414,45 em 25-26/11 (0,50 sobre R$ 826), contra ~0,62 normal longe da data; id, nome e endereço conferem e o Recanto no mesmo dia ficou normal (0,583). Sinal de promoção da Villa valendo para 24-26/11 (ou para estadias a ~15 dias): conferir em Promoções na extranet."
   },
   {
    "id": "genius-alavanca-2610",
@@ -977,7 +977,9 @@
    "desde": "2026-11-07",
    "urgencia": 2,
    "data_alvo": "2026-11-09",
-   "texto": "Qual anúncio da Booking é o Recanto hoje? A busca de segurança de 07/11 10:53 (por coordenadas) achou o 7562933 com o endereço certo e preço; o aprendizado de 27/10 diz que o 7562933 saiu do ar e o 15459723 recebe os preços do Beds24, e o scripts/faixas_de_preco.py (linha 33) e o .claude/workflows/varredura-concorrencia.js (linha 14) tratam o 15459723 como Recanto. O SKILL.md e o references/mercado.md dizem que pelo nome a busca cai no 15459723, sem disponibilidade. Na busca de segurança de 09/11 (10:53), anotar os dois ids, avaliações e preço; alinhar scripts e textos ao que estiver ativo (achado da revisão final de 07/11)."
+   "texto": "Qual anúncio da Booking é o Recanto hoje? A busca de segurança de 07/11 10:53 (por coordenadas) achou o 7562933 com o endereço certo e preço; o aprendizado de 27/10 diz que o 7562933 saiu do ar e o 15459723 recebe os preços do Beds24, e o scripts/faixas_de_preco.py (linha 33) e o .claude/workflows/varredura-concorrencia.js (linha 14) tratam o 15459723 como Recanto. O SKILL.md e o references/mercado.md dizem que pelo nome a busca cai no 15459723, sem disponibilidade. Na busca de segurança de 09/11 (10:53), anotar os dois ids, avaliações e preço; alinhar scripts e textos ao que estiver ativo (achado da revisão final de 07/11).",
+   "resolvido_em": "2026-11-09",
+   "resolucao": "Busca de segurança de 09/11 10:53 (24-25/11): por coordenadas e também por hotel_names o Recanto volta como id 7562933, 'Recanto dos Moinhos - Boutique Hotel', 575 Rua Januário Pereira, R$ 711,50 (razão 0,583 sobre a Moinhos); o 15459723 não aparece mais. Alinhados: scripts/faixas_de_preco.py e scripts/mercado_diario.py (o 7562933 e o slug pousada-recanto-dos-moinhos entram como nossos; o antigo fica), .claude/workflows/varredura-concorrencia.js (nosso=true também para o 7562933), coleta-pricelabs.js, SKILL.md, references/mercado.md e pricelabs/plano-reducao-chamadas.md."
   },
   {
    "id": "estadia-2027-11-08-recanto",

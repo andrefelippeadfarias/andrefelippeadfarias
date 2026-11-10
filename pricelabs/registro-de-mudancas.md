@@ -4710,6 +4710,12 @@ Festas da Villa (Natal e Réveillon) ficaram como estavam (decisão 6 é do Reca
 
 **Envio:** `last_date_pushed` dos 7 quartos ainda em 09/11 17:04 BRT às 10:55: o envio diário de hoje não saiu; as 328 regras gravadas às 08:00 não estão nos canais. Pedido de Sync Now ao dono. Logs: nenhuma mudança manual.
 
+## 10/11/2026, 12:35 BRT — Pedido do dono: valores e lotação do fim de semana 13-15/11 (consulta, nada gravado)
+
+- Beds24 (12:35): sexta 13/11 Recanto 4/16 (Moinhos 1/7, Panorâmica I 2/6, Panorâmica II 1/2, Afrodite 0/1), Villa 6/15 (King Spa 7 4/7, King Spa 2 2/2, Balcony 0/6); sábado 14/11 Recanto 5/16 (Panorâmica I 3/6), Villa 6/15. Os cancelamentos das 10:41-10:46 tiraram 2 reservas da Moinhos e a Afrodite reabriu.
+- Booking agora (conector oficial, 13-15/11, 2 adultos, café): Recanto R$ 2.469,79 (R$ 1.235/noite) e Villa R$ 2.738,74 (R$ 1.369/noite): ainda os preços de ontem. `last_date_pushed` segue em 09/11 17:04 BRT nos 7 quartos e `last_refreshed_at` vazio: o envio de hoje não saiu. Com o envio, a Booking passa a mostrar ~R$ 669/noite no Recanto (Moinhos) e ~R$ 854 na Villa (Balcony a 90% da King Spa 7).
+- Novas desde 10:55: Balcony e King Spa 7 em 11/11 (Booking, R$ 298 e R$ 324), King Spa 2 04-07/12 (Expedia, R$ 1.239).
+
 ## O que só pode ser feito na tela (passo a passo para você)
 
 1. **Safety Minimum Price → "Do Not Apply"** (Dynamic Pricing → Customizations → aba Groups → Edit no grupo Recanto dos Moinhos → All Customizations → Safety Minimum Price). Anote o valor atual antes.

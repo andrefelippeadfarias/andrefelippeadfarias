@@ -1068,7 +1068,8 @@
       "desde": "2026-11-10",
       "urgencia": 1,
       "data_alvo": "2026-11-10",
-      "texto": "King Spa 2 em 10/11: 3 reservas do Airbnb para 2 suítes (95716070 e 95524247 confirmadas; 95939474 'new', R$ 357, de 09/11 20:32 BRT). Recepção resolver antes da chegada de hoje."
+      "texto": "King Spa 2 em 10/11: 3 reservas do Airbnb para 2 suítes (95716070 e 95524247 confirmadas; 95939474 'new', R$ 357, de 09/11 20:32 BRT). Recepção resolver antes da chegada de hoje. RESOLVIDO: às 16:54 BRT o Beds24 mostra a King Spa 2 com numAvail 0 em 10/11; 95716070 e 95524247 passaram para a King Spa 7 (7/7).",
+      "resolvido_em": "2026-11-10"
     },
     {
       "id": "villa-quarto-booking-fora-pricelabs",

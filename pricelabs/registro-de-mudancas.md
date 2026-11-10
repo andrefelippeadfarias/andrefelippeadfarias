@@ -4754,6 +4754,18 @@ As 23 reservas da Booking criadas às 10:39 (21 na King Spa 7, 1 King Spa 2 06-0
 
 Fora do plano: Moinhos 13-15/11 já no preço do plano; Balcony D0 (10/11) ficaria em R$ 838, mas D0 nunca sobe. O envio leva tudo ao canal amanhã (~08:47) ou num Sync Now; as descidas da Balcony em 15-17/11 (D5-D7) são as que mais ganham com o Sync Now.
 
+## 10/11/2026, 16:54 a 17:25 BRT — Rotina leve das 16:53: overbooking da King Spa 2 resolvido e Balcony de 26/11 pela Regra G
+
+**Beds24 desde 13:48 BRT** (vigilância: 0 alerta; sombra `rodada` de acordo com movimento + abaixo + vigilância): novas Moinhos 13-15/11 (Booking, R$ 1.347 e R$ 1.032; agora 3/7), King Spa 2 26/11 (Airbnb, R$ 476; esgotou, 2/2); pedidos do Airbnb sem reserva (Moinhos 13-15/11, Panorâmica II 15/11, King Spa 2 13-18/12). **Overbooking da King Spa 2 de hoje resolvido:** duas reservas do Airbnb (95716070 e 95524247) passaram para a King Spa 7, que fechou a noite 7/7; King Spa 2 com numAvail 0. Abaixo de 70%: só a 95762093 (direta, R$ 300, já citada em 09/11; mudou de quarto hoje). Double 20-21/11 segue com 7 reservas para 6 suítes. Logs do PriceLabs: só gravações da skill.
+
+Recálculo: King Spa 2 (3 de 3 em 24 h; próxima vaga 19:55 BRT). Regras da Villa lidas às 16:56. Plano `pace.py` só da Villa com `--noites VK2=2026-11-26 VK7=2026-11-10 VK2=2026-11-10`; validação com o calendário em cache ajustado às regras vigentes (King Spa 7 26/11 a R$ 1.051): 0 erro, 0 aviso.
+
+| Mudança | Onde | Antes | Depois (gravado 17:21 BRT; conferido na resposta) | Como desfazer |
+|---|---|---|---|---|
+| Regra G (King Spa 2 esgotou; suíte com banheira livre mais barata passou a ser a King Spa 7, R$ 1.051) | Balcony 26/11 | R$ 826 | R$ 914 | — (regra vigente) |
+
+Não gravado agora: proteção da King Spa 2 esgotada em 26/11 (piso R$ 944, D16): entra no plano de amanhã cedo. Moinhos 13-14/11 com 3/7: a escada do plano começa na 4ª venda; sem passo. Correção do registro das 14:00-15:40: o log do PriceLabs mostra a exclusão da King Spa 7 de 15-17/11 às 15:38:49 e a regravação a partir de 15:39:23 (a janela sem regra foi de segundos). Sombra da flutuação: leitura do Beds24 das 17:22 guardada.
+
 ## O que só pode ser feito na tela (passo a passo para você)
 
 1. **Safety Minimum Price → "Do Not Apply"** (Dynamic Pricing → Customizations → aba Groups → Edit no grupo Recanto dos Moinhos → All Customizations → Safety Minimum Price). Anote o valor atual antes.

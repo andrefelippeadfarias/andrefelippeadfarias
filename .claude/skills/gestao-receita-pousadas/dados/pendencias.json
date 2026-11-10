@@ -1013,7 +1013,8 @@
       "desde": "2026-11-10",
       "urgencia": 1,
       "data_alvo": "2026-11-12",
-      "texto": "Análise completa nov-fev pedida pelo dono em 09/11 (pricelabs/analise-nov-fev-2026-11-10.md; página https://claude.ai/artifact/4fe5rrZh7CqWP4v74wXuTG; dados em pricelabs/analise-nov-fev-2026-11-10/). Nada foi gravado. Sete decisões aguardam o dono: (1) aplicar já os preços de abertura no fim de semana de 13-14/11 (tabela por suíte em dados_este_fds.json; urgente); (2) fim de semana: piso por suíte no lugar do piso único de R$ 850 Genius 3; (3) fim de semana abre no mercado e a escada só começa depois de metade vendida (substitui F5/F3 de 04/11 e a subida desde a primeira reserva); (4) Balcony com preço próprio (10% abaixo da King Spa vira teto); (5) dia de semana: na última semana as suítes livres descem à mediana do mercado com hidro (piso de R$ 500 Genius 3 vale até D8); (6) Natal e Réveillon do Recanto abrem na mediana do mercado com hidro, não em F5; (7) Afrodite no fim de semana 15% acima da Panorâmica I no lugar da faixa de R$ 1.600-1.800. Sem resposta do dono nenhuma delas é aplicada: seguem valendo as ordens de 01/11, 04/11 e 27/10 e os pisos atuais."
+      "texto": "Análise completa nov-fev pedida pelo dono em 09/11 (pricelabs/analise-nov-fev-2026-11-10.md; página https://claude.ai/artifact/4fe5rrZh7CqWP4v74wXuTG; dados em pricelabs/analise-nov-fev-2026-11-10/). Nada foi gravado. Sete decisões aguardam o dono: (1) aplicar já os preços de abertura no fim de semana de 13-14/11 (tabela por suíte em dados_este_fds.json; urgente); (2) fim de semana: piso por suíte no lugar do piso único de R$ 850 Genius 3; (3) fim de semana abre no mercado e a escada só começa depois de metade vendida (substitui F5/F3 de 04/11 e a subida desde a primeira reserva); (4) Balcony com preço próprio (10% abaixo da King Spa vira teto); (5) dia de semana: na última semana as suítes livres descem à mediana do mercado com hidro (piso de R$ 500 Genius 3 vale até D8); (6) Natal e Réveillon do Recanto abrem na mediana do mercado com hidro, não em F5; (7) Afrodite no fim de semana 15% acima da Panorâmica I no lugar da faixa de R$ 1.600-1.800. Sem resposta do dono nenhuma delas é aplicada: seguem valendo as ordens de 01/11, 04/11 e 27/10 e os pisos atuais. RESOLVIDO 09/11 ~23:35 BRT: dono aprovou 1, 2, 3, 5, 6, 7 e as demais sugestões; recusou a 4 (Balcony com preço próprio), trocada pela regra dos 80% (ordem dono-2026-11-09-plano-nov-fev; regras.md 4f). Gravado em 10/11 07:53 BRT.",
+      "resolvido_em": "2026-11-10"
     },
     {
       "id": "analise-nov-fev-revisao-independente",
@@ -1022,6 +1023,28 @@
       "urgencia": 1,
       "data_alvo": "2026-11-10",
       "texto": "A revisão independente dos números da análise nov-fev e a conferência do quarto com hidro hotel a hotel não rodaram em 10/11 de madrugada (limite de uso da conta até 00:50 BRT). Rodar a revisão (dados próprios, percentis da régua, lógica do plano, descrição das ordens do dono) e avisar o dono de qualquer número corrigido; o Recanto só foi medido na Booking em 7 das 32 estadias (busca por coordenadas)."
+    },
+    {
+      "id": "plano-dono-regua-refazer",
+      "responsavel": "skill",
+      "desde": "2026-11-10",
+      "urgencia": 2,
+      "data_alvo": "2026-11-24",
+      "texto": "Régua do plano do dono (dados/regua_dono.json) é da varredura de 09-10/11. Refazer a varredura de 32 estadias (conector oficial; scripts em pricelabs/analise-nov-fev-2026-11-10/scripts) a cada 15 dias, junto da revisão dos 12 meses, e até 31/12 estender a régua de março em diante (a ordem vale até 28/02/2027). Medir de novo o fator público da Villa (promoção ativa: 0,35 no Natal, 0,41 no Réveillon)."
+    },
+    {
+      "id": "balcony-80-interpretacao",
+      "responsavel": "dono",
+      "desde": "2026-11-10",
+      "urgencia": 3,
+      "texto": "Confirmar com o dono a leitura de '80% de lotação' da regra nova da Balcony: hoje = suítes com banheira da Villa na noite (King Spa 7 + King Spa 2, 8 ou 9 de 9 vendidas). Se ele quis dizer a Villa inteira ou o hotel todo, ajustar plano_dono.balcony_no_mercado e o validador."
+    },
+    {
+      "id": "vk2-expedia-20270506-abaixo",
+      "responsavel": "dono",
+      "desde": "2026-11-10",
+      "urgencia": 2,
+      "texto": "Reserva nova da Expedia na King Spa 2 de 06/05/2027, 4 noites, R$ 1.188,94 no total (~R$ 297 por noite), feita em 10/11 00:10 UTC: bem abaixo do esperado para a suíte. Conferir na Expedia/Beds24 a tarifa e o plano tarifário que geraram esse valor (a skill não altera reservas)."
     }
   ],
   "versao": "2026-11-05T15"

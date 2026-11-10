@@ -880,7 +880,8 @@ class TestConcorrenciaHidroVista(unittest.TestCase):
             "VK2": {"days": [dia("2026-12-04", 1860, "0/2")], "overrides": [{"date": "2026-12-04", "min_price": 43}]},
             "Balcony": {"days": [dia("2026-12-04", 1640, "0/6")]}}}
         comp = {"periodos": [{"rotulo": "t", "datas": ["2026-12-04"], "mediana_a": 600, "recanto": 1100}]}
-        itens, _ = c.montar(CFG, comp, coleta, date(2026, 10, 19), {("VK7", "2026-12-04"): 1})
+        # sem a ordem do plano do dono de 09/11 (com ela, sexta 04/12 é noite do plano e o script não gera item)
+        itens, _ = c.montar(CFG, comp, coleta, date(2026, 10, 19), {("VK7", "2026-12-04"): 1}, ordens={})
         por = {i["quarto"]: i for i in itens}
         self.assertNotIn("Q2", por)                      # sem desconto
         self.assertNotIn("VK7", por)                     # bloqueado: não está à venda
@@ -3431,9 +3432,13 @@ class TestPace(unittest.TestCase):
         # dia de semana fora de feriado: R$ 500 Genius ÷ 0,63 (CFG do teste) = R$ 794 > mínimo R$ 800? não: vale o mínimo
         piso, origem = pace.pisos_enviados(self.cfg, "Q7", date(2026, 11, 10))
         self.assertAlmostEqual(piso, max(800, 500 / 0.63), places=0)
-        # fds: R$ 850 ÷ 0,61 = R$ 1.393
-        piso, origem = pace.pisos_enviados(self.cfg, "Q7", date(2026, 11, 13))
+        # fds: R$ 850 ÷ 0,61 = R$ 1.393 (fora do plano do dono de 09/11: sexta 05/03/2027)
+        piso, origem = pace.pisos_enviados(self.cfg, "Q7", date(2027, 3, 5))
         self.assertAlmostEqual(piso, 850 / 0.61, places=0)
+        # no plano do dono (10/11/2026 a 28/02/2027, decisão 2): sem o R$ 850, vale o padrão de qualidade (R$ 1.000)
+        piso, origem = pace.pisos_enviados(self.cfg, "Q7", date(2026, 11, 13))
+        self.assertAlmostEqual(piso, 1000, places=0)
+        self.assertIn("padrão de qualidade", origem)
         # feriado (Finados): piso real R$ 800 ÷ 0,42 = R$ 1.905
         piso, origem = pace.pisos_enviados(self.cfg, "Q7", date(2026, 11, 1))
         self.assertAlmostEqual(piso, 800 / 0.42, places=0)
@@ -3694,11 +3699,25 @@ class TestPace(unittest.TestCase):
         it = [x for x in res["itens"] if x["quarto"] == "Afrodite"][0]
         self.assertGreaterEqual(it["min_price"], round(1391 * 1.2))
         self.assertEqual(it["ordem_id"], "dono-2026-10-22-afrodite-mais-cara")
-        # sábado 14/11 dentro de 95 dias: faixa R$ 1.600-1.800 públicos ÷ 0,63 = R$ 2.540-2.857, piso e teto da faixa
+        # sábado 14/11 dentro de 95 dias: faixa R$ 1.600-1.800 públicos ÷ 0,63 = R$ 2.540-2.857, piso e teto (sem a
+        # ordem do plano do dono de 09/11 nas ordens: apagar a ordem devolve a regra de antes; revisão de 10/11)
         cals = {"Afrodite": {"2026-11-14": row("2026-11-14", 5840, 1)}}
         res = pace.plano(cfg, anc, cals, hoje, ordem, {"passos": []}, dias=20, regra_j_ativa=False)
         it = [x for x in res["itens"] if x["quarto"] == "Afrodite"][0]
         self.assertEqual((it["min_price"], it["max_price"]), (round(1600 / 0.63), 2857))
+        # com a ordem do plano (decisão 7, noites de 10/11/2026 a 28/02/2027) a faixa sai: só a proteção
+        from ordens import carregar_ordens
+        import plano_dono as PD
+        com_plano = dict(ordem, **{PD.ORDEM_ID: carregar_ordens()[PD.ORDEM_ID]})
+        res = pace.plano(cfg, anc, cals, hoje, com_plano, {"passos": []}, dias=20, regra_j_ativa=False)
+        self.assertFalse([x for x in res["itens"] if x["quarto"] == "Afrodite" and x.get("max_price") == 2857])
+        with PD.com_ordens(com_plano):
+            self.assertIsNone(pace.regra_afrodite(cfg, cals, {}, date(2026, 11, 14), hoje)[1])
+        with PD.com_ordens({}):
+            self.assertEqual(pace.regra_afrodite(cfg, cals, {}, date(2026, 11, 14), hoje)[1], 2857)
+        # fora do período (sábado 06/03/2027, dentro dos 95 dias de 01/03/2027) a faixa continua
+        self.assertEqual(pace.regra_afrodite(cfg, {}, {}, date(2027, 3, 6), date(2027, 3, 1)),
+                         (round(1600 / 0.63), round(1800 / 0.63)))
 
     def test_revisao_3110_afrodite_toda_noite_q2_no_piso_e_libera(self):
         import pace
@@ -3854,7 +3873,9 @@ class TestFaixasDono(unittest.TestCase):
         n3, f3s = f.gerar_ordens(fx, cfg, regra3, {}, hoje, 30, {"sus": sus}, "2026-11-04T14:00+00:00")
         o3 = [o for o in n3 if o["pousada_faixa"] == "Recanto"][0]
         self.assertEqual(o3["gatilho_dias"], 7)                                      # sexta abre o bloco do fds
-        piso_fds = pisos_enviados(cfg, "Q7", date(2026, 11, 27))[0]
+        import plano_dono as PD
+        with PD.com_ordens({"sus": sus}):  # as mesmas ordens do gerar_ordens (sem a do plano: o R$ 850 de antes)
+            piso_fds = pisos_enviados(cfg, "Q7", date(2026, 11, 27))[0]
         self.assertEqual(o3["piso_atras"]["Q7"], round(max(hid["50"] / f.razao("Recanto", 0), piso_fds), 2))
         self.assertNotIn("abaixo_piso", o3["libera"])
         self.assertEqual(f3s["sus"], {"Q7": ["2026-11-27"]})

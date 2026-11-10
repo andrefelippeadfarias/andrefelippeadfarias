@@ -15,6 +15,12 @@ considerada super luxo"): toda noite acima das outras três. Dono 27/10 ("Pode s
     vale para o inverno de 2027 (30/10: 50 fins de semana de 2027 receberam teto de R$ 3.050 com o algoritmo a R$ 4.100
     a 4.570; desfeito no mesmo dia). Fora do horizonte vale só a ordem (piso acima das outras).
 
+Plano do dono de 09/11 (dono-2026-11-09-plano-nov-fev, decisão 7; só com a ordem no arquivo de ordens): nas noites de
+fim de semana, feriado e festas de 10/11/2026 a 28/02/2027 a Afrodite fica 15% acima da Panorâmica I (o preço dela na
+noite), sem a faixa de R$ 1.600-1.800, e nunca abaixo do prêmio dela sobre a mais cara das outras (o de sempre: 5% em
+sexta, sábado e feriado; 20% nos outros dias, inclusive 27-28/12, entre festas; revisão de 10/11). Dia de semana de D7 a
+D0 (decisão 5), a faixa da Panorâmica II usa o piso de mercado do plano (exigencias com `hoje`).
+
 Para cada noite, com os preços do recálculo do PriceLabs: menor = min(Q7, Double), maior = max(Q7, Double). A Q2 precisa
 ficar entre os dois. Tolerância: 1% da base do quarto + R$ 1 (o PriceLabs só aceita piso e teto em percentual inteiro da
 base; na Q2, 1% são R$ 18,70). `plano` gera, só para as noites fora da faixa, piso e teto da Q2 em reais
@@ -36,6 +42,7 @@ import sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from calendario_12m import exigencias, ler_recalculo  # noqa: E402
 from comum import carregar_quartos, esgotado, periodo_feriado  # noqa: E402
+import plano_dono as PD  # noqa: E402
 
 POSICAO = 0.75
 
@@ -44,28 +51,43 @@ def tol(cfg: dict, quarto: str) -> float:
     return 0.01 * float(cfg["por_curto"][quarto]["base"]) + 1
 
 
-def faixa(cfg: dict, d: dt.date, q7: dict, db: dict, q2: dict) -> dict:
+def faixa(cfg: dict, d: dt.date, q7: dict, db: dict, q2: dict, hoje: dt.date | None = None) -> dict:
+    """Faixa da Panorâmica II. Com `hoje`, o piso da regra é o do dia (plano do dono de 09/11, decisão 5: dia de semana de
+    D7 a D0 com o piso de mercado; revisão de 10/11: sem `hoje` o piso ficava em R$ 1.220 com a Moinhos e a Panorâmica I a
+    ~R$ 900-960, e o `plano` punha a Panorâmica II acima da Panorâmica I). `piso_dono`: o piso sem a liberação do plano
+    (abaixo dele, o item precisa da ordem do plano)."""
     a, b, c = float(q7["price"]), float(db["price"]), float(q2["price"])
     menor, maior = min(a, b), max(a, b)
-    piso_regra = exigencias(cfg, cfg["por_curto"]["Q2"], d)["piso"] or 0
+    piso_dono = exigencias(cfg, cfg["por_curto"]["Q2"], d)["piso"] or 0
+    piso_regra = (exigencias(cfg, cfg["por_curto"]["Q2"], d, hoje)["piso"] or 0) if hoje is not None else piso_dono
     piso = round(max(piso_regra, menor))
     teto = round(max(piso, menor + POSICAO * (maior - menor)))
     t = tol(cfg, "Q2")
     fora = c > maior + t or c < menor - t or float(q2.get("min_price") or 0) > maior + t
     final = min(max(c, piso), teto) if fora else c
-    return {"moinhos": a, "panoramica_1": b, "panoramica_2": c, "piso": piso, "teto": teto, "fora": fora, "q2_final": final}
+    return {"moinhos": a, "panoramica_1": b, "panoramica_2": c, "piso": piso, "teto": teto, "fora": fora, "q2_final": final,
+            "piso_dono": piso_dono}
+
+
+def noite_do_plano(cfg: dict, d: dt.date) -> bool:
+    """Noite em que o plano do dono de 09/11 fixa o preço da Afrodite (fim de semana, feriado e festas do Recanto, de
+    10/11/2026 a 28/02/2027): Afrodite 15% acima da Panorâmica I, sem a faixa de R$ 1.600-1.800 (decisão 7)."""
+    return PD.governa_noite("Afrodite", d.isoformat(), cfg)
 
 
 def premio_afrodite(cfg: dict, d: dt.date) -> float:
     q = cfg["por_curto"]["Afrodite"]
     if d.weekday() in (4, 5) or periodo_feriado(cfg, d):
+        # o plano do dono de 09/11 não muda o prêmio (R1: "5% em sexta/sábado/feriado"); 27-28/12 (entre festas,
+        # domingo e segunda) ficam com os 20% de dia de semana (revisão de 10/11)
         return float(q["premio_minimo"])
     return float(q.get("premio_minimo_semana", q["premio_minimo"]))
 
 
 def faixa_fds_afrodite(cfg: dict, d: dt.date):
-    """(piso, teto) enviados da faixa de fim de semana, ou None em dia de semana e feriado."""
-    if d.weekday() not in (4, 5) or periodo_feriado(cfg, d):
+    """(piso, teto) enviados da faixa de fim de semana, ou None em dia de semana, feriado e nas noites do plano do dono
+    de 09/11 (decisão 7: a Afrodite fica 15% acima da Panorâmica I, no lugar da faixa de 27/10)."""
+    if d.weekday() not in (4, 5) or periodo_feriado(cfg, d) or noite_do_plano(cfg, d):
         return None
     par = cfg["parametros"]
     fat = par["regra_j"]["fator_publico"]["Recanto"]
@@ -74,13 +96,14 @@ def faixa_fds_afrodite(cfg: dict, d: dt.date):
 
 
 def faixa_afrodite(cfg: dict, d: dt.date, q7: dict, db: dict, q2_final: float, af: dict,
-                   teto_ate: dt.date | None = None) -> dict:
+                   teto_ate: dt.date | None = None, panoramica_1: dict | None = None,
+                   hoje: dt.date | None = None) -> dict:
     """Afrodite acima das outras três: piso = o maior entre o piso da regra e a mais cara das outras × (1 + prêmio).
     Fim de semana fora de feriado: teto na faixa alta do mercado, nunca abaixo do piso da ordem, e só até `teto_ate`
     (hoje + afrodite_fds_horizonte_dias; None = sem limite, para testes)."""
     outras = max(float(q7["price"]), float(db["price"]), float(q2_final))
     premio = premio_afrodite(cfg, d)
-    piso_regra = exigencias(cfg, cfg["por_curto"]["Afrodite"], d)["piso"] or 0
+    piso_regra = exigencias(cfg, cfg["por_curto"]["Afrodite"], d, hoje)["piso"] or 0
     for ex in cfg["limites_seguranca"].get("excecoes_dono", []) or []:
         # piso menor aberto pelo dono (26/10: R$ 300 no Genius 3 até 08/11) vale também aqui
         if ex.get("quarto") == "Afrodite" and ex["de"] <= d.isoformat() <= ex["ate"]:
@@ -88,6 +111,11 @@ def faixa_afrodite(cfg: dict, d: dt.date, q7: dict, db: dict, q2_final: float, a
     piso = round(max(piso_regra, outras * (1 + premio)))
     preco = float(af["price"])
     abaixo = preco < outras * (1 + premio) - tol(cfg, "Afrodite")
+    if panoramica_1 is not None and noite_do_plano(cfg, d):
+        # plano do dono de 09/11 (decisão 7): 15% acima da Panorâmica I (o preço do plano dela, também esgotada)
+        ref = float(panoramica_1["price"]) * PD.AFRODITE_SOBRE_DOUBLE
+        piso = max(piso, round(ref))
+        abaixo = abaixo or preco < ref - tol(cfg, "Afrodite")
     teto = None
     fds = faixa_fds_afrodite(cfg, d) if teto_ate is None or d <= teto_ate else None
     if fds and preco > fds[1] + tol(cfg, "Afrodite"):
@@ -102,15 +130,16 @@ def horizonte_teto_fds(cfg: dict, hoje: dt.date) -> dt.date:
     return hoje + dt.timedelta(days=int(cfg["parametros"].get("afrodite_fds_horizonte_dias", 95)))
 
 
-def comparar(cfg, cal7, caldb, cal2, de, ate, calaf=None):
+def comparar(cfg, cal7, caldb, cal2, de, ate, calaf=None, hoje=None):
+    hoje = hoje or de
     out, d = [], de
-    teto_ate = horizonte_teto_fds(cfg, de)
+    teto_ate = horizonte_teto_fds(cfg, hoje)
     while d <= ate:
         s = d.isoformat()
         if s in cal7 and s in caldb and s in cal2:
             # Regra J (dono, 27/10): suíte esgotada vai ao topo do mercado e sai da ordem; a ordem vale entre as que vendem
             esg = {k: esgotado(c[s], cfg["por_curto"][k]["unidades"]) for k, c in (("Q7", cal7), ("Double", caldb), ("Q2", cal2))}
-            f = faixa(cfg, d, cal7[s], caldb[s], cal2[s])
+            f = faixa(cfg, d, cal7[s], caldb[s], cal2[s], hoje)
             if f["fora"] and not any(esg.values()):
                 out.append({"data": s, "quarto": "Q2", **f})
             if calaf and s in calaf and not esgotado(calaf[s], 1):
@@ -120,7 +149,7 @@ def comparar(cfg, cal7, caldb, cal2, de, ate, calaf=None):
                     continue
                 f = dict(f, q2_final=(f["q2_final"] if not esg["Q2"] else 0))
                 ref = max(abertos, key=lambda r: float(r["price"]))
-                g = faixa_afrodite(cfg, d, ref, ref, f["q2_final"], calaf[s], teto_ate)
+                g = faixa_afrodite(cfg, d, ref, ref, f["q2_final"], calaf[s], teto_ate, panoramica_1=caldb[s], hoje=hoje)
                 if g["fora"]:
                     out.append({"data": s, "quarto": "Afrodite", **g})
         d += dt.timedelta(days=1)
@@ -131,10 +160,15 @@ def montar_plano(fora: list[dict], hoje: dt.date) -> dict:
     itens = []
     for x in fora:
         if x["quarto"] == "Q2":
+            # abaixo do piso do dono só pelo piso de mercado do plano de 09/11 (decisão 5, D7 a D0): é a ordem do plano
+            # que libera (a do Recanto não libera 'abaixo_piso')
+            r3 = x["piso"] < float(x.get("piso_dono") or 0) - 1
+            oid = PD.ORDEM_ID if r3 else "dono-2026-10-21-ordem-recanto"
             itens.append({"tipo": "data", "quarto": "Q2", "data": x["data"], "min_price": x["piso"], "max_price": x["teto"],
-                          "preco_antes": x["panoramica_2"], "excecao": "dono", "ordem_id": "dono-2026-10-21-ordem-recanto",
+                          "preco_antes": x["panoramica_2"], "excecao": "dono", "ordem_id": oid,
                           "motivo": (f"Dono 21/10: Panorâmica II entre a Moinhos (R$ {x['moinhos']:.0f}) e a Panorâmica I "
-                                     f"(R$ {x['panoramica_1']:.0f}); estava R$ {x['panoramica_2']:.0f}")})
+                                     f"(R$ {x['panoramica_1']:.0f}); estava R$ {x['panoramica_2']:.0f}"
+                                     + ("; piso de mercado de D7 a D0 (plano do dono 09/11)" if r3 else ""))})
         else:
             it = {"tipo": "data", "quarto": "Afrodite", "data": x["data"], "min_price": x["piso"],
                   "preco_antes": x["afrodite"],
@@ -163,7 +197,7 @@ def main(argv=None) -> int:
     ate = dt.date.fromisoformat(a.ate) if a.ate else hoje + dt.timedelta(days=366)
     rec = dict(x.split("=", 1) for x in a.recalculos)
     fora = comparar(cfg, ler_recalculo(rec["Q7"]), ler_recalculo(rec["Double"]), ler_recalculo(rec["Q2"]), de, ate,
-                    ler_recalculo(rec["Afrodite"]) if rec.get("Afrodite") else None)
+                    ler_recalculo(rec["Afrodite"]) if rec.get("Afrodite") else None, hoje=hoje)
     q2 = [x for x in fora if x["quarto"] == "Q2"]
     af = [x for x in fora if x["quarto"] == "Afrodite"]
     print(f"{len(q2)} noites com a Panorâmica II fora da faixa entre a Moinhos e a Panorâmica I, de {de} a {ate}")

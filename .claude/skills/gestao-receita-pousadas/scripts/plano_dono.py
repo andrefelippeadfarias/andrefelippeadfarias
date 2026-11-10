@@ -210,3 +210,73 @@ def balcony_mercado_enviado(rn: dict, tipo: str) -> float | None:
     serie, pct = BALCONY_MERCADO[grupo(tipo)]
     v = ancora(rn, serie, pct)
     return None if v is None else v / fator(rn, "Balcony")
+
+
+def tipo_da_noite(n: str, cfg: dict | None = None) -> str | None:
+    """Tipo da noite no plano: o da régua (`tipo`); sem régua, o do calendário das faixas (faixas_dono.tipo_da_noite)."""
+    rn = noite_regua(n)
+    if rn and rn.get("tipo"):
+        return rn["tipo"]
+    try:
+        from faixas_dono import tipo_da_noite as _tipo
+        return _tipo(date.fromisoformat(n), cfg)
+    except Exception:  # noqa: BLE001 - sem calendário, sem plano
+        return None
+
+
+def governa_noite(q: str, n: str, cfg: dict | None = None, ordens: dict | None = None) -> bool:
+    """A noite está no período, a ordem do plano está no arquivo de ordens (ativo) e o plano fixa o preço da suíte nela
+    (fim de semana, feriado, festas do Recanto)."""
+    if not ativo(n, ordens, q):
+        return False
+    t = tipo_da_noite(n, cfg)
+    return t is not None and governa(q, t)
+
+
+# ---------- a ordem no arquivo de ordens liga o plano (revisão de 10/11: apagar a ordem desliga TUDO, R1 a R5,
+# inclusive o que vale pela data: piso de fim de semana da R2, faixa e prêmio da Afrodite, exigências das auditorias)
+_ORDENS_EM_USO: list = []      # pilha de dicionários de ordens em uso (pace.plano, Validador, comparar); vazia = arquivo
+
+
+@lru_cache(maxsize=4)
+def _ordens_arquivo(caminho: str, mtime: float) -> dict:
+    from ordens import carregar_ordens
+    return carregar_ordens(caminho)
+
+
+def ordens_padrao() -> dict:
+    """As ordens do arquivo padrão (dados/ordens_dono.json), relidas quando o arquivo muda."""
+    import os
+    from ordens import ARQ_ORDENS
+    try:
+        mt = os.path.getmtime(ARQ_ORDENS)
+    except OSError:
+        return {}
+    return _ordens_arquivo(str(ARQ_ORDENS), mt)
+
+
+class com_ordens:
+    """`with com_ordens(ordens):` as funções que não recebem as ordens (pisos_enviados, exigencias, prêmio e faixa da
+    Afrodite) passam a olhar este dicionário, não o arquivo padrão (pace.plano com --ordens, Validador, testes)."""
+
+    def __init__(self, ordens: dict | None):
+        self.ordens = ordens
+
+    def __enter__(self):
+        _ORDENS_EM_USO.append(self.ordens)
+        return self
+
+    def __exit__(self, *exc):
+        _ORDENS_EM_USO.pop()
+        return False
+
+
+def ativo(n: str, ordens: dict | None = None, quarto: str = "Q7") -> bool:
+    """O plano vale na noite: dentro do período e com a ordem do plano vigente para o quarto em `ordens` (sem elas, as
+    ordens em uso por `com_ordens`; sem nenhuma, o arquivo padrão)."""
+    if not vale(n):
+        return False
+    if ordens is None:
+        ordens = _ORDENS_EM_USO[-1] if _ORDENS_EM_USO and _ORDENS_EM_USO[-1] is not None else ordens_padrao()
+    from ordens import ordem_valida
+    return ordem_valida(ordens, ORDEM_ID, quarto, date.fromisoformat(n)) is not None

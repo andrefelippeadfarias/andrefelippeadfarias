@@ -239,20 +239,42 @@ def sabado_com_sexta_passada(d: dt.date, hoje: dt.date | None) -> bool:
     return hoje is not None and d.weekday() == 5 and d - UM_DIA < hoje <= d
 
 
-def exigencias(cfg: dict, q: dict, d: dt.date) -> dict:
+def exigencias(cfg: dict, q: dict, d: dt.date, hoje: dt.date | None = None) -> dict:
+    """Piso e estadia que a regra exige na noite. Plano do dono de 09/11 (dono-2026-11-09-plano-nov-fev, noites de
+    10/11/2026 a 28/02/2027, só com a ordem no arquivo de ordens): sexta e sábado das suítes com banheira sem o piso de
+    R$ 850 no Genius 3; nas noites que o plano governa (fim de semana, feriado, festas do Recanto) o piso é o padrão de
+    qualidade, R$ 800 reais no feriado e o limite de segurança, sem o mínimo do anúncio nem o piso_real do período (a
+    ordem libera: a Afrodite pode ir a 1,15 x Panorâmica I abaixo dos R$ 1.500 dela; revisão de 10/11); com `hoje`, dia de
+    semana de D7 a D0 com o piso de mercado do plano (mediana com hidro) quando menor, nunca abaixo do limite de
+    segurança."""
+    import plano_dono as PD
     L, P = cfg["limites_seguranca"], cfg["parametros"]
     fer = periodo_feriado(cfg, d)
     fds = d.weekday() in (4, 5)
+    n = d.isoformat()
+    lim_seg = float(L["fracao_min_referencia"]) * float(q["min_referencia"])
+    plano = bool(q.get("banheira")) and PD.governa_noite(q["curto"], n, cfg)
     piso = None
     if q.get("banheira"):
-        alvo = L["piso_vitrine_fds_suites"] if fds else L["piso_vitrine_semana_suites"]
-        fat = (P["fator_vitrine_fds"] if fds else P["fator_vitrine_semana"])[q["pousada"]]
-        piso = max(float(q["min"]), float(alvo) / float(fat))
+        if fds and not fer and PD.ativo(n, quarto=q["curto"]):
+            # R2: sem o R$ 850 no Genius 3; com o plano governando a noite, sem o mínimo do anúncio (vale o preço do plano)
+            piso = max(float(L["padrao_qualidade_diaria"]), lim_seg if plano else float(q["min"]))
+        else:
+            alvo = L["piso_vitrine_fds_suites"] if fds else L["piso_vitrine_semana_suites"]
+            fat = (P["fator_vitrine_fds"] if fds else P["fator_vitrine_semana"])[q["pousada"]]
+            piso = max(float(q["min"]), float(alvo) / float(fat))
+            rn = PD.noite_regua(n) if (hoje is not None and not fds and not fer and PD.ativo(n, quarto=q["curto"])) else None
+            pm = PD.piso_semana_ultima(q["curto"], rn, (d - hoje).days) \
+                if rn and PD.grupo(rn.get("tipo", "")) == "semana" else None
+            if pm is not None:
+                piso = min(piso, max(pm, lim_seg))
     if fer:
         real = (fer.get("piso_real_por_quarto") or {}).get(q["curto"], fer.get("piso_real")) or L["piso_feriado_real_seguranca"]
         real = max(float(real), float(L["piso_feriado_real_seguranca"]))
+        if plano:
+            real = float(L["piso_feriado_real_seguranca"])  # plano do dono: o piso_real do período fica dispensado
         fat = q["fator_vitrine"] if q.get("piso_feriado_base") == "vitrine" else q["fator_real"]
-        pf = max(float(q["min"]), real / float(fat))
+        pf = max(lim_seg if plano else float(q["min"]), real / float(fat))
         if q.get("banheira"):
             pf = max(pf, float(L["padrao_qualidade_diaria"]))
         piso = pf   # feriado: vale o piso de feriado (os pisos de R$ 500/850 são "fora de feriado", regras.md §4)
@@ -351,7 +373,9 @@ def comparar(cfg: dict, quarto: str, cal: dict, de: dt.date, ate: dt.date, orden
             out.append({"quarto": quarto, "data": ds, "falta": ["sem dado de preço no recálculo"]})
             d += UM_DIA
             continue
-        ex = exigencias(cfg, q, d)
+        import plano_dono as PD
+        with PD.com_ordens(ordens):  # o plano do dono de 09/11 só vale com a ordem nas ordens desta auditoria
+            ex = exigencias(cfg, q, d, hoje)
         falta, info, item = [], [], {}
         tipo_est, temporada = None, None
         piso_ef = float(r.get("min_price") or 0)

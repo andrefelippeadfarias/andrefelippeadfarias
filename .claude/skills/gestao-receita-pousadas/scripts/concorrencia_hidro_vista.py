@@ -18,6 +18,12 @@ busca com hidro). Para cada data com corte na VK7 ou VK2, a Balcony volta a 10% 
 --reservas (passo 2 do plano de redução de chamadas, 07/11), as reservas vêm do arquivo do `beds24.py reservas --json`
 já lido na rotina (a janela dele precisa cobrir de hoje até 2 dias depois da última data dos períodos).
 Sempre passe a saída pelo validar_plano.py antes de gravar.
+
+Plano do dono de 09/11 (dono-2026-11-09-plano-nov-fev, com a ordem no arquivo de ordens; revisão de 10/11): nas suítes e
+noites que o plano governa (fim de semana, feriado e festas do Recanto, de 10/11/2026 a 28/02/2027) o preço é o do plano
+(pace.py) e este script não gera item (o "+10% pelo piso" era a escada desde a primeira venda, que a decisão 3 tirou);
+a Balcony nas noites com 80% ou mais das suítes com banheira da Villa vendidas também fica com o pace (preço de
+mercado); em sexta e sábado do período o piso do dono é o padrão de qualidade (R$ 1.000 enviados), sem o R$ 850 (R2).
 """
 
 from __future__ import annotations
@@ -31,6 +37,7 @@ import sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from comum import carregar_quartos, periodo_feriado  # noqa: E402
 from validar_plano import em_reais  # noqa: E402
+import plano_dono as PD  # noqa: E402
 
 RAIZ = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 META = [(7, .70), (15, .50), (30, .35), (45, .25), (60, .15)]
@@ -48,8 +55,9 @@ def meta(hoje, d):
     return next((v for lim, v in META if dd < lim), 0.10)
 
 
-def montar(cfg, comp, coleta, hoje, vendidas=None):
+def montar(cfg, comp, coleta, hoje, vendidas=None, ordens=None):
     Q, L, P = cfg["por_curto"], cfg["limites_seguranca"], cfg["parametros"]
+    ordens = PD.ordens_padrao() if ordens is None else ordens
     rooms = coleta["rooms"]
     cal = {(k, x["date"][:10]): x for k, r in rooms.items() for x in r.get("days") or []}
     ov = {(k, o["date"][:10]): o for k, r in rooms.items() for o in (r.get("overrides") or [])}
@@ -82,6 +90,9 @@ def montar(cfg, comp, coleta, hoje, vendidas=None):
             real = max(float(piso), float(L["piso_feriado_real_seguranca"]))
             return max(float(q["min"]), real / float(q["fator_real"]))
         if d.weekday() in (4, 5):
+            if PD.ativo(d.isoformat(), ordens, k):
+                # R2 do plano do dono de 09/11: sem o R$ 850 no Genius 3; vale o padrão de qualidade (enviado)
+                return max(float(q["min"]), float(L["padrao_qualidade_diaria"]))
             return max(float(q["min"]), L["piso_vitrine_fds_suites"] / P["fator_vitrine_fds"][q["pousada"]])
         return max(float(q["min"]), L["piso_vitrine_semana_suites"] / P["fator_vitrine_semana"][q["pousada"]])
 
@@ -97,6 +108,9 @@ def montar(cfg, comp, coleta, hoje, vendidas=None):
             for k in SUITES:
                 if k == "Q2":
                     continue   # dono 21/10: a Queen (2) segue a faixa entre a Queen 7 e a Double (ordem_recanto.py)
+                if PD.governa_noite(k, s, cfg, ordens):
+                    notas.append(f"{k} {s}: preço do plano do dono de 09/11 (pace.py), sem item aqui")
+                    continue
                 q, x = Q[k], cal.get((k, s))
                 if not x:
                     continue
@@ -140,6 +154,11 @@ def montar(cfg, comp, coleta, hoje, vendidas=None):
     for s in sorted({s for (k, s) in novos if k in ("VK7", "VK2")}):
         d = dt.date.fromisoformat(s)
         if periodo_feriado(cfg, d) or not cal.get(("Balcony", s)):
+            continue
+        vb = [ocupacao(k, s) for k in PD.BANHEIRA_VILLA if cal.get((k, s))]
+        if PD.ativo(s, ordens, "Balcony") and PD.noite_regua(s) and len(vb) == len(PD.BANHEIRA_VILLA) \
+                and PD.balcony_no_mercado(sum(v for v, _ in vb), sum(int(Q[k]["unidades"]) for k in PD.BANHEIRA_VILLA)):
+            notas.append(f"Balcony {s}: 80% ou mais das suítes com banheira da Villa vendidas, preço de mercado pelo pace.py")
             continue
         livres = [novos.get((k, s), float((cal.get((k, s)) or {}).get("price") or 0))
                   for k in ("VK7", "VK2") if cal.get((k, s)) and ocupacao(k, s)[0] < ocupacao(k, s)[1]]

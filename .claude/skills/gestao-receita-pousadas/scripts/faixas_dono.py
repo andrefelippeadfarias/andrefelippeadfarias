@@ -611,8 +611,29 @@ def vendidas_inv(inv: dict, q: str, n: str, unidades: int) -> int:
     return max(0, min(unidades, unidades - int(x["numAvail"])))
 
 
+def plano_governa(cfg: dict, existentes: dict, pous: str, qs: list, n: str) -> bool:
+    """Plano do dono de 09/11 (ordem dono-2026-11-09-plano-nov-fev, quando está no arquivo de ordens): a noite da
+    pousada em que TODAS as suítes com banheira têm o preço pelo plano (fim de semana e feriado de 10/11/2026 a
+    28/02/2027 nas duas pousadas; festas só no Recanto) não recebe ordem de faixa nova. Dias de semana e festas da
+    Villa seguem como antes."""
+    import plano_dono as PD
+    if PD.ORDEM_ID not in existentes:
+        return False
+    banh = [q for q in qs if cfg["por_curto"][q].get("banheira")]
+    return bool(banh) and all(PD.governa_noite(q, n, cfg, existentes) for q in banh)
+
+
 def gerar_ordens(fx: dict, cfg: dict, regra: dict, inv: dict, hoje: date, dias: int, existentes: dict,
                  criada_em: str, vale=None) -> tuple[list[dict], dict]:
+    """Ver _gerar_ordens. Os pisos do dono (pace.pisos_enviados, prêmio da Afrodite) olham as ordens `existentes`: o
+    plano do dono de 09/11 só vale com a ordem dele nelas (revisão de 10/11)."""
+    import plano_dono as PD
+    with PD.com_ordens(existentes):
+        return _gerar_ordens(fx, cfg, regra, inv, hoje, dias, existentes, criada_em, vale)
+
+
+def _gerar_ordens(fx: dict, cfg: dict, regra: dict, inv: dict, hoje: date, dias: int, existentes: dict,
+                  criada_em: str, vale=None) -> tuple[list[dict], dict]:
     """(ordens novas, {ordem_id antiga: [noites que saem dela]}). Uma ordem por noite e pousada, como as de 02 e 03/11:
     pisos na faixa (÷ razão; nunca abaixo do piso do dono nem acima do máximo do anúncio), topo na F5, e perto da data
     o gatilho de D7 (F2/F3: desce uma faixa sem venda nova) ou a descida gradual (F5: degraus F4, F3, F2, F1 em D7, D5,
@@ -671,6 +692,8 @@ def gerar_ordens(fx: dict, cfg: dict, regra: dict, inv: dict, hoje: date, dias: 
             r = regra_da_noite(regra, d, t, pous)
             if not r or (pous, n) in ja or (vale is not None and not vale(pous, n)):
                 continue
+            if plano_governa(cfg, existentes, pous, qs_todos, n):
+                continue  # plano do dono de 09/11: o preço das suítes com banheira da noite é do plano (pace.py)
             f = int(r["faixa"])
             # ordem do dono mais nova, preço por data, mudança manual ou acompanhamento aberto: o quarto fica fora
             qs = [q for q in qs_todos if not any(bloqueia(x, q, n, d) for x in existentes.values())]

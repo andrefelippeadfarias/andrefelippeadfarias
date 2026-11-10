@@ -78,6 +78,7 @@ from comum import (DIAS_SEMANA, aguardando_dono, carregar_quartos, data, data_de
                    hoje_brt, ler_instante, ler_json, orfa_permitida, periodo_feriado, reais, regra_dia_chegada,
                    resultado_workflow, sexta_reaberta)
 from ordens import carregar_ordens, cobre, congelada, ordem_valida
+import plano_dono as PD
 
 TIPOS = {"data", "apagar", "anuncio", "personalizacao"}
 PALAVRAS_PROIBIDAS = ("ota", "oferta", "genius", "promo", "deal", "visibility")
@@ -325,6 +326,7 @@ class Validador:
         self.padrao = lim.get("padrao_qualidade_diaria")  # só o dono muda; sem ele, nada passa
         self.par = cfg["parametros"]
         self.pisos: set = set()             # (curto, data) cujo valor em "finais" é piso de percentual
+        self.ordem_item: dict = {}          # (curto, data) -> ordem_id do item com excecao 'dono' válida
         # 30/10: excecao "dono" só com ordem_id de dados/ordens_dono.json vigente para o quarto e a noite
         self.ordens = ordens if isinstance(ordens, dict) else carregar_ordens(ordens)
 
@@ -348,6 +350,33 @@ class Validador:
 
     # ---------- validações
     def validar(self, itens: list[dict]) -> None:
+        # o plano do dono de 09/11 (R2, Afrodite, exigências) só vale com a ordem dele nas ordens deste validador
+        with PD.com_ordens(self.ordens):
+            self._validar(itens)
+
+    def escopo_plano(self, q: dict, d: date) -> str | None:
+        """Onde a ordem do plano do dono de 09/11 serve de exceção 'dono' (revisão de 10/11: tipo 'regra', quartos '*',
+        10/11 a 28/02, ela liberava preço fixo, mínimo do anúncio e piso_real de feriado em qualquer quarto e noite do
+        período): R1 (suíte e noite que o plano governa), R3 (dia de semana de D7 a D0 nas suítes do piso de mercado) e
+        R4 (Balcony com 80% ou mais das suítes com banheira da Villa vendidas, provado pelo calendário de --precos).
+        None dentro do escopo; senão, o texto do erro."""
+        n = d.isoformat()
+        if PD.governa_noite(q["curto"], n, self.cfg, self.ordens):
+            return None
+        if self.piso_mercado_do_plano(q, d) is not None:
+            return None
+        if q["curto"] == "Balcony":
+            vend = self.vendidas_banheira_villa(n)
+            if vend is not None and PD.balcony_no_mercado(*vend) and PD.noite_regua(n):
+                return None
+            return (f"a ordem do plano ({PD.ORDEM_ID}) só libera a Balcony com 80% ou mais das suítes com banheira da "
+                    "Villa vendidas, provado pelo calendário de --precos " + (f"({vend[0]}/{vend[1]} vendidas)" if vend
+                                                                             else "(sem --precos da King Spa 7 e 2)"))
+        return (f"a ordem do plano ({PD.ORDEM_ID}) não vale para {q['curto']} em {n}: só nas suítes e noites que o plano "
+                "governa (fim de semana, feriado, festas do Recanto), no piso de mercado de D7 a D0 (Moinhos, Panorâmicas, "
+                "King Spa) e na Balcony com 80% das suítes com banheira da Villa vendidas")
+
+    def _validar(self, itens: list[dict]) -> None:
         finais = {}  # (curto, data) -> preço fixo planejado ou piso (min_price) do percentual
         if not self.padrao or float(self.padrao) <= 0:
             self.erros.append("ERRO padrão de qualidade ausente ou zerado em dados/quartos.json "
@@ -433,6 +462,10 @@ class Validador:
                                      "não serve de exceção 'dono' para preço fixo, Regra I, chegada/saída nem piso de "
                                      "feriado; cite a ordem do dono que libera isso")
                 excecao = None
+            elif it.get("ordem_id") == PD.ORDEM_ID and self.escopo_plano(q, d):
+                # revisão de 10/11: a ordem do plano é restrita (R1, R3, R4), como as ordens 'regra' da estadia
+                self.erro(i, it, self.escopo_plano(q, d))
+                excecao = None
         cong = congelada(self.ordens, q["curto"], d)
         if cong and (cong["id"] != it.get("ordem_id")):
             self.erro(i, it, f"noite com mudança manual do dono pela tela ({cong['id']}, até {cong['ate']}): respeite e registre; "
@@ -500,6 +533,8 @@ class Validador:
 
         if minimo is not None:
             finais[(q["curto"], d.isoformat())] = minimo
+            if excecao == "dono":
+                self.ordem_item[(q["curto"], d.isoformat())] = it.get("ordem_id")
             if tipo_preco != "fixed":
                 self.pisos.add((q["curto"], d.isoformat()))
             if minimo < piso_abs:
@@ -827,8 +862,10 @@ class Validador:
         a partir de limites_seguranca.padrao_qualidade_diaria (preço enviado). Para ir abaixo, o item
         precisa do campo 'mercado' com o dado (texto com número). A exceção do dono também libera, com aviso."""
         if q.get("banheira") and d.weekday() not in (4, 5) and not fer:
-            self.piso_vitrine_semana(i, it, q, minimo, excecao)
-        if q.get("banheira") and d.weekday() in (4, 5) and not fer:
+            self.piso_vitrine_semana(i, it, q, minimo, excecao, d=d)
+        if q.get("banheira") and d.weekday() in (4, 5) and not fer and not PD.ativo(d.isoformat(), self.ordens, q["curto"]):
+            # plano do dono de 09/11 (decisão 2): de 10/11/2026 a 28/02/2027 o piso de R$ 850 no Genius 3 sai de sexta e
+            # sábado; o padrão de qualidade (abaixo) continua
             self.piso_vitrine_semana(i, it, q, minimo, excecao, fds=True)
         padrao = float(self.padrao or 0)
         if padrao <= 0 or not q.get("banheira") or not (d.weekday() in (4, 5) or fer):
@@ -857,7 +894,20 @@ class Validador:
             return None
         return float(alvo) / float(fat)
 
-    def piso_vitrine_semana(self, i, it, q, minimo, excecao, fds: bool = False):
+    def piso_mercado_do_plano(self, q: dict, d: date) -> float | None:
+        """Plano do dono de 09/11 (decisão 5): dia de semana fora de feriado e de festas, de D7 a D0, nas suítes Moinhos,
+        Panorâmicas e King Spa: piso = mediana do mercado com hidro (x 1,05 na Panorâmica I) ÷ fator público medido
+        (plano_dono.piso_semana_ultima), nunca abaixo do limite de segurança. None fora disso."""
+        n = d.isoformat()
+        if not PD.ativo(n, self.ordens, q["curto"]) or d.weekday() in (4, 5) or periodo_feriado(self.cfg, d):
+            return None
+        rn = PD.noite_regua(n)
+        if not rn or PD.grupo(rn.get("tipo", "")) != "semana":
+            return None
+        v = PD.piso_semana_ultima(q["curto"], rn, (d - self.hoje).days)
+        return None if v is None else max(v, self.piso_absoluto(q, d))
+
+    def piso_vitrine_semana(self, i, it, q, minimo, excecao, fds: bool = False, d: date | None = None):
         """Dono (14/10): domingo a quinta, fora de feriado, preço final nas plataformas a partir de R$ 500 nas suítes
         com banheira (inclusive na Regra I). Sem exceção de mercado; só a ordem do dono libera."""
         req = self.piso_semana_enviado(q, fds)
@@ -866,6 +916,22 @@ class Validador:
             self.erro(i, it, f"piso de vitrine de {nome} sem configuração (limites_seguranca/parametros)")
             return
         if minimo >= req - 1:
+            return
+        if excecao == "dono" and not fds and d is not None and it.get("ordem_id") == PD.ORDEM_ID:
+            # plano do dono de 09/11 (decisão 5): só a ordem do plano, só de D7 a D0, só até o piso de mercado (com a folga
+            # do percentual inteiro da base); 'abaixo_piso' não entra: a liberação é só esta
+            pm = self.piso_mercado_do_plano(q, d)
+            folga = 0.01 * float(q["base"]) + 1
+            if pm is None:
+                self.erro(i, it, f"abaixo do piso de vitrine de {nome} ({reais(req)} enviados): a ordem do plano "
+                                 f"({PD.ORDEM_ID}) só libera o piso de mercado de D7 a D0 nas suítes Moinhos, "
+                                 "Panorâmicas e King Spa")
+            elif minimo < pm - folga:
+                self.erro(i, it, f"abaixo do piso de mercado do plano do dono ({reais(pm)} enviados, mediana com hidro "
+                                 f"de D7 a D0): preço/piso {reais(minimo)}")
+            else:
+                self.aviso(i, it, f"abaixo do piso de vitrine de {nome} pelo piso de mercado do plano do dono "
+                                  f"({reais(pm)}, D{(d - self.hoje).days})")
             return
         if excecao == "dono":
             # revisão de 31/10: a ordem citada precisa liberar 'abaixo_piso' (a ordem do Recanto, por exemplo, não libera)
@@ -887,6 +953,9 @@ class Validador:
         if it.get("excecao") == "dono" and it.get("ordem_id") in self.ordens_regra_estadia():
             self.erro(i, it, f"a ordem {it.get('ordem_id')} é {self.ordens_regra_estadia()[it.get('ordem_id')]}: não vale "
                              "como exceção 'dono' em item de anúncio")
+        if it.get("excecao") == "dono" and it.get("ordem_id") == PD.ORDEM_ID:
+            self.erro(i, it, f"a ordem do plano ({PD.ORDEM_ID}) é preço por noite: não vale como exceção 'dono' em item "
+                             "de anúncio")
         if it.get("excecao") != "dono":
             self.erro(i, it, "dono (14/10): \"Lembre-se tem ser correções percentuais\": base, mínimo e máximo do anúncio "
                              "não se usam para corrigir preço; use piso/teto/preço em percentual por data "
@@ -948,6 +1017,15 @@ class Validador:
                                    f"mais barata livre ({menor:.0f}; alvo {alvo:.0f})")
             if fer:
                 continue  # no feriado a Regra G só baixa a Balcony: o piso de feriado pode deixá-la abaixo do alvo
+            vend_v = self.vendidas_banheira_villa(d)
+            if balc < alvo * 0.95 and self.ordem_item.get(("Balcony", d)) == PD.ORDEM_ID and vend_v is not None \
+                    and PD.balcony_no_mercado(*vend_v):
+                # plano do dono de 09/11 (regra dos 80%): com 8 ou mais das 9 suítes com banheira da Villa vendidas
+                # (calendário de --precos), a Balcony vai ao mercado do quarto sem banheira; acima da suíte segue ERRO
+                self.avisos.append(f"aviso Regra G {d}: Balcony {balc:.0f} abaixo do alvo {alvo:.0f} no mercado do quarto "
+                                   f"sem banheira pela ordem {PD.ORDEM_ID} ({vend_v[0]}/{vend_v[1]} vendidas nas suítes "
+                                   "com banheira da Villa)")
+                continue
             libera_g = [o.get("id") for o in (self.ordens or {}).values()
                         if cobre(o, "Balcony", data(d)) and "regra_g" in (o.get("libera") or [])
                         and (not o.get("noites") or d in o["noites"])]
@@ -965,6 +1043,19 @@ class Validador:
                     self.avisos.append(f"aviso {msg}; é piso de percentual, confira no recálculo")
                 else:
                     self.erros.append(f"ERRO {msg}")
+
+
+    def vendidas_banheira_villa(self, d: str) -> tuple[int, int] | None:
+        """(vendidas, unidades) das suítes com banheira da Villa na noite, pelo calendário de --precos; None sem os dois
+        quartos no calendário (sem prova, a regra dos 80% não libera nada)."""
+        v = t = 0
+        for k in PD.BANHEIRA_VILLA:
+            x = self.precos.get((k, d))
+            if not x or x.get("total") is None:
+                return None
+            v += min(int(x["vendidas"]), int(x["total"]))
+            t += int(self.cfg["por_curto"][k]["unidades"])
+        return v, t
 
 
 def precos_da_coleta(res: dict, agora: datetime | None = None) -> dict:

@@ -1058,7 +1058,23 @@
       "responsavel": "dono",
       "desde": "2026-11-10",
       "urgencia": 1,
-      "texto": "Envio diário de 10/11 não saiu até 10:55 BRT (last_date_pushed 09/11 17:04 BRT nos 7 quartos): as 328 regras do plano gravadas às 08:00 só chegam aos canais com Sync Now ou no próximo envio. Conferir na rotina das 13:53."
+      "texto": "Envio diário de 10/11 não saiu até 10:55 BRT (last_date_pushed 09/11 17:04 BRT nos 7 quartos): as 328 regras do plano gravadas às 08:00 só chegam aos canais com Sync Now ou no próximo envio. Conferir na rotina das 13:53. RESOLVIDO: Sync Now do dono às 12:38 BRT; Beds24 com os 328 preços e Booking com o Recanto a R$ 672/noite em 13-15/11.",
+      "resolvido_em": "2026-11-10"
+    },
+    {
+      "id": "vk2-overbooking-20261110",
+      "responsavel": "dono",
+      "desde": "2026-11-10",
+      "urgencia": 1,
+      "data_alvo": "2026-11-10",
+      "texto": "King Spa 2 em 10/11: 3 reservas do Airbnb para 2 suítes (95716070 e 95524247 confirmadas; 95939474 'new', R$ 357, de 09/11 20:32 BRT). Recepção resolver antes da chegada de hoje."
+    },
+    {
+      "id": "villa-quarto-booking-fora-pricelabs",
+      "responsavel": "dono",
+      "desde": "2026-11-10",
+      "urgencia": 2,
+      "texto": "Villa na Booking em 15-16/11 por R$ 424,95 com só a Balcony livre (R$ 1.168 no PriceLabs; razão 0,36); em 13-15/11, R$ 1.010/noite (razão 0,62-0,69). Conferir na página da Booking qual quarto aparece a R$ 425: promoção de última hora na Balcony ou tipo de quarto da Villa fora do PriceLabs. A régua do plano converte público em enviado pela razão medida, e ela depende disso."
     }
   ],
   "versao": "2026-11-05T15"

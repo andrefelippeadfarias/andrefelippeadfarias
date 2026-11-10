@@ -4722,6 +4722,21 @@ Festas da Villa (Natal e Réveillon) ficaram como estavam (decisão 6 é do Reca
 - Booking às 12:38-12:39 ainda com os preços antigos (Recanto R$ 2.469,79 e Villa R$ 2.738,74 por 13-15/11): o Beds24 leva alguns minutos para enviar à Booking. Nova busca em seguida.
 - Booking às 12:43 (13-15/11, 2 adultos, café): **Recanto R$ 1.343,24 (R$ 672/noite), como o plano** (Moinhos R$ 1.091 × 0,616). **Villa R$ 2.020,96 (R$ 1.010/noite)**, acima dos ~R$ 854 esperados (Balcony R$ 1.473 × 0,58): razão 0,686 sobre a Balcony ou 0,615 sobre a King Spa 7. Ou a promoção que deixava a Villa mais barata (razão 0,43-0,58) saiu, ou a Balcony não é o quarto mostrado. O conector não diz o quarto: pedido ao dono para conferir na página da Booking qual quarto aparece e se mexeu em Promoções; a rotina das 13:53 mede de novo e, com a promoção fora, o plano recalcula o enviado da Villa para manter o público.
 
+## 10/11/2026, 13:54 a 14:10 BRT — Rotina leve das 13:53: escada da King Spa 7 no fim de semana e overbooking da King Spa 2 hoje
+
+**Overbooking hoje (10/11) na King Spa 2:** 3 reservas do Airbnb para 2 suítes (2 confirmadas, de 05/11 e 01/11, e 1 "new" de 09/11 20:32 BRT, R$ 357; numAvail −1 no Beds24). Avisado ao dono para a recepção resolver antes da chegada. A skill não mexe em reservas.
+
+**Beds24 desde 12:35 BRT** (vigilância: 0 alerta): King Spa 7 13-16/11 (Booking, R$ 2.080, já pela tarifa nova), Balcony 20-22/11 (Booking, R$ 2.171) e Balcony 10/11 (Airbnb, R$ 257). Recálculos: King Spa 7 (2 de 3 em 24 h) e Balcony (1 de 3).
+
+| Mudança | Onde | Antes | Depois (gravado 13:58 BRT; conferido na resposta) | Como desfazer |
+|---|---|---|---|---|
+| Escada do plano (5/7 vendidas, 2 degraus de +7%) | King Spa 7 13 e 14/11 | R$ 1.643 | R$ 1.747 (público ~R$ 1.012) | pedir "volte a King Spa 7 de 13-14/11 ao preço de abertura" |
+| Regra G (90% da King Spa 7) | Balcony 13 e 14/11 | R$ 1.473 | R$ 1.575 | idem |
+
+Não gravado (dependem da rajada das 10:39, ainda sem confirmação da recepção): proteção da King Spa 7 esgotada em 15/11 (iria de R$ 1.347 a R$ 1.013) e Balcony 15/11 no mercado pela regra dos 80% (9/9; iria de R$ 1.168 a R$ 686). O envio leva as 4 mudanças ao canal amanhã (~08:47) ou num Sync Now.
+
+**Villa na Booking:** 15-16/11 aparece por R$ 424,95, com só a Balcony livre no Beds24 (R$ 1.168 no PriceLabs): razão 0,36. Em 13-15/11, R$ 1.010 por noite (razão 0,62-0,69). A diferença de razão entre datas pode ser promoção de última hora ou um tipo de quarto na Booking fora do PriceLabs com preço próprio. Pedido ao dono: conferir na página da Booking qual quarto aparece a R$ 425 em 15/11.
+
 ## O que só pode ser feito na tela (passo a passo para você)
 
 1. **Safety Minimum Price → "Do Not Apply"** (Dynamic Pricing → Customizations → aba Groups → Edit no grupo Recanto dos Moinhos → All Customizations → Safety Minimum Price). Anote o valor atual antes.

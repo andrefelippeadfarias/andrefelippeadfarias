@@ -13928,6 +13928,32 @@
    "total": 2,
    "gravado_em": "2026-11-10T11:13:15+00:00",
    "chegou_ao_canal": false
+  },
+  {
+   "quarto": "VK7",
+   "noite": "2026-11-13",
+   "de": 1643.0,
+   "para": 1747,
+   "direcao": "sobe",
+   "status": "plano",
+   "vendidas": 5,
+   "base": "quarto",
+   "total": 7,
+   "gravado_em": "2026-11-10T16:58:35+00:00",
+   "chegou_ao_canal": false
+  },
+  {
+   "quarto": "VK7",
+   "noite": "2026-11-14",
+   "de": 1643.0,
+   "para": 1747,
+   "direcao": "sobe",
+   "status": "plano",
+   "vendidas": 5,
+   "base": "quarto",
+   "total": 7,
+   "gravado_em": "2026-11-10T16:58:35+00:00",
+   "chegou_ao_canal": false
   }
  ]
 }

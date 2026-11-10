@@ -491,3 +491,10 @@ Cada item tem data e evidência. Para incluir um item novo: data, o fato, a evid
 - **Proposta de preço: comparar com o nível de antes da última subida.** A abertura proposta para a Moinhos e a Balcony ficou perto do que a Booking mostrava em 01/11 (R$ 720 e R$ 655), nível em que os fins de semana fecharam em 65% e 68%. Cenário acima do histórico é "alvo", não "provável", e o texto tem de dizer o que o sustenta.
 - **Limite de uso no meio de um workflow:** os agentes param com "You've hit your 5-hour limit". Os registros parciais em `_work_N/` permitem montar o bloco à mão; as buscas que faltam (poucas) cabem na sessão principal. Deixar a revisão independente como pendência com data, não fingir que rodou.
 
+## 10/11/2026 — Gravação grande do plano do dono
+
+- **Arquivos de ferramenta com o mesmo nome:** chamadas paralelas ao `get_listing_date_overrides` que respondem no mesmo milissegundo salvam no mesmo arquivo de resultado e o segundo sobrescreve o primeiro (Moinhos e King Spa 7; Panorâmica II e King Spa 2 em 10/11). Ler em série ou conferir pelo tamanho antes de usar.
+- **`update_listing_date_overrides` com muitas datas devolve na verificação todas as regras do intervalo** (centenas de linhas). Para lotes grandes: motivo curto no payload (o registro guarda o detalhe), um lote por quarto e conferência depois por arquivo (`get_listing_date_overrides` sem data final, comparado com o payload por script): 328 de 328 em 10/11.
+- **Rotina leve e reinício do processo:** a gravação parou entre o plano validado e a primeira chamada; a rodada seguinte refez o motor com o Beds24 novo (3 vendas na King Spa 2) antes de gravar. Plano validado de madrugada não se grava horas depois sem conferir as vendas.
+- **`calendario_12m auditar` com calendário do `get_listing_prices`** acusa piso em todas as noites (esse endpoint não traz min_price): só a parte de estadia vale; o piso se confere com o arquivo do recálculo.
+

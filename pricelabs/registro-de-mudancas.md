@@ -4673,6 +4673,35 @@ Valores antigos para desfazer: `pricelabs/personalizacoes-balcony-antes-2026-11-
 
 > **Regras em vigor:** desde 06/10/2026 elas ficam em `.claude/skills/gestao-receita-pousadas/references/regras.md`. Este arquivo guarda só o histórico das mudanças.
 
+## 10/11/2026, 07:57 a 08:20 BRT — Rotina das 07:53 + pedido do dono: plano de novembro a fevereiro aplicado
+
+**Ordem do dono (09/11 ~23:35 BRT; `dono-2026-11-09-plano-nov-fev`):** "Pode aplicar tudo, com exceção da questão do balcone [...] No resto de todas as suas sugestões, podemos aplicar sim". Decisões 1, 2, 3, 5, 6 e 7 aprovadas; a 4 (Balcony com preço próprio) recusada e trocada pela regra dos 80%: a Balcony segue a Regra G e só vai ao preço de mercado do quarto sem banheira na noite com 8 ou 9 das 9 suítes com banheira da Villa vendidas. Regras em `regras.md` 4f.
+
+**Código (commits f439071, c830024):** `plano_dono.py` + `dados/regua_dono.json` (régua por noite da varredura de 09-10/11) e o ramo do plano no `pace.py`, com validador, calendário de 12 meses, ordem do Recanto, faixas e concorrência alinhados. Revisão: mapa do código, implementação, 2 revisores independentes (dry-run e verificador próprio; regressão contra o código anterior), 12 achados corrigidos; 341 testes OK. Sem a ordem no arquivo, o motor volta ao de antes.
+
+**Beds24 desde 19:53 BRT de 09/11** (vigilância: 0 alerta): novas na King Spa 2 em 10/11 (Airbnb, R$ 357), 18-20/11 (Airbnb, R$ 997) e 06/05/2027 (Expedia, 4 noites, R$ 1.189, ~R$ 297 por noite: abaixo do esperado, vai ao dono). King Spa 2 recalculada às 07:58 (2 de 3 em 24 h). Overbooking que segue: Panorâmica I 20-21/11 (7 para 6). Moinhos 20-21/11 com 1 unidade bloqueada sem reserva (PriceLabs 5, Beds24 4): fora do motor.
+
+**Gravado (validador: 0 erro; calendário de 09/11 20:04 UTC cruzado com o Beds24 de 07:59 BRT, por isso `--horas 16`):** 2 noites apagadas (Afrodite 10 e 11/11, recriadas) e 328 regras por data em 16 chamadas, todas conferidas na releitura das regras por data (328 de 328 iguais ao plano). Estadia: Afrodite 18/11 com 1 noite (órfã, PriceLabs e Beds24) e King Spa 2 11/02/2027 com 1 noite (quinta). Ledger: 257 passos.
+
+| Mudança | Onde | Antes (enviado) | Depois (enviado; público) | Como desfazer (pedir ao Claude) |
+|---|---|---|---|---|
+| Plano: fim de semana 13/11 | Moinhos / Panorâmica I / Panorâmica II / Afrodite | 2.006 / 2.013 / 2.019 / 2.860 | 1.086 (669) / 1.435 (884) / 1.349 (831) / 1.650 (1.016) | "Volte às regras anteriores ao plano de 09/11" |
+| Plano: fim de semana 14/11 | Moinhos / Panorâmica I / Panorâmica II / Afrodite | 2.006 / 2.013 / 2.019 / 2.860 | 1.086 (669) / 1.536 (946) / 1.427 (879) / 1.770 (1.090) | idem |
+| Plano: 13 e 14/11 | King Spa 7 e King Spa 2 / Balcony (Regra G, 6/9) | 2.856 e 2.388-2.423 / 2.464 | 1.632 (946) / 1.473 (854) | idem |
+| Plano: fins de semana de 27/11 a 27/02 | 6 suítes com banheira | R$ 1.905-3.180 | Moinhos ~1.000-1.290; Panorâmicas ~1.330-1.810; King Spa ~1.430-2.060; Afrodite ~1.650-2.190 | idem |
+| Plano: Consciência Negra 19-21/11 | Recanto e Villa | Panorâmica I 3.860; Afrodite 5.216; King Spa 7 4.262 (20/11) | 3.195; 3.676; 3.097 (escada: unidades que um cancelamento reabrir) | idem |
+| Plano: Natal, entre festas e Réveillon do Recanto | Moinhos / Panorâmicas / Afrodite | ~4.974 / ~4.988 / ~5.940-6.700 | Natal 2.189-2.688; Réveillon 2.977-3.806; Afrodite 2.706-4.391 | idem |
+| Plano: Carnaval 05-09/02 | 6 suítes | 2.381-3.608 | Moinhos 2.265; Panorâmicas 2.333-2.352; King Spa 2.255-2.413; Afrodite 2.706 | idem |
+| Dia de semana D0-D7 (piso de mercado) | Moinhos, Panorâmicas | ~1.220-1.258 | ~883-950 | idem |
+| Balcony na regra dos 80% | 10/11 (8/9), 20/11 (8/9), 12/12 (8/9) | 698 / 1.943 / 2.451 | 686 / 1.753 / 1.041 | idem |
+| Regra G com as King Spa novas | Balcony, 55 noites até 28/02 | — | 90% da suíte com banheira livre mais barata | idem |
+
+Festas da Villa (Natal e Réveillon) ficaram como estavam (decisão 6 é do Recanto). Não gravado: a Balcony de hoje subiria de R$ 698 para R$ 838 pela Regra G (D0 nunca sobe); 6 proteções de esgotada da Afrodite em janeiro, além de D60.
+
+**Chegada aos canais:** gravação terminada às 08:13 BRT, antes do envio diário (~08:31-08:47): sai no envio de hoje; a rotina das 10:53 confere o preço no PriceLabs (sem recálculo extra).
+
+**Não feito nesta rodada (tempo da gravação):** coleta completa pelo workflow, âncora e busca diária de concorrentes, `faixas_dono.py ordens` e a revisão independente da análise (gatilho das 03:56): ficam para as rotinas de hoje. Sombra da flutuação: foto 1 de 7 tirada (sem base do Beds24 na pasta).
+
 ## O que só pode ser feito na tela (passo a passo para você)
 
 1. **Safety Minimum Price → "Do Not Apply"** (Dynamic Pricing → Customizations → aba Groups → Edit no grupo Recanto dos Moinhos → All Customizations → Safety Minimum Price). Anote o valor atual antes.

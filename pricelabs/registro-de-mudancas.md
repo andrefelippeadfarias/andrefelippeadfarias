@@ -4716,6 +4716,12 @@ Festas da Villa (Natal e Réveillon) ficaram como estavam (decisão 6 é do Reca
 - Booking agora (conector oficial, 13-15/11, 2 adultos, café): Recanto R$ 2.469,79 (R$ 1.235/noite) e Villa R$ 2.738,74 (R$ 1.369/noite): ainda os preços de ontem. `last_date_pushed` segue em 09/11 17:04 BRT nos 7 quartos e `last_refreshed_at` vazio: o envio de hoje não saiu. Com o envio, a Booking passa a mostrar ~R$ 669/noite no Recanto (Moinhos) e ~R$ 854 na Villa (Balcony a 90% da King Spa 7).
 - Novas desde 10:55: Balcony e King Spa 7 em 11/11 (Booking, R$ 298 e R$ 324), King Spa 2 04-07/12 (Expedia, R$ 1.239).
 
+## 10/11/2026, 12:38 BRT — Sync Now do dono: preços do plano no Beds24
+
+- `last_date_pushed` dos 7 quartos: 10/11 12:38 BRT (Sync Now do dono). Beds24 lido às 12:39 com preços: as 328 noites do plano iguais ao gravado (diferença só do arredondamento em % da base, até R$ 11; ex.: Moinhos 13/11 R$ 1.091 contra R$ 1.086).
+- Booking às 12:38-12:39 ainda com os preços antigos (Recanto R$ 2.469,79 e Villa R$ 2.738,74 por 13-15/11): o Beds24 leva alguns minutos para enviar à Booking. Nova busca em seguida.
+- Booking às 12:43 (13-15/11, 2 adultos, café): **Recanto R$ 1.343,24 (R$ 672/noite), como o plano** (Moinhos R$ 1.091 × 0,616). **Villa R$ 2.020,96 (R$ 1.010/noite)**, acima dos ~R$ 854 esperados (Balcony R$ 1.473 × 0,58): razão 0,686 sobre a Balcony ou 0,615 sobre a King Spa 7. Ou a promoção que deixava a Villa mais barata (razão 0,43-0,58) saiu, ou a Balcony não é o quarto mostrado. O conector não diz o quarto: pedido ao dono para conferir na página da Booking qual quarto aparece e se mexeu em Promoções; a rotina das 13:53 mede de novo e, com a promoção fora, o plano recalcula o enviado da Villa para manter o público.
+
 ## O que só pode ser feito na tela (passo a passo para você)
 
 1. **Safety Minimum Price → "Do Not Apply"** (Dynamic Pricing → Customizations → aba Groups → Edit no grupo Recanto dos Moinhos → All Customizations → Safety Minimum Price). Anote o valor atual antes.

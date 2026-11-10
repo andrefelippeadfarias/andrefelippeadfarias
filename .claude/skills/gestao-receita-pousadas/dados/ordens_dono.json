@@ -9781,6 +9781,31 @@
     "personalizacao"
    ],
    "nota": "Uma gravação de personalização (update_customizations, nível listing) na Balcony, só com as chaves que diferem das outras suítes, guardando os valores antigos no registro para desfazer."
+  },
+  {
+   "id": "dono-2026-11-09-plano-nov-fev",
+   "data": "2026-11-09",
+   "criada_em": "2026-11-10T02:35:00Z",
+   "texto": "Pode aplicar tudo, com exceção da questão do balcone, pois a diferença de preço dentro da Booking, com uma discrepância muito grande para uma suíte que não tem banheira, para uma suíte que tem banheira, acaba atraindo um público muito abaixo e gerando uma expectativa falsa de valor. Isso acaba fazendo com que as suítes com banheira não vendam, que são o nosso principal objetivo. E o objetivo secundário seria as suítes sem banheira. Então vamos trabalhar nesse escopo para mantermos a venda das com banheira em alta. Adotando uma estratégia de sempre que estivermos com pelo menos 80% de lotação em determinadas datas, possamos ajustar as suítes sem banheira, as balcony, para o preço de mercado correto. No resto de todas as suas sugestões, podemos aplicar sim, para que possamos chegar ao objetivo.",
+   "contexto": "Resposta do dono (09/11 ~23:35 BRT) às 7 decisões da análise nov-fev (pricelabs/analise-nov-fev-2026-11-10.md; página https://claude.ai/artifact/4fe5rrZh7CqWP4v74wXuTG).",
+   "tipo": "regra",
+   "quartos": [
+    "*"
+   ],
+   "de": "2026-11-10",
+   "ate": "2027-02-28",
+   "libera": [],
+   "decisoes": {
+    "1": "aprovada: preços de abertura já em 13 e 14/11 (tabela em pricelabs/analise-nov-fev-2026-11-10/dados_este_fds.json)",
+    "2": "aprovada: piso de fim de semana por suíte no lugar do piso único de R$ 850 no Genius 3 (limites_seguranca.piso_vitrine_fds_suites); o padrão de qualidade de R$ 1.000 enviados segue",
+    "3": "aprovada: fim de semana abre na âncora de mercado por suíte e a escada (+7% por unidade) só começa depois de metade das unidades vendidas, até o teto; substitui a F5/F3 de fim de semana da ordem de 04/11 e a subida desde a primeira venda (ordem de 01/11) nessas noites",
+    "4": "RECUSADA: a Balcony NÃO ganha preço próprio. Segue presa às suítes com banheira (Regra G, 85,5-90% da suíte com banheira livre mais barata da Villa). Regra nova do dono: na noite em que as suítes com banheira da Villa (King Spa 7 + King Spa 2, 9 unidades) tiverem 80% ou mais vendidas, a Balcony vai ao preço de mercado do quarto sem banheira (âncora: quarto mais barato dos concorrentes), nunca acima da Regra G",
+    "5": "aprovada: dia de semana das suítes com banheira no piso do dono (R$ 500 no Genius 3) até D8; de D7 a D0 as unidades livres descem à mediana do mercado com hidro",
+    "6": "aprovada: Natal e Réveillon do Recanto abrem na mediana do mercado com hidro (Moinhos no p40), nunca acima do pedido de 09/11, e sobem pela escada até o p75; a Villa nessas datas fica como está (já aparece na Booking abaixo da mediana)",
+    "7": "aprovada: Afrodite no fim de semana 15% acima da Panorâmica I, no lugar da faixa de R$ 1.600-1.800 públicos de 27/10",
+    "demais": "aprovadas as outras sugestões da página: feriados abrem na mediana do mercado com hidro (nunca acima do pedido de 09/11) e sobem pela escada até o p75; a 7 dias, noite de fim de semana ou feriado com menos de 60% vendido desce 10%"
+   },
+   "nota": "Execução: régua por noite em dados/regua_dono.json (varredura de 09-10/11, 77 concorrentes, 32 estadias; fator público medido por pousada, mês e tipo; pedido de 09/11 como teto da abertura). Implementação no motor e gravação registradas em pricelabs/registro-de-mudancas.md (10/11). Interpretação da skill, a confirmar com o dono: '80% de lotação' = suítes com banheira da Villa na noite (8 de 9 vendidas)."
   }
  ]
 }

@@ -4702,6 +4702,14 @@ Festas da Villa (Natal e Réveillon) ficaram como estavam (decisão 6 é do Reca
 
 **Não feito nesta rodada (tempo da gravação):** coleta completa pelo workflow, âncora e busca diária de concorrentes, `faixas_dono.py ordens` e a revisão independente da análise (gatilho das 03:56): ficam para as rotinas de hoje. Sombra da flutuação: foto 1 de 7 tirada (sem base do Beds24 na pasta).
 
+## 10/11/2026, 10:54 a 11:10 BRT — Rotina leve das 10:53: rajada de reservas da Booking na King Spa 7, sem gravação
+
+**Vigilância: 1 alerta** (3 cancelamentos da Booking em 5 min, 10:41 a 10:46 BRT): Moinhos 13-15/11 (R$ 1.571), Moinhos 14-16/11 (R$ 1.190) e Panorâmica I 12-16/11 (R$ 3.466, reserva de 27/08). Saíram logo depois da queda de preço gravada às 08:00; o envio de hoje ainda não tinha saído, então não é troca pela tarifa nova no canal. A Afrodite de 12 a 15/11 também reabriu (1 unidade).
+
+**Número estranho, sem decisão em cima dele:** às 10:38:59-10:39:03 BRT entraram 23 reservas novas da Booking no Beds24 em 4 segundos (21 King Spa 7, 1 King Spa 2 de 06-09/01, 1 Balcony em 15/11), de 10/11 a 07/03/2027, R$ 335 a R$ 640 por noite, todas "confirmed", 2 adultos, números da Booking diferentes. King Spa 7 caiu de 4-5 livres para 0-3 em 22 noites (16 e 17/11 esgotadas). Pode ser lote atrasado da Booking (reservas antigas entregues de uma vez) ou reservas duplicadas/falsas; 5 delas têm outra reserva da Booking no mesmo quarto e datas (uma com o mesmo valor, R$ 438,57 em 23/11). Pedido à recepção: conferir no extranet da Booking (Reservas) antes de qualquer preço da Villa subir por elas. O motor não foi rodado nesta rodada (a escada e a regra dos 80% da Balcony reagiriam a essas vendas).
+
+**Envio:** `last_date_pushed` dos 7 quartos ainda em 09/11 17:04 BRT às 10:55: o envio diário de hoje não saiu; as 328 regras gravadas às 08:00 não estão nos canais. Pedido de Sync Now ao dono. Logs: nenhuma mudança manual.
+
 ## O que só pode ser feito na tela (passo a passo para você)
 
 1. **Safety Minimum Price → "Do Not Apply"** (Dynamic Pricing → Customizations → aba Groups → Edit no grupo Recanto dos Moinhos → All Customizations → Safety Minimum Price). Anote o valor atual antes.

@@ -1045,6 +1045,20 @@
       "desde": "2026-11-10",
       "urgencia": 2,
       "texto": "Reserva nova da Expedia na King Spa 2 de 06/05/2027, 4 noites, R$ 1.188,94 no total (~R$ 297 por noite), feita em 10/11 00:10 UTC: bem abaixo do esperado para a suíte. Conferir na Expedia/Beds24 a tarifa e o plano tarifário que geraram esse valor (a skill não altera reservas)."
+    },
+    {
+      "id": "booking-rajada-20261110",
+      "responsavel": "dono",
+      "desde": "2026-11-10",
+      "urgencia": 1,
+      "texto": "23 reservas da Booking criadas no Beds24 em 4 segundos (10/11 10:38:59-10:39:03 BRT; ids Beds24 95970791 a 95970813; 21 na King Spa 7, 1 King Spa 2 06-09/01, 1 Balcony 15/11), de 10/11 a 07/03/2027, R$ 335-640 por noite. Conferir no extranet da Booking se existem e se não duplicam reservas já lançadas (5 coincidem em quarto e datas com outras da Booking). Até a confirmação, o motor não sobe a Villa por elas. Depois: rodar o pace com --noites nas noites afetadas."
+    },
+    {
+      "id": "envio-20261110-nao-saiu",
+      "responsavel": "dono",
+      "desde": "2026-11-10",
+      "urgencia": 1,
+      "texto": "Envio diário de 10/11 não saiu até 10:55 BRT (last_date_pushed 09/11 17:04 BRT nos 7 quartos): as 328 regras do plano gravadas às 08:00 só chegam aos canais com Sync Now ou no próximo envio. Conferir na rotina das 13:53."
     }
   ],
   "versao": "2026-11-05T15"

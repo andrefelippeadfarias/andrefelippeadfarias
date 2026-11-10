@@ -4737,6 +4737,23 @@ Não gravado (dependem da rajada das 10:39, ainda sem confirmação da recepçã
 
 **Villa na Booking:** 15-16/11 aparece por R$ 424,95, com só a Balcony livre no Beds24 (R$ 1.168 no PriceLabs): razão 0,36. Em 13-15/11, R$ 1.010 por noite (razão 0,62-0,69). A diferença de razão entre datas pode ser promoção de última hora ou um tipo de quarto na Booking fora do PriceLabs com preço próprio. Pedido ao dono: conferir na página da Booking qual quarto aparece a R$ 425 em 15/11.
 
+## 10/11/2026, 14:00 a 15:40 BRT — Dono confirma a rajada da King Spa 7 ("As reservas da King Spa 7 são verdadeiras, pode aplicar")
+
+As 23 reservas da Booking criadas às 10:39 (21 na King Spa 7, 1 King Spa 2 06-09/01, 1 Balcony 15/11) passam a contar. Plano: `pace.py plano --hoje 2026-11-10 --dias 60` com os calendários alinhados ao Beds24, `--regras` lidas às 14:00, `--bloqueios` (Moinhos 20 e 21/11) e `--noites` só nas noites da rajada (King Spa 7 10-12, 15-18, 22-26 e 29/11, 06/12, 14-19/12; King Spa 2 04-06/12 e 06-08/01; Balcony 10, 11 e 15/11; Moinhos 13-15/11; Afrodite 12-15/11). Validação: 0 erro. Apagadas às 14:00 as regras antigas da King Spa 7 em 15, 16 e 17/11 (tetos de R$ 1.347, 1.169 e 1.214, antes de regravar como piso); os 34 itens gravados às 15:39 (o trabalho parou entre as duas etapas; nenhum envio aconteceu no meio, nada chegou ao canal sem regra) e conferidos na resposta da API. Ledger: 20 passos.
+
+| Mudança | Onde | Antes | Depois (enviado) | Como desfazer |
+|---|---|---|---|---|
+| Escada de vendas (dia de semana) | King Spa 7 11/11 (5/7), 12/11 (5/7) | R$ 947 / 1.436 | R$ 1.137 / 1.724 | pedir "volte a King Spa 7 de 11-12/11" |
+| Proteção da noite esgotada (7/7; piso p90, estadia mínima mantida) | King Spa 7 15, 16 e 17/11 | teto R$ 1.347 / 1.169 / 1.214 | piso R$ 1.013 / 944 / 944 | idem |
+| Escada de vendas | King Spa 7 18, 22, 23, 24, 25, 26 e 29/11, 06/12, 14-17/12 | R$ 947-1.421 | R$ 1.042-1.564 (+5% a +10%) | idem |
+| Regra nova dos 80% (8 ou 9 de 9 com banheira vendidas) | Balcony 15, 16, 22 e 29/11; 17/11 | R$ 902-1.168 | R$ 686; 17/11 R$ 749 | pedir "Balcony de volta à Regra G nessas noites" |
+| Regra G (90% da suíte com banheira livre mais barata) | Balcony 11, 24 e 25/11, 05 e 06/12 | R$ 826 / 1.016 / 826 / 1.397 / 902 | R$ 851 / 1.118 / 914 / 1.499 / 1.168 | — (regra vigente) |
+| Escada (Afrodite sem venda, Recanto 3-4/16) | Afrodite 12 e 15/11 | R$ 1.800 | R$ 1.500 | pedir "Afrodite de volta a R$ 1.800" |
+| Plano do dono (fds; 1 degrau de +7%) | King Spa 2 04 e 05/12 (2/2), 08/01 (1/2) | R$ 1.562 / 1.562 / 1.715 | R$ 1.559 / 1.559 / 1.832 | idem |
+| Escada de vendas | King Spa 2 06 e 07/01 | R$ 1.003 | R$ 1.054 | idem |
+
+Fora do plano: Moinhos 13-15/11 já no preço do plano; Balcony D0 (10/11) ficaria em R$ 838, mas D0 nunca sobe. O envio leva tudo ao canal amanhã (~08:47) ou num Sync Now; as descidas da Balcony em 15-17/11 (D5-D7) são as que mais ganham com o Sync Now.
+
 ## O que só pode ser feito na tela (passo a passo para você)
 
 1. **Safety Minimum Price → "Do Not Apply"** (Dynamic Pricing → Customizations → aba Groups → Edit no grupo Recanto dos Moinhos → All Customizations → Safety Minimum Price). Anote o valor atual antes.

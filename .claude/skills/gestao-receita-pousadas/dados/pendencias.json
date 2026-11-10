@@ -1051,7 +1051,8 @@
       "responsavel": "dono",
       "desde": "2026-11-10",
       "urgencia": 1,
-      "texto": "23 reservas da Booking criadas no Beds24 em 4 segundos (10/11 10:38:59-10:39:03 BRT; ids Beds24 95970791 a 95970813; 21 na King Spa 7, 1 King Spa 2 06-09/01, 1 Balcony 15/11), de 10/11 a 07/03/2027, R$ 335-640 por noite. Conferir no extranet da Booking se existem e se não duplicam reservas já lançadas (5 coincidem em quarto e datas com outras da Booking). Até a confirmação, o motor não sobe a Villa por elas. Depois: rodar o pace com --noites nas noites afetadas."
+      "texto": "23 reservas da Booking criadas no Beds24 em 4 segundos (10/11 10:38:59-10:39:03 BRT; ids Beds24 95970791 a 95970813; 21 na King Spa 7, 1 King Spa 2 06-09/01, 1 Balcony 15/11), de 10/11 a 07/03/2027, R$ 335-640 por noite. Conferir no extranet da Booking se existem e se não duplicam reservas já lançadas (5 coincidem em quarto e datas com outras da Booking). Até a confirmação, o motor não sobe a Villa por elas. Depois: rodar o pace com --noites nas noites afetadas. RESOLVIDO: dono confirmou às 13:59 BRT (\"As reservas da King Spa 7 são verdadeiras, pode aplicar\"); pace rodado nas noites afetadas e 34 regras gravadas às 15:39 BRT.",
+      "resolvido_em": "2026-11-10"
     },
     {
       "id": "envio-20261110-nao-saiu",

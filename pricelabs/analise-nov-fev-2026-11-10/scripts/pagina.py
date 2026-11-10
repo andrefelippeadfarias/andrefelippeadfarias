@@ -539,7 +539,7 @@ FRASE_VILLA = (f"Nos dias de semana de novembro a Villa apareceu por {r(min(_sem
                f"(preço enviado × {str(FPAD['Villa']).replace('.', ',')}). No Natal (23 a 25/12) apareceu por {r(_nat['nossos_booking']['Villa'])} a noite, com o menor preço enviado em {r(_menor(_nat))}, "
                f"que daria {r(_menor(_nat) * FPAD['Villa'])}. No Réveillon (30/12 a 03/01), {r(_rev['nossos_booking']['Villa'])} contra {r(_menor(_rev) * FPAD['Villa'])}. "
                "No Beds24 o preço está igual ao do PriceLabs, então a diferença nasce na Booking: promoção, plano tarifário ou desconto que só aparece na extranet. Em janeiro e fevereiro a relação volta ao normal. "
-               "Vale o senhor conferir em Promoções, principalmente as datas de Natal e Réveillon.")
+               "Vale conferir em Promoções, principalmente as datas de Natal e Réveillon.")
 nossos_b = [x for x in DM['estadias'] if x.get('nossos_booking')]
 
 corpo = f"""
@@ -649,7 +649,7 @@ corpo = f"""
 
 <section>
   <h2>Decisões que são suas</h2>
-  <p>Estes pontos mudam pisos e ordens que o senhor definiu. Não alterei nada. Responda com os números que aprova.</p>
+  <p>Estes pontos mudam pisos e ordens que você definiu. Não alterei nada. Responda com os números que aprova.</p>
   <div class="decisoes">
     <div class="decisao"><span class="n">Decisão 1 · urgente, vale para sexta</span><b>Aplicar já os preços de abertura neste fim de semana (13 e 14/11).</b><span>Estamos a 3 dias, com {p(PL['fds_futuros'][0]['pousadas']['Recanto']['ocup'])} no Recanto e {p(PL['fds_futuros'][0]['pousadas']['Villa']['ocup'])} na Villa. A Balcony pede {r(L['Balcony']['atual']['publico'] if L['Balcony'] else None)} públicos e não vendeu nenhuma das 6.</span></div>
     <div class="decisao"><span class="n">Decisão 2</span><b>Fim de semana: trocar o piso único de R$ 850 (Genius 3) por um piso por suíte.</b><span>No Recanto, Moinhos abrindo em {faixa_txt('Q7', 'fds')} enviados; Panorâmicas em {faixa_txt('Double', 'fds')}. O piso atual equivale a {r(PISO_FDS_ENV['Recanto'])} enviados e {r(PISO_FDS_PUB['Recanto'])} públicos; a mediana do quarto com hidro dos concorrentes nos fins de semana de novembro é {r(hid_fds_nov)}. Na Villa, as King Spa abrem perto do piso atual ({r(PISO_FDS_ENV['Villa'])} enviados) e só passam abaixo dele na última semana, se a noite estiver com menos de 60% vendido.</span></div>

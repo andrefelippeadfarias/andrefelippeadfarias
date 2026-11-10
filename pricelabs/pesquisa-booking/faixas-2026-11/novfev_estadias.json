@@ -1,0 +1,194 @@
+[
+ {
+  "checkin": "2026-11-13",
+  "checkout": "2026-11-15",
+  "tipo": "fds",
+  "rotulo": "fds 13-15/11"
+ },
+ {
+  "checkin": "2026-11-20",
+  "checkout": "2026-11-22",
+  "tipo": "feriado",
+  "rotulo": "Consciência Negra 20-22/11"
+ },
+ {
+  "checkin": "2026-11-27",
+  "checkout": "2026-11-29",
+  "tipo": "fds",
+  "rotulo": "fds 27-29/11"
+ },
+ {
+  "checkin": "2026-12-04",
+  "checkout": "2026-12-06",
+  "tipo": "fds",
+  "rotulo": "fds 04-06/12"
+ },
+ {
+  "checkin": "2026-12-11",
+  "checkout": "2026-12-13",
+  "tipo": "fds",
+  "rotulo": "fds 11-13/12"
+ },
+ {
+  "checkin": "2026-12-18",
+  "checkout": "2026-12-20",
+  "tipo": "fds",
+  "rotulo": "fds 18-20/12"
+ },
+ {
+  "checkin": "2026-12-23",
+  "checkout": "2026-12-25",
+  "tipo": "natal",
+  "rotulo": "Natal pacote 23-25/12"
+ },
+ {
+  "checkin": "2026-12-25",
+  "checkout": "2026-12-27",
+  "tipo": "natal",
+  "rotulo": "Natal 25-27/12"
+ },
+ {
+  "checkin": "2026-12-30",
+  "checkout": "2027-01-03",
+  "tipo": "reveillon",
+  "rotulo": "Réveillon 30/12-03/01"
+ },
+ {
+  "checkin": "2027-01-08",
+  "checkout": "2027-01-10",
+  "tipo": "fds",
+  "rotulo": "fds 08-10/01"
+ },
+ {
+  "checkin": "2027-01-15",
+  "checkout": "2027-01-17",
+  "tipo": "fds",
+  "rotulo": "fds 15-17/01"
+ },
+ {
+  "checkin": "2027-01-22",
+  "checkout": "2027-01-24",
+  "tipo": "fds",
+  "rotulo": "fds 22-24/01 (Aniv. SP)"
+ },
+ {
+  "checkin": "2027-01-29",
+  "checkout": "2027-01-31",
+  "tipo": "fds",
+  "rotulo": "fds 29-31/01"
+ },
+ {
+  "checkin": "2027-02-05",
+  "checkout": "2027-02-09",
+  "tipo": "feriado",
+  "rotulo": "Carnaval 05-09/02"
+ },
+ {
+  "checkin": "2027-02-12",
+  "checkout": "2027-02-14",
+  "tipo": "fds",
+  "rotulo": "fds 12-14/02"
+ },
+ {
+  "checkin": "2027-02-19",
+  "checkout": "2027-02-21",
+  "tipo": "fds",
+  "rotulo": "fds 19-21/02"
+ },
+ {
+  "checkin": "2027-02-26",
+  "checkout": "2027-02-28",
+  "tipo": "fds",
+  "rotulo": "fds 26-28/02"
+ },
+ {
+  "checkin": "2026-11-11",
+  "checkout": "2026-11-12",
+  "tipo": "semana",
+  "rotulo": "qua 11/11"
+ },
+ {
+  "checkin": "2026-11-17",
+  "checkout": "2026-11-18",
+  "tipo": "semana",
+  "rotulo": "ter 17/11"
+ },
+ {
+  "checkin": "2026-11-25",
+  "checkout": "2026-11-26",
+  "tipo": "semana",
+  "rotulo": "qua 25/11"
+ },
+ {
+  "checkin": "2026-12-02",
+  "checkout": "2026-12-03",
+  "tipo": "semana",
+  "rotulo": "qua 02/12"
+ },
+ {
+  "checkin": "2026-12-09",
+  "checkout": "2026-12-10",
+  "tipo": "semana",
+  "rotulo": "qua 09/12"
+ },
+ {
+  "checkin": "2026-12-16",
+  "checkout": "2026-12-17",
+  "tipo": "semana",
+  "rotulo": "qua 16/12"
+ },
+ {
+  "checkin": "2026-12-21",
+  "checkout": "2026-12-23",
+  "tipo": "semana",
+  "rotulo": "pré-Natal 21-23/12"
+ },
+ {
+  "checkin": "2026-12-27",
+  "checkout": "2026-12-29",
+  "tipo": "entre_festas",
+  "rotulo": "entre festas 27-29/12"
+ },
+ {
+  "checkin": "2027-01-05",
+  "checkout": "2027-01-06",
+  "tipo": "semana",
+  "rotulo": "ter 05/01"
+ },
+ {
+  "checkin": "2027-01-13",
+  "checkout": "2027-01-14",
+  "tipo": "semana",
+  "rotulo": "qua 13/01"
+ },
+ {
+  "checkin": "2027-01-20",
+  "checkout": "2027-01-21",
+  "tipo": "semana",
+  "rotulo": "qua 20/01"
+ },
+ {
+  "checkin": "2027-01-27",
+  "checkout": "2027-01-28",
+  "tipo": "semana",
+  "rotulo": "qua 27/01"
+ },
+ {
+  "checkin": "2027-02-03",
+  "checkout": "2027-02-04",
+  "tipo": "semana",
+  "rotulo": "qua 03/02"
+ },
+ {
+  "checkin": "2027-02-17",
+  "checkout": "2027-02-18",
+  "tipo": "semana",
+  "rotulo": "qua 17/02"
+ },
+ {
+  "checkin": "2027-02-24",
+  "checkout": "2027-02-25",
+  "tipo": "semana",
+  "rotulo": "qua 24/02"
+ }
+]

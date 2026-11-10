@@ -1,0 +1,160 @@
+{
+ "sexta": "2026-11-13",
+ "regua": {
+  "com_preco": 61,
+  "lista": {
+   "25": 604,
+   "40": 669,
+   "50": 758,
+   "75": 1189
+  },
+  "hidro": {
+   "25": 826,
+   "40": 941,
+   "50": 1180,
+   "65": 1364,
+   "75": 1547
+  },
+  "pares_lista50": 609,
+  "pares_hidro50": 842,
+  "nossos_booking": {
+   "Recanto": 1235,
+   "Villa": 1428,
+   "recanto_obs": "busca por coordenadas (id 7562933), 10/11 ~02:15 UTC",
+   "villa_obs": "da busca por nome nos lotes dos concorrentes"
+  }
+ },
+ "fator_publico": {
+  "Recanto": 0.6157,
+  "Villa": 0.5795
+ },
+ "suites": [
+  {
+   "q": "Q7",
+   "nome": "Moinhos",
+   "un": 7,
+   "vend_sex": 2,
+   "vend_sab": 3,
+   "hoje_enviado": 2006,
+   "hoje_publico": 1235,
+   "sexta": {
+    "publico": 669,
+    "enviado": 1087,
+    "g3": 451,
+    "pago": 532
+   },
+   "sabado": {
+    "publico": 669,
+    "enviado": 1087,
+    "g3": 451,
+    "pago": 532
+   }
+  },
+  {
+   "q": "Q2",
+   "nome": "Panorâmica II",
+   "un": 2,
+   "vend_sex": 1,
+   "vend_sab": 1,
+   "hoje_enviado": 2019,
+   "hoje_publico": 1243,
+   "sexta": {
+    "publico": 946,
+    "enviado": 1536,
+    "g3": 638,
+    "pago": 753
+   },
+   "sabado": {
+    "publico": 946,
+    "enviado": 1536,
+    "g3": 638,
+    "pago": 753
+   }
+  },
+  {
+   "q": "Double",
+   "nome": "Panorâmica I",
+   "un": 6,
+   "vend_sex": 2,
+   "vend_sab": 3,
+   "hoje_enviado": 2013,
+   "hoje_publico": 1239,
+   "sexta": {
+    "publico": 884,
+    "enviado": 1436,
+    "g3": 596,
+    "pago": 704
+   },
+   "sabado": {
+    "publico": 946,
+    "enviado": 1536,
+    "g3": 638,
+    "pago": 753
+   }
+  },
+  {
+   "q": "Afrodite",
+   "nome": "Afrodite",
+   "un": 1,
+   "vend_sex": 1,
+   "vend_sab": 1,
+   "hoje_enviado": 2860,
+   "hoje_publico": 1761,
+   "sexta": null,
+   "sabado": null
+  },
+  {
+   "q": "VK7",
+   "nome": "King Spa 7",
+   "un": 7,
+   "vend_sex": 4,
+   "vend_sab": 4,
+   "hoje_enviado": 2856,
+   "hoje_publico": 1655,
+   "sexta": {
+    "publico": 946,
+    "enviado": 1632,
+    "g3": 837,
+    "pago": 751
+   },
+   "sabado": {
+    "publico": 946,
+    "enviado": 1632,
+    "g3": 837,
+    "pago": 751
+   }
+  },
+  {
+   "q": "VK2",
+   "nome": "King Spa 2",
+   "un": 2,
+   "vend_sex": 2,
+   "vend_sab": 2,
+   "hoje_enviado": 2406,
+   "hoje_publico": 1394,
+   "sexta": null,
+   "sabado": null
+  },
+  {
+   "q": "Balcony",
+   "nome": "Balcony",
+   "un": 6,
+   "vend_sex": 0,
+   "vend_sab": 0,
+   "hoje_enviado": 2464,
+   "hoje_publico": 1428,
+   "sexta": {
+    "publico": 609,
+    "enviado": 1051,
+    "g3": 539,
+    "pago": 483
+   },
+   "sabado": {
+    "publico": 609,
+    "enviado": 1051,
+    "g3": 539,
+    "pago": 483
+   }
+  }
+ ]
+}

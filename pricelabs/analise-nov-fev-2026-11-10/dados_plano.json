@@ -1,0 +1,9236 @@
+{
+ "r_pago": {
+  "Recanto": 0.49,
+  "Villa": 0.46
+ },
+ "passo_escada": 0.07,
+ "descida_ultima": 0.1,
+ "festas_ritmo": [
+  {
+   "d": "2026-12-23",
+   "sub": "natal",
+   "Recanto": {
+    "ocup": 0.0625,
+    "mercado_agora": 25.9,
+    "mercado_ly_final": 59.5
+   },
+   "Villa": {
+    "ocup": 0.2,
+    "mercado_agora": 22.4,
+    "mercado_ly_final": 67.6
+   }
+  },
+  {
+   "d": "2026-12-24",
+   "sub": "natal",
+   "Recanto": {
+    "ocup": 0.0625,
+    "mercado_agora": 35.4,
+    "mercado_ly_final": 53.2
+   },
+   "Villa": {
+    "ocup": 0.3333,
+    "mercado_agora": 34.2,
+    "mercado_ly_final": 61.2
+   }
+  },
+  {
+   "d": "2026-12-25",
+   "sub": "natal",
+   "Recanto": {
+    "ocup": 0.0625,
+    "mercado_agora": 33,
+    "mercado_ly_final": 49.1
+   },
+   "Villa": {
+    "ocup": 0.0667,
+    "mercado_agora": 31.9,
+    "mercado_ly_final": 58.7
+   }
+  },
+  {
+   "d": "2026-12-26",
+   "sub": "natal",
+   "Recanto": {
+    "ocup": 0.0625,
+    "mercado_agora": 25.9,
+    "mercado_ly_final": 51.5
+   },
+   "Villa": {
+    "ocup": 0.0,
+    "mercado_agora": 25.7,
+    "mercado_ly_final": 63.2
+   }
+  },
+  {
+   "d": "2026-12-27",
+   "sub": "entre_festas",
+   "Recanto": {
+    "ocup": 0.0,
+    "mercado_agora": 18.8,
+    "mercado_ly_final": 51.6
+   },
+   "Villa": {
+    "ocup": 0.0,
+    "mercado_agora": 17.2,
+    "mercado_ly_final": 62.5
+   }
+  },
+  {
+   "d": "2026-12-28",
+   "sub": "entre_festas",
+   "Recanto": {
+    "ocup": 0.0,
+    "mercado_agora": 21.7,
+    "mercado_ly_final": 57.5
+   },
+   "Villa": {
+    "ocup": 0.0667,
+    "mercado_agora": 19.6,
+    "mercado_ly_final": 68.6
+   }
+  },
+  {
+   "d": "2026-12-29",
+   "sub": "entre_festas",
+   "Recanto": {
+    "ocup": 0.0,
+    "mercado_agora": 28.2,
+    "mercado_ly_final": 83.8
+   },
+   "Villa": {
+    "ocup": 0.1333,
+    "mercado_agora": 26,
+    "mercado_ly_final": 84.1
+   }
+  },
+  {
+   "d": "2026-12-30",
+   "sub": "reveillon",
+   "Recanto": {
+    "ocup": 0.25,
+    "mercado_agora": 39.6,
+    "mercado_ly_final": 95.2
+   },
+   "Villa": {
+    "ocup": 0.2667,
+    "mercado_agora": 34,
+    "mercado_ly_final": 99.1
+   }
+  },
+  {
+   "d": "2026-12-31",
+   "sub": "reveillon",
+   "Recanto": {
+    "ocup": 0.5625,
+    "mercado_agora": 45.6,
+    "mercado_ly_final": 91.3
+   },
+   "Villa": {
+    "ocup": 0.6,
+    "mercado_agora": 41.1,
+    "mercado_ly_final": 93.7
+   }
+  },
+  {
+   "d": "2027-01-01",
+   "sub": "reveillon",
+   "Recanto": {
+    "ocup": 0.3125,
+    "mercado_agora": 44.1,
+    "mercado_ly_final": 69.8
+   },
+   "Villa": {
+    "ocup": 0.2,
+    "mercado_agora": 37.7,
+    "mercado_ly_final": 83.4
+   }
+  },
+  {
+   "d": "2027-01-02",
+   "sub": "reveillon",
+   "Recanto": {
+    "ocup": 0.1875,
+    "mercado_agora": 24.7,
+    "mercado_ly_final": 56.4
+   },
+   "Villa": {
+    "ocup": 0.0667,
+    "mercado_agora": 22,
+    "mercado_ly_final": 62.1
+   }
+  }
+ ],
+ "fatores_medidos": {
+  "Recanto|2026-11|fds": {
+   "n": 2,
+   "mediana": 0.6156,
+   "min": 0.6155,
+   "max": 0.6157
+  },
+  "Recanto|2026-11|feriado": {
+   "n": 1,
+   "mediana": 0.6326,
+   "min": 0.6326,
+   "max": 0.6326
+  },
+  "Recanto|2026-11|semana": {
+   "n": 1,
+   "mediana": 0.6327,
+   "min": 0.6327,
+   "max": 0.6327
+  },
+  "Recanto|2026-12|fds": {
+   "n": 1,
+   "mediana": 0.6157,
+   "min": 0.6157,
+   "max": 0.6157
+  },
+  "Recanto|2026-12|reveillon": {
+   "n": 1,
+   "mediana": 0.6156,
+   "min": 0.6156,
+   "max": 0.6156
+  },
+  "Recanto|2027-01|fds": {
+   "n": 1,
+   "mediana": 0.6157,
+   "min": 0.6157,
+   "max": 0.6157
+  },
+  "Villa|2026-11|fds": {
+   "n": 2,
+   "mediana": 0.5764,
+   "min": 0.5733,
+   "max": 0.5795
+  },
+  "Villa|2026-11|feriado": {
+   "n": 1,
+   "mediana": 0.6526,
+   "min": 0.6526,
+   "max": 0.6526
+  },
+  "Villa|2026-11|semana": {
+   "n": 3,
+   "mediana": 0.4746,
+   "min": 0.425,
+   "max": 0.5012
+  },
+  "Villa|2026-12|entre_festas": {
+   "n": 1,
+   "mediana": 0.6174,
+   "min": 0.6174,
+   "max": 0.6174
+  },
+  "Villa|2026-12|fds": {
+   "n": 3,
+   "mediana": 0.6001,
+   "min": 0.5587,
+   "max": 0.6254
+  },
+  "Villa|2026-12|natal": {
+   "n": 2,
+   "mediana": 0.3556,
+   "min": 0.3533,
+   "max": 0.3578
+  },
+  "Villa|2026-12|reveillon": {
+   "n": 1,
+   "mediana": 0.4127,
+   "min": 0.4127,
+   "max": 0.4127
+  },
+  "Villa|2026-12|semana": {
+   "n": 4,
+   "mediana": 0.6043,
+   "min": 0.5737,
+   "max": 0.7151
+  },
+  "Villa|2027-01|fds": {
+   "n": 4,
+   "mediana": 0.6173,
+   "min": 0.6173,
+   "max": 0.6519
+  },
+  "Villa|2027-01|semana": {
+   "n": 4,
+   "mediana": 0.6244,
+   "min": 0.6,
+   "max": 0.7151
+  },
+  "Villa|2027-02|fds": {
+   "n": 3,
+   "mediana": 0.6173,
+   "min": 0.6173,
+   "max": 0.6173
+  },
+  "Villa|2027-02|feriado": {
+   "n": 1,
+   "mediana": 0.6596,
+   "min": 0.6596,
+   "max": 0.6596
+  },
+  "Villa|2027-02|semana": {
+   "n": 3,
+   "mediana": 0.6349,
+   "min": 0.6205,
+   "max": 0.6438
+  }
+ },
+ "fator_padrao": {
+  "Recanto": 0.63,
+  "Villa": 0.65
+ },
+ "piso_semana": {
+  "Recanto": 1220,
+  "Villa": 944
+ },
+ "parte_antecipada": {
+  "Recanto": 0.36,
+  "Villa": 0.34
+ },
+ "ocup_alvo": {
+  "provavel": {
+   "semana": {
+    "baixa": 0.55,
+    "alta": 0.6
+   },
+   "fds": {
+    "baixa": 0.8,
+    "alta": 0.85
+   },
+   "feriado": {
+    "baixa": 0.9,
+    "alta": 0.9
+   },
+   "festas": {
+    "baixa": 0.9,
+    "alta": 0.9
+   }
+  },
+  "meta": {
+   "semana": {
+    "baixa": 0.65,
+    "alta": 0.7
+   },
+   "fds": {
+    "baixa": 0.95,
+    "alta": 0.97
+   },
+   "feriado": {
+    "baixa": 0.97,
+    "alta": 0.97
+   },
+   "festas": {
+    "baixa": 0.97,
+    "alta": 0.97
+   }
+  }
+ },
+ "regua": {
+  "2026-11|semana": {
+   "mes": "2026-11",
+   "sub": "semana",
+   "estadias": [
+    "qua 11/11",
+    "ter 17/11",
+    "qua 25/11"
+   ],
+   "n_estadias": 3,
+   "com_preco": 69,
+   "lista": {
+    "25": 280,
+    "40": 322,
+    "50": 388,
+    "65": 535,
+    "75": 716,
+    "90": 1069
+   },
+   "hidro": {
+    "25": 403,
+    "40": 501,
+    "50": 572,
+    "65": 796,
+    "75": 1033,
+    "90": 1497
+   },
+   "pares_lista": {
+    "25": 215,
+    "50": 269,
+    "75": 400
+   },
+   "pares_hidro": {
+    "25": 304,
+    "50": 411,
+    "75": 611
+   },
+   "nota9_lista": {
+    "50": 440
+   },
+   "nota9_hidro": {
+    "50": 628
+   },
+   "n_pares": 15,
+   "n_nota9": 50,
+   "nossos_booking": {
+    "Recanto": 794,
+    "Villa": 418
+   }
+  },
+  "2026-11|fds": {
+   "mes": "2026-11",
+   "sub": "fds",
+   "estadias": [
+    "fds 13-15/11",
+    "fds 27-29/11"
+   ],
+   "n_estadias": 2,
+   "com_preco": 64,
+   "lista": {
+    "25": 618,
+    "40": 710,
+    "50": 784,
+    "65": 1020,
+    "75": 1193,
+    "90": 1459
+   },
+   "hidro": {
+    "25": 834,
+    "40": 996,
+    "50": 1190,
+    "65": 1440,
+    "75": 1620,
+    "90": 2176
+   },
+   "pares_lista": {
+    "25": 584,
+    "50": 620,
+    "75": 900
+   },
+   "pares_hidro": {
+    "25": 748,
+    "50": 862,
+    "75": 1537
+   },
+   "nota9_lista": {
+    "50": 815
+   },
+   "nota9_hidro": {
+    "50": 1260
+   },
+   "n_pares": 13,
+   "n_nota9": 46,
+   "nossos_booking": {
+    "Recanto": 1361,
+    "Villa": 1398
+   }
+  },
+  "2026-11|feriado": {
+   "mes": "2026-11",
+   "sub": "feriado",
+   "estadias": [
+    "Consciência Negra 20-22/11"
+   ],
+   "n_estadias": 1,
+   "com_preco": 53,
+   "lista": {
+    "25": 910,
+    "40": 1059,
+    "50": 1143,
+    "65": 1329,
+    "75": 1550,
+    "90": 1933
+   },
+   "hidro": {
+    "25": 1269,
+    "40": 1570,
+    "50": 1650,
+    "65": 2101,
+    "75": 2451,
+    "90": 2784
+   },
+   "pares_lista": {
+    "25": 855,
+    "50": 949,
+    "75": 1276
+   },
+   "pares_hidro": {
+    "25": 1195,
+    "50": 1324,
+    "75": 1780
+   },
+   "nota9_lista": {
+    "50": 1224
+   },
+   "nota9_hidro": {
+    "50": 1803
+   },
+   "n_pares": 10,
+   "n_nota9": 39,
+   "nossos_booking": {
+    "Recanto": 1822,
+    "Villa": 1268
+   }
+  },
+  "2026-12|semana": {
+   "mes": "2026-12",
+   "sub": "semana",
+   "estadias": [
+    "qua 02/12",
+    "qua 09/12",
+    "qua 16/12",
+    "pré-Natal 21-23/12"
+   ],
+   "n_estadias": 4,
+   "com_preco": 68,
+   "lista": {
+    "25": 332,
+    "40": 410,
+    "50": 486,
+    "65": 579,
+    "75": 778,
+    "90": 1180
+   },
+   "hidro": {
+    "25": 492,
+    "40": 576,
+    "50": 685,
+    "65": 879,
+    "75": 1113,
+    "90": 1640
+   },
+   "pares_lista": {
+    "25": 252,
+    "50": 344,
+    "75": 481
+   },
+   "pares_hidro": {
+    "25": 364,
+    "50": 494,
+    "75": 741
+   },
+   "nota9_lista": {
+    "50": 511
+   },
+   "nota9_hidro": {
+    "50": 767
+   },
+   "n_pares": 14,
+   "n_nota9": 50,
+   "nossos_booking": {
+    "Recanto": null,
+    "Villa": 629
+   }
+  },
+  "2026-12|fds": {
+   "mes": "2026-12",
+   "sub": "fds",
+   "estadias": [
+    "fds 04-06/12",
+    "fds 11-13/12",
+    "fds 18-20/12"
+   ],
+   "n_estadias": 3,
+   "com_preco": 68,
+   "lista": {
+    "25": 643,
+    "40": 779,
+    "50": 838,
+    "65": 1029,
+    "75": 1180,
+    "90": 1464
+   },
+   "hidro": {
+    "25": 936,
+    "40": 1120,
+    "50": 1181,
+    "65": 1456,
+    "75": 1670,
+    "90": 2139
+   },
+   "pares_lista": {
+    "25": 551,
+    "50": 615,
+    "75": 770
+   },
+   "pares_hidro": {
+    "25": 753,
+    "50": 931,
+    "75": 1182
+   },
+   "nota9_lista": {
+    "50": 891
+   },
+   "nota9_hidro": {
+    "50": 1291
+   },
+   "n_pares": 14,
+   "n_nota9": 49,
+   "nossos_booking": {
+    "Recanto": 1495,
+    "Villa": 1296
+   }
+  },
+  "2026-12|natal": {
+   "mes": "2026-12",
+   "sub": "natal",
+   "estadias": [
+    "Natal pacote 23-25/12",
+    "Natal 25-27/12"
+   ],
+   "n_estadias": 2,
+   "com_preco": 48,
+   "lista": {
+    "25": 845,
+    "40": 1006,
+    "50": 1122,
+    "65": 1343,
+    "75": 1610,
+    "90": 2106
+   },
+   "hidro": {
+    "25": 1183,
+    "40": 1400,
+    "50": 1549,
+    "65": 2046,
+    "75": 2392,
+    "90": 3173
+   },
+   "pares_lista": {
+    "25": 678,
+    "50": 905,
+    "75": 1308
+   },
+   "pares_hidro": {
+    "25": 1088,
+    "50": 1386,
+    "75": 1825
+   },
+   "nota9_lista": {
+    "50": 1182
+   },
+   "nota9_hidro": {
+    "50": 1768
+   },
+   "n_pares": 12,
+   "n_nota9": 32,
+   "nossos_booking": {
+    "Recanto": null,
+    "Villa": 1594
+   }
+  },
+  "2026-12|entre_festas": {
+   "mes": "2026-12",
+   "sub": "entre_festas",
+   "estadias": [
+    "entre festas 27-29/12"
+   ],
+   "n_estadias": 1,
+   "com_preco": 56,
+   "lista": {
+    "25": 553,
+    "40": 653,
+    "50": 730,
+    "65": 963,
+    "75": 1136,
+    "90": 1525
+   },
+   "hidro": {
+    "25": 771,
+    "40": 910,
+    "50": 1055,
+    "65": 1362,
+    "75": 1668,
+    "90": 2286
+   },
+   "pares_lista": {
+    "25": 540,
+    "50": 590,
+    "75": 909
+   },
+   "pares_hidro": {
+    "25": 753,
+    "50": 823,
+    "75": 1267
+   },
+   "nota9_lista": {
+    "50": 735
+   },
+   "nota9_hidro": {
+    "50": 1100
+   },
+   "n_pares": 13,
+   "n_nota9": 39,
+   "nossos_booking": {
+    "Recanto": null,
+    "Villa": 1157
+   }
+  },
+  "2026-12|reveillon": {
+   "mes": "2026-12",
+   "sub": "reveillon",
+   "estadias": [
+    "Réveillon 30/12-03/01"
+   ],
+   "n_estadias": 1,
+   "com_preco": 67,
+   "lista": {
+    "25": 1052,
+    "40": 1329,
+    "50": 1556,
+    "65": 1835,
+    "75": 2168,
+    "90": 2640
+   },
+   "hidro": {
+    "25": 1510,
+    "40": 1833,
+    "50": 2190,
+    "65": 2829,
+    "75": 3135,
+    "90": 3890
+   },
+   "pares_lista": {
+    "25": 851,
+    "50": 918,
+    "75": 1218
+   },
+   "pares_hidro": {
+    "25": 1180,
+    "50": 1507,
+    "75": 1909
+   },
+   "nota9_lista": {
+    "50": 1706
+   },
+   "nota9_hidro": {
+    "50": 2496
+   },
+   "n_pares": 15,
+   "n_nota9": 48,
+   "nossos_booking": {
+    "Recanto": 3062,
+    "Villa": 1850
+   }
+  },
+  "2027-01|semana": {
+   "mes": "2027-01",
+   "sub": "semana",
+   "estadias": [
+    "ter 05/01",
+    "qua 13/01",
+    "qua 20/01",
+    "qua 27/01"
+   ],
+   "n_estadias": 4,
+   "com_preco": 64,
+   "lista": {
+    "25": 341,
+    "40": 377,
+    "50": 468,
+    "65": 631,
+    "75": 879,
+    "90": 1258
+   },
+   "hidro": {
+    "25": 490,
+    "40": 560,
+    "50": 660,
+    "65": 986,
+    "75": 1200,
+    "90": 1866
+   },
+   "pares_lista": {
+    "25": 281,
+    "50": 332,
+    "75": 557
+   },
+   "pares_hidro": {
+    "25": 395,
+    "50": 530,
+    "75": 777
+   },
+   "nota9_lista": {
+    "50": 517
+   },
+   "nota9_hidro": {
+    "50": 734
+   },
+   "n_pares": 13,
+   "n_nota9": 48,
+   "nossos_booking": {
+    "Recanto": null,
+    "Villa": 680
+   }
+  },
+  "2027-01|fds": {
+   "mes": "2027-01",
+   "sub": "fds",
+   "estadias": [
+    "fds 08-10/01",
+    "fds 15-17/01",
+    "fds 22-24/01 (Aniv. SP)",
+    "fds 29-31/01"
+   ],
+   "n_estadias": 4,
+   "com_preco": 66,
+   "lista": {
+    "25": 610,
+    "40": 712,
+    "50": 792,
+    "65": 916,
+    "75": 1159,
+    "90": 1570
+   },
+   "hidro": {
+    "25": 838,
+    "40": 989,
+    "50": 1166,
+    "65": 1430,
+    "75": 1639,
+    "90": 2332
+   },
+   "pares_lista": {
+    "25": 546,
+    "50": 624,
+    "75": 828
+   },
+   "pares_hidro": {
+    "25": 734,
+    "50": 998,
+    "75": 1252
+   },
+   "nota9_lista": {
+    "50": 826
+   },
+   "nota9_hidro": {
+    "50": 1223
+   },
+   "n_pares": 13,
+   "n_nota9": 50,
+   "nossos_booking": {
+    "Recanto": 1567,
+    "Villa": 1176
+   }
+  },
+  "2027-02|semana": {
+   "mes": "2027-02",
+   "sub": "semana",
+   "estadias": [
+    "qua 03/02",
+    "qua 17/02",
+    "qua 24/02"
+   ],
+   "n_estadias": 3,
+   "com_preco": 61,
+   "lista": {
+    "25": 294,
+    "40": 344,
+    "50": 387,
+    "65": 584,
+    "75": 980,
+    "90": 1253
+   },
+   "hidro": {
+    "25": 424,
+    "40": 504,
+    "50": 663,
+    "65": 881,
+    "75": 1230,
+    "90": 1931
+   },
+   "pares_lista": {
+    "25": 254,
+    "50": 331,
+    "75": 553
+   },
+   "pares_hidro": {
+    "25": 366,
+    "50": 494,
+    "75": 771
+   },
+   "nota9_lista": {
+    "50": 469
+   },
+   "nota9_hidro": {
+    "50": 737
+   },
+   "n_pares": 13,
+   "n_nota9": 44,
+   "nossos_booking": {
+    "Recanto": null,
+    "Villa": 654
+   }
+  },
+  "2027-02|feriado": {
+   "mes": "2027-02",
+   "sub": "feriado",
+   "estadias": [
+    "Carnaval 05-09/02"
+   ],
+   "n_estadias": 1,
+   "com_preco": 59,
+   "lista": {
+    "25": 853,
+    "40": 1003,
+    "50": 1044,
+    "65": 1144,
+    "75": 1358,
+    "90": 2060
+   },
+   "hidro": {
+    "25": 1187,
+    "40": 1433,
+    "50": 1488,
+    "65": 1748,
+    "75": 1944,
+    "90": 2878
+   },
+   "pares_lista": {
+    "25": 754,
+    "50": 845,
+    "75": 1026
+   },
+   "pares_hidro": {
+    "25": 1095,
+    "50": 1318,
+    "75": 1508
+   },
+   "nota9_lista": {
+    "50": 1092
+   },
+   "nota9_hidro": {
+    "50": 1671
+   },
+   "n_pares": 13,
+   "n_nota9": 42,
+   "nossos_booking": {
+    "Recanto": null,
+    "Villa": 1252
+   }
+  },
+  "2027-02|fds": {
+   "mes": "2027-02",
+   "sub": "fds",
+   "estadias": [
+    "fds 12-14/02",
+    "fds 19-21/02",
+    "fds 26-28/02"
+   ],
+   "n_estadias": 3,
+   "com_preco": 60,
+   "lista": {
+    "25": 512,
+    "40": 606,
+    "50": 722,
+    "65": 884,
+    "75": 1101,
+    "90": 1519
+   },
+   "hidro": {
+    "25": 733,
+    "40": 955,
+    "50": 1082,
+    "65": 1337,
+    "75": 1480,
+    "90": 2151
+   },
+   "pares_lista": {
+    "25": 446,
+    "50": 596,
+    "75": 824
+   },
+   "pares_hidro": {
+    "25": 608,
+    "50": 922,
+    "75": 1149
+   },
+   "nota9_lista": {
+    "50": 747
+   },
+   "nota9_hidro": {
+    "50": 1159
+   },
+   "n_pares": 13,
+   "n_nota9": 44,
+   "nossos_booking": {
+    "Recanto": null,
+    "Villa": 1176
+   }
+  }
+ },
+ "linhas": [
+  {
+   "mes": "2026-11",
+   "sub": "semana",
+   "grupo": "semana",
+   "q": "Q7",
+   "pousada": "Recanto",
+   "noites": 14,
+   "cap": 98,
+   "vendidas": 21,
+   "ocup": 0.2143,
+   "livres": 77,
+   "fator_publico": 0.6327,
+   "atual": {
+    "enviado": 1236,
+    "publico": 782,
+    "g3": 509,
+    "pago": 606,
+    "pos_lista": "p78",
+    "pos_hidro": "p64"
+   },
+   "regra_abertura": [
+    "hidro",
+    "50",
+    1.0
+   ],
+   "regra_teto": [
+    "hidro",
+    "65",
+    1.0
+   ],
+   "proposta": {
+    "abertura": {
+     "publico": 772,
+     "enviado": 1220,
+     "g3": 502,
+     "pago": 598
+    },
+    "ultima": {
+     "publico": 572,
+     "enviado": 904,
+     "g3": 372,
+     "pago": 443
+    },
+    "teto": {
+     "publico": 796,
+     "enviado": 1258,
+     "g3": 518,
+     "pago": 616
+    },
+    "pago_medio": 499,
+    "modo": "piso atual até D8; mercado na última semana",
+    "var_vs_atual": -0.0128
+   },
+   "historico": {
+    "ocup": 0.4286,
+    "pago_p25": 329.49,
+    "pago_p50": 429.66,
+    "pago_p75": 486.26,
+    "n": 144
+   }
+  },
+  {
+   "mes": "2026-11",
+   "sub": "semana",
+   "grupo": "semana",
+   "q": "Double",
+   "pousada": "Recanto",
+   "noites": 14,
+   "cap": 84,
+   "vendidas": 31,
+   "ocup": 0.369,
+   "livres": 53,
+   "fator_publico": 0.6327,
+   "atual": {
+    "enviado": 1294,
+    "publico": 819,
+    "g3": 533,
+    "pago": 634,
+    "pos_lista": "p79",
+    "pos_hidro": "p66"
+   },
+   "regra_abertura": [
+    "hidro",
+    "50",
+    1.05
+   ],
+   "regra_teto": [
+    "hidro",
+    "65",
+    1.0
+   ],
+   "proposta": {
+    "abertura": {
+     "publico": 810,
+     "enviado": 1281,
+     "g3": 527,
+     "pago": 628
+    },
+    "ultima": {
+     "publico": 601,
+     "enviado": 949,
+     "g3": 391,
+     "pago": 465
+    },
+    "teto": {
+     "publico": 810,
+     "enviado": 1281,
+     "g3": 527,
+     "pago": 628
+    },
+    "pago_medio": 524,
+    "modo": "piso atual até D8; mercado na última semana",
+    "var_vs_atual": -0.011
+   },
+   "historico": {
+    "ocup": 0.6424,
+    "pago_p25": 377.5,
+    "pago_p50": 470.83,
+    "pago_p75": 625.14,
+    "n": 185
+   }
+  },
+  {
+   "mes": "2026-11",
+   "sub": "semana",
+   "grupo": "semana",
+   "q": "Q2",
+   "pousada": "Recanto",
+   "noites": 14,
+   "cap": 28,
+   "vendidas": 13,
+   "ocup": 0.4643,
+   "livres": 15,
+   "fator_publico": 0.6327,
+   "atual": {
+    "enviado": 1246,
+    "publico": 788,
+    "g3": 513,
+    "pago": 611,
+    "pos_lista": "p78",
+    "pos_hidro": "p64"
+   },
+   "regra_abertura": [
+    "hidro",
+    "50",
+    1.0
+   ],
+   "regra_teto": [
+    "hidro",
+    "65",
+    1.0
+   ],
+   "proposta": {
+    "abertura": {
+     "publico": 772,
+     "enviado": 1220,
+     "g3": 502,
+     "pago": 598
+    },
+    "ultima": {
+     "publico": 572,
+     "enviado": 904,
+     "g3": 372,
+     "pago": 443
+    },
+    "teto": {
+     "publico": 796,
+     "enviado": 1258,
+     "g3": 518,
+     "pago": 616
+    },
+    "pago_medio": 499,
+    "modo": "piso atual até D8; mercado na última semana",
+    "var_vs_atual": -0.0203
+   },
+   "historico": {
+    "ocup": 0.4062,
+    "pago_p25": 335.4,
+    "pago_p50": 415.99,
+    "pago_p75": 481.41,
+    "n": 39
+   }
+  },
+  {
+   "mes": "2026-11",
+   "sub": "semana",
+   "grupo": "semana",
+   "q": "Afrodite",
+   "pousada": "Recanto",
+   "noites": 14,
+   "cap": 14,
+   "vendidas": 6,
+   "ocup": 0.4286,
+   "livres": 8,
+   "fator_publico": 0.6327,
+   "atual": {
+    "enviado": 1640,
+    "publico": 1038,
+    "g3": 675,
+    "pago": 804,
+    "pos_lista": "p89",
+    "pos_hidro": "p75"
+   },
+   "regra_abertura": [
+    "hidro",
+    "50",
+    1.2
+   ],
+   "regra_teto": [
+    "hidro",
+    "65",
+    1.0
+   ],
+   "proposta": {
+    "abertura": {
+     "publico": 926,
+     "enviado": 1464,
+     "g3": 603,
+     "pago": 717
+    },
+    "ultima": {
+     "publico": 686,
+     "enviado": 1085,
+     "g3": 447,
+     "pago": 532
+    },
+    "teto": {
+     "publico": 926,
+     "enviado": 1464,
+     "g3": 603,
+     "pago": 717
+    },
+    "pago_medio": 598,
+    "modo": "piso atual até D8; mercado na última semana",
+    "var_vs_atual": -0.1079
+   },
+   "historico": {
+    "ocup": 0.7083,
+    "pago_p25": 342.43,
+    "pago_p50": 401.85,
+    "pago_p75": 544.06,
+    "n": 32
+   }
+  },
+  {
+   "mes": "2026-11",
+   "sub": "semana",
+   "grupo": "semana",
+   "q": "VK7",
+   "pousada": "Villa",
+   "noites": 14,
+   "cap": 98,
+   "vendidas": 43,
+   "ocup": 0.4388,
+   "livres": 55,
+   "fator_publico": 0.4746,
+   "atual": {
+    "enviado": 1076,
+    "publico": 511,
+    "g3": 416,
+    "pago": 495,
+    "pos_lista": "p63",
+    "pos_hidro": "p41"
+   },
+   "regra_abertura": [
+    "hidro",
+    "50",
+    1.0
+   ],
+   "regra_teto": [
+    "hidro",
+    "65",
+    1.0
+   ],
+   "proposta": {
+    "abertura": {
+     "publico": 448,
+     "enviado": 944,
+     "g3": 365,
+     "pago": 434
+    },
+    "ultima": {
+     "publico": 448,
+     "enviado": 944,
+     "g3": 365,
+     "pago": 434
+    },
+    "teto": {
+     "publico": 796,
+     "enviado": 1677,
+     "g3": 649,
+     "pago": 772
+    },
+    "pago_medio": 434,
+    "modo": "piso atual até D8; mercado na última semana",
+    "var_vs_atual": -0.1233
+   },
+   "historico": {
+    "ocup": 0.6607,
+    "pago_p25": 368.28,
+    "pago_p50": 449.26,
+    "pago_p75": 594.91,
+    "n": 222
+   }
+  },
+  {
+   "mes": "2026-11",
+   "sub": "semana",
+   "grupo": "semana",
+   "q": "VK2",
+   "pousada": "Villa",
+   "noites": 14,
+   "cap": 28,
+   "vendidas": 21,
+   "ocup": 0.75,
+   "livres": 7,
+   "fator_publico": 0.4746,
+   "atual": {
+    "enviado": 1056,
+    "publico": 501,
+    "g3": 409,
+    "pago": 486,
+    "pos_lista": "p62",
+    "pos_hidro": "p40"
+   },
+   "regra_abertura": [
+    "hidro",
+    "50",
+    1.0
+   ],
+   "regra_teto": [
+    "hidro",
+    "65",
+    1.0
+   ],
+   "proposta": {
+    "abertura": {
+     "publico": 448,
+     "enviado": 944,
+     "g3": 365,
+     "pago": 434
+    },
+    "ultima": {
+     "publico": 448,
+     "enviado": 944,
+     "g3": 365,
+     "pago": 434
+    },
+    "teto": {
+     "publico": 796,
+     "enviado": 1677,
+     "g3": 649,
+     "pago": 772
+    },
+    "pago_medio": 434,
+    "modo": "piso atual até D8; mercado na última semana",
+    "var_vs_atual": -0.1058
+   },
+   "historico": {
+    "ocup": 0.625,
+    "pago_p25": 365.33,
+    "pago_p50": 448.7,
+    "pago_p75": 541.34,
+    "n": 60
+   }
+  },
+  {
+   "mes": "2026-11",
+   "sub": "semana",
+   "grupo": "semana",
+   "q": "Balcony",
+   "pousada": "Villa",
+   "noites": 14,
+   "cap": 84,
+   "vendidas": 1,
+   "ocup": 0.0119,
+   "livres": 83,
+   "fator_publico": 0.4746,
+   "atual": {
+    "enviado": 926,
+    "publico": 439,
+    "g3": 358,
+    "pago": 426,
+    "pos_lista": "p55",
+    "pos_hidro": "p31"
+   },
+   "regra_abertura": [
+    "lista",
+    "40",
+    1.0
+   ],
+   "regra_teto": [
+    "lista",
+    "65",
+    1.0
+   ],
+   "proposta": {
+    "abertura": {
+     "publico": 327,
+     "enviado": 690,
+     "g3": 267,
+     "pago": 317
+    },
+    "ultima": {
+     "publico": 327,
+     "enviado": 690,
+     "g3": 267,
+     "pago": 317
+    },
+    "teto": {
+     "publico": 535,
+     "enviado": 1127,
+     "g3": 436,
+     "pago": 519
+    },
+    "pago_medio": 317,
+    "modo": "preço próprio, sem seguir a King Spa",
+    "var_vs_atual": -0.2551
+   },
+   "historico": {
+    "ocup": 0.1181,
+    "pago_p25": 247.65,
+    "pago_p50": 331.8,
+    "pago_p75": 472.4,
+    "n": 34
+   }
+  },
+  {
+   "mes": "2026-11",
+   "sub": "fds",
+   "grupo": "fds",
+   "q": "Q7",
+   "pousada": "Recanto",
+   "noites": 4,
+   "cap": 28,
+   "vendidas": 7,
+   "ocup": 0.25,
+   "livres": 21,
+   "fator_publico": 0.6156,
+   "atual": {
+    "enviado": 2240,
+    "publico": 1379,
+    "g3": 930,
+    "pago": 1098,
+    "pos_lista": "p85",
+    "pos_hidro": "p61"
+   },
+   "regra_abertura": [
+    "lista",
+    "40",
+    1.0
+   ],
+   "regra_teto": [
+    "hidro",
+    "50",
+    1.0
+   ],
+   "proposta": {
+    "abertura": {
+     "publico": 710,
+     "enviado": 1153,
+     "g3": 479,
+     "pago": 565
+    },
+    "ultima": {
+     "publico": 639,
+     "enviado": 1038,
+     "g3": 431,
+     "pago": 509
+    },
+    "teto": {
+     "publico": 1190,
+     "enviado": 1933,
+     "g3": 803,
+     "pago": 947
+    },
+    "pago_medio": 601,
+    "modo": "escada depois da metade vendida; desce 10% a 7 dias se abaixo de 60%",
+    "var_vs_atual": -0.4851
+   },
+   "historico": {
+    "ocup": 0.5268,
+    "pago_p25": 503.86,
+    "pago_p50": 559.28,
+    "pago_p75": 657.01,
+    "n": 59
+   }
+  },
+  {
+   "mes": "2026-11",
+   "sub": "fds",
+   "grupo": "fds",
+   "q": "Double",
+   "pousada": "Recanto",
+   "noites": 4,
+   "cap": 24,
+   "vendidas": 13,
+   "ocup": 0.5417,
+   "livres": 11,
+   "fator_publico": 0.6156,
+   "atual": {
+    "enviado": 2379,
+    "publico": 1465,
+    "g3": 988,
+    "pago": 1166,
+    "pos_lista": "≥p90",
+    "pos_hidro": "p66"
+   },
+   "regra_abertura": [
+    "pares_hidro",
+    "50",
+    1.05
+   ],
+   "regra_teto": [
+    "hidro",
+    "65",
+    1.0
+   ],
+   "proposta": {
+    "abertura": {
+     "publico": 905,
+     "enviado": 1470,
+     "g3": 611,
+     "pago": 720
+    },
+    "ultima": {
+     "publico": 815,
+     "enviado": 1323,
+     "g3": 550,
+     "pago": 648
+    },
+    "teto": {
+     "publico": 1440,
+     "enviado": 2339,
+     "g3": 971,
+     "pago": 1146
+    },
+    "pago_medio": 773,
+    "modo": "escada depois da metade vendida; desce 10% a 7 dias se abaixo de 60%",
+    "var_vs_atual": -0.3823
+   },
+   "historico": {
+    "ocup": 0.7917,
+    "pago_p25": 644.75,
+    "pago_p50": 743.46,
+    "pago_p75": 861.9,
+    "n": 76
+   }
+  },
+  {
+   "mes": "2026-11",
+   "sub": "fds",
+   "grupo": "fds",
+   "q": "Q2",
+   "pousada": "Recanto",
+   "noites": 4,
+   "cap": 8,
+   "vendidas": 2,
+   "ocup": 0.25,
+   "livres": 6,
+   "fator_publico": 0.6156,
+   "atual": {
+    "enviado": 2295,
+    "publico": 1413,
+    "g3": 953,
+    "pago": 1125,
+    "pos_lista": "p87",
+    "pos_hidro": "p63"
+   },
+   "regra_abertura": [
+    "pares_hidro",
+    "50",
+    1.05
+   ],
+   "regra_teto": [
+    "hidro",
+    "65",
+    1.0
+   ],
+   "proposta": {
+    "abertura": {
+     "publico": 905,
+     "enviado": 1470,
+     "g3": 611,
+     "pago": 720
+    },
+    "ultima": {
+     "publico": 815,
+     "enviado": 1323,
+     "g3": 550,
+     "pago": 648
+    },
+    "teto": {
+     "publico": 1440,
+     "enviado": 2339,
+     "g3": 971,
+     "pago": 1146
+    },
+    "pago_medio": 746,
+    "modo": "escada depois da metade vendida; desce 10% a 7 dias se abaixo de 60%",
+    "var_vs_atual": -0.3595
+   },
+   "historico": {
+    "ocup": 0.6875,
+    "pago_p25": 663.38,
+    "pago_p50": 711.56,
+    "pago_p75": 819.81,
+    "n": 22
+   }
+  },
+  {
+   "mes": "2026-11",
+   "sub": "fds",
+   "grupo": "fds",
+   "q": "Afrodite",
+   "pousada": "Recanto",
+   "noites": 4,
+   "cap": 4,
+   "vendidas": 2,
+   "ocup": 0.5,
+   "livres": 2,
+   "fator_publico": 0.6156,
+   "atual": {
+    "enviado": 3180,
+    "publico": 1958,
+    "g3": 1321,
+    "pago": 1558,
+    "pos_lista": "≥p90",
+    "pos_hidro": "p84"
+   },
+   "regra_abertura": [
+    "pares_hidro",
+    "50",
+    1.2075
+   ],
+   "regra_teto": [
+    "hidro",
+    "65",
+    1.0
+   ],
+   "proposta": {
+    "abertura": {
+     "publico": 1041,
+     "enviado": 1691,
+     "g3": 702,
+     "pago": 828
+    },
+    "ultima": {
+     "publico": 937,
+     "enviado": 1522,
+     "g3": 632,
+     "pago": 746
+    },
+    "teto": {
+     "publico": 1440,
+     "enviado": 2339,
+     "g3": 971,
+     "pago": 1146
+    },
+    "pago_medio": 828,
+    "modo": "escada depois da metade vendida; desce 10% a 7 dias se abaixo de 60%",
+    "var_vs_atual": -0.4683
+   },
+   "historico": {
+    "ocup": 0.625,
+    "pago_p25": 655.8,
+    "pago_p50": 842.72,
+    "pago_p75": 1099.76,
+    "n": 8
+   }
+  },
+  {
+   "mes": "2026-11",
+   "sub": "fds",
+   "grupo": "fds",
+   "q": "VK7",
+   "pousada": "Villa",
+   "noites": 4,
+   "cap": 28,
+   "vendidas": 19,
+   "ocup": 0.6786,
+   "livres": 9,
+   "fator_publico": 0.5764,
+   "atual": {
+    "enviado": 2841,
+    "publico": 1638,
+    "g3": 1449,
+    "pago": 1307,
+    "pos_lista": "≥p90",
+    "pos_hidro": "p75"
+   },
+   "regra_abertura": [
+    "pares_hidro",
+    "50",
+    1.05
+   ],
+   "regra_teto": [
+    "hidro",
+    "65",
+    1.0
+   ],
+   "proposta": {
+    "abertura": {
+     "publico": 905,
+     "enviado": 1570,
+     "g3": 801,
+     "pago": 722
+    },
+    "ultima": {
+     "publico": 815,
+     "enviado": 1413,
+     "g3": 721,
+     "pago": 650
+    },
+    "teto": {
+     "publico": 1440,
+     "enviado": 2498,
+     "g3": 1274,
+     "pago": 1149
+    },
+    "pago_medio": 768,
+    "modo": "escada depois da metade vendida; desce 10% a 7 dias se abaixo de 60%",
+    "var_vs_atual": -0.4475
+   },
+   "historico": {
+    "ocup": 0.875,
+    "pago_p25": 591.18,
+    "pago_p50": 700.0,
+    "pago_p75": 823.5,
+    "n": 96
+   }
+  },
+  {
+   "mes": "2026-11",
+   "sub": "fds",
+   "grupo": "fds",
+   "q": "VK2",
+   "pousada": "Villa",
+   "noites": 4,
+   "cap": 8,
+   "vendidas": 4,
+   "ocup": 0.5,
+   "livres": 4,
+   "fator_publico": 0.5764,
+   "atual": {
+    "enviado": 2718,
+    "publico": 1567,
+    "g3": 1386,
+    "pago": 1250,
+    "pos_lista": "≥p90",
+    "pos_hidro": "p72"
+   },
+   "regra_abertura": [
+    "pares_hidro",
+    "50",
+    1.05
+   ],
+   "regra_teto": [
+    "hidro",
+    "65",
+    1.0
+   ],
+   "proposta": {
+    "abertura": {
+     "publico": 905,
+     "enviado": 1570,
+     "g3": 801,
+     "pago": 722
+    },
+    "ultima": {
+     "publico": 815,
+     "enviado": 1413,
+     "g3": 721,
+     "pago": 650
+    },
+    "teto": {
+     "publico": 1440,
+     "enviado": 2498,
+     "g3": 1274,
+     "pago": 1149
+    },
+    "pago_medio": 748,
+    "modo": "escada depois da metade vendida; desce 10% a 7 dias se abaixo de 60%",
+    "var_vs_atual": -0.4225
+   },
+   "historico": {
+    "ocup": 0.9062,
+    "pago_p25": 533.25,
+    "pago_p50": 579.54,
+    "pago_p75": 994.29,
+    "n": 29
+   }
+  },
+  {
+   "mes": "2026-11",
+   "sub": "fds",
+   "grupo": "fds",
+   "q": "Balcony",
+   "pousada": "Villa",
+   "noites": 4,
+   "cap": 24,
+   "vendidas": 0,
+   "ocup": 0.0,
+   "livres": 24,
+   "fator_publico": 0.5764,
+   "atual": {
+    "enviado": 2426,
+    "publico": 1398,
+    "g3": 1237,
+    "pago": 1116,
+    "pos_lista": "p87",
+    "pos_hidro": "p62"
+   },
+   "regra_abertura": [
+    "pares_lista",
+    "50",
+    1.0
+   ],
+   "regra_teto": [
+    "lista",
+    "50",
+    1.0
+   ],
+   "proposta": {
+    "abertura": {
+     "publico": 620,
+     "enviado": 1076,
+     "g3": 548,
+     "pago": 495
+    },
+    "ultima": {
+     "publico": 558,
+     "enviado": 968,
+     "g3": 494,
+     "pago": 445
+    },
+    "teto": {
+     "publico": 784,
+     "enviado": 1360,
+     "g3": 694,
+     "pago": 626
+    },
+    "pago_medio": 531,
+    "modo": "escada depois da metade vendida; desce 10% a 7 dias se abaixo de 60%",
+    "var_vs_atual": -0.5565
+   },
+   "historico": {
+    "ocup": 0.3646,
+    "pago_p25": 394.07,
+    "pago_p50": 440.56,
+    "pago_p75": 653.33,
+    "n": 35
+   }
+  },
+  {
+   "mes": "2026-11",
+   "sub": "feriado",
+   "grupo": "feriado",
+   "q": "Q7",
+   "pousada": "Recanto",
+   "noites": 3,
+   "cap": 21,
+   "vendidas": 11,
+   "ocup": 0.5238,
+   "livres": 10,
+   "fator_publico": 0.6326,
+   "atual": {
+    "enviado": 2299,
+    "publico": 1454,
+    "g3": 970,
+    "pago": 1127,
+    "pos_lista": "p71",
+    "pos_hidro": "p34"
+   },
+   "regra_abertura": [
+    "hidro",
+    "40",
+    1.0
+   ],
+   "regra_teto": [
+    "hidro",
+    "65",
+    1.0
+   ],
+   "proposta": {
+    "abertura": {
+     "publico": 1454,
+     "enviado": 2298,
+     "g3": 969,
+     "pago": 1126
+    },
+    "ultima": {
+     "publico": 1309,
+     "enviado": 2069,
+     "g3": 872,
+     "pago": 1014
+    },
+    "teto": {
+     "publico": 2101,
+     "enviado": 3321,
+     "g3": 1401,
+     "pago": 1627
+    },
+    "pago_medio": 1197,
+    "modo": "escada depois da metade vendida; desce 10% a 7 dias se abaixo de 60%",
+    "var_vs_atual": 0.0
+   },
+   "historico": {
+    "ocup": 0.5238,
+    "pago_p25": 751.87,
+    "pago_p50": 1037.06,
+    "pago_p75": 1226.14,
+    "n": 22
+   }
+  },
+  {
+   "mes": "2026-11",
+   "sub": "feriado",
+   "grupo": "feriado",
+   "q": "Double",
+   "pousada": "Recanto",
+   "noites": 3,
+   "cap": 18,
+   "vendidas": 17,
+   "ocup": 0.9444,
+   "livres": 1,
+   "fator_publico": 0.6326,
+   "atual": {
+    "enviado": 2102,
+    "publico": 1330,
+    "g3": 886,
+    "pago": 1030,
+    "pos_lista": "p65",
+    "pos_hidro": "p28"
+   },
+   "regra_abertura": [
+    "hidro",
+    "50",
+    1.0
+   ],
+   "regra_teto": [
+    "hidro",
+    "75",
+    1.0
+   ],
+   "proposta": {
+    "abertura": {
+     "publico": 1330,
+     "enviado": 2102,
+     "g3": 887,
+     "pago": 1030
+    },
+    "ultima": {
+     "publico": 1197,
+     "enviado": 1892,
+     "g3": 798,
+     "pago": 927
+    },
+    "teto": {
+     "publico": 2451,
+     "enviado": 3874,
+     "g3": 1634,
+     "pago": 1898
+    },
+    "pago_medio": 1106,
+    "modo": "escada depois da metade vendida; desce 10% a 7 dias se abaixo de 60%",
+    "var_vs_atual": 0.0
+   },
+   "historico": {
+    "ocup": 0.7222,
+    "pago_p25": 721.75,
+    "pago_p50": 1010.25,
+    "pago_p75": 1134.51,
+    "n": 26
+   }
+  },
+  {
+   "mes": "2026-11",
+   "sub": "feriado",
+   "grupo": "feriado",
+   "q": "Q2",
+   "pousada": "Recanto",
+   "noites": 3,
+   "cap": 6,
+   "vendidas": 4,
+   "ocup": 0.6667,
+   "livres": 2,
+   "fator_publico": 0.6326,
+   "atual": {
+    "enviado": 1924,
+    "publico": 1217,
+    "g3": 811,
+    "pago": 943,
+    "pos_lista": "p56",
+    "pos_hidro": "≤p25"
+   },
+   "regra_abertura": [
+    "hidro",
+    "50",
+    1.0
+   ],
+   "regra_teto": [
+    "hidro",
+    "75",
+    1.0
+   ],
+   "proposta": {
+    "abertura": {
+     "publico": 1217,
+     "enviado": 1924,
+     "g3": 811,
+     "pago": 943
+    },
+    "ultima": {
+     "publico": 1095,
+     "enviado": 1731,
+     "g3": 730,
+     "pago": 848
+    },
+    "teto": {
+     "publico": 2451,
+     "enviado": 3874,
+     "g3": 1634,
+     "pago": 1898
+    },
+    "pago_medio": 976,
+    "modo": "escada depois da metade vendida; desce 10% a 7 dias se abaixo de 60%",
+    "var_vs_atual": 0.0
+   },
+   "historico": {
+    "ocup": 0.4167,
+    "pago_p25": 686.1,
+    "pago_p50": 686.1,
+    "pago_p75": 1304.09,
+    "n": 5
+   }
+  },
+  {
+   "mes": "2026-11",
+   "sub": "feriado",
+   "grupo": "feriado",
+   "q": "Afrodite",
+   "pousada": "Recanto",
+   "noites": 3,
+   "cap": 3,
+   "vendidas": 3,
+   "ocup": 1.0,
+   "livres": 0,
+   "fator_publico": 0.6326,
+   "atual": {
+    "enviado": null,
+    "publico": null,
+    "g3": null,
+    "pago": null
+   },
+   "regra_abertura": [
+    "hidro",
+    "50",
+    1.15
+   ],
+   "regra_teto": [
+    "hidro",
+    "75",
+    1.0
+   ],
+   "proposta": {
+    "abertura": {
+     "publico": 1897,
+     "enviado": 3000,
+     "g3": 1265,
+     "pago": 1470
+    },
+    "ultima": {
+     "publico": 1708,
+     "enviado": 2700,
+     "g3": 1138,
+     "pago": 1323
+    },
+    "teto": {
+     "publico": 2451,
+     "enviado": 3874,
+     "g3": 1634,
+     "pago": 1898
+    },
+    "pago_medio": 1470,
+    "modo": "escada depois da metade vendida; desce 10% a 7 dias se abaixo de 60%",
+    "var_vs_atual": null
+   },
+   "historico": {
+    "ocup": 0.6667,
+    "pago_p25": 953.88,
+    "pago_p50": 960.83,
+    "pago_p75": 960.83,
+    "n": 4
+   }
+  },
+  {
+   "mes": "2026-11",
+   "sub": "feriado",
+   "grupo": "feriado",
+   "q": "VK7",
+   "pousada": "Villa",
+   "noites": 3,
+   "cap": 21,
+   "vendidas": 9,
+   "ocup": 0.4286,
+   "livres": 12,
+   "fator_publico": 0.6526,
+   "atual": {
+    "enviado": 2709,
+    "publico": 1768,
+    "g3": 1523,
+    "pago": 1246,
+    "pos_lista": "p84",
+    "pos_hidro": "p54"
+   },
+   "regra_abertura": [
+    "hidro",
+    "50",
+    1.0
+   ],
+   "regra_teto": [
+    "hidro",
+    "75",
+    1.0
+   ],
+   "proposta": {
+    "abertura": {
+     "publico": 1650,
+     "enviado": 2528,
+     "g3": 1422,
+     "pago": 1163
+    },
+    "ultima": {
+     "publico": 1485,
+     "enviado": 2276,
+     "g3": 1279,
+     "pago": 1047
+    },
+    "teto": {
+     "publico": 2451,
+     "enviado": 3756,
+     "g3": 2112,
+     "pago": 1728
+    },
+    "pago_medio": 1236,
+    "modo": "escada depois da metade vendida; desce 10% a 7 dias se abaixo de 60%",
+    "var_vs_atual": -0.0667
+   },
+   "historico": {
+    "ocup": 0.9524,
+    "pago_p25": 590.62,
+    "pago_p50": 733.8,
+    "pago_p75": 821.61,
+    "n": 40
+   }
+  },
+  {
+   "mes": "2026-11",
+   "sub": "feriado",
+   "grupo": "feriado",
+   "q": "VK2",
+   "pousada": "Villa",
+   "noites": 3,
+   "cap": 6,
+   "vendidas": 4,
+   "ocup": 0.6667,
+   "livres": 2,
+   "fator_publico": 0.6526,
+   "atual": {
+    "enviado": 2908,
+    "publico": 1898,
+    "g3": 1635,
+    "pago": 1338,
+    "pos_lista": "p89",
+    "pos_hidro": "p58"
+   },
+   "regra_abertura": [
+    "hidro",
+    "50",
+    1.0
+   ],
+   "regra_teto": [
+    "hidro",
+    "75",
+    1.0
+   ],
+   "proposta": {
+    "abertura": {
+     "publico": 1650,
+     "enviado": 2528,
+     "g3": 1422,
+     "pago": 1163
+    },
+    "ultima": {
+     "publico": 1485,
+     "enviado": 2276,
+     "g3": 1279,
+     "pago": 1047
+    },
+    "teto": {
+     "publico": 2451,
+     "enviado": 3756,
+     "g3": 2112,
+     "pago": 1728
+    },
+    "pago_medio": 1204,
+    "modo": "escada depois da metade vendida; desce 10% a 7 dias se abaixo de 60%",
+    "var_vs_atual": -0.1307
+   },
+   "historico": {
+    "ocup": 0.75,
+    "pago_p25": 702.23,
+    "pago_p50": 816.94,
+    "pago_p75": 876.13,
+    "n": 9
+   }
+  },
+  {
+   "mes": "2026-11",
+   "sub": "feriado",
+   "grupo": "feriado",
+   "q": "Balcony",
+   "pousada": "Villa",
+   "noites": 3,
+   "cap": 18,
+   "vendidas": 4,
+   "ocup": 0.2222,
+   "livres": 14,
+   "fator_publico": 0.6526,
+   "atual": {
+    "enviado": 1758,
+    "publico": 1147,
+    "g3": 988,
+    "pago": 809,
+    "pos_lista": "p50",
+    "pos_hidro": "≤p25"
+   },
+   "regra_abertura": [
+    "lista",
+    "50",
+    1.0
+   ],
+   "regra_teto": [
+    "lista",
+    "75",
+    1.0
+   ],
+   "proposta": {
+    "abertura": {
+     "publico": 1143,
+     "enviado": 1751,
+     "g3": 985,
+     "pago": 806
+    },
+    "ultima": {
+     "publico": 1029,
+     "enviado": 1576,
+     "g3": 886,
+     "pago": 725
+    },
+    "teto": {
+     "publico": 1550,
+     "enviado": 2375,
+     "g3": 1335,
+     "pago": 1093
+    },
+    "pago_medio": 865,
+    "modo": "escada depois da metade vendida; desce 10% a 7 dias se abaixo de 60%",
+    "var_vs_atual": -0.0035
+   },
+   "historico": {
+    "ocup": 0.75,
+    "pago_p25": 459.3,
+    "pago_p50": 553.6,
+    "pago_p75": 615.18,
+    "n": 27
+   }
+  },
+  {
+   "mes": "2026-12",
+   "sub": "semana",
+   "grupo": "semana",
+   "q": "Q7",
+   "pousada": "Recanto",
+   "noites": 16,
+   "cap": 112,
+   "vendidas": 11,
+   "ocup": 0.0982,
+   "livres": 101,
+   "fator_publico": 0.6327,
+   "atual": {
+    "enviado": 1292,
+    "publico": 817,
+    "g3": 532,
+    "pago": 633,
+    "pos_lista": "p76",
+    "pos_hidro": "p60"
+   },
+   "regra_abertura": [
+    "hidro",
+    "50",
+    1.0
+   ],
+   "regra_teto": [
+    "hidro",
+    "65",
+    1.0
+   ],
+   "proposta": {
+    "abertura": {
+     "publico": 772,
+     "enviado": 1220,
+     "g3": 502,
+     "pago": 598
+    },
+    "ultima": {
+     "publico": 685,
+     "enviado": 1083,
+     "g3": 446,
+     "pago": 531
+    },
+    "teto": {
+     "publico": 879,
+     "enviado": 1389,
+     "g3": 572,
+     "pago": 681
+    },
+    "pago_medio": 555,
+    "modo": "piso atual até D8; mercado na última semana",
+    "var_vs_atual": -0.0551
+   },
+   "historico": {
+    "ocup": 0.4286,
+    "pago_p25": 329.49,
+    "pago_p50": 429.66,
+    "pago_p75": 486.26,
+    "n": 144
+   }
+  },
+  {
+   "mes": "2026-12",
+   "sub": "semana",
+   "grupo": "semana",
+   "q": "Double",
+   "pousada": "Recanto",
+   "noites": 16,
+   "cap": 96,
+   "vendidas": 14,
+   "ocup": 0.1458,
+   "livres": 82,
+   "fator_publico": 0.6327,
+   "atual": {
+    "enviado": 1311,
+    "publico": 829,
+    "g3": 540,
+    "pago": 642,
+    "pos_lista": "p77",
+    "pos_hidro": "p61"
+   },
+   "regra_abertura": [
+    "hidro",
+    "50",
+    1.05
+   ],
+   "regra_teto": [
+    "hidro",
+    "65",
+    1.0
+   ],
+   "proposta": {
+    "abertura": {
+     "publico": 810,
+     "enviado": 1281,
+     "g3": 527,
+     "pago": 628
+    },
+    "ultima": {
+     "publico": 719,
+     "enviado": 1137,
+     "g3": 468,
+     "pago": 557
+    },
+    "teto": {
+     "publico": 879,
+     "enviado": 1389,
+     "g3": 572,
+     "pago": 681
+    },
+    "pago_medio": 582,
+    "modo": "piso atual até D8; mercado na última semana",
+    "var_vs_atual": -0.0229
+   },
+   "historico": {
+    "ocup": 0.6424,
+    "pago_p25": 377.5,
+    "pago_p50": 470.83,
+    "pago_p75": 625.14,
+    "n": 185
+   }
+  },
+  {
+   "mes": "2026-12",
+   "sub": "semana",
+   "grupo": "semana",
+   "q": "Q2",
+   "pousada": "Recanto",
+   "noites": 16,
+   "cap": 32,
+   "vendidas": 2,
+   "ocup": 0.0625,
+   "livres": 30,
+   "fator_publico": 0.6327,
+   "atual": {
+    "enviado": 1322,
+    "publico": 836,
+    "g3": 544,
+    "pago": 648,
+    "pos_lista": "p77",
+    "pos_hidro": "p62"
+   },
+   "regra_abertura": [
+    "hidro",
+    "50",
+    1.0
+   ],
+   "regra_teto": [
+    "hidro",
+    "65",
+    1.0
+   ],
+   "proposta": {
+    "abertura": {
+     "publico": 772,
+     "enviado": 1220,
+     "g3": 502,
+     "pago": 598
+    },
+    "ultima": {
+     "publico": 685,
+     "enviado": 1083,
+     "g3": 446,
+     "pago": 531
+    },
+    "teto": {
+     "publico": 879,
+     "enviado": 1389,
+     "g3": 572,
+     "pago": 681
+    },
+    "pago_medio": 555,
+    "modo": "piso atual até D8; mercado na última semana",
+    "var_vs_atual": -0.0766
+   },
+   "historico": {
+    "ocup": 0.4062,
+    "pago_p25": 335.4,
+    "pago_p50": 415.99,
+    "pago_p75": 481.41,
+    "n": 39
+   }
+  },
+  {
+   "mes": "2026-12",
+   "sub": "semana",
+   "grupo": "semana",
+   "q": "Afrodite",
+   "pousada": "Recanto",
+   "noites": 16,
+   "cap": 16,
+   "vendidas": 4,
+   "ocup": 0.25,
+   "livres": 12,
+   "fator_publico": 0.6327,
+   "atual": {
+    "enviado": 1625,
+    "publico": 1028,
+    "g3": 669,
+    "pago": 796,
+    "pos_lista": "p84",
+    "pos_hidro": "p71"
+   },
+   "regra_abertura": [
+    "hidro",
+    "50",
+    1.2
+   ],
+   "regra_teto": [
+    "hidro",
+    "65",
+    1.0
+   ],
+   "proposta": {
+    "abertura": {
+     "publico": 926,
+     "enviado": 1464,
+     "g3": 603,
+     "pago": 717
+    },
+    "ultima": {
+     "publico": 822,
+     "enviado": 1299,
+     "g3": 535,
+     "pago": 637
+    },
+    "teto": {
+     "publico": 926,
+     "enviado": 1464,
+     "g3": 603,
+     "pago": 717
+    },
+    "pago_medio": 666,
+    "modo": "piso atual até D8; mercado na última semana",
+    "var_vs_atual": -0.0992
+   },
+   "historico": {
+    "ocup": 0.7083,
+    "pago_p25": 342.43,
+    "pago_p50": 401.85,
+    "pago_p75": 544.06,
+    "n": 32
+   }
+  },
+  {
+   "mes": "2026-12",
+   "sub": "semana",
+   "grupo": "semana",
+   "q": "VK7",
+   "pousada": "Villa",
+   "noites": 16,
+   "cap": 112,
+   "vendidas": 34,
+   "ocup": 0.3036,
+   "livres": 78,
+   "fator_publico": 0.6043,
+   "atual": {
+    "enviado": 1102,
+    "publico": 666,
+    "g3": 543,
+    "pago": 507,
+    "pos_lista": "p69",
+    "pos_hidro": "p48"
+   },
+   "regra_abertura": [
+    "hidro",
+    "50",
+    1.0
+   ],
+   "regra_teto": [
+    "hidro",
+    "65",
+    1.0
+   ],
+   "proposta": {
+    "abertura": {
+     "publico": 570,
+     "enviado": 944,
+     "g3": 465,
+     "pago": 434
+    },
+    "ultima": {
+     "publico": 570,
+     "enviado": 944,
+     "g3": 465,
+     "pago": 434
+    },
+    "teto": {
+     "publico": 879,
+     "enviado": 1455,
+     "g3": 717,
+     "pago": 669
+    },
+    "pago_medio": 434,
+    "modo": "piso atual até D8; mercado na última semana",
+    "var_vs_atual": -0.1441
+   },
+   "historico": {
+    "ocup": 0.6607,
+    "pago_p25": 368.28,
+    "pago_p50": 449.26,
+    "pago_p75": 594.91,
+    "n": 222
+   }
+  },
+  {
+   "mes": "2026-12",
+   "sub": "semana",
+   "grupo": "semana",
+   "q": "VK2",
+   "pousada": "Villa",
+   "noites": 16,
+   "cap": 32,
+   "vendidas": 10,
+   "ocup": 0.3125,
+   "livres": 22,
+   "fator_publico": 0.6043,
+   "atual": {
+    "enviado": 1040,
+    "publico": 628,
+    "g3": 512,
+    "pago": 478,
+    "pos_lista": "p67",
+    "pos_hidro": "p45"
+   },
+   "regra_abertura": [
+    "hidro",
+    "50",
+    1.0
+   ],
+   "regra_teto": [
+    "hidro",
+    "65",
+    1.0
+   ],
+   "proposta": {
+    "abertura": {
+     "publico": 570,
+     "enviado": 944,
+     "g3": 465,
+     "pago": 434
+    },
+    "ultima": {
+     "publico": 570,
+     "enviado": 944,
+     "g3": 465,
+     "pago": 434
+    },
+    "teto": {
+     "publico": 879,
+     "enviado": 1455,
+     "g3": 717,
+     "pago": 669
+    },
+    "pago_medio": 434,
+    "modo": "piso atual até D8; mercado na última semana",
+    "var_vs_atual": -0.0924
+   },
+   "historico": {
+    "ocup": 0.625,
+    "pago_p25": 365.33,
+    "pago_p50": 448.7,
+    "pago_p75": 541.34,
+    "n": 60
+   }
+  },
+  {
+   "mes": "2026-12",
+   "sub": "semana",
+   "grupo": "semana",
+   "q": "Balcony",
+   "pousada": "Villa",
+   "noites": 16,
+   "cap": 96,
+   "vendidas": 0,
+   "ocup": 0.0,
+   "livres": 96,
+   "fator_publico": 0.6043,
+   "atual": {
+    "enviado": 964,
+    "publico": 583,
+    "g3": 475,
+    "pago": 443,
+    "pos_lista": "p65",
+    "pos_hidro": "p41"
+   },
+   "regra_abertura": [
+    "lista",
+    "40",
+    1.0
+   ],
+   "regra_teto": [
+    "lista",
+    "65",
+    1.0
+   ],
+   "proposta": {
+    "abertura": {
+     "publico": 417,
+     "enviado": 690,
+     "g3": 340,
+     "pago": 317
+    },
+    "ultima": {
+     "publico": 417,
+     "enviado": 690,
+     "g3": 340,
+     "pago": 317
+    },
+    "teto": {
+     "publico": 579,
+     "enviado": 958,
+     "g3": 472,
+     "pago": 441
+    },
+    "pago_medio": 317,
+    "modo": "preço próprio, sem seguir a King Spa",
+    "var_vs_atual": -0.2847
+   },
+   "historico": {
+    "ocup": 0.1181,
+    "pago_p25": 247.65,
+    "pago_p50": 331.8,
+    "pago_p75": 472.4,
+    "n": 34
+   }
+  },
+  {
+   "mes": "2026-12",
+   "sub": "fds",
+   "grupo": "fds",
+   "q": "Q7",
+   "pousada": "Recanto",
+   "noites": 6,
+   "cap": 42,
+   "vendidas": 4,
+   "ocup": 0.0952,
+   "livres": 38,
+   "fator_publico": 0.6157,
+   "atual": {
+    "enviado": 2418,
+    "publico": 1489,
+    "g3": 1004,
+    "pago": 1185,
+    "pos_lista": "≥p90",
+    "pos_hidro": "p67"
+   },
+   "regra_abertura": [
+    "lista",
+    "40",
+    1.0
+   ],
+   "regra_teto": [
+    "hidro",
+    "50",
+    1.0
+   ],
+   "proposta": {
+    "abertura": {
+     "publico": 779,
+     "enviado": 1265,
+     "g3": 526,
+     "pago": 620
+    },
+    "ultima": {
+     "publico": 701,
+     "enviado": 1139,
+     "g3": 473,
+     "pago": 558
+    },
+    "teto": {
+     "publico": 1181,
+     "enviado": 1918,
+     "g3": 797,
+     "pago": 940
+    },
+    "pago_medio": 659,
+    "modo": "escada depois da metade vendida; desce 10% a 7 dias se abaixo de 60%",
+    "var_vs_atual": -0.4768
+   },
+   "historico": {
+    "ocup": 0.5268,
+    "pago_p25": 503.86,
+    "pago_p50": 559.28,
+    "pago_p75": 657.01,
+    "n": 59
+   }
+  },
+  {
+   "mes": "2026-12",
+   "sub": "fds",
+   "grupo": "fds",
+   "q": "Double",
+   "pousada": "Recanto",
+   "noites": 6,
+   "cap": 36,
+   "vendidas": 13,
+   "ocup": 0.3611,
+   "livres": 23,
+   "fator_publico": 0.6157,
+   "atual": {
+    "enviado": 2441,
+    "publico": 1503,
+    "g3": 1014,
+    "pago": 1196,
+    "pos_lista": "≥p90",
+    "pos_hidro": "p67"
+   },
+   "regra_abertura": [
+    "pares_hidro",
+    "50",
+    1.05
+   ],
+   "regra_teto": [
+    "hidro",
+    "65",
+    1.0
+   ],
+   "proposta": {
+    "abertura": {
+     "publico": 978,
+     "enviado": 1588,
+     "g3": 659,
+     "pago": 778
+    },
+    "ultima": {
+     "publico": 880,
+     "enviado": 1429,
+     "g3": 594,
+     "pago": 700
+    },
+    "teto": {
+     "publico": 1456,
+     "enviado": 2365,
+     "g3": 982,
+     "pago": 1159
+    },
+    "pago_medio": 835,
+    "modo": "escada depois da metade vendida; desce 10% a 7 dias se abaixo de 60%",
+    "var_vs_atual": -0.3493
+   },
+   "historico": {
+    "ocup": 0.7917,
+    "pago_p25": 644.75,
+    "pago_p50": 743.46,
+    "pago_p75": 861.9,
+    "n": 76
+   }
+  },
+  {
+   "mes": "2026-12",
+   "sub": "fds",
+   "grupo": "fds",
+   "q": "Q2",
+   "pousada": "Recanto",
+   "noites": 6,
+   "cap": 12,
+   "vendidas": 0,
+   "ocup": 0.0,
+   "livres": 12,
+   "fator_publico": 0.6157,
+   "atual": {
+    "enviado": 2433,
+    "publico": 1498,
+    "g3": 1011,
+    "pago": 1192,
+    "pos_lista": "≥p90",
+    "pos_hidro": "p67"
+   },
+   "regra_abertura": [
+    "pares_hidro",
+    "50",
+    1.05
+   ],
+   "regra_teto": [
+    "hidro",
+    "65",
+    1.0
+   ],
+   "proposta": {
+    "abertura": {
+     "publico": 978,
+     "enviado": 1588,
+     "g3": 659,
+     "pago": 778
+    },
+    "ultima": {
+     "publico": 880,
+     "enviado": 1429,
+     "g3": 594,
+     "pago": 700
+    },
+    "teto": {
+     "publico": 1456,
+     "enviado": 2365,
+     "g3": 982,
+     "pago": 1159
+    },
+    "pago_medio": 805,
+    "modo": "escada depois da metade vendida; desce 10% a 7 dias se abaixo de 60%",
+    "var_vs_atual": -0.3471
+   },
+   "historico": {
+    "ocup": 0.6875,
+    "pago_p25": 663.38,
+    "pago_p50": 711.56,
+    "pago_p75": 819.81,
+    "n": 22
+   }
+  },
+  {
+   "mes": "2026-12",
+   "sub": "fds",
+   "grupo": "fds",
+   "q": "Afrodite",
+   "pousada": "Recanto",
+   "noites": 6,
+   "cap": 6,
+   "vendidas": 2,
+   "ocup": 0.3333,
+   "livres": 4,
+   "fator_publico": 0.6157,
+   "atual": {
+    "enviado": 2615,
+    "publico": 1610,
+    "g3": 1086,
+    "pago": 1281,
+    "pos_lista": "≥p90",
+    "pos_hidro": "p72"
+   },
+   "regra_abertura": [
+    "pares_hidro",
+    "50",
+    1.2075
+   ],
+   "regra_teto": [
+    "hidro",
+    "65",
+    1.0
+   ],
+   "proposta": {
+    "abertura": {
+     "publico": 1124,
+     "enviado": 1826,
+     "g3": 758,
+     "pago": 895
+    },
+    "ultima": {
+     "publico": 1012,
+     "enviado": 1643,
+     "g3": 683,
+     "pago": 805
+    },
+    "teto": {
+     "publico": 1456,
+     "enviado": 2365,
+     "g3": 982,
+     "pago": 1159
+    },
+    "pago_medio": 895,
+    "modo": "escada depois da metade vendida; desce 10% a 7 dias se abaixo de 60%",
+    "var_vs_atual": -0.3019
+   },
+   "historico": {
+    "ocup": 0.625,
+    "pago_p25": 655.8,
+    "pago_p50": 842.72,
+    "pago_p75": 1099.76,
+    "n": 8
+   }
+  },
+  {
+   "mes": "2026-12",
+   "sub": "fds",
+   "grupo": "fds",
+   "q": "VK7",
+   "pousada": "Villa",
+   "noites": 6,
+   "cap": 42,
+   "vendidas": 14,
+   "ocup": 0.3333,
+   "livres": 28,
+   "fator_publico": 0.6001,
+   "atual": {
+    "enviado": 2349,
+    "publico": 1410,
+    "g3": 1247,
+    "pago": 1081,
+    "pos_lista": "p87",
+    "pos_hidro": "p62"
+   },
+   "regra_abertura": [
+    "pares_hidro",
+    "50",
+    1.05
+   ],
+   "regra_teto": [
+    "hidro",
+    "65",
+    1.0
+   ],
+   "proposta": {
+    "abertura": {
+     "publico": 978,
+     "enviado": 1629,
+     "g3": 865,
+     "pago": 749
+    },
+    "ultima": {
+     "publico": 880,
+     "enviado": 1466,
+     "g3": 778,
+     "pago": 674
+    },
+    "teto": {
+     "publico": 1456,
+     "enviado": 2426,
+     "g3": 1288,
+     "pago": 1116
+    },
+    "pago_medio": 796,
+    "modo": "escada depois da metade vendida; desce 10% a 7 dias se abaixo de 60%",
+    "var_vs_atual": -0.3064
+   },
+   "historico": {
+    "ocup": 0.875,
+    "pago_p25": 591.18,
+    "pago_p50": 700.0,
+    "pago_p75": 823.5,
+    "n": 96
+   }
+  },
+  {
+   "mes": "2026-12",
+   "sub": "fds",
+   "grupo": "fds",
+   "q": "VK2",
+   "pousada": "Villa",
+   "noites": 6,
+   "cap": 12,
+   "vendidas": 4,
+   "ocup": 0.3333,
+   "livres": 8,
+   "fator_publico": 0.6001,
+   "atual": {
+    "enviado": 2351,
+    "publico": 1411,
+    "g3": 1248,
+    "pago": 1081,
+    "pos_lista": "p87",
+    "pos_hidro": "p63"
+   },
+   "regra_abertura": [
+    "pares_hidro",
+    "50",
+    1.05
+   ],
+   "regra_teto": [
+    "hidro",
+    "65",
+    1.0
+   ],
+   "proposta": {
+    "abertura": {
+     "publico": 978,
+     "enviado": 1629,
+     "g3": 865,
+     "pago": 749
+    },
+    "ultima": {
+     "publico": 880,
+     "enviado": 1466,
+     "g3": 778,
+     "pago": 674
+    },
+    "teto": {
+     "publico": 1456,
+     "enviado": 2426,
+     "g3": 1288,
+     "pago": 1116
+    },
+    "pago_medio": 776,
+    "modo": "escada depois da metade vendida; desce 10% a 7 dias se abaixo de 60%",
+    "var_vs_atual": -0.3069
+   },
+   "historico": {
+    "ocup": 0.9062,
+    "pago_p25": 533.25,
+    "pago_p50": 579.54,
+    "pago_p75": 994.29,
+    "n": 29
+   }
+  },
+  {
+   "mes": "2026-12",
+   "sub": "fds",
+   "grupo": "fds",
+   "q": "Balcony",
+   "pousada": "Villa",
+   "noites": 6,
+   "cap": 36,
+   "vendidas": 2,
+   "ocup": 0.0556,
+   "livres": 34,
+   "fator_publico": 0.6001,
+   "atual": {
+    "enviado": 2168,
+    "publico": 1301,
+    "g3": 1151,
+    "pago": 997,
+    "pos_lista": "p81",
+    "pos_hidro": "p57"
+   },
+   "regra_abertura": [
+    "pares_lista",
+    "50",
+    1.0
+   ],
+   "regra_teto": [
+    "lista",
+    "50",
+    1.0
+   ],
+   "proposta": {
+    "abertura": {
+     "publico": 615,
+     "enviado": 1025,
+     "g3": 544,
+     "pago": 471
+    },
+    "ultima": {
+     "publico": 554,
+     "enviado": 922,
+     "g3": 490,
+     "pago": 424
+    },
+    "teto": {
+     "publico": 838,
+     "enviado": 1396,
+     "g3": 741,
+     "pago": 642
+    },
+    "pago_medio": 506,
+    "modo": "escada depois da metade vendida; desce 10% a 7 dias se abaixo de 60%",
+    "var_vs_atual": -0.5273
+   },
+   "historico": {
+    "ocup": 0.3646,
+    "pago_p25": 394.07,
+    "pago_p50": 440.56,
+    "pago_p75": 653.33,
+    "n": 35
+   }
+  },
+  {
+   "mes": "2026-12",
+   "sub": "natal",
+   "grupo": "festas",
+   "q": "Q7",
+   "pousada": "Recanto",
+   "noites": 4,
+   "cap": 28,
+   "vendidas": 0,
+   "ocup": 0.0,
+   "livres": 28,
+   "fator_publico": 0.6156,
+   "atual": {
+    "enviado": 4974,
+    "publico": 3062,
+    "g3": 2029,
+    "pago": 2437,
+    "pos_lista": "≥p90",
+    "pos_hidro": "p88"
+   },
+   "regra_abertura": [
+    "hidro",
+    "40",
+    1.0
+   ],
+   "regra_teto": [
+    "hidro",
+    "75",
+    1.0
+   ],
+   "proposta": {
+    "abertura": {
+     "publico": 1400,
+     "enviado": 2274,
+     "g3": 928,
+     "pago": 1114
+    },
+    "ultima": {
+     "publico": 1260,
+     "enviado": 2047,
+     "g3": 835,
+     "pago": 1003
+    },
+    "teto": {
+     "publico": 2392,
+     "enviado": 3886,
+     "g3": 1585,
+     "pago": 1904
+    },
+    "pago_medio": 1184,
+    "modo": "escada depois da metade vendida; desce 10% a 7 dias se abaixo de 60%",
+    "var_vs_atual": -0.5428
+   }
+  },
+  {
+   "mes": "2026-12",
+   "sub": "natal",
+   "grupo": "festas",
+   "q": "Double",
+   "pousada": "Recanto",
+   "noites": 4,
+   "cap": 24,
+   "vendidas": 4,
+   "ocup": 0.1667,
+   "livres": 20,
+   "fator_publico": 0.6156,
+   "atual": {
+    "enviado": 4988,
+    "publico": 3071,
+    "g3": 2035,
+    "pago": 2444,
+    "pos_lista": "≥p90",
+    "pos_hidro": "p88"
+   },
+   "regra_abertura": [
+    "hidro",
+    "50",
+    1.0
+   ],
+   "regra_teto": [
+    "hidro",
+    "75",
+    1.0
+   ],
+   "proposta": {
+    "abertura": {
+     "publico": 1549,
+     "enviado": 2516,
+     "g3": 1027,
+     "pago": 1233
+    },
+    "ultima": {
+     "publico": 1394,
+     "enviado": 2265,
+     "g3": 924,
+     "pago": 1110
+    },
+    "teto": {
+     "publico": 2392,
+     "enviado": 3886,
+     "g3": 1585,
+     "pago": 1904
+    },
+    "pago_medio": 1323,
+    "modo": "escada depois da metade vendida; desce 10% a 7 dias se abaixo de 60%",
+    "var_vs_atual": -0.4956
+   }
+  },
+  {
+   "mes": "2026-12",
+   "sub": "natal",
+   "grupo": "festas",
+   "q": "Q2",
+   "pousada": "Recanto",
+   "noites": 4,
+   "cap": 8,
+   "vendidas": 0,
+   "ocup": 0.0,
+   "livres": 8,
+   "fator_publico": 0.6156,
+   "atual": {
+    "enviado": 4977,
+    "publico": 3064,
+    "g3": 2030,
+    "pago": 2439,
+    "pos_lista": "≥p90",
+    "pos_hidro": "p88"
+   },
+   "regra_abertura": [
+    "hidro",
+    "50",
+    1.0
+   ],
+   "regra_teto": [
+    "hidro",
+    "75",
+    1.0
+   ],
+   "proposta": {
+    "abertura": {
+     "publico": 1549,
+     "enviado": 2516,
+     "g3": 1027,
+     "pago": 1233
+    },
+    "ultima": {
+     "publico": 1394,
+     "enviado": 2265,
+     "g3": 924,
+     "pago": 1110
+    },
+    "teto": {
+     "publico": 2392,
+     "enviado": 3886,
+     "g3": 1585,
+     "pago": 1904
+    },
+    "pago_medio": 1276,
+    "modo": "escada depois da metade vendida; desce 10% a 7 dias se abaixo de 60%",
+    "var_vs_atual": -0.4945
+   }
+  },
+  {
+   "mes": "2026-12",
+   "sub": "natal",
+   "grupo": "festas",
+   "q": "Afrodite",
+   "pousada": "Recanto",
+   "noites": 4,
+   "cap": 4,
+   "vendidas": 0,
+   "ocup": 0.0,
+   "livres": 4,
+   "fator_publico": 0.6156,
+   "atual": {
+    "enviado": 5935,
+    "publico": 3654,
+    "g3": 2421,
+    "pago": 2908,
+    "pos_lista": "≥p90",
+    "pos_hidro": "≥p90"
+   },
+   "regra_abertura": [
+    "hidro",
+    "50",
+    1.15
+   ],
+   "regra_teto": [
+    "hidro",
+    "75",
+    1.0
+   ],
+   "proposta": {
+    "abertura": {
+     "publico": 1781,
+     "enviado": 2894,
+     "g3": 1180,
+     "pago": 1418
+    },
+    "ultima": {
+     "publico": 1603,
+     "enviado": 2604,
+     "g3": 1062,
+     "pago": 1276
+    },
+    "teto": {
+     "publico": 2392,
+     "enviado": 3886,
+     "g3": 1585,
+     "pago": 1904
+    },
+    "pago_medio": 1418,
+    "modo": "escada depois da metade vendida; desce 10% a 7 dias se abaixo de 60%",
+    "var_vs_atual": -0.5126
+   }
+  },
+  {
+   "mes": "2026-12",
+   "sub": "natal",
+   "grupo": "festas",
+   "q": "VK7",
+   "pousada": "Villa",
+   "noites": 4,
+   "cap": 28,
+   "vendidas": 4,
+   "ocup": 0.1429,
+   "livres": 24,
+   "fator_publico": 0.3556,
+   "atual": {
+    "enviado": 4988,
+    "publico": 1774,
+    "g3": 1508,
+    "pago": 1774,
+    "pos_lista": "p80",
+    "pos_hidro": "p57"
+   },
+   "regra_abertura": [
+    "hidro",
+    "50",
+    1.0
+   ],
+   "regra_teto": [
+    "hidro",
+    "75",
+    1.0
+   ],
+   "proposta": {
+    "abertura": {
+     "publico": 1549,
+     "enviado": 4356,
+     "g3": 1317,
+     "pago": 1549
+    },
+    "ultima": {
+     "publico": 1394,
+     "enviado": 3920,
+     "g3": 1185,
+     "pago": 1394
+    },
+    "teto": {
+     "publico": 2392,
+     "enviado": 6727,
+     "g3": 2033,
+     "pago": 2392
+    },
+    "pago_medio": 1646,
+    "modo": "escada depois da metade vendida; desce 10% a 7 dias se abaixo de 60%",
+    "var_vs_atual": -0.1268
+   }
+  },
+  {
+   "mes": "2026-12",
+   "sub": "natal",
+   "grupo": "festas",
+   "q": "VK2",
+   "pousada": "Villa",
+   "noites": 4,
+   "cap": 8,
+   "vendidas": 1,
+   "ocup": 0.125,
+   "livres": 7,
+   "fator_publico": 0.3556,
+   "atual": {
+    "enviado": 4991,
+    "publico": 1775,
+    "g3": 1509,
+    "pago": 1775,
+    "pos_lista": "p80",
+    "pos_hidro": "p57"
+   },
+   "regra_abertura": [
+    "hidro",
+    "50",
+    1.0
+   ],
+   "regra_teto": [
+    "hidro",
+    "75",
+    1.0
+   ],
+   "proposta": {
+    "abertura": {
+     "publico": 1549,
+     "enviado": 4356,
+     "g3": 1317,
+     "pago": 1549
+    },
+    "ultima": {
+     "publico": 1394,
+     "enviado": 3920,
+     "g3": 1185,
+     "pago": 1394
+    },
+    "teto": {
+     "publico": 2392,
+     "enviado": 6727,
+     "g3": 2033,
+     "pago": 2392
+    },
+    "pago_medio": 1603,
+    "modo": "escada depois da metade vendida; desce 10% a 7 dias se abaixo de 60%",
+    "var_vs_atual": -0.1273
+   }
+  },
+  {
+   "mes": "2026-12",
+   "sub": "natal",
+   "grupo": "festas",
+   "q": "Balcony",
+   "pousada": "Villa",
+   "noites": 4,
+   "cap": 24,
+   "vendidas": 4,
+   "ocup": 0.1667,
+   "livres": 20,
+   "fator_publico": 0.3556,
+   "atual": {
+    "enviado": 4483,
+    "publico": 1594,
+    "g3": 1355,
+    "pago": 1594,
+    "pos_lista": "p74",
+    "pos_hidro": "p51"
+   },
+   "regra_abertura": [
+    "lista",
+    "50",
+    1.0
+   ],
+   "regra_teto": [
+    "lista",
+    "75",
+    1.0
+   ],
+   "proposta": {
+    "abertura": {
+     "publico": 1122,
+     "enviado": 3155,
+     "g3": 954,
+     "pago": 1122
+    },
+    "ultima": {
+     "publico": 1010,
+     "enviado": 2840,
+     "g3": 858,
+     "pago": 1010
+    },
+    "teto": {
+     "publico": 1610,
+     "enviado": 4528,
+     "g3": 1368,
+     "pago": 1610
+    },
+    "pago_medio": 1204,
+    "modo": "escada depois da metade vendida; desce 10% a 7 dias se abaixo de 60%",
+    "var_vs_atual": -0.2961
+   }
+  },
+  {
+   "mes": "2026-12",
+   "sub": "entre_festas",
+   "grupo": "festas",
+   "q": "Q7",
+   "pousada": "Recanto",
+   "noites": 3,
+   "cap": 21,
+   "vendidas": 0,
+   "ocup": 0.0,
+   "livres": 21,
+   "fator_publico": 0.6156,
+   "atual": {
+    "enviado": 2194,
+    "publico": 1351,
+    "g3": 879,
+    "pago": 1075,
+    "pos_lista": "p83",
+    "pos_hidro": "p64"
+   },
+   "regra_abertura": [
+    "hidro",
+    "40",
+    1.0
+   ],
+   "regra_teto": [
+    "hidro",
+    "75",
+    1.0
+   ],
+   "proposta": {
+    "abertura": {
+     "publico": 910,
+     "enviado": 1478,
+     "g3": 592,
+     "pago": 724
+    },
+    "ultima": {
+     "publico": 819,
+     "enviado": 1330,
+     "g3": 533,
+     "pago": 652
+    },
+    "teto": {
+     "publico": 1668,
+     "enviado": 2710,
+     "g3": 1086,
+     "pago": 1328
+    },
+    "pago_medio": 770,
+    "modo": "escada depois da metade vendida; desce 10% a 7 dias se abaixo de 60%",
+    "var_vs_atual": -0.3264
+   }
+  },
+  {
+   "mes": "2026-12",
+   "sub": "entre_festas",
+   "grupo": "festas",
+   "q": "Double",
+   "pousada": "Recanto",
+   "noites": 3,
+   "cap": 18,
+   "vendidas": 0,
+   "ocup": 0.0,
+   "livres": 18,
+   "fator_publico": 0.6156,
+   "atual": {
+    "enviado": 2664,
+    "publico": 1640,
+    "g3": 1067,
+    "pago": 1305,
+    "pos_lista": "≥p90",
+    "pos_hidro": "p74"
+   },
+   "regra_abertura": [
+    "hidro",
+    "50",
+    1.0
+   ],
+   "regra_teto": [
+    "hidro",
+    "75",
+    1.0
+   ],
+   "proposta": {
+    "abertura": {
+     "publico": 1055,
+     "enviado": 1714,
+     "g3": 687,
+     "pago": 840
+    },
+    "ultima": {
+     "publico": 950,
+     "enviado": 1542,
+     "g3": 618,
+     "pago": 756
+    },
+    "teto": {
+     "publico": 1668,
+     "enviado": 2710,
+     "g3": 1086,
+     "pago": 1328
+    },
+    "pago_medio": 901,
+    "modo": "escada depois da metade vendida; desce 10% a 7 dias se abaixo de 60%",
+    "var_vs_atual": -0.3567
+   }
+  },
+  {
+   "mes": "2026-12",
+   "sub": "entre_festas",
+   "grupo": "festas",
+   "q": "Q2",
+   "pousada": "Recanto",
+   "noites": 3,
+   "cap": 6,
+   "vendidas": 0,
+   "ocup": 0.0,
+   "livres": 6,
+   "fator_publico": 0.6156,
+   "atual": {
+    "enviado": 2587,
+    "publico": 1593,
+    "g3": 1036,
+    "pago": 1268,
+    "pos_lista": "≥p90",
+    "pos_hidro": "p73"
+   },
+   "regra_abertura": [
+    "hidro",
+    "50",
+    1.0
+   ],
+   "regra_teto": [
+    "hidro",
+    "75",
+    1.0
+   ],
+   "proposta": {
+    "abertura": {
+     "publico": 1055,
+     "enviado": 1714,
+     "g3": 687,
+     "pago": 840
+    },
+    "ultima": {
+     "publico": 950,
+     "enviado": 1542,
+     "g3": 618,
+     "pago": 756
+    },
+    "teto": {
+     "publico": 1668,
+     "enviado": 2710,
+     "g3": 1086,
+     "pago": 1328
+    },
+    "pago_medio": 869,
+    "modo": "escada depois da metade vendida; desce 10% a 7 dias se abaixo de 60%",
+    "var_vs_atual": -0.3377
+   }
+  },
+  {
+   "mes": "2026-12",
+   "sub": "entre_festas",
+   "grupo": "festas",
+   "q": "Afrodite",
+   "pousada": "Recanto",
+   "noites": 3,
+   "cap": 3,
+   "vendidas": 0,
+   "ocup": 0.0,
+   "livres": 3,
+   "fator_publico": 0.6156,
+   "atual": {
+    "enviado": 3920,
+    "publico": 2413,
+    "g3": 1570,
+    "pago": 1921,
+    "pos_lista": "≥p90",
+    "pos_hidro": "≥p90"
+   },
+   "regra_abertura": [
+    "hidro",
+    "50",
+    1.15
+   ],
+   "regra_teto": [
+    "hidro",
+    "75",
+    1.0
+   ],
+   "proposta": {
+    "abertura": {
+     "publico": 1213,
+     "enviado": 1971,
+     "g3": 790,
+     "pago": 966
+    },
+    "ultima": {
+     "publico": 1092,
+     "enviado": 1774,
+     "g3": 711,
+     "pago": 869
+    },
+    "teto": {
+     "publico": 1668,
+     "enviado": 2710,
+     "g3": 1086,
+     "pago": 1328
+    },
+    "pago_medio": 966,
+    "modo": "escada depois da metade vendida; desce 10% a 7 dias se abaixo de 60%",
+    "var_vs_atual": -0.4973
+   }
+  },
+  {
+   "mes": "2026-12",
+   "sub": "entre_festas",
+   "grupo": "festas",
+   "q": "VK7",
+   "pousada": "Villa",
+   "noites": 3,
+   "cap": 21,
+   "vendidas": 3,
+   "ocup": 0.1429,
+   "livres": 18,
+   "fator_publico": 0.6174,
+   "atual": {
+    "enviado": 2390,
+    "publico": 1476,
+    "g3": 1203,
+    "pago": 1099,
+    "pos_lista": "p88",
+    "pos_hidro": "p69"
+   },
+   "regra_abertura": [
+    "hidro",
+    "50",
+    1.0
+   ],
+   "regra_teto": [
+    "hidro",
+    "75",
+    1.0
+   ],
+   "proposta": {
+    "abertura": {
+     "publico": 1055,
+     "enviado": 1709,
+     "g3": 860,
+     "pago": 786
+    },
+    "ultima": {
+     "publico": 950,
+     "enviado": 1538,
+     "g3": 774,
+     "pago": 707
+    },
+    "teto": {
+     "publico": 1668,
+     "enviado": 2702,
+     "g3": 1360,
+     "pago": 1243
+    },
+    "pago_medio": 835,
+    "modo": "escada depois da metade vendida; desce 10% a 7 dias se abaixo de 60%",
+    "var_vs_atual": -0.2852
+   }
+  },
+  {
+   "mes": "2026-12",
+   "sub": "entre_festas",
+   "grupo": "festas",
+   "q": "VK2",
+   "pousada": "Villa",
+   "noites": 3,
+   "cap": 6,
+   "vendidas": 0,
+   "ocup": 0.0,
+   "livres": 6,
+   "fator_publico": 0.6174,
+   "atual": {
+    "enviado": 2303,
+    "publico": 1422,
+    "g3": 1159,
+    "pago": 1059,
+    "pos_lista": "p86",
+    "pos_hidro": "p67"
+   },
+   "regra_abertura": [
+    "hidro",
+    "50",
+    1.0
+   ],
+   "regra_teto": [
+    "hidro",
+    "75",
+    1.0
+   ],
+   "proposta": {
+    "abertura": {
+     "publico": 1055,
+     "enviado": 1709,
+     "g3": 860,
+     "pago": 786
+    },
+    "ultima": {
+     "publico": 950,
+     "enviado": 1538,
+     "g3": 774,
+     "pago": 707
+    },
+    "teto": {
+     "publico": 1668,
+     "enviado": 2702,
+     "g3": 1360,
+     "pago": 1243
+    },
+    "pago_medio": 814,
+    "modo": "escada depois da metade vendida; desce 10% a 7 dias se abaixo de 60%",
+    "var_vs_atual": -0.2581
+   }
+  },
+  {
+   "mes": "2026-12",
+   "sub": "entre_festas",
+   "grupo": "festas",
+   "q": "Balcony",
+   "pousada": "Villa",
+   "noites": 3,
+   "cap": 18,
+   "vendidas": 0,
+   "ocup": 0.0,
+   "livres": 18,
+   "fator_publico": 0.6174,
+   "atual": {
+    "enviado": 2015,
+    "publico": 1244,
+    "g3": 1014,
+    "pago": 927,
+    "pos_lista": "p79",
+    "pos_hidro": "p59"
+   },
+   "regra_abertura": [
+    "lista",
+    "50",
+    1.0
+   ],
+   "regra_teto": [
+    "lista",
+    "75",
+    1.0
+   ],
+   "proposta": {
+    "abertura": {
+     "publico": 730,
+     "enviado": 1182,
+     "g3": 595,
+     "pago": 544
+    },
+    "ultima": {
+     "publico": 657,
+     "enviado": 1064,
+     "g3": 536,
+     "pago": 490
+    },
+    "teto": {
+     "publico": 1136,
+     "enviado": 1840,
+     "g3": 926,
+     "pago": 846
+    },
+    "pago_medio": 584,
+    "modo": "escada depois da metade vendida; desce 10% a 7 dias se abaixo de 60%",
+    "var_vs_atual": -0.4132
+   }
+  },
+  {
+   "mes": "2026-12",
+   "sub": "reveillon",
+   "grupo": "festas",
+   "q": "Q7",
+   "pousada": "Recanto",
+   "noites": 2,
+   "cap": 14,
+   "vendidas": 9,
+   "ocup": 0.6429,
+   "livres": 5,
+   "fator_publico": 0.6156,
+   "atual": {
+    "enviado": 4974,
+    "publico": 3062,
+    "g3": 1993,
+    "pago": 2437,
+    "pos_lista": "≥p90",
+    "pos_hidro": "p73"
+   },
+   "regra_abertura": [
+    "hidro",
+    "40",
+    1.0
+   ],
+   "regra_teto": [
+    "hidro",
+    "75",
+    1.0
+   ],
+   "proposta": {
+    "abertura": {
+     "publico": 1833,
+     "enviado": 2978,
+     "g3": 1193,
+     "pago": 1459
+    },
+    "ultima": {
+     "publico": 1650,
+     "enviado": 2680,
+     "g3": 1074,
+     "pago": 1313
+    },
+    "teto": {
+     "publico": 3135,
+     "enviado": 5093,
+     "g3": 2040,
+     "pago": 2495
+    },
+    "pago_medio": 1551,
+    "modo": "escada depois da metade vendida; desce 10% a 7 dias se abaixo de 60%",
+    "var_vs_atual": -0.4014
+   }
+  },
+  {
+   "mes": "2026-12",
+   "sub": "reveillon",
+   "grupo": "festas",
+   "q": "Double",
+   "pousada": "Recanto",
+   "noites": 2,
+   "cap": 12,
+   "vendidas": 3,
+   "ocup": 0.25,
+   "livres": 9,
+   "fator_publico": 0.6156,
+   "atual": {
+    "enviado": 4988,
+    "publico": 3071,
+    "g3": 1998,
+    "pago": 2444,
+    "pos_lista": "≥p90",
+    "pos_hidro": "p73"
+   },
+   "regra_abertura": [
+    "hidro",
+    "50",
+    1.0
+   ],
+   "regra_teto": [
+    "hidro",
+    "75",
+    1.0
+   ],
+   "proposta": {
+    "abertura": {
+     "publico": 2190,
+     "enviado": 3558,
+     "g3": 1425,
+     "pago": 1743
+    },
+    "ultima": {
+     "publico": 1971,
+     "enviado": 3202,
+     "g3": 1283,
+     "pago": 1569
+    },
+    "teto": {
+     "publico": 3135,
+     "enviado": 5093,
+     "g3": 2040,
+     "pago": 2495
+    },
+    "pago_medio": 1871,
+    "modo": "escada depois da metade vendida; desce 10% a 7 dias se abaixo de 60%",
+    "var_vs_atual": -0.2869
+   }
+  },
+  {
+   "mes": "2026-12",
+   "sub": "reveillon",
+   "grupo": "festas",
+   "q": "Q2",
+   "pousada": "Recanto",
+   "noites": 2,
+   "cap": 4,
+   "vendidas": 1,
+   "ocup": 0.25,
+   "livres": 3,
+   "fator_publico": 0.6156,
+   "atual": {
+    "enviado": 4977,
+    "publico": 3064,
+    "g3": 1994,
+    "pago": 2439,
+    "pos_lista": "≥p90",
+    "pos_hidro": "p73"
+   },
+   "regra_abertura": [
+    "hidro",
+    "50",
+    1.0
+   ],
+   "regra_teto": [
+    "hidro",
+    "75",
+    1.0
+   ],
+   "proposta": {
+    "abertura": {
+     "publico": 2190,
+     "enviado": 3558,
+     "g3": 1425,
+     "pago": 1743
+    },
+    "ultima": {
+     "publico": 1971,
+     "enviado": 3202,
+     "g3": 1283,
+     "pago": 1569
+    },
+    "teto": {
+     "publico": 3135,
+     "enviado": 5093,
+     "g3": 2040,
+     "pago": 2495
+    },
+    "pago_medio": 1804,
+    "modo": "escada depois da metade vendida; desce 10% a 7 dias se abaixo de 60%",
+    "var_vs_atual": -0.2852
+   }
+  },
+  {
+   "mes": "2026-12",
+   "sub": "reveillon",
+   "grupo": "festas",
+   "q": "Afrodite",
+   "pousada": "Recanto",
+   "noites": 2,
+   "cap": 2,
+   "vendidas": 0,
+   "ocup": 0.0,
+   "livres": 2,
+   "fator_publico": 0.6156,
+   "atual": {
+    "enviado": 6700,
+    "publico": 4125,
+    "g3": 2684,
+    "pago": 3283,
+    "pos_lista": "≥p90",
+    "pos_hidro": "≥p90"
+   },
+   "regra_abertura": [
+    "hidro",
+    "50",
+    1.15
+   ],
+   "regra_teto": [
+    "hidro",
+    "75",
+    1.0
+   ],
+   "proposta": {
+    "abertura": {
+     "publico": 2518,
+     "enviado": 4091,
+     "g3": 1639,
+     "pago": 2005
+    },
+    "ultima": {
+     "publico": 2267,
+     "enviado": 3682,
+     "g3": 1475,
+     "pago": 1804
+    },
+    "teto": {
+     "publico": 3135,
+     "enviado": 5093,
+     "g3": 2040,
+     "pago": 2495
+    },
+    "pago_medio": 2005,
+    "modo": "escada depois da metade vendida; desce 10% a 7 dias se abaixo de 60%",
+    "var_vs_atual": -0.3896
+   }
+  },
+  {
+   "mes": "2026-12",
+   "sub": "reveillon",
+   "grupo": "festas",
+   "q": "VK7",
+   "pousada": "Villa",
+   "noites": 2,
+   "cap": 14,
+   "vendidas": 5,
+   "ocup": 0.3571,
+   "livres": 9,
+   "fator_publico": 0.4127,
+   "atual": {
+    "enviado": 4988,
+    "publico": 2059,
+    "g3": 1679,
+    "pago": 2059,
+    "pos_lista": "p72",
+    "pos_hidro": "p46"
+   },
+   "regra_abertura": [
+    "hidro",
+    "50",
+    1.0
+   ],
+   "regra_teto": [
+    "hidro",
+    "75",
+    1.0
+   ],
+   "proposta": {
+    "abertura": {
+     "publico": 2059,
+     "enviado": 4989,
+     "g3": 1679,
+     "pago": 2059
+    },
+    "ultima": {
+     "publico": 1853,
+     "enviado": 4490,
+     "g3": 1511,
+     "pago": 1853
+    },
+    "teto": {
+     "publico": 3135,
+     "enviado": 7596,
+     "g3": 2556,
+     "pago": 3135
+    },
+    "pago_medio": 2188,
+    "modo": "escada depois da metade vendida; desce 10% a 7 dias se abaixo de 60%",
+    "var_vs_atual": 0.0
+   }
+  },
+  {
+   "mes": "2026-12",
+   "sub": "reveillon",
+   "grupo": "festas",
+   "q": "VK2",
+   "pousada": "Villa",
+   "noites": 2,
+   "cap": 4,
+   "vendidas": 2,
+   "ocup": 0.5,
+   "livres": 2,
+   "fator_publico": 0.4127,
+   "atual": {
+    "enviado": 4991,
+    "publico": 2060,
+    "g3": 1680,
+    "pago": 2060,
+    "pos_lista": "p72",
+    "pos_hidro": "p46"
+   },
+   "regra_abertura": [
+    "hidro",
+    "50",
+    1.0
+   ],
+   "regra_teto": [
+    "hidro",
+    "75",
+    1.0
+   ],
+   "proposta": {
+    "abertura": {
+     "publico": 2060,
+     "enviado": 4992,
+     "g3": 1680,
+     "pago": 2060
+    },
+    "ultima": {
+     "publico": 1854,
+     "enviado": 4492,
+     "g3": 1512,
+     "pago": 1854
+    },
+    "teto": {
+     "publico": 3135,
+     "enviado": 7596,
+     "g3": 2556,
+     "pago": 3135
+    },
+    "pago_medio": 2132,
+    "modo": "escada depois da metade vendida; desce 10% a 7 dias se abaixo de 60%",
+    "var_vs_atual": 0.0
+   }
+  },
+  {
+   "mes": "2026-12",
+   "sub": "reveillon",
+   "grupo": "festas",
+   "q": "Balcony",
+   "pousada": "Villa",
+   "noites": 2,
+   "cap": 12,
+   "vendidas": 6,
+   "ocup": 0.5,
+   "livres": 6,
+   "fator_publico": 0.4127,
+   "atual": {
+    "enviado": 4483,
+    "publico": 1850,
+    "g3": 1509,
+    "pago": 1850,
+    "pos_lista": "p65",
+    "pos_hidro": "p40"
+   },
+   "regra_abertura": [
+    "lista",
+    "50",
+    1.0
+   ],
+   "regra_teto": [
+    "lista",
+    "75",
+    1.0
+   ],
+   "proposta": {
+    "abertura": {
+     "publico": 1556,
+     "enviado": 3770,
+     "g3": 1269,
+     "pago": 1556
+    },
+    "ultima": {
+     "publico": 1400,
+     "enviado": 3393,
+     "g3": 1142,
+     "pago": 1400
+    },
+    "teto": {
+     "publico": 2168,
+     "enviado": 5253,
+     "g3": 1768,
+     "pago": 2168
+    },
+    "pago_medio": 1670,
+    "modo": "escada depois da metade vendida; desce 10% a 7 dias se abaixo de 60%",
+    "var_vs_atual": -0.1589
+   }
+  },
+  {
+   "mes": "2027-01",
+   "sub": "semana",
+   "grupo": "semana",
+   "q": "Q7",
+   "pousada": "Recanto",
+   "noites": 21,
+   "cap": 147,
+   "vendidas": 6,
+   "ocup": 0.0408,
+   "livres": 141,
+   "fator_publico": 0.6327,
+   "atual": {
+    "enviado": 1273,
+    "publico": 805,
+    "g3": 524,
+    "pago": 624,
+    "pos_lista": "p72",
+    "pos_hidro": "p57"
+   },
+   "regra_abertura": [
+    "hidro",
+    "50",
+    1.0
+   ],
+   "regra_teto": [
+    "hidro",
+    "65",
+    1.0
+   ],
+   "proposta": {
+    "abertura": {
+     "publico": 772,
+     "enviado": 1220,
+     "g3": 502,
+     "pago": 598
+    },
+    "ultima": {
+     "publico": 660,
+     "enviado": 1043,
+     "g3": 430,
+     "pago": 511
+    },
+    "teto": {
+     "publico": 986,
+     "enviado": 1558,
+     "g3": 642,
+     "pago": 764
+    },
+    "pago_medio": 542,
+    "modo": "piso atual até D8; mercado na última semana",
+    "var_vs_atual": -0.041
+   },
+   "historico": {
+    "ocup": 0.4286,
+    "pago_p25": 329.49,
+    "pago_p50": 429.66,
+    "pago_p75": 486.26,
+    "n": 144
+   }
+  },
+  {
+   "mes": "2027-01",
+   "sub": "semana",
+   "grupo": "semana",
+   "q": "Double",
+   "pousada": "Recanto",
+   "noites": 21,
+   "cap": 126,
+   "vendidas": 8,
+   "ocup": 0.0635,
+   "livres": 118,
+   "fator_publico": 0.6327,
+   "atual": {
+    "enviado": 1324,
+    "publico": 838,
+    "g3": 545,
+    "pago": 649,
+    "pos_lista": "p73",
+    "pos_hidro": "p58"
+   },
+   "regra_abertura": [
+    "hidro",
+    "50",
+    1.05
+   ],
+   "regra_teto": [
+    "hidro",
+    "65",
+    1.0
+   ],
+   "proposta": {
+    "abertura": {
+     "publico": 810,
+     "enviado": 1281,
+     "g3": 527,
+     "pago": 628
+    },
+    "ultima": {
+     "publico": 693,
+     "enviado": 1095,
+     "g3": 451,
+     "pago": 537
+    },
+    "teto": {
+     "publico": 986,
+     "enviado": 1558,
+     "g3": 642,
+     "pago": 764
+    },
+    "pago_medio": 569,
+    "modo": "piso atual até D8; mercado na última semana",
+    "var_vs_atual": -0.0334
+   },
+   "historico": {
+    "ocup": 0.6424,
+    "pago_p25": 377.5,
+    "pago_p50": 470.83,
+    "pago_p75": 625.14,
+    "n": 185
+   }
+  },
+  {
+   "mes": "2027-01",
+   "sub": "semana",
+   "grupo": "semana",
+   "q": "Q2",
+   "pousada": "Recanto",
+   "noites": 21,
+   "cap": 42,
+   "vendidas": 2,
+   "ocup": 0.0476,
+   "livres": 40,
+   "fator_publico": 0.6327,
+   "atual": {
+    "enviado": 1300,
+    "publico": 823,
+    "g3": 535,
+    "pago": 637,
+    "pos_lista": "p73",
+    "pos_hidro": "p58"
+   },
+   "regra_abertura": [
+    "hidro",
+    "50",
+    1.0
+   ],
+   "regra_teto": [
+    "hidro",
+    "65",
+    1.0
+   ],
+   "proposta": {
+    "abertura": {
+     "publico": 772,
+     "enviado": 1220,
+     "g3": 502,
+     "pago": 598
+    },
+    "ultima": {
+     "publico": 660,
+     "enviado": 1043,
+     "g3": 430,
+     "pago": 511
+    },
+    "teto": {
+     "publico": 986,
+     "enviado": 1558,
+     "g3": 642,
+     "pago": 764
+    },
+    "pago_medio": 542,
+    "modo": "piso atual até D8; mercado na última semana",
+    "var_vs_atual": -0.062
+   },
+   "historico": {
+    "ocup": 0.4062,
+    "pago_p25": 335.4,
+    "pago_p50": 415.99,
+    "pago_p75": 481.41,
+    "n": 39
+   }
+  },
+  {
+   "mes": "2027-01",
+   "sub": "semana",
+   "grupo": "semana",
+   "q": "Afrodite",
+   "pousada": "Recanto",
+   "noites": 21,
+   "cap": 21,
+   "vendidas": 9,
+   "ocup": 0.4286,
+   "livres": 12,
+   "fator_publico": 0.6327,
+   "atual": {
+    "enviado": 1726,
+    "publico": 1092,
+    "g3": 711,
+    "pago": 846,
+    "pos_lista": "p83",
+    "pos_hidro": "p70"
+   },
+   "regra_abertura": [
+    "hidro",
+    "50",
+    1.2
+   ],
+   "regra_teto": [
+    "hidro",
+    "65",
+    1.0
+   ],
+   "proposta": {
+    "abertura": {
+     "publico": 926,
+     "enviado": 1464,
+     "g3": 603,
+     "pago": 717
+    },
+    "ultima": {
+     "publico": 792,
+     "enviado": 1252,
+     "g3": 515,
+     "pago": 613
+    },
+    "teto": {
+     "publico": 986,
+     "enviado": 1558,
+     "g3": 642,
+     "pago": 764
+    },
+    "pago_medio": 651,
+    "modo": "piso atual até D8; mercado na última semana",
+    "var_vs_atual": -0.152
+   },
+   "historico": {
+    "ocup": 0.7083,
+    "pago_p25": 342.43,
+    "pago_p50": 401.85,
+    "pago_p75": 544.06,
+    "n": 32
+   }
+  },
+  {
+   "mes": "2027-01",
+   "sub": "semana",
+   "grupo": "semana",
+   "q": "VK7",
+   "pousada": "Villa",
+   "noites": 21,
+   "cap": 147,
+   "vendidas": 8,
+   "ocup": 0.0544,
+   "livres": 139,
+   "fator_publico": 0.6244,
+   "atual": {
+    "enviado": 1288,
+    "publico": 804,
+    "g3": 656,
+    "pago": 592,
+    "pos_lista": "p72",
+    "pos_hidro": "p57"
+   },
+   "regra_abertura": [
+    "hidro",
+    "50",
+    1.0
+   ],
+   "regra_teto": [
+    "hidro",
+    "65",
+    1.0
+   ],
+   "proposta": {
+    "abertura": {
+     "publico": 589,
+     "enviado": 944,
+     "g3": 481,
+     "pago": 434
+    },
+    "ultima": {
+     "publico": 589,
+     "enviado": 944,
+     "g3": 481,
+     "pago": 434
+    },
+    "teto": {
+     "publico": 986,
+     "enviado": 1579,
+     "g3": 804,
+     "pago": 726
+    },
+    "pago_medio": 434,
+    "modo": "piso atual até D8; mercado na última semana",
+    "var_vs_atual": -0.2674
+   },
+   "historico": {
+    "ocup": 0.6607,
+    "pago_p25": 368.28,
+    "pago_p50": 449.26,
+    "pago_p75": 594.91,
+    "n": 222
+   }
+  },
+  {
+   "mes": "2027-01",
+   "sub": "semana",
+   "grupo": "semana",
+   "q": "VK2",
+   "pousada": "Villa",
+   "noites": 21,
+   "cap": 42,
+   "vendidas": 3,
+   "ocup": 0.0714,
+   "livres": 39,
+   "fator_publico": 0.6244,
+   "atual": {
+    "enviado": 1140,
+    "publico": 712,
+    "g3": 580,
+    "pago": 524,
+    "pos_lista": "p68",
+    "pos_hidro": "p52"
+   },
+   "regra_abertura": [
+    "hidro",
+    "50",
+    1.0
+   ],
+   "regra_teto": [
+    "hidro",
+    "65",
+    1.0
+   ],
+   "proposta": {
+    "abertura": {
+     "publico": 589,
+     "enviado": 944,
+     "g3": 481,
+     "pago": 434
+    },
+    "ultima": {
+     "publico": 589,
+     "enviado": 944,
+     "g3": 481,
+     "pago": 434
+    },
+    "teto": {
+     "publico": 986,
+     "enviado": 1579,
+     "g3": 804,
+     "pago": 726
+    },
+    "pago_medio": 434,
+    "modo": "piso atual até D8; mercado na última semana",
+    "var_vs_atual": -0.1728
+   },
+   "historico": {
+    "ocup": 0.625,
+    "pago_p25": 365.33,
+    "pago_p50": 448.7,
+    "pago_p75": 541.34,
+    "n": 60
+   }
+  },
+  {
+   "mes": "2027-01",
+   "sub": "semana",
+   "grupo": "semana",
+   "q": "Balcony",
+   "pousada": "Villa",
+   "noites": 21,
+   "cap": 126,
+   "vendidas": 0,
+   "ocup": 0.0,
+   "livres": 126,
+   "fator_publico": 0.6244,
+   "atual": {
+    "enviado": 1224,
+    "publico": 764,
+    "g3": 623,
+    "pago": 563,
+    "pos_lista": "p70",
+    "pos_hidro": "p55"
+   },
+   "regra_abertura": [
+    "lista",
+    "40",
+    1.0
+   ],
+   "regra_teto": [
+    "lista",
+    "65",
+    1.0
+   ],
+   "proposta": {
+    "abertura": {
+     "publico": 431,
+     "enviado": 690,
+     "g3": 351,
+     "pago": 317
+    },
+    "ultima": {
+     "publico": 431,
+     "enviado": 690,
+     "g3": 351,
+     "pago": 317
+    },
+    "teto": {
+     "publico": 631,
+     "enviado": 1011,
+     "g3": 515,
+     "pago": 465
+    },
+    "pago_medio": 317,
+    "modo": "preço próprio, sem seguir a King Spa",
+    "var_vs_atual": -0.4359
+   },
+   "historico": {
+    "ocup": 0.1181,
+    "pago_p25": 247.65,
+    "pago_p50": 331.8,
+    "pago_p75": 472.4,
+    "n": 34
+   }
+  },
+  {
+   "mes": "2027-01",
+   "sub": "fds",
+   "grupo": "fds",
+   "q": "Q7",
+   "pousada": "Recanto",
+   "noites": 8,
+   "cap": 56,
+   "vendidas": 4,
+   "ocup": 0.0714,
+   "livres": 52,
+   "fator_publico": 0.6157,
+   "atual": {
+    "enviado": 2354,
+    "publico": 1449,
+    "g3": 978,
+    "pago": 1153,
+    "pos_lista": "p86",
+    "pos_hidro": "p66"
+   },
+   "regra_abertura": [
+    "lista",
+    "40",
+    1.0
+   ],
+   "regra_teto": [
+    "hidro",
+    "50",
+    1.0
+   ],
+   "proposta": {
+    "abertura": {
+     "publico": 712,
+     "enviado": 1156,
+     "g3": 480,
+     "pago": 567
+    },
+    "ultima": {
+     "publico": 641,
+     "enviado": 1041,
+     "g3": 432,
+     "pago": 510
+    },
+    "teto": {
+     "publico": 1166,
+     "enviado": 1894,
+     "g3": 787,
+     "pago": 928
+    },
+    "pago_medio": 602,
+    "modo": "escada depois da metade vendida; desce 10% a 7 dias se abaixo de 60%",
+    "var_vs_atual": -0.5086
+   },
+   "historico": {
+    "ocup": 0.5268,
+    "pago_p25": 503.86,
+    "pago_p50": 559.28,
+    "pago_p75": 657.01,
+    "n": 59
+   }
+  },
+  {
+   "mes": "2027-01",
+   "sub": "fds",
+   "grupo": "fds",
+   "q": "Double",
+   "pousada": "Recanto",
+   "noites": 8,
+   "cap": 48,
+   "vendidas": 0,
+   "ocup": 0.0,
+   "livres": 48,
+   "fator_publico": 0.6157,
+   "atual": {
+    "enviado": 2448,
+    "publico": 1507,
+    "g3": 1017,
+    "pago": 1200,
+    "pos_lista": "p88",
+    "pos_hidro": "p69"
+   },
+   "regra_abertura": [
+    "pares_hidro",
+    "50",
+    1.05
+   ],
+   "regra_teto": [
+    "hidro",
+    "65",
+    1.0
+   ],
+   "proposta": {
+    "abertura": {
+     "publico": 1048,
+     "enviado": 1702,
+     "g3": 707,
+     "pago": 834
+    },
+    "ultima": {
+     "publico": 943,
+     "enviado": 1532,
+     "g3": 636,
+     "pago": 751
+    },
+    "teto": {
+     "publico": 1430,
+     "enviado": 2323,
+     "g3": 965,
+     "pago": 1138
+    },
+    "pago_medio": 895,
+    "modo": "escada depois da metade vendida; desce 10% a 7 dias se abaixo de 60%",
+    "var_vs_atual": -0.3046
+   },
+   "historico": {
+    "ocup": 0.7917,
+    "pago_p25": 644.75,
+    "pago_p50": 743.46,
+    "pago_p75": 861.9,
+    "n": 76
+   }
+  },
+  {
+   "mes": "2027-01",
+   "sub": "fds",
+   "grupo": "fds",
+   "q": "Q2",
+   "pousada": "Recanto",
+   "noites": 8,
+   "cap": 16,
+   "vendidas": 0,
+   "ocup": 0.0,
+   "livres": 16,
+   "fator_publico": 0.6157,
+   "atual": {
+    "enviado": 2405,
+    "publico": 1481,
+    "g3": 999,
+    "pago": 1178,
+    "pos_lista": "p87",
+    "pos_hidro": "p67"
+   },
+   "regra_abertura": [
+    "pares_hidro",
+    "50",
+    1.05
+   ],
+   "regra_teto": [
+    "hidro",
+    "65",
+    1.0
+   ],
+   "proposta": {
+    "abertura": {
+     "publico": 1048,
+     "enviado": 1702,
+     "g3": 707,
+     "pago": 834
+    },
+    "ultima": {
+     "publico": 943,
+     "enviado": 1532,
+     "g3": 636,
+     "pago": 751
+    },
+    "teto": {
+     "publico": 1430,
+     "enviado": 2323,
+     "g3": 965,
+     "pago": 1138
+    },
+    "pago_medio": 863,
+    "modo": "escada depois da metade vendida; desce 10% a 7 dias se abaixo de 60%",
+    "var_vs_atual": -0.2924
+   },
+   "historico": {
+    "ocup": 0.6875,
+    "pago_p25": 663.38,
+    "pago_p50": 711.56,
+    "pago_p75": 819.81,
+    "n": 22
+   }
+  },
+  {
+   "mes": "2027-01",
+   "sub": "fds",
+   "grupo": "fds",
+   "q": "Afrodite",
+   "pousada": "Recanto",
+   "noites": 8,
+   "cap": 8,
+   "vendidas": 0,
+   "ocup": 0.0,
+   "livres": 8,
+   "fator_publico": 0.6157,
+   "atual": {
+    "enviado": 2918,
+    "publico": 1797,
+    "g3": 1212,
+    "pago": 1430,
+    "pos_lista": "≥p90",
+    "pos_hidro": "p78"
+   },
+   "regra_abertura": [
+    "pares_hidro",
+    "50",
+    1.2075
+   ],
+   "regra_teto": [
+    "hidro",
+    "65",
+    1.0
+   ],
+   "proposta": {
+    "abertura": {
+     "publico": 1205,
+     "enviado": 1957,
+     "g3": 813,
+     "pago": 959
+    },
+    "ultima": {
+     "publico": 1085,
+     "enviado": 1762,
+     "g3": 732,
+     "pago": 863
+    },
+    "teto": {
+     "publico": 1430,
+     "enviado": 2323,
+     "g3": 965,
+     "pago": 1138
+    },
+    "pago_medio": 959,
+    "modo": "escada depois da metade vendida; desce 10% a 7 dias se abaixo de 60%",
+    "var_vs_atual": -0.3294
+   },
+   "historico": {
+    "ocup": 0.625,
+    "pago_p25": 655.8,
+    "pago_p50": 842.72,
+    "pago_p75": 1099.76,
+    "n": 8
+   }
+  },
+  {
+   "mes": "2027-01",
+   "sub": "fds",
+   "grupo": "fds",
+   "q": "VK7",
+   "pousada": "Villa",
+   "noites": 8,
+   "cap": 56,
+   "vendidas": 5,
+   "ocup": 0.0893,
+   "livres": 51,
+   "fator_publico": 0.6173,
+   "atual": {
+    "enviado": 2291,
+    "publico": 1414,
+    "g3": 1251,
+    "pago": 1054,
+    "pos_lista": "p84",
+    "pos_hidro": "p64"
+   },
+   "regra_abertura": [
+    "pares_hidro",
+    "50",
+    1.05
+   ],
+   "regra_teto": [
+    "hidro",
+    "65",
+    1.0
+   ],
+   "proposta": {
+    "abertura": {
+     "publico": 1048,
+     "enviado": 1698,
+     "g3": 927,
+     "pago": 781
+    },
+    "ultima": {
+     "publico": 943,
+     "enviado": 1528,
+     "g3": 834,
+     "pago": 703
+    },
+    "teto": {
+     "publico": 1430,
+     "enviado": 2317,
+     "g3": 1265,
+     "pago": 1066
+    },
+    "pago_medio": 830,
+    "modo": "escada depois da metade vendida; desce 10% a 7 dias se abaixo de 60%",
+    "var_vs_atual": -0.2588
+   },
+   "historico": {
+    "ocup": 0.875,
+    "pago_p25": 591.18,
+    "pago_p50": 700.0,
+    "pago_p75": 823.5,
+    "n": 96
+   }
+  },
+  {
+   "mes": "2027-01",
+   "sub": "fds",
+   "grupo": "fds",
+   "q": "VK2",
+   "pousada": "Villa",
+   "noites": 8,
+   "cap": 16,
+   "vendidas": 0,
+   "ocup": 0.0,
+   "livres": 16,
+   "fator_publico": 0.6173,
+   "atual": {
+    "enviado": 1954,
+    "publico": 1206,
+    "g3": 1067,
+    "pago": 899,
+    "pos_lista": "p77",
+    "pos_hidro": "p52"
+   },
+   "regra_abertura": [
+    "pares_hidro",
+    "50",
+    1.05
+   ],
+   "regra_teto": [
+    "hidro",
+    "65",
+    1.0
+   ],
+   "proposta": {
+    "abertura": {
+     "publico": 1048,
+     "enviado": 1698,
+     "g3": 927,
+     "pago": 781
+    },
+    "ultima": {
+     "publico": 943,
+     "enviado": 1528,
+     "g3": 834,
+     "pago": 703
+    },
+    "teto": {
+     "publico": 1430,
+     "enviado": 2317,
+     "g3": 1265,
+     "pago": 1066
+    },
+    "pago_medio": 808,
+    "modo": "escada depois da metade vendida; desce 10% a 7 dias se abaixo de 60%",
+    "var_vs_atual": -0.131
+   },
+   "historico": {
+    "ocup": 0.9062,
+    "pago_p25": 533.25,
+    "pago_p50": 579.54,
+    "pago_p75": 994.29,
+    "n": 29
+   }
+  },
+  {
+   "mes": "2027-01",
+   "sub": "fds",
+   "grupo": "fds",
+   "q": "Balcony",
+   "pousada": "Villa",
+   "noites": 8,
+   "cap": 48,
+   "vendidas": 0,
+   "ocup": 0.0,
+   "livres": 48,
+   "fator_publico": 0.6173,
+   "atual": {
+    "enviado": 1880,
+    "publico": 1161,
+    "g3": 1027,
+    "pago": 865,
+    "pos_lista": "p75",
+    "pos_hidro": "p50"
+   },
+   "regra_abertura": [
+    "pares_lista",
+    "50",
+    1.0
+   ],
+   "regra_teto": [
+    "lista",
+    "50",
+    1.0
+   ],
+   "proposta": {
+    "abertura": {
+     "publico": 624,
+     "enviado": 1011,
+     "g3": 552,
+     "pago": 465
+    },
+    "ultima": {
+     "publico": 562,
+     "enviado": 910,
+     "g3": 497,
+     "pago": 418
+    },
+    "teto": {
+     "publico": 792,
+     "enviado": 1283,
+     "g3": 701,
+     "pago": 590
+    },
+    "pago_medio": 499,
+    "modo": "escada depois da metade vendida; desce 10% a 7 dias se abaixo de 60%",
+    "var_vs_atual": -0.4625
+   },
+   "historico": {
+    "ocup": 0.3646,
+    "pago_p25": 394.07,
+    "pago_p50": 440.56,
+    "pago_p75": 653.33,
+    "n": 35
+   }
+  },
+  {
+   "mes": "2027-01",
+   "sub": "reveillon",
+   "grupo": "festas",
+   "q": "Q7",
+   "pousada": "Recanto",
+   "noites": 2,
+   "cap": 14,
+   "vendidas": 4,
+   "ocup": 0.2857,
+   "livres": 10,
+   "fator_publico": 0.6156,
+   "atual": {
+    "enviado": 4974,
+    "publico": 3062,
+    "g3": 2066,
+    "pago": 2437,
+    "pos_lista": "≥p90",
+    "pos_hidro": "p73"
+   },
+   "regra_abertura": [
+    "hidro",
+    "40",
+    1.0
+   ],
+   "regra_teto": [
+    "hidro",
+    "75",
+    1.0
+   ],
+   "proposta": {
+    "abertura": {
+     "publico": 1833,
+     "enviado": 2978,
+     "g3": 1237,
+     "pago": 1459
+    },
+    "ultima": {
+     "publico": 1650,
+     "enviado": 2680,
+     "g3": 1113,
+     "pago": 1313
+    },
+    "teto": {
+     "publico": 3135,
+     "enviado": 5093,
+     "g3": 2115,
+     "pago": 2495
+    },
+    "pago_medio": 1551,
+    "modo": "escada depois da metade vendida; desce 10% a 7 dias se abaixo de 60%",
+    "var_vs_atual": -0.4014
+   }
+  },
+  {
+   "mes": "2027-01",
+   "sub": "reveillon",
+   "grupo": "festas",
+   "q": "Double",
+   "pousada": "Recanto",
+   "noites": 2,
+   "cap": 12,
+   "vendidas": 4,
+   "ocup": 0.3333,
+   "livres": 8,
+   "fator_publico": 0.6156,
+   "atual": {
+    "enviado": 4988,
+    "publico": 3071,
+    "g3": 2071,
+    "pago": 2444,
+    "pos_lista": "≥p90",
+    "pos_hidro": "p73"
+   },
+   "regra_abertura": [
+    "hidro",
+    "50",
+    1.0
+   ],
+   "regra_teto": [
+    "hidro",
+    "75",
+    1.0
+   ],
+   "proposta": {
+    "abertura": {
+     "publico": 2190,
+     "enviado": 3558,
+     "g3": 1477,
+     "pago": 1743
+    },
+    "ultima": {
+     "publico": 1971,
+     "enviado": 3202,
+     "g3": 1330,
+     "pago": 1569
+    },
+    "teto": {
+     "publico": 3135,
+     "enviado": 5093,
+     "g3": 2115,
+     "pago": 2495
+    },
+    "pago_medio": 1871,
+    "modo": "escada depois da metade vendida; desce 10% a 7 dias se abaixo de 60%",
+    "var_vs_atual": -0.2869
+   }
+  },
+  {
+   "mes": "2027-01",
+   "sub": "reveillon",
+   "grupo": "festas",
+   "q": "Q2",
+   "pousada": "Recanto",
+   "noites": 2,
+   "cap": 4,
+   "vendidas": 0,
+   "ocup": 0.0,
+   "livres": 4,
+   "fator_publico": 0.6156,
+   "atual": {
+    "enviado": 4977,
+    "publico": 3064,
+    "g3": 2067,
+    "pago": 2439,
+    "pos_lista": "≥p90",
+    "pos_hidro": "p73"
+   },
+   "regra_abertura": [
+    "hidro",
+    "50",
+    1.0
+   ],
+   "regra_teto": [
+    "hidro",
+    "75",
+    1.0
+   ],
+   "proposta": {
+    "abertura": {
+     "publico": 2190,
+     "enviado": 3558,
+     "g3": 1477,
+     "pago": 1743
+    },
+    "ultima": {
+     "publico": 1971,
+     "enviado": 3202,
+     "g3": 1330,
+     "pago": 1569
+    },
+    "teto": {
+     "publico": 3135,
+     "enviado": 5093,
+     "g3": 2115,
+     "pago": 2495
+    },
+    "pago_medio": 1804,
+    "modo": "escada depois da metade vendida; desce 10% a 7 dias se abaixo de 60%",
+    "var_vs_atual": -0.2852
+   }
+  },
+  {
+   "mes": "2027-01",
+   "sub": "reveillon",
+   "grupo": "festas",
+   "q": "Afrodite",
+   "pousada": "Recanto",
+   "noites": 2,
+   "cap": 2,
+   "vendidas": 0,
+   "ocup": 0.0,
+   "livres": 2,
+   "fator_publico": 0.6156,
+   "atual": {
+    "enviado": 6560,
+    "publico": 4038,
+    "g3": 2724,
+    "pago": 3214,
+    "pos_lista": "≥p90",
+    "pos_hidro": "≥p90"
+   },
+   "regra_abertura": [
+    "hidro",
+    "50",
+    1.15
+   ],
+   "regra_teto": [
+    "hidro",
+    "75",
+    1.0
+   ],
+   "proposta": {
+    "abertura": {
+     "publico": 2518,
+     "enviado": 4091,
+     "g3": 1699,
+     "pago": 2005
+    },
+    "ultima": {
+     "publico": 2267,
+     "enviado": 3682,
+     "g3": 1529,
+     "pago": 1804
+    },
+    "teto": {
+     "publico": 3135,
+     "enviado": 5093,
+     "g3": 2115,
+     "pago": 2495
+    },
+    "pago_medio": 2005,
+    "modo": "escada depois da metade vendida; desce 10% a 7 dias se abaixo de 60%",
+    "var_vs_atual": -0.3764
+   }
+  },
+  {
+   "mes": "2027-01",
+   "sub": "reveillon",
+   "grupo": "festas",
+   "q": "VK7",
+   "pousada": "Villa",
+   "noites": 2,
+   "cap": 14,
+   "vendidas": 3,
+   "ocup": 0.2143,
+   "livres": 11,
+   "fator_publico": 0.4127,
+   "atual": {
+    "enviado": 4988,
+    "publico": 2059,
+    "g3": 1821,
+    "pago": 2059,
+    "pos_lista": "p72",
+    "pos_hidro": "p46"
+   },
+   "regra_abertura": [
+    "hidro",
+    "50",
+    1.0
+   ],
+   "regra_teto": [
+    "hidro",
+    "75",
+    1.0
+   ],
+   "proposta": {
+    "abertura": {
+     "publico": 2059,
+     "enviado": 4989,
+     "g3": 1821,
+     "pago": 2059
+    },
+    "ultima": {
+     "publico": 1853,
+     "enviado": 4490,
+     "g3": 1639,
+     "pago": 1853
+    },
+    "teto": {
+     "publico": 3135,
+     "enviado": 7596,
+     "g3": 2773,
+     "pago": 3135
+    },
+    "pago_medio": 2188,
+    "modo": "escada depois da metade vendida; desce 10% a 7 dias se abaixo de 60%",
+    "var_vs_atual": 0.0
+   }
+  },
+  {
+   "mes": "2027-01",
+   "sub": "reveillon",
+   "grupo": "festas",
+   "q": "VK2",
+   "pousada": "Villa",
+   "noites": 2,
+   "cap": 4,
+   "vendidas": 0,
+   "ocup": 0.0,
+   "livres": 4,
+   "fator_publico": 0.4127,
+   "atual": {
+    "enviado": 4991,
+    "publico": 2060,
+    "g3": 1822,
+    "pago": 2060,
+    "pos_lista": "p72",
+    "pos_hidro": "p46"
+   },
+   "regra_abertura": [
+    "hidro",
+    "50",
+    1.0
+   ],
+   "regra_teto": [
+    "hidro",
+    "75",
+    1.0
+   ],
+   "proposta": {
+    "abertura": {
+     "publico": 2060,
+     "enviado": 4992,
+     "g3": 1822,
+     "pago": 2060
+    },
+    "ultima": {
+     "publico": 1854,
+     "enviado": 4492,
+     "g3": 1640,
+     "pago": 1854
+    },
+    "teto": {
+     "publico": 3135,
+     "enviado": 7596,
+     "g3": 2773,
+     "pago": 3135
+    },
+    "pago_medio": 2132,
+    "modo": "escada depois da metade vendida; desce 10% a 7 dias se abaixo de 60%",
+    "var_vs_atual": 0.0
+   }
+  },
+  {
+   "mes": "2027-01",
+   "sub": "reveillon",
+   "grupo": "festas",
+   "q": "Balcony",
+   "pousada": "Villa",
+   "noites": 2,
+   "cap": 12,
+   "vendidas": 1,
+   "ocup": 0.0833,
+   "livres": 11,
+   "fator_publico": 0.4127,
+   "atual": {
+    "enviado": 4483,
+    "publico": 1850,
+    "g3": 1637,
+    "pago": 1850,
+    "pos_lista": "p65",
+    "pos_hidro": "p40"
+   },
+   "regra_abertura": [
+    "lista",
+    "50",
+    1.0
+   ],
+   "regra_teto": [
+    "lista",
+    "75",
+    1.0
+   ],
+   "proposta": {
+    "abertura": {
+     "publico": 1556,
+     "enviado": 3770,
+     "g3": 1376,
+     "pago": 1556
+    },
+    "ultima": {
+     "publico": 1400,
+     "enviado": 3393,
+     "g3": 1239,
+     "pago": 1400
+    },
+    "teto": {
+     "publico": 2168,
+     "enviado": 5253,
+     "g3": 1918,
+     "pago": 2168
+    },
+    "pago_medio": 1670,
+    "modo": "escada depois da metade vendida; desce 10% a 7 dias se abaixo de 60%",
+    "var_vs_atual": -0.1589
+   }
+  },
+  {
+   "mes": "2027-02",
+   "sub": "semana",
+   "grupo": "semana",
+   "q": "Q7",
+   "pousada": "Recanto",
+   "noites": 17,
+   "cap": 119,
+   "vendidas": 1,
+   "ocup": 0.0084,
+   "livres": 118,
+   "fator_publico": 0.6327,
+   "atual": {
+    "enviado": 1279,
+    "publico": 809,
+    "g3": 527,
+    "pago": 627,
+    "pos_lista": "p71",
+    "pos_hidro": "p60"
+   },
+   "regra_abertura": [
+    "hidro",
+    "50",
+    1.0
+   ],
+   "regra_teto": [
+    "hidro",
+    "65",
+    1.0
+   ],
+   "proposta": {
+    "abertura": {
+     "publico": 772,
+     "enviado": 1220,
+     "g3": 502,
+     "pago": 598
+    },
+    "ultima": {
+     "publico": 663,
+     "enviado": 1048,
+     "g3": 431,
+     "pago": 513
+    },
+    "teto": {
+     "publico": 881,
+     "enviado": 1392,
+     "g3": 573,
+     "pago": 682
+    },
+    "pago_medio": 544,
+    "modo": "piso atual até D8; mercado na última semana",
+    "var_vs_atual": -0.0457
+   },
+   "historico": {
+    "ocup": 0.4286,
+    "pago_p25": 329.49,
+    "pago_p50": 429.66,
+    "pago_p75": 486.26,
+    "n": 144
+   }
+  },
+  {
+   "mes": "2027-02",
+   "sub": "semana",
+   "grupo": "semana",
+   "q": "Double",
+   "pousada": "Recanto",
+   "noites": 17,
+   "cap": 102,
+   "vendidas": 2,
+   "ocup": 0.0196,
+   "livres": 100,
+   "fator_publico": 0.6327,
+   "atual": {
+    "enviado": 1350,
+    "publico": 854,
+    "g3": 556,
+    "pago": 662,
+    "pos_lista": "p72",
+    "pos_hidro": "p63"
+   },
+   "regra_abertura": [
+    "hidro",
+    "50",
+    1.05
+   ],
+   "regra_teto": [
+    "hidro",
+    "65",
+    1.0
+   ],
+   "proposta": {
+    "abertura": {
+     "publico": 810,
+     "enviado": 1281,
+     "g3": 527,
+     "pago": 628
+    },
+    "ultima": {
+     "publico": 696,
+     "enviado": 1100,
+     "g3": 453,
+     "pago": 539
+    },
+    "teto": {
+     "publico": 881,
+     "enviado": 1392,
+     "g3": 573,
+     "pago": 682
+    },
+    "pago_medio": 571,
+    "modo": "piso atual até D8; mercado na última semana",
+    "var_vs_atual": -0.0515
+   },
+   "historico": {
+    "ocup": 0.6424,
+    "pago_p25": 377.5,
+    "pago_p50": 470.83,
+    "pago_p75": 625.14,
+    "n": 185
+   }
+  },
+  {
+   "mes": "2027-02",
+   "sub": "semana",
+   "grupo": "semana",
+   "q": "Q2",
+   "pousada": "Recanto",
+   "noites": 17,
+   "cap": 34,
+   "vendidas": 0,
+   "ocup": 0.0,
+   "livres": 34,
+   "fator_publico": 0.6327,
+   "atual": {
+    "enviado": 1322,
+    "publico": 836,
+    "g3": 544,
+    "pago": 648,
+    "pos_lista": "p71",
+    "pos_hidro": "p62"
+   },
+   "regra_abertura": [
+    "hidro",
+    "50",
+    1.0
+   ],
+   "regra_teto": [
+    "hidro",
+    "65",
+    1.0
+   ],
+   "proposta": {
+    "abertura": {
+     "publico": 772,
+     "enviado": 1220,
+     "g3": 502,
+     "pago": 598
+    },
+    "ultima": {
+     "publico": 663,
+     "enviado": 1048,
+     "g3": 431,
+     "pago": 513
+    },
+    "teto": {
+     "publico": 881,
+     "enviado": 1392,
+     "g3": 573,
+     "pago": 682
+    },
+    "pago_medio": 544,
+    "modo": "piso atual até D8; mercado na última semana",
+    "var_vs_atual": -0.0766
+   },
+   "historico": {
+    "ocup": 0.4062,
+    "pago_p25": 335.4,
+    "pago_p50": 415.99,
+    "pago_p75": 481.41,
+    "n": 39
+   }
+  },
+  {
+   "mes": "2027-02",
+   "sub": "semana",
+   "grupo": "semana",
+   "q": "Afrodite",
+   "pousada": "Recanto",
+   "noites": 17,
+   "cap": 17,
+   "vendidas": 0,
+   "ocup": 0.0,
+   "livres": 17,
+   "fator_publico": 0.6327,
+   "atual": {
+    "enviado": 1818,
+    "publico": 1150,
+    "g3": 749,
+    "pago": 891,
+    "pos_lista": "p84",
+    "pos_hidro": "p73"
+   },
+   "regra_abertura": [
+    "hidro",
+    "50",
+    1.2
+   ],
+   "regra_teto": [
+    "hidro",
+    "65",
+    1.0
+   ],
+   "proposta": {
+    "abertura": {
+     "publico": 926,
+     "enviado": 1464,
+     "g3": 603,
+     "pago": 717
+    },
+    "ultima": {
+     "publico": 796,
+     "enviado": 1257,
+     "g3": 518,
+     "pago": 616
+    },
+    "teto": {
+     "publico": 926,
+     "enviado": 1464,
+     "g3": 603,
+     "pago": 717
+    },
+    "pago_medio": 653,
+    "modo": "piso atual até D8; mercado na última semana",
+    "var_vs_atual": -0.1948
+   },
+   "historico": {
+    "ocup": 0.7083,
+    "pago_p25": 342.43,
+    "pago_p50": 401.85,
+    "pago_p75": 544.06,
+    "n": 32
+   }
+  },
+  {
+   "mes": "2027-02",
+   "sub": "semana",
+   "grupo": "semana",
+   "q": "VK7",
+   "pousada": "Villa",
+   "noites": 17,
+   "cap": 119,
+   "vendidas": 0,
+   "ocup": 0.0,
+   "livres": 119,
+   "fator_publico": 0.6349,
+   "atual": {
+    "enviado": 1309,
+    "publico": 831,
+    "g3": 678,
+    "pago": 602,
+    "pos_lista": "p71",
+    "pos_hidro": "p62"
+   },
+   "regra_abertura": [
+    "hidro",
+    "50",
+    1.0
+   ],
+   "regra_teto": [
+    "hidro",
+    "65",
+    1.0
+   ],
+   "proposta": {
+    "abertura": {
+     "publico": 599,
+     "enviado": 944,
+     "g3": 489,
+     "pago": 434
+    },
+    "ultima": {
+     "publico": 599,
+     "enviado": 944,
+     "g3": 489,
+     "pago": 434
+    },
+    "teto": {
+     "publico": 881,
+     "enviado": 1388,
+     "g3": 718,
+     "pago": 638
+    },
+    "pago_medio": 434,
+    "modo": "piso atual até D8; mercado na última semana",
+    "var_vs_atual": -0.2792
+   },
+   "historico": {
+    "ocup": 0.6607,
+    "pago_p25": 368.28,
+    "pago_p50": 449.26,
+    "pago_p75": 594.91,
+    "n": 222
+   }
+  },
+  {
+   "mes": "2027-02",
+   "sub": "semana",
+   "grupo": "semana",
+   "q": "VK2",
+   "pousada": "Villa",
+   "noites": 17,
+   "cap": 34,
+   "vendidas": 1,
+   "ocup": 0.0294,
+   "livres": 33,
+   "fator_publico": 0.6349,
+   "atual": {
+    "enviado": 1125,
+    "publico": 714,
+    "g3": 582,
+    "pago": 518,
+    "pos_lista": "p68",
+    "pos_hidro": "p54"
+   },
+   "regra_abertura": [
+    "hidro",
+    "50",
+    1.0
+   ],
+   "regra_teto": [
+    "hidro",
+    "65",
+    1.0
+   ],
+   "proposta": {
+    "abertura": {
+     "publico": 599,
+     "enviado": 944,
+     "g3": 489,
+     "pago": 434
+    },
+    "ultima": {
+     "publico": 599,
+     "enviado": 944,
+     "g3": 489,
+     "pago": 434
+    },
+    "teto": {
+     "publico": 881,
+     "enviado": 1388,
+     "g3": 718,
+     "pago": 638
+    },
+    "pago_medio": 434,
+    "modo": "piso atual até D8; mercado na última semana",
+    "var_vs_atual": -0.1611
+   },
+   "historico": {
+    "ocup": 0.625,
+    "pago_p25": 365.33,
+    "pago_p50": 448.7,
+    "pago_p75": 541.34,
+    "n": 60
+   }
+  },
+  {
+   "mes": "2027-02",
+   "sub": "semana",
+   "grupo": "semana",
+   "q": "Balcony",
+   "pousada": "Villa",
+   "noites": 17,
+   "cap": 102,
+   "vendidas": 0,
+   "ocup": 0.0,
+   "livres": 102,
+   "fator_publico": 0.6349,
+   "atual": {
+    "enviado": 1352,
+    "publico": 858,
+    "g3": 700,
+    "pago": 622,
+    "pos_lista": "p72",
+    "pos_hidro": "p63"
+   },
+   "regra_abertura": [
+    "lista",
+    "40",
+    1.0
+   ],
+   "regra_teto": [
+    "lista",
+    "65",
+    1.0
+   ],
+   "proposta": {
+    "abertura": {
+     "publico": 438,
+     "enviado": 690,
+     "g3": 357,
+     "pago": 317
+    },
+    "ultima": {
+     "publico": 438,
+     "enviado": 690,
+     "g3": 357,
+     "pago": 317
+    },
+    "teto": {
+     "publico": 584,
+     "enviado": 920,
+     "g3": 476,
+     "pago": 423
+    },
+    "pago_medio": 317,
+    "modo": "preço próprio, sem seguir a King Spa",
+    "var_vs_atual": -0.4895
+   },
+   "historico": {
+    "ocup": 0.1181,
+    "pago_p25": 247.65,
+    "pago_p50": 331.8,
+    "pago_p75": 472.4,
+    "n": 34
+   }
+  },
+  {
+   "mes": "2027-02",
+   "sub": "fds",
+   "grupo": "fds",
+   "q": "Q7",
+   "pousada": "Recanto",
+   "noites": 6,
+   "cap": 42,
+   "vendidas": 0,
+   "ocup": 0.0,
+   "livres": 42,
+   "fator_publico": 0.6157,
+   "atual": {
+    "enviado": 2018,
+    "publico": 1242,
+    "g3": 838,
+    "pago": 989,
+    "pos_lista": "p80",
+    "pos_hidro": "p59"
+   },
+   "regra_abertura": [
+    "lista",
+    "40",
+    1.0
+   ],
+   "regra_teto": [
+    "hidro",
+    "50",
+    1.0
+   ],
+   "proposta": {
+    "abertura": {
+     "publico": 606,
+     "enviado": 984,
+     "g3": 409,
+     "pago": 482
+    },
+    "ultima": {
+     "publico": 545,
+     "enviado": 886,
+     "g3": 368,
+     "pago": 434
+    },
+    "teto": {
+     "publico": 1082,
+     "enviado": 1757,
+     "g3": 730,
+     "pago": 861
+    },
+    "pago_medio": 513,
+    "modo": "escada depois da metade vendida; desce 10% a 7 dias se abaixo de 60%",
+    "var_vs_atual": -0.5121
+   },
+   "historico": {
+    "ocup": 0.5268,
+    "pago_p25": 503.86,
+    "pago_p50": 559.28,
+    "pago_p75": 657.01,
+    "n": 59
+   }
+  },
+  {
+   "mes": "2027-02",
+   "sub": "fds",
+   "grupo": "fds",
+   "q": "Double",
+   "pousada": "Recanto",
+   "noites": 6,
+   "cap": 36,
+   "vendidas": 1,
+   "ocup": 0.0278,
+   "livres": 35,
+   "fator_publico": 0.6157,
+   "atual": {
+    "enviado": 2220,
+    "publico": 1367,
+    "g3": 922,
+    "pago": 1088,
+    "pos_lista": "p85",
+    "pos_hidro": "p67"
+   },
+   "regra_abertura": [
+    "pares_hidro",
+    "50",
+    1.05
+   ],
+   "regra_teto": [
+    "hidro",
+    "65",
+    1.0
+   ],
+   "proposta": {
+    "abertura": {
+     "publico": 968,
+     "enviado": 1572,
+     "g3": 653,
+     "pago": 770
+    },
+    "ultima": {
+     "publico": 871,
+     "enviado": 1415,
+     "g3": 588,
+     "pago": 693
+    },
+    "teto": {
+     "publico": 1337,
+     "enviado": 2172,
+     "g3": 902,
+     "pago": 1064
+    },
+    "pago_medio": 827,
+    "modo": "escada depois da metade vendida; desce 10% a 7 dias se abaixo de 60%",
+    "var_vs_atual": -0.2919
+   },
+   "historico": {
+    "ocup": 0.7917,
+    "pago_p25": 644.75,
+    "pago_p50": 743.46,
+    "pago_p75": 861.9,
+    "n": 76
+   }
+  },
+  {
+   "mes": "2027-02",
+   "sub": "fds",
+   "grupo": "fds",
+   "q": "Q2",
+   "pousada": "Recanto",
+   "noites": 6,
+   "cap": 12,
+   "vendidas": 0,
+   "ocup": 0.0,
+   "livres": 12,
+   "fator_publico": 0.6157,
+   "atual": {
+    "enviado": 2134,
+    "publico": 1314,
+    "g3": 886,
+    "pago": 1046,
+    "pos_lista": "p83",
+    "pos_hidro": "p64"
+   },
+   "regra_abertura": [
+    "pares_hidro",
+    "50",
+    1.05
+   ],
+   "regra_teto": [
+    "hidro",
+    "65",
+    1.0
+   ],
+   "proposta": {
+    "abertura": {
+     "publico": 968,
+     "enviado": 1572,
+     "g3": 653,
+     "pago": 770
+    },
+    "ultima": {
+     "publico": 871,
+     "enviado": 1415,
+     "g3": 588,
+     "pago": 693
+    },
+    "teto": {
+     "publico": 1337,
+     "enviado": 2172,
+     "g3": 902,
+     "pago": 1064
+    },
+    "pago_medio": 797,
+    "modo": "escada depois da metade vendida; desce 10% a 7 dias se abaixo de 60%",
+    "var_vs_atual": -0.2633
+   },
+   "historico": {
+    "ocup": 0.6875,
+    "pago_p25": 663.38,
+    "pago_p50": 711.56,
+    "pago_p75": 819.81,
+    "n": 22
+   }
+  },
+  {
+   "mes": "2027-02",
+   "sub": "fds",
+   "grupo": "fds",
+   "q": "Afrodite",
+   "pousada": "Recanto",
+   "noites": 6,
+   "cap": 6,
+   "vendidas": 0,
+   "ocup": 0.0,
+   "livres": 6,
+   "fator_publico": 0.6157,
+   "atual": {
+    "enviado": 3000,
+    "publico": 1847,
+    "g3": 1246,
+    "pago": 1470,
+    "pos_lista": "≥p90",
+    "pos_hidro": "p83"
+   },
+   "regra_abertura": [
+    "pares_hidro",
+    "50",
+    1.2075
+   ],
+   "regra_teto": [
+    "hidro",
+    "65",
+    1.0
+   ],
+   "proposta": {
+    "abertura": {
+     "publico": 1113,
+     "enviado": 1808,
+     "g3": 751,
+     "pago": 886
+    },
+    "ultima": {
+     "publico": 1002,
+     "enviado": 1627,
+     "g3": 676,
+     "pago": 797
+    },
+    "teto": {
+     "publico": 1337,
+     "enviado": 2172,
+     "g3": 902,
+     "pago": 1064
+    },
+    "pago_medio": 886,
+    "modo": "escada depois da metade vendida; desce 10% a 7 dias se abaixo de 60%",
+    "var_vs_atual": -0.3974
+   },
+   "historico": {
+    "ocup": 0.625,
+    "pago_p25": 655.8,
+    "pago_p50": 842.72,
+    "pago_p75": 1099.76,
+    "n": 8
+   }
+  },
+  {
+   "mes": "2027-02",
+   "sub": "fds",
+   "grupo": "fds",
+   "q": "VK7",
+   "pousada": "Villa",
+   "noites": 6,
+   "cap": 42,
+   "vendidas": 0,
+   "ocup": 0.0,
+   "livres": 42,
+   "fator_publico": 0.6173,
+   "atual": {
+    "enviado": 2220,
+    "publico": 1370,
+    "g3": 1212,
+    "pago": 1021,
+    "pos_lista": "p85",
+    "pos_hidro": "p67"
+   },
+   "regra_abertura": [
+    "pares_hidro",
+    "50",
+    1.05
+   ],
+   "regra_teto": [
+    "hidro",
+    "65",
+    1.0
+   ],
+   "proposta": {
+    "abertura": {
+     "publico": 968,
+     "enviado": 1568,
+     "g3": 856,
+     "pago": 721
+    },
+    "ultima": {
+     "publico": 871,
+     "enviado": 1411,
+     "g3": 771,
+     "pago": 649
+    },
+    "teto": {
+     "publico": 1337,
+     "enviado": 2166,
+     "g3": 1183,
+     "pago": 996
+    },
+    "pago_medio": 767,
+    "modo": "escada depois da metade vendida; desce 10% a 7 dias se abaixo de 60%",
+    "var_vs_atual": -0.2934
+   },
+   "historico": {
+    "ocup": 0.875,
+    "pago_p25": 591.18,
+    "pago_p50": 700.0,
+    "pago_p75": 823.5,
+    "n": 96
+   }
+  },
+  {
+   "mes": "2027-02",
+   "sub": "fds",
+   "grupo": "fds",
+   "q": "VK2",
+   "pousada": "Villa",
+   "noites": 6,
+   "cap": 12,
+   "vendidas": 0,
+   "ocup": 0.0,
+   "livres": 12,
+   "fator_publico": 0.6173,
+   "atual": {
+    "enviado": 1905,
+    "publico": 1176,
+    "g3": 1040,
+    "pago": 876,
+    "pos_lista": "p78",
+    "pos_hidro": "p56"
+   },
+   "regra_abertura": [
+    "pares_hidro",
+    "50",
+    1.05
+   ],
+   "regra_teto": [
+    "hidro",
+    "65",
+    1.0
+   ],
+   "proposta": {
+    "abertura": {
+     "publico": 968,
+     "enviado": 1568,
+     "g3": 856,
+     "pago": 721
+    },
+    "ultima": {
+     "publico": 871,
+     "enviado": 1411,
+     "g3": 771,
+     "pago": 649
+    },
+    "teto": {
+     "publico": 1337,
+     "enviado": 2166,
+     "g3": 1183,
+     "pago": 996
+    },
+    "pago_medio": 747,
+    "modo": "escada depois da metade vendida; desce 10% a 7 dias se abaixo de 60%",
+    "var_vs_atual": -0.1769
+   },
+   "historico": {
+    "ocup": 0.9062,
+    "pago_p25": 533.25,
+    "pago_p50": 579.54,
+    "pago_p75": 994.29,
+    "n": 29
+   }
+  },
+  {
+   "mes": "2027-02",
+   "sub": "fds",
+   "grupo": "fds",
+   "q": "Balcony",
+   "pousada": "Villa",
+   "noites": 6,
+   "cap": 36,
+   "vendidas": 0,
+   "ocup": 0.0,
+   "livres": 36,
+   "fator_publico": 0.6173,
+   "atual": {
+    "enviado": 1905,
+    "publico": 1176,
+    "g3": 1040,
+    "pago": 876,
+    "pos_lista": "p78",
+    "pos_hidro": "p56"
+   },
+   "regra_abertura": [
+    "pares_lista",
+    "50",
+    1.0
+   ],
+   "regra_teto": [
+    "lista",
+    "50",
+    1.0
+   ],
+   "proposta": {
+    "abertura": {
+     "publico": 596,
+     "enviado": 965,
+     "g3": 527,
+     "pago": 444
+    },
+    "ultima": {
+     "publico": 536,
+     "enviado": 869,
+     "g3": 475,
+     "pago": 400
+    },
+    "teto": {
+     "publico": 722,
+     "enviado": 1170,
+     "g3": 639,
+     "pago": 538
+    },
+    "pago_medio": 476,
+    "modo": "escada depois da metade vendida; desce 10% a 7 dias se abaixo de 60%",
+    "var_vs_atual": -0.4932
+   },
+   "historico": {
+    "ocup": 0.3646,
+    "pago_p25": 394.07,
+    "pago_p50": 440.56,
+    "pago_p75": 653.33,
+    "n": 35
+   }
+  },
+  {
+   "mes": "2027-02",
+   "sub": "feriado",
+   "grupo": "feriado",
+   "q": "Q7",
+   "pousada": "Recanto",
+   "noites": 5,
+   "cap": 35,
+   "vendidas": 2,
+   "ocup": 0.0571,
+   "livres": 33,
+   "fator_publico": 0.6326,
+   "atual": {
+    "enviado": 2381,
+    "publico": 1506,
+    "g3": 995,
+    "pago": 1167,
+    "pos_lista": "p78",
+    "pos_hidro": "p51"
+   },
+   "regra_abertura": [
+    "hidro",
+    "40",
+    1.0
+   ],
+   "regra_teto": [
+    "hidro",
+    "65",
+    1.0
+   ],
+   "proposta": {
+    "abertura": {
+     "publico": 1433,
+     "enviado": 2265,
+     "g3": 946,
+     "pago": 1110
+    },
+    "ultima": {
+     "publico": 1290,
+     "enviado": 2039,
+     "g3": 852,
+     "pago": 999
+    },
+    "teto": {
+     "publico": 1748,
+     "enviado": 2763,
+     "g3": 1154,
+     "pago": 1354
+    },
+    "pago_medio": 1179,
+    "modo": "escada depois da metade vendida; desce 10% a 7 dias se abaixo de 60%",
+    "var_vs_atual": -0.0485
+   },
+   "historico": {
+    "ocup": 0.5238,
+    "pago_p25": 751.87,
+    "pago_p50": 1037.06,
+    "pago_p75": 1226.14,
+    "n": 22
+   }
+  },
+  {
+   "mes": "2027-02",
+   "sub": "feriado",
+   "grupo": "feriado",
+   "q": "Double",
+   "pousada": "Recanto",
+   "noites": 5,
+   "cap": 30,
+   "vendidas": 3,
+   "ocup": 0.1,
+   "livres": 27,
+   "fator_publico": 0.6326,
+   "atual": {
+    "enviado": 2500,
+    "publico": 1582,
+    "g3": 1044,
+    "pago": 1225,
+    "pos_lista": "p80",
+    "pos_hidro": "p55"
+   },
+   "regra_abertura": [
+    "hidro",
+    "50",
+    1.0
+   ],
+   "regra_teto": [
+    "hidro",
+    "75",
+    1.0
+   ],
+   "proposta": {
+    "abertura": {
+     "publico": 1488,
+     "enviado": 2352,
+     "g3": 983,
+     "pago": 1153
+    },
+    "ultima": {
+     "publico": 1339,
+     "enviado": 2117,
+     "g3": 884,
+     "pago": 1037
+    },
+    "teto": {
+     "publico": 1944,
+     "enviado": 3073,
+     "g3": 1284,
+     "pago": 1506
+    },
+    "pago_medio": 1237,
+    "modo": "escada depois da metade vendida; desce 10% a 7 dias se abaixo de 60%",
+    "var_vs_atual": -0.0594
+   },
+   "historico": {
+    "ocup": 0.7222,
+    "pago_p25": 721.75,
+    "pago_p50": 1010.25,
+    "pago_p75": 1134.51,
+    "n": 26
+   }
+  },
+  {
+   "mes": "2027-02",
+   "sub": "feriado",
+   "grupo": "feriado",
+   "q": "Q2",
+   "pousada": "Recanto",
+   "noites": 5,
+   "cap": 10,
+   "vendidas": 0,
+   "ocup": 0.0,
+   "livres": 10,
+   "fator_publico": 0.6326,
+   "atual": {
+    "enviado": 2404,
+    "publico": 1521,
+    "g3": 1004,
+    "pago": 1178,
+    "pos_lista": "p78",
+    "pos_hidro": "p52"
+   },
+   "regra_abertura": [
+    "hidro",
+    "50",
+    1.0
+   ],
+   "regra_teto": [
+    "hidro",
+    "75",
+    1.0
+   ],
+   "proposta": {
+    "abertura": {
+     "publico": 1488,
+     "enviado": 2352,
+     "g3": 983,
+     "pago": 1153
+    },
+    "ultima": {
+     "publico": 1339,
+     "enviado": 2117,
+     "g3": 884,
+     "pago": 1037
+    },
+    "teto": {
+     "publico": 1944,
+     "enviado": 3073,
+     "g3": 1284,
+     "pago": 1506
+    },
+    "pago_medio": 1193,
+    "modo": "escada depois da metade vendida; desce 10% a 7 dias se abaixo de 60%",
+    "var_vs_atual": -0.0217
+   },
+   "historico": {
+    "ocup": 0.4167,
+    "pago_p25": 686.1,
+    "pago_p50": 686.1,
+    "pago_p75": 1304.09,
+    "n": 5
+   }
+  },
+  {
+   "mes": "2027-02",
+   "sub": "feriado",
+   "grupo": "feriado",
+   "q": "Afrodite",
+   "pousada": "Recanto",
+   "noites": 5,
+   "cap": 5,
+   "vendidas": 0,
+   "ocup": 0.0,
+   "livres": 5,
+   "fator_publico": 0.6326,
+   "atual": {
+    "enviado": 3144,
+    "publico": 1989,
+    "g3": 1313,
+    "pago": 1541,
+    "pos_lista": "p88",
+    "pos_hidro": "p76"
+   },
+   "regra_abertura": [
+    "hidro",
+    "50",
+    1.15
+   ],
+   "regra_teto": [
+    "hidro",
+    "75",
+    1.0
+   ],
+   "proposta": {
+    "abertura": {
+     "publico": 1711,
+     "enviado": 2705,
+     "g3": 1130,
+     "pago": 1325
+    },
+    "ultima": {
+     "publico": 1540,
+     "enviado": 2435,
+     "g3": 1017,
+     "pago": 1193
+    },
+    "teto": {
+     "publico": 1944,
+     "enviado": 3073,
+     "g3": 1284,
+     "pago": 1506
+    },
+    "pago_medio": 1325,
+    "modo": "escada depois da metade vendida; desce 10% a 7 dias se abaixo de 60%",
+    "var_vs_atual": -0.1398
+   },
+   "historico": {
+    "ocup": 0.6667,
+    "pago_p25": 953.88,
+    "pago_p50": 960.83,
+    "pago_p75": 960.83,
+    "n": 4
+   }
+  },
+  {
+   "mes": "2027-02",
+   "sub": "feriado",
+   "grupo": "feriado",
+   "q": "VK7",
+   "pousada": "Villa",
+   "noites": 5,
+   "cap": 35,
+   "vendidas": 0,
+   "ocup": 0.0,
+   "livres": 35,
+   "fator_publico": 0.6596,
+   "atual": {
+    "enviado": 2741,
+    "publico": 1808,
+    "g3": 1524,
+    "pago": 1261,
+    "pos_lista": "p85",
+    "pos_hidro": "p68"
+   },
+   "regra_abertura": [
+    "hidro",
+    "50",
+    1.0
+   ],
+   "regra_teto": [
+    "hidro",
+    "75",
+    1.0
+   ],
+   "proposta": {
+    "abertura": {
+     "publico": 1488,
+     "enviado": 2256,
+     "g3": 1254,
+     "pago": 1038
+    },
+    "ultima": {
+     "publico": 1339,
+     "enviado": 2030,
+     "g3": 1129,
+     "pago": 934
+    },
+    "teto": {
+     "publico": 1944,
+     "enviado": 2947,
+     "g3": 1639,
+     "pago": 1356
+    },
+    "pago_medio": 1103,
+    "modo": "escada depois da metade vendida; desce 10% a 7 dias se abaixo de 60%",
+    "var_vs_atual": -0.177
+   },
+   "historico": {
+    "ocup": 0.9524,
+    "pago_p25": 590.62,
+    "pago_p50": 733.8,
+    "pago_p75": 821.61,
+    "n": 40
+   }
+  },
+  {
+   "mes": "2027-02",
+   "sub": "feriado",
+   "grupo": "feriado",
+   "q": "VK2",
+   "pousada": "Villa",
+   "noites": 5,
+   "cap": 10,
+   "vendidas": 2,
+   "ocup": 0.2,
+   "livres": 8,
+   "fator_publico": 0.6596,
+   "atual": {
+    "enviado": 2566,
+    "publico": 1693,
+    "g3": 1427,
+    "pago": 1180,
+    "pos_lista": "p82",
+    "pos_hidro": "p62"
+   },
+   "regra_abertura": [
+    "hidro",
+    "50",
+    1.0
+   ],
+   "regra_teto": [
+    "hidro",
+    "75",
+    1.0
+   ],
+   "proposta": {
+    "abertura": {
+     "publico": 1488,
+     "enviado": 2256,
+     "g3": 1254,
+     "pago": 1038
+    },
+    "ultima": {
+     "publico": 1339,
+     "enviado": 2030,
+     "g3": 1129,
+     "pago": 934
+    },
+    "teto": {
+     "publico": 1944,
+     "enviado": 2947,
+     "g3": 1639,
+     "pago": 1356
+    },
+    "pago_medio": 1074,
+    "modo": "escada depois da metade vendida; desce 10% a 7 dias se abaixo de 60%",
+    "var_vs_atual": -0.1211
+   },
+   "historico": {
+    "ocup": 0.75,
+    "pago_p25": 702.23,
+    "pago_p50": 816.94,
+    "pago_p75": 876.13,
+    "n": 9
+   }
+  },
+  {
+   "mes": "2027-02",
+   "sub": "feriado",
+   "grupo": "feriado",
+   "q": "Balcony",
+   "pousada": "Villa",
+   "noites": 5,
+   "cap": 30,
+   "vendidas": 4,
+   "ocup": 0.1333,
+   "livres": 26,
+   "fator_publico": 0.6596,
+   "atual": {
+    "enviado": 1897,
+    "publico": 1251,
+    "g3": 1055,
+    "pago": 873,
+    "pos_lista": "p70",
+    "pos_hidro": "p29"
+   },
+   "regra_abertura": [
+    "lista",
+    "50",
+    1.0
+   ],
+   "regra_teto": [
+    "lista",
+    "75",
+    1.0
+   ],
+   "proposta": {
+    "abertura": {
+     "publico": 1044,
+     "enviado": 1583,
+     "g3": 880,
+     "pago": 728
+    },
+    "ultima": {
+     "publico": 940,
+     "enviado": 1424,
+     "g3": 792,
+     "pago": 655
+    },
+    "teto": {
+     "publico": 1358,
+     "enviado": 2059,
+     "g3": 1145,
+     "pago": 947
+    },
+    "pago_medio": 781,
+    "modo": "escada depois da metade vendida; desce 10% a 7 dias se abaixo de 60%",
+    "var_vs_atual": -0.1655
+   },
+   "historico": {
+    "ocup": 0.75,
+    "pago_p25": 459.3,
+    "pago_p50": 553.6,
+    "pago_p75": 615.18,
+    "n": 27
+   }
+  }
+ ],
+ "expectativa": [
+  {
+   "mes": "2026-11",
+   "pousada": "Recanto",
+   "temporada": "baixa",
+   "meta_dono": 220000,
+   "livro": 133481,
+   "cap_mes": 480,
+   "revpar_meta": 458,
+   "cenarios": {
+    "sem_mudar": {
+     "receita": 168990,
+     "vs_meta": 0.7681,
+     "por_grupo": {
+      "semana": {
+       "ocup_final": 0.5234,
+       "novas_unidades": 46,
+       "pago_medio": 471,
+       "receita_nova": 21802
+      },
+      "fds": {
+       "ocup_final": 0.6523,
+       "novas_unidades": 18,
+       "pago_medio": 772,
+       "receita_nova": 13708
+      },
+      "feriado": {
+       "ocup_final": 0.7292,
+       "novas_unidades": 0,
+       "pago_medio": 956,
+       "receita_nova": 0
+      }
+     },
+     "ocup_mes": 0.5708,
+     "revpar": 352
+    },
+    "provavel": {
+     "receita": 188264,
+     "vs_meta": 0.8557,
+     "por_grupo": {
+      "semana": {
+       "ocup_final": 0.55,
+       "novas_unidades": 52,
+       "pago_medio": 513,
+       "receita_nova": 26770
+      },
+      "fds": {
+       "ocup_final": 0.8,
+       "novas_unidades": 27,
+       "pago_medio": 681,
+       "receita_nova": 18534
+      },
+      "feriado": {
+       "ocup_final": 0.9,
+       "novas_unidades": 8,
+       "pago_medio": 1156,
+       "receita_nova": 9479
+      }
+     },
+     "ocup_mes": 0.6188,
+     "revpar": 392
+    },
+    "meta": {
+     "receita": 210177,
+     "vs_meta": 0.9554,
+     "por_grupo": {
+      "semana": {
+       "ocup_final": 0.65,
+       "novas_unidades": 75,
+       "pago_medio": 513,
+       "receita_nova": 38258
+      },
+      "fds": {
+       "ocup_final": 0.95,
+       "novas_unidades": 37,
+       "pago_medio": 681,
+       "receita_nova": 25076
+      },
+      "feriado": {
+       "ocup_final": 0.97,
+       "novas_unidades": 12,
+       "pago_medio": 1156,
+       "receita_nova": 13363
+      }
+     },
+     "ocup_mes": 0.6958,
+     "revpar": 438
+    }
+   },
+   "mercado_pl": {
+    "occ_ly_final": 35,
+    "adr_ly": 702,
+    "revpar_ly": 245.7,
+    "occ_agora": 23
+   }
+  },
+  {
+   "mes": "2026-11",
+   "pousada": "Villa",
+   "temporada": "baixa",
+   "meta_dono": 150000,
+   "livro": 96620,
+   "cap_mes": 450,
+   "revpar_meta": 333,
+   "cenarios": {
+    "sem_mudar": {
+     "receita": 135132,
+     "vs_meta": 0.9009,
+     "por_grupo": {
+      "semana": {
+       "ocup_final": 0.4389,
+       "novas_unidades": 27,
+       "pago_medio": 483,
+       "receita_nova": 13131
+      },
+      "fds": {
+       "ocup_final": 0.675,
+       "novas_unidades": 18,
+       "pago_medio": 681,
+       "receita_nova": 11920
+      },
+      "feriado": {
+       "ocup_final": 0.8444,
+       "novas_unidades": 21,
+       "pago_medio": 641,
+       "receita_nova": 13460
+      }
+     },
+     "ocup_mes": 0.5778,
+     "revpar": 300
+    },
+    "provavel": {
+     "receita": 155091,
+     "vs_meta": 1.0339,
+     "por_grupo": {
+      "semana": {
+       "ocup_final": 0.55,
+       "novas_unidades": 51,
+       "pago_medio": 367,
+       "receita_nova": 18535
+      },
+      "fds": {
+       "ocup_final": 0.8,
+       "novas_unidades": 25,
+       "pago_medio": 612,
+       "receita_nova": 15303
+      },
+      "feriado": {
+       "ocup_final": 0.9,
+       "novas_unidades": 24,
+       "pago_medio": 1048,
+       "receita_nova": 24633
+      }
+     },
+     "ocup_mes": 0.6533,
+     "revpar": 345
+    },
+    "meta": {
+     "receita": 171609,
+     "vs_meta": 1.1441,
+     "por_grupo": {
+      "semana": {
+       "ocup_final": 0.65,
+       "novas_unidades": 72,
+       "pago_medio": 367,
+       "receita_nova": 26242
+      },
+      "fds": {
+       "ocup_final": 0.95,
+       "novas_unidades": 34,
+       "pago_medio": 612,
+       "receita_nova": 20812
+      },
+      "feriado": {
+       "ocup_final": 0.97,
+       "novas_unidades": 27,
+       "pago_medio": 1048,
+       "receita_nova": 27935
+      }
+     },
+     "ocup_mes": 0.7267,
+     "revpar": 381
+    }
+   },
+   "mercado_pl": {
+    "occ_ly_final": 42,
+    "adr_ly": 598,
+    "revpar_ly": 251.2,
+    "occ_agora": 23
+   }
+  },
+  {
+   "mes": "2026-12",
+   "pousada": "Recanto",
+   "temporada": "alta",
+   "meta_dono": 350000,
+   "livro": 54352,
+   "cap_mes": 496,
+   "revpar_meta": 706,
+   "cenarios": {
+    "sem_mudar": {
+     "receita": 218319,
+     "vs_meta": 0.6238,
+     "por_grupo": {
+      "semana": {
+       "ocup_final": 0.5234,
+       "novas_unidades": 103,
+       "pago_medio": 471,
+       "receita_nova": 48553
+      },
+      "fds": {
+       "ocup_final": 0.6523,
+       "novas_unidades": 44,
+       "pago_medio": 772,
+       "receita_nova": 33690
+      },
+      "festas": {
+       "ocup_final": 0.5938,
+       "novas_unidades": 68,
+       "pago_medio": 1193,
+       "receita_nova": 81725
+      }
+     },
+     "ocup_mes": 0.5685,
+     "revpar": 440
+    },
+    "provavel": {
+     "receita": 304063,
+     "vs_meta": 0.8688,
+     "por_grupo": {
+      "semana": {
+       "ocup_final": 0.6,
+       "novas_unidades": 123,
+       "pago_medio": 571,
+       "receita_nova": 69975
+      },
+      "fds": {
+       "ocup_final": 0.85,
+       "novas_unidades": 63,
+       "pago_medio": 747,
+       "receita_nova": 46736
+      },
+      "festas": {
+       "ocup_final": 0.9,
+       "novas_unidades": 113,
+       "pago_medio": 1181,
+       "receita_nova": 132999
+      }
+     },
+     "ocup_mes": 0.7379,
+     "revpar": 613
+    },
+    "meta": {
+     "receita": 339181,
+     "vs_meta": 0.9691,
+     "por_grupo": {
+      "semana": {
+       "ocup_final": 0.7,
+       "novas_unidades": 148,
+       "pago_medio": 571,
+       "receita_nova": 84587
+      },
+      "fds": {
+       "ocup_final": 0.97,
+       "novas_unidades": 74,
+       "pago_medio": 747,
+       "receita_nova": 55337
+      },
+      "festas": {
+       "ocup_final": 0.97,
+       "novas_unidades": 123,
+       "pago_medio": 1181,
+       "receita_nova": 144905
+      }
+     },
+     "ocup_mes": 0.8306,
+     "revpar": 684
+    }
+   },
+   "mercado_pl": {
+    "occ_ly_final": 42,
+    "adr_ly": 809,
+    "revpar_ly": 339.8,
+    "occ_agora": 16
+   }
+  },
+  {
+   "mes": "2026-12",
+   "pousada": "Villa",
+   "temporada": "alta",
+   "meta_dono": 300000,
+   "livro": 65623,
+   "cap_mes": 465,
+   "revpar_meta": 645,
+   "cenarios": {
+    "sem_mudar": {
+     "receita": 215019,
+     "vs_meta": 0.7167,
+     "por_grupo": {
+      "semana": {
+       "ocup_final": 0.4389,
+       "novas_unidades": 61,
+       "pago_medio": 483,
+       "receita_nova": 29646
+      },
+      "fds": {
+       "ocup_final": 0.675,
+       "novas_unidades": 41,
+       "pago_medio": 681,
+       "receita_nova": 27756
+      },
+      "festas": {
+       "ocup_final": 0.8444,
+       "novas_unidades": 89,
+       "pago_medio": 1034,
+       "receita_nova": 91994
+      }
+     },
+     "ocup_mes": 0.6022,
+     "revpar": 462
+    },
+    "provavel": {
+     "receita": 262301,
+     "vs_meta": 0.8743,
+     "por_grupo": {
+      "semana": {
+       "ocup_final": 0.6,
+       "novas_unidades": 100,
+       "pago_medio": 377,
+       "receita_nova": 37669
+      },
+      "fds": {
+       "ocup_final": 0.85,
+       "novas_unidades": 56,
+       "pago_medio": 653,
+       "receita_nova": 36886
+      },
+      "festas": {
+       "ocup_final": 0.9,
+       "novas_unidades": 96,
+       "pago_medio": 1266,
+       "receita_nova": 122123
+      }
+     },
+     "ocup_mes": 0.7333,
+     "revpar": 564
+    },
+    "meta": {
+     "receita": 290352,
+     "vs_meta": 0.9678,
+     "por_grupo": {
+      "semana": {
+       "ocup_final": 0.7,
+       "novas_unidades": 124,
+       "pago_medio": 377,
+       "receita_nova": 46710
+      },
+      "fds": {
+       "ocup_final": 0.97,
+       "novas_unidades": 67,
+       "pago_medio": 653,
+       "receita_nova": 43937
+      },
+      "festas": {
+       "ocup_final": 0.97,
+       "novas_unidades": 106,
+       "pago_medio": 1266,
+       "receita_nova": 134082
+      }
+     },
+     "ocup_mes": 0.8301,
+     "revpar": 624
+    }
+   },
+   "mercado_pl": {
+    "occ_ly_final": 49,
+    "adr_ly": 769,
+    "revpar_ly": 376.8,
+    "occ_agora": 15
+   }
+  },
+  {
+   "mes": "2027-01",
+   "pousada": "Recanto",
+   "temporada": "alta",
+   "meta_dono": 350000,
+   "livro": 30799,
+   "cap_mes": 496,
+   "revpar_meta": 706,
+   "cenarios": {
+    "sem_mudar": {
+     "receita": 174574,
+     "vs_meta": 0.4988,
+     "por_grupo": {
+      "semana": {
+       "ocup_final": 0.5234,
+       "novas_unidades": 151,
+       "pago_medio": 471,
+       "receita_nova": 71121
+      },
+      "fds": {
+       "ocup_final": 0.6523,
+       "novas_unidades": 80,
+       "pago_medio": 772,
+       "receita_nova": 61395
+      },
+      "festas": {
+       "ocup_final": 0.5938,
+       "novas_unidades": 11,
+       "pago_medio": 1024,
+       "receita_nova": 11260
+      }
+     },
+     "ocup_mes": 0.5625,
+     "revpar": 352
+    },
+    "provavel": {
+     "receita": 246131,
+     "vs_meta": 0.7032,
+     "por_grupo": {
+      "semana": {
+       "ocup_final": 0.6,
+       "novas_unidades": 177,
+       "pago_medio": 556,
+       "receita_nova": 98269
+      },
+      "fds": {
+       "ocup_final": 0.85,
+       "novas_unidades": 105,
+       "pago_medio": 772,
+       "receita_nova": 80919
+      },
+      "festas": {
+       "ocup_final": 0.9,
+       "novas_unidades": 21,
+       "pago_medio": 1738,
+       "receita_nova": 36143
+      }
+     },
+     "ocup_mes": 0.6855,
+     "revpar": 496
+    },
+    "meta": {
+     "receita": 280580,
+     "vs_meta": 0.8017,
+     "por_grupo": {
+      "semana": {
+       "ocup_final": 0.7,
+       "novas_unidades": 210,
+       "pago_medio": 556,
+       "receita_nova": 116966
+      },
+      "fds": {
+       "ocup_final": 0.97,
+       "novas_unidades": 120,
+       "pago_medio": 772,
+       "receita_nova": 92779
+      },
+      "festas": {
+       "ocup_final": 0.97,
+       "novas_unidades": 23,
+       "pago_medio": 1738,
+       "receita_nova": 40036
+      }
+     },
+     "ocup_mes": 0.7863,
+     "revpar": 566
+    }
+   },
+   "mercado_pl": {
+    "occ_ly_final": 35,
+    "adr_ly": 704,
+    "revpar_ly": 246.4,
+    "occ_agora": 8
+   }
+  },
+  {
+   "mes": "2027-01",
+   "pousada": "Villa",
+   "temporada": "alta",
+   "meta_dono": 300000,
+   "livro": 17056,
+   "cap_mes": 465,
+   "revpar_meta": 645,
+   "cenarios": {
+    "sem_mudar": {
+     "receita": 161983,
+     "vs_meta": 0.5399,
+     "por_grupo": {
+      "semana": {
+       "ocup_final": 0.4389,
+       "novas_unidades": 127,
+       "pago_medio": 483,
+       "receita_nova": 61508
+      },
+      "fds": {
+       "ocup_final": 0.675,
+       "novas_unidades": 76,
+       "pago_medio": 681,
+       "receita_nova": 51766
+      },
+      "festas": {
+       "ocup_final": 0.8444,
+       "novas_unidades": 21,
+       "pago_medio": 1484,
+       "receita_nova": 31653
+      }
+     },
+     "ocup_mes": 0.5247,
+     "revpar": 348
+    },
+    "provavel": {
+     "receita": 197573,
+     "vs_meta": 0.6586,
+     "por_grupo": {
+      "semana": {
+       "ocup_final": 0.6,
+       "novas_unidades": 178,
+       "pago_medio": 386,
+       "receita_nova": 68620
+      },
+      "fds": {
+       "ocup_final": 0.85,
+       "novas_unidades": 97,
+       "pago_medio": 689,
+       "receita_nova": 66812
+      },
+      "festas": {
+       "ocup_final": 0.9,
+       "novas_unidades": 23,
+       "pago_medio": 1960,
+       "receita_nova": 45085
+      }
+     },
+     "ocup_mes": 0.6839,
+     "revpar": 425
+    },
+    "meta": {
+     "receita": 223752,
+     "vs_meta": 0.7458,
+     "por_grupo": {
+      "semana": {
+       "ocup_final": 0.7,
+       "novas_unidades": 210,
+       "pago_medio": 386,
+       "receita_nova": 80764
+      },
+      "fds": {
+       "ocup_final": 0.97,
+       "novas_unidades": 111,
+       "pago_medio": 689,
+       "receita_nova": 76730
+      },
+      "festas": {
+       "ocup_final": 0.97,
+       "novas_unidades": 25,
+       "pago_medio": 1960,
+       "receita_nova": 49202
+      }
+     },
+     "ocup_mes": 0.7871,
+     "revpar": 481
+    }
+   },
+   "mercado_pl": {
+    "occ_ly_final": 45,
+    "adr_ly": 636,
+    "revpar_ly": 286.2,
+    "occ_agora": 6
+   }
+  },
+  {
+   "mes": "2027-02",
+   "pousada": "Recanto",
+   "temporada": "baixa",
+   "meta_dono": 220000,
+   "livro": 7590,
+   "cap_mes": 448,
+   "revpar_meta": 491,
+   "cenarios": {
+    "sem_mudar": {
+     "receita": 161519,
+     "vs_meta": 0.7342,
+     "por_grupo": {
+      "semana": {
+       "ocup_final": 0.5234,
+       "novas_unidades": 139,
+       "pago_medio": 471,
+       "receita_nova": 65700
+      },
+      "fds": {
+       "ocup_final": 0.6523,
+       "novas_unidades": 62,
+       "pago_medio": 772,
+       "receita_nova": 47591
+      },
+      "feriado": {
+       "ocup_final": 0.5938,
+       "novas_unidades": 42,
+       "pago_medio": 956,
+       "receita_nova": 40639
+      }
+     },
+     "ocup_mes": 0.5625,
+     "revpar": 361
+    },
+    "provavel": {
+     "receita": 223150,
+     "vs_meta": 1.0143,
+     "por_grupo": {
+      "semana": {
+       "ocup_final": 0.55,
+       "novas_unidades": 147,
+       "pago_medio": 561,
+       "receita_nova": 82232
+      },
+      "fds": {
+       "ocup_final": 0.8,
+       "novas_unidades": 76,
+       "pago_medio": 688,
+       "receita_nova": 52159
+      },
+      "feriado": {
+       "ocup_final": 0.9,
+       "novas_unidades": 67,
+       "pago_medio": 1211,
+       "receita_nova": 81169
+      }
+     },
+     "ocup_mes": 0.6674,
+     "revpar": 498
+    },
+    "meta": {
+     "receita": 255100,
+     "vs_meta": 1.1595,
+     "por_grupo": {
+      "semana": {
+       "ocup_final": 0.65,
+       "novas_unidades": 174,
+       "pago_medio": 561,
+       "receita_nova": 97489
+      },
+      "fds": {
+       "ocup_final": 0.95,
+       "novas_unidades": 90,
+       "pago_medio": 688,
+       "receita_nova": 62068
+      },
+      "feriado": {
+       "ocup_final": 0.97,
+       "novas_unidades": 73,
+       "pago_medio": 1211,
+       "receita_nova": 87953
+      }
+     },
+     "ocup_mes": 0.7723,
+     "revpar": 569
+    }
+   },
+   "mercado_pl": {
+    "occ_ly_final": 29,
+    "adr_ly": 709,
+    "revpar_ly": 205.6,
+    "occ_agora": 5
+   }
+  },
+  {
+   "mes": "2027-02",
+   "pousada": "Villa",
+   "temporada": "baixa",
+   "meta_dono": 150000,
+   "livro": 4813,
+   "cap_mes": 420,
+   "revpar_meta": 357,
+   "cenarios": {
+    "sem_mudar": {
+     "receita": 136554,
+     "vs_meta": 0.9104,
+     "por_grupo": {
+      "semana": {
+       "ocup_final": 0.4389,
+       "novas_unidades": 111,
+       "pago_medio": 483,
+       "receita_nova": 53613
+      },
+      "fds": {
+       "ocup_final": 0.675,
+       "novas_unidades": 61,
+       "pago_medio": 681,
+       "receita_nova": 41379
+      },
+      "feriado": {
+       "ocup_final": 0.8444,
+       "novas_unidades": 57,
+       "pago_medio": 641,
+       "receita_nova": 36749
+      }
+     },
+     "ocup_mes": 0.5619,
+     "revpar": 325
+    },
+    "provavel": {
+     "receita": 165522,
+     "vs_meta": 1.1035,
+     "por_grupo": {
+      "semana": {
+       "ocup_final": 0.55,
+       "novas_unidades": 139,
+       "pago_medio": 387,
+       "receita_nova": 53892
+      },
+      "fds": {
+       "ocup_final": 0.8,
+       "novas_unidades": 72,
+       "pago_medio": 648,
+       "receita_nova": 46651
+      },
+      "feriado": {
+       "ocup_final": 0.9,
+       "novas_unidades": 62,
+       "pago_medio": 978,
+       "receita_nova": 60166
+      }
+     },
+     "ocup_mes": 0.6667,
+     "revpar": 394
+    },
+    "meta": {
+     "receita": 189274,
+     "vs_meta": 1.2618,
+     "por_grupo": {
+      "semana": {
+       "ocup_final": 0.65,
+       "novas_unidades": 165,
+       "pago_medio": 387,
+       "receita_nova": 63761
+      },
+      "fds": {
+       "ocup_final": 0.95,
+       "novas_unidades": 86,
+       "pago_medio": 648,
+       "receita_nova": 55398
+      },
+      "feriado": {
+       "ocup_final": 0.97,
+       "novas_unidades": 67,
+       "pago_medio": 978,
+       "receita_nova": 65302
+      }
+     },
+     "ocup_mes": 0.7738,
+     "revpar": 451
+    }
+   },
+   "mercado_pl": {
+    "occ_ly_final": 34,
+    "adr_ly": 630,
+    "revpar_ly": 214.2,
+    "occ_agora": 4
+   }
+  }
+ ],
+ "fds_futuros": [
+  {
+   "sexta": "2026-11-13",
+   "sub": "fds",
+   "D": 3,
+   "quartos": {
+    "Q7": {
+     "sex": 2,
+     "sab": 3,
+     "un": 7,
+     "enviado": 2006,
+     "publico": 1235
+    },
+    "Double": {
+     "sex": 2,
+     "sab": 3,
+     "un": 6,
+     "enviado": 2013,
+     "publico": 1239
+    },
+    "Q2": {
+     "sex": 1,
+     "sab": 1,
+     "un": 2,
+     "enviado": 2019,
+     "publico": 1243
+    },
+    "Afrodite": {
+     "sex": 1,
+     "sab": 1,
+     "un": 1,
+     "enviado": 2860,
+     "publico": 1761
+    },
+    "VK7": {
+     "sex": 4,
+     "sab": 4,
+     "un": 7,
+     "enviado": 2856,
+     "publico": 1655
+    },
+    "VK2": {
+     "sex": 2,
+     "sab": 2,
+     "un": 2,
+     "enviado": 2406,
+     "publico": 1394
+    },
+    "Balcony": {
+     "sex": 0,
+     "sab": 0,
+     "un": 6,
+     "enviado": 2464,
+     "publico": 1428
+    }
+   },
+   "pousadas": {
+    "Recanto": {
+     "ocup": 0.4375,
+     "mercado_pl": {
+      "agora": 30.9,
+      "ly_final": 64.5
+     }
+    },
+    "Villa": {
+     "ocup": 0.4,
+     "mercado_pl": {
+      "agora": 25.6,
+      "ly_final": 74.8
+     }
+    }
+   },
+   "mercado": {
+    "com_preco": 61,
+    "lista": {
+     "25": 604,
+     "40": 669,
+     "50": 758,
+     "75": 1189
+    },
+    "hidro": {
+     "25": 826,
+     "40": 941,
+     "50": 1180,
+     "65": 1364,
+     "75": 1547
+    },
+    "pares_lista50": 609,
+    "pares_hidro50": 842,
+    "nossos_booking": {
+     "Recanto": 1235,
+     "Villa": 1428,
+     "recanto_obs": "busca por coordenadas (id 7562933), 10/11 ~02:15 UTC",
+     "villa_obs": "da busca por nome nos lotes dos concorrentes"
+    }
+   }
+  },
+  {
+   "sexta": "2026-11-20",
+   "sub": "feriado",
+   "D": 10,
+   "quartos": {
+    "Q7": {
+     "sex": 5,
+     "sab": 5,
+     "un": 7,
+     "enviado": 2880,
+     "publico": 1822
+    },
+    "Double": {
+     "sex": 6,
+     "sab": 6,
+     "un": 6,
+     "enviado": 3710,
+     "publico": 2347
+    },
+    "Q2": {
+     "sex": 2,
+     "sab": 2,
+     "un": 2,
+     "enviado": 3806,
+     "publico": 2407
+    },
+    "Afrodite": {
+     "sex": 1,
+     "sab": 1,
+     "un": 1,
+     "enviado": 5014,
+     "publico": 3172
+    },
+    "VK7": {
+     "sex": 6,
+     "sab": 3,
+     "un": 7,
+     "enviado": 3862,
+     "publico": 2521
+    },
+    "VK2": {
+     "sex": 2,
+     "sab": 1,
+     "un": 2,
+     "enviado": 3694,
+     "publico": 2411
+    },
+    "Balcony": {
+     "sex": 2,
+     "sab": 2,
+     "un": 6,
+     "enviado": 1943,
+     "publico": 1268
+    }
+   },
+   "pousadas": {
+    "Recanto": {
+     "ocup": 0.875,
+     "mercado_pl": {
+      "agora": 49.1,
+      "ly_final": 82
+     }
+    },
+    "Villa": {
+     "ocup": 0.5333,
+     "mercado_pl": {
+      "agora": 48.8,
+      "ly_final": 84.8
+     }
+    }
+   },
+   "mercado": {
+    "com_preco": 53,
+    "lista": {
+     "25": 910,
+     "40": 1059,
+     "50": 1143,
+     "75": 1550
+    },
+    "hidro": {
+     "25": 1269,
+     "40": 1570,
+     "50": 1650,
+     "65": 2101,
+     "75": 2451
+    },
+    "pares_lista50": 949,
+    "pares_hidro50": 1324,
+    "nossos_booking": {
+     "Recanto": 1822,
+     "Villa": 1268,
+     "recanto_obs": "busca por coordenadas (id 7562933), 10/11 ~02:15 UTC",
+     "villa_obs": "da busca por nome nos lotes dos concorrentes"
+    }
+   }
+  },
+  {
+   "sexta": "2026-11-27",
+   "sub": "fds",
+   "D": 17,
+   "quartos": {
+    "Q7": {
+     "sex": 1,
+     "sab": 1,
+     "un": 7,
+     "enviado": 2416,
+     "publico": 1487
+    },
+    "Double": {
+     "sex": 4,
+     "sab": 4,
+     "un": 6,
+     "enviado": 3019,
+     "publico": 1858
+    },
+    "Q2": {
+     "sex": 0,
+     "sab": 0,
+     "un": 2,
+     "enviado": 2433,
+     "publico": 1498
+    },
+    "Afrodite": {
+     "sex": 0,
+     "sab": 0,
+     "un": 1,
+     "enviado": 3180,
+     "publico": 1957
+    },
+    "VK7": {
+     "sex": 4,
+     "sab": 7,
+     "un": 7,
+     "enviado": 2683,
+     "publico": 1538
+    },
+    "VK2": {
+     "sex": 0,
+     "sab": 0,
+     "un": 2,
+     "enviado": 2718,
+     "publico": 1558
+    },
+    "Balcony": {
+     "sex": 0,
+     "sab": 0,
+     "un": 6,
+     "enviado": 2388,
+     "publico": 1369
+    }
+   },
+   "pousadas": {
+    "Recanto": {
+     "ocup": 0.3125,
+     "mercado_pl": {
+      "agora": 22.2,
+      "ly_final": 53.1
+     }
+    },
+    "Villa": {
+     "ocup": 0.3667,
+     "mercado_pl": {
+      "agora": 21.7,
+      "ly_final": 64.2
+     }
+    }
+   },
+   "mercado": {
+    "com_preco": 66,
+    "lista": {
+     "25": 632,
+     "40": 751,
+     "50": 809,
+     "75": 1197
+    },
+    "hidro": {
+     "25": 843,
+     "40": 1051,
+     "50": 1199,
+     "65": 1516,
+     "75": 1694
+    },
+    "pares_lista50": 632,
+    "pares_hidro50": 882,
+    "nossos_booking": {
+     "Recanto": 1487,
+     "Villa": 1369,
+     "recanto_obs": "busca por coordenadas (id 7562933), 10/11 ~02:15 UTC",
+     "villa_obs": "da busca por nome nos lotes dos concorrentes"
+    }
+   }
+  },
+  {
+   "sexta": "2026-12-04",
+   "sub": "fds",
+   "D": 24,
+   "quartos": {
+    "Q7": {
+     "sex": 2,
+     "sab": 2,
+     "un": 7,
+     "enviado": 2522,
+     "publico": 1553
+    },
+    "Double": {
+     "sex": 2,
+     "sab": 3,
+     "un": 6,
+     "enviado": 2560,
+     "publico": 1576
+    },
+    "Q2": {
+     "sex": 0,
+     "sab": 0,
+     "un": 2,
+     "enviado": 2528,
+     "publico": 1556
+    },
+    "Afrodite": {
+     "sex": 0,
+     "sab": 0,
+     "un": 1,
+     "enviado": 2690,
+     "publico": 1656
+    },
+    "VK7": {
+     "sex": 1,
+     "sab": 5,
+     "un": 7,
+     "enviado": 2694,
+     "publico": 1685
+    },
+    "VK2": {
+     "sex": 1,
+     "sab": 1,
+     "un": 2,
+     "enviado": 2635,
+     "publico": 1648
+    },
+    "Balcony": {
+     "sex": 1,
+     "sab": 1,
+     "un": 6,
+     "enviado": 2280,
+     "publico": 1426
+    }
+   },
+   "pousadas": {
+    "Recanto": {
+     "ocup": 0.2812,
+     "mercado_pl": {
+      "agora": 14.8,
+      "ly_final": 54
+     }
+    },
+    "Villa": {
+     "ocup": 0.3333,
+     "mercado_pl": {
+      "agora": 13.2,
+      "ly_final": 64.9
+     }
+    }
+   },
+   "mercado": {
+    "com_preco": 67,
+    "lista": {
+     "25": 649,
+     "40": 765,
+     "50": 842,
+     "75": 1160
+    },
+    "hidro": {
+     "25": 925,
+     "40": 1075,
+     "50": 1175,
+     "65": 1425,
+     "75": 1672
+    },
+    "pares_lista50": 622,
+    "pares_hidro50": 868,
+    "nossos_booking": {
+     "Recanto": null,
+     "Villa": 1426,
+     "recanto_obs": "não buscado (limite de uso)",
+     "villa_obs": "da busca por nome nos lotes dos concorrentes"
+    }
+   }
+  },
+  {
+   "sexta": "2026-12-11",
+   "sub": "fds",
+   "D": 31,
+   "quartos": {
+    "Q7": {
+     "sex": 0,
+     "sab": 0,
+     "un": 7,
+     "enviado": 2428,
+     "publico": 1495
+    },
+    "Double": {
+     "sex": 2,
+     "sab": 2,
+     "un": 6,
+     "enviado": 2442,
+     "publico": 1504
+    },
+    "Q2": {
+     "sex": 0,
+     "sab": 0,
+     "un": 2,
+     "enviado": 2433,
+     "publico": 1498
+    },
+    "Afrodite": {
+     "sex": 1,
+     "sab": 1,
+     "un": 1,
+     "enviado": 2840,
+     "publico": 1749
+    },
+    "VK7": {
+     "sex": 1,
+     "sab": 6,
+     "un": 7,
+     "enviado": 2560,
+     "publico": 1537
+    },
+    "VK2": {
+     "sex": 0,
+     "sab": 2,
+     "un": 2,
+     "enviado": 2413,
+     "publico": 1448
+    },
+    "Balcony": {
+     "sex": 0,
+     "sab": 0,
+     "un": 6,
+     "enviado": 2248,
+     "publico": 1349
+    }
+   },
+   "pousadas": {
+    "Recanto": {
+     "ocup": 0.1875,
+     "mercado_pl": {
+      "agora": 11.6,
+      "ly_final": 49.5
+     }
+    },
+    "Villa": {
+     "ocup": 0.3,
+     "mercado_pl": {
+      "agora": 12.8,
+      "ly_final": 57.3
+     }
+    }
+   },
+   "mercado": {
+    "com_preco": 66,
+    "lista": {
+     "25": 625,
+     "40": 792,
+     "50": 843,
+     "75": 1199
+    },
+    "hidro": {
+     "25": 903,
+     "40": 1161,
+     "50": 1191,
+     "65": 1475,
+     "75": 1645
+    },
+    "pares_lista50": 622,
+    "pares_hidro50": 963,
+    "nossos_booking": {
+     "Recanto": 1495,
+     "Villa": 1349,
+     "recanto_obs": "busca por coordenadas (id 7562933), 10/11 ~02:15 UTC",
+     "villa_obs": "da busca por nome nos lotes dos concorrentes"
+    }
+   }
+  },
+  {
+   "sexta": "2026-12-18",
+   "sub": "fds",
+   "D": 38,
+   "quartos": {
+    "Q7": {
+     "sex": 0,
+     "sab": 0,
+     "un": 7,
+     "enviado": 2334,
+     "publico": 1437
+    },
+    "Double": {
+     "sex": 2,
+     "sab": 2,
+     "un": 6,
+     "enviado": 2338,
+     "publico": 1440
+    },
+    "Q2": {
+     "sex": 0,
+     "sab": 0,
+     "un": 2,
+     "enviado": 2337,
+     "publico": 1439
+    },
+    "Afrodite": {
+     "sex": 0,
+     "sab": 0,
+     "un": 1,
+     "enviado": 2540,
+     "publico": 1564
+    },
+    "VK7": {
+     "sex": 0,
+     "sab": 1,
+     "un": 7,
+     "enviado": 2257,
+     "publico": 1261
+    },
+    "VK2": {
+     "sex": 0,
+     "sab": 0,
+     "un": 2,
+     "enviado": 2222,
+     "publico": 1242
+    },
+    "Balcony": {
+     "sex": 0,
+     "sab": 0,
+     "un": 6,
+     "enviado": 1994,
+     "publico": 1114
+    }
+   },
+   "pousadas": {
+    "Recanto": {
+     "ocup": 0.125,
+     "mercado_pl": {
+      "agora": 12.3,
+      "ly_final": 54
+     }
+    },
+    "Villa": {
+     "ocup": 0.0333,
+     "mercado_pl": {
+      "agora": 14,
+      "ly_final": 69.7
+     }
+    }
+   },
+   "mercado": {
+    "com_preco": 70,
+    "lista": {
+     "25": 656,
+     "40": 780,
+     "50": 828,
+     "75": 1180
+    },
+    "hidro": {
+     "25": 979,
+     "40": 1123,
+     "50": 1177,
+     "65": 1469,
+     "75": 1692
+    },
+    "pares_lista50": 600,
+    "pares_hidro50": 963,
+    "nossos_booking": {
+     "Recanto": null,
+     "Villa": 1114,
+     "recanto_obs": "não buscado (limite de uso)",
+     "villa_obs": "da busca por nome nos lotes dos concorrentes"
+    }
+   }
+  },
+  {
+   "sexta": "2026-12-25",
+   "sub": "natal",
+   "D": 45,
+   "quartos": {
+    "Q7": {
+     "sex": 0,
+     "sab": 0,
+     "un": 7,
+     "enviado": 4974,
+     "publico": 3062
+    },
+    "Double": {
+     "sex": 1,
+     "sab": 1,
+     "un": 6,
+     "enviado": 4988,
+     "publico": 3071
+    },
+    "Q2": {
+     "sex": 0,
+     "sab": 0,
+     "un": 2,
+     "enviado": 4977,
+     "publico": 3064
+    },
+    "Afrodite": {
+     "sex": 0,
+     "sab": 0,
+     "un": 1,
+     "enviado": 5920,
+     "publico": 3644
+    },
+    "VK7": {
+     "sex": 1,
+     "sab": 0,
+     "un": 7,
+     "enviado": 4988,
+     "publico": 1785
+    },
+    "VK2": {
+     "sex": 0,
+     "sab": 0,
+     "un": 2,
+     "enviado": 4991,
+     "publico": 1786
+    },
+    "Balcony": {
+     "sex": 0,
+     "sab": 0,
+     "un": 6,
+     "enviado": 4483,
+     "publico": 1604
+    }
+   },
+   "pousadas": {
+    "Recanto": {
+     "ocup": 0.0625,
+     "mercado_pl": {
+      "agora": 25.9,
+      "ly_final": 51.5
+     }
+    },
+    "Villa": {
+     "ocup": 0.0333,
+     "mercado_pl": {
+      "agora": 25.7,
+      "ly_final": 63.2
+     }
+    }
+   },
+   "mercado": {
+    "com_preco": 48,
+    "lista": {
+     "25": 875,
+     "40": 959,
+     "50": 1119,
+     "75": 1547
+    },
+    "hidro": {
+     "25": 1240,
+     "40": 1348,
+     "50": 1443,
+     "65": 1897,
+     "75": 2315
+    },
+    "pares_lista50": 900,
+    "pares_hidro50": 1329,
+    "nossos_booking": {
+     "Recanto": null,
+     "Villa": 1604,
+     "recanto_obs": "não buscado (limite de uso)",
+     "villa_obs": "da busca por nome nos lotes dos concorrentes"
+    }
+   }
+  },
+  {
+   "sexta": "2027-01-01",
+   "sub": "reveillon",
+   "D": 52,
+   "quartos": {
+    "Q7": {
+     "sex": 3,
+     "sab": 1,
+     "un": 7,
+     "enviado": 4974,
+     "publico": 3062
+    },
+    "Double": {
+     "sex": 2,
+     "sab": 2,
+     "un": 6,
+     "enviado": 4988,
+     "publico": 3071
+    },
+    "Q2": {
+     "sex": 0,
+     "sab": 0,
+     "un": 2,
+     "enviado": 4977,
+     "publico": 3064
+    },
+    "Afrodite": {
+     "sex": 0,
+     "sab": 0,
+     "un": 1,
+     "enviado": 6560,
+     "publico": 4038
+    },
+    "VK7": {
+     "sex": 2,
+     "sab": 1,
+     "un": 7,
+     "enviado": 4988,
+     "publico": 2059
+    },
+    "VK2": {
+     "sex": 0,
+     "sab": 0,
+     "un": 2,
+     "enviado": 4991,
+     "publico": 2060
+    },
+    "Balcony": {
+     "sex": 1,
+     "sab": 0,
+     "un": 6,
+     "enviado": 4483,
+     "publico": 1850
+    }
+   },
+   "pousadas": {
+    "Recanto": {
+     "ocup": 0.25,
+     "mercado_pl": {
+      "agora": 24.7,
+      "ly_final": 56.4
+     }
+    },
+    "Villa": {
+     "ocup": 0.1333,
+     "mercado_pl": {
+      "agora": 22,
+      "ly_final": 62.1
+     }
+    }
+   }
+  },
+  {
+   "sexta": "2027-01-08",
+   "sub": "fds",
+   "D": 59,
+   "quartos": {
+    "Q7": {
+     "sex": 0,
+     "sab": 0,
+     "un": 7,
+     "enviado": 2545,
+     "publico": 1567
+    },
+    "Double": {
+     "sex": 0,
+     "sab": 0,
+     "un": 6,
+     "enviado": 2546,
+     "publico": 1568
+    },
+    "Q2": {
+     "sex": 0,
+     "sab": 0,
+     "un": 2,
+     "enviado": 2560,
+     "publico": 1576
+    },
+    "Afrodite": {
+     "sex": 0,
+     "sab": 0,
+     "un": 1,
+     "enviado": 2840,
+     "publico": 1749
+    },
+    "VK7": {
+     "sex": 0,
+     "sab": 0,
+     "un": 7,
+     "enviado": 2220,
+     "publico": 1447
+    },
+    "VK2": {
+     "sex": 0,
+     "sab": 0,
+     "un": 2,
+     "enviado": 1905,
+     "publico": 1242
+    },
+    "Balcony": {
+     "sex": 0,
+     "sab": 0,
+     "un": 6,
+     "enviado": 1804,
+     "publico": 1176
+    }
+   },
+   "pousadas": {
+    "Recanto": {
+     "ocup": 0.0,
+     "mercado_pl": {
+      "agora": 7.4,
+      "ly_final": 41.1
+     }
+    },
+    "Villa": {
+     "ocup": 0.0,
+     "mercado_pl": {
+      "agora": 6.5,
+      "ly_final": 56.1
+     }
+    }
+   },
+   "mercado": {
+    "com_preco": 67,
+    "lista": {
+     "25": 606,
+     "40": 711,
+     "50": 800,
+     "75": 1182
+    },
+    "hidro": {
+     "25": 834,
+     "40": 983,
+     "50": 1179,
+     "65": 1487,
+     "75": 1644
+    },
+    "pares_lista50": 635,
+    "pares_hidro50": 1063,
+    "nossos_booking": {
+     "Recanto": 1567,
+     "Villa": 1176,
+     "recanto_obs": "busca por coordenadas (id 7562933), 10/11 ~02:15 UTC",
+     "villa_obs": "da busca por nome nos lotes dos concorrentes"
+    }
+   }
+  },
+  {
+   "sexta": "2027-01-15",
+   "sub": "fds",
+   "D": 66,
+   "quartos": {
+    "Q7": {
+     "sex": 1,
+     "sab": 1,
+     "un": 7,
+     "enviado": 2405,
+     "publico": 1481
+    },
+    "Double": {
+     "sex": 0,
+     "sab": 0,
+     "un": 6,
+     "enviado": 2412,
+     "publico": 1485
+    },
+    "Q2": {
+     "sex": 0,
+     "sab": 0,
+     "un": 2,
+     "enviado": 2417,
+     "publico": 1488
+    },
+    "Afrodite": {
+     "sex": 0,
+     "sab": 0,
+     "un": 1,
+     "enviado": 2840,
+     "publico": 1749
+    },
+    "VK7": {
+     "sex": 1,
+     "sab": 1,
+     "un": 7,
+     "enviado": 2273,
+     "publico": 1403
+    },
+    "VK2": {
+     "sex": 0,
+     "sab": 0,
+     "un": 2,
+     "enviado": 1951,
+     "publico": 1204
+    },
+    "Balcony": {
+     "sex": 0,
+     "sab": 0,
+     "un": 6,
+     "enviado": 1905,
+     "publico": 1176
+    }
+   },
+   "pousadas": {
+    "Recanto": {
+     "ocup": 0.0625,
+     "mercado_pl": {
+      "agora": 3.6,
+      "ly_final": 42.8
+     }
+    },
+    "Villa": {
+     "ocup": 0.0667,
+     "mercado_pl": {
+      "agora": 3.1,
+      "ly_final": 53.3
+     }
+    }
+   },
+   "mercado": {
+    "com_preco": 65,
+    "lista": {
+     "25": 605,
+     "40": 713,
+     "50": 794,
+     "75": 1174
+    },
+    "hidro": {
+     "25": 842,
+     "40": 986,
+     "50": 1156,
+     "65": 1398,
+     "75": 1639
+    },
+    "pares_lista50": 620,
+    "pares_hidro50": 898,
+    "nossos_booking": {
+     "Recanto": null,
+     "Villa": 1176,
+     "recanto_obs": "não buscado (limite de uso)",
+     "villa_obs": "da busca por nome nos lotes dos concorrentes"
+    }
+   }
+  },
+  {
+   "sexta": "2027-01-22",
+   "sub": "fds",
+   "D": 73,
+   "quartos": {
+    "Q7": {
+     "sex": 1,
+     "sab": 1,
+     "un": 7,
+     "enviado": 1912,
+     "publico": 1177
+    },
+    "Double": {
+     "sex": 0,
+     "sab": 0,
+     "un": 6,
+     "enviado": 2332,
+     "publico": 1436
+    },
+    "Q2": {
+     "sex": 0,
+     "sab": 0,
+     "un": 2,
+     "enviado": 2131,
+     "publico": 1312
+    },
+    "Afrodite": {
+     "sex": 0,
+     "sab": 0,
+     "un": 1,
+     "enviado": 3151,
+     "publico": 1940
+    },
+    "VK7": {
+     "sex": 0,
+     "sab": 0,
+     "un": 7,
+     "enviado": 2342,
+     "publico": 1446
+    },
+    "VK2": {
+     "sex": 0,
+     "sab": 0,
+     "un": 2,
+     "enviado": 2057,
+     "publico": 1270
+    },
+    "Balcony": {
+     "sex": 0,
+     "sab": 0,
+     "un": 6,
+     "enviado": 1905,
+     "publico": 1176
+    }
+   },
+   "pousadas": {
+    "Recanto": {
+     "ocup": 0.0625,
+     "mercado_pl": {
+      "agora": 4.4,
+      "ly_final": 35.6
+     }
+    },
+    "Villa": {
+     "ocup": 0.0,
+     "mercado_pl": {
+      "agora": 4.3,
+      "ly_final": 43.2
+     }
+    }
+   },
+   "mercado": {
+    "com_preco": 64,
+    "lista": {
+     "25": 627,
+     "40": 712,
+     "50": 787,
+     "75": 1112
+    },
+    "hidro": {
+     "25": 866,
+     "40": 993,
+     "50": 1162,
+     "65": 1368,
+     "75": 1633
+    },
+    "pares_lista50": 635,
+    "pares_hidro50": 1028,
+    "nossos_booking": {
+     "Recanto": null,
+     "Villa": 1176,
+     "recanto_obs": "não buscado (limite de uso)",
+     "villa_obs": "da busca por nome nos lotes dos concorrentes"
+    }
+   }
+  },
+  {
+   "sexta": "2027-01-29",
+   "sub": "fds",
+   "D": 80,
+   "quartos": {
+    "Q7": {
+     "sex": 0,
+     "sab": 0,
+     "un": 7,
+     "enviado": 2498,
+     "publico": 1538
+    },
+    "Double": {
+     "sex": 0,
+     "sab": 0,
+     "un": 6,
+     "enviado": 2501,
+     "publico": 1540
+    },
+    "Q2": {
+     "sex": 0,
+     "sab": 0,
+     "un": 2,
+     "enviado": 2512,
+     "publico": 1547
+    },
+    "Afrodite": {
+     "sex": 0,
+     "sab": 0,
+     "un": 1,
+     "enviado": 2840,
+     "publico": 1749
+    },
+    "VK7": {
+     "sex": 1,
+     "sab": 2,
+     "un": 7,
+     "enviado": 2346,
+     "publico": 1448
+    },
+    "VK2": {
+     "sex": 0,
+     "sab": 0,
+     "un": 2,
+     "enviado": 1905,
+     "publico": 1176
+    },
+    "Balcony": {
+     "sex": 0,
+     "sab": 0,
+     "un": 6,
+     "enviado": 1905,
+     "publico": 1176
+    }
+   },
+   "pousadas": {
+    "Recanto": {
+     "ocup": 0.0,
+     "mercado_pl": {
+      "agora": 6.4,
+      "ly_final": 28.8
+     }
+    },
+    "Villa": {
+     "ocup": 0.1,
+     "mercado_pl": {
+      "agora": 3.8,
+      "ly_final": 37
+     }
+    }
+   },
+   "mercado": {
+    "com_preco": 66,
+    "lista": {
+     "25": 604,
+     "40": 712,
+     "50": 787,
+     "75": 1169
+    },
+    "hidro": {
+     "25": 809,
+     "40": 993,
+     "50": 1167,
+     "65": 1465,
+     "75": 1639
+    },
+    "pares_lista50": 605,
+    "pares_hidro50": 1002,
+    "nossos_booking": {
+     "Recanto": null,
+     "Villa": 1176,
+     "recanto_obs": "não buscado (limite de uso)",
+     "villa_obs": "da busca por nome nos lotes dos concorrentes"
+    }
+   }
+  },
+  {
+   "sexta": "2027-02-05",
+   "sub": "feriado",
+   "D": 87,
+   "quartos": {
+    "Q7": {
+     "sex": 0,
+     "sab": 0,
+     "un": 7,
+     "enviado": 2381,
+     "publico": 1506
+    },
+    "Double": {
+     "sex": 0,
+     "sab": 1,
+     "un": 6,
+     "enviado": 2670,
+     "publico": 1689
+    },
+    "Q2": {
+     "sex": 0,
+     "sab": 0,
+     "un": 2,
+     "enviado": 2433,
+     "publico": 1539
+    },
+    "Afrodite": {
+     "sex": 0,
+     "sab": 0,
+     "un": 1,
+     "enviado": 3608,
+     "publico": 2282
+    },
+    "VK7": {
+     "sex": 0,
+     "sab": 0,
+     "un": 7,
+     "enviado": 2991,
+     "publico": 1973
+    },
+    "VK2": {
+     "sex": 1,
+     "sab": 1,
+     "un": 2,
+     "enviado": 2567,
+     "publico": 1693
+    },
+    "Balcony": {
+     "sex": 1,
+     "sab": 1,
+     "un": 6,
+     "enviado": 1905,
+     "publico": 1257
+    }
+   },
+   "pousadas": {
+    "Recanto": {
+     "ocup": 0.0312,
+     "mercado_pl": {
+      "agora": 9.3,
+      "ly_final": 25.7
+     }
+    },
+    "Villa": {
+     "ocup": 0.1333,
+     "mercado_pl": {
+      "agora": 4.8,
+      "ly_final": 33.9
+     }
+    }
+   },
+   "mercado": {
+    "com_preco": 59,
+    "lista": {
+     "25": 853,
+     "40": 1003,
+     "50": 1044,
+     "75": 1358
+    },
+    "hidro": {
+     "25": 1187,
+     "40": 1433,
+     "50": 1488,
+     "65": 1748,
+     "75": 1944
+    },
+    "pares_lista50": 845,
+    "pares_hidro50": 1318,
+    "nossos_booking": {
+     "Recanto": null,
+     "Villa": 1252,
+     "recanto_obs": "não buscado (limite de uso)",
+     "villa_obs": "da busca por nome nos lotes dos concorrentes"
+    }
+   }
+  },
+  {
+   "sexta": "2027-02-12",
+   "sub": "fds",
+   "D": 94,
+   "quartos": {
+    "Q7": {
+     "sex": 0,
+     "sab": 0,
+     "un": 7,
+     "enviado": 2018,
+     "publico": 1242
+    },
+    "Double": {
+     "sex": 0,
+     "sab": 1,
+     "un": 6,
+     "enviado": 2220,
+     "publico": 1367
+    },
+    "Q2": {
+     "sex": 0,
+     "sab": 0,
+     "un": 2,
+     "enviado": 2162,
+     "publico": 1331
+    },
+    "Afrodite": {
+     "sex": 0,
+     "sab": 0,
+     "un": 1,
+     "enviado": 3000,
+     "publico": 1847
+    },
+    "VK7": {
+     "sex": 0,
+     "sab": 0,
+     "un": 7,
+     "enviado": 2220,
+     "publico": 1370
+    },
+    "VK2": {
+     "sex": 0,
+     "sab": 0,
+     "un": 2,
+     "enviado": 1905,
+     "publico": 1176
+    },
+    "Balcony": {
+     "sex": 0,
+     "sab": 0,
+     "un": 6,
+     "enviado": 1905,
+     "publico": 1176
+    }
+   },
+   "pousadas": {
+    "Recanto": {
+     "ocup": 0.0312,
+     "mercado_pl": {
+      "agora": 4.5,
+      "ly_final": 82
+     }
+    },
+    "Villa": {
+     "ocup": 0.0,
+     "mercado_pl": {
+      "agora": 5.6,
+      "ly_final": 91
+     }
+    }
+   },
+   "mercado": {
+    "com_preco": 62,
+    "lista": {
+     "25": 509,
+     "40": 617,
+     "50": 726,
+     "75": 1128
+    },
+    "hidro": {
+     "25": 726,
+     "40": 944,
+     "50": 1096,
+     "65": 1369,
+     "75": 1492
+    },
+    "pares_lista50": 604,
+    "pares_hidro50": 842,
+    "nossos_booking": {
+     "Recanto": null,
+     "Villa": 1176,
+     "recanto_obs": "não buscado (limite de uso)",
+     "villa_obs": "da busca por nome nos lotes dos concorrentes"
+    }
+   }
+  },
+  {
+   "sexta": "2027-02-19",
+   "sub": "fds",
+   "D": 101,
+   "quartos": {
+    "Q7": {
+     "sex": 0,
+     "sab": 0,
+     "un": 7,
+     "enviado": 2018,
+     "publico": 1242
+    },
+    "Double": {
+     "sex": 0,
+     "sab": 0,
+     "un": 6,
+     "enviado": 2220,
+     "publico": 1367
+    },
+    "Q2": {
+     "sex": 0,
+     "sab": 0,
+     "un": 2,
+     "enviado": 2162,
+     "publico": 1331
+    },
+    "Afrodite": {
+     "sex": 0,
+     "sab": 0,
+     "un": 1,
+     "enviado": 3000,
+     "publico": 1847
+    },
+    "VK7": {
+     "sex": 0,
+     "sab": 0,
+     "un": 7,
+     "enviado": 2220,
+     "publico": 1370
+    },
+    "VK2": {
+     "sex": 0,
+     "sab": 0,
+     "un": 2,
+     "enviado": 1905,
+     "publico": 1176
+    },
+    "Balcony": {
+     "sex": 0,
+     "sab": 0,
+     "un": 6,
+     "enviado": 1905,
+     "publico": 1176
+    }
+   },
+   "pousadas": {
+    "Recanto": {
+     "ocup": 0.0,
+     "mercado_pl": {
+      "agora": 3,
+      "ly_final": 30.6
+     }
+    },
+    "Villa": {
+     "ocup": 0.0,
+     "mercado_pl": {
+      "agora": 2.5,
+      "ly_final": 34.7
+     }
+    }
+   },
+   "mercado": {
+    "com_preco": 62,
+    "lista": {
+     "25": 515,
+     "40": 617,
+     "50": 726,
+     "75": 1094
+    },
+    "hidro": {
+     "25": 733,
+     "40": 977,
+     "50": 1077,
+     "65": 1366,
+     "75": 1492
+    },
+    "pares_lista50": 604,
+    "pares_hidro50": 1002,
+    "nossos_booking": {
+     "Recanto": null,
+     "Villa": 1176,
+     "recanto_obs": "não buscado (limite de uso)",
+     "villa_obs": "da busca por nome nos lotes dos concorrentes"
+    }
+   }
+  },
+  {
+   "sexta": "2027-02-26",
+   "sub": "fds",
+   "D": 108,
+   "quartos": {
+    "Q7": {
+     "sex": 0,
+     "sab": 0,
+     "un": 7,
+     "enviado": 2018,
+     "publico": 1242
+    },
+    "Double": {
+     "sex": 0,
+     "sab": 0,
+     "un": 6,
+     "enviado": 2220,
+     "publico": 1367
+    },
+    "Q2": {
+     "sex": 0,
+     "sab": 0,
+     "un": 2,
+     "enviado": 2079,
+     "publico": 1280
+    },
+    "Afrodite": {
+     "sex": 0,
+     "sab": 0,
+     "un": 1,
+     "enviado": 3000,
+     "publico": 1847
+    },
+    "VK7": {
+     "sex": 0,
+     "sab": 0,
+     "un": 7,
+     "enviado": 2220,
+     "publico": 1370
+    },
+    "VK2": {
+     "sex": 0,
+     "sab": 0,
+     "un": 2,
+     "enviado": 1905,
+     "publico": 1176
+    },
+    "Balcony": {
+     "sex": 0,
+     "sab": 0,
+     "un": 6,
+     "enviado": 1905,
+     "publico": 1176
+    }
+   },
+   "pousadas": {
+    "Recanto": {
+     "ocup": 0.0,
+     "mercado_pl": {
+      "agora": 3,
+      "ly_final": 38.7
+     }
+    },
+    "Villa": {
+     "ocup": 0.0,
+     "mercado_pl": {
+      "agora": 2.5,
+      "ly_final": 47.7
+     }
+    }
+   },
+   "mercado": {
+    "com_preco": 57,
+    "lista": {
+     "25": 512,
+     "40": 584,
+     "50": 715,
+     "75": 1080
+    },
+    "hidro": {
+     "25": 740,
+     "40": 944,
+     "50": 1073,
+     "65": 1275,
+     "75": 1456
+    },
+    "pares_lista50": 579,
+    "pares_hidro50": 922,
+    "nossos_booking": {
+     "Recanto": null,
+     "Villa": 1176,
+     "recanto_obs": "não buscado (limite de uso)",
+     "villa_obs": "da busca por nome nos lotes dos concorrentes"
+    }
+   }
+  }
+ ],
+ "occ_pl": {
+  "Recanto|2026-11|semana": {
+   "agora": 12.7,
+   "stly": 15.4,
+   "ly_final": 26.0,
+   "p50": 546,
+   "p75": 723
+  },
+  "Recanto|2026-11|fds": {
+   "agora": 24.8,
+   "stly": 26.4,
+   "ly_final": 51.6,
+   "p50": 740,
+   "p75": 952
+  },
+  "Recanto|2026-11|feriado": {
+   "agora": 39.8,
+   "stly": 40.2,
+   "ly_final": 82.9,
+   "p50": 764,
+   "p75": 1004
+  },
+  "Recanto|2026-12|semana": {
+   "agora": 8.6,
+   "stly": 10.9,
+   "ly_final": 29.6,
+   "p50": 647,
+   "p75": 814
+  },
+  "Recanto|2026-12|fds": {
+   "agora": 11.3,
+   "stly": 16.4,
+   "ly_final": 45.0,
+   "p50": 779,
+   "p75": 1014
+  },
+  "Recanto|2026-12|festas": {
+   "agora": 30.5,
+   "stly": 24.7,
+   "ly_final": 65.9,
+   "p50": 1101,
+   "p75": 1377
+  },
+  "Recanto|2027-01|semana": {
+   "agora": 6.0,
+   "stly": 5.3,
+   "ly_final": 29.5,
+   "p50": 666,
+   "p75": 877
+  },
+  "Recanto|2027-01|fds": {
+   "agora": 5.6,
+   "stly": 2.8,
+   "ly_final": 33.5,
+   "p50": 757,
+   "p75": 994
+  },
+  "Recanto|2027-01|festas": {
+   "agora": 34.4,
+   "stly": 19.8,
+   "ly_final": 63.1,
+   "p50": 1092,
+   "p75": 1380
+  },
+  "Recanto|2027-02|semana": {
+   "agora": 4.3,
+   "stly": 4.6,
+   "ly_final": 27.2,
+   "p50": 619,
+   "p75": 813
+  },
+  "Recanto|2027-02|fds": {
+   "agora": 3.6,
+   "stly": 3.0,
+   "ly_final": 40.8,
+   "p50": 716,
+   "p75": 905
+  },
+  "Recanto|2027-02|feriado": {
+   "agora": 8.7,
+   "stly": 3.0,
+   "ly_final": 18.4,
+   "p50": 840,
+   "p75": 1100
+  },
+  "Villa|2026-11|semana": {
+   "agora": 13.2,
+   "stly": 17.6,
+   "ly_final": 31.5,
+   "p50": 493,
+   "p75": 637
+  },
+  "Villa|2026-11|fds": {
+   "agora": 21.7,
+   "stly": 33.6,
+   "ly_final": 62.2,
+   "p50": 650,
+   "p75": 905
+  },
+  "Villa|2026-11|feriado": {
+   "agora": 41.8,
+   "stly": 44.5,
+   "ly_final": 84.3,
+   "p50": 717,
+   "p75": 991
+  },
+  "Villa|2026-12|semana": {
+   "agora": 9.7,
+   "stly": 13.0,
+   "ly_final": 35.7,
+   "p50": 571,
+   "p75": 773
+  },
+  "Villa|2026-12|fds": {
+   "agora": 12.0,
+   "stly": 18.3,
+   "ly_final": 55.9,
+   "p50": 686,
+   "p75": 971
+  },
+  "Villa|2026-12|festas": {
+   "agora": 28.0,
+   "stly": 29.6,
+   "ly_final": 73.2,
+   "p50": 1055,
+   "p75": 1423
+  },
+  "Villa|2027-01|semana": {
+   "agora": 4.7,
+   "stly": 5.5,
+   "ly_final": 38.6,
+   "p50": 564,
+   "p75": 838
+  },
+  "Villa|2027-01|fds": {
+   "agora": 4.3,
+   "stly": 3.8,
+   "ly_final": 44.5,
+   "p50": 652,
+   "p75": 929
+  },
+  "Villa|2027-01|festas": {
+   "agora": 29.9,
+   "stly": 21.6,
+   "ly_final": 72.8,
+   "p50": 1050,
+   "p75": 1371
+  },
+  "Villa|2027-02|semana": {
+   "agora": 3.6,
+   "stly": 4.3,
+   "ly_final": 31.4,
+   "p50": 567,
+   "p75": 787
+  },
+  "Villa|2027-02|fds": {
+   "agora": 3.4,
+   "stly": 3.1,
+   "ly_final": 47.7,
+   "p50": 628,
+   "p75": 891
+  },
+  "Villa|2027-02|feriado": {
+   "agora": 5.7,
+   "stly": 2.7,
+   "ly_final": 24.3,
+   "p50": 835,
+   "p75": 1182
+  }
+ },
+ "mercado_mensal_pl": {
+  "Recanto": {
+   "2026-11": {
+    "occ_agora": 23,
+    "occ_ly_final": 35,
+    "adr_ly": 702
+   },
+   "2026-12": {
+    "occ_agora": 16,
+    "occ_ly_final": 42,
+    "adr_ly": 809
+   },
+   "2027-01": {
+    "occ_agora": 8,
+    "occ_ly_final": 35,
+    "adr_ly": 704
+   },
+   "2027-02": {
+    "occ_agora": 5,
+    "occ_ly_final": 29,
+    "adr_ly": 709
+   }
+  },
+  "Villa": {
+   "2026-11": {
+    "occ_agora": 23,
+    "occ_ly_final": 42,
+    "adr_ly": 598
+   },
+   "2026-12": {
+    "occ_agora": 15,
+    "occ_ly_final": 49,
+    "adr_ly": 769
+   },
+   "2027-01": {
+    "occ_agora": 6,
+    "occ_ly_final": 45,
+    "adr_ly": 636
+   },
+   "2027-02": {
+    "occ_agora": 4,
+    "occ_ly_final": 34,
+    "adr_ly": 630
+   }
+  }
+ }
+}

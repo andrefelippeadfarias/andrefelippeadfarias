@@ -4649,6 +4649,28 @@ Valores antigos para desfazer: `pricelabs/personalizacoes-balcony-antes-2026-11-
 
 **Regra G:** Balcony 10/11 R$ 698 (ordem de redução até terça) e 11/11 R$ 826, abaixo de 90% da King Spa 2 livre (R$ 857). Sem mudança.
 
+## 09/11/2026, 22:40 a 10/11/2026, 00:20 BRT — Análise completa de novembro a fevereiro (pedido do dono)
+
+**Pedido do dono (09/11, noite):** refazer a análise de preços contra os hotéis do mesmo parâmetro, fins de semana e dias de semana, de novembro a fevereiro, com a solução para lotar e a expectativa de valor e lotação. **Nada foi gravado no PriceLabs nem no Beds24.**
+
+**O que foi medido:** preços dos 7 quartos (`get_listing_prices`), inventário e reservas do Beds24 (chegadas desde 01/09), mercado do PriceLabs por data e 32 estadias de novembro a fevereiro no conector oficial da Booking para os 77 concorrentes com hidro (`pricelabs/pesquisa-booking/faixas-2026-11/novfev_respostas_1..8.json`). A Villa foi medida na Booking nas 32 estadias; o Recanto, em 7 (busca por coordenadas).
+
+**Achados:**
+- Fins de semana de 01/09 a 09/11: Recanto 65%, Villa 68%; só o de 16/10 lotou. Moinhos 53% e Balcony 36% nos fins de semana; Balcony 12% nos dias de semana.
+- Hóspede pagou (mediana, por noite) R$ 677 no Recanto e R$ 652 na Villa no fim de semana; as diárias livres dos fins de semana de novembro pedem o equivalente a R$ 1.144 e R$ 1.177.
+- Este fim de semana (13 a 15/11, D3): Recanto 44%, Villa 40%; Booking mostra o Recanto a R$ 1.235 e a Villa a R$ 1.428 por noite; concorrentes: mais barato R$ 758, com hidro R$ 1.180 (medianas); hotéis de nota abaixo de 9: R$ 609 e R$ 842; 61 de 77 com vaga.
+- Desde 01/11 (antes das subidas de 02 a 04/11, quando a Booking mostrava R$ 720 e R$ 655 para o mesmo fim de semana), Moinhos, Panorâmicas, Afrodite e Balcony não ganharam diária nos cinco fins de semana comuns; só as King Spa ganharam.
+- 67% (Recanto) e 65% (Villa) das diárias de fim de semana saem nos últimos 7 dias.
+- **Villa na Booking abaixo da tabela:** R$ 392 a R$ 448 nos dias de semana de novembro (0,43 a 0,50 do enviado), R$ 1.584 no Natal 23-25/12 (0,35; menor enviado R$ 4.483) e R$ 1.850 no Réveillon (0,41). O `price1` do Beds24 é igual ao do PriceLabs: a diferença nasce na Booking. Pendência `villa-oferta-ultima-hora` atualizada e subida para urgência 1.
+
+**Proposta (aguarda o dono):** fim de semana abrindo no mercado por suíte (Balcony pelo quarto mais barato dos hotéis de nota abaixo de 9; Moinhos no patamar de 40% do quarto mais barato; Panorâmicas e King Spa 5% acima da mediana com hidro dos hotéis de nota abaixo de 9; Afrodite 15% acima da Panorâmica I), escada de +7% por unidade só depois de metade vendida, −10% a 7 dias com menos de 60% vendido; dia de semana no piso do dono até D8 e, na última semana, mediana do mercado com hidro; festas do Recanto na mediana com hidro. Tabelas por mês em `pricelabs/analise-nov-fev-2026-11-10.md` e na página https://claude.ai/artifact/4fe5rrZh7CqWP4v74wXuTG.
+
+**Expectativa (receita do mês contra a meta mínima do dono):** no ritmo de set-nov, R$ 1,37 milhão de R$ 2,04 milhões nos quatro meses; no alvo do plano (fins de semana a 80-85%, dias de semana a 55-60%), R$ 1,74 milhão; com lotação ideal (95-97% e 65-70%), R$ 1,96 milhão. Janeiro fica em 66% a 70% da meta no alvo e em 75% a 80% com lotação ideal. O alvo depende de mudanças ainda não testadas; o ritmo de set-nov é o que os dados já mostraram.
+
+**Sete decisões levadas ao dono** (pendência `analise-nov-fev-7-decisoes`): preços de abertura já em 13-14/11; piso de fim de semana por suíte; escada só depois de metade vendida; Balcony com preço próprio; última semana dos dias de semana na mediana do mercado; festas do Recanto na mediana com hidro; Afrodite 15% acima da Panorâmica I.
+
+**Limites desta rodada:** a varredura parou no limite de uso da conta (4 de 11 agentes); o bloco 8 foi montado a partir dos registros e as buscas do Recanto foram feitas à mão. A conferência do quarto com hidro hotel a hotel e a revisão independente dos números ficaram para depois (pendência `analise-nov-fev-revisao-independente`).
+
 > **Regras em vigor:** desde 06/10/2026 elas ficam em `.claude/skills/gestao-receita-pousadas/references/regras.md`. Este arquivo guarda só o histórico das mudanças.
 
 ## O que só pode ser feito na tela (passo a passo para você)

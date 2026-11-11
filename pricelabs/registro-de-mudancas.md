@@ -4766,6 +4766,26 @@ Recálculo: King Spa 2 (3 de 3 em 24 h; próxima vaga 19:55 BRT). Regras da Vill
 
 Não gravado agora: proteção da King Spa 2 esgotada em 26/11 (piso R$ 944, D16): entra no plano de amanhã cedo. Moinhos 13-14/11 com 3/7: a escada do plano começa na 4ª venda; sem passo. Correção do registro das 14:00-15:40: o log do PriceLabs mostra a exclusão da King Spa 7 de 15-17/11 às 15:38:49 e a regravação a partir de 15:39:23 (a janela sem regra foi de segundos). Sombra da flutuação: leitura do Beds24 das 17:22 guardada.
 
+## 10/11/2026, 19:54 a 21:15 BRT — Rotina leve das 19:53: fim de semana 13-15/11 quase cheio (escada do plano e Balcony pela regra dos 80%)
+
+**Beds24 desde 16:48 BRT** (sombra `rodada` de acordo): 14 novas, 3 canceladas, 2 alteradas. Moinhos 13-15/11 esgotou (7/7 em 13 e 14/11: 3 da Booking e 1 do Airbnb confirmada); Panorâmica I 13-15/11 e 15/11 (Airbnb); King Spa 7 13-15/11 (Booking; 6/7), 20-22/11 (direta, esgotou 20/11), 04-06/12 (Booking; 6/7 em 05/12) e 30/12-01/01 (direta); Balcony 25-30/11 (Booking, 5 noites). Pedidos do Airbnb sem reserva: Panorâmica I 15-17/11, Panorâmica II 15/11, King Spa 2 13-18/12. **Vigilância: 1 alerta** — 3 reservas da Booking criadas e canceladas em minutos, R$ 0 (95991471, 95994648, 95995117). **Abaixo de 70%:** 95991536 (King Spa 7 20-22/11, direta, R$ 1.700, 30%) e 95996006 (King Spa 7 30/12-01/01, direta, R$ 3.200, 32%), as duas da VillaRecep1. Double 20-21/11 segue com 7 reservas para 6 suítes. Logs: sem mudança manual.
+
+Recálculos: Panorâmica I, King Spa 7, Balcony e Moinhos (King Spa 7 e Balcony 2 de 3 em 24 h; Moinhos e Panorâmica I 1 de 3). Regras lidas às 19:54-19:55 (Recanto e Balcony; King Spa 7 e King Spa 2 da leitura das 16:56, sem mudança nos logs). Plano `pace.py` com `--noites` nas noites das reservas novas; validação 0 erro (avisos: estadia de sábado e feriado mantida pela gravação parcial; Balcony abaixo da Regra G pela regra dos 80%). Panorâmica II baixada 1 ponto de % à mão para ficar ≤ Panorâmica I depois do arredondamento (pendência da skill aberta). Gravado entre 20:37 e 21:12 BRT; conferido nas respostas. Ledger: 12 passos.
+
+| Mudança | Onde | Antes | Depois (enviado) | Como desfazer |
+|---|---|---|---|---|
+| Escada do plano (7/7; 3 degraus de +7%) | Moinhos 13 e 14/11 | R$ 1.091 | R$ 1.337 | pedir "Moinhos de 13-14/11 de volta à abertura" |
+| Escada do plano (3/6 e 4/6) | Panorâmica I 13 e 14/11 | R$ 1.436 / 1.539 | R$ 1.539 / 1.658 | idem |
+| Ordem do Recanto (Moinhos ≤ Panorâmica II ≤ Panorâmica I) | Panorâmica II 13 e 14/11 | R$ 1.352 / 1.431 | R$ 1.526 / 1.654 | idem |
+| Afrodite 15% acima da Panorâmica I | Afrodite 13 e 14/11 | R$ 1.660 / 1.780 | R$ 1.780 / 1.920 | idem |
+| Escada do plano (6/7; 3 degraus) | King Spa 7 13 e 14/11 | R$ 1.761 | R$ 1.880 | idem |
+| Escada do plano (feriado, 4/7; 1 degrau) | King Spa 7 21/11 | R$ 2.531 | R$ 2.708 | idem |
+| Escada do plano (6/7; 3 degraus) | King Spa 7 05/12 | R$ 1.672 | R$ 1.791 | idem |
+| Regra dos 80% (8/9 com banheira vendidas): Balcony no mercado do quarto sem banheira | Balcony 13 e 14/11; 05/12 | R$ 1.575 / 1.575 / 1.499 | R$ 1.054 / 1.054 / 1.003 | pedir "Balcony de volta à Regra G nessas noites" |
+| Escada de vendas + Regra G | Balcony 25 e 26/11 | R$ 914 | R$ 940 | — |
+
+Sem passo: Panorâmica I 15/11 (já acima da reta do dia de semana), King Spa 7 20/11 e 04/12 (já no preço do plano), King Spa 7 30-31/12 (festas da Villa ficam como estão). Proteção das noites esgotadas da Moinhos 13-14/11 (já com o preço do plano) e da King Spa 7 20/11 e King Spa 2 26/11 (D10 e D16): plano de amanhã cedo. Balcony 27-28/11 segue presa entre o piso da ordem de 04/11 e a Regra G (rotina completa). Estadia: Panorâmica II, Afrodite e King Spa 7 de 14/11 sem estadia mínima na regra por data (já estava assim; Beds24 com 2 e sábado fechado). Sombra da flutuação: leitura das 21:13 guardada. O envio de amanhã (~08:47) leva tudo ao canal; Sync Now antes, se o dono quiser a Balcony a R$ 1.054 já para 13-14/11.
+
 ## O que só pode ser feito na tela (passo a passo para você)
 
 1. **Safety Minimum Price → "Do Not Apply"** (Dynamic Pricing → Customizations → aba Groups → Edit no grupo Recanto dos Moinhos → All Customizations → Safety Minimum Price). Anote o valor atual antes.

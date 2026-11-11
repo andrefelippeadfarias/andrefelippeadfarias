@@ -1077,6 +1077,27 @@
       "desde": "2026-11-10",
       "urgencia": 2,
       "texto": "Villa na Booking em 15-16/11 por R$ 424,95 com só a Balcony livre (R$ 1.168 no PriceLabs; razão 0,36); em 13-15/11, R$ 1.010/noite (razão 0,62-0,69). Conferir na página da Booking qual quarto aparece a R$ 425: promoção de última hora na Balcony ou tipo de quarto da Villa fora do PriceLabs. A régua do plano converte público em enviado pela razão medida, e ela depende disso."
+    },
+    {
+      "id": "vk7-diretas-abaixo-20261110",
+      "responsavel": "dono",
+      "desde": "2026-11-10",
+      "urgencia": 1,
+      "texto": "Duas reservas diretas da King Spa 7 lançadas pela recepção (VillaRecep1) em 10/11 abaixo de 70% do esperado: 95991536 (20-22/11, Consciência Negra, R$ 1.700 de R$ 5.639 esperados, 30%; fechou a noite de 20/11, 7/7) e 95996006 (30/12-01/01, Réveillon, R$ 3.200 de R$ 9.976, 32%). Conferir com a recepção se o valor está certo (tarifa de cortesia, pacote ou erro de lançamento). A skill não altera reservas."
+    },
+    {
+      "id": "booking-cancelamentos-rapidos-20261110",
+      "responsavel": "dono",
+      "desde": "2026-11-10",
+      "urgencia": 2,
+      "texto": "Vigilância de 10/11 (19:53): 3 reservas da Booking criadas e canceladas em minutos, R$ 0 (95991471 King Spa 7 13-15/11, 95994648 King Spa 2 21-24/02, 95995117 Panorâmica II 13-15/11), entre 18:01 e 20:18 BRT. Confirmar com a recepção se foram tentativas de hóspedes (cartão recusado) ou algo fora do comum na extranet."
+    },
+    {
+      "id": "pace-ordem-recanto-arredondamento",
+      "responsavel": "skill",
+      "desde": "2026-11-10",
+      "urgencia": 3,
+      "texto": "O arredondamento em % da base (1 ponto = R$ 15,90 na Panorâmica II, R$ 14,80 na Panorâmica I) pôs a Panorâmica II R$ 3 a R$ 12 acima da Panorâmica I em 13-14/11 no plano do pace de 10/11 19:53; o validador aceitou pela tolerância. Corrigido à mão (1 ponto abaixo). Fazer o pace/validar_plano escolherem o % da Panorâmica II que respeite Moinhos ≤ Panorâmica II ≤ Panorâmica I depois do arredondamento, com teste."
     }
   ],
   "versao": "2026-11-05T15"

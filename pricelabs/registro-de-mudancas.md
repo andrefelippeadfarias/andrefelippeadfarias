@@ -4817,6 +4817,21 @@ Sem passo: Panorâmica I 15/11 (já acima da reta do dia de semana), King Spa 7 
 
 Beds24: lote de 2 itens aplicado e relido (2 de 2); o lote único em sombra trouxe os mesmos 2. Não gravado: Balcony 27-28/11 segue presa entre o piso da ordem de faixa de 04/11 e a Regra G (fica como está). Sombra da flutuação: foto 2 de 7 (a King Spa 7 ficou fora: calendário de ontem).
 
+## 11/11/2026, 10:54 a 11:10 BRT — Rotina leve das 10:53: segundo lote da Booking na King Spa 7, overbooking amanhã e Expedia a R$ 146 na Balcony
+
+**Beds24 desde 07:48 BRT** (vigilância: 0 alerta): lote da Booking às 08:47:13-15 BRT, 10 reservas com números seguidos (96020747 a 96020756): King Spa 7 11-13/11, 12/11 (2), 22/11, 23-27/11, 29/11, 30/11, 06/12 e King Spa 2 21-24/02, R$ 333-603 por noite. Mesmo padrão do lote de 10/11, que o dono confirmou como verdadeiro: tratado como venda. Também: King Spa 7 11/11 (Booking, R$ 395) e **Balcony 04-06/12 pela Expedia por R$ 292,02 as 2 noites (13% do esperado)**. **King Spa 7 em 12/11: 8 reservas para 7 suítes (overbooking).** King Spa 7 esgotou em 11, 22, 23 e 29/11.
+
+**Envio:** o envio diário de hoje não saiu até 10:55 (`last_date_pushed` em 10/11 21:48 BRT nos 7 quartos): as gravações das 07:53 e desta rodada esperam o próximo envio ou um Sync Now. Logs: só a API. **Booking (segurança, 24-25/11):** Recanto id 7562933 a R$ 731,27 (razão 0,60, ok); **Villa id 14824789 a R$ 422,94 (razão 0,38 sobre a Balcony livre, abaixo de 0,42)**: o mesmo caso de 15/11, pendência com o dono.
+
+Recálculo: King Spa 7 (3 de 3 em 24 h; próxima vaga 13:54 BRT); Balcony e King Spa 2 com o calendário das 08:07/08:02 (menos de 6 h). Regras da Villa lidas às 10:56. Plano `pace.py` só da Villa nas noites das vendas; validação 0 erro. Proteção da King Spa 7 esgotada em 22, 23 e 29/11 fica para o plano de amanhã cedo (D11 em diante). A exclusão das regras de 11 e 12/11 foi feita às 11:03 e a regravação às 11:05 (um reinício do processo no meio; conferido antes de regravar). Ledger: 5 passos.
+
+| Mudança | Onde | Antes | Depois (conferido na resposta) | Como desfazer |
+|---|---|---|---|---|
+| Proteção da noite esgotada (D0 e D1) | King Spa 7 11 e 12/11 | R$ 1.140 / 1.732 (piso = teto) | piso R$ 947 / 1.036, sem teto | — |
+| Escada de vendas | King Spa 7 24, 25, 26, 30/11 e 06/12 | R$ 1.288 / 1.051 / 1.051 / 947 / 1.347 | R$ 1.421 / 1.169 / 1.169 / 1.051 / 1.495 | pedir "King Spa 7 de volta nessas noites" |
+| Regra dos 80% (8/9 com banheira vendidas) | Balcony 11, 12, 23/11 e 06/12 | R$ 851 / 1.245 / 1.308 / 1.168 | R$ 673 / 686 / 686 / 686 | pedir "Balcony de volta à Regra G" |
+| Regra G | Balcony 24, 25 e 26/11 | R$ 1.118 / 940 / 940 | R$ 1.232 / 1.016 / 1.016 | — |
+
 ## O que só pode ser feito na tela (passo a passo para você)
 
 1. **Safety Minimum Price → "Do Not Apply"** (Dynamic Pricing → Customizations → aba Groups → Edit no grupo Recanto dos Moinhos → All Customizations → Safety Minimum Price). Anote o valor atual antes.

@@ -14760,6 +14760,71 @@
    "total": 6,
    "gravado_em": "2026-11-11T11:51:38+00:00",
    "chegou_ao_canal": false
+  },
+  {
+   "quarto": "VK7",
+   "noite": "2026-11-24",
+   "de": 1288.0,
+   "para": 1417,
+   "direcao": "sobe",
+   "status": "frente",
+   "vendidas": 6,
+   "base": "quarto",
+   "total": 7,
+   "gravado_em": "2026-11-11T14:06:05+00:00",
+   "chegou_ao_canal": false
+  },
+  {
+   "quarto": "VK7",
+   "noite": "2026-11-25",
+   "de": 1051.0,
+   "para": 1157,
+   "direcao": "sobe",
+   "status": "frente",
+   "vendidas": 5,
+   "base": "quarto",
+   "total": 7,
+   "gravado_em": "2026-11-11T14:06:05+00:00",
+   "chegou_ao_canal": false
+  },
+  {
+   "quarto": "VK7",
+   "noite": "2026-11-26",
+   "de": 1051.0,
+   "para": 1157,
+   "direcao": "sobe",
+   "status": "frente",
+   "vendidas": 4,
+   "base": "quarto",
+   "total": 7,
+   "gravado_em": "2026-11-11T14:06:05+00:00",
+   "chegou_ao_canal": false
+  },
+  {
+   "quarto": "VK7",
+   "noite": "2026-11-30",
+   "de": 947.0,
+   "para": 1042,
+   "direcao": "sobe",
+   "status": "frente",
+   "vendidas": 4,
+   "base": "quarto",
+   "total": 7,
+   "gravado_em": "2026-11-11T14:06:05+00:00",
+   "chegou_ao_canal": false
+  },
+  {
+   "quarto": "VK7",
+   "noite": "2026-12-06",
+   "de": 1347.0,
+   "para": 1482,
+   "direcao": "sobe",
+   "status": "frente",
+   "vendidas": 6,
+   "base": "quarto",
+   "total": 7,
+   "gravado_em": "2026-11-11T14:06:05+00:00",
+   "chegou_ao_canal": false
   }
  ]
 }

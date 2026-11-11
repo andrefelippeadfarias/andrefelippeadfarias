@@ -1077,7 +1077,7 @@
       "responsavel": "dono",
       "desde": "2026-11-10",
       "urgencia": 2,
-      "texto": "Villa na Booking em 15-16/11 por R$ 424,95 com só a Balcony livre (R$ 1.168 no PriceLabs; razão 0,36); em 13-15/11, R$ 1.010/noite (razão 0,62-0,69). Conferir na página da Booking qual quarto aparece a R$ 425: promoção de última hora na Balcony ou tipo de quarto da Villa fora do PriceLabs. A régua do plano converte público em enviado pela razão medida, e ela depende disso."
+      "texto": "Villa na Booking em 15-16/11 por R$ 424,95 com só a Balcony livre (R$ 1.168 no PriceLabs; razão 0,36); em 13-15/11, R$ 1.010/noite (razão 0,62-0,69). Conferir na página da Booking qual quarto aparece a R$ 425: promoção de última hora na Balcony ou tipo de quarto da Villa fora do PriceLabs. A régua do plano converte público em enviado pela razão medida, e ela depende disso. 11/11 10:53: de novo, Villa por R$ 422,94 em 24-25/11 (Balcony livre a R$ 1.118 no PriceLabs; razão 0,38, abaixo do limite de 0,42)."
     },
     {
       "id": "vk7-diretas-abaixo-20261110",
@@ -1099,6 +1099,28 @@
       "desde": "2026-11-10",
       "urgencia": 3,
       "texto": "O arredondamento em % da base (1 ponto = R$ 15,90 na Panorâmica II, R$ 14,80 na Panorâmica I) pôs a Panorâmica II R$ 3 a R$ 12 acima da Panorâmica I em 13-14/11 no plano do pace de 10/11 19:53; o validador aceitou pela tolerância. Corrigido à mão (1 ponto abaixo). Fazer o pace/validar_plano escolherem o % da Panorâmica II que respeite Moinhos ≤ Panorâmica II ≤ Panorâmica I depois do arredondamento, com teste."
+    },
+    {
+      "id": "vk7-overbooking-20261112",
+      "responsavel": "dono",
+      "desde": "2026-11-11",
+      "urgencia": 1,
+      "data_alvo": "2026-11-12",
+      "texto": "King Spa 7 em 12/11 (amanhã): 8 reservas para 7 suítes no Beds24 (numAvail -1) depois do lote da Booking das 08:47 BRT de 11/11 (96020748 e 96020749, R$ 340 cada). Recepção resolver antes da chegada. A skill não mexe em reservas."
+    },
+    {
+      "id": "booking-lote-20261111",
+      "responsavel": "dono",
+      "desde": "2026-11-11",
+      "urgencia": 2,
+      "texto": "Segundo lote da Booking em 2 dias: 10 reservas criadas no Beds24 às 08:47:13-15 BRT de 11/11 (96020747 a 96020756; 9 King Spa 7 de 11/11 a 06/12 e 1 King Spa 2 21-24/02), R$ 333-603 por noite (valores antigos). Mesmo padrão do lote de 10/11, que o dono confirmou como reservas verdadeiras; tratado como venda (escada e proteção gravadas às 11:05 BRT). Conferir no extranet da Booking se estão lá; se alguma não existir, avisar para desfazer."
+    },
+    {
+      "id": "expedia-balcony-20261204-r292",
+      "responsavel": "dono",
+      "desde": "2026-11-11",
+      "urgencia": 1,
+      "texto": "Reserva da Expedia 96023845 (ref. no canal 2600478189) na Balcony 04-06/12, R$ 292,02 pelas 2 noites (R$ 146/noite; 13% do esperado), status new, 09:49 BRT de 11/11. Tarifa da Villa na Expedia fora do lugar (antes a Expedia tinha tarifa fixa de R$ 2.037-4.075, pendência beds24-canais-villa). Conferir a tarifa da Villa na Expedia (Partner Central / mapeamento no Beds24) e, se for erro, pedir o cancelamento por erro de tarifa. A skill não mexe em reservas nem em canais."
     }
   ],
   "versao": "2026-11-05T15"

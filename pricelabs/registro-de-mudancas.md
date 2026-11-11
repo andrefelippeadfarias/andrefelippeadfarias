@@ -4843,6 +4843,26 @@ Recálculos: Panorâmica I e Panorâmica II (3 de 3 em 24 h); **King Spa 2 falho
 | Escada de vendas | Panorâmica I 15 (4/6) e 16/11 (2/6) | R$ 962 | R$ 1.110 | pedir "Panorâmica I de 15-16/11 de volta" |
 | Plano do dono (fds; 1/2 vendida, 1 degrau) | Panorâmica II 27 e 28/11 | R$ 1.510 | R$ 1.622 (abaixo da Panorâmica I, R$ 1.732) | idem |
 
+## 11/11/2026, 16:54 a 18:45 BRT — Rotina leve das 16:53 (leitura às 16:54; gravações só às 18:38, com a sessão presa no modo de planejamento)
+
+**O que atrasou:** a sessão estava em modo de planejamento (plano do plugin WordPress) e voltou a ele a cada reinício do processo; nesse modo nada pode ser gravado. Leitura às 16:54 e 17:05; gravações às 18:38, depois de reler o Beds24 às 18:23. No meio, a regra da King Spa 2 de 12/11 ficou apagada de 18:35 a 18:38 (reinício entre o apagar e o regravar; noite esgotada, sem envio no intervalo).
+
+**Beds24 desde 13:48 BRT** (vigilância: 0 alerta): novas Afrodite 15-17/11 (Booking, R$ 1.521; esgotou 15 e 16/11), Panorâmica I 12/11 (Booking, R$ 462), King Spa 7 20/12 (Booking, R$ 781) e diretas da recepção: King Spa 7 15-17/11 (R$ 1.522; **overbooking em 15 e 16/11, 8/7**), King Spa 7 24-26/11 (R$ 450 pelas 2 noites, **17% do esperado**; esgotou 24/11), King Spa 7 28/12 (R$ 450, 24%) e Moinhos 04-06/12 (R$ 1.243, 50%). Overbooking da King Spa 7 de 12/11 resolvido (reserva passada para a King Spa 2, que esgotou 11 e 12/11). Panorâmica II reabriu hoje e amanhã (reservas passadas para a Panorâmica I). Panorâmica I 20-21/11 segue 7/6. Logs do PriceLabs: só a API.
+
+Recálculos: King Spa 7 (17:24) e King Spa 2 (18:23), os dois com 3 de 3 em 24 h; Balcony com o calendário das 08:07 (aceito sem saldo guardado). Panorâmica I e II sem cota: sem passo na Panorâmica I de 12/11 (não conferido, limite de recálculo). Plano `pace.py` da Villa nas noites das vendas; validação 0 erro. Ledger: 3 passos.
+
+| Mudança | Onde | Antes | Depois (conferido na resposta) | Como desfazer |
+|---|---|---|---|---|
+| Proteção da noite esgotada (D1) | King Spa 2 12/11 | R$ 1.435 (piso = teto) | piso R$ 1.041, sem teto, estadia 1 | — |
+| Escada de vendas | King Spa 7 25/11 (6/7), 20/12 e 28/12 (2/7) | R$ 1.169 / 1.347 / 2.279 | R$ 1.288 / 1.421 / 2.398 | pedir "King Spa 7 de volta nessas noites" |
+| Regra dos 80% (8/9 com banheira vendidas) | Balcony 24 e 25/11 | R$ 1.232 / 1.016 | R$ 686 / 673 | pedir "Balcony de volta à Regra G" |
+| Regra G | Balcony 20/12 | R$ 1.206 | R$ 1.232 | — |
+| Noite órfã (hoje livre, amanhã esgotada) | King Spa 7 11/11 no Beds24 | estadia 2 | estadia 1 (no PriceLabs a efetiva já era 1) | — |
+| Sábado órfão | King Spa 7 21/11 no Beds24 | entrada e saída abertas (alguém ou um envio tirou o noCheckOut das 08:50) | só entrada aberta (noCheckOut) | — |
+| Sábado esgotado com sexta livre | King Spa 2 28/11 no Beds24 | sábado fechado | saída aberta (noCheckIn) | — |
+
+Para o plano de amanhã cedo: proteção da King Spa 7 de 24/11 e da Afrodite de 15-16/11, e a noite órfã da King Spa 2 em 27/11 (estadia 1 nos dois sistemas).
+
 ## O que só pode ser feito na tela (passo a passo para você)
 
 1. **Safety Minimum Price → "Do Not Apply"** (Dynamic Pricing → Customizations → aba Groups → Edit no grupo Recanto dos Moinhos → All Customizations → Safety Minimum Price). Anote o valor atual antes.

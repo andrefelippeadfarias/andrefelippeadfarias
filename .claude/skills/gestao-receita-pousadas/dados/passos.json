@@ -14877,6 +14877,45 @@
    "total": 2,
    "gravado_em": "2026-11-11T16:58:20+00:00",
    "chegou_ao_canal": false
+  },
+  {
+   "quarto": "VK7",
+   "noite": "2026-11-25",
+   "de": 1169.0,
+   "para": 1286,
+   "direcao": "sobe",
+   "status": "frente",
+   "vendidas": 6,
+   "base": "quarto",
+   "total": 7,
+   "gravado_em": "2026-11-11T21:38:17+00:00",
+   "chegou_ao_canal": false
+  },
+  {
+   "quarto": "VK7",
+   "noite": "2026-12-20",
+   "de": 1347.0,
+   "para": 1415,
+   "direcao": "sobe",
+   "status": "frente",
+   "vendidas": 2,
+   "base": "quarto",
+   "total": 7,
+   "gravado_em": "2026-11-11T21:38:17+00:00",
+   "chegou_ao_canal": false
+  },
+  {
+   "quarto": "VK7",
+   "noite": "2026-12-28",
+   "de": 2279.0,
+   "para": 2393,
+   "direcao": "sobe",
+   "status": "frente",
+   "vendidas": 2,
+   "base": "quarto",
+   "total": 7,
+   "gravado_em": "2026-11-11T21:38:17+00:00",
+   "chegou_ao_canal": false
   }
  ]
 }

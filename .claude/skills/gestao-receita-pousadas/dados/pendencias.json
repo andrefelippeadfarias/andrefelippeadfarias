@@ -1084,7 +1084,7 @@
       "responsavel": "dono",
       "desde": "2026-11-10",
       "urgencia": 1,
-      "texto": "Duas reservas diretas da King Spa 7 lançadas pela recepção (VillaRecep1) em 10/11 abaixo de 70% do esperado: 95991536 (20-22/11, Consciência Negra, R$ 1.700 de R$ 5.639 esperados, 30%; fechou a noite de 20/11, 7/7) e 95996006 (30/12-01/01, Réveillon, R$ 3.200 de R$ 9.976, 32%). Conferir com a recepção se o valor está certo (tarifa de cortesia, pacote ou erro de lançamento). A skill não altera reservas. Em 11/11 (madrugada), mais uma: 95997106 (King Spa 2 28/11, R$ 500 de R$ 1.626, 31%), também da VillaRecep1."
+      "texto": "Duas reservas diretas da King Spa 7 lançadas pela recepção (VillaRecep1) em 10/11 abaixo de 70% do esperado: 95991536 (20-22/11, Consciência Negra, R$ 1.700 de R$ 5.639 esperados, 30%; fechou a noite de 20/11, 7/7) e 95996006 (30/12-01/01, Réveillon, R$ 3.200 de R$ 9.976, 32%). Conferir com a recepção se o valor está certo (tarifa de cortesia, pacote ou erro de lançamento). A skill não altera reservas. Em 11/11 (madrugada), mais uma: 95997106 (King Spa 2 28/11, R$ 500 de R$ 1.626, 31%), também da VillaRecep1. 11/11 tarde: mais duas da VillaRecep1 na King Spa 7: 96042885 (24-26/11, R$ 450 pelas 2 noites, 17%) e 96042818 (28/12, R$ 450, 24%); e a direta 96042786 na Moinhos 04-06/12 (R$ 1.243, 50%, lançada por API)."
     },
     {
       "id": "booking-cancelamentos-rapidos-20261110",
@@ -1106,7 +1106,8 @@
       "desde": "2026-11-11",
       "urgencia": 1,
       "data_alvo": "2026-11-12",
-      "texto": "King Spa 7 em 12/11 (amanhã): 8 reservas para 7 suítes no Beds24 (numAvail -1) depois do lote da Booking das 08:47 BRT de 11/11 (96020748 e 96020749, R$ 340 cada). Recepção resolver antes da chegada. A skill não mexe em reservas."
+      "texto": "King Spa 7 em 12/11 (amanhã): 8 reservas para 7 suítes no Beds24 (numAvail -1) depois do lote da Booking das 08:47 BRT de 11/11 (96020748 e 96020749, R$ 340 cada). Recepção resolver antes da chegada. A skill não mexe em reservas. RESOLVIDO: às 16:54 BRT de 11/11 o Beds24 mostra a King Spa 7 com 7/7 em 12/11 (uma reserva passou para a King Spa 2).",
+      "resolvido_em": "2026-11-11"
     },
     {
       "id": "booking-lote-20261111",
@@ -1121,6 +1122,21 @@
       "desde": "2026-11-11",
       "urgencia": 1,
       "texto": "Reserva da Expedia 96023845 (ref. no canal 2600478189) na Balcony 04-06/12, R$ 292,02 pelas 2 noites (R$ 146/noite; 13% do esperado), status new, 09:49 BRT de 11/11. Tarifa da Villa na Expedia fora do lugar (antes a Expedia tinha tarifa fixa de R$ 2.037-4.075, pendência beds24-canais-villa). Conferir a tarifa da Villa na Expedia (Partner Central / mapeamento no Beds24) e, se for erro, pedir o cancelamento por erro de tarifa. A skill não mexe em reservas nem em canais. 11/11 13:53: mais uma da Expedia abaixo do esperado, 96034736 (ref. 2600572266) na King Spa 7 13-15/11, R$ 1.211 pelas 2 noites (34% do esperado). Duas no mesmo dia: a tarifa da Villa na Expedia parece descolada do PriceLabs."
+    },
+    {
+      "id": "vk7-overbooking-20261115",
+      "responsavel": "dono",
+      "desde": "2026-11-11",
+      "urgencia": 1,
+      "data_alvo": "2026-11-15",
+      "texto": "King Spa 7 em 15 e 16/11: 8 reservas para 7 suítes (numAvail -1) depois da reserva direta 96044699 (VillaRecep1, 15-17/11, R$ 1.522), lançada com as noites já cheias. Recepção resolver antes de 15/11. A skill não mexe em reservas."
+    },
+    {
+      "id": "sessao-modo-plan-reinicios",
+      "responsavel": "dono",
+      "desde": "2026-11-11",
+      "urgencia": 1,
+      "texto": "Em 11/11 a sessão do Claude voltou ao modo 'Plan' a cada reinício do processo (4 vezes entre 14:00 e 18:40 BRT): a rotina das 16:53 só leu, e as gravações saíram às 18:38. Trocar o modo no seletor ao lado da caixa de mensagem para 'Auto' (ou 'Accept edits'), senão as rotinas de preço ficam sem gravar a cada reinício."
     }
   ],
   "versao": "2026-11-05T15"

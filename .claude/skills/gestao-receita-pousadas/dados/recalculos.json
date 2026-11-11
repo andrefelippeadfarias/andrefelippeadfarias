@@ -339,6 +339,20 @@
    "resultado": "falha",
    "erro": "400 limite do Beds24 no PriceLabs",
    "registrado_em": "2026-11-11T16:55:41Z"
+  },
+  {
+   "quarto": "VK7",
+   "em": "2026-11-11T20:24:16Z",
+   "resultado": "ok",
+   "id_ms": 1794428656401,
+   "registrado_em": "2026-11-11T20:25:23Z"
+  },
+  {
+   "quarto": "VK2",
+   "em": "2026-11-11T21:23:30Z",
+   "resultado": "ok",
+   "id_ms": 1794432210900,
+   "registrado_em": "2026-11-11T21:23:44Z"
   }
  ]
 }

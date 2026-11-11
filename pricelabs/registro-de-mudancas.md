@@ -4832,6 +4832,17 @@ Recálculo: King Spa 7 (3 de 3 em 24 h; próxima vaga 13:54 BRT); Balcony e King
 | Regra dos 80% (8/9 com banheira vendidas) | Balcony 11, 12, 23/11 e 06/12 | R$ 851 / 1.245 / 1.308 / 1.168 | R$ 673 / 686 / 686 / 686 | pedir "Balcony de volta à Regra G" |
 | Regra G | Balcony 24, 25 e 26/11 | R$ 1.118 / 940 / 940 | R$ 1.232 / 1.016 / 1.016 | — |
 
+## 11/11/2026, 13:54 a 14:00 BRT — Rotina leve das 13:53: escada da Panorâmica I e II; segunda reserva da Expedia abaixo do esperado
+
+**Beds24 desde 10:48 BRT** (vigilância: 0 alerta): novas Panorâmica I 15-17/11 (Booking, R$ 1.188), Panorâmica II 27-29/11 (Booking, R$ 1.833), King Spa 2 27-29/11 (Airbnb, R$ 1.683; esgotou 28/11) e **King Spa 7 13-15/11 pela Expedia por R$ 1.211 as 2 noites (34% do esperado; esgotou 13 e 14/11)**: segunda reserva da Expedia abaixo do esperado no dia (pendência da tarifa da Expedia). O Beds24 já mostra a estadia 1 do sábado órfão da King Spa 7 (21/11): houve envio depois das 10:55. Overbooking: King Spa 7 12/11 (8/7) e Panorâmica I 20-21/11 (7/6) seguem. Logs: só a API.
+
+Recálculos: Panorâmica I e Panorâmica II (3 de 3 em 24 h); **King Spa 2 falhou (400, limite do Beds24 do lado do PriceLabs; conta na cota)**: sem passo na King Spa 2 27/11 nesta rodada (não conferido, limite de recálculo; próxima vaga 16:57 BRT). Plano `pace.py` do Recanto nas noites das vendas, regras da leitura das 07:53 (sem gravação nessas noites desde então); validação 0 erro; ordem do Recanto conferida em reais. Ledger: 4 passos. Noites esgotadas (King Spa 7 13-14/11, King Spa 2 28/11): proteção no plano de amanhã cedo; Balcony 13-14 e 28/11 já no mercado pela regra dos 80%.
+
+| Mudança | Onde | Antes | Depois (conferido na resposta) | Como desfazer |
+|---|---|---|---|---|
+| Escada de vendas | Panorâmica I 15 (4/6) e 16/11 (2/6) | R$ 962 | R$ 1.110 | pedir "Panorâmica I de 15-16/11 de volta" |
+| Plano do dono (fds; 1/2 vendida, 1 degrau) | Panorâmica II 27 e 28/11 | R$ 1.510 | R$ 1.622 (abaixo da Panorâmica I, R$ 1.732) | idem |
+
 ## O que só pode ser feito na tela (passo a passo para você)
 
 1. **Safety Minimum Price → "Do Not Apply"** (Dynamic Pricing → Customizations → aba Groups → Edit no grupo Recanto dos Moinhos → All Customizations → Safety Minimum Price). Anote o valor atual antes.

@@ -318,6 +318,27 @@
    "resultado": "ok",
    "id_ms": 1794405340694,
    "registrado_em": "2026-11-11T13:55:54Z"
+  },
+  {
+   "quarto": "Double",
+   "em": "2026-11-11T16:55:12Z",
+   "resultado": "ok",
+   "id_ms": 1794416112029,
+   "registrado_em": "2026-11-11T16:55:41Z"
+  },
+  {
+   "quarto": "Q2",
+   "em": "2026-11-11T16:55:21Z",
+   "resultado": "ok",
+   "id_ms": 1794416121353,
+   "registrado_em": "2026-11-11T16:55:41Z"
+  },
+  {
+   "quarto": "VK2",
+   "em": "2026-11-11T16:55:41Z",
+   "resultado": "falha",
+   "erro": "400 limite do Beds24 no PriceLabs",
+   "registrado_em": "2026-11-11T16:55:41Z"
   }
  ]
 }

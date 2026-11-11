@@ -1,8 +1,8 @@
 {
  "_doc": "Âncora de mercado do motor de pace: percentis do preço público por noite dos hotéis com hidro na Booking (2 adultos). p50 e max medidos; p75/p90/p25 aproximados (ver ancora_mercado.py). Noite sem busca própria usa `por_tipo` do mesmo tipo e mês.",
- "atualizado_em": "2026-11-09",
+ "atualizado_em": "2026-11-11",
  "fontes": [
-  "/tmp/claude-0/-home-user-andrefelippeadfarias/02bd5933-6de8-57dc-9e2b-aeb0b12a4913/scratchpad/r0911/coleta.json"
+  "/tmp/claude-0/-home-user-andrefelippeadfarias/02bd5933-6de8-57dc-9e2b-aeb0b12a4913/scratchpad/c1111/coleta.json"
  ],
  "noites": {
   "2026-10-31": {
@@ -332,30 +332,30 @@
    "ordem_id": "dono-2026-11-02-nov-fds-regua-lista"
   },
   "2026-12-01": {
-   "p25": 208,
-   "p50": 288,
-   "p75": 309,
-   "p90": 485,
-   "max": 720,
-   "n": 19,
-   "n_comparaveis": 8,
-   "p50_medido": true,
+   "p25": 251,
+   "p50": 313,
+   "p75": 545,
+   "p90": 687,
+   "max": 965,
+   "n": 18,
+   "n_comparaveis": 5,
+   "p50_medido": false,
    "tipo": "semana",
    "fonte": "semana 01-03/12",
-   "busca_em": "2026-10-30"
+   "busca_em": "2026-11-11"
   },
   "2026-12-02": {
-   "p25": 208,
-   "p50": 288,
-   "p75": 309,
-   "p90": 485,
-   "max": 720,
-   "n": 19,
-   "n_comparaveis": 8,
-   "p50_medido": true,
+   "p25": 251,
+   "p50": 313,
+   "p75": 545,
+   "p90": 687,
+   "max": 965,
+   "n": 18,
+   "n_comparaveis": 5,
+   "p50_medido": false,
    "tipo": "semana",
    "fonte": "semana 01-03/12",
-   "busca_em": "2026-10-30"
+   "busca_em": "2026-11-11"
   },
   "2026-12-04": {
    "p25": 420,
@@ -384,30 +384,30 @@
    "busca_em": "2026-10-30"
   },
   "2026-12-11": {
-   "p25": 470,
-   "p50": 640,
-   "p75": 770,
-   "p90": 779,
-   "max": 791,
-   "n": 18,
-   "n_comparaveis": 6,
-   "p50_medido": true,
+   "p25": 507,
+   "p50": 714,
+   "p75": 954,
+   "p90": 1098,
+   "max": 1193,
+   "n": 16,
+   "n_comparaveis": 2,
+   "p50_medido": false,
    "tipo": "fds",
    "fonte": "fds 11-13/12",
-   "busca_em": "2026-10-30"
+   "busca_em": "2026-11-11"
   },
   "2026-12-12": {
-   "p25": 470,
-   "p50": 640,
-   "p75": 770,
-   "p90": 779,
-   "max": 791,
-   "n": 18,
-   "n_comparaveis": 6,
-   "p50_medido": true,
+   "p25": 507,
+   "p50": 714,
+   "p75": 954,
+   "p90": 1098,
+   "max": 1193,
+   "n": 16,
+   "n_comparaveis": 2,
+   "p50_medido": false,
    "tipo": "fds",
    "fonte": "fds 11-13/12",
-   "busca_em": "2026-10-30"
+   "busca_em": "2026-11-11"
   },
   "2026-12-15": {
    "p25": 309,
@@ -529,13 +529,13 @@
     "busca_em": "2026-11-06"
    },
    "2026-12": {
-    "p25": 258,
-    "p50": 328,
-    "p75": 390,
-    "p90": 602,
-    "max": 735,
+    "p25": 280,
+    "p50": 340,
+    "p75": 508,
+    "p90": 704,
+    "max": 858,
     "n_noites": 4,
-    "busca_em": "2026-10-30"
+    "busca_em": "2026-11-11"
    }
   },
   "fds": {
@@ -549,13 +549,13 @@
     "busca_em": "2026-11-01"
    },
    "2026-12": {
-    "p25": 470,
-    "p50": 640,
-    "p75": 770,
-    "p90": 789,
-    "max": 850,
+    "p25": 499,
+    "p50": 714,
+    "p75": 791,
+    "p90": 1052,
+    "max": 1189,
     "n_noites": 6,
-    "busca_em": "2026-10-30"
+    "busca_em": "2026-11-11"
    }
   }
  }

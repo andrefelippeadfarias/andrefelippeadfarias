@@ -1044,7 +1044,8 @@
       "responsavel": "dono",
       "desde": "2026-11-10",
       "urgencia": 2,
-      "texto": "Reserva nova da Expedia na King Spa 2 de 06/05/2027, 4 noites, R$ 1.188,94 no total (~R$ 297 por noite), feita em 10/11 00:10 UTC: bem abaixo do esperado para a suíte. Conferir na Expedia/Beds24 a tarifa e o plano tarifário que geraram esse valor (a skill não altera reservas)."
+      "texto": "Reserva nova da Expedia na King Spa 2 de 06/05/2027, 4 noites, R$ 1.188,94 no total (~R$ 297 por noite), feita em 10/11 00:10 UTC: bem abaixo do esperado para a suíte. Conferir na Expedia/Beds24 a tarifa e o plano tarifário que geraram esse valor (a skill não altera reservas). RESOLVIDO: a reserva da Expedia (95940273, King Spa 2 06-10/05/2027) foi cancelada; Beds24 lido em 11/11 07:53.",
+      "resolvido_em": "2026-11-11"
     },
     {
       "id": "booking-rajada-20261110",
@@ -1083,7 +1084,7 @@
       "responsavel": "dono",
       "desde": "2026-11-10",
       "urgencia": 1,
-      "texto": "Duas reservas diretas da King Spa 7 lançadas pela recepção (VillaRecep1) em 10/11 abaixo de 70% do esperado: 95991536 (20-22/11, Consciência Negra, R$ 1.700 de R$ 5.639 esperados, 30%; fechou a noite de 20/11, 7/7) e 95996006 (30/12-01/01, Réveillon, R$ 3.200 de R$ 9.976, 32%). Conferir com a recepção se o valor está certo (tarifa de cortesia, pacote ou erro de lançamento). A skill não altera reservas."
+      "texto": "Duas reservas diretas da King Spa 7 lançadas pela recepção (VillaRecep1) em 10/11 abaixo de 70% do esperado: 95991536 (20-22/11, Consciência Negra, R$ 1.700 de R$ 5.639 esperados, 30%; fechou a noite de 20/11, 7/7) e 95996006 (30/12-01/01, Réveillon, R$ 3.200 de R$ 9.976, 32%). Conferir com a recepção se o valor está certo (tarifa de cortesia, pacote ou erro de lançamento). A skill não altera reservas. Em 11/11 (madrugada), mais uma: 95997106 (King Spa 2 28/11, R$ 500 de R$ 1.626, 31%), também da VillaRecep1."
     },
     {
       "id": "booking-cancelamentos-rapidos-20261110",

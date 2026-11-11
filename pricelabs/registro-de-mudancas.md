@@ -4786,6 +4786,37 @@ Recálculos: Panorâmica I, King Spa 7, Balcony e Moinhos (King Spa 7 e Balcony 
 
 Sem passo: Panorâmica I 15/11 (já acima da reta do dia de semana), King Spa 7 20/11 e 04/12 (já no preço do plano), King Spa 7 30-31/12 (festas da Villa ficam como estão). Proteção das noites esgotadas da Moinhos 13-14/11 (já com o preço do plano) e da King Spa 7 20/11 e King Spa 2 26/11 (D10 e D16): plano de amanhã cedo. Balcony 27-28/11 segue presa entre o piso da ordem de 04/11 e a Regra G (rotina completa). Estadia: Panorâmica II, Afrodite e King Spa 7 de 14/11 sem estadia mínima na regra por data (já estava assim; Beds24 com 2 e sábado fechado). Sombra da flutuação: leitura das 21:13 guardada. O envio de amanhã (~08:47) leva tudo ao canal; Sync Now antes, se o dono quiser a Balcony a R$ 1.054 já para 13-14/11.
 
+## 11/11/2026, 07:54 a 08:55 BRT — Rotina completa das 07:53 (quarta): escada da Villa, Balcony pela regra dos 80% em 28/11, piso de D7 em 18/11 e noite nova de 10/01
+
+**Beds24 desde 19:48 BRT de 10/11** (vigilância: 0 alerta; sombra `rodada` usada): novas Moinhos 27-29/11 (Airbnb, R$ 1.352), Afrodite 13-15/11 (Booking, R$ 1.841; esgotou 13-14/11), King Spa 2 28/11 (direta, VillaRecep1, R$ 500, **31% do esperado**) e King Spa 7 30/12-01/01 (direta, R$ 3.200, 32%, já citada às 19:53). Canceladas: King Spa 2 06-10/05/2027 (Expedia; pendência da tarifa baixa resolvida) e duas criadas e canceladas em minutos (King Spa 2 21-24/02, Panorâmica II 13-15/11). Oito reservas diretas antigas da Panorâmica I em 11-13/12 aparecem como canceladas (já estavam fora do estoque). Alterações nas reservas de 10/11 (troca de quarto da recepção). Pedidos do Airbnb sem reserva: Balcony 13-15/11, Panorâmica I 15/11, King Spa 2 24/11. Logs: sem mudança manual.
+
+**Envio:** os 7 quartos foram enviados às 21:48 BRT de 10/11 (`last_date_pushed`); o Beds24 tem os preços das 19:53 (ex.: Balcony 13/11 R$ 1.054, King Spa 7 R$ 1.880). O `user_price` da coleta ficou com o valor antigo: não usar como prova de envio (aprendizado). 310 passos marcados como chegados ao canal.
+
+**Ocupação (Beds24, 7 dias):** hotel 46% (Recanto 38%, Villa 54%) contra a meta de 70%; 15 dias 48%; 30 dias 37% ✅. King Spa 7 88% e King Spa 2 86% em 7 dias; Balcony 5%. Comparação PriceLabs × Beds24: Moinhos 20-21/11 com 1 bloqueio sem reserva, Panorâmica I 20-21/11 com 7 reservas para 6 suítes (overbooking), Afrodite 19-22/11 com a reserva de R$ 0.
+
+**Recálculos:** para medir, Moinhos, Panorâmica I, Panorâmica II, Afrodite, King Spa 2 e Balcony; a King Spa 7 ficou com o calendário de 10/11 22:56 alinhado ao Beds24 (1 recálculo guardado para as rotinas leves). Conferência em recálculo: Panorâmica II e Afrodite, 6 de 6 ✅; os outros quartos, conferidos na resposta da API (cota guardada para as rotinas leves). Âncora refeita com as buscas de 01-03/12 e 11-13/12. Faixas: 2 ordens novas (10/01/2027). Revisão de 12 meses em dia (01/11).
+
+**Gravado no PriceLabs** (`pace.py` 60 noites, 47 itens; 7 sem efeito e 2 só de arredondamento tirados; + sábado órfão e sexta da Afrodite; validador 0 erro; ordem do Recanto conferida em reais depois do arredondamento; apagada antes a regra da King Spa 2 em 26/11; 08:44-08:51 BRT; ledger 30 passos):
+
+| Mudança | Onde | Antes | Depois | Como desfazer |
+|---|---|---|---|---|
+| Escada de vendas (amanhã, D1) | King Spa 2 12/11 (Villa 6/9) | R$ 1.194 | R$ 1.435 | pedir "King Spa 2 de 12/11 de volta" |
+| Regra G (amanhã, D1) | Balcony 12/11 | R$ 1.041 | R$ 1.245 | idem |
+| Piso de mercado de D7 do plano (dia de semana) + ordem do Recanto | Moinhos e Panorâmica II 18/11 | R$ 1.220 / 1.224 | R$ 915 / 922 | pedir "Moinhos de 18/11 de volta" |
+| Escada de vendas | King Spa 2 18, 23, 24/11, 07/12, 14-17/12 | R$ 952-1.372 | R$ 1.041-1.511 | — |
+| Escada de vendas | Panorâmica I 24 e 25/11; Afrodite 24/11 | R$ 1.510 / 1.362; R$ 1.820 | R$ 1.672 / 1.450; R$ 2.020 | — |
+| Escada de vendas | King Spa 7 07, 08 e 09/12 | R$ 1.288 / 1.051 | R$ 1.421 / 1.169 | — |
+| Regra G e escada | Balcony 18, 23/11, 07-09/12, 14-17/12 | R$ 826-1.194 | R$ 914-1.308 | — |
+| Regra dos 80% (8/9 com banheira vendidas) | Balcony 28/11 | R$ 1.460 | R$ 1.105 | pedir "Balcony de 28/11 de volta à Regra G" |
+| Plano do dono (fds, 1 degrau) | King Spa 2 28/11 | R$ 1.626 | R$ 1.740 | — |
+| Proteção da noite esgotada (piso p90, sem teto) | King Spa 2 26/11 e 06/12 | R$ 952 / 1.130 | piso R$ 952 / 1.092 | — |
+| Ordem do Recanto | Panorâmica II 25/11 | R$ 1.352 | R$ 1.224 | — |
+| Noite nova na janela (domingo, 0 vendida) | 10/01/2027: Panorâmica II, Panorâmica I, Afrodite, King Spa 7, King Spa 2, Balcony | R$ 1.304 / 1.288 / 1.710 / 1.284 / 1.094 / 991 | R$ 1.240 / 1.243 / 1.500 / 1.006 / 1.003 / 914 | — |
+| Sábado órfão (sexta esgotada) | King Spa 7 21/11 | estadia 2, sábado fechado | estadia 1 (PriceLabs) e entrada aberta (Beds24 noCheckOut) | pedir "feche o sábado 21/11 da King Spa 7" |
+| Sexta da Afrodite aberta (dono 05/11) | Afrodite 12/11/2027 (fim da janela de 12 meses) | — | entrada e saída abertas (PriceLabs e Beds24) | — |
+
+Beds24: lote de 2 itens aplicado e relido (2 de 2); o lote único em sombra trouxe os mesmos 2. Não gravado: Balcony 27-28/11 segue presa entre o piso da ordem de faixa de 04/11 e a Regra G (fica como está). Sombra da flutuação: foto 2 de 7 (a King Spa 7 ficou fora: calendário de ontem).
+
 ## O que só pode ser feito na tela (passo a passo para você)
 
 1. **Safety Minimum Price → "Do Not Apply"** (Dynamic Pricing → Customizations → aba Groups → Edit no grupo Recanto dos Moinhos → All Customizations → Safety Minimum Price). Anote o valor atual antes.

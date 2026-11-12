@@ -395,6 +395,27 @@
    "resultado": "ok",
    "id_ms": 1794496253515,
    "registrado_em": "2026-11-12T15:11:00Z"
+  },
+  {
+   "quarto": "Q7",
+   "em": "2026-11-12T16:54:19Z",
+   "resultado": "ok",
+   "id_ms": 1794502459943,
+   "registrado_em": "2026-11-12T16:54:28Z"
+  },
+  {
+   "quarto": "Double",
+   "em": "2026-11-12T16:57:47Z",
+   "resultado": "ok",
+   "id_ms": 1794502667465,
+   "registrado_em": "2026-11-12T16:57:50Z"
+  },
+  {
+   "quarto": "Q2",
+   "em": "2026-11-12T16:57:59Z",
+   "resultado": "ok",
+   "id_ms": 1794502679046,
+   "registrado_em": "2026-11-12T16:58:05Z"
   }
  ]
 }

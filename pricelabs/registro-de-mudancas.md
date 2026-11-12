@@ -4980,6 +4980,24 @@ Validado (0 erros; as 2 confirmações da Balcony de 23 e 24/11 entraram só na 
 
 **Achados baixos anotados:** a proteção da King Spa 2 de hoje (D0) foi regravada igual por um teto velho no arquivo de trabalho montado sem recálculo (sem efeito); a Balcony de 11/01/2027 ficou a 91,1% da suíte livre (dentro da folga de 1% da base; a rotina de amanhã leva a 90%). A tabela de cima marca a King Spa 2 como não recalculada.
 
+## 12/11/2026, 13:53 a 14:00 BRT — Rotina leve das 13:53: escada da Moinhos 17-18/11 e overbooking da King Spa 2 hoje
+
+**Beds24 desde 11:31 BRT:** 1 nova (Moinhos 17-19/11, Booking, R$ 953), 0 canceladas, 6 alteradas. Segurança: 0 alertas. **Hoje (12/11): King Spa 2 com 3 reservas para 2 suítes e King Spa 7 com 1 livre** (três reservas da King Spa 2 de 11-13/11 foram alteradas agora; parece reserva mudada de quarto por engano: a recepção precisa conferir). Abaixo do esperado: reserva da Panorâmica II 20-22/11 pela Booking, 41% do preço de agora (feito antes da subida do feriado; nº e hóspede só no relatório). Overbooking que segue: King Spa 7 15-16/11 e Panorâmica I 20-21/11.
+
+**Gravado (13:57 BRT), validado (0 erros) e conferido:**
+
+| Mudança | Onde | Antes | Depois | Como desfazer (pedir ao Claude) |
+|---|---|---|---|---|
+| Moinhos 17/11 | PriceLabs por data | R$ 915 | piso e teto R$ 1.056 (-10% da base), escada (2/7) | regravar -22% |
+| Moinhos 18/11 | PriceLabs por data | R$ 915 | piso e teto R$ 1.056 (-10%), escada (3/7) | regravar -22% |
+| Panorâmica I 17/11 | PriceLabs por data | R$ 962 | piso e teto R$ 1.066 (-28%), ordem do Recanto (recalculado e conferido 13:58 ✅) | regravar -35% |
+| Panorâmica II 17/11 | PriceLabs por data | R$ 922 | piso e teto R$ 1.065 (-33%), ordem do Recanto (✅ 13:58) | regravar -42% |
+| Panorâmica II 18/11 | PriceLabs por data | R$ 922 | piso e teto R$ 1.065 (-33%), ordem do Recanto (✅ 13:58) | regravar -42% |
+
+A Moinhos foi conferida pela resposta da API (o último recálculo dela das 24 h fica para as rotinas da tarde). O item da Panorâmica I saiu do motor citando a ordem de faixa do dia (que não libera o piso de mercado de D7 a D0); troquei para a ordem do plano de 09/11, a mesma dos outros itens, e o validador passou. A King Spa 7 de hoje (1 livre a R$ 1.055) ficou como está (o motor não propôs mudança).
+
+**Envio:** estas mudanças chegam aos canais no envio de amanhã ou com o Sync Now.
+
 ## O que só pode ser feito na tela (passo a passo para você)
 
 1. **Safety Minimum Price → "Do Not Apply"** (Dynamic Pricing → Customizations → aba Groups → Edit no grupo Recanto dos Moinhos → All Customizations → Safety Minimum Price). Anote o valor atual antes.

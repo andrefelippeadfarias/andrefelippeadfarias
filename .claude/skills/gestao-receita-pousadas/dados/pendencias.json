@@ -1260,6 +1260,14 @@
       "atualizado_em": "2026-11-12",
       "resolvido_em": "2026-11-12",
       "resolucao": "pace.protecao_esgotada mantém o piso da escada ao soltar o teto; teste novo; as 4 noites da King Spa 7 regravadas às 13:00 BRT (registro l.4970)."
+    },
+    {
+      "id": "d0-arredondamento-percentual-20261112",
+      "responsavel": "skill",
+      "desde": "2026-11-12",
+      "urgencia": 2,
+      "atualizado_em": "2026-11-12",
+      "texto": "A revisão do plugin (M1, 12/11) achou que o piso em percentual da base, arredondado para cima, pode deixar o preço de HOJE acima do atual quando o preço vigente não está num ponto inteiro de % da base (preço do algoritmo, sem regra por data). O validar_plano.py não tem checagem explícita de 'D0 nunca sobe' depois do arredondamento (a trava está só no pace). Conferir pace.py e validar_plano.py e, se valer, limitar o passo de D0 ao preço atual depois do arredondamento, com teste (no plugin: PaceEngine::tonightAtMostCurrent, docs/ENGINE.md 1.4)."
     }
   ],
   "versao": "2026-11-12T13"

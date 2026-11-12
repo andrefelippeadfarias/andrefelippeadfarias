@@ -4,3 +4,5 @@
 /dist/
 *.phar
 /tests/e2e/screenshots/
+__pycache__/
+*.pyc

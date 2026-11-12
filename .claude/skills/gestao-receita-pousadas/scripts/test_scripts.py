@@ -3506,11 +3506,23 @@ class TestPace(unittest.TestCase):
         cal = {"2026-11-24": {"date": "2026-11-24", "price": "1848", "mu_occupancy": "7/7", "num_bookings": "7", "min_price": "1848", "max_price": "1848", "min_stay": "1"}}
         res = pace.plano(self.cfg, anc, {"Q7": cal}, hoje, {}, {"passos": []}, dias=30, regra_j_ativa=True)
         self.assertEqual(res["itens"], [])
-        # Regra J desligada: piso de proteção p90 (R$ 579 ÷ 0,63 = R$ 919 < piso do dono R$ 800? não: 919 > 800 → 919) e teto livre
+        # Regra J desligada, piso = teto sem regra por data conhecida (legado da Regra J): piso de proteção p90 (R$ 579 ÷
+        # 0,63 = R$ 919 → 920) e teto livre
         res = pace.plano(self.cfg, anc, {"Q7": cal}, hoje, {}, {"passos": []}, dias=30, regra_j_ativa=False)
         it = res["itens"][0]
         self.assertTrue(it["protecao"])
         self.assertEqual((it["min_price"], it["max_price"]), (920, 5000.0))
+        # revisão de 12/11 (a proteção só sobe o piso): piso = teto da escada (regra por data sem Regra J) acima do p90 →
+        # o teto sai e o piso da escada fica; o da Regra J antiga desce ao p90 como antes
+        rg_escada = {"Q7": {"2026-11-24": {"date": "2026-11-24", "min_price": 58, "min_price_type": "percent_base", "max_price": 58,
+                                           "max_price_type": "percent_base", "reason": "Escada de vendas (dono 01/11): 6/7 vendidas"}}}
+        it_e = pace.plano(self.cfg, anc, {"Q7": cal}, hoje, {}, {"passos": []}, dias=30, regra_j_ativa=False, regras=rg_escada)["itens"][0]
+        self.assertEqual(it_e["max_price"], 5000.0)
+        self.assertGreaterEqual(it_e["min_price"], 1848)
+        self.assertIn("mantido", it_e["motivo"])
+        rg_j = {"Q7": {"2026-11-24": dict(rg_escada["Q7"]["2026-11-24"], reason="Regra J: suíte esgotada no topo do mercado")}}
+        it_j = pace.plano(self.cfg, anc, {"Q7": cal}, hoje, {}, {"passos": []}, dias=30, regra_j_ativa=False, regras=rg_j)["itens"][0]
+        self.assertEqual(it_j["min_price"], 920)
         # já protegida (piso igual, sem teto): sem item
         cal2 = {"2026-11-24": dict(cal["2026-11-24"], min_price="920", max_price="5000")}
         res = pace.plano(self.cfg, anc, {"Q7": cal2}, hoje, {}, {"passos": []}, dias=30, regra_j_ativa=False)

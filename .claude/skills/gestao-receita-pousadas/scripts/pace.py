@@ -738,10 +738,26 @@ def protecao_esgotada(cfg: dict, p: dict, anc: dict, origem: str, curto: str, d:
     # teto a soltar fica como está (noite vendida com piso mais alto não perde nada e evita regravar todo dia)
     if atual_min >= piso * (1 - p["tolerancia"]) and not tem_teto:
         return None
-    it = {"tipo": "data", "quarto": curto, "data": d.isoformat(), "min_price": math.ceil(piso), "max_price": float(q["max"]),
+    # origem do piso no motivo (revisão de 12/11: o motivo citava o p90 quando o piso vinha do piso do dono)
+    if piso_extra and piso == float(piso_extra) and piso > pub / fp:
+        fonte = f"piso da ordem R$ {piso:.0f}"
+    elif piso == piso_dono and piso > pub / fp:
+        fonte = f"piso do dono R$ {piso:.0f} enviados (p{pct:.0f} do mercado com hidro R$ {pub:.0f} público é menor)"
+    else:
+        fonte = f"piso no p{pct:.0f} do mercado com hidro, R$ {pub:.0f} público = R$ {piso:.0f} enviados ({origem})"
+    novo_min = math.ceil(piso)
+    # revisão de 12/11 (regras.md 4d, "a proteção só SOBE o piso"): soltar o teto não baixa o piso vigente. A escada da
+    # King Spa 7 de 23/11 (piso = teto R$ 1.569) virou piso R$ 944 ao esgotar: um cancelamento venderia a unidade 40%
+    # abaixo da escada antes da rotina seguinte. Piso vigente acima do de proteção fica, só o teto sai. Exceção: o piso =
+    # teto da Regra J antiga (topo do mercado, desligada pelo dono em 31/10) ou sem regra por data conhecida desce ao p90.
+    motivo_regra = str((regra or {}).get("reason") or "")
+    legado_j = not regra or ("Regra J" in motivo_regra and "Regra J desligada" not in motivo_regra)
+    if tem_teto and atual_min > novo_min and not legado_j:
+        novo_min = round(atual_min, 2)
+        fonte = f"piso vigente R$ {atual_min:.0f} mantido (a proteção só sobe o piso; {fonte})"
+    it = {"tipo": "data", "quarto": curto, "data": d.isoformat(), "min_price": novo_min, "max_price": float(q["max"]),
             "preco_antes": atual, "protecao": True,
-            "motivo": (f"Proteção da noite esgotada ({v}/{u}; Regra J desligada pelo dono em 31/10): piso no p{pct:.0f} do "
-                       f"mercado com hidro, R$ {pub:.0f} público = R$ {piso:.0f} enviados ({origem}); teto livre")}
+            "motivo": (f"Proteção da noite esgotada ({v}/{u}; Regra J desligada pelo dono em 31/10): {fonte}; teto livre")}
     if teto_regra:
         it["max_price"] = math.floor(max(teto, it["min_price"]))
         it["motivo"] = it["motivo"].replace("teto livre", f"teto da faixa do dono R$ {it['max_price']}")

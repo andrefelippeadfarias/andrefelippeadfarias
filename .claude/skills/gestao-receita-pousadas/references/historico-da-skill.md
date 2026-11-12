@@ -2,6 +2,19 @@
 
 Cada mudança feita na própria Skill (regras, parâmetros, scripts, fluxo) entra aqui: data, o que mudou, por quê (evidência) e como desfazer. A entrada mais nova fica em cima.
 
+## 12/11/2026 (~13:00 BRT): a proteção da noite esgotada não baixa o piso da escada (revisão independente)
+
+- `pace.protecao_esgotada`: ao soltar o teto de uma noite esgotada, o piso vigente da escada ou do plano do dono acima do piso de proteção (p90 da âncora, pisos do dono) fica; só o piso = teto da Regra J antiga (ou sem regra por data conhecida) desce ao p90, como antes. Motivo: a rotina das 12:05 baixou o piso da King Spa 7 de 23/11 de R$ 1.569 para R$ 947 ao esgotar (regras.md 4d: "a proteção só SOBE o piso"). O motivo gravado cita a origem real do piso. Teste em `test_scripts.py` (test_protecao_esgotada_e_ajuste_de_tetos); 341 OK. As 4 noites da King Spa 7 (22, 23, 24 e 29/11) foram regravadas com o piso da escada às 13:00.
+- Pendência aberta: o motor não gera item quando a Balcony já está no mercado pela regra dos 80%, e o validador acusa Regra G falsa quando o mesmo plano mexe na King Spa da noite (`motor-balcony-80-confirmacao-20261112`); por ora, item de confirmação só na validação.
+
+## 10/11/2026 — Plano do dono de novembro a fevereiro no motor (ordem `dono-2026-11-09-plano-nov-fev`)
+- Dono 09/11 ~23:35 BRT: "Pode aplicar tudo, com exceção da questão do balcone [...]". Decisões 1, 2, 3, 5, 6, 7 aprovadas; a 4 recusada e trocada pela regra dos 80% da Balcony (`regras.md` 4f).
+- Novo: `scripts/plano_dono.py` (regras puras), `dados/regua_dono.json` (régua por noite de 09-10/11), `test_plano_dono.py`, `test_plano_motor.py`.
+- `pace.py`: ramo do plano no laço por noite (depois de manual, preço por data e bloqueio; antes da esgotada), `plano_da_noite`, `item_do_plano`, `balcony_no_mercado`, R2 em `pisos_enviados` (sem os R$ 850 em sexta e sábado do período), piso de mercado de dia de semana de D7 a D0, coerência que não reajusta as noites do plano. Sem a ordem no arquivo, nada disso vale.
+- `validar_plano.py`: a ordem do plano só serve de exceção nas noites do plano, no piso de mercado de D7 a D0 e na Balcony com 8/9 provados por `--precos`; nada de `abaixo_piso` genérico.
+- `calendario_12m.py`, `ordem_recanto.py`, `faixas_dono.py`, `concorrencia_hidro_vista.py`: alinhados ao plano (exigências, faixa da Afrodite, sem ordem de faixa nas noites do plano, sem item nas noites do plano).
+- Revisão: mapa do código (2 leitores), implementação, 2 revisores independentes (fidelidade com dry-run e verificador próprio; regressões contra o HEAD), 12 achados corrigidos; 341 testes OK.
+
 ## 09/11/2026 (~11:40-13:00 BRT): decisões do dono sobre mínimo, flutuação e Balcony ("1. Sim / 2 Sim / 3. Sim")
 - **Por quê:** respostas às 3 perguntas da análise de mínimo, base e máximo do PriceLabs (09/11 10:17 BRT).
 - **O que mudou:**
@@ -643,12 +656,3 @@ Hora da ANÁLISE E AGENDA DIÁRIA do PriceLabs (rotina "Agenda diária PriceLabs
 - Teste `test_escada_reta_usa_vendidas_base`; 114 OK.
 - Ordens `dono-2026-11-03-recanto-fds-hidro-MMDD` (8) com `vendidas_base`; a `-1106` foi apagada e a sexta 06/11 volta às ordens de 25/10 e 01/11.
 - Pendências de código: a proteção da noite esgotada ignora o piso das ordens `alvo_por_data`; a busca diária não acha o Recanto por nome (só pelas coordenadas).
-
-## 10/11/2026 — Plano do dono de novembro a fevereiro no motor (ordem `dono-2026-11-09-plano-nov-fev`)
-- Dono 09/11 ~23:35 BRT: "Pode aplicar tudo, com exceção da questão do balcone [...]". Decisões 1, 2, 3, 5, 6, 7 aprovadas; a 4 recusada e trocada pela regra dos 80% da Balcony (`regras.md` 4f).
-- Novo: `scripts/plano_dono.py` (regras puras), `dados/regua_dono.json` (régua por noite de 09-10/11), `test_plano_dono.py`, `test_plano_motor.py`.
-- `pace.py`: ramo do plano no laço por noite (depois de manual, preço por data e bloqueio; antes da esgotada), `plano_da_noite`, `item_do_plano`, `balcony_no_mercado`, R2 em `pisos_enviados` (sem os R$ 850 em sexta e sábado do período), piso de mercado de dia de semana de D7 a D0, coerência que não reajusta as noites do plano. Sem a ordem no arquivo, nada disso vale.
-- `validar_plano.py`: a ordem do plano só serve de exceção nas noites do plano, no piso de mercado de D7 a D0 e na Balcony com 8/9 provados por `--precos`; nada de `abaixo_piso` genérico.
-- `calendario_12m.py`, `ordem_recanto.py`, `faixas_dono.py`, `concorrencia_hidro_vista.py`: alinhados ao plano (exigências, faixa da Afrodite, sem ordem de faixa nas noites do plano, sem item nas noites do plano).
-- Revisão: mapa do código (2 leitores), implementação, 2 revisores independentes (fidelidade com dry-run e verificador próprio; regressões contra o HEAD), 12 achados corrigidos; 341 testes OK.
-

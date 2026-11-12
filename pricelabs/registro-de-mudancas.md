@@ -4885,7 +4885,7 @@ Sombra da flutuação: leitura do Beds24 das 06:13 guardada com `fechar --forcar
 
 **Auditoria de 12 meses:** 0 noites fora da regra no PriceLabs; estadia pelo dia de chegada e órfãs já certas (plano `--so-estadia` com 0 itens); no Beds24, o sábado novo do horizonte (13/11/2027) fechado para entrada e saída nos 6 quartos (lote aplicado e relido: 6 conferidos; lote único igual ao lote atual).
 
-**Motor de pace:** 390 noites (à frente 51, no ritmo 184, atrás 12, muito atrás 11); 62 itens (35 para cima, 13 para baixo, 14 de coerência), 6 tetos apagados antes nas noites esgotadas (Afrodite 15-16/11; King Spa 7 22, 23, 24 e 29/11). **Validador:** 3 erros falsos na Regra G da Balcony (23/11, 24/11 e 06/12): nessas noites vale a regra dos 80% (8/9 suítes com banheira da Villa vendidas) e a Balcony já está no mercado (R$ 686), mas o motor não gera item quando o preço já está certo e o validador exige o item da ordem do plano; incluí 3 itens de confirmação com o mesmo valor vigente (ordem `dono-2026-11-09-plano-nov-fev`), e o validador passou (0 erros). Pendência da Skill aberta para o motor emitir esse item.
+**Motor de pace:** 390 noites (à frente 51, no ritmo 184, atrás 12, muito atrás 11); 62 itens (35 para cima, 13 para baixo, 7 de coerência e 7 de proteção das esgotadas), 6 tetos apagados antes nas noites esgotadas (Afrodite 15-16/11; King Spa 7 22, 23, 24 e 29/11). **Validador:** 3 erros falsos na Regra G da Balcony (23/11, 24/11 e 06/12): nessas noites vale a regra dos 80% (8/9 suítes com banheira da Villa vendidas) e a Balcony já está no mercado (R$ 686), mas o motor não gera item quando o preço já está certo e o validador exige o item da ordem do plano; incluí 3 itens de confirmação com o mesmo valor vigente (ordem `dono-2026-11-09-plano-nov-fev`), e o validador passou (0 erros). Pendência da Skill aberta para o motor emitir esse item.
 
 **Gravado (15:05-15:09 UTC) e conferido no recálculo das 12:09-12:10 BRT:** 48 noites ✅ e 0 diferenças em 6 quartos; a King Spa 2 foi conferida só pela resposta da API (guardei o último recálculo dela das 24 h para a rotina das 13:53).
 
@@ -4923,23 +4923,23 @@ Sombra da flutuação: leitura do Beds24 das 06:13 guardada com `fechar --forcar
 | Panorâmica II 28/11 | PriceLabs por data | R$ 1.622 | piso e teto R$ 1.510 (-5% da base) — Plano do dono 09/11 (fds): abertura R$ 926 público | apagar a regra da data ou regravar o valor de antes |
 | Panorâmica II 11/01 | PriceLabs por data | R$ 1.510 | piso e teto R$ 1.224 (-23% da base) — Escada de vendas (dono 01/11): 1/16 vendidas | apagar a regra da data ou regravar o valor de antes |
 | Moinhos (Q7) 11/01 | PriceLabs por data | R$ 1.513 | piso e teto R$ 1.220 (+4% da base) — Escada de vendas (dono 01/11): 1/7 vendidas | apagar a regra da data ou regravar o valor de antes |
-| King Spa 2 12/11 | PriceLabs por data | R$ 1.041 | piso (teto livre) R$ 1.041 (-18% da base) — Proteção da noite esgotada (2/2 | apagar a regra da data ou regravar o valor de antes |
-| King Spa 2 18/11 | PriceLabs por data | R$ 1.105 | piso e teto R$ 1.283 (+1% da base) — Escada de vendas (dono 01/11): 6/9 vendidas | apagar a regra da data ou regravar o valor de antes |
-| King Spa 2 19/11 | PriceLabs por data | R$ 2.248 | piso e teto R$ 2.057 (+62% da base) — Plano do dono 09/11 (feriado): abertura R$ 1368 público | apagar a regra da data ou regravar o valor de antes |
-| King Spa 2 23/11 | PriceLabs por data | R$ 1.511 | piso e teto R$ 1.664 (+31% da base) — Escada de vendas (dono 01/11): 8/9 vendidas | apagar a regra da data ou regravar o valor de antes |
-| King Spa 2 24/11 | PriceLabs por data | R$ 1.435 | piso e teto R$ 1.588 (+25% da base) — Escada de vendas (dono 01/11): 8/9 vendidas | apagar a regra da data ou regravar o valor de antes |
-| King Spa 2 27/11 | PriceLabs por data | R$ 1.626 | piso e teto R$ 1.740 (+37% da base) — Plano do dono 09/11 (fds): abertura R$ 926 público | apagar a regra da data ou regravar o valor de antes |
-| King Spa 2 30/11 | PriceLabs por data | R$ 952 | piso e teto R$ 1.054 (-17% da base) — Escada de vendas (dono 01/11): 5/9 vendidas | apagar a regra da data ou regravar o valor de antes |
-| King Spa 2 07/12 | PriceLabs por data | R$ 1.232 | piso e teto R$ 1.334 (+5% da base) — Escada de vendas (dono 01/11): 6/9 vendidas | apagar a regra da data ou regravar o valor de antes |
-| King Spa 2 13/12 | PriceLabs por data | R$ 1.105 | piso e teto R$ 1.168 (-8% da base) — Escada de vendas (dono 01/11): 6/9 vendidas | apagar a regra da data ou regravar o valor de antes |
-| King Spa 2 14/12 | PriceLabs por data | R$ 1.041 | piso e teto R$ 1.105 (-13% da base) — Escada de vendas (dono 01/11): 4/9 vendidas | apagar a regra da data ou regravar o valor de antes |
-| King Spa 2 15/12 | PriceLabs por data | R$ 1.041 | piso e teto R$ 1.105 (-13% da base) — Escada de vendas (dono 01/11): 3/9 vendidas | apagar a regra da data ou regravar o valor de antes |
-| King Spa 2 16/12 | PriceLabs por data | R$ 1.041 | piso e teto R$ 1.105 (-13% da base) — Escada de vendas (dono 01/11): 4/9 vendidas | apagar a regra da data ou regravar o valor de antes |
-| King Spa 2 17/12 | PriceLabs por data | R$ 1.041 | piso e teto R$ 1.105 (-13% da base) — Escada de vendas (dono 01/11): 3/9 vendidas | apagar a regra da data ou regravar o valor de antes |
-| King Spa 2 28/12 | PriceLabs por data | R$ 2.184 | piso e teto R$ 2.286 (+80% da base) — Escada de vendas (dono 01/11): 2/9 vendidas | apagar a regra da data ou regravar o valor de antes |
-| King Spa 2 06/01 | PriceLabs por data | R$ 1.054 | piso e teto R$ 1.118 (-12% da base) — Escada de vendas (dono 01/11): 1/9 vendidas | apagar a regra da data ou regravar o valor de antes |
-| King Spa 2 07/01 | PriceLabs por data | R$ 1.054 | piso e teto R$ 1.118 (-12% da base) — Escada de vendas (dono 01/11): 1/9 vendidas | apagar a regra da data ou regravar o valor de antes |
-| King Spa 2 11/01 | PriceLabs por data | R$ 1.042 | piso e teto R$ 1.003 (-21% da base) — Escada de vendas (dono 01/11): 1/9 vendidas | apagar a regra da data ou regravar o valor de antes |
+| King Spa 2 12/11 | PriceLabs por data | R$ 1.041 | piso (teto livre) R$ 1.041 (-18% da base) — Proteção da noite esgotada (2/2 (não recalculado: conferido só pela resposta da API) | apagar a regra da data ou regravar o valor de antes |
+| King Spa 2 18/11 | PriceLabs por data | R$ 1.105 | piso e teto R$ 1.283 (+1% da base) — Escada de vendas (dono 01/11): 6/9 vendidas (não recalculado: conferido só pela resposta da API) | apagar a regra da data ou regravar o valor de antes |
+| King Spa 2 19/11 | PriceLabs por data | R$ 2.248 | piso e teto R$ 2.057 (+62% da base) — Plano do dono 09/11 (feriado): abertura R$ 1368 público (não recalculado: conferido só pela resposta da API) | apagar a regra da data ou regravar o valor de antes |
+| King Spa 2 23/11 | PriceLabs por data | R$ 1.511 | piso e teto R$ 1.664 (+31% da base) — Escada de vendas (dono 01/11): 8/9 vendidas (não recalculado: conferido só pela resposta da API) | apagar a regra da data ou regravar o valor de antes |
+| King Spa 2 24/11 | PriceLabs por data | R$ 1.435 | piso e teto R$ 1.588 (+25% da base) — Escada de vendas (dono 01/11): 8/9 vendidas (não recalculado: conferido só pela resposta da API) | apagar a regra da data ou regravar o valor de antes |
+| King Spa 2 27/11 | PriceLabs por data | R$ 1.626 | piso e teto R$ 1.740 (+37% da base) — Plano do dono 09/11 (fds): abertura R$ 926 público (não recalculado: conferido só pela resposta da API) | apagar a regra da data ou regravar o valor de antes |
+| King Spa 2 30/11 | PriceLabs por data | R$ 952 | piso e teto R$ 1.054 (-17% da base) — Escada de vendas (dono 01/11): 5/9 vendidas (não recalculado: conferido só pela resposta da API) | apagar a regra da data ou regravar o valor de antes |
+| King Spa 2 07/12 | PriceLabs por data | R$ 1.232 | piso e teto R$ 1.334 (+5% da base) — Escada de vendas (dono 01/11): 6/9 vendidas (não recalculado: conferido só pela resposta da API) | apagar a regra da data ou regravar o valor de antes |
+| King Spa 2 13/12 | PriceLabs por data | R$ 1.105 | piso e teto R$ 1.168 (-8% da base) — Escada de vendas (dono 01/11): 6/9 vendidas (não recalculado: conferido só pela resposta da API) | apagar a regra da data ou regravar o valor de antes |
+| King Spa 2 14/12 | PriceLabs por data | R$ 1.041 | piso e teto R$ 1.105 (-13% da base) — Escada de vendas (dono 01/11): 4/9 vendidas (não recalculado: conferido só pela resposta da API) | apagar a regra da data ou regravar o valor de antes |
+| King Spa 2 15/12 | PriceLabs por data | R$ 1.041 | piso e teto R$ 1.105 (-13% da base) — Escada de vendas (dono 01/11): 3/9 vendidas (não recalculado: conferido só pela resposta da API) | apagar a regra da data ou regravar o valor de antes |
+| King Spa 2 16/12 | PriceLabs por data | R$ 1.041 | piso e teto R$ 1.105 (-13% da base) — Escada de vendas (dono 01/11): 4/9 vendidas (não recalculado: conferido só pela resposta da API) | apagar a regra da data ou regravar o valor de antes |
+| King Spa 2 17/12 | PriceLabs por data | R$ 1.041 | piso e teto R$ 1.105 (-13% da base) — Escada de vendas (dono 01/11): 3/9 vendidas (não recalculado: conferido só pela resposta da API) | apagar a regra da data ou regravar o valor de antes |
+| King Spa 2 28/12 | PriceLabs por data | R$ 2.184 | piso e teto R$ 2.286 (+80% da base) — Escada de vendas (dono 01/11): 2/9 vendidas (não recalculado: conferido só pela resposta da API) | apagar a regra da data ou regravar o valor de antes |
+| King Spa 2 06/01 | PriceLabs por data | R$ 1.054 | piso e teto R$ 1.118 (-12% da base) — Escada de vendas (dono 01/11): 1/9 vendidas (não recalculado: conferido só pela resposta da API) | apagar a regra da data ou regravar o valor de antes |
+| King Spa 2 07/01 | PriceLabs por data | R$ 1.054 | piso e teto R$ 1.118 (-12% da base) — Escada de vendas (dono 01/11): 1/9 vendidas (não recalculado: conferido só pela resposta da API) | apagar a regra da data ou regravar o valor de antes |
+| King Spa 2 11/01 | PriceLabs por data | R$ 1.042 | piso e teto R$ 1.003 (-21% da base) — Escada de vendas (dono 01/11): 1/9 vendidas (não recalculado: conferido só pela resposta da API) | apagar a regra da data ou regravar o valor de antes |
 | King Spa 7 18/11 | PriceLabs por data | R$ 1.051 | piso e teto R$ 1.214 (-18% da base) — Escada de vendas (dono 01/11): 5/7 vendidas | apagar a regra da data ou regravar o valor de antes |
 | King Spa 7 22/11 | PriceLabs por data | R$ 1.169 | piso (teto livre) R$ 1.051 (-29% da base), estadia 1 — Proteção da noite esgotada (7/7 | apagar a regra da data ou regravar o valor de antes |
 | King Spa 7 23/11 | PriceLabs por data | R$ 1.569 | piso (teto livre) R$ 947 (-36% da base), estadia 2 — Proteção da noite esgotada (7/7 | apagar a regra da data ou regravar o valor de antes |
@@ -4961,6 +4961,24 @@ Sombra da flutuação: leitura do Beds24 das 06:13 guardada com `fechar --forcar
 **Envio:** o envio de hoje já saiu (10:08); estas mudanças chegam aos canais no envio de amanhã, ou antes com o Sync Now (pedido no relatório, por causa da Panorâmica II de hoje).
 
 **Sombra da flutuação:** foto 3 de 7 registrada.
+
+
+## 12/11/2026, 12:40 a 13:05 BRT — Revisão independente da rotina de hoje: 1 correção gravada (King Spa 7) e 1 correção no motor
+
+**Revisão** (2 revisores só de leitura): as regras duras conferem nas 65 mudanças das 12:05 (nada de hoje subiu, nenhum item abaixo dos limites e pisos, ordem do Recanto e Regra G/80% em reais, escada pelas vendas do Beds24, um passo por noite, sábado 13/11/2027 na regra, tabela do registro igual ao gravado). Um problema médio: **a proteção das noites esgotadas baixou o piso da escada em 4 noites da King Spa 7** (ao soltar o teto, o motor gravava o piso do p90 mesmo com o piso da escada mais alto), contra a regra 4d ("a proteção só SOBE o piso"). As 4 estão 7/7 no Beds24 (nenhuma venda perdida), mas um cancelamento venderia a unidade até 40% abaixo da escada.
+
+**Motor corrigido** (`pace.protecao_esgotada`): ao soltar o teto, o piso vigente da escada ou do plano do dono acima do de proteção fica; só o piso = teto da Regra J antiga (ou sem regra por data conhecida) desce ao p90, como antes. O motivo gravado agora cita a origem real do piso (p90, piso do dono ou piso mantido). Teste novo; 341 testes da skill OK.
+
+| Mudança | Onde | Antes | Depois (conferido na resposta da API às 13:00) | Como desfazer (pedir ao Claude) |
+|---|---|---|---|---|
+| King Spa 7 22/11 | PriceLabs por data | piso R$ 1.051 (-29%) | piso R$ 1.169 (-21%, o da escada), teto livre, estadia 1 | regravar o piso -29% |
+| King Spa 7 23/11 | PriceLabs por data | piso R$ 947 (-36%) | piso R$ 1.569 (+6%, o da escada), teto livre, estadia 2 | regravar o piso -36% |
+| King Spa 7 24/11 | PriceLabs por data | piso R$ 947 (-36%) | piso R$ 1.421 (-4%, o da escada), teto livre, estadia 1 | regravar o piso -36% |
+| King Spa 7 29/11 | PriceLabs por data | piso R$ 1.006 (-32%) | piso R$ 1.110 (-25%, o da escada), teto livre, estadia 1 | regravar o piso -32% |
+
+Validado (0 erros; as 2 confirmações da Balcony de 23 e 24/11 entraram só na validação, pelo mesmo motivo de antes, e não foram regravadas). Logs do PriceLabs lidos antes: só a API. Sem recálculo de conferência (a King Spa 7 tem 1 recálculo nas 24 h, guardado para as rotinas de 13:53 e 16:53).
+
+**Achados baixos anotados:** a proteção da King Spa 2 de hoje (D0) foi regravada igual por um teto velho no arquivo de trabalho montado sem recálculo (sem efeito); a Balcony de 11/01/2027 ficou a 91,1% da suíte livre (dentro da folga de 1% da base; a rotina de amanhã leva a 90%). A tabela de cima marca a King Spa 2 como não recalculada.
 
 ## O que só pode ser feito na tela (passo a passo para você)
 

@@ -1,0 +1,9 @@
+{
+ "function": "pace.fator_publico",
+ "php_target": "Ritmo\\Domain\\Market\\PriceFactor::factor(room, public, type)",
+ "notes": "cfg is tests/fixtures/frozen/quartos.json; in PHP, the rule set of tests/fixtures/presets/parity.json.",
+ "cases": [
+  {"input": {"pousada": "Recanto"}, "expected": 0.63},
+  {"input": {"pousada": "Villa"}, "expected": 0.65}
+ ]
+}

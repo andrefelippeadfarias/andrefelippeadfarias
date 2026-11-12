@@ -28,6 +28,7 @@ OUTPUT = TOOLS.parent / "presets" / "parity.json"
 WEEKEND_DAYS = [4, 5]  # ancora_mercado.tipo_noite: Friday and Saturday nights
 ZERO_SOLD_DAYS = {"weekday": 7, "weekend": 14, "holiday": 14}  # pace.status_da_noite
 TUB_TAG = "tub"
+GROUP_PACE_MAX_UNITS = 2  # pace._plano: rooms of 1 or 2 units use pace.ocupacao_pousada (the rooms with a tub)
 
 LEFT_OUT = [
     "quartos[].acima_de / entre / premio_minimo (room relations)",
@@ -96,6 +97,7 @@ def pace(cfg: dict) -> dict:
         "band": p["banda"],
         "very_behind": p["muito_atras"],
         "zero_sold_days": ZERO_SOLD_DAYS,
+        "group_pace": {"max_units": GROUP_PACE_MAX_UNITS, "room_tags": [TUB_TAG]},
         "target_percentile": {
             PROPERTY_TIER[short]: {TARGET_STATUS[status]: value for status, value in table.items()}
             for short, table in p["alvo"].items()

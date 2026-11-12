@@ -58,17 +58,21 @@
                 "weekend": 10,
                 "holiday": 14
             },
+            "group_pace": {
+                "max_units": 0,
+                "room_tags": []
+            },
             "target_percentile": {
                 "premium": {
-                    "ahead_near": 90,
-                    "ahead": 75,
+                    "ahead_near": 80,
+                    "ahead": 70,
                     "on_pace": 60,
                     "behind": 50,
                     "very_behind": 40
                 },
                 "standard": {
-                    "ahead_near": 80,
-                    "ahead": 65,
+                    "ahead_near": 70,
+                    "ahead": 60,
                     "on_pace": 50,
                     "behind": 40,
                     "very_behind": 30

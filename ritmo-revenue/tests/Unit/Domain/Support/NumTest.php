@@ -109,9 +109,21 @@ final class NumTest extends TestCase
         self::assertSame(-30, Num::floorEps(-30.0000000001));
     }
 
+    public function testCeilIntAndFloorIntHaveNoTolerance(): void
+    {
+        self::assertSame(15, Num::ceilInt(14.000000000000002));
+        self::assertSame(15, Num::ceilInt(14.0000000005));
+        self::assertSame(14, Num::ceilInt(14.0));
+        self::assertSame(-30, Num::ceilInt(-30.9));
+        self::assertSame(13, Num::floorInt(13.999999999999998));
+        self::assertSame(13, Num::floorInt(13.9999999995));
+        self::assertSame(14, Num::floorInt(14.0));
+        self::assertSame(-31, Num::floorInt(-30.1));
+    }
+
     public function testCeilAndFloorRejectNonFiniteNumbers(): void
     {
-        foreach (['ceilEps', 'floorEps'] as $method) {
+        foreach (['ceilEps', 'floorEps', 'ceilInt', 'floorInt'] as $method) {
             try {
                 Num::$method(NAN);
                 self::fail('Expected an InvalidArgumentException.');

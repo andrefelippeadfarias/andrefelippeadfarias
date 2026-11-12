@@ -59,6 +59,32 @@ final class Num
     }
 
     /**
+     * math.ceil($value): the smallest whole number not below the value, with no tolerance.
+     * The pace engine rounds a rising price with it.
+     *
+     * @throws InvalidArgumentException when the value is not finite or does not fit in an integer
+     */
+    public static function ceilInt(float $value): int
+    {
+        self::assertFinite($value);
+
+        return self::toInt(ceil($value));
+    }
+
+    /**
+     * math.floor($value): the largest whole number not above the value, with no tolerance.
+     * The pace engine rounds a falling price with it.
+     *
+     * @throws InvalidArgumentException when the value is not finite or does not fit in an integer
+     */
+    public static function floorInt(float $value): int
+    {
+        self::assertFinite($value);
+
+        return self::toInt(floor($value));
+    }
+
+    /**
      * math.ceil($value - 1e-9): rounds up, ignoring float noise just above an integer.
      *
      * @throws InvalidArgumentException when the value is not finite or does not fit in an integer

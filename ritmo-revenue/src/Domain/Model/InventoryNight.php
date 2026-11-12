@@ -16,12 +16,12 @@ final class InventoryNight
     public readonly DateTimeImmutable $date;
 
     /**
-     * @param int        $available units still for sale
+     * @param int        $available units still for sale; negative when the night is overbooked by that many units
      * @param int|null   $minStay   null when the PMS has no value for the night
      * @param int|null   $maxStay   null when the PMS has no value for the night
      * @param float|null $pmsPrice  price held by the PMS for the night; null when not read
      *
-     * @throws InvalidArgumentException on negative counts or prices
+     * @throws InvalidArgumentException on invalid stay lengths or a negative price
      */
     public function __construct(
         DateTimeImmutable $date,
@@ -31,9 +31,6 @@ final class InventoryNight
         public readonly Restriction $restriction = Restriction::None,
         public readonly ?float $pmsPrice = null,
     ) {
-        if ($available < 0) {
-            throw new InvalidArgumentException('Available units cannot be negative.');
-        }
         if (($minStay !== null && $minStay < 1) || ($maxStay !== null && $maxStay < 1)) {
             throw new InvalidArgumentException('Stay lengths must be at least one night.');
         }

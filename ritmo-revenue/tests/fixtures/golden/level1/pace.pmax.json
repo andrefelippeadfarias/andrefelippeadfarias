@@ -3,6 +3,7 @@
  "php_target": "Ritmo\\Domain\\Config\\RuleSet::maxStepPercent(daysOut)",
  "notes": "cfg is tests/fixtures/frozen/quartos.json; in PHP, the rule set of tests/fixtures/presets/parity.json.",
  "cases": [
+  {"input": {"dias": -7}, "expected": 20.0},
   {"input": {"dias": -1}, "expected": 20.0},
   {"input": {"dias": 0}, "expected": 20.0},
   {"input": {"dias": 1}, "expected": 20.0},
@@ -14,12 +15,17 @@
   {"input": {"dias": 7}, "expected": 15.0},
   {"input": {"dias": 8}, "expected": 10.0},
   {"input": {"dias": 9}, "expected": 10.0},
+  {"input": {"dias": 10}, "expected": 10.0},
+  {"input": {"dias": 14}, "expected": 10.0},
   {"input": {"dias": 15}, "expected": 10.0},
   {"input": {"dias": 29}, "expected": 10.0},
   {"input": {"dias": 30}, "expected": 10.0},
   {"input": {"dias": 31}, "expected": 5.0},
   {"input": {"dias": 32}, "expected": 5.0},
+  {"input": {"dias": 45}, "expected": 5.0},
   {"input": {"dias": 60}, "expected": 5.0},
+  {"input": {"dias": 90}, "expected": 5.0},
+  {"input": {"dias": 120}, "expected": 5.0},
   {"input": {"dias": 365}, "expected": 5.0}
  ]
 }

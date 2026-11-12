@@ -1,6 +1,6 @@
 # Ritmo Revenue: architecture
 
-The product plan is in [PLANO.md](PLANO.md). The exact signatures of everything shared between modules are in [CONTRACTS.md](CONTRACTS.md). This document says where code goes, what each folder may and may not do, who owns it, and the conventions every module follows.
+The product plan is in [PLANO.md](PLANO.md). The exact signatures of everything shared between modules are in [CONTRACTS.md](CONTRACTS.md); the rule engine (calendar, market, pricing, plan, report) is in [ENGINE.md](ENGINE.md). This document says where code goes, what each folder may and may not do, who owns it, and the conventions every module follows.
 
 ## 1. What the plugin is
 
@@ -184,7 +184,7 @@ No code path may send POST, PUT, PATCH or DELETE to a PMS or pricing system. Thr
 
 The end-to-end check of M1 asserts that the fake servers received no POST and no DELETE during a shadow run.
 
-**Open point for the connectors and infrastructure phases:** the verified API notes of the pricing system list its calendar read as `POST /listing_prices` (a read that uses POST). Guard 3 as specified forbids it. Either a GET equivalent is used, or that single read-only endpoint is put on an explicit allow-list in the HTTP guard (method + host + exact path), covered by a test. This is a product-safety decision and must be made explicitly, not worked around.
+**Open point for the connectors and infrastructure phases:** the verified API notes of the pricing system list its calendar read as `POST /listing_prices` (a read that uses POST). Guard 3 as specified forbids it. The options are: (a) the run pipeline takes the current price and the units sold of each night from the PMS (`PmsConnector::readInventory(..., withPrices: true)` gives `InventoryNight::$pmsPrice`, the price the pricing system sent; bookings give the units sold) and never calls `readPrices()` of a connector whose only price read is a POST (a call ends in `WriteBlocked` from the HTTP guard); or (b) that single read-only endpoint is put on an explicit allow-list in the HTTP guard (method + host + exact path), covered by a test. Until the owner chooses (b), (a) is the rule: no POST leaves the site. This is a product-safety decision and must be made explicitly, not worked around.
 
 ## 7. Golden tests
 
@@ -198,7 +198,7 @@ The reference engine's pure functions are run with frozen inputs by `tests/fixtu
 - Inputs use the reference engine's argument names and vocabulary. `Ritmo\Tests\Support\Golden` loads the cases and translates the vocabulary (`Golden::nightType('fds')`).
 - Functions that take the engine configuration are computed in PHP from the parity preset (`Fixtures::parityRules()`, `Fixtures::parityPreset()`).
 - Tolerance: amounts within 0.01; percentages and integers exact. NaN is written as the string `"NaN"`.
-- `tests/fixtures/golden/MANIFEST.json` records the repository commit the engine was at, the generation date, the hashes of the frozen inputs and the case count of every file. A test fails if a frozen input changes without the goldens being regenerated.
+- `tests/fixtures/golden/MANIFEST.json` records the repository commit at generation (`repo_commit`), the last commit that changed the reference engine (`engine_commit`), whether the engine had uncommitted changes (`engine_dirty`, which must be `false`), the generation date, the hashes of the frozen inputs and the case count of every file. A test fails if a frozen input changes without the goldens being regenerated, or if the goldens came from uncommitted engine code.
 - To regenerate after the reference rules change: `python3 tests/fixtures/tools/freeze_inputs.py`, then `dump_golden.py`, then `make_parity_preset.py`. The tools read the reference engine's folder and never write to it.
 
 ## 8. What is not here yet

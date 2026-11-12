@@ -1,0 +1,12 @@
+{
+ "function": "pace.teto_anuncio",
+ "php_target": "Ritmo\\Domain\\Pricing\\Floors::highestFloor(room)",
+ "notes": "Only the rooms whose result depends on their own listing alone (see cases_teto_anuncio).",
+ "cases": [
+  {"input": {"curto": "Double"}, "expected": 4987.6},
+  {"input": {"curto": "Afrodite"}, "expected": 10000.0},
+  {"input": {"curto": "VK7"}, "expected": 4987.6},
+  {"input": {"curto": "Balcony"}, "expected": 4991.1},
+  {"input": {"curto": "VK2"}, "expected": 4991.1}
+ ]
+}

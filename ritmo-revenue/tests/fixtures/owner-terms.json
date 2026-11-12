@@ -2,7 +2,7 @@
   "_doc": "Names, room codes and ids of the owner's own properties. They may appear only under tests/fixtures/; the architecture test fails when plugin code (src/, presets/, templates/, assets/, the root PHP files) mentions one. Matched as whole words, ignoring case.",
   "terms": [
     "recanto", "moinhos", "villa", "dolce amore", "afrodite", "balcony", "panorâmica", "panoramica",
-    "campos do jordão", "campos do jordao", "capivari",
+    "campos do jordão", "campos do jordao", "capivari", "king spa",
     "Q7", "Q2", "VK7", "VK2",
     "124405", "350362", "350364", "722805", "722806", "722807", "722808", "722813", "722814", "722815",
     "7562933", "14824789", "15459723"

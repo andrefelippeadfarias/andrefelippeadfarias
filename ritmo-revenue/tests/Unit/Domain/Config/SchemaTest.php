@@ -23,7 +23,8 @@ final class SchemaTest extends TestCase
             'calendar.weekend_days', 'calendar.holidays',
             'calendar.holidays.*.name', 'calendar.holidays.*.start', 'calendar.holidays.*.end',
             'calendar.holidays.*.night_type', 'calendar.holidays.*.min_stay', 'calendar.holidays.*.floor',
-            'pace.band', 'pace.very_behind', 'pace.zero_sold_days.weekday', 'pace.target_percentile',
+            'pace.band', 'pace.very_behind', 'pace.zero_sold_days.weekday', 'pace.group_pace.max_units', 'pace.group_pace.room_tags',
+            'pace.target_percentile',
             'pace.target_percentile.*.ahead_near', 'pace.target_percentile.*.ahead', 'pace.target_percentile.*.on_pace',
             'pace.target_percentile.*.behind', 'pace.target_percentile.*.very_behind', 'pace.ahead_near_days',
             'pace.k', 'pace.max_step', 'pace.max_step.*.min_days', 'pace.max_step.*.percent',
@@ -62,6 +63,24 @@ final class SchemaTest extends TestCase
             if ($field->type === FieldType::ListOf || $field->type === FieldType::Map) {
                 self::assertNotNull($field->max, "$key has no size limit");
                 self::assertTrue(Schema::ruleSet()->has($key . '.*'), "$key has no item definition");
+            }
+        }
+    }
+
+    public function testEveryFieldHasHelpOfItsOwnOrFromTheSectionAroundIt(): void
+    {
+        $schema = Schema::ruleSet();
+        foreach ($schema->children('') as $key => $section) {
+            self::assertNotSame('', $section->help, "the section $key has no help");
+        }
+        foreach ($schema->fields() as $key => $field) {
+            $closest = $field;
+            while ($closest->help === '' && $closest->parentKey() !== null) {
+                $closest = $schema->field($closest->parentKey());
+            }
+            self::assertNotSame('', $closest->help, "$key has no help, and neither has any group around it");
+            if (!$field->type->isContainer() && $field->parentKey() !== null) {
+                self::assertNotSame($schema->field((string) strtok($key, '.'))->help, $closest->help, "$key is explained only by its top-level section");
             }
         }
     }

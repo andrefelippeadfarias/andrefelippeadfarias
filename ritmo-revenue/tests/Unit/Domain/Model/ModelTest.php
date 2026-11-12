@@ -223,7 +223,8 @@ final class ModelTest extends TestCase
         self::assertSame(Restriction::None, $night->restriction);
         self::assertNull($night->minStay);
         self::assertNull($night->pmsPrice);
-        foreach ([[-1, null, null, null], [1, 0, null, null], [1, null, 0, null], [1, null, null, -5.0], [1, null, null, NAN]] as [$available, $minStay, $maxStay, $price]) {
+        self::assertSame(-1, (new InventoryNight(Days::date('2026-11-11'), -1))->available, 'a negative count is an overbooked night');
+        foreach ([[1, 0, null, null], [1, null, 0, null], [1, null, null, -5.0], [1, null, null, NAN]] as [$available, $minStay, $maxStay, $price]) {
             try {
                 new InventoryNight(Days::date('2026-11-11'), $available, $minStay, $maxStay, Restriction::None, $price);
                 self::fail('Expected an InvalidArgumentException.');

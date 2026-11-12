@@ -1,0 +1,76 @@
+{
+  "_doc": "Invented world served by the fake APIs (tests/fake-apis/router.php): one fictional property, three room types with 4, 2 and 1 units, sixty nights from 'start'. Nothing here belongs to a real property, account or guest. Tokens and keys are placeholders that only the simulator accepts. Night 2027-03-05 of room 902001 is sold out (4 of 4); night 2027-03-13 of room 902002 is overbooked (3 bookings, 2 units). Bookings 7001-7012 cover every status. The simulator adds synthetic guest fields (marked GUESTDATA) to each booking it serves, so tests can prove that the connector drops them.",
+  "start": "2027-03-01",
+  "nights": 60,
+  "currency": "BRL",
+  "beds24": {
+    "long_life_token": "sim-long-life-token-0001",
+    "refresh_token": "sim-refresh-token-0001",
+    "access_token_lifetime": 3600,
+    "bookings_per_page": 4,
+    "credit": {"remaining": "96.0", "resets_in": "280", "cost": "1"},
+    "property": {"id": 901001, "name": "Example Inn"}
+  },
+  "pricelabs": {
+    "api_key": "sim-pricelabs-key-0001",
+    "pms": "beds24",
+    "last_date_pushed": "2027-02-28T09:10:00Z",
+    "last_refreshed_at": "2027-02-28T21:30:00Z",
+    "other_listings": [
+      {"id": "elsewhere-55001", "pms": "othersystem", "name": "Loft kept in another system", "min": 200, "base": 300, "max": 900, "currency": "BRL", "push_enabled": false, "last_date_pushed": null, "last_refreshed_at": null}
+    ]
+  },
+  "rooms": [
+    {"room_id": 902001, "name": "Standard Room", "units": 4, "min_stay": 1, "max_stay": 30, "min": 320, "base": 480, "max": 1600, "weekday_price": 420, "weekend_price": 560, "push_enabled": true},
+    {"room_id": 902002, "name": "Garden Suite", "units": 2, "min_stay": 2, "max_stay": 14, "min": 450, "base": 700, "max": 2400, "weekday_price": 640, "weekend_price": 820, "push_enabled": true},
+    {"room_id": 902003, "name": "Master Suite", "units": 1, "min_stay": 2, "max_stay": 14, "min": 750, "base": 1100, "max": 3600, "weekday_price": 980, "weekend_price": 1350, "push_enabled": false}
+  ],
+  "calendar_rules": [
+    {"room_id": 902001, "from": "2027-03-13", "to": "2027-03-13", "override": "noCheckIn"},
+    {"room_id": 902001, "from": "2027-03-28", "to": "2027-03-28", "override": "noCheckOut", "max_stay": 5},
+    {"room_id": 902002, "from": "2027-03-19", "to": "2027-03-21", "override": "noCheckInOrCheckOut", "min_stay": 3},
+    {"room_id": 902003, "from": "2027-04-05", "to": "2027-04-08", "override": "blackout"}
+  ],
+  "bookings": [
+    {"id": 7001, "roomId": 902001, "roomQty": 2, "status": "confirmed", "arrival": "2027-03-05", "departure": "2027-03-07", "price": 2240, "channel": "booking", "referer": "Booking.com", "bookingTime": "2027-01-10T14:22:05Z", "modifiedTime": "2027-01-10T14:22:05Z", "cancelTime": null,
+     "invoiceItems": [{"id": 1, "type": "charge", "qty": 1, "amount": 2240, "lineTotal": 2240, "invoiceeId": null}]},
+    {"id": 7002, "roomId": 902001, "roomQty": 1, "status": "confirmed", "arrival": "2027-03-05", "departure": "2027-03-06", "price": 560, "channel": "airbnb", "referer": "Airbnb", "bookingTime": "2027-02-01T09:00:00Z", "modifiedTime": "2027-02-01T09:00:00Z", "cancelTime": null,
+     "invoiceItems": [{"id": 2, "type": "charge", "qty": 1, "amount": 560, "lineTotal": 560, "invoiceeId": null}, {"id": 3, "type": "payment", "qty": 1, "amount": 560, "lineTotal": 560, "invoiceeId": null}]},
+    {"id": 7003, "roomId": 902001, "roomQty": 1, "status": "new", "arrival": "2027-03-05", "departure": "2027-03-08", "price": 1540, "channel": "", "referer": "frontdesk1", "bookingTime": "2027-02-20T18:45:00Z", "modifiedTime": "2027-02-25T11:00:00Z", "cancelTime": null,
+     "invoiceItems": []},
+    {"id": 7004, "roomId": 902001, "roomQty": 1, "status": "cancelled", "arrival": "2027-03-12", "departure": "2027-03-14", "price": 1120, "channel": "booking", "referer": "Booking.com", "bookingTime": "2027-02-11T07:15:00Z", "modifiedTime": "2027-02-26T08:30:00Z", "cancelTime": "2027-02-26T08:30:00Z",
+     "invoiceItems": [{"id": 4, "type": "charge", "qty": 1, "amount": 1120, "lineTotal": 1120, "invoiceeId": null}]},
+    {"id": 7005, "roomId": 902001, "roomQty": 1, "status": "request", "arrival": "2027-03-20", "departure": "2027-03-22", "price": 1120, "channel": "booking", "referer": "Booking.com", "bookingTime": "2027-02-27T10:05:00Z", "modifiedTime": "2027-02-27T10:05:00Z", "cancelTime": null,
+     "invoiceItems": []},
+    {"id": 7006, "roomId": 902002, "roomQty": 1, "status": "confirmed", "arrival": "2027-03-12", "departure": "2027-03-14", "price": 1640, "channel": "booking", "referer": "Booking.com", "bookingTime": "2027-01-22T16:40:00Z", "modifiedTime": "2027-01-22T16:40:00Z", "cancelTime": null,
+     "invoiceItems": [{"id": 5, "type": "charge", "qty": 2, "amount": 820, "lineTotal": null, "invoiceeId": null}]},
+    {"id": 7007, "roomId": 902002, "roomQty": 1, "status": "confirmed", "arrival": "2027-03-13", "departure": "2027-03-15", "price": 1610, "channel": "airbnb", "referer": "Airbnb", "bookingTime": "2027-02-03T12:00:00Z", "modifiedTime": "2027-02-03T12:00:00Z", "cancelTime": null,
+     "invoiceItems": [{"id": 6, "type": "charge", "qty": 1, "amount": 1460, "lineTotal": 1460, "invoiceeId": null}, {"id": 7, "type": "charge", "qty": 1, "amount": 150, "lineTotal": 150, "invoiceeId": 55}]},
+    {"id": 7008, "roomId": 902002, "roomQty": 1, "status": "confirmed", "arrival": "2027-03-13", "departure": "2027-03-14", "price": 820, "channel": "", "referer": "frontdesk1", "bookingTime": "2027-02-27T22:10:00Z", "modifiedTime": "2027-02-27T22:10:00Z", "cancelTime": null,
+     "invoiceItems": []},
+    {"id": 7009, "roomId": 902002, "roomQty": 1, "status": "inquiry", "arrival": "2027-04-02", "departure": "2027-04-04", "price": null, "channel": "booking", "referer": "Booking.com", "bookingTime": "2027-02-28T08:00:00Z", "modifiedTime": "2027-02-28T08:00:00Z", "cancelTime": null,
+     "invoiceItems": []},
+    {"id": 7010, "roomId": 902003, "roomQty": 1, "status": "confirmed", "arrival": "2027-03-26", "departure": "2027-03-29", "price": 3680, "channel": "booking", "referer": "Booking.com", "bookingTime": "2027-01-05T20:30:00Z", "modifiedTime": "2027-01-05T20:30:00Z", "cancelTime": null,
+     "invoiceItems": [{"id": 8, "type": "charge", "qty": 1, "amount": 3680, "lineTotal": 3680, "invoiceeId": null}]},
+    {"id": 7011, "roomId": 902003, "roomQty": 1, "status": "black", "arrival": "2027-04-05", "departure": "2027-04-09", "price": null, "channel": "", "referer": "frontdesk1", "bookingTime": "2027-02-15T13:00:00Z", "modifiedTime": "2027-02-15T13:00:00Z", "cancelTime": null,
+     "invoiceItems": []},
+    {"id": 7012, "roomId": 902003, "roomQty": 1, "status": "confirmed", "arrival": "2027-04-16", "departure": "2027-04-18", "price": 2700, "channel": "expedia", "referer": "Expedia", "bookingTime": "2027-02-28T23:59:59Z", "modifiedTime": "2027-02-28T23:59:59Z", "cancelTime": null,
+     "invoiceItems": [{"id": 9, "type": "charge", "qty": 1, "amount": 2700, "lineTotal": 2700, "invoiceeId": null}]}
+  ],
+  "overrides": {
+    "901001___902001": [
+      {"date": "2027-03-05", "price": null, "price_type": null, "min_price": "25", "min_price_type": "percent_base", "max_price": "80", "max_price_type": "percent_base", "min_stay": null, "check_in": null, "check_out": null, "currency": "BRL", "reason": "Sold-out night protection", "lead_time_expiry": null},
+      {"date": "2027-03-13", "min_stay": 2, "check_in": "1111101", "check_out": "1111111", "check_in_check_out_enabled": "1", "reason": "No arrival on Saturday"},
+      {"date": "2027-03-20", "price": "610", "price_type": "fixed", "currency": "BRL", "reason": ""},
+      {"date": "2027-03-27", "min_price": "-15", "min_price_type": "percent_base", "reason": "Pace: behind"}
+    ],
+    "901001___902002": [
+      {"date": "2027-03-19", "min_stay": 3, "check_in": "1111011", "check_out": "1111101", "check_in_check_out_enabled": "1", "min_price": "900", "min_price_type": "fixed", "max_price": "1900", "max_price_type": "fixed", "currency": "BRL", "reason": "Long weekend package"},
+      {"date": "2027-03-20", "min_stay": 3, "check_in": "1111011", "check_out": "1111101", "check_in_check_out_enabled": "1", "min_price": "900", "min_price_type": "fixed", "max_price": "1900", "max_price_type": "fixed", "currency": "BRL", "reason": "Long weekend package"},
+      {"date": "2027-04-10", "price": "-10", "price_type": "percent", "reason": "Manual discount"}
+    ],
+    "901001___902003": [
+      {"date": "2027-04-02", "min_price": "12", "check_in": "1111111", "check_out": "0000000", "check_in_check_out_enabled": "0", "reason": "Floor without a type, masks switched off"}
+    ]
+  }
+}

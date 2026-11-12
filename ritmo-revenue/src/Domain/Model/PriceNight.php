@@ -23,6 +23,11 @@ final class PriceNight
      * @param int        $sold            units sold
      * @param int        $total           units of the listing
      * @param bool       $hasDateOverride true when a date-specific override exists for the night
+     * @param float|null $userPrice       price the pricing system holds as the one in use for the night
+     *                                    (what it last sent or the owner fixed); null when it reports none
+     * @param float|null $uncustomizedPrice price of the pricing system's own algorithm before the account's
+     *                                    customisations; null when not reported
+     * @param bool       $unbookable      true when the pricing system marks the night as not bookable
      *
      * @throws InvalidArgumentException on negative amounts or counts
      */
@@ -35,8 +40,11 @@ final class PriceNight
         public readonly int $sold,
         public readonly int $total,
         public readonly bool $hasDateOverride = false,
+        public readonly ?float $userPrice = null,
+        public readonly ?float $uncustomizedPrice = null,
+        public readonly bool $unbookable = false,
     ) {
-        foreach ([$price, $minPrice, $maxPrice] as $amount) {
+        foreach ([$price, $minPrice, $maxPrice, $userPrice, $uncustomizedPrice] as $amount) {
             if ($amount !== null && (!is_finite($amount) || $amount < 0)) {
                 throw new InvalidArgumentException('Prices cannot be negative.');
             }

@@ -35,6 +35,7 @@ final class RuleSetTest extends TestCase
         $data['pace']['very_behind'] = 28;
         $data['pace']['zero_sold_days'] = ['weekday' => 4, 'weekend' => 9, 'holiday' => 21];
         $data['pace']['ahead_near_days'] = 5;
+        $data['pace']['group_pace'] = ['max_units' => 2, 'room_tags' => ['tub', 'view']];
         $data['pace']['k'] = 0.4;
         $data['pace']['max_step'] = [['min_days' => 0, 'percent' => 18], ['min_days' => 21, 'percent' => 6], ['min_days' => 5, 'percent' => 12]];
         $data['pace']['min_n'] = 8;
@@ -156,6 +157,8 @@ final class RuleSetTest extends TestCase
         self::assertSame(9, $rules->zeroSoldDays(NightType::Weekend));
         self::assertSame(21, $rules->zeroSoldDays(NightType::Holiday));
         self::assertSame(5, $rules->aheadNearDays());
+        self::assertSame(2, $rules->groupPaceMaxUnits());
+        self::assertSame(['tub', 'view'], $rules->groupPaceRoomTags());
         self::assertSame(0.4, $rules->stepStrength());
         self::assertSame(8, $rules->minSampleSize());
         self::assertSame(9, $rules->maxSampleAgeDays());

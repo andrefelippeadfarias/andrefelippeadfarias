@@ -1,9 +1,12 @@
 {
- "generated_at": "2026-11-11",
- "repo_commit": "7768377b650d9f89b6f5e08a481ba5140364f4ae",
+ "generated_at": "2026-11-12",
+ "repo_commit": "f11dc3ba2c0660aaf17a657dce9849262a82a33c",
  "engine": ".claude/skills/gestao-receita-pousadas/scripts",
+ "engine_commit": "c830024bf40584d206fcb4978ac983588f111c76",
+ "engine_dirty": false,
  "python": "3.11.17",
  "frozen_today": "2026-11-11",
+ "frozen_now": "2026-11-11T22:53:00+00:00",
  "frozen_inputs": {
   "REDACTIONS.json": "50aaa4351e4b7c1e4702b879b4b31de1f06c7842bdfb452c29254466af93eb64",
   "ancora_mercado.json": "dd82ea191406308652b47cda77acec06cef2b4f1a4acdaa583dad893ceb938c4",
@@ -33,6 +36,38 @@
   "tier": {
    "Recanto": "premium",
    "Villa": "standard"
+  },
+  "floor_label": {
+   "mínimo do anúncio": "listing_min",
+   "limite de segurança": "reference_min_fraction",
+   "piso de feriado": "holiday_floor",
+   "piso do dono": "owner_floor",
+   "padrão de qualidade": "quality_floor"
+  },
+  "step_direction": {
+   "sobe": "up",
+   "desce": "down"
+  },
+  "cadence": {
+   "nao_chegou": "cadence_previous_step_not_pushed",
+   "menos_24h": "cadence_step_within_24h"
+  },
+  "left_out": {
+   "esgotada": "sold_out_pending_m2",
+   "sem_ancora": "no_market_anchor"
+  },
+  "anchor_origin": {
+   "propria": "measured",
+   "mes": "fallback",
+   "mes_proximo": "fallback"
+  },
+  "booking_status": {
+   "confirmed": "confirmed",
+   "new": "new",
+   "request": "request",
+   "cancelled": "cancelled",
+   "black": "blocked",
+   "inquiry": "inquiry"
   }
  },
  "files": [
@@ -54,7 +89,7 @@
   {
    "file": "level1/pace.pmax.json",
    "function": "pace.pmax",
-   "cases": 18
+   "cases": 24
   },
   {
    "file": "level1/pace.passo.json",
@@ -72,6 +107,11 @@
    "cases": 96
   },
   {
+   "file": "level1/ancora_mercado.tipo_noite.json",
+   "function": "ancora_mercado.tipo_noite",
+   "cases": 463
+  },
+  {
    "file": "level1/ancora_mercado.valor_percentil.json",
    "function": "ancora_mercado.valor_percentil",
    "cases": 323
@@ -84,12 +124,12 @@
   {
    "file": "level1/validar_plano.piso_pct.json",
    "function": "validar_plano.piso_pct",
-   "cases": 930
+   "cases": 945
   },
   {
    "file": "level1/validar_plano.teto_pct.json",
    "function": "validar_plano.teto_pct",
-   "cases": 930
+   "cases": 945
   },
   {
    "file": "level1/validar_plano.em_reais.json",
@@ -100,6 +140,66 @@
    "file": "level1/builtins.round.json",
    "function": "builtins.round",
    "cases": 464
+  },
+  {
+   "file": "level1/pace.fator_publico.json",
+   "function": "pace.fator_publico",
+   "cases": 2
+  },
+  {
+   "file": "level1/pace.pisos_enviados.json",
+   "function": "pace.pisos_enviados",
+   "cases": 770
+  },
+  {
+   "file": "level1/pace.limite_seguranca.json",
+   "function": "pace.limite_seguranca",
+   "cases": 7
+  },
+  {
+   "file": "level1/validar_plano.piso_absoluto.json",
+   "function": "validar_plano.piso_absoluto",
+   "cases": 7
+  },
+  {
+   "file": "level1/pace.teto_anuncio.json",
+   "function": "pace.teto_anuncio",
+   "cases": 5
+  },
+  {
+   "file": "level1/ancora_mercado.substitui.json",
+   "function": "ancora_mercado.substitui",
+   "cases": 900
+  },
+  {
+   "file": "level1/ancora_mercado.construir.json",
+   "function": "ancora_mercado.construir",
+   "cases": 3
+  },
+  {
+   "file": "level1/ancora_mercado.ancora_da_noite.json",
+   "function": "ancora_mercado.ancora_da_noite",
+   "cases": 364
+  },
+  {
+   "file": "level1/pace.plano.core.json",
+   "function": "pace.plano.core",
+   "cases": 1122
+  },
+  {
+   "file": "level1/validar_plano.montar_payload.json",
+   "function": "validar_plano.montar_payload",
+   "cases": 140
+  },
+  {
+   "file": "level1/ocupacao.calcular.json",
+   "function": "ocupacao.calcular",
+   "cases": 3
+  },
+  {
+   "file": "level1/beds24.comparar.json",
+   "function": "beds24.comparar",
+   "cases": 3
   }
  ]
 }

@@ -1,0 +1,14 @@
+{
+ "function": "validar_plano.piso_absoluto",
+ "php_target": "Ritmo\\Domain\\Pricing\\Floors::safetyLimit(room)",
+ "notes": "cfg is tests/fixtures/frozen/quartos.json; in PHP, the rule set of tests/fixtures/presets/parity.json. The configuration without the rules of later milestones, which the parity preset leaves out too: dated owner exceptions to the safety limit, per-room holiday floors and the sales ladder.",
+ "cases": [
+  {"input": {"curto": "Q7"}, "expected": 560.0},
+  {"input": {"curto": "Double"}, "expected": 630.0},
+  {"input": {"curto": "Afrodite"}, "expected": 1050.0},
+  {"input": {"curto": "Q2"}, "expected": 595.0},
+  {"input": {"curto": "VK7"}, "expected": 700.0},
+  {"input": {"curto": "Balcony"}, "expected": 630.0},
+  {"input": {"curto": "VK2"}, "expected": 630.0}
+ ]
+}

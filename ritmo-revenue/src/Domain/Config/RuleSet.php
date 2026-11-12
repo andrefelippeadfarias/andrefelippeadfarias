@@ -212,6 +212,26 @@ final class RuleSet
     }
 
     /**
+     * Room types with this many units or fewer are placed on the curve by the occupancy of
+     * their group instead of their own. Zero: no room is.
+     */
+    public function groupPaceMaxUnits(): int
+    {
+        return $this->data['pace']['group_pace']['max_units'];
+    }
+
+    /**
+     * The group of the rule above: the room types of the same property with every one of these
+     * tags (every room type when empty).
+     *
+     * @return list<string>
+     */
+    public function groupPaceRoomTags(): array
+    {
+        return $this->data['pace']['group_pace']['room_tags'];
+    }
+
+    /**
      * The target-percentile table of a tier; an unknown tier uses the "standard" table.
      *
      * @return array{ahead_near: float, ahead: float, on_pace: float, behind: float, very_behind: float}

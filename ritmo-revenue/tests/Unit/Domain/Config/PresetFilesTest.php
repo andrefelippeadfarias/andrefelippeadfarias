@@ -99,6 +99,8 @@ final class PresetFilesTest extends TestCase
         self::assertSame((float) $pace['banda'], $rules->paceBand());
         self::assertSame((float) $pace['muito_atras'], $rules->paceVeryBehind());
         self::assertSame($pace['frente_perto_dias'], $rules->aheadNearDays());
+        self::assertSame(2, $rules->groupPaceMaxUnits(), 'fixed in the engine: rooms of 1 or 2 units');
+        self::assertSame(['tub'], $rules->groupPaceRoomTags());
         self::assertSame((float) $pace['k'], $rules->stepStrength());
         self::assertSame($pace['min_n'], $rules->minSampleSize());
         self::assertSame($pace['idade_max_dias'], $rules->maxSampleAgeDays());
@@ -156,6 +158,8 @@ final class PresetFilesTest extends TestCase
         $manifest = Fixtures::json('golden/MANIFEST.json');
 
         self::assertMatchesRegularExpression('/^[0-9a-f]{40}$/', $manifest['repo_commit']);
+        self::assertMatchesRegularExpression('/^[0-9a-f]{40}$/', $manifest['engine_commit']);
+        self::assertFalse($manifest['engine_dirty'], 'the goldens were generated from uncommitted engine code: commit the engine and run dump_golden.py again');
         self::assertMatchesRegularExpression('/^\d{4}-\d{2}-\d{2}$/', $manifest['generated_at']);
         foreach ($manifest['frozen_inputs'] as $file => $sha256) {
             self::assertSame($sha256, hash_file('sha256', Fixtures::path('frozen/' . $file)), "frozen/$file changed after the goldens were generated");
@@ -165,11 +169,12 @@ final class PresetFilesTest extends TestCase
             'pace.curva', 'pace.status_da_noite', 'pace.percentil_alvo', 'pace.pmax', 'pace.passo',
             'ancora_mercado.quantil', 'ancora_mercado.valor_percentil', 'ancora_mercado.percentil_de',
             'validar_plano.piso_pct', 'validar_plano.teto_pct', 'validar_plano.em_reais',
+            'pace.efetivo', 'ancora_mercado.tipo_noite', 'builtins.round',
         ];
         $listed = array_column($manifest['files'], 'cases', 'function');
         foreach ($expected as $function) {
             self::assertArrayHasKey($function, $listed);
-            self::assertGreaterThanOrEqual(18, $listed[$function], "$function has too few cases");
+            self::assertGreaterThanOrEqual(24, $listed[$function], "$function has too few cases");
         }
         foreach ($manifest['files'] as $entry) {
             $golden = Fixtures::json('golden/' . $entry['file']);

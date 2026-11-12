@@ -70,7 +70,7 @@ final class RuleSetFields
     {
         $defaults = [7 => 60.0, 15 => 45.0, 30 => 30.0, 45 => 20.0, 60 => 10.0];
         $fields = [
-            new Field('occupancy', FieldType::Group, 'Occupancy'),
+            new Field('occupancy', FieldType::Group, 'Occupancy', 'How full the property should be as each window closes. Reports and alerts compare the sold share with these goals.'),
             new Field(
                 'occupancy.goals',
                 FieldType::Group,
@@ -99,7 +99,7 @@ final class RuleSetFields
     private static function calendar(): array
     {
         return [
-            new Field('calendar', FieldType::Group, 'Calendar'),
+            new Field('calendar', FieldType::Group, 'Calendar', 'Which nights are priced as weekend nights and which periods are holidays. Every other rule is set per night type.'),
             new Field(
                 key: 'calendar.weekend_days',
                 type: FieldType::ListOf,
@@ -165,7 +165,7 @@ final class RuleSetFields
             NightType::Holiday->value => [60 => 15.0, 30 => 35.0, 14 => 55.0, 7 => 70.0, 3 => 85.0, 1 => 95.0, 0 => 100.0],
         ];
         $fields = [
-            new Field('pace', FieldType::Group, 'Pace'),
+            new Field('pace', FieldType::Group, 'Pace', 'How fast each night should sell and how the price follows: the expected sales curve, the market percentile to aim at and the size of each step.'),
             new Field(
                 'pace.curves',
                 FieldType::Group,
@@ -236,6 +236,31 @@ final class RuleSetFields
                 unit: Field::UNIT_DAYS,
             );
         }
+        $fields[] = new Field(
+            'pace.group_pace',
+            FieldType::Group,
+            'Rooms read with their group',
+            'A room type with very few units jumps between 0%, 50% and 100% sold, which says little about its pace. Such rooms are placed on the curve by the occupancy of a group of room types of the same property instead.'
+        );
+        $fields[] = new Field(
+            key: 'pace.group_pace.max_units',
+            type: FieldType::Integer,
+            label: 'Room types with up to this many units',
+            help: 'Room types with this many units or fewer are read with their group. Zero turns the rule off.',
+            default: 0,
+            min: 0,
+            max: 50,
+        );
+        $fields[] = new Field(
+            'pace.group_pace.room_tags',
+            FieldType::ListOf,
+            'The group: rooms tagged',
+            'The group is made of the room types of the same property that have every one of these tags. Empty means every room type of the property.',
+            default: [],
+            max: 20,
+            unique: true,
+        );
+        $fields[] = new Field('pace.group_pace.room_tags.*', FieldType::Text, 'Tag', required: true, pattern: Identifier::SLUG_PATTERN);
 
         return $fields;
     }
@@ -259,8 +284,9 @@ final class RuleSetFields
             label: 'Target market percentile',
             help: 'Where in the market price range a night should sit, by pace status. Each tier is one table and a property uses the table of its tier. The tier "standard" must exist.',
             default: [
-                self::DEFAULT_TIER => ['ahead_near' => 80.0, 'ahead' => 65.0, 'on_pace' => 50.0, 'behind' => 40.0, 'very_behind' => 30.0],
-                'premium' => ['ahead_near' => 90.0, 'ahead' => 75.0, 'on_pace' => 60.0, 'behind' => 50.0, 'very_behind' => 40.0],
+                // Neutral ladders: the median when on pace, 10 points per status; "premium" sits 10 points higher.
+                self::DEFAULT_TIER => ['ahead_near' => 70.0, 'ahead' => 60.0, 'on_pace' => 50.0, 'behind' => 40.0, 'very_behind' => 30.0],
+                'premium' => ['ahead_near' => 80.0, 'ahead' => 70.0, 'on_pace' => 60.0, 'behind' => 50.0, 'very_behind' => 40.0],
             ],
             min: 1,
             max: 12,
@@ -387,7 +413,7 @@ final class RuleSetFields
         $tagsHelp = 'The floor applies to rooms that have every tag listed. Leave empty for every room.';
 
         return [
-            new Field('floors', FieldType::Group, 'Floors'),
+            new Field('floors', FieldType::Group, 'Floors', 'Prices no rule may go below. The floor of a night is the highest of the floors that apply to it.'),
             new Field(
                 key: 'floors.fraction_of_reference_min',
                 type: FieldType::Number,
@@ -524,7 +550,7 @@ final class RuleSetFields
     private static function safety(): array
     {
         return [
-            new Field('safety', FieldType::Group, 'Safety'),
+            new Field('safety', FieldType::Group, 'Safety', 'Limits that hold whatever the other rules decide.'),
             new Field(
                 key: 'safety.weekly_listing_change_max',
                 type: FieldType::Number,

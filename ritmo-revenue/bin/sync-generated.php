@@ -1,15 +1,15 @@
 <?php
 /**
- * Rewrites the two files that are generated from the code:
+ * Rewrites the files that are generated from the code:
  *
  *   presets/default.json   the neutral preset: exactly the defaults of the rule set schema
  *   docs/CONTRACTS.md      the signature reference at the end of the document
+ *   docs/ENGINE.md         the signature reference of the rule engine, likewise
  *
  * Usage: php bin/sync-generated.php
  *
  * Run it after adding or changing a rule field (src/Domain/Config/RuleSetFields.php) or the
- * public surface of anything under src/Contracts, src/Domain/Model, src/Domain/Support or
- * src/Domain/Config. Tests fail while either file is stale.
+ * public surface of anything under src/Contracts or src/Domain. Tests fail while a file is stale.
  */
 
 declare(strict_types=1);
@@ -40,3 +40,4 @@ if ($presetChanged) {
 
 fwrite(STDOUT, 'presets/default.json ' . ($presetChanged ? "updated.\n" : "is up to date.\n"));
 fwrite(STDOUT, 'docs/CONTRACTS.md ' . (ContractsDoc::sync() ? "updated.\n" : "is up to date.\n"));
+fwrite(STDOUT, 'docs/ENGINE.md ' . (ContractsDoc::sync(ContractsDoc::ENGINE) ? "updated.\n" : "is up to date.\n"));

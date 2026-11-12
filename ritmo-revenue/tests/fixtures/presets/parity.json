@@ -338,6 +338,12 @@
         "weekend": 14,
         "holiday": 14
       },
+      "group_pace": {
+        "max_units": 2,
+        "room_tags": [
+          "tub"
+        ]
+      },
       "target_percentile": {
         "premium": {
           "ahead_near": 90,

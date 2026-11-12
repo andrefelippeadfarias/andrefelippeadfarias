@@ -28,6 +28,7 @@ Conventions (dates, money, errors, logging) are in [ARCHITECTURE.md](ARCHITECTUR
 | `roundInt($x): int` | `round(x)` | |
 | `ceilEps($x): int` | `math.ceil(x - 1e-9)` | |
 | `floorEps($x): int` | `math.floor(x + 1e-9)` | |
+| `ceilInt($x): int`, `floorInt($x): int` | `math.ceil(x)`, `math.floor(x)` | No tolerance: how the pace engine rounds a rising and a falling price. |
 | `clamp($x, $min, $max): float` | `max(min_, min(max_, x))` | |
 | `floorToPercent($amount, $base): int` | `validar_plano.piso_pct` | Floor as a whole % over the base, rounded **up**. -31 means base x 0.69. |
 | `ceilingToPercent($amount, $base): int` | `validar_plano.teto_pct` | Ceiling as a whole % over the base, rounded **down**. |
@@ -43,8 +44,8 @@ Immutable DTOs (`final`, every property `readonly`) and backed enums. Constructo
 |---|---|
 | `Property` | `id` is the stable key chosen at setup (a code, unique per site); rule tables reference properties by it. `mode` defaults to `PropertyMode::Shadow`. `occupancyGoals` (`array<int window days, float percent>`) is the property's own override and may be empty: resolve with `RuleSet::occupancyGoalsFor($property)`. `tier` (slug, default `standard`) selects the target-percentile table. `fromArray()`/`toArray()` use snake_case keys (`occupancy_goals`). |
 | `RoomType` | `propertyId` links it to its property (first constructor argument). `code` is unique per site. `pmsRef` and `pricingRef` may be `''` while unmapped. `base`, `min`, `max` are the listing values in the sent plan as configured in the plugin; `referenceMin` is the owner's reference minimum. `tags` are slugs (`hasTag()`, `hasAllTags()`). |
-| `InventoryNight` | One PMS calendar night of a room: `available`, `minStay`, `maxStay`, `restriction` (`Restriction`), `pmsPrice` (null unless prices were read). |
-| `PriceNight` | One night of a listing in the pricing system: `price`, `minPrice`, `maxPrice` (floor and ceiling in force, null when unknown), `minStay`, `sold`, `total`, `hasDateOverride`. `isSoldOut()` is `total > 0 && sold >= total`. |
+| `InventoryNight` | One PMS calendar night of a room: `available` (negative when the night is overbooked by that many units; connectors pass the PMS number through), `minStay`, `maxStay`, `restriction` (`Restriction`), `pmsPrice` (null unless prices were read). |
+| `PriceNight` | One night of a listing in the pricing system: `price`, `minPrice`, `maxPrice` (floor and ceiling in force, null when unknown), `minStay`, `sold`, `total`, `hasDateOverride`. `isSoldOut()` is `total > 0 && sold >= total`. Optional, as the pricing system reports them: `userPrice` (the price it holds as in use; null when it reports none), `uncustomizedPrice` (its algorithm before the account's customisations) and `unbookable`. |
 | `DateOverride` | A date-specific override. `minPercent`/`maxPercent` are percentages over the listing base (what the plugin writes). `checkinMask`/`checkoutMask` are 7 characters `0`/`1`, Monday to Sunday. Overrides made by hand may carry `price` + `priceType` (`DateOverride::PRICE_FIXED` or `PRICE_PERCENT`) or absolute `minFixed`/`maxFixed`; these optional fields exist so reading never loses what is in force. |
 | `BookingRecord` | No guest name, contact or free text, by design; a test fails if such a field is added. `roomCode` is null when the PMS room is not mapped (`roomPmsRef` always holds the PMS room id). `units` is how many units the booking takes. `nights()` returns its `DateRange`. |
 | `BookingStatus` | `confirmed`, `new`, `request`, `cancelled`, `blocked`, `inquiry`. `occupies()` is true for `confirmed` and `new`. Each PMS connector maps its own statuses. |
@@ -131,6 +132,7 @@ Typed accessors of `RuleSet` and the rule each one reads:
 | `paceCurve(NightType): array<int days, float percent>` (farthest first) | `pace.curves.<type>.{60,30,14,7,3,1,0}` | `pace.curvas` |
 | `paceBand()`, `paceVeryBehind()` | `pace.band`, `pace.very_behind` | `banda`, `muito_atras` |
 | `zeroSoldDays(NightType): int` | `pace.zero_sold_days.<type>` | 7 / 14 / 14, fixed in `status_da_noite` |
+| `groupPaceMaxUnits(): int`, `groupPaceRoomTags(): list<string>` | `pace.group_pace.{max_units,room_tags}` | rooms of 1 or 2 units read by `ocupacao_pousada`, fixed in `_plano` (0 = off) |
 | `targetPercentiles($tier): array`; `targetPercentile($tier, PaceStatus, $daysOut): float` | `pace.target_percentile.<tier>.*`, `pace.ahead_near_days` | `pace.percentil_alvo` (golden-tested) |
 | `aheadNearDays()`, `stepStrength()` | `pace.ahead_near_days`, `pace.k` | `frente_perto_dias`, `k` |
 | `maxStepPercent($daysOut): float` | `pace.max_step.*` (`min_days`, `percent`) | `pace.pmax` (golden-tested) |
@@ -156,7 +158,8 @@ Typed accessors of `RuleSet` and the rule each one reads:
     "curves": {"weekday": {"60": 5, "30": 10, "14": 20, "7": 35, "3": 50, "1": 65, "0": 100}, "weekend": {"…": 0}, "holiday": {"…": 0}},
     "band": 15, "very_behind": 25,
     "zero_sold_days": {"weekday": 5, "weekend": 10, "holiday": 14},
-    "target_percentile": {"standard": {"ahead_near": 80, "ahead": 65, "on_pace": 50, "behind": 40, "very_behind": 30}, "premium": {"…": 0}},
+    "group_pace": {"max_units": 0, "room_tags": []},
+    "target_percentile": {"standard": {"ahead_near": 70, "ahead": 60, "on_pace": 50, "behind": 40, "very_behind": 30}, "premium": {"…": 0}},
     "ahead_near_days": 7, "k": 0.5,
     "max_step": [{"min_days": 30, "percent": 5}, {"min_days": 8, "percent": 10}, {"min_days": 0, "percent": 15}],
     "min_n": 5, "max_age_days": 14, "tolerance": 0.02, "protection_percentile": 85
@@ -213,12 +216,15 @@ Level-1 golden files and where their PHP port lives:
 | `builtins.round` | `value`, `decimals` | `Num::roundHalfEven` (tested) |
 | `pace.pmax` | `dias` | `RuleSet::maxStepPercent` (tested) |
 | `pace.percentil_alvo` | `pousada`, `status`, `dias` | `RuleSet::targetPercentile` (tested) |
-| `pace.curva` | `tipo`, `dias` | engine phase, `Domain\Pricing`, from `RuleSet::paceCurve()` |
-| `pace.status_da_noite` | `tipo`, `dias`, `vendidas`, `unidades`; expected `{status, vendido, curva}` | engine phase, `Domain\Pricing` |
-| `pace.passo` | `atual`, `alvo`, `dias`, `fraco` | engine phase, `Domain\Pricing` |
-| `ancora_mercado.quantil` | `valores`, `p` | engine phase, `Domain\Market` |
-| `ancora_mercado.valor_percentil` | `anc` (`p25`..`max`), `pct` | engine phase, `Domain\Market` |
-| `ancora_mercado.percentil_de` | `preco_publico`, `anc` | engine phase, `Domain\Market` |
+| `ancora_mercado.tipo_noite` | `d` (`YYYY-MM-DD`); expected `{tipo, feriado}` (`feriado` is the period's name or null) | `RuleSet::nightType`, `RuleSet::holidayOn` (tested) |
+| `pace.curva` | `tipo`, `dias` | `Pricing\PaceCurve::expected` |
+| `pace.status_da_noite` | `tipo`, `dias`, `vendidas`, `unidades`; expected `{status, vendido, curva}` | `Pricing\PaceMeter::measure` |
+| `pace.passo` | `atual`, `alvo`, `dias`, `fraco` | `Pricing\StepSize::next` |
+| `ancora_mercado.quantil` | `valores`, `p` | `Market\Quantile::of` |
+| `ancora_mercado.valor_percentil` | `anc` (`p25`..`max`), `pct` | `Market\AnchorLookup::valueAt` |
+| `ancora_mercado.percentil_de` | `preco_publico`, `anc` | `Market\AnchorLookup::percentileOf` |
+
+The golden files of the engine core (floors, anchors, one decision per room night, percentages of the payload, occupancy) and every engine class are in [ENGINE.md](ENGINE.md); `tests/Golden/Level1Test.php` checks all of them and fails when a golden file has no test.
 
 ## Part 2. Signature reference
 
@@ -277,6 +283,8 @@ public function plusSeconds(int $seconds): self;
 const EPSILON = 1.0E-9;
 public static function roundHalfEven(float $value, int $decimals = 0): float;
 public static function roundInt(float $value): int;
+public static function ceilInt(float $value): int;
+public static function floorInt(float $value): int;
 public static function ceilEps(float $value): int;
 public static function floorEps(float $value): int;
 public static function clamp(float $value, float $min, float $max): float;
@@ -430,7 +438,10 @@ public readonly ?int $minStay;
 public readonly int $sold;
 public readonly int $total;
 public readonly bool $hasDateOverride;
-public function __construct(DateTimeImmutable $date, float $price, ?float $minPrice, ?float $maxPrice, ?int $minStay, int $sold, int $total, bool $hasDateOverride = false);
+public readonly ?float $userPrice;
+public readonly ?float $uncustomizedPrice;
+public readonly bool $unbookable;
+public function __construct(DateTimeImmutable $date, float $price, ?float $minPrice, ?float $maxPrice, ?int $minStay, int $sold, int $total, bool $hasDateOverride = false, ?float $userPrice = null, ?float $uncustomizedPrice = null, bool $unbookable = false);
 public function isSoldOut(): bool;
 ```
 
@@ -624,6 +635,8 @@ public function paceCurve(NightType $type): array;
 public function paceBand(): float;
 public function paceVeryBehind(): float;
 public function zeroSoldDays(NightType $type): int;
+public function groupPaceMaxUnits(): int;
+public function groupPaceRoomTags(): array;
 public function targetPercentiles(string $tier): array;
 public function targetPercentile(string $tier, PaceStatus $status, int $daysOut): float;
 public function aheadNearDays(): int;

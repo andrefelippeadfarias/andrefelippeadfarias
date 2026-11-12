@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Ritmo\Tests\Unit\Infrastructure\Support;
+namespace Ritmo\Tests\Fakes;
 
 use DateTimeImmutable;
 use DateTimeZone;
@@ -10,9 +10,10 @@ use Ritmo\Domain\Support\Clock;
 use Ritmo\Domain\Support\Days;
 
 /**
- * A clock the test moves by hand, so waits and expirations happen without real time passing.
+ * A clock a test moves by hand, so waits, expirations and changes of day happen without real
+ * time passing (tokens, credit windows, locks, runs that resume on another day).
  */
-final class ManualClock implements Clock
+final class MovableClock implements Clock
 {
     private DateTimeImmutable $now;
 
@@ -31,9 +32,11 @@ final class ManualClock implements Clock
         return Days::localDate($this->now, $timezone);
     }
 
+    /**
+     * Moves the clock by a number of seconds, to the microsecond (negative moves it back).
+     */
     public function advance(float $seconds): void
     {
-        $microseconds = (int) round($seconds * 1_000_000);
-        $this->now = $this->now->modify(sprintf('%+d microseconds', $microseconds));
+        $this->now = $this->now->modify(sprintf('%+d microseconds', (int) round($seconds * 1_000_000)));
     }
 }

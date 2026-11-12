@@ -9,21 +9,21 @@ use PHPUnit\Framework\TestCase;
 use Ritmo\Infrastructure\Db\PdoDatabase;
 use Ritmo\Infrastructure\Lock\DbLock;
 use Ritmo\Infrastructure\Lock\LockHandle;
-use Ritmo\Tests\Unit\Infrastructure\Support\ManualClock;
+use Ritmo\Tests\Fakes\MovableClock;
 use Ritmo\Tests\Unit\Infrastructure\Support\MigratedDatabase;
 
 final class DbLockTest extends TestCase
 {
     private PdoDatabase $db;
 
-    private ManualClock $clock;
+    private MovableClock $clock;
 
     private DbLock $locks;
 
     protected function setUp(): void
     {
         $this->db = MigratedDatabase::create();
-        $this->clock = new ManualClock('2026-11-11T10:53:00Z');
+        $this->clock = new MovableClock('2026-11-11T10:53:00Z');
         $this->locks = new DbLock($this->db, $this->clock);
     }
 

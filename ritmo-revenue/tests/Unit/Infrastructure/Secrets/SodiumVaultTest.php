@@ -11,7 +11,7 @@ use Ritmo\Infrastructure\Secrets\SecretStatus;
 use Ritmo\Infrastructure\Secrets\SecretUnavailable;
 use Ritmo\Infrastructure\Secrets\SodiumVault;
 use Ritmo\Infrastructure\Store\ArrayStore;
-use Ritmo\Tests\Unit\Infrastructure\Support\ManualClock;
+use Ritmo\Tests\Fakes\MovableClock;
 
 final class SodiumVaultTest extends TestCase
 {
@@ -21,12 +21,12 @@ final class SodiumVaultTest extends TestCase
 
     private ArrayStore $store;
 
-    private ManualClock $clock;
+    private MovableClock $clock;
 
     protected function setUp(): void
     {
         $this->store = new ArrayStore();
-        $this->clock = new ManualClock('2026-11-11T12:00:00Z');
+        $this->clock = new MovableClock('2026-11-11T12:00:00Z');
     }
 
     public function testASecretIsEncryptedAndComesBackOnlyThroughReveal(): void
@@ -163,7 +163,7 @@ final class SodiumVaultTest extends TestCase
         self::assertSame('token-abcdefghijkl', (new SodiumVault($this->store, $this->clock))->reveal('pms.token'), 'another request reads it with the stored seed');
         self::assertNotSame($seed, (function (): string {
             $other = new ArrayStore();
-            (new SodiumVault($other, new ManualClock()))->install();
+            (new SodiumVault($other, new MovableClock()))->install();
 
             return $other->get('vault')['seed'];
         })(), 'every site gets its own seed');

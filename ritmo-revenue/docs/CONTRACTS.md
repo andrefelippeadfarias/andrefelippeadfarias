@@ -268,7 +268,7 @@ public static function diff(DateTimeInterface $from, DateTimeInterface $to): int
 public static function weekday(DateTimeInterface $date): int;
 ```
 
-#### `Ritmo\Domain\Support\FixedClock` (final class)
+#### `Ritmo\Domain\Support\FixedClock` (final class implements Clock)
 
 ```php
 public function __construct(DateTimeInterface|string $now);
@@ -293,7 +293,7 @@ public static function ceilingToPercent(float $amount, float $base): int;
 public static function percentToAmount(float $percent, float $base, int $decimals = 0): float;
 ```
 
-#### `Ritmo\Domain\Support\SystemClock` (final class)
+#### `Ritmo\Domain\Support\SystemClock` (final class implements Clock)
 
 ```php
 public function now(): DateTimeImmutable;

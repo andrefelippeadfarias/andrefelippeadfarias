@@ -14,7 +14,7 @@ use Ritmo\Contracts\Logger;
 use Ritmo\Infrastructure\Http\GuardedHttpClient;
 use Ritmo\Infrastructure\Http\ReadRouteAllowList;
 use Ritmo\Infrastructure\Log\MemoryLogger;
-use Ritmo\Tests\Unit\Infrastructure\Support\ScriptedHttpClient;
+use Ritmo\Tests\Fakes\ScriptedHttpClient;
 
 final class GuardedHttpClientTest extends TestCase
 {
@@ -24,7 +24,7 @@ final class GuardedHttpClientTest extends TestCase
 
     protected function setUp(): void
     {
-        $this->inner = new ScriptedHttpClient(new HttpResponse(200, ['Content-Type' => 'application/json'], '{"ok":true}'));
+        $this->inner = new ScriptedHttpClient(static fn (): HttpResponse => new HttpResponse(200, ['Content-Type' => 'application/json'], '{"ok":true}'));
         $this->logger = new MemoryLogger();
     }
 
@@ -37,7 +37,7 @@ final class GuardedHttpClientTest extends TestCase
         self::assertSame(['ok' => true], $response->json());
         self::assertSame(
             [['method' => 'GET', 'url' => 'https://api.pms.example/v2/bookings?arrivalFrom=2026-12-01', 'headers' => ['token' => 'abc'], 'body' => null, 'timeout' => 45]],
-            $this->inner->requests
+            array_map(static fn (array $sent): array => array_diff_key($sent, ['path' => true, 'query' => true]), $this->inner->requests())
         );
         self::assertSame([], $client->blockedAttempts());
         self::assertSame([], $this->logger->entries());
@@ -69,7 +69,7 @@ final class GuardedHttpClientTest extends TestCase
             self::assertNotInstanceOf(ConnectorException::class, $blocked, 'a block is never a retryable connector failure');
         }
 
-        self::assertSame([], $this->inner->requests, 'nothing reached the network');
+        self::assertSame([], $this->inner->requests(), 'nothing reached the network');
         self::assertCount(1, $client->blockedAttempts());
         self::assertSame(strtoupper(trim($method)), $client->blockedAttempts()[0]['method']);
         self::assertSame('api.pricing.example', $client->blockedAttempts()[0]['host']);
@@ -99,7 +99,7 @@ final class GuardedHttpClientTest extends TestCase
 
         $client->request('POST', 'https://api.pricing.example/v1/listing_prices', [], '{"listings":[]}');
         $client->request('post', 'https://API.Pricing.Example:443/v1/listing_prices?x=1', [], '{}');
-        self::assertCount(2, $this->inner->requests);
+        self::assertCount(2, $this->inner->requests());
 
         $refused = [
             'another path' => ['POST', 'https://api.pricing.example/v1/listings'],
@@ -124,7 +124,7 @@ final class GuardedHttpClientTest extends TestCase
             }
         }
 
-        self::assertCount(2, $this->inner->requests);
+        self::assertCount(2, $this->inner->requests());
         self::assertCount(count($refused), $client->blockedAttempts());
     }
 
@@ -167,7 +167,7 @@ final class GuardedHttpClientTest extends TestCase
         } catch (WriteBlocked $blocked) {
             self::assertStringContainsString('method-override', $blocked->getMessage());
         }
-        self::assertSame([], $this->inner->requests);
+        self::assertSame([], $this->inner->requests());
     }
 
     /**
@@ -202,7 +202,7 @@ final class GuardedHttpClientTest extends TestCase
             self::fail('The malformed request must be refused.');
         } catch (InvalidArgumentException) {
         }
-        self::assertSame([], $this->inner->requests);
+        self::assertSame([], $this->inner->requests());
     }
 
     public function testTheAllowListTakesOnlyExactPostRoutes(): void

@@ -44,10 +44,10 @@ final class MigratorTest extends TestCase
         self::assertSame(0, $migrator->currentVersion());
         self::assertFalse($migrator->isUpToDate());
 
-        self::assertSame([1, 2, 3, 4], $migrator->migrate());
+        self::assertSame([1, 2, 3, 4, 5], $migrator->migrate());
 
-        self::assertSame(4, $migrator->currentVersion());
-        self::assertSame(4, $this->store->get('db_version'));
+        self::assertSame(5, $migrator->currentVersion());
+        self::assertSame(5, $this->store->get('db_version'));
         self::assertTrue($migrator->isUpToDate());
 
         $expected = [...self::PLAN_TABLES, ...self::OWN_TABLES];
@@ -122,11 +122,11 @@ final class MigratorTest extends TestCase
         $before = $this->schemaSql();
         $this->store->delete('db_version');
 
-        self::assertSame([1, 2, 3, 4], Migrator::standard($this->db, $this->store)->migrate());
+        self::assertSame([1, 2, 3, 4, 5], Migrator::standard($this->db, $this->store)->migrate());
 
         self::assertSame($before, $this->schemaSql());
         self::assertSame('1', $this->db->selectValue('SELECT COUNT(*) FROM wp_ritmo_properties'));
-        self::assertSame(4, $this->store->get('db_version'));
+        self::assertSame(5, $this->store->get('db_version'));
     }
 
     public function testAVersionThatIsNotANumberCountsAsZeroAndAFutureVersionIsLeftAlone(): void
@@ -194,9 +194,11 @@ final class MigratorTest extends TestCase
             $received[] = $sql;
         }, $db->charsetCollate());
 
-        self::assertSame([1, 2, 3, 4], $migrator->migrate());
+        self::assertSame([1, 2, 3, 4, 5], $migrator->migrate());
 
-        self::assertCount(count(self::PLAN_TABLES) + count(self::OWN_TABLES), $received);
+        $definitions = array_sum(array_map(static fn (Migration $migration): int => count($migration->tables()), Migrations::all()));
+        self::assertGreaterThan(count(self::PLAN_TABLES) + count(self::OWN_TABLES), $definitions, 'a table restated by a later migration goes through dbDelta again');
+        self::assertCount($definitions, $received);
         self::assertSame([], $wpdb->queries, 'with dbDelta the migrator runs no statement of its own');
         foreach ($received as $sql) {
             self::assertMatchesRegularExpression('/^CREATE TABLE wp_ritmo_[a-z_]+ \(\n/', $sql);
@@ -220,7 +222,7 @@ final class MigratorTest extends TestCase
 
         self::assertSame([], $this->tablesInDatabase());
         self::assertFalse($this->store->has('db_version'));
-        self::assertSame([1, 2, 3, 4], $migrator->migrate(), 'the plugin can be installed again');
+        self::assertSame([1, 2, 3, 4, 5], $migrator->migrate(), 'the plugin can be installed again');
     }
 
     /**

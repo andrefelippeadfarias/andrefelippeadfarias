@@ -19,6 +19,7 @@ final class Migrations
             new Migration0002Market(),
             new Migration0003Operation(),
             new Migration0004Housekeeping(),
+            new Migration0005RunStages(),
         ];
     }
 }

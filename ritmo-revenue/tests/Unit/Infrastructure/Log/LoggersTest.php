@@ -13,19 +13,19 @@ use Ritmo\Infrastructure\Log\DbLogger;
 use Ritmo\Infrastructure\Log\LogLevel;
 use Ritmo\Infrastructure\Log\LogSanitizer;
 use Ritmo\Infrastructure\Log\MemoryLogger;
-use Ritmo\Tests\Unit\Infrastructure\Support\ManualClock;
+use Ritmo\Tests\Fakes\MovableClock;
 use Ritmo\Tests\Unit\Infrastructure\Support\MigratedDatabase;
 
 final class LoggersTest extends TestCase
 {
     private PdoDatabase $db;
 
-    private ManualClock $clock;
+    private MovableClock $clock;
 
     protected function setUp(): void
     {
         $this->db = MigratedDatabase::create();
-        $this->clock = new ManualClock('2026-11-11T10:53:00Z');
+        $this->clock = new MovableClock('2026-11-11T10:53:00Z');
     }
 
     public function testEntriesAreStoredWithLevelContextAndTime(): void

@@ -72,10 +72,10 @@ $clock = new SystemClock();
 
 // Migrations through the real dbDelta, twice.
 $migrator = Migrator::standard($db, $store, static fn (string $sql) => dbDelta($sql), $db->charsetCollate());
-check($migrator->migrate() === [1, 2, 3, 4], 'first migration applies 1..4');
+check($migrator->migrate() === [1, 2, 3, 4, 5], 'first migration applies 1..5');
 check($migrator->migrate() === [], 'second migration applies nothing');
-check(get_option('ritmo_db_version') === '4', 'ritmo_db_version option holds 4');
-check(Migrator::standard($db, new Ritmo\Infrastructure\Store\ArrayStore(), static fn (string $sql) => dbDelta($sql), $db->charsetCollate())->migrate() === [1, 2, 3, 4], 'dbDelta again over existing tables');
+check(get_option('ritmo_db_version') === '5', 'ritmo_db_version option holds 5');
+check(Migrator::standard($db, new Ritmo\Infrastructure\Store\ArrayStore(), static fn (string $sql) => dbDelta($sql), $db->charsetCollate())->migrate() === [1, 2, 3, 4, 5], 'dbDelta again over existing tables');
 $inspector = new SchemaInspector($db);
 foreach ($migrator->tables() as $name => $table) {
     check($inspector->columns($name) === $table->columnNames(), "columns of $name: " . implode(',', $inspector->columns($name)));

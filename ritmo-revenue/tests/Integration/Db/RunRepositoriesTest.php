@@ -17,19 +17,19 @@ use Ritmo\Infrastructure\Db\Repository\PlanItemRepository;
 use Ritmo\Infrastructure\Db\Repository\QuotaLogRepository;
 use Ritmo\Infrastructure\Db\Repository\RunRepository;
 use Ritmo\Infrastructure\Db\Repository\StepLedgerRepository;
-use Ritmo\Tests\Unit\Infrastructure\Support\ManualClock;
+use Ritmo\Tests\Fakes\MovableClock;
 use Ritmo\Tests\Unit\Infrastructure\Support\MigratedDatabase;
 
 final class RunRepositoriesTest extends TestCase
 {
     private PdoDatabase $db;
 
-    private ManualClock $clock;
+    private MovableClock $clock;
 
     protected function setUp(): void
     {
         $this->db = MigratedDatabase::create();
-        $this->clock = new ManualClock('2026-11-11T10:53:00Z');
+        $this->clock = new MovableClock('2026-11-11T10:53:00Z');
     }
 
     public function testARunIsOpenedAndClosed(): void
@@ -70,7 +70,7 @@ final class RunRepositoriesTest extends TestCase
         self::assertSame(['ruleset_version' => null], array_intersect_key((array) $runs->find($id), ['ruleset_version' => true]));
     }
 
-    public function testARunEndsOnlyAsCompletedOrFailedAndMustExist(): void
+    public function testARunEndsOnlyAsCompletedFailedOrStoppedAndMustExist(): void
     {
         $runs = new RunRepository($this->db);
         $id = $runs->start('inn-1', 'full', PropertyMode::Shadow, 1, new DateTimeImmutable('2026-11-11T10:53:00Z'));
@@ -83,6 +83,37 @@ final class RunRepositoriesTest extends TestCase
 
         $this->expectException(OutOfBoundsException::class);
         $runs->finish(999, RunRepository::COMPLETED, [], new DateTimeImmutable('2026-11-11T10:54:00Z'));
+    }
+
+    public function testARunRecordsItsStagesAndDropsTheirStateWhenItEnds(): void
+    {
+        $runs = new RunRepository($this->db);
+        $day = new DateTimeImmutable('2026-11-11T00:00:00Z');
+        $id = $runs->start('inn-1', 'shadow', PropertyMode::Shadow, 2, new DateTimeImmutable('2026-11-11T10:53:00Z'), $day);
+        $other = $runs->start('inn-2', 'shadow', PropertyMode::Shadow, 2, new DateTimeImmutable('2026-11-11T10:54:00Z'), $day);
+
+        self::assertSame('', $runs->find($id)['stage'] ?? null);
+        self::assertSame('2026-11-11', $runs->find($id)['run_day']?->format('Y-m-d'));
+        self::assertSame([], $runs->state($id));
+
+        $runs->advance($id, 'collect', ['bookings' => 4], ['listings' => ['A' => ['min' => 100.5]]]);
+
+        self::assertSame('collect', $runs->find($id)['stage'] ?? null);
+        self::assertSame(['bookings' => 4], $runs->find($id)['summary'] ?? null);
+        self::assertSame(['listings' => ['A' => ['min' => 100.5]]], $runs->state($id));
+        self::assertSame($id, $runs->openRun('inn-1', 'shadow')['id'] ?? null);
+        self::assertNull($runs->openRun('inn-1', 'full'));
+
+        $runs->finish($id, RunRepository::STOPPED, ['bookings' => 4], new DateTimeImmutable('2026-11-11T10:55:00Z'), 'Stopped by the emergency switch.');
+
+        self::assertSame(RunRepository::STOPPED, $runs->find($id)['status'] ?? null);
+        self::assertSame([], $runs->state($id), 'the state carried between stages goes when the run ends');
+        self::assertNull($runs->openRun('inn-1', 'shadow'));
+        self::assertSame($other, $runs->openRun('inn-2', 'shadow')['id'] ?? null);
+        self::assertNotNull($runs->find($other)['run_day'] ?? null);
+
+        $this->expectException(OutOfBoundsException::class);
+        $runs->advance($id, 'measure', [], []);
     }
 
     public function testTheLatestRunsComeNewestFirstPerProperty(): void

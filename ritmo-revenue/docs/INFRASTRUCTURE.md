@@ -54,6 +54,7 @@ Tables (all prefixed, all with an auto-incremented `id`):
 | 2 Market | `competitors`, `price_samples`, `market_anchor` |
 | 3 Operation | `orders`, `bookings`, `snapshots`, `runs`, `plan_items`, `write_ops`, `step_ledger`, `change_log`, `alerts`, `pending_items`, `api_quota_log` |
 | 4 Housekeeping | `locks`, `log` |
+| 5 Run stages | `runs` again, with `run_day`, `stage` and `state`: a run made of resumable stages (`RunRepository::advance()`, `state()`, `openRun()`) |
 
 `bookings` stores what `BookingRecord` carries and nothing else; a test lists its columns and fails when one that could identify a guest is added. `relations`, `periods`, `price_factors`, `competitors`, `orders`, `write_ops`, `change_log` and `pending_items` have no repository yet: they belong to later milestones.
 
@@ -69,7 +70,7 @@ All in `Ritmo\Infrastructure\Db\Repository`, built with the `Database` (and the 
 | `InventorySnapshotRepository` | Keeps every capture; `latest($room, $from, $to, $asOf)` answers with the calendar as known at an instant. |
 | `MarketAnchorRepository` | One anchor per property and night; `range()` has the shape of `MarketDataProvider::readAnchors()`. |
 | `PriceSampleRepository` | Samples are only added. |
-| `RunRepository`, `PlanItemRepository` | `start()` / `finish()`; `addAll($runId, $items)` stores a whole plan or nothing. |
+| `RunRepository`, `PlanItemRepository` | `start()` / `advance()` after each completed stage (stage name, summary, state for the next stage) / `finish()` as `completed`, `failed` or `stopped` (the state is dropped); `openRun()` finds a run to resume. `addAll($runId, $items)` stores a whole plan or nothing. |
 | `AlertRepository` | `raise()` with a `$dedupeKey` refreshes the open alert of the same key instead of repeating it. |
 | `StepLedgerRepository` | Every pace step of a night; `lastStep()` for the cadence rule, `markReachedChannel()` after a push. |
 | `QuotaLogRepository` | The rows behind `DbQuotaLedger`. |
@@ -96,9 +97,9 @@ All in `Ritmo\Infrastructure\Db\Repository`, built with the `Database` (and the 
 
 ## Part 2. Signature reference
 
-Generated from the code. Do not edit between the markers; run `php tests/Unit/Infrastructure/Support/sync-doc.php`.
+Generated from the code. Do not edit between the markers; run `php bin/sync-generated.php`.
 
-<!-- BEGIN GENERATED SIGNATURES (php tests/Unit/Infrastructure/Support/sync-doc.php) -->
+<!-- BEGIN GENERATED SIGNATURES (php bin/sync-generated.php) -->
 
 #### `Ritmo\Infrastructure\Db\Database` (interface)
 
@@ -120,7 +121,7 @@ public function delete(string $table, array $where): int;
 public function transaction(callable $work): mixed;
 ```
 
-#### `Ritmo\Infrastructure\Db\DatabaseException` (final class extends RuntimeException implements )
+#### `Ritmo\Infrastructure\Db\DatabaseException` (final class extends RuntimeException)
 
 ```php
 // no public members
@@ -179,6 +180,14 @@ public function tables(): array;
 ```
 
 #### `Ritmo\Infrastructure\Db\Migration\Migration0004Housekeeping` (final class implements Migration)
+
+```php
+public function version(): int;
+public function description(): string;
+public function tables(): array;
+```
+
+#### `Ritmo\Infrastructure\Db\Migration\Migration0005RunStages` (final class implements Migration)
 
 ```php
 public function version(): int;
@@ -357,8 +366,12 @@ public function history(int $limit = 50): array;
 const RUNNING = 'running';
 const COMPLETED = 'completed';
 const FAILED = 'failed';
+const STOPPED = 'stopped';
 public function __construct(Database $db);
-public function start(string $propertyId, string $kind, PropertyMode $mode, ?int $ruleSetVersion, DateTimeImmutable $startedAt): int;
+public function start(string $propertyId, string $kind, PropertyMode $mode, ?int $ruleSetVersion, DateTimeImmutable $startedAt, ?DateTimeImmutable $runDay = null): int;
+public function advance(int $runId, string $stage, array $summary, array $state): void;
+public function state(int $runId): array;
+public function openRun(string $propertyId, string $kind): ?array;
 public function finish(int $runId, string $status, array $summary, DateTimeImmutable $finishedAt, ?string $error = null): void;
 public function find(int $runId): ?array;
 public function latest(?string $propertyId = null, int $limit = 20): array;
@@ -564,7 +577,7 @@ public static function method(string $method): string;
 public static function headerLines(array $headers): array;
 ```
 
-#### `Ritmo\Infrastructure\Http\RequestTarget` (final class implements )
+#### `Ritmo\Infrastructure\Http\RequestTarget` (final class)
 
 ```php
 public readonly string $scheme;
@@ -667,7 +680,7 @@ public readonly ?DateTimeImmutable $updatedAt;
 public function __construct(bool $configured, string $lastFour = '', ?DateTimeImmutable $updatedAt = null);
 ```
 
-#### `Ritmo\Infrastructure\Secrets\SecretUnavailable` (final class extends RuntimeException implements )
+#### `Ritmo\Infrastructure\Secrets\SecretUnavailable` (final class extends RuntimeException)
 
 ```php
 // no public members

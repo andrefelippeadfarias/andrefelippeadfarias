@@ -11,19 +11,19 @@ use Ritmo\Contracts\HttpResponse;
 use Ritmo\Infrastructure\Http\RateLimit;
 use Ritmo\Infrastructure\Http\RateLimiter;
 use Ritmo\Infrastructure\Http\ThrottledHttpClient;
-use Ritmo\Tests\Unit\Infrastructure\Support\ClockSleeper;
-use Ritmo\Tests\Unit\Infrastructure\Support\ManualClock;
-use Ritmo\Tests\Unit\Infrastructure\Support\ScriptedHttpClient;
+use Ritmo\Tests\Fakes\ClockSleeper;
+use Ritmo\Tests\Fakes\MovableClock;
+use Ritmo\Tests\Fakes\ScriptedHttpClient;
 
 final class RateLimiterTest extends TestCase
 {
-    private ManualClock $clock;
+    private MovableClock $clock;
 
     private ClockSleeper $sleeper;
 
     protected function setUp(): void
     {
-        $this->clock = new ManualClock('2026-11-11T12:00:00Z');
+        $this->clock = new MovableClock('2026-11-11T12:00:00Z');
         $this->sleeper = new ClockSleeper($this->clock);
     }
 
@@ -35,7 +35,7 @@ final class RateLimiterTest extends TestCase
         self::assertSame(0.0, $limiter->acquire('api'));
         self::assertSame(0.0, $limiter->acquire('api'));
 
-        self::assertSame([], $this->sleeper->sleeps);
+        self::assertSame([], $this->sleeper->waits());
         self::assertSame(3, $limiter->used('api', 60));
     }
 
@@ -54,7 +54,7 @@ final class RateLimiterTest extends TestCase
         self::assertSame(3, $limiter->used('api', 60), 'a refused call is not counted');
 
         self::assertSame(35.0, $limiter->acquire('api'));   // waits until 12:01:00
-        self::assertSame([35.0], $this->sleeper->sleeps);
+        self::assertSame([35.0], $this->sleeper->waits());
         self::assertSame('12:01:00', $this->clock->now()->format('H:i:s'));
 
         self::assertSame(10.0, $limiter->waitTime('api'), 'now the 12:00:10 call holds the window');
@@ -83,7 +83,7 @@ final class RateLimiterTest extends TestCase
 
         self::assertSame(10.0, $limiter->acquire('api'), 'held by the short window');    // t=10
         self::assertSame(90.0, $limiter->acquire('api'), 'then by the long one');         // t=100
-        self::assertSame([10.0, 90.0], $this->sleeper->sleeps);
+        self::assertSame([10.0, 90.0], $this->sleeper->waits());
         self::assertSame(2, $limiter->used('api', 100), 'the two calls of t=0 left the long window');
     }
 
@@ -95,9 +95,9 @@ final class RateLimiterTest extends TestCase
             $limiter->acquire('api');
         }
 
-        self::assertCount(16, $this->sleeper->sleeps, 'a pause after each burst of sixty');
-        self::assertSame(60.0, $this->sleeper->sleeps[0]);
-        self::assertSame(960.0, array_sum($this->sleeper->sleeps));
+        self::assertCount(16, $this->sleeper->waits(), 'a pause after each burst of sixty');
+        self::assertSame(60.0, $this->sleeper->waits()[0]);
+        self::assertSame(960.0, array_sum($this->sleeper->waits()));
         self::assertSame(1000, $limiter->used('api', 3600));
 
         self::assertSame(2640.0, $limiter->waitTime('api'), 'the hour is full: the next call waits for the first burst to turn one hour old');
@@ -130,7 +130,7 @@ final class RateLimiterTest extends TestCase
             self::assertStringContainsString('"api"', $limited->getMessage());
         }
 
-        self::assertSame([], $this->sleeper->sleeps);
+        self::assertSame([], $this->sleeper->waits());
         self::assertSame(1, $limiter->used('api', 3600));
     }
 
@@ -173,18 +173,18 @@ final class RateLimiterTest extends TestCase
 
     public function testAThrottledClientTakesItsTurnBeforeEveryRequest(): void
     {
-        $inner = new ScriptedHttpClient(new HttpResponse(200, [], 'ok'));
+        $inner = new ScriptedHttpClient(static fn (): HttpResponse => new HttpResponse(200, [], 'ok'));
         $client = new ThrottledHttpClient($inner, $this->limiter([new RateLimit(2, 10)]), 'pricing');
 
         $client->request('GET', 'https://api.pricing.example/v1/listings');
         $client->request('GET', 'https://api.pricing.example/v1/listings', ['X-A' => 'b'], null, 12);
-        self::assertSame([], $this->sleeper->sleeps);
+        self::assertSame([], $this->sleeper->waits());
 
         self::assertSame('ok', $client->request('GET', 'https://api.pricing.example/v1/listings')->body());
 
-        self::assertSame([10.0], $this->sleeper->sleeps);
-        self::assertCount(3, $inner->requests);
-        self::assertSame(['method' => 'GET', 'url' => 'https://api.pricing.example/v1/listings', 'headers' => ['X-A' => 'b'], 'body' => null, 'timeout' => 12], $inner->requests[1]);
+        self::assertSame([10.0], $this->sleeper->waits());
+        self::assertCount(3, $inner->requests());
+        self::assertSame(['method' => 'GET', 'url' => 'https://api.pricing.example/v1/listings', 'headers' => ['X-A' => 'b'], 'body' => null, 'timeout' => 12], array_diff_key($inner->requests()[1], ['path' => true, 'query' => true]));
     }
 
     /**

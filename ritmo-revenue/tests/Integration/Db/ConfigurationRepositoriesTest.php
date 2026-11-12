@@ -16,19 +16,19 @@ use Ritmo\Infrastructure\Db\Repository\PropertyRepository;
 use Ritmo\Infrastructure\Db\Repository\RoomTypeRepository;
 use Ritmo\Infrastructure\Db\Repository\RuleSetRepository;
 use Ritmo\Tests\Support\Fixtures;
-use Ritmo\Tests\Unit\Infrastructure\Support\ManualClock;
+use Ritmo\Tests\Fakes\MovableClock;
 use Ritmo\Tests\Unit\Infrastructure\Support\MigratedDatabase;
 
 final class ConfigurationRepositoriesTest extends TestCase
 {
     private PdoDatabase $db;
 
-    private ManualClock $clock;
+    private MovableClock $clock;
 
     protected function setUp(): void
     {
         $this->db = MigratedDatabase::create();
-        $this->clock = new ManualClock('2026-11-11T12:00:00Z');
+        $this->clock = new MovableClock('2026-11-11T12:00:00Z');
     }
 
     public function testAPropertyIsSavedFoundAndReplaced(): void

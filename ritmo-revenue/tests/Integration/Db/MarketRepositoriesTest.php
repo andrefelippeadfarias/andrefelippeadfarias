@@ -17,7 +17,7 @@ use Ritmo\Infrastructure\Db\PdoDatabase;
 use Ritmo\Infrastructure\Db\Repository\InventorySnapshotRepository;
 use Ritmo\Infrastructure\Db\Repository\MarketAnchorRepository;
 use Ritmo\Infrastructure\Db\Repository\PriceSampleRepository;
-use Ritmo\Tests\Unit\Infrastructure\Support\ManualClock;
+use Ritmo\Tests\Fakes\MovableClock;
 use Ritmo\Tests\Unit\Infrastructure\Support\MigratedDatabase;
 
 final class MarketRepositoriesTest extends TestCase
@@ -31,7 +31,7 @@ final class MarketRepositoriesTest extends TestCase
 
     public function testAnchorsAreKeptOnePerNightAndReadAsARange(): void
     {
-        $anchors = new MarketAnchorRepository($this->db, new ManualClock());
+        $anchors = new MarketAnchorRepository($this->db, new MovableClock());
         $first = new MarketAnchor(Days::date('2026-12-24'), 410.0, 520.5, 640.25, 810.0, 1200.0, 12, Days::date('2026-11-10'), AnchorOrigin::Measured);
         $second = new MarketAnchor(Days::date('2026-12-25'), 400.0, 500.0, 600.0, 800.0, 900.0, 0, null, AnchorOrigin::Fallback);
 

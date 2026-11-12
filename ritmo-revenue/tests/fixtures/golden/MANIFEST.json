@@ -1,6 +1,6 @@
 {
  "generated_at": "2026-11-11",
- "repo_commit": "c0457e729c80ae1035b89daed089c5b026da248d",
+ "repo_commit": "7768377b650d9f89b6f5e08a481ba5140364f4ae",
  "engine": ".claude/skills/gestao-receita-pousadas/scripts",
  "python": "3.11.17",
  "frozen_today": "2026-11-11",

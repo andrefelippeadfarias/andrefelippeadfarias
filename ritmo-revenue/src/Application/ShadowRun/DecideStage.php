@@ -178,7 +178,8 @@ final class DecideStage implements Stage
     }
 
     /**
-     * Units sold and on sale of every room on every night, for the group pace of small rooms.
+     * Units sold (an overbooked room counts as full) and on sale of every room on every night,
+     * for the group pace of small rooms.
      *
      * @param list<RoomType>                                  $rooms
      * @param array<string, array<string, InventoryNight>>    $inventory
@@ -190,7 +191,7 @@ final class DecideStage implements Stage
         $sales = [];
         foreach ($rooms as $room) {
             foreach ($inventory[$room->code] ?? [] as $key => $night) {
-                $sales[$key][$room->code] = [max(0, $room->units - $night->available), $room->units];
+                $sales[$key][$room->code] = [max(0, min($room->units, $room->units - $night->available)), $room->units];
             }
         }
 

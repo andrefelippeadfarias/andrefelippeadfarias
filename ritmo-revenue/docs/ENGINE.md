@@ -68,7 +68,7 @@ Every decision is kept, not only the steps: `PaceDecision::toArray()` is the row
 5. **One step** (`StepSize`): `pace.k` times the distance, limited by `pace.max_step`, half of the limit with a weak anchor.
 6. **Hard floor** (`Floors::hardFloor`): the step stops there (`heldAtFloor`).
 7. **Listing maximum:** the step stops at `Floors::highestFloor()`.
-8. **Tonight never goes up.**
+8. **Tonight never goes up**, not even through the rounding of the floor: a step down whose floor the pricing system would apply (a whole percentage of the base, rounded up) above the current price goes down to the highest whole percentage that does not pass it; if that is under the hard floor, tonight keeps its price. This is a deliberate difference from the reference, which does not look at the rounding on the night of today.
 9. **Tolerance:** a change within `pace.tolerance` is not a step (`Hold`, `within_tolerance`). Otherwise the price is rounded to a whole currency unit, up when rising and down when falling.
 10. **Cadence:** a step in the same direction as the last one of the ledger waits until that one reached the sales channels and 24 hours passed (`Hold`, `cadence_previous_step_not_pushed` or `cadence_step_within_24h`).
 11. **The item** (`Step`, `pace_step`): `minPrice` is the new floor. Going up, `maxPrice` is the target (never under the floor), so the pricing algorithm cannot jump past the step. Going down, `maxPrice` follows the floor only when the current price is held above it by the algorithm or by an older ceiling. A last pass keeps the floor, as a whole percentage over the base, under the listing maximum.
@@ -101,7 +101,7 @@ Every decision is kept, not only the steps: `PaceDecision::toArray()` is the row
 | `step` | `from`, `to`, `strength`, `max_percent` |
 | `held_at_floor` | `floor`, `label`, `public`, `percentile` |
 | `capped_at_listing_max` | `highest_floor`, `listing_max` |
-| `today_never_rises` | `wanted`, `current` |
+| `today_never_rises` | `wanted`, `current`, `applied_floor` (the wanted floor as the pricing system applies it, a whole percentage of the base rounded up), `to` (the price kept: the current one, or the highest whole percentage of the base that does not pass it) |
 | `within_tolerance` | `tolerance`, `from`, `to` |
 | `cadence_previous_step_not_pushed`, `cadence_step_within_24h` | `direction`, `last_step_at`, `wanted` |
 | `ceiling_at_target` | `ceiling`, `target` |
@@ -116,8 +116,8 @@ Every decision is kept, not only the steps: `PaceDecision::toArray()` is the row
 - `PlanItem`: `roomCode`, `date`, `minPrice`, `maxPrice`, `minStay` (each nullable, at least one set), `reasonCode`, `reasonParams`, `before` (`NightState`: `price`, `minPrice`, `maxPrice`, `minStay`, `minPercent`, `maxPercent` in force; null = not known). `PlanItem::fromDecision()` builds the item of a step. The constructor checks the shape only; the rules are the validator's.
 - `Plan`: `propertyId`, `today`, `createdAt`, `items`. `Plan::fromDecisions($property, $clock, $decisions, $before)` keeps the steps. `without($indexes)` drops items by position.
 - `Validator::validate($plan, $property, $rooms): ValidationResult` gives `errors`, `warnings` (lists of `PlanIssue`: `severity`, `code`, `message`, `itemIndex`, `roomCode`, `date`, `params`) and, only when there is no error, `plan` (`ValidatedPlan`). `rejectedItems()` lists the positions of the items with errors, so the application can show them or validate again without them.
-- `ValidatedPlan` has a private constructor and no factory: only the validator creates it. It keeps `validatedAt`, `today`, the property's `timezone`, `rulesHash` and the warnings. `isCurrent($clock)` is false once the property's day changed: such a plan is redone, never written.
-- `PercentRounding::convert($item, $room): PercentItem` gives `minPercent` (rounded up) and `maxPercent` (rounded down, never under the floor) over the listing base, with `minAmount()` / `maxAmount()` as the pricing system will apply them. `apply($validatedPlan, $rooms): PercentPlan` converts every item and moves to `dropped` those whose percentages (and stay) are the ones already in force (`NightState::$minPercent`, `$maxPercent`).
+- `ValidatedPlan` has a private constructor and no factory: only the validator creates it, and `Validator::sealed($plan)` is true only for the plans a validator of this process sealed (a WeakMap), so an object made through Reflection is not taken as validated. It cannot be serialised nor unserialised (`LogicException`; `PercentPlan` likewise). It keeps `validatedAt`, `today`, the property's `timezone`, `rulesHash`, the warnings and `bases` (room code => listing base the items were checked with). `isCurrent($clock)` is false once the property's day changed: such a plan is redone, never written. `ArchitectureTest` forbids in `src/` the calls that get around a private constructor (closure rebinding, `newInstanceWithoutConstructor`, `setAccessible`, `unserialize`), except the validator's own `seal()`.
+- `PercentRounding::convert($item, $room): PercentItem` gives `minPercent` (rounded up) and `maxPercent` (rounded down, never under the floor) over the listing base, with `minAmount()` / `maxAmount()` as the pricing system will apply them. `apply($validatedPlan, $rooms): PercentPlan` refuses (`InvalidArgumentException`) a plan the validator did not seal and a room whose base is not the one in `bases`, converts every item and moves to `dropped` those whose percentages (and stay) are the ones already in force (`NightState::$minPercent`, `$maxPercent`).
 
 Validator errors (floors are compared as applied: a whole percentage over the base, rounded up):
 
@@ -128,7 +128,7 @@ Validator errors (floors are compared as applied: a whole percentage over the ba
 | `duplicate_item` | A second item for the same room night. |
 | `missing_reason` | An item without `reasonCode`. |
 | `past_date` | A night before today. |
-| `raise_today` | A floor for tonight above tonight's price. |
+| `raise_today` | A floor for tonight above tonight's price, also when only its rounding up to a whole percentage of the base puts it above (params `floor`, `applied_floor`, `current_price`). |
 | `today_without_current_price` | A floor for tonight without `before->price`. |
 | `below_safety_limit` | A floor (or a ceiling without floor) under the safety limit. |
 | `below_listing_min`, `below_hard_floor` | A floor (or a ceiling without floor) more than one currency unit under the hard floor of the night; the code says whether that floor is the listing minimum. |
@@ -136,7 +136,7 @@ Validator errors (floors are compared as applied: a whole percentage over the ba
 | `ceiling_below_floor` | A ceiling under the floor of the item or, without one, under the floor in force. |
 | `no_effect` | Everything the item sets is already in force (amounts within one unit, same stay). |
 
-Warnings: `today_floor_rounds_above_price` (the rounding alone lifts tonight's floor above the price), `rise_above_max_step` (the floor raises the price by more than one step of the engine), `no_before` (the item has no `before`, so its effect cannot be checked).
+Warnings: `rise_above_max_step` (the floor raises the price by more than one step of the engine), `no_before` (the item has no `before`, so its effect cannot be checked).
 
 A hard floor above the listing maximum is a configuration conflict: the engine goes to the maximum and the validator reports `below_hard_floor`, for a person to solve.
 
@@ -459,6 +459,8 @@ public readonly ValidatedPlan $plan;
 public readonly array $items;
 public readonly array $dropped;
 public function __construct(ValidatedPlan $plan, array $items, array $dropped);
+public function __serialize(): array;
+public function __unserialize(array $data): void;
 ```
 
 #### `Ritmo\Domain\Plan\PercentRounding` (final class)
@@ -499,7 +501,6 @@ const BELOW_LISTING_MIN = 'below_listing_min';
 const ABOVE_LISTING_MAX = 'above_listing_max';
 const CEILING_BELOW_FLOOR = 'ceiling_below_floor';
 const NO_EFFECT = 'no_effect';
-const TODAY_FLOOR_ROUNDS_ABOVE_PRICE = 'today_floor_rounds_above_price';
 const RISE_ABOVE_MAX_STEP = 'rise_above_max_step';
 const NO_BEFORE = 'no_before';
 public readonly string $severity;
@@ -540,7 +541,10 @@ public readonly DateTimeImmutable $today;
 public readonly string $timezone;
 public readonly string $rulesHash;
 public readonly array $warnings;
+public readonly array $bases;
 public function isCurrent(Clock $clock): bool;
+public function __serialize(): array;
+public function __unserialize(array $data): void;
 ```
 
 #### `Ritmo\Domain\Plan\ValidationResult` (final class)
@@ -564,6 +568,7 @@ const LISTING_MAX_MARGIN = 0.5;
 const SAME_AMOUNT = 1.0;
 public function __construct(RuleSet $rules, Clock $clock);
 public function validate(Plan $plan, Property $property, array $rooms): ValidationResult;
+public static function sealed(ValidatedPlan $plan): bool;
 ```
 
 #### `Ritmo\Domain\Report\BookedUnits` (final class)

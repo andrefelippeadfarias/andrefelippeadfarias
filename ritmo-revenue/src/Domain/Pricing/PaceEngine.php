@@ -211,12 +211,40 @@ final class PaceEngine
         }
         $new = min($new, $top);
 
-        if ($daysOut === 0 && $this->rules->neverRaiseToday() && $new > $current) {
-            $trace[] = self::entry(RuleCode::TODAY_NEVER_RISES, ['wanted' => $new, 'current' => $current]);
-            $new = $current;
+        if ($daysOut === 0 && $this->rules->neverRaiseToday()) {
+            $new = $this->tonightAtMostCurrent($context, $new, $floor, $trace);
         }
 
         return ['new' => $new, 'held' => $held, 'capped' => $capped, 'floor' => $floor];
+    }
+
+    /**
+     * The price of tonight never goes up, not even through the rounding of the floor: the pricing
+     * system applies a floor as a whole percentage over the base, rounded up, so a step down that
+     * ends within one percentage of the base under the price would still raise it. Such a step
+     * goes down to the highest whole percentage that does not pass the price; when that is under
+     * the hard floor of the night, the night stays at its price.
+     *
+     * @param list<array{code: string, params: array<string, scalar|null>}> $trace
+     */
+    private function tonightAtMostCurrent(NightContext $context, float $new, HardFloor $floor, array &$trace): float
+    {
+        $current = $context->currentPrice;
+        $room = $context->room;
+        if ($new <= $current && self::effectiveFloor($room, $new) <= $current) {
+            return $new;
+        }
+
+        $highest = Num::percentToAmount((float) Num::ceilingToPercent($current, $room->base), $room->base, 2);
+        $allowed = $new > $current || $highest < $floor->amount ? $current : min($new, $highest);
+        $trace[] = self::entry(RuleCode::TODAY_NEVER_RISES, [
+            'wanted' => $new,
+            'current' => $current,
+            'applied_floor' => self::effectiveFloor($room, min($new, $current)),
+            'to' => $allowed,
+        ]);
+
+        return $allowed;
     }
 
     /**

@@ -116,4 +116,19 @@ final class PercentRoundingTest extends TestCase
         $this->expectException(InvalidArgumentException::class);
         (new PercentRounding())->apply($validated, [EngineSample::standard()]);
     }
+
+    public function testApplyOnlyConvertsWithTheBasesThePlanWasValidatedWith(): void
+    {
+        $clock = new FixedClock('2027-03-03T12:00:00+00:00');
+        $plan = new Plan('inn', $clock->today('UTC'), $clock->now(), [self::item(900.0, null, new NightState(1000.0, 870.0), '2027-03-10')]);
+        $validated = (new Validator(EngineSample::rules(), $clock))->validate($plan, EngineSample::property(), [EngineSample::deluxe()])->plan;
+        self::assertNotNull($validated);
+        self::assertSame(['Deluxe' => 1000.0], $validated->bases);
+
+        // The same room re-read with a base of 3000: -10% there would be 2700, not the 900 validated.
+        $reread = new RoomType('inn', 'Deluxe', 'Deluxe room', 4, 'pms-1', 'pricing-1', 3000.0, 600.0, 3000.0, 700.0, ['tub']);
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('validated with 1000.00');
+        (new PercentRounding())->apply($validated, [$reread]);
+    }
 }

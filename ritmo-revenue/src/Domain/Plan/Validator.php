@@ -13,6 +13,7 @@ use Ritmo\Domain\Model\RoomType;
 use Ritmo\Domain\Pricing\Floors;
 use Ritmo\Domain\Support\Clock;
 use Ritmo\Domain\Support\Days;
+use WeakMap;
 
 /**
  * The plan validator of milestone 1: the minimum set of safety rules. It is the only way to get
@@ -23,8 +24,9 @@ use Ritmo\Domain\Support\Days;
  * - the plan was computed for another day; a room that is not of the property; two items for
  *   the same room night; an item without a reason;
  * - a night before today;
- * - a floor for tonight above tonight's price ("the price of today never goes up"), or without
- *   the current price to compare with;
+ * - a floor for tonight above tonight's price ("the price of today never goes up"), also when
+ *   only its rounding up to a whole percentage puts it above, or without the current price to
+ *   compare with;
  * - a floor (or, in an item with a ceiling only, the ceiling) under the safety limit, under the
  *   listing minimum or under the hard floor of the night;
  * - a floor or a ceiling over the listing maximum;
@@ -60,6 +62,9 @@ final class Validator
 
     /** @var list<PlanIssue> */
     private array $warnings = [];
+
+    /** @var WeakMap<ValidatedPlan, true>|null the plans sealed in this process */
+    private static ?WeakMap $sealedPlans = null;
 
     public function __construct(private readonly RuleSet $rules, private readonly Clock $clock)
     {
@@ -117,7 +122,7 @@ final class Validator
             $this->checkItem($index, $this->rounding->convert($item, $room), $room, $daysOut);
         }
 
-        return new ValidationResult($this->errors, $this->warnings, $this->errors === [] ? $this->seal($plan, $today, $property->timezone) : null);
+        return new ValidationResult($this->errors, $this->warnings, $this->errors === [] ? $this->seal($plan, $today, $property->timezone, $byCode) : null);
     }
 
     private function checkItem(int $index, PercentItem $percent, RoomType $room, int $daysOut): void
@@ -206,7 +211,8 @@ final class Validator
     }
 
     /**
-     * The price of tonight never goes up: a floor above tonight's price would raise it.
+     * The price of tonight never goes up: a floor above tonight's price would raise it, and so
+     * would one that only the rounding up to a whole percentage of the base puts above it.
      */
     private function checkToday(int $index, PercentItem $percent): void
     {
@@ -218,14 +224,16 @@ final class Validator
         $current = $item->before?->price;
         if ($current === null) {
             $this->error($index, $item, PlanIssue::TODAY_WITHOUT_CURRENT_PRICE, 'A floor for tonight needs the current price of the night, to show that it does not raise it.');
-        } elseif ($item->minPrice > $current) {
-            $this->error($index, $item, PlanIssue::RAISE_TODAY, sprintf('The floor of %.2f would raise the price of tonight (%.2f).', $item->minPrice, $current), [
+
+            return;
+        }
+        // The floor as the pricing system applies it (rounded up to a whole percentage); with the
+        // ceiling lifted to that floor, it is also the lowest price the night can have.
+        $applied = $percent->minAmount(2);
+        if ($item->minPrice > $current || $applied > $current) {
+            $this->error($index, $item, PlanIssue::RAISE_TODAY, sprintf('The floor of %.2f, applied as %.2f, would raise the price of tonight (%.2f).', $item->minPrice, $applied, $current), [
                 'floor' => $item->minPrice,
-                'current_price' => $current,
-            ]);
-        } elseif ($percent->minAmount(2) > $current) {
-            $this->warning($index, $item, PlanIssue::TODAY_FLOOR_ROUNDS_ABOVE_PRICE, sprintf('Rounded up to a whole percentage, the floor becomes %.2f, above the price of tonight (%.2f).', $percent->minAmount(2), $current), [
-                'applied_floor' => $percent->minAmount(2),
+                'applied_floor' => $applied,
                 'current_price' => $current,
             ]);
         }
@@ -273,19 +281,38 @@ final class Validator
     }
 
     /**
-     * Creates the ValidatedPlan through its private constructor: this method is the only place
-     * that can.
+     * True when the plan was sealed by a Validator of this process: an object made some other way
+     * (Reflection, a copy) is not a validated plan, whatever it holds.
      */
-    private function seal(Plan $plan, DateTimeImmutable $today, string $timezone): ValidatedPlan
+    public static function sealed(ValidatedPlan $plan): bool
     {
+        return self::$sealedPlans !== null && isset(self::$sealedPlans[$plan]);
+    }
+
+    /**
+     * Creates the ValidatedPlan through its private constructor (this method is the only place
+     * that can) and records it as sealed.
+     *
+     * @param array<string, RoomType> $byCode the room types the items were checked with
+     */
+    private function seal(Plan $plan, DateTimeImmutable $today, string $timezone, array $byCode): ValidatedPlan
+    {
+        $bases = [];
+        foreach ($plan->items as $item) {
+            $bases[$item->roomCode] = $byCode[$item->roomCode]->base;
+        }
+        ksort($bases);
         $create = Closure::bind(
-            static fn (Plan $plan, DateTimeImmutable $validatedAt, DateTimeImmutable $today, string $timezone, string $rulesHash, array $warnings): ValidatedPlan
-                => new ValidatedPlan($plan, $validatedAt, $today, $timezone, $rulesHash, $warnings),
+            static fn (Plan $plan, DateTimeImmutable $validatedAt, DateTimeImmutable $today, string $timezone, string $rulesHash, array $warnings, array $bases): ValidatedPlan
+                => new ValidatedPlan($plan, $validatedAt, $today, $timezone, $rulesHash, $warnings, $bases),
             null,
             ValidatedPlan::class
         );
+        $validated = $create($plan, $this->clock->now(), $today, $timezone, $this->rules->hash(), $this->warnings, $bases);
+        self::$sealedPlans ??= new WeakMap();
+        self::$sealedPlans[$validated] = true;
 
-        return $create($plan, $this->clock->now(), $today, $timezone, $this->rules->hash(), $this->warnings);
+        return $validated;
     }
 
     /**

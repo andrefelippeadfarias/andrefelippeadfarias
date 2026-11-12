@@ -82,6 +82,30 @@ final class ArchitectureTest extends TestCase
     }
 
     /**
+     * A ValidatedPlan is only worth something if nothing but the Validator gets around private
+     * constructors: no plugin code rebinds closures, instantiates without a constructor, opens
+     * private members or unserialises objects. The Validator's own seal() is the one exception.
+     */
+    public function testOnlyTheValidatorGetsAroundAPrivateConstructor(): void
+    {
+        $forbidden = ['newInstanceWithoutConstructor', 'bind', 'bindTo', 'call', 'setAccessible', 'unserialize', 'ReflectionProperty', 'ReflectionMethod'];
+        $violations = [];
+        foreach (SourceScan::phpFiles(Fixtures::pluginRoot() . '/src') as $file) {
+            $found = [];
+            foreach (token_get_all((string) file_get_contents($file)) as $i => $token) {
+                if (is_array($token) && $token[0] === T_STRING && in_array($token[1], $forbidden, true)) {
+                    $found[] = $token[1];
+                }
+            }
+            if ($found !== [] && !(str_ends_with($file, '/Domain/Plan/Validator.php') && $found === ['bind'])) {
+                $violations[] = self::relative($file) . ': ' . implode(', ', $found);
+            }
+        }
+
+        self::assertSame([], $violations);
+    }
+
+    /**
      * @return array<string, array{string, list<string>}>
      */
     public static function wordPressSnippets(): array

@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace Ritmo\Tests\Unit\Domain\Plan;
 
+use DateTimeImmutable;
 use InvalidArgumentException;
+use LogicException;
 use PHPUnit\Framework\TestCase;
 use ReflectionClass;
 use ReflectionMethod;
@@ -12,6 +14,7 @@ use Ritmo\Domain\Config\RuleSet;
 use Ritmo\Domain\Model\Property;
 use Ritmo\Domain\Model\RoomType;
 use Ritmo\Domain\Plan\NightState;
+use Ritmo\Domain\Plan\PercentRounding;
 use Ritmo\Domain\Plan\Plan;
 use Ritmo\Domain\Plan\PlanIssue;
 use Ritmo\Domain\Plan\PlanItem;
@@ -140,6 +143,41 @@ final class ValidatorTest extends TestCase
         self::assertTrue($class->isFinal());
         self::assertSame([], $class->getMethods(ReflectionMethod::IS_STATIC), 'no factory');
         self::assertNull(self::validate([self::item(['min' => 100.0])])->plan, 'a plan with an error is never sealed');
+        self::assertTrue(Validator::sealed(self::validate([self::item()])->plan));
+    }
+
+    public function testAValidatedPlanCannotBeSerialisedNorUnserialised(): void
+    {
+        $validated = self::validate([self::item()])->plan;
+        self::assertNotNull($validated);
+
+        try {
+            serialize($validated);
+            self::fail('serialised');
+        } catch (LogicException) {
+        }
+        $forged = sprintf('O:%d:"%s":0:{}', strlen(ValidatedPlan::class), ValidatedPlan::class);
+        $this->expectException(LogicException::class);
+        unserialize($forged);
+    }
+
+    public function testAPlanMadeThroughReflectionIsNotSealed(): void
+    {
+        $bad = self::item(['min' => 1.0]);
+        self::assertSame([PlanIssue::BELOW_SAFETY_LIMIT], self::validate([$bad])->errorCodes());
+
+        $class = new ReflectionClass(ValidatedPlan::class);
+        $forged = $class->newInstanceWithoutConstructor();
+        $constructor = $class->getConstructor();
+        $constructor->setAccessible(true);
+        $now = new DateTimeImmutable(self::NOW);
+        $constructor->invoke($forged, new Plan('inn', Days::date(self::TODAY), $now, [$bad]), $now, Days::date(self::TODAY), 'UTC', EngineSample::rules()->hash(), [], ['Deluxe' => 1000.0]);
+
+        self::assertTrue($forged->isCurrent(new FixedClock(self::NOW)), 'the object itself looks fine');
+        self::assertFalse(Validator::sealed($forged));
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('not sealed by the Validator');
+        (new PercentRounding())->apply($forged, [EngineSample::deluxe()]);
     }
 
     public function testAPlanOfAnotherDayMustBeRedone(): void
@@ -208,16 +246,32 @@ final class ValidatorTest extends TestCase
         self::assertSame([], self::errorsOf(['night' => self::TODAY, 'min' => null, 'max' => 900.0]), 'a ceiling alone can only lower tonight');
     }
 
-    public function testWarnsWhenTheRoundingAloneLiftsTonightAboveItsPrice(): void
+    public function testTheRoundingAloneMayNotLiftTonightAboveItsPrice(): void
     {
         // 995.50 asked is under the price of 999, but it is sent as +0% of the base: 1000.
         $result = self::validate([self::item(['night' => self::TODAY, 'min' => 995.5, 'before' => new NightState(999.0, 600.0, 3000.0)])]);
 
-        self::assertTrue($result->isValid());
-        self::assertSame([PlanIssue::TODAY_FLOOR_ROUNDS_ABOVE_PRICE], $result->warningCodes());
-        self::assertSame(['applied_floor' => 1000.0, 'current_price' => 999.0], $result->warnings[0]->params);
-        self::assertFalse($result->warnings[0]->isError());
-        self::assertSame($result->warnings, $result->plan->warnings);
+        self::assertFalse($result->isValid());
+        self::assertNull($result->plan, 'never sealed');
+        self::assertSame([PlanIssue::RAISE_TODAY], $result->errorCodes());
+        self::assertSame(['floor' => 995.5, 'applied_floor' => 1000.0, 'current_price' => 999.0], $result->errors[0]->params);
+        self::assertSame([0], $result->rejectedItems());
+        self::assertSame([], $result->warningCodes());
+
+        $atPrice = self::validate([self::item(['night' => self::TODAY, 'min' => 995.5, 'before' => new NightState(1000.0, 600.0, 3000.0)])]);
+        self::assertTrue($atPrice->isValid(), 'applied at exactly the price of tonight: nothing goes up');
+    }
+
+    public function testTonightOnALargeBaseRejectsAStepThatRoundsAboveThePrice(): void
+    {
+        // Base 3000: one whole percentage is 30, more than a step of 2% of a price of 595.
+        $loft = new RoomType('inn', 'Loft', 'Loft', 2, 'pms-3', 'pricing-3', 3000.0, 300.0, 6000.0, 300.0);
+        $clock = new FixedClock(self::NOW);
+        $item = new PlanItem('Loft', Days::date(self::TODAY), 583.0, 583.0, null, 'pace_step', [], new NightState(595.0, 595.0, 6000.0));
+        $result = (new Validator(EngineSample::rules(), $clock))->validate(new Plan('inn', Days::date(self::TODAY), $clock->now(), [$item]), EngineSample::property(), [$loft]);
+
+        self::assertSame([PlanIssue::RAISE_TODAY], $result->errorCodes(), '583 is sent as -80%: floor and ceiling 600');
+        self::assertSame(600.0, $result->errors[0]->params['applied_floor']);
     }
 
     public function testAFloorUnderTheSafetyLimitIsRejected(): void

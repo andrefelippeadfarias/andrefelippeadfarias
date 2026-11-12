@@ -33,8 +33,6 @@ final class PlanIssue
     /** Everything the item sets is already in force. */
     public const NO_EFFECT = 'no_effect';
 
-    /** Warning: rounded up to a whole percentage, the floor of tonight passes its current price. */
-    public const TODAY_FLOOR_ROUNDS_ABOVE_PRICE = 'today_floor_rounds_above_price';
     /** Warning: the floor raises the price by more than one step of the pace engine. */
     public const RISE_ABOVE_MAX_STEP = 'rise_above_max_step';
     /** Warning: without what is in force, the validator cannot tell whether the item changes anything. */

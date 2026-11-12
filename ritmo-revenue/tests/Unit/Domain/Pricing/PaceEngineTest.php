@@ -170,6 +170,36 @@ final class PaceEngineTest extends TestCase
         self::assertFalse($tomorrow->applied(RuleCode::TODAY_NEVER_RISES));
     }
 
+    public function testTonightNeverGoesUpThroughTheRoundingOfItsFloor(): void
+    {
+        // Base 3000: one whole percentage is 30. From 595 the step wants 572.50, which the pricing
+        // system would apply as -80%, 600: above tonight's price.
+        $loft = new RoomType('inn', 'Loft', 'Loft', 2, 'pms-3', 'pricing-3', 3000.0, 300.0, 6000.0, 300.0);
+        $tonight = self::decide(['night' => '2027-03-03', 'room' => $loft, 'price' => 595.0]);
+
+        self::assertTrue($tonight->isStep());
+        self::assertSame(StepDirection::Down, $tonight->direction);
+        self::assertSame(570.0, $tonight->minPrice, 'down to -81%, 570, the highest whole percentage under 595');
+        self::assertSame(570.0, $tonight->maxPrice);
+        self::assertSame(['wanted' => 572.5, 'current' => 595.0, 'applied_floor' => 600.0, 'to' => 570.0], $tonight->traceParams(RuleCode::TODAY_NEVER_RISES));
+
+        $tomorrow = self::decide(['night' => '2027-03-04', 'room' => $loft, 'price' => 595.0]);
+        self::assertSame(572.0, $tomorrow->minPrice, 'tomorrow the rounding may lift the floor');
+        self::assertFalse($tomorrow->applied(RuleCode::TODAY_NEVER_RISES));
+    }
+
+    public function testTonightStaysWhenNoWholePercentageFitsBetweenTheHardFloorAndThePrice(): void
+    {
+        // Listing minimum 590: from 595 any floor at or over 590 is applied as -80%, 600.
+        $loft = new RoomType('inn', 'Loft', 'Loft', 2, 'pms-3', 'pricing-3', 3000.0, 590.0, 6000.0, 590.0);
+        $tonight = self::decide(['night' => '2027-03-03', 'room' => $loft, 'price' => 595.0]);
+
+        self::assertSame(DecisionKind::Hold, $tonight->kind);
+        self::assertNull($tonight->minPrice);
+        self::assertSame(595.0, $tonight->proposedPrice);
+        self::assertSame(595.0, $tonight->traceParams(RuleCode::TODAY_NEVER_RISES)['to']);
+    }
+
     public function testThePriceOfTonightMayGoDown(): void
     {
         $decision = self::decide(['night' => '2027-03-03', 'price' => 1000.0]);

@@ -8,6 +8,10 @@
 #   2. "rerun": the site restarted with RITMO_PRICING_CALENDAR_READ=1; a second shadow run, and
 #      only GET plus the POST of /listing_prices may reach the simulator.
 #
+# Then tests/e2e/wordpress-checks.php checks, on the same site and across PHP processes, the
+# emergency switch, the keys at rest, the capabilities after a new activation and a
+# RITMO_SECRET_KEY that is too short.
+#
 # Then it checks that WordPress logged no PHP error from the plugin, and stops both servers.
 #
 #   bin/e2e.sh [screenshot folder]    default: tests/e2e/screenshots (outside git)
@@ -32,6 +36,8 @@ RITMO_E2E_PASS=setup RITMO_PRICING_CALENDAR_READ=0 RITMO_E2E_SCREENS="$SCREENS" 
 
 RITMO_PRICING_CALENDAR_READ=1 "$ROOT/bin/wp-test-site.sh" restart
 RITMO_E2E_PASS=rerun RITMO_PRICING_CALENDAR_READ=1 RITMO_E2E_SCREENS="$SCREENS" node "$ROOT/tests/e2e/shadow-run.js"
+
+php "$ROOT/tests/e2e/wordpress-checks.php" "$ROOT/.wp-test/wordpress"
 
 # PHP reports a plugin file by its real path (the plugin folder is linked into the site).
 PLUGIN_FILES="$ROOT/(src|templates)/|$ROOT/(ritmo-revenue|uninstall)\.php|wp-content/plugins/ritmo-revenue/"

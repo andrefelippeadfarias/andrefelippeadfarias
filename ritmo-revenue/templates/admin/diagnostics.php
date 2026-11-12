@@ -8,11 +8,18 @@
 declare(strict_types=1);
 
 use Ritmo\Admin\View;
+use Ritmo\Infrastructure\Secrets\SodiumVault;
 
 defined('ABSPATH') || exit;
 
 $ritmo_time = static fn ($instant): string => $instant instanceof DateTimeInterface ? wp_date('Y-m-d H:i:s', $instant->getTimestamp()) : '–';
 $ritmo_yes = static fn (bool $value): string => $value ? __('Yes', 'ritmo-revenue') : __('No', 'ritmo-revenue');
+$ritmo_protection = static fn (string $protection): string => match ($protection) {
+    SodiumVault::PROTECTION_CONFIGURED_KEY => __('Key from RITMO_SECRET_KEY, outside the database.', 'ritmo-revenue'),
+    SodiumVault::PROTECTION_SITE_SALTS => __('Key bound to the salts of wp-config.php: a copy of the database alone decrypts nothing. Define RITMO_SECRET_KEY (32 characters or more) to keep it independent of the salts; regenerating the salts makes the saved keys unreadable.', 'ritmo-revenue'),
+    SodiumVault::PROTECTION_UNAVAILABLE => __('Unavailable: RITMO_SECRET_KEY is shorter than 32 characters. Saved keys cannot be used or changed until it is fixed.', 'ritmo-revenue'),
+    default => __('Warning: the encryption key is kept in the database, so a copy of the database is enough to read the saved keys. Define RITMO_SECRET_KEY (32 characters or more) in wp-config.php.', 'ritmo-revenue'),
+};
 
 View::render('admin/partials/header', $view);
 ?>
@@ -27,6 +34,8 @@ View::render('admin/partials/header', $view);
                 <tr><th scope="row"><?php esc_html_e('WordPress', 'ritmo-revenue'); ?></th><td><?php echo esc_html($view['versions']['wordpress']); ?></td></tr>
                 <tr><th scope="row"><?php esc_html_e('PHP', 'ritmo-revenue'); ?></th><td><?php echo esc_html($view['versions']['php']); ?></td></tr>
                 <tr><th scope="row"><?php esc_html_e('Sodium encryption', 'ritmo-revenue'); ?></th><td><?php echo esc_html($ritmo_yes($view['versions']['sodium'])); ?></td></tr>
+                <tr><th scope="row"><?php esc_html_e('Encryption of saved keys', 'ritmo-revenue'); ?></th>
+                    <td data-ritmo="vault-protection" class="<?php echo esc_attr(in_array($view['vault']['protection'], [SodiumVault::PROTECTION_DATABASE_ONLY, SodiumVault::PROTECTION_UNAVAILABLE], true) ? 'ritmo-error' : ''); ?>"><?php echo esc_html($ritmo_protection($view['vault']['protection'])); ?></td></tr>
                 <tr><th scope="row"><?php esc_html_e('Pricing calendar read (POST)', 'ritmo-revenue'); ?></th><td><?php echo esc_html($ritmo_yes($view['calendar_read'])); ?></td></tr>
             </tbody>
         </table>

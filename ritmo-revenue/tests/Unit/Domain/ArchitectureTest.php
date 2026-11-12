@@ -92,7 +92,7 @@ final class ArchitectureTest extends TestCase
         $violations = [];
         foreach (SourceScan::phpFiles(Fixtures::pluginRoot() . '/src') as $file) {
             $found = [];
-            foreach (token_get_all((string) file_get_contents($file)) as $i => $token) {
+            foreach (token_get_all((string) file_get_contents($file)) as $token) {
                 if (is_array($token) && $token[0] === T_STRING && in_array($token[1], $forbidden, true)) {
                     $found[] = $token[1];
                 }

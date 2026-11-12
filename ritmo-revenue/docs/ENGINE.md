@@ -75,6 +75,8 @@ Every decision is kept, not only the steps: `PaceDecision::toArray()` is the row
 
 **Types.** `NightContext` is the input (see 1.1; `NightContext::fromPriceNight()` builds it from a `PriceNight`). `LedgerStep` is the last step of the ledger for the room night: `direction`, `recordedAt` (instant), `reachedChannel`. `PaceDecision` carries `kind` (`DecisionKind`: `step`, `hold`, `skipped`), `reasonCode`, `direction` (`StepDirection`: `up`, `down`), `reading` (`PaceReading`: `status`, `soldPercent`, `expectedPercent`, `gap()`), `floor` (`HardFloor`: `amount`, `label`, `candidates`), the target and the trace.
 
+**The price the engine starts from** (`RuleInForce`): a price read before the last date rule was written (an old recalculation of the pricing system, or the price the PMS still holds) is brought within the floor and ceiling of the date rule in force before the engine sees it: under the floor (by more than 0.5) it becomes the floor, over the ceiling it becomes the ceiling, never under the floor. `RuleInForce::floor($rule, $base)` and `ceiling()` turn the rule into amounts (fixed, else the percentage over the base). The shadow run's decide stage applies it and, when the price moved, puts `price_within_rule_in_force` with the price read at the front of the item's trace. Reference: `pace.preco_no_vigente`.
+
 **The hard floor** is the highest of: the listing minimum (`listing_min`), the safety limit `floors.fraction_of_reference_min` x reference minimum (`reference_min_fraction`), the owner floors of the night type (`owner_floor`), the quality floor (`quality_floor`) and, on a night of a configured period, the period's own floor or the general holiday floor, whichever is higher (`holiday_floor`). Each amount is divided by the factor of its price plan for the room and night type. On a tie the label is, in this order of preference: owner, holiday, quality, listing minimum, reference fraction. `Floors::safetyLimit($room)` is the fraction of the reference minimum alone.
 
 **Outcomes** (`PaceDecision::$kind` and `$reasonCode`):
@@ -93,6 +95,7 @@ Every decision is kept, not only the steps: `PaceDecision::toArray()` is the row
 
 | Code | Parameters |
 |---|---|
+| `price_within_rule_in_force` | `read` (the price read), `price` (the price the engine starts from), `floor_in_force`, `ceiling_in_force`. Added in front of the trace by the shadow run, not by the engine (see below). |
 | `night` | `night_type`, `days_out`, `period` (name of the configured period or null) |
 | `pace_status` | `status`, `sold`, `units`, `basis` (`room` or `group`), `sold_percent`, `expected_percent` |
 | `market_target` | `tier`, `ahead_near`, `percentile`, `public`, `factor`, `sent`, `anchor_origin`, `anchor_n`, `anchor_captured_at` |
@@ -163,6 +166,7 @@ A hard floor above the listing maximum is a configuration conflict: the engine g
 | `ancora_mercado.tipo_noite` | `HolidayCalendar` |
 | `pace.plano.core` | `PaceBasis::groupFor` and `PaceEngine::decide`: 1122 room nights of `pace.plano` over synthetic calendars |
 | `validar_plano.montar_payload` | `PercentRounding::convert` |
+| `pace.preco_no_vigente` | `RuleInForce::price`, `floor`, `ceiling`: 630 prices against date rules of every kind |
 | `ocupacao.calcular`, `beds24.comparar` | `OccupancyWindows`, `PmsPricingMismatch` |
 | `validar_plano.piso_pct`, `teto_pct`, `em_reais`, `pace.efetivo`, `builtins.round` | `Num` |
 
@@ -385,6 +389,7 @@ const NIGHT = 'night';
 const PAST_NIGHT = 'past_night';
 const SOLD_OUT_PENDING_M2 = 'sold_out_pending_m2';
 const NO_MARKET_ANCHOR = 'no_market_anchor';
+const PRICE_WITHIN_RULE_IN_FORCE = 'price_within_rule_in_force';
 const PACE_STATUS = 'pace_status';
 const MARKET_TARGET = 'market_target';
 const WEAK_ANCHOR = 'weak_anchor';
@@ -399,6 +404,15 @@ const CADENCE_STEP_WITHIN_24H = 'cadence_step_within_24h';
 const PACE_STEP = 'pace_step';
 const CEILING_AT_TARGET = 'ceiling_at_target';
 const CEILING_FOLLOWS_FLOOR = 'ceiling_follows_floor';
+```
+
+#### `Ritmo\Domain\Pricing\RuleInForce` (final class)
+
+```php
+const MARGIN = 0.5;
+public static function floor(?DateOverride $rule, float $base): ?float;
+public static function ceiling(?DateOverride $rule, float $base): ?float;
+public static function price(float $price, ?float $floor, ?float $ceiling): float;
 ```
 
 #### `Ritmo\Domain\Pricing\StepDirection` (enum)

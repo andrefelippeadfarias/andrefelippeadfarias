@@ -22,7 +22,7 @@ final class Activator
         $services = Services::instance();
         $services->migrator()->migrate();
         $services->vault()->install();
-        Roles::install();
+        Roles::install($services->store());
         if ($services->ruleSets()->currentVersion() === null) {
             $services->ruleSets()->save(RuleSet::defaults(), 'Neutral defaults, stored at activation');
         }

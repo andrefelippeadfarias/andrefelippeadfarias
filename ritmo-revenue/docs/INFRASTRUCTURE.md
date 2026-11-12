@@ -9,6 +9,7 @@ What `src/Infrastructure` offers to the application, the panel and the compositi
 ```php
 $clock = new SystemClock();
 $store = new OptionsStore();                    // key "db_version" is the option "ritmo_db_version"
+                                                // getFresh($key) reads past WordPress's cache of the request
 $db    = new WpdbDatabase($wpdb);               // tables are "{$wpdb->prefix}ritmo_<name>"
 
 // Activation and every upgrade (idempotent):
@@ -77,7 +78,20 @@ All in `Ritmo\Infrastructure\Db\Repository`, built with the `Database` (and the 
 
 ### 1.5 Secrets
 
-`SodiumVault` encrypts with `sodium_crypto_secretbox`, one subkey per entry. For the interface there is only `status($name)`: configured or not, the last four characters (none for a secret shorter than 12) and when it was saved. `reveal($name)` is for the connector that sends the secret; its result must never be shown, logged or returned by an endpoint. Register revealed secrets with `LogSanitizer::registerSecret()` so that they are masked wherever they appear.
+`SodiumVault` encrypts with `sodium_crypto_secretbox`, one subkey per entry. For the interface there is only `status($name)`: configured or not, and when it was saved; nothing of the secret is kept in clear, not even some of its characters. `reveal($name)` is for the connector that sends the secret; its result must never be shown, logged or returned by an endpoint. Register revealed secrets with `LogSanitizer::registerSecret()` so that they are masked wherever they appear.
+
+Where the key lives (`protection()`, shown in Diagnostics), from the safest:
+
+| Protection | Key | What a copy of the database alone gives |
+|---|---|---|
+| `configured_key` | `RITMO_SECRET_KEY` (32 characters or more) in wp-config.php | nothing |
+| `site_salts` | the stored random seed bound to `AUTH_KEY` and `SECURE_AUTH_KEY` of wp-config.php | nothing; regenerating those salts makes the saved keys unreadable (enter them again) |
+| `database_only` | the stored seed alone (the site has no salts, or the placeholders of wp-config-sample.php) | every secret: Diagnostics shows a warning |
+| `unavailable` | `RITMO_SECRET_KEY` shorter than 32 characters | nothing is stored or revealed until it is fixed |
+
+Threat model: the vault protects the keys against a leak of the database (a backup, a dump, an SQL injection in another plugin). It does not protect against someone who can read wp-config.php or run code on the site.
+
+An invalid `RITMO_SECRET_KEY` does not throw: `problem()` explains it, `put()`, `reveal()` and `rotate()` throw `SecretUnavailable`, an admin notice reports it to whoever manages the connections, and activation and the screens keep working. `install()` (activation) creates the seed when needed and calls `upgrade()`, which moves every entry it can read to the current key (entries of older versions, or entries of the seed once `RITMO_SECRET_KEY` is set) and drops what older versions kept next to an entry.
 
 `rotate()` re-encrypts every entry in one write: without a configured key it replaces the stored seed; with one it moves everything under it and drops the seed. After `RITMO_SECRET_KEY` changed, pass the old value: `rotate($oldKey)`.
 
@@ -675,9 +689,8 @@ public function error(string $message, array $context = []): void;
 
 ```php
 public readonly bool $configured;
-public readonly string $lastFour;
 public readonly ?DateTimeImmutable $updatedAt;
-public function __construct(bool $configured, string $lastFour = '', ?DateTimeImmutable $updatedAt = null);
+public function __construct(bool $configured, ?DateTimeImmutable $updatedAt = null);
 ```
 
 #### `Ritmo\Infrastructure\Secrets\SecretUnavailable` (final class extends RuntimeException)
@@ -690,9 +703,17 @@ public function __construct(bool $configured, string $lastFour = '', ?DateTimeIm
 
 ```php
 const MIN_CONFIGURED_KEY_LENGTH = 32;
-public function __construct(KeyValueStore $store, Clock $clock, ?string $configuredKey = null);
+const PROTECTION_CONFIGURED_KEY = 'configured_key';
+const PROTECTION_SITE_SALTS = 'site_salts';
+const PROTECTION_DATABASE_ONLY = 'database_only';
+const PROTECTION_UNAVAILABLE = 'unavailable';
+public function __construct(KeyValueStore $store, Clock $clock, ?string $configuredKey = null, ?string $siteSecret = null);
 public static function forSite(KeyValueStore $store, Clock $clock): self;
+public static function configuredKeyProblem(?string $configuredKey): ?string;
+public function problem(): ?string;
+public function protection(): string;
 public function install(): void;
+public function upgrade(): int;
 public function put(string $name, string $secret): void;
 public function reveal(string $name): string;
 public function has(string $name): bool;
@@ -709,6 +730,7 @@ public function __serialize(): array;
 ```php
 public function __construct(array $values = []);
 public function get(string $key, mixed $default = null): mixed;
+public function getFresh(string $key, mixed $default = null): mixed;
 public function has(string $key): bool;
 public function set(string $key, mixed $value): void;
 public function delete(string $key): void;
@@ -726,6 +748,7 @@ public static function encode(string $key, mixed $value): string;
 ```php
 public function __construct(string $prefix = 'ritmo_');
 public function get(string $key, mixed $default = null): mixed;
+public function getFresh(string $key, mixed $default = null): mixed;
 public function has(string $key): bool;
 public function set(string $key, mixed $value): void;
 public function delete(string $key): void;

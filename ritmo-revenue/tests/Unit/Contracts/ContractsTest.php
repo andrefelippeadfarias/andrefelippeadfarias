@@ -59,7 +59,7 @@ final class ContractsTest extends TestCase
             LicenceProvider::class => ['id', 'check'],
             AiProvider::class => ['id', 'complete'],
             HttpClient::class => ['request'],
-            KeyValueStore::class => ['get', 'has', 'set', 'delete'],
+            KeyValueStore::class => ['get', 'getFresh', 'has', 'set', 'delete'],
             QuotaLedger::class => ['record', 'countSince'],
             Logger::class => ['log', 'debug', 'info', 'warning', 'error'],
         ];

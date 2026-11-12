@@ -18,6 +18,7 @@ final class SodiumVaultTest extends TestCase
     private const API_KEY = 'pk-live-3f9a1c77d2e04b55a8c6';
     private const KEY_A = 'site-key-A-0123456789abcdef0123456789abcdef';
     private const KEY_B = 'site-key-B-fedcba9876543210fedcba9876543210';
+    private const SALTS = "auth-key-of-the-test-site-0123456789\0secure-auth-key-of-the-test-site-0123";
 
     private ArrayStore $store;
 
@@ -51,7 +52,7 @@ final class SodiumVaultTest extends TestCase
         self::assertNotSame($first, $this->store->get('vault')['entries']['a']['c']);
     }
 
-    public function testTheInterfaceOnlyLearnsWhetherASecretExistsAndItsLastFourCharacters(): void
+    public function testTheInterfaceOnlyLearnsWhetherASecretExistsAndWhenItWasSaved(): void
     {
         $vault = new SodiumVault($this->store, $this->clock);
         self::assertEquals(new SecretStatus(false), $vault->status('pricing.api_key'));
@@ -60,20 +61,20 @@ final class SodiumVaultTest extends TestCase
         $status = $vault->status('pricing.api_key');
 
         self::assertTrue($status->configured);
-        self::assertSame('a8c6', $status->lastFour);
         self::assertSame('2026-11-11T12:00:00+00:00', $status->updatedAt?->format(DATE_ATOM));
-        self::assertSame(['configured', 'lastFour', 'updatedAt'], array_keys(get_object_vars($status)), 'the status has no room for the secret');
+        self::assertSame(['configured', 'updatedAt'], array_keys(get_object_vars($status)), 'the status has no room for any part of the secret');
     }
 
-    public function testAShortSecretShowsNoCharactersAtAll(): void
+    public function testNoPartOfTheSecretIsKeptInClear(): void
     {
-        $vault = new SodiumVault($this->store, $this->clock);
-        $vault->put('short', 'abcdefghijk');
-        $vault->put('long-enough', 'abcdefghijkl');
+        $vault = new SodiumVault($this->store, $this->clock, null, self::SALTS);
+        $vault->put('pms.token', 'FAKE-TOKEN-zz9q-UNIQUEMARK-1111');
 
-        self::assertSame('', $vault->status('short')->lastFour);
-        self::assertTrue($vault->status('short')->configured);
-        self::assertSame('ijkl', $vault->status('long-enough')->lastFour);
+        $stored = (string) json_encode($this->store->all());
+        foreach (['1111', 'FAKE', 'UNIQUEMARK', 'zz9q'] as $part) {
+            self::assertStringNotContainsString($part, $stored);
+        }
+        self::assertSame(['k', 'n', 'c', 'u'], array_keys($this->store->get('vault')['entries']['pms.token']));
     }
 
     public function testTheVaultNeverPrintsItsKeyOrASecret(): void
@@ -237,7 +238,7 @@ final class SodiumVaultTest extends TestCase
         self::assertNotSame($before['entries']['pms.token']['c'], $after['entries']['pms.token']['c']);
         self::assertSame('the-pms-token-000001', $vault->reveal('pms.token'));
         self::assertSame(self::API_KEY, (new SodiumVault($this->store, $this->clock))->reveal('pricing.api_key'));
-        self::assertSame('a8c6', $vault->status('pricing.api_key')->lastFour);
+        self::assertSame('2026-11-11T12:00:00+00:00', $vault->status('pricing.api_key')->updatedAt?->format(DATE_ATOM), 'the date the secret was saved, not the rotation');
 
         // The old seed no longer opens anything.
         $old = new ArrayStore(['vault' => ['seed' => $before['seed'], 'entries' => $after['entries']]]);
@@ -306,10 +307,99 @@ final class SodiumVaultTest extends TestCase
         $vault->reveal('pms.token');
     }
 
-    public function testAConfiguredKeyMustBeLongEnough(): void
+    public function testATooShortConfiguredKeyMakesTheVaultUnavailableWithoutBreakingIt(): void
     {
-        $this->expectException(InvalidArgumentException::class);
-        new SodiumVault($this->store, $this->clock, 'too-short');
+        (new SodiumVault($this->store, $this->clock))->put('pms.token', 'the-pms-token-000001');
+        $before = $this->store->all();
+        $vault = new SodiumVault($this->store, $this->clock, 'too-short');
+
+        self::assertSame(SodiumVault::PROTECTION_UNAVAILABLE, $vault->protection());
+        self::assertStringContainsString('at least 32 characters', (string) $vault->problem());
+        self::assertStringNotContainsString('too-short', (string) $vault->problem());
+        self::assertTrue($vault->has('pms.token'), 'what is stored is still reported');
+        self::assertTrue($vault->status('pms.token')->configured);
+        $vault->install();
+        self::assertSame(0, $vault->upgrade());
+        self::assertSame($before, $this->store->all(), 'nothing is changed');
+
+        foreach ([static fn () => $vault->reveal('pms.token'), static fn () => $vault->put('pms.token', 'another-token-0001'), static fn () => $vault->rotate()] as $call) {
+            try {
+                $call();
+                self::fail('the vault must refuse while its key is invalid');
+            } catch (SecretUnavailable $refused) {
+                self::assertStringContainsString('RITMO_SECRET_KEY', $refused->getMessage());
+            }
+        }
+        self::assertSame($before, $this->store->all());
+        self::assertNull(SodiumVault::configuredKeyProblem(null));
+        self::assertNull(SodiumVault::configuredKeyProblem(self::KEY_A));
+    }
+
+    public function testWithTheSiteSaltsACopyOfTheDatabaseAloneDecryptsNothing(): void
+    {
+        $vault = new SodiumVault($this->store, $this->clock, null, self::SALTS);
+        self::assertSame(SodiumVault::PROTECTION_SITE_SALTS, $vault->protection());
+        $vault->put('pricing.api_key', self::API_KEY);
+        self::assertSame(self::API_KEY, (new SodiumVault($this->store, $this->clock, null, self::SALTS))->reveal('pricing.api_key'));
+
+        // What someone with the database only can do: the seed, the context and the entry name.
+        $state = $this->store->get('vault');
+        $key = sodium_crypto_generichash("ritmo-revenue/vault/v1\0" . base64_decode($state['seed']), '', SODIUM_CRYPTO_SECRETBOX_KEYBYTES);
+        $entry = $state['entries']['pricing.api_key'];
+        $entryKey = sodium_crypto_generichash('entry:pricing.api_key', $key, SODIUM_CRYPTO_SECRETBOX_KEYBYTES);
+        self::assertFalse(sodium_crypto_secretbox_open(base64_decode($entry['c']), base64_decode($entry['n']), $entryKey));
+
+        $this->expectException(SecretUnavailable::class);
+        (new SodiumVault(new ArrayStore($this->store->all()), $this->clock))->reveal('pricing.api_key');
+    }
+
+    public function testWithoutSaltsNorAConfiguredKeyTheDiagnosticsAreTold(): void
+    {
+        self::assertSame(SodiumVault::PROTECTION_DATABASE_ONLY, (new SodiumVault($this->store, $this->clock))->protection());
+        self::assertSame(SodiumVault::PROTECTION_DATABASE_ONLY, (new SodiumVault($this->store, $this->clock, null, 'short'))->protection(), 'salts too short to count');
+        self::assertSame(SodiumVault::PROTECTION_CONFIGURED_KEY, (new SodiumVault($this->store, $this->clock, self::KEY_A, self::SALTS))->protection());
+    }
+
+    public function testUpgradeMovesOldEntriesToTheSaltBoundKeyAndDropsTheCharactersTheyKept(): void
+    {
+        // As an older version left it: under the seed alone, with the last characters in clear.
+        (new SodiumVault($this->store, $this->clock))->put('pricing.api_key', self::API_KEY);
+        $state = $this->store->get('vault');
+        $old = $state['entries']['pricing.api_key'];
+        $state['entries']['pricing.api_key']['l'] = 'a8c6';
+        $this->store->set('vault', $state);
+        $this->clock->advance(86400);
+
+        $vault = new SodiumVault($this->store, $this->clock, null, self::SALTS);
+        self::assertSame(self::API_KEY, $vault->reveal('pricing.api_key'), 'readable before the upgrade');
+        $vault->install();
+
+        $entry = $this->store->get('vault')['entries']['pricing.api_key'];
+        self::assertNotSame($old['k'], $entry['k']);
+        self::assertSame(['k', 'n', 'c', 'u'], array_keys($entry));
+        self::assertSame($old['u'], $entry['u'], 'still the day it was saved');
+        self::assertSame(self::API_KEY, $vault->reveal('pricing.api_key'));
+        self::assertSame(0, $vault->upgrade(), 'nothing left to move');
+        $this->expectException(SecretUnavailable::class);
+        (new SodiumVault($this->store, $this->clock))->reveal('pricing.api_key');
+    }
+
+    public function testUpgradeUnderAConfiguredKeyDropsTheSeedOnlyWhenEveryEntryMoved(): void
+    {
+        (new SodiumVault($this->store, $this->clock, null, self::SALTS))->put('pms.token', 'the-pms-token-000001');
+        $unreadable = $this->store->get('vault');
+        $unreadable['entries']['lost'] = ['k' => 'ffffffffffffffff', 'n' => '', 'c' => '', 'u' => ''];
+        $this->store->set('vault', $unreadable);
+
+        $vault = new SodiumVault($this->store, $this->clock, self::KEY_A, self::SALTS);
+        self::assertSame(1, $vault->upgrade());
+        self::assertNotNull($this->store->get('vault')['seed'], 'an entry it could not read keeps the seed');
+        self::assertSame('the-pms-token-000001', $vault->reveal('pms.token'));
+
+        $vault->forget('lost');
+        self::assertSame(0, $vault->upgrade());
+        self::assertNull($this->store->get('vault')['seed']);
+        self::assertSame('the-pms-token-000001', (new SodiumVault($this->store, $this->clock, self::KEY_A))->reveal('pms.token'));
     }
 
     public function testTheSiteVaultReadsTheConstantOnlyWhenItIsDefined(): void
@@ -320,7 +410,7 @@ final class SodiumVaultTest extends TestCase
         $vault->put('pms.token', 'the-pms-token-000001');
 
         self::assertNotNull($this->store->get('vault')['seed'], 'without the constant the vault uses the stored seed');
-        self::assertSame(['uses_configured_key' => false], $vault->__debugInfo());
+        self::assertSame(['uses_configured_key' => false, 'uses_site_salts' => false], $vault->__debugInfo(), 'the test process defines no salts either');
     }
 
     public function testGarbageInTheStoreIsAnEmptyVault(): void

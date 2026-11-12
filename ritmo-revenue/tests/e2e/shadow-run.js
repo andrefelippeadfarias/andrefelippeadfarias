@@ -68,7 +68,9 @@ async function connections(page) {
     check((await page.textContent('.ritmo-notice')).includes('Connections saved.'), 'the connections were not saved');
     const html = await page.content();
     check(SECRETS.every((secret) => !html.includes(secret)), 'a secret came back to the browser');
-    check((await page.textContent('[data-ritmo="beds24-secret"]')).includes('Configured, ends with 0001'), 'the Beds24 token status is missing');
+    const beds24Status = await page.textContent('[data-ritmo="beds24-secret"]');
+    check(beds24Status.includes('Configured, saved on'), 'the Beds24 token status is missing: ' + beds24Status);
+    check(!beds24Status.includes('0001'), 'characters of the token are shown: ' + beds24Status);
 
     for (const provider of ['beds24', 'pricelabs']) {
         await submitAndWait(page, '[data-ritmo="test-' + provider + '-button"]');

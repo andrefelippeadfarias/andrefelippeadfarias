@@ -10,6 +10,7 @@ use Ritmo\Connectors\Beds24\Beds24Connector;
 use Ritmo\Connectors\PriceLabs\PriceLabsConnector;
 use Ritmo\Domain\Config\InvalidConfig;
 use Ritmo\Domain\Config\ValidationError;
+use Ritmo\Infrastructure\Secrets\SecretUnavailable;
 use Ritmo\WordPress\ConnectorFactory;
 use Ritmo\WordPress\Roles;
 use Ritmo\WordPress\Services;
@@ -69,7 +70,7 @@ final class AdminActions
             $args = self::$method();
         } catch (InvalidConfig $refused) {
             Notice::flash(Notice::ERROR, $refused->getMessage(), array_map(static fn (ValidationError $e): string => (string) $e, $refused->errors()));
-        } catch (InvalidArgumentException | OutOfBoundsException $refused) {
+        } catch (InvalidArgumentException | OutOfBoundsException | SecretUnavailable $refused) {
             Notice::flash(Notice::ERROR, $refused->getMessage());
         }
 

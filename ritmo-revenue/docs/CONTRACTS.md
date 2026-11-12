@@ -91,7 +91,7 @@ A PMS connector is built with the room map of the site (PMS room id to room type
 | `MarketDataProvider::readAnchors($propertyId, $from, $to)` | `array<'YYYY-MM-DD', MarketAnchor>`, ascending; nights without data are absent. |
 | `LicenceProvider::check($licenceKey, $siteUrl): LicenceState` | Never throws; an unreachable provider answers `LicenceState::UNREACHABLE`. |
 | `AiProvider::complete($system, $messages, $maxTokens): string` | `$messages` is `list<array{role: 'user'|'assistant', content: string}>`. Text only; no guest data in prompts. |
-| `KeyValueStore` | `get($key, $default = null)`, `has`, `set`, `delete`. JSON-encodable values. Not for secrets. |
+| `KeyValueStore` | `get($key, $default = null)`, `getFresh($key, $default = null)` (read past any cache of the request, so a value stored by another request or process is seen; for the emergency switch), `has`, `set`, `delete`. JSON-encodable values. Not for secrets. |
 | `QuotaLedger` | `record($provider, $action, $scope, $succeeded, $at)` and `countSince($provider, $action, $scope, $since)`. A failed call still spends quota. `$scope` is a listing ref or `''` for the account. |
 | `Logger` | `log($level, $message, $context = [])` plus `debug`, `info`, `warning`, `error`. Levels are the constants `Logger::DEBUG` ... `Logger::ERROR`. |
 
@@ -240,6 +240,23 @@ What changed when the engine, infrastructure and connectors were put together wi
 | One set of test doubles in `tests/Fakes`: `MovableClock` (default instant `2026-11-11T12:00:00Z`, `advance(float)` to the microsecond) replaces the infrastructure's `ManualClock`; `ClockSleeper` (`waits()`, advances the clock by the exact wait) and `ScriptedHttpClient` (`queue()`, a handler, `requests()`, `lines()`) replace the infrastructure's copies. | CONNECTORS.md 6 |
 | One generator of signature references: `Tests\Support\ContractsDoc` renders CONTRACTS, ENGINE, INFRASTRUCTURE and APPLICATION (headings name the plugin interfaces a class implements) and `php bin/sync-generated.php` rewrites them all. | this document |
 | A `DateRange` is read with `first()` and `last()`; it has no public properties. | Part 2 |
+
+### 1.7 Corrections after the review of M1
+
+What the correction phase changed in shared signatures and behaviour. The only interface of `src/Contracts` that changed is `KeyValueStore`.
+
+| Change | Where |
+|---|---|
+| `KeyValueStore::getFresh()`: `OptionsStore` drops the option from WordPress's request cache (`options`, `notoptions`, and `alloptions` when autoloaded) before reading it; `ArrayStore` reads its array. `EmergencySwitch::isEngaged()` uses it, so a run sees between two stages the switch engaged by another request. | this document 1.3, APPLICATION.md |
+| With the switch engaged, `ShadowRunService::run()` (and the scheduled `resumeOpenRuns()`) closes the property's open run as `stopped` under the run lock; it never resumes from data collected before the emergency. | APPLICATION.md |
+| Tonight never goes up, also through rounding: `PaceEngine` limits a step of tonight to the highest whole percentage of the base that does not pass the price (or holds the night), and `Validator` refuses with `raise_today` a floor whose applied amount passes tonight's price. The warning `today_floor_rounds_above_price` is gone. | ENGINE.md 1.4, 1.5 |
+| `ValidatedPlan`: `__serialize()`/`__unserialize()` throw `LogicException` (also `PercentPlan`); `Validator::sealed($plan)` is true only for the plans a validator of the process sealed; `ValidatedPlan::$bases` holds the listing base of each room it was validated with, and `PercentRounding::apply()` refuses an unsealed plan or a room with another base. `ArchitectureTest` forbids in `src/` the calls that get around a private constructor. | ENGINE.md 1.5 |
+| `Domain\Pricing\RuleInForce` (port of `pace.preco_no_vigente`): the decide stage brings the price read within the floor and ceiling of the date rule in force before the engine, and records `price_within_rule_in_force` (with the price read) at the front of the item's trace. Golden file `pace.preco_no_vigente`. | ENGINE.md 1.4 |
+| `SodiumVault(KeyValueStore, Clock, ?string $configuredKey = null, ?string $siteSecret = null)`: without `RITMO_SECRET_KEY` the stored seed is bound to `AUTH_KEY` and `SECURE_AUTH_KEY` of wp-config.php (`forSite()` reads them), so a copy of the database alone decrypts nothing; `install()` moves older entries to the current key (`upgrade()`). `protection()` (`configured_key`, `site_salts`, `database_only`, `unavailable`) is shown in Diagnostics. A `RITMO_SECRET_KEY` shorter than 32 characters no longer throws: `problem()` explains it, `put()`, `reveal()` and `rotate()` throw `SecretUnavailable`, an admin notice and Diagnostics say so, activation and the screens keep working. | INFRASTRUCTURE.md |
+| Nothing of a secret is kept in clear: `SecretStatus` is `configured` and `updatedAt` only (the last four characters are gone from the option and from the screen, which shows the date the key was saved). | INFRASTRUCTURE.md |
+| `Roles::install(KeyValueStore $settings)` grants by version (`Roles::GRANTS`, setting `roles_version`): a capability the site took away is not given back, a deleted role is not created again. | ARCHITECTURE.md 6 |
+
+**Pending decision of the owner: the calendar read by POST.** The PriceLabs calendar (`POST /listing_prices`) is a read that its API serves only by POST. It stays off by default and is allowed only by the constant `RITMO_PRICING_CALENDAR_READ === true`, for that exact host and path; every other POST, PUT, PATCH and DELETE is refused by the HTTP guard (`GuardedHttpClient`, with its tests). Rule 9 of milestone M1 ("no code path may send POST/PUT/PATCH/DELETE to a PMS or pricing system") does not foresee this exception: until the owner approves it, sites must not define the constant. If the owner does not approve it, the route and the constant are removed and the engine reads prices from the PMS only.
 
 ## Part 2. Signature reference
 
@@ -795,6 +812,7 @@ public function json(): array;
 
 ```php
 public function get(string $key, mixed $default = null): mixed;
+public function getFresh(string $key, mixed $default = null): mixed;
 public function has(string $key): bool;
 public function set(string $key, mixed $value): void;
 public function delete(string $key): void;

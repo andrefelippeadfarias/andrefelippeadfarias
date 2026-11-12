@@ -13,7 +13,7 @@
  * 127.0.0.1 and WP_HTTP_BLOCK_EXTERNAL. The script deletes and recreates that database file.
  *
  * Nothing leaves the machine: every outgoing HTTP request of WordPress is refused.
- * Last run: 64 checks passed on WordPress 7.1.4 with SQLite driver 3.1.3.
+ * Last run: 67 checks passed on WordPress 7.1.4 with SQLite driver 3.1.3.
  */
 
 declare(strict_types=1);
@@ -198,7 +198,13 @@ $vault->install();
 $vault->put('pricing.api_key', 'pk-live-3f9a1c77d2e04b55a8c6');
 check((SodiumVault::forSite(new OptionsStore(), $clock))->reveal('pricing.api_key') === 'pk-live-3f9a1c77d2e04b55a8c6', 'vault over real options');
 check(!str_contains((string) get_option('ritmo_vault'), 'pk-live'), 'the option holds no clear secret');
-check($vault->rotate() === 1 && $vault->reveal('pricing.api_key') === 'pk-live-3f9a1c77d2e04b55a8c6' && $vault->status('pricing.api_key')->lastFour === 'a8c6', 'vault rotation');
+check(!str_contains((string) get_option('ritmo_vault'), 'a8c6'), 'the option holds no character of the secret');
+check($vault->protection() === SodiumVault::PROTECTION_SITE_SALTS, 'the vault key is bound to the salts of wp-config.php');
+check($vault->rotate() === 1 && $vault->reveal('pricing.api_key') === 'pk-live-3f9a1c77d2e04b55a8c6' && $vault->status('pricing.api_key')->configured, 'vault rotation');
+// WordPress reads options past its cache while installing; tests/e2e/wordpress-checks.php checks getFresh() across processes.
+$store->set('fresh_probe', ['a' => 1]);
+check($store->getFresh('fresh_probe') === ['a' => 1] && $store->getFresh('missing_probe', 'none') === 'none', 'getFresh over real options');
+$store->delete('fresh_probe');
 
 // Uninstall.
 $migrator->uninstall();

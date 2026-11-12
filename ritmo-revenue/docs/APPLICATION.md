@@ -8,7 +8,7 @@ The use cases (`src/Application`), the wiring for WordPress (`src/WordPress`, `s
 
 `ShadowRunService::run($propertyId, $budgetSeconds = 20): RunOutcome` starts or resumes the shadow run of one property. It writes nothing outside the plugin's tables.
 
-1. Unknown property: `OutOfBoundsException`. Emergency switch engaged: `blocked`, no run is started.
+1. Unknown property: `OutOfBoundsException`. Emergency switch engaged: `blocked`, no run is started, and a run of the property left open is closed as `stopped` under the run lock (so it never resumes from what it collected before the emergency; when another request holds the lock, that request stops it before its next stage). The scheduled `resumeOpenRuns()` goes through the same path.
 2. The property's run lock (`DbLock`, key `shadow_run:<id>`, 600 s, heartbeat before every stage). Held by another request: `busy`.
 3. "Today" is `Clock::today($property->timezone)`; the run covers 60 nights from today (`HORIZON_NIGHTS`). An open run of the same day resumes from its next stage; an open run of an earlier day is closed as `failed` ("The day of the property changed ...") and a new run starts.
 4. Rules: the version in force when the run started (`runs.ruleset_version`; the neutral defaults when no version was saved). Rooms: the property's room types with a PMS mapping; none is a failed run.
@@ -22,13 +22,13 @@ The use cases (`src/Application`), the wiring for WordPress (`src/WordPress`, `s
 | `validate` | the items of `decide` | nothing | items `would_write`, `no_change`, `rejected`, issue codes |
 | `shadow` | the outcome of `validate` | `plan_items`: one row per floor or ceiling, `status` = `would_write` / `no_change` / `rejected`, `details` = rule trace, percentages, issues, `would_write` flag | rows stored, `writes_sent` = 0 |
 
-How `decide` reads a room night: the current price is the pricing system's (calendar read) or else the PMS price; the floor and ceiling in force come from the calendar read or else from the date override (fixed amount, or percentage over the room's base); the units sold are `units - available` of the PMS calendar, between 0 and the units (a blocked unit counts as sold). A night without an anchor (`AnchorLookup::forNight()` gives null) is counted as `no_market_data` and the engine is not asked. Small rooms are read with their group (`PaceBasis`). Steps become `PlanItem`s with `NightState::from($price, $override)` as what is in force.
+How `decide` reads a room night: the current price is the pricing system's (calendar read) or else the PMS price, brought within the floor and ceiling of the date override in force (`RuleInForce`, the reference's `pace.preco_no_vigente`: under the floor by more than 0.5 it is the floor, over the ceiling it is the ceiling); when it moved, the item's trace starts with `price_within_rule_in_force` and the price read; the floor and ceiling in force come from the calendar read or else from the date override (fixed amount, or percentage over the room's base); the units sold are `units - available` of the PMS calendar, between 0 and the units (a blocked unit counts as sold). A night without an anchor (`AnchorLookup::forNight()` gives null) is counted as `no_market_data` and the engine is not asked. Small rooms are read with their group (`PaceBasis`). Steps become `PlanItem`s with `NightState::from($price, $override)` as what is in force.
 
 How `validate` treats errors: the items with errors are set apart as `rejected` and the rest is validated again until it is valid; an error of the whole plan (`stale_plan`) fails the run (`PlanRefused`). `PercentRounding::apply()` gives the percentages; items whose percentages are already in force are `no_change`.
 
 `ShadowRunService::resumeOpenRuns()` resumes every open run; the WP-Cron hook `ritmo_resume_shadow_runs` (hourly, `WordPress\Scheduler`) calls it.
 
-The emergency switch (`EmergencySwitch`) is the option `ritmo_kill_switch` (Diagnostics screen) or the constant `RITMO_KILL_SWITCH` in wp-config.php, which the admin cannot release.
+The emergency switch (`EmergencySwitch`) is the option `ritmo_kill_switch` (Diagnostics screen) or the constant `RITMO_KILL_SWITCH` in wp-config.php, which the admin cannot release. The option is read with `KeyValueStore::getFresh()`, past WordPress's cache of the request, so a run sees between two stages a switch engaged by another request.
 
 ### 1.2 Wiring
 
@@ -51,7 +51,7 @@ Lifecycle: `Activator::activate()` (migrations, vault, role "Revenue Manager" an
 | Dashboard | `ritmo_view` | traffic light, rooms x windows, alerts, push state, last shadow run, "what would be written" with the reason in words (`Admin\ReasonText` turns the rule trace into sentences), "Run shadow now" (`ritmo_manage_rules`) |
 | Connections | `ritmo_manage_connections` | Beds24 token type, token, property ids; PriceLabs key and PMS name. Secret fields are write-only (only "configured, ends with ..." is shown); "Test connection" per system |
 | Setup | `ritmo_manage_rules` | properties and their mapping, create property, map room type, import preset (file or text), competitor prices (CSV) |
-| Diagnostics | `ritmo_view` | versions (plugin, database, WordPress, PHP, sodium, calendar read), WP-Cron and run locks, last runs, emergency switch and uninstall choice (`ritmo_manage_connections`), recent log |
+| Diagnostics | `ritmo_view` | versions (plugin, database, WordPress, PHP, sodium, encryption of saved keys: `SodiumVault::protection()`, calendar read), WP-Cron and run locks, last runs, emergency switch and uninstall choice (`ritmo_manage_connections`), recent log |
 
 The role `ritmo_revenue_manager` ("Revenue Manager") has `read` and the four capabilities; administrators get the four. `ritmo_approve` is reserved for the approval mode of a later milestone.
 
@@ -372,7 +372,10 @@ const APPROVE = 'ritmo_approve';
 const MANAGE_CONNECTIONS = 'ritmo_manage_connections';
 const ROLE = 'ritmo_revenue_manager';
 const CAPABILITIES = ['ritmo_view', 'ritmo_manage_rules', 'ritmo_approve', 'ritmo_manage_connections'];
-public static function install(): void;
+const GRANTS = [['ritmo_view', 'ritmo_manage_rules', 'ritmo_approve', 'ritmo_manage_connections']];
+const VERSION_KEY = 'roles_version';
+public static function install(KeyValueStore $settings): void;
+public static function pending(int $done, bool $roleExists): array;
 public static function remove(): void;
 ```
 
@@ -436,6 +439,7 @@ const CONNECTIONS = 'ritmo-revenue-connections';
 const SETUP = 'ritmo-revenue-setup';
 const DIAGNOSTICS = 'ritmo-revenue-diagnostics';
 public static function register(): void;
+public static function vaultNotice(): void;
 public static function enqueue(string $hook): void;
 public static function dashboard(): void;
 public static function connections(): void;

@@ -39,6 +39,7 @@ final class Plugin
         add_action('admin_init', [self::class, 'upgrade']);
         add_action('admin_menu', [AdminPages::class, 'register']);
         add_action('admin_enqueue_scripts', [AdminPages::class, 'enqueue']);
+        add_action('admin_notices', [AdminPages::class, 'vaultNotice']);
         add_action('rest_api_init', [RestRoutes::class, 'register']);
         add_action(Scheduler::RESUME_HOOK, [self::class, 'resumeOpenRuns']);
         AdminActions::register();

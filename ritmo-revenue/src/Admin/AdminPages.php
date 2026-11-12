@@ -43,6 +43,23 @@ final class AdminPages
         add_submenu_page(self::DASHBOARD, __('Diagnostics', 'ritmo-revenue'), __('Diagnostics', 'ritmo-revenue'), Roles::VIEW, self::DIAGNOSTICS, [self::class, 'diagnostics']);
     }
 
+    /**
+     * On every admin screen, to whoever manages the connections: a RITMO_SECRET_KEY the vault
+     * cannot use. The plugin keeps working; saved keys wait until the constant is fixed.
+     */
+    public static function vaultNotice(): void
+    {
+        $problem = current_user_can(Roles::MANAGE_CONNECTIONS) ? Services::instance()->vault()->problem() : null;
+        if ($problem === null) {
+            return;
+        }
+        printf(
+            '<div class="notice notice-error" data-ritmo="vault-problem"><p><strong>%s</strong> %s</p></div>',
+            esc_html__('Ritmo Revenue:', 'ritmo-revenue'),
+            esc_html__('RITMO_SECRET_KEY in wp-config.php is too short (at least 32 characters). Saved keys cannot be used or changed until it is fixed.', 'ritmo-revenue')
+        );
+    }
+
     public static function enqueue(string $hook): void
     {
         if (!str_contains($hook, self::DASHBOARD)) {
@@ -132,6 +149,7 @@ final class AdminPages
             'cron' => Scheduler::state(),
             'switch' => ['engaged' => $switch->isEngaged(), 'by_constant' => $switch->isEngagedByConstant()],
             'calendar_read' => $services->connectors()->readsPricingCalendar(),
+            'vault' => ['protection' => $services->vault()->protection(), 'problem' => $services->vault()->problem()],
             'delete_data' => $services->store()->get(Uninstaller::DELETE_DATA, false) === true,
             'can_manage' => current_user_can(Roles::MANAGE_CONNECTIONS),
             'log' => $services->logger()->recent(20, 'info'),

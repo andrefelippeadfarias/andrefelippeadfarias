@@ -20,16 +20,34 @@ bin/                developer scripts
 
 ## Development
 
+### Tests
+
 ```
 bin/test.sh                      run the whole suite (downloads PHPUnit to tools/ on first use)
 bin/test.sh tests/Unit/Domain    run one folder or file
 bin/test.sh NumTest              run by filter
+bin/test.sh tests/Golden         only the golden tests against the reference engine
 php bin/sync-generated.php       rewrite presets/default.json and the signature references of the docs
-bin/e2e.sh [screenshot folder]   end-to-end test on a throwaway WordPress with SQLite (Node + Playwright)
-bin/wp-test-site.sh start|stop   the throwaway WordPress alone: http://127.0.0.1:8090, simulator on :8091
 ```
 
-Constants for wp-config.php: `RITMO_SECRET_KEY` (key of the secrets vault), `RITMO_KILL_SWITCH` (stops every run), `RITMO_PRICING_CALENDAR_READ` (allows the pricing system's calendar read, a POST; off by default). `RITMO_DEV` and the base URL constants are for development only.
+PHPUnit comes as a .phar from phar.phpunit.de (kept in `tools/`, outside git); nothing else is needed for the suite, which runs on SQLite in memory and never calls a real API. After changing a public signature, run `php bin/sync-generated.php`: the doc tests fail while a signature reference is stale.
+
+### Test site and end-to-end test
+
+```
+bin/e2e.sh [screenshot folder]   the whole end-to-end test (default folder: tests/e2e/screenshots)
+bin/wp-test-site.sh start        the throwaway WordPress alone: http://127.0.0.1:8090, simulator on :8091
+bin/wp-test-site.sh stop         stop both servers
+```
+
+`bin/wp-test-site.sh` downloads WordPress and the SQLite plugin from wordpress.org into `.wp-test/` (outside git), installs the site with `tests/e2e/install.php` and serves it with `php -S`, next to the local simulator of the PMS and pricing APIs (`tests/fake-apis/`). `bin/e2e.sh` seeds an invented property (`tests/e2e/seed.php`), drives the screens with Playwright (`tests/e2e/shadow-run.js`, Node and Playwright must be installed), checks that only reads reached the simulator, runs `tests/e2e/wordpress-checks.php` (emergency switch across processes, keys at rest, capabilities after a new activation, a `RITMO_SECRET_KEY` that is too short) and fails on any PHP error of the plugin in `.wp-test/debug.log`.
+
+### Constants for wp-config.php
+
+- `RITMO_SECRET_KEY`: key of the secrets vault, 32 characters or more. Recommended: without it the key is derived from a seed in the database bound to `AUTH_KEY` and `SECURE_AUTH_KEY` (regenerating those salts makes the saved keys unreadable), and Diagnostics says which protection is in use. A shorter value disables the vault with a notice, without breaking the site.
+- `RITMO_KILL_SWITCH`: stops every run.
+- `RITMO_PRICING_CALENDAR_READ`: allows the pricing system's calendar read, a POST; off by default and pending the owner's approval (see `docs/CONTRACTS.md` 1.7).
+- `RITMO_DEV` and the base URL constants are for development only.
 
 Read `docs/ARCHITECTURE.md` before adding code: it says what each folder may do, who owns it and the conventions for dates, rounding, errors and logging. `docs/CONTRACTS.md` has the exact signatures shared between modules.
 

@@ -16,10 +16,10 @@ $ritmo_secret_state = static function ($status): string {
         return __('Not configured.', 'ritmo-revenue');
     }
 
-    return $status->lastFour === ''
+    return $status->updatedAt === null
         ? __('Configured.', 'ritmo-revenue')
-        /* translators: %s: last four characters of the saved key */
-        : sprintf(__('Configured, ends with %s.', 'ritmo-revenue'), $status->lastFour);
+        /* translators: %s: date and time the key was saved */
+        : sprintf(__('Configured, saved on %s.', 'ritmo-revenue'), wp_date('Y-m-d H:i', $status->updatedAt->getTimestamp()));
 };
 $ritmo_last_test = static function ($test): string {
     if (!is_array($test)) {

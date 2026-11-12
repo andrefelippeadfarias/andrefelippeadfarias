@@ -47,11 +47,15 @@ final class ScaffoldTest extends TestCase
     public function testMainFileDefinesConstantsLoadsTheAutoloaderAndHooksBoot(): void
     {
         $main = self::root() . '/ritmo-revenue.php';
-        $code = 'define("ABSPATH", "/tmp/"); $hooks = [];'
+        $code = 'define("ABSPATH", "/tmp/"); $hooks = []; $lifecycle = [];'
             . 'function add_action($hook, $callback) { global $hooks; $hooks[] = [$hook, $callback]; }'
+            . 'function register_activation_hook($file, $callback) { global $lifecycle; $lifecycle[] = ["activation", $file, $callback]; }'
+            . 'function register_deactivation_hook($file, $callback) { global $lifecycle; $lifecycle[] = ["deactivation", $file, $callback]; }'
             . 'require ' . var_export($main, true) . ';'
+            . '$atLoad = $hooks;'
             . 'call_user_func($hooks[0][1]);'
-            . 'echo json_encode(["version" => RITMO_VERSION, "file" => RITMO_FILE, "dir" => RITMO_DIR, "hooks" => $hooks,'
+            . 'echo json_encode(["version" => RITMO_VERSION, "file" => RITMO_FILE, "dir" => RITMO_DIR, "hooks" => $atLoad, "lifecycle" => $lifecycle,'
+            . ' "booted_hooks" => array_column(array_slice($hooks, 1), 0),'
             . ' "booted" => Ritmo\Plugin::isBooted(), "autoload" => interface_exists("Ritmo\\\\Domain\\\\Support\\\\Clock")]);';
 
         [$exit, $output] = self::runPhp($code);
@@ -63,6 +67,15 @@ final class ScaffoldTest extends TestCase
         self::assertSame($main, $result['file']);
         self::assertSame(self::root(), $result['dir']);
         self::assertSame([['plugins_loaded', ['Ritmo\\Plugin', 'boot']]], $result['hooks']);
+        self::assertSame([
+            ['activation', $main, ['Ritmo\\WordPress\\Activator', 'activate']],
+            ['deactivation', $main, ['Ritmo\\WordPress\\Deactivator', 'deactivate']],
+        ], $result['lifecycle']);
+        self::assertSame(
+            ['init', 'admin_init', 'admin_menu', 'admin_enqueue_scripts', 'rest_api_init', 'ritmo_resume_shadow_runs', ...array_map(static fn (string $action): string => 'admin_post_' . $action, \Ritmo\Admin\AdminActions::names())],
+            $result['booted_hooks'],
+            'boot registers the screens, the actions, the REST API and the scheduled hook'
+        );
         self::assertTrue($result['booted']);
         self::assertTrue($result['autoload']);
         self::assertStringContainsString($result['version'], (string) file_get_contents($main, false, null, 0, 8192), 'RITMO_VERSION and the header version must agree');
@@ -80,10 +93,12 @@ final class ScaffoldTest extends TestCase
 
     public function testUninstallIsSafeInsideWordPress(): void
     {
-        [$exit, $output] = self::runPhp('define("WP_UNINSTALL_PLUGIN", "ritmo-revenue/ritmo-revenue.php"); require ' . var_export(self::root() . '/uninstall.php', true) . '; echo "DONE";');
+        $stubs = 'define("WP_UNINSTALL_PLUGIN", "ritmo-revenue/ritmo-revenue.php"); $asked = [];'
+            . 'function get_option($name, $default = false) { global $asked; $asked[] = $name; return $default; }';
+        [$exit, $output] = self::runPhp($stubs . 'require ' . var_export(self::root() . '/uninstall.php', true) . '; echo "DONE " . json_encode($asked);');
 
-        self::assertSame(0, $exit);
-        self::assertSame('DONE', $output, 'uninstall.php must run without output or errors');
+        self::assertSame(0, $exit, $output);
+        self::assertSame('DONE ["ritmo_delete_data_on_uninstall"]', $output, 'without the choice to delete data, uninstall reads that choice and touches nothing');
     }
 
     public function testBootIsIdempotent(): void

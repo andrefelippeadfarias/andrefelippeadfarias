@@ -201,6 +201,8 @@ Typed accessors of `RuleSet` and the rule each one reads:
 | Helper | Use |
 |---|---|
 | `Fixtures::path('golden/…')`, `Fixtures::json(…)`, `Fixtures::pluginRoot()` | Paths and decoded fixture files. |
+| `ContractsDoc::render($document)`, `current()`, `sync()`, `ContractsDoc::DOCUMENTS` | The generated signature references of the module documents. |
+| `tests/Fakes/*` | The doubles every module shares (clock, sleeper, HTTP client, logger, quota ledger, in-memory connectors, connector source, simulator server); listed in CONNECTORS.md, section 6. |
 | `Fixtures::parityPreset(): Preset`, `Fixtures::parityRules(): RuleSet` | The reference engine's configuration: two properties (one in the tier `premium`, one in `standard`) and 7 room types. Compute golden cases from these; get the property id or tier of a golden case with `Golden::propertyId()` / `Golden::tier()`. |
 | `Golden::cases('pace.curva')` | `list<array{input: array, expected: mixed}>` of a level-1 golden file. |
 | `Golden::nightType('fds')`, `Golden::paceStatus('frente')`, `Golden::propertyId($pousada)`, `Golden::tier($pousada)` | Vocabulary of the reference engine to plugin types. |
@@ -225,6 +227,19 @@ Level-1 golden files and where their PHP port lives:
 | `ancora_mercado.percentil_de` | `preco_publico`, `anc` | `Market\AnchorLookup::percentileOf` |
 
 The golden files of the engine core (floors, anchors, one decision per room night, percentages of the payload, occupancy) and every engine class are in [ENGINE.md](ENGINE.md); `tests/Golden/Level1Test.php` checks all of them and fails when a golden file has no test.
+
+### 1.6 Integration of the modules (milestone M1)
+
+What changed when the engine, infrastructure and connectors were put together with the use cases and WordPress. Nothing in `src/Contracts` changed.
+
+| Change | Where |
+|---|---|
+| `Application\ConnectorSource` (`pms()`, `pricing()`, `readsPricingCalendar()`) is how use cases get connectors; a missing credential is `Application\ConnectionNotConfigured`. `WordPress\ConnectorFactory` implements it; `tests/Fakes/StaticConnectorSource` is its double. | APPLICATION.md 1.2 |
+| `RunRepository` records resumable stages: `start(..., ?DateTimeImmutable $runDay = null)`, `advance($runId, $stage, $summary, $state)`, `state($runId)`, `openRun($propertyId, $kind)`, and runs may end `stopped` (emergency switch). Migration 5 restates `runs` with `run_day`, `stage` and `state`. | INFRASTRUCTURE.md 1.3, 1.4 |
+| The emergency switch is `Application\EmergencySwitch`: option `ritmo_kill_switch` or constant `RITMO_KILL_SWITCH`. The pricing calendar read is allowed only by the constant `RITMO_PRICING_CALENDAR_READ === true`. | ARCHITECTURE.md 6 |
+| One set of test doubles in `tests/Fakes`: `MovableClock` (default instant `2026-11-11T12:00:00Z`, `advance(float)` to the microsecond) replaces the infrastructure's `ManualClock`; `ClockSleeper` (`waits()`, advances the clock by the exact wait) and `ScriptedHttpClient` (`queue()`, a handler, `requests()`, `lines()`) replace the infrastructure's copies. | CONNECTORS.md 6 |
+| One generator of signature references: `Tests\Support\ContractsDoc` renders CONTRACTS, ENGINE, INFRASTRUCTURE and APPLICATION (headings name the plugin interfaces a class implements) and `php bin/sync-generated.php` rewrites them all. | this document |
+| A `DateRange` is read with `first()` and `last()`; it has no public properties. | Part 2 |
 
 ## Part 2. Signature reference
 

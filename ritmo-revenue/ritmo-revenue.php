@@ -22,4 +22,6 @@ define('RITMO_DIR', __DIR__);
 
 require_once RITMO_DIR . '/src/autoload.php';
 
+register_activation_hook(__FILE__, [\Ritmo\WordPress\Activator::class, 'activate']);
+register_deactivation_hook(__FILE__, [\Ritmo\WordPress\Deactivator::class, 'deactivate']);
 add_action('plugins_loaded', [\Ritmo\Plugin::class, 'boot']);

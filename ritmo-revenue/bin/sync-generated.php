@@ -41,6 +41,6 @@ if ($presetChanged) {
 }
 
 fwrite(STDOUT, 'presets/default.json ' . ($presetChanged ? "updated.\n" : "is up to date.\n"));
-foreach ([ContractsDoc::CONTRACTS, ContractsDoc::ENGINE, ContractsDoc::INFRASTRUCTURE] as $document) {
+foreach (ContractsDoc::DOCUMENTS as $document) {
     fwrite(STDOUT, 'docs/' . $document . ' ' . (ContractsDoc::sync($document) ? "updated.\n" : "is up to date.\n"));
 }

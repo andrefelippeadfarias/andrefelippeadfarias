@@ -88,4 +88,5 @@ It logs every request (method, path, query, status), answers `GET /__log`, `POST
 | `FakeApiServer` | Starts the simulator on a free port, reads and resets its log, asks for faults. |
 | `ScriptedHttpClient` | `HttpClient` that answers from a queue or a handler and records every request. |
 | `InMemoryPmsConnector`, `InMemoryPricingConnector` | Connectors over data in memory with the contract's semantics, for tests of whatever consumes them; a conformance test holds them to the real connectors. |
-| `MemoryQuotaLedger`, `RecordingLogger`, `MovableClock`, `ClockSleeper` | Ledger, logger, clock and sleeper doubles. |
+| `StaticConnectorSource` | The `Application\ConnectorSource` of the use-case tests: hands out the connectors it was given; a missing one is "not configured". |
+| `MemoryQuotaLedger`, `RecordingLogger`, `MovableClock`, `ClockSleeper` | Ledger, logger, clock (moved by hand, to the microsecond) and sleeper doubles, shared by every module's tests. |

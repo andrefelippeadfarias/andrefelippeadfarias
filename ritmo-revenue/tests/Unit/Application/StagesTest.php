@@ -38,6 +38,7 @@ final class StagesTest extends TestCase
             'STD|2027-03-10' => self::entry(new PlanItem('STD', Days::date('2027-03-10'), 441.0, 480.0, null, 'pace_step', [], new NightState(420.0))),
             'STD|2027-03-11' => self::entry(new PlanItem('STD', Days::date('2027-03-11'), 100.0, null, null, 'pace_step', [], new NightState(420.0))),
             'STE|2027-03-10' => self::entry(new PlanItem('STE', Days::date('2027-03-10'), 700.0, null, null, 'pace_step', [], new NightState(700.0, 700.0, null, null, 0.0))),
+            'STE|2027-03-11' => self::entry(new PlanItem('STE', Days::date('2027-03-11'), 700.0, null, null, 'pace_step', [], new NightState(700.0, null, null, null, 0.0))),
         ]]);
 
         $result = (new ValidateStage($this->world->clock))->run($context);
@@ -47,9 +48,11 @@ final class StagesTest extends TestCase
         self::assertSame(-8, $outcomes['STD|2027-03-10']['min_percent'], '441 over a base of 480, rounded up');
         self::assertSame(PlanItemStatus::REJECTED, $outcomes['STD|2027-03-11']['status']);
         self::assertContains(PlanIssue::BELOW_SAFETY_LIMIT, array_column($outcomes['STD|2027-03-11']['issues'], 'code'));
-        self::assertNotSame(PlanItemStatus::WOULD_WRITE, $outcomes['STE|2027-03-10']['status'], 'a floor already in force is not written again');
-        self::assertSame(1, $result->summary[PlanItemStatus::WOULD_WRITE]);
-        self::assertSame(1, $result->summary[PlanItemStatus::REJECTED]);
+        self::assertSame(PlanItemStatus::REJECTED, $outcomes['STE|2027-03-10']['status'], 'a floor already in force has no effect');
+        self::assertContains(PlanIssue::NO_EFFECT, array_column($outcomes['STE|2027-03-10']['issues'], 'code'));
+        self::assertSame(PlanItemStatus::NO_CHANGE, $outcomes['STE|2027-03-11']['status'], 'the same percentage is already in force');
+        self::assertSame(['items' => 4, PlanItemStatus::WOULD_WRITE => 1, PlanItemStatus::NO_CHANGE => 1, PlanItemStatus::REJECTED => 2], array_diff_key($result->summary, ['issues' => true]));
+        self::assertSame([PlanIssue::BELOW_SAFETY_LIMIT => 1, PlanIssue::NO_EFFECT => 1], $result->summary['issues']);
     }
 
     public function testAPlanMadeForAnotherDayIsRefusedAsAWhole(): void

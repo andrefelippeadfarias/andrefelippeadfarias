@@ -1,0 +1,39 @@
+/* Ritmo Revenue admin screens. Plain CSS, no build step. */
+.ritmo { max-width: 1280px; }
+.ritmo-tabs { margin-bottom: 16px; }
+.ritmo-card { background: #fff; border: 1px solid #dcdcde; border-radius: 6px; padding: 16px 20px; margin: 0 0 16px; box-sizing: border-box; }
+.ritmo-card h2, .ritmo-card h3 { margin-top: 0; }
+.ritmo-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 16px; }
+.ritmo-grid > .ritmo-card { margin: 0 0 16px; }
+.ritmo-bar { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; margin-bottom: 12px; }
+.ritmo-property-name { margin: 0; font-size: 1.4em; }
+.ritmo-inline { display: inline-flex; gap: 6px; align-items: center; }
+.ritmo-badge { display: inline-block; padding: 2px 10px; border-radius: 999px; font-size: 12px; font-weight: 600; }
+.ritmo-badge-shadow { background: #f0f6fc; color: #0a4b78; border: 1px solid #72aee6; }
+.ritmo-big { font-size: 2.4em; font-weight: 600; margin: 8px 0; display: flex; align-items: center; gap: 12px; }
+.ritmo-light { width: 22px; height: 22px; border-radius: 50%; background: #a7aaad; display: inline-block; box-shadow: 0 0 0 3px #f0f0f1; }
+.ritmo-signal-green .ritmo-light { background: #00a32a; }
+.ritmo-signal-amber .ritmo-light { background: #dba617; }
+.ritmo-signal-red .ritmo-light { background: #d63638; }
+.ritmo-table td small { display: block; color: #646970; }
+.ritmo-cell-green { background: #edfaef; }
+.ritmo-cell-amber { background: #fcf9e8; }
+.ritmo-cell-red { background: #fcf0f1; }
+.ritmo-row-warning td, .ritmo-row-warning th { background: #fcf9e8; }
+.ritmo-status { display: inline-block; padding: 1px 8px; border-radius: 4px; font-weight: 600; background: #f0f0f1; }
+.ritmo-status-completed { background: #edfaef; color: #00450c; }
+.ritmo-status-running { background: #f0f6fc; color: #0a4b78; }
+.ritmo-status-failed, .ritmo-status-stopped { background: #fcf0f1; color: #8a2424; }
+.ritmo-error { color: #b32d2e; }
+.ritmo-facts { margin: 8px 0 12px 18px; list-style: disc; }
+.ritmo-alerts { margin: 0; }
+.ritmo-alerts li { padding: 6px 8px; border-left: 4px solid #dba617; background: #fcf9e8; margin-bottom: 6px; }
+.ritmo-alerts li.ritmo-alert-critical { border-color: #d63638; background: #fcf0f1; }
+.ritmo-why { font-size: 12px; color: #3c434a; min-width: 320px; }
+.ritmo-progress { margin-left: 8px; color: #50575e; }
+.ritmo-form label { display: inline-block; margin-right: 12px; }
+.ritmo-details { margin: 4px 0 8px 18px; list-style: disc; }
+@media (max-width: 782px) {
+    .ritmo-grid { grid-template-columns: 1fr; }
+    .ritmo-table { display: block; overflow-x: auto; }
+}

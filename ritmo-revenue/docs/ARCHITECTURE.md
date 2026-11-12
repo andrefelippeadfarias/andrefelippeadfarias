@@ -1,6 +1,6 @@
 # Ritmo Revenue: architecture
 
-The product plan is in [PLANO.md](PLANO.md). The exact signatures of everything shared between modules are in [CONTRACTS.md](CONTRACTS.md); the rule engine (calendar, market, pricing, plan, report) is in [ENGINE.md](ENGINE.md). This document says where code goes, what each folder may and may not do, who owns it, and the conventions every module follows.
+The product plan is in [PLANO.md](PLANO.md). The exact signatures of everything shared between modules are in [CONTRACTS.md](CONTRACTS.md); the rule engine (calendar, market, pricing, plan, report) is in [ENGINE.md](ENGINE.md); the plumbing in [INFRASTRUCTURE.md](INFRASTRUCTURE.md); the connectors in [CONNECTORS.md](CONNECTORS.md); the shadow run, the screens and the REST API in [APPLICATION.md](APPLICATION.md). This document says where code goes, what each folder may and may not do, who owns it, and the conventions every module follows.
 
 ## 1. What the plugin is
 
@@ -25,12 +25,13 @@ src/
   Contracts/             interfaces between the engine and the outside world. PURE PHP.
   Connectors/            Beds24/, PriceLabs/, Market/, Licence/, Ai/ (implement Contracts)
   Infrastructure/        Db/, Http/, Secrets/, Scheduler/, Lock/, Log/ (WordPress-facing plumbing)
-  Application/           use cases: the run pipeline, later the write gate, undo, approval
+  Application/           use cases: the shadow run pipeline, the dashboard, the setup; later the write gate, undo, approval
+  WordPress/             per-request wiring (Services), activation, deactivation, uninstall, roles, scheduled hook, connector factory
   Admin/  Rest/          wp-admin screens and the REST API ritmo/v1
 templates/ assets/       server-rendered views, plain JS and CSS (no build step)
 languages/               translations (text domain ritmo-revenue)
 presets/default.json     the neutral preset shipped with the plugin (generated)
-bin/                     developer scripts (test.sh, sync-generated.php)
+bin/                     developer scripts (test.sh, sync-generated.php, wp-test-site.sh, e2e.sh)
 docs/                    this folder
 tests/                   Unit/ Golden/ Integration/ e2e/ Fakes/ Support/ fixtures/
 tools/                   downloaded developer tools (PHPUnit .phar); outside git
@@ -44,20 +45,23 @@ tools/                   downloaded developer tools (PHPUnit .phar); outside git
 | `src/Contracts/**` | Declare interfaces, their small value objects and exceptions. Depend on `Domain/Model` and `Domain/Support`. | Contain behaviour beyond trivial value objects. Mention WordPress. |
 | `src/Connectors/**` | Implement `Contracts` by talking to one external system through `Contracts\HttpClient`. Map external payloads to `Domain\Model` DTOs. | Call the WordPress HTTP API or cURL directly. Keep guest names or contacts. Decide prices. Send a write in M1. |
 | `src/Infrastructure/**` | Use WordPress (`$wpdb`, options, HTTP API, cron/Action Scheduler, sodium). Implement `HttpClient`, `KeyValueStore`, `QuotaLedger`, `Logger`, repositories, migrations, the secrets vault. | Contain pricing rules. Be called from `Domain`. |
-| `src/Application/**` | Orchestrate: load configuration, call connectors, call the engine, store and report the result. | Contain pricing rules or SQL. Bypass the validator or the write guards. |
+| `src/Application/**` | Orchestrate: load configuration, call connectors (read methods only in M1) through `Application\ConnectorSource`, call the engine, store and report the result through the repositories of `Infrastructure\Db\Repository`, `DbLock` and `Database::transaction()`. | Contain pricing rules or SQL. Call WordPress. Bypass the validator or the write guards. |
+| `src/WordPress/**` | Wire the modules for one request (`Services`), run the lifecycle (activation, deactivation, uninstall), install roles and capabilities, schedule hooks, build the connectors from the vault (`ConnectorFactory`). | Contain pricing rules or SQL beyond the uninstall clean-up. Decide anything a use case decides. |
 | `src/Admin/**`, `src/Rest/**`, `templates/**`, `assets/**` | Render screens, register REST routes, check capabilities and nonces, escape output, translate texts. | Contain pricing rules, call external systems directly, write SQL (use repositories). |
 | `tests/**` | Anything needed to test. Owner-specific data lives only under `tests/fixtures/`. | Call a real external API. Tests use fakes on `127.0.0.1` or in-memory doubles. |
 
 Dependency direction (an arrow means "may depend on"):
 
 ```
+WordPress ─▶ everything below (it is the composition root)
 Admin, Rest ─▶ Application ─▶ Domain ◀─ Contracts ◀─ Connectors
-                    │                        ▲            │
-                    └──▶ Contracts ──────────┘            ▼
+                    │   │                    ▲            │
+                    │   └──▶ Contracts ──────┘            ▼
+                    └──▶ Infrastructure (repositories, lock, Database::transaction)
 Infrastructure ─▶ Contracts, Domain\Model          Contracts\HttpClient
 ```
 
-`Domain` depends on nothing. `Contracts` depends only on `Domain\Model` and `Domain\Support`. Nothing depends on `Admin` or `Rest`.
+`Domain` depends on nothing. `Contracts` depends only on `Domain\Model` and `Domain\Support`. Nothing depends on `Admin`, `Rest` or `WordPress` except the plugin entry files.
 
 The architecture tests in `tests/Unit/Domain/ArchitectureTest.php` enforce the pure-PHP rule, the clock rule, the rounding rule, `declare(strict_types=1)`, PSR-4 naming and the absence of owner-specific data in plugin code. They fail the build; do not relax them.
 
@@ -71,9 +75,9 @@ Each folder has one owner per phase, so that parallel work never edits the same 
 | `src/Domain/Calendar`, `Market`, `Pricing`, `Plan`, `Report` and their tests under `tests/Unit/Domain/<Module>` and `tests/Golden` | **Engine** phase |
 | `src/Infrastructure/**`, `tests/Unit/Infrastructure`, `tests/Integration/Infrastructure` | **Infrastructure** phase |
 | `src/Connectors/**`, `tests/Fakes/**` (fake servers and in-memory connectors), `tests/Unit/Connectors`, `tests/Integration/Connectors` | **Connectors** phase |
-| `src/Application/**`, `tests/Unit/Application` | **Application** phase |
-| `src/Admin/**`, `src/Rest/**`, `templates/**`, `assets/**`, their tests | **Panel** phase |
-| `ritmo-revenue.php`, `src/Plugin.php`, `uninstall.php`, `README.md`, `tests/phpunit.xml`, `tests/bootstrap.php` | **Integration** phase (wiring, whole-suite run) |
+| `src/Application/**`, `tests/Unit/Application`, `tests/Integration/Application` | **Application** phase |
+| `src/Admin/**`, `src/Rest/**`, `templates/**`, `assets/**`, `tests/Unit/WordPress`, `tests/e2e/**` | **Panel** phase |
+| `ritmo-revenue.php`, `src/Plugin.php`, `src/WordPress/**`, `uninstall.php`, `README.md`, `tests/phpunit.xml`, `tests/bootstrap.php`, `bin/wp-test-site.sh`, `bin/e2e.sh` | **Integration** phase (wiring, whole-suite run, end-to-end test) |
 
 ### Extending the foundation
 
@@ -166,25 +170,39 @@ bin/test.sh NumTest                  a filter
 
 `bin/test.sh` downloads PHPUnit (a `.phar` in `tools/`, outside git) from phar.phpunit.de on first use and exits with PHPUnit's code. The suite treats warnings, notices, deprecations and risky tests as failures.
 
+```
+bin/e2e.sh [screenshot folder]       end-to-end test on a throwaway WordPress (needs Node with Playwright and Chromium)
+bin/wp-test-site.sh start|restart|stop   the throwaway WordPress alone (.wp-test/, outside git)
+```
+
+`bin/e2e.sh` builds WordPress with SQLite from wordpress.org, activates the plugin, seeds the invented property of the simulator (`tests/e2e/seed.php`) and runs `tests/e2e/shadow-run.js` twice (without and with the pricing calendar read), checking the screens, the REST API and the simulator's log. See APPLICATION.md, section 1.6.
+
 - `tests/Unit/**` mirrors `src/**`. Pure, no WordPress.
 - `tests/Golden/**` holds the parity tests of the engine against the golden fixtures.
 - `tests/Integration/**` needs a WordPress or a fake server on `127.0.0.1`.
-- `tests/Fakes/**` holds fake servers and in-memory implementations of `Contracts`.
+- `tests/Fakes/**` holds fake servers, in-memory implementations of `Contracts` and the doubles every module shares (clock, sleeper, HTTP client, logger, quota ledger, connector source). There is one double per need: do not add a second clock or HTTP double next to a module's tests.
+- `tests/e2e/**` holds the end-to-end scripts (install, seed, Playwright).
 - `tests/Support/**` holds helpers: `Fixtures` (paths, the parity preset), `Golden` (golden cases and vocabulary), `SourceScan`, `SignaturePrinter`, `ContractsDoc`.
 
 During a phase, run only your own folder; the integration phase runs the whole suite.
 
 ## 6. Read-only guarantees of M1
 
-No code path may send POST, PUT, PATCH or DELETE to a PMS or pricing system. Three independent guards:
+No code path may send POST, PUT, PATCH or DELETE to a PMS or pricing system. Four independent guards:
 
 1. **Contracts:** every write method of `PmsConnector` and `PricingConnector` throws `NotAvailableInThisMilestone`. Implementations get this from the traits `Contracts\Support\PmsWritesUnavailable` and `PricingWritesUnavailable`; they do not write their own.
 2. **Write token:** every write method requires a `Contracts\WriteToken`, whose constructor is private and which has no factory until the milestone that adds the write gate. Nobody can call a write method without forging one by reflection.
 3. **HTTP:** the `HttpClient` implementation refuses mutating methods with `WriteBlocked` before anything leaves the site.
+4. **No write call:** the shadow stage holds no connector, and a source test fails when anything outside `src/Connectors` calls a write method of a connector.
 
-The end-to-end check of M1 asserts that the fake servers received no POST and no DELETE during a shadow run.
+The end-to-end check of M1 (`bin/e2e.sh`) asserts, from the simulator's own log, that a shadow run sent no PUT, PATCH or DELETE and no POST other than the one below when the site allows it.
 
-**Open point for the connectors and infrastructure phases:** the verified API notes of the pricing system list its calendar read as `POST /listing_prices` (a read that uses POST). Guard 3 as specified forbids it. The options are: (a) the run pipeline takes the current price and the units sold of each night from the PMS (`PmsConnector::readInventory(..., withPrices: true)` gives `InventoryNight::$pmsPrice`, the price the pricing system sent; bookings give the units sold) and never calls `readPrices()` of a connector whose only price read is a POST (a call ends in `WriteBlocked` from the HTTP guard); or (b) that single read-only endpoint is put on an explicit allow-list in the HTTP guard (method + host + exact path), covered by a test. Until the owner chooses (b), (a) is the rule: no POST leaves the site. This is a product-safety decision and must be made explicitly, not worked around.
+**The pricing system's calendar read (`POST /listing_prices`).** The verified API notes list it as a read that uses POST, which guard 3 forbids. As built in M1:
+
+- (a) is the default: the run takes the current price of each night from the PMS (`readInventory(..., withPrices: true)`), the units sold from the PMS calendar, and never calls `readPrices()`. Nothing but GET leaves the site.
+- (b) exists only as an explicit opt-in of the site, outside the admin: `define('RITMO_PRICING_CALENDAR_READ', true);` in wp-config.php. Then `WordPress\ConnectorFactory` puts exactly that method, host and path on `ReadRouteAllowList`, the run reads the calendar (price, floor and ceiling in force) and the measure stage also compares the units sold of both systems.
+
+Whether (b) is ever turned on in production remains the owner's decision; the end-to-end test proves both ways (only GET with (a); only GET plus that POST with (b)).
 
 ## 7. Golden tests
 

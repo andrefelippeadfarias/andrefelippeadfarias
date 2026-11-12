@@ -4863,6 +4863,16 @@ Recálculos: King Spa 7 (17:24) e King Spa 2 (18:23), os dois com 3 de 3 em 24 h
 
 Para o plano de amanhã cedo: proteção da King Spa 7 de 24/11 e da Afrodite de 15-16/11, e a noite órfã da King Spa 2 em 27/11 (estadia 1 nos dois sistemas).
 
+## 12/11/2026, 06:10 a 06:30 BRT — Rotina leve das 19:53 de 11/11, entregue com 10 horas de atraso (só leitura)
+
+**O que atrasou:** os dois trabalhos do plugin WordPress lançados às 18:42 e 18:50 BRT de 11/11 (11 agentes ao mesmo tempo) gastaram o limite de uso de 5 horas da conta, que só zerou às 22:50 BRT. Os dois pararam, e o aviso da rotina das 19:53 ficou na fila até 06:10 de 12/11. Daqui em diante o plugin roda com no máximo 3 agentes por vez, para não tirar o lugar das rotinas de preço.
+
+**Beds24 desde 18:23 BRT de 11/11** (vigilância: 0 alerta; 7 novas, 3 canceladas, 6 alteradas): novas Balcony 13-15/11 (Booking, R$ 966), King Spa 7 13-15/12 (Booking, R$ 860), Balcony 11/11 (direta, R$ 200), King Spa 7 21/12 (direta da recepção, R$ 540, **34% do esperado**), King Spa 2 14-17/01 (Expedia, R$ 735 pelas 3 noites, **18%**) e King Spa 7 23-30/03 (Expedia, 7 noites por R$ 2.671, **19%**); consulta do Airbnb na Balcony de 15/11 (não ocupa). Canceladas: Panorâmica I 12/11, Balcony 25-30/11 (5 noites) e Moinhos 13-15/11. Overbooking sem mudança: King Spa 7 15-16/11 (8/7) e Panorâmica I 20-21/11 (7/6).
+
+**Nada gravado:** faltavam 1h40 para a rotina completa das 07:53, a Panorâmica II e a King Spa 2 estavam sem cota de recálculo até 08:02, e nenhuma noite de hoje ou amanhã mudou de estado (King Spa 7 e King Spa 2 já estavam esgotadas de 12 a 14/11). Fica para o plano das 07:53: proteção das noites esgotadas (King Spa 7 13-14/11, 22-24/11 e 29/11; Afrodite 15-16/11; King Spa 2 28/11), noite órfã da King Spa 2 em 27/11, Moinhos 13-14/11 (reabriu 1 unidade) e Balcony 25-29/11 (voltaram 5 noites).
+
+Sombra da flutuação: leitura do Beds24 das 06:13 guardada com `fechar --forcar` (a das 19:53 não rodou).
+
 ## O que só pode ser feito na tela (passo a passo para você)
 
 1. **Safety Minimum Price → "Do Not Apply"** (Dynamic Pricing → Customizations → aba Groups → Edit no grupo Recanto dos Moinhos → All Customizations → Safety Minimum Price). Anote o valor atual antes.

@@ -1084,7 +1084,8 @@
       "responsavel": "dono",
       "desde": "2026-11-10",
       "urgencia": 1,
-      "texto": "Duas reservas diretas da King Spa 7 lançadas pela recepção (VillaRecep1) em 10/11 abaixo de 70% do esperado: 95991536 (20-22/11, Consciência Negra, R$ 1.700 de R$ 5.639 esperados, 30%; fechou a noite de 20/11, 7/7) e 95996006 (30/12-01/01, Réveillon, R$ 3.200 de R$ 9.976, 32%). Conferir com a recepção se o valor está certo (tarifa de cortesia, pacote ou erro de lançamento). A skill não altera reservas. Em 11/11 (madrugada), mais uma: 95997106 (King Spa 2 28/11, R$ 500 de R$ 1.626, 31%), também da VillaRecep1. 11/11 tarde: mais duas da VillaRecep1 na King Spa 7: 96042885 (24-26/11, R$ 450 pelas 2 noites, 17%) e 96042818 (28/12, R$ 450, 24%); e a direta 96042786 na Moinhos 04-06/12 (R$ 1.243, 50%, lançada por API)."
+      "texto": "Duas reservas diretas da King Spa 7 lançadas pela recepção (VillaRecep1) em 10/11 abaixo de 70% do esperado: 95991536 (20-22/11, Consciência Negra, R$ 1.700 de R$ 5.639 esperados, 30%; fechou a noite de 20/11, 7/7) e 95996006 (30/12-01/01, Réveillon, R$ 3.200 de R$ 9.976, 32%). Conferir com a recepção se o valor está certo (tarifa de cortesia, pacote ou erro de lançamento). A skill não altera reservas. Em 11/11 (madrugada), mais uma: 95997106 (King Spa 2 28/11, R$ 500 de R$ 1.626, 31%), também da VillaRecep1. 11/11 tarde: mais duas da VillaRecep1 na King Spa 7: 96042885 (24-26/11, R$ 450 pelas 2 noites, 17%) e 96042818 (28/12, R$ 450, 24%); e a direta 96042786 na Moinhos 04-06/12 (R$ 1.243, 50%, lançada por API). 12/11: mais uma da VillaRecep1, 96055396 (King Spa 7 21/12, R$ 540 de R$ 1.584, 34%).",
+      "atualizado_em": "2026-11-12"
     },
     {
       "id": "booking-cancelamentos-rapidos-20261110",
@@ -1121,7 +1122,8 @@
       "responsavel": "dono",
       "desde": "2026-11-11",
       "urgencia": 1,
-      "texto": "Reserva da Expedia 96023845 (ref. no canal 2600478189) na Balcony 04-06/12, R$ 292,02 pelas 2 noites (R$ 146/noite; 13% do esperado), status new, 09:49 BRT de 11/11. Tarifa da Villa na Expedia fora do lugar (antes a Expedia tinha tarifa fixa de R$ 2.037-4.075, pendência beds24-canais-villa). Conferir a tarifa da Villa na Expedia (Partner Central / mapeamento no Beds24) e, se for erro, pedir o cancelamento por erro de tarifa. A skill não mexe em reservas nem em canais. 11/11 13:53: mais uma da Expedia abaixo do esperado, 96034736 (ref. 2600572266) na King Spa 7 13-15/11, R$ 1.211 pelas 2 noites (34% do esperado). Duas no mesmo dia: a tarifa da Villa na Expedia parece descolada do PriceLabs."
+      "texto": "Reserva da Expedia 96023845 (ref. no canal 2600478189) na Balcony 04-06/12, R$ 292,02 pelas 2 noites (R$ 146/noite; 13% do esperado), status new, 09:49 BRT de 11/11. Tarifa da Villa na Expedia fora do lugar (antes a Expedia tinha tarifa fixa de R$ 2.037-4.075, pendência beds24-canais-villa). Conferir a tarifa da Villa na Expedia (Partner Central / mapeamento no Beds24) e, se for erro, pedir o cancelamento por erro de tarifa. A skill não mexe em reservas nem em canais. 11/11 13:53: mais uma da Expedia abaixo do esperado, 96034736 (ref. 2600572266) na King Spa 7 13-15/11, R$ 1.211 pelas 2 noites (34% do esperado). Duas no mesmo dia: a tarifa da Villa na Expedia parece descolada do PriceLabs. 12/11 (madrugada): mais duas da Expedia, 96054395 (ref. 2600888830) na King Spa 2 14-17/01/2027, R$ 735 pelas 3 noites (18% do esperado), e 96060438 (ref. 2601016995, Expedia Affiliate Network) na King Spa 7 23-30/03/2027, 7 noites por R$ 2.671 (19%). Quatro em 2 dias, a R$ 146-380 por noite: URGENTE conferir e, se for erro, pausar a Villa na Expedia no Beds24 (Channel Manager → Expedia: mapeamento da tarifa e multiplicador de preço) antes que venda mais datas de alta.",
+      "atualizado_em": "2026-11-12"
     },
     {
       "id": "vk7-overbooking-20261115",
@@ -1137,6 +1139,13 @@
       "desde": "2026-11-11",
       "urgencia": 1,
       "texto": "Em 11/11 a sessão do Claude voltou ao modo 'Plan' a cada reinício do processo (4 vezes entre 14:00 e 18:40 BRT): a rotina das 16:53 só leu, e as gravações saíram às 18:38. Trocar o modo no seletor ao lado da caixa de mensagem para 'Auto' (ou 'Accept edits'), senão as rotinas de preço ficam sem gravar a cada reinício."
+    },
+    {
+      "id": "limite-uso-rotina-1953-20261111",
+      "responsavel": "dono",
+      "desde": "2026-11-12",
+      "urgencia": 1,
+      "texto": "Em 11/11 o desenvolvimento do plugin WordPress (11 agentes ao mesmo tempo, 18:42-19:30 BRT) gastou o limite de uso de 5 horas da conta: os trabalhos pararam e a rotina das 19:53 não rodou (chegou às 06:10 de 12/11, só leitura). Medida tomada: o plugin passa a rodar com no máximo 3 agentes por vez. Se o limite bater de novo, as rotinas de preço atrasam: o dono decide se prefere desenvolver o plugin mais devagar ou aumentar o limite do plano."
     }
   ],
   "versao": "2026-11-05T15"

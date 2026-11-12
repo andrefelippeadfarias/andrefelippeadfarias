@@ -1084,7 +1084,7 @@
       "responsavel": "dono",
       "desde": "2026-11-10",
       "urgencia": 1,
-      "texto": "Duas reservas diretas da King Spa 7 lançadas pela recepção (VillaRecep1) em 10/11 abaixo de 70% do esperado: 95991536 (20-22/11, Consciência Negra, R$ 1.700 de R$ 5.639 esperados, 30%; fechou a noite de 20/11, 7/7) e 95996006 (30/12-01/01, Réveillon, R$ 3.200 de R$ 9.976, 32%). Conferir com a recepção se o valor está certo (tarifa de cortesia, pacote ou erro de lançamento). A skill não altera reservas. Em 11/11 (madrugada), mais uma: 95997106 (King Spa 2 28/11, R$ 500 de R$ 1.626, 31%), também da VillaRecep1. 11/11 tarde: mais duas da VillaRecep1 na King Spa 7: 96042885 (24-26/11, R$ 450 pelas 2 noites, 17%) e 96042818 (28/12, R$ 450, 24%); e a direta 96042786 na Moinhos 04-06/12 (R$ 1.243, 50%, lançada por API). 12/11: mais uma da VillaRecep1, 96055396 (King Spa 7 21/12, R$ 540 de R$ 1.584, 34%).",
+      "texto": "Duas reservas diretas da King Spa 7 lançadas pela recepção (VillaRecep1) em 10/11 abaixo de 70% do esperado: 95991536 (20-22/11, Consciência Negra, R$ 1.700 de R$ 5.639 esperados, 30%; fechou a noite de 20/11, 7/7) e 95996006 (30/12-01/01, Réveillon, R$ 3.200 de R$ 9.976, 32%). Conferir com a recepção se o valor está certo (tarifa de cortesia, pacote ou erro de lançamento). A skill não altera reservas. Em 11/11 (madrugada), mais uma: 95997106 (King Spa 2 28/11, R$ 500 de R$ 1.626, 31%), também da VillaRecep1. 11/11 tarde: mais duas da VillaRecep1 na King Spa 7: 96042885 (24-26/11, R$ 450 pelas 2 noites, 17%) e 96042818 (28/12, R$ 450, 24%); e a direta 96042786 na Moinhos 04-06/12 (R$ 1.243, 50%, lançada por API). 12/11: mais uma da VillaRecep1, 96055396 (King Spa 7 21/12, R$ 540 de R$ 1.584, 34%). Em 12/11 (manhã), mais uma alterada: 96044699 (King Spa 7 15-17/11, direta, R$ 900 de R$ 2.341 esperados, 38%), da VillaRecep1.",
       "atualizado_em": "2026-11-12"
     },
     {
@@ -1145,7 +1145,16 @@
       "responsavel": "dono",
       "desde": "2026-11-12",
       "urgencia": 1,
-      "texto": "Em 11/11 o desenvolvimento do plugin WordPress (11 agentes ao mesmo tempo, 18:42-19:30 BRT) gastou o limite de uso de 5 horas da conta: os trabalhos pararam e a rotina das 19:53 não rodou (chegou às 06:10 de 12/11, só leitura). Medida tomada: o plugin passa a rodar com no máximo 3 agentes por vez. Se o limite bater de novo, as rotinas de preço atrasam: o dono decide se prefere desenvolver o plugin mais devagar ou aumentar o limite do plano."
+      "texto": "Em 11/11 o desenvolvimento do plugin WordPress (11 agentes ao mesmo tempo, 18:42-19:30 BRT) gastou o limite de uso de 5 horas da conta: os trabalhos pararam e a rotina das 19:53 não rodou (chegou às 06:10 de 12/11, só leitura). Medida tomada: o plugin passa a rodar com no máximo 3 agentes por vez. Se o limite bater de novo, as rotinas de preço atrasam: o dono decide se prefere desenvolver o plugin mais devagar ou aumentar o limite do plano. Em 12/11 o limite pegou de novo (até 11:10 BRT): a rotina das 07:53 e a das 10:53 saíram juntas às 11:35-12:15.",
+      "atualizado_em": "2026-11-12"
+    },
+    {
+      "id": "motor-balcony-80-confirmacao-20261112",
+      "responsavel": "skill",
+      "desde": "2026-11-12",
+      "urgencia": "media",
+      "atualizado_em": "2026-11-12",
+      "texto": "pace.py balcony_no_mercado devolve True sem item quando a Balcony já está no preço de mercado (regra dos 80%); se o mesmo plano sobe a King Spa nessa noite, o validar_plano.py dá ERRO de Regra G (exige item da ordem dono-2026-11-09-plano-nov-fev). Em 12/11 (23/11, 24/11 e 06/12) contornei com 3 itens de confirmação com o mesmo valor vigente. Corrigir: o motor emitir o item de confirmação (ou o validador aceitar a regra vigente com reason da ordem) e um teste em test_plano_motor.py."
     }
   ],
   "versao": "2026-11-05T15"

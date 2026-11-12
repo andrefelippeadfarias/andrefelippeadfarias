@@ -4873,6 +4873,95 @@ Para o plano de amanhã cedo: proteção da King Spa 7 de 24/11 e da Afrodite de
 
 Sombra da flutuação: leitura do Beds24 das 06:13 guardada com `fechar --forcar` (a das 19:53 não rodou).
 
+## 12/11/2026, 11:35 a 12:15 BRT — Rotina das 07:53 (completa) entregue às 11:35, junto com a leve das 10:53
+
+**Atraso:** o limite de 5 horas de uso da conta (renovado às 11:10 BRT) segurou a rotina das 07:53 e a das 10:53; esta rodada faz as duas.
+
+**Coleta:** workflow `coleta-pricelabs` completo. O envio diário saiu às 10:08 BRT nos 7 quartos (recálculo do envio às 10:08), então nenhum quarto estava velho e não gastei recálculo para medir: os arquivos de trabalho saíram do `get_listing_prices` de 12 meses (preço e estadia de agora), das regras por data lidas agora (piso e teto nas datas com regra) e do recálculo de ontem às 18:24 nas datas sem regra, com a ocupação do Beds24 lido às 11:38. Logs do PriceLabs: só a API (nenhuma mudança manual).
+
+**Beds24 desde 06:05 BRT:** 4 novas (Moinhos 13-15/11 Booking R$ 1.256; King Spa 7 18/11 Booking R$ 438; Panorâmica I 12/11 Booking R$ 477; consulta Airbnb da Panorâmica I 15/11), 1 cancelada (King Spa 7 12-14/12, direta, R$ 2.299), 6 alteradas (uma reserva da Panorâmica II de 27-29/11 foi para a Afrodite). Segurança: 0 alertas. Abaixo do esperado: 1 direta da King Spa 7 15-17/11 (38% do esperado, lançada pela VillaRecep1; nº e hóspede só no relatório). Overbooking segue: King Spa 7 15-16/11 (8/7) e Panorâmica I 20-21/11 (7/6). Bloqueio sem reserva: Moinhos 20-21/11 (1 unidade) e Balcony 15-16/11 (1 unidade; a consulta do Airbnb segura o quarto).
+
+**Ocupação (Beds24):** hotel 54% em 7 dias, 52% em 15, 39% em 30; Recanto 47%/49%/35%; Villa 62%/56%/44%; Balcony 12% em 7 dias e 8% em 60.
+
+**Auditoria de 12 meses:** 0 noites fora da regra no PriceLabs; estadia pelo dia de chegada e órfãs já certas (plano `--so-estadia` com 0 itens); no Beds24, o sábado novo do horizonte (13/11/2027) fechado para entrada e saída nos 6 quartos (lote aplicado e relido: 6 conferidos; lote único igual ao lote atual).
+
+**Motor de pace:** 390 noites (à frente 51, no ritmo 184, atrás 12, muito atrás 11); 62 itens (35 para cima, 13 para baixo, 14 de coerência), 6 tetos apagados antes nas noites esgotadas (Afrodite 15-16/11; King Spa 7 22, 23, 24 e 29/11). **Validador:** 3 erros falsos na Regra G da Balcony (23/11, 24/11 e 06/12): nessas noites vale a regra dos 80% (8/9 suítes com banheira da Villa vendidas) e a Balcony já está no mercado (R$ 686), mas o motor não gera item quando o preço já está certo e o validador exige o item da ordem do plano; incluí 3 itens de confirmação com o mesmo valor vigente (ordem `dono-2026-11-09-plano-nov-fev`), e o validador passou (0 erros). Pendência da Skill aberta para o motor emitir esse item.
+
+**Gravado (15:05-15:09 UTC) e conferido no recálculo das 12:09-12:10 BRT:** 48 noites ✅ e 0 diferenças em 6 quartos; a King Spa 2 foi conferida só pela resposta da API (guardei o último recálculo dela das 24 h para a rotina das 13:53).
+
+| Mudança | Onde | Antes | Depois (recalculado e conferido às 12:10) | Como desfazer (pedir ao Claude) |
+|---|---|---|---|---|
+| Afrodite 15/11 | PriceLabs por data | R$ 1.500 | piso (teto livre) R$ 1.600 (-20% da base), estadia 1 — Proteção da noite esgotada (1/1 | apagar a regra da data ou regravar o valor de antes |
+| Afrodite 16/11 | PriceLabs por data | R$ 1.500 | piso (teto livre) R$ 1.560 (-22% da base), estadia 2 — Proteção da noite esgotada (1/1 | apagar a regra da data ou regravar o valor de antes |
+| Afrodite 18/11 | PriceLabs por data | R$ 1.566 | piso e teto R$ 1.500 (-25% da base) — Escada de vendas (dono 01/11): 8/16 vendidas | apagar a regra da data ou regravar o valor de antes |
+| Afrodite 24/11 | PriceLabs por data | R$ 2.020 | piso e teto R$ 2.080 (+4% da base) — Afrodite 20% acima da mais cara das outras (R$ 1732) | apagar a regra da data ou regravar o valor de antes |
+| Afrodite 11/01 | PriceLabs por data | R$ 1.820 | piso e teto R$ 1.500 (-25% da base) — Escada de vendas (dono 01/11): 1/16 vendidas | apagar a regra da data ou regravar o valor de antes |
+| Balcony 18/11 | PriceLabs por data | R$ 914 | piso e teto R$ 1.054 (-17% da base) — Escada de vendas (dono 01/11): 0/6 vendidas | apagar a regra da data ou regravar o valor de antes |
+| Balcony 23/11 | PriceLabs por data | R$ 686 | piso e teto R$ 686 (-46% da base) — Confirma (mesmo valor vigente) a Balcony no mercado pela regra dos 80% | apagar a regra da data ou regravar o valor de antes |
+| Balcony 24/11 | PriceLabs por data | R$ 686 | piso e teto R$ 686 (-46% da base) — Confirma (mesmo valor vigente) a Balcony no mercado pela regra dos 80% | apagar a regra da data ou regravar o valor de antes |
+| Balcony 26/11 | PriceLabs por data | R$ 1.016 | piso e teto R$ 1.118 (-12% da base) — Escada de vendas (dono 01/11): 0/6 vendidas | apagar a regra da data ou regravar o valor de antes |
+| Balcony 27/11 | PriceLabs por data | R$ 1.460 | piso e teto R$ 1.549 (+22% da base) — Regra G: Balcony 10% abaixo da suíte com banheira livre mais barata (R | apagar a regra da data ou regravar o valor de antes |
+| Balcony 30/11 | PriceLabs por data | R$ 826 | piso e teto R$ 927 (-27% da base) — Escada de vendas (dono 01/11): 0/6 vendidas | apagar a regra da data ou regravar o valor de antes |
+| Balcony 06/12 | PriceLabs por data | R$ 686 | piso e teto R$ 686 (-46% da base) — Confirma (mesmo valor vigente) a Balcony no mercado pela regra dos 80% | apagar a regra da data ou regravar o valor de antes |
+| Balcony 07/12 | PriceLabs por data | R$ 1.080 | piso e teto R$ 1.156 (-9% da base) — Escada de vendas (dono 01/11): 0/6 vendidas | apagar a regra da data ou regravar o valor de antes |
+| Balcony 12/12 | PriceLabs por data | R$ 1.041 | piso e teto R$ 1.740 (+37% da base) — Regra G: Balcony 10% abaixo da suíte com banheira livre mais barata (R | apagar a regra da data ou regravar o valor de antes |
+| Balcony 13/12 | PriceLabs por data | R$ 965 | piso e teto R$ 1.016 (-20% da base) — Escada de vendas (dono 01/11): 0/6 vendidas | apagar a regra da data ou regravar o valor de antes |
+| Balcony 14/12 | PriceLabs por data | R$ 914 | piso e teto R$ 965 (-24% da base) — Regra G: Balcony 10% abaixo da suíte com banheira livre mais barata (R | apagar a regra da data ou regravar o valor de antes |
+| Balcony 15/12 | PriceLabs por data | R$ 914 | piso e teto R$ 965 (-24% da base) — Regra G: Balcony 10% abaixo da suíte com banheira livre mais barata (R | apagar a regra da data ou regravar o valor de antes |
+| Balcony 16/12 | PriceLabs por data | R$ 914 | piso e teto R$ 965 (-24% da base) — Regra G: Balcony 10% abaixo da suíte com banheira livre mais barata (R | apagar a regra da data ou regravar o valor de antes |
+| Balcony 17/12 | PriceLabs por data | R$ 914 | piso e teto R$ 965 (-24% da base) — Regra G: Balcony 10% abaixo da suíte com banheira livre mais barata (R | apagar a regra da data ou regravar o valor de antes |
+| Balcony 21/12 | PriceLabs por data | R$ 1.372 | piso e teto R$ 1.448 (+14% da base) — Escada de vendas (dono 01/11): 0/6 vendidas | apagar a regra da data ou regravar o valor de antes |
+| Balcony 11/01 | PriceLabs por data | R$ 978 | piso e teto R$ 914 (-28% da base) — Escada de vendas (dono 01/11): 0/6 vendidas | apagar a regra da data ou regravar o valor de antes |
+| Panorâmica I 15/11 | PriceLabs por data | R$ 1.110 | piso e teto R$ 1.332 (-10% da base) — Escada de vendas (dono 01/11): 5/6 vendidas | apagar a regra da data ou regravar o valor de antes |
+| Panorâmica I 16/11 | PriceLabs por data | R$ 1.110 | piso e teto R$ 1.288 (-13% da base) — Escada de vendas (dono 01/11): 3/6 vendidas | apagar a regra da data ou regravar o valor de antes |
+| Panorâmica I 24/11 | PriceLabs por data | R$ 1.672 | piso e teto R$ 1.732 (+17% da base) — Escada de vendas (dono 01/11): 3/6 vendidas | apagar a regra da data ou regravar o valor de antes |
+| Panorâmica I 11/01 | PriceLabs por data | R$ 1.510 | piso e teto R$ 1.228 (-17% da base) — Escada de vendas (dono 01/11): 0/6 vendidas | apagar a regra da data ou regravar o valor de antes |
+| Panorâmica II 12/11 | PriceLabs por data | R$ 1.495 | piso e teto R$ 922 (-42% da base) — Escada de vendas (dono 01/11): 5/16 vendidas | apagar a regra da data ou regravar o valor de antes |
+| Panorâmica II 16/11 | PriceLabs por data | R$ 922 | piso e teto R$ 1.065 (-33% da base) — Escada de vendas (dono 01/11): 5/16 vendidas | apagar a regra da data ou regravar o valor de antes |
+| Panorâmica II 25/11 | PriceLabs por data | R$ 1.224 | piso e teto R$ 1.352 (-15% da base) — Escada de vendas (dono 01/11): 6/16 vendidas | apagar a regra da data ou regravar o valor de antes |
+| Panorâmica II 27/11 | PriceLabs por data | R$ 1.622 | piso e teto R$ 1.510 (-5% da base) — Plano do dono 09/11 (fds): abertura R$ 926 público | apagar a regra da data ou regravar o valor de antes |
+| Panorâmica II 28/11 | PriceLabs por data | R$ 1.622 | piso e teto R$ 1.510 (-5% da base) — Plano do dono 09/11 (fds): abertura R$ 926 público | apagar a regra da data ou regravar o valor de antes |
+| Panorâmica II 11/01 | PriceLabs por data | R$ 1.510 | piso e teto R$ 1.224 (-23% da base) — Escada de vendas (dono 01/11): 1/16 vendidas | apagar a regra da data ou regravar o valor de antes |
+| Moinhos (Q7) 11/01 | PriceLabs por data | R$ 1.513 | piso e teto R$ 1.220 (+4% da base) — Escada de vendas (dono 01/11): 1/7 vendidas | apagar a regra da data ou regravar o valor de antes |
+| King Spa 2 12/11 | PriceLabs por data | R$ 1.041 | piso (teto livre) R$ 1.041 (-18% da base) — Proteção da noite esgotada (2/2 | apagar a regra da data ou regravar o valor de antes |
+| King Spa 2 18/11 | PriceLabs por data | R$ 1.105 | piso e teto R$ 1.283 (+1% da base) — Escada de vendas (dono 01/11): 6/9 vendidas | apagar a regra da data ou regravar o valor de antes |
+| King Spa 2 19/11 | PriceLabs por data | R$ 2.248 | piso e teto R$ 2.057 (+62% da base) — Plano do dono 09/11 (feriado): abertura R$ 1368 público | apagar a regra da data ou regravar o valor de antes |
+| King Spa 2 23/11 | PriceLabs por data | R$ 1.511 | piso e teto R$ 1.664 (+31% da base) — Escada de vendas (dono 01/11): 8/9 vendidas | apagar a regra da data ou regravar o valor de antes |
+| King Spa 2 24/11 | PriceLabs por data | R$ 1.435 | piso e teto R$ 1.588 (+25% da base) — Escada de vendas (dono 01/11): 8/9 vendidas | apagar a regra da data ou regravar o valor de antes |
+| King Spa 2 27/11 | PriceLabs por data | R$ 1.626 | piso e teto R$ 1.740 (+37% da base) — Plano do dono 09/11 (fds): abertura R$ 926 público | apagar a regra da data ou regravar o valor de antes |
+| King Spa 2 30/11 | PriceLabs por data | R$ 952 | piso e teto R$ 1.054 (-17% da base) — Escada de vendas (dono 01/11): 5/9 vendidas | apagar a regra da data ou regravar o valor de antes |
+| King Spa 2 07/12 | PriceLabs por data | R$ 1.232 | piso e teto R$ 1.334 (+5% da base) — Escada de vendas (dono 01/11): 6/9 vendidas | apagar a regra da data ou regravar o valor de antes |
+| King Spa 2 13/12 | PriceLabs por data | R$ 1.105 | piso e teto R$ 1.168 (-8% da base) — Escada de vendas (dono 01/11): 6/9 vendidas | apagar a regra da data ou regravar o valor de antes |
+| King Spa 2 14/12 | PriceLabs por data | R$ 1.041 | piso e teto R$ 1.105 (-13% da base) — Escada de vendas (dono 01/11): 4/9 vendidas | apagar a regra da data ou regravar o valor de antes |
+| King Spa 2 15/12 | PriceLabs por data | R$ 1.041 | piso e teto R$ 1.105 (-13% da base) — Escada de vendas (dono 01/11): 3/9 vendidas | apagar a regra da data ou regravar o valor de antes |
+| King Spa 2 16/12 | PriceLabs por data | R$ 1.041 | piso e teto R$ 1.105 (-13% da base) — Escada de vendas (dono 01/11): 4/9 vendidas | apagar a regra da data ou regravar o valor de antes |
+| King Spa 2 17/12 | PriceLabs por data | R$ 1.041 | piso e teto R$ 1.105 (-13% da base) — Escada de vendas (dono 01/11): 3/9 vendidas | apagar a regra da data ou regravar o valor de antes |
+| King Spa 2 28/12 | PriceLabs por data | R$ 2.184 | piso e teto R$ 2.286 (+80% da base) — Escada de vendas (dono 01/11): 2/9 vendidas | apagar a regra da data ou regravar o valor de antes |
+| King Spa 2 06/01 | PriceLabs por data | R$ 1.054 | piso e teto R$ 1.118 (-12% da base) — Escada de vendas (dono 01/11): 1/9 vendidas | apagar a regra da data ou regravar o valor de antes |
+| King Spa 2 07/01 | PriceLabs por data | R$ 1.054 | piso e teto R$ 1.118 (-12% da base) — Escada de vendas (dono 01/11): 1/9 vendidas | apagar a regra da data ou regravar o valor de antes |
+| King Spa 2 11/01 | PriceLabs por data | R$ 1.042 | piso e teto R$ 1.003 (-21% da base) — Escada de vendas (dono 01/11): 1/9 vendidas | apagar a regra da data ou regravar o valor de antes |
+| King Spa 7 18/11 | PriceLabs por data | R$ 1.051 | piso e teto R$ 1.214 (-18% da base) — Escada de vendas (dono 01/11): 5/7 vendidas | apagar a regra da data ou regravar o valor de antes |
+| King Spa 7 22/11 | PriceLabs por data | R$ 1.169 | piso (teto livre) R$ 1.051 (-29% da base), estadia 1 — Proteção da noite esgotada (7/7 | apagar a regra da data ou regravar o valor de antes |
+| King Spa 7 23/11 | PriceLabs por data | R$ 1.569 | piso (teto livre) R$ 947 (-36% da base), estadia 2 — Proteção da noite esgotada (7/7 | apagar a regra da data ou regravar o valor de antes |
+| King Spa 7 24/11 | PriceLabs por data | R$ 1.421 | piso (teto livre) R$ 947 (-36% da base), estadia 1 — Proteção da noite esgotada (7/7 | apagar a regra da data ou regravar o valor de antes |
+| King Spa 7 26/11 | PriceLabs por data | R$ 1.169 | piso e teto R$ 1.288 (-13% da base) — Escada de vendas (dono 01/11): 4/7 vendidas | apagar a regra da data ou regravar o valor de antes |
+| King Spa 7 29/11 | PriceLabs por data | R$ 1.110 | piso (teto livre) R$ 1.006 (-32% da base), estadia 1 — Proteção da noite esgotada (7/7 | apagar a regra da data ou regravar o valor de antes |
+| King Spa 7 30/11 | PriceLabs por data | R$ 1.051 | piso e teto R$ 1.169 (-21% da base) — Escada de vendas (dono 01/11): 4/7 vendidas | apagar a regra da data ou regravar o valor de antes |
+| King Spa 7 06/12 | PriceLabs por data | R$ 1.495 | piso e teto R$ 1.658 (+12% da base) — Escada de vendas (dono 01/11): 6/7 vendidas | apagar a regra da data ou regravar o valor de antes |
+| King Spa 7 12/12 | PriceLabs por data | R$ 2.072 | piso e teto R$ 1.939 (+31% da base) — Plano do dono 09/11 (fds): abertura R$ 1011 público | apagar a regra da data ou regravar o valor de antes |
+| King Spa 7 13/12 | PriceLabs por data | R$ 1.110 | piso e teto R$ 1.169 (-21% da base) — Escada de vendas (dono 01/11): 5/7 vendidas | apagar a regra da data ou regravar o valor de antes |
+| King Spa 7 14/12 | PriceLabs por data | R$ 1.051 | piso e teto R$ 1.110 (-25% da base) — Escada de vendas (dono 01/11): 3/7 vendidas | apagar a regra da data ou regravar o valor de antes |
+| King Spa 7 15/12 | PriceLabs por data | R$ 1.051 | piso e teto R$ 1.110 (-25% da base) — Escada de vendas (dono 01/11): 3/7 vendidas | apagar a regra da data ou regravar o valor de antes |
+| King Spa 7 16/12 | PriceLabs por data | R$ 1.051 | piso e teto R$ 1.110 (-25% da base) — Escada de vendas (dono 01/11): 4/7 vendidas | apagar a regra da data ou regravar o valor de antes |
+| King Spa 7 17/12 | PriceLabs por data | R$ 1.051 | piso e teto R$ 1.110 (-25% da base) — Escada de vendas (dono 01/11): 3/7 vendidas | apagar a regra da data ou regravar o valor de antes |
+| King Spa 7 21/12 | PriceLabs por data | R$ 1.584 | piso e teto R$ 1.672 (+13% da base) — Escada de vendas (dono 01/11): 3/7 vendidas | apagar a regra da data ou regravar o valor de antes |
+| King Spa 7 11/01 | PriceLabs por data | R$ 1.201 | piso e teto R$ 1.006 (-32% da base) — Escada de vendas (dono 01/11): 0/7 vendidas | apagar a regra da data ou regravar o valor de antes |
+| Sábado 13/11/2027 fechado para entrada e saída | Beds24 (6 quartos) | sem restrição | noCheckInOrCheckOut | voltar o override a none |
+
+**Envio:** o envio de hoje já saiu (10:08); estas mudanças chegam aos canais no envio de amanhã, ou antes com o Sync Now (pedido no relatório, por causa da Panorâmica II de hoje).
+
+**Sombra da flutuação:** foto 3 de 7 registrada.
+
 ## O que só pode ser feito na tela (passo a passo para você)
 
 1. **Safety Minimum Price → "Do Not Apply"** (Dynamic Pricing → Customizations → aba Groups → Edit no grupo Recanto dos Moinhos → All Customizations → Safety Minimum Price). Anote o valor atual antes.

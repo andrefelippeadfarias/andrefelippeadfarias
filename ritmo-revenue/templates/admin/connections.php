@@ -85,9 +85,9 @@ View::render('admin/partials/header', $view);
     </table>
     <p class="description">
         <?php if ($view['calendar_read']) : ?>
-            <?php esc_html_e('The pricing calendar is read from PriceLabs (allowed on this site by RITMO_PRICING_CALENDAR_READ; that read uses POST).', 'ritmo-revenue'); ?>
+            <?php esc_html_e('The pricing calendar is read from PriceLabs. That read uses POST and changes nothing; define RITMO_PRICING_CALENDAR_READ as false in wp-config.php to switch it off.', 'ritmo-revenue'); ?>
         <?php else : ?>
-            <?php esc_html_e('Current prices come from the PMS calendar; the PriceLabs calendar, a read its API serves by POST, is not used.', 'ritmo-revenue'); ?>
+            <?php esc_html_e('Current prices come from the PMS calendar: the PriceLabs calendar read (a POST) is switched off on this site by RITMO_PRICING_CALENDAR_READ.', 'ritmo-revenue'); ?>
         <?php endif; ?>
     </p>
     <?php submit_button(__('Save connections', 'ritmo-revenue'), 'primary', 'save_connections'); ?>

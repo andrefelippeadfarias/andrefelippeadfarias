@@ -4,7 +4,7 @@
 #
 #   bin/wp-test-site.sh start     build a fresh site and start both servers
 #   bin/wp-test-site.sh restart   restart the site server only (keeps the database), e.g. with
-#                                 RITMO_PRICING_CALENDAR_READ=1 in the environment
+#                                 RITMO_PRICING_CALENDAR_READ=0 in the environment
 #   bin/wp-test-site.sh stop      stop both servers
 #
 # The site: WordPress from https://wordpress.org/latest.zip on SQLite (the plugin
@@ -17,7 +17,8 @@
 #   simulator:  http://127.0.0.1:8091  (php -S tests/fake-apis/router.php), its scenario moved to
 #               start today in the property's timezone
 #
-# Environment: RITMO_PRICING_CALENDAR_READ=1 allows the pricing system's calendar read (a POST).
+# Environment: RITMO_PRICING_CALENDAR_READ=0 switches off the pricing system's calendar read (a POST
+# that reads; on by default).
 
 set -euo pipefail
 
@@ -90,7 +91,9 @@ define('FS_METHOD', 'direct');
 define('RITMO_DEV', true);
 define('RITMO_BEDS24_BASE_URL', 'http://127.0.0.1:$API_PORT/beds24/v2');
 define('RITMO_PRICELABS_BASE_URL', 'http://127.0.0.1:$API_PORT/pricelabs/v1');
-define('RITMO_PRICING_CALENDAR_READ', getenv('RITMO_PRICING_CALENDAR_READ') === '1');
+if (getenv('RITMO_PRICING_CALENDAR_READ') === '0') {
+    define('RITMO_PRICING_CALENDAR_READ', false);
+}
 if (!defined('ABSPATH')) {
     define('ABSPATH', __DIR__ . '/');
 }

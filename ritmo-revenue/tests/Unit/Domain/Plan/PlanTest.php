@@ -7,8 +7,11 @@ namespace Ritmo\Tests\Unit\Domain\Plan;
 use DateTimeImmutable;
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
+use Ritmo\Domain\Plan\ListingChange;
+use Ritmo\Domain\Plan\ListingField;
 use Ritmo\Domain\Plan\NightState;
 use Ritmo\Domain\Plan\Plan;
+use Ritmo\Domain\Plan\PlanDeletion;
 use Ritmo\Domain\Plan\PlanItem;
 use Ritmo\Domain\Pricing\NightContext;
 use Ritmo\Domain\Pricing\PaceDecision;
@@ -75,5 +78,38 @@ final class PlanTest extends TestCase
         self::assertSame(['Deluxe|2027-03-10', 'Deluxe|2027-03-09'], array_map(static fn (PlanItem $item): string => $item->key(), $plan->items), 'the sold-out night is not a step');
         self::assertSame($before['Deluxe|2027-03-10'], $plan->items[0]->before);
         self::assertSame(1000.0, $plan->items[1]->before?->price);
+    }
+
+    public function testHoldsItsDeletionsAndListingChanges(): void
+    {
+        $now = new DateTimeImmutable('2027-03-03T12:00:00Z');
+        $deletion = new PlanDeletion('Deluxe', new DateTimeImmutable('2027-03-10T15:00:00Z'), 'CEILING_RELEASE_DELETE', 'frees the ceiling');
+        $change = new ListingChange('Deluxe', ListingField::Min, 640.0, 'OWNER_ORDER', '', 'order-1');
+        $plan = new Plan('inn', Days::date('2027-03-03'), $now, [], [$deletion, $deletion], [$change]);
+
+        self::assertSame('Deluxe|2027-03-10', $plan->deletions[0]->key());
+        self::assertSame(['room' => 'Deluxe', 'date' => '2027-03-10', 'reason_code' => 'CEILING_RELEASE_DELETE', 'reason_text' => 'frees the ceiling'], $deletion->toArray());
+        self::assertSame('min', $plan->listingChanges[0]->toArray()['field']);
+        self::assertSame([1, 0], [count($plan->without([], [0], [0])->deletions), count($plan->without([], [0], [0])->listingChanges)]);
+    }
+
+    public function testRefusesEntriesWithoutShape(): void
+    {
+        $night = Days::date('2027-03-10');
+        $now = new DateTimeImmutable('2027-03-03T12:00:00Z');
+        $builders = [
+            'deletion of a bad room code' => static fn () => new PlanDeletion('not a code', $night),
+            'listing amount of zero' => static fn () => new ListingChange('Deluxe', ListingField::Base, 0.0),
+            'listing with an empty order id' => static fn () => new ListingChange('Deluxe', ListingField::Base, 900.0, orderId: ''),
+            'an item among the deletions' => static fn () => new Plan('inn', $night, $now, [], [new PlanItem('Deluxe', $night, 900.0)]),
+        ];
+        foreach ($builders as $name => $build) {
+            try {
+                $build();
+                self::fail("Expected an InvalidArgumentException for: $name.");
+            } catch (InvalidArgumentException) {
+                $this->addToAssertionCount(1);
+            }
+        }
     }
 }

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Ritmo\Domain\Relations\Config;
 
 use BackedEnum;
+use DateTimeImmutable;
 use Ritmo\Domain\Config\ValidationError;
 use Ritmo\Domain\Support\Days;
 
@@ -60,7 +61,7 @@ final class Reader
         if (!is_string($value)) {
             return $this->fail($key, ValidationError::TYPE, 'must be text', $default ?? '');
         }
-        if (mb_strlen($value) > $maxLength) {
+        if ((int) preg_match_all('/./su', $value) > $maxLength) {
             return $this->fail($key, ValidationError::RANGE, sprintf('must have at most %d characters', $maxLength), $default ?? '');
         }
         if ($pattern !== null && preg_match($pattern, $value) !== 1) {
@@ -201,7 +202,7 @@ final class Reader
     /**
      * A date as YYYY-MM-DD.
      */
-    public function date(string $key): ?\DateTimeImmutable
+    public function date(string $key): ?DateTimeImmutable
     {
         $value = $this->value($key, null);
         if (!is_string($value) || !Days::isValid($value)) {

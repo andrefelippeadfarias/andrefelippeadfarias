@@ -4,8 +4,14 @@
 Reads tests/fixtures/frozen/quartos.json and writes tests/fixtures/presets/parity.json. The golden
 tests load this preset on the PHP side, so that PHP and Python compute from the same rules.
 
-Only what the plugin's rule set schema knows is converted; what is left out (rules of later
-milestones) is listed on the screen. The preset is test data: it never ships with the plugin.
+The sections of milestone M2 come from the parity fixtures the golden generators of each module
+write next to it (run them first): parity-relations.json (relations, price_bands), parity-ladder.json
+(ladder, soldout, cadence, no_effect, orders), parity-stay.json (stay) and parity-plan.json (plan).
+Inputs of a run that live in those fixtures (the market ruler, the weekly reference of the listings,
+the PMS name) are not rules and stay out of the preset.
+
+Only what the plugin's rule set schema knows is converted; what is left out is listed on the
+screen. The preset is test data: it never ships with the plugin.
 
 Usage: python3 tests/fixtures/tools/make_parity_preset.py
 """
@@ -13,6 +19,7 @@ Usage: python3 tests/fixtures/tools/make_parity_preset.py
 from __future__ import annotations
 
 import json
+import subprocess
 import sys
 from pathlib import Path
 
@@ -31,13 +38,18 @@ TUB_TAG = "tub"
 GROUP_PACE_MAX_UNITS = 2  # pace._plano: rooms of 1 or 2 units use pace.ocupacao_pousada (the rooms with a tub)
 
 LEFT_OUT = [
-    "quartos[].acima_de / entre / premio_minimo (room relations)",
-    "feriados[].pacote and piso_real_por_quarto (packages, per-room holiday floors)",
+    "feriados[].piso_real_por_quarto (per-room holiday floors)",
     "limites_seguranca.excecoes_dono (dated owner exceptions)",
-    "parametros.pace.escada_vendas, parametros.escada (sales ladder)",
-    "parametros.estadia_por_dia_chegada, regra_h_beds24 (stay and arrival rules)",
-    "parametros.fator_canal, seguranca, regra_* and the rest of parametros",
+    "parametros.fator_canal, seguranca and the rest of parametros",
 ]
+
+# Rule set sections of milestone M2, by the module fixture that holds them.
+MODULE_SECTIONS = {
+    "parity-relations.json": ["relations", "price_bands"],
+    "parity-ladder.json": ["ladder", "soldout", "cadence", "no_effect", "orders"],
+    "parity-stay.json": ["stay"],
+    "parity-plan.json": ["plan"],
+}
 
 
 def properties(cfg: dict) -> list[dict]:
@@ -103,6 +115,7 @@ def pace(cfg: dict) -> dict:
             for short, table in p["alvo"].items()
         },
         "ahead_near_days": p["frente_perto_dias"],
+        "sales_ramp": {"enabled": bool(p["escada_vendas"].get("ativa")), "top_percentile": float(p["escada_vendas"].get("p_topo", 90))},
         "k": p["k"],
         "max_step": max_step(p["pmax"]),
         "min_n": p["min_n"],
@@ -173,8 +186,27 @@ def preset(cfg: dict) -> dict:
             "floors": floors(cfg),
             "price_factors": price_factors(cfg),
             "safety": {"weekly_listing_change_max": cfg["limites_seguranca"]["variacao_semanal_base_min"], "never_raise_today": True},
+            **module_sections(),
         },
     }
+
+
+def module_sections() -> dict:
+    """The M2 sections, copied from the parity fixture of the module that owns each one and completed
+    with the schema defaults (the fixtures leave out fields at their default), so that the preset
+    passes the strict validator."""
+    out: dict = {}
+    for name, sections in MODULE_SECTIONS.items():
+        with open(OUTPUT.parent / name, encoding="utf-8") as handle:
+            fixture = json.load(handle)
+        for section in sections:
+            if section not in fixture:
+                raise SystemExit(f"{name} has no section {section!r}: run the golden generator of that module first")
+            out[section] = fixture[section]
+    filled = subprocess.run(["php", str(TOOLS / "fill_defaults.php")], input=json.dumps(out), capture_output=True,
+                            text=True, check=True)
+    complete = json.loads(filled.stdout)
+    return {section: complete[section] for section in out}
 
 
 def main() -> int:
@@ -187,6 +219,7 @@ def main() -> int:
         handle.write("\n")
     rooms = sum(len(p["room_types"]) for p in data["properties"])
     print(f"{OUTPUT}: {len(data['properties'])} properties, {rooms} room types, {len(data['rules']['calendar']['holidays'])} holidays")
+    print("M2 sections from the module fixtures: " + ", ".join(s for sections in MODULE_SECTIONS.values() for s in sections))
     print("left out (not in the rule set schema yet):")
     for item in LEFT_OUT:
         print("  - " + item)

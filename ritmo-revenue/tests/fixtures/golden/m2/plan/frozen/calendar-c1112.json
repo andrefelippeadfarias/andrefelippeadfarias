@@ -1,0 +1,2980 @@
+{
+ "hoje": "2026-11-12",
+ "rooms": {
+  "Q7": {
+   "last_refreshed_at": "2026-11-12T14:47:18+00:00",
+   "days": [
+    {
+     "date": "2026-11-12",
+     "price": 915.0,
+     "min_price": null,
+     "multi_unit_occupancy": "0/7",
+     "booking_status": ""
+    },
+    {
+     "date": "2026-11-13",
+     "price": 1337.0,
+     "min_price": null,
+     "multi_unit_occupancy": "7/7",
+     "booking_status": "Booked"
+    },
+    {
+     "date": "2026-11-14",
+     "price": 1337.0,
+     "min_price": null,
+     "multi_unit_occupancy": "7/7",
+     "booking_status": "Booked"
+    },
+    {
+     "date": "2026-11-15",
+     "price": 915.0,
+     "min_price": null,
+     "multi_unit_occupancy": "1/7",
+     "booking_status": "Booked"
+    },
+    {
+     "date": "2026-11-16",
+     "price": 915.0,
+     "min_price": null,
+     "multi_unit_occupancy": "1/7",
+     "booking_status": "Booked"
+    },
+    {
+     "date": "2026-11-17",
+     "price": 915.0,
+     "min_price": null,
+     "multi_unit_occupancy": "1/7",
+     "booking_status": "Booked"
+    },
+    {
+     "date": "2026-11-18",
+     "price": 915.0,
+     "min_price": null,
+     "multi_unit_occupancy": "2/7",
+     "booking_status": "Booked"
+    },
+    {
+     "date": "2026-11-19",
+     "price": 1924.0,
+     "min_price": null,
+     "multi_unit_occupancy": "1/7",
+     "booking_status": "Booked"
+    },
+    {
+     "date": "2026-11-20",
+     "price": 2733.0,
+     "min_price": null,
+     "multi_unit_occupancy": "5/7",
+     "booking_status": "Booked"
+    },
+    {
+     "date": "2026-11-21",
+     "price": 3026.0,
+     "min_price": null,
+     "multi_unit_occupancy": "5/7",
+     "booking_status": "Booked"
+    },
+    {
+     "date": "2026-11-22",
+     "price": 1220.0,
+     "min_price": null,
+     "multi_unit_occupancy": "1/7",
+     "booking_status": "Booked"
+    },
+    {
+     "date": "2026-11-23",
+     "price": 1478.0,
+     "min_price": null,
+     "multi_unit_occupancy": "4/7",
+     "booking_status": "Booked"
+    },
+    {
+     "date": "2026-11-24",
+     "price": 1220.0,
+     "min_price": null,
+     "multi_unit_occupancy": "2/7",
+     "booking_status": "Booked"
+    },
+    {
+     "date": "2026-11-25",
+     "price": 1220.0,
+     "min_price": null,
+     "multi_unit_occupancy": "3/7",
+     "booking_status": "Booked"
+    },
+    {
+     "date": "2026-11-26",
+     "price": 1220.0,
+     "min_price": null,
+     "multi_unit_occupancy": "1/7",
+     "booking_status": "Booked"
+    },
+    {
+     "date": "2026-11-27",
+     "price": 1232.0,
+     "min_price": null,
+     "multi_unit_occupancy": "2/7",
+     "booking_status": "Booked"
+    },
+    {
+     "date": "2026-11-28",
+     "price": 1232.0,
+     "min_price": null,
+     "multi_unit_occupancy": "2/7",
+     "booking_status": "Booked"
+    },
+    {
+     "date": "2026-11-29",
+     "price": 1220.0,
+     "min_price": null,
+     "multi_unit_occupancy": "0/7",
+     "booking_status": ""
+    },
+    {
+     "date": "2026-11-30",
+     "price": 1220.0,
+     "min_price": null,
+     "multi_unit_occupancy": "1/7",
+     "booking_status": "Booked"
+    },
+    {
+     "date": "2026-12-01",
+     "price": 1232.0,
+     "min_price": null,
+     "multi_unit_occupancy": "1/7",
+     "booking_status": "Booked"
+    },
+    {
+     "date": "2026-12-02",
+     "price": 1232.0,
+     "min_price": null,
+     "multi_unit_occupancy": "0/7",
+     "booking_status": ""
+    },
+    {
+     "date": "2026-12-03",
+     "price": 1232.0,
+     "min_price": null,
+     "multi_unit_occupancy": "0/7",
+     "booking_status": ""
+    },
+    {
+     "date": "2026-12-04",
+     "price": 1243.0,
+     "min_price": null,
+     "multi_unit_occupancy": "3/7",
+     "booking_status": "Booked"
+    },
+    {
+     "date": "2026-12-05",
+     "price": 1243.0,
+     "min_price": null,
+     "multi_unit_occupancy": "3/7",
+     "booking_status": "Booked"
+    },
+    {
+     "date": "2026-12-06",
+     "price": 1771.0,
+     "min_price": null,
+     "multi_unit_occupancy": "4/7",
+     "booking_status": "Booked"
+    },
+    {
+     "date": "2026-12-07",
+     "price": 1501.0,
+     "min_price": null,
+     "multi_unit_occupancy": "3/7",
+     "booking_status": "Booked"
+    },
+    {
+     "date": "2026-12-08",
+     "price": 1232.0,
+     "min_price": null,
+     "multi_unit_occupancy": "0/7",
+     "booking_status": ""
+    },
+    {
+     "date": "2026-12-09",
+     "price": 1232.0,
+     "min_price": null,
+     "multi_unit_occupancy": "0/7",
+     "booking_status": ""
+    },
+    {
+     "date": "2026-12-10",
+     "price": 1232.0,
+     "min_price": null,
+     "multi_unit_occupancy": "0/7",
+     "booking_status": ""
+    },
+    {
+     "date": "2026-12-11",
+     "price": 1290.0,
+     "min_price": null,
+     "multi_unit_occupancy": "0/7",
+     "booking_status": ""
+    },
+    {
+     "date": "2026-12-12",
+     "price": 1290.0,
+     "min_price": null,
+     "multi_unit_occupancy": "0/7",
+     "booking_status": ""
+    },
+    {
+     "date": "2026-12-13",
+     "price": 1232.0,
+     "min_price": null,
+     "multi_unit_occupancy": "0/7",
+     "booking_status": ""
+    },
+    {
+     "date": "2026-12-14",
+     "price": 1232.0,
+     "min_price": null,
+     "multi_unit_occupancy": "1/7",
+     "booking_status": "Booked"
+    },
+    {
+     "date": "2026-12-15",
+     "price": 1232.0,
+     "min_price": null,
+     "multi_unit_occupancy": "1/7",
+     "booking_status": "Booked"
+    },
+    {
+     "date": "2026-12-16",
+     "price": 1232.0,
+     "min_price": null,
+     "multi_unit_occupancy": "1/7",
+     "booking_status": "Booked"
+    },
+    {
+     "date": "2026-12-17",
+     "price": 1232.0,
+     "min_price": null,
+     "multi_unit_occupancy": "0/7",
+     "booking_status": ""
+    },
+    {
+     "date": "2026-12-18",
+     "price": 1267.0,
+     "min_price": null,
+     "multi_unit_occupancy": "0/7",
+     "booking_status": ""
+    },
+    {
+     "date": "2026-12-19",
+     "price": 1267.0,
+     "min_price": null,
+     "multi_unit_occupancy": "0/7",
+     "booking_status": ""
+    },
+    {
+     "date": "2026-12-20",
+     "price": 1408.0,
+     "min_price": null,
+     "multi_unit_occupancy": "0/7",
+     "booking_status": ""
+    },
+    {
+     "date": "2026-12-21",
+     "price": 1408.0,
+     "min_price": null,
+     "multi_unit_occupancy": "0/7",
+     "booking_status": ""
+    },
+    {
+     "date": "2026-12-22",
+     "price": 1408.0,
+     "min_price": null,
+     "multi_unit_occupancy": "0/7",
+     "booking_status": ""
+    },
+    {
+     "date": "2026-12-23",
+     "price": 2369.0,
+     "min_price": null,
+     "multi_unit_occupancy": "0/7",
+     "booking_status": ""
+    },
+    {
+     "date": "2026-12-24",
+     "price": 2369.0,
+     "min_price": null,
+     "multi_unit_occupancy": "0/7",
+     "booking_status": ""
+    },
+    {
+     "date": "2026-12-25",
+     "price": 2194.0,
+     "min_price": null,
+     "multi_unit_occupancy": "0/7",
+     "booking_status": ""
+    },
+    {
+     "date": "2026-12-26",
+     "price": 2194.0,
+     "min_price": null,
+     "multi_unit_occupancy": "0/7",
+     "booking_status": ""
+    },
+    {
+     "date": "2026-12-27",
+     "price": 1490.0,
+     "min_price": null,
+     "multi_unit_occupancy": "0/7",
+     "booking_status": ""
+    },
+    {
+     "date": "2026-12-28",
+     "price": 1490.0,
+     "min_price": null,
+     "multi_unit_occupancy": "0/7",
+     "booking_status": ""
+    },
+    {
+     "date": "2026-12-29",
+     "price": 1912.0,
+     "min_price": null,
+     "multi_unit_occupancy": "0/7",
+     "booking_status": ""
+    },
+    {
+     "date": "2026-12-30",
+     "price": 3191.0,
+     "min_price": null,
+     "multi_unit_occupancy": "4/7",
+     "booking_status": "Booked"
+    },
+    {
+     "date": "2026-12-31",
+     "price": 3413.0,
+     "min_price": null,
+     "multi_unit_occupancy": "5/7",
+     "booking_status": "Booked"
+    },
+    {
+     "date": "2027-01-01",
+     "price": 2979.0,
+     "min_price": null,
+     "multi_unit_occupancy": "3/7",
+     "booking_status": "Booked"
+    },
+    {
+     "date": "2027-01-02",
+     "price": 2979.0,
+     "min_price": null,
+     "multi_unit_occupancy": "1/7",
+     "booking_status": "Booked"
+    },
+    {
+     "date": "2027-01-03",
+     "price": 1232.0,
+     "min_price": null,
+     "multi_unit_occupancy": "0/7",
+     "booking_status": ""
+    },
+    {
+     "date": "2027-01-04",
+     "price": 1232.0,
+     "min_price": null,
+     "multi_unit_occupancy": "0/7",
+     "booking_status": ""
+    },
+    {
+     "date": "2027-01-05",
+     "price": 1232.0,
+     "min_price": null,
+     "multi_unit_occupancy": "0/7",
+     "booking_status": ""
+    },
+    {
+     "date": "2027-01-06",
+     "price": 1232.0,
+     "min_price": null,
+     "multi_unit_occupancy": "0/7",
+     "booking_status": ""
+    },
+    {
+     "date": "2027-01-07",
+     "price": 1232.0,
+     "min_price": null,
+     "multi_unit_occupancy": "0/7",
+     "booking_status": ""
+    },
+    {
+     "date": "2027-01-08",
+     "price": 1161.0,
+     "min_price": null,
+     "multi_unit_occupancy": "0/7",
+     "booking_status": ""
+    },
+    {
+     "date": "2027-01-09",
+     "price": 1161.0,
+     "min_price": null,
+     "multi_unit_occupancy": "0/7",
+     "booking_status": ""
+    },
+    {
+     "date": "2027-01-10",
+     "price": 1232.0,
+     "min_price": null,
+     "multi_unit_occupancy": "0/7",
+     "booking_status": ""
+    }
+   ]
+  },
+  "Double": {
+   "last_refreshed_at": "2026-11-12T14:47:18+00:00",
+   "days": [
+    {
+     "date": "2026-11-12",
+     "price": 962.0,
+     "min_price": null,
+     "multi_unit_occupancy": "5/6",
+     "booking_status": "Booked"
+    },
+    {
+     "date": "2026-11-13",
+     "price": 1539.0,
+     "min_price": null,
+     "multi_unit_occupancy": "3/6",
+     "booking_status": "Booked"
+    },
+    {
+     "date": "2026-11-14",
+     "price": 1658.0,
+     "min_price": null,
+     "multi_unit_occupancy": "4/6",
+     "booking_status": "Booked"
+    },
+    {
+     "date": "2026-11-15",
+     "price": 1110.0,
+     "min_price": null,
+     "multi_unit_occupancy": "5/6",
+     "booking_status": "Booked"
+    },
+    {
+     "date": "2026-11-16",
+     "price": 1110.0,
+     "min_price": null,
+     "multi_unit_occupancy": "3/6",
+     "booking_status": "Booked"
+    },
+    {
+     "date": "2026-11-17",
+     "price": 962.0,
+     "min_price": null,
+     "multi_unit_occupancy": "1/6",
+     "booking_status": "Booked"
+    },
+    {
+     "date": "2026-11-18",
+     "price": 1288.0,
+     "min_price": null,
+     "multi_unit_occupancy": "6/6",
+     "booking_status": "Booked"
+    },
+    {
+     "date": "2026-11-19",
+     "price": 2590.0,
+     "min_price": null,
+     "multi_unit_occupancy": "5/6",
+     "booking_status": "Booked"
+    },
+    {
+     "date": "2026-11-20",
+     "price": 3197.0,
+     "min_price": null,
+     "multi_unit_occupancy": "6/6",
+     "booking_status": "Booked"
+    },
+    {
+     "date": "2026-11-21",
+     "price": 3197.0,
+     "min_price": null,
+     "multi_unit_occupancy": "6/6",
+     "booking_status": "Booked"
+    },
+    {
+     "date": "2026-11-22",
+     "price": 1480.0,
+     "min_price": null,
+     "multi_unit_occupancy": "4/6",
+     "booking_status": "Booked"
+    },
+    {
+     "date": "2026-11-23",
+     "price": 1480.0,
+     "min_price": null,
+     "multi_unit_occupancy": "3/6",
+     "booking_status": "Booked"
+    },
+    {
+     "date": "2026-11-24",
+     "price": 1672.0,
+     "min_price": null,
+     "multi_unit_occupancy": "3/6",
+     "booking_status": "Booked"
+    },
+    {
+     "date": "2026-11-25",
+     "price": 1450.0,
+     "min_price": null,
+     "multi_unit_occupancy": "1/6",
+     "booking_status": "Booked"
+    },
+    {
+     "date": "2026-11-26",
+     "price": 1228.0,
+     "min_price": null,
+     "multi_unit_occupancy": "0/6",
+     "booking_status": ""
+    },
+    {
+     "date": "2026-11-27",
+     "price": 1732.0,
+     "min_price": null,
+     "multi_unit_occupancy": "4/6",
+     "booking_status": "Booked"
+    },
+    {
+     "date": "2026-11-28",
+     "price": 1732.0,
+     "min_price": null,
+     "multi_unit_occupancy": "4/6",
+     "booking_status": "Booked"
+    },
+    {
+     "date": "2026-11-29",
+     "price": 1421.0,
+     "min_price": null,
+     "multi_unit_occupancy": "4/6",
+     "booking_status": "Booked"
+    },
+    {
+     "date": "2026-11-30",
+     "price": 1228.0,
+     "min_price": null,
+     "multi_unit_occupancy": "1/6",
+     "booking_status": "Booked"
+    },
+    {
+     "date": "2026-12-01",
+     "price": 1243.0,
+     "min_price": null,
+     "multi_unit_occupancy": "1/6",
+     "booking_status": "Booked"
+    },
+    {
+     "date": "2026-12-02",
+     "price": 1243.0,
+     "min_price": null,
+     "multi_unit_occupancy": "1/6",
+     "booking_status": "Booked"
+    },
+    {
+     "date": "2026-12-03",
+     "price": 1243.0,
+     "min_price": null,
+     "multi_unit_occupancy": "0/6",
+     "booking_status": ""
+    },
+    {
+     "date": "2026-12-04",
+     "price": 1480.0,
+     "min_price": null,
+     "multi_unit_occupancy": "2/6",
+     "booking_status": "Booked"
+    },
+    {
+     "date": "2026-12-05",
+     "price": 1584.0,
+     "min_price": null,
+     "multi_unit_occupancy": "3/6",
+     "booking_status": "Booked"
+    },
+    {
+     "date": "2026-12-06",
+     "price": 1776.0,
+     "min_price": null,
+     "multi_unit_occupancy": "1/6",
+     "booking_status": "Booked"
+    },
+    {
+     "date": "2026-12-07",
+     "price": 1510.0,
+     "min_price": null,
+     "multi_unit_occupancy": "1/6",
+     "booking_status": "Booked"
+    },
+    {
+     "date": "2026-12-08",
+     "price": 1243.0,
+     "min_price": null,
+     "multi_unit_occupancy": "1/6",
+     "booking_status": "Booked"
+    },
+    {
+     "date": "2026-12-09",
+     "price": 1243.0,
+     "min_price": null,
+     "multi_unit_occupancy": "0/6",
+     "booking_status": ""
+    },
+    {
+     "date": "2026-12-10",
+     "price": 1243.0,
+     "min_price": null,
+     "multi_unit_occupancy": "0/6",
+     "booking_status": ""
+    },
+    {
+     "date": "2026-12-11",
+     "price": 1643.0,
+     "min_price": null,
+     "multi_unit_occupancy": "2/6",
+     "booking_status": "Booked"
+    },
+    {
+     "date": "2026-12-12",
+     "price": 1643.0,
+     "min_price": null,
+     "multi_unit_occupancy": "2/6",
+     "booking_status": "Booked"
+    },
+    {
+     "date": "2026-12-13",
+     "price": 1243.0,
+     "min_price": null,
+     "multi_unit_occupancy": "2/6",
+     "booking_status": "Booked"
+    },
+    {
+     "date": "2026-12-14",
+     "price": 1228.0,
+     "min_price": null,
+     "multi_unit_occupancy": "1/6",
+     "booking_status": "Booked"
+    },
+    {
+     "date": "2026-12-15",
+     "price": 1243.0,
+     "min_price": null,
+     "multi_unit_occupancy": "0/6",
+     "booking_status": ""
+    },
+    {
+     "date": "2026-12-16",
+     "price": 1243.0,
+     "min_price": null,
+     "multi_unit_occupancy": "0/6",
+     "booking_status": ""
+    },
+    {
+     "date": "2026-12-17",
+     "price": 1243.0,
+     "min_price": null,
+     "multi_unit_occupancy": "0/6",
+     "booking_status": ""
+    },
+    {
+     "date": "2026-12-18",
+     "price": 1643.0,
+     "min_price": null,
+     "multi_unit_occupancy": "2/6",
+     "booking_status": "Booked"
+    },
+    {
+     "date": "2026-12-19",
+     "price": 1643.0,
+     "min_price": null,
+     "multi_unit_occupancy": "2/6",
+     "booking_status": "Booked"
+    },
+    {
+     "date": "2026-12-20",
+     "price": 1421.0,
+     "min_price": null,
+     "multi_unit_occupancy": "2/6",
+     "booking_status": "Booked"
+    },
+    {
+     "date": "2026-12-21",
+     "price": 1421.0,
+     "min_price": null,
+     "multi_unit_occupancy": "2/6",
+     "booking_status": "Booked"
+    },
+    {
+     "date": "2026-12-22",
+     "price": 1421.0,
+     "min_price": null,
+     "multi_unit_occupancy": "2/6",
+     "booking_status": "Booked"
+    },
+    {
+     "date": "2026-12-23",
+     "price": 2694.0,
+     "min_price": null,
+     "multi_unit_occupancy": "1/6",
+     "booking_status": "Booked"
+    },
+    {
+     "date": "2026-12-24",
+     "price": 2694.0,
+     "min_price": null,
+     "multi_unit_occupancy": "1/6",
+     "booking_status": "Booked"
+    },
+    {
+     "date": "2026-12-25",
+     "price": 2353.0,
+     "min_price": null,
+     "multi_unit_occupancy": "1/6",
+     "booking_status": "Booked"
+    },
+    {
+     "date": "2026-12-26",
+     "price": 2353.0,
+     "min_price": null,
+     "multi_unit_occupancy": "1/6",
+     "booking_status": "Booked"
+    },
+    {
+     "date": "2026-12-27",
+     "price": 1717.0,
+     "min_price": null,
+     "multi_unit_occupancy": "0/6",
+     "booking_status": ""
+    },
+    {
+     "date": "2026-12-28",
+     "price": 1717.0,
+     "min_price": null,
+     "multi_unit_occupancy": "0/6",
+     "booking_status": ""
+    },
+    {
+     "date": "2026-12-29",
+     "price": 1909.0,
+     "min_price": null,
+     "multi_unit_occupancy": "0/6",
+     "booking_status": ""
+    },
+    {
+     "date": "2026-12-30",
+     "price": 3567.0,
+     "min_price": null,
+     "multi_unit_occupancy": "0/6",
+     "booking_status": ""
+    },
+    {
+     "date": "2026-12-31",
+     "price": 3818.0,
+     "min_price": null,
+     "multi_unit_occupancy": "3/6",
+     "booking_status": "Booked"
+    },
+    {
+     "date": "2027-01-01",
+     "price": 3567.0,
+     "min_price": null,
+     "multi_unit_occupancy": "2/6",
+     "booking_status": "Booked"
+    },
+    {
+     "date": "2027-01-02",
+     "price": 3567.0,
+     "min_price": null,
+     "multi_unit_occupancy": "2/6",
+     "booking_status": "Booked"
+    },
+    {
+     "date": "2027-01-03",
+     "price": 1228.0,
+     "min_price": null,
+     "multi_unit_occupancy": "0/6",
+     "booking_status": ""
+    },
+    {
+     "date": "2027-01-04",
+     "price": 1228.0,
+     "min_price": null,
+     "multi_unit_occupancy": "1/6",
+     "booking_status": "Booked"
+    },
+    {
+     "date": "2027-01-05",
+     "price": 1228.0,
+     "min_price": null,
+     "multi_unit_occupancy": "1/6",
+     "booking_status": "Booked"
+    },
+    {
+     "date": "2027-01-06",
+     "price": 1243.0,
+     "min_price": null,
+     "multi_unit_occupancy": "1/6",
+     "booking_status": "Booked"
+    },
+    {
+     "date": "2027-01-07",
+     "price": 1243.0,
+     "min_price": null,
+     "multi_unit_occupancy": "1/6",
+     "booking_status": "Booked"
+    },
+    {
+     "date": "2027-01-08",
+     "price": 1820.0,
+     "min_price": null,
+     "multi_unit_occupancy": "0/6",
+     "booking_status": ""
+    },
+    {
+     "date": "2027-01-09",
+     "price": 1820.0,
+     "min_price": null,
+     "multi_unit_occupancy": "0/6",
+     "booking_status": ""
+    },
+    {
+     "date": "2027-01-10",
+     "price": 1243.0,
+     "min_price": null,
+     "multi_unit_occupancy": "0/6",
+     "booking_status": ""
+    }
+   ]
+  },
+  "Afrodite": {
+   "last_refreshed_at": "2026-11-12T14:47:18+00:00",
+   "days": [
+    {
+     "date": "2026-11-12",
+     "price": 1500.0,
+     "min_price": null,
+     "multi_unit_occupancy": "",
+     "booking_status": ""
+    },
+    {
+     "date": "2026-11-13",
+     "price": 1780.0,
+     "min_price": null,
+     "multi_unit_occupancy": "",
+     "booking_status": "Booked"
+    },
+    {
+     "date": "2026-11-14",
+     "price": 1920.0,
+     "min_price": null,
+     "multi_unit_occupancy": "",
+     "booking_status": "Booked"
+    },
+    {
+     "date": "2026-11-15",
+     "price": 1500.0,
+     "min_price": null,
+     "multi_unit_occupancy": "",
+     "booking_status": "Booked"
+    },
+    {
+     "date": "2026-11-16",
+     "price": 1500.0,
+     "min_price": null,
+     "multi_unit_occupancy": "",
+     "booking_status": "Booked"
+    },
+    {
+     "date": "2026-11-17",
+     "price": 1520.0,
+     "min_price": null,
+     "multi_unit_occupancy": "",
+     "booking_status": ""
+    },
+    {
+     "date": "2026-11-18",
+     "price": 1566.0,
+     "min_price": null,
+     "multi_unit_occupancy": "",
+     "booking_status": ""
+    },
+    {
+     "date": "2026-11-19",
+     "price": 2980.0,
+     "min_price": null,
+     "multi_unit_occupancy": "",
+     "booking_status": "Booked"
+    },
+    {
+     "date": "2026-11-20",
+     "price": 3680.0,
+     "min_price": null,
+     "multi_unit_occupancy": "",
+     "booking_status": "Booked"
+    },
+    {
+     "date": "2026-11-21",
+     "price": 3680.0,
+     "min_price": null,
+     "multi_unit_occupancy": "",
+     "booking_status": "Booked"
+    },
+    {
+     "date": "2026-11-22",
+     "price": 1780.0,
+     "min_price": null,
+     "multi_unit_occupancy": "",
+     "booking_status": ""
+    },
+    {
+     "date": "2026-11-23",
+     "price": 1780.0,
+     "min_price": null,
+     "multi_unit_occupancy": "",
+     "booking_status": ""
+    },
+    {
+     "date": "2026-11-24",
+     "price": 2020.0,
+     "min_price": null,
+     "multi_unit_occupancy": "",
+     "booking_status": ""
+    },
+    {
+     "date": "2026-11-25",
+     "price": 1876.0,
+     "min_price": null,
+     "multi_unit_occupancy": "",
+     "booking_status": "Booked"
+    },
+    {
+     "date": "2026-11-26",
+     "price": 1500.0,
+     "min_price": null,
+     "multi_unit_occupancy": "",
+     "booking_status": ""
+    },
+    {
+     "date": "2026-11-27",
+     "price": 2000.0,
+     "min_price": null,
+     "multi_unit_occupancy": "",
+     "booking_status": "Booked"
+    },
+    {
+     "date": "2026-11-28",
+     "price": 2000.0,
+     "min_price": null,
+     "multi_unit_occupancy": "",
+     "booking_status": "Booked"
+    },
+    {
+     "date": "2026-11-29",
+     "price": 1739.0,
+     "min_price": null,
+     "multi_unit_occupancy": "",
+     "booking_status": ""
+    },
+    {
+     "date": "2026-11-30",
+     "price": 1700.0,
+     "min_price": null,
+     "multi_unit_occupancy": "",
+     "booking_status": "Booked"
+    },
+    {
+     "date": "2026-12-01",
+     "price": 1611.0,
+     "min_price": null,
+     "multi_unit_occupancy": "",
+     "booking_status": "Booked"
+    },
+    {
+     "date": "2026-12-02",
+     "price": 1615.0,
+     "min_price": null,
+     "multi_unit_occupancy": "",
+     "booking_status": "Booked"
+    },
+    {
+     "date": "2026-12-03",
+     "price": 1500.0,
+     "min_price": null,
+     "multi_unit_occupancy": "",
+     "booking_status": ""
+    },
+    {
+     "date": "2026-12-04",
+     "price": 1720.0,
+     "min_price": null,
+     "multi_unit_occupancy": "",
+     "booking_status": ""
+    },
+    {
+     "date": "2026-12-05",
+     "price": 1840.0,
+     "min_price": null,
+     "multi_unit_occupancy": "",
+     "booking_status": ""
+    },
+    {
+     "date": "2026-12-06",
+     "price": 2140.0,
+     "min_price": null,
+     "multi_unit_occupancy": "",
+     "booking_status": ""
+    },
+    {
+     "date": "2026-12-07",
+     "price": 1820.0,
+     "min_price": null,
+     "multi_unit_occupancy": "",
+     "booking_status": ""
+    },
+    {
+     "date": "2026-12-08",
+     "price": 1500.0,
+     "min_price": null,
+     "multi_unit_occupancy": "",
+     "booking_status": ""
+    },
+    {
+     "date": "2026-12-09",
+     "price": 1500.0,
+     "min_price": null,
+     "multi_unit_occupancy": "",
+     "booking_status": ""
+    },
+    {
+     "date": "2026-12-10",
+     "price": 1500.0,
+     "min_price": null,
+     "multi_unit_occupancy": "",
+     "booking_status": ""
+    },
+    {
+     "date": "2026-12-11",
+     "price": 1900.0,
+     "min_price": null,
+     "multi_unit_occupancy": "",
+     "booking_status": "Booked"
+    },
+    {
+     "date": "2026-12-12",
+     "price": 1900.0,
+     "min_price": null,
+     "multi_unit_occupancy": "",
+     "booking_status": "Booked"
+    },
+    {
+     "date": "2026-12-13",
+     "price": 2034.0,
+     "min_price": null,
+     "multi_unit_occupancy": "",
+     "booking_status": "Booked"
+    },
+    {
+     "date": "2026-12-14",
+     "price": 1762.0,
+     "min_price": null,
+     "multi_unit_occupancy": "",
+     "booking_status": "Booked"
+    },
+    {
+     "date": "2026-12-15",
+     "price": 1500.0,
+     "min_price": null,
+     "multi_unit_occupancy": "",
+     "booking_status": ""
+    },
+    {
+     "date": "2026-12-16",
+     "price": 1500.0,
+     "min_price": null,
+     "multi_unit_occupancy": "",
+     "booking_status": ""
+    },
+    {
+     "date": "2026-12-17",
+     "price": 1500.0,
+     "min_price": null,
+     "multi_unit_occupancy": "",
+     "booking_status": ""
+    },
+    {
+     "date": "2026-12-18",
+     "price": 1900.0,
+     "min_price": null,
+     "multi_unit_occupancy": "",
+     "booking_status": ""
+    },
+    {
+     "date": "2026-12-19",
+     "price": 1900.0,
+     "min_price": null,
+     "multi_unit_occupancy": "",
+     "booking_status": ""
+    },
+    {
+     "date": "2026-12-20",
+     "price": 1720.0,
+     "min_price": null,
+     "multi_unit_occupancy": "",
+     "booking_status": ""
+    },
+    {
+     "date": "2026-12-21",
+     "price": 1720.0,
+     "min_price": null,
+     "multi_unit_occupancy": "",
+     "booking_status": ""
+    },
+    {
+     "date": "2026-12-22",
+     "price": 1720.0,
+     "min_price": null,
+     "multi_unit_occupancy": "",
+     "booking_status": ""
+    },
+    {
+     "date": "2026-12-23",
+     "price": 3100.0,
+     "min_price": null,
+     "multi_unit_occupancy": "",
+     "booking_status": ""
+    },
+    {
+     "date": "2026-12-24",
+     "price": 3100.0,
+     "min_price": null,
+     "multi_unit_occupancy": "",
+     "booking_status": ""
+    },
+    {
+     "date": "2026-12-25",
+     "price": 2720.0,
+     "min_price": null,
+     "multi_unit_occupancy": "",
+     "booking_status": ""
+    },
+    {
+     "date": "2026-12-26",
+     "price": 2720.0,
+     "min_price": null,
+     "multi_unit_occupancy": "",
+     "booking_status": ""
+    },
+    {
+     "date": "2026-12-27",
+     "price": 2060.0,
+     "min_price": null,
+     "multi_unit_occupancy": "",
+     "booking_status": ""
+    },
+    {
+     "date": "2026-12-28",
+     "price": 2060.0,
+     "min_price": null,
+     "multi_unit_occupancy": "",
+     "booking_status": ""
+    },
+    {
+     "date": "2026-12-29",
+     "price": 2200.0,
+     "min_price": null,
+     "multi_unit_occupancy": "",
+     "booking_status": ""
+    },
+    {
+     "date": "2026-12-30",
+     "price": 4120.0,
+     "min_price": null,
+     "multi_unit_occupancy": "",
+     "booking_status": ""
+    },
+    {
+     "date": "2026-12-31",
+     "price": 4400.0,
+     "min_price": null,
+     "multi_unit_occupancy": "",
+     "booking_status": ""
+    },
+    {
+     "date": "2027-01-01",
+     "price": 4120.0,
+     "min_price": null,
+     "multi_unit_occupancy": "",
+     "booking_status": ""
+    },
+    {
+     "date": "2027-01-02",
+     "price": 4120.0,
+     "min_price": null,
+     "multi_unit_occupancy": "",
+     "booking_status": ""
+    },
+    {
+     "date": "2027-01-03",
+     "price": 2015.0,
+     "min_price": null,
+     "multi_unit_occupancy": "",
+     "booking_status": "Booked"
+    },
+    {
+     "date": "2027-01-04",
+     "price": 1682.0,
+     "min_price": null,
+     "multi_unit_occupancy": "",
+     "booking_status": "Booked"
+    },
+    {
+     "date": "2027-01-05",
+     "price": 1588.0,
+     "min_price": null,
+     "multi_unit_occupancy": "",
+     "booking_status": "Booked"
+    },
+    {
+     "date": "2027-01-06",
+     "price": 1500.0,
+     "min_price": null,
+     "multi_unit_occupancy": "",
+     "booking_status": ""
+    },
+    {
+     "date": "2027-01-07",
+     "price": 1500.0,
+     "min_price": null,
+     "multi_unit_occupancy": "",
+     "booking_status": ""
+    },
+    {
+     "date": "2027-01-08",
+     "price": 2100.0,
+     "min_price": null,
+     "multi_unit_occupancy": "",
+     "booking_status": ""
+    },
+    {
+     "date": "2027-01-09",
+     "price": 2100.0,
+     "min_price": null,
+     "multi_unit_occupancy": "",
+     "booking_status": ""
+    },
+    {
+     "date": "2027-01-10",
+     "price": 1500.0,
+     "min_price": null,
+     "multi_unit_occupancy": "",
+     "booking_status": ""
+    }
+   ]
+  },
+  "Q2": {
+   "last_refreshed_at": "2026-11-12T14:47:18+00:00",
+   "days": [
+    {
+     "date": "2026-11-12",
+     "price": 1495.0,
+     "min_price": 1495,
+     "multi_unit_occupancy": "0/2",
+     "booking_status": ""
+    },
+    {
+     "date": "2026-11-13",
+     "price": 1526.0,
+     "min_price": 1526,
+     "multi_unit_occupancy": "1/2",
+     "booking_status": "Booked"
+    },
+    {
+     "date": "2026-11-14",
+     "price": 1654.0,
+     "min_price": 1654,
+     "multi_unit_occupancy": "1/2",
+     "booking_status": "Booked"
+    },
+    {
+     "date": "2026-11-15",
+     "price": 922.0,
+     "min_price": 922,
+     "multi_unit_occupancy": "1/2",
+     "booking_status": "Booked"
+    },
+    {
+     "date": "2026-11-16",
+     "price": 922.0,
+     "min_price": 922,
+     "multi_unit_occupancy": "0/2",
+     "booking_status": ""
+    },
+    {
+     "date": "2026-11-17",
+     "price": 922.0,
+     "min_price": 922,
+     "multi_unit_occupancy": "0/2",
+     "booking_status": ""
+    },
+    {
+     "date": "2026-11-18",
+     "price": 922.0,
+     "min_price": 922,
+     "multi_unit_occupancy": "0/2",
+     "booking_status": ""
+    },
+    {
+     "date": "2026-11-19",
+     "price": 1924.0,
+     "min_price": 1924,
+     "multi_unit_occupancy": "0/2",
+     "booking_status": ""
+    },
+    {
+     "date": "2026-11-20",
+     "price": 2798.0,
+     "min_price": 2798,
+     "multi_unit_occupancy": "2/2",
+     "booking_status": "Booked"
+    },
+    {
+     "date": "2026-11-21",
+     "price": 2798.0,
+     "min_price": 2798,
+     "multi_unit_occupancy": "2/2",
+     "booking_status": "Booked"
+    },
+    {
+     "date": "2026-11-22",
+     "price": 1224.0,
+     "min_price": 1224,
+     "multi_unit_occupancy": "1/2",
+     "booking_status": "Booked"
+    },
+    {
+     "date": "2026-11-23",
+     "price": 1479.0,
+     "min_price": 1479,
+     "multi_unit_occupancy": "1/2",
+     "booking_status": "Booked"
+    },
+    {
+     "date": "2026-11-24",
+     "price": 1463.0,
+     "min_price": 1463,
+     "multi_unit_occupancy": "2/2",
+     "booking_status": "Booked"
+    },
+    {
+     "date": "2026-11-25",
+     "price": 1224.0,
+     "min_price": 1224,
+     "multi_unit_occupancy": "1/2",
+     "booking_status": "Booked"
+    },
+    {
+     "date": "2026-11-26",
+     "price": 1224.0,
+     "min_price": 1224,
+     "multi_unit_occupancy": "1/2",
+     "booking_status": "Booked"
+    },
+    {
+     "date": "2026-11-27",
+     "price": 1622.0,
+     "min_price": 1622,
+     "multi_unit_occupancy": "0/2",
+     "booking_status": ""
+    },
+    {
+     "date": "2026-11-28",
+     "price": 1622.0,
+     "min_price": 1622,
+     "multi_unit_occupancy": "0/2",
+     "booking_status": ""
+    },
+    {
+     "date": "2026-11-29",
+     "price": 1224.0,
+     "min_price": 1224,
+     "multi_unit_occupancy": "0/2",
+     "booking_status": ""
+    },
+    {
+     "date": "2026-11-30",
+     "price": 1224.0,
+     "min_price": 1224,
+     "multi_unit_occupancy": "1/2",
+     "booking_status": "Booked"
+    },
+    {
+     "date": "2026-12-01",
+     "price": 1224.0,
+     "min_price": 1224,
+     "multi_unit_occupancy": "2/2",
+     "booking_status": "Booked"
+    },
+    {
+     "date": "2026-12-02",
+     "price": 1240.0,
+     "min_price": 1240,
+     "multi_unit_occupancy": "0/2",
+     "booking_status": ""
+    },
+    {
+     "date": "2026-12-03",
+     "price": 1240.0,
+     "min_price": 1240,
+     "multi_unit_occupancy": "0/2",
+     "booking_status": ""
+    },
+    {
+     "date": "2026-12-04",
+     "price": 1431.0,
+     "min_price": 1431,
+     "multi_unit_occupancy": "0/2",
+     "booking_status": ""
+    },
+    {
+     "date": "2026-12-05",
+     "price": 1495.0,
+     "min_price": 1495,
+     "multi_unit_occupancy": "0/2",
+     "booking_status": ""
+    },
+    {
+     "date": "2026-12-06",
+     "price": 1781.0,
+     "min_price": 1781,
+     "multi_unit_occupancy": "0/2",
+     "booking_status": ""
+    },
+    {
+     "date": "2026-12-07",
+     "price": 1510.0,
+     "min_price": 1510,
+     "multi_unit_occupancy": "0/2",
+     "booking_status": ""
+    },
+    {
+     "date": "2026-12-08",
+     "price": 1240.0,
+     "min_price": 1240,
+     "multi_unit_occupancy": "0/2",
+     "booking_status": ""
+    },
+    {
+     "date": "2026-12-09",
+     "price": 1240.0,
+     "min_price": 1240,
+     "multi_unit_occupancy": "0/2",
+     "booking_status": ""
+    },
+    {
+     "date": "2026-12-10",
+     "price": 1240.0,
+     "min_price": 1240,
+     "multi_unit_occupancy": "0/2",
+     "booking_status": ""
+    },
+    {
+     "date": "2026-12-11",
+     "price": 1558.0,
+     "min_price": 1558,
+     "multi_unit_occupancy": "0/2",
+     "booking_status": ""
+    },
+    {
+     "date": "2026-12-12",
+     "price": 1558.0,
+     "min_price": 1558,
+     "multi_unit_occupancy": "0/2",
+     "booking_status": ""
+    },
+    {
+     "date": "2026-12-13",
+     "price": 1240.0,
+     "min_price": 1240,
+     "multi_unit_occupancy": "0/2",
+     "booking_status": ""
+    },
+    {
+     "date": "2026-12-14",
+     "price": 1240.0,
+     "min_price": 1240,
+     "multi_unit_occupancy": "0/2",
+     "booking_status": ""
+    },
+    {
+     "date": "2026-12-15",
+     "price": 1240.0,
+     "min_price": 1240,
+     "multi_unit_occupancy": "0/2",
+     "booking_status": ""
+    },
+    {
+     "date": "2026-12-16",
+     "price": 1240.0,
+     "min_price": 1240,
+     "multi_unit_occupancy": "0/2",
+     "booking_status": ""
+    },
+    {
+     "date": "2026-12-17",
+     "price": 1240.0,
+     "min_price": 1240,
+     "multi_unit_occupancy": "0/2",
+     "booking_status": ""
+    },
+    {
+     "date": "2026-12-18",
+     "price": 1558.0,
+     "min_price": 1558,
+     "multi_unit_occupancy": "0/2",
+     "booking_status": ""
+    },
+    {
+     "date": "2026-12-19",
+     "price": 1558.0,
+     "min_price": 1558,
+     "multi_unit_occupancy": "0/2",
+     "booking_status": ""
+    },
+    {
+     "date": "2026-12-20",
+     "price": 1415.0,
+     "min_price": 1415,
+     "multi_unit_occupancy": "0/2",
+     "booking_status": ""
+    },
+    {
+     "date": "2026-12-21",
+     "price": 1415.0,
+     "min_price": 1415,
+     "multi_unit_occupancy": "0/2",
+     "booking_status": ""
+    },
+    {
+     "date": "2026-12-22",
+     "price": 1415.0,
+     "min_price": 1415,
+     "multi_unit_occupancy": "0/2",
+     "booking_status": ""
+    },
+    {
+     "date": "2026-12-23",
+     "price": 2624.0,
+     "min_price": 2624,
+     "multi_unit_occupancy": "0/2",
+     "booking_status": ""
+    },
+    {
+     "date": "2026-12-24",
+     "price": 2624.0,
+     "min_price": 2624,
+     "multi_unit_occupancy": "0/2",
+     "booking_status": ""
+    },
+    {
+     "date": "2026-12-25",
+     "price": 2321.0,
+     "min_price": 2321,
+     "multi_unit_occupancy": "0/2",
+     "booking_status": ""
+    },
+    {
+     "date": "2026-12-26",
+     "price": 2321.0,
+     "min_price": 2321,
+     "multi_unit_occupancy": "0/2",
+     "booking_status": ""
+    },
+    {
+     "date": "2026-12-27",
+     "price": 1670.0,
+     "min_price": 1670,
+     "multi_unit_occupancy": "0/2",
+     "booking_status": ""
+    },
+    {
+     "date": "2026-12-28",
+     "price": 1670.0,
+     "min_price": 1670,
+     "multi_unit_occupancy": "0/2",
+     "booking_status": ""
+    },
+    {
+     "date": "2026-12-29",
+     "price": 1924.0,
+     "min_price": 1924,
+     "multi_unit_occupancy": "0/2",
+     "booking_status": ""
+    },
+    {
+     "date": "2026-12-30",
+     "price": 3482.0,
+     "min_price": 3482,
+     "multi_unit_occupancy": "0/2",
+     "booking_status": ""
+    },
+    {
+     "date": "2026-12-31",
+     "price": 3721.0,
+     "min_price": 3721,
+     "multi_unit_occupancy": "1/2",
+     "booking_status": "Booked"
+    },
+    {
+     "date": "2027-01-01",
+     "price": 3434.0,
+     "min_price": 3434,
+     "multi_unit_occupancy": "0/2",
+     "booking_status": ""
+    },
+    {
+     "date": "2027-01-02",
+     "price": 3434.0,
+     "min_price": 3434,
+     "multi_unit_occupancy": "0/2",
+     "booking_status": ""
+    },
+    {
+     "date": "2027-01-03",
+     "price": 1240.0,
+     "min_price": 1240,
+     "multi_unit_occupancy": "1/2",
+     "booking_status": "Booked"
+    },
+    {
+     "date": "2027-01-04",
+     "price": 1240.0,
+     "min_price": 1240,
+     "multi_unit_occupancy": "1/2",
+     "booking_status": "Booked"
+    },
+    {
+     "date": "2027-01-05",
+     "price": 1240.0,
+     "min_price": 1240,
+     "multi_unit_occupancy": "0/2",
+     "booking_status": ""
+    },
+    {
+     "date": "2027-01-06",
+     "price": 1240.0,
+     "min_price": 1240,
+     "multi_unit_occupancy": "0/2",
+     "booking_status": ""
+    },
+    {
+     "date": "2027-01-07",
+     "price": 1240.0,
+     "min_price": 1240,
+     "multi_unit_occupancy": "0/2",
+     "booking_status": ""
+    },
+    {
+     "date": "2027-01-08",
+     "price": 1670.0,
+     "min_price": 1670,
+     "multi_unit_occupancy": "0/2",
+     "booking_status": ""
+    },
+    {
+     "date": "2027-01-09",
+     "price": 1670.0,
+     "min_price": 1670,
+     "multi_unit_occupancy": "0/2",
+     "booking_status": ""
+    },
+    {
+     "date": "2027-01-10",
+     "price": 1240.0,
+     "min_price": 1240,
+     "multi_unit_occupancy": "0/2",
+     "booking_status": ""
+    }
+   ]
+  },
+  "VK7": {
+   "last_refreshed_at": "2026-11-12T14:47:18+00:00",
+   "days": [
+    {
+     "date": "2026-11-12",
+     "price": 1055.0,
+     "min_price": null,
+     "multi_unit_occupancy": "7/7",
+     "booking_status": "Booked"
+    },
+    {
+     "date": "2026-11-13",
+     "price": 1880.0,
+     "min_price": null,
+     "multi_unit_occupancy": "7/7",
+     "booking_status": "Booked"
+    },
+    {
+     "date": "2026-11-14",
+     "price": 1880.0,
+     "min_price": null,
+     "multi_unit_occupancy": "7/7",
+     "booking_status": "Booked"
+    },
+    {
+     "date": "2026-11-15",
+     "price": 1275.0,
+     "min_price": null,
+     "multi_unit_occupancy": "7/7",
+     "booking_status": "Booked"
+    },
+    {
+     "date": "2026-11-16",
+     "price": 1066.0,
+     "min_price": null,
+     "multi_unit_occupancy": "7/7",
+     "booking_status": "Booked"
+    },
+    {
+     "date": "2026-11-17",
+     "price": 1079.0,
+     "min_price": null,
+     "multi_unit_occupancy": "7/7",
+     "booking_status": "Booked"
+    },
+    {
+     "date": "2026-11-18",
+     "price": 1051.0,
+     "min_price": null,
+     "multi_unit_occupancy": "5/7",
+     "booking_status": "Booked"
+    },
+    {
+     "date": "2026-11-19",
+     "price": 2057.0,
+     "min_price": null,
+     "multi_unit_occupancy": "0/7",
+     "booking_status": ""
+    },
+    {
+     "date": "2026-11-20",
+     "price": 3108.0,
+     "min_price": null,
+     "multi_unit_occupancy": "7/7",
+     "booking_status": "Booked"
+    },
+    {
+     "date": "2026-11-21",
+     "price": 2708.0,
+     "min_price": null,
+     "multi_unit_occupancy": "4/7",
+     "booking_status": "Booked"
+    },
+    {
+     "date": "2026-11-22",
+     "price": 1169.0,
+     "min_price": null,
+     "multi_unit_occupancy": "7/7",
+     "booking_status": "Booked"
+    },
+    {
+     "date": "2026-11-23",
+     "price": 1569.0,
+     "min_price": null,
+     "multi_unit_occupancy": "7/7",
+     "booking_status": "Booked"
+    },
+    {
+     "date": "2026-11-24",
+     "price": 1421.0,
+     "min_price": null,
+     "multi_unit_occupancy": "7/7",
+     "booking_status": "Booked"
+    },
+    {
+     "date": "2026-11-25",
+     "price": 1288.0,
+     "min_price": null,
+     "multi_unit_occupancy": "6/7",
+     "booking_status": "Booked"
+    },
+    {
+     "date": "2026-11-26",
+     "price": 1169.0,
+     "min_price": null,
+     "multi_unit_occupancy": "4/7",
+     "booking_status": "Booked"
+    },
+    {
+     "date": "2026-11-27",
+     "price": 1732.0,
+     "min_price": null,
+     "multi_unit_occupancy": "4/7",
+     "booking_status": "Booked"
+    },
+    {
+     "date": "2026-11-28",
+     "price": 1983.0,
+     "min_price": null,
+     "multi_unit_occupancy": "7/7",
+     "booking_status": "Booked"
+    },
+    {
+     "date": "2026-11-29",
+     "price": 1110.0,
+     "min_price": null,
+     "multi_unit_occupancy": "7/7",
+     "booking_status": "Booked"
+    },
+    {
+     "date": "2026-11-30",
+     "price": 1051.0,
+     "min_price": null,
+     "multi_unit_occupancy": "4/7",
+     "booking_status": "Booked"
+    },
+    {
+     "date": "2026-12-01",
+     "price": 947.0,
+     "min_price": null,
+     "multi_unit_occupancy": "1/7",
+     "booking_status": "Booked"
+    },
+    {
+     "date": "2026-12-02",
+     "price": 977.0,
+     "min_price": null,
+     "multi_unit_occupancy": "2/7",
+     "booking_status": "Booked"
+    },
+    {
+     "date": "2026-12-03",
+     "price": 1006.0,
+     "min_price": null,
+     "multi_unit_occupancy": "1/7",
+     "booking_status": "Booked"
+    },
+    {
+     "date": "2026-12-04",
+     "price": 1465.0,
+     "min_price": null,
+     "multi_unit_occupancy": "2/7",
+     "booking_status": "Booked"
+    },
+    {
+     "date": "2026-12-05",
+     "price": 1791.0,
+     "min_price": null,
+     "multi_unit_occupancy": "6/7",
+     "booking_status": "Booked"
+    },
+    {
+     "date": "2026-12-06",
+     "price": 1495.0,
+     "min_price": null,
+     "multi_unit_occupancy": "6/7",
+     "booking_status": "Booked"
+    },
+    {
+     "date": "2026-12-07",
+     "price": 1421.0,
+     "min_price": null,
+     "multi_unit_occupancy": "5/7",
+     "booking_status": "Booked"
+    },
+    {
+     "date": "2026-12-08",
+     "price": 1169.0,
+     "min_price": null,
+     "multi_unit_occupancy": "2/7",
+     "booking_status": "Booked"
+    },
+    {
+     "date": "2026-12-09",
+     "price": 1169.0,
+     "min_price": null,
+     "multi_unit_occupancy": "2/7",
+     "booking_status": "Booked"
+    },
+    {
+     "date": "2026-12-10",
+     "price": 947.0,
+     "min_price": null,
+     "multi_unit_occupancy": "2/7",
+     "booking_status": "Booked"
+    },
+    {
+     "date": "2026-12-11",
+     "price": 1687.0,
+     "min_price": null,
+     "multi_unit_occupancy": "1/7",
+     "booking_status": "Booked"
+    },
+    {
+     "date": "2026-12-12",
+     "price": 2072.0,
+     "min_price": null,
+     "multi_unit_occupancy": "5/7",
+     "booking_status": "Booked"
+    },
+    {
+     "date": "2026-12-13",
+     "price": 1110.0,
+     "min_price": null,
+     "multi_unit_occupancy": "5/7",
+     "booking_status": "Booked"
+    },
+    {
+     "date": "2026-12-14",
+     "price": 1051.0,
+     "min_price": null,
+     "multi_unit_occupancy": "3/7",
+     "booking_status": "Booked"
+    },
+    {
+     "date": "2026-12-15",
+     "price": 1051.0,
+     "min_price": null,
+     "multi_unit_occupancy": "3/7",
+     "booking_status": "Booked"
+    },
+    {
+     "date": "2026-12-16",
+     "price": 1051.0,
+     "min_price": null,
+     "multi_unit_occupancy": "4/7",
+     "booking_status": "Booked"
+    },
+    {
+     "date": "2026-12-17",
+     "price": 1051.0,
+     "min_price": null,
+     "multi_unit_occupancy": "3/7",
+     "booking_status": "Booked"
+    },
+    {
+     "date": "2026-12-18",
+     "price": 1820.0,
+     "min_price": null,
+     "multi_unit_occupancy": "1/7",
+     "booking_status": "Booked"
+    },
+    {
+     "date": "2026-12-19",
+     "price": 1820.0,
+     "min_price": null,
+     "multi_unit_occupancy": "2/7",
+     "booking_status": "Booked"
+    },
+    {
+     "date": "2026-12-20",
+     "price": 1421.0,
+     "min_price": null,
+     "multi_unit_occupancy": "2/7",
+     "booking_status": "Booked"
+    },
+    {
+     "date": "2026-12-21",
+     "price": 1584.0,
+     "min_price": null,
+     "multi_unit_occupancy": "3/7",
+     "booking_status": "Booked"
+    },
+    {
+     "date": "2026-12-22",
+     "price": 1584.0,
+     "min_price": null,
+     "multi_unit_occupancy": "2/7",
+     "booking_status": "Booked"
+    },
+    {
+     "date": "2026-12-23",
+     "price": 4988.0,
+     "min_price": null,
+     "multi_unit_occupancy": "2/7",
+     "booking_status": "Booked"
+    },
+    {
+     "date": "2026-12-24",
+     "price": 4988.0,
+     "min_price": null,
+     "multi_unit_occupancy": "1/7",
+     "booking_status": "Booked"
+    },
+    {
+     "date": "2026-12-25",
+     "price": 4988.0,
+     "min_price": null,
+     "multi_unit_occupancy": "1/7",
+     "booking_status": "Booked"
+    },
+    {
+     "date": "2026-12-26",
+     "price": 4988.0,
+     "min_price": null,
+     "multi_unit_occupancy": "0/7",
+     "booking_status": ""
+    },
+    {
+     "date": "2026-12-27",
+     "price": 2087.0,
+     "min_price": null,
+     "multi_unit_occupancy": "0/7",
+     "booking_status": ""
+    },
+    {
+     "date": "2026-12-28",
+     "price": 2398.0,
+     "min_price": null,
+     "multi_unit_occupancy": "2/7",
+     "booking_status": "Booked"
+    },
+    {
+     "date": "2026-12-29",
+     "price": 2944.0,
+     "min_price": null,
+     "multi_unit_occupancy": "2/7",
+     "booking_status": "Booked"
+    },
+    {
+     "date": "2026-12-30",
+     "price": 4988.0,
+     "min_price": null,
+     "multi_unit_occupancy": "3/7",
+     "booking_status": "Booked"
+    },
+    {
+     "date": "2026-12-31",
+     "price": 4988.0,
+     "min_price": null,
+     "multi_unit_occupancy": "4/7",
+     "booking_status": "Booked"
+    },
+    {
+     "date": "2027-01-01",
+     "price": 4988.0,
+     "min_price": null,
+     "multi_unit_occupancy": "2/7",
+     "booking_status": "Booked"
+    },
+    {
+     "date": "2027-01-02",
+     "price": 4988.0,
+     "min_price": null,
+     "multi_unit_occupancy": "1/7",
+     "booking_status": "Booked"
+    },
+    {
+     "date": "2027-01-03",
+     "price": 1006.0,
+     "min_price": null,
+     "multi_unit_occupancy": "1/7",
+     "booking_status": "Booked"
+    },
+    {
+     "date": "2027-01-04",
+     "price": 1006.0,
+     "min_price": null,
+     "multi_unit_occupancy": "1/7",
+     "booking_status": "Booked"
+    },
+    {
+     "date": "2027-01-05",
+     "price": 1006.0,
+     "min_price": null,
+     "multi_unit_occupancy": "1/7",
+     "booking_status": "Booked"
+    },
+    {
+     "date": "2027-01-06",
+     "price": 1006.0,
+     "min_price": null,
+     "multi_unit_occupancy": "0/7",
+     "booking_status": ""
+    },
+    {
+     "date": "2027-01-07",
+     "price": 1006.0,
+     "min_price": null,
+     "multi_unit_occupancy": "0/7",
+     "booking_status": ""
+    },
+    {
+     "date": "2027-01-08",
+     "price": 1717.0,
+     "min_price": null,
+     "multi_unit_occupancy": "0/7",
+     "booking_status": ""
+    },
+    {
+     "date": "2027-01-09",
+     "price": 1717.0,
+     "min_price": null,
+     "multi_unit_occupancy": "0/7",
+     "booking_status": ""
+    },
+    {
+     "date": "2027-01-10",
+     "price": 1006.0,
+     "min_price": null,
+     "multi_unit_occupancy": "0/7",
+     "booking_status": ""
+    }
+   ]
+  },
+  "Balcony": {
+   "last_refreshed_at": "2026-11-12T14:47:18+00:00",
+   "days": [
+    {
+     "date": "2026-11-12",
+     "price": 686.0,
+     "min_price": null,
+     "multi_unit_occupancy": "0/6",
+     "booking_status": ""
+    },
+    {
+     "date": "2026-11-13",
+     "price": 1054.0,
+     "min_price": null,
+     "multi_unit_occupancy": "1/6",
+     "booking_status": "Booked"
+    },
+    {
+     "date": "2026-11-14",
+     "price": 1054.0,
+     "min_price": null,
+     "multi_unit_occupancy": "1/6",
+     "booking_status": "Booked"
+    },
+    {
+     "date": "2026-11-15",
+     "price": 686.0,
+     "min_price": null,
+     "multi_unit_occupancy": "2/6",
+     "booking_status": "Booked"
+    },
+    {
+     "date": "2026-11-16",
+     "price": 686.0,
+     "min_price": null,
+     "multi_unit_occupancy": "1/6",
+     "booking_status": "Booked"
+    },
+    {
+     "date": "2026-11-17",
+     "price": 749.0,
+     "min_price": null,
+     "multi_unit_occupancy": "0/6",
+     "booking_status": ""
+    },
+    {
+     "date": "2026-11-18",
+     "price": 914.0,
+     "min_price": null,
+     "multi_unit_occupancy": "0/6",
+     "booking_status": ""
+    },
+    {
+     "date": "2026-11-19",
+     "price": 1511.0,
+     "min_price": null,
+     "multi_unit_occupancy": "0/6",
+     "booking_status": ""
+    },
+    {
+     "date": "2026-11-20",
+     "price": 1753.0,
+     "min_price": null,
+     "multi_unit_occupancy": "3/6",
+     "booking_status": "Booked"
+    },
+    {
+     "date": "2026-11-21",
+     "price": 1943.0,
+     "min_price": null,
+     "multi_unit_occupancy": "3/6",
+     "booking_status": "Booked"
+    },
+    {
+     "date": "2026-11-22",
+     "price": 686.0,
+     "min_price": null,
+     "multi_unit_occupancy": "0/6",
+     "booking_status": ""
+    },
+    {
+     "date": "2026-11-23",
+     "price": 686.0,
+     "min_price": null,
+     "multi_unit_occupancy": "0/6",
+     "booking_status": ""
+    },
+    {
+     "date": "2026-11-24",
+     "price": 686.0,
+     "min_price": null,
+     "multi_unit_occupancy": "0/6",
+     "booking_status": ""
+    },
+    {
+     "date": "2026-11-25",
+     "price": 673.0,
+     "min_price": null,
+     "multi_unit_occupancy": "1/6",
+     "booking_status": "Booked"
+    },
+    {
+     "date": "2026-11-26",
+     "price": 1016.0,
+     "min_price": null,
+     "multi_unit_occupancy": "0/6",
+     "booking_status": ""
+    },
+    {
+     "date": "2026-11-27",
+     "price": 1460.0,
+     "min_price": null,
+     "multi_unit_occupancy": "0/6",
+     "booking_status": ""
+    },
+    {
+     "date": "2026-11-28",
+     "price": 1105.0,
+     "min_price": null,
+     "multi_unit_occupancy": "0/6",
+     "booking_status": ""
+    },
+    {
+     "date": "2026-11-29",
+     "price": 686.0,
+     "min_price": null,
+     "multi_unit_occupancy": "0/6",
+     "booking_status": ""
+    },
+    {
+     "date": "2026-11-30",
+     "price": 826.0,
+     "min_price": null,
+     "multi_unit_occupancy": "0/6",
+     "booking_status": ""
+    },
+    {
+     "date": "2026-12-01",
+     "price": 851.0,
+     "min_price": null,
+     "multi_unit_occupancy": "0/6",
+     "booking_status": ""
+    },
+    {
+     "date": "2026-12-02",
+     "price": 876.0,
+     "min_price": null,
+     "multi_unit_occupancy": "0/6",
+     "booking_status": ""
+    },
+    {
+     "date": "2026-12-03",
+     "price": 902.0,
+     "min_price": null,
+     "multi_unit_occupancy": "0/6",
+     "booking_status": ""
+    },
+    {
+     "date": "2026-12-04",
+     "price": 1308.0,
+     "min_price": null,
+     "multi_unit_occupancy": "2/6",
+     "booking_status": "Booked"
+    },
+    {
+     "date": "2026-12-05",
+     "price": 1003.0,
+     "min_price": null,
+     "multi_unit_occupancy": "2/6",
+     "booking_status": "Booked"
+    },
+    {
+     "date": "2026-12-06",
+     "price": 686.0,
+     "min_price": null,
+     "multi_unit_occupancy": "0/6",
+     "booking_status": ""
+    },
+    {
+     "date": "2026-12-07",
+     "price": 1080.0,
+     "min_price": null,
+     "multi_unit_occupancy": "0/6",
+     "booking_status": ""
+    },
+    {
+     "date": "2026-12-08",
+     "price": 978.0,
+     "min_price": null,
+     "multi_unit_occupancy": "0/6",
+     "booking_status": ""
+    },
+    {
+     "date": "2026-12-09",
+     "price": 978.0,
+     "min_price": null,
+     "multi_unit_occupancy": "0/6",
+     "booking_status": ""
+    },
+    {
+     "date": "2026-12-10",
+     "price": 864.0,
+     "min_price": null,
+     "multi_unit_occupancy": "0/6",
+     "booking_status": ""
+    },
+    {
+     "date": "2026-12-11",
+     "price": 1511.0,
+     "min_price": null,
+     "multi_unit_occupancy": "0/6",
+     "booking_status": ""
+    },
+    {
+     "date": "2026-12-12",
+     "price": 1041.0,
+     "min_price": null,
+     "multi_unit_occupancy": "0/6",
+     "booking_status": ""
+    },
+    {
+     "date": "2026-12-13",
+     "price": 965.0,
+     "min_price": null,
+     "multi_unit_occupancy": "0/6",
+     "booking_status": ""
+    },
+    {
+     "date": "2026-12-14",
+     "price": 914.0,
+     "min_price": null,
+     "multi_unit_occupancy": "0/6",
+     "booking_status": ""
+    },
+    {
+     "date": "2026-12-15",
+     "price": 914.0,
+     "min_price": null,
+     "multi_unit_occupancy": "0/6",
+     "booking_status": ""
+    },
+    {
+     "date": "2026-12-16",
+     "price": 914.0,
+     "min_price": null,
+     "multi_unit_occupancy": "0/6",
+     "booking_status": ""
+    },
+    {
+     "date": "2026-12-17",
+     "price": 914.0,
+     "min_price": null,
+     "multi_unit_occupancy": "0/6",
+     "booking_status": ""
+    },
+    {
+     "date": "2026-12-18",
+     "price": 1626.0,
+     "min_price": null,
+     "multi_unit_occupancy": "0/6",
+     "booking_status": ""
+    },
+    {
+     "date": "2026-12-19",
+     "price": 1626.0,
+     "min_price": null,
+     "multi_unit_occupancy": "0/6",
+     "booking_status": ""
+    },
+    {
+     "date": "2026-12-20",
+     "price": 1232.0,
+     "min_price": null,
+     "multi_unit_occupancy": "0/6",
+     "booking_status": ""
+    },
+    {
+     "date": "2026-12-21",
+     "price": 1372.0,
+     "min_price": null,
+     "multi_unit_occupancy": "0/6",
+     "booking_status": ""
+    },
+    {
+     "date": "2026-12-22",
+     "price": 1372.0,
+     "min_price": null,
+     "multi_unit_occupancy": "0/6",
+     "booking_status": ""
+    },
+    {
+     "date": "2026-12-23",
+     "price": 4483.0,
+     "min_price": null,
+     "multi_unit_occupancy": "0/6",
+     "booking_status": ""
+    },
+    {
+     "date": "2026-12-24",
+     "price": 4483.0,
+     "min_price": null,
+     "multi_unit_occupancy": "4/6",
+     "booking_status": "Booked"
+    },
+    {
+     "date": "2026-12-25",
+     "price": 4483.0,
+     "min_price": null,
+     "multi_unit_occupancy": "0/6",
+     "booking_status": ""
+    },
+    {
+     "date": "2026-12-26",
+     "price": 4483.0,
+     "min_price": null,
+     "multi_unit_occupancy": "0/6",
+     "booking_status": ""
+    },
+    {
+     "date": "2026-12-27",
+     "price": 1791.0,
+     "min_price": null,
+     "multi_unit_occupancy": "0/6",
+     "booking_status": ""
+    },
+    {
+     "date": "2026-12-28",
+     "price": 1956.0,
+     "min_price": null,
+     "multi_unit_occupancy": "0/6",
+     "booking_status": ""
+    },
+    {
+     "date": "2026-12-29",
+     "price": 2299.0,
+     "min_price": null,
+     "multi_unit_occupancy": "0/6",
+     "booking_status": ""
+    },
+    {
+     "date": "2026-12-30",
+     "price": 4483.0,
+     "min_price": null,
+     "multi_unit_occupancy": "1/6",
+     "booking_status": "Booked"
+    },
+    {
+     "date": "2026-12-31",
+     "price": 4483.0,
+     "min_price": null,
+     "multi_unit_occupancy": "5/6",
+     "booking_status": "Booked"
+    },
+    {
+     "date": "2027-01-01",
+     "price": 4483.0,
+     "min_price": null,
+     "multi_unit_occupancy": "1/6",
+     "booking_status": "Booked"
+    },
+    {
+     "date": "2027-01-02",
+     "price": 4483.0,
+     "min_price": null,
+     "multi_unit_occupancy": "0/6",
+     "booking_status": ""
+    },
+    {
+     "date": "2027-01-03",
+     "price": 902.0,
+     "min_price": null,
+     "multi_unit_occupancy": "0/6",
+     "booking_status": ""
+    },
+    {
+     "date": "2027-01-04",
+     "price": 902.0,
+     "min_price": null,
+     "multi_unit_occupancy": "0/6",
+     "booking_status": ""
+    },
+    {
+     "date": "2027-01-05",
+     "price": 902.0,
+     "min_price": null,
+     "multi_unit_occupancy": "0/6",
+     "booking_status": ""
+    },
+    {
+     "date": "2027-01-06",
+     "price": 889.0,
+     "min_price": null,
+     "multi_unit_occupancy": "0/6",
+     "booking_status": ""
+    },
+    {
+     "date": "2027-01-07",
+     "price": 902.0,
+     "min_price": null,
+     "multi_unit_occupancy": "0/6",
+     "booking_status": ""
+    },
+    {
+     "date": "2027-01-08",
+     "price": 1537.0,
+     "min_price": null,
+     "multi_unit_occupancy": "0/6",
+     "booking_status": ""
+    },
+    {
+     "date": "2027-01-09",
+     "price": 1537.0,
+     "min_price": null,
+     "multi_unit_occupancy": "0/6",
+     "booking_status": ""
+    },
+    {
+     "date": "2027-01-10",
+     "price": 914.0,
+     "min_price": null,
+     "multi_unit_occupancy": "0/6",
+     "booking_status": ""
+    }
+   ]
+  },
+  "VK2": {
+   "last_refreshed_at": "2026-11-12T14:47:18+00:00",
+   "days": [
+    {
+     "date": "2026-11-12",
+     "price": 1041.0,
+     "min_price": null,
+     "multi_unit_occupancy": "2/2",
+     "booking_status": "Booked"
+    },
+    {
+     "date": "2026-11-13",
+     "price": 1638.0,
+     "min_price": null,
+     "multi_unit_occupancy": "2/2",
+     "booking_status": "Booked"
+    },
+    {
+     "date": "2026-11-14",
+     "price": 1638.0,
+     "min_price": null,
+     "multi_unit_occupancy": "2/2",
+     "booking_status": "Booked"
+    },
+    {
+     "date": "2026-11-15",
+     "price": 1094.0,
+     "min_price": null,
+     "multi_unit_occupancy": "2/2",
+     "booking_status": "Booked"
+    },
+    {
+     "date": "2026-11-16",
+     "price": 952.0,
+     "min_price": null,
+     "multi_unit_occupancy": "2/2",
+     "booking_status": "Booked"
+    },
+    {
+     "date": "2026-11-17",
+     "price": 952.0,
+     "min_price": null,
+     "multi_unit_occupancy": "2/2",
+     "booking_status": "Booked"
+    },
+    {
+     "date": "2026-11-18",
+     "price": 1105.0,
+     "min_price": null,
+     "multi_unit_occupancy": "1/2",
+     "booking_status": "Booked"
+    },
+    {
+     "date": "2026-11-19",
+     "price": 2248.0,
+     "min_price": null,
+     "multi_unit_occupancy": "1/2",
+     "booking_status": "Booked"
+    },
+    {
+     "date": "2026-11-20",
+     "price": 2705.0,
+     "min_price": null,
+     "multi_unit_occupancy": "2/2",
+     "booking_status": "Booked"
+    },
+    {
+     "date": "2026-11-21",
+     "price": 2705.0,
+     "min_price": null,
+     "multi_unit_occupancy": "1/2",
+     "booking_status": "Booked"
+    },
+    {
+     "date": "2026-11-22",
+     "price": 1041.0,
+     "min_price": null,
+     "multi_unit_occupancy": "2/2",
+     "booking_status": "Booked"
+    },
+    {
+     "date": "2026-11-23",
+     "price": 1511.0,
+     "min_price": null,
+     "multi_unit_occupancy": "1/2",
+     "booking_status": "Booked"
+    },
+    {
+     "date": "2026-11-24",
+     "price": 1435.0,
+     "min_price": null,
+     "multi_unit_occupancy": "1/2",
+     "booking_status": "Booked"
+    },
+    {
+     "date": "2026-11-25",
+     "price": 1098.0,
+     "min_price": null,
+     "multi_unit_occupancy": "2/2",
+     "booking_status": "Booked"
+    },
+    {
+     "date": "2026-11-26",
+     "price": 952.0,
+     "min_price": null,
+     "multi_unit_occupancy": "2/2",
+     "booking_status": "Booked"
+    },
+    {
+     "date": "2026-11-27",
+     "price": 1626.0,
+     "min_price": null,
+     "multi_unit_occupancy": "1/2",
+     "booking_status": "Booked"
+    },
+    {
+     "date": "2026-11-28",
+     "price": 1740.0,
+     "min_price": null,
+     "multi_unit_occupancy": "2/2",
+     "booking_status": "Booked"
+    },
+    {
+     "date": "2026-11-29",
+     "price": 1065.0,
+     "min_price": null,
+     "multi_unit_occupancy": "2/2",
+     "booking_status": "Booked"
+    },
+    {
+     "date": "2026-11-30",
+     "price": 952.0,
+     "min_price": null,
+     "multi_unit_occupancy": "1/2",
+     "booking_status": "Booked"
+    },
+    {
+     "date": "2026-12-01",
+     "price": 952.0,
+     "min_price": null,
+     "multi_unit_occupancy": "0/2",
+     "booking_status": ""
+    },
+    {
+     "date": "2026-12-02",
+     "price": 991.0,
+     "min_price": null,
+     "multi_unit_occupancy": "0/2",
+     "booking_status": ""
+    },
+    {
+     "date": "2026-12-03",
+     "price": 991.0,
+     "min_price": null,
+     "multi_unit_occupancy": "1/2",
+     "booking_status": "Booked"
+    },
+    {
+     "date": "2026-12-04",
+     "price": 1562.0,
+     "min_price": null,
+     "multi_unit_occupancy": "2/2",
+     "booking_status": "Booked"
+    },
+    {
+     "date": "2026-12-05",
+     "price": 1562.0,
+     "min_price": null,
+     "multi_unit_occupancy": "2/2",
+     "booking_status": "Booked"
+    },
+    {
+     "date": "2026-12-06",
+     "price": 1240.0,
+     "min_price": null,
+     "multi_unit_occupancy": "2/2",
+     "booking_status": "Booked"
+    },
+    {
+     "date": "2026-12-07",
+     "price": 1232.0,
+     "min_price": null,
+     "multi_unit_occupancy": "1/2",
+     "booking_status": "Booked"
+    },
+    {
+     "date": "2026-12-08",
+     "price": 1118.0,
+     "min_price": null,
+     "multi_unit_occupancy": "0/2",
+     "booking_status": ""
+    },
+    {
+     "date": "2026-12-09",
+     "price": 1118.0,
+     "min_price": null,
+     "multi_unit_occupancy": "0/2",
+     "booking_status": ""
+    },
+    {
+     "date": "2026-12-10",
+     "price": 952.0,
+     "min_price": null,
+     "multi_unit_occupancy": "0/2",
+     "booking_status": ""
+    },
+    {
+     "date": "2026-12-11",
+     "price": 1689.0,
+     "min_price": null,
+     "multi_unit_occupancy": "0/2",
+     "booking_status": ""
+    },
+    {
+     "date": "2026-12-12",
+     "price": 1803.0,
+     "min_price": null,
+     "multi_unit_occupancy": "2/2",
+     "booking_status": "Booked"
+    },
+    {
+     "date": "2026-12-13",
+     "price": 1105.0,
+     "min_price": null,
+     "multi_unit_occupancy": "1/2",
+     "booking_status": "Booked"
+    },
+    {
+     "date": "2026-12-14",
+     "price": 1041.0,
+     "min_price": null,
+     "multi_unit_occupancy": "1/2",
+     "booking_status": "Booked"
+    },
+    {
+     "date": "2026-12-15",
+     "price": 1041.0,
+     "min_price": null,
+     "multi_unit_occupancy": "0/2",
+     "booking_status": ""
+    },
+    {
+     "date": "2026-12-16",
+     "price": 1041.0,
+     "min_price": null,
+     "multi_unit_occupancy": "0/2",
+     "booking_status": ""
+    },
+    {
+     "date": "2026-12-17",
+     "price": 1041.0,
+     "min_price": null,
+     "multi_unit_occupancy": "0/2",
+     "booking_status": ""
+    },
+    {
+     "date": "2026-12-18",
+     "price": 1816.0,
+     "min_price": null,
+     "multi_unit_occupancy": "0/2",
+     "booking_status": ""
+    },
+    {
+     "date": "2026-12-19",
+     "price": 1816.0,
+     "min_price": null,
+     "multi_unit_occupancy": "0/2",
+     "booking_status": ""
+    },
+    {
+     "date": "2026-12-20",
+     "price": 1346.0,
+     "min_price": null,
+     "multi_unit_occupancy": "2/2",
+     "booking_status": "Booked"
+    },
+    {
+     "date": "2026-12-21",
+     "price": 1511.0,
+     "min_price": null,
+     "multi_unit_occupancy": "2/2",
+     "booking_status": "Booked"
+    },
+    {
+     "date": "2026-12-22",
+     "price": 1575.0,
+     "min_price": null,
+     "multi_unit_occupancy": "1/2",
+     "booking_status": "Booked"
+    },
+    {
+     "date": "2026-12-23",
+     "price": 4991.0,
+     "min_price": null,
+     "multi_unit_occupancy": "1/2",
+     "booking_status": "Booked"
+    },
+    {
+     "date": "2026-12-24",
+     "price": 4991.0,
+     "min_price": null,
+     "multi_unit_occupancy": "0/2",
+     "booking_status": ""
+    },
+    {
+     "date": "2026-12-25",
+     "price": 4991.0,
+     "min_price": null,
+     "multi_unit_occupancy": "0/2",
+     "booking_status": ""
+    },
+    {
+     "date": "2026-12-26",
+     "price": 4991.0,
+     "min_price": null,
+     "multi_unit_occupancy": "0/2",
+     "booking_status": ""
+    },
+    {
+     "date": "2026-12-27",
+     "price": 2083.0,
+     "min_price": null,
+     "multi_unit_occupancy": "0/2",
+     "booking_status": ""
+    },
+    {
+     "date": "2026-12-28",
+     "price": 2184.0,
+     "min_price": null,
+     "multi_unit_occupancy": "0/2",
+     "booking_status": ""
+    },
+    {
+     "date": "2026-12-29",
+     "price": 2605.0,
+     "min_price": null,
+     "multi_unit_occupancy": "0/2",
+     "booking_status": ""
+    },
+    {
+     "date": "2026-12-30",
+     "price": 4991.0,
+     "min_price": null,
+     "multi_unit_occupancy": "1/2",
+     "booking_status": "Booked"
+    },
+    {
+     "date": "2026-12-31",
+     "price": 4991.0,
+     "min_price": null,
+     "multi_unit_occupancy": "1/2",
+     "booking_status": "Booked"
+    },
+    {
+     "date": "2027-01-01",
+     "price": 4991.0,
+     "min_price": null,
+     "multi_unit_occupancy": "0/2",
+     "booking_status": ""
+    },
+    {
+     "date": "2027-01-02",
+     "price": 4991.0,
+     "min_price": null,
+     "multi_unit_occupancy": "0/2",
+     "booking_status": ""
+    },
+    {
+     "date": "2027-01-03",
+     "price": 1003.0,
+     "min_price": null,
+     "multi_unit_occupancy": "0/2",
+     "booking_status": ""
+    },
+    {
+     "date": "2027-01-04",
+     "price": 1003.0,
+     "min_price": null,
+     "multi_unit_occupancy": "0/2",
+     "booking_status": ""
+    },
+    {
+     "date": "2027-01-05",
+     "price": 1003.0,
+     "min_price": null,
+     "multi_unit_occupancy": "0/2",
+     "booking_status": ""
+    },
+    {
+     "date": "2027-01-06",
+     "price": 1054.0,
+     "min_price": null,
+     "multi_unit_occupancy": "1/2",
+     "booking_status": "Booked"
+    },
+    {
+     "date": "2027-01-07",
+     "price": 1054.0,
+     "min_price": null,
+     "multi_unit_occupancy": "1/2",
+     "booking_status": "Booked"
+    },
+    {
+     "date": "2027-01-08",
+     "price": 1842.0,
+     "min_price": null,
+     "multi_unit_occupancy": "1/2",
+     "booking_status": "Booked"
+    },
+    {
+     "date": "2027-01-09",
+     "price": 1714.0,
+     "min_price": null,
+     "multi_unit_occupancy": "0/2",
+     "booking_status": ""
+    },
+    {
+     "date": "2027-01-10",
+     "price": 1003.0,
+     "min_price": null,
+     "multi_unit_occupancy": "0/2",
+     "booking_status": ""
+    }
+   ]
+  }
+ }
+}

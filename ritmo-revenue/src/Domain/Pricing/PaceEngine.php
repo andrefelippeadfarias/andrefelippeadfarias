@@ -106,6 +106,7 @@ final class PaceEngine
             'floor' => $price['floor'],
             'heldAtFloor' => $price['held'],
             'weakAnchor' => $aim['weak'],
+            'stepPrice' => $price['stepPrice'],
         ];
 
         return $this->conclude($context, $common, $aim['targetSent'], $price, $trace);
@@ -144,7 +145,7 @@ final class PaceEngine
         ]);
 
         $factor = $this->factors->factor($context->room, PricePlan::PublicRate, $type);
-        $percentile = $this->targets->forNight($context->property, $reading->status, $daysOut);
+        $percentile = $context->terms->percentileFor($this->targets->forNight($context->property, $reading->status, $daysOut));
         $targetPublic = AnchorLookup::valueAt($anchor, $percentile);
         $targetSent = $targetPublic / $factor;
         $trace[] = self::entry(RuleCode::MARKET_TARGET, [
@@ -163,7 +164,7 @@ final class PaceEngine
         if ($weak) {
             $trace[] = self::entry(RuleCode::WEAK_ANCHOR, ['n' => $anchor->n, 'age_days' => $this->anchors->ageInDays($anchor, $today)]);
         }
-        if ($reading->status === PaceStatus::Ahead && $targetSent < $current) {
+        if ($reading->status === PaceStatus::Ahead && $targetSent < $current && !$context->terms->byOrder) {
             $trace[] = self::entry(RuleCode::AHEAD_NEVER_LOWERS, ['target' => $targetSent, 'current' => $current]);
             $targetSent = $current;
         }
@@ -178,11 +179,12 @@ final class PaceEngine
      * @param array{targetSent: float, factor: float, weak: bool, ...} $aim
      * @param list<array{code: string, params: array<string, scalar|null>}> $trace
      *
-     * @return array{new: float, held: bool, capped: bool, floor: HardFloor}
+     * @return array{new: float, held: bool, capped: bool, floor: HardFloor, stepPrice: float}
      */
     private function price(NightContext $context, MarketAnchor $anchor, array $aim, int $daysOut, array &$trace): array
     {
         $current = $context->currentPrice;
+        $terms = $context->terms;
         $new = $this->steps->next($current, $aim['targetSent'], $daysOut, $aim['weak']);
         $trace[] = self::entry(RuleCode::STEP, [
             'from' => $current,
@@ -190,8 +192,21 @@ final class PaceEngine
             'strength' => $this->rules->stepStrength(),
             'max_percent' => $this->steps->maxPercent($daysOut, $aim['weak']),
         ]);
+        if ($terms->freeStep && $aim['targetSent'] < $current) {
+            $new = $aim['targetSent'];
+        }
+        if ($terms->fixedPrice !== null) {
+            $new = $terms->fixedPrice;
+        }
+        $stepPrice = $new;
 
-        $floor = $this->floors->hardFloor($context->room, $context->night);
+        $floor = $terms->floor ?? $this->floors->hardFloor($context->room, $context->night);
+        if ($terms->ceilingCap !== null) {
+            $new = min($new, max($terms->ceilingCap, $floor->amount));
+        }
+        if ($terms->onlyDown && $new > $current) {
+            $new = $current;
+        }
         $held = $new < $floor->amount;
         if ($held) {
             $new = $floor->amount;
@@ -204,7 +219,7 @@ final class PaceEngine
             ]);
         }
 
-        $top = $this->floors->highestFloor($context->room);
+        $top = $terms->listingTop ?? $this->floors->highestFloor($context->room);
         $capped = $new >= $top - self::CENT;
         if ($capped) {
             $trace[] = self::entry(RuleCode::CAPPED_AT_LISTING_MAX, ['highest_floor' => $top, 'listing_max' => $context->room->max]);
@@ -215,7 +230,7 @@ final class PaceEngine
             $new = $this->tonightAtMostCurrent($context, $new, $floor, $trace);
         }
 
-        return ['new' => $new, 'held' => $held, 'capped' => $capped, 'floor' => $floor];
+        return ['new' => $new, 'held' => $held, 'capped' => $capped, 'floor' => $floor, 'stepPrice' => $stepPrice];
     }
 
     /**
@@ -258,7 +273,8 @@ final class PaceEngine
     private function conclude(NightContext $context, array $common, float $targetSent, array $price, array $trace): PaceDecision
     {
         $current = $context->currentPrice;
-        $direction = $this->steps->direction($current, $price['new']);
+        $compared = $context->terms->compareApplied && $price['new'] > $current ? self::effectiveFloor($context->room, $price['new']) : $price['new'];
+        $direction = $compared > $price['new'] ? $this->steps->direction($current, $compared) : $this->steps->direction($current, $price['new']);
         $rounded = match ($direction) {
             StepDirection::Up => Num::ceilInt($price['new']),
             StepDirection::Down => Num::floorInt($price['new']),
@@ -284,7 +300,13 @@ final class PaceEngine
         }
 
         $ceiling = $this->ceilingFor($context, $direction, $rounded, $targetSent, $trace);
-        [$min, $max] = $this->capAtListingMax($context->room, (float) $rounded, $ceiling);
+        if ($context->terms->lockCeilingAlways || ($context->terms->lockCeilingDown && $direction === StepDirection::Down)) {
+            $ceiling = (float) $rounded;
+        }
+        if ($context->terms->ceilingCap !== null && ($ceiling === null || $ceiling > $context->terms->ceilingCap)) {
+            $ceiling = (float) Num::floorInt(max($context->terms->ceilingCap, (float) $rounded));
+        }
+        [$min, $max] = $this->capAtListingMax($context->room, (float) $rounded, $ceiling, $context->terms->listingTop);
         if (abs($min - $rounded) >= 0.5) {
             // The listing maximum moved the floor: the step is what will really be written.
             $direction = $this->steps->direction($current, $min);
@@ -350,9 +372,9 @@ final class PaceEngine
      *
      * @return array{float, float|null} floor and ceiling
      */
-    private function capAtListingMax(RoomType $room, float $min, ?float $max): array
+    private function capAtListingMax(RoomType $room, float $min, ?float $max, ?float $listingTop): array
     {
-        $top = $this->floors->highestFloor($room);
+        $top = $listingTop ?? $this->floors->highestFloor($room);
         if (self::effectiveFloor($room, $min) > $top + self::CENT) {
             $min = (float) Num::floorInt($top);
         }

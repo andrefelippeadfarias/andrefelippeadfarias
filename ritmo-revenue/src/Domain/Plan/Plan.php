@@ -15,7 +15,8 @@ use Ritmo\Domain\Support\Clock;
 use Ritmo\Domain\Support\Days;
 
 /**
- * The changes proposed for one property in one run, with the day they were computed for.
+ * The changes proposed for one property in one run, with the day they were computed for: the
+ * date rules to delete first, the items to write and the changes to the listings.
  *
  * A plan is only a proposal: nothing may be written from it before the Validator turns it into
  * a ValidatedPlan.
@@ -29,30 +30,40 @@ final class Plan implements Countable
     /** @var list<PlanItem> */
     public readonly array $items;
 
+    /** @var list<PlanDeletion> */
+    public readonly array $deletions;
+
+    /** @var list<ListingChange> */
+    public readonly array $listingChanges;
+
     /**
-     * @param DateTimeImmutable $today     the property's "today" the plan was computed for (date-only)
-     * @param DateTimeImmutable $createdAt instant the plan was computed
-     * @param list<PlanItem>    $items
+     * @param DateTimeImmutable   $today          the property's "today" the plan was computed for (date-only)
+     * @param DateTimeImmutable   $createdAt      instant the plan was computed
+     * @param list<PlanItem>      $items
+     * @param list<PlanDeletion>  $deletions      date rules deleted before the items are written
+     * @param list<ListingChange> $listingChanges
      *
-     * @throws InvalidArgumentException on an invalid property id or an item that is not a PlanItem
+     * @throws InvalidArgumentException on an invalid property id or an entry of the wrong class
      */
     public function __construct(
         public readonly string $propertyId,
         DateTimeImmutable $today,
         DateTimeImmutable $createdAt,
         array $items,
+        array $deletions = [],
+        array $listingChanges = [],
     ) {
         if (!Identifier::isCode($propertyId)) {
             throw new InvalidArgumentException(sprintf('Invalid property id "%s".', $propertyId));
         }
-        foreach ($items as $item) {
-            if (!$item instanceof PlanItem) {
-                throw new InvalidArgumentException('A plan holds PlanItem objects only.');
-            }
-        }
+        self::assertAll($items, PlanItem::class);
+        self::assertAll($deletions, PlanDeletion::class);
+        self::assertAll($listingChanges, ListingChange::class);
         $this->today = Days::normalize($today);
         $this->createdAt = $createdAt->setTimezone(new DateTimeZone('UTC'));
         $this->items = array_values($items);
+        $this->deletions = array_values($deletions);
+        $this->listingChanges = array_values($listingChanges);
     }
 
     /**
@@ -79,12 +90,34 @@ final class Plan implements Countable
     }
 
     /**
-     * The same plan without the items at the given positions (those a validation pointed at).
+     * The same plan without the entries at the given positions (those a validation pointed at).
      *
-     * @param list<int> $indexes positions in $items
+     * @param list<int> $indexes         positions in $items
+     * @param list<int> $deletions       positions in $deletions
+     * @param list<int> $listingChanges  positions in $listingChanges
      */
-    public function without(array $indexes): self
+    public function without(array $indexes, array $deletions = [], array $listingChanges = []): self
     {
-        return new self($this->propertyId, $this->today, $this->createdAt, array_values(array_diff_key($this->items, array_flip($indexes))));
+        return new self(
+            $this->propertyId,
+            $this->today,
+            $this->createdAt,
+            array_values(array_diff_key($this->items, array_flip($indexes))),
+            array_values(array_diff_key($this->deletions, array_flip($deletions))),
+            array_values(array_diff_key($this->listingChanges, array_flip($listingChanges))),
+        );
+    }
+
+    /**
+     * @param array<mixed> $entries
+     * @param class-string $class
+     */
+    private static function assertAll(array $entries, string $class): void
+    {
+        foreach ($entries as $entry) {
+            if (!$entry instanceof $class) {
+                throw new InvalidArgumentException(sprintf('A plan holds %s objects there only.', $class));
+            }
+        }
     }
 }

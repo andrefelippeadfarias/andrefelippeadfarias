@@ -1,0 +1,146 @@
+{
+ "itens": [
+  {
+   "tipo": "data",
+   "quarto": "Q7",
+   "data": "2026-11-17",
+   "motivo": "Pace (synthetic: under the safety limit)",
+   "min_price": 500,
+   "preco_antes": 1300
+  },
+  {
+   "tipo": "data",
+   "quarto": "Q7",
+   "data": "2026-11-24",
+   "motivo": "Pace (synthetic: under the listing minimum, far)",
+   "min_price": 900,
+   "preco_antes": 1300
+  },
+  {
+   "tipo": "data",
+   "quarto": "VK7",
+   "data": "2026-11-24",
+   "motivo": "Pace (synthetic: a valid floor)",
+   "min_price": 1000,
+   "preco_antes": 1000
+  },
+  {
+   "tipo": "data",
+   "quarto": "Double",
+   "data": "2026-11-20",
+   "motivo": "Pace (synthetic: holiday safety floor)",
+   "min_price": 1200,
+   "preco_antes": 1500
+  },
+  {
+   "tipo": "data",
+   "quarto": "Q7",
+   "data": "2026-12-24",
+   "motivo": "Pace (synthetic: holiday period floor)",
+   "min_price": 2000,
+   "preco_antes": 2500,
+   "min_stay": 2
+  },
+  {
+   "tipo": "data",
+   "quarto": "VK2",
+   "data": "2026-11-14",
+   "motivo": "Pace (synthetic: quality floor, last minute)",
+   "min_price": 900,
+   "preco_antes": 1400
+  },
+  {
+   "tipo": "data",
+   "quarto": "VK2",
+   "data": "2026-11-13",
+   "motivo": "Pace (synthetic: quality floor with market evidence)",
+   "min_price": 980,
+   "preco_antes": 1100,
+   "mercado": "mediana da Booking R$ 620 com 12 concorrentes na noite"
+  },
+  {
+   "tipo": "data",
+   "quarto": "Afrodite",
+   "data": "2026-11-17",
+   "motivo": "Pace (synthetic: ceiling under the floor)",
+   "min_price": 2000,
+   "max_price": 1900,
+   "preco_antes": 2000
+  },
+  {
+   "tipo": "data",
+   "quarto": "Q2",
+   "data": "2026-11-25",
+   "motivo": "Pace (synthetic: ceiling only)",
+   "max_price": 1000,
+   "preco_antes": 1500
+  },
+  {
+   "tipo": "data",
+   "quarto": "Q7",
+   "data": "2026-11-26",
+   "motivo": "Pace (synthetic: over the listing maximum)",
+   "min_price": 5100,
+   "preco_antes": 4000
+  },
+  {
+   "tipo": "data",
+   "quarto": "Q7",
+   "data": "2026-11-18",
+   "motivo": "Pace (synthetic: a large rise)",
+   "min_price": 1500,
+   "preco_antes": 1200
+  },
+  {
+   "tipo": "data",
+   "quarto": "Balcony",
+   "data": "2026-11-24",
+   "motivo": "Regra G (synthetic: above the cheapest tub suite)",
+   "min_price": 1500,
+   "preco_antes": 900
+  },
+  {
+   "tipo": "data",
+   "quarto": "Q7",
+   "data": "2026-11-27",
+   "motivo": "Plano do dono (synthetic: unknown order)",
+   "min_price": 2100,
+   "max_price": 2100,
+   "excecao": "dono",
+   "ordem_id": "dono-0000-00-00-unknown",
+   "preco_antes": 2100
+  },
+  {
+   "tipo": "data",
+   "quarto": "VK7",
+   "data": "2026-11-17",
+   "motivo": "Plano do dono (synthetic: market floor of the plan)",
+   "min_price": 900,
+   "max_price": 900,
+   "excecao": "dono",
+   "ordem_id": "dono-2026-11-09-plano-nov-fev",
+   "preco_antes": 1000
+  },
+  {
+   "tipo": "data",
+   "quarto": "Balcony",
+   "data": "2026-11-25",
+   "motivo": "Plano do dono (synthetic: outside the plan's scope)",
+   "min_price": 700,
+   "max_price": 700,
+   "excecao": "dono",
+   "ordem_id": "dono-2026-11-09-plano-nov-fev",
+   "preco_antes": 800
+  },
+  {
+   "tipo": "data",
+   "quarto": "Q7",
+   "data": "2026-11-23",
+   "motivo": "Pace (synthetic: below the weekday floor, released)",
+   "min_price": 1100,
+   "preco_antes": 1300,
+   "excecao": "dono",
+   "ordem_id": "synthetic-below-floor"
+  }
+ ]
+}

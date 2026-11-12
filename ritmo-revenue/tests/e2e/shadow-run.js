@@ -6,7 +6,7 @@
  *
  * Environment:
  *   RITMO_E2E_PASS               "setup" (connections, setup and diagnostics too) or "rerun" (shadow run only)
- *   RITMO_PRICING_CALENDAR_READ  "1" when the site allows the pricing calendar read, the one POST allowed
+ *   RITMO_PRICING_CALENDAR_READ  "0" when the site switched off the pricing calendar read (on by default), the one POST allowed
  *   RITMO_E2E_SCREENS            folder of the screenshots
  */
 'use strict';
@@ -24,7 +24,7 @@ const CALENDAR_READ_PATH = '/pricelabs/v1/listing_prices';
 const SECRETS = ['sim-refresh-token-0001', 'sim-pricelabs-key-0001'];
 
 const pass = process.env.RITMO_E2E_PASS || 'setup';
-const calendarRead = process.env.RITMO_PRICING_CALENDAR_READ === '1';
+const calendarRead = process.env.RITMO_PRICING_CALENDAR_READ !== '0';
 const screens = process.env.RITMO_E2E_SCREENS || path.join(__dirname, 'screenshots');
 const shots = [];
 
@@ -107,7 +107,7 @@ async function shadowRun(page) {
     const why = (await page.locator('.ritmo-would-write tbody tr .ritmo-why').first().textContent()).trim();
     check(why.includes('Proposed step'), 'the reason of an item is not explained: ' + why);
     check((await page.textContent('[data-ritmo="last-run"]')).includes('0 writes sent'), 'the run does not report zero writes');
-    await shot(page, pass === 'setup' ? '04-dashboard-after-shadow-run.png' : '06-dashboard-with-calendar-read.png');
+    await shot(page, pass === 'setup' ? '04-dashboard-after-shadow-run.png' : '06-dashboard-without-calendar-read.png');
     return rows;
 }
 

@@ -1,0 +1,768 @@
+{
+ "today": "2026-11-16",
+ "now": "2026-11-16T13:53:00Z",
+ "days": 7,
+ "calendars": {
+  "Q7": {
+   "2026-11-16": {
+    "price": 1206.0,
+    "mu_occupancy": "4/7",
+    "min_price": 1032.24,
+    "max_price": 5000.0
+   },
+   "2026-11-17": {
+    "price": 863.0,
+    "mu_occupancy": "0/7",
+    "min_price": 920.0,
+    "max_price": 5000.0
+   },
+   "2026-11-18": {
+    "price": 948.0,
+    "mu_occupancy": "5/7",
+    "min_price": 879.75,
+    "max_price": 5000.0
+   },
+   "2026-11-19": {
+    "price": 1841.0,
+    "mu_occupancy": "4/7",
+    "min_price": 920.0,
+    "max_price": 5000.0
+   },
+   "2026-11-20": {
+    "price": 1437.0,
+    "mu_occupancy": "4/7",
+    "min_price": 920.0,
+    "max_price": 5000.0
+   },
+   "2026-11-21": {
+    "price": 1798.0,
+    "mu_occupancy": "1/7",
+    "min_price": 920.0,
+    "max_price": 5000.0
+   },
+   "2026-11-22": {
+    "price": 947.0,
+    "mu_occupancy": "3/7",
+    "min_price": 920.0,
+    "max_price": 5000.0
+   },
+   "2026-11-23": {
+    "price": 1166.0,
+    "mu_occupancy": "2/7",
+    "min_price": 1043.97,
+    "max_price": 5000.0
+   }
+  },
+  "Double": {
+   "2026-11-16": {
+    "price": 1203.0,
+    "mu_occupancy": "6/6",
+    "min_price": 1035.0,
+    "max_price": 5000.0
+   },
+   "2026-11-17": {
+    "price": 1325.0,
+    "mu_occupancy": "4/6",
+    "min_price": 1035.0,
+    "max_price": 5000.0
+   },
+   "2026-11-18": {
+    "price": 1558.0,
+    "mu_occupancy": "2/6",
+    "min_price": 1509.6,
+    "max_price": 5000.0
+   },
+   "2026-11-19": {
+    "price": 2054.0,
+    "mu_occupancy": "2/6",
+    "min_price": 1035.0,
+    "max_price": 5000.0
+   },
+   "2026-11-20": {
+    "price": 1886.0,
+    "mu_occupancy": "6/6",
+    "min_price": 1035.0,
+    "max_price": 5000.0
+   },
+   "2026-11-21": {
+    "price": 2034.0,
+    "mu_occupancy": "5/6",
+    "min_price": 1035.0,
+    "max_price": 5000.0
+   },
+   "2026-11-22": {
+    "price": 1568.0,
+    "mu_occupancy": "1/6",
+    "min_price": 1035.0,
+    "max_price": 5000.0
+   },
+   "2026-11-23": {
+    "price": 1274.0,
+    "mu_occupancy": "3/6",
+    "min_price": 1035.0,
+    "max_price": 5000.0
+   }
+  },
+  "Q2": {
+   "2026-11-16": {
+    "price": 1671.0,
+    "mu_occupancy": "1/2",
+    "min_price": 1494.6,
+    "max_price": 1876.2
+   },
+   "2026-11-17": {
+    "price": 1250.0,
+    "mu_occupancy": "0/2",
+    "min_price": 977.0,
+    "max_price": 5000.0
+   },
+   "2026-11-18": {
+    "price": 1301.0,
+    "mu_occupancy": "2/2",
+    "min_price": 977.0,
+    "max_price": 5000.0
+   },
+   "2026-11-19": {
+    "price": 2341.0,
+    "mu_occupancy": "2/2",
+    "min_price": 977.0,
+    "max_price": 5000.0
+   },
+   "2026-11-20": {
+    "price": 2000.0,
+    "mu_occupancy": "1/2",
+    "min_price": 1780.8,
+    "max_price": 2035.2
+   },
+   "2026-11-21": {
+    "price": 1997.0,
+    "mu_occupancy": "1/2",
+    "min_price": 977.0,
+    "max_price": 5000.0
+   },
+   "2026-11-22": {
+    "price": 1541.0,
+    "mu_occupancy": "2/2",
+    "min_price": 1319.7,
+    "max_price": 5000.0
+   },
+   "2026-11-23": {
+    "price": 1154.0,
+    "mu_occupancy": "1/2",
+    "min_price": 977.0,
+    "max_price": 5000.0
+   }
+  },
+  "Afrodite": {
+   "2026-11-16": {
+    "price": 1518.0,
+    "mu_occupancy": "1/1",
+    "min_price": 1500.0,
+    "max_price": 10000.0
+   },
+   "2026-11-17": {
+    "price": 1529.0,
+    "mu_occupancy": "1/1",
+    "min_price": 1520.0,
+    "max_price": 10000.0
+   },
+   "2026-11-18": {
+    "price": 1680.0,
+    "mu_occupancy": "1/1",
+    "min_price": 1500.0,
+    "max_price": 10000.0
+   },
+   "2026-11-19": {
+    "price": 3019.0,
+    "mu_occupancy": "0/1",
+    "min_price": 1500.0,
+    "max_price": 10000.0
+   },
+   "2026-11-20": {
+    "price": 2946.0,
+    "mu_occupancy": "1/1",
+    "min_price": 1500.0,
+    "max_price": 10000.0
+   },
+   "2026-11-21": {
+    "price": 2201.0,
+    "mu_occupancy": "1/1",
+    "min_price": 2100.0,
+    "max_price": 2360.0
+   },
+   "2026-11-22": {
+    "price": 1612.0,
+    "mu_occupancy": "0/1",
+    "min_price": 1500.0,
+    "max_price": 10000.0
+   },
+   "2026-11-23": {
+    "price": 1507.0,
+    "mu_occupancy": "1/1",
+    "min_price": 1500.0,
+    "max_price": 10000.0
+   }
+  },
+  "VK7": {
+   "2026-11-16": {
+    "price": 1075.0,
+    "mu_occupancy": "3/7",
+    "min_price": 944.0,
+    "max_price": 5000.0
+   },
+   "2026-11-17": {
+    "price": 1264.0,
+    "mu_occupancy": "3/7",
+    "min_price": 1258.0,
+    "max_price": 1391.2
+   },
+   "2026-11-18": {
+    "price": 1560.0,
+    "mu_occupancy": "5/7",
+    "min_price": 944.0,
+    "max_price": 5000.0
+   },
+   "2026-11-19": {
+    "price": 1937.0,
+    "mu_occupancy": "3/7",
+    "min_price": 944.0,
+    "max_price": 5000.0
+   },
+   "2026-11-20": {
+    "price": 1908.0,
+    "mu_occupancy": "6/7",
+    "min_price": 944.0,
+    "max_price": 5000.0
+   },
+   "2026-11-21": {
+    "price": 1850.0,
+    "mu_occupancy": "7/7",
+    "min_price": 1850.0,
+    "max_price": 5000.0
+   },
+   "2026-11-22": {
+    "price": 1294.0,
+    "mu_occupancy": "4/7",
+    "min_price": 944.0,
+    "max_price": 5000.0
+   },
+   "2026-11-23": {
+    "price": 1202.0,
+    "mu_occupancy": "0/7",
+    "min_price": 944.0,
+    "max_price": 5000.0
+   }
+  },
+  "VK2": {
+   "2026-11-16": {
+    "price": 955.0,
+    "mu_occupancy": "0/2",
+    "min_price": 944.0,
+    "max_price": 5000.0
+   },
+   "2026-11-17": {
+    "price": 930.0,
+    "mu_occupancy": "0/2",
+    "min_price": 944.0,
+    "max_price": 5000.0
+   },
+   "2026-11-18": {
+    "price": 1202.0,
+    "mu_occupancy": "0/2",
+    "min_price": 944.0,
+    "max_price": 5000.0
+   },
+   "2026-11-19": {
+    "price": 1675.0,
+    "mu_occupancy": "0/2",
+    "min_price": 944.0,
+    "max_price": 5000.0
+   },
+   "2026-11-20": {
+    "price": 1441.0,
+    "mu_occupancy": "1/2",
+    "min_price": 1282.7,
+    "max_price": 5000.0
+   },
+   "2026-11-21": {
+    "price": 1900.0,
+    "mu_occupancy": "1/2",
+    "min_price": 944.0,
+    "max_price": 5000.0
+   },
+   "2026-11-22": {
+    "price": 1134.0,
+    "mu_occupancy": "2/2",
+    "min_price": 944.0,
+    "max_price": 5000.0
+   },
+   "2026-11-23": {
+    "price": 1136.0,
+    "mu_occupancy": "1/2",
+    "min_price": 1130.3,
+    "max_price": 5000.0
+   }
+  },
+  "Balcony": {
+   "2026-11-16": {
+    "price": 1163.0,
+    "mu_occupancy": "5/6",
+    "min_price": 690.0,
+    "max_price": 5000.0
+   },
+   "2026-11-17": {
+    "price": 970.0,
+    "mu_occupancy": "1/6",
+    "min_price": 690.0,
+    "max_price": 5000.0
+   },
+   "2026-11-18": {
+    "price": 1005.0,
+    "mu_occupancy": "1/6",
+    "min_price": 977.9,
+    "max_price": 1079.5
+   },
+   "2026-11-19": {
+    "price": 1916.0,
+    "mu_occupancy": "1/6",
+    "min_price": 1727.2,
+    "max_price": 5000.0
+   },
+   "2026-11-20": {
+    "price": 2030.0,
+    "mu_occupancy": "5/6",
+    "min_price": 690.0,
+    "max_price": 5000.0
+   },
+   "2026-11-21": {
+    "price": 1631.0,
+    "mu_occupancy": "4/6",
+    "min_price": 690.0,
+    "max_price": 5000.0
+   },
+   "2026-11-22": {
+    "price": 1288.0,
+    "mu_occupancy": "5/6",
+    "min_price": 1155.7,
+    "max_price": 1435.1
+   },
+   "2026-11-23": {
+    "price": 1084.0,
+    "mu_occupancy": "3/6",
+    "min_price": 690.0,
+    "max_price": 5000.0
+   }
+  }
+ },
+ "rules": {
+  "Q7": {
+   "2026-11-16": {
+    "date": "2026-11-16",
+    "min_price": -12,
+    "min_price_type": "percent_base",
+    "reason": "engine",
+    "min_stay": 1
+   },
+   "2026-11-18": {
+    "date": "2026-11-18",
+    "min_price": -25,
+    "min_price_type": "percent_base",
+    "reason": "engine"
+   },
+   "2026-11-23": {
+    "date": "2026-11-23",
+    "min_price": -11,
+    "min_price_type": "percent_base",
+    "reason": "engine"
+   }
+  },
+  "Double": {
+   "2026-11-18": {
+    "date": "2026-11-18",
+    "min_price": 2,
+    "min_price_type": "percent_base",
+    "reason": "engine",
+    "min_stay": 2
+   }
+  },
+  "Q2": {
+   "2026-11-16": {
+    "date": "2026-11-16",
+    "min_price": -6,
+    "min_price_type": "percent_base",
+    "reason": "engine",
+    "max_price": 18,
+    "max_price_type": "percent_base",
+    "min_stay": 2
+   },
+   "2026-11-20": {
+    "date": "2026-11-20",
+    "min_price": 12,
+    "min_price_type": "percent_base",
+    "reason": "engine",
+    "max_price": 28,
+    "max_price_type": "percent_base",
+    "min_stay": 1
+   },
+   "2026-11-22": {
+    "date": "2026-11-22",
+    "min_price": -17,
+    "min_price_type": "percent_base",
+    "reason": "engine"
+   }
+  },
+  "Afrodite": {
+   "2026-11-17": {
+    "date": "2026-11-17",
+    "min_price": -24,
+    "min_price_type": "percent_base",
+    "reason": "engine",
+    "min_stay": 1
+   },
+   "2026-11-21": {
+    "date": "2026-11-21",
+    "min_price": 5,
+    "min_price_type": "percent_base",
+    "reason": "engine",
+    "max_price": 18,
+    "max_price_type": "percent_base",
+    "min_stay": 2
+   },
+   "2026-11-23": {
+    "date": "2026-11-23",
+    "min_price": -25,
+    "min_price_type": "percent_base",
+    "reason": "engine",
+    "min_stay": 2
+   }
+  },
+  "VK7": {
+   "2026-11-17": {
+    "date": "2026-11-17",
+    "min_price": -15,
+    "min_price_type": "percent_base",
+    "reason": "engine",
+    "max_price": -6,
+    "max_price_type": "percent_base",
+    "min_stay": 1
+   },
+   "2026-11-21": {
+    "date": "2026-11-21",
+    "min_price": 25,
+    "min_price_type": "percent_base",
+    "reason": "engine"
+   }
+  },
+  "VK2": {
+   "2026-11-20": {
+    "date": "2026-11-20",
+    "min_price": 1,
+    "min_price_type": "percent_base",
+    "reason": "engine",
+    "min_stay": 1
+   },
+   "2026-11-23": {
+    "date": "2026-11-23",
+    "min_price": -11,
+    "min_price_type": "percent_base",
+    "reason": "engine"
+   }
+  },
+  "Balcony": {
+   "2026-11-18": {
+    "date": "2026-11-18",
+    "min_price": -23,
+    "min_price_type": "percent_base",
+    "reason": "engine",
+    "max_price": -15,
+    "max_price_type": "percent_base",
+    "min_stay": 2
+   },
+   "2026-11-19": {
+    "date": "2026-11-19",
+    "min_price": 36,
+    "min_price_type": "percent_base",
+    "reason": "engine",
+    "min_stay": 1
+   },
+   "2026-11-22": {
+    "date": "2026-11-22",
+    "min_price": -9,
+    "min_price_type": "percent_base",
+    "reason": "engine",
+    "max_price": 13,
+    "max_price_type": "percent_base",
+    "min_stay": 1
+   }
+  }
+ },
+ "ledger": {
+  "passos": [
+   {
+    "quarto": "Q7",
+    "noite": "2026-11-17",
+    "de": 863.0,
+    "para": 863.0,
+    "direcao": "desce",
+    "status": "plano",
+    "vendidas": 0,
+    "base": "quarto",
+    "total": 7,
+    "gravado_em": "2026-11-14T12:53:00+00:00",
+    "chegou_ao_canal": "2026-11-16T11:53+00:00"
+   },
+   {
+    "quarto": "Q7",
+    "noite": "2026-11-21",
+    "de": 1798.0,
+    "para": 1798.0,
+    "direcao": "sobe",
+    "status": "plano",
+    "vendidas": 1,
+    "base": "quarto",
+    "total": 7,
+    "gravado_em": "2026-11-15T11:53:00+00:00",
+    "chegou_ao_canal": "2026-11-16T11:53+00:00"
+   },
+   {
+    "quarto": "Q7",
+    "noite": "2026-11-23",
+    "de": 1166.0,
+    "para": 1166.0,
+    "direcao": "desce",
+    "status": "atras",
+    "vendidas": 2,
+    "base": "quarto",
+    "total": 7,
+    "gravado_em": "2026-11-15T11:53:00+00:00",
+    "chegou_ao_canal": "2026-11-16T11:53+00:00"
+   },
+   {
+    "quarto": "Double",
+    "noite": "2026-11-18",
+    "de": 1558.0,
+    "para": 1558.0,
+    "direcao": "desce",
+    "status": "atras",
+    "vendidas": 2,
+    "base": "quarto",
+    "total": 6,
+    "gravado_em": "2026-11-15T17:53:00+00:00",
+    "chegou_ao_canal": "2026-11-16T11:53+00:00"
+   },
+   {
+    "quarto": "Double",
+    "noite": "2026-11-22",
+    "de": 1568.0,
+    "para": 1568.0,
+    "direcao": "sobe",
+    "status": "plano",
+    "vendidas": 0,
+    "base": "quarto",
+    "total": 6,
+    "gravado_em": "2026-11-15T11:53:00+00:00",
+    "chegou_ao_canal": "2026-11-16T11:53+00:00"
+   },
+   {
+    "quarto": "Double",
+    "noite": "2026-11-23",
+    "de": 1274.0,
+    "para": 1274.0,
+    "direcao": "sobe",
+    "status": "ritmo",
+    "vendidas": 3,
+    "base": "quarto",
+    "total": 6,
+    "gravado_em": "2026-11-14T12:53:00+00:00",
+    "chegou_ao_canal": false
+   },
+   {
+    "quarto": "Q2",
+    "noite": "2026-11-16",
+    "de": 1671.0,
+    "para": 1671.0,
+    "direcao": "desce",
+    "status": "atras",
+    "vendidas": 1,
+    "base": "quarto",
+    "total": 2,
+    "gravado_em": "2026-11-15T17:53:00+00:00",
+    "chegou_ao_canal": "2026-11-16T11:53+00:00"
+   },
+   {
+    "quarto": "Afrodite",
+    "noite": "2026-11-17",
+    "de": 1529.0,
+    "para": 1529.0,
+    "direcao": "desce",
+    "status": "ritmo",
+    "vendidas": 1,
+    "base": "quarto",
+    "total": 1,
+    "gravado_em": "2026-11-15T17:53:00+00:00",
+    "chegou_ao_canal": "2026-11-16T11:53+00:00"
+   },
+   {
+    "quarto": "Afrodite",
+    "noite": "2026-11-19",
+    "de": 3019.0,
+    "para": 3019.0,
+    "direcao": "sobe",
+    "status": "plano",
+    "vendidas": 0,
+    "base": "quarto",
+    "total": 1,
+    "gravado_em": "2026-11-14T12:53:00+00:00",
+    "chegou_ao_canal": false
+   },
+   {
+    "quarto": "VK2",
+    "noite": "2026-11-16",
+    "de": 955.0,
+    "para": 955.0,
+    "direcao": "sobe",
+    "status": "ritmo",
+    "vendidas": 0,
+    "base": "quarto",
+    "total": 2,
+    "gravado_em": "2026-11-14T12:53:00+00:00",
+    "chegou_ao_canal": "2026-11-16T11:53+00:00"
+   },
+   {
+    "quarto": "VK2",
+    "noite": "2026-11-19",
+    "de": 1675.0,
+    "para": 1675.0,
+    "direcao": "desce",
+    "status": "frente",
+    "vendidas": 0,
+    "base": "quarto",
+    "total": 2,
+    "gravado_em": "2026-11-15T17:53:00+00:00",
+    "chegou_ao_canal": false
+   },
+   {
+    "quarto": "VK2",
+    "noite": "2026-11-20",
+    "de": 1441.0,
+    "para": 1441.0,
+    "direcao": "sobe",
+    "status": "plano",
+    "vendidas": 1,
+    "base": "quarto",
+    "total": 2,
+    "gravado_em": "2026-11-14T12:53:00+00:00",
+    "chegou_ao_canal": false
+   },
+   {
+    "quarto": "Balcony",
+    "noite": "2026-11-18",
+    "de": 1005.0,
+    "para": 1005.0,
+    "direcao": "sobe",
+    "status": "plano",
+    "vendidas": 1,
+    "base": "quarto",
+    "total": 6,
+    "gravado_em": "2026-11-16T10:53:00+00:00",
+    "chegou_ao_canal": "2026-11-16T11:53+00:00"
+   },
+   {
+    "quarto": "Balcony",
+    "noite": "2026-11-19",
+    "de": 1916.0,
+    "para": 1916.0,
+    "direcao": "desce",
+    "status": "atras",
+    "vendidas": 1,
+    "base": "quarto",
+    "total": 6,
+    "gravado_em": "2026-11-14T12:53:00+00:00",
+    "chegou_ao_canal": false
+   },
+   {
+    "quarto": "Balcony",
+    "noite": "2026-11-20",
+    "de": 2030.0,
+    "para": 2030.0,
+    "direcao": "desce",
+    "status": "atras",
+    "vendidas": 5,
+    "base": "quarto",
+    "total": 6,
+    "gravado_em": "2026-11-14T12:53:00+00:00",
+    "chegou_ao_canal": "2026-11-16T11:53+00:00"
+   },
+   {
+    "quarto": "Balcony",
+    "noite": "2026-11-22",
+    "de": 1288.0,
+    "para": 1288.0,
+    "direcao": "sobe",
+    "status": "frente",
+    "vendidas": 5,
+    "base": "quarto",
+    "total": 6,
+    "gravado_em": "2026-11-15T17:53:00+00:00",
+    "chegou_ao_canal": false
+   }
+  ]
+ },
+ "orders": [
+  {
+   "id": "dono-2026-10-07-regra-g",
+   "data": "2026-10-07",
+   "tipo": "regra",
+   "quartos": [
+    "Balcony"
+   ],
+   "de": "2026-10-07",
+   "ate": "2027-12-31",
+   "libera": [
+    "fixo"
+   ]
+  },
+  {
+   "id": "dono-2026-10-21-ordem-recanto",
+   "data": "2026-10-21",
+   "tipo": "regra",
+   "quartos": [
+    "Q2"
+   ],
+   "de": "2026-10-21",
+   "ate": "2027-12-31",
+   "libera": [
+    "teto_q2",
+    "fixo"
+   ]
+  },
+  {
+   "id": "dono-2026-10-22-afrodite-mais-cara",
+   "data": "2026-10-22",
+   "tipo": "regra",
+   "quartos": [
+    "Afrodite"
+   ],
+   "de": "2026-10-22",
+   "ate": "2027-12-31",
+   "libera": [
+    "acima_15",
+    "fixo"
+   ]
+  },
+  {
+   "id": "dono-2026-11-09-plano-nov-fev",
+   "data": "2026-11-09",
+   "criada_em": "2026-11-10T02:35:00Z",
+   "tipo": "regra",
+   "quartos": [
+    "*"
+   ],
+   "de": "2026-11-10",
+   "ate": "2027-02-28",
+   "libera": []
+  }
+ ],
+ "blocked": [],
+ "filter": null
+}

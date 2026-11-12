@@ -361,6 +361,10 @@
         }
       },
       "ahead_near_days": 7,
+      "sales_ramp": {
+        "enabled": true,
+        "top_percentile": 90.0
+      },
       "k": 0.5,
       "max_step": [
         {
@@ -472,6 +476,2058 @@
     "safety": {
       "weekly_listing_change_max": 0.15,
       "never_raise_today": true
+    },
+    "relations": {
+      "tolerance": {
+        "trigger_amount": 1.0,
+        "audit_base_percent": 1.0,
+        "audit_amount": 1.0
+      },
+      "scan_horizon_days": 60,
+      "audit_horizon_days": 366,
+      "blocked_nights": "ignore",
+      "rounding_recheck": {
+        "mode": "warn",
+        "epsilon_amount": 0.005
+      },
+      "items": [
+        {
+          "id": "recanto-double-at-least-q7",
+          "label": "Middle-high room never below the low room, unless the low room is on its last unit",
+          "enabled": true,
+          "property": "recanto",
+          "type": "at_least",
+          "target": "Double",
+          "priority": 10,
+          "stages": [
+            "coherence"
+          ],
+          "scan": "touched",
+          "strategy_nights": "skip",
+          "scope": {
+            "night_types": [],
+            "weekdays": [],
+            "periods": [],
+            "exclude_periods": [],
+            "min_days_out": null,
+            "max_days_out": null,
+            "requires_order": null
+          },
+          "params": {
+            "reference": "Q7",
+            "margin": {
+              "type": "percent",
+              "value": 0
+            },
+            "reference_min_units_left": 2,
+            "derive": false,
+            "derive_min": "none"
+          },
+          "order_ref": null
+        },
+        {
+          "id": "recanto-q2-between-q7-double",
+          "label": "Middle room between the low and the high room (up to 75% of the way)",
+          "enabled": true,
+          "property": "recanto",
+          "type": "between",
+          "target": "Q2",
+          "priority": 20,
+          "stages": [
+            "strategy",
+            "coherence",
+            "audit"
+          ],
+          "scan": "touched",
+          "strategy_nights": "skip",
+          "scope": {
+            "night_types": [],
+            "weekdays": [],
+            "periods": [],
+            "exclude_periods": [],
+            "min_days_out": null,
+            "max_days_out": null,
+            "requires_order": null
+          },
+          "params": {
+            "mode": "path",
+            "low_reference": "Q7",
+            "high_reference": "Double",
+            "position_min": 0.0,
+            "position_max": 0.75,
+            "references": "free_only"
+          },
+          "order_ref": "dono-2026-10-21-ordem-recanto"
+        },
+        {
+          "id": "recanto-afrodite-15-over-double",
+          "label": "Top room above the high room on the nights priced by the sales ladder",
+          "enabled": true,
+          "property": "recanto",
+          "type": "at_least",
+          "target": "Afrodite",
+          "priority": 25,
+          "stages": [
+            "strategy",
+            "audit"
+          ],
+          "scan": "touched",
+          "strategy_nights": "only",
+          "scope": {
+            "night_types": [],
+            "weekdays": [],
+            "periods": [
+              {
+                "start": "2026-11-10",
+                "end": "2027-02-28"
+              }
+            ],
+            "exclude_periods": [],
+            "min_days_out": null,
+            "max_days_out": null,
+            "requires_order": "dono-2026-11-09-plano-nov-fev"
+          },
+          "params": {
+            "reference": "Double",
+            "margin": {
+              "type": "percent",
+              "value": 15.0
+            },
+            "reference_min_units_left": 0,
+            "derive": true,
+            "derive_min": "quality_floor"
+          },
+          "order_ref": "dono-2026-11-09-plano-nov-fev"
+        },
+        {
+          "id": "recanto-afrodite-premium-over-max",
+          "label": "Top room the most expensive, by a premium per night type",
+          "enabled": true,
+          "property": "recanto",
+          "type": "premium_over_max",
+          "target": "Afrodite",
+          "priority": 30,
+          "stages": [
+            "strategy",
+            "coherence",
+            "audit"
+          ],
+          "scan": "touched",
+          "strategy_nights": "skip",
+          "scope": {
+            "night_types": [],
+            "weekdays": [],
+            "periods": [],
+            "exclude_periods": [],
+            "min_days_out": null,
+            "max_days_out": null,
+            "requires_order": null
+          },
+          "params": {
+            "set": {
+              "room_tags": [
+                "tub"
+              ]
+            },
+            "premium_percent": {
+              "weekday": 20.0,
+              "weekend": 5.0,
+              "holiday": 5.0
+            },
+            "epsilon_amount": 0.5,
+            "members": "free_only"
+          },
+          "order_ref": "dono-2026-10-22-afrodite-mais-cara"
+        },
+        {
+          "id": "villa-balcony-switch-80",
+          "label": "Room without a tub at its market price when most tub suites are sold",
+          "enabled": true,
+          "property": "villa",
+          "type": "occupancy_switch",
+          "target": "Balcony",
+          "priority": 10,
+          "stages": [
+            "coherence",
+            "validate"
+          ],
+          "scan": "horizon",
+          "strategy_nights": "apply",
+          "scope": {
+            "night_types": [],
+            "weekdays": [],
+            "periods": [
+              {
+                "start": "2026-11-10",
+                "end": "2027-02-28"
+              }
+            ],
+            "exclude_periods": [],
+            "min_days_out": null,
+            "max_days_out": null,
+            "requires_order": "dono-2026-11-09-plano-nov-fev"
+          },
+          "params": {
+            "trigger": {
+              "set": {
+                "room_tags": [
+                  "tub"
+                ]
+              },
+              "unit": "percent",
+              "threshold": 80.0
+            },
+            "then": {
+              "kind": "market_percentile",
+              "by_night_group": {
+                "weekday": {
+                  "segment": "cheapest",
+                  "percentile": 40.0
+                },
+                "winter_weekday": {
+                  "segment": "cheapest",
+                  "percentile": 40.0
+                },
+                "weekend": {
+                  "segment": "peers_cheapest",
+                  "percentile": 50.0
+                },
+                "winter_weekend": {
+                  "segment": "peers_cheapest",
+                  "percentile": 50.0
+                },
+                "holiday": {
+                  "segment": "cheapest",
+                  "percentile": 50.0
+                },
+                "christmas": {
+                  "segment": "cheapest",
+                  "percentile": 50.0
+                },
+                "between_holidays": {
+                  "segment": "cheapest",
+                  "percentile": 50.0
+                },
+                "new_year": {
+                  "segment": "cheapest",
+                  "percentile": 50.0
+                }
+              }
+            },
+            "cap_relation": "villa-balcony-discount-band",
+            "floor": "safety",
+            "suspends": [
+              "villa-balcony-discount-band"
+            ]
+          },
+          "order_ref": "dono-2026-11-09-plano-nov-fev"
+        },
+        {
+          "id": "villa-balcony-discount-band",
+          "label": "Room without a tub below the cheapest free tub suite",
+          "enabled": true,
+          "property": "villa",
+          "type": "discount_band",
+          "target": "Balcony",
+          "priority": 20,
+          "stages": [
+            "coherence",
+            "validate"
+          ],
+          "scan": "horizon",
+          "strategy_nights": "apply",
+          "scope": {
+            "night_types": [],
+            "weekdays": [],
+            "periods": [],
+            "exclude_periods": [],
+            "min_days_out": null,
+            "max_days_out": null,
+            "requires_order": null
+          },
+          "params": {
+            "set": {
+              "room_tags": [
+                "tub"
+              ]
+            },
+            "upper_percent": 90.0,
+            "lower_percent": 85.5,
+            "reference_rounding_margin": 15.0,
+            "lower_extra_amount": 1.0,
+            "members": "free_only",
+            "on_empty_set": "skip",
+            "down_only_night_types": [
+              "holiday"
+            ],
+            "order_floor_yields": true,
+            "follow_strategy_reference": true,
+            "write_mode": "pin"
+          },
+          "order_ref": "dono-2026-10-07-regra-g"
+        }
+      ]
+    },
+    "price_bands": {
+      "items": [
+        {
+          "id": "recanto-afrodite-weekend-market-band",
+          "label": "Top room on weekends: high band of the market",
+          "enabled": true,
+          "property": "recanto",
+          "room": "Afrodite",
+          "night_types": [
+            "weekend"
+          ],
+          "price_plan": "public",
+          "min_amount": 1600.0,
+          "max_amount": 1800.0,
+          "max_days_out": 95,
+          "skip_on_strategy_nights": true
+        }
+      ]
+    },
+    "ladder": {
+      "enabled": true,
+      "strategies": [
+        {
+          "id": "plan-nov-feb",
+          "label": "Nov-Feb plan",
+          "enabled": true,
+          "mode": "stepped",
+          "valid_from": "2026-11-10",
+          "valid_to": "2027-02-28",
+          "activated_on": null,
+          "authority_order_id": "dono-2026-11-09-plano-nov-fev",
+          "lock_ceiling": true,
+          "step": {
+            "trigger_fraction": 0.5,
+            "percent_per_unit": 7.0
+          },
+          "drop": {
+            "enabled": true,
+            "window_days": 7,
+            "occupancy_below": 0.6,
+            "percent": 10.0,
+            "skip_inside_window_at_activation": true
+          },
+          "weekend_floor_override": {
+            "enabled": true,
+            "weekdays": [
+              4,
+              5
+            ]
+          },
+          "rules": [
+            {
+              "night_types": [
+                "weekend",
+                "winter_weekend"
+              ],
+              "rooms": [
+                "Q7"
+              ],
+              "opening": {
+                "series": "cheapest",
+                "percentile": 40.0,
+                "multiplier": 1.0,
+                "cap": "reference_snapshot"
+              },
+              "ceiling": {
+                "series": "comparable",
+                "percentile": 50.0
+              },
+              "apply_quality_floor": true,
+              "apply_drop": true,
+              "room_tags": [],
+              "derive": {
+                "from_room": null,
+                "multiplier": 1.0
+              }
+            },
+            {
+              "night_types": [
+                "weekend",
+                "winter_weekend"
+              ],
+              "rooms": [
+                "Q2"
+              ],
+              "opening": {
+                "series": "peers_comparable",
+                "percentile": 50.0,
+                "multiplier": 1.05,
+                "cap": "reference_snapshot"
+              },
+              "ceiling": {
+                "series": "comparable",
+                "percentile": 65.0
+              },
+              "apply_quality_floor": true,
+              "apply_drop": true,
+              "room_tags": [],
+              "derive": {
+                "from_room": null,
+                "multiplier": 1.0
+              }
+            },
+            {
+              "night_types": [
+                "weekend",
+                "winter_weekend"
+              ],
+              "rooms": [
+                "Double"
+              ],
+              "opening": {
+                "series": "peers_comparable",
+                "percentile": 50.0,
+                "multiplier": 1.05,
+                "cap": "reference_snapshot"
+              },
+              "ceiling": {
+                "series": "comparable",
+                "percentile": 65.0
+              },
+              "apply_quality_floor": true,
+              "apply_drop": true,
+              "room_tags": [],
+              "derive": {
+                "from_room": null,
+                "multiplier": 1.0
+              }
+            },
+            {
+              "night_types": [
+                "weekend",
+                "winter_weekend"
+              ],
+              "rooms": [
+                "VK7"
+              ],
+              "opening": {
+                "series": "peers_comparable",
+                "percentile": 50.0,
+                "multiplier": 1.05,
+                "cap": "reference_snapshot"
+              },
+              "ceiling": {
+                "series": "comparable",
+                "percentile": 65.0
+              },
+              "apply_quality_floor": true,
+              "apply_drop": true,
+              "room_tags": [],
+              "derive": {
+                "from_room": null,
+                "multiplier": 1.0
+              }
+            },
+            {
+              "night_types": [
+                "weekend",
+                "winter_weekend"
+              ],
+              "rooms": [
+                "VK2"
+              ],
+              "opening": {
+                "series": "peers_comparable",
+                "percentile": 50.0,
+                "multiplier": 1.05,
+                "cap": "reference_snapshot"
+              },
+              "ceiling": {
+                "series": "comparable",
+                "percentile": 65.0
+              },
+              "apply_quality_floor": true,
+              "apply_drop": true,
+              "room_tags": [],
+              "derive": {
+                "from_room": null,
+                "multiplier": 1.0
+              }
+            },
+            {
+              "night_types": [
+                "weekend",
+                "winter_weekend"
+              ],
+              "rooms": [
+                "Afrodite"
+              ],
+              "derive": {
+                "from_room": "Double",
+                "multiplier": 1.15
+              },
+              "apply_quality_floor": true,
+              "apply_drop": true,
+              "room_tags": [],
+              "opening": {
+                "series": null,
+                "percentile": 50.0,
+                "multiplier": 1.0,
+                "cap": "none"
+              },
+              "ceiling": {
+                "series": null,
+                "percentile": 75.0
+              }
+            },
+            {
+              "night_types": [
+                "holiday"
+              ],
+              "rooms": [
+                "Q7"
+              ],
+              "opening": {
+                "series": "comparable",
+                "percentile": 40.0,
+                "multiplier": 1.0,
+                "cap": "reference_snapshot"
+              },
+              "ceiling": {
+                "series": "comparable",
+                "percentile": 65.0
+              },
+              "apply_quality_floor": true,
+              "apply_drop": true,
+              "room_tags": [],
+              "derive": {
+                "from_room": null,
+                "multiplier": 1.0
+              }
+            },
+            {
+              "night_types": [
+                "holiday"
+              ],
+              "rooms": [
+                "Q2"
+              ],
+              "opening": {
+                "series": "comparable",
+                "percentile": 50.0,
+                "multiplier": 1.0,
+                "cap": "reference_snapshot"
+              },
+              "ceiling": {
+                "series": "comparable",
+                "percentile": 75.0
+              },
+              "apply_quality_floor": true,
+              "apply_drop": true,
+              "room_tags": [],
+              "derive": {
+                "from_room": null,
+                "multiplier": 1.0
+              }
+            },
+            {
+              "night_types": [
+                "holiday"
+              ],
+              "rooms": [
+                "Double"
+              ],
+              "opening": {
+                "series": "comparable",
+                "percentile": 50.0,
+                "multiplier": 1.0,
+                "cap": "reference_snapshot"
+              },
+              "ceiling": {
+                "series": "comparable",
+                "percentile": 75.0
+              },
+              "apply_quality_floor": true,
+              "apply_drop": true,
+              "room_tags": [],
+              "derive": {
+                "from_room": null,
+                "multiplier": 1.0
+              }
+            },
+            {
+              "night_types": [
+                "holiday"
+              ],
+              "rooms": [
+                "VK7"
+              ],
+              "opening": {
+                "series": "comparable",
+                "percentile": 50.0,
+                "multiplier": 1.0,
+                "cap": "reference_snapshot"
+              },
+              "ceiling": {
+                "series": "comparable",
+                "percentile": 75.0
+              },
+              "apply_quality_floor": true,
+              "apply_drop": true,
+              "room_tags": [],
+              "derive": {
+                "from_room": null,
+                "multiplier": 1.0
+              }
+            },
+            {
+              "night_types": [
+                "holiday"
+              ],
+              "rooms": [
+                "VK2"
+              ],
+              "opening": {
+                "series": "comparable",
+                "percentile": 50.0,
+                "multiplier": 1.0,
+                "cap": "reference_snapshot"
+              },
+              "ceiling": {
+                "series": "comparable",
+                "percentile": 75.0
+              },
+              "apply_quality_floor": true,
+              "apply_drop": true,
+              "room_tags": [],
+              "derive": {
+                "from_room": null,
+                "multiplier": 1.0
+              }
+            },
+            {
+              "night_types": [
+                "holiday"
+              ],
+              "rooms": [
+                "Afrodite"
+              ],
+              "derive": {
+                "from_room": "Double",
+                "multiplier": 1.15
+              },
+              "apply_quality_floor": true,
+              "apply_drop": true,
+              "room_tags": [],
+              "opening": {
+                "series": null,
+                "percentile": 50.0,
+                "multiplier": 1.0,
+                "cap": "none"
+              },
+              "ceiling": {
+                "series": null,
+                "percentile": 75.0
+              }
+            },
+            {
+              "night_types": [
+                "christmas",
+                "between_holidays",
+                "new_year"
+              ],
+              "rooms": [
+                "Q7"
+              ],
+              "opening": {
+                "series": "comparable",
+                "percentile": 40.0,
+                "multiplier": 1.0,
+                "cap": "reference_snapshot"
+              },
+              "ceiling": {
+                "series": "comparable",
+                "percentile": 75.0
+              },
+              "apply_quality_floor": true,
+              "apply_drop": true,
+              "room_tags": [],
+              "derive": {
+                "from_room": null,
+                "multiplier": 1.0
+              }
+            },
+            {
+              "night_types": [
+                "christmas",
+                "between_holidays",
+                "new_year"
+              ],
+              "rooms": [
+                "Q2"
+              ],
+              "opening": {
+                "series": "comparable",
+                "percentile": 50.0,
+                "multiplier": 1.0,
+                "cap": "reference_snapshot"
+              },
+              "ceiling": {
+                "series": "comparable",
+                "percentile": 75.0
+              },
+              "apply_quality_floor": true,
+              "apply_drop": true,
+              "room_tags": [],
+              "derive": {
+                "from_room": null,
+                "multiplier": 1.0
+              }
+            },
+            {
+              "night_types": [
+                "christmas",
+                "between_holidays",
+                "new_year"
+              ],
+              "rooms": [
+                "Double"
+              ],
+              "opening": {
+                "series": "comparable",
+                "percentile": 50.0,
+                "multiplier": 1.0,
+                "cap": "reference_snapshot"
+              },
+              "ceiling": {
+                "series": "comparable",
+                "percentile": 75.0
+              },
+              "apply_quality_floor": true,
+              "apply_drop": true,
+              "room_tags": [],
+              "derive": {
+                "from_room": null,
+                "multiplier": 1.0
+              }
+            },
+            {
+              "night_types": [
+                "christmas",
+                "between_holidays",
+                "new_year"
+              ],
+              "rooms": [
+                "Afrodite"
+              ],
+              "derive": {
+                "from_room": "Double",
+                "multiplier": 1.15
+              },
+              "apply_quality_floor": true,
+              "apply_drop": true,
+              "room_tags": [],
+              "opening": {
+                "series": null,
+                "percentile": 50.0,
+                "multiplier": 1.0,
+                "cap": "none"
+              },
+              "ceiling": {
+                "series": null,
+                "percentile": 75.0
+              }
+            }
+          ],
+          "relations": {
+            "between": [
+              {
+                "room": "Q2",
+                "low": "Q7",
+                "high": "Double",
+                "position": 0.75
+              }
+            ],
+            "premium": [
+              {
+                "room": "Afrodite",
+                "over": [
+                  "Q7",
+                  "Double",
+                  "Q2"
+                ],
+                "rate_weekend_or_holiday": 0.05,
+                "rate_other": 0.2
+              }
+            ]
+          },
+          "last_minute_floor": {
+            "enabled": true,
+            "night_types": [
+              "weekday",
+              "winter_weekday"
+            ],
+            "excluded_weekdays": [
+              4,
+              5
+            ],
+            "skip_holidays": true,
+            "window_days": 7,
+            "series": "comparable",
+            "percentile": 50.0,
+            "rooms": {
+              "Q7": 1.0,
+              "Q2": 1.0,
+              "Double": 1.05,
+              "VK7": 1.0,
+              "VK2": 1.0
+            }
+          },
+          "proportional": {
+            "fallback_step_percent": 7.0,
+            "band_room": "Balcony",
+            "band_reference_room": "VK2",
+            "band_factor": 0.9,
+            "band_cap_rooms": [
+              "VK7",
+              "VK2"
+            ],
+            "band_cap_discount": 0.1,
+            "temporary_floor": {
+              "amount": 300.0,
+              "until": "2026-11-08"
+            }
+          }
+        }
+      ]
+    },
+    "soldout": {
+      "protection": {
+        "enabled": true,
+        "percentile": 90.0,
+        "use_target_order_floor": true,
+        "use_relation_bounds": true,
+        "keep_live_floor_on_release": true,
+        "retired_floor_markers": [
+          "Regra J"
+        ],
+        "retired_floor_exemptions": [
+          "Regra J desligada"
+        ]
+      },
+      "light_run_max_days": null
+    },
+    "cadence": {
+      "min_hours_between_steps": 24,
+      "require_channel_arrival": true,
+      "opposite_direction_immediate": true,
+      "release_on_booking": true,
+      "new_order_immediate_once": true,
+      "first_ladder_step_immediate": true,
+      "relation_violation_bypass": true
+    },
+    "no_effect": {
+      "drop_rounding_only": false,
+      "money_slack": 1.0
+    },
+    "orders": {
+      "manual_freeze_days": 7,
+      "defaults": {
+        "target_percentile": 50.0,
+        "strong_night_occupancy": 0.7,
+        "strong_night_ahead_occupancy": 0.5,
+        "fallback_trigger_days": 7,
+        "descent_marks": [
+          7,
+          5,
+          3,
+          1
+        ]
+      },
+      "descent_reached_slack": 0.02
+    },
+    "stay": {
+      "arrival_rule": {
+        "enabled": true,
+        "valid_from": "2026-11-05",
+        "valid_to": null,
+        "by_weekday": [
+          2,
+          1,
+          2,
+          1,
+          2,
+          2,
+          1
+        ],
+        "properties": [],
+        "rooms": [],
+        "held_weekdays": []
+      },
+      "orphan": {
+        "next_night": true,
+        "on_holidays": true
+      },
+      "holiday_min_stay": 2,
+      "closed_days": [
+        {
+          "weekday": 5,
+          "restriction": "no_checkin_checkout",
+          "rooms": [],
+          "except_rooms": [],
+          "min_stay": 2,
+          "open_dates": {
+            "2026-12-26": "none"
+          },
+          "orphan_side": {
+            "enabled": true,
+            "on_holidays": true,
+            "when_closed_day_sold_out": "no_checkin",
+            "when_previous_sold_out": "no_checkout"
+          }
+        }
+      ],
+      "open_days": [
+        {
+          "weekday": 4,
+          "rooms": [
+            "Afrodite"
+          ]
+        }
+      ],
+      "packages": [
+        {
+          "name": "Dono 03/11: pacotes fechados (Natal 23→25; Ano Novo 30→01 ou 30→03)",
+          "rooms": [],
+          "nights": [
+            {
+              "date": "2026-12-23",
+              "min_stay": 2,
+              "max_stay": 2,
+              "restriction": "none"
+            },
+            {
+              "date": "2026-12-24",
+              "min_stay": 2,
+              "max_stay": 2,
+              "restriction": "no_checkin_checkout"
+            },
+            {
+              "date": "2026-12-25",
+              "min_stay": null,
+              "max_stay": null,
+              "restriction": "none"
+            },
+            {
+              "date": "2026-12-29",
+              "min_stay": 1,
+              "max_stay": 2,
+              "restriction": null
+            },
+            {
+              "date": "2026-12-30",
+              "min_stay": 2,
+              "max_stay": 4,
+              "restriction": "none"
+            },
+            {
+              "date": "2026-12-31",
+              "min_stay": 2,
+              "max_stay": 4,
+              "restriction": "no_checkin_checkout"
+            },
+            {
+              "date": "2027-01-01",
+              "min_stay": null,
+              "max_stay": 4,
+              "restriction": "no_checkin"
+            },
+            {
+              "date": "2027-01-02",
+              "min_stay": null,
+              "max_stay": 4,
+              "restriction": "no_checkin_checkout"
+            },
+            {
+              "date": "2027-01-03",
+              "min_stay": null,
+              "max_stay": null,
+              "restriction": "none"
+            }
+          ]
+        }
+      ],
+      "seasons": [
+        {
+          "name": "Quarta 14/10/2026 – última hora, véspera da Oktoberfest",
+          "start": "2026-10-14",
+          "end": "2026-10-14",
+          "weekdays": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ],
+          "min_stay": 1
+        },
+        {
+          "name": "Oktoberfest 2026 – abertura",
+          "start": "2026-10-15",
+          "end": "2026-10-15",
+          "weekdays": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ],
+          "min_stay": 1
+        },
+        {
+          "name": "Oktoberfest 2026 + WTR Campos do Jordão – sexta 16 e sábado 17/10",
+          "start": "2026-10-16",
+          "end": "2026-10-17",
+          "weekdays": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ],
+          "min_stay": 2
+        },
+        {
+          "name": "Outubro 2026 pós-Oktoberfest",
+          "start": "2026-10-18",
+          "end": "2026-10-29",
+          "weekdays": [
+            0,
+            1,
+            2,
+            3,
+            6
+          ],
+          "min_stay": 1
+        },
+        {
+          "name": "Outubro 2026 pós-Oktoberfest",
+          "start": "2026-10-18",
+          "end": "2026-10-29",
+          "weekdays": [
+            4,
+            5
+          ],
+          "min_stay": 1
+        },
+        {
+          "name": "Finados 2026",
+          "start": "2026-10-30",
+          "end": "2026-11-01",
+          "weekdays": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ],
+          "min_stay": 3
+        },
+        {
+          "name": "Novembro 2026",
+          "start": "2026-11-02",
+          "end": "2026-11-18",
+          "weekdays": [
+            0,
+            1,
+            2,
+            3,
+            6
+          ],
+          "min_stay": 1
+        },
+        {
+          "name": "Novembro 2026",
+          "start": "2026-11-02",
+          "end": "2026-11-18",
+          "weekdays": [
+            4,
+            5
+          ],
+          "min_stay": 1
+        },
+        {
+          "name": "Consciência Negra 2026",
+          "start": "2026-11-19",
+          "end": "2026-11-21",
+          "weekdays": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ],
+          "min_stay": 2
+        },
+        {
+          "name": "Fim de novembro e 1ª quinzena de dezembro 2026",
+          "start": "2026-11-22",
+          "end": "2026-12-17",
+          "weekdays": [
+            0,
+            1,
+            2,
+            3,
+            6
+          ],
+          "min_stay": 1
+        },
+        {
+          "name": "Fim de novembro e 1ª quinzena de dezembro 2026",
+          "start": "2026-11-22",
+          "end": "2026-12-17",
+          "weekdays": [
+            4,
+            5
+          ],
+          "min_stay": 1
+        },
+        {
+          "name": "Pré-Natal 2026",
+          "start": "2026-12-18",
+          "end": "2026-12-23",
+          "weekdays": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ],
+          "min_stay": 1
+        },
+        {
+          "name": "Natal 2026",
+          "start": "2026-12-24",
+          "end": "2026-12-26",
+          "weekdays": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ],
+          "min_stay": 2
+        },
+        {
+          "name": "Entre Natal e Réveillon 2026",
+          "start": "2026-12-27",
+          "end": "2026-12-28",
+          "weekdays": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ],
+          "min_stay": 1
+        },
+        {
+          "name": "Réveillon 2026/2027",
+          "start": "2026-12-29",
+          "end": "2027-01-02",
+          "weekdays": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ],
+          "min_stay": 3
+        },
+        {
+          "name": "Janeiro 2027 férias de verão",
+          "start": "2027-01-03",
+          "end": "2027-01-21",
+          "weekdays": [
+            0,
+            1,
+            2,
+            3,
+            6
+          ],
+          "min_stay": 1
+        },
+        {
+          "name": "Janeiro 2027 férias de verão",
+          "start": "2027-01-03",
+          "end": "2027-01-21",
+          "weekdays": [
+            4,
+            5
+          ],
+          "min_stay": 1
+        },
+        {
+          "name": "Aniversário de São Paulo 2027",
+          "start": "2027-01-22",
+          "end": "2027-01-24",
+          "weekdays": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ],
+          "min_stay": 2
+        },
+        {
+          "name": "Fim de janeiro e início de fevereiro 2027",
+          "start": "2027-01-25",
+          "end": "2027-02-04",
+          "weekdays": [
+            0,
+            1,
+            2,
+            3,
+            6
+          ],
+          "min_stay": 1
+        },
+        {
+          "name": "Fim de janeiro e início de fevereiro 2027",
+          "start": "2027-01-25",
+          "end": "2027-02-04",
+          "weekdays": [
+            4,
+            5
+          ],
+          "min_stay": 1
+        },
+        {
+          "name": "Carnaval 2027",
+          "start": "2027-02-05",
+          "end": "2027-02-09",
+          "weekdays": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ],
+          "min_stay": 3
+        },
+        {
+          "name": "Pós-Carnaval, fevereiro e março 2027",
+          "start": "2027-02-10",
+          "end": "2027-03-17",
+          "weekdays": [
+            0,
+            1,
+            2,
+            3,
+            6
+          ],
+          "min_stay": 1
+        },
+        {
+          "name": "Pós-Carnaval, fevereiro e março 2027",
+          "start": "2027-02-10",
+          "end": "2027-03-17",
+          "weekdays": [
+            4,
+            5
+          ],
+          "min_stay": 1
+        },
+        {
+          "name": "INDOMIT Pedra do Baú 2027",
+          "start": "2027-03-18",
+          "end": "2027-03-20",
+          "weekdays": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ],
+          "min_stay": 1
+        },
+        {
+          "name": "Semana pré-Páscoa 2027",
+          "start": "2027-03-21",
+          "end": "2027-03-24",
+          "weekdays": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ],
+          "min_stay": 1
+        },
+        {
+          "name": "Semana Santa / Páscoa 2027",
+          "start": "2027-03-25",
+          "end": "2027-03-27",
+          "weekdays": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ],
+          "min_stay": 2
+        },
+        {
+          "name": "Abril 2027 outono",
+          "start": "2027-03-28",
+          "end": "2027-04-19",
+          "weekdays": [
+            0,
+            1,
+            2,
+            3,
+            6
+          ],
+          "min_stay": 1
+        },
+        {
+          "name": "Abril 2027 outono",
+          "start": "2027-03-28",
+          "end": "2027-04-19",
+          "weekdays": [
+            4,
+            5
+          ],
+          "min_stay": 1
+        },
+        {
+          "name": "Tiradentes 2027",
+          "start": "2027-04-20",
+          "end": "2027-04-21",
+          "weekdays": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ],
+          "min_stay": 1
+        },
+        {
+          "name": "Fim de abril 2027",
+          "start": "2027-04-22",
+          "end": "2027-04-29",
+          "weekdays": [
+            0,
+            1,
+            2,
+            3,
+            6
+          ],
+          "min_stay": 1
+        },
+        {
+          "name": "Fim de abril 2027",
+          "start": "2027-04-22",
+          "end": "2027-04-29",
+          "weekdays": [
+            4,
+            5
+          ],
+          "min_stay": 1
+        },
+        {
+          "name": "1º de Maio 2027",
+          "start": "2027-04-30",
+          "end": "2027-05-01",
+          "weekdays": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ],
+          "min_stay": 1
+        },
+        {
+          "name": "Maio 2027 pré-temporada de inverno",
+          "start": "2027-05-02",
+          "end": "2027-05-25",
+          "weekdays": [
+            0,
+            1,
+            2,
+            3,
+            6
+          ],
+          "min_stay": 1
+        },
+        {
+          "name": "Maio 2027 pré-temporada",
+          "start": "2027-05-02",
+          "end": "2027-05-25",
+          "weekdays": [
+            4,
+            5
+          ],
+          "min_stay": 1
+        },
+        {
+          "name": "Corpus Christi 2027",
+          "start": "2027-05-26",
+          "end": "2027-05-29",
+          "weekdays": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ],
+          "min_stay": 3
+        },
+        {
+          "name": "Início de junho 2027",
+          "start": "2027-05-30",
+          "end": "2027-06-10",
+          "weekdays": [
+            0,
+            1,
+            2,
+            3,
+            6
+          ],
+          "min_stay": 1
+        },
+        {
+          "name": "Início de junho 2027",
+          "start": "2027-05-30",
+          "end": "2027-06-10",
+          "weekdays": [
+            4,
+            5
+          ],
+          "min_stay": 2
+        },
+        {
+          "name": "Dia dos Namorados 2027",
+          "start": "2027-06-11",
+          "end": "2027-06-12",
+          "weekdays": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ],
+          "min_stay": 2
+        },
+        {
+          "name": "Segunda metade de junho 2027",
+          "start": "2027-06-13",
+          "end": "2027-07-01",
+          "weekdays": [
+            0,
+            1,
+            2,
+            3,
+            6
+          ],
+          "min_stay": 1
+        },
+        {
+          "name": "Segunda metade de junho 2027",
+          "start": "2027-06-13",
+          "end": "2027-07-01",
+          "weekdays": [
+            4,
+            5
+          ],
+          "min_stay": 2
+        },
+        {
+          "name": "Abertura do 57º Festival de Inverno 2027",
+          "start": "2027-07-02",
+          "end": "2027-07-03",
+          "weekdays": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ],
+          "min_stay": 2
+        },
+        {
+          "name": "1ª semana do Festival de Inverno 2027",
+          "start": "2027-07-04",
+          "end": "2027-07-07",
+          "weekdays": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ],
+          "min_stay": 1
+        },
+        {
+          "name": "Feriadão de 9 de Julho 2027",
+          "start": "2027-07-08",
+          "end": "2027-07-10",
+          "weekdays": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ],
+          "min_stay": 3
+        },
+        {
+          "name": "Pico de julho 2027",
+          "start": "2027-07-11",
+          "end": "2027-07-25",
+          "weekdays": [
+            0,
+            1,
+            2,
+            3,
+            6
+          ],
+          "min_stay": 2
+        },
+        {
+          "name": "Pico de julho 2027",
+          "start": "2027-07-11",
+          "end": "2027-07-25",
+          "weekdays": [
+            4,
+            5
+          ],
+          "min_stay": 2
+        },
+        {
+          "name": "Última semana do Festival de Inverno 2027",
+          "start": "2027-07-26",
+          "end": "2027-07-29",
+          "weekdays": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ],
+          "min_stay": 1
+        },
+        {
+          "name": "Encerramento do Festival de Inverno",
+          "start": "2027-07-30",
+          "end": "2027-07-31",
+          "weekdays": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ],
+          "min_stay": 2
+        },
+        {
+          "name": "1ª quinzena de agosto 2027",
+          "start": "2027-08-01",
+          "end": "2027-08-15",
+          "weekdays": [
+            0,
+            1,
+            2,
+            3,
+            6
+          ],
+          "min_stay": 1
+        },
+        {
+          "name": "1ª quinzena de agosto 2027",
+          "start": "2027-08-01",
+          "end": "2027-08-15",
+          "weekdays": [
+            4,
+            5
+          ],
+          "min_stay": 1
+        },
+        {
+          "name": "2ª quinzena de agosto e início de setembro 2027",
+          "start": "2027-08-16",
+          "end": "2027-09-02",
+          "weekdays": [
+            0,
+            1,
+            2,
+            3,
+            6
+          ],
+          "min_stay": 1
+        },
+        {
+          "name": "2ª quinzena de agosto e início de setembro 2027",
+          "start": "2027-08-16",
+          "end": "2027-09-02",
+          "weekdays": [
+            4,
+            5
+          ],
+          "min_stay": 1
+        },
+        {
+          "name": "7 de Setembro 2027",
+          "start": "2027-09-03",
+          "end": "2027-09-06",
+          "weekdays": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ],
+          "min_stay": 2
+        },
+        {
+          "name": "Setembro 2027 pós-feriado",
+          "start": "2027-09-07",
+          "end": "2027-09-14",
+          "weekdays": [
+            0,
+            1,
+            2,
+            3,
+            6
+          ],
+          "min_stay": 1
+        },
+        {
+          "name": "Setembro 2027",
+          "start": "2027-09-07",
+          "end": "2027-09-14",
+          "weekdays": [
+            4,
+            5
+          ],
+          "min_stay": 1
+        },
+        {
+          "name": "XXII Congresso Brasileiro do Quadril – CBQ 2027",
+          "start": "2027-09-15",
+          "end": "2027-09-18",
+          "weekdays": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ],
+          "min_stay": 2
+        },
+        {
+          "name": "Setembro 2027 entre CBQ e L'Étape",
+          "start": "2027-09-19",
+          "end": "2027-09-23",
+          "weekdays": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ],
+          "min_stay": 1
+        },
+        {
+          "name": "L'Étape Campos do Jordão by Tour de France 2027",
+          "start": "2027-09-24",
+          "end": "2027-09-25",
+          "weekdays": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ],
+          "min_stay": 2
+        },
+        {
+          "name": "Fim de setembro e início de outubro 2027",
+          "start": "2027-09-26",
+          "end": "2027-10-07",
+          "weekdays": [
+            0,
+            1,
+            2,
+            3,
+            6
+          ],
+          "min_stay": 1
+        },
+        {
+          "name": "Fim de setembro e início de outubro 2027",
+          "start": "2027-09-26",
+          "end": "2027-10-07",
+          "weekdays": [
+            4,
+            5
+          ],
+          "min_stay": 1
+        },
+        {
+          "name": "12 de Outubro 2027",
+          "start": "2027-10-08",
+          "end": "2027-10-11",
+          "weekdays": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ],
+          "min_stay": 2
+        },
+        {
+          "name": "Terça 12/10",
+          "start": "2027-10-12",
+          "end": "2027-10-13",
+          "weekdays": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ],
+          "min_stay": 1
+        },
+        {
+          "name": "Oktoberfest 2027 – abertura",
+          "start": "2027-10-14",
+          "end": "2027-10-14",
+          "weekdays": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ],
+          "min_stay": 1
+        },
+        {
+          "name": "Oktoberfest 2027",
+          "start": "2027-10-15",
+          "end": "2027-10-16",
+          "weekdays": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ],
+          "min_stay": 2
+        },
+        {
+          "name": "Outubro 2027 pós-Oktoberfest",
+          "start": "2027-10-17",
+          "end": "2027-10-28",
+          "weekdays": [
+            0,
+            1,
+            2,
+            3,
+            6
+          ],
+          "min_stay": 1
+        },
+        {
+          "name": "Outubro 2027 pós-Oktoberfest",
+          "start": "2027-10-17",
+          "end": "2027-10-28",
+          "weekdays": [
+            4,
+            5
+          ],
+          "min_stay": 1
+        },
+        {
+          "name": "Finados 2027",
+          "start": "2027-10-29",
+          "end": "2027-11-01",
+          "weekdays": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ],
+          "min_stay": 2
+        },
+        {
+          "name": "Novembro 2027",
+          "start": "2027-11-02",
+          "end": "2027-11-11",
+          "weekdays": [
+            0,
+            1,
+            2,
+            3,
+            6
+          ],
+          "min_stay": 1
+        },
+        {
+          "name": "Novembro 2027",
+          "start": "2027-11-02",
+          "end": "2027-11-11",
+          "weekdays": [
+            4,
+            5
+          ],
+          "min_stay": 1
+        },
+        {
+          "name": "Proclamação da República 2027",
+          "start": "2027-11-12",
+          "end": "2027-11-14",
+          "weekdays": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ],
+          "min_stay": 2
+        },
+        {
+          "name": "Semana curta 15 a 18/11/2027",
+          "start": "2027-11-15",
+          "end": "2027-11-18",
+          "weekdays": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ],
+          "min_stay": 1
+        },
+        {
+          "name": "Consciência Negra 2027",
+          "start": "2027-11-19",
+          "end": "2027-11-20",
+          "weekdays": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ],
+          "min_stay": 1
+        },
+        {
+          "name": "Fim de novembro e 1ª quinzena de dezembro 2027",
+          "start": "2027-11-21",
+          "end": "2027-12-17",
+          "weekdays": [
+            0,
+            1,
+            2,
+            3,
+            6
+          ],
+          "min_stay": 1
+        },
+        {
+          "name": "Fim de novembro e 1ª quinzena de dezembro 2027",
+          "start": "2027-11-21",
+          "end": "2027-12-17",
+          "weekdays": [
+            4,
+            5
+          ],
+          "min_stay": 1
+        },
+        {
+          "name": "Pré-Natal 2027",
+          "start": "2027-12-18",
+          "end": "2027-12-23",
+          "weekdays": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ],
+          "min_stay": 1
+        },
+        {
+          "name": "Natal 2027",
+          "start": "2027-12-24",
+          "end": "2027-12-25",
+          "weekdays": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ],
+          "min_stay": 2
+        },
+        {
+          "name": "Entre Natal e Réveillon 2027",
+          "start": "2027-12-26",
+          "end": "2027-12-28",
+          "weekdays": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ],
+          "min_stay": 1
+        },
+        {
+          "name": "Réveillon 2027/2028",
+          "start": "2027-12-29",
+          "end": "2027-12-31",
+          "weekdays": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ],
+          "min_stay": 3
+        }
+      ],
+      "pricing_sync": {
+        "min_stay_rooms": [
+          "*"
+        ],
+        "max_stay_rooms": [],
+        "arrival_departure_rooms": [
+          "Afrodite"
+        ]
+      },
+      "keep_reason_markers": [
+        "regra j"
+      ],
+      "batch": {
+        "urgent_days": 14,
+        "max_ranges": 100
+      }
+    },
+    "plan": {
+      "validator": {
+        "calendar_max_age_hours": 6.0,
+        "occupancy_reason_codes": [],
+        "rise_warning_percent": 15.0,
+        "rise_exempt_reason_codes": [
+          "SOLD_OUT_PROTECTION"
+        ],
+        "max_min_stay": 7,
+        "market_evidence_min_length": 20,
+        "no_discount_rooms": [],
+        "last_minute": {
+          "enabled": true,
+          "rooms": [
+            "Q7",
+            "Double",
+            "VK7",
+            "Balcony",
+            "VK2"
+          ],
+          "max_days_out": 3,
+          "max_discount": 0.2,
+          "max_sold_share": 0.7,
+          "last_unit_only_rooms": [
+            "Double",
+            "Q2",
+            "VK7",
+            "VK2"
+          ]
+        }
+      },
+      "payload": {
+        "reason_max_length": 250,
+        "slice_max_dates": 70
+      }
     }
   }
 }

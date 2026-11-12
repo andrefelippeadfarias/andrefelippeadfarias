@@ -8,7 +8,7 @@
   "tests/fixtures/golden/m2/relations/frozen/regua_dono.json": "1eb5f954c9011bcf864eaecbb81ca758927574cd9c832c92133363f3857eadff",
   "tests/fixtures/golden/m2/relations/frozen/sazonalidade.json": "4704bef878fb4ea0425571a2becf6b6d388ac473c713db9017e8d9bd7236b7d3"
  },
- "parity_preset": "9662926caec0a49b9f5aa588912afc586fcb1031c377127e07993ad68764ff5f",
+ "parity_preset": "9a7c2958c1facc9dc00c93f4e5064b70b813508b6371b4148bb568c441174219",
  "files": {
   "ordem_recanto.comparar.json": 8,
   "ordem_recanto.faixa.json": 48,

@@ -14,10 +14,17 @@ use Ritmo\Tests\Support\SourceScan;
  *
  * - src/Domain and src/Contracts are pure PHP: nothing from WordPress.
  * - The domain reads time only through Clock and rounds only through Num.
- * - Plugin code carries nothing specific to the owner's own properties.
+ * - Plugin code and its documentation carry nothing specific to the owner's own properties.
  */
 final class ArchitectureTest extends TestCase
 {
+    /**
+     * Internal documents that name the owner's properties. They stay in the repository for the
+     * team and are left out of the distributed zip by the packaging of milestone M5
+     * (ARCHITECTURE.md, section 2).
+     */
+    private const INTERNAL_DOCUMENTS = ['docs/PLANO.md'];
+
     private static function source(string $relative): string
     {
         return Fixtures::pluginRoot() . '/src/' . $relative;
@@ -228,8 +235,8 @@ final class ArchitectureTest extends TestCase
         $terms = Fixtures::json('owner-terms.json')['terms'];
         $pattern = '/(?<![\p{L}\p{N}_])(' . implode('|', array_map(static fn (string $term): string => preg_quote($term, '/'), $terms)) . ')(?![\p{L}\p{N}_])/iu';
 
-        $files = glob($root . '/*.php') ?: [];
-        foreach (['src', 'presets', 'templates', 'assets'] as $directory) {
+        $files = array_merge(glob($root . '/*.php') ?: [], [$root . '/README.md']);
+        foreach (['src', 'presets', 'templates', 'assets', 'docs'] as $directory) {
             if (!is_dir($root . '/' . $directory)) {
                 continue;
             }
@@ -240,14 +247,21 @@ final class ArchitectureTest extends TestCase
         }
 
         self::assertGreaterThan(40, count($files));
+        self::assertContains($root . '/docs/ARCHITECTURE.md', $files, 'the documentation is scanned too');
         $violations = [];
         foreach ($files as $file) {
+            if (in_array(self::relative($file), self::INTERNAL_DOCUMENTS, true)) {
+                continue;
+            }
             if (preg_match_all($pattern, (string) file_get_contents($file), $matches) > 0) {
                 $violations[] = self::relative($file) . ': ' . implode(', ', array_unique($matches[1]));
             }
         }
 
-        self::assertSame([], $violations, 'owner-specific names, room codes or ids found in plugin code');
+        self::assertSame([], $violations, 'owner-specific names, room codes or ids found in plugin code or documentation');
+        foreach (self::INTERNAL_DOCUMENTS as $document) {
+            self::assertFileExists($root . '/' . $document, 'an internal document that no longer exists must leave the exclusion list');
+        }
         foreach ($terms as $term) {
             self::assertSame(1, preg_match($pattern, 'rooms of ' . ucfirst($term) . ', all of them'), "the pattern must catch \"$term\"");
             self::assertSame(0, preg_match($pattern, 'x' . $term . 'x'), "the pattern must match \"$term\" as a whole word only");

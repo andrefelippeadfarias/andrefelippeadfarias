@@ -203,20 +203,36 @@
      "then": {
       "kind": "market_percentile",
       "by_night_group": {
-       "weekend": {
-        "segment": "pares_lista",
-        "percentile": 50.0
-       },
        "weekday": {
-        "segment": "lista",
+        "segment": "cheapest",
         "percentile": 40.0
        },
-       "holiday": {
-        "segment": "lista",
+       "winter_weekday": {
+        "segment": "cheapest",
+        "percentile": 40.0
+       },
+       "weekend": {
+        "segment": "peers_cheapest",
         "percentile": 50.0
        },
-       "festive": {
-        "segment": "lista",
+       "winter_weekend": {
+        "segment": "peers_cheapest",
+        "percentile": 50.0
+       },
+       "holiday": {
+        "segment": "cheapest",
+        "percentile": 50.0
+       },
+       "christmas": {
+        "segment": "cheapest",
+        "percentile": 50.0
+       },
+       "between_holidays": {
+        "segment": "cheapest",
+        "percentile": 50.0
+       },
+       "new_year": {
+        "segment": "cheapest",
         "percentile": 50.0
        }
       }

@@ -1,0 +1,40 @@
+{
+ "itens": [
+  {
+   "tipo": "apagar",
+   "quarto": "Afrodite",
+   "data": "2026-11-15",
+   "motivo": "solta o teto (R$ 1500) antes de regravar o piso: Proteção da noite esgotada (1/1; Regra J desligada pelo dono em 31/10): piso no p90 do mercado com hidro, R$ 600 público"
+  },
+  {
+   "tipo": "apagar",
+   "quarto": "Afrodite",
+   "data": "2026-11-16",
+   "motivo": "solta o teto (R$ 1500) antes de regravar o piso: Proteção da noite esgotada (1/1; Regra J desligada pelo dono em 31/10): piso no p90 do mercado com hidro, R$ 600 público"
+  },
+  {
+   "tipo": "apagar",
+   "quarto": "VK7",
+   "data": "2026-11-22",
+   "motivo": "solta o teto (R$ 1169) antes de regravar o piso: Proteção da noite esgotada (7/7; Regra J desligada pelo dono em 31/10): piso no p90 do mercado com hidro, R$ 600 público"
+  },
+  {
+   "tipo": "apagar",
+   "quarto": "VK7",
+   "data": "2026-11-23",
+   "motivo": "solta o teto (R$ 1569) antes de regravar o piso: Proteção da noite esgotada (7/7; Regra J desligada pelo dono em 31/10): piso no p90 do mercado com hidro, R$ 600 público"
+  },
+  {
+   "tipo": "apagar",
+   "quarto": "VK7",
+   "data": "2026-11-24",
+   "motivo": "solta o teto (R$ 1421) antes de regravar o piso: Proteção da noite esgotada (7/7; Regra J desligada pelo dono em 31/10): piso no p90 do mercado com hidro, R$ 392 público"
+  },
+  {
+   "tipo": "apagar",
+   "quarto": "VK7",
+   "data": "2026-11-29",
+   "motivo": "solta o teto (R$ 1110) antes de regravar o piso: Proteção da noite esgotada (7/7; Regra J desligada pelo dono em 31/10): piso no p90 do mercado com hidro, R$ 600 público"
+  }
+ ]
+}

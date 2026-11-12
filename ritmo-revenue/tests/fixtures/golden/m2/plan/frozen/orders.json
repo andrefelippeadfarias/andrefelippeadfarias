@@ -1,0 +1,9454 @@
+{
+ "ordens": [
+  {
+   "id": "dono-2026-10-03-finados-mais-20",
+   "tipo": "preco_por_data",
+   "quartos": [
+    "*"
+   ],
+   "de": "2026-10-30",
+   "ate": "2026-11-02",
+   "data": "2026-10-03",
+   "libera": [
+    "estadia"
+   ]
+  },
+  {
+   "id": "dono-2026-10-07-regra-g",
+   "tipo": "regra",
+   "quartos": [
+    "Balcony"
+   ],
+   "de": "2026-10-07",
+   "ate": "2027-12-31",
+   "data": "2026-10-07",
+   "libera": [
+    "fixo"
+   ]
+  },
+  {
+   "id": "dono-2026-10-21-ordem-recanto",
+   "tipo": "regra",
+   "quartos": [
+    "Q2"
+   ],
+   "de": "2026-10-21",
+   "ate": "2027-12-31",
+   "data": "2026-10-21",
+   "libera": [
+    "teto_q2",
+    "fixo"
+   ]
+  },
+  {
+   "id": "dono-2026-10-22-afrodite-mais-cara",
+   "tipo": "regra",
+   "quartos": [
+    "Afrodite"
+   ],
+   "de": "2026-10-22",
+   "ate": "2027-12-31",
+   "data": "2026-10-22",
+   "libera": [
+    "acima_15",
+    "fixo"
+   ]
+  },
+  {
+   "id": "dono-2026-10-25-publico-450",
+   "tipo": "piso_por_data",
+   "quartos": [
+    "VK7",
+    "VK2",
+    "Balcony"
+   ],
+   "de": "2026-11-02",
+   "ate": "2026-11-08",
+   "noites": [
+    "2026-11-02",
+    "2026-11-03",
+    "2026-11-04",
+    "2026-11-05",
+    "2026-11-08"
+   ],
+   "noites_fora": {
+    "VK7": [
+     "2026-11-08"
+    ],
+    "VK2": [
+     "2026-11-08"
+    ]
+   },
+   "data": "2026-10-25",
+   "libera": [
+    "fixo",
+    "abaixo_piso"
+   ],
+   "pisos_enviados": {
+    "VK7": 710,
+    "VK2": 711,
+    "Balcony": 635
+   }
+  },
+  {
+   "id": "dono-2026-10-25-publico-450-fds-recanto",
+   "tipo": "piso_por_data",
+   "quartos": [
+    "Q7",
+    "Double"
+   ],
+   "de": "2026-11-06",
+   "ate": "2026-11-07",
+   "noites": [
+    "2026-11-06",
+    "2026-11-07"
+   ],
+   "data": "2026-10-25",
+   "libera": [
+    "fixo",
+    "abaixo_piso"
+   ],
+   "pisos_enviados": {
+    "Q7": 720,
+    "Double": 760
+   }
+  },
+  {
+   "id": "dono-2026-10-26-genius-300",
+   "tipo": "piso_por_data",
+   "quartos": [
+    "Q7",
+    "Double",
+    "Q2",
+    "Afrodite"
+   ],
+   "de": "2026-11-02",
+   "ate": "2026-11-08",
+   "noites": [
+    "2026-11-02",
+    "2026-11-03",
+    "2026-11-04",
+    "2026-11-05"
+   ],
+   "data": "2026-10-26",
+   "libera": [
+    "fixo",
+    "abaixo_piso"
+   ],
+   "pisos_enviados": {
+    "Q7": 739,
+    "Q2": 747,
+    "Double": 755,
+    "Afrodite": 800
+   }
+  },
+  {
+   "id": "dono-2026-10-26-escada",
+   "tipo": "regra",
+   "quartos": [
+    "*"
+   ],
+   "de": "2026-10-26",
+   "ate": "2026-10-30",
+   "data": "2026-10-26",
+   "libera": [
+    "fixo",
+    "acima_15"
+   ]
+  },
+  {
+   "id": "dono-2026-10-27-regra-j",
+   "tipo": "regra",
+   "quartos": [
+    "*"
+   ],
+   "de": "2026-10-27",
+   "ate": "2026-10-30",
+   "data": "2026-10-27",
+   "libera": [
+    "fixo",
+    "acima_15"
+   ]
+  },
+  {
+   "id": "dono-2026-10-29-sexta-mercado",
+   "tipo": "preco_por_data",
+   "quartos": [
+    "*"
+   ],
+   "de": "2026-10-30",
+   "ate": "2026-10-30",
+   "data": "2026-10-29",
+   "libera": [
+    "fixo",
+    "estadia"
+   ]
+  },
+  {
+   "id": "dono-2026-10-30-finados-menos-10",
+   "tipo": "preco_por_data",
+   "quartos": [
+    "*"
+   ],
+   "de": "2026-10-30",
+   "ate": "2026-11-01",
+   "data": "2026-10-30",
+   "libera": [
+    "fixo"
+   ]
+  },
+  {
+   "id": "manual-2026-10-29-moinhos-panoramica1",
+   "tipo": "manual",
+   "quartos": [
+    "Q7",
+    "Double"
+   ],
+   "de": "2026-10-30",
+   "ate": "2026-10-31",
+   "data": "2026-10-29",
+   "libera": []
+  },
+  {
+   "id": "dono-2026-10-31-ligar-motor",
+   "tipo": "regra",
+   "quartos": [
+    "*"
+   ],
+   "de": "2026-10-31",
+   "ate": "2027-12-31",
+   "data": "2026-10-31",
+   "libera": [
+    "acima_15",
+    "anuncio"
+   ]
+  },
+  {
+   "id": "dono-2026-10-31-villa-reabrir-0507",
+   "tipo": "regra",
+   "quartos": [
+    "VK7",
+    "VK2",
+    "Balcony"
+   ],
+   "de": "2026-11-05",
+   "ate": "2026-11-07",
+   "data": "2026-10-31",
+   "libera": [
+    "acima_15",
+    "fixo",
+    "abaixo_piso"
+   ]
+  },
+  {
+   "id": "dono-2026-11-01-recanto-base-mercado",
+   "tipo": "alvo_por_data",
+   "quartos": [
+    "Q7",
+    "Double",
+    "Q2"
+   ],
+   "de": "2026-11-01",
+   "ate": "2026-11-30",
+   "noites": [
+    "2026-11-03",
+    "2026-11-04",
+    "2026-11-05",
+    "2026-11-06",
+    "2026-11-07"
+   ],
+   "data": "2026-11-01",
+   "libera": [
+    "abaixo_piso",
+    "acima_15"
+   ],
+   "pisos_enviados": {
+    "Q7": 560,
+    "Double": 630,
+    "Q2": 595
+   },
+   "percentil": 50,
+   "escada_vendas": true,
+   "passo_livre": true,
+   "ocupacao_max": 0.7,
+   "frente_ocupacao": 0.5
+  },
+  {
+   "id": "dono-2026-11-01-beds24-fds-e-villa-0511",
+   "tipo": "regra",
+   "quartos": [
+    "Double",
+    "Q7",
+    "Q2",
+    "Afrodite",
+    "VK7",
+    "VK2",
+    "Balcony"
+   ],
+   "de": "2026-11-01",
+   "ate": "2027-12-31",
+   "data": "2026-11-01",
+   "libera": [
+    "estadia"
+   ]
+  },
+  {
+   "id": "dono-2026-11-01-beds24-edicao",
+   "tipo": "regra",
+   "quartos": [
+    "*"
+   ],
+   "de": "2026-11-01",
+   "ate": "2027-12-31",
+   "data": "2026-11-01",
+   "libera": [
+    "beds24_inventario",
+    "estadia"
+   ]
+  },
+  {
+   "id": "dono-2026-11-01-revisao-365",
+   "tipo": "regra",
+   "quartos": [
+    "*"
+   ],
+   "de": "2026-11-01",
+   "ate": "2027-10-31",
+   "data": "2026-11-01",
+   "libera": [
+    "beds24_inventario"
+   ]
+  },
+  {
+   "id": "dono-2026-11-01-beds24-semana-afrodite-vk7",
+   "tipo": "regra",
+   "quartos": [
+    "*"
+   ],
+   "de": "2026-11-01",
+   "ate": "2027-10-31",
+   "data": "2026-11-01",
+   "libera": [
+    "beds24_inventario",
+    "estadia"
+   ]
+  },
+  {
+   "id": "dono-2026-11-01-afrodite-sextas-feriado",
+   "tipo": "regra",
+   "quartos": [
+    "Afrodite"
+   ],
+   "de": "2026-11-20",
+   "ate": "2027-07-09",
+   "data": "2026-11-01",
+   "libera": [
+    "beds24_inventario"
+   ]
+  },
+  {
+   "id": "dono-2026-11-01-balcony-0809",
+   "tipo": "preco_por_data",
+   "quartos": [
+    "Balcony"
+   ],
+   "de": "2026-11-08",
+   "ate": "2026-11-09",
+   "data": "2026-11-01",
+   "libera": [
+    "regra_g",
+    "abaixo_piso",
+    "fixo"
+   ]
+  },
+  {
+   "id": "dono-2026-11-01-subir-com-reservas",
+   "tipo": "regra",
+   "quartos": [
+    "*"
+   ],
+   "de": "2026-11-01",
+   "ate": "2027-12-31",
+   "data": "2026-11-01",
+   "libera": []
+  },
+  {
+   "id": "dono-2026-11-01-villa-base-mercado",
+   "tipo": "alvo_por_data",
+   "quartos": [
+    "VK7",
+    "VK2",
+    "Balcony"
+   ],
+   "de": "2026-11-02",
+   "ate": "2026-11-30",
+   "noites": [
+    "2026-11-02",
+    "2026-11-03",
+    "2026-11-04",
+    "2026-11-05",
+    "2026-11-08",
+    "2026-11-09",
+    "2026-11-10",
+    "2026-11-11",
+    "2026-11-12",
+    "2026-11-15",
+    "2026-11-16",
+    "2026-11-17",
+    "2026-11-18",
+    "2026-11-22",
+    "2026-11-23",
+    "2026-11-24",
+    "2026-11-25",
+    "2026-11-26",
+    "2026-11-29",
+    "2026-11-30"
+   ],
+   "noites_fora": {
+    "VK7": [
+     "2026-11-08",
+     "2026-11-09",
+     "2026-11-10",
+     "2026-11-11",
+     "2026-11-12",
+     "2026-11-15",
+     "2026-11-16",
+     "2026-11-17",
+     "2026-11-18",
+     "2026-11-22",
+     "2026-11-23",
+     "2026-11-24",
+     "2026-11-25",
+     "2026-11-26",
+     "2026-11-29",
+     "2026-11-30"
+    ],
+    "VK2": [
+     "2026-11-08",
+     "2026-11-09",
+     "2026-11-10",
+     "2026-11-11",
+     "2026-11-12",
+     "2026-11-15",
+     "2026-11-16",
+     "2026-11-17",
+     "2026-11-18",
+     "2026-11-22",
+     "2026-11-23",
+     "2026-11-24",
+     "2026-11-25",
+     "2026-11-26",
+     "2026-11-29",
+     "2026-11-30"
+    ],
+    "Balcony": [
+     "2026-11-10",
+     "2026-11-11",
+     "2026-11-12",
+     "2026-11-15",
+     "2026-11-16",
+     "2026-11-17",
+     "2026-11-18",
+     "2026-11-22",
+     "2026-11-23",
+     "2026-11-24",
+     "2026-11-25",
+     "2026-11-26",
+     "2026-11-29",
+     "2026-11-30"
+    ]
+   },
+   "data": "2026-11-01",
+   "criada_em": "2026-11-01T20:55+00:00",
+   "libera": [
+    "abaixo_piso",
+    "acima_15"
+   ],
+   "pisos_enviados": {
+    "VK7": 710,
+    "VK2": 711,
+    "Balcony": 635
+   },
+   "percentil": 50,
+   "escada_vendas": true,
+   "passo_livre": true,
+   "ocupacao_max": 0.7,
+   "frente_ocupacao": 0.5
+  },
+  {
+   "id": "dono-2026-11-01-consciencia-negra-p75",
+   "tipo": "alvo_por_data",
+   "quartos": [
+    "VK7",
+    "VK2",
+    "Balcony"
+   ],
+   "de": "2026-11-19",
+   "ate": "2026-11-21",
+   "noites": [
+    "2026-11-19",
+    "2026-11-20",
+    "2026-11-21"
+   ],
+   "data": "2026-11-01",
+   "criada_em": "2026-11-01T20:55+00:00",
+   "libera": [],
+   "percentil": 75,
+   "escada_vendas": false,
+   "passo_livre": true,
+   "so_desce": true,
+   "ocupacao_max": 0.7,
+   "frente_ocupacao": 0.5
+  },
+  {
+   "id": "dono-2026-11-01-consciencia-negra-p75-recanto",
+   "tipo": "alvo_por_data",
+   "quartos": [
+    "Q7",
+    "Double",
+    "Q2",
+    "Afrodite"
+   ],
+   "de": "2026-11-19",
+   "ate": "2026-11-19",
+   "noites": [
+    "2026-11-19"
+   ],
+   "data": "2026-11-01",
+   "criada_em": "2026-11-01T20:55+00:00",
+   "libera": [],
+   "percentil": 75,
+   "escada_vendas": false,
+   "passo_livre": true,
+   "so_desce": true,
+   "ocupacao_max": 0.7,
+   "frente_ocupacao": 0.5
+  },
+  {
+   "id": "dono-2026-11-01-villa-pre-natal-mediana",
+   "tipo": "alvo_por_data",
+   "quartos": [
+    "VK7",
+    "VK2"
+   ],
+   "de": "2026-12-21",
+   "ate": "2026-12-23",
+   "noites": [
+    "2026-12-21",
+    "2026-12-22",
+    "2026-12-23"
+   ],
+   "noites_fora": {
+    "VK7": [
+     "2026-12-21",
+     "2026-12-22",
+     "2026-12-23"
+    ],
+    "VK2": [
+     "2026-12-21",
+     "2026-12-22",
+     "2026-12-23"
+    ]
+   },
+   "data": "2026-11-01",
+   "criada_em": "2026-11-01T23:25+00:00",
+   "libera": [
+    "acima_15"
+   ],
+   "pisos_enviados": {
+    "VK7": 1500,
+    "VK2": 1500
+   },
+   "percentil": 50,
+   "escada_vendas": true,
+   "passo_livre": true,
+   "ocupacao_max": 0.7,
+   "frente_ocupacao": 0.5,
+   "topo_enviados": {
+    "VK7": 2871,
+    "VK2": 3099
+   }
+  },
+  {
+   "id": "dono-2026-11-01-villa-27-28-mediana",
+   "tipo": "alvo_por_data",
+   "quartos": [
+    "VK7",
+    "VK2"
+   ],
+   "de": "2026-12-27",
+   "ate": "2026-12-28",
+   "noites": [
+    "2026-12-27",
+    "2026-12-28"
+   ],
+   "data": "2026-11-01",
+   "criada_em": "2026-11-01T23:25+00:00",
+   "libera": [
+    "acima_15"
+   ],
+   "pisos_enviados": {
+    "VK7": 2077,
+    "VK2": 2077
+   },
+   "percentil": 50,
+   "escada_vendas": true,
+   "passo_livre": true,
+   "ocupacao_max": 0.7,
+   "frente_ocupacao": 0.5,
+   "topo_enviados": {
+    "VK7": 3493,
+    "VK2": 3010
+   }
+  },
+  {
+   "id": "dono-2026-11-01-gatilhos-festas",
+   "tipo": "acompanhamento",
+   "quartos": [
+    "Q7",
+    "Double",
+    "Afrodite",
+    "Q2",
+    "VK7",
+    "VK2",
+    "Balcony"
+   ],
+   "de": "2026-12-24",
+   "ate": "2027-01-01",
+   "noites": [
+    "2026-12-24",
+    "2026-12-25",
+    "2026-12-26",
+    "2026-12-27",
+    "2026-12-28",
+    "2026-12-29",
+    "2026-12-30",
+    "2026-12-31",
+    "2027-01-01"
+   ],
+   "noites_fora": {
+    "Q7": [
+     "2026-12-24",
+     "2026-12-25",
+     "2026-12-26",
+     "2026-12-30",
+     "2026-12-31",
+     "2027-01-01"
+    ],
+    "Q2": [
+     "2026-12-24",
+     "2026-12-25",
+     "2026-12-26",
+     "2026-12-30",
+     "2026-12-31",
+     "2027-01-01"
+    ],
+    "Double": [
+     "2026-12-24",
+     "2026-12-25",
+     "2026-12-26",
+     "2026-12-30",
+     "2026-12-31",
+     "2027-01-01"
+    ],
+    "Afrodite": [
+     "2026-12-24",
+     "2026-12-25",
+     "2026-12-26",
+     "2026-12-30",
+     "2026-12-31",
+     "2027-01-01"
+    ],
+    "VK7": [
+     "2026-12-24",
+     "2026-12-25",
+     "2026-12-26",
+     "2026-12-30",
+     "2026-12-31",
+     "2027-01-01"
+    ],
+    "VK2": [
+     "2026-12-24",
+     "2026-12-25",
+     "2026-12-26",
+     "2026-12-30",
+     "2026-12-31",
+     "2027-01-01"
+    ],
+    "Balcony": [
+     "2026-12-24",
+     "2026-12-25",
+     "2026-12-26",
+     "2026-12-30",
+     "2026-12-31",
+     "2027-01-01"
+    ]
+   },
+   "data": "2026-11-01",
+   "criada_em": "2026-11-01T23:25+00:00",
+   "libera": []
+  },
+  {
+   "id": "dono-2026-11-02-sabados-fechados",
+   "tipo": "restricao",
+   "quartos": [
+    "Q7",
+    "Double",
+    "Afrodite",
+    "Q2",
+    "VK7",
+    "VK2",
+    "Balcony"
+   ],
+   "de": "2026-11-02",
+   "ate": "2099-12-31",
+   "data": "2026-11-02",
+   "criada_em": "2026-11-02T00:10+00:00",
+   "libera": []
+  },
+  {
+   "id": "dono-2026-11-02-sabado-orfao",
+   "tipo": "regra",
+   "quartos": [
+    "Q7",
+    "Double",
+    "Afrodite",
+    "Q2",
+    "VK7",
+    "VK2",
+    "Balcony"
+   ],
+   "de": "2026-11-02",
+   "ate": "2099-12-31",
+   "data": "2026-11-02",
+   "criada_em": "2026-11-02T01:00+00:00",
+   "libera": [
+    "beds24_inventario",
+    "sabado_aberto_orfao",
+    "estadia_1_orfa"
+   ]
+  },
+  {
+   "id": "dono-2026-11-02-festas-sabado-aberto",
+   "tipo": "regra",
+   "quartos": [
+    "Q7",
+    "Double",
+    "Afrodite",
+    "Q2",
+    "VK7",
+    "VK2",
+    "Balcony"
+   ],
+   "de": "2026-12-26",
+   "ate": "2026-12-26",
+   "noites": [
+    "2026-12-26"
+   ],
+   "data": "2026-11-02",
+   "criada_em": "2026-11-02T01:00+00:00",
+   "libera": [
+    "beds24_inventario",
+    "sabado_aberto"
+   ]
+  },
+  {
+   "id": "dono-2026-11-02-nov-fds-regua-lista",
+   "tipo": "regra",
+   "quartos": [
+    "Q7",
+    "Double",
+    "Afrodite",
+    "Q2",
+    "VK7",
+    "VK2",
+    "Balcony"
+   ],
+   "de": "2026-11-13",
+   "ate": "2026-11-28",
+   "noites": [
+    "2026-11-13",
+    "2026-11-14",
+    "2026-11-27",
+    "2026-11-28"
+   ],
+   "noites_fora": {
+    "Q7": [
+     "2026-11-27",
+     "2026-11-28"
+    ],
+    "Q2": [
+     "2026-11-27",
+     "2026-11-28"
+    ],
+    "VK7": [
+     "2026-11-27",
+     "2026-11-28"
+    ],
+    "VK2": [
+     "2026-11-27",
+     "2026-11-28"
+    ],
+    "Balcony": [
+     "2026-11-27",
+     "2026-11-28"
+    ]
+   },
+   "data": "2026-11-02",
+   "criada_em": "2026-11-02T01:30+00:00",
+   "libera": [],
+   "vendidas_base": {
+    "Q7": {
+     "2026-11-13": 2,
+     "2026-11-14": 3,
+     "2026-11-27": 1,
+     "2026-11-28": 1
+    },
+    "VK7": {
+     "2026-11-27": 3,
+     "2026-11-28": 2
+    },
+    "Balcony": {
+     "2026-11-13": 0,
+     "2026-11-14": 0,
+     "2026-11-27": 0,
+     "2026-11-28": 0
+    },
+    "Q2": {
+     "2026-11-13": 8,
+     "2026-11-14": 9,
+     "2026-11-27": 5,
+     "2026-11-28": 5
+    },
+    "VK2": {
+     "2026-11-13": 4,
+     "2026-11-14": 4,
+     "2026-11-27": 3,
+     "2026-11-28": 2
+    }
+   }
+  },
+  {
+   "id": "dono-2026-11-02-aniv-sp-gatilho",
+   "tipo": "acompanhamento",
+   "quartos": [
+    "Q7",
+    "Double",
+    "Afrodite",
+    "Q2",
+    "VK7",
+    "VK2",
+    "Balcony"
+   ],
+   "de": "2027-01-01",
+   "ate": "2027-01-24",
+   "noites": [
+    "2027-01-24"
+   ],
+   "data": "2026-11-02",
+   "criada_em": "2026-11-02T01:30+00:00",
+   "libera": [
+    "estadia_1_domingo_24_01",
+    "domingo_24_01_fora_do_feriado"
+   ]
+  },
+  {
+   "id": "dono-2026-11-02-villa-fds-hidro-1106",
+   "tipo": "alvo_por_data",
+   "quartos": [
+    "VK7",
+    "VK2",
+    "Balcony"
+   ],
+   "de": "2026-11-06",
+   "ate": "2026-11-07",
+   "noites": [
+    "2026-11-06",
+    "2026-11-07"
+   ],
+   "data": "2026-11-02",
+   "criada_em": "2026-11-02T12:20+00:00",
+   "libera": [
+    "acima_15"
+   ],
+   "pisos_enviados": {
+    "VK7": 1900,
+    "VK2": 1900,
+    "Balcony": 1207
+   },
+   "percentil": 50,
+   "escada_vendas": true,
+   "passo_livre": true,
+   "ocupacao_max": 0.7,
+   "frente_ocupacao": 0.5,
+   "topo_enviados": {
+    "VK7": 3754,
+    "VK2": 3754,
+    "Balcony": 1940
+   }
+  },
+  {
+   "id": "dono-2026-11-02-villa-fds-hidro-1113",
+   "tipo": "alvo_por_data",
+   "quartos": [
+    "VK7",
+    "VK2",
+    "Balcony"
+   ],
+   "de": "2026-11-13",
+   "ate": "2026-11-14",
+   "noites": [
+    "2026-11-13",
+    "2026-11-14"
+   ],
+   "data": "2026-11-02",
+   "criada_em": "2026-11-02T12:20+00:00",
+   "libera": [
+    "acima_15"
+   ],
+   "pisos_enviados": {
+    "VK7": 1910,
+    "VK2": 1910,
+    "Balcony": 1267
+   },
+   "percentil": 50,
+   "escada_vendas": true,
+   "passo_livre": true,
+   "ocupacao_max": 0.7,
+   "frente_ocupacao": 0.5,
+   "topo_enviados": {
+    "VK7": 3544,
+    "VK2": 3544,
+    "Balcony": 1958
+   }
+  },
+  {
+   "id": "dono-2026-11-02-villa-fds-hidro-1120",
+   "tipo": "alvo_por_data",
+   "quartos": [
+    "VK7",
+    "VK2",
+    "Balcony"
+   ],
+   "de": "2026-11-20",
+   "ate": "2026-11-21",
+   "noites": [
+    "2026-11-20",
+    "2026-11-21"
+   ],
+   "data": "2026-11-02",
+   "criada_em": "2026-11-02T12:20+00:00",
+   "libera": [
+    "acima_15"
+   ],
+   "pisos_enviados": {
+    "VK7": 2572,
+    "VK2": 2572,
+    "Balcony": 1729
+   },
+   "percentil": 50,
+   "escada_vendas": true,
+   "passo_livre": true,
+   "ocupacao_max": 0.7,
+   "frente_ocupacao": 0.5,
+   "topo_enviados": {
+    "VK7": 4625,
+    "VK2": 4625,
+    "Balcony": 2359
+   }
+  },
+  {
+   "id": "dono-2026-11-02-villa-fds-hidro-1127",
+   "tipo": "alvo_por_data",
+   "quartos": [
+    "VK7",
+    "VK2",
+    "Balcony"
+   ],
+   "de": "2026-11-27",
+   "ate": "2026-11-28",
+   "noites": [
+    "2026-11-27",
+    "2026-11-28"
+   ],
+   "noites_fora": {
+    "VK7": [
+     "2026-11-27",
+     "2026-11-28"
+    ],
+    "VK2": [
+     "2026-11-27",
+     "2026-11-28"
+    ],
+    "Balcony": [
+     "2026-11-27",
+     "2026-11-28"
+    ]
+   },
+   "data": "2026-11-02",
+   "criada_em": "2026-11-02T12:20+00:00",
+   "libera": [
+    "acima_15"
+   ],
+   "pisos_enviados": {
+    "VK7": 2000,
+    "VK2": 2000,
+    "Balcony": 1250
+   },
+   "percentil": 50,
+   "escada_vendas": true,
+   "passo_livre": true,
+   "ocupacao_max": 0.7,
+   "frente_ocupacao": 0.5,
+   "topo_enviados": {
+    "VK7": 3420,
+    "VK2": 3420,
+    "Balcony": 1869
+   }
+  },
+  {
+   "id": "dono-2026-11-02-villa-fds-hidro-1204",
+   "tipo": "alvo_por_data",
+   "quartos": [
+    "VK7",
+    "VK2",
+    "Balcony"
+   ],
+   "de": "2026-12-04",
+   "ate": "2026-12-05",
+   "noites": [
+    "2026-12-04",
+    "2026-12-05"
+   ],
+   "noites_fora": {
+    "VK7": [
+     "2026-12-04",
+     "2026-12-05"
+    ],
+    "VK2": [
+     "2026-12-04",
+     "2026-12-05"
+    ],
+    "Balcony": [
+     "2026-12-04",
+     "2026-12-05"
+    ]
+   },
+   "data": "2026-11-02",
+   "criada_em": "2026-11-02T12:20+00:00",
+   "libera": [
+    "acima_15"
+   ],
+   "pisos_enviados": {
+    "VK7": 2041,
+    "VK2": 2041,
+    "Balcony": 1384
+   },
+   "percentil": 50,
+   "escada_vendas": true,
+   "passo_livre": true,
+   "ocupacao_max": 0.7,
+   "frente_ocupacao": 0.5,
+   "topo_enviados": {
+    "VK7": 3790,
+    "VK2": 3790,
+    "Balcony": 2067
+   }
+  },
+  {
+   "id": "dono-2026-11-02-villa-fds-hidro-1211",
+   "tipo": "alvo_por_data",
+   "quartos": [
+    "VK7",
+    "VK2",
+    "Balcony"
+   ],
+   "de": "2026-12-11",
+   "ate": "2026-12-12",
+   "noites": [
+    "2026-12-11",
+    "2026-12-12"
+   ],
+   "noites_fora": {
+    "VK7": [
+     "2026-12-11",
+     "2026-12-12"
+    ],
+    "VK2": [
+     "2026-12-11",
+     "2026-12-12"
+    ],
+    "Balcony": [
+     "2026-12-11",
+     "2026-12-12"
+    ]
+   },
+   "data": "2026-11-02",
+   "criada_em": "2026-11-02T12:20+00:00",
+   "libera": [
+    "acima_15"
+   ],
+   "pisos_enviados": {
+    "VK7": 2059,
+    "VK2": 2059,
+    "Balcony": 1499
+   },
+   "percentil": 50,
+   "escada_vendas": true,
+   "passo_livre": true,
+   "ocupacao_max": 0.7,
+   "frente_ocupacao": 0.5,
+   "topo_enviados": {
+    "VK7": 3522,
+    "VK2": 3522,
+    "Balcony": 2051
+   }
+  },
+  {
+   "id": "dono-2026-11-02-villa-fds-hidro-1218",
+   "tipo": "alvo_por_data",
+   "quartos": [
+    "VK7",
+    "VK2",
+    "Balcony"
+   ],
+   "de": "2026-12-18",
+   "ate": "2026-12-19",
+   "noites": [
+    "2026-12-18",
+    "2026-12-19"
+   ],
+   "noites_fora": {
+    "VK7": [
+     "2026-12-18",
+     "2026-12-19"
+    ],
+    "VK2": [
+     "2026-12-18",
+     "2026-12-19"
+    ],
+    "Balcony": [
+     "2026-12-18",
+     "2026-12-19"
+    ]
+   },
+   "data": "2026-11-02",
+   "criada_em": "2026-11-02T12:20+00:00",
+   "libera": [
+    "acima_15"
+   ],
+   "pisos_enviados": {
+    "VK7": 1962,
+    "VK2": 1962,
+    "Balcony": 1473
+   },
+   "percentil": 50,
+   "escada_vendas": true,
+   "passo_livre": true,
+   "ocupacao_max": 0.7,
+   "frente_ocupacao": 0.5,
+   "topo_enviados": {
+    "VK7": 4166,
+    "VK2": 4166,
+    "Balcony": 1878
+   }
+  },
+  {
+   "id": "dono-2026-11-03-festas-pacotes",
+   "tipo": "restricao",
+   "quartos": [
+    "Q7",
+    "Double",
+    "Afrodite",
+    "Q2",
+    "VK7",
+    "VK2",
+    "Balcony"
+   ],
+   "de": "2026-12-23",
+   "ate": "2027-01-03",
+   "noites": [
+    "2026-12-23",
+    "2026-12-24",
+    "2026-12-25",
+    "2026-12-29",
+    "2026-12-30",
+    "2026-12-31",
+    "2027-01-01",
+    "2027-01-02",
+    "2027-01-03"
+   ],
+   "data": "2026-11-03",
+   "criada_em": "2026-11-03T10:30+00:00",
+   "libera": [
+    "chegada_saida_por_data",
+    "estadia_por_data"
+   ]
+  },
+  {
+   "id": "dono-2026-11-03-recanto-fds-hidro-1113",
+   "tipo": "alvo_por_data",
+   "quartos": [
+    "Q7",
+    "Q2",
+    "Double"
+   ],
+   "de": "2026-11-13",
+   "ate": "2026-11-14",
+   "noites": [
+    "2026-11-13",
+    "2026-11-14"
+   ],
+   "data": "2026-11-03",
+   "criada_em": "2026-11-03T10:45+00:00",
+   "libera": [
+    "acima_15"
+   ],
+   "pisos_enviados": {
+    "Q7": 2388,
+    "Q2": 2388,
+    "Double": 2708
+   },
+   "percentil": 65,
+   "vendidas_base": {
+    "Q7": {
+     "2026-11-13": 2,
+     "2026-11-14": 3
+    },
+    "Double": {
+     "2026-11-13": 4,
+     "2026-11-14": 4
+    },
+    "Q2": {
+     "2026-11-13": 8,
+     "2026-11-14": 9
+    }
+   },
+   "escada_vendas": true,
+   "passo_livre": true,
+   "ocupacao_max": 0.7,
+   "frente_ocupacao": 0.5,
+   "topo_enviados": {
+    "Q7": 3656,
+    "Q2": 3656,
+    "Double": 3656
+   },
+   "piso_atras": {
+    "Q7": 1970,
+    "Q2": 1970,
+    "Double": 1970
+   },
+   "gatilho_dias": 7
+  },
+  {
+   "id": "dono-2026-11-03-recanto-fds-hidro-1127",
+   "tipo": "alvo_por_data",
+   "quartos": [
+    "Q7",
+    "Q2",
+    "Double"
+   ],
+   "de": "2026-11-27",
+   "ate": "2026-11-28",
+   "noites": [
+    "2026-11-27",
+    "2026-11-28"
+   ],
+   "noites_fora": {
+    "Q7": [
+     "2026-11-27",
+     "2026-11-28"
+    ],
+    "Q2": [
+     "2026-11-27",
+     "2026-11-28"
+    ],
+    "Double": [
+     "2026-11-27",
+     "2026-11-28"
+    ]
+   },
+   "data": "2026-11-03",
+   "criada_em": "2026-11-03T10:45+00:00",
+   "libera": [
+    "acima_15"
+   ],
+   "pisos_enviados": {
+    "Q7": 2628,
+    "Q2": 2628,
+    "Double": 3019
+   },
+   "percentil": 65,
+   "vendidas_base": {
+    "Q7": {
+     "2026-11-27": 1,
+     "2026-11-28": 1
+    },
+    "Double": {
+     "2026-11-27": 4,
+     "2026-11-28": 4
+    },
+    "Q2": {
+     "2026-11-27": 5,
+     "2026-11-28": 5
+    }
+   },
+   "escada_vendas": true,
+   "passo_livre": true,
+   "ocupacao_max": 0.7,
+   "frente_ocupacao": 0.5,
+   "topo_enviados": {
+    "Q7": 3850,
+    "Q2": 3850,
+    "Double": 3850
+   },
+   "piso_atras": {
+    "Q7": 2252,
+    "Q2": 2252,
+    "Double": 2252
+   },
+   "gatilho_dias": 7
+  },
+  {
+   "id": "dono-2026-11-03-recanto-fds-hidro-1204",
+   "tipo": "alvo_por_data",
+   "quartos": [
+    "Q7",
+    "Q2",
+    "Double"
+   ],
+   "de": "2026-12-04",
+   "ate": "2026-12-05",
+   "noites": [
+    "2026-12-04",
+    "2026-12-05"
+   ],
+   "noites_fora": {
+    "Q7": [
+     "2026-12-04",
+     "2026-12-05"
+    ],
+    "Q2": [
+     "2026-12-04",
+     "2026-12-05"
+    ],
+    "Double": [
+     "2026-12-04",
+     "2026-12-05"
+    ]
+   },
+   "data": "2026-11-03",
+   "criada_em": "2026-11-03T10:45+00:00",
+   "libera": [
+    "acima_15"
+   ],
+   "pisos_enviados": {
+    "Q7": 2513,
+    "Q2": 2513,
+    "Double": 2513
+   },
+   "percentil": 65,
+   "vendidas_base": {
+    "Q7": {
+     "2026-12-04": 2,
+     "2026-12-05": 2
+    },
+    "Double": {
+     "2026-12-04": 2,
+     "2026-12-05": 4
+    },
+    "Q2": {
+     "2026-12-04": 4,
+     "2026-12-05": 6
+    }
+   },
+   "escada_vendas": true,
+   "passo_livre": true,
+   "ocupacao_max": 0.7,
+   "frente_ocupacao": 0.5,
+   "topo_enviados": {
+    "Q7": 3846,
+    "Q2": 3846,
+    "Double": 3846
+   },
+   "piso_atras": {
+    "Q7": 2071,
+    "Q2": 2071,
+    "Double": 2071
+   },
+   "gatilho_dias": 7
+  },
+  {
+   "id": "dono-2026-11-03-recanto-fds-hidro-1211",
+   "tipo": "alvo_por_data",
+   "quartos": [
+    "Q7",
+    "Q2",
+    "Double"
+   ],
+   "de": "2026-12-11",
+   "ate": "2026-12-12",
+   "noites": [
+    "2026-12-11",
+    "2026-12-12"
+   ],
+   "noites_fora": {
+    "Q7": [
+     "2026-12-11",
+     "2026-12-12"
+    ],
+    "Q2": [
+     "2026-12-11",
+     "2026-12-12"
+    ],
+    "Double": [
+     "2026-12-11",
+     "2026-12-12"
+    ]
+   },
+   "data": "2026-11-03",
+   "criada_em": "2026-11-03T10:45+00:00",
+   "libera": [
+    "acima_15"
+   ],
+   "pisos_enviados": {
+    "Q7": 2524,
+    "Q2": 2524,
+    "Double": 2524
+   },
+   "percentil": 65,
+   "vendidas_base": {
+    "Q7": {
+     "2026-12-11": 0,
+     "2026-12-12": 0
+    },
+    "Double": {
+     "2026-12-11": 2,
+     "2026-12-12": 2
+    },
+    "Q2": {
+     "2026-12-11": 3,
+     "2026-12-12": 3
+    }
+   },
+   "escada_vendas": true,
+   "passo_livre": true,
+   "ocupacao_max": 0.7,
+   "frente_ocupacao": 0.5,
+   "topo_enviados": {
+    "Q7": 3573,
+    "Q2": 3573,
+    "Double": 3573
+   },
+   "piso_atras": {
+    "Q7": 2089,
+    "Q2": 2089,
+    "Double": 2089
+   },
+   "gatilho_dias": 7
+  },
+  {
+   "id": "dono-2026-11-03-recanto-fds-hidro-1218",
+   "tipo": "alvo_por_data",
+   "quartos": [
+    "Q7",
+    "Q2",
+    "Double"
+   ],
+   "de": "2026-12-18",
+   "ate": "2026-12-19",
+   "noites": [
+    "2026-12-18",
+    "2026-12-19"
+   ],
+   "noites_fora": {
+    "Q7": [
+     "2026-12-18",
+     "2026-12-19"
+    ],
+    "Q2": [
+     "2026-12-18",
+     "2026-12-19"
+    ],
+    "Double": [
+     "2026-12-18",
+     "2026-12-19"
+    ]
+   },
+   "data": "2026-11-03",
+   "criada_em": "2026-11-03T10:45+00:00",
+   "libera": [
+    "acima_15"
+   ],
+   "pisos_enviados": {
+    "Q7": 2475,
+    "Q2": 2475,
+    "Double": 2475
+   },
+   "percentil": 65,
+   "vendidas_base": {
+    "Q7": {
+     "2026-12-18": 0,
+     "2026-12-19": 0
+    },
+    "Double": {
+     "2026-12-18": 2,
+     "2026-12-19": 2
+    },
+    "Q2": {
+     "2026-12-18": 2,
+     "2026-12-19": 2
+    }
+   },
+   "escada_vendas": true,
+   "passo_livre": true,
+   "ocupacao_max": 0.7,
+   "frente_ocupacao": 0.5,
+   "topo_enviados": {
+    "Q7": 4227,
+    "Q2": 4227,
+    "Double": 4227
+   },
+   "piso_atras": {
+    "Q7": 1991,
+    "Q2": 1991,
+    "Double": 1991
+   },
+   "gatilho_dias": 7
+  },
+  {
+   "id": "dono-2026-11-03-recanto-fds-hidro-0108",
+   "tipo": "alvo_por_data",
+   "quartos": [
+    "Q7",
+    "Q2",
+    "Double"
+   ],
+   "de": "2027-01-08",
+   "ate": "2027-01-09",
+   "noites": [
+    "2027-01-08",
+    "2027-01-09"
+   ],
+   "data": "2026-11-03",
+   "criada_em": "2026-11-03T10:45+00:00",
+   "libera": [
+    "acima_15"
+   ],
+   "pisos_enviados": {
+    "Q7": 2534,
+    "Q2": 2534,
+    "Double": 2534
+   },
+   "percentil": 65,
+   "vendidas_base": {
+    "Q7": {
+     "2027-01-08": 0,
+     "2027-01-09": 0
+    },
+    "Double": {
+     "2027-01-08": 0,
+     "2027-01-09": 0
+    },
+    "Q2": {
+     "2027-01-08": 0,
+     "2027-01-09": 0
+    }
+   },
+   "escada_vendas": true,
+   "passo_livre": true,
+   "ocupacao_max": 0.7,
+   "frente_ocupacao": 0.5,
+   "topo_enviados": {
+    "Q7": 4010,
+    "Q2": 4010,
+    "Double": 4010
+   },
+   "piso_atras": {
+    "Q7": 1969,
+    "Q2": 1969,
+    "Double": 1969
+   },
+   "gatilho_dias": 7
+  },
+  {
+   "id": "dono-2026-11-03-recanto-fds-hidro-0115",
+   "tipo": "alvo_por_data",
+   "quartos": [
+    "Q7",
+    "Q2",
+    "Double"
+   ],
+   "de": "2027-01-15",
+   "ate": "2027-01-16",
+   "noites": [
+    "2027-01-15",
+    "2027-01-16"
+   ],
+   "data": "2026-11-03",
+   "criada_em": "2026-11-03T10:45+00:00",
+   "libera": [
+    "acima_15"
+   ],
+   "pisos_enviados": {
+    "Q7": 2398,
+    "Q2": 2398,
+    "Double": 2398
+   },
+   "percentil": 65,
+   "vendidas_base": {
+    "Q7": {
+     "2027-01-15": 1,
+     "2027-01-16": 1
+    },
+    "Double": {
+     "2027-01-15": 0,
+     "2027-01-16": 0
+    },
+    "Q2": {
+     "2027-01-15": 1,
+     "2027-01-16": 1
+    }
+   },
+   "escada_vendas": true,
+   "passo_livre": true,
+   "ocupacao_max": 0.7,
+   "frente_ocupacao": 0.5,
+   "topo_enviados": {
+    "Q7": 3939,
+    "Q2": 3939,
+    "Double": 3939
+   },
+   "piso_atras": {
+    "Q7": 1953,
+    "Q2": 1953,
+    "Double": 1953
+   },
+   "gatilho_dias": 7
+  },
+  {
+   "id": "dono-2026-11-03-recanto-fds-hidro-0129",
+   "tipo": "alvo_por_data",
+   "quartos": [
+    "Q7",
+    "Q2",
+    "Double"
+   ],
+   "de": "2027-01-29",
+   "ate": "2027-01-30",
+   "noites": [
+    "2027-01-29",
+    "2027-01-30"
+   ],
+   "data": "2026-11-03",
+   "criada_em": "2026-11-03T10:45+00:00",
+   "libera": [
+    "acima_15"
+   ],
+   "pisos_enviados": {
+    "Q7": 2491,
+    "Q2": 2491,
+    "Double": 2491
+   },
+   "percentil": 65,
+   "vendidas_base": {
+    "Q7": {
+     "2027-01-29": 0,
+     "2027-01-30": 0
+    },
+    "Double": {
+     "2027-01-29": 0,
+     "2027-01-30": 0
+    },
+    "Q2": {
+     "2027-01-29": 0,
+     "2027-01-30": 0
+    }
+   },
+   "escada_vendas": true,
+   "passo_livre": true,
+   "ocupacao_max": 0.7,
+   "frente_ocupacao": 0.5,
+   "topo_enviados": {
+    "Q7": 3951,
+    "Q2": 3951,
+    "Double": 3951
+   },
+   "piso_atras": {
+    "Q7": 1908,
+    "Q2": 1908,
+    "Double": 1908
+   },
+   "gatilho_dias": 7
+  },
+  {
+   "id": "dono-2026-11-03-recanto-semana-hidro-1108",
+   "tipo": "alvo_por_data",
+   "quartos": [
+    "Q7",
+    "Q2",
+    "Double"
+   ],
+   "de": "2026-11-08",
+   "ate": "2026-11-08",
+   "noites": [
+    "2026-11-08"
+   ],
+   "noites_fora": {
+    "Q7": [
+     "2026-11-08"
+    ],
+    "Q2": [
+     "2026-11-08"
+    ],
+    "Double": [
+     "2026-11-08"
+    ]
+   },
+   "data": "2026-11-03",
+   "criada_em": "2026-11-03T13:50+00:00",
+   "libera": [
+    "acima_15"
+   ],
+   "pisos_enviados": {
+    "Q7": 1618,
+    "Q2": 1618,
+    "Double": 1618
+   },
+   "percentil": 65,
+   "vendidas_base": {
+    "Q7": {
+     "2026-11-08": 5
+    },
+    "Double": {
+     "2026-11-08": 3
+    },
+    "Q2": {
+     "2026-11-08": 11
+    }
+   },
+   "escada_vendas": true,
+   "passo_livre": true,
+   "ocupacao_max": 0.7,
+   "frente_ocupacao": 0.5,
+   "topo_enviados": {
+    "Q7": 3043,
+    "Q2": 3043,
+    "Double": 3043
+   },
+   "piso_atras": {
+    "Q7": 1220,
+    "Q2": 1220,
+    "Double": 1220
+   },
+   "gatilho_dias": 7
+  },
+  {
+   "id": "dono-2026-11-03-recanto-semana-hidro-1109",
+   "tipo": "alvo_por_data",
+   "quartos": [
+    "Q7",
+    "Q2",
+    "Double"
+   ],
+   "de": "2026-11-09",
+   "ate": "2026-11-09",
+   "noites": [
+    "2026-11-09"
+   ],
+   "noites_fora": {
+    "Q7": [
+     "2026-11-09"
+    ],
+    "Q2": [
+     "2026-11-09"
+    ],
+    "Double": [
+     "2026-11-09"
+    ]
+   },
+   "data": "2026-11-03",
+   "criada_em": "2026-11-03T13:50+00:00",
+   "libera": [
+    "acima_15"
+   ],
+   "pisos_enviados": {
+    "Q7": 1624,
+    "Q2": 1624,
+    "Double": 1624
+   },
+   "percentil": 65,
+   "vendidas_base": {
+    "Q7": {
+     "2026-11-09": 6
+    },
+    "Double": {
+     "2026-11-09": 3
+    },
+    "Q2": {
+     "2026-11-09": 12
+    }
+   },
+   "escada_vendas": true,
+   "passo_livre": true,
+   "ocupacao_max": 0.7,
+   "frente_ocupacao": 0.5,
+   "topo_enviados": {
+    "Q7": 2989,
+    "Q2": 2989,
+    "Double": 2989
+   },
+   "piso_atras": {
+    "Q7": 1220,
+    "Q2": 1220,
+    "Double": 1220
+   },
+   "gatilho_dias": 7
+  },
+  {
+   "id": "dono-2026-11-03-recanto-semana-hidro-1110",
+   "tipo": "alvo_por_data",
+   "quartos": [
+    "Q7",
+    "Q2",
+    "Double"
+   ],
+   "de": "2026-11-10",
+   "ate": "2026-11-10",
+   "noites": [
+    "2026-11-10"
+   ],
+   "noites_fora": {
+    "Q7": [
+     "2026-11-10"
+    ],
+    "Q2": [
+     "2026-11-10"
+    ],
+    "Double": [
+     "2026-11-10"
+    ]
+   },
+   "data": "2026-11-03",
+   "criada_em": "2026-11-03T13:50+00:00",
+   "libera": [
+    "acima_15"
+   ],
+   "pisos_enviados": {
+    "Q7": 1560,
+    "Q2": 1560,
+    "Double": 1560
+   },
+   "percentil": 65,
+   "vendidas_base": {
+    "Q7": {
+     "2026-11-10": 4
+    },
+    "Double": {
+     "2026-11-10": 3
+    },
+    "Q2": {
+     "2026-11-10": 9
+    }
+   },
+   "escada_vendas": true,
+   "passo_livre": true,
+   "ocupacao_max": 0.7,
+   "frente_ocupacao": 0.5,
+   "topo_enviados": {
+    "Q7": 2915,
+    "Q2": 2915,
+    "Double": 2915
+   },
+   "piso_atras": {
+    "Q7": 1220,
+    "Q2": 1220,
+    "Double": 1220
+   },
+   "gatilho_dias": 7
+  },
+  {
+   "id": "dono-2026-11-03-recanto-semana-hidro-1111",
+   "tipo": "alvo_por_data",
+   "quartos": [
+    "Q7",
+    "Q2",
+    "Double"
+   ],
+   "de": "2026-11-11",
+   "ate": "2026-11-11",
+   "noites": [
+    "2026-11-11"
+   ],
+   "noites_fora": {
+    "Q7": [
+     "2026-11-11"
+    ],
+    "Q2": [
+     "2026-11-11"
+    ],
+    "Double": [
+     "2026-11-11"
+    ]
+   },
+   "data": "2026-11-03",
+   "criada_em": "2026-11-03T13:50+00:00",
+   "libera": [
+    "acima_15"
+   ],
+   "pisos_enviados": {
+    "Q7": 1409,
+    "Q2": 1409,
+    "Double": 1687
+   },
+   "percentil": 65,
+   "vendidas_base": {
+    "Q7": {
+     "2026-11-11": 0
+    },
+    "Double": {
+     "2026-11-11": 3
+    },
+    "Q2": {
+     "2026-11-11": 5
+    }
+   },
+   "escada_vendas": true,
+   "passo_livre": true,
+   "ocupacao_max": 0.7,
+   "frente_ocupacao": 0.5,
+   "topo_enviados": {
+    "Q7": 2543,
+    "Q2": 2543,
+    "Double": 2543
+   },
+   "piso_atras": {
+    "Q7": 1220,
+    "Q2": 1220,
+    "Double": 1220
+   },
+   "gatilho_dias": 9
+  },
+  {
+   "id": "dono-2026-11-03-recanto-semana-hidro-1112",
+   "tipo": "alvo_por_data",
+   "quartos": [
+    "Q7",
+    "Q2",
+    "Double"
+   ],
+   "de": "2026-11-12",
+   "ate": "2026-11-12",
+   "noites": [
+    "2026-11-12"
+   ],
+   "noites_fora": {
+    "Q7": [
+     "2026-11-12"
+    ],
+    "Q2": [
+     "2026-11-12"
+    ],
+    "Double": [
+     "2026-11-12"
+    ]
+   },
+   "data": "2026-11-03",
+   "criada_em": "2026-11-03T13:50+00:00",
+   "libera": [
+    "acima_15"
+   ],
+   "pisos_enviados": {
+    "Q7": 1489,
+    "Q2": 1489,
+    "Double": 1489
+   },
+   "percentil": 65,
+   "vendidas_base": {
+    "Q7": {
+     "2026-11-12": 0
+    },
+    "Double": {
+     "2026-11-12": 2
+    },
+    "Q2": {
+     "2026-11-12": 5
+    }
+   },
+   "escada_vendas": true,
+   "passo_livre": true,
+   "ocupacao_max": 0.7,
+   "frente_ocupacao": 0.5,
+   "topo_enviados": {
+    "Q7": 2617,
+    "Q2": 2617,
+    "Double": 2617
+   },
+   "piso_atras": {
+    "Q7": 1220,
+    "Q2": 1220,
+    "Double": 1220
+   },
+   "gatilho_dias": 9
+  },
+  {
+   "id": "dono-2026-11-03-recanto-semana-hidro-1115",
+   "tipo": "alvo_por_data",
+   "quartos": [
+    "Q7",
+    "Q2",
+    "Double"
+   ],
+   "de": "2026-11-15",
+   "ate": "2026-11-15",
+   "noites": [
+    "2026-11-15"
+   ],
+   "noites_fora": {
+    "Q7": [
+     "2026-11-15"
+    ],
+    "Q2": [
+     "2026-11-15"
+    ],
+    "Double": [
+     "2026-11-15"
+    ]
+   },
+   "data": "2026-11-03",
+   "criada_em": "2026-11-03T13:50+00:00",
+   "libera": [
+    "acima_15"
+   ],
+   "pisos_enviados": {
+    "Q7": 1485,
+    "Q2": 1485,
+    "Double": 1485
+   },
+   "percentil": 65,
+   "vendidas_base": {
+    "Q7": {
+     "2026-11-15": 3
+    },
+    "Double": {
+     "2026-11-15": 3
+    },
+    "Q2": {
+     "2026-11-15": 8
+    }
+   },
+   "escada_vendas": true,
+   "passo_livre": true,
+   "ocupacao_max": 0.7,
+   "frente_ocupacao": 0.5,
+   "topo_enviados": {
+    "Q7": 2807,
+    "Q2": 2807,
+    "Double": 2807
+   },
+   "piso_atras": {
+    "Q7": 1253,
+    "Q2": 1253,
+    "Double": 1253
+   },
+   "gatilho_dias": 7
+  },
+  {
+   "id": "dono-2026-11-03-recanto-semana-hidro-1116",
+   "tipo": "alvo_por_data",
+   "quartos": [
+    "Q7",
+    "Q2",
+    "Double"
+   ],
+   "de": "2026-11-16",
+   "ate": "2026-11-16",
+   "noites": [
+    "2026-11-16"
+   ],
+   "noites_fora": {
+    "Q7": [
+     "2026-11-16"
+    ],
+    "Q2": [
+     "2026-11-16"
+    ],
+    "Double": [
+     "2026-11-16"
+    ]
+   },
+   "data": "2026-11-03",
+   "criada_em": "2026-11-03T13:50+00:00",
+   "libera": [
+    "acima_15"
+   ],
+   "pisos_enviados": {
+    "Q7": 1406,
+    "Q2": 1406,
+    "Double": 1406
+   },
+   "percentil": 65,
+   "vendidas_base": {
+    "Q7": {
+     "2026-11-16": 1
+    },
+    "Double": {
+     "2026-11-16": 1
+    },
+    "Q2": {
+     "2026-11-16": 2
+    }
+   },
+   "escada_vendas": true,
+   "passo_livre": true,
+   "ocupacao_max": 0.7,
+   "frente_ocupacao": 0.5,
+   "topo_enviados": {
+    "Q7": 2535,
+    "Q2": 2535,
+    "Double": 2535
+   },
+   "piso_atras": {
+    "Q7": 1220,
+    "Q2": 1220,
+    "Double": 1220
+   },
+   "gatilho_dias": 7
+  },
+  {
+   "id": "dono-2026-11-03-recanto-semana-hidro-1117",
+   "tipo": "alvo_por_data",
+   "quartos": [
+    "Q7",
+    "Q2",
+    "Double"
+   ],
+   "de": "2026-11-17",
+   "ate": "2026-11-17",
+   "noites": [
+    "2026-11-17"
+   ],
+   "noites_fora": {
+    "Q7": [
+     "2026-11-17"
+    ],
+    "Q2": [
+     "2026-11-17"
+    ],
+    "Double": [
+     "2026-11-17"
+    ]
+   },
+   "data": "2026-11-03",
+   "criada_em": "2026-11-03T13:50+00:00",
+   "libera": [
+    "acima_15"
+   ],
+   "pisos_enviados": {
+    "Q7": 1252,
+    "Q2": 1252,
+    "Double": 1252
+   },
+   "percentil": 65,
+   "vendidas_base": {
+    "Q7": {
+     "2026-11-17": 1
+    },
+    "Double": {
+     "2026-11-17": 1
+    },
+    "Q2": {
+     "2026-11-17": 2
+    }
+   },
+   "escada_vendas": true,
+   "passo_livre": true,
+   "ocupacao_max": 0.7,
+   "frente_ocupacao": 0.5,
+   "topo_enviados": {
+    "Q7": 2383,
+    "Q2": 2383,
+    "Double": 2383
+   },
+   "piso_atras": {
+    "Q7": 1220,
+    "Q2": 1220,
+    "Double": 1220
+   },
+   "gatilho_dias": 7
+  },
+  {
+   "id": "dono-2026-11-03-recanto-semana-hidro-1118",
+   "tipo": "alvo_por_data",
+   "quartos": [
+    "Q7",
+    "Q2",
+    "Double"
+   ],
+   "de": "2026-11-18",
+   "ate": "2026-11-18",
+   "noites": [
+    "2026-11-18"
+   ],
+   "noites_fora": {
+    "Q7": [
+     "2026-11-18"
+    ],
+    "Q2": [
+     "2026-11-18"
+    ],
+    "Double": [
+     "2026-11-18"
+    ]
+   },
+   "data": "2026-11-03",
+   "criada_em": "2026-11-03T13:50+00:00",
+   "libera": [
+    "acima_15"
+   ],
+   "pisos_enviados": {
+    "Q7": 1406,
+    "Q2": 1406,
+    "Double": 1287
+   },
+   "percentil": 65,
+   "vendidas_base": {
+    "Q7": {
+     "2026-11-18": 2
+    },
+    "Double": {
+     "2026-11-18": 6
+    },
+    "Q2": {
+     "2026-11-18": 8
+    }
+   },
+   "escada_vendas": true,
+   "passo_livre": true,
+   "ocupacao_max": 0.7,
+   "frente_ocupacao": 0.5,
+   "topo_enviados": {
+    "Q7": 2532,
+    "Q2": 2532,
+    "Double": 2532
+   },
+   "piso_atras": {
+    "Q7": 1220,
+    "Q2": 1220,
+    "Double": 1220
+   },
+   "gatilho_dias": 7
+  },
+  {
+   "id": "dono-2026-11-03-recanto-semana-hidro-1122",
+   "tipo": "alvo_por_data",
+   "quartos": [
+    "Q7",
+    "Q2",
+    "Double"
+   ],
+   "de": "2026-11-22",
+   "ate": "2026-11-22",
+   "noites": [
+    "2026-11-22"
+   ],
+   "noites_fora": {
+    "Q7": [
+     "2026-11-22"
+    ],
+    "Q2": [
+     "2026-11-22"
+    ],
+    "Double": [
+     "2026-11-22"
+    ]
+   },
+   "data": "2026-11-03",
+   "criada_em": "2026-11-03T13:50+00:00",
+   "libera": [
+    "acima_15"
+   ],
+   "pisos_enviados": {
+    "Q7": 1401,
+    "Q2": 1477,
+    "Double": 1477
+   },
+   "percentil": 65,
+   "vendidas_base": {
+    "Q7": {
+     "2026-11-22": 1
+    },
+    "Double": {
+     "2026-11-22": 4
+    },
+    "Q2": {
+     "2026-11-22": 6
+    }
+   },
+   "escada_vendas": true,
+   "passo_livre": true,
+   "ocupacao_max": 0.7,
+   "frente_ocupacao": 0.5,
+   "topo_enviados": {
+    "Q7": 2565,
+    "Q2": 2565,
+    "Double": 2565
+   },
+   "piso_atras": {
+    "Q7": 1235,
+    "Q2": 1235,
+    "Double": 1235
+   },
+   "gatilho_dias": 7
+  },
+  {
+   "id": "dono-2026-11-03-recanto-semana-hidro-1123",
+   "tipo": "alvo_por_data",
+   "quartos": [
+    "Q7",
+    "Q2",
+    "Double"
+   ],
+   "de": "2026-11-23",
+   "ate": "2026-11-23",
+   "noites": [
+    "2026-11-23"
+   ],
+   "noites_fora": {
+    "Q7": [
+     "2026-11-23"
+    ],
+    "Q2": [
+     "2026-11-23"
+    ],
+    "Double": [
+     "2026-11-23"
+    ]
+   },
+   "data": "2026-11-03",
+   "criada_em": "2026-11-03T13:50+00:00",
+   "libera": [
+    "acima_15"
+   ],
+   "pisos_enviados": {
+    "Q7": 1477,
+    "Q2": 1477,
+    "Double": 1477
+   },
+   "percentil": 65,
+   "vendidas_base": {
+    "Q7": {
+     "2026-11-23": 4
+    },
+    "Double": {
+     "2026-11-23": 3
+    },
+    "Q2": {
+     "2026-11-23": 8
+    }
+   },
+   "escada_vendas": true,
+   "passo_livre": true,
+   "ocupacao_max": 0.7,
+   "frente_ocupacao": 0.5,
+   "topo_enviados": {
+    "Q7": 2632,
+    "Q2": 2632,
+    "Double": 2632
+   },
+   "piso_atras": {
+    "Q7": 1235,
+    "Q2": 1235,
+    "Double": 1224
+   },
+   "gatilho_dias": 7
+  },
+  {
+   "id": "dono-2026-11-03-recanto-semana-hidro-1124",
+   "tipo": "alvo_por_data",
+   "quartos": [
+    "Q7",
+    "Q2",
+    "Double"
+   ],
+   "de": "2026-11-24",
+   "ate": "2026-11-24",
+   "noites": [
+    "2026-11-24"
+   ],
+   "noites_fora": {
+    "Q7": [
+     "2026-11-24"
+    ],
+    "Q2": [
+     "2026-11-24"
+    ],
+    "Double": [
+     "2026-11-24"
+    ]
+   },
+   "data": "2026-11-03",
+   "criada_em": "2026-11-03T13:50+00:00",
+   "libera": [
+    "acima_15"
+   ],
+   "pisos_enviados": {
+    "Q7": 1454,
+    "Q2": 1454,
+    "Double": 1477
+   },
+   "percentil": 65,
+   "vendidas_base": {
+    "Q7": {
+     "2026-11-24": 2
+    },
+    "Double": {
+     "2026-11-24": 1
+    },
+    "Q2": {
+     "2026-11-24": 5
+    }
+   },
+   "escada_vendas": true,
+   "passo_livre": true,
+   "ocupacao_max": 0.7,
+   "frente_ocupacao": 0.5,
+   "topo_enviados": {
+    "Q7": 2557,
+    "Q2": 2557,
+    "Double": 2557
+   },
+   "piso_atras": {
+    "Q7": 1235,
+    "Q2": 1224,
+    "Double": 1224
+   },
+   "gatilho_dias": 7
+  },
+  {
+   "id": "dono-2026-11-03-recanto-semana-hidro-1125",
+   "tipo": "alvo_por_data",
+   "quartos": [
+    "Q7",
+    "Q2",
+    "Double"
+   ],
+   "de": "2026-11-25",
+   "ate": "2026-11-25",
+   "noites": [
+    "2026-11-25"
+   ],
+   "noites_fora": {
+    "Q7": [
+     "2026-11-25"
+    ],
+    "Q2": [
+     "2026-11-25"
+    ],
+    "Double": [
+     "2026-11-25"
+    ]
+   },
+   "data": "2026-11-03",
+   "criada_em": "2026-11-03T13:50+00:00",
+   "libera": [
+    "acima_15"
+   ],
+   "pisos_enviados": {
+    "Q7": 1477,
+    "Q2": 1477,
+    "Double": 1477
+   },
+   "percentil": 65,
+   "vendidas_base": {
+    "Q7": {
+     "2026-11-25": 3
+    },
+    "Double": {
+     "2026-11-25": 0
+    },
+    "Q2": {
+     "2026-11-25": 5
+    }
+   },
+   "escada_vendas": true,
+   "passo_livre": true,
+   "ocupacao_max": 0.7,
+   "frente_ocupacao": 0.5,
+   "topo_enviados": {
+    "Q7": 2606,
+    "Q2": 2606,
+    "Double": 2606
+   },
+   "piso_atras": {
+    "Q7": 1235,
+    "Q2": 1220,
+    "Double": 1220
+   },
+   "gatilho_dias": 7
+  },
+  {
+   "id": "dono-2026-11-03-recanto-semana-hidro-1126",
+   "tipo": "alvo_por_data",
+   "quartos": [
+    "Q7",
+    "Q2",
+    "Double"
+   ],
+   "de": "2026-11-26",
+   "ate": "2026-11-26",
+   "noites": [
+    "2026-11-26"
+   ],
+   "noites_fora": {
+    "Q7": [
+     "2026-11-26"
+    ],
+    "Q2": [
+     "2026-11-26"
+    ],
+    "Double": [
+     "2026-11-26"
+    ]
+   },
+   "data": "2026-11-03",
+   "criada_em": "2026-11-03T13:50+00:00",
+   "libera": [
+    "acima_15"
+   ],
+   "pisos_enviados": {
+    "Q7": 1433,
+    "Q2": 1433,
+    "Double": 1433
+   },
+   "percentil": 65,
+   "vendidas_base": {
+    "Q7": {
+     "2026-11-26": 1
+    },
+    "Double": {
+     "2026-11-26": 0
+    },
+    "Q2": {
+     "2026-11-26": 2
+    }
+   },
+   "escada_vendas": true,
+   "passo_livre": true,
+   "ocupacao_max": 0.7,
+   "frente_ocupacao": 0.5,
+   "topo_enviados": {
+    "Q7": 2614,
+    "Q2": 2614,
+    "Double": 2614
+   },
+   "piso_atras": {
+    "Q7": 1220,
+    "Q2": 1220,
+    "Double": 1220
+   },
+   "gatilho_dias": 7
+  },
+  {
+   "id": "dono-2026-11-03-recanto-semana-hidro-1129",
+   "tipo": "alvo_por_data",
+   "quartos": [
+    "Q7",
+    "Q2",
+    "Double"
+   ],
+   "de": "2026-11-29",
+   "ate": "2026-11-29",
+   "noites": [
+    "2026-11-29"
+   ],
+   "noites_fora": {
+    "Q7": [
+     "2026-11-29"
+    ],
+    "Q2": [
+     "2026-11-29"
+    ],
+    "Double": [
+     "2026-11-29"
+    ]
+   },
+   "data": "2026-11-03",
+   "criada_em": "2026-11-03T13:50+00:00",
+   "libera": [
+    "acima_15"
+   ],
+   "pisos_enviados": {
+    "Q7": 1398,
+    "Q2": 1398,
+    "Double": 1398
+   },
+   "percentil": 65,
+   "vendidas_base": {
+    "Q7": {
+     "2026-11-29": 0
+    },
+    "Double": {
+     "2026-11-29": 4
+    },
+    "Q2": {
+     "2026-11-29": 4
+    }
+   },
+   "escada_vendas": true,
+   "passo_livre": true,
+   "ocupacao_max": 0.7,
+   "frente_ocupacao": 0.5,
+   "topo_enviados": {
+    "Q7": 2632,
+    "Q2": 2632,
+    "Double": 2632
+   },
+   "piso_atras": {
+    "Q7": 1239,
+    "Q2": 1239,
+    "Double": 1239
+   },
+   "gatilho_dias": 7
+  },
+  {
+   "id": "dono-2026-11-03-recanto-semana-hidro-1130",
+   "tipo": "alvo_por_data",
+   "quartos": [
+    "Q7",
+    "Q2",
+    "Double"
+   ],
+   "de": "2026-11-30",
+   "ate": "2026-11-30",
+   "noites": [
+    "2026-11-30"
+   ],
+   "noites_fora": {
+    "Q7": [
+     "2026-11-30"
+    ],
+    "Q2": [
+     "2026-11-30"
+    ],
+    "Double": [
+     "2026-11-30"
+    ]
+   },
+   "data": "2026-11-03",
+   "criada_em": "2026-11-03T13:50+00:00",
+   "libera": [
+    "acima_15"
+   ],
+   "pisos_enviados": {
+    "Q7": 1398,
+    "Q2": 1359,
+    "Double": 1359
+   },
+   "percentil": 65,
+   "vendidas_base": {
+    "Q7": {
+     "2026-11-30": 1
+    },
+    "Double": {
+     "2026-11-30": 1
+    },
+    "Q2": {
+     "2026-11-30": 4
+    }
+   },
+   "escada_vendas": true,
+   "passo_livre": true,
+   "ocupacao_max": 0.7,
+   "frente_ocupacao": 0.5,
+   "topo_enviados": {
+    "Q7": 2606,
+    "Q2": 2606,
+    "Double": 2606
+   },
+   "piso_atras": {
+    "Q7": 1239,
+    "Q2": 1220,
+    "Double": 1220
+   },
+   "gatilho_dias": 7
+  },
+  {
+   "id": "dono-2026-11-03-q2-flutua",
+   "tipo": "regra",
+   "quartos": [
+    "Q2"
+   ],
+   "de": "2026-11-03",
+   "ate": "2099-12-31",
+   "data": "2026-11-03",
+   "libera": []
+  },
+  {
+   "id": "dono-2026-11-03-booking-fechada",
+   "tipo": "regra",
+   "quartos": [
+    "*"
+   ],
+   "de": "2026-11-03",
+   "ate": "2026-11-03",
+   "data": "2026-11-03",
+   "libera": [
+    "beds24_inventario"
+   ]
+  },
+  {
+   "id": "dono-2026-11-04-faixa-recanto-20261108",
+   "tipo": "alvo_por_data",
+   "quartos": [
+    "Q7",
+    "Q2",
+    "Double",
+    "Afrodite"
+   ],
+   "de": "2026-11-08",
+   "ate": "2026-11-08",
+   "noites": [
+    "2026-11-08"
+   ],
+   "data": "2026-11-04",
+   "criada_em": "2026-11-04T15:13+00:00",
+   "libera": [
+    "acima_15"
+   ],
+   "pisos_enviados": {
+    "Q7": 1219.51,
+    "Q2": 1219.51,
+    "Double": 1219.51,
+    "Afrodite": 1500.0
+   },
+   "percentil": 50,
+   "vendidas_base": {
+    "Q7": {
+     "2026-11-08": 5
+    },
+    "Q2": {
+     "2026-11-08": 11
+    },
+    "Double": {
+     "2026-11-08": 3
+    },
+    "Afrodite": {
+     "2026-11-08": 11
+    }
+   },
+   "escada_vendas": true,
+   "passo_livre": true,
+   "ocupacao_max": 0.7,
+   "frente_ocupacao": 0.5,
+   "topo_enviados": {
+    "Q7": 2638.71,
+    "Q2": 2638.71,
+    "Double": 2638.71,
+    "Afrodite": 3166.45
+   },
+   "piso_atras": {
+    "Q7": 1219.51,
+    "Q2": 1219.51,
+    "Double": 1219.51,
+    "Afrodite": 1500.0
+   },
+   "gatilho_dias": 7,
+   "gatilho_min_dias": 2,
+   "pousada_faixa": "Recanto",
+   "faixa": 2
+  },
+  {
+   "id": "dono-2026-11-04-faixa-villa-20261108",
+   "tipo": "alvo_por_data",
+   "quartos": [
+    "VK7",
+    "VK2"
+   ],
+   "de": "2026-11-08",
+   "ate": "2026-11-08",
+   "noites": [
+    "2026-11-08"
+   ],
+   "data": "2026-11-04",
+   "criada_em": "2026-11-04T15:13+00:00",
+   "libera": [
+    "acima_15"
+   ],
+   "pisos_enviados": {
+    "VK7": 981.54,
+    "VK2": 981.54
+   },
+   "percentil": 50,
+   "vendidas_base": {
+    "VK7": {
+     "2026-11-08": 6
+    },
+    "VK2": {
+     "2026-11-08": 8
+    }
+   },
+   "escada_vendas": true,
+   "passo_livre": true,
+   "ocupacao_max": 0.7,
+   "frente_ocupacao": 0.5,
+   "topo_enviados": {
+    "VK7": 2516.92,
+    "VK2": 2516.92
+   },
+   "piso_atras": {
+    "VK7": 944.0,
+    "VK2": 943.4
+   },
+   "gatilho_dias": 7,
+   "gatilho_min_dias": 2,
+   "pousada_faixa": "Villa",
+   "faixa": 2
+  },
+  {
+   "id": "dono-2026-11-04-faixa-recanto-20261109",
+   "tipo": "alvo_por_data",
+   "quartos": [
+    "Q7",
+    "Q2",
+    "Double",
+    "Afrodite"
+   ],
+   "de": "2026-11-09",
+   "ate": "2026-11-09",
+   "noites": [
+    "2026-11-09"
+   ],
+   "data": "2026-11-04",
+   "criada_em": "2026-11-04T15:13+00:00",
+   "libera": [
+    "acima_15"
+   ],
+   "pisos_enviados": {
+    "Q7": 1219.51,
+    "Q2": 1219.51,
+    "Double": 1219.51,
+    "Afrodite": 1500.0
+   },
+   "percentil": 50,
+   "vendidas_base": {
+    "Q7": {
+     "2026-11-09": 6
+    },
+    "Q2": {
+     "2026-11-09": 12
+    },
+    "Double": {
+     "2026-11-09": 3
+    },
+    "Afrodite": {
+     "2026-11-09": 12
+    }
+   },
+   "escada_vendas": true,
+   "passo_livre": true,
+   "ocupacao_max": 0.7,
+   "frente_ocupacao": 0.5,
+   "topo_enviados": {
+    "Q7": 2620.97,
+    "Q2": 2620.97,
+    "Double": 2620.97,
+    "Afrodite": 3145.16
+   },
+   "piso_atras": {
+    "Q7": 1219.51,
+    "Q2": 1219.51,
+    "Double": 1219.51,
+    "Afrodite": 1500.0
+   },
+   "gatilho_dias": 8,
+   "gatilho_min_dias": 2,
+   "pousada_faixa": "Recanto",
+   "faixa": 2
+  },
+  {
+   "id": "dono-2026-11-04-faixa-villa-20261109",
+   "tipo": "alvo_por_data",
+   "quartos": [
+    "VK7",
+    "VK2"
+   ],
+   "de": "2026-11-09",
+   "ate": "2026-11-09",
+   "noites": [
+    "2026-11-09"
+   ],
+   "data": "2026-11-04",
+   "criada_em": "2026-11-04T15:13+00:00",
+   "libera": [
+    "acima_15"
+   ],
+   "pisos_enviados": {
+    "VK7": 944.0,
+    "VK2": 943.4
+   },
+   "percentil": 50,
+   "vendidas_base": {
+    "VK7": {
+     "2026-11-09": 7
+    },
+    "VK2": {
+     "2026-11-09": 9
+    }
+   },
+   "escada_vendas": true,
+   "passo_livre": true,
+   "ocupacao_max": 0.7,
+   "frente_ocupacao": 0.5,
+   "topo_enviados": {
+    "VK7": 2500.0,
+    "VK2": 2500.0
+   },
+   "piso_atras": {
+    "VK7": 944.0,
+    "VK2": 943.4
+   },
+   "gatilho_dias": 8,
+   "gatilho_min_dias": 2,
+   "pousada_faixa": "Villa",
+   "faixa": 2
+  },
+  {
+   "id": "dono-2026-11-04-faixa-recanto-20261110",
+   "tipo": "alvo_por_data",
+   "quartos": [
+    "Q7",
+    "Q2",
+    "Double",
+    "Afrodite"
+   ],
+   "de": "2026-11-10",
+   "ate": "2026-11-10",
+   "noites": [
+    "2026-11-10"
+   ],
+   "data": "2026-11-04",
+   "criada_em": "2026-11-04T15:13+00:00",
+   "libera": [
+    "acima_15"
+   ],
+   "pisos_enviados": {
+    "Q7": 1219.51,
+    "Q2": 1219.51,
+    "Double": 1219.51,
+    "Afrodite": 1500.0
+   },
+   "percentil": 50,
+   "vendidas_base": {
+    "Q7": {
+     "2026-11-10": 4
+    },
+    "Q2": {
+     "2026-11-10": 9
+    },
+    "Double": {
+     "2026-11-10": 3
+    },
+    "Afrodite": {
+     "2026-11-10": 9
+    }
+   },
+   "escada_vendas": true,
+   "passo_livre": true,
+   "ocupacao_max": 0.7,
+   "frente_ocupacao": 0.5,
+   "topo_enviados": {
+    "Q7": 2538.71,
+    "Q2": 2538.71,
+    "Double": 2538.71,
+    "Afrodite": 3046.45
+   },
+   "piso_atras": {
+    "Q7": 1219.51,
+    "Q2": 1219.51,
+    "Double": 1219.51,
+    "Afrodite": 1500.0
+   },
+   "gatilho_dias": 9,
+   "gatilho_min_dias": 2,
+   "pousada_faixa": "Recanto",
+   "faixa": 2
+  },
+  {
+   "id": "dono-2026-11-04-faixa-villa-20261110",
+   "tipo": "alvo_por_data",
+   "quartos": [
+    "VK7",
+    "VK2",
+    "Balcony"
+   ],
+   "de": "2026-11-10",
+   "ate": "2026-11-10",
+   "noites": [
+    "2026-11-10"
+   ],
+   "data": "2026-11-04",
+   "criada_em": "2026-11-04T15:13+00:00",
+   "libera": [
+    "acima_15"
+   ],
+   "pisos_enviados": {
+    "VK7": 944.0,
+    "VK2": 943.4,
+    "Balcony": 798.92
+   },
+   "percentil": 50,
+   "vendidas_base": {
+    "VK7": {
+     "2026-11-10": 6
+    },
+    "VK2": {
+     "2026-11-10": 7
+    },
+    "Balcony": {
+     "2026-11-10": 0
+    }
+   },
+   "escada_vendas": true,
+   "passo_livre": true,
+   "ocupacao_max": 0.7,
+   "frente_ocupacao": 0.5,
+   "topo_enviados": {
+    "VK7": 2421.54,
+    "VK2": 2421.54,
+    "Balcony": 2179.38
+   },
+   "piso_atras": {
+    "VK7": 944.0,
+    "VK2": 943.4,
+    "Balcony": 690.0
+   },
+   "gatilho_dias": 9,
+   "gatilho_min_dias": 2,
+   "pousada_faixa": "Villa",
+   "faixa": 2
+  },
+  {
+   "id": "dono-2026-11-04-faixa-recanto-20261111",
+   "tipo": "alvo_por_data",
+   "quartos": [
+    "Q7",
+    "Q2",
+    "Double",
+    "Afrodite"
+   ],
+   "de": "2026-11-11",
+   "ate": "2026-11-11",
+   "noites": [
+    "2026-11-11"
+   ],
+   "data": "2026-11-04",
+   "criada_em": "2026-11-04T15:13+00:00",
+   "libera": [
+    "acima_15"
+   ],
+   "pisos_enviados": {
+    "Q7": 1219.51,
+    "Q2": 1219.51,
+    "Double": 1219.51,
+    "Afrodite": 1500.0
+   },
+   "percentil": 50,
+   "vendidas_base": {
+    "Q7": {
+     "2026-11-11": 0
+    },
+    "Q2": {
+     "2026-11-11": 5
+    },
+    "Double": {
+     "2026-11-11": 3
+    },
+    "Afrodite": {
+     "2026-11-11": 5
+    }
+   },
+   "escada_vendas": true,
+   "passo_livre": true,
+   "ocupacao_max": 0.7,
+   "frente_ocupacao": 0.5,
+   "topo_enviados": {
+    "Q7": 2530.65,
+    "Q2": 2530.65,
+    "Double": 2530.65,
+    "Afrodite": 3036.77
+   },
+   "piso_atras": {
+    "Q7": 1219.51,
+    "Q2": 1219.51,
+    "Double": 1219.51,
+    "Afrodite": 1500.0
+   },
+   "gatilho_dias": 10,
+   "gatilho_min_dias": 2,
+   "pousada_faixa": "Recanto",
+   "faixa": 2
+  },
+  {
+   "id": "dono-2026-11-04-faixa-villa-20261111",
+   "tipo": "alvo_por_data",
+   "quartos": [
+    "VK7",
+    "VK2",
+    "Balcony"
+   ],
+   "de": "2026-11-11",
+   "ate": "2026-11-11",
+   "noites": [
+    "2026-11-11"
+   ],
+   "data": "2026-11-04",
+   "criada_em": "2026-11-04T15:13+00:00",
+   "libera": [
+    "acima_15"
+   ],
+   "pisos_enviados": {
+    "VK7": 944.0,
+    "VK2": 943.4,
+    "Balcony": 778.15
+   },
+   "percentil": 50,
+   "vendidas_base": {
+    "VK7": {
+     "2026-11-11": 3
+    },
+    "VK2": {
+     "2026-11-11": 5
+    },
+    "Balcony": {
+     "2026-11-11": 0
+    }
+   },
+   "escada_vendas": true,
+   "passo_livre": true,
+   "ocupacao_max": 0.7,
+   "frente_ocupacao": 0.5,
+   "topo_enviados": {
+    "VK7": 2413.85,
+    "VK2": 2413.85,
+    "Balcony": 2172.46
+   },
+   "piso_atras": {
+    "VK7": 944.0,
+    "VK2": 943.4,
+    "Balcony": 690.0
+   },
+   "gatilho_dias": 10,
+   "gatilho_min_dias": 2,
+   "pousada_faixa": "Villa",
+   "faixa": 2
+  },
+  {
+   "id": "dono-2026-11-04-faixa-recanto-20261112",
+   "tipo": "alvo_por_data",
+   "quartos": [
+    "Q7",
+    "Q2",
+    "Double",
+    "Afrodite"
+   ],
+   "de": "2026-11-12",
+   "ate": "2026-11-12",
+   "noites": [
+    "2026-11-12"
+   ],
+   "data": "2026-11-04",
+   "criada_em": "2026-11-04T15:13+00:00",
+   "libera": [
+    "acima_15"
+   ],
+   "pisos_enviados": {
+    "Q7": 1219.51,
+    "Q2": 1219.51,
+    "Double": 1219.51,
+    "Afrodite": 1500.0
+   },
+   "percentil": 50,
+   "vendidas_base": {
+    "Q7": {
+     "2026-11-12": 0
+    },
+    "Q2": {
+     "2026-11-12": 6
+    },
+    "Double": {
+     "2026-11-12": 3
+    },
+    "Afrodite": {
+     "2026-11-12": 6
+    }
+   },
+   "escada_vendas": true,
+   "passo_livre": true,
+   "ocupacao_max": 0.7,
+   "frente_ocupacao": 0.5,
+   "topo_enviados": {
+    "Q7": 2522.58,
+    "Q2": 2522.58,
+    "Double": 2522.58,
+    "Afrodite": 3027.1
+   },
+   "piso_atras": {
+    "Q7": 1219.51,
+    "Q2": 1219.51,
+    "Double": 1219.51,
+    "Afrodite": 1500.0
+   },
+   "gatilho_dias": 11,
+   "gatilho_min_dias": 2,
+   "pousada_faixa": "Recanto",
+   "faixa": 2
+  },
+  {
+   "id": "dono-2026-11-04-faixa-villa-20261112",
+   "tipo": "alvo_por_data",
+   "quartos": [
+    "VK7",
+    "VK2",
+    "Balcony"
+   ],
+   "de": "2026-11-12",
+   "ate": "2026-11-12",
+   "noites": [
+    "2026-11-12"
+   ],
+   "data": "2026-11-04",
+   "criada_em": "2026-11-04T15:13+00:00",
+   "libera": [
+    "acima_15"
+   ],
+   "pisos_enviados": {
+    "VK7": 944.0,
+    "VK2": 943.4,
+    "Balcony": 798.92
+   },
+   "percentil": 50,
+   "vendidas_base": {
+    "VK7": {
+     "2026-11-12": 1
+    },
+    "VK2": {
+     "2026-11-12": 3
+    },
+    "Balcony": {
+     "2026-11-12": 0
+    }
+   },
+   "escada_vendas": true,
+   "passo_livre": true,
+   "ocupacao_max": 0.7,
+   "frente_ocupacao": 0.5,
+   "topo_enviados": {
+    "VK7": 2406.15,
+    "VK2": 2406.15,
+    "Balcony": 2165.54
+   },
+   "piso_atras": {
+    "VK7": 944.0,
+    "VK2": 943.4,
+    "Balcony": 690.0
+   },
+   "gatilho_dias": 11,
+   "gatilho_min_dias": 2,
+   "pousada_faixa": "Villa",
+   "faixa": 2
+  },
+  {
+   "id": "dono-2026-11-04-faixa-recanto-20261115",
+   "tipo": "alvo_por_data",
+   "quartos": [
+    "Q7",
+    "Q2",
+    "Double",
+    "Afrodite"
+   ],
+   "de": "2026-11-15",
+   "ate": "2026-11-15",
+   "noites": [
+    "2026-11-15"
+   ],
+   "data": "2026-11-04",
+   "criada_em": "2026-11-04T15:13+00:00",
+   "libera": [
+    "acima_15"
+   ],
+   "pisos_enviados": {
+    "Q7": 1219.51,
+    "Q2": 1219.51,
+    "Double": 1219.51,
+    "Afrodite": 1500.0
+   },
+   "percentil": 50,
+   "vendidas_base": {
+    "Q7": {
+     "2026-11-15": 3
+    },
+    "Q2": {
+     "2026-11-15": 8
+    },
+    "Double": {
+     "2026-11-15": 3
+    },
+    "Afrodite": {
+     "2026-11-15": 8
+    }
+   },
+   "escada_vendas": true,
+   "passo_livre": true,
+   "ocupacao_max": 0.7,
+   "frente_ocupacao": 0.5,
+   "topo_enviados": {
+    "Q7": 2746.77,
+    "Q2": 2746.77,
+    "Double": 2746.77,
+    "Afrodite": 3296.13
+   },
+   "piso_atras": {
+    "Q7": 1219.51,
+    "Q2": 1219.51,
+    "Double": 1219.51,
+    "Afrodite": 1500.0
+   },
+   "gatilho_dias": 7,
+   "gatilho_min_dias": 2,
+   "pousada_faixa": "Recanto",
+   "faixa": 2
+  },
+  {
+   "id": "dono-2026-11-04-faixa-villa-20261115",
+   "tipo": "alvo_por_data",
+   "quartos": [
+    "VK7",
+    "VK2",
+    "Balcony"
+   ],
+   "de": "2026-11-15",
+   "ate": "2026-11-15",
+   "noites": [
+    "2026-11-15"
+   ],
+   "data": "2026-11-04",
+   "criada_em": "2026-11-04T15:13+00:00",
+   "libera": [
+    "acima_15"
+   ],
+   "pisos_enviados": {
+    "VK7": 1012.31,
+    "VK2": 1012.31,
+    "Balcony": 911.08
+   },
+   "percentil": 50,
+   "vendidas_base": {
+    "VK7": {
+     "2026-11-15": 2
+    },
+    "VK2": {
+     "2026-11-15": 3
+    },
+    "Balcony": {
+     "2026-11-15": 0
+    }
+   },
+   "escada_vendas": true,
+   "passo_livre": true,
+   "ocupacao_max": 0.7,
+   "frente_ocupacao": 0.5,
+   "topo_enviados": {
+    "VK7": 2620.0,
+    "VK2": 2620.0,
+    "Balcony": 2358.0
+   },
+   "piso_atras": {
+    "VK7": 944.0,
+    "VK2": 943.4,
+    "Balcony": 690.0
+   },
+   "gatilho_dias": 7,
+   "gatilho_min_dias": 2,
+   "pousada_faixa": "Villa",
+   "faixa": 2
+  },
+  {
+   "id": "dono-2026-11-04-faixa-recanto-20261116",
+   "tipo": "alvo_por_data",
+   "quartos": [
+    "Q7",
+    "Q2",
+    "Double",
+    "Afrodite"
+   ],
+   "de": "2026-11-16",
+   "ate": "2026-11-16",
+   "noites": [
+    "2026-11-16"
+   ],
+   "data": "2026-11-04",
+   "criada_em": "2026-11-04T15:13+00:00",
+   "libera": [
+    "acima_15"
+   ],
+   "pisos_enviados": {
+    "Q7": 1219.51,
+    "Q2": 1219.51,
+    "Double": 1219.51,
+    "Afrodite": 1500.0
+   },
+   "percentil": 50,
+   "vendidas_base": {
+    "Q7": {
+     "2026-11-16": 1
+    },
+    "Q2": {
+     "2026-11-16": 2
+    },
+    "Double": {
+     "2026-11-16": 1
+    },
+    "Afrodite": {
+     "2026-11-16": 2
+    }
+   },
+   "escada_vendas": true,
+   "passo_livre": true,
+   "ocupacao_max": 0.7,
+   "frente_ocupacao": 0.5,
+   "topo_enviados": {
+    "Q7": 2522.58,
+    "Q2": 2522.58,
+    "Double": 2522.58,
+    "Afrodite": 3027.1
+   },
+   "piso_atras": {
+    "Q7": 1219.51,
+    "Q2": 1219.51,
+    "Double": 1219.51,
+    "Afrodite": 1500.0
+   },
+   "gatilho_dias": 8,
+   "gatilho_min_dias": 2,
+   "pousada_faixa": "Recanto",
+   "faixa": 2
+  },
+  {
+   "id": "dono-2026-11-04-faixa-villa-20261116",
+   "tipo": "alvo_por_data",
+   "quartos": [
+    "VK7",
+    "VK2",
+    "Balcony"
+   ],
+   "de": "2026-11-16",
+   "ate": "2026-11-16",
+   "noites": [
+    "2026-11-16"
+   ],
+   "data": "2026-11-04",
+   "criada_em": "2026-11-04T15:13+00:00",
+   "libera": [
+    "acima_15"
+   ],
+   "pisos_enviados": {
+    "VK7": 944.0,
+    "VK2": 943.4,
+    "Balcony": 828.0
+   },
+   "percentil": 50,
+   "vendidas_base": {
+    "VK7": {
+     "2026-11-16": 1
+    },
+    "VK2": {
+     "2026-11-16": 2
+    },
+    "Balcony": {
+     "2026-11-16": 0
+    }
+   },
+   "escada_vendas": true,
+   "passo_livre": true,
+   "ocupacao_max": 0.7,
+   "frente_ocupacao": 0.5,
+   "topo_enviados": {
+    "VK7": 2406.15,
+    "VK2": 2406.15,
+    "Balcony": 2165.54
+   },
+   "piso_atras": {
+    "VK7": 944.0,
+    "VK2": 943.4,
+    "Balcony": 690.0
+   },
+   "gatilho_dias": 8,
+   "gatilho_min_dias": 2,
+   "pousada_faixa": "Villa",
+   "faixa": 2
+  },
+  {
+   "id": "dono-2026-11-04-faixa-recanto-20261117",
+   "tipo": "alvo_por_data",
+   "quartos": [
+    "Q7",
+    "Q2",
+    "Double",
+    "Afrodite"
+   ],
+   "de": "2026-11-17",
+   "ate": "2026-11-17",
+   "noites": [
+    "2026-11-17"
+   ],
+   "data": "2026-11-04",
+   "criada_em": "2026-11-04T15:13+00:00",
+   "libera": [
+    "acima_15"
+   ],
+   "pisos_enviados": {
+    "Q7": 1219.51,
+    "Q2": 1219.51,
+    "Double": 1219.51,
+    "Afrodite": 1500.0
+   },
+   "percentil": 50,
+   "vendidas_base": {
+    "Q7": {
+     "2026-11-17": 1
+    },
+    "Q2": {
+     "2026-11-17": 2
+    },
+    "Double": {
+     "2026-11-17": 1
+    },
+    "Afrodite": {
+     "2026-11-17": 2
+    }
+   },
+   "escada_vendas": true,
+   "passo_livre": true,
+   "ocupacao_max": 0.7,
+   "frente_ocupacao": 0.5,
+   "topo_enviados": {
+    "Q7": 2354.84,
+    "Q2": 2354.84,
+    "Double": 2354.84,
+    "Afrodite": 2825.81
+   },
+   "piso_atras": {
+    "Q7": 1219.51,
+    "Q2": 1219.51,
+    "Double": 1219.51,
+    "Afrodite": 1500.0
+   },
+   "gatilho_dias": 9,
+   "gatilho_min_dias": 2,
+   "pousada_faixa": "Recanto",
+   "faixa": 2
+  },
+  {
+   "id": "dono-2026-11-04-faixa-villa-20261117",
+   "tipo": "alvo_por_data",
+   "quartos": [
+    "VK7",
+    "VK2",
+    "Balcony"
+   ],
+   "de": "2026-11-17",
+   "ate": "2026-11-17",
+   "noites": [
+    "2026-11-17"
+   ],
+   "data": "2026-11-04",
+   "criada_em": "2026-11-04T15:13+00:00",
+   "libera": [
+    "acima_15"
+   ],
+   "pisos_enviados": {
+    "VK7": 944.0,
+    "VK2": 943.4,
+    "Balcony": 796.15
+   },
+   "percentil": 50,
+   "vendidas_base": {
+    "VK7": {
+     "2026-11-17": 2
+    },
+    "VK2": {
+     "2026-11-17": 4
+    },
+    "Balcony": {
+     "2026-11-17": 0
+    }
+   },
+   "escada_vendas": true,
+   "passo_livre": true,
+   "ocupacao_max": 0.7,
+   "frente_ocupacao": 0.5,
+   "topo_enviados": {
+    "VK7": 2246.15,
+    "VK2": 2246.15,
+    "Balcony": 2021.54
+   },
+   "piso_atras": {
+    "VK7": 944.0,
+    "VK2": 943.4,
+    "Balcony": 690.0
+   },
+   "gatilho_dias": 9,
+   "gatilho_min_dias": 2,
+   "pousada_faixa": "Villa",
+   "faixa": 2
+  },
+  {
+   "id": "dono-2026-11-04-faixa-recanto-20261118",
+   "tipo": "alvo_por_data",
+   "quartos": [
+    "Q7",
+    "Q2",
+    "Double",
+    "Afrodite"
+   ],
+   "de": "2026-11-18",
+   "ate": "2026-11-18",
+   "noites": [
+    "2026-11-18"
+   ],
+   "data": "2026-11-04",
+   "criada_em": "2026-11-04T15:13+00:00",
+   "libera": [
+    "acima_15"
+   ],
+   "pisos_enviados": {
+    "Q7": 1219.51,
+    "Q2": 1219.51,
+    "Double": 1219.51,
+    "Afrodite": 1500.0
+   },
+   "percentil": 50,
+   "vendidas_base": {
+    "Q7": {
+     "2026-11-18": 2
+    },
+    "Q2": {
+     "2026-11-18": 8
+    },
+    "Double": {
+     "2026-11-18": 6
+    },
+    "Afrodite": {
+     "2026-11-18": 8
+    }
+   },
+   "escada_vendas": true,
+   "passo_livre": true,
+   "ocupacao_max": 0.7,
+   "frente_ocupacao": 0.5,
+   "topo_enviados": {
+    "Q7": 2450.0,
+    "Q2": 2450.0,
+    "Double": 2450.0,
+    "Afrodite": 2940.0
+   },
+   "piso_atras": {
+    "Q7": 1219.51,
+    "Q2": 1219.51,
+    "Double": 1219.51,
+    "Afrodite": 1500.0
+   },
+   "gatilho_dias": 10,
+   "gatilho_min_dias": 2,
+   "pousada_faixa": "Recanto",
+   "faixa": 2
+  },
+  {
+   "id": "dono-2026-11-04-faixa-villa-20261118",
+   "tipo": "alvo_por_data",
+   "quartos": [
+    "VK7",
+    "VK2",
+    "Balcony"
+   ],
+   "de": "2026-11-18",
+   "ate": "2026-11-18",
+   "noites": [
+    "2026-11-18"
+   ],
+   "data": "2026-11-04",
+   "criada_em": "2026-11-04T15:13+00:00",
+   "libera": [
+    "acima_15"
+   ],
+   "pisos_enviados": {
+    "VK7": 944.0,
+    "VK2": 943.4,
+    "Balcony": 780.92
+   },
+   "percentil": 50,
+   "vendidas_base": {
+    "VK7": {
+     "2026-11-18": 2
+    },
+    "VK2": {
+     "2026-11-18": 4
+    },
+    "Balcony": {
+     "2026-11-18": 0
+    }
+   },
+   "escada_vendas": true,
+   "passo_livre": true,
+   "ocupacao_max": 0.7,
+   "frente_ocupacao": 0.5,
+   "topo_enviados": {
+    "VK7": 2336.92,
+    "VK2": 2336.92,
+    "Balcony": 2103.23
+   },
+   "piso_atras": {
+    "VK7": 944.0,
+    "VK2": 943.4,
+    "Balcony": 690.0
+   },
+   "gatilho_dias": 10,
+   "gatilho_min_dias": 2,
+   "pousada_faixa": "Villa",
+   "faixa": 2
+  },
+  {
+   "id": "dono-2026-11-04-faixa-recanto-20261122",
+   "tipo": "alvo_por_data",
+   "quartos": [
+    "Q7",
+    "Q2",
+    "Double",
+    "Afrodite"
+   ],
+   "de": "2026-11-22",
+   "ate": "2026-11-22",
+   "noites": [
+    "2026-11-22"
+   ],
+   "data": "2026-11-04",
+   "criada_em": "2026-11-04T15:13+00:00",
+   "libera": [
+    "acima_15"
+   ],
+   "pisos_enviados": {
+    "Q7": 1219.51,
+    "Q2": 1219.51,
+    "Double": 1219.51,
+    "Afrodite": 1500.0
+   },
+   "percentil": 50,
+   "vendidas_base": {
+    "Q7": {
+     "2026-11-22": 1
+    },
+    "Q2": {
+     "2026-11-22": 6
+    },
+    "Double": {
+     "2026-11-22": 4
+    },
+    "Afrodite": {
+     "2026-11-22": 6
+    }
+   },
+   "escada_vendas": true,
+   "passo_livre": true,
+   "ocupacao_max": 0.7,
+   "frente_ocupacao": 0.5,
+   "topo_enviados": {
+    "Q7": 2482.26,
+    "Q2": 2482.26,
+    "Double": 2482.26,
+    "Afrodite": 2978.71
+   },
+   "piso_atras": {
+    "Q7": 1219.51,
+    "Q2": 1219.51,
+    "Double": 1219.51,
+    "Afrodite": 1500.0
+   },
+   "gatilho_dias": 7,
+   "gatilho_min_dias": 2,
+   "pousada_faixa": "Recanto",
+   "faixa": 2
+  },
+  {
+   "id": "dono-2026-11-04-faixa-villa-20261122",
+   "tipo": "alvo_por_data",
+   "quartos": [
+    "VK7",
+    "VK2",
+    "Balcony"
+   ],
+   "de": "2026-11-22",
+   "ate": "2026-11-22",
+   "noites": [
+    "2026-11-22"
+   ],
+   "data": "2026-11-04",
+   "criada_em": "2026-11-04T15:13+00:00",
+   "libera": [
+    "acima_15"
+   ],
+   "pisos_enviados": {
+    "VK7": 1038.46,
+    "VK2": 1038.46,
+    "Balcony": 934.61
+   },
+   "percentil": 50,
+   "vendidas_base": {
+    "VK7": {
+     "2026-11-22": 4
+    },
+    "VK2": {
+     "2026-11-22": 6
+    },
+    "Balcony": {
+     "2026-11-22": 0
+    }
+   },
+   "escada_vendas": true,
+   "passo_livre": true,
+   "ocupacao_max": 0.7,
+   "frente_ocupacao": 0.5,
+   "topo_enviados": {
+    "VK7": 2367.69,
+    "VK2": 2367.69,
+    "Balcony": 2130.92
+   },
+   "piso_atras": {
+    "VK7": 944.0,
+    "VK2": 943.4,
+    "Balcony": 690.0
+   },
+   "gatilho_dias": 7,
+   "gatilho_min_dias": 2,
+   "pousada_faixa": "Villa",
+   "faixa": 2
+  },
+  {
+   "id": "dono-2026-11-04-faixa-recanto-20261123",
+   "tipo": "alvo_por_data",
+   "quartos": [
+    "Q7",
+    "Q2",
+    "Double",
+    "Afrodite"
+   ],
+   "de": "2026-11-23",
+   "ate": "2026-11-23",
+   "noites": [
+    "2026-11-23"
+   ],
+   "data": "2026-11-04",
+   "criada_em": "2026-11-04T15:13+00:00",
+   "libera": [
+    "acima_15"
+   ],
+   "pisos_enviados": {
+    "Q7": 1219.51,
+    "Q2": 1219.51,
+    "Double": 1219.51,
+    "Afrodite": 1500.0
+   },
+   "percentil": 50,
+   "vendidas_base": {
+    "Q7": {
+     "2026-11-23": 4
+    },
+    "Q2": {
+     "2026-11-23": 8
+    },
+    "Double": {
+     "2026-11-23": 3
+    },
+    "Afrodite": {
+     "2026-11-23": 8
+    }
+   },
+   "escada_vendas": true,
+   "passo_livre": true,
+   "ocupacao_max": 0.7,
+   "frente_ocupacao": 0.5,
+   "topo_enviados": {
+    "Q7": 2546.77,
+    "Q2": 2546.77,
+    "Double": 2546.77,
+    "Afrodite": 3056.13
+   },
+   "piso_atras": {
+    "Q7": 1219.51,
+    "Q2": 1219.51,
+    "Double": 1219.51,
+    "Afrodite": 1500.0
+   },
+   "gatilho_dias": 8,
+   "gatilho_min_dias": 2,
+   "pousada_faixa": "Recanto",
+   "faixa": 2
+  },
+  {
+   "id": "dono-2026-11-04-faixa-villa-20261123",
+   "tipo": "alvo_por_data",
+   "quartos": [
+    "VK7",
+    "VK2",
+    "Balcony"
+   ],
+   "de": "2026-11-23",
+   "ate": "2026-11-23",
+   "noites": [
+    "2026-11-23"
+   ],
+   "data": "2026-11-04",
+   "criada_em": "2026-11-04T15:13+00:00",
+   "libera": [
+    "acima_15"
+   ],
+   "pisos_enviados": {
+    "VK7": 944.0,
+    "VK2": 943.4,
+    "Balcony": 775.38
+   },
+   "percentil": 50,
+   "vendidas_base": {
+    "VK7": {
+     "2026-11-23": 1
+    },
+    "VK2": {
+     "2026-11-23": 2
+    },
+    "Balcony": {
+     "2026-11-23": 0
+    }
+   },
+   "escada_vendas": true,
+   "passo_livre": true,
+   "ocupacao_max": 0.7,
+   "frente_ocupacao": 0.5,
+   "topo_enviados": {
+    "VK7": 2429.23,
+    "VK2": 2429.23,
+    "Balcony": 2186.31
+   },
+   "piso_atras": {
+    "VK7": 944.0,
+    "VK2": 943.4,
+    "Balcony": 690.0
+   },
+   "gatilho_dias": 8,
+   "gatilho_min_dias": 2,
+   "pousada_faixa": "Villa",
+   "faixa": 2
+  },
+  {
+   "id": "dono-2026-11-04-faixa-recanto-20261124",
+   "tipo": "alvo_por_data",
+   "quartos": [
+    "Q7",
+    "Q2",
+    "Double",
+    "Afrodite"
+   ],
+   "de": "2026-11-24",
+   "ate": "2026-11-24",
+   "noites": [
+    "2026-11-24"
+   ],
+   "data": "2026-11-04",
+   "criada_em": "2026-11-04T15:13+00:00",
+   "libera": [
+    "acima_15"
+   ],
+   "pisos_enviados": {
+    "Q7": 1219.51,
+    "Q2": 1219.51,
+    "Double": 1219.51,
+    "Afrodite": 1500.0
+   },
+   "percentil": 50,
+   "vendidas_base": {
+    "Q7": {
+     "2026-11-24": 2
+    },
+    "Q2": {
+     "2026-11-24": 5
+    },
+    "Double": {
+     "2026-11-24": 1
+    },
+    "Afrodite": {
+     "2026-11-24": 5
+    }
+   },
+   "escada_vendas": true,
+   "passo_livre": true,
+   "ocupacao_max": 0.7,
+   "frente_ocupacao": 0.5,
+   "topo_enviados": {
+    "Q7": 2474.19,
+    "Q2": 2474.19,
+    "Double": 2474.19,
+    "Afrodite": 2969.03
+   },
+   "piso_atras": {
+    "Q7": 1219.51,
+    "Q2": 1219.51,
+    "Double": 1219.51,
+    "Afrodite": 1500.0
+   },
+   "gatilho_dias": 9,
+   "gatilho_min_dias": 2,
+   "pousada_faixa": "Recanto",
+   "faixa": 2
+  },
+  {
+   "id": "dono-2026-11-04-faixa-villa-20261124",
+   "tipo": "alvo_por_data",
+   "quartos": [
+    "VK7",
+    "VK2",
+    "Balcony"
+   ],
+   "de": "2026-11-24",
+   "ate": "2026-11-24",
+   "noites": [
+    "2026-11-24"
+   ],
+   "data": "2026-11-04",
+   "criada_em": "2026-11-04T15:13+00:00",
+   "libera": [
+    "acima_15"
+   ],
+   "pisos_enviados": {
+    "VK7": 944.0,
+    "VK2": 943.4,
+    "Balcony": 807.23
+   },
+   "percentil": 50,
+   "vendidas_base": {
+    "VK7": {
+     "2026-11-24": 1
+    },
+    "VK2": {
+     "2026-11-24": 1
+    },
+    "Balcony": {
+     "2026-11-24": 0
+    }
+   },
+   "escada_vendas": true,
+   "passo_livre": true,
+   "ocupacao_max": 0.7,
+   "frente_ocupacao": 0.5,
+   "topo_enviados": {
+    "VK7": 2360.0,
+    "VK2": 2360.0,
+    "Balcony": 2124.0
+   },
+   "piso_atras": {
+    "VK7": 944.0,
+    "VK2": 943.4,
+    "Balcony": 690.0
+   },
+   "gatilho_dias": 9,
+   "gatilho_min_dias": 2,
+   "pousada_faixa": "Villa",
+   "faixa": 2
+  },
+  {
+   "id": "dono-2026-11-04-faixa-recanto-20261125",
+   "tipo": "alvo_por_data",
+   "quartos": [
+    "Q7",
+    "Q2",
+    "Double",
+    "Afrodite"
+   ],
+   "de": "2026-11-25",
+   "ate": "2026-11-25",
+   "noites": [
+    "2026-11-25"
+   ],
+   "data": "2026-11-04",
+   "criada_em": "2026-11-04T15:13+00:00",
+   "libera": [
+    "acima_15"
+   ],
+   "pisos_enviados": {
+    "Q7": 1219.51,
+    "Q2": 1219.51,
+    "Double": 1219.51,
+    "Afrodite": 1500.0
+   },
+   "percentil": 50,
+   "vendidas_base": {
+    "Q7": {
+     "2026-11-25": 3
+    },
+    "Q2": {
+     "2026-11-25": 5
+    },
+    "Double": {
+     "2026-11-25": 0
+    },
+    "Afrodite": {
+     "2026-11-25": 5
+    }
+   },
+   "escada_vendas": true,
+   "passo_livre": true,
+   "ocupacao_max": 0.7,
+   "frente_ocupacao": 0.5,
+   "topo_enviados": {
+    "Q7": 2522.58,
+    "Q2": 2522.58,
+    "Double": 2522.58,
+    "Afrodite": 3027.1
+   },
+   "piso_atras": {
+    "Q7": 1219.51,
+    "Q2": 1219.51,
+    "Double": 1219.51,
+    "Afrodite": 1500.0
+   },
+   "gatilho_dias": 10,
+   "gatilho_min_dias": 2,
+   "pousada_faixa": "Recanto",
+   "faixa": 2
+  },
+  {
+   "id": "dono-2026-11-04-faixa-villa-20261125",
+   "tipo": "alvo_por_data",
+   "quartos": [
+    "VK7",
+    "VK2",
+    "Balcony"
+   ],
+   "de": "2026-11-25",
+   "ate": "2026-11-25",
+   "noites": [
+    "2026-11-25"
+   ],
+   "data": "2026-11-04",
+   "criada_em": "2026-11-04T15:13+00:00",
+   "libera": [
+    "acima_15"
+   ],
+   "pisos_enviados": {
+    "VK7": 944.0,
+    "VK2": 943.4,
+    "Balcony": 807.23
+   },
+   "percentil": 50,
+   "vendidas_base": {
+    "VK7": {
+     "2026-11-25": 2
+    },
+    "VK2": {
+     "2026-11-25": 3
+    },
+    "Balcony": {
+     "2026-11-25": 1
+    }
+   },
+   "escada_vendas": true,
+   "passo_livre": true,
+   "ocupacao_max": 0.7,
+   "frente_ocupacao": 0.5,
+   "topo_enviados": {
+    "VK7": 2406.15,
+    "VK2": 2406.15,
+    "Balcony": 2165.54
+   },
+   "piso_atras": {
+    "VK7": 944.0,
+    "VK2": 943.4,
+    "Balcony": 690.0
+   },
+   "gatilho_dias": 10,
+   "gatilho_min_dias": 2,
+   "pousada_faixa": "Villa",
+   "faixa": 2
+  },
+  {
+   "id": "dono-2026-11-04-faixa-recanto-20261126",
+   "tipo": "alvo_por_data",
+   "quartos": [
+    "Q7",
+    "Q2",
+    "Double",
+    "Afrodite"
+   ],
+   "de": "2026-11-26",
+   "ate": "2026-11-26",
+   "noites": [
+    "2026-11-26"
+   ],
+   "data": "2026-11-04",
+   "criada_em": "2026-11-04T15:13+00:00",
+   "libera": [
+    "acima_15"
+   ],
+   "pisos_enviados": {
+    "Q7": 1219.51,
+    "Q2": 1219.51,
+    "Double": 1219.51,
+    "Afrodite": 1500.0
+   },
+   "percentil": 50,
+   "vendidas_base": {
+    "Q7": {
+     "2026-11-26": 1
+    },
+    "Q2": {
+     "2026-11-26": 2
+    },
+    "Double": {
+     "2026-11-26": 0
+    },
+    "Afrodite": {
+     "2026-11-26": 2
+    }
+   },
+   "escada_vendas": true,
+   "passo_livre": true,
+   "ocupacao_max": 0.7,
+   "frente_ocupacao": 0.5,
+   "topo_enviados": {
+    "Q7": 2530.65,
+    "Q2": 2530.65,
+    "Double": 2530.65,
+    "Afrodite": 3036.77
+   },
+   "piso_atras": {
+    "Q7": 1219.51,
+    "Q2": 1219.51,
+    "Double": 1219.51,
+    "Afrodite": 1500.0
+   },
+   "gatilho_dias": 11,
+   "gatilho_min_dias": 2,
+   "pousada_faixa": "Recanto",
+   "faixa": 2
+  },
+  {
+   "id": "dono-2026-11-04-faixa-villa-20261126",
+   "tipo": "alvo_por_data",
+   "quartos": [
+    "VK7",
+    "VK2",
+    "Balcony"
+   ],
+   "de": "2026-11-26",
+   "ate": "2026-11-26",
+   "noites": [
+    "2026-11-26"
+   ],
+   "data": "2026-11-04",
+   "criada_em": "2026-11-04T15:13+00:00",
+   "libera": [
+    "acima_15"
+   ],
+   "pisos_enviados": {
+    "VK7": 944.0,
+    "VK2": 943.4,
+    "Balcony": 775.38
+   },
+   "percentil": 50,
+   "vendidas_base": {
+    "VK7": {
+     "2026-11-26": 2
+    },
+    "VK2": {
+     "2026-11-26": 3
+    },
+    "Balcony": {
+     "2026-11-26": 0
+    }
+   },
+   "escada_vendas": true,
+   "passo_livre": true,
+   "ocupacao_max": 0.7,
+   "frente_ocupacao": 0.5,
+   "topo_enviados": {
+    "VK7": 2413.85,
+    "VK2": 2413.85,
+    "Balcony": 2172.46
+   },
+   "piso_atras": {
+    "VK7": 944.0,
+    "VK2": 943.4,
+    "Balcony": 690.0
+   },
+   "gatilho_dias": 11,
+   "gatilho_min_dias": 2,
+   "pousada_faixa": "Villa",
+   "faixa": 2
+  },
+  {
+   "id": "dono-2026-11-04-faixa-recanto-20261127",
+   "tipo": "alvo_por_data",
+   "quartos": [
+    "Q7",
+    "Q2",
+    "Double",
+    "Afrodite"
+   ],
+   "de": "2026-11-27",
+   "ate": "2026-11-27",
+   "noites": [
+    "2026-11-27"
+   ],
+   "data": "2026-11-04",
+   "criada_em": "2026-11-04T15:13+00:00",
+   "libera": [
+    "acima_15"
+   ],
+   "pisos_enviados": {
+    "Q7": 2414.52,
+    "Q2": 2414.52,
+    "Double": 2414.52,
+    "Afrodite": 2535.24
+   },
+   "percentil": 65,
+   "vendidas_base": {
+    "Q7": {
+     "2026-11-27": 1
+    },
+    "Q2": {
+     "2026-11-27": 5
+    },
+    "Double": {
+     "2026-11-27": 4
+    },
+    "Afrodite": {
+     "2026-11-27": 5
+    }
+   },
+   "escada_vendas": true,
+   "passo_livre": true,
+   "ocupacao_max": 0.7,
+   "frente_ocupacao": 0.5,
+   "topo_enviados": {
+    "Q7": 3440.32,
+    "Q2": 3440.32,
+    "Double": 3440.32,
+    "Afrodite": 3612.34
+   },
+   "piso_atras": {
+    "Q7": 2213.26,
+    "Q2": 2213.26,
+    "Double": 2213.26,
+    "Afrodite": 2323.92
+   },
+   "gatilho_dias": 7,
+   "gatilho_min_dias": 2,
+   "pousada_faixa": "Recanto",
+   "faixa": 3
+  },
+  {
+   "id": "dono-2026-11-04-faixa-villa-20261127",
+   "tipo": "alvo_por_data",
+   "quartos": [
+    "VK7",
+    "VK2",
+    "Balcony"
+   ],
+   "de": "2026-11-27",
+   "ate": "2026-11-27",
+   "noites": [
+    "2026-11-27"
+   ],
+   "data": "2026-11-04",
+   "criada_em": "2026-11-04T15:13+00:00",
+   "libera": [
+    "acima_15"
+   ],
+   "pisos_enviados": {
+    "VK7": 2303.08,
+    "VK2": 2303.08,
+    "Balcony": 2072.77
+   },
+   "percentil": 65,
+   "vendidas_base": {
+    "VK7": {
+     "2026-11-27": 4
+    },
+    "VK2": {
+     "2026-11-27": 5
+    },
+    "Balcony": {
+     "2026-11-27": 0
+    }
+   },
+   "escada_vendas": true,
+   "passo_livre": true,
+   "ocupacao_max": 0.7,
+   "frente_ocupacao": 0.5,
+   "topo_enviados": {
+    "VK7": 3281.54,
+    "VK2": 3281.54,
+    "Balcony": 2953.38
+   },
+   "piso_atras": {
+    "VK7": 2111.11,
+    "VK2": 2111.11,
+    "Balcony": 1900.0
+   },
+   "gatilho_dias": 7,
+   "gatilho_min_dias": 2,
+   "pousada_faixa": "Villa",
+   "faixa": 3
+  },
+  {
+   "id": "dono-2026-11-04-faixa-recanto-20261128",
+   "tipo": "alvo_por_data",
+   "quartos": [
+    "Q7",
+    "Q2",
+    "Double",
+    "Afrodite"
+   ],
+   "de": "2026-11-28",
+   "ate": "2026-11-28",
+   "noites": [
+    "2026-11-28"
+   ],
+   "data": "2026-11-04",
+   "criada_em": "2026-11-04T15:13+00:00",
+   "libera": [
+    "acima_15"
+   ],
+   "pisos_enviados": {
+    "Q7": 2414.52,
+    "Q2": 2414.52,
+    "Double": 2414.52,
+    "Afrodite": 2535.24
+   },
+   "percentil": 65,
+   "vendidas_base": {
+    "Q7": {
+     "2026-11-28": 1
+    },
+    "Q2": {
+     "2026-11-28": 5
+    },
+    "Double": {
+     "2026-11-28": 4
+    },
+    "Afrodite": {
+     "2026-11-28": 5
+    }
+   },
+   "escada_vendas": true,
+   "passo_livre": true,
+   "ocupacao_max": 0.7,
+   "frente_ocupacao": 0.5,
+   "topo_enviados": {
+    "Q7": 3440.32,
+    "Q2": 3440.32,
+    "Double": 3440.32,
+    "Afrodite": 3612.34
+   },
+   "piso_atras": {
+    "Q7": 2213.26,
+    "Q2": 2213.26,
+    "Double": 2213.26,
+    "Afrodite": 2323.92
+   },
+   "gatilho_dias": 8,
+   "gatilho_min_dias": 2,
+   "pousada_faixa": "Recanto",
+   "faixa": 3
+  },
+  {
+   "id": "dono-2026-11-04-faixa-villa-20261128",
+   "tipo": "alvo_por_data",
+   "quartos": [
+    "VK7",
+    "VK2",
+    "Balcony"
+   ],
+   "de": "2026-11-28",
+   "ate": "2026-11-28",
+   "noites": [
+    "2026-11-28"
+   ],
+   "data": "2026-11-04",
+   "criada_em": "2026-11-04T15:13+00:00",
+   "libera": [
+    "acima_15"
+   ],
+   "pisos_enviados": {
+    "VK7": 2303.08,
+    "VK2": 2303.08,
+    "Balcony": 2072.77
+   },
+   "percentil": 65,
+   "vendidas_base": {
+    "VK7": {
+     "2026-11-28": 7
+    },
+    "VK2": {
+     "2026-11-28": 8
+    },
+    "Balcony": {
+     "2026-11-28": 0
+    }
+   },
+   "escada_vendas": true,
+   "passo_livre": true,
+   "ocupacao_max": 0.7,
+   "frente_ocupacao": 0.5,
+   "topo_enviados": {
+    "VK7": 3281.54,
+    "VK2": 3281.54,
+    "Balcony": 2953.38
+   },
+   "piso_atras": {
+    "VK7": 2111.11,
+    "VK2": 2111.11,
+    "Balcony": 1900.0
+   },
+   "gatilho_dias": 8,
+   "gatilho_min_dias": 2,
+   "pousada_faixa": "Villa",
+   "faixa": 3
+  },
+  {
+   "id": "dono-2026-11-04-faixa-recanto-20261129",
+   "tipo": "alvo_por_data",
+   "quartos": [
+    "Q7",
+    "Q2",
+    "Double",
+    "Afrodite"
+   ],
+   "de": "2026-11-29",
+   "ate": "2026-11-29",
+   "noites": [
+    "2026-11-29"
+   ],
+   "data": "2026-11-04",
+   "criada_em": "2026-11-04T15:13+00:00",
+   "libera": [
+    "acima_15"
+   ],
+   "pisos_enviados": {
+    "Q7": 1219.51,
+    "Q2": 1219.51,
+    "Double": 1219.51,
+    "Afrodite": 1500.0
+   },
+   "percentil": 50,
+   "vendidas_base": {
+    "Q7": {
+     "2026-11-29": 0
+    },
+    "Q2": {
+     "2026-11-29": 4
+    },
+    "Double": {
+     "2026-11-29": 4
+    },
+    "Afrodite": {
+     "2026-11-29": 4
+    }
+   },
+   "escada_vendas": true,
+   "passo_livre": true,
+   "ocupacao_max": 0.7,
+   "frente_ocupacao": 0.5,
+   "topo_enviados": {
+    "Q7": 2538.71,
+    "Q2": 2538.71,
+    "Double": 2538.71,
+    "Afrodite": 3046.45
+   },
+   "piso_atras": {
+    "Q7": 1219.51,
+    "Q2": 1219.51,
+    "Double": 1219.51,
+    "Afrodite": 1500.0
+   },
+   "gatilho_dias": 7,
+   "gatilho_min_dias": 2,
+   "pousada_faixa": "Recanto",
+   "faixa": 2
+  },
+  {
+   "id": "dono-2026-11-04-faixa-villa-20261129",
+   "tipo": "alvo_por_data",
+   "quartos": [
+    "VK7",
+    "VK2",
+    "Balcony"
+   ],
+   "de": "2026-11-29",
+   "ate": "2026-11-29",
+   "noites": [
+    "2026-11-29"
+   ],
+   "data": "2026-11-04",
+   "criada_em": "2026-11-04T15:13+00:00",
+   "libera": [
+    "acima_15"
+   ],
+   "pisos_enviados": {
+    "VK7": 993.85,
+    "VK2": 993.85,
+    "Balcony": 894.46
+   },
+   "percentil": 50,
+   "vendidas_base": {
+    "VK7": {
+     "2026-11-29": 5
+    },
+    "VK2": {
+     "2026-11-29": 7
+    },
+    "Balcony": {
+     "2026-11-29": 0
+    }
+   },
+   "escada_vendas": true,
+   "passo_livre": true,
+   "ocupacao_max": 0.7,
+   "frente_ocupacao": 0.5,
+   "topo_enviados": {
+    "VK7": 2421.54,
+    "VK2": 2421.54,
+    "Balcony": 2179.38
+   },
+   "piso_atras": {
+    "VK7": 944.0,
+    "VK2": 943.4,
+    "Balcony": 690.0
+   },
+   "gatilho_dias": 7,
+   "gatilho_min_dias": 2,
+   "pousada_faixa": "Villa",
+   "faixa": 2
+  },
+  {
+   "id": "dono-2026-11-04-faixa-recanto-20261130",
+   "tipo": "alvo_por_data",
+   "quartos": [
+    "Q7",
+    "Q2",
+    "Double",
+    "Afrodite"
+   ],
+   "de": "2026-11-30",
+   "ate": "2026-11-30",
+   "noites": [
+    "2026-11-30"
+   ],
+   "data": "2026-11-04",
+   "criada_em": "2026-11-04T15:13+00:00",
+   "libera": [
+    "acima_15"
+   ],
+   "pisos_enviados": {
+    "Q7": 1219.51,
+    "Q2": 1219.51,
+    "Double": 1219.51,
+    "Afrodite": 1500.0
+   },
+   "percentil": 50,
+   "vendidas_base": {
+    "Q7": {
+     "2026-11-30": 1
+    },
+    "Q2": {
+     "2026-11-30": 4
+    },
+    "Double": {
+     "2026-11-30": 1
+    },
+    "Afrodite": {
+     "2026-11-30": 4
+    }
+   },
+   "escada_vendas": true,
+   "passo_livre": true,
+   "ocupacao_max": 0.7,
+   "frente_ocupacao": 0.5,
+   "topo_enviados": {
+    "Q7": 2522.58,
+    "Q2": 2522.58,
+    "Double": 2522.58,
+    "Afrodite": 3027.1
+   },
+   "piso_atras": {
+    "Q7": 1219.51,
+    "Q2": 1219.51,
+    "Double": 1219.51,
+    "Afrodite": 1500.0
+   },
+   "gatilho_dias": 8,
+   "gatilho_min_dias": 2,
+   "pousada_faixa": "Recanto",
+   "faixa": 2
+  },
+  {
+   "id": "dono-2026-11-04-faixa-villa-20261130",
+   "tipo": "alvo_por_data",
+   "quartos": [
+    "VK7",
+    "VK2",
+    "Balcony"
+   ],
+   "de": "2026-11-30",
+   "ate": "2026-11-30",
+   "noites": [
+    "2026-11-30"
+   ],
+   "data": "2026-11-04",
+   "criada_em": "2026-11-04T15:13+00:00",
+   "libera": [
+    "acima_15"
+   ],
+   "pisos_enviados": {
+    "VK7": 944.0,
+    "VK2": 943.4,
+    "Balcony": 798.92
+   },
+   "percentil": 50,
+   "vendidas_base": {
+    "VK7": {
+     "2026-11-30": 3
+    },
+    "VK2": {
+     "2026-11-30": 4
+    },
+    "Balcony": {
+     "2026-11-30": 0
+    }
+   },
+   "escada_vendas": true,
+   "passo_livre": true,
+   "ocupacao_max": 0.7,
+   "frente_ocupacao": 0.5,
+   "topo_enviados": {
+    "VK7": 2406.15,
+    "VK2": 2406.15,
+    "Balcony": 2165.54
+   },
+   "piso_atras": {
+    "VK7": 944.0,
+    "VK2": 943.4,
+    "Balcony": 690.0
+   },
+   "gatilho_dias": 8,
+   "gatilho_min_dias": 2,
+   "pousada_faixa": "Villa",
+   "faixa": 2
+  },
+  {
+   "id": "dono-2026-11-04-faixa-recanto-20261201",
+   "tipo": "alvo_por_data",
+   "quartos": [
+    "Q7",
+    "Q2",
+    "Double",
+    "Afrodite"
+   ],
+   "de": "2026-12-01",
+   "ate": "2026-12-01",
+   "noites": [
+    "2026-12-01"
+   ],
+   "data": "2026-11-04",
+   "criada_em": "2026-11-04T15:13+00:00",
+   "libera": [
+    "acima_15"
+   ],
+   "pisos_enviados": {
+    "Q7": 1219.51,
+    "Q2": 1219.51,
+    "Double": 1219.51,
+    "Afrodite": 1500.0
+   },
+   "percentil": 50,
+   "vendidas_base": {
+    "Q7": {
+     "2026-12-01": 1
+    },
+    "Q2": {
+     "2026-12-01": 5
+    },
+    "Double": {
+     "2026-12-01": 1
+    },
+    "Afrodite": {
+     "2026-12-01": 5
+    }
+   },
+   "escada_vendas": true,
+   "passo_livre": true,
+   "ocupacao_max": 0.7,
+   "frente_ocupacao": 0.5,
+   "topo_enviados": {
+    "Q7": 2512.9,
+    "Q2": 2512.9,
+    "Double": 2512.9,
+    "Afrodite": 3015.48
+   },
+   "piso_atras": {
+    "Q7": 1219.51,
+    "Q2": 1219.51,
+    "Double": 1219.51,
+    "Afrodite": 1500.0
+   },
+   "gatilho_dias": 9,
+   "gatilho_min_dias": 2,
+   "pousada_faixa": "Recanto",
+   "faixa": 2
+  },
+  {
+   "id": "dono-2026-11-04-faixa-villa-20261201",
+   "tipo": "alvo_por_data",
+   "quartos": [
+    "VK7",
+    "VK2",
+    "Balcony"
+   ],
+   "de": "2026-12-01",
+   "ate": "2026-12-01",
+   "noites": [
+    "2026-12-01"
+   ],
+   "data": "2026-11-04",
+   "criada_em": "2026-11-04T15:13+00:00",
+   "libera": [
+    "acima_15"
+   ],
+   "pisos_enviados": {
+    "VK7": 944.0,
+    "VK2": 943.4,
+    "Balcony": 844.62
+   },
+   "percentil": 50,
+   "vendidas_base": {
+    "VK7": {
+     "2026-12-01": 1
+    },
+    "VK2": {
+     "2026-12-01": 1
+    },
+    "Balcony": {
+     "2026-12-01": 0
+    }
+   },
+   "escada_vendas": true,
+   "passo_livre": true,
+   "ocupacao_max": 0.7,
+   "frente_ocupacao": 0.5,
+   "topo_enviados": {
+    "VK7": 2396.92,
+    "VK2": 2396.92,
+    "Balcony": 2157.23
+   },
+   "piso_atras": {
+    "VK7": 944.0,
+    "VK2": 943.4,
+    "Balcony": 690.0
+   },
+   "gatilho_dias": 9,
+   "gatilho_min_dias": 2,
+   "pousada_faixa": "Villa",
+   "faixa": 2
+  },
+  {
+   "id": "dono-2026-11-04-faixa-recanto-20261202",
+   "tipo": "alvo_por_data",
+   "quartos": [
+    "Q7",
+    "Q2",
+    "Double",
+    "Afrodite"
+   ],
+   "de": "2026-12-02",
+   "ate": "2026-12-02",
+   "noites": [
+    "2026-12-02"
+   ],
+   "data": "2026-11-04",
+   "criada_em": "2026-11-04T15:13+00:00",
+   "libera": [
+    "acima_15"
+   ],
+   "pisos_enviados": {
+    "Q7": 1219.51,
+    "Q2": 1219.51,
+    "Double": 1219.51,
+    "Afrodite": 1500.0
+   },
+   "percentil": 50,
+   "vendidas_base": {
+    "Q7": {
+     "2026-12-02": 0
+    },
+    "Q2": {
+     "2026-12-02": 2
+    },
+    "Double": {
+     "2026-12-02": 1
+    },
+    "Afrodite": {
+     "2026-12-02": 2
+    }
+   },
+   "escada_vendas": true,
+   "passo_livre": true,
+   "ocupacao_max": 0.7,
+   "frente_ocupacao": 0.5,
+   "topo_enviados": {
+    "Q7": 2503.23,
+    "Q2": 2503.23,
+    "Double": 2503.23,
+    "Afrodite": 3003.87
+   },
+   "piso_atras": {
+    "Q7": 1219.51,
+    "Q2": 1219.51,
+    "Double": 1219.51,
+    "Afrodite": 1500.0
+   },
+   "gatilho_dias": 10,
+   "gatilho_min_dias": 2,
+   "pousada_faixa": "Recanto",
+   "faixa": 2
+  },
+  {
+   "id": "dono-2026-11-04-faixa-villa-20261202",
+   "tipo": "alvo_por_data",
+   "quartos": [
+    "VK7",
+    "VK2",
+    "Balcony"
+   ],
+   "de": "2026-12-02",
+   "ate": "2026-12-02",
+   "noites": [
+    "2026-12-02"
+   ],
+   "data": "2026-11-04",
+   "criada_em": "2026-11-04T15:13+00:00",
+   "libera": [
+    "acima_15"
+   ],
+   "pisos_enviados": {
+    "VK7": 989.23,
+    "VK2": 989.23,
+    "Balcony": 890.31
+   },
+   "percentil": 50,
+   "vendidas_base": {
+    "VK7": {
+     "2026-12-02": 2
+    },
+    "VK2": {
+     "2026-12-02": 2
+    },
+    "Balcony": {
+     "2026-12-02": 0
+    }
+   },
+   "escada_vendas": true,
+   "passo_livre": true,
+   "ocupacao_max": 0.7,
+   "frente_ocupacao": 0.5,
+   "topo_enviados": {
+    "VK7": 2387.69,
+    "VK2": 2387.69,
+    "Balcony": 2148.92
+   },
+   "piso_atras": {
+    "VK7": 944.0,
+    "VK2": 943.4,
+    "Balcony": 729.23
+   },
+   "gatilho_dias": 10,
+   "gatilho_min_dias": 2,
+   "pousada_faixa": "Villa",
+   "faixa": 2
+  },
+  {
+   "id": "dono-2026-11-04-faixa-recanto-20261203",
+   "tipo": "alvo_por_data",
+   "quartos": [
+    "Q7",
+    "Q2",
+    "Double",
+    "Afrodite"
+   ],
+   "de": "2026-12-03",
+   "ate": "2026-12-03",
+   "noites": [
+    "2026-12-03"
+   ],
+   "data": "2026-11-04",
+   "criada_em": "2026-11-04T15:13+00:00",
+   "libera": [
+    "acima_15"
+   ],
+   "pisos_enviados": {
+    "Q7": 1219.51,
+    "Q2": 1219.51,
+    "Double": 1219.51,
+    "Afrodite": 1500.0
+   },
+   "percentil": 50,
+   "vendidas_base": {
+    "Q7": {
+     "2026-12-03": 0
+    },
+    "Q2": {
+     "2026-12-03": 0
+    },
+    "Double": {
+     "2026-12-03": 0
+    },
+    "Afrodite": {
+     "2026-12-03": 0
+    }
+   },
+   "escada_vendas": true,
+   "passo_livre": true,
+   "ocupacao_max": 0.7,
+   "frente_ocupacao": 0.5,
+   "topo_enviados": {
+    "Q7": 2503.23,
+    "Q2": 2503.23,
+    "Double": 2503.23,
+    "Afrodite": 3003.87
+   },
+   "piso_atras": {
+    "Q7": 1219.51,
+    "Q2": 1219.51,
+    "Double": 1219.51,
+    "Afrodite": 1500.0
+   },
+   "gatilho_dias": 11,
+   "gatilho_min_dias": 2,
+   "pousada_faixa": "Recanto",
+   "faixa": 2
+  },
+  {
+   "id": "dono-2026-11-04-faixa-villa-20261203",
+   "tipo": "alvo_por_data",
+   "quartos": [
+    "VK7",
+    "VK2",
+    "Balcony"
+   ],
+   "de": "2026-12-03",
+   "ate": "2026-12-03",
+   "noites": [
+    "2026-12-03"
+   ],
+   "data": "2026-11-04",
+   "criada_em": "2026-11-04T15:13+00:00",
+   "libera": [
+    "acima_15"
+   ],
+   "pisos_enviados": {
+    "VK7": 989.23,
+    "VK2": 989.23,
+    "Balcony": 890.31
+   },
+   "percentil": 50,
+   "vendidas_base": {
+    "VK7": {
+     "2026-12-03": 1
+    },
+    "VK2": {
+     "2026-12-03": 2
+    },
+    "Balcony": {
+     "2026-12-03": 0
+    }
+   },
+   "escada_vendas": true,
+   "passo_livre": true,
+   "ocupacao_max": 0.7,
+   "frente_ocupacao": 0.5,
+   "topo_enviados": {
+    "VK7": 2387.69,
+    "VK2": 2387.69,
+    "Balcony": 2148.92
+   },
+   "piso_atras": {
+    "VK7": 944.0,
+    "VK2": 943.4,
+    "Balcony": 729.23
+   },
+   "gatilho_dias": 11,
+   "gatilho_min_dias": 2,
+   "pousada_faixa": "Villa",
+   "faixa": 2
+  },
+  {
+   "id": "dono-2026-11-04-faixa-recanto-20261204",
+   "tipo": "alvo_por_data",
+   "quartos": [
+    "Q7",
+    "Q2",
+    "Double",
+    "Afrodite"
+   ],
+   "de": "2026-12-04",
+   "ate": "2026-12-04",
+   "noites": [
+    "2026-12-04"
+   ],
+   "data": "2026-11-04",
+   "criada_em": "2026-11-04T15:13+00:00",
+   "libera": [
+    "acima_15"
+   ],
+   "pisos_enviados": {
+    "Q7": 2466.13,
+    "Q2": 2466.13,
+    "Double": 2466.13,
+    "Afrodite": 2589.44
+   },
+   "percentil": 65,
+   "vendidas_base": {
+    "Q7": {
+     "2026-12-04": 2
+    },
+    "Q2": {
+     "2026-12-04": 4
+    },
+    "Double": {
+     "2026-12-04": 2
+    },
+    "Afrodite": {
+     "2026-12-04": 4
+    }
+   },
+   "escada_vendas": true,
+   "passo_livre": true,
+   "ocupacao_max": 0.7,
+   "frente_ocupacao": 0.5,
+   "topo_enviados": {
+    "Q7": 3479.03,
+    "Q2": 3479.03,
+    "Double": 3479.03,
+    "Afrodite": 3652.98
+   },
+   "piso_atras": {
+    "Q7": 2129.03,
+    "Q2": 2129.03,
+    "Double": 2129.03,
+    "Afrodite": 2235.48
+   },
+   "gatilho_dias": 7,
+   "gatilho_min_dias": 2,
+   "pousada_faixa": "Recanto",
+   "faixa": 3
+  },
+  {
+   "id": "dono-2026-11-04-faixa-villa-20261204",
+   "tipo": "alvo_por_data",
+   "quartos": [
+    "VK7",
+    "VK2",
+    "Balcony"
+   ],
+   "de": "2026-12-04",
+   "ate": "2026-12-04",
+   "noites": [
+    "2026-12-04"
+   ],
+   "data": "2026-11-04",
+   "criada_em": "2026-11-04T15:13+00:00",
+   "libera": [
+    "acima_15"
+   ],
+   "pisos_enviados": {
+    "VK7": 2352.31,
+    "VK2": 2352.31,
+    "Balcony": 2117.08
+   },
+   "percentil": 65,
+   "vendidas_base": {
+    "VK7": {
+     "2026-12-04": 1
+    },
+    "VK2": {
+     "2026-12-04": 2
+    },
+    "Balcony": {
+     "2026-12-04": 1
+    }
+   },
+   "escada_vendas": true,
+   "passo_livre": true,
+   "ocupacao_max": 0.7,
+   "frente_ocupacao": 0.5,
+   "topo_enviados": {
+    "VK7": 3318.46,
+    "VK2": 3318.46,
+    "Balcony": 2986.61
+   },
+   "piso_atras": {
+    "VK7": 2030.77,
+    "VK2": 2030.77,
+    "Balcony": 1827.69
+   },
+   "gatilho_dias": 7,
+   "gatilho_min_dias": 2,
+   "pousada_faixa": "Villa",
+   "faixa": 3
+  },
+  {
+   "id": "dono-2026-11-04-faixa-recanto-20261205",
+   "tipo": "alvo_por_data",
+   "quartos": [
+    "Q7",
+    "Q2",
+    "Double",
+    "Afrodite"
+   ],
+   "de": "2026-12-05",
+   "ate": "2026-12-05",
+   "noites": [
+    "2026-12-05"
+   ],
+   "data": "2026-11-04",
+   "criada_em": "2026-11-04T15:13+00:00",
+   "libera": [
+    "acima_15"
+   ],
+   "pisos_enviados": {
+    "Q7": 2466.13,
+    "Q2": 2466.13,
+    "Double": 2466.13,
+    "Afrodite": 2589.44
+   },
+   "percentil": 65,
+   "vendidas_base": {
+    "Q7": {
+     "2026-12-05": 2
+    },
+    "Q2": {
+     "2026-12-05": 6
+    },
+    "Double": {
+     "2026-12-05": 4
+    },
+    "Afrodite": {
+     "2026-12-05": 6
+    }
+   },
+   "escada_vendas": true,
+   "passo_livre": true,
+   "ocupacao_max": 0.7,
+   "frente_ocupacao": 0.5,
+   "topo_enviados": {
+    "Q7": 3479.03,
+    "Q2": 3479.03,
+    "Double": 3479.03,
+    "Afrodite": 3652.98
+   },
+   "piso_atras": {
+    "Q7": 2129.03,
+    "Q2": 2129.03,
+    "Double": 2129.03,
+    "Afrodite": 2235.48
+   },
+   "gatilho_dias": 8,
+   "gatilho_min_dias": 2,
+   "pousada_faixa": "Recanto",
+   "faixa": 3
+  },
+  {
+   "id": "dono-2026-11-04-faixa-villa-20261205",
+   "tipo": "alvo_por_data",
+   "quartos": [
+    "VK7",
+    "VK2",
+    "Balcony"
+   ],
+   "de": "2026-12-05",
+   "ate": "2026-12-05",
+   "noites": [
+    "2026-12-05"
+   ],
+   "data": "2026-11-04",
+   "criada_em": "2026-11-04T15:13+00:00",
+   "libera": [
+    "acima_15"
+   ],
+   "pisos_enviados": {
+    "VK7": 2352.31,
+    "VK2": 2352.31,
+    "Balcony": 2117.08
+   },
+   "percentil": 65,
+   "vendidas_base": {
+    "VK7": {
+     "2026-12-05": 5
+    },
+    "VK2": {
+     "2026-12-05": 6
+    },
+    "Balcony": {
+     "2026-12-05": 1
+    }
+   },
+   "escada_vendas": true,
+   "passo_livre": true,
+   "ocupacao_max": 0.7,
+   "frente_ocupacao": 0.5,
+   "topo_enviados": {
+    "VK7": 3318.46,
+    "VK2": 3318.46,
+    "Balcony": 2986.61
+   },
+   "piso_atras": {
+    "VK7": 2030.77,
+    "VK2": 2030.77,
+    "Balcony": 1827.69
+   },
+   "gatilho_dias": 8,
+   "gatilho_min_dias": 2,
+   "pousada_faixa": "Villa",
+   "faixa": 3
+  },
+  {
+   "id": "dono-2026-11-04-faixa-recanto-20261206",
+   "tipo": "alvo_por_data",
+   "quartos": [
+    "Q7",
+    "Q2",
+    "Double",
+    "Afrodite"
+   ],
+   "de": "2026-12-06",
+   "ate": "2026-12-06",
+   "noites": [
+    "2026-12-06"
+   ],
+   "data": "2026-11-04",
+   "criada_em": "2026-11-04T15:13+00:00",
+   "libera": [
+    "acima_15"
+   ],
+   "pisos_enviados": {
+    "Q7": 1219.51,
+    "Q2": 1219.51,
+    "Double": 1219.51,
+    "Afrodite": 1500.0
+   },
+   "percentil": 50,
+   "vendidas_base": {
+    "Q7": {
+     "2026-12-06": 2
+    },
+    "Q2": {
+     "2026-12-06": 4
+    },
+    "Double": {
+     "2026-12-06": 2
+    },
+    "Afrodite": {
+     "2026-12-06": 4
+    }
+   },
+   "escada_vendas": true,
+   "passo_livre": true,
+   "ocupacao_max": 0.7,
+   "frente_ocupacao": 0.5,
+   "topo_enviados": {
+    "Q7": 2569.35,
+    "Q2": 2569.35,
+    "Double": 2569.35,
+    "Afrodite": 3083.23
+   },
+   "piso_atras": {
+    "Q7": 1219.51,
+    "Q2": 1219.51,
+    "Double": 1219.51,
+    "Afrodite": 1500.0
+   },
+   "gatilho_dias": 7,
+   "gatilho_min_dias": 2,
+   "pousada_faixa": "Recanto",
+   "faixa": 2
+  },
+  {
+   "id": "dono-2026-11-04-faixa-villa-20261206",
+   "tipo": "alvo_por_data",
+   "quartos": [
+    "VK7",
+    "VK2",
+    "Balcony"
+   ],
+   "de": "2026-12-06",
+   "ate": "2026-12-06",
+   "noites": [
+    "2026-12-06"
+   ],
+   "data": "2026-11-04",
+   "criada_em": "2026-11-04T15:13+00:00",
+   "libera": [
+    "acima_15"
+   ],
+   "pisos_enviados": {
+    "VK7": 947.69,
+    "VK2": 947.69,
+    "Balcony": 852.92
+   },
+   "percentil": 50,
+   "vendidas_base": {
+    "VK7": {
+     "2026-12-06": 4
+    },
+    "VK2": {
+     "2026-12-06": 5
+    },
+    "Balcony": {
+     "2026-12-06": 0
+    }
+   },
+   "escada_vendas": true,
+   "passo_livre": true,
+   "ocupacao_max": 0.7,
+   "frente_ocupacao": 0.5,
+   "topo_enviados": {
+    "VK7": 2450.77,
+    "VK2": 2450.77,
+    "Balcony": 2205.69
+   },
+   "piso_atras": {
+    "VK7": 944.0,
+    "VK2": 943.4,
+    "Balcony": 733.85
+   },
+   "gatilho_dias": 7,
+   "gatilho_min_dias": 2,
+   "pousada_faixa": "Villa",
+   "faixa": 2
+  },
+  {
+   "id": "dono-2026-11-04-faixa-recanto-20261207",
+   "tipo": "alvo_por_data",
+   "quartos": [
+    "Q7",
+    "Q2",
+    "Double",
+    "Afrodite"
+   ],
+   "de": "2026-12-07",
+   "ate": "2026-12-07",
+   "noites": [
+    "2026-12-07"
+   ],
+   "data": "2026-11-04",
+   "criada_em": "2026-11-04T15:13+00:00",
+   "libera": [
+    "acima_15"
+   ],
+   "pisos_enviados": {
+    "Q7": 1219.51,
+    "Q2": 1219.51,
+    "Double": 1219.51,
+    "Afrodite": 1500.0
+   },
+   "percentil": 50,
+   "vendidas_base": {
+    "Q7": {
+     "2026-12-07": 2
+    },
+    "Q2": {
+     "2026-12-07": 3
+    },
+    "Double": {
+     "2026-12-07": 1
+    },
+    "Afrodite": {
+     "2026-12-07": 3
+    }
+   },
+   "escada_vendas": true,
+   "passo_livre": true,
+   "ocupacao_max": 0.7,
+   "frente_ocupacao": 0.5,
+   "topo_enviados": {
+    "Q7": 2569.35,
+    "Q2": 2569.35,
+    "Double": 2569.35,
+    "Afrodite": 3083.23
+   },
+   "piso_atras": {
+    "Q7": 1219.51,
+    "Q2": 1219.51,
+    "Double": 1219.51,
+    "Afrodite": 1500.0
+   },
+   "gatilho_dias": 8,
+   "gatilho_min_dias": 2,
+   "pousada_faixa": "Recanto",
+   "faixa": 2
+  },
+  {
+   "id": "dono-2026-11-04-faixa-villa-20261207",
+   "tipo": "alvo_por_data",
+   "quartos": [
+    "VK7",
+    "VK2",
+    "Balcony"
+   ],
+   "de": "2026-12-07",
+   "ate": "2026-12-07",
+   "noites": [
+    "2026-12-07"
+   ],
+   "data": "2026-11-04",
+   "criada_em": "2026-11-04T15:13+00:00",
+   "libera": [
+    "acima_15"
+   ],
+   "pisos_enviados": {
+    "VK7": 947.69,
+    "VK2": 947.69,
+    "Balcony": 852.92
+   },
+   "percentil": 50,
+   "vendidas_base": {
+    "VK7": {
+     "2026-12-07": 4
+    },
+    "VK2": {
+     "2026-12-07": 5
+    },
+    "Balcony": {
+     "2026-12-07": 0
+    }
+   },
+   "escada_vendas": true,
+   "passo_livre": true,
+   "ocupacao_max": 0.7,
+   "frente_ocupacao": 0.5,
+   "topo_enviados": {
+    "VK7": 2450.77,
+    "VK2": 2450.77,
+    "Balcony": 2205.69
+   },
+   "piso_atras": {
+    "VK7": 944.0,
+    "VK2": 943.4,
+    "Balcony": 733.85
+   },
+   "gatilho_dias": 8,
+   "gatilho_min_dias": 2,
+   "pousada_faixa": "Villa",
+   "faixa": 2
+  },
+  {
+   "id": "dono-2026-11-04-faixa-recanto-20261208",
+   "tipo": "alvo_por_data",
+   "quartos": [
+    "Q7",
+    "Q2",
+    "Double",
+    "Afrodite"
+   ],
+   "de": "2026-12-08",
+   "ate": "2026-12-08",
+   "noites": [
+    "2026-12-08"
+   ],
+   "data": "2026-11-04",
+   "criada_em": "2026-11-04T15:13+00:00",
+   "libera": [
+    "acima_15"
+   ],
+   "pisos_enviados": {
+    "Q7": 1219.51,
+    "Q2": 1219.51,
+    "Double": 1219.51,
+    "Afrodite": 1500.0
+   },
+   "percentil": 50,
+   "vendidas_base": {
+    "Q7": {
+     "2026-12-08": 0
+    },
+    "Q2": {
+     "2026-12-08": 1
+    },
+    "Double": {
+     "2026-12-08": 1
+    },
+    "Afrodite": {
+     "2026-12-08": 1
+    }
+   },
+   "escada_vendas": true,
+   "passo_livre": true,
+   "ocupacao_max": 0.7,
+   "frente_ocupacao": 0.5,
+   "topo_enviados": {
+    "Q7": 2569.35,
+    "Q2": 2569.35,
+    "Double": 2569.35,
+    "Afrodite": 3083.23
+   },
+   "piso_atras": {
+    "Q7": 1219.51,
+    "Q2": 1219.51,
+    "Double": 1219.51,
+    "Afrodite": 1500.0
+   },
+   "gatilho_dias": 9,
+   "gatilho_min_dias": 2,
+   "pousada_faixa": "Recanto",
+   "faixa": 2
+  },
+  {
+   "id": "dono-2026-11-04-faixa-villa-20261208",
+   "tipo": "alvo_por_data",
+   "quartos": [
+    "VK7",
+    "VK2",
+    "Balcony"
+   ],
+   "de": "2026-12-08",
+   "ate": "2026-12-08",
+   "noites": [
+    "2026-12-08"
+   ],
+   "data": "2026-11-04",
+   "criada_em": "2026-11-04T15:13+00:00",
+   "libera": [
+    "acima_15"
+   ],
+   "pisos_enviados": {
+    "VK7": 947.69,
+    "VK2": 947.69,
+    "Balcony": 852.92
+   },
+   "percentil": 50,
+   "vendidas_base": {
+    "VK7": {
+     "2026-12-08": 1
+    },
+    "VK2": {
+     "2026-12-08": 1
+    },
+    "Balcony": {
+     "2026-12-08": 0
+    }
+   },
+   "escada_vendas": true,
+   "passo_livre": true,
+   "ocupacao_max": 0.7,
+   "frente_ocupacao": 0.5,
+   "topo_enviados": {
+    "VK7": 2450.77,
+    "VK2": 2450.77,
+    "Balcony": 2205.69
+   },
+   "piso_atras": {
+    "VK7": 944.0,
+    "VK2": 943.4,
+    "Balcony": 733.85
+   },
+   "gatilho_dias": 9,
+   "gatilho_min_dias": 2,
+   "pousada_faixa": "Villa",
+   "faixa": 2
+  },
+  {
+   "id": "dono-2026-11-04-faixa-recanto-20261209",
+   "tipo": "alvo_por_data",
+   "quartos": [
+    "Q7",
+    "Q2",
+    "Double",
+    "Afrodite"
+   ],
+   "de": "2026-12-09",
+   "ate": "2026-12-09",
+   "noites": [
+    "2026-12-09"
+   ],
+   "data": "2026-11-04",
+   "criada_em": "2026-11-04T15:13+00:00",
+   "libera": [
+    "acima_15"
+   ],
+   "pisos_enviados": {
+    "Q7": 1219.51,
+    "Q2": 1219.51,
+    "Double": 1219.51,
+    "Afrodite": 1500.0
+   },
+   "percentil": 50,
+   "vendidas_base": {
+    "Q7": {
+     "2026-12-09": 0
+    },
+    "Q2": {
+     "2026-12-09": 0
+    },
+    "Double": {
+     "2026-12-09": 0
+    },
+    "Afrodite": {
+     "2026-12-09": 0
+    }
+   },
+   "escada_vendas": true,
+   "passo_livre": true,
+   "ocupacao_max": 0.7,
+   "frente_ocupacao": 0.5,
+   "topo_enviados": {
+    "Q7": 2569.35,
+    "Q2": 2569.35,
+    "Double": 2569.35,
+    "Afrodite": 3083.23
+   },
+   "piso_atras": {
+    "Q7": 1219.51,
+    "Q2": 1219.51,
+    "Double": 1219.51,
+    "Afrodite": 1500.0
+   },
+   "gatilho_dias": 10,
+   "gatilho_min_dias": 2,
+   "pousada_faixa": "Recanto",
+   "faixa": 2
+  },
+  {
+   "id": "dono-2026-11-04-faixa-villa-20261209",
+   "tipo": "alvo_por_data",
+   "quartos": [
+    "VK7",
+    "VK2",
+    "Balcony"
+   ],
+   "de": "2026-12-09",
+   "ate": "2026-12-09",
+   "noites": [
+    "2026-12-09"
+   ],
+   "data": "2026-11-04",
+   "criada_em": "2026-11-04T15:13+00:00",
+   "libera": [
+    "acima_15"
+   ],
+   "pisos_enviados": {
+    "VK7": 947.69,
+    "VK2": 947.69,
+    "Balcony": 852.92
+   },
+   "percentil": 50,
+   "vendidas_base": {
+    "VK7": {
+     "2026-12-09": 1
+    },
+    "VK2": {
+     "2026-12-09": 1
+    },
+    "Balcony": {
+     "2026-12-09": 0
+    }
+   },
+   "escada_vendas": true,
+   "passo_livre": true,
+   "ocupacao_max": 0.7,
+   "frente_ocupacao": 0.5,
+   "topo_enviados": {
+    "VK7": 2450.77,
+    "VK2": 2450.77,
+    "Balcony": 2205.69
+   },
+   "piso_atras": {
+    "VK7": 944.0,
+    "VK2": 943.4,
+    "Balcony": 733.85
+   },
+   "gatilho_dias": 10,
+   "gatilho_min_dias": 2,
+   "pousada_faixa": "Villa",
+   "faixa": 2
+  },
+  {
+   "id": "dono-2026-11-04-faixa-recanto-20261210",
+   "tipo": "alvo_por_data",
+   "quartos": [
+    "Q7",
+    "Q2",
+    "Double",
+    "Afrodite"
+   ],
+   "de": "2026-12-10",
+   "ate": "2026-12-10",
+   "noites": [
+    "2026-12-10"
+   ],
+   "data": "2026-11-04",
+   "criada_em": "2026-11-04T15:13+00:00",
+   "libera": [
+    "acima_15"
+   ],
+   "pisos_enviados": {
+    "Q7": 1219.51,
+    "Q2": 1219.51,
+    "Double": 1219.51,
+    "Afrodite": 1500.0
+   },
+   "percentil": 50,
+   "vendidas_base": {
+    "Q7": {
+     "2026-12-10": 0
+    },
+    "Q2": {
+     "2026-12-10": 0
+    },
+    "Double": {
+     "2026-12-10": 0
+    },
+    "Afrodite": {
+     "2026-12-10": 0
+    }
+   },
+   "escada_vendas": true,
+   "passo_livre": true,
+   "ocupacao_max": 0.7,
+   "frente_ocupacao": 0.5,
+   "topo_enviados": {
+    "Q7": 2569.35,
+    "Q2": 2569.35,
+    "Double": 2569.35,
+    "Afrodite": 3083.23
+   },
+   "piso_atras": {
+    "Q7": 1219.51,
+    "Q2": 1219.51,
+    "Double": 1219.51,
+    "Afrodite": 1500.0
+   },
+   "gatilho_dias": 11,
+   "gatilho_min_dias": 2,
+   "pousada_faixa": "Recanto",
+   "faixa": 2
+  },
+  {
+   "id": "dono-2026-11-04-faixa-villa-20261210",
+   "tipo": "alvo_por_data",
+   "quartos": [
+    "VK7",
+    "VK2",
+    "Balcony"
+   ],
+   "de": "2026-12-10",
+   "ate": "2026-12-10",
+   "noites": [
+    "2026-12-10"
+   ],
+   "data": "2026-11-04",
+   "criada_em": "2026-11-04T15:13+00:00",
+   "libera": [
+    "acima_15"
+   ],
+   "pisos_enviados": {
+    "VK7": 947.69,
+    "VK2": 947.69,
+    "Balcony": 852.92
+   },
+   "percentil": 50,
+   "vendidas_base": {
+    "VK7": {
+     "2026-12-10": 2
+    },
+    "VK2": {
+     "2026-12-10": 2
+    },
+    "Balcony": {
+     "2026-12-10": 0
+    }
+   },
+   "escada_vendas": true,
+   "passo_livre": true,
+   "ocupacao_max": 0.7,
+   "frente_ocupacao": 0.5,
+   "topo_enviados": {
+    "VK7": 2450.77,
+    "VK2": 2450.77,
+    "Balcony": 2205.69
+   },
+   "piso_atras": {
+    "VK7": 944.0,
+    "VK2": 943.4,
+    "Balcony": 733.85
+   },
+   "gatilho_dias": 11,
+   "gatilho_min_dias": 2,
+   "pousada_faixa": "Villa",
+   "faixa": 2
+  },
+  {
+   "id": "dono-2026-11-04-faixa-recanto-20261211",
+   "tipo": "alvo_por_data",
+   "quartos": [
+    "Q7",
+    "Q2",
+    "Double",
+    "Afrodite"
+   ],
+   "de": "2026-12-11",
+   "ate": "2026-12-11",
+   "noites": [
+    "2026-12-11"
+   ],
+   "data": "2026-11-04",
+   "criada_em": "2026-11-04T15:13+00:00",
+   "libera": [
+    "acima_15"
+   ],
+   "pisos_enviados": {
+    "Q7": 2424.19,
+    "Q2": 2424.19,
+    "Double": 2424.19,
+    "Afrodite": 2545.4
+   },
+   "percentil": 65,
+   "vendidas_base": {
+    "Q7": {
+     "2026-12-11": 0
+    },
+    "Q2": {
+     "2026-12-11": 3
+    },
+    "Double": {
+     "2026-12-11": 2
+    },
+    "Afrodite": {
+     "2026-12-11": 3
+    }
+   },
+   "escada_vendas": true,
+   "passo_livre": true,
+   "ocupacao_max": 0.7,
+   "frente_ocupacao": 0.5,
+   "topo_enviados": {
+    "Q7": 3488.71,
+    "Q2": 3488.71,
+    "Double": 3488.71,
+    "Afrodite": 3663.15
+   },
+   "piso_atras": {
+    "Q7": 2154.12,
+    "Q2": 2154.12,
+    "Double": 2154.12,
+    "Afrodite": 2261.83
+   },
+   "gatilho_dias": 7,
+   "gatilho_min_dias": 2,
+   "pousada_faixa": "Recanto",
+   "faixa": 3
+  },
+  {
+   "id": "dono-2026-11-04-faixa-villa-20261211",
+   "tipo": "alvo_por_data",
+   "quartos": [
+    "VK7",
+    "VK2",
+    "Balcony"
+   ],
+   "de": "2026-12-11",
+   "ate": "2026-12-11",
+   "noites": [
+    "2026-12-11"
+   ],
+   "data": "2026-11-04",
+   "criada_em": "2026-11-04T15:13+00:00",
+   "libera": [
+    "acima_15"
+   ],
+   "pisos_enviados": {
+    "VK7": 2312.31,
+    "VK2": 2312.31,
+    "Balcony": 2081.08
+   },
+   "percentil": 65,
+   "vendidas_base": {
+    "VK7": {
+     "2026-12-11": 1
+    },
+    "VK2": {
+     "2026-12-11": 1
+    },
+    "Balcony": {
+     "2026-12-11": 0
+    }
+   },
+   "escada_vendas": true,
+   "passo_livre": true,
+   "ocupacao_max": 0.7,
+   "frente_ocupacao": 0.5,
+   "topo_enviados": {
+    "VK7": 3327.69,
+    "VK2": 3327.69,
+    "Balcony": 2994.92
+   },
+   "piso_atras": {
+    "VK7": 2054.7,
+    "VK2": 2054.7,
+    "Balcony": 1849.23
+   },
+   "gatilho_dias": 7,
+   "gatilho_min_dias": 2,
+   "pousada_faixa": "Villa",
+   "faixa": 3
+  },
+  {
+   "id": "dono-2026-11-04-faixa-recanto-20261212",
+   "tipo": "alvo_por_data",
+   "quartos": [
+    "Q7",
+    "Q2",
+    "Double",
+    "Afrodite"
+   ],
+   "de": "2026-12-12",
+   "ate": "2026-12-12",
+   "noites": [
+    "2026-12-12"
+   ],
+   "data": "2026-11-04",
+   "criada_em": "2026-11-04T15:13+00:00",
+   "libera": [
+    "acima_15"
+   ],
+   "pisos_enviados": {
+    "Q7": 2424.19,
+    "Q2": 2424.19,
+    "Double": 2424.19,
+    "Afrodite": 2545.4
+   },
+   "percentil": 65,
+   "vendidas_base": {
+    "Q7": {
+     "2026-12-12": 0
+    },
+    "Q2": {
+     "2026-12-12": 3
+    },
+    "Double": {
+     "2026-12-12": 2
+    },
+    "Afrodite": {
+     "2026-12-12": 3
+    }
+   },
+   "escada_vendas": true,
+   "passo_livre": true,
+   "ocupacao_max": 0.7,
+   "frente_ocupacao": 0.5,
+   "topo_enviados": {
+    "Q7": 3488.71,
+    "Q2": 3488.71,
+    "Double": 3488.71,
+    "Afrodite": 3663.15
+   },
+   "piso_atras": {
+    "Q7": 2154.12,
+    "Q2": 2154.12,
+    "Double": 2154.12,
+    "Afrodite": 2261.83
+   },
+   "gatilho_dias": 8,
+   "gatilho_min_dias": 2,
+   "pousada_faixa": "Recanto",
+   "faixa": 3
+  },
+  {
+   "id": "dono-2026-11-04-faixa-villa-20261212",
+   "tipo": "alvo_por_data",
+   "quartos": [
+    "VK7",
+    "VK2",
+    "Balcony"
+   ],
+   "de": "2026-12-12",
+   "ate": "2026-12-12",
+   "noites": [
+    "2026-12-12"
+   ],
+   "data": "2026-11-04",
+   "criada_em": "2026-11-04T15:13+00:00",
+   "libera": [
+    "acima_15"
+   ],
+   "pisos_enviados": {
+    "VK7": 2312.31,
+    "VK2": 2312.31,
+    "Balcony": 2081.08
+   },
+   "percentil": 65,
+   "vendidas_base": {
+    "VK7": {
+     "2026-12-12": 4
+    },
+    "VK2": {
+     "2026-12-12": 6
+    },
+    "Balcony": {
+     "2026-12-12": 0
+    }
+   },
+   "escada_vendas": true,
+   "passo_livre": true,
+   "ocupacao_max": 0.7,
+   "frente_ocupacao": 0.5,
+   "topo_enviados": {
+    "VK7": 3327.69,
+    "VK2": 3327.69,
+    "Balcony": 2994.92
+   },
+   "piso_atras": {
+    "VK7": 2054.7,
+    "VK2": 2054.7,
+    "Balcony": 1849.23
+   },
+   "gatilho_dias": 8,
+   "gatilho_min_dias": 2,
+   "pousada_faixa": "Villa",
+   "faixa": 3
+  },
+  {
+   "id": "dono-2026-11-04-faixa-recanto-20261213",
+   "tipo": "alvo_por_data",
+   "quartos": [
+    "Q7",
+    "Q2",
+    "Double",
+    "Afrodite"
+   ],
+   "de": "2026-12-13",
+   "ate": "2026-12-13",
+   "noites": [
+    "2026-12-13"
+   ],
+   "data": "2026-11-04",
+   "criada_em": "2026-11-04T15:13+00:00",
+   "libera": [
+    "acima_15"
+   ],
+   "pisos_enviados": {
+    "Q7": 1219.51,
+    "Q2": 1219.51,
+    "Double": 1219.51,
+    "Afrodite": 1500.0
+   },
+   "percentil": 50,
+   "vendidas_base": {
+    "Q7": {
+     "2026-12-13": 0
+    },
+    "Q2": {
+     "2026-12-13": 3
+    },
+    "Double": {
+     "2026-12-13": 2
+    },
+    "Afrodite": {
+     "2026-12-13": 3
+    }
+   },
+   "escada_vendas": true,
+   "passo_livre": true,
+   "ocupacao_max": 0.7,
+   "frente_ocupacao": 0.5,
+   "topo_enviados": {
+    "Q7": 2740.32,
+    "Q2": 2740.32,
+    "Double": 2740.32,
+    "Afrodite": 3288.39
+   },
+   "piso_atras": {
+    "Q7": 1219.51,
+    "Q2": 1219.51,
+    "Double": 1219.51,
+    "Afrodite": 1500.0
+   },
+   "gatilho_dias": 7,
+   "gatilho_min_dias": 2,
+   "pousada_faixa": "Recanto",
+   "faixa": 2
+  },
+  {
+   "id": "dono-2026-11-04-faixa-villa-20261213",
+   "tipo": "alvo_por_data",
+   "quartos": [
+    "VK7",
+    "VK2",
+    "Balcony"
+   ],
+   "de": "2026-12-13",
+   "ate": "2026-12-13",
+   "noites": [
+    "2026-12-13"
+   ],
+   "data": "2026-11-04",
+   "criada_em": "2026-11-04T15:13+00:00",
+   "libera": [
+    "acima_15"
+   ],
+   "pisos_enviados": {
+    "VK7": 986.15,
+    "VK2": 986.15,
+    "Balcony": 887.53
+   },
+   "percentil": 50,
+   "vendidas_base": {
+    "VK7": {
+     "2026-12-13": 3
+    },
+    "VK2": {
+     "2026-12-13": 4
+    },
+    "Balcony": {
+     "2026-12-13": 0
+    }
+   },
+   "escada_vendas": true,
+   "passo_livre": true,
+   "ocupacao_max": 0.7,
+   "frente_ocupacao": 0.5,
+   "topo_enviados": {
+    "VK7": 2613.85,
+    "VK2": 2613.85,
+    "Balcony": 2352.46
+   },
+   "piso_atras": {
+    "VK7": 944.0,
+    "VK2": 943.4,
+    "Balcony": 721.54
+   },
+   "gatilho_dias": 7,
+   "gatilho_min_dias": 2,
+   "pousada_faixa": "Villa",
+   "faixa": 2
+  },
+  {
+   "id": "dono-2026-11-04-faixa-recanto-20261214",
+   "tipo": "alvo_por_data",
+   "quartos": [
+    "Q7",
+    "Q2",
+    "Double",
+    "Afrodite"
+   ],
+   "de": "2026-12-14",
+   "ate": "2026-12-14",
+   "noites": [
+    "2026-12-14"
+   ],
+   "data": "2026-11-04",
+   "criada_em": "2026-11-04T15:13+00:00",
+   "libera": [
+    "acima_15"
+   ],
+   "pisos_enviados": {
+    "Q7": 1219.51,
+    "Q2": 1219.51,
+    "Double": 1219.51,
+    "Afrodite": 1500.0
+   },
+   "percentil": 50,
+   "vendidas_base": {
+    "Q7": {
+     "2026-12-14": 1
+    },
+    "Q2": {
+     "2026-12-14": 3
+    },
+    "Double": {
+     "2026-12-14": 1
+    },
+    "Afrodite": {
+     "2026-12-14": 3
+    }
+   },
+   "escada_vendas": true,
+   "passo_livre": true,
+   "ocupacao_max": 0.7,
+   "frente_ocupacao": 0.5,
+   "topo_enviados": {
+    "Q7": 2740.32,
+    "Q2": 2740.32,
+    "Double": 2740.32,
+    "Afrodite": 3288.39
+   },
+   "piso_atras": {
+    "Q7": 1219.51,
+    "Q2": 1219.51,
+    "Double": 1219.51,
+    "Afrodite": 1500.0
+   },
+   "gatilho_dias": 8,
+   "gatilho_min_dias": 2,
+   "pousada_faixa": "Recanto",
+   "faixa": 2
+  },
+  {
+   "id": "dono-2026-11-04-faixa-villa-20261214",
+   "tipo": "alvo_por_data",
+   "quartos": [
+    "VK7",
+    "VK2",
+    "Balcony"
+   ],
+   "de": "2026-12-14",
+   "ate": "2026-12-14",
+   "noites": [
+    "2026-12-14"
+   ],
+   "data": "2026-11-04",
+   "criada_em": "2026-11-04T15:13+00:00",
+   "libera": [
+    "acima_15"
+   ],
+   "pisos_enviados": {
+    "VK7": 986.15,
+    "VK2": 986.15,
+    "Balcony": 887.53
+   },
+   "percentil": 50,
+   "vendidas_base": {
+    "VK7": {
+     "2026-12-14": 1
+    },
+    "VK2": {
+     "2026-12-14": 2
+    },
+    "Balcony": {
+     "2026-12-14": 0
+    }
+   },
+   "escada_vendas": true,
+   "passo_livre": true,
+   "ocupacao_max": 0.7,
+   "frente_ocupacao": 0.5,
+   "topo_enviados": {
+    "VK7": 2613.85,
+    "VK2": 2613.85,
+    "Balcony": 2352.46
+   },
+   "piso_atras": {
+    "VK7": 944.0,
+    "VK2": 943.4,
+    "Balcony": 721.54
+   },
+   "gatilho_dias": 8,
+   "gatilho_min_dias": 2,
+   "pousada_faixa": "Villa",
+   "faixa": 2
+  },
+  {
+   "id": "dono-2026-11-04-faixa-recanto-20261215",
+   "tipo": "alvo_por_data",
+   "quartos": [
+    "Q7",
+    "Q2",
+    "Double",
+    "Afrodite"
+   ],
+   "de": "2026-12-15",
+   "ate": "2026-12-15",
+   "noites": [
+    "2026-12-15"
+   ],
+   "data": "2026-11-04",
+   "criada_em": "2026-11-04T15:13+00:00",
+   "libera": [
+    "acima_15"
+   ],
+   "pisos_enviados": {
+    "Q7": 1219.51,
+    "Q2": 1219.51,
+    "Double": 1219.51,
+    "Afrodite": 1500.0
+   },
+   "percentil": 50,
+   "vendidas_base": {
+    "Q7": {
+     "2026-12-15": 1
+    },
+    "Q2": {
+     "2026-12-15": 1
+    },
+    "Double": {
+     "2026-12-15": 0
+    },
+    "Afrodite": {
+     "2026-12-15": 1
+    }
+   },
+   "escada_vendas": true,
+   "passo_livre": true,
+   "ocupacao_max": 0.7,
+   "frente_ocupacao": 0.5,
+   "topo_enviados": {
+    "Q7": 2740.32,
+    "Q2": 2740.32,
+    "Double": 2740.32,
+    "Afrodite": 3288.39
+   },
+   "piso_atras": {
+    "Q7": 1219.51,
+    "Q2": 1219.51,
+    "Double": 1219.51,
+    "Afrodite": 1500.0
+   },
+   "gatilho_dias": 9,
+   "gatilho_min_dias": 2,
+   "pousada_faixa": "Recanto",
+   "faixa": 2
+  },
+  {
+   "id": "dono-2026-11-04-faixa-villa-20261215",
+   "tipo": "alvo_por_data",
+   "quartos": [
+    "VK7",
+    "VK2",
+    "Balcony"
+   ],
+   "de": "2026-12-15",
+   "ate": "2026-12-15",
+   "noites": [
+    "2026-12-15"
+   ],
+   "data": "2026-11-04",
+   "criada_em": "2026-11-04T15:13+00:00",
+   "libera": [
+    "acima_15"
+   ],
+   "pisos_enviados": {
+    "VK7": 986.15,
+    "VK2": 986.15,
+    "Balcony": 887.53
+   },
+   "percentil": 50,
+   "vendidas_base": {
+    "VK7": {
+     "2026-12-15": 1
+    },
+    "VK2": {
+     "2026-12-15": 1
+    },
+    "Balcony": {
+     "2026-12-15": 0
+    }
+   },
+   "escada_vendas": true,
+   "passo_livre": true,
+   "ocupacao_max": 0.7,
+   "frente_ocupacao": 0.5,
+   "topo_enviados": {
+    "VK7": 2613.85,
+    "VK2": 2613.85,
+    "Balcony": 2352.46
+   },
+   "piso_atras": {
+    "VK7": 944.0,
+    "VK2": 943.4,
+    "Balcony": 721.54
+   },
+   "gatilho_dias": 9,
+   "gatilho_min_dias": 2,
+   "pousada_faixa": "Villa",
+   "faixa": 2
+  },
+  {
+   "id": "dono-2026-11-04-faixa-recanto-20261216",
+   "tipo": "alvo_por_data",
+   "quartos": [
+    "Q7",
+    "Q2",
+    "Double",
+    "Afrodite"
+   ],
+   "de": "2026-12-16",
+   "ate": "2026-12-16",
+   "noites": [
+    "2026-12-16"
+   ],
+   "data": "2026-11-04",
+   "criada_em": "2026-11-04T15:13+00:00",
+   "libera": [
+    "acima_15"
+   ],
+   "pisos_enviados": {
+    "Q7": 1219.51,
+    "Q2": 1219.51,
+    "Double": 1219.51,
+    "Afrodite": 1500.0
+   },
+   "percentil": 50,
+   "vendidas_base": {
+    "Q7": {
+     "2026-12-16": 1
+    },
+    "Q2": {
+     "2026-12-16": 1
+    },
+    "Double": {
+     "2026-12-16": 0
+    },
+    "Afrodite": {
+     "2026-12-16": 1
+    }
+   },
+   "escada_vendas": true,
+   "passo_livre": true,
+   "ocupacao_max": 0.7,
+   "frente_ocupacao": 0.5,
+   "topo_enviados": {
+    "Q7": 2740.32,
+    "Q2": 2740.32,
+    "Double": 2740.32,
+    "Afrodite": 3288.39
+   },
+   "piso_atras": {
+    "Q7": 1219.51,
+    "Q2": 1219.51,
+    "Double": 1219.51,
+    "Afrodite": 1500.0
+   },
+   "gatilho_dias": 10,
+   "gatilho_min_dias": 2,
+   "pousada_faixa": "Recanto",
+   "faixa": 2
+  },
+  {
+   "id": "dono-2026-11-04-faixa-villa-20261216",
+   "tipo": "alvo_por_data",
+   "quartos": [
+    "VK7",
+    "VK2",
+    "Balcony"
+   ],
+   "de": "2026-12-16",
+   "ate": "2026-12-16",
+   "noites": [
+    "2026-12-16"
+   ],
+   "data": "2026-11-04",
+   "criada_em": "2026-11-04T15:13+00:00",
+   "libera": [
+    "acima_15"
+   ],
+   "pisos_enviados": {
+    "VK7": 986.15,
+    "VK2": 986.15,
+    "Balcony": 887.53
+   },
+   "percentil": 50,
+   "vendidas_base": {
+    "VK7": {
+     "2026-12-16": 2
+    },
+    "VK2": {
+     "2026-12-16": 2
+    },
+    "Balcony": {
+     "2026-12-16": 0
+    }
+   },
+   "escada_vendas": true,
+   "passo_livre": true,
+   "ocupacao_max": 0.7,
+   "frente_ocupacao": 0.5,
+   "topo_enviados": {
+    "VK7": 2613.85,
+    "VK2": 2613.85,
+    "Balcony": 2352.46
+   },
+   "piso_atras": {
+    "VK7": 944.0,
+    "VK2": 943.4,
+    "Balcony": 721.54
+   },
+   "gatilho_dias": 10,
+   "gatilho_min_dias": 2,
+   "pousada_faixa": "Villa",
+   "faixa": 2
+  },
+  {
+   "id": "dono-2026-11-04-faixa-recanto-20261217",
+   "tipo": "alvo_por_data",
+   "quartos": [
+    "Q7",
+    "Q2",
+    "Double",
+    "Afrodite"
+   ],
+   "de": "2026-12-17",
+   "ate": "2026-12-17",
+   "noites": [
+    "2026-12-17"
+   ],
+   "data": "2026-11-04",
+   "criada_em": "2026-11-04T15:13+00:00",
+   "libera": [
+    "acima_15"
+   ],
+   "pisos_enviados": {
+    "Q7": 1219.51,
+    "Q2": 1219.51,
+    "Double": 1219.51,
+    "Afrodite": 1500.0
+   },
+   "percentil": 50,
+   "vendidas_base": {
+    "Q7": {
+     "2026-12-17": 0
+    },
+    "Q2": {
+     "2026-12-17": 0
+    },
+    "Double": {
+     "2026-12-17": 0
+    },
+    "Afrodite": {
+     "2026-12-17": 0
+    }
+   },
+   "escada_vendas": true,
+   "passo_livre": true,
+   "ocupacao_max": 0.7,
+   "frente_ocupacao": 0.5,
+   "topo_enviados": {
+    "Q7": 2740.32,
+    "Q2": 2740.32,
+    "Double": 2740.32,
+    "Afrodite": 3288.39
+   },
+   "piso_atras": {
+    "Q7": 1219.51,
+    "Q2": 1219.51,
+    "Double": 1219.51,
+    "Afrodite": 1500.0
+   },
+   "gatilho_dias": 11,
+   "gatilho_min_dias": 2,
+   "pousada_faixa": "Recanto",
+   "faixa": 2
+  },
+  {
+   "id": "dono-2026-11-04-faixa-villa-20261217",
+   "tipo": "alvo_por_data",
+   "quartos": [
+    "VK7",
+    "VK2",
+    "Balcony"
+   ],
+   "de": "2026-12-17",
+   "ate": "2026-12-17",
+   "noites": [
+    "2026-12-17"
+   ],
+   "data": "2026-11-04",
+   "criada_em": "2026-11-04T15:13+00:00",
+   "libera": [
+    "acima_15"
+   ],
+   "pisos_enviados": {
+    "VK7": 986.15,
+    "VK2": 986.15,
+    "Balcony": 887.53
+   },
+   "percentil": 50,
+   "vendidas_base": {
+    "VK7": {
+     "2026-12-17": 1
+    },
+    "VK2": {
+     "2026-12-17": 1
+    },
+    "Balcony": {
+     "2026-12-17": 0
+    }
+   },
+   "escada_vendas": true,
+   "passo_livre": true,
+   "ocupacao_max": 0.7,
+   "frente_ocupacao": 0.5,
+   "topo_enviados": {
+    "VK7": 2613.85,
+    "VK2": 2613.85,
+    "Balcony": 2352.46
+   },
+   "piso_atras": {
+    "VK7": 944.0,
+    "VK2": 943.4,
+    "Balcony": 721.54
+   },
+   "gatilho_dias": 11,
+   "gatilho_min_dias": 2,
+   "pousada_faixa": "Villa",
+   "faixa": 2
+  },
+  {
+   "id": "dono-2026-11-04-faixa-recanto-20261218",
+   "tipo": "alvo_por_data",
+   "quartos": [
+    "Q7",
+    "Q2",
+    "Double",
+    "Afrodite"
+   ],
+   "de": "2026-12-18",
+   "ate": "2026-12-18",
+   "noites": [
+    "2026-12-18"
+   ],
+   "data": "2026-11-04",
+   "criada_em": "2026-11-04T15:13+00:00",
+   "libera": [
+    "acima_15"
+   ],
+   "pisos_enviados": {
+    "Q7": 2332.26,
+    "Q2": 2332.26,
+    "Double": 2332.26,
+    "Afrodite": 2448.87
+   },
+   "percentil": 65,
+   "vendidas_base": {
+    "Q7": {
+     "2026-12-18": 0
+    },
+    "Q2": {
+     "2026-12-18": 2
+    },
+    "Double": {
+     "2026-12-18": 2
+    },
+    "Afrodite": {
+     "2026-12-18": 2
+    }
+   },
+   "escada_vendas": true,
+   "passo_livre": true,
+   "ocupacao_max": 0.7,
+   "frente_ocupacao": 0.5,
+   "topo_enviados": {
+    "Q7": 3503.23,
+    "Q2": 3503.23,
+    "Double": 3503.23,
+    "Afrodite": 3678.39
+   },
+   "piso_atras": {
+    "Q7": 2129.03,
+    "Q2": 2129.03,
+    "Double": 2129.03,
+    "Afrodite": 2235.48
+   },
+   "gatilho_dias": 7,
+   "gatilho_min_dias": 2,
+   "pousada_faixa": "Recanto",
+   "faixa": 3
+  },
+  {
+   "id": "dono-2026-11-04-faixa-villa-20261218",
+   "tipo": "alvo_por_data",
+   "quartos": [
+    "VK7",
+    "VK2",
+    "Balcony"
+   ],
+   "de": "2026-12-18",
+   "ate": "2026-12-18",
+   "noites": [
+    "2026-12-18"
+   ],
+   "data": "2026-11-04",
+   "criada_em": "2026-11-04T15:13+00:00",
+   "libera": [
+    "acima_15"
+   ],
+   "pisos_enviados": {
+    "VK7": 2224.62,
+    "VK2": 2224.62,
+    "Balcony": 2002.15
+   },
+   "percentil": 65,
+   "vendidas_base": {
+    "VK7": {
+     "2026-12-18": 0
+    },
+    "VK2": {
+     "2026-12-18": 0
+    },
+    "Balcony": {
+     "2026-12-18": 0
+    }
+   },
+   "escada_vendas": true,
+   "passo_livre": true,
+   "ocupacao_max": 0.7,
+   "frente_ocupacao": 0.5,
+   "topo_enviados": {
+    "VK7": 3341.54,
+    "VK2": 3341.54,
+    "Balcony": 3007.38
+   },
+   "piso_atras": {
+    "VK7": 2030.77,
+    "VK2": 2030.77,
+    "Balcony": 1827.69
+   },
+   "gatilho_dias": 7,
+   "gatilho_min_dias": 2,
+   "pousada_faixa": "Villa",
+   "faixa": 3
+  },
+  {
+   "id": "dono-2026-11-04-faixa-recanto-20261219",
+   "tipo": "alvo_por_data",
+   "quartos": [
+    "Q7",
+    "Q2",
+    "Double",
+    "Afrodite"
+   ],
+   "de": "2026-12-19",
+   "ate": "2026-12-19",
+   "noites": [
+    "2026-12-19"
+   ],
+   "data": "2026-11-04",
+   "criada_em": "2026-11-04T15:13+00:00",
+   "libera": [
+    "acima_15"
+   ],
+   "pisos_enviados": {
+    "Q7": 2332.26,
+    "Q2": 2332.26,
+    "Double": 2332.26,
+    "Afrodite": 2448.87
+   },
+   "percentil": 65,
+   "vendidas_base": {
+    "Q7": {
+     "2026-12-19": 0
+    },
+    "Q2": {
+     "2026-12-19": 2
+    },
+    "Double": {
+     "2026-12-19": 2
+    },
+    "Afrodite": {
+     "2026-12-19": 2
+    }
+   },
+   "escada_vendas": true,
+   "passo_livre": true,
+   "ocupacao_max": 0.7,
+   "frente_ocupacao": 0.5,
+   "topo_enviados": {
+    "Q7": 3503.23,
+    "Q2": 3503.23,
+    "Double": 3503.23,
+    "Afrodite": 3678.39
+   },
+   "piso_atras": {
+    "Q7": 2129.03,
+    "Q2": 2129.03,
+    "Double": 2129.03,
+    "Afrodite": 2235.48
+   },
+   "gatilho_dias": 8,
+   "gatilho_min_dias": 2,
+   "pousada_faixa": "Recanto",
+   "faixa": 3
+  },
+  {
+   "id": "dono-2026-11-04-faixa-villa-20261219",
+   "tipo": "alvo_por_data",
+   "quartos": [
+    "VK7",
+    "VK2",
+    "Balcony"
+   ],
+   "de": "2026-12-19",
+   "ate": "2026-12-19",
+   "noites": [
+    "2026-12-19"
+   ],
+   "data": "2026-11-04",
+   "criada_em": "2026-11-04T15:13+00:00",
+   "libera": [
+    "acima_15"
+   ],
+   "pisos_enviados": {
+    "VK7": 2224.62,
+    "VK2": 2224.62,
+    "Balcony": 2002.15
+   },
+   "percentil": 65,
+   "vendidas_base": {
+    "VK7": {
+     "2026-12-19": 1
+    },
+    "VK2": {
+     "2026-12-19": 1
+    },
+    "Balcony": {
+     "2026-12-19": 0
+    }
+   },
+   "escada_vendas": true,
+   "passo_livre": true,
+   "ocupacao_max": 0.7,
+   "frente_ocupacao": 0.5,
+   "topo_enviados": {
+    "VK7": 3341.54,
+    "VK2": 3341.54,
+    "Balcony": 3007.38
+   },
+   "piso_atras": {
+    "VK7": 2030.77,
+    "VK2": 2030.77,
+    "Balcony": 1827.69
+   },
+   "gatilho_dias": 8,
+   "gatilho_min_dias": 2,
+   "pousada_faixa": "Villa",
+   "faixa": 3
+  },
+  {
+   "id": "dono-2026-11-04-faixa-recanto-20261220",
+   "tipo": "alvo_por_data",
+   "quartos": [
+    "Q7",
+    "Q2",
+    "Double",
+    "Afrodite"
+   ],
+   "de": "2026-12-20",
+   "ate": "2026-12-20",
+   "noites": [
+    "2026-12-20"
+   ],
+   "data": "2026-11-04",
+   "criada_em": "2026-11-04T15:13+00:00",
+   "libera": [
+    "acima_15"
+   ],
+   "pisos_enviados": {
+    "Q7": 1400.0,
+    "Q2": 1400.0,
+    "Double": 1400.0,
+    "Afrodite": 1680.0
+   },
+   "percentil": 50,
+   "vendidas_base": {
+    "Q7": {
+     "2026-12-20": 0
+    },
+    "Q2": {
+     "2026-12-20": 2
+    },
+    "Double": {
+     "2026-12-20": 2
+    },
+    "Afrodite": {
+     "2026-12-20": 2
+    }
+   },
+   "escada_vendas": true,
+   "passo_livre": true,
+   "ocupacao_max": 0.7,
+   "frente_ocupacao": 0.5,
+   "topo_enviados": {
+    "Q7": 3087.1,
+    "Q2": 3087.1,
+    "Double": 3087.1,
+    "Afrodite": 3704.52
+   },
+   "piso_atras": {
+    "Q7": 1219.51,
+    "Q2": 1219.51,
+    "Double": 1219.51,
+    "Afrodite": 1500.0
+   },
+   "gatilho_dias": 7,
+   "gatilho_min_dias": 2,
+   "pousada_faixa": "Recanto",
+   "faixa": 2
+  },
+  {
+   "id": "dono-2026-11-04-faixa-villa-20261220",
+   "tipo": "alvo_por_data",
+   "quartos": [
+    "VK7",
+    "VK2",
+    "Balcony"
+   ],
+   "de": "2026-12-20",
+   "ate": "2026-12-20",
+   "noites": [
+    "2026-12-20"
+   ],
+   "data": "2026-11-04",
+   "criada_em": "2026-11-04T15:13+00:00",
+   "libera": [
+    "acima_15"
+   ],
+   "pisos_enviados": {
+    "VK7": 1335.38,
+    "VK2": 1335.38,
+    "Balcony": 1201.84
+   },
+   "percentil": 50,
+   "vendidas_base": {
+    "VK7": {
+     "2026-12-20": 1
+    },
+    "VK2": {
+     "2026-12-20": 3
+    },
+    "Balcony": {
+     "2026-12-20": 0
+    }
+   },
+   "escada_vendas": true,
+   "passo_livre": true,
+   "ocupacao_max": 0.7,
+   "frente_ocupacao": 0.5,
+   "topo_enviados": {
+    "VK7": 2944.62,
+    "VK2": 2944.62,
+    "Balcony": 2650.15
+   },
+   "piso_atras": {
+    "VK7": 977.78,
+    "VK2": 977.78,
+    "Balcony": 880.0
+   },
+   "gatilho_dias": 7,
+   "gatilho_min_dias": 2,
+   "pousada_faixa": "Villa",
+   "faixa": 2
+  },
+  {
+   "id": "dono-2026-11-04-faixa-recanto-20261221",
+   "tipo": "alvo_por_data",
+   "quartos": [
+    "Q7",
+    "Q2",
+    "Double",
+    "Afrodite"
+   ],
+   "de": "2026-12-21",
+   "ate": "2026-12-21",
+   "noites": [
+    "2026-12-21"
+   ],
+   "data": "2026-11-04",
+   "criada_em": "2026-11-04T15:13+00:00",
+   "libera": [
+    "acima_15"
+   ],
+   "pisos_enviados": {
+    "Q7": 1400.0,
+    "Q2": 1400.0,
+    "Double": 1400.0,
+    "Afrodite": 1680.0
+   },
+   "percentil": 50,
+   "vendidas_base": {
+    "Q7": {
+     "2026-12-21": 0
+    },
+    "Q2": {
+     "2026-12-21": 2
+    },
+    "Double": {
+     "2026-12-21": 2
+    },
+    "Afrodite": {
+     "2026-12-21": 2
+    }
+   },
+   "escada_vendas": true,
+   "passo_livre": true,
+   "ocupacao_max": 0.7,
+   "frente_ocupacao": 0.5,
+   "topo_enviados": {
+    "Q7": 3087.1,
+    "Q2": 3087.1,
+    "Double": 3087.1,
+    "Afrodite": 3704.52
+   },
+   "piso_atras": {
+    "Q7": 1219.51,
+    "Q2": 1219.51,
+    "Double": 1219.51,
+    "Afrodite": 1500.0
+   },
+   "gatilho_dias": 8,
+   "gatilho_min_dias": 2,
+   "pousada_faixa": "Recanto",
+   "faixa": 2
+  },
+  {
+   "id": "dono-2026-11-04-faixa-villa-20261221",
+   "tipo": "alvo_por_data",
+   "quartos": [
+    "VK7",
+    "VK2",
+    "Balcony"
+   ],
+   "de": "2026-12-21",
+   "ate": "2026-12-21",
+   "noites": [
+    "2026-12-21"
+   ],
+   "data": "2026-11-04",
+   "criada_em": "2026-11-04T15:13+00:00",
+   "libera": [
+    "acima_15"
+   ],
+   "pisos_enviados": {
+    "VK7": 1335.38,
+    "VK2": 1335.38,
+    "Balcony": 1201.84
+   },
+   "percentil": 50,
+   "vendidas_base": {
+    "VK7": {
+     "2026-12-21": 1
+    },
+    "VK2": {
+     "2026-12-21": 3
+    },
+    "Balcony": {
+     "2026-12-21": 0
+    }
+   },
+   "escada_vendas": true,
+   "passo_livre": true,
+   "ocupacao_max": 0.7,
+   "frente_ocupacao": 0.5,
+   "topo_enviados": {
+    "VK7": 2944.62,
+    "VK2": 2944.62,
+    "Balcony": 2650.15
+   },
+   "piso_atras": {
+    "VK7": 977.78,
+    "VK2": 977.78,
+    "Balcony": 880.0
+   },
+   "gatilho_dias": 8,
+   "gatilho_min_dias": 2,
+   "pousada_faixa": "Villa",
+   "faixa": 2
+  },
+  {
+   "id": "dono-2026-11-04-faixa-recanto-20261222",
+   "tipo": "alvo_por_data",
+   "quartos": [
+    "Q7",
+    "Q2",
+    "Double",
+    "Afrodite"
+   ],
+   "de": "2026-12-22",
+   "ate": "2026-12-22",
+   "noites": [
+    "2026-12-22"
+   ],
+   "data": "2026-11-04",
+   "criada_em": "2026-11-04T15:13+00:00",
+   "libera": [
+    "acima_15"
+   ],
+   "pisos_enviados": {
+    "Q7": 1400.0,
+    "Q2": 1400.0,
+    "Double": 1400.0,
+    "Afrodite": 1680.0
+   },
+   "percentil": 50,
+   "vendidas_base": {
+    "Q7": {
+     "2026-12-22": 0
+    },
+    "Q2": {
+     "2026-12-22": 2
+    },
+    "Double": {
+     "2026-12-22": 2
+    },
+    "Afrodite": {
+     "2026-12-22": 2
+    }
+   },
+   "escada_vendas": true,
+   "passo_livre": true,
+   "ocupacao_max": 0.7,
+   "frente_ocupacao": 0.5,
+   "topo_enviados": {
+    "Q7": 3087.1,
+    "Q2": 3087.1,
+    "Double": 3087.1,
+    "Afrodite": 3704.52
+   },
+   "piso_atras": {
+    "Q7": 1219.51,
+    "Q2": 1219.51,
+    "Double": 1219.51,
+    "Afrodite": 1500.0
+   },
+   "gatilho_dias": 9,
+   "gatilho_min_dias": 2,
+   "pousada_faixa": "Recanto",
+   "faixa": 2
+  },
+  {
+   "id": "dono-2026-11-04-faixa-villa-20261222",
+   "tipo": "alvo_por_data",
+   "quartos": [
+    "VK7",
+    "VK2",
+    "Balcony"
+   ],
+   "de": "2026-12-22",
+   "ate": "2026-12-22",
+   "noites": [
+    "2026-12-22"
+   ],
+   "data": "2026-11-04",
+   "criada_em": "2026-11-04T15:13+00:00",
+   "libera": [
+    "acima_15"
+   ],
+   "pisos_enviados": {
+    "VK7": 1335.38,
+    "VK2": 1335.38,
+    "Balcony": 1201.84
+   },
+   "percentil": 50,
+   "vendidas_base": {
+    "VK7": {
+     "2026-12-22": 1
+    },
+    "VK2": {
+     "2026-12-22": 2
+    },
+    "Balcony": {
+     "2026-12-22": 0
+    }
+   },
+   "escada_vendas": true,
+   "passo_livre": true,
+   "ocupacao_max": 0.7,
+   "frente_ocupacao": 0.5,
+   "topo_enviados": {
+    "VK7": 2944.62,
+    "VK2": 2944.62,
+    "Balcony": 2650.15
+   },
+   "piso_atras": {
+    "VK7": 977.78,
+    "VK2": 977.78,
+    "Balcony": 880.0
+   },
+   "gatilho_dias": 9,
+   "gatilho_min_dias": 2,
+   "pousada_faixa": "Villa",
+   "faixa": 2
+  },
+  {
+   "id": "dono-2026-11-04-faixa-recanto-20261223",
+   "tipo": "alvo_por_data",
+   "quartos": [
+    "Q7",
+    "Q2",
+    "Double",
+    "Afrodite"
+   ],
+   "de": "2026-12-23",
+   "ate": "2026-12-23",
+   "noites": [
+    "2026-12-23"
+   ],
+   "data": "2026-11-04",
+   "criada_em": "2026-11-04T15:13+00:00",
+   "libera": [
+    "acima_15"
+   ],
+   "pisos_enviados": {
+    "Q7": 5000.0,
+    "Q2": 5000.0,
+    "Double": 5000.0,
+    "Afrodite": 5952.82
+   },
+   "percentil": 90,
+   "vendidas_base": {
+    "Q7": {
+     "2026-12-23": 0
+    },
+    "Q2": {
+     "2026-12-23": 1
+    },
+    "Double": {
+     "2026-12-23": 1
+    },
+    "Afrodite": {
+     "2026-12-23": 1
+    }
+   },
+   "escada_vendas": true,
+   "passo_livre": true,
+   "ocupacao_max": 0.7,
+   "frente_ocupacao": 0.5,
+   "topo_enviados": {
+    "Q7": 5000.0,
+    "Q2": 5000.0,
+    "Double": 5000.0,
+    "Afrodite": 5952.82
+   },
+   "degraus_atras": {
+    "Q7": [
+     4591.4,
+     3899.64,
+     2901.43,
+     2380.95
+    ],
+    "Q2": [
+     4591.4,
+     3899.64,
+     2901.43,
+     2380.95
+    ],
+    "Double": [
+     4591.4,
+     3899.64,
+     2901.43,
+     2380.95
+    ],
+    "Afrodite": [
+     4820.97,
+     4094.62,
+     3046.51,
+     2380.95
+    ]
+   },
+   "degraus_dias": [
+    7,
+    5,
+    3,
+    1
+   ],
+   "pousada_faixa": "Recanto",
+   "faixa": 5
+  },
+  {
+   "id": "dono-2026-11-04-faixa-villa-20261223",
+   "tipo": "alvo_por_data",
+   "quartos": [
+    "VK7",
+    "VK2",
+    "Balcony"
+   ],
+   "de": "2026-12-23",
+   "ate": "2026-12-23",
+   "noites": [
+    "2026-12-23"
+   ],
+   "data": "2026-11-04",
+   "criada_em": "2026-11-04T15:13+00:00",
+   "libera": [
+    "acima_15"
+   ],
+   "pisos_enviados": {
+    "VK7": 5000.0,
+    "VK2": 5000.0,
+    "Balcony": 4500.0
+   },
+   "percentil": 90,
+   "vendidas_base": {
+    "VK7": {
+     "2026-12-23": 2
+    },
+    "VK2": {
+     "2026-12-23": 3
+    },
+    "Balcony": {
+     "2026-12-23": 0
+    }
+   },
+   "escada_vendas": true,
+   "passo_livre": true,
+   "ocupacao_max": 0.7,
+   "frente_ocupacao": 0.5,
+   "topo_enviados": {
+    "VK7": 5000.0,
+    "VK2": 5000.0,
+    "Balcony": 4500.0
+   },
+   "degraus_atras": {
+    "VK7": [
+     4379.49,
+     3719.66,
+     2767.52,
+     2564.1
+    ],
+    "VK2": [
+     4379.49,
+     3719.66,
+     2767.52,
+     2564.1
+    ],
+    "Balcony": [
+     3941.54,
+     3347.69,
+     2490.77,
+     1886.79
+    ]
+   },
+   "degraus_dias": [
+    7,
+    5,
+    3,
+    1
+   ],
+   "pousada_faixa": "Villa",
+   "faixa": 5
+  },
+  {
+   "id": "dono-2026-11-04-faixa-recanto-20261224",
+   "tipo": "alvo_por_data",
+   "quartos": [
+    "Q7",
+    "Q2",
+    "Double",
+    "Afrodite"
+   ],
+   "de": "2026-12-24",
+   "ate": "2026-12-24",
+   "noites": [
+    "2026-12-24"
+   ],
+   "data": "2026-11-04",
+   "criada_em": "2026-11-04T15:13+00:00",
+   "libera": [
+    "acima_15"
+   ],
+   "pisos_enviados": {
+    "Q7": 5000.0,
+    "Q2": 5000.0,
+    "Double": 5000.0,
+    "Afrodite": 5932.5
+   },
+   "percentil": 90,
+   "vendidas_base": {
+    "Q7": {
+     "2026-12-24": 0
+    },
+    "Q2": {
+     "2026-12-24": 1
+    },
+    "Double": {
+     "2026-12-24": 1
+    },
+    "Afrodite": {
+     "2026-12-24": 1
+    }
+   },
+   "escada_vendas": true,
+   "passo_livre": true,
+   "ocupacao_max": 0.7,
+   "frente_ocupacao": 0.5,
+   "topo_enviados": {
+    "Q7": 5000.0,
+    "Q2": 5000.0,
+    "Double": 5000.0,
+    "Afrodite": 5932.5
+   },
+   "degraus_atras": {
+    "Q7": [
+     5000.0,
+     4014.34,
+     3068.1,
+     2380.95
+    ],
+    "Q2": [
+     5000.0,
+     4014.34,
+     3068.1,
+     2380.95
+    ],
+    "Double": [
+     5000.0,
+     4014.34,
+     3068.1,
+     2380.95
+    ],
+    "Afrodite": [
+     5393.01,
+     4215.05,
+     3221.51,
+     2404.84
+    ]
+   },
+   "degraus_dias": [
+    7,
+    5,
+    3,
+    1
+   ],
+   "pousada_faixa": "Recanto",
+   "faixa": 5
+  },
+  {
+   "id": "dono-2026-11-04-faixa-villa-20261224",
+   "tipo": "alvo_por_data",
+   "quartos": [
+    "VK7",
+    "VK2",
+    "Balcony"
+   ],
+   "de": "2026-12-24",
+   "ate": "2026-12-24",
+   "noites": [
+    "2026-12-24"
+   ],
+   "data": "2026-11-04",
+   "criada_em": "2026-11-04T15:13+00:00",
+   "libera": [
+    "acima_15"
+   ],
+   "pisos_enviados": {
+    "VK7": 5000.0,
+    "VK2": 5000.0,
+    "Balcony": 4500.0
+   },
+   "percentil": 90,
+   "vendidas_base": {
+    "VK7": {
+     "2026-12-24": 1
+    },
+    "VK2": {
+     "2026-12-24": 1
+    },
+    "Balcony": {
+     "2026-12-24": 4
+    }
+   },
+   "escada_vendas": true,
+   "passo_livre": true,
+   "ocupacao_max": 0.7,
+   "frente_ocupacao": 0.5,
+   "topo_enviados": {
+    "VK7": 5000.0,
+    "VK2": 5000.0,
+    "Balcony": 4500.0
+   },
+   "degraus_atras": {
+    "VK7": [
+     4899.15,
+     3829.06,
+     2926.5,
+     2564.1
+    ],
+    "VK2": [
+     4899.15,
+     3829.06,
+     2926.5,
+     2564.1
+    ],
+    "Balcony": [
+     4409.23,
+     3446.15,
+     2633.85,
+     1966.15
+    ]
+   },
+   "degraus_dias": [
+    7,
+    5,
+    3,
+    1
+   ],
+   "pousada_faixa": "Villa",
+   "faixa": 5
+  },
+  {
+   "id": "dono-2026-11-04-faixa-recanto-20261226",
+   "tipo": "alvo_por_data",
+   "quartos": [
+    "Q7",
+    "Q2",
+    "Double",
+    "Afrodite"
+   ],
+   "de": "2026-12-26",
+   "ate": "2026-12-26",
+   "noites": [
+    "2026-12-26"
+   ],
+   "data": "2026-11-04",
+   "criada_em": "2026-11-04T15:13+00:00",
+   "libera": [
+    "acima_15"
+   ],
+   "pisos_enviados": {
+    "Q7": 5000.0,
+    "Q2": 5000.0,
+    "Double": 5000.0,
+    "Afrodite": 5912.18
+   },
+   "percentil": 90,
+   "vendidas_base": {
+    "Q7": {
+     "2026-12-26": 0
+    },
+    "Q2": {
+     "2026-12-26": 1
+    },
+    "Double": {
+     "2026-12-26": 1
+    },
+    "Afrodite": {
+     "2026-12-26": 1
+    }
+   },
+   "escada_vendas": true,
+   "passo_livre": true,
+   "ocupacao_max": 0.7,
+   "frente_ocupacao": 0.5,
+   "topo_enviados": {
+    "Q7": 5000.0,
+    "Q2": 5000.0,
+    "Double": 5000.0,
+    "Afrodite": 5912.18
+   },
+   "degraus_atras": {
+    "Q7": [
+     5000.0,
+     3921.15,
+     3021.51,
+     2380.95
+    ],
+    "Q2": [
+     5000.0,
+     3921.15,
+     3021.51,
+     2380.95
+    ],
+    "Double": [
+     5000.0,
+     3921.15,
+     3021.51,
+     2380.95
+    ],
+    "Afrodite": [
+     5261.29,
+     4117.2,
+     3172.58,
+     2382.26
+    ]
+   },
+   "degraus_dias": [
+    7,
+    5,
+    3,
+    1
+   ],
+   "pousada_faixa": "Recanto",
+   "faixa": 5
+  },
+  {
+   "id": "dono-2026-11-04-faixa-villa-20261226",
+   "tipo": "alvo_por_data",
+   "quartos": [
+    "VK7",
+    "VK2",
+    "Balcony"
+   ],
+   "de": "2026-12-26",
+   "ate": "2026-12-26",
+   "noites": [
+    "2026-12-26"
+   ],
+   "data": "2026-11-04",
+   "criada_em": "2026-11-04T15:13+00:00",
+   "libera": [
+    "acima_15"
+   ],
+   "pisos_enviados": {
+    "VK7": 5000.0,
+    "VK2": 5000.0,
+    "Balcony": 4500.0
+   },
+   "percentil": 90,
+   "vendidas_base": {
+    "VK7": {
+     "2026-12-26": 0
+    },
+    "VK2": {
+     "2026-12-26": 0
+    },
+    "Balcony": {
+     "2026-12-26": 0
+    }
+   },
+   "escada_vendas": true,
+   "passo_livre": true,
+   "ocupacao_max": 0.7,
+   "frente_ocupacao": 0.5,
+   "topo_enviados": {
+    "VK7": 5000.0,
+    "VK2": 5000.0,
+    "Balcony": 4500.0
+   },
+   "degraus_atras": {
+    "VK7": [
+     4779.49,
+     3740.17,
+     2882.05,
+     2564.1
+    ],
+    "VK2": [
+     4779.49,
+     3740.17,
+     2882.05,
+     2564.1
+    ],
+    "Balcony": [
+     4301.54,
+     3366.15,
+     2593.85,
+     1947.69
+    ]
+   },
+   "degraus_dias": [
+    7,
+    5,
+    3,
+    1
+   ],
+   "pousada_faixa": "Villa",
+   "faixa": 5
+  },
+  {
+   "id": "dono-2026-11-04-faixa-recanto-20261230",
+   "tipo": "alvo_por_data",
+   "quartos": [
+    "Q7",
+    "Q2",
+    "Double",
+    "Afrodite"
+   ],
+   "de": "2026-12-30",
+   "ate": "2026-12-30",
+   "noites": [
+    "2026-12-30"
+   ],
+   "data": "2026-11-04",
+   "criada_em": "2026-11-04T15:13+00:00",
+   "libera": [
+    "acima_15"
+   ],
+   "pisos_enviados": {
+    "Q7": 5000.0,
+    "Q2": 5000.0,
+    "Double": 5000.0,
+    "Afrodite": 6682.74
+   },
+   "percentil": 90,
+   "vendidas_base": {
+    "Q7": {
+     "2026-12-30": 4
+    },
+    "Q2": {
+     "2026-12-30": 4
+    },
+    "Double": {
+     "2026-12-30": 0
+    },
+    "Afrodite": {
+     "2026-12-30": 4
+    }
+   },
+   "escada_vendas": true,
+   "passo_livre": true,
+   "ocupacao_max": 0.7,
+   "frente_ocupacao": 0.5,
+   "topo_enviados": {
+    "Q7": 5000.0,
+    "Q2": 5000.0,
+    "Double": 5000.0,
+    "Afrodite": 6682.74
+   },
+   "degraus_atras": {
+    "Q7": [
+     5000.0,
+     5000.0,
+     4109.32,
+     2724.01
+    ],
+    "Q2": [
+     5000.0,
+     5000.0,
+     4109.32,
+     2724.01
+    ],
+    "Double": [
+     5000.0,
+     5000.0,
+     4109.32,
+     2724.01
+    ],
+    "Afrodite": [
+     6243.55,
+     5376.08,
+     4314.78,
+     2860.22
+    ]
+   },
+   "degraus_dias": [
+    7,
+    5,
+    3,
+    1
+   ],
+   "pousada_faixa": "Recanto",
+   "faixa": 5
+  },
+  {
+   "id": "dono-2026-11-04-faixa-villa-20261230",
+   "tipo": "alvo_por_data",
+   "quartos": [
+    "VK7",
+    "VK2",
+    "Balcony"
+   ],
+   "de": "2026-12-30",
+   "ate": "2026-12-30",
+   "noites": [
+    "2026-12-30"
+   ],
+   "data": "2026-11-04",
+   "criada_em": "2026-11-04T15:13+00:00",
+   "libera": [
+    "acima_15"
+   ],
+   "pisos_enviados": {
+    "VK7": 5000.0,
+    "VK2": 5000.0,
+    "Balcony": 4500.0
+   },
+   "percentil": 90,
+   "vendidas_base": {
+    "VK7": {
+     "2026-12-30": 2
+    },
+    "VK2": {
+     "2026-12-30": 3
+    },
+    "Balcony": {
+     "2026-12-30": 1
+    }
+   },
+   "escada_vendas": true,
+   "passo_livre": true,
+   "ocupacao_max": 0.7,
+   "frente_ocupacao": 0.5,
+   "topo_enviados": {
+    "VK7": 5000.0,
+    "VK2": 5000.0,
+    "Balcony": 4500.0
+   },
+   "degraus_atras": {
+    "VK7": [
+     5000.0,
+     4883.76,
+     3919.66,
+     2598.29
+    ],
+    "VK2": [
+     5000.0,
+     4883.76,
+     3919.66,
+     2598.29
+    ],
+    "Balcony": [
+     4500.0,
+     4395.38,
+     3527.69,
+     2338.46
+    ]
+   },
+   "degraus_dias": [
+    7,
+    5,
+    3,
+    1
+   ],
+   "pousada_faixa": "Villa",
+   "faixa": 5
+  },
+  {
+   "id": "dono-2026-11-04-faixa-recanto-20261231",
+   "tipo": "alvo_por_data",
+   "quartos": [
+    "Q7",
+    "Q2",
+    "Double",
+    "Afrodite"
+   ],
+   "de": "2026-12-31",
+   "ate": "2026-12-31",
+   "noites": [
+    "2026-12-31"
+   ],
+   "data": "2026-11-04",
+   "criada_em": "2026-11-04T15:13+00:00",
+   "libera": [
+    "acima_15"
+   ],
+   "pisos_enviados": {
+    "Q7": 5000.0,
+    "Q2": 5000.0,
+    "Double": 5000.0,
+    "Afrodite": 6682.74
+   },
+   "percentil": 90,
+   "vendidas_base": {
+    "Q7": {
+     "2026-12-31": 5
+    },
+    "Q2": {
+     "2026-12-31": 9
+    },
+    "Double": {
+     "2026-12-31": 3
+    },
+    "Afrodite": {
+     "2026-12-31": 9
+    }
+   },
+   "escada_vendas": true,
+   "passo_livre": true,
+   "ocupacao_max": 0.7,
+   "frente_ocupacao": 0.5,
+   "topo_enviados": {
+    "Q7": 5000.0,
+    "Q2": 5000.0,
+    "Double": 5000.0,
+    "Afrodite": 6682.74
+   },
+   "degraus_atras": {
+    "Q7": [
+     5000.0,
+     5000.0,
+     4109.32,
+     2724.01
+    ],
+    "Q2": [
+     5000.0,
+     5000.0,
+     4109.32,
+     2724.01
+    ],
+    "Double": [
+     5000.0,
+     5000.0,
+     4109.32,
+     2724.01
+    ],
+    "Afrodite": [
+     6243.55,
+     5376.08,
+     4314.78,
+     2860.22
+    ]
+   },
+   "degraus_dias": [
+    7,
+    5,
+    3,
+    1
+   ],
+   "pousada_faixa": "Recanto",
+   "faixa": 5
+  },
+  {
+   "id": "dono-2026-11-04-faixa-villa-20261231",
+   "tipo": "alvo_por_data",
+   "quartos": [
+    "VK7",
+    "VK2",
+    "Balcony"
+   ],
+   "de": "2026-12-31",
+   "ate": "2026-12-31",
+   "noites": [
+    "2026-12-31"
+   ],
+   "data": "2026-11-04",
+   "criada_em": "2026-11-04T15:13+00:00",
+   "libera": [
+    "acima_15"
+   ],
+   "pisos_enviados": {
+    "VK7": 5000.0,
+    "VK2": 5000.0,
+    "Balcony": 4500.0
+   },
+   "percentil": 90,
+   "vendidas_base": {
+    "VK7": {
+     "2026-12-31": 3
+    },
+    "VK2": {
+     "2026-12-31": 4
+    },
+    "Balcony": {
+     "2026-12-31": 5
+    }
+   },
+   "escada_vendas": true,
+   "passo_livre": true,
+   "ocupacao_max": 0.7,
+   "frente_ocupacao": 0.5,
+   "topo_enviados": {
+    "VK7": 5000.0,
+    "VK2": 5000.0,
+    "Balcony": 4500.0
+   },
+   "degraus_atras": {
+    "VK7": [
+     5000.0,
+     4883.76,
+     3919.66,
+     2598.29
+    ],
+    "VK2": [
+     5000.0,
+     4883.76,
+     3919.66,
+     2598.29
+    ],
+    "Balcony": [
+     4500.0,
+     4395.38,
+     3527.69,
+     2338.46
+    ]
+   },
+   "degraus_dias": [
+    7,
+    5,
+    3,
+    1
+   ],
+   "pousada_faixa": "Villa",
+   "faixa": 5
+  },
+  {
+   "id": "dono-2026-11-04-faixa-recanto-20270101",
+   "tipo": "alvo_por_data",
+   "quartos": [
+    "Q7",
+    "Q2",
+    "Double",
+    "Afrodite"
+   ],
+   "de": "2027-01-01",
+   "ate": "2027-01-01",
+   "noites": [
+    "2027-01-01"
+   ],
+   "data": "2026-11-04",
+   "criada_em": "2026-11-04T15:13+00:00",
+   "libera": [
+    "acima_15"
+   ],
+   "pisos_enviados": {
+    "Q7": 5000.0,
+    "Q2": 5000.0,
+    "Double": 5000.0,
+    "Afrodite": 6598.06
+   },
+   "percentil": 90,
+   "vendidas_base": {
+    "Q7": {
+     "2027-01-01": 3
+    },
+    "Q2": {
+     "2027-01-01": 5
+    },
+    "Double": {
+     "2027-01-01": 2
+    },
+    "Afrodite": {
+     "2027-01-01": 5
+    }
+   },
+   "escada_vendas": true,
+   "passo_livre": true,
+   "ocupacao_max": 0.7,
+   "frente_ocupacao": 0.5,
+   "topo_enviados": {
+    "Q7": 5000.0,
+    "Q2": 5000.0,
+    "Double": 5000.0,
+    "Afrodite": 6598.06
+   },
+   "degraus_atras": {
+    "Q7": [
+     5000.0,
+     4971.33,
+     4168.46,
+     2756.27
+    ],
+    "Q2": [
+     5000.0,
+     4971.33,
+     4168.46,
+     2756.27
+    ],
+    "Double": [
+     5000.0,
+     4971.33,
+     4168.46,
+     2756.27
+    ],
+    "Afrodite": [
+     6091.13,
+     5219.89,
+     4376.88,
+     2894.09
+    ]
+   },
+   "degraus_dias": [
+    7,
+    5,
+    3,
+    1
+   ],
+   "pousada_faixa": "Recanto",
+   "faixa": 5
+  },
+  {
+   "id": "dono-2026-11-04-faixa-villa-20270101",
+   "tipo": "alvo_por_data",
+   "quartos": [
+    "VK7",
+    "VK2",
+    "Balcony"
+   ],
+   "de": "2027-01-01",
+   "ate": "2027-01-01",
+   "noites": [
+    "2027-01-01"
+   ],
+   "data": "2026-11-04",
+   "criada_em": "2026-11-04T15:13+00:00",
+   "libera": [
+    "acima_15"
+   ],
+   "pisos_enviados": {
+    "VK7": 5000.0,
+    "VK2": 5000.0,
+    "Balcony": 4500.0
+   },
+   "percentil": 90,
+   "vendidas_base": {
+    "VK7": {
+     "2027-01-01": 2
+    },
+    "VK2": {
+     "2027-01-01": 2
+    },
+    "Balcony": {
+     "2027-01-01": 1
+    }
+   },
+   "escada_vendas": true,
+   "passo_livre": true,
+   "ocupacao_max": 0.7,
+   "frente_ocupacao": 0.5,
+   "topo_enviados": {
+    "VK7": 5000.0,
+    "VK2": 5000.0,
+    "Balcony": 4500.0
+   },
+   "degraus_atras": {
+    "VK7": [
+     5000.0,
+     4741.88,
+     3976.07,
+     2629.06
+    ],
+    "VK2": [
+     5000.0,
+     4741.88,
+     3976.07,
+     2629.06
+    ],
+    "Balcony": [
+     4500.0,
+     4267.69,
+     3578.46,
+     2366.15
+    ]
+   },
+   "degraus_dias": [
+    7,
+    5,
+    3,
+    1
+   ],
+   "pousada_faixa": "Villa",
+   "faixa": 5
+  },
+  {
+   "id": "dono-2026-11-04-faixa-recanto-20270102",
+   "tipo": "alvo_por_data",
+   "quartos": [
+    "Q7",
+    "Q2",
+    "Double",
+    "Afrodite"
+   ],
+   "de": "2027-01-02",
+   "ate": "2027-01-02",
+   "noites": [
+    "2027-01-02"
+   ],
+   "data": "2026-11-04",
+   "criada_em": "2026-11-04T15:13+00:00",
+   "libera": [
+    "acima_15"
+   ],
+   "pisos_enviados": {
+    "Q7": 5000.0,
+    "Q2": 5000.0,
+    "Double": 5000.0,
+    "Afrodite": 6513.39
+   },
+   "percentil": 90,
+   "vendidas_base": {
+    "Q7": {
+     "2027-01-02": 1
+    },
+    "Q2": {
+     "2027-01-02": 3
+    },
+    "Double": {
+     "2027-01-02": 2
+    },
+    "Afrodite": {
+     "2027-01-02": 3
+    }
+   },
+   "escada_vendas": true,
+   "passo_livre": true,
+   "ocupacao_max": 0.7,
+   "frente_ocupacao": 0.5,
+   "topo_enviados": {
+    "Q7": 5000.0,
+    "Q2": 5000.0,
+    "Double": 5000.0,
+    "Afrodite": 6513.39
+   },
+   "degraus_atras": {
+    "Q7": [
+     5000.0,
+     4822.58,
+     4109.32,
+     2704.3
+    ],
+    "Q2": [
+     5000.0,
+     4822.58,
+     4109.32,
+     2704.3
+    ],
+    "Double": [
+     5000.0,
+     4822.58,
+     4109.32,
+     2704.3
+    ],
+    "Afrodite": [
+     5844.62,
+     5063.71,
+     4314.78,
+     2839.52
+    ]
+   },
+   "degraus_dias": [
+    7,
+    5,
+    3,
+    1
+   ],
+   "pousada_faixa": "Recanto",
+   "faixa": 5
+  },
+  {
+   "id": "dono-2026-11-04-faixa-villa-20270102",
+   "tipo": "alvo_por_data",
+   "quartos": [
+    "VK7",
+    "VK2",
+    "Balcony"
+   ],
+   "de": "2027-01-02",
+   "ate": "2027-01-02",
+   "noites": [
+    "2027-01-02"
+   ],
+   "data": "2026-11-04",
+   "criada_em": "2026-11-04T15:13+00:00",
+   "libera": [
+    "acima_15"
+   ],
+   "pisos_enviados": {
+    "VK7": 5000.0,
+    "VK2": 5000.0,
+    "Balcony": 4500.0
+   },
+   "percentil": 90,
+   "vendidas_base": {
+    "VK7": {
+     "2027-01-02": 1
+    },
+    "VK2": {
+     "2027-01-02": 1
+    },
+    "Balcony": {
+     "2027-01-02": 0
+    }
+   },
+   "escada_vendas": true,
+   "passo_livre": true,
+   "ocupacao_max": 0.7,
+   "frente_ocupacao": 0.5,
+   "topo_enviados": {
+    "VK7": 5000.0,
+    "VK2": 5000.0,
+    "Balcony": 4500.0
+   },
+   "degraus_atras": {
+    "VK7": [
+     5000.0,
+     4600.0,
+     3919.66,
+     2579.49
+    ],
+    "VK2": [
+     5000.0,
+     4600.0,
+     3919.66,
+     2579.49
+    ],
+    "Balcony": [
+     4500.0,
+     4140.0,
+     3527.69,
+     2321.54
+    ]
+   },
+   "degraus_dias": [
+    7,
+    5,
+    3,
+    1
+   ],
+   "pousada_faixa": "Villa",
+   "faixa": 5
+  },
+  {
+   "id": "dono-2026-11-04-faixa-recanto-20270103",
+   "tipo": "alvo_por_data",
+   "quartos": [
+    "Q7",
+    "Q2",
+    "Double",
+    "Afrodite"
+   ],
+   "de": "2027-01-03",
+   "ate": "2027-01-03",
+   "noites": [
+    "2027-01-03"
+   ],
+   "data": "2026-11-04",
+   "criada_em": "2026-11-04T15:13+00:00",
+   "libera": [
+    "acima_15"
+   ],
+   "pisos_enviados": {
+    "Q7": 1219.51,
+    "Q2": 1219.51,
+    "Double": 1219.51,
+    "Afrodite": 1500.0
+   },
+   "percentil": 50,
+   "vendidas_base": {
+    "Q7": {
+     "2027-01-03": 0
+    },
+    "Q2": {
+     "2027-01-03": 2
+    },
+    "Double": {
+     "2027-01-03": 0
+    },
+    "Afrodite": {
+     "2027-01-03": 2
+    }
+   },
+   "escada_vendas": true,
+   "passo_livre": true,
+   "ocupacao_max": 0.7,
+   "frente_ocupacao": 0.5,
+   "topo_enviados": {
+    "Q7": 2877.42,
+    "Q2": 2877.42,
+    "Double": 2877.42,
+    "Afrodite": 3452.9
+   },
+   "piso_atras": {
+    "Q7": 1219.51,
+    "Q2": 1219.51,
+    "Double": 1219.51,
+    "Afrodite": 1500.0
+   },
+   "gatilho_dias": 7,
+   "gatilho_min_dias": 2,
+   "pousada_faixa": "Recanto",
+   "faixa": 2
+  },
+  {
+   "id": "dono-2026-11-04-faixa-villa-20270103",
+   "tipo": "alvo_por_data",
+   "quartos": [
+    "VK7",
+    "VK2",
+    "Balcony"
+   ],
+   "de": "2027-01-03",
+   "ate": "2027-01-03",
+   "noites": [
+    "2027-01-03"
+   ],
+   "data": "2026-11-04",
+   "criada_em": "2026-11-04T15:13+00:00",
+   "libera": [
+    "acima_15"
+   ],
+   "pisos_enviados": {
+    "VK7": 996.92,
+    "VK2": 996.92,
+    "Balcony": 897.23
+   },
+   "percentil": 50,
+   "vendidas_base": {
+    "VK7": {
+     "2027-01-03": 1
+    },
+    "VK2": {
+     "2027-01-03": 1
+    },
+    "Balcony": {
+     "2027-01-03": 0
+    }
+   },
+   "escada_vendas": true,
+   "passo_livre": true,
+   "ocupacao_max": 0.7,
+   "frente_ocupacao": 0.5,
+   "topo_enviados": {
+    "VK7": 2744.62,
+    "VK2": 2744.62,
+    "Balcony": 2470.15
+   },
+   "piso_atras": {
+    "VK7": 944.0,
+    "VK2": 943.4,
+    "Balcony": 750.77
+   },
+   "gatilho_dias": 7,
+   "gatilho_min_dias": 2,
+   "pousada_faixa": "Villa",
+   "faixa": 2
+  },
+  {
+   "id": "dono-2026-11-04-faixa-recanto-20261225",
+   "tipo": "alvo_por_data",
+   "quartos": [
+    "Q7",
+    "Q2",
+    "Double",
+    "Afrodite"
+   ],
+   "de": "2026-12-25",
+   "ate": "2026-12-25",
+   "noites": [
+    "2026-12-25"
+   ],
+   "data": "2026-11-04",
+   "criada_em": "2026-11-04T18:36+00:00",
+   "libera": [
+    "acima_15"
+   ],
+   "pisos_enviados": {
+    "Q7": 5000.0,
+    "Q2": 5000.0,
+    "Double": 5000.0,
+    "Afrodite": 5912.18
+   },
+   "percentil": 90,
+   "vendidas_base": {
+    "Q7": {
+     "2026-12-25": 0
+    },
+    "Q2": {
+     "2026-12-25": 1
+    },
+    "Double": {
+     "2026-12-25": 1
+    },
+    "Afrodite": {
+     "2026-12-25": 1
+    }
+   },
+   "escada_vendas": true,
+   "passo_livre": true,
+   "ocupacao_max": 0.7,
+   "frente_ocupacao": 0.5,
+   "topo_enviados": {
+    "Q7": 5000.0,
+    "Q2": 5000.0,
+    "Double": 5000.0,
+    "Afrodite": 5912.18
+   },
+   "degraus_atras": {
+    "Q7": [
+     5000.0,
+     3921.15,
+     3021.51,
+     2380.95
+    ],
+    "Q2": [
+     5000.0,
+     3921.15,
+     3021.51,
+     2380.95
+    ],
+    "Double": [
+     5000.0,
+     3921.15,
+     3021.51,
+     2380.95
+    ],
+    "Afrodite": [
+     5261.29,
+     4117.2,
+     3172.58,
+     2382.26
+    ]
+   },
+   "degraus_dias": [
+    7,
+    5,
+    3,
+    1
+   ],
+   "pousada_faixa": "Recanto",
+   "faixa": 5
+  },
+  {
+   "id": "dono-2026-11-04-faixa-villa-20261225",
+   "tipo": "alvo_por_data",
+   "quartos": [
+    "VK7",
+    "VK2",
+    "Balcony"
+   ],
+   "de": "2026-12-25",
+   "ate": "2026-12-25",
+   "noites": [
+    "2026-12-25"
+   ],
+   "data": "2026-11-04",
+   "criada_em": "2026-11-04T18:36+00:00",
+   "libera": [
+    "acima_15"
+   ],
+   "pisos_enviados": {
+    "VK7": 5000.0,
+    "VK2": 5000.0,
+    "Balcony": 4500.0
+   },
+   "percentil": 90,
+   "vendidas_base": {
+    "VK7": {
+     "2026-12-25": 1
+    },
+    "VK2": {
+     "2026-12-25": 1
+    },
+    "Balcony": {
+     "2026-12-25": 0
+    }
+   },
+   "escada_vendas": true,
+   "passo_livre": true,
+   "ocupacao_max": 0.7,
+   "frente_ocupacao": 0.5,
+   "topo_enviados": {
+    "VK7": 5000.0,
+    "VK2": 5000.0,
+    "Balcony": 4500.0
+   },
+   "degraus_atras": {
+    "VK7": [
+     4779.49,
+     3740.17,
+     2882.05,
+     2564.1
+    ],
+    "VK2": [
+     4779.49,
+     3740.17,
+     2882.05,
+     2564.1
+    ],
+    "Balcony": [
+     4301.54,
+     3366.15,
+     2593.85,
+     1947.69
+    ]
+   },
+   "degraus_dias": [
+    7,
+    5,
+    3,
+    1
+   ],
+   "pousada_faixa": "Villa",
+   "faixa": 5
+  },
+  {
+   "id": "dono-2026-11-04-estadia-dia-chegada",
+   "tipo": "regra",
+   "quartos": [
+    "Q7",
+    "Double",
+    "Afrodite",
+    "Q2",
+    "VK7",
+    "VK2",
+    "Balcony"
+   ],
+   "de": "2026-11-05",
+   "ate": "2099-12-31",
+   "data": "2026-11-04",
+   "criada_em": "2026-11-05T00:00+00:00",
+   "libera": [
+    "beds24_inventario",
+    "estadia_1_orfa"
+   ]
+  },
+  {
+   "id": "dono-2026-11-04-faixa-recanto-20270104",
+   "tipo": "alvo_por_data",
+   "quartos": [
+    "Q7",
+    "Q2",
+    "Double",
+    "Afrodite"
+   ],
+   "de": "2027-01-04",
+   "ate": "2027-01-04",
+   "noites": [
+    "2027-01-04"
+   ],
+   "data": "2026-11-04",
+   "criada_em": "2026-11-05T11:14+00:00",
+   "libera": [
+    "acima_15"
+   ],
+   "pisos_enviados": {
+    "Q7": 1219.51,
+    "Q2": 1219.51,
+    "Double": 1219.51,
+    "Afrodite": 1500.0
+   },
+   "percentil": 50,
+   "vendidas_base": {
+    "Q7": {
+     "2027-01-04": 0
+    },
+    "Q2": {
+     "2027-01-04": 3
+    },
+    "Double": {
+     "2027-01-04": 1
+    },
+    "Afrodite": {
+     "2027-01-04": 3
+    }
+   },
+   "escada_vendas": true,
+   "passo_livre": true,
+   "ocupacao_max": 0.7,
+   "frente_ocupacao": 0.5,
+   "topo_enviados": {
+    "Q7": 2877.42,
+    "Q2": 2877.42,
+    "Double": 2877.42,
+    "Afrodite": 3452.9
+   },
+   "piso_atras": {
+    "Q7": 1219.51,
+    "Q2": 1219.51,
+    "Double": 1219.51,
+    "Afrodite": 1500.0
+   },
+   "gatilho_dias": 8,
+   "gatilho_min_dias": 2,
+   "pousada_faixa": "Recanto",
+   "faixa": 2
+  },
+  {
+   "id": "dono-2026-11-04-faixa-villa-20270104",
+   "tipo": "alvo_por_data",
+   "quartos": [
+    "VK7",
+    "VK2",
+    "Balcony"
+   ],
+   "de": "2027-01-04",
+   "ate": "2027-01-04",
+   "noites": [
+    "2027-01-04"
+   ],
+   "data": "2026-11-04",
+   "criada_em": "2026-11-05T11:14+00:00",
+   "libera": [
+    "acima_15"
+   ],
+   "pisos_enviados": {
+    "VK7": 996.92,
+    "VK2": 996.92,
+    "Balcony": 897.23
+   },
+   "percentil": 50,
+   "vendidas_base": {
+    "VK7": {
+     "2027-01-04": 1
+    },
+    "VK2": {
+     "2027-01-04": 1
+    },
+    "Balcony": {
+     "2027-01-04": 0
+    }
+   },
+   "escada_vendas": true,
+   "passo_livre": true,
+   "ocupacao_max": 0.7,
+   "frente_ocupacao": 0.5,
+   "topo_enviados": {
+    "VK7": 2744.62,
+    "VK2": 2744.62,
+    "Balcony": 2470.15
+   },
+   "piso_atras": {
+    "VK7": 944.0,
+    "VK2": 943.4,
+    "Balcony": 750.77
+   },
+   "gatilho_dias": 8,
+   "gatilho_min_dias": 2,
+   "pousada_faixa": "Villa",
+   "faixa": 2
+  },
+  {
+   "id": "dono-2026-11-05-afrodite-sexta-orfas-feriado",
+   "tipo": "regra",
+   "quartos": [
+    "Q7",
+    "Double",
+    "Afrodite",
+    "Q2",
+    "VK7",
+    "VK2",
+    "Balcony"
+   ],
+   "de": "2026-11-05",
+   "ate": "2099-12-31",
+   "data": "2026-11-05",
+   "criada_em": "2026-11-05T15:05+00:00",
+   "libera": [
+    "beds24_inventario",
+    "chegada_saida_afrodite_sexta",
+    "estadia_1_orfa_feriado"
+   ]
+  },
+  {
+   "id": "dono-2026-11-04-faixa-recanto-20270105",
+   "tipo": "alvo_por_data",
+   "quartos": [
+    "Q7",
+    "Q2",
+    "Double",
+    "Afrodite"
+   ],
+   "de": "2027-01-05",
+   "ate": "2027-01-05",
+   "noites": [
+    "2027-01-05"
+   ],
+   "data": "2026-11-04",
+   "criada_em": "2026-11-06T10:59:59Z",
+   "libera": [
+    "acima_15"
+   ],
+   "pisos_enviados": {
+    "Q7": 1219.51,
+    "Q2": 1219.51,
+    "Double": 1219.51,
+    "Afrodite": 1500.0
+   },
+   "percentil": 50,
+   "vendidas_base": {
+    "Q7": {
+     "2027-01-05": 0
+    },
+    "Q2": {
+     "2027-01-05": 2
+    },
+    "Double": {
+     "2027-01-05": 1
+    },
+    "Afrodite": {
+     "2027-01-05": 2
+    }
+   },
+   "escada_vendas": true,
+   "passo_livre": true,
+   "ocupacao_max": 0.7,
+   "frente_ocupacao": 0.5,
+   "topo_enviados": {
+    "Q7": 2877.42,
+    "Q2": 2877.42,
+    "Double": 2877.42,
+    "Afrodite": 3452.9
+   },
+   "piso_atras": {
+    "Q7": 1219.51,
+    "Q2": 1219.51,
+    "Double": 1219.51,
+    "Afrodite": 1500.0
+   },
+   "gatilho_dias": 9,
+   "gatilho_min_dias": 2,
+   "pousada_faixa": "Recanto",
+   "faixa": 2
+  },
+  {
+   "id": "dono-2026-11-04-faixa-villa-20270105",
+   "tipo": "alvo_por_data",
+   "quartos": [
+    "VK7",
+    "VK2",
+    "Balcony"
+   ],
+   "de": "2027-01-05",
+   "ate": "2027-01-05",
+   "noites": [
+    "2027-01-05"
+   ],
+   "data": "2026-11-04",
+   "criada_em": "2026-11-06T10:59:59Z",
+   "libera": [
+    "acima_15"
+   ],
+   "pisos_enviados": {
+    "VK7": 996.92,
+    "VK2": 996.92,
+    "Balcony": 897.23
+   },
+   "percentil": 50,
+   "vendidas_base": {
+    "VK7": {
+     "2027-01-05": 1
+    },
+    "VK2": {
+     "2027-01-05": 1
+    },
+    "Balcony": {
+     "2027-01-05": 0
+    }
+   },
+   "escada_vendas": true,
+   "passo_livre": true,
+   "ocupacao_max": 0.7,
+   "frente_ocupacao": 0.5,
+   "topo_enviados": {
+    "VK7": 2744.62,
+    "VK2": 2744.62,
+    "Balcony": 2470.15
+   },
+   "piso_atras": {
+    "VK7": 944.0,
+    "VK2": 943.4,
+    "Balcony": 750.77
+   },
+   "gatilho_dias": 9,
+   "gatilho_min_dias": 2,
+   "pousada_faixa": "Villa",
+   "faixa": 2
+  },
+  {
+   "id": "dono-2026-11-04-faixa-recanto-20270106",
+   "tipo": "alvo_por_data",
+   "quartos": [
+    "Q7",
+    "Q2",
+    "Double",
+    "Afrodite"
+   ],
+   "de": "2027-01-06",
+   "ate": "2027-01-06",
+   "noites": [
+    "2027-01-06"
+   ],
+   "data": "2026-11-04",
+   "criada_em": "2026-11-07T10:57:11Z",
+   "libera": [
+    "acima_15"
+   ],
+   "pisos_enviados": {
+    "Q7": 1219.51,
+    "Q2": 1219.51,
+    "Double": 1219.51,
+    "Afrodite": 1500.0
+   },
+   "percentil": 50,
+   "vendidas_base": {
+    "Q7": {
+     "2027-01-06": 0
+    },
+    "Q2": {
+     "2027-01-06": 1
+    },
+    "Double": {
+     "2027-01-06": 1
+    },
+    "Afrodite": {
+     "2027-01-06": 1
+    }
+   },
+   "escada_vendas": true,
+   "passo_livre": true,
+   "ocupacao_max": 0.7,
+   "frente_ocupacao": 0.5,
+   "topo_enviados": {
+    "Q7": 2877.42,
+    "Q2": 2877.42,
+    "Double": 2877.42,
+    "Afrodite": 3452.9
+   },
+   "piso_atras": {
+    "Q7": 1219.51,
+    "Q2": 1219.51,
+    "Double": 1219.51,
+    "Afrodite": 1500.0
+   },
+   "gatilho_dias": 10,
+   "gatilho_min_dias": 2,
+   "pousada_faixa": "Recanto",
+   "faixa": 2
+  },
+  {
+   "id": "dono-2026-11-04-faixa-villa-20270106",
+   "tipo": "alvo_por_data",
+   "quartos": [
+    "VK7",
+    "VK2",
+    "Balcony"
+   ],
+   "de": "2027-01-06",
+   "ate": "2027-01-06",
+   "noites": [
+    "2027-01-06"
+   ],
+   "data": "2026-11-04",
+   "criada_em": "2026-11-07T10:57:11Z",
+   "libera": [
+    "acima_15"
+   ],
+   "pisos_enviados": {
+    "VK7": 996.92,
+    "VK2": 996.92,
+    "Balcony": 897.23
+   },
+   "percentil": 50,
+   "vendidas_base": {
+    "VK7": {
+     "2027-01-06": 0
+    },
+    "VK2": {
+     "2027-01-06": 0
+    },
+    "Balcony": {
+     "2027-01-06": 0
+    }
+   },
+   "escada_vendas": true,
+   "passo_livre": true,
+   "ocupacao_max": 0.7,
+   "frente_ocupacao": 0.5,
+   "topo_enviados": {
+    "VK7": 2744.62,
+    "VK2": 2744.62,
+    "Balcony": 2470.15
+   },
+   "piso_atras": {
+    "VK7": 944.0,
+    "VK2": 943.4,
+    "Balcony": 750.77
+   },
+   "gatilho_dias": 10,
+   "gatilho_min_dias": 2,
+   "pousada_faixa": "Villa",
+   "faixa": 2
+  },
+  {
+   "id": "dono-2026-11-04-faixa-recanto-20270107",
+   "tipo": "alvo_por_data",
+   "quartos": [
+    "Q7",
+    "Q2",
+    "Double",
+    "Afrodite"
+   ],
+   "de": "2027-01-07",
+   "ate": "2027-01-07",
+   "noites": [
+    "2027-01-07"
+   ],
+   "data": "2026-11-04",
+   "criada_em": "2026-11-08T13:56:56Z",
+   "libera": [
+    "acima_15"
+   ],
+   "pisos_enviados": {
+    "Q7": 1219.51,
+    "Q2": 1219.51,
+    "Double": 1219.51,
+    "Afrodite": 1500.0
+   },
+   "percentil": 50,
+   "vendidas_base": {
+    "Q7": {
+     "2027-01-07": 0
+    },
+    "Q2": {
+     "2027-01-07": 1
+    },
+    "Double": {
+     "2027-01-07": 1
+    },
+    "Afrodite": {
+     "2027-01-07": 1
+    }
+   },
+   "escada_vendas": true,
+   "passo_livre": true,
+   "ocupacao_max": 0.7,
+   "frente_ocupacao": 0.5,
+   "topo_enviados": {
+    "Q7": 2877.42,
+    "Q2": 2877.42,
+    "Double": 2877.42,
+    "Afrodite": 3452.9
+   },
+   "piso_atras": {
+    "Q7": 1219.51,
+    "Q2": 1219.51,
+    "Double": 1219.51,
+    "Afrodite": 1500.0
+   },
+   "gatilho_dias": 11,
+   "gatilho_min_dias": 2,
+   "pousada_faixa": "Recanto",
+   "faixa": 2
+  },
+  {
+   "id": "dono-2026-11-04-faixa-villa-20270107",
+   "tipo": "alvo_por_data",
+   "quartos": [
+    "VK7",
+    "VK2",
+    "Balcony"
+   ],
+   "de": "2027-01-07",
+   "ate": "2027-01-07",
+   "noites": [
+    "2027-01-07"
+   ],
+   "data": "2026-11-04",
+   "criada_em": "2026-11-08T13:56:56Z",
+   "libera": [
+    "acima_15"
+   ],
+   "pisos_enviados": {
+    "VK7": 996.92,
+    "VK2": 996.92,
+    "Balcony": 897.23
+   },
+   "percentil": 50,
+   "vendidas_base": {
+    "VK7": {
+     "2027-01-07": 0
+    },
+    "VK2": {
+     "2027-01-07": 0
+    },
+    "Balcony": {
+     "2027-01-07": 0
+    }
+   },
+   "escada_vendas": true,
+   "passo_livre": true,
+   "ocupacao_max": 0.7,
+   "frente_ocupacao": 0.5,
+   "topo_enviados": {
+    "VK7": 2744.62,
+    "VK2": 2744.62,
+    "Balcony": 2470.15
+   },
+   "piso_atras": {
+    "VK7": 944.0,
+    "VK2": 943.4,
+    "Balcony": 750.77
+   },
+   "gatilho_dias": 11,
+   "gatilho_min_dias": 2,
+   "pousada_faixa": "Villa",
+   "faixa": 2
+  },
+  {
+   "id": "dono-2026-11-09-minimo-piso-semana",
+   "tipo": "regra",
+   "quartos": [
+    "Q7",
+    "Double",
+    "Q2",
+    "VK2"
+   ],
+   "de": "2026-11-09",
+   "ate": "2026-12-07",
+   "data": "2026-11-09",
+   "criada_em": "2026-11-09T14:45:00Z",
+   "libera": [
+    "anuncio"
+   ]
+  },
+  {
+   "id": "dono-2026-11-09-sombra-flutuacao-vk7",
+   "tipo": "regra",
+   "quartos": [
+    "VK7"
+   ],
+   "de": "2026-11-10",
+   "ate": "2026-12-07",
+   "data": "2026-11-09",
+   "criada_em": "2026-11-09T14:45:00Z",
+   "libera": []
+  },
+  {
+   "id": "dono-2026-11-09-balcony-personalizacao",
+   "tipo": "regra",
+   "quartos": [
+    "Balcony"
+   ],
+   "de": "2026-11-09",
+   "ate": "2026-11-09",
+   "data": "2026-11-09",
+   "criada_em": "2026-11-09T14:45:00Z",
+   "libera": [
+    "personalizacao"
+   ]
+  },
+  {
+   "id": "dono-2026-11-09-plano-nov-fev",
+   "tipo": "regra",
+   "quartos": [
+    "*"
+   ],
+   "de": "2026-11-10",
+   "ate": "2027-02-28",
+   "data": "2026-11-09",
+   "criada_em": "2026-11-10T02:35:00Z",
+   "libera": []
+  },
+  {
+   "id": "dono-2026-11-04-faixa-recanto-20270110",
+   "tipo": "alvo_por_data",
+   "quartos": [
+    "Q7",
+    "Q2",
+    "Double",
+    "Afrodite"
+   ],
+   "de": "2027-01-10",
+   "ate": "2027-01-10",
+   "noites": [
+    "2027-01-10"
+   ],
+   "data": "2026-11-04",
+   "criada_em": "2026-11-11T10:54:56Z",
+   "libera": [
+    "acima_15"
+   ],
+   "pisos_enviados": {
+    "Q7": 1219.51,
+    "Q2": 1219.51,
+    "Double": 1219.51,
+    "Afrodite": 1500.0
+   },
+   "percentil": 50,
+   "vendidas_base": {
+    "Q7": {
+     "2027-01-10": 0
+    },
+    "Q2": {
+     "2027-01-10": 0
+    },
+    "Double": {
+     "2027-01-10": 0
+    },
+    "Afrodite": {
+     "2027-01-10": 0
+    }
+   },
+   "escada_vendas": true,
+   "passo_livre": true,
+   "ocupacao_max": 0.7,
+   "frente_ocupacao": 0.5,
+   "topo_enviados": {
+    "Q7": 3037.1,
+    "Q2": 3037.1,
+    "Double": 3037.1,
+    "Afrodite": 3644.52
+   },
+   "piso_atras": {
+    "Q7": 1219.51,
+    "Q2": 1219.51,
+    "Double": 1219.51,
+    "Afrodite": 1500.0
+   },
+   "gatilho_dias": 7,
+   "gatilho_min_dias": 2,
+   "pousada_faixa": "Recanto",
+   "faixa": 2
+  },
+  {
+   "id": "dono-2026-11-04-faixa-villa-20270110",
+   "tipo": "alvo_por_data",
+   "quartos": [
+    "VK7",
+    "VK2",
+    "Balcony"
+   ],
+   "de": "2027-01-10",
+   "ate": "2027-01-10",
+   "noites": [
+    "2027-01-10"
+   ],
+   "data": "2026-11-04",
+   "criada_em": "2026-11-11T10:54:56Z",
+   "libera": [
+    "acima_15"
+   ],
+   "pisos_enviados": {
+    "VK7": 1001.54,
+    "VK2": 1001.54,
+    "Balcony": 901.38
+   },
+   "percentil": 50,
+   "vendidas_base": {
+    "VK7": {
+     "2027-01-10": 0
+    },
+    "VK2": {
+     "2027-01-10": 0
+    },
+    "Balcony": {
+     "2027-01-10": 0
+    }
+   },
+   "escada_vendas": true,
+   "passo_livre": true,
+   "ocupacao_max": 0.7,
+   "frente_ocupacao": 0.5,
+   "topo_enviados": {
+    "VK7": 2896.92,
+    "VK2": 2896.92,
+    "Balcony": 2607.23
+   },
+   "piso_atras": {
+    "VK7": 944.0,
+    "VK2": 944.0,
+    "Balcony": 743.08
+   },
+   "gatilho_dias": 7,
+   "gatilho_min_dias": 2,
+   "pousada_faixa": "Villa",
+   "faixa": 2
+  },
+  {
+   "id": "dono-2026-11-04-faixa-recanto-20270111",
+   "tipo": "alvo_por_data",
+   "quartos": [
+    "Q7",
+    "Q2",
+    "Double",
+    "Afrodite"
+   ],
+   "de": "2027-01-11",
+   "ate": "2027-01-11",
+   "noites": [
+    "2027-01-11"
+   ],
+   "data": "2026-11-04",
+   "criada_em": "2026-11-12T14:38:32Z",
+   "libera": [
+    "acima_15"
+   ],
+   "pisos_enviados": {
+    "Q7": 1219.51,
+    "Q2": 1219.51,
+    "Double": 1219.51,
+    "Afrodite": 1500.0
+   },
+   "percentil": 50,
+   "vendidas_base": {
+    "Q7": {
+     "2027-01-11": 1
+    },
+    "Q2": {
+     "2027-01-11": 1
+    },
+    "Double": {
+     "2027-01-11": 0
+    },
+    "Afrodite": {
+     "2027-01-11": 1
+    }
+   },
+   "escada_vendas": true,
+   "passo_livre": true,
+   "ocupacao_max": 0.7,
+   "frente_ocupacao": 0.5,
+   "topo_enviados": {
+    "Q7": 3037.1,
+    "Q2": 3037.1,
+    "Double": 3037.1,
+    "Afrodite": 3644.52
+   },
+   "piso_atras": {
+    "Q7": 1219.51,
+    "Q2": 1219.51,
+    "Double": 1219.51,
+    "Afrodite": 1500.0
+   },
+   "gatilho_dias": 8,
+   "gatilho_min_dias": 2,
+   "pousada_faixa": "Recanto",
+   "faixa": 2
+  },
+  {
+   "id": "dono-2026-11-04-faixa-villa-20270111",
+   "tipo": "alvo_por_data",
+   "quartos": [
+    "VK7",
+    "VK2",
+    "Balcony"
+   ],
+   "de": "2027-01-11",
+   "ate": "2027-01-11",
+   "noites": [
+    "2027-01-11"
+   ],
+   "data": "2026-11-04",
+   "criada_em": "2026-11-12T14:38:32Z",
+   "libera": [
+    "acima_15"
+   ],
+   "pisos_enviados": {
+    "VK7": 1001.54,
+    "VK2": 1001.54,
+    "Balcony": 901.38
+   },
+   "percentil": 50,
+   "vendidas_base": {
+    "VK7": {
+     "2027-01-11": 0
+    },
+    "VK2": {
+     "2027-01-11": 1
+    },
+    "Balcony": {
+     "2027-01-11": 0
+    }
+   },
+   "escada_vendas": true,
+   "passo_livre": true,
+   "ocupacao_max": 0.7,
+   "frente_ocupacao": 0.5,
+   "topo_enviados": {
+    "VK7": 2896.92,
+    "VK2": 2896.92,
+    "Balcony": 2607.23
+   },
+   "piso_atras": {
+    "VK7": 944.0,
+    "VK2": 944.0,
+    "Balcony": 743.08
+   },
+   "gatilho_dias": 8,
+   "gatilho_min_dias": 2,
+   "pousada_faixa": "Villa",
+   "faixa": 2
+  }
+ ]
+}

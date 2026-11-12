@@ -36,6 +36,7 @@ final class NightContext
      * @param int|null          $paceSold       units sold of the group the pace is measured over, when it is not the room
      *                                          alone (a room of one or two units read with the rest of its property); given
      *                                          together with $paceUnits. Defaults to $sold over the units of the room type
+     * @param PaceTerms         $terms          what orders, the sales ramp and relations change in the step (neutral by default)
      *
      * @throws InvalidArgumentException on a room of another property, a negative amount or count, or half a pace basis
      */
@@ -52,6 +53,7 @@ final class NightContext
         public readonly ?LedgerStep $lastStep = null,
         ?int $paceSold = null,
         ?int $paceUnits = null,
+        public readonly PaceTerms $terms = new PaceTerms(),
     ) {
         if ($room->propertyId !== $property->id) {
             throw new InvalidArgumentException(sprintf('Room "%s" does not belong to property "%s".', $room->code, $property->id));

@@ -1,0 +1,171 @@
+{
+ "scenarios": [
+  {
+   "name": "c1111-final",
+   "plan": "plan-c1111-final.json",
+   "today": "2026-11-11",
+   "calendar": "calendar-c1111.json",
+   "now": "2026-11-11T11:37:48Z",
+   "accept_stale": false,
+   "max_hours": 6
+  },
+  {
+   "name": "c1112-final",
+   "plan": "plan-c1112-final.json",
+   "today": "2026-11-12",
+   "calendar": "calendar-c1112.json",
+   "now": "2026-11-12T15:17:18Z",
+   "accept_stale": false,
+   "max_hours": 6
+  },
+  {
+   "name": "c1112-delete",
+   "plan": "plan-c1112-delete.json",
+   "today": "2026-11-12",
+   "calendar": "calendar-c1112.json",
+   "now": "2026-11-12T15:17:18Z",
+   "accept_stale": false,
+   "max_hours": 6
+  },
+  {
+   "name": "synthetic-floors",
+   "plan": "plan-synthetic-floors.json",
+   "today": "2026-11-12",
+   "calendar": "calendar-c1112.json",
+   "now": "2026-11-12T15:17:18Z",
+   "accept_stale": false,
+   "max_hours": 6
+  },
+  {
+   "name": "synthetic-stay-masks",
+   "plan": "plan-synthetic-stay-masks.json",
+   "today": "2026-11-12",
+   "calendar": "calendar-c1112.json",
+   "now": "2026-11-12T15:17:18Z",
+   "accept_stale": false,
+   "max_hours": 6
+  },
+  {
+   "name": "synthetic-orders-listing",
+   "plan": "plan-synthetic-orders-listing.json",
+   "today": "2026-11-12",
+   "calendar": "calendar-c1112.json",
+   "now": "2026-11-12T15:17:18Z",
+   "accept_stale": false,
+   "max_hours": 6
+  },
+  {
+   "name": "synthetic-deletions",
+   "plan": "plan-synthetic-deletions.json",
+   "today": "2026-11-12",
+   "calendar": "calendar-c1112.json",
+   "now": "2026-11-12T15:17:18Z",
+   "accept_stale": false,
+   "max_hours": 6
+  },
+  {
+   "name": "synthetic-occupancy",
+   "plan": "plan-synthetic-occupancy.json",
+   "today": "2026-11-12",
+   "calendar": "calendar-c1112.json",
+   "now": "2026-11-12T15:17:18Z",
+   "accept_stale": false,
+   "max_hours": 6
+  },
+  {
+   "name": "synthetic-occupancy-stale",
+   "plan": "plan-synthetic-occupancy.json",
+   "today": "2026-11-12",
+   "calendar": "calendar-c1112.json",
+   "now": "2026-11-12T23:17:18Z",
+   "accept_stale": false,
+   "max_hours": 6
+  },
+  {
+   "name": "synthetic-occupancy-accepted",
+   "plan": "plan-synthetic-occupancy.json",
+   "today": "2026-11-12",
+   "calendar": "calendar-c1112.json",
+   "now": "2026-11-12T23:17:18Z",
+   "accept_stale": true,
+   "max_hours": 6
+  },
+  {
+   "name": "synthetic-payload",
+   "plan": "plan-synthetic-payload.json",
+   "today": "2026-11-12",
+   "calendar": "calendar-c1112.json",
+   "now": "2026-11-12T15:17:18Z",
+   "accept_stale": false,
+   "max_hours": 6
+  }
+ ],
+ "synthetic_orders": {
+  "synthetic-orders-listing": [
+   {
+    "id": "manual-2026-11-12-q2-2026-11-18",
+    "tipo": "manual",
+    "quartos": [
+     "Q2"
+    ],
+    "de": "2026-11-18",
+    "ate": "2026-11-19",
+    "data": "2026-11-12"
+   }
+  ],
+  "*": [
+   {
+    "id": "synthetic-below-floor",
+    "tipo": "regra",
+    "quartos": [
+     "Q7"
+    ],
+    "de": "2026-11-12",
+    "ate": "2026-12-31",
+    "data": "2026-11-12",
+    "libera": [
+     "abaixo_piso"
+    ]
+   },
+   {
+    "id": "synthetic-stay-new",
+    "tipo": "regra",
+    "quartos": [
+     "Q7"
+    ],
+    "de": "2026-11-12",
+    "ate": "2026-12-31",
+    "data": "2026-11-10",
+    "libera": [
+     "estadia"
+    ]
+   },
+   {
+    "id": "synthetic-stay-old",
+    "tipo": "regra",
+    "quartos": [
+     "Q7"
+    ],
+    "de": "2026-11-01",
+    "ate": "2026-12-31",
+    "data": "2026-11-01",
+    "libera": [
+     "estadia"
+    ]
+   },
+   {
+    "id": "synthetic-listing",
+    "tipo": "regra",
+    "quartos": [
+     "*"
+    ],
+    "de": "2026-11-01",
+    "ate": "2027-12-31",
+    "data": "2026-11-12",
+    "libera": [
+     "anuncio"
+    ]
+   }
+  ]
+ }
+}

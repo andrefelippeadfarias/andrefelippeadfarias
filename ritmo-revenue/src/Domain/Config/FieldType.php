@@ -29,6 +29,13 @@ enum FieldType: string
     /** A calendar date as "YYYY-MM-DD". */
     case Date = 'date';
 
+    /**
+     * A group of fields whose shape depends on a sibling field (the parameters of a room
+     * relation follow its type). The schema only checks that it is a group; the module that owns
+     * it describes and checks its fields (RuleSetValidator runs that module's reader).
+     */
+    case Variant = 'variant';
+
     public function isContainer(): bool
     {
         return $this === self::Group || $this === self::Map || $this === self::ListOf;

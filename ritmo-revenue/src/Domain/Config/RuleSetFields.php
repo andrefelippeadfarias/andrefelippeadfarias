@@ -4,15 +4,27 @@ declare(strict_types=1);
 
 namespace Ritmo\Domain\Config;
 
+use Ritmo\Domain\Calendar\Stay\StayFields;
 use Ritmo\Domain\Model\Identifier;
 use Ritmo\Domain\Model\NightType;
 use Ritmo\Domain\Model\PricePlan;
+use Ritmo\Domain\Orders\OrdersConfig;
+use Ritmo\Domain\Plan\PlanConfig;
+use Ritmo\Domain\Pricing\Cadence\CadenceConfig;
+use Ritmo\Domain\Pricing\Cadence\NoEffectConfig;
+use Ritmo\Domain\Pricing\Ladder\LadderFields;
+use Ritmo\Domain\Pricing\Protection\ProtectionConfig;
+use Ritmo\Domain\Relations\Config\RelationFields;
+use Ritmo\Domain\Relations\Config\RelationsConfig;
 
 /**
  * The field definitions of the rule set: every rule a customer can configure, with its type,
  * range, neutral default, label and help text.
  *
  * The defaults are deliberately generic. presets/default.json is this same set of defaults.
+ * The sections of milestone M2 (relations, price bands, ladder, sold-out protection, cadence,
+ * no-effect filter, owner orders, stay and plan) are described by the module that owns them and
+ * listed here, so that the rule set has one schema.
  */
 final class RuleSetFields
 {
@@ -52,6 +64,47 @@ final class RuleSetFields
             self::floors(),
             self::priceFactors(),
             self::safety(),
+            self::relations(),
+            self::priceBands(),
+            LadderFields::all(),
+            ProtectionConfig::fields(),
+            CadenceConfig::fields(),
+            NoEffectConfig::fields(),
+            OrdersConfig::fields(),
+            StayFields::all(),
+            PlanConfig::fields(),
+        );
+    }
+
+    /**
+     * The fields of a module's list item, re-rooted under the item's key ("relations.items.*").
+     *
+     * @param list<Field> $fields keys relative to the item
+     *
+     * @return list<Field>
+     */
+    public static function nested(string $prefix, array $fields): array
+    {
+        return array_map(
+            static fn (Field $f): Field => new Field(
+                $prefix . '.' . $f->key,
+                $f->type,
+                $f->label,
+                $f->help,
+                $f->default,
+                $f->required,
+                $f->nullable,
+                $f->min,
+                $f->max,
+                $f->exclusiveMin,
+                $f->enum,
+                $f->locked,
+                $f->pattern,
+                $f->requiredKeys,
+                $f->unique,
+                $f->unit,
+            ),
+            $fields
         );
     }
 
@@ -315,6 +368,9 @@ final class RuleSetFields
             max: 365,
             unit: Field::UNIT_DAYS,
         );
+        $fields[] = new Field('pace.sales_ramp', FieldType::Group, 'Sales ramp', 'The target percentile of a night climbs with its sales: nothing sold keeps the percentile of the pace status, every unit sold moves it toward the top. A new booking also allows one more step up the same day.');
+        $fields[] = new Field('pace.sales_ramp.enabled', FieldType::Boolean, 'Climb with the sales', 'Off: the percentile of the pace status alone.', false);
+        $fields[] = new Field('pace.sales_ramp.top_percentile', FieldType::Number, 'Top percentile', 'The percentile of a sold-out night; it never lowers a status percentile above it.', 90.0, min: 0, max: 100, unit: Field::UNIT_PERCENT);
 
         return $fields;
     }
@@ -542,6 +598,42 @@ final class RuleSetFields
                 unit: Field::UNIT_RATIO,
             ),
         ]);
+    }
+
+    /**
+     * Relations between room types (RELATIONS.md). The parameters of a relation depend on its
+     * type: they are a variant group that Relations\Config\RelationsConfig reads and checks.
+     *
+     * @return list<Field>
+     */
+    private static function relations(): array
+    {
+        $item = 'relations.items.*';
+
+        return [
+            ...RelationFields::general(),
+            new Field('relations.items', FieldType::ListOf, 'Relations', 'Each relation keeps one room type in order with others of the same property. A cycle is refused.', [], max: RelationsConfig::MAX_RELATIONS),
+            new Field($item, FieldType::Group, 'Relation', required: true),
+            ...self::nested($item, RelationFields::relation()),
+            new Field($item . '.params', FieldType::Variant, 'Parameters', 'They depend on the kind of relation: at_least, between, premium_over_max, discount_band or occupancy_switch.', []),
+        ];
+    }
+
+    /**
+     * Market bands of room types, read by the discount bands and the premium relations.
+     *
+     * @return list<Field>
+     */
+    private static function priceBands(): array
+    {
+        $item = 'price_bands.items.*';
+
+        return [
+            new Field('price_bands', FieldType::Group, 'Price bands', 'The lowest and highest price of a room type on some night types, measured against the market.'),
+            new Field('price_bands.items', FieldType::ListOf, 'Bands', 'Each band holds one room type of one property between two prices on some night types.', [], max: RelationsConfig::MAX_BANDS),
+            new Field($item, FieldType::Group, 'Band', 'The lowest and highest price of one room type, in a price plan, up to a horizon.', required: true),
+            ...self::nested($item, RelationFields::priceBand()),
+        ];
     }
 
     /**

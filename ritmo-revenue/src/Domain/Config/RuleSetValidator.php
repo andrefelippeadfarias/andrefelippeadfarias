@@ -4,6 +4,15 @@ declare(strict_types=1);
 
 namespace Ritmo\Domain\Config;
 
+use Ritmo\Domain\Calendar\Stay\StayConfig;
+use Ritmo\Domain\Calendar\Stay\StayFields;
+use Ritmo\Domain\Orders\OrdersConfig;
+use Ritmo\Domain\Plan\PlanConfig;
+use Ritmo\Domain\Pricing\Cadence\CadenceConfig;
+use Ritmo\Domain\Pricing\Cadence\NoEffectConfig;
+use Ritmo\Domain\Pricing\Ladder\LadderConfig;
+use Ritmo\Domain\Pricing\Protection\ProtectionConfig;
+use Ritmo\Domain\Relations\Config\RelationsConfig;
 use Ritmo\Domain\Support\Days;
 
 /**
@@ -30,6 +39,20 @@ final class RuleSetValidator
         if ($this->errors === []) {
             $this->checkAcrossFields($data);
         }
+
+        return $this->errors;
+    }
+
+    /**
+     * Checks one top-level section alone (the same rules as validate(), without the rules that
+     * span sections). A module reading its own section uses it.
+     *
+     * @return list<ValidationError>
+     */
+    public function validateSection(string $root, mixed $value): array
+    {
+        $this->errors = [];
+        $this->check(Schema::ruleSet()->field($root), $root, $value);
 
         return $this->errors;
     }
@@ -149,6 +172,7 @@ final class RuleSetValidator
                 ? null
                 : [ValidationError::CHOICE, 'must be one of: ' . implode(', ', $field->enum ?? [])],
             FieldType::Date => is_string($value) && Days::isValid($value) ? null : [ValidationError::FORMAT, 'must be a date as YYYY-MM-DD'],
+            FieldType::Variant => is_array($value) && ($value === [] || !array_is_list($value)) ? null : [ValidationError::TYPE, 'must be a group of fields'],
             default => null,
         };
 
@@ -212,6 +236,47 @@ final class RuleSetValidator
         $this->checkTargetTables($data['pace']['target_percentile']);
         $this->checkStepBands($data['pace']['max_step']);
         $this->checkRoomOverrides($data['price_factors']['room_overrides']);
+        $this->checkSections($data);
+    }
+
+    /**
+     * The sections of milestone M2 are read by the module that owns them, which checks what
+     * spans their fields (the parameters of each relation, the references inside a ladder
+     * strategy, ranges of dates...). Their errors join the others with the same paths.
+     *
+     * @param array<int|string, mixed> $data
+     */
+    private function checkSections(array $data): void
+    {
+        $readers = [
+            'relations' => static fn (): mixed => RelationsConfig::fromArray(['relations' => $data['relations'], 'price_bands' => $data['price_bands']]),
+            LadderConfig::ROOT => static fn (): mixed => LadderConfig::fromArray($data[LadderConfig::ROOT]),
+            ProtectionConfig::ROOT => static fn (): mixed => ProtectionConfig::fromArray($data[ProtectionConfig::ROOT]),
+            CadenceConfig::ROOT => static fn (): mixed => CadenceConfig::fromArray($data[CadenceConfig::ROOT]),
+            NoEffectConfig::ROOT => static fn (): mixed => NoEffectConfig::fromArray($data[NoEffectConfig::ROOT]),
+            OrdersConfig::ROOT => static fn (): mixed => OrdersConfig::fromArray($data[OrdersConfig::ROOT]),
+            StayFields::ROOT => static fn (): mixed => StayConfig::fromArray($data[StayFields::ROOT]),
+            PlanConfig::ROOT => static fn (): mixed => PlanConfig::fromArray($data[PlanConfig::ROOT]),
+        ];
+        $seen = [];
+        foreach ($this->errors as $error) {
+            $seen[$error->path . '|' . $error->code] = true;
+        }
+        foreach ($readers as $root => $read) {
+            try {
+                $read();
+            } catch (InvalidConfig $invalid) {
+                foreach ($invalid->errors() as $error) {
+                    $path = $error->path === $root || str_starts_with($error->path, $root . '.') || str_starts_with($error->path, 'price_bands')
+                        ? $error->path
+                        : $root . '.' . $error->path;
+                    if (!isset($seen[$path . '|' . $error->code])) {
+                        $seen[$path . '|' . $error->code] = true;
+                        $this->add($path, $error->code, $error->message);
+                    }
+                }
+            }
+        }
     }
 
     /**

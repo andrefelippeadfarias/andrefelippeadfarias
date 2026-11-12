@@ -45,12 +45,13 @@ final class PercentItem
     /**
      * True when everything the item sets is already in force as the same percentage (and the
      * same minimum stay): writing it would change nothing, the amounts differ only by rounding.
-     * False whenever what is in force is not known.
+     * False whenever what is in force is not known, and for an item that sets the arrival and
+     * departure days (what is in force there is not kept).
      */
     public function sameAsInForce(): bool
     {
         $before = $this->item->before;
-        if ($before === null) {
+        if ($before === null || $this->item->setsDays()) {
             return false;
         }
 

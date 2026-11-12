@@ -1,0 +1,199 @@
+{
+ "itens": [
+  {
+   "tipo": "data",
+   "quarto": "Q7",
+   "data": "2026-11-16",
+   "motivo": "estadia (synthetic: Monday needs two)",
+   "min_stay": 1
+  },
+  {
+   "tipo": "data",
+   "quarto": "Q7",
+   "data": "2026-11-17",
+   "motivo": "estadia (synthetic: Tuesday opens one)",
+   "min_stay": 2
+  },
+  {
+   "tipo": "data",
+   "quarto": "Q7",
+   "data": "2026-11-18",
+   "motivo": "estadia (synthetic: Wednesday above two)",
+   "min_stay": 3
+  },
+  {
+   "tipo": "data",
+   "quarto": "Q7",
+   "data": "2026-11-14",
+   "motivo": "estadia (synthetic: closed day with one night)",
+   "min_stay": 1
+  },
+  {
+   "tipo": "data",
+   "quarto": "VK7",
+   "data": "2026-11-20",
+   "motivo": "estadia (synthetic: holiday with one night)",
+   "min_stay": 1
+  },
+  {
+   "tipo": "data",
+   "quarto": "Double",
+   "data": "2026-11-23",
+   "motivo": "Noite órfã (synthetic: proven)",
+   "min_stay": 1,
+   "orfa": "seguinte",
+   "orfa_prova": {
+    "noite_vendidas": 3,
+    "noite_total": 6,
+    "seguinte_vendidas": 6,
+    "seguinte_total": 6
+   }
+  },
+  {
+   "tipo": "data",
+   "quarto": "Double",
+   "data": "2026-11-25",
+   "motivo": "Noite órfã (synthetic: no proof)",
+   "min_stay": 1,
+   "orfa": "seguinte"
+  },
+  {
+   "tipo": "data",
+   "quarto": "VK7",
+   "data": "2026-11-21",
+   "motivo": "Sábado órfão (synthetic: proven, on a holiday)",
+   "min_stay": 1,
+   "orfa": "sábado",
+   "orfa_prova": {
+    "fonte": "beds24",
+    "unidades": 7,
+    "noite_numAvail": 3,
+    "anterior_numAvail": 0,
+    "lido_em": "2026-11-12T10:00:00Z"
+   }
+  },
+  {
+   "tipo": "data",
+   "quarto": "VK7",
+   "data": "2026-12-05",
+   "motivo": "Sábado órfão (synthetic: old read)",
+   "min_stay": 1,
+   "orfa": "sábado",
+   "orfa_prova": {
+    "fonte": "beds24",
+    "unidades": 7,
+    "noite_numAvail": 2,
+    "anterior_numAvail": 0,
+    "lido_em": "2026-11-09T10:00:00Z"
+   }
+  },
+  {
+   "tipo": "data",
+   "quarto": "Q2",
+   "data": "2026-11-19",
+   "motivo": "estadia (synthetic: out of range)",
+   "min_stay": 9
+  },
+  {
+   "tipo": "data",
+   "quarto": "Afrodite",
+   "data": "2026-11-21",
+   "motivo": "chegada (synthetic: opens the closed day)",
+   "check_in": "1111111",
+   "check_out": "1111101"
+  },
+  {
+   "tipo": "data",
+   "quarto": "Q7",
+   "data": "2026-11-24",
+   "motivo": "chegada (synthetic: closes a Tuesday)",
+   "check_out": "1011111"
+  },
+  {
+   "tipo": "data",
+   "quarto": "Q2",
+   "data": "2026-12-01",
+   "motivo": "chegada (synthetic: every day closed)",
+   "check_in": "0000000"
+  },
+  {
+   "tipo": "data",
+   "quarto": "Afrodite",
+   "data": "2026-11-27",
+   "motivo": "chegada (synthetic: closes the open Friday)",
+   "check_out": "1111011"
+  },
+  {
+   "tipo": "data",
+   "quarto": "VK2",
+   "data": "2026-11-21",
+   "motivo": "Sábado órfão (synthetic: orphan side opened)",
+   "min_stay": 1,
+   "check_in": "1111111",
+   "check_out": "1111101",
+   "orfa": "sábado",
+   "orfa_prova": {
+    "fonte": "beds24",
+    "unidades": 2,
+    "noite_numAvail": 1,
+    "anterior_numAvail": 0,
+    "lido_em": "2026-11-12T10:00:00Z"
+   },
+   "excecao": "dono",
+   "ordem_id": "dono-2026-11-02-sabado-orfao"
+  },
+  {
+   "tipo": "data",
+   "quarto": "VK2",
+   "data": "2026-11-14",
+   "motivo": "Sábado órfão (synthetic: the wrong side)",
+   "check_in": "1111111",
+   "check_out": "1111101",
+   "orfa": "sexta",
+   "excecao": "dono",
+   "ordem_id": "dono-2026-11-02-sabado-orfao"
+  },
+  {
+   "tipo": "data",
+   "quarto": "Q7",
+   "data": "2026-11-30",
+   "motivo": "Pace (synthetic: keeps the reason with a price)",
+   "min_price": 1300,
+   "preco_antes": 1300,
+   "manter_reason": true
+  },
+  {
+   "tipo": "data",
+   "quarto": "Q7",
+   "data": "2026-12-23",
+   "motivo": "estadia (synthetic: package night)",
+   "min_stay": 1
+  },
+  {
+   "tipo": "data",
+   "quarto": "Double",
+   "data": "2026-11-14",
+   "motivo": "Pace (synthetic: Saturday floor without its stay)",
+   "min_price": 1500,
+   "preco_antes": 1400
+  },
+  {
+   "tipo": "data",
+   "quarto": "Q7",
+   "data": "2026-11-25",
+   "motivo": "estadia (synthetic: released by a newer order)",
+   "min_stay": 1,
+   "excecao": "dono",
+   "ordem_id": "synthetic-stay-new"
+  },
+  {
+   "tipo": "data",
+   "quarto": "Q7",
+   "data": "2026-12-02",
+   "motivo": "estadia (synthetic: order older than the rule)",
+   "min_stay": 1,
+   "excecao": "dono",
+   "ordem_id": "synthetic-stay-old"
+  }
+ ]
+}

@@ -7,6 +7,7 @@ namespace Ritmo\Domain\Config;
 use InvalidArgumentException;
 use Ritmo\Domain\Model\Property;
 use Ritmo\Domain\Model\RoomType;
+use Ritmo\Domain\Relations\RelationValidator;
 
 /**
  * Reads a preset (file, JSON text or array) into a validated Preset.
@@ -234,6 +235,13 @@ final class PresetLoader
             if (!in_array($override['room'], $codes, true)) {
                 $this->add("rules.price_factors.room_overrides.$index.room", ValidationError::REFERENCE, 'is not the code of a room type of this preset');
             }
+        }
+        $references = [
+            ...RuleReferences::unknown($rules->toArray(), $codes, $propertyIds),
+            ...(new RelationValidator())->validate($rules->relations(), $roomTypes, $propertyIds),
+        ];
+        foreach ($references as $error) {
+            $this->add('rules.' . $error->path, $error->code, $error->message);
         }
     }
 }

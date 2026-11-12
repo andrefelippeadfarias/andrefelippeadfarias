@@ -1,0 +1,98 @@
+{
+ "generated_at": "2026-11-12",
+ "repo_commit": "968d1d87f444e340c7c839b56086a160941f2d1b",
+ "engine": ".claude/skills/gestao-receita-pousadas/scripts",
+ "engine_commit": "036acfa9db12515ac92461345c0ae1e10ef369fa",
+ "engine_dirty": false,
+ "python": "3.11.17",
+ "frozen_inputs": {
+  "frozen/quartos.json": "40712bc254335536cd1a9e664c8c64cd767f04c046890c1e28b22e63cefc7365",
+  "frozen/ancora_mercado.json": "dd82ea191406308652b47cda77acec06cef2b4f1a4acdaa583dad893ceb938c4",
+  "frozen/ladder/regua_dono.json": "9e910eb504a4cfd27f2019f2d00bc3ae1afddfa71e965124bdabd7174029e161",
+  "golden/m2/stay/frozen/seasons.json": "bcd16f94b3ff43d79a68c342f6299d7c87498ea1628e9c6ef2aa829d5a48a452",
+  "golden/m2/relations/frozen/ordens.json": "cd171d574ee8f2a2f5b6578dbc9cb63e9b6fe51dd4f51818bb7404bbc90ed4b8",
+  "golden/level2/frozen/frozen_nights.json": "e3697377aef4832a362d9f58ce118758ec82c61311876ea69a1c163783ea7292",
+  "golden/level2/frozen/holiday_period.json": "e466d7228885ae95cd1f4f1cbdc91415322d4e356e9c6d28191f690462587b7a",
+  "golden/level2/frozen/light_run_filter.json": "d762ade2799ce45319f7fb9c7f67d1c9b928018ccb84d02e6b0cf8d325d816fd",
+  "golden/level2/frozen/occupancy_switch_80.json": "5e20b52dfe380f3815d6e92b6fd667336e71ceeee0bb9ce4a44c9e855a1ee5aa",
+  "golden/level2/frozen/orphan_nights.json": "661a168a2e00514b2adaf8fd67771812ed82d703a0824243b9f2b62d5eea95ae",
+  "golden/level2/frozen/owner_orders_by_date.json": "53dc7bc66c16b7f5e558e19935824dbff7a3fb332dab958f1f51a2576121ac87",
+  "golden/level2/frozen/small_rooms.json": "4417191d166a39ca1af64e2154102bbe0e9261148aac5271697f43153cfcc97c",
+  "golden/level2/frozen/sold_out_and_reopened.json": "7483bf35744f1d062aa8219b61f78cb4fce3f246a8851e914fc09ce1f9649da6",
+  "golden/level2/frozen/weekday_sales_ramp.json": "3fd671737d58e1ee8cebbb3c11c39b6f612e90a4c1bec75411cb2bf1a04ec27e",
+  "golden/level2/frozen/weekend_owner_plan.json": "bd8ebc865a0fc2d226ea610676d8e6d37bc89872dd7806139430389a878adeca"
+ },
+ "tolerance": {
+  "amounts": 0.01,
+  "percentages_and_integers": "exact"
+ },
+ "scenarios": [
+  {
+   "name": "weekday_sales_ramp",
+   "today": "2026-11-12",
+   "days": 6,
+   "note": "Thursday: weekday nights of every room, the pace step with the sales ramp, the last-minute market floor of the owner's plan from D7 to D0 and the weekend nights of the ladder at the edge."
+  },
+  {
+   "name": "weekend_owner_plan",
+   "today": "2026-11-12",
+   "days": 10,
+   "note": "Weekend nights priced by the owner's ladder (Friday and Saturday), with the relations of the ladder night."
+  },
+  {
+   "name": "holiday_period",
+   "today": "2026-11-16",
+   "days": 7,
+   "note": "The holiday of 19-21 Nov priced by the ladder and the holiday floors, with the nights around it."
+  },
+  {
+   "name": "sold_out_and_reopened",
+   "today": "2026-11-12",
+   "days": 9,
+   "note": "Sold-out nights get the protection floor (the locked rule in force is deleted first); nights that were sold out and reopened leave the locked rule."
+  },
+  {
+   "name": "light_run_filter",
+   "today": "2026-11-12",
+   "days": 14,
+   "note": "Light run: only the nights of the filter take a pace step or a protection; the others feed the relations."
+  },
+  {
+   "name": "orphan_nights",
+   "today": "2026-11-12",
+   "days": 9,
+   "note": "Free nights before a sold-out night: the rule rewritten after the ceiling is freed keeps the orphan stay with its proof."
+  },
+  {
+   "name": "occupancy_switch_80",
+   "today": "2026-11-12",
+   "days": 8,
+   "note": "With 80% of the tub suites of the second property sold, the room without a tub goes to the market."
+  },
+  {
+   "name": "owner_orders_by_date",
+   "today": "2026-11-12",
+   "days": 12,
+   "note": "Owner orders by date: a fixed price, a floor order and a market target order without a sales ramp."
+  },
+  {
+   "name": "frozen_nights",
+   "today": "2026-11-12",
+   "days": 8,
+   "note": "Nights frozen by a manual change of the owner and nights blocked in the PMS stay as they are."
+  },
+  {
+   "name": "small_rooms",
+   "today": "2026-11-12",
+   "days": 12,
+   "note": "Rooms of one and two units read with their property's tub suites, and the single room above the others."
+  }
+ ],
+ "files": [
+  {
+   "file": "pace.plano.json",
+   "function": "pace.plano",
+   "cases": 10
+  }
+ ]
+}

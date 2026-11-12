@@ -1,12 +1,13 @@
 #!/usr/bin/env bash
 #
-# End-to-end test of milestone M1: builds the throwaway WordPress (bin/wp-test-site.sh), seeds it
+# End-to-end test (milestones M1 and M2): builds the throwaway WordPress (bin/wp-test-site.sh), seeds it
 # (tests/e2e/seed.php) and runs tests/e2e/shadow-run.js twice with Playwright:
 #
-#   1. "setup": connections, setup, dashboard, shadow run, REST, diagnostics; the pricing
-#      calendar read is not allowed, so only GET may reach the simulator;
-#   2. "rerun": the site restarted with RITMO_PRICING_CALENDAR_READ=1; a second shadow run, and
-#      only GET plus the POST of /listing_prices may reach the simulator.
+#   1. "setup": connections, setup, dashboard, shadow run (full plan, validation, payload and
+#      slices), REST, diagnostics; the pricing calendar read is on (the default), so only GET and
+#      the POST of /listing_prices, a read, may reach the simulator;
+#   2. "rerun": the site restarted with RITMO_PRICING_CALENDAR_READ=0; a second shadow run, and
+#      only GET may reach the simulator.
 #
 # Then tests/e2e/wordpress-checks.php checks, on the same site and across PHP processes, the
 # emergency switch, the keys at rest, the capabilities after a new activation and a
@@ -29,13 +30,13 @@ trap cleanup EXIT
 rm -rf "$SCREENS"
 mkdir -p "$SCREENS"
 
-RITMO_PRICING_CALENDAR_READ=0 "$ROOT/bin/wp-test-site.sh" start
+RITMO_PRICING_CALENDAR_READ= "$ROOT/bin/wp-test-site.sh" start
 php "$ROOT/tests/e2e/seed.php" "$ROOT/.wp-test/wordpress"
 
-RITMO_E2E_PASS=setup RITMO_PRICING_CALENDAR_READ=0 RITMO_E2E_SCREENS="$SCREENS" node "$ROOT/tests/e2e/shadow-run.js"
+RITMO_E2E_PASS=setup RITMO_PRICING_CALENDAR_READ= RITMO_E2E_SCREENS="$SCREENS" node "$ROOT/tests/e2e/shadow-run.js"
 
-RITMO_PRICING_CALENDAR_READ=1 "$ROOT/bin/wp-test-site.sh" restart
-RITMO_E2E_PASS=rerun RITMO_PRICING_CALENDAR_READ=1 RITMO_E2E_SCREENS="$SCREENS" node "$ROOT/tests/e2e/shadow-run.js"
+RITMO_PRICING_CALENDAR_READ=0 "$ROOT/bin/wp-test-site.sh" restart
+RITMO_E2E_PASS=rerun RITMO_PRICING_CALENDAR_READ=0 RITMO_E2E_SCREENS="$SCREENS" node "$ROOT/tests/e2e/shadow-run.js"
 
 php "$ROOT/tests/e2e/wordpress-checks.php" "$ROOT/.wp-test/wordpress"
 

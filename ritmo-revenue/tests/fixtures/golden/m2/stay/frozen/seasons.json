@@ -1,0 +1,544 @@
+{
+ "_doc": "Frozen season periods (dates, days, minimum stay, name) from the engine data by golden_stay.py freeze.",
+ "periodos": [
+  {
+   "nome": "Quarta 14/10/2026 – última hora, véspera da Oktoberfest",
+   "inicio": "2026-10-14",
+   "fim": "2026-10-14",
+   "dias": "todos",
+   "estadia_minima": 1
+  },
+  {
+   "nome": "Oktoberfest 2026 – abertura (quinta 15/10) + Dia do Professor",
+   "inicio": "2026-10-15",
+   "fim": "2026-10-15",
+   "dias": "todos",
+   "estadia_minima": 1
+  },
+  {
+   "nome": "Oktoberfest 2026 + WTR Campos do Jordão – sexta 16 e sábado 17/10",
+   "inicio": "2026-10-16",
+   "fim": "2026-10-17",
+   "dias": "todos",
+   "estadia_minima": 2
+  },
+  {
+   "nome": "Outubro 2026 pós-Oktoberfest (18 a 29/10), dias de semana: dom a qui",
+   "inicio": "2026-10-18",
+   "fim": "2026-10-29",
+   "dias": "dom-qui",
+   "estadia_minima": 1
+  },
+  {
+   "nome": "Outubro 2026 pós-Oktoberfest (18 a 29/10), sextas e sábados (23-24/10)",
+   "inicio": "2026-10-18",
+   "fim": "2026-10-29",
+   "dias": "sex-sab",
+   "estadia_minima": 1
+  },
+  {
+   "nome": "Finados 2026 (seg 2/11) + abertura do Natal FLMA (acendimento 30/10) – noites sex 30/10 a dom 1/11",
+   "inicio": "2026-10-30",
+   "fim": "2026-11-01",
+   "dias": "todos",
+   "estadia_minima": 3
+  },
+  {
+   "nome": "Novembro 2026 (2 a 18/11), dias de semana: dom a qui",
+   "inicio": "2026-11-02",
+   "fim": "2026-11-18",
+   "dias": "dom-qui",
+   "estadia_minima": 1
+  },
+  {
+   "nome": "Novembro 2026 (2 a 18/11), sextas e sábados com Natal FLMA (6-7 e 13-14/11)",
+   "inicio": "2026-11-02",
+   "fim": "2026-11-18",
+   "dias": "sex-sab",
+   "estadia_minima": 1
+  },
+  {
+   "nome": "Consciência Negra 2026 (sex 20/11) + Natal FLMA – noites qui 19 a sáb 21/11",
+   "inicio": "2026-11-19",
+   "fim": "2026-11-21",
+   "dias": "todos",
+   "estadia_minima": 2
+  },
+  {
+   "nome": "Fim de novembro e 1ª quinzena de dezembro 2026 (22/11 a 17/12), dias de semana: dom a qui",
+   "inicio": "2026-11-22",
+   "fim": "2026-12-17",
+   "dias": "dom-qui",
+   "estadia_minima": 1
+  },
+  {
+   "nome": "Fim de novembro e 1ª quinzena de dezembro 2026 (22/11 a 17/12), sextas e sábados com Natal FLMA (27-28/11, 4-5/12, 11-12/12)",
+   "inicio": "2026-11-22",
+   "fim": "2026-12-17",
+   "dias": "sex-sab",
+   "estadia_minima": 1
+  },
+  {
+   "nome": "Pré-Natal 2026 (sex 18 a qua 23/12): último fim de semana do Natal FLMA, Corrida Iluminada (19/12), início das férias escolares",
+   "inicio": "2026-12-18",
+   "fim": "2026-12-23",
+   "dias": "todos",
+   "estadia_minima": 1
+  },
+  {
+   "nome": "Natal 2026 (sex 25/12) – noites qui 24 a sáb 26/12",
+   "inicio": "2026-12-24",
+   "fim": "2026-12-26",
+   "dias": "todos",
+   "estadia_minima": 2
+  },
+  {
+   "nome": "Entre Natal e Réveillon 2026 (dom 27 e seg 28/12)",
+   "inicio": "2026-12-27",
+   "fim": "2026-12-28",
+   "dias": "todos",
+   "estadia_minima": 1
+  },
+  {
+   "nome": "Réveillon 2026/2027 (1/1 sexta) – noites ter 29/12 a sáb 2/1",
+   "inicio": "2026-12-29",
+   "fim": "2027-01-02",
+   "dias": "todos",
+   "estadia_minima": 3
+  },
+  {
+   "nome": "Janeiro 2027 férias de verão (3 a 21/1), dias de semana: dom a qui",
+   "inicio": "2027-01-03",
+   "fim": "2027-01-21",
+   "dias": "dom-qui",
+   "estadia_minima": 1
+  },
+  {
+   "nome": "Janeiro 2027 férias de verão (3 a 21/1), sextas e sábados (8-9 e 15-16/1)",
+   "inicio": "2027-01-03",
+   "fim": "2027-01-21",
+   "dias": "sex-sab",
+   "estadia_minima": 1
+  },
+  {
+   "nome": "Aniversário de São Paulo 2027 (seg 25/1) – feriadão paulistano, noites sex 22 a dom 24/1",
+   "inicio": "2027-01-22",
+   "fim": "2027-01-24",
+   "dias": "todos",
+   "estadia_minima": 2
+  },
+  {
+   "nome": "Fim de janeiro e início de fevereiro 2027 (25/1 a 4/2), dias de semana: dom a qui",
+   "inicio": "2027-01-25",
+   "fim": "2027-02-04",
+   "dias": "dom-qui",
+   "estadia_minima": 1
+  },
+  {
+   "nome": "Fim de janeiro e início de fevereiro 2027 (25/1 a 4/2), sextas e sábados (29-30/1)",
+   "inicio": "2027-01-25",
+   "fim": "2027-02-04",
+   "dias": "sex-sab",
+   "estadia_minima": 1
+  },
+  {
+   "nome": "Carnaval 2027 (seg 8 e ter 9/2) – noites sex 5 a ter 9/2, check-out qua 10/2",
+   "inicio": "2027-02-05",
+   "fim": "2027-02-09",
+   "dias": "todos",
+   "estadia_minima": 3
+  },
+  {
+   "nome": "Pós-Carnaval, fevereiro e março 2027 (10/2 a 17/3), dias de semana: dom a qui",
+   "inicio": "2027-02-10",
+   "fim": "2027-03-17",
+   "dias": "dom-qui",
+   "estadia_minima": 1
+  },
+  {
+   "nome": "Pós-Carnaval, fevereiro e março 2027 (10/2 a 17/3), sextas e sábados (Páscoa de Campos a partir de ~20/2; Meia Maratona ~13/3)",
+   "inicio": "2027-02-10",
+   "fim": "2027-03-17",
+   "dias": "sex-sab",
+   "estadia_minima": 1
+  },
+  {
+   "nome": "INDOMIT Pedra do Baú 2027 (São Bento do Sapucaí, ultra trail) – transbordo para Campos, noites qui 18 a sáb 20/3",
+   "inicio": "2027-03-18",
+   "fim": "2027-03-20",
+   "dias": "todos",
+   "estadia_minima": 1
+  },
+  {
+   "nome": "Semana pré-Páscoa 2027 (dom 21 a qua 24/3)",
+   "inicio": "2027-03-21",
+   "fim": "2027-03-24",
+   "dias": "todos",
+   "estadia_minima": 1
+  },
+  {
+   "nome": "Semana Santa / Páscoa 2027 (Sexta Santa 26/3, Páscoa 28/3) – noites qui 25 a sáb 27/3",
+   "inicio": "2027-03-25",
+   "fim": "2027-03-27",
+   "dias": "todos",
+   "estadia_minima": 2
+  },
+  {
+   "nome": "Abril 2027 outono (28/3 a 19/4), dias de semana: dom a qui",
+   "inicio": "2027-03-28",
+   "fim": "2027-04-19",
+   "dias": "dom-qui",
+   "estadia_minima": 1
+  },
+  {
+   "nome": "Abril 2027 outono (28/3 a 19/4), sextas e sábados (Festa da Truta e do Pinhão em SAP a partir de ~16/4)",
+   "inicio": "2027-03-28",
+   "fim": "2027-04-19",
+   "dias": "sex-sab",
+   "estadia_minima": 1
+  },
+  {
+   "nome": "Tiradentes 2027 (qua 21/4) – feriado isolado, noites ter 20 e qua 21/4",
+   "inicio": "2027-04-20",
+   "fim": "2027-04-21",
+   "dias": "todos",
+   "estadia_minima": 1
+  },
+  {
+   "nome": "Fim de abril 2027 (22 a 29/4), dias de semana: dom a qui (22/4 emenda de Tiradentes; 29/4 aniversário da cidade, feriado local)",
+   "inicio": "2027-04-22",
+   "fim": "2027-04-29",
+   "dias": "dom-qui",
+   "estadia_minima": 1
+  },
+  {
+   "nome": "Fim de abril 2027 (22 a 29/4), sextas e sábados (23-24/4)",
+   "inicio": "2027-04-22",
+   "fim": "2027-04-29",
+   "dias": "sex-sab",
+   "estadia_minima": 1
+  },
+  {
+   "nome": "1º de Maio 2027 (sábado, sem dia extra) + aniversário da cidade (qui 29/4) + Festa da Truta e do Pinhão SAP – noites sex 30/4 e sáb 1/5",
+   "inicio": "2027-04-30",
+   "fim": "2027-05-01",
+   "dias": "todos",
+   "estadia_minima": 1
+  },
+  {
+   "nome": "Maio 2027 pré-temporada de inverno (2 a 25/5), dias de semana: dom a qui",
+   "inicio": "2027-05-02",
+   "fim": "2027-05-25",
+   "dias": "dom-qui",
+   "estadia_minima": 1
+  },
+  {
+   "nome": "Maio 2027 pré-temporada (2 a 25/5), sextas e sábados (Festa do Pinhão ~7-8/5; Giro d'Italia ~15/5; Mountain Festival SBS ~21-22/5)",
+   "inicio": "2027-05-02",
+   "fim": "2027-05-25",
+   "dias": "sex-sab",
+   "estadia_minima": 1
+  },
+  {
+   "nome": "Corpus Christi 2027 (qui 27/5) – abertura da temporada de inverno, noites qua 26 a sáb 29/5",
+   "inicio": "2027-05-26",
+   "fim": "2027-05-29",
+   "dias": "todos",
+   "estadia_minima": 3
+  },
+  {
+   "nome": "Início de junho 2027 (30/5 a 10/6), dias de semana: dom a qui",
+   "inicio": "2027-05-30",
+   "fim": "2027-06-10",
+   "dias": "dom-qui",
+   "estadia_minima": 1
+  },
+  {
+   "nome": "Início de junho 2027 (30/5 a 10/6), sextas e sábados (4-5/6 Winter Festival do Tênis Clube)",
+   "inicio": "2027-05-30",
+   "fim": "2027-06-10",
+   "dias": "sex-sab",
+   "estadia_minima": 2
+  },
+  {
+   "nome": "Dia dos Namorados 2027 (sáb 12/6) – noites sex 11 e sáb 12/6",
+   "inicio": "2027-06-11",
+   "fim": "2027-06-12",
+   "dias": "todos",
+   "estadia_minima": 2
+  },
+  {
+   "nome": "Segunda metade de junho 2027 (13/6 a 1/7), dias de semana: dom a qui (férias da Copa Feminina a partir de 24/6 se a Lei 15.421/2026 for mantida)",
+   "inicio": "2027-06-13",
+   "fim": "2027-07-01",
+   "dias": "dom-qui",
+   "estadia_minima": 1
+  },
+  {
+   "nome": "Segunda metade de junho 2027 (13/6 a 1/7), sextas e sábados (18-19 e 25-26/6)",
+   "inicio": "2027-06-13",
+   "fim": "2027-07-01",
+   "dias": "sex-sab",
+   "estadia_minima": 2
+  },
+  {
+   "nome": "Abertura do 57º Festival de Inverno 2027 (sáb 3/7, data estimada) – noites sex 2 e sáb 3/7",
+   "inicio": "2027-07-02",
+   "fim": "2027-07-03",
+   "dias": "todos",
+   "estadia_minima": 2
+  },
+  {
+   "nome": "1ª semana do Festival de Inverno 2027 (dom 4 a qua 7/7)",
+   "inicio": "2027-07-04",
+   "fim": "2027-07-07",
+   "dias": "todos",
+   "estadia_minima": 1
+  },
+  {
+   "nome": "Feriadão de 9 de Julho 2027 (sex, feriado estadual SP) + início das férias de julho – noites qui 8 a sáb 10/7",
+   "inicio": "2027-07-08",
+   "fim": "2027-07-10",
+   "dias": "todos",
+   "estadia_minima": 3
+  },
+  {
+   "nome": "Pico de julho 2027 (11 a 25/7): férias escolares + Festival de Inverno, dias de semana: dom a qui",
+   "inicio": "2027-07-11",
+   "fim": "2027-07-25",
+   "dias": "dom-qui",
+   "estadia_minima": 2
+  },
+  {
+   "nome": "Pico de julho 2027 (11 a 25/7), sextas e sábados (16-17 e 23-24/7; Festa da Cerejeira ~24/7)",
+   "inicio": "2027-07-11",
+   "fim": "2027-07-25",
+   "dias": "sex-sab",
+   "estadia_minima": 2
+  },
+  {
+   "nome": "Última semana do Festival de Inverno 2027 (seg 26 a qui 29/7), fim das férias",
+   "inicio": "2027-07-26",
+   "fim": "2027-07-29",
+   "dias": "todos",
+   "estadia_minima": 1
+  },
+  {
+   "nome": "Encerramento do Festival de Inverno (dom 1/8, estimado) + Festa da Cerejeira – noites sex 30 e sáb 31/7",
+   "inicio": "2027-07-30",
+   "fim": "2027-07-31",
+   "dias": "todos",
+   "estadia_minima": 2
+  },
+  {
+   "nome": "1ª quinzena de agosto 2027 (1 a 15/8), dias de semana: dom a qui",
+   "inicio": "2027-08-01",
+   "fim": "2027-08-15",
+   "dias": "dom-qui",
+   "estadia_minima": 1
+  },
+  {
+   "nome": "1ª quinzena de agosto 2027 (1 a 15/8), sextas e sábados (6-7/8 véspera do Dia dos Pais 8/8; 13-14/8 Festa da Cerejeira)",
+   "inicio": "2027-08-01",
+   "fim": "2027-08-15",
+   "dias": "sex-sab",
+   "estadia_minima": 1
+  },
+  {
+   "nome": "2ª quinzena de agosto e início de setembro 2027 (16/8 a 2/9), dias de semana: dom a qui",
+   "inicio": "2027-08-16",
+   "fim": "2027-09-02",
+   "dias": "dom-qui",
+   "estadia_minima": 1
+  },
+  {
+   "nome": "2ª quinzena de agosto e início de setembro 2027 (16/8 a 2/9), sextas e sábados (20-21/8; 27-28/8 Jazz na Serra SAP + Epic Race MTB)",
+   "inicio": "2027-08-16",
+   "fim": "2027-09-02",
+   "dias": "sex-sab",
+   "estadia_minima": 1
+  },
+  {
+   "nome": "7 de Setembro 2027 (ter) – ponte sex 3 a seg 6/9 + Mostra das Nações Mantiqueira",
+   "inicio": "2027-09-03",
+   "fim": "2027-09-06",
+   "dias": "todos",
+   "estadia_minima": 2
+  },
+  {
+   "nome": "Setembro 2027 pós-feriado (7 a 14/9), dias de semana: dom a qui (7/9 feriado; 14/9 chegadas antecipadas ao CBQ)",
+   "inicio": "2027-09-07",
+   "fim": "2027-09-14",
+   "dias": "dom-qui",
+   "estadia_minima": 1
+  },
+  {
+   "nome": "Setembro 2027 (7 a 14/9), sextas e sábados (10-11/9)",
+   "inicio": "2027-09-07",
+   "fim": "2027-09-14",
+   "dias": "sex-sab",
+   "estadia_minima": 1
+  },
+  {
+   "nome": "XXII Congresso Brasileiro do Quadril – CBQ 2027 (Campos Hall, qua 15 a sáb 18/9, ~1.500 especialistas)",
+   "inicio": "2027-09-15",
+   "fim": "2027-09-18",
+   "dias": "todos",
+   "estadia_minima": 2
+  },
+  {
+   "nome": "Setembro 2027 entre CBQ e L'Étape (dom 19 a qui 23/9)",
+   "inicio": "2027-09-19",
+   "fim": "2027-09-23",
+   "dias": "todos",
+   "estadia_minima": 1
+  },
+  {
+   "nome": "L'Étape Campos do Jordão by Tour de France 2027 (prova dom 26/9) – noites sex 24 e sáb 25/9",
+   "inicio": "2027-09-24",
+   "fim": "2027-09-25",
+   "dias": "todos",
+   "estadia_minima": 2
+  },
+  {
+   "nome": "Fim de setembro e início de outubro 2027 (26/9 a 7/10), dias de semana: dom a qui (1/10 padroeira, feriado local)",
+   "inicio": "2027-09-26",
+   "fim": "2027-10-07",
+   "dias": "dom-qui",
+   "estadia_minima": 1
+  },
+  {
+   "nome": "Fim de setembro e início de outubro 2027 (26/9 a 7/10), sextas e sábados (1-2/10)",
+   "inicio": "2027-09-26",
+   "fim": "2027-10-07",
+   "dias": "sex-sab",
+   "estadia_minima": 1
+  },
+  {
+   "nome": "12 de Outubro 2027 (ter) + Dia das Crianças – ponte sex 8 a seg 11/10",
+   "inicio": "2027-10-08",
+   "fim": "2027-10-11",
+   "dias": "todos",
+   "estadia_minima": 2
+  },
+  {
+   "nome": "Terça 12/10 (feriado) e quarta 13/10/2027 – pós-feriadão, 'semana do saco cheio'",
+   "inicio": "2027-10-12",
+   "fim": "2027-10-13",
+   "dias": "todos",
+   "estadia_minima": 1
+  },
+  {
+   "nome": "Oktoberfest 2027 – abertura (qui 14/10, data estimada)",
+   "inicio": "2027-10-14",
+   "fim": "2027-10-14",
+   "dias": "todos",
+   "estadia_minima": 1
+  },
+  {
+   "nome": "Oktoberfest 2027 (estimada) + WTR + Dia do Professor (sex 15/10) – noites sex 15 e sáb 16/10",
+   "inicio": "2027-10-15",
+   "fim": "2027-10-16",
+   "dias": "todos",
+   "estadia_minima": 2
+  },
+  {
+   "nome": "Outubro 2027 pós-Oktoberfest (17 a 28/10), dias de semana: dom a qui (28/10 ponto facultativo do servidor)",
+   "inicio": "2027-10-17",
+   "fim": "2027-10-28",
+   "dias": "dom-qui",
+   "estadia_minima": 1
+  },
+  {
+   "nome": "Outubro 2027 pós-Oktoberfest (17 a 28/10), sextas e sábados (22-23/10; alternativa de Oktoberfest em 21-24/10)",
+   "inicio": "2027-10-17",
+   "fim": "2027-10-28",
+   "dias": "sex-sab",
+   "estadia_minima": 1
+  },
+  {
+   "nome": "Finados 2027 (ter 2/11) – ponte sex 29/10 a seg 1/11 + abertura do Natal FLMA (~29/10)",
+   "inicio": "2027-10-29",
+   "fim": "2027-11-01",
+   "dias": "todos",
+   "estadia_minima": 2
+  },
+  {
+   "nome": "Novembro 2027 (2 a 11/11), dias de semana: dom a qui (2/11 feriado)",
+   "inicio": "2027-11-02",
+   "fim": "2027-11-11",
+   "dias": "dom-qui",
+   "estadia_minima": 1
+  },
+  {
+   "nome": "Novembro 2027 (2 a 11/11), sextas e sábados com Natal FLMA (5-6/11)",
+   "inicio": "2027-11-02",
+   "fim": "2027-11-11",
+   "dias": "sex-sab",
+   "estadia_minima": 1
+  },
+  {
+   "nome": "Proclamação da República 2027 (seg 15/11) + Natal FLMA – noites sex 12 a dom 14/11",
+   "inicio": "2027-11-12",
+   "fim": "2027-11-14",
+   "dias": "todos",
+   "estadia_minima": 2
+  },
+  {
+   "nome": "Semana curta 15 a 18/11/2027 (seg a qui, entre dois feriados)",
+   "inicio": "2027-11-15",
+   "fim": "2027-11-18",
+   "dias": "todos",
+   "estadia_minima": 1
+  },
+  {
+   "nome": "Consciência Negra 2027 (sáb 20/11, sem dia extra) + Natal FLMA – noites sex 19 e sáb 20/11",
+   "inicio": "2027-11-19",
+   "fim": "2027-11-20",
+   "dias": "todos",
+   "estadia_minima": 1
+  },
+  {
+   "nome": "Fim de novembro e 1ª quinzena de dezembro 2027 (21/11 a 17/12), dias de semana: dom a qui",
+   "inicio": "2027-11-21",
+   "fim": "2027-12-17",
+   "dias": "dom-qui",
+   "estadia_minima": 1
+  },
+  {
+   "nome": "Fim de novembro e 1ª quinzena de dezembro 2027 (21/11 a 17/12), sextas e sábados com Natal FLMA (26-27/11, 3-4, 10-11 e 17/12)",
+   "inicio": "2027-11-21",
+   "fim": "2027-12-17",
+   "dias": "sex-sab",
+   "estadia_minima": 1
+  },
+  {
+   "nome": "Pré-Natal 2027 (sáb 18 a qui 23/12): Corrida Iluminada (~18/12), fim da programação FLMA, início das férias escolares",
+   "inicio": "2027-12-18",
+   "fim": "2027-12-23",
+   "dias": "todos",
+   "estadia_minima": 1
+  },
+  {
+   "nome": "Natal 2027 (sáb 25/12) – noites sex 24 e sáb 25/12",
+   "inicio": "2027-12-24",
+   "fim": "2027-12-25",
+   "dias": "todos",
+   "estadia_minima": 2
+  },
+  {
+   "nome": "Entre Natal e Réveillon 2027 (dom 26 a ter 28/12)",
+   "inicio": "2027-12-26",
+   "fim": "2027-12-28",
+   "dias": "todos",
+   "estadia_minima": 1
+  },
+  {
+   "nome": "Réveillon 2027/2028 (sex 31/12) – noites qua 29 a sex 31/12 (noite de sáb 1/1/2028 fora da janela, mesma estadia)",
+   "inicio": "2027-12-29",
+   "fim": "2027-12-31",
+   "dias": "todos",
+   "estadia_minima": 3
+  }
+ ]
+}

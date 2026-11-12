@@ -21,7 +21,6 @@ use Ritmo\Domain\Plan\PlanItem;
 use Ritmo\Domain\Plan\ValidatedPlan;
 use Ritmo\Domain\Plan\ValidationResult;
 use Ritmo\Domain\Plan\Validator;
-use Ritmo\Domain\Pricing\Floors;
 use Ritmo\Domain\Pricing\NightContext;
 use Ritmo\Domain\Pricing\PaceEngine;
 use Ritmo\Domain\Support\Days;
@@ -286,13 +285,14 @@ final class ValidatorTest extends TestCase
     public function testAFloorUnderTheHardFloorOfTheNightIsRejected(): void
     {
         $result = self::validate([self::item(['min' => 700.0])]);
-        self::assertSame([PlanIssue::BELOW_HARD_FLOOR], $result->errorCodes());
-        self::assertSame(['amount' => 700.0, 'hard_floor' => 800.0, 'floor_label' => Floors::OWNER], $result->errors[0]->params);
+        self::assertSame([PlanIssue::BELOW_OWNER_FLOOR], $result->errorCodes());
+        self::assertSame(['amount' => 700.0, 'owner_floor' => 800.0, 'order_id' => null], $result->errors[0]->params);
 
         self::assertSame([], self::errorsOf(['min' => 800.0]));
-        self::assertSame([PlanIssue::BELOW_HARD_FLOOR], self::errorsOf(['night' => '2027-03-12', 'min' => 1100.0]), 'the weekend floor is 1166.67');
+        self::assertSame([PlanIssue::BELOW_OWNER_FLOOR], self::errorsOf(['night' => '2027-03-12', 'min' => 1100.0]), 'the weekend floor is 1166.67');
         self::assertSame([], self::errorsOf(['night' => '2027-03-12', 'min' => 1166.0]), 'sent as +17%: 1170');
-        self::assertSame([PlanIssue::BELOW_HARD_FLOOR], self::errorsOf(['night' => '2027-03-18', 'min' => 1700.0, 'before' => new NightState(2000.0, 600.0)]), 'the floor of the fair is 1800');
+        self::assertSame([PlanIssue::BELOW_HOLIDAY_FLOOR], self::errorsOf(['night' => '2027-03-18', 'min' => 1700.0, 'before' => new NightState(2000.0, 600.0)]), 'the floor of the fair is 900 discounted: 1800');
+        self::assertSame([PlanIssue::BELOW_HOLIDAY_SAFETY_FLOOR, PlanIssue::BELOW_HOLIDAY_FLOOR], self::errorsOf(['night' => '2027-03-18', 'min' => 1150.0, 'before' => new NightState(2000.0, 600.0)]), 'under the general holiday floor too: 600 discounted is 1200');
     }
 
     public function testAFloorHeldAtTheHardFloorMayStandOneUnitUnderIt(): void
@@ -304,7 +304,7 @@ final class ValidatorTest extends TestCase
         });
 
         self::assertSame([], self::errorsOf(['min' => 800.0], $ownerFloor(400.3)), 'hard floor 800.60: a step rounded down to 800 passes');
-        self::assertSame([PlanIssue::BELOW_HARD_FLOOR], self::errorsOf(['min' => 800.0], $ownerFloor(401.0)), 'hard floor 802');
+        self::assertSame([PlanIssue::BELOW_OWNER_FLOOR], self::errorsOf(['min' => 800.0], $ownerFloor(401.0)), 'owner floor 802');
     }
 
     public function testAFloorUnderTheListingMinimumIsNamedAsSuch(): void
@@ -312,7 +312,7 @@ final class ValidatorTest extends TestCase
         $result = self::validate([self::item(['room' => 'Standard', 'min' => 280.0, 'before' => new NightState(350.0, 300.0)])]);
 
         self::assertSame([PlanIssue::BELOW_LISTING_MIN], $result->errorCodes());
-        self::assertSame(Floors::LISTING_MIN, $result->errors[0]->params['floor_label']);
+        self::assertSame(300.0, $result->errors[0]->params['listing_min']);
     }
 
     public function testFloorAndCeilingMayNotPassTheListingMaximum(): void
@@ -341,7 +341,7 @@ final class ValidatorTest extends TestCase
 
         self::assertSame([], self::errorsOf(['min' => null, 'max' => 900.0, 'before' => new NightState(1100.0, 900.5)]), 'within one unit');
         self::assertSame([], self::errorsOf(['min' => null, 'max' => 900.0, 'before' => new NightState(1100.0)]), 'no floor known');
-        self::assertSame([PlanIssue::BELOW_HARD_FLOOR], self::errorsOf(['min' => null, 'max' => 700.0, 'before' => new NightState(1100.0)]), 'a ceiling is the highest price of the night');
+        self::assertSame([PlanIssue::BELOW_OWNER_FLOOR], self::errorsOf(['min' => null, 'max' => 700.0, 'before' => new NightState(1100.0)]), 'a ceiling is the highest price of the night');
         self::assertSame([PlanIssue::BELOW_SAFETY_LIMIT], self::errorsOf(['min' => null, 'max' => 500.0, 'before' => new NightState(1100.0)]));
     }
 
@@ -367,18 +367,18 @@ final class ValidatorTest extends TestCase
         self::assertSame([PlanIssue::NO_BEFORE], $result->warningCodes());
     }
 
-    public function testWarnsAboutARiseLargerThanOneStepOfTheEngine(): void
+    public function testWarnsAboutARiseLargerThanTheConfiguredPercent(): void
     {
-        // 7 days away the largest step is 15%: from 1000, 1150, plus the slack of the roundings (1% of the base + 1).
-        self::assertSame([], self::validate([self::item(['min' => 1160.0])])->warningCodes());
+        // 15% by default: from 1000, 1150, plus one unit.
+        self::assertSame([], self::validate([self::item(['min' => 1150.0])])->warningCodes());
 
-        $result = self::validate([self::item(['min' => 1170.0])]);
+        $result = self::validate([self::item(['min' => 1160.0])]);
         self::assertTrue($result->isValid(), 'a floor may require it: a warning, not an error');
         self::assertSame([PlanIssue::RISE_ABOVE_MAX_STEP], $result->warningCodes());
-        self::assertSame(['applied_floor' => 1170.0, 'current_price' => 1000.0, 'max_step_percent' => 15.0], $result->warnings[0]->params);
+        self::assertSame(['applied_floor' => 1160.0, 'current_price' => 1000.0, 'max_step_percent' => 15.0], $result->warnings[0]->params);
 
-        self::assertSame([], self::validate([self::item(['night' => '2027-04-12', 'min' => 1060.0])])->warningCodes(), '40 days away the step is 5%: 1050 plus the slack');
-        self::assertSame([PlanIssue::RISE_ABOVE_MAX_STEP], self::validate([self::item(['night' => '2027-04-12', 'min' => 1070.0])])->warningCodes());
+        self::assertSame([], self::validate([self::item(['min' => 1160.0, 'reason' => 'SOLD_OUT_PROTECTION'])])->warningCodes(), 'the protection of a sold-out night may rise further');
+        self::assertSame([], self::validate([self::item(['night' => '2027-03-18', 'min' => 2000.0, 'before' => new NightState(1200.0, 600.0)])])->warningCodes(), 'no warning on a holiday night');
     }
 
     public function testEveryErrorOfEveryItemIsReported(): void
@@ -440,7 +440,7 @@ final class ValidatorTest extends TestCase
                 // The fair's floor for the Standard room (2250) is over its listing maximum (1500): the engine can only
                 // go to the maximum, and the validator reports the conflict for a person to solve.
                 $conflicts++;
-                self::assertSame([PlanIssue::BELOW_HARD_FLOOR], $result->errorCodes(), json_encode($step->toArray()));
+                self::assertSame([PlanIssue::BELOW_HOLIDAY_FLOOR], $result->errorCodes(), json_encode($step->toArray()));
                 continue;
             }
             self::assertSame([], $result->errorCodes(), json_encode($step->toArray()));

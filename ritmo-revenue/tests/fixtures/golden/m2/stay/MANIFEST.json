@@ -1,0 +1,152 @@
+{
+ "generated_at": "2026-11-12",
+ "repo_commit": "968d1d87f444e340c7c839b56086a160941f2d1b",
+ "engine": ".claude/skills/gestao-receita-pousadas/scripts",
+ "engine_commit": "036acfa9db12515ac92461345c0ae1e10ef369fa",
+ "engine_dirty": false,
+ "python": "3.11.17",
+ "frozen_inputs": {
+  "frozen/quartos.json": "40712bc254335536cd1a9e664c8c64cd767f04c046890c1e28b22e63cefc7365",
+  "golden/m2/stay/frozen/seasons.json": "bcd16f94b3ff43d79a68c342f6299d7c87498ea1628e9c6ef2aa829d5a48a452",
+  "golden/m2/stay/frozen/scenario-july_season.json": "7c9b638180f7526aa0ece68fe7d7d788208241e6153b72d4491594d1144dec26",
+  "golden/m2/stay/frozen/scenario-midweek.json": "2991b4fd513c18288e3dc8587e8783dc29c5c421562b4cd8bf6c034f6b2693b3",
+  "golden/m2/stay/frozen/scenario-saturday_today.json": "a2086dc6fb477bbc9686712a20e5627ffdd2e42ee98dfb3e7ee7c0cb794b00a2",
+  "golden/m2/stay/frozen/scenario-sold_out_pressure.json": "13ff1ded1955603ce6e482fe18fd69fdc6526c02ee7acbb810a1827cfc7b3a5f"
+ },
+ "parity_fixture": {
+  "file": "presets/parity-stay.json",
+  "sha256": "3ccfaa9f80a13fe5e4e605c2adfdac16f6eb130a1107e1b59f5958dbe2ecb329"
+ },
+ "tolerance": {
+  "amounts": 0.01,
+  "percentages_and_integers": "exact"
+ },
+ "vocabulary": {
+  "restriction": {
+   "none": "none",
+   "blackout": "blackout",
+   "noCheckIn": "no_checkin",
+   "noCheckOut": "no_checkout",
+   "noCheckInOrCheckOut": "no_checkin_checkout"
+  },
+  "orphan_side": {
+   "sexta": "previous",
+   "sábado": "closed_day"
+  },
+  "proof_neighbour": {
+   "seguinte": "next",
+   "anterior": "previous"
+  },
+  "season_days": {
+   "todos": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6
+   ],
+   "sex-sab": [
+    4,
+    5
+   ],
+   "dom-qui": [
+    0,
+    1,
+    2,
+    3,
+    6
+   ]
+  },
+  "property": {
+   "Recanto": "recanto",
+   "Villa": "villa"
+  },
+  "stay_kind": {
+   "sobe": "arrival_day",
+   "desce": "arrival_day",
+   "órfã": "orphan_night",
+   "explícita": "explicit_rule",
+   "sábado órfão": "closed_day_orphan"
+  },
+  "arrival_reason": {
+   "sábado de festa": "closed_day_open_date",
+   "sábado esgotado": "orphan_side_closed_day_sold_out",
+   "já passou": "orphan_side_previous_past",
+   "sexta esgotada": "orphan_side_previous_sold_out",
+   "sexta com override": "closed_day",
+   "entrada e saída abertas": "open_day",
+   "": "closed_day",
+   "override_por_data": "package"
+  },
+  "issue": {
+   "sem dado de preço": "no_pricing_data",
+   "fora do plano só de estadia": "own_stay_outside_stay_plan",
+   "sem min_stay na regra por data": "explicit_stay",
+   "sábado órfão": "closed_day_orphan_today",
+   "saída de sexta fechada": "open_day_masks",
+   "(noite órfã)": "orphan_night",
+   " > ": "stay_down",
+   " < ": "stay_up"
+  },
+  "accepted": {
+   "aguardando o dono": "held",
+   "noite órfã (noite seguinte esgotada)": "orphan_accepted",
+   "sábado órfão": "closed_day_orphan_accepted",
+   "dia órfão": "isolated_day"
+  }
+ },
+ "files": [
+  {
+   "file": "validar_plano.estadia_exigida.json",
+   "function": "validar_plano.estadia_exigida",
+   "cases": 426
+  },
+  {
+   "file": "validar_plano.estadia_planejada.json",
+   "function": "validar_plano.estadia_planejada",
+   "cases": 1392
+  },
+  {
+   "file": "comum.orfa_permitida.json",
+   "function": "comum.orfa_permitida",
+   "cases": 261
+  },
+  {
+   "file": "comum.sexta_reaberta.json",
+   "function": "comum.sexta_reaberta",
+   "cases": 70
+  },
+  {
+   "file": "calendario_12m.sabado_com_sexta_passada.json",
+   "function": "calendario_12m.sabado_com_sexta_passada",
+   "cases": 44
+  },
+  {
+   "file": "calendario_12m.estadia_da_noite.json",
+   "function": "calendario_12m.estadia_da_noite",
+   "cases": 1008
+  },
+  {
+   "file": "calendario_12m.prova_sabado_orfao.json",
+   "function": "calendario_12m.prova_sabado_orfao",
+   "cases": 196
+  },
+  {
+   "file": "calendario_12m.classificar_beds24.json",
+   "function": "calendario_12m.classificar_beds24",
+   "cases": 4
+  },
+  {
+   "file": "calendario_12m.comparar.json",
+   "function": "calendario_12m.comparar",
+   "cases": 4
+  },
+  {
+   "file": "calendario_12m.lote_unico.json",
+   "function": "calendario_12m.lote_unico",
+   "cases": 8
+  }
+ ]
+}

@@ -35,6 +35,14 @@ final class PlanItemTest extends TestCase
                 'reason_code' => 'pace_step',
                 'reason_params' => ['direction' => 'down'],
                 'before' => $before->toArray(),
+                'check_in' => null,
+                'check_out' => null,
+                'order_id' => null,
+                'orphan' => null,
+                'market_evidence' => null,
+                'keep_reason' => false,
+                'reason_text' => '',
+                'reads_occupancy' => false,
             ],
             $item->toArray()
         );
@@ -51,6 +59,9 @@ final class PlanItemTest extends TestCase
             'negative ceiling' => static fn (): PlanItem => new PlanItem('Deluxe', $night, null, -10.0),
             'floor that is not a number' => static fn (): PlanItem => new PlanItem('Deluxe', $night, NAN),
             'stay of zero nights' => static fn (): PlanItem => new PlanItem('Deluxe', $night, null, null, 0),
+            'mask of six days' => static fn (): PlanItem => new PlanItem('Deluxe', $night, checkInMask: '111111'),
+            'mask with another character' => static fn (): PlanItem => new PlanItem('Deluxe', $night, checkOutMask: '1111x11'),
+            'empty order id' => static fn (): PlanItem => new PlanItem('Deluxe', $night, 900.0, orderId: ''),
         ];
         foreach ($builders as $name => $build) {
             try {
@@ -60,6 +71,15 @@ final class PlanItemTest extends TestCase
                 $this->addToAssertionCount(1);
             }
         }
+    }
+
+    public function testAnItemMaySetOnlyTheArrivalAndDepartureDays(): void
+    {
+        $item = new PlanItem('Deluxe', Days::date('2027-03-10'), checkOutMask: '1111011', reasonCode: 'open_day');
+
+        self::assertTrue($item->setsDays());
+        self::assertFalse($item->setsPrice());
+        self::assertSame('1111011', $item->toArray()['check_out']);
     }
 
     public function testAnItemMayBreakTheRulesTheValidatorChecks(): void

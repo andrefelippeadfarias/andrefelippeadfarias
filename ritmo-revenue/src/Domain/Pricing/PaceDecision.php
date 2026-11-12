@@ -35,6 +35,8 @@ final class PaceDecision
      * @param HardFloor|null     $floor             hard floor of the night
      * @param bool               $heldAtFloor       true when the step stopped at the hard floor
      * @param bool               $weakAnchor        true when the anchor was small or old and the step was halved
+     * @param float|null         $stepPrice         the price after the step (or the order's free step or ramp), before
+     *                                              the relation cap, the floor, the listing top and tonight's rule
      * @param list<array{code: string, params: array<string, scalar|null>}> $trace the rules applied, in order
      */
     public function __construct(
@@ -60,6 +62,7 @@ final class PaceDecision
         public readonly ?HardFloor $floor = null,
         public readonly bool $heldAtFloor = false,
         public readonly bool $weakAnchor = false,
+        public readonly ?float $stepPrice = null,
     ) {
     }
 

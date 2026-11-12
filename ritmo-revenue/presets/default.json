@@ -79,6 +79,10 @@
                 }
             },
             "ahead_near_days": 7,
+            "sales_ramp": {
+                "enabled": false,
+                "top_percentile": 90
+            },
             "k": 0.5,
             "max_step": [
                 {
@@ -136,6 +140,136 @@
         "safety": {
             "weekly_listing_change_max": 0.1,
             "never_raise_today": true
+        },
+        "relations": {
+            "tolerance": {
+                "trigger_amount": 1,
+                "audit_base_percent": 1,
+                "audit_amount": 1
+            },
+            "scan_horizon_days": 60,
+            "audit_horizon_days": 366,
+            "blocked_nights": "exclude",
+            "rounding_recheck": {
+                "mode": "fix",
+                "epsilon_amount": 0.005
+            },
+            "items": []
+        },
+        "price_bands": {
+            "items": []
+        },
+        "ladder": {
+            "enabled": false,
+            "strategies": []
+        },
+        "soldout": {
+            "protection": {
+                "enabled": true,
+                "percentile": 90,
+                "use_target_order_floor": true,
+                "use_relation_bounds": true,
+                "keep_live_floor_on_release": true,
+                "retired_floor_markers": [],
+                "retired_floor_exemptions": []
+            },
+            "light_run_max_days": null
+        },
+        "cadence": {
+            "min_hours_between_steps": 24,
+            "require_channel_arrival": true,
+            "opposite_direction_immediate": true,
+            "release_on_booking": true,
+            "new_order_immediate_once": true,
+            "first_ladder_step_immediate": true,
+            "relation_violation_bypass": true
+        },
+        "no_effect": {
+            "drop_rounding_only": true,
+            "money_slack": 1
+        },
+        "orders": {
+            "manual_freeze_days": 7,
+            "defaults": {
+                "target_percentile": 50,
+                "strong_night_occupancy": 0.7,
+                "strong_night_ahead_occupancy": 0.5,
+                "fallback_trigger_days": 7,
+                "descent_marks": [
+                    7,
+                    5,
+                    3,
+                    1
+                ]
+            },
+            "descent_reached_slack": 0.02
+        },
+        "stay": {
+            "arrival_rule": {
+                "enabled": false,
+                "valid_from": null,
+                "valid_to": null,
+                "by_weekday": [
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1
+                ],
+                "properties": [],
+                "rooms": [],
+                "held_weekdays": []
+            },
+            "orphan": {
+                "next_night": false,
+                "on_holidays": false
+            },
+            "holiday_min_stay": 1,
+            "closed_days": [],
+            "open_days": [],
+            "packages": [],
+            "seasons": [],
+            "pricing_sync": {
+                "min_stay_rooms": [],
+                "max_stay_rooms": [],
+                "arrival_departure_rooms": []
+            },
+            "keep_reason_markers": [],
+            "batch": {
+                "urgent_days": 14,
+                "max_ranges": 100
+            }
+        },
+        "plan": {
+            "validator": {
+                "calendar_max_age_hours": 6,
+                "occupancy_reason_codes": [
+                    "SOLD_OUT_PROTECTION",
+                    "RELATION_DISCOUNT_BAND",
+                    "RELATION_OCCUPANCY_SWITCH"
+                ],
+                "rise_warning_percent": 15,
+                "rise_exempt_reason_codes": [
+                    "SOLD_OUT_PROTECTION"
+                ],
+                "max_min_stay": 30,
+                "market_evidence_min_length": 20,
+                "no_discount_rooms": [],
+                "last_minute": {
+                    "enabled": false,
+                    "rooms": [],
+                    "max_days_out": 3,
+                    "max_discount": 0.2,
+                    "max_sold_share": 0.7,
+                    "last_unit_only_rooms": []
+                }
+            },
+            "payload": {
+                "reason_max_length": 250,
+                "slice_max_dates": 70
+            }
         }
     }
 }

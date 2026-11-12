@@ -37,7 +37,6 @@ import copy  # noqa: E402
 import datetime as dt  # noqa: E402
 import hashlib  # noqa: E402
 import json  # noqa: E402
-import math  # noqa: E402
 import re  # noqa: E402
 import subprocess  # noqa: E402
 from pathlib import Path  # noqa: E402
@@ -121,6 +120,12 @@ FILES: dict = {}
 
 
 # ---------------------------------------------------------------- the parity preset of the relations
+# The ruler's vocabulary of the plugin (tests/fixtures/golden/m2/ladder/MANIFEST.json, written by golden_ladder.py).
+RULER_LABEL = {"semana": "weekday", "inverno_semana": "winter_weekday", "fds": "weekend", "inverno_fds": "winter_weekend",
+               "feriado": "holiday", "natal": "christmas", "entre_festas": "between_holidays", "reveillon": "new_year"}
+RULER_SERIES = {"lista": "cheapest", "hidro": "comparable", "pares_lista": "peers_cheapest", "pares_hidro": "peers_comparable"}
+
+
 def relations_preset(cfg: dict) -> dict:
     """The owner's relations in the generic graph. Values come from the configuration and the engine's constants;
     the literals are the engine's own literals (cited)."""
@@ -131,7 +136,6 @@ def relations_preset(cfg: dict) -> dict:
     plan_period = [{"start": PD.DE, "end": PD.ATE}]
     scope = {"night_types": [], "weekdays": [], "periods": [], "exclude_periods": [], "min_days_out": None,
              "max_days_out": None, "requires_order": None}
-    groups = {"semana": "weekday", "fds": "weekend", "feriado": "holiday", "festas": "festive"}
 
     def rel(rid, label, prop, typ, target, priority, stages, scan, strategy, params, order, **scope_patch):
         return {"id": rid, "label": label, "enabled": True, "property": prop, "type": typ, "target": target,
@@ -161,8 +165,11 @@ def relations_preset(cfg: dict) -> dict:
         rel("villa-balcony-switch-80", "Room without a tub at its market price when most tub suites are sold",
             "villa", "occupancy_switch", "Balcony", 10, ["coherence", "validate"], "horizon", "apply",
             {"trigger": {"set": {"room_tags": ["tub"]}, "unit": "percent", "threshold": round(PD.GATILHO_BALCONY * 100, 6)},
+             # keyed by the ruler's night type and named by the plugin's ruler series (the ladder's vocabulary), so
+             # that the plan assembly reads the market price from the same ruler as the ladder
              "then": {"kind": "market_percentile", "by_night_group": {
-                 groups[g]: {"segment": s, "percentile": float(p)} for g, (s, p) in PD.BALCONY_MERCADO.items()}},
+                 RULER_LABEL[label]: {"segment": RULER_SERIES[PD.BALCONY_MERCADO[g][0]], "percentile": float(PD.BALCONY_MERCADO[g][1])}
+                 for label, g in PD.GRUPO.items()}},
              "cap_relation": "villa-balcony-discount-band", "floor": "safety",
              "suspends": ["villa-balcony-discount-band"]}, PLAN_ID, periods=plan_period, requires_order=PLAN_ID),
         rel("villa-balcony-discount-band", "Room without a tub below the cheapest free tub suite",
@@ -271,11 +278,6 @@ def calendar(cfg: dict, cals: dict) -> dict:
                          "min": num(pace.vigente(cfg, k, r, None, "min_price")),
                          "max": num(pace.vigente(cfg, k, r, None, "max_price"))}
     return out
-
-
-def plain_rows(cfg: dict, rows: dict) -> dict:
-    """{room: {night: engine row}} for the audit functions, which only read price and min_price."""
-    return calendar(cfg, rows)
 
 
 def night_type(cfg: dict, n: str) -> str:
@@ -1335,8 +1337,10 @@ def engine_state() -> tuple[str, bool]:
 
 
 def main() -> int:
-    argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter).add_argument(
-        "--freeze", action="store_true", help="copy the engine data (read-only) into the frozen folder first")
+    parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
+    parser.add_argument("--freeze", action="store_true",
+                        help="copy the engine data (read-only) into the frozen folder first (done before the engine loads)")
+    parser.parse_args()
     _write_json(PARITY, relations_preset(CFG))
     coherence_cases()
     between_audit_cases()

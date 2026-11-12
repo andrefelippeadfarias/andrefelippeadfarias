@@ -6,10 +6,19 @@ namespace Ritmo\Domain\Config;
 
 use DateTimeInterface;
 use OutOfBoundsException;
+use Ritmo\Domain\Calendar\Stay\StayConfig;
+use Ritmo\Domain\Calendar\Stay\StayFields;
 use Ritmo\Domain\Model\NightType;
 use Ritmo\Domain\Model\PaceStatus;
 use Ritmo\Domain\Model\PricePlan;
 use Ritmo\Domain\Model\Property;
+use Ritmo\Domain\Orders\OrdersConfig;
+use Ritmo\Domain\Plan\PlanConfig;
+use Ritmo\Domain\Pricing\Cadence\CadenceConfig;
+use Ritmo\Domain\Pricing\Cadence\NoEffectConfig;
+use Ritmo\Domain\Pricing\Ladder\LadderConfig;
+use Ritmo\Domain\Pricing\Protection\ProtectionConfig;
+use Ritmo\Domain\Relations\Config\RelationsConfig;
 use Ritmo\Domain\Support\DateRange;
 use Ritmo\Domain\Support\Days;
 
@@ -24,6 +33,9 @@ final class RuleSet
 {
     /** @var list<Holiday>|null built on first use */
     private ?array $holidays = null;
+
+    /** @var array<string, object> the M2 sections, read by their modules on first use */
+    private array $sections = [];
 
     /**
      * @param array<string, mixed> $data canonical, validated
@@ -404,6 +416,72 @@ final class RuleSet
     }
 
     /**
+     * The top percentile of the sales ramp, or null when the ramp is off.
+     */
+    public function salesRampTop(): ?float
+    {
+        return $this->data['pace']['sales_ramp']['enabled'] ? $this->data['pace']['sales_ramp']['top_percentile'] : null;
+    }
+
+    /**
+     * Relations between room types and price bands (sections "relations" and "price_bands").
+     */
+    public function relations(): RelationsConfig
+    {
+        return $this->section('relations', fn (): RelationsConfig => RelationsConfig::fromArray(['relations' => $this->data['relations'], 'price_bands' => $this->data['price_bands']]));
+    }
+
+    public function ladder(): LadderConfig
+    {
+        return $this->section(LadderConfig::ROOT, fn (): LadderConfig => LadderConfig::fromArray($this->data[LadderConfig::ROOT]));
+    }
+
+    /**
+     * Protection of sold-out nights (section "soldout").
+     */
+    public function soldOut(): ProtectionConfig
+    {
+        return $this->section(ProtectionConfig::ROOT, fn (): ProtectionConfig => ProtectionConfig::fromArray($this->data[ProtectionConfig::ROOT]));
+    }
+
+    public function cadence(): CadenceConfig
+    {
+        return $this->section(CadenceConfig::ROOT, fn (): CadenceConfig => CadenceConfig::fromArray($this->data[CadenceConfig::ROOT]));
+    }
+
+    public function noEffect(): NoEffectConfig
+    {
+        return $this->section(NoEffectConfig::ROOT, fn (): NoEffectConfig => NoEffectConfig::fromArray($this->data[NoEffectConfig::ROOT]));
+    }
+
+    public function orders(): OrdersConfig
+    {
+        return $this->section(OrdersConfig::ROOT, fn (): OrdersConfig => OrdersConfig::fromArray($this->data[OrdersConfig::ROOT]));
+    }
+
+    public function stay(): StayConfig
+    {
+        return $this->section(StayFields::ROOT, fn (): StayConfig => StayConfig::fromArray($this->data[StayFields::ROOT]));
+    }
+
+    public function plan(): PlanConfig
+    {
+        return $this->section(PlanConfig::ROOT, fn (): PlanConfig => PlanConfig::fromArray($this->data[PlanConfig::ROOT]));
+    }
+
+    /**
+     * @template T of object
+     *
+     * @param callable(): T $read
+     *
+     * @return T
+     */
+    private function section(string $name, callable $read): object
+    {
+        return $this->sections[$name] ??= $read();
+    }
+
+    /**
      * @param array<int|string, mixed> $value
      *
      * @return array<int|string, mixed>
@@ -429,6 +507,9 @@ final class RuleSet
         if ($field->type === FieldType::Number) {
             return (float) $value;
         }
+        if ($field->type === FieldType::Variant) {
+            return self::sortedKeys($value);
+        }
         if ($field->type !== FieldType::Map && $field->type !== FieldType::ListOf) {
             return $value;
         }
@@ -439,5 +520,21 @@ final class RuleSet
         }
 
         return array_map(static fn (mixed $entry): mixed => self::canonical($schema, $item, $entry), $value);
+    }
+
+    /**
+     * A variant group in canonical form: the keys of every group inside it sorted, lists kept in
+     * their order (its owner reads the values).
+     */
+    private static function sortedKeys(mixed $value): mixed
+    {
+        if (!is_array($value)) {
+            return $value;
+        }
+        if (!array_is_list($value)) {
+            ksort($value, SORT_STRING);
+        }
+
+        return array_map(static fn (mixed $entry): mixed => self::sortedKeys($entry), $value);
     }
 }

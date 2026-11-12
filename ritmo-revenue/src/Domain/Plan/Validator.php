@@ -7,68 +7,71 @@ namespace Ritmo\Domain\Plan;
 use Closure;
 use DateTimeImmutable;
 use InvalidArgumentException;
+use Ritmo\Domain\Calendar\HolidayCalendar;
 use Ritmo\Domain\Config\RuleSet;
+use Ritmo\Domain\Market\PriceFactor;
 use Ritmo\Domain\Model\Property;
 use Ritmo\Domain\Model\RoomType;
-use Ritmo\Domain\Pricing\Floors;
+use Ritmo\Domain\Plan\Validation\AuthorityCheck;
+use Ritmo\Domain\Plan\Validation\BandCheck;
+use Ritmo\Domain\Plan\Validation\DeletionCheck;
+use Ritmo\Domain\Plan\Validation\EffectCheck;
+use Ritmo\Domain\Plan\Validation\FloorCheck;
+use Ritmo\Domain\Plan\Validation\IssueLog;
+use Ritmo\Domain\Plan\Validation\ItemAuthority;
+use Ritmo\Domain\Plan\Validation\ItemCheck;
+use Ritmo\Domain\Plan\Validation\ItemFacts;
+use Ritmo\Domain\Plan\Validation\LastMinuteCheck;
+use Ritmo\Domain\Plan\Validation\ListingCheck;
+use Ritmo\Domain\Plan\Validation\MaskCheck;
+use Ritmo\Domain\Plan\Validation\OrphanProofCheck;
+use Ritmo\Domain\Plan\Validation\PriceBoundsCheck;
+use Ritmo\Domain\Plan\Validation\StayCheck;
 use Ritmo\Domain\Support\Clock;
 use Ritmo\Domain\Support\Days;
 use WeakMap;
 
 /**
- * The plan validator of milestone 1: the minimum set of safety rules. It is the only way to get
- * a ValidatedPlan.
+ * The plan validator: every safety rule a plan must pass before anything is written. It is the
+ * only way to get a ValidatedPlan.
  *
- * Errors (any of them stops the whole plan):
+ * Any error stops the whole plan; ValidationResult::rejected() lists the entries to drop for a
+ * second validation. Per entry:
  *
- * - the plan was computed for another day; a room that is not of the property; two items for
- *   the same room night; an item without a reason;
- * - a night before today;
- * - a floor for tonight above tonight's price ("the price of today never goes up"), also when
- *   only its rounding up to a whole percentage puts it above, or without the current price to
- *   compare with;
- * - a floor (or, in an item with a ceiling only, the ceiling) under the safety limit, under the
- *   listing minimum or under the hard floor of the night;
- * - a floor or a ceiling over the listing maximum;
- * - a ceiling under the floor of the item, or under the floor in force when the item has none;
- * - an item that changes nothing of what is in force.
+ * - shape: the plan is of today (by the clock, in the property's timezone), rooms of the property,
+ *   one entry per room night, a reason, no night in the past;
+ * - the owner order it cites (Validation\AuthorityCheck);
+ * - floors (FloorCheck, LastMinuteCheck), prices (PriceBoundsCheck), stay and orphan nights
+ *   (StayCheck, OrphanProofCheck), arrival and departure days (MaskCheck), effect, fresh calendar
+ *   and rise (EffectCheck);
+ * - over the plan: the discount bands of the relations (BandCheck), the deletions (DeletionCheck)
+ *   and the listing changes (ListingCheck).
  *
  * Floors are compared as the pricing system will apply them: a whole percentage over the base,
  * rounded up (PercentRounding).
  *
- * Reference: the same checks of validar_plano.Validador.validar_data and pace.sem_efeito; the
- * rest of that validator (stay rules, relations, owner orders, exceptions) comes later.
+ * Reference: validar_plano.Validador (validar, validar_data, validar_apagar, validar_anuncio,
+ * validar_balcony) and the effect of pace.sem_efeito. VALIDATOR.md lists the rules and where the
+ * plugin decides differently.
  */
 final class Validator
 {
-    /**
-     * A step is rounded to whole currency units, so a floor held at the hard floor may stand up
-     * to one unit under it (the reference's margin).
-     */
-    public const FLOOR_MARGIN = 1.0;
-
-    /** Slack over the listing maximum (the reference's). */
-    public const LISTING_MAX_MARGIN = 0.5;
-
-    /** Two amounts within one currency unit are the same price (the reference's). */
-    public const SAME_AMOUNT = 1.0;
-
-    private readonly Floors $floors;
-
-    private readonly PercentRounding $rounding;
-
-    /** @var list<PlanIssue> */
-    private array $errors = [];
-
-    /** @var list<PlanIssue> */
-    private array $warnings = [];
-
     /** @var WeakMap<ValidatedPlan, true>|null the plans sealed in this process */
     private static ?WeakMap $sealedPlans = null;
 
-    public function __construct(private readonly RuleSet $rules, private readonly Clock $clock)
+    private readonly PlanConfig $config;
+
+    private readonly PriceFactor $factors;
+
+    private readonly HolidayCalendar $calendar;
+
+    private readonly PercentRounding $rounding;
+
+    public function __construct(private readonly RuleSet $rules, private readonly Clock $clock, ?PlanConfig $config = null)
     {
-        $this->floors = new Floors($rules);
+        $this->config = $config ?? new PlanConfig();
+        $this->factors = new PriceFactor($rules);
+        $this->calendar = new HolidayCalendar($rules);
         $this->rounding = new PercentRounding();
     }
 
@@ -77,207 +80,111 @@ final class Validator
      *
      * @throws InvalidArgumentException when the plan is of another property
      */
-    public function validate(Plan $plan, Property $property, array $rooms): ValidationResult
+    public function validate(Plan $plan, Property $property, array $rooms, ?ValidationContext $context = null): ValidationResult
     {
         if ($plan->propertyId !== $property->id) {
             throw new InvalidArgumentException(sprintf('The plan is for property "%s", not "%s".', $plan->propertyId, $property->id));
         }
-        $this->errors = [];
-        $this->warnings = [];
-
+        $context ??= new ValidationContext();
+        $log = new IssueLog();
         $today = $this->clock->today($property->timezone);
         if (Days::key($plan->today) !== Days::key($today)) {
-            $this->errors[] = new PlanIssue(PlanIssue::ERROR, PlanIssue::STALE_PLAN, 'The plan was computed for another day and must be redone.', null, null, null, [
+            $log->add(true, PlanIssue::STALE_PLAN, 'The plan was computed for another day and must be redone.', null, null, null, [
                 'plan_today' => Days::key($plan->today),
                 'today' => Days::key($today),
-            ]);
+            ], IssueSubject::Plan);
         }
-
         $byCode = [];
         foreach ($rooms as $room) {
             if ($room->propertyId === $property->id) {
                 $byCode[$room->code] = $room;
             }
         }
+
+        $authority = new AuthorityCheck($context->orders, $context->strategies, $log);
+        $facts = $this->checkItems($plan, $byCode, $today, $property->timezone, $context, $authority, $log);
+        if ($context->bands !== null) {
+            (new BandCheck($context->bands, $context->relationReport, $context->calendar, $log))->check($facts);
+        }
+        (new DeletionCheck($this->calendar, $context->stay, $log))->check($plan->deletions, $byCode, $today);
+        (new ListingCheck($this->rules, $authority, $log))->check($plan->listingChanges, $byCode, $context->weeklyReference, $today);
+
+        $errors = $log->errors();
+
+        return new ValidationResult($errors, $log->warnings(), $errors === [] ? $this->seal($plan, $today, $property->timezone, $byCode, $log->warnings()) : null);
+    }
+
+    /**
+     * @param array<string, RoomType> $byCode
+     *
+     * @return list<ItemFacts> the items that passed the shape checks
+     */
+    private function checkItems(Plan $plan, array $byCode, DateTimeImmutable $today, string $timezone, ValidationContext $context, AuthorityCheck $authority, IssueLog $log): array
+    {
+        $checks = $this->itemChecks($context, $today, $timezone, $log);
+        $facts = [];
         $seen = [];
         foreach ($plan->items as $index => $item) {
+            $issue = static fn (string $code, string $message, array $params = []) => $log->add(true, $code, $message, $index, $item->roomCode, $item->date, $params, IssueSubject::Item);
             $room = $byCode[$item->roomCode] ?? null;
             if ($room === null) {
-                $this->error($index, $item, PlanIssue::UNKNOWN_ROOM, sprintf('Room "%s" is not a room type of this property.', $item->roomCode));
+                $issue(PlanIssue::UNKNOWN_ROOM, sprintf('Room "%s" is not a room type of this property.', $item->roomCode));
                 continue;
             }
             if (isset($seen[$item->key()])) {
-                $this->error($index, $item, PlanIssue::DUPLICATE_ITEM, 'There is already an item for this room night; the later one would silently overwrite it.', ['first_item' => $seen[$item->key()]]);
+                $issue(PlanIssue::DUPLICATE_ITEM, 'There is already an item for this room night; the later one would silently overwrite it.', ['first_item' => $seen[$item->key()]]);
             }
             $seen[$item->key()] ??= $index;
             if ($item->reasonCode === '') {
-                $this->error($index, $item, PlanIssue::MISSING_REASON, 'The item has no reason code for the change log.');
+                $issue(PlanIssue::MISSING_REASON, 'The item has no reason code for the change log.');
             }
-
             $daysOut = Days::diff($today, $item->date);
             if ($daysOut < 0) {
-                $this->error($index, $item, PlanIssue::PAST_DATE, 'The night is in the past.');
+                $issue(PlanIssue::PAST_DATE, 'The night is in the past.');
                 continue;
             }
-            $this->checkItem($index, $this->rounding->convert($item, $room), $room, $daysOut);
+            $f = $this->facts($index, $item, $room, $daysOut, $authority->resolve($index, $room->code, $item->date, $item->orderId), $context);
+            foreach ($checks as $check) {
+                $check->check($f);
+            }
+            $facts[] = $f;
         }
 
-        return new ValidationResult($this->errors, $this->warnings, $this->errors === [] ? $this->seal($plan, $today, $property->timezone, $byCode) : null);
-    }
-
-    private function checkItem(int $index, PercentItem $percent, RoomType $room, int $daysOut): void
-    {
-        $this->checkFloors($index, $percent, $room);
-        $this->checkListingMaximum($index, $percent, $room);
-        $this->checkCeilingAgainstFloor($index, $percent->item);
-        if ($daysOut === 0) {
-            $this->checkToday($index, $percent);
-        }
-        $this->checkEffect($index, $percent);
-        $this->checkRise($index, $percent, $room, $daysOut);
+        return $facts;
     }
 
     /**
-     * The lowest price the item allows (its floor; its ceiling when it has no floor, because a
-     * ceiling is the highest price the night can have) against the floors of the night.
+     * @return list<ItemCheck>
      */
-    private function checkFloors(int $index, PercentItem $percent, RoomType $room): void
+    private function itemChecks(ValidationContext $context, DateTimeImmutable $today, string $timezone, IssueLog $log): array
     {
-        $lowest = $percent->minAmount() ?? $percent->maxAmount();
-        if ($lowest === null) {
-            return;
-        }
+        $proofs = new OrphanProofCheck($today, $timezone, $context->calendar);
 
-        $what = $percent->minPercent !== null ? 'floor' : 'ceiling';
-        $safety = $this->floors->safetyLimit($room);
-        $hard = $this->floors->hardFloor($room, $percent->item->date);
-        if ($lowest < $safety) {
-            $this->error($index, $percent->item, PlanIssue::BELOW_SAFETY_LIMIT, sprintf('The %s of %.2f is under the safety limit of %.2f.', $what, $lowest, $safety), [
-                'amount' => $lowest,
-                'safety_limit' => $safety,
-            ]);
-        } elseif ($lowest < $hard->amount - self::FLOOR_MARGIN) {
-            $code = $hard->label === Floors::LISTING_MIN ? PlanIssue::BELOW_LISTING_MIN : PlanIssue::BELOW_HARD_FLOOR;
-            $this->error($index, $percent->item, $code, sprintf('The %s of %.2f is under the hard floor of the night, %.2f (%s).', $what, $lowest, $hard->amount, $hard->label), [
-                'amount' => $lowest,
-                'hard_floor' => $hard->amount,
-                'floor_label' => $hard->label,
-            ]);
-        }
+        return [
+            new FloorCheck($this->rules, $this->factors, $this->config, $context->strategies, new LastMinuteCheck($this->config->lastMinute, $log), $log),
+            new PriceBoundsCheck($this->rules, $this->config, $log),
+            new StayCheck($context->stay, $this->config, $proofs, $log),
+            new MaskCheck($context->stay, $log),
+            new EffectCheck($this->config, $context->calendar, $context->acceptStaleCalendar, $this->clock->now(), $log),
+        ];
     }
 
-    private function checkListingMaximum(int $index, PercentItem $percent, RoomType $room): void
+    private function facts(int $index, PlanItem $item, RoomType $room, int $daysOut, ItemAuthority $authority, ValidationContext $context): ItemFacts
     {
-        $limit = $room->max + self::LISTING_MAX_MARGIN;
-        $floor = $percent->minAmount();
-        if ($floor !== null && $floor > $limit) {
-            $this->error($index, $percent->item, PlanIssue::ABOVE_LISTING_MAX, sprintf('The floor of %.2f is over the listing maximum of %.2f.', $floor, $room->max), [
-                'amount' => $floor,
-                'listing_max' => $room->max,
-            ]);
-        }
-        $ceiling = $percent->item->maxPrice;
-        if ($ceiling !== null && $ceiling > $limit) {
-            $this->error($index, $percent->item, PlanIssue::ABOVE_LISTING_MAX, sprintf('The ceiling of %.2f is over the listing maximum of %.2f.', $ceiling, $room->max), [
-                'amount' => $ceiling,
-                'listing_max' => $room->max,
-            ]);
-        }
-    }
+        $fresh = $context->calendar?->night($room->code, $item->date);
+        $state = $item->before ?? ($fresh === null ? null : new NightState($fresh->price, $fresh->floor));
 
-    /**
-     * A ceiling under the floor leaves the pricing system at the floor: the ceiling would not do
-     * what the plan says.
-     */
-    private function checkCeilingAgainstFloor(int $index, PlanItem $item): void
-    {
-        if ($item->maxPrice === null) {
-            return;
-        }
-
-        $floor = $item->minPrice;
-        $inForce = false;
-        if ($floor === null && ($item->before?->minPrice ?? 0.0) > $item->maxPrice + self::SAME_AMOUNT) {
-            $floor = $item->before->minPrice;
-            $inForce = true;
-        }
-        if ($floor !== null && $item->maxPrice < $floor) {
-            $this->error($index, $item, PlanIssue::CEILING_BELOW_FLOOR, sprintf('The ceiling of %.2f is under the floor %s, %.2f.', $item->maxPrice, $inForce ? 'in force' : 'of the item', $floor), [
-                'ceiling' => $item->maxPrice,
-                'floor' => $floor,
-                'floor_in_force' => $inForce,
-            ]);
-        }
-    }
-
-    /**
-     * The price of tonight never goes up: a floor above tonight's price would raise it, and so
-     * would one that only the rounding up to a whole percentage of the base puts above it.
-     */
-    private function checkToday(int $index, PercentItem $percent): void
-    {
-        $item = $percent->item;
-        if ($item->minPrice === null || !$this->rules->neverRaiseToday()) {
-            return;
-        }
-
-        $current = $item->before?->price;
-        if ($current === null) {
-            $this->error($index, $item, PlanIssue::TODAY_WITHOUT_CURRENT_PRICE, 'A floor for tonight needs the current price of the night, to show that it does not raise it.');
-
-            return;
-        }
-        // The floor as the pricing system applies it (rounded up to a whole percentage); with the
-        // ceiling lifted to that floor, it is also the lowest price the night can have.
-        $applied = $percent->minAmount(2);
-        if ($item->minPrice > $current || $applied > $current) {
-            $this->error($index, $item, PlanIssue::RAISE_TODAY, sprintf('The floor of %.2f, applied as %.2f, would raise the price of tonight (%.2f).', $item->minPrice, $applied, $current), [
-                'floor' => $item->minPrice,
-                'applied_floor' => $applied,
-                'current_price' => $current,
-            ]);
-        }
-    }
-
-    private function checkEffect(int $index, PercentItem $percent): void
-    {
-        $item = $percent->item;
-        $before = $item->before;
-        if ($before === null) {
-            $this->warning($index, $item, PlanIssue::NO_BEFORE, 'Without what is in force for the night, the item cannot be checked for effect.');
-
-            return;
-        }
-
-        $sameFloor = $percent->minPercent === null || ($before->minPrice !== null && abs($percent->minAmount(2) - $before->minPrice) <= self::SAME_AMOUNT);
-        $sameCeiling = $percent->maxPercent === null || ($before->maxPrice !== null && abs($percent->maxAmount(2) - $before->maxPrice) <= self::SAME_AMOUNT);
-        $sameStay = $item->minStay === null || $before->minStay === $item->minStay;
-        if ($sameFloor && $sameCeiling && $sameStay) {
-            $this->error($index, $item, PlanIssue::NO_EFFECT, 'Everything the item sets is already in force: writing it would change nothing.');
-        }
-    }
-
-    /**
-     * A floor far above the current price moves the night by more than one step of the pace
-     * engine: allowed (a floor may require it), but worth a look.
-     */
-    private function checkRise(int $index, PercentItem $percent, RoomType $room, int $daysOut): void
-    {
-        $current = $percent->item->before?->price;
-        $floor = $percent->minAmount();
-        if ($current === null || $current <= 0.0 || $floor === null) {
-            return;
-        }
-
-        $maxStep = $this->rules->maxStepPercent($daysOut);
-        // One whole percentage of the base plus one unit: what the two roundings of a step can add.
-        if ($floor > $current * (1 + $maxStep / 100) + 0.01 * $room->base + 1) {
-            $this->warning($index, $percent->item, PlanIssue::RISE_ABOVE_MAX_STEP, sprintf('The floor of %.2f is more than %s%% above the current price (%.2f).', $floor, $maxStep, $current), [
-                'applied_floor' => $floor,
-                'current_price' => $current,
-                'max_step_percent' => $maxStep,
-            ]);
-        }
+        return new ItemFacts(
+            $index,
+            $this->rounding->convert($item, $room),
+            $room,
+            $daysOut,
+            $this->calendar->nightType($item->date),
+            $this->calendar->holidayOn($item->date),
+            $authority,
+            $fresh,
+            $state,
+        );
     }
 
     /**
@@ -293,9 +200,10 @@ final class Validator
      * Creates the ValidatedPlan through its private constructor (this method is the only place
      * that can) and records it as sealed.
      *
-     * @param array<string, RoomType> $byCode the room types the items were checked with
+     * @param array<string, RoomType> $byCode   the room types the items were checked with
+     * @param list<PlanIssue>         $warnings
      */
-    private function seal(Plan $plan, DateTimeImmutable $today, string $timezone, array $byCode): ValidatedPlan
+    private function seal(Plan $plan, DateTimeImmutable $today, string $timezone, array $byCode, array $warnings): ValidatedPlan
     {
         $bases = [];
         foreach ($plan->items as $item) {
@@ -308,26 +216,10 @@ final class Validator
             null,
             ValidatedPlan::class
         );
-        $validated = $create($plan, $this->clock->now(), $today, $timezone, $this->rules->hash(), $this->warnings, $bases);
+        $validated = $create($plan, $this->clock->now(), $today, $timezone, $this->rules->hash(), $warnings, $bases);
         self::$sealedPlans ??= new WeakMap();
         self::$sealedPlans[$validated] = true;
 
         return $validated;
-    }
-
-    /**
-     * @param array<string, scalar|null> $params
-     */
-    private function error(int $index, PlanItem $item, string $code, string $message, array $params = []): void
-    {
-        $this->errors[] = new PlanIssue(PlanIssue::ERROR, $code, $message, $index, $item->roomCode, $item->date, $params);
-    }
-
-    /**
-     * @param array<string, scalar|null> $params
-     */
-    private function warning(int $index, PlanItem $item, string $code, string $message, array $params = []): void
-    {
-        $this->warnings[] = new PlanIssue(PlanIssue::WARNING, $code, $message, $index, $item->roomCode, $item->date, $params);
     }
 }

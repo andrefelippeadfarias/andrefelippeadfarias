@@ -180,7 +180,7 @@ final class LadderFields
             new Field("$p.band_cap_rooms.*", FieldType::Text, 'Room', pattern: self::CODE),
             new Field("$p.band_cap_discount", FieldType::Number, 'Discount below the cap', '', 0.1, min: 0, max: 0.5, unit: Field::UNIT_RATIO),
             new Field("$p.temporary_floor", FieldType::Group, 'Temporary guest minimum', 'A lower cancellation floor until a date, in the price plan of the owner floors.'),
-            new Field("$p.temporary_floor.amount", FieldType::Number, 'Amount', '', null, nullable: true, min: 0, exclusiveMin: true, unit: Field::UNIT_MONEY),
+            new Field("$p.temporary_floor.amount", FieldType::Number, 'Amount', '', null, nullable: true, min: 0, max: 1000000, exclusiveMin: true, unit: Field::UNIT_MONEY),
             new Field("$p.temporary_floor.until", FieldType::Date, 'Until', '', null, nullable: true),
         ];
     }

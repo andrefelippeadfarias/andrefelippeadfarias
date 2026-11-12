@@ -591,6 +591,7 @@ case Boolean = 'bool';
 case Text = 'string';
 case Choice = 'enum';
 case Date = 'date';
+case Variant = 'variant';
 public function isContainer(): bool;
 ```
 
@@ -649,6 +650,13 @@ public function fromJson(string $json): Preset;
 public function fromArray(array $data): Preset;
 ```
 
+#### `Ritmo\Domain\Config\RuleReferences` (final class)
+
+```php
+const EVERY_ROOM = '*';
+public static function unknown(array $rules, array $roomCodes, array $propertyIds): array;
+```
+
 #### `Ritmo\Domain\Config\RuleSet` (final class)
 
 ```php
@@ -685,6 +693,15 @@ public function holidayFloor(): FloorRule;
 public function priceFactor(string $propertyId, PricePlan $plan, NightType $type, ?string $roomCode = null): float;
 public function weeklyListingChangeMax(): float;
 public function neverRaiseToday(): bool;
+public function salesRampTop(): ?float;
+public function relations(): RelationsConfig;
+public function ladder(): LadderConfig;
+public function soldOut(): ProtectionConfig;
+public function cadence(): CadenceConfig;
+public function noEffect(): NoEffectConfig;
+public function orders(): OrdersConfig;
+public function stay(): StayConfig;
+public function plan(): PlanConfig;
 ```
 
 #### `Ritmo\Domain\Config\RuleSetFields` (final class)
@@ -696,12 +713,14 @@ const TARGET_STATUSES = ['ahead_near', 'ahead', 'on_pace', 'behind', 'very_behin
 const DEFAULT_TIER = 'standard';
 const ANY_PROPERTY = '*';
 public static function all(): array;
+public static function nested(string $prefix, array $fields): array;
 ```
 
 #### `Ritmo\Domain\Config\RuleSetValidator` (final class)
 
 ```php
 public function validate(array $data): array;
+public function validateSection(string $root, mixed $value): array;
 ```
 
 #### `Ritmo\Domain\Config\Schema` (final class)

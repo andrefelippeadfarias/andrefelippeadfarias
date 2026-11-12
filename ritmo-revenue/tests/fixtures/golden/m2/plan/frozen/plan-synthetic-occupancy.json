@@ -1,0 +1,44 @@
+{
+ "itens": [
+  {
+   "tipo": "data",
+   "quarto": "VK2",
+   "data": "2026-11-16",
+   "motivo": "Proteção da noite esgotada (synthetic)",
+   "min_price": 1400,
+   "preco_antes": 1300
+  },
+  {
+   "tipo": "data",
+   "quarto": "Q7",
+   "data": "2026-11-17",
+   "motivo": "Pace (synthetic: not by occupancy)",
+   "min_price": 1250,
+   "preco_antes": 1300
+  },
+  {
+   "tipo": "data",
+   "quarto": "VK7",
+   "data": "2026-11-13",
+   "motivo": "Pace (synthetic: last minute under the minimum)",
+   "min_price": 850,
+   "preco_antes": 1000
+  },
+  {
+   "tipo": "data",
+   "quarto": "Balcony",
+   "data": "2026-11-13",
+   "motivo": "Pace (synthetic: last minute, deeper than allowed)",
+   "min_price": 540,
+   "preco_antes": 700
+  },
+  {
+   "tipo": "data",
+   "quarto": "Q2",
+   "data": "2026-11-13",
+   "motivo": "Pace (synthetic: no last-minute rule here)",
+   "min_price": 950,
+   "preco_antes": 1100
+  }
+ ]
+}

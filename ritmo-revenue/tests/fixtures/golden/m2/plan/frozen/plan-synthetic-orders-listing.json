@@ -1,0 +1,50 @@
+{
+ "itens": [
+  {
+   "tipo": "data",
+   "quarto": "Q2",
+   "data": "2026-11-18",
+   "motivo": "Pace (synthetic: a night the owner froze)",
+   "min_price": 1300,
+   "preco_antes": 1500
+  },
+  {
+   "tipo": "anuncio",
+   "quarto": "Q7",
+   "campo": "min",
+   "valor": 850,
+   "antes": 800,
+   "motivo": "synthetic: no order"
+  },
+  {
+   "tipo": "anuncio",
+   "quarto": "Q7",
+   "campo": "base",
+   "valor": 1500,
+   "antes": 1173,
+   "motivo": "synthetic: weekly limit",
+   "excecao": "dono",
+   "ordem_id": "synthetic-listing"
+  },
+  {
+   "tipo": "anuncio",
+   "quarto": "VK7",
+   "campo": "min",
+   "valor": 600,
+   "antes": 944,
+   "motivo": "synthetic: safety",
+   "excecao": "dono",
+   "ordem_id": "synthetic-listing"
+  },
+  {
+   "tipo": "anuncio",
+   "quarto": "Double",
+   "campo": "base",
+   "valor": 1000,
+   "antes": 1480,
+   "motivo": "synthetic: base under min",
+   "excecao": "dono",
+   "ordem_id": "synthetic-listing"
+  }
+ ]
+}

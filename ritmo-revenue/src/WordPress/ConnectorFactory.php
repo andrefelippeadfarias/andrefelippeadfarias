@@ -58,7 +58,12 @@ final class ConnectorFactory implements ConnectorSource
 
     public const DEFAULT_PRICELABS_PMS = 'beds24';
 
-    /** Constant that allows the pricing system's calendar read, a read its API serves by POST. */
+    /**
+     * Constant that switches off the pricing system's calendar read. The read is on by default
+     * (decision of 12 Nov: POST /listing_prices reads, it changes nothing, and the engine needs
+     * the floor and ceiling in force); define it as false in wp-config.php to read prices from
+     * the PMS only.
+     */
     public const CALENDAR_READ_CONSTANT = 'RITMO_PRICING_CALENDAR_READ';
 
     public const BEDS24_URL_CONSTANT = 'RITMO_BEDS24_BASE_URL';
@@ -111,7 +116,7 @@ final class ConnectorFactory implements ConnectorSource
 
     public function readsPricingCalendar(): bool
     {
-        return defined(self::CALENDAR_READ_CONSTANT) && constant(self::CALENDAR_READ_CONSTANT) === true;
+        return !defined(self::CALENDAR_READ_CONSTANT) || constant(self::CALENDAR_READ_CONSTANT) !== false;
     }
 
     /**
@@ -144,8 +149,8 @@ final class ConnectorFactory implements ConnectorSource
     }
 
     /**
-     * Only GET leaves the site, plus, when the site allows it, the one calendar read of the
-     * pricing system (exact host and path).
+     * Only GET leaves the site, plus the one calendar read of the pricing system (exact host and
+     * path) unless the site switched it off.
      */
     private function guarded(): GuardedHttpClient
     {

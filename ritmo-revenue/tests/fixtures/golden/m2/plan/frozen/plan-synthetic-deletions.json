@@ -1,0 +1,40 @@
+{
+ "itens": [
+  {
+   "tipo": "apagar",
+   "quarto": "Q7",
+   "data": "2026-11-10",
+   "motivo": "solta o teto (synthetic Q7 2026-11-10)"
+  },
+  {
+   "tipo": "apagar",
+   "quarto": "Q7",
+   "data": "2026-11-14",
+   "motivo": "solta o teto (synthetic Q7 2026-11-14)"
+  },
+  {
+   "tipo": "apagar",
+   "quarto": "VK7",
+   "data": "2026-11-20",
+   "motivo": "solta o teto (synthetic VK7 2026-11-20)"
+  },
+  {
+   "tipo": "apagar",
+   "quarto": "Q2",
+   "data": "2026-11-15",
+   "motivo": "solta o teto (synthetic Q2 2026-11-15)"
+  },
+  {
+   "tipo": "apagar",
+   "quarto": "Double",
+   "data": "2026-11-16",
+   "motivo": "solta o teto (synthetic Double 2026-11-16)"
+  },
+  {
+   "tipo": "apagar",
+   "quarto": "Q2",
+   "data": "2026-11-12",
+   "motivo": "solta o teto (synthetic Q2 2026-11-12)"
+  }
+ ]
+}

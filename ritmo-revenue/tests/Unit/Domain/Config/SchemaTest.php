@@ -15,7 +15,7 @@ use Ritmo\Domain\Config\Schema;
 
 final class SchemaTest extends TestCase
 {
-    public function testRuleSetSchemaCoversEveryGroupOfTheFirstMilestone(): void
+    public function testRuleSetSchemaCoversEveryGroupOfTheFirstTwoMilestones(): void
     {
         $schema = Schema::ruleSet();
         $expected = [
@@ -45,7 +45,7 @@ final class SchemaTest extends TestCase
         foreach ($expected as $key) {
             self::assertTrue($schema->has($key), "missing field $key");
         }
-        self::assertSame(['occupancy', 'calendar', 'pace', 'floors', 'price_factors', 'safety'], array_keys($schema->children('')));
+        self::assertSame(['occupancy', 'calendar', 'pace', 'floors', 'price_factors', 'safety', 'relations', 'price_bands', 'ladder', 'soldout', 'cadence', 'no_effect', 'orders', 'stay', 'plan'], array_keys($schema->children('')));
     }
 
     public function testEveryFieldIsFullyDescribed(): void

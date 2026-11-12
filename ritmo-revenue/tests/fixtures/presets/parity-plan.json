@@ -1,0 +1,70 @@
+{
+ "_doc": "The plan section of the rule set with the reference engine's values (validar_plano.py, fatiar_payload.py, quartos.json). Written by tests/fixtures/tools/golden_plan.py; never edit by hand.",
+ "plan": {
+  "validator": {
+   "calendar_max_age_hours": 6.0,
+   "occupancy_reason_codes": [],
+   "rise_warning_percent": 15.0,
+   "rise_exempt_reason_codes": [
+    "SOLD_OUT_PROTECTION"
+   ],
+   "max_min_stay": 7,
+   "market_evidence_min_length": 20,
+   "no_discount_rooms": [],
+   "last_minute": {
+    "enabled": true,
+    "rooms": [
+     "Q7",
+     "Double",
+     "VK7",
+     "Balcony",
+     "VK2"
+    ],
+    "max_days_out": 3,
+    "max_discount": 0.2,
+    "max_sold_share": 0.7,
+    "last_unit_only_rooms": [
+     "Double",
+     "Q2",
+     "VK7",
+     "VK2"
+    ]
+   }
+  },
+  "payload": {
+   "reason_max_length": 250,
+   "slice_max_dates": 70
+  }
+ },
+ "weekly_reference": {
+  "Q7": {
+   "min": 800.0,
+   "base": 1173.0
+  },
+  "Double": {
+   "min": 900.0,
+   "base": 1480.0
+  },
+  "Afrodite": {
+   "min": 1500.0,
+   "base": 2000.0
+  },
+  "Q2": {
+   "min": 850.0,
+   "base": 1590.0
+  },
+  "VK7": {
+   "min": 944.0,
+   "base": 1480.0
+  },
+  "Balcony": {
+   "min": 690.0,
+   "base": 1270.0
+  },
+  "VK2": {
+   "min": 879.0,
+   "base": 1270.0
+  }
+ },
+ "pms": "beds24"
+}

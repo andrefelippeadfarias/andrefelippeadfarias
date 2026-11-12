@@ -50,9 +50,20 @@ final class ValidationResult
      */
     public function rejectedItems(): array
     {
+        return $this->rejected(IssueSubject::Item);
+    }
+
+    /**
+     * Positions of the entries of one list of the plan (items, deletions or listing changes) that
+     * have at least one error, ascending.
+     *
+     * @return list<int>
+     */
+    public function rejected(IssueSubject $subject): array
+    {
         $indexes = [];
         foreach ($this->errors as $issue) {
-            if ($issue->itemIndex !== null) {
+            if ($issue->itemIndex !== null && $issue->subject === $subject) {
                 $indexes[$issue->itemIndex] = true;
             }
         }

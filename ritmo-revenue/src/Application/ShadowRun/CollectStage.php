@@ -43,8 +43,8 @@ final class CollectStage implements Stage
         $pms = $this->connectors->pms();
         $pricing = $this->connectors->pricing();
         $readsCalendar = $this->connectors->readsPricingCalendar();
-        $from = $context->horizon->first;
-        $to = $context->horizon->last;
+        $from = $context->horizon->first();
+        $to = $context->horizon->last();
 
         $byRef = [];
         foreach ($pricing->listListings() as $listing) {

@@ -12,6 +12,7 @@ use Ritmo\Domain\Config\RuleSet;
 use Ritmo\Domain\Market\AnchorBuilder;
 use Ritmo\Domain\Market\PriceSample;
 use Ritmo\Domain\Model\Identifier;
+use Ritmo\Domain\Model\MarketAnchor;
 use Ritmo\Domain\Model\Property;
 use Ritmo\Domain\Model\PropertyMode;
 use Ritmo\Domain\Model\RoomType;
@@ -166,9 +167,10 @@ final class SetupService
             $builder = new AnchorBuilder($this->ruleSets->current() ?? RuleSet::defaults());
             $built = $builder->build($fresh);
             $merged = $builder->merge($this->anchors->range($property->id, $from, $to), $built, $this->clock->today($property->timezone));
-            $this->anchors->saveMany($property->id, array_values(array_intersect_key($merged, $built)));
+            $replaced = array_filter($built, static fn (MarketAnchor $anchor, string $night): bool => $merged[$night] === $anchor, ARRAY_FILTER_USE_BOTH);
+            $this->anchors->saveMany($property->id, array_values($replaced));
 
-            return ['samples' => count($rows), 'nights' => count($built), 'anchors' => count(array_intersect_key($merged, $built))];
+            return ['samples' => count($rows), 'nights' => count($built), 'anchors' => count($replaced)];
         });
     }
 

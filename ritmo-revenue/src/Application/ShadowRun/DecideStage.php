@@ -171,7 +171,7 @@ final class DecideStage implements Stage
     {
         $inventory = [];
         foreach ($context->rooms as $room) {
-            $inventory[$room->code] = $this->snapshots->latest($room->code, $context->horizon->first, $context->horizon->last, $context->capturedAt());
+            $inventory[$room->code] = $this->snapshots->latest($room->code, $context->horizon->first(), $context->horizon->last(), $context->capturedAt());
         }
 
         return $inventory;

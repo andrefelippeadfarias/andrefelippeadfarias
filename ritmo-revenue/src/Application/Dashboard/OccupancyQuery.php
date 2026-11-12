@@ -53,7 +53,7 @@ final class OccupancyQuery
         $inventory = [];
         $captured = null;
         foreach ($rooms as $room) {
-            $inventory[$room->code] = array_values($this->snapshots->latest($room->code, $range->first, $range->last));
+            $inventory[$room->code] = array_values($this->snapshots->latest($room->code, $range->first(), $range->last()));
             $last = $this->snapshots->lastCapturedAt($room->code);
             if ($last !== null && ($captured === null || $last > $captured)) {
                 $captured = $last;

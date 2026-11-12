@@ -98,7 +98,7 @@ final class MeasureStage implements Stage
     {
         $inventory = [];
         foreach ($context->rooms as $room) {
-            $inventory[$room->code] = array_values($this->snapshots->latest($room->code, $context->horizon->first, $context->horizon->last, $context->capturedAt()));
+            $inventory[$room->code] = array_values($this->snapshots->latest($room->code, $context->horizon->first(), $context->horizon->last(), $context->capturedAt()));
         }
 
         return $inventory;
@@ -112,7 +112,7 @@ final class MeasureStage implements Stage
         $pricing = array_map('array_values', $context->pricingNights());
 
         return (new PmsPricingMismatch())->find(
-            $this->bookings->overlapping($context->horizon->first, $context->horizon->last),
+            $this->bookings->overlapping($context->horizon->first(), $context->horizon->last()),
             $pricing,
             $context->horizon
         );

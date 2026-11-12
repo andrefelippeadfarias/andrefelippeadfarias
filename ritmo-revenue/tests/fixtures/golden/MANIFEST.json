@@ -1,0 +1,105 @@
+{
+ "generated_at": "2026-11-11",
+ "repo_commit": "c0457e729c80ae1035b89daed089c5b026da248d",
+ "engine": ".claude/skills/gestao-receita-pousadas/scripts",
+ "python": "3.11.17",
+ "frozen_today": "2026-11-11",
+ "frozen_inputs": {
+  "REDACTIONS.json": "50aaa4351e4b7c1e4702b879b4b31de1f06c7842bdfb452c29254466af93eb64",
+  "ancora_mercado.json": "dd82ea191406308652b47cda77acec06cef2b4f1a4acdaa583dad893ceb938c4",
+  "quartos.json": "40712bc254335536cd1a9e664c8c64cd767f04c046890c1e28b22e63cefc7365"
+ },
+ "tolerance": {
+  "amounts": 0.01,
+  "percentages_and_integers": "exact"
+ },
+ "nan": "written as the string \"NaN\"",
+ "vocabulary": {
+  "night_type": {
+   "semana": "weekday",
+   "fds": "weekend",
+   "feriado": "holiday"
+  },
+  "pace_status": {
+   "frente": "ahead",
+   "ritmo": "on_pace",
+   "atras": "behind",
+   "muito_atras": "very_behind"
+  },
+  "property": {
+   "Recanto": "recanto",
+   "Villa": "villa"
+  },
+  "tier": {
+   "Recanto": "premium",
+   "Villa": "standard"
+  }
+ },
+ "files": [
+  {
+   "file": "level1/pace.curva.json",
+   "function": "pace.curva",
+   "cases": 72
+  },
+  {
+   "file": "level1/pace.status_da_noite.json",
+   "function": "pace.status_da_noite",
+   "cases": 809
+  },
+  {
+   "file": "level1/pace.percentil_alvo.json",
+   "function": "pace.percentil_alvo",
+   "cases": 56
+  },
+  {
+   "file": "level1/pace.pmax.json",
+   "function": "pace.pmax",
+   "cases": 18
+  },
+  {
+   "file": "level1/pace.passo.json",
+   "function": "pace.passo",
+   "cases": 460
+  },
+  {
+   "file": "level1/pace.efetivo.json",
+   "function": "pace.efetivo",
+   "cases": 238
+  },
+  {
+   "file": "level1/ancora_mercado.quantil.json",
+   "function": "ancora_mercado.quantil",
+   "cases": 96
+  },
+  {
+   "file": "level1/ancora_mercado.valor_percentil.json",
+   "function": "ancora_mercado.valor_percentil",
+   "cases": 323
+  },
+  {
+   "file": "level1/ancora_mercado.percentil_de.json",
+   "function": "ancora_mercado.percentil_de",
+   "cases": 444
+  },
+  {
+   "file": "level1/validar_plano.piso_pct.json",
+   "function": "validar_plano.piso_pct",
+   "cases": 930
+  },
+  {
+   "file": "level1/validar_plano.teto_pct.json",
+   "function": "validar_plano.teto_pct",
+   "cases": 930
+  },
+  {
+   "file": "level1/validar_plano.em_reais.json",
+   "function": "validar_plano.em_reais",
+   "cases": 500
+  },
+  {
+   "file": "level1/builtins.round.json",
+   "function": "builtins.round",
+   "cases": 464
+  }
+ ]
+}

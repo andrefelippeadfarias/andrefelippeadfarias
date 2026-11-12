@@ -1,0 +1,683 @@
+{
+ "versao": "2026-10-31T00",
+ "nota": "Fonte única dos dados de máquina da Skill. Os scripts leem daqui. Quem mudar base, mínimo ou máximo no PriceLabs atualiza este arquivo no mesmo commit.",
+ "pms": "beds24",
+ "grupo": {
+  "id": 124405,
+  "nome": "Recanto dos Moinhos"
+ },
+ "fuso": "America/Sao_Paulo",
+ "metas": {
+  "7": 70,
+  "15": 50,
+  "30": 35,
+  "45": 25,
+  "60": 15
+ },
+ "quartos": [
+  {
+   "curto": "Q7",
+   "id": "350362___722805",
+   "nome": "Queen (7)",
+   "pousada": "Recanto",
+   "unidades": 7,
+   "min": 920,
+   "base": 1173,
+   "max": 5000,
+   "min_referencia": 800,
+   "banheira": true,
+   "fator_real": 0.42,
+   "fator_vitrine": 0.59,
+   "piso_feriado_base": "real",
+   "sem_desconto": false,
+   "regra_i": true,
+   "regra_f": true,
+   "demanda": "media",
+   "fator_vitrine_fds": 0.61,
+   "demanda_nota": "média em 14/10: 15d 35% (70% da meta), 30d 22% (63%)"
+  },
+  {
+   "curto": "Double",
+   "id": "350362___722806",
+   "nome": "Double",
+   "pousada": "Recanto",
+   "unidades": 6,
+   "min": 1035,
+   "base": 1480,
+   "max": 5000,
+   "min_referencia": 900,
+   "banheira": true,
+   "fator_real": 0.42,
+   "fator_vitrine": 0.59,
+   "piso_feriado_base": "real",
+   "sem_desconto": false,
+   "regra_i": true,
+   "regra_f": true,
+   "demanda": "alta",
+   "fator_vitrine_fds": 0.61,
+   "demanda_nota": "alta confirmada em 14/10: 7d 81%, 15d 56%, 30d 47%"
+  },
+  {
+   "curto": "Afrodite",
+   "id": "350362___722807",
+   "nome": "Afrodite",
+   "pousada": "Recanto",
+   "unidades": 1,
+   "min": 1500,
+   "base": 2000,
+   "max": 10000,
+   "min_referencia": 1500,
+   "banheira": true,
+   "fator_real": 0.42,
+   "fator_vitrine": 0.59,
+   "piso_feriado_base": "real",
+   "sem_desconto": false,
+   "regra_i": false,
+   "regra_f": false,
+   "demanda": "media",
+   "fator_vitrine_fds": 0.61,
+   "acima_de": [
+    "Q7",
+    "Double",
+    "Q2"
+   ],
+   "premio_minimo": 0.05,
+   "premio_minimo_semana": 0.2,
+   "ordem_nota": "Dono 27/10 ('Pode ser', reposicionamento da Afrodite): de domingo a quinta fora de feriado pelo menos 20% acima da mais cara das outras três (premio_minimo_semana); sexta, sábado e feriado pelo menos 5% (premio_minimo); sexta e sábado fora de feriado na faixa alta do mercado, R$ 1.600 a R$ 1.800 na vitrine (parametros.afrodite_fds_publico). Antes, dono 22/10: 'A Suíte Afrodite tem que ser a mais cara, com valor mais alto da Recanto, pois ela é considerada super luxo.' Toda noite pelo menos 5% acima da mais cara das outras três suítes do Recanto (ordem_recanto.py). A Regra C (−30% a até 13 dias, piso R$ 1.500) só vale se a Afrodite continuar acima das outras."
+  },
+  {
+   "curto": "Q2",
+   "id": "350362___722808",
+   "nome": "Queen (2)",
+   "pousada": "Recanto",
+   "unidades": 2,
+   "min": 977,
+   "base": 1590,
+   "max": 5000,
+   "min_referencia": 850,
+   "banheira": true,
+   "fator_real": 0.42,
+   "fator_vitrine": 0.59,
+   "piso_feriado_base": "real",
+   "sem_desconto": false,
+   "regra_i": false,
+   "regra_f": false,
+   "demanda": "alta",
+   "fator_vitrine_fds": 0.61,
+   "entre": [
+    "Q7",
+    "Double"
+   ],
+   "ordem_nota": "Dono 21/10: 'Os valores da Suíte Panorâmica II devem sempre estar entre a Moinhos e a Panorâmica I' (Q2 entre Q7 e Double, noite a noite; scripts/ordem_recanto.py). Substitui a regra antiga de 'sem desconto' (19/10), criada quando se achava que o hóspede pagava 34% do enviado; em 21/10 achou-se que era uma tarifa fixa 50067466 na Booking; em 03/11 viu-se que foram só 2 reservas de 21/10 e que a Q2 flutua. fator_real volta a 0,42 como o resto do Recanto, para o piso de feriado da Q2 não passar o da Double.",
+   "base_antes_2210": 1870,
+   "base_nota": "Dono 22/10 ('Pode fazer'): base de R$ 1.870 para R$ 1.590 (1º passo); 2º passo em 29/10 para R$ 1.352 (limite de 15% por semana).",
+   "motor_nota": "Dono 03/11: 'ela deve flutuar como o planejado'. Volta ao motor de pace como os outros quartos. A 'tarifa fixa' 50067466 apareceu só em 2 reservas de 21/10 (20-22/11, R$ 412,50 e R$ 495); as demais reservas da Booking da Q2 (tarifas 60962482 e 50068135) vêm com o preço do dia (R$ 321 a R$ 1.610 por noite)."
+  },
+  {
+   "curto": "VK7",
+   "id": "350364___722813",
+   "nome": "Villa King Spa (7)",
+   "pousada": "Villa",
+   "unidades": 7,
+   "min": 944,
+   "base": 1480,
+   "max": 5000,
+   "min_referencia": 1000,
+   "banheira": true,
+   "fator_real": 0.39,
+   "fator_vitrine": 0.53,
+   "piso_feriado_base": "real",
+   "sem_desconto": false,
+   "regra_i": true,
+   "regra_f": true,
+   "demanda": "alta",
+   "fator_vitrine_fds": 0.66,
+   "demanda_desde": "2026-10-14",
+   "demanda_nota": "candidata em 13/10 (rotina leve), confirmada na rotina completa de 14/10: 7d 88%, 15d 56%, 30d 47%"
+  },
+  {
+   "curto": "Balcony",
+   "id": "350364___722814",
+   "nome": "Balcony",
+   "pousada": "Villa",
+   "unidades": 6,
+   "min": 690,
+   "base": 1270,
+   "max": 5000,
+   "min_referencia": 900,
+   "banheira": false,
+   "fator_real": 0.39,
+   "fator_vitrine": 0.53,
+   "piso_feriado_base": "vitrine",
+   "sem_desconto": false,
+   "regra_i": true,
+   "regra_f": false,
+   "demanda": "baixa",
+   "fator_vitrine_fds": 0.66,
+   "demanda_nota": "baixa em 14/10: 15d 24% (48% da meta)"
+  },
+  {
+   "curto": "VK2",
+   "id": "350364___722815",
+   "nome": "Villa King Spa (2)",
+   "pousada": "Villa",
+   "unidades": 2,
+   "min": 944,
+   "base": 1270,
+   "max": 5000,
+   "min_referencia": 900,
+   "banheira": true,
+   "fator_real": 0.39,
+   "fator_vitrine": 0.53,
+   "piso_feriado_base": "real",
+   "sem_desconto": false,
+   "regra_i": true,
+   "regra_f": true,
+   "demanda": "alta",
+   "fator_vitrine_fds": 0.66,
+   "demanda_nota": "15/10: alta confirmada na segunda rotina completa seguida (15d 70%, 30d 50%; 14/10 15d 70%, 30d 50%)."
+  }
+ ],
+ "referencia_semanal": {
+  "data": "2026-11-09",
+  "nota": "Base e mínimo de cada quarto no início da semana (lidos do PriceLabs na coleta de 09/11 07:53, antes dos passos do dia). A revisão de segunda atualiza. O validador barra mudança acima do limite semanal contra estes valores. A referência estava parada em 12/10 (Q2 base 1870, VK7 mín. 850, Balcony 765, VK2 765); atualizada em 09/11 para o passo 1 da ordem dono-2026-11-09-minimo-piso-semana.",
+  "valores": {
+   "Q7": {
+    "min": 800,
+    "base": 1173
+   },
+   "Double": {
+    "min": 900,
+    "base": 1480
+   },
+   "Afrodite": {
+    "min": 1500,
+    "base": 2000
+   },
+   "Q2": {
+    "min": 850,
+    "base": 1590
+   },
+   "VK7": {
+    "min": 944,
+    "base": 1480
+   },
+   "Balcony": {
+    "min": 690,
+    "base": 1270
+   },
+   "VK2": {
+    "min": 879,
+    "base": 1270
+   }
+  }
+ },
+ "limites_seguranca": {
+  "nota": "Só o dono muda estes limites. A Skill nunca os altera sozinha.",
+  "fracao_min_referencia": 0.7,
+  "variacao_semanal_base_min": 0.15,
+  "piso_feriado_real_seguranca": 800,
+  "padrao_qualidade_diaria": 1000,
+  "padrao_qualidade_nota": "Dono, 08/10: sexta, sábado e feriado das suítes com banheira a partir deste valor, no preço enviado (tabela do PriceLabs, antes dos descontos da OTA). Só o dono muda. A Skill só desce abaixo com o campo mercado no plano e a entrada em excecoes_mercado.",
+  "proibido": [
+   "descontos de OTA",
+   "ofertas da Booking",
+   "Genius acima do nível 3",
+   "política de sábado sozinho (Regra H)",
+   "pedir senha ou token no chat"
+  ],
+  "piso_vitrine_semana_suites": 500,
+  "piso_vitrine_semana_nota": "Dono, 14/10: \"Vamos ajustar os valores das suítes com banheira para dia de semana, no mínimo de R$500. Preço final nas plataformas. Ajuste isso percentualmente para podermos termos a flutuação de preço natural do Price Labs.\" Vale para as 6 suítes com banheira (não a Balcony), nas noites de domingo a quinta fora de feriado: piso enviado ≥ este valor ÷ parametros.fator_vitrine_semana da pousada (vitrine da Booking, a mais descontada). Vale também para a Regra I. Só o dono muda.",
+  "piso_vitrine_fds_suites": 850,
+  "piso_vitrine_fds_nota": "Dono, 14/10: \"Para o fim de semana a diária mínima pra suíte, com banheira, deve ser na faixa de R$ 850,00\" (lido como preço final nas plataformas, como o pedido anterior de R$ 500). Vale para as 6 suítes com banheira (não a Balcony) nas noites de sexta e sábado fora de feriado, inclusive na Regra I: piso enviado ≥ este valor ÷ parametros.fator_vitrine_fds da pousada. Responde a dúvida do padrão de qualidade (base = preço final). Só o dono muda.",
+  "excecoes_dono": [
+   {
+    "quarto": "Afrodite",
+    "de": "2026-10-26",
+    "ate": "2026-11-08",
+    "limite": 800,
+    "ordem": "Dono, 26/10: \"Vamos completar as reservas. Valor mínimo de diária de 300 reais\"; R$ 300 = o que o hóspede Genius 3 paga (\"Ninguém paga menos de 300\"); Afrodite \"Seguir a ordem\" (5% acima da Panorâmica I). Dias de semana em aberto até 08/11."
+   }
+  ],
+  "excecoes_dono_nota": "Exceção ao limite de segurança por quarto e período, só por ordem expressa do dono (cite a ordem). O validador usa o 'limite' no lugar de 70% do mínimo de referência dentro do período; fora dele volta o limite normal."
+ },
+ "parametros": {
+  "nota": "A Skill ajusta estes valores sozinha, dentro dos limites de segurança. Toda mudança vai para o historico-da-skill.md.",
+  "regra_i_dias": 3,
+  "regra_i_desconto_max": 0.2,
+  "regra_f_saida_vendido": 0.5,
+  "regra_c_desconto": 0.3,
+  "regra_a_janela_dias": 14,
+  "regra_a_janela_dias_nota": "Fora de uso desde as noites de 05/11/2026: a ordem do dono de 04/11 21:00 BRT (estadia_por_dia_chegada, 'última hora não libera') tirou a 1 noite nos próximos 14 dias; segunda, quarta e sexta ficam com 2 também na última hora (1 só na noite órfã). O valor fica só como registro da Regra A antiga.",
+  "estadia_por_dia_chegada": {
+   "ativa": true,
+   "desde": "2026-11-05",
+   "por_dia": {
+    "seg": 2,
+    "ter": 1,
+    "qua": 2,
+    "qui": 1,
+    "sex": 2,
+    "sab": 2,
+    "dom": 1
+   },
+   "orfa_noite_seguinte": true,
+   "orfa_em_feriado": true,
+   "orfa_em_feriado_ordem_id": "dono-2026-11-05-afrodite-sexta-orfas-feriado",
+   "orfa_em_feriado_nota": "Dono 05/11/2026 ~12:05 BRT ('Isso, pode abrir Afrodite, saída de sexta. As faixas por dia, eu acho que está dentro do escopo por enquanto. As noites órfãs do feriado, a gente pode abrir.'; ordem dono-2026-11-05-afrodite-sexta-orfas-feriado): a noite órfã (livre no quarto com a noite seguinte esgotada nele) leva 1 diária também em feriado e véspera de feriado, nunca em noite de pacote (Natal 23→25/12 e Ano Novo 30/12→01 e 30/12→03/01: regra_h_beds24.estadia_minima_por_data, estadia_maxima_por_data e override_por_data). No feriado a órfã desce a 1 (plano do PriceLabs, também o só de estadia, e lote do Beds24); quando a noite seguinte reabre, a estadia volta à do feriado pelo plano completo (calendario_12m plano sem --so-estadia), como toda estadia de feriado abaixo da exigida (o plano só de estadia lista a falta; o lote do Beds24 não mexe, para não desfazer liberação de 1 noite em feriado dada pelo dono). Acima da do feriado não desce sozinha. O dia isolado do feriado (1 entre noites esgotadas) é órfã também: fica como informação aceita. Aplicada por validar_plano (orfa_permitida, noite_orfa_decide, estadia_planejada), calendario_12m (plano do PriceLabs e lote do Beds24) e pace.ajustar_tetos. Desligar (false) volta ao comportamento de 04/11 (órfã só fora de feriado).",
+   "ordem_id": "dono-2026-11-04-estadia-dia-chegada",
+   "nota": "Dono 04/11/2026 21:00 BRT: 'Vamos ajustar aqui uma estratégia que eu sempre usei. Abriremos apenas para uma diária. A diária de domingo, a diária de terça e a diária de quinta. Todas as outras deverão ser com no mínimo 2 dias.' Perguntado (1) se feriados e pacotes seguem com as regras próprias, (2) se noite órfã e última hora liberam 1 diária e (3) se começa em 05/11: 'Sim, mantém feriados e pacotes; libera órfã; começa amanhã'. Estadia mínima pelo DIA DE CHEGADA, nos 7 quartos, desde as noites de 05/11, no Beds24 e no PriceLabs por data (o envio do PriceLabs leva a estadia ao Beds24; no Beds24 'stayThrough', com valores 1 e 2, dá o mesmo que pela chegada). Sábado: Regra H (2 e fechado para entrada e saída), intacta. Feriado, véspera e pacote ficam com a estadia própria (feriados; regra_h_beds24.estadia_minima_por_data), inclusive quando a noite seria órfã; temporada do calendário acima do dia vale (pico de julho 11-25/07/2027 e CBQ 16/09/2027 com 2). Noite órfã (livre no quarto com a noite seguinte esgotada nele) com 1, fora de feriado, pacote e sábado (o sábado órfão segue regra_h_beds24.orfas, ordem de 02/11; a sexta órfã passou a esta regra). Última hora não libera: saem a Regra A de 14 dias (regra_a_janela_dias) e a exceção 'regra_h' de sábado de última hora. Abaixo da estadia do dia só a noite órfã ou ordem do dono mais nova que libere 'estadia'. Aplicada por validar_plano (estadia_exigida, estadia_alvo, estadia_planejada), calendario_12m (plano do PriceLabs e lote do Beds24, nos dois sentidos) e pace.ajustar_tetos. Estadia de feriado acima da regra não se reduz sozinha (pendência do dono). 05/11 (dono, ordem dono-2026-11-05-afrodite-sexta-orfas-feriado, 'Isso, pode abrir Afrodite, saída de sexta. As faixas por dia, eu acho que está dentro do escopo por enquanto. As noites órfãs do feriado, a gente pode abrir.'): a saída de sexta da Afrodite abriu (regra_h_beds24.sexta_reaberta_por_quarto) e a chave aguardando_dono (quartas da Afrodite fora da regra do dia) foi apagada: as quartas da Afrodite seguem a regra (2 noites, qua→sex). A noite órfã vale também em feriado e véspera, fora de pacote (orfa_em_feriado)."
+  },
+  "piso_feriado_real_padrao": 1000,
+  "regra_g_desconto": 0.1,
+  "fator_vitrine_semana": {
+   "Recanto": 0.41,
+   "Villa": 0.53,
+   "nota": "Vitrine ÷ enviado no público mais descontado (Genius 3), dono 20/10: o piso vale para todos. Recanto 0,41 (Q7 30/11: R$ 350 ÷ R$ 852, PDF do dono). Villa fica em 0,53 (medido 0,549 na VK2 em 30/11; vale o menor). A revisão de segunda recalibra só com PDF do dono ou busca equivalente logada; ao cair o fator, o piso enviado sobe."
+  },
+  "fator_vitrine_fds": {
+   "Recanto": 0.425,
+   "Villa": 0.575,
+   "nota": "Vitrine Genius 3 ÷ enviado em sexta e sábado (PDF do dono, 27-28/11): Recanto 0,425 (Q7 R$ 749 ÷ R$ 1.760); Villa 0,575 (VK2 R$ 995 ÷ R$ 1.729). Dono 20/10: o piso de R$ 850 vale para todos."
+  },
+  "fator_canal": {
+   "Recanto": {
+    "booking": 0.49,
+    "airbnb": 0.41,
+    "direct": 1.0
+   },
+   "Villa": {
+    "booking": 0.46,
+    "airbnb": 0.31,
+    "direct": 1.0
+   },
+   "nota": "Valor que chega ÷ price1 do Beds24 por canal (Beds24, reservas de 13 a 19/10), depois dos descontos das plataformas (dono, 21/10: 'Considere o valor de desconto nas plataformas'). Direto = 1,0: não há desconto de plataforma. Recalibrar na revisão de segunda."
+  },
+  "alerta_reserva": 0.7,
+  "regra_h_beds24": {
+   "troca_sabado": {
+    "none": "noCheckInOrCheckOut",
+    "noCheckIn": "noCheckInOrCheckOut",
+    "noCheckOut": "noCheckInOrCheckOut"
+   },
+   "estadia_minima_sabado": 2,
+   "nota": "Dono 02/11/2026: 'Preciso que mantenha todos os sábados fechados sempre, tanto para a entrada quanto para a saída.' Todo sábado fica noCheckInOrCheckOut no Beds24 nos 7 quartos, em todo o horizonte, inclusive em feriado (a Afrodite também no PriceLabs por data, porque o envio dela leva chegada/saída). O fim de semana vende de sexta a domingo ou mais. Substitui a Regra H de 01/11 (chegada no sábado liberada) e as exceções de 01/11 (Natal 26/12 no Recanto e 02/01 na Afrodite). Exceção só com nova ordem do dono. Auditoria: calendario_12m.py (--plano-beds24).",
+   "sabado_override": "noCheckInOrCheckOut",
+   "sabados_excecao": {
+    "2026-12-26": "none"
+   },
+   "sabados_excecao_nota": "Dono 02/11 ('Pode fazer', proposta 2; ordem dono-2026-11-02-festas-sabado-aberto): nos sábados de festa 26/12 e 02/01, entrada e saída abertas nos 7 quartos (Afrodite também no PriceLabs, check_in/check_out 1111111). 03/11: o sábado 02/01 saiu da exceção e fica fechado (pacote fechado do Ano Novo, dono 03/11).",
+   "orfas": {
+    "ativa": true,
+    "sabado_esgotado": "noCheckIn",
+    "sexta_esgotada": "noCheckOut",
+    "ordem_id": "dono-2026-11-02-sabado-orfao",
+    "em_feriado": true,
+    "em_feriado_ordem_id": "dono-2026-11-05-afrodite-sexta-orfas-feriado",
+    "nota": "Dono 02/11 ('Pode fazer', proposta 1): sábado esgotado no quarto (numAvail 0) com a sexta livre abre a saída do sábado só nesse quarto (noCheckIn); sexta esgotada com o sábado livre abre a entrada do sábado (noCheckOut). A noite órfã leva estadia mínima 1 (PriceLabs por data). Quando o lado esgotado reabre, o sábado volta a fechar. 05/11 (dono, ordem dono-2026-11-05-afrodite-sexta-orfas-feriado, 'As noites órfãs do feriado, a gente pode abrir'): vale também em feriado e véspera (em_feriado), a estadia 1 do sábado órfão inclusive; nunca em noite de pacote (Natal e Ano Novo) nem no sábado de festa com exceção própria (sabados_excecao, 26/12). Desligar em_feriado volta a 'fora de feriado'."
+   },
+   "sexta_override_por_quarto": {},
+   "sexta_override_nota": "05/11/2026 (dono, ~12:05 BRT, ordem dono-2026-11-05-afrodite-sexta-orfas-feriado: 'Isso, pode abrir Afrodite, saída de sexta.'): a Afrodite saiu daqui; a sexta dela volta à regra geral (sem override: entrada e saída abertas, 'none' no Beds24; no PriceLabs por data, check_out com a sexta em 1). As noites de pacote (25/12 e 01/01, override_por_data) e o sábado (Regra H) não mudam. Antes: dono 01/11 14:10 ('Sim'; ordens dono-2026-11-01-beds24-semana-afrodite-vk7 e dono-2026-11-01-afrodite-sextas-feriado): Afrodite com chegada de sexta liberada e saída de sexta fechada em todas as sextas, inclusive de feriado (Beds24 noCheckOut; PriceLabs por data check_in 1111111 e check_out 1111011, a sexta é o 5º caractere, segunda a domingo). Quarto que voltar a ter override de sexta entra de novo aqui só com nova ordem do dono.",
+   "sexta_reaberta_por_quarto": {
+    "Afrodite": "noCheckOut"
+   },
+   "sexta_reaberta_ordem_id": "dono-2026-11-05-afrodite-sexta-orfas-feriado",
+   "sexta_reaberta_nota": "Dono 05/11/2026 ('Isso, pode abrir Afrodite, saída de sexta.'; ordem dono-2026-11-05-afrodite-sexta-orfas-feriado): override de sexta que a ordem antiga do dono punha no quarto e que a nova tirou. Nas sextas fora de pacote, a auditoria reabre: no Beds24, o override antigo (noCheckOut) vira 'none' (item com pricelabs_tambem, porque o envio do PriceLabs leva a chegada/saída da Afrodite ao Beds24); no PriceLabs por data (calendario_12m.comparar com --regras, e pace.ajustar_tetos ao herdar a regra apagada), check_out com o 5º caractere (sexta) em 1, o resto da máscara e o check_in mantidos. O validador barra fechar de novo a saída de sexta desse quarto sem ordem do dono mais nova que esta.",
+   "override_por_data": {
+    "2026-12-23": "none",
+    "2026-12-24": "noCheckInOrCheckOut",
+    "2026-12-25": "none",
+    "2026-12-30": "none",
+    "2026-12-31": "noCheckInOrCheckOut",
+    "2027-01-01": "noCheckIn",
+    "2027-01-02": "noCheckInOrCheckOut",
+    "2027-01-03": "none"
+   },
+   "estadia_minima_por_data": {
+    "2026-12-23": 2,
+    "2026-12-24": 2,
+    "2026-12-29": 1,
+    "2026-12-30": 2,
+    "2026-12-31": 2
+   },
+   "estadia_maxima_por_data": {
+    "2026-12-23": 2,
+    "2026-12-24": 2,
+    "2026-12-29": 2,
+    "2026-12-30": 4,
+    "2026-12-31": 4,
+    "2027-01-01": 4,
+    "2027-01-02": 4
+   },
+   "override_por_data_motivo": "Dono 03/11: pacotes fechados (Natal 23→25; Ano Novo 30→01 ou 30→03)",
+   "override_por_data_nota": "Dono 03/11: 'Natal de 23 a 25. Vamos deixar esse período pré-definido para que apenas tenhamos reservas nessas datas. Ano Novo, altíssima temporada, de 30 a 01 prefixado. Podendo o hóspede estender até o dia 03 apenas.' Chegada/saída por data valem para todos os quartos, acima da regra do sábado e da sexta da Afrodite (25/12 e 01/01 abrem a saída da Afrodite). Os quartos do Beds24 usam restrictionStrategy 'stayThrough': estadia mínima e máxima valem em cada noite da reserva. Estadia mínima 2 em 31/12 (antes 3) para o 30→01 caber; máxima 2 em 29/12 barra 28→01 e 29→01. A mínima vai também ao PriceLabs por data (o envio dele leva ao Beds24); a máxima só existe no Beds24. Reservas já feitas fora dos pacotes ficam como estão (a skill nunca mexe em reserva). Ordem dono-2026-11-03-festas-pacotes."
+  },
+  "escada": {
+   "passo": 0.07,
+   "fator_balcony": 0.9,
+   "top_n": 3,
+   "piso_genius": {
+    "valor": 300,
+    "ate": "2026-11-08"
+   },
+   "nota_proporcional": "Dono, 28/10: 'Ajuste a escada de aumento de preço de forma proporcional sempre para chegarmos ao valor da média dos tops do mercado com nossas características sempre.' Alvo = média dos top_n maiores preços do quarto com hidro da classe A (hidro + vista, até 3 km do Capivari; concorrentes_hidro_vista.json: topo_a dos feriados e referencias_topo de semana e fds) ÷ regra_j.fator_publico. Cada venda move o preço na reta até o alvo, na proporção das unidades: novo = alvo − (alvo − atual) × livres_depois ÷ livres_antes; a última unidade chega ao alvo. Cancelamento desce pela mesma reta, até o piso_genius (R$ 300 no Genius 3 até 08/11; depois os pisos de vitrine do dono). 'passo' (7%) só sem dado de mercado.",
+   "nota": "Dono, 26/10 (substituída em 28/10 pela nota_proporcional): a cada reserva, subir o preço gradualmente do mínimo atual até o alto padrão (teto = piso do dono de R$ 500 dom-qui / R$ 850 sex-sáb no Genius 3; Balcony 90% do teto da VK2). Um degrau de 7% por reserva no quarto e nas noites da estadia (scripts/escada_reservas.py)."
+  },
+  "afrodite_fds_publico": [
+   1600,
+   1800
+  ],
+  "afrodite_fds_nota": "Dono 27/10 ('Pode ser'): Afrodite no fim de semana fora de feriado na faixa alta do mercado sem passar do topo (classe A com hidro: mediana ~R$ 1.270-1.310, topo ~R$ 2.000 na vitrine). Enviado = vitrine ÷ regra_j.fator_publico do Recanto. Aplicado pelo ordem_recanto.py. | 30/10: o teto de fim de semana vale só até hoje + afrodite_fds_horizonte_dias (95 dias): a faixa R$ 1.600-1.800 foi medida em out/26 e não serve para o inverno de 2027 (50 fins de semana de 2027 receberam teto e foram desfeitos em 30/10).",
+  "regra_j": {
+   "fator_publico": {
+    "Recanto": 0.63,
+    "Villa": 0.65
+   },
+   "limiar_pousada": 0.9,
+   "sem_dado_mult": 1.5,
+   "nota": "Dono, 27/10: suíte lotada ou com overbooking, ou pousada lotada (≥ 90% vendida), vai ao topo do mercado: maior preço do quarto com hidro da classe A no período (concorrentes_hidro_vista.json → maximo_a) ÷ fator público da Booking (Recanto 0,59 no anúncio 15459723; Villa 0,589). Sem dado do período: preço atual × 1,5. scripts/topo_mercado.py. 30/10: fator público unificado em parametros.fator_publico (0,63/0,65); limiar_pousada 0,9 e sem_dado_mult 1,5 ficam até a resposta do dono à decisão D3 (proposta: lotada = 100%; sem dado = p90 da âncora)."
+  },
+  "fator_publico": {
+   "Recanto": 0.63,
+   "Villa": 0.65,
+   "medido_em": "2026-10-29",
+   "fonte": "preço público na Booking ÷ enviado: Recanto anúncio 7562933 (0,53-0,63 por data, 29/10 pós-sync; 0,658 em 25/10), Villa 14824789 (~0,65). Único fator de comparação com o mercado (motor de pace e âncora); os fatores do Genius 3 (fator_vitrine_semana/fds) só convertem os pisos do dono e o fator_real só o piso de feriado. Recalibrar toda rotina completa pela busca dos nossos anúncios; abaixo de 0,55 é promoção ativa a confirmar com o dono.",
+   "nota": "30/10/2026: criado na reformulação da estratégia (motor de pace).",
+   "revisao_semanal_2026-11-02": "Mantidos 0,63 (Recanto) e 0,65 (Villa). Medição de 01/11 pela Booking (conector oficial, nossos anúncios): novembro 0,633 (Recanto 13/11) e 0,653 (Villa 13/11), batendo com os fatores; dezembro e janeiro 0,61-0,62 nas duas pousadas (a mais de 30 dias). O motor usa um fator só: nas noites de dezembro em diante o alvo enviado sai ~3% abaixo do que a vitrine pede. Nenhuma promoção nova abaixo de 0,55 encontrada; a reserva Genius de última hora da King Spa 7 (06-08/11) pagou 0,38 do enviado."
+  },
+  "pace": {
+   "curvas": {
+    "semana": {
+     "60": 3,
+     "30": 8,
+     "14": 15,
+     "7": 28,
+     "3": 42,
+     "1": 55,
+     "0": 100
+    },
+    "fds": {
+     "60": 8,
+     "30": 18,
+     "14": 32,
+     "7": 50,
+     "3": 68,
+     "1": 85,
+     "0": 100
+    },
+    "feriado": {
+     "60": 12,
+     "30": 30,
+     "14": 50,
+     "7": 68,
+     "3": 82,
+     "1": 92,
+     "0": 100
+    }
+   },
+   "banda": 20,
+   "muito_atras": 30,
+   "alvo": {
+    "Recanto": {
+     "frente_perto": 90,
+     "frente": 75,
+     "ritmo": 65,
+     "atras": 50,
+     "muito_atras": 40
+    },
+    "Villa": {
+     "frente_perto": 75,
+     "frente": 65,
+     "ritmo": 50,
+     "atras": 40,
+     "muito_atras": 25
+    }
+   },
+   "frente_perto_dias": 7,
+   "k": 0.5,
+   "pmax": {
+    "31+": 5,
+    "8-30": 10,
+    "4-7": 15,
+    "0-3": 20
+   },
+   "min_n": 6,
+   "idade_max_dias": 10,
+   "tolerancia": 0.03,
+   "nota": "Motor de pace (30/10/2026, pedido do dono: maior valor com os 2 hotéis lotados). curvas = % vendido esperado a D dias da noite, por tipo (dom-qui, sex-sáb, feriado), calibradas no histórico de 01/09 a 30/10 (39-50% das reservas com 0-1 dia; Booking mediana 10 d) e na janela do mercado do PriceLabs (nov 0-8/0-10 d; dez 0-24 d); recalibrar na revisão de segunda só com n >= 10 por célula e no máximo 5 pontos por ponto. banda = pontos de diferença vendido − curva para sair de 'no ritmo'; muito_atras = pontos para 'muito atrás'. alvo = percentil do preço PÚBLICO dos hotéis com hidro na Booking (dados/ancora_mercado.json) por status e pousada (Recanto um degrau acima da Villa; frente_perto = à frente a até frente_perto_dias). passo = k × distância relativa até o alvo, limitado por pmax conforme D (pela metade com âncora com n < min_n ou mais velha que idade_max_dias). tolerancia = variação mínima para gerar passo. | protecao_percentil: percentil da âncora usado como piso de proteção da noite esgotada/overbooking com a Regra J desligada (31/10).",
+   "protecao_percentil": 90,
+   "escada_vendas": {
+    "ativa": true,
+    "p_topo": 90,
+    "nota": "Dono 01/11: 'Agora vamos aumentando o valor gradualmente de acordo com que as datas que estão feitas as reservas forem entrando. Para que possamos atingir nossos objetivos.' O percentil alvo de cada noite sobe com a ocupação dela: p_status + (p_topo − p_status) × vendidas/unidades (quartos de 1-2 unidades pela ocupação das suítes com banheira da pousada). Reserva nova libera mais um passo para cima no mesmo dia (cadência por venda); cancelamento desce pela mesma reta. Nas noites da ordem de base do mercado com escada_vendas, o piso sai do piso da ordem e sobe com a ocupação até o piso padrão do dono, sem salto; noite que já vende bem nunca desce para a reta."
+   }
+  },
+  "motor": {
+   "modo": "ligado",
+   "desde": "2026-10-30",
+   "ligado_em": "2026-10-31T00:30-03:00",
+   "regra_j_ativa": false,
+   "ordem": "dono-2026-10-31-ligar-motor",
+   "resposta_do_dono": "Pode ligar o motor de pace. Pode fazer tudo também conforme planejado. Tudo que você verificou está correto. Vamos vender.",
+   "nota": "modo: sombra (calcula e relata, não grava) | ligado (grava D0-D60 pelo validador). regra_j_ativa False: noite esgotada e overbooking recebem piso de proteção no p90 da âncora com teto livre (pace.protecao_percentil), nunca piso = teto; 'pousada lotada' deixa de existir como gatilho. A escada por reserva (26 e 28/10) e a Regra J (27/10) encerraram em 30/10 (ordens_dono.json)."
+  },
+  "afrodite_fds_horizonte_dias": 95,
+  "seguranca": {
+   "_nota": "Dono 03/11: 'A nossa bokking .com foi invadida .' / 'Precisamos proteger nossas propriedades'. scripts/vigia_seguranca.py em toda rotina (topo do relatório). Origem nova da equipe ou integração: incluir aqui depois de confirmar com o dono.",
+   "origens_conhecidas": [
+    "Booking.com",
+    "Airbnb",
+    "Expedia",
+    "Expedia Affiliate Network",
+    "google",
+    "setBooking JSON",
+    "API"
+   ],
+   "rajada_cancelamentos": 3,
+   "rajada_horas": 3,
+   "booking_propriedades": {
+    "Recanto dos Moinhos": {
+     "id": 7562933,
+     "endereco": "575 Rua Januário Pereira"
+    },
+    "Villa Dolce Amore": {
+     "id": 14824789,
+     "endereco": "R. das Candelas, 79"
+    }
+   },
+   "booking_razao_alerta": [
+    0.42,
+    0.72
+   ]
+  }
+ },
+ "feriados": [
+  {
+   "nome": "Nossa Senhora Aparecida",
+   "inicio": "2026-10-09",
+   "fim": "2026-10-11",
+   "piso_real": 800,
+   "nota": "Noites de feriado (a noite de segunda 12/10 é volta e não entra). Piso de R$ 1.000 decidido pelo dono em 06/10; Villa a R$ 800 desde 06/10 16h (estratégia agressiva); Recanto a R$ 800 desde 07/10 08:20 pela Skill: 24 h sem venda de feriado a 2 dias, 19 de 31 unidades livres na sexta, Recanto 13% acima da mediana com hidro da Booking."
+  },
+  {
+   "nome": "Finados",
+   "inicio": "2026-10-30",
+   "fim": "2026-11-01",
+   "piso_real": null,
+   "nota": "Dono pôs +20% e 3 noites nos 7 quartos de 30/10 a 02/11 pela tela (03/10). Piso real R$ 800 por baixo do +20% do dono (03/10); estadia 3 noites por decisão dele.",
+   "estadia_minima": 3
+  },
+  {
+   "nome": "Consciência Negra",
+   "inicio": "2026-11-19",
+   "fim": "2026-11-21",
+   "piso_real": null,
+   "nota": "Piso real R$ 800 (não o padrão de R$ 1.000): decidido em 10/10 com o mercado a 23% a 36 dias e o Recanto já acima da mediana com hidro; rever na rotina completa de 20/10 (D-30)."
+  },
+  {
+   "nome": "Natal",
+   "inicio": "2026-12-23",
+   "fim": "2026-12-24",
+   "piso_real": 1000,
+   "nota": "Piso padrão R$ 1.000 reais (regras.md, feriado novo); a Skill pode ajustar pelos dados, nunca abaixo de R$ 800. Natal e Réveillon são picos em qualquer dia da semana (exceção à regra do feriado em fim de semana). Janela alinhada à sazonalidade em 14/10: noites 24 a 26/12 (sábado 26/12 é alta no calendário), 2 noites. Dono 03/11: 'Natal de 23 a 25 ... pré-definido para que apenas tenhamos reservas nessas datas': pacote fechado, chegada 23/12 e saída 25/12 (noites 23 e 24); 24/12 sem chegada nem saída; estadia máxima 2 nas noites 23 e 24 no Beds24 (stayThrough). Ordem dono-2026-11-03-festas-pacotes.",
+   "estadia_minima": 2,
+   "pacote": {
+    "chegada": "2026-12-23",
+    "saidas": [
+     "2026-12-25"
+    ]
+   }
+  },
+  {
+   "nome": "Natal (25 e 26/12, depois do pacote)",
+   "inicio": "2026-12-25",
+   "fim": "2026-12-26",
+   "piso_real": 1000,
+   "estadia_minima": 2,
+   "nota": "Dono 03/11: o pacote de Natal passou a 23→25. As noites 25 e 26/12 eram do Natal (janela de 14/10) e seguem com o mesmo piso de feriado e estadia 2; o dono não mexeu no preço delas. Sábado 26/12 continua aberto para entrada e saída (exceção do dono de 02/11)."
+  },
+  {
+   "nome": "Réveillon (véspera 29/12)",
+   "inicio": "2026-12-29",
+   "fim": "2026-12-29",
+   "piso_real": 1000,
+   "estadia_minima": 1,
+   "nota": "Dono 03/11: o pacote do Ano Novo passou a 30→01 ou 30→03. A noite 29/12 sai do pacote e fica com o mesmo piso de feriado; estadia mínima 1 e máxima 2 no Beds24 (stayThrough): vende 29→30 e 28→30, e barra 28→01 e 29→01."
+  },
+  {
+   "nome": "Réveillon",
+   "inicio": "2026-12-30",
+   "fim": "2027-01-02",
+   "piso_real": 1000,
+   "nota": "Piso padrão R$ 1.000 reais (regras.md, feriado novo); a Skill pode ajustar pelos dados, nunca abaixo de R$ 800. Natal e Réveillon são picos em qualquer dia da semana (exceção à regra do feriado em fim de semana). Janela alinhada à sazonalidade em 14/10: noites 29/12 a 2/1 (muito alta), 3 noites. Dono 03/11: 'Ano Novo, altíssima temporada, de 30 a 01 prefixado. Podendo o hóspede estender até o dia 03 apenas': pacote fechado, chegada só em 30/12 e saída em 01/01 ou 03/01; 31/12 e 02/01 sem chegada nem saída, 01/01 sem chegada; estadia mínima 2 em 30 e 31/12; máxima 4 nas noites 30/12 a 02/01 no Beds24 (stayThrough). Ordem dono-2026-11-03-festas-pacotes.",
+   "estadia_minima": 2,
+   "pacote": {
+    "chegada": "2026-12-30",
+    "saidas": [
+     "2027-01-01",
+     "2027-01-03"
+    ]
+   }
+  },
+  {
+   "nome": "Aniversário de São Paulo (feriadão paulistano)",
+   "inicio": "2027-01-22",
+   "fim": "2027-01-24",
+   "piso_real": 800,
+   "fonte": "sazonalidade.json (pesquisa de 13/10/2026)",
+   "nota": "Piso R$ 800 reais (14/10): feriado fraco (mercado de janeiro = novembro, 36%/45%; Tiradentes isolado na quarta, nível médio na sazonalidade); dentro da regra (padrão R$ 1.000, ajustável pelos dados, nunca abaixo de R$ 800)."
+  },
+  {
+   "nome": "Carnaval",
+   "inicio": "2027-02-05",
+   "fim": "2027-02-09",
+   "piso_real": 1000,
+   "fonte": "sazonalidade.json (pesquisa de 13/10/2026)",
+   "nota": "Piso padrão R$ 1.000 reais (regras.md, feriado novo); a Skill pode ajustar pelos dados, nunca abaixo de R$ 800."
+  },
+  {
+   "nome": "Semana Santa / Páscoa",
+   "inicio": "2027-03-25",
+   "fim": "2027-03-27",
+   "piso_real": 1000,
+   "fonte": "sazonalidade.json (pesquisa de 13/10/2026)",
+   "nota": "Piso padrão R$ 1.000 reais (regras.md, feriado novo); a Skill pode ajustar pelos dados, nunca abaixo de R$ 800."
+  },
+  {
+   "nome": "Tiradentes (isolado, quarta)",
+   "inicio": "2027-04-20",
+   "fim": "2027-04-21",
+   "piso_real": 800,
+   "fonte": "sazonalidade.json (pesquisa de 13/10/2026)",
+   "nota": "Piso R$ 800 reais (14/10): feriado fraco (mercado de janeiro = novembro, 36%/45%; Tiradentes isolado na quarta, nível médio na sazonalidade); dentro da regra (padrão R$ 1.000, ajustável pelos dados, nunca abaixo de R$ 800)."
+  },
+  {
+   "nome": "Corpus Christi (abertura da temporada de inverno)",
+   "inicio": "2027-05-26",
+   "fim": "2027-05-29",
+   "piso_real": 1000,
+   "fonte": "sazonalidade.json (pesquisa de 13/10/2026)",
+   "nota": "Piso padrão R$ 1.000 reais (regras.md, feriado novo); a Skill pode ajustar pelos dados, nunca abaixo de R$ 800."
+  },
+  {
+   "nome": "Dia dos Namorados 2027 (pico)",
+   "inicio": "2027-06-11",
+   "fim": "2027-06-12",
+   "piso_real": 1000,
+   "estadia_minima": 2,
+   "fonte": "sazonalidade.json (muito alta) e estrategia.md §3 (picos: Réveillon, Corpus Christi, 9 de Julho e Namorados)",
+   "nota": "Data comemorativa tratada como pico (21/10, pergunta do dono sobre datas comemorativas): noites sex 11 e sáb 12/06/2027, 2 noites, piso padrão de feriado R$ 1.000 no bolso. Não é feriado: os pisos de R$ 500/850 do dono continuam valendo por baixo. A skill pode ajustar pelos dados, nunca abaixo de R$ 800."
+  },
+  {
+   "nome": "Revolução Constitucionalista, 9 de Julho (feriado estadual SP)",
+   "inicio": "2027-07-08",
+   "fim": "2027-07-10",
+   "piso_real": 1000,
+   "fonte": "sazonalidade.json (pesquisa de 13/10/2026)",
+   "nota": "Piso padrão R$ 1.000 reais (regras.md, feriado novo); a Skill pode ajustar pelos dados, nunca abaixo de R$ 800."
+  },
+  {
+   "nome": "Independência, 7 de Setembro (ponte)",
+   "inicio": "2027-09-03",
+   "fim": "2027-09-06",
+   "piso_real": 1000,
+   "fonte": "sazonalidade.json (pesquisa de 13/10/2026)",
+   "nota": "Piso padrão R$ 1.000 reais (regras.md, feriado novo); a Skill pode ajustar pelos dados, nunca abaixo de R$ 800."
+  },
+  {
+   "nome": "Nossa Senhora Aparecida / Dia das Crianças (ponte)",
+   "inicio": "2027-10-08",
+   "fim": "2027-10-11",
+   "piso_real": 1000,
+   "fonte": "sazonalidade.json (pesquisa de 13/10/2026)",
+   "nota": "Piso padrão R$ 1.000 reais (regras.md, feriado novo); a Skill pode ajustar pelos dados, nunca abaixo de R$ 800."
+  },
+  {
+   "nome": "Finados (ponte)",
+   "inicio": "2027-10-29",
+   "fim": "2027-11-01",
+   "piso_real": 1000,
+   "fonte": "sazonalidade.json (pesquisa de 13/10/2026)",
+   "nota": "Piso padrão R$ 1.000 reais (regras.md, feriado novo); a Skill pode ajustar pelos dados, nunca abaixo de R$ 800."
+  },
+  {
+   "nome": "Proclamação da República (feriadão)",
+   "inicio": "2027-11-12",
+   "fim": "2027-11-14",
+   "piso_real": 1000,
+   "fonte": "sazonalidade.json (pesquisa de 13/10/2026)",
+   "nota": "Piso padrão R$ 1.000 reais (regras.md, feriado novo); a Skill pode ajustar pelos dados, nunca abaixo de R$ 800."
+  },
+  {
+   "nome": "Natal",
+   "inicio": "2027-12-24",
+   "fim": "2027-12-25",
+   "piso_real": 1000,
+   "fonte": "sazonalidade.json (pesquisa de 13/10/2026)",
+   "nota": "Piso padrão R$ 1.000 reais (regras.md, feriado novo); a Skill pode ajustar pelos dados, nunca abaixo de R$ 800. Natal e Réveillon são picos em qualquer dia da semana (exceção à regra do feriado em fim de semana)."
+  },
+  {
+   "nome": "Réveillon",
+   "inicio": "2027-12-29",
+   "fim": "2027-12-31",
+   "piso_real": 1000,
+   "fonte": "sazonalidade.json (pesquisa de 13/10/2026)",
+   "nota": "Piso padrão R$ 1.000 reais (regras.md, feriado novo); a Skill pode ajustar pelos dados, nunca abaixo de R$ 800. Natal e Réveillon são picos em qualquer dia da semana (exceção à regra do feriado em fim de semana)."
+  }
+ ],
+ "feriados_nota": "Cada período lista as NOITES de feriado (data de entrada da diária). piso_real null = sem piso do dono; vale só o limite de segurança. Feriados de 2027 acrescentados em 14/10/2026 a partir de dados/sazonalidade.json (noites de hospedagem; só os que geram viagem: feriados municipais e os que caem em sábado ou domingo ficam de fora). Eventos e temporadas ficam em sazonalidade.json → datas. 14/10: Proclamação 2026 (dom 15/11) saiu da lista: é fim de semana comum (noites 13 e 14/11 seguem o padrão de sexta e sábado); feriados de dezembro de 2026 em diante receberam o piso padrão de R$ 1.000 reais. 14/10: Natal e Réveillon ficam na lista mesmo em sábado ou domingo (Prefeitura: 70% a 95% de ocupação). `estadia_minima` opcional por feriado (Finados 3); sem ela vale o calendário de sazonalidade ou 2.",
+ "demanda_nota": "Classificação de demanda por suíte (alta/media/baixa), revista em toda rotina completa pela ocupação 15/30 dias contra as metas e pelo ritmo de reservas dos últimos 14 dias. Última revisão: 2026-10-13 (rotina das 10:53; antes, 2026-10-12, rotina completa e revisão semanal; hoje o calendário traz o lote de 09/10 e 48 reservas novas desde 10/10). Q7 15d 34%/30d 21% sobe de baixa para MÉDIA (acima de 60% da meta nas duas janelas: 30% e 21%), com 47 diárias vendidas em 06–12/10; Double 56%/47% alta; Q2 70%/62% alta; Afrodite 60%/43% média, candidata a alta (1 unidade; 3 diárias na semana); VK7 sobe de média para ALTA em 13/10 (calendário recalculado às 12:44 BRT, 21 h mais novo que o da coleta: 7d 73,5%, 15d 51,4%, 30d 44,8%, 45d 32,7%, 60d 26,7% e 49 diárias vendidas em 06–12/10; margem pequena, 1,4 ponto no 15d: volta a média se o 15d ficar abaixo de 50% em dois recálculos seguidos); VK2 53%/45% média, candidata a alta (2 unidades; 10 diárias na semana); Balcony 18%/24% baixa. Atualização de 13/10 16:55: com os recálculos novos Double 15d 54%/30d 46% (volta a confirmar alta depois da queda das 13:53 pelo calendário velho), VK7 15d 60%/30d 49% alta, Q7 7d 74% mas 15d 42%/30d 25% (média, 15d abaixo da meta de 50%), VK2 15d 60%/30d 47% e Balcony 24%/28% baixa. Exceções de mercado: nenhuma em vigor.",
+ "excecoes_mercado": [],
+ "modo": {
+  "Recanto": "padrão",
+  "Villa": "padrão",
+  "nota": "Modo por faturamento (regras.md 4c; dono 14/10). A revisão de segunda compara o livro do mês com as metas do dono em metas_faturamento.json e grava: \"volume\" (atrás do menor limiar: a flutuação age como classe baixa), \"padrão\" (entre os limiares) ou \"preco\" (na meta do dono ou acima: age como classe alta), este só com a pousada na meta de ocupação em 2 das janelas de 7, 15 e 30 dias (trava de lotação). A rotina completa pode rebaixar preco para padrão; a rotina leve nunca muda.",
+  "desde": "2026-10-14"
+ },
+ "modo_decisao": {
+  "em": "2026-10-19T14:30",
+  "pedido": "revisão semanal de segunda",
+  "Recanto": "livro de outubro R$ 144 mil (rental_revenue + reservas sem valor pelo total_cost, noites por no_of_days) no dia 19; ritmo 70%: realista R$ 99 mil, meta do dono R$ 154 mil -> padrão; ocupação na meta só em 30d",
+  "Villa": "livro de outubro R$ 113 mil; ritmo 70%: realista R$ 92 mil, meta do dono R$ 105 mil -> preco pela receita, mas a trava de lotação segura em padrão (ocupação fora da meta em 7, 15 e 30 dias)"
+ }
+}

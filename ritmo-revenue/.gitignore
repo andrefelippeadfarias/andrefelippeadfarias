@@ -1,0 +1,6 @@
+# Anchored to this folder on purpose: tests/fixtures/tools/ holds versioned generator scripts.
+/tools/
+/.wp-test/
+/dist/
+*.phar
+/tests/e2e/screenshots/

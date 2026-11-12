@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/10.5/phpunit.xsd"
+         bootstrap="bootstrap.php"
+         cacheDirectory="../tools/.phpunit.cache"
+         colors="true"
+         failOnRisky="true"
+         failOnWarning="true"
+         failOnNotice="true"
+         failOnDeprecation="true"
+         beStrictAboutOutputDuringTests="true"
+         displayDetailsOnTestsThatTriggerDeprecations="true"
+         displayDetailsOnTestsThatTriggerNotices="true"
+         displayDetailsOnTestsThatTriggerWarnings="true"
+         displayDetailsOnTestsThatTriggerErrors="true">
+    <testsuites>
+        <testsuite name="all">
+            <directory>.</directory>
+            <exclude>fixtures</exclude>
+        </testsuite>
+    </testsuites>
+    <source>
+        <include>
+            <directory>../src</directory>
+        </include>
+    </source>
+</phpunit>

@@ -1,0 +1,21 @@
+{
+    "name": "ritmo/ritmo-revenue",
+    "description": "Revenue management for small hotels and inns (WordPress plugin).",
+    "type": "wordpress-plugin",
+    "require": {
+        "php": ">=8.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "Ritmo\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Ritmo\\Tests\\": "tests/"
+        }
+    },
+    "scripts": {
+        "test": "bin/test.sh"
+    }
+}

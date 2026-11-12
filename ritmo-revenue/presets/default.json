@@ -1,0 +1,137 @@
+{
+    "format": "ritmo-revenue-preset",
+    "format_version": 1,
+    "name": "Neutral defaults",
+    "description": "Generic starting point: no property, no holiday, no owner floor and price factors of 1. The setup wizard adds the properties and the owner adjusts the rules.",
+    "properties": [],
+    "rules": {
+        "occupancy": {
+            "goals": {
+                "7": 60,
+                "15": 45,
+                "30": 30,
+                "45": 20,
+                "60": 10
+            }
+        },
+        "calendar": {
+            "weekend_days": [
+                4,
+                5
+            ],
+            "holidays": []
+        },
+        "pace": {
+            "curves": {
+                "weekday": {
+                    "60": 5,
+                    "30": 10,
+                    "14": 20,
+                    "7": 35,
+                    "3": 50,
+                    "1": 65,
+                    "0": 100
+                },
+                "weekend": {
+                    "60": 10,
+                    "30": 20,
+                    "14": 35,
+                    "7": 55,
+                    "3": 70,
+                    "1": 85,
+                    "0": 100
+                },
+                "holiday": {
+                    "60": 15,
+                    "30": 35,
+                    "14": 55,
+                    "7": 70,
+                    "3": 85,
+                    "1": 95,
+                    "0": 100
+                }
+            },
+            "band": 15,
+            "very_behind": 25,
+            "zero_sold_days": {
+                "weekday": 5,
+                "weekend": 10,
+                "holiday": 14
+            },
+            "target_percentile": {
+                "premium": {
+                    "ahead_near": 90,
+                    "ahead": 75,
+                    "on_pace": 60,
+                    "behind": 50,
+                    "very_behind": 40
+                },
+                "standard": {
+                    "ahead_near": 80,
+                    "ahead": 65,
+                    "on_pace": 50,
+                    "behind": 40,
+                    "very_behind": 30
+                }
+            },
+            "ahead_near_days": 7,
+            "k": 0.5,
+            "max_step": [
+                {
+                    "min_days": 30,
+                    "percent": 5
+                },
+                {
+                    "min_days": 8,
+                    "percent": 10
+                },
+                {
+                    "min_days": 0,
+                    "percent": 15
+                }
+            ],
+            "min_n": 5,
+            "max_age_days": 14,
+            "tolerance": 0.02,
+            "protection_percentile": 85
+        },
+        "floors": {
+            "fraction_of_reference_min": 0.75,
+            "owner": [],
+            "quality_floor": {
+                "amount": 0,
+                "price_plan": "sent",
+                "night_types": [
+                    "weekend",
+                    "holiday"
+                ],
+                "room_tags": []
+            },
+            "holiday_floor": {
+                "amount": 0,
+                "price_plan": "sent"
+            }
+        },
+        "price_factors": {
+            "properties": {
+                "*": {
+                    "public": {
+                        "weekday": 1,
+                        "weekend": 1,
+                        "holiday": 1
+                    },
+                    "discounted": {
+                        "weekday": 1,
+                        "weekend": 1,
+                        "holiday": 1
+                    }
+                }
+            },
+            "room_overrides": []
+        },
+        "safety": {
+            "weekly_listing_change_max": 0.1,
+            "never_raise_today": true
+        }
+    }
+}

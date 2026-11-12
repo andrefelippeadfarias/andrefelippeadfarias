@@ -48,15 +48,17 @@ final class PriceBoundsCheck implements ItemCheck
 
     /**
      * The price of tonight never goes up: a floor above tonight's price would raise it, and so
-     * would one that only the rounding up to a whole percentage of the base puts above it.
+     * would one that only the rounding up to a whole percentage of the base puts above it. The
+     * price compared is the lowest known (the item's record or the fresh calendar). A floor that
+     * writes again the floor in force changes nothing and raises nothing.
      */
     private function tonight(ItemFacts $f): void
     {
         $item = $f->item;
-        if ($item->minPrice === null || !$this->rules->neverRaiseToday()) {
+        if ($item->minPrice === null || !$this->rules->neverRaiseToday() || $f->rewritesFloorInForce()) {
             return;
         }
-        $current = $f->current();
+        $current = $f->lowestCurrent();
         if ($current === null) {
             $this->log->item($f, true, PlanIssue::TODAY_WITHOUT_CURRENT_PRICE, 'A floor for tonight needs the current price of the night, to show that it does not raise it.');
 

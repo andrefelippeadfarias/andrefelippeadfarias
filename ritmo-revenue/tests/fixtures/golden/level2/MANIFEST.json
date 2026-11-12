@@ -1,6 +1,6 @@
 {
  "generated_at": "2026-11-12",
- "repo_commit": "968d1d87f444e340c7c839b56086a160941f2d1b",
+ "repo_commit": "85051011e39622de018c707766da37e6a049fdb0",
  "engine": ".claude/skills/gestao-receita-pousadas/scripts",
  "engine_commit": "036acfa9db12515ac92461345c0ae1e10ef369fa",
  "engine_dirty": false,
@@ -11,16 +11,22 @@
   "frozen/ladder/regua_dono.json": "9e910eb504a4cfd27f2019f2d00bc3ae1afddfa71e965124bdabd7174029e161",
   "golden/m2/stay/frozen/seasons.json": "bcd16f94b3ff43d79a68c342f6299d7c87498ea1628e9c6ef2aa829d5a48a452",
   "golden/m2/relations/frozen/ordens.json": "cd171d574ee8f2a2f5b6578dbc9cb63e9b6fe51dd4f51818bb7404bbc90ed4b8",
+  "golden/level2/frozen/band_released_by_order.json": "a2f74623bad82d8f44cc3c8751dca56c9df6ffc03bbf5b0125732f2ee22730bb",
   "golden/level2/frozen/frozen_nights.json": "e3697377aef4832a362d9f58ce118758ec82c61311876ea69a1c163783ea7292",
   "golden/level2/frozen/holiday_period.json": "e466d7228885ae95cd1f4f1cbdc91415322d4e356e9c6d28191f690462587b7a",
   "golden/level2/frozen/light_run_filter.json": "d762ade2799ce45319f7fb9c7f67d1c9b928018ccb84d02e6b0cf8d325d816fd",
   "golden/level2/frozen/occupancy_switch_80.json": "5e20b52dfe380f3815d6e92b6fd667336e71ceeee0bb9ce4a44c9e855a1ee5aa",
   "golden/level2/frozen/orphan_nights.json": "661a168a2e00514b2adaf8fd67771812ed82d703a0824243b9f2b62d5eea95ae",
   "golden/level2/frozen/owner_orders_by_date.json": "53dc7bc66c16b7f5e558e19935824dbff7a3fb332dab958f1f51a2576121ac87",
+  "golden/level2/frozen/range_orders_d0.json": "34ccaffb7c50496957f3e366285906ccb27cde3884477a1f4413b8ec4dc0dd0d",
+  "golden/level2/frozen/range_orders_d1.json": "64d0bc7606596fb2d84331aea4a1f2ac8f032fafd42f350e063486d393c586cf",
   "golden/level2/frozen/small_rooms.json": "4417191d166a39ca1af64e2154102bbe0e9261148aac5271697f43153cfcc97c",
   "golden/level2/frozen/sold_out_and_reopened.json": "7483bf35744f1d062aa8219b61f78cb4fce3f246a8851e914fc09ce1f9649da6",
   "golden/level2/frozen/weekday_sales_ramp.json": "3fd671737d58e1ee8cebbb3c11c39b6f612e90a4c1bec75411cb2bf1a04ec27e",
   "golden/level2/frozen/weekend_owner_plan.json": "bd8ebc865a0fc2d226ea610676d8e6d37bc89872dd7806139430389a878adeca"
+ },
+ "golden_files": {
+  "golden/level2/pace.plano.json": "dc0320b6507c64e861145b4a03a11b60db28c69d72c04cff788b9fa298a9a184"
  },
  "tolerance": {
   "amounts": 0.01,
@@ -61,7 +67,7 @@
    "name": "orphan_nights",
    "today": "2026-11-12",
    "days": 9,
-   "note": "Free nights before a sold-out night: the rule rewritten after the ceiling is freed keeps the orphan stay with its proof."
+   "note": "Sold-out nights next to free nights, all under locked rules: the sold-out nights' rules are deleted first and written again with their stay; the free nights keep their rules and get their own items. No rule of a free night is rewritten here, so these inputs produce no orphan claim."
   },
   {
    "name": "occupancy_switch_80",
@@ -82,6 +88,24 @@
    "note": "Nights frozen by a manual change of the owner and nights blocked in the PMS stay as they are."
   },
   {
+   "name": "band_released_by_order",
+   "today": "2026-11-12",
+   "days": 8,
+   "note": "A fixed-price order that releases the discount band: the room under the band's lower edge is a warning."
+  },
+  {
+   "name": "range_orders_d1",
+   "today": "2026-11-11",
+   "days": 20,
+   "note": "Real inputs of a full run (calendars, rules, ledger and the owner's range orders with the sales ramp, fallback floors and descent steps); the occupancy switch item that changes nothing is dropped (L5)."
+  },
+  {
+   "name": "range_orders_d0",
+   "today": "2026-11-12",
+   "days": 20,
+   "note": "Real inputs of the next day's full run: the sales ramp of the range orders from D0, a protection that writes the floor in force again on D0 (L6) and the occupancy switch without effect (L5)."
+  },
+  {
    "name": "small_rooms",
    "today": "2026-11-12",
    "days": 12,
@@ -92,7 +116,7 @@
   {
    "file": "pace.plano.json",
    "function": "pace.plano",
-   "cases": 10
+   "cases": 13
   }
  ]
 }

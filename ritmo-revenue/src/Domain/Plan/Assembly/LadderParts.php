@@ -34,7 +34,7 @@ use Ritmo\Domain\Pricing\Ladder\WeekendFloorOverride;
  * a ladder night, the item builder and the two floors the strategy changes elsewhere (the
  * last-minute market floor of the pace step, the weekend owner floor of the standard floors).
  *
- * Reference: plano_da_noite, relativos_recanto and item_do_plano as pace._plano calls them.
+ * Reference: plano_da_noite, the relative prices of the between-rooms order and item_do_plano as pace._plano calls them.
  */
 final class LadderParts
 {
@@ -74,13 +74,14 @@ final class LadderParts
         $factors = new PriceFactor($rules);
         $ladder = new SalesLadder($strategy, $rooms, $rules->qualityFloor(), $factors, $calendar);
         $hardFloors = new LadderHardFloor(new Floors($rules, $factors), $calendar, $factors, $rules->holidayFloor());
-        $relations = new LadderRelations($ladder, $calendar, $rules->weekendDays());
+        $slack = $rules->noEffect()->moneySlack;
+        $relations = new LadderRelations($ladder, $calendar, $rules->weekendDays(), $slack);
 
         return new self(
             $strategy,
             new LadderNightEvaluator($ladder, $ruler, $hardFloors, $relations),
             $relations,
-            new LadderItemBuilder($strategy, $cadence, $rules->cadence(), $rules->tolerance()),
+            new LadderItemBuilder($strategy, $cadence, $rules->cadence(), $rules->tolerance(), $slack),
             new LastMinuteMarketFloor($ladder, $ruler, $hardFloors, $calendar),
             new WeekendFloorOverride($strategy, $rules->qualityFloor(), $factors, $calendar),
             $ladder,

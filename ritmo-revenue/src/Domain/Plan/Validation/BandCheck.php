@@ -19,7 +19,7 @@ use Ritmo\Domain\Support\Days;
  * applies it, its ceiling likewise. A band rule broken on a night is reported on the item of that
  * room night when there is one, else on the plan with the room and night.
  *
- * Reference: validar_plano.Validador.validar_balcony, through Relations\Validate\DiscountBandCheck
+ * Reference: the discount-band check of validar_plano.Validador, through Relations\Validate\DiscountBandCheck
  * (which accepts the night the coherence stage left at the switched price, switch_satisfied).
  */
 final class BandCheck

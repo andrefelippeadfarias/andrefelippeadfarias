@@ -233,7 +233,8 @@ final class ArchitectureTest extends TestCase
     {
         $root = Fixtures::pluginRoot();
         $terms = Fixtures::json('owner-terms.json')['terms'];
-        $pattern = '/(?<![\p{L}\p{N}_])(' . implode('|', array_map(static fn (string $term): string => preg_quote($term, '/'), $terms)) . ')(?![\p{L}\p{N}_])/iu';
+        // "_" separates words here: a reference function named after a property is caught too.
+        $pattern = '/(?<![\p{L}\p{N}])(' . implode('|', array_map(static fn (string $term): string => preg_quote($term, '/'), $terms)) . ')(?![\p{L}\p{N}])/iu';
 
         $files = array_merge(glob($root . '/*.php') ?: [], [$root . '/README.md']);
         foreach (['src', 'presets', 'templates', 'assets', 'docs'] as $directory) {
@@ -265,6 +266,17 @@ final class ArchitectureTest extends TestCase
         foreach ($terms as $term) {
             self::assertSame(1, preg_match($pattern, 'rooms of ' . ucfirst($term) . ', all of them'), "the pattern must catch \"$term\"");
             self::assertSame(0, preg_match($pattern, 'x' . $term . 'x'), "the pattern must match \"$term\" as a whole word only");
+            self::assertSame(1, preg_match($pattern, 'check_' . $term . '_rule'), "the pattern must catch \"$term\" inside a snake_case name");
+        }
+    }
+
+    public function testThePackageLeavesOutTheInternalDocumentsAndTheTests(): void
+    {
+        $file = Fixtures::pluginRoot() . '/.distignore';
+        self::assertFileExists($file);
+        $entries = array_filter(array_map('trim', file($file) ?: []), static fn (string $line): bool => $line !== '' && !str_starts_with($line, '#'));
+        foreach ([...array_map(static fn (string $doc): string => '/' . $doc, self::INTERNAL_DOCUMENTS), '/tests/', '/tools/', '/bin/'] as $path) {
+            self::assertContains($path, $entries, "$path must stay out of the distributed package");
         }
     }
 

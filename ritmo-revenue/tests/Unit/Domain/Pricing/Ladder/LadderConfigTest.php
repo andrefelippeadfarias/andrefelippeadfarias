@@ -40,9 +40,12 @@ final class LadderConfigTest extends TestCase
 
         self::assertFalse($strategy->enabled);
         self::assertSame('stepped', $strategy->mode);
-        self::assertSame(0.5, $strategy->steps->triggerFraction);
+        self::assertSame(1.0, $strategy->steps->triggerFraction, 'no step until it is configured');
         self::assertSame(5.0, $strategy->steps->percentPerUnit);
         self::assertFalse($strategy->drop->enabled);
+        self::assertSame([0, 0.0, 0.0], [$strategy->drop->windowDays, $strategy->drop->occupancyBelow, $strategy->drop->percent], 'a drop that does nothing');
+        self::assertSame([], $strategy->weekendFloorWeekdays);
+        self::assertSame([1.0, 0.0], [$strategy->proportional->bandFactor, $strategy->proportional->bandCapDiscount], 'the discount room at its reference, not under it');
         self::assertFalse($strategy->weekendFloorOverride);
         self::assertFalse($strategy->lastMinuteFloor->enabled);
         self::assertNull($strategy->authorityOrderId);
@@ -108,7 +111,9 @@ final class LadderConfigTest extends TestCase
     public function testTheOtherAreasHaveNeutralDefaultsAndRejectBadValues(): void
     {
         self::assertSame(7, OrdersConfig::fromArray([])->manualFreezeDays);
-        self::assertSame([7, 5, 3, 1], OrdersConfig::fromArray([])->descentMarks);
+        $orders = OrdersConfig::fromArray([]);
+        self::assertSame([], $orders->descentMarks, 'an order without its own marks does not descend');
+        self::assertSame([1.0, 1.0, 0], [$orders->strongNightOccupancy, $orders->strongNightAheadOccupancy, $orders->fallbackTriggerDays], 'an order applies to every night that is not sold out');
         self::assertSame(24, CadenceConfig::fromArray([])->minHoursBetweenSteps);
         $protection = ProtectionConfig::fromArray([]);
         self::assertTrue($protection->enabled);

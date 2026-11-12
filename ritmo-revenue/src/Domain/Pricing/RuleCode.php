@@ -40,6 +40,9 @@ final class RuleCode
     /** One step towards the target, limited by the days left. */
     public const STEP = 'step';
 
+    /** The sales ramp of an owner target order sets the price (and may lower the floor) instead of the step. */
+    public const ORDER_SALES_RAMP = 'order_sales_ramp';
+
     /** The step would go under the hard floor: the price stops at the floor. */
     public const HELD_AT_FLOOR = 'held_at_floor';
 

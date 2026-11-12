@@ -21,6 +21,7 @@ use Ritmo\Domain\Support\Num;
 final class WorkItem
 {
     public const PACE_STEP = 'PACE_STEP';
+    public const ORDER_SALES_RAMP = 'ORDER_SALES_RAMP';
     public const LADDER_PRICE = 'LADDER_PRICE';
     public const SOLD_OUT_PROTECTION = 'SOLD_OUT_PROTECTION';
     public const RELATION_AT_LEAST = 'RELATION_AT_LEAST';

@@ -12,7 +12,10 @@ use Ritmo\Domain\Calendar\Stay\StayRules;
 use Ritmo\Domain\Market\AnchorLookup;
 use Ritmo\Domain\Model\DateOverride;
 use Ritmo\Domain\Model\PriceNight;
+use Ritmo\Domain\Config\RuleSet;
 use Ritmo\Domain\Orders\OrderBook;
+use Ritmo\Domain\Orders\OrderReader;
+use Ritmo\Domain\Orders\OwnerOrder;
 use Ritmo\Domain\Plan\Assembly\CeilingRelease;
 use Ritmo\Domain\Plan\Assembly\LadderParts;
 use Ritmo\Domain\Plan\Assembly\NightLine;
@@ -24,6 +27,8 @@ use Ritmo\Domain\Plan\PlanItem;
 use Ritmo\Domain\Pricing\Cadence\StepCadence;
 use Ritmo\Domain\Pricing\Cadence\StepLedger;
 use Ritmo\Domain\Pricing\Ladder\MarketRuler;
+use Ritmo\Domain\Pricing\OrderSalesRamp;
+use Ritmo\Domain\Pricing\RuleCode;
 use Ritmo\Domain\Support\Days;
 use Ritmo\Domain\Support\FixedClock;
 use Ritmo\Tests\Unit\Domain\EngineSample;
@@ -131,9 +136,85 @@ final class PlanAssemblerTest extends TestCase
         self::assertNull(LadderParts::fromRules(EngineSample::rules(), $rooms, null, $cadence));
     }
 
-    private function assembler(): PlanAssembler
+    public function testATargetOrderWithASalesRampPricesItsNightsOnTheRamp(): void
     {
-        return new PlanAssembler(EngineSample::rules(), new FixedClock('2027-03-03T12:00:00Z'), 'sample-pms');
+        $run = $this->assembler(self::rampRules())->assemble($this->inputs(orders: new OrderBook([self::rampOrder()])));
+
+        $deluxe = array_values(array_filter($run->plan->items, static fn (PlanItem $i): bool => $i->roomCode === 'Deluxe'));
+        self::assertNotSame([], $deluxe);
+        foreach ($deluxe as $item) {
+            self::assertSame(WorkItem::ORDER_SALES_RAMP, $item->reasonCode);
+            self::assertSame('ramp-1', $item->orderId);
+            self::assertSame(OrderSalesRamp::FALLBACK_FLOOR, self::rampTrace($item)['floor_label'], 'unsold and close to the date: the fallback floor');
+            self::assertSame(650.0, self::rampTrace($item)['floor']);
+        }
+        foreach ($run->plan->items as $item) {
+            if ($item->roomCode === 'Standard') {
+                self::assertSame(WorkItem::PACE_STEP, $item->reasonCode, 'a room without the order keeps the pace step');
+            }
+        }
+    }
+
+    public function testTheFallbackFloorWaitsUntilTheOrderIsOldEnough(): void
+    {
+        $young = self::rampOrder(['created_at' => '2027-03-02T23:30:00Z', 'fallback_min_days' => 2]);
+        $old = self::rampOrder(['created_at' => '2027-02-28T10:00:00Z', 'fallback_min_days' => 2]);
+
+        foreach ([[$young, 'order_floor', 700.0], [$old, OrderSalesRamp::FALLBACK_FLOOR, 650.0]] as [$order, $label, $floor]) {
+            $run = $this->assembler(self::rampRules())->assemble($this->inputs(orders: new OrderBook([$order])));
+            $item = array_values(array_filter($run->plan->items, static fn (PlanItem $i): bool => $i->roomCode === 'Deluxe'))[0];
+            self::assertSame($label, self::rampTrace($item)['floor_label']);
+            self::assertSame($floor, self::rampTrace($item)['floor']);
+        }
+    }
+
+    private static function rampRules(): RuleSet
+    {
+        return EngineSample::rules(static function (array $data): array {
+            $data['pace']['sales_ramp']['enabled'] = true;
+
+            return $data;
+        });
+    }
+
+    /**
+     * A market target order of the Deluxe room on its sales ramp, with a fallback floor.
+     *
+     * @param array<string, mixed> $with
+     */
+    private static function rampOrder(array $with = []): OwnerOrder
+    {
+        return (new OrderReader())->read($with + [
+            'id' => 'ramp-1',
+            'type' => 'target',
+            'rooms' => ['Deluxe'],
+            'from' => self::NIGHTS[0],
+            'to' => self::NIGHTS[2],
+            'floors' => ['Deluxe' => 700],
+            'percentile' => 50,
+            'sales_ramp' => true,
+            'fallback_floors' => ['Deluxe' => 650],
+            'fallback_trigger_days' => 7,
+            'releases' => ['below_standard_floor'],
+        ]);
+    }
+
+    /**
+     * @return array<string, mixed>
+     */
+    private static function rampTrace(PlanItem $item): array
+    {
+        foreach ($item->reasonParams['rule_trace'] as $entry) {
+            if ($entry['code'] === RuleCode::ORDER_SALES_RAMP) {
+                return $entry['params'];
+            }
+        }
+        self::fail('the item has no sales ramp in its trace');
+    }
+
+    private function assembler(?RuleSet $rules = null): PlanAssembler
+    {
+        return new PlanAssembler($rules ?? EngineSample::rules(), new FixedClock('2027-03-03T12:00:00Z'), 'sample-pms');
     }
 
     /**
@@ -141,7 +222,7 @@ final class PlanAssemblerTest extends TestCase
      * @param array<string, true>                        $blocked
      * @param array<string, true>|null                   $lightFilter
      */
-    private function inputs(array $overrides = [], array $blocked = [], ?array $lightFilter = null): RunInputs
+    private function inputs(array $overrides = [], array $blocked = [], ?array $lightFilter = null, OrderBook $orders = new OrderBook()): RunInputs
     {
         $rooms = [EngineSample::deluxe(), EngineSample::standard()];
         $calendar = [];
@@ -163,7 +244,7 @@ final class PlanAssemblerTest extends TestCase
             $overrides,
             new AnchorLookup(EngineSample::rules(), $anchors),
             new StepLedger(),
-            new OrderBook(),
+            $orders,
             null,
             $blocked,
             $lightFilter,

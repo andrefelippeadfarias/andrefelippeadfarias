@@ -16,6 +16,7 @@ use Ritmo\Domain\Orders\OrderReader;
 use Ritmo\Domain\Orders\OrderRelease;
 use Ritmo\Domain\Orders\OrderType;
 use Ritmo\Domain\Orders\OwnerOrder;
+use Ritmo\Domain\Plan\Assembly\Hooks\BookOrderGuard;
 
 final class OrdersBehaviourTest extends TestCase
 {
@@ -113,6 +114,23 @@ final class OrdersBehaviourTest extends TestCase
         self::assertSame(OrderAuthority::ORDER_NOT_IN_FORCE, $authority->check('floor', 'Z9', $night, $needs));
         self::assertSame(OrderAuthority::ORDER_DOES_NOT_RELEASE, $authority->check('floor', 'A1', $night, [OrderRelease::FixedPrice]));
         self::assertSame(OrderAuthority::ORDER_OUT_OF_SCOPE, $authority->check('floor', 'A1', $night, $needs, static fn (): bool => false));
+    }
+
+    public function testAnOrderMayReleaseTheDiscountBandOfItsRooms(): void
+    {
+        $reader = new OrderReader();
+        $book = new OrderBook([
+            $reader->read(['id' => 'low-1', 'type' => 'fixed_price', 'rooms' => ['B2'], 'from' => '2026-12-04', 'to' => '2026-12-05', 'releases' => ['fixed_price', 'discount_band']]),
+            $reader->read(['id' => 'listed-1', 'type' => 'floor', 'rooms' => ['A1'], 'from' => '2026-12-01', 'to' => '2026-12-10', 'nights' => ['2026-12-03'], 'releases' => ['discount_band']]),
+            $reader->read(['id' => 'plain-1', 'type' => 'floor', 'rooms' => ['A1', 'B2'], 'from' => '2026-12-01', 'to' => '2026-12-10', 'releases' => ['below_standard_floor']]),
+        ]);
+        $guard = new BookOrderGuard($book);
+
+        self::assertSame('low-1', $guard->releases('any-band', 'B2', new DateTimeImmutable('2026-12-05')));
+        self::assertNull($guard->releases('any-band', 'B2', new DateTimeImmutable('2026-12-06')), 'outside the order');
+        self::assertSame('listed-1', $guard->releases('any-band', 'A1', new DateTimeImmutable('2026-12-03')));
+        self::assertNull($guard->releases('any-band', 'A1', new DateTimeImmutable('2026-12-04')), 'not a listed night');
+        self::assertNull($book->releasing(OrderRelease::DiscountBand, 'C3', new DateTimeImmutable('2026-12-05')), 'a room the orders do not cover');
     }
 
     public function testNoItemTouchesANightFrozenByAnotherManualChange(): void

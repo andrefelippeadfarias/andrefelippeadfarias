@@ -13,7 +13,10 @@ use Ritmo\Domain\Orders\OrderRelease;
 use Ritmo\Domain\Plan\Assembly\RunCalendar;
 use Ritmo\Domain\Pricing\Floors;
 use Ritmo\Domain\Pricing\Ladder\LastMinuteMarketFloor;
+use Ritmo\Domain\Pricing\OrderSalesRamp;
 use Ritmo\Domain\Pricing\PaceMeter;
+use Ritmo\Domain\Pricing\PaceReading;
+use Ritmo\Domain\Pricing\StepSize;
 use Ritmo\Domain\Pricing\Terms\NightTermsResolver;
 use Ritmo\Domain\Relations\Neutral\HardFloorSource;
 use Ritmo\Domain\Relations\Port\BetweenHints;
@@ -37,6 +40,8 @@ final class RunFloorSource implements FloorSource
 
     private readonly Floors $floors;
 
+    private readonly StepSize $steps;
+
     public function __construct(
         private readonly RuleSet $rules,
         private readonly RunCalendar $calendar,
@@ -48,6 +53,7 @@ final class RunFloorSource implements FloorSource
         $this->meter = new PaceMeter($rules);
         $this->factors = new PriceFactor($rules);
         $this->floors = new Floors($rules, $this->factors);
+        $this->steps = new StepSize($rules);
     }
 
     public function inForce(string $room, DateTimeImmutable $night): FloorInForce
@@ -82,17 +88,22 @@ final class RunFloorSource implements FloorSource
         $ramp = $this->rules->salesRampTop();
         $ladder = $ramp !== null && $target !== null && $target->terms->salesRamp;
         $strong = false;
-        $share = 0.0;
+        $orderRamp = null;
+        $reading = null;
         if ($target !== null) {
             [$sold, $total] = $this->calendar->paceBasis($type, $night);
-            $share = $total > 0 ? $sold / $total : 0.0;
-            $status = $this->meter->measure($this->rules->nightType($night), $daysOut, $sold, $total)->status;
-            $strong = !$this->terms->isWeakNight($target, $status, $sold, $total);
+            $reading = $this->meter->measure($this->rules->nightType($night), $daysOut, $sold, $total);
+            $strong = !$this->terms->isWeakNight($target, $reading->status, $sold, $total);
+            $orderRamp = $ladder ? $this->terms->rampFor($target, $type, $night, $daysOut, $reading->status, $sold, $total) : null;
             if (!$ladder && $strong) {
                 $target = null;
             }
         }
         $floor = $this->terms->floorWithOrders($type, $night, $target !== null ? $inputs->orders : $inputs->orders->withoutTargets())['floor']->amount;
+        if ($orderRamp !== null && $reading !== null) {
+            [$floor, $descended] = $this->rampFloor($orderRamp, $floor, $room, $night, $daysOut, $reading);
+            $strong = $strong && !$descended;
+        }
         $standard = $floor;
         $market = $this->marketFloor?->floorFor($room, $night, $daysOut, $inputs->orders);
         if ($market !== null && $market['amount'] < $floor) {
@@ -102,13 +113,36 @@ final class RunFloorSource implements FloorSource
         $anchor = $target !== null ? $inputs->anchors->forNight($night) : null;
         if ($target !== null && $anchor !== null) {
             $percentile = $inputs->orders->percentileOf($target);
-            if ($ladder && $ramp > $percentile) {
-                $percentile += ($ramp - $percentile) * max(0.0, min(1.0, $share));
+            if ($orderRamp !== null && $ramp > $percentile) {
+                $percentile += ($ramp - $percentile) * $orderRamp->share;
             }
             $ceiling = AnchorLookup::valueAt($anchor, $percentile) / $this->factors->factor($type, PricePlan::PublicRate, $this->rules->nightType($night));
         }
 
         return new BetweenHints($floor, $standard, $market !== null ? $market['order'] : null, $ceiling, $ladder && $strong);
+    }
+
+    /**
+     * The floor of a "between" room on its order's sales ramp: the fallback floor and the descent
+     * step lower it (no one-step limit here: the room stays above its lower reference, which
+     * already descends one step at a time); back on its curve it climbs by at most one step limit.
+     * Returns the floor and whether a descent step applied.
+     *
+     * @return array{float, bool}
+     */
+    private function rampFloor(OrderSalesRamp $ramp, float $floor, string $room, DateTimeImmutable $night, int $daysOut, PaceReading $reading): array
+    {
+        if ($ramp->fallbackFloor !== null) {
+            $floor = min($floor, $ramp->fallbackFloor);
+        }
+        $descent = $ramp->descentFloor($daysOut, $reading);
+        if ($descent !== null) {
+            return [min($floor, $descent), true];
+        }
+        $current = $this->calendar->row($room, $night)?->price;
+        $limit = $current === null ? null : $ramp->returnLimit($daysOut, $current, $floor, $this->steps->maxPercent($daysOut));
+
+        return [$limit ?? $floor, false];
     }
 
     public function switchFloor(string $room, DateTimeImmutable $night): float

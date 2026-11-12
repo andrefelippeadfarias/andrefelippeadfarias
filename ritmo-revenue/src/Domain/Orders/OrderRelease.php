@@ -30,6 +30,9 @@ enum OrderRelease: string
     /** Arrival or departure days other than the configured ones. */
     case ArrivalDeparture = 'arrival_departure';
 
+    /** A price under the lower edge of a discount band whose target is the room. */
+    case DiscountBand = 'discount_band';
+
     /** A change to the listing itself (base, minimum, maximum). */
     case Listing = 'listing';
 

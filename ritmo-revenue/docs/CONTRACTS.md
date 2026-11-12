@@ -256,11 +256,11 @@ What the correction phase changed in shared signatures and behaviour. The only i
 | Nothing of a secret is kept in clear: `SecretStatus` is `configured` and `updatedAt` only (the last four characters are gone from the option and from the screen, which shows the date the key was saved). | INFRASTRUCTURE.md |
 | `Roles::install(KeyValueStore $settings)` grants by version (`Roles::GRANTS`, setting `roles_version`): a capability the site took away is not given back, a deleted role is not created again. | ARCHITECTURE.md 6 |
 
-**Decided (12 Nov): the calendar read by POST.** The PriceLabs calendar (`POST /listing_prices`) only reads and the engine needs it: it is on by default, for that exact host and path, and a site switches it off with `define('RITMO_PRICING_CALENDAR_READ', false)`. Every other POST, PUT, PATCH and DELETE is still refused by the HTTP guard (ARCHITECTURE.md, section 6).
+**Decided (milestone 2): the calendar read by POST.** The PriceLabs calendar (`POST /listing_prices`) only reads and the engine needs it: it is on by default, for that exact host and path, and a site switches it off with `define('RITMO_PRICING_CALENDAR_READ', false)`. Every other POST, PUT, PATCH and DELETE is still refused by the HTTP guard (ARCHITECTURE.md, section 6).
 
 ### 1.8 Integration of milestone M2
 
-What milestone 2 changed in shared signatures and behaviour. No interface of `src/Contracts` changed; the write methods still throw `NotAvailableInThisMilestone` and `WriteToken` still has no factory.
+What milestone 2 changed in shared signatures and behaviour. No interface of `src/Contracts` changed; the write methods still throw `NotAvailableInThisMilestone` and `WriteToken` still has no factory (and refuses to be serialised or unserialised).
 
 | Change | Where |
 |---|---|
@@ -272,6 +272,9 @@ What milestone 2 changed in shared signatures and behaviour. No interface of `sr
 | Item reason codes of an assembled plan are upper case (`PACE_STEP`, `LADDER_PRICE`, `SOLD_OUT_PROTECTION`, `RELATION_*`); a single pace decision still turns into `pace_step` through `PlanItem::fromDecision()`. | ENGINE.md 1.8 |
 | Shadow run: `DecideStage(RunInputsReader, Clock, string $pmsName)` assembles the whole plan; `ValidateStage()` reads its validation; `ShadowStage(PlanItemRepository, RunPayloadRepository)` also stores deletions, the payload and the slices. New repositories `OrderRepository`, `RunPayloadRepository` (migration 6, table `run_payloads`) and `StepLedgerRepository::ledger()`. `StateCodec::planItem()` / `toPlanItem()` are gone (the stages carry `PlanItem::toArray()`). | APPLICATION.md, INFRASTRUCTURE.md |
 | `ConnectorFactory::pricingPmsName()`; the calendar read on by default (above). | APPLICATION.md 1.2 |
+| Correction of M2: `PaceTerms::$fixedPrice` (never set) became `PaceTerms::$ramp` (`Pricing\OrderSalesRamp`, the sales ramp of a target order); `NightTermsResolver` takes the property's timezone last and has `rampFor()`; `NightTerms::citedOrder(?float, ?HardFloor)`; item code `ORDER_SALES_RAMP` and trace code `order_sales_ramp`. | ENGINE.md 1.4, 1.8; ORDERS.md 1 |
+| Correction of M2: `OrderRelease::DiscountBand` (`discount_band`) and `OrderBook::releasing()`; `BookOrderGuard::releases()` answers from the book. `RelationReport::switchItemDropped()`. `ItemFacts::lowestCurrent()`, `rewritesFloorInForce()`, and `floorInForce()` is the highest known. `WriteToken` throws on `__serialize`/`__unserialize`. | ORDERS.md 1; ENGINE.md 1.8; VALIDATOR.md 6 |
+| Correction of M2: neutral defaults for a new strategy's step, drop, weekend nights, "between" position, premium and discount-room factors, for the order defaults and for the last-minute discount; the owner's values live in the parity preset. | LADDER.md 4; ORDERS.md 4; VALIDATOR.md 3 |
 
 ## Part 2. Signature reference
 
@@ -945,7 +948,8 @@ public function updateListing(WriteToken $token, string $listingRef, array $fiel
 #### `Ritmo\Contracts\WriteToken` (final class)
 
 ```php
-// no public members
+public function __serialize(): array;
+public function __unserialize(array $data): void;
 ```
 
 <!-- END GENERATED SIGNATURES -->

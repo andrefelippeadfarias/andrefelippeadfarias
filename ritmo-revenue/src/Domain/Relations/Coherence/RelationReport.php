@@ -55,6 +55,22 @@ final class RelationReport
     }
 
     /**
+     * The item an occupancy switch applied on the room night was dropped because the night is
+     * already where the switch puts it: the switch is satisfied without an item, as when the
+     * coherence stage finds the night there.
+     */
+    public function switchItemDropped(string $room, DateTimeImmutable $night): void
+    {
+        foreach ($this->decisions as $decision) {
+            if ($decision->target === $room && $decision->night == $night && $decision->outcome === Outcome::SwitchApplied) {
+                $this->decisions[] = new RelationDecision($decision->relationId, $decision->type, $room, $night, Outcome::SwitchSatisfied);
+
+                return;
+            }
+        }
+    }
+
+    /**
      * The id of the occupancy switch that holds the room-night without a price item because the
      * target is already where the switch puts it, or null. The validator accepts that night.
      */

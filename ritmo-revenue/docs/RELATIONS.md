@@ -138,7 +138,8 @@ above the cheapest free member is always an error (`band.above_reference`, and `
 for a ceiling); above the upper edge a warning (`band.above_upper`); below the lower edge an error
 (`band.below_lower`) unless a switch of the target holds the night with its trigger **proven by the fresh
 calendar** and either the item cites the switch's order or the coherence report says `switch_satisfied`
-(`band.below_by_switch`), an owner order releases the band (`band.below_by_order`), or the value is a percent
+(`band.below_by_switch`; also when the switch's item was dropped for having no effect, ENGINE.md 1.8, L5), an owner
+order covering the night releases the discount band (`discount_band`, `band.below_by_order`), or the value is a percent
 floor against a reference that is not in the plan (`band.below_confirm_after_recalc`). Down-only night types are
 not checked below. The scope check of the switch's order on other items (`switch.not_proven` in the spec)
 belongs to the order rules of the validator and is not here.
@@ -177,14 +178,14 @@ and "hold the current price".
 | Golden file | Cases | PHP |
 |---|---|---|
 | `pace.coerencia` | 179 | `CoherencePass` + `NightSet` (night set and night types checked too) |
-| `ordem_recanto.faixa` | 48 | `RelationAuditor::auditBetween` |
-| `ordem_recanto.faixa_afrodite` | 44 | `PremiumAudit::check` |
-| `ordem_recanto.comparar` (+ `montar_plano`) | 8 | `RelationAuditor::run` + `toPlanItems` |
-| `pace.regra_afrodite` | 22 | `PremiumBounds::forNight` |
+| between-rooms order: band (`faixa`) | 48 | `RelationAuditor::auditBetween` |
+| between-rooms order: premium band | 44 | `PremiumAudit::check` |
+| between-rooms order: `comparar` (+ `montar_plano`) | 8 | `RelationAuditor::run` + `toPlanItems` |
+| pace: premium room rule | 22 | `PremiumBounds::forNight` |
 | `pace.teto_anuncio` | 44 | `ListingCapChain::capFor` |
 | `pace.limitar_ao_maximo` | 9 | `ListingCapChain::apply` |
-| `plano_dono.balcony_no_mercado` | 44 | `SwitchParams::isHit` |
-| `validar_plano.validar_balcony` | 34 | `DiscountBandCheck::check` |
+| plano_dono: occupancy switch trigger | 44 | `SwitchParams::isHit` |
+| validar_plano: discount-band check | 34 | `DiscountBandCheck::check` |
 
 Amounts within 0.01; flags, rooms, nights, order ids and issue codes exactly. The configured price bands are also
 checked against the engine's bands on every recorded night.

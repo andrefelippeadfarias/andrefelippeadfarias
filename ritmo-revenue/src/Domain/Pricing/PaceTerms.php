@@ -23,7 +23,8 @@ final class PaceTerms
      * @param float|null     $rampTop        the sales ramp: the status percentile climbs toward this top ...
      * @param float          $rampShare      ... in proportion to the share sold (0 to 1)
      * @param bool           $freeStep       a target under the price is reached at once, without the step limit
-     * @param float|null     $fixedPrice     the price an owner order's ramp decided, instead of the step
+     * @param OrderSalesRamp|null $ramp     the sales ramp of the night's target order: it decides the price and
+     *                                       may lower the floor, instead of the step
      * @param HardFloor|null $floor          the floor that replaces the hard floor of the night
      * @param float|null     $ceilingCap     a relation's ceiling: the price stays under it (never under the floor)
      * @param bool           $onlyDown       the order only lowers: never above the current price
@@ -38,7 +39,7 @@ final class PaceTerms
         public readonly ?float $rampTop = null,
         public readonly float $rampShare = 0.0,
         public readonly bool $freeStep = false,
-        public readonly ?float $fixedPrice = null,
+        public readonly ?OrderSalesRamp $ramp = null,
         public readonly ?HardFloor $floor = null,
         public readonly ?float $ceilingCap = null,
         public readonly bool $onlyDown = false,

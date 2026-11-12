@@ -1,0 +1,13 @@
+# Left out of the distributed plugin package (the zip of milestone 5).
+# Internal planning document: it names the owner's properties.
+/docs/PLANO.md
+# Tests and their fixtures (the parity preset and the frozen inputs carry the owner's data).
+/tests/
+# Development tools, scripts and local environments.
+/tools/
+/bin/
+/.wp-test/
+/dist/
+/composer.json
+/.gitignore
+/.distignore

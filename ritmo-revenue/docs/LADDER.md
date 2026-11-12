@@ -61,7 +61,7 @@ cap   = relation ceiling or listing maximum
 
 - Only raises: no item when the live floor is within the tolerance of the floor and there is no ceiling to release
   (`PROTECTION_ALREADY_IN_PLACE`); no item while the live floor is unknown (`PROTECTION_UNKNOWN_LIVE_FLOOR`).
-- Releasing a ceiling never lowers the floor (fix of 12 Nov in the reference engine): a live floor above the
+- Releasing a ceiling never lowers the floor (a fix of the reference engine): a live floor above the
   protection floor stays and only the ceiling goes (`FloorSource::LiveFloorKept`), unless no live override is known
   or its reason marks a retired rule (`retired_floor_markers` / `retired_floor_exemptions`).
 - The ceiling is the listing maximum (free: the plan deletes the override first) or the relation ceiling rounded
@@ -101,7 +101,13 @@ them with `ConfigReader` (defaults, unknown keys, ranges, every problem reported
 | `ladder` | `LadderConfig::fromArray()`, `LadderFields::all()` | off, no strategy |
 | `soldout` | `ProtectionConfig` | protection on, p90, keep the live floor, no retired markers, no light-run limit |
 | `cadence` | `CadenceConfig` | 24 h, wait for the channel, every exception on |
-| `orders` | `OrdersConfig` (ORDERS.md) | 7 frozen days, percentile 50 |
+| `orders` | `OrdersConfig` (ORDERS.md) | 7 frozen days, percentile 50, an order applies to every night not sold out, no fallback before the night, no descent marks |
+
+A new strategy's fields default to values that change nothing until they are set: steps only when every unit is sold
+(`step.trigger_fraction` 1), a drop of 0 % over 0 days below 0 % sold (`drop` is also off), no weekend nights for the
+floor override, a "between" room up to its dearer room (`position` 1), a premium of 0 over the dearest room, the
+discount room at its reference (`band_factor` 1, `band_cap_discount` 0). The owner's values are in the parity
+preset only.
 
 The quality standard (`floors.quality_floor`), the holiday floor, the owner floors, the price factors, the weekend
 days and the tolerance come from the M1 rule set.

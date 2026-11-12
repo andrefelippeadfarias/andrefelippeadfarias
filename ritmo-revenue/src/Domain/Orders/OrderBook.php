@@ -89,6 +89,23 @@ final class OrderBook
     }
 
     /**
+     * The first order that covers the room night (and lists it, when it lists nights) and
+     * releases what is asked, or null.
+     *
+     * Reference: validar_plano.Validador (libera regra_g: cobre and noites).
+     */
+    public function releasing(OrderRelease $release, string $room, DateTimeInterface $night): ?OwnerOrder
+    {
+        foreach ($this->orders as $order) {
+            if ($order->releases($release) && $order->covers($room, $night) && $order->listsNight($night)) {
+                return $order;
+            }
+        }
+
+        return null;
+    }
+
+    /**
      * The first manual change still freezing the room night, or null (ordens.congelada).
      */
     public function manualFreeze(string $room, DateTimeInterface $night): ?OwnerOrder

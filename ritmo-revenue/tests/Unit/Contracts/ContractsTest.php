@@ -100,7 +100,15 @@ final class ContractsTest extends TestCase
         self::assertTrue($reflection->isFinal());
         self::assertTrue($reflection->getConstructor()?->isPrivate());
         self::assertSame([], $reflection->getMethods(ReflectionMethod::IS_STATIC), 'no factory may exist while the plugin is read-only');
-        self::assertSame(['__construct'], array_map(static fn (ReflectionMethod $m): string => $m->getName(), $reflection->getMethods()));
+        self::assertSame(['__construct', '__serialize', '__unserialize'], array_map(static fn (ReflectionMethod $m): string => $m->getName(), $reflection->getMethods()));
+    }
+
+    public function testAWriteTokenCannotBeRebuiltFromASerialisedString(): void
+    {
+        $class = WriteToken::class;
+
+        $this->expectException(\LogicException::class);
+        unserialize(sprintf('O:%d:"%s":0:{}', strlen($class), $class));
     }
 
     public function testThePmsWriteTraitThrowsForEveryWriteMethod(): void

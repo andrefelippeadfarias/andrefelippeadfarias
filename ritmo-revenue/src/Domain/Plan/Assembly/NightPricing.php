@@ -264,7 +264,8 @@ final class NightPricing
             $paceUnits,
         );
         $params = ['direction' => $decision->direction?->value, 'rule_trace' => $decision->trace, 'step' => $step->toArray()];
-        $work = new WorkItem($room->code, $night, $row->price, $decision->minPrice, $decision->maxPrice, WorkItem::PACE_STEP, $params, $this->before($room, $night), $terms->citedOrder($decision->stepPrice), true);
+        $code = $terms->pace->ramp !== null ? WorkItem::ORDER_SALES_RAMP : WorkItem::PACE_STEP;
+        $work = new WorkItem($room->code, $night, $row->price, $decision->minPrice, $decision->maxPrice, $code, $params, $this->before($room, $night), $terms->citedOrder($decision->stepPrice, $decision->floor), true);
         $this->add($work, $decision->reasonCode, ['trace' => $decision->trace], $decision);
     }
 
@@ -299,7 +300,7 @@ final class NightPricing
 
     /**
      * The bounds of the premium relations of a room on a night, before the coherence stage
-     * (pace.regra_afrodite): above the dearest room of the set that sells, under its band.
+     * (the premium room rule of pace.py): above the dearest room of the set that sells, under its band.
      */
     private function premium(RoomType $room, DateTimeImmutable $night): ?PremiumCap
     {

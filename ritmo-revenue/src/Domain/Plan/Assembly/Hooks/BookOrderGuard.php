@@ -6,13 +6,11 @@ namespace Ritmo\Domain\Plan\Assembly\Hooks;
 
 use DateTimeImmutable;
 use Ritmo\Domain\Orders\OrderBook;
+use Ritmo\Domain\Orders\OrderRelease;
 use Ritmo\Domain\Relations\Port\OrderGuard;
 
 /**
  * What the owner's orders of the run say to the relations.
- *
- * No order releases a relation in milestone M2 (the reference's band release of one owner rule is
- * not an order release of the plugin), so releases() always answers null.
  */
 final class BookOrderGuard implements OrderGuard
 {
@@ -40,8 +38,12 @@ final class BookOrderGuard implements OrderGuard
         return $this->orders->inForce($orderId, $room, $night) !== null;
     }
 
+    /**
+     * Only discount bands are released by an order (it names what it releases, not the relation):
+     * an order that releases the discount band of the room releases every band whose target it is.
+     */
     public function releases(string $relationId, string $room, DateTimeImmutable $night): ?string
     {
-        return null;
+        return $this->orders->releasing(OrderRelease::DiscountBand, $room, $night)?->id;
     }
 }

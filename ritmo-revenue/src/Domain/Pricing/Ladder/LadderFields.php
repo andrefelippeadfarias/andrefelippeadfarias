@@ -58,7 +58,7 @@ final class LadderFields
             new Field("$s.lock_ceiling", FieldType::Boolean, 'Fix the price', 'Write floor and ceiling at the ladder price so the pricing algorithm cannot move it.', true),
             new Field("$s.weekend_floor_override", FieldType::Group, 'Weekend floor override', 'While the strategy acts, the weekend owner floor gives way to the quality standard.'),
             new Field("$s.weekend_floor_override.enabled", FieldType::Boolean, 'Replace weekend floor', 'Use the quality standard instead of the weekend owner floor on the nights below.', false),
-            new Field("$s.weekend_floor_override.weekdays", FieldType::ListOf, 'Weekend nights', 'Nights (by check-in weekday, Monday = 0) the override covers.', [4, 5], max: 7, unique: true),
+            new Field("$s.weekend_floor_override.weekdays", FieldType::ListOf, 'Weekend nights', 'Nights (by check-in weekday, Monday = 0) the override covers.', [], max: 7, unique: true),
             new Field("$s.weekend_floor_override.weekdays.*", FieldType::Integer, 'Weekday', min: 0, max: 6),
         ];
     }
@@ -72,13 +72,13 @@ final class LadderFields
 
         return [
             new Field("$s.step", FieldType::Group, 'Steps', 'How the price climbs as units sell.'),
-            new Field("$s.step.trigger_fraction", FieldType::Number, 'Start steps after', 'Fraction of the units that sells at the opening price.', 0.5, min: 0, max: 1, exclusiveMin: true, unit: Field::UNIT_RATIO),
+            new Field("$s.step.trigger_fraction", FieldType::Number, 'Start steps after', 'Fraction of the units that sells at the opening price (1 = no step).', 1.0, min: 0, max: 1, exclusiveMin: true, unit: Field::UNIT_RATIO),
             new Field("$s.step.percent_per_unit", FieldType::Number, 'Step per unit (%)', 'Compound increase for each further unit sold.', 5.0, min: 0, max: 50, unit: Field::UNIT_PERCENT),
             new Field("$s.drop", FieldType::Group, 'Last-minute drop', 'Lower the price close to the night when few units sold.'),
             new Field("$s.drop.enabled", FieldType::Boolean, 'Last-minute drop', 'Lower the price close to the night when few units sold.', false),
-            new Field("$s.drop.window_days", FieldType::Integer, 'Drop window (days)', 'Applies from this many days before the night down to the night itself.', 7, min: 0, max: 60, unit: Field::UNIT_DAYS),
-            new Field("$s.drop.occupancy_below", FieldType::Number, 'Occupancy below', 'Drop only when less than this share of the room type is sold.', 0.6, min: 0, max: 1, unit: Field::UNIT_RATIO),
-            new Field("$s.drop.percent", FieldType::Number, 'Drop (%)', 'Applied once, after the steps and the ceiling.', 10.0, min: 0, max: 50, unit: Field::UNIT_PERCENT),
+            new Field("$s.drop.window_days", FieldType::Integer, 'Drop window (days)', 'Applies from this many days before the night down to the night itself.', 0, min: 0, max: 60, unit: Field::UNIT_DAYS),
+            new Field("$s.drop.occupancy_below", FieldType::Number, 'Occupancy below', 'Drop only when less than this share of the room type is sold.', 0.0, min: 0, max: 1, unit: Field::UNIT_RATIO),
+            new Field("$s.drop.percent", FieldType::Number, 'Drop (%)', 'Applied once, after the steps and the ceiling.', 0.0, min: 0, max: 50, unit: Field::UNIT_PERCENT),
             new Field("$s.drop.skip_inside_window_at_activation", FieldType::Boolean, 'Spare nights already close', 'Nights already inside the window when the strategy was activated keep the ladder price.', true),
         ];
     }
@@ -129,14 +129,14 @@ final class LadderFields
             new Field("$s.relations.between.*.room", FieldType::Text, 'Room', required: true, pattern: self::CODE),
             new Field("$s.relations.between.*.low", FieldType::Text, 'Not below', required: true, pattern: self::CODE),
             new Field("$s.relations.between.*.high", FieldType::Text, 'Toward', required: true, pattern: self::CODE),
-            new Field("$s.relations.between.*.position", FieldType::Number, 'Position', 'How far toward the dearer room it may go (0.75 = three quarters of the way).', 0.75, min: 0, max: 1, unit: Field::UNIT_RATIO),
+            new Field("$s.relations.between.*.position", FieldType::Number, 'Position', 'How far toward the dearer room it may go (0.75 = three quarters of the way; 1 = up to it).', 1.0, min: 0, max: 1, unit: Field::UNIT_RATIO),
             new Field("$s.relations.premium", FieldType::ListOf, 'Premium over the dearest', 'A room kept above the dearest of others that still sell.', [], max: 20),
             new Field("$s.relations.premium.*", FieldType::Group, 'Premium relation', required: true),
             new Field("$s.relations.premium.*.room", FieldType::Text, 'Room', required: true, pattern: self::CODE),
             new Field("$s.relations.premium.*.over", FieldType::ListOf, 'Above', required: true, min: 1, max: 20, unique: true),
             new Field("$s.relations.premium.*.over.*", FieldType::Text, 'Room', pattern: self::CODE),
-            new Field("$s.relations.premium.*.rate_weekend_or_holiday", FieldType::Number, 'Premium on weekends and holidays', '', 0.05, min: 0, max: 1, unit: Field::UNIT_RATIO),
-            new Field("$s.relations.premium.*.rate_other", FieldType::Number, 'Premium on other nights', '', 0.2, min: 0, max: 1, unit: Field::UNIT_RATIO),
+            new Field("$s.relations.premium.*.rate_weekend_or_holiday", FieldType::Number, 'Premium on weekends and holidays', 'Share above the dearest of the other rooms (0 = at least as dear).', 0.0, min: 0, max: 1, unit: Field::UNIT_RATIO),
+            new Field("$s.relations.premium.*.rate_other", FieldType::Number, 'Premium on other nights', 'Share above the dearest of the other rooms (0 = at least as dear).', 0.0, min: 0, max: 1, unit: Field::UNIT_RATIO),
         ];
     }
 
@@ -175,10 +175,10 @@ final class LadderFields
             new Field("$p.fallback_step_percent", FieldType::Number, 'Step without market data (%)', 'Used when no market top is known for the night.', 5.0, min: 0, max: 50, unit: Field::UNIT_PERCENT),
             new Field("$p.band_room", FieldType::Text, 'Discount room', 'A room priced in a band below other rooms.', null, nullable: true, pattern: self::CODE),
             new Field("$p.band_reference_room", FieldType::Text, 'Discount room reference', 'Its target is a share of this room\'s target.', null, nullable: true, pattern: self::CODE),
-            new Field("$p.band_factor", FieldType::Number, 'Discount room factor', 'Target of the discount room relative to its reference room.', 0.9, min: 0.1, max: 1, unit: Field::UNIT_RATIO),
+            new Field("$p.band_factor", FieldType::Number, 'Discount room factor', 'Target of the discount room relative to its reference room (1 = the same price).', 1.0, min: 0.1, max: 1, unit: Field::UNIT_RATIO),
             new Field("$p.band_cap_rooms", FieldType::ListOf, 'Discount room cap', 'The discount room stays under the cheapest of these rooms that still sells.', [], max: 20, unique: true),
             new Field("$p.band_cap_rooms.*", FieldType::Text, 'Room', pattern: self::CODE),
-            new Field("$p.band_cap_discount", FieldType::Number, 'Discount below the cap', '', 0.1, min: 0, max: 0.5, unit: Field::UNIT_RATIO),
+            new Field("$p.band_cap_discount", FieldType::Number, 'Discount below the cap', 'Share under the cheapest capping room (0 = at it).', 0.0, min: 0, max: 0.5, unit: Field::UNIT_RATIO),
             new Field("$p.temporary_floor", FieldType::Group, 'Temporary guest minimum', 'A lower cancellation floor until a date, in the price plan of the owner floors.'),
             new Field("$p.temporary_floor.amount", FieldType::Number, 'Amount', '', null, nullable: true, min: 0, max: 1000000, exclusiveMin: true, unit: Field::UNIT_MONEY),
             new Field("$p.temporary_floor.until", FieldType::Date, 'Until', '', null, nullable: true),

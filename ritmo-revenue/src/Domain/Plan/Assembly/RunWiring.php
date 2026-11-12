@@ -71,7 +71,7 @@ final class RunWiring
         $this->graph = new RelationGraph($relations, array_values($inputs->rooms));
         $this->caps = new ListingCapChain($this->graph, $this->relationsConfig->settings);
         $this->ladder = LadderParts::fromRules($rules, $inputs->rooms, $inputs->ruler, $this->cadence());
-        $this->terms = new NightTermsResolver($rules, $rules->orders(), new Floors($rules), $inputs->orders, $this->ladder?->marketFloor, $this->ladder?->weekendOverride);
+        $this->terms = new NightTermsResolver($rules, $rules->orders(), new Floors($rules), $inputs->orders, $this->ladder?->marketFloor, $this->ladder?->weekendOverride, $inputs->property->timezone);
         $this->hooks = $this->hooks();
         $this->stay = new StayRules($rules->stay(), new HolidayCalendar($rules), array_values($inputs->rooms));
     }
@@ -110,7 +110,7 @@ final class RunWiring
             $facts,
             new PaceEngine($this->rules, $this->clock),
             $this->terms,
-            new SoldOutProtection($this->rules->soldOut(), $this->rules->tolerance()),
+            new SoldOutProtection($this->rules->soldOut(), $this->rules->tolerance(), $this->rules->noEffect()->moneySlack),
             $this->cadence(),
             $this->graph,
             $this->caps,

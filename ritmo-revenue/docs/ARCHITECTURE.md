@@ -193,7 +193,7 @@ During a phase, run only your own folder; the integration phase runs the whole s
 No code path may send POST, PUT, PATCH or DELETE to a PMS or pricing system. Four independent guards:
 
 1. **Contracts:** every write method of `PmsConnector` and `PricingConnector` throws `NotAvailableInThisMilestone`. Implementations get this from the traits `Contracts\Support\PmsWritesUnavailable` and `PricingWritesUnavailable`; they do not write their own.
-2. **Write token:** every write method requires a `Contracts\WriteToken`, whose constructor is private and which has no factory until the milestone that adds the write gate. Nobody can call a write method without forging one by reflection.
+2. **Write token:** every write method requires a `Contracts\WriteToken`, whose constructor is private and which has no factory until the milestone that adds the write gate. Nobody can call a write method without forging one by reflection: a token cannot be rebuilt by `unserialize()` either (`__unserialize` throws). Sealing the tokens the gate issues (as `Validator::sealed()` does for plans) comes with the gate in M3.
 3. **HTTP:** the `HttpClient` implementation refuses mutating methods with `WriteBlocked` before anything leaves the site.
 4. **No write call:** the shadow stage holds no connector, and a source test fails when anything outside `src/Connectors` calls a write method of a connector.
 
@@ -201,7 +201,7 @@ In M2 the plan assembly builds the payload and the slices of what it would write
 
 The end-to-end check (`bin/e2e.sh`) asserts, from the simulator's own log, that a shadow run sent no PUT, PATCH or DELETE and no POST other than the calendar read below.
 
-**The pricing system's calendar read (`POST /listing_prices`).** The verified API notes list it as a read that uses POST, which guard 3 forbids. Decision of the project manager (12 Nov): that request only reads (it changes nothing) and the engine needs it (price, floor and ceiling in force), so it is **on by default**:
+**The pricing system's calendar read (`POST /listing_prices`).** The verified API notes list it as a read that uses POST, which guard 3 forbids. Decision of the project manager (milestone 2): that request only reads (it changes nothing) and the engine needs it (price, floor and ceiling in force), so it is **on by default**:
 
 - `WordPress\ConnectorFactory` puts exactly that method, host and path on `ReadRouteAllowList` (nothing else is allowed: any other POST, and that POST to another host or path, is still refused by guard 3); the run reads the calendar and the measure stage also compares the units sold of both systems.
 - A site switches it off with `define('RITMO_PRICING_CALENDAR_READ', false);` in wp-config.php (any other value, or no definition, leaves it on). Then the run takes the current price of each night from the PMS (`readInventory(..., withPrices: true)`), never calls `readPrices()`, and nothing but GET leaves the site.

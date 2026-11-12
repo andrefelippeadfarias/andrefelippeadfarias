@@ -66,6 +66,7 @@ Every decision is kept, not only the steps: `PaceDecision::toArray()` is the row
 3. **Target** (`TargetPercentile`, `AnchorLookup::valueAt`, `PriceFactor`): the market percentile of the status for the property's tier, as a public price, divided by the public factor.
 4. **A night ahead of its curve never goes down:** its target is at least the current price.
 5. **One step** (`StepSize`): `pace.k` times the distance, limited by `pace.max_step`, half of the limit with a weak anchor.
+   **The sales ramp of an owner target order** (`OrderSalesRamp`, when `PaceTerms::$ramp` carries one, see 1.8) replaces the step: close to the date an unsold night may drop to the order's fallback floor, a night under its curve goes down the order's descent steps (one per mark reached, one step at a time) and a night back on its curve climbs back to the floor by at most the step limit (`order_fallback_floor`, `order_descent_step`, `order_return_limit`); the line of the ramp is the floor plus the share sold since the order's base of the way to the top (the standard floors or the order's top), never under the target. Under the line the price climbs by at most the step limit; above it a weak night (or one that descended) goes straight to it, a night that sells well stays. A rise is measured on the floor as the pricing system applies it.
 6. **Hard floor** (`Floors::hardFloor`): the step stops there (`heldAtFloor`).
 7. **Listing maximum:** the step stops at `Floors::highestFloor()`.
 8. **Tonight never goes up**, not even through the rounding of the floor: a step down whose floor the pricing system would apply (a whole percentage of the base, rounded up) above the current price goes down to the highest whole percentage that does not pass it; if that is under the hard floor, tonight keeps its price. This is a deliberate difference from the reference, which does not look at the rounding on the night of today.
@@ -102,6 +103,7 @@ Every decision is kept, not only the steps: `PaceDecision::toArray()` is the row
 | `weak_anchor` | `n`, `age_days` |
 | `ahead_never_lowers` | `target`, `current` |
 | `step` | `from`, `to`, `strength`, `max_percent` |
+| `order_sales_ramp` | `order`, `share` (sold since the order's base), `line`, `top`, `floor`, `floor_label` (the order's floor, `order_fallback_floor`, `order_descent_step`, `order_return_limit` or a premium relation's), `to` |
 | `held_at_floor` | `floor`, `label`, `public`, `percentile` |
 | `capped_at_listing_max` | `highest_floor`, `listing_max` |
 | `today_never_rises` | `wanted`, `current`, `applied_floor` (the wanted floor as the pricing system applies it, a whole percentage of the base rounded up), `to` (the price kept: the current one, or the highest whole percentage of the base that does not pass it) |
@@ -220,14 +222,18 @@ Precedence, as the stages apply it: safety (validator, tonight never rises) > ow
 
 **Night lines** (`NightLine::$code`): the `PaceDecision` reason codes of 1.4, or `night_blocked`, `manual_freeze`, `order_fixed_price`, `ladder_price`, `ladder_hold`, `sold_out_protection`, `sold_out_no_item`, `sold_out_no_anchor`, `no_market_anchor`, `out_of_night_filter`, `cadence_hold`.
 
-**Item reason codes** (`PlanItem::$reasonCode`): `PACE_STEP`, `LADDER_PRICE`, `SOLD_OUT_PROTECTION`, and when a relation changed the item `RELATION_AT_LEAST`, `RELATION_BETWEEN`, `RELATION_PREMIUM_OVER_MAX`, `RELATION_DISCOUNT_BAND`, `RELATION_OCCUPANCY_SWITCH` (the protection first, then the relation, then what priced it; `reasonParams.priced_by` keeps what priced it and `reasonParams.relation_codes` every relation). `reasonParams.step` is the `StepProposal` the ledger records.
+**Item reason codes** (`PlanItem::$reasonCode`): `PACE_STEP`, `ORDER_SALES_RAMP` (a pace step decided by the sales ramp of an owner target order), `LADDER_PRICE`, `SOLD_OUT_PROTECTION`, and when a relation changed the item `RELATION_AT_LEAST`, `RELATION_BETWEEN`, `RELATION_PREMIUM_OVER_MAX`, `RELATION_DISCOUNT_BAND`, `RELATION_OCCUPANCY_SWITCH` (the protection first, then the relation, then what priced it; `reasonParams.priced_by` keeps what priced it and `reasonParams.relation_codes` every relation). `reasonParams.step` is the `StepProposal` the ledger records.
 
 Where the assembly decides differently from the reference, on purpose:
 
 - **L1, light runs per property.** The reference prices both properties in one pass; in a light run its relations also look at the nights the other property touched. The plugin assembles one property at a time and looks only at that property's filter and items.
 - **L2, a delete-and-rewrite group goes together.** When the validator refuses the item that writes a night again, its deletion is not sent either (and the other way round): the reference would delete the rule and leave the night without its floor and stay.
 - **L3, effect of a rewrite.** An item whose rule the plan deletes first always has an effect: the validator does not call it `no_effect` and `PercentRounding` does not drop it (the reference keeps it through `sem_efeito`).
-- **L4, reason codes.** The reference writes the same text for the "at least" and the "between" relations; the plugin gives each its own code. Item texts of the payload are the plugin's, from the code and its parameters.
+- **L4, reason codes.** The reference writes the same text for the "at least" and the "between" relations; the plugin gives each its own code. Item texts of the payload are the plugin's, from the code and its parameters. The premium of the owner's ladder over the dearest room is a rule of the ladder strategy: such an item keeps `LADDER_PRICE` where the reference's text reads as the premium relation.
+- **L5, an occupancy switch without effect is satisfied.** When the switch's item is dropped because the night is already at the switched price (the no-effect filter, or the validator's `no_effect`), the switch is recorded as satisfied without an item (`RelationReport::switchItemDropped`), as a light run finds it, and the discount band check accepts the night (`band_below_by_switch`, a warning). The reference refuses the band there (`band_below_lower`), which refuses the whole plan of that property on every full run after the switch was written.
+- **L6, a floor that writes again the floor in force.** An item whose floor is the whole percentage already in force (by the rule and by the fresh calendar) and that sets nothing else is refused as `no_effect`, and it never counts as raising tonight's price (`raise_today`); the reference writes it again.
+- **Payload.** Items whose whole percentages are already in force are left out of the payload (`PercentRounding`), whatever amounts the calendar shows; the reference writes them again.
+- **An owner order may release the discount band** (`discount_band` in its releases; the reference's `regra_g`): under the band's lower edge on a night it covers is a warning (`band_below_by_order`), as in the reference.
 
 ### 1.9 The modules of milestone 2
 
@@ -242,7 +248,7 @@ Where the assembly decides differently from the reference, on purpose:
 
 ### 1.10 Parity of whole runs (level 2)
 
-`tests/Golden/Level2Test.php` runs `PlanAssembler` over the ten scenarios of `tests/fixtures/golden/level2/pace.plano.json` (weekday ladder and sales ramp, the owner's weekend plan, a holiday, sold-out and reopened nights, a light run, orphan nights, the occupancy switch, owner orders by date, frozen and blocked nights, small rooms), written by `tests/fixtures/tools/golden_level2.py` from the reference engine's functions with frozen inputs (`tests/fixtures/golden/level2/frozen/`; nothing is written into the reference's folder). Per property it checks every item (floor and ceiling within 0.01, stay, masks, orphan claim, order cited, price before, reason, step block), the delete-first nights, the no-effect items, the validator's codes per entry (the reference's, with the validator divergences V1 to V5 of VALIDATOR.md recorded in the golden), and the payload and slices of what the plugin would write. The deliberate differences L1 and L4 are listed by scenario in `tests/fixtures/golden/level2/plugin-divergences.json`.
+`tests/Golden/Level2Test.php` runs `PlanAssembler` over the thirteen scenarios of `tests/fixtures/golden/level2/pace.plano.json` (weekday ladder and sales percentile, the owner's weekend plan, a holiday, sold-out and reopened nights, a light run, locked rules next to sold-out nights, the occupancy switch, owner orders by date, frozen and blocked nights, an order that releases the discount band, two full runs over the owner's real inputs with the range orders on their sales ramp, small rooms), written by `tests/fixtures/tools/golden_level2.py` from the reference engine's functions with frozen inputs (`tests/fixtures/golden/level2/frozen/`; nothing is written into the reference's folder). Per property it checks every item (floor and ceiling within 0.01, stay, masks, orphan claim, order cited, price before, reason, step block), the delete-first nights, the no-effect items, the validator's codes per entry (the reference's, with the validator divergences V1 to V5 of VALIDATOR.md recorded in the golden), and the payload and slices of what the plugin would write. The deliberate differences L1 and L4 are listed by scenario in `tests/fixtures/golden/level2/plugin-divergences.json`; L5 and L6 are applied to the expected codes by the generator (`refine`), and the slices are also checked in writing order (deletions first, then D0, D1 and the rest). No scenario produces an orphan claim yet: that path is covered by the unit tests of the stay hook.
 
 ### 1.11 Class index of milestone 2
 
@@ -293,7 +299,9 @@ What each class of the engine added in milestone 2 is, in one line; the area doc
 
 | Class | What it is |
 |---|---|
+| `OrderSalesRamp` | The sales ramp of an owner target order on one room night: the line from the order's floor to the top by the share sold, the fallback floor, the descent steps and the climb back (reference: the escada_ordem branch of pace._plano). |
 | `PaceTerms` | What the rest of the plan changes in the pace step of one room night: an owner order, the sales ramp, a strategy's market floor, the bounds of a room relation, the chained listing top. |
+| `RampStep` | Where the sales ramp puts one room night: its floor, the price before the floor and the listing top, and the line it aimed at. |
 
 `src/Domain/Pricing/Cadence`
 
@@ -407,7 +415,7 @@ What each class of the engine added in milestone 2 is, in one line; the area doc
 | `BookOrderGuard` | What the owner's orders of the run say to the relations. |
 | `LadderStrategyGuard` | What the validator asks the run's sales ladder strategy about the order behind it. |
 | `LadderStrategyView` | What the sales ladder of the run says to the relations: which room nights it governs, and which a target order with a sales ramp pins (reference: PD.governa_noite and the "ladder pin" of pace.coerencia). |
-| `RulerMarketTarget` | The market price an occupancy switch sends its room to, read from the market ruler: the series and percentile its configuration gives for the ruler's night type, over the night's public factor of the room's property (reference: plano_dono.balcony_mercado_enviado). |
+| `RulerMarketTarget` | The market price an occupancy switch sends its room to, read from the market ruler: the series and percentile its configuration gives for the ruler's night type, over the night's public factor of the room's property (reference: plano_dono, the sent market price of the room without a tub). |
 | `RunFloorSource` | The floors of a room night as the run's orders and strategy set them, for the relations. |
 
 `src/Domain/Plan/Payload`
@@ -1274,7 +1282,7 @@ public readonly int $windowDays;
 public readonly float $occupancyBelow;
 public readonly float $percent;
 public readonly bool $skipInsideWindowAtActivation;
-public function __construct(bool $enabled = false, int $windowDays = 7, float $occupancyBelow = 0.6, float $percent = 10.0, bool $skipInsideWindowAtActivation = true);
+public function __construct(bool $enabled = false, int $windowDays = 0, float $occupancyBelow = 0.0, float $percent = 0.0, bool $skipInsideWindowAtActivation = true);
 ```
 
 #### `Ritmo\Domain\Pricing\Ladder\EffectiveValue` (final class)
@@ -1465,7 +1473,7 @@ public function matches(RoomType $room, string $nightType): bool;
 ```php
 public readonly float $triggerFraction;
 public readonly float $percentPerUnit;
-public function __construct(float $triggerFraction = 0.5, float $percentPerUnit = 5.0);
+public function __construct(float $triggerFraction = 1.0, float $percentPerUnit = 5.0);
 ```
 
 #### `Ritmo\Domain\Pricing\Ladder\LadderStrategy` (final class)
@@ -1492,15 +1500,15 @@ public readonly array $premium;
 public readonly LastMinuteFloorRule $lastMinuteFloor;
 public readonly ProportionalRule $proportional;
 public function __construct(string $id, string $label = '', bool $enabled = false, string $mode = 'stepped', ?DateTimeImmutable $validFrom = null, ?DateTimeImmutable $validTo = null, ?DateTimeImmutable $activatedOn = null, ?string $authorityOrderId = null, bool $lockCeiling = true, LadderSteps $steps = \Ritmo\Domain\Pricing\Ladder\LadderSteps::__set_state(array(
-   'triggerFraction' => 0.5,
+   'triggerFraction' => 1.0,
    'percentPerUnit' => 5.0,
 )), DropRule $drop = \Ritmo\Domain\Pricing\Ladder\DropRule::__set_state(array(
    'enabled' => false,
-   'windowDays' => 7,
-   'occupancyBelow' => 0.6,
-   'percent' => 10.0,
+   'windowDays' => 0,
+   'occupancyBelow' => 0.0,
+   'percent' => 0.0,
    'skipInsideWindowAtActivation' => true,
-)), bool $weekendFloorOverride = false, array $weekendFloorWeekdays = [4, 5], array $rules = [], array $between = [], array $premium = [], LastMinuteFloorRule $lastMinuteFloor = \Ritmo\Domain\Pricing\Ladder\LastMinuteFloorRule::__set_state(array(
+)), bool $weekendFloorOverride = false, array $weekendFloorWeekdays = [], array $rules = [], array $between = [], array $premium = [], LastMinuteFloorRule $lastMinuteFloor = \Ritmo\Domain\Pricing\Ladder\LastMinuteFloorRule::__set_state(array(
    'enabled' => false,
    'nightTypes' => 
   array (
@@ -1519,11 +1527,11 @@ public function __construct(string $id, string $label = '', bool $enabled = fals
    'fallbackStepPercent' => 5.0,
    'bandRoom' => NULL,
    'bandReferenceRoom' => NULL,
-   'bandFactor' => 0.9,
+   'bandFactor' => 1.0,
    'bandCapRooms' => 
   array (
   ),
-   'bandCapDiscount' => 0.1,
+   'bandCapDiscount' => 0.0,
    'temporaryFloor' => NULL,
    'temporaryFloorUntil' => NULL,
 )));
@@ -1620,7 +1628,7 @@ public readonly array $bandCapRooms;
 public readonly float $bandCapDiscount;
 public readonly ?float $temporaryFloor;
 public readonly ?DateTimeImmutable $temporaryFloorUntil;
-public function __construct(float $fallbackStepPercent = 5.0, ?string $bandRoom = null, ?string $bandReferenceRoom = null, float $bandFactor = 0.9, array $bandCapRooms = [], float $bandCapDiscount = 0.1, ?float $temporaryFloor = null, ?DateTimeImmutable $temporaryFloorUntil = null);
+public function __construct(float $fallbackStepPercent = 5.0, ?string $bandRoom = null, ?string $bandReferenceRoom = null, float $bandFactor = 1.0, array $bandCapRooms = [], float $bandCapDiscount = 0.0, ?float $temporaryFloor = null, ?DateTimeImmutable $temporaryFloorUntil = null);
 ```
 
 #### `Ritmo\Domain\Pricing\Ladder\RulerNight` (final class)
@@ -1704,7 +1712,7 @@ public function __construct(Property $property, RoomType $room, DateTimeImmutabl
    'rampTop' => NULL,
    'rampShare' => 0.0,
    'freeStep' => false,
-   'fixedPrice' => NULL,
+   'ramp' => NULL,
    'floor' => NULL,
    'ceilingCap' => NULL,
    'onlyDown' => false,
@@ -1716,6 +1724,31 @@ public function __construct(Property $property, RoomType $room, DateTimeImmutabl
 public static function fromPriceNight(Property $property, RoomType $room, PriceNight $price, ?MarketAnchor $anchor, ?LedgerStep $lastStep = null): self;
 public function isSoldOut(): bool;
 public function usesGroupPace(): bool;
+```
+
+#### `Ritmo\Domain\Pricing\OrderSalesRamp` (final class)
+
+```php
+const FALLBACK_FLOOR = 'order_fallback_floor';
+const DESCENT_STEP = 'order_descent_step';
+const RETURN_LIMIT = 'order_return_limit';
+public readonly string $orderId;
+public readonly float $share;
+public readonly float $top;
+public readonly float $standardFloor;
+public readonly bool $belowStandard;
+public readonly ?float $fallbackFloor;
+public readonly array $descentFloors;
+public readonly array $descentMarks;
+public readonly float $reachedSlack;
+public readonly bool $weak;
+public readonly ?HardFloor $raise;
+public function __construct(string $orderId, float $share, float $top, float $standardFloor, bool $belowStandard, ?float $fallbackFloor, array $descentFloors, array $descentMarks, float $reachedSlack, bool $weak, ?HardFloor $raise = null);
+public function withRaise(?HardFloor $raise): self;
+public function line(float $floor, float $target): float;
+public function descentFloor(int $daysOut, PaceReading $reading, ?float $current = null, float $target = 0.0): ?float;
+public function returnLimit(int $daysOut, float $current, float $floor, float $maxStepPercent): ?float;
+public function step(HardFloor $floor, float $target, float $current, int $daysOut, PaceReading $reading, float $maxStepPercent): RampStep;
 ```
 
 #### `Ritmo\Domain\Pricing\PaceBasis` (final class)
@@ -1798,7 +1831,7 @@ public readonly bool $byOrder;
 public readonly ?float $rampTop;
 public readonly float $rampShare;
 public readonly bool $freeStep;
-public readonly ?float $fixedPrice;
+public readonly ?OrderSalesRamp $ramp;
 public readonly ?HardFloor $floor;
 public readonly ?float $ceilingCap;
 public readonly bool $onlyDown;
@@ -1806,7 +1839,7 @@ public readonly ?float $listingTop;
 public readonly bool $compareApplied;
 public readonly bool $lockCeilingDown;
 public readonly bool $lockCeilingAlways;
-public function __construct(?float $percentile = null, bool $byOrder = false, ?float $rampTop = null, float $rampShare = 0.0, bool $freeStep = false, ?float $fixedPrice = null, ?HardFloor $floor = null, ?float $ceilingCap = null, bool $onlyDown = false, ?float $listingTop = null, bool $compareApplied = false, bool $lockCeilingDown = false, bool $lockCeilingAlways = false);
+public function __construct(?float $percentile = null, bool $byOrder = false, ?float $rampTop = null, float $rampShare = 0.0, bool $freeStep = false, ?OrderSalesRamp $ramp = null, ?HardFloor $floor = null, ?float $ceilingCap = null, bool $onlyDown = false, ?float $listingTop = null, bool $compareApplied = false, bool $lockCeilingDown = false, bool $lockCeilingAlways = false);
 public function percentileFor(float $statusPercentile): float;
 ```
 
@@ -1886,6 +1919,15 @@ public function relationCeiling(?float $ceiling): ?float;
 public function inLightRunReach(int $daysOut): bool;
 ```
 
+#### `Ritmo\Domain\Pricing\RampStep` (final class)
+
+```php
+public readonly HardFloor $floor;
+public readonly float $price;
+public readonly float $line;
+public function __construct(HardFloor $floor, float $price, float $line);
+```
+
 #### `Ritmo\Domain\Pricing\RuleCode` (final class)
 
 ```php
@@ -1899,6 +1941,7 @@ const MARKET_TARGET = 'market_target';
 const WEAK_ANCHOR = 'weak_anchor';
 const AHEAD_NEVER_LOWERS = 'ahead_never_lowers';
 const STEP = 'step';
+const ORDER_SALES_RAMP = 'order_sales_ramp';
 const HELD_AT_FLOOR = 'held_at_floor';
 const CAPPED_AT_LISTING_MAX = 'capped_at_listing_max';
 const TODAY_NEVER_RISES = 'today_never_rises';
@@ -1952,9 +1995,10 @@ public readonly ?float $replacedFloor;
 public readonly ?string $replacedOrder;
 public readonly ?string $relationOrder;
 public readonly ?string $targetOrder;
-public function __construct(PaceTerms $pace, ?string $floorOrder = null, ?float $replacedFloor = null, ?string $replacedOrder = null, ?string $relationOrder = null, ?string $targetOrder = null);
+public readonly ?string $premiumOrder;
+public function __construct(PaceTerms $pace, ?string $floorOrder = null, ?float $replacedFloor = null, ?string $replacedOrder = null, ?string $relationOrder = null, ?string $targetOrder = null, ?string $premiumOrder = null);
 public static function neutral(): self;
-public function citedOrder(?float $stepPrice): ?string;
+public function citedOrder(?float $stepPrice, ?HardFloor $floor = null): ?string;
 ```
 
 #### `Ritmo\Domain\Pricing\Terms\NightTermsResolver` (final class)
@@ -1963,10 +2007,11 @@ public function citedOrder(?float $stepPrice): ?string;
 const ORDER_FLOOR = 'order_floor';
 const MARKET_FLOOR = 'market_floor';
 const PREMIUM_FLOOR = 'relation_premium';
-public function __construct(RuleSet $rules, OrdersConfig $ordersConfig, Floors $floors, OrderBook $orders, ?LastMinuteMarketFloor $marketFloor = null, ?WeekendFloorOverride $weekendOverride = null);
+public function __construct(RuleSet $rules, OrdersConfig $ordersConfig, Floors $floors, OrderBook $orders, ?LastMinuteMarketFloor $marketFloor = null, ?WeekendFloorOverride $weekendOverride = null, string $timezone = 'UTC');
 public function standardFloor(RoomType $room, DateTimeImmutable $night): HardFloor;
 public function floorWithOrders(RoomType $room, DateTimeImmutable $night, OrderBook $orders): array;
 public function resolve(RoomType $room, DateTimeImmutable $night, int $daysOut, NightType $type, int $sold, int $units, int $paceSold, int $paceUnits, ?PremiumCap $premium = null, ?float $listingTop = null): NightTerms;
+public function rampFor(OwnerOrder $order, RoomType $room, DateTimeImmutable $night, int $daysOut, PaceStatus $status, int $sold, int $total): OrderSalesRamp;
 public function isWeakNight(OwnerOrder $order, PaceStatus $status, int $sold, int $units): bool;
 ```
 
@@ -2176,6 +2221,7 @@ public function occupancy(): array;
 
 ```php
 const PACE_STEP = 'PACE_STEP';
+const ORDER_SALES_RAMP = 'ORDER_SALES_RAMP';
 const LADDER_PRICE = 'LADDER_PRICE';
 const SOLD_OUT_PROTECTION = 'SOLD_OUT_PROTECTION';
 const RELATION_AT_LEAST = 'RELATION_AT_LEAST';
@@ -2251,7 +2297,7 @@ public readonly int $maxDaysOut;
 public readonly float $maxDiscount;
 public readonly float $maxSoldShare;
 public readonly array $lastUnitOnlyRooms;
-public function __construct(bool $enabled = false, array $rooms = [], int $maxDaysOut = 3, float $maxDiscount = 0.2, float $maxSoldShare = 0.7, array $lastUnitOnlyRooms = []);
+public function __construct(bool $enabled = false, array $rooms = [], int $maxDaysOut = 0, float $maxDiscount = 0.0, float $maxSoldShare = 0.0, array $lastUnitOnlyRooms = []);
 public function coversRoom(string $roomCode): bool;
 public static function read(ConfigReader $reader, array $data, string $path): self;
 public static function fields(string $path, string $roomPattern): array;
@@ -2382,9 +2428,9 @@ public function __construct(string $pms, PlanConfig $config = \Ritmo\Domain\Plan
      'rooms' => 
     array (
     ),
-     'maxDaysOut' => 3,
-     'maxDiscount' => 0.2,
-     'maxSoldShare' => 0.7,
+     'maxDaysOut' => 0,
+     'maxDiscount' => 0.0,
+     'maxSoldShare' => 0.0,
      'lastUnitOnlyRooms' => 
     array (
     ),
@@ -2499,9 +2545,9 @@ public function __construct(float $calendarMaxAgeHours = 6.0, array $occupancyRe
    'rooms' => 
   array (
   ),
-   'maxDaysOut' => 3,
-   'maxDiscount' => 0.2,
-   'maxSoldShare' => 0.7,
+   'maxDaysOut' => 0,
+   'maxDiscount' => 0.0,
+   'maxSoldShare' => 0.0,
    'lastUnitOnlyRooms' => 
   array (
   ),
@@ -2742,7 +2788,9 @@ public function __construct(int $index, PercentItem $percent, RoomType $room, in
 public function floor(): ?float;
 public function lowest(): ?float;
 public function current(): ?float;
+public function lowestCurrent(): ?float;
 public function floorInForce(): ?float;
+public function rewritesFloorInForce(): bool;
 ```
 
 #### `Ritmo\Domain\Plan\Validation\LastMinuteCheck` (final class)

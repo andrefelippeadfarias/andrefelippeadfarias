@@ -1004,7 +1004,11 @@ def parity_fixture(c: dict) -> dict:
                                    "retired_floor_markers": ["Regra J"], "retired_floor_exemptions": ["Regra J desligada"]},
                     "light_run_max_days": None},
         "cadence": {"min_hours_between_steps": 24},
-        "orders": {"manual_freeze_days": 7},
+        # pace.noite_fraca, piso_atras_da_ordem and degrau_atras_da_ordem: the values a target order takes when it does
+        # not say (ao.get(..., default) in the engine's code); explicit here, the plugin's own defaults are neutral
+        "orders": {"manual_freeze_days": 7,
+                   "defaults": {"target_percentile": 50.0, "strong_night_occupancy": 0.7, "strong_night_ahead_occupancy": 0.5,
+                                "fallback_trigger_days": 7, "descent_marks": [7, 5, 3, 1]}},
         "no_effect": {"drop_rounding_only": False, "money_slack": 1.0},
         "ruler": {n: {"type": NIGHT_LABEL[v["tipo"]],
                       "series": {SERIES[s]: v[s] for s in SERIES if s in v},

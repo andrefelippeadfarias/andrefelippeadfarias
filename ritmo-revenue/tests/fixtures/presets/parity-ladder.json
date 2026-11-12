@@ -431,7 +431,19 @@
   "min_hours_between_steps": 24
  },
  "orders": {
-  "manual_freeze_days": 7
+  "manual_freeze_days": 7,
+  "defaults": {
+   "target_percentile": 50.0,
+   "strong_night_occupancy": 0.7,
+   "strong_night_ahead_occupancy": 0.5,
+   "fallback_trigger_days": 7,
+   "descent_marks": [
+    7,
+    5,
+    3,
+    1
+   ]
+  }
  },
  "no_effect": {
   "drop_rounding_only": false,

@@ -12,7 +12,7 @@ use Ritmo\Domain\Model\PriceNight;
  * else the ladder price, else the live calendar price (a room outside the ladder: frozen, fixed
  * by order, blocked). A room sells when it has a calendar night, is not sold out and is not blocked.
  *
- * Reference: pace.referencias_recanto.
+ * Reference: the references of the between-rooms order in pace.py.
  */
 final class LadderReferences
 {

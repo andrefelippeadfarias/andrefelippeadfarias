@@ -4,6 +4,12 @@
     "light_run_filter": ["Balcony|2026-11-13"]
   },
   "reason_refinements": {
-    "RELATION_BETWEEN": {"não fica abaixo": "RELATION_AT_LEAST"}
-  }
+    "RELATION_BETWEEN": {"não fica abaixo": "RELATION_AT_LEAST"},
+    "RELATION_PREMIUM_OVER_MAX": {"acima da mais cara das outras; público": "LADDER_PRICE"}
+  },
+  "reason_refinement_notes": {
+    "RELATION_AT_LEAST": "L4: the reference writes the same text for the at_least and the between relations.",
+    "LADDER_PRICE": "The premium of the owner's ladder over the dearest room is a rule of the ladder strategy in the plugin, not the premium relation: a ladder item that only the ladder priced keeps LADDER_PRICE."
+  },
+  "payload_left_out": "Items whose whole percentages are already in force (the rule in force, whatever amounts the calendar shows) are left out of the payload by PercentRounding; the reference writes them again."
 }

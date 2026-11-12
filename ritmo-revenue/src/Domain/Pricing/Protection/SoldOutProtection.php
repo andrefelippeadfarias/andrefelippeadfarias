@@ -33,7 +33,7 @@ use Ritmo\Domain\Support\Num;
  * empty night must not protect a sold one); the floor of a target order enters only as an extra
  * floor ({@see extraFloor()}).
  *
- * Reference: pace.protecao_esgotada (with the fix of 12 Nov) and its caller in pace._plano.
+ * Reference: pace.protecao_esgotada (with its fix: the protection only raises the floor) and its caller in pace._plano.
  */
 final class SoldOutProtection
 {

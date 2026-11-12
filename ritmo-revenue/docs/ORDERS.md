@@ -31,6 +31,32 @@ step reads (sales ramp, free step, only down, strong-night thresholds, top, fall
   list is not part of coverage.
 - `isInForceFor(room, night)`: covers it, lists the night when it lists nights, not a follow-up.
 
+**The sales ramp of a target order** (`sales_ramp`, with `pace.sales_ramp` on; `Pricing\OrderSalesRamp`, built by
+`Pricing\Terms\NightTermsResolver::rampFor`): the night stays on the order whatever it sells, and its price climbs one
+line per booking. The line goes from the order's floor (the market base) to the top (the highest of the standard
+floors without target orders and the order's `top`) by the share sold since the order's `base_sold` (the units sold
+when the ruler changed; without it the whole share), never under the market target of the ramped percentile. Under the
+line the price climbs by at most the step limit of the days out per day (a new booking allows one more step the same
+day); above it a weak night (by the strong-night thresholds, on the pace basis) goes straight to it and a night that
+sells well keeps its price. Close to the date:
+
+- **Fallback floor** (`fallback_floors`): a night at most `fallback_trigger_days` away that sold nothing since the base
+  drops to it, once the order is `fallback_min_days` old (its creation date in the property's timezone).
+- **Descent** (`descent_floors`, `descent_marks`): a night under its pace curve goes one step down per mark reached,
+  one step at a time (the next step after the last one whose line the price already reached, within
+  `orders.descent_reached_slack`), and then goes straight to the line even when it sells well.
+- **Climb back**: a night inside the window of the marks, back on its curve with the price under the floor, climbs by
+  at most the step limit at a time.
+
+The fallback and descent floors never go under the standard floor unless the order releases `below_standard_floor`.
+The item's reason is `ORDER_SALES_RAMP`; it cites the order whose floor it is held at (the target order when the
+fallback or descent lowered it). The "between" relation applies the same fallback, descent and climb back to the
+middle room's floor (without the one-step limit). Reference: the escada_ordem branch of `pace._plano`.
+
+**Releasing the discount band** (`discount_band`, the reference's `regra_g`): an order covering the night (and listing
+it, when it lists nights) lets the target of a discount band sit under the band's lower edge with a warning
+(`band_below_by_order`, `OrderBook::releasing`, `Plan\Assembly\Hooks\BookOrderGuard::releases`).
+
 ## 2. The order book and its precedence
 
 `OrderBook` keeps the orders in the order they were recorded (that order breaks ties) and answers:
@@ -72,9 +98,11 @@ owner's plan outside its scope); the plugin accepts an order only for what its r
 ## 4. Configuration
 
 `OrdersConfig` (`orders` section): `manual_freeze_days` (1–60, default 7), `defaults.target_percentile` (50),
-`defaults.strong_night_occupancy` (0.7), `defaults.strong_night_ahead_occupancy` (0.5),
-`defaults.fallback_trigger_days` (7), `defaults.descent_marks` ([7, 5, 3, 1]), `descent_reached_slack` (0.02). Fields
-are described with `Domain\Config\Field` (`OrdersConfig::fields()`).
+`defaults.strong_night_occupancy` (1: a target order applies to every night that is not sold out),
+`defaults.strong_night_ahead_occupancy` (1), `defaults.fallback_trigger_days` (0: on the night only),
+`defaults.descent_marks` (none: an order without its own marks does not descend), `descent_reached_slack` (0.02). The
+defaults are neutral: they change nothing an order does not ask; the reference engine's own values are in the parity
+preset. Fields are described with `Domain\Config\Field` (`OrdersConfig::fields()`).
 
 ## 5. Parity
 

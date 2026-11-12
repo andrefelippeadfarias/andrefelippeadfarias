@@ -21,7 +21,7 @@ use Ritmo\Domain\Support\Days;
  * rounding step of the pricing system (percent slack of the base plus the money slack). Applying it
  * again (with what really stays on the channel) restarts from the remembered base.
  *
- * Reference: pace.relativos_recanto.
+ * Reference: the relative prices of the between-rooms order in pace.py.
  */
 final class LadderRelations
 {

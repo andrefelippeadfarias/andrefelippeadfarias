@@ -23,9 +23,9 @@ final class ProportionalRule
         public readonly float $fallbackStepPercent = 5.0,
         public readonly ?string $bandRoom = null,
         public readonly ?string $bandReferenceRoom = null,
-        public readonly float $bandFactor = 0.9,
+        public readonly float $bandFactor = 1.0,
         public readonly array $bandCapRooms = [],
-        public readonly float $bandCapDiscount = 0.1,
+        public readonly float $bandCapDiscount = 0.0,
         public readonly ?float $temporaryFloor = null,
         public readonly ?DateTimeImmutable $temporaryFloorUntil = null,
     ) {

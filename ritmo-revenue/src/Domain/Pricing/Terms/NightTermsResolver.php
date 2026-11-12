@@ -10,25 +10,26 @@ use Ritmo\Domain\Model\NightType;
 use Ritmo\Domain\Model\PaceStatus;
 use Ritmo\Domain\Model\RoomType;
 use Ritmo\Domain\Orders\OrderBook;
+use Ritmo\Domain\Orders\OrderRelease;
 use Ritmo\Domain\Orders\OrdersConfig;
 use Ritmo\Domain\Orders\OwnerOrder;
 use Ritmo\Domain\Pricing\Floors;
 use Ritmo\Domain\Pricing\HardFloor;
 use Ritmo\Domain\Pricing\Ladder\LastMinuteMarketFloor;
 use Ritmo\Domain\Pricing\Ladder\WeekendFloorOverride;
+use Ritmo\Domain\Pricing\OrderSalesRamp;
 use Ritmo\Domain\Pricing\PaceMeter;
 use Ritmo\Domain\Pricing\PaceTerms;
+use Ritmo\Domain\Support\Days;
 
 /**
  * The terms of the pace step of a room night: what the owner's target and floor orders, the
  * sales ramp, a strategy's last-minute market floor and the bounds of a premium relation change.
  *
  * Reference: the pace branch of pace._plano (alvo_da_ordem, noite_fraca, percentil_com_vendas,
- * piso_com_ordem, piso_semana_mercado, regra_afrodite, so_desce, passo_livre).
- *
- * A target order whose terms carry a sales ramp of its own (the reference's "escada_vendas" order:
- * floor behind, descent steps and the ramp line) is read here as a plain target order whose
- * percentile climbs with the sales; the rest of that ramp is not part of milestone M2.
+ * piso_com_ordem, piso_semana_mercado, the premium relation's floor and band, so_desce, passo_livre
+ * and the sales ramp of a target order: piso_atras_da_ordem, degrau_atras_da_ordem,
+ * limite_volta_degrau, piso_com_vendas).
  */
 final class NightTermsResolver
 {
@@ -46,6 +47,7 @@ final class NightTermsResolver
         private readonly OrderBook $orders,
         private readonly ?LastMinuteMarketFloor $marketFloor = null,
         private readonly ?WeekendFloorOverride $weekendOverride = null,
+        private readonly string $timezone = 'UTC',
     ) {
         $this->meter = new PaceMeter($rules);
     }
@@ -102,13 +104,14 @@ final class NightTermsResolver
         $target = $this->orders->targetFor($room->code, $night);
         $rampTop = $this->rules->salesRampTop();
         $share = $paceUnits > 0 ? $paceSold / $paceUnits : 0.0;
-        $byOrder = $target !== null && ($this->rampsWithSales($target) || $this->isWeakNight($target, $status, $sold, $units));
+        $ramp = $target !== null && $this->rampsWithSales($target) ? $this->rampFor($target, $room, $night, $daysOut, $status, $paceSold, $paceUnits) : null;
+        $byOrder = $ramp !== null || ($target !== null && $this->isWeakNight($target, $status, $sold, $units));
 
         $percentile = null;
         if ($byOrder) {
             $percentile = $this->orders->percentileOf($target);
-            if ($this->rampsWithSales($target)) {
-                $percentile = self::ramp($percentile, $this->rampShare($room, $night, $paceSold, $paceUnits), (float) $rampTop);
+            if ($ramp !== null) {
+                $percentile = self::ramp($percentile, $ramp->share, (float) $rampTop);
             }
         }
 
@@ -126,8 +129,12 @@ final class NightTermsResolver
         $relationOrder = null;
         $cap = null;
         if ($premium !== null) {
-            if ($premium->floor > $floor->amount) {
-                $floor = new HardFloor($premium->floor, self::PREMIUM_FLOOR, [...$floor->candidates, ['label' => self::PREMIUM_FLOOR, 'amount' => $premium->floor]]);
+            $raise = new HardFloor($premium->floor, self::PREMIUM_FLOOR, [...$floor->candidates, ['label' => self::PREMIUM_FLOOR, 'amount' => $premium->floor]]);
+            if ($ramp !== null) {
+                // The ramp may lower the floor first: the premium floor is compared with the ramp's.
+                $ramp = $ramp->withRaise($raise);
+            } elseif ($premium->floor > $floor->amount) {
+                $floor = $raise;
                 $relationOrder = $premium->orderRef;
             }
             if ($premium->ceiling !== null) {
@@ -141,17 +148,68 @@ final class NightTermsResolver
             byOrder: $byOrder,
             rampTop: !$byOrder && $rampTop !== null ? $rampTop : null,
             rampShare: max(0.0, min(1.0, $share)),
-            freeStep: $byOrder && $target->terms->freeStep && !$this->rampsWithSales($target),
+            freeStep: $byOrder && $target->terms->freeStep && $ramp === null,
+            ramp: $ramp,
             floor: $floor,
             ceilingCap: $cap,
             onlyDown: $byOrder && $target->terms->onlyDown,
             listingTop: $listingTop,
-            compareApplied: $byOrder && $this->rampsWithSales($target),
+            compareApplied: $ramp !== null,
             lockCeilingDown: $byOrder && $target->terms->freeStep,
-            lockCeilingAlways: $byOrder && $target->terms->freeStep && $this->rampsWithSales($target),
+            lockCeilingAlways: $ramp !== null && $target->terms->freeStep,
         );
 
-        return new NightTerms($terms, $floorOrder, $replacedFloor, $replacedOrder, $relationOrder, $byOrder ? $target->id : null);
+        return new NightTerms($terms, $floorOrder, $replacedFloor, $replacedOrder, $relationOrder, $byOrder ? $target->id : null, $premium?->orderRef);
+    }
+
+    /**
+     * The sales ramp of a target order on a room night (reference: the escada_ordem branch of
+     * pace._plano). $sold and $total are the units of the pace basis: the room, or its group.
+     */
+    public function rampFor(OwnerOrder $order, RoomType $room, DateTimeImmutable $night, int $daysOut, PaceStatus $status, int $sold, int $total): OrderSalesRamp
+    {
+        $standard = $this->standardFloor($room, $night)->amount;
+        $belowStandard = $order->releases(OrderRelease::BelowStandardFloor);
+        $top = max($this->floorWithOrders($room, $night, $this->orders->withoutTargets())['floor']->amount, $standard, $order->terms->top[$room->code] ?? 0.0);
+        $fallback = $this->fallbackFloor($order, $room->code, $night, $daysOut, $sold);
+
+        return new OrderSalesRamp(
+            $order->id,
+            $this->rampShare($room, $night, $sold, $total),
+            $top,
+            $standard,
+            $belowStandard,
+            $fallback === null || $belowStandard ? $fallback : max($fallback, $standard),
+            $order->terms->descentFloors[$room->code] ?? [],
+            $order->terms->descentMarks ?? $this->ordersConfig->descentMarks,
+            $this->ordersConfig->descentReachedSlack,
+            $this->isWeakNight($order, $status, $sold, $total),
+        );
+    }
+
+    /**
+     * The fallback floor of a target order: a night at most the trigger days away that sold
+     * nothing since the order's base drops to it, once the order is old enough; null when the
+     * trigger does not hold (reference: pace.piso_atras_da_ordem, before the standard floor).
+     */
+    private function fallbackFloor(OwnerOrder $order, string $room, DateTimeImmutable $night, int $daysOut, int $sold): ?float
+    {
+        $amount = $order->terms->fallbackFloors[$room] ?? null;
+        if ($amount === null || $daysOut > ($order->terms->fallbackTriggerDays ?? $this->ordersConfig->fallbackTriggerDays)) {
+            return null;
+        }
+        if ($sold > ($this->orders->baseSold($room, $night)['sold'] ?? 0)) {
+            return null;
+        }
+        $minDays = $order->terms->fallbackMinDays ?? 0;
+        if ($minDays > 0 && $order->createdAt !== null) {
+            $today = Days::add($night, -$daysOut);
+            if (Days::diff(Days::localDate($order->createdAt, $this->timezone), $today) < $minDays) {
+                return null;
+            }
+        }
+
+        return $amount;
     }
 
     /**

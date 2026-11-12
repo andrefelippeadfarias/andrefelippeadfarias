@@ -9,7 +9,7 @@ use InvalidArgumentException;
 /**
  * The bounds a premium relation puts on its room before the coherence stage: above the dearest
  * room of its set that still sells, and under the high end of its price band when it has one.
- * Reference: pace.regra_afrodite (Relations\PremiumBounds computes the amounts).
+ * Reference: the premium room rule of pace.py (Relations\PremiumBounds computes the amounts).
  */
 final class PremiumCap
 {

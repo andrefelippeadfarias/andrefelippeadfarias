@@ -6,7 +6,7 @@ external systems: the payload and the slices are data for the writer of mileston
 a `WriteToken` or an HTTP client.
 
 Reference engine: `validar_plano.py` (`Validador`: `validar`, `validar_data`, `validar_apagar`, `validar_anuncio`,
-`validar_balcony`, `validar_chegada_saida`, `padrao_qualidade`, `piso_vitrine_semana`, `calendario_fresco`,
+the discount-band check, `validar_chegada_saida`, `padrao_qualidade`, `piso_vitrine_semana`, `calendario_fresco`,
 `libera_estadia`, `checar_prova_orfa`; `precos_da_coleta`, `montar_payload`) and `fatiar_payload.py` (`fatiar`).
 
 ## 1. The plan
@@ -83,7 +83,7 @@ Every issue is a `PlanIssue` (`severity`, `code`, `message`, `itemIndex`, `roomC
 | `stay_not_in_item` | W | A floor on a closed day or holiday night without its stay. | `sem min_stay no item` |
 | `orphan_not_allowed`, `orphan_without_proof`, `orphan_contradicted` | E | An orphan night outside where the rule allows it; without its proof (inventory read today or yesterday, or calendar units); contradicted by the fresh calendar. | `checar_prova_orfa` |
 | `mask_all_closed`, `mask_opens_closed_day`, `mask_beyond_orphan_side`, `mask_closes_open_night`, `mask_closes_open_day` | E | Arrival and departure days (section 2.2). | `validar_chegada_saida` |
-| `band_*` | E/W | The discount bands of the relations, in currency after rounding (`Relations\Validate\DiscountBandCheck`; RELATIONS.md, section 8), reported on the item of the room night or on the plan. | `validar_balcony` |
+| `band_*` | E/W | The discount bands of the relations, in currency after rounding (`Relations\Validate\DiscountBandCheck`; RELATIONS.md, section 8), reported on the item of the room night or on the plan. | discount-band check |
 | `delete_removes_stay`, `delete_removes_holiday_floor` | W | A deletion drops the stay of a closed day, holiday or night that requires more than one night (not a held night), or a holiday's floor. | `validar_apagar` |
 | `listing_needs_order`, `listing_weekly_change_above_limit`, `listing_base_below_min` (and `below_safety_limit` for a minimum) | E | Listing changes only by order, within the weekly limit of the rule set against the week's reference. | `validar_anuncio` |
 | `no_effect` | E | Everything the item sets is already in force (M1). | `pace.sem_efeito` |
@@ -120,7 +120,7 @@ without one.
 | `validator.max_min_stay` | 30 | 7 |
 | `validator.market_evidence_min_length` | 20 | 20 |
 | `validator.no_discount_rooms` | none | none |
-| `validator.last_minute.{enabled, rooms, max_days_out, max_discount, max_sold_share, last_unit_only_rooms}` | off, none, 3, 0.2, 0.7, none | on, the rooms of Regra I, 3, 0.2, 0.7, the rooms in high demand |
+| `validator.last_minute.{enabled, rooms, max_days_out, max_discount, max_sold_share, last_unit_only_rooms}` | off, none, 0, 0, 0, none (nothing allowed until set) | on, the rooms of Regra I, 3, 0.2, 0.7, the rooms in high demand |
 | `payload.reason_max_length` | 250 (at most 255) | 250 |
 | `payload.slice_max_dates` | 70 | 70 |
 
@@ -164,8 +164,10 @@ In the goldens (applied to the expected codes, listed per case in `divergences`)
 |---|---|---|
 | V1 | Under the safety limit, only that floor is reported (M1). | Also the listing minimum, owner floors, Regra I... |
 | V3 | `no_before` warning when nothing is known in force for the night (M1). | Silent. |
-| V4 | Tonight never rises, also through the rounding of the floor: the real plan of 12 Nov had a protection floor of 1034 for tonight sent as -18% (1041.40) over a price of 1041; the plugin refuses that item and writes the rest. | Its validator does not look at tonight. |
+| V4 | Tonight never rises, also through the rounding of the floor: a floor of 995.50 for tonight over a base of 1000 is sent as +0% (1000) over a price of 999; the plugin refuses that item and writes the rest. A floor that writes again the percentage in force raises nothing (it is refused as `no_effect` instead, L6). | Its validator does not look at tonight. |
 | V5 | An order silences the rise warning only when it releases a larger rise or backs the strategy. | Any order in force silences it. |
+| L5 | An occupancy switch whose item was dropped for having no effect is satisfied without an item: the band check warns (`band_below_by_switch`) (ENGINE.md 1.8). | Refuses the band (`band_below_lower`), and so the property's whole plan. |
+| L6 | An item that writes again the floor percentage in force and nothing else is refused as `no_effect` and is not a rise of tonight. | Writes it; with V4 it would be `raise_today`. |
 
 Not in the goldens (by design):
 
@@ -179,8 +181,11 @@ Not in the goldens (by design):
 - The general holiday floor applies on holiday-priced nights (M1 `Floors`), the period's own floor on every night of
   the period; in the parity preset every period is priced as holiday.
 - A ceiling over the listing maximum is refused (M1); the reference checks only the floor.
+- What is in force for the night is read on the safe side when the item's record and the fresh calendar disagree:
+  tonight's price is the lowest of the two (`ItemFacts::lowestCurrent`, for `raise_today`) and the floor in force the
+  highest (`ItemFacts::floorInForce`, for `ceiling_below_floor`). The reference has no such check of tonight.
 - Not ported: customisation items of the pricing system (OTA discounts, offers and programmes are not expressible in a
-  plan), the old Saturday rule of 1 Nov (`excecao: regra_h`, before the arrival rule) and the register of market
+  plan), the reference's old Saturday exception (before the arrival rule) and the register of market
   exceptions with review dates (`excecoes_mercado`, M4 market module); the stay-rule orders of the reference are
   configuration in the plugin.
 

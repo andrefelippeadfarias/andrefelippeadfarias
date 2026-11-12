@@ -11,8 +11,8 @@ use Ritmo\Domain\Pricing\Ladder\ConfigReader;
 
 /**
  * Settings of the no-effect filter ({@see NoEffectFilter}): what counts as "already in force"
- * before a plan is validated. Reference: pace.sem_efeito (the rounding-only part is the lesson of
- * 11 Nov and has no reference; the parity preset switches it off).
+ * before a plan is validated. Reference: pace.sem_efeito (the rounding-only part is a lesson of the
+ * reference's operation, not in its code; the parity preset switches it off).
  */
 final class NoEffectConfig
 {

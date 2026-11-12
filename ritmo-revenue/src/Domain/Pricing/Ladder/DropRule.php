@@ -12,9 +12,9 @@ final class DropRule
 {
     public function __construct(
         public readonly bool $enabled = false,
-        public readonly int $windowDays = 7,
-        public readonly float $occupancyBelow = 0.6,
-        public readonly float $percent = 10.0,
+        public readonly int $windowDays = 0,
+        public readonly float $occupancyBelow = 0.0,
+        public readonly float $percent = 0.0,
         public readonly bool $skipInsideWindowAtActivation = true,
     ) {
     }

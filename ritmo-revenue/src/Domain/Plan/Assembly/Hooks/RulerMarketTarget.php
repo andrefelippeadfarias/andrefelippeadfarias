@@ -14,7 +14,7 @@ use Ritmo\Domain\Relations\Relation;
 /**
  * The market price an occupancy switch sends its room to, read from the market ruler: the series
  * and percentile its configuration gives for the ruler's night type, over the night's public
- * factor of the room's property (reference: plano_dono.balcony_mercado_enviado).
+ * factor of the room's property (reference: plano_dono, the sent market price of the room without a tub).
  */
 final class RulerMarketTarget implements MarketTargetSource
 {

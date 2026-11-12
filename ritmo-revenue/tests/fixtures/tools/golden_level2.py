@@ -81,8 +81,9 @@ SCENARIOS = [
                  "rule": {"min_price": 0, "max_price": 0, "min_stay": 2, "reason": "locked"}},
                 {"rooms": ["VK7", "Double"], "nights": ["2026-11-14", "2026-11-17"], "sold": 0,
                  "rule": {"min_price": 0, "max_price": 0, "min_stay": 2, "check_out": "1111101", "reason": "locked"}}],
-     "note": "Free nights before a sold-out night: the rule rewritten after the ceiling is freed keeps the orphan stay "
-             "with its proof."},
+     "note": "Sold-out nights next to free nights, all under locked rules: the sold-out nights' rules are deleted first and "
+             "written again with their stay; the free nights keep their rules and get their own items. No rule of a free "
+             "night is rewritten here, so these inputs produce no orphan claim."},
     {"name": "occupancy_switch_80", "today": "2026-11-12", "now": "2026-11-12T16:53:00Z", "days": 8, "seed": 2611207,
      "tweaks": [{"rooms": ["VK7"], "nights": ["2026-11-16", "2026-11-17", "2026-11-19"], "sold": 6},
                 {"rooms": ["VK2"], "nights": ["2026-11-16", "2026-11-17", "2026-11-19"], "sold": "all"},
@@ -101,6 +102,18 @@ SCENARIOS = [
                       data="2026-11-11")],
      "blocked": [["Q2", "2026-11-15"], ["Balcony", "2026-11-13"]],
      "note": "Nights frozen by a manual change of the owner and nights blocked in the PMS stay as they are."},
+    {"name": "band_released_by_order", "today": "2026-11-12", "now": "2026-11-12T16:53:00Z", "days": 8, "seed": 2611211,
+     "tweaks": [{"rooms": ["Balcony"], "nights": ["2026-11-16", "2026-11-17"], "sold": 0,
+                 "rule": {"min_price": -45, "max_price": -45, "reason": "owner low"}}],
+     "orders": [order("dono-2026-11-11-balcony-baixa", "preco_por_data", ["Balcony"], "2026-11-16", "2026-11-17",
+                      libera=["fixo", "regra_g"])],
+     "note": "A fixed-price order that releases the discount band: the room under the band's lower edge is a warning."},
+    {"name": "range_orders_d1", "today": "2026-11-11", "now": "2026-11-11T11:00:00Z", "days": 20, "real": True,
+     "note": "Real inputs of a full run (calendars, rules, ledger and the owner's range orders with the sales ramp, "
+             "fallback floors and descent steps); the occupancy switch item that changes nothing is dropped (L5)."},
+    {"name": "range_orders_d0", "today": "2026-11-12", "now": "2026-11-12T14:45:00Z", "days": 20, "real": True,
+     "note": "Real inputs of the next day's full run: the sales ramp of the range orders from D0, a protection that "
+             "writes the floor in force again on D0 (L6) and the occupancy switch without effect (L5)."},
     {"name": "small_rooms", "today": "2026-11-12", "now": "2026-11-12T16:53:00Z", "days": 12, "seed": 2611210,
      "rooms_focus": ["Afrodite", "Q2", "VK2"],
      "tweaks": [{"rooms": ["Afrodite"], "nights": ["2026-11-16", "2026-11-19"], "sold": "all"},
@@ -246,7 +259,7 @@ def plan_of(c: dict, inputs: dict) -> tuple[list[dict], list[dict], list[dict]]:
     return items, delete, no_effect
 
 
-def validate(c: dict, inputs: dict, items: list[dict]) -> dict:
+def validate(c: dict, inputs: dict, items: list[dict], deleted: set | None = None, no_effect: list | None = None) -> dict:
     today = dt.date.fromisoformat(inputs["today"])
     now = dt.datetime.fromisoformat(inputs["now"].replace("Z", "+00:00"))
     orders = {o["id"]: o for o in copy.deepcopy(inputs["orders"])}
@@ -255,8 +268,71 @@ def validate(c: dict, inputs: dict, items: list[dict]) -> dict:
     v.validar(copy.deepcopy(items))
     expected = GP.classify(v, items)
     php, applied = GP.plugin_expected(c, expected, items, prices, orders, today)
+    applied = sorted(set(applied) | refine(c, inputs, items, php, deleted or set(), no_effect or []))
     return {"expected": expected, "php_expected": php, "divergences": applied, "valid": not v.erros,
             "hooks": GP.hooks(c, v, items, orders, today)}
+
+
+# ---------------------------------------------------------------- level-2 divergences of the plugin
+def refine(c: dict, inputs: dict, items: list[dict], php: dict, deleted: set, no_effect: list) -> set:
+    """The deliberate divergences of whole runs (docs/ENGINE.md 1.8), applied to the plugin's expected codes:
+    L5: an occupancy switch item dropped for having no effect leaves the night at the switched price; the band check
+        accepts it (warning band_below_by_switch) where the reference refuses the band (band_below_lower).
+    L6: an item that writes again the floor in force, and nothing else, changes nothing: the plugin refuses it as
+        no_effect (the reference writes it) and it never raises tonight's price (no raise_today of V4)."""
+    applied = set()
+    switched = {(x["quarto"], x["data"]) for x in no_effect if "regra dos 80%" in str(x.get("motivo", ""))}
+    for entry in php["plan"]:
+        if (entry[0], entry[1]) in switched and entry[3] == "band_below_lower":
+            entry[2:] = ["warning", "band_below_by_switch"]
+            applied.add("L5")
+    for (subject, index), it in zip(GP.subjects(items), items):
+        if subject != "item" or it.get("tipo") != "data":
+            continue
+        codes = php["item"].setdefault(str(index), [])
+        if rewrites_floor(c, inputs, it) and ["error", "raise_today"] in codes:
+            codes.remove(["error", "raise_today"])
+            applied.add("L6")
+        if (it["quarto"], it["data"]) not in deleted and changes_nothing(c, inputs, it):
+            codes.append(["error", "no_effect"])
+            codes.sort()
+            applied.add("L6")
+    php["item"] = dict(sorted(((k, v) for k, v in php["item"].items() if v), key=lambda kv: int(kv[0])))
+    return applied
+
+
+def in_force(inputs: dict, it: dict) -> tuple[dict | None, dict]:
+    return (inputs["calendars"].get(it["quarto"]) or {}).get(it["data"]), (inputs["rules"].get(it["quarto"]) or {}).get(it["data"]) or {}
+
+
+def rewrites_floor(c: dict, inputs: dict, it: dict) -> bool:
+    """The floor percentage of the item is the one of the rule in force and of the calendar's floor."""
+    if it.get("min_price") is None:
+        return False
+    q = c["por_curto"][it["quarto"]]
+    row, rule = in_force(inputs, it)
+    pct = VP.piso_pct(q, float(it["min_price"]))
+    if rule.get("min_price") is None or rule.get("min_price_type", "percent_base") != "percent_base" or float(rule["min_price"]) != pct:
+        return False
+    return row is None or row.get("min_price") is None or VP.piso_pct(q, float(row["min_price"])) == pct
+
+
+def changes_nothing(c: dict, inputs: dict, it: dict) -> bool:
+    """The validator's effect check of the plugin: every amount it sets within one currency unit of the calendar's,
+    the same minimum stay as the rule in force, and no arrival or departure days."""
+    q = c["por_curto"][it["quarto"]]
+    row, rule = in_force(inputs, it)
+    if row is None or it.get("check_in") is not None or it.get("check_out") is not None:
+        return False
+    base = float(q["base"])
+    floor, ceiling = it.get("min_price"), it.get("max_price")
+    lo = None if floor is None else VP.piso_pct(q, float(floor))
+    hi = None if ceiling is None else VP.teto_pct(q, float(ceiling))
+    if lo is not None and hi is not None and hi < lo:
+        hi = lo
+    same = lambda pct, live: pct is None or (live is not None and abs(round(base * (1 + pct / 100), 2) - float(live)) <= 1.0)
+    return same(lo, row.get("min_price")) and same(hi, row.get("max_price")) \
+        and (it.get("min_stay") is None or rule.get("min_stay") == it["min_stay"])
 
 
 def plain(items: list[dict]) -> list[dict]:
@@ -278,13 +354,17 @@ def slices(c: dict, payload: dict, today: dt.date) -> list[dict]:
 
 
 def case_of(c: dict, s: dict) -> dict:
-    inputs = build_inputs(c, s)
     frozen_name = f"{s['name']}.json"
-    GP.write_json(FROZEN_OUT / frozen_name, inputs)
+    if s.get("real"):
+        inputs = GP.read(FROZEN_OUT / frozen_name)  # real inputs, frozen once: read, never rewritten
+    else:
+        inputs = build_inputs(c, s)
+        GP.write_json(FROZEN_OUT / frozen_name, inputs)
     items, delete, no_effect = plan_of(c, inputs)
     today = dt.date.fromisoformat(inputs["today"])
+    deleted = {(x["quarto"], x["data"]) for x in delete}
     val_delete = validate(c, inputs, delete) if delete else None
-    val_items = validate(c, inputs, items)
+    val_items = validate(c, inputs, items, deleted, no_effect)
     payload_delete = VP.montar_payload(c, copy.deepcopy(delete)) if delete else {}
     payload_items = VP.montar_payload(c, copy.deepcopy(items)) if items else {}
     return {"name": s["name"], "note": s["note"], "input": {"frozen": frozen_name},
@@ -315,6 +395,7 @@ def dump(generated_at: str) -> int:
         "engine_dirty": engine_dirty,
         "python": platform.python_version(),
         "frozen_inputs": {p.relative_to(GP.FIXTURES).as_posix(): GP.sha256(p) for p in inputs},
+        "golden_files": {(OUT / "pace.plano.json").relative_to(GP.FIXTURES).as_posix(): GP.sha256(OUT / "pace.plano.json")},
         "tolerance": {"amounts": 0.01, "percentages_and_integers": "exact"},
         "scenarios": [{"name": s["name"], "today": s["today"], "days": s["days"], "note": s["note"]} for s in SCENARIOS],
         "files": [{"file": "pace.plano.json", "function": "pace.plano", "cases": len(cases)}],

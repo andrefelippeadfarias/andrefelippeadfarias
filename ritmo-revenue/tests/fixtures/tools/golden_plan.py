@@ -132,7 +132,7 @@ RELEASE = {"fixo": "fixed_price", "abaixo_piso": "below_standard_floor", "acima_
            "sabado_aberto_orfao": "orphan_stay", "sabado_aberto": "arrival_departure",
            "chegada_saida_por_data": "arrival_departure", "chegada_saida_afrodite_sexta": "arrival_departure",
            "estadia_por_data": "stay", "anuncio": "listing", "beds24_inventario": "inventory",
-           "personalizacao": "customization"}
+           "personalizacao": "customization", "regra_g": "discount_band"}
 ORDER_TYPE = {"preco_por_data": "fixed_price", "piso_por_data": "floor", "alvo_por_data": "target", "regra": "rule",
               "manual": "manual", "acompanhamento": "follow_up", "restricao": "restriction"}
 # Order keys of the engine -> the plugin's (OrderReader); "pousada_faixa" and "faixa" are kept for the engine only.

@@ -51,7 +51,7 @@ use WeakMap;
  * rounded up (PercentRounding).
  *
  * Reference: validar_plano.Validador (validar, validar_data, validar_apagar, validar_anuncio,
- * validar_balcony) and the effect of pace.sem_efeito. VALIDATOR.md lists the rules and where the
+ * discount-band check) and the effect of pace.sem_efeito. VALIDATOR.md lists the rules and where the
  * plugin decides differently.
  */
 final class Validator

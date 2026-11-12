@@ -60,7 +60,7 @@ final class ConnectorFactory implements ConnectorSource
 
     /**
      * Constant that switches off the pricing system's calendar read. The read is on by default
-     * (decision of 12 Nov: POST /listing_prices reads, it changes nothing, and the engine needs
+     * (project decision: POST /listing_prices reads, it changes nothing, and the engine needs
      * the floor and ceiling in force); define it as false in wp-config.php to read prices from
      * the PMS only.
      */

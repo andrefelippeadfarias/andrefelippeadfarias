@@ -41,6 +41,7 @@ final class ReasonText
     {
         return match ($code) {
             'PACE_STEP' => __('Pace step', 'ritmo-revenue'),
+            'ORDER_SALES_RAMP' => __('Sales ramp of an owner order', 'ritmo-revenue'),
             'LADDER_PRICE' => __('Sales ladder', 'ritmo-revenue'),
             'SOLD_OUT_PROTECTION' => __('Protection of a sold-out night', 'ritmo-revenue'),
             'RELATION_AT_LEAST' => __('Relation: at least another room', 'ritmo-revenue'),
@@ -103,6 +104,14 @@ final class ReasonText
                 self::number($p['from'] ?? null, 2),
                 self::number($p['to'] ?? null, 2),
                 self::number($p['max_percent'] ?? null, 1)
+            ),
+            RuleCode::ORDER_SALES_RAMP => sprintf(
+                /* translators: 1: order id, 2: line of the ramp, 3: price reached, 4: floor of the ramp */
+                __('Sales ramp of order %1$s: line %2$s, price %3$s over a floor of %4$s.', 'ritmo-revenue'),
+                (string) ($p['order'] ?? ''),
+                self::number($p['line'] ?? null, 2),
+                self::number($p['to'] ?? null, 2),
+                self::number($p['floor'] ?? null, 2)
             ),
             RuleCode::HELD_AT_FLOOR => sprintf(
                 /* translators: 1: floor amount, 2: which floor */
@@ -179,6 +188,9 @@ final class ReasonText
             'quality_floor' => __('quality floor', 'ritmo-revenue'),
             'holiday_floor' => __('holiday floor', 'ritmo-revenue'),
             'owner_floor' => __('owner floor', 'ritmo-revenue'),
+            'order_fallback_floor' => __('fallback floor of the order', 'ritmo-revenue'),
+            'order_descent_step' => __('descent step of the order', 'ritmo-revenue'),
+            'order_return_limit' => __('climb back limited to one step', 'ritmo-revenue'),
             default => $label,
         };
     }

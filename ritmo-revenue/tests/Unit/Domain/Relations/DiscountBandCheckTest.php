@@ -106,6 +106,25 @@ final class DiscountBandCheckTest extends TestCase
         self::assertSame(['band.below_lower error'], self::issues(['SPA2' => 1909.2], self::calendar(1041.4, 5, 0), [], $report), 'the trigger must still be proven (5 of 7)');
     }
 
+    /**
+     * A full run: the switch applied an item that the no-effect filter dropped (the night is already
+     * at the switched price). The switch is then satisfied without an item, as in a light run.
+     */
+    public function testASwitchItemDroppedForHavingNoEffectSatisfiesTheSwitch(): void
+    {
+        $fresh = self::calendar(1041.4, 5, 1);
+        $night = Days::date(self::N);
+        $report = new RelationReport();
+        $report->record(new RelationDecision('plain-switch', RelationType::OccupancySwitch, 'PLAIN', $night, Outcome::SwitchApplied));
+
+        self::assertSame(['band.below_lower error'], self::issues(['SPA2' => 1909.2], $fresh, [], $report), 'applied, but its item is gone');
+        $report->switchItemDropped('SPA2', $night);
+        self::assertSame(['band.below_lower error'], self::issues(['SPA2' => 1909.2], $fresh, [], $report), 'another room: nothing changes');
+        $report->switchItemDropped('PLAIN', $night);
+        self::assertSame('plain-switch', $report->satisfiedBySwitch('PLAIN', $night));
+        self::assertSame(['band.below_by_switch warning'], self::issues(['SPA2' => 1909.2], $fresh, [], $report));
+    }
+
     public function testSoldOutTargetsOrReferencesAndHolidaysBelowTheBandAreSkipped(): void
     {
         self::assertSame([], self::issues(['PLAIN' => 1500.0], ['SPA' => [1000.0, 0, 5], 'SPA2' => [1100.0, 0, 2], 'PLAIN' => [880.0, 4, 0]]));

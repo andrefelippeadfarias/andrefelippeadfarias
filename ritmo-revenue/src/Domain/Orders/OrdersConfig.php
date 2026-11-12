@@ -26,10 +26,10 @@ final class OrdersConfig
     public function __construct(
         public readonly int $manualFreezeDays = 7,
         public readonly float $targetPercentile = 50.0,
-        public readonly float $strongNightOccupancy = 0.7,
-        public readonly float $strongNightAheadOccupancy = 0.5,
-        public readonly int $fallbackTriggerDays = 7,
-        public readonly array $descentMarks = [7, 5, 3, 1],
+        public readonly float $strongNightOccupancy = 1.0,
+        public readonly float $strongNightAheadOccupancy = 1.0,
+        public readonly int $fallbackTriggerDays = 0,
+        public readonly array $descentMarks = [],
         public readonly float $descentReachedSlack = 0.02,
     ) {
     }
@@ -74,10 +74,10 @@ final class OrdersConfig
             new Field('orders.manual_freeze_days', FieldType::Integer, 'Manual change freeze (days)', 'A night the owner changed by hand in the pricing system stays out of the engine for this many days.', 7, min: 1, max: 60, unit: Field::UNIT_DAYS),
             new Field('orders.defaults', FieldType::Group, 'Target order defaults', 'Values a target order uses when it does not set them.'),
             new Field('orders.defaults.target_percentile', FieldType::Number, 'Order percentile', 'Market percentile of a target order that does not name one.', 50.0, min: 0, max: 110),
-            new Field('orders.defaults.strong_night_occupancy', FieldType::Number, 'Strong night occupancy', 'From this share of units sold a target order leaves the night to the engine.', 0.7, min: 0, max: 1, unit: Field::UNIT_RATIO),
-            new Field('orders.defaults.strong_night_ahead_occupancy', FieldType::Number, 'Strong night when ahead', 'The same share when the night is ahead of its pace curve.', 0.5, min: 0, max: 1, unit: Field::UNIT_RATIO),
-            new Field('orders.defaults.fallback_trigger_days', FieldType::Integer, 'Fallback trigger (days)', 'Days before the night from which an unsold night may drop to the fallback floor of its order.', 7, min: 0, max: 60, unit: Field::UNIT_DAYS),
-            new Field('orders.defaults.descent_marks', FieldType::ListOf, 'Descent marks (days)', 'One descent step of a target order for each of these marks reached, closest last.', [7, 5, 3, 1], min: 1, max: 10, unique: true),
+            new Field('orders.defaults.strong_night_occupancy', FieldType::Number, 'Strong night occupancy', 'From this share of units sold a target order leaves the night to the engine (1 = only when sold out).', 1.0, min: 0, max: 1, unit: Field::UNIT_RATIO),
+            new Field('orders.defaults.strong_night_ahead_occupancy', FieldType::Number, 'Strong night when ahead', 'The same share when the night is ahead of its pace curve.', 1.0, min: 0, max: 1, unit: Field::UNIT_RATIO),
+            new Field('orders.defaults.fallback_trigger_days', FieldType::Integer, 'Fallback trigger (days)', 'Days before the night from which an unsold night may drop to the fallback floor of its order (0 = on the night only).', 0, min: 0, max: 60, unit: Field::UNIT_DAYS),
+            new Field('orders.defaults.descent_marks', FieldType::ListOf, 'Descent marks (days)', 'One descent step of a target order for each of these marks reached, closest last (none: an order without its own marks does not descend).', [], min: 0, max: 10, unique: true),
             new Field('orders.defaults.descent_marks.*', FieldType::Integer, 'Mark', min: 0, max: 60, unit: Field::UNIT_DAYS),
             new Field('orders.descent_reached_slack', FieldType::Number, 'Step reached slack', 'A descent step counts as reached when its price is within this share of the live price.', 0.02, min: 0, max: 0.1, unit: Field::UNIT_RATIO),
         ];

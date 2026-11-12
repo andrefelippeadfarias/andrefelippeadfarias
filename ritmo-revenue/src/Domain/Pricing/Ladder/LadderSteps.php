@@ -11,7 +11,7 @@ namespace Ritmo\Domain\Pricing\Ladder;
 final class LadderSteps
 {
     public function __construct(
-        public readonly float $triggerFraction = 0.5,
+        public readonly float $triggerFraction = 1.0,
         public readonly float $percentPerUnit = 5.0,
     ) {
     }

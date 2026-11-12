@@ -14,7 +14,7 @@ use Ritmo\Domain\Support\Days;
  * steps and drop, the relations solved inside its nights, its last-minute market floor and,
  * optionally, the owner order that must stay in force for it to act.
  *
- * Reference: plano_dono.py (the owner's plan of 9 Nov, made generic).
+ * Reference: plano_dono.py (the owner's plan module, made generic).
  */
 final class LadderStrategy
 {
@@ -41,7 +41,7 @@ final class LadderStrategy
         public readonly LadderSteps $steps = new LadderSteps(),
         public readonly DropRule $drop = new DropRule(),
         public readonly bool $weekendFloorOverride = false,
-        public readonly array $weekendFloorWeekdays = [4, 5],
+        public readonly array $weekendFloorWeekdays = [],
         public readonly array $rules = [],
         public readonly array $between = [],
         public readonly array $premium = [],

@@ -176,7 +176,7 @@ final class PaceEngine
      * One step towards the target, kept between the hard floor and the listing maximum and, for
      * tonight, never above the current price.
      *
-     * @param array{targetSent: float, factor: float, weak: bool, ...} $aim
+     * @param array{reading: PaceReading, targetSent: float, factor: float, weak: bool, ...} $aim
      * @param list<array{code: string, params: array<string, scalar|null>}> $trace
      *
      * @return array{new: float, held: bool, capped: bool, floor: HardFloor, stepPrice: float}
@@ -195,12 +195,22 @@ final class PaceEngine
         if ($terms->freeStep && $aim['targetSent'] < $current) {
             $new = $aim['targetSent'];
         }
-        if ($terms->fixedPrice !== null) {
-            $new = $terms->fixedPrice;
+        $floor = $terms->floor ?? $this->floors->hardFloor($context->room, $context->night);
+        if ($terms->ramp !== null) {
+            $ramp = $terms->ramp->step($floor, $aim['targetSent'], $current, $daysOut, $aim['reading'], $this->steps->maxPercent($daysOut));
+            [$new, $floor] = [$ramp->price, $ramp->floor];
+            $trace[] = self::entry(RuleCode::ORDER_SALES_RAMP, [
+                'order' => $terms->ramp->orderId,
+                'share' => $terms->ramp->share,
+                'line' => $ramp->line,
+                'top' => $terms->ramp->top,
+                'floor' => $floor->amount,
+                'floor_label' => $floor->label,
+                'to' => $new,
+            ]);
         }
         $stepPrice = $new;
 
-        $floor = $terms->floor ?? $this->floors->hardFloor($context->room, $context->night);
         if ($terms->ceilingCap !== null) {
             $new = min($new, max($terms->ceilingCap, $floor->amount));
         }

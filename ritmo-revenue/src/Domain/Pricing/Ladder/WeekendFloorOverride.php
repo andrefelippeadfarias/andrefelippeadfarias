@@ -22,7 +22,7 @@ use Ritmo\Domain\Support\Num;
  * standard instead of the weekend owner floor. It applies to the rooms the quality standard
  * covers, whether or not a ladder rule prices them that night.
  *
- * Reference: pace.pisos_enviados (the branch of the owner's plan of 9 Nov).
+ * Reference: pace.pisos_enviados (the branch of the owner's plan).
  */
 final class WeekendFloorOverride
 {

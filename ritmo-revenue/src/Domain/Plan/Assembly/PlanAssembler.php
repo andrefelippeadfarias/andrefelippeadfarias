@@ -12,6 +12,7 @@ use Ritmo\Domain\Plan\Payload\PayloadBuilder;
 use Ritmo\Domain\Plan\Payload\Slicer;
 use Ritmo\Domain\Plan\Plan;
 use Ritmo\Domain\Plan\PlanDeletion;
+use Ritmo\Domain\Plan\PlanIssue;
 use Ritmo\Domain\Plan\PlanItem;
 use Ritmo\Domain\Plan\ValidationContext;
 use Ritmo\Domain\Plan\ValidationResult;
@@ -58,8 +59,9 @@ final class PlanAssembler
         foreach ($work as $item) {
             $item->syncStep($this->rules->tolerance());
         }
-        $deletions = (new CeilingRelease(new StayHook($wiring->stay)))->apply($work, $inputs, $wiring->occupancy());
+        $deletions = (new CeilingRelease(new StayHook($wiring->stay), $this->rules->noEffect()->moneySlack))->apply($work, $inputs, $wiring->occupancy());
         $kept = $this->withoutEffectless($work, $inputs, $deletions);
+        self::switchesSatisfied([...$kept->noEffect, ...$kept->roundingOnly], $report);
         $plan = new Plan($inputs->property->id, $inputs->today, $this->clock->now(), $kept->kept, $deletions);
 
         $validator = new Validator($this->rules, $this->clock, $this->rules->plan());
@@ -151,10 +153,42 @@ final class PlanAssembler
         }
         $items = array_keys(array_filter($plan->items, static fn (PlanItem $item): bool => isset($refused[$item->key()])));
         $deletions = array_keys(array_filter($plan->deletions, static fn (PlanDeletion $deletion): bool => isset($refused[$deletion->key()])));
+        $effectless = array_filter($first->rejected(IssueSubject::Item), static fn (int $index): bool => self::onlyWithoutEffect($first, $index));
+        self::switchesSatisfied(array_map(static fn (int $index): PlanItem => $plan->items[$index], $effectless), $context->relationReport);
         $rest = $plan->without($items, $deletions, $first->rejected(IssueSubject::Listing));
         $again = $validator->validate($rest, $inputs->property, array_values($inputs->rooms), $context);
 
         return $again->isValid() ? $again : null;
+    }
+
+    /**
+     * An occupancy switch whose item is dropped for having no effect is satisfied without an item:
+     * the night is already at the switched price, and the discount band check accepts it so
+     * (the reference refuses the band there, see docs/ENGINE.md 1.8).
+     *
+     * @param array<PlanItem> $dropped
+     */
+    private static function switchesSatisfied(array $dropped, ?RelationReport $report): void
+    {
+        foreach ($dropped as $item) {
+            if ($report !== null && in_array(WorkItem::RELATION_OCCUPANCY_SWITCH, $item->reasonParams['relation_codes'] ?? [], true)) {
+                $report->switchItemDropped($item->roomCode, $item->date);
+            }
+        }
+    }
+
+    /**
+     * The validator refused the item only because it changes nothing.
+     */
+    private static function onlyWithoutEffect(ValidationResult $result, int $index): bool
+    {
+        foreach ($result->errors as $issue) {
+            if ($issue->subject === IssueSubject::Item && $issue->itemIndex === $index && $issue->code !== PlanIssue::NO_EFFECT) {
+                return false;
+            }
+        }
+
+        return true;
     }
 
     /**

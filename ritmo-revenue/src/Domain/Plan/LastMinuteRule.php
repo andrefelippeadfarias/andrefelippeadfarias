@@ -26,9 +26,9 @@ final class LastMinuteRule
     public function __construct(
         public readonly bool $enabled = false,
         public readonly array $rooms = [],
-        public readonly int $maxDaysOut = 3,
-        public readonly float $maxDiscount = 0.2,
-        public readonly float $maxSoldShare = 0.7,
+        public readonly int $maxDaysOut = 0,
+        public readonly float $maxDiscount = 0.0,
+        public readonly float $maxSoldShare = 0.0,
         public readonly array $lastUnitOnlyRooms = [],
     ) {
     }
@@ -75,9 +75,9 @@ final class LastMinuteRule
             new Field("$path.enabled", FieldType::Boolean, 'Allow it', 'Off: a floor under the listing minimum always needs an owner order.', false),
             new Field("$path.rooms", FieldType::ListOf, 'Rooms', 'The rooms that may go under their listing minimum.', [], max: 200, unique: true),
             new Field("$path.rooms.*", FieldType::Text, 'Room', min: 1, max: 40, pattern: $roomPattern),
-            new Field("$path.max_days_out", FieldType::Integer, 'Days before the night', 'Only this many days before the night, or fewer.', 3, min: 0, max: 30, unit: Field::UNIT_DAYS),
-            new Field("$path.max_discount", FieldType::Number, 'Deepest discount', 'Share of the listing minimum the floor may go under it.', 0.2, min: 0, max: 0.9, unit: Field::UNIT_RATIO),
-            new Field("$path.max_sold_share", FieldType::Number, 'Most sold share', 'Not on a night with more than this share of the units sold (tonight only with a warning).', 0.7, min: 0, max: 1, unit: Field::UNIT_RATIO),
+            new Field("$path.max_days_out", FieldType::Integer, 'Days before the night', 'Only this many days before the night, or fewer.', 0, min: 0, max: 30, unit: Field::UNIT_DAYS),
+            new Field("$path.max_discount", FieldType::Number, 'Deepest discount', 'Share of the listing minimum the floor may go under it.', 0.0, min: 0, max: 0.9, unit: Field::UNIT_RATIO),
+            new Field("$path.max_sold_share", FieldType::Number, 'Most sold share', 'Not on a night with more than this share of the units sold (tonight only with a warning).', 0.0, min: 0, max: 1, unit: Field::UNIT_RATIO),
             new Field("$path.last_unit_only_rooms", FieldType::ListOf, 'Last unit only', 'Rooms in high demand: the discount only for the last free unit.', [], max: 200, unique: true),
             new Field("$path.last_unit_only_rooms.*", FieldType::Text, 'Room', min: 1, max: 40, pattern: $roomPattern),
         ];

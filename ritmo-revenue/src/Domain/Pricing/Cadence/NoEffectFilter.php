@@ -24,7 +24,7 @@ use Ritmo\Domain\Support\Num;
  * live ceiling. An item with a floor below its ceiling is tested with its greatest value (kept
  * quirk of the reference).
  *
- * Rounding only (lesson of 11 Nov, not in the reference; off in the parity preset): an item, not
+ * Rounding only (a lesson of the reference's operation, not in its code; off in the parity preset): an item, not
  * on a night deleted first and without a minimum stay, whose floor lands on the same whole
  * percentage of the base as the live floor and whose ceiling (when it sets one) on the same as the
  * live ceiling. Both live values it compares must be known.

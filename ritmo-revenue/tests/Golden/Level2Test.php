@@ -9,9 +9,11 @@ use PHPUnit\Framework\TestCase;
 use Ritmo\Domain\Model\Property;
 use Ritmo\Domain\Plan\Assembly\AssembledPlan;
 use Ritmo\Domain\Plan\Assembly\PlanAssembler;
+use Ritmo\Domain\Model\RoomType;
 use Ritmo\Domain\Plan\IssueSubject;
 use Ritmo\Domain\Plan\Payload\CallKind;
 use Ritmo\Domain\Plan\Payload\Slice;
+use Ritmo\Domain\Plan\PercentRounding;
 use Ritmo\Domain\Plan\PlanItem;
 use Ritmo\Domain\Support\Days;
 use Ritmo\Domain\Support\FixedClock;
@@ -44,7 +46,7 @@ final class Level2Test extends TestCase
     {
         $manifest = Fixtures::json('golden/level2/MANIFEST.json');
         self::assertFalse($manifest['engine_dirty'], 'the goldens must come from committed engine code');
-        foreach ($manifest['frozen_inputs'] as $path => $hash) {
+        foreach ([...$manifest['frozen_inputs'], ...$manifest['golden_files']] as $path => $hash) {
             self::assertSame($hash, hash_file('sha256', Fixtures::path($path)), "$path changed without regenerating the goldens");
         }
         $names = array_column(Level2Scenario::cases(), 'name');
@@ -145,13 +147,18 @@ final class Level2Test extends TestCase
                 self::assertTrue(self::referenceRefuses($case, $codes), "{$case['name']} {$property->id}: the plugin writes nothing only where the reference refuses the plan");
                 continue;
             }
-            $dropped = self::droppedKeys($case, $run);
+            $dropped = self::droppedKeys($case, $run) + self::alreadyInForce($run, $scenario->rooms($property));
             $payload = $run->payload->toArray();
             $reference = $case['expected']['payload'];
             self::assertSame(self::calls($reference['deletions']['delete_listing_date_overrides'] ?? [], $listings, $dropped), self::calls($payload['deletions'], $listings, []), "{$case['name']} {$property->id}: deletions");
             self::assertSame(self::calls($reference['items']['update_listing_date_overrides'] ?? [], $listings, $dropped), self::calls($payload['writes'], $listings, []), "{$case['name']} {$property->id}: writes");
-            $expectedSlices = self::slices([...$case['expected']['slices']['deletions'], ...$case['expected']['slices']['items']], $codes, $dropped);
-            self::assertSame($expectedSlices, self::slices(array_map(self::asReference(...), $run->slices), $codes, []), "{$case['name']} {$property->id}: slices in writing order");
+            $expectedSlices = self::ranked(self::slices([...$case['expected']['slices']['deletions'], ...$case['expected']['slices']['items']], $codes, $dropped));
+            $slices = self::slices(array_map(self::asReference(...), $run->slices), $codes, []);
+            self::assertSame($expectedSlices, self::ranked($slices), "{$case['name']} {$property->id}: the slices");
+            $urgency = array_map(static fn (array $slice): array => array_slice(self::rank($slice), 0, 2), $slices);
+            $inOrder = $urgency;
+            sort($inOrder);
+            self::assertSame($inOrder, $urgency, "{$case['name']} {$property->id}: written in order, deletions first, then D0, D1 and the rest");
         }
     }
 
@@ -161,7 +168,7 @@ final class Level2Test extends TestCase
      * property's light-run nights (L1); "reason_refinements" tells apart two relations the reference
      * writes with the same text, by the words after it.
      *
-     * @return array{other_property_light_run: array<string, list<string>>, reason_refinements: array<string, array<string, string>>}
+     * @return array{other_property_light_run: array<string, list<string>>, reason_refinements: array<string, array<string, string>>, reason_refinement_notes: array<string, string>, payload_left_out: string}
      */
     private static function divergences(): array
     {
@@ -341,6 +348,24 @@ final class Level2Test extends TestCase
     }
 
     /**
+     * Items of the final plan whose whole percentages are already in force: PercentRounding leaves
+     * them out of the payload, the reference writes them again (plugin-divergences.json, payload_left_out).
+     *
+     * @param list<RoomType> $rooms
+     *
+     * @return array<string, true> "ROOM|DATE"
+     */
+    private static function alreadyInForce(AssembledPlan $run, array $rooms): array
+    {
+        $out = [];
+        foreach ((new PercentRounding())->apply($run->finalValidation->plan, $rooms)->dropped as $percent) {
+            $out[$percent->item->key()] = true;
+        }
+
+        return $out;
+    }
+
+    /**
      * Calls of the property's listings without the dropped dates and without the reason text, by
      * listing (the order of the calls follows the first item of each room, which moves when an
      * item is dropped).
@@ -376,8 +401,7 @@ final class Level2Test extends TestCase
 
     /**
      * Slices of the property's rooms without the dropped dates, the reason text and the numbers, in
-     * writing order (deletions, tonight, tomorrow, the blocks, the listing), rooms sorted inside
-     * each step.
+     * the order given ({@see ranked()} sorts them for the comparison).
      *
      * @param list<array<string, mixed>> $slices in the reference's terms
      * @param list<string>               $codes
@@ -412,10 +436,31 @@ final class Level2Test extends TestCase
                 'args' => ['listing_id' => $slice['args']['listing_id'], 'pms' => $slice['args']['pms'], 'overrides' => $overrides],
             ];
         }
-        $rank = static fn (array $s): array => [array_search($s['ferramenta'], array_values(self::TOOLS), true), $s['rotulo'] === 'D0' ? 0 : ($s['rotulo'] === 'D1' ? 1 : 2), $s['quarto'], $s['rotulo']];
-        usort($out, static fn (array $a, array $b): int => $rank($a) <=> $rank($b));
-
         return $out;
+    }
+
+    /**
+     * The order slices are compared in: the tool, the urgency (D0, D1, the rest), then the room.
+     *
+     * @param array<string, mixed> $slice
+     *
+     * @return list<int|string|false>
+     */
+    private static function rank(array $slice): array
+    {
+        return [array_search($slice['ferramenta'], array_values(self::TOOLS), true), $slice['rotulo'] === 'D0' ? 0 : ($slice['rotulo'] === 'D1' ? 1 : 2), $slice['quarto'], $slice['rotulo']];
+    }
+
+    /**
+     * @param list<array<string, mixed>> $slices
+     *
+     * @return list<array<string, mixed>>
+     */
+    private static function ranked(array $slices): array
+    {
+        usort($slices, static fn (array $a, array $b): int => self::rank($a) <=> self::rank($b));
+
+        return $slices;
     }
 
     /**

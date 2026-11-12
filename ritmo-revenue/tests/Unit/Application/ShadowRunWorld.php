@@ -10,6 +10,7 @@ use Ritmo\Application\EmergencySwitch;
 use Ritmo\Application\ShadowRun\CollectStage;
 use Ritmo\Application\ShadowRun\DecideStage;
 use Ritmo\Application\ShadowRun\MeasureStage;
+use Ritmo\Application\ShadowRun\RunInputsReader;
 use Ritmo\Application\ShadowRun\RunPipeline;
 use Ritmo\Application\ShadowRun\ShadowRunService;
 use Ritmo\Application\ShadowRun\ShadowStage;
@@ -35,10 +36,12 @@ use Ritmo\Infrastructure\Db\Repository\AlertRepository;
 use Ritmo\Infrastructure\Db\Repository\BookingRepository;
 use Ritmo\Infrastructure\Db\Repository\InventorySnapshotRepository;
 use Ritmo\Infrastructure\Db\Repository\MarketAnchorRepository;
+use Ritmo\Infrastructure\Db\Repository\OrderRepository;
 use Ritmo\Infrastructure\Db\Repository\PlanItemRepository;
 use Ritmo\Infrastructure\Db\Repository\PropertyRepository;
 use Ritmo\Infrastructure\Db\Repository\RoomTypeRepository;
 use Ritmo\Infrastructure\Db\Repository\RuleSetRepository;
+use Ritmo\Infrastructure\Db\Repository\RunPayloadRepository;
 use Ritmo\Infrastructure\Db\Repository\RunRepository;
 use Ritmo\Infrastructure\Db\Repository\StepLedgerRepository;
 use Ritmo\Infrastructure\Lock\DbLock;
@@ -206,9 +209,9 @@ final class ShadowRunWorld
         return [
             new CollectStage($connectors ?? new StaticConnectorSource($this->pms, $this->pricing), $this->snapshots, $this->bookings, $this->clock),
             new MeasureStage($this->snapshots, $this->bookings, $this->alerts, $this->clock),
-            new DecideStage($this->snapshots, $this->anchors, new StepLedgerRepository($this->db), $this->clock),
-            new ValidateStage($this->clock),
-            new ShadowStage($this->planItems),
+            new DecideStage(new RunInputsReader($this->snapshots, $this->anchors, new StepLedgerRepository($this->db), new OrderRepository($this->db, $this->clock)), $this->clock, 'beds24'),
+            new ValidateStage(),
+            new ShadowStage($this->planItems, new RunPayloadRepository($this->db, $this->clock)),
         ];
     }
 

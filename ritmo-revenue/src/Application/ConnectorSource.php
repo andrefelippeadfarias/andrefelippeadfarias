@@ -24,8 +24,8 @@ interface ConnectorSource
     public function pricing(): PricingConnector;
 
     /**
-     * True only when the site explicitly allowed the pricing system's calendar read, the one read
-     * its API serves by POST (ARCHITECTURE.md, section 6). Otherwise prices come from the PMS.
+     * True unless the site switched off the pricing system's calendar read, the one read its API
+     * serves by POST (ARCHITECTURE.md, section 6). When off, prices come from the PMS.
      */
     public function readsPricingCalendar(): bool;
 }

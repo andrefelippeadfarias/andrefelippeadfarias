@@ -14,7 +14,8 @@ use Ritmo\Domain\Support\Num;
  * asked), a ceiling rounds DOWN (never over it) and is never left under the floor.
  *
  * An item whose percentages are the ones already in force only differs by rounding and is
- * dropped: writing it would change nothing.
+ * dropped: writing it would change nothing. An item whose rule the plan deletes first is always
+ * kept: it writes that rule again.
  *
  * A plan is only converted with the listing bases it was validated with: percentages of another
  * base are amounts the Validator never checked.
@@ -60,6 +61,10 @@ final class PercentRounding
             }
         }
 
+        $deletedFirst = [];
+        foreach ($plan->plan->deletions as $deletion) {
+            $deletedFirst[$deletion->key()] = true;
+        }
         $items = [];
         $dropped = [];
         foreach ($plan->plan->items as $item) {
@@ -67,7 +72,7 @@ final class PercentRounding
                 throw new InvalidArgumentException(sprintf('Unknown room "%s" in the plan.', $item->roomCode));
             }
             $percent = $this->convert($item, $byCode[$item->roomCode]);
-            if ($percent->sameAsInForce()) {
+            if ($percent->sameAsInForce() && !isset($deletedFirst[$item->key()])) {
                 $dropped[] = $percent;
             } else {
                 $items[] = $percent;

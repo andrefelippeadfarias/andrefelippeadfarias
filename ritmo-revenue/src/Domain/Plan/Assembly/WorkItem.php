@@ -8,6 +8,7 @@ use DateTimeImmutable;
 use Ritmo\Domain\Plan\NightState;
 use Ritmo\Domain\Plan\OrphanClaim;
 use Ritmo\Domain\Plan\PlanItem;
+use Ritmo\Domain\Pricing\StepDirection;
 use Ritmo\Domain\Relations\Coherence\DraftItem;
 use Ritmo\Domain\Relations\Coherence\Reason;
 use Ritmo\Domain\Support\Num;
@@ -147,6 +148,37 @@ final class WorkItem
     }
 
     /**
+     * After the relations and the listing cap, the step block says what will be written: its
+     * "to" becomes the final floor (the engine's value is kept as "engine_to") and its direction
+     * is measured again from the price before; within the tolerance there is no step to record.
+     *
+     * Reference: pace.sincronizar_pace.
+     */
+    public function syncStep(float $tolerance): void
+    {
+        $step = $this->params['step'] ?? null;
+        if (!is_array($step) || $this->minPrice === null || !isset($step['price_from'], $step['price_to']) || abs($this->minPrice - (float) $step['price_to']) < 0.5) {
+            return;
+        }
+        $from = (float) $step['price_from'];
+        $step['engine_to'] = $step['price_to'];
+        $step['price_to'] = $this->minPrice;
+        $step['direction'] = $this->minPrice > $from * (1 + $tolerance) ? StepDirection::Up->value : ($this->minPrice < $from * (1 - $tolerance) ? StepDirection::Down->value : null);
+        $this->params['step'] = $step;
+    }
+
+    /**
+     * The item reads the units sold of the night: a sold-out protection, or a relation that
+     * depends on what is free (a discount band, an occupancy switch).
+     */
+    public function readsOccupancy(): bool
+    {
+        return $this->protection
+            || in_array(self::RELATION_DISCOUNT_BAND, $this->relations, true)
+            || in_array(self::RELATION_OCCUPANCY_SWITCH, $this->relations, true);
+    }
+
+    /**
      * The floor as the pricing system applies it: a whole percentage of the base, rounded up.
      */
     public static function applied(float $amount, float $base): float
@@ -154,7 +186,7 @@ final class WorkItem
         return Num::percentToAmount((float) Num::floorToPercent($amount, $base), $base, 2);
     }
 
-    public function toPlanItem(bool $readsOccupancy): PlanItem
+    public function toPlanItem(): PlanItem
     {
         $params = $this->params + ['priced_by' => $this->reasonCode];
         if ($this->relations !== []) {
@@ -177,7 +209,7 @@ final class WorkItem
             null,
             $this->keepReason,
             '',
-            $readsOccupancy,
+            $this->readsOccupancy(),
         );
     }
 }

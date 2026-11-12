@@ -6,14 +6,16 @@ namespace Ritmo\Tests\Unit\Application;
 
 use OutOfBoundsException;
 use PHPUnit\Framework\TestCase;
-use Ritmo\Application\ShadowRun\DecideStage;
 use Ritmo\Application\ShadowRun\PlanItemStatus;
 use Ritmo\Application\ShadowRun\RunOutcome;
 use Ritmo\Application\ShadowRun\ShadowRunService;
 use Ritmo\Contracts\Exception\ConnectorException;
 use Ritmo\Domain\Model\DateOverride;
+use Ritmo\Domain\Plan\Assembly\NightLine;
+use Ritmo\Domain\Plan\Assembly\WorkItem;
 use Ritmo\Domain\Pricing\RuleCode;
 use Ritmo\Domain\Support\Days;
+use Ritmo\Infrastructure\Db\Repository\RunPayloadRepository;
 use Ritmo\Infrastructure\Db\Repository\RunRepository;
 use Ritmo\Tests\Fakes\InMemoryPmsConnector;
 use Ritmo\Tests\Fakes\InMemoryPricingConnector;
@@ -60,7 +62,7 @@ final class ShadowRunServiceTest extends TestCase
         foreach ($items as $item) {
             self::assertContains($item['room_code'], ['STD', 'STE'], 'the unmapped room is left out');
             self::assertContains($item['field'], ['floor', 'ceiling']);
-            self::assertSame(RuleCode::PACE_STEP, $item['reason']);
+            self::assertSame(WorkItem::PACE_STEP, $item['reason']);
             self::assertSame($item['status'] === PlanItemStatus::WOULD_WRITE, $item['details']['would_write']);
             $codes = array_column($item['details']['rule_trace'], 'code');
             self::assertSame(RuleCode::NIGHT, $codes[0]);
@@ -109,6 +111,20 @@ final class ShadowRunServiceTest extends TestCase
         }
     }
 
+    public function testThePayloadAndTheSlicesOfWhatPassesAreKeptAndNothingIsSent(): void
+    {
+        $outcome = $this->world->service()->run(ShadowRunWorld::PROPERTY);
+        $summary = $this->world->runs->find((int) $outcome->runId)['summary'] ?? [];
+        $kept = (new RunPayloadRepository($this->world->db, $this->world->clock))->forRun((int) $outcome->runId);
+
+        self::assertNotNull($kept['payload']);
+        $dates = array_sum(array_map(static fn (array $call): int => count($call['overrides']), $kept['payload']['writes']));
+        self::assertSame($summary['validate'][PlanItemStatus::WOULD_WRITE], $dates, 'one date rule per room night that would be written');
+        self::assertSame($summary['shadow']['slices'], count($kept['slices']));
+        self::assertSame(range(1, count($kept['slices'])), array_column($kept['slices'], 'number'), 'in writing order');
+        self::assertSame(0, $summary['shadow']['writes_sent']);
+    }
+
     public function testNightsWithoutAnchorAreNoMarketDataAndGiveNoItem(): void
     {
         $outcome = $this->world->service()->run(ShadowRunWorld::PROPERTY);
@@ -117,7 +133,7 @@ final class ShadowRunServiceTest extends TestCase
         $weekendNights = count(array_filter(iterator_to_array(ShadowRunWorld::nights()), ShadowRunWorld::isWeekend(...)));
         self::assertSame(2 * $weekendNights, $decide['no_market_data']);
         self::assertSame(2 * ShadowRunService::HORIZON_NIGHTS, $decide['nights']);
-        self::assertArrayNotHasKey(RuleCode::NO_MARKET_ANCHOR, $decide['by_reason'], 'the engine is not asked about such nights');
+        self::assertSame($decide['no_market_data'], $decide['by_reason'][NightLine::NO_MARKET_ANCHOR] + ($decide['by_reason'][NightLine::SOLD_OUT_NO_ANCHOR] ?? 0), 'such nights are set apart before the engine');
     }
 
     public function testCollectStoresTheCalendarAndTheBookingsAndMeasureRaisesAlerts(): void
@@ -339,9 +355,8 @@ final class ShadowRunServiceTest extends TestCase
         $outcome = $this->world->service()->run(ShadowRunWorld::PROPERTY);
         $decide = $this->world->runs->find((int) $outcome->runId)['summary']['decide'] ?? [];
 
-        self::assertArrayNotHasKey(DecideStage::NO_INVENTORY, $decide['by_reason']);
-        self::assertArrayNotHasKey(DecideStage::NO_CURRENT_PRICE, $decide['by_reason']);
-        self::assertArrayHasKey(RuleCode::SOLD_OUT_PENDING_M2, $decide['by_reason'], 'the sold-out weekday night is left for M2');
+        self::assertSame(2 * ShadowRunService::HORIZON_NIGHTS, $decide['nights'], 'every room night of the snapshot has its line');
+        self::assertNotSame([], array_intersect_key($decide['by_reason'], array_flip([NightLine::PROTECTION, NightLine::PROTECTION_NONE])), 'the sold-out weekday night goes to the protection of sold-out nights');
     }
 }
 

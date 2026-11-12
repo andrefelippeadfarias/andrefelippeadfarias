@@ -12,6 +12,7 @@ use Ritmo\Application\Setup\SetupService;
 use Ritmo\Application\ShadowRun\CollectStage;
 use Ritmo\Application\ShadowRun\DecideStage;
 use Ritmo\Application\ShadowRun\MeasureStage;
+use Ritmo\Application\ShadowRun\RunInputsReader;
 use Ritmo\Application\ShadowRun\RunPipeline;
 use Ritmo\Application\ShadowRun\ShadowRunService;
 use Ritmo\Application\ShadowRun\ShadowStage;
@@ -23,12 +24,14 @@ use Ritmo\Infrastructure\Db\Repository\AlertRepository;
 use Ritmo\Infrastructure\Db\Repository\BookingRepository;
 use Ritmo\Infrastructure\Db\Repository\InventorySnapshotRepository;
 use Ritmo\Infrastructure\Db\Repository\MarketAnchorRepository;
+use Ritmo\Infrastructure\Db\Repository\OrderRepository;
 use Ritmo\Infrastructure\Db\Repository\PlanItemRepository;
 use Ritmo\Infrastructure\Db\Repository\PriceSampleRepository;
 use Ritmo\Infrastructure\Db\Repository\PropertyRepository;
 use Ritmo\Infrastructure\Db\Repository\QuotaLogRepository;
 use Ritmo\Infrastructure\Db\Repository\RoomTypeRepository;
 use Ritmo\Infrastructure\Db\Repository\RuleSetRepository;
+use Ritmo\Infrastructure\Db\Repository\RunPayloadRepository;
 use Ritmo\Infrastructure\Db\Repository\RunRepository;
 use Ritmo\Infrastructure\Db\Repository\StepLedgerRepository;
 use Ritmo\Infrastructure\Db\WpdbDatabase;
@@ -124,6 +127,11 @@ final class Services
         return $this->once('runs', fn (): RunRepository => new RunRepository($this->db));
     }
 
+    public function runPayloads(): RunPayloadRepository
+    {
+        return $this->once('runPayloads', fn (): RunPayloadRepository => new RunPayloadRepository($this->db, $this->clock()));
+    }
+
     public function planItems(): PlanItemRepository
     {
         return $this->once('planItems', fn (): PlanItemRepository => new PlanItemRepository($this->db, $this->clock()));
@@ -172,9 +180,13 @@ final class Services
             $pipeline = new RunPipeline([
                 new CollectStage($this->connectors(), $this->snapshots(), $bookings, $clock),
                 new MeasureStage($this->snapshots(), $bookings, $this->alerts(), $clock),
-                new DecideStage($this->snapshots(), $anchors, new StepLedgerRepository($this->db), $clock),
-                new ValidateStage($clock),
-                new ShadowStage($this->planItems()),
+                new DecideStage(
+                    new RunInputsReader($this->snapshots(), $anchors, new StepLedgerRepository($this->db), new OrderRepository($this->db, $clock)),
+                    $clock,
+                    $this->connectors()->pricingPmsName(),
+                ),
+                new ValidateStage(),
+                new ShadowStage($this->planItems(), $this->runPayloads()),
             ], $this->runs(), $this->db, $this->emergencySwitch(), $clock, $this->logger());
 
             return new ShadowRunService($this->properties(), $this->roomTypes(), $this->ruleSets(), $this->runs(), $this->locks(), $this->emergencySwitch(), $pipeline, $clock, $this->logger());

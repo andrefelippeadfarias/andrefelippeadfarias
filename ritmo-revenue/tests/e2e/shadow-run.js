@@ -106,6 +106,9 @@ async function shadowRun(page) {
     check(new RegExp('^' + rows + ' of \\d+ room nights shown').test(total), 'the count of room nights is wrong: ' + total);
     const why = (await page.locator('.ritmo-would-write tbody tr .ritmo-why').first().textContent()).trim();
     check(why.includes('Proposed step'), 'the reason of an item is not explained: ' + why);
+    const reason = (await page.locator('.ritmo-would-write tbody tr [data-ritmo="reason"]').first().textContent()).trim();
+    check(reason.length > 0, 'the rule that priced the night is not named');
+    check(await page.locator('[data-ritmo="refused"]').count() === 1, 'the section of what the validator refused is missing');
     check((await page.textContent('[data-ritmo="last-run"]')).includes('0 writes sent'), 'the run does not report zero writes');
     await shot(page, pass === 'setup' ? '04-dashboard-after-shadow-run.png' : '06-dashboard-without-calendar-read.png');
     return rows;

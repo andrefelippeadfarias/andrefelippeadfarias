@@ -256,7 +256,22 @@ What the correction phase changed in shared signatures and behaviour. The only i
 | Nothing of a secret is kept in clear: `SecretStatus` is `configured` and `updatedAt` only (the last four characters are gone from the option and from the screen, which shows the date the key was saved). | INFRASTRUCTURE.md |
 | `Roles::install(KeyValueStore $settings)` grants by version (`Roles::GRANTS`, setting `roles_version`): a capability the site took away is not given back, a deleted role is not created again. | ARCHITECTURE.md 6 |
 
-**Pending decision of the owner: the calendar read by POST.** The PriceLabs calendar (`POST /listing_prices`) is a read that its API serves only by POST. It stays off by default and is allowed only by the constant `RITMO_PRICING_CALENDAR_READ === true`, for that exact host and path; every other POST, PUT, PATCH and DELETE is refused by the HTTP guard (`GuardedHttpClient`, with its tests). Rule 9 of milestone M1 ("no code path may send POST/PUT/PATCH/DELETE to a PMS or pricing system") does not foresee this exception: until the owner approves it, sites must not define the constant. If the owner does not approve it, the route and the constant are removed and the engine reads prices from the PMS only.
+**Decided (12 Nov): the calendar read by POST.** The PriceLabs calendar (`POST /listing_prices`) only reads and the engine needs it: it is on by default, for that exact host and path, and a site switches it off with `define('RITMO_PRICING_CALENDAR_READ', false)`. Every other POST, PUT, PATCH and DELETE is still refused by the HTTP guard (ARCHITECTURE.md, section 6).
+
+### 1.8 Integration of milestone M2
+
+What milestone 2 changed in shared signatures and behaviour. No interface of `src/Contracts` changed; the write methods still throw `NotAvailableInThisMilestone` and `WriteToken` still has no factory.
+
+| Change | Where |
+|---|---|
+| Rule set schema: new sections `relations` (with `price_bands`), `ladder`, `soldout`, `cadence`, `no_effect`, `orders`, `stay` and `plan`, each with neutral defaults, ranges and help (`RuleSetFields::all()` joins the fields of `RelationFields`, `LadderFields`, `ProtectionConfig`, `CadenceConfig`, `NoEffectConfig`, `OrdersConfig`, `StayFields`, `PlanConfig`); typed accessors `RuleSet::relations()`, `ladder()`, `soldOut()`, `cadence()`, `noEffect()`, `orders()`, `stay()`, `plan()`; `RuleReferences` checks the room and property references of those sections. `presets/default.json` and `tests/fixtures/presets/parity.json` (built by `make_parity_preset.py` from the area fixtures `parity-<area>.json`) carry them. | 1.4, the area documents |
+| `PlanItem`: new optional parameters at the end (`checkInMask`, `checkOutMask`, `orderId`, `orphan`, `marketEvidence`, `keepReason`, `reasonText`, `readsOccupancy`); `toArray()` gives them. `Plan` takes `deletions` (`PlanDeletion`) and `listingChanges` (`ListingChange`); `without()` drops by position in each list. | ENGINE.md 1.5, VALIDATOR.md |
+| `PlanIssue::$subject` (`IssueSubject`: item, deletion, listing, plan) and the floor codes by family (`below_owner_floor`, `below_quality_floor`, ...; `below_hard_floor` is gone). `ValidationResult::rejected(IssueSubject)`. | ENGINE.md 1.12 |
+| `Validator::__construct(RuleSet, Clock, ?PlanConfig)` and `validate(Plan, Property, rooms, ?ValidationContext)`: without a context the checks of milestone 2 are neutral. An item whose night the plan deletes first is never `no_effect`, and `PercentRounding::apply()` never drops it. | VALIDATOR.md, ENGINE.md 1.8 |
+| `NightContext::$terms` (`Pricing\PaceTerms`, neutral by default) and `PaceDecision::$stepPrice`: what orders, the sales ramp, a market floor, a relation and the chained listing top change in a pace step. | ENGINE.md 1.8 |
+| Item reason codes of an assembled plan are upper case (`PACE_STEP`, `LADDER_PRICE`, `SOLD_OUT_PROTECTION`, `RELATION_*`); a single pace decision still turns into `pace_step` through `PlanItem::fromDecision()`. | ENGINE.md 1.8 |
+| Shadow run: `DecideStage(RunInputsReader, Clock, string $pmsName)` assembles the whole plan; `ValidateStage()` reads its validation; `ShadowStage(PlanItemRepository, RunPayloadRepository)` also stores deletions, the payload and the slices. New repositories `OrderRepository`, `RunPayloadRepository` (migration 6, table `run_payloads`) and `StepLedgerRepository::ledger()`. `StateCodec::planItem()` / `toPlanItem()` are gone (the stages carry `PlanItem::toArray()`). | APPLICATION.md, INFRASTRUCTURE.md |
+| `ConnectorFactory::pricingPmsName()`; the calendar read on by default (above). | APPLICATION.md 1.2 |
 
 ## Part 2. Signature reference
 

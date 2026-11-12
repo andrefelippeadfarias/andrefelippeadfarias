@@ -18,13 +18,13 @@ The use cases (`src/Application`), the wiring for WordPress (`src/WordPress`, `s
 |---|---|---|---|
 | `collect` | `listListings()`, `readOverrides()`, `readPrices()` (only with the calendar read, ARCHITECTURE.md section 6), `readInventory(..., withPrices: true)`, `readBookingsModifiedSince()` (from the newest stored modification, or 365 days back) | snapshot of the PMS calendar (`InventorySnapshotRepository::store`), bookings (`upsertMany`) | listings found or missing, overrides, pricing nights, inventory nights, bookings read |
 | `measure` | the snapshot of this run, the stored bookings | alerts `overbooked` (critical), `sold_mismatch`, `push_disabled`, `push_stale` (more than 30 h since the last push or never), deduplicated per room and night | occupancy per window and room against the goals, overbooked nights, mismatches, push state per listing |
-| `decide` | the snapshot, the market anchors, the step ledger | nothing | nights by reason (`no_inventory`, `no_current_price`, `no_market_data` and the engine's codes), steps |
-| `validate` | the items of `decide` | nothing | items `would_write`, `no_change`, `rejected`, issue codes |
-| `shadow` | the outcome of `validate` | `plan_items`: one row per floor or ceiling, `status` = `would_write` / `no_change` / `rejected`, `details` = rule trace, percentages, issues, `would_write` flag | rows stored, `writes_sent` = 0 |
+| `decide` | the snapshot, the date rules and the pricing calendar of this run, the market anchors, the step ledger (`StepLedgerRepository::ledger`), the owner orders (`OrderRepository::book`) | nothing | room nights by `NightLine` code (`no_market_data` counts those without an anchor), items, deletions |
+| `validate` | the validation the assembly made | nothing | items `would_write`, `no_change`, `rejected`, issue codes, issues of the plan as a whole, `refused` |
+| `shadow` | the items, deletions, payload and slices of `decide` with the outcome of `validate` | `plan_items`: one row per floor, ceiling or minimum stay of an item and one per date rule deleted first (field `delete`), `status` = `would_write` / `no_change` / `rejected`, `details` = rule trace, reason parameters, relation codes, order cited, percentages, masks, orphan claim, issues; `run_payloads`: the payload and its slices in writing order | rows stored, `would_write`, slices, `writes_sent` = 0 |
 
-How `decide` reads a room night: the current price is the pricing system's (calendar read) or else the PMS price, brought within the floor and ceiling of the date override in force (`RuleInForce`, the reference's `pace.preco_no_vigente`: under the floor by more than 0.5 it is the floor, over the ceiling it is the ceiling); when it moved, the item's trace starts with `price_within_rule_in_force` and the price read; the floor and ceiling in force come from the calendar read or else from the date override (fixed amount, or percentage over the room's base); the units sold are `units - available` of the PMS calendar, between 0 and the units (a blocked unit counts as sold). A night without an anchor (`AnchorLookup::forNight()` gives null) is counted as `no_market_data` and the engine is not asked. Small rooms are read with their group (`PaceBasis`). Steps become `PlanItem`s with `NightState::from($price, $override)` as what is in force.
+How `decide` works (milestone 2): `RunInputsReader` turns what the run collected into the `RunInputs` of the plan assembly (ENGINE.md, section 1.8) and `PlanAssembler` builds, validates and slices the whole plan; `AssemblyState` keeps it as arrays for the next stages. A room night: the current price is the pricing system's (calendar read) or else the PMS price; the assembly brings it within the floor and ceiling of the date rule in force (`RuleInForce`, the reference's `pace.preco_no_vigente`), and when it moved the item's trace starts with `price_within_rule_in_force` and the price read; the floor and ceiling in force come from the calendar read or else from the date rule (fixed amount, or percentage over the room's base); the units sold are `units - available` of the PMS calendar, between 0 and the units (a blocked unit counts as sold). A night without an anchor is a `no_market_anchor` line (counted as `no_market_data`) and the engine is not asked. Without a market ruler no sales ladder strategy acts, and no night is held as closed in the PMS (neither has a source yet); the run is a full run (no light-run filter).
 
-How `validate` treats errors: the items with errors are set apart as `rejected` and the rest is validated again until it is valid; an error of the whole plan (`stale_plan`) fails the run (`PlanRefused`). `PercentRounding::apply()` gives the percentages; items whose percentages are already in force are `no_change`.
+How `validate` treats errors: the validator ran inside the assembly with the run's context (orders, stay rules, relations, the fresh calendar); the entries it refused are `rejected` and the rest was validated again (a deletion and the item that writes its night again go together). Items whose percentages are already in force are `no_change`. A plan made for another day (`stale_plan`) fails the run (`PlanRefused`); a plan whose remaining errors concern it as a whole keeps every item `rejected` and its issues on show.
 
 `ShadowRunService::resumeOpenRuns()` resumes every open run; the WP-Cron hook `ritmo_resume_shadow_runs` (hourly, `WordPress\Scheduler`) calls it.
 
@@ -34,14 +34,14 @@ The emergency switch (`EmergencySwitch`) is the option `ritmo_kill_switch` (Diag
 
 `WordPress\Services::instance()` builds the objects of a request on first use: `WpdbDatabase`, `SystemClock`, `OptionsStore`, `DbLogger` with `LogSanitizer`, `SodiumVault::forSite()`, the migrator (through `dbDelta`), every repository, `DbLock`, the emergency switch, `ConnectorFactory`, `ShadowRunService`, `OccupancyQuery`, `PropertyDashboard`, `SetupService`.
 
-`WordPress\ConnectorFactory` implements `Application\ConnectorSource`. It builds `Beds24Connector` (refresh or long-life token from the vault entry `beds24_token`, room map from `RoomTypeRepository::pmsMap()`, property ids from the setting `beds24_property_ids`, `CreditAwareHttpClient`) and `PriceLabsConnector` (key `pricelabs_api_key`, PMS name `pricelabs_pms`, `ThrottledHttpClient` with 60/min and 1000/h, `DbQuotaLedger`), both over `GuardedHttpClient(new WpHttpClient())`. A missing secret is `ConnectionNotConfigured`. The base URLs are production unless `RITMO_DEV` is true and `RITMO_BEDS24_BASE_URL` / `RITMO_PRICELABS_BASE_URL` are defined. `readsPricingCalendar()` is true only when `RITMO_PRICING_CALENDAR_READ === true`; then the allow-list holds that one route. `test($provider)` never throws.
+`WordPress\ConnectorFactory` implements `Application\ConnectorSource`. It builds `Beds24Connector` (refresh or long-life token from the vault entry `beds24_token`, room map from `RoomTypeRepository::pmsMap()`, property ids from the setting `beds24_property_ids`, `CreditAwareHttpClient`) and `PriceLabsConnector` (key `pricelabs_api_key`, PMS name `pricelabs_pms`, `ThrottledHttpClient` with 60/min and 1000/h, `DbQuotaLedger`), both over `GuardedHttpClient(new WpHttpClient())`. A missing secret is `ConnectionNotConfigured`. The base URLs are production unless `RITMO_DEV` is true and `RITMO_BEDS24_BASE_URL` / `RITMO_PRICELABS_BASE_URL` are defined. `readsPricingCalendar()` is true unless the site defines `RITMO_PRICING_CALENDAR_READ` as `false` (decision of 12 Nov: that POST only reads); then the allow-list holds that one route, exact host and path. `pricingPmsName()` is the PMS name the payload carries. `test($provider)` never throws.
 
 Lifecycle: `Activator::activate()` (migrations, vault, role "Revenue Manager" and capabilities, neutral rules when none, scheduled hook), `Deactivator::deactivate()` (unschedules), `uninstall.php` → `Uninstaller` (drops tables, `ritmo_*` options, role and capabilities only when the setting `delete_data_on_uninstall` is true). `Plugin::boot()` registers the text domain (on `init`), the upgrade check (`admin_init`: migrations when the database version is behind), the menu, the assets, the admin actions, the REST routes and the scheduled hook.
 
 ### 1.3 Dashboard and setup
 
 - `OccupancyQuery::forProperty($id)`: occupancy of each goal window, per room and for the property, from the latest stored PMS calendar (no external call), with the traffic light of the 7-night window (`OccupancySignal`: green at or above the goal, amber up to 10 points under, red below, unknown without data).
-- `PropertyDashboard::build($id)`: the property, the occupancy, the open alerts, the last shadow run, the last completed one, the push state it measured and "what would be written": the room nights of its `would_write` items (floor and ceiling, in force and proposed, percentages, rule trace), nearest first, at most 60, with the total.
+- `PropertyDashboard::build($id)`: the property, the occupancy, the open alerts, the last shadow run, the last completed one, the push state it measured, "what would be written" (the room nights of its `would_write` items: price now, floor, ceiling and stay in force and proposed, percentages, the reason code, the owner order and relations behind it, the rule trace and the validator's warnings; nearest first, at most 60, with the total), "refused" (every room night the validator refused, with its errors) and the issues of the plan as a whole.
 - `SetupService`: `createProperty()` (code, name, timezone from the PHP list, three-letter currency, tier; always in shadow mode), `saveRoomType()` (mapping to the PMS room id and the pricing listing id, amounts as typed in the form), `importPreset()` (PresetLoader validation, rules saved as a new version, properties forced to shadow mode, one transaction; `InvalidConfig` lists every error), `importSamples()` (`SampleCsv`: one `date,price` per line; each paste is a full picture of its nights and rebuilds their anchors by `AnchorBuilder::build()` and `merge()`).
 
 ### 1.4 Screens and capabilities
@@ -89,6 +89,7 @@ Screenshots: `01-connections`, `02-setup`, `03-dashboard-before`, `04-dashboard-
 | `ShadowRunService`, `RunPipeline`, `RunOutcome` | Start or resume a run under the lock; run the stages; where a call left the run. |
 | `Stage`, `StageResult`, `RunContext` | A stage, what it produced (summary, state, writes) and what it works with (property, mapped rooms, rules, today, nights, state). |
 | `CollectStage`, `MeasureStage`, `DecideStage`, `ValidateStage`, `ShadowStage` | The five stages of 1.1. |
+| `RunInputsReader`, `AssemblyState` | What the plan assembly reads, from what the run collected; the assembled plan as the arrays the next stages carry. |
 | `StateCodec`, `PlanItemStatus`, `PlanRefused` | State carried between stages as arrays; statuses of stored items; refusal of a whole plan. |
 | `ConnectorSource`, `ConnectionNotConfigured`, `EmergencySwitch` | Where use cases get connectors; missing credentials; the general switch. |
 | `OccupancyQuery`, `OccupancySignal`, `PropertyDashboard` | Dashboard data (1.3). |
@@ -99,7 +100,7 @@ Screenshots: `01-connections`, `02-setup`, `03-dashboard-before`, `04-dashboard-
 
 ### 1.8 Not in this milestone
 
-Writing (write gate, approval and autonomous modes), scheduled runs, the nights grid, rule editors, relations, stay rules, the sales ladder, owner orders, protection of sold-out nights, the `pt_BR` translation, licence and assistant. The step ledger is read (cadence) but nothing records steps while the plugin only shadows.
+Writing (write gate, approval and autonomous modes; the payload and slices are stored, never sent), scheduled and light runs, the nights grid with every room night, rule and order editors, the market ruler of a ladder strategy and the nights closed in the PMS, the `pt_BR` translation, licence and assistant. The step ledger is read (cadence) but nothing records steps while the plugin only shadows.
 
 ## Part 2. Signature reference
 
@@ -178,6 +179,12 @@ public function importPreset(string $json, int $userId = 0): array;
 public function importSamples(string $propertyId, string $csv): array;
 ```
 
+#### `Ritmo\Application\ShadowRun\AssemblyState` (final class)
+
+```php
+public static function of(AssembledPlan $run, array $priceTraces, array $rooms): array;
+```
+
 #### `Ritmo\Application\ShadowRun\CollectStage` (final class implements Stage)
 
 ```php
@@ -193,9 +200,7 @@ public function run(RunContext $context): StageResult;
 ```php
 const NAME = 'decide';
 const NO_MARKET_DATA = 'no_market_data';
-const NO_INVENTORY = 'no_inventory';
-const NO_CURRENT_PRICE = 'no_current_price';
-public function __construct(InventorySnapshotRepository $snapshots, MarketAnchorRepository $anchors, StepLedgerRepository $ledger, Clock $clock);
+public function __construct(RunInputsReader $inputs, Clock $clock, string $pmsName);
 public function name(): string;
 public function run(RunContext $context): StageResult;
 ```
@@ -245,6 +250,14 @@ public function overrides(): array;
 public function readsPricingCalendar(): bool;
 ```
 
+#### `Ritmo\Application\ShadowRun\RunInputsReader` (final class)
+
+```php
+public function __construct(InventorySnapshotRepository $snapshots, MarketAnchorRepository $anchors, StepLedgerRepository $ledger, OrderRepository $orders);
+public function read(RunContext $context, DateTimeImmutable $now): RunInputs;
+public function priceTraces(): array;
+```
+
 #### `Ritmo\Application\ShadowRun\RunOutcome` (final class)
 
 ```php
@@ -288,7 +301,8 @@ public function resumeOpenRuns(int $budgetSeconds = 20): array;
 
 ```php
 const NAME = 'shadow';
-public function __construct(PlanItemRepository $planItems);
+const DELETE_FIELD = 'delete';
+public function __construct(PlanItemRepository $planItems, RunPayloadRepository $payloads);
 public function name(): string;
 public function run(RunContext $context): StageResult;
 ```
@@ -317,8 +331,6 @@ public static function override(DateOverride $override): array;
 public static function toOverride(array $data): DateOverride;
 public static function priceNight(PriceNight $night): array;
 public static function toPriceNight(array $data): PriceNight;
-public static function planItem(PlanItem $item): array;
-public static function toPlanItem(array $data): PlanItem;
 public static function instant(?string $value): ?DateTimeImmutable;
 ```
 
@@ -326,7 +338,6 @@ public static function instant(?string $value): ?DateTimeImmutable;
 
 ```php
 const NAME = 'validate';
-public function __construct(Clock $clock);
 public function name(): string;
 public function run(RunContext $context): StageResult;
 ```
@@ -355,6 +366,7 @@ public function pricing(): PricingConnector;
 public function readsPricingCalendar(): bool;
 public function test(string $provider): ConnectionStatus;
 public static function propertyIds(string $text): array;
+public function pricingPmsName(): string;
 ```
 
 #### `Ritmo\WordPress\Deactivator` (final class)
@@ -403,6 +415,7 @@ public function properties(): PropertyRepository;
 public function roomTypes(): RoomTypeRepository;
 public function ruleSets(): RuleSetRepository;
 public function runs(): RunRepository;
+public function runPayloads(): RunPayloadRepository;
 public function planItems(): PlanItemRepository;
 public function alerts(): AlertRepository;
 public function snapshots(): InventorySnapshotRepository;
@@ -461,6 +474,7 @@ public static function take(): ?array;
 
 ```php
 public static function sentences(array $trace): array;
+public static function reason(string $code): string;
 public static function describe(array $trace): string;
 ```
 

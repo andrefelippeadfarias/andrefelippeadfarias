@@ -14,6 +14,7 @@ use Ritmo\Domain\Orders\OrderGate;
 use Ritmo\Domain\Plan\NightState;
 use Ritmo\Domain\Pricing\Cadence\SoldBase;
 use Ritmo\Domain\Pricing\Cadence\StepCadence;
+use Ritmo\Domain\Pricing\Cadence\StepProposal;
 use Ritmo\Domain\Pricing\Ladder\LadderNight;
 use Ritmo\Domain\Pricing\Ladder\LadderReferences;
 use Ritmo\Domain\Pricing\NightContext;
@@ -32,6 +33,7 @@ use Ritmo\Domain\Relations\RelationGraph;
 use Ritmo\Domain\Relations\RelationType;
 use Ritmo\Domain\Relations\Port\NightCalendar;
 use Ritmo\Domain\Support\Days;
+use Ritmo\Domain\Support\Num;
 
 /**
  * Prices every room night of the run, night after night: the gates (blocked in the PMS, frozen
@@ -249,10 +251,19 @@ final class NightPricing
 
             return;
         }
-        $params = ['direction' => $decision->direction?->value, 'rule_trace' => $decision->trace, 'step' => [
-            'status' => $decision->reading?->status->value, 'direction' => $decision->direction?->value, 'from' => $row->price,
-            'to' => $decision->minPrice, 'sold' => $paceSold, 'base' => $grouped ? SoldBase::Property->value : SoldBase::Room->value, 'total' => $paceUnits,
-        ]];
+        $step = new StepProposal(
+            $room->code,
+            $night,
+            (string) $decision->reading?->status->value,
+            $decision->direction,
+            $row->price,
+            (float) $decision->minPrice,
+            (int) Num::roundHalfEven((float) $decision->targetSent, 0),
+            $paceSold,
+            $grouped ? SoldBase::Property : SoldBase::Room,
+            $paceUnits,
+        );
+        $params = ['direction' => $decision->direction?->value, 'rule_trace' => $decision->trace, 'step' => $step->toArray()];
         $work = new WorkItem($room->code, $night, $row->price, $decision->minPrice, $decision->maxPrice, WorkItem::PACE_STEP, $params, $this->before($room, $night), $terms->citedOrder($decision->stepPrice), true);
         $this->add($work, $decision->reasonCode, ['trace' => $decision->trace], $decision);
     }
@@ -307,11 +318,17 @@ final class NightPricing
         return $cap;
     }
 
+    /**
+     * Keeps the item and its line. The floor of an item becomes the night's decided price for the
+     * relations that read it, except a sold-out protection (the reference leaves those out).
+     *
+     * @param array<string, mixed> $params
+     */
     private function add(WorkItem $item, string $code, array $params, ?PaceDecision $decision = null): void
     {
         $this->items[] = $item;
         $room = $this->calendar->inputs()->rooms[$item->room];
-        if ($item->minPrice !== null) {
+        if ($item->minPrice !== null && !$item->protection) {
             $this->facts->decide($item->room, $item->night, WorkItem::applied($item->minPrice, $room->base));
         }
         $this->lines[] = new NightLine($item->room, $item->night, $item->priceBefore, $code, $params, $item->minPrice, $item->maxPrice, $decision);

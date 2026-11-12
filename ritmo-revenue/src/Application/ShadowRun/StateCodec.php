@@ -8,8 +8,6 @@ use DateTimeImmutable;
 use Ritmo\Domain\Model\DateOverride;
 use Ritmo\Domain\Model\ListingInfo;
 use Ritmo\Domain\Model\PriceNight;
-use Ritmo\Domain\Plan\NightState;
-use Ritmo\Domain\Plan\PlanItem;
 use Ritmo\Domain\Support\Days;
 
 /**
@@ -106,49 +104,6 @@ final class StateCodec
             (int) $data['sold'],
             (int) $data['total'],
             (bool) ($data['has_override'] ?? false),
-        );
-    }
-
-    /**
-     * @return array<string, mixed>
-     */
-    public static function planItem(PlanItem $item): array
-    {
-        return [
-            'room_code' => $item->roomCode,
-            'date' => Days::key($item->date),
-            'min_price' => $item->minPrice,
-            'max_price' => $item->maxPrice,
-            'min_stay' => $item->minStay,
-            'reason_code' => $item->reasonCode,
-            'reason_params' => $item->reasonParams,
-            'before' => $item->before?->toArray(),
-        ];
-    }
-
-    /**
-     * @param array<string, mixed> $data
-     */
-    public static function toPlanItem(array $data): PlanItem
-    {
-        $before = is_array($data['before'] ?? null) ? $data['before'] : null;
-
-        return new PlanItem(
-            (string) $data['room_code'],
-            Days::date((string) $data['date']),
-            self::float($data['min_price'] ?? null),
-            self::float($data['max_price'] ?? null),
-            self::int($data['min_stay'] ?? null),
-            (string) ($data['reason_code'] ?? ''),
-            is_array($data['reason_params'] ?? null) ? $data['reason_params'] : [],
-            $before === null ? null : new NightState(
-                self::float($before['price'] ?? null),
-                self::float($before['min_price'] ?? null),
-                self::float($before['max_price'] ?? null),
-                self::int($before['min_stay'] ?? null),
-                self::float($before['min_percent'] ?? null),
-                self::float($before['max_percent'] ?? null),
-            ),
         );
     }
 

@@ -122,6 +122,10 @@ final class Validator
     private function checkItems(Plan $plan, array $byCode, DateTimeImmutable $today, string $timezone, ValidationContext $context, AuthorityCheck $authority, IssueLog $log): array
     {
         $checks = $this->itemChecks($context, $today, $timezone, $log);
+        $deletedFirst = [];
+        foreach ($plan->deletions as $deletion) {
+            $deletedFirst[$deletion->key()] = true;
+        }
         $facts = [];
         $seen = [];
         foreach ($plan->items as $index => $item) {
@@ -143,7 +147,7 @@ final class Validator
                 $issue(PlanIssue::PAST_DATE, 'The night is in the past.');
                 continue;
             }
-            $f = $this->facts($index, $item, $room, $daysOut, $authority->resolve($index, $room->code, $item->date, $item->orderId), $context);
+            $f = $this->facts($index, $item, $room, $daysOut, $authority->resolve($index, $room->code, $item->date, $item->orderId), $context, isset($deletedFirst[$item->key()]));
             foreach ($checks as $check) {
                 $check->check($f);
             }
@@ -169,7 +173,7 @@ final class Validator
         ];
     }
 
-    private function facts(int $index, PlanItem $item, RoomType $room, int $daysOut, ItemAuthority $authority, ValidationContext $context): ItemFacts
+    private function facts(int $index, PlanItem $item, RoomType $room, int $daysOut, ItemAuthority $authority, ValidationContext $context, bool $afterDeletion): ItemFacts
     {
         $fresh = $context->calendar?->night($room->code, $item->date);
         $state = $item->before ?? ($fresh === null ? null : new NightState($fresh->price, $fresh->floor));
@@ -184,6 +188,7 @@ final class Validator
             $authority,
             $fresh,
             $state,
+            $afterDeletion,
         );
     }
 

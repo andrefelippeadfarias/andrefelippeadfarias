@@ -115,7 +115,7 @@ final class PlanParity
      *
      * @return array<string, mixed>
      */
-    private static function orderRow(array $order): array
+    public static function orderRow(array $order): array
     {
         $vocabulary = self::manifest()['vocabulary'];
         $row = [];

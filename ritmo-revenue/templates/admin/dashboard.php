@@ -222,7 +222,58 @@ View::render('admin/partials/header', $view);
                                     <?php endif; ?>
                                 </td>
                             <?php endforeach; ?>
-                            <td class="ritmo-why"><?php echo esc_html(ReasonText::describe($ritmo_item['rule_trace'])); ?></td>
+                            <td class="ritmo-why">
+                                <strong data-ritmo="reason"><?php echo esc_html(ReasonText::reason((string) $ritmo_item['reason'])); ?></strong>
+                                <?php if ($ritmo_item['order_id'] !== null) : ?>
+                                    <small><?php echo esc_html(sprintf(/* translators: %s: owner order id */ __('order %s', 'ritmo-revenue'), (string) $ritmo_item['order_id'])); ?></small>
+                                <?php endif; ?>
+                                <?php foreach ($ritmo_item['relation_codes'] as $ritmo_relation) : ?>
+                                    <small><?php echo esc_html(ReasonText::reason((string) $ritmo_relation)); ?></small>
+                                <?php endforeach; ?>
+                                <br><?php echo esc_html(ReasonText::describe($ritmo_item['rule_trace'])); ?>
+                                <?php foreach ($ritmo_item['issues'] as $ritmo_issue) : ?>
+                                    <br><small class="ritmo-issue-<?php echo esc_attr((string) $ritmo_issue['severity']); ?>"><?php echo esc_html((string) $ritmo_issue['message']); ?></small>
+                                <?php endforeach; ?>
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
+        <?php endif; ?>
+    </section>
+    <section class="ritmo-card" data-ritmo="refused">
+        <h3><?php esc_html_e('Refused by the validator', 'ritmo-revenue'); ?></h3>
+        <p class="description"><?php esc_html_e('Room nights the last completed shadow run proposed and the validator refused, with its errors. They would not be written.', 'ritmo-revenue'); ?></p>
+        <?php if ($ritmo_board['plan_issues'] !== []) : ?>
+            <p data-ritmo="plan-issues"><?php echo esc_html(sprintf(/* translators: %s: issue codes */ __('Issues of the plan as a whole: %s', 'ritmo-revenue'), implode(', ', $ritmo_board['plan_issues']))); ?></p>
+        <?php endif; ?>
+        <?php if ($ritmo_board['refused'] === []) : ?>
+            <p><?php esc_html_e('Nothing refused.', 'ritmo-revenue'); ?></p>
+        <?php else : ?>
+            <table class="widefat striped ritmo-table ritmo-refused">
+                <thead><tr>
+                    <th scope="col"><?php esc_html_e('Night', 'ritmo-revenue'); ?></th>
+                    <th scope="col"><?php esc_html_e('Room type', 'ritmo-revenue'); ?></th>
+                    <th scope="col"><?php esc_html_e('Price now', 'ritmo-revenue'); ?></th>
+                    <th scope="col"><?php esc_html_e('Proposed floor', 'ritmo-revenue'); ?></th>
+                    <th scope="col"><?php esc_html_e('Why', 'ritmo-revenue'); ?></th>
+                    <th scope="col"><?php esc_html_e('Validator errors', 'ritmo-revenue'); ?></th>
+                </tr></thead>
+                <tbody>
+                    <?php foreach ($ritmo_board['refused'] as $ritmo_item) : ?>
+                        <tr>
+                            <td><?php echo esc_html($ritmo_item['night']->format('Y-m-d')); ?></td>
+                            <td><?php echo esc_html($ritmo_item['room_code']); ?></td>
+                            <td><?php echo esc_html($ritmo_amount($ritmo_item['current_price'])); ?></td>
+                            <td><?php echo esc_html($ritmo_item['floor'] === null ? '–' : $ritmo_amount($ritmo_item['floor']['proposed'])); ?></td>
+                            <td><?php echo esc_html(ReasonText::reason((string) $ritmo_item['reason'])); ?></td>
+                            <td>
+                                <?php foreach ($ritmo_item['issues'] as $ritmo_issue) : ?>
+                                    <?php if ($ritmo_issue['severity'] === 'error') : ?>
+                                        <code><?php echo esc_html((string) $ritmo_issue['code']); ?></code> <?php echo esc_html((string) $ritmo_issue['message']); ?><br>
+                                    <?php endif; ?>
+                                <?php endforeach; ?>
+                            </td>
                         </tr>
                     <?php endforeach; ?>
                 </tbody>

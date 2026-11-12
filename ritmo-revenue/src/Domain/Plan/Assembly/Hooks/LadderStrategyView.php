@@ -6,8 +6,8 @@ namespace Ritmo\Domain\Plan\Assembly\Hooks;
 
 use DateTimeImmutable;
 use Ritmo\Domain\Orders\OrderBook;
+use Ritmo\Domain\Plan\Assembly\LadderParts;
 use Ritmo\Domain\Plan\PlanItem;
-use Ritmo\Domain\Pricing\Ladder\LadderNightEvaluator;
 use Ritmo\Domain\Relations\Port\StrategyView;
 
 /**
@@ -21,7 +21,7 @@ final class LadderStrategyView implements StrategyView
      * @param array<string, true> $blocked room nights closed in the PMS (PlanItem::keyOf)
      */
     public function __construct(
-        private readonly ?LadderNightEvaluator $ladder,
+        private readonly ?LadderParts $ladder,
         private readonly OrderBook $orders,
         private readonly array $blocked,
         private readonly bool $salesRamp,

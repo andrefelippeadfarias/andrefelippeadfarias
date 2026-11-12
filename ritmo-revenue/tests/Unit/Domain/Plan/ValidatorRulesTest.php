@@ -16,11 +16,11 @@ use Ritmo\Domain\Plan\ListingField;
 use Ritmo\Domain\Plan\NightState;
 use Ritmo\Domain\Plan\OrphanClaim;
 use Ritmo\Domain\Plan\OrphanClaimKind;
+use Ritmo\Domain\Plan\PercentRounding;
 use Ritmo\Domain\Plan\Plan;
 use Ritmo\Domain\Plan\PlanConfig;
 use Ritmo\Domain\Plan\PlanDeletion;
 use Ritmo\Domain\Plan\PlanIssue;
-use Ritmo\Domain\Plan\PlanItem;
 use Ritmo\Domain\Plan\Port\StrategyGuard;
 use Ritmo\Domain\Plan\Validation\OrphanProofCheck;
 use Ritmo\Domain\Plan\Validator;
@@ -343,5 +343,17 @@ final class ValidatorRulesTest extends TestCase
             sort($paths);
             self::assertSame(['plan.payload.reason_max_length', 'plan.validator.last_minute.rooms.0', 'plan.validator.max_min_stay', 'plan.validator.unknown'], $paths);
         }
+    }
+
+    public function testAnItemThatWritesAgainARuleDeletedFirstHasAnEffect(): void
+    {
+        $item = PlanSample::item(['roomCode' => 'Standard', 'minPrice' => null, 'minStay' => 2, 'reasonCode' => 'CEILING_RELEASE', 'before' => new NightState(450.0, 300.0, 1500.0, 2)]);
+        $alone = PlanSample::validate([$item]);
+        self::assertContains(PlanIssue::NO_EFFECT, $alone->errorCodes(), 'the same stay in force: nothing to write');
+
+        $rewrite = PlanSample::validate([$item], null, null, [new PlanDeletion('Standard', $item->date, 'CEILING_RELEASE_DELETE')]);
+        self::assertNotContains(PlanIssue::NO_EFFECT, $rewrite->errorCodes(), 'the deletion removes that rule first');
+        self::assertNotNull($rewrite->plan);
+        self::assertCount(1, (new PercentRounding())->apply($rewrite->plan, [EngineSample::deluxe(), EngineSample::standard()])->items, 'nor is it dropped as already in force');
     }
 }

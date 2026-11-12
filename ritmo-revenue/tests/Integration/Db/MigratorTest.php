@@ -20,13 +20,13 @@ use Ritmo\Tests\Unit\Infrastructure\Support\FakeWpdb;
 
 final class MigratorTest extends TestCase
 {
-    /** The tables of the approved plan, plus the two the infrastructure itself needs. */
+    /** The tables of the approved plan, plus the two the infrastructure itself needs and the payloads of a run (M2). */
     private const PLAN_TABLES = [
         'properties', 'room_types', 'relations', 'periods', 'rulesets', 'price_factors', 'competitors', 'price_samples',
         'market_anchor', 'orders', 'bookings', 'runs', 'plan_items', 'write_ops', 'step_ledger', 'change_log', 'alerts',
         'pending_items', 'api_quota_log', 'snapshots',
     ];
-    private const OWN_TABLES = ['locks', 'log'];
+    private const OWN_TABLES = ['locks', 'log', 'run_payloads'];
 
     private PdoDatabase $db;
 
@@ -44,10 +44,10 @@ final class MigratorTest extends TestCase
         self::assertSame(0, $migrator->currentVersion());
         self::assertFalse($migrator->isUpToDate());
 
-        self::assertSame([1, 2, 3, 4, 5], $migrator->migrate());
+        self::assertSame([1, 2, 3, 4, 5, 6], $migrator->migrate());
 
-        self::assertSame(5, $migrator->currentVersion());
-        self::assertSame(5, $this->store->get('db_version'));
+        self::assertSame(6, $migrator->currentVersion());
+        self::assertSame(6, $this->store->get('db_version'));
         self::assertTrue($migrator->isUpToDate());
 
         $expected = [...self::PLAN_TABLES, ...self::OWN_TABLES];
@@ -122,11 +122,11 @@ final class MigratorTest extends TestCase
         $before = $this->schemaSql();
         $this->store->delete('db_version');
 
-        self::assertSame([1, 2, 3, 4, 5], Migrator::standard($this->db, $this->store)->migrate());
+        self::assertSame([1, 2, 3, 4, 5, 6], Migrator::standard($this->db, $this->store)->migrate());
 
         self::assertSame($before, $this->schemaSql());
         self::assertSame('1', $this->db->selectValue('SELECT COUNT(*) FROM wp_ritmo_properties'));
-        self::assertSame(5, $this->store->get('db_version'));
+        self::assertSame(6, $this->store->get('db_version'));
     }
 
     public function testAVersionThatIsNotANumberCountsAsZeroAndAFutureVersionIsLeftAlone(): void
@@ -194,7 +194,7 @@ final class MigratorTest extends TestCase
             $received[] = $sql;
         }, $db->charsetCollate());
 
-        self::assertSame([1, 2, 3, 4, 5], $migrator->migrate());
+        self::assertSame([1, 2, 3, 4, 5, 6], $migrator->migrate());
 
         $definitions = array_sum(array_map(static fn (Migration $migration): int => count($migration->tables()), Migrations::all()));
         self::assertGreaterThan(count(self::PLAN_TABLES) + count(self::OWN_TABLES), $definitions, 'a table restated by a later migration goes through dbDelta again');
@@ -222,7 +222,7 @@ final class MigratorTest extends TestCase
 
         self::assertSame([], $this->tablesInDatabase());
         self::assertFalse($this->store->has('db_version'));
-        self::assertSame([1, 2, 3, 4, 5], $migrator->migrate(), 'the plugin can be installed again');
+        self::assertSame([1, 2, 3, 4, 5, 6], $migrator->migrate(), 'the plugin can be installed again');
     }
 
     /**

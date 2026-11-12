@@ -62,6 +62,9 @@ final class EffectCheck implements ItemCheck
 
     private function effect(ItemFacts $f): void
     {
+        if ($f->afterDeletion) {
+            return;
+        }
         $state = $f->state;
         if ($state === null) {
             $this->log->item($f, false, PlanIssue::NO_BEFORE, 'Without what is in force for the night, the item cannot be checked for effect.');

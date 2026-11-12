@@ -184,11 +184,17 @@ Not in the goldens (by design):
   exceptions with review dates (`excecoes_mercado`, M4 market module); the stay-rule orders of the reference are
   configuration in the plugin.
 
-## 7. For the integration phase
+## 7. Integration (done in M2)
 
-- Schema: add `PlanConfig::fields()` to the rule set (section `plan`) and merge `parity-plan.json` into `parity.json`
-  (`weekly_reference` and `pms` belong to the run's inputs and the pricing connector).
-- Pipeline: build the `ValidationContext` per run (fresh calendar, order book, the ladder's `StrategyGuard`, stay
-  rules, `DiscountBandCheck` and the coherence report); map `Plan\PlanItem` from the draft items (masks, order,
-  orphan claim, `readsOccupancy`, `reasonText`); the delete-first plan becomes `Plan::$deletions`.
-- `docs/ENGINE.md`: section 1.5 should point here; `php bin/sync-generated.php` refreshes its signature reference.
+- Schema: `PlanConfig::fields()` is the section `plan` of the rule set; `parity-plan.json` is merged into `parity.json`
+  (`weekly_reference` and `pms` are inputs of the run and of the pricing connector).
+- The run's `ValidationContext` is built by `Plan\Assembly\RunWiring::validationContext()`: the fresh calendar of the
+  run, its order book, `Assembly\Hooks\LadderStrategyGuard` (the strategy's scope: the nights it governs, its
+  last-minute market floor, the nights where an occupancy switch citing its order held), the stay rules, the discount
+  bands with the run's `RelationReport`. Plan items come from the assembly (masks, order, orphan claim,
+  `readsOccupancy`); the ceiling release fills `Plan::$deletions`. See ENGINE.md, section 1.8.
+- The validator never calls `no_effect` an item whose night the plan deletes first, and `PercentRounding` never drops
+  it (it writes that rule again). When the plan is validated again without what was refused, a deletion and the item
+  that writes its night again go together.
+- Not wired: `Relations\RoundingRecheck` (the order of related rooms checked again after the rounding to whole
+  percentages). The reference does not check it either; the decision is left to the review of M2.

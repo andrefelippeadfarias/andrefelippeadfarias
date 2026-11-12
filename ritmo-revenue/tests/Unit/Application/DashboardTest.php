@@ -42,6 +42,8 @@ final class DashboardTest extends TestCase
         self::assertNull($view['occupancy']['captured_at']);
         self::assertNull($view['last_run']);
         self::assertSame([], $view['would_write']);
+        self::assertSame([], $view['refused']);
+        self::assertSame([], $view['plan_issues']);
         self::assertSame([], $view['alerts']);
     }
 
@@ -64,7 +66,13 @@ final class DashboardTest extends TestCase
         self::assertSame($summary['validate'][PlanItemStatus::WOULD_WRITE], $view['would_write_total'], 'one entry per room night');
         self::assertCount(min(PropertyDashboard::WOULD_WRITE_SHOWN, $view['would_write_total']), $view['would_write']);
         $first = $view['would_write'][0];
-        self::assertSame(['room_code', 'night', 'current_price', 'floor', 'ceiling', 'rule_trace'], array_keys($first));
+        self::assertSame(['room_code', 'night', 'status', 'current_price', 'floor', 'ceiling', 'min_stay', 'reason', 'order_id', 'relation_codes', 'rule_trace', 'issues'], array_keys($first));
+        self::assertSame('PACE_STEP', $first['reason']);
+        self::assertSame($summary['validate'][PlanItemStatus::REJECTED], count($view['refused']), 'every refused room night is listed');
+        foreach ($view['refused'] as $refused) {
+            self::assertContains('error', array_column($refused['issues'], 'severity'), 'with the errors of the validator');
+        }
+        self::assertSame($summary['validate']['plan_issues'], $view['plan_issues']);
         self::assertNotNull($first['floor']['proposed'] ?? null);
         self::assertIsInt($first['floor']['percent']);
         self::assertSame('pace_step', array_column($first['rule_trace'], 'code')[count($first['rule_trace']) - 1]);

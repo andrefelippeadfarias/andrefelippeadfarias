@@ -12,6 +12,7 @@ use Ritmo\Application\ShadowRun\DecideStage;
 use Ritmo\Application\ShadowRun\MeasureStage;
 use Ritmo\Application\ShadowRun\PlanItemStatus;
 use Ritmo\Application\ShadowRun\RunOutcome;
+use Ritmo\Application\ShadowRun\RunInputsReader;
 use Ritmo\Application\ShadowRun\RunPipeline;
 use Ritmo\Application\ShadowRun\ShadowRunService;
 use Ritmo\Application\ShadowRun\ShadowStage;
@@ -26,10 +27,12 @@ use Ritmo\Infrastructure\Db\Repository\AlertRepository;
 use Ritmo\Infrastructure\Db\Repository\BookingRepository;
 use Ritmo\Infrastructure\Db\Repository\InventorySnapshotRepository;
 use Ritmo\Infrastructure\Db\Repository\MarketAnchorRepository;
+use Ritmo\Infrastructure\Db\Repository\OrderRepository;
 use Ritmo\Infrastructure\Db\Repository\PlanItemRepository;
 use Ritmo\Infrastructure\Db\Repository\PropertyRepository;
 use Ritmo\Infrastructure\Db\Repository\RoomTypeRepository;
 use Ritmo\Infrastructure\Db\Repository\RuleSetRepository;
+use Ritmo\Infrastructure\Db\Repository\RunPayloadRepository;
 use Ritmo\Infrastructure\Db\Repository\RunRepository;
 use Ritmo\Infrastructure\Db\Repository\StepLedgerRepository;
 use Ritmo\Infrastructure\Lock\DbLock;
@@ -100,9 +103,9 @@ final class ShadowRunOverSimulatorTest extends SimulatorTestCase
         $pipeline = new RunPipeline([
             new CollectStage($connectors, $snapshots, $bookings, $clock),
             new MeasureStage($snapshots, $bookings, new AlertRepository($db, $clock), $clock),
-            new DecideStage($snapshots, $anchors, new StepLedgerRepository($db), $clock),
-            new ValidateStage($clock),
-            new ShadowStage($planItems),
+            new DecideStage(new RunInputsReader($snapshots, $anchors, new StepLedgerRepository($db), new OrderRepository($db, $clock)), $clock, 'beds24'),
+            new ValidateStage(),
+            new ShadowStage($planItems, new RunPayloadRepository($db, $clock)),
         ], $runs, $db, $switch, $clock, $this->logger);
         $service = new ShadowRunService(new PropertyRepository($db, $clock), $rooms, new RuleSetRepository($db, $clock), $runs, new DbLock($db, $clock), $switch, $pipeline, $clock, $this->logger);
 

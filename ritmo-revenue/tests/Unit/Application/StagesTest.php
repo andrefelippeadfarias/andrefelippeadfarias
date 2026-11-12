@@ -13,8 +13,6 @@ use Ritmo\Application\ShadowRun\StateCodec;
 use Ritmo\Application\ShadowRun\ValidateStage;
 use Ritmo\Domain\Config\RuleSet;
 use Ritmo\Domain\Model\Property;
-use Ritmo\Domain\Plan\NightState;
-use Ritmo\Domain\Plan\PlanItem;
 use Ritmo\Domain\Plan\PlanIssue;
 use Ritmo\Domain\Support\DateRange;
 use Ritmo\Domain\Support\Days;
@@ -32,43 +30,51 @@ final class StagesTest extends TestCase
         $this->world = new ShadowRunWorld();
     }
 
-    public function testRejectedItemsAreSetApartAndTheRestIsValidatedAgain(): void
+    public function testTheOutcomesOfTheAssembledPlanAreCountedAndCarried(): void
     {
         $context = $this->context(['items' => [
-            'STD|2027-03-10' => self::entry(new PlanItem('STD', Days::date('2027-03-10'), 441.0, 480.0, null, 'pace_step', [], new NightState(420.0))),
-            'STD|2027-03-11' => self::entry(new PlanItem('STD', Days::date('2027-03-11'), 100.0, null, null, 'pace_step', [], new NightState(420.0))),
-            'STE|2027-03-10' => self::entry(new PlanItem('STE', Days::date('2027-03-10'), 700.0, null, null, 'pace_step', [], new NightState(700.0, 700.0, null, null, 0.0))),
-            'STE|2027-03-11' => self::entry(new PlanItem('STE', Days::date('2027-03-11'), 700.0, null, null, 'pace_step', [], new NightState(700.0, null, null, null, 0.0))),
-        ]]);
+            'STD|2027-03-10' => self::entry(PlanItemStatus::WOULD_WRITE, -8),
+            'STD|2027-03-11' => self::entry(PlanItemStatus::REJECTED, null, [PlanIssue::BELOW_SAFETY_LIMIT]),
+            'STE|2027-03-10' => self::entry(PlanItemStatus::REJECTED, null, [PlanIssue::NO_EFFECT]),
+            'STE|2027-03-11' => self::entry(PlanItemStatus::NO_CHANGE, 0),
+        ], 'refused' => null, 'plan_issues' => []]);
 
-        $result = (new ValidateStage($this->world->clock))->run($context);
-        $outcomes = $result->state['outcomes'];
+        $result = (new ValidateStage())->run($context);
 
-        self::assertSame(PlanItemStatus::WOULD_WRITE, $outcomes['STD|2027-03-10']['status']);
-        self::assertSame(-8, $outcomes['STD|2027-03-10']['min_percent'], '441 over a base of 480, rounded up');
-        self::assertSame(PlanItemStatus::REJECTED, $outcomes['STD|2027-03-11']['status']);
-        self::assertContains(PlanIssue::BELOW_SAFETY_LIMIT, array_column($outcomes['STD|2027-03-11']['issues'], 'code'));
-        self::assertSame(PlanItemStatus::REJECTED, $outcomes['STE|2027-03-10']['status'], 'a floor already in force has no effect');
-        self::assertContains(PlanIssue::NO_EFFECT, array_column($outcomes['STE|2027-03-10']['issues'], 'code'));
-        self::assertSame(PlanItemStatus::NO_CHANGE, $outcomes['STE|2027-03-11']['status'], 'the same percentage is already in force');
-        self::assertSame(['items' => 4, PlanItemStatus::WOULD_WRITE => 1, PlanItemStatus::NO_CHANGE => 1, PlanItemStatus::REJECTED => 2], array_diff_key($result->summary, ['issues' => true]));
+        self::assertSame(-8, $result->state['outcomes']['STD|2027-03-10']['min_percent']);
+        self::assertSame(['STD|2027-03-10', 'STD|2027-03-11', 'STE|2027-03-10', 'STE|2027-03-11'], array_keys($result->state['outcomes']));
+        self::assertSame(['items' => 4, PlanItemStatus::WOULD_WRITE => 1, PlanItemStatus::NO_CHANGE => 1, PlanItemStatus::REJECTED => 2], array_intersect_key($result->summary, array_flip(['items', PlanItemStatus::WOULD_WRITE, PlanItemStatus::NO_CHANGE, PlanItemStatus::REJECTED])));
         self::assertSame([PlanIssue::BELOW_SAFETY_LIMIT => 1, PlanIssue::NO_EFFECT => 1], $result->summary['issues']);
+        self::assertFalse($result->summary['refused']);
     }
 
     public function testAPlanMadeForAnotherDayIsRefusedAsAWhole(): void
     {
-        $context = $this->context(['items' => [
-            'STD|2027-03-10' => self::entry(new PlanItem('STD', Days::date('2027-03-10'), 441.0, null, null, 'pace_step', [], new NightState(420.0))),
-        ]], '2027-02-28');
+        $context = $this->context(['items' => ['STD|2027-03-10' => self::entry(PlanItemStatus::REJECTED, null, [PlanIssue::STALE_PLAN])], 'refused' => [PlanIssue::STALE_PLAN]]);
 
         $this->expectException(PlanRefused::class);
         $this->expectExceptionMessage('stale_plan');
-        (new ValidateStage($this->world->clock))->run($context);
+        (new ValidateStage())->run($context);
+    }
+
+    public function testAPlanRefusedAsAWholeForAnotherReasonIsKeptWithItsIssues(): void
+    {
+        $context = $this->context([
+            'items' => ['STD|2027-03-10' => self::entry(PlanItemStatus::REJECTED)],
+            'refused' => ['band_above_reference'],
+            'plan_issues' => [['severity' => PlanIssue::ERROR, 'code' => 'band_above_reference', 'message' => 'out of its band', 'room' => 'STD', 'night' => '2027-03-12']],
+        ]);
+
+        $result = (new ValidateStage())->run($context);
+
+        self::assertTrue($result->summary['refused']);
+        self::assertSame(['band_above_reference'], $result->summary['plan_issues']);
+        self::assertSame(1, $result->summary[PlanItemStatus::REJECTED]);
     }
 
     public function testAnEmptyPlanIsValid(): void
     {
-        $result = (new ValidateStage($this->world->clock))->run($this->context([]));
+        $result = (new ValidateStage())->run($this->context([]));
 
         self::assertSame([], $result->state['outcomes']);
         self::assertSame(0, $result->summary['items']);
@@ -96,11 +102,6 @@ final class StagesTest extends TestCase
 
     public function testStateTravelsAsPlainArraysAndComesBackTheSame(): void
     {
-        $item = new PlanItem('STD', Days::date('2027-03-10'), 441.0, 480.5, 2, 'pace_step', ['direction' => 'up'], new NightState(420.0, 380.0, null, 1, -10.0, 50.0));
-        $back = StateCodec::toPlanItem(json_decode((string) json_encode(StateCodec::planItem($item)), true));
-        self::assertEquals($item, $back);
-        self::assertSame(StateCodec::planItem($item), StateCodec::planItem($back));
-
         $pricing = ShadowRunWorld::pricing();
         $night = $pricing->readPrices('L-STD', Days::date('2027-03-02'), Days::date('2027-03-02'))[0];
         self::assertEquals($night, StateCodec::toPriceNight(json_decode((string) json_encode(StateCodec::priceNight($night)), true)));
@@ -121,10 +122,16 @@ final class StagesTest extends TestCase
     }
 
     /**
+     * An item of the decide stage with the outcome its validation gave.
+     *
+     * @param list<string> $codes issue codes of the item
+     *
      * @return array<string, mixed>
      */
-    private static function entry(PlanItem $item): array
+    private static function entry(string $status, ?int $minPercent = null, array $codes = []): array
     {
-        return ['item' => StateCodec::planItem($item), 'trace' => [], 'pace_status' => 'on_pace', 'direction' => 'up'];
+        $issues = array_map(static fn (string $code): array => ['severity' => PlanIssue::ERROR, 'code' => $code, 'message' => $code], $codes);
+
+        return ['item' => [], 'trace' => [], 'pace_status' => 'on_pace', 'direction' => 'up', 'outcome' => ['status' => $status, 'min_percent' => $minPercent, 'max_percent' => null, 'issues' => $issues]];
     }
 }

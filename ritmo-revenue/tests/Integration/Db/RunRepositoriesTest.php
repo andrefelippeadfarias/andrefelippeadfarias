@@ -10,11 +10,16 @@ use OutOfBoundsException;
 use PHPUnit\Framework\TestCase;
 use Ritmo\Domain\Model\PricePlan;
 use Ritmo\Domain\Model\PropertyMode;
+use Ritmo\Domain\Config\InvalidConfig;
+use Ritmo\Domain\Pricing\Cadence\SoldBase;
+use Ritmo\Domain\Pricing\StepDirection;
 use Ritmo\Domain\Support\Days;
 use Ritmo\Infrastructure\Db\PdoDatabase;
 use Ritmo\Infrastructure\Db\Repository\AlertRepository;
+use Ritmo\Infrastructure\Db\Repository\OrderRepository;
 use Ritmo\Infrastructure\Db\Repository\PlanItemRepository;
 use Ritmo\Infrastructure\Db\Repository\QuotaLogRepository;
+use Ritmo\Infrastructure\Db\Repository\RunPayloadRepository;
 use Ritmo\Infrastructure\Db\Repository\RunRepository;
 use Ritmo\Infrastructure\Db\Repository\StepLedgerRepository;
 use Ritmo\Tests\Fakes\MovableClock;
@@ -329,5 +334,52 @@ final class RunRepositoriesTest extends TestCase
             ['2026-11-11 10:00:01', '2026-11-11 10:00:05'],
             array_column($this->db->select('SELECT called_at FROM wp_ritmo_api_quota_log ORDER BY id'), 'called_at')
         );
+    }
+
+    public function testTheLedgerOfAPropertyIsReadAsTheCadenceReadsIt(): void
+    {
+        $repository = new StepLedgerRepository($this->db);
+        $night = Days::date('2026-11-20');
+        $repository->record('inn-1', 'suite', $night, StepLedgerRepository::UP, 600.0, 630.0, new DateTimeImmutable('2026-11-10T10:53:00Z'), 'ahead', 1, 2, 'room', 4);
+        $repository->record('inn-1', 'suite', $night, StepLedgerRepository::DOWN, 630.0, 615.0, new DateTimeImmutable('2026-11-11T10:53:00Z'), 'behind', 1, 6, 'property');
+        $repository->markReachedChannel('suite', new DateTimeImmutable('2026-11-10T12:00:00Z'));
+        $repository->record('inn-2', 'suite', $night, StepLedgerRepository::UP, 1.0, 2.0, new DateTimeImmutable('2026-11-11T10:53:00Z'));
+        $repository->record('inn-1', 'suite', Days::date('2026-12-25'), StepLedgerRepository::UP, 1.0, 2.0, new DateTimeImmutable('2026-11-11T10:53:00Z'));
+
+        $ledger = $repository->ledger('inn-1', Days::date('2026-11-12'), Days::date('2026-11-30'));
+
+        self::assertCount(2, $ledger->records(), 'only the property and the nights asked for');
+        $last = $ledger->lastStep('suite', $night);
+        self::assertSame(StepDirection::Down, $last->direction);
+        self::assertSame(SoldBase::Property, $last->soldBase);
+        self::assertNull($last->onChannelAt);
+        self::assertNotNull($ledger->records()[0]->onChannelAt, 'a step marked on the channel counts as arrived');
+    }
+
+    public function testOrdersAreReadIntoABookAndAnOrderThatEndedIsLeftOut(): void
+    {
+        $orders = new OrderRepository($this->db, $this->clock);
+        $orders->add('inn-1', ['type' => 'manual', 'rooms' => ['suite'], 'from' => '2026-11-14', 'to' => '2026-11-16']);
+        $orders->add('inn-1', ['type' => 'floor', 'rooms' => ['suite'], 'from' => '2026-11-01', 'to' => '2026-11-05', 'floors' => ['suite' => 500.0]]);
+        $orders->add('inn-2', ['type' => 'manual', 'rooms' => ['suite'], 'from' => '2026-11-14', 'to' => '2026-11-16']);
+
+        $book = $orders->book('inn-1', Days::date('2026-11-11'));
+
+        self::assertCount(1, $book->all());
+        self::assertNotNull($book->manualFreeze('suite', Days::date('2026-11-15')));
+        $this->expectException(InvalidConfig::class);
+        $orders->add('inn-1', ['type' => 'manual', 'rooms' => [], 'from' => '2026-11-14', 'to' => '2026-11-13']);
+    }
+
+    public function testThePayloadAndTheSlicesOfARunAreKeptInWritingOrder(): void
+    {
+        $payloads = new RunPayloadRepository($this->db, $this->clock);
+        self::assertSame(['payload' => null, 'slices' => []], $payloads->forRun(7));
+
+        $payloads->store(7, 'inn-1', ['writes' => [['listing_id' => 'L1']]], [['number' => 1, 'label' => 'D0'], ['number' => 2, 'label' => 'D1']]);
+
+        self::assertSame(['payload' => ['writes' => [['listing_id' => 'L1']]], 'slices' => [['number' => 1, 'label' => 'D0'], ['number' => 2, 'label' => 'D1']]], $payloads->forRun(7));
+        $this->expectException(InvalidArgumentException::class);
+        $payloads->store(0, 'inn-1', [], []);
     }
 }

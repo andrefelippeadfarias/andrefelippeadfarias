@@ -23,6 +23,8 @@ final class ItemFacts
     /**
      * @param NightState|null    $state   what is in force: the item's own record, else the fresh calendar's
      * @param CalendarNight|null $fresh   the night in the fresh calendar
+     * @param bool               $afterDeletion the plan deletes the night's rule first: the item writes
+     *                                          it again, so what was in force says nothing of its effect
      */
     public function __construct(
         public readonly int $index,
@@ -34,6 +36,7 @@ final class ItemFacts
         public readonly ItemAuthority $authority,
         public readonly ?CalendarNight $fresh,
         public readonly ?NightState $state,
+        public readonly bool $afterDeletion = false,
     ) {
         $this->item = $percent->item;
     }

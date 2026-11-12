@@ -20,6 +20,7 @@ final class Migrations
             new Migration0003Operation(),
             new Migration0004Housekeeping(),
             new Migration0005RunStages(),
+            new Migration0006RunPayloads(),
         ];
     }
 }

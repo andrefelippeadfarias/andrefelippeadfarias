@@ -56,8 +56,9 @@ Tables (all prefixed, all with an auto-incremented `id`):
 | 3 Operation | `orders`, `bookings`, `snapshots`, `runs`, `plan_items`, `write_ops`, `step_ledger`, `change_log`, `alerts`, `pending_items`, `api_quota_log` |
 | 4 Housekeeping | `locks`, `log` |
 | 5 Run stages | `runs` again, with `run_day`, `stage` and `state`: a run made of resumable stages (`RunRepository::advance()`, `state()`, `openRun()`) |
+| 6 Run payloads | `run_payloads`: the payload of a run's validated plan and its slices, in writing order (M2; stored, never sent) |
 
-`bookings` stores what `BookingRecord` carries and nothing else; a test lists its columns and fails when one that could identify a guest is added. `relations`, `periods`, `price_factors`, `competitors`, `orders`, `write_ops`, `change_log` and `pending_items` have no repository yet: they belong to later milestones.
+`bookings` stores what `BookingRecord` carries and nothing else; a test lists its columns and fails when one that could identify a guest is added. `relations`, `periods`, `price_factors`, `competitors`, `write_ops`, `change_log` and `pending_items` have no repository yet: they belong to later milestones.
 
 ### 1.4 Repositories
 
@@ -73,7 +74,9 @@ All in `Ritmo\Infrastructure\Db\Repository`, built with the `Database` (and the 
 | `PriceSampleRepository` | Samples are only added. |
 | `RunRepository`, `PlanItemRepository` | `start()` / `advance()` after each completed stage (stage name, summary, state for the next stage) / `finish()` as `completed`, `failed` or `stopped` (the state is dropped); `openRun()` finds a run to resume. `addAll($runId, $items)` stores a whole plan or nothing. |
 | `AlertRepository` | `raise()` with a `$dedupeKey` refreshes the open alert of the same key instead of repeating it. |
-| `StepLedgerRepository` | Every pace step of a night; `lastStep()` for the cadence rule, `markReachedChannel()` after a push. |
+| `StepLedgerRepository` | Every pace step of a night; `lastStep()` for the cadence rule, `ledger($propertyId, $from, $to)` as the `StepLedger` the plan assembly reads (a step marked on the channel counts as arrived when recorded), `markReachedChannel()` after a push. |
+| `OrderRepository` | Owner orders: `add()` keeps the order's fields as `OrderReader` takes them (a row that does not read is refused), `book($propertyId, $from)` gives the `OrderBook` of the active orders still in force; an order that no longer reads fails the run that needs it. |
+| `RunPayloadRepository` | `store($runId, $propertyId, $payload, $slices)` keeps the payload and the slices of a run, all or nothing; `forRun()` reads them back. |
 | `QuotaLogRepository` | The rows behind `DbQuotaLedger`. |
 
 ### 1.5 Secrets
@@ -209,6 +212,14 @@ public function description(): string;
 public function tables(): array;
 ```
 
+#### `Ritmo\Infrastructure\Db\Migration\Migration0006RunPayloads` (final class implements Migration)
+
+```php
+public function version(): int;
+public function description(): string;
+public function tables(): array;
+```
+
 #### `Ritmo\Infrastructure\Db\Migration\Migrations` (final class)
 
 ```php
@@ -311,6 +322,15 @@ public function find(string $propertyId, DateTimeImmutable $night): ?MarketAncho
 public function range(string $propertyId, DateTimeImmutable $from, DateTimeImmutable $to): array;
 ```
 
+#### `Ritmo\Infrastructure\Db\Repository\OrderRepository` (final class)
+
+```php
+const ACTIVE = 'active';
+public function __construct(Database $db, Clock $clock);
+public function add(string $propertyId, array $order, int $userId = 0): int;
+public function book(string $propertyId, DateTimeImmutable $from): OrderBook;
+```
+
 #### `Ritmo\Infrastructure\Db\Repository\PlanItemRepository` (final class)
 
 ```php
@@ -374,6 +394,16 @@ public function find(int $version): ?RuleSet;
 public function history(int $limit = 50): array;
 ```
 
+#### `Ritmo\Infrastructure\Db\Repository\RunPayloadRepository` (final class)
+
+```php
+const PAYLOAD = 'payload';
+const SLICE = 'slice';
+public function __construct(Database $db, Clock $clock);
+public function store(int $runId, string $propertyId, array $payload, array $slices): void;
+public function forRun(int $runId): array;
+```
+
 #### `Ritmo\Infrastructure\Db\Repository\RunRepository` (final class)
 
 ```php
@@ -399,6 +429,7 @@ const DOWN = 'down';
 public function __construct(Database $db);
 public function record(string $propertyId, string $roomCode, DateTimeImmutable $night, string $direction, float $from, float $to, DateTimeImmutable $recordedAt, string $paceStatus = '', ?int $unitsSold = null, ?int $unitsTotal = null, string $countBasis = 'room', ?int $runId = null): int;
 public function lastStep(string $roomCode, DateTimeImmutable $night): ?array;
+public function ledger(string $propertyId, DateTimeImmutable $from, DateTimeImmutable $to): StepLedger;
 public function forNight(string $roomCode, DateTimeImmutable $night): array;
 public function markReachedChannel(string $roomCode, DateTimeImmutable $pushedAt): int;
 ```

@@ -233,12 +233,13 @@ the base + 1, band pinned floor = ceiling, + 0.5 on the premium floor, switch fl
 14. Minimum distance between the low and the high room: possible as `at_least` with a margin; not in the parity
     fixture.
 
-## 13. For the integration phase
+## 13. Integration (done in M2)
 
-- Schema: add `RelationFields::general()` and the `items` lists (relations and `price_bands`) to the rule set;
-  validate items with `RelationsConfig::fromArray()` and `RelationValidator` on save; merge
-  `parity-relations.json` into `tests/fixtures/presets/parity.json`.
-- Pipeline: after the engine, `NightSet::of()` then `CoherencePass::run()` (keep the `RelationReport` with the run),
-  then `ListingCapChain::apply()`; pace step and sold-out protection use `PremiumBounds`; the payload builder
-  calls `RoundingRecheck::check()` per night; `Plan\Validator` calls `DiscountBandCheck::check()` with the run's
-  report; `Plan\PlanItem` is built from `DraftItem::toArray()` (reasons as codes with arguments).
+- Schema: the relations and `price_bands` are sections of the rule set (`RelationFields`), validated on save;
+  `parity-relations.json` is merged into `tests/fixtures/presets/parity.json`.
+- Pipeline (`Plan\Assembly\PlanAssembler`, ENGINE.md section 1.8): after the pricing of every room night,
+  `NightSet::of()` (at most the run's horizon) then `CoherencePass::run()`, whose `RelationReport` goes to the
+  validator, then `ListingCapChain::apply()`; the pace step and the sold-out protection use `PremiumBounds` for the
+  premium relations; `Plan\Validator` calls `DiscountBandCheck::check()` with the run's report; work items take back
+  what the coherence did (`DraftItem` reasons become the `RELATION_*` codes of the item).
+- Not wired: `RoundingRecheck` (see VALIDATOR.md, section 7).

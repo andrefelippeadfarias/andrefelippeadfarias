@@ -6,6 +6,10 @@ namespace Ritmo\Infrastructure\Db\Repository;
 
 use DateTimeImmutable;
 use InvalidArgumentException;
+use Ritmo\Domain\Pricing\Cadence\SoldBase;
+use Ritmo\Domain\Pricing\Cadence\StepLedger;
+use Ritmo\Domain\Pricing\Cadence\StepRecord;
+use Ritmo\Domain\Pricing\StepDirection;
 use Ritmo\Infrastructure\Db\Database;
 use Ritmo\Infrastructure\Db\DbValue;
 
@@ -80,6 +84,38 @@ final class StepLedgerRepository
     public function lastStep(string $roomCode, DateTimeImmutable $night): ?array
     {
         return $this->forNight($roomCode, $night)[0] ?? null;
+    }
+
+    /**
+     * The steps of a property's nights between two dates, as the cadence reads them. A step marked
+     * as arrived on the channel counts as arrived when it was recorded (the instant of the push is
+     * not kept).
+     */
+    public function ledger(string $propertyId, DateTimeImmutable $from, DateTimeImmutable $to): StepLedger
+    {
+        $rows = $this->db->select(
+            sprintf('SELECT * FROM %s WHERE property_code = ? AND night >= ? AND night <= ? ORDER BY recorded_at, id', $this->db->table(self::TABLE)),
+            [$propertyId, DbValue::night($from), DbValue::night($to)]
+        );
+
+        return new StepLedger(array_map(static function (array $row): StepRecord {
+            $recorded = DbValue::requireInstant($row['recorded_at']);
+
+            return new StepRecord(
+                (string) $row['room_code'],
+                DbValue::requireNight($row['night']),
+                (float) $row['from_value'],
+                (float) $row['to_value'],
+                StepDirection::from((string) $row['direction']),
+                (string) $row['pace_status'],
+                DbValue::nullableInt($row['units_sold']),
+                SoldBase::tryFrom((string) $row['count_basis']) ?? SoldBase::Room,
+                DbValue::nullableInt($row['units_total']),
+                $recorded,
+                false,
+                (bool) (int) $row['reached_channel'] ? $recorded : null,
+            );
+        }, $rows));
     }
 
     /**

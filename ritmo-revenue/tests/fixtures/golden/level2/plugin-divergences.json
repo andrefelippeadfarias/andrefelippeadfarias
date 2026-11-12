@@ -1,0 +1,9 @@
+{
+  "notes": "Hand-written (not generated): where the plugin decides differently from the reference on purpose, per scenario. See docs/ENGINE.md, section 1.9, and tests/Golden/Level2Test.php.",
+  "other_property_light_run": {
+    "light_run_filter": ["Balcony|2026-11-13"]
+  },
+  "reason_refinements": {
+    "RELATION_BETWEEN": {"não fica abaixo": "RELATION_AT_LEAST"}
+  }
+}

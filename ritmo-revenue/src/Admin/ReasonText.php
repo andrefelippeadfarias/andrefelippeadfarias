@@ -35,6 +35,25 @@ final class ReasonText
     }
 
     /**
+     * The name of what priced a room night (the reason code of a plan item).
+     */
+    public static function reason(string $code): string
+    {
+        return match ($code) {
+            'PACE_STEP' => __('Pace step', 'ritmo-revenue'),
+            'LADDER_PRICE' => __('Sales ladder', 'ritmo-revenue'),
+            'SOLD_OUT_PROTECTION' => __('Protection of a sold-out night', 'ritmo-revenue'),
+            'RELATION_AT_LEAST' => __('Relation: at least another room', 'ritmo-revenue'),
+            'RELATION_BETWEEN' => __('Relation: between two rooms', 'ritmo-revenue'),
+            'RELATION_PREMIUM_OVER_MAX' => __('Relation: above the dearest room', 'ritmo-revenue'),
+            'RELATION_DISCOUNT_BAND' => __('Relation: discount band', 'ritmo-revenue'),
+            'RELATION_OCCUPANCY_SWITCH' => __('Relation: occupancy switch', 'ritmo-revenue'),
+            'CEILING_RELEASE_DELETE' => __('Ceiling freed (rule deleted first)', 'ritmo-revenue'),
+            default => $code,
+        };
+    }
+
+    /**
      * @param list<array{code: string, params: array<string, mixed>}> $trace
      */
     public static function describe(array $trace): string

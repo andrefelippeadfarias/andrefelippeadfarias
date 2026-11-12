@@ -4,7 +4,14 @@ WordPress plugin for revenue management of small hotels and inns: it reads booki
 
 Requires WordPress 6.5+ and PHP 8.1+. No Composer runtime dependencies.
 
-**Status: milestone M1, read-only.** The plugin computes and shows what it would do (shadow mode) and writes nothing to any external system. Admin menu "Ritmo Revenue": Dashboard, Connections, Setup, Diagnostics; REST API `ritmo/v1`.
+**Status: milestone M2, read-only.** The plugin computes and shows what it would do (shadow mode) and writes nothing to any external system. Admin menu "Ritmo Revenue": Dashboard, Connections, Setup, Diagnostics; REST API `ritmo/v1`.
+
+What milestone 2 delivers, all configurable with neutral defaults:
+
+- **The whole plan of a run** (`Domain\Plan\Assembly\PlanAssembler`): pace step with owner orders, sales ramp and last-minute market floor; protection of sold-out nights; sales ladder strategies; relations between rooms (at least, between, premium over the dearest, discount band, occupancy switch) with cycles refused when saved; the listing maximum in chain; the delete-first plan for ceilings to free, with stay and arrival rules (orphan nights, closed and open days, packages); the no-effect filter; one step per night per day (cadence and step ledger).
+- **The full validator** (safety limit, tonight never rises, stale plan and stale calendar, floors by family, owner orders and their releases, stay and masks, orphan proofs, discount bands, weekly listing limit, items without effect), **the payload and its slices** (at most 70 dates per call; deletions, tonight, tomorrow, then blocks, the listing last). Data only: nothing sends them.
+- **The shadow run** assembles the plan, stores every proposal with its outcome, reason and validator issues, and keeps the payload and slices; the dashboard shows, per room night, the price now, the proposal, why (reason, order, relations, rule trace) and the validator's errors.
+- **Parity** with the reference engine: golden tests per area and ten whole runs (level 2: plan, validator, payload, slices).
 
 ## Layout
 
@@ -13,7 +20,7 @@ ritmo-revenue.php   plugin entry point
 src/                Ritmo\ (PSR-4): Domain (pure PHP engine), Contracts, Connectors, Infrastructure, Application, WordPress, Admin, Rest
 templates/ assets/  server-rendered screens, plain CSS and JavaScript (no build step)
 presets/            default.json, the neutral preset
-docs/               PLANO.md (product plan), ARCHITECTURE.md, CONTRACTS.md, ENGINE.md, INFRASTRUCTURE.md, CONNECTORS.md, APPLICATION.md
+docs/               PLANO.md (product plan, internal: not in the zip), ARCHITECTURE.md, CONTRACTS.md, ENGINE.md, INFRASTRUCTURE.md, CONNECTORS.md, APPLICATION.md, and per area RELATIONS.md, LADDER.md, ORDERS.md, STAY.md, VALIDATOR.md
 tests/              PHPUnit suites, fakes and fixtures
 bin/                developer scripts
 ```
@@ -30,7 +37,7 @@ bin/test.sh tests/Golden         only the golden tests against the reference eng
 php bin/sync-generated.php       rewrite presets/default.json and the signature references of the docs
 ```
 
-PHPUnit comes as a .phar from phar.phpunit.de (kept in `tools/`, outside git); nothing else is needed for the suite, which runs on SQLite in memory and never calls a real API. After changing a public signature, run `php bin/sync-generated.php`: the doc tests fail while a signature reference is stale.
+PHPUnit comes as a .phar from phar.phpunit.de (kept in `tools/`, outside git, only when its sha256 matches a pinned release); nothing else is needed for the suite, which runs on SQLite in memory and never calls a real API. After changing a public signature, run `php bin/sync-generated.php`: the doc tests fail while a signature reference is stale.
 
 ### Test site and end-to-end test
 
@@ -46,7 +53,7 @@ bin/wp-test-site.sh stop         stop both servers
 
 - `RITMO_SECRET_KEY`: key of the secrets vault, 32 characters or more. Recommended: without it the key is derived from a seed in the database bound to `AUTH_KEY` and `SECURE_AUTH_KEY` (regenerating those salts makes the saved keys unreadable), and Diagnostics says which protection is in use. A shorter value disables the vault with a notice, without breaking the site.
 - `RITMO_KILL_SWITCH`: stops every run.
-- `RITMO_PRICING_CALENDAR_READ`: allows the pricing system's calendar read, a POST; off by default and pending the owner's approval (see `docs/CONTRACTS.md` 1.7).
+- `RITMO_PRICING_CALENDAR_READ`: the pricing system's calendar read (a POST that only reads) is on by default; define the constant as `false` to switch it off and read prices from the PMS only (see `docs/ARCHITECTURE.md` 6).
 - `RITMO_DEV` and the base URL constants are for development only.
 
 Read `docs/ARCHITECTURE.md` before adding code: it says what each folder may do, who owns it and the conventions for dates, rounding, errors and logging. `docs/CONTRACTS.md` has the exact signatures shared between modules.

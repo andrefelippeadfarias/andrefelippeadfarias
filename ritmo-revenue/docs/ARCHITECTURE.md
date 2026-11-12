@@ -1,6 +1,6 @@
 # Ritmo Revenue: architecture
 
-The product plan is in [PLANO.md](PLANO.md). The exact signatures of everything shared between modules are in [CONTRACTS.md](CONTRACTS.md); the rule engine (calendar, market, pricing, plan, report) is in [ENGINE.md](ENGINE.md); the plumbing in [INFRASTRUCTURE.md](INFRASTRUCTURE.md); the connectors in [CONNECTORS.md](CONNECTORS.md); the shadow run, the screens and the REST API in [APPLICATION.md](APPLICATION.md). This document says where code goes, what each folder may and may not do, who owns it, and the conventions every module follows.
+The product plan is in [PLANO.md](PLANO.md), an internal document of the project (it names the pilot properties): the vocabulary test skips it and the packaging of M5 leaves it out of the zip. The exact signatures of everything shared between modules are in [CONTRACTS.md](CONTRACTS.md); the rule engine (calendar, market, pricing, plan, report) is in [ENGINE.md](ENGINE.md); the plumbing in [INFRASTRUCTURE.md](INFRASTRUCTURE.md); the connectors in [CONNECTORS.md](CONNECTORS.md); the shadow run, the screens and the REST API in [APPLICATION.md](APPLICATION.md). This document says where code goes, what each folder may and may not do, who owns it, and the conventions every module follows.
 
 ## 1. What the plugin is
 
@@ -168,7 +168,9 @@ bin/test.sh tests/Unit/Domain        one folder or file
 bin/test.sh NumTest                  a filter
 ```
 
-`bin/test.sh` downloads PHPUnit (a `.phar` in `tools/`, outside git) from phar.phpunit.de on first use and exits with PHPUnit's code. The suite treats warnings, notices, deprecations and risky tests as failures.
+`bin/test.sh` downloads PHPUnit (a `.phar` in `tools/`, outside git) from phar.phpunit.de on first use, keeps it only when its sha256 matches one of the pinned releases listed in the script (there is no unverified fallback: when every pinned download fails, the script stops and asks for a new pinned entry) and exits with PHPUnit's code. A `.phar` already in `tools/` that matches no pinned checksum is downloaded again. The suite treats warnings, notices, deprecations and risky tests as failures.
+
+**Owner vocabulary.** `ArchitectureTest` fails when the names, room codes or ids of the pilot properties (`tests/fixtures/owner-terms.json`) appear in the plugin's code, presets, templates, assets, README or `docs/`. The only exception is `docs/PLANO.md`, marked internal: it stays in the repository and is excluded from the distributed zip by the packaging of M5. Those names may appear only under `tests/` (the parity preset, the frozen inputs and the golden tests built on them).
 
 ```
 bin/e2e.sh [screenshot folder]       end-to-end test on a throwaway WordPress (needs Node with Playwright and Chromium)
@@ -186,7 +188,7 @@ bin/wp-test-site.sh start|restart|stop   the throwaway WordPress alone (.wp-test
 
 During a phase, run only your own folder; the integration phase runs the whole suite.
 
-## 6. Read-only guarantees of M1
+## 6. Read-only guarantees (M1 and M2)
 
 No code path may send POST, PUT, PATCH or DELETE to a PMS or pricing system. Four independent guards:
 
@@ -195,14 +197,16 @@ No code path may send POST, PUT, PATCH or DELETE to a PMS or pricing system. Fou
 3. **HTTP:** the `HttpClient` implementation refuses mutating methods with `WriteBlocked` before anything leaves the site.
 4. **No write call:** the shadow stage holds no connector, and a source test fails when anything outside `src/Connectors` calls a write method of a connector.
 
-The end-to-end check of M1 (`bin/e2e.sh`) asserts, from the simulator's own log, that a shadow run sent no PUT, PATCH or DELETE and no POST other than the one below when the site allows it.
+In M2 the plan assembly builds the payload and the slices of what it would write and the shadow run stores them (`run_payloads`); no code path sends them: the write methods still throw `NotAvailableInThisMilestone` and `WriteToken` still has no factory (the write gate comes in M3).
 
-**The pricing system's calendar read (`POST /listing_prices`).** The verified API notes list it as a read that uses POST, which guard 3 forbids. As built in M1:
+The end-to-end check (`bin/e2e.sh`) asserts, from the simulator's own log, that a shadow run sent no PUT, PATCH or DELETE and no POST other than the calendar read below.
 
-- (a) is the default: the run takes the current price of each night from the PMS (`readInventory(..., withPrices: true)`), the units sold from the PMS calendar, and never calls `readPrices()`. Nothing but GET leaves the site.
-- (b) exists only as an explicit opt-in of the site, outside the admin: `define('RITMO_PRICING_CALENDAR_READ', true);` in wp-config.php. Then `WordPress\ConnectorFactory` puts exactly that method, host and path on `ReadRouteAllowList`, the run reads the calendar (price, floor and ceiling in force) and the measure stage also compares the units sold of both systems.
+**The pricing system's calendar read (`POST /listing_prices`).** The verified API notes list it as a read that uses POST, which guard 3 forbids. Decision of the project manager (12 Nov): that request only reads (it changes nothing) and the engine needs it (price, floor and ceiling in force), so it is **on by default**:
 
-Whether (b) is ever turned on in production remains the owner's decision; the end-to-end test proves both ways (only GET with (a); only GET plus that POST with (b)).
+- `WordPress\ConnectorFactory` puts exactly that method, host and path on `ReadRouteAllowList` (nothing else is allowed: any other POST, and that POST to another host or path, is still refused by guard 3); the run reads the calendar and the measure stage also compares the units sold of both systems.
+- A site switches it off with `define('RITMO_PRICING_CALENDAR_READ', false);` in wp-config.php (any other value, or no definition, leaves it on). Then the run takes the current price of each night from the PMS (`readInventory(..., withPrices: true)`), never calls `readPrices()`, and nothing but GET leaves the site.
+
+The end-to-end test proves both ways (only GET plus that POST by default; only GET with the constant set to false).
 
 ## 7. Golden tests
 
@@ -219,6 +223,8 @@ The reference engine's pure functions are run with frozen inputs by `tests/fixtu
 - `tests/fixtures/golden/MANIFEST.json` records the repository commit at generation (`repo_commit`), the last commit that changed the reference engine (`engine_commit`), whether the engine had uncommitted changes (`engine_dirty`, which must be `false`), the generation date, the hashes of the frozen inputs and the case count of every file. A test fails if a frozen input changes without the goldens being regenerated, or if the goldens came from uncommitted engine code.
 - To regenerate after the reference rules change: `python3 tests/fixtures/tools/freeze_inputs.py`, then `dump_golden.py`, then `make_parity_preset.py`. The tools read the reference engine's folder and never write to it.
 
+**Milestone 2.** Each area has its generator and its goldens: `golden_relations.py`, `golden_ladder.py`, `golden_stay.py` and `golden_plan.py` write `tests/fixtures/golden/m2/<area>/` with their own MANIFEST and frozen inputs, and the parity values of each area (`tests/fixtures/presets/parity-<area>.json`), which `make_parity_preset.py` joins into `parity.json`. **Level 2**: `golden_level2.py` runs whole plans of the reference engine (its plan, the delete-first plan, the no-effect filter, the validator, the payload and the slices) over ten frozen scenarios and writes `tests/fixtures/golden/level2/pace.plano.json`; `tests/Golden/Level2Test.php` compares `PlanAssembler` with it, per property (ENGINE.md, section 1.10). The deliberate differences are written in the area documents and in the tests, never silently: in `php_expected` of the goldens, in `tests/fixtures/golden/level2/plugin-divergences.json`, or as a named adjustment in the test.
+
 ## 8. What is not here yet
 
-Room relations, stay and arrival rules, the sales ladder, owner orders, dated exceptions to floors, per-room holiday floors and packages belong to M2 and are not in the rule set schema. The parity preset tool lists what it leaves out each time it runs.
+M2 brought into the rule set schema the sections `relations`, `price_bands`, `ladder`, `soldout`, `cadence`, `no_effect`, `orders`, `stay` and `plan` (each with neutral defaults, ranges and help; `RuleSetValidator` checks them and the room and property references they hold), and the plan assembly of a whole run (ENGINE.md, section 1.8). Still to come: writing (M3: write gate, writer, confirmation, step ledger recorded from what was written, scheduler, alerts), the source of the market ruler of a ladder strategy and of the nights closed in the PMS, editors and the nights grid (M4), the assistant, licence and packaging (M5). Dated owner exceptions to the safety limit are not modelled. The parity preset tool lists what it leaves out each time it runs.

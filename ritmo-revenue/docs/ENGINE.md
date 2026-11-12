@@ -2,7 +2,7 @@
 
 What `src/Domain/Calendar`, `Market`, `Pricing`, `Plan` and `Report` do and how the application calls them. Everything here is pure PHP over the shared types of [CONTRACTS.md](CONTRACTS.md) and follows the conventions of [ARCHITECTURE.md](ARCHITECTURE.md). Part 1 explains; Part 2 is the exact signature of every public member, generated from the code by `php bin/sync-generated.php` (a test fails when it is stale).
 
-Milestone 1 holds the core of the pace engine. Room relations, stay rules, the sales ladder, owner orders and the protection of sold-out nights come in the next milestone (section 1.8).
+Milestone 1 holds the core of the pace engine (sections 1.1 to 1.7). Milestone 2 adds room relations, stay rules, the sales ladder, owner orders, the protection of sold-out nights, the full validator with its payload and slices, and the assembly of the whole plan of a run (sections 1.8 to 1.12).
 
 ## Part 1. Guide
 
@@ -134,14 +134,14 @@ Validator errors (floors are compared as applied: a whole percentage over the ba
 | `raise_today` | A floor for tonight above tonight's price, also when only its rounding up to a whole percentage of the base puts it above (params `floor`, `applied_floor`, `current_price`). |
 | `today_without_current_price` | A floor for tonight without `before->price`. |
 | `below_safety_limit` | A floor (or a ceiling without floor) under the safety limit. |
-| `below_listing_min`, `below_hard_floor` | A floor (or a ceiling without floor) more than one currency unit under the hard floor of the night; the code says whether that floor is the listing minimum. |
+| `below_listing_min` and the floor families of 1.12 | A floor (or a ceiling without floor) more than one currency unit under a floor of the night; the code says which floor (listing minimum, owner, quality, holiday). |
 | `above_listing_max` | A floor or a ceiling over the listing maximum. |
 | `ceiling_below_floor` | A ceiling under the floor of the item or, without one, under the floor in force. |
 | `no_effect` | Everything the item sets is already in force (amounts within one unit, same stay). |
 
 Warnings: `rise_above_max_step` (the floor raises the price by more than one step of the engine), `no_before` (the item has no `before`, so its effect cannot be checked).
 
-A hard floor above the listing maximum is a configuration conflict: the engine goes to the maximum and the validator reports `below_hard_floor`, for a person to solve.
+A hard floor above the listing maximum is a configuration conflict: the engine goes to the maximum and the validator reports the floor it passes (1.12), for a person to solve.
 
 ### 1.6 Report
 
@@ -179,9 +179,335 @@ Where the plugin generalises the reference:
 - The validator compares floors as applied, not as asked: with whole-unit steps, an asked floor is up to one unit under the hard floor it was held at.
 - The no-effect check covers any item (floor, ceiling or stay), where the reference only looks at locked prices.
 
-### 1.8 Not in this milestone
+### 1.8 The whole plan of a run (milestone 2)
 
-Room relations, stay and arrival rules, the sales ladder, owner orders and dated exceptions, protection of sold-out nights, cadence released by a new sale, payload slices, the step ledger itself. `OccupancyWindows` counts a blocked night as sold, because the PMS inventory does not tell a block from a sale; `PmsPricingMismatch` is what shows blocks without a booking.
+`Plan\Assembly\PlanAssembler::assemble(RunInputs): AssembledPlan` builds the plan of one property for one run, end to end, and is the only place the pieces of milestone 2 meet:
+
+```php
+$inputs = new RunInputs(
+    $property, $rooms, $today, $now, $days,            // horizon: today .. today + $days
+    $calendar,                                          // room code => 'YYYY-MM-DD' => PriceNight (price, floor and ceiling in force, sold/total)
+    $overrides,                                         // room code => 'YYYY-MM-DD' => DateOverride in force
+    $anchors,                                           // AnchorLookup
+    $ledger,                                            // Pricing\Cadence\StepLedger
+    $orders,                                            // Orders\OrderBook
+    $ruler,                                             // ?Pricing\Ladder\MarketRuler: without it no ladder strategy acts
+    $blocked,                                           // PlanItem::keyOf() => true: closed in the PMS without a booking
+    $lightFilter,                                       // PlanItem::keyOf() => true for a light run; null for a full run
+    $readAt,                                            // room code => instant the calendar was read
+    $weeklyReference,                                   // room code => listing base and minimum at the start of the week
+);
+$run = (new PlanAssembler($rules, $clock, $pmsName))->assemble($inputs);
+$run->plan;              // items and the delete-first deletions, as built
+$run->validation;        // the Validator's result over that plan (with the run's context)
+$run->finalValidation;   // validated again without what it refused (null when even that fails)
+$run->payload;           // Payload of the final plan, or null
+$run->slices;            // list<Slice> in writing order
+$run->lines;             // list<NightLine>: what happened to every room night of the horizon
+```
+
+The stages, in order (reference: `pace.py plano`, then `validar_plano` and `fatiar_payload`):
+
+1. **Wiring** (`RunWiring`): the relations of the property (`RelationGraph`, `ListingCapChain`), the sales ladder (`LadderParts::fromRules`: the first active stepped strategy, only with a market ruler), the terms of the pace step (`Pricing\Terms\NightTermsResolver`), the hooks the relations ask (`Hooks\BookOrderGuard`, `Hooks\LadderStrategyView`, `Hooks\RunFloorSource`, `Hooks\RulerMarketTarget`) and the stay rules. `RunCalendar` brings every price within the date rule in force (`RuleInForce`) and gives the floor and ceiling in force and the pace basis of small rooms.
+2. **Pricing every room night** (`NightPricing`), night after night, rooms in the order of their relations: a night closed in the PMS, frozen by a manual change or fixed by an owner order is left alone (`OrderBook::gateFor`); a night a ladder strategy governs is priced by the ladder (`LadderParts::build`, with the ladder relations solved against what the reference rooms keep); a sold-out night gets the protection floor (`SoldOutProtection`); every other night takes the pace step of `PaceEngine::decide` with its `PaceTerms` (owner target and floor orders, the sales ramp, the strategy's last-minute market floor, the bounds of a premium relation, the chained listing top) and the cadence of `StepCadence`. Each proposal is a `WorkItem`; each room night gets a `NightLine`.
+3. **Relations** (`Relations\Coherence\CoherencePass` over `NightSet::of()`, at most the run's horizon), then the listing maximum (`ListingCapChain::apply`). Work items take back what the relations did (`WorkItem::absorb`); the relations may create items (`WorkItem::fromDraft`) or remove one.
+4. **The step block follows the final floor** (`WorkItem::syncStep`, reference `pace.sincronizar_pace`): the ledger records what is written.
+5. **Ceilings to free** (`CeilingRelease`, reference `pace.ajustar_tetos`): an item whose ceiling is the listing maximum (or whose floor passes the ceiling in force) drops its ceiling; where the rule in force has a ceiling, the night goes to the delete-first plan (`PlanDeletion`, reason `CEILING_RELEASE_DELETE`) and the item writes back the stay and masks of the deleted rule, corrected by `Calendar\Stay\StayHook::rewrite` (open day, orphan night with its proof, stay of a closed day).
+6. **No effect** (`Pricing\Cadence\NoEffectFilter`): floor and ceiling equal to what is in force, outside the delete-first nights.
+7. **Validator** with the run's `ValidationContext` (`RunWiring::validationContext`: the fresh calendar, the orders, `Hooks\LadderStrategyGuard`, the stay rules, the discount bands with the run's `RelationReport`). When it refuses entries, the plan is validated again without them; a deletion and the item that writes its night again go together. Then `PayloadBuilder` and `Slicer`.
+
+Precedence, as the stages apply it: safety (validator, tonight never rises) > owner orders and floors > ladder and pace > relations. A light run (`RunInputs::$lightFilter`) steps and protects only the nights of its filter (a ladder room priced against others also when one of those is in the filter); the other nights still feed the relations.
+
+**Night lines** (`NightLine::$code`): the `PaceDecision` reason codes of 1.4, or `night_blocked`, `manual_freeze`, `order_fixed_price`, `ladder_price`, `ladder_hold`, `sold_out_protection`, `sold_out_no_item`, `sold_out_no_anchor`, `no_market_anchor`, `out_of_night_filter`, `cadence_hold`.
+
+**Item reason codes** (`PlanItem::$reasonCode`): `PACE_STEP`, `LADDER_PRICE`, `SOLD_OUT_PROTECTION`, and when a relation changed the item `RELATION_AT_LEAST`, `RELATION_BETWEEN`, `RELATION_PREMIUM_OVER_MAX`, `RELATION_DISCOUNT_BAND`, `RELATION_OCCUPANCY_SWITCH` (the protection first, then the relation, then what priced it; `reasonParams.priced_by` keeps what priced it and `reasonParams.relation_codes` every relation). `reasonParams.step` is the `StepProposal` the ledger records.
+
+Where the assembly decides differently from the reference, on purpose:
+
+- **L1, light runs per property.** The reference prices both properties in one pass; in a light run its relations also look at the nights the other property touched. The plugin assembles one property at a time and looks only at that property's filter and items.
+- **L2, a delete-and-rewrite group goes together.** When the validator refuses the item that writes a night again, its deletion is not sent either (and the other way round): the reference would delete the rule and leave the night without its floor and stay.
+- **L3, effect of a rewrite.** An item whose rule the plan deletes first always has an effect: the validator does not call it `no_effect` and `PercentRounding` does not drop it (the reference keeps it through `sem_efeito`).
+- **L4, reason codes.** The reference writes the same text for the "at least" and the "between" relations; the plugin gives each its own code. Item texts of the payload are the plugin's, from the code and its parameters.
+
+### 1.9 The modules of milestone 2
+
+| Area | Folder | Read |
+|---|---|---|
+| Stay and arrival rules, PMS inventory audit, stay plan of the pricing system | `Calendar/Stay` | [STAY.md](STAY.md) |
+| Sales ladder, last-minute market floor, sold-out protection, cadence and step ledger, no-effect filter | `Pricing/Ladder`, `Pricing/Protection`, `Pricing/Cadence`, `Pricing/Terms` | [LADDER.md](LADDER.md) |
+| Owner orders: precedence, freeze, authority | `Orders` | [ORDERS.md](ORDERS.md) |
+| Relations between rooms | `Relations` | [RELATIONS.md](RELATIONS.md) |
+| Validator, payload and slices | `Plan`, `Plan/Validation`, `Plan/Payload`, `Plan/Port` | [VALIDATOR.md](VALIDATOR.md) |
+| Plan assembly | `Plan/Assembly` | section 1.8 |
+
+### 1.10 Parity of whole runs (level 2)
+
+`tests/Golden/Level2Test.php` runs `PlanAssembler` over the ten scenarios of `tests/fixtures/golden/level2/pace.plano.json` (weekday ladder and sales ramp, the owner's weekend plan, a holiday, sold-out and reopened nights, a light run, orphan nights, the occupancy switch, owner orders by date, frozen and blocked nights, small rooms), written by `tests/fixtures/tools/golden_level2.py` from the reference engine's functions with frozen inputs (`tests/fixtures/golden/level2/frozen/`; nothing is written into the reference's folder). Per property it checks every item (floor and ceiling within 0.01, stay, masks, orphan claim, order cited, price before, reason, step block), the delete-first nights, the no-effect items, the validator's codes per entry (the reference's, with the validator divergences V1 to V5 of VALIDATOR.md recorded in the golden), and the payload and slices of what the plugin would write. The deliberate differences L1 and L4 are listed by scenario in `tests/fixtures/golden/level2/plugin-divergences.json`.
+
+### 1.11 Class index of milestone 2
+
+What each class of the engine added in milestone 2 is, in one line; the area documents of 1.9 explain how they work together.
+
+`src/Domain/Calendar/Stay`
+
+| Class | What it is |
+|---|---|
+| `ArrivalDepartureChange` | An arrival/departure restriction to write on one night of a room, ready for the milestone that writes (nothing here sends it). |
+| `ArrivalRule` | Minimum stay by the weekday of arrival, for the nights from validFrom to validTo. |
+| `BatchPolicy` | How the single PMS batch is cut: the nights from today to today + urgentDays go first, and the writer sends at most maxRanges ranges per request. |
+| `ChangeTarget` | The system a stay or arrival/departure change is meant for. |
+| `ClosedDayRule` | A weekday closed for arrival and/or departure in the PMS, for every room (empty rooms) or the listed ones, except the excepted rooms. |
+| `ClosedDaySide` | The restriction a closed day must have in the PMS and which side of it, if any, is an orphan. |
+| `InventoryAudit` | Compares the PMS inventory (units for sale, minimum and maximum stay, arrival/departure restriction) with the stay rules and lists, per room, the changes the PMS needs. |
+| `NightStayDecision` | The stay decision of one night of the pricing stay plan: its findings and, when the stay must change, the new stay with its reason, orphan kind and proof, and the season behind it. |
+| `Occupancy` | Free and sold-out nights of one room from a single source, so that the PMS audit and the pricing plan decide orphan nights alike. |
+| `OpenDayRule` | A weekday enforced open for arrival and departure in the listed rooms: the audit clears an arrival/departure restriction found there (a blackout stays) and the pricing plan opens that weekday in the date override's masks. |
+| `OrphanKind` | Why a night may sell with a one-night stay below its rule. |
+| `OrphanPolicy` | The orphan night of the arrival rule: a free night whose next night is sold out sells with one night (never in a package; in holiday periods only when onHolidays). |
+| `OrphanProof` | The occupancy that makes a night an orphan, as read when the change was planned, so that a validator can check it before writing. |
+| `OrphanSide` | The orphan side of a closed day: when the closed day is sold out and the night before is free, the closed day takes whenClosedDaySoldOut (departure opens, so the night before sells alone); when the night before is sold out (or already past) and the closed day is free, it takes whenPreviousSoldOut (arrival opens) and sells with one night. |
+| `Package` | A closed package: dates with their own stay and arrival/departure, for every room (empty rooms) or the listed ones. |
+| `PackageNight` | One night of a closed package: its minimum and maximum stay and its arrival/departure restriction, each optional. |
+| `PlannedStay` | The minimum stay a night must have, and whether it is the one-night stay of an orphan night. |
+| `PricingStayEntry` | One night of the pricing stay plan: what was found (issues and accepted reasons) and the items for the pricing system's date override (a stay and/or arrival/departure masks), if any. |
+| `PricingStayNight` | One night of the pricing calendar as the stay plan reads it: the minimum stay in force, the units sold and total, and the listing's arrival/departure masks (seven characters 0/1, Monday to Sunday; null when the pricing system reports none; masksEnabled false when they are switched off). |
+| `PricingStayPlan` | The stay plan of one room for the pricing system: per night, the stay the rules ask against the stay in force there (the effective stay when known, else the calendar's), and the date-override items that correct it (no prices: floors are the pricing engine's). |
+| `PricingSync` | For which rooms the pricing system pushes each stay field to the PMS. |
+| `RestrictedNight` | A night with a restriction no stay rule asks for: reported, never changed. |
+| `RewrittenStay` | The stay and departure mask a rewritten date rule carries, and the orphan behind a one-night stay with its proof. |
+| `RoomAudit` | What the audit of one room's PMS inventory found. |
+| `RoomFindings` | Collects what the audit finds in one room while it walks the nights; frozen into a RoomAudit. |
+| `Season` | A period of the season calendar, on some weekdays, with its own minimum stay or none. |
+| `StayBatch` | The single PMS batch of a run: every change of the audit once, the urgent ones (today to today + urgentDays) first by night, property and room, then the rest by property, room and night; changes of the same room and night keep the audit's order (restriction, arrival-rule stay, today's closed-day orphan, package stay). |
+| `StayChange` | A minimum and/or maximum stay to write on one night of a room, ready for the milestone that writes (nothing here sends it). |
+| `StayConfig` | The stay and arrival/departure rules ("stay" section). |
+| `StayFields` | The definitions of the "stay" section of the rule set: type, range, neutral default and help of every field. |
+| `StayFinding` | What the pricing stay plan found on a night: an issue (out of the rule) or a reason it accepts a stay below the rule. |
+| `StayHook` | What the pricing plan asks of the stay rules when it deletes a date rule and writes it again (to free a ceiling): the stay the rewritten rule must carry instead of the inherited one, the proof when that stay is an orphan's, and the enforced open day in the inherited masks. |
+| `StayReason` | The rule behind a stay or arrival/departure change. |
+| `StayRules` | The stay rules of one night of a room: the stay it requires, the stay it must have from the one it has, and where an orphan stay fits. |
+| `StaySyncCapability` | The stay fields a pricing connector can write by date and pushes on to the PMS. |
+| `StaySyncField` | A stay field that a pricing system may push to the PMS, overwriting what the PMS holds. |
+
+`src/Domain/Pricing`
+
+| Class | What it is |
+|---|---|
+| `PaceTerms` | What the rest of the plan changes in the pace step of one room night: an owner order, the sales ramp, a strategy's market floor, the bounds of a room relation, the chained listing top. |
+
+`src/Domain/Pricing/Cadence`
+
+| Class | What it is |
+|---|---|
+| `CadenceConfig` | Settings of the step cadence: one step per night per day and direction, and its exceptions. |
+| `CadenceVerdict` | Whether a step may go now, and the reason when it must wait. |
+| `NoEffectConfig` | Settings of the no-effect filter ({@see NoEffectFilter}): what counts as "already in force" before a plan is validated. |
+| `NoEffectFilter` | Drops the items that would change nothing, before they are validated, written or recorded as steps: writing them costs a write and the ledger would record a step that never happened, holding the real step of the day. |
+| `NoEffectResult` | The items a plan keeps and the ones the no-effect filter dropped, by reason. |
+| `SoldBase` | What the units sold of a step were counted over: the room type itself, or the property's pool (small rooms read the property's occupancy). |
+| `StepCadence` | One step per night per day and direction. |
+| `StepLedger` | The steps written to the pricing system, oldest first. |
+| `StepProposal` | The step an item carries: where the price was, where it goes and what was sold. |
+| `StepRecord` | One row of the step ledger: a step that was written to the pricing system. |
+
+`src/Domain/Pricing/Ladder`
+
+| Class | What it is |
+|---|---|
+| `BatchImportDetector` | Finds room nights sold by a batch import of the channel manager: bookings created in the same minute, from a minimum number on, are an import and not demand, so the proportional ladder does not count them as new sales. |
+| `BetweenRule` | Inside a ladder night, a room kept between two other rooms: never below the cheaper one and at most a position of the way up to the dearer one. |
+| `ConfigReader` | Reads one configuration section against its own field definitions. |
+| `Derivation` | A room priced from another room of the same night: that room's price times a multiplier. |
+| `DropRule` | The last-minute drop of a ladder: inside the window before the night, with less than a share of the units sold, the price drops by a percentage (applied after the steps and the ceiling). |
+| `EffectiveValue` | The amount the pricing system really applies for a floor or a ceiling: it stores them as a whole percentage of the listing base, so a floor is rounded up and a ceiling down to the next whole percentage (two decimals). |
+| `LadderActivation` | Whether a strategy acts on a room night: it is enabled, the night is inside its period and, when it depends on an owner order, that order exists, covers the room and the night (and lists it, when it lists nights) and is not a follow-up. |
+| `LadderConfig` | The "ladder" section: the sales ladder switch and its strategies. |
+| `LadderFields` | The definitions of the "ladder" section (type, range, neutral default, label, help), in the format of the rule set schema. |
+| `LadderHardFloor` | The floors a ladder price never goes below: the safety limit and, on a night of a configured holiday period, the general holiday floor in the sent plan. |
+| `LadderItem` | The floor (and, when the strategy locks it, the ceiling) a ladder writes for a room night, with the strategy and owner order behind it and the step it records once written. |
+| `LadderItemBuilder` | Turns the ladder price of a room night into the item the plan writes (floor, and ceiling when the strategy locks it) or into a line only. |
+| `LadderLine` | The diagnosis of a ladder room night for the grid, written whether or not an item comes out. |
+| `LadderNight` | What a strategy decided for one night: the quote of every room it prices, or a ruler gap (the strategy would price the night but the ruler has no entry for it). |
+| `LadderNightEvaluator` | Prices one night for every room a strategy governs, all at once (some rooms depend on others). |
+| `LadderOutcome` | The item a ladder room night produces (or null) and its line for the grid. |
+| `LadderQuote` | The public price a ladder asks for the next unit of a room night, with how it got there. |
+| `LadderReferences` | The prices the relations of a ladder night read for each room: what really stays on the channel when it is known (an item's effective value, or the live price of a room that got no item), else the ladder price, else the live calendar price (a room outside the ladder: frozen, fixed by order, blocked). |
+| `LadderRelations` | The room relations of a ladder night, solved inside the ladder (the general relations pass leaves the nights a ladder prices alone). |
+| `LadderRoomQuote` | The ladder price of one room on one night, in the sent plan, with the figures behind it. |
+| `LadderRule` | How a ladder prices some rooms on some night types: where it opens, where it stops, whether it derives from another room, and which floors and drops apply. |
+| `LadderSteps` | The steps of a ladder: after a fraction of the units sells at the opening price, every further unit adds a compound percentage. |
+| `LadderStrategy` | A sales ladder strategy: a period, the rules that price some rooms on some night types, its steps and drop, the relations solved inside its nights, its last-minute market floor and, optionally, the owner order that must stay in force for it to act. |
+| `LastMinuteFloorRule` | The last-minute market floor of a strategy: on the nights the ladder does not price, close to the night, the floor of some rooms comes down to a market value when that is lower. |
+| `LastMinuteMarketFloor` | The last-minute market floor of a strategy, for the nights its ladder does not price: close to the night, the floor of the covered rooms comes down to a market value of the ruler (times the room's multiplier, over the night's public factor), never below the safety limit. |
+| `MarketRuler` | The market ruler of a period: one {@see RulerNight} per night. |
+| `MarketTopTable` | The public market top of the proportional ladder: the average of the highest comparable prices, measured for holiday periods (by night) and for reference nights (by weekday or weekend). |
+| `PremiumRule` | Inside a ladder night, a premium room kept above the dearest of other rooms that still sell, by one rate on weekend and holiday nights and another on the other nights. |
+| `ProportionalLadder` | The proportional ladder mode (optional; off in the neutral and parity presets): each booking moves the price along the line from the price in force to a market target, in proportion to the units sold; the last unit sold reaches the target. |
+| `ProportionalMove` | A price move of the proportional ladder after new sales (or cancellations) of a room night. |
+| `ProportionalRule` | Settings of the proportional ladder mode: each booking moves the price along the line from the price in force to a market top, in proportion to the units sold. |
+| `RulerNight` | The market ruler of one night: its night-type label, the public prices of each market series at stored percentiles, the public factor measured per property and the reference sent price of each room (the price in force when a strategy was set up). |
+| `RulerPoint` | A point of the market ruler: a price series at a stored percentile, times a multiplier. |
+| `SalesLadder` | The stepped sales ladder of a strategy, in the public plan of the market ruler. |
+| `WeekendFloorOverride` | While a strategy acts on a room, on its weekend nights outside holiday periods the owner floors give way to the quality standard: the ladder price itself is the floor of those nights, and every other part of the engine (sold-out protection, pace step on a ruler gap) sees the quality standard instead of the weekend owner floor. |
+
+`src/Domain/Pricing/Protection`
+
+| Class | What it is |
+|---|---|
+| `FloorSource` | Where the floor of a protection item really comes from; the reason shown to the owner names it. |
+| `LiveBounds` | The floor and ceiling in force on a night, in money: the value the pricing calendar reports when it is above zero; otherwise the one of the live date override (a percentage over the listing base, two decimals, or a fixed amount); otherwise unknown (null). |
+| `ProtectionConfig` | Settings of the sold-out protection. |
+| `ProtectionItem` | The floor and ceiling the sold-out protection asks for a room night. |
+| `ProtectionOutcome` | What the sold-out protection decided for a room night: an item, or why there is none. |
+| `SoldOutProtection` | Protection of a sold-out (or overbooked) room night that no sales ladder governs: a floor high in the market with the ceiling released, so a cancellation never reopens the night cheap. |
+
+`src/Domain/Pricing/Terms`
+
+| Class | What it is |
+|---|---|
+| `NightTerms` | The terms of the pace step of one room night and the owner order its item cites. |
+| `NightTermsResolver` | The terms of the pace step of a room night: what the owner's target and floor orders, the sales ramp, a strategy's last-minute market floor and the bounds of a premium relation change. |
+| `PremiumCap` | The bounds a premium relation puts on its room before the coherence stage: above the dearest room of its set that still sells, and under the high end of its price band when it has one. |
+
+`src/Domain/Plan`
+
+| Class | What it is |
+|---|---|
+| `CalendarNight` | One room night of the fresh pricing calendar the validator reads: its price, the floor in force and the units sold of the total. |
+| `FreshCalendar` | The pricing calendar read just before validating: per room night, the price, the floor in force and the units sold; per room, the instant the pricing system last recalculated it. |
+| `IssueSubject` | What a PlanIssue is about, and so which list of the plan its index points at. |
+| `LastMinuteRule` | A last-minute discount under the listing minimum, without an owner order: allowed in the rooms listed, a few days before the night, down to a share under the minimum, on a night with units free and not mostly sold (tonight, mostly sold, only with a warning), and in the rooms listed as "last unit only" only for the last unit. |
+| `ListingChange` | A change to the listing itself (its base, minimum or maximum price), as opposed to a date rule. |
+| `ListingField` | The listing amounts a plan may change. |
+| `OrphanClaim` | What an item claims when it gives a night a shorter stay, or opens a closed day, because the night is an orphan: which kind of orphan, and the occupancy read that proves it (checked by the validator before anything is written). |
+| `OrphanClaimKind` | The kinds of orphan night an item may claim. |
+| `PlanConfig` | Settings of the plan validator, the payload and its slices (section "plan" of the rule set). |
+| `PlanDeletion` | A date rule of the pricing system to delete before the items are written. |
+| `ValidationContext` | What the validator reads besides the plan and the rule set: the fresh calendar, the owner orders, the strategies behind them, the stay rules, the discount bands with the run's relation report, and the listing values at the start of the week. |
+
+`src/Domain/Plan/Assembly`
+
+| Class | What it is |
+|---|---|
+| `AssembledPlan` | Everything one assembly produced for a property: the plan as built, its validation, the plan that passes (without the entries the validator refused), the payload and its slices ready for the writer of a later milestone, the nights grid and what was dropped on the way. |
+| `CeilingRelease` | Frees the ceiling of the items that should have none. |
+| `LadderParts` | The sales ladder strategy of a run, wired once: the night evaluator, the relations solved inside a ladder night, the item builder and the two floors the strategy changes elsewhere (the last-minute market floor of the pace step, the weekend owner floor of the standard floors). |
+| `NightLine` | One row of the nights grid of a run: what the engine did with a room night and why, with the item's floor and ceiling when it proposed one. |
+| `NightPricing` | Prices every room night of the run, night after night: the gates (blocked in the PMS, frozen by a manual change, fixed by the owner), the sales ladder, the protection of sold-out nights and the pace step with its terms. |
+| `PlanAssembler` | Builds the plan of one property for one run, end to end: price every room night (gates, sales ladder, sold-out protection, pace step with its terms) -> relations between rooms (coherence) -> listing maximum -> step blocks follow the final floor -> delete-first plan for the ceilings to free (with the stay rules) -> no-effect filter -> Validator -> (again without what it refused) -> PayloadBuilder -> Slicer. |
+| `RunCalendar` | The calendar of a run as the engine reads it: each price brought within the floor and ceiling of the date rule in force (an old recalculation does not see what was written after it), the floor and ceiling in force, the units sold and the pace basis of small rooms. |
+| `RunInputs` | Everything one run reads to assemble the plan of a property, collected beforehand: no connector, no repository, no clock here. |
+| `RunWiring` | The collaborators of one assembly, wired from the rule set and the inputs of the run: the relations of the property, the sales ladder, the terms of the pace step, the hooks the relations and the validator ask, and the stay rules. |
+| `WorkItem` | One room night of the plan while it is being assembled: the passes after the pricing (the relations, the listing top, the ceiling release) change it in place; {@see toPlanItem()} gives the immutable item at the end. |
+
+`src/Domain/Plan/Assembly/Hooks`
+
+| Class | What it is |
+|---|---|
+| `BookOrderGuard` | What the owner's orders of the run say to the relations. |
+| `LadderStrategyGuard` | What the validator asks the run's sales ladder strategy about the order behind it. |
+| `LadderStrategyView` | What the sales ladder of the run says to the relations: which room nights it governs, and which a target order with a sales ramp pins (reference: PD.governa_noite and the "ladder pin" of pace.coerencia). |
+| `RulerMarketTarget` | The market price an occupancy switch sends its room to, read from the market ruler: the series and percentile its configuration gives for the ruler's night type, over the night's public factor of the room's property (reference: plano_dono.balcony_mercado_enviado). |
+| `RunFloorSource` | The floors of a room night as the run's orders and strategy set them, for the relations. |
+
+`src/Domain/Plan/Payload`
+
+| Class | What it is |
+|---|---|
+| `CallKind` | The calls a payload makes to the pricing system, in the order they are written. |
+| `ListingWrite` | The listing amounts of one listing to change (base, min, max), sent plan. |
+| `OverrideWrite` | One date rule as it is written to the pricing system: the floor and the ceiling as whole percentages over the listing base ("percent_base": -31 is the base times 0.69), the minimum stay, both arrival and departure masks when either is set, and the reason (null keeps the reason of the rule in force). |
+| `Payload` | What a validated plan writes to the pricing system, as data: per listing, the date rules to delete, the date rules to write and the listing changes. |
+| `PayloadBuilder` | Turns a validated plan into what the pricing system stores, per listing, in plan order: - the date rules to delete first; - the date rules to write: floor and ceiling always as whole percentages over the base (the floor rounded up, the ceiling down and never under the floor; never a fixed amount), the property's currency with them, the minimum stay, both weekday masks when either is set (the other one all open), the reason cut to the configured length, or no reason for an item that keeps the reason of the rule in force; - the listing amounts. |
+| `RoomCall` | The date rules of one listing in one call: the overrides to write, or the dates whose rules are deleted. |
+| `Slice` | One call of the payload, in writing order: a part of the date rules of one listing (tonight, tomorrow or one chunk of the rest, "k/n") or the listing changes of one listing. |
+| `Slicer` | Cuts a payload into the calls the writer makes, in order: every deletion first; then tonight of every listing, tomorrow of every listing, and the rest listing by listing, by date; the listing changes last. |
+
+`src/Domain/Plan/Port`
+
+| Class | What it is |
+|---|---|
+| `NoStrategy` | The answers of a site without pricing strategies: no order backs one, so every order in force counts wherever it covers, and the owner floors always apply. |
+| `StrategyGuard` | What the validator asks the pricing strategies (the sales ladder) about the owner orders behind them. |
+
+`src/Domain/Plan/Validation`
+
+| Class | What it is |
+|---|---|
+| `AuthorityCheck` | The owner order an entry cites: a night frozen by a manual change of the owner (other than the cited order) is never touched; a cited order must be in force for the room and night and, when it backs a strategy, the strategy must act there. |
+| `BandCheck` | The discount bands of the relations over the whole plan, in currency after the floors were turned into whole percentages: the value of each room night is its floor as the pricing system applies it, its ceiling likewise. |
+| `DeletionCheck` | The date rules a plan deletes before writing: a room of the property, a reason, one deletion per room night, never in the past; and warnings when the deletion drops what the night needs (its stay, on a closed day, a holiday or a night that requires more than one night, unless the night waits for an owner decision; the protection floor of a holiday). |
+| `EffectCheck` | What an item changes and what it was decided on: a decision that depends on occupancy needs a fresh calendar; an item that changes nothing of what is in force is refused; a floor far above the current price gets a warning (the pricing system moves one step a day). |
+| `FloorCheck` | The floors of the night against the lowest price an item allows (its floor as applied, or its ceiling when it sets no floor), each family on its own: - the safety limit (never released; when it fails, it is the only floor reported); - the listing minimum (floors only): an order that allows it, or the last-minute discount rule; - on a night of a configured period (floors only), the period's own floor and, when the night is priced as a holiday, the general holiday floor (never released), both in their price plan; - the owner floors of the night type, unless a strategy replaces them that night: an order that allows it (a warning), or down to the last-minute market floor of the strategy the item cites; - the quality floor: an order that allows it, or market evidence written in the item (warnings). |
+| `IssueLog` | The errors and warnings found while validating one plan, in the order they were found. |
+| `ItemAuthority` | The owner order an item cites, once checked: in force for the room night and, when it backs a strategy, inside the strategy's scope. |
+| `ItemCheck` | One family of rules of the validator, run on every item that passed the shape checks. |
+| `ItemFacts` | What every check of one item reads: the item, its room, its amounts as the pricing system will apply them (whole percentages of the base), the night, what is in force and the order it cites. |
+| `LastMinuteCheck` | A floor under the listing minimum without an order, in a room and window the last-minute rule covers: not deeper than its share, only with the fresh calendar, never on a sold-out night, not on a night mostly sold (tonight only with a warning), and in "last unit only" rooms for the last free unit. |
+| `ListingCheck` | Changes to the listings: prices are corrected by percentages on dates, so a listing changes only by an owner order in force that releases it; the base and the minimum move at most the weekly limit from their values at the start of the week; the minimum never goes under the safety limit and the base never under the minimum. |
+| `MaskCheck` | The arrival and departure days an item writes (seven 0/1 characters from Monday; a mask the item leaves out is written all open). |
+| `OrphanProofCheck` | Whether the occupancy an item carries proves its orphan night, and whether the fresh calendar contradicts it. |
+| `PriceBoundsCheck` | The shape of the prices of an item against the night: tonight never rises, nothing over the listing maximum, a ceiling never under the floor (the item's or, without one, the floor in force), a room without discounts never under its current price, and the reason of a date rule kept only by an item that does not change the price it explains. |
+| `StayCheck` | The minimum stay an item writes against the stay rules of the night: - never under what a holiday, a package, the arrival rule or a closed day requires, unless the night is a proven orphan or an owner order releases the stay (an order older than the arrival rule does not); - where the arrival rule opens one night, not above it without such an order (above a longer rule only a warning); - a closed day or holiday night written without its stay gets a warning (the date rule may lose it); - an orphan night needs its proof (see OrphanProofCheck), not contradicted by the fresh calendar. |
+
+### 1.12 Validator codes of milestone 2
+
+The validator of 1.5 grew into the checks of `Plan/Validation` (VALIDATOR.md, section 2). Its codes, besides those of 1.5:
+
+| Code | Family | Meaning |
+|---|---|---|
+| `stale_calendar` | The plan and its entries | Fresh calendar older than the configured hours under a decision that depends on occupancy. |
+| `stale_calendar_accepted` | The plan and its entries | Warning: the same, accepted explicitly for this validation. |
+| `below_owner_floor` | Floors |  |
+| `below_quality_floor` | Floors |  |
+| `below_holiday_floor` | Floors |  |
+| `below_holiday_safety_floor` | Floors | Under the general holiday floor: no order releases it. |
+| `below_market_floor` | Floors | Under the last-minute market floor of the strategy the item cites (or the strategy has none tonight). |
+| `below_floor_by_order` | Floors | Warning: under an owner floor, released by the order the item cites. |
+| `below_floor_by_market_floor` | Floors | Warning: under an owner floor, down to the last-minute market floor of the strategy the item cites. |
+| `below_quality_by_order` | Floors | Warning: under the quality floor by an order in force. |
+| `below_quality_by_market` | Floors | Warning: under the quality floor with the market evidence written in the item. |
+| `no_discount_room` | Floors | A room that never takes a discount would be put under its current price. |
+| `last_minute_too_deep` | Last-minute discount under the listing minimum |  |
+| `last_minute_without_calendar` | Last-minute discount under the listing minimum |  |
+| `last_minute_sold_out` | Last-minute discount under the listing minimum |  |
+| `last_minute_too_sold` | Last-minute discount under the listing minimum |  |
+| `last_minute_too_sold_tonight` | Last-minute discount under the listing minimum | Warning: tonight is already mostly sold; the discount only follows the one in force. |
+| `last_minute_last_unit_only` | Last-minute discount under the listing minimum |  |
+| `order_not_in_force` | Owner orders |  |
+| `order_out_of_scope` | Owner orders |  |
+| `order_does_not_release` | Owner orders |  |
+| `night_frozen` | Owner orders | A manual change of the owner other than the cited order freezes the night. |
+| `stay_below_required` | Stay and orphan nights |  |
+| `stay_above_one_night` | Stay and orphan nights | A stay above one night where the rule opens one night. |
+| `stay_above_required` | Stay and orphan nights | Warning: a stay above the one the night requires. |
+| `stay_out_of_range` | Stay and orphan nights |  |
+| `stay_not_in_item` | Stay and orphan nights | Warning: a closed day or holiday night written without its stay. |
+| `orphan_not_allowed` | Stay and orphan nights |  |
+| `orphan_without_proof` | Stay and orphan nights |  |
+| `orphan_contradicted` | Stay and orphan nights | The fresh calendar contradicts the orphan proof. |
+| `mask_all_closed` | Arrival and departure days |  |
+| `mask_opens_closed_day` | Arrival and departure days |  |
+| `mask_beyond_orphan_side` | Arrival and departure days |  |
+| `mask_closes_open_night` | Arrival and departure days |  |
+| `mask_closes_open_day` | Arrival and departure days |  |
+| `keep_reason_with_price` | Arrival and departure days | The reason of the date rule is kept while the item changes the price it explains. |
+| `band_above_reference` | Discount bands of the relations |  |
+| `band_ceiling_above_reference` | Discount bands of the relations |  |
+| `band_above_upper` | Discount bands of the relations |  |
+| `band_below_lower` | Discount bands of the relations |  |
+| `band_below_by_switch` | Discount bands of the relations |  |
+| `band_below_by_order` | Discount bands of the relations |  |
+| `band_below_confirm_after_recalc` | Discount bands of the relations |  |
+| `delete_removes_stay` | Deletions and listing changes | Warning: deleting the date rule drops the stay the night requires. |
+| `delete_removes_holiday_floor` | Deletions and listing changes | Warning: deleting a holiday date rule drops its protection floor. |
+| `listing_needs_order` | Deletions and listing changes |  |
+| `listing_weekly_change_above_limit` | Deletions and listing changes |  |
+| `listing_base_below_min` | Deletions and listing changes |  |
+
+### 1.13 Not in this milestone
+
+Writing (the write gate, the writer of the payload and its slices, the confirmation after writing and the step ledger recorded from what was written) comes in milestone 3. The market ruler of a ladder strategy and the nights closed in the PMS without a booking have no source in the shadow run yet, so there no ladder strategy acts and no night is held as blocked. `OccupancyWindows` counts a blocked night as sold, because the PMS inventory does not tell a block from a sale; `PmsPricingMismatch` is what shows blocks without a booking.
 
 ## Part 2. Signature reference
 
@@ -1384,7 +1710,8 @@ public function __construct(Property $property, RoomType $room, DateTimeImmutabl
    'onlyDown' => false,
    'listingTop' => NULL,
    'compareApplied' => false,
-   'lockCeiling' => false,
+   'lockCeilingDown' => false,
+   'lockCeilingAlways' => false,
 )));
 public static function fromPriceNight(Property $property, RoomType $room, PriceNight $price, ?MarketAnchor $anchor, ?LedgerStep $lastStep = null): self;
 public function isSoldOut(): bool;
@@ -1477,8 +1804,9 @@ public readonly ?float $ceilingCap;
 public readonly bool $onlyDown;
 public readonly ?float $listingTop;
 public readonly bool $compareApplied;
-public readonly bool $lockCeiling;
-public function __construct(?float $percentile = null, bool $byOrder = false, ?float $rampTop = null, float $rampShare = 0.0, bool $freeStep = false, ?float $fixedPrice = null, ?HardFloor $floor = null, ?float $ceilingCap = null, bool $onlyDown = false, ?float $listingTop = null, bool $compareApplied = false, bool $lockCeiling = false);
+public readonly bool $lockCeilingDown;
+public readonly bool $lockCeilingAlways;
+public function __construct(?float $percentile = null, bool $byOrder = false, ?float $rampTop = null, float $rampShare = 0.0, bool $freeStep = false, ?float $fixedPrice = null, ?HardFloor $floor = null, ?float $ceilingCap = null, bool $onlyDown = false, ?float $listingTop = null, bool $compareApplied = false, bool $lockCeilingDown = false, bool $lockCeilingAlways = false);
 public function percentileFor(float $statusPercentile): float;
 ```
 
@@ -1613,6 +1941,276 @@ public function direction(float $current, float $new): ?StepDirection;
 public function __construct(RuleSet $rules);
 public function forNight(Property $property, PaceStatus $status, int $daysOut): float;
 public function isAheadNear(PaceStatus $status, int $daysOut): bool;
+```
+
+#### `Ritmo\Domain\Pricing\Terms\NightTerms` (final class)
+
+```php
+public readonly PaceTerms $pace;
+public readonly ?string $floorOrder;
+public readonly ?float $replacedFloor;
+public readonly ?string $replacedOrder;
+public readonly ?string $relationOrder;
+public readonly ?string $targetOrder;
+public function __construct(PaceTerms $pace, ?string $floorOrder = null, ?float $replacedFloor = null, ?string $replacedOrder = null, ?string $relationOrder = null, ?string $targetOrder = null);
+public static function neutral(): self;
+public function citedOrder(?float $stepPrice): ?string;
+```
+
+#### `Ritmo\Domain\Pricing\Terms\NightTermsResolver` (final class)
+
+```php
+const ORDER_FLOOR = 'order_floor';
+const MARKET_FLOOR = 'market_floor';
+const PREMIUM_FLOOR = 'relation_premium';
+public function __construct(RuleSet $rules, OrdersConfig $ordersConfig, Floors $floors, OrderBook $orders, ?LastMinuteMarketFloor $marketFloor = null, ?WeekendFloorOverride $weekendOverride = null);
+public function standardFloor(RoomType $room, DateTimeImmutable $night): HardFloor;
+public function floorWithOrders(RoomType $room, DateTimeImmutable $night, OrderBook $orders): array;
+public function resolve(RoomType $room, DateTimeImmutable $night, int $daysOut, NightType $type, int $sold, int $units, int $paceSold, int $paceUnits, ?PremiumCap $premium = null, ?float $listingTop = null): NightTerms;
+public function isWeakNight(OwnerOrder $order, PaceStatus $status, int $sold, int $units): bool;
+```
+
+#### `Ritmo\Domain\Pricing\Terms\PremiumCap` (final class)
+
+```php
+public readonly float $floor;
+public readonly ?float $ceiling;
+public readonly ?string $orderRef;
+public function __construct(float $floor, ?float $ceiling, ?string $orderRef);
+```
+
+#### `Ritmo\Domain\Plan\Assembly\AssembledPlan` (final class)
+
+```php
+public readonly Plan $plan;
+public readonly ValidationResult $validation;
+public readonly ?ValidationResult $finalValidation;
+public readonly ?Payload $payload;
+public readonly array $slices;
+public readonly array $lines;
+public readonly array $noEffect;
+public readonly array $roundingOnly;
+public readonly RelationReport $relations;
+public function __construct(Plan $plan, ValidationResult $validation, ?ValidationResult $finalValidation, ?Payload $payload, array $slices, array $lines, array $noEffect, array $roundingOnly, RelationReport $relations);
+public function isValid(): bool;
+```
+
+#### `Ritmo\Domain\Plan\Assembly\CeilingRelease` (final class)
+
+```php
+const DELETE_REASON = 'CEILING_RELEASE_DELETE';
+public function __construct(StayHook $stay, float $moneySlack = 1.0);
+public function apply(array $items, RunInputs $inputs, array $occupancy): array;
+```
+
+#### `Ritmo\Domain\Plan\Assembly\Hooks\BookOrderGuard` (final class implements OrderGuard)
+
+```php
+public function __construct(OrderBook $orders);
+public function isFrozen(string $room, DateTimeImmutable $night): bool;
+public function hasOwnerPrice(string $room, DateTimeImmutable $night): bool;
+public function floorOrderRef(string $room, DateTimeImmutable $night): ?string;
+public function isActive(string $orderId, string $room, DateTimeImmutable $night): bool;
+public function releases(string $relationId, string $room, DateTimeImmutable $night): ?string;
+```
+
+#### `Ritmo\Domain\Plan\Assembly\Hooks\LadderStrategyGuard` (final class implements StrategyGuard)
+
+```php
+public function __construct(LadderParts $ladder, OrderBook $orders, DateTimeImmutable $today, array $switches, RelationReport $report, array $blocked);
+public function backsStrategy(string $orderId): bool;
+public function actsOn(string $orderId, string $roomCode, DateTimeImmutable $night): bool;
+public function marketFloor(string $orderId, string $roomCode, DateTimeImmutable $night): ?float;
+public function replacesOwnerFloors(string $roomCode, DateTimeImmutable $night): bool;
+```
+
+#### `Ritmo\Domain\Plan\Assembly\Hooks\LadderStrategyView` (final class implements StrategyView)
+
+```php
+public function __construct(?LadderParts $ladder, OrderBook $orders, array $blocked, bool $salesRamp);
+public function pinsFloorToCeiling(string $room, DateTimeImmutable $night): bool;
+public function governs(string $room, DateTimeImmutable $night): bool;
+```
+
+#### `Ritmo\Domain\Plan\Assembly\Hooks\RulerMarketTarget` (final class implements MarketTargetSource)
+
+```php
+public function __construct(MarketRuler $ruler, SalesLadder $ladder);
+public function sentPrice(Relation $relation, string $room, DateTimeImmutable $night): ?float;
+```
+
+#### `Ritmo\Domain\Plan\Assembly\Hooks\RunFloorSource` (final class implements FloorSource)
+
+```php
+public function __construct(RuleSet $rules, RunCalendar $calendar, NightTermsResolver $terms, HardFloorSource $hard, AnchorLookup $anchors, ?LastMinuteMarketFloor $marketFloor);
+public function inForce(string $room, DateTimeImmutable $night): FloorInForce;
+public function lowestAllowed(string $room, DateTimeImmutable $night): float;
+public function betweenHints(Relation $relation, string $room, DateTimeImmutable $night): BetweenHints;
+public function switchFloor(string $room, DateTimeImmutable $night): float;
+public function ruleFloor(string $room, DateTimeImmutable $night, ?DateTimeImmutable $today): ?float;
+public function safetyException(string $room, DateTimeImmutable $night): ?float;
+```
+
+#### `Ritmo\Domain\Plan\Assembly\LadderParts` (final class)
+
+```php
+public readonly LadderStrategy $strategy;
+public readonly LastMinuteMarketFloor $marketFloor;
+public readonly WeekendFloorOverride $weekendOverride;
+public readonly SalesLadder $ladder;
+public static function fromRules(RuleSet $rules, array $rooms, ?MarketRuler $ruler, StepCadence $cadence): ?self;
+public function evaluate(DateTimeImmutable $night, int $daysOut, array $rows, OrderBook $orders, array $blocked): LadderNight;
+public function acts(string $room, DateTimeImmutable $night, OrderBook $orders, array $blocked): bool;
+public function isRelational(string $room): bool;
+public function reapply(LadderNight $night, LadderReferences $references): LadderNight;
+public function inFilter(RunInputs $inputs, string $room, DateTimeImmutable $night): bool;
+public function build(RoomType $room, LadderRoomQuote $quote, int $daysOut, PriceNight $live, ?DateOverride $override, StepLedger $ledger, DateTimeImmutable $now, bool $inFilter, float $listingTop): LadderOutcome;
+```
+
+#### `Ritmo\Domain\Plan\Assembly\NightLine` (final class)
+
+```php
+const BLOCKED = 'night_blocked';
+const FROZEN = 'manual_freeze';
+const FIXED_PRICE = 'order_fixed_price';
+const LADDER_PRICE = 'ladder_price';
+const LADDER_HOLD = 'ladder_hold';
+const PROTECTION = 'sold_out_protection';
+const PROTECTION_NONE = 'sold_out_no_item';
+const SOLD_OUT_NO_ANCHOR = 'sold_out_no_anchor';
+const NO_MARKET_ANCHOR = 'no_market_anchor';
+const OUT_OF_FILTER = 'out_of_night_filter';
+const CADENCE = 'cadence_hold';
+public readonly DateTimeImmutable $night;
+public readonly string $room;
+public readonly ?float $price;
+public readonly string $code;
+public readonly array $params;
+public readonly ?float $minPrice;
+public readonly ?float $maxPrice;
+public readonly ?PaceDecision $decision;
+public function __construct(string $room, DateTimeImmutable $night, ?float $price, string $code, array $params = [], ?float $minPrice = null, ?float $maxPrice = null, ?PaceDecision $decision = null);
+public function toArray(): array;
+```
+
+#### `Ritmo\Domain\Plan\Assembly\NightPricing` (final class)
+
+```php
+public function __construct(RuleSet $rules, RunCalendar $calendar, NightFacts $facts, PaceEngine $engine, NightTermsResolver $terms, SoldOutProtection $protection, StepCadence $cadence, RelationGraph $graph, ListingCapChain $caps, PriceBandSource $bands, NightCalendar $nightTypes, ?LadderParts $ladder);
+public function run(): void;
+public function items(): array;
+public function lines(): array;
+public function strategyDecided(): array;
+```
+
+#### `Ritmo\Domain\Plan\Assembly\PlanAssembler` (final class)
+
+```php
+public function __construct(RuleSet $rules, Clock $clock, string $pmsName);
+public function assemble(RunInputs $inputs): AssembledPlan;
+```
+
+#### `Ritmo\Domain\Plan\Assembly\RunCalendar` (final class)
+
+```php
+public function __construct(RunInputs $inputs, RuleSet $rules);
+public function inputs(): RunInputs;
+public function row(string $room, DateTimeImmutable $night): ?PriceNight;
+public function lists(): array;
+public function night(DateTimeImmutable $night): array;
+public function priceRead(string $room, DateTimeImmutable $night): ?float;
+public function floorInForce(RoomType $room, DateTimeImmutable $night): float;
+public function ceilingInForce(RoomType $room, DateTimeImmutable $night): float;
+public function paceBasis(RoomType $room, DateTimeImmutable $night): array;
+```
+
+#### `Ritmo\Domain\Plan\Assembly\RunInputs` (final class)
+
+```php
+public readonly DateTimeImmutable $today;
+public readonly DateTimeImmutable $now;
+public readonly array $rooms;
+public readonly Property $property;
+public readonly int $days;
+public readonly array $calendar;
+public readonly array $overrides;
+public readonly AnchorLookup $anchors;
+public readonly StepLedger $ledger;
+public readonly OrderBook $orders;
+public readonly ?MarketRuler $ruler;
+public readonly array $blocked;
+public readonly ?array $lightFilter;
+public readonly array $readAt;
+public readonly array $weeklyReference;
+public function __construct(Property $property, array $rooms, DateTimeImmutable $today, DateTimeImmutable $now, int $days, array $calendar, array $overrides, AnchorLookup $anchors, StepLedger $ledger, OrderBook $orders, ?MarketRuler $ruler = null, array $blocked = [], ?array $lightFilter = null, array $readAt = [], array $weeklyReference = []);
+public function nights(): array;
+public function row(string $room, DateTimeImmutable $night): ?PriceNight;
+public function override(string $room, DateTimeImmutable $night): ?DateOverride;
+public function isBlocked(string $room, DateTimeImmutable $night): bool;
+public function isLightRun(): bool;
+public function inFilter(string $room, DateTimeImmutable $night): bool;
+```
+
+#### `Ritmo\Domain\Plan\Assembly\RunWiring` (final class)
+
+```php
+public readonly RunCalendar $calendar;
+public readonly RelationsConfig $relationsConfig;
+public readonly RelationGraph $graph;
+public readonly ListingCapChain $caps;
+public readonly ?LadderParts $ladder;
+public readonly NightTermsResolver $terms;
+public readonly RelationHooks $hooks;
+public readonly StayRules $stay;
+public readonly RunInputs $inputs;
+public function __construct(RuleSet $rules, Clock $clock, RunInputs $inputs);
+public function cadence(): StepCadence;
+public function pricingFacts(): NightFacts;
+public function facts(array $decided, array $strategyDecided): NightFacts;
+public function nightPricing(NightFacts $facts): NightPricing;
+public function validationContext(RelationReport $report): ValidationContext;
+public function occupancy(): array;
+```
+
+#### `Ritmo\Domain\Plan\Assembly\WorkItem` (final class)
+
+```php
+const PACE_STEP = 'PACE_STEP';
+const LADDER_PRICE = 'LADDER_PRICE';
+const SOLD_OUT_PROTECTION = 'SOLD_OUT_PROTECTION';
+const RELATION_AT_LEAST = 'RELATION_AT_LEAST';
+const RELATION_BETWEEN = 'RELATION_BETWEEN';
+const RELATION_PREMIUM_OVER_MAX = 'RELATION_PREMIUM_OVER_MAX';
+const RELATION_DISCOUNT_BAND = 'RELATION_DISCOUNT_BAND';
+const RELATION_OCCUPANCY_SWITCH = 'RELATION_OCCUPANCY_SWITCH';
+public readonly ?int $minStay;
+public readonly ?string $checkInMask;
+public readonly ?string $checkOutMask;
+public readonly ?OrphanClaim $orphan;
+public readonly bool $keepReason;
+public readonly string $room;
+public readonly DateTimeImmutable $night;
+public readonly float $priceBefore;
+public readonly ?float $minPrice;
+public readonly ?float $maxPrice;
+public readonly string $reasonCode;
+public readonly array $params;
+public readonly NightState $before;
+public readonly ?string $orderId;
+public readonly bool $engineStep;
+public readonly bool $strategy;
+public readonly bool $protection;
+public function __construct(string $room, DateTimeImmutable $night, float $priceBefore, ?float $minPrice, ?float $maxPrice, string $reasonCode, array $params, NightState $before, ?string $orderId = null, bool $engineStep = false, bool $strategy = false, bool $protection = false);
+public function key(): string;
+public function toDraft(): DraftItem;
+public function absorb(DraftItem $draft): void;
+public static function fromDraft(DraftItem $draft, NightState $before): self;
+public function primaryCode(): string;
+public function relationCodes(): array;
+public function syncStep(float $tolerance): void;
+public function readsOccupancy(): bool;
+public static function applied(float $amount, float $base): float;
+public function toPlanItem(): PlanItem;
 ```
 
 #### `Ritmo\Domain\Plan\CalendarNight` (final class)
@@ -2139,7 +2737,8 @@ public readonly ?Holiday $holiday;
 public readonly ItemAuthority $authority;
 public readonly ?CalendarNight $fresh;
 public readonly ?NightState $state;
-public function __construct(int $index, PercentItem $percent, RoomType $room, int $daysOut, NightType $nightType, ?Holiday $holiday, ItemAuthority $authority, ?CalendarNight $fresh, ?NightState $state);
+public readonly bool $afterDeletion;
+public function __construct(int $index, PercentItem $percent, RoomType $room, int $daysOut, NightType $nightType, ?Holiday $holiday, ItemAuthority $authority, ?CalendarNight $fresh, ?NightState $state, bool $afterDeletion = false);
 public function floor(): ?float;
 public function lowest(): ?float;
 public function current(): ?float;

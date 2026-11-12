@@ -139,11 +139,19 @@ final class ConnectorFactory implements ConnectorSource
         return array_values(array_filter(array_map('trim', explode(',', $text)), static fn (string $id): bool => preg_match('/^[1-9]\d{0,11}$/', $id) === 1));
     }
 
+    /**
+     * The PMS of the listings as the pricing system names it: the payload of a plan carries it.
+     */
+    public function pricingPmsName(): string
+    {
+        return (string) $this->settings->get(self::PRICELABS_PMS, self::DEFAULT_PRICELABS_PMS);
+    }
+
     private function pricingConfig(): PriceLabsConfig
     {
         return new PriceLabsConfig(
             $this->secret(self::PRICELABS_SECRET, 'PriceLabs'),
-            (string) $this->settings->get(self::PRICELABS_PMS, self::DEFAULT_PRICELABS_PMS),
+            $this->pricingPmsName(),
             self::constantUrl(self::PRICELABS_URL_CONSTANT)
         );
     }

@@ -1,0 +1,935 @@
+{
+ "function": "pace.regra_afrodite",
+ "php_target": "Ritmo\\Domain\\Relations\\PremiumBounds::forNight()",
+ "notes": "Floor and ceiling of the top room before the coherence stage (for the pace step and the sold-out protection). `band` is the room's sent band of the night (null when none), `band_last_night` the last night it may be copied to. Floor 0 without a member that is not sold out.",
+ "cases": [
+  {
+   "name": "weekday_all_free",
+   "input": {
+    "night": "2027-03-02",
+    "today": "2027-03-01",
+    "calendar": {
+     "Q7": {
+      "2027-03-02": {
+       "price": 1300.0,
+       "sold": 1,
+       "total": 7,
+       "min": null,
+       "max": null
+      }
+     },
+     "Double": {
+      "2027-03-02": {
+       "price": 1400.0,
+       "sold": 1,
+       "total": 6,
+       "min": null,
+       "max": null
+      }
+     },
+     "Q2": {
+      "2027-03-02": {
+       "price": 1350.0,
+       "sold": 0,
+       "total": 2,
+       "min": null,
+       "max": null
+      }
+     }
+    },
+    "decided": {},
+    "band": null,
+    "band_last_night": "2027-06-04"
+   },
+   "expected": {
+    "floor": 1680.0,
+    "ceiling": null
+   }
+  },
+  {
+   "name": "weekday_double_sold_out",
+   "input": {
+    "night": "2027-03-02",
+    "today": "2027-03-01",
+    "calendar": {
+     "Q7": {
+      "2027-03-02": {
+       "price": 1300.0,
+       "sold": 1,
+       "total": 7,
+       "min": null,
+       "max": null
+      }
+     },
+     "Double": {
+      "2027-03-02": {
+       "price": 1400.0,
+       "sold": 6,
+       "total": 6,
+       "min": null,
+       "max": null
+      }
+     },
+     "Q2": {
+      "2027-03-02": {
+       "price": 1350.0,
+       "sold": 0,
+       "total": 2,
+       "min": null,
+       "max": null
+      }
+     }
+    },
+    "decided": {},
+    "band": null,
+    "band_last_night": "2027-06-04"
+   },
+   "expected": {
+    "floor": 1620.0,
+    "ceiling": null
+   }
+  },
+  {
+   "name": "weekday_all_sold_out",
+   "input": {
+    "night": "2027-03-02",
+    "today": "2027-03-01",
+    "calendar": {
+     "Q7": {
+      "2027-03-02": {
+       "price": 1300.0,
+       "sold": 7,
+       "total": 7,
+       "min": null,
+       "max": null
+      }
+     },
+     "Double": {
+      "2027-03-02": {
+       "price": 1400.0,
+       "sold": 6,
+       "total": 6,
+       "min": null,
+       "max": null
+      }
+     },
+     "Q2": {
+      "2027-03-02": {
+       "price": 1350.0,
+       "sold": 2,
+       "total": 2,
+       "min": null,
+       "max": null
+      }
+     }
+    },
+    "decided": {},
+    "band": null,
+    "band_last_night": "2027-06-04"
+   },
+   "expected": {
+    "floor": 0.0,
+    "ceiling": null
+   }
+  },
+  {
+   "name": "weekday_decided_price_overrides_calendar",
+   "input": {
+    "night": "2027-03-02",
+    "today": "2027-03-01",
+    "calendar": {
+     "Q7": {
+      "2027-03-02": {
+       "price": 1300.0,
+       "sold": 1,
+       "total": 7,
+       "min": null,
+       "max": null
+      }
+     },
+     "Double": {
+      "2027-03-02": {
+       "price": 1400.0,
+       "sold": 1,
+       "total": 6,
+       "min": null,
+       "max": null
+      }
+     },
+     "Q2": {
+      "2027-03-02": {
+       "price": 1350.0,
+       "sold": 0,
+       "total": 2,
+       "min": null,
+       "max": null
+      }
+     }
+    },
+    "decided": {
+     "Double|2027-03-02": 1509.6
+    },
+    "band": null,
+    "band_last_night": "2027-06-04"
+   },
+   "expected": {
+    "floor": 1811.5199999999998,
+    "ceiling": null
+   }
+  },
+  {
+   "name": "weekday_decided_price_of_sold_out_room_ignored",
+   "input": {
+    "night": "2027-03-02",
+    "today": "2027-03-01",
+    "calendar": {
+     "Q7": {
+      "2027-03-02": {
+       "price": 1300.0,
+       "sold": 1,
+       "total": 7,
+       "min": null,
+       "max": null
+      }
+     },
+     "Double": {
+      "2027-03-02": {
+       "price": 1400.0,
+       "sold": 6,
+       "total": 6,
+       "min": null,
+       "max": null
+      }
+     },
+     "Q2": {
+      "2027-03-02": {
+       "price": 1350.0,
+       "sold": 0,
+       "total": 2,
+       "min": null,
+       "max": null
+      }
+     }
+    },
+    "decided": {
+     "Double|2027-03-02": 1900.0
+    },
+    "band": null,
+    "band_last_night": "2027-06-04"
+   },
+   "expected": {
+    "floor": 1620.0,
+    "ceiling": null
+   }
+  },
+  {
+   "name": "weekday_no_calendars",
+   "input": {
+    "night": "2027-03-02",
+    "today": "2027-03-01",
+    "calendar": {},
+    "decided": {},
+    "band": null,
+    "band_last_night": "2027-06-04"
+   },
+   "expected": {
+    "floor": 0.0,
+    "ceiling": null
+   }
+  },
+  {
+   "name": "weekday_only_q2",
+   "input": {
+    "night": "2027-03-02",
+    "today": "2027-03-01",
+    "calendar": {
+     "Q2": {
+      "2027-03-02": {
+       "price": 1350.0,
+       "sold": 0,
+       "total": 2,
+       "min": null,
+       "max": null
+      }
+     }
+    },
+    "decided": {},
+    "band": null,
+    "band_last_night": "2027-06-04"
+   },
+   "expected": {
+    "floor": 1620.0,
+    "ceiling": null
+   }
+  },
+  {
+   "name": "weekend_inside_horizon_band",
+   "input": {
+    "night": "2027-03-06",
+    "today": "2027-03-01",
+    "calendar": {
+     "Q7": {
+      "2027-03-06": {
+       "price": 2000.0,
+       "sold": 1,
+       "total": 7,
+       "min": null,
+       "max": null
+      }
+     },
+     "Double": {
+      "2027-03-06": {
+       "price": 2100.0,
+       "sold": 1,
+       "total": 6,
+       "min": null,
+       "max": null
+      }
+     },
+     "Q2": {
+      "2027-03-06": {
+       "price": 2050.0,
+       "sold": 0,
+       "total": 2,
+       "min": null,
+       "max": null
+      }
+     }
+    },
+    "decided": {},
+    "band": [
+     2540.0,
+     2857.0
+    ],
+    "band_last_night": "2027-06-04"
+   },
+   "expected": {
+    "floor": 2540.0,
+    "ceiling": 2857.0
+   }
+  },
+  {
+   "name": "weekend_inside_horizon_order_above_band_floor",
+   "input": {
+    "night": "2027-03-06",
+    "today": "2027-03-01",
+    "calendar": {
+     "Q7": {
+      "2027-03-06": {
+       "price": 2000.0,
+       "sold": 1,
+       "total": 7,
+       "min": null,
+       "max": null
+      }
+     },
+     "Double": {
+      "2027-03-06": {
+       "price": 2900.0,
+       "sold": 1,
+       "total": 6,
+       "min": null,
+       "max": null
+      }
+     },
+     "Q2": {
+      "2027-03-06": {
+       "price": 2050.0,
+       "sold": 0,
+       "total": 2,
+       "min": null,
+       "max": null
+      }
+     }
+    },
+    "decided": {},
+    "band": [
+     2540.0,
+     2857.0
+    ],
+    "band_last_night": "2027-06-04"
+   },
+   "expected": {
+    "floor": 3045.0,
+    "ceiling": 2857.0
+   }
+  },
+  {
+   "name": "weekend_all_sold_out_band_only",
+   "input": {
+    "night": "2027-03-06",
+    "today": "2027-03-01",
+    "calendar": {
+     "Q7": {
+      "2027-03-06": {
+       "price": 2000.0,
+       "sold": 7,
+       "total": 7,
+       "min": null,
+       "max": null
+      }
+     },
+     "Double": {
+      "2027-03-06": {
+       "price": 2100.0,
+       "sold": 6,
+       "total": 6,
+       "min": null,
+       "max": null
+      }
+     },
+     "Q2": {
+      "2027-03-06": {
+       "price": 2050.0,
+       "sold": 2,
+       "total": 2,
+       "min": null,
+       "max": null
+      }
+     }
+    },
+    "decided": {},
+    "band": [
+     2540.0,
+     2857.0
+    ],
+    "band_last_night": "2027-06-04"
+   },
+   "expected": {
+    "floor": 2540.0,
+    "ceiling": 2857.0
+   }
+  },
+  {
+   "name": "weekend_horizon_last_day",
+   "input": {
+    "night": "2027-06-04",
+    "today": "2027-03-01",
+    "calendar": {
+     "Q7": {
+      "2027-06-04": {
+       "price": 2000.0,
+       "sold": 1,
+       "total": 7,
+       "min": null,
+       "max": null
+      }
+     },
+     "Double": {
+      "2027-06-04": {
+       "price": 2100.0,
+       "sold": 1,
+       "total": 6,
+       "min": null,
+       "max": null
+      }
+     },
+     "Q2": {
+      "2027-06-04": {
+       "price": 2050.0,
+       "sold": 0,
+       "total": 2,
+       "min": null,
+       "max": null
+      }
+     }
+    },
+    "decided": {},
+    "band": [
+     2540.0,
+     2857.0
+    ],
+    "band_last_night": "2027-06-04"
+   },
+   "expected": {
+    "floor": 2540.0,
+    "ceiling": 2857.0
+   }
+  },
+  {
+   "name": "weekend_beyond_horizon",
+   "input": {
+    "night": "2027-06-05",
+    "today": "2027-03-01",
+    "calendar": {
+     "Q7": {
+      "2027-06-05": {
+       "price": 2000.0,
+       "sold": 1,
+       "total": 7,
+       "min": null,
+       "max": null
+      }
+     },
+     "Double": {
+      "2027-06-05": {
+       "price": 2100.0,
+       "sold": 1,
+       "total": 6,
+       "min": null,
+       "max": null
+      }
+     },
+     "Q2": {
+      "2027-06-05": {
+       "price": 2050.0,
+       "sold": 0,
+       "total": 2,
+       "min": null,
+       "max": null
+      }
+     }
+    },
+    "decided": {},
+    "band": [
+     2540.0,
+     2857.0
+    ],
+    "band_last_night": "2027-06-04"
+   },
+   "expected": {
+    "floor": 2205.0,
+    "ceiling": null
+   }
+  },
+  {
+   "name": "holiday_fri",
+   "input": {
+    "night": "2027-03-26",
+    "today": "2027-03-01",
+    "calendar": {
+     "Q7": {
+      "2027-03-26": {
+       "price": 2500.0,
+       "sold": 1,
+       "total": 7,
+       "min": null,
+       "max": null
+      }
+     },
+     "Double": {
+      "2027-03-26": {
+       "price": 3000.0,
+       "sold": 1,
+       "total": 6,
+       "min": null,
+       "max": null
+      }
+     },
+     "Q2": {
+      "2027-03-26": {
+       "price": 2700.0,
+       "sold": 0,
+       "total": 2,
+       "min": null,
+       "max": null
+      }
+     }
+    },
+    "decided": {},
+    "band": null,
+    "band_last_night": "2027-06-04"
+   },
+   "expected": {
+    "floor": 3150.0,
+    "ceiling": null
+   }
+  },
+  {
+   "name": "holiday_sat",
+   "input": {
+    "night": "2027-03-27",
+    "today": "2027-03-01",
+    "calendar": {
+     "Q7": {
+      "2027-03-27": {
+       "price": 2500.0,
+       "sold": 1,
+       "total": 7,
+       "min": null,
+       "max": null
+      }
+     },
+     "Double": {
+      "2027-03-27": {
+       "price": 3000.0,
+       "sold": 1,
+       "total": 6,
+       "min": null,
+       "max": null
+      }
+     },
+     "Q2": {
+      "2027-03-27": {
+       "price": 2700.0,
+       "sold": 0,
+       "total": 2,
+       "min": null,
+       "max": null
+      }
+     }
+    },
+    "decided": {},
+    "band": null,
+    "band_last_night": "2027-06-04"
+   },
+   "expected": {
+    "floor": 3150.0,
+    "ceiling": null
+   }
+  },
+  {
+   "name": "sunday_after_holiday",
+   "input": {
+    "night": "2027-03-28",
+    "today": "2027-03-01",
+    "calendar": {
+     "Q7": {
+      "2027-03-28": {
+       "price": 1300.0,
+       "sold": 1,
+       "total": 7,
+       "min": null,
+       "max": null
+      }
+     },
+     "Double": {
+      "2027-03-28": {
+       "price": 1400.0,
+       "sold": 1,
+       "total": 6,
+       "min": null,
+       "max": null
+      }
+     },
+     "Q2": {
+      "2027-03-28": {
+       "price": 1350.0,
+       "sold": 0,
+       "total": 2,
+       "min": null,
+       "max": null
+      }
+     }
+    },
+    "decided": {},
+    "band": null,
+    "band_last_night": "2027-06-04"
+   },
+   "expected": {
+    "floor": 1680.0,
+    "ceiling": null
+   }
+  },
+  {
+   "name": "plan_weekend_governed_no_band",
+   "input": {
+    "night": "2026-11-14",
+    "today": "2026-11-11",
+    "calendar": {
+     "Q7": {
+      "2026-11-14": {
+       "price": 1100.0,
+       "sold": 1,
+       "total": 7,
+       "min": null,
+       "max": null
+      }
+     },
+     "Double": {
+      "2026-11-14": {
+       "price": 1500.0,
+       "sold": 1,
+       "total": 6,
+       "min": null,
+       "max": null
+      }
+     },
+     "Q2": {
+      "2026-11-14": {
+       "price": 1400.0,
+       "sold": 0,
+       "total": 2,
+       "min": null,
+       "max": null
+      }
+     }
+    },
+    "decided": {},
+    "band": null,
+    "band_last_night": "2027-02-14"
+   },
+   "expected": {
+    "floor": 1575.0,
+    "ceiling": null
+   }
+  },
+  {
+   "name": "plan_weekend_without_plan_order_band",
+   "input": {
+    "night": "2026-11-14",
+    "today": "2026-11-11",
+    "calendar": {
+     "Q7": {
+      "2026-11-14": {
+       "price": 1100.0,
+       "sold": 1,
+       "total": 7,
+       "min": null,
+       "max": null
+      }
+     },
+     "Double": {
+      "2026-11-14": {
+       "price": 1500.0,
+       "sold": 1,
+       "total": 6,
+       "min": null,
+       "max": null
+      }
+     },
+     "Q2": {
+      "2026-11-14": {
+       "price": 1400.0,
+       "sold": 0,
+       "total": 2,
+       "min": null,
+       "max": null
+      }
+     }
+    },
+    "decided": {},
+    "band": [
+     2540.0,
+     2857.0
+    ],
+    "band_last_night": "2027-02-14"
+   },
+   "expected": {
+    "floor": 2540.0,
+    "ceiling": 2857.0
+   }
+  },
+  {
+   "name": "plan_weekday",
+   "input": {
+    "night": "2026-11-16",
+    "today": "2026-11-11",
+    "calendar": {
+     "Q7": {
+      "2026-11-16": {
+       "price": 905.0,
+       "sold": 1,
+       "total": 7,
+       "min": null,
+       "max": null
+      }
+     },
+     "Double": {
+      "2026-11-16": {
+       "price": 950.0,
+       "sold": 1,
+       "total": 6,
+       "min": null,
+       "max": null
+      }
+     },
+     "Q2": {
+      "2026-11-16": {
+       "price": 930.0,
+       "sold": 0,
+       "total": 2,
+       "min": null,
+       "max": null
+      }
+     }
+    },
+    "decided": {},
+    "band": null,
+    "band_last_night": "2027-02-14"
+   },
+   "expected": {
+    "floor": 1140.0,
+    "ceiling": null
+   }
+  },
+  {
+   "name": "plan_between_holidays_sun",
+   "input": {
+    "night": "2026-12-27",
+    "today": "2026-12-20",
+    "calendar": {
+     "Q7": {
+      "2026-12-27": {
+       "price": 2400.0,
+       "sold": 1,
+       "total": 7,
+       "min": null,
+       "max": null
+      }
+     },
+     "Double": {
+      "2026-12-27": {
+       "price": 2400.0,
+       "sold": 1,
+       "total": 6,
+       "min": null,
+       "max": null
+      }
+     },
+     "Q2": {
+      "2026-12-27": {
+       "price": 2400.0,
+       "sold": 0,
+       "total": 2,
+       "min": null,
+       "max": null
+      }
+     }
+    },
+    "decided": {},
+    "band": null,
+    "band_last_night": "2027-03-25"
+   },
+   "expected": {
+    "floor": 2880.0,
+    "ceiling": null
+   }
+  },
+  {
+   "name": "plan_reveillon_eve_tue_holiday",
+   "input": {
+    "night": "2026-12-29",
+    "today": "2026-12-20",
+    "calendar": {
+     "Q7": {
+      "2026-12-29": {
+       "price": 2400.0,
+       "sold": 1,
+       "total": 7,
+       "min": null,
+       "max": null
+      }
+     },
+     "Double": {
+      "2026-12-29": {
+       "price": 2500.0,
+       "sold": 1,
+       "total": 6,
+       "min": null,
+       "max": null
+      }
+     },
+     "Q2": {
+      "2026-12-29": {
+       "price": 2450.0,
+       "sold": 0,
+       "total": 2,
+       "min": null,
+       "max": null
+      }
+     }
+    },
+    "decided": {},
+    "band": null,
+    "band_last_night": "2027-03-25"
+   },
+   "expected": {
+    "floor": 2625.0,
+    "ceiling": null
+   }
+  },
+  {
+   "name": "patched_horizon_10_days",
+   "input": {
+    "night": "2027-03-12",
+    "today": "2027-03-01",
+    "calendar": {
+     "Q7": {
+      "2027-03-12": {
+       "price": 2000.0,
+       "sold": 1,
+       "total": 7,
+       "min": null,
+       "max": null
+      }
+     },
+     "Double": {
+      "2027-03-12": {
+       "price": 2100.0,
+       "sold": 1,
+       "total": 6,
+       "min": null,
+       "max": null
+      }
+     },
+     "Q2": {
+      "2027-03-12": {
+       "price": 2050.0,
+       "sold": 0,
+       "total": 2,
+       "min": null,
+       "max": null
+      }
+     }
+    },
+    "decided": {},
+    "band": [
+     2540.0,
+     2857.0
+    ],
+    "band_last_night": "2027-03-11"
+   },
+   "expected": {
+    "floor": 2205.0,
+    "ceiling": null
+   }
+  },
+  {
+   "name": "patched_horizon_11_days",
+   "input": {
+    "night": "2027-03-12",
+    "today": "2027-03-01",
+    "calendar": {
+     "Q7": {
+      "2027-03-12": {
+       "price": 2000.0,
+       "sold": 1,
+       "total": 7,
+       "min": null,
+       "max": null
+      }
+     },
+     "Double": {
+      "2027-03-12": {
+       "price": 2100.0,
+       "sold": 1,
+       "total": 6,
+       "min": null,
+       "max": null
+      }
+     },
+     "Q2": {
+      "2027-03-12": {
+       "price": 2050.0,
+       "sold": 0,
+       "total": 2,
+       "min": null,
+       "max": null
+      }
+     }
+    },
+    "decided": {},
+    "band": [
+     2540.0,
+     2857.0
+    ],
+    "band_last_night": "2027-03-12"
+   },
+   "expected": {
+    "floor": 2540.0,
+    "ceiling": 2857.0
+   }
+  }
+ ]
+}

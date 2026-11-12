@@ -1,0 +1,466 @@
+{
+ "periodos": [
+  {
+   "inicio": "2026-10-14",
+   "fim": "2026-10-14",
+   "dias": "todos",
+   "estadia_minima": 1
+  },
+  {
+   "inicio": "2026-10-15",
+   "fim": "2026-10-15",
+   "dias": "todos",
+   "estadia_minima": 1
+  },
+  {
+   "inicio": "2026-10-16",
+   "fim": "2026-10-17",
+   "dias": "todos",
+   "estadia_minima": 2
+  },
+  {
+   "inicio": "2026-10-18",
+   "fim": "2026-10-29",
+   "dias": "dom-qui",
+   "estadia_minima": 1
+  },
+  {
+   "inicio": "2026-10-18",
+   "fim": "2026-10-29",
+   "dias": "sex-sab",
+   "estadia_minima": 1
+  },
+  {
+   "inicio": "2026-10-30",
+   "fim": "2026-11-01",
+   "dias": "todos",
+   "estadia_minima": 3
+  },
+  {
+   "inicio": "2026-11-02",
+   "fim": "2026-11-18",
+   "dias": "dom-qui",
+   "estadia_minima": 1
+  },
+  {
+   "inicio": "2026-11-02",
+   "fim": "2026-11-18",
+   "dias": "sex-sab",
+   "estadia_minima": 1
+  },
+  {
+   "inicio": "2026-11-19",
+   "fim": "2026-11-21",
+   "dias": "todos",
+   "estadia_minima": 2
+  },
+  {
+   "inicio": "2026-11-22",
+   "fim": "2026-12-17",
+   "dias": "dom-qui",
+   "estadia_minima": 1
+  },
+  {
+   "inicio": "2026-11-22",
+   "fim": "2026-12-17",
+   "dias": "sex-sab",
+   "estadia_minima": 1
+  },
+  {
+   "inicio": "2026-12-18",
+   "fim": "2026-12-23",
+   "dias": "todos",
+   "estadia_minima": 1
+  },
+  {
+   "inicio": "2026-12-24",
+   "fim": "2026-12-26",
+   "dias": "todos",
+   "estadia_minima": 2
+  },
+  {
+   "inicio": "2026-12-27",
+   "fim": "2026-12-28",
+   "dias": "todos",
+   "estadia_minima": 1
+  },
+  {
+   "inicio": "2026-12-29",
+   "fim": "2027-01-02",
+   "dias": "todos",
+   "estadia_minima": 3
+  },
+  {
+   "inicio": "2027-01-03",
+   "fim": "2027-01-21",
+   "dias": "dom-qui",
+   "estadia_minima": 1
+  },
+  {
+   "inicio": "2027-01-03",
+   "fim": "2027-01-21",
+   "dias": "sex-sab",
+   "estadia_minima": 1
+  },
+  {
+   "inicio": "2027-01-22",
+   "fim": "2027-01-24",
+   "dias": "todos",
+   "estadia_minima": 2
+  },
+  {
+   "inicio": "2027-01-25",
+   "fim": "2027-02-04",
+   "dias": "dom-qui",
+   "estadia_minima": 1
+  },
+  {
+   "inicio": "2027-01-25",
+   "fim": "2027-02-04",
+   "dias": "sex-sab",
+   "estadia_minima": 1
+  },
+  {
+   "inicio": "2027-02-05",
+   "fim": "2027-02-09",
+   "dias": "todos",
+   "estadia_minima": 3
+  },
+  {
+   "inicio": "2027-02-10",
+   "fim": "2027-03-17",
+   "dias": "dom-qui",
+   "estadia_minima": 1
+  },
+  {
+   "inicio": "2027-02-10",
+   "fim": "2027-03-17",
+   "dias": "sex-sab",
+   "estadia_minima": 1
+  },
+  {
+   "inicio": "2027-03-18",
+   "fim": "2027-03-20",
+   "dias": "todos",
+   "estadia_minima": 1
+  },
+  {
+   "inicio": "2027-03-21",
+   "fim": "2027-03-24",
+   "dias": "todos",
+   "estadia_minima": 1
+  },
+  {
+   "inicio": "2027-03-25",
+   "fim": "2027-03-27",
+   "dias": "todos",
+   "estadia_minima": 2
+  },
+  {
+   "inicio": "2027-03-28",
+   "fim": "2027-04-19",
+   "dias": "dom-qui",
+   "estadia_minima": 1
+  },
+  {
+   "inicio": "2027-03-28",
+   "fim": "2027-04-19",
+   "dias": "sex-sab",
+   "estadia_minima": 1
+  },
+  {
+   "inicio": "2027-04-20",
+   "fim": "2027-04-21",
+   "dias": "todos",
+   "estadia_minima": 1
+  },
+  {
+   "inicio": "2027-04-22",
+   "fim": "2027-04-29",
+   "dias": "dom-qui",
+   "estadia_minima": 1
+  },
+  {
+   "inicio": "2027-04-22",
+   "fim": "2027-04-29",
+   "dias": "sex-sab",
+   "estadia_minima": 1
+  },
+  {
+   "inicio": "2027-04-30",
+   "fim": "2027-05-01",
+   "dias": "todos",
+   "estadia_minima": 1
+  },
+  {
+   "inicio": "2027-05-02",
+   "fim": "2027-05-25",
+   "dias": "dom-qui",
+   "estadia_minima": 1
+  },
+  {
+   "inicio": "2027-05-02",
+   "fim": "2027-05-25",
+   "dias": "sex-sab",
+   "estadia_minima": 1
+  },
+  {
+   "inicio": "2027-05-26",
+   "fim": "2027-05-29",
+   "dias": "todos",
+   "estadia_minima": 3
+  },
+  {
+   "inicio": "2027-05-30",
+   "fim": "2027-06-10",
+   "dias": "dom-qui",
+   "estadia_minima": 1
+  },
+  {
+   "inicio": "2027-05-30",
+   "fim": "2027-06-10",
+   "dias": "sex-sab",
+   "estadia_minima": 2
+  },
+  {
+   "inicio": "2027-06-11",
+   "fim": "2027-06-12",
+   "dias": "todos",
+   "estadia_minima": 2
+  },
+  {
+   "inicio": "2027-06-13",
+   "fim": "2027-07-01",
+   "dias": "dom-qui",
+   "estadia_minima": 1
+  },
+  {
+   "inicio": "2027-06-13",
+   "fim": "2027-07-01",
+   "dias": "sex-sab",
+   "estadia_minima": 2
+  },
+  {
+   "inicio": "2027-07-02",
+   "fim": "2027-07-03",
+   "dias": "todos",
+   "estadia_minima": 2
+  },
+  {
+   "inicio": "2027-07-04",
+   "fim": "2027-07-07",
+   "dias": "todos",
+   "estadia_minima": 1
+  },
+  {
+   "inicio": "2027-07-08",
+   "fim": "2027-07-10",
+   "dias": "todos",
+   "estadia_minima": 3
+  },
+  {
+   "inicio": "2027-07-11",
+   "fim": "2027-07-25",
+   "dias": "dom-qui",
+   "estadia_minima": 2
+  },
+  {
+   "inicio": "2027-07-11",
+   "fim": "2027-07-25",
+   "dias": "sex-sab",
+   "estadia_minima": 2
+  },
+  {
+   "inicio": "2027-07-26",
+   "fim": "2027-07-29",
+   "dias": "todos",
+   "estadia_minima": 1
+  },
+  {
+   "inicio": "2027-07-30",
+   "fim": "2027-07-31",
+   "dias": "todos",
+   "estadia_minima": 2
+  },
+  {
+   "inicio": "2027-08-01",
+   "fim": "2027-08-15",
+   "dias": "dom-qui",
+   "estadia_minima": 1
+  },
+  {
+   "inicio": "2027-08-01",
+   "fim": "2027-08-15",
+   "dias": "sex-sab",
+   "estadia_minima": 1
+  },
+  {
+   "inicio": "2027-08-16",
+   "fim": "2027-09-02",
+   "dias": "dom-qui",
+   "estadia_minima": 1
+  },
+  {
+   "inicio": "2027-08-16",
+   "fim": "2027-09-02",
+   "dias": "sex-sab",
+   "estadia_minima": 1
+  },
+  {
+   "inicio": "2027-09-03",
+   "fim": "2027-09-06",
+   "dias": "todos",
+   "estadia_minima": 2
+  },
+  {
+   "inicio": "2027-09-07",
+   "fim": "2027-09-14",
+   "dias": "dom-qui",
+   "estadia_minima": 1
+  },
+  {
+   "inicio": "2027-09-07",
+   "fim": "2027-09-14",
+   "dias": "sex-sab",
+   "estadia_minima": 1
+  },
+  {
+   "inicio": "2027-09-15",
+   "fim": "2027-09-18",
+   "dias": "todos",
+   "estadia_minima": 2
+  },
+  {
+   "inicio": "2027-09-19",
+   "fim": "2027-09-23",
+   "dias": "todos",
+   "estadia_minima": 1
+  },
+  {
+   "inicio": "2027-09-24",
+   "fim": "2027-09-25",
+   "dias": "todos",
+   "estadia_minima": 2
+  },
+  {
+   "inicio": "2027-09-26",
+   "fim": "2027-10-07",
+   "dias": "dom-qui",
+   "estadia_minima": 1
+  },
+  {
+   "inicio": "2027-09-26",
+   "fim": "2027-10-07",
+   "dias": "sex-sab",
+   "estadia_minima": 1
+  },
+  {
+   "inicio": "2027-10-08",
+   "fim": "2027-10-11",
+   "dias": "todos",
+   "estadia_minima": 2
+  },
+  {
+   "inicio": "2027-10-12",
+   "fim": "2027-10-13",
+   "dias": "todos",
+   "estadia_minima": 1
+  },
+  {
+   "inicio": "2027-10-14",
+   "fim": "2027-10-14",
+   "dias": "todos",
+   "estadia_minima": 1
+  },
+  {
+   "inicio": "2027-10-15",
+   "fim": "2027-10-16",
+   "dias": "todos",
+   "estadia_minima": 2
+  },
+  {
+   "inicio": "2027-10-17",
+   "fim": "2027-10-28",
+   "dias": "dom-qui",
+   "estadia_minima": 1
+  },
+  {
+   "inicio": "2027-10-17",
+   "fim": "2027-10-28",
+   "dias": "sex-sab",
+   "estadia_minima": 1
+  },
+  {
+   "inicio": "2027-10-29",
+   "fim": "2027-11-01",
+   "dias": "todos",
+   "estadia_minima": 2
+  },
+  {
+   "inicio": "2027-11-02",
+   "fim": "2027-11-11",
+   "dias": "dom-qui",
+   "estadia_minima": 1
+  },
+  {
+   "inicio": "2027-11-02",
+   "fim": "2027-11-11",
+   "dias": "sex-sab",
+   "estadia_minima": 1
+  },
+  {
+   "inicio": "2027-11-12",
+   "fim": "2027-11-14",
+   "dias": "todos",
+   "estadia_minima": 2
+  },
+  {
+   "inicio": "2027-11-15",
+   "fim": "2027-11-18",
+   "dias": "todos",
+   "estadia_minima": 1
+  },
+  {
+   "inicio": "2027-11-19",
+   "fim": "2027-11-20",
+   "dias": "todos",
+   "estadia_minima": 1
+  },
+  {
+   "inicio": "2027-11-21",
+   "fim": "2027-12-17",
+   "dias": "dom-qui",
+   "estadia_minima": 1
+  },
+  {
+   "inicio": "2027-11-21",
+   "fim": "2027-12-17",
+   "dias": "sex-sab",
+   "estadia_minima": 1
+  },
+  {
+   "inicio": "2027-12-18",
+   "fim": "2027-12-23",
+   "dias": "todos",
+   "estadia_minima": 1
+  },
+  {
+   "inicio": "2027-12-24",
+   "fim": "2027-12-25",
+   "dias": "todos",
+   "estadia_minima": 2
+  },
+  {
+   "inicio": "2027-12-26",
+   "fim": "2027-12-28",
+   "dias": "todos",
+   "estadia_minima": 1
+  },
+  {
+   "inicio": "2027-12-29",
+   "fim": "2027-12-31",
+   "dias": "todos",
+   "estadia_minima": 3
+  }
+ ]
+}

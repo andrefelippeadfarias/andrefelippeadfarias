@@ -1,0 +1,12 @@
+{
+ "function": "pace.plano_no_ledger",
+ "php_target": "StepLedger::hasLadderStep(room, night)",
+ "notes": "Has the room night already had a ladder step (status 'plano')?",
+ "cases": [
+  {"name": "empty", "input": {"ledger": [], "room": "Q7", "night": "2026-11-13"}, "expected": false},
+  {"name": "only_pace_steps", "input": {"ledger": [{"quarto": "Q7", "noite": "2026-11-13", "de": 0.0, "para": 0, "direcao": "desce", "status": "atras", "vendidas": 2, "base": "quarto", "total": null, "gravado_em": "2026-11-10T10:00:00+00:00", "chegou_ao_canal": false}], "room": "Q7", "night": "2026-11-13"}, "expected": false},
+  {"name": "ladder_step", "input": {"ledger": [{"quarto": "Q7", "noite": "2026-11-13", "de": 0.0, "para": 0, "direcao": "desce", "status": "atras", "vendidas": 2, "base": "quarto", "total": null, "gravado_em": "2026-11-10T10:00:00+00:00", "chegou_ao_canal": false}, {"quarto": "Q7", "noite": "2026-11-13", "de": 0.0, "para": 0, "direcao": "desce", "status": "plano", "vendidas": 2, "base": "quarto", "total": 7, "gravado_em": "2026-11-10T11:00:00+00:00", "chegou_ao_canal": false}], "room": "Q7", "night": "2026-11-13"}, "expected": true},
+  {"name": "ladder_step_other_room", "input": {"ledger": [{"quarto": "Q7", "noite": "2026-11-13", "de": 0.0, "para": 0, "direcao": "desce", "status": "atras", "vendidas": 2, "base": "quarto", "total": null, "gravado_em": "2026-11-10T10:00:00+00:00", "chegou_ao_canal": false}, {"quarto": "Q7", "noite": "2026-11-13", "de": 0.0, "para": 0, "direcao": "desce", "status": "plano", "vendidas": 2, "base": "quarto", "total": 7, "gravado_em": "2026-11-10T11:00:00+00:00", "chegou_ao_canal": false}], "room": "Q2", "night": "2026-11-13"}, "expected": false},
+  {"name": "ladder_step_other_night", "input": {"ledger": [{"quarto": "Q7", "noite": "2026-11-13", "de": 0.0, "para": 0, "direcao": "desce", "status": "atras", "vendidas": 2, "base": "quarto", "total": null, "gravado_em": "2026-11-10T10:00:00+00:00", "chegou_ao_canal": false}, {"quarto": "Q7", "noite": "2026-11-13", "de": 0.0, "para": 0, "direcao": "desce", "status": "plano", "vendidas": 2, "base": "quarto", "total": 7, "gravado_em": "2026-11-10T11:00:00+00:00", "chegou_ao_canal": false}], "room": "Q7", "night": "2026-11-14"}, "expected": false}
+ ]
+}

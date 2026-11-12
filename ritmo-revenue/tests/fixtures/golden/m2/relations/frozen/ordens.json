@@ -1,0 +1,57 @@
+{
+ "ordens": [
+  {
+   "id": "dono-2026-10-07-regra-g",
+   "data": "2026-10-07",
+   "tipo": "regra",
+   "quartos": [
+    "Balcony"
+   ],
+   "de": "2026-10-07",
+   "ate": "2027-12-31",
+   "libera": [
+    "fixo"
+   ]
+  },
+  {
+   "id": "dono-2026-10-21-ordem-recanto",
+   "data": "2026-10-21",
+   "tipo": "regra",
+   "quartos": [
+    "Q2"
+   ],
+   "de": "2026-10-21",
+   "ate": "2027-12-31",
+   "libera": [
+    "teto_q2",
+    "fixo"
+   ]
+  },
+  {
+   "id": "dono-2026-10-22-afrodite-mais-cara",
+   "data": "2026-10-22",
+   "tipo": "regra",
+   "quartos": [
+    "Afrodite"
+   ],
+   "de": "2026-10-22",
+   "ate": "2027-12-31",
+   "libera": [
+    "acima_15",
+    "fixo"
+   ]
+  },
+  {
+   "id": "dono-2026-11-09-plano-nov-fev",
+   "data": "2026-11-09",
+   "criada_em": "2026-11-10T02:35:00Z",
+   "tipo": "regra",
+   "quartos": [
+    "*"
+   ],
+   "de": "2026-11-10",
+   "ate": "2027-02-28",
+   "libera": []
+  }
+ ]
+}

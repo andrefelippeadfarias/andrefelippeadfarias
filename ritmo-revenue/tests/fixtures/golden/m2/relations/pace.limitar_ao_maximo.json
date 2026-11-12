@@ -1,0 +1,462 @@
+{
+ "function": "pace.limitar_ao_maximo",
+ "php_target": "Ritmo\\Domain\\Relations\\ListingCapChain::apply()",
+ "notes": "The last pass over the plan items (date items only): floors above the cap cut to it; the ceiling of an item at the cap follows, except for a sold-out protection.",
+ "cases": [
+  {
+   "name": "floors_above_listing_max_chain",
+   "input": {
+    "items": [
+     {
+      "room": "Q7",
+      "night": "2026-12-24",
+      "floor": 5024.0,
+      "ceiling": null,
+      "order_ref": null,
+      "price_before": 3000.0,
+      "engine_step": false,
+      "strategy_item": false,
+      "protection": false
+     },
+     {
+      "room": "Q2",
+      "night": "2026-12-24",
+      "floor": 5024.0,
+      "ceiling": null,
+      "order_ref": null,
+      "price_before": 3000.0,
+      "engine_step": false,
+      "strategy_item": false,
+      "protection": false
+     },
+     {
+      "room": "Double",
+      "night": "2026-12-24",
+      "floor": 5017.0,
+      "ceiling": null,
+      "order_ref": null,
+      "price_before": 3000.0,
+      "engine_step": false,
+      "strategy_item": false,
+      "protection": false
+     },
+     {
+      "room": "Afrodite",
+      "night": "2026-12-24",
+      "floor": 10400.0,
+      "ceiling": null,
+      "order_ref": null,
+      "price_before": 3000.0,
+      "engine_step": false,
+      "strategy_item": false,
+      "protection": false
+     }
+    ],
+    "rooms_patch": {}
+   },
+   "expected": [
+    {
+     "room": "Q7",
+     "night": "2026-12-24",
+     "floor": 4973.0,
+     "ceiling": null,
+     "order_ref": null,
+     "price_before": 3000.0
+    },
+    {
+     "room": "Q2",
+     "night": "2026-12-24",
+     "floor": 4976.0,
+     "ceiling": null,
+     "order_ref": null,
+     "price_before": 3000.0
+    },
+    {
+     "room": "Double",
+     "night": "2026-12-24",
+     "floor": 4987.0,
+     "ceiling": null,
+     "order_ref": null,
+     "price_before": 3000.0
+    },
+    {
+     "room": "Afrodite",
+     "night": "2026-12-24",
+     "floor": 10000.0,
+     "ceiling": null,
+     "order_ref": null,
+     "price_before": 3000.0
+    }
+   ]
+  },
+  {
+   "name": "floors_below_cap_untouched",
+   "input": {
+    "items": [
+     {
+      "room": "Q7",
+      "night": "2026-12-24",
+      "floor": 3000.0,
+      "ceiling": null,
+      "order_ref": null,
+      "price_before": 3000.0,
+      "engine_step": false,
+      "strategy_item": false,
+      "protection": false
+     },
+     {
+      "room": "Q2",
+      "night": "2026-12-24",
+      "floor": 3100.0,
+      "ceiling": 3200.0,
+      "order_ref": null,
+      "price_before": 3000.0,
+      "engine_step": false,
+      "strategy_item": false,
+      "protection": false
+     },
+     {
+      "room": "Double",
+      "night": "2026-12-24",
+      "floor": 3300.0,
+      "ceiling": null,
+      "order_ref": null,
+      "price_before": 3000.0,
+      "engine_step": false,
+      "strategy_item": false,
+      "protection": false
+     }
+    ],
+    "rooms_patch": {}
+   },
+   "expected": [
+    {
+     "room": "Q7",
+     "night": "2026-12-24",
+     "floor": 3000.0,
+     "ceiling": null,
+     "order_ref": null,
+     "price_before": 3000.0
+    },
+    {
+     "room": "Q2",
+     "night": "2026-12-24",
+     "floor": 3100.0,
+     "ceiling": 3200.0,
+     "order_ref": null,
+     "price_before": 3000.0
+    },
+    {
+     "room": "Double",
+     "night": "2026-12-24",
+     "floor": 3300.0,
+     "ceiling": null,
+     "order_ref": null,
+     "price_before": 3000.0
+    }
+   ]
+  },
+  {
+   "name": "floor_at_cap_ceiling_follows",
+   "input": {
+    "items": [
+     {
+      "room": "Q2",
+      "night": "2026-12-24",
+      "floor": 4990.0,
+      "ceiling": 5000.0,
+      "order_ref": null,
+      "price_before": 3000.0,
+      "engine_step": false,
+      "strategy_item": false,
+      "protection": false
+     },
+     {
+      "room": "Q7",
+      "night": "2026-12-24",
+      "floor": 4985.0,
+      "ceiling": 6000.0,
+      "order_ref": null,
+      "price_before": 3000.0,
+      "engine_step": false,
+      "strategy_item": false,
+      "protection": false
+     }
+    ],
+    "rooms_patch": {}
+   },
+   "expected": [
+    {
+     "room": "Q2",
+     "night": "2026-12-24",
+     "floor": 4976.0,
+     "ceiling": 4976.0,
+     "order_ref": null,
+     "price_before": 3000.0
+    },
+    {
+     "room": "Q7",
+     "night": "2026-12-24",
+     "floor": 4973.0,
+     "ceiling": 4973.0,
+     "order_ref": null,
+     "price_before": 3000.0
+    }
+   ]
+  },
+  {
+   "name": "floor_at_cap_protection_item_keeps_free_ceiling",
+   "input": {
+    "items": [
+     {
+      "room": "Q2",
+      "night": "2026-12-24",
+      "floor": 4990.0,
+      "ceiling": 5000.0,
+      "order_ref": null,
+      "price_before": 3000.0,
+      "engine_step": false,
+      "strategy_item": false,
+      "protection": true
+     }
+    ],
+    "rooms_patch": {}
+   },
+   "expected": [
+    {
+     "room": "Q2",
+     "night": "2026-12-24",
+     "floor": 4976.0,
+     "ceiling": 5000.0,
+     "order_ref": null,
+     "price_before": 3000.0
+    }
+   ]
+  },
+  {
+   "name": "floor_near_cap_within_1pct_base_ceiling_follows",
+   "input": {
+    "items": [
+     {
+      "room": "Double",
+      "night": "2026-12-24",
+      "floor": 4960.0,
+      "ceiling": 5000.0,
+      "order_ref": null,
+      "price_before": 3000.0,
+      "engine_step": false,
+      "strategy_item": false,
+      "protection": false
+     }
+    ],
+    "rooms_patch": {}
+   },
+   "expected": [
+    {
+     "room": "Double",
+     "night": "2026-12-24",
+     "floor": 4960.0,
+     "ceiling": 4987.0,
+     "order_ref": null,
+     "price_before": 3000.0
+    }
+   ]
+  },
+  {
+   "name": "floor_far_from_cap_ceiling_kept",
+   "input": {
+    "items": [
+     {
+      "room": "Double",
+      "night": "2026-12-24",
+      "floor": 4900.0,
+      "ceiling": 5000.0,
+      "order_ref": null,
+      "price_before": 3000.0,
+      "engine_step": false,
+      "strategy_item": false,
+      "protection": false
+     }
+    ],
+    "rooms_patch": {}
+   },
+   "expected": [
+    {
+     "room": "Double",
+     "night": "2026-12-24",
+     "floor": 4900.0,
+     "ceiling": 5000.0,
+     "order_ref": null,
+     "price_before": 3000.0
+    }
+   ]
+  },
+  {
+   "name": "items_without_floor_ignored",
+   "input": {
+    "items": [
+     {
+      "room": "Double",
+      "night": "2026-12-24",
+      "floor": null,
+      "ceiling": 6000.0,
+      "order_ref": null,
+      "price_before": 3000.0,
+      "engine_step": false,
+      "strategy_item": false,
+      "protection": false
+     }
+    ],
+    "rooms_patch": {}
+   },
+   "expected": [
+    {
+     "room": "Double",
+     "night": "2026-12-24",
+     "floor": null,
+     "ceiling": 6000.0,
+     "order_ref": null,
+     "price_before": 3000.0
+    }
+   ]
+  },
+  {
+   "name": "other_property_no_chain",
+   "input": {
+    "items": [
+     {
+      "room": "VK7",
+      "night": "2026-12-24",
+      "floor": 5100.0,
+      "ceiling": null,
+      "order_ref": null,
+      "price_before": 3000.0,
+      "engine_step": false,
+      "strategy_item": false,
+      "protection": false
+     },
+     {
+      "room": "VK2",
+      "night": "2026-12-24",
+      "floor": 5100.0,
+      "ceiling": 5200.0,
+      "order_ref": null,
+      "price_before": 3000.0,
+      "engine_step": false,
+      "strategy_item": false,
+      "protection": false
+     },
+     {
+      "room": "Balcony",
+      "night": "2026-12-24",
+      "floor": 5100.0,
+      "ceiling": null,
+      "order_ref": null,
+      "price_before": 3000.0,
+      "engine_step": false,
+      "strategy_item": false,
+      "protection": false
+     }
+    ],
+    "rooms_patch": {}
+   },
+   "expected": [
+    {
+     "room": "VK7",
+     "night": "2026-12-24",
+     "floor": 4987.0,
+     "ceiling": null,
+     "order_ref": null,
+     "price_before": 3000.0
+    },
+    {
+     "room": "VK2",
+     "night": "2026-12-24",
+     "floor": 4991.0,
+     "ceiling": 4991.0,
+     "order_ref": null,
+     "price_before": 3000.0
+    },
+    {
+     "room": "Balcony",
+     "night": "2026-12-24",
+     "floor": 4991.0,
+     "ceiling": null,
+     "order_ref": null,
+     "price_before": 3000.0
+    }
+   ]
+  },
+  {
+   "name": "patched_q2_max_2500_chain_lowers_q7",
+   "input": {
+    "items": [
+     {
+      "room": "Q7",
+      "night": "2026-12-24",
+      "floor": 2600.0,
+      "ceiling": null,
+      "order_ref": null,
+      "price_before": 3000.0,
+      "engine_step": false,
+      "strategy_item": false,
+      "protection": false
+     },
+     {
+      "room": "Q2",
+      "night": "2026-12-24",
+      "floor": 2600.0,
+      "ceiling": null,
+      "order_ref": null,
+      "price_before": 3000.0,
+      "engine_step": false,
+      "strategy_item": false,
+      "protection": false
+     },
+     {
+      "room": "Double",
+      "night": "2026-12-24",
+      "floor": 2600.0,
+      "ceiling": null,
+      "order_ref": null,
+      "price_before": 3000.0,
+      "engine_step": false,
+      "strategy_item": false,
+      "protection": false
+     }
+    ],
+    "rooms_patch": {
+     "Q2": {
+      "max": 2500
+     }
+    }
+   },
+   "expected": [
+    {
+     "room": "Q7",
+     "night": "2026-12-24",
+     "floor": 2486.0,
+     "ceiling": null,
+     "order_ref": null,
+     "price_before": 3000.0
+    },
+    {
+     "room": "Q2",
+     "night": "2026-12-24",
+     "floor": 2496.0,
+     "ceiling": null,
+     "order_ref": null,
+     "price_before": 3000.0
+    },
+    {
+     "room": "Double",
+     "night": "2026-12-24",
+     "floor": 2600.0,
+     "ceiling": null,
+     "order_ref": null,
+     "price_before": 3000.0
+    }
+   ]
+  }
+ ]
+}

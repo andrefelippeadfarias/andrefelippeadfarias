@@ -1,0 +1,17 @@
+{
+ "function": "plano_dono.enviado",
+ "php_target": "SalesLadder::toSent(room, rulerNight, public, rule)",
+ "notes": "Public -> sent with the night's public factor of the room's property; never below the quality standard (1000 sent) for the rooms with its tag. Only room nights the strategy prices (where the engine calls it).",
+ "cases": [
+  {"name": "Q7_2026-11-13_669", "input": {"room": "Q7", "night": "2026-11-13", "publico": 669}, "expected": 1086.5681338314114},
+  {"name": "Q7_2026-11-13_500", "input": {"room": "Q7", "night": "2026-11-13", "publico": 500}, "expected": 1000.0},
+  {"name": "Q7_2026-11-13_1615.7", "input": {"room": "Q7", "night": "2026-11-13", "publico": 1615.7}, "expected": 2624.1676140977747},
+  {"name": "VK7_2026-11-13_946", "input": {"room": "VK7", "night": "2026-11-13", "publico": 946}, "expected": 1632.44176013805},
+  {"name": "VK7_2026-11-19_400", "input": {"room": "VK7", "night": "2026-11-19", "publico": 400}, "expected": 1000.0},
+  {"name": "Afrodite_2026-11-13_1017", "input": {"room": "Afrodite", "night": "2026-11-13", "publico": 1017}, "expected": 1651.778463537437},
+  {"name": "Afrodite_2026-12-31_500", "input": {"room": "Afrodite", "night": "2026-12-31", "publico": 500}, "expected": 1000.0},
+  {"name": "Double_2026-12-12_579.5", "input": {"room": "Double", "night": "2026-12-12", "publico": 579.5}, "expected": 1000.0},
+  {"name": "Q2_2026-12-27_615.71", "input": {"room": "Q2", "night": "2026-12-27", "publico": 615.71}, "expected": 1000.1786874593893},
+  {"name": "Q2_2026-12-27_2615.71", "input": {"room": "Q2", "night": "2026-12-27", "publico": 2615.71}, "expected": 4249.041585445094}
+ ]
+}

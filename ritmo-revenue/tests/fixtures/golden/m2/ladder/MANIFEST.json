@@ -1,0 +1,262 @@
+{
+ "generated_at": "2026-11-12",
+ "repo_commit": "1cbe91123fa2cd7304d562aa2573fa6dede983e6",
+ "engine": ".claude/skills/gestao-receita-pousadas/scripts",
+ "engine_commit": "036acfa9db12515ac92461345c0ae1e10ef369fa",
+ "engine_dirty": false,
+ "python": "3.11.17",
+ "frozen_inputs": {
+  "quartos.json": "40712bc254335536cd1a9e664c8c64cd767f04c046890c1e28b22e63cefc7365",
+  "ladder/regua_dono.json": "9e910eb504a4cfd27f2019f2d00bc3ae1afddfa71e965124bdabd7174029e161"
+ },
+ "parity_fixture": {
+  "file": "presets/parity-ladder.json",
+  "sha256": "17718d704da285c1fb1642a8122ab8e8aa6e8b0bc25df07694b7f1f7bf411169"
+ },
+ "tolerance": {
+  "amounts": 0.01,
+  "percentages_and_integers": "exact"
+ },
+ "vocabulary": {
+  "night_label": {
+   "semana": "weekday",
+   "inverno_semana": "winter_weekday",
+   "fds": "weekend",
+   "inverno_fds": "winter_weekend",
+   "feriado": "holiday",
+   "natal": "christmas",
+   "entre_festas": "between_holidays",
+   "reveillon": "new_year"
+  },
+  "series": {
+   "lista": "cheapest",
+   "hidro": "comparable",
+   "pares_lista": "peers_cheapest",
+   "pares_hidro": "peers_comparable"
+  },
+  "property": {
+   "Recanto": "recanto",
+   "Villa": "villa"
+  },
+  "order_type": {
+   "preco_por_data": "fixed_price",
+   "piso_por_data": "floor",
+   "alvo_por_data": "target",
+   "regra": "rule",
+   "manual": "manual",
+   "acompanhamento": "follow_up",
+   "restricao": "restriction"
+  },
+  "release": {
+   "fixo": "fixed_price",
+   "abaixo_piso": "below_standard_floor",
+   "acima_15": "above_weekly_rise_limit",
+   "estadia": "stay",
+   "estadia_1_orfa": "orphan_stay",
+   "anuncio": "listing",
+   "beds24_inventario": "inventory",
+   "personalizacao": "customization"
+  },
+  "order_keys": {
+   "id": "id",
+   "tipo": "type",
+   "quartos": "rooms",
+   "de": "from",
+   "ate": "to",
+   "noites": "nights",
+   "noites_fora": "excluded_nights",
+   "data": "given_on",
+   "criada_em": "created_at",
+   "libera": "releases",
+   "pisos_enviados": "floors",
+   "percentil": "percentile",
+   "vendidas_base": "base_sold",
+   "texto": "note",
+   "escada_vendas": "sales_ramp",
+   "passo_livre": "free_step",
+   "so_desce": "only_down",
+   "ocupacao_max": "strong_night_occupancy",
+   "frente_ocupacao": "strong_night_ahead_occupancy",
+   "topo_enviados": "top",
+   "piso_atras": "fallback_floors",
+   "gatilho_dias": "fallback_trigger_days",
+   "gatilho_min_dias": "fallback_min_days",
+   "degraus_atras": "descent_floors",
+   "degraus_dias": "descent_marks"
+  },
+  "step_direction": {
+   "sobe": "up",
+   "desce": "down"
+  },
+  "sold_base": {
+   "quarto": "room",
+   "pousada": "property"
+  },
+  "step_status": {
+   "plano": "ladder"
+  },
+  "hold": {
+   "D0 nunca sobe": "LADDER_TODAY_NEVER_UP",
+   "fora do filtro": "OUT_OF_NIGHT_FILTER",
+   "ainda não chegou": "CADENCE_NOT_ON_CHANNEL",
+   "menos de 24 h": "CADENCE_WITHIN_24H"
+  }
+ },
+ "files": [
+  {
+   "file": "plano_dono.degraus_escada.json",
+   "function": "plano_dono.degraus_escada",
+   "cases": 75
+  },
+  {
+   "file": "plano_dono.desce.json",
+   "function": "plano_dono.desce",
+   "cases": 480
+  },
+  {
+   "file": "plano_dono.governa.json",
+   "function": "plano_dono.governa",
+   "cases": 56
+  },
+  {
+   "file": "plano_dono.abertura_publico.json",
+   "function": "plano_dono.abertura_publico",
+   "cases": 95
+  },
+  {
+   "file": "plano_dono.teto_publico.json",
+   "function": "plano_dono.teto_publico",
+   "cases": 95
+  },
+  {
+   "file": "plano_dono.preco_publico.json",
+   "function": "plano_dono.preco_publico",
+   "cases": 238
+  },
+  {
+   "file": "plano_dono.enviado.json",
+   "function": "plano_dono.enviado",
+   "cases": 10
+  },
+  {
+   "file": "plano_dono.ativo.json",
+   "function": "plano_dono.ativo",
+   "cases": 63
+  },
+  {
+   "file": "pace.piso_semana_mercado.json",
+   "function": "pace.piso_semana_mercado",
+   "cases": 182
+  },
+  {
+   "file": "pace.piso_duro_do_plano.json",
+   "function": "pace.piso_duro_do_plano",
+   "cases": 42
+  },
+  {
+   "file": "pace.pisos_enviados.json",
+   "function": "pace.pisos_enviados",
+   "cases": 140
+  },
+  {
+   "file": "pace.plano_da_noite.json",
+   "function": "pace.plano_da_noite",
+   "cases": 20
+  },
+  {
+   "file": "pace.item_do_plano.json",
+   "function": "pace.item_do_plano",
+   "cases": 37
+  },
+  {
+   "file": "pace.plano_no_ledger.json",
+   "function": "pace.plano_no_ledger",
+   "cases": 5
+  },
+  {
+   "file": "pace.cadencia_permite.json",
+   "function": "pace.cadencia_permite",
+   "cases": 37
+  },
+  {
+   "file": "pace.ordem_nova_sem_passo.json",
+   "function": "pace.ordem_nova_sem_passo",
+   "cases": 11
+  },
+  {
+   "file": "pace.registrar_passos.json",
+   "function": "pace.registrar_passos",
+   "cases": 6
+  },
+  {
+   "file": "pace.marcar_envio.json",
+   "function": "pace.marcar_envio",
+   "cases": 7
+  },
+  {
+   "file": "pace.protecao_esgotada.json",
+   "function": "pace.protecao_esgotada",
+   "cases": 36
+  },
+  {
+   "file": "pace.sem_efeito.json",
+   "function": "pace.sem_efeito",
+   "cases": 17
+  },
+  {
+   "file": "ordens.cobre.json",
+   "function": "ordens.cobre",
+   "cases": 256
+  },
+  {
+   "file": "ordens.ordem_valida.json",
+   "function": "ordens.ordem_valida",
+   "cases": 260
+  },
+  {
+   "file": "ordens.consultas.json",
+   "function": "ordens.consultas",
+   "cases": 32
+  },
+  {
+   "file": "ordens.registrar_manual.json",
+   "function": "ordens.registrar_manual",
+   "cases": 3
+  },
+  {
+   "file": "escada_reservas.proporcional.json",
+   "function": "escada_reservas.proporcional",
+   "cases": 33
+  },
+  {
+   "file": "escada_reservas.passo.json",
+   "function": "escada_reservas.passo",
+   "cases": 58
+  },
+  {
+   "file": "escada_reservas.piso_dono.json",
+   "function": "escada_reservas.piso_dono",
+   "cases": 35
+  },
+  {
+   "file": "escada_reservas.topo_publico.json",
+   "function": "escada_reservas.topo_publico",
+   "cases": 8
+  },
+  {
+   "file": "escada_reservas.alvo.json",
+   "function": "escada_reservas.alvo",
+   "cases": 28
+  },
+  {
+   "file": "escada_reservas.lotes.json",
+   "function": "escada_reservas.lotes",
+   "cases": 6
+  },
+  {
+   "file": "escada_reservas.plano.json",
+   "function": "escada_reservas.plano",
+   "cases": 15
+  }
+ ]
+}

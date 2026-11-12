@@ -1,0 +1,10 @@
+{
+ "function": "ordens.registrar_manual",
+ "php_target": "ManualFreeze::record(room, from, to, today) + OrderBook::with(order)",
+ "notes": "A manual change becomes a manual order: id manual-<today>-<room lowercase>-<from>, from..min(to, today + 7 days), given today; recording it again replaces it.",
+ "cases": [
+  {"name": "short_change", "input": {"room": "Q7", "from": "2026-12-01", "to": "2026-12-03", "today": "2026-11-28", "days": 7, "book": [{"id": "manual-2026-11-28-q7-2026-12-01", "tipo": "manual", "quartos": ["Q7"], "de": "2026-12-01", "ate": "2026-12-05", "data": "2026-11-28", "libera": []}]}, "expected": {"order": {"id": "manual-2026-11-28-q7-2026-12-01", "data": "2026-11-28", "texto": "manual change (golden fixture)", "quartos": ["Q7"], "de": "2026-12-01", "ate": "2026-12-03", "tipo": "manual", "libera": []}, "book_ids": ["manual-2026-11-28-q7-2026-12-01"]}},
+  {"name": "long_change_cut_at_7_days", "input": {"room": "VK7", "from": "2026-11-29", "to": "2026-12-20", "today": "2026-11-28", "days": 7, "book": [{"id": "manual-2026-11-28-q7-2026-12-01", "tipo": "manual", "quartos": ["Q7"], "de": "2026-12-01", "ate": "2026-12-05", "data": "2026-11-28", "libera": []}]}, "expected": {"order": {"id": "manual-2026-11-28-vk7-2026-11-29", "data": "2026-11-28", "texto": "manual change (golden fixture)", "quartos": ["VK7"], "de": "2026-11-29", "ate": "2026-12-05", "tipo": "manual", "libera": []}, "book_ids": ["manual-2026-11-28-q7-2026-12-01", "manual-2026-11-28-vk7-2026-11-29"]}},
+  {"name": "same_day", "input": {"room": "Double", "from": "2026-11-28", "to": "2026-11-28", "today": "2026-11-28", "days": 7, "book": [{"id": "manual-2026-11-28-q7-2026-12-01", "tipo": "manual", "quartos": ["Q7"], "de": "2026-12-01", "ate": "2026-12-05", "data": "2026-11-28", "libera": []}]}, "expected": {"order": {"id": "manual-2026-11-28-double-2026-11-28", "data": "2026-11-28", "texto": "manual change (golden fixture)", "quartos": ["Double"], "de": "2026-11-28", "ate": "2026-11-28", "tipo": "manual", "libera": []}, "book_ids": ["manual-2026-11-28-q7-2026-12-01", "manual-2026-11-28-double-2026-11-28"]}}
+ ]
+}

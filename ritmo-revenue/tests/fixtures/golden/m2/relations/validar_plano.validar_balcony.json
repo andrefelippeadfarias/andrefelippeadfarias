@@ -1,0 +1,1354 @@
+{
+ "function": "validar_plano.Validador.validar_balcony",
+ "php_target": "Ritmo\\Domain\\Relations\\Validate\\DiscountBandCheck::check()",
+ "notes": "Validator rule of the discount band. Expected: issues sorted by night and code (the engine's Portuguese messages classified). `releases` are the owner orders that release the band (hook), `satisfied_by_switch` the coherence decisions given to the check. `php_expected` (when present) is the plugin's deliberate result where it differs from the engine (see docs/RELATIONS.md).",
+ "cases": [
+  {
+   "name": "in_band_fixed",
+   "input": {
+    "today": "2027-03-01",
+    "planned": {
+     "Balcony|2027-03-02": 889.0
+    },
+    "ceilings": {},
+    "percent_floors": [],
+    "order_refs": {},
+    "releases": {},
+    "satisfied_by_switch": [],
+    "fresh": {
+     "VK7|2027-03-02": {
+      "price": 1000.0,
+      "free": 6,
+      "sold": 1,
+      "total": 7
+     },
+     "VK2|2027-03-02": {
+      "price": 1100.0,
+      "free": 2,
+      "sold": 0,
+      "total": 2
+     },
+     "Balcony|2027-03-02": {
+      "price": 880.0,
+      "free": 6,
+      "sold": 0,
+      "total": 6
+     }
+    }
+   },
+   "expected": []
+  },
+  {
+   "name": "at_target",
+   "input": {
+    "today": "2027-03-01",
+    "planned": {
+     "Balcony|2027-03-02": 900.0
+    },
+    "ceilings": {},
+    "percent_floors": [],
+    "order_refs": {},
+    "releases": {},
+    "satisfied_by_switch": [],
+    "fresh": {
+     "VK7|2027-03-02": {
+      "price": 1000.0,
+      "free": 6,
+      "sold": 1,
+      "total": 7
+     },
+     "VK2|2027-03-02": {
+      "price": 1100.0,
+      "free": 2,
+      "sold": 0,
+      "total": 2
+     },
+     "Balcony|2027-03-02": {
+      "price": 880.0,
+      "free": 6,
+      "sold": 0,
+      "total": 6
+     }
+    }
+   },
+   "expected": []
+  },
+  {
+   "name": "above_target_within_slack",
+   "input": {
+    "today": "2027-03-01",
+    "planned": {
+     "Balcony|2027-03-02": 913.7
+    },
+    "ceilings": {},
+    "percent_floors": [],
+    "order_refs": {},
+    "releases": {},
+    "satisfied_by_switch": [],
+    "fresh": {
+     "VK7|2027-03-02": {
+      "price": 1000.0,
+      "free": 6,
+      "sold": 1,
+      "total": 7
+     },
+     "VK2|2027-03-02": {
+      "price": 1100.0,
+      "free": 2,
+      "sold": 0,
+      "total": 2
+     },
+     "Balcony|2027-03-02": {
+      "price": 880.0,
+      "free": 6,
+      "sold": 0,
+      "total": 6
+     }
+    }
+   },
+   "expected": []
+  },
+  {
+   "name": "above_target_warning",
+   "input": {
+    "today": "2027-03-01",
+    "planned": {
+     "Balcony|2027-03-02": 913.71
+    },
+    "ceilings": {},
+    "percent_floors": [],
+    "order_refs": {},
+    "releases": {},
+    "satisfied_by_switch": [],
+    "fresh": {
+     "VK7|2027-03-02": {
+      "price": 1000.0,
+      "free": 6,
+      "sold": 1,
+      "total": 7
+     },
+     "VK2|2027-03-02": {
+      "price": 1100.0,
+      "free": 2,
+      "sold": 0,
+      "total": 2
+     },
+     "Balcony|2027-03-02": {
+      "price": 880.0,
+      "free": 6,
+      "sold": 0,
+      "total": 6
+     }
+    }
+   },
+   "expected": [
+    {
+     "night": "2027-03-02",
+     "code": "band.above_upper",
+     "error": false
+    }
+   ]
+  },
+  {
+   "name": "equal_to_ref_plus_1_warning_only",
+   "input": {
+    "today": "2027-03-01",
+    "planned": {
+     "Balcony|2027-03-02": 1001.0
+    },
+    "ceilings": {},
+    "percent_floors": [],
+    "order_refs": {},
+    "releases": {},
+    "satisfied_by_switch": [],
+    "fresh": {
+     "VK7|2027-03-02": {
+      "price": 1000.0,
+      "free": 6,
+      "sold": 1,
+      "total": 7
+     },
+     "VK2|2027-03-02": {
+      "price": 1100.0,
+      "free": 2,
+      "sold": 0,
+      "total": 2
+     },
+     "Balcony|2027-03-02": {
+      "price": 880.0,
+      "free": 6,
+      "sold": 0,
+      "total": 6
+     }
+    }
+   },
+   "expected": [
+    {
+     "night": "2027-03-02",
+     "code": "band.above_upper",
+     "error": false
+    }
+   ]
+  },
+  {
+   "name": "above_ref_error",
+   "input": {
+    "today": "2027-03-01",
+    "planned": {
+     "Balcony|2027-03-02": 1001.01
+    },
+    "ceilings": {},
+    "percent_floors": [],
+    "order_refs": {},
+    "releases": {},
+    "satisfied_by_switch": [],
+    "fresh": {
+     "VK7|2027-03-02": {
+      "price": 1000.0,
+      "free": 6,
+      "sold": 1,
+      "total": 7
+     },
+     "VK2|2027-03-02": {
+      "price": 1100.0,
+      "free": 2,
+      "sold": 0,
+      "total": 2
+     },
+     "Balcony|2027-03-02": {
+      "price": 880.0,
+      "free": 6,
+      "sold": 0,
+      "total": 6
+     }
+    }
+   },
+   "expected": [
+    {
+     "night": "2027-03-02",
+     "code": "band.above_reference",
+     "error": true
+    }
+   ]
+  },
+  {
+   "name": "ceiling_above_ref_error",
+   "input": {
+    "today": "2027-03-01",
+    "planned": {
+     "Balcony|2027-03-02": 889.0
+    },
+    "ceilings": {
+     "Balcony|2027-03-02": 1001.5
+    },
+    "percent_floors": [],
+    "order_refs": {},
+    "releases": {},
+    "satisfied_by_switch": [],
+    "fresh": {
+     "VK7|2027-03-02": {
+      "price": 1000.0,
+      "free": 6,
+      "sold": 1,
+      "total": 7
+     },
+     "VK2|2027-03-02": {
+      "price": 1100.0,
+      "free": 2,
+      "sold": 0,
+      "total": 2
+     },
+     "Balcony|2027-03-02": {
+      "price": 880.0,
+      "free": 6,
+      "sold": 0,
+      "total": 6
+     }
+    }
+   },
+   "expected": [
+    {
+     "night": "2027-03-02",
+     "code": "band.ceiling_above_reference",
+     "error": true
+    }
+   ]
+  },
+  {
+   "name": "ceiling_at_ref_plus_1_ok",
+   "input": {
+    "today": "2027-03-01",
+    "planned": {
+     "Balcony|2027-03-02": 889.0
+    },
+    "ceilings": {
+     "Balcony|2027-03-02": 1001.0
+    },
+    "percent_floors": [],
+    "order_refs": {},
+    "releases": {},
+    "satisfied_by_switch": [],
+    "fresh": {
+     "VK7|2027-03-02": {
+      "price": 1000.0,
+      "free": 6,
+      "sold": 1,
+      "total": 7
+     },
+     "VK2|2027-03-02": {
+      "price": 1100.0,
+      "free": 2,
+      "sold": 0,
+      "total": 2
+     },
+     "Balcony|2027-03-02": {
+      "price": 880.0,
+      "free": 6,
+      "sold": 0,
+      "total": 6
+     }
+    }
+   },
+   "expected": []
+  },
+  {
+   "name": "at_lower_edge",
+   "input": {
+    "today": "2027-03-01",
+    "planned": {
+     "Balcony|2027-03-02": 855.0
+    },
+    "ceilings": {},
+    "percent_floors": [],
+    "order_refs": {},
+    "releases": {},
+    "satisfied_by_switch": [],
+    "fresh": {
+     "VK7|2027-03-02": {
+      "price": 1000.0,
+      "free": 6,
+      "sold": 1,
+      "total": 7
+     },
+     "VK2|2027-03-02": {
+      "price": 1100.0,
+      "free": 2,
+      "sold": 0,
+      "total": 2
+     },
+     "Balcony|2027-03-02": {
+      "price": 880.0,
+      "free": 6,
+      "sold": 0,
+      "total": 6
+     }
+    }
+   },
+   "expected": []
+  },
+  {
+   "name": "below_lower_edge_error",
+   "input": {
+    "today": "2027-03-01",
+    "planned": {
+     "Balcony|2027-03-02": 854.99
+    },
+    "ceilings": {},
+    "percent_floors": [],
+    "order_refs": {},
+    "releases": {},
+    "satisfied_by_switch": [],
+    "fresh": {
+     "VK7|2027-03-02": {
+      "price": 1000.0,
+      "free": 6,
+      "sold": 1,
+      "total": 7
+     },
+     "VK2|2027-03-02": {
+      "price": 1100.0,
+      "free": 2,
+      "sold": 0,
+      "total": 2
+     },
+     "Balcony|2027-03-02": {
+      "price": 880.0,
+      "free": 6,
+      "sold": 0,
+      "total": 6
+     }
+    }
+   },
+   "expected": [
+    {
+     "night": "2027-03-02",
+     "code": "band.below_lower",
+     "error": true
+    }
+   ]
+  },
+  {
+   "name": "below_lower_edge_percent_floor_against_calendar_ref_warning",
+   "input": {
+    "today": "2027-03-01",
+    "planned": {
+     "Balcony|2027-03-02": 850.9
+    },
+    "ceilings": {},
+    "percent_floors": [
+     "Balcony|2027-03-02"
+    ],
+    "order_refs": {},
+    "releases": {},
+    "satisfied_by_switch": [],
+    "fresh": {
+     "VK7|2027-03-02": {
+      "price": 1000.0,
+      "free": 6,
+      "sold": 1,
+      "total": 7
+     },
+     "VK2|2027-03-02": {
+      "price": 1100.0,
+      "free": 2,
+      "sold": 0,
+      "total": 2
+     },
+     "Balcony|2027-03-02": {
+      "price": 880.0,
+      "free": 6,
+      "sold": 0,
+      "total": 6
+     }
+    }
+   },
+   "expected": [
+    {
+     "night": "2027-03-02",
+     "code": "band.below_confirm_after_recalc",
+     "error": false
+    }
+   ]
+  },
+  {
+   "name": "below_lower_edge_percent_floor_against_planned_ref_error",
+   "input": {
+    "today": "2027-03-01",
+    "planned": {
+     "Balcony|2027-03-02": 850.9,
+     "VK7|2027-03-02": 1000.0
+    },
+    "ceilings": {},
+    "percent_floors": [
+     "Balcony|2027-03-02",
+     "VK7|2027-03-02"
+    ],
+    "order_refs": {},
+    "releases": {},
+    "satisfied_by_switch": [],
+    "fresh": {
+     "VK7|2027-03-02": {
+      "price": 1000.0,
+      "free": 6,
+      "sold": 1,
+      "total": 7
+     },
+     "VK2|2027-03-02": {
+      "price": 1100.0,
+      "free": 2,
+      "sold": 0,
+      "total": 2
+     },
+     "Balcony|2027-03-02": {
+      "price": 880.0,
+      "free": 6,
+      "sold": 0,
+      "total": 6
+     }
+    }
+   },
+   "expected": [
+    {
+     "night": "2027-03-02",
+     "code": "band.below_lower",
+     "error": true
+    }
+   ]
+  },
+  {
+   "name": "ref_planned_cheaper_than_calendar",
+   "input": {
+    "today": "2027-03-01",
+    "planned": {
+     "Balcony|2027-03-02": 889.0,
+     "VK7|2027-03-02": 947.2
+    },
+    "ceilings": {},
+    "percent_floors": [],
+    "order_refs": {},
+    "releases": {},
+    "satisfied_by_switch": [],
+    "fresh": {
+     "VK7|2027-03-02": {
+      "price": 1000.0,
+      "free": 6,
+      "sold": 1,
+      "total": 7
+     },
+     "VK2|2027-03-02": {
+      "price": 1100.0,
+      "free": 2,
+      "sold": 0,
+      "total": 2
+     },
+     "Balcony|2027-03-02": {
+      "price": 880.0,
+      "free": 6,
+      "sold": 0,
+      "total": 6
+     }
+    }
+   },
+   "expected": [
+    {
+     "night": "2027-03-02",
+     "code": "band.above_upper",
+     "error": false
+    }
+   ]
+  },
+  {
+   "name": "cheapest_ref_sold_out_uses_other",
+   "input": {
+    "today": "2027-03-01",
+    "planned": {
+     "Balcony|2027-03-02": 980.0
+    },
+    "ceilings": {},
+    "percent_floors": [],
+    "order_refs": {},
+    "releases": {},
+    "satisfied_by_switch": [],
+    "fresh": {
+     "VK7|2027-03-02": {
+      "price": 1000.0,
+      "free": 0,
+      "sold": 7,
+      "total": 7
+     },
+     "VK2|2027-03-02": {
+      "price": 1100.0,
+      "free": 2,
+      "sold": 0,
+      "total": 2
+     },
+     "Balcony|2027-03-02": {
+      "price": 880.0,
+      "free": 6,
+      "sold": 0,
+      "total": 6
+     }
+    }
+   },
+   "expected": []
+  },
+  {
+   "name": "all_refs_sold_out_skipped",
+   "input": {
+    "today": "2027-03-01",
+    "planned": {
+     "Balcony|2027-03-02": 1500.0
+    },
+    "ceilings": {},
+    "percent_floors": [],
+    "order_refs": {},
+    "releases": {},
+    "satisfied_by_switch": [],
+    "fresh": {
+     "VK7|2027-03-02": {
+      "price": 1000.0,
+      "free": 0,
+      "sold": 7,
+      "total": 7
+     },
+     "VK2|2027-03-02": {
+      "price": 1100.0,
+      "free": 0,
+      "sold": 2,
+      "total": 2
+     },
+     "Balcony|2027-03-02": {
+      "price": 880.0,
+      "free": 6,
+      "sold": 0,
+      "total": 6
+     }
+    }
+   },
+   "expected": []
+  },
+  {
+   "name": "target_sold_out_skipped",
+   "input": {
+    "today": "2027-03-01",
+    "planned": {
+     "Balcony|2027-03-02": 1500.0
+    },
+    "ceilings": {},
+    "percent_floors": [],
+    "order_refs": {},
+    "releases": {},
+    "satisfied_by_switch": [],
+    "fresh": {
+     "VK7|2027-03-02": {
+      "price": 1000.0,
+      "free": 6,
+      "sold": 1,
+      "total": 7
+     },
+     "VK2|2027-03-02": {
+      "price": 1100.0,
+      "free": 2,
+      "sold": 0,
+      "total": 2
+     },
+     "Balcony|2027-03-02": {
+      "price": 880.0,
+      "free": 0,
+      "sold": 6,
+      "total": 6
+     }
+    }
+   },
+   "expected": []
+  },
+  {
+   "name": "no_calendar_prices_no_refs_skipped",
+   "input": {
+    "today": "2027-03-01",
+    "planned": {
+     "Balcony|2027-03-02": 889.0
+    },
+    "ceilings": {},
+    "percent_floors": [],
+    "order_refs": {},
+    "releases": {},
+    "satisfied_by_switch": [],
+    "fresh": {}
+   },
+   "expected": []
+  },
+  {
+   "name": "only_ref_planned_target_from_calendar_in_band",
+   "input": {
+    "today": "2027-03-01",
+    "planned": {
+     "VK7|2027-03-02": 1000.0
+    },
+    "ceilings": {},
+    "percent_floors": [],
+    "order_refs": {},
+    "releases": {},
+    "satisfied_by_switch": [],
+    "fresh": {
+     "VK7|2027-03-02": {
+      "price": 1000.0,
+      "free": 6,
+      "sold": 1,
+      "total": 7
+     },
+     "VK2|2027-03-02": {
+      "price": 1100.0,
+      "free": 2,
+      "sold": 0,
+      "total": 2
+     },
+     "Balcony|2027-03-02": {
+      "price": 889.0,
+      "free": 6,
+      "sold": 0,
+      "total": 6
+     }
+    }
+   },
+   "expected": []
+  },
+  {
+   "name": "only_ref_planned_target_from_calendar_too_high",
+   "input": {
+    "today": "2027-03-01",
+    "planned": {
+     "VK7|2027-03-02": 900.0
+    },
+    "ceilings": {},
+    "percent_floors": [],
+    "order_refs": {},
+    "releases": {},
+    "satisfied_by_switch": [],
+    "fresh": {
+     "VK7|2027-03-02": {
+      "price": 1000.0,
+      "free": 6,
+      "sold": 1,
+      "total": 7
+     },
+     "VK2|2027-03-02": {
+      "price": 1100.0,
+      "free": 2,
+      "sold": 0,
+      "total": 2
+     },
+     "Balcony|2027-03-02": {
+      "price": 980.0,
+      "free": 6,
+      "sold": 0,
+      "total": 6
+     }
+    }
+   },
+   "expected": [
+    {
+     "night": "2027-03-02",
+     "code": "band.above_reference",
+     "error": true
+    }
+   ]
+  },
+  {
+   "name": "order_releases_band_below",
+   "input": {
+    "today": "2027-03-01",
+    "planned": {
+     "Balcony|2027-03-02": 700.0
+    },
+    "ceilings": {},
+    "percent_floors": [],
+    "order_refs": {},
+    "releases": {
+     "Balcony|2027-03-02": "lib"
+    },
+    "satisfied_by_switch": [],
+    "fresh": {
+     "VK7|2027-03-02": {
+      "price": 1000.0,
+      "free": 6,
+      "sold": 1,
+      "total": 7
+     },
+     "VK2|2027-03-02": {
+      "price": 1100.0,
+      "free": 2,
+      "sold": 0,
+      "total": 2
+     },
+     "Balcony|2027-03-02": {
+      "price": 880.0,
+      "free": 6,
+      "sold": 0,
+      "total": 6
+     }
+    }
+   },
+   "expected": [
+    {
+     "night": "2027-03-02",
+     "code": "band.below_by_order",
+     "error": false
+    }
+   ]
+  },
+  {
+   "name": "order_releases_band_only_listed_nights",
+   "input": {
+    "today": "2027-03-01",
+    "planned": {
+     "Balcony|2027-03-02": 700.0
+    },
+    "ceilings": {},
+    "percent_floors": [],
+    "order_refs": {},
+    "releases": {},
+    "satisfied_by_switch": [],
+    "fresh": {
+     "VK7|2027-03-02": {
+      "price": 1000.0,
+      "free": 6,
+      "sold": 1,
+      "total": 7
+     },
+     "VK2|2027-03-02": {
+      "price": 1100.0,
+      "free": 2,
+      "sold": 0,
+      "total": 2
+     },
+     "Balcony|2027-03-02": {
+      "price": 880.0,
+      "free": 6,
+      "sold": 0,
+      "total": 6
+     }
+    }
+   },
+   "expected": [
+    {
+     "night": "2027-03-02",
+     "code": "band.below_lower",
+     "error": true
+    }
+   ]
+  },
+  {
+   "name": "order_release_does_not_cover_above_ref",
+   "input": {
+    "today": "2027-03-01",
+    "planned": {
+     "Balcony|2027-03-02": 1100.0
+    },
+    "ceilings": {},
+    "percent_floors": [],
+    "order_refs": {},
+    "releases": {
+     "Balcony|2027-03-02": "lib"
+    },
+    "satisfied_by_switch": [],
+    "fresh": {
+     "VK7|2027-03-02": {
+      "price": 1000.0,
+      "free": 6,
+      "sold": 1,
+      "total": 7
+     },
+     "VK2|2027-03-02": {
+      "price": 1100.0,
+      "free": 2,
+      "sold": 0,
+      "total": 2
+     },
+     "Balcony|2027-03-02": {
+      "price": 880.0,
+      "free": 6,
+      "sold": 0,
+      "total": 6
+     }
+    }
+   },
+   "expected": [
+    {
+     "night": "2027-03-02",
+     "code": "band.above_reference",
+     "error": true
+    }
+   ]
+  },
+  {
+   "name": "patched_discount_15pct_target",
+   "input": {
+    "today": "2027-03-01",
+    "planned": {
+     "Balcony|2027-03-02": 889.0
+    },
+    "ceilings": {},
+    "percent_floors": [],
+    "order_refs": {},
+    "releases": {},
+    "satisfied_by_switch": [],
+    "fresh": {
+     "VK7|2027-03-02": {
+      "price": 1000.0,
+      "free": 6,
+      "sold": 1,
+      "total": 7
+     },
+     "VK2|2027-03-02": {
+      "price": 1100.0,
+      "free": 2,
+      "sold": 0,
+      "total": 2
+     },
+     "Balcony|2027-03-02": {
+      "price": 880.0,
+      "free": 6,
+      "sold": 0,
+      "total": 6
+     }
+    },
+    "relations_patch": {
+     "villa-balcony-discount-band": {
+      "upper_percent": 85.0,
+      "lower_percent": 80.75
+     }
+    }
+   },
+   "expected": [
+    {
+     "night": "2027-03-02",
+     "code": "band.above_upper",
+     "error": false
+    }
+   ]
+  },
+  {
+   "name": "holiday_far_below_target_no_error",
+   "input": {
+    "today": "2027-03-01",
+    "planned": {
+     "Balcony|2027-03-26": 1511.3
+    },
+    "ceilings": {},
+    "percent_floors": [],
+    "order_refs": {},
+    "releases": {},
+    "satisfied_by_switch": [],
+    "fresh": {
+     "VK7|2027-03-26": {
+      "price": 3000.0,
+      "free": 6,
+      "sold": 1,
+      "total": 7
+     },
+     "VK2|2027-03-26": {
+      "price": 2578.1,
+      "free": 2,
+      "sold": 0,
+      "total": 2
+     },
+     "Balcony|2027-03-26": {
+      "price": 2333.0,
+      "free": 6,
+      "sold": 0,
+      "total": 6
+     }
+    }
+   },
+   "expected": []
+  },
+  {
+   "name": "holiday_above_90pct_warning",
+   "input": {
+    "today": "2027-03-01",
+    "planned": {
+     "Balcony|2027-03-26": 2425.7
+    },
+    "ceilings": {},
+    "percent_floors": [],
+    "order_refs": {},
+    "releases": {},
+    "satisfied_by_switch": [],
+    "fresh": {
+     "VK7|2027-03-26": {
+      "price": 3000.0,
+      "free": 6,
+      "sold": 1,
+      "total": 7
+     },
+     "VK2|2027-03-26": {
+      "price": 2578.1,
+      "free": 2,
+      "sold": 0,
+      "total": 2
+     },
+     "Balcony|2027-03-26": {
+      "price": 2333.0,
+      "free": 6,
+      "sold": 0,
+      "total": 6
+     }
+    }
+   },
+   "expected": [
+    {
+     "night": "2027-03-26",
+     "code": "band.above_upper",
+     "error": false
+    }
+   ]
+  },
+  {
+   "name": "holiday_above_ref_error",
+   "input": {
+    "today": "2027-03-01",
+    "planned": {
+     "Balcony|2027-03-26": 2600.0
+    },
+    "ceilings": {},
+    "percent_floors": [],
+    "order_refs": {},
+    "releases": {},
+    "satisfied_by_switch": [],
+    "fresh": {
+     "VK7|2027-03-26": {
+      "price": 3000.0,
+      "free": 6,
+      "sold": 1,
+      "total": 7
+     },
+     "VK2|2027-03-26": {
+      "price": 2578.1,
+      "free": 2,
+      "sold": 0,
+      "total": 2
+     },
+     "Balcony|2027-03-26": {
+      "price": 2333.0,
+      "free": 6,
+      "sold": 0,
+      "total": 6
+     }
+    }
+   },
+   "expected": [
+    {
+     "night": "2027-03-26",
+     "code": "band.above_reference",
+     "error": true
+    }
+   ]
+  },
+  {
+   "name": "switch_8_of_9_plan_order_item_warning",
+   "input": {
+    "today": "2026-12-01",
+    "planned": {
+     "Balcony|2026-12-12": 1041.4,
+     "VK7|2026-12-12": 1909.2
+    },
+    "ceilings": {},
+    "percent_floors": [],
+    "order_refs": {
+     "Balcony|2026-12-12": "dono-2026-11-09-plano-nov-fev"
+    },
+    "releases": {},
+    "satisfied_by_switch": [],
+    "fresh": {
+     "VK7|2026-12-12": {
+      "price": 1900.0,
+      "free": 1,
+      "sold": 6,
+      "total": 7
+     },
+     "VK2|2026-12-12": {
+      "price": 2400.0,
+      "free": 0,
+      "sold": 2,
+      "total": 2
+     },
+     "Balcony|2026-12-12": {
+      "price": 2000.0,
+      "free": 6,
+      "sold": 0,
+      "total": 6
+     }
+    }
+   },
+   "expected": [
+    {
+     "night": "2026-12-12",
+     "code": "band.below_by_switch",
+     "error": false
+    }
+   ]
+  },
+  {
+   "name": "switch_7_of_9_plan_order_item_error",
+   "input": {
+    "today": "2026-12-01",
+    "planned": {
+     "Balcony|2026-12-12": 1041.4,
+     "VK7|2026-12-12": 1909.2
+    },
+    "ceilings": {},
+    "percent_floors": [],
+    "order_refs": {
+     "Balcony|2026-12-12": "dono-2026-11-09-plano-nov-fev"
+    },
+    "releases": {},
+    "satisfied_by_switch": [],
+    "fresh": {
+     "VK7|2026-12-12": {
+      "price": 1900.0,
+      "free": 2,
+      "sold": 5,
+      "total": 7
+     },
+     "VK2|2026-12-12": {
+      "price": 2400.0,
+      "free": 0,
+      "sold": 2,
+      "total": 2
+     },
+     "Balcony|2026-12-12": {
+      "price": 2000.0,
+      "free": 6,
+      "sold": 0,
+      "total": 6
+     }
+    }
+   },
+   "expected": [
+    {
+     "night": "2026-12-12",
+     "code": "band.below_lower",
+     "error": true
+    }
+   ]
+  },
+  {
+   "name": "switch_8_of_9_other_order_item_error",
+   "input": {
+    "today": "2026-12-01",
+    "planned": {
+     "Balcony|2026-12-12": 1041.4,
+     "VK7|2026-12-12": 1909.2
+    },
+    "ceilings": {},
+    "percent_floors": [],
+    "order_refs": {
+     "Balcony|2026-12-12": "dono-2026-10-07-regra-g"
+    },
+    "releases": {},
+    "satisfied_by_switch": [],
+    "fresh": {
+     "VK7|2026-12-12": {
+      "price": 1900.0,
+      "free": 1,
+      "sold": 6,
+      "total": 7
+     },
+     "VK2|2026-12-12": {
+      "price": 2400.0,
+      "free": 0,
+      "sold": 2,
+      "total": 2
+     },
+     "Balcony|2026-12-12": {
+      "price": 2000.0,
+      "free": 6,
+      "sold": 0,
+      "total": 6
+     }
+    }
+   },
+   "expected": [
+    {
+     "night": "2026-12-12",
+     "code": "band.below_lower",
+     "error": true
+    }
+   ]
+  },
+  {
+   "name": "switch_8_of_9_above_ref_still_error",
+   "input": {
+    "today": "2026-12-01",
+    "planned": {
+     "Balcony|2026-12-12": 1950.0,
+     "VK7|2026-12-12": 1909.2
+    },
+    "ceilings": {},
+    "percent_floors": [],
+    "order_refs": {
+     "Balcony|2026-12-12": "dono-2026-11-09-plano-nov-fev"
+    },
+    "releases": {},
+    "satisfied_by_switch": [],
+    "fresh": {
+     "VK7|2026-12-12": {
+      "price": 1900.0,
+      "free": 1,
+      "sold": 6,
+      "total": 7
+     },
+     "VK2|2026-12-12": {
+      "price": 2400.0,
+      "free": 0,
+      "sold": 2,
+      "total": 2
+     },
+     "Balcony|2026-12-12": {
+      "price": 2000.0,
+      "free": 6,
+      "sold": 0,
+      "total": 6
+     }
+    }
+   },
+   "expected": [
+    {
+     "night": "2026-12-12",
+     "code": "band.above_reference",
+     "error": true
+    }
+   ]
+  },
+  {
+   "name": "switch_missing_ref_calendar_no_proof_error",
+   "input": {
+    "today": "2026-12-01",
+    "planned": {
+     "Balcony|2026-12-12": 1041.4,
+     "VK7|2026-12-12": 1909.2
+    },
+    "ceilings": {},
+    "percent_floors": [],
+    "order_refs": {
+     "Balcony|2026-12-12": "dono-2026-11-09-plano-nov-fev"
+    },
+    "releases": {},
+    "satisfied_by_switch": [],
+    "fresh": {
+     "VK7|2026-12-12": {
+      "price": 1900.0,
+      "free": 1,
+      "sold": 6,
+      "total": 7
+     },
+     "Balcony|2026-12-12": {
+      "price": 2000.0,
+      "free": 6,
+      "sold": 0,
+      "total": 6
+     }
+    }
+   },
+   "expected": [
+    {
+     "night": "2026-12-12",
+     "code": "band.below_lower",
+     "error": true
+    }
+   ]
+  },
+  {
+   "name": "switch_satisfied_without_item_engine_false_error",
+   "input": {
+    "today": "2026-12-01",
+    "planned": {
+     "VK7|2026-12-12": 1909.2
+    },
+    "ceilings": {},
+    "percent_floors": [],
+    "order_refs": {},
+    "releases": {},
+    "satisfied_by_switch": [
+     "Balcony|2026-12-12"
+    ],
+    "fresh": {
+     "VK7|2026-12-12": {
+      "price": 1900.0,
+      "free": 1,
+      "sold": 6,
+      "total": 7
+     },
+     "VK2|2026-12-12": {
+      "price": 2400.0,
+      "free": 0,
+      "sold": 2,
+      "total": 2
+     },
+     "Balcony|2026-12-12": {
+      "price": 1041.4,
+      "free": 6,
+      "sold": 0,
+      "total": 6
+     }
+    },
+    "note": "divergence: with the coherence decision 'satisfied by the occupancy switch' the night is accepted"
+   },
+   "expected": [
+    {
+     "night": "2026-12-12",
+     "code": "band.below_lower",
+     "error": true
+    }
+   ],
+   "php_expected": [
+    {
+     "night": "2026-12-12",
+     "code": "band.below_by_switch",
+     "error": false
+    }
+   ]
+  },
+  {
+   "name": "switch_satisfied_without_report_still_error",
+   "input": {
+    "today": "2026-12-01",
+    "planned": {
+     "VK7|2026-12-12": 1909.2
+    },
+    "ceilings": {},
+    "percent_floors": [],
+    "order_refs": {},
+    "releases": {},
+    "satisfied_by_switch": [],
+    "fresh": {
+     "VK7|2026-12-12": {
+      "price": 1900.0,
+      "free": 1,
+      "sold": 6,
+      "total": 7
+     },
+     "VK2|2026-12-12": {
+      "price": 2400.0,
+      "free": 0,
+      "sold": 2,
+      "total": 2
+     },
+     "Balcony|2026-12-12": {
+      "price": 1041.4,
+      "free": 6,
+      "sold": 0,
+      "total": 6
+     }
+    },
+    "note": "without the coherence decision the plugin reports what the engine reports"
+   },
+   "expected": [
+    {
+     "night": "2026-12-12",
+     "code": "band.below_lower",
+     "error": true
+    }
+   ]
+  },
+  {
+   "name": "switch_satisfied_decision_without_trigger_proof_still_error",
+   "input": {
+    "today": "2026-12-01",
+    "planned": {
+     "VK7|2026-12-12": 1909.2
+    },
+    "ceilings": {},
+    "percent_floors": [],
+    "order_refs": {},
+    "releases": {},
+    "satisfied_by_switch": [
+     "Balcony|2026-12-12"
+    ],
+    "fresh": {
+     "VK7|2026-12-12": {
+      "price": 1900.0,
+      "free": 1,
+      "sold": 6,
+      "total": 7
+     },
+     "Balcony|2026-12-12": {
+      "price": 1041.4,
+      "free": 6,
+      "sold": 0,
+      "total": 6
+     }
+    },
+    "note": "the decision needs the trigger proven by the fresh calendar: a member missing is no proof"
+   },
+   "expected": [
+    {
+     "night": "2026-12-12",
+     "code": "band.below_lower",
+     "error": true
+    }
+   ]
+  }
+ ]
+}

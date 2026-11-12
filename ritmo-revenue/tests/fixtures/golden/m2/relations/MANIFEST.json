@@ -1,0 +1,23 @@
+{
+ "engine_commit": "036acfa9db12515ac92461345c0ae1e10ef369fa",
+ "engine_dirty": false,
+ "engine_path": ".claude/skills/gestao-receita-pousadas/scripts",
+ "frozen_inputs": {
+  "tests/fixtures/frozen/quartos.json": "40712bc254335536cd1a9e664c8c64cd767f04c046890c1e28b22e63cefc7365",
+  "tests/fixtures/golden/m2/relations/frozen/ordens.json": "cd171d574ee8f2a2f5b6578dbc9cb63e9b6fe51dd4f51818bb7404bbc90ed4b8",
+  "tests/fixtures/golden/m2/relations/frozen/regua_dono.json": "1eb5f954c9011bcf864eaecbb81ca758927574cd9c832c92133363f3857eadff",
+  "tests/fixtures/golden/m2/relations/frozen/sazonalidade.json": "4704bef878fb4ea0425571a2becf6b6d388ac473c713db9017e8d9bd7236b7d3"
+ },
+ "parity_preset": "9662926caec0a49b9f5aa588912afc586fcb1031c377127e07993ad68764ff5f",
+ "files": {
+  "ordem_recanto.comparar.json": 8,
+  "ordem_recanto.faixa.json": 48,
+  "ordem_recanto.faixa_afrodite.json": 44,
+  "pace.coerencia.json": 179,
+  "pace.limitar_ao_maximo.json": 9,
+  "pace.regra_afrodite.json": 22,
+  "pace.teto_anuncio.json": 44,
+  "plano_dono.balcony_no_mercado.json": 44,
+  "validar_plano.validar_balcony.json": 34
+ }
+}

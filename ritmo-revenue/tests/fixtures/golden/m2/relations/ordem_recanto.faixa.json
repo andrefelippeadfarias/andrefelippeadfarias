@@ -1,0 +1,2849 @@
+{
+ "function": "ordem_recanto.faixa",
+ "php_target": "Ritmo\\Domain\\Relations\\Audit\\RelationAuditor::auditBetween()",
+ "notes": "Audit of the middle room of a between relation on one night (current prices only). `today` null = the rule floor without the lead-time market floor. Bounds are whole currency (half to even).",
+ "cases": [
+  {
+   "name": "weekday_inside_mid",
+   "input": {
+    "night": "2027-05-04",
+    "today": null,
+    "hooks": {
+     "Q2|2027-05-04": {
+      "rule_floor_owner": 1220.0,
+      "rule_floor_today": 1220.0,
+      "governs": false,
+      "band": null,
+      "safety_exception": null,
+      "between": {
+       "own_floor": 1220.0,
+       "standard_floor": 1220.0,
+       "lowering_order_ref": "dono-2026-11-09-plano-nov-fev",
+       "own_target_ceiling": null,
+       "hold_current": false
+      }
+     }
+    },
+    "calendar": {
+     "Q7": {
+      "2027-05-04": {
+       "price": 1232.0,
+       "sold": 0,
+       "total": 7,
+       "min": null,
+       "max": null
+      }
+     },
+     "Double": {
+      "2027-05-04": {
+       "price": 1302.0,
+       "sold": 0,
+       "total": 6,
+       "min": null,
+       "max": null
+      }
+     },
+     "Q2": {
+      "2027-05-04": {
+       "price": 1260.0,
+       "sold": 0,
+       "total": 2,
+       "min": null,
+       "max": null
+      }
+     }
+    }
+   },
+   "expected": {
+    "floor": 1232.0,
+    "ceiling": 1284.0,
+    "out": false,
+    "final": 1260.0,
+    "owner_floor": 1220.0
+   }
+  },
+  {
+   "name": "weekday_inside_at_low",
+   "input": {
+    "night": "2027-05-04",
+    "today": null,
+    "hooks": {
+     "Q2|2027-05-04": {
+      "rule_floor_owner": 1220.0,
+      "rule_floor_today": 1220.0,
+      "governs": false,
+      "band": null,
+      "safety_exception": null,
+      "between": {
+       "own_floor": 1220.0,
+       "standard_floor": 1220.0,
+       "lowering_order_ref": "dono-2026-11-09-plano-nov-fev",
+       "own_target_ceiling": null,
+       "hold_current": false
+      }
+     }
+    },
+    "calendar": {
+     "Q7": {
+      "2027-05-04": {
+       "price": 1232.0,
+       "sold": 0,
+       "total": 7,
+       "min": null,
+       "max": null
+      }
+     },
+     "Double": {
+      "2027-05-04": {
+       "price": 1302.0,
+       "sold": 0,
+       "total": 6,
+       "min": null,
+       "max": null
+      }
+     },
+     "Q2": {
+      "2027-05-04": {
+       "price": 1232.0,
+       "sold": 0,
+       "total": 2,
+       "min": null,
+       "max": null
+      }
+     }
+    }
+   },
+   "expected": {
+    "floor": 1232.0,
+    "ceiling": 1284.0,
+    "out": false,
+    "final": 1232.0,
+    "owner_floor": 1220.0
+   }
+  },
+  {
+   "name": "weekday_inside_at_high",
+   "input": {
+    "night": "2027-05-04",
+    "today": null,
+    "hooks": {
+     "Q2|2027-05-04": {
+      "rule_floor_owner": 1220.0,
+      "rule_floor_today": 1220.0,
+      "governs": false,
+      "band": null,
+      "safety_exception": null,
+      "between": {
+       "own_floor": 1220.0,
+       "standard_floor": 1220.0,
+       "lowering_order_ref": "dono-2026-11-09-plano-nov-fev",
+       "own_target_ceiling": null,
+       "hold_current": false
+      }
+     }
+    },
+    "calendar": {
+     "Q7": {
+      "2027-05-04": {
+       "price": 1232.0,
+       "sold": 0,
+       "total": 7,
+       "min": null,
+       "max": null
+      }
+     },
+     "Double": {
+      "2027-05-04": {
+       "price": 1302.0,
+       "sold": 0,
+       "total": 6,
+       "min": null,
+       "max": null
+      }
+     },
+     "Q2": {
+      "2027-05-04": {
+       "price": 1302.0,
+       "sold": 0,
+       "total": 2,
+       "min": null,
+       "max": null
+      }
+     }
+    }
+   },
+   "expected": {
+    "floor": 1232.0,
+    "ceiling": 1284.0,
+    "out": false,
+    "final": 1302.0,
+    "owner_floor": 1220.0
+   }
+  },
+  {
+   "name": "weekday_inside_low_minus_tol",
+   "input": {
+    "night": "2027-05-04",
+    "today": null,
+    "hooks": {
+     "Q2|2027-05-04": {
+      "rule_floor_owner": 1220.0,
+      "rule_floor_today": 1220.0,
+      "governs": false,
+      "band": null,
+      "safety_exception": null,
+      "between": {
+       "own_floor": 1220.0,
+       "standard_floor": 1220.0,
+       "lowering_order_ref": "dono-2026-11-09-plano-nov-fev",
+       "own_target_ceiling": null,
+       "hold_current": false
+      }
+     }
+    },
+    "calendar": {
+     "Q7": {
+      "2027-05-04": {
+       "price": 1232.0,
+       "sold": 0,
+       "total": 7,
+       "min": null,
+       "max": null
+      }
+     },
+     "Double": {
+      "2027-05-04": {
+       "price": 1302.0,
+       "sold": 0,
+       "total": 6,
+       "min": null,
+       "max": null
+      }
+     },
+     "Q2": {
+      "2027-05-04": {
+       "price": 1215.1,
+       "sold": 0,
+       "total": 2,
+       "min": null,
+       "max": null
+      }
+     }
+    }
+   },
+   "expected": {
+    "floor": 1232.0,
+    "ceiling": 1284.0,
+    "out": false,
+    "final": 1215.1,
+    "owner_floor": 1220.0
+   }
+  },
+  {
+   "name": "weekday_out_low_minus_tol_minus_cent",
+   "input": {
+    "night": "2027-05-04",
+    "today": null,
+    "hooks": {
+     "Q2|2027-05-04": {
+      "rule_floor_owner": 1220.0,
+      "rule_floor_today": 1220.0,
+      "governs": false,
+      "band": null,
+      "safety_exception": null,
+      "between": {
+       "own_floor": 1220.0,
+       "standard_floor": 1220.0,
+       "lowering_order_ref": "dono-2026-11-09-plano-nov-fev",
+       "own_target_ceiling": null,
+       "hold_current": false
+      }
+     }
+    },
+    "calendar": {
+     "Q7": {
+      "2027-05-04": {
+       "price": 1232.0,
+       "sold": 0,
+       "total": 7,
+       "min": null,
+       "max": null
+      }
+     },
+     "Double": {
+      "2027-05-04": {
+       "price": 1302.0,
+       "sold": 0,
+       "total": 6,
+       "min": null,
+       "max": null
+      }
+     },
+     "Q2": {
+      "2027-05-04": {
+       "price": 1215.09,
+       "sold": 0,
+       "total": 2,
+       "min": null,
+       "max": null
+      }
+     }
+    }
+   },
+   "expected": {
+    "floor": 1232.0,
+    "ceiling": 1284.0,
+    "out": true,
+    "final": 1232.0,
+    "owner_floor": 1220.0
+   }
+  },
+  {
+   "name": "weekday_inside_high_plus_tol",
+   "input": {
+    "night": "2027-05-04",
+    "today": null,
+    "hooks": {
+     "Q2|2027-05-04": {
+      "rule_floor_owner": 1220.0,
+      "rule_floor_today": 1220.0,
+      "governs": false,
+      "band": null,
+      "safety_exception": null,
+      "between": {
+       "own_floor": 1220.0,
+       "standard_floor": 1220.0,
+       "lowering_order_ref": "dono-2026-11-09-plano-nov-fev",
+       "own_target_ceiling": null,
+       "hold_current": false
+      }
+     }
+    },
+    "calendar": {
+     "Q7": {
+      "2027-05-04": {
+       "price": 1232.0,
+       "sold": 0,
+       "total": 7,
+       "min": null,
+       "max": null
+      }
+     },
+     "Double": {
+      "2027-05-04": {
+       "price": 1302.0,
+       "sold": 0,
+       "total": 6,
+       "min": null,
+       "max": null
+      }
+     },
+     "Q2": {
+      "2027-05-04": {
+       "price": 1318.9,
+       "sold": 0,
+       "total": 2,
+       "min": null,
+       "max": null
+      }
+     }
+    }
+   },
+   "expected": {
+    "floor": 1232.0,
+    "ceiling": 1284.0,
+    "out": false,
+    "final": 1318.9,
+    "owner_floor": 1220.0
+   }
+  },
+  {
+   "name": "weekday_out_high_plus_tol_plus_cent",
+   "input": {
+    "night": "2027-05-04",
+    "today": null,
+    "hooks": {
+     "Q2|2027-05-04": {
+      "rule_floor_owner": 1220.0,
+      "rule_floor_today": 1220.0,
+      "governs": false,
+      "band": null,
+      "safety_exception": null,
+      "between": {
+       "own_floor": 1220.0,
+       "standard_floor": 1220.0,
+       "lowering_order_ref": "dono-2026-11-09-plano-nov-fev",
+       "own_target_ceiling": null,
+       "hold_current": false
+      }
+     }
+    },
+    "calendar": {
+     "Q7": {
+      "2027-05-04": {
+       "price": 1232.0,
+       "sold": 0,
+       "total": 7,
+       "min": null,
+       "max": null
+      }
+     },
+     "Double": {
+      "2027-05-04": {
+       "price": 1302.0,
+       "sold": 0,
+       "total": 6,
+       "min": null,
+       "max": null
+      }
+     },
+     "Q2": {
+      "2027-05-04": {
+       "price": 1318.91,
+       "sold": 0,
+       "total": 2,
+       "min": null,
+       "max": null
+      }
+     }
+    }
+   },
+   "expected": {
+    "floor": 1232.0,
+    "ceiling": 1284.0,
+    "out": true,
+    "final": 1284.0,
+    "owner_floor": 1220.0
+   }
+  },
+  {
+   "name": "weekday_out_far_above",
+   "input": {
+    "night": "2027-05-04",
+    "today": null,
+    "hooks": {
+     "Q2|2027-05-04": {
+      "rule_floor_owner": 1220.0,
+      "rule_floor_today": 1220.0,
+      "governs": false,
+      "band": null,
+      "safety_exception": null,
+      "between": {
+       "own_floor": 1220.0,
+       "standard_floor": 1220.0,
+       "lowering_order_ref": "dono-2026-11-09-plano-nov-fev",
+       "own_target_ceiling": null,
+       "hold_current": false
+      }
+     }
+    },
+    "calendar": {
+     "Q7": {
+      "2027-05-04": {
+       "price": 1232.0,
+       "sold": 0,
+       "total": 7,
+       "min": null,
+       "max": null
+      }
+     },
+     "Double": {
+      "2027-05-04": {
+       "price": 1302.0,
+       "sold": 0,
+       "total": 6,
+       "min": null,
+       "max": null
+      }
+     },
+     "Q2": {
+      "2027-05-04": {
+       "price": 1613.0,
+       "sold": 0,
+       "total": 2,
+       "min": null,
+       "max": null
+      }
+     }
+    }
+   },
+   "expected": {
+    "floor": 1232.0,
+    "ceiling": 1284.0,
+    "out": true,
+    "final": 1284.0,
+    "owner_floor": 1220.0
+   }
+  },
+  {
+   "name": "weekday_out_far_below",
+   "input": {
+    "night": "2027-05-04",
+    "today": null,
+    "hooks": {
+     "Q2|2027-05-04": {
+      "rule_floor_owner": 1220.0,
+      "rule_floor_today": 1220.0,
+      "governs": false,
+      "band": null,
+      "safety_exception": null,
+      "between": {
+       "own_floor": 1220.0,
+       "standard_floor": 1220.0,
+       "lowering_order_ref": "dono-2026-11-09-plano-nov-fev",
+       "own_target_ceiling": null,
+       "hold_current": false
+      }
+     }
+    },
+    "calendar": {
+     "Q7": {
+      "2027-05-04": {
+       "price": 1232.0,
+       "sold": 0,
+       "total": 7,
+       "min": null,
+       "max": null
+      }
+     },
+     "Double": {
+      "2027-05-04": {
+       "price": 1302.0,
+       "sold": 0,
+       "total": 6,
+       "min": null,
+       "max": null
+      }
+     },
+     "Q2": {
+      "2027-05-04": {
+       "price": 900.0,
+       "sold": 0,
+       "total": 2,
+       "min": null,
+       "max": null
+      }
+     }
+    }
+   },
+   "expected": {
+    "floor": 1232.0,
+    "ceiling": 1284.0,
+    "out": true,
+    "final": 1232.0,
+    "owner_floor": 1220.0
+   }
+  },
+  {
+   "name": "weekday_inside_price_but_floor_in_force_above_high",
+   "input": {
+    "night": "2027-05-04",
+    "today": null,
+    "hooks": {
+     "Q2|2027-05-04": {
+      "rule_floor_owner": 1220.0,
+      "rule_floor_today": 1220.0,
+      "governs": false,
+      "band": null,
+      "safety_exception": null,
+      "between": {
+       "own_floor": 1220.0,
+       "standard_floor": 1220.0,
+       "lowering_order_ref": "dono-2026-11-09-plano-nov-fev",
+       "own_target_ceiling": null,
+       "hold_current": false
+      }
+     }
+    },
+    "calendar": {
+     "Q7": {
+      "2027-05-04": {
+       "price": 1232.0,
+       "sold": 0,
+       "total": 7,
+       "min": null,
+       "max": null
+      }
+     },
+     "Double": {
+      "2027-05-04": {
+       "price": 1302.0,
+       "sold": 0,
+       "total": 6,
+       "min": null,
+       "max": null
+      }
+     },
+     "Q2": {
+      "2027-05-04": {
+       "price": 1290.0,
+       "sold": 0,
+       "total": 2,
+       "min": 1400.0,
+       "max": null
+      }
+     }
+    }
+   },
+   "expected": {
+    "floor": 1232.0,
+    "ceiling": 1284.0,
+    "out": true,
+    "final": 1284.0,
+    "owner_floor": 1220.0
+   }
+  },
+  {
+   "name": "weekday_inside_price_floor_in_force_at_high_plus_tol",
+   "input": {
+    "night": "2027-05-04",
+    "today": null,
+    "hooks": {
+     "Q2|2027-05-04": {
+      "rule_floor_owner": 1220.0,
+      "rule_floor_today": 1220.0,
+      "governs": false,
+      "band": null,
+      "safety_exception": null,
+      "between": {
+       "own_floor": 1220.0,
+       "standard_floor": 1220.0,
+       "lowering_order_ref": "dono-2026-11-09-plano-nov-fev",
+       "own_target_ceiling": null,
+       "hold_current": false
+      }
+     }
+    },
+    "calendar": {
+     "Q7": {
+      "2027-05-04": {
+       "price": 1232.0,
+       "sold": 0,
+       "total": 7,
+       "min": null,
+       "max": null
+      }
+     },
+     "Double": {
+      "2027-05-04": {
+       "price": 1302.0,
+       "sold": 0,
+       "total": 6,
+       "min": null,
+       "max": null
+      }
+     },
+     "Q2": {
+      "2027-05-04": {
+       "price": 1290.0,
+       "sold": 0,
+       "total": 2,
+       "min": 1318.9,
+       "max": null
+      }
+     }
+    }
+   },
+   "expected": {
+    "floor": 1232.0,
+    "ceiling": 1284.0,
+    "out": false,
+    "final": 1290.0,
+    "owner_floor": 1220.0
+   }
+  },
+  {
+   "name": "weekday_reversed_refs_q7_above_double",
+   "input": {
+    "night": "2027-05-04",
+    "today": null,
+    "hooks": {
+     "Q2|2027-05-04": {
+      "rule_floor_owner": 1220.0,
+      "rule_floor_today": 1220.0,
+      "governs": false,
+      "band": null,
+      "safety_exception": null,
+      "between": {
+       "own_floor": 1220.0,
+       "standard_floor": 1220.0,
+       "lowering_order_ref": "dono-2026-11-09-plano-nov-fev",
+       "own_target_ceiling": null,
+       "hold_current": false
+      }
+     }
+    },
+    "calendar": {
+     "Q7": {
+      "2027-05-04": {
+       "price": 1500.0,
+       "sold": 0,
+       "total": 7,
+       "min": null,
+       "max": null
+      }
+     },
+     "Double": {
+      "2027-05-04": {
+       "price": 1300.0,
+       "sold": 0,
+       "total": 6,
+       "min": null,
+       "max": null
+      }
+     },
+     "Q2": {
+      "2027-05-04": {
+       "price": 1700.0,
+       "sold": 0,
+       "total": 2,
+       "min": null,
+       "max": null
+      }
+     }
+    }
+   },
+   "expected": {
+    "floor": 1300.0,
+    "ceiling": 1450.0,
+    "out": true,
+    "final": 1450.0,
+    "owner_floor": 1220.0
+   }
+  },
+  {
+   "name": "weekday_reversed_refs_inside",
+   "input": {
+    "night": "2027-05-04",
+    "today": null,
+    "hooks": {
+     "Q2|2027-05-04": {
+      "rule_floor_owner": 1220.0,
+      "rule_floor_today": 1220.0,
+      "governs": false,
+      "band": null,
+      "safety_exception": null,
+      "between": {
+       "own_floor": 1220.0,
+       "standard_floor": 1220.0,
+       "lowering_order_ref": "dono-2026-11-09-plano-nov-fev",
+       "own_target_ceiling": null,
+       "hold_current": false
+      }
+     }
+    },
+    "calendar": {
+     "Q7": {
+      "2027-05-04": {
+       "price": 1500.0,
+       "sold": 0,
+       "total": 7,
+       "min": null,
+       "max": null
+      }
+     },
+     "Double": {
+      "2027-05-04": {
+       "price": 1300.0,
+       "sold": 0,
+       "total": 6,
+       "min": null,
+       "max": null
+      }
+     },
+     "Q2": {
+      "2027-05-04": {
+       "price": 1400.0,
+       "sold": 0,
+       "total": 2,
+       "min": null,
+       "max": null
+      }
+     }
+    }
+   },
+   "expected": {
+    "floor": 1300.0,
+    "ceiling": 1450.0,
+    "out": false,
+    "final": 1400.0,
+    "owner_floor": 1220.0
+   }
+  },
+  {
+   "name": "weekday_tie_refs_q2_above",
+   "input": {
+    "night": "2027-05-04",
+    "today": null,
+    "hooks": {
+     "Q2|2027-05-04": {
+      "rule_floor_owner": 1220.0,
+      "rule_floor_today": 1220.0,
+      "governs": false,
+      "band": null,
+      "safety_exception": null,
+      "between": {
+       "own_floor": 1220.0,
+       "standard_floor": 1220.0,
+       "lowering_order_ref": "dono-2026-11-09-plano-nov-fev",
+       "own_target_ceiling": null,
+       "hold_current": false
+      }
+     }
+    },
+    "calendar": {
+     "Q7": {
+      "2027-05-04": {
+       "price": 1400.0,
+       "sold": 0,
+       "total": 7,
+       "min": null,
+       "max": null
+      }
+     },
+     "Double": {
+      "2027-05-04": {
+       "price": 1400.0,
+       "sold": 0,
+       "total": 6,
+       "min": null,
+       "max": null
+      }
+     },
+     "Q2": {
+      "2027-05-04": {
+       "price": 1500.0,
+       "sold": 0,
+       "total": 2,
+       "min": null,
+       "max": null
+      }
+     }
+    }
+   },
+   "expected": {
+    "floor": 1400.0,
+    "ceiling": 1400.0,
+    "out": true,
+    "final": 1400.0,
+    "owner_floor": 1220.0
+   }
+  },
+  {
+   "name": "weekday_tie_refs_q2_equal",
+   "input": {
+    "night": "2027-05-04",
+    "today": null,
+    "hooks": {
+     "Q2|2027-05-04": {
+      "rule_floor_owner": 1220.0,
+      "rule_floor_today": 1220.0,
+      "governs": false,
+      "band": null,
+      "safety_exception": null,
+      "between": {
+       "own_floor": 1220.0,
+       "standard_floor": 1220.0,
+       "lowering_order_ref": "dono-2026-11-09-plano-nov-fev",
+       "own_target_ceiling": null,
+       "hold_current": false
+      }
+     }
+    },
+    "calendar": {
+     "Q7": {
+      "2027-05-04": {
+       "price": 1400.0,
+       "sold": 0,
+       "total": 7,
+       "min": null,
+       "max": null
+      }
+     },
+     "Double": {
+      "2027-05-04": {
+       "price": 1400.0,
+       "sold": 0,
+       "total": 6,
+       "min": null,
+       "max": null
+      }
+     },
+     "Q2": {
+      "2027-05-04": {
+       "price": 1400.0,
+       "sold": 0,
+       "total": 2,
+       "min": null,
+       "max": null
+      }
+     }
+    }
+   },
+   "expected": {
+    "floor": 1400.0,
+    "ceiling": 1400.0,
+    "out": false,
+    "final": 1400.0,
+    "owner_floor": 1220.0
+   }
+  },
+  {
+   "name": "weekday_tie_refs_q2_below",
+   "input": {
+    "night": "2027-05-04",
+    "today": null,
+    "hooks": {
+     "Q2|2027-05-04": {
+      "rule_floor_owner": 1220.0,
+      "rule_floor_today": 1220.0,
+      "governs": false,
+      "band": null,
+      "safety_exception": null,
+      "between": {
+       "own_floor": 1220.0,
+       "standard_floor": 1220.0,
+       "lowering_order_ref": "dono-2026-11-09-plano-nov-fev",
+       "own_target_ceiling": null,
+       "hold_current": false
+      }
+     }
+    },
+    "calendar": {
+     "Q7": {
+      "2027-05-04": {
+       "price": 1400.0,
+       "sold": 0,
+       "total": 7,
+       "min": null,
+       "max": null
+      }
+     },
+     "Double": {
+      "2027-05-04": {
+       "price": 1400.0,
+       "sold": 0,
+       "total": 6,
+       "min": null,
+       "max": null
+      }
+     },
+     "Q2": {
+      "2027-05-04": {
+       "price": 1300.0,
+       "sold": 0,
+       "total": 2,
+       "min": null,
+       "max": null
+      }
+     }
+    }
+   },
+   "expected": {
+    "floor": 1400.0,
+    "ceiling": 1400.0,
+    "out": true,
+    "final": 1400.0,
+    "owner_floor": 1220.0
+   }
+  },
+  {
+   "name": "weekday_rule_floor_above_both_refs",
+   "input": {
+    "night": "2027-05-04",
+    "today": null,
+    "hooks": {
+     "Q2|2027-05-04": {
+      "rule_floor_owner": 1220.0,
+      "rule_floor_today": 1220.0,
+      "governs": false,
+      "band": null,
+      "safety_exception": null,
+      "between": {
+       "own_floor": 1220.0,
+       "standard_floor": 1220.0,
+       "lowering_order_ref": "dono-2026-11-09-plano-nov-fev",
+       "own_target_ceiling": null,
+       "hold_current": false
+      }
+     }
+    },
+    "calendar": {
+     "Q7": {
+      "2027-05-04": {
+       "price": 900.0,
+       "sold": 0,
+       "total": 7,
+       "min": null,
+       "max": null
+      }
+     },
+     "Double": {
+      "2027-05-04": {
+       "price": 960.0,
+       "sold": 0,
+       "total": 6,
+       "min": null,
+       "max": null
+      }
+     },
+     "Q2": {
+      "2027-05-04": {
+       "price": 1300.0,
+       "sold": 0,
+       "total": 2,
+       "min": null,
+       "max": null
+      }
+     }
+    }
+   },
+   "expected": {
+    "floor": 1220.0,
+    "ceiling": 1220.0,
+    "out": true,
+    "final": 1220.0,
+    "owner_floor": 1220.0
+   }
+  },
+  {
+   "name": "weekday_rule_floor_between_refs",
+   "input": {
+    "night": "2027-05-04",
+    "today": null,
+    "hooks": {
+     "Q2|2027-05-04": {
+      "rule_floor_owner": 1220.0,
+      "rule_floor_today": 1220.0,
+      "governs": false,
+      "band": null,
+      "safety_exception": null,
+      "between": {
+       "own_floor": 1220.0,
+       "standard_floor": 1220.0,
+       "lowering_order_ref": "dono-2026-11-09-plano-nov-fev",
+       "own_target_ceiling": null,
+       "hold_current": false
+      }
+     }
+    },
+    "calendar": {
+     "Q7": {
+      "2027-05-04": {
+       "price": 1100.0,
+       "sold": 0,
+       "total": 7,
+       "min": null,
+       "max": null
+      }
+     },
+     "Double": {
+      "2027-05-04": {
+       "price": 1400.0,
+       "sold": 0,
+       "total": 6,
+       "min": null,
+       "max": null
+      }
+     },
+     "Q2": {
+      "2027-05-04": {
+       "price": 1700.0,
+       "sold": 0,
+       "total": 2,
+       "min": null,
+       "max": null
+      }
+     }
+    }
+   },
+   "expected": {
+    "floor": 1220.0,
+    "ceiling": 1325.0,
+    "out": true,
+    "final": 1325.0,
+    "owner_floor": 1220.0
+   }
+  },
+  {
+   "name": "weekday_half_values_bankers_rounding",
+   "input": {
+    "night": "2027-05-04",
+    "today": null,
+    "hooks": {
+     "Q2|2027-05-04": {
+      "rule_floor_owner": 1220.0,
+      "rule_floor_today": 1220.0,
+      "governs": false,
+      "band": null,
+      "safety_exception": null,
+      "between": {
+       "own_floor": 1220.0,
+       "standard_floor": 1220.0,
+       "lowering_order_ref": "dono-2026-11-09-plano-nov-fev",
+       "own_target_ceiling": null,
+       "hold_current": false
+      }
+     }
+    },
+    "calendar": {
+     "Q7": {
+      "2027-05-04": {
+       "price": 1300.5,
+       "sold": 0,
+       "total": 7,
+       "min": null,
+       "max": null
+      }
+     },
+     "Double": {
+      "2027-05-04": {
+       "price": 1400.5,
+       "sold": 0,
+       "total": 6,
+       "min": null,
+       "max": null
+      }
+     },
+     "Q2": {
+      "2027-05-04": {
+       "price": 1700.0,
+       "sold": 0,
+       "total": 2,
+       "min": null,
+       "max": null
+      }
+     }
+    }
+   },
+   "expected": {
+    "floor": 1300.0,
+    "ceiling": 1376.0,
+    "out": true,
+    "final": 1376.0,
+    "owner_floor": 1220.0
+   }
+  },
+  {
+   "name": "weekday_half_values_bankers_rounding_2",
+   "input": {
+    "night": "2027-05-04",
+    "today": null,
+    "hooks": {
+     "Q2|2027-05-04": {
+      "rule_floor_owner": 1220.0,
+      "rule_floor_today": 1220.0,
+      "governs": false,
+      "band": null,
+      "safety_exception": null,
+      "between": {
+       "own_floor": 1220.0,
+       "standard_floor": 1220.0,
+       "lowering_order_ref": "dono-2026-11-09-plano-nov-fev",
+       "own_target_ceiling": null,
+       "hold_current": false
+      }
+     }
+    },
+    "calendar": {
+     "Q7": {
+      "2027-05-04": {
+       "price": 1301.5,
+       "sold": 0,
+       "total": 7,
+       "min": null,
+       "max": null
+      }
+     },
+     "Double": {
+      "2027-05-04": {
+       "price": 1402.5,
+       "sold": 0,
+       "total": 6,
+       "min": null,
+       "max": null
+      }
+     },
+     "Q2": {
+      "2027-05-04": {
+       "price": 1700.0,
+       "sold": 0,
+       "total": 2,
+       "min": null,
+       "max": null
+      }
+     }
+    }
+   },
+   "expected": {
+    "floor": 1302.0,
+    "ceiling": 1377.0,
+    "out": true,
+    "final": 1377.0,
+    "owner_floor": 1220.0
+   }
+  },
+  {
+   "name": "weekend_out_above",
+   "input": {
+    "night": "2027-05-08",
+    "today": null,
+    "hooks": {
+     "Q2|2027-05-08": {
+      "rule_floor_owner": 2000.0,
+      "rule_floor_today": 2000.0,
+      "governs": false,
+      "band": null,
+      "safety_exception": null,
+      "between": {
+       "own_floor": 2000.0,
+       "standard_floor": 2000.0,
+       "lowering_order_ref": "dono-2026-11-09-plano-nov-fev",
+       "own_target_ceiling": null,
+       "hold_current": false
+      }
+     }
+    },
+    "calendar": {
+     "Q7": {
+      "2027-05-08": {
+       "price": 2018.0,
+       "sold": 0,
+       "total": 7,
+       "min": null,
+       "max": null
+      }
+     },
+     "Double": {
+      "2027-05-08": {
+       "price": 2028.0,
+       "sold": 0,
+       "total": 6,
+       "min": null,
+       "max": null
+      }
+     },
+     "Q2": {
+      "2027-05-08": {
+       "price": 2400.0,
+       "sold": 0,
+       "total": 2,
+       "min": null,
+       "max": null
+      }
+     }
+    }
+   },
+   "expected": {
+    "floor": 2018.0,
+    "ceiling": 2026.0,
+    "out": true,
+    "final": 2026.0,
+    "owner_floor": 2000.0
+   }
+  },
+  {
+   "name": "weekend_inside",
+   "input": {
+    "night": "2027-05-08",
+    "today": null,
+    "hooks": {
+     "Q2|2027-05-08": {
+      "rule_floor_owner": 2000.0,
+      "rule_floor_today": 2000.0,
+      "governs": false,
+      "band": null,
+      "safety_exception": null,
+      "between": {
+       "own_floor": 2000.0,
+       "standard_floor": 2000.0,
+       "lowering_order_ref": "dono-2026-11-09-plano-nov-fev",
+       "own_target_ceiling": null,
+       "hold_current": false
+      }
+     }
+    },
+    "calendar": {
+     "Q7": {
+      "2027-05-08": {
+       "price": 2018.0,
+       "sold": 0,
+       "total": 7,
+       "min": null,
+       "max": null
+      }
+     },
+     "Double": {
+      "2027-05-08": {
+       "price": 2028.0,
+       "sold": 0,
+       "total": 6,
+       "min": null,
+       "max": null
+      }
+     },
+     "Q2": {
+      "2027-05-08": {
+       "price": 2020.0,
+       "sold": 0,
+       "total": 2,
+       "min": null,
+       "max": null
+      }
+     }
+    }
+   },
+   "expected": {
+    "floor": 2018.0,
+    "ceiling": 2026.0,
+    "out": false,
+    "final": 2020.0,
+    "owner_floor": 2000.0
+   }
+  },
+  {
+   "name": "weekend_refs_below_rule_floor",
+   "input": {
+    "night": "2027-05-08",
+    "today": null,
+    "hooks": {
+     "Q2|2027-05-08": {
+      "rule_floor_owner": 2000.0,
+      "rule_floor_today": 2000.0,
+      "governs": false,
+      "band": null,
+      "safety_exception": null,
+      "between": {
+       "own_floor": 2000.0,
+       "standard_floor": 2000.0,
+       "lowering_order_ref": "dono-2026-11-09-plano-nov-fev",
+       "own_target_ceiling": null,
+       "hold_current": false
+      }
+     }
+    },
+    "calendar": {
+     "Q7": {
+      "2027-05-08": {
+       "price": 1800.0,
+       "sold": 0,
+       "total": 7,
+       "min": null,
+       "max": null
+      }
+     },
+     "Double": {
+      "2027-05-08": {
+       "price": 1900.0,
+       "sold": 0,
+       "total": 6,
+       "min": null,
+       "max": null
+      }
+     },
+     "Q2": {
+      "2027-05-08": {
+       "price": 2100.0,
+       "sold": 0,
+       "total": 2,
+       "min": null,
+       "max": null
+      }
+     }
+    }
+   },
+   "expected": {
+    "floor": 2000.0,
+    "ceiling": 2000.0,
+    "out": true,
+    "final": 2000.0,
+    "owner_floor": 2000.0
+   }
+  },
+  {
+   "name": "weekend_refs_far_apart",
+   "input": {
+    "night": "2027-05-08",
+    "today": null,
+    "hooks": {
+     "Q2|2027-05-08": {
+      "rule_floor_owner": 2000.0,
+      "rule_floor_today": 2000.0,
+      "governs": false,
+      "band": null,
+      "safety_exception": null,
+      "between": {
+       "own_floor": 2000.0,
+       "standard_floor": 2000.0,
+       "lowering_order_ref": "dono-2026-11-09-plano-nov-fev",
+       "own_target_ceiling": null,
+       "hold_current": false
+      }
+     }
+    },
+    "calendar": {
+     "Q7": {
+      "2027-05-08": {
+       "price": 2100.0,
+       "sold": 0,
+       "total": 7,
+       "min": null,
+       "max": null
+      }
+     },
+     "Double": {
+      "2027-05-08": {
+       "price": 2900.0,
+       "sold": 0,
+       "total": 6,
+       "min": null,
+       "max": null
+      }
+     },
+     "Q2": {
+      "2027-05-08": {
+       "price": 3200.0,
+       "sold": 0,
+       "total": 2,
+       "min": null,
+       "max": null
+      }
+     }
+    }
+   },
+   "expected": {
+    "floor": 2100.0,
+    "ceiling": 2700.0,
+    "out": true,
+    "final": 2700.0,
+    "owner_floor": 2000.0
+   }
+  },
+  {
+   "name": "weekend_q2_below",
+   "input": {
+    "night": "2027-05-08",
+    "today": null,
+    "hooks": {
+     "Q2|2027-05-08": {
+      "rule_floor_owner": 2000.0,
+      "rule_floor_today": 2000.0,
+      "governs": false,
+      "band": null,
+      "safety_exception": null,
+      "between": {
+       "own_floor": 2000.0,
+       "standard_floor": 2000.0,
+       "lowering_order_ref": "dono-2026-11-09-plano-nov-fev",
+       "own_target_ceiling": null,
+       "hold_current": false
+      }
+     }
+    },
+    "calendar": {
+     "Q7": {
+      "2027-05-08": {
+       "price": 2100.0,
+       "sold": 0,
+       "total": 7,
+       "min": null,
+       "max": null
+      }
+     },
+     "Double": {
+      "2027-05-08": {
+       "price": 2900.0,
+       "sold": 0,
+       "total": 6,
+       "min": null,
+       "max": null
+      }
+     },
+     "Q2": {
+      "2027-05-08": {
+       "price": 1900.0,
+       "sold": 0,
+       "total": 2,
+       "min": null,
+       "max": null
+      }
+     }
+    }
+   },
+   "expected": {
+    "floor": 2100.0,
+    "ceiling": 2700.0,
+    "out": true,
+    "final": 2100.0,
+    "owner_floor": 2000.0
+   }
+  },
+  {
+   "name": "holiday_out_above",
+   "input": {
+    "night": "2027-03-26",
+    "today": null,
+    "hooks": {
+     "Q2|2027-03-26": {
+      "rule_floor_owner": 2381.0,
+      "rule_floor_today": 2381.0,
+      "governs": false,
+      "band": null,
+      "safety_exception": null,
+      "between": {
+       "own_floor": 2381.0,
+       "standard_floor": 2381.0,
+       "lowering_order_ref": "dono-2026-11-09-plano-nov-fev",
+       "own_target_ceiling": null,
+       "hold_current": false
+      }
+     }
+    },
+    "calendar": {
+     "Q7": {
+      "2027-03-26": {
+       "price": 2500.0,
+       "sold": 0,
+       "total": 7,
+       "min": null,
+       "max": null
+      }
+     },
+     "Double": {
+      "2027-03-26": {
+       "price": 3000.0,
+       "sold": 0,
+       "total": 6,
+       "min": null,
+       "max": null
+      }
+     },
+     "Q2": {
+      "2027-03-26": {
+       "price": 3400.0,
+       "sold": 0,
+       "total": 2,
+       "min": null,
+       "max": null
+      }
+     }
+    }
+   },
+   "expected": {
+    "floor": 2500.0,
+    "ceiling": 2875.0,
+    "out": true,
+    "final": 2875.0,
+    "owner_floor": 2381.0
+   }
+  },
+  {
+   "name": "holiday_inside",
+   "input": {
+    "night": "2027-03-26",
+    "today": null,
+    "hooks": {
+     "Q2|2027-03-26": {
+      "rule_floor_owner": 2381.0,
+      "rule_floor_today": 2381.0,
+      "governs": false,
+      "band": null,
+      "safety_exception": null,
+      "between": {
+       "own_floor": 2381.0,
+       "standard_floor": 2381.0,
+       "lowering_order_ref": "dono-2026-11-09-plano-nov-fev",
+       "own_target_ceiling": null,
+       "hold_current": false
+      }
+     }
+    },
+    "calendar": {
+     "Q7": {
+      "2027-03-26": {
+       "price": 2500.0,
+       "sold": 0,
+       "total": 7,
+       "min": null,
+       "max": null
+      }
+     },
+     "Double": {
+      "2027-03-26": {
+       "price": 3000.0,
+       "sold": 0,
+       "total": 6,
+       "min": null,
+       "max": null
+      }
+     },
+     "Q2": {
+      "2027-03-26": {
+       "price": 2700.0,
+       "sold": 0,
+       "total": 2,
+       "min": null,
+       "max": null
+      }
+     }
+    }
+   },
+   "expected": {
+    "floor": 2500.0,
+    "ceiling": 2875.0,
+    "out": false,
+    "final": 2700.0,
+    "owner_floor": 2381.0
+   }
+  },
+  {
+   "name": "holiday_refs_below_holiday_floor",
+   "input": {
+    "night": "2027-03-26",
+    "today": null,
+    "hooks": {
+     "Q2|2027-03-26": {
+      "rule_floor_owner": 2381.0,
+      "rule_floor_today": 2381.0,
+      "governs": false,
+      "band": null,
+      "safety_exception": null,
+      "between": {
+       "own_floor": 2381.0,
+       "standard_floor": 2381.0,
+       "lowering_order_ref": "dono-2026-11-09-plano-nov-fev",
+       "own_target_ceiling": null,
+       "hold_current": false
+      }
+     }
+    },
+    "calendar": {
+     "Q7": {
+      "2027-03-26": {
+       "price": 2000.0,
+       "sold": 0,
+       "total": 7,
+       "min": null,
+       "max": null
+      }
+     },
+     "Double": {
+      "2027-03-26": {
+       "price": 2200.0,
+       "sold": 0,
+       "total": 6,
+       "min": null,
+       "max": null
+      }
+     },
+     "Q2": {
+      "2027-03-26": {
+       "price": 2600.0,
+       "sold": 0,
+       "total": 2,
+       "min": null,
+       "max": null
+      }
+     }
+    }
+   },
+   "expected": {
+    "floor": 2381.0,
+    "ceiling": 2381.0,
+    "out": true,
+    "final": 2381.0,
+    "owner_floor": 2381.0
+   }
+  },
+  {
+   "name": "plan_weekday_d5_with_today_q2_reopened_high",
+   "input": {
+    "night": "2026-11-16",
+    "today": "2026-11-11",
+    "hooks": {
+     "Q2|2026-11-16": {
+      "rule_floor_owner": 1220.0,
+      "rule_floor_today": 904.0,
+      "governs": false,
+      "band": null,
+      "safety_exception": null,
+      "between": {
+       "own_floor": 904.0,
+       "standard_floor": 1220.0,
+       "lowering_order_ref": "dono-2026-11-09-plano-nov-fev",
+       "own_target_ceiling": null,
+       "hold_current": false
+      }
+     }
+    },
+    "calendar": {
+     "Q7": {
+      "2026-11-16": {
+       "price": 905.0,
+       "sold": 0,
+       "total": 7,
+       "min": null,
+       "max": null
+      }
+     },
+     "Double": {
+      "2026-11-16": {
+       "price": 950.0,
+       "sold": 0,
+       "total": 6,
+       "min": null,
+       "max": null
+      }
+     },
+     "Q2": {
+      "2026-11-16": {
+       "price": 1300.0,
+       "sold": 0,
+       "total": 2,
+       "min": null,
+       "max": null
+      }
+     }
+    }
+   },
+   "expected": {
+    "floor": 905.0,
+    "ceiling": 939.0,
+    "out": true,
+    "final": 939.0,
+    "owner_floor": 1220.0
+   }
+  },
+  {
+   "name": "plan_weekday_d5_with_today_q2_inside",
+   "input": {
+    "night": "2026-11-16",
+    "today": "2026-11-11",
+    "hooks": {
+     "Q2|2026-11-16": {
+      "rule_floor_owner": 1220.0,
+      "rule_floor_today": 904.0,
+      "governs": false,
+      "band": null,
+      "safety_exception": null,
+      "between": {
+       "own_floor": 904.0,
+       "standard_floor": 1220.0,
+       "lowering_order_ref": "dono-2026-11-09-plano-nov-fev",
+       "own_target_ceiling": null,
+       "hold_current": false
+      }
+     }
+    },
+    "calendar": {
+     "Q7": {
+      "2026-11-16": {
+       "price": 905.0,
+       "sold": 0,
+       "total": 7,
+       "min": null,
+       "max": null
+      }
+     },
+     "Double": {
+      "2026-11-16": {
+       "price": 950.0,
+       "sold": 0,
+       "total": 6,
+       "min": null,
+       "max": null
+      }
+     },
+     "Q2": {
+      "2026-11-16": {
+       "price": 930.0,
+       "sold": 0,
+       "total": 2,
+       "min": null,
+       "max": null
+      }
+     }
+    }
+   },
+   "expected": {
+    "floor": 905.0,
+    "ceiling": 939.0,
+    "out": false,
+    "final": 930.0,
+    "owner_floor": 1220.0
+   }
+  },
+  {
+   "name": "plan_weekday_d5_without_today_q2_reopened_high",
+   "input": {
+    "night": "2026-11-16",
+    "today": null,
+    "hooks": {
+     "Q2|2026-11-16": {
+      "rule_floor_owner": 1220.0,
+      "rule_floor_today": 1220.0,
+      "governs": false,
+      "band": null,
+      "safety_exception": null,
+      "between": {
+       "own_floor": 1220.0,
+       "standard_floor": 1220.0,
+       "lowering_order_ref": "dono-2026-11-09-plano-nov-fev",
+       "own_target_ceiling": null,
+       "hold_current": false
+      }
+     }
+    },
+    "calendar": {
+     "Q7": {
+      "2026-11-16": {
+       "price": 905.0,
+       "sold": 0,
+       "total": 7,
+       "min": null,
+       "max": null
+      }
+     },
+     "Double": {
+      "2026-11-16": {
+       "price": 950.0,
+       "sold": 0,
+       "total": 6,
+       "min": null,
+       "max": null
+      }
+     },
+     "Q2": {
+      "2026-11-16": {
+       "price": 1300.0,
+       "sold": 0,
+       "total": 2,
+       "min": null,
+       "max": null
+      }
+     }
+    }
+   },
+   "expected": {
+    "floor": 1220.0,
+    "ceiling": 1220.0,
+    "out": true,
+    "final": 1220.0,
+    "owner_floor": 1220.0
+   }
+  },
+  {
+   "name": "plan_weekday_d5_without_today_q2_inside",
+   "input": {
+    "night": "2026-11-16",
+    "today": null,
+    "hooks": {
+     "Q2|2026-11-16": {
+      "rule_floor_owner": 1220.0,
+      "rule_floor_today": 1220.0,
+      "governs": false,
+      "band": null,
+      "safety_exception": null,
+      "between": {
+       "own_floor": 1220.0,
+       "standard_floor": 1220.0,
+       "lowering_order_ref": "dono-2026-11-09-plano-nov-fev",
+       "own_target_ceiling": null,
+       "hold_current": false
+      }
+     }
+    },
+    "calendar": {
+     "Q7": {
+      "2026-11-16": {
+       "price": 905.0,
+       "sold": 0,
+       "total": 7,
+       "min": null,
+       "max": null
+      }
+     },
+     "Double": {
+      "2026-11-16": {
+       "price": 950.0,
+       "sold": 0,
+       "total": 6,
+       "min": null,
+       "max": null
+      }
+     },
+     "Q2": {
+      "2026-11-16": {
+       "price": 930.0,
+       "sold": 0,
+       "total": 2,
+       "min": null,
+       "max": null
+      }
+     }
+    }
+   },
+   "expected": {
+    "floor": 1220.0,
+    "ceiling": 1220.0,
+    "out": false,
+    "final": 930.0,
+    "owner_floor": 1220.0
+   }
+  },
+  {
+   "name": "plan_weekday_d12_with_today_q2_reopened_high",
+   "input": {
+    "night": "2026-11-23",
+    "today": "2026-11-11",
+    "hooks": {
+     "Q2|2026-11-23": {
+      "rule_floor_owner": 1220.0,
+      "rule_floor_today": 1220.0,
+      "governs": false,
+      "band": null,
+      "safety_exception": null,
+      "between": {
+       "own_floor": 1220.0,
+       "standard_floor": 1220.0,
+       "lowering_order_ref": "dono-2026-11-09-plano-nov-fev",
+       "own_target_ceiling": null,
+       "hold_current": false
+      }
+     }
+    },
+    "calendar": {
+     "Q7": {
+      "2026-11-23": {
+       "price": 905.0,
+       "sold": 0,
+       "total": 7,
+       "min": null,
+       "max": null
+      }
+     },
+     "Double": {
+      "2026-11-23": {
+       "price": 950.0,
+       "sold": 0,
+       "total": 6,
+       "min": null,
+       "max": null
+      }
+     },
+     "Q2": {
+      "2026-11-23": {
+       "price": 1300.0,
+       "sold": 0,
+       "total": 2,
+       "min": null,
+       "max": null
+      }
+     }
+    }
+   },
+   "expected": {
+    "floor": 1220.0,
+    "ceiling": 1220.0,
+    "out": true,
+    "final": 1220.0,
+    "owner_floor": 1220.0
+   }
+  },
+  {
+   "name": "plan_weekday_d12_with_today_q2_inside",
+   "input": {
+    "night": "2026-11-23",
+    "today": "2026-11-11",
+    "hooks": {
+     "Q2|2026-11-23": {
+      "rule_floor_owner": 1220.0,
+      "rule_floor_today": 1220.0,
+      "governs": false,
+      "band": null,
+      "safety_exception": null,
+      "between": {
+       "own_floor": 1220.0,
+       "standard_floor": 1220.0,
+       "lowering_order_ref": "dono-2026-11-09-plano-nov-fev",
+       "own_target_ceiling": null,
+       "hold_current": false
+      }
+     }
+    },
+    "calendar": {
+     "Q7": {
+      "2026-11-23": {
+       "price": 905.0,
+       "sold": 0,
+       "total": 7,
+       "min": null,
+       "max": null
+      }
+     },
+     "Double": {
+      "2026-11-23": {
+       "price": 950.0,
+       "sold": 0,
+       "total": 6,
+       "min": null,
+       "max": null
+      }
+     },
+     "Q2": {
+      "2026-11-23": {
+       "price": 930.0,
+       "sold": 0,
+       "total": 2,
+       "min": null,
+       "max": null
+      }
+     }
+    }
+   },
+   "expected": {
+    "floor": 1220.0,
+    "ceiling": 1220.0,
+    "out": false,
+    "final": 930.0,
+    "owner_floor": 1220.0
+   }
+  },
+  {
+   "name": "plan_weekday_d7_with_today_q2_reopened_high",
+   "input": {
+    "night": "2026-11-18",
+    "today": "2026-11-11",
+    "hooks": {
+     "Q2|2026-11-18": {
+      "rule_floor_owner": 1220.0,
+      "rule_floor_today": 904.0,
+      "governs": false,
+      "band": null,
+      "safety_exception": null,
+      "between": {
+       "own_floor": 904.0,
+       "standard_floor": 1220.0,
+       "lowering_order_ref": "dono-2026-11-09-plano-nov-fev",
+       "own_target_ceiling": null,
+       "hold_current": false
+      }
+     }
+    },
+    "calendar": {
+     "Q7": {
+      "2026-11-18": {
+       "price": 905.0,
+       "sold": 0,
+       "total": 7,
+       "min": null,
+       "max": null
+      }
+     },
+     "Double": {
+      "2026-11-18": {
+       "price": 950.0,
+       "sold": 0,
+       "total": 6,
+       "min": null,
+       "max": null
+      }
+     },
+     "Q2": {
+      "2026-11-18": {
+       "price": 1300.0,
+       "sold": 0,
+       "total": 2,
+       "min": null,
+       "max": null
+      }
+     }
+    }
+   },
+   "expected": {
+    "floor": 905.0,
+    "ceiling": 939.0,
+    "out": true,
+    "final": 939.0,
+    "owner_floor": 1220.0
+   }
+  },
+  {
+   "name": "plan_weekday_d7_with_today_q2_inside",
+   "input": {
+    "night": "2026-11-18",
+    "today": "2026-11-11",
+    "hooks": {
+     "Q2|2026-11-18": {
+      "rule_floor_owner": 1220.0,
+      "rule_floor_today": 904.0,
+      "governs": false,
+      "band": null,
+      "safety_exception": null,
+      "between": {
+       "own_floor": 904.0,
+       "standard_floor": 1220.0,
+       "lowering_order_ref": "dono-2026-11-09-plano-nov-fev",
+       "own_target_ceiling": null,
+       "hold_current": false
+      }
+     }
+    },
+    "calendar": {
+     "Q7": {
+      "2026-11-18": {
+       "price": 905.0,
+       "sold": 0,
+       "total": 7,
+       "min": null,
+       "max": null
+      }
+     },
+     "Double": {
+      "2026-11-18": {
+       "price": 950.0,
+       "sold": 0,
+       "total": 6,
+       "min": null,
+       "max": null
+      }
+     },
+     "Q2": {
+      "2026-11-18": {
+       "price": 930.0,
+       "sold": 0,
+       "total": 2,
+       "min": null,
+       "max": null
+      }
+     }
+    }
+   },
+   "expected": {
+    "floor": 905.0,
+    "ceiling": 939.0,
+    "out": false,
+    "final": 930.0,
+    "owner_floor": 1220.0
+   }
+  },
+  {
+   "name": "plan_weekday_d8_with_today_q2_reopened_high",
+   "input": {
+    "night": "2026-11-19",
+    "today": "2026-11-11",
+    "hooks": {
+     "Q2|2026-11-19": {
+      "rule_floor_owner": 1905.0,
+      "rule_floor_today": 1905.0,
+      "governs": true,
+      "band": null,
+      "safety_exception": null,
+      "between": {
+       "own_floor": 1905.0,
+       "standard_floor": 1905.0,
+       "lowering_order_ref": "dono-2026-11-09-plano-nov-fev",
+       "own_target_ceiling": null,
+       "hold_current": false
+      }
+     }
+    },
+    "calendar": {
+     "Q7": {
+      "2026-11-19": {
+       "price": 905.0,
+       "sold": 0,
+       "total": 7,
+       "min": null,
+       "max": null
+      }
+     },
+     "Double": {
+      "2026-11-19": {
+       "price": 950.0,
+       "sold": 0,
+       "total": 6,
+       "min": null,
+       "max": null
+      }
+     },
+     "Q2": {
+      "2026-11-19": {
+       "price": 1300.0,
+       "sold": 0,
+       "total": 2,
+       "min": null,
+       "max": null
+      }
+     }
+    }
+   },
+   "expected": {
+    "floor": 1905.0,
+    "ceiling": 1905.0,
+    "out": true,
+    "final": 1905.0,
+    "owner_floor": 1905.0
+   }
+  },
+  {
+   "name": "plan_weekday_d8_with_today_q2_inside",
+   "input": {
+    "night": "2026-11-19",
+    "today": "2026-11-11",
+    "hooks": {
+     "Q2|2026-11-19": {
+      "rule_floor_owner": 1905.0,
+      "rule_floor_today": 1905.0,
+      "governs": true,
+      "band": null,
+      "safety_exception": null,
+      "between": {
+       "own_floor": 1905.0,
+       "standard_floor": 1905.0,
+       "lowering_order_ref": "dono-2026-11-09-plano-nov-fev",
+       "own_target_ceiling": null,
+       "hold_current": false
+      }
+     }
+    },
+    "calendar": {
+     "Q7": {
+      "2026-11-19": {
+       "price": 905.0,
+       "sold": 0,
+       "total": 7,
+       "min": null,
+       "max": null
+      }
+     },
+     "Double": {
+      "2026-11-19": {
+       "price": 950.0,
+       "sold": 0,
+       "total": 6,
+       "min": null,
+       "max": null
+      }
+     },
+     "Q2": {
+      "2026-11-19": {
+       "price": 930.0,
+       "sold": 0,
+       "total": 2,
+       "min": null,
+       "max": null
+      }
+     }
+    }
+   },
+   "expected": {
+    "floor": 1905.0,
+    "ceiling": 1905.0,
+    "out": false,
+    "final": 930.0,
+    "owner_floor": 1905.0
+   }
+  },
+  {
+   "name": "plan_weekday_d0_with_today_q2_reopened_high",
+   "input": {
+    "night": "2026-11-11",
+    "today": "2026-11-11",
+    "hooks": {
+     "Q2|2026-11-11": {
+      "rule_floor_owner": 1220.0,
+      "rule_floor_today": 884.0,
+      "governs": false,
+      "band": null,
+      "safety_exception": null,
+      "between": {
+       "own_floor": 884.0,
+       "standard_floor": 1220.0,
+       "lowering_order_ref": "dono-2026-11-09-plano-nov-fev",
+       "own_target_ceiling": null,
+       "hold_current": false
+      }
+     }
+    },
+    "calendar": {
+     "Q7": {
+      "2026-11-11": {
+       "price": 905.0,
+       "sold": 0,
+       "total": 7,
+       "min": null,
+       "max": null
+      }
+     },
+     "Double": {
+      "2026-11-11": {
+       "price": 950.0,
+       "sold": 0,
+       "total": 6,
+       "min": null,
+       "max": null
+      }
+     },
+     "Q2": {
+      "2026-11-11": {
+       "price": 1300.0,
+       "sold": 0,
+       "total": 2,
+       "min": null,
+       "max": null
+      }
+     }
+    }
+   },
+   "expected": {
+    "floor": 905.0,
+    "ceiling": 939.0,
+    "out": true,
+    "final": 939.0,
+    "owner_floor": 1220.0
+   }
+  },
+  {
+   "name": "plan_weekday_d0_with_today_q2_inside",
+   "input": {
+    "night": "2026-11-11",
+    "today": "2026-11-11",
+    "hooks": {
+     "Q2|2026-11-11": {
+      "rule_floor_owner": 1220.0,
+      "rule_floor_today": 884.0,
+      "governs": false,
+      "band": null,
+      "safety_exception": null,
+      "between": {
+       "own_floor": 884.0,
+       "standard_floor": 1220.0,
+       "lowering_order_ref": "dono-2026-11-09-plano-nov-fev",
+       "own_target_ceiling": null,
+       "hold_current": false
+      }
+     }
+    },
+    "calendar": {
+     "Q7": {
+      "2026-11-11": {
+       "price": 905.0,
+       "sold": 0,
+       "total": 7,
+       "min": null,
+       "max": null
+      }
+     },
+     "Double": {
+      "2026-11-11": {
+       "price": 950.0,
+       "sold": 0,
+       "total": 6,
+       "min": null,
+       "max": null
+      }
+     },
+     "Q2": {
+      "2026-11-11": {
+       "price": 930.0,
+       "sold": 0,
+       "total": 2,
+       "min": null,
+       "max": null
+      }
+     }
+    }
+   },
+   "expected": {
+    "floor": 905.0,
+    "ceiling": 939.0,
+    "out": false,
+    "final": 930.0,
+    "owner_floor": 1220.0
+   }
+  },
+  {
+   "name": "plan_weekday_d5_without_plan_order",
+   "input": {
+    "night": "2026-11-16",
+    "today": "2026-11-11",
+    "hooks": {
+     "Q2|2026-11-16": {
+      "rule_floor_owner": 1220.0,
+      "rule_floor_today": 1220.0,
+      "governs": false,
+      "band": null,
+      "safety_exception": null,
+      "between": {
+       "own_floor": 1220.0,
+       "standard_floor": 1220.0,
+       "lowering_order_ref": "dono-2026-11-09-plano-nov-fev",
+       "own_target_ceiling": null,
+       "hold_current": false
+      }
+     }
+    },
+    "calendar": {
+     "Q7": {
+      "2026-11-16": {
+       "price": 905.0,
+       "sold": 0,
+       "total": 7,
+       "min": null,
+       "max": null
+      }
+     },
+     "Double": {
+      "2026-11-16": {
+       "price": 950.0,
+       "sold": 0,
+       "total": 6,
+       "min": null,
+       "max": null
+      }
+     },
+     "Q2": {
+      "2026-11-16": {
+       "price": 1300.0,
+       "sold": 0,
+       "total": 2,
+       "min": null,
+       "max": null
+      }
+     }
+    }
+   },
+   "expected": {
+    "floor": 1220.0,
+    "ceiling": 1220.0,
+    "out": true,
+    "final": 1220.0,
+    "owner_floor": 1220.0
+   }
+  },
+  {
+   "name": "plan_weekend_fri_out_above",
+   "input": {
+    "night": "2026-11-13",
+    "today": "2026-11-11",
+    "hooks": {
+     "Q2|2026-11-13": {
+      "rule_floor_owner": 1000.0,
+      "rule_floor_today": 1000.0,
+      "governs": true,
+      "band": null,
+      "safety_exception": null,
+      "between": {
+       "own_floor": 1000.0,
+       "standard_floor": 1000.0,
+       "lowering_order_ref": "dono-2026-11-09-plano-nov-fev",
+       "own_target_ceiling": null,
+       "hold_current": false
+      }
+     }
+    },
+    "calendar": {
+     "Q7": {
+      "2026-11-13": {
+       "price": 1100.0,
+       "sold": 0,
+       "total": 7,
+       "min": null,
+       "max": null
+      }
+     },
+     "Double": {
+      "2026-11-13": {
+       "price": 1500.0,
+       "sold": 0,
+       "total": 6,
+       "min": null,
+       "max": null
+      }
+     },
+     "Q2": {
+      "2026-11-13": {
+       "price": 1700.0,
+       "sold": 0,
+       "total": 2,
+       "min": null,
+       "max": null
+      }
+     }
+    }
+   },
+   "expected": {
+    "floor": 1100.0,
+    "ceiling": 1400.0,
+    "out": true,
+    "final": 1400.0,
+    "owner_floor": 1000.0
+   }
+  },
+  {
+   "name": "plan_weekend_fri_without_plan_order",
+   "input": {
+    "night": "2026-11-13",
+    "today": "2026-11-11",
+    "hooks": {
+     "Q2|2026-11-13": {
+      "rule_floor_owner": 2000.0,
+      "rule_floor_today": 2000.0,
+      "governs": false,
+      "band": null,
+      "safety_exception": null,
+      "between": {
+       "own_floor": 2000.0,
+       "standard_floor": 2000.0,
+       "lowering_order_ref": "dono-2026-11-09-plano-nov-fev",
+       "own_target_ceiling": null,
+       "hold_current": false
+      }
+     }
+    },
+    "calendar": {
+     "Q7": {
+      "2026-11-13": {
+       "price": 1100.0,
+       "sold": 0,
+       "total": 7,
+       "min": null,
+       "max": null
+      }
+     },
+     "Double": {
+      "2026-11-13": {
+       "price": 1500.0,
+       "sold": 0,
+       "total": 6,
+       "min": null,
+       "max": null
+      }
+     },
+     "Q2": {
+      "2026-11-13": {
+       "price": 1700.0,
+       "sold": 0,
+       "total": 2,
+       "min": null,
+       "max": null
+      }
+     }
+    }
+   },
+   "expected": {
+    "floor": 2000.0,
+    "ceiling": 2000.0,
+    "out": true,
+    "final": 2000.0,
+    "owner_floor": 2000.0
+   }
+  },
+  {
+   "name": "plan_holiday_natal_out_above",
+   "input": {
+    "night": "2026-12-24",
+    "today": "2026-12-01",
+    "hooks": {
+     "Q2|2026-12-24": {
+      "rule_floor_owner": 1905.0,
+      "rule_floor_today": 1905.0,
+      "governs": true,
+      "band": null,
+      "safety_exception": null,
+      "between": {
+       "own_floor": 1905.0,
+       "standard_floor": 1905.0,
+       "lowering_order_ref": "dono-2026-11-09-plano-nov-fev",
+       "own_target_ceiling": null,
+       "hold_current": false
+      }
+     }
+    },
+    "calendar": {
+     "Q7": {
+      "2026-12-24": {
+       "price": 2400.0,
+       "sold": 0,
+       "total": 7,
+       "min": null,
+       "max": null
+      }
+     },
+     "Double": {
+      "2026-12-24": {
+       "price": 2700.0,
+       "sold": 0,
+       "total": 6,
+       "min": null,
+       "max": null
+      }
+     },
+     "Q2": {
+      "2026-12-24": {
+       "price": 3100.0,
+       "sold": 0,
+       "total": 2,
+       "min": null,
+       "max": null
+      }
+     }
+    }
+   },
+   "expected": {
+    "floor": 2400.0,
+    "ceiling": 2625.0,
+    "out": true,
+    "final": 2625.0,
+    "owner_floor": 1905.0
+   }
+  },
+  {
+   "name": "plan_holiday_natal_without_plan_order",
+   "input": {
+    "night": "2026-12-24",
+    "today": "2026-12-01",
+    "hooks": {
+     "Q2|2026-12-24": {
+      "rule_floor_owner": 2381.0,
+      "rule_floor_today": 2381.0,
+      "governs": false,
+      "band": null,
+      "safety_exception": null,
+      "between": {
+       "own_floor": 2381.0,
+       "standard_floor": 2381.0,
+       "lowering_order_ref": "dono-2026-11-09-plano-nov-fev",
+       "own_target_ceiling": null,
+       "hold_current": false
+      }
+     }
+    },
+    "calendar": {
+     "Q7": {
+      "2026-12-24": {
+       "price": 2400.0,
+       "sold": 0,
+       "total": 7,
+       "min": null,
+       "max": null
+      }
+     },
+     "Double": {
+      "2026-12-24": {
+       "price": 2700.0,
+       "sold": 0,
+       "total": 6,
+       "min": null,
+       "max": null
+      }
+     },
+     "Q2": {
+      "2026-12-24": {
+       "price": 3100.0,
+       "sold": 0,
+       "total": 2,
+       "min": null,
+       "max": null
+      }
+     }
+    }
+   },
+   "expected": {
+    "floor": 2400.0,
+    "ceiling": 2625.0,
+    "out": true,
+    "final": 2625.0,
+    "owner_floor": 2381.0
+   }
+  },
+  {
+   "name": "plan_between_holidays_sun",
+   "input": {
+    "night": "2026-12-27",
+    "today": "2026-12-20",
+    "hooks": {
+     "Q2|2026-12-27": {
+      "rule_floor_owner": 1220.0,
+      "rule_floor_today": 1220.0,
+      "governs": true,
+      "band": null,
+      "safety_exception": null,
+      "between": {
+       "own_floor": 1220.0,
+       "standard_floor": 1220.0,
+       "lowering_order_ref": "dono-2026-11-09-plano-nov-fev",
+       "own_target_ceiling": null,
+       "hold_current": false
+      }
+     }
+    },
+    "calendar": {
+     "Q7": {
+      "2026-12-27": {
+       "price": 1400.0,
+       "sold": 0,
+       "total": 7,
+       "min": null,
+       "max": null
+      }
+     },
+     "Double": {
+      "2026-12-27": {
+       "price": 1700.0,
+       "sold": 0,
+       "total": 6,
+       "min": null,
+       "max": null
+      }
+     },
+     "Q2": {
+      "2026-12-27": {
+       "price": 1900.0,
+       "sold": 0,
+       "total": 2,
+       "min": null,
+       "max": null
+      }
+     }
+    }
+   },
+   "expected": {
+    "floor": 1400.0,
+    "ceiling": 1625.0,
+    "out": true,
+    "final": 1625.0,
+    "owner_floor": 1220.0
+   }
+  },
+  {
+   "name": "patched_q2_base_1352_tolerance",
+   "input": {
+    "night": "2027-05-04",
+    "today": null,
+    "hooks": {
+     "Q2|2027-05-04": {
+      "rule_floor_owner": 1220.0,
+      "rule_floor_today": 1220.0,
+      "governs": false,
+      "band": null,
+      "safety_exception": null,
+      "between": {
+       "own_floor": 1220.0,
+       "standard_floor": 1220.0,
+       "lowering_order_ref": "dono-2026-11-09-plano-nov-fev",
+       "own_target_ceiling": null,
+       "hold_current": false
+      }
+     }
+    },
+    "calendar": {
+     "Q7": {
+      "2027-05-04": {
+       "price": 1232.0,
+       "sold": 0,
+       "total": 7,
+       "min": null,
+       "max": null
+      }
+     },
+     "Double": {
+      "2027-05-04": {
+       "price": 1302.0,
+       "sold": 0,
+       "total": 6,
+       "min": null,
+       "max": null
+      }
+     },
+     "Q2": {
+      "2027-05-04": {
+       "price": 1317.0,
+       "sold": 0,
+       "total": 2,
+       "min": null,
+       "max": null
+      }
+     }
+    },
+    "rooms_patch": {
+     "Q2": {
+      "base": 1352
+     }
+    }
+   },
+   "expected": {
+    "floor": 1232.0,
+    "ceiling": 1284.0,
+    "out": true,
+    "final": 1284.0,
+    "owner_floor": 1220.0
+   }
+  },
+  {
+   "name": "patched_q2_base_1352_out",
+   "input": {
+    "night": "2027-05-04",
+    "today": null,
+    "hooks": {
+     "Q2|2027-05-04": {
+      "rule_floor_owner": 1220.0,
+      "rule_floor_today": 1220.0,
+      "governs": false,
+      "band": null,
+      "safety_exception": null,
+      "between": {
+       "own_floor": 1220.0,
+       "standard_floor": 1220.0,
+       "lowering_order_ref": "dono-2026-11-09-plano-nov-fev",
+       "own_target_ceiling": null,
+       "hold_current": false
+      }
+     }
+    },
+    "calendar": {
+     "Q7": {
+      "2027-05-04": {
+       "price": 1232.0,
+       "sold": 0,
+       "total": 7,
+       "min": null,
+       "max": null
+      }
+     },
+     "Double": {
+      "2027-05-04": {
+       "price": 1302.0,
+       "sold": 0,
+       "total": 6,
+       "min": null,
+       "max": null
+      }
+     },
+     "Q2": {
+      "2027-05-04": {
+       "price": 1317.53,
+       "sold": 0,
+       "total": 2,
+       "min": null,
+       "max": null
+      }
+     }
+    },
+    "rooms_patch": {
+     "Q2": {
+      "base": 1352
+     }
+    }
+   },
+   "expected": {
+    "floor": 1232.0,
+    "ceiling": 1284.0,
+    "out": true,
+    "final": 1284.0,
+    "owner_floor": 1220.0
+   }
+  }
+ ]
+}

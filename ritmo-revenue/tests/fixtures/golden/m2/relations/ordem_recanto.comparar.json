@@ -1,0 +1,2631 @@
+{
+ "function": "ordem_recanto.comparar+montar_plano",
+ "php_target": "Ritmo\\Domain\\Relations\\Audit\\RelationAuditor::run() and toPlanItems()",
+ "notes": "Whole audit over a date range: findings in night order (middle room before top room) and the plan items built from them (the middle room cites the order that allows going below the owner's floor when its floor is below it, else its relation's order; the top room cites none).",
+ "cases": [
+  {
+   "name": "week_outside_plan_mixed",
+   "input": {
+    "today": "2027-03-01",
+    "from": "2027-03-01",
+    "to": "2027-03-07",
+    "calendar": {
+     "Q7": {
+      "2027-03-01": {
+       "price": 1232.0,
+       "sold": 1,
+       "total": 7,
+       "min": null,
+       "max": null
+      },
+      "2027-03-02": {
+       "price": 1232.0,
+       "sold": 1,
+       "total": 7,
+       "min": null,
+       "max": null
+      },
+      "2027-03-03": {
+       "price": 1232.0,
+       "sold": 7,
+       "total": 7,
+       "min": null,
+       "max": null
+      },
+      "2027-03-04": {
+       "price": 1500.0,
+       "sold": 6,
+       "total": 7,
+       "min": null,
+       "max": null
+      },
+      "2027-03-05": {
+       "price": 2018.0,
+       "sold": 1,
+       "total": 7,
+       "min": null,
+       "max": null
+      },
+      "2027-03-06": {
+       "price": 2018.0,
+       "sold": 1,
+       "total": 7,
+       "min": null,
+       "max": null
+      },
+      "2027-03-07": {
+       "price": 1232.0,
+       "sold": 0,
+       "total": 7,
+       "min": null,
+       "max": null
+      }
+     },
+     "Double": {
+      "2027-03-01": {
+       "price": 1302.0,
+       "sold": 1,
+       "total": 6,
+       "min": null,
+       "max": null
+      },
+      "2027-03-02": {
+       "price": 1302.0,
+       "sold": 6,
+       "total": 6,
+       "min": null,
+       "max": null
+      },
+      "2027-03-03": {
+       "price": 1302.0,
+       "sold": 1,
+       "total": 6,
+       "min": null,
+       "max": null
+      },
+      "2027-03-04": {
+       "price": 1300.0,
+       "sold": 1,
+       "total": 6,
+       "min": null,
+       "max": null
+      },
+      "2027-03-05": {
+       "price": 2028.0,
+       "sold": 1,
+       "total": 6,
+       "min": null,
+       "max": null
+      },
+      "2027-03-06": {
+       "price": 2900.0,
+       "sold": 1,
+       "total": 6,
+       "min": null,
+       "max": null
+      },
+      "2027-03-07": {
+       "price": 1302.0,
+       "sold": 0,
+       "total": 6,
+       "min": null,
+       "max": null
+      }
+     },
+     "Q2": {
+      "2027-03-01": {
+       "price": 1613.0,
+       "sold": 0,
+       "total": 2,
+       "min": null,
+       "max": null
+      },
+      "2027-03-02": {
+       "price": 1613.0,
+       "sold": 0,
+       "total": 2,
+       "min": null,
+       "max": null
+      },
+      "2027-03-03": {
+       "price": 1613.0,
+       "sold": 0,
+       "total": 2,
+       "min": null,
+       "max": null
+      },
+      "2027-03-04": {
+       "price": 1700.0,
+       "sold": 0,
+       "total": 2,
+       "min": null,
+       "max": null
+      },
+      "2027-03-05": {
+       "price": 2400.0,
+       "sold": 0,
+       "total": 2,
+       "min": null,
+       "max": null
+      },
+      "2027-03-06": {
+       "price": 2020.0,
+       "sold": 2,
+       "total": 2,
+       "min": null,
+       "max": null
+      },
+      "2027-03-07": {
+       "price": 1290.0,
+       "sold": 0,
+       "total": 2,
+       "min": 1500.0,
+       "max": null
+      }
+     },
+     "Afrodite": {
+      "2027-03-01": {
+       "price": 1500.0,
+       "sold": 0,
+       "total": 1,
+       "min": null,
+       "max": null
+      },
+      "2027-03-02": {
+       "price": 1500.0,
+       "sold": 0,
+       "total": 1,
+       "min": null,
+       "max": null
+      },
+      "2027-03-03": {
+       "price": 1500.0,
+       "sold": 0,
+       "total": 1,
+       "min": null,
+       "max": null
+      },
+      "2027-03-04": {
+       "price": 1900.0,
+       "sold": 0,
+       "total": 1,
+       "min": null,
+       "max": null
+      },
+      "2027-03-05": {
+       "price": 3523.0,
+       "sold": 0,
+       "total": 1,
+       "min": null,
+       "max": null
+      },
+      "2027-03-06": {
+       "price": 2950.0,
+       "sold": 0,
+       "total": 1,
+       "min": null,
+       "max": null
+      },
+      "2027-03-07": {
+       "price": 1500.0,
+       "sold": 1,
+       "total": 1,
+       "min": null,
+       "max": null
+      }
+     }
+    },
+    "hooks": {
+     "Q2|2027-03-01": {
+      "rule_floor_owner": 1220.0,
+      "rule_floor_today": 1220.0,
+      "governs": false,
+      "band": null,
+      "safety_exception": null,
+      "between": {
+       "own_floor": 1220.0,
+       "standard_floor": 1220.0,
+       "lowering_order_ref": "dono-2026-11-09-plano-nov-fev",
+       "own_target_ceiling": null,
+       "hold_current": false
+      }
+     },
+     "Q2|2027-03-02": {
+      "rule_floor_owner": 1220.0,
+      "rule_floor_today": 1220.0,
+      "governs": false,
+      "band": null,
+      "safety_exception": null,
+      "between": {
+       "own_floor": 1220.0,
+       "standard_floor": 1220.0,
+       "lowering_order_ref": "dono-2026-11-09-plano-nov-fev",
+       "own_target_ceiling": null,
+       "hold_current": false
+      }
+     },
+     "Q2|2027-03-03": {
+      "rule_floor_owner": 1220.0,
+      "rule_floor_today": 1220.0,
+      "governs": false,
+      "band": null,
+      "safety_exception": null,
+      "between": {
+       "own_floor": 1220.0,
+       "standard_floor": 1220.0,
+       "lowering_order_ref": "dono-2026-11-09-plano-nov-fev",
+       "own_target_ceiling": null,
+       "hold_current": false
+      }
+     },
+     "Q2|2027-03-04": {
+      "rule_floor_owner": 1220.0,
+      "rule_floor_today": 1220.0,
+      "governs": false,
+      "band": null,
+      "safety_exception": null,
+      "between": {
+       "own_floor": 1220.0,
+       "standard_floor": 1220.0,
+       "lowering_order_ref": "dono-2026-11-09-plano-nov-fev",
+       "own_target_ceiling": null,
+       "hold_current": false
+      }
+     },
+     "Q2|2027-03-05": {
+      "rule_floor_owner": 2000.0,
+      "rule_floor_today": 2000.0,
+      "governs": false,
+      "band": null,
+      "safety_exception": null,
+      "between": {
+       "own_floor": 2000.0,
+       "standard_floor": 2000.0,
+       "lowering_order_ref": "dono-2026-11-09-plano-nov-fev",
+       "own_target_ceiling": null,
+       "hold_current": false
+      }
+     },
+     "Q2|2027-03-06": {
+      "rule_floor_owner": 2000.0,
+      "rule_floor_today": 2000.0,
+      "governs": false,
+      "band": null,
+      "safety_exception": null,
+      "between": {
+       "own_floor": 2000.0,
+       "standard_floor": 2000.0,
+       "lowering_order_ref": "dono-2026-11-09-plano-nov-fev",
+       "own_target_ceiling": null,
+       "hold_current": false
+      }
+     },
+     "Q2|2027-03-07": {
+      "rule_floor_owner": 1220.0,
+      "rule_floor_today": 1220.0,
+      "governs": false,
+      "band": null,
+      "safety_exception": null,
+      "between": {
+       "own_floor": 1220.0,
+       "standard_floor": 1220.0,
+       "lowering_order_ref": "dono-2026-11-09-plano-nov-fev",
+       "own_target_ceiling": null,
+       "hold_current": false
+      }
+     },
+     "Afrodite|2027-03-01": {
+      "rule_floor_owner": 1500.0,
+      "rule_floor_today": 1500.0,
+      "governs": false,
+      "band": null,
+      "safety_exception": null,
+      "between": {
+       "own_floor": 1500.0,
+       "standard_floor": 1500.0,
+       "lowering_order_ref": "dono-2026-11-09-plano-nov-fev",
+       "own_target_ceiling": null,
+       "hold_current": false
+      }
+     },
+     "Afrodite|2027-03-02": {
+      "rule_floor_owner": 1500.0,
+      "rule_floor_today": 1500.0,
+      "governs": false,
+      "band": null,
+      "safety_exception": null,
+      "between": {
+       "own_floor": 1500.0,
+       "standard_floor": 1500.0,
+       "lowering_order_ref": "dono-2026-11-09-plano-nov-fev",
+       "own_target_ceiling": null,
+       "hold_current": false
+      }
+     },
+     "Afrodite|2027-03-03": {
+      "rule_floor_owner": 1500.0,
+      "rule_floor_today": 1500.0,
+      "governs": false,
+      "band": null,
+      "safety_exception": null,
+      "between": {
+       "own_floor": 1500.0,
+       "standard_floor": 1500.0,
+       "lowering_order_ref": "dono-2026-11-09-plano-nov-fev",
+       "own_target_ceiling": null,
+       "hold_current": false
+      }
+     },
+     "Afrodite|2027-03-04": {
+      "rule_floor_owner": 1500.0,
+      "rule_floor_today": 1500.0,
+      "governs": false,
+      "band": null,
+      "safety_exception": null,
+      "between": {
+       "own_floor": 1500.0,
+       "standard_floor": 1500.0,
+       "lowering_order_ref": "dono-2026-11-09-plano-nov-fev",
+       "own_target_ceiling": null,
+       "hold_current": false
+      }
+     },
+     "Afrodite|2027-03-05": {
+      "rule_floor_owner": 2000.0,
+      "rule_floor_today": 2000.0,
+      "governs": false,
+      "band": [
+       2540.0,
+       2857.0
+      ],
+      "safety_exception": null,
+      "between": {
+       "own_floor": 2000.0,
+       "standard_floor": 2000.0,
+       "lowering_order_ref": "dono-2026-11-09-plano-nov-fev",
+       "own_target_ceiling": null,
+       "hold_current": false
+      }
+     },
+     "Afrodite|2027-03-06": {
+      "rule_floor_owner": 2000.0,
+      "rule_floor_today": 2000.0,
+      "governs": false,
+      "band": [
+       2540.0,
+       2857.0
+      ],
+      "safety_exception": null,
+      "between": {
+       "own_floor": 2000.0,
+       "standard_floor": 2000.0,
+       "lowering_order_ref": "dono-2026-11-09-plano-nov-fev",
+       "own_target_ceiling": null,
+       "hold_current": false
+      }
+     },
+     "Afrodite|2027-03-07": {
+      "rule_floor_owner": 1500.0,
+      "rule_floor_today": 1500.0,
+      "governs": false,
+      "band": null,
+      "safety_exception": null,
+      "between": {
+       "own_floor": 1500.0,
+       "standard_floor": 1500.0,
+       "lowering_order_ref": "dono-2026-11-09-plano-nov-fev",
+       "own_target_ceiling": null,
+       "hold_current": false
+      }
+     }
+    },
+    "band_last_night": "2027-06-04"
+   },
+   "expected": {
+    "findings": [
+     {
+      "room": "Q2",
+      "night": "2027-03-01",
+      "floor": 1232.0,
+      "ceiling": 1284.0,
+      "current": 1613.0
+     },
+     {
+      "room": "Afrodite",
+      "night": "2027-03-01",
+      "floor": 1562.0,
+      "ceiling": null,
+      "current": 1500.0
+     },
+     {
+      "room": "Afrodite",
+      "night": "2027-03-02",
+      "floor": 1541.0,
+      "ceiling": null,
+      "current": 1500.0
+     },
+     {
+      "room": "Afrodite",
+      "night": "2027-03-03",
+      "floor": 1562.0,
+      "ceiling": null,
+      "current": 1500.0
+     },
+     {
+      "room": "Q2",
+      "night": "2027-03-04",
+      "floor": 1300.0,
+      "ceiling": 1450.0,
+      "current": 1700.0
+     },
+     {
+      "room": "Q2",
+      "night": "2027-03-05",
+      "floor": 2018.0,
+      "ceiling": 2026.0,
+      "current": 2400.0
+     },
+     {
+      "room": "Afrodite",
+      "night": "2027-03-05",
+      "floor": 2540.0,
+      "ceiling": 2857.0,
+      "current": 3523.0
+     },
+     {
+      "room": "Afrodite",
+      "night": "2027-03-06",
+      "floor": 3045.0,
+      "ceiling": 3045.0,
+      "current": 2950.0
+     },
+     {
+      "room": "Q2",
+      "night": "2027-03-07",
+      "floor": 1232.0,
+      "ceiling": 1284.0,
+      "current": 1290.0
+     }
+    ],
+    "items": [
+     {
+      "room": "Q2",
+      "night": "2027-03-01",
+      "floor": 1232.0,
+      "ceiling": 1284.0,
+      "order_ref": "dono-2026-10-21-ordem-recanto",
+      "price_before": 1613.0
+     },
+     {
+      "room": "Afrodite",
+      "night": "2027-03-01",
+      "floor": 1562.0,
+      "ceiling": null,
+      "order_ref": null,
+      "price_before": 1500.0
+     },
+     {
+      "room": "Afrodite",
+      "night": "2027-03-02",
+      "floor": 1541.0,
+      "ceiling": null,
+      "order_ref": null,
+      "price_before": 1500.0
+     },
+     {
+      "room": "Afrodite",
+      "night": "2027-03-03",
+      "floor": 1562.0,
+      "ceiling": null,
+      "order_ref": null,
+      "price_before": 1500.0
+     },
+     {
+      "room": "Q2",
+      "night": "2027-03-04",
+      "floor": 1300.0,
+      "ceiling": 1450.0,
+      "order_ref": "dono-2026-10-21-ordem-recanto",
+      "price_before": 1700.0
+     },
+     {
+      "room": "Q2",
+      "night": "2027-03-05",
+      "floor": 2018.0,
+      "ceiling": 2026.0,
+      "order_ref": "dono-2026-10-21-ordem-recanto",
+      "price_before": 2400.0
+     },
+     {
+      "room": "Afrodite",
+      "night": "2027-03-05",
+      "floor": 2540.0,
+      "ceiling": 2857.0,
+      "order_ref": null,
+      "price_before": 3523.0
+     },
+     {
+      "room": "Afrodite",
+      "night": "2027-03-06",
+      "floor": 3045.0,
+      "ceiling": 3045.0,
+      "order_ref": null,
+      "price_before": 2950.0
+     },
+     {
+      "room": "Q2",
+      "night": "2027-03-07",
+      "floor": 1232.0,
+      "ceiling": 1284.0,
+      "order_ref": "dono-2026-10-21-ordem-recanto",
+      "price_before": 1290.0
+     }
+    ]
+   }
+  },
+  {
+   "name": "both_refs_sold_out_skips_top_suite",
+   "input": {
+    "today": "2027-03-01",
+    "from": "2027-03-02",
+    "to": "2027-03-03",
+    "calendar": {
+     "Q7": {
+      "2027-03-02": {
+       "price": 1232.0,
+       "sold": 7,
+       "total": 7,
+       "min": null,
+       "max": null
+      },
+      "2027-03-03": {
+       "price": 1232.0,
+       "sold": 7,
+       "total": 7,
+       "min": null,
+       "max": null
+      }
+     },
+     "Double": {
+      "2027-03-02": {
+       "price": 1302.0,
+       "sold": 6,
+       "total": 6,
+       "min": null,
+       "max": null
+      },
+      "2027-03-03": {
+       "price": 1302.0,
+       "sold": 6,
+       "total": 6,
+       "min": null,
+       "max": null
+      }
+     },
+     "Q2": {
+      "2027-03-02": {
+       "price": 1613.0,
+       "sold": 0,
+       "total": 2,
+       "min": null,
+       "max": null
+      },
+      "2027-03-03": {
+       "price": 1613.0,
+       "sold": 2,
+       "total": 2,
+       "min": null,
+       "max": null
+      }
+     },
+     "Afrodite": {
+      "2027-03-02": {
+       "price": 1400.0,
+       "sold": 0,
+       "total": 1,
+       "min": null,
+       "max": null
+      },
+      "2027-03-03": {
+       "price": 1400.0,
+       "sold": 0,
+       "total": 1,
+       "min": null,
+       "max": null
+      }
+     }
+    },
+    "hooks": {
+     "Q2|2027-03-02": {
+      "rule_floor_owner": 1220.0,
+      "rule_floor_today": 1220.0,
+      "governs": false,
+      "band": null,
+      "safety_exception": null,
+      "between": {
+       "own_floor": 1220.0,
+       "standard_floor": 1220.0,
+       "lowering_order_ref": "dono-2026-11-09-plano-nov-fev",
+       "own_target_ceiling": null,
+       "hold_current": false
+      }
+     },
+     "Q2|2027-03-03": {
+      "rule_floor_owner": 1220.0,
+      "rule_floor_today": 1220.0,
+      "governs": false,
+      "band": null,
+      "safety_exception": null,
+      "between": {
+       "own_floor": 1220.0,
+       "standard_floor": 1220.0,
+       "lowering_order_ref": "dono-2026-11-09-plano-nov-fev",
+       "own_target_ceiling": null,
+       "hold_current": false
+      }
+     },
+     "Afrodite|2027-03-02": {
+      "rule_floor_owner": 1500.0,
+      "rule_floor_today": 1500.0,
+      "governs": false,
+      "band": null,
+      "safety_exception": null,
+      "between": {
+       "own_floor": 1500.0,
+       "standard_floor": 1500.0,
+       "lowering_order_ref": "dono-2026-11-09-plano-nov-fev",
+       "own_target_ceiling": null,
+       "hold_current": false
+      }
+     },
+     "Afrodite|2027-03-03": {
+      "rule_floor_owner": 1500.0,
+      "rule_floor_today": 1500.0,
+      "governs": false,
+      "band": null,
+      "safety_exception": null,
+      "between": {
+       "own_floor": 1500.0,
+       "standard_floor": 1500.0,
+       "lowering_order_ref": "dono-2026-11-09-plano-nov-fev",
+       "own_target_ceiling": null,
+       "hold_current": false
+      }
+     }
+    },
+    "band_last_night": "2027-06-04"
+   },
+   "expected": {
+    "findings": [],
+    "items": []
+   }
+  },
+  {
+   "name": "without_top_suite_calendar_and_missing_night",
+   "input": {
+    "today": "2027-03-01",
+    "from": "2027-03-01",
+    "to": "2027-03-04",
+    "calendar": {
+     "Q7": {
+      "2027-03-01": {
+       "price": 1232.0,
+       "sold": 1,
+       "total": 7,
+       "min": null,
+       "max": null
+      },
+      "2027-03-02": {
+       "price": 1232.0,
+       "sold": 1,
+       "total": 7,
+       "min": null,
+       "max": null
+      },
+      "2027-03-04": {
+       "price": 1232.0,
+       "sold": 1,
+       "total": 7,
+       "min": null,
+       "max": null
+      }
+     },
+     "Double": {
+      "2027-03-01": {
+       "price": 1302.0,
+       "sold": 1,
+       "total": 6,
+       "min": null,
+       "max": null
+      },
+      "2027-03-02": {
+       "price": 1302.0,
+       "sold": 1,
+       "total": 6,
+       "min": null,
+       "max": null
+      },
+      "2027-03-03": {
+       "price": 1302.0,
+       "sold": 1,
+       "total": 6,
+       "min": null,
+       "max": null
+      },
+      "2027-03-04": {
+       "price": 1302.0,
+       "sold": 1,
+       "total": 6,
+       "min": null,
+       "max": null
+      }
+     },
+     "Q2": {
+      "2027-03-01": {
+       "price": 1613.0,
+       "sold": 0,
+       "total": 2,
+       "min": null,
+       "max": null
+      },
+      "2027-03-02": {
+       "price": 1250.0,
+       "sold": 0,
+       "total": 2,
+       "min": null,
+       "max": null
+      },
+      "2027-03-03": {
+       "price": 1613.0,
+       "sold": 0,
+       "total": 2,
+       "min": null,
+       "max": null
+      },
+      "2027-03-04": {
+       "price": 1100.0,
+       "sold": 0,
+       "total": 2,
+       "min": null,
+       "max": null
+      }
+     }
+    },
+    "hooks": {
+     "Q2|2027-03-01": {
+      "rule_floor_owner": 1220.0,
+      "rule_floor_today": 1220.0,
+      "governs": false,
+      "band": null,
+      "safety_exception": null,
+      "between": {
+       "own_floor": 1220.0,
+       "standard_floor": 1220.0,
+       "lowering_order_ref": "dono-2026-11-09-plano-nov-fev",
+       "own_target_ceiling": null,
+       "hold_current": false
+      }
+     },
+     "Q2|2027-03-02": {
+      "rule_floor_owner": 1220.0,
+      "rule_floor_today": 1220.0,
+      "governs": false,
+      "band": null,
+      "safety_exception": null,
+      "between": {
+       "own_floor": 1220.0,
+       "standard_floor": 1220.0,
+       "lowering_order_ref": "dono-2026-11-09-plano-nov-fev",
+       "own_target_ceiling": null,
+       "hold_current": false
+      }
+     },
+     "Q2|2027-03-03": {
+      "rule_floor_owner": 1220.0,
+      "rule_floor_today": 1220.0,
+      "governs": false,
+      "band": null,
+      "safety_exception": null,
+      "between": {
+       "own_floor": 1220.0,
+       "standard_floor": 1220.0,
+       "lowering_order_ref": "dono-2026-11-09-plano-nov-fev",
+       "own_target_ceiling": null,
+       "hold_current": false
+      }
+     },
+     "Q2|2027-03-04": {
+      "rule_floor_owner": 1220.0,
+      "rule_floor_today": 1220.0,
+      "governs": false,
+      "band": null,
+      "safety_exception": null,
+      "between": {
+       "own_floor": 1220.0,
+       "standard_floor": 1220.0,
+       "lowering_order_ref": "dono-2026-11-09-plano-nov-fev",
+       "own_target_ceiling": null,
+       "hold_current": false
+      }
+     }
+    },
+    "band_last_night": "2027-06-04"
+   },
+   "expected": {
+    "findings": [
+     {
+      "room": "Q2",
+      "night": "2027-03-01",
+      "floor": 1232.0,
+      "ceiling": 1284.0,
+      "current": 1613.0
+     },
+     {
+      "room": "Q2",
+      "night": "2027-03-04",
+      "floor": 1232.0,
+      "ceiling": 1284.0,
+      "current": 1100.0
+     }
+    ],
+    "items": [
+     {
+      "room": "Q2",
+      "night": "2027-03-01",
+      "floor": 1232.0,
+      "ceiling": 1284.0,
+      "order_ref": "dono-2026-10-21-ordem-recanto",
+      "price_before": 1613.0
+     },
+     {
+      "room": "Q2",
+      "night": "2027-03-04",
+      "floor": 1232.0,
+      "ceiling": 1284.0,
+      "order_ref": "dono-2026-10-21-ordem-recanto",
+      "price_before": 1100.0
+     }
+    ]
+   }
+  },
+  {
+   "name": "holiday_semana_santa",
+   "input": {
+    "today": "2027-03-01",
+    "from": "2027-03-25",
+    "to": "2027-03-28",
+    "calendar": {
+     "Q7": {
+      "2027-03-25": {
+       "price": 2500.0,
+       "sold": 1,
+       "total": 7,
+       "min": null,
+       "max": null
+      },
+      "2027-03-26": {
+       "price": 2500.0,
+       "sold": 1,
+       "total": 7,
+       "min": null,
+       "max": null
+      },
+      "2027-03-27": {
+       "price": 2500.0,
+       "sold": 7,
+       "total": 7,
+       "min": null,
+       "max": null
+      },
+      "2027-03-28": {
+       "price": 1232.0,
+       "sold": 1,
+       "total": 7,
+       "min": null,
+       "max": null
+      }
+     },
+     "Double": {
+      "2027-03-25": {
+       "price": 3000.0,
+       "sold": 1,
+       "total": 6,
+       "min": null,
+       "max": null
+      },
+      "2027-03-26": {
+       "price": 3000.0,
+       "sold": 1,
+       "total": 6,
+       "min": null,
+       "max": null
+      },
+      "2027-03-27": {
+       "price": 3000.0,
+       "sold": 1,
+       "total": 6,
+       "min": null,
+       "max": null
+      },
+      "2027-03-28": {
+       "price": 1302.0,
+       "sold": 1,
+       "total": 6,
+       "min": null,
+       "max": null
+      }
+     },
+     "Q2": {
+      "2027-03-25": {
+       "price": 3400.0,
+       "sold": 0,
+       "total": 2,
+       "min": null,
+       "max": null
+      },
+      "2027-03-26": {
+       "price": 2700.0,
+       "sold": 0,
+       "total": 2,
+       "min": null,
+       "max": null
+      },
+      "2027-03-27": {
+       "price": 3400.0,
+       "sold": 0,
+       "total": 2,
+       "min": null,
+       "max": null
+      },
+      "2027-03-28": {
+       "price": 1290.0,
+       "sold": 0,
+       "total": 2,
+       "min": null,
+       "max": null
+      }
+     },
+     "Afrodite": {
+      "2027-03-25": {
+       "price": 3100.0,
+       "sold": 0,
+       "total": 1,
+       "min": null,
+       "max": null
+      },
+      "2027-03-26": {
+       "price": 6000.0,
+       "sold": 0,
+       "total": 1,
+       "min": null,
+       "max": null
+      },
+      "2027-03-27": {
+       "price": 3100.0,
+       "sold": 0,
+       "total": 1,
+       "min": null,
+       "max": null
+      },
+      "2027-03-28": {
+       "price": 1500.0,
+       "sold": 0,
+       "total": 1,
+       "min": null,
+       "max": null
+      }
+     }
+    },
+    "hooks": {
+     "Q2|2027-03-25": {
+      "rule_floor_owner": 2381.0,
+      "rule_floor_today": 2381.0,
+      "governs": false,
+      "band": null,
+      "safety_exception": null,
+      "between": {
+       "own_floor": 2381.0,
+       "standard_floor": 2381.0,
+       "lowering_order_ref": "dono-2026-11-09-plano-nov-fev",
+       "own_target_ceiling": null,
+       "hold_current": false
+      }
+     },
+     "Q2|2027-03-26": {
+      "rule_floor_owner": 2381.0,
+      "rule_floor_today": 2381.0,
+      "governs": false,
+      "band": null,
+      "safety_exception": null,
+      "between": {
+       "own_floor": 2381.0,
+       "standard_floor": 2381.0,
+       "lowering_order_ref": "dono-2026-11-09-plano-nov-fev",
+       "own_target_ceiling": null,
+       "hold_current": false
+      }
+     },
+     "Q2|2027-03-27": {
+      "rule_floor_owner": 2381.0,
+      "rule_floor_today": 2381.0,
+      "governs": false,
+      "band": null,
+      "safety_exception": null,
+      "between": {
+       "own_floor": 2381.0,
+       "standard_floor": 2381.0,
+       "lowering_order_ref": "dono-2026-11-09-plano-nov-fev",
+       "own_target_ceiling": null,
+       "hold_current": false
+      }
+     },
+     "Q2|2027-03-28": {
+      "rule_floor_owner": 1220.0,
+      "rule_floor_today": 1220.0,
+      "governs": false,
+      "band": null,
+      "safety_exception": null,
+      "between": {
+       "own_floor": 1220.0,
+       "standard_floor": 1220.0,
+       "lowering_order_ref": "dono-2026-11-09-plano-nov-fev",
+       "own_target_ceiling": null,
+       "hold_current": false
+      }
+     },
+     "Afrodite|2027-03-25": {
+      "rule_floor_owner": 2381.0,
+      "rule_floor_today": 2381.0,
+      "governs": false,
+      "band": null,
+      "safety_exception": null,
+      "between": {
+       "own_floor": 2381.0,
+       "standard_floor": 2381.0,
+       "lowering_order_ref": "dono-2026-11-09-plano-nov-fev",
+       "own_target_ceiling": null,
+       "hold_current": false
+      }
+     },
+     "Afrodite|2027-03-26": {
+      "rule_floor_owner": 2381.0,
+      "rule_floor_today": 2381.0,
+      "governs": false,
+      "band": null,
+      "safety_exception": null,
+      "between": {
+       "own_floor": 2381.0,
+       "standard_floor": 2381.0,
+       "lowering_order_ref": "dono-2026-11-09-plano-nov-fev",
+       "own_target_ceiling": null,
+       "hold_current": false
+      }
+     },
+     "Afrodite|2027-03-27": {
+      "rule_floor_owner": 2381.0,
+      "rule_floor_today": 2381.0,
+      "governs": false,
+      "band": null,
+      "safety_exception": null,
+      "between": {
+       "own_floor": 2381.0,
+       "standard_floor": 2381.0,
+       "lowering_order_ref": "dono-2026-11-09-plano-nov-fev",
+       "own_target_ceiling": null,
+       "hold_current": false
+      }
+     },
+     "Afrodite|2027-03-28": {
+      "rule_floor_owner": 1500.0,
+      "rule_floor_today": 1500.0,
+      "governs": false,
+      "band": null,
+      "safety_exception": null,
+      "between": {
+       "own_floor": 1500.0,
+       "standard_floor": 1500.0,
+       "lowering_order_ref": "dono-2026-11-09-plano-nov-fev",
+       "own_target_ceiling": null,
+       "hold_current": false
+      }
+     }
+    },
+    "band_last_night": "2027-06-04"
+   },
+   "expected": {
+    "findings": [
+     {
+      "room": "Q2",
+      "night": "2027-03-25",
+      "floor": 2500.0,
+      "ceiling": 2875.0,
+      "current": 3400.0
+     },
+     {
+      "room": "Afrodite",
+      "night": "2027-03-25",
+      "floor": 3150.0,
+      "ceiling": null,
+      "current": 3100.0
+     },
+     {
+      "room": "Afrodite",
+      "night": "2027-03-27",
+      "floor": 3150.0,
+      "ceiling": null,
+      "current": 3100.0
+     },
+     {
+      "room": "Afrodite",
+      "night": "2027-03-28",
+      "floor": 1562.0,
+      "ceiling": null,
+      "current": 1500.0
+     }
+    ],
+    "items": [
+     {
+      "room": "Q2",
+      "night": "2027-03-25",
+      "floor": 2500.0,
+      "ceiling": 2875.0,
+      "order_ref": "dono-2026-10-21-ordem-recanto",
+      "price_before": 3400.0
+     },
+     {
+      "room": "Afrodite",
+      "night": "2027-03-25",
+      "floor": 3150.0,
+      "ceiling": null,
+      "order_ref": null,
+      "price_before": 3100.0
+     },
+     {
+      "room": "Afrodite",
+      "night": "2027-03-27",
+      "floor": 3150.0,
+      "ceiling": null,
+      "order_ref": null,
+      "price_before": 3100.0
+     },
+     {
+      "room": "Afrodite",
+      "night": "2027-03-28",
+      "floor": 1562.0,
+      "ceiling": null,
+      "order_ref": null,
+      "price_before": 1500.0
+     }
+    ]
+   }
+  },
+  {
+   "name": "weekend_band_horizon_edge",
+   "input": {
+    "today": "2027-03-01",
+    "from": "2027-06-04",
+    "to": "2027-06-05",
+    "calendar": {
+     "Q7": {
+      "2027-06-04": {
+       "price": 2018.0,
+       "sold": 1,
+       "total": 7,
+       "min": null,
+       "max": null
+      },
+      "2027-06-05": {
+       "price": 2018.0,
+       "sold": 1,
+       "total": 7,
+       "min": null,
+       "max": null
+      }
+     },
+     "Double": {
+      "2027-06-04": {
+       "price": 2028.0,
+       "sold": 1,
+       "total": 6,
+       "min": null,
+       "max": null
+      },
+      "2027-06-05": {
+       "price": 2028.0,
+       "sold": 1,
+       "total": 6,
+       "min": null,
+       "max": null
+      }
+     },
+     "Q2": {
+      "2027-06-04": {
+       "price": 2020.0,
+       "sold": 0,
+       "total": 2,
+       "min": null,
+       "max": null
+      },
+      "2027-06-05": {
+       "price": 2020.0,
+       "sold": 0,
+       "total": 2,
+       "min": null,
+       "max": null
+      }
+     },
+     "Afrodite": {
+      "2027-06-04": {
+       "price": 3523.0,
+       "sold": 0,
+       "total": 1,
+       "min": null,
+       "max": null
+      },
+      "2027-06-05": {
+       "price": 3523.0,
+       "sold": 0,
+       "total": 1,
+       "min": null,
+       "max": null
+      }
+     }
+    },
+    "hooks": {
+     "Q2|2027-06-04": {
+      "rule_floor_owner": 2000.0,
+      "rule_floor_today": 2000.0,
+      "governs": false,
+      "band": null,
+      "safety_exception": null,
+      "between": {
+       "own_floor": 2000.0,
+       "standard_floor": 2000.0,
+       "lowering_order_ref": "dono-2026-11-09-plano-nov-fev",
+       "own_target_ceiling": null,
+       "hold_current": false
+      }
+     },
+     "Q2|2027-06-05": {
+      "rule_floor_owner": 2000.0,
+      "rule_floor_today": 2000.0,
+      "governs": false,
+      "band": null,
+      "safety_exception": null,
+      "between": {
+       "own_floor": 2000.0,
+       "standard_floor": 2000.0,
+       "lowering_order_ref": "dono-2026-11-09-plano-nov-fev",
+       "own_target_ceiling": null,
+       "hold_current": false
+      }
+     },
+     "Afrodite|2027-06-04": {
+      "rule_floor_owner": 2000.0,
+      "rule_floor_today": 2000.0,
+      "governs": false,
+      "band": [
+       2540.0,
+       2857.0
+      ],
+      "safety_exception": null,
+      "between": {
+       "own_floor": 2000.0,
+       "standard_floor": 2000.0,
+       "lowering_order_ref": "dono-2026-11-09-plano-nov-fev",
+       "own_target_ceiling": null,
+       "hold_current": false
+      }
+     },
+     "Afrodite|2027-06-05": {
+      "rule_floor_owner": 2000.0,
+      "rule_floor_today": 2000.0,
+      "governs": false,
+      "band": [
+       2540.0,
+       2857.0
+      ],
+      "safety_exception": null,
+      "between": {
+       "own_floor": 2000.0,
+       "standard_floor": 2000.0,
+       "lowering_order_ref": "dono-2026-11-09-plano-nov-fev",
+       "own_target_ceiling": null,
+       "hold_current": false
+      }
+     }
+    },
+    "band_last_night": "2027-06-04"
+   },
+   "expected": {
+    "findings": [
+     {
+      "room": "Afrodite",
+      "night": "2027-06-04",
+      "floor": 2540.0,
+      "ceiling": 2857.0,
+      "current": 3523.0
+     }
+    ],
+    "items": [
+     {
+      "room": "Afrodite",
+      "night": "2027-06-04",
+      "floor": 2540.0,
+      "ceiling": 2857.0,
+      "order_ref": null,
+      "price_before": 3523.0
+     }
+    ]
+   }
+  },
+  {
+   "name": "plan_period_with_plan_order",
+   "input": {
+    "today": "2026-11-11",
+    "from": "2026-11-11",
+    "to": "2026-11-25",
+    "calendar": {
+     "Q7": {
+      "2026-11-13": {
+       "price": 1100.0,
+       "sold": 2,
+       "total": 7,
+       "min": null,
+       "max": null
+      },
+      "2026-11-14": {
+       "price": 1100.0,
+       "sold": 7,
+       "total": 7,
+       "min": null,
+       "max": null
+      },
+      "2026-11-16": {
+       "price": 905.0,
+       "sold": 1,
+       "total": 7,
+       "min": null,
+       "max": null
+      },
+      "2026-11-17": {
+       "price": 905.0,
+       "sold": 1,
+       "total": 7,
+       "min": null,
+       "max": null
+      },
+      "2026-11-20": {
+       "price": 1700.0,
+       "sold": 1,
+       "total": 7,
+       "min": null,
+       "max": null
+      },
+      "2026-11-23": {
+       "price": 905.0,
+       "sold": 1,
+       "total": 7,
+       "min": null,
+       "max": null
+      }
+     },
+     "Double": {
+      "2026-11-13": {
+       "price": 1500.0,
+       "sold": 2,
+       "total": 6,
+       "min": null,
+       "max": null
+      },
+      "2026-11-14": {
+       "price": 1500.0,
+       "sold": 6,
+       "total": 6,
+       "min": null,
+       "max": null
+      },
+      "2026-11-16": {
+       "price": 950.0,
+       "sold": 1,
+       "total": 6,
+       "min": null,
+       "max": null
+      },
+      "2026-11-17": {
+       "price": 950.0,
+       "sold": 1,
+       "total": 6,
+       "min": null,
+       "max": null
+      },
+      "2026-11-20": {
+       "price": 1900.0,
+       "sold": 1,
+       "total": 6,
+       "min": null,
+       "max": null
+      },
+      "2026-11-23": {
+       "price": 950.0,
+       "sold": 1,
+       "total": 6,
+       "min": null,
+       "max": null
+      }
+     },
+     "Q2": {
+      "2026-11-13": {
+       "price": 1700.0,
+       "sold": 1,
+       "total": 2,
+       "min": null,
+       "max": null
+      },
+      "2026-11-14": {
+       "price": 1700.0,
+       "sold": 1,
+       "total": 2,
+       "min": null,
+       "max": null
+      },
+      "2026-11-16": {
+       "price": 1300.0,
+       "sold": 0,
+       "total": 2,
+       "min": null,
+       "max": null
+      },
+      "2026-11-17": {
+       "price": 930.0,
+       "sold": 0,
+       "total": 2,
+       "min": null,
+       "max": null
+      },
+      "2026-11-20": {
+       "price": 2100.0,
+       "sold": 0,
+       "total": 2,
+       "min": null,
+       "max": null
+      },
+      "2026-11-23": {
+       "price": 1300.0,
+       "sold": 0,
+       "total": 2,
+       "min": null,
+       "max": null
+      }
+     },
+     "Afrodite": {
+      "2026-11-13": {
+       "price": 1700.0,
+       "sold": 0,
+       "total": 1,
+       "min": null,
+       "max": null
+      },
+      "2026-11-14": {
+       "price": 1700.0,
+       "sold": 0,
+       "total": 1,
+       "min": null,
+       "max": null
+      },
+      "2026-11-16": {
+       "price": 1100.0,
+       "sold": 0,
+       "total": 1,
+       "min": null,
+       "max": null
+      },
+      "2026-11-17": {
+       "price": 1600.0,
+       "sold": 0,
+       "total": 1,
+       "min": null,
+       "max": null
+      },
+      "2026-11-20": {
+       "price": 2000.0,
+       "sold": 0,
+       "total": 1,
+       "min": null,
+       "max": null
+      },
+      "2026-11-23": {
+       "price": 1300.0,
+       "sold": 0,
+       "total": 1,
+       "min": null,
+       "max": null
+      }
+     }
+    },
+    "hooks": {
+     "Q2|2026-11-13": {
+      "rule_floor_owner": 1000.0,
+      "rule_floor_today": 1000.0,
+      "governs": true,
+      "band": null,
+      "safety_exception": null,
+      "between": {
+       "own_floor": 1000.0,
+       "standard_floor": 1000.0,
+       "lowering_order_ref": "dono-2026-11-09-plano-nov-fev",
+       "own_target_ceiling": null,
+       "hold_current": false
+      }
+     },
+     "Q2|2026-11-14": {
+      "rule_floor_owner": 1000.0,
+      "rule_floor_today": 1000.0,
+      "governs": true,
+      "band": null,
+      "safety_exception": null,
+      "between": {
+       "own_floor": 1000.0,
+       "standard_floor": 1000.0,
+       "lowering_order_ref": "dono-2026-11-09-plano-nov-fev",
+       "own_target_ceiling": null,
+       "hold_current": false
+      }
+     },
+     "Q2|2026-11-16": {
+      "rule_floor_owner": 1220.0,
+      "rule_floor_today": 904.0,
+      "governs": false,
+      "band": null,
+      "safety_exception": null,
+      "between": {
+       "own_floor": 904.0,
+       "standard_floor": 1220.0,
+       "lowering_order_ref": "dono-2026-11-09-plano-nov-fev",
+       "own_target_ceiling": null,
+       "hold_current": false
+      }
+     },
+     "Q2|2026-11-17": {
+      "rule_floor_owner": 1220.0,
+      "rule_floor_today": 906.0,
+      "governs": false,
+      "band": null,
+      "safety_exception": null,
+      "between": {
+       "own_floor": 906.0,
+       "standard_floor": 1220.0,
+       "lowering_order_ref": "dono-2026-11-09-plano-nov-fev",
+       "own_target_ceiling": null,
+       "hold_current": false
+      }
+     },
+     "Q2|2026-11-20": {
+      "rule_floor_owner": 1905.0,
+      "rule_floor_today": 1905.0,
+      "governs": true,
+      "band": null,
+      "safety_exception": null,
+      "between": {
+       "own_floor": 1905.0,
+       "standard_floor": 1905.0,
+       "lowering_order_ref": "dono-2026-11-09-plano-nov-fev",
+       "own_target_ceiling": null,
+       "hold_current": false
+      }
+     },
+     "Q2|2026-11-23": {
+      "rule_floor_owner": 1220.0,
+      "rule_floor_today": 1220.0,
+      "governs": false,
+      "band": null,
+      "safety_exception": null,
+      "between": {
+       "own_floor": 1220.0,
+       "standard_floor": 1220.0,
+       "lowering_order_ref": "dono-2026-11-09-plano-nov-fev",
+       "own_target_ceiling": null,
+       "hold_current": false
+      }
+     },
+     "Afrodite|2026-11-13": {
+      "rule_floor_owner": 1050.0,
+      "rule_floor_today": 1050.0,
+      "governs": true,
+      "band": null,
+      "safety_exception": null,
+      "between": {
+       "own_floor": 1050.0,
+       "standard_floor": 1050.0,
+       "lowering_order_ref": "dono-2026-11-09-plano-nov-fev",
+       "own_target_ceiling": null,
+       "hold_current": false
+      }
+     },
+     "Afrodite|2026-11-14": {
+      "rule_floor_owner": 1050.0,
+      "rule_floor_today": 1050.0,
+      "governs": true,
+      "band": null,
+      "safety_exception": null,
+      "between": {
+       "own_floor": 1050.0,
+       "standard_floor": 1050.0,
+       "lowering_order_ref": "dono-2026-11-09-plano-nov-fev",
+       "own_target_ceiling": null,
+       "hold_current": false
+      }
+     },
+     "Afrodite|2026-11-16": {
+      "rule_floor_owner": 1500.0,
+      "rule_floor_today": 1500.0,
+      "governs": false,
+      "band": null,
+      "safety_exception": null,
+      "between": {
+       "own_floor": 1500.0,
+       "standard_floor": 1500.0,
+       "lowering_order_ref": "dono-2026-11-09-plano-nov-fev",
+       "own_target_ceiling": null,
+       "hold_current": false
+      }
+     },
+     "Afrodite|2026-11-17": {
+      "rule_floor_owner": 1500.0,
+      "rule_floor_today": 1500.0,
+      "governs": false,
+      "band": null,
+      "safety_exception": null,
+      "between": {
+       "own_floor": 1500.0,
+       "standard_floor": 1500.0,
+       "lowering_order_ref": "dono-2026-11-09-plano-nov-fev",
+       "own_target_ceiling": null,
+       "hold_current": false
+      }
+     },
+     "Afrodite|2026-11-20": {
+      "rule_floor_owner": 1905.0,
+      "rule_floor_today": 1905.0,
+      "governs": true,
+      "band": null,
+      "safety_exception": null,
+      "between": {
+       "own_floor": 1905.0,
+       "standard_floor": 1905.0,
+       "lowering_order_ref": "dono-2026-11-09-plano-nov-fev",
+       "own_target_ceiling": null,
+       "hold_current": false
+      }
+     },
+     "Afrodite|2026-11-23": {
+      "rule_floor_owner": 1500.0,
+      "rule_floor_today": 1500.0,
+      "governs": false,
+      "band": null,
+      "safety_exception": null,
+      "between": {
+       "own_floor": 1500.0,
+       "standard_floor": 1500.0,
+       "lowering_order_ref": "dono-2026-11-09-plano-nov-fev",
+       "own_target_ceiling": null,
+       "hold_current": false
+      }
+     }
+    },
+    "band_last_night": "2027-02-14"
+   },
+   "expected": {
+    "findings": [
+     {
+      "room": "Q2",
+      "night": "2026-11-13",
+      "floor": 1100.0,
+      "ceiling": 1400.0,
+      "current": 1700.0
+     },
+     {
+      "room": "Afrodite",
+      "night": "2026-11-13",
+      "floor": 1725.0,
+      "ceiling": null,
+      "current": 1700.0
+     },
+     {
+      "room": "Q2",
+      "night": "2026-11-16",
+      "floor": 905.0,
+      "ceiling": 939.0,
+      "current": 1300.0
+     },
+     {
+      "room": "Afrodite",
+      "night": "2026-11-16",
+      "floor": 1500.0,
+      "ceiling": null,
+      "current": 1100.0
+     },
+     {
+      "room": "Q2",
+      "night": "2026-11-20",
+      "floor": 1905.0,
+      "ceiling": 1905.0,
+      "current": 2100.0
+     },
+     {
+      "room": "Afrodite",
+      "night": "2026-11-20",
+      "floor": 2185.0,
+      "ceiling": null,
+      "current": 2000.0
+     },
+     {
+      "room": "Q2",
+      "night": "2026-11-23",
+      "floor": 1220.0,
+      "ceiling": 1220.0,
+      "current": 1300.0
+     },
+     {
+      "room": "Afrodite",
+      "night": "2026-11-23",
+      "floor": 1500.0,
+      "ceiling": null,
+      "current": 1300.0
+     }
+    ],
+    "items": [
+     {
+      "room": "Q2",
+      "night": "2026-11-13",
+      "floor": 1100.0,
+      "ceiling": 1400.0,
+      "order_ref": "dono-2026-10-21-ordem-recanto",
+      "price_before": 1700.0
+     },
+     {
+      "room": "Afrodite",
+      "night": "2026-11-13",
+      "floor": 1725.0,
+      "ceiling": null,
+      "order_ref": null,
+      "price_before": 1700.0
+     },
+     {
+      "room": "Q2",
+      "night": "2026-11-16",
+      "floor": 905.0,
+      "ceiling": 939.0,
+      "order_ref": "dono-2026-11-09-plano-nov-fev",
+      "price_before": 1300.0
+     },
+     {
+      "room": "Afrodite",
+      "night": "2026-11-16",
+      "floor": 1500.0,
+      "ceiling": null,
+      "order_ref": null,
+      "price_before": 1100.0
+     },
+     {
+      "room": "Q2",
+      "night": "2026-11-20",
+      "floor": 1905.0,
+      "ceiling": 1905.0,
+      "order_ref": "dono-2026-10-21-ordem-recanto",
+      "price_before": 2100.0
+     },
+     {
+      "room": "Afrodite",
+      "night": "2026-11-20",
+      "floor": 2185.0,
+      "ceiling": null,
+      "order_ref": null,
+      "price_before": 2000.0
+     },
+     {
+      "room": "Q2",
+      "night": "2026-11-23",
+      "floor": 1220.0,
+      "ceiling": 1220.0,
+      "order_ref": "dono-2026-10-21-ordem-recanto",
+      "price_before": 1300.0
+     },
+     {
+      "room": "Afrodite",
+      "night": "2026-11-23",
+      "floor": 1500.0,
+      "ceiling": null,
+      "order_ref": null,
+      "price_before": 1300.0
+     }
+    ]
+   }
+  },
+  {
+   "name": "plan_period_without_plan_order",
+   "input": {
+    "today": "2026-11-11",
+    "from": "2026-11-11",
+    "to": "2026-11-25",
+    "calendar": {
+     "Q7": {
+      "2026-11-13": {
+       "price": 1100.0,
+       "sold": 2,
+       "total": 7,
+       "min": null,
+       "max": null
+      },
+      "2026-11-14": {
+       "price": 1100.0,
+       "sold": 7,
+       "total": 7,
+       "min": null,
+       "max": null
+      },
+      "2026-11-16": {
+       "price": 905.0,
+       "sold": 1,
+       "total": 7,
+       "min": null,
+       "max": null
+      },
+      "2026-11-17": {
+       "price": 905.0,
+       "sold": 1,
+       "total": 7,
+       "min": null,
+       "max": null
+      },
+      "2026-11-20": {
+       "price": 1700.0,
+       "sold": 1,
+       "total": 7,
+       "min": null,
+       "max": null
+      },
+      "2026-11-23": {
+       "price": 905.0,
+       "sold": 1,
+       "total": 7,
+       "min": null,
+       "max": null
+      }
+     },
+     "Double": {
+      "2026-11-13": {
+       "price": 1500.0,
+       "sold": 2,
+       "total": 6,
+       "min": null,
+       "max": null
+      },
+      "2026-11-14": {
+       "price": 1500.0,
+       "sold": 6,
+       "total": 6,
+       "min": null,
+       "max": null
+      },
+      "2026-11-16": {
+       "price": 950.0,
+       "sold": 1,
+       "total": 6,
+       "min": null,
+       "max": null
+      },
+      "2026-11-17": {
+       "price": 950.0,
+       "sold": 1,
+       "total": 6,
+       "min": null,
+       "max": null
+      },
+      "2026-11-20": {
+       "price": 1900.0,
+       "sold": 1,
+       "total": 6,
+       "min": null,
+       "max": null
+      },
+      "2026-11-23": {
+       "price": 950.0,
+       "sold": 1,
+       "total": 6,
+       "min": null,
+       "max": null
+      }
+     },
+     "Q2": {
+      "2026-11-13": {
+       "price": 1700.0,
+       "sold": 1,
+       "total": 2,
+       "min": null,
+       "max": null
+      },
+      "2026-11-14": {
+       "price": 1700.0,
+       "sold": 1,
+       "total": 2,
+       "min": null,
+       "max": null
+      },
+      "2026-11-16": {
+       "price": 1300.0,
+       "sold": 0,
+       "total": 2,
+       "min": null,
+       "max": null
+      },
+      "2026-11-17": {
+       "price": 930.0,
+       "sold": 0,
+       "total": 2,
+       "min": null,
+       "max": null
+      },
+      "2026-11-20": {
+       "price": 2100.0,
+       "sold": 0,
+       "total": 2,
+       "min": null,
+       "max": null
+      },
+      "2026-11-23": {
+       "price": 1300.0,
+       "sold": 0,
+       "total": 2,
+       "min": null,
+       "max": null
+      }
+     },
+     "Afrodite": {
+      "2026-11-13": {
+       "price": 1700.0,
+       "sold": 0,
+       "total": 1,
+       "min": null,
+       "max": null
+      },
+      "2026-11-14": {
+       "price": 1700.0,
+       "sold": 0,
+       "total": 1,
+       "min": null,
+       "max": null
+      },
+      "2026-11-16": {
+       "price": 1100.0,
+       "sold": 0,
+       "total": 1,
+       "min": null,
+       "max": null
+      },
+      "2026-11-17": {
+       "price": 1600.0,
+       "sold": 0,
+       "total": 1,
+       "min": null,
+       "max": null
+      },
+      "2026-11-20": {
+       "price": 2000.0,
+       "sold": 0,
+       "total": 1,
+       "min": null,
+       "max": null
+      },
+      "2026-11-23": {
+       "price": 1300.0,
+       "sold": 0,
+       "total": 1,
+       "min": null,
+       "max": null
+      }
+     }
+    },
+    "hooks": {
+     "Q2|2026-11-13": {
+      "rule_floor_owner": 2000.0,
+      "rule_floor_today": 2000.0,
+      "governs": false,
+      "band": null,
+      "safety_exception": null,
+      "between": {
+       "own_floor": 2000.0,
+       "standard_floor": 2000.0,
+       "lowering_order_ref": "dono-2026-11-09-plano-nov-fev",
+       "own_target_ceiling": null,
+       "hold_current": false
+      }
+     },
+     "Q2|2026-11-14": {
+      "rule_floor_owner": 2000.0,
+      "rule_floor_today": 2000.0,
+      "governs": false,
+      "band": null,
+      "safety_exception": null,
+      "between": {
+       "own_floor": 2000.0,
+       "standard_floor": 2000.0,
+       "lowering_order_ref": "dono-2026-11-09-plano-nov-fev",
+       "own_target_ceiling": null,
+       "hold_current": false
+      }
+     },
+     "Q2|2026-11-16": {
+      "rule_floor_owner": 1220.0,
+      "rule_floor_today": 1220.0,
+      "governs": false,
+      "band": null,
+      "safety_exception": null,
+      "between": {
+       "own_floor": 1220.0,
+       "standard_floor": 1220.0,
+       "lowering_order_ref": "dono-2026-11-09-plano-nov-fev",
+       "own_target_ceiling": null,
+       "hold_current": false
+      }
+     },
+     "Q2|2026-11-17": {
+      "rule_floor_owner": 1220.0,
+      "rule_floor_today": 1220.0,
+      "governs": false,
+      "band": null,
+      "safety_exception": null,
+      "between": {
+       "own_floor": 1220.0,
+       "standard_floor": 1220.0,
+       "lowering_order_ref": "dono-2026-11-09-plano-nov-fev",
+       "own_target_ceiling": null,
+       "hold_current": false
+      }
+     },
+     "Q2|2026-11-20": {
+      "rule_floor_owner": 1905.0,
+      "rule_floor_today": 1905.0,
+      "governs": false,
+      "band": null,
+      "safety_exception": null,
+      "between": {
+       "own_floor": 1905.0,
+       "standard_floor": 1905.0,
+       "lowering_order_ref": "dono-2026-11-09-plano-nov-fev",
+       "own_target_ceiling": null,
+       "hold_current": false
+      }
+     },
+     "Q2|2026-11-23": {
+      "rule_floor_owner": 1220.0,
+      "rule_floor_today": 1220.0,
+      "governs": false,
+      "band": null,
+      "safety_exception": null,
+      "between": {
+       "own_floor": 1220.0,
+       "standard_floor": 1220.0,
+       "lowering_order_ref": "dono-2026-11-09-plano-nov-fev",
+       "own_target_ceiling": null,
+       "hold_current": false
+      }
+     },
+     "Afrodite|2026-11-13": {
+      "rule_floor_owner": 2000.0,
+      "rule_floor_today": 2000.0,
+      "governs": false,
+      "band": [
+       2540.0,
+       2857.0
+      ],
+      "safety_exception": null,
+      "between": {
+       "own_floor": 2000.0,
+       "standard_floor": 2000.0,
+       "lowering_order_ref": "dono-2026-11-09-plano-nov-fev",
+       "own_target_ceiling": null,
+       "hold_current": false
+      }
+     },
+     "Afrodite|2026-11-14": {
+      "rule_floor_owner": 2000.0,
+      "rule_floor_today": 2000.0,
+      "governs": false,
+      "band": [
+       2540.0,
+       2857.0
+      ],
+      "safety_exception": null,
+      "between": {
+       "own_floor": 2000.0,
+       "standard_floor": 2000.0,
+       "lowering_order_ref": "dono-2026-11-09-plano-nov-fev",
+       "own_target_ceiling": null,
+       "hold_current": false
+      }
+     },
+     "Afrodite|2026-11-16": {
+      "rule_floor_owner": 1500.0,
+      "rule_floor_today": 1500.0,
+      "governs": false,
+      "band": null,
+      "safety_exception": null,
+      "between": {
+       "own_floor": 1500.0,
+       "standard_floor": 1500.0,
+       "lowering_order_ref": "dono-2026-11-09-plano-nov-fev",
+       "own_target_ceiling": null,
+       "hold_current": false
+      }
+     },
+     "Afrodite|2026-11-17": {
+      "rule_floor_owner": 1500.0,
+      "rule_floor_today": 1500.0,
+      "governs": false,
+      "band": null,
+      "safety_exception": null,
+      "between": {
+       "own_floor": 1500.0,
+       "standard_floor": 1500.0,
+       "lowering_order_ref": "dono-2026-11-09-plano-nov-fev",
+       "own_target_ceiling": null,
+       "hold_current": false
+      }
+     },
+     "Afrodite|2026-11-20": {
+      "rule_floor_owner": 1905.0,
+      "rule_floor_today": 1905.0,
+      "governs": false,
+      "band": null,
+      "safety_exception": null,
+      "between": {
+       "own_floor": 1905.0,
+       "standard_floor": 1905.0,
+       "lowering_order_ref": "dono-2026-11-09-plano-nov-fev",
+       "own_target_ceiling": null,
+       "hold_current": false
+      }
+     },
+     "Afrodite|2026-11-23": {
+      "rule_floor_owner": 1500.0,
+      "rule_floor_today": 1500.0,
+      "governs": false,
+      "band": null,
+      "safety_exception": null,
+      "between": {
+       "own_floor": 1500.0,
+       "standard_floor": 1500.0,
+       "lowering_order_ref": "dono-2026-11-09-plano-nov-fev",
+       "own_target_ceiling": null,
+       "hold_current": false
+      }
+     }
+    },
+    "band_last_night": "2027-02-14"
+   },
+   "expected": {
+    "findings": [
+     {
+      "room": "Q2",
+      "night": "2026-11-13",
+      "floor": 2000.0,
+      "ceiling": 2000.0,
+      "current": 1700.0
+     },
+     {
+      "room": "Afrodite",
+      "night": "2026-11-13",
+      "floor": 2100.0,
+      "ceiling": null,
+      "current": 1700.0
+     },
+     {
+      "room": "Q2",
+      "night": "2026-11-16",
+      "floor": 1220.0,
+      "ceiling": 1220.0,
+      "current": 1300.0
+     },
+     {
+      "room": "Afrodite",
+      "night": "2026-11-16",
+      "floor": 1500.0,
+      "ceiling": null,
+      "current": 1100.0
+     },
+     {
+      "room": "Q2",
+      "night": "2026-11-20",
+      "floor": 1905.0,
+      "ceiling": 1905.0,
+      "current": 2100.0
+     },
+     {
+      "room": "Q2",
+      "night": "2026-11-23",
+      "floor": 1220.0,
+      "ceiling": 1220.0,
+      "current": 1300.0
+     },
+     {
+      "room": "Afrodite",
+      "night": "2026-11-23",
+      "floor": 1500.0,
+      "ceiling": null,
+      "current": 1300.0
+     }
+    ],
+    "items": [
+     {
+      "room": "Q2",
+      "night": "2026-11-13",
+      "floor": 2000.0,
+      "ceiling": 2000.0,
+      "order_ref": "dono-2026-10-21-ordem-recanto",
+      "price_before": 1700.0
+     },
+     {
+      "room": "Afrodite",
+      "night": "2026-11-13",
+      "floor": 2100.0,
+      "ceiling": null,
+      "order_ref": null,
+      "price_before": 1700.0
+     },
+     {
+      "room": "Q2",
+      "night": "2026-11-16",
+      "floor": 1220.0,
+      "ceiling": 1220.0,
+      "order_ref": "dono-2026-10-21-ordem-recanto",
+      "price_before": 1300.0
+     },
+     {
+      "room": "Afrodite",
+      "night": "2026-11-16",
+      "floor": 1500.0,
+      "ceiling": null,
+      "order_ref": null,
+      "price_before": 1100.0
+     },
+     {
+      "room": "Q2",
+      "night": "2026-11-20",
+      "floor": 1905.0,
+      "ceiling": 1905.0,
+      "order_ref": "dono-2026-10-21-ordem-recanto",
+      "price_before": 2100.0
+     },
+     {
+      "room": "Q2",
+      "night": "2026-11-23",
+      "floor": 1220.0,
+      "ceiling": 1220.0,
+      "order_ref": "dono-2026-10-21-ordem-recanto",
+      "price_before": 1300.0
+     },
+     {
+      "room": "Afrodite",
+      "night": "2026-11-23",
+      "floor": 1500.0,
+      "ceiling": null,
+      "order_ref": null,
+      "price_before": 1300.0
+     }
+    ]
+   }
+  },
+  {
+   "name": "ties_and_reversed",
+   "input": {
+    "today": "2027-03-01",
+    "from": "2027-03-08",
+    "to": "2027-03-11",
+    "calendar": {
+     "Q7": {
+      "2027-03-08": {
+       "price": 1400.0,
+       "sold": 1,
+       "total": 7,
+       "min": null,
+       "max": null
+      },
+      "2027-03-09": {
+       "price": 1500.0,
+       "sold": 1,
+       "total": 7,
+       "min": null,
+       "max": null
+      },
+      "2027-03-10": {
+       "price": 1400.0,
+       "sold": 1,
+       "total": 7,
+       "min": null,
+       "max": null
+      },
+      "2027-03-11": {
+       "price": 1400.0,
+       "sold": 1,
+       "total": 7,
+       "min": null,
+       "max": null
+      }
+     },
+     "Double": {
+      "2027-03-08": {
+       "price": 1400.0,
+       "sold": 1,
+       "total": 6,
+       "min": null,
+       "max": null
+      },
+      "2027-03-09": {
+       "price": 1300.0,
+       "sold": 1,
+       "total": 6,
+       "min": null,
+       "max": null
+      },
+      "2027-03-10": {
+       "price": 1400.0,
+       "sold": 1,
+       "total": 6,
+       "min": null,
+       "max": null
+      },
+      "2027-03-11": {
+       "price": 1400.0,
+       "sold": 1,
+       "total": 6,
+       "min": null,
+       "max": null
+      }
+     },
+     "Q2": {
+      "2027-03-08": {
+       "price": 1500.0,
+       "sold": 0,
+       "total": 2,
+       "min": null,
+       "max": null
+      },
+      "2027-03-09": {
+       "price": 1700.0,
+       "sold": 0,
+       "total": 2,
+       "min": null,
+       "max": null
+      },
+      "2027-03-10": {
+       "price": 1400.0,
+       "sold": 0,
+       "total": 2,
+       "min": null,
+       "max": null
+      },
+      "2027-03-11": {
+       "price": 1300.0,
+       "sold": 0,
+       "total": 2,
+       "min": null,
+       "max": null
+      }
+     },
+     "Afrodite": {
+      "2027-03-08": {
+       "price": 1680.0,
+       "sold": 0,
+       "total": 1,
+       "min": null,
+       "max": null
+      },
+      "2027-03-09": {
+       "price": 1790.0,
+       "sold": 0,
+       "total": 1,
+       "min": null,
+       "max": null
+      },
+      "2027-03-10": {
+       "price": 1650.0,
+       "sold": 0,
+       "total": 1,
+       "min": null,
+       "max": null
+      },
+      "2027-03-11": {
+       "price": 1700.0,
+       "sold": 0,
+       "total": 1,
+       "min": null,
+       "max": null
+      }
+     }
+    },
+    "hooks": {
+     "Q2|2027-03-08": {
+      "rule_floor_owner": 1220.0,
+      "rule_floor_today": 1220.0,
+      "governs": false,
+      "band": null,
+      "safety_exception": null,
+      "between": {
+       "own_floor": 1220.0,
+       "standard_floor": 1220.0,
+       "lowering_order_ref": "dono-2026-11-09-plano-nov-fev",
+       "own_target_ceiling": null,
+       "hold_current": false
+      }
+     },
+     "Q2|2027-03-09": {
+      "rule_floor_owner": 1220.0,
+      "rule_floor_today": 1220.0,
+      "governs": false,
+      "band": null,
+      "safety_exception": null,
+      "between": {
+       "own_floor": 1220.0,
+       "standard_floor": 1220.0,
+       "lowering_order_ref": "dono-2026-11-09-plano-nov-fev",
+       "own_target_ceiling": null,
+       "hold_current": false
+      }
+     },
+     "Q2|2027-03-10": {
+      "rule_floor_owner": 1220.0,
+      "rule_floor_today": 1220.0,
+      "governs": false,
+      "band": null,
+      "safety_exception": null,
+      "between": {
+       "own_floor": 1220.0,
+       "standard_floor": 1220.0,
+       "lowering_order_ref": "dono-2026-11-09-plano-nov-fev",
+       "own_target_ceiling": null,
+       "hold_current": false
+      }
+     },
+     "Q2|2027-03-11": {
+      "rule_floor_owner": 1220.0,
+      "rule_floor_today": 1220.0,
+      "governs": false,
+      "band": null,
+      "safety_exception": null,
+      "between": {
+       "own_floor": 1220.0,
+       "standard_floor": 1220.0,
+       "lowering_order_ref": "dono-2026-11-09-plano-nov-fev",
+       "own_target_ceiling": null,
+       "hold_current": false
+      }
+     },
+     "Afrodite|2027-03-08": {
+      "rule_floor_owner": 1500.0,
+      "rule_floor_today": 1500.0,
+      "governs": false,
+      "band": null,
+      "safety_exception": null,
+      "between": {
+       "own_floor": 1500.0,
+       "standard_floor": 1500.0,
+       "lowering_order_ref": "dono-2026-11-09-plano-nov-fev",
+       "own_target_ceiling": null,
+       "hold_current": false
+      }
+     },
+     "Afrodite|2027-03-09": {
+      "rule_floor_owner": 1500.0,
+      "rule_floor_today": 1500.0,
+      "governs": false,
+      "band": null,
+      "safety_exception": null,
+      "between": {
+       "own_floor": 1500.0,
+       "standard_floor": 1500.0,
+       "lowering_order_ref": "dono-2026-11-09-plano-nov-fev",
+       "own_target_ceiling": null,
+       "hold_current": false
+      }
+     },
+     "Afrodite|2027-03-10": {
+      "rule_floor_owner": 1500.0,
+      "rule_floor_today": 1500.0,
+      "governs": false,
+      "band": null,
+      "safety_exception": null,
+      "between": {
+       "own_floor": 1500.0,
+       "standard_floor": 1500.0,
+       "lowering_order_ref": "dono-2026-11-09-plano-nov-fev",
+       "own_target_ceiling": null,
+       "hold_current": false
+      }
+     },
+     "Afrodite|2027-03-11": {
+      "rule_floor_owner": 1500.0,
+      "rule_floor_today": 1500.0,
+      "governs": false,
+      "band": null,
+      "safety_exception": null,
+      "between": {
+       "own_floor": 1500.0,
+       "standard_floor": 1500.0,
+       "lowering_order_ref": "dono-2026-11-09-plano-nov-fev",
+       "own_target_ceiling": null,
+       "hold_current": false
+      }
+     }
+    },
+    "band_last_night": "2027-06-04"
+   },
+   "expected": {
+    "findings": [
+     {
+      "room": "Q2",
+      "night": "2027-03-08",
+      "floor": 1400.0,
+      "ceiling": 1400.0,
+      "current": 1500.0
+     },
+     {
+      "room": "Q2",
+      "night": "2027-03-09",
+      "floor": 1300.0,
+      "ceiling": 1450.0,
+      "current": 1700.0
+     },
+     {
+      "room": "Afrodite",
+      "night": "2027-03-10",
+      "floor": 1680.0,
+      "ceiling": null,
+      "current": 1650.0
+     },
+     {
+      "room": "Q2",
+      "night": "2027-03-11",
+      "floor": 1400.0,
+      "ceiling": 1400.0,
+      "current": 1300.0
+     }
+    ],
+    "items": [
+     {
+      "room": "Q2",
+      "night": "2027-03-08",
+      "floor": 1400.0,
+      "ceiling": 1400.0,
+      "order_ref": "dono-2026-10-21-ordem-recanto",
+      "price_before": 1500.0
+     },
+     {
+      "room": "Q2",
+      "night": "2027-03-09",
+      "floor": 1300.0,
+      "ceiling": 1450.0,
+      "order_ref": "dono-2026-10-21-ordem-recanto",
+      "price_before": 1700.0
+     },
+     {
+      "room": "Afrodite",
+      "night": "2027-03-10",
+      "floor": 1680.0,
+      "ceiling": null,
+      "order_ref": null,
+      "price_before": 1650.0
+     },
+     {
+      "room": "Q2",
+      "night": "2027-03-11",
+      "floor": 1400.0,
+      "ceiling": 1400.0,
+      "order_ref": "dono-2026-10-21-ordem-recanto",
+      "price_before": 1300.0
+     }
+    ]
+   }
+  }
+ ]
+}

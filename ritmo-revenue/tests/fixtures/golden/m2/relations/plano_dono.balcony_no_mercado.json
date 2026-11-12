@@ -1,0 +1,359 @@
+{
+ "function": "plano_dono.balcony_no_mercado",
+ "php_target": "Ritmo\\Domain\\Relations\\Params\\SwitchParams::isHit()",
+ "notes": "Trigger of the occupancy switch of the parity preset: sold / units >= threshold - 1e-9, units > 0.",
+ "cases": [
+  {
+   "name": "sold_0_of_9",
+   "input": {
+    "sold": 0,
+    "units": 9
+   },
+   "expected": false
+  },
+  {
+   "name": "sold_1_of_9",
+   "input": {
+    "sold": 1,
+    "units": 9
+   },
+   "expected": false
+  },
+  {
+   "name": "sold_2_of_9",
+   "input": {
+    "sold": 2,
+    "units": 9
+   },
+   "expected": false
+  },
+  {
+   "name": "sold_3_of_9",
+   "input": {
+    "sold": 3,
+    "units": 9
+   },
+   "expected": false
+  },
+  {
+   "name": "sold_4_of_9",
+   "input": {
+    "sold": 4,
+    "units": 9
+   },
+   "expected": false
+  },
+  {
+   "name": "sold_5_of_9",
+   "input": {
+    "sold": 5,
+    "units": 9
+   },
+   "expected": false
+  },
+  {
+   "name": "sold_6_of_9",
+   "input": {
+    "sold": 6,
+    "units": 9
+   },
+   "expected": false
+  },
+  {
+   "name": "sold_7_of_9",
+   "input": {
+    "sold": 7,
+    "units": 9
+   },
+   "expected": false
+  },
+  {
+   "name": "sold_8_of_9",
+   "input": {
+    "sold": 8,
+    "units": 9
+   },
+   "expected": true
+  },
+  {
+   "name": "sold_9_of_9",
+   "input": {
+    "sold": 9,
+    "units": 9
+   },
+   "expected": true
+  },
+  {
+   "name": "sold_10_of_9",
+   "input": {
+    "sold": 10,
+    "units": 9
+   },
+   "expected": true
+  },
+  {
+   "name": "sold_0_of_5",
+   "input": {
+    "sold": 0,
+    "units": 5
+   },
+   "expected": false
+  },
+  {
+   "name": "sold_1_of_5",
+   "input": {
+    "sold": 1,
+    "units": 5
+   },
+   "expected": false
+  },
+  {
+   "name": "sold_2_of_5",
+   "input": {
+    "sold": 2,
+    "units": 5
+   },
+   "expected": false
+  },
+  {
+   "name": "sold_3_of_5",
+   "input": {
+    "sold": 3,
+    "units": 5
+   },
+   "expected": false
+  },
+  {
+   "name": "sold_4_of_5",
+   "input": {
+    "sold": 4,
+    "units": 5
+   },
+   "expected": true
+  },
+  {
+   "name": "sold_5_of_5",
+   "input": {
+    "sold": 5,
+    "units": 5
+   },
+   "expected": true
+  },
+  {
+   "name": "sold_6_of_5",
+   "input": {
+    "sold": 6,
+    "units": 5
+   },
+   "expected": true
+  },
+  {
+   "name": "sold_0_of_10",
+   "input": {
+    "sold": 0,
+    "units": 10
+   },
+   "expected": false
+  },
+  {
+   "name": "sold_1_of_10",
+   "input": {
+    "sold": 1,
+    "units": 10
+   },
+   "expected": false
+  },
+  {
+   "name": "sold_2_of_10",
+   "input": {
+    "sold": 2,
+    "units": 10
+   },
+   "expected": false
+  },
+  {
+   "name": "sold_3_of_10",
+   "input": {
+    "sold": 3,
+    "units": 10
+   },
+   "expected": false
+  },
+  {
+   "name": "sold_4_of_10",
+   "input": {
+    "sold": 4,
+    "units": 10
+   },
+   "expected": false
+  },
+  {
+   "name": "sold_5_of_10",
+   "input": {
+    "sold": 5,
+    "units": 10
+   },
+   "expected": false
+  },
+  {
+   "name": "sold_6_of_10",
+   "input": {
+    "sold": 6,
+    "units": 10
+   },
+   "expected": false
+  },
+  {
+   "name": "sold_7_of_10",
+   "input": {
+    "sold": 7,
+    "units": 10
+   },
+   "expected": false
+  },
+  {
+   "name": "sold_8_of_10",
+   "input": {
+    "sold": 8,
+    "units": 10
+   },
+   "expected": true
+  },
+  {
+   "name": "sold_9_of_10",
+   "input": {
+    "sold": 9,
+    "units": 10
+   },
+   "expected": true
+  },
+  {
+   "name": "sold_10_of_10",
+   "input": {
+    "sold": 10,
+    "units": 10
+   },
+   "expected": true
+  },
+  {
+   "name": "sold_11_of_10",
+   "input": {
+    "sold": 11,
+    "units": 10
+   },
+   "expected": true
+  },
+  {
+   "name": "sold_0_of_7",
+   "input": {
+    "sold": 0,
+    "units": 7
+   },
+   "expected": false
+  },
+  {
+   "name": "sold_1_of_7",
+   "input": {
+    "sold": 1,
+    "units": 7
+   },
+   "expected": false
+  },
+  {
+   "name": "sold_2_of_7",
+   "input": {
+    "sold": 2,
+    "units": 7
+   },
+   "expected": false
+  },
+  {
+   "name": "sold_3_of_7",
+   "input": {
+    "sold": 3,
+    "units": 7
+   },
+   "expected": false
+  },
+  {
+   "name": "sold_4_of_7",
+   "input": {
+    "sold": 4,
+    "units": 7
+   },
+   "expected": false
+  },
+  {
+   "name": "sold_5_of_7",
+   "input": {
+    "sold": 5,
+    "units": 7
+   },
+   "expected": false
+  },
+  {
+   "name": "sold_6_of_7",
+   "input": {
+    "sold": 6,
+    "units": 7
+   },
+   "expected": true
+  },
+  {
+   "name": "sold_7_of_7",
+   "input": {
+    "sold": 7,
+    "units": 7
+   },
+   "expected": true
+  },
+  {
+   "name": "sold_8_of_7",
+   "input": {
+    "sold": 8,
+    "units": 7
+   },
+   "expected": true
+  },
+  {
+   "name": "sold_0_of_1",
+   "input": {
+    "sold": 0,
+    "units": 1
+   },
+   "expected": false
+  },
+  {
+   "name": "sold_1_of_1",
+   "input": {
+    "sold": 1,
+    "units": 1
+   },
+   "expected": true
+  },
+  {
+   "name": "sold_2_of_1",
+   "input": {
+    "sold": 2,
+    "units": 1
+   },
+   "expected": true
+  },
+  {
+   "name": "sold_0_of_0",
+   "input": {
+    "sold": 0,
+    "units": 0
+   },
+   "expected": false
+  },
+  {
+   "name": "sold_1_of_0",
+   "input": {
+    "sold": 1,
+    "units": 0
+   },
+   "expected": false
+  }
+ ]
+}

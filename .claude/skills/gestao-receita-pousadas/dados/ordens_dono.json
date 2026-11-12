@@ -9927,6 +9927,127 @@
    "gatilho_dias": 7,
    "gatilho_min_dias": 2,
    "nota": "F2 (Dia de semana (dom-qui)): régua com hidro medida em noite vizinha (12/01, 2 dias) (1 estadia), p50 R$ 651 público, p90 R$ 1883; ÷ 0.650 (Booking/enviado; ÷ 0.585 nos degraus de D7 ou menos); nunca abaixo do piso do dono. Gatilho de D7 sem venda nova: F1 (ou o piso do dono). Afrodite pelo prêmio dela e Balcony 10% abaixo (Regra G). Como desfazer: pedir 'Volte às ordens anteriores de 10/01/27'."
+  },
+  {
+   "id": "dono-2026-11-04-faixa-recanto-20270111",
+   "data": "2026-11-04",
+   "criada_em": "2026-11-12T14:38:32Z",
+   "texto": "Para feriados, vamos aplicar o F5 e baixar gradualmente caso a lotação esteja abaixo da expectativa 7 dias antes. Para Natal, aplicar F5, Réveillon F5, inverno e final de semana F5. Para dias de semana, vamos aplicar F2 e fins de semana do mês de dezembro e os últimos dois de novembro, vamos aplicar F3.",
+   "contexto": "Resposta do dono à régua de faixas (página 'Régua de Preços das Pousadas', 04/11/2026).",
+   "pousada_faixa": "Recanto",
+   "quartos": [
+    "Q7",
+    "Q2",
+    "Double",
+    "Afrodite"
+   ],
+   "de": "2027-01-11",
+   "ate": "2027-01-11",
+   "noites": [
+    "2027-01-11"
+   ],
+   "tipo": "alvo_por_data",
+   "percentil": 50,
+   "faixa": 2,
+   "passo_livre": true,
+   "escada_vendas": true,
+   "pisos_enviados": {
+    "Q7": 1219.51,
+    "Q2": 1219.51,
+    "Double": 1219.51,
+    "Afrodite": 1500.0
+   },
+   "topo_enviados": {
+    "Q7": 3037.1,
+    "Q2": 3037.1,
+    "Double": 3037.1,
+    "Afrodite": 3644.52
+   },
+   "vendidas_base": {
+    "Q7": {
+     "2027-01-11": 1
+    },
+    "Q2": {
+     "2027-01-11": 1
+    },
+    "Double": {
+     "2027-01-11": 0
+    },
+    "Afrodite": {
+     "2027-01-11": 1
+    }
+   },
+   "libera": [
+    "acima_15"
+   ],
+   "ocupacao_max": 0.7,
+   "frente_ocupacao": 0.5,
+   "piso_atras": {
+    "Q7": 1219.51,
+    "Q2": 1219.51,
+    "Double": 1219.51,
+    "Afrodite": 1500.0
+   },
+   "gatilho_dias": 8,
+   "gatilho_min_dias": 2,
+   "nota": "F2 (Dia de semana (dom-qui)): régua com hidro medida em noite vizinha (12/01, 1 dia) (1 estadia), p50 R$ 651 público, p90 R$ 1883; ÷ 0.620 (Booking/enviado; ÷ 0.558 nos degraus de D7 ou menos); nunca abaixo do piso do dono. Gatilho de D7 sem venda nova: F1 (ou o piso do dono). Afrodite pelo prêmio dela e Balcony 10% abaixo (Regra G). Como desfazer: pedir 'Volte às ordens anteriores de 11/01/27'."
+  },
+  {
+   "id": "dono-2026-11-04-faixa-villa-20270111",
+   "data": "2026-11-04",
+   "criada_em": "2026-11-12T14:38:32Z",
+   "texto": "Para feriados, vamos aplicar o F5 e baixar gradualmente caso a lotação esteja abaixo da expectativa 7 dias antes. Para Natal, aplicar F5, Réveillon F5, inverno e final de semana F5. Para dias de semana, vamos aplicar F2 e fins de semana do mês de dezembro e os últimos dois de novembro, vamos aplicar F3.",
+   "contexto": "Resposta do dono à régua de faixas (página 'Régua de Preços das Pousadas', 04/11/2026).",
+   "pousada_faixa": "Villa",
+   "quartos": [
+    "VK7",
+    "VK2",
+    "Balcony"
+   ],
+   "de": "2027-01-11",
+   "ate": "2027-01-11",
+   "noites": [
+    "2027-01-11"
+   ],
+   "tipo": "alvo_por_data",
+   "percentil": 50,
+   "faixa": 2,
+   "passo_livre": true,
+   "escada_vendas": true,
+   "pisos_enviados": {
+    "VK7": 1001.54,
+    "VK2": 1001.54,
+    "Balcony": 901.38
+   },
+   "topo_enviados": {
+    "VK7": 2896.92,
+    "VK2": 2896.92,
+    "Balcony": 2607.23
+   },
+   "vendidas_base": {
+    "VK7": {
+     "2027-01-11": 0
+    },
+    "VK2": {
+     "2027-01-11": 1
+    },
+    "Balcony": {
+     "2027-01-11": 0
+    }
+   },
+   "libera": [
+    "acima_15"
+   ],
+   "ocupacao_max": 0.7,
+   "frente_ocupacao": 0.5,
+   "piso_atras": {
+    "VK7": 944.0,
+    "VK2": 944.0,
+    "Balcony": 743.08
+   },
+   "gatilho_dias": 8,
+   "gatilho_min_dias": 2,
+   "nota": "F2 (Dia de semana (dom-qui)): régua com hidro medida em noite vizinha (12/01, 1 dia) (1 estadia), p50 R$ 651 público, p90 R$ 1883; ÷ 0.650 (Booking/enviado; ÷ 0.585 nos degraus de D7 ou menos); nunca abaixo do piso do dono. Gatilho de D7 sem venda nova: F1 (ou o piso do dono). Afrodite pelo prêmio dela e Balcony 10% abaixo (Regra G). Como desfazer: pedir 'Volte às ordens anteriores de 11/01/27'."
   }
  ]
 }

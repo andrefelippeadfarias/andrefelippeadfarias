@@ -22,8 +22,9 @@ use Ritmo\Infrastructure\Lock\DbLock;
 /**
  * Starts or resumes the shadow run of a property: under the property's run lock, for the
  * property's "today" (from the clock, in the property's timezone), unless the emergency switch is
- * engaged. A run left open by a request that died resumes from its next stage; one left open on
- * an earlier day is closed as failed and a new run starts.
+ * engaged (then a run left open is closed as stopped). A run left open by a request that died
+ * resumes from its next stage; one left open on an earlier day is closed as failed and a new run
+ * starts.
  */
 final class ShadowRunService
 {
@@ -62,7 +63,7 @@ final class ShadowRunService
     {
         $property = $this->properties->find($propertyId) ?? throw new OutOfBoundsException(sprintf('Unknown property "%s".', $propertyId));
         if ($this->switch->isEngaged()) {
-            return new RunOutcome(RunOutcome::BLOCKED, null, '', 'The emergency switch is engaged: no run starts.');
+            return $this->blocked($property);
         }
 
         $lock = $this->locks->acquire(self::lockKey($property->id), self::LOCK_TTL_SECONDS);
@@ -101,6 +102,36 @@ final class ShadowRunService
         }
 
         return $outcomes;
+    }
+
+    /**
+     * With the switch engaged no run starts, and a run left open is closed as stopped under the
+     * lock, so it never resumes from what it collected before the emergency. When another request
+     * holds the lock, that request stops the run itself before its next stage.
+     */
+    private function blocked(Property $property): RunOutcome
+    {
+        $message = 'The emergency switch is engaged: no run starts.';
+        $lock = $this->locks->acquire(self::lockKey($property->id), self::LOCK_TTL_SECONDS);
+        if ($lock === null) {
+            return new RunOutcome(RunOutcome::BLOCKED, null, '', $message);
+        }
+
+        try {
+            $open = $this->runs->openRun($property->id, self::KIND);
+            if ($open === null) {
+                return new RunOutcome(RunOutcome::BLOCKED, null, '', $message);
+            }
+            $reason = $open['stage'] === ''
+                ? 'Stopped by the emergency switch before its first stage.'
+                : sprintf('Stopped by the emergency switch after the stage "%s".', $open['stage']);
+            $this->runs->finish($open['id'], RunRepository::STOPPED, $open['summary'], $this->clock->now(), $reason);
+            $this->logger->warning('An open run was stopped by the emergency switch.', ['run_id' => $open['id'], 'property_id' => $property->id, 'stage' => $open['stage']]);
+
+            return new RunOutcome(RunOutcome::BLOCKED, $open['id'], $open['stage'], $message . ' The open run was stopped.');
+        } finally {
+            $this->locks->release($lock);
+        }
     }
 
     private function context(Property $property): RunContext|RunOutcome

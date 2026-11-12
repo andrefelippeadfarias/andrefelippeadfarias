@@ -244,6 +244,35 @@ def cases_em_reais(cfg: dict) -> list[dict]:
     return out
 
 
+def cases_preco_no_vigente(cfg: dict) -> list[dict]:
+    """Prices on, just inside and just outside the floor and ceiling of date rules of every kind."""
+    rules = [
+        {"min_price": -10, "min_price_type": "percent_base", "max_price": 0, "max_price_type": "percent_base"},
+        {"min_price": -31.5, "min_price_type": "percent_base"},
+        {"max_price": 20, "max_price_type": "percent_base"},
+        {"min_price": 15, "min_price_type": "percent_base", "max_price": 5, "max_price_type": "percent_base"},
+        {"min_price": 0, "min_price_type": "fixed", "max_price": -30, "max_price_type": "percent_base"},
+        {"min_price": None, "max_price": None},
+    ]
+    out = []
+    for q in cfg["quartos"]:
+        curto, base = q["curto"], float(q["base"])
+        fixed = {"min_price": round(base * 0.83), "min_price_type": "fixed", "max_price": round(base * 1.4), "max_price_type": "fixed"}
+        for regra in rules + [fixed]:
+            lo = pace.vigente(cfg, curto, {}, regra, "min_price")
+            hi = pace.vigente(cfg, curto, {}, regra, "max_price")
+            prices = {round(base * 0.3, 2), round(base * 3, 2), base}
+            for bound in (lo, hi):
+                if bound is not None:
+                    prices |= {round(bound + d, 2) for d in (-0.6, -0.5, -0.4, 0.0, 0.4, 0.5, 0.6)}
+            for preco in sorted(prices):
+                night = "2026-11-20"
+                r = pace.preco_no_vigente(cfg, {curto: {night: {"price": preco}}}, {curto: {night: regra}})[curto][night]
+                out.append({"input": {"curto": curto, "preco": preco, "regra": regra},
+                            "expected": {"price": r["price"], "preco_recalculo": r.get("preco_recalculo")}})
+    return out
+
+
 # ---------- the engine core of milestone 1 (floors, anchors, one decision per room night)
 def core_cfg(cfg: dict) -> dict:
     """The configuration without the rules of later milestones, which the parity preset leaves out too: dated owner
@@ -685,6 +714,11 @@ def golden_files(cfg: dict, anchor_file: dict) -> list[dict]:
                   "(esgotada, sem_ancora or null), linha (the diagnosis of the night, as the engine rounds it), item (what "
                   "would be written, or null)}.",
          "cases": cases_plano_core(core, anchor_file)},
+        {"function": "pace.preco_no_vigente", "php_target": "Ritmo\\Domain\\Pricing\\RuleInForce::price(price, floor(rule, base), ceiling(rule, base))",
+         "notes": "regra = the date rule in force (min_price/max_price with their *_type: percent_base over the base or fixed); "
+                  "preco = the price of the recalculation. expected.price = the price the engine starts from; "
+                  "expected.preco_recalculo = the price read when it was moved, else null.",
+         "cases": cases_preco_no_vigente(cfg)},
         {"function": "validar_plano.montar_payload", "php_target": "Ritmo\\Domain\\Plan\\PercentRounding",
          "notes": "expected = min_price and max_price of the override, as the whole percentages over the base the engine "
                   "sends (strings), null when the item does not set them.", "cases": cases_montar_payload(cfg)},

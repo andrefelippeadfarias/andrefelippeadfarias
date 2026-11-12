@@ -11,6 +11,7 @@ use Ritmo\Application\ShadowRun\PlanItemStatus;
 use Ritmo\Application\ShadowRun\RunOutcome;
 use Ritmo\Application\ShadowRun\ShadowRunService;
 use Ritmo\Contracts\Exception\ConnectorException;
+use Ritmo\Domain\Model\DateOverride;
 use Ritmo\Domain\Pricing\RuleCode;
 use Ritmo\Domain\Support\Days;
 use Ritmo\Infrastructure\Db\Repository\RunRepository;
@@ -69,6 +70,43 @@ final class ShadowRunServiceTest extends TestCase
         $floor = array_values(array_filter($wouldWrite, static fn (array $i): bool => $i['field'] === 'floor'))[0];
         self::assertSame(420.0, $floor['current'] ?? $floor['details']['current_price'], 'the current price comes from the PMS');
         self::assertIsInt($floor['details']['min_percent']);
+    }
+
+    public function testAPriceOutsideTheDateRuleInForceIsBroughtWithinItBeforeTheEngine(): void
+    {
+        // The PMS still holds 420 on 2027-03-11, but the rule in force puts the floor at +20%
+        // of the base of 480: 576. The pricing system will sell at 576 at least, so the engine
+        // starts from there and steps down, not up from 420.
+        $world = ShadowRunWorld::pricing();
+        $first = Days::date(ShadowRunWorld::FIRST_NIGHT);
+        $last = Days::add($first, ShadowRunService::HORIZON_NIGHTS - 1);
+        $pricing = new InMemoryPricingConnector(
+            $world->listListings(),
+            ['L-STD' => $world->readPrices('L-STD', $first, $last), 'L-STE' => $world->readPrices('L-STE', $first, $last)],
+            ['L-STD' => [new DateOverride(Days::date('2027-03-11'), 20.0, 30.0)]],
+        );
+        $outcome = $this->world->service(new StaticConnectorSource($this->world->pms, $pricing))->run(ShadowRunWorld::PROPERTY);
+        self::assertSame(RunOutcome::COMPLETED, $outcome->status, (string) $outcome->error);
+
+        $night = array_values(array_filter(
+            $this->world->planItems->forRun((int) $outcome->runId),
+            static fn (array $item): bool => $item['room_code'] === 'STD' && $item['night']->format('Y-m-d') === '2027-03-11' && $item['field'] === 'floor'
+        ));
+        self::assertCount(1, $night);
+        $trace = $night[0]['details']['rule_trace'];
+        self::assertSame(RuleCode::PRICE_WITHIN_RULE_IN_FORCE, $trace[0]['code']);
+        self::assertSame(['read' => 420.0, 'price' => 576.0, 'floor_in_force' => 576.0, 'ceiling_in_force' => 624.0], $trace[0]['params']);
+        $step = array_values(array_filter($trace, static fn (array $entry): bool => $entry['code'] === RuleCode::PACE_STEP))[0]['params'];
+        self::assertSame('down', $step['direction']);
+        self::assertSame(576.0, $step['from']);
+
+        $plain = array_filter(
+            $this->world->planItems->forRun((int) $outcome->runId),
+            static fn (array $item): bool => $item['room_code'] === 'STD' && $item['night']->format('Y-m-d') === '2027-03-09'
+        );
+        foreach ($plain as $item) {
+            self::assertSame(RuleCode::NIGHT, $item['details']['rule_trace'][0]['code'], 'without a rule the price read is used as it is');
+        }
     }
 
     public function testNightsWithoutAnchorAreNoMarketDataAndGiveNoItem(): void
@@ -180,6 +218,54 @@ final class ShadowRunServiceTest extends TestCase
 
         $this->world->switch->release();
         self::assertSame(RunOutcome::COMPLETED, $this->world->service()->run(ShadowRunWorld::PROPERTY)->status);
+    }
+
+    public function testTheSwitchClosesARunLeftOpenSoItNeverResumesFromOldData(): void
+    {
+        $open = $this->world->service()->run(ShadowRunWorld::PROPERTY, 0);
+        self::assertSame(RunOutcome::RUNNING, $open->status);
+        self::assertSame('collect', $open->stage);
+
+        $this->world->switch->engage();
+        $blocked = $this->world->service()->run(ShadowRunWorld::PROPERTY);
+        self::assertSame(RunOutcome::BLOCKED, $blocked->status);
+        self::assertSame($open->runId, $blocked->runId, 'the open run is named');
+        $run = $this->world->runs->find((int) $open->runId);
+        self::assertSame(RunRepository::STOPPED, $run['status'] ?? null);
+        self::assertSame('Stopped by the emergency switch after the stage "collect".', $run['error'] ?? null);
+        self::assertNull($this->world->runs->openRun(ShadowRunWorld::PROPERTY, ShadowRunService::KIND));
+        self::assertSame([], $this->world->service()->resumeOpenRuns(), 'nothing left to resume');
+
+        $this->world->switch->release();
+        $this->world->pms = ShadowRunWorld::pms();
+        $fresh = $this->world->service()->run(ShadowRunWorld::PROPERTY);
+        self::assertSame(RunOutcome::COMPLETED, $fresh->status);
+        self::assertNotSame($open->runId, $fresh->runId, 'a new run collects again');
+        self::assertSame(self::READS_PMS, $this->world->pms->calls());
+    }
+
+    public function testTheScheduledHookStopsTheOpenRunsWhileTheSwitchIsEngaged(): void
+    {
+        $open = $this->world->service()->run(ShadowRunWorld::PROPERTY, 0);
+        $this->world->switch->engage();
+
+        $outcomes = $this->world->service()->resumeOpenRuns();
+
+        self::assertSame(RunOutcome::BLOCKED, $outcomes[ShadowRunWorld::PROPERTY]->status);
+        self::assertSame(RunRepository::STOPPED, $this->world->runs->find((int) $open->runId)['status'] ?? null);
+    }
+
+    public function testWithTheSwitchEngagedARunHeldByAnotherRequestIsLeftToThatRequest(): void
+    {
+        $open = $this->world->service()->run(ShadowRunWorld::PROPERTY, 0);
+        $held = $this->world->locks->acquire(ShadowRunService::lockKey(ShadowRunWorld::PROPERTY), 60);
+        self::assertNotNull($held);
+        $this->world->switch->engage();
+
+        $blocked = $this->world->service()->run(ShadowRunWorld::PROPERTY);
+
+        self::assertSame(RunOutcome::BLOCKED, $blocked->status);
+        self::assertSame(RunRepository::RUNNING, $this->world->runs->find((int) $open->runId)['status'] ?? null, 'the request holding the lock stops it before its next stage');
     }
 
     public function testTheConstantEngagesTheSwitchWithoutAnyOption(): void

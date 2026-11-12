@@ -31,9 +31,13 @@ final class EmergencySwitch
         return defined(self::CONSTANT) && (bool) constant(self::CONSTANT);
     }
 
+    /**
+     * Reads the option past the request cache, so a run in progress sees the switch engaged by
+     * another request between two of its stages.
+     */
     public function isEngaged(): bool
     {
-        return $this->engagedByConstant || $this->store->get(self::KEY, false) === true;
+        return $this->engagedByConstant || $this->store->getFresh(self::KEY, false) === true;
     }
 
     public function isEngagedByConstant(): bool

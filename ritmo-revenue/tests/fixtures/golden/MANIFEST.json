@@ -1,8 +1,8 @@
 {
  "generated_at": "2026-11-12",
- "repo_commit": "f11dc3ba2c0660aaf17a657dce9849262a82a33c",
+ "repo_commit": "e4dcf07263bd31e90fc1b5d6c501749441b780e1",
  "engine": ".claude/skills/gestao-receita-pousadas/scripts",
- "engine_commit": "c830024bf40584d206fcb4978ac983588f111c76",
+ "engine_commit": "036acfa9db12515ac92461345c0ae1e10ef369fa",
  "engine_dirty": false,
  "python": "3.11.17",
  "frozen_today": "2026-11-11",
@@ -185,6 +185,11 @@
    "file": "level1/pace.plano.core.json",
    "function": "pace.plano.core",
    "cases": 1122
+  },
+  {
+   "file": "level1/pace.preco_no_vigente.json",
+   "function": "pace.preco_no_vigente",
+   "cases": 630
   },
   {
    "file": "level1/validar_plano.montar_payload.json",

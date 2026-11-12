@@ -39,6 +39,27 @@ final class OptionsStore implements KeyValueStore
         }
     }
 
+    /**
+     * Drops the option from WordPress's request cache (its own entry, the list of options known
+     * to be missing and, when it is autoloaded, the autoloaded set) before reading it again.
+     */
+    public function getFresh(string $key, mixed $default = null): mixed
+    {
+        $name = $this->name($key);
+        wp_cache_delete($name, 'options');
+        $missing = wp_cache_get('notoptions', 'options');
+        if (is_array($missing) && isset($missing[$name])) {
+            unset($missing[$name]);
+            wp_cache_set('notoptions', $missing, 'options');
+        }
+        $autoloaded = wp_cache_get('alloptions', 'options');
+        if (is_array($autoloaded) && array_key_exists($name, $autoloaded)) {
+            wp_cache_delete('alloptions', 'options');
+        }
+
+        return $this->get($key, $default);
+    }
+
     public function has(string $key): bool
     {
         $missing = new stdClass();

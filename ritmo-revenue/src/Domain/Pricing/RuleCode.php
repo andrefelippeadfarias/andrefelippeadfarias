@@ -22,6 +22,9 @@ final class RuleCode
     /** Outcome: the night has no market anchor to aim at. */
     public const NO_MARKET_ANCHOR = 'no_market_anchor';
 
+    /** The price read for the night was outside the date rule in force: the engine starts from the price the rule allows. */
+    public const PRICE_WITHIN_RULE_IN_FORCE = 'price_within_rule_in_force';
+
     /** Where the night is against its expected sales curve. */
     public const PACE_STATUS = 'pace_status';
 

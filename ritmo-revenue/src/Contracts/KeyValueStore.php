@@ -17,6 +17,13 @@ interface KeyValueStore
      */
     public function get(string $key, mixed $default = null): mixed;
 
+    /**
+     * Like get(), read past any cache kept for the current request: what another request or
+     * process stored in the meantime is seen. For values that must be current, such as the
+     * emergency switch.
+     */
+    public function getFresh(string $key, mixed $default = null): mixed;
+
     public function has(string $key): bool;
 
     public function set(string $key, mixed $value): void;

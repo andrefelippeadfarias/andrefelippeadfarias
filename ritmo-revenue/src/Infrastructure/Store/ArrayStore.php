@@ -32,6 +32,14 @@ final class ArrayStore implements KeyValueStore
         return array_key_exists($key, $this->values) ? $this->values[$key] : $default;
     }
 
+    /**
+     * The values live in this object only: there is no other copy to be stale against.
+     */
+    public function getFresh(string $key, mixed $default = null): mixed
+    {
+        return $this->get($key, $default);
+    }
+
     public function has(string $key): bool
     {
         return array_key_exists($key, $this->values);

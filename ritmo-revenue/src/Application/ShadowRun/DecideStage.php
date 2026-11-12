@@ -16,10 +16,11 @@ use Ritmo\Domain\Pricing\LedgerStep;
 use Ritmo\Domain\Pricing\NightContext;
 use Ritmo\Domain\Pricing\PaceBasis;
 use Ritmo\Domain\Pricing\PaceEngine;
+use Ritmo\Domain\Pricing\RuleCode;
+use Ritmo\Domain\Pricing\RuleInForce;
 use Ritmo\Domain\Pricing\StepDirection;
 use Ritmo\Domain\Support\Clock;
 use Ritmo\Domain\Support\Days;
-use Ritmo\Domain\Support\Num;
 use Ritmo\Infrastructure\Db\Repository\InventorySnapshotRepository;
 use Ritmo\Infrastructure\Db\Repository\MarketAnchorRepository;
 use Ritmo\Infrastructure\Db\Repository\StepLedgerRepository;
@@ -100,9 +101,10 @@ final class DecideStage implements Stage
                 ));
                 $byReason[$decision->reasonCode] = ($byReason[$decision->reasonCode] ?? 0) + 1;
                 if ($decision->isStep()) {
+                    $priceTrace = self::priceTrace($room, $inv, $prices[$room->code][$key] ?? null, $override, $price);
                     $items[PlanItem::keyOf($room->code, $night)] = [
                         'item' => StateCodec::planItem(PlanItem::fromDecision($decision, NightState::from($price, $override))),
-                        'trace' => $decision->trace,
+                        'trace' => $priceTrace === null ? $decision->trace : [$priceTrace, ...$decision->trace],
                         'pace_status' => $decision->reading?->status->value,
                         'direction' => $decision->direction?->value,
                     ];
@@ -124,42 +126,50 @@ final class DecideStage implements Stage
 
     /**
      * What the engine reads for one room night: the price in force (from the pricing system's
-     * calendar when it was read, else the price the PMS holds), the floor and ceiling in force
-     * and the units sold according to the PMS calendar (a blocked unit counts as sold).
+     * calendar when it was read, else the price the PMS holds) brought within the floor and
+     * ceiling of the date rule in force, the floor and ceiling in force and the units sold
+     * according to the PMS calendar (a blocked unit counts as sold).
      */
     private static function priceNight(RoomType $room, InventoryNight $inventory, ?PriceNight $read, ?DateOverride $override): ?PriceNight
     {
         $sold = max(0, min($room->units, $room->units - $inventory->available));
         if ($read !== null) {
-            return new PriceNight($inventory->date, $read->price, $read->minPrice, $read->maxPrice, $read->minStay, $sold, $room->units, $read->hasDateOverride);
-        }
-        if ($inventory->pmsPrice === null || $inventory->pmsPrice <= 0.0) {
+            $price = $read->price;
+            $min = $read->minPrice;
+            $max = $read->maxPrice;
+            $minStay = $read->minStay;
+        } elseif ($inventory->pmsPrice !== null && $inventory->pmsPrice > 0.0) {
+            $price = $inventory->pmsPrice;
+            $min = RuleInForce::floor($override, $room->base);
+            $max = RuleInForce::ceiling($override, $room->base);
+            $minStay = $override?->minStay ?? $inventory->minStay;
+        } else {
             return null;
         }
+        $within = RuleInForce::price($price, RuleInForce::floor($override, $room->base), RuleInForce::ceiling($override, $room->base));
 
-        return new PriceNight(
-            $inventory->date,
-            $inventory->pmsPrice,
-            self::bound($override?->minFixed, $override?->minPercent, $room->base),
-            self::bound($override?->maxFixed, $override?->maxPercent, $room->base),
-            $override?->minStay ?? $inventory->minStay,
-            $sold,
-            $room->units,
-            $override !== null,
-        );
+        return new PriceNight($inventory->date, $within, $min, $max, $minStay, $sold, $room->units, $read?->hasDateOverride ?? $override !== null);
     }
 
     /**
-     * A floor or ceiling of an override as an amount: the fixed amount, else the percentage over
-     * the listing base.
+     * The trace entry of a price brought within the date rule in force, or null when the price
+     * read was already within it.
+     *
+     * @return array{code: string, params: array<string, scalar|null>}|null
      */
-    private static function bound(?float $fixed, ?float $percent, float $base): ?float
+    private static function priceTrace(RoomType $room, InventoryNight $inventory, ?PriceNight $read, ?DateOverride $override, PriceNight $used): ?array
     {
-        if ($fixed !== null) {
-            return $fixed;
+        $price = $read?->price ?? $inventory->pmsPrice;
+        if ($price === null || $price === $used->price) {
+            return null;
         }
 
-        return $percent === null ? null : Num::percentToAmount($percent, $base, 2);
+        return ['code' => RuleCode::PRICE_WITHIN_RULE_IN_FORCE, 'params' => [
+            'read' => $price,
+            'price' => $used->price,
+            'floor_in_force' => RuleInForce::floor($override, $room->base),
+            'ceiling_in_force' => RuleInForce::ceiling($override, $room->base),
+        ]];
     }
 
     /**

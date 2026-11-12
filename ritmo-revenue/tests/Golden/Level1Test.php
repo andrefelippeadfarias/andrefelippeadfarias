@@ -13,6 +13,7 @@ use Ritmo\Domain\Market\Quantile;
 use Ritmo\Domain\Model\AnchorOrigin;
 use Ritmo\Domain\Model\BookingRecord;
 use Ritmo\Domain\Model\BookingStatus;
+use Ritmo\Domain\Model\DateOverride;
 use Ritmo\Domain\Model\InventoryNight;
 use Ritmo\Domain\Model\MarketAnchor;
 use Ritmo\Domain\Model\NightType;
@@ -30,6 +31,7 @@ use Ritmo\Domain\Pricing\PaceDecision;
 use Ritmo\Domain\Pricing\PaceEngine;
 use Ritmo\Domain\Pricing\PaceMeter;
 use Ritmo\Domain\Pricing\RuleCode;
+use Ritmo\Domain\Pricing\RuleInForce;
 use Ritmo\Domain\Pricing\StepDirection;
 use Ritmo\Domain\Pricing\StepSize;
 use Ritmo\Domain\Pricing\TargetPercentile;
@@ -75,6 +77,7 @@ final class Level1Test extends TestCase
         'pace.pisos_enviados' => 'testHardFloorMatchesPisosEnviados',
         'pace.plano.core' => 'testPaceEngineAndPaceBasisMatchTheCoreOfPlano',
         'pace.pmax' => 'testMaxStepMatchesPmax',
+        'pace.preco_no_vigente' => 'testRuleInForceMatchesPrecoNoVigente',
         'pace.status_da_noite' => 'testPaceMeterMatchesStatusDaNoite',
         'pace.teto_anuncio' => 'testHighestFloorMatchesTetoAnuncio',
         'validar_plano.em_reais' => 'testPercentToAmountMatchesEmReais',
@@ -521,6 +524,32 @@ final class Level1Test extends TestCase
     }
 
     // ---------- Plan
+
+    public function testRuleInForceMatchesPrecoNoVigente(): void
+    {
+        $preset = Fixtures::parityPreset();
+        $moved = 0;
+        foreach (Golden::cases('pace.preco_no_vigente') as $case) {
+            $in = $case['input'];
+            $where = json_encode($in);
+            $rule = $in['regra'];
+            $amount = static fn (string $field, string $type): ?float => ($rule[$field] ?? null) !== null && ($rule[$field . '_type'] ?? '') === $type ? (float) $rule[$field] : null;
+            $override = new DateOverride(
+                Days::date('2026-11-20'),
+                minPercent: $amount('min_price', 'percent_base'),
+                maxPercent: $amount('max_price', 'percent_base'),
+                minFixed: $amount('min_price', 'fixed'),
+                maxFixed: $amount('max_price', 'fixed'),
+            );
+            $base = $preset->roomType($in['curto'])->base;
+            $price = RuleInForce::price((float) $in['preco'], RuleInForce::floor($override, $base), RuleInForce::ceiling($override, $base));
+
+            self::assertEqualsWithDelta((float) $case['expected']['price'], $price, 0.01, $where);
+            self::assertSame($case['expected']['preco_recalculo'] !== null, $price !== (float) $in['preco'], $where);
+            $moved += $price !== (float) $in['preco'] ? 1 : 0;
+        }
+        self::assertGreaterThan(100, $moved, 'prices under the floor and over the ceiling are brought within them');
+    }
 
     public function testPercentRoundingMatchesMontarPayload(): void
     {

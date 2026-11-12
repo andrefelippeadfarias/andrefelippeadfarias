@@ -49,6 +49,12 @@ final class ReasonText
     {
         return match ($code) {
             RuleCode::NIGHT => self::night($p),
+            RuleCode::PRICE_WITHIN_RULE_IN_FORCE => sprintf(
+                /* translators: 1: price read, 2: price the date rule in force allows */
+                __('The price read, %1$s, is outside the date rule in force: the engine starts from %2$s.', 'ritmo-revenue'),
+                self::number($p['read'] ?? null, 2),
+                self::number($p['price'] ?? null, 2)
+            ),
             RuleCode::PACE_STATUS => sprintf(
                 /* translators: 1: pace status, 2: units sold, 3: units on sale, 4: percent sold, 5: percent the curve expects */
                 __('Pace %1$s: %2$s of %3$s units sold (%4$s%% against %5$s%% expected).', 'ritmo-revenue'),

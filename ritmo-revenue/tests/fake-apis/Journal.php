@@ -18,6 +18,14 @@ final class Journal
         $this->stateFile = $logFile . '.state';
     }
 
+    /**
+     * The writable world kept next to this log.
+     */
+    public function writeWorld(): WriteWorld
+    {
+        return new WriteWorld($this->logFile);
+    }
+
     public function record(string $method, string $path, string $query, int $status): void
     {
         $line = json_encode(['method' => $method, 'path' => $path, 'query' => $query, 'status' => $status], JSON_UNESCAPED_SLASHES | JSON_THROW_ON_ERROR);
@@ -48,6 +56,7 @@ final class Journal
     {
         file_put_contents($this->logFile, '', LOCK_EX);
         file_put_contents($this->stateFile, '{}', LOCK_EX);
+        $this->writeWorld()->reset();
     }
 
     public function issueAccessToken(): string
@@ -78,7 +87,7 @@ final class Journal
     }
 
     /**
-     * @param array{method: string, path: string, status: int, headers: array<string, string>, times: int} $fault
+     * @param array{method: string, path: string, status: int, headers: array<string, string>, times: int, mode: string, seconds: int} $fault
      */
     public function addFault(array $fault): void
     {
@@ -90,7 +99,7 @@ final class Journal
     /**
      * The first failure asked for this method and path, used up once.
      *
-     * @return array{method: string, path: string, status: int, headers: array<string, string>, times: int}|null
+     * @return array{method: string, path: string, status: int, headers: array<string, string>, times: int, mode?: string, seconds?: int}|null
      */
     public function takeFault(string $method, string $path): ?array
     {

@@ -26,6 +26,7 @@ use Ritmo\Domain\Plan\Validation\ListingCheck;
 use Ritmo\Domain\Plan\Validation\MaskCheck;
 use Ritmo\Domain\Plan\Validation\OrphanProofCheck;
 use Ritmo\Domain\Plan\Validation\PriceBoundsCheck;
+use Ritmo\Domain\Plan\Validation\RelationOrderCheck;
 use Ritmo\Domain\Plan\Validation\StayCheck;
 use Ritmo\Domain\Support\Clock;
 use Ritmo\Domain\Support\Days;
@@ -45,7 +46,8 @@ use WeakMap;
  *   (StayCheck, OrphanProofCheck), arrival and departure days (MaskCheck), effect, fresh calendar
  *   and rise (EffectCheck);
  * - over the plan: the discount bands of the relations (BandCheck), the deletions (DeletionCheck)
- *   and the listing changes (ListingCheck).
+ *   and the listing changes (ListingCheck); the order between related rooms after refusals
+ *   (RelationOrderCheck, when the context carries the relations).
  *
  * Floors are compared as the pricing system will apply them: a whole percentage over the base,
  * rounded up (PercentRounding).
@@ -106,7 +108,10 @@ final class Validator
         if ($context->bands !== null) {
             (new BandCheck($context->bands, $context->relationReport, $context->calendar, $log))->check($facts);
         }
-        (new DeletionCheck($this->calendar, $context->stay, $log))->check($plan->deletions, $byCode, $today);
+        if ($context->relations !== null) {
+            (new RelationOrderCheck($context->relations, $context->calendar, $context->relationReport, $today, $log))->check($facts);
+        }
+        (new DeletionCheck($this->calendar, $context->stay, $log, $authority))->check($plan->deletions, $byCode, $today);
         (new ListingCheck($this->rules, $authority, $log))->check($plan->listingChanges, $byCode, $context->weeklyReference, $today);
 
         $errors = $log->errors();

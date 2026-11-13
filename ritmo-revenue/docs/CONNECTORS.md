@@ -90,3 +90,37 @@ It logs every request (method, path, query, status), answers `GET /__log`, `POST
 | `InMemoryPmsConnector`, `InMemoryPricingConnector` | Connectors over data in memory with the contract's semantics, for tests of whatever consumes them; a conformance test holds them to the real connectors. |
 | `StaticConnectorSource` | The `Application\ConnectorSource` of the use-case tests: hands out the connectors it was given; a missing one is "not configured". |
 | `MemoryQuotaLedger`, `RecordingLogger`, `MovableClock`, `ClockSleeper` | Ledger, logger, clock (moved by hand, to the microsecond) and sleeper doubles, shared by every module's tests. |
+
+## 7. Writes (M3)
+
+A connector writes only when it was built with a write authority (the write gate of the run,
+`Contracts\WriteAuthority`) over an HTTP client that has a write door (`Contracts\WriteHttpClient`).
+Built without one (every read-only run, `ConnectorFactory` today), every write method throws
+`WriteBlocked` and nothing leaves. Every write goes the same way:
+
+1. the body is built from a whitelist, refusing anything else with `WriteBlocked` before any
+   request: `OverrideWriteBody` (date rules: floor and ceiling only as whole percentages of the
+   base, stay 1 to 30, both arrival/departure masks with their switch, reason, currency; never a
+   price, a fixed amount or an expiry; a call never repeats a date), `ListingUpdateBody` (min,
+   base, max in order) and `CalendarWriteBody` (PMS: availability and channel limits 0 to the units
+   of the room, stays 1 to 30 with min not above max, the five restrictions; never a key starting
+   with "price"; at most 100 ranges per call, grouped by room);
+2. the write authority is asked whether the token allows exactly that request (operation, targets,
+   nights, fields): a token forged, expired, revoked, stopped by the emergency switch or already
+   used for that step is refused;
+3. the request is sent once through the client's write door, which lets it through only on a
+   route of the `WriteRouteAllowList` (`PriceLabsConnector::WRITE_ROUTES`, `PriceLabsConnector::LISTING_ROUTE`
+   where listing changes are enabled, `Beds24Connector::CALENDAR_PATH`; a booking route cannot be
+   declared) and with a live token. The read door (`request()`) stays read-only.
+
+Answers: PriceLabs' 400 "Pricing data for this date isn't available yet" becomes `NotReady`; other
+failures keep the M1 mapping (`HttpFailure`). A Beds24 answer with `"success": false` for any room is
+a refusal. A 401 on a Beds24 write with a refresh token renews the access token and sends the same
+body once more; a second 401 stops. Writes are never repeated by `CreditAwareHttpClient` (a 429
+goes back to the caller, who stops). The routes and bodies of the recalculation (`POST /refresh_listing`
+with `listing_id` and `pms`) and of the listing change (`POST /listings`) follow the provider's
+documented calls but are not in the project's verified API notes yet (WRITE.md, D13).
+
+The simulator (`tests/fake-apis`) has a writable world, off by default: `POST /__writes` turns it
+on (`WriteWorld`, `PriceLabsWrites`, `Beds24Writes`), `GET /__writes` shows what was written and
+every write body received; faults take a mode (`apply_then_fail`, `drop_silently`, `delay`).

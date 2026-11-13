@@ -8,7 +8,6 @@ use PHPUnit\Framework\Attributes\PreserveGlobalState;
 use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 use ReflectionClass;
 use Ritmo\Connectors\Beds24\Beds24Credentials;
-use Ritmo\Contracts\Exception\NotAvailableInThisMilestone;
 use Ritmo\Contracts\Exception\WriteBlocked;
 use Ritmo\Contracts\WriteToken;
 use Ritmo\Domain\Support\Days;
@@ -50,8 +49,8 @@ final class ReadOnlyRoundTripTest extends SimulatorTestCase
         foreach ($writes as $write) {
             try {
                 $write();
-                self::fail('No write is available in this milestone.');
-            } catch (NotAvailableInThisMilestone) {
+                self::fail('A connector built without a write authority never writes.');
+            } catch (WriteBlocked) {
                 self::addToAssertionCount(1);
             }
         }

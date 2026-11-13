@@ -47,6 +47,18 @@ final class Scenario
     }
 
     /**
+     * The same world with what a write run stored: the date rules of each listing and the values
+     * written to the PMS calendar (room id => night => values).
+     *
+     * @param array<string, list<array<string, mixed>>>             $overrides
+     * @param array<string, array<string, array<string, mixed>>>    $calendar
+     */
+    public function withWrites(array $overrides, array $calendar): self
+    {
+        return new self(['overrides' => $overrides, 'calendar_writes' => $calendar] + $this->data);
+    }
+
+    /**
      * @return array<string, mixed>
      */
     public function beds24(): array
@@ -161,7 +173,9 @@ final class Scenario
      */
     public function available(array $room, string $night): int
     {
-        return $room['units'] - $this->unitsTaken($room['room_id'], $night, self::TAKES_INVENTORY);
+        $written = $this->data['calendar_writes'][(string) $room['room_id']][$night]['numAvail'] ?? null;
+
+        return ($written ?? $room['units']) - $this->unitsTaken($room['room_id'], $night, self::TAKES_INVENTORY);
     }
 
     /**
@@ -192,8 +206,9 @@ final class Scenario
             $day['maxStay'] = $rule['max_stay'] ?? $day['maxStay'];
             $day['override'] = $rule['override'] ?? $day['override'];
         }
+        $written = $this->data['calendar_writes'][(string) $room['room_id']][$night] ?? [];
 
-        return $day;
+        return array_intersect_key($written, $day) + $day;
     }
 
     /**

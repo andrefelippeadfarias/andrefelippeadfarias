@@ -10,7 +10,8 @@
  *   RITMO_FAKE_API_START  optional YYYY-MM-DD: moves the scenario so that its first night is that day
  *
  * The world it serves is tests/fixtures/api/scenario.json. Routes and the control plane are
- * described in Simulator.php. It answers reads only and never calls anything.
+ * described in Simulator.php. It answers reads only unless a test turns its writable world on
+ * (POST /__writes), and it never calls anything.
  */
 
 declare(strict_types=1);
@@ -22,6 +23,9 @@ require_once __DIR__ . '/Journal.php';
 require_once __DIR__ . '/Scenario.php';
 require_once __DIR__ . '/Beds24Api.php';
 require_once __DIR__ . '/PriceLabsApi.php';
+require_once __DIR__ . '/WriteWorld.php';
+require_once __DIR__ . '/PriceLabsWrites.php';
+require_once __DIR__ . '/Beds24Writes.php';
 require_once __DIR__ . '/Simulator.php';
 
 if (PHP_SAPI !== 'cli-server') {

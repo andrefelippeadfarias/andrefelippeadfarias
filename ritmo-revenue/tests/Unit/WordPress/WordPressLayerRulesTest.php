@@ -81,6 +81,9 @@ final class WordPressLayerRulesTest extends TestCase
         $writes = ['writeCalendar', 'writeOverrides', 'deleteOverrides', 'updateListing', 'requestRecalculation'];
         foreach (['Application', 'Admin', 'Rest', 'WordPress'] as $folder) {
             foreach (SourceScan::phpFiles(Fixtures::pluginRoot() . '/src/' . $folder) as $file) {
+                if (str_ends_with($file, '/Application/Write/Execute/StepSender.php')) {
+                    continue; // the one sender of the write path, under a token of the write gate (WRITE.md)
+                }
                 $source = (string) file_get_contents($file);
                 foreach ($writes as $write) {
                     self::assertStringNotContainsString('->' . $write . '(', $source, basename($file) . ' calls ' . $write);

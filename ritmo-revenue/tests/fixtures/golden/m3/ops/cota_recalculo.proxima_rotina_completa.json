@@ -1,0 +1,87 @@
+{
+ "function": "cota_recalculo.proxima_rotina_completa",
+ "php_target": "Ritmo\\Domain\\Operations\\SlotPlanner::nextFullAfter",
+ "notes": "The schedule is the one of tests/fixtures/presets/parity-ops.json (the reference's routines: full run and light runs at local times). inicio_rodada = latest slot at or before now (inclusive); proxima_rotina_completa = first full slot strictly after now.",
+ "cases": [
+  {
+   "name": "2026-11-12T10:52:59Z",
+   "input": {
+    "agora": "2026-11-12T10:52:59Z",
+    "fuso": "America/Sao_Paulo"
+   },
+   "expected": "2026-11-12T10:53:00Z"
+  },
+  {
+   "name": "2026-11-12T10:53:00Z",
+   "input": {
+    "agora": "2026-11-12T10:53:00Z",
+    "fuso": "America/Sao_Paulo"
+   },
+   "expected": "2026-11-13T10:53:00Z"
+  },
+  {
+   "name": "2026-11-12T13:53:00Z",
+   "input": {
+    "agora": "2026-11-12T13:53:00Z",
+    "fuso": "America/Sao_Paulo"
+   },
+   "expected": "2026-11-13T10:53:00Z"
+  },
+  {
+   "name": "2026-11-12T23:30:00Z",
+   "input": {
+    "agora": "2026-11-12T23:30:00Z",
+    "fuso": "America/Sao_Paulo"
+   },
+   "expected": "2026-11-13T10:53:00Z"
+  },
+  {
+   "name": "2026-11-13T02:59:00Z",
+   "input": {
+    "agora": "2026-11-13T02:59:00Z",
+    "fuso": "America/Sao_Paulo"
+   },
+   "expected": "2026-11-13T10:53:00Z"
+  },
+  {
+   "name": "2026-11-13T03:00:00Z",
+   "input": {
+    "agora": "2026-11-13T03:00:00Z",
+    "fuso": "America/Sao_Paulo"
+   },
+   "expected": "2026-11-13T10:53:00Z"
+  },
+  {
+   "name": "2026-11-13T22:53:00Z",
+   "input": {
+    "agora": "2026-11-13T22:53:00Z",
+    "fuso": "America/Sao_Paulo"
+   },
+   "expected": "2026-11-14T10:53:00Z"
+  },
+  {
+   "name": "2026-11-14T22:52:59Z",
+   "input": {
+    "agora": "2026-11-14T22:52:59Z",
+    "fuso": "America/Sao_Paulo"
+   },
+   "expected": "2026-11-15T10:53:00Z"
+  },
+  {
+   "name": "2026-12-31T23:59:59Z",
+   "input": {
+    "agora": "2026-12-31T23:59:59Z",
+    "fuso": "America/Sao_Paulo"
+   },
+   "expected": "2027-01-01T10:53:00Z"
+  },
+  {
+   "name": "2027-01-01T03:00:00Z",
+   "input": {
+    "agora": "2027-01-01T03:00:00Z",
+    "fuso": "America/Sao_Paulo"
+   },
+   "expected": "2027-01-01T10:53:00Z"
+  }
+ ]
+}

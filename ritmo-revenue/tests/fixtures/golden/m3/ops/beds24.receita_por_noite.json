@@ -1,0 +1,196 @@
+{
+ "function": "beds24.receita_por_noite",
+ "php_target": "Ritmo\\Connectors\\Beds24\\BookingMapper::map (total) + BookingRecord::nights()",
+ "notes": "The mapper implements this since M1; these cases pin it for the alerts. 'price_missing_is_zero': the reference gives 0.0, the mapper gives null; both mean 'no value' to the alerts.",
+ "cases": [
+  {
+   "name": "price_only",
+   "input": {
+    "id": 1,
+    "roomId": "9001",
+    "arrival": "2026-11-20",
+    "departure": "2026-11-22",
+    "status": "confirmed",
+    "channel": "booking",
+    "referer": "Booking.com",
+    "price": 840.0
+   },
+   "expected": {
+    "chegada": "2026-11-20",
+    "noites": 2,
+    "total": 840.0
+   }
+  },
+  {
+   "name": "invoice_charges_sum",
+   "input": {
+    "id": 2,
+    "roomId": "9001",
+    "arrival": "2026-11-20",
+    "departure": "2026-11-22",
+    "status": "confirmed",
+    "channel": "booking",
+    "referer": "Booking.com",
+    "price": 999.0,
+    "invoiceItems": [
+     {
+      "type": "charge",
+      "lineTotal": 300.0
+     },
+     {
+      "type": "charge",
+      "lineTotal": 320.5
+     },
+     {
+      "type": "payment",
+      "lineTotal": -620.5
+     }
+    ]
+   },
+   "expected": {
+    "chegada": "2026-11-20",
+    "noites": 2,
+    "total": 620.5
+   }
+  },
+  {
+   "name": "charge_of_other_invoicee_excluded",
+   "input": {
+    "id": 3,
+    "roomId": "9001",
+    "arrival": "2026-11-20",
+    "departure": "2026-11-22",
+    "status": "confirmed",
+    "channel": "booking",
+    "referer": "Booking.com",
+    "price": 0,
+    "invoiceItems": [
+     {
+      "type": "charge",
+      "lineTotal": 400.0
+     },
+     {
+      "type": "charge",
+      "lineTotal": 90.0,
+      "invoiceeId": 77
+     }
+    ]
+   },
+   "expected": {
+    "chegada": "2026-11-20",
+    "noites": 2,
+    "total": 400.0
+   }
+  },
+  {
+   "name": "amount_times_qty_without_line_total",
+   "input": {
+    "id": 4,
+    "roomId": "9001",
+    "arrival": "2026-11-20",
+    "departure": "2026-11-22",
+    "status": "confirmed",
+    "channel": "booking",
+    "referer": "Booking.com",
+    "price": 500.0,
+    "invoiceItems": [
+     {
+      "type": "Charge",
+      "amount": 250.0,
+      "qty": 2
+     }
+    ]
+   },
+   "expected": {
+    "chegada": "2026-11-20",
+    "noites": 2,
+    "total": 500.0
+   }
+  },
+  {
+   "name": "qty_zero_counts_as_one",
+   "input": {
+    "id": 5,
+    "roomId": "9001",
+    "arrival": "2026-11-20",
+    "departure": "2026-11-22",
+    "status": "confirmed",
+    "channel": "booking",
+    "referer": "Booking.com",
+    "price": 500.0,
+    "invoiceItems": [
+     {
+      "type": "charge",
+      "amount": 250.0,
+      "qty": 0
+     }
+    ]
+   },
+   "expected": {
+    "chegada": "2026-11-20",
+    "noites": 2,
+    "total": 250.0
+   }
+  },
+  {
+   "name": "same_day_departure_is_one_night",
+   "input": {
+    "id": 6,
+    "roomId": "9001",
+    "arrival": "2026-11-20",
+    "departure": "2026-11-20",
+    "status": "confirmed",
+    "channel": "booking",
+    "referer": "Booking.com",
+    "price": 300.0
+   },
+   "expected": {
+    "chegada": "2026-11-20",
+    "noites": 1,
+    "total": 300.0
+   }
+  },
+  {
+   "name": "no_charges_falls_back_to_price",
+   "input": {
+    "id": 7,
+    "roomId": "9001",
+    "arrival": "2026-11-20",
+    "departure": "2026-11-22",
+    "status": "confirmed",
+    "channel": "booking",
+    "referer": "Booking.com",
+    "price": 410.0,
+    "invoiceItems": [
+     {
+      "type": "payment",
+      "lineTotal": -410.0
+     }
+    ]
+   },
+   "expected": {
+    "chegada": "2026-11-20",
+    "noites": 2,
+    "total": 410.0
+   }
+  },
+  {
+   "name": "price_missing_is_zero",
+   "input": {
+    "id": 8,
+    "roomId": "9001",
+    "arrival": "2026-11-20",
+    "departure": "2026-11-22",
+    "status": "confirmed",
+    "channel": "booking",
+    "referer": "Booking.com",
+    "price": null
+   },
+   "expected": {
+    "chegada": "2026-11-20",
+    "noites": 2,
+    "total": 0.0
+   }
+  }
+ ]
+}

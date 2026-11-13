@@ -12,7 +12,7 @@ use Ritmo\Connectors\PriceLabs\PriceLabsConfig;
 use Ritmo\Connectors\PriceLabs\PriceLabsConnector;
 use Ritmo\Contracts\Exception\AuthFailed;
 use Ritmo\Contracts\Exception\ConnectorException;
-use Ritmo\Contracts\Exception\NotAvailableInThisMilestone;
+use Ritmo\Contracts\Exception\WriteBlocked;
 use Ritmo\Contracts\Exception\RateLimited;
 use Ritmo\Contracts\HttpResponse;
 use Ritmo\Contracts\WriteToken;
@@ -276,7 +276,7 @@ final class PriceLabsConnectorTest extends TestCase
         self::assertSame(60, PriceLabsConnector::REQUESTS_PER_MINUTE);
     }
 
-    public function testEveryWriteAndTheRecalculationAreNotAvailableAndSendNothing(): void
+    public function testAReadOnlyConnectorRefusesEveryWriteAndTheRecalculationAndSendsNothing(): void
     {
         $token = (new ReflectionClass(WriteToken::class))->newInstanceWithoutConstructor();
         $calls = [
@@ -289,8 +289,8 @@ final class PriceLabsConnectorTest extends TestCase
         foreach ($calls as $call) {
             try {
                 $call();
-                self::fail('Writing must not be available in this milestone.');
-            } catch (NotAvailableInThisMilestone) {
+                self::fail('A connector built without a write authority never writes.');
+            } catch (WriteBlocked) {
                 self::addToAssertionCount(1);
             }
         }

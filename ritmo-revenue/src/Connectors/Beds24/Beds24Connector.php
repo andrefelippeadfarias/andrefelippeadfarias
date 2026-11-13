@@ -9,26 +9,35 @@ use DateTimeZone;
 use Ritmo\Connectors\Support\Payload;
 use Ritmo\Contracts\ConnectionStatus;
 use Ritmo\Contracts\Exception\ConnectorException;
+use Ritmo\Contracts\Exception\WriteBlocked;
 use Ritmo\Contracts\HttpClient;
 use Ritmo\Contracts\Logger;
 use Ritmo\Contracts\PmsConnector;
-use Ritmo\Contracts\Support\PmsWritesUnavailable;
+use Ritmo\Contracts\WriteAuthority;
+use Ritmo\Contracts\WriteOperation;
+use Ritmo\Contracts\WriteRequest;
+use Ritmo\Contracts\WriteToken;
 use Ritmo\Domain\Model\BookingRecord;
 use Ritmo\Domain\Support\Clock;
 use Ritmo\Domain\Support\DateRange;
 use Ritmo\Domain\Support\Days;
 
 /**
- * Beds24 (API V2) as the PMS: bookings and the inventory calendar, read-only.
+ * Beds24 (API V2) as the PMS: bookings and the inventory calendar.
  *
- * Every request is a GET. Writing the calendar is not available in this milestone (the trait
- * throws), and bookings are never written by the plugin at all.
+ * Reads are GET. The only write is the calendar (CALENDAR_PATH): availability, stay, the
+ * arrival/departure restriction and channel limits, built from a whitelist (CalendarWriteBody),
+ * allowed by the write authority for exactly those rooms, nights and fields, and sent once. A
+ * price is never written here and bookings are never written by the plugin at all: there is no
+ * method for it and no booking route on the write allow-list. Without a write authority the
+ * connector is read-only.
  */
 final class Beds24Connector implements PmsConnector
 {
-    use PmsWritesUnavailable;
-
     public const ID = 'beds24';
+
+    /** The one write route, relative to the base URL. */
+    public const CALENDAR_PATH = '/inventory/rooms/calendar';
 
     public const BASE_URL = 'https://api.beds24.com/v2';
 
@@ -43,6 +52,7 @@ final class Beds24Connector implements PmsConnector
         private readonly Beds24Config $config,
         Clock $clock,
         Logger $logger,
+        private readonly ?WriteAuthority $authority = null,
     ) {
         $this->client = new Beds24Client($http, $config, $clock, $logger);
         $this->bookings = new BookingMapper($config->roomMap);
@@ -127,7 +137,7 @@ final class Beds24Connector implements PmsConnector
 
         // A room may come in more than one item (one per page); its ranges are put together first.
         $spans = array_fill_keys($roomIds, []);
-        foreach ($this->client->all('/inventory/rooms/calendar', $query) as $room) {
+        foreach ($this->client->all(self::CALENDAR_PATH, $query) as $room) {
             $roomId = Payload::text($room, 'roomId', 64);
             if (isset($spans[$roomId])) {
                 array_push($spans[$roomId], ...Payload::rows($room, 'calendar'));
@@ -135,6 +145,20 @@ final class Beds24Connector implements PmsConnector
         }
 
         return array_map(fn (array $calendar): array => $this->inventory->nights($calendar, $range), $spans);
+    }
+
+    /**
+     * @param list<array<string, mixed>> $changes ranges in the API's fields: roomId, from, to and the values to set
+     *                                         (numAvail, minStay, maxStay, override, channels)
+     */
+    public function writeCalendar(WriteToken $token, array $changes): void
+    {
+        $body = CalendarWriteBody::build($changes, $this->config->roomUnits);
+        if ($this->authority === null) {
+            throw WriteBlocked::forRequest('POST', self::CALENDAR_PATH, 'the connector was built read-only');
+        }
+        $this->authority->verify($token, new WriteRequest(WriteOperation::PmsCalendar, CalendarWriteBody::nights($body), CalendarWriteBody::fields($body)));
+        $this->client->post($token, self::CALENDAR_PATH, $body);
     }
 
     /**

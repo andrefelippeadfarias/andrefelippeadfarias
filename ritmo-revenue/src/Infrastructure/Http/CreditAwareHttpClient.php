@@ -4,8 +4,11 @@ declare(strict_types=1);
 
 namespace Ritmo\Infrastructure\Http;
 
+use Ritmo\Contracts\Exception\WriteBlocked;
 use Ritmo\Contracts\HttpClient;
 use Ritmo\Contracts\HttpResponse;
+use Ritmo\Contracts\WriteHttpClient;
+use Ritmo\Contracts\WriteToken;
 use Ritmo\Domain\Support\Clock;
 use Ritmo\Infrastructure\Support\Sleeper;
 
@@ -19,10 +22,12 @@ use Ritmo\Infrastructure\Support\Sleeper;
  *   announces none) and tries once more. The second 429 is returned to the caller. Other
  *   methods are never repeated here.
  *
+ * - A write waits for the credit the same way and is never repeated: a 429 goes back to the
+ *   caller, who stops (a write is sent once).
  * No wait is longer than the maximum. Waits go through the Sleeper and are reported by
  * waits(), so a run can say how long it stood still.
  */
-final class CreditAwareHttpClient implements HttpClient
+final class CreditAwareHttpClient implements WriteHttpClient
 {
     private ?float $remaining = null;
 
@@ -64,6 +69,18 @@ final class CreditAwareHttpClient implements HttpClient
         $this->remaining = null;
 
         $response = $this->inner->request($method, $url, $headers, $body, $timeout);
+        $this->note($response);
+
+        return $response;
+    }
+
+    public function write(WriteToken $token, string $method, string $url, array $headers = [], ?string $body = null, int $timeout = 30): HttpResponse
+    {
+        if (!$this->inner instanceof WriteHttpClient) {
+            throw WriteBlocked::forRequest($method, $url, 'the HTTP client of this connector is read-only');
+        }
+        $this->waitForCredit();
+        $response = $this->inner->write($token, $method, $url, $headers, $body, $timeout);
         $this->note($response);
 
         return $response;

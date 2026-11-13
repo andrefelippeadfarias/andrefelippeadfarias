@@ -1,0 +1,331 @@
+{
+ "function": "vigia_seguranca.classificar (cancellation waves)",
+ "php_target": "Ritmo\\Domain\\Write\\Hold\\CancellationWave::detect()",
+ "notes": "Per channel, every cancellation inside a window of N or more within H hours is marked; marked ones are grouped when consecutive ones are at most H apart. Only cancellations at or after `since` count.",
+ "cases": [
+  {
+   "name": "three_in_three_hours_is_a_wave",
+   "input": {
+    "bookings": [
+     {
+      "id": 1,
+      "roomId": 1,
+      "status": "cancelled",
+      "channel": "booking",
+      "referer": "Booking.com",
+      "bookingTime": "2026-10-01T10:00:00Z",
+      "modifiedTime": "2026-11-06T11:26:00Z",
+      "cancelTime": "2026-11-06T11:26:00Z",
+      "price": 500
+     },
+     {
+      "id": 2,
+      "roomId": 1,
+      "status": "cancelled",
+      "channel": "booking",
+      "referer": "Booking.com",
+      "bookingTime": "2026-10-01T10:00:00Z",
+      "modifiedTime": "2026-11-06T12:10:00Z",
+      "cancelTime": "2026-11-06T12:10:00Z",
+      "price": 500
+     },
+     {
+      "id": 3,
+      "roomId": 1,
+      "status": "cancelled",
+      "channel": "booking",
+      "referer": "Booking.com",
+      "bookingTime": "2026-10-01T10:00:00Z",
+      "modifiedTime": "2026-11-06T14:20:00Z",
+      "cancelTime": "2026-11-06T14:20:00Z",
+      "price": 500
+     }
+    ],
+    "since": "2026-11-06T06:00:00Z",
+    "min_count": 3,
+    "window_hours": 3
+   },
+   "expected": [
+    {
+     "channel": "booking",
+     "bookings": [
+      1,
+      2,
+      3
+     ]
+    }
+   ]
+  },
+  {
+   "name": "two_are_not_a_wave",
+   "input": {
+    "bookings": [
+     {
+      "id": 1,
+      "roomId": 1,
+      "status": "cancelled",
+      "channel": "booking",
+      "referer": "Booking.com",
+      "bookingTime": "2026-10-01T10:00:00Z",
+      "modifiedTime": "2026-11-06T11:26:00Z",
+      "cancelTime": "2026-11-06T11:26:00Z",
+      "price": 500
+     },
+     {
+      "id": 2,
+      "roomId": 1,
+      "status": "cancelled",
+      "channel": "booking",
+      "referer": "Booking.com",
+      "bookingTime": "2026-10-01T10:00:00Z",
+      "modifiedTime": "2026-11-06T12:10:00Z",
+      "cancelTime": "2026-11-06T12:10:00Z",
+      "price": 500
+     }
+    ],
+    "since": "2026-11-06T06:00:00Z",
+    "min_count": 3,
+    "window_hours": 3
+   },
+   "expected": []
+  },
+  {
+   "name": "three_spread_over_more_than_three_hours",
+   "input": {
+    "bookings": [
+     {
+      "id": 1,
+      "roomId": 1,
+      "status": "cancelled",
+      "channel": "booking",
+      "referer": "Booking.com",
+      "bookingTime": "2026-10-01T10:00:00Z",
+      "modifiedTime": "2026-11-06T08:00:00Z",
+      "cancelTime": "2026-11-06T08:00:00Z",
+      "price": 500
+     },
+     {
+      "id": 2,
+      "roomId": 1,
+      "status": "cancelled",
+      "channel": "booking",
+      "referer": "Booking.com",
+      "bookingTime": "2026-10-01T10:00:00Z",
+      "modifiedTime": "2026-11-06T10:00:00Z",
+      "cancelTime": "2026-11-06T10:00:00Z",
+      "price": 500
+     },
+     {
+      "id": 3,
+      "roomId": 1,
+      "status": "cancelled",
+      "channel": "booking",
+      "referer": "Booking.com",
+      "bookingTime": "2026-10-01T10:00:00Z",
+      "modifiedTime": "2026-11-06T11:30:00Z",
+      "cancelTime": "2026-11-06T11:30:00Z",
+      "price": 500
+     }
+    ],
+    "since": "2026-11-06T06:00:00Z",
+    "min_count": 3,
+    "window_hours": 3
+   },
+   "expected": []
+  },
+  {
+   "name": "channels_count_apart",
+   "input": {
+    "bookings": [
+     {
+      "id": 1,
+      "roomId": 1,
+      "status": "cancelled",
+      "channel": "booking",
+      "referer": "Booking.com",
+      "bookingTime": "2026-10-01T10:00:00Z",
+      "modifiedTime": "2026-11-06T11:26:00Z",
+      "cancelTime": "2026-11-06T11:26:00Z",
+      "price": 500
+     },
+     {
+      "id": 2,
+      "roomId": 1,
+      "status": "cancelled",
+      "channel": "airbnb",
+      "referer": "Booking.com",
+      "bookingTime": "2026-10-01T10:00:00Z",
+      "modifiedTime": "2026-11-06T11:40:00Z",
+      "cancelTime": "2026-11-06T11:40:00Z",
+      "price": 500
+     },
+     {
+      "id": 3,
+      "roomId": 1,
+      "status": "cancelled",
+      "channel": "booking",
+      "referer": "Booking.com",
+      "bookingTime": "2026-10-01T10:00:00Z",
+      "modifiedTime": "2026-11-06T12:00:00Z",
+      "cancelTime": "2026-11-06T12:00:00Z",
+      "price": 500
+     }
+    ],
+    "since": "2026-11-06T06:00:00Z",
+    "min_count": 3,
+    "window_hours": 3
+   },
+   "expected": []
+  },
+  {
+   "name": "two_waves_in_one_run",
+   "input": {
+    "bookings": [
+     {
+      "id": 0,
+      "roomId": 1,
+      "status": "cancelled",
+      "channel": "booking",
+      "referer": "Booking.com",
+      "bookingTime": "2026-10-01T10:00:00Z",
+      "modifiedTime": "2026-11-06T08:00:00Z",
+      "cancelTime": "2026-11-06T08:00:00Z",
+      "price": 500
+     },
+     {
+      "id": 1,
+      "roomId": 1,
+      "status": "cancelled",
+      "channel": "booking",
+      "referer": "Booking.com",
+      "bookingTime": "2026-10-01T10:00:00Z",
+      "modifiedTime": "2026-11-06T08:10:00Z",
+      "cancelTime": "2026-11-06T08:10:00Z",
+      "price": 500
+     },
+     {
+      "id": 2,
+      "roomId": 1,
+      "status": "cancelled",
+      "channel": "booking",
+      "referer": "Booking.com",
+      "bookingTime": "2026-10-01T10:00:00Z",
+      "modifiedTime": "2026-11-06T08:20:00Z",
+      "cancelTime": "2026-11-06T08:20:00Z",
+      "price": 500
+     },
+     {
+      "id": 3,
+      "roomId": 1,
+      "status": "cancelled",
+      "channel": "booking",
+      "referer": "Booking.com",
+      "bookingTime": "2026-10-01T10:00:00Z",
+      "modifiedTime": "2026-11-06T13:00:00Z",
+      "cancelTime": "2026-11-06T13:00:00Z",
+      "price": 500
+     },
+     {
+      "id": 4,
+      "roomId": 1,
+      "status": "cancelled",
+      "channel": "booking",
+      "referer": "Booking.com",
+      "bookingTime": "2026-10-01T10:00:00Z",
+      "modifiedTime": "2026-11-06T13:05:00Z",
+      "cancelTime": "2026-11-06T13:05:00Z",
+      "price": 500
+     },
+     {
+      "id": 5,
+      "roomId": 1,
+      "status": "cancelled",
+      "channel": "booking",
+      "referer": "Booking.com",
+      "bookingTime": "2026-10-01T10:00:00Z",
+      "modifiedTime": "2026-11-06T13:30:00Z",
+      "cancelTime": "2026-11-06T13:30:00Z",
+      "price": 500
+     },
+     {
+      "id": 6,
+      "roomId": 1,
+      "status": "cancelled",
+      "channel": "booking",
+      "referer": "Booking.com",
+      "bookingTime": "2026-10-01T10:00:00Z",
+      "modifiedTime": "2026-11-06T14:00:00Z",
+      "cancelTime": "2026-11-06T14:00:00Z",
+      "price": 500
+     }
+    ],
+    "since": "2026-11-06T06:00:00Z",
+    "min_count": 3,
+    "window_hours": 3
+   },
+   "expected": [
+    {
+     "channel": "booking",
+     "bookings": [
+      0,
+      1,
+      2
+     ]
+    },
+    {
+     "channel": "booking",
+     "bookings": [
+      3,
+      4,
+      5,
+      6
+     ]
+    }
+   ]
+  },
+  {
+   "name": "cancellation_before_since_is_ignored",
+   "input": {
+    "bookings": [
+     {
+      "id": 1,
+      "roomId": 1,
+      "status": "cancelled",
+      "channel": "booking",
+      "referer": "Booking.com",
+      "bookingTime": "2026-10-01T10:00:00Z",
+      "modifiedTime": "2026-11-06T05:00:00Z",
+      "cancelTime": "2026-11-06T05:00:00Z",
+      "price": 500
+     },
+     {
+      "id": 2,
+      "roomId": 1,
+      "status": "cancelled",
+      "channel": "booking",
+      "referer": "Booking.com",
+      "bookingTime": "2026-10-01T10:00:00Z",
+      "modifiedTime": "2026-11-06T11:00:00Z",
+      "cancelTime": "2026-11-06T11:00:00Z",
+      "price": 500
+     },
+     {
+      "id": 3,
+      "roomId": 1,
+      "status": "cancelled",
+      "channel": "booking",
+      "referer": "Booking.com",
+      "bookingTime": "2026-10-01T10:00:00Z",
+      "modifiedTime": "2026-11-06T11:30:00Z",
+      "cancelTime": "2026-11-06T11:30:00Z",
+      "price": 500
+     }
+    ],
+    "since": "2026-11-06T06:00:00Z",
+    "min_count": 3,
+    "window_hours": 3
+   },
+   "expected": []
+  }
+ ]
+}

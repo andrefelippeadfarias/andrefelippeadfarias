@@ -1,0 +1,159 @@
+{
+ "function": "beds24.corpo_edicao",
+ "php_target": "Ritmo\\Connectors\\Beds24\\CalendarWriteBody::build()",
+ "notes": "Only availability (0..units), minimum and maximum stay (1..30, min <= max), arrival/departure restriction (none, blackout, noCheckIn, noCheckOut, noCheckInOrCheckOut) and per-channel limits (booking, expedia, airbnb; sent as text, null lifts the limit). Never a price. Room codes and unit counts are the reference's (fixtures only).",
+ "cases": [
+  {
+   "name": "min_stay_and_override",
+   "input": {
+    "curto": "Q7",
+    "de": "2026-11-21",
+    "ate": "2026-11-21",
+    "min_stay": 2,
+    "override": "noCheckInOrCheckOut",
+    "room_id": "722805",
+    "units": 7
+   },
+   "expected": {
+    "calendar": [
+     {
+      "from": "2026-11-21",
+      "to": "2026-11-21",
+      "minStay": 2,
+      "override": "noCheckInOrCheckOut"
+     }
+    ]
+   }
+  },
+  {
+   "name": "min_above_max_refused",
+   "input": {
+    "curto": "Q7",
+    "de": "2026-12-23",
+    "ate": "2026-12-24",
+    "min_stay": 3,
+    "max_stay": 2,
+    "room_id": "722805",
+    "units": 7
+   },
+   "expected": {
+    "refused": true
+   }
+  },
+  {
+   "name": "stay_out_of_range_refused",
+   "input": {
+    "curto": "Q7",
+    "de": "2026-12-23",
+    "ate": "2026-12-24",
+    "min_stay": 31,
+    "room_id": "722805",
+    "units": 7
+   },
+   "expected": {
+    "refused": true
+   }
+  },
+  {
+   "name": "unknown_restriction_refused",
+   "input": {
+    "curto": "Q7",
+    "de": "2026-12-23",
+    "ate": "2026-12-24",
+    "override": "closed",
+    "room_id": "722805",
+    "units": 7
+   },
+   "expected": {
+    "refused": true
+   }
+  },
+  {
+   "name": "availability_above_units_refused",
+   "input": {
+    "curto": "Q2",
+    "de": "2026-12-23",
+    "ate": "2026-12-24",
+    "num_avail": 3,
+    "room_id": "722808",
+    "units": 2
+   },
+   "expected": {
+    "refused": true
+   }
+  },
+  {
+   "name": "channel_limit_written_as_text",
+   "input": {
+    "curto": "Q2",
+    "de": "2026-12-23",
+    "ate": "2026-12-24",
+    "canais_max": {
+     "booking": 0,
+     "airbnb": null
+    },
+    "room_id": "722808",
+    "units": 2
+   },
+   "expected": {
+    "calendar": [
+     {
+      "from": "2026-12-23",
+      "to": "2026-12-24",
+      "channels": {
+       "booking": {
+        "maxBookings": "0"
+       },
+       "airbnb": {
+        "maxBookings": null
+       }
+      }
+     }
+    ]
+   }
+  },
+  {
+   "name": "unknown_channel_refused",
+   "input": {
+    "curto": "Q2",
+    "de": "2026-12-23",
+    "ate": "2026-12-24",
+    "canais_max": {
+     "vrbo": 0
+    },
+    "room_id": "722808",
+    "units": 2
+   },
+   "expected": {
+    "refused": true
+   }
+  },
+  {
+   "name": "nothing_to_change_refused",
+   "input": {
+    "curto": "Q2",
+    "de": "2026-12-23",
+    "ate": "2026-12-24",
+    "room_id": "722808",
+    "units": 2
+   },
+   "expected": {
+    "refused": true
+   }
+  },
+  {
+   "name": "end_before_start_refused",
+   "input": {
+    "curto": "Q2",
+    "de": "2026-12-24",
+    "ate": "2026-12-23",
+    "min_stay": 2,
+    "room_id": "722808",
+    "units": 2
+   },
+   "expected": {
+    "refused": true
+   }
+  }
+ ]
+}

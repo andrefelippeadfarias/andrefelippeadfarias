@@ -1,0 +1,55 @@
+{
+ "function": "ler_recalculo.tolerancia_percentual",
+ "php_target": "Ritmo\\Domain\\Write\\Confirm\\PercentSlack::of()",
+ "notes": "Slack of a floor/ceiling written as a whole percentage of the base: max(1.5 % of the value, 1 % of max(value, base) + 1, 1).",
+ "cases": [
+  {
+   "name": "value_744_base_1480",
+   "input": {
+    "value": 744,
+    "base": 1480
+   },
+   "expected": 15.8
+  },
+  {
+   "name": "value_1000_base_1000",
+   "input": {
+    "value": 1000,
+    "base": 1000
+   },
+   "expected": 15.0
+  },
+  {
+   "name": "value_2000_base_900",
+   "input": {
+    "value": 2000,
+    "base": 900
+   },
+   "expected": 30.0
+  },
+  {
+   "name": "value_50_base_0",
+   "input": {
+    "value": 50,
+    "base": 0
+   },
+   "expected": 1.5
+  },
+  {
+   "name": "value_0_base_0",
+   "input": {
+    "value": 0,
+    "base": 0
+   },
+   "expected": 1.0
+  },
+  {
+   "name": "value_1569_base_1480",
+   "input": {
+    "value": 1569,
+    "base": 1480
+   },
+   "expected": 23.535
+  }
+ ]
+}

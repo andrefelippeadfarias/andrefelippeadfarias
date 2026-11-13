@@ -10,13 +10,15 @@ use DateTimeZone;
 /**
  * The read side of the Beds24 API V2 in its real response format: the token exchange,
  * /properties, /bookings (filters and pages) and /inventory/rooms/calendar (ranges of equal
- * days). Anything that is not a GET is refused with 405: the simulator never changes.
+ * days). Anything that is not a GET is refused with 405 while the writable world is off; with it
+ * on, an authorised write goes to Beds24Writes.
  */
 final class Beds24Api
 {
     public function __construct(
         private readonly Scenario $scenario,
         private readonly Journal $journal,
+        private readonly ?WriteWorld $world = null,
     ) {
     }
 
@@ -24,9 +26,9 @@ final class Beds24Api
      * @param array<string, list<string>> $query
      * @param array<string, string>       $headers request headers, names in lowercase
      */
-    public function handle(string $method, string $path, array $query, array $headers): Reply
+    public function handle(string $method, string $path, array $query, array $headers, string $body = ''): Reply
     {
-        $reply = $this->route($method, $path, $query, $headers);
+        $reply = $this->route($method, $path, $query, $headers, $body);
 
         return $reply->withHeaders($this->creditHeaders());
     }
@@ -35,10 +37,14 @@ final class Beds24Api
      * @param array<string, list<string>> $query
      * @param array<string, string>       $headers
      */
-    private function route(string $method, string $path, array $query, array $headers): Reply
+    private function route(string $method, string $path, array $query, array $headers, string $body): Reply
     {
         if ($method !== 'GET') {
-            return self::error(405, 'The simulator is read-only.');
+            if ($this->world === null || !$this->world->enabled()) {
+                return self::error(405, 'The simulator is read-only.');
+            }
+
+            return $this->authorised($headers) ? (new Beds24Writes($this->scenario, $this->world))->handle($method, $path, $body) : self::error(401, 'Token is missing or not valid.');
         }
         if ($path === '/authentication/token') {
             return $this->token($headers);

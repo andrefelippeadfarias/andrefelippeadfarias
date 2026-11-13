@@ -1,0 +1,28 @@
+{
+  "_doc": "Parity values of the write path (M3, write area) for the reference operation. The integration merges them into tests/fixtures/presets/parity.json. run_schedule is the reference's routine schedule, used only by the quota golden test to derive the run start and the next full run of each case.",
+  "write": {
+    "max_read_age_minutes": 30,
+    "max_validation_age_minutes": 10,
+    "token_ttl_minutes": 15,
+    "horizon_days": 365,
+    "horizon_edge_days": 2,
+    "max_identical_refusals": 2,
+    "listing_changes_enabled": true,
+    "pms_max_ranges_per_post": 100,
+    "call_timeout_seconds": 300,
+    "max_dates_per_call": 70
+  },
+  "quota": {
+    "per_listing": 3,
+    "window_hours": 24,
+    "per_account_per_minute": 10,
+    "account_wait_after_429_seconds": 60,
+    "future_slack_seconds": 300,
+    "failure_cooldown_minutes": 0
+  },
+  "run_schedule": {
+    "timezone": "America/Sao_Paulo",
+    "routines": ["07:53", "10:53", "13:53", "16:53", "19:53"],
+    "full_run": "07:53"
+  }
+}

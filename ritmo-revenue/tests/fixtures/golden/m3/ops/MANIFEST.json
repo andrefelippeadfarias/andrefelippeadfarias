@@ -1,0 +1,21 @@
+{
+ "generated_at": "2026-11-12",
+ "repo_commit": "19fec669564f23d420c99616bf659044ba46f8d5",
+ "engine": ".claude/skills/gestao-receita-pousadas/scripts",
+ "engine_commit": "036acfa9db12515ac92461345c0ae1e10ef369fa",
+ "engine_dirty": false,
+ "python": "3.11.17",
+ "tolerance": {
+  "amounts": 0.01,
+  "percentages_and_integers": "exact"
+ },
+ "files": {
+  "beds24.alterada_desde.json": 5,
+  "beds24.movimento_de.json": 7,
+  "beds24.receita_por_noite.json": 8,
+  "cota_recalculo.inicio_rodada.json": 10,
+  "cota_recalculo.proxima_rotina_completa.json": 10,
+  "reservas_abaixo.avaliar.json": 13,
+  "vigia_seguranca.classificar.json": 17
+ }
+}

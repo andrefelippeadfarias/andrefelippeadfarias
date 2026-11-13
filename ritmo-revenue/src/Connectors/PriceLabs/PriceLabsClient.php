@@ -8,23 +8,30 @@ use Ritmo\Connectors\Support\HttpFailure;
 use Ritmo\Connectors\Support\Query;
 use Ritmo\Connectors\Support\RequestBudget;
 use Ritmo\Contracts\Exception\ConnectorException;
+use Ritmo\Contracts\Exception\NotReady;
+use Ritmo\Contracts\Exception\WriteBlocked;
 use Ritmo\Contracts\HttpClient;
 use Ritmo\Contracts\HttpResponse;
 use Ritmo\Contracts\Logger;
+use Ritmo\Contracts\WriteHttpClient;
+use Ritmo\Contracts\WriteToken;
 
 /**
  * The HTTP conversation with the PriceLabs Customer API: the key header, the hourly budget and
  * the meaning of each status.
  *
  * It can send a GET to any path of the API and one POST, to the calendar read
- * (PriceLabsConnector::PRICES_PATH), which changes nothing in the account. There is no other
- * way to send a request through this class.
+ * (PriceLabsConnector::PRICES_PATH), which changes nothing in the account. Writes go only
+ * through write(), under a write token, and only when the HTTP client it was given can write.
  */
 final class PriceLabsClient
 {
     private const LABEL = 'PriceLabs';
 
     private const TIMEOUT_SECONDS = 120;
+
+    /** What the API answers (400) for a date it has not priced yet; matched without case. */
+    private const NOT_READY_PATTERN = '/(isn\'t|is not|not) available yet/i';
 
     public function __construct(
         private readonly HttpClient $http,
@@ -60,6 +67,51 @@ final class PriceLabsClient
         $path = PriceLabsConnector::PRICES_PATH;
 
         return $this->send('POST', $path, $this->config->baseUrl . $path, json_encode($parameters, JSON_THROW_ON_ERROR));
+    }
+
+    /**
+     * One write, sent once (never repeated here: a lost answer leaves the outcome unknown and the
+     * caller re-reads before anything is sent again).
+     *
+     * @param array<string, mixed> $body
+     *
+     * @return array<int|string, mixed> the decoded answer; empty for an empty answer (204)
+     *
+     * @throws WriteBlocked       when this client cannot write or the guard refuses the request
+     * @throws NotReady           on the 400 of a date the pricing system has not priced yet
+     * @throws ConnectorException on any other failure (status, timeout)
+     */
+    public function write(WriteToken $token, string $method, string $path, array $body): array
+    {
+        if (!$this->http instanceof WriteHttpClient) {
+            throw WriteBlocked::forRequest($method, $path, 'the PriceLabs connector was built read-only');
+        }
+        $operation = $method . ' ' . $path;
+        $headers = ['X-API-Key' => $this->config->apiKey(), 'Accept' => 'application/json', 'Content-Type' => 'application/json'];
+
+        $this->budget->assertOpen();
+        try {
+            $response = $this->http->write($token, $method, $this->config->baseUrl . $path, $headers, json_encode($body, JSON_THROW_ON_ERROR), self::TIMEOUT_SECONDS);
+        } catch (ConnectorException $e) {
+            $this->budget->record(false);
+
+            throw $e;
+        }
+        $this->budget->record($response->isSuccess());
+        $this->logger->info('PriceLabs write finished.', [
+            'provider' => PriceLabsConnector::ID,
+            'operation' => $operation,
+            'http_status' => $response->status(),
+        ]);
+
+        if ($response->status() === 400 && preg_match(self::NOT_READY_PATTERN, $response->body()) === 1) {
+            throw new NotReady(sprintf('PriceLabs has no pricing data yet for a date of %s (HTTP 400).', $operation), PriceLabsConnector::ID, 400);
+        }
+        if ($response->isSuccess() && trim($response->body()) === '') {
+            return [];
+        }
+
+        return $this->decode($response, $operation);
     }
 
     /**

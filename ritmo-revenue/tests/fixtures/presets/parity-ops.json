@@ -1,0 +1,44 @@
+{
+ "_doc": "Parity values of the operations area (M3: scheduler, light run, alerts) for the reference operation. The integration merges them into tests/fixtures/presets/parity.json (sections schedule, light_run and alerts; the operations spec nests them under 'operations'). The schedule is the reference's routines in the property's timezone; the channel factors are keyed by the parity preset's property ids.",
+ "schedule": {
+  "full_time": "07:53",
+  "light_times": ["10:53", "13:53", "16:53", "19:53"],
+  "min_spacing_minutes": 60,
+  "late_tolerance_minutes": 30,
+  "retry_failed_after_minutes": 15,
+  "run_budget_seconds": 20,
+  "tick_budget_seconds": 40,
+  "max_movement_lookback_days": 30,
+  "stalled_after_minutes": 20,
+  "stop_reads_under_emergency": false
+ },
+ "light_run": {
+  "movement_overlap_minutes": 5,
+  "initial_lookback_hours": 24,
+  "protect_flip_days": 1,
+  "orphan_window_days": 7,
+  "read_rules_without_movement": false,
+  "read_listing_status": true
+ },
+ "alerts": {
+  "security": {
+   "enabled": true,
+   "origins_confirmed": true,
+   "zero_value": true
+  },
+  "below_expected": {
+   "enabled": true,
+   "threshold": 0.7,
+   "critical_threshold": 0.5,
+   "default_factor": 1.0,
+   "price_basis": "current",
+   "channel_factors": {
+    "recanto": {"booking": 0.49, "airbnb": 0.41, "direct": 1.0},
+    "villa": {"booking": 0.46, "airbnb": 0.31, "direct": 1.0}
+   }
+  },
+  "inventory_max_nights_listed": 50,
+  "connector_down_escalate_runs": 3
+ },
+ "timezone": "America/Sao_Paulo"
+}

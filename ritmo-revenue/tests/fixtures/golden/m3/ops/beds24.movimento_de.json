@@ -1,0 +1,190 @@
+{
+ "function": "beds24.movimento_de",
+ "php_target": "Ritmo\\Domain\\Operations\\MovementClassifier::classify",
+ "notes": "The reference compares ISO strings; the plugin compares instants (identical for these second-precision UTC inputs). Kinds: nova -> new, alterada -> modified, cancelada -> cancelled. Status 'black' is BookingStatus::Blocked in the plugin.",
+ "cases": [
+  {
+   "name": "booking_201",
+   "input": {
+    "reserva": {
+     "id": 201,
+     "roomId": "9001",
+     "arrival": "2026-11-20",
+     "departure": "2026-11-22",
+     "status": "confirmed",
+     "channel": "booking",
+     "referer": "Booking.com",
+     "price": 500.0,
+     "bookingTime": "2026-11-10T14:00:00Z",
+     "modifiedTime": "2026-11-10T14:00:00Z"
+    },
+    "desde": "2026-11-10T13:40:00Z"
+   },
+   "expected": {
+    "tipo": "nova",
+    "id": 201,
+    "status": "confirmed",
+    "chegada": "2026-11-20",
+    "noites": 2,
+    "receita": 500.0
+   }
+  },
+  {
+   "name": "booking_202",
+   "input": {
+    "reserva": {
+     "id": 202,
+     "roomId": "9001",
+     "arrival": "2026-11-20",
+     "departure": "2026-11-22",
+     "status": "confirmed",
+     "channel": "booking",
+     "referer": "Booking.com",
+     "price": 500.0,
+     "bookingTime": "2026-11-01T10:00:00Z",
+     "modifiedTime": "2026-11-10T15:00:00Z"
+    },
+    "desde": "2026-11-10T13:40:00Z"
+   },
+   "expected": {
+    "tipo": "alterada",
+    "id": 202,
+    "status": "confirmed",
+    "chegada": "2026-11-20",
+    "noites": 2,
+    "receita": 500.0
+   }
+  },
+  {
+   "name": "booking_203",
+   "input": {
+    "reserva": {
+     "id": 203,
+     "roomId": "9001",
+     "arrival": "2026-11-20",
+     "departure": "2026-11-22",
+     "status": "cancelled",
+     "channel": "booking",
+     "referer": "Booking.com",
+     "price": 500.0,
+     "bookingTime": "2026-11-01T10:00:00Z",
+     "modifiedTime": "2026-11-10T15:10:00Z",
+     "cancelTime": "2026-11-10T15:10:00Z"
+    },
+    "desde": "2026-11-10T13:40:00Z"
+   },
+   "expected": {
+    "tipo": "cancelada",
+    "id": 203,
+    "status": "cancelled",
+    "chegada": "2026-11-20",
+    "noites": 2,
+    "receita": 500.0
+   }
+  },
+  {
+   "name": "booking_204",
+   "input": {
+    "reserva": {
+     "id": 204,
+     "roomId": "9001",
+     "arrival": "2026-11-20",
+     "departure": "2026-11-22",
+     "status": "cancelled",
+     "channel": "booking",
+     "referer": "Booking.com",
+     "price": 500.0,
+     "bookingTime": "2026-11-10T13:50:00Z",
+     "modifiedTime": "2026-11-10T14:30:00Z",
+     "cancelTime": "2026-11-09T10:00:00Z"
+    },
+    "desde": "2026-11-10T13:40:00Z"
+   },
+   "expected": {
+    "tipo": "nova",
+    "id": 204,
+    "status": "cancelled",
+    "chegada": "2026-11-20",
+    "noites": 2,
+    "receita": 500.0
+   }
+  },
+  {
+   "name": "booking_205",
+   "input": {
+    "reserva": {
+     "id": 205,
+     "roomId": "9001",
+     "arrival": "2026-11-20",
+     "departure": "2026-11-22",
+     "status": "black",
+     "channel": "",
+     "referer": "",
+     "price": 0,
+     "bookingTime": "2026-11-10T16:00:00Z"
+    },
+    "desde": "2026-11-10T13:40:00Z"
+   },
+   "expected": {
+    "tipo": "nova",
+    "id": 205,
+    "status": "black",
+    "chegada": "2026-11-20",
+    "noites": 2,
+    "receita": 0.0
+   }
+  },
+  {
+   "name": "booking_206",
+   "input": {
+    "reserva": {
+     "id": 206,
+     "roomId": "9001",
+     "arrival": "2026-11-20",
+     "departure": "2026-11-22",
+     "status": "confirmed",
+     "channel": "booking",
+     "referer": "Booking.com",
+     "price": 500.0,
+     "bookingTime": "2026-11-10T13:40:00Z",
+     "modifiedTime": "2026-11-10T13:40:00Z"
+    },
+    "desde": "2026-11-10T13:40:00Z"
+   },
+   "expected": {
+    "tipo": "nova",
+    "id": 206,
+    "status": "confirmed",
+    "chegada": "2026-11-20",
+    "noites": 2,
+    "receita": 500.0
+   }
+  },
+  {
+   "name": "booking_207",
+   "input": {
+    "reserva": {
+     "id": 207,
+     "roomId": "9001",
+     "arrival": "2026-11-20",
+     "departure": "2026-11-22",
+     "status": "cancelled",
+     "channel": "booking",
+     "referer": "Booking.com",
+     "price": 500.0,
+     "bookingTime": "2026-11-01T10:00:00Z",
+     "modifiedTime": "2026-11-10T13:50:00Z"
+    },
+    "desde": "2026-11-10T13:40:00Z"
+   },
+   "expected": {
+    "tipo": "alterada",
+    "id": 207,
+    "status": "cancelled",
+    "chegada": "2026-11-20",
+    "noites": 2,
+    "receita": 500.0
+   }
+  }
+ ]
+}

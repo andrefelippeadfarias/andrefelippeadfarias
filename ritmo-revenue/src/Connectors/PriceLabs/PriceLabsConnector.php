@@ -11,11 +11,15 @@ use Ritmo\Connectors\Support\Payload;
 use Ritmo\Connectors\Support\RequestBudget;
 use Ritmo\Contracts\ConnectionStatus;
 use Ritmo\Contracts\Exception\ConnectorException;
+use Ritmo\Contracts\Exception\WriteBlocked;
 use Ritmo\Contracts\HttpClient;
 use Ritmo\Contracts\Logger;
 use Ritmo\Contracts\PricingConnector;
 use Ritmo\Contracts\QuotaLedger;
-use Ritmo\Contracts\Support\PricingWritesUnavailable;
+use Ritmo\Contracts\WriteAuthority;
+use Ritmo\Contracts\WriteOperation;
+use Ritmo\Contracts\WriteRequest;
+use Ritmo\Contracts\WriteToken;
 use Ritmo\Domain\Model\DateOverride;
 use Ritmo\Domain\Model\ListingInfo;
 use Ritmo\Domain\Model\PriceNight;
@@ -25,11 +29,14 @@ use Ritmo\Domain\Support\Days;
 
 /**
  * PriceLabs (Customer API) as the pricing system: the listing directory, the price calendar
- * and the date-specific overrides, read-only.
+ * and the date-specific overrides; and, for a write run, the date rules, their deletion, a
+ * recalculation and a listing change.
  *
  * The calendar read is a POST by the API's design (PRICES_PATH); it changes nothing in the
- * account. Every method that would change something (overrides, listing settings, a
- * recalculation) comes from the trait and throws in this milestone.
+ * account. Every write builds its body from a whitelist (OverrideWriteBody, ListingUpdateBody),
+ * then asks the write authority (the write gate's live registry) whether the token allows exactly
+ * that request, and only then sends it once through the HTTP client's write door. A connector
+ * built without a write authority is read-only: every write method throws WriteBlocked.
  *
  * Limits of the API: REQUESTS_PER_MINUTE and REQUESTS_PER_HOUR. The hourly limit is enforced
  * here through the quota ledger, so it holds across runs. The per-minute limit is paced by the
@@ -38,8 +45,6 @@ use Ritmo\Domain\Support\Days;
  */
 final class PriceLabsConnector implements PricingConnector
 {
-    use PricingWritesUnavailable;
-
     public const ID = 'pricelabs';
 
     public const BASE_URL = 'https://api.pricelabs.co/v1';
@@ -50,6 +55,14 @@ final class PriceLabsConnector implements PricingConnector
     public const REQUESTS_PER_MINUTE = 60;
 
     public const REQUESTS_PER_HOUR = 1000;
+
+    /** Write routes, relative to the base URL, for WriteRouteAllowList ("{id}" is the listing id). */
+    public const WRITE_ROUTES = [['POST', '/listings/{id}/overrides'], ['DELETE', '/listings/{id}/overrides'], ['POST', self::RECALCULATION_PATH]];
+
+    /** The listing change route: on the allow-list only where listing changes are enabled. */
+    public const LISTING_ROUTE = ['POST', '/listings'];
+
+    public const RECALCULATION_PATH = '/refresh_listing';
 
     private const LABEL = 'PriceLabs';
 
@@ -67,6 +80,7 @@ final class PriceLabsConnector implements PricingConnector
         Clock $clock,
         QuotaLedger $ledger,
         private readonly Logger $logger,
+        private readonly ?WriteAuthority $authority = null,
     ) {
         $budget = new RequestBudget($ledger, $clock, self::ID, self::LABEL, self::REQUESTS_PER_HOUR, 3600);
         $this->client = new PriceLabsClient($http, $config, $budget, $logger);
@@ -173,6 +187,67 @@ final class PriceLabsConnector implements PricingConnector
         }
 
         return $this->inRange(Payload::rows($answer, 'overrides'), $this->overrides->map(...), $range, 'GET ' . $path);
+    }
+
+    /**
+     * The recalculation is metered (three per listing per rolling day): the caller checks and
+     * records the quota around this call.
+     */
+    public function requestRecalculation(WriteToken $token, string $listingRef): void
+    {
+        $listingRef = self::listingRef($listingRef);
+        $this->authorise($token, new WriteRequest(WriteOperation::Recalculation, [$listingRef => []]));
+        $this->client->write($token, 'POST', self::RECALCULATION_PATH, ['listing_id' => $listingRef, 'pms' => $this->config->pmsName]);
+    }
+
+    /**
+     * @param list<array<string, mixed>> $overrides date rules in the API's fields (OverrideWrite::toArray())
+     */
+    public function writeOverrides(WriteToken $token, string $listingRef, array $overrides): void
+    {
+        $listingRef = self::listingRef($listingRef);
+        $body = OverrideWriteBody::write($this->config->pmsName, $overrides);
+        $this->authorise($token, new WriteRequest(WriteOperation::OverridesWrite, [$listingRef => OverrideWriteBody::dates($body)], OverrideWriteBody::fields($body)));
+        $this->client->write($token, 'POST', self::overridesPath($listingRef), $body);
+    }
+
+    /**
+     * @param list<DateTimeImmutable> $dates
+     */
+    public function deleteOverrides(WriteToken $token, string $listingRef, array $dates): void
+    {
+        $listingRef = self::listingRef($listingRef);
+        $keys = array_map(static fn (mixed $date): string => $date instanceof DateTimeImmutable ? Days::key($date) : '', $dates);
+        $body = OverrideWriteBody::delete($this->config->pmsName, $keys);
+        $this->authorise($token, new WriteRequest(WriteOperation::OverridesDelete, [$listingRef => $keys]));
+        $this->client->write($token, 'DELETE', self::overridesPath($listingRef), $body);
+    }
+
+    /**
+     * @param array<string, float> $fields "min", "base" and/or "max" => amount
+     */
+    public function updateListing(WriteToken $token, string $listingRef, array $fields): void
+    {
+        $listingRef = self::listingRef($listingRef);
+        $body = ListingUpdateBody::build($listingRef, $this->config->pmsName, $fields);
+        $this->authorise($token, new WriteRequest(WriteOperation::ListingUpdate, [$listingRef => []], array_keys($fields)));
+        $this->client->write($token, self::LISTING_ROUTE[0], self::LISTING_ROUTE[1], $body);
+    }
+
+    /**
+     * @throws WriteBlocked when the connector is read-only or the token does not allow the request
+     */
+    private function authorise(WriteToken $token, WriteRequest $request): void
+    {
+        if ($this->authority === null) {
+            throw WriteBlocked::forRequest('POST', 'PriceLabs', 'the connector was built read-only');
+        }
+        $this->authority->verify($token, $request);
+    }
+
+    private static function overridesPath(string $listingRef): string
+    {
+        return '/listings/' . rawurlencode($listingRef) . '/overrides';
     }
 
     /**

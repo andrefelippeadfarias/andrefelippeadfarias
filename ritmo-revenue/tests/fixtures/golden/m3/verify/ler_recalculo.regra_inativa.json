@@ -1,0 +1,157 @@
+{
+ "function": "ler_recalculo.regra_inativa",
+ "php_target": "Ritmo\\Domain\\Write\\Confirm\\RuleLiveness::check()",
+ "notes": "A written date rule only counts as confirmed when the recalculated night has dso_flag 1 and its floor is the written one within max(1, 1.5 % of the floor). Only for items with price_type fixed or percent.",
+ "cases": [
+  {
+   "name": "no_price_type_is_never_inactive",
+   "input": {
+    "item": {
+     "min_price": 900
+    },
+    "recalc_night": {
+     "dso_flag": 0,
+     "min_price": 500
+    }
+   },
+   "expected": {
+    "inactive": false,
+    "kind": ""
+   }
+  },
+  {
+   "name": "dso_flag_zero_is_inactive",
+   "input": {
+    "item": {
+     "price_type": "percent",
+     "min_price": 900
+    },
+    "recalc_night": {
+     "dso_flag": 0,
+     "min_price": 900
+    }
+   },
+   "expected": {
+    "inactive": true,
+    "kind": "expired_or_out_of_reach"
+   }
+  },
+  {
+   "name": "dso_flag_string_one_is_live",
+   "input": {
+    "item": {
+     "price_type": "percent",
+     "min_price": 900
+    },
+    "recalc_night": {
+     "dso_flag": "1",
+     "min_price": 900
+    }
+   },
+   "expected": {
+    "inactive": false,
+    "kind": ""
+   }
+  },
+  {
+   "name": "floor_within_1_5_percent",
+   "input": {
+    "item": {
+     "price_type": "percent",
+     "min_price": 1000
+    },
+    "recalc_night": {
+     "dso_flag": 1,
+     "min_price": 1014
+    }
+   },
+   "expected": {
+    "inactive": false,
+    "kind": ""
+   }
+  },
+  {
+   "name": "floor_beyond_1_5_percent",
+   "input": {
+    "item": {
+     "price_type": "percent",
+     "min_price": 1000
+    },
+    "recalc_night": {
+     "dso_flag": 1,
+     "min_price": 1016
+    }
+   },
+   "expected": {
+    "inactive": true,
+    "kind": "floor_differs"
+   }
+  },
+  {
+   "name": "small_floor_slack_is_at_least_one",
+   "input": {
+    "item": {
+     "price_type": "fixed",
+     "min_price": 50
+    },
+    "recalc_night": {
+     "dso_flag": 1,
+     "min_price": 51
+    }
+   },
+   "expected": {
+    "inactive": false,
+    "kind": ""
+   }
+  },
+  {
+   "name": "small_floor_beyond_one",
+   "input": {
+    "item": {
+     "price_type": "fixed",
+     "min_price": 50
+    },
+    "recalc_night": {
+     "dso_flag": 1,
+     "min_price": 51.5
+    }
+   },
+   "expected": {
+    "inactive": true,
+    "kind": "floor_differs"
+   }
+  },
+  {
+   "name": "no_floor_in_item_only_flag",
+   "input": {
+    "item": {
+     "price_type": "percent"
+    },
+    "recalc_night": {
+     "dso_flag": 1,
+     "min_price": 3
+    }
+   },
+   "expected": {
+    "inactive": false,
+    "kind": ""
+   }
+  },
+  {
+   "name": "missing_floor_in_recalc_reads_zero",
+   "input": {
+    "item": {
+     "price_type": "percent",
+     "min_price": 900
+    },
+    "recalc_night": {
+     "dso_flag": 1
+    }
+   },
+   "expected": {
+    "inactive": true,
+    "kind": "floor_differs"
+   }
+  }
+ ]
+}

@@ -1,0 +1,66 @@
+{
+ "function": "cota_recalculo.abre_em",
+ "php_target": "Ritmo\\Application\\Write\\Quota\\RollingWindow::opensAt()",
+ "notes": "When the count in the window falls below the limit: window after the (n-limit)-th oldest instant; null when already below.",
+ "cases": [
+  {
+   "name": "below_limit",
+   "input": {
+    "instants": [
+     "2026-11-07T10:00:00Z",
+     "2026-11-07T11:00:00Z"
+    ],
+    "limit": 3,
+    "window_seconds": 86400
+   },
+   "expected": null
+  },
+  {
+   "name": "at_limit",
+   "input": {
+    "instants": [
+     "2026-11-07T10:00:00Z",
+     "2026-11-07T11:00:00Z",
+     "2026-11-07T12:00:00Z"
+    ],
+    "limit": 3,
+    "window_seconds": 86400
+   },
+   "expected": "2026-11-08T10:00:00Z"
+  },
+  {
+   "name": "over_limit_unsorted",
+   "input": {
+    "instants": [
+     "2026-11-07T12:00:00Z",
+     "2026-11-07T10:00:00Z",
+     "2026-11-07T11:00:00Z",
+     "2026-11-07T15:00:00Z"
+    ],
+    "limit": 3,
+    "window_seconds": 86400
+   },
+   "expected": "2026-11-08T11:00:00Z"
+  },
+  {
+   "name": "account_minute",
+   "input": {
+    "instants": [
+     "2026-11-07T12:00:00Z",
+     "2026-11-07T12:00:05Z",
+     "2026-11-07T12:00:10Z",
+     "2026-11-07T12:00:15Z",
+     "2026-11-07T12:00:20Z",
+     "2026-11-07T12:00:25Z",
+     "2026-11-07T12:00:30Z",
+     "2026-11-07T12:00:35Z",
+     "2026-11-07T12:00:40Z",
+     "2026-11-07T12:00:45Z"
+    ],
+    "limit": 10,
+    "window_seconds": 60
+   },
+   "expected": "2026-11-07T12:01:00Z"
+  }
+ ]
+}

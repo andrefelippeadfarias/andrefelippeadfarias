@@ -1,0 +1,135 @@
+{
+ "function": "pace.envios_da_coleta",
+ "php_target": "Ritmo\\Domain\\Write\\Channel\\PushTimes::fromListings()",
+ "notes": "Last push per room from the listing directory: rooms with push disabled, no readable instant or no mapping are left out (and reported); the same room twice keeps the oldest push; an instant without zone is UTC.",
+ "cases": [
+  {
+   "name": "each_room_by_its_own_push",
+   "input": {
+    "listing_room": {
+     "L1": "R1",
+     "L2": "R2",
+     "L3": "S1"
+    },
+    "collect": {
+     "contexto": {
+      "sync": [
+       {
+        "listing_id": "L1",
+        "last_date_pushed": "2026-11-05T19:55:00Z",
+        "push_enabled": true
+       },
+       {
+        "listing_id": "L2",
+        "last_date_pushed": "2026-11-05T18:15:00",
+        "push_enabled": true
+       }
+      ]
+     }
+    }
+   },
+   "expected": {
+    "pushed_at": {
+     "R1": "2026-11-05T19:55:00Z",
+     "R2": "2026-11-05T18:15:00Z"
+    },
+    "left_out": 0
+   }
+  },
+  {
+   "name": "push_disabled_and_unreadable_left_out",
+   "input": {
+    "listing_room": {
+     "L1": "R1",
+     "L2": "R2",
+     "L3": "S1"
+    },
+    "collect": {
+     "contexto": {
+      "sync": [
+       {
+        "listing_id": "L1",
+        "last_date_pushed": "2026-11-05T19:55:00Z",
+        "push_enabled": false
+       },
+       {
+        "listing_id": "L2",
+        "last_date_pushed": "N/A"
+       },
+       {
+        "listing_id": "L3",
+        "last_date_pushed": null
+       },
+       {
+        "listing_id": "L9",
+        "last_date_pushed": "2026-11-05T19:55:00Z"
+       }
+      ]
+     }
+    }
+   },
+   "expected": {
+    "pushed_at": {},
+    "left_out": 4
+   }
+  },
+  {
+   "name": "same_room_twice_keeps_the_oldest",
+   "input": {
+    "listing_room": {
+     "L1": "R1",
+     "L2": "R2",
+     "L3": "S1"
+    },
+    "collect": {
+     "contexto": {
+      "sync": [
+       {
+        "listing_id": "L1",
+        "last_date_pushed": "2026-11-05T19:55:00Z"
+       },
+       {
+        "listing_id": "L1",
+        "last_date_pushed": "2026-11-05T08:00:00Z"
+       }
+      ]
+     }
+    }
+   },
+   "expected": {
+    "pushed_at": {
+     "R1": "2026-11-05T08:00:00Z"
+    },
+    "left_out": 0
+   }
+  },
+  {
+   "name": "workflow_envelope",
+   "input": {
+    "listing_room": {
+     "L1": "R1",
+     "L2": "R2",
+     "L3": "S1"
+    },
+    "collect": {
+     "result": {
+      "contexto": {
+       "sync": [
+        {
+         "listing_id": "L2",
+         "last_date_pushed": "2026-11-06T10:00:00+00:00"
+        }
+       ]
+      }
+     }
+    }
+   },
+   "expected": {
+    "pushed_at": {
+     "R2": "2026-11-06T10:00:00Z"
+    },
+    "left_out": 0
+   }
+  }
+ ]
+}

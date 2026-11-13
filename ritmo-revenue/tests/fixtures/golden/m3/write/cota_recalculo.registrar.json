@@ -1,0 +1,353 @@
+{
+ "function": "cota_recalculo.registrar",
+ "php_target": "Ritmo\\Application\\Write\\Quota\\AttemptLog::accept() (dedupe rules)",
+ "notes": "Every attempt counts (ok, falha, 429). Dedupe: with ids on both sides the response id decides; otherwise room + whole second. Same attempt with another result, or one id on two rooms: refused, nothing stored. An instant more than 5 min after now is refused; error text squeezed to one line, cut to 300 characters.",
+ "cases": [
+  {
+   "name": "same_id_twice_counts_once",
+   "input": {
+    "now": "2026-11-07T12:00:00Z",
+    "operations": [
+     {
+      "room": "R1",
+      "result": "ok",
+      "id_ms": 1794052770123
+     },
+     {
+      "room": "R1",
+      "result": "ok",
+      "id_ms": 1794052770123
+     }
+    ]
+   },
+   "expected": {
+    "outcomes": [
+     {
+      "recorded": true,
+      "at": "2026-11-07T11:59:30Z",
+      "error_kept": null
+     },
+     {
+      "recorded": false,
+      "at": "2026-11-07T11:59:30Z",
+      "error_kept": null
+     }
+    ],
+    "stored": [
+     {
+      "quarto": "R1",
+      "em": "2026-11-07T11:59:30Z",
+      "resultado": "ok",
+      "id_ms": 1794052770123
+     }
+    ]
+   }
+  },
+  {
+   "name": "different_ids_same_second_are_two_attempts",
+   "input": {
+    "now": "2026-11-07T12:00:00Z",
+    "operations": [
+     {
+      "room": "R1",
+      "result": "ok",
+      "id_ms": 1794052770123
+     },
+     {
+      "room": "R1",
+      "result": "falha",
+      "id_ms": 1794052770777,
+      "error": "x"
+     }
+    ]
+   },
+   "expected": {
+    "outcomes": [
+     {
+      "recorded": true,
+      "at": "2026-11-07T11:59:30Z",
+      "error_kept": null
+     },
+     {
+      "recorded": true,
+      "at": "2026-11-07T11:59:30Z",
+      "error_kept": "x"
+     }
+    ],
+    "stored": [
+     {
+      "quarto": "R1",
+      "em": "2026-11-07T11:59:30Z",
+      "resultado": "ok",
+      "id_ms": 1794052770123
+     },
+     {
+      "quarto": "R1",
+      "em": "2026-11-07T11:59:30Z",
+      "resultado": "falha",
+      "erro": "x",
+      "id_ms": 1794052770777
+     }
+    ]
+   }
+  },
+  {
+   "name": "same_room_and_second_without_id_counts_once",
+   "input": {
+    "now": "2026-11-07T12:00:00Z",
+    "operations": [
+     {
+      "room": "R1",
+      "result": "ok",
+      "at": "2026-11-07T12:00:00Z"
+     },
+     {
+      "room": "R1",
+      "result": "ok",
+      "at": "2026-11-07T12:00:00.700Z"
+     }
+    ]
+   },
+   "expected": {
+    "outcomes": [
+     {
+      "recorded": true,
+      "at": "2026-11-07T12:00:00Z",
+      "error_kept": null
+     },
+     {
+      "recorded": false,
+      "at": "2026-11-07T12:00:00Z",
+      "error_kept": null
+     }
+    ],
+    "stored": [
+     {
+      "quarto": "R1",
+      "em": "2026-11-07T12:00:00Z",
+      "resultado": "ok"
+     }
+    ]
+   }
+  },
+  {
+   "name": "same_attempt_other_result_is_a_conflict",
+   "input": {
+    "now": "2026-11-07T12:00:00Z",
+    "operations": [
+     {
+      "room": "R1",
+      "result": "ok",
+      "at": "2026-11-07T12:00:00Z"
+     },
+     {
+      "room": "R1",
+      "result": "429",
+      "at": "2026-11-07T12:00:00Z"
+     }
+    ]
+   },
+   "expected": {
+    "outcomes": [
+     {
+      "recorded": true,
+      "at": "2026-11-07T12:00:00Z",
+      "error_kept": null
+     },
+     {
+      "refused": true
+     }
+    ],
+    "stored": [
+     {
+      "quarto": "R1",
+      "em": "2026-11-07T12:00:00Z",
+      "resultado": "ok"
+     }
+    ]
+   }
+  },
+  {
+   "name": "same_id_other_room_is_a_conflict",
+   "input": {
+    "now": "2026-11-07T12:00:00Z",
+    "operations": [
+     {
+      "room": "R1",
+      "result": "ok",
+      "id_ms": 1794052770123
+     },
+     {
+      "room": "R2",
+      "result": "ok",
+      "id_ms": 1794052770123
+     }
+    ]
+   },
+   "expected": {
+    "outcomes": [
+     {
+      "recorded": true,
+      "at": "2026-11-07T11:59:30Z",
+      "error_kept": null
+     },
+     {
+      "refused": true
+     }
+    ],
+    "stored": [
+     {
+      "quarto": "R1",
+      "em": "2026-11-07T11:59:30Z",
+      "resultado": "ok",
+      "id_ms": 1794052770123
+     }
+    ]
+   }
+  },
+  {
+   "name": "more_than_5_min_ahead_is_refused",
+   "input": {
+    "now": "2026-11-07T12:00:00Z",
+    "operations": [
+     {
+      "room": "R1",
+      "result": "ok",
+      "at": "2026-11-07T12:06:00Z"
+     }
+    ]
+   },
+   "expected": {
+    "outcomes": [
+     {
+      "refused": true
+     }
+    ],
+    "stored": []
+   }
+  },
+  {
+   "name": "4_min_ahead_is_accepted",
+   "input": {
+    "now": "2026-11-07T12:00:00Z",
+    "operations": [
+     {
+      "room": "R1",
+      "result": "ok",
+      "at": "2026-11-07T12:04:00Z"
+     }
+    ]
+   },
+   "expected": {
+    "outcomes": [
+     {
+      "recorded": true,
+      "at": "2026-11-07T12:04:00Z",
+      "error_kept": null
+     }
+    ],
+    "stored": [
+     {
+      "quarto": "R1",
+      "em": "2026-11-07T12:04:00Z",
+      "resultado": "ok"
+     }
+    ]
+   }
+  },
+  {
+   "name": "id_in_seconds_is_refused",
+   "input": {
+    "now": "2026-11-07T12:00:00Z",
+    "operations": [
+     {
+      "room": "R1",
+      "result": "ok",
+      "id_ms": 1794052770
+     }
+    ]
+   },
+   "expected": {
+    "outcomes": [
+     {
+      "refused": true
+     }
+    ],
+    "stored": []
+   }
+  },
+  {
+   "name": "time_without_zone_is_refused",
+   "input": {
+    "now": "2026-11-07T12:00:00Z",
+    "operations": [
+     {
+      "room": "R1",
+      "result": "ok",
+      "at": "2026-11-07T12:00:00"
+     }
+    ]
+   },
+   "expected": {
+    "outcomes": [
+     {
+      "refused": true
+     }
+    ],
+    "stored": []
+   }
+  },
+  {
+   "name": "unknown_result_is_refused",
+   "input": {
+    "now": "2026-11-07T12:00:00Z",
+    "operations": [
+     {
+      "room": "R1",
+      "result": "maybe",
+      "at": "2026-11-07T11:00:00Z"
+     }
+    ]
+   },
+   "expected": {
+    "outcomes": [
+     {
+      "refused": true
+     }
+    ],
+    "stored": []
+   }
+  },
+  {
+   "name": "error_text_is_one_line_and_cut_to_300",
+   "input": {
+    "now": "2026-11-07T12:00:00Z",
+    "operations": [
+     {
+      "room": "R1",
+      "result": "falha",
+      "at": "2026-11-07T11:00:00Z",
+      "error": "a\n b  xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+     }
+    ]
+   },
+   "expected": {
+    "outcomes": [
+     {
+      "recorded": true,
+      "at": "2026-11-07T11:00:00Z",
+      "error_kept": "a b xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+     }
+    ],
+    "stored": [
+     {
+      "quarto": "R1",
+      "em": "2026-11-07T11:00:00Z",
+      "resultado": "falha",
+      "erro": "a b xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+     }
+    ]
+   }
+  }
+ ]
+}

@@ -93,14 +93,19 @@ final class ContractsTest extends TestCase
         }
     }
 
-    public function testAWriteTokenCannotBeObtainedInThisMilestone(): void
+    /**
+     * Only the write gate creates a token (through the private constructor); a token has no factory,
+     * cannot be cloned and grants nothing by itself (the gate's live registry does).
+     */
+    public function testAWriteTokenHasNoPublicWayIn(): void
     {
         $reflection = new ReflectionClass(WriteToken::class);
 
         self::assertTrue($reflection->isFinal());
         self::assertTrue($reflection->getConstructor()?->isPrivate());
-        self::assertSame([], $reflection->getMethods(ReflectionMethod::IS_STATIC), 'no factory may exist while the plugin is read-only');
-        self::assertSame(['__construct', '__serialize', '__unserialize'], array_map(static fn (ReflectionMethod $m): string => $m->getName(), $reflection->getMethods()));
+        self::assertTrue($reflection->getMethod('__clone')->isPrivate());
+        self::assertSame([], $reflection->getMethods(ReflectionMethod::IS_STATIC), 'no factory may exist: only the write gate issues tokens');
+        self::assertSame(['__construct', '__clone', '__serialize', '__unserialize'], array_map(static fn (ReflectionMethod $m): string => $m->getName(), $reflection->getMethods()));
     }
 
     public function testAWriteTokenCannotBeRebuiltFromASerialisedString(): void

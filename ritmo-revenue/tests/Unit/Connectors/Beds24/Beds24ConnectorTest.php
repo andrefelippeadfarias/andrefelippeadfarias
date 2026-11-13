@@ -12,7 +12,7 @@ use Ritmo\Connectors\Beds24\Beds24Connector;
 use Ritmo\Connectors\Beds24\Beds24Credentials;
 use Ritmo\Contracts\Exception\AuthFailed;
 use Ritmo\Contracts\Exception\ConnectorException;
-use Ritmo\Contracts\Exception\NotAvailableInThisMilestone;
+use Ritmo\Contracts\Exception\WriteBlocked;
 use Ritmo\Contracts\Exception\RateLimited;
 use Ritmo\Contracts\HttpResponse;
 use Ritmo\Contracts\WriteToken;
@@ -386,14 +386,14 @@ final class Beds24ConnectorTest extends TestCase
         $this->connector()->readInventory(['902001&roomId=1'], Days::date('2027-03-05'), Days::date('2027-03-07'));
     }
 
-    public function testWritingTheCalendarIsNotAvailableAndSendsNothing(): void
+    public function testAReadOnlyConnectorRefusesTheCalendarWriteAndSendsNothing(): void
     {
         $token = (new ReflectionClass(WriteToken::class))->newInstanceWithoutConstructor();
 
         try {
-            $this->connector()->writeCalendar($token, [['room' => '902001', 'from' => '2027-03-05', 'to' => '2027-03-05', 'minStay' => 2]]);
-            self::fail('Writing must not be available in this milestone.');
-        } catch (NotAvailableInThisMilestone) {
+            $this->connector()->writeCalendar($token, [['roomId' => '902001', 'from' => '2027-03-05', 'to' => '2027-03-05', 'minStay' => 2]]);
+            self::fail('A connector built without a write authority never writes.');
+        } catch (WriteBlocked) {
             self::assertSame([], $this->http->requests());
         }
     }

@@ -15,11 +15,14 @@ use Ritmo\Domain\Support\Days;
 
 /**
  * The date rules a plan deletes before writing: a room of the property, a reason, one deletion per
- * room night, never in the past; and warnings when the deletion drops what the night needs (its
- * stay, on a closed day, a holiday or a night that requires more than one night, unless the night
- * waits for an owner decision; the protection floor of a holiday).
+ * room night, never in the past, never on a night an owner order keeps away (a manual freeze or a
+ * fixed price, through AuthorityCheck: deleting the rule would undo the owner's change); and
+ * warnings when the deletion drops what the night needs (its stay, on a closed day, a holiday or a
+ * night that requires more than one night, unless the night waits for an owner decision; the
+ * protection floor of a holiday).
  *
- * Reference: validar_plano.Validador.validar_apagar.
+ * Reference: validar_plano.Validador.validar_apagar. The order guard on deletions is a plugin rule
+ * (divergence F2 of docs/VERIFY.md): the reference checks the freeze on items only.
  */
 final class DeletionCheck
 {
@@ -27,6 +30,7 @@ final class DeletionCheck
         private readonly HolidayCalendar $calendar,
         private readonly ?StayRules $stay,
         private readonly IssueLog $log,
+        private readonly ?AuthorityCheck $authority = null,
     ) {
     }
 
@@ -53,6 +57,7 @@ final class DeletionCheck
             if (Days::diff($today, $deletion->date) < 0) {
                 $issue(true, PlanIssue::PAST_DATE, 'The night is in the past.');
             }
+            $this->authority?->resolve($index, $deletion->roomCode, $deletion->date, null, IssueSubject::Deletion);
             $this->dropped($deletion, $issue);
         }
     }

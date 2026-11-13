@@ -1,0 +1,96 @@
+{
+ "function": "beds24.alterada_desde",
+ "php_target": "Ritmo\\Domain\\Operations\\MovementClassifier::changedSince",
+ "notes": "A booking without timestamps counts as changed (the security watch skips it: see vigia_seguranca.classificar 'no_timestamps_ignored').",
+ "cases": [
+  {
+   "name": "modified_after",
+   "input": {
+    "reserva": {
+     "id": 1,
+     "roomId": "9001",
+     "arrival": "2026-11-20",
+     "departure": "2026-11-22",
+     "status": "confirmed",
+     "channel": "booking",
+     "referer": "Booking.com",
+     "price": 500.0,
+     "modifiedTime": "2026-11-10T14:00:00Z"
+    },
+    "desde": "2026-11-10T13:40:00Z"
+   },
+   "expected": true
+  },
+  {
+   "name": "modified_exactly_at_since",
+   "input": {
+    "reserva": {
+     "id": 2,
+     "roomId": "9001",
+     "arrival": "2026-11-20",
+     "departure": "2026-11-22",
+     "status": "confirmed",
+     "channel": "booking",
+     "referer": "Booking.com",
+     "price": 500.0,
+     "modifiedTime": "2026-11-10T13:40:00Z"
+    },
+    "desde": "2026-11-10T13:40:00Z"
+   },
+   "expected": true
+  },
+  {
+   "name": "modified_before",
+   "input": {
+    "reserva": {
+     "id": 3,
+     "roomId": "9001",
+     "arrival": "2026-11-20",
+     "departure": "2026-11-22",
+     "status": "confirmed",
+     "channel": "booking",
+     "referer": "Booking.com",
+     "price": 500.0,
+     "modifiedTime": "2026-11-10T13:39:59Z"
+    },
+    "desde": "2026-11-10T13:40:00Z"
+   },
+   "expected": false
+  },
+  {
+   "name": "only_booking_time_after",
+   "input": {
+    "reserva": {
+     "id": 4,
+     "roomId": "9001",
+     "arrival": "2026-11-20",
+     "departure": "2026-11-22",
+     "status": "confirmed",
+     "channel": "booking",
+     "referer": "Booking.com",
+     "price": 500.0,
+     "bookingTime": "2026-11-10T14:00:00Z"
+    },
+    "desde": "2026-11-10T13:40:00Z"
+   },
+   "expected": true
+  },
+  {
+   "name": "no_timestamp_counts",
+   "input": {
+    "reserva": {
+     "id": 5,
+     "roomId": "9001",
+     "arrival": "2026-11-20",
+     "departure": "2026-11-22",
+     "status": "confirmed",
+     "channel": "booking",
+     "referer": "Booking.com",
+     "price": 500.0
+    },
+    "desde": "2026-11-10T13:40:00Z"
+   },
+   "expected": true
+  }
+ ]
+}

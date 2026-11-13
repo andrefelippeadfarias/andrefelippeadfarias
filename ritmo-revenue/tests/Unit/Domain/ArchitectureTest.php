@@ -89,9 +89,10 @@ final class ArchitectureTest extends TestCase
     }
 
     /**
-     * A ValidatedPlan is only worth something if nothing but the Validator gets around private
-     * constructors: no plugin code rebinds closures, instantiates without a constructor, opens
-     * private members or unserialises objects. The Validator's own seal() is the one exception.
+     * A ValidatedPlan (and a WriteToken) is only worth something if nothing but its issuer gets
+     * around private constructors: no plugin code rebinds closures, instantiates without a
+     * constructor, opens private members or unserialises objects. The Validator's seal() and the
+     * write gate's mint() are the two exceptions.
      */
     public function testOnlyTheValidatorGetsAroundAPrivateConstructor(): void
     {
@@ -104,7 +105,8 @@ final class ArchitectureTest extends TestCase
                     $found[] = $token[1];
                 }
             }
-            if ($found !== [] && !(str_ends_with($file, '/Domain/Plan/Validator.php') && $found === ['bind'])) {
+            $sealer = str_ends_with($file, '/Domain/Plan/Validator.php') || str_ends_with($file, '/Application/Write/Gate/WriteGate.php');
+            if ($found !== [] && !($sealer && $found === ['bind'])) {
                 $violations[] = self::relative($file) . ': ' . implode(', ', $found);
             }
         }

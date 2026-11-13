@@ -9,14 +9,18 @@ use Ritmo\Connectors\Support\Payload;
 use Ritmo\Connectors\Support\Query;
 use Ritmo\Contracts\Exception\AuthFailed;
 use Ritmo\Contracts\Exception\ConnectorException;
+use Ritmo\Contracts\Exception\WriteBlocked;
 use Ritmo\Contracts\HttpClient;
 use Ritmo\Contracts\HttpResponse;
 use Ritmo\Contracts\Logger;
+use Ritmo\Contracts\WriteHttpClient;
+use Ritmo\Contracts\WriteToken;
 use Ritmo\Domain\Support\Clock;
 
 /**
  * The HTTP conversation with the Beds24 API V2: authentication, the call credit, paging and the
- * meaning of each status. It only ever sends GET.
+ * meaning of each status. Reads are GET; the one write (the calendar) goes through post(), under a
+ * write token, only when the HTTP client it was given can write.
  */
 final class Beds24Client
 {
@@ -102,6 +106,43 @@ final class Beds24Client
     }
 
     /**
+     * One write (a POST with a JSON body), sent once. A rejected access token obtained from a
+     * refresh token is renewed and the same body sent once more (a 401 applies nothing); a second
+     * 401 stops. The answer of the calendar write is a list with one result per room: any
+     * "success": false is a refusal.
+     *
+     * @param list<array<string, mixed>> $body
+     *
+     * @return array<int|string, mixed>
+     *
+     * @throws WriteBlocked       when this client cannot write or the guard refuses the request
+     * @throws ConnectorException on a failure status, a refusal in the answer or no answer
+     */
+    public function post(WriteToken $token, string $path, array $body): array
+    {
+        if (!$this->http instanceof WriteHttpClient) {
+            throw WriteBlocked::forRequest('POST', $path, 'the Beds24 connector was built read-only');
+        }
+        $operation = 'POST ' . $path;
+        $json = json_encode($body, JSON_THROW_ON_ERROR);
+        $response = $this->sendWrite($this->http, $token, $path, $json, $operation);
+        if ($response->status() === 401 && $this->config->credentials->isRefreshable()) {
+            $this->logger->warning('Beds24 rejected the access token of a write; renewing it and sending the same body once.', ['provider' => Beds24Connector::ID, 'operation' => $operation]);
+            $this->accessToken = null;
+            $response = $this->sendWrite($this->http, $token, $path, $json, $operation);
+        }
+
+        $answer = $this->decode($response, $operation);
+        foreach ($answer as $item) {
+            if (is_array($item) && ($item['success'] ?? true) === false) {
+                throw new ConnectorException(sprintf('Beds24 refused part of %s.', $operation), Beds24Connector::ID, $response->status(), false);
+            }
+        }
+
+        return $answer;
+    }
+
+    /**
      * Credit left in the five-minute window according to the last response; null when unknown.
      */
     public function creditRemaining(): ?float
@@ -176,6 +217,30 @@ final class Beds24Client
 
         $this->credit->note($response);
         $this->logger->debug('Beds24 request finished.', [
+            'provider' => Beds24Connector::ID,
+            'operation' => $operation,
+            'http_status' => $response->status(),
+        ]);
+
+        return $response;
+    }
+
+    /**
+     * @throws ConnectorException
+     */
+    private function sendWrite(WriteHttpClient $http, WriteToken $token, string $path, string $json, string $operation): HttpResponse
+    {
+        $this->credit->assertEnough();
+        $response = $http->write(
+            $token,
+            'POST',
+            $this->config->baseUrl . $path,
+            ['Accept' => 'application/json', 'Content-Type' => 'application/json', 'token' => $this->token()],
+            $json,
+            self::TIMEOUT_SECONDS
+        );
+        $this->credit->note($response);
+        $this->logger->info('Beds24 write finished.', [
             'provider' => Beds24Connector::ID,
             'operation' => $operation,
             'http_status' => $response->status(),

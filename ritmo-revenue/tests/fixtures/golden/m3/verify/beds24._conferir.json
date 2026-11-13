@@ -1,0 +1,165 @@
+{
+ "function": "beds24._conferir",
+ "php_target": "Ritmo\\Domain\\Write\\Confirm\\PmsCalendarCheck::compare()",
+ "notes": "Every written field of every night of the item against the re-read calendar; availability against the expected NET value (units minus bookings) when the item carries it.",
+ "cases": [
+  {
+   "name": "all_fields_match",
+   "input": {
+    "items": [
+     {
+      "quarto": "R1",
+      "de": "2026-11-21",
+      "ate": "2026-11-22",
+      "min_stay": 2,
+      "override": "noCheckInOrCheckOut"
+     }
+    ],
+    "reread": {
+     "R1": {
+      "2026-11-21": {
+       "minStay": 2,
+       "override": "noCheckInOrCheckOut"
+      },
+      "2026-11-22": {
+       "minStay": 2,
+       "override": "noCheckInOrCheckOut"
+      }
+     }
+    }
+   },
+   "expected": {
+    "errors": 0,
+    "items_with_error": 0
+   }
+  },
+  {
+   "name": "one_night_differs",
+   "input": {
+    "items": [
+     {
+      "quarto": "R1",
+      "de": "2026-11-21",
+      "ate": "2026-11-22",
+      "min_stay": 2
+     }
+    ],
+    "reread": {
+     "R1": {
+      "2026-11-21": {
+       "minStay": 2
+      },
+      "2026-11-22": {
+       "minStay": 1
+      }
+     }
+    }
+   },
+   "expected": {
+    "errors": 1,
+    "items_with_error": 1
+   }
+  },
+  {
+   "name": "availability_read_net_of_bookings",
+   "input": {
+    "items": [
+     {
+      "quarto": "R2",
+      "de": "2026-11-05",
+      "ate": "2026-11-05",
+      "num_avail": 7,
+      "num_avail_esperado": 6
+     }
+    ],
+    "reread": {
+     "R2": {
+      "2026-11-05": {
+       "numAvail": 6
+      }
+     }
+    }
+   },
+   "expected": {
+    "errors": 0,
+    "items_with_error": 0
+   }
+  },
+  {
+   "name": "availability_without_expected_compares_written",
+   "input": {
+    "items": [
+     {
+      "quarto": "R2",
+      "de": "2026-11-05",
+      "ate": "2026-11-05",
+      "num_avail": 7
+     }
+    ],
+    "reread": {
+     "R2": {
+      "2026-11-05": {
+       "numAvail": 6
+      }
+     }
+    }
+   },
+   "expected": {
+    "errors": 1,
+    "items_with_error": 1
+   }
+  },
+  {
+   "name": "channel_limit_as_text",
+   "input": {
+    "items": [
+     {
+      "quarto": "S1",
+      "de": "2026-12-01",
+      "ate": "2026-12-01",
+      "canais_max": {
+       "booking": "0"
+      }
+     }
+    ],
+    "reread": {
+     "S1": {
+      "2026-12-01": {
+       "canais_max": {
+        "booking": "0"
+       }
+      }
+     }
+    }
+   },
+   "expected": {
+    "errors": 0,
+    "items_with_error": 0
+   }
+  },
+  {
+   "name": "night_missing_from_reread",
+   "input": {
+    "items": [
+     {
+      "quarto": "S1",
+      "de": "2026-12-01",
+      "ate": "2026-12-02",
+      "max_stay": 2
+     }
+    ],
+    "reread": {
+     "S1": {
+      "2026-12-01": {
+       "maxStay": 2
+      }
+     }
+    }
+   },
+   "expected": {
+    "errors": 1,
+    "items_with_error": 1
+   }
+  }
+ ]
+}

@@ -1,0 +1,19 @@
+{
+  "_doc": "Parity values of the confirmation, record and approval area (M3) for the reference operation. The integration merges them into tests/fixtures/presets/parity.json. third_party: the reference freezes a manually changed night for 7 days by time (ordens.registrar_manual); waves: 3 cancellations of one channel within 3 hours (vigia_seguranca), held until acknowledged; approval: the reference validates with a calendar of at most 6 hours (validar_plano --horas 6).",
+  "verify": {
+    "delivery_overdue_hours": 30
+  },
+  "third_party": {
+    "until_night_passes": false,
+    "freeze_days": 7
+  },
+  "waves": {
+    "min_cancellations": 3,
+    "window_hours": 3,
+    "hold_hours": null,
+    "scope": "property"
+  },
+  "approval": {
+    "max_calendar_age_hours": 6
+  }
+}

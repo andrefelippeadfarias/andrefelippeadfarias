@@ -1,0 +1,985 @@
+{
+ "function": "vigia_seguranca.classificar",
+ "php_target": "Ritmo\\Domain\\Alerts\\SecurityWatch::inspect",
+ "notes": "Compare the finding kind, booking ids, channel and burst members; texts (detalhe) are the plugin's own. Kinds: 'origem desconhecida' -> unknown_origin, 'reserva sem valor' -> zero_value, 'reserva alterada sem valor' -> zero_value_modified, 'rajada de cancelamentos' -> cancellation_burst. The reference reads the raw price field; the plugin reads BookingRecord::total (equal here: no invoice items).",
+ "cases": [
+  {
+   "name": "unknown_origin",
+   "input": {
+    "reservas": [
+     {
+      "id": 1,
+      "roomId": "9001",
+      "arrival": "2026-11-20",
+      "departure": "2026-11-22",
+      "status": "confirmed",
+      "channel": "booking",
+      "referer": "new-user",
+      "price": 500.0,
+      "bookingTime": "2026-11-10T14:00:00Z",
+      "modifiedTime": "2026-11-10T14:00:00Z"
+     }
+    ],
+    "desde": "2026-11-10T13:40:00Z",
+    "par": {
+     "origens_conhecidas": [
+      "Booking.com",
+      "Airbnb",
+      "API",
+      "frontdesk-1"
+     ],
+     "rajada_cancelamentos": 3,
+     "rajada_horas": 3
+    },
+    "quartos": {
+     "9001": "room-a",
+     "9002": "room-b"
+    }
+   },
+   "expected": [
+    {
+     "id": 1,
+     "quarto": "room-a",
+     "chegada": "2026-11-20",
+     "saida": "2026-11-22",
+     "status": "confirmed",
+     "canal": "booking",
+     "origem": "new-user",
+     "alerta": "origem desconhecida"
+    }
+   ]
+  },
+  {
+   "name": "known_origin_case_insensitive",
+   "input": {
+    "reservas": [
+     {
+      "id": 2,
+      "roomId": "9001",
+      "arrival": "2026-11-20",
+      "departure": "2026-11-22",
+      "status": "confirmed",
+      "channel": "booking",
+      "referer": "booking.COM",
+      "price": 500.0,
+      "bookingTime": "2026-11-10T14:00:00Z"
+     }
+    ],
+    "desde": "2026-11-10T13:40:00Z",
+    "par": {
+     "origens_conhecidas": [
+      "Booking.com",
+      "Airbnb",
+      "API",
+      "frontdesk-1"
+     ],
+     "rajada_cancelamentos": 3,
+     "rajada_horas": 3
+    },
+    "quartos": {
+     "9001": "room-a",
+     "9002": "room-b"
+    }
+   },
+   "expected": []
+  },
+  {
+   "name": "empty_origin_never_alerts",
+   "input": {
+    "reservas": [
+     {
+      "id": 3,
+      "roomId": "9001",
+      "arrival": "2026-11-20",
+      "departure": "2026-11-22",
+      "status": "confirmed",
+      "channel": "booking",
+      "referer": "",
+      "price": 500.0,
+      "bookingTime": "2026-11-10T14:00:00Z"
+     }
+    ],
+    "desde": "2026-11-10T13:40:00Z",
+    "par": {
+     "origens_conhecidas": [
+      "Booking.com",
+      "Airbnb",
+      "API",
+      "frontdesk-1"
+     ],
+     "rajada_cancelamentos": 3,
+     "rajada_horas": 3
+    },
+    "quartos": {
+     "9001": "room-a",
+     "9002": "room-b"
+    }
+   },
+   "expected": []
+  },
+  {
+   "name": "modified_before_since_ignored",
+   "input": {
+    "reservas": [
+     {
+      "id": 4,
+      "roomId": "9001",
+      "arrival": "2026-11-20",
+      "departure": "2026-11-22",
+      "status": "confirmed",
+      "channel": "booking",
+      "referer": "new-user",
+      "price": 500.0,
+      "bookingTime": "2026-11-09T10:00:00Z",
+      "modifiedTime": "2026-11-10T13:39:59Z"
+     }
+    ],
+    "desde": "2026-11-10T13:40:00Z",
+    "par": {
+     "origens_conhecidas": [
+      "Booking.com",
+      "Airbnb",
+      "API",
+      "frontdesk-1"
+     ],
+     "rajada_cancelamentos": 3,
+     "rajada_horas": 3
+    },
+    "quartos": {
+     "9001": "room-a",
+     "9002": "room-b"
+    }
+   },
+   "expected": []
+  },
+  {
+   "name": "no_timestamps_ignored",
+   "input": {
+    "reservas": [
+     {
+      "id": 5,
+      "roomId": "9001",
+      "arrival": "2026-11-20",
+      "departure": "2026-11-22",
+      "status": "confirmed",
+      "channel": "booking",
+      "referer": "new-user",
+      "price": 0
+     }
+    ],
+    "desde": "2026-11-10T13:40:00Z",
+    "par": {
+     "origens_conhecidas": [
+      "Booking.com",
+      "Airbnb",
+      "API",
+      "frontdesk-1"
+     ],
+     "rajada_cancelamentos": 3,
+     "rajada_horas": 3
+    },
+    "quartos": {
+     "9001": "room-a",
+     "9002": "room-b"
+    }
+   },
+   "expected": []
+  },
+  {
+   "name": "zero_value_created_in_window",
+   "input": {
+    "reservas": [
+     {
+      "id": 6,
+      "roomId": "9001",
+      "arrival": "2026-11-20",
+      "departure": "2026-11-22",
+      "status": "confirmed",
+      "channel": "booking",
+      "referer": "Booking.com",
+      "price": 0,
+      "bookingTime": "2026-11-10T15:00:00Z"
+     }
+    ],
+    "desde": "2026-11-10T13:40:00Z",
+    "par": {
+     "origens_conhecidas": [
+      "Booking.com",
+      "Airbnb",
+      "API",
+      "frontdesk-1"
+     ],
+     "rajada_cancelamentos": 3,
+     "rajada_horas": 3
+    },
+    "quartos": {
+     "9001": "room-a",
+     "9002": "room-b"
+    }
+   },
+   "expected": [
+    {
+     "id": 6,
+     "quarto": "room-a",
+     "chegada": "2026-11-20",
+     "saida": "2026-11-22",
+     "status": "confirmed",
+     "canal": "booking",
+     "origem": "Booking.com",
+     "alerta": "reserva sem valor"
+    }
+   ]
+  },
+  {
+   "name": "zero_value_modified_old_booking",
+   "input": {
+    "reservas": [
+     {
+      "id": 7,
+      "roomId": "9001",
+      "arrival": "2026-11-20",
+      "departure": "2026-11-22",
+      "status": "confirmed",
+      "channel": "booking",
+      "referer": "Booking.com",
+      "price": 0,
+      "bookingTime": "2026-11-01T10:00:00Z",
+      "modifiedTime": "2026-11-10T15:00:00Z"
+     }
+    ],
+    "desde": "2026-11-10T13:40:00Z",
+    "par": {
+     "origens_conhecidas": [
+      "Booking.com",
+      "Airbnb",
+      "API",
+      "frontdesk-1"
+     ],
+     "rajada_cancelamentos": 3,
+     "rajada_horas": 3
+    },
+    "quartos": {
+     "9001": "room-a",
+     "9002": "room-b"
+    }
+   },
+   "expected": [
+    {
+     "id": 7,
+     "quarto": "room-a",
+     "chegada": "2026-11-20",
+     "saida": "2026-11-22",
+     "status": "confirmed",
+     "canal": "booking",
+     "origem": "Booking.com",
+     "alerta": "reserva alterada sem valor"
+    }
+   ]
+  },
+  {
+   "name": "zero_value_request_status_ignored",
+   "input": {
+    "reservas": [
+     {
+      "id": 8,
+      "roomId": "9001",
+      "arrival": "2026-11-20",
+      "departure": "2026-11-22",
+      "status": "request",
+      "channel": "booking",
+      "referer": "Booking.com",
+      "price": 0,
+      "bookingTime": "2026-11-10T15:00:00Z"
+     }
+    ],
+    "desde": "2026-11-10T13:40:00Z",
+    "par": {
+     "origens_conhecidas": [
+      "Booking.com",
+      "Airbnb",
+      "API",
+      "frontdesk-1"
+     ],
+     "rajada_cancelamentos": 3,
+     "rajada_horas": 3
+    },
+    "quartos": {
+     "9001": "room-a",
+     "9002": "room-b"
+    }
+   },
+   "expected": []
+  },
+  {
+   "name": "zero_value_new_status",
+   "input": {
+    "reservas": [
+     {
+      "id": 9,
+      "roomId": "9001",
+      "arrival": "2026-11-20",
+      "departure": "2026-11-22",
+      "status": "new",
+      "channel": "booking",
+      "referer": "Booking.com",
+      "price": null,
+      "bookingTime": "2026-11-10T15:00:00Z"
+     }
+    ],
+    "desde": "2026-11-10T13:40:00Z",
+    "par": {
+     "origens_conhecidas": [
+      "Booking.com",
+      "Airbnb",
+      "API",
+      "frontdesk-1"
+     ],
+     "rajada_cancelamentos": 3,
+     "rajada_horas": 3
+    },
+    "quartos": {
+     "9001": "room-a",
+     "9002": "room-b"
+    }
+   },
+   "expected": [
+    {
+     "id": 9,
+     "quarto": "room-a",
+     "chegada": "2026-11-20",
+     "saida": "2026-11-22",
+     "status": "new",
+     "canal": "booking",
+     "origem": "Booking.com",
+     "alerta": "reserva sem valor"
+    }
+   ]
+  },
+  {
+   "name": "burst_three_same_channel",
+   "input": {
+    "reservas": [
+     {
+      "id": 10,
+      "roomId": "9001",
+      "arrival": "2026-11-20",
+      "departure": "2026-11-22",
+      "status": "cancelled",
+      "channel": "booking",
+      "referer": "Booking.com",
+      "price": 500.0,
+      "bookingTime": "2026-11-01T10:00:00Z",
+      "modifiedTime": "2026-11-10T14:00:00Z",
+      "cancelTime": "2026-11-10T14:00:00Z"
+     },
+     {
+      "id": 11,
+      "roomId": "9001",
+      "arrival": "2026-11-20",
+      "departure": "2026-11-22",
+      "status": "cancelled",
+      "channel": "booking",
+      "referer": "Booking.com",
+      "price": 500.0,
+      "bookingTime": "2026-11-01T10:00:00Z",
+      "modifiedTime": "2026-11-10T15:00:00Z",
+      "cancelTime": "2026-11-10T15:00:00Z"
+     },
+     {
+      "id": 12,
+      "roomId": "9001",
+      "arrival": "2026-11-20",
+      "departure": "2026-11-22",
+      "status": "cancelled",
+      "channel": "booking",
+      "referer": "Booking.com",
+      "price": 500.0,
+      "bookingTime": "2026-11-01T10:00:00Z",
+      "modifiedTime": "2026-11-10T16:00:00Z",
+      "cancelTime": "2026-11-10T16:00:00Z"
+     }
+    ],
+    "desde": "2026-11-10T13:40:00Z",
+    "par": {
+     "origens_conhecidas": [
+      "Booking.com",
+      "Airbnb",
+      "API",
+      "frontdesk-1"
+     ],
+     "rajada_cancelamentos": 3,
+     "rajada_horas": 3
+    },
+    "quartos": {
+     "9001": "room-a",
+     "9002": "room-b"
+    }
+   },
+   "expected": [
+    {
+     "alerta": "rajada de cancelamentos",
+     "canal": "booking",
+     "reservas": [
+      10,
+      11,
+      12
+     ]
+    }
+   ]
+  },
+  {
+   "name": "two_cancellations_no_burst",
+   "input": {
+    "reservas": [
+     {
+      "id": 20,
+      "roomId": "9001",
+      "arrival": "2026-11-20",
+      "departure": "2026-11-22",
+      "status": "cancelled",
+      "channel": "booking",
+      "referer": "Booking.com",
+      "price": 500.0,
+      "bookingTime": "2026-11-01T10:00:00Z",
+      "modifiedTime": "2026-11-10T14:00:00Z",
+      "cancelTime": "2026-11-10T14:00:00Z"
+     },
+     {
+      "id": 21,
+      "roomId": "9001",
+      "arrival": "2026-11-20",
+      "departure": "2026-11-22",
+      "status": "cancelled",
+      "channel": "booking",
+      "referer": "Booking.com",
+      "price": 500.0,
+      "bookingTime": "2026-11-01T10:00:00Z",
+      "modifiedTime": "2026-11-10T15:00:00Z",
+      "cancelTime": "2026-11-10T15:00:00Z"
+     }
+    ],
+    "desde": "2026-11-10T13:40:00Z",
+    "par": {
+     "origens_conhecidas": [
+      "Booking.com",
+      "Airbnb",
+      "API",
+      "frontdesk-1"
+     ],
+     "rajada_cancelamentos": 3,
+     "rajada_horas": 3
+    },
+    "quartos": {
+     "9001": "room-a",
+     "9002": "room-b"
+    }
+   },
+   "expected": []
+  },
+  {
+   "name": "burst_window_edge_exactly_3h",
+   "input": {
+    "reservas": [
+     {
+      "id": 30,
+      "roomId": "9001",
+      "arrival": "2026-11-20",
+      "departure": "2026-11-22",
+      "status": "cancelled",
+      "channel": "booking",
+      "referer": "Booking.com",
+      "price": 500.0,
+      "bookingTime": "2026-11-01T10:00:00Z",
+      "modifiedTime": "2026-11-10T14:00:00Z",
+      "cancelTime": "2026-11-10T14:00:00Z"
+     },
+     {
+      "id": 31,
+      "roomId": "9001",
+      "arrival": "2026-11-20",
+      "departure": "2026-11-22",
+      "status": "cancelled",
+      "channel": "booking",
+      "referer": "Booking.com",
+      "price": 500.0,
+      "bookingTime": "2026-11-01T10:00:00Z",
+      "modifiedTime": "2026-11-10T15:30:00Z",
+      "cancelTime": "2026-11-10T15:30:00Z"
+     },
+     {
+      "id": 32,
+      "roomId": "9001",
+      "arrival": "2026-11-20",
+      "departure": "2026-11-22",
+      "status": "cancelled",
+      "channel": "booking",
+      "referer": "Booking.com",
+      "price": 500.0,
+      "bookingTime": "2026-11-01T10:00:00Z",
+      "modifiedTime": "2026-11-10T17:00:00Z",
+      "cancelTime": "2026-11-10T17:00:00Z"
+     }
+    ],
+    "desde": "2026-11-10T13:40:00Z",
+    "par": {
+     "origens_conhecidas": [
+      "Booking.com",
+      "Airbnb",
+      "API",
+      "frontdesk-1"
+     ],
+     "rajada_cancelamentos": 3,
+     "rajada_horas": 3
+    },
+    "quartos": {
+     "9001": "room-a",
+     "9002": "room-b"
+    }
+   },
+   "expected": [
+    {
+     "alerta": "rajada de cancelamentos",
+     "canal": "booking",
+     "reservas": [
+      30,
+      31,
+      32
+     ]
+    }
+   ]
+  },
+  {
+   "name": "burst_spread_over_3h_no_alert",
+   "input": {
+    "reservas": [
+     {
+      "id": 40,
+      "roomId": "9001",
+      "arrival": "2026-11-20",
+      "departure": "2026-11-22",
+      "status": "cancelled",
+      "channel": "booking",
+      "referer": "Booking.com",
+      "price": 500.0,
+      "bookingTime": "2026-11-01T10:00:00Z",
+      "modifiedTime": "2026-11-10T14:00:00Z",
+      "cancelTime": "2026-11-10T14:00:00Z"
+     },
+     {
+      "id": 41,
+      "roomId": "9001",
+      "arrival": "2026-11-20",
+      "departure": "2026-11-22",
+      "status": "cancelled",
+      "channel": "booking",
+      "referer": "Booking.com",
+      "price": 500.0,
+      "bookingTime": "2026-11-01T10:00:00Z",
+      "modifiedTime": "2026-11-10T15:30:00Z",
+      "cancelTime": "2026-11-10T15:30:00Z"
+     },
+     {
+      "id": 42,
+      "roomId": "9001",
+      "arrival": "2026-11-20",
+      "departure": "2026-11-22",
+      "status": "cancelled",
+      "channel": "booking",
+      "referer": "Booking.com",
+      "price": 500.0,
+      "bookingTime": "2026-11-01T10:00:00Z",
+      "modifiedTime": "2026-11-10T17:00:01Z",
+      "cancelTime": "2026-11-10T17:00:01Z"
+     }
+    ],
+    "desde": "2026-11-10T13:40:00Z",
+    "par": {
+     "origens_conhecidas": [
+      "Booking.com",
+      "Airbnb",
+      "API",
+      "frontdesk-1"
+     ],
+     "rajada_cancelamentos": 3,
+     "rajada_horas": 3
+    },
+    "quartos": {
+     "9001": "room-a",
+     "9002": "room-b"
+    }
+   },
+   "expected": []
+  },
+  {
+   "name": "two_waves_two_alerts",
+   "input": {
+    "reservas": [
+     {
+      "id": 50,
+      "roomId": "9001",
+      "arrival": "2026-11-20",
+      "departure": "2026-11-22",
+      "status": "cancelled",
+      "channel": "booking",
+      "referer": "Booking.com",
+      "price": 500.0,
+      "bookingTime": "2026-11-01T10:00:00Z",
+      "modifiedTime": "2026-11-10T14:00:00Z",
+      "cancelTime": "2026-11-10T14:00:00Z"
+     },
+     {
+      "id": 51,
+      "roomId": "9001",
+      "arrival": "2026-11-20",
+      "departure": "2026-11-22",
+      "status": "cancelled",
+      "channel": "booking",
+      "referer": "Booking.com",
+      "price": 500.0,
+      "bookingTime": "2026-11-01T10:00:00Z",
+      "modifiedTime": "2026-11-10T14:10:00Z",
+      "cancelTime": "2026-11-10T14:10:00Z"
+     },
+     {
+      "id": 52,
+      "roomId": "9001",
+      "arrival": "2026-11-20",
+      "departure": "2026-11-22",
+      "status": "cancelled",
+      "channel": "booking",
+      "referer": "Booking.com",
+      "price": 500.0,
+      "bookingTime": "2026-11-01T10:00:00Z",
+      "modifiedTime": "2026-11-10T14:20:00Z",
+      "cancelTime": "2026-11-10T14:20:00Z"
+     },
+     {
+      "id": 53,
+      "roomId": "9001",
+      "arrival": "2026-11-20",
+      "departure": "2026-11-22",
+      "status": "cancelled",
+      "channel": "booking",
+      "referer": "Booking.com",
+      "price": 500.0,
+      "bookingTime": "2026-11-01T10:00:00Z",
+      "modifiedTime": "2026-11-10T20:00:00Z",
+      "cancelTime": "2026-11-10T20:00:00Z"
+     },
+     {
+      "id": 54,
+      "roomId": "9001",
+      "arrival": "2026-11-20",
+      "departure": "2026-11-22",
+      "status": "cancelled",
+      "channel": "booking",
+      "referer": "Booking.com",
+      "price": 500.0,
+      "bookingTime": "2026-11-01T10:00:00Z",
+      "modifiedTime": "2026-11-10T20:05:00Z",
+      "cancelTime": "2026-11-10T20:05:00Z"
+     },
+     {
+      "id": 55,
+      "roomId": "9001",
+      "arrival": "2026-11-20",
+      "departure": "2026-11-22",
+      "status": "cancelled",
+      "channel": "booking",
+      "referer": "Booking.com",
+      "price": 500.0,
+      "bookingTime": "2026-11-01T10:00:00Z",
+      "modifiedTime": "2026-11-10T20:06:00Z",
+      "cancelTime": "2026-11-10T20:06:00Z"
+     }
+    ],
+    "desde": "2026-11-10T13:40:00Z",
+    "par": {
+     "origens_conhecidas": [
+      "Booking.com",
+      "Airbnb",
+      "API",
+      "frontdesk-1"
+     ],
+     "rajada_cancelamentos": 3,
+     "rajada_horas": 3
+    },
+    "quartos": {
+     "9001": "room-a",
+     "9002": "room-b"
+    }
+   },
+   "expected": [
+    {
+     "alerta": "rajada de cancelamentos",
+     "canal": "booking",
+     "reservas": [
+      50,
+      51,
+      52
+     ]
+    },
+    {
+     "alerta": "rajada de cancelamentos",
+     "canal": "booking",
+     "reservas": [
+      53,
+      54,
+      55
+     ]
+    }
+   ]
+  },
+  {
+   "name": "burst_split_by_channel",
+   "input": {
+    "reservas": [
+     {
+      "id": 60,
+      "roomId": "9001",
+      "arrival": "2026-11-20",
+      "departure": "2026-11-22",
+      "status": "cancelled",
+      "channel": "booking",
+      "referer": "Booking.com",
+      "price": 500.0,
+      "bookingTime": "2026-11-01T10:00:00Z",
+      "modifiedTime": "2026-11-10T14:00:00Z",
+      "cancelTime": "2026-11-10T14:00:00Z"
+     },
+     {
+      "id": 61,
+      "roomId": "9001",
+      "arrival": "2026-11-20",
+      "departure": "2026-11-22",
+      "status": "cancelled",
+      "channel": "airbnb",
+      "referer": "Booking.com",
+      "price": 500.0,
+      "bookingTime": "2026-11-01T10:00:00Z",
+      "modifiedTime": "2026-11-10T14:01:00Z",
+      "cancelTime": "2026-11-10T14:01:00Z"
+     },
+     {
+      "id": 62,
+      "roomId": "9001",
+      "arrival": "2026-11-20",
+      "departure": "2026-11-22",
+      "status": "cancelled",
+      "channel": "booking",
+      "referer": "Booking.com",
+      "price": 500.0,
+      "bookingTime": "2026-11-01T10:00:00Z",
+      "modifiedTime": "2026-11-10T14:02:00Z",
+      "cancelTime": "2026-11-10T14:02:00Z"
+     },
+     {
+      "id": 63,
+      "roomId": "9001",
+      "arrival": "2026-11-20",
+      "departure": "2026-11-22",
+      "status": "cancelled",
+      "channel": "airbnb",
+      "referer": "Booking.com",
+      "price": 500.0,
+      "bookingTime": "2026-11-01T10:00:00Z",
+      "modifiedTime": "2026-11-10T14:03:00Z",
+      "cancelTime": "2026-11-10T14:03:00Z"
+     }
+    ],
+    "desde": "2026-11-10T13:40:00Z",
+    "par": {
+     "origens_conhecidas": [
+      "Booking.com",
+      "Airbnb",
+      "API",
+      "frontdesk-1"
+     ],
+     "rajada_cancelamentos": 3,
+     "rajada_horas": 3
+    },
+    "quartos": {
+     "9001": "room-a",
+     "9002": "room-b"
+    }
+   },
+   "expected": []
+  },
+  {
+   "name": "cancel_time_before_since_not_in_burst",
+   "input": {
+    "reservas": [
+     {
+      "id": 70,
+      "roomId": "9001",
+      "arrival": "2026-11-20",
+      "departure": "2026-11-22",
+      "status": "cancelled",
+      "channel": "booking",
+      "referer": "Booking.com",
+      "price": 500.0,
+      "bookingTime": "2026-11-01T10:00:00Z",
+      "modifiedTime": "2026-11-10T14:00:00Z",
+      "cancelTime": "2026-11-10T13:00:00Z"
+     },
+     {
+      "id": 71,
+      "roomId": "9001",
+      "arrival": "2026-11-20",
+      "departure": "2026-11-22",
+      "status": "cancelled",
+      "channel": "booking",
+      "referer": "Booking.com",
+      "price": 500.0,
+      "bookingTime": "2026-11-01T10:00:00Z",
+      "modifiedTime": "2026-11-10T14:00:00Z",
+      "cancelTime": "2026-11-10T14:00:00Z"
+     },
+     {
+      "id": 72,
+      "roomId": "9001",
+      "arrival": "2026-11-20",
+      "departure": "2026-11-22",
+      "status": "cancelled",
+      "channel": "booking",
+      "referer": "Booking.com",
+      "price": 500.0,
+      "bookingTime": "2026-11-01T10:00:00Z",
+      "modifiedTime": "2026-11-10T14:00:00Z",
+      "cancelTime": "2026-11-10T14:05:00Z"
+     }
+    ],
+    "desde": "2026-11-10T13:40:00Z",
+    "par": {
+     "origens_conhecidas": [
+      "Booking.com",
+      "Airbnb",
+      "API",
+      "frontdesk-1"
+     ],
+     "rajada_cancelamentos": 3,
+     "rajada_horas": 3
+    },
+    "quartos": {
+     "9001": "room-a",
+     "9002": "room-b"
+    }
+   },
+   "expected": []
+  },
+  {
+   "name": "burst_long_wave_marks_all",
+   "input": {
+    "reservas": [
+     {
+      "id": 80,
+      "roomId": "9001",
+      "arrival": "2026-11-20",
+      "departure": "2026-11-22",
+      "status": "cancelled",
+      "channel": "booking",
+      "referer": "Booking.com",
+      "price": 500.0,
+      "bookingTime": "2026-11-01T10:00:00Z",
+      "modifiedTime": "2026-11-10T14:00:00Z",
+      "cancelTime": "2026-11-10T14:00:00Z"
+     },
+     {
+      "id": 81,
+      "roomId": "9001",
+      "arrival": "2026-11-20",
+      "departure": "2026-11-22",
+      "status": "cancelled",
+      "channel": "booking",
+      "referer": "Booking.com",
+      "price": 500.0,
+      "bookingTime": "2026-11-01T10:00:00Z",
+      "modifiedTime": "2026-11-10T14:30:00Z",
+      "cancelTime": "2026-11-10T14:30:00Z"
+     },
+     {
+      "id": 82,
+      "roomId": "9001",
+      "arrival": "2026-11-20",
+      "departure": "2026-11-22",
+      "status": "cancelled",
+      "channel": "booking",
+      "referer": "Booking.com",
+      "price": 500.0,
+      "bookingTime": "2026-11-01T10:00:00Z",
+      "modifiedTime": "2026-11-10T15:00:00Z",
+      "cancelTime": "2026-11-10T15:00:00Z"
+     },
+     {
+      "id": 83,
+      "roomId": "9001",
+      "arrival": "2026-11-20",
+      "departure": "2026-11-22",
+      "status": "cancelled",
+      "channel": "booking",
+      "referer": "Booking.com",
+      "price": 500.0,
+      "bookingTime": "2026-11-01T10:00:00Z",
+      "modifiedTime": "2026-11-10T15:30:00Z",
+      "cancelTime": "2026-11-10T15:30:00Z"
+     },
+     {
+      "id": 84,
+      "roomId": "9001",
+      "arrival": "2026-11-20",
+      "departure": "2026-11-22",
+      "status": "cancelled",
+      "channel": "booking",
+      "referer": "Booking.com",
+      "price": 500.0,
+      "bookingTime": "2026-11-01T10:00:00Z",
+      "modifiedTime": "2026-11-10T16:00:00Z",
+      "cancelTime": "2026-11-10T16:00:00Z"
+     },
+     {
+      "id": 85,
+      "roomId": "9001",
+      "arrival": "2026-11-20",
+      "departure": "2026-11-22",
+      "status": "cancelled",
+      "channel": "booking",
+      "referer": "Booking.com",
+      "price": 500.0,
+      "bookingTime": "2026-11-01T10:00:00Z",
+      "modifiedTime": "2026-11-10T16:30:00Z",
+      "cancelTime": "2026-11-10T16:30:00Z"
+     }
+    ],
+    "desde": "2026-11-10T13:40:00Z",
+    "par": {
+     "origens_conhecidas": [
+      "Booking.com",
+      "Airbnb",
+      "API",
+      "frontdesk-1"
+     ],
+     "rajada_cancelamentos": 3,
+     "rajada_horas": 3
+    },
+    "quartos": {
+     "9001": "room-a",
+     "9002": "room-b"
+    }
+   },
+   "expected": [
+    {
+     "alerta": "rajada de cancelamentos",
+     "canal": "booking",
+     "reservas": [
+      80,
+      81,
+      82,
+      83,
+      84,
+      85
+     ]
+    }
+   ]
+  }
+ ]
+}

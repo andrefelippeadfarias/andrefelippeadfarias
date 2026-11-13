@@ -1,0 +1,956 @@
+{
+ "function": "cota_recalculo.situacao",
+ "php_target": "Ritmo\\Application\\Write\\Quota\\RecalcQuota::verdict()",
+ "notes": "Limits of the reference: 3 per room in a rolling 24 h (strictly greater than now-24h), 10 per account per rolling minute, 1 minute account wait after any 429, failures and 429 of the room since the run start block the room until the next run. run_start null = the reference's last scheduled routine (07:53, 10:53, 13:53, 16:53, 19:53 America/Sao_Paulo): parity preset only; the plugin passes the run's own start instant. blocked_by maps the reference's messages to codes. Timezone America/Sao_Paulo.",
+ "cases": [
+  {
+   "name": "empty_ledger",
+   "input": {
+    "attempts": [],
+    "room": "R1",
+    "now": "2026-11-07T12:00:00Z",
+    "run_start": null,
+    "future_slack_seconds": 0
+   },
+   "expected": {
+    "allowed": true,
+    "blocked_by": [],
+    "used": 0,
+    "left": 3,
+    "by_result": {
+     "ok": 0,
+     "falha": 0,
+     "429": 0
+    },
+    "room_slot_opens_at": null,
+    "account_slot_opens_at": null,
+    "account_429_wait_until": null,
+    "run_start": "2026-11-07T10:53:00Z",
+    "account_last_minute": 0,
+    "morning_slot_warning": false
+   }
+  },
+  {
+   "name": "three_in_24h_block_until_oldest_plus_24h",
+   "input": {
+    "attempts": [
+     {
+      "quarto": "R1",
+      "em": "2026-11-07T10:55:00Z",
+      "resultado": "ok"
+     },
+     {
+      "quarto": "R1",
+      "em": "2026-11-07T13:00:00Z",
+      "resultado": "ok"
+     },
+     {
+      "quarto": "R1",
+      "em": "2026-11-07T20:00:00Z",
+      "resultado": "ok"
+     }
+    ],
+    "room": "R1",
+    "now": "2026-11-07T22:00:00Z",
+    "run_start": null,
+    "future_slack_seconds": 0
+   },
+   "expected": {
+    "allowed": false,
+    "blocked_by": [
+     "room_quota_spent"
+    ],
+    "used": 3,
+    "left": 0,
+    "by_result": {
+     "ok": 3,
+     "falha": 0,
+     "429": 0
+    },
+    "room_slot_opens_at": "2026-11-08T10:55:00Z",
+    "account_slot_opens_at": null,
+    "account_429_wait_until": null,
+    "run_start": "2026-11-07T19:53:00Z",
+    "account_last_minute": 0,
+    "morning_slot_warning": false
+   }
+  },
+  {
+   "name": "one_second_before_the_slot_reopens",
+   "input": {
+    "attempts": [
+     {
+      "quarto": "R1",
+      "em": "2026-11-07T10:55:00Z",
+      "resultado": "ok"
+     },
+     {
+      "quarto": "R1",
+      "em": "2026-11-07T13:00:00Z",
+      "resultado": "ok"
+     },
+     {
+      "quarto": "R1",
+      "em": "2026-11-07T20:00:00Z",
+      "resultado": "ok"
+     }
+    ],
+    "room": "R1",
+    "now": "2026-11-08T10:54:59Z",
+    "run_start": null,
+    "future_slack_seconds": 0
+   },
+   "expected": {
+    "allowed": false,
+    "blocked_by": [
+     "room_quota_spent"
+    ],
+    "used": 3,
+    "left": 0,
+    "by_result": {
+     "ok": 3,
+     "falha": 0,
+     "429": 0
+    },
+    "room_slot_opens_at": "2026-11-08T10:55:00Z",
+    "account_slot_opens_at": null,
+    "account_429_wait_until": null,
+    "run_start": "2026-11-08T10:53:00Z",
+    "account_last_minute": 0,
+    "morning_slot_warning": false
+   }
+  },
+  {
+   "name": "exactly_24h_after_the_oldest_is_free",
+   "input": {
+    "attempts": [
+     {
+      "quarto": "R1",
+      "em": "2026-11-07T10:55:00Z",
+      "resultado": "ok"
+     },
+     {
+      "quarto": "R1",
+      "em": "2026-11-07T13:00:00Z",
+      "resultado": "ok"
+     },
+     {
+      "quarto": "R1",
+      "em": "2026-11-07T20:00:00Z",
+      "resultado": "ok"
+     }
+    ],
+    "room": "R1",
+    "now": "2026-11-08T10:55:00Z",
+    "run_start": null,
+    "future_slack_seconds": 0
+   },
+   "expected": {
+    "allowed": true,
+    "blocked_by": [],
+    "used": 2,
+    "left": 1,
+    "by_result": {
+     "ok": 2,
+     "falha": 0,
+     "429": 0
+    },
+    "room_slot_opens_at": null,
+    "account_slot_opens_at": null,
+    "account_429_wait_until": null,
+    "run_start": "2026-11-08T10:53:00Z",
+    "account_last_minute": 0,
+    "morning_slot_warning": false
+   }
+  },
+  {
+   "name": "other_room_unaffected",
+   "input": {
+    "attempts": [
+     {
+      "quarto": "R1",
+      "em": "2026-11-07T10:55:00Z",
+      "resultado": "ok"
+     },
+     {
+      "quarto": "R1",
+      "em": "2026-11-07T13:00:00Z",
+      "resultado": "ok"
+     },
+     {
+      "quarto": "R1",
+      "em": "2026-11-07T20:00:00Z",
+      "resultado": "ok"
+     }
+    ],
+    "room": "R2",
+    "now": "2026-11-07T22:00:00Z",
+    "run_start": null,
+    "future_slack_seconds": 0
+   },
+   "expected": {
+    "allowed": true,
+    "blocked_by": [],
+    "used": 0,
+    "left": 3,
+    "by_result": {
+     "ok": 0,
+     "falha": 0,
+     "429": 0
+    },
+    "room_slot_opens_at": null,
+    "account_slot_opens_at": null,
+    "account_429_wait_until": null,
+    "run_start": "2026-11-07T19:53:00Z",
+    "account_last_minute": 0,
+    "morning_slot_warning": false
+   }
+  },
+  {
+   "name": "four_in_window_reopens_after_the_second",
+   "input": {
+    "attempts": [
+     {
+      "quarto": "R1",
+      "em": "2026-11-07T10:00:00Z",
+      "resultado": "ok"
+     },
+     {
+      "quarto": "R1",
+      "em": "2026-11-07T11:00:00Z",
+      "resultado": "ok"
+     },
+     {
+      "quarto": "R1",
+      "em": "2026-11-07T12:00:00Z",
+      "resultado": "ok"
+     },
+     {
+      "quarto": "R1",
+      "em": "2026-11-07T15:00:00Z",
+      "resultado": "429"
+     }
+    ],
+    "room": "R1",
+    "now": "2026-11-07T23:00:00Z",
+    "run_start": null,
+    "future_slack_seconds": 0
+   },
+   "expected": {
+    "allowed": false,
+    "blocked_by": [
+     "room_quota_spent"
+    ],
+    "used": 4,
+    "left": 0,
+    "by_result": {
+     "ok": 3,
+     "falha": 0,
+     "429": 1
+    },
+    "room_slot_opens_at": "2026-11-08T11:00:00Z",
+    "account_slot_opens_at": null,
+    "account_429_wait_until": null,
+    "run_start": "2026-11-07T22:53:00Z",
+    "account_last_minute": 0,
+    "morning_slot_warning": false
+   }
+  },
+  {
+   "name": "failure_and_429_count",
+   "input": {
+    "attempts": [
+     {
+      "quarto": "R1",
+      "em": "2026-11-07T10:55:00Z",
+      "resultado": "ok"
+     },
+     {
+      "quarto": "R1",
+      "em": "2026-11-07T11:00:00Z",
+      "resultado": "falha",
+      "erro": "Beds24 appears to be temporarily unavailable or under high load"
+     },
+     {
+      "quarto": "R1",
+      "em": "2026-11-07T14:00:00Z",
+      "resultado": "429"
+     }
+    ],
+    "room": "R1",
+    "now": "2026-11-07T20:00:00Z",
+    "run_start": null,
+    "future_slack_seconds": 0
+   },
+   "expected": {
+    "allowed": false,
+    "blocked_by": [
+     "room_quota_spent"
+    ],
+    "used": 3,
+    "left": 0,
+    "by_result": {
+     "ok": 1,
+     "falha": 1,
+     "429": 1
+    },
+    "room_slot_opens_at": "2026-11-08T10:55:00Z",
+    "account_slot_opens_at": null,
+    "account_429_wait_until": null,
+    "run_start": "2026-11-07T19:53:00Z",
+    "account_last_minute": 0,
+    "morning_slot_warning": false
+   }
+  },
+  {
+   "name": "attempt_after_the_clock_does_not_count",
+   "input": {
+    "attempts": [
+     {
+      "quarto": "R1",
+      "em": "2026-11-07T12:00:00Z",
+      "resultado": "ok"
+     }
+    ],
+    "room": "R1",
+    "now": "2026-11-07T11:00:00Z",
+    "run_start": null,
+    "future_slack_seconds": 0
+   },
+   "expected": {
+    "allowed": true,
+    "blocked_by": [],
+    "used": 0,
+    "left": 3,
+    "by_result": {
+     "ok": 0,
+     "falha": 0,
+     "429": 0
+    },
+    "room_slot_opens_at": null,
+    "account_slot_opens_at": null,
+    "account_429_wait_until": null,
+    "run_start": "2026-11-07T10:53:00Z",
+    "account_last_minute": 0,
+    "morning_slot_warning": false
+   }
+  },
+  {
+   "name": "attempt_3_min_ahead_counts_with_5_min_slack",
+   "input": {
+    "attempts": [
+     {
+      "quarto": "R1",
+      "em": "2026-11-07T12:03:00Z",
+      "resultado": "ok"
+     },
+     {
+      "quarto": "R1",
+      "em": "2026-11-07T09:00:00Z",
+      "resultado": "ok"
+     },
+     {
+      "quarto": "R1",
+      "em": "2026-11-07T10:00:00Z",
+      "resultado": "ok"
+     }
+    ],
+    "room": "R1",
+    "now": "2026-11-07T12:00:00Z",
+    "run_start": null,
+    "future_slack_seconds": 300
+   },
+   "expected": {
+    "allowed": false,
+    "blocked_by": [
+     "room_quota_spent"
+    ],
+    "used": 3,
+    "left": 0,
+    "by_result": {
+     "ok": 3,
+     "falha": 0,
+     "429": 0
+    },
+    "room_slot_opens_at": "2026-11-08T09:00:00Z",
+    "account_slot_opens_at": null,
+    "account_429_wait_until": null,
+    "run_start": "2026-11-07T10:53:00Z",
+    "account_last_minute": 1,
+    "morning_slot_warning": false
+   }
+  },
+  {
+   "name": "upstream_unavailable_this_run_blocks_until_next_run",
+   "input": {
+    "attempts": [
+     {
+      "quarto": "R1",
+      "em": "2026-11-07T10:56:00Z",
+      "resultado": "falha",
+      "erro": "Beds24 appears to be temporarily unavailable or under high load"
+     }
+    ],
+    "room": "R1",
+    "now": "2026-11-07T11:30:00Z",
+    "run_start": null,
+    "future_slack_seconds": 0
+   },
+   "expected": {
+    "allowed": false,
+    "blocked_by": [
+     "room_upstream_unavailable_this_run"
+    ],
+    "used": 1,
+    "left": 2,
+    "by_result": {
+     "ok": 0,
+     "falha": 1,
+     "429": 0
+    },
+    "room_slot_opens_at": null,
+    "account_slot_opens_at": null,
+    "account_429_wait_until": null,
+    "run_start": "2026-11-07T10:53:00Z",
+    "account_last_minute": 0,
+    "morning_slot_warning": false
+   }
+  },
+  {
+   "name": "upstream_failure_before_the_run_does_not_block",
+   "input": {
+    "attempts": [
+     {
+      "quarto": "R1",
+      "em": "2026-11-07T10:56:00Z",
+      "resultado": "falha",
+      "erro": "Beds24 appears to be temporarily unavailable or under high load"
+     }
+    ],
+    "room": "R1",
+    "now": "2026-11-07T14:00:00Z",
+    "run_start": null,
+    "future_slack_seconds": 0
+   },
+   "expected": {
+    "allowed": true,
+    "blocked_by": [],
+    "used": 1,
+    "left": 2,
+    "by_result": {
+     "ok": 0,
+     "falha": 1,
+     "429": 0
+    },
+    "room_slot_opens_at": null,
+    "account_slot_opens_at": null,
+    "account_429_wait_until": null,
+    "run_start": "2026-11-07T13:53:00Z",
+    "account_last_minute": 0,
+    "morning_slot_warning": false
+   }
+  },
+  {
+   "name": "429_this_run_blocks",
+   "input": {
+    "attempts": [
+     {
+      "quarto": "R1",
+      "em": "2026-11-07T14:00:00Z",
+      "resultado": "429"
+     }
+    ],
+    "room": "R1",
+    "now": "2026-11-07T14:30:00Z",
+    "run_start": null,
+    "future_slack_seconds": 0
+   },
+   "expected": {
+    "allowed": false,
+    "blocked_by": [
+     "room_429_this_run"
+    ],
+    "used": 1,
+    "left": 2,
+    "by_result": {
+     "ok": 0,
+     "falha": 0,
+     "429": 1
+    },
+    "room_slot_opens_at": null,
+    "account_slot_opens_at": null,
+    "account_429_wait_until": null,
+    "run_start": "2026-11-07T13:53:00Z",
+    "account_last_minute": 0,
+    "morning_slot_warning": false
+   }
+  },
+  {
+   "name": "unknown_failure_this_run_blocks",
+   "input": {
+    "attempts": [
+     {
+      "quarto": "R1",
+      "em": "2026-11-07T14:00:00Z",
+      "resultado": "falha",
+      "erro": "timeout"
+     }
+    ],
+    "room": "R1",
+    "now": "2026-11-07T14:30:00Z",
+    "run_start": null,
+    "future_slack_seconds": 0
+   },
+   "expected": {
+    "allowed": false,
+    "blocked_by": [
+     "room_failure_this_run"
+    ],
+    "used": 1,
+    "left": 2,
+    "by_result": {
+     "ok": 0,
+     "falha": 1,
+     "429": 0
+    },
+    "room_slot_opens_at": null,
+    "account_slot_opens_at": null,
+    "account_429_wait_until": null,
+    "run_start": "2026-11-07T13:53:00Z",
+    "account_last_minute": 0,
+    "morning_slot_warning": false
+   }
+  },
+  {
+   "name": "ok_this_run_does_not_block",
+   "input": {
+    "attempts": [
+     {
+      "quarto": "R1",
+      "em": "2026-11-07T14:00:00Z",
+      "resultado": "ok"
+     }
+    ],
+    "room": "R1",
+    "now": "2026-11-07T14:30:00Z",
+    "run_start": null,
+    "future_slack_seconds": 0
+   },
+   "expected": {
+    "allowed": true,
+    "blocked_by": [],
+    "used": 1,
+    "left": 2,
+    "by_result": {
+     "ok": 1,
+     "falha": 0,
+     "429": 0
+    },
+    "room_slot_opens_at": null,
+    "account_slot_opens_at": null,
+    "account_429_wait_until": null,
+    "run_start": "2026-11-07T13:53:00Z",
+    "account_last_minute": 0,
+    "morning_slot_warning": false
+   }
+  },
+  {
+   "name": "explicit_run_start",
+   "input": {
+    "attempts": [
+     {
+      "quarto": "R1",
+      "em": "2026-11-07T14:00:00Z",
+      "resultado": "falha",
+      "erro": "x"
+     }
+    ],
+    "room": "R1",
+    "now": "2026-11-07T14:30:00Z",
+    "run_start": "2026-11-07T14:10:00Z",
+    "future_slack_seconds": 0
+   },
+   "expected": {
+    "allowed": true,
+    "blocked_by": [],
+    "used": 1,
+    "left": 2,
+    "by_result": {
+     "ok": 0,
+     "falha": 1,
+     "429": 0
+    },
+    "room_slot_opens_at": null,
+    "account_slot_opens_at": null,
+    "account_429_wait_until": null,
+    "run_start": "2026-11-07T14:10:00Z",
+    "account_last_minute": 0,
+    "morning_slot_warning": false
+   }
+  },
+  {
+   "name": "ten_per_minute_on_the_account",
+   "input": {
+    "attempts": [
+     {
+      "quarto": "S1",
+      "em": "2026-11-07T12:00:00Z",
+      "resultado": "ok"
+     },
+     {
+      "quarto": "R2",
+      "em": "2026-11-07T12:00:05Z",
+      "resultado": "ok"
+     },
+     {
+      "quarto": "S1",
+      "em": "2026-11-07T12:00:10Z",
+      "resultado": "ok"
+     },
+     {
+      "quarto": "R2",
+      "em": "2026-11-07T12:00:15Z",
+      "resultado": "ok"
+     },
+     {
+      "quarto": "S1",
+      "em": "2026-11-07T12:00:20Z",
+      "resultado": "ok"
+     },
+     {
+      "quarto": "R2",
+      "em": "2026-11-07T12:00:25Z",
+      "resultado": "ok"
+     },
+     {
+      "quarto": "S1",
+      "em": "2026-11-07T12:00:30Z",
+      "resultado": "ok"
+     },
+     {
+      "quarto": "R2",
+      "em": "2026-11-07T12:00:35Z",
+      "resultado": "ok"
+     },
+     {
+      "quarto": "S1",
+      "em": "2026-11-07T12:00:40Z",
+      "resultado": "ok"
+     },
+     {
+      "quarto": "R2",
+      "em": "2026-11-07T12:00:45Z",
+      "resultado": "ok"
+     }
+    ],
+    "room": "R1",
+    "now": "2026-11-07T12:00:50Z",
+    "run_start": null,
+    "future_slack_seconds": 0
+   },
+   "expected": {
+    "allowed": false,
+    "blocked_by": [
+     "account_minute_limit"
+    ],
+    "used": 0,
+    "left": 3,
+    "by_result": {
+     "ok": 0,
+     "falha": 0,
+     "429": 0
+    },
+    "room_slot_opens_at": null,
+    "account_slot_opens_at": "2026-11-07T12:01:00Z",
+    "account_429_wait_until": null,
+    "run_start": "2026-11-07T10:53:00Z",
+    "account_last_minute": 10,
+    "morning_slot_warning": false
+   }
+  },
+  {
+   "name": "429_of_another_room_holds_every_room_one_minute",
+   "input": {
+    "attempts": [
+     {
+      "quarto": "R2",
+      "em": "2026-11-07T12:00:10Z",
+      "resultado": "429"
+     }
+    ],
+    "room": "R1",
+    "now": "2026-11-07T12:00:40Z",
+    "run_start": null,
+    "future_slack_seconds": 0
+   },
+   "expected": {
+    "allowed": false,
+    "blocked_by": [
+     "account_429_wait"
+    ],
+    "used": 0,
+    "left": 3,
+    "by_result": {
+     "ok": 0,
+     "falha": 0,
+     "429": 0
+    },
+    "room_slot_opens_at": null,
+    "account_slot_opens_at": null,
+    "account_429_wait_until": "2026-11-07T12:01:10Z",
+    "run_start": "2026-11-07T10:53:00Z",
+    "account_last_minute": 1,
+    "morning_slot_warning": false
+   }
+  },
+  {
+   "name": "429_of_another_room_released_after_one_minute",
+   "input": {
+    "attempts": [
+     {
+      "quarto": "R2",
+      "em": "2026-11-07T12:00:10Z",
+      "resultado": "429"
+     }
+    ],
+    "room": "R1",
+    "now": "2026-11-07T12:01:11Z",
+    "run_start": null,
+    "future_slack_seconds": 0
+   },
+   "expected": {
+    "allowed": true,
+    "blocked_by": [],
+    "used": 0,
+    "left": 3,
+    "by_result": {
+     "ok": 0,
+     "falha": 0,
+     "429": 0
+    },
+    "room_slot_opens_at": null,
+    "account_slot_opens_at": null,
+    "account_429_wait_until": null,
+    "run_start": "2026-11-07T10:53:00Z",
+    "account_last_minute": 0,
+    "morning_slot_warning": false
+   }
+  },
+  {
+   "name": "own_429_before_the_run_holds_one_minute",
+   "input": {
+    "attempts": [
+     {
+      "quarto": "R1",
+      "em": "2026-11-07T13:52:30Z",
+      "resultado": "429"
+     }
+    ],
+    "room": "R1",
+    "now": "2026-11-07T13:53:10Z",
+    "run_start": null,
+    "future_slack_seconds": 0
+   },
+   "expected": {
+    "allowed": false,
+    "blocked_by": [
+     "account_429_wait"
+    ],
+    "used": 1,
+    "left": 2,
+    "by_result": {
+     "ok": 0,
+     "falha": 0,
+     "429": 1
+    },
+    "room_slot_opens_at": null,
+    "account_slot_opens_at": null,
+    "account_429_wait_until": "2026-11-07T13:53:30Z",
+    "run_start": "2026-11-07T13:53:00Z",
+    "account_last_minute": 1,
+    "morning_slot_warning": false
+   }
+  },
+  {
+   "name": "400_of_another_room_does_not_hold_the_account",
+   "input": {
+    "attempts": [
+     {
+      "quarto": "R2",
+      "em": "2026-11-07T12:00:10Z",
+      "resultado": "falha",
+      "erro": "Beds24 appears to be temporarily unavailable or under high load"
+     }
+    ],
+    "room": "R1",
+    "now": "2026-11-07T12:00:40Z",
+    "run_start": null,
+    "future_slack_seconds": 0
+   },
+   "expected": {
+    "allowed": true,
+    "blocked_by": [],
+    "used": 0,
+    "left": 3,
+    "by_result": {
+     "ok": 0,
+     "falha": 0,
+     "429": 0
+    },
+    "room_slot_opens_at": null,
+    "account_slot_opens_at": null,
+    "account_429_wait_until": null,
+    "run_start": "2026-11-07T10:53:00Z",
+    "account_last_minute": 1,
+    "morning_slot_warning": false
+   }
+  },
+  {
+   "name": "third_attempt_takes_tomorrows_morning_slot_warning",
+   "input": {
+    "attempts": [
+     {
+      "quarto": "R1",
+      "em": "2026-11-07T11:00:00Z",
+      "resultado": "ok"
+     },
+     {
+      "quarto": "R1",
+      "em": "2026-11-07T17:00:00Z",
+      "resultado": "ok"
+     }
+    ],
+    "room": "R1",
+    "now": "2026-11-07T22:30:00Z",
+    "run_start": null,
+    "future_slack_seconds": 0
+   },
+   "expected": {
+    "allowed": true,
+    "blocked_by": [],
+    "used": 2,
+    "left": 1,
+    "by_result": {
+     "ok": 2,
+     "falha": 0,
+     "429": 0
+    },
+    "room_slot_opens_at": null,
+    "account_slot_opens_at": null,
+    "account_429_wait_until": null,
+    "run_start": "2026-11-07T19:53:00Z",
+    "account_last_minute": 0,
+    "morning_slot_warning": true
+   }
+  },
+  {
+   "name": "no_warning_when_the_slot_reopens_before_the_morning_run",
+   "input": {
+    "attempts": [
+     {
+      "quarto": "R1",
+      "em": "2026-11-07T09:00:00Z",
+      "resultado": "ok"
+     },
+     {
+      "quarto": "R1",
+      "em": "2026-11-07T20:00:00Z",
+      "resultado": "ok"
+     }
+    ],
+    "room": "R1",
+    "now": "2026-11-07T23:00:00Z",
+    "run_start": null,
+    "future_slack_seconds": 0
+   },
+   "expected": {
+    "allowed": true,
+    "blocked_by": [],
+    "used": 2,
+    "left": 1,
+    "by_result": {
+     "ok": 2,
+     "falha": 0,
+     "429": 0
+    },
+    "room_slot_opens_at": null,
+    "account_slot_opens_at": null,
+    "account_429_wait_until": null,
+    "run_start": "2026-11-07T22:53:00Z",
+    "account_last_minute": 0,
+    "morning_slot_warning": false
+   }
+  },
+  {
+   "name": "no_warning_on_the_second_attempt",
+   "input": {
+    "attempts": [
+     {
+      "quarto": "R1",
+      "em": "2026-11-07T11:00:00Z",
+      "resultado": "ok"
+     }
+    ],
+    "room": "R1",
+    "now": "2026-11-07T22:30:00Z",
+    "run_start": null,
+    "future_slack_seconds": 0
+   },
+   "expected": {
+    "allowed": true,
+    "blocked_by": [],
+    "used": 1,
+    "left": 2,
+    "by_result": {
+     "ok": 1,
+     "falha": 0,
+     "429": 0
+    },
+    "room_slot_opens_at": null,
+    "account_slot_opens_at": null,
+    "account_429_wait_until": null,
+    "run_start": "2026-11-07T19:53:00Z",
+    "account_last_minute": 0,
+    "morning_slot_warning": false
+   }
+  },
+  {
+   "name": "night_attempt_warns_about_todays_morning_run",
+   "input": {
+    "attempts": [
+     {
+      "quarto": "R1",
+      "em": "2026-11-07T11:00:00Z",
+      "resultado": "ok"
+     },
+     {
+      "quarto": "R1",
+      "em": "2026-11-07T15:00:00Z",
+      "resultado": "ok"
+     }
+    ],
+    "room": "R1",
+    "now": "2026-11-08T03:30:00Z",
+    "run_start": null,
+    "future_slack_seconds": 0
+   },
+   "expected": {
+    "allowed": true,
+    "blocked_by": [],
+    "used": 2,
+    "left": 1,
+    "by_result": {
+     "ok": 2,
+     "falha": 0,
+     "429": 0
+    },
+    "room_slot_opens_at": null,
+    "account_slot_opens_at": null,
+    "account_429_wait_until": null,
+    "run_start": "2026-11-07T22:53:00Z",
+    "account_last_minute": 0,
+    "morning_slot_warning": true
+   }
+  }
+ ]
+}

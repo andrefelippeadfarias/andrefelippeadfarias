@@ -10,13 +10,14 @@ use DateTimeZone;
 /**
  * The read side of the PriceLabs Customer API in its real response format: GET /listings,
  * POST /listing_prices (a read that takes its parameters in the body) and
- * GET /listings/{id}/overrides. Every other request that is not a GET is refused with 405.
+ * GET /listings/{id}/overrides. Every other request that is not a GET is refused with 405,
+ * unless the writable world is on (PriceLabsWrites).
  */
 final class PriceLabsApi
 {
     private const MAX_NIGHTS = 500;
 
-    public function __construct(private readonly Scenario $scenario)
+    public function __construct(private readonly Scenario $scenario, private readonly ?WriteWorld $world = null)
     {
     }
 
@@ -36,6 +37,12 @@ final class PriceLabsApi
 
         if ($method === 'POST' && $path === '/listing_prices') {
             return $this->prices($body);
+        }
+        if ($method !== 'GET' && $this->world !== null && $this->world->enabled()) {
+            $reply = (new PriceLabsWrites($this->scenario, $this->world))->handle($method, $path, $body);
+            if ($reply !== null) {
+                return $reply;
+            }
         }
         if ($method !== 'GET') {
             return self::error(405, 'READ_ONLY_SIMULATOR');

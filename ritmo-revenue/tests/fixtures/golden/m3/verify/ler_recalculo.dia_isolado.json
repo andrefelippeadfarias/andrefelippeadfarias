@@ -1,0 +1,121 @@
+{
+ "function": "ler_recalculo.dia_isolado",
+ "php_target": "Ritmo\\Domain\\Write\\Confirm\\IsolatedNight::is()",
+ "notes": "A free night between two sold-out nights: the pricing system shows minimum stay 1 by its own orphan-day rule; a minimum-stay mismatch there is not a write failure (do not rewrite).",
+ "cases": [
+  {
+   "name": "free_between_two_sold",
+   "input": {
+    "calendar": {
+     "2026-11-09": {
+      "mu_occupancy": "7/7"
+     },
+     "2026-11-10": {
+      "mu_occupancy": "3/7"
+     },
+     "2026-11-11": {
+      "mu_occupancy": "7/7"
+     }
+    },
+    "night": "2026-11-10",
+    "units": 7
+   },
+   "expected": true
+  },
+  {
+   "name": "sold_between_two_sold_is_not_isolated",
+   "input": {
+    "calendar": {
+     "2026-11-09": {
+      "mu_occupancy": "7/7"
+     },
+     "2026-11-10": {
+      "mu_occupancy": "7/7"
+     },
+     "2026-11-11": {
+      "mu_occupancy": "7/7"
+     }
+    },
+    "night": "2026-11-10",
+    "units": 7
+   },
+   "expected": false
+  },
+  {
+   "name": "only_one_side_sold",
+   "input": {
+    "calendar": {
+     "2026-11-09": {
+      "mu_occupancy": "7/7"
+     },
+     "2026-11-10": {
+      "mu_occupancy": "3/7"
+     },
+     "2026-11-11": {
+      "mu_occupancy": "3/7"
+     }
+    },
+    "night": "2026-11-10",
+    "units": 7
+   },
+   "expected": false
+  },
+  {
+   "name": "missing_neighbour",
+   "input": {
+    "calendar": {
+     "2026-11-10": {
+      "mu_occupancy": "3/7"
+     },
+     "2026-11-11": {
+      "mu_occupancy": "7/7"
+     }
+    },
+    "night": "2026-11-10",
+    "units": 7
+   },
+   "expected": false
+  },
+  {
+   "name": "single_unit_by_bookings",
+   "input": {
+    "calendar": {
+     "2026-11-09": {
+      "mu_occupancy": "-1",
+      "num_bookings": "1"
+     },
+     "2026-11-10": {
+      "mu_occupancy": "-1",
+      "num_bookings": "0"
+     },
+     "2026-11-11": {
+      "mu_occupancy": "-1",
+      "num_bookings": "1"
+     }
+    },
+    "night": "2026-11-10",
+    "units": 1
+   },
+   "expected": true
+  },
+  {
+   "name": "collected_calendar_field",
+   "input": {
+    "calendar": {
+     "2026-11-09": {
+      "multi_unit_occupancy": "2/2"
+     },
+     "2026-11-10": {
+      "multi_unit_occupancy": "1/2"
+     },
+     "2026-11-11": {
+      "multi_unit_occupancy": "2/2"
+     }
+    },
+    "night": "2026-11-10",
+    "units": 2
+   },
+   "expected": true
+  }
+ ]
+}

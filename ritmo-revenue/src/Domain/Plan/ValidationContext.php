@@ -9,12 +9,14 @@ use Ritmo\Domain\Orders\OrderBook;
 use Ritmo\Domain\Plan\Port\NoStrategy;
 use Ritmo\Domain\Plan\Port\StrategyGuard;
 use Ritmo\Domain\Relations\Coherence\RelationReport;
+use Ritmo\Domain\Relations\RelationGraph;
 use Ritmo\Domain\Relations\Validate\DiscountBandCheck;
 
 /**
  * What the validator reads besides the plan and the rule set: the fresh calendar, the owner
  * orders, the strategies behind them, the stay rules, the discount bands with the run's relation
- * report, and the listing values at the start of the week. Every part is optional: what is
+ * report, the listing values at the start of the week and the relations between the rooms (the
+ * order the plan must keep after refusals, Validation\RelationOrderCheck). Every part is optional: what is
  * missing turns its checks off (or, for a decision that needs the calendar, refuses it).
  */
 final class ValidationContext
@@ -32,6 +34,7 @@ final class ValidationContext
         public readonly ?RelationReport $relationReport = null,
         public readonly array $weeklyReference = [],
         public readonly bool $acceptStaleCalendar = false,
+        public readonly ?RelationGraph $relations = null,
     ) {
     }
 }

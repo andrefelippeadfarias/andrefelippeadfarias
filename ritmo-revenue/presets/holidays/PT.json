@@ -1,0 +1,177 @@
+{
+ "format": "ritmo-revenue-holidays",
+ "version": 1,
+ "country": "PT",
+ "names": {
+  "en": "Portugal",
+  "pt_BR": "Portugal",
+  "pt": "Portugal"
+ },
+ "source": "Código do Trabalho, articles 234 and 235 (Lei n.º 7/2009, as amended by Lei n.º 8/2016); see docs/EDITORS.md.",
+ "days_off": [
+  5,
+  6
+ ],
+ "bridges": true,
+ "holidays": [
+  {
+   "id": "new_year",
+   "rule": {
+    "fixed": "01-01"
+   },
+   "names": {
+    "en": "New Year's Day",
+    "pt": "Ano Novo"
+   }
+  },
+  {
+   "id": "carnival_tuesday",
+   "rule": {
+    "easter": -47
+   },
+   "names": {
+    "en": "Carnival Tuesday",
+    "pt": "Carnaval"
+   },
+   "kind": "optional"
+  },
+  {
+   "id": "good_friday",
+   "rule": {
+    "easter": -2
+   },
+   "names": {
+    "en": "Good Friday",
+    "pt": "Sexta-feira Santa"
+   }
+  },
+  {
+   "id": "easter",
+   "rule": {
+    "easter": 0
+   },
+   "names": {
+    "en": "Easter Sunday",
+    "pt": "Páscoa"
+   }
+  },
+  {
+   "id": "freedom_day",
+   "rule": {
+    "fixed": "04-25"
+   },
+   "names": {
+    "en": "Freedom Day",
+    "pt": "Dia da Liberdade"
+   }
+  },
+  {
+   "id": "labour_day",
+   "rule": {
+    "fixed": "05-01"
+   },
+   "names": {
+    "en": "Labour Day",
+    "pt": "Dia do Trabalhador"
+   }
+  },
+  {
+   "id": "corpus_christi",
+   "rule": {
+    "easter": 60
+   },
+   "names": {
+    "en": "Corpus Christi",
+    "pt": "Corpo de Deus"
+   }
+  },
+  {
+   "id": "portugal_day",
+   "rule": {
+    "fixed": "06-10"
+   },
+   "names": {
+    "en": "Portugal Day",
+    "pt": "Dia de Portugal"
+   }
+  },
+  {
+   "id": "assumption",
+   "rule": {
+    "fixed": "08-15"
+   },
+   "names": {
+    "en": "Assumption Day",
+    "pt": "Assunção de Nossa Senhora"
+   }
+  },
+  {
+   "id": "republic",
+   "rule": {
+    "fixed": "10-05"
+   },
+   "names": {
+    "en": "Republic Day",
+    "pt": "Implantação da República"
+   }
+  },
+  {
+   "id": "all_saints",
+   "rule": {
+    "fixed": "11-01"
+   },
+   "names": {
+    "en": "All Saints' Day",
+    "pt": "Dia de Todos os Santos"
+   }
+  },
+  {
+   "id": "restoration",
+   "rule": {
+    "fixed": "12-01"
+   },
+   "names": {
+    "en": "Restoration of Independence",
+    "pt": "Restauração da Independência"
+   }
+  },
+  {
+   "id": "immaculate_conception",
+   "rule": {
+    "fixed": "12-08"
+   },
+   "names": {
+    "en": "Immaculate Conception",
+    "pt": "Imaculada Conceição"
+   }
+  },
+  {
+   "id": "christmas",
+   "rule": {
+    "fixed": "12-25"
+   },
+   "names": {
+    "en": "Christmas Day",
+    "pt": "Natal"
+   }
+  }
+ ],
+ "checked": {
+  "2026": {
+   "new_year": "2026-01-01",
+   "carnival_tuesday": "2026-02-17",
+   "good_friday": "2026-04-03",
+   "easter": "2026-04-05",
+   "freedom_day": "2026-04-25",
+   "labour_day": "2026-05-01",
+   "corpus_christi": "2026-06-04",
+   "portugal_day": "2026-06-10",
+   "assumption": "2026-08-15",
+   "republic": "2026-10-05",
+   "all_saints": "2026-11-01",
+   "restoration": "2026-12-01",
+   "immaculate_conception": "2026-12-08",
+   "christmas": "2026-12-25"
+  }
+ }
+}

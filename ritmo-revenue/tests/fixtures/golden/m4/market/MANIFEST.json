@@ -1,0 +1,25 @@
+{
+ "generated_for": "2026-11-13",
+ "engine": ".claude/skills/gestao-receita-pousadas/scripts",
+ "engine_commit": "036acfa9db12515ac92461345c0ae1e10ef369fa",
+ "engine_dirty": false,
+ "python": "3.11.17",
+ "frozen_inputs": [
+  "sweep_1.json",
+  "sweep_2.json"
+ ],
+ "tolerance": {
+  "amounts": 0.01,
+  "percentiles_and_counts": "exact"
+ },
+ "files": {
+  "faixas_dono.quantil.json": 45,
+  "faixas_dono.r_hidro.json": 7,
+  "faixas_dono.estadia_por_noite.json": 14,
+  "faixas_dono.construir.json": 2,
+  "faixas_dono.mediana_por_mes.json": 30,
+  "faixas_dono.regua_noite.json": 89,
+  "faixas_dono.percentil_de.json": 7,
+  "faixas_dono.posicao.json": 20
+ }
+}

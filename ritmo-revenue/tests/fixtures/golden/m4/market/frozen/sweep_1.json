@@ -1,0 +1,3428 @@
+{
+ "estadias": [
+  {
+   "checkin": "2026-12-01",
+   "checkout": "2026-12-02",
+   "tipo": "label",
+   "hoteis": [
+    {
+     "slug": "comp-31",
+     "preco_total": 603.6
+    },
+    {
+     "slug": "comp-28",
+     "preco_total": 377.54
+    },
+    {
+     "slug": "comp-08",
+     "preco_total": 298.49
+    },
+    {
+     "slug": "comp-23",
+     "preco_total": 584.6
+    },
+    {
+     "slug": "comp-54",
+     "preco_total": 509.17
+    },
+    {
+     "slug": "comp-33",
+     "preco_total": 674.58
+    },
+    {
+     "slug": "comp-30",
+     "preco_total": 497.71
+    },
+    {
+     "slug": "comp-51",
+     "preco_total": 333.14
+    },
+    {
+     "slug": "comp-03",
+     "preco_total": 747.02
+    },
+    {
+     "slug": "comp-15",
+     "preco_total": 353.09
+    },
+    {
+     "slug": "comp-16",
+     "preco_total": 194.65
+    },
+    {
+     "slug": "comp-57",
+     "preco_total": 313.18
+    },
+    {
+     "slug": "comp-06",
+     "preco_total": 450.05
+    },
+    {
+     "slug": "comp-59",
+     "preco_total": 1142.08
+    },
+    {
+     "slug": "comp-58",
+     "preco_total": 764.87
+    },
+    {
+     "slug": "comp-48",
+     "preco_total": 285.7
+    },
+    {
+     "slug": "comp-21",
+     "preco_total": 236.49
+    },
+    {
+     "slug": "comp-46",
+     "preco_total": 908.18
+    },
+    {
+     "slug": "comp-50",
+     "preco_total": 347.31
+    },
+    {
+     "slug": "comp-47",
+     "preco_total": 667.18
+    },
+    {
+     "slug": "comp-35",
+     "preco_total": 374.56
+    },
+    {
+     "slug": "comp-49",
+     "preco_total": 421.83
+    },
+    {
+     "slug": "comp-29",
+     "preco_total": 302.13
+    },
+    {
+     "slug": "comp-42",
+     "preco_total": 699.89
+    },
+    {
+     "slug": "comp-41",
+     "preco_total": 265.96
+    },
+    {
+     "slug": "comp-17",
+     "preco_total": 153.37
+    },
+    {
+     "slug": "comp-20",
+     "preco_total": 701.24
+    },
+    {
+     "slug": "comp-60",
+     "preco_total": 537.11
+    },
+    {
+     "slug": "comp-53",
+     "preco_total": 403.25
+    },
+    {
+     "slug": "comp-32",
+     "preco_total": 392.55
+    },
+    {
+     "slug": "comp-55",
+     "preco_total": 183.56
+    },
+    {
+     "slug": "comp-12",
+     "preco_total": 550.67
+    },
+    {
+     "slug": "comp-24",
+     "preco_total": 438.04
+    },
+    {
+     "slug": "comp-34",
+     "preco_total": 367.04
+    },
+    {
+     "slug": "comp-14",
+     "preco_total": 455.65
+    },
+    {
+     "slug": "comp-22",
+     "preco_total": 394.37
+    },
+    {
+     "slug": "comp-45",
+     "preco_total": 205.47
+    },
+    {
+     "slug": "comp-02",
+     "preco_total": 697.2
+    },
+    {
+     "slug": "comp-04",
+     "preco_total": 611.16
+    },
+    {
+     "slug": "comp-26",
+     "preco_total": 274.08
+    },
+    {
+     "slug": "comp-09",
+     "preco_total": 369.51
+    },
+    {
+     "slug": "comp-52",
+     "preco_total": 705.58
+    },
+    {
+     "slug": "comp-40",
+     "preco_total": 499.27
+    },
+    {
+     "slug": "comp-07",
+     "preco_total": 364.02
+    },
+    {
+     "slug": "own-hotel",
+     "preco_total": 420
+    },
+    {
+     "slug": "not-in-catalog",
+     "preco_total": 336.0
+    },
+    {
+     "slug": "comp-56",
+     "preco_total": null
+    }
+   ]
+  },
+  {
+   "checkin": "2026-12-03",
+   "checkout": "2026-12-04",
+   "tipo": "label",
+   "hoteis": [
+    {
+     "slug": "comp-28",
+     "preco_total": 655.12
+    },
+    {
+     "slug": "comp-14",
+     "preco_total": 365.22
+    },
+    {
+     "slug": "comp-38",
+     "preco_total": 405.47
+    },
+    {
+     "slug": "comp-29",
+     "preco_total": 400.78
+    },
+    {
+     "slug": "comp-53",
+     "preco_total": 311.94
+    },
+    {
+     "slug": "comp-06",
+     "preco_total": 348.4
+    },
+    {
+     "slug": "comp-08",
+     "preco_total": 445.18
+    },
+    {
+     "slug": "comp-55",
+     "preco_total": 581.54
+    },
+    {
+     "slug": "comp-39",
+     "preco_total": 448.09
+    },
+    {
+     "slug": "comp-24",
+     "preco_total": 347.8
+    },
+    {
+     "slug": "comp-21",
+     "preco_total": 415.99
+    },
+    {
+     "slug": "comp-51",
+     "preco_total": 360.55
+    },
+    {
+     "slug": "comp-54",
+     "preco_total": 587.97
+    },
+    {
+     "slug": "comp-52",
+     "preco_total": 603.35
+    },
+    {
+     "slug": "comp-12",
+     "preco_total": 485.57
+    },
+    {
+     "slug": "comp-26",
+     "preco_total": 501.4
+    },
+    {
+     "slug": "comp-48",
+     "preco_total": 330.91
+    },
+    {
+     "slug": "comp-25",
+     "preco_total": 358.49
+    },
+    {
+     "slug": "comp-27",
+     "preco_total": 437.79
+    },
+    {
+     "slug": "comp-30",
+     "preco_total": 488.22
+    },
+    {
+     "slug": "comp-15",
+     "preco_total": 599.02
+    },
+    {
+     "slug": "comp-20",
+     "preco_total": 435.06
+    },
+    {
+     "slug": "own-hotel",
+     "preco_total": 400
+    },
+    {
+     "slug": "not-in-catalog",
+     "preco_total": 320.0
+    },
+    {
+     "slug": "comp-23",
+     "preco_total": null
+    }
+   ]
+  },
+  {
+   "checkin": "2026-12-04",
+   "checkout": "2026-12-06",
+   "tipo": "label",
+   "hoteis": [
+    {
+     "slug": "comp-44",
+     "preco_total": 1440.9
+    },
+    {
+     "slug": "comp-10",
+     "preco_total": 2456.88
+    },
+    {
+     "slug": "comp-53",
+     "preco_total": 1785.55
+    },
+    {
+     "slug": "comp-60",
+     "preco_total": 938.77
+    },
+    {
+     "slug": "comp-59",
+     "preco_total": 1382.26
+    },
+    {
+     "slug": "comp-26",
+     "preco_total": 1531.71
+    },
+    {
+     "slug": "comp-07",
+     "preco_total": 3139.96
+    },
+    {
+     "slug": "comp-32",
+     "preco_total": 879.65
+    },
+    {
+     "slug": "comp-19",
+     "preco_total": 1168.44
+    },
+    {
+     "slug": "comp-45",
+     "preco_total": 1581.76
+    },
+    {
+     "slug": "comp-50",
+     "preco_total": 1513.9
+    },
+    {
+     "slug": "comp-12",
+     "preco_total": 1862.15
+    },
+    {
+     "slug": "comp-52",
+     "preco_total": 1566.3
+    },
+    {
+     "slug": "comp-18",
+     "preco_total": 1597.15
+    },
+    {
+     "slug": "comp-09",
+     "preco_total": 847.23
+    },
+    {
+     "slug": "comp-20",
+     "preco_total": 1649.72
+    },
+    {
+     "slug": "comp-24",
+     "preco_total": 2629.25
+    },
+    {
+     "slug": "comp-30",
+     "preco_total": 1377.13
+    },
+    {
+     "slug": "comp-38",
+     "preco_total": 967.4
+    },
+    {
+     "slug": "comp-57",
+     "preco_total": 3081.87
+    },
+    {
+     "slug": "comp-47",
+     "preco_total": 1369.84
+    },
+    {
+     "slug": "comp-06",
+     "preco_total": 2153.1
+    },
+    {
+     "slug": "comp-01",
+     "preco_total": 1221.41
+    },
+    {
+     "slug": "comp-22",
+     "preco_total": 1361.77
+    },
+    {
+     "slug": "comp-28",
+     "preco_total": 1249.2
+    },
+    {
+     "slug": "comp-23",
+     "preco_total": 1568.73
+    },
+    {
+     "slug": "comp-11",
+     "preco_total": 2310.17
+    },
+    {
+     "slug": "comp-17",
+     "preco_total": 2834.66
+    },
+    {
+     "slug": "comp-27",
+     "preco_total": 690.97
+    },
+    {
+     "slug": "comp-42",
+     "preco_total": 1999.88
+    },
+    {
+     "slug": "comp-34",
+     "preco_total": 1035.28
+    },
+    {
+     "slug": "comp-55",
+     "preco_total": 1676.75
+    },
+    {
+     "slug": "comp-49",
+     "preco_total": 1468.32
+    },
+    {
+     "slug": "comp-58",
+     "preco_total": 1840.18
+    },
+    {
+     "slug": "comp-05",
+     "preco_total": 1490.25
+    },
+    {
+     "slug": "comp-46",
+     "preco_total": 1818.58
+    },
+    {
+     "slug": "comp-31",
+     "preco_total": 2752.64
+    },
+    {
+     "slug": "comp-03",
+     "preco_total": 2038.79
+    },
+    {
+     "slug": "comp-54",
+     "preco_total": 1292.22
+    },
+    {
+     "slug": "comp-48",
+     "preco_total": 2554.16
+    },
+    {
+     "slug": "comp-02",
+     "preco_total": 1941.01
+    },
+    {
+     "slug": "comp-08",
+     "preco_total": 1381.21
+    },
+    {
+     "slug": "comp-04",
+     "preco_total": 985.08
+    },
+    {
+     "slug": "comp-14",
+     "preco_total": 1344.96
+    },
+    {
+     "slug": "comp-15",
+     "preco_total": 774.43
+    },
+    {
+     "slug": "comp-40",
+     "preco_total": 1617.9
+    },
+    {
+     "slug": "comp-36",
+     "preco_total": 1623.3
+    },
+    {
+     "slug": "comp-21",
+     "preco_total": 1110.5
+    },
+    {
+     "slug": "comp-25",
+     "preco_total": 2723.73
+    },
+    {
+     "slug": "comp-33",
+     "preco_total": 1127.32
+    },
+    {
+     "slug": "comp-56",
+     "preco_total": 1718.68
+    },
+    {
+     "slug": "comp-51",
+     "preco_total": 1545.97
+    },
+    {
+     "slug": "own-hotel",
+     "preco_total": 1560
+    },
+    {
+     "slug": "not-in-catalog",
+     "preco_total": 1248.0
+    },
+    {
+     "slug": "comp-41",
+     "preco_total": null
+    }
+   ]
+  },
+  {
+   "checkin": "2026-12-08",
+   "checkout": "2026-12-09",
+   "tipo": "label",
+   "hoteis": [
+    {
+     "slug": "comp-19",
+     "preco_total": 546.27
+    },
+    {
+     "slug": "comp-24",
+     "preco_total": 459.28
+    },
+    {
+     "slug": "comp-26",
+     "preco_total": 191.4
+    },
+    {
+     "slug": "comp-13",
+     "preco_total": 543.04
+    },
+    {
+     "slug": "comp-36",
+     "preco_total": 173.61
+    },
+    {
+     "slug": "comp-02",
+     "preco_total": 341.38
+    },
+    {
+     "slug": "comp-56",
+     "preco_total": 608.25
+    },
+    {
+     "slug": "comp-48",
+     "preco_total": 387.94
+    },
+    {
+     "slug": "comp-58",
+     "preco_total": 415.18
+    },
+    {
+     "slug": "comp-15",
+     "preco_total": 379.3
+    },
+    {
+     "slug": "comp-41",
+     "preco_total": 254.91
+    },
+    {
+     "slug": "comp-34",
+     "preco_total": 426.96
+    },
+    {
+     "slug": "own-hotel",
+     "preco_total": 380
+    },
+    {
+     "slug": "not-in-catalog",
+     "preco_total": 304.0
+    },
+    {
+     "slug": "comp-14",
+     "preco_total": null
+    }
+   ]
+  },
+  {
+   "checkin": "2026-12-11",
+   "checkout": "2026-12-13",
+   "tipo": "label",
+   "hoteis": [
+    {
+     "slug": "comp-24",
+     "preco_total": 1070.14
+    },
+    {
+     "slug": "comp-28",
+     "preco_total": 1357.1
+    },
+    {
+     "slug": "comp-29",
+     "preco_total": 1288.27
+    },
+    {
+     "slug": "comp-57",
+     "preco_total": 1670.04
+    },
+    {
+     "slug": "comp-38",
+     "preco_total": 1909.6
+    },
+    {
+     "slug": "comp-25",
+     "preco_total": 2263.57
+    },
+    {
+     "slug": "comp-44",
+     "preco_total": 1791.1
+    },
+    {
+     "slug": "comp-34",
+     "preco_total": 2236.02
+    },
+    {
+     "slug": "comp-16",
+     "preco_total": 1397.55
+    },
+    {
+     "slug": "comp-55",
+     "preco_total": 2642.65
+    },
+    {
+     "slug": "comp-06",
+     "preco_total": 1366.42
+    },
+    {
+     "slug": "comp-48",
+     "preco_total": 1730.74
+    },
+    {
+     "slug": "comp-52",
+     "preco_total": 2664.64
+    },
+    {
+     "slug": "comp-27",
+     "preco_total": 1798.95
+    },
+    {
+     "slug": "comp-11",
+     "preco_total": 1166.86
+    },
+    {
+     "slug": "comp-07",
+     "preco_total": 1928.87
+    },
+    {
+     "slug": "comp-39",
+     "preco_total": 1504.23
+    },
+    {
+     "slug": "comp-32",
+     "preco_total": 1154.46
+    },
+    {
+     "slug": "comp-20",
+     "preco_total": 1364.09
+    },
+    {
+     "slug": "comp-30",
+     "preco_total": 2081.82
+    },
+    {
+     "slug": "comp-53",
+     "preco_total": 910.44
+    },
+    {
+     "slug": "comp-46",
+     "preco_total": 1059.66
+    },
+    {
+     "slug": "comp-50",
+     "preco_total": 1472.89
+    },
+    {
+     "slug": "comp-47",
+     "preco_total": 1946.13
+    },
+    {
+     "slug": "comp-31",
+     "preco_total": 1840.0
+    },
+    {
+     "slug": "comp-21",
+     "preco_total": 1247.85
+    },
+    {
+     "slug": "comp-54",
+     "preco_total": 817.03
+    },
+    {
+     "slug": "comp-60",
+     "preco_total": 3297.47
+    },
+    {
+     "slug": "comp-05",
+     "preco_total": 1350.12
+    },
+    {
+     "slug": "comp-12",
+     "preco_total": 3912.84
+    },
+    {
+     "slug": "comp-40",
+     "preco_total": 967.79
+    },
+    {
+     "slug": "comp-59",
+     "preco_total": 847.86
+    },
+    {
+     "slug": "comp-41",
+     "preco_total": 896.38
+    },
+    {
+     "slug": "comp-18",
+     "preco_total": 1283.66
+    },
+    {
+     "slug": "comp-01",
+     "preco_total": 1019.64
+    },
+    {
+     "slug": "comp-36",
+     "preco_total": 1252.86
+    },
+    {
+     "slug": "comp-04",
+     "preco_total": 1251.41
+    },
+    {
+     "slug": "comp-45",
+     "preco_total": 1269.41
+    },
+    {
+     "slug": "comp-17",
+     "preco_total": 2067.18
+    },
+    {
+     "slug": "comp-08",
+     "preco_total": 1238.66
+    },
+    {
+     "slug": "comp-13",
+     "preco_total": 3349.35
+    },
+    {
+     "slug": "comp-22",
+     "preco_total": 1475.21
+    },
+    {
+     "slug": "comp-26",
+     "preco_total": 1165.34
+    },
+    {
+     "slug": "comp-37",
+     "preco_total": 1891.45
+    },
+    {
+     "slug": "comp-15",
+     "preco_total": 1916.44
+    },
+    {
+     "slug": "comp-09",
+     "preco_total": 1105.33
+    },
+    {
+     "slug": "comp-33",
+     "preco_total": 1962.97
+    },
+    {
+     "slug": "own-hotel",
+     "preco_total": 1640
+    },
+    {
+     "slug": "not-in-catalog",
+     "preco_total": 1312.0
+    },
+    {
+     "slug": "comp-35",
+     "preco_total": null
+    }
+   ]
+  },
+  {
+   "checkin": "2026-12-15",
+   "checkout": "2026-12-16",
+   "tipo": "label",
+   "hoteis": [
+    {
+     "slug": "comp-23",
+     "preco_total": 359.24
+    },
+    {
+     "slug": "comp-55",
+     "preco_total": 740.82
+    },
+    {
+     "slug": "comp-36",
+     "preco_total": 450.35
+    },
+    {
+     "slug": "comp-08",
+     "preco_total": 753.04
+    },
+    {
+     "slug": "comp-18",
+     "preco_total": 431.31
+    },
+    {
+     "slug": "comp-39",
+     "preco_total": 520.97
+    },
+    {
+     "slug": "comp-50",
+     "preco_total": 336.9
+    },
+    {
+     "slug": "comp-05",
+     "preco_total": 709.26
+    },
+    {
+     "slug": "comp-17",
+     "preco_total": 738.35
+    },
+    {
+     "slug": "comp-04",
+     "preco_total": 637.59
+    },
+    {
+     "slug": "comp-52",
+     "preco_total": 477.24
+    },
+    {
+     "slug": "comp-26",
+     "preco_total": 316.56
+    },
+    {
+     "slug": "comp-35",
+     "preco_total": 257.74
+    },
+    {
+     "slug": "comp-29",
+     "preco_total": 925.19
+    },
+    {
+     "slug": "comp-15",
+     "preco_total": 436.1
+    },
+    {
+     "slug": "comp-09",
+     "preco_total": 208.54
+    },
+    {
+     "slug": "comp-07",
+     "preco_total": 535.83
+    },
+    {
+     "slug": "comp-37",
+     "preco_total": 460.16
+    },
+    {
+     "slug": "comp-27",
+     "preco_total": 326.29
+    },
+    {
+     "slug": "comp-03",
+     "preco_total": 653.43
+    },
+    {
+     "slug": "comp-32",
+     "preco_total": 813.39
+    },
+    {
+     "slug": "comp-54",
+     "preco_total": 585.48
+    },
+    {
+     "slug": "comp-13",
+     "preco_total": 614.44
+    },
+    {
+     "slug": "comp-44",
+     "preco_total": 487.97
+    },
+    {
+     "slug": "comp-31",
+     "preco_total": 321.26
+    },
+    {
+     "slug": "comp-22",
+     "preco_total": 351.99
+    },
+    {
+     "slug": "comp-41",
+     "preco_total": 785.36
+    },
+    {
+     "slug": "comp-06",
+     "preco_total": 500.1
+    },
+    {
+     "slug": "comp-01",
+     "preco_total": 241.14
+    },
+    {
+     "slug": "comp-12",
+     "preco_total": 400.18
+    },
+    {
+     "slug": "comp-16",
+     "preco_total": 482.77
+    },
+    {
+     "slug": "comp-30",
+     "preco_total": 333.11
+    },
+    {
+     "slug": "comp-34",
+     "preco_total": 370.06
+    },
+    {
+     "slug": "comp-46",
+     "preco_total": 416.18
+    },
+    {
+     "slug": "comp-53",
+     "preco_total": 501.74
+    },
+    {
+     "slug": "comp-19",
+     "preco_total": 338.15
+    },
+    {
+     "slug": "comp-02",
+     "preco_total": 404.29
+    },
+    {
+     "slug": "comp-56",
+     "preco_total": 405.41
+    },
+    {
+     "slug": "comp-11",
+     "preco_total": 518.05
+    },
+    {
+     "slug": "comp-45",
+     "preco_total": 391.38
+    },
+    {
+     "slug": "comp-59",
+     "preco_total": 588.85
+    },
+    {
+     "slug": "own-hotel",
+     "preco_total": 450
+    },
+    {
+     "slug": "not-in-catalog",
+     "preco_total": 360.0
+    },
+    {
+     "slug": "comp-20",
+     "preco_total": null
+    }
+   ]
+  },
+  {
+   "checkin": "2026-12-18",
+   "checkout": "2026-12-20",
+   "tipo": "label",
+   "hoteis": [
+    {
+     "slug": "comp-31",
+     "preco_total": 1590.17
+    },
+    {
+     "slug": "comp-01",
+     "preco_total": 2089.68
+    },
+    {
+     "slug": "comp-06",
+     "preco_total": 1017.04
+    },
+    {
+     "slug": "comp-48",
+     "preco_total": 2268.73
+    },
+    {
+     "slug": "comp-23",
+     "preco_total": 1376.82
+    },
+    {
+     "slug": "comp-14",
+     "preco_total": 4024.65
+    },
+    {
+     "slug": "comp-45",
+     "preco_total": 1788.13
+    },
+    {
+     "slug": "comp-25",
+     "preco_total": 1306.3
+    },
+    {
+     "slug": "comp-18",
+     "preco_total": 2134.47
+    },
+    {
+     "slug": "comp-22",
+     "preco_total": 1263.29
+    },
+    {
+     "slug": "comp-16",
+     "preco_total": 1070.44
+    },
+    {
+     "slug": "comp-13",
+     "preco_total": 3143.43
+    },
+    {
+     "slug": "comp-40",
+     "preco_total": 1322.8
+    },
+    {
+     "slug": "comp-08",
+     "preco_total": 1259.69
+    },
+    {
+     "slug": "comp-54",
+     "preco_total": 1085.21
+    },
+    {
+     "slug": "comp-07",
+     "preco_total": 1447.88
+    },
+    {
+     "slug": "comp-29",
+     "preco_total": 2494.48
+    },
+    {
+     "slug": "comp-50",
+     "preco_total": 1871.24
+    },
+    {
+     "slug": "comp-60",
+     "preco_total": 2539.41
+    },
+    {
+     "slug": "comp-44",
+     "preco_total": 2446.29
+    },
+    {
+     "slug": "comp-43",
+     "preco_total": 1971.11
+    },
+    {
+     "slug": "comp-52",
+     "preco_total": 2239.35
+    },
+    {
+     "slug": "comp-17",
+     "preco_total": 1866.4
+    },
+    {
+     "slug": "comp-30",
+     "preco_total": 1795.33
+    },
+    {
+     "slug": "comp-19",
+     "preco_total": 1320.5
+    },
+    {
+     "slug": "comp-28",
+     "preco_total": 884.86
+    },
+    {
+     "slug": "comp-36",
+     "preco_total": 2700.37
+    },
+    {
+     "slug": "comp-11",
+     "preco_total": 1021.21
+    },
+    {
+     "slug": "comp-41",
+     "preco_total": 1808.49
+    },
+    {
+     "slug": "comp-57",
+     "preco_total": 2138.29
+    },
+    {
+     "slug": "comp-38",
+     "preco_total": 2731.06
+    },
+    {
+     "slug": "comp-39",
+     "preco_total": 1668.68
+    },
+    {
+     "slug": "comp-34",
+     "preco_total": 1578.48
+    },
+    {
+     "slug": "comp-47",
+     "preco_total": 1539.38
+    },
+    {
+     "slug": "comp-24",
+     "preco_total": 783.28
+    },
+    {
+     "slug": "comp-42",
+     "preco_total": 2184.26
+    },
+    {
+     "slug": "comp-58",
+     "preco_total": 1143.79
+    },
+    {
+     "slug": "comp-35",
+     "preco_total": 1321.76
+    },
+    {
+     "slug": "own-hotel",
+     "preco_total": 1800
+    },
+    {
+     "slug": "not-in-catalog",
+     "preco_total": 1440.0
+    },
+    {
+     "slug": "comp-27",
+     "preco_total": null
+    }
+   ]
+  },
+  {
+   "checkin": "2026-12-24",
+   "checkout": "2026-12-26",
+   "tipo": "label",
+   "hoteis": [
+    {
+     "slug": "comp-41",
+     "preco_total": 2715.55
+    },
+    {
+     "slug": "comp-38",
+     "preco_total": 1682.28
+    },
+    {
+     "slug": "comp-25",
+     "preco_total": 2425.2
+    },
+    {
+     "slug": "comp-40",
+     "preco_total": 5123.35
+    },
+    {
+     "slug": "comp-47",
+     "preco_total": 3368.15
+    },
+    {
+     "slug": "comp-45",
+     "preco_total": 2503.14
+    },
+    {
+     "slug": "comp-15",
+     "preco_total": 3289.2
+    },
+    {
+     "slug": "comp-39",
+     "preco_total": 3128.06
+    },
+    {
+     "slug": "comp-20",
+     "preco_total": 2265.51
+    },
+    {
+     "slug": "comp-57",
+     "preco_total": 3654.28
+    },
+    {
+     "slug": "comp-22",
+     "preco_total": 2099.41
+    },
+    {
+     "slug": "comp-03",
+     "preco_total": 2132.35
+    },
+    {
+     "slug": "comp-19",
+     "preco_total": 2001.19
+    },
+    {
+     "slug": "comp-11",
+     "preco_total": 2526.6
+    },
+    {
+     "slug": "comp-51",
+     "preco_total": 3502.33
+    },
+    {
+     "slug": "comp-04",
+     "preco_total": 1417.18
+    },
+    {
+     "slug": "comp-58",
+     "preco_total": 5531.53
+    },
+    {
+     "slug": "comp-42",
+     "preco_total": 2710.69
+    },
+    {
+     "slug": "comp-55",
+     "preco_total": 1869.55
+    },
+    {
+     "slug": "comp-24",
+     "preco_total": 3700.77
+    },
+    {
+     "slug": "comp-06",
+     "preco_total": 2423.74
+    },
+    {
+     "slug": "comp-50",
+     "preco_total": 3086.1
+    },
+    {
+     "slug": "comp-54",
+     "preco_total": 3861.31
+    },
+    {
+     "slug": "comp-28",
+     "preco_total": 1339.37
+    },
+    {
+     "slug": "comp-14",
+     "preco_total": 1539.99
+    },
+    {
+     "slug": "comp-29",
+     "preco_total": 2189.68
+    },
+    {
+     "slug": "comp-49",
+     "preco_total": 4756.27
+    },
+    {
+     "slug": "comp-37",
+     "preco_total": 3843.24
+    },
+    {
+     "slug": "comp-35",
+     "preco_total": 2799.41
+    },
+    {
+     "slug": "comp-36",
+     "preco_total": 2755.88
+    },
+    {
+     "slug": "comp-07",
+     "preco_total": 1705.92
+    },
+    {
+     "slug": "comp-33",
+     "preco_total": 2202.24
+    },
+    {
+     "slug": "comp-08",
+     "preco_total": 1306.62
+    },
+    {
+     "slug": "comp-23",
+     "preco_total": 2711.04
+    },
+    {
+     "slug": "comp-48",
+     "preco_total": 1497.84
+    },
+    {
+     "slug": "comp-56",
+     "preco_total": 3053.57
+    },
+    {
+     "slug": "comp-46",
+     "preco_total": 3924.17
+    },
+    {
+     "slug": "comp-26",
+     "preco_total": 5937.17
+    },
+    {
+     "slug": "comp-13",
+     "preco_total": 2415.75
+    },
+    {
+     "slug": "comp-60",
+     "preco_total": 3073.83
+    },
+    {
+     "slug": "comp-12",
+     "preco_total": 2111.29
+    },
+    {
+     "slug": "comp-21",
+     "preco_total": 3067.91
+    },
+    {
+     "slug": "comp-17",
+     "preco_total": 2012.12
+    },
+    {
+     "slug": "comp-01",
+     "preco_total": 4648.3
+    },
+    {
+     "slug": "comp-27",
+     "preco_total": 3758.91
+    },
+    {
+     "slug": "comp-32",
+     "preco_total": 3937.89
+    },
+    {
+     "slug": "comp-10",
+     "preco_total": 4526.13
+    },
+    {
+     "slug": "comp-53",
+     "preco_total": 3630.98
+    },
+    {
+     "slug": "comp-16",
+     "preco_total": 2098.01
+    },
+    {
+     "slug": "comp-34",
+     "preco_total": 3722.62
+    },
+    {
+     "slug": "own-hotel",
+     "preco_total": 2800
+    },
+    {
+     "slug": "not-in-catalog",
+     "preco_total": 2240.0
+    },
+    {
+     "slug": "comp-52",
+     "preco_total": null
+    }
+   ]
+  },
+  {
+   "checkin": "2026-12-31",
+   "checkout": "2027-01-02",
+   "tipo": "label",
+   "hoteis": [
+    {
+     "slug": "comp-17",
+     "preco_total": 3019.74
+    },
+    {
+     "slug": "comp-05",
+     "preco_total": 3666.64
+    },
+    {
+     "slug": "comp-52",
+     "preco_total": 4892.16
+    },
+    {
+     "slug": "comp-31",
+     "preco_total": 4818.36
+    },
+    {
+     "slug": "comp-40",
+     "preco_total": 7086.99
+    },
+    {
+     "slug": "comp-15",
+     "preco_total": 4511.43
+    },
+    {
+     "slug": "comp-38",
+     "preco_total": 3900.46
+    },
+    {
+     "slug": "comp-32",
+     "preco_total": 2134.09
+    },
+    {
+     "slug": "comp-57",
+     "preco_total": 2589.36
+    },
+    {
+     "slug": "comp-03",
+     "preco_total": 3220.66
+    },
+    {
+     "slug": "comp-22",
+     "preco_total": 4602.41
+    },
+    {
+     "slug": "comp-51",
+     "preco_total": 4923.77
+    },
+    {
+     "slug": "comp-29",
+     "preco_total": 6936.83
+    },
+    {
+     "slug": "comp-47",
+     "preco_total": 4207.9
+    },
+    {
+     "slug": "comp-11",
+     "preco_total": 4331.05
+    },
+    {
+     "slug": "comp-55",
+     "preco_total": 3464.78
+    },
+    {
+     "slug": "comp-04",
+     "preco_total": 4651.96
+    },
+    {
+     "slug": "comp-16",
+     "preco_total": 6025.54
+    },
+    {
+     "slug": "comp-37",
+     "preco_total": 2254.02
+    },
+    {
+     "slug": "comp-26",
+     "preco_total": 4157.91
+    },
+    {
+     "slug": "comp-53",
+     "preco_total": 3886.87
+    },
+    {
+     "slug": "comp-20",
+     "preco_total": 7884.38
+    },
+    {
+     "slug": "comp-39",
+     "preco_total": 5053.06
+    },
+    {
+     "slug": "comp-19",
+     "preco_total": 8942.78
+    },
+    {
+     "slug": "comp-59",
+     "preco_total": 5051.28
+    },
+    {
+     "slug": "comp-02",
+     "preco_total": 3040.29
+    },
+    {
+     "slug": "comp-23",
+     "preco_total": 7456.25
+    },
+    {
+     "slug": "comp-43",
+     "preco_total": 2367.11
+    },
+    {
+     "slug": "comp-36",
+     "preco_total": 5669.94
+    },
+    {
+     "slug": "comp-41",
+     "preco_total": 4206.41
+    },
+    {
+     "slug": "comp-60",
+     "preco_total": 4880.97
+    },
+    {
+     "slug": "comp-07",
+     "preco_total": 2061.54
+    },
+    {
+     "slug": "comp-50",
+     "preco_total": 1976.77
+    },
+    {
+     "slug": "comp-25",
+     "preco_total": 3448.17
+    },
+    {
+     "slug": "comp-33",
+     "preco_total": 5310.22
+    },
+    {
+     "slug": "comp-35",
+     "preco_total": 4439.97
+    },
+    {
+     "slug": "comp-08",
+     "preco_total": 1633.4
+    },
+    {
+     "slug": "comp-21",
+     "preco_total": 4445.34
+    },
+    {
+     "slug": "comp-06",
+     "preco_total": 4737.44
+    },
+    {
+     "slug": "comp-24",
+     "preco_total": 4641.61
+    },
+    {
+     "slug": "comp-49",
+     "preco_total": 3250.09
+    },
+    {
+     "slug": "comp-13",
+     "preco_total": 7984.76
+    },
+    {
+     "slug": "comp-30",
+     "preco_total": 3728.96
+    },
+    {
+     "slug": "comp-54",
+     "preco_total": 2723.14
+    },
+    {
+     "slug": "comp-44",
+     "preco_total": 6335.14
+    },
+    {
+     "slug": "comp-09",
+     "preco_total": 4140.14
+    },
+    {
+     "slug": "comp-46",
+     "preco_total": 2914.38
+    },
+    {
+     "slug": "comp-48",
+     "preco_total": 5212.62
+    },
+    {
+     "slug": "comp-18",
+     "preco_total": 3333.76
+    },
+    {
+     "slug": "comp-28",
+     "preco_total": 5050.24
+    },
+    {
+     "slug": "comp-34",
+     "preco_total": 1508.25
+    },
+    {
+     "slug": "comp-45",
+     "preco_total": 3371.06
+    },
+    {
+     "slug": "comp-56",
+     "preco_total": 5707.0
+    },
+    {
+     "slug": "comp-10",
+     "preco_total": 1687.35
+    },
+    {
+     "slug": "comp-14",
+     "preco_total": 3167.78
+    },
+    {
+     "slug": "own-hotel",
+     "preco_total": 3800
+    },
+    {
+     "slug": "not-in-catalog",
+     "preco_total": 3040.0
+    },
+    {
+     "slug": "comp-01",
+     "preco_total": null
+    }
+   ]
+  },
+  {
+   "checkin": "2027-01-05",
+   "checkout": "2027-01-06",
+   "tipo": "label",
+   "hoteis": [
+    {
+     "slug": "comp-32",
+     "preco_total": 235.63
+    },
+    {
+     "slug": "comp-33",
+     "preco_total": 444.42
+    },
+    {
+     "slug": "comp-03",
+     "preco_total": 1055.77
+    },
+    {
+     "slug": "comp-55",
+     "preco_total": 475.43
+    },
+    {
+     "slug": "comp-36",
+     "preco_total": 657.12
+    },
+    {
+     "slug": "comp-41",
+     "preco_total": 355.64
+    },
+    {
+     "slug": "comp-38",
+     "preco_total": 636.29
+    },
+    {
+     "slug": "comp-04",
+     "preco_total": 484.24
+    },
+    {
+     "slug": "comp-18",
+     "preco_total": 588.05
+    },
+    {
+     "slug": "comp-48",
+     "preco_total": 267.93
+    },
+    {
+     "slug": "comp-39",
+     "preco_total": 378.08
+    },
+    {
+     "slug": "comp-23",
+     "preco_total": 274.51
+    },
+    {
+     "slug": "comp-51",
+     "preco_total": 249.98
+    },
+    {
+     "slug": "comp-59",
+     "preco_total": 588.75
+    },
+    {
+     "slug": "comp-19",
+     "preco_total": 403.59
+    },
+    {
+     "slug": "comp-24",
+     "preco_total": 397.37
+    },
+    {
+     "slug": "comp-40",
+     "preco_total": 832.93
+    },
+    {
+     "slug": "comp-12",
+     "preco_total": 608.9
+    },
+    {
+     "slug": "comp-07",
+     "preco_total": 428.9
+    },
+    {
+     "slug": "comp-15",
+     "preco_total": 427.93
+    },
+    {
+     "slug": "comp-52",
+     "preco_total": 480.7
+    },
+    {
+     "slug": "comp-54",
+     "preco_total": 556.72
+    },
+    {
+     "slug": "comp-47",
+     "preco_total": 601.33
+    },
+    {
+     "slug": "comp-28",
+     "preco_total": 695.33
+    },
+    {
+     "slug": "comp-13",
+     "preco_total": 492.28
+    },
+    {
+     "slug": "comp-46",
+     "preco_total": 429.49
+    },
+    {
+     "slug": "comp-22",
+     "preco_total": 370.15
+    },
+    {
+     "slug": "comp-21",
+     "preco_total": 475.65
+    },
+    {
+     "slug": "comp-60",
+     "preco_total": 496.06
+    },
+    {
+     "slug": "comp-11",
+     "preco_total": 390.69
+    },
+    {
+     "slug": "own-hotel",
+     "preco_total": 520
+    },
+    {
+     "slug": "not-in-catalog",
+     "preco_total": 416.0
+    },
+    {
+     "slug": "comp-45",
+     "preco_total": null
+    }
+   ]
+  },
+  {
+   "checkin": "2027-01-08",
+   "checkout": "2027-01-10",
+   "tipo": "label",
+   "hoteis": [
+    {
+     "slug": "comp-39",
+     "preco_total": 1371.44
+    },
+    {
+     "slug": "comp-22",
+     "preco_total": 1213.38
+    },
+    {
+     "slug": "comp-36",
+     "preco_total": 2351.26
+    },
+    {
+     "slug": "comp-28",
+     "preco_total": 4610.22
+    },
+    {
+     "slug": "comp-56",
+     "preco_total": 2890.53
+    },
+    {
+     "slug": "comp-21",
+     "preco_total": 2910.94
+    },
+    {
+     "slug": "comp-24",
+     "preco_total": 1332.53
+    },
+    {
+     "slug": "comp-18",
+     "preco_total": 1549.21
+    },
+    {
+     "slug": "comp-32",
+     "preco_total": 2242.02
+    },
+    {
+     "slug": "comp-55",
+     "preco_total": 1905.01
+    },
+    {
+     "slug": "comp-19",
+     "preco_total": 1467.12
+    },
+    {
+     "slug": "comp-52",
+     "preco_total": 1849.32
+    },
+    {
+     "slug": "comp-30",
+     "preco_total": 1444.83
+    },
+    {
+     "slug": "comp-60",
+     "preco_total": 1473.52
+    },
+    {
+     "slug": "comp-31",
+     "preco_total": 2656.66
+    },
+    {
+     "slug": "comp-20",
+     "preco_total": 2676.58
+    },
+    {
+     "slug": "comp-40",
+     "preco_total": 1407.42
+    },
+    {
+     "slug": "comp-05",
+     "preco_total": 1219.94
+    },
+    {
+     "slug": "comp-44",
+     "preco_total": 2131.82
+    },
+    {
+     "slug": "comp-02",
+     "preco_total": 2363.51
+    },
+    {
+     "slug": "comp-10",
+     "preco_total": 4567.05
+    },
+    {
+     "slug": "comp-38",
+     "preco_total": 1830.61
+    },
+    {
+     "slug": "comp-41",
+     "preco_total": 3909.3
+    },
+    {
+     "slug": "comp-29",
+     "preco_total": 1920.05
+    },
+    {
+     "slug": "comp-06",
+     "preco_total": 1177.7
+    },
+    {
+     "slug": "comp-37",
+     "preco_total": 2792.98
+    },
+    {
+     "slug": "comp-17",
+     "preco_total": 1061.95
+    },
+    {
+     "slug": "comp-48",
+     "preco_total": 2304.95
+    },
+    {
+     "slug": "comp-59",
+     "preco_total": 1938.04
+    },
+    {
+     "slug": "comp-04",
+     "preco_total": 1176.19
+    },
+    {
+     "slug": "comp-51",
+     "preco_total": 2194.48
+    },
+    {
+     "slug": "comp-57",
+     "preco_total": 1928.76
+    },
+    {
+     "slug": "comp-45",
+     "preco_total": 2511.8
+    },
+    {
+     "slug": "comp-43",
+     "preco_total": 1700.89
+    },
+    {
+     "slug": "comp-49",
+     "preco_total": 1482.68
+    },
+    {
+     "slug": "comp-35",
+     "preco_total": 1604.29
+    },
+    {
+     "slug": "comp-09",
+     "preco_total": 1087.48
+    },
+    {
+     "slug": "comp-54",
+     "preco_total": 3377.95
+    },
+    {
+     "slug": "comp-53",
+     "preco_total": 3026.46
+    },
+    {
+     "slug": "comp-46",
+     "preco_total": 2431.14
+    },
+    {
+     "slug": "comp-26",
+     "preco_total": 2216.63
+    },
+    {
+     "slug": "comp-50",
+     "preco_total": 1061.92
+    },
+    {
+     "slug": "comp-27",
+     "preco_total": 3079.94
+    },
+    {
+     "slug": "comp-58",
+     "preco_total": 1567.82
+    },
+    {
+     "slug": "comp-01",
+     "preco_total": 1584.67
+    },
+    {
+     "slug": "own-hotel",
+     "preco_total": 1960
+    },
+    {
+     "slug": "not-in-catalog",
+     "preco_total": 1568.0
+    },
+    {
+     "slug": "comp-25",
+     "preco_total": null
+    }
+   ]
+  },
+  {
+   "checkin": "2027-01-12",
+   "checkout": "2027-01-13",
+   "tipo": "label",
+   "hoteis": [
+    {
+     "slug": "comp-27",
+     "preco_total": 281.22
+    },
+    {
+     "slug": "comp-02",
+     "preco_total": 402.45
+    },
+    {
+     "slug": "comp-24",
+     "preco_total": 581.11
+    },
+    {
+     "slug": "comp-28",
+     "preco_total": 260.4
+    },
+    {
+     "slug": "comp-56",
+     "preco_total": 876.31
+    },
+    {
+     "slug": "comp-07",
+     "preco_total": 337.8
+    },
+    {
+     "slug": "comp-38",
+     "preco_total": 560.51
+    },
+    {
+     "slug": "comp-29",
+     "preco_total": 564.0
+    },
+    {
+     "slug": "comp-48",
+     "preco_total": 555.36
+    },
+    {
+     "slug": "comp-47",
+     "preco_total": 279.24
+    },
+    {
+     "slug": "comp-51",
+     "preco_total": 436.84
+    },
+    {
+     "slug": "comp-09",
+     "preco_total": 806.11
+    },
+    {
+     "slug": "comp-55",
+     "preco_total": 480.58
+    },
+    {
+     "slug": "comp-18",
+     "preco_total": 467.81
+    },
+    {
+     "slug": "comp-14",
+     "preco_total": 190.8
+    },
+    {
+     "slug": "comp-44",
+     "preco_total": 438.76
+    },
+    {
+     "slug": "comp-40",
+     "preco_total": 518.65
+    },
+    {
+     "slug": "comp-53",
+     "preco_total": 560.18
+    },
+    {
+     "slug": "comp-39",
+     "preco_total": 477.64
+    },
+    {
+     "slug": "comp-19",
+     "preco_total": 247.67
+    },
+    {
+     "slug": "comp-50",
+     "preco_total": 643.54
+    },
+    {
+     "slug": "comp-59",
+     "preco_total": 1053.8
+    },
+    {
+     "slug": "comp-37",
+     "preco_total": 486.51
+    },
+    {
+     "slug": "comp-33",
+     "preco_total": 606.17
+    },
+    {
+     "slug": "comp-36",
+     "preco_total": 381.37
+    },
+    {
+     "slug": "comp-35",
+     "preco_total": 380.75
+    },
+    {
+     "slug": "comp-04",
+     "preco_total": 382.83
+    },
+    {
+     "slug": "comp-03",
+     "preco_total": 452.83
+    },
+    {
+     "slug": "comp-20",
+     "preco_total": 394.51
+    },
+    {
+     "slug": "comp-49",
+     "preco_total": 480.6
+    },
+    {
+     "slug": "comp-21",
+     "preco_total": 405.66
+    },
+    {
+     "slug": "comp-45",
+     "preco_total": 343.51
+    },
+    {
+     "slug": "comp-30",
+     "preco_total": 531.37
+    },
+    {
+     "slug": "comp-32",
+     "preco_total": 440.76
+    },
+    {
+     "slug": "comp-13",
+     "preco_total": 289.85
+    },
+    {
+     "slug": "comp-52",
+     "preco_total": 706.4
+    },
+    {
+     "slug": "comp-57",
+     "preco_total": 953.58
+    },
+    {
+     "slug": "comp-26",
+     "preco_total": 593.8
+    },
+    {
+     "slug": "comp-58",
+     "preco_total": 614.33
+    },
+    {
+     "slug": "comp-43",
+     "preco_total": 679.64
+    },
+    {
+     "slug": "comp-60",
+     "preco_total": 532.64
+    },
+    {
+     "slug": "comp-22",
+     "preco_total": 418.46
+    },
+    {
+     "slug": "comp-31",
+     "preco_total": 378.96
+    },
+    {
+     "slug": "own-hotel",
+     "preco_total": 500
+    },
+    {
+     "slug": "not-in-catalog",
+     "preco_total": 400.0
+    },
+    {
+     "slug": "comp-41",
+     "preco_total": null
+    }
+   ]
+  },
+  {
+   "checkin": "2027-01-15",
+   "checkout": "2027-01-17",
+   "tipo": "label",
+   "hoteis": [
+    {
+     "slug": "comp-07",
+     "preco_total": 1660.11
+    },
+    {
+     "slug": "comp-53",
+     "preco_total": 1855.38
+    },
+    {
+     "slug": "comp-30",
+     "preco_total": 1550.98
+    },
+    {
+     "slug": "comp-19",
+     "preco_total": 2314.72
+    },
+    {
+     "slug": "comp-15",
+     "preco_total": 1813.87
+    },
+    {
+     "slug": "comp-58",
+     "preco_total": 2142.83
+    },
+    {
+     "slug": "comp-11",
+     "preco_total": 1847.68
+    },
+    {
+     "slug": "comp-37",
+     "preco_total": 1954.56
+    },
+    {
+     "slug": "comp-48",
+     "preco_total": 2781.03
+    },
+    {
+     "slug": "comp-40",
+     "preco_total": 2152.37
+    },
+    {
+     "slug": "comp-41",
+     "preco_total": 3387.74
+    },
+    {
+     "slug": "comp-20",
+     "preco_total": 2141.26
+    },
+    {
+     "slug": "comp-42",
+     "preco_total": 1284.82
+    },
+    {
+     "slug": "comp-55",
+     "preco_total": 2918.5
+    },
+    {
+     "slug": "comp-36",
+     "preco_total": 1739.3
+    },
+    {
+     "slug": "comp-59",
+     "preco_total": 1623.2
+    },
+    {
+     "slug": "comp-29",
+     "preco_total": 1254.87
+    },
+    {
+     "slug": "comp-44",
+     "preco_total": 1711.19
+    },
+    {
+     "slug": "comp-60",
+     "preco_total": 2149.42
+    },
+    {
+     "slug": "comp-25",
+     "preco_total": 2694.4
+    },
+    {
+     "slug": "comp-49",
+     "preco_total": 1567.51
+    },
+    {
+     "slug": "comp-38",
+     "preco_total": 1438.0
+    },
+    {
+     "slug": "comp-32",
+     "preco_total": 1680.79
+    },
+    {
+     "slug": "comp-01",
+     "preco_total": 2150.27
+    },
+    {
+     "slug": "comp-46",
+     "preco_total": 2273.19
+    },
+    {
+     "slug": "comp-13",
+     "preco_total": 2302.8
+    },
+    {
+     "slug": "comp-14",
+     "preco_total": 1183.08
+    },
+    {
+     "slug": "comp-35",
+     "preco_total": 1401.02
+    },
+    {
+     "slug": "comp-43",
+     "preco_total": 1869.68
+    },
+    {
+     "slug": "comp-24",
+     "preco_total": 1524.81
+    },
+    {
+     "slug": "comp-21",
+     "preco_total": 1909.52
+    },
+    {
+     "slug": "comp-23",
+     "preco_total": 2581.15
+    },
+    {
+     "slug": "comp-12",
+     "preco_total": 1807.01
+    },
+    {
+     "slug": "comp-04",
+     "preco_total": 1250.91
+    },
+    {
+     "slug": "comp-10",
+     "preco_total": 1394.72
+    },
+    {
+     "slug": "comp-22",
+     "preco_total": 2057.02
+    },
+    {
+     "slug": "comp-39",
+     "preco_total": 1884.52
+    },
+    {
+     "slug": "comp-16",
+     "preco_total": 1610.01
+    },
+    {
+     "slug": "comp-08",
+     "preco_total": 2345.01
+    },
+    {
+     "slug": "own-hotel",
+     "preco_total": 1880
+    },
+    {
+     "slug": "not-in-catalog",
+     "preco_total": 1504.0
+    },
+    {
+     "slug": "comp-54",
+     "preco_total": null
+    }
+   ]
+  },
+  {
+   "checkin": "2027-01-20",
+   "checkout": "2027-01-21",
+   "tipo": "label",
+   "hoteis": [
+    {
+     "slug": "comp-46",
+     "preco_total": 993.97
+    },
+    {
+     "slug": "comp-30",
+     "preco_total": 403.37
+    },
+    {
+     "slug": "comp-09",
+     "preco_total": 501.25
+    },
+    {
+     "slug": "comp-40",
+     "preco_total": 549.31
+    },
+    {
+     "slug": "comp-52",
+     "preco_total": 416.92
+    },
+    {
+     "slug": "comp-11",
+     "preco_total": 451.1
+    },
+    {
+     "slug": "comp-12",
+     "preco_total": 323.51
+    },
+    {
+     "slug": "comp-32",
+     "preco_total": 306.24
+    },
+    {
+     "slug": "comp-38",
+     "preco_total": 643.0
+    },
+    {
+     "slug": "comp-19",
+     "preco_total": 775.39
+    },
+    {
+     "slug": "comp-05",
+     "preco_total": 535.53
+    },
+    {
+     "slug": "comp-60",
+     "preco_total": 857.76
+    },
+    {
+     "slug": "comp-51",
+     "preco_total": 371.79
+    },
+    {
+     "slug": "comp-20",
+     "preco_total": 828.42
+    },
+    {
+     "slug": "comp-34",
+     "preco_total": 281.93
+    },
+    {
+     "slug": "comp-45",
+     "preco_total": 313.85
+    },
+    {
+     "slug": "comp-50",
+     "preco_total": 397.09
+    },
+    {
+     "slug": "comp-15",
+     "preco_total": 337.03
+    },
+    {
+     "slug": "own-hotel",
+     "preco_total": 470
+    },
+    {
+     "slug": "not-in-catalog",
+     "preco_total": 376.0
+    },
+    {
+     "slug": "comp-41",
+     "preco_total": null
+    }
+   ]
+  },
+  {
+   "checkin": "2027-01-22",
+   "checkout": "2027-01-24",
+   "tipo": "label",
+   "hoteis": [
+    {
+     "slug": "comp-13",
+     "preco_total": 1682.79
+    },
+    {
+     "slug": "comp-37",
+     "preco_total": 2458.32
+    },
+    {
+     "slug": "comp-38",
+     "preco_total": 1794.54
+    },
+    {
+     "slug": "comp-04",
+     "preco_total": 801.7
+    },
+    {
+     "slug": "comp-03",
+     "preco_total": 2053.94
+    },
+    {
+     "slug": "comp-36",
+     "preco_total": 1714.12
+    },
+    {
+     "slug": "comp-55",
+     "preco_total": 3037.12
+    },
+    {
+     "slug": "comp-46",
+     "preco_total": 1068.6
+    },
+    {
+     "slug": "comp-08",
+     "preco_total": 1342.34
+    },
+    {
+     "slug": "comp-27",
+     "preco_total": 1113.44
+    },
+    {
+     "slug": "comp-20",
+     "preco_total": 2616.42
+    },
+    {
+     "slug": "comp-28",
+     "preco_total": 1935.91
+    },
+    {
+     "slug": "comp-11",
+     "preco_total": 2457.59
+    },
+    {
+     "slug": "comp-17",
+     "preco_total": 1970.77
+    },
+    {
+     "slug": "comp-19",
+     "preco_total": 1992.38
+    },
+    {
+     "slug": "comp-06",
+     "preco_total": 1815.2
+    },
+    {
+     "slug": "comp-01",
+     "preco_total": 1206.4
+    },
+    {
+     "slug": "comp-30",
+     "preco_total": 1542.58
+    },
+    {
+     "slug": "comp-29",
+     "preco_total": 1705.37
+    },
+    {
+     "slug": "comp-10",
+     "preco_total": 1768.32
+    },
+    {
+     "slug": "comp-54",
+     "preco_total": 2787.18
+    },
+    {
+     "slug": "comp-45",
+     "preco_total": 2965.92
+    },
+    {
+     "slug": "comp-56",
+     "preco_total": 1670.54
+    },
+    {
+     "slug": "comp-02",
+     "preco_total": 2105.29
+    },
+    {
+     "slug": "comp-25",
+     "preco_total": 1161.81
+    },
+    {
+     "slug": "comp-32",
+     "preco_total": 1078.54
+    },
+    {
+     "slug": "comp-42",
+     "preco_total": 2090.68
+    },
+    {
+     "slug": "comp-21",
+     "preco_total": 2056.48
+    },
+    {
+     "slug": "comp-49",
+     "preco_total": 1370.4
+    },
+    {
+     "slug": "comp-60",
+     "preco_total": 2137.15
+    },
+    {
+     "slug": "comp-33",
+     "preco_total": 3123.61
+    },
+    {
+     "slug": "comp-09",
+     "preco_total": 1436.38
+    },
+    {
+     "slug": "comp-41",
+     "preco_total": 1741.68
+    },
+    {
+     "slug": "comp-34",
+     "preco_total": 1849.11
+    },
+    {
+     "slug": "comp-12",
+     "preco_total": 1838.43
+    },
+    {
+     "slug": "comp-22",
+     "preco_total": 1898.77
+    },
+    {
+     "slug": "comp-57",
+     "preco_total": 3764.63
+    },
+    {
+     "slug": "comp-47",
+     "preco_total": 1073.77
+    },
+    {
+     "slug": "comp-14",
+     "preco_total": 1924.76
+    },
+    {
+     "slug": "comp-50",
+     "preco_total": 2299.61
+    },
+    {
+     "slug": "comp-39",
+     "preco_total": 1501.87
+    },
+    {
+     "slug": "comp-23",
+     "preco_total": 2101.11
+    },
+    {
+     "slug": "own-hotel",
+     "preco_total": 1820
+    },
+    {
+     "slug": "not-in-catalog",
+     "preco_total": 1456.0
+    },
+    {
+     "slug": "comp-53",
+     "preco_total": null
+    }
+   ]
+  },
+  {
+   "checkin": "2027-02-02",
+   "checkout": "2027-02-03",
+   "tipo": "label",
+   "hoteis": [
+    {
+     "slug": "comp-03",
+     "preco_total": 479.39
+    },
+    {
+     "slug": "comp-58",
+     "preco_total": 385.28
+    },
+    {
+     "slug": "comp-15",
+     "preco_total": 746.4
+    },
+    {
+     "slug": "comp-51",
+     "preco_total": 311.96
+    },
+    {
+     "slug": "comp-14",
+     "preco_total": 305.0
+    },
+    {
+     "slug": "comp-56",
+     "preco_total": 921.08
+    },
+    {
+     "slug": "comp-09",
+     "preco_total": 398.48
+    },
+    {
+     "slug": "comp-20",
+     "preco_total": 433.87
+    },
+    {
+     "slug": "comp-46",
+     "preco_total": 376.3
+    },
+    {
+     "slug": "comp-02",
+     "preco_total": 290.37
+    },
+    {
+     "slug": "comp-28",
+     "preco_total": 394.52
+    },
+    {
+     "slug": "comp-40",
+     "preco_total": 458.42
+    },
+    {
+     "slug": "comp-24",
+     "preco_total": 713.5
+    },
+    {
+     "slug": "comp-11",
+     "preco_total": 443.96
+    },
+    {
+     "slug": "comp-47",
+     "preco_total": 370.19
+    },
+    {
+     "slug": "comp-32",
+     "preco_total": 342.9
+    },
+    {
+     "slug": "comp-25",
+     "preco_total": 457.68
+    },
+    {
+     "slug": "comp-57",
+     "preco_total": 465.27
+    },
+    {
+     "slug": "comp-19",
+     "preco_total": 441.99
+    },
+    {
+     "slug": "comp-48",
+     "preco_total": 253.84
+    },
+    {
+     "slug": "comp-60",
+     "preco_total": 359.65
+    },
+    {
+     "slug": "comp-17",
+     "preco_total": 439.44
+    },
+    {
+     "slug": "comp-30",
+     "preco_total": 426.12
+    },
+    {
+     "slug": "comp-53",
+     "preco_total": 244.45
+    },
+    {
+     "slug": "comp-16",
+     "preco_total": 418.94
+    },
+    {
+     "slug": "comp-27",
+     "preco_total": 365.9
+    },
+    {
+     "slug": "comp-13",
+     "preco_total": 389.13
+    },
+    {
+     "slug": "comp-37",
+     "preco_total": 729.28
+    },
+    {
+     "slug": "comp-04",
+     "preco_total": 309.54
+    },
+    {
+     "slug": "comp-12",
+     "preco_total": 826.46
+    },
+    {
+     "slug": "comp-31",
+     "preco_total": 377.96
+    },
+    {
+     "slug": "comp-08",
+     "preco_total": 407.43
+    },
+    {
+     "slug": "comp-35",
+     "preco_total": 307.06
+    },
+    {
+     "slug": "comp-34",
+     "preco_total": 317.35
+    },
+    {
+     "slug": "comp-59",
+     "preco_total": 922.85
+    },
+    {
+     "slug": "comp-36",
+     "preco_total": 370.9
+    },
+    {
+     "slug": "comp-21",
+     "preco_total": 529.18
+    },
+    {
+     "slug": "comp-22",
+     "preco_total": 569.7
+    },
+    {
+     "slug": "comp-41",
+     "preco_total": 398.02
+    },
+    {
+     "slug": "comp-29",
+     "preco_total": 500.89
+    },
+    {
+     "slug": "own-hotel",
+     "preco_total": 430
+    },
+    {
+     "slug": "not-in-catalog",
+     "preco_total": 344.0
+    },
+    {
+     "slug": "comp-43",
+     "preco_total": null
+    }
+   ]
+  },
+  {
+   "checkin": "2027-02-05",
+   "checkout": "2027-02-07",
+   "tipo": "label",
+   "hoteis": [
+    {
+     "slug": "comp-10",
+     "preco_total": 1350.95
+    },
+    {
+     "slug": "comp-20",
+     "preco_total": 1476.95
+    },
+    {
+     "slug": "comp-58",
+     "preco_total": 771.43
+    },
+    {
+     "slug": "comp-12",
+     "preco_total": 1736.97
+    },
+    {
+     "slug": "comp-53",
+     "preco_total": 1425.21
+    },
+    {
+     "slug": "comp-33",
+     "preco_total": 1562.0
+    },
+    {
+     "slug": "comp-09",
+     "preco_total": 1293.05
+    },
+    {
+     "slug": "comp-51",
+     "preco_total": 1573.92
+    },
+    {
+     "slug": "comp-14",
+     "preco_total": 1963.68
+    },
+    {
+     "slug": "comp-34",
+     "preco_total": 2962.3
+    },
+    {
+     "slug": "comp-15",
+     "preco_total": 1293.33
+    },
+    {
+     "slug": "comp-37",
+     "preco_total": 1164.53
+    },
+    {
+     "slug": "comp-44",
+     "preco_total": 1478.81
+    },
+    {
+     "slug": "comp-57",
+     "preco_total": 1275.63
+    },
+    {
+     "slug": "comp-06",
+     "preco_total": 1734.24
+    },
+    {
+     "slug": "comp-55",
+     "preco_total": 917.08
+    },
+    {
+     "slug": "comp-02",
+     "preco_total": 2226.48
+    },
+    {
+     "slug": "comp-21",
+     "preco_total": 1581.98
+    },
+    {
+     "slug": "comp-07",
+     "preco_total": 734.09
+    },
+    {
+     "slug": "comp-41",
+     "preco_total": 1583.6
+    },
+    {
+     "slug": "comp-30",
+     "preco_total": 2013.89
+    },
+    {
+     "slug": "comp-08",
+     "preco_total": 1701.35
+    },
+    {
+     "slug": "comp-38",
+     "preco_total": 2183.08
+    },
+    {
+     "slug": "comp-04",
+     "preco_total": 1720.58
+    },
+    {
+     "slug": "comp-29",
+     "preco_total": 1073.74
+    },
+    {
+     "slug": "comp-56",
+     "preco_total": 2064.39
+    },
+    {
+     "slug": "comp-46",
+     "preco_total": 2653.79
+    },
+    {
+     "slug": "comp-03",
+     "preco_total": 1090.19
+    },
+    {
+     "slug": "comp-54",
+     "preco_total": 2429.55
+    },
+    {
+     "slug": "comp-25",
+     "preco_total": 1742.85
+    },
+    {
+     "slug": "comp-22",
+     "preco_total": 1031.69
+    },
+    {
+     "slug": "comp-50",
+     "preco_total": 1082.36
+    },
+    {
+     "slug": "comp-59",
+     "preco_total": 1323.94
+    },
+    {
+     "slug": "own-hotel",
+     "preco_total": 1520
+    },
+    {
+     "slug": "not-in-catalog",
+     "preco_total": 1216.0
+    },
+    {
+     "slug": "comp-23",
+     "preco_total": null
+    }
+   ]
+  },
+  {
+   "checkin": "2027-02-13",
+   "checkout": "2027-02-16",
+   "tipo": "label",
+   "hoteis": [
+    {
+     "slug": "comp-32",
+     "preco_total": 6312.74
+    },
+    {
+     "slug": "comp-58",
+     "preco_total": 5736.44
+    },
+    {
+     "slug": "comp-29",
+     "preco_total": 3351.97
+    },
+    {
+     "slug": "comp-47",
+     "preco_total": 3432.15
+    },
+    {
+     "slug": "comp-40",
+     "preco_total": 2374.18
+    },
+    {
+     "slug": "comp-12",
+     "preco_total": 4537.6
+    },
+    {
+     "slug": "comp-09",
+     "preco_total": 6891.71
+    },
+    {
+     "slug": "comp-28",
+     "preco_total": 4668.69
+    },
+    {
+     "slug": "comp-54",
+     "preco_total": 4775.99
+    },
+    {
+     "slug": "comp-06",
+     "preco_total": 2713.85
+    },
+    {
+     "slug": "comp-27",
+     "preco_total": 3812.39
+    },
+    {
+     "slug": "comp-31",
+     "preco_total": 3531.69
+    },
+    {
+     "slug": "comp-39",
+     "preco_total": 4502.87
+    },
+    {
+     "slug": "comp-08",
+     "preco_total": 7188.03
+    },
+    {
+     "slug": "comp-56",
+     "preco_total": 5624.7
+    },
+    {
+     "slug": "comp-60",
+     "preco_total": 5156.39
+    },
+    {
+     "slug": "comp-04",
+     "preco_total": 4590.27
+    },
+    {
+     "slug": "comp-38",
+     "preco_total": 3794.05
+    },
+    {
+     "slug": "comp-25",
+     "preco_total": 3235.0
+    },
+    {
+     "slug": "comp-16",
+     "preco_total": 5386.02
+    },
+    {
+     "slug": "comp-34",
+     "preco_total": 3519.85
+    },
+    {
+     "slug": "comp-50",
+     "preco_total": 6646.25
+    },
+    {
+     "slug": "comp-03",
+     "preco_total": 2114.1
+    },
+    {
+     "slug": "comp-51",
+     "preco_total": 3474.29
+    },
+    {
+     "slug": "comp-43",
+     "preco_total": 2653.65
+    },
+    {
+     "slug": "comp-17",
+     "preco_total": 6103.38
+    },
+    {
+     "slug": "comp-52",
+     "preco_total": 4632.78
+    },
+    {
+     "slug": "comp-07",
+     "preco_total": 2485.46
+    },
+    {
+     "slug": "comp-48",
+     "preco_total": 4505.04
+    },
+    {
+     "slug": "comp-35",
+     "preco_total": 4863.9
+    },
+    {
+     "slug": "comp-13",
+     "preco_total": 3835.14
+    },
+    {
+     "slug": "comp-57",
+     "preco_total": 3761.52
+    },
+    {
+     "slug": "comp-45",
+     "preco_total": 2944.15
+    },
+    {
+     "slug": "comp-26",
+     "preco_total": 3303.3
+    },
+    {
+     "slug": "comp-21",
+     "preco_total": 2874.94
+    },
+    {
+     "slug": "comp-37",
+     "preco_total": 3027.59
+    },
+    {
+     "slug": "comp-05",
+     "preco_total": 7060.33
+    },
+    {
+     "slug": "comp-30",
+     "preco_total": 6915.59
+    },
+    {
+     "slug": "comp-22",
+     "preco_total": 2845.47
+    },
+    {
+     "slug": "comp-14",
+     "preco_total": 3567.01
+    },
+    {
+     "slug": "comp-10",
+     "preco_total": 5366.21
+    },
+    {
+     "slug": "comp-59",
+     "preco_total": 2312.33
+    },
+    {
+     "slug": "comp-02",
+     "preco_total": 4012.1
+    },
+    {
+     "slug": "comp-55",
+     "preco_total": 5139.04
+    },
+    {
+     "slug": "comp-49",
+     "preco_total": 3556.27
+    },
+    {
+     "slug": "comp-23",
+     "preco_total": 2071.95
+    },
+    {
+     "slug": "comp-42",
+     "preco_total": 4692.98
+    },
+    {
+     "slug": "comp-36",
+     "preco_total": 4207.35
+    },
+    {
+     "slug": "own-hotel",
+     "preco_total": 3900
+    },
+    {
+     "slug": "not-in-catalog",
+     "preco_total": 3120.0
+    },
+    {
+     "slug": "comp-53",
+     "preco_total": null
+    }
+   ]
+  },
+  {
+   "checkin": "2027-02-17",
+   "checkout": "2027-02-18",
+   "tipo": "label",
+   "hoteis": [
+    {
+     "slug": "comp-48",
+     "preco_total": 266.93
+    },
+    {
+     "slug": "comp-45",
+     "preco_total": 505.31
+    },
+    {
+     "slug": "comp-13",
+     "preco_total": 481.48
+    },
+    {
+     "slug": "comp-33",
+     "preco_total": 690.84
+    },
+    {
+     "slug": "comp-57",
+     "preco_total": 309.18
+    },
+    {
+     "slug": "comp-34",
+     "preco_total": 375.59
+    },
+    {
+     "slug": "comp-01",
+     "preco_total": 324.56
+    },
+    {
+     "slug": "comp-54",
+     "preco_total": 328.1
+    },
+    {
+     "slug": "comp-14",
+     "preco_total": 535.59
+    },
+    {
+     "slug": "comp-23",
+     "preco_total": 384.76
+    },
+    {
+     "slug": "comp-07",
+     "preco_total": 298.94
+    },
+    {
+     "slug": "comp-55",
+     "preco_total": 477.32
+    },
+    {
+     "slug": "comp-20",
+     "preco_total": 551.01
+    },
+    {
+     "slug": "comp-31",
+     "preco_total": 317.96
+    },
+    {
+     "slug": "comp-30",
+     "preco_total": 646.61
+    },
+    {
+     "slug": "comp-53",
+     "preco_total": 350.34
+    },
+    {
+     "slug": "own-hotel",
+     "preco_total": 390
+    },
+    {
+     "slug": "not-in-catalog",
+     "preco_total": 312.0
+    },
+    {
+     "slug": "comp-26",
+     "preco_total": null
+    }
+   ]
+  },
+  {
+   "checkin": "2027-02-19",
+   "checkout": "2027-02-21",
+   "tipo": "label",
+   "hoteis": [
+    {
+     "slug": "comp-42",
+     "preco_total": 2882.13
+    },
+    {
+     "slug": "comp-55",
+     "preco_total": 1058.85
+    },
+    {
+     "slug": "comp-11",
+     "preco_total": 2240.84
+    },
+    {
+     "slug": "comp-39",
+     "preco_total": 1853.3
+    },
+    {
+     "slug": "comp-01",
+     "preco_total": 2174.46
+    },
+    {
+     "slug": "comp-07",
+     "preco_total": 3118.09
+    },
+    {
+     "slug": "comp-29",
+     "preco_total": 1883.09
+    },
+    {
+     "slug": "comp-21",
+     "preco_total": 911.13
+    },
+    {
+     "slug": "comp-57",
+     "preco_total": 1068.21
+    },
+    {
+     "slug": "comp-31",
+     "preco_total": 2232.92
+    },
+    {
+     "slug": "comp-05",
+     "preco_total": 2367.05
+    },
+    {
+     "slug": "comp-14",
+     "preco_total": 1621.93
+    },
+    {
+     "slug": "comp-35",
+     "preco_total": 1052.11
+    },
+    {
+     "slug": "comp-32",
+     "preco_total": 939.72
+    },
+    {
+     "slug": "comp-48",
+     "preco_total": 1130.59
+    },
+    {
+     "slug": "comp-03",
+     "preco_total": 1961.28
+    },
+    {
+     "slug": "comp-04",
+     "preco_total": 2687.75
+    },
+    {
+     "slug": "comp-19",
+     "preco_total": 850.94
+    },
+    {
+     "slug": "comp-12",
+     "preco_total": 1422.77
+    },
+    {
+     "slug": "comp-37",
+     "preco_total": 1539.48
+    },
+    {
+     "slug": "comp-08",
+     "preco_total": 1156.99
+    },
+    {
+     "slug": "comp-34",
+     "preco_total": 1620.9
+    },
+    {
+     "slug": "comp-58",
+     "preco_total": 3349.72
+    },
+    {
+     "slug": "comp-41",
+     "preco_total": 1680.27
+    },
+    {
+     "slug": "comp-59",
+     "preco_total": 1117.78
+    },
+    {
+     "slug": "comp-24",
+     "preco_total": 1053.19
+    },
+    {
+     "slug": "comp-06",
+     "preco_total": 1838.79
+    },
+    {
+     "slug": "comp-27",
+     "preco_total": 1541.78
+    },
+    {
+     "slug": "comp-54",
+     "preco_total": 957.76
+    },
+    {
+     "slug": "comp-50",
+     "preco_total": 1327.45
+    },
+    {
+     "slug": "comp-53",
+     "preco_total": 2257.24
+    },
+    {
+     "slug": "comp-36",
+     "preco_total": 1414.36
+    },
+    {
+     "slug": "comp-43",
+     "preco_total": 1218.53
+    },
+    {
+     "slug": "comp-18",
+     "preco_total": 2519.19
+    },
+    {
+     "slug": "comp-44",
+     "preco_total": 1311.02
+    },
+    {
+     "slug": "comp-46",
+     "preco_total": 1605.64
+    },
+    {
+     "slug": "comp-09",
+     "preco_total": 2423.93
+    },
+    {
+     "slug": "comp-26",
+     "preco_total": 2107.64
+    },
+    {
+     "slug": "comp-52",
+     "preco_total": 2244.7
+    },
+    {
+     "slug": "comp-51",
+     "preco_total": 2624.0
+    },
+    {
+     "slug": "comp-23",
+     "preco_total": 1587.46
+    },
+    {
+     "slug": "comp-40",
+     "preco_total": 1130.49
+    },
+    {
+     "slug": "comp-25",
+     "preco_total": 919.53
+    },
+    {
+     "slug": "comp-49",
+     "preco_total": 1125.43
+    },
+    {
+     "slug": "comp-15",
+     "preco_total": 1315.59
+    },
+    {
+     "slug": "comp-13",
+     "preco_total": 1569.52
+    },
+    {
+     "slug": "own-hotel",
+     "preco_total": 1600
+    },
+    {
+     "slug": "not-in-catalog",
+     "preco_total": 1280.0
+    },
+    {
+     "slug": "comp-17",
+     "preco_total": null
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,72 @@
+{
+ "function": "faixas_dono.r_hidro",
+ "php_target": "Ritmo\\Domain\\Market\\Series\\ComparableFactor",
+ "notes": "Measured or default factor; an uncertain factor above 2.0 is capped at 2.0. In the plugin: competitor.comparable_factor, factor_source estimated, market.comparable.estimated_factor_cap.",
+ "cases": [
+  {
+   "input": {
+    "competitor": {
+     "r_hidro": 1.5,
+     "r_hidro_fonte": "medido"
+    },
+    "default": 1.395
+   },
+   "expected": 1.5
+  },
+  {
+   "input": {
+    "competitor": {},
+    "default": 1.395
+   },
+   "expected": 1.395
+  },
+  {
+   "input": {
+    "competitor": {
+     "r_hidro": null
+    },
+    "default": 1.395
+   },
+   "expected": 1.395
+  },
+  {
+   "input": {
+    "competitor": {
+     "r_hidro": 2.6,
+     "r_hidro_fonte": "estimado (incerto)"
+    },
+    "default": 1.395
+   },
+   "expected": 2.0
+  },
+  {
+   "input": {
+    "competitor": {
+     "r_hidro": 1.8,
+     "r_hidro_fonte": "estimado (incerto)"
+    },
+    "default": 1.395
+   },
+   "expected": 1.8
+  },
+  {
+   "input": {
+    "competitor": {
+     "r_hidro": 2.6,
+     "r_hidro_fonte": "medido"
+    },
+    "default": 1.395
+   },
+   "expected": 2.6
+  },
+  {
+   "input": {
+    "competitor": {
+     "r_hidro": 0
+    },
+    "default": 1.2
+   },
+   "expected": 1.2
+  }
+ ]
+}

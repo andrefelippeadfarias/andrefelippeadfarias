@@ -1,0 +1,287 @@
+{
+ "function": "faixas_dono.posicao",
+ "php_target": "Ritmo\\Domain\\Market\\Series\\PricePosition::band",
+ "notes": "Where an amount sits among the band values: '≈Fn' within tolerance x value, 'abaixo da F1', 'acima da F5', 'entre Fa e Fb'. The plugin returns {kind: near|below|above|between, bands}.",
+ "cases": [
+  {
+   "input": {
+    "value": 300.0,
+    "bands": {
+     "F1": 400.0,
+     "F2": 520.0,
+     "F3": 610.0,
+     "F4": 700.0,
+     "F5": 900.0
+    },
+    "tolerance": 0.05
+   },
+   "expected": "abaixo da F1"
+  },
+  {
+   "input": {
+    "value": 300.0,
+    "bands": {
+     "F1": 400.0,
+     "F2": 520.0,
+     "F3": 610.0,
+     "F4": 700.0,
+     "F5": 900.0
+    },
+    "tolerance": 0.0
+   },
+   "expected": "abaixo da F1"
+  },
+  {
+   "input": {
+    "value": 380.0,
+    "bands": {
+     "F1": 400.0,
+     "F2": 520.0,
+     "F3": 610.0,
+     "F4": 700.0,
+     "F5": 900.0
+    },
+    "tolerance": 0.05
+   },
+   "expected": "≈F1"
+  },
+  {
+   "input": {
+    "value": 380.0,
+    "bands": {
+     "F1": 400.0,
+     "F2": 520.0,
+     "F3": 610.0,
+     "F4": 700.0,
+     "F5": 900.0
+    },
+    "tolerance": 0.0
+   },
+   "expected": "abaixo da F1"
+  },
+  {
+   "input": {
+    "value": 400.0,
+    "bands": {
+     "F1": 400.0,
+     "F2": 520.0,
+     "F3": 610.0,
+     "F4": 700.0,
+     "F5": 900.0
+    },
+    "tolerance": 0.05
+   },
+   "expected": "≈F1"
+  },
+  {
+   "input": {
+    "value": 400.0,
+    "bands": {
+     "F1": 400.0,
+     "F2": 520.0,
+     "F3": 610.0,
+     "F4": 700.0,
+     "F5": 900.0
+    },
+    "tolerance": 0.0
+   },
+   "expected": "≈F1"
+  },
+  {
+   "input": {
+    "value": 419.0,
+    "bands": {
+     "F1": 400.0,
+     "F2": 520.0,
+     "F3": 610.0,
+     "F4": 700.0,
+     "F5": 900.0
+    },
+    "tolerance": 0.05
+   },
+   "expected": "≈F1"
+  },
+  {
+   "input": {
+    "value": 419.0,
+    "bands": {
+     "F1": 400.0,
+     "F2": 520.0,
+     "F3": 610.0,
+     "F4": 700.0,
+     "F5": 900.0
+    },
+    "tolerance": 0.0
+   },
+   "expected": "entre F1 e F2"
+  },
+  {
+   "input": {
+    "value": 470.0,
+    "bands": {
+     "F1": 400.0,
+     "F2": 520.0,
+     "F3": 610.0,
+     "F4": 700.0,
+     "F5": 900.0
+    },
+    "tolerance": 0.05
+   },
+   "expected": "entre F1 e F2"
+  },
+  {
+   "input": {
+    "value": 470.0,
+    "bands": {
+     "F1": 400.0,
+     "F2": 520.0,
+     "F3": 610.0,
+     "F4": 700.0,
+     "F5": 900.0
+    },
+    "tolerance": 0.0
+   },
+   "expected": "entre F1 e F2"
+  },
+  {
+   "input": {
+    "value": 600.0,
+    "bands": {
+     "F1": 400.0,
+     "F2": 520.0,
+     "F3": 610.0,
+     "F4": 700.0,
+     "F5": 900.0
+    },
+    "tolerance": 0.05
+   },
+   "expected": "≈F3"
+  },
+  {
+   "input": {
+    "value": 600.0,
+    "bands": {
+     "F1": 400.0,
+     "F2": 520.0,
+     "F3": 610.0,
+     "F4": 700.0,
+     "F5": 900.0
+    },
+    "tolerance": 0.0
+   },
+   "expected": "entre F2 e F3"
+  },
+  {
+   "input": {
+    "value": 640.0,
+    "bands": {
+     "F1": 400.0,
+     "F2": 520.0,
+     "F3": 610.0,
+     "F4": 700.0,
+     "F5": 900.0
+    },
+    "tolerance": 0.05
+   },
+   "expected": "≈F3"
+  },
+  {
+   "input": {
+    "value": 640.0,
+    "bands": {
+     "F1": 400.0,
+     "F2": 520.0,
+     "F3": 610.0,
+     "F4": 700.0,
+     "F5": 900.0
+    },
+    "tolerance": 0.0
+   },
+   "expected": "entre F3 e F4"
+  },
+  {
+   "input": {
+    "value": 905.0,
+    "bands": {
+     "F1": 400.0,
+     "F2": 520.0,
+     "F3": 610.0,
+     "F4": 700.0,
+     "F5": 900.0
+    },
+    "tolerance": 0.05
+   },
+   "expected": "≈F5"
+  },
+  {
+   "input": {
+    "value": 905.0,
+    "bands": {
+     "F1": 400.0,
+     "F2": 520.0,
+     "F3": 610.0,
+     "F4": 700.0,
+     "F5": 900.0
+    },
+    "tolerance": 0.0
+   },
+   "expected": "acima da F5"
+  },
+  {
+   "input": {
+    "value": 960.0,
+    "bands": {
+     "F1": 400.0,
+     "F2": 520.0,
+     "F3": 610.0,
+     "F4": 700.0,
+     "F5": 900.0
+    },
+    "tolerance": 0.05
+   },
+   "expected": "acima da F5"
+  },
+  {
+   "input": {
+    "value": 960.0,
+    "bands": {
+     "F1": 400.0,
+     "F2": 520.0,
+     "F3": 610.0,
+     "F4": 700.0,
+     "F5": 900.0
+    },
+    "tolerance": 0.0
+   },
+   "expected": "acima da F5"
+  },
+  {
+   "input": {
+    "value": 1000.0,
+    "bands": {
+     "F1": 400.0,
+     "F2": 520.0,
+     "F3": 610.0,
+     "F4": 700.0,
+     "F5": 900.0
+    },
+    "tolerance": 0.05
+   },
+   "expected": "acima da F5"
+  },
+  {
+   "input": {
+    "value": 1000.0,
+    "bands": {
+     "F1": 400.0,
+     "F2": 520.0,
+     "F3": 610.0,
+     "F4": 700.0,
+     "F5": 900.0
+    },
+    "tolerance": 0.0
+   },
+   "expected": "acima da F5"
+  }
+ ]
+}

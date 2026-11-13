@@ -1,0 +1,197 @@
+{
+ "format": "ritmo-revenue-holidays",
+ "version": 1,
+ "country": "BR",
+ "names": {
+  "en": "Brazil",
+  "pt_BR": "Brasil"
+ },
+ "source": "Federal law (Lei 662/1949 with Lei 10.607/2002, Lei 6.802/1980, Lei 9.093/1995, Lei 14.759/2023) and the yearly federal ordinance on national holidays and optional days off; see docs/EDITORS.md.",
+ "days_off": [
+  5,
+  6
+ ],
+ "bridges": true,
+ "holidays": [
+  {
+   "id": "new_year",
+   "rule": {
+    "fixed": "01-01"
+   },
+   "names": {
+    "en": "New Year's Day",
+    "pt_BR": "Confraternização Universal"
+   }
+  },
+  {
+   "id": "carnival_monday",
+   "rule": {
+    "easter": -48
+   },
+   "names": {
+    "en": "Carnival Monday",
+    "pt_BR": "Segunda-feira de Carnaval"
+   },
+   "kind": "optional"
+  },
+  {
+   "id": "carnival_tuesday",
+   "rule": {
+    "easter": -47
+   },
+   "names": {
+    "en": "Carnival Tuesday",
+    "pt_BR": "Terça-feira de Carnaval"
+   },
+   "kind": "optional"
+  },
+  {
+   "id": "good_friday",
+   "rule": {
+    "easter": -2
+   },
+   "names": {
+    "en": "Good Friday",
+    "pt_BR": "Sexta-feira da Paixão"
+   }
+  },
+  {
+   "id": "tiradentes",
+   "rule": {
+    "fixed": "04-21"
+   },
+   "names": {
+    "en": "Tiradentes Day",
+    "pt_BR": "Tiradentes"
+   }
+  },
+  {
+   "id": "labour_day",
+   "rule": {
+    "fixed": "05-01"
+   },
+   "names": {
+    "en": "Labour Day",
+    "pt_BR": "Dia do Trabalho"
+   }
+  },
+  {
+   "id": "corpus_christi",
+   "rule": {
+    "easter": 60
+   },
+   "names": {
+    "en": "Corpus Christi",
+    "pt_BR": "Corpus Christi"
+   },
+   "kind": "optional"
+  },
+  {
+   "id": "independence",
+   "rule": {
+    "fixed": "09-07"
+   },
+   "names": {
+    "en": "Independence Day",
+    "pt_BR": "Independência do Brasil"
+   }
+  },
+  {
+   "id": "our_lady_aparecida",
+   "rule": {
+    "fixed": "10-12"
+   },
+   "names": {
+    "en": "Our Lady of Aparecida",
+    "pt_BR": "Nossa Senhora Aparecida"
+   }
+  },
+  {
+   "id": "all_souls",
+   "rule": {
+    "fixed": "11-02"
+   },
+   "names": {
+    "en": "All Souls' Day",
+    "pt_BR": "Finados"
+   }
+  },
+  {
+   "id": "republic",
+   "rule": {
+    "fixed": "11-15"
+   },
+   "names": {
+    "en": "Republic Day",
+    "pt_BR": "Proclamação da República"
+   }
+  },
+  {
+   "id": "black_consciousness",
+   "rule": {
+    "fixed": "11-20"
+   },
+   "names": {
+    "en": "Black Consciousness Day",
+    "pt_BR": "Dia Nacional de Zumbi e da Consciência Negra"
+   }
+  },
+  {
+   "id": "christmas",
+   "rule": {
+    "fixed": "12-25"
+   },
+   "names": {
+    "en": "Christmas Day",
+    "pt_BR": "Natal"
+   }
+  }
+ ],
+ "checked": {
+  "2026": {
+   "new_year": "2026-01-01",
+   "carnival_monday": "2026-02-16",
+   "carnival_tuesday": "2026-02-17",
+   "good_friday": "2026-04-03",
+   "tiradentes": "2026-04-21",
+   "labour_day": "2026-05-01",
+   "corpus_christi": "2026-06-04",
+   "independence": "2026-09-07",
+   "our_lady_aparecida": "2026-10-12",
+   "all_souls": "2026-11-02",
+   "republic": "2026-11-15",
+   "black_consciousness": "2026-11-20",
+   "christmas": "2026-12-25"
+  },
+  "2027": {
+   "new_year": "2027-01-01",
+   "carnival_monday": "2027-02-08",
+   "carnival_tuesday": "2027-02-09",
+   "good_friday": "2027-03-26",
+   "tiradentes": "2027-04-21",
+   "labour_day": "2027-05-01",
+   "corpus_christi": "2027-05-27",
+   "independence": "2027-09-07",
+   "our_lady_aparecida": "2027-10-12",
+   "all_souls": "2027-11-02",
+   "republic": "2027-11-15",
+   "black_consciousness": "2027-11-20",
+   "christmas": "2027-12-25"
+  },
+  "2028": {
+   "new_year": "2028-01-01",
+   "carnival_monday": "2028-02-28",
+   "carnival_tuesday": "2028-02-29",
+   "good_friday": "2028-04-14",
+   "tiradentes": "2028-04-21",
+   "labour_day": "2028-05-01",
+   "corpus_christi": "2028-06-15",
+   "independence": "2028-09-07",
+   "our_lady_aparecida": "2028-10-12",
+   "all_souls": "2028-11-02",
+   "republic": "2028-11-15",
+   "black_consciousness": "2028-11-20",
+   "christmas": "2028-12-25"
+  }
+ }
+}

@@ -1,0 +1,1520 @@
+{
+ "function": "faixas_dono.regua_noite",
+ "php_target": "Ritmo\\Domain\\Market\\Series\\NightSeries",
+ "notes": "The comparable series of a night from the stays of faixas_dono.construir (min_n 15): stays of the same type starting on the night with n >= 40 (median per percentile); else stays containing the night; else the nearest stays of the type within 3 days (only those at the smallest distance); else the type table. Values rounded half to even. origin_text is the engine's own.",
+ "cases": [
+  {
+   "input": {
+    "night": "2026-11-28",
+    "type": "weekend"
+   },
+   "expected": {
+    "values": {
+     "25": 949,
+     "50": 1171,
+     "65": 1433,
+     "75": 1575,
+     "90": 2000
+    },
+    "origin": "type_table",
+    "origin_text": "tabela do tipo"
+   }
+  },
+  {
+   "input": {
+    "night": "2026-11-29",
+    "type": "weekday"
+   },
+   "expected": {
+    "values": {
+     "25": 486,
+     "50": 677,
+     "65": 806,
+     "75": 863,
+     "90": 1186
+    },
+    "origin": "neighbour",
+    "origin_text": "medida em noite vizinha (01/12, 2 dias) (1 estadia)"
+   }
+  },
+  {
+   "input": {
+    "night": "2026-11-30",
+    "type": "weekday"
+   },
+   "expected": {
+    "values": {
+     "25": 486,
+     "50": 677,
+     "65": 806,
+     "75": 863,
+     "90": 1186
+    },
+    "origin": "neighbour",
+    "origin_text": "medida em noite vizinha (01/12, 1 dia) (1 estadia)"
+   }
+  },
+  {
+   "input": {
+    "night": "2026-12-01",
+    "type": "weekday"
+   },
+   "expected": {
+    "values": {
+     "25": 486,
+     "50": 677,
+     "65": 806,
+     "75": 863,
+     "90": 1186
+    },
+    "origin": "night",
+    "origin_text": "medida na noite (1 estadia)"
+   }
+  },
+  {
+   "input": {
+    "night": "2026-12-02",
+    "type": "weekday"
+   },
+   "expected": {
+    "values": {
+     "25": 528,
+     "50": 660,
+     "65": 746,
+     "75": 781,
+     "90": 973
+    },
+    "origin": "neighbour",
+    "origin_text": "medida em noite vizinha (01/12, 1 dia) (2 estadias)"
+   }
+  },
+  {
+   "input": {
+    "night": "2026-12-03",
+    "type": "weekday"
+   },
+   "expected": {
+    "values": {
+     "25": 570,
+     "50": 642,
+     "65": 686,
+     "75": 699,
+     "90": 760
+    },
+    "origin": "containing",
+    "origin_text": "medida nas estadias que contêm a noite (1 estadia)"
+   }
+  },
+  {
+   "input": {
+    "night": "2026-12-04",
+    "type": "weekend"
+   },
+   "expected": {
+    "values": {
+     "25": 874,
+     "50": 1171,
+     "65": 1449,
+     "75": 1575,
+     "90": 2000
+    },
+    "origin": "night",
+    "origin_text": "medida na noite (1 estadia)"
+   }
+  },
+  {
+   "input": {
+    "night": "2026-12-05",
+    "type": "weekend"
+   },
+   "expected": {
+    "values": {
+     "25": 874,
+     "50": 1171,
+     "65": 1449,
+     "75": 1575,
+     "90": 2000
+    },
+    "origin": "containing",
+    "origin_text": "medida nas estadias que contêm a noite (1 estadia)"
+   }
+  },
+  {
+   "input": {
+    "night": "2026-12-06",
+    "type": "weekday"
+   },
+   "expected": {
+    "values": {
+     "25": 570,
+     "50": 642,
+     "65": 686,
+     "75": 699,
+     "90": 760
+    },
+    "origin": "neighbour",
+    "origin_text": "medida em noite vizinha (03/12, 3 dias) (1 estadia)"
+   }
+  },
+  {
+   "input": {
+    "night": "2026-12-07",
+    "type": "weekday"
+   },
+   "expected": {
+    "values": {
+     "25": 533,
+     "50": 677,
+     "65": 772,
+     "75": 863,
+     "90": 1150
+    },
+    "origin": "type_table",
+    "origin_text": "tabela do tipo"
+   }
+  },
+  {
+   "input": {
+    "night": "2026-12-08",
+    "type": "weekday"
+   },
+   "expected": {
+    "values": {
+     "25": 533,
+     "50": 677,
+     "65": 772,
+     "75": 863,
+     "90": 1150
+    },
+    "origin": "type_table",
+    "origin_text": "tabela do tipo"
+   }
+  },
+  {
+   "input": {
+    "night": "2026-12-09",
+    "type": "weekday"
+   },
+   "expected": {
+    "values": {
+     "25": 533,
+     "50": 677,
+     "65": 772,
+     "75": 863,
+     "90": 1150
+    },
+    "origin": "type_table",
+    "origin_text": "tabela do tipo"
+   }
+  },
+  {
+   "input": {
+    "night": "2026-12-10",
+    "type": "weekday"
+   },
+   "expected": {
+    "values": {
+     "25": 533,
+     "50": 677,
+     "65": 772,
+     "75": 863,
+     "90": 1150
+    },
+    "origin": "type_table",
+    "origin_text": "tabela do tipo"
+   }
+  },
+  {
+   "input": {
+    "night": "2026-12-11",
+    "type": "weekend"
+   },
+   "expected": {
+    "values": {
+     "25": 949,
+     "50": 1103,
+     "65": 1316,
+     "75": 1462,
+     "90": 1925
+    },
+    "origin": "night",
+    "origin_text": "medida na noite (1 estadia)"
+   }
+  },
+  {
+   "input": {
+    "night": "2026-12-12",
+    "type": "weekend"
+   },
+   "expected": {
+    "values": {
+     "25": 949,
+     "50": 1103,
+     "65": 1316,
+     "75": 1462,
+     "90": 1925
+    },
+    "origin": "containing",
+    "origin_text": "medida nas estadias que contêm a noite (1 estadia)"
+   }
+  },
+  {
+   "input": {
+    "night": "2026-12-13",
+    "type": "weekday"
+   },
+   "expected": {
+    "values": {
+     "25": 594,
+     "50": 730,
+     "65": 857,
+     "75": 901,
+     "90": 1150
+    },
+    "origin": "neighbour",
+    "origin_text": "medida em noite vizinha (15/12, 2 dias) (1 estadia)"
+   }
+  },
+  {
+   "input": {
+    "night": "2026-12-14",
+    "type": "weekday"
+   },
+   "expected": {
+    "values": {
+     "25": 594,
+     "50": 730,
+     "65": 857,
+     "75": 901,
+     "90": 1150
+    },
+    "origin": "neighbour",
+    "origin_text": "medida em noite vizinha (15/12, 1 dia) (1 estadia)"
+   }
+  },
+  {
+   "input": {
+    "night": "2026-12-15",
+    "type": "weekday"
+   },
+   "expected": {
+    "values": {
+     "25": 594,
+     "50": 730,
+     "65": 857,
+     "75": 901,
+     "90": 1150
+    },
+    "origin": "night",
+    "origin_text": "medida na noite (1 estadia)"
+   }
+  },
+  {
+   "input": {
+    "night": "2026-12-16",
+    "type": "weekday"
+   },
+   "expected": {
+    "values": {
+     "25": 594,
+     "50": 730,
+     "65": 857,
+     "75": 901,
+     "90": 1150
+    },
+    "origin": "neighbour",
+    "origin_text": "medida em noite vizinha (15/12, 1 dia) (1 estadia)"
+   }
+  },
+  {
+   "input": {
+    "night": "2026-12-17",
+    "type": "weekday"
+   },
+   "expected": {
+    "values": {
+     "25": 594,
+     "50": 730,
+     "65": 857,
+     "75": 901,
+     "90": 1150
+    },
+    "origin": "neighbour",
+    "origin_text": "medida em noite vizinha (15/12, 2 dias) (1 estadia)"
+   }
+  },
+  {
+   "input": {
+    "night": "2026-12-18",
+    "type": "weekend"
+   },
+   "expected": {
+    "values": {
+     "25": 1043,
+     "50": 1284,
+     "65": 1381,
+     "75": 1708,
+     "90": 2301
+    },
+    "origin": "containing",
+    "origin_text": "medida nas estadias que contêm a noite (1 estadia)"
+   }
+  },
+  {
+   "input": {
+    "night": "2026-12-19",
+    "type": "weekend"
+   },
+   "expected": {
+    "values": {
+     "25": 1043,
+     "50": 1284,
+     "65": 1381,
+     "75": 1708,
+     "90": 2301
+    },
+    "origin": "containing",
+    "origin_text": "medida nas estadias que contêm a noite (1 estadia)"
+   }
+  },
+  {
+   "input": {
+    "night": "2026-12-20",
+    "type": "weekday"
+   },
+   "expected": {
+    "values": {
+     "25": 533,
+     "50": 677,
+     "65": 772,
+     "75": 863,
+     "90": 1150
+    },
+    "origin": "type_table",
+    "origin_text": "tabela do tipo"
+   }
+  },
+  {
+   "input": {
+    "night": "2026-12-21",
+    "type": "weekday"
+   },
+   "expected": {
+    "values": {
+     "25": 533,
+     "50": 677,
+     "65": 772,
+     "75": 863,
+     "90": 1150
+    },
+    "origin": "type_table",
+    "origin_text": "tabela do tipo"
+   }
+  },
+  {
+   "input": {
+    "night": "2026-12-22",
+    "type": "weekday"
+   },
+   "expected": {
+    "values": {
+     "25": 533,
+     "50": 677,
+     "65": 772,
+     "75": 863,
+     "90": 1150
+    },
+    "origin": "type_table",
+    "origin_text": "tabela do tipo"
+   }
+  },
+  {
+   "input": {
+    "night": "2026-12-23",
+    "type": "weekday"
+   },
+   "expected": {
+    "values": {
+     "25": 533,
+     "50": 677,
+     "65": 772,
+     "75": 863,
+     "90": 1150
+    },
+    "origin": "type_table",
+    "origin_text": "tabela do tipo"
+   }
+  },
+  {
+   "input": {
+    "night": "2026-12-24",
+    "type": "holiday"
+   },
+   "expected": {
+    "values": {
+     "25": 1568,
+     "50": 2142,
+     "65": 2426,
+     "75": 2766,
+     "90": 3351
+    },
+    "origin": "night",
+    "origin_text": "medida na noite (1 estadia)"
+   }
+  },
+  {
+   "input": {
+    "night": "2026-12-25",
+    "type": "holiday"
+   },
+   "expected": {
+    "values": {
+     "25": 1568,
+     "50": 2142,
+     "65": 2426,
+     "75": 2766,
+     "90": 3351
+    },
+    "origin": "containing",
+    "origin_text": "medida nas estadias que contêm a noite (1 estadia)"
+   }
+  },
+  {
+   "input": {
+    "night": "2026-12-26",
+    "type": "weekend"
+   },
+   "expected": {
+    "values": {
+     "25": 949,
+     "50": 1171,
+     "65": 1433,
+     "75": 1575,
+     "90": 2000
+    },
+    "origin": "type_table",
+    "origin_text": "tabela do tipo"
+   }
+  },
+  {
+   "input": {
+    "night": "2026-12-27",
+    "type": "weekday"
+   },
+   "expected": {
+    "values": {
+     "25": 533,
+     "50": 677,
+     "65": 772,
+     "75": 863,
+     "90": 1150
+    },
+    "origin": "type_table",
+    "origin_text": "tabela do tipo"
+   }
+  },
+  {
+   "input": {
+    "night": "2026-12-28",
+    "type": "weekday"
+   },
+   "expected": {
+    "values": {
+     "25": 533,
+     "50": 677,
+     "65": 772,
+     "75": 863,
+     "90": 1150
+    },
+    "origin": "type_table",
+    "origin_text": "tabela do tipo"
+   }
+  },
+  {
+   "input": {
+    "night": "2026-12-29",
+    "type": "weekday"
+   },
+   "expected": {
+    "values": {
+     "25": 533,
+     "50": 677,
+     "65": 772,
+     "75": 863,
+     "90": 1150
+    },
+    "origin": "type_table",
+    "origin_text": "tabela do tipo"
+   }
+  },
+  {
+   "input": {
+    "night": "2026-12-30",
+    "type": "weekday"
+   },
+   "expected": {
+    "values": {
+     "25": 533,
+     "50": 677,
+     "65": 772,
+     "75": 863,
+     "90": 1150
+    },
+    "origin": "type_table",
+    "origin_text": "tabela do tipo"
+   }
+  },
+  {
+   "input": {
+    "night": "2026-12-31",
+    "type": "holiday"
+   },
+   "expected": {
+    "values": {
+     "25": 2341,
+     "50": 2997,
+     "65": 3542,
+     "75": 3856,
+     "90": 5761
+    },
+    "origin": "night",
+    "origin_text": "medida na noite (1 estadia)"
+   }
+  },
+  {
+   "input": {
+    "night": "2027-01-01",
+    "type": "holiday"
+   },
+   "expected": {
+    "values": {
+     "25": 2341,
+     "50": 2997,
+     "65": 3542,
+     "75": 3856,
+     "90": 5761
+    },
+    "origin": "containing",
+    "origin_text": "medida nas estadias que contêm a noite (1 estadia)"
+   }
+  },
+  {
+   "input": {
+    "night": "2027-01-02",
+    "type": "weekend"
+   },
+   "expected": {
+    "values": {
+     "25": 949,
+     "50": 1171,
+     "65": 1433,
+     "75": 1575,
+     "90": 2000
+    },
+    "origin": "type_table",
+    "origin_text": "tabela do tipo"
+   }
+  },
+  {
+   "input": {
+    "night": "2027-01-03",
+    "type": "weekday"
+   },
+   "expected": {
+    "values": {
+     "25": 549,
+     "50": 680,
+     "65": 751,
+     "75": 844,
+     "90": 989
+    },
+    "origin": "neighbour",
+    "origin_text": "medida em noite vizinha (05/01, 2 dias) (1 estadia)"
+   }
+  },
+  {
+   "input": {
+    "night": "2027-01-04",
+    "type": "weekday"
+   },
+   "expected": {
+    "values": {
+     "25": 549,
+     "50": 680,
+     "65": 751,
+     "75": 844,
+     "90": 989
+    },
+    "origin": "neighbour",
+    "origin_text": "medida em noite vizinha (05/01, 1 dia) (1 estadia)"
+   }
+  },
+  {
+   "input": {
+    "night": "2027-01-05",
+    "type": "weekday"
+   },
+   "expected": {
+    "values": {
+     "25": 549,
+     "50": 680,
+     "65": 751,
+     "75": 844,
+     "90": 989
+    },
+    "origin": "containing",
+    "origin_text": "medida nas estadias que contêm a noite (1 estadia)"
+   }
+  },
+  {
+   "input": {
+    "night": "2027-01-06",
+    "type": "weekday"
+   },
+   "expected": {
+    "values": {
+     "25": 549,
+     "50": 680,
+     "65": 751,
+     "75": 844,
+     "90": 989
+    },
+    "origin": "neighbour",
+    "origin_text": "medida em noite vizinha (05/01, 1 dia) (1 estadia)"
+   }
+  },
+  {
+   "input": {
+    "night": "2027-01-07",
+    "type": "weekday"
+   },
+   "expected": {
+    "values": {
+     "25": 549,
+     "50": 680,
+     "65": 751,
+     "75": 844,
+     "90": 989
+    },
+    "origin": "neighbour",
+    "origin_text": "medida em noite vizinha (05/01, 2 dias) (1 estadia)"
+   }
+  },
+  {
+   "input": {
+    "night": "2027-01-08",
+    "type": "weekend"
+   },
+   "expected": {
+    "values": {
+     "25": 1091,
+     "50": 1407,
+     "65": 1861,
+     "75": 2022,
+     "90": 2495
+    },
+    "origin": "night",
+    "origin_text": "medida na noite (1 estadia)"
+   }
+  },
+  {
+   "input": {
+    "night": "2027-01-09",
+    "type": "weekend"
+   },
+   "expected": {
+    "values": {
+     "25": 1091,
+     "50": 1407,
+     "65": 1861,
+     "75": 2022,
+     "90": 2495
+    },
+    "origin": "containing",
+    "origin_text": "medida nas estadias que contêm a noite (1 estadia)"
+   }
+  },
+  {
+   "input": {
+    "night": "2027-01-10",
+    "type": "weekday"
+   },
+   "expected": {
+    "values": {
+     "25": 533,
+     "50": 672,
+     "65": 772,
+     "75": 913,
+     "90": 1388
+    },
+    "origin": "neighbour",
+    "origin_text": "medida em noite vizinha (12/01, 2 dias) (1 estadia)"
+   }
+  },
+  {
+   "input": {
+    "night": "2027-01-11",
+    "type": "weekday"
+   },
+   "expected": {
+    "values": {
+     "25": 533,
+     "50": 672,
+     "65": 772,
+     "75": 913,
+     "90": 1388
+    },
+    "origin": "neighbour",
+    "origin_text": "medida em noite vizinha (12/01, 1 dia) (1 estadia)"
+   }
+  },
+  {
+   "input": {
+    "night": "2027-01-12",
+    "type": "weekday"
+   },
+   "expected": {
+    "values": {
+     "25": 533,
+     "50": 672,
+     "65": 772,
+     "75": 913,
+     "90": 1388
+    },
+    "origin": "night",
+    "origin_text": "medida na noite (1 estadia)"
+   }
+  },
+  {
+   "input": {
+    "night": "2027-01-13",
+    "type": "weekday"
+   },
+   "expected": {
+    "values": {
+     "25": 533,
+     "50": 672,
+     "65": 772,
+     "75": 913,
+     "90": 1388
+    },
+    "origin": "neighbour",
+    "origin_text": "medida em noite vizinha (12/01, 1 dia) (1 estadia)"
+   }
+  },
+  {
+   "input": {
+    "night": "2027-01-14",
+    "type": "weekday"
+   },
+   "expected": {
+    "values": {
+     "25": 533,
+     "50": 672,
+     "65": 772,
+     "75": 913,
+     "90": 1388
+    },
+    "origin": "neighbour",
+    "origin_text": "medida em noite vizinha (12/01, 2 dias) (1 estadia)"
+   }
+  },
+  {
+   "input": {
+    "night": "2027-01-15",
+    "type": "weekend"
+   },
+   "expected": {
+    "values": {
+     "25": 1168,
+     "50": 1426,
+     "65": 1592,
+     "75": 1697,
+     "90": 2071
+    },
+    "origin": "containing",
+    "origin_text": "medida nas estadias que contêm a noite (1 estadia)"
+   }
+  },
+  {
+   "input": {
+    "night": "2027-01-16",
+    "type": "weekend"
+   },
+   "expected": {
+    "values": {
+     "25": 1168,
+     "50": 1426,
+     "65": 1592,
+     "75": 1697,
+     "90": 2071
+    },
+    "origin": "containing",
+    "origin_text": "medida nas estadias que contêm a noite (1 estadia)"
+   }
+  },
+  {
+   "input": {
+    "night": "2027-01-17",
+    "type": "weekday"
+   },
+   "expected": {
+    "values": {
+     "25": 492,
+     "50": 805,
+     "65": 872,
+     "75": 1023,
+     "90": 1168
+    },
+    "origin": "neighbour",
+    "origin_text": "medida em noite vizinha (20/01, 3 dias) (1 estadia)"
+   }
+  },
+  {
+   "input": {
+    "night": "2027-01-18",
+    "type": "weekday"
+   },
+   "expected": {
+    "values": {
+     "25": 492,
+     "50": 805,
+     "65": 872,
+     "75": 1023,
+     "90": 1168
+    },
+    "origin": "neighbour",
+    "origin_text": "medida em noite vizinha (20/01, 2 dias) (1 estadia)"
+   }
+  },
+  {
+   "input": {
+    "night": "2027-01-19",
+    "type": "weekday"
+   },
+   "expected": {
+    "values": {
+     "25": 492,
+     "50": 805,
+     "65": 872,
+     "75": 1023,
+     "90": 1168
+    },
+    "origin": "neighbour",
+    "origin_text": "medida em noite vizinha (20/01, 1 dia) (1 estadia)"
+   }
+  },
+  {
+   "input": {
+    "night": "2027-01-20",
+    "type": "weekday"
+   },
+   "expected": {
+    "values": {
+     "25": 492,
+     "50": 805,
+     "65": 872,
+     "75": 1023,
+     "90": 1168
+    },
+    "origin": "containing",
+    "origin_text": "medida nas estadias que contêm a noite (1 estadia)"
+   }
+  },
+  {
+   "input": {
+    "night": "2027-01-21",
+    "type": "weekday"
+   },
+   "expected": {
+    "values": {
+     "25": 492,
+     "50": 805,
+     "65": 872,
+     "75": 1023,
+     "90": 1168
+    },
+    "origin": "neighbour",
+    "origin_text": "medida em noite vizinha (20/01, 1 dia) (1 estadia)"
+   }
+  },
+  {
+   "input": {
+    "night": "2027-01-22",
+    "type": "weekend"
+   },
+   "expected": {
+    "values": {
+     "25": 1142,
+     "50": 1387,
+     "65": 1647,
+     "75": 1800,
+     "90": 2133
+    },
+    "origin": "night",
+    "origin_text": "medida na noite (1 estadia)"
+   }
+  },
+  {
+   "input": {
+    "night": "2027-01-23",
+    "type": "weekend"
+   },
+   "expected": {
+    "values": {
+     "25": 1142,
+     "50": 1387,
+     "65": 1647,
+     "75": 1800,
+     "90": 2133
+    },
+    "origin": "containing",
+    "origin_text": "medida nas estadias que contêm a noite (1 estadia)"
+   }
+  },
+  {
+   "input": {
+    "night": "2027-01-24",
+    "type": "weekday"
+   },
+   "expected": {
+    "values": {
+     "25": 533,
+     "50": 677,
+     "65": 772,
+     "75": 863,
+     "90": 1150
+    },
+    "origin": "type_table",
+    "origin_text": "tabela do tipo"
+   }
+  },
+  {
+   "input": {
+    "night": "2027-01-25",
+    "type": "weekday"
+   },
+   "expected": {
+    "values": {
+     "25": 533,
+     "50": 677,
+     "65": 772,
+     "75": 863,
+     "90": 1150
+    },
+    "origin": "type_table",
+    "origin_text": "tabela do tipo"
+   }
+  },
+  {
+   "input": {
+    "night": "2027-01-26",
+    "type": "weekday"
+   },
+   "expected": {
+    "values": {
+     "25": 533,
+     "50": 677,
+     "65": 772,
+     "75": 863,
+     "90": 1150
+    },
+    "origin": "type_table",
+    "origin_text": "tabela do tipo"
+   }
+  },
+  {
+   "input": {
+    "night": "2027-01-27",
+    "type": "weekday"
+   },
+   "expected": {
+    "values": {
+     "25": 533,
+     "50": 677,
+     "65": 772,
+     "75": 863,
+     "90": 1150
+    },
+    "origin": "type_table",
+    "origin_text": "tabela do tipo"
+   }
+  },
+  {
+   "input": {
+    "night": "2027-01-28",
+    "type": "weekday"
+   },
+   "expected": {
+    "values": {
+     "25": 533,
+     "50": 677,
+     "65": 772,
+     "75": 863,
+     "90": 1150
+    },
+    "origin": "type_table",
+    "origin_text": "tabela do tipo"
+   }
+  },
+  {
+   "input": {
+    "night": "2027-01-29",
+    "type": "weekend"
+   },
+   "expected": {
+    "values": {
+     "25": 1072,
+     "50": 1340,
+     "65": 1511,
+     "75": 1681,
+     "90": 2315
+    },
+    "origin": "night",
+    "origin_text": "medida na noite (1 estadia)"
+   }
+  },
+  {
+   "input": {
+    "night": "2027-01-30",
+    "type": "weekend"
+   },
+   "expected": {
+    "values": {
+     "25": 1072,
+     "50": 1340,
+     "65": 1511,
+     "75": 1681,
+     "90": 2315
+    },
+    "origin": "containing",
+    "origin_text": "medida nas estadias que contêm a noite (1 estadia)"
+   }
+  },
+  {
+   "input": {
+    "night": "2027-01-31",
+    "type": "weekday"
+   },
+   "expected": {
+    "values": {
+     "25": 540,
+     "50": 605,
+     "65": 714,
+     "75": 778,
+     "90": 1030
+    },
+    "origin": "neighbour",
+    "origin_text": "medida em noite vizinha (02/02, 2 dias) (1 estadia)"
+   }
+  },
+  {
+   "input": {
+    "night": "2027-02-01",
+    "type": "weekday"
+   },
+   "expected": {
+    "values": {
+     "25": 540,
+     "50": 605,
+     "65": 714,
+     "75": 778,
+     "90": 1030
+    },
+    "origin": "neighbour",
+    "origin_text": "medida em noite vizinha (02/02, 1 dia) (1 estadia)"
+   }
+  },
+  {
+   "input": {
+    "night": "2027-02-02",
+    "type": "weekday"
+   },
+   "expected": {
+    "values": {
+     "25": 540,
+     "50": 605,
+     "65": 714,
+     "75": 778,
+     "90": 1030
+    },
+    "origin": "night",
+    "origin_text": "medida na noite (1 estadia)"
+   }
+  },
+  {
+   "input": {
+    "night": "2027-02-03",
+    "type": "weekday"
+   },
+   "expected": {
+    "values": {
+     "25": 540,
+     "50": 605,
+     "65": 714,
+     "75": 778,
+     "90": 1030
+    },
+    "origin": "neighbour",
+    "origin_text": "medida em noite vizinha (02/02, 1 dia) (1 estadia)"
+   }
+  },
+  {
+   "input": {
+    "night": "2027-02-04",
+    "type": "weekday"
+   },
+   "expected": {
+    "values": {
+     "25": 540,
+     "50": 605,
+     "65": 714,
+     "75": 778,
+     "90": 1030
+    },
+    "origin": "neighbour",
+    "origin_text": "medida em noite vizinha (02/02, 2 dias) (1 estadia)"
+   }
+  },
+  {
+   "input": {
+    "night": "2027-02-05",
+    "type": "weekend"
+   },
+   "expected": {
+    "values": {
+     "25": 972,
+     "50": 1105,
+     "65": 1384,
+     "75": 1446,
+     "90": 1871
+    },
+    "origin": "containing",
+    "origin_text": "medida nas estadias que contêm a noite (1 estadia)"
+   }
+  },
+  {
+   "input": {
+    "night": "2027-02-06",
+    "type": "weekend"
+   },
+   "expected": {
+    "values": {
+     "25": 972,
+     "50": 1105,
+     "65": 1384,
+     "75": 1446,
+     "90": 1871
+    },
+    "origin": "containing",
+    "origin_text": "medida nas estadias que contêm a noite (1 estadia)"
+   }
+  },
+  {
+   "input": {
+    "night": "2027-02-07",
+    "type": "weekday"
+   },
+   "expected": {
+    "values": {
+     "25": 533,
+     "50": 677,
+     "65": 772,
+     "75": 863,
+     "90": 1150
+    },
+    "origin": "type_table",
+    "origin_text": "tabela do tipo"
+   }
+  },
+  {
+   "input": {
+    "night": "2027-02-08",
+    "type": "weekday"
+   },
+   "expected": {
+    "values": {
+     "25": 533,
+     "50": 677,
+     "65": 772,
+     "75": 863,
+     "90": 1150
+    },
+    "origin": "type_table",
+    "origin_text": "tabela do tipo"
+   }
+  },
+  {
+   "input": {
+    "night": "2027-02-09",
+    "type": "weekday"
+   },
+   "expected": {
+    "values": {
+     "25": 533,
+     "50": 677,
+     "65": 772,
+     "75": 863,
+     "90": 1150
+    },
+    "origin": "type_table",
+    "origin_text": "tabela do tipo"
+   }
+  },
+  {
+   "input": {
+    "night": "2027-02-10",
+    "type": "weekday"
+   },
+   "expected": {
+    "values": {
+     "25": 533,
+     "50": 677,
+     "65": 772,
+     "75": 863,
+     "90": 1150
+    },
+    "origin": "type_table",
+    "origin_text": "tabela do tipo"
+   }
+  },
+  {
+   "input": {
+    "night": "2027-02-11",
+    "type": "weekday"
+   },
+   "expected": {
+    "values": {
+     "25": 533,
+     "50": 677,
+     "65": 772,
+     "75": 863,
+     "90": 1150
+    },
+    "origin": "type_table",
+    "origin_text": "tabela do tipo"
+   }
+  },
+  {
+   "input": {
+    "night": "2027-02-12",
+    "type": "weekend"
+   },
+   "expected": {
+    "values": {
+     "25": 949,
+     "50": 1171,
+     "65": 1433,
+     "75": 1575,
+     "90": 2000
+    },
+    "origin": "type_table",
+    "origin_text": "tabela do tipo"
+   }
+  },
+  {
+   "input": {
+    "night": "2027-02-13",
+    "type": "holiday"
+   },
+   "expected": {
+    "values": {
+     "25": 1600,
+     "50": 1927,
+     "65": 2144,
+     "75": 2569,
+     "90": 3770
+    },
+    "origin": "night",
+    "origin_text": "medida na noite (1 estadia)"
+   }
+  },
+  {
+   "input": {
+    "night": "2027-02-14",
+    "type": "holiday"
+   },
+   "expected": {
+    "values": {
+     "25": 1600,
+     "50": 1927,
+     "65": 2144,
+     "75": 2569,
+     "90": 3770
+    },
+    "origin": "containing",
+    "origin_text": "medida nas estadias que contêm a noite (1 estadia)"
+   }
+  },
+  {
+   "input": {
+    "night": "2027-02-15",
+    "type": "holiday"
+   },
+   "expected": {
+    "values": {
+     "25": 1600,
+     "50": 1927,
+     "65": 2144,
+     "75": 2569,
+     "90": 3770
+    },
+    "origin": "containing",
+    "origin_text": "medida nas estadias que contêm a noite (1 estadia)"
+   }
+  },
+  {
+   "input": {
+    "night": "2027-02-16",
+    "type": "weekday"
+   },
+   "expected": {
+    "values": {
+     "25": 450,
+     "50": 671,
+     "65": 750,
+     "75": 769,
+     "90": 845
+    },
+    "origin": "neighbour",
+    "origin_text": "medida em noite vizinha (17/02, 1 dia) (1 estadia)"
+   }
+  },
+  {
+   "input": {
+    "night": "2027-02-17",
+    "type": "weekday"
+   },
+   "expected": {
+    "values": {
+     "25": 450,
+     "50": 671,
+     "65": 750,
+     "75": 769,
+     "90": 845
+    },
+    "origin": "containing",
+    "origin_text": "medida nas estadias que contêm a noite (1 estadia)"
+   }
+  },
+  {
+   "input": {
+    "night": "2027-02-18",
+    "type": "weekday"
+   },
+   "expected": {
+    "values": {
+     "25": 450,
+     "50": 671,
+     "65": 750,
+     "75": 769,
+     "90": 845
+    },
+    "origin": "neighbour",
+    "origin_text": "medida em noite vizinha (17/02, 1 dia) (1 estadia)"
+   }
+  },
+  {
+   "input": {
+    "night": "2027-02-19",
+    "type": "weekend"
+   },
+   "expected": {
+    "values": {
+     "25": 836,
+     "50": 1220,
+     "65": 1482,
+     "75": 1651,
+     "90": 2062
+    },
+    "origin": "night",
+    "origin_text": "medida na noite (1 estadia)"
+   }
+  },
+  {
+   "input": {
+    "night": "2027-02-20",
+    "type": "weekend"
+   },
+   "expected": {
+    "values": {
+     "25": 836,
+     "50": 1220,
+     "65": 1482,
+     "75": 1651,
+     "90": 2062
+    },
+    "origin": "containing",
+    "origin_text": "medida nas estadias que contêm a noite (1 estadia)"
+   }
+  },
+  {
+   "input": {
+    "night": "2027-02-21",
+    "type": "weekday"
+   },
+   "expected": {
+    "values": {
+     "25": 533,
+     "50": 677,
+     "65": 772,
+     "75": 863,
+     "90": 1150
+    },
+    "origin": "type_table",
+    "origin_text": "tabela do tipo"
+   }
+  },
+  {
+   "input": {
+    "night": "2027-02-22",
+    "type": "weekday"
+   },
+   "expected": {
+    "values": {
+     "25": 533,
+     "50": 677,
+     "65": 772,
+     "75": 863,
+     "90": 1150
+    },
+    "origin": "type_table",
+    "origin_text": "tabela do tipo"
+   }
+  },
+  {
+   "input": {
+    "night": "2027-02-23",
+    "type": "weekday"
+   },
+   "expected": {
+    "values": {
+     "25": 533,
+     "50": 677,
+     "65": 772,
+     "75": 863,
+     "90": 1150
+    },
+    "origin": "type_table",
+    "origin_text": "tabela do tipo"
+   }
+  },
+  {
+   "input": {
+    "night": "2027-02-24",
+    "type": "weekday"
+   },
+   "expected": {
+    "values": {
+     "25": 533,
+     "50": 677,
+     "65": 772,
+     "75": 863,
+     "90": 1150
+    },
+    "origin": "type_table",
+    "origin_text": "tabela do tipo"
+   }
+  }
+ ]
+}

@@ -1,0 +1,113 @@
+/* Rules, Orders and Market screens of Ritmo Revenue. No web font, no image but dashicons. */
+.ritmo-editors {
+    --ritmo-text: #1d2327;
+    --ritmo-muted: #50575e;
+    --ritmo-border: #c3c4c7;
+    --ritmo-focus: var(--wp-admin-theme-color, #2271b1);
+    --ritmo-good-text: #00450c;
+    --ritmo-good-bg: #edfaef;
+    --ritmo-attention-text: #5c4400;
+    --ritmo-attention-bg: #fcf9e8;
+    --ritmo-critical-text: #8a2424;
+    --ritmo-critical-bg: #fcf0f1;
+    --ritmo-info-text: #0a4b78;
+    --ritmo-info-bg: #f0f6fc;
+    --ritmo-neutral-text: #2c3338;
+    --ritmo-neutral-bg: #f0f0f1;
+    color: var(--ritmo-text);
+    max-width: 100%;
+}
+.ritmo-editors a:focus-visible,
+.ritmo-editors button:focus-visible,
+.ritmo-editors input:focus-visible,
+.ritmo-editors select:focus-visible,
+.ritmo-editors textarea:focus-visible,
+.ritmo-editors summary:focus-visible {
+    outline: 2px solid var(--ritmo-focus);
+    outline-offset: 2px;
+}
+.ritmo-editors .ritmo-muted,
+.ritmo-editors .ritmo-help { color: var(--ritmo-muted); }
+.ritmo-editors .ritmo-help { margin: 0.25em 0 0; font-size: 13px; }
+.ritmo-editors .ritmo-help span { display: inline-block; margin-right: 0.75em; }
+.ritmo-editors .ritmo-card {
+    background: #fff;
+    border: 1px solid var(--ritmo-border);
+    padding: 12px 16px;
+    margin: 16px 0;
+    max-width: 100%;
+    box-sizing: border-box;
+}
+.ritmo-editors .ritmo-grid { display: grid; gap: 16px; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
+.ritmo-editors .ritmo-grid .ritmo-card { margin: 0; }
+.ritmo-editors .ritmo-intro { max-width: 70em; }
+.ritmo-editors .ritmo-callout { padding: 8px 12px; border-left: 4px solid var(--ritmo-focus); background: var(--ritmo-info-bg); color: var(--ritmo-info-text); }
+.ritmo-editors .ritmo-tone-attention.ritmo-callout { border-color: #996800; background: var(--ritmo-attention-bg); color: var(--ritmo-attention-text); }
+.ritmo-editors .ritmo-badge { display: inline-block; padding: 1px 8px; border-radius: 10px; font-size: 12px; line-height: 18px; border: 1px solid currentColor; }
+.ritmo-editors .ritmo-tone-good { color: var(--ritmo-good-text); background: var(--ritmo-good-bg); }
+.ritmo-editors .ritmo-tone-attention { color: var(--ritmo-attention-text); background: var(--ritmo-attention-bg); }
+.ritmo-editors .ritmo-tone-critical { color: var(--ritmo-critical-text); background: var(--ritmo-critical-bg); }
+.ritmo-editors .ritmo-tone-info { color: var(--ritmo-info-text); background: var(--ritmo-info-bg); }
+.ritmo-editors .ritmo-tone-neutral { color: var(--ritmo-neutral-text); background: var(--ritmo-neutral-bg); }
+.ritmo-editors .ritmo-changed { color: var(--ritmo-attention-text); background: var(--ritmo-attention-bg); font-size: 12px; padding: 0 6px; border-radius: 8px; }
+.ritmo-editors .ritmo-draft-bar { display: flex; flex-wrap: wrap; gap: 8px 16px; align-items: center; justify-content: space-between; padding: 8px 12px; margin: 12px 0; background: var(--ritmo-attention-bg); color: var(--ritmo-attention-text); border: 1px solid #996800; }
+.ritmo-editors .ritmo-draft-bar p { margin: 0; }
+.ritmo-editors .ritmo-sections ul { display: flex; flex-wrap: wrap; gap: 4px 16px; margin: 8px 0; padding: 0; list-style: none; }
+.ritmo-editors .ritmo-sections a[aria-current="page"] { font-weight: 600; text-decoration: none; color: var(--ritmo-text); }
+.ritmo-editors .ritmo-section-select { display: none; }
+.ritmo-editors .ritmo-group { border: 1px solid var(--ritmo-border); padding: 8px 12px; margin: 12px 0; min-width: 0; }
+.ritmo-editors .ritmo-group > legend { font-weight: 600; padding: 0 4px; }
+.ritmo-editors .ritmo-item { border: 1px dashed var(--ritmo-border); padding: 8px 12px; margin: 8px 0; }
+.ritmo-editors .ritmo-item > summary { cursor: pointer; font-weight: 600; }
+.ritmo-editors .ritmo-field { margin: 10px 0; }
+.ritmo-editors .ritmo-field label { font-weight: 600; }
+.ritmo-editors .ritmo-field .ritmo-control { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; margin-top: 4px; }
+.ritmo-editors .ritmo-field input[type="number"] { width: 9em; }
+.ritmo-editors .ritmo-field input[type="text"],
+.ritmo-editors .ritmo-field textarea,
+.ritmo-editors .ritmo-field select { max-width: 100%; }
+.ritmo-editors .ritmo-field-error { color: var(--ritmo-critical-text); font-weight: 600; margin: 4px 0; }
+.ritmo-editors .ritmo-field-invalid input,
+.ritmo-editors .ritmo-field-invalid select { border-color: var(--ritmo-critical-text); }
+.ritmo-editors .ritmo-check { display: inline-block; margin: 2px 12px 2px 0; font-weight: normal; }
+.ritmo-editors .ritmo-choice { display: block; margin: 6px 0; }
+.ritmo-editors .ritmo-locked { color: var(--ritmo-muted); margin-left: 8px; }
+.ritmo-editors .ritmo-error-summary { border: 2px solid var(--ritmo-critical-text); background: var(--ritmo-critical-bg); padding: 8px 16px; margin: 12px 0; }
+.ritmo-editors .ritmo-error-summary a { color: var(--ritmo-critical-text); }
+.ritmo-editors .ritmo-inline { display: inline-block; margin: 2px 4px 2px 0; }
+.ritmo-editors .ritmo-actions { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+.ritmo-editors .ritmo-filters { display: flex; flex-wrap: wrap; gap: 6px 10px; align-items: center; margin: 12px 0; }
+.ritmo-editors .ritmo-inline-fieldset { border: 0; padding: 0; margin: 0; display: inline-flex; flex-wrap: wrap; gap: 4px; }
+.ritmo-editors .ritmo-paging a { margin-right: 16px; }
+.ritmo-editors .ritmo-relation.ritmo-off { opacity: 0.85; border-style: dashed; }
+.ritmo-editors .ritmo-releases { margin: 4px 0 0 1.2em; list-style: disc; }
+.ritmo-editors .ritmo-table-scroll { max-width: 100%; overflow-x: auto; }
+.ritmo-editors .ritmo-months { display: grid; gap: 16px; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
+.ritmo-editors .ritmo-month { border-collapse: collapse; width: 100%; table-layout: fixed; }
+.ritmo-editors .ritmo-month caption { font-weight: 600; text-align: left; padding: 4px 0; }
+.ritmo-editors .ritmo-month th { font-size: 11px; overflow: hidden; text-overflow: ellipsis; }
+.ritmo-editors .ritmo-month td { border: 1px solid var(--ritmo-border); vertical-align: top; padding: 2px; height: 3.5em; font-size: 11px; overflow-wrap: break-word; }
+.ritmo-editors .ritmo-month abbr { text-decoration: none; }
+.ritmo-editors .ritmo-month .ritmo-day { display: block; font-weight: 600; }
+.ritmo-editors .ritmo-month .ritmo-mark { display: block; font-size: 10px; line-height: 1.2; }
+.ritmo-editors .ritmo-month .ritmo-weekend { background: var(--ritmo-neutral-bg); }
+.ritmo-editors .ritmo-month .ritmo-holiday { background: var(--ritmo-attention-bg); }
+.ritmo-editors .ritmo-month .ritmo-package { box-shadow: inset 0 -3px 0 var(--ritmo-focus); }
+.ritmo-editors .ritmo-month .ritmo-blank { background: transparent; border: 0; }
+@media (max-width: 600px) {
+    .ritmo-editors .ritmo-sections ul { display: none; }
+    .ritmo-editors .ritmo-section-select { display: flex; gap: 6px; align-items: center; flex-wrap: wrap; }
+    .ritmo-editors table.ritmo-table,
+    .ritmo-editors table.ritmo-table tbody,
+    .ritmo-editors table.ritmo-table tr,
+    .ritmo-editors table.ritmo-table th,
+    .ritmo-editors table.ritmo-table td { display: block; width: 100%; box-sizing: border-box; }
+    .ritmo-editors table.ritmo-table thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+    .ritmo-editors table.ritmo-table tr { border-bottom: 1px solid var(--ritmo-border); padding: 6px 0; }
+    .ritmo-editors table.ritmo-table [data-label]::before { content: attr(data-label); display: block; font-weight: 600; color: var(--ritmo-muted); font-size: 12px; }
+    .ritmo-editors .ritmo-field input[type="text"],
+    .ritmo-editors .ritmo-field textarea { width: 100%; }
+}
+@media (prefers-reduced-motion: reduce) {
+    .ritmo-editors * { transition: none !important; }
+}

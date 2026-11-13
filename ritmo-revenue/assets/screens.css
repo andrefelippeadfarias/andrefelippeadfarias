@@ -1,0 +1,154 @@
+/*
+ * Ritmo Revenue: the central screens (overview, nights, approvals, alerts, to-do, change log,
+ * settings). No web font, no image but dashicons, nothing from a CDN.
+ * Contrast pairs are annotated for the contrast test: "contrast: <fg> on <bg>".
+ */
+.ritmo {
+    --ritmo-text: #1d2327;
+    --ritmo-muted: #50575e;            /* contrast: muted on white 7.4:1 */
+    --ritmo-border: #8c8f94;           /* contrast: border on white 3.3:1 ui */
+    --ritmo-focus: var(--wp-admin-theme-color, #2271b1);
+    --ritmo-good-fg: #00450c;          /* contrast: good-fg on good-bg */
+    --ritmo-good-bg: #edfaef;
+    --ritmo-attention-fg: #5c4400;     /* contrast: attention-fg on attention-bg */
+    --ritmo-attention-bg: #fcf9e8;
+    --ritmo-critical-fg: #8a2424;      /* contrast: critical-fg on critical-bg */
+    --ritmo-critical-bg: #fcf0f1;
+    --ritmo-info-fg: #0a4b78;          /* contrast: info-fg on info-bg */
+    --ritmo-info-bg: #f0f6fc;
+    --ritmo-neutral-fg: #2c3338;       /* contrast: neutral-fg on neutral-bg */
+    --ritmo-neutral-bg: #f0f0f1;
+    color: var(--ritmo-text);
+}
+
+.ritmo a:focus-visible,
+.ritmo button:focus-visible,
+.ritmo input:focus-visible,
+.ritmo select:focus-visible,
+.ritmo textarea:focus-visible,
+.ritmo summary:focus-visible,
+.ritmo [tabindex]:focus-visible {
+    outline: 2px solid var(--ritmo-focus);
+    outline-offset: 2px;
+}
+
+.ritmo-head { display: flex; flex-wrap: wrap; gap: 8px 16px; align-items: center; justify-content: space-between; }
+.ritmo-picker { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+
+.ritmo-strip { display: flex; flex-wrap: wrap; gap: 6px; margin: 8px 0 12px; }
+.ritmo-badge {
+    display: inline-flex; align-items: center; gap: 4px;
+    padding: 2px 8px; border-radius: 3px; border: 1px solid transparent;
+    font-weight: 600; text-decoration: none; white-space: normal;
+}
+.ritmo-badge .dashicons { font-size: 16px; width: 16px; height: 16px; }
+.ritmo-tone-good { color: var(--ritmo-good-fg); background: var(--ritmo-good-bg); }
+.ritmo-tone-attention { color: var(--ritmo-attention-fg); background: var(--ritmo-attention-bg); }
+.ritmo-tone-critical { color: var(--ritmo-critical-fg); background: var(--ritmo-critical-bg); }
+.ritmo-tone-info { color: var(--ritmo-info-fg); background: var(--ritmo-info-bg); }
+.ritmo-tone-neutral { color: var(--ritmo-neutral-fg); background: var(--ritmo-neutral-bg); }
+.ritmo-tone-plain { color: var(--ritmo-text); background: #fff; }
+
+/* Legend of the nights grid: the symbols and colours in words (colour is never the only signal). */
+.ritmo-legend { display: flex; flex-wrap: wrap; gap: 4px 16px; margin: 12px 0 0; padding: 0; list-style: none; }
+.ritmo-legend li { display: inline-flex; align-items: center; gap: 4px; margin: 0; }
+.ritmo-legend .dashicons { font-size: 16px; width: 16px; height: 16px; }
+.ritmo-swatch { display: inline-block; width: 14px; height: 14px; border: 1px solid var(--ritmo-border); border-radius: 2px; }
+
+.ritmo-muted { color: var(--ritmo-muted); }
+.ritmo-error { color: var(--ritmo-critical-fg); font-weight: 600; }
+.ritmo-big { font-size: 1.3em; font-weight: 600; margin: 4px 0; }
+.ritmo-pct { color: var(--ritmo-muted); }
+.ritmo-price { font-variant-numeric: tabular-nums; }
+
+.ritmo-cards { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; margin: 12px 0; }
+.ritmo-card {
+    background: #fff; border: 1px solid #c3c4c7; border-radius: 4px;
+    padding: 12px 16px; margin: 0 0 16px; min-width: 0;
+}
+.ritmo-cards > .ritmo-card { margin: 0; }
+.ritmo-wide { grid-column: 1 / -1; }
+.ritmo-card h2 { margin-top: 4px; }
+.ritmo-block { min-width: 0; }
+.ritmo-list { margin: 4px 0 8px 18px; list-style: disc; }
+.ritmo-facts { display: grid; grid-template-columns: max-content 1fr; gap: 4px 12px; margin: 0; }
+.ritmo-facts dt { font-weight: 600; }
+.ritmo-facts dd { margin: 0; }
+.ritmo-actions { display: flex; flex-wrap: wrap; gap: 8px 16px; align-items: center; }
+.ritmo-inline { display: inline-block; margin: 0 8px 8px 0; }
+.ritmo-empty { background: #fff; border: 1px dashed #8c8f94; padding: 16px; margin: 12px 0; }
+.ritmo-hint { color: var(--ritmo-info-fg); }
+.ritmo-pace { display: flex; flex-wrap: wrap; gap: 6px; list-style: none; margin: 0; }
+
+.ritmo-filters { margin: 8px 0 12px; background: #fff; border: 1px solid #c3c4c7; padding: 4px 12px; }
+.ritmo-filters summary { cursor: pointer; font-weight: 600; padding: 6px 0; }
+.ritmo-filters form { display: flex; flex-wrap: wrap; gap: 4px 16px; align-items: flex-end; }
+.ritmo-filters label { display: block; font-weight: 600; }
+.ritmo-rooms label { display: inline-block; font-weight: 400; margin-right: 12px; }
+
+/* Scroll regions: wide content scrolls inside itself, never the page. */
+.ritmo-scroll { overflow-x: auto; max-width: 100%; }
+.ritmo-nightgrid { border-collapse: separate; border-spacing: 0; font-size: 13px; }
+.ritmo-nightgrid caption { text-align: left; padding: 6px 0; font-weight: 600; }
+.ritmo-nightgrid th, .ritmo-nightgrid td { border-bottom: 1px solid #dcdcde; border-right: 1px solid #dcdcde; padding: 0; text-align: center; min-width: 64px; }
+.ritmo-nightgrid thead th { position: sticky; top: 0; background: #f6f7f7; padding: 4px; z-index: 2; font-weight: 600; }
+.ritmo-nightgrid .ritmo-sticky { position: sticky; left: 0; background: #fff; z-index: 3; text-align: left; padding: 4px 8px; min-width: 120px; }
+.ritmo-nightgrid thead .ritmo-sticky { z-index: 4; background: #f6f7f7; }
+.ritmo-nightgrid .ritmo-weekday, .ritmo-nightgrid .ritmo-holiday-name { display: block; font-weight: 400; }
+.ritmo-nightgrid .ritmo-holiday { background: var(--ritmo-attention-bg); color: var(--ritmo-attention-fg); }
+.ritmo-nightgrid td a { display: block; padding: 6px 4px; min-height: 28px; color: inherit; text-decoration: none; }
+.ritmo-nightgrid td a:hover { text-decoration: underline; }
+.ritmo-nightgrid .dashicons { font-size: 14px; width: 14px; height: 14px; }
+.ritmo-cell-off { background: #f6f7f7; }
+
+/* Approvals */
+.ritmo-impact { display: flex; flex-wrap: wrap; gap: 4px 16px; list-style: none; margin: 8px 0; font-weight: 600; }
+.ritmo-room { border-top: 1px solid #dcdcde; padding: 6px 0; }
+.ritmo-room > summary, .ritmo-segment > summary { cursor: pointer; padding: 6px 0; }
+.ritmo-segment { margin-left: 16px; }
+.ritmo-nights { margin: 0 0 8px 24px; }
+.ritmo-night { display: flex; flex-wrap: wrap; gap: 4px 12px; align-items: baseline; padding: 4px 0; border-bottom: 1px dotted #dcdcde; }
+.ritmo-warning { color: var(--ritmo-attention-fg); background: var(--ritmo-attention-bg); padding: 0 4px; }
+.ritmo-reason { color: var(--ritmo-muted); flex-basis: 100%; }
+.ritmo-buttons .button { min-height: 40px; margin: 0 8px 8px 0; }
+.ritmo-total { font-weight: 600; min-height: 1.4em; }
+.ritmo-listing-row { margin: 8px 0; }
+
+/* Wizard */
+.ritmo-wizard { display: grid; grid-template-columns: 240px minmax(0, 1fr); gap: 16px; }
+.ritmo-steps { margin: 0 0 0 20px; }
+.ritmo-steps li { margin: 6px 0; }
+.ritmo-steps [aria-current="step"] a { font-weight: 700; }
+.ritmo-done { color: var(--ritmo-good-fg); margin-left: 4px; }
+.ritmo-room-cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 12px; }
+.ritmo-room-card { border: 1px solid #c3c4c7; padding: 8px 12px; min-width: 0; }
+.ritmo-room-card input { width: 100%; }
+.ritmo-day { display: inline-block; margin-right: 12px; }
+.ritmo-form label { font-weight: 600; }
+.ritmo-confirm code { font-size: 1em; }
+.ritmo-log { list-style: none; margin: 0; }
+.ritmo-log li { padding: 4px 0; border-bottom: 1px dotted #dcdcde; overflow-wrap: anywhere; }
+.ritmo-todo li { padding: 6px 0; border-bottom: 1px dotted #dcdcde; }
+
+@media (prefers-reduced-motion: reduce) {
+    .ritmo * { transition: none !important; animation: none !important; }
+}
+
+@media (max-width: 782px) {
+    .ritmo-cards { grid-template-columns: minmax(0, 1fr); }
+    .ritmo-wizard { grid-template-columns: minmax(0, 1fr); }
+    .ritmo .button, .ritmo input[type="checkbox"] { min-height: 40px; }
+    .ritmo input[type="checkbox"] { min-width: 24px; }
+    .ritmo-filters form { display: block; }
+}
+
+/* Under 600 px a list table becomes stacked cards: each cell names its column. */
+@media (max-width: 600px) {
+    .ritmo-table thead { position: absolute; left: -9999px; }
+    .ritmo-table, .ritmo-table tbody, .ritmo-table tr, .ritmo-table td, .ritmo-table th { display: block; width: auto; }
+    .ritmo-table tr { border: 1px solid #c3c4c7; margin: 0 0 8px; padding: 4px 8px; }
+    .ritmo-table td[data-label]::before, .ritmo-table th[data-label]::before { content: attr(data-label) ": "; font-weight: 600; }
+    .ritmo-segment { margin-left: 0; }
+    .ritmo-nights { margin-left: 0; }
+    .ritmo-facts { grid-template-columns: minmax(0, 1fr); }
+}

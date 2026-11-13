@@ -15631,6 +15631,19 @@
    "total": 7,
    "gravado_em": "2026-11-12T20:04:55+00:00",
    "chegou_ao_canal": false
+  },
+  {
+   "quarto": "VK7",
+   "noite": "2026-12-12",
+   "de": 1939.0,
+   "para": 2065,
+   "direcao": "sobe",
+   "status": "plano",
+   "vendidas": 6,
+   "base": "quarto",
+   "total": 7,
+   "gravado_em": "2026-11-13T01:14:49+00:00",
+   "chegou_ao_canal": false
   }
  ]
 }

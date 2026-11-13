@@ -5019,6 +5019,29 @@ Sem mudança: **Balcony 13-14/11** continua em R$ 1.054, porque a regra dos 80% 
 
 **Envio:** estas mudanças chegam aos canais no envio de amanhã ou com o Sync Now.
 
+## 12/11/2026, 21:33 a 22:16 BRT — Rotina leve das 19:53 (atrasada): King Spa 7 de amanhã reaberta, escada da King Spa 7 em 12/12 e Balcony 12/12 no mercado
+
+A rotina das 19:53 rodou às 21:33, porque a sessão bateu no limite de uso.
+
+**Beds24 desde 16:49 BRT:** 6 novas (Balcony 19-22/11 pela Booking; King Spa 7 11-13/12 pela Booking; Moinhos 18-20/12 pela Booking; King Spa 7 hoje, direta; e duas consultas do Airbnb na Balcony, 20/11 e 11/12, que não bloqueiam), 2 canceladas (Moinhos 06-08/12, Booking; King Spa 7 12-14/11, direta) e 5 alteradas (reservas de hoje da Villa e uma da Panorâmica I mudada para 15/11). No inventário: King Spa 7 sexta 13/11 reaberta (1 livre), Panorâmica I domingo 15/11 esgotada, Balcony 19-21/11 com uma a menos, King Spa 7 11-12/12 com uma a menos (12/12 com 6/7), Moinhos 18-19/12 com uma a menos e 06-07/12 com uma a mais. Segurança: 0 alertas. Abaixo do esperado: 0. Overbooking que segue: King Spa 7 15-16/11 e Panorâmica I 20-21/11 (–1 cada). Logs do PriceLabs: nenhuma mudança manual (só as gravações das 16:53).
+
+**Gravado (22:14 BRT), validado (0 erros) e conferido:**
+
+| Mudança | Onde | Antes | Depois | Como desfazer (pedir ao Claude) |
+|---|---|---|---|---|
+| King Spa 7 12/12 (sábado) | PriceLabs por data | R$ 1.939 | piso e teto R$ 2.065 (40% da base), plano do dono de fim de semana com 6/7 vendidas (3 degraus de +7%); estadia 2 mantida | regravar piso e teto 31% |
+| Balcony 12/12 (sábado) | PriceLabs por data | R$ 1.740 | piso e teto R$ 1.041 (-18%), regra dos 80% (8/9 suítes com banheira da Villa vendidas: Balcony no mercado do quarto sem banheira); estadia 2 mantida | regravar piso e teto 37% |
+| King Spa 7 sexta 13/11 | Beds24 | estadia 2 | estadia 1 (noite órfã: sábado 14/11 esgotado), relido e conferido; no PriceLabs a estadia efetiva já é 1 | voltar a estadia 2 |
+| King Spa 7 sábado 14/11 | Beds24 | fechado para chegada e saída | `noCheckIn` (saída do sábado aberta: sábado esgotado com a sexta livre, dono 02/11), relido e conferido | voltar a `noCheckInOrCheckOut` |
+
+Os dois preços foram conferidos pela resposta da API (a verificação devolveu as regras salvas). Recálculo não conferido (limite de recálculo): a King Spa 7 e a Balcony usaram a última vaga das 24 h nesta rodada (próxima 13/11 12:10). Ledger: 1 passo (King Spa 7 12/12).
+
+Sem mudança: **Moinhos** 18-19/12 (venda) e 06-07/12 (cancelamento) ficam para quando houver recálculo, porque a cota da Moinhos acaba de novo só às 12:10 de 13/11 (não conferido, limite de recálculo). **Balcony 19-21/11** e **King Spa 7 11/12**: o motor manteve (19/11 no piso de feriado; 20/11 já vigente). **King Spa 7 13/11** fica no preço do plano (R$ 1.880). **Panorâmica I 15/11** esgotada: a proteção entra no plano de amanhã cedo. A estadia da Panorâmica II numa noite entre 16 e 19/11 está abaixo da regra; isso fica para o plano completo das 07:53, porque com `--so-estadia` a estadia não sobe. Sombra da flutuação: foto do Beds24 das 21:33 guardada.
+
+Observação: depois das 21:00 BRT o Beds24 já conta o dia em UTC e não devolve a noite de hoje no inventário (leitura começou em 13/11). Hoje não fez falta.
+
+**Envio:** a estadia de sexta 13/11 e o sábado 14/11 da King Spa 7 já valem no Beds24. Para os canais receberem antes do envio de amanhã, vale o Sync Now no PriceLabs (D1).
+
 ## O que só pode ser feito na tela (passo a passo para você)
 
 1. **Safety Minimum Price → "Do Not Apply"** (Dynamic Pricing → Customizations → aba Groups → Edit no grupo Recanto dos Moinhos → All Customizations → Safety Minimum Price). Anote o valor atual antes.

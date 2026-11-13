@@ -6,6 +6,7 @@ namespace Ritmo\Tests\Integration\Run\Support;
 
 use Ritmo\Application\Approval\CapabilityCheck;
 use Ritmo\Application\EmergencySwitch;
+use Ritmo\Application\Mode\ModePreconditions;
 use Ritmo\Application\Mode\ModeService;
 use Ritmo\Application\Run\RunStack;
 use Ritmo\Application\Schedule\LaunchResult;
@@ -20,7 +21,6 @@ use Ritmo\Domain\Model\AnchorOrigin;
 use Ritmo\Domain\Model\MarketAnchor;
 use Ritmo\Domain\Model\Property;
 use Ritmo\Domain\Model\PropertyMode;
-use Ritmo\Domain\Model\RoomType;
 use Ritmo\Domain\Operations\RunKind;
 use Ritmo\Domain\Support\DateRange;
 use Ritmo\Domain\Support\Days;
@@ -167,8 +167,19 @@ final class RunWorld
         $this->clock->advance((float) ($target->getTimestamp() - $this->clock->now()->getTimestamp()));
     }
 
+    /**
+     * The owner tested both connections (a condition of the approval mode).
+     */
+    public function testConnections(bool $ok = true): void
+    {
+        foreach (ModePreconditions::PROVIDERS as $provider) {
+            $this->store->set(ModePreconditions::CONNECTION_TEST_PREFIX . $provider, ['ok' => $ok, 'message' => $ok ? 'OK' : 'refused', 'at' => $this->clock->now()->format(DATE_ATOM)]);
+        }
+    }
+
     private function seed(PropertyMode $mode): void
     {
+        $this->testConnections();
         $this->stack->properties()->save(new Property(self::PROPERTY, 'Example Inn', 'UTC', 'BRL'));
         foreach (SimWorld::rooms() as $room) {
             $this->stack->roomTypes()->save($room);
@@ -180,13 +191,5 @@ final class RunWorld
         if ($mode !== PropertyMode::Shadow) {
             $this->switchTo($mode);
         }
-    }
-
-    /**
-     * @return list<RoomType>
-     */
-    public static function rooms(): array
-    {
-        return SimWorld::rooms();
     }
 }

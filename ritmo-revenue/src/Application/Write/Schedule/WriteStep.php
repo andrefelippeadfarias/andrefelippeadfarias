@@ -50,11 +50,12 @@ final class WriteStep
     }
 
     /**
-     * What the token must allow for this step (operation, targets, nights, fields).
+     * What the token must allow for this step (operation, targets, nights, fields and the entries
+     * with their values).
      */
     public function request(): WriteRequest
     {
-        return new WriteRequest($this->operation, $this->nights, $this->fields());
+        return new WriteRequest($this->operation, $this->nights, $this->fields(), WriteRequest::entriesOf($this->payload));
     }
 
     public function target(): string

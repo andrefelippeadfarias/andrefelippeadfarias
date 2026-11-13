@@ -23,7 +23,7 @@ Reference: the reference skill's `ler_recalculo.py` (confirmation), `pace.py` (`
 | `src/Domain/Write/VerifyConfig.php` | section `verify`. |
 | `src/Application/Verify` | `Verifier`, `NightConfirmation`, `StoredStatus`, `ConfirmationQuota`, `RecordService`, `RecordOutcome`, `DeliveryService`, `UndoService`, `UndoRequest`, `ThirdPartyWatch`, `ThirdPartyResult`. |
 | `src/Application/Approval` | `ApprovalService`, `ApprovalGrant`, `ApprovalKind`, `ApprovalStatus`, `ApprovalRefused`, `ApprovalConfig`, `ApprovalWindow`, `PlanEntry`, `PlanEntries`, `PartialApproval`, `ApprovalSelection`, `ApprovedSubset`, `RestrictedPlan`, `CapabilityCheck`, `WaveHoldService`. |
-| `src/Infrastructure/Db` | `Migration/DraftVerify` and the repositories `ChangeLogRepository`, `WrittenStepRepository`, `PlanApprovalRepository`, `NightObservationRepository`, `DetectedFreezeRepository`, `WaveHoldRepository`. |
+| `src/Infrastructure/Db` | `Migration/Migration0008Confirmation` and the repositories `ChangeLogRepository`, `WrittenStepRepository`, `PlanApprovalRepository`, `NightObservationRepository`, `DetectedFreezeRepository`, `WaveHoldRepository`. |
 | `src/Domain/Plan/Validation` | the closures F2, X1 and 12 of the M2 review (section 7). |
 
 ## 1. Where this area sits in a write run
@@ -108,9 +108,16 @@ undo of the night is confirmed (`undone_at`); `ledger()` leaves undone steps out
 The pricing API has no change log, so a change is found by comparing states (`ManualChangeDetector`):
 
 - every read is an `Observation` of a room night (pricing date rule or PMS night), and so is every read-back after
-  a write of the plugin (origin `written`): the plugin's own change is then the last observation, not a difference;
+  a write of the plugin (origin `written`): the plugin's own change is then the last observation, not a difference.
+  A write merges into the rule that was there, so the written observation of a merged write keeps the night's other
+  fields from its latest observation (a fixed price, say; a fixed floor or ceiling the write replaced by a
+  percentage is dropped), and a deletion or a group's rewrite is kept as read (`RecordService`). Review finding of
+  the M3 correction phase: the plugin's own merged writes were taken for manual changes and froze nights;
 - a difference from the last observation is a third-party change, except: a first observation (baseline), a night
-  before today, a night with an unresolved write of the plugin (the resume classifies it), PMS availability, a date
+  before today, a night of a write of the plugin no run observed yet (a group left open, or a write whose unknown
+  outcome the read-back of this run's watch found applied: `ResumeReport::ownUnobserved()`; the read-back runs
+  before the comparison, in every mode, so a group written whole and changed by hand later is compared and frozen
+  like any other night), PMS availability, a date
   rule gone after its lead-time expiry, a PMS stay or restriction equal to what the pricing system's push sets
   there, and the reason text (never observed);
 - the changed nights of a room become a `DetectedFreeze`: exactly those nights, whatever their date, in both
@@ -127,7 +134,8 @@ row only when the values of the night changed.
 - `ApprovalService::propose()` stores a validated plan (sealed by the Validator) as a request: its entries
   (`PlanEntry`: kind, room, night or listing field, the exact fields sent as whole percentages, the order) and
   their hash (`PlanEntries::hash()`: SHA-256 of the canonical entries, never of explanations). Listing values go to
-  a request of their own (`ApprovalKind::Listing`). A newer request of the property supersedes the older one.
+  a request of their own (`ApprovalKind::Listing`). A newer request of the property supersedes the older one, and
+  lapses the approval of its kind not written yet.
 - It expires at the property's next midnight or `approval.max_calendar_age_hours` after the calendar was read,
   whichever comes first (`ApprovalWindow`). An expired request is never approved nor written.
 - `approve()` needs `ritmo_approve` at that moment (`CapabilityCheck`); a partial approval takes whole groups (a
@@ -139,7 +147,11 @@ row only when the values of the night changed.
   keeps nothing); the result is validated again and goes to the write gate with the gate's `HumanApproval` built
   from the grant (`planHash` of the restricted plan, `today` = the grant's day, `approvedBy`,
   `listingChanges()`).
-- `markWritten()`, `expireDue()`, `expireAll()` (mode or rules changed) close the life of a request.
+- At most one approval of a kind waits for its write: approving lapses the older approved request of the kind,
+  and the approved write takes the request decided last (never an older one left behind).
+- `markWritten()`, `expireDue()`, `expireAll()` close the life of a request; `expireAll()` (any change of mode, the
+  emergency switch engaged, the rules changed) expires the pending requests and lapses the approved ones not
+  written yet: an approval never writes after the change it predates.
 
 ## 7. Validator closures of the M2 review
 
@@ -219,7 +231,7 @@ exactly the steps the reference marks.
 | F2, X1, 12 | Section 7. | Not checked. |
 | H1 | A wave holds the cuts in the plan until a person releases the hold (or the configured hours pass). | An alert; the operator held the cuts by hand. |
 
-## 12. Storage (draft migration `DraftVerify`, renumbered by the integration)
+## 12. Storage (migration 8, `Migration0008Confirmation`)
 
 | Table | New |
 |---|---|

@@ -12,7 +12,7 @@ This document covers how runs start (the scheduler) and what a light run does. T
 | `src/Domain/Operations` (pure) | `LightRunConfig`, `MovementWindow`, `MovementClassifier`, `MovementDetector`, `MovementBatch`, `Movement`, `MovementKind`, `BookingVersion`, `SoldOutFlip`, `SoldOutFlips`, `LightRoundFacts`, `LightRoundPlanner`, `LightRoundPlan`, `LightTrigger`, `DeferredWork`, `OrphanWindow` | The light run: what moved, which nights, which rooms may take a step, what waits for the next full run. |
 | `src/Application/Schedule` | `SchedulerTick`, `RunLauncher`, `LockedRunLauncher`, `RunExecutor`, `RunNowService`, `LaunchResult`, `LaunchStatus`, `FailureKind`, `ScheduleSource`, `ScheduleHousekeeping`, `TickReport`, `PauseService`, `StallMonitor`, `MovementTracker`, `MovementRead`, `LightRoundService`, `LightRoundRequest`, `RoomQuota` | The tick, the property run lock, "Run now", the daily purge, the pause, the stalled-scheduler check, the movement read and the scope of a light run. |
 | `src/Infrastructure/Schedule` | `ScheduledRunRepository`, `OperationStateRepository`, `BookingMovementRepository`, `WpCronTrigger` | Slot rows, per-property state, processed booking versions, the WP-Cron event. |
-| `src/Infrastructure/Db/Migration/DraftOps.php` | | Draft migration (the integration numbers it): `scheduled_runs`, `operation_state`, `booking_movements`, and the lifecycle columns of `alerts`. |
+| `src/Infrastructure/Db/Migration/Migration0009Operations.php` | | Migration 9: `scheduled_runs`, `operation_state`, `booking_movements`, and the lifecycle columns of `alerts`. |
 
 ## 2. The scheduler
 
@@ -215,10 +215,12 @@ light run), the weekly review.
 | Sold-out flips near today enter the filter without a booking movement. | A block or a room move changes availability without a sale. |
 | No recalculation before deciding; the quota is checked for the confirmation after writing. | Sales are counted from the PMS; a mutating call before a validated plan would need a token. |
 | A light run with the PMS down stops with "vigilance blind"; no plan B through the pricing system. | The pricing system has no booking read in the plugin's contracts. |
+| Raising a mode checks the conditions of operations spec 6.1 (`ModePreconditions`): shadow → approval by `ritmo_manage_connections`, with the last `modes.min_shadow_runs` runs completed in shadow with a plan (the newest within 24 h), both connections tested OK within 24 h, no open `connector_down` or `write_failed` and the switch released; approval → autonomous also with no `write_failed` in 7 days and no wave holding cuts. Two conditions of the spec are not checked: the pricing calendar read (the plugin decides and confirms from the date rules without it, ARCHITECTURE.md section 6) and the vault apart (a passing connection test reads the secrets through it). | The reference has no modes; review finding of the M3 correction phase (`ModeServiceTest`). |
+| Any change of mode, and engaging the emergency switch, ends the approvals not written yet; a newer approval or proposal lapses the older one. | An approval is given for one moment and one plan; it never writes after the change it predates. |
 
 ## 5. For the integration
 
-- Number `DraftOps` and add it to `Migrations::all()`; name the new tables in INFRASTRUCTURE.md;
+- Done in the integration: migration 9 (`Migration0009Operations`) in `Migrations::all()`, its tables in INFRASTRUCTURE.md;
   regenerate the signature references (`php bin/sync-generated.php`).
 - Wire `ritmo_tick` (`WpCronTrigger::withInterval` on `cron_schedules`, `schedule()` on activation,
   `unschedule()` on deactivation, the hook calling `SchedulerTick::run`), replacing the hourly

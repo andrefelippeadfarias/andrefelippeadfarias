@@ -7,38 +7,27 @@ namespace Ritmo\Tests\Integration\Application;
 use PHPUnit\Framework\Attributes\PreserveGlobalState;
 use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 use Ritmo\Application\EmergencySwitch;
-use Ritmo\Application\ShadowRun\CollectStage;
-use Ritmo\Application\ShadowRun\DecideStage;
-use Ritmo\Application\ShadowRun\MeasureStage;
+use Ritmo\Application\Run\RunStack;
 use Ritmo\Application\ShadowRun\PlanItemStatus;
 use Ritmo\Application\ShadowRun\RunOutcome;
-use Ritmo\Application\ShadowRun\RunInputsReader;
-use Ritmo\Application\ShadowRun\RunPipeline;
-use Ritmo\Application\ShadowRun\ShadowRunService;
-use Ritmo\Application\ShadowRun\ShadowStage;
-use Ritmo\Application\ShadowRun\ValidateStage;
+use Ritmo\Application\Write\Gate\WriteGate;
 use Ritmo\Domain\Model\AnchorOrigin;
 use Ritmo\Domain\Model\MarketAnchor;
 use Ritmo\Domain\Model\Property;
 use Ritmo\Domain\Model\RoomType;
 use Ritmo\Domain\Support\DateRange;
 use Ritmo\Domain\Support\Days;
-use Ritmo\Infrastructure\Db\Repository\AlertRepository;
-use Ritmo\Infrastructure\Db\Repository\BookingRepository;
-use Ritmo\Infrastructure\Db\Repository\InventorySnapshotRepository;
 use Ritmo\Infrastructure\Db\Repository\MarketAnchorRepository;
-use Ritmo\Infrastructure\Db\Repository\OrderRepository;
-use Ritmo\Infrastructure\Db\Repository\PlanItemRepository;
 use Ritmo\Infrastructure\Db\Repository\PropertyRepository;
 use Ritmo\Infrastructure\Db\Repository\RoomTypeRepository;
-use Ritmo\Infrastructure\Db\Repository\RuleSetRepository;
-use Ritmo\Infrastructure\Db\Repository\RunPayloadRepository;
 use Ritmo\Infrastructure\Db\Repository\RunRepository;
-use Ritmo\Infrastructure\Db\Repository\StepLedgerRepository;
-use Ritmo\Infrastructure\Lock\DbLock;
+use Ritmo\Infrastructure\Schedule\RecipientDirectory;
 use Ritmo\Infrastructure\Store\ArrayStore;
+use Ritmo\Tests\Fakes\ClockSleeper;
 use Ritmo\Tests\Fakes\StaticConnectorSource;
 use Ritmo\Tests\Integration\Connectors\SimulatorTestCase;
+use Ritmo\Tests\Unit\Application\Alerts\RecordingMailer;
+use Ritmo\Tests\Unit\Application\Verify\Capabilities;
 use Ritmo\Tests\Unit\Infrastructure\Support\MigratedDatabase;
 
 /**
@@ -95,19 +84,17 @@ final class ShadowRunOverSimulatorTest extends SimulatorTestCase
 
         $http = $this->guardedHttp($calendarRead);
         $connectors = new StaticConnectorSource($this->beds24(null, $http), $this->priceLabs($http), $calendarRead);
-        $runs = new RunRepository($db);
-        $snapshots = new InventorySnapshotRepository($db);
-        $bookings = new BookingRepository($db);
-        $planItems = new PlanItemRepository($db, $clock);
         $switch = new EmergencySwitch(new ArrayStore());
-        $pipeline = new RunPipeline([
-            new CollectStage($connectors, $snapshots, $bookings, $clock),
-            new MeasureStage($snapshots, $bookings, new AlertRepository($db, $clock), $clock),
-            new DecideStage(new RunInputsReader($snapshots, $anchors, new StepLedgerRepository($db), new OrderRepository($db, $clock)), $clock, 'beds24'),
-            new ValidateStage(),
-            new ShadowStage($planItems, new RunPayloadRepository($db, $clock)),
-        ], $runs, $db, $switch, $clock, $this->logger);
-        $service = new ShadowRunService(new PropertyRepository($db, $clock), $rooms, new RuleSetRepository($db, $clock), $runs, new DbLock($db, $clock), $switch, $pipeline, $clock, $this->logger);
+        $recipients = new class () implements RecipientDirectory {
+            public function addresses(): array
+            {
+                return [];
+            }
+        };
+        $stack = new RunStack($db, $clock, new ArrayStore(), $this->logger, $connectors, $switch, new WriteGate($clock, $switch), new Capabilities(), new RecordingMailer(), $recipients, new ClockSleeper($clock));
+        $runs = $stack->runs();
+        $planItems = $stack->planItems();
+        $service = $stack->shadowRuns();
 
         $outcome = $service->run('sim-inn');
         $items = array_values(array_filter($planItems->forRun((int) $outcome->runId), static fn (array $item): bool => $item['status'] === PlanItemStatus::WOULD_WRITE));

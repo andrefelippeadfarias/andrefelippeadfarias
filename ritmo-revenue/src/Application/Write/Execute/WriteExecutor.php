@@ -64,7 +64,7 @@ final class WriteExecutor
 
             return $progress->outcome([]);
         }
-        $rows = $this->journal->plan($run->runId, $run->property->id, $run->issued, $before);
+        $rows = $this->journal->plan($run->runId, $run->property->id, $run->issued, $before, $run->plan);
         try {
             foreach ($steps as $index => $step) {
                 $stop = $progress->stopped() ?? $this->stopBefore($run, $step, $steps[$index + 1] ?? null);

@@ -4,13 +4,14 @@ declare(strict_types=1);
 
 namespace Ritmo\Rest;
 
+use InvalidArgumentException;
 use OutOfBoundsException;
+use Ritmo\Admin\RefusalText;
 use Ritmo\Application\Approval\ApprovalRefused;
 use Ritmo\Application\Approval\PlanEntry;
 use Ritmo\Application\Mode\ModeRefused;
 use Ritmo\Domain\Model\PropertyMode;
 use Ritmo\Domain\Write\Change\ChangeRecord;
-use Ritmo\Infrastructure\Db\Repository\OperationEventRepository;
 use Ritmo\WordPress\Roles;
 use Ritmo\WordPress\Services;
 use WP_Error;
@@ -21,17 +22,19 @@ use WP_REST_Server;
 /**
  * The routes of the operation (milestone M3) in ritmo/v1. Every route needs the session, the
  * REST nonce and a capability (RestRoutes::allowed); the use cases check again what each person
- * may do (a change of mode, an approval, an undo).
+ * may do (a change of mode, an approval, an undo). The decision on a plan and the position of the
+ * emergency switch are read strictly in the callback, after the permission (OperationInput): a
+ * malformed value is a 400 that changes nothing.
  *
  * | Route | Capability |
  * |---|---|
  * | POST /properties/{id}/run | ritmo_manage_rules ("Run now") |
  * | POST /properties/{id}/mode | ritmo_view (the mode service checks the capability of each change) |
  * | GET /properties/{id}/approvals | ritmo_view |
- * | POST /approvals/{id} | ritmo_approve (decision approve or reject, optional entry keys) |
+ * | POST /approvals/{id} | ritmo_approve (decision "approve" or "reject", required; optional non-empty list of entry keys) |
  * | GET /properties/{id}/changes | ritmo_view |
  * | POST /properties/{id}/undo | ritmo_approve |
- * | POST /emergency | ritmo_manage_connections |
+ * | POST /emergency | ritmo_manage_connections (engaged: true or false, required) |
  */
 final class OperationRoutes
 {
@@ -76,7 +79,7 @@ final class OperationRoutes
         } catch (OutOfBoundsException) {
             return self::notFound();
         } catch (ModeRefused $refused) {
-            return new WP_Error('ritmo_' . $refused->reason, $refused->getMessage(), ['status' => $refused->reason === ModeRefused::NO_CAPABILITY ? 403 : 409]);
+            return new WP_Error('ritmo_' . $refused->reason, RefusalText::mode($refused), ['status' => $refused->reason === ModeRefused::NO_CAPABILITY ? 403 : 409]);
         }
 
         return new WP_REST_Response(['id' => $property->id, 'mode' => $property->mode->value]);
@@ -100,18 +103,23 @@ final class OperationRoutes
     {
         $stack = Services::instance()->stack();
         $property = (string) $request->get_param('property');
-        $keys = $request->get_param('keys');
         try {
-            if ($request->get_param('decision') === 'reject') {
+            $decision = OperationInput::decision($request->get_param('decision'));
+            $keys = OperationInput::keys($request->get_param('keys'));
+        } catch (InvalidArgumentException $bad) {
+            return new WP_Error('ritmo_bad_decision', __('Send the decision "approve" or "reject" and, to approve only part of the plan, a non-empty list of entry keys.', 'ritmo-revenue'), ['status' => 400]);
+        }
+        try {
+            if ($decision === OperationInput::REJECT) {
                 $stack->approvalDesk()->reject($property, (int) $request['id'], get_current_user_id(), $stack->rules()->approval(), sanitize_text_field((string) $request->get_param('note')));
 
                 return new WP_REST_Response(['status' => 'rejected']);
             }
-            $grant = $stack->approvalDesk()->approve($property, (int) $request['id'], get_current_user_id(), is_array($keys) ? array_values(array_map('strval', $keys)) : null, $stack->rules()->approval(), sanitize_text_field((string) $request->get_param('note')));
+            $grant = $stack->approvalDesk()->approve($property, (int) $request['id'], get_current_user_id(), $keys, $stack->rules()->approval(), sanitize_text_field((string) $request->get_param('note')));
         } catch (OutOfBoundsException) {
             return self::notFound();
         } catch (ApprovalRefused $refused) {
-            return new WP_Error('ritmo_' . $refused->reason, $refused->getMessage(), ['status' => $refused->reason === ApprovalRefused::NO_CAPABILITY ? 403 : 409]);
+            return new WP_Error('ritmo_' . $refused->reason, RefusalText::approval($refused), ['status' => $refused->reason === ApprovalRefused::NO_CAPABILITY ? 403 : 409]);
         }
 
         return new WP_REST_Response(['status' => 'approved', 'entries' => count($grant->approvedEntries)]);
@@ -150,7 +158,7 @@ final class OperationRoutes
         } catch (OutOfBoundsException) {
             return self::notFound();
         } catch (ApprovalRefused $refused) {
-            return new WP_Error('ritmo_' . $refused->reason, $refused->getMessage(), ['status' => 403]);
+            return new WP_Error('ritmo_' . $refused->reason, RefusalText::approval($refused), ['status' => 403]);
         }
 
         return new WP_REST_Response($result, match ($result['status']) {
@@ -160,15 +168,15 @@ final class OperationRoutes
         });
     }
 
-    public static function emergency(WP_REST_Request $request): WP_REST_Response
+    public static function emergency(WP_REST_Request $request): WP_REST_Response|WP_Error
     {
-        $services = Services::instance();
-        $switch = $services->emergencySwitch();
-        $engage = (bool) $request->get_param('engaged');
-        $engage ? $switch->engage() : $switch->release();
-        $services->stack()->events()->record('', OperationEventRepository::EMERGENCY, $engage ? 'released' : 'engaged', $engage ? 'engaged' : 'released', 'REST', 'user:' . get_current_user_id(), $services->clock()->now());
+        try {
+            $engage = OperationInput::engaged($request->get_param('engaged'));
+        } catch (InvalidArgumentException) {
+            return new WP_Error('ritmo_bad_switch', __('Say whether the emergency switch is engaged: true or false.', 'ritmo-revenue'), ['status' => 400]);
+        }
 
-        return new WP_REST_Response(['engaged' => $switch->isEngaged()]);
+        return new WP_REST_Response(['engaged' => Services::instance()->stack()->emergency()->set($engage, 'REST', 'user:' . get_current_user_id())]);
     }
 
     private static function notFound(): WP_Error

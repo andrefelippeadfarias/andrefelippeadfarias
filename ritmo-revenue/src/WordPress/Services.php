@@ -31,7 +31,6 @@ use Ritmo\Infrastructure\Http\WpHttpClient;
 use Ritmo\Infrastructure\Lock\DbLock;
 use Ritmo\Infrastructure\Log\DbLogger;
 use Ritmo\Infrastructure\Log\LogSanitizer;
-use Ritmo\Infrastructure\Schedule\WpCronTrigger;
 use Ritmo\Infrastructure\Schedule\WpMailer;
 use Ritmo\Infrastructure\Schedule\WpRecipientDirectory;
 use Ritmo\Infrastructure\Secrets\SodiumVault;
@@ -192,7 +191,8 @@ final class Services
             new WpMailer(),
             new WpRecipientDirectory($this->store()),
             new SystemSleeper(),
-            static fn () => WpCronTrigger::spawnNow(),
+            static fn () => Scheduler::tickNow(),
+            static fn (): ?int => TimeLimit::forWrite(),
         ));
     }
 

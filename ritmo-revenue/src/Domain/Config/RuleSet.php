@@ -72,6 +72,42 @@ final class RuleSet
     }
 
     /**
+     * Builds a rule set stored by an earlier version of the plugin: every setting it does not have
+     * yet (a section or a field added later) takes its neutral default, and what it has is kept
+     * and validated as usual. Lists are never merged with the defaults.
+     *
+     * @param array<int|string, mixed> $stored
+     *
+     * @throws InvalidConfig when what was stored does not pass validation
+     */
+    public static function fromStored(array $stored): self
+    {
+        return self::fromArray(self::completed(Schema::ruleSet()->defaults(), $stored));
+    }
+
+    /**
+     * @param array<int|string, mixed> $defaults
+     * @param array<int|string, mixed> $stored
+     *
+     * @return array<int|string, mixed>
+     */
+    private static function completed(array $defaults, array $stored): array
+    {
+        if (array_is_list($defaults) || array_is_list($stored) && $stored !== []) {
+            return $stored;
+        }
+        foreach ($defaults as $key => $default) {
+            if (!array_key_exists($key, $stored)) {
+                $stored[$key] = $default;
+            } elseif (is_array($default) && is_array($stored[$key]) && $default !== [] && !array_is_list($default)) {
+                $stored[$key] = self::completed($default, $stored[$key]);
+            }
+        }
+
+        return $stored;
+    }
+
+    /**
      * The neutral rule set made of the schema defaults.
      */
     public static function defaults(): self

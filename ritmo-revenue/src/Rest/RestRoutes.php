@@ -51,7 +51,7 @@ final class RestRoutes
             'methods' => WP_REST_Server::READABLE,
             'callback' => [self::class, 'run'],
             'permission_callback' => self::allowed(Roles::VIEW),
-        ]);
+        ]);        OperationRoutes::register();
     }
 
     /**

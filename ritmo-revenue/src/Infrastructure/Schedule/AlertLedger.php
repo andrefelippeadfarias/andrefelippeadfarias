@@ -90,6 +90,20 @@ final class AlertLedger
         return array_map($this->hydrate(...), $this->db->select($sql, [$propertyId, AlertStatus::Resolved->value, ...$codes]));
     }
 
+    /**
+     * The alerts of a code first raised since an instant, whatever their status, newest first (an
+     * open alert raised again keeps its row: AlertLedger::active() finds it).
+     *
+     * @return list<AlertRecord>
+     */
+    public function since(string $propertyId, string $code, DateTimeImmutable $since): array
+    {
+        return array_map($this->hydrate(...), $this->db->select(
+            sprintf('SELECT * FROM %s WHERE property_code = ? AND code = ? AND created_at >= ? ORDER BY created_at DESC, id DESC', $this->db->table(self::TABLE)),
+            [$propertyId, $code, DbValue::instant($since)]
+        ));
+    }
+
     public function acknowledge(int $id, int $userId, DateTimeImmutable $now): void
     {
         $this->db->update(self::TABLE, [

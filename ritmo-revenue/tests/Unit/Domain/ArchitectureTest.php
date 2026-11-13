@@ -249,8 +249,19 @@ final class ArchitectureTest extends TestCase
             }
         }
 
+        // The tests too, outside the fixtures (where the reference operation's data lives): they name
+        // its rooms, properties and relations only through Ritmo\Tests\Support\ParityNames.
+        $tests = new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($root . '/tests', \FilesystemIterator::SKIP_DOTS));
+        foreach ($tests as $file) {
+            $path = $file->getPathname();
+            if (!str_contains($path, '/tests/fixtures/') && !str_contains($path, '/tests/e2e/screenshots/') && preg_match('/\.(php|js|json|sh|md)$/', $path) === 1) {
+                $files[] = $path;
+            }
+        }
+
         self::assertGreaterThan(40, count($files));
         self::assertContains($root . '/docs/ARCHITECTURE.md', $files, 'the documentation is scanned too');
+        self::assertContains($root . '/tests/Support/ParityNames.php', $files, 'the tests are scanned too');
         $violations = [];
         foreach ($files as $file) {
             if (in_array(self::relative($file), self::INTERNAL_DOCUMENTS, true)) {
@@ -261,7 +272,7 @@ final class ArchitectureTest extends TestCase
             }
         }
 
-        self::assertSame([], $violations, 'owner-specific names, room codes or ids found in plugin code or documentation');
+        self::assertSame([], $violations, 'owner-specific names, room codes or ids found in plugin code, documentation or tests');
         foreach (self::INTERNAL_DOCUMENTS as $document) {
             self::assertFileExists($root . '/' . $document, 'an internal document that no longer exists must leave the exclusion list');
         }

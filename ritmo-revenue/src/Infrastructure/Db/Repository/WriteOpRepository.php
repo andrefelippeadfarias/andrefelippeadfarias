@@ -132,6 +132,32 @@ final class WriteOpRepository
     }
 
     /**
+     * True when one of the plugin's five latest accepted listing changes of the listing wrote
+     * these values (each within half a unit).
+     *
+     * @param array<string, float> $values field (min, base, max) => amount
+     */
+    public function listingWritten(string $propertyCode, string $listingRef, array $values): bool
+    {
+        $rows = $this->db->select(
+            sprintf("SELECT payload FROM %s WHERE property_code = ? AND operation = 'listing_update' AND target_ref = ? AND status IN ('accepted', 'stored') ORDER BY id DESC LIMIT 5", $this->db->table(self::TABLE)),
+            [$propertyCode, $listingRef]
+        );
+        foreach ($rows as $row) {
+            $sent = DbValue::toArray($row['payload'])['entries'] ?? [];
+            $matches = $values !== [] && is_array($sent);
+            foreach ($values as $field => $amount) {
+                $matches = $matches && is_numeric($sent[$field] ?? null) && abs((float) $sent[$field] - $amount) < 0.5;
+            }
+            if ($matches) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
      * How many runs in a row, the latest first, the same body was refused (400) for the property.
      */
     public function refusalStreak(string $propertyCode, string $bodyHash): int

@@ -68,6 +68,28 @@ final class RoomType
         }
     }
 
+    /**
+     * The same room with the listing values the pricing system holds now (null keeps the value):
+     * the percentages of a run are over the base it read, never over a base typed at setup. Null
+     * when the values read cannot be a listing (not positive, or out of order).
+     */
+    public function withListing(?float $min, ?float $base, ?float $max): ?self
+    {
+        $min ??= $this->min;
+        $base ??= $this->base;
+        $max ??= $this->max;
+        foreach ([$min, $base, $max] as $amount) {
+            if (!is_finite($amount) || $amount <= 0) {
+                return null;
+            }
+        }
+        if ($max < $min) {
+            return null;
+        }
+
+        return new self($this->propertyId, $this->code, $this->name, $this->units, $this->pmsRef, $this->pricingRef, $base, $min, $max, $this->referenceMin, $this->tags);
+    }
+
     public function hasTag(string $tag): bool
     {
         return in_array($tag, $this->tags, true);

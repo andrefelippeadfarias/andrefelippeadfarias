@@ -18,6 +18,7 @@ use Ritmo\Domain\Calendar\Stay\StayFinding;
 use Ritmo\Domain\Calendar\Stay\StayHook;
 use Ritmo\Domain\Support\Days;
 use Ritmo\Tests\Support\Fixtures;
+use Ritmo\Tests\Support\ParityNames;
 
 /**
  * Parity of the stay rules with the reference Python engine: every golden file of
@@ -41,7 +42,6 @@ final class StayGoldenTest extends TestCase
         'calendario_12m.classificar_beds24.json', 'calendario_12m.comparar.json', 'calendario_12m.lote_unico.json',
     ];
 
-    private const ANY_ROOM = 'Q7';
 
     public function testEveryGoldenFileIsCoveredAndTheInputsAreTheFrozenOnes(): void
     {
@@ -63,7 +63,7 @@ final class StayGoldenTest extends TestCase
     {
         $rules = StayParity::rules();
         foreach (self::cases('validar_plano.estadia_exigida.json') as $case) {
-            self::assertSame($case['expected'], $rules->requiredStay(self::ANY_ROOM, Days::date($case['input']['night'])), $case['name']);
+            self::assertSame($case['expected'], $rules->requiredStay(ParityNames::room('low'), Days::date($case['input']['night'])), $case['name']);
         }
     }
 
@@ -82,7 +82,7 @@ final class StayGoldenTest extends TestCase
         $rules = StayParity::rules();
         foreach (self::cases('comum.orfa_permitida.json') as $case) {
             $in = $case['input'];
-            self::assertSame($case['expected'], $rules->orphanAllowed(self::ANY_ROOM, Days::date($in['night']), $in['closed_day_side']), $case['name']);
+            self::assertSame($case['expected'], $rules->orphanAllowed(ParityNames::room('low'), Days::date($in['night']), $in['closed_day_side']), $case['name']);
         }
     }
 
@@ -99,7 +99,7 @@ final class StayGoldenTest extends TestCase
         $rules = StayParity::rules();
         foreach (self::cases('calendario_12m.sabado_com_sexta_passada.json') as $case) {
             $today = $case['input']['today'] === null ? null : Days::date($case['input']['today']);
-            self::assertSame($case['expected'], $rules->closedDayWithPreviousPast(self::ANY_ROOM, Days::date($case['input']['night']), $today), $case['name']);
+            self::assertSame($case['expected'], $rules->closedDayWithPreviousPast(ParityNames::room('low'), Days::date($case['input']['night']), $today), $case['name']);
         }
     }
 

@@ -108,6 +108,29 @@ final class LadderConfigTest extends TestCase
         }
     }
 
+    public function testARuleThatRepeatsARoomAndNightTypeOrOpensAboveItsCeilingIsRefusedWhenSaved(): void
+    {
+        $rule = ['night_types' => ['weekend'], 'rooms' => ['A'], 'opening' => ['series' => 'market', 'percentile' => 40], 'ceiling' => ['series' => 'market', 'percentile' => 75]];
+        $cases = [
+            'ladder.strategies.0.rules.1.rooms unique' => [$rule, ['rooms' => ['A', 'B']] + $rule],
+            'ladder.strategies.0.rules.1.rooms unique ' => [$rule, ['night_types' => []] + $rule],
+            'ladder.strategies.0.rules.0.opening.percentile order' => [['opening' => ['series' => 'market', 'percentile' => 90]] + $rule],
+            'ladder.strategies.0.rules.0.opening.percentile order ' => [['opening' => ['series' => 'market', 'percentile' => 75, 'multiplier' => 1.2]] + $rule],
+        ];
+        foreach ($cases as $expected => $rules) {
+            try {
+                LadderConfig::fromArray(['strategies' => [['id' => 'a', 'rules' => $rules]]]);
+                self::fail('expected InvalidConfig: ' . $expected);
+            } catch (InvalidConfig $error) {
+                self::assertContains(trim($expected), array_map(static fn ($e): string => $e->path . ' ' . $e->code, $error->errors()));
+            }
+        }
+
+        $other = ['night_types' => ['weekday']] + $rule;
+        $belowCeiling = ['rooms' => ['B'], 'opening' => ['series' => 'cheapest', 'percentile' => 90]] + $rule;
+        self::assertCount(1, LadderConfig::fromArray(['strategies' => [['id' => 'a', 'rules' => [$rule, $other, $belowCeiling]]]])->strategies, 'another night type, or another series, is fine');
+    }
+
     public function testTheOtherAreasHaveNeutralDefaultsAndRejectBadValues(): void
     {
         self::assertSame(7, OrdersConfig::fromArray([])->manualFreezeDays);

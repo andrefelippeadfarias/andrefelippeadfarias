@@ -207,7 +207,7 @@ final class PriceLabsConnector implements PricingConnector
     {
         $listingRef = self::listingRef($listingRef);
         $body = OverrideWriteBody::write($this->config->pmsName, $overrides);
-        $this->authorise($token, new WriteRequest(WriteOperation::OverridesWrite, [$listingRef => OverrideWriteBody::dates($body)], OverrideWriteBody::fields($body)));
+        $this->authorise($token, new WriteRequest(WriteOperation::OverridesWrite, [$listingRef => OverrideWriteBody::dates($body)], OverrideWriteBody::fields($body), WriteRequest::entriesOf($overrides)));
         $this->client->write($token, 'POST', self::overridesPath($listingRef), $body);
     }
 
@@ -219,7 +219,7 @@ final class PriceLabsConnector implements PricingConnector
         $listingRef = self::listingRef($listingRef);
         $keys = array_map(static fn (mixed $date): string => $date instanceof DateTimeImmutable ? Days::key($date) : '', $dates);
         $body = OverrideWriteBody::delete($this->config->pmsName, $keys);
-        $this->authorise($token, new WriteRequest(WriteOperation::OverridesDelete, [$listingRef => $keys]));
+        $this->authorise($token, new WriteRequest(WriteOperation::OverridesDelete, [$listingRef => $keys], [], WriteRequest::entriesOf($keys)));
         $this->client->write($token, 'DELETE', self::overridesPath($listingRef), $body);
     }
 
@@ -230,7 +230,7 @@ final class PriceLabsConnector implements PricingConnector
     {
         $listingRef = self::listingRef($listingRef);
         $body = ListingUpdateBody::build($listingRef, $this->config->pmsName, $fields);
-        $this->authorise($token, new WriteRequest(WriteOperation::ListingUpdate, [$listingRef => []], array_keys($fields)));
+        $this->authorise($token, new WriteRequest(WriteOperation::ListingUpdate, [$listingRef => []], array_keys($fields), WriteRequest::entriesOf($fields)));
         $this->client->write($token, self::LISTING_ROUTE[0], self::LISTING_ROUTE[1], $body);
     }
 

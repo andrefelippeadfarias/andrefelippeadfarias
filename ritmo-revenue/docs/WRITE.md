@@ -22,7 +22,7 @@ src/Application/Write/
              QuotaConfig (section "quota"), AttemptRefused
 src/Contracts/        WriteToken (sealed), WriteAuthority, WriteHttpClient, WriteRequest, WriteOperation, Exception\NotReady
 src/Infrastructure/Http/   WriteRouteAllowList; GuardedHttpClient, ThrottledHttpClient, CreditAwareHttpClient get write()
-src/Infrastructure/Db/     Migration/DraftWrite (renumbered by the integration), Repository/WriteOpRepository,
+src/Infrastructure/Db/     Migration/Migration0007WritePath, Repository/WriteOpRepository,
                            Repository/RecalcAttemptRepository
 src/Connectors/PriceLabs/  OverrideWriteBody, ListingUpdateBody, the four write methods
 src/Connectors/Beds24/     CalendarWriteBody, writeCalendar(), Beds24Config::$roomUnits
@@ -44,6 +44,7 @@ with a reason code) unless every check holds:
 | G2 | the plan is of the property's today (clock, property timezone) and of this property | `stale_plan`, `wrong_property` |
 | G3 | validated at most `write.max_validation_age_minutes` ago | `stale_validation` |
 | G4 | the calendars were read at most `write.max_read_age_minutes` ago (never in the future) | `stale_reads` |
+| G4b | the plan's percentages are over the listing bases the run read (`WriteContext` rooms carry the listing values read: `RunContext` and `UndoWriter` take them from the pricing system; within a cent) | `base_changed` |
 | G5 | the emergency switch is released (read fresh) | `kill_switch` |
 | G6 | the authorization allows it now: autonomous mode, or a person's approval of this plan hash, of today, by a user who holds the approval capability now; never shadow; the licence allows writing | `mode_shadow`, `mode_not_autonomous`, `licence`, `approval_mismatch`, `approval_stale`, `approver_lacks_capability` |
 | G7 | a listing change only with listing changes enabled AND a person's approval naming it; otherwise it is left out (`dropped`, `listing_needs_approval`) and the rest goes on | — |
@@ -55,10 +56,13 @@ with a reason code) unless every check holds:
 The token (`Contracts\WriteToken`) is created only by `WriteGate::mint()` through its private
 constructor (`Closure::bind`, the one exception besides the Validator's seal allowed by the
 architecture test). It carries nothing but a random id: what it may do is kept by the gate's
-static `WeakMap` registry (`TokenGrant`): the steps it covers (each usable once), its expiry
+static `WeakMap` registry (`TokenGrant`): the steps it covers (each usable once, with the values of
+each entry: `WriteRequest::entriesOf()` of the body the connector got; a request with other values
+is refused), its expiry
 (`write.token_ttl_minutes`, never past the property's midnight), the property's day. `verify()`
-(called by every connector write) and `isLive()` (called by the HTTP guard) refuse a token that is
-not in the registry (made by `newInstanceWithoutConstructor`, `unserialize` throws, `clone` is
+(called by every connector write) and `claim()` (called by the HTTP guard for the exact method, URL
+and body: only the write a step was just used for, once more for the same request after a PMS token
+renewal) refuse a token that is not in the registry (made by `newInstanceWithoutConstructor`, `unserialize` throws, `clone` is
 private), revoked (end of the run), expired, of another day, or alive while the emergency switch is
 engaged (it is then revoked for good). A request outside the steps (another listing, night, field
 or operation) or a step used twice is refused (closes the M2 pending item 7c).
@@ -111,20 +115,34 @@ alerts is the operations area's.
 
 ## 5. Journal and resume
 
-`write_ops` (draft migration `DraftWrite`): one row per step with the nights, the body (never
+`write_ops` (migration 7, `Migration0007WritePath`): one row per step with the nights, the body (never
 headers), `before_state`, `intended_state` (merge semantics: a write keeps the fields it does not
 send; a deletion leaves no rule; a group rewrite leaves only its fields; PMS availability is read
 back net of bookings, compared with the expected net value when given), `observed_state`, hashes of
 the token, the plan and the body, and `resolved_run_id`.
 
-`ResumeService` (first work of a write run) reads again every target of the rows earlier runs left
-unsettled (`planned`, `sending`, `accepted`, `unknown`, and every row of a group) and classifies each
-night: applied, not applied, diverged (`ResumePlanner`). Rows become `stored`, `abandoned` or
-`mismatch` and are marked resolved. Nothing of the old payload is sent again: the run builds and
-validates a fresh plan; items whose state is already in force drop out of the payload (no effect),
-so only what is missing goes. A group whose deletion applied and whose rewrite did not is a
-`BrokenGroup`; its rewrite becomes plan items (`repair_group`) for the nights from today on, which go
-through the Validator and the gate (tonight never rises) and are written first.
+`ResumeService` runs in the watch stage of every run, whatever its mode, before anything is decided
+and before the third-party comparison: it reads again every target of the rows earlier runs left
+unsettled (`planned`, `sending`, `accepted`, `unknown`, and the rows of a group not stored whole; a
+group stored whole is resolved without a read) and classifies each night: applied, not applied,
+diverged (`ResumePlanner`; the rewrite of a group is read even when it was never sent). Rows become
+`stored`, `abandoned` or `mismatch`, keep what was read and are marked resolved; the rows a dead
+request left applied are recorded as its verify stage would have (change log, step ledger,
+observations: the next decision never gives a second pace step), and their nights are the plugin's
+own for the third-party comparison; a night that diverged is someone else's (frozen). Nothing of the
+old payload is sent again: the run builds and validates a fresh plan; items whose state is already
+in force drop out of the payload (no effect), so only what is missing goes. A group whose deletion
+applied and whose rewrite did not is a `BrokenGroup`: its rows stay unresolved (every run sees it
+and raises `write_failed` with the open groups again) until its rewrite is in force; its rewrite
+becomes plan items (`repair_group`) for the nights from today on, which go through the Validator and
+the gate (tonight never rises) and are written first and alone: at once when autonomous, as the
+plan proposed for approval in approval mode.
+
+The write of a run happens once (`WriteRunner::guardOnce`): a request that finds journal rows of its
+own run (its process died while writing, and the scheduler continued the run) ends the run as
+failed (`WriteInterrupted`) instead of sending from the old reads. The executor also gets a deadline
+from the request's time limit (`WordPress\TimeLimit` asks PHP for 300 seconds first): no call starts
+without time to finish it.
 
 ## 6. Recalculation quota
 
@@ -134,8 +152,12 @@ waits a minute (except the listing's own 429 inside the run), a listing whose at
 429 since the run start waits for the next run; a morning-slot warning never blocks. Every attempt
 counts, failures and 429 included. `RecalcGuard` records the attempt as `pending` BEFORE the call and
 settles it after (`ok`, `failure`, `rate_limited`); a pending attempt older than the call timeout
-counts as a failure. `RecalcQuota::runStartFor()` gives the run start: the scheduled slot, and at
-least `quota.failure_cooldown_minutes` before now for a run started by hand or a resume (D6).
+counts as a failure. `RecalcQuota::runStartFor()` gives the run start, through `Run\QuotaRunStart`:
+the slot of a full or light run, and for any other run (by hand, an approved write, a retry) the
+latest scheduled routine, at least `quota.failure_cooldown_minutes` before now (D6; the reference's
+`inicio_rodada`). The settings can only make the provider's limits stricter: `quota.per_listing` at
+most 3, `quota.window_hours` at least 24, `quota.per_account_per_minute` at most 10,
+`quota.account_wait_after_429_seconds` at least 60 (`QuotaConfig` refuses anything else).
 `AttemptLog` keeps the recording rules (golden `cota_recalculo.registrar`); instants need a timezone.
 
 ## 7. Field locks, four layers

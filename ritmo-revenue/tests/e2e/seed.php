@@ -10,6 +10,7 @@
 
 declare(strict_types=1);
 
+use Ritmo\Domain\Config\RuleSet;
 use Ritmo\Domain\Support\Days;
 use Ritmo\WordPress\Services;
 
@@ -28,6 +29,11 @@ $scenario = json_decode((string) file_get_contents($root . '/tests/fixtures/api/
 $setup = Services::instance()->setup();
 
 $preset = $setup->importPreset((string) file_get_contents($root . '/presets/default.json'));
+// The operations pass switches to approval right after the two shadow runs: no minimum of shadow
+// runs on this test site (the neutral rules ask for three).
+$rules = Services::instance()->ruleSets()->current()?->toArray() ?? [];
+$rules['modes']['min_shadow_runs'] = 0;
+Services::instance()->ruleSets()->save(RuleSet::fromArray($rules), 'End-to-end test: approval without waiting for shadow runs');
 $setup->createProperty(['id' => E2E_PROPERTY, 'name' => $scenario['beds24']['property']['name'], 'timezone' => E2E_TIMEZONE, 'currency' => $scenario['currency']]);
 
 $codes = [];
@@ -61,4 +67,4 @@ for ($day = 0; $day < $scenario['nights']; ++$day) {
 }
 $samples = $setup->importSamples(E2E_PROPERTY, implode("\n", $lines));
 
-printf("Seeded %s: rules version %d, room types %s, %d prices for %d nights.\n", E2E_PROPERTY, $preset['rules_version'], implode(', ', $codes), $samples['samples'], $samples['nights']);
+printf("Seeded %s: rules version %d (then the operations tweak), room types %s, %d prices for %d nights.\n", E2E_PROPERTY, $preset['rules_version'], implode(', ', $codes), $samples['samples'], $samples['nights']);

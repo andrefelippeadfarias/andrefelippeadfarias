@@ -31,6 +31,33 @@ final class BrokenGroup
     }
 
     /**
+     * @return array{group: string, room: string, listing: string, rewrite: list<array<string, string>>}
+     */
+    public function toArray(): array
+    {
+        return ['group' => $this->groupKey, 'room' => $this->roomCode, 'listing' => $this->listing, 'rewrite' => $this->rewrite];
+    }
+
+    /**
+     * @param array<string, mixed> $data as toArray() gives it
+     *
+     * @throws InvalidArgumentException when a field is missing
+     */
+    public static function fromArray(array $data): self
+    {
+        foreach (['group', 'room', 'listing'] as $key) {
+            if (!is_string($data[$key] ?? null) || $data[$key] === '') {
+                throw new InvalidArgumentException(sprintf('A broken group needs "%s".', $key));
+            }
+        }
+        if (!is_array($data['rewrite'] ?? null) || !array_is_list($data['rewrite'])) {
+            throw new InvalidArgumentException('A broken group needs the list of its rewrite.');
+        }
+
+        return new self($data['group'], $data['room'], $data['listing'], $data['rewrite']);
+    }
+
+    /**
      * The rewrite as plan items, nights before today left out (the past is never written).
      *
      * @return list<PlanItem>

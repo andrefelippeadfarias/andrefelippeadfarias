@@ -157,7 +157,7 @@ final class Beds24Connector implements PmsConnector
         if ($this->authority === null) {
             throw WriteBlocked::forRequest('POST', self::CALENDAR_PATH, 'the connector was built read-only');
         }
-        $this->authority->verify($token, new WriteRequest(WriteOperation::PmsCalendar, CalendarWriteBody::nights($body), CalendarWriteBody::fields($body)));
+        $this->authority->verify($token, new WriteRequest(WriteOperation::PmsCalendar, CalendarWriteBody::nights($body), CalendarWriteBody::fields($body), WriteRequest::entriesOf($changes)));
         $this->client->post($token, self::CALENDAR_PATH, $body);
     }
 

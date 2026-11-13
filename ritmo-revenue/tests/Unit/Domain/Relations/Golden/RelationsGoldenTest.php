@@ -35,6 +35,7 @@ use Ritmo\Domain\Relations\Validate\PlanNightValues;
 use Ritmo\Domain\Support\DateRange;
 use Ritmo\Domain\Support\Days;
 use Ritmo\Tests\Support\Fixtures;
+use Ritmo\Tests\Support\ParityNames;
 
 /**
  * Parity of the relations with the reference Python engine: every golden file of
@@ -49,18 +50,17 @@ final class RelationsGoldenTest extends TestCase
 {
     private const AMOUNT_TOLERANCE = 0.01;
 
-    private const COVERAGE = [
-        'pace.coerencia.json', 'ordem_recanto.faixa.json', 'ordem_recanto.faixa_afrodite.json', 'ordem_recanto.comparar.json',
-        'pace.regra_afrodite.json', 'pace.teto_anuncio.json', 'pace.limitar_ao_maximo.json',
-        'plano_dono.balcony_no_mercado.json', 'validar_plano.validar_balcony.json',
-    ];
+    /** Golden files named after the reference's own functions; those of its properties by key (ParityNames). */
+    private const COVERAGE = ['pace.coerencia.json', 'pace.teto_anuncio.json', 'pace.limitar_ao_maximo.json'];
+
+    private const COVERAGE_BY_KEY = ['between_audit', 'premium_audit', 'audit_run', 'premium_bounds', 'switch_trigger', 'band_check'];
 
     public function testEveryGoldenFileIsCoveredAndTheInputsAreTheFrozenOnes(): void
     {
         $manifest = Fixtures::json(ParityRelations::GOLDEN . 'MANIFEST.json');
         $onDisk = array_map('basename', glob(Fixtures::path(ParityRelations::GOLDEN . '*.*.json')) ?: []);
         sort($onDisk);
-        $covered = self::COVERAGE;
+        $covered = [...self::COVERAGE, ...array_map(static fn (string $key): string => ParityNames::golden($key) . '.json', self::COVERAGE_BY_KEY)];
         sort($covered);
         self::assertSame($covered, $onDisk, 'every golden file of the relations needs a test here');
         self::assertSame($covered, array_keys($manifest['files']));
@@ -112,7 +112,7 @@ final class RelationsGoldenTest extends TestCase
     {
         $night = Days::date($input['night']);
         $finding = self::auditor($input, $input['today'] ?? $input['night'])
-            ->auditBetween(self::relation('recanto-q2-between-q7-double'), $night);
+            ->auditBetween(self::relation(ParityNames::relation('between')), $night);
 
         self::assertNotNull($finding);
         self::assertAmounts($expected, [
@@ -132,8 +132,8 @@ final class RelationsGoldenTest extends TestCase
         $rooms = ParityRelations::rooms();
         $calendar = new ParityNightCalendar();
         $today = Days::date($input['today'] ?? $input['night']);
-        $premium = self::relation('recanto-afrodite-premium-over-max', $config);
-        $derive = $input['derive'] ? self::relation('recanto-afrodite-15-over-double', $config) : null;
+        $premium = self::relation(ParityNames::relation('premium'), $config);
+        $derive = $input['derive'] ? self::relation(ParityNames::relation('derive'), $config) : null;
         $audit = new PremiumAudit($config->settings, self::facts($input, $rooms), RecordedHooks::bundle($input, $calendar), $today);
 
         $finding = $audit->check($premium, $premium->params, $derive, Days::date($input['night']), (float) $input['others']);
@@ -173,9 +173,9 @@ final class RelationsGoldenTest extends TestCase
         $config = ParityRelations::config($input['relations_patch'] ?? []);
         $rooms = ParityRelations::rooms();
         $graph = new RelationGraph($config->relations, $rooms);
-        $relation = self::relation('recanto-afrodite-premium-over-max', $config);
+        $relation = self::relation(ParityNames::relation('premium'), $config);
         $night = Days::date($input['night']);
-        $hooks = RecordedHooks::bundle(['hooks' => ['Afrodite|' . $input['night'] => ['band' => $input['band']]], 'band_last_night' => $input['band_last_night']], new ParityNightCalendar());
+        $hooks = RecordedHooks::bundle(['hooks' => [ParityNames::room('suite') . '|' . $input['night'] => ['band' => $input['band']]], 'band_last_night' => $input['band_last_night']], new ParityNightCalendar());
 
         $bounds = PremiumBounds::forNight($relation, $graph->members($relation), $night, self::facts($input, $rooms), $hooks->calendar, $hooks->bands, Days::date($input['today']));
 
@@ -212,7 +212,7 @@ final class RelationsGoldenTest extends TestCase
     #[DataProvider('triggerCases')]
     public function testOccupancyTrigger(array $input, bool $expected): void
     {
-        $switch = self::relation('villa-balcony-switch-80');
+        $switch = self::relation(ParityNames::relation('switch'));
         self::assertInstanceOf(SwitchParams::class, $switch->params);
 
         self::assertSame($expected, $switch->params->isHit($input['sold'], $input['units']));
@@ -246,7 +246,7 @@ final class RelationsGoldenTest extends TestCase
             $report = new RelationReport();
             foreach ($input['satisfied_by_switch'] as $key) {
                 [$room, $night] = RoomNight::split($key);
-                $report->record(new RelationDecision('villa-balcony-switch-80', RelationType::OccupancySwitch, $room, Days::date($night), Outcome::SwitchSatisfied));
+                $report->record(new RelationDecision(ParityNames::relation('switch'), RelationType::OccupancySwitch, $room, Days::date($night), Outcome::SwitchSatisfied));
             }
         }
 
@@ -290,7 +290,7 @@ final class RelationsGoldenTest extends TestCase
      */
     public static function betweenAuditCases(): array
     {
-        return ParityRelations::provide('ordem_recanto.faixa');
+        return ParityRelations::provide(ParityNames::golden('between_audit'));
     }
 
     /**
@@ -298,7 +298,7 @@ final class RelationsGoldenTest extends TestCase
      */
     public static function premiumAuditCases(): array
     {
-        return ParityRelations::provide('ordem_recanto.faixa_afrodite');
+        return ParityRelations::provide(ParityNames::golden('premium_audit'));
     }
 
     /**
@@ -306,7 +306,7 @@ final class RelationsGoldenTest extends TestCase
      */
     public static function auditRunCases(): array
     {
-        return ParityRelations::provide('ordem_recanto.comparar');
+        return ParityRelations::provide(ParityNames::golden('audit_run'));
     }
 
     /**
@@ -314,7 +314,7 @@ final class RelationsGoldenTest extends TestCase
      */
     public static function premiumBoundsCases(): array
     {
-        return ParityRelations::provide('pace.regra_afrodite');
+        return ParityRelations::provide(ParityNames::golden('premium_bounds'));
     }
 
     /**
@@ -338,7 +338,7 @@ final class RelationsGoldenTest extends TestCase
      */
     public static function triggerCases(): array
     {
-        return ParityRelations::provide('plano_dono.balcony_no_mercado');
+        return ParityRelations::provide(ParityNames::golden('switch_trigger'));
     }
 
     /**
@@ -346,7 +346,7 @@ final class RelationsGoldenTest extends TestCase
      */
     public static function bandCheckCases(): array
     {
-        return ParityRelations::provide('validar_plano.validar_balcony');
+        return ParityRelations::provide(ParityNames::golden('band_check'));
     }
 
     /**

@@ -29,6 +29,8 @@ final class AdminPages
 
     public const DIAGNOSTICS = 'ritmo-revenue-diagnostics';
 
+    public const OPERATIONS = 'ritmo-revenue-operations';
+
     private function __construct()
     {
     }
@@ -40,6 +42,7 @@ final class AdminPages
         add_submenu_page(self::DASHBOARD, __('Dashboard', 'ritmo-revenue'), __('Dashboard', 'ritmo-revenue'), Roles::VIEW, self::DASHBOARD, [self::class, 'dashboard']);
         add_submenu_page(self::DASHBOARD, __('Connections', 'ritmo-revenue'), __('Connections', 'ritmo-revenue'), Roles::MANAGE_CONNECTIONS, self::CONNECTIONS, [self::class, 'connections']);
         add_submenu_page(self::DASHBOARD, __('Setup', 'ritmo-revenue'), __('Setup', 'ritmo-revenue'), Roles::MANAGE_RULES, self::SETUP, [self::class, 'setup']);
+        add_submenu_page(self::DASHBOARD, __('Operations', 'ritmo-revenue'), __('Operations', 'ritmo-revenue'), Roles::VIEW, self::OPERATIONS, [self::class, 'operations']);
         add_submenu_page(self::DASHBOARD, __('Diagnostics', 'ritmo-revenue'), __('Diagnostics', 'ritmo-revenue'), Roles::VIEW, self::DIAGNOSTICS, [self::class, 'diagnostics']);
     }
 
@@ -157,6 +160,39 @@ final class AdminPages
     }
 
     /**
+     * Operations: the mode of the property, the plan waiting for approval (approve all, approve
+     * the nights ticked, refuse), the change log with "undo", "Run now" and the emergency switch.
+     * The full approval screen is of a later milestone.
+     */
+    public static function operations(): void
+    {
+        self::requireCapability(Roles::VIEW);
+        $services = Services::instance();
+        $stack = $services->stack();
+        $properties = $services->properties()->all();
+        $selected = self::selectedProperty($properties);
+        $property = $selected === null ? null : $stack->properties()->find($selected);
+        $rules = $stack->rules();
+        $last = $selected === null ? null : ($stack->runs()->latest($selected, 1)[0] ?? null);
+
+        View::render('admin/operations', self::common(self::OPERATIONS) + [
+            'properties' => array_map(static fn (Property $p): array => ['id' => $p->id, 'name' => $p->name], $properties),
+            'selected' => $selected,
+            'mode' => $property?->mode->value,
+            'autonomous_enabled' => $rules->modes()->autonomousEnabled,
+            'pending' => $selected === null ? [] : $stack->approvalDesk()->pending($selected, $rules->approval()),
+            'changes' => $selected === null ? [] : array_reverse($stack->changeLog()->latest($selected, 50)),
+            'events' => $selected === null ? [] : $stack->events()->latest($selected, null, 20),
+            'report' => (array) ($last['summary']['report']['lines'] ?? []),
+            'last_run' => $last,
+            'switch_engaged' => $services->emergencySwitch()->isEngaged(),
+            'can_approve' => current_user_can(Roles::APPROVE),
+            'can_run' => current_user_can(Roles::MANAGE_RULES),
+            'can_manage' => current_user_can(Roles::MANAGE_CONNECTIONS),
+        ]);
+    }
+
+    /**
      * @param list<Property> $properties
      *
      * @return list<array{property: string, holder: array<string, mixed>|null}>
@@ -196,6 +232,7 @@ final class AdminPages
         if (current_user_can(Roles::MANAGE_RULES)) {
             $pages[self::SETUP] = __('Setup', 'ritmo-revenue');
         }
+        $pages[self::OPERATIONS] = __('Operations', 'ritmo-revenue');
         $pages[self::DIAGNOSTICS] = __('Diagnostics', 'ritmo-revenue');
 
         return ['page' => $page, 'notice' => Notice::take(), 'pages' => $pages, 'post_url' => admin_url('admin-post.php')];

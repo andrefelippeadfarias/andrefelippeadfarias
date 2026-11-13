@@ -14,7 +14,8 @@ final class Margin
     public const PERCENT = 'percent';
     public const AMOUNT = 'amount';
 
-    private const MIN_PERCENT = -90.0;
+    /** An at-least margin below this would empty the relation of its sense (the target could sit at half its reference). */
+    private const MIN_PERCENT = -50.0;
     private const MAX_PERCENT = 500.0;
     private const MAX_AMOUNT = 100000.0;
 

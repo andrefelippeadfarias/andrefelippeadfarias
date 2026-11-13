@@ -27,6 +27,7 @@ final class LightScope
         private readonly LightRoundService $service,
         private readonly RecalcGuard $quota,
         private readonly RunRepository $runs,
+        private readonly QuotaRunStart $runStart,
     ) {
     }
 
@@ -59,7 +60,7 @@ final class LightScope
             $manual,
             $newOverbooked,
             $context->rules->lightRun(),
-        ), new RecalcRoomQuota($this->quota, $listings, $startedAt), $context->runId);
+        ), new RecalcRoomQuota($this->quota, $listings, $this->runStart->of($context)), $context->runId);
 
         $filter = $plan->continues() ? array_keys($plan->filter) : [];
 

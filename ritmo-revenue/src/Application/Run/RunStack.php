@@ -12,6 +12,8 @@ use Ritmo\Application\Approval\ApprovalService;
 use Ritmo\Application\Approval\CapabilityCheck;
 use Ritmo\Application\ConnectorSource;
 use Ritmo\Application\EmergencySwitch;
+use Ritmo\Application\Mode\EmergencyControl;
+use Ritmo\Application\Mode\ModePreconditions;
 use Ritmo\Application\Mode\ModeService;
 use Ritmo\Application\Schedule\LightRoundService;
 use Ritmo\Application\Schedule\LockedRunLauncher;
@@ -92,7 +94,8 @@ final class RunStack
     private array $made = [];
 
     /**
-     * @param (Closure(): void)|null $wake asks the scheduler to tick now (after an approval)
+     * @param (Closure(): void)|null         $wake     asks the scheduler to tick now (after an approval)
+     * @param (Closure(): (int|null))|null   $timeLeft seconds the request may still work, for the write's deadline
      */
     public function __construct(
         public readonly Database $db,
@@ -107,6 +110,7 @@ final class RunStack
         private readonly RecipientDirectory $recipients,
         private readonly Sleeper $sleeper,
         private readonly ?Closure $wake = null,
+        private readonly ?Closure $timeLeft = null,
     ) {
     }
 
@@ -220,6 +224,11 @@ final class RunStack
         return $this->once(__FUNCTION__, fn (): RecalcGuard => new RecalcGuard(new RecalcAttemptRepository($this->db), $this->clock, PriceLabsConnector::ID, $this->rules()->quota(), $this->rules()->write()->callTimeoutSeconds));
     }
 
+    public function quotaRunStart(): QuotaRunStart
+    {
+        return $this->once(__FUNCTION__, fn (): QuotaRunStart => new QuotaRunStart($this->slots(), $this->runs(), $this->recalcGuard(), $this->clock));
+    }
+
     public function inputs(): RunInputsReader
     {
         return $this->once(__FUNCTION__, fn (): RunInputsReader => new RunInputsReader(
@@ -306,12 +315,23 @@ final class RunStack
     {
         return $this->once(__FUNCTION__, fn (): ModeService => new ModeService(
             $this->properties(),
-            $this->runs(),
             $this->events(),
             new ApprovalService($this->approvalRequests(), $this->capabilities, $this->clock, $this->rules()->approval()),
             $this->capabilities,
             $this->alerts(),
             $this->store,
+            $this->clock,
+            new ModePreconditions($this->runs(), new AlertLedger($this->db), $this->holds(), $this->switch, $this->store, $this->clock),
+        ));
+    }
+
+    public function emergency(): EmergencyControl
+    {
+        return $this->once(__FUNCTION__, fn (): EmergencyControl => new EmergencyControl(
+            $this->switch,
+            $this->properties(),
+            new ApprovalService($this->approvalRequests(), $this->capabilities, $this->clock, $this->rules()->approval()),
+            $this->events(),
             $this->clock,
         ));
     }
@@ -341,10 +361,11 @@ final class RunStack
             $this->observations(),
             $this->freezes(),
             $this->capabilities,
-            new LightScope(new LightRoundService($this->snapshots(), $alerts), $this->recalcGuard(), $this->runs()),
+            new LightScope(new LightRoundService($this->snapshots(), $alerts), $this->recalcGuard(), $this->runs(), $this->quotaRunStart()),
             $this->snapshots(),
             $this->bookings(),
-            $this->writeOps(),
+            new JournalWatch($this->connectors, new ResumeService($this->writeOps()), $this->record(), $alerts, $this->clock),
+            new ListingWatch($this->roomTypes(), $this->writeOps(), $this->events(), $alerts, $this->clock),
             $this->clock,
         );
     }
@@ -384,7 +405,7 @@ final class RunStack
     {
         return new WriteStage(
             new PlanRebuild($this->inputs(), $this->clock, $this->connectors->pricingPmsName()),
-            new WriteRunner($this->connectors, $this->gate, $this->executor(), new ResumeService($this->writeOps()), $this->runs(), $this->capabilities, $this->clock),
+            new WriteRunner($this->connectors, $this->gate, $this->executor(), $this->writeOps(), $this->quotaRunStart(), $this->capabilities, $this->clock, $this->timeLeft),
             $this->approvalRequests(),
             $this->holds(),
             $this->capabilities,

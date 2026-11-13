@@ -43,6 +43,14 @@ final class RecalcGuard
     }
 
     /**
+     * The start of the "same run" for a run of a scheduled slot, or of one started otherwise.
+     */
+    public function runStart(DateTimeImmutable $slotStart, bool $scheduled): DateTimeImmutable
+    {
+        return $this->quota->runStartFor($slotStart, $this->clock->now(), $scheduled);
+    }
+
+    /**
      * Records the attempt, makes the call and settles the attempt with its outcome.
      *
      * @param Closure(): void $call the recalculation call

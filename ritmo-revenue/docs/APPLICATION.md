@@ -4,103 +4,124 @@ The use cases (`src/Application`), the wiring for WordPress (`src/WordPress`, `s
 
 ## Part 1. Guide
 
-### 1.1 The shadow run
+### 1.1 The run pipeline
 
-`ShadowRunService::run($propertyId, $budgetSeconds = 20): RunOutcome` starts or resumes the shadow run of one property. It writes nothing outside the plugin's tables.
+Every run of a property goes through the same pipeline (`ShadowRun\RunPipeline`), one short stage at a time; each completed stage is stored with the run (`RunRepository::advance()`: stage name, summary, state for the next stage) in one transaction with what the stage stored, so a run interrupted by the end of a request resumes from its next stage. Before every stage the pipeline checks the lock (`busy` when another request took it) and the emergency switch: a run that may write stops, and so does the shadow run a person starts from the dashboard; a scheduled run in shadow mode (the property's mode, or forced by the switch) goes on reading and watching (operations spec O9, D7). The stages after the write (`AfterWriteStage`: verify and report) run even under the switch, so what already went out is confirmed and recorded. A stage that throws ends the run as `failed` with `Stage "<name>": <message>` (the plugin's own exceptions carry sentences safe to show; others are named by their class only).
 
-1. Unknown property: `OutOfBoundsException`. Emergency switch engaged: `blocked`, no run is started, and a run of the property left open is closed as `stopped` under the run lock (so it never resumes from what it collected before the emergency; when another request holds the lock, that request stops it before its next stage). The scheduled `resumeOpenRuns()` goes through the same path.
-2. The property's run lock (`DbLock`, key `shadow_run:<id>`, 600 s, heartbeat before every stage). Held by another request: `busy`.
-3. "Today" is `Clock::today($property->timezone)`; the run covers 60 nights from today (`HORIZON_NIGHTS`). An open run of the same day resumes from its next stage; an open run of an earlier day is closed as `failed` ("The day of the property changed ...") and a new run starts.
-4. Rules: the version in force when the run started (`runs.ruleset_version`; the neutral defaults when no version was saved). Rooms: the property's room types with a PMS mapping; none is a failed run.
-5. `RunPipeline::continue()` runs the stages in order. Before each stage it checks the emergency switch (`stopped` when engaged) and the lock. Each stage computes, then its writes and the stage marker (`RunRepository::advance()`: stage name, summary, state for the next stage) are stored in one transaction. After the budget no new stage starts and the outcome is `running`: call again to resume. A stage that throws ends the run as `failed` with `Stage "<name>": <message>` (the plugin's own exceptions carry sentences safe to show; others are named by their class only).
+The mode is fixed when the run starts (`runs.mode`): the property's mode, or shadow under the emergency switch; the kind is `shadow` (the dashboard's "Run shadow now"), `full`, `light`, `manual` ("Run now") or `approved_write`. "Today" is `Clock::today($property->timezone)` when the run opens; the run decides `plan.horizon_nights` nights from today (60 with the neutral rules) with the rules version in force when it started. A run of an earlier day is never continued: it is closed as failed and its plan is never written.
 
 | Stage | Reads | Stores | Summary |
 |---|---|---|---|
-| `collect` | `listListings()`, `readOverrides()`, `readPrices()` (only with the calendar read, ARCHITECTURE.md section 6), `readInventory(..., withPrices: true)`, `readBookingsModifiedSince()` (from the newest stored modification, or 365 days back) | snapshot of the PMS calendar (`InventorySnapshotRepository::store`), bookings (`upsertMany`) | listings found or missing, overrides, pricing nights, inventory nights, bookings read |
-| `measure` | the snapshot of this run, the stored bookings | alerts `overbooked` (critical), `sold_mismatch`, `push_disabled`, `push_stale` (more than 30 h since the last push or never), deduplicated per room and night | occupancy per window and room against the goals, overbooked nights, mismatches, push state per listing |
-| `decide` | the snapshot, the date rules and the pricing calendar of this run, the market anchors, the step ledger (`StepLedgerRepository::ledger`), the owner orders (`OrderRepository::book`) | nothing | room nights by `NightLine` code (`no_market_data` counts those without an anchor), items, deletions |
-| `validate` | the validation the assembly made | nothing | items `would_write`, `no_change`, `rejected`, issue codes, issues of the plan as a whole, `refused` |
-| `shadow` | the items, deletions, payload and slices of `decide` with the outcome of `validate` | `plan_items`: one row per floor, ceiling or minimum stay of an item and one per date rule deleted first (field `delete`), `status` = `would_write` / `no_change` / `rejected`, `details` = rule trace, reason parameters, relation codes, order cited, percentages, masks, orphan claim, issues; `run_payloads`: the payload and its slices in writing order | rows stored, `would_write`, slices, `writes_sent` = 0 |
+| `collect` | `listListings()`, `readOverrides()`, `readPrices()` (only with the calendar read, ARCHITECTURE.md section 6), `readInventory(..., withPrices: true)`, `readBookingsModifiedSince()` | snapshot of the PMS calendar, bookings | listings found or missing, overrides, pricing nights, inventory nights, bookings read |
+| `watch` | the bookings moved since the cursor (`MovementTracker`, one list for the movement and the watch), the snapshot, the stored bookings, the listing values read against the stored ones (`ListingWatch`), the journal rows of earlier writes read back (`JournalWatch` over `ResumeService`, in every mode), the earlier observations of every night | alerts (security, below expected, overbooked, closed without booking, manual change, listing changed, groups left open), the cancellation-wave hold, the listing values stored when they changed, the record of writes a dead request left applied (change log, step ledger), the observations and the freezes of nights someone else changed; state: nights closed in the PMS without a booking, the groups left open and, in a light run, the filter of the nights it may touch (`LightScope`) | bookings read, rows settled, listing changes, groups open, movements, findings, wave hold, manual changes, nights frozen |
+| `measure` | the snapshot of this run, the stored bookings | alerts `overbooked`, `sold_mismatch`, `push_disabled`, `push_stale` | occupancy per window and room, overbooked nights, mismatches, push state |
+| `decide` | `RunInputsReader`: the snapshot, the date rules and the pricing calendar, the market anchors and the market ruler built from them (`AnchorRuler`), the step ledger, the owner orders with the freezes, the blocked nights and the light filter of the watch, the listing values at the start of the week (`WeeklyReference`) | nothing | room nights by `NightLine` code, items, deletions |
+| `validate` | the validation the assembly made | nothing | items `would_write`, `no_change`, `rejected`, issue codes, refusal |
+| `shadow` | the plan of `decide` and `validate` | `plan_items` (one row per field of an item and per deletion, with its status and details) and `run_payloads` | rows stored, `would_write`, slices, `writes_sent` = 0 |
+| `write` | the plan built again in this request (`PlanRebuild`: a validated plan lives only in the process that validated it) | by mode: nothing (shadow); a request waiting for approval and the alert `approval_pending` (approval); the write (autonomous, or the approved write) | mode, entries proposed or held, writes sent, steps by status, stop reason, refusal of the gate |
+| `verify` | the journal rows of this run read back as stored (`JournalNights`); the push times and PMS prices of the steps waiting for the channel (`DeliveryService`) | change log, step ledger and observations of what was stored (`RecordService`); steps delivered | nights confirmed, changes and steps recorded, delivery |
+| `report` | the summaries of the run | nothing | the report lines (sync now first, security, overbooking, where every item went; three lines for a light run without anything to do) |
 
-How `decide` works (milestone 2): `RunInputsReader` turns what the run collected into the `RunInputs` of the plan assembly (ENGINE.md, section 1.8) and `PlanAssembler` builds, validates and slices the whole plan; `AssemblyState` keeps it as arrays for the next stages. A room night: the current price is the pricing system's (calendar read) or else the PMS price; the assembly brings it within the floor and ceiling of the date rule in force (`RuleInForce`, the reference's `pace.preco_no_vigente`), and when it moved the item's trace starts with `price_within_rule_in_force` and the price read; the floor and ceiling in force come from the calendar read or else from the date rule (fixed amount, or percentage over the room's base); the units sold are `units - available` of the PMS calendar, between 0 and the units (a blocked unit counts as sold). A night without an anchor is a `no_market_anchor` line (counted as `no_market_data`) and the engine is not asked. Without a market ruler no sales ladder strategy acts, and no night is held as closed in the PMS (neither has a source yet); the run is a full run (no light-run filter).
+The write (`WriteStage`, `WriteRunner`) happens once per run: a request that finds journal rows of its own run (its process died while writing) ends the run as failed (`WriteInterrupted`) instead of sending again from the same reads; the next run's watch reads those rows back. A group left open between its deletion and its rewrite (found by the watch) is repaired first and alone (`BrokenGroup::repairItems`, through the validator and the gate): at once when autonomous; in approval mode its repair is the plan proposed, alone, and written once a person approves it (an approved write that does not cover the repair is still written). The rows of an open group stay unresolved, so every run sees it and raises its alert again until the rewrite is in force. Else the plan, without the price cuts a cancellation wave holds (`CancellationHold`, validated again), goes to the write gate with the authorization of the mode: the property's autonomous authorization (`ModeService::autonomousAuthorization`, from the last switch to autonomous) or the approval of a person (`HumanApproval` over the fresh plan cut down to the approved entries by `ApprovedSubset` and validated again). The gate issues a token or refuses (`WriteRefused`: the refusal is in the summary, nothing is sent); the executor sends the steps in series and stops at the first failure; `WriteReport` counts the steps and raises `write_failed` when the write failed or left groups open. Listings not recalculated on the property's today are recalculated first when the quota allows (`WriteRunner::staleListings`, `RecalcRoomQuota`); the "same run" of the quota is the latest scheduled routine (`QuotaRunStart`): a recalculation that failed is not tried again by a run started meanwhile. The executor gets a deadline from the request's time limit (`WordPress\TimeLimit`, which asks PHP for the write's time first). After an autonomous write `ModeService::afterWrite()` counts the runs in a row whose writes failed and lowers the property to approval after `modes.demote_after_failed_writes`.
 
-How `validate` treats errors: the validator ran inside the assembly with the run's context (orders, stay rules, relations, the fresh calendar); the entries it refused are `rejected` and the rest was validated again (a deletion and the item that writes its night again go together). Items whose percentages are already in force are `no_change`. A plan made for another day (`stale_plan`) fails the run (`PlanRefused`); a plan whose remaining errors concern it as a whole keeps every item `rejected` and its issues on show.
+`ShadowRunService::run($propertyId, $budgetSeconds = 20): RunOutcome` runs the `shadow` kind (always in shadow mode) under the property's single run lock (`LockedRunLauncher::lockKey`, `property_run:<id>`); with the emergency switch engaged it starts nothing and closes a run left open as `stopped` (`blocked`). `ShadowRunService::resumeOpenRuns()` resumes the open shadow runs. The scheduled runs go through `LockedRunLauncher` and `PipelineRunExecutor` (1.2).
 
-`ShadowRunService::resumeOpenRuns()` resumes every open run; the WP-Cron hook `ritmo_resume_shadow_runs` (hourly, `WordPress\Scheduler`) calls it.
-
-The emergency switch (`EmergencySwitch`) is the option `ritmo_kill_switch` (Diagnostics screen) or the constant `RITMO_KILL_SWITCH` in wp-config.php, which the admin cannot release. The option is read with `KeyValueStore::getFresh()`, past WordPress's cache of the request, so a run sees between two stages a switch engaged by another request.
+The emergency switch (`EmergencySwitch`) is the option `ritmo_kill_switch` (Diagnostics and Operations screens, REST `POST /emergency`, both through `Mode\EmergencyControl`, which also ends every approval not written yet when the switch is engaged and records the event only when the switch moved) or the constant `RITMO_KILL_SWITCH` in wp-config.php, which the admin cannot release. The option is read with `KeyValueStore::getFresh()`, past WordPress's cache of the request, so a run sees between two stages (and the executor before every slice) a switch engaged by another request.
 
 ### 1.2 Wiring
 
-`WordPress\Services::instance()` builds the objects of a request on first use: `WpdbDatabase`, `SystemClock`, `OptionsStore`, `DbLogger` with `LogSanitizer`, `SodiumVault::forSite()`, the migrator (through `dbDelta`), every repository, `DbLock`, the emergency switch, `ConnectorFactory`, `ShadowRunService`, `OccupancyQuery`, `PropertyDashboard`, `SetupService`.
+`WordPress\Services::instance()` builds the objects of a request on first use: `WpdbDatabase`, `SystemClock`, `OptionsStore`, `DbLogger` with `LogSanitizer`, `SodiumVault::forSite()`, the migrator (through `dbDelta`), the emergency switch, the write gate (`gate()`, with the write and plan limits of the rules in force), `ConnectorFactory` (with the gate as write authority) and `Run\RunStack`. `RunStack` is the run machinery wired once over a database, a clock, a store, a logger, the connectors, the switch, the gate, a capability check (`WpCapabilityCheck`: `user_can`), a mailer and the recipients of the alerts: the repositories, the alerts (`AlertService`, `AlertNotifier`), the pipeline and its stages, `RunOpener` (opens and reopens runs), `PipelineRunExecutor` (the `RunExecutor` of the scheduler), `LockedRunLauncher`, `RunNowService`, `ShadowRunService`, `SchedulerTick` (with `CurrentSchedule`, the schedule of the rules in force, and `ScheduleHousekeeping`), `StallMonitor`, `ApprovalDesk`, `ModeService`, `UndoService` and `UndoWriter`. The end-to-end tests build the same stack over SQLite and the simulator.
 
-`WordPress\ConnectorFactory` implements `Application\ConnectorSource`. It builds `Beds24Connector` (refresh or long-life token from the vault entry `beds24_token`, room map from `RoomTypeRepository::pmsMap()`, property ids from the setting `beds24_property_ids`, `CreditAwareHttpClient`) and `PriceLabsConnector` (key `pricelabs_api_key`, PMS name `pricelabs_pms`, `ThrottledHttpClient` with 60/min and 1000/h, `DbQuotaLedger`), both over `GuardedHttpClient(new WpHttpClient())`. A missing secret is `ConnectionNotConfigured`. The base URLs are production unless `RITMO_DEV` is true and `RITMO_BEDS24_BASE_URL` / `RITMO_PRICELABS_BASE_URL` are defined. `readsPricingCalendar()` is true unless the site defines `RITMO_PRICING_CALENDAR_READ` as `false` (project decision: that POST only reads); then the allow-list holds that one route, exact host and path. `pricingPmsName()` is the PMS name the payload carries. `test($provider)` never throws.
+`WordPress\ConnectorFactory` implements `Application\ConnectorSource`. It builds `Beds24Connector` (refresh or long-life token from the vault entry `beds24_token`, room map and units from the room types, property ids from the setting `beds24_property_ids`, `CreditAwareHttpClient`) and `PriceLabsConnector` (key `pricelabs_api_key`, PMS name `pricelabs_pms`, `ThrottledHttpClient` with 60/min and 1000/h, `DbQuotaLedger`), both over `GuardedHttpClient(new WpHttpClient())` with the read routes, the write routes of both systems (exact paths at their base URLs) and the gate as write authority. A missing secret is `ConnectionNotConfigured`. The base URLs are production unless `RITMO_DEV` is true and `RITMO_BEDS24_BASE_URL` / `RITMO_PRICELABS_BASE_URL` are defined. `readsPricingCalendar()` is true unless the site defines `RITMO_PRICING_CALENDAR_READ` as `false`. `pricingPmsName()` is the PMS name the payload carries. `test($provider)` never throws.
 
-Lifecycle: `Activator::activate()` (migrations, vault, role "Revenue Manager" and capabilities, neutral rules when none, scheduled hook), `Deactivator::deactivate()` (unschedules), `uninstall.php` → `Uninstaller` (drops tables, `ritmo_*` options, role and capabilities only when the setting `delete_data_on_uninstall` is true). `Plugin::boot()` registers the text domain (on `init`), the upgrade check (`admin_init`: migrations when the database version is behind), the menu, the assets, the admin actions, the REST routes and the scheduled hook.
+Lifecycle: `Activator::activate()` (`Scheduler::schedule()` first: the five-minute WP-Cron event `ritmo_tick`, the event of earlier versions cleared; then migrations, vault, role and capabilities, and the neutral rules when none, or the stored rules completed with the settings added since, `RuleSetRepository::upgradeCurrent()`; rules that do not pass are logged and leave the rest done), `Deactivator::deactivate()` and `Uninstaller` (`Scheduler::unschedule()`; the uninstaller drops tables, `ritmo_*` options, role and capabilities only when the setting `delete_data_on_uninstall` is true). `Plugin::boot()` registers the text domain, the upgrade check (on `init`, every kind of request, one request at a time under a lock: the tick and the REST API never run over an old database; the tick does nothing while the tables are not up to date), the menu, the assets, the admin actions, the REST routes, the interval `ritmo_five_minutes` (filter `cron_schedules`), the tick (`Plugin::tick()` → `SchedulerTick::run()`; a failure is logged by its kind and raises `scheduler_stalled`, never thrown into WP-Cron) and, on the admin screens, the tick's event put back when it is missing and `StallMonitor::check()` (`scheduler_stalled` when slots wait with no tick; guarded the same way). After an approval `Scheduler::tickNow()` schedules a one-off tick and spawns WP-Cron, so the approved write starts at once (operations spec D16), still under the property's run lock.
 
 ### 1.3 Dashboard and setup
 
-- `OccupancyQuery::forProperty($id)`: occupancy of each goal window, per room and for the property, from the latest stored PMS calendar (no external call), with the traffic light of the 7-night window (`OccupancySignal`: green at or above the goal, amber up to 10 points under, red below, unknown without data).
-- `PropertyDashboard::build($id)`: the property, the occupancy, the open alerts, the last shadow run, the last completed one, the push state it measured, "what would be written" (the room nights of its `would_write` items: price now, floor, ceiling and stay in force and proposed, percentages, the reason code, the owner order and relations behind it, the rule trace and the validator's warnings; nearest first, at most 60, with the total), "refused" (every room night the validator refused, with its errors) and the issues of the plan as a whole.
-- `SetupService`: `createProperty()` (code, name, timezone from the PHP list, three-letter currency, tier; always in shadow mode), `saveRoomType()` (mapping to the PMS room id and the pricing listing id, amounts as typed in the form), `importPreset()` (PresetLoader validation, rules saved as a new version, properties forced to shadow mode, one transaction; `InvalidConfig` lists every error), `importSamples()` (`SampleCsv`: one `date,price` per line; each paste is a full picture of its nights and rebuilds their anchors by `AnchorBuilder::build()` and `merge()`).
+- `OccupancyQuery::forProperty($id)`: occupancy of each goal window, per room and for the property, from the latest stored PMS calendar (no external call), with the traffic light of the 7-night window (`OccupancySignal`).
+- `PropertyDashboard::build($id)`: the property, the occupancy, the open alerts, the last shadow run, the last completed one, the push state it measured, "what would be written", "refused" and the issues of the plan as a whole.
+- `SetupService`: `createProperty()` (always in shadow mode), `saveRoomType()`, `importPreset()` (properties forced to shadow mode), `importSamples()` (`SampleCsv`).
 
-### 1.4 Screens and capabilities
+### 1.4 Modes, approvals and undo
+
+- `Mode\ModeService::change()`: shadow → approval by a person who manages the connections when `Mode\ModePreconditions::toApproval()` is met (the last `modes.min_shadow_runs` runs completed in shadow with a plan, the newest within 24 h; both connections tested OK within 24 h; no open `connector_down` or `write_failed`; the switch released); approval → autonomous only when `modes.autonomous_enabled`, by a person who manages the connections, typing the property's id, after `modes.min_approval_days` and `modes.min_written_plans`, with no `write_failed` in 7 days and no wave holding cuts (`toAutonomous()`); shadow → autonomous never; any lower mode by whoever approves, manages the rules or the connections, at once (the write in progress stops before its next slice: its heartbeat checks the mode). `ModeRefused` names why, with each unmet condition coded (`Admin\RefusalText` translates them). Every change is an event of the change log (`OperationEventRepository`); any change ends the requests waiting and lapses the approvals not written yet.
+- `Approval\ApprovalService` (the requests, `PlanEntries`, `PartialApproval`, `ApprovedSubset`, `ApprovalWindow`, `ApprovalGrant`, `ApprovalKind`, `ApprovalStatus`, `ApprovalSelection`, `RestrictedPlan`, `ApprovalRefused`, `PlanEntry`) and `ApprovalDesk` (what the screen and the REST API call): approve all or whole groups, refuse; the decision is recorded and an approval puts an `approved_write` slot on the schedule. At most one approval of a kind waits for its write: a new approval or a new proposal lapses the older one, and the approved write takes the approval decided last. `CapabilityCheck` is the port of `user_can`. `WaveHoldService` observes and releases the hold of a cancellation wave.
+- Undo (`UndoWriter`, over `UndoService` and `UndoRequest`): the undo is a plan read from the change log rows and the nights as they are now (a night changed since is a conflict and is left alone), validated, approved by the person who asked (approval capability), issued a token by the gate for exactly that plan and sent by the executor, as a run of kind `undo` under the property's run lock; the nights read back as stored are recorded and the rows marked undone.
+- Confirmation (`Verify`): `Verifier`, `NightConfirmation`, `StoredStatus`, `RecordService`, `RecordOutcome`, `DeliveryService`, `ConfirmationQuota`, `ThirdPartyWatch`, `ThirdPartyResult` (VERIFY.md).
+
+### 1.5 Screens and capabilities
 
 | Screen (menu "Ritmo Revenue") | Capability | Content |
 |---|---|---|
-| Dashboard | `ritmo_view` | traffic light, rooms x windows, alerts, push state, last shadow run, "what would be written" with the reason in words (`Admin\ReasonText` turns the rule trace into sentences), "Run shadow now" (`ritmo_manage_rules`) |
-| Connections | `ritmo_manage_connections` | Beds24 token type, token, property ids; PriceLabs key and PMS name. Secret fields are write-only (only "configured, ends with ..." is shown); "Test connection" per system |
-| Setup | `ritmo_manage_rules` | properties and their mapping, create property, map room type, import preset (file or text), competitor prices (CSV) |
-| Diagnostics | `ritmo_view` | versions (plugin, database, WordPress, PHP, sodium, encryption of saved keys: `SodiumVault::protection()`, calendar read), WP-Cron and run locks, last runs, emergency switch and uninstall choice (`ritmo_manage_connections`), recent log |
+| Dashboard | `ritmo_view` | traffic light, rooms x windows, alerts, push state, last shadow run, "what would be written" with the reason in words (`Admin\ReasonText`), "Run shadow now" (`ritmo_manage_rules`) |
+| Connections | `ritmo_manage_connections` | Beds24 and PriceLabs credentials (write-only), "Test connection" |
+| Setup | `ritmo_manage_rules` | properties and their mapping, import preset, competitor prices (CSV) |
+| Operations | `ritmo_view` | mode (change form; autonomous with the typed confirmation), "Run now" (`ritmo_manage_rules`), the last report, the emergency switch (`ritmo_manage_connections`), the plan waiting for approval (approve all, approve the nights ticked, refuse: `ritmo_approve`), the change log with "undo" (`ritmo_approve`), who did what |
+| Diagnostics | `ritmo_view` | versions, WP-Cron and run locks, last runs, emergency switch and uninstall choice (`ritmo_manage_connections`), recent log |
 
-The role `ritmo_revenue_manager` ("Revenue Manager") has `read` and the four capabilities; administrators get the four. `ritmo_approve` is reserved for the approval mode of a later milestone.
+The role `ritmo_revenue_manager` ("Revenue Manager") has `read` and the four capabilities; administrators get the four. Every form posts to admin-post.php (`Admin\AdminActions`): the capability and the nonce (`check_admin_referer`) are checked before any field is read, values are sanitised and validated by the use case, and the action redirects back with a notice. Every value a template prints goes through `esc_html`, `esc_attr` or `esc_url` as a whole; a source test fails otherwise.
 
-Every form posts to admin-post.php (`Admin\AdminActions`): the capability and the nonce (`check_admin_referer`) are checked before any field is read, values are sanitised and validated by the use case, and the action redirects back with a notice. Every value a template prints goes through `esc_html`, `esc_attr` or `esc_url` as a whole; a source test fails otherwise. The JavaScript (`assets/admin.js`) calls the REST route of the shadow run, repeats it while the outcome is `running` and reloads the page; without JavaScript the same button posts the form.
+### 1.6 REST API `ritmo/v1`
 
-### 1.5 REST API `ritmo/v1`
-
-Every route needs a logged-in session, the `wp_rest` nonce in `X-WP-Nonce` (401 otherwise) and a capability (403 otherwise).
+Every route needs a logged-in session, the `wp_rest` nonce in `X-WP-Nonce` (401 otherwise) and a capability (403 otherwise); the use cases check again what each person may do.
 
 | Route | Capability | Answer |
 |---|---|---|
-| `GET /status` | `ritmo_view` | version, database version and whether it is current, emergency switch, calendar read, properties with their last run |
+| `GET /status` | `ritmo_view` | version, database version, emergency switch, calendar read, properties with their mode and last run |
 | `GET /properties/{id}/occupancy` | `ritmo_view` | `OccupancyQuery::forProperty()`; 404 for an unknown property |
-| `POST /properties/{id}/shadow-run` | `ritmo_manage_rules` | `RunOutcome` (`status`, `run_id`, `stage`, `error`); 409 when busy, 423 when the emergency switch blocks it, 404 for an unknown property |
-| `GET /runs/{id}` | `ritmo_view` | the run, its summary, room nights by item status and how many would be written; 404 for an unknown run |
+| `POST /properties/{id}/shadow-run` | `ritmo_manage_rules` | `RunOutcome`; 409 when busy, 423 under the emergency switch |
+| `GET /runs/{id}` | `ritmo_view` | the run, its summary, room nights by item status |
+| `POST /properties/{id}/run` | `ritmo_manage_rules` | "Run now" (`RunNowService`): status, run id; 409 when busy |
+| `POST /properties/{id}/mode` | `ritmo_view` | `mode`, `confirmation`, `reason`; 403 or 409 with the reason of `ModeRefused` |
+| `GET /properties/{id}/approvals` | `ritmo_view` | the requests waiting, with their entries and groups |
+| `POST /approvals/{id}` | `ritmo_approve` | `property`, `decision` (exactly `approve` or `reject`), optional `keys` (a non-empty list of entry keys); 400 for anything else (`Rest\OperationInput`: a refusal typed wrong never approves), 409 when no longer pending |
+| `GET /properties/{id}/changes` | `ritmo_view` | the latest change log rows |
+| `POST /properties/{id}/undo` | `ritmo_approve` | `changes` (ids): the undo's status, nights written back and changes undone; 409 busy, 423 blocked |
+| `POST /emergency` | `ritmo_manage_connections` | `engaged` (required boolean): engages or releases the switch (recorded when it moved); 400 without a clear value (a malformed request never releases it) |
 
-### 1.6 The throwaway site and the end-to-end test
+The first four are `Rest\RestRoutes`; the operation routes are `Rest\OperationRoutes`.
+
+### 1.7 The throwaway site and the end-to-end test
 
 ```
 bin/e2e.sh [screenshot folder]
 ```
 
-1. `bin/wp-test-site.sh start` downloads WordPress (wordpress.org/latest.zip) and the SQLite integration plugin (downloads.wordpress.org) into `.wp-test/downloads`, unpacks a fresh site in `.wp-test/wordpress`, installs the SQLite drop-in, writes a test-only wp-config.php (SQLite, `WP_HTTP_BLOCK_EXTERNAL`, `RITMO_DEV`, the simulator's base URLs, `RITMO_PRICING_CALENDAR_READ` from the environment), links this folder as the plugin, installs WordPress with a test-only administrator and activates the plugin (`tests/e2e/install.php`), then serves the site on 127.0.0.1:8090 and the simulator on 127.0.0.1:8091 (scenario moved to start today).
-2. `tests/e2e/seed.php` imports `presets/default.json`, creates the invented property of the simulator with its three room types mapped to the simulator's ids, and pastes six competitor prices for each of the 60 nights.
-3. `tests/e2e/shadow-run.js` (Playwright, Chromium, screenshots at device scale factor 2), first pass: log in; save the connections and check that no secret comes back to the browser; test both connections; check Setup; run the shadow run from the dashboard and wait for it; check "what would be written", its reasons and "0 writes sent"; check the REST routes (401 without nonce, 404 for an unknown property); check Diagnostics; read `GET /__log` of the simulator: only GET reached it.
-4. Second pass, after restarting the site with `RITMO_PRICING_CALENDAR_READ=1`: a second shadow run; only GET and `POST /pricelabs/v1/listing_prices` reached the simulator.
-5. WordPress' debug log must hold no PHP error, warning, notice or deprecation from a plugin file. Both servers are stopped at the end.
+1. `bin/wp-test-site.sh start` downloads WordPress and the SQLite integration plugin into `.wp-test/downloads`, unpacks a fresh site, writes a test-only wp-config.php (SQLite, `WP_HTTP_BLOCK_EXTERNAL`, `RITMO_DEV`, the simulator's base URLs), links this folder as the plugin, installs and activates it, then serves the site on 127.0.0.1:8090 and the simulator on 127.0.0.1:8091 (scenario moved to start today; writes enabled in the simulator's world).
+2. `tests/e2e/seed.php` imports `presets/default.json` (with `modes.min_shadow_runs` 0 for the test), creates the invented property with three room types and pastes competitor prices.
+3. `tests/e2e/shadow-run.js` (Playwright, Chromium): log in; connections; setup; shadow run from the dashboard; REST checks; Diagnostics; the simulator's log: only reads. Then the operations: switch to approval on the Operations screen, "Run now" (the plan waits; still only reads), approve everything, run the due tick through `wp-cron.php`: the approved writes reach the simulator; engage the emergency switch on the screen: "Run now" sends no write.
+4. Second pass with `RITMO_PRICING_CALENDAR_READ=1`: a second shadow run; only reads and `POST /pricelabs/v1/listing_prices` (and the writes of the approval of the first pass).
+5. WordPress' debug log must hold no PHP error, warning, notice or deprecation from a plugin file.
 
-Screenshots: `01-connections`, `02-setup`, `03-dashboard-before`, `04-dashboard-after-shadow-run`, `05-diagnostics`, `06-dashboard-with-calendar-read` (`.png`).
+The PHP end-to-end tests of the run (`tests/Integration/Run`, no browser) cover: shadow sends no write; approval writes nothing before the approval and the approved (or partly approved) entries after; autonomous writes in slices and records; a crash after N requests and the resume without sending twice; a process killed while writing and continued later (the run ends as failed, nothing is sent from its reads, the manual change made meanwhile is kept); a 429 in the middle; a failed recalculation not tried again before the next routine; the emergency switch between slices and between a deletion and its rewrite (repaired first by the next run; in approval mode proposed first and written once approved); a manual change on a night written by a group (frozen, never overwritten) and the plugin's own merged writes (never taken for manual changes); a listing base changed in the pricing system (the run writes over the base it read, stores it and alerts); approvals that end with a lower mode, the emergency switch or a newer approval; undo; a light run with a new booking (only its nights get a step) and without movement (three lines); the security and below-expected alerts.
 
-### 1.7 Where each class is
+### 1.8 Where each class is
 
 | Class | Role |
 |---|---|
-| `ShadowRunService`, `RunPipeline`, `RunOutcome` | Start or resume a run under the lock; run the stages; where a call left the run. |
-| `Stage`, `StageResult`, `RunContext` | A stage, what it produced (summary, state, writes) and what it works with (property, mapped rooms, rules, today, nights, state). |
-| `CollectStage`, `MeasureStage`, `DecideStage`, `ValidateStage`, `ShadowStage` | The five stages of 1.1. |
-| `RunInputsReader`, `AssemblyState` | What the plan assembly reads, from what the run collected; the assembled plan as the arrays the next stages carry. |
-| `StateCodec`, `PlanItemStatus`, `PlanRefused` | State carried between stages as arrays; statuses of stored items; refusal of a whole plan. |
+| `RunPipeline`, `Stage`, `AfterWriteStage`, `StageResult`, `RunContext`, `RunOutcome` | The pipeline (1.1). |
+| `CollectStage`, `MeasureStage`, `DecideStage`, `ValidateStage`, `ShadowStage` | The reading and deciding stages. |
+| `WatchStage`, `JournalWatch`, `ListingWatch`, `LightScope`, `BookingsUnwatched`, `RecalcRoomQuota`, `QuotaRunStart` | The watch before deciding, the write journal read back, the listing values read against the stored ones, the scope of a light run, the failed booking read, the recalculation quota by room and the start of its "same run". |
+| `WriteStage`, `PlanRebuild`, `RebuiltPlan`, `WriteRunner`, `WriteReport`, `WriteInterrupted` | The write stage; a write re-entered after its process died. |
+| `VerifyStage`, `JournalNights`, `ReportStage` | Confirmation, record and report. |
+| `RunInputsReader`, `AssemblyState`, `WeeklyReference`, `StateCodec`, `PlanItemStatus`, `PlanRefused` | What the plan assembly reads; the plan as arrays; state between stages. |
+| `RunStack`, `RunOpener`, `PipelineRunExecutor`, `CurrentSchedule` | Composition, opening runs, the executor of the scheduler, the schedule in force. |
+| `ShadowRunService`, `RunNowService`, `LockedRunLauncher`, `RunLauncher`, `RunExecutor`, `LaunchResult`, `LaunchStatus`, `FailureKind` | Starting and continuing runs under the property's lock. |
+| `SchedulerTick`, `TickReport`, `ScheduleSource`, `ScheduleHousekeeping`, `StallMonitor`, `PauseService`, `MovementTracker`, `MovementRead`, `LightRoundService`, `LightRoundRequest`, `RoomQuota` | The scheduler and the light run (OPERATIONS.md). |
+| `AlertService`, `AlertNotifier`, `MailText`, `WatchService`, `WatchInput`, `WatchOutcome` | Alerts (ALERTS.md). |
+| `ModeService`, `ModePreconditions`, `ModeRefused`, `EmergencyControl` | Modes and the emergency switch (1.1, 1.4). |
+| `UndoWriter` | Undo (1.4). |
+| `Write\...` (`WriteGate`, `WriteContext`, `WriteAuthorization`, `AutonomousAuthorization`, `HumanApproval`, `IssuedToken`, `TokenGrant`, `PlanHash`, `TonightGuard`, `TonightState`, `FieldLocks`, `WriteRefused`, `WriteExecutor`, `WriteRun`, `WriteOutcome`, `StepSender`, `StepResult`, `StopReason`, `RunProgress`, `PmsGuard`, `StoredCheck`, `WriteJournal`, `StateReader`, `StoredState`, `NightRule`, `OpStatus`, `RecalcGuard`, `RecalcQuota`, `RecalcAttempt`, `AttemptLog`, `AttemptOutcome`, `AttemptRefused`, `QuotaVerdict`, `RollingWindow`, `ResumeService`, `ResumePlanner`, `ResumeReport`, `BrokenGroup`, `NightClass`, `WriteSchedule`, `WriteStep`, `CalendarChange`) | The write path (WRITE.md). |
+| `Approval\...`, `Verify\...` | Approvals and confirmation (1.4, VERIFY.md). |
 | `ConnectorSource`, `ConnectionNotConfigured`, `EmergencySwitch` | Where use cases get connectors; missing credentials; the general switch. |
-| `OccupancyQuery`, `OccupancySignal`, `PropertyDashboard` | Dashboard data (1.3). |
-| `SetupService`, `SampleCsv` | Setup use cases (1.3). |
-| `Services`, `ConnectorFactory`, `Activator`, `Deactivator`, `Uninstaller`, `Roles`, `Scheduler` | WordPress wiring and lifecycle (1.2). |
-| `AdminPages`, `AdminActions`, `View`, `Notice`, `ReasonText` | Screens, form actions, templates, one-time notices, the rule trace in words (1.4). |
-| `RestRoutes` | The REST API (1.5). |
+| `OccupancyQuery`, `OccupancySignal`, `PropertyDashboard`, `SetupService`, `SampleCsv` | Dashboard and setup (1.3). |
+| `Services`, `ConnectorFactory`, `WpCapabilityCheck`, `Activator`, `Deactivator`, `Uninstaller`, `Roles`, `Scheduler`, `TimeLimit` | WordPress wiring and lifecycle (1.2). |
+| `AdminPages`, `AdminActions`, `View`, `Notice`, `ReasonText`, `RefusalText` | Screens and form actions (1.5); the refusals through the text domain. |
+| `RestRoutes`, `OperationRoutes`, `OperationInput` | The REST API (1.6); the strict reading of decisions and of the switch. |
 
-### 1.8 Not in this milestone
+### 1.9 Not in this milestone
 
-Writing (write gate, approval and autonomous modes; the payload and slices are stored, never sent), scheduled and light runs, the nights grid with every room night, rule and order editors, the market ruler of a ladder strategy and the nights closed in the PMS, the `pt_BR` translation, licence and assistant. The step ledger is read (cadence) but nothing records steps while the plugin only shadows.
+The full approval screen, the nights grid, rule and order editors, the PMS stay and arrival changes of the stay audit as writes (the audit raises its alerts; the write path accepts `CalendarChange` but the run passes none yet), the `pt_BR` translation, licence and assistant.
 
 ## Part 2. Signature reference
 
@@ -170,6 +191,15 @@ public function __construct(array $security, array $belowExpected, array $overbo
 public function __construct(AlertService $alerts, AlertsConfig $config, CancellationWave $waves, InventorySnapshotRepository $snapshots);
 public function watch(WatchInput $in): WatchOutcome;
 public function audit(string $propertyId, array $audits, array $rooms, ?int $runId = null): void;
+```
+
+#### `Ritmo\Application\Approval\ApprovalDesk` (final class)
+
+```php
+public function __construct(PlanApprovalRepository $requests, CapabilityCheck $capabilities, ScheduledRunRepository $slots, OperationEventRepository $events, PropertyRepository $properties, Clock $clock, ?Closure $wake = null);
+public function approve(string $propertyId, int $requestId, int $userId, ?array $selected, ApprovalConfig $config, string $note = ''): ApprovalGrant;
+public function reject(string $propertyId, int $requestId, int $userId, ApprovalConfig $config, string $note = ''): void;
+public function pending(string $propertyId, ApprovalConfig $config): array;
 ```
 
 #### `Ritmo\Application\Approval\ApprovalGrant` (final class)
@@ -340,6 +370,7 @@ public static function forProvider(string $label): self;
 public function pms(): PmsConnector;
 public function pricing(): PricingConnector;
 public function readsPricingCalendar(): bool;
+public function pricingPmsName(): string;
 ```
 
 #### `Ritmo\Application\Dashboard\OccupancyQuery` (final class)
@@ -380,6 +411,264 @@ public function isEngaged(): bool;
 public function isEngagedByConstant(): bool;
 public function engage(): void;
 public function release(): void;
+```
+
+#### `Ritmo\Application\Mode\EmergencyControl` (final class)
+
+```php
+const REASON = 'emergency_switch';
+public function __construct(EmergencySwitch $switch, PropertyRepository $properties, ApprovalService $approvals, OperationEventRepository $events, Clock $clock);
+public function set(bool $engage, string $via, string $actor): bool;
+```
+
+#### `Ritmo\Application\Mode\ModePreconditions` (final class)
+
+```php
+const CONNECTION_TEST_PREFIX = 'connection_test_';
+const PROVIDERS = ['beds24', 'pricelabs'];
+public function __construct(RunRepository $runs, AlertLedger $alerts, WaveHoldRepository $holds, EmergencySwitch $switch, KeyValueStore $store, Clock $clock);
+public function toApproval(Property $property, ModesConfig $config): array;
+public function toAutonomous(Property $property): array;
+public static function unmet(string $code, array $params, string $text): array;
+```
+
+#### `Ritmo\Application\Mode\ModeRefused` (final class extends RuntimeException)
+
+```php
+const NO_CAPABILITY = 'no_capability';
+const CONDITIONS = 'conditions_not_met';
+const DISABLED = 'autonomous_disabled';
+const CONFIRMATION = 'confirmation_mismatch';
+public readonly string $reason;
+public readonly array $conditions;
+public function __construct(string $reason, string $message, array $conditions = []);
+```
+
+#### `Ritmo\Application\Mode\ModeService` (final class)
+
+```php
+const MANAGE_RULES = 'ritmo_manage_rules';
+const MANAGE_CONNECTIONS = 'ritmo_manage_connections';
+public function __construct(PropertyRepository $properties, OperationEventRepository $events, ApprovalService $approvals, CapabilityCheck $capabilities, AlertService $alerts, KeyValueStore $store, Clock $clock, ModePreconditions $preconditions);
+public function change(string $propertyId, PropertyMode $to, int $userId, ModesConfig $config, string $confirmation = '', string $reason = ''): Property;
+public function autonomousAuthorization(Property $property): ?AutonomousAuthorization;
+public function afterWrite(Property $property, bool $failed, ModesConfig $config): bool;
+```
+
+#### `Ritmo\Application\Run\BookingsUnwatched` (final class extends RuntimeException)
+
+```php
+// no public members
+```
+
+#### `Ritmo\Application\Run\CurrentSchedule` (final class implements ScheduleSource)
+
+```php
+public function __construct(RuleSetRepository $ruleSets);
+public function schedule(Property $property): ScheduleConfig;
+```
+
+#### `Ritmo\Application\Run\JournalNights` (final class)
+
+```php
+public static function confirmed(array $rows, DateTimeImmutable $writtenAt): array;
+public static function fields(?array $state, bool $pms): NightFields;
+```
+
+#### `Ritmo\Application\Run\JournalWatch` (final class)
+
+```php
+public function __construct(ConnectorSource $connectors, ResumeService $resume, RecordService $record, AlertService $alerts, Clock $clock);
+public function settle(RunContext $context): ResumeReport;
+public static function ownNights(ResumeReport $settled): array;
+```
+
+#### `Ritmo\Application\Run\LightScope` (final class)
+
+```php
+public function __construct(LightRoundService $service, RecalcGuard $quota, RunRepository $runs, QuotaRunStart $runStart);
+public function scope(RunContext $context, array $movements, array $inventory, array $changes, int $newOverbooked): array;
+```
+
+#### `Ritmo\Application\Run\ListingWatch` (final class)
+
+```php
+public function __construct(RoomTypeRepository $roomTypes, WriteOpRepository $ops, OperationEventRepository $events, AlertService $alerts, Clock $clock);
+public function inspect(RunContext $context): array;
+```
+
+#### `Ritmo\Application\Run\PipelineRunExecutor` (final class implements RunExecutor)
+
+```php
+public function __construct(RunOpener $opener, RunRepository $runs, RunPipeline $pipeline);
+public function start(Property $property, RunKind $kind, bool $forcedShadow, DateTimeImmutable $today, DateTimeImmutable $deadline, Closure $heartbeat): LaunchResult;
+public function resume(Property $property, int $runId, DateTimeImmutable $deadline, Closure $heartbeat): LaunchResult;
+```
+
+#### `Ritmo\Application\Run\PlanRebuild` (final class)
+
+```php
+public function __construct(RunInputsReader $inputs, Clock $clock, string $pmsName);
+public function rebuild(RunContext $context): RebuiltPlan;
+```
+
+#### `Ritmo\Application\Run\QuotaRunStart` (final class)
+
+```php
+public function __construct(ScheduledRunRepository $slots, RunRepository $runs, RecalcGuard $guard, Clock $clock);
+public function of(RunContext $context): DateTimeImmutable;
+```
+
+#### `Ritmo\Application\Run\RebuiltPlan` (final class)
+
+```php
+public readonly RunInputs $inputs;
+public readonly AssembledPlan $assembled;
+public function __construct(RunInputs $inputs, PlanAssembler $assembler, AssembledPlan $assembled, RuleSet $rules, Clock $clock);
+public function validated(): ?ValidatedPlan;
+public function revalidate(Plan $plan): ?ValidatedPlan;
+public function calendar(): FreshCalendar;
+public static function proposals(Plan $plan): array;
+```
+
+#### `Ritmo\Application\Run\RecalcRoomQuota` (final class implements RoomQuota, ConfirmationQuota)
+
+```php
+public function __construct(RecalcGuard $guard, array $listings, DateTimeImmutable $runStart);
+public function permits(string $roomCode): bool;
+public function allows(string $roomCode, DateTimeImmutable $now): bool;
+```
+
+#### `Ritmo\Application\Run\ReportStage` (final class implements AfterWriteStage, Stage)
+
+```php
+const NAME = 'report';
+public function name(): string;
+public function run(RunContext $context): StageResult;
+```
+
+#### `Ritmo\Application\Run\RunOpener` (final class)
+
+```php
+public function __construct(RoomTypeRepository $roomTypes, RuleSetRepository $ruleSets, RunRepository $runs, Clock $clock, Logger $logger);
+public function open(Property $property, string $kind, PropertyMode $mode, DateTimeImmutable $today): RunContext|RunOutcome;
+public function reopen(Property $property, array $open): RunContext;
+```
+
+#### `Ritmo\Application\Run\RunStack` (final class)
+
+```php
+const MAX_EMAILS_PER_HOUR = 6;
+public readonly Database $db;
+public readonly Clock $clock;
+public readonly KeyValueStore $store;
+public readonly Logger $logger;
+public readonly ConnectorSource $connectors;
+public readonly EmergencySwitch $switch;
+public readonly WriteGate $gate;
+public readonly CapabilityCheck $capabilities;
+public function __construct(Database $db, Clock $clock, KeyValueStore $store, Logger $logger, ConnectorSource $connectors, EmergencySwitch $switch, WriteGate $gate, CapabilityCheck $capabilities, Mailer $mailer, RecipientDirectory $recipients, Sleeper $sleeper, ?Closure $wake = null, ?Closure $timeLeft = null);
+public function rules(): RuleSet;
+public function properties(): PropertyRepository;
+public function roomTypes(): RoomTypeRepository;
+public function ruleSets(): RuleSetRepository;
+public function runs(): RunRepository;
+public function planItems(): PlanItemRepository;
+public function snapshots(): InventorySnapshotRepository;
+public function bookings(): BookingRepository;
+public function writeOps(): WriteOpRepository;
+public function changeLog(): ChangeLogRepository;
+public function writtenSteps(): WrittenStepRepository;
+public function approvalRequests(): PlanApprovalRepository;
+public function events(): OperationEventRepository;
+public function holds(): WaveHoldRepository;
+public function freezes(): DetectedFreezeRepository;
+public function observations(): NightObservationRepository;
+public function slots(): ScheduledRunRepository;
+public function states(): OperationStateRepository;
+public function locks(): DbLock;
+public function alerts(): AlertService;
+public function recalcGuard(): RecalcGuard;
+public function quotaRunStart(): QuotaRunStart;
+public function inputs(): RunInputsReader;
+public function pipeline(): RunPipeline;
+public function opener(): RunOpener;
+public function launcher(): LockedRunLauncher;
+public function runNow(): RunNowService;
+public function shadowRuns(): ShadowRunService;
+public function tick(): SchedulerTick;
+public function stallMonitor(): StallMonitor;
+public function approvalDesk(): ApprovalDesk;
+public function modes(): ModeService;
+public function emergency(): EmergencyControl;
+public function undo(): UndoService;
+public function executor(): WriteExecutor;
+public function undoWriter(): UndoWriter;
+```
+
+#### `Ritmo\Application\Run\UndoWriter` (final class)
+
+```php
+const KIND = 'undo';
+public function __construct(PropertyRepository $properties, RoomTypeRepository $roomTypes, RunRepository $runs, OrderRepository $orders, UndoService $undo, RecordService $record, WriteOpRepository $ops, OperationEventRepository $events, ConnectorSource $connectors, WriteGate $gate, WriteExecutor $executor, EmergencySwitch $switch, DbLock $locks, CapabilityCheck $capabilities, Clock $clock);
+public function undo(string $propertyId, array $changeIds, int $userId, RuleSet $rules): array;
+```
+
+#### `Ritmo\Application\Run\VerifyStage` (final class implements AfterWriteStage, Stage)
+
+```php
+const NAME = 'verify';
+public function __construct(WriteOpRepository $ops, RecordService $record, WrittenStepRepository $steps, ConnectorSource $connectors, Clock $clock);
+public function name(): string;
+public function run(RunContext $context): StageResult;
+```
+
+#### `Ritmo\Application\Run\WatchStage` (final class implements Stage)
+
+```php
+const NAME = 'watch';
+public function __construct(ConnectorSource $connectors, MovementTracker $movements, AlertService $alerts, WaveHoldRepository $holds, NightObservationRepository $observations, DetectedFreezeRepository $freezes, CapabilityCheck $capabilities, LightScope $light, InventorySnapshotRepository $snapshots, BookingRepository $bookings, JournalWatch $journal, ListingWatch $listings, Clock $clock);
+public function name(): string;
+public function run(RunContext $context): StageResult;
+```
+
+#### `Ritmo\Application\Run\WeeklyReference` (final class)
+
+```php
+public function __construct(KeyValueStore $store);
+public function of(string $propertyId, array $listings, DateTimeImmutable $today): array;
+```
+
+#### `Ritmo\Application\Run\WriteInterrupted` (final class extends RuntimeException)
+
+```php
+// no public members
+```
+
+#### `Ritmo\Application\Run\WriteReport` (final class)
+
+```php
+public function __construct(AlertService $alerts, Clock $clock);
+public function summarize(RunContext $context, WriteOutcome $outcome, string $actor): array;
+```
+
+#### `Ritmo\Application\Run\WriteRunner` (final class)
+
+```php
+public function __construct(ConnectorSource $connectors, WriteGate $gate, WriteExecutor $executor, WriteOpRepository $ops, QuotaRunStart $runStart, CapabilityCheck $capabilities, Clock $clock, ?Closure $timeLeft = null);
+public function guardOnce(RunContext $context): void;
+public function repairPlan(RunContext $context, RebuiltPlan $rebuilt, array $broken): ?ValidatedPlan;
+public function write(RunContext $context, RebuiltPlan $rebuilt, ValidatedPlan $plan, WriteAuthorization $auth, Closure $stillAllowed, array $recalculate): WriteOutcome;
+public static function staleListings(RunContext $context, ValidatedPlan $plan): array;
+```
+
+#### `Ritmo\Application\Run\WriteStage` (final class implements Stage)
+
+```php
+const NAME = 'write';
+public function __construct(PlanRebuild $rebuild, WriteRunner $runner, PlanApprovalRepository $requests, WaveHoldRepository $holds, CapabilityCheck $capabilities, ModeService $modes, PropertyRepository $properties, AlertService $alerts, OperationEventRepository $events, WriteReport $report, Clock $clock);
+public function name(): string;
+public function run(RunContext $context): StageResult;
 ```
 
 #### `Ritmo\Application\Schedule\FailureKind` (enum)
@@ -573,6 +862,12 @@ public function importPreset(string $json, int $userId = 0): array;
 public function importSamples(string $propertyId, string $csv): array;
 ```
 
+#### `Ritmo\Application\ShadowRun\AfterWriteStage` (interface)
+
+```php
+// no public members
+```
+
 #### `Ritmo\Application\ShadowRun\AssemblyState` (final class)
 
 ```php
@@ -626,9 +921,9 @@ public static function withCodes(array $codes): self;
 #### `Ritmo\Application\ShadowRun\RunContext` (final class)
 
 ```php
+public readonly array $rooms;
 public readonly int $runId;
 public readonly Property $property;
-public readonly array $rooms;
 public readonly RuleSet $rules;
 public readonly DateTimeImmutable $today;
 public readonly DateRange $horizon;
@@ -638,7 +933,9 @@ public readonly array $state;
 public readonly string $kind;
 public readonly PropertyMode $mode;
 public readonly ?int $rulesetVersion;
-public function __construct(int $runId, Property $property, array $rooms, RuleSet $rules, DateTimeImmutable $today, DateRange $horizon, string $stage = '', array $summary = [], array $state = [], string $kind = 'shadow', PropertyMode $mode = PropertyMode::Shadow, ?int $rulesetVersion = null);
+public function __construct(int $runId, Property $property, array $rooms, RuleSet $rules, DateTimeImmutable $today, DateRange $horizon, string $stage = '', array $summary = [], array $state = [], string $kind = 'shadow', PropertyMode $mode = PropertyMode::Shadow, ?int $rulesetVersion = null, ?Closure $heartbeat = null);
+public function withHeartbeat(?Closure $heartbeat): self;
+public function stillHeld(): bool;
 public function after(string $stage, array $summary, array $state): self;
 public function capturedAt(): ?DateTimeImmutable;
 public function listings(): array;
@@ -650,7 +947,7 @@ public function readsPricingCalendar(): bool;
 #### `Ritmo\Application\ShadowRun\RunInputsReader` (final class)
 
 ```php
-public function __construct(InventorySnapshotRepository $snapshots, MarketAnchorRepository $anchors, StepLedgerRepository $ledger, OrderRepository $orders);
+public function __construct(InventorySnapshotRepository $snapshots, MarketAnchorRepository $anchors, StepLedgerRepository $ledger, OrderRepository $orders, ?ThirdPartyWatch $thirdParty = null, ?WeeklyReference $weekly = null);
 public function read(RunContext $context, DateTimeImmutable $now): RunInputs;
 public function priceTraces(): array;
 ```
@@ -685,10 +982,9 @@ public function continue(RunContext $context, DateTimeImmutable $deadline, ?Clos
 
 ```php
 const KIND = 'shadow';
-const HORIZON_NIGHTS = 60;
 const LOCK_TTL_SECONDS = 600;
 const DEFAULT_BUDGET_SECONDS = 20;
-public function __construct(PropertyRepository $properties, RoomTypeRepository $roomTypes, RuleSetRepository $ruleSets, RunRepository $runs, DbLock $locks, EmergencySwitch $switch, RunPipeline $pipeline, Clock $clock, Logger $logger);
+public function __construct(PropertyRepository $properties, RunOpener $opener, RunRepository $runs, DbLock $locks, EmergencySwitch $switch, RunPipeline $pipeline, Clock $clock, Logger $logger);
 public static function lockKey(string $propertyId): string;
 public function run(string $propertyId, int $budgetSeconds = 20): RunOutcome;
 public function resumeOpenRuns(int $budgetSeconds = 20): array;
@@ -819,7 +1115,8 @@ public function release(int $freezeId, int $userId): bool;
 public readonly UndoDraft $draft;
 public readonly array $refused;
 public readonly array $grants;
-public function __construct(UndoDraft $draft, array $refused, array $grants);
+public readonly ?ValidatedPlan $plan;
+public function __construct(UndoDraft $draft, array $refused, array $grants, ?ValidatedPlan $plan = null);
 ```
 
 #### `Ritmo\Application\Verify\UndoService` (final class)
@@ -1039,6 +1336,7 @@ public function __construct(string $propertyId, string $timezone, string $today,
 public function revoke(): void;
 public function isRevoked(): bool;
 public function use(WriteRequest $request): bool;
+public function claim(string $signature): bool;
 ```
 
 #### `Ritmo\Application\Write\Gate\TonightGuard` (final class)
@@ -1134,6 +1432,7 @@ public function __construct(Clock $clock, EmergencySwitch $switch, WriteConfig $
 public function issue(ValidatedPlan $plan, WriteAuthorization $auth, WriteContext $context, array $pms = [], array $recalculate = []): IssuedToken;
 public function isLive(WriteToken $token): bool;
 public function verify(WriteToken $token, WriteRequest $request): void;
+public function claim(WriteToken $token, string $method, string $url, ?string $body): bool;
 public function revoke(WriteToken $token): void;
 ```
 
@@ -1145,6 +1444,7 @@ const WRONG_PROPERTY = 'wrong_property';
 const STALE_PLAN = 'stale_plan';
 const STALE_VALIDATION = 'stale_validation';
 const STALE_READS = 'stale_reads';
+const BASE_CHANGED = 'base_changed';
 const KILL_SWITCH = 'kill_switch';
 const MODE_SHADOW = 'mode_shadow';
 const MODE_NOT_AUTONOMOUS = 'mode_not_autonomous';
@@ -1215,7 +1515,7 @@ public function intended(WriteStep $step): array;
 
 ```php
 public function __construct(WriteOpRepository $ops, Clock $clock);
-public function plan(int $runId, string $propertyCode, IssuedToken $issued, StoredState $before): array;
+public function plan(int $runId, string $propertyCode, IssuedToken $issued, StoredState $before, ?ValidatedPlan $plan = null): array;
 public function sending(int $row): void;
 public function finish(int $row, OpStatus $status, ?int $httpStatus = null, ?string $error = null): void;
 public function observe(int $row, OpStatus $status, array $observed): void;
@@ -1295,6 +1595,7 @@ public function __construct(RecalcAttemptRepository $attempts, Clock $clock, str
    'failureCooldownMinutes' => 60,
 )), int $callTimeoutSeconds = 120);
 public function verdict(string $listing, DateTimeImmutable $runStart, ?DateTimeImmutable $nextFullRun = null): QuotaVerdict;
+public function runStart(DateTimeImmutable $slotStart, bool $scheduled): DateTimeImmutable;
 public function attempt(string $listing, Closure $call): void;
 ```
 
@@ -1328,6 +1629,8 @@ public readonly string $roomCode;
 public readonly string $listing;
 public readonly array $rewrite;
 public function __construct(string $groupKey, string $roomCode, string $listing, array $rewrite);
+public function toArray(): array;
+public static function fromArray(array $data): self;
 public function repairItems(RoomType $room, string $today): array;
 ```
 
@@ -1352,7 +1655,13 @@ public static function targets(array $rows): array;
 public readonly array $rows;
 public readonly array $nights;
 public readonly array $broken;
-public function __construct(array $rows, array $nights, array $broken);
+public readonly array $journal;
+public readonly array $kept;
+public readonly array $observed;
+public function __construct(array $rows, array $nights, array $broken, array $journal = [], array $kept = [], array $observed = []);
+public function keeping(array $kept): self;
+public function recovered(): array;
+public function ownUnobserved(): array;
 public function applied(): array;
 ```
 
@@ -1441,7 +1750,7 @@ const DEFAULT_PRICELABS_PMS = 'beds24';
 const CALENDAR_READ_CONSTANT = 'RITMO_PRICING_CALENDAR_READ';
 const BEDS24_URL_CONSTANT = 'RITMO_BEDS24_BASE_URL';
 const PRICELABS_URL_CONSTANT = 'RITMO_PRICELABS_BASE_URL';
-public function __construct(SodiumVault $vault, KeyValueStore $settings, RoomTypeRepository $roomTypes, QuotaLogRepository $quotaLog, HttpClient $wire, Clock $clock, Logger $logger, LogSanitizer $sanitizer);
+public function __construct(SodiumVault $vault, KeyValueStore $settings, RoomTypeRepository $roomTypes, QuotaLogRepository $quotaLog, HttpClient $wire, Clock $clock, Logger $logger, LogSanitizer $sanitizer, ?WriteAuthority $authority = null);
 public function pms(): PmsConnector;
 public function pricing(): PricingConnector;
 public function readsPricingCalendar(): bool;
@@ -1475,9 +1784,11 @@ public static function remove(): void;
 #### `Ritmo\WordPress\Scheduler` (final class)
 
 ```php
-const RESUME_HOOK = 'ritmo_resume_shadow_runs';
+const LEGACY_HOOK = 'ritmo_resume_shadow_runs';
+const NOW = 'now';
 public static function schedule(): void;
 public static function unschedule(): void;
+public static function tickNow(): void;
 public static function state(): array;
 ```
 
@@ -1496,17 +1807,25 @@ public function properties(): PropertyRepository;
 public function roomTypes(): RoomTypeRepository;
 public function ruleSets(): RuleSetRepository;
 public function runs(): RunRepository;
-public function runPayloads(): RunPayloadRepository;
 public function planItems(): PlanItemRepository;
 public function alerts(): AlertRepository;
 public function snapshots(): InventorySnapshotRepository;
 public function locks(): DbLock;
 public function emergencySwitch(): EmergencySwitch;
+public function gate(): WriteGate;
 public function connectors(): ConnectorFactory;
+public function stack(): RunStack;
 public function shadowRuns(): ShadowRunService;
 public function occupancy(): OccupancyQuery;
 public function dashboard(): PropertyDashboard;
 public function setup(): SetupService;
+```
+
+#### `Ritmo\WordPress\TimeLimit` (final class)
+
+```php
+const WRITE_SECONDS = 300;
+public static function forWrite(): ?int;
 ```
 
 #### `Ritmo\WordPress\Uninstaller` (final class)
@@ -1516,6 +1835,12 @@ const DELETE_DATA = 'delete_data_on_uninstall';
 public function __construct(KeyValueStore $settings, Closure $removeData);
 public static function forSite(): self;
 public function run(): bool;
+```
+
+#### `Ritmo\WordPress\WpCapabilityCheck` (final class implements CapabilityCheck)
+
+```php
+public function userCan(int $userId, string $capability): bool;
 ```
 
 #### `Ritmo\Admin\AdminActions` (final class)
@@ -1532,6 +1857,7 @@ const DASHBOARD = 'ritmo-revenue';
 const CONNECTIONS = 'ritmo-revenue-connections';
 const SETUP = 'ritmo-revenue-setup';
 const DIAGNOSTICS = 'ritmo-revenue-diagnostics';
+const OPERATIONS = 'ritmo-revenue-operations';
 public static function register(): void;
 public static function vaultNotice(): void;
 public static function enqueue(string $hook): void;
@@ -1539,6 +1865,7 @@ public static function dashboard(): void;
 public static function connections(): void;
 public static function setup(): void;
 public static function diagnostics(): void;
+public static function operations(): void;
 ```
 
 #### `Ritmo\Admin\Notice` (final class)
@@ -1559,10 +1886,41 @@ public static function reason(string $code): string;
 public static function describe(array $trace): string;
 ```
 
+#### `Ritmo\Admin\RefusalText` (final class)
+
+```php
+public static function mode(ModeRefused $refused): string;
+public static function approval(ApprovalRefused $refused): string;
+```
+
 #### `Ritmo\Admin\View` (final class)
 
 ```php
 public static function render(string $template, array $view): void;
+```
+
+#### `Ritmo\Rest\OperationInput` (final class)
+
+```php
+const APPROVE = 'approve';
+const REJECT = 'reject';
+public static function decision(mixed $value): string;
+public static function keys(mixed $value): ?array;
+public static function engaged(mixed $value): bool;
+public static function switchPosition(string $value): bool;
+```
+
+#### `Ritmo\Rest\OperationRoutes` (final class)
+
+```php
+public static function register(): void;
+public static function runNow(WP_REST_Request $request): WP_REST_Response|WP_Error;
+public static function mode(WP_REST_Request $request): WP_REST_Response|WP_Error;
+public static function approvals(WP_REST_Request $request): WP_REST_Response|WP_Error;
+public static function decide(WP_REST_Request $request): WP_REST_Response|WP_Error;
+public static function changes(WP_REST_Request $request): WP_REST_Response|WP_Error;
+public static function undo(WP_REST_Request $request): WP_REST_Response|WP_Error;
+public static function emergency(WP_REST_Request $request): WP_REST_Response|WP_Error;
 ```
 
 #### `Ritmo\Rest\RestRoutes` (final class)

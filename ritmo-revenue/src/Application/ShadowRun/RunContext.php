@@ -19,9 +19,17 @@ use Ritmo\Domain\Support\DateRange;
  * run started with, the property day, the nights it covers, the summary so far, the state the
  * previous stages left, the kind of run and the mode it runs in (fixed when it started: shadow for
  * a shadow run and for any run under the emergency switch).
+ *
+ * Once the listings were read, the rooms carry the listing values read (minimum, base, maximum):
+ * every percentage of the run (floors, ceilings, the tonight guard of the write gate) is over the
+ * base the pricing system applies now, never over a base stored earlier (review finding of the M3
+ * correction phase; the watch stage alerts and stores the change).
  */
 final class RunContext
 {
+    /** @var list<RoomType> */
+    public readonly array $rooms;
+
     /**
      * @param list<RoomType>       $rooms   room types of the property that are mapped to the PMS
      * @param array<string, mixed> $summary summary of the stages completed so far, by stage
@@ -30,7 +38,7 @@ final class RunContext
     public function __construct(
         public readonly int $runId,
         public readonly Property $property,
-        public readonly array $rooms,
+        array $rooms,
         public readonly RuleSet $rules,
         public readonly DateTimeImmutable $today,
         public readonly DateRange $horizon,
@@ -42,6 +50,27 @@ final class RunContext
         public readonly ?int $rulesetVersion = null,
         private readonly ?Closure $heartbeat = null,
     ) {
+        $this->rooms = self::live($rooms, is_array($state['listings'] ?? null) ? $state['listings'] : []);
+    }
+
+    /**
+     * @param list<RoomType>                       $rooms
+     * @param array<string, array<string, mixed>>  $listings room code => listing as StateCodec::listing() stores it
+     *
+     * @return list<RoomType>
+     */
+    private static function live(array $rooms, array $listings): array
+    {
+        $amount = static fn (mixed $v): ?float => is_int($v) || is_float($v) ? (float) $v : null;
+
+        return array_map(static function (RoomType $room) use ($listings, $amount): RoomType {
+            $read = $listings[$room->code] ?? null;
+            if (!is_array($read)) {
+                return $room;
+            }
+
+            return $room->withListing($amount($read['min'] ?? null), $amount($read['base'] ?? null), $amount($read['max'] ?? null)) ?? $room;
+        }, $rooms);
     }
 
     /**

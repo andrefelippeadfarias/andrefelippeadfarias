@@ -114,6 +114,7 @@ final class UndoWriter
         foreach ($this->roomTypes->forProperty($property->id) as $room) {
             $rooms[$room->code] = $room;
         }
+        $rooms = $this->live($rooms);
         $today = $this->clock->today($property->timezone);
         $context = new ValidationContext(null, $this->orders->book($property->id, $today));
         $request = $this->undo->request($property, $rooms, $changeIds, $userId, new Validator($rules, $this->clock, $rules->plan()), $context, $runId);
@@ -147,6 +148,30 @@ final class UndoWriter
         $this->events->record($property->id, OperationEventRepository::UNDO, 'requested', $complete ? 'written' : 'partial', sprintf('%d change(s) asked, %d undone.', count($changeIds), $undone), $auth->actor(), $now, $runId);
 
         return ['written' => count($confirmed), 'undone' => $undone, 'refused' => $refused];
+    }
+
+    /**
+     * The rooms with the listing values the pricing system holds now: the percentages of the undo
+     * are over the base it applies (RunContext does the same for a run).
+     *
+     * @param array<string, RoomType> $rooms
+     *
+     * @return array<string, RoomType>
+     */
+    private function live(array $rooms): array
+    {
+        $read = [];
+        foreach ($this->connectors->pricing()->listListings() as $listing) {
+            $read[$listing->ref] = $listing;
+        }
+        foreach ($rooms as $code => $room) {
+            $listing = $read[$room->pricingRef] ?? null;
+            if ($listing !== null) {
+                $rooms[$code] = $room->withListing($listing->min, $listing->base, $listing->max) ?? $room;
+            }
+        }
+
+        return $rooms;
     }
 
     /**

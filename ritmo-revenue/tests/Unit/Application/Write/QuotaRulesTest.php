@@ -84,4 +84,26 @@ final class QuotaRulesTest extends TestCase
         $this->expectException(InvalidConfig::class);
         WriteConfig::fromArray(['token_ttl_minutes' => 0, 'pms_max_ranges_per_post' => 101]);
     }
+
+    /**
+     * The quota is the provider's limit counted in 24 rolling hours (task rule 9(f)): the settings
+     * can make it stricter, never looser. Review finding of the M3 correction phase: per_listing 10
+     * with a 1 h window allowed 240 recalculations a day.
+     */
+    public function testTheQuotaCanOnlyBeMadeStricterThanTheProviderLimits(): void
+    {
+        foreach ([['per_listing' => 10], ['per_listing' => 4], ['window_hours' => 1], ['window_hours' => 23], ['per_account_per_minute' => 11], ['account_wait_after_429_seconds' => 0]] as $loose) {
+            try {
+                QuotaConfig::fromArray($loose);
+                self::fail('accepted ' . json_encode($loose));
+            } catch (InvalidConfig) {
+                self::addToAssertionCount(1);
+            }
+        }
+        $strict = QuotaConfig::fromArray(['per_listing' => 2, 'window_hours' => 48, 'per_account_per_minute' => 5, 'account_wait_after_429_seconds' => 120]);
+        self::assertSame([2, 48, 5, 120], [$strict->perListing, $strict->windowHours, $strict->perAccountPerMinute, $strict->accountWaitAfter429Seconds]);
+
+        $this->expectException(\InvalidArgumentException::class);
+        new QuotaConfig(perListing: 10, windowHours: 1);
+    }
 }

@@ -52,6 +52,7 @@ Every decision is kept, not only the steps: `PaceDecision::toArray()` is the row
 | `Quantile` | `of($values, $p)` (linear between ranks; `NAN` for an empty list) and `median()`. |
 | `PriceSample` | One public price of a competitor for one night: `night`, `publicPrice`, `capturedAt`, optional `source`. |
 | `AnchorBuilder` | `fromSamples($night, $samples)` / `build($samples)`: p25, p50, p75, p90 and max of the samples of each night (whole amounts by default; only the newest sample of each named source counts; the anchor is dated by its newest sample). `merge($existing, $fresh, $today)` applies `replaces()`. `isWeak($anchor, $today)`: `n < pace.min_n` or older than `pace.max_age_days`. `monthlyFallbacks($anchors)`: per night type and month, the median of the measured anchors. |
+| `AnchorRuler` | `of($anchors, $rules)`: the market ruler of a run from the property's anchors: one series named `market` with the percentiles 25, 50, 75, 90 and 100 (the highest price) of each anchored night and its night type. A sales ladder strategy reads its rules by series and percentile; nights without an anchor have no ruler night. Public factors and reference prices are not known from the anchors and stay empty. |
 | `AnchorLookup` | `forNight($night)`: the night's own anchor; else the fallback of its night type in its month; else in the closest month; else null. A fallback has `n = 0` and origin `fallback`, so it is weak. `AnchorLookup::valueAt($anchor, $percentile)` and `percentileOf($anchor, $publicPrice)` convert between percentile and public price. |
 | `PriceFactor` | `factor($room, $plan, $type)`, `toSent()`, `fromSent()`, `convert()`: plan price = sent price x factor. |
 
@@ -445,6 +446,7 @@ What each class of the engine added in milestone 2 is, in one line; the area doc
 | `AuthorityCheck` | The owner order an entry cites: a night frozen by a manual change of the owner (other than the cited order) is never touched; a cited order must be in force for the room and night and, when it backs a strategy, the strategy must act there. |
 | `BandCheck` | The discount bands of the relations over the whole plan, in currency after the floors were turned into whole percentages: the value of each room night is its floor as the pricing system applies it, its ceiling likewise. |
 | `DeletionCheck` | The date rules a plan deletes before writing: a room of the property, a reason, one deletion per room night, never in the past; and warnings when the deletion drops what the night needs (its stay, on a closed day, a holiday or a night that requires more than one night, unless the night waits for an owner decision; the protection floor of a holiday). |
+| `RelationOrderCheck` | The order of related rooms in currency (at least, between on the path) for a plan cut down after refusals, an approval or a cancellation hold: an entry that leaves its relation worse than the night holds now is refused (`relation_broken`), so validating again converges. Not run on the plan as the relations stage built it (coherent by construction; the check is stricter than the reference there). Deletions of frozen nights are refused by `DeletionCheck` and entries on a night whose price an owner order fixed by `AuthorityCheck` (`night_fixed_by_order`) unless they cite that order (VERIFY.md section 7). |
 | `EffectCheck` | What an item changes and what it was decided on: a decision that depends on occupancy needs a fresh calendar; an item that changes nothing of what is in force is refused; a floor far above the current price gets a warning (the pricing system moves one step a day). |
 | `FloorCheck` | The floors of the night against the lowest price an item allows (its floor as applied, or its ceiling when it sets no floor), each family on its own: - the safety limit (never released; when it fails, it is the only floor reported); - the listing minimum (floors only): an order that allows it, or the last-minute discount rule; - on a night of a configured period (floors only), the period's own floor and, when the night is priced as a holiday, the general holiday floor (never released), both in their price plan; - the owner floors of the night type, unless a strategy replaces them that night: an order that allows it (a warning), or down to the last-minute market floor of the strategy the item cites; - the quality floor: an order that allows it, or market evidence written in the item (warnings). |
 | `IssueLog` | The errors and warnings found while validating one plan, in the order they were found. |
@@ -1037,6 +1039,13 @@ public static function valueAt(MarketAnchor $anchor, float $percentile): float;
 public static function percentileOf(MarketAnchor $anchor, float $publicPrice): float;
 ```
 
+#### `Ritmo\Domain\Market\AnchorRuler` (final class)
+
+```php
+const SERIES = 'market';
+public static function of(array $anchors, RuleSet $rules): MarketRuler;
+```
+
 #### `Ritmo\Domain\Market\PriceFactor` (final class)
 
 ```php
@@ -1170,6 +1179,7 @@ public readonly ?int $sold;
 public readonly SoldBase $soldBase;
 public readonly ?int $soldTotal;
 public function __construct(string $roomCode, DateTimeImmutable $night, string $sourceStatus, ?StepDirection $direction, float $priceFrom, float $priceTo, int $targetSent, ?int $sold, SoldBase $soldBase, ?int $soldTotal);
+public static function fromArray(array $data): self;
 public function toArray(): array;
 ```
 
@@ -2153,6 +2163,7 @@ public function strategyDecided(): array;
 ```php
 public function __construct(RuleSet $rules, Clock $clock, string $pmsName);
 public function assemble(RunInputs $inputs): AssembledPlan;
+public function revalidate(RunInputs $inputs, Plan $plan, RelationReport $report): ValidationResult;
 ```
 
 #### `Ritmo\Domain\Plan\Assembly\RunCalendar` (final class)
@@ -2213,8 +2224,9 @@ public function cadence(): StepCadence;
 public function pricingFacts(): NightFacts;
 public function facts(array $decided, array $strategyDecided): NightFacts;
 public function nightPricing(NightFacts $facts): NightPricing;
-public function validationContext(RelationReport $report): ValidationContext;
+public function validationContext(RelationReport $report, bool $relationOrder = false): ValidationContext;
 public function occupancy(): array;
+public function freshCalendar(): FreshCalendar;
 ```
 
 #### `Ritmo\Domain\Plan\Assembly\WorkItem` (final class)
@@ -2524,6 +2536,7 @@ public readonly string $propertyId;
 public function __construct(string $propertyId, DateTimeImmutable $today, DateTimeImmutable $createdAt, array $items, array $deletions = [], array $listingChanges = []);
 public static function fromDecisions(Property $property, Clock $clock, array $decisions, array $before = []): self;
 public function count(): int;
+public function isEmpty(): bool;
 public function without(array $indexes, array $deletions = [], array $listingChanges = []): self;
 ```
 

@@ -87,6 +87,7 @@ final class RelationConfigTest extends TestCase
         return [
             'unknown type' => [RelationsSample::relationData('a', 'cheaper_than', 'LOW', []), 'type', ValidationError::CHOICE],
             'missing reference' => [RelationsSample::relationData('a', 'at_least', 'LOW', []), 'params.reference', ValidationError::REQUIRED],
+            'at_least margin of minus 90 percent' => [RelationsSample::relationData('a', 'at_least', 'HIGH', ['reference' => 'LOW', 'margin' => ['type' => 'percent', 'value' => -90]]), 'params.margin.value', ValidationError::RANGE],
             'percent out of range' => [RelationsSample::relationData('a', 'premium_over_max', 'TOP', ['set' => ['room_tags' => ['tub']], 'premium_percent' => ['weekday' => 900]]), 'params.premium_percent.weekday', ValidationError::RANGE],
             'way inverted' => [RelationsSample::relationData('a', 'between', 'MID', ['low_reference' => 'LOW', 'high_reference' => 'HIGH', 'position_min' => 0.8, 'position_max' => 0.5]), 'params.position_max', ValidationError::ORDER],
             'band inverted' => [RelationsSample::relationData('a', 'discount_band', 'PLAIN', ['set' => ['room_tags' => ['tub']], 'upper_percent' => 80, 'lower_percent' => 90]), 'params.lower_percent', ValidationError::ORDER],

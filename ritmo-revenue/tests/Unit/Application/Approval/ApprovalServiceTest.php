@@ -141,6 +141,28 @@ final class ApprovalServiceTest extends TestCase
         self::assertSame([], $this->repository->pending('inn'));
     }
 
+    public function testExpireAllAlsoLapsesTheApprovalsNotWrittenYet(): void
+    {
+        [$id] = $this->service->propose(self::plan(false), 41, new DateTimeImmutable('2027-03-03T11:00:00Z'));
+        $this->service->approve($id, self::APPROVER);
+
+        self::assertSame(1, $this->service->expireAll('inn', 'mode_changed'));
+        self::assertSame(['lapsed', 'mode_changed'], [$this->repository->find($id)['status'], $this->repository->find($id)['expiry_reason']]);
+        self::assertSame([], $this->repository->approved('inn'));
+        self::assertRefused(ApprovalRefused::NOT_APPROVED, fn () => $this->service->grant($id));
+    }
+
+    public function testANewApprovalOrANewProposalEndsTheOlderApprovalNotWrittenYet(): void
+    {
+        [$first] = $this->service->propose(self::plan(false), 41, new DateTimeImmutable('2027-03-03T11:00:00Z'));
+        $this->service->approve($first, self::APPROVER);
+        [$second] = $this->service->propose(self::plan(false), 42, new DateTimeImmutable('2027-03-03T11:30:00Z'));
+
+        self::assertSame('lapsed', $this->repository->find($first)['status'], 'a newer plan replaces the approval not written yet');
+        $this->service->approve($second, self::APPROVER);
+        self::assertSame([$second], array_column($this->repository->approved('inn'), 'id'), 'at most one approval of a kind waits for its write');
+    }
+
     public function testAWrittenApprovalIsClosed(): void
     {
         [$id] = $this->service->propose(self::plan(false), 41, new DateTimeImmutable('2027-03-03T11:00:00Z'));

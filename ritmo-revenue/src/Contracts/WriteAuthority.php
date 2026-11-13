@@ -27,4 +27,11 @@ interface WriteAuthority
      * @throws WriteBlocked when the token does not allow the request
      */
     public function verify(WriteToken $token, WriteRequest $request): void;
+
+    /**
+     * The HTTP guard asks before a write leaves: true only for a live token whose connector has
+     * just used a step for it (verify()); the same request may be claimed once more (a token
+     * renewed after a 401). A live token alone never lets a write through.
+     */
+    public function claim(WriteToken $token, string $method, string $url, ?string $body): bool;
 }

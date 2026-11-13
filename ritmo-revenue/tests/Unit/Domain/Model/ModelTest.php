@@ -148,6 +148,17 @@ final class ModelTest extends TestCase
         Property::fromArray($data);
     }
 
+    public function testARoomTakesTheListingValuesReadOnlyWhenTheyCanBeAListing(): void
+    {
+        $room = new RoomType('main', 'Deluxe', 'Deluxe Suite', 3, 'r-9', 'l-9', 900.0, 600.0, 4000.0, 550.0, ['tub']);
+
+        $live = $room->withListing(null, 1100.0, null);
+        self::assertSame([600.0, 1100.0, 4000.0, 550.0, ['tub']], [$live?->min, $live?->base, $live?->max, $live?->referenceMin, $live?->tags]);
+        self::assertNull($room->withListing(0.0, null, null), 'not positive');
+        self::assertNull($room->withListing(5000.0, null, null), 'a minimum over the maximum');
+        self::assertNull($room->withListing(null, NAN, null));
+    }
+
     public function testRoomTypeTagsAndArrayRoundTrip(): void
     {
         $room = new RoomType('main', 'Deluxe', 'Deluxe Suite', 3, 'r-9', 'l-9', 900.0, 600.0, 4000.0, 550.0, ['tub', 'view']);

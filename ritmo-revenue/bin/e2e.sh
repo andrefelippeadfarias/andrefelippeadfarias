@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-# End-to-end test (milestones M1 and M2): builds the throwaway WordPress (bin/wp-test-site.sh), seeds it
+# End-to-end test (milestones M1 to M3): builds the throwaway WordPress (bin/wp-test-site.sh), seeds it
 # (tests/e2e/seed.php) and runs tests/e2e/shadow-run.js twice with Playwright:
 #
 #   1. "setup": connections, setup, dashboard, shadow run (full plan, validation, payload and
@@ -8,6 +8,10 @@
 #      the POST of /listing_prices, a read, may reach the simulator;
 #   2. "rerun": the site restarted with RITMO_PRICING_CALENDAR_READ=0; a second shadow run, and
 #      only GET may reach the simulator.
+#
+# Then tests/e2e/operations.js (M3): approval mode on the Operations screen, "Run now" writes
+# nothing while the plan waits, the approval writes only on the write routes of the pricing
+# system, and the emergency switch on the screen blocks every write.
 #
 # Then tests/e2e/wordpress-checks.php checks, on the same site and across PHP processes, the
 # emergency switch, the keys at rest, the capabilities after a new activation and a
@@ -37,6 +41,8 @@ RITMO_E2E_PASS=setup RITMO_PRICING_CALENDAR_READ= RITMO_E2E_SCREENS="$SCREENS" n
 
 RITMO_PRICING_CALENDAR_READ=0 "$ROOT/bin/wp-test-site.sh" restart
 RITMO_E2E_PASS=rerun RITMO_PRICING_CALENDAR_READ=0 RITMO_E2E_SCREENS="$SCREENS" node "$ROOT/tests/e2e/shadow-run.js"
+
+RITMO_E2E_SCREENS="$SCREENS" node "$ROOT/tests/e2e/operations.js"
 
 php "$ROOT/tests/e2e/wordpress-checks.php" "$ROOT/.wp-test/wordpress"
 

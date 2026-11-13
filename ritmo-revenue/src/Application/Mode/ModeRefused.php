@@ -7,7 +7,8 @@ namespace Ritmo\Application\Mode;
 use RuntimeException;
 
 /**
- * A change of mode that is not allowed now, with a code and a sentence safe to show.
+ * A change of mode that is not allowed now, with a code, a sentence safe to show and, for unmet
+ * conditions, each condition with its code and values (the screens translate them).
  */
 final class ModeRefused extends RuntimeException
 {
@@ -16,7 +17,10 @@ final class ModeRefused extends RuntimeException
     public const DISABLED = 'autonomous_disabled';
     public const CONFIRMATION = 'confirmation_mismatch';
 
-    public function __construct(public readonly string $reason, string $message)
+    /**
+     * @param list<array{code: string, params: array<string, int|string>, text: string}> $conditions
+     */
+    public function __construct(public readonly string $reason, string $message, public readonly array $conditions = [])
     {
         parent::__construct($message);
     }

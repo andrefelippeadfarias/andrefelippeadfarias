@@ -23,6 +23,14 @@ final class Capabilities implements CapabilityCheck
         return in_array($capability, $this->held[$userId] ?? [], true);
     }
 
+    /**
+     * @param list<string> $capabilities
+     */
+    public function grant(int $userId, array $capabilities): void
+    {
+        $this->held[$userId] = $capabilities;
+    }
+
     public function revoke(int $userId): void
     {
         unset($this->held[$userId]);

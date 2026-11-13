@@ -49,6 +49,7 @@ final class ScaffoldTest extends TestCase
         $main = self::root() . '/ritmo-revenue.php';
         $code = 'define("ABSPATH", "/tmp/"); $hooks = []; $lifecycle = [];'
             . 'function add_action($hook, $callback) { global $hooks; $hooks[] = [$hook, $callback]; }'
+            . 'function add_filter($hook, $callback) { global $hooks; $hooks[] = [$hook, $callback]; }'
             . 'function register_activation_hook($file, $callback) { global $lifecycle; $lifecycle[] = ["activation", $file, $callback]; }'
             . 'function register_deactivation_hook($file, $callback) { global $lifecycle; $lifecycle[] = ["deactivation", $file, $callback]; }'
             . 'require ' . var_export($main, true) . ';'
@@ -72,9 +73,9 @@ final class ScaffoldTest extends TestCase
             ['deactivation', $main, ['Ritmo\\WordPress\\Deactivator', 'deactivate']],
         ], $result['lifecycle']);
         self::assertSame(
-            ['init', 'admin_init', 'admin_menu', 'admin_enqueue_scripts', 'admin_notices', 'rest_api_init', 'ritmo_resume_shadow_runs', ...array_map(static fn (string $action): string => 'admin_post_' . $action, \Ritmo\Admin\AdminActions::names())],
+            ['init', 'init', 'admin_menu', 'admin_enqueue_scripts', 'admin_notices', 'rest_api_init', 'cron_schedules', 'ritmo_tick', 'admin_init', ...array_map(static fn (string $action): string => 'admin_post_' . $action, \Ritmo\Admin\AdminActions::names())],
             $result['booted_hooks'],
-            'boot registers the screens, the actions, the REST API and the scheduled hook'
+            'boot registers the text domain, the update on every kind of request (not only the screens: the tick and the REST API run on an updated database), the screens, the actions, the REST API, the scheduler tick and its interval'
         );
         self::assertTrue($result['booted']);
         self::assertTrue($result['autoload']);

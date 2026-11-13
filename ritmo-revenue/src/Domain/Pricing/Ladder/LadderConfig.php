@@ -83,6 +83,7 @@ final class LadderConfig
             $rules[] = self::rule($r, $rule, "$p.rules.$i");
         }
         self::checkDerivations($r, $rules, "$p.rules");
+        self::checkOverlaps($r, $rules, "$p.rules");
         $override = $row['weekend_floor_override'];
 
         return new LadderStrategy(
@@ -127,17 +128,55 @@ final class LadderConfig
             $r->add("$p.opening.series", ValidationError::REQUIRED, 'is required unless the rule derives from another room');
         }
 
+        $openingPoint = $series === null ? null : new RulerPoint($series, $r->float($opening['percentile'], "$p.opening.percentile"), $r->float($opening['multiplier'], "$p.opening.multiplier"));
+        $ceilingPoint = $ceilingSeries === null ? null : new RulerPoint($ceilingSeries, $r->float($ceiling['percentile'], "$p.ceiling.percentile"));
+        if ($openingPoint !== null && $ceilingPoint !== null && self::above($openingPoint, $ceilingPoint)) {
+            $r->add("$p.opening.percentile", ValidationError::ORDER, 'the opening is above the ceiling of the same series: the steps would never start');
+        }
+
         return new LadderRule(
             self::texts($r, $row['night_types'], "$p.night_types"),
             $rooms,
             $tags,
-            $series === null ? null : new RulerPoint($series, $r->float($opening['percentile'], "$p.opening.percentile"), $r->float($opening['multiplier'], "$p.opening.multiplier")),
+            $openingPoint,
             $r->choice($opening['cap'], "$p.opening.cap") === 'reference_snapshot',
-            $ceilingSeries === null ? null : new RulerPoint($ceilingSeries, $r->float($ceiling['percentile'], "$p.ceiling.percentile")),
+            $ceilingPoint,
             $fromRoom === null ? null : new Derivation($fromRoom, $r->float($derive['multiplier'], "$p.derive.multiplier")),
             $r->bool($row['apply_quality_floor'], "$p.apply_quality_floor"),
             $r->bool($row['apply_drop'], "$p.apply_drop"),
         );
+    }
+
+    /**
+     * The opening is above the ceiling when both read the same series and the opening's point,
+     * with its multiplier, is past the ceiling's.
+     */
+    private static function above(RulerPoint $opening, RulerPoint $ceiling): bool
+    {
+        return $opening->series === $ceiling->series
+            && ($opening->percentile > $ceiling->percentile || ($opening->percentile == $ceiling->percentile && $opening->multiplier > 1.0));
+    }
+
+    /**
+     * Two rules of one strategy never price the same room on the same night type (an empty list
+     * of night types is every type): which one wins would be the order of the list.
+     *
+     * @param list<LadderRule> $rules
+     */
+    private static function checkOverlaps(ConfigReader $r, array $rules, string $path): void
+    {
+        $seen = [];
+        foreach ($rules as $i => $rule) {
+            foreach ($rule->rooms as $room) {
+                foreach ($rule->nightTypes === [] ? ['*'] : $rule->nightTypes as $type) {
+                    $clash = $seen[$room]['*'] ?? ($type === '*' ? (array_values($seen[$room] ?? [])[0] ?? null) : ($seen[$room][$type] ?? null));
+                    if ($clash !== null) {
+                        $r->add("$path.$i.rooms", ValidationError::UNIQUE, sprintf('room %s on %s nights is already priced by rule %d of the strategy', $room, $type === '*' ? 'all' : $type, $clash));
+                    }
+                    $seen[$room][$type] ??= $i;
+                }
+            }
+        }
     }
 
     /**

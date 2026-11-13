@@ -14,7 +14,8 @@ use Ritmo\Contracts\WriteOperation;
  * against the old payload alone: each night is applied (holds what the step intended), not
  * applied (still what was read before) or diverged. A row is stored when every night is applied,
  * abandoned when none is (or it was never sent) and a mismatch otherwise. A group whose deletion
- * is applied and whose rewrite is not is a broken group, repaired first. Pure.
+ * is applied and whose rewrite is not is a broken group, repaired first; the rewrite of a group is
+ * read even when it was never sent, so a group whose repair is in force closes. Pure.
  */
 final class ResumePlanner
 {
@@ -36,12 +37,12 @@ final class ResumePlanner
                 $rewrites[$row['group_key']] = $row['intended_state'];
             }
         }
-        $statuses = $classes = [];
+        $statuses = $classes = $observed = [];
         foreach ($rows as $row) {
-            [$statuses[$row['id']], $classes[$row['id']]] = $this->row($row, $fresh, $rewrites[$row['group_key']] ?? []);
+            [$statuses[$row['id']], $classes[$row['id']], $observed[$row['id']]] = $this->row($row, $fresh, $rewrites[$row['group_key']] ?? []);
         }
 
-        return new ResumeReport($statuses, $classes, $this->brokenGroups($rows, $statuses));
+        return new ResumeReport($statuses, $classes, $this->brokenGroups($rows, $statuses), $rows, [], array_filter($observed, static fn (array $o): bool => $o !== []));
     }
 
     /**
@@ -71,20 +72,22 @@ final class ResumePlanner
      * @param array<string, mixed>                                                                   $row
      * @param array<string, array<string, array{state: array<string, mixed>|null, fields: list<string>}>> $rewrite what the group's rewrite intended (a deletion of the group is applied when its night holds it)
      *
-     * @return array{0: OpStatus, 1: array<string, array<string, string>>}
+     * @return array{0: OpStatus, 1: array<string, array<string, string>>, 2: array<string, array<string, array<string, mixed>|null>>} status, night classes, state read now
      */
     private function row(array $row, StoredState $fresh, array $rewrite): array
     {
         $writes = [WriteOperation::OverridesWrite->value, WriteOperation::OverridesDelete->value, WriteOperation::PmsCalendar->value];
         $status = OpStatus::from((string) $row['status']);
-        if (in_array($status, self::NEVER_APPLIED, true) || !in_array($row['operation'], $writes, true)) {
-            return [$status === OpStatus::Planned ? OpStatus::Abandoned : $status, []];
+        $groupRewrite = $row['group_key'] !== '' && $row['operation'] === WriteOperation::OverridesWrite->value;
+        if ((in_array($status, self::NEVER_APPLIED, true) && !$groupRewrite) || !in_array($row['operation'], $writes, true)) {
+            return [$status === OpStatus::Planned ? OpStatus::Abandoned : $status, [], []];
         }
         $pms = $row['operation'] === WriteOperation::PmsCalendar->value;
-        $classes = [];
+        $classes = $read = [];
         foreach ($row['intended_state'] as $target => $nights) {
             foreach ($nights as $night => $want) {
                 $now = $pms ? ($fresh->pms[$target][$night] ?? null) : ($fresh->pricing[$target][$night] ?? null);
+                $read[$target][$night] = $now;
                 $before = $row['before_state'][$target][$night] ?? null;
                 $class = $this->night($now, $want, $before, $pms);
                 $after = $rewrite[$target][$night] ?? null;
@@ -100,7 +103,7 @@ final class ResumePlanner
             $all !== [] && array_unique($all) === [NightClass::Applied->value] => OpStatus::Stored,
             $all === [] || array_unique($all) === [NightClass::NotApplied->value] => OpStatus::Abandoned,
             default => OpStatus::Mismatch,
-        }, $classes];
+        }, $classes, $read];
     }
 
     /**

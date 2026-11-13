@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Ritmo\Application\Run;
 
+use Ritmo\Application\ShadowRun\AfterWriteStage;
 use Ritmo\Application\ShadowRun\PlanItemStatus;
 use Ritmo\Application\ShadowRun\RunContext;
-use Ritmo\Application\ShadowRun\AfterWriteStage;
 use Ritmo\Application\ShadowRun\StageResult;
 use Ritmo\Domain\Model\PropertyMode;
 use Ritmo\Domain\Operations\RunKind;

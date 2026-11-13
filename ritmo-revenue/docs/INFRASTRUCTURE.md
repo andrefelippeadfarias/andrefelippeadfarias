@@ -33,11 +33,14 @@ $locks = new DbLock($db, $clock);
 
 Tests and command-line tools use `PdoDatabase::inMemory()`, `new ArrayStore()`, `new MemoryLogger()` and `new CurlHttpClient()`; `Migrator::standard($db, $store)` without the third argument runs the statements directly. The uninstall handler calls `Migrator::standard($db, $store)->uninstall()`, which drops every plugin table.
 
-### 1.2 Read-only guard (milestone M1)
+### 1.2 HTTP guard: reads, and writes only with a live token (milestone M3)
 
-`GuardedHttpClient` lets only `GET` leave the site. Any other method, to any host, ends in `WriteBlocked` before the wrapped client is called, is logged as a warning (method, host and path only) and is listed by `blockedAttempts()`. Requests with a method-override header are blocked too; a malformed method, URL or header is an `InvalidArgumentException`. The clients never follow redirects.
+`GuardedHttpClient::request()` lets only `GET` leave the site. Any other method, to any host, ends in `WriteBlocked` before the wrapped client is called, is logged as a warning (method, host and path only) and is listed by `blockedAttempts()`. Requests with a method-override header are blocked too; a malformed method, URL or header is an `InvalidArgumentException`. The clients never follow redirects.
 
-The one exception is `ReadRouteAllowList`: a `POST` whose host and **exact** path were added with `->with($connector, 'POST', $host, $path)` passes. Only `POST` can be listed. **The list is empty unless the composition root adds to it.** Whether the pricing system's calendar read (a `POST`) goes on the list is the open product-safety decision of ARCHITECTURE.md section 6: until the owner decides, pass `ReadRouteAllowList::none()`.
+Two exceptions:
+
+- `ReadRouteAllowList`: a `POST` whose host and **exact** path were added with `->with($connector, 'POST', $host, $path)` passes `request()` (the pricing system's calendar read, ARCHITECTURE.md section 6). Only `POST` can be listed.
+- `GuardedHttpClient::write($token, ...)` (the `WriteHttpClient` port): only a route of the `WriteRouteAllowList` (exact paths at the base URLs the composition root declares; a booking route cannot be declared) and only the request a connector has just used a step of a live token for (`WriteAuthority::claim($token, $method, $url, $body)`: a live token alone lets nothing through; the same request may go once more, for the Beds24 token renewal after a 401). `ThrottledHttpClient` and `CreditAwareHttpClient` pass a write through and never repeat it. Without a write list and an authority every write is `WriteBlocked`.
 
 ### 1.3 Database
 
@@ -56,9 +59,12 @@ Tables (all prefixed, all with an auto-incremented `id`):
 | 3 Operation | `orders`, `bookings`, `snapshots`, `runs`, `plan_items`, `write_ops`, `step_ledger`, `change_log`, `alerts`, `pending_items`, `api_quota_log` |
 | 4 Housekeeping | `locks`, `log` |
 | 5 Run stages | `runs` again, with `run_day`, `stage` and `state`: a run made of resumable stages (`RunRepository::advance()`, `state()`, `openRun()`) |
-| 6 Run payloads | `run_payloads`: the payload of a run's validated plan and its slices, in writing order (M2; stored, never sent) |
+| 6 Run payloads | `run_payloads`: the payload of a run's validated plan and its slices, in writing order (M2) |
+| 7 Write path | `write_ops` again (the write-ahead journal: slice, label, dates, state before, intended and read back, token, plan and body hashes, the run that classified the row) and `api_quota_log` again (outcome, response id and error of a recalculation attempt) |
+| 8 Confirmation | `change_log` again (group, undone change, confirmation level, order, amounts) and `step_ledger` again (reached the channel at, undone at, journal reference); `plan_approvals` (plans waiting for a person), `night_observations` (what each read found per room night), `detected_freezes` (nights frozen because someone else changed them), `wave_holds` (the hold of a cancellation wave) |
+| 9 Operations | `scheduled_runs` (slot occurrences of each property), `operation_state` (pause and cursors), `booking_movements` (processed versions of bookings), `alerts` again (lifecycle: evidence, acknowledgement, resolution, e-mail, digest, occurrences) |
 
-`bookings` stores what `BookingRecord` carries and nothing else; a test lists its columns and fails when one that could identify a guest is added. `relations`, `periods`, `price_factors`, `competitors`, `write_ops`, `change_log` and `pending_items` have no repository yet: they belong to later milestones.
+`bookings` stores what `BookingRecord` carries and nothing else; a test lists its columns and fails when one that could identify a guest is added. No table can hold guest data: bookings appear only by their PMS id. `relations`, `periods`, `price_factors`, `competitors` and `pending_items` have no repository yet. `change_log` holds the night changes (`ChangeLogRepository`) and the operation events without a provider (`OperationEventRepository`: modes, approvals, the emergency switch, releases, undo requests, listing values that changed).
 
 ### 1.4 Repositories
 
@@ -67,7 +73,7 @@ All in `Ritmo\Infrastructure\Db\Repository`, built with the `Database` (and the 
 | Repository | Notes |
 |---|---|
 | `PropertyRepository`, `RoomTypeRepository` | `save()` creates or replaces by id/code. Lookups are exact, and a code that differs from an existing one only in case is refused (MySQL and SQLite disagree on case). `RoomTypeRepository::pmsMap()` is the room map a PMS connector is built with. |
-| `RuleSetRepository` | `save()` writes a new version and returns its number; saving rules equal to the current version returns the current number. No method edits or deletes a version. |
+| `RuleSetRepository` | `save()` writes a new version and returns its number; saving rules equal to the current version returns the current number. No method edits or deletes a version. `find()` reads a version stored by an earlier version of the plugin with the settings added since at their neutral defaults (`RuleSet::fromStored()`); `upgradeCurrent()` saves the completed rules once as a new version (the activator calls it after an update). |
 | `BookingRepository` | `upsert($pms, $booking, $syncedAt)` is keyed by connector id + PMS reference. `overlapping($from, $to)` returns every status, like `PmsConnector::readBookingsByStay()`. `latestModification($pms)` is the cursor for incremental reads. |
 | `InventorySnapshotRepository` | Keeps every capture; `latest($room, $from, $to, $asOf)` answers with the calendar as known at an instant. |
 | `MarketAnchorRepository` | One anchor per property and night; `range()` has the shape of `MarketDataProvider::readAnchors()`. |
@@ -78,6 +84,12 @@ All in `Ritmo\Infrastructure\Db\Repository`, built with the `Database` (and the 
 | `OrderRepository` | Owner orders: `add()` keeps the order's fields as `OrderReader` takes them (a row that does not read is refused), `book($propertyId, $from)` gives the `OrderBook` of the active orders still in force; an order that no longer reads fails the run that needs it. |
 | `RunPayloadRepository` | `store($runId, $propertyId, $payload, $slices)` keeps the payload and the slices of a run, all or nothing; `forRun()` reads them back. |
 | `QuotaLogRepository` | The rows behind `DbQuotaLedger`. |
+| `WriteOpRepository`, `RecalcAttemptRepository` | The write journal (`insertPlanned`, `markSending` before the call, `finish`, `observe`, `unsettled`, `resolve`, `refusalStreak`, `listingWritten`: whether a listing change of the plugin set the values read) and the recalculation attempts (pending before the call). |
+| `ChangeLogRepository`, `OperationEventRepository` | The change log of nights (before, after, inverse operation; `markUndone`) and the events of the operation (`record`, `latest`, `lastTo`). |
+| `WrittenStepRepository` | The step ledger as the write path keeps it: steps of stored nights, delivered at the channel, undone. |
+| `PlanApprovalRepository` | Requests waiting for a person: `create`, `pending`, `approved`, `latest`, `decide` (only from pending), `close`, `finish`. |
+| `NightObservationRepository`, `DetectedFreezeRepository`, `WaveHoldRepository` | What each read found, the nights frozen by a change of someone else, the hold of a cancellation wave. |
+| `Schedule\ScheduledRunRepository`, `Schedule\OperationStateRepository`, `Schedule\BookingMovementRepository`, `Schedule\AlertLedger` | The slots, the pause and cursors, the processed booking versions, the alerts with their lifecycle (`since()`: the alerts of a code first raised since an instant, for the conditions of a mode) (OPERATIONS.md, ALERTS.md). |
 
 ### 1.5 Secrets
 
@@ -376,6 +388,22 @@ public function latest(string $propertyId, DateTimeImmutable $from, DateTimeImmu
 public function purgeBefore(string $propertyId, DateTimeImmutable $before): int;
 ```
 
+#### `Ritmo\Infrastructure\Db\Repository\OperationEventRepository` (final class)
+
+```php
+const MODE = 'mode';
+const APPROVAL = 'approval';
+const EMERGENCY = 'emergency';
+const WAVE_RELEASE = 'wave_release';
+const FREEZE_RELEASE = 'freeze_release';
+const UNDO = 'undo_request';
+const LISTING = 'listing_values';
+public function __construct(Database $db);
+public function record(string $propertyId, string $kind, string $from, string $to, string $reason, string $actor, DateTimeImmutable $at, ?int $runId = null): int;
+public function latest(string $propertyId, ?string $kind = null, int $limit = 50): array;
+public function lastTo(string $propertyId, string $kind, string $to): ?array;
+```
+
 #### `Ritmo\Infrastructure\Db\Repository\OrderRepository` (final class)
 
 ```php
@@ -389,10 +417,13 @@ public function book(string $propertyId, DateTimeImmutable $from): OrderBook;
 
 ```php
 const PENDING = 'pending';
+const APPROVED = 'approved';
 public function __construct(Database $db);
 public function create(?int $runId, string $propertyId, string $kind, string $planHash, DateTimeImmutable $planDay, ?int $rulesetVersion, DateTimeImmutable $calendarReadAt, DateTimeImmutable $expiresAt, array $entries, DateTimeImmutable $now): int;
 public function find(int $id): ?array;
 public function pending(string $propertyId, ?string $kind = null): array;
+public function approved(string $propertyId, ?string $kind = null): array;
+public function latest(string $propertyId, int $limit = 20): array;
 public function decide(int $id, string $status, array $approvedKeys, array $rejectedKeys, int $userId, string $capability, DateTimeImmutable $at, string $note = ''): bool;
 public function close(int $id, string $status, string $reason): bool;
 public function finish(int $id, string $fromStatus, string $status, string $reason, ?int $writeRunId): bool;
@@ -468,6 +499,7 @@ public function save(RuleSet $rules, string $note = '', int $userId = 0): int;
 public function currentVersion(): ?int;
 public function current(): ?RuleSet;
 public function find(int $version): ?RuleSet;
+public function upgradeCurrent(): ?int;
 public function history(int $limit = 50): array;
 ```
 
@@ -532,6 +564,7 @@ public function observe(int $id, string $status, array $observed): void;
 public function resolve(array $ids, int $runId, string $status): void;
 public function ofRun(int $runId): array;
 public function unsettled(string $propertyCode, int $exceptRunId): array;
+public function listingWritten(string $propertyCode, string $listingRef, array $values): bool;
 public function refusalStreak(string $propertyCode, string $bodyHash): int;
 ```
 
@@ -850,6 +883,7 @@ public function find(int $id): ?AlertRecord;
 public function insert(AlertDraft $draft, ?int $runId, DateTimeImmutable $now): AlertRecord;
 public function refresh(AlertRecord $alert, AlertDraft $draft, ?int $runId, DateTimeImmutable $now): AlertRecord;
 public function active(string $propertyId, array $codes): array;
+public function since(string $propertyId, string $code, DateTimeImmutable $since): array;
 public function acknowledge(int $id, int $userId, DateTimeImmutable $now): void;
 public function resolve(int $id, ?int $userId, DateTimeImmutable $now): void;
 public function markNotified(int $id, DateTimeImmutable $now): void;

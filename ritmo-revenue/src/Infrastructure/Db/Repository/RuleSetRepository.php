@@ -71,13 +71,40 @@ final class RuleSetRepository
     }
 
     /**
+     * A stored version; the settings added by later versions of the plugin take their neutral
+     * defaults (RuleSet::fromStored).
+     *
      * @throws InvalidConfig when the stored rules no longer pass validation
      */
     public function find(int $version): ?RuleSet
     {
         $stored = $this->db->selectValue(sprintf('SELECT rules FROM %s WHERE version = ?', $this->db->table(self::TABLE)), [$version]);
 
-        return $stored === null ? null : RuleSet::fromArray(DbValue::toArray($stored));
+        return $stored === null ? null : RuleSet::fromStored(DbValue::toArray($stored));
+    }
+
+    /**
+     * After an update of the plugin: when the rules in force miss settings added since, saves
+     * them completed with the neutral defaults as a new version (nothing when already complete).
+     *
+     * @return int|null the version saved, or null when nothing changed
+     *
+     * @throws InvalidConfig when the stored rules do not pass validation even completed
+     */
+    public function upgradeCurrent(): ?int
+    {
+        $version = $this->currentVersion();
+        if ($version === null) {
+            return null;
+        }
+        $stored = DbValue::toArray($this->db->selectValue(sprintf('SELECT rules FROM %s WHERE version = ?', $this->db->table(self::TABLE)), [$version]));
+        $completed = RuleSet::fromStored($stored);
+        if ($completed->toArray() === $stored) {
+            return null;
+        }
+        $saved = $this->save($completed, 'Completed with the neutral defaults of the settings added by an update');
+
+        return $saved === $version ? null : $saved;
     }
 
     /**

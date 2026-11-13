@@ -78,6 +78,11 @@ final class WriteDoorTest extends TestCase
             {
                 $this->test->asked($request);
             }
+
+            public function claim(WriteToken $token, string $method, string $url, ?string $body): bool
+            {
+                return $this->test->isLive();
+            }
         };
     }
 

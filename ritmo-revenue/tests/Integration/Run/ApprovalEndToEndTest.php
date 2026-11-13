@@ -45,6 +45,24 @@ final class ApprovalEndToEndTest extends TestCase
         self::assertSame('written', $world->stack->approvalRequests()->find($pending[0]['id'])['status'] ?? null);
     }
 
+    public function testTheSchedulerTickWritesTheApprovedPlanFirst(): void
+    {
+        $world = new RunWorld(PropertyMode::Approval);
+        $world->run();
+        $pending = $world->stack->approvalDesk()->pending(RunWorld::PROPERTY, new ApprovalConfig());
+        $world->stack->approvalDesk()->approve(RunWorld::PROPERTY, $pending[0]['id'], RunWorld::OWNER, null, new ApprovalConfig());
+
+        for ($tick = 0; $tick < 5 && $world->stack->approvalRequests()->find($pending[0]['id'])['status'] !== 'written'; ++$tick) {
+            $world->stack->tick()->run();
+            $world->later('+5 minutes');
+        }
+
+        self::assertSame('written', $world->stack->approvalRequests()->find($pending[0]['id'])['status'] ?? null);
+        self::assertNotSame([], $world->writes());
+        $kinds = array_column($world->stack->runs()->latest(RunWorld::PROPERTY, 10), 'kind');
+        self::assertContains('approved_write', $kinds);
+    }
+
     public function testAPartialApprovalWritesOnlyTheNightsApproved(): void
     {
         $world = new RunWorld(PropertyMode::Approval);

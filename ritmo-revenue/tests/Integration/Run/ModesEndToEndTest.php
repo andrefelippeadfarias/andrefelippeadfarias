@@ -7,7 +7,6 @@ namespace Ritmo\Tests\Integration\Run;
 use PHPUnit\Framework\TestCase;
 use Ritmo\Application\Schedule\LaunchStatus;
 use Ritmo\Domain\Model\PropertyMode;
-use Ritmo\Domain\Operations\RunKind;
 use Ritmo\Tests\Integration\Run\Support\RunWorld;
 
 /**

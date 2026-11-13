@@ -210,9 +210,42 @@ final class ConfigurationRepositoriesTest extends TestCase
         );
         sort($methods);
 
-        self::assertSame(['__construct', 'current', 'currentVersion', 'find', 'history', 'save'], $methods);
+        self::assertSame(['__construct', 'current', 'currentVersion', 'find', 'history', 'save', 'upgradeCurrent'], $methods, 'upgradeCurrent only saves a new version');
 
         $source = (string) file_get_contents((string) (new \ReflectionClass(RuleSetRepository::class))->getFileName());
         self::assertDoesNotMatchRegularExpression('/->(update|delete|upsert|execute)\(/', $source, 'rule set versions are only ever inserted');
+    }
+
+    /**
+     * An update from M2 to M3 found rules without the sections M3 added and broke every screen
+     * (review finding of the M3 correction phase): the stored rules are now completed with the
+     * neutral defaults, kept as they were otherwise, and saved once as a new version.
+     */
+    public function testRulesStoredByAnEarlierVersionAreCompletedWithTheNeutralDefaults(): void
+    {
+        $m2 = Fixtures::json('presets/rules-m2.json')['rules'];
+        self::assertArrayNotHasKey('write', $m2);
+        $this->db->insert('rulesets', ['version' => 1, 'hash' => str_repeat('a', 64), 'rules' => json_encode($m2), 'note' => 'M2', 'created_by' => 0, 'created_at' => '2026-11-10 12:00:00']);
+        $repository = new RuleSetRepository($this->db, $this->clock);
+
+        $current = $repository->current();
+        self::assertNotNull($current);
+        self::assertEquals(RuleSet::defaults()->write(), $current->write(), 'a section added later takes its neutral default');
+        self::assertSame(RuleSet::defaults()->toArray()['modes'], $current->toArray()['modes'], 'the new modes stay neutral (autonomous off)');
+        self::assertSame(RuleSet::defaults()->plan()->horizonNights, $current->plan()->horizonNights, 'a field added later inside an old section too');
+        self::assertSame($m2['ladder'], $current->toArray()['ladder'], 'what was stored is kept');
+
+        self::assertSame(2, $repository->upgradeCurrent(), 'the completed rules are saved once as a new version');
+        self::assertNull($repository->upgradeCurrent(), 'and only once');
+        self::assertSame(RuleSet::fromStored($m2)->hash(), $repository->current()?->hash());
+    }
+
+    public function testCompletingStoredRulesNeverLoosensWhatWasStored(): void
+    {
+        $m2 = Fixtures::json('presets/rules-m2.json')['rules'];
+        $m2['quota'] = ['per_listing' => 10];
+
+        $this->expectException(\Ritmo\Domain\Config\InvalidConfig::class);
+        RuleSet::fromStored($m2);
     }
 }

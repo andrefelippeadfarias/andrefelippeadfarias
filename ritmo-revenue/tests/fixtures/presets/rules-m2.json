@@ -1,0 +1,266 @@
+{
+  "_comment": "The rule set the plugin stored at milestone M2 (commit 19fec66, presets/default.json): an update to M3 must complete it with the settings added since.",
+  "rules": {
+    "occupancy": {
+      "goals": {
+        "7": 60,
+        "15": 45,
+        "30": 30,
+        "45": 20,
+        "60": 10
+      }
+    },
+    "calendar": {
+      "weekend_days": [
+        4,
+        5
+      ],
+      "holidays": []
+    },
+    "pace": {
+      "curves": {
+        "weekday": {
+          "60": 5,
+          "30": 10,
+          "14": 20,
+          "7": 35,
+          "3": 50,
+          "1": 65,
+          "0": 100
+        },
+        "weekend": {
+          "60": 10,
+          "30": 20,
+          "14": 35,
+          "7": 55,
+          "3": 70,
+          "1": 85,
+          "0": 100
+        },
+        "holiday": {
+          "60": 15,
+          "30": 35,
+          "14": 55,
+          "7": 70,
+          "3": 85,
+          "1": 95,
+          "0": 100
+        }
+      },
+      "band": 15,
+      "very_behind": 25,
+      "zero_sold_days": {
+        "weekday": 5,
+        "weekend": 10,
+        "holiday": 14
+      },
+      "group_pace": {
+        "max_units": 0,
+        "room_tags": []
+      },
+      "target_percentile": {
+        "premium": {
+          "ahead_near": 80,
+          "ahead": 70,
+          "on_pace": 60,
+          "behind": 50,
+          "very_behind": 40
+        },
+        "standard": {
+          "ahead_near": 70,
+          "ahead": 60,
+          "on_pace": 50,
+          "behind": 40,
+          "very_behind": 30
+        }
+      },
+      "ahead_near_days": 7,
+      "sales_ramp": {
+        "enabled": false,
+        "top_percentile": 90
+      },
+      "k": 0.5,
+      "max_step": [
+        {
+          "min_days": 30,
+          "percent": 5
+        },
+        {
+          "min_days": 8,
+          "percent": 10
+        },
+        {
+          "min_days": 0,
+          "percent": 15
+        }
+      ],
+      "min_n": 5,
+      "max_age_days": 14,
+      "tolerance": 0.02,
+      "protection_percentile": 85
+    },
+    "floors": {
+      "fraction_of_reference_min": 0.75,
+      "owner": [],
+      "quality_floor": {
+        "amount": 0,
+        "price_plan": "sent",
+        "night_types": [
+          "weekend",
+          "holiday"
+        ],
+        "room_tags": []
+      },
+      "holiday_floor": {
+        "amount": 0,
+        "price_plan": "sent"
+      }
+    },
+    "price_factors": {
+      "properties": {
+        "*": {
+          "public": {
+            "weekday": 1,
+            "weekend": 1,
+            "holiday": 1
+          },
+          "discounted": {
+            "weekday": 1,
+            "weekend": 1,
+            "holiday": 1
+          }
+        }
+      },
+      "room_overrides": []
+    },
+    "safety": {
+      "weekly_listing_change_max": 0.1,
+      "never_raise_today": true
+    },
+    "relations": {
+      "tolerance": {
+        "trigger_amount": 1,
+        "audit_base_percent": 1,
+        "audit_amount": 1
+      },
+      "scan_horizon_days": 60,
+      "audit_horizon_days": 366,
+      "blocked_nights": "exclude",
+      "rounding_recheck": {
+        "mode": "fix",
+        "epsilon_amount": 0.005
+      },
+      "items": []
+    },
+    "price_bands": {
+      "items": []
+    },
+    "ladder": {
+      "enabled": false,
+      "strategies": []
+    },
+    "soldout": {
+      "protection": {
+        "enabled": true,
+        "percentile": 90,
+        "use_target_order_floor": true,
+        "use_relation_bounds": true,
+        "keep_live_floor_on_release": true,
+        "retired_floor_markers": [],
+        "retired_floor_exemptions": []
+      },
+      "light_run_max_days": null
+    },
+    "cadence": {
+      "min_hours_between_steps": 24,
+      "require_channel_arrival": true,
+      "opposite_direction_immediate": true,
+      "release_on_booking": true,
+      "new_order_immediate_once": true,
+      "first_ladder_step_immediate": true,
+      "relation_violation_bypass": true
+    },
+    "no_effect": {
+      "drop_rounding_only": true,
+      "money_slack": 1
+    },
+    "orders": {
+      "manual_freeze_days": 7,
+      "defaults": {
+        "target_percentile": 50,
+        "strong_night_occupancy": 1,
+        "strong_night_ahead_occupancy": 1,
+        "fallback_trigger_days": 0,
+        "descent_marks": []
+      },
+      "descent_reached_slack": 0.02
+    },
+    "stay": {
+      "arrival_rule": {
+        "enabled": false,
+        "valid_from": null,
+        "valid_to": null,
+        "by_weekday": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        "properties": [],
+        "rooms": [],
+        "held_weekdays": []
+      },
+      "orphan": {
+        "next_night": false,
+        "on_holidays": false
+      },
+      "holiday_min_stay": 1,
+      "closed_days": [],
+      "open_days": [],
+      "packages": [],
+      "seasons": [],
+      "pricing_sync": {
+        "min_stay_rooms": [],
+        "max_stay_rooms": [],
+        "arrival_departure_rooms": []
+      },
+      "keep_reason_markers": [],
+      "batch": {
+        "urgent_days": 14,
+        "max_ranges": 100
+      }
+    },
+    "plan": {
+      "validator": {
+        "calendar_max_age_hours": 6,
+        "occupancy_reason_codes": [
+          "SOLD_OUT_PROTECTION",
+          "RELATION_DISCOUNT_BAND",
+          "RELATION_OCCUPANCY_SWITCH"
+        ],
+        "rise_warning_percent": 15,
+        "rise_exempt_reason_codes": [
+          "SOLD_OUT_PROTECTION"
+        ],
+        "max_min_stay": 30,
+        "market_evidence_min_length": 20,
+        "no_discount_rooms": [],
+        "last_minute": {
+          "enabled": false,
+          "rooms": [],
+          "max_days_out": 0,
+          "max_discount": 0,
+          "max_sold_share": 0,
+          "last_unit_only_rooms": []
+        }
+      },
+      "payload": {
+        "reason_max_length": 250,
+        "slice_max_dates": 70
+      }
+    }
+  }
+}

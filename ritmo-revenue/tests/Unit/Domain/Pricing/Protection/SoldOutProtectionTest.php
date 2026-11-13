@@ -16,6 +16,7 @@ use Ritmo\Domain\Pricing\Protection\FloorSource;
 use Ritmo\Domain\Pricing\Protection\ProtectionConfig;
 use Ritmo\Domain\Pricing\Protection\ProtectionOutcome;
 use Ritmo\Domain\Pricing\Protection\SoldOutProtection;
+use Ritmo\Tests\Support\ParityNames;
 use Ritmo\Tests\Unit\Domain\Pricing\Ladder\Reference;
 
 /**
@@ -27,14 +28,14 @@ final class SoldOutProtectionTest extends TestCase
     {
         $off = new SoldOutProtection(new ProtectionConfig(enabled: false), 0.03);
 
-        self::assertSame(ProtectionOutcome::DISABLED, $off->propose(Reference::room('Q7'), $this->live(2100.0), null, $this->anchor(), 0.63, 2000.0)->code);
-        self::assertSame(ProtectionOutcome::NO_ANCHOR, $this->protection()->propose(Reference::room('Q7'), $this->live(2100.0), null, null, 0.63, 2000.0)->code);
+        self::assertSame(ProtectionOutcome::DISABLED, $off->propose(Reference::room(ParityNames::room('low')), $this->live(2100.0), null, $this->anchor(), 0.63, 2000.0)->code);
+        self::assertSame(ProtectionOutcome::NO_ANCHOR, $this->protection()->propose(Reference::room(ParityNames::room('low')), $this->live(2100.0), null, null, 0.63, 2000.0)->code);
     }
 
     public function testTheConfiguredPercentileIsHonoured(): void
     {
         $at75 = new SoldOutProtection(new ProtectionConfig(percentile: 75.0), 0.03);
-        $item = $at75->propose(Reference::room('Q7'), $this->live(1500.0), null, $this->anchor(), 0.63, 1000.0)->item;
+        $item = $at75->propose(Reference::room(ParityNames::room('low')), $this->live(1500.0), null, $this->anchor(), 0.63, 1000.0)->item;
 
         self::assertNotNull($item);
         self::assertSame(1747.0, $item->minPrice, '1100 / 0.63 rounded up; the reference engine always uses 90');
@@ -45,7 +46,7 @@ final class SoldOutProtectionTest extends TestCase
     {
         $live = new PriceNight(new DateTimeImmutable('2027-03-12'), 2100.0, null, null, null, 7, 7);
 
-        self::assertSame(ProtectionOutcome::UNKNOWN_LIVE_FLOOR, $this->protection()->propose(Reference::room('Q7'), $live, null, $this->anchor(), 0.63, 2000.0)->code);
+        self::assertSame(ProtectionOutcome::UNKNOWN_LIVE_FLOOR, $this->protection()->propose(Reference::room(ParityNames::room('low')), $live, null, $this->anchor(), 0.63, 2000.0)->code);
     }
 
     public function testAHigherLiveFloorComesDownWhenKeepingItIsSwitchedOff(): void
@@ -53,9 +54,9 @@ final class SoldOutProtectionTest extends TestCase
         $override = new DateOverride(new DateTimeImmutable('2027-03-12'), 156.0, 156.0, reason: 'ladder price');
         $live = $this->live(3000.0, 3000.0);
 
-        $kept = $this->protection()->propose(Reference::room('Q7'), $live, $override, $this->anchor(), 0.63, 2000.0)->item;
+        $kept = $this->protection()->propose(Reference::room(ParityNames::room('low')), $live, $override, $this->anchor(), 0.63, 2000.0)->item;
         $lowered = (new SoldOutProtection(new ProtectionConfig(keepLiveFloorOnRelease: false), 0.03))
-            ->propose(Reference::room('Q7'), $live, $override, $this->anchor(), 0.63, 2000.0)->item;
+            ->propose(Reference::room(ParityNames::room('low')), $live, $override, $this->anchor(), 0.63, 2000.0)->item;
 
         self::assertSame(3000.0, $kept?->minPrice);
         self::assertSame(FloorSource::LiveFloorKept, $kept?->floorSource);
@@ -65,15 +66,15 @@ final class SoldOutProtectionTest extends TestCase
 
     public function testExtraFloorAndRelationBoundsFollowTheSwitches(): void
     {
-        $order = new OwnerOrder('target', OrderType::Target, ['Q7'], new DateTimeImmutable('2027-03-01'), new DateTimeImmutable('2027-03-31'), floors: ['Q7' => 2600.0]);
+        $order = new OwnerOrder('target', OrderType::Target, [ParityNames::room('low')], new DateTimeImmutable('2027-03-01'), new DateTimeImmutable('2027-03-31'), floors: [ParityNames::room('low') => 2600.0]);
         $all = $this->protection();
         $none = new SoldOutProtection(new ProtectionConfig(useTargetOrderFloor: false, useRelationBounds: false), 0.03);
 
-        self::assertSame(2600.0, $all->extraFloor(2400.0, $order, 'Q7'));
-        self::assertSame(2400.0, $all->extraFloor(2400.0, null, 'Q7'));
-        self::assertSame(2600.0, $all->extraFloor(null, $order, 'Q7'));
-        self::assertNull($all->extraFloor(null, $order, 'VK7'));
-        self::assertNull($none->extraFloor(2400.0, $order, 'Q7'));
+        self::assertSame(2600.0, $all->extraFloor(2400.0, $order, ParityNames::room('low')));
+        self::assertSame(2400.0, $all->extraFloor(2400.0, null, ParityNames::room('low')));
+        self::assertSame(2600.0, $all->extraFloor(null, $order, ParityNames::room('low')));
+        self::assertNull($all->extraFloor(null, $order, ParityNames::room('dual')));
+        self::assertNull($none->extraFloor(2400.0, $order, ParityNames::room('low')));
         self::assertSame(2857.0, $all->relationCeiling(2857.0));
         self::assertNull($none->relationCeiling(2857.0));
     }
@@ -88,7 +89,7 @@ final class SoldOutProtectionTest extends TestCase
 
     public function testTheItemBecomesAPlanItem(): void
     {
-        $item = $this->protection()->propose(Reference::room('Q7'), $this->live(2100.0), null, $this->anchor(), 0.63, 2000.0)->item;
+        $item = $this->protection()->propose(Reference::room(ParityNames::room('low')), $this->live(2100.0), null, $this->anchor(), 0.63, 2000.0)->item;
         self::assertNotNull($item);
         $plan = $item->toPlanItem();
 

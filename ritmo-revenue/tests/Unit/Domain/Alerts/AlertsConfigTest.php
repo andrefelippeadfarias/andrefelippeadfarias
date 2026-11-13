@@ -9,6 +9,7 @@ use Ritmo\Domain\Alerts\AlertsConfig;
 use Ritmo\Domain\Alerts\PriceBasis;
 use Ritmo\Domain\Config\InvalidConfig;
 use Ritmo\Tests\Support\Fixtures;
+use Ritmo\Tests\Support\ParityNames;
 
 final class AlertsConfigTest extends TestCase
 {
@@ -29,8 +30,8 @@ final class AlertsConfigTest extends TestCase
         $config = AlertsConfig::fromArray(Fixtures::json('presets/parity-ops.json')['alerts']);
 
         self::assertSame(PriceBasis::Current, $config->belowExpected->priceBasis);
-        self::assertSame(0.49, $config->belowExpected->factor('recanto', 'booking'));
-        self::assertSame(1.0, $config->belowExpected->factor('villa', 'expedia'));
+        self::assertSame(0.49, $config->belowExpected->factor(ParityNames::property('first'), 'booking'));
+        self::assertSame(1.0, $config->belowExpected->factor(ParityNames::property('second'), 'expedia'));
     }
 
     public function testKnownOriginsAreComparedWithoutCaseAndSpaces(): void

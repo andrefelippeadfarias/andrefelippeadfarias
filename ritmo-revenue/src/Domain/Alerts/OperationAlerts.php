@@ -32,6 +32,26 @@ final class OperationAlerts
         );
     }
 
+    /**
+     * Raised by every run while a deletion-and-rewrite group stays open: its nights have no date
+     * rule until the rewrite is in force (task rule 9(e)).
+     *
+     * @param list<string> $nights "room|YYYY-MM-DD" of the nights without their rule
+     */
+    public static function groupsOpen(string $propertyId, int $groups, array $nights, string $mode, DateTimeImmutable $at): AlertDraft
+    {
+        return new AlertDraft(
+            AlertCode::WriteFailed,
+            $propertyId,
+            ['pricing'],
+            $mode === 'approval'
+                ? 'Nights are without their date rule since a write stopped between a deletion and its rewrite: approve the repair proposed first.'
+                : 'Nights are without their date rule since a write stopped between a deletion and its rewrite: the next run that may write repairs them first.',
+            ['provider' => 'pricing', 'http_status' => null, 'failure' => 'group_open', 'slice' => 0, 'entries_left' => 0, 'groups_open' => $groups, 'nights' => array_slice($nights, 0, 20), 'mode' => $mode],
+            evidenceAt: $at,
+        );
+    }
+
     public static function recalcQuotaExhausted(string $propertyId, string $roomCode): AlertDraft
     {
         return new AlertDraft(

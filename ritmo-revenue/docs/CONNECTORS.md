@@ -49,7 +49,7 @@ $pricing = new PriceLabsConnector(
 
 `InventoryMapper` maps the Beds24 override to `Restriction` (`none`, `blackout`, `noCheckIn`, `noCheckOut`, `noCheckInOrCheckOut`); an unknown value is an error, not a silent "none". `ListingMapper`, `PriceNightMapper` and `OverrideMapper` read the PriceLabs payloads through `Payload`, which treats text numbers, `-1`/`0` sentinels and missing fields as "no value".
 
-Writing is not available: `writeCalendar`, `writeOverrides`, `deleteOverrides`, `updateListing` and `requestRecalculation` come from the contract traits and throw `NotAvailableInThisMilestone` without sending anything.
+Writing (milestone 3, section 7) needs the write authority; without it `writeCalendar`, `writeOverrides`, `deleteOverrides`, `updateListing` and `requestRecalculation` come from the contract traits and throw `NotAvailableInThisMilestone` without sending anything.
 
 ## 3. The calendar read of PriceLabs is a POST
 

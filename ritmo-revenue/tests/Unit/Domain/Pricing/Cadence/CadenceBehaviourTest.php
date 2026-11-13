@@ -18,6 +18,7 @@ use Ritmo\Domain\Pricing\Cadence\StepLedger;
 use Ritmo\Domain\Pricing\Cadence\StepProposal;
 use Ritmo\Domain\Pricing\Cadence\StepRecord;
 use Ritmo\Domain\Pricing\StepDirection;
+use Ritmo\Tests\Support\ParityNames;
 use Ritmo\Tests\Unit\Domain\Pricing\Ladder\Reference;
 
 final class CadenceBehaviourTest extends TestCase
@@ -30,46 +31,46 @@ final class CadenceBehaviourTest extends TestCase
         $now = new DateTimeImmutable('2027-03-08T16:53:00Z');
         $down = new StepLedger([$this->record(StepDirection::Down, '2027-03-08T10:58:00Z', 4)]);
 
-        self::assertTrue((new StepCadence())->permits($down, 'VK7', $night, StepDirection::Up, $now)->allowed);
+        self::assertTrue((new StepCadence())->permits($down, ParityNames::room('dual'), $night, StepDirection::Up, $now)->allowed);
         $strict = new StepCadence(new CadenceConfig(oppositeDirectionImmediate: false));
-        self::assertSame(CadenceVerdict::NOT_ON_CHANNEL, $strict->permits($down, 'VK7', $night, StepDirection::Up, $now)->code);
+        self::assertSame(CadenceVerdict::NOT_ON_CHANNEL, $strict->permits($down, ParityNames::room('dual'), $night, StepDirection::Up, $now)->code);
 
-        self::assertTrue((new StepCadence())->permits($down, 'VK7', $night, StepDirection::Down, $now, 3, SoldBase::Room, 7)->allowed);
+        self::assertTrue((new StepCadence())->permits($down, ParityNames::room('dual'), $night, StepDirection::Down, $now, 3, SoldBase::Room, 7)->allowed);
         $noRelease = new StepCadence(new CadenceConfig(releaseOnBooking: false));
-        self::assertFalse($noRelease->permits($down, 'VK7', $night, StepDirection::Down, $now, 3, SoldBase::Room, 7)->allowed);
+        self::assertFalse($noRelease->permits($down, ParityNames::room('dual'), $night, StepDirection::Down, $now, 3, SoldBase::Room, 7)->allowed);
 
         $arrived = new StepLedger([$this->record(StepDirection::Down, '2027-03-08T10:58:00Z', 4, '2027-03-08T11:30:00Z')]);
-        self::assertSame(CadenceVerdict::WITHIN_INTERVAL, (new StepCadence())->permits($arrived, 'VK7', $night, StepDirection::Down, $now)->code);
-        self::assertTrue((new StepCadence(new CadenceConfig(minHoursBetweenSteps: 5)))->permits($arrived, 'VK7', $night, StepDirection::Down, $now)->allowed);
-        self::assertTrue((new StepCadence(new CadenceConfig(requireChannelArrival: false, minHoursBetweenSteps: 0)))->permits($down, 'VK7', $night, StepDirection::Down, $now)->allowed);
+        self::assertSame(CadenceVerdict::WITHIN_INTERVAL, (new StepCadence())->permits($arrived, ParityNames::room('dual'), $night, StepDirection::Down, $now)->code);
+        self::assertTrue((new StepCadence(new CadenceConfig(minHoursBetweenSteps: 5)))->permits($arrived, ParityNames::room('dual'), $night, StepDirection::Down, $now)->allowed);
+        self::assertTrue((new StepCadence(new CadenceConfig(requireChannelArrival: false, minHoursBetweenSteps: 0)))->permits($down, ParityNames::room('dual'), $night, StepDirection::Down, $now)->allowed);
     }
 
     public function testTheNewOrderExceptionCanBeSwitchedOff(): void
     {
-        $order = Reference::orders(['o' => ['id' => 'o', 'tipo' => 'alvo_por_data', 'quartos' => ['Q7'], 'de' => self::NIGHT, 'ate' => self::NIGHT, 'data' => '2027-03-08', 'criada_em' => '2027-03-08T15:00:00Z']])->find('o');
+        $order = Reference::orders(['o' => ['id' => 'o', 'tipo' => 'alvo_por_data', 'quartos' => [ParityNames::room('low')], 'de' => self::NIGHT, 'ate' => self::NIGHT, 'data' => '2027-03-08', 'criada_em' => '2027-03-08T15:00:00Z']])->find('o');
         $today = new DateTimeImmutable('2027-03-08');
 
-        self::assertTrue((new StepCadence())->newOrderBypass(new StepLedger(), 'Q7', new DateTimeImmutable(self::NIGHT), $order, $today));
-        self::assertFalse((new StepCadence(new CadenceConfig(newOrderImmediateOnce: false)))->newOrderBypass(new StepLedger(), 'Q7', new DateTimeImmutable(self::NIGHT), $order, $today));
+        self::assertTrue((new StepCadence())->newOrderBypass(new StepLedger(), ParityNames::room('low'), new DateTimeImmutable(self::NIGHT), $order, $today));
+        self::assertFalse((new StepCadence(new CadenceConfig(newOrderImmediateOnce: false)))->newOrderBypass(new StepLedger(), ParityNames::room('low'), new DateTimeImmutable(self::NIGHT), $order, $today));
     }
 
     public function testOnlyStepsWithADirectionAreRecorded(): void
     {
         $night = new DateTimeImmutable(self::NIGHT);
         $ledger = (new StepLedger())->record([
-            new StepProposal('Q7', $night, StepRecord::LADDER, StepDirection::Up, 1000.0, 1099.0, 1098, 2, SoldBase::Room, 7),
-            new StepProposal('Q7', $night, StepRecord::LADDER, null, 1000.0, 1010.0, 1010, 2, SoldBase::Room, 7),
+            new StepProposal(ParityNames::room('low'), $night, StepRecord::LADDER, StepDirection::Up, 1000.0, 1099.0, 1098, 2, SoldBase::Room, 7),
+            new StepProposal(ParityNames::room('low'), $night, StepRecord::LADDER, null, 1000.0, 1010.0, 1010, 2, SoldBase::Room, 7),
         ], new DateTimeImmutable('2027-03-08T16:58:20.5-03:00'));
 
         self::assertCount(1, $ledger->records());
         self::assertSame('2027-03-08T19:58:20+00:00', $ledger->records()[0]->toArray()['written_at']);
-        self::assertTrue($ledger->hasLadderStep('Q7', $night));
+        self::assertTrue($ledger->hasLadderStep(ParityNames::room('low'), $night));
         self::assertSame(1, $ledger->pendingCount());
     }
 
     public function testALedgerRowRoundTripsAndKeepsItsMinutePrecision(): void
     {
-        $row = ['room' => 'VK7', 'night' => self::NIGHT, 'price_from' => 1300.0, 'price_to' => 1105.0, 'direction' => 'down', 'source_status' => 'very_behind',
+        $row = ['room' => ParityNames::room('dual'), 'night' => self::NIGHT, 'price_from' => 1300.0, 'price_to' => 1105.0, 'direction' => 'down', 'source_status' => 'very_behind',
             'sold' => 0, 'sold_base' => 'property', 'sold_total' => 9, 'written_at' => '2027-03-08T10:58+00:00', 'on_channel_at' => '2027-03-08T11:30+00:00'];
         $record = StepRecord::fromArray($row);
 
@@ -83,10 +84,10 @@ final class CadenceBehaviourTest extends TestCase
     public function testRoundingOnlyItemsAreDroppedWhenSwitchedOn(): void
     {
         $night = new DateTimeImmutable('2026-11-24');
-        $live = [PlanItem::keyOf('Q7', $night) => new PriceNight($night, 1232.0, 1220.0, 5000.0, null, 1, 7)];
-        $samePercent = new PlanItem('Q7', $night, 1225.0);
-        $higher = new PlanItem('Q7', $night, 1240.0);
-        $withStay = new PlanItem('Q7', $night, 1225.0, null, 2);
+        $live = [PlanItem::keyOf(ParityNames::room('low'), $night) => new PriceNight($night, 1232.0, 1220.0, 5000.0, null, 1, 7)];
+        $samePercent = new PlanItem(ParityNames::room('low'), $night, 1225.0);
+        $higher = new PlanItem(ParityNames::room('low'), $night, 1240.0);
+        $withStay = new PlanItem(ParityNames::room('low'), $night, 1225.0, null, 2);
         $result = (new NoEffectFilter())->filter([$samePercent, $higher, $withStay], Reference::rooms(), $live, []);
 
         self::assertSame([$samePercent], $result->roundingOnly);
@@ -98,6 +99,6 @@ final class CadenceBehaviourTest extends TestCase
 
     private function record(StepDirection $direction, string $written, int $sold, ?string $onChannel = null): StepRecord
     {
-        return new StepRecord('VK7', new DateTimeImmutable(self::NIGHT), 1300.0, 1200.0, $direction, 'behind', $sold, SoldBase::Room, 7, new DateTimeImmutable($written), false, $onChannel === null ? null : new DateTimeImmutable($onChannel));
+        return new StepRecord(ParityNames::room('dual'), new DateTimeImmutable(self::NIGHT), 1300.0, 1200.0, $direction, 'behind', $sold, SoldBase::Room, 7, new DateTimeImmutable($written), false, $onChannel === null ? null : new DateTimeImmutable($onChannel));
     }
 }

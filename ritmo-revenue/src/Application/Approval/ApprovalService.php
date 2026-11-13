@@ -69,6 +69,7 @@ final class ApprovalService
             foreach ($this->repository->pending($propertyId, $requestKind->value) as $older) {
                 $this->repository->close($older['id'], ApprovalStatus::Superseded->value, self::SUPERSEDED);
             }
+            $this->lapseApproved($propertyId, $requestKind->value, self::SUPERSEDED);
             $ids[] = $this->repository->create(
                 $runId,
                 $propertyId,
@@ -110,6 +111,7 @@ final class ApprovalService
         if (!$this->repository->decide($id, ApprovalStatus::Approved->value, $selection->approved, $selection->rejected, $userId, CapabilityCheck::APPROVE, $now, $note)) {
             throw new ApprovalRefused(ApprovalRefused::NOT_PENDING, 'The request was decided meanwhile.');
         }
+        $this->lapseApproved((string) $row['property_id'], (string) $row['kind'], self::SUPERSEDED, $id);
 
         return $this->grantOf($this->repository->find($id) ?? $row);
     }
@@ -193,7 +195,9 @@ final class ApprovalService
     }
 
     /**
-     * Ends every pending request of a property for a reason (the mode left approval, the rules changed).
+     * Ends every open request of a property for a reason (the mode changed, the emergency switch
+     * was engaged, the rules changed): the pending ones expire and the approved ones not written
+     * yet lapse, so an approval given before never writes after the change.
      *
      * @return int requests ended
      */
@@ -204,7 +208,24 @@ final class ApprovalService
             $ended += $this->repository->close($row['id'], ApprovalStatus::Expired->value, $reason) ? 1 : 0;
         }
 
-        return $ended;
+        return $ended + $this->lapseApproved($propertyId, null, $reason);
+    }
+
+    /**
+     * Lapses the approved requests not written yet (of one kind, when given), but $keep.
+     *
+     * @return int requests lapsed
+     */
+    private function lapseApproved(string $propertyId, ?string $kind, string $reason, ?int $keep = null): int
+    {
+        $lapsed = 0;
+        foreach ($this->repository->approved($propertyId, $kind) as $row) {
+            if ($row['id'] !== $keep) {
+                $lapsed += $this->repository->finish($row['id'], ApprovalStatus::Approved->value, ApprovalStatus::Lapsed->value, $reason, null) ? 1 : 0;
+            }
+        }
+
+        return $lapsed;
     }
 
     /**

@@ -15,6 +15,7 @@ use Ritmo\Application\ShadowRun\RunContext;
 use Ritmo\Application\ShadowRun\Stage;
 use Ritmo\Application\ShadowRun\StageResult;
 use Ritmo\Application\Verify\ThirdPartyWatch;
+use Ritmo\Application\Write\Resume\BrokenGroup;
 use Ritmo\Domain\Alerts\OperationAlerts;
 use Ritmo\Domain\Model\RoomType;
 use Ritmo\Domain\Operations\RunKind;
@@ -33,16 +34,20 @@ use Ritmo\Infrastructure\Db\Repository\DetectedFreezeRepository;
 use Ritmo\Infrastructure\Db\Repository\InventorySnapshotRepository;
 use Ritmo\Infrastructure\Db\Repository\NightObservationRepository;
 use Ritmo\Infrastructure\Db\Repository\WaveHoldRepository;
-use Ritmo\Infrastructure\Db\Repository\WriteOpRepository;
 
 /**
  * Watches the property before anything is decided (operations spec O21): reads the bookings that
  * moved since the previous read (one list for the movement and the watch, O50), raises the
  * security, below-expected, overbooking and closed-night alerts, observes a cancellation wave
- * (it holds price cuts until a person releases it), and compares what this run read with what
- * earlier runs read or wrote, freezing every night someone else changed (it is never overwritten
- * while frozen). It leaves for the decision the nights closed in the PMS without a booking and,
- * in a light run, the room nights the run may touch.
+ * (it holds price cuts until a person releases it), stores the listing values read when they
+ * changed (ListingWatch: alerted unless the plugin wrote them), reads back what earlier writes left
+ * with an unknown outcome (JournalWatch, in every mode: a night of a write whose outcome nobody read
+ * is neither the plugin's nor someone else's until it is read), and compares what this run read with
+ * what earlier runs read or wrote, freezing every night someone else changed (it is never
+ * overwritten while frozen). It leaves for the decision the nights closed in the PMS without a
+ * booking, the deletion-and-rewrite groups left open (repaired first by a run that may write;
+ * their alert is raised again by every run until then) and, in a light run, the room nights the
+ * run may touch.
  *
  * A booking read that fails twice raises connector_down and fails the run: with the bookings
  * unwatched nothing is decided nor written.
@@ -62,7 +67,8 @@ final class WatchStage implements Stage
         private readonly LightScope $light,
         private readonly InventorySnapshotRepository $snapshots,
         private readonly BookingRepository $bookings,
-        private readonly WriteOpRepository $ops,
+        private readonly JournalWatch $journal,
+        private readonly ListingWatch $listings,
         private readonly Clock $clock,
     ) {
     }
@@ -96,7 +102,9 @@ final class WatchStage implements Stage
             $context->runId,
         ));
         $hold = $waves->observe($context->property->id, $read->bookings, $read->window->since);
-        $third = $thirdParty->inspect($context->property, $this->observations($context, $inventory), $this->unresolved($context), $this->pushed($context), $context->runId);
+        $listingChanges = $this->listings->inspect($context);
+        $settled = $this->journal->settle($context);
+        $third = $thirdParty->inspect($context->property, $this->observations($context, $inventory), JournalWatch::ownNights($settled), $this->pushed($context), $context->runId);
         $this->alerts->raiseAll(array_map(fn (ThirdPartyChange $c) => OperationAlerts::manualChange(
             $context->property->id,
             $c->provider->value,
@@ -107,9 +115,12 @@ final class WatchStage implements Stage
             $this->clock->now(),
         ), $third->changes), $context->runId);
 
-        $state = ['blocked' => array_keys($outcome->blocked)];
+        $state = ['blocked' => array_keys($outcome->blocked), 'broken_groups' => array_map(static fn (BrokenGroup $g): array => $g->toArray(), $settled->broken)];
         $summary = [
             'bookings_read' => count($read->bookings),
+            'settled' => count($settled->rows),
+            'listing_changes' => count($listingChanges),
+            'groups_open' => count($settled->broken),
             'movements' => count($read->batch?->movements ?? []),
             'security_findings' => count($outcome->security),
             'below_expected' => count($outcome->belowExpected),
@@ -169,32 +180,6 @@ final class WatchStage implements Stage
         }
 
         return $out;
-    }
-
-    /**
-     * Nights with a write of the plugin whose outcome no run has read back yet: not a change by
-     * someone else.
-     *
-     * @return array<string, bool>
-     */
-    private function unresolved(RunContext $context): array
-    {
-        $keys = [];
-        foreach ($this->ops->unsettled($context->property->id, $context->runId) as $row) {
-            $payload = is_array($row['payload'] ?? null) ? $row['payload'] : [];
-            $room = (string) ($payload['room'] ?? '');
-            if ($room === '') {
-                continue;
-            }
-            $provider = $row['provider'] === 'pms' ? Provider::Pms : Provider::Pricing;
-            foreach ((array) ($row['dates'] ?? []) as $night) {
-                if (is_string($night) && Days::isValid($night)) {
-                    $keys[WrittenNight::keyOf($provider, $room, Days::date($night))] = true;
-                }
-            }
-        }
-
-        return $keys;
     }
 
     /**

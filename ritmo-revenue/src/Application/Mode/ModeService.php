@@ -18,19 +18,22 @@ use Ritmo\Domain\Operations\ModesConfig;
 use Ritmo\Domain\Support\Clock;
 use Ritmo\Infrastructure\Db\Repository\OperationEventRepository;
 use Ritmo\Infrastructure\Db\Repository\PropertyRepository;
-use Ritmo\Infrastructure\Db\Repository\RunRepository;
 
 /**
  * The operating mode of each property (operations spec 7, O35, O36, O43):
  *
- * - shadow -> approval: a person who manages the rules, after the configured shadow runs;
+ * - shadow -> approval: a person who manages the connections, when the conditions of
+ *   ModePreconditions::toApproval() are met (the configured shadow runs, the newest within 24 h,
+ *   connections tested, no open failure alert, the emergency switch released);
  * - approval -> autonomous: only when the site allows the autonomous mode, by a person who manages
  *   the connections, typing the property's id as confirmation, after the configured days in
- *   approval and approved plans written; shadow -> autonomous is never possible;
+ *   approval and approved plans written, with no write failed in 7 days and no wave holding cuts;
+ *   shadow -> autonomous is never possible;
  * - any lower mode: anyone who approves, manages the rules or the connections, at once (a write in
  *   progress stops before its next slice).
  *
- * Every change is recorded with who, when and why; leaving approval ends the plans waiting for it.
+ * Every change is recorded with who, when and why; any change ends the plans waiting for approval
+ * and the approvals not written yet (an approval never outlives the mode it was given in).
  * The only changes the plugin makes on its own lower the mode: autonomous -> approval after the
  * configured runs in a row whose writes failed.
  */
@@ -43,13 +46,13 @@ final class ModeService
 
     public function __construct(
         private readonly PropertyRepository $properties,
-        private readonly RunRepository $runs,
         private readonly OperationEventRepository $events,
         private readonly ApprovalService $approvals,
         private readonly CapabilityCheck $capabilities,
         private readonly AlertService $alerts,
         private readonly KeyValueStore $store,
         private readonly Clock $clock,
+        private readonly ModePreconditions $preconditions,
     ) {
     }
 
@@ -127,13 +130,10 @@ final class ModeService
             return;
         }
         if ($to === PropertyMode::Approval) {
-            if (!$this->capabilities->userCan($userId, self::MANAGE_RULES)) {
-                throw new ModeRefused(ModeRefused::NO_CAPABILITY, 'Switching to approval needs the rules capability.');
+            if (!$this->capabilities->userCan($userId, self::MANAGE_CONNECTIONS)) {
+                throw new ModeRefused(ModeRefused::NO_CAPABILITY, 'Switching to approval needs the connections capability.');
             }
-            $done = $this->completedShadowRuns($property->id);
-            if ($done < $config->minShadowRuns) {
-                throw new ModeRefused(ModeRefused::CONDITIONS, sprintf('The property needs %d completed shadow runs first (%d so far).', $config->minShadowRuns, $done));
-            }
+            self::refuseUnmet($this->preconditions->toApproval($property, $config));
 
             return;
         }
@@ -149,7 +149,7 @@ final class ModeService
             throw new ModeRefused(ModeRefused::DISABLED, 'The autonomous mode is switched off for this site.');
         }
         if ($property->mode !== PropertyMode::Approval) {
-            throw new ModeRefused(ModeRefused::CONDITIONS, 'A property reaches the autonomous mode only from approval.');
+            self::refuseUnmet([ModePreconditions::unmet('from_approval_only', [], 'A property reaches the autonomous mode only from approval.')]);
         }
         if (!$this->capabilities->userCan($userId, self::MANAGE_CONNECTIONS)) {
             throw new ModeRefused(ModeRefused::NO_CAPABILITY, 'Switching to autonomous needs the connections capability.');
@@ -164,13 +164,24 @@ final class ModeService
             static fn (array $e): bool => $e['to'] === 'written' && ($since === null || $e['at'] >= $since),
         ));
         if ($days < $config->minApprovalDays || $written < $config->minWrittenPlans) {
-            throw new ModeRefused(ModeRefused::CONDITIONS, sprintf(
-                'The property needs %d days in approval and %d approved plans written first (%d days and %d plans so far).',
-                $config->minApprovalDays,
-                $config->minWrittenPlans,
-                $days,
-                $written,
-            ));
+            self::refuseUnmet([ModePreconditions::unmet(
+                'approval_time',
+                ['days_needed' => $config->minApprovalDays, 'plans_needed' => $config->minWrittenPlans, 'days' => $days, 'plans' => $written],
+                sprintf('The property needs %d days in approval and %d approved plans written first (%d days and %d plans so far).', $config->minApprovalDays, $config->minWrittenPlans, $days, $written),
+            )]);
+        }
+        self::refuseUnmet($this->preconditions->toAutonomous($property));
+    }
+
+    /**
+     * @param list<array{code: string, params: array<string, int|string>, text: string}> $unmet
+     *
+     * @throws ModeRefused when a condition is not met
+     */
+    private static function refuseUnmet(array $unmet): void
+    {
+        if ($unmet !== []) {
+            throw new ModeRefused(ModeRefused::CONDITIONS, implode(' ', array_column($unmet, 'text')), $unmet);
         }
     }
 
@@ -178,17 +189,7 @@ final class ModeService
     {
         $this->properties->setMode($property->id, $to);
         $this->events->record($property->id, OperationEventRepository::MODE, $property->mode->value, $to->value, $reason, $actor, $this->clock->now());
-        if ($property->mode === PropertyMode::Approval) {
-            $this->approvals->expireAll($property->id, 'mode_changed');
-        }
-    }
-
-    private function completedShadowRuns(string $propertyId): int
-    {
-        return count(array_filter(
-            $this->runs->latest($propertyId, 200),
-            static fn (array $run): bool => $run['status'] === RunRepository::COMPLETED && $run['mode'] === PropertyMode::Shadow,
-        ));
+        $this->approvals->expireAll($property->id, 'mode_changed');
     }
 
     /**

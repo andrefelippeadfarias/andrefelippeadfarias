@@ -105,6 +105,20 @@ final class WriteGateTest extends TestCase
         self::assertSame(WriteRefused::STALE_READS, $this->refusal(fn () => WriteSample::gate($this->clock)->issue($fresh, $this->auto(), WriteSample::context($this->clock, readAt: $future))));
     }
 
+    /**
+     * The percentages of a plan are over the bases it was validated with; a plan over another base
+     * than the one the run read is refused (review finding of the M3 correction phase).
+     */
+    public function testAPlanOverAnotherListingBaseThanTheOneReadIsRefused(): void
+    {
+        $plan = $this->plan();
+        $rooms = array_map(static fn ($room) => $room->code === 'Deluxe' ? $room->withListing(null, $room->base * 1.6, $room->max * 2) : $room, WriteSample::rooms());
+        $context = WriteSample::context($this->clock);
+        $moved = new \Ritmo\Application\Write\Gate\WriteContext($context->property, $rooms, $context->readAt, $context->tonight, $context->lockHeld, $context->pricingPms);
+
+        self::assertSame(WriteRefused::BASE_CHANGED, $this->refusal(fn () => WriteSample::gate($this->clock)->issue($plan, $this->auto(), $moved)));
+    }
+
     public function testTheEmergencySwitchRefusesTheTokenAndEndsALiveOne(): void
     {
         $switch = WriteSample::switch();
@@ -228,6 +242,8 @@ final class WriteGateTest extends TestCase
             'other night' => new WriteRequest(WriteOperation::OverridesWrite, ['pricing-1' => ['2027-03-11']], $step->fields()),
             'other field' => new WriteRequest(WriteOperation::OverridesWrite, ['pricing-1' => ['2027-03-10']], ['max_price']),
             'other operation' => new WriteRequest(WriteOperation::OverridesDelete, ['pricing-1' => ['2027-03-10']]),
+            'no values' => new WriteRequest(WriteOperation::OverridesWrite, ['pricing-1' => ['2027-03-10']], $step->fields()),
+            'other values' => new WriteRequest(WriteOperation::OverridesWrite, ['pricing-1' => ['2027-03-10']], $step->fields(), WriteRequest::entriesOf([['date' => '2027-03-10', 'min_price' => '300', 'min_price_type' => 'percent_base']])),
         ];
         foreach ($outside as $what => $request) {
             try {
@@ -237,7 +253,26 @@ final class WriteGateTest extends TestCase
                 self::assertTrue($gate->isLive($issued->token), $what);
             }
         }
-        $gate->verify($issued->token, new WriteRequest(WriteOperation::OverridesWrite, ['pricing-1' => ['2027-03-10']], ['min_price']));
+        $gate->verify($issued->token, $step->request());
+    }
+
+    /**
+     * A live token alone never lets a write through the HTTP guard: only the request a connector
+     * just used a step for (review finding of the M3 correction phase), and the same request once
+     * more (a PMS token renewed after a 401).
+     */
+    public function testTheHttpGuardTakesOnlyTheWriteAStepWasUsedFor(): void
+    {
+        $gate = WriteSample::gate($this->clock);
+        $issued = $gate->issue($this->plan(), $this->auto(), WriteSample::context($this->clock));
+        $url = 'https://api.example.test/v1/listings/pricing-1/overrides';
+
+        self::assertFalse($gate->claim($issued->token, 'POST', $url, '{"a":1}'), 'no step was used');
+        $gate->verify($issued->token, $issued->steps[0]->request());
+        self::assertTrue($gate->claim($issued->token, 'POST', $url, '{"a":1}'));
+        self::assertTrue($gate->claim($issued->token, 'POST', $url, '{"a":1}'), 'the same request once more');
+        self::assertFalse($gate->claim($issued->token, 'POST', $url, '{"a":1}'), 'not a third time');
+        self::assertFalse($gate->claim($issued->token, 'POST', $url, '{"a":2}'), 'another request needs another step');
     }
 
     public function testATokenMadeAnyOtherWayIsRefused(): void

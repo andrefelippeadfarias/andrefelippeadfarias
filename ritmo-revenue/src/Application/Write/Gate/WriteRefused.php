@@ -17,6 +17,7 @@ final class WriteRefused extends DomainException
     public const STALE_PLAN = 'stale_plan';
     public const STALE_VALIDATION = 'stale_validation';
     public const STALE_READS = 'stale_reads';
+    public const BASE_CHANGED = 'base_changed';
     public const KILL_SWITCH = 'kill_switch';
     public const MODE_SHADOW = 'mode_shadow';
     public const MODE_NOT_AUTONOMOUS = 'mode_not_autonomous';

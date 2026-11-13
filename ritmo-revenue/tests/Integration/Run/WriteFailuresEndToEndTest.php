@@ -7,6 +7,7 @@ namespace Ritmo\Tests\Integration\Run;
 use PHPUnit\Framework\TestCase;
 use Ritmo\Application\Schedule\LaunchStatus;
 use Ritmo\Domain\Model\PropertyMode;
+use Ritmo\Infrastructure\Db\Repository\RecalcAttemptRepository;
 use Ritmo\Infrastructure\Schedule\AlertLedger;
 use Ritmo\Tests\Integration\Run\Support\RunWorld;
 
@@ -32,7 +33,7 @@ final class WriteFailuresEndToEndTest extends TestCase
 
         self::assertSame(LaunchStatus::Completed, $second->status, $second->note);
         $summary = $world->summary($second->runId);
-        self::assertGreaterThan(0, $summary['write']['settled'] ?? 0, 'the unsettled rows of the crash were read back first');
+        self::assertGreaterThan(0, $summary['watch']['settled'] ?? 0, 'the unsettled rows of the crash were read back first (by the watch, before anything is decided)');
         $after = array_slice(self::sentDates($world), count($before));
         foreach ($after as [$path, $date, $value]) {
             foreach ($before as [$p, $d, $v]) {
@@ -117,6 +118,37 @@ final class WriteFailuresEndToEndTest extends TestCase
         self::assertGreaterThan(0, $repaired['writes_sent']);
         $after = array_values(array_filter(array_slice($world->writes(), 3), static fn (string $l): bool => !str_ends_with($l, '/refresh_listing')));
         self::assertSame('POST /pricelabs/v1/listings/901001___902001/overrides', $after[0] ?? '', 'the rewrite of the open group goes first');
+    }
+
+    /**
+     * A recalculation that failed is not tried again before the next scheduled routine, even by a
+     * new run started meanwhile (WRITE.md section 6, D6; cota_recalculo.py). Review finding of the
+     * M3 correction phase: the plugin counted the "same run" from each run's own start.
+     */
+    public function testAFailedRecalculationIsNotTriedAgainByANewRunOfTheSameRoutine(): void
+    {
+        $world = self::world();
+        $world->apis->fault('POST', '/pricelabs/v1/refresh_listing', 400);
+        $world->run();
+        $first = self::attempts($world);
+        self::assertSame(['failure'], array_values(array_unique(array_column($first, 'outcome'))), 'the first recalculation failed and the write stopped there');
+        $failed = $first[0]['listing'];
+
+        $world->later('+15 minutes');
+        $world->run();
+
+        $again = array_filter(array_slice(self::attempts($world), count($first)), static fn (array $a): bool => $a['listing'] === $failed);
+        self::assertSame([], array_values($again), 'the listing whose recalculation failed waits for the next routine');
+    }
+
+    /**
+     * Every recalculation attempt recorded, oldest first.
+     *
+     * @return list<array{id: int, listing: string, outcome: string, at: \DateTimeImmutable, error: string|null, response_id: string}>
+     */
+    private static function attempts(RunWorld $world): array
+    {
+        return (new RecalcAttemptRepository($world->db))->since('pricelabs', new \DateTimeImmutable('2027-01-01T00:00:00Z'));
     }
 
     private static function world(): RunWorld

@@ -32,7 +32,8 @@ use WeakMap;
  * issue() builds the steps of the validated plan itself (payload, slices, schedule) and gives a
  * token for exactly those steps only when, with the clock read once at the start:
  * the plan was sealed by the Validator of this process (G1), is of the property's today (G2),
- * was validated recently (G3) over reads still fresh (G4); the emergency switch is released
+ * was validated recently (G3) over reads still fresh (G4) and over the listing bases the run read
+ * (the context's rooms carry them: a plan over another base is refused); the emergency switch is released
  * (G5); the authorization allows it now (G6: autonomous mode, or a person's approval of this
  * plan; never shadow); tonight's price cannot rise (G8); every field is allowed (G9); and the run
  * holds the site's write lock (G12). A listing change goes only with a person's approval naming
@@ -45,6 +46,9 @@ use WeakMap;
  */
 final class WriteGate implements WriteAuthority
 {
+    /** A plan's base and the base read are the same within a cent. */
+    private const BASE_SLACK = 0.005;
+
     /** @var WeakMap<WriteToken, TokenGrant>|null */
     private static ?WeakMap $grants = null;
 
@@ -116,6 +120,11 @@ final class WriteGate implements WriteAuthority
         }
     }
 
+    public function claim(WriteToken $token, string $method, string $url, ?string $body): bool
+    {
+        return $this->liveGrant($token)?->claim(hash('sha256', $method . "\n" . $url . "\n" . ($body ?? ''))) === true;
+    }
+
     /**
      * Ends a token: at the end of a run, or when it stops.
      */
@@ -156,6 +165,12 @@ final class WriteGate implements WriteAuthority
         };
         if ($refusal !== null) {
             throw new WriteRefused($refusal[0], $refusal[1]);
+        }
+        foreach ($plan->bases as $code => $base) {
+            $read = $context->rooms[$code] ?? null;
+            if ($read === null || abs($read->base - $base) > self::BASE_SLACK) {
+                throw new WriteRefused(WriteRefused::BASE_CHANGED, 'The plan\'s percentages are over another listing base than the one read: it is validated again, never written.', (string) $code);
+            }
         }
     }
 

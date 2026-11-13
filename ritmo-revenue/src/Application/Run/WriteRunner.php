@@ -16,46 +16,53 @@ use Ritmo\Application\Write\Gate\TonightState;
 use Ritmo\Application\Write\Gate\WriteAuthorization;
 use Ritmo\Application\Write\Gate\WriteContext;
 use Ritmo\Application\Write\Gate\WriteGate;
-use Ritmo\Application\Write\Journal\StateReader;
 use Ritmo\Application\Write\Resume\BrokenGroup;
-use Ritmo\Application\Write\Resume\ResumeReport;
-use Ritmo\Application\Write\Resume\ResumeService;
 use Ritmo\Application\ShadowRun\RunContext;
 use Ritmo\Domain\Model\RoomType;
 use Ritmo\Domain\Plan\Plan;
 use Ritmo\Domain\Plan\ValidatedPlan;
 use Ritmo\Domain\Support\Clock;
 use Ritmo\Domain\Support\Days;
-use Ritmo\Infrastructure\Db\Repository\RunRepository;
+use Ritmo\Infrastructure\Db\Repository\WriteOpRepository;
 
 /**
- * The write of one run, once its plan is authorized: first what earlier runs left unsettled is
- * read back and classified (never sent again from the journal); a group stopped between its
- * deletion and its rewrite is repaired first, alone, through the validator and the gate; else the
- * plan goes to the gate (which issues the token or refuses) and the executor sends it in series,
- * slice after slice, stopping at the first failure.
+ * The write of one run, once its plan is authorized: a group stopped between its deletion and its
+ * rewrite (found by the watch stage's read-back) is repaired first, alone, through the validator
+ * and the gate; else the plan goes to the gate (which issues the token or refuses) and the
+ * executor sends it in series, slice after slice, stopping at the first failure. The write of a
+ * run happens once: a request that finds journal rows of its own run (the process died in the
+ * middle of the write) never sends again from what that run collected.
  */
 final class WriteRunner
 {
+    /** Seconds kept free before the request's time limit: a call never starts in them. */
+    private const TIME_MARGIN_SECONDS = 10;
+
+    /**
+     * @param (Closure(): (int|null))|null $timeLeft seconds this request may still work (it may extend its
+     *                                               limit first); null or a null answer: no limit
+     */
     public function __construct(
         private readonly ConnectorSource $connectors,
         private readonly WriteGate $gate,
         private readonly WriteExecutor $executor,
-        private readonly ResumeService $resume,
-        private readonly RunRepository $runs,
+        private readonly WriteOpRepository $ops,
+        private readonly QuotaRunStart $runStart,
         private readonly CapabilityCheck $capabilities,
         private readonly Clock $clock,
+        private readonly ?Closure $timeLeft = null,
     ) {
     }
 
     /**
-     * Reads back what earlier runs left unsettled.
-     *
-     * @throws \Ritmo\Contracts\Exception\ConnectorException when the systems cannot be read: nothing is written
+     * @throws WriteInterrupted when this run already journaled writes: an earlier request of the
+     *                          same run died while writing
      */
-    public function settle(RunContext $context): ResumeReport
+    public function guardOnce(RunContext $context): void
     {
-        return $this->resume->resume($context->runId, $context->property->id, new StateReader($this->connectors->pricing(), $this->connectors->pms()));
+        if ($this->ops->ofRun($context->runId) !== []) {
+            throw new WriteInterrupted('The write of this run was interrupted (the process stopped while writing): it is never sent again from the same reads; the next run reads the systems again and sends only what is missing.');
+        }
     }
 
     /**
@@ -111,9 +118,19 @@ final class WriteRunner
             $this->connectors->pricing(),
             $this->connectors->pms(),
             $heartbeat,
-            null,
-            $this->runs->find($context->runId)['started_at'] ?? $this->clock->now(),
+            $this->deadline(),
+            $this->runStart->of($context),
         ));
+    }
+
+    /**
+     * The instant after which no call starts: the request's time limit less a margin.
+     */
+    private function deadline(): ?DateTimeImmutable
+    {
+        $seconds = $this->timeLeft === null ? null : ($this->timeLeft)();
+
+        return $seconds === null || $seconds <= 0 ? null : $this->clock->now()->modify(sprintf('+%d seconds', max(0, $seconds - self::TIME_MARGIN_SECONDS)));
     }
 
     /**

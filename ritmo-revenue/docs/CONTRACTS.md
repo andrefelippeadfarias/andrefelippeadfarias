@@ -66,7 +66,7 @@ All `$from`/`$to` are nights, both inclusive. Read methods throw `ConnectorExcep
 | `readBookingsByStay($from, $to)` | `list<BookingRecord>`: bookings of **every status** with at least one night in the range. |
 | `readBookingsModifiedSince($instant)` | `list<BookingRecord>`: bookings of every status created or modified at or after the instant. |
 | `readInventory($roomRefs, $from, $to, $withPrices = false)` | `array<string pmsRoomRef, list<InventoryNight>>`, nights ascending; nights the PMS does not report are absent. |
-| `writeCalendar(WriteToken $token, array $changes)` | Throws `NotAvailableInThisMilestone` in M1. |
+| `writeCalendar(WriteToken $token, array $changes)` | Asks the write authority for the exact request first; ranges `{roomId, from, to, numAvail?, minStay?, maxStay?, override?, channels?}`; never a price or a booking. Without an authority: `WriteBlocked`. |
 
 A PMS connector is built with the room map of the site (PMS room id to room type code) so it can fill `BookingRecord::$roomCode`.
 
@@ -77,7 +77,7 @@ A PMS connector is built with the room map of the site (PMS room id to room type
 | `listListings()` | `list<ListingInfo>`: every listing with min/base/max and push state. |
 | `readPrices($listingRef, $from, $to)` | `list<PriceNight>`, ascending. |
 | `readOverrides($listingRef, $from, $to)` | `list<DateOverride>`, ascending; nights without an override are absent. |
-| `requestRecalculation`, `writeOverrides`, `deleteOverrides`, `updateListing` | Take a `WriteToken` first; throw `NotAvailableInThisMilestone` in M1. |
+| `requestRecalculation`, `writeOverrides`, `deleteOverrides`, `updateListing` | Take a `WriteToken` first, checked by the write authority (`WriteGate`) before the request is built; `writeOverrides` takes the rows of `OverrideWrite::toArray()`, `deleteOverrides` a list of nights. Without an authority: `WriteBlocked`. |
 
 **Write methods in M1.** Implementations `use Ritmo\Contracts\Support\PmsWritesUnavailable;` or `PricingWritesUnavailable;` and do not write these methods themselves. `WriteToken` cannot be constructed (private constructor, no factory). The array shapes of `$changes`, `$overrides` and `$fields` are provisional until the milestone that enables writing.
 
@@ -102,7 +102,7 @@ A PMS connector is built with the room map of the site (PMS room id to room type
 | `ConnectorException` | `\RuntimeException` | Any failure talking to an external system. `provider()`, `httpStatus()`, `isRetryable()`. |
 | `RateLimited` | `ConnectorException` | Rate limit or quota reached. `retryAfterSeconds()`. Stop the batch. |
 | `AuthFailed` | `ConnectorException` | Credentials rejected. Never retried. |
-| `NotAvailableInThisMilestone` | `\LogicException` | A write method was reached while the plugin is read-only: a bug. |
+| `NotAvailableInThisMilestone` | `\LogicException` | A write method of a test double that does not write (the traits `PmsWritesUnavailable`, `PricingWritesUnavailable`): a bug. |
 | `WriteBlocked` | `\RuntimeException` | A mutating request was stopped before leaving the site. |
 
 ### 1.4 `Ritmo\Domain\Config`
@@ -275,6 +275,19 @@ What milestone 2 changed in shared signatures and behaviour. No interface of `sr
 | Correction of M2: `PaceTerms::$fixedPrice` (never set) became `PaceTerms::$ramp` (`Pricing\OrderSalesRamp`, the sales ramp of a target order); `NightTermsResolver` takes the property's timezone last and has `rampFor()`; `NightTerms::citedOrder(?float, ?HardFloor)`; item code `ORDER_SALES_RAMP` and trace code `order_sales_ramp`. | ENGINE.md 1.4, 1.8; ORDERS.md 1 |
 | Correction of M2: `OrderRelease::DiscountBand` (`discount_band`) and `OrderBook::releasing()`; `BookOrderGuard::releases()` answers from the book. `RelationReport::switchItemDropped()`. `ItemFacts::lowestCurrent()`, `rewritesFloorInForce()`, and `floorInForce()` is the highest known. `WriteToken` throws on `__serialize`/`__unserialize`. | ORDERS.md 1; ENGINE.md 1.8; VALIDATOR.md 6 |
 | Correction of M2: neutral defaults for a new strategy's step, drop, weekend nights, "between" position, premium and discount-room factors, for the order defaults and for the last-minute discount; the owner's values live in the parity preset. | LADDER.md 4; ORDERS.md 4; VALIDATOR.md 3 |
+
+### 1.9 Integration of milestone M3
+
+What milestone 3 changed in shared signatures and behaviour.
+
+| Change | Where |
+|---|---|
+| `WriteToken`: private constructor and `__clone`, `__serialize`/`__unserialize` throw, `readonly $id` for the journal; only `WriteGate` issues one and its power is in the gate's live registry. New `WriteAuthority` (`isLive`, `verify`, and `claim` for the HTTP guard: correction phase), `WriteHttpClient` (`write($token, ...)`), `WriteRequest` (with `entries`, the values of the body, `WriteRequest::entriesOf()`: correction phase), `WriteOperation`, `Exception\NotReady`. The connectors take an optional last `?WriteAuthority`: without it every write method throws `WriteBlocked`. | ARCHITECTURE.md 6, WRITE.md, CONNECTORS.md 7 |
+| `Application\ConnectorSource::pricingPmsName()` (the PMS name the payload carries). | APPLICATION.md 1.2 |
+| Rule set schema: new sections `write`, `quota`, `verify`, `approval`, `third_party`, `waves`, `modes`, `schedule`, `light_run`, `alerts` (`WriteConfig`, `QuotaConfig`, `ApprovalConfig` moved to `Domain\Write`; `ModesConfig` is new) with typed accessors on `RuleSet`; `plan.horizon_nights` (nights a run decides, 60). Neutral defaults: shadow, the full run only, autonomous off; the parity values in `tests/fixtures/presets/parity-{write,verify,ops}.json`, joined into `parity.json`. | 1.4, the area documents |
+| Migrations 7 (write path), 8 (confirmation and approvals), 9 (operations). | INFRASTRUCTURE.md 1.3 |
+| `RunContext` carries the run's kind, mode, rules version and heartbeat; the run pipeline has the stages `watch`, `write`, `verify` and `report`; `ShadowRunService` takes a `RunOpener` and the single run lock of the property. | APPLICATION.md 1.1 |
+| `PlanAssembler::revalidate()`, `RunWiring::validationContext($report, $relationOrder)` (the relation order check only for a plan cut down), `RunWiring::freshCalendar()` public, `Plan::isEmpty()`, `StepProposal::fromArray()`. | ENGINE.md |
 
 ## Part 2. Signature reference
 
@@ -553,6 +566,7 @@ public readonly float $max;
 public readonly float $referenceMin;
 public readonly array $tags;
 public function __construct(string $propertyId, string $code, string $name, int $units, string $pmsRef, string $pricingRef, float $base, float $min, float $max, float $referenceMin, array $tags = []);
+public function withListing(?float $min, ?float $base, ?float $max): ?self;
 public function hasTag(string $tag): bool;
 public function hasAllTags(array $tags): bool;
 public static function fromArray(array $data): self;
@@ -679,6 +693,7 @@ public static function unknown(array $rules, array $roomCodes, array $propertyId
 
 ```php
 public static function fromArray(array $data): self;
+public static function fromStored(array $stored): self;
 public static function defaults(): self;
 public function toArray(): array;
 public function hash(): string;
@@ -966,6 +981,7 @@ public function updateListing(WriteToken $token, string $listingRef, array $fiel
 ```php
 public function isLive(WriteToken $token): bool;
 public function verify(WriteToken $token, WriteRequest $request): void;
+public function claim(WriteToken $token, string $method, string $url, ?string $body): bool;
 ```
 
 #### `Ritmo\Contracts\WriteHttpClient` (interface)
@@ -990,8 +1006,10 @@ public function isPms(): bool;
 ```php
 public readonly array $nights;
 public readonly array $fields;
+public readonly array $entries;
 public readonly WriteOperation $operation;
-public function __construct(WriteOperation $operation, array $nights, array $fields = []);
+public function __construct(WriteOperation $operation, array $nights, array $fields = [], array $entries = []);
+public static function entriesOf(array $payload): array;
 ```
 
 #### `Ritmo\Contracts\WriteToken` (final class)

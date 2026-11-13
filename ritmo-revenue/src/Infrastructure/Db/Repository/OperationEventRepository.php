@@ -23,8 +23,10 @@ final class OperationEventRepository
     public const WAVE_RELEASE = 'wave_release';
     public const FREEZE_RELEASE = 'freeze_release';
     public const UNDO = 'undo_request';
+    /** The listing values (minimum, base, maximum) read differ from the stored ones: the stored follow. */
+    public const LISTING = 'listing_values';
 
-    private const KINDS = [self::MODE, self::APPROVAL, self::EMERGENCY, self::WAVE_RELEASE, self::FREEZE_RELEASE, self::UNDO];
+    private const KINDS = [self::MODE, self::APPROVAL, self::EMERGENCY, self::WAVE_RELEASE, self::FREEZE_RELEASE, self::UNDO, self::LISTING];
 
     private const TABLE = 'change_log';
 

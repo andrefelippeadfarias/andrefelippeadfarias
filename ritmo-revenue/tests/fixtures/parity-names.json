@@ -1,0 +1,21 @@
+{
+  "_doc": "The reference operation's names as the parity fixtures carry them, under neutral keys: the tests outside tests/fixtures name rooms, properties, relations and golden files only through these keys (Ritmo\\Tests\\Support\\ParityNames), so the vocabulary test can scan them. Test data only.",
+  "rooms": {"low": "Q7", "middle": "Q2", "high": "Double", "suite": "Afrodite", "dual": "VK7", "plain": "Balcony"},
+  "properties": {"first": "recanto", "second": "villa"},
+  "relations": {
+    "at_least": "recanto-double-at-least-q7",
+    "between": "recanto-q2-between-q7-double",
+    "premium": "recanto-afrodite-premium-over-max",
+    "derive": "recanto-afrodite-15-over-double",
+    "switch": "villa-balcony-switch-80",
+    "band": "villa-balcony-discount-band"
+  },
+  "golden": {
+    "between_audit": "ordem_recanto.faixa",
+    "premium_audit": "ordem_recanto.faixa_afrodite",
+    "audit_run": "ordem_recanto.comparar",
+    "premium_bounds": "pace.regra_afrodite",
+    "switch_trigger": "plano_dono.balcony_no_mercado",
+    "band_check": "validar_plano.validar_balcony"
+  }
+}

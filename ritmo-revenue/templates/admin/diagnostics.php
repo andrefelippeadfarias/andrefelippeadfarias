@@ -44,7 +44,7 @@ View::render('admin/partials/header', $view);
     <section class="ritmo-card" data-ritmo="cron">
         <h2><?php esc_html_e('Scheduler and locks', 'ritmo-revenue'); ?></h2>
         <p><?php echo esc_html($view['cron']['disabled'] ? __('WP-Cron is disabled on this site (DISABLE_WP_CRON); a server cron must call wp-cron.php.', 'ritmo-revenue') : __('WP-Cron is enabled.', 'ritmo-revenue')); ?></p>
-        <p><?php echo esc_html(sprintf(/* translators: %s: date and time */ __('Next resume of interrupted runs: %s', 'ritmo-revenue'), $view['cron']['next_run'] === null ? __('not scheduled', 'ritmo-revenue') : wp_date('Y-m-d H:i', $view['cron']['next_run']))); ?></p>
+        <p><?php echo esc_html(sprintf(/* translators: %s: date and time */ __('Next scheduler tick: %s', 'ritmo-revenue'), $view['cron']['next_run'] === null ? __('not scheduled', 'ritmo-revenue') : wp_date('Y-m-d H:i', $view['cron']['next_run']))); ?></p>
         <table class="widefat striped ritmo-table" data-ritmo="locks">
             <thead><tr><th scope="col"><?php esc_html_e('Property', 'ritmo-revenue'); ?></th><th scope="col"><?php esc_html_e('Run lock', 'ritmo-revenue'); ?></th></tr></thead>
             <tbody>

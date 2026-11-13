@@ -18,6 +18,7 @@ use Ritmo\Application\Write\Gate\HumanApproval;
 use Ritmo\Application\Write\Gate\PlanHash;
 use Ritmo\Application\Write\Gate\WriteAuthorization;
 use Ritmo\Application\Write\Gate\WriteRefused;
+use Ritmo\Application\Write\Resume\BrokenGroup;
 use Ritmo\Domain\Alerts\AlertCode;
 use Ritmo\Domain\Alerts\AlertDraft;
 use Ritmo\Domain\Model\PropertyMode;
@@ -42,8 +43,10 @@ use Ritmo\Infrastructure\Db\Repository\WaveHoldRepository;
  *   and writes them with a token issued for exactly that subset;
  * - autonomous: the plan goes to the write gate with the property's autonomous authorization.
  *
- * A write run first reads back what earlier runs left unsettled; a group left open is repaired
- * first and alone. The listing values (minimum, base, maximum) never leave in an autonomous run.
+ * A group left open by an earlier write (found by the watch stage) is repaired first and alone:
+ * at once when autonomous, and proposed first for approval in approval mode. The write of a run
+ * happens once (WriteRunner::guardOnce). The listing values (minimum, base, maximum) never leave
+ * in an autonomous run.
  */
 final class WriteStage implements Stage
 {
@@ -84,9 +87,13 @@ final class WriteStage implements Stage
     private function propose(RunContext $context): StageResult
     {
         $rebuilt = $this->rebuild->rebuild($context);
+        $broken = self::broken($context);
+        if ($broken !== []) {
+            return $this->proposeRepair($context, $this->runner->repairPlan($context, $rebuilt, $broken));
+        }
         [$plan, $held] = $this->held($context, $rebuilt, $rebuilt->validated());
         if ($plan === null || $plan->plan->isEmpty()) {
-            return new StageResult(['mode' => PropertyMode::Approval->value, 'proposed' => false, 'held' => count($held), 'writes_sent' => 0], ['write' => ['held' => $held]]);
+            return new StageResult(['mode' => PropertyMode::Approval->value, 'repair' => false, 'proposed' => false, 'held' => count($held), 'writes_sent' => 0], ['write' => ['held' => $held]]);
         }
         $ids = $this->approvals($context)->propose($plan, $context->runId, $context->capturedAt() ?? $this->clock->now(), $context->rulesetVersion);
         $this->alerts->raise(new AlertDraft(
@@ -98,26 +105,40 @@ final class WriteStage implements Stage
         ), $context->runId);
 
         return new StageResult(
-            ['mode' => PropertyMode::Approval->value, 'proposed' => true, 'approval_ids' => $ids, 'entries' => count($plan->plan->items) + count($plan->plan->deletions), 'held' => count($held), 'writes_sent' => 0],
+            ['mode' => PropertyMode::Approval->value, 'repair' => false, 'proposed' => true, 'approval_ids' => $ids, 'entries' => count($plan->plan->items) + count($plan->plan->deletions), 'held' => count($held), 'writes_sent' => 0],
             ['write' => ['held' => $held]],
         );
     }
 
+    /**
+     * In approval mode a group left open is repaired only once a person approves its repair: it
+     * is proposed first and alone, before any other plan.
+     */
+    private function proposeRepair(RunContext $context, ?ValidatedPlan $repair): StageResult
+    {
+        $base = ['mode' => PropertyMode::Approval->value, 'repair' => true, 'held' => 0, 'writes_sent' => 0];
+        if ($repair === null || $repair->plan->isEmpty()) {
+            return new StageResult($base + ['proposed' => false], []);
+        }
+        $ids = $this->approvals($context)->propose($repair, $context->runId, $context->capturedAt() ?? $this->clock->now(), $context->rulesetVersion);
+        $this->alerts->raise(new AlertDraft(
+            AlertCode::ApprovalPending,
+            $context->property->id,
+            ['plan'],
+            sprintf('The repair of %d room nights left without their date rule waits for approval.', count($repair->plan->items)),
+            ['approval_ids' => $ids, 'repair' => true],
+        ), $context->runId);
+
+        return new StageResult($base + ['proposed' => true, 'approval_ids' => $ids, 'entries' => count($repair->plan->items)], []);
+    }
+
     private function write(RunContext $context): StageResult
     {
-        $settled = $this->runner->settle($context);
+        $this->runner->guardOnce($context);
         $rebuilt = $this->rebuild->rebuild($context);
-        $approval = null;
-        $repair = $settled->broken !== [];
-        if ($repair) {
-            $plan = $this->runner->repairPlan($context, $rebuilt, $settled->broken);
-        } elseif ($context->kind === RunKind::ApprovedWrite->value) {
-            [$approval, $plan] = $this->approved($context, $rebuilt);
-        } else {
-            $plan = $rebuilt->validated();
-        }
+        [$approval, $plan, $repair] = $this->planToWrite($context, $rebuilt);
         [$plan, $held] = $this->held($context, $rebuilt, $plan);
-        $base = ['mode' => $context->mode->value, 'repair' => $repair, 'settled' => count($settled->rows), 'held' => count($held)];
+        $base = ['mode' => $context->mode->value, 'repair' => $repair, 'held' => count($held)];
         if ($plan === null || $plan->plan->isEmpty()) {
             return new StageResult($base + ['writes_sent' => 0, 'nothing_to_write' => true], ['write' => ['held' => $held]]);
         }
@@ -161,14 +182,51 @@ final class WriteStage implements Stage
     }
 
     /**
-     * The approved request and the fresh plan cut down to what it approved, validated again.
+     * What this run writes and under which approval: the repair of the groups left open first and
+     * alone (autonomous, or covered by the approval being written: the repair a person approved);
+     * else the approved entries of the fresh plan, or the whole fresh plan when autonomous. An
+     * approval that does not cover the repair is still written: the repair is proposed again.
+     *
+     * @return array{0: HumanApproval|null, 1: ValidatedPlan|null, 2: bool} approval, plan, whether it is the repair
+     */
+    private function planToWrite(RunContext $context, RebuiltPlan $rebuilt): array
+    {
+        $broken = self::broken($context);
+        $repair = $broken === [] ? null : $this->runner->repairPlan($context, $rebuilt, $broken);
+        if ($context->kind !== RunKind::ApprovedWrite->value) {
+            return $repair !== null ? [null, $repair, true] : [null, $rebuilt->validated(), false];
+        }
+        if ($repair !== null) {
+            [$approval, $plan] = $this->approved($context, $rebuilt, $repair);
+            if ($plan !== null) {
+                return [$approval, $plan, true];
+            }
+        }
+        [$approval, $plan] = $this->approved($context, $rebuilt, $rebuilt->validated());
+
+        return [$approval, $plan, false];
+    }
+
+    /**
+     * The groups the watch stage found open.
+     *
+     * @return list<BrokenGroup>
+     */
+    private static function broken(RunContext $context): array
+    {
+        $groups = is_array($context->state['broken_groups'] ?? null) ? $context->state['broken_groups'] : [];
+
+        return array_values(array_map(static fn (array $g): BrokenGroup => BrokenGroup::fromArray($g), array_filter($groups, 'is_array')));
+    }
+
+    /**
+     * The approved request and a fresh plan cut down to what it approved, validated again.
      *
      * @return array{0: HumanApproval|null, 1: ValidatedPlan|null}
      */
-    private function approved(RunContext $context, RebuiltPlan $rebuilt): array
+    private function approved(RunContext $context, RebuiltPlan $rebuilt, ?ValidatedPlan $fresh): array
     {
-        $fresh = $rebuilt->validated();
-        $request = $this->requests->approved($context->property->id)[0] ?? null;
+        $request = self::latestDecided($this->requests->approved($context->property->id));
         if ($fresh === null || $request === null) {
             return [null, null];
         }
@@ -184,6 +242,21 @@ final class WriteStage implements Stage
         }
 
         return [new HumanApproval((string) $grant->approvalId, $grant->propertyId, PlanHash::of($plan->plan), $grant->planDay, $grant->approvedBy, $grant->approvedAt, $grant->listingChanges()), $plan];
+    }
+
+    /**
+     * The approval decided last: a new approval or proposal ends the older ones of its kind
+     * (ApprovalService), so this is the one the person just gave, never an older one left behind.
+     *
+     * @param list<array<string, mixed>> $approved
+     *
+     * @return array<string, mixed>|null
+     */
+    private static function latestDecided(array $approved): ?array
+    {
+        usort($approved, static fn (array $a, array $b): int => [$a['decided_at'], $a['id']] <=> [$b['decided_at'], $b['id']]);
+
+        return $approved === [] ? null : $approved[count($approved) - 1];
     }
 
     /**

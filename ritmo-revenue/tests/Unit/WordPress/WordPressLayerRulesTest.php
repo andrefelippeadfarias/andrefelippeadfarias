@@ -39,12 +39,16 @@ final class WordPressLayerRulesTest extends TestCase
     public function testEveryRestRouteChecksACapabilityAndTheNonce(): void
     {
         $source = (string) file_get_contents(Fixtures::pluginRoot() . '/src/Rest/RestRoutes.php');
+        $operations = (string) file_get_contents(Fixtures::pluginRoot() . '/src/Rest/OperationRoutes.php');
 
         $routes = substr_count($source, 'register_rest_route(');
         self::assertSame(4, $routes);
         self::assertSame($routes, preg_match_all("/'permission_callback' => self::allowed\\(Roles::[A-Z_]+\\)/", $source));
+        $more = substr_count($operations, 'register_rest_route(');
+        self::assertSame(7, $more);
+        self::assertSame($more, preg_match_all("/'permission_callback' => RestRoutes::allowed\\(Roles::[A-Z_]+\\)/", $operations));
         self::assertStringContainsString("wp_verify_nonce((string) \$request->get_header('X-WP-Nonce'), 'wp_rest')", $source);
-        self::assertStringNotContainsString('__return_true', $source);
+        self::assertStringNotContainsString('__return_true', $source . $operations);
     }
 
     public function testEveryAdminActionChecksItsCapabilityAndNonceBeforeReadingTheForm(): void

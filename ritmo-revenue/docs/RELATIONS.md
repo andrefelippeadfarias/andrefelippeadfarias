@@ -15,7 +15,7 @@ by the ladder (`Pricing\Ladder`), which reads the same `Relation` objects.
 
 | Type | The target (A) ... | Params (`params.*`) |
 |---|---|---|
-| `at_least` | never below a reference B, plus a margin (percent or amount) | `reference`, `margin {type, value}`, `reference_min_units_left` (2 = the last unit of B does not pull A), `derive`, `derive_min` |
+| `at_least` | never below a reference B, plus a margin (percent from -50 to 500, or amount) | `reference`, `margin {type, value}`, `reference_min_units_left` (2 = the last unit of B does not pull A), `derive`, `derive_min` |
 | `between` | between two rooms, from the cheaper one up to a point of the way to the dearer one (`mode: path`), or between two percents of one room (`mode: percent_of`) | `low_reference`, `high_reference`, `position_min`, `position_max` / `reference`, `min_percent`, `max_percent`; `references` (`free_only` or `all`) |
 | `premium_over_max` | above the dearest room of a set by a percent per night type (+ `epsilon_amount`, strictly above) | `set`, `premium_percent {weekday, weekend, holiday}`, `epsilon_amount`, `members` |
 | `discount_band` | between `lower_percent` and `upper_percent` of the cheapest **free** room of a set (85.5% to 90%) | `set`, `upper_percent`, `lower_percent`, `reference_rounding_margin`, `lower_extra_amount`, `members`, `on_empty_set` (`skip`, `use_sold_out`), `down_only_night_types`, `order_floor_yields`, `follow_strategy_reference`, `write_mode` (`pin`, `bounds`) |

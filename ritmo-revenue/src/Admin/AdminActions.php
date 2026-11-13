@@ -6,11 +6,16 @@ namespace Ritmo\Admin;
 
 use InvalidArgumentException;
 use OutOfBoundsException;
+use Ritmo\Application\Approval\ApprovalRefused;
+use Ritmo\Application\Mode\ModePreconditions;
+use Ritmo\Application\Mode\ModeRefused;
 use Ritmo\Connectors\Beds24\Beds24Connector;
 use Ritmo\Connectors\PriceLabs\PriceLabsConnector;
 use Ritmo\Domain\Config\InvalidConfig;
 use Ritmo\Domain\Config\ValidationError;
+use Ritmo\Domain\Model\PropertyMode;
 use Ritmo\Infrastructure\Secrets\SecretUnavailable;
+use Ritmo\Rest\OperationInput;
 use Ritmo\WordPress\ConnectorFactory;
 use Ritmo\WordPress\Roles;
 use Ritmo\WordPress\Services;
@@ -34,6 +39,11 @@ final class AdminActions
         'ritmo_run_shadow' => ['runShadow', Roles::MANAGE_RULES, AdminPages::DASHBOARD],
         'ritmo_emergency_switch' => ['emergencySwitch', Roles::MANAGE_CONNECTIONS, AdminPages::DIAGNOSTICS],
         'ritmo_save_settings' => ['saveSettings', Roles::MANAGE_CONNECTIONS, AdminPages::DIAGNOSTICS],
+        'ritmo_run_now' => ['runNow', Roles::MANAGE_RULES, AdminPages::OPERATIONS],
+        'ritmo_set_mode' => ['setMode', Roles::VIEW, AdminPages::OPERATIONS],
+        'ritmo_decide_plan' => ['decidePlan', Roles::APPROVE, AdminPages::OPERATIONS],
+        'ritmo_undo_changes' => ['undoChanges', Roles::APPROVE, AdminPages::OPERATIONS],
+        'ritmo_emergency_operations' => ['emergencySwitch', Roles::MANAGE_CONNECTIONS, AdminPages::OPERATIONS],
     ];
 
     private const PRESET_MAX_BYTES = 1048576;
@@ -70,6 +80,10 @@ final class AdminActions
             $args = self::$method();
         } catch (InvalidConfig $refused) {
             Notice::flash(Notice::ERROR, $refused->getMessage(), array_map(static fn (ValidationError $e): string => (string) $e, $refused->errors()));
+        } catch (ModeRefused $refused) {
+            Notice::flash(Notice::ERROR, RefusalText::mode($refused));
+        } catch (ApprovalRefused $refused) {
+            Notice::flash(Notice::ERROR, RefusalText::approval($refused));
         } catch (InvalidArgumentException | OutOfBoundsException | SecretUnavailable $refused) {
             Notice::flash(Notice::ERROR, $refused->getMessage());
         }
@@ -118,7 +132,7 @@ final class AdminActions
         $provider = self::field('provider') === PriceLabsConnector::ID ? PriceLabsConnector::ID : Beds24Connector::ID;
         $services = Services::instance();
         $status = $services->connectors()->test($provider);
-        $services->store()->set('connection_test_' . $provider, [
+        $services->store()->set(ModePreconditions::CONNECTION_TEST_PREFIX . $provider, [
             'ok' => $status->ok,
             'message' => $status->message,
             'at' => $services->clock()->now()->format(DATE_ATOM),
@@ -213,15 +227,90 @@ final class AdminActions
         return ['property' => $property];
     }
 
+    private static function runNow(): array
+    {
+        $property = self::field('property_id');
+        $result = Services::instance()->stack()->runNow()->run($property);
+        Notice::flash(
+            in_array($result->status->value, ['completed', 'running'], true) ? Notice::SUCCESS : Notice::ERROR,
+            /* translators: 1: status of the run, 2: note or empty */
+            trim(sprintf(__('Run: %1$s. %2$s', 'ritmo-revenue'), $result->status->value, $result->note))
+        );
+
+        return ['property' => $property];
+    }
+
+    private static function setMode(): array
+    {
+        $property = self::field('property_id');
+        $mode = PropertyMode::tryFrom(self::field('mode')) ?? throw new InvalidArgumentException(__('Unknown mode.', 'ritmo-revenue'));
+        $stack = Services::instance()->stack();
+        $changed = $stack->modes()->change($property, $mode, get_current_user_id(), $stack->rules()->modes(), self::field('confirmation'), self::field('reason'));
+        /* translators: %s: the mode */
+        Notice::flash(Notice::SUCCESS, sprintf(__('The property is now in %s mode.', 'ritmo-revenue'), $changed->mode->value));
+
+        return ['property' => $property];
+    }
+
+    /**
+     * Approve all, approve the groups ticked, or refuse a plan waiting for approval.
+     */
+    private static function decidePlan(): array
+    {
+        $property = self::field('property_id');
+        $request = (int) self::field('request_id');
+        $stack = Services::instance()->stack();
+        $decision = self::field('decision');
+        if (!in_array($decision, ['reject', 'all', 'selected'], true)) {
+            throw new InvalidArgumentException(__('Choose to approve everything, approve the nights ticked, or refuse the plan.', 'ritmo-revenue'));
+        }
+        if ($decision === 'reject') {
+            $stack->approvalDesk()->reject($property, $request, get_current_user_id(), $stack->rules()->approval(), self::field('note'));
+            Notice::flash(Notice::SUCCESS, __('The plan was refused: nothing will be written.', 'ritmo-revenue'));
+
+            return ['property' => $property];
+        }
+        $keys = $decision === 'all' ? null : self::list('entries');
+        if ($keys === []) {
+            throw new InvalidArgumentException(__('Tick the nights to approve, or approve everything.', 'ritmo-revenue'));
+        }
+        $grant = $stack->approvalDesk()->approve($property, $request, get_current_user_id(), $keys, $stack->rules()->approval(), self::field('note'));
+        /* translators: %d: entries approved */
+        Notice::flash(Notice::SUCCESS, sprintf(__('%d entries approved: the write starts in the background, from fresh reads, under the write gate.', 'ritmo-revenue'), count($grant->approvedEntries)));
+
+        return ['property' => $property];
+    }
+
+    private static function undoChanges(): array
+    {
+        $property = self::field('property_id');
+        $ids = array_values(array_filter(array_map('intval', self::list('changes')), static fn (int $id): bool => $id > 0));
+        if ($ids === []) {
+            throw new InvalidArgumentException(__('Tick the changes to undo.', 'ritmo-revenue'));
+        }
+        $stack = Services::instance()->stack();
+        $result = $stack->undoWriter()->undo($property, $ids, get_current_user_id(), $stack->rules());
+        Notice::flash(
+            $result['status'] === 'completed' ? Notice::SUCCESS : Notice::ERROR,
+            /* translators: 1: status, 2: nights written back, 3: changes undone */
+            sprintf(__('Undo: %1$s; %2$d night(s) written back, %3$d change(s) undone.', 'ritmo-revenue'), $result['status'], $result['written'], $result['undone'])
+        );
+
+        return ['property' => $property];
+    }
+
     private static function emergencySwitch(): array
     {
-        $switch = Services::instance()->emergencySwitch();
-        if (self::field('switch') === 'engage') {
-            $switch->engage();
+        try {
+            $engage = OperationInput::switchPosition(self::field('switch'));
+        } catch (InvalidArgumentException) {
+            throw new InvalidArgumentException(__('Choose to engage or to release the emergency switch.', 'ritmo-revenue'));
+        }
+        $engaged = Services::instance()->stack()->emergency()->set($engage, 'Screen', 'user:' . get_current_user_id());
+        if ($engage) {
             Notice::flash(Notice::WARNING, __('Emergency switch engaged: no run starts and running ones stop before their next stage.', 'ritmo-revenue'));
         } else {
-            $switch->release();
-            Notice::flash(Notice::SUCCESS, $switch->isEngaged()
+            Notice::flash(Notice::SUCCESS, $engaged
                 ? __('The option was released, but the constant RITMO_KILL_SWITCH keeps the switch engaged.', 'ritmo-revenue')
                 : __('Emergency switch released.', 'ritmo-revenue'));
         }
@@ -243,6 +332,18 @@ final class AdminActions
         $value = $_POST[$name] ?? ''; // phpcs:ignore WordPress.Security.NonceVerification.Missing
 
         return is_string($value) ? trim(sanitize_text_field(wp_unslash($value))) : '';
+    }
+
+    /**
+     * A list of ticked values (checkboxes named "name[]"), each sanitised.
+     *
+     * @return list<string>
+     */
+    private static function list(string $name): array
+    {
+        $value = $_POST[$name] ?? []; // phpcs:ignore WordPress.Security.NonceVerification.Missing
+
+        return is_array($value) ? array_values(array_filter(array_map(static fn ($v): string => is_string($v) ? trim(sanitize_text_field(wp_unslash($v))) : '', $value), 'strlen')) : [];
     }
 
     /**

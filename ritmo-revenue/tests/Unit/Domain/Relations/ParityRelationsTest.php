@@ -11,6 +11,7 @@ use Ritmo\Domain\Relations\RelationGraph;
 use Ritmo\Domain\Relations\RelationStage;
 use Ritmo\Domain\Relations\RelationValidator;
 use Ritmo\Tests\Support\Fixtures;
+use Ritmo\Tests\Support\ParityNames;
 use Ritmo\Tests\Unit\Domain\Relations\Golden\ParityRelations;
 
 /**
@@ -33,9 +34,9 @@ final class ParityRelationsTest extends TestCase
         $ids = static fn (array $relations): array => array_map(static fn (Relation $relation): string => $relation->id, $relations);
 
         self::assertSame([
-            'recanto-double-at-least-q7', 'recanto-q2-between-q7-double', 'recanto-afrodite-premium-over-max',
-            'villa-balcony-switch-80', 'villa-balcony-discount-band',
+            ParityNames::relation('at_least'), ParityNames::relation('between'), ParityNames::relation('premium'),
+            ParityNames::relation('switch'), ParityNames::relation('band'),
         ], $ids($graph->orderedFor(RelationStage::Coherence)));
-        self::assertSame(['recanto-q2-between-q7-double', 'recanto-afrodite-15-over-double', 'recanto-afrodite-premium-over-max'], $ids($graph->orderedFor(RelationStage::Audit)));
+        self::assertSame([ParityNames::relation('between'), ParityNames::relation('derive'), ParityNames::relation('premium')], $ids($graph->orderedFor(RelationStage::Audit)));
     }
 }

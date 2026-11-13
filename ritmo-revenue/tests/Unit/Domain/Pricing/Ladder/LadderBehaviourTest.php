@@ -25,6 +25,7 @@ use Ritmo\Domain\Pricing\Ladder\LadderRoomQuote;
 use Ritmo\Domain\Pricing\Ladder\LastMinuteMarketFloor;
 use Ritmo\Domain\Pricing\Ladder\WeekendFloorOverride;
 use Ritmo\Domain\Pricing\StepDirection;
+use Ritmo\Tests\Support\ParityNames;
 
 /**
  * Behaviours of the ladder beyond the golden cases: switches of the configuration, the plan item
@@ -65,8 +66,8 @@ final class LadderBehaviourTest extends TestCase
         $evaluator = new LadderNightEvaluator($ladder, Reference::ruler(), Reference::hardFloor(), Reference::relations($ladder));
         $floor = new LastMinuteMarketFloor($ladder, Reference::ruler(), Reference::hardFloor(), new HolidayCalendar(Reference::rules()));
 
-        self::assertSame([], $evaluator->evaluate($night, 3, ['Q7' => $row], $orders)->quotes);
-        self::assertNull($floor->floorFor('Q7', new DateTimeImmutable('2026-11-17'), 3, $orders));
+        self::assertSame([], $evaluator->evaluate($night, 3, [ParityNames::room('low') => $row], $orders)->quotes);
+        self::assertNull($floor->floorFor(ParityNames::room('low'), new DateTimeImmutable('2026-11-17'), 3, $orders));
     }
 
     public function testTheWeekendOverrideNeedsTheStrategyAndAWeekendNightOutsideHolidays(): void
@@ -74,13 +75,13 @@ final class LadderBehaviourTest extends TestCase
         $rules = Reference::rules();
         $override = new WeekendFloorOverride(Reference::strategy(), $rules->qualityFloor(), new PriceFactor($rules), new HolidayCalendar($rules));
         $orders = Reference::orders(['o' => ['id' => Reference::strategy()->authorityOrderId, 'tipo' => 'regra', 'quartos' => ['*'], 'de' => '2026-11-10', 'ate' => '2027-02-28']]);
-        $room = Reference::room('Q7');
+        $room = Reference::room(ParityNames::room('low'));
 
         self::assertTrue($override->applies($room, new DateTimeImmutable('2026-11-13'), $orders));
         self::assertFalse($override->applies($room, new DateTimeImmutable('2026-11-13'), new OrderBook()), 'without the order');
         self::assertFalse($override->applies($room, new DateTimeImmutable('2026-11-17'), $orders), 'a weekday');
         self::assertFalse($override->applies($room, new DateTimeImmutable('2026-11-20'), $orders), 'a holiday');
-        self::assertFalse($override->applies(Reference::room('Balcony'), new DateTimeImmutable('2026-11-13'), $orders), 'no quality tag');
+        self::assertFalse($override->applies(Reference::room(ParityNames::room('plain')), new DateTimeImmutable('2026-11-13'), $orders), 'no quality tag');
         $floor = (new Floors($rules))->hardFloor($room, new DateTimeImmutable('2026-11-17'));
         self::assertSame($floor, $override->standardFloor($floor, $room, new DateTimeImmutable('2026-11-17'), $orders));
     }
@@ -113,7 +114,7 @@ final class LadderBehaviourTest extends TestCase
     public function testTheFirstLadderStepExceptionCanBeSwitchedOff(): void
     {
         $night = new DateTimeImmutable('2026-11-13');
-        $ledger = new StepLedger([new StepRecord('Q7', $night, 2100.0, 2006.0, StepDirection::Down, 'behind', 2, SoldBase::Room, 7, new DateTimeImmutable('2026-11-10T10:00:00Z'))]);
+        $ledger = new StepLedger([new StepRecord(ParityNames::room('low'), $night, 2100.0, 2006.0, StepDirection::Down, 'behind', 2, SoldBase::Room, 7, new DateTimeImmutable('2026-11-10T10:00:00Z'))]);
 
         self::assertNotNull($this->builder(new CadenceConfig())->build(...$this->downCase($ledger))->item, 'the first ladder step goes at once');
         $held = $this->builder(new CadenceConfig(firstLadderStepImmediate: false))->build(...$this->downCase($ledger));
@@ -138,15 +139,15 @@ final class LadderBehaviourTest extends TestCase
     }
 
     /**
-     * Q7 on a weekend night: the ladder asks 1086.57 while 2006 is live, three days out.
+     * The low room on a weekend night: the ladder asks 1086.57 while 2006 is live, three days out.
      *
      * @return array<int, mixed>
      */
     private function downCase(StepLedger $ledger): array
     {
         $night = new DateTimeImmutable('2026-11-13');
-        $quote = new LadderRoomQuote('Q7', 'weekend', 1086.57, 669.0, 669.0, 0, false, 2, 7, 560.0, 'safety_limit', 0.6157, false, null, 1000.0, [LadderRoomQuote::RELATION_BETWEEN]);
+        $quote = new LadderRoomQuote(ParityNames::room('low'), 'weekend', 1086.57, 669.0, 669.0, 0, false, 2, 7, 560.0, 'safety_limit', 0.6157, false, null, 1000.0, [LadderRoomQuote::RELATION_BETWEEN]);
 
-        return [Reference::room('Q7'), $quote, 3, new PriceNight($night, 2006.0, 2006.0, 2006.0, null, 2, 7), null, $ledger, new DateTimeImmutable('2026-11-10T12:00:00Z'), true, 5000.0];
+        return [Reference::room(ParityNames::room('low')), $quote, 3, new PriceNight($night, 2006.0, 2006.0, 2006.0, null, 2, 7), null, $ledger, new DateTimeImmutable('2026-11-10T12:00:00Z'), true, 5000.0];
     }
 }

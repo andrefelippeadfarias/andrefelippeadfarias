@@ -31,7 +31,7 @@ final class GuardedHttpClient implements WriteHttpClient
     private const REASON_OVERRIDE = 'the request carries a method-override header';
     private const REASON_NOT_A_WRITE_ROUTE = 'the route is not a write route of the plugin';
     private const REASON_NO_AUTHORITY = 'this client was not built for a write run';
-    private const REASON_TOKEN = 'the write token is not live';
+    private const REASON_TOKEN = 'the write token is not live, or no step of it was used for this request';
 
     /** @var list<array{method: string, host: string, path: string, reason: string}> */
     private array $blocked = [];
@@ -62,7 +62,7 @@ final class GuardedHttpClient implements WriteHttpClient
         $target = RequestTarget::fromUrl($url);
         RequestLine::headerLines($headers);
 
-        $this->refuse($method, $target, $this->writeRefusal($token, $method, $target, $headers));
+        $this->refuse($method, $target, $this->writeRefusal($token, $method, $target, $headers, $url, $body));
 
         return $this->inner->request($method, $url, $headers, $body, $timeout);
     }
@@ -97,11 +97,12 @@ final class GuardedHttpClient implements WriteHttpClient
     }
 
     /**
-     * Why the write may not leave the site; null when it may.
+     * Why the write may not leave the site; null when it may: a declared write route, and a live
+     * token whose connector has just used a step of it for this request (WriteAuthority::claim()).
      *
      * @param array<array-key, mixed> $headers
      */
-    private function writeRefusal(WriteToken $token, string $method, RequestTarget $target, array $headers): ?string
+    private function writeRefusal(WriteToken $token, string $method, RequestTarget $target, array $headers, string $url, ?string $body): ?string
     {
         if (self::overridesMethod($headers)) {
             return self::REASON_OVERRIDE;
@@ -113,7 +114,7 @@ final class GuardedHttpClient implements WriteHttpClient
             return self::REASON_NO_AUTHORITY;
         }
 
-        return $this->authority->isLive($token) ? null : self::REASON_TOKEN;
+        return $this->authority->claim($token, $method, $url, $body) ? null : self::REASON_TOKEN;
     }
 
     /**

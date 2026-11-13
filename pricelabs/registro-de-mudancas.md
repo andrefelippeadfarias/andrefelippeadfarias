@@ -5042,6 +5042,67 @@ Observação: depois das 21:00 BRT o Beds24 já conta o dia em UTC e não devolv
 
 **Envio:** a estadia de sexta 13/11 e o sábado 14/11 da King Spa 7 já valem no Beds24. Para os canais receberem antes do envio de amanhã, vale o Sync Now no PriceLabs (D1).
 
+## 13/11/2026, 07:58 a 08:30 BRT — Rotina completa das 07:53 (sexta): escada nas vendas novas, descida de 06-07/12 no Recanto e proteção das esgotadas
+
+**Coleta:** workflow `coleta-pricelabs` completo, com concorrentes (semana 24-26/11 e fim de semana 04-06/12). Envio aos canais ligado nos 7 quartos (último às 17:36 BRT de 12/11). Logs do PriceLabs: só as nossas gravações; nenhuma mudança manual.
+
+**Recálculo para medir:** Moinhos, Panorâmica II, King Spa 7 e Balcony estavam sem cota até 12:09/12:10. A Panorâmica I falhou ("Beds24 appears to be temporarily unavailable", conta na cota). Afrodite e King Spa 2 foram recalculadas às 08:07. Nos outros 5 quartos, o calendário de trabalho saiu do último recálculo de cada um, com o preço e a estadia da coleta (calendário das 17:36 de ontem) e a ocupação do Beds24 lida às 07:58. A validação usou `--aceitar-velho`.
+
+**Beds24 desde 21:28 BRT de 12/11:** 3 novas (Balcony 13-15/11 Booking R$ 753; Panorâmica I 04-06/12 Booking R$ 1.919; Moinhos 04-06/12 Airbnb R$ 1.363), 0 canceladas. Segurança: 0 alertas. Abaixo do esperado: 0. Overbooking que segue: King Spa 7 15-16/11 e Panorâmica I 20-21/11 (–1 cada). Bloqueio sem reserva: Balcony 15-16/11 (1 unidade).
+
+**Ocupação (Beds24, confirmadas + novas):** Recanto 52% em 7 dias, 50% em 15, 36% em 30; Villa 58%/57%/45%. Mercado (PriceLabs): 13/11 35% (52% no ano passado), 14/11 42% (63%), 20/11 58% (51%).
+
+**Concorrentes (Booking, 2 noites):** semana 24-26/11, mediana R$ 580 (18 hotéis); Recanto R$ 1.463, o mais caro da amostra (2,5x a mediana, efeito do piso de vitrine de dia de semana); Villa R$ 837. Fim de semana 04-06/12, mediana R$ 1.393 (16 hotéis); Recanto R$ 1.450 (1,04x); Villa R$ 1.585.
+
+**Auditoria de 12 meses:** 1 noite fora da regra no PriceLabs (Panorâmica II 19/11, véspera de feriado, estadia 1 → 2); órfãs e sábados certos; lote do Beds24 com 0 itens.
+
+**Motor de pace:** 392 noites (à frente 48, no ritmo 191, atrás 11, muito atrás 8); 32 itens (15 para cima, 8 para baixo, 9 de coerência) e 2 tetos a apagar antes nas esgotadas. **Validador:** 2 erros corrigidos antes de gravar: (1) Panorâmica I 17/11 ficava abaixo do piso de vitrine de dia de semana, então o item saiu; (2) na Balcony 25/11 (King Spa 7 subindo, 8/9 suítes com banheira vendidas), entrou o item que confirma a regra dos 80%. Depois: 33 itens, 0 erros.
+
+**Gravado (08:13 a 08:23 BRT) e conferido pela resposta da API (cada chamada devolveu as regras salvas):**
+
+| Mudança | Onde | Antes | Depois | Como desfazer (pedir ao Claude) |
+|---|---|---|---|---|
+| Panorâmica II 15/11 | PriceLabs por data | R$ 922 | piso e teto R$ 1.107 (-30% da base), Escada de vendas (dono 01/11): 9/16 vendidas | regravar piso -42% e teto -42% |
+| Afrodite 17/11 | PriceLabs por data | R$ 1.520 | piso e teto R$ 1.595 (-20% da base), Escada de vendas (dono 01/11): 3/16 vendidas | regravar piso -24% e teto -24% |
+| Afrodite 18/11 | PriceLabs por data | R$ 1.500 | piso e teto R$ 1.680 (-16% da base), Escada de vendas (dono 01/11): 9/16 vendidas | regravar piso -25% e teto -25% |
+| Panorâmica II 18/11 | PriceLabs por data | R$ 1.065 | piso e teto R$ 1.098 (-30% da base), Escada de vendas (dono 01/11): 9/16 vendidas | regravar piso -33% e teto -33% |
+| Panorâmica II 19/11 | PriceLabs por data | R$ 1.924 | estadia 2, 12m 21/10: estadia 2n feriado | voltar a estadia 1 |
+| Moinhos 21/11 | PriceLabs por data | R$ 2.663 | piso e teto R$ 2.656 (127% da base), Plano do dono 09/11 (feriado): abertura R$ 1570 público | regravar piso 127% e teto 127% |
+| Balcony 25/11 | PriceLabs por data | R$ 673 | piso e teto R$ 673 (-47% da base), Confirma (mesmo valor vigente) a Balcony no mercado pela regra dos 80% | regravar piso -47% e teto -47% |
+| King Spa 7 25/11 | PriceLabs por data | R$ 1.288 | piso e teto R$ 1.417 (-4% da base), Escada de vendas (dono 01/11): 6/7 vendidas | regravar piso -13% e teto -13% |
+| Balcony 01/12 | PriceLabs por data | R$ 851 | piso e teto R$ 914 (-28% da base), Regra G: Balcony 10% abaixo da suíte com banheira livre mais barata (R | regravar piso -33% e teto -33% |
+| King Spa 2 01/12 | PriceLabs por data | R$ 952 | piso e teto R$ 1.048 (-17% da base), Escada de vendas (dono 01/11): 2/9 vendidas | regravar piso -25% e teto -25% |
+| Afrodite 04/12 | PriceLabs por data | R$ 1.720 | piso e teto R$ 1.839 (-8% da base), Plano do dono 09/11 (fds): abertura R$ 1048 público | regravar piso -14% e teto -14% |
+| Panorâmica I 04/12 | PriceLabs por data | R$ 1.480 | piso e teto R$ 1.584 (8% da base), Plano do dono 09/11 (fds): abertura R$ 911 público | regravar piso 0% e teto 0% |
+| Panorâmica II 04/12 | PriceLabs por data | R$ 1.431 | piso e teto R$ 1.481 (-6% da base), Plano do dono 09/11 (fds): abertura R$ 911 público | regravar piso -10% e teto -10% |
+| Moinhos 04/12 | PriceLabs por data | R$ 1.243 | piso e teto R$ 1.330 (14% da base), Plano do dono 09/11 (fds): abertura R$ 765 público | regravar piso 6% e teto 6% |
+| Afrodite 05/12 | PriceLabs por data | R$ 1.840 | piso e teto R$ 1.958 (-2% da base), Plano do dono 09/11 (fds): abertura R$ 1048 público | regravar piso -8% e teto -8% |
+| Panorâmica I 05/12 | PriceLabs por data | R$ 1.584 | piso e teto R$ 1.695 (15% da base), Plano do dono 09/11 (fds): abertura R$ 911 público | regravar piso 7% e teto 7% |
+| Moinhos 05/12 | PriceLabs por data | R$ 1.243 | piso e teto R$ 1.330 (14% da base), Plano do dono 09/11 (fds): abertura R$ 765 público | regravar piso 6% e teto 6% |
+| Afrodite 06/12 | PriceLabs por data | R$ 2.140 | piso e teto R$ 1.795 (-10% da base), Escada de vendas (dono 01/11): 4/16 vendidas | regravar piso 7% e teto 7% |
+| Panorâmica I 06/12 | PriceLabs por data | R$ 1.776 | piso e teto R$ 1.490 (1% da base), Escada de vendas (dono 01/11): 1/6 vendidas | regravar piso 20% e teto 20% |
+| Panorâmica II 06/12 | PriceLabs por data | R$ 1.781 | piso e teto R$ 1.490 (-6% da base), Escada de vendas (dono 01/11): 4/16 vendidas | regravar piso 12% e teto 12% |
+| Moinhos 06/12 | PriceLabs por data | R$ 1.771 | piso e teto R$ 1.489 (27% da base), Escada de vendas (dono 01/11): 3/7 vendidas | regravar piso 51% e teto 51% |
+| Afrodite 07/12 | PriceLabs por data | R$ 1.820 | piso e teto R$ 1.500 (-25% da base), Escada de vendas (dono 01/11): 3/16 vendidas | regravar piso -9% e teto -9% |
+| Panorâmica I 07/12 | PriceLabs por data | R$ 1.510 | piso e teto R$ 1.219 (-17% da base), Escada de vendas (dono 01/11): 1/6 vendidas | regravar piso 2% e teto 2% |
+| Panorâmica II 07/12 | PriceLabs por data | R$ 1.510 | piso e teto R$ 1.220 (-23% da base), Escada de vendas (dono 01/11): 3/16 vendidas | regravar piso -5% e teto -5% |
+| Moinhos 07/12 | PriceLabs por data | R$ 1.501 | piso e teto R$ 1.219 (4% da base), Escada de vendas (dono 01/11): 2/7 vendidas | regravar piso 28% e teto 28% |
+| Balcony 12/12 | PriceLabs por data | R$ 1.041 | piso e teto R$ 1.041 (-18% da base), Balcony no mercado do quarto sem banheira (plano do dono 09/11, regra  | regravar piso -18% e teto -18% |
+| King Spa 7 12/12 | PriceLabs por data | R$ 2.072 | piso e teto R$ 2.064 (40% da base), Plano do dono 09/11 (fds): abertura R$ 1011 público | regravar piso 40% e teto 40% |
+| Balcony 20/12 | PriceLabs por data | R$ 1.232 | piso e teto R$ 1.295 (2% da base), Regra G: Balcony 10% abaixo da suíte com banheira livre mais barata (R | regravar piso -3% e teto -3% |
+| King Spa 7 20/12 | PriceLabs por data | R$ 1.421 | piso e teto R$ 1.493 (1% da base), Escada de vendas (dono 01/11): 2/7 vendidas | regravar piso -4% e teto -4% |
+| King Spa 7 28/12 | PriceLabs por data | R$ 2.398 | piso e teto R$ 2.482 (68% da base), Escada de vendas (dono 01/11): 2/7 vendidas | regravar piso 62% e teto 62% |
+| Balcony 12/01/27 | PriceLabs por data | R$ 978 | piso e teto R$ 914 (-28% da base), Regra G: Balcony 10% abaixo da suíte com banheira livre mais barata (R | regravar piso -23% e teto -23% |
+
+**Não gravado / pendente:**
+- **Panorâmica I 15/11 (esgotada, 6/6):** o teto foi apagado às 08:12 para soltar a proteção, mas a regravação do piso (R$ 1.332, -10%, estadia 1) voltou "Pricing data for this date isn't available yet". A noite está **sem regra por data** até o recálculo. Nada pode ser vendido nela (6/6). Regravo na rotina das 10:53, depois do envio diário, ou às 12:10 com o recálculo da Panorâmica I.
+- **Afrodite 12/01/2027 (esgotada):** a troca da Regra J antiga (piso e teto 42%, R$ 2.840) pela proteção (piso R$ 1.565, teto livre) ficou para quando houver recálculo, porque apagar exige recalcular de novo. A regra antiga é a mais conservadora.
+- **Conferência no recálculo:** não conferido (limite de recálculo) nos 5 quartos sem cota. Afrodite (1 vaga) e King Spa 2 (2 vagas) ficam para as rotinas da tarde.
+
+Sombra da flutuação: foto de hoje só com Afrodite e King Spa 2 (os outros 5 calendários são de ontem).
+
+**Envio:** as mudanças chegam aos canais no envio de hoje.
+
 ## O que só pode ser feito na tela (passo a passo para você)
 
 1. **Safety Minimum Price → "Do Not Apply"** (Dynamic Pricing → Customizations → aba Groups → Edit no grupo Recanto dos Moinhos → All Customizations → Safety Minimum Price). Anote o valor atual antes.

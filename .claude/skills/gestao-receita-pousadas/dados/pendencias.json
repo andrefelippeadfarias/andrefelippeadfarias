@@ -1284,6 +1284,22 @@
       "urgencia": 3,
       "texto": "Na leve das 16:53 de 12/11, 5 get_listing_date_overrides foram em paralelo, contra a regra das chamadas em série. Dois resultados (Afrodite e King Spa 7) caíram no mesmo arquivo de tool-results, porque o nome do arquivo vem do milissegundo, e um sobrescreveu o outro. Nada foi gravado errado: refiz as duas leituras em série e conferi o mapa dos quartos contra as regras das 13:53. Regra reforçada em aprendizados.md: toda chamada ao PriceLabs, inclusive leitura, vai em série.",
       "atualizado_em": "2026-11-12"
+    },
+    {
+      "id": "double-1511-sem-regra-20261113",
+      "responsavel": "skill",
+      "desde": "2026-11-13",
+      "urgencia": 1,
+      "texto": "Panorâmica I (Double) 15/11, esgotada 6/6: o teto foi apagado às 08:12 de 13/11 para soltar a proteção e a regravação (piso -10% = R$ 1.332, sem teto, estadia 1) voltou 'Pricing data for this date isn't available yet'. A noite está sem regra por data. Regravar na rotina das 10:53 (depois do envio diário) ou às 12:10 com o recálculo da Double (cota livre a partir de 12:10). Item pronto em pendentes.json da rotina completa de 13/11 (rascunho c1113).",
+      "atualizado_em": "2026-11-13"
+    },
+    {
+      "id": "afrodite-1201-regra-j-antiga-20261113",
+      "responsavel": "skill",
+      "desde": "2026-11-13",
+      "urgencia": 3,
+      "texto": "Afrodite 12/01/2027, esgotada 1/1: a Regra J antiga (piso e teto 42%, R$ 2.840) continua. O motor pede a proteção (piso da ordem R$ 1.565, teto livre), que exige apagar a regra, recalcular a Afrodite e regravar. Fazer quando houver recálculo livre na Afrodite (na manhã seguinte).",
+      "atualizado_em": "2026-11-13"
     }
   ],
   "versao": "2026-11-12T13"

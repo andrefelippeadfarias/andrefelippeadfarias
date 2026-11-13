@@ -23,6 +23,8 @@ use Ritmo\Domain\Pricing\Cadence\NoEffectConfig;
 use Ritmo\Domain\Pricing\Ladder\LadderConfig;
 use Ritmo\Domain\Pricing\Protection\ProtectionConfig;
 use Ritmo\Domain\Relations\Config\RelationsConfig;
+use Ritmo\Domain\Stay\Write\StayWriteConfig;
+use Ritmo\Domain\Stay\Write\StayWriteFields;
 use Ritmo\Domain\Support\DateRange;
 use Ritmo\Domain\Support\Days;
 use Ritmo\Domain\Write\ApprovalConfig;
@@ -508,6 +510,14 @@ final class RuleSet
     public function stay(): StayConfig
     {
         return $this->section(StayFields::ROOT, fn (): StayConfig => StayConfig::fromArray($this->data[StayFields::ROOT]));
+    }
+
+    /**
+     * Stay and arrival/departure writes (section "stay", sub-section "write").
+     */
+    public function stayWrite(): StayWriteConfig
+    {
+        return $this->section(StayWriteFields::ROOT, fn (): StayWriteConfig => StayWriteConfig::fromArray((array) ($this->data[StayFields::ROOT]['write'] ?? [])));
     }
 
     public function plan(): PlanConfig

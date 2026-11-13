@@ -45,12 +45,12 @@ final class ClosedDaySide
             return new self($closed->restriction, StayReason::ClosedDay);
         }
         if ($night->available <= 0 && $previousAvailable > 0) {
-            return new self($side->whenClosedDaySoldOut, StayReason::OrphanSideClosedDaySoldOut, soldOutClosedDay: true);
+            return new self($side->whenClosedDaySoldOut, StayReason::OrphanSideClosedDaySoldOut, soldOutClosedDay: true, proof: $occupancy->proof($night->date, OrphanProof::PREVIOUS));
         }
         if ($previousAvailable <= 0 && $night->available > 0) {
             return $past
                 ? new self($side->whenPreviousSoldOut, StayReason::OrphanSidePreviousPast, freeClosedDay: true, proof: $occupancy->proofPreviousPast($night->date))
-                : new self($side->whenPreviousSoldOut, StayReason::OrphanSidePreviousSoldOut, freeClosedDay: true);
+                : new self($side->whenPreviousSoldOut, StayReason::OrphanSidePreviousSoldOut, freeClosedDay: true, proof: $occupancy->proof($night->date, OrphanProof::PREVIOUS));
         }
 
         return new self($closed->restriction, StayReason::ClosedDay);

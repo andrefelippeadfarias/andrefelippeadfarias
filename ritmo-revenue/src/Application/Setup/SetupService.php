@@ -7,6 +7,7 @@ namespace Ritmo\Application\Setup;
 use DateTimeZone;
 use InvalidArgumentException;
 use Ritmo\Domain\Config\InvalidConfig;
+use Ritmo\Domain\Config\Preset;
 use Ritmo\Domain\Config\PresetLoader;
 use Ritmo\Domain\Config\RuleSet;
 use Ritmo\Domain\Market\AnchorBuilder;
@@ -88,6 +89,23 @@ final class SetupService
      */
     public function saveRoomType(array $input): RoomType
     {
+        $room = $this->roomType($input);
+        $this->roomTypes->save($room);
+
+        return $room;
+    }
+
+    /**
+     * The room type of the input, checked but not saved: an existing property, valid values, and
+     * a PMS room and a pricing listing that no other room is mapped to (one listing planned twice
+     * would get two different prices in the same run).
+     *
+     * @param array<string, mixed> $input as saveRoomType()
+     *
+     * @throws InvalidArgumentException when a value is missing or wrong
+     */
+    public function roomType(array $input): RoomType
+    {
         $propertyId = self::text($input, 'property_id');
         if ($this->properties->find($propertyId) === null) {
             throw new InvalidArgumentException('Choose an existing property for the room type.');
@@ -106,14 +124,31 @@ final class SetupService
             'reference_min' => self::amount($input, 'reference_min'),
             'tags' => $tags,
         ]);
-        $this->roomTypes->save($room);
+        foreach ($this->roomTypes->all() as $other) {
+            if ($other->code !== $room->code && ($other->pmsRef === $room->pmsRef || $other->pricingRef === $room->pricingRef)) {
+                throw new InvalidArgumentException(sprintf('The PMS room or the pricing listing is already mapped to the room "%s".', $other->code));
+            }
+        }
 
         return $room;
     }
 
     /**
-     * Imports a preset file: its rules become a new rule set version and its properties and room
-     * types are created or replaced, every property in shadow mode whatever the file says.
+     * The preset of a file, checked but not saved.
+     *
+     * @throws InvalidConfig            listing every error of the file
+     * @throws InvalidArgumentException when the text is not a preset
+     */
+    public function preset(string $json): Preset
+    {
+        return (new PresetLoader())->fromJson($json);
+    }
+
+    /**
+     * Imports a preset file without a person behind it (the e2e seed and tests): its rules become
+     * a new rule set version and its properties and room types are created or replaced, every
+     * property in shadow mode whatever the file says. A person imports through the setup wizard
+     * (SetupWizard::importPreset), where the rules go through the rules editor.
      *
      * @return array{properties: int, room_types: int, rules_version: int}
      *
@@ -122,19 +157,30 @@ final class SetupService
      */
     public function importPreset(string $json, int $userId = 0): array
     {
-        $preset = (new PresetLoader())->fromJson($json);
+        $preset = $this->preset($json);
 
         return $this->db->transaction(function () use ($preset, $userId): array {
             $version = $this->ruleSets->save($preset->rules, 'Imported preset: ' . mb_substr($preset->name, 0, 100), $userId);
-            foreach ($preset->properties as $property) {
-                $this->properties->save(Property::fromArray(['mode' => PropertyMode::Shadow->value] + $property->toArray()));
-            }
-            foreach ($preset->roomTypes as $room) {
-                $this->roomTypes->save($room);
-            }
 
-            return ['properties' => count($preset->properties), 'room_types' => count($preset->roomTypes), 'rules_version' => $version];
+            return $this->savePlaces($preset) + ['rules_version' => $version];
         });
+    }
+
+    /**
+     * The properties (in shadow mode whatever the file says) and room types of a preset.
+     *
+     * @return array{properties: int, room_types: int}
+     */
+    public function savePlaces(Preset $preset): array
+    {
+        foreach ($preset->properties as $property) {
+            $this->properties->save(Property::fromArray(['mode' => PropertyMode::Shadow->value] + $property->toArray()));
+        }
+        foreach ($preset->roomTypes as $room) {
+            $this->roomTypes->save($room);
+        }
+
+        return ['properties' => count($preset->properties), 'room_types' => count($preset->roomTypes)];
     }
 
     /**

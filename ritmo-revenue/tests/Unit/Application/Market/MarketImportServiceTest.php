@@ -7,6 +7,7 @@ namespace Ritmo\Tests\Unit\Application\Market;
 use PHPUnit\Framework\TestCase;
 use Ritmo\Application\Market\MarketRefused;
 use Ritmo\Application\Market\UploadedFile;
+use Ritmo\Admin\Market\MarketText;
 use Ritmo\Domain\Market\Csv\MarketCsvProblem;
 use Ritmo\Domain\Support\Days;
 use Ritmo\Infrastructure\Db\Repository\EditorEventRepository;
@@ -43,6 +44,32 @@ final class MarketImportServiceTest extends TestCase
         self::assertStringNotContainsString('abc', $stored, 'the import keeps line, column and code, never a cell');
         self::assertStringNotContainsString('nobody', $stored);
         self::assertSame(EditorEventRepository::MARKET_IMPORT, $world->events->latest(MarketWorld::PROPERTY, [EditorEventRepository::MARKET_IMPORT])[0]['kind']);
+    }
+
+    public function testACellThatLooksLikePersonalDataIsNeverKeptNorShown(): void
+    {
+        $world = new MarketWorld();
+        $world->addCompetitors(2);
+        $rows = [
+            ...self::rows(2),
+            ['comp-01', '2026-12-04', '2026-12-06', 'maria.silva@example.com', '', '', '', '', '', ''],
+            ['comp-01', '2026-12-04', '2026-12-06', '+55 11 91234-5678', '', '', '', '', '', ''],
+            ['comp-02', '2026-12-04', '2026-12-06', 'CPF 123.456.789-09', '', '', '', '', '', ''],
+            ['ana.lima@example.com', '2026-12-04', '2026-12-06', '900', '', '', '', '', '', ''],
+        ];
+
+        $preview = $world->importService->preview(MarketWorld::PROPERTY, self::file($rows), 7);
+
+        self::assertSame([4, 5, 6, 7], array_map(static fn (MarketCsvProblem $p): int => $p->line, $preview->problems));
+        foreach ($preview->problems as $problem) {
+            self::assertSame(MarketCsvProblem::HIDDEN_VALUE, $problem->value);
+            self::assertStringContainsString('value hidden', MarketText::problem($problem));
+        }
+        self::assertSame([], $preview->unknownCompetitors, 'never offered as a competitor to create');
+        $stored = (string) json_encode($world->previews->stored);
+        foreach (['maria.silva', '91234', '123.456.789', 'ana.lima'] as $private) {
+            self::assertStringNotContainsString($private, $stored);
+        }
     }
 
     public function testTheSameFileIsRefusedAndTheSameRowsChangeNothing(): void

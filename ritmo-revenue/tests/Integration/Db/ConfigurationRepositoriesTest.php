@@ -134,6 +134,19 @@ final class ConfigurationRepositoriesTest extends TestCase
         self::assertSame(['901' => 'suite', '902' => 'loft'], $rooms->pmsMap());
     }
 
+    public function testARoomRowChangedByHandIntoAnInvalidRoomIsLeftOutAndNamed(): void
+    {
+        $rooms = new RoomTypeRepository($this->db, $this->clock);
+        $rooms->save(new RoomType('inn', 'STD', 'Standard', 2, '1', 'pl-1', 600.0, 400.0, 1200.0, 400.0));
+        $rooms->save(new RoomType('inn', 'GDN', 'Garden', 2, '2', 'pl-2', 600.0, 400.0, 1200.0, 400.0));
+        $this->db->update('room_types', ['tags' => '["peer<x>"]'], ['code' => 'STD']);
+
+        self::assertSame(['GDN'], array_map(static fn (RoomType $r): string => $r->code, $rooms->forProperty('inn')));
+        self::assertSame(['GDN'], array_map(static fn (RoomType $r): string => $r->code, $rooms->all()));
+        self::assertNull($rooms->find('STD'));
+        self::assertSame(['STD'], $rooms->unreadable());
+    }
+
     public function testARoomReferenceLongerThanItsColumnIsRefusedNotCut(): void
     {
         $rooms = new RoomTypeRepository($this->db, $this->clock);

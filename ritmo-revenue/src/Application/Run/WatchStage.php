@@ -22,10 +22,10 @@ use Ritmo\Domain\Operations\RunKind;
 use Ritmo\Domain\Report\BookedUnits;
 use Ritmo\Domain\Support\Clock;
 use Ritmo\Domain\Support\Days;
+use Ritmo\Domain\Write\Hold\CancellationWave;
 use Ritmo\Domain\Write\State\ChangeField;
 use Ritmo\Domain\Write\State\NightFields;
 use Ritmo\Domain\Write\State\Provider;
-use Ritmo\Domain\Write\Hold\CancellationWave;
 use Ritmo\Domain\Write\State\WrittenNight;
 use Ritmo\Domain\Write\ThirdParty\Observation;
 use Ritmo\Domain\Write\ThirdParty\ThirdPartyChange;
@@ -104,7 +104,7 @@ final class WatchStage implements Stage
         $hold = $waves->observe($context->property->id, $read->bookings, $read->window->since);
         $listingChanges = $this->listings->inspect($context);
         $settled = $this->journal->settle($context);
-        $third = $thirdParty->inspect($context->property, $this->observations($context, $inventory), JournalWatch::ownNights($settled), $this->pushed($context), $context->runId);
+        $third = $thirdParty->inspect($context->property, $this->observations($context, $inventory), JournalWatch::ownNights($settled), PushedFields::of($context->rules->stay()->pricingSync, $this->connectors->pricingStaySync(), $context->pricingNights(), $context->overrides()), $context->runId);
         $this->alerts->raiseAll(array_map(fn (ThirdPartyChange $c) => OperationAlerts::manualChange(
             $context->property->id,
             $c->provider->value,
@@ -175,26 +175,6 @@ final class WatchStage implements Stage
                 }
                 if (isset($inventory[$room->code][$night])) {
                     $out[] = new Observation(Provider::Pms, $room->code, Days::date($night), NightFields::fromInventory($inventory[$room->code][$night]), $at);
-                }
-            }
-        }
-
-        return $out;
-    }
-
-    /**
-     * The minimum stays the pricing system's push sets in the PMS (its date rules): a PMS night
-     * that took them was not changed by someone else.
-     *
-     * @return array<string, NightFields>
-     */
-    private function pushed(RunContext $context): array
-    {
-        $out = [];
-        foreach ($context->overrides() as $room => $nights) {
-            foreach ($nights as $night => $override) {
-                if ($override->minStay !== null) {
-                    $out[WrittenNight::keyOf(Provider::Pms, (string) $room, Days::date((string) $night))] = new NightFields([ChangeField::PMS_MIN_STAY => $override->minStay]);
                 }
             }
         }

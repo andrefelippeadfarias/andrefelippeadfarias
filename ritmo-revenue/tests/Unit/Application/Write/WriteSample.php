@@ -11,6 +11,10 @@ use Ritmo\Application\EmergencySwitch;
 use Ritmo\Application\Write\Gate\TonightState;
 use Ritmo\Application\Write\Gate\WriteContext;
 use Ritmo\Application\Write\Gate\WriteGate;
+use Ritmo\Application\Write\Schedule\CalendarChange;
+use Ritmo\Domain\Write\State\ChangeField;
+use Ritmo\Domain\Write\State\NightFields;
+use Ritmo\Domain\Stay\Write\PmsChangeEntry;
 use Ritmo\Domain\Write\WriteConfig;
 use Ritmo\Domain\Model\DateOverride;
 use Ritmo\Domain\Model\Property;
@@ -64,16 +68,48 @@ final class WriteSample
      * @param list<PlanItem>      $items
      * @param list<PlanDeletion>  $deletions
      * @param list<ListingChange> $listing
+     * @param list<CalendarChange> $pms
      */
-    public static function validated(Clock $clock, array $items, array $deletions = [], array $listing = []): ValidatedPlan
+    public static function validated(Clock $clock, array $items, array $deletions = [], array $listing = [], array $pms = []): ValidatedPlan
     {
-        $plan = new Plan('inn', $clock->today(EngineSample::TIMEZONE), $clock->now(), $items, $deletions, $listing);
+        $plan = new Plan('inn', $clock->today(EngineSample::TIMEZONE), $clock->now(), $items, $deletions, $listing, self::pmsEntries($pms));
         $orders = PlanSample::orders([['id' => 'listing', 'type' => 'rule', 'releases' => ['listing']]]);
         $result = (new Validator(EngineSample::rules(), $clock))->validate($plan, self::property(), self::rooms(), PlanSample::context(orders: $orders));
         Assert::assertTrue($result->isValid(), implode(', ', $result->errorCodes()));
         Assert::assertNotNull($result->plan);
 
         return $result->plan;
+    }
+
+    /**
+     * The PMS changes a test writes, as the sealed entries of a plan: one per night of each
+     * change's range (the gate builds the calendar changes from them).
+     *
+     * @param list<CalendarChange> $changes
+     *
+     * @return list<PmsChangeEntry>
+     */
+    public static function pmsEntries(array $changes): array
+    {
+        $out = [];
+        foreach ($changes as $change) {
+            $target = [
+                ChangeField::PMS_MIN_STAY => $change->minStay,
+                ChangeField::PMS_MAX_STAY => $change->maxStay,
+                ChangeField::PMS_RESTRICTION => $change->restriction?->value,
+                ChangeField::PMS_AVAILABLE => $change->available,
+            ];
+            foreach ($change->channels as $channel => $limit) {
+                $target[ChangeField::PMS_CHANNEL_LIMIT . $channel] = $limit;
+            }
+            $target = array_filter($target, static fn (mixed $v, string $k): bool => $v !== null || str_starts_with($k, ChangeField::PMS_CHANNEL_LIMIT), ARRAY_FILTER_USE_BOTH);
+            $before = $change->minStayBefore === null ? [] : [ChangeField::PMS_MIN_STAY => $change->minStayBefore];
+            foreach ($change->nights() as $night) {
+                $out[] = new PmsChangeEntry($change->roomCode, Days::date((string) $night), new NightFields($target), new NightFields($before), $change->reason === '' ? 'test' : $change->reason, $change->alsoPricing);
+            }
+        }
+
+        return $out;
     }
 
     /**

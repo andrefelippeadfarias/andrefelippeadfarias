@@ -59,6 +59,24 @@ final class PlanAssemblerTest extends TestCase
         self::assertSame([], $run->plan->deletions);
     }
 
+    public function testAWriteOnANightWhoseRuleExpiresIsADeleteAndRewriteGroupWithoutTheExpiry(): void
+    {
+        $plain = $this->assembler()->assemble($this->inputs());
+        $item = $plain->plan->items[0];
+        $night = Days::key($item->date);
+        $expiring = new DateOverride($item->date, -20.0, null, 2, null, null, 'by hand', leadTimeExpiryDays: 3);
+
+        $run = $this->assembler()->assemble($this->inputs(overrides: [$item->roomCode => [$night => $expiring]]));
+
+        self::assertContains($item->key(), array_map(static fn ($d): string => $d->key(), $run->plan->deletions), 'the expiring rule is deleted first (W36)');
+        $rewrite = array_values(array_filter($run->plan->items, static fn (PlanItem $i): bool => $i->key() === $item->key()))[0] ?? null;
+        self::assertNotNull($rewrite);
+        self::assertSame(2, $rewrite->minStay, 'the rewrite keeps the stay of the deleted rule');
+        self::assertStringNotContainsString('lead_time_expiry', (string) json_encode($run->payload?->toArray()), 'no body ever carries the expiry (W37)');
+        self::assertSame(3, $expiring->expiry()?->days);
+        self::assertSame(Days::key(Days::add($item->date, -4)), Days::key($expiring->expiry()->lastActiveDay()), 'active until night - N - 1');
+    }
+
     public function testALightRunStepsOnlyTheNightsOfItsFilter(): void
     {
         $full = $this->assembler()->assemble($this->inputs());

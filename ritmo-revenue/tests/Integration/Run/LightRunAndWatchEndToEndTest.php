@@ -42,7 +42,7 @@ final class LightRunAndWatchEndToEndTest extends TestCase
         self::assertSame([], $world->writes());
     }
 
-    public function testALightRunWithoutMovementDecidesNothingAndSaysSoInThreeLines(): void
+    public function testALightRunWithoutMovementDecidesNothingAndSaysSoInOneLine(): void
     {
         $world = new RunWorld();
         $world->run();
@@ -52,7 +52,8 @@ final class LightRunAndWatchEndToEndTest extends TestCase
 
         $summary = $world->summary($light->runId);
         self::assertSame(0, $summary['validate']['items'] ?? null);
-        self::assertCount(3, $summary['report']['lines'] ?? []);
+        // The three sentences of M3 (nothing moved, nothing decided, writes sent: 0) are one coded line (reports spec 2.5).
+        self::assertSame([['code' => 'light_idle', 'params' => []]], $summary['report']['items'] ?? null);
     }
 
     public function testABookingWithoutValueAndOneFarBelowThePricesRaiseTheirAlerts(): void

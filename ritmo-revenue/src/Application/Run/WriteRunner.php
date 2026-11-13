@@ -108,7 +108,7 @@ final class WriteRunner
             $this->connectors->pricingPmsName(),
             true,
             fn (int $user): bool => $this->capabilities->userCan($user, CapabilityCheck::APPROVE),
-        ), [], $recalculate);
+        ), $recalculate);
 
         return $this->executor->execute(new WriteRun(
             $context->runId,

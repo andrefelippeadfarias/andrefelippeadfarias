@@ -108,6 +108,16 @@ final class MappersTest extends TestCase
         self::assertSame('Long weekend', $override->reason);
     }
 
+    public function testTheLeadTimeExpiryIsReadAsWholeDaysOnly(): void
+    {
+        $mapper = new OverrideMapper();
+
+        self::assertSame(3, $mapper->map(['date' => '2027-03-11', 'min_price' => '10', 'lead_time_expiry' => 3])?->leadTimeExpiryDays);
+        self::assertSame(2, $mapper->map(['date' => '2027-03-11', 'lead_time_expiry' => '2'])?->leadTimeExpiryDays);
+        self::assertNull($mapper->map(['date' => '2027-03-11', 'lead_time_expiry' => '2.5'])?->leadTimeExpiryDays, 'not a whole number of days: read as none');
+        self::assertNull($mapper->map(['date' => '2027-03-11'])?->leadTimeExpiryDays);
+    }
+
     public function testPriceRulesAndWhatCannotBeRead(): void
     {
         $mapper = new OverrideMapper();

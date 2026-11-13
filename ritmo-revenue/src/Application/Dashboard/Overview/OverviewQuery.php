@@ -196,26 +196,24 @@ final class OverviewQuery
      * The newest run with what it did, and, for the run whose plan the screens show, how many
      * nights it would write.
      *
-     * @return array{run: array<string, mixed>|null, would_write: int|null, writes_sent: int|null, lines: list<string>}
+     * @return array{run: array<string, mixed>|null, would_write: int|null, writes_sent: int|null}
      */
     public function lastRun(Property $property): array
     {
         $recent = $this->lastPlan->recentRuns($property->id, 5);
         $run = $recent[0] ?? null;
         if ($run === null) {
-            return ['run' => null, 'would_write' => null, 'writes_sent' => null, 'lines' => []];
+            return ['run' => null, 'would_write' => null, 'writes_sent' => null];
         }
         $plan = $this->lastPlan->of($recent);
         $wouldWrite = $plan['run'] !== null && $plan['run']['id'] === $run['id']
             ? count(array_filter($plan['plan']->all(), static fn (PlannedNight $n): bool => $n->status === PlannedNight::WOULD_WRITE))
             : null;
-        $lines = $run['summary']['report']['lines'] ?? [];
 
         return [
             'run' => $run,
             'would_write' => $wouldWrite,
             'writes_sent' => is_numeric($run['summary']['write']['writes_sent'] ?? null) ? (int) $run['summary']['write']['writes_sent'] : null,
-            'lines' => array_slice(array_values(array_filter(is_array($lines) ? $lines : [], 'is_string')), 0, 8),
         ];
     }
 

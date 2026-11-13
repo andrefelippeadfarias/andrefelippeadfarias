@@ -62,14 +62,13 @@ final class JournalWatch
         $keys = [];
         foreach ($settled->ownUnobserved() as $row) {
             $payload = is_array($row['payload'] ?? null) ? $row['payload'] : [];
-            $room = (string) ($payload['room'] ?? '');
-            if ($room === '') {
-                continue;
-            }
             $provider = $row['provider'] === 'pms' ? Provider::Pms : Provider::Pricing;
-            foreach ((array) ($row['dates'] ?? []) as $night) {
-                if (is_string($night) && Days::isValid($night)) {
-                    $keys[WrittenNight::keyOf($provider, $room, Days::date($night))] = true;
+            foreach ((array) ($payload['nights'] ?? []) as $target => $nights) {
+                $room = JournalNights::roomOf($payload, (string) $target);
+                foreach ($room === '' ? [] : (array) $nights as $night) {
+                    if (is_string($night) && Days::isValid($night)) {
+                        $keys[WrittenNight::keyOf($provider, $room, Days::date($night))] = true;
+                    }
                 }
             }
         }

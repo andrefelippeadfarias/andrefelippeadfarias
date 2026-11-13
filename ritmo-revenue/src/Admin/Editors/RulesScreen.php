@@ -58,6 +58,7 @@ final class RulesScreen
             'orders' => __('Owner order defaults', 'ritmo-revenue'),
             'plan' => __('Plan and writing', 'ritmo-revenue'),
             'runs' => __('Runs and alerts', 'ritmo-revenue'),
+            'reports' => __('Reports and forecasts', 'ritmo-revenue'),
         ];
     }
 

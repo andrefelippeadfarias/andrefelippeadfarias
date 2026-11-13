@@ -7,6 +7,7 @@ namespace Ritmo\Application\Approval;
 use Closure;
 use DateTimeZone;
 use OutOfBoundsException;
+use Ritmo\Application\Rules\PrivacyCheck;
 use Ritmo\Domain\Operations\LocalTime;
 use Ritmo\Domain\Operations\Slot;
 use Ritmo\Domain\Operations\SlotKind;
@@ -26,6 +27,8 @@ use Ritmo\Infrastructure\Schedule\ScheduledRunRepository;
  */
 final class ApprovalDesk
 {
+    public const NOTE_MAX = 190;
+
     /**
      * @param (Closure(): void)|null $wake asks the scheduler to tick now (WP-Cron spawn)
      */
@@ -41,15 +44,17 @@ final class ApprovalDesk
     }
 
     /**
-     * @param list<string>|null $selected entry keys (closed over their groups); null approves everything
+     * @param list<string>|null     $selected      entry keys (closed over their groups); null approves everything
+     * @param array<string, string> $confirmations listing entry key => the amount typed (ApprovalService::approve())
      *
-     * @throws ApprovalRefused       as ApprovalService::approve()
+     * @throws ApprovalRefused       as ApprovalService::approve(), or when the note holds guest data
      * @throws OutOfBoundsException when the request is not of the property
      */
-    public function approve(string $propertyId, int $requestId, int $userId, ?array $selected, ApprovalConfig $config, string $note = ''): ApprovalGrant
+    public function approve(string $propertyId, int $requestId, int $userId, ?array $selected, ApprovalConfig $config, string $note = '', array $confirmations = []): ApprovalGrant
     {
+        self::checkNote($note);
         $this->belongs($propertyId, $requestId);
-        $grant = $this->service($config)->approve($requestId, $userId, $selected, $note);
+        $grant = $this->service($config)->approve($requestId, $userId, $selected, $note, $confirmations);
         $this->events->record($propertyId, OperationEventRepository::APPROVAL, 'pending', 'approved', $note === '' ? sprintf('Request %d approved (%d entries).', $requestId, count($grant->approvedEntries)) : $note, 'user:' . $userId, $this->clock->now());
         $this->schedule($propertyId);
 
@@ -57,11 +62,12 @@ final class ApprovalDesk
     }
 
     /**
-     * @throws ApprovalRefused       as ApprovalService::reject()
+     * @throws ApprovalRefused       as ApprovalService::reject(), or when the note holds guest data
      * @throws OutOfBoundsException when the request is not of the property
      */
     public function reject(string $propertyId, int $requestId, int $userId, ApprovalConfig $config, string $note = ''): void
     {
+        self::checkNote($note);
         $this->belongs($propertyId, $requestId);
         $this->service($config)->reject($requestId, $userId, $note);
         $this->events->record($propertyId, OperationEventRepository::APPROVAL, 'pending', 'rejected', $note === '' ? sprintf('Request %d refused.', $requestId) : $note, 'user:' . $userId, $this->clock->now());
@@ -115,5 +121,18 @@ final class ApprovalDesk
     private function service(ApprovalConfig $config): ApprovalService
     {
         return new ApprovalService($this->requests, $this->capabilities, $this->clock, $config);
+    }
+
+    /**
+     * A decision note is kept and shown: never guest data (an email, a phone, a document), on
+     * every path (form and REST).
+     *
+     * @throws ApprovalRefused
+     */
+    private static function checkNote(string $note): void
+    {
+        if (PrivacyCheck::problem($note, self::NOTE_MAX) !== null) {
+            throw new ApprovalRefused(ApprovalRefused::NOTE_PRIVATE, 'A note cannot hold an email, a phone number or a document, and has at most 190 characters.');
+        }
     }
 }

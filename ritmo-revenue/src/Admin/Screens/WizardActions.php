@@ -152,11 +152,10 @@ final class WizardActions
                 'base' => $row['base'],
                 'min' => $row['min'],
                 'max' => $row['max'],
-                'reference_min' => self::existingReference($row['code']) ?? $row['min'],
                 'tags' => $row['tags'],
             ];
         }
-        $saved = ScreenServices::instance()->wizard()->saveRooms($rows);
+        $saved = ScreenServices::instance()->wizard()->saveRooms($rows, get_current_user_id());
         /* translators: %s: number of rooms */
         Notice::flash(Notice::SUCCESS, sprintf(_n('%s room saved.', '%s rooms saved.', $saved, 'ritmo-revenue'), number_format_i18n($saved)));
 
@@ -171,7 +170,7 @@ final class WizardActions
         $property = $form->text('property_id', 32);
         $services = ScreenServices::instance();
         if ($form->choice('rules', ['conservative', 'import'], 'conservative') === 'import') {
-            $summary = $services->services()->setup()->importPreset(self::presetFile(), get_current_user_id());
+            $summary = $services->wizard()->importPreset(self::presetFile(), get_current_user_id());
             /* translators: 1: rules version, 2: properties, 3: room types */
             Notice::flash(Notice::SUCCESS, sprintf(__('Preset imported: rules version %1$d, %2$d properties and %3$d room types, all in shadow mode.', 'ritmo-revenue'), $summary['rules_version'], $summary['properties'], $summary['room_types']));
         }
@@ -208,13 +207,6 @@ final class WizardActions
         Notice::flash(Notice::SUCCESS, __('Safety limits confirmed. They apply from the next run.', 'ritmo-revenue'));
 
         return ['tab' => 'setup', 'step' => 8, 'property' => $property];
-    }
-
-    private static function existingReference(string $code): ?string
-    {
-        $room = $code === '' ? null : ScreenServices::instance()->services()->roomTypes()->find($code);
-
-        return $room === null ? null : (string) $room->referenceMin;
     }
 
     /**

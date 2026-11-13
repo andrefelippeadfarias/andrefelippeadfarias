@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Ritmo\Application\Mode;
 
+use Closure;
 use DateTimeImmutable;
 use Ritmo\Application\EmergencySwitch;
 use Ritmo\Contracts\KeyValueStore;
@@ -46,6 +47,9 @@ final class ModePreconditions
 
     private const WRITE_FAILED_DAYS = 7;
 
+    /**
+     * @param (Closure(): string)|null $safetyFingerprint the fingerprint of the safety values in force (SafetyValues::fingerprint)
+     */
     public function __construct(
         private readonly RunRepository $runs,
         private readonly AlertLedger $alerts,
@@ -53,6 +57,7 @@ final class ModePreconditions
         private readonly EmergencySwitch $switch,
         private readonly KeyValueStore $store,
         private readonly Clock $clock,
+        private readonly ?Closure $safetyFingerprint = null,
     ) {
     }
 
@@ -135,13 +140,18 @@ final class ModePreconditions
     }
 
     /**
-     * Step 7 of the setup (admin spec 5.1) recorded who confirmed the safety limits.
+     * Step 7 of the setup (admin spec 5.1) recorded who confirmed the safety limits, and the
+     * safety values are still the ones confirmed (their fingerprint): any later change of a limit
+     * or of a room's reference minimum needs a new confirmation.
      */
     private function safetyConfirmed(): bool
     {
         $setup = $this->store->get(self::SETUP_KEY);
+        if (!is_array($setup) || !is_string($setup['safety_confirmed_at'] ?? null) || $setup['safety_confirmed_at'] === '') {
+            return false;
+        }
 
-        return is_array($setup) && is_string($setup['safety_confirmed_at'] ?? null) && $setup['safety_confirmed_at'] !== '';
+        return $this->safetyFingerprint === null || ($setup['safety_fingerprint'] ?? null) === ($this->safetyFingerprint)();
     }
 
     private static function within(DateTimeImmutable $at, DateTimeImmutable $now, int $seconds): bool

@@ -50,6 +50,7 @@ use Ritmo\Infrastructure\Store\ArrayStore;
 use Ritmo\Tests\Fakes\MemoryQuotaLedger;
 use Ritmo\Tests\Fakes\MovableClock;
 use Ritmo\Tests\Fakes\RecordingLogger;
+use Ritmo\Tests\Unit\Application\Write\WriteSample;
 use Ritmo\Tests\Unit\Domain\EngineSample;
 
 /**
@@ -182,7 +183,26 @@ final class SimWorld
      */
     public function issue(ValidatedPlan $plan, array $pms = [], array $recalculate = []): IssuedToken
     {
-        return $this->gate->issue($plan, new AutonomousAuthorization('inn', 1, new DateTimeImmutable('2027-03-01T00:00:00Z')), $this->context(), $pms, $recalculate);
+        return $this->gate->issue($this->sealPms($plan, $pms), new AutonomousAuthorization('inn', 1, new DateTimeImmutable('2027-03-01T00:00:00Z')), $this->context(), $recalculate);
+    }
+
+    /**
+     * The plan validated again with these PMS changes sealed in it (the gate writes only sealed
+     * PMS changes); the plan itself when there are none.
+     *
+     * @param list<CalendarChange> $pms
+     */
+    public function sealPms(ValidatedPlan $plan, array $pms): ValidatedPlan
+    {
+        if ($pms === []) {
+            return $plan;
+        }
+        $with = $plan->plan->withPmsChanges(WriteSample::pmsEntries($pms));
+        $result = (new Validator(EngineSample::rules(), $this->clock))->validate($with, self::property(), self::rooms(), new ValidationContext());
+        Assert::assertTrue($result->isValid(), implode(', ', $result->errorCodes()));
+        Assert::assertNotNull($result->plan);
+
+        return $result->plan;
     }
 
     public function execute(IssuedToken $issued, ValidatedPlan $plan, ?callable $heartbeat = null, ?DateTimeImmutable $deadline = null): WriteOutcome
@@ -200,7 +220,9 @@ final class SimWorld
      */
     public function write(ValidatedPlan $plan, array $pms = [], array $recalculate = []): WriteOutcome
     {
-        return $this->execute($this->issue($plan, $pms, $recalculate), $plan);
+        $plan = $this->sealPms($plan, $pms);
+
+        return $this->execute($this->issue($plan, [], $recalculate), $plan);
     }
 
     /**

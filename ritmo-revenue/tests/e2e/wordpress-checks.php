@@ -19,7 +19,8 @@
 
 declare(strict_types=1);
 
-use Ritmo\Admin\AdminPages;
+use Ritmo\Admin\AdminScreens;
+use Ritmo\Admin\Components\Menu;
 use Ritmo\Application\ShadowRun\RunOutcome;
 use Ritmo\Infrastructure\Db\Repository\RunRepository;
 use Ritmo\Infrastructure\Secrets\SodiumVault;
@@ -68,14 +69,16 @@ function child(string $site, string $mode): string
 }
 
 /**
- * Renders an admin screen of the plugin as the given user.
+ * Renders a tab of the Settings screen of the plugin as the given user.
  */
-function screen(string $method, int $userId): string
+function screen(string $tab, int $userId): string
 {
     require_once ABSPATH . 'wp-admin/includes/admin.php';
     wp_set_current_user($userId);
+    $_GET['page'] = Menu::SETTINGS;
+    $_GET['tab'] = $tab;
     ob_start();
-    AdminPages::$method();
+    (AdminScreens::renderers()[Menu::SETTINGS])();
 
     return (string) ob_get_clean();
 }
@@ -101,10 +104,10 @@ switch ($mode) {
         $test = $services->connectors()->test('beds24');
         check(!$test->ok && str_contains($test->message, 'RITMO_SECRET_KEY'), 'the connection test says what is wrong: ' . $test->message);
         $admin = administratorId();
-        check(str_contains(screen('connections', $admin), 'Beds24 (PMS)'), 'the Connections screen opens');
+        check(str_contains(screen('connections', $admin), 'data-ritmo="connection-test-beds24"'), 'the Connections tab opens');
         check(str_contains(screen('diagnostics', $admin), 'shorter than 32 characters'), 'Diagnostics names the problem');
         ob_start();
-        AdminPages::vaultNotice();
+        AdminScreens::vaultNotice();
         check(str_contains((string) ob_get_clean(), 'data-ritmo="vault-problem"'), 'an admin notice reports the problem');
         $outcome = $services->shadowRuns()->run(E2E_PROPERTY, 60);
         check($outcome->status === RunOutcome::FAILED && str_contains((string) $outcome->error, 'RITMO_SECRET_KEY'), 'the run fails with the reason: ' . $outcome->status . ' ' . $outcome->error);

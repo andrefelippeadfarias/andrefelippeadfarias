@@ -1,10 +1,11 @@
 /**
- * End-to-end check of milestone M3 on the throwaway site (run it through bin/e2e.sh, after the
- * shadow passes): on the Operations screen, switch the seeded property to approval, "Run now" and
- * see the plan wait with nothing written; approve everything, let the scheduler run (wp-cron.php)
- * and see the approved writes reach the simulator, only on the write routes of the pricing system
- * (never a price or a booking to the PMS); then engage the emergency switch on the screen and see
- * that "Run now" sends nothing. Proved through the simulator's own log (GET /__log).
+ * End-to-end check of milestone M3 on the M4 screens (run it through bin/e2e.sh, after the shadow
+ * passes): on the Operations screen, switch the seeded property to approval, "Run now" and see the
+ * plan wait on the Approvals screen with nothing written; approve everything, let the scheduler
+ * run (wp-cron.php) and see the approved writes reach the simulator, only on the write routes of
+ * the pricing system or the PMS calendar (and no PMS body with a price or a booking); then engage
+ * the emergency switch on the Operations screen and see that "Run now" sends nothing. Proved
+ * through the simulator's own log (GET /__log).
  *
  * Environment:
  *   RITMO_E2E_SCREENS   folder of the screenshots
@@ -20,7 +21,7 @@ const USER = 'ritmo-e2e-admin';
 const PASSWORD = 'ritmo-e2e-only-password';
 const PROPERTY = 'example-inn';
 const READ_POST = '/pricelabs/v1/listing_prices';
-const WRITE_ROUTES = [/^\/pricelabs\/v1\/listings\/[^/]+\/overrides$/, /^\/pricelabs\/v1\/refresh_listing$/];
+const WRITE_ROUTES = [/^\/pricelabs\/v1\/listings\/[^/]+\/overrides$/, /^\/pricelabs\/v1\/refresh_listing$/, /^\/beds24\/v2\/inventory\/rooms\/calendar$/];
 
 const screens = process.env.RITMO_E2E_SCREENS || path.join(__dirname, 'screenshots');
 const shots = [];
@@ -31,8 +32,23 @@ function check(condition, message) {
     }
 }
 
+// The built-in PHP servers drop a connection now and then under load ("fetch failed"): a request
+// of the test itself (simulator log, wp-cron) is tried again a few times before the pass fails.
+async function retryFetch(url, options = {}) {
+    for (let attempt = 1; ; attempt += 1) {
+        try {
+            return await fetch(url, options);
+        } catch (error) {
+            if (attempt >= 5) {
+                throw error;
+            }
+            await new Promise((resolve) => setTimeout(resolve, 300 * attempt));
+        }
+    }
+}
+
 async function writesInLog() {
-    const response = await fetch(API + '/__log');
+    const response = await retryFetch(API + '/__log');
     const body = await response.json();
     return body.requests.filter((r) => !r.path.startsWith('/__') && r.method !== 'GET' && !(r.method === 'POST' && r.path === READ_POST));
 }
@@ -98,8 +114,12 @@ async function operations(page) {
     await page.goto(SITE + '/wp-admin/admin.php?page=ritmo-revenue-operations&property=' + PROPERTY);
 }
 
+async function approvalsScreen(page) {
+    await page.goto(SITE + '/wp-admin/admin.php?page=ritmo-revenue-approvals&property=' + PROPERTY);
+}
+
 async function notice(page) {
-    return (await page.textContent('.ritmo-notice')).trim();
+    return (await page.textContent('[data-ritmo="notice"]')).trim();
 }
 
 /**
@@ -110,7 +130,7 @@ async function runNow(page) {
         await operations(page);
         await submitAndWait(page, '[data-ritmo="run-now-button"]');
         const text = await notice(page);
-        if (!text.startsWith('Run: running')) {
+        if (!/^Run now: (running|waiting)/.test(text)) {
             return text;
         }
     }
@@ -118,8 +138,8 @@ async function runNow(page) {
 }
 
 async function main() {
-    await fetch(API + '/__reset', { method: 'POST' });
-    await fetch(API + '/__writes', { method: 'POST', body: JSON.stringify({ not_ready: [] }) });
+    await retryFetch(API + '/__reset', { method: 'POST' });
+    await retryFetch(API + '/__writes', { method: 'POST', body: JSON.stringify({ not_ready: [] }) });
 
     const browser = await chromium.launch();
     const context = await browser.newContext({ viewport: { width: 1440, height: 1000 }, deviceScaleFactor: 2 });
@@ -138,22 +158,22 @@ async function main() {
         check((await page.getAttribute('[data-ritmo="current-mode"]', 'data-mode')) === 'shadow', 'a new property is not in shadow mode');
         await page.selectOption('#ritmo-mode', 'approval');
         await submitAndWait(page, '[data-ritmo="set-mode"]');
-        check((await notice(page)).includes('approval mode'), 'the mode did not change: ' + await notice(page));
+        check(/approval/i.test(await notice(page)), 'the mode did not change: ' + await notice(page));
         const run = await runNow(page);
-        check(run.startsWith('Run: completed'), 'the run in approval mode did not complete: ' + run);
-        await operations(page);
+        check(run.startsWith('Run now: completed'), 'the run in approval mode did not complete: ' + run);
+        await approvalsScreen(page);
         check(await page.locator('[data-ritmo="approval-request"]').count() === 1, 'no plan waits for approval');
         check((await writesInLog()).length === 0, 'something was written before the approval: ' + JSON.stringify(await writesInLog()));
         await shot(page, '07-operations-waiting-for-approval.png');
         await restChecks(page);
-        await operations(page);
+        await approvalsScreen(page);
 
         // Approve everything: the scheduler writes the approved plan.
         await submitAndWait(page, '[data-ritmo="approve-all"]');
-        check((await notice(page)).includes('entries approved'), 'the approval failed: ' + await notice(page));
+        check(/nights? approved/.test(await notice(page)), 'the approval failed: ' + await notice(page));
         let writes = [];
         for (let attempt = 0; attempt < 10 && writes.length === 0; attempt++) {
-            await fetch(SITE + '/wp-cron.php?doing_wp_cron=' + (Date.now() / 1000).toFixed(4));
+            await retryFetch(SITE + '/wp-cron.php?doing_wp_cron=' + (Date.now() / 1000).toFixed(4));
             writes = await writesInLog();
             if (writes.length === 0) {
                 await runNow(page);
@@ -163,12 +183,14 @@ async function main() {
         check(writes.length > 0, 'the approved plan was not written');
         const outside = writes.filter((w) => !WRITE_ROUTES.some((route) => route.test(w.path)));
         check(outside.length === 0, 'a write left the write routes of the pricing system: ' + JSON.stringify(outside));
-        check(!writes.some((w) => w.path.startsWith('/beds24/')), 'something was written to the PMS');
-        await operations(page);
-        check(await page.locator('[data-ritmo="change"]').count() > 0, 'the change log is empty after the write');
+        const bodies = (await (await retryFetch(API + '/__writes')).json()).writes || [];
+        check(!bodies.some((w) => String(w.path).startsWith('/beds24/') && /price|booking/i.test(JSON.stringify(w.body))), 'a price or a booking was sent to the PMS');
+        await page.goto(SITE + '/wp-admin/admin.php?page=ritmo-revenue-changes&property=' + PROPERTY);
+        check(await page.locator('[data-ritmo="run-group"]').count() > 0, 'the change log is empty after the write');
         await shot(page, '08-operations-after-approved-write.png');
 
         // The emergency switch on the screen: nothing more leaves.
+        await operations(page);
         await submitAndWait(page, '[data-ritmo="switch-button"]');
         check((await page.textContent('[data-ritmo="switch-state"]')).includes('Engaged'), 'the switch did not engage');
         const before = (await writesInLog()).length;

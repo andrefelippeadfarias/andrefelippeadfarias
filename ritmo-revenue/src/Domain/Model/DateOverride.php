@@ -6,6 +6,7 @@ namespace Ritmo\Domain\Model;
 
 use DateTimeImmutable;
 use InvalidArgumentException;
+use Ritmo\Domain\Stay\Write\Expiry\ExpiryWindow;
 use Ritmo\Domain\Support\Days;
 
 /**
@@ -50,6 +51,7 @@ final class DateOverride
         public readonly ?string $priceType = null,
         public readonly ?float $minFixed = null,
         public readonly ?float $maxFixed = null,
+        public readonly ?int $leadTimeExpiryDays = null,
     ) {
         foreach ([$checkinMask, $checkoutMask] as $mask) {
             if ($mask !== null && !self::isValidMask($mask)) {
@@ -58,6 +60,9 @@ final class DateOverride
         }
         if ($minStay !== null && $minStay < 1) {
             throw new InvalidArgumentException('The minimum stay must be at least one night.');
+        }
+        if ($leadTimeExpiryDays !== null && $leadTimeExpiryDays < 0) {
+            throw new InvalidArgumentException('A lead-time expiry is zero or more days.');
         }
         if (($price === null) !== ($priceType === null)) {
             throw new InvalidArgumentException('A price override needs both the price and its type.');
@@ -79,6 +84,14 @@ final class DateOverride
     /**
      * True when the override sets a price, a floor or a ceiling (not only stay or arrival rules).
      */
+    /**
+     * The lead-time expiry of the rule (it stops applying N days before its night), or null.
+     */
+    public function expiry(): ?ExpiryWindow
+    {
+        return $this->leadTimeExpiryDays === null ? null : new ExpiryWindow($this->date, $this->leadTimeExpiryDays);
+    }
+
     public function hasPriceRule(): bool
     {
         return $this->price !== null

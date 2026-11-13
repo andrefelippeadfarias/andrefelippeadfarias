@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Ritmo\Application\Market;
 
 use InvalidArgumentException;
+use Ritmo\Application\Rules\PrivacyCheck;
 use Ritmo\Domain\Market\Csv\CompetitorIndex;
 use Ritmo\Domain\Market\Csv\CsvContext;
 use Ritmo\Domain\Market\Csv\MarketCsvProblem;
@@ -73,7 +74,7 @@ final class MarketImportService
             'invalid' => $read->invalidLines(),
             'warned' => count(array_unique(array_map(static fn (MarketCsvProblem $p): int => $p->line, $read->ofKind(MarketCsvProblem::WARNING)))),
             'problems' => array_map(
-                static fn (MarketCsvProblem $p): array => [$p->kind, $p->code, $p->line, $p->column, $p->value],
+                static fn (MarketCsvProblem $p): array => [$p->kind, $p->code, $p->line, $p->column, self::shown($p->value)],
                 array_slice($read->problems, 0, ImportPreview::LISTED_PROBLEMS)
             ),
             'more_problems' => max(0, count($read->problems) - ImportPreview::LISTED_PROBLEMS),
@@ -112,7 +113,7 @@ final class MarketImportService
         $checkIns = array_map(static fn (ParsedRow $r) => $r->checkIn, $rows);
         $unknown = [];
         foreach ($problems as $problem) {
-            if ($problem->code === MarketCsvProblem::UNKNOWN_COMPETITOR && $problem->value !== '') {
+            if ($problem->code === MarketCsvProblem::UNKNOWN_COMPETITOR && $problem->value !== '' && $problem->value !== MarketCsvProblem::HIDDEN_VALUE) {
                 $unknown[$problem->value] = true;
             }
         }
@@ -307,5 +308,16 @@ final class MarketImportService
         }
 
         return $nights;
+    }
+
+    /**
+     * The value of a problem as it may be kept in the preview and shown: a value that looks like
+     * personal data (an email, a phone, a document) is replaced (rule 4).
+     */
+    private static function shown(string $value): string
+    {
+        $problem = PrivacyCheck::problem($value, PHP_INT_MAX);
+
+        return $problem === null ? $value : MarketCsvProblem::HIDDEN_VALUE;
     }
 }

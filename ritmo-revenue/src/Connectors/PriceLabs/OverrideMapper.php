@@ -6,6 +6,7 @@ namespace Ritmo\Connectors\PriceLabs;
 
 use Ritmo\Connectors\Support\Payload;
 use Ritmo\Domain\Model\DateOverride;
+use Ritmo\Domain\Stay\Write\Expiry\ExpiryWindow;
 
 /**
  * Turns a date-specific override of PriceLabs into a DateOverride.
@@ -57,7 +58,8 @@ final class OverrideMapper
             $price,
             $priceType,
             self::bound($override, 'min_price', self::FIXED),
-            self::bound($override, 'max_price', self::FIXED)
+            self::bound($override, 'max_price', self::FIXED),
+            ExpiryWindow::read($date, $override['lead_time_expiry'] ?? null)?->days
         );
     }
 

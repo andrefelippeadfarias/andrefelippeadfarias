@@ -6,6 +6,7 @@ namespace Ritmo\Application\Schedule;
 
 use DateTimeImmutable;
 use InvalidArgumentException;
+use Ritmo\Application\Rules\PrivacyCheck;
 use OutOfBoundsException;
 use Ritmo\Contracts\Logger;
 use Ritmo\Domain\Support\Clock;
@@ -43,7 +44,10 @@ final class PauseService
         if ($until !== null && $until <= $this->clock->now()) {
             throw new InvalidArgumentException('A pause ends in the future.');
         }
-        $clean = trim((string) preg_replace('/[\x00-\x1F\x7F]+/u', ' ', $reason));
+        $clean = trim((string) preg_replace('/[\x00-\x1F\x7F]+/u', ' ', strip_tags($reason)));
+        if (PrivacyCheck::problem($clean, self::MAX_REASON) !== null) {
+            throw new InvalidArgumentException('A reason cannot hold an email, a phone number or a document number.');
+        }
         $this->states->pause($propertyId, $until, $userId, mb_substr($clean, 0, self::MAX_REASON));
         $this->events->record($propertyId, OperationEventRepository::PAUSE, 'running', $until?->format(DATE_ATOM) ?? 'until_resumed', mb_substr($clean, 0, self::MAX_REASON), 'user:' . $userId, $this->clock->now());
         $this->logger->info('The scheduled runs of a property were paused.', ['property_id' => $propertyId, 'user_id' => $userId, 'until' => $until?->format(DATE_ATOM)]);

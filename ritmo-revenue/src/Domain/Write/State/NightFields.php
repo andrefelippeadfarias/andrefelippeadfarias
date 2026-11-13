@@ -7,6 +7,7 @@ namespace Ritmo\Domain\Write\State;
 use InvalidArgumentException;
 use Ritmo\Domain\Model\DateOverride;
 use Ritmo\Domain\Model\InventoryNight;
+use Ritmo\Domain\Support\Days;
 use Ritmo\Domain\Support\Num;
 
 /**
@@ -76,6 +77,7 @@ final class NightFields
             ChangeField::PRICE_TYPE => $override->priceType,
             ChangeField::FLOOR_FIXED => $override->minFixed,
             ChangeField::CEILING_FIXED => $override->maxFixed,
+            ChangeField::EXPIRY => $override->expiry() === null ? null : Days::key($override->expiry()->lastActiveDay()),
         ]);
     }
 

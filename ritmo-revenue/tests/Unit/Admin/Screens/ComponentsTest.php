@@ -121,9 +121,30 @@ final class ComponentsTest extends TestCase
 
         $stream = fopen('php://memory', 'w+b');
         self::assertIsResource($stream);
-        CsvWriter::write($stream, ['night', 'note'], [['2026-11-20', '=1+1'], ['2026-11-21', 'ok, fine']]);
+        CsvWriter::write($stream, ['night', 'note', 'amount'], [['2026-11-20', '=1+1', 480.5], ['2026-11-21', 'ok, fine', -5]]);
         rewind($stream);
-        self::assertSame("night,note\n2026-11-20,'=1+1\n2026-11-21,\"ok, fine\"\n", stream_get_contents($stream));
+        self::assertSame("\"night\",\"note\",\"amount\"\n\"2026-11-20\",\"'=1+1\",480.5\n\"2026-11-21\",\"ok, fine\",-5\n", stream_get_contents($stream));
+    }
+
+    public function testNoExportedCellBecomesAFormulaWhenASpreadsheetSplitsAtSemicolonsOrTabs(): void
+    {
+        self::assertSame("Inn;'=2*3+cmd|x!A1", CsvWriter::cell('Inn;=2*3+cmd|x!A1'));
+        self::assertSame("Suite; '@SUM(1;1)", CsvWriter::cell('Suite; @SUM(1;1)'));
+        self::assertSame("'-a,'+b", CsvWriter::cell('-a,+b'));
+        self::assertSame('Room 2 - garden', CsvWriter::cell('Room 2 - garden'), 'a dash inside a text is kept');
+
+        $stream = fopen('php://memory', 'w+b');
+        self::assertIsResource($stream);
+        CsvWriter::write($stream, ['code', 'name', 'room'], [['cmp2', 'Hotel;=2*3+cmd|x!A1', "Suite;@SUM(1;1)\t=1"]]);
+        rewind($stream);
+        $text = (string) stream_get_contents($stream);
+        foreach ([',', ';', "\t"] as $separator) {
+            foreach (preg_split('/\R/', trim($text)) ?: [] as $line) {
+                foreach (str_getcsv($line, $separator, '"', '') as $cell) {
+                    self::assertDoesNotMatchRegularExpression('/^\s*[=+\-@]/', $cell, sprintf('split at %s: %s', json_encode($separator), $line));
+                }
+            }
+        }
     }
 
     public function testRatiosAreTypedAsPercentAndSavedExactly(): void

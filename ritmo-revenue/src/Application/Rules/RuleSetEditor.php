@@ -102,6 +102,20 @@ final class RuleSetEditor
     }
 
     /**
+     * What a person would type to confirm the safety changes of these rules against the rules in
+     * force ('' when none): for a caller that took its own typed confirmation of the same change
+     * (the setup wizard's step 7 asks for the property id).
+     *
+     * @param array<string, mixed> $candidate complete rules
+     */
+    public function safetyConfirmation(array $candidate): string
+    {
+        $inForce = $this->ruleSets->current()?->toArray() ?? RuleSet::defaults()->toArray();
+
+        return SafetyFields::confirmation(SafetyFields::of(RuleDiff::between($inForce, $candidate, Schema::ruleSet())));
+    }
+
+    /**
      * The nights waiting for approval that saving would close, per property.
      *
      * @return array<string, int>

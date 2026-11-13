@@ -1,0 +1,179 @@
+{
+    "about": "Product terms and their pt_BR translation (spec 05, 7.4). Every msgid with the English term as a whole word must have a msgstr with one of the translations and none of the forbidden variants. Checked by tests/Unit/I18n/TranslationFilesTest.php.",
+    "terms": [
+        {
+            "en": "emergency switch",
+            "pt": [
+                "chave de emergência"
+            ],
+            "forbidden": [
+                "botão de pânico"
+            ]
+        },
+        {
+            "en": "shadow mode",
+            "pt": [
+                "modo sombra"
+            ],
+            "forbidden": [
+                "modo de teste"
+            ]
+        },
+        {
+            "en": "autonomous mode",
+            "pt": [
+                "modo autônomo"
+            ],
+            "forbidden": [
+                "modo automático"
+            ]
+        },
+        {
+            "en": "owner order",
+            "pt": [
+                "ordem do dono",
+                "ordens do dono"
+            ],
+            "forbidden": [
+                "pedido do dono",
+                "comando"
+            ]
+        },
+        {
+            "en": "sales ladder",
+            "pt": [
+                "escada de vendas"
+            ],
+            "forbidden": []
+        },
+        {
+            "en": "change log",
+            "pt": [
+                "registro de mudanças"
+            ],
+            "forbidden": [
+                "log de alterações"
+            ]
+        },
+        {
+            "en": "floor",
+            "pt": [
+                "piso"
+            ],
+            "forbidden": [
+                "chão",
+                "limite inferior"
+            ]
+        },
+        {
+            "en": "ceiling",
+            "pt": [
+                "teto"
+            ],
+            "forbidden": [
+                "limite superior"
+            ]
+        },
+        {
+            "en": "listing",
+            "pt": [
+                "anúncio"
+            ],
+            "forbidden": [
+                "listagem"
+            ]
+        },
+        {
+            "en": "minimum stay",
+            "pt": [
+                "estadia mínima",
+                "estadias mínimas"
+            ],
+            "forbidden": [
+                "permanência mínima",
+                "mínimo de noites"
+            ]
+        },
+        {
+            "en": "pricing system",
+            "pt": [
+                "sistema de preços"
+            ],
+            "forbidden": [
+                "precificador"
+            ]
+        },
+        {
+            "en": "safety limit",
+            "pt": [
+                "limite de segurança",
+                "limites de segurança"
+            ],
+            "forbidden": []
+        },
+        {
+            "en": "Run now",
+            "pt": [
+                "Rodar agora"
+            ],
+            "forbidden": [
+                "Executar agora"
+            ]
+        },
+        {
+            "en": "to-do",
+            "pt": [
+                "pendência",
+                "pendências"
+            ],
+            "forbidden": [
+                "tarefa"
+            ]
+        },
+        {
+            "en": "undo",
+            "pt": [
+                "desfaz",
+                "desfeit",
+                "desfaç"
+            ],
+            "forbidden": [
+                "reverter"
+            ]
+        },
+        {
+            "en": "property",
+            "pt": [
+                "propriedade"
+            ],
+            "forbidden": [
+                "imóvel",
+                "estabelecimento"
+            ]
+        },
+        {
+            "en": "occupancy",
+            "pt": [
+                "ocupação"
+            ],
+            "forbidden": []
+        },
+        {
+            "en": "Sync Now",
+            "pt": [
+                "Sync Now"
+            ],
+            "forbidden": []
+        }
+    ],
+    "forbidden_anywhere": [
+        "tarifa",
+        "precificador",
+        "modo de teste",
+        "lotado",
+        "faturamento",
+        "listagem",
+        "Executar agora",
+        "botão de pânico"
+    ]
+}

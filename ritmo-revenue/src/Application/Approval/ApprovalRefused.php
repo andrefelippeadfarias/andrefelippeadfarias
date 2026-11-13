@@ -20,6 +20,9 @@ final class ApprovalRefused extends RuntimeException
     public const UNKNOWN_ENTRY = 'unknown_entry';
     public const LISTING_NEEDS_EXPLICIT_APPROVAL = 'listing_needs_explicit_approval';
     public const UNSEALED_PLAN = 'unsealed_plan';
+    public const LISTING_NEEDS_SAFETY = 'listing_needs_safety';
+    public const LISTING_NOT_CONFIRMED = 'listing_not_confirmed';
+    public const NOTE_PRIVATE = 'note_private';
 
     public function __construct(public readonly string $reason, string $message)
     {

@@ -15,9 +15,13 @@ use Ritmo\Application\Dashboard\Setup\SetupWizard;
 use Ritmo\Application\Dashboard\Setup\WizardProgress;
 use Ritmo\Application\Dashboard\Setup\WouldDo;
 use Ritmo\Application\Grid\LastPlan;
+use Ritmo\Application\Rules\PendingApprovals;
+use Ritmo\Application\Rules\RuleChecks;
+use Ritmo\Application\Rules\RuleSetEditor;
 use Ritmo\Application\Setup\SetupService;
 use Ritmo\Contracts\ConnectionStatus;
 use Ritmo\Domain\Model\PropertyMode;
+use Ritmo\Infrastructure\Db\Repository\EditorEventRepository;
 use Ritmo\Infrastructure\Db\Repository\InventorySnapshotRepository;
 use Ritmo\Infrastructure\Db\Repository\MarketAnchorRepository;
 use Ritmo\Infrastructure\Db\Repository\PlanItemRepository;
@@ -28,6 +32,11 @@ use Ritmo\Tests\Unit\Application\Grid\ScreenWorld;
 
 final class SetupAndSupportTest extends TestCase
 {
+    private EditorEventRepository $events;
+
+    /** @var PendingApprovals&object{closed: list<string>} */
+    private PendingApprovals $closed;
+
     public function testTheWizardStepsAreDerivedFromFacts(): void
     {
         $fresh = new WizardProgress([]);
@@ -52,7 +61,7 @@ final class SetupAndSupportTest extends TestCase
         self::assertSame(4, $wizard->progress(null)->current());
 
         $world->property();
-        $saved = $wizard->saveRooms([$this->roomRow('A'), $this->roomRow('B')]);
+        $saved = $wizard->saveRooms([$this->roomRow('A'), $this->roomRow('B')], 1);
         self::assertSame(2, $saved);
         self::assertSame(6, $wizard->progress('inn')->current());
 
@@ -79,12 +88,79 @@ final class SetupAndSupportTest extends TestCase
         $world->property();
         $wizard = $this->wizard($world, true);
         try {
-            $wizard->saveRooms([$this->roomRow('A'), ['property_id' => 'inn', 'code' => 'bad code!'] + $this->roomRow('B')]);
+            $wizard->saveRooms([$this->roomRow('A'), ['property_id' => 'inn', 'code' => 'bad code!'] + $this->roomRow('B')], 1);
             self::fail('the step was not refused');
         } catch (RoomRowsRefused $refused) {
             self::assertSame(2, $refused->errors[0]['row']);
         }
         self::assertSame([], $world->roomTypes()->forProperty('inn'), 'nothing saved');
+    }
+
+    public function testTheRulesStepGoesThroughTheEditorAndClosesWaitingApprovals(): void
+    {
+        $world = new ScreenWorld();
+        $world->property();
+        $this->wizard($world, false)->chooseRules([4, 5, 6], 2);
+
+        self::assertSame(['inn:rules_changed'], $this->closed->closed, 'a plan waiting for approval was made under the old rules');
+        self::assertNotSame([], $this->events->latest('inn', [EditorEventRepository::RULES_VERSION]), 'the new version is in the log of rule changes');
+    }
+
+    public function testImportingAPresetNeedsTheSafetyCapability(): void
+    {
+        $world = new ScreenWorld();
+        $world->property();
+        $preset = (string) file_get_contents(dirname(__DIR__, 4) . '/presets/default.json');
+        try {
+            $this->wizard($world, false)->importPreset($preset, 2);
+            self::fail('a person without ritmo_manage_safety imported a preset');
+        } catch (\InvalidArgumentException) {
+            self::assertNull((new RuleSetRepository($world->raw, $world->clock))->currentVersion(), 'nothing saved');
+        }
+        $summary = $this->wizard($world, true)->importPreset($preset, 1);
+        self::assertSame(1, $summary['rules_version']);
+        self::assertSame(['inn:rules_changed'], $this->closed->closed);
+    }
+
+    public function testWithoutTheSafetyCapabilityTheRoomValuesOfAnExistingRoomStay(): void
+    {
+        $world = new ScreenWorld();
+        $world->property();
+        $this->wizard($world, true)->saveRooms([$this->roomRow('A')], 1);
+        try {
+            $this->wizard($world, false)->saveRooms([['min' => '1'] + $this->roomRow('A')], 2);
+            self::fail('a person without ritmo_manage_safety changed the minimum of a room');
+        } catch (RoomRowsRefused $refused) {
+            self::assertStringContainsString('safety limits', $refused->errors[0]['message']);
+        }
+        self::assertSame([400.0, 400.0], [$world->roomTypes()->find('A')?->min, $world->roomTypes()->find('A')?->referenceMin]);
+        self::assertSame(1, $this->wizard($world, false)->saveRooms([['name' => 'Renamed'] + $this->roomRow('A')], 2), 'other values change');
+        self::assertSame(400.0, $world->roomTypes()->find('A')?->referenceMin, 'the reference minimum is kept');
+    }
+
+    public function testANewRoomCannotTakeTheListingOfAnother(): void
+    {
+        $world = new ScreenWorld();
+        $world->property();
+        $this->wizard($world, true)->saveRooms([$this->roomRow('A')], 1);
+        try {
+            $this->wizard($world, true)->saveRooms([['code' => 'DUP'] + $this->roomRow('A')], 1);
+            self::fail('a second room was mapped to the same PMS room and listing');
+        } catch (RoomRowsRefused $refused) {
+            self::assertStringContainsString('already mapped', $refused->errors[0]['message']);
+        }
+        self::assertNull($world->roomTypes()->find('DUP'));
+    }
+
+    public function testWithoutTheSafetyCapabilityANewRoomOnlyJoinsAPropertyInShadow(): void
+    {
+        $world = new ScreenWorld();
+        $world->property();
+        self::assertSame(1, $this->wizard($world, false)->saveRooms([$this->roomRow('A')], 2), 'shadow mode: nothing is written');
+        $world->property('inn', PropertyMode::Approval);
+
+        $this->expectException(RoomRowsRefused::class);
+        $this->wizard($world, false)->saveRooms([$this->roomRow('B')], 2);
     }
 
     public function testTheSafetyStepNeedsTheSafetyCapability(): void
@@ -168,7 +244,7 @@ final class SetupAndSupportTest extends TestCase
      */
     private function roomRow(string $code): array
     {
-        return ['property_id' => 'inn', 'code' => $code, 'name' => 'Room ' . $code, 'units' => '2', 'pms_ref' => '10' . strlen($code), 'pricing_ref' => 'pl-' . $code, 'base' => '600', 'min' => '400', 'max' => '1200', 'reference_min' => '400', 'tags' => ''];
+        return ['property_id' => 'inn', 'code' => $code, 'name' => 'Room ' . $code, 'units' => '2', 'pms_ref' => '10' . bin2hex($code), 'pricing_ref' => 'pl-' . $code, 'base' => '600', 'min' => '400', 'max' => '1200', 'tags' => ''];
     }
 
     private function wizard(ScreenWorld $world, bool $safety): SetupWizard
@@ -186,6 +262,25 @@ final class SetupAndSupportTest extends TestCase
             }
         };
 
-        return new SetupWizard($world->raw, $world->properties(), $world->roomTypes(), $ruleSets, new RunRepository($world->raw), $setup, new ConnectionTests($world->settings, $world->clock), new SetupState($world->settings), $capabilities, $world->clock);
+        $this->events = new EditorEventRepository($world->raw);
+        $this->closed = new class () implements PendingApprovals {
+            /** @var list<string> */
+            public array $closed = [];
+
+            public function waitingNights(string $propertyId): int
+            {
+                return 1;
+            }
+
+            public function expireAll(string $propertyId, string $reason): int
+            {
+                $this->closed[] = $propertyId . ':' . $reason;
+
+                return 1;
+            }
+        };
+        $editor = new RuleSetEditor($world->raw, $world->clock, $ruleSets, $world->properties(), $this->events, new RuleChecks($world->properties(), $world->roomTypes()), $this->closed);
+
+        return new SetupWizard($world->raw, $world->properties(), $world->roomTypes(), $ruleSets, new RunRepository($world->raw), $setup, new ConnectionTests($world->settings, $world->clock), new SetupState($world->settings), $capabilities, $world->clock, $editor);
     }
 }

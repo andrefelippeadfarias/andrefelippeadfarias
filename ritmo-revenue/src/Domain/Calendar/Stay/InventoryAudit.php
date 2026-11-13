@@ -129,19 +129,22 @@ final class InventoryAudit
         $this->restriction($found, $night, $side->restriction, $side->reason, $side->proof);
         $stay = $night->minStay ?? 1;
         $freeSideAllowed = $side->freeClosedDay && $this->rules->orphanAllowed($found->room, $night->date, true);
+        // the stay of a free closed day goes to the PMS only once the night before has passed (the
+        // reference's batch); a future one goes to the pricing system, whose push carries it
+        $previousPast = $side->reason === StayReason::OrphanSidePreviousPast;
         if ($side->soldOutClosedDay && $previous !== null) {
             $this->previousNightOrphan($found, $previous);
         } elseif ($freeSideAllowed && $stay > 1) {
             $found->orphanStays[] = new StayChange(
                 $found->room,
                 $night->date,
-                $side->proof === null ? ChangeTarget::Pricing : ChangeTarget::Pms,
+                $previousPast ? ChangeTarget::Pms : ChangeTarget::Pricing,
                 StayReason::ClosedDayOrphan,
                 minStay: 1,
                 minStayBefore: $stay,
-                alsoPricing: $side->proof !== null && $this->pushes(StaySyncField::MinStay, $found->room),
+                alsoPricing: $previousPast && $this->pushes(StaySyncField::MinStay, $found->room),
                 orphan: OrphanKind::ClosedDay,
-                proof: $side->proof,
+                proof: $previousPast ? $side->proof : null,
                 holiday: $this->rules->holiday($night->date)?->name,
             );
         }
@@ -196,6 +199,7 @@ final class InventoryAudit
             minStayBefore: $stay,
             alsoPricing: $this->pushes(StaySyncField::MinStay, $found->room),
             orphan: $orphan ? OrphanKind::NextNight : null,
+            proof: $orphan ? $occupancy->proof($date, OrphanProof::NEXT) : null,
             holiday: $this->rules->holiday($date)?->name,
         );
     }

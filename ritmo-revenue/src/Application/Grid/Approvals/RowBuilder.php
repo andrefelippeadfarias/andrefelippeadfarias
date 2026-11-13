@@ -52,9 +52,11 @@ final class RowBuilder
         $groupSize = array_count_values(array_map(static fn (PlanEntry $e): string => $e->group(), $entries));
         $linked = array_flip($linkedKeys);
 
-        return array_map(fn (PlanEntry $e): EntryRow => $e->kind === PlanEntry::LISTING
-            ? $this->listing($e)
-            : $this->night($e, ($groupSize[$e->group()] ?? 1) > 1, isset($linked[$e->key()])), $entries);
+        return array_map(fn (PlanEntry $e): EntryRow => match ($e->kind) {
+            PlanEntry::LISTING => $this->listing($e),
+            PlanEntry::PMS => self::pms($e),
+            default => $this->night($e, ($groupSize[$e->group()] ?? 1) > 1, isset($linked[$e->key()])),
+        }, $entries);
     }
 
     private function night(PlanEntry $entry, bool $inGroup, bool $linked): EntryRow
@@ -109,6 +111,17 @@ final class RowBuilder
         $after = is_numeric($entry->fields['value'] ?? null) ? (float) $entry->fields['value'] : null;
 
         return new EntryRow($entry->key(), $entry->kind, $entry->roomCode, null, $entry->subject, $entry->group(), $entry->fields, $entry->orderId, EntryRow::LISTING, $before, $after, null, null, null, null, '', null, [], '', $entry->orderId === null ? [] : [EntryWarnings::ORDER], false);
+    }
+
+    /**
+     * A change of the PMS calendar: the night and the fields with the values read before.
+     */
+    private static function pms(PlanEntry $entry): EntryRow
+    {
+        $day = explode('|', $entry->subject, 2)[0];
+        $night = Days::isValid($day) ? Days::date($day) : null;
+
+        return new EntryRow($entry->key(), $entry->kind, $entry->roomCode, $night, $entry->subject, $entry->group(), $entry->fields, $entry->orderId, EntryRow::PMS, null, null, null, null, null, null, '', null, [], '', $entry->orderId === null ? [] : [EntryWarnings::ORDER], false);
     }
 
     private static function direction(PlanEntry $entry, bool $inGroup, ?float $before, ?float $after): string

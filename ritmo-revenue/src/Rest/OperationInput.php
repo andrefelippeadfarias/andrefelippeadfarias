@@ -64,6 +64,33 @@ final class OperationInput
     }
 
     /**
+     * The amounts typed to confirm listing changes: an object of entry key => amount (digits, an
+     * optional dot or comma and two decimals); none when absent.
+     *
+     * @return array<string, string>
+     *
+     * @throws InvalidArgumentException when the value is not such an object
+     */
+    public static function confirmations(mixed $value): array
+    {
+        if ($value === null) {
+            return [];
+        }
+        if (!is_array($value) || count($value) > 10) {
+            throw new InvalidArgumentException('The confirmations must be an object of entry key => amount.');
+        }
+        $out = [];
+        foreach ($value as $key => $amount) {
+            if (!is_string($key) || !is_scalar($amount) || preg_match('/^\d{1,9}([.,]\d{1,2})?$/', trim((string) $amount)) !== 1) {
+                throw new InvalidArgumentException('Every confirmation is an amount typed for a listing entry.');
+            }
+            $out[$key] = trim((string) $amount);
+        }
+
+        return $out;
+    }
+
+    /**
      * The position asked for the emergency switch: true engages, false releases.
      *
      * @throws InvalidArgumentException unless the value is a boolean or one of "1", "true", "0", "false"

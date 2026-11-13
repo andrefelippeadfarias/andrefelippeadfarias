@@ -148,6 +148,7 @@
 @media (max-width: 600px) {
     .ritmo-table thead { position: absolute; left: -9999px; }
     .ritmo-table, .ritmo-table tbody, .ritmo-table tr, .ritmo-table td, .ritmo-table th { display: block; width: auto; }
+    .ritmo-table caption:not(.screen-reader-text) { display: block; text-align: left; }
     .ritmo-table tr { border: 1px solid #c3c4c7; margin: 0 0 8px; padding: 4px 8px; }
     .ritmo-table td[data-label]::before, .ritmo-table th[data-label]::before { content: attr(data-label) ": "; font-weight: 600; }
     .ritmo-segment { margin-left: 0; }
@@ -160,3 +161,13 @@
 .ritmo-checklist li { display: flex; gap: 6px; align-items: flex-start; margin: 4px 0; }
 .ritmo-met .dashicons { color: #007017; }
 .ritmo-unmet .dashicons { color: #8a4600; }
+
+/* Changes of the PMS calendar in an approval: one line per field. */
+.ritmo-plain { margin: 0.25rem 0 0 1.75rem; padding: 0; list-style: none; }
+
+/* Sentences one under the other (the report of a run): they wrap at any width. */
+.ritmo-lines { margin: 4px 0 0 1.25rem; list-style: disc; }
+.ritmo-lines li { overflow-wrap: anywhere; }
+
+/* A select with long option texts (the sections of the rules in Portuguese) never widens the page. */
+.wrap.ritmo select { max-width: 100%; }

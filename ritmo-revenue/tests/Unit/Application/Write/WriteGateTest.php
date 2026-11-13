@@ -201,13 +201,14 @@ final class WriteGateTest extends TestCase
     {
         $gate = WriteSample::gate($this->clock);
         $night = Days::date('2027-03-12');
-        $tooMany = [new CalendarChange('Deluxe', 'pms-1', $night, $night, available: 5)];
-        $wrongRoom = [new CalendarChange('Deluxe', 'pms-2', $night, $night, minStay: 2)];
+        $items = [WriteSample::item()];
+        $tooMany = WriteSample::validated($this->clock, $items, pms: [new CalendarChange('Deluxe', 'pms-1', $night, $night, available: 5)]);
 
-        self::assertSame(WriteRefused::FORBIDDEN_FIELD, $this->refusal(fn () => $gate->issue($this->plan(), $this->auto(), WriteSample::context($this->clock), $tooMany)));
-        self::assertSame(WriteRefused::FORBIDDEN_FIELD, $this->refusal(fn () => $gate->issue($this->plan(), $this->auto(), WriteSample::context($this->clock), $wrongRoom)));
-        $fine = [new CalendarChange('Deluxe', 'pms-1', $night, $night, minStay: 2, available: 4)];
-        self::assertSame(WriteOperation::PmsCalendar, $gate->issue($this->plan(), $this->auto(), WriteSample::context($this->clock), $fine)->steps[1]->operation);
+        self::assertSame(WriteRefused::FORBIDDEN_FIELD, $this->refusal(fn () => $gate->issue($tooMany, $this->auto(), WriteSample::context($this->clock))));
+        $fine = WriteSample::validated($this->clock, $items, pms: [new CalendarChange('Deluxe', 'pms-1', $night, $night, minStay: 2, available: 4)]);
+        $issued = $gate->issue($fine, $this->auto(), WriteSample::context($this->clock));
+        self::assertSame(WriteOperation::PmsCalendar, $issued->steps[1]->operation);
+        self::assertSame('pms-1', $issued->steps[1]->changes[0]->roomId, 'the room\'s own PMS id: a sealed change cannot name another room');
     }
 
     public function testTheRunMustHoldTheWriteLock(): void

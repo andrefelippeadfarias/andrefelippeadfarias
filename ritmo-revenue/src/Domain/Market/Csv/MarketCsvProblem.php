@@ -11,6 +11,12 @@ namespace Ritmo\Domain\Market\Csv;
  */
 final class MarketCsvProblem
 {
+    /**
+     * The value of a cell that looks like personal data (an email, a phone, a document), kept in
+     * place of it: never stored nor shown. A NUL byte never comes from a file (it is refused).
+     */
+    public const HIDDEN_VALUE = "\0hidden";
+
     public const FILE = 'file';
 
     public const ERROR = 'error';

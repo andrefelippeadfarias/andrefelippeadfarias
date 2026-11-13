@@ -7,8 +7,9 @@ namespace Ritmo\Application\Write\Gate;
 use Closure;
 use DateTimeImmutable;
 use DateTimeZone;
+use InvalidArgumentException;
 use Ritmo\Application\EmergencySwitch;
-use Ritmo\Application\Write\Schedule\CalendarChange;
+use Ritmo\Application\Write\Calendar\PmsCalendarChanges;
 use Ritmo\Application\Write\Schedule\WriteSchedule;
 use Ritmo\Application\Write\Schedule\WriteStep;
 use Ritmo\Domain\Write\WriteConfig;
@@ -61,12 +62,14 @@ final class WriteGate implements WriteAuthority
     }
 
     /**
-     * @param list<CalendarChange> $pms         PMS changes of the run (field-locked here)
-     * @param list<string>         $recalculate listing ids to recalculate before their writes
+     * The PMS steps come from the PMS changes sealed with the plan (never from a list of the
+     * caller): a change the validator did not seal cannot get a token.
+     *
+     * @param list<string> $recalculate listing ids to recalculate before their writes
      *
      * @throws WriteRefused when the plan may not be written
      */
-    public function issue(ValidatedPlan $plan, WriteAuthorization $auth, WriteContext $context, array $pms = [], array $recalculate = []): IssuedToken
+    public function issue(ValidatedPlan $plan, WriteAuthorization $auth, WriteContext $context, array $recalculate = []): IssuedToken
     {
         $now = $this->clock->now();
         $today = $this->clock->today($context->property->timezone);
@@ -80,7 +83,7 @@ final class WriteGate implements WriteAuthority
             throw new WriteRefused($refusal, 'The authorization does not allow this plan now.');
         }
 
-        [$steps, $dropped] = $this->listingSteps($this->steps($plan, $context, $pms, $recalculate), $auth);
+        [$steps, $dropped] = $this->listingSteps($this->steps($plan, $context, $recalculate), $auth);
         if ($steps === []) {
             throw new WriteRefused(WriteRefused::NOTHING_TO_WRITE, 'The plan has nothing this token could write.');
         }
@@ -175,13 +178,17 @@ final class WriteGate implements WriteAuthority
     }
 
     /**
-     * @param list<CalendarChange> $pms
-     * @param list<string>         $recalculate
+     * @param list<string> $recalculate
      *
      * @return list<WriteStep>
      */
-    private function steps(ValidatedPlan $plan, WriteContext $context, array $pms, array $recalculate): array
+    private function steps(ValidatedPlan $plan, WriteContext $context, array $recalculate): array
     {
+        try {
+            $pms = PmsCalendarChanges::of($plan->plan->pmsChanges, $context->rooms);
+        } catch (InvalidArgumentException) {
+            throw new WriteRefused(WriteRefused::WRONG_PROPERTY, 'A PMS change of the plan is of a room the run did not read.');
+        }
         $payload = (new PayloadBuilder($context->pricingPms, $this->planConfig))->build($plan, $context->property, array_values($context->rooms));
         $slices = (new Slicer($this->config->maxDatesPerCall))->slice($payload, $plan->today);
 

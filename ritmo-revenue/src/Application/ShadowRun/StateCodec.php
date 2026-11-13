@@ -50,6 +50,7 @@ final class StateCodec
             'price_type' => $override->priceType,
             'min_fixed' => $override->minFixed,
             'max_fixed' => $override->maxFixed,
+            'lead_time_expiry' => $override->leadTimeExpiryDays,
         ];
     }
 
@@ -70,6 +71,7 @@ final class StateCodec
             self::text($data['price_type'] ?? null),
             self::float($data['min_fixed'] ?? null),
             self::float($data['max_fixed'] ?? null),
+            self::int($data['lead_time_expiry'] ?? null),
         );
     }
 

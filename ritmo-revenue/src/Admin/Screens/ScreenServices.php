@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Ritmo\Admin\Screens;
 
 use Closure;
+use Ritmo\Admin\Editors\EditorServices;
 use Ritmo\Application\Dashboard\Alerts\AlertList;
 use Ritmo\Application\Dashboard\Changes\ChangeList;
 use Ritmo\Application\Dashboard\Connections\ConnectionTests;
@@ -180,6 +181,7 @@ final class ScreenServices
             $this->setupState(),
             new WpCapabilityCheck(),
             $this->services->clock(),
+            EditorServices::instance()->editor(),
         ));
     }
 

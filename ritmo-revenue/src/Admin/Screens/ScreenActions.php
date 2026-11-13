@@ -52,6 +52,7 @@ final class ScreenActions
             $args = ($action->handler)($form) + $args;
         } catch (Throwable $failure) {
             Notice::flash(Notice::ERROR, ErrorText::from($failure, self::log(...)), self::details($failure));
+            $args['failed'] = true;
         }
         if ($action->download && !isset($args['failed'])) {
             exit;

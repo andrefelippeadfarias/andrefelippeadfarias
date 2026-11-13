@@ -6,6 +6,7 @@ namespace Ritmo\Application\Write\Calendar;
 
 use InvalidArgumentException;
 use Ritmo\Application\Write\Schedule\CalendarChange;
+use Ritmo\Domain\Model\Restriction;
 use Ritmo\Domain\Model\RoomType;
 use Ritmo\Domain\Stay\Write\PmsChangeEntry;
 use Ritmo\Domain\Write\State\ChangeField;
@@ -51,10 +52,32 @@ final class PmsCalendarChanges
                 minStayBefore: $entry->minStay() !== null && is_int($before) ? $before : null,
                 alsoPricing: $entry->needsPricingStep(),
                 reason: $entry->reason,
+                read: self::read($entry),
             );
         }
 
         return $out;
+    }
+
+    /**
+     * The stay values read before the plan, for each stay field the change sets and the read
+     * holds (a value not read is not guarded): the minimum stay goes as $minStayBefore.
+     *
+     * @return array<string, int|string|null> API field => value read
+     */
+    private static function read(PmsChangeEntry $entry): array
+    {
+        $read = [];
+        $max = $entry->before->get(ChangeField::PMS_MAX_STAY);
+        if ($entry->maxStay() !== null && is_int($max)) {
+            $read['maxStay'] = $max;
+        }
+        $restriction = Restriction::tryFrom((string) $entry->before->get(ChangeField::PMS_RESTRICTION));
+        if ($entry->restriction() !== null && $restriction !== null) {
+            $read['override'] = CalendarChange::apiRestriction($restriction);
+        }
+
+        return $read;
     }
 
     /**

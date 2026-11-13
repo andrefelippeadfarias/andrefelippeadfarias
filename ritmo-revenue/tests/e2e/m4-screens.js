@@ -51,9 +51,12 @@ function check(condition, message) {
     }
 }
 
+/* Requests of the earlier passes (bin/e2e.sh runs this after them) are left out of every check. */
+let baseline = 0;
+
 async function simulatorRequests() {
     const body = await (await fetch(API + '/__log')).json();
-    return body.requests.filter((request) => !request.path.startsWith('/__'));
+    return body.requests.slice(baseline).filter((request) => !request.path.startsWith('/__'));
 }
 
 async function submitAndWait(page, selector) {
@@ -564,6 +567,7 @@ async function wizardPass() {
         check(menu.length === 12, 'the menu has ' + menu.length + ' entries');
         results.push({ menu: menu.map((t) => t.replace(/\s+\d+.*$/, '')) });
 
+        baseline = (await (await fetch(API + '/__log')).json()).requests.length;
         await page.goto(SITE + '/wp-admin/admin.php?page=ritmo-revenue-connections&property=' + PROPERTY);
         check(page.url().includes('page=ritmo-revenue-settings') && page.url().includes('tab=connections') && page.url().includes('property=' + PROPERTY), 'the old slug did not redirect: ' + page.url());
 

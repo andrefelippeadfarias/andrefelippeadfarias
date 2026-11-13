@@ -8,6 +8,8 @@ use Ritmo\Application\ConnectionNotConfigured;
 use Ritmo\Application\ConnectorSource;
 use Ritmo\Contracts\PmsConnector;
 use Ritmo\Contracts\PricingConnector;
+use Ritmo\Domain\Calendar\Stay\StaySyncCapability;
+use Ritmo\Domain\Calendar\Stay\StaySyncField;
 
 /**
  * A ConnectorSource that hands out the connectors it was given; a missing one is "not
@@ -41,5 +43,10 @@ final class StaticConnectorSource implements ConnectorSource
     public function readsPricingCalendar(): bool
     {
         return $this->readsPricingCalendar;
+    }
+
+    public function pricingStaySync(): StaySyncCapability
+    {
+        return new StaySyncCapability(StaySyncField::MinStay, StaySyncField::ArrivalDeparture);
     }
 }

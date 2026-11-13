@@ -289,6 +289,21 @@ What milestone 3 changed in shared signatures and behaviour.
 | `RunContext` carries the run's kind, mode, rules version and heartbeat; the run pipeline has the stages `watch`, `write`, `verify` and `report`; `ShadowRunService` takes a `RunOpener` and the single run lock of the property. | APPLICATION.md 1.1 |
 | `PlanAssembler::revalidate()`, `RunWiring::validationContext($report, $relationOrder)` (the relation order check only for a plan cut down), `RunWiring::freshCalendar()` public, `Plan::isEmpty()`, `StepProposal::fromArray()`. | ENGINE.md |
 
+### 1.10 Integration of milestone M4
+
+What milestone 4 changed in shared signatures and behaviour. No interface of `src/Contracts` changed.
+
+| Change | Where |
+|---|---|
+| `Plan` carries `pmsChanges` (list of `Stay\Write\PmsChangeEntry`, last constructor argument, default `[]`), `withPmsChanges()`, and `without()` takes the positions of the PMS changes to leave out; `isEmpty()` counts them. `IssueSubject::Pms`; the validator checks their shape (`PmsShapeCheck`: codes `pms_room_unknown`, `pms_past_night`, `pms_beyond_horizon`, `pms_duplicate`) and seals them with the items. | ENGINE.md 1.12-1.13, STAY.md 7 |
+| `WriteGate::issue(ValidatedPlan, WriteAuthorization, WriteContext, array $recalculate = [])`: the PMS steps come from the sealed `Plan::$pmsChanges` only; the list argument of M3 is gone. `PlanHash` and `PlanEntries` (kind `pms`) cover the PMS changes; a plan without them keeps its M3 hash. | ARCHITECTURE.md 6, STAY.md 7 |
+| `PlanAssembler::reassemble(RunInputs, AssembledPlan, items, pmsChanges)`; `ExpiryRewrite` applied in the assembly; `DateOverride::$leadTimeExpiryDays` (last constructor argument) and `expiry()`; `NightFields::fromOverride()` fills `EXPIRY`. | ENGINE.md 1.13, STAY.md 7 |
+| `Application\ConnectorSource::pricingStaySync()` (the stay fields the pricing system pushes to the PMS). | APPLICATION.md 1.8 |
+| `RuleSet::stayWrite()`; rule set schema: new sections `market`, `reports` and `stay.write` (neutral: stay writes off). | ENGINE.md 1.13, MARKET.md, REPORTS.md |
+| Run summaries: `decide` counts `pms_would_write`, `pms_rejected`, `pms_frozen`, `pms_merge_conflicts`, `pms_capped`; `verify` counts `pms_nights_confirmed` apart from `nights_confirmed`; `report` holds `items` (codes with counts) instead of English `lines` (runs recorded before are shown as they were). | OPERATIONS.md 5, REPORTS.md |
+| Migrations 10 (screens), 11 (market series), 12 (reports). | INFRASTRUCTURE.md 1.3 |
+| Capabilities: `ritmo_manage_safety` (administrators only) and the role `ritmo_revenue_viewer`; the emergency switch is engaged with `ritmo_approve` or `ritmo_manage_connections` and released only with `ritmo_manage_connections`. | APPLICATION.md 1.5 |
+
 ## Part 2. Signature reference
 
 Generated from the code. Do not edit between the markers; run `php bin/sync-generated.php`.
@@ -418,8 +433,10 @@ public readonly ?float $price;
 public readonly ?string $priceType;
 public readonly ?float $minFixed;
 public readonly ?float $maxFixed;
-public function __construct(DateTimeImmutable $date, ?float $minPercent = null, ?float $maxPercent = null, ?int $minStay = null, ?string $checkinMask = null, ?string $checkoutMask = null, string $reason = '', ?float $price = null, ?string $priceType = null, ?float $minFixed = null, ?float $maxFixed = null);
+public readonly ?int $leadTimeExpiryDays;
+public function __construct(DateTimeImmutable $date, ?float $minPercent = null, ?float $maxPercent = null, ?int $minStay = null, ?string $checkinMask = null, ?string $checkoutMask = null, string $reason = '', ?float $price = null, ?string $priceType = null, ?float $minFixed = null, ?float $maxFixed = null, ?int $leadTimeExpiryDays = null);
 public static function isValidMask(string $mask): bool;
+public function expiry(): ?ExpiryWindow;
 public function hasPriceRule(): bool;
 ```
 
@@ -734,6 +751,7 @@ public function cadence(): CadenceConfig;
 public function noEffect(): NoEffectConfig;
 public function orders(): OrdersConfig;
 public function stay(): StayConfig;
+public function stayWrite(): StayWriteConfig;
 public function plan(): PlanConfig;
 public function write(): WriteConfig;
 public function quota(): QuotaConfig;

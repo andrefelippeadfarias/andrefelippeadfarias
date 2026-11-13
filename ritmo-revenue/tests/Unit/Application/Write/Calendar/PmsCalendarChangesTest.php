@@ -41,6 +41,9 @@ final class PmsCalendarChangesTest extends TestCase
         self::assertTrue($a->alsoPricing, 'paired: the pricing step goes first');
         self::assertSame(['roomId' => '902001', 'from' => self::NIGHT, 'to' => self::NIGHT, 'override' => 'noCheckIn'], $b->range());
         self::assertFalse($b->alsoPricing, 'held by the pricing calendar: goes alone');
+        self::assertSame(['override' => 'none'], $b->readBefore(), 'the restriction read is guarded right before the write');
+        self::assertSame(['minStay' => 2], $a->readBefore());
+        self::assertSame([], $c->readBefore(), 'availability and channel limits are not stay values');
         self::assertSame(['roomId' => '902001', 'from' => self::NIGHT, 'to' => self::NIGHT, 'numAvail' => 1, 'channels' => ['booking' => 0]], $c->range());
         foreach ([$a, $b, $c] as $change) {
             self::assertStringNotContainsString('price', json_encode($change->range(), JSON_THROW_ON_ERROR));

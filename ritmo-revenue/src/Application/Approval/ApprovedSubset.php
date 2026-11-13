@@ -46,8 +46,8 @@ final class ApprovedSubset
                 $groupsOut[$entry->group()] = true;
             }
         }
-        $drop = ['item' => [], 'deletion' => [], 'listing' => []];
-        $positions = ['item' => 0, 'deletion' => 0, 'listing' => 0];
+        $drop = ['item' => [], 'deletion' => [], 'listing' => [], 'pms' => []];
+        $positions = ['item' => 0, 'deletion' => 0, 'listing' => 0, 'pms' => 0];
         foreach ($entries as $entry) {
             $index = $positions[$entry->kind]++;
             if (isset($groupsOut[$entry->group()])) {
@@ -58,6 +58,6 @@ final class ApprovedSubset
             }
         }
 
-        return new RestrictedPlan($fresh->without($drop['item'], $drop['deletion'], $drop['listing']), $changed, $missing);
+        return new RestrictedPlan($fresh->without($drop['item'], $drop['deletion'], $drop['listing'], $drop['pms']), $changed, $missing);
     }
 }

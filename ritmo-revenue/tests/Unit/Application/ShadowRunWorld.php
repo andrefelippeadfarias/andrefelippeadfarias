@@ -10,6 +10,7 @@ use Ritmo\Application\EmergencySwitch;
 use Ritmo\Application\Market\MarketRulerAssembler;
 use Ritmo\Application\Market\MarketSeriesService;
 use Ritmo\Application\Run\RunOpener;
+use Ritmo\Application\Run\StayWriteStep;
 use Ritmo\Application\ShadowRun\CollectStage;
 use Ritmo\Application\ShadowRun\DecideStage;
 use Ritmo\Application\ShadowRun\MeasureStage;
@@ -226,7 +227,7 @@ final class ShadowRunWorld
                 new OrderRepository($this->db, $this->clock),
                 new MarketRulerAssembler(new MarketSeriesRepository($this->db), $this->anchors, new LadderReferenceRepository($this->db)),
                 new MarketSeriesService($this->db, $this->clock, new PropertyRepository($this->db, $this->clock), new RuleSetRepository($this->db, $this->clock), new CompetitorRepository($this->db, $this->clock), new StaySampleRepository($this->db), new MarketSeriesRepository($this->db), $this->anchors),
-            ), $this->clock, 'beds24'),
+            ), $this->clock, 'beds24', new StayWriteStep($this->snapshots, ($connectors ?? new StaticConnectorSource($this->pms, $this->pricing))->pricingStaySync(), $this->clock)),
             new ValidateStage(),
             new ShadowStage($this->planItems, new RunPayloadRepository($this->db, $this->clock)),
         ];

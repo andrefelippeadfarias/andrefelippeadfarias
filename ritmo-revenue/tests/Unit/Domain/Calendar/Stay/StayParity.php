@@ -162,6 +162,41 @@ final class StayParity
     }
 
     /**
+     * Divergence SW-X5 (STAY.md): a PMS change made for an orphan night or a future orphan side
+     * carries the proof of this run's PMS read (the plugin refuses it without one); the
+     * reference's Beds24 batch carries none. The proof is built from the frozen inventory: the
+     * night and its sold-out neighbour (the next night of an arrival-rule orphan, the night before
+     * a closed day), as numbers available.
+     *
+     * @param array<string, mixed>      $scenario
+     * @param array<string, mixed>|null $proof the reference's proof
+     *
+     * @return array<string, int|string>|null
+     */
+    public static function pmsOrphanProof(array $scenario, string $room, string $night, string $reason, ?array $proof): ?array
+    {
+        $neighbour = match ($reason) {
+            'orphan_night' => 'next',
+            'orphan_side_closed_day_sold_out', 'orphan_side_previous_sold_out' => 'previous',
+            default => null,
+        };
+        if ($proof !== null || $neighbour === null) {
+            return $proof;
+        }
+        $other = Days::key(Days::add(Days::date($night), $neighbour === 'next' ? 1 : -1));
+        $inventory = $scenario['inventory'][$room];
+
+        return array_filter([
+            'source' => 'pms',
+            'neighbour' => $neighbour,
+            'units' => Fixtures::parityPreset()->roomType($room)->units,
+            'night_available' => $inventory[$night]['numAvail'] ?? null,
+            'neighbour_available' => $inventory[$other]['numAvail'] ?? null,
+            'read_at' => self::readAt($scenario)->format(DATE_ATOM),
+        ], static fn (mixed $value): bool => $value !== null);
+    }
+
+    /**
      * @param array<string, mixed> $scenario
      */
     public static function readAt(array $scenario): DateTimeImmutable

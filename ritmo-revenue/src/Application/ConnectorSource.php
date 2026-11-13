@@ -6,6 +6,7 @@ namespace Ritmo\Application;
 
 use Ritmo\Contracts\PmsConnector;
 use Ritmo\Contracts\PricingConnector;
+use Ritmo\Domain\Calendar\Stay\StaySyncCapability;
 
 /**
  * Where the use cases get their connectors. The connectors are built on demand because they need
@@ -33,4 +34,10 @@ interface ConnectorSource
      * The PMS of the listings as the pricing system names it: the payload of a plan carries it.
      */
     public function pricingPmsName(): string;
+
+    /**
+     * The stay fields the pricing system writes by date and pushes on to the PMS (minimum stay,
+     * arrival and departure days): a PMS change of such a field needs its pricing step too.
+     */
+    public function pricingStaySync(): StaySyncCapability;
 }

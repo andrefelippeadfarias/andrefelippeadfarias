@@ -1,4 +1,4 @@
-# Ritmo Revenue: scheduler and light runs (milestone M3)
+# Ritmo Revenue: scheduler, light runs and the end of a run (milestones M3 and M4)
 
 This document covers how runs start (the scheduler) and what a light run does. The alerts are in
 `ALERTS.md`; writing, confirmation and the recalculation quota belong to the write path
@@ -218,22 +218,31 @@ light run), the weekly review.
 | Raising a mode checks the conditions of operations spec 6.1 (`ModePreconditions`): shadow → approval by `ritmo_manage_connections`, with the last `modes.min_shadow_runs` runs completed in shadow with a plan (the newest within 24 h), both connections tested OK within 24 h, no open `connector_down` or `write_failed` and the switch released; approval → autonomous also with no `write_failed` in 7 days and no wave holding cuts. Two conditions of the spec are not checked: the pricing calendar read (the plugin decides and confirms from the date rules without it, ARCHITECTURE.md section 6) and the vault apart (a passing connection test reads the secrets through it). | The reference has no modes; review finding of the M3 correction phase (`ModeServiceTest`). |
 | Any change of mode, and engaging the emergency switch, ends the approvals not written yet; a newer approval or proposal lapses the older one. | An approval is given for one moment and one plan; it never writes after the change it predates. |
 
-## 5. For the integration
+## 5. The end of a full run (M4)
 
-- Done in the integration: migration 9 (`Migration0009Operations`) in `Migrations::all()`, its tables in INFRASTRUCTURE.md;
-  regenerate the signature references (`php bin/sync-generated.php`).
-- Wire `ritmo_tick` (`WpCronTrigger::withInterval` on `cron_schedules`, `schedule()` on activation,
-  `unschedule()` on deactivation, the hook calling `SchedulerTick::run`), replacing the hourly
-  resume hook; add `WpCronTrigger`, `WpMailer` and `WpRecipientDirectory` to the reviewed list of
-  `InfrastructureRulesTest`.
-- Implement `RunExecutor` over the run pipeline (kinds `full`, `light`, `manual`,
-  `approved_write`; the light stages `collect_light`, `watch`, `scope` using `MovementTracker`,
-  `WatchService` and `LightRoundService`) and give it to `LockedRunLauncher`, which already holds
-  the property's run lock and closes runs of an earlier day; make "Run now" (REST and admin) call
-  `RunNowService`, and make `ShadowRunService` take `LockedRunLauncher::lockKey()` instead of
-  `shadow_run:<id>` (or retire it behind the executor), so that no run of a property bypasses the
-  lock. Implement `ScheduleSource` and the sections `schedule`, `light_run`, `alerts` from the rule
-  set, `RoomQuota` over the write path's `RecalcQuota`.
-- Call `WpCronTrigger::spawnNow()` after an approval is recorded (D16).
-- Record pause, resume and the hold in `change_log` (O41) once the change log of the write path is
-  in place.
+`Run\ReportStage` stores the report of the run as codes with counts and reason codes (`Domain\Report\RunLines\RunReportItems`: `light_idle`, `sync_now`, `shadow_would_write`, `waiting_approval`, `written`, `held`, `validator_refused`, `pms_skipped`, `delivery_overdue`, `market_stale`...); `Admin\Reports\RunLineText` writes them in the reader's language. An idle light run says it in one line (`light_idle`: no booking moved, nothing decided, writes sent: 0). A full run then runs `Run\RunEndChecks`, each condition raised once per property and resolved by the run that no longer finds it:
+
+| Alert | When |
+|---|---|
+| `market_stale` | the newest market price for the coming nights is older than `market.stale_after_days` |
+| `market_gap` | an active sales ladder strategy would price nights the market ruler has no value for |
+| `delivery_overdue` | written steps not seen at the channel within `verify.delivery_overdue_hours`; not while `push_disabled` or `push_stale` is open (that one explains it) |
+| `review_due` | the last 12-month review is older than `reports.review.interval_days` |
+| `pms_changes_capped` | the stay rules asked for more PMS changes than `stay.write.max_changes_per_run`; none was written |
+
+The stay and arrival/departure writes of a full run (`Run\StayWriteStep`, STAY.md "Writes") are planned after the plan assembly, checked by `Stay\Write\PmsChangeCheck` against the pricing items the validator accepted, and sealed with the plan; the write stage sends them after the pricing steps, through the gate. What the pricing system's push sets in the PMS (`Run\PushedFields`) is not taken for a change by someone else.
+
+## 6. Open points (M4)
+
+| Point | State |
+|---|---|
+| D1 of the M3 leftovers: the rounding re-check (`RoundingRecheck`) and the relation audit (`RelationAuditor`) as passes of the run, and the longer read horizon | not wired: `relations.rounding_recheck` and `relations.audit_horizon_days` still have no effect on a run |
+| D3: channel limits read back from the PMS | the reader (`Stay\Write\ChannelLimits`) exists; the connector does not ask for them (`includeChannels` is not in the verified API list) |
+| D4: one bookings read per run | the collect stage and the watch still read the bookings once each |
+| Stay writes of a light run (the orphan window) and the revert-by-push counter (`RevertLedger`) | light runs plan no stay write; the ledger is not fed by the next run's observation yet |
+| `RuleInForce` and a date rule past its lead-time expiry | an inactive rule is still read as in force by the PMS-price fallback (the pricing calendar, read by default, already says what applies) |
+| The undo as an approval request (spec 05 D9) and the PMS side of an undo through the gate | the undo still runs at once for the person who approves; PMS restores are not written |
+| The PMS room list in the setup wizard (spec 05 D4) | rooms are suggested from the pricing system's listings; the PMS id and the units are typed |
+| The "Sync Now" to-do item right after a write of tonight | made from the change log by the next screen load, not by the write stage |
+| Alert e-mails | still in English (the `Application` layer is free of WordPress) |
+

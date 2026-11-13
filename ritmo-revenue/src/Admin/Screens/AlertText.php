@@ -56,6 +56,7 @@ final class AlertText
             'market_gap' => __('Nights without market prices', 'ritmo-revenue'),
             'delivery_overdue' => __('Prices not confirmed at the channels yet', 'ritmo-revenue'),
             'review_due' => __('Time for the 12-month review', 'ritmo-revenue'),
+            'pms_changes_capped' => __('Too many stay changes for the PMS', 'ritmo-revenue'),
             default => __('Alert', 'ritmo-revenue'),
         };
     }
@@ -85,6 +86,7 @@ final class AlertText
             'market_gap' => __('A sales ladder strategy is on, but some of the next nights have no competitor price, so it does not change them.', 'ritmo-revenue'),
             'delivery_overdue' => __('The pricing system took the new prices, but the channels have not shown them yet within the expected time.', 'ritmo-revenue'),
             'review_due' => __('The rules ask for a look at the next 12 months at a regular interval, and that time has come.', 'ritmo-revenue'),
+            'pms_changes_capped' => __('The stay rules asked for more changes of minimum stay or arrival and departure in the PMS than one run may write, so none was written. A rule may be set wrong.', 'ritmo-revenue'),
             default => __('The plugin noticed something that needs a look.', 'ritmo-revenue'),
         };
     }
@@ -110,6 +112,7 @@ final class AlertText
             'market_stale', 'market_gap' => __('Import a new file of competitor prices in Market.', 'ritmo-revenue'),
             'delivery_overdue' => __('Check that the pricing system sends prices to the channels; the alert ends by itself when they arrive.', 'ritmo-revenue'),
             'review_due' => __('Open the 12-month review in Reports and save it.', 'ritmo-revenue'),
+            'pms_changes_capped' => __('Check the stay rules in Rules; the next run tries again.', 'ritmo-revenue'),
             default => __('Read the facts below and resolve the alert when it is handled.', 'ritmo-revenue'),
         };
     }

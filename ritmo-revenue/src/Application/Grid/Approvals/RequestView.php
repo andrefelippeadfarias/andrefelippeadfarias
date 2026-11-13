@@ -15,6 +15,7 @@ final class RequestView
     /**
      * @param array<string, list<Segment>>                                         $rooms   room code => segments, in room order
      * @param list<EntryRow>                                                       $listing listing changes
+     * @param list<EntryRow>                                                       $pms     changes of the PMS calendar
      * @param list<array{relation: string, night: string, rooms: list<string>}>    $pairs
      */
     public function __construct(
@@ -36,6 +37,7 @@ final class RequestView
         public readonly array $listing,
         public readonly Impact $impact,
         public readonly array $pairs,
+        public readonly array $pms = [],
     ) {
     }
 

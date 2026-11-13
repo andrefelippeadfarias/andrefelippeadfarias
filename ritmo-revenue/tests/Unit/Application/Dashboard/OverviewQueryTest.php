@@ -96,7 +96,7 @@ final class OverviewQueryTest extends TestCase
         $last = $this->world->overview()->lastRun($property);
 
         self::assertSame(2, $last['would_write']);
-        self::assertSame(['Done.'], $last['lines']);
+        self::assertSame(['Done.'], $last['run']['summary']['report']['lines'] ?? null, 'the screen renders the stored report');
     }
 
     public function testTheNextRunsComeFromTheScheduleInTheLocalTime(): void

@@ -156,7 +156,7 @@ final class StayWritePlannerGoldenTest extends TestCase
             if ($item['reason'] === 'package' && $item['min_stay'] !== null) {
                 $item['min_stay_before'] = $inventory[$item['room']][$item['from']]->minStay ?? 1;
             }
-            $out[] = ['room' => $item['room'], 'night' => $item['from'], 'restriction' => $item['restriction'], 'min_stay' => $item['min_stay'], 'min_stay_before' => $item['min_stay_before'], 'max_stay' => $item['max_stay'], 'also_pricing' => $item['also_pricing'], 'reason' => $item['reason'], 'proof' => $item['proof']];
+            $out[] = ['room' => $item['room'], 'night' => $item['from'], 'restriction' => $item['restriction'], 'min_stay' => $item['min_stay'], 'min_stay_before' => $item['min_stay_before'], 'max_stay' => $item['max_stay'], 'also_pricing' => $item['also_pricing'], 'reason' => $item['reason'], 'proof' => StayParity::pmsOrphanProof($scenario, $item['room'], $item['from'], $item['reason'], $item['proof'])]; // SW-X5
         }
 
         return $out;

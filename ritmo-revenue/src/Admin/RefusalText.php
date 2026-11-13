@@ -24,6 +24,7 @@ final class RefusalText
             ModeRefused::NO_CAPABILITY => __('You do not hold the capability this change of mode needs.', 'ritmo-revenue'),
             ModeRefused::DISABLED => __('The autonomous mode is switched off for this site.', 'ritmo-revenue'),
             ModeRefused::CONFIRMATION => __('Type the property\'s id to confirm the autonomous mode.', 'ritmo-revenue'),
+            ModeRefused::REASON_PRIVATE => __('A reason cannot hold an email, a phone number or a document number (guest data is never kept). The mode was not changed.', 'ritmo-revenue'),
             ModeRefused::CONDITIONS => $refused->conditions === []
                 ? __('The property does not meet the conditions of this mode yet.', 'ritmo-revenue')
                 : implode(' ', array_map(static fn (array $c): string => self::condition($c['code'], $c['params']), $refused->conditions)),
@@ -42,6 +43,9 @@ final class RefusalText
             ApprovalRefused::NOTHING_SELECTED => __('Nothing was selected.', 'ritmo-revenue'),
             ApprovalRefused::UNKNOWN_ENTRY => __('A night ticked is not part of this plan.', 'ritmo-revenue'),
             ApprovalRefused::LISTING_NEEDS_EXPLICIT_APPROVAL => __('Each listing value must be approved by name.', 'ritmo-revenue'),
+            ApprovalRefused::LISTING_NEEDS_SAFETY => __('Only a person allowed to change safety limits can approve a change of the listing.', 'ritmo-revenue'),
+            ApprovalRefused::LISTING_NOT_CONFIRMED => __('Type the new amount of each listing change you approve, exactly as shown.', 'ritmo-revenue'),
+            ApprovalRefused::NOTE_PRIVATE => __('A note cannot hold an email, a phone number or a document number (guest data is never kept). Nothing was decided.', 'ritmo-revenue'),
             default => __('This decision is not allowed now.', 'ritmo-revenue'),
         };
     }

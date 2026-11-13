@@ -20,6 +20,8 @@ use Ritmo\Contracts\Logger;
 use Ritmo\Contracts\PmsConnector;
 use Ritmo\Contracts\PricingConnector;
 use Ritmo\Contracts\WriteAuthority;
+use Ritmo\Domain\Calendar\Stay\StaySyncCapability;
+use Ritmo\Domain\Calendar\Stay\StaySyncField;
 use Ritmo\Domain\Support\Clock;
 use Ritmo\Infrastructure\Db\Repository\QuotaLogRepository;
 use Ritmo\Infrastructure\Db\Repository\RoomTypeRepository;
@@ -157,6 +159,15 @@ final class ConnectorFactory implements ConnectorSource
     public function pricingPmsName(): string
     {
         return (string) $this->settings->get(self::PRICELABS_PMS, self::DEFAULT_PRICELABS_PMS);
+    }
+
+    /**
+     * The pricing system's date rules carry the minimum stay and the arrival and departure masks,
+     * and its push sends them to the PMS; never the maximum stay (STAY.md, "also pricing").
+     */
+    public function pricingStaySync(): StaySyncCapability
+    {
+        return new StaySyncCapability(StaySyncField::MinStay, StaySyncField::ArrivalDeparture);
     }
 
     private function pricingConfig(): PriceLabsConfig

@@ -57,6 +57,18 @@ $ritmo_notice = $view['notice'];
     <p class="ritmo-muted"><?php esc_html_e('The status could not be loaded. Nothing was changed.', 'ritmo-revenue'); ?></p>
 <?php endif; ?>
 
+<?php if (($ritmo_header['unreadable_rooms'] ?? []) !== []) : ?>
+    <div class="notice notice-warning ritmo-notice" role="status" data-ritmo="unreadable-rooms">
+        <p><?php
+        echo esc_html(sprintf(
+            /* translators: %s: room codes, separated by commas */
+            __('Some rooms of the plugin could not be read and are left out of every screen and run: %s. Save them again in Settings, setup (step 5).', 'ritmo-revenue'),
+            implode(', ', $ritmo_header['unreadable_rooms'])
+        ));
+        ?></p>
+    </div>
+<?php endif; ?>
+
 <?php if (is_array($ritmo_notice)) : ?>
     <div class="notice notice-<?php echo esc_attr($ritmo_notice['type']); ?> ritmo-notice" data-ritmo="notice" role="<?php echo esc_attr($ritmo_notice['type'] === 'error' ? 'alert' : 'status'); ?>">
         <p><?php echo esc_html($ritmo_notice['message']); ?></p>

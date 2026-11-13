@@ -47,6 +47,7 @@ use Ritmo\Tests\Fakes\MemoryQuotaLedger;
 use Ritmo\Tests\Fakes\MovableClock;
 use Ritmo\Tests\Fakes\RecordingLogger;
 use Ritmo\Tests\Integration\Write\Support\SimWorld;
+use Ritmo\Tests\Unit\Application\Write\WriteSample;
 use Ritmo\Tests\Unit\Domain\EngineSample;
 use RuntimeException;
 
@@ -146,9 +147,12 @@ final class WriteOverHttpTest extends TestCase
         self::assertSame([], $this->writeLines(), 'the simulator log has no write');
     }
 
-    private function plan(): ValidatedPlan
+    /**
+     * @param list<CalendarChange> $pms sealed with the plan
+     */
+    private function plan(array $pms = []): ValidatedPlan
     {
-        $plan = new Plan('inn', $this->clock->today('UTC'), $this->clock->now(), [SimWorld::item('STD', '2027-03-10', 450.0), SimWorld::item('GDN', '2027-03-11', 600.0)]);
+        $plan = new Plan('inn', $this->clock->today('UTC'), $this->clock->now(), [SimWorld::item('STD', '2027-03-10', 450.0), SimWorld::item('GDN', '2027-03-11', 600.0)], [], [], WriteSample::pmsEntries($pms));
         $result = (new Validator(EngineSample::rules(), $this->clock))->validate($plan, SimWorld::property(), SimWorld::rooms());
         self::assertNotNull($result->plan);
 
@@ -166,7 +170,8 @@ final class WriteOverHttpTest extends TestCase
             $tonight[$room->code] = new TonightState($room->code, $this->pricing->readPrices($room->pricingRef, $today, $today)[0]?->price, null);
         }
         $context = new WriteContext(SimWorld::property(), SimWorld::rooms(), $this->clock->now(), $tonight, static fn (): bool => true, 'beds24');
-        $issued = $this->gate->issue($plan, new AutonomousAuthorization('inn', 1, $this->clock->now()), $context, $pms);
+        $plan = $pms === [] ? $plan : $this->plan($pms);
+        $issued = $this->gate->issue($plan, new AutonomousAuthorization('inn', 1, $this->clock->now()), $context);
         $executor = new WriteExecutor($this->gate, $this->switch, $this->clock, new WriteJournal($this->ops, $this->clock));
 
         return $executor->execute(new WriteRun(1, SimWorld::property(), $plan, $issued, $this->pricing, $this->pms, static fn (): bool => true));

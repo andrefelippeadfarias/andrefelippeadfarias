@@ -8,6 +8,7 @@ use OutOfBoundsException;
 use Ritmo\Application\Alerts\AlertService;
 use Ritmo\Application\Approval\ApprovalService;
 use Ritmo\Application\Approval\CapabilityCheck;
+use Ritmo\Application\Rules\PrivacyCheck;
 use Ritmo\Application\Write\Gate\AutonomousAuthorization;
 use Ritmo\Contracts\KeyValueStore;
 use Ritmo\Domain\Alerts\AlertCode;
@@ -42,6 +43,8 @@ final class ModeService
     public const MANAGE_RULES = 'ritmo_manage_rules';
     public const MANAGE_CONNECTIONS = 'ritmo_manage_connections';
 
+    public const REASON_MAX = 190;
+
     private const FAILURES_KEY = 'write_failures_';
 
     public function __construct(
@@ -58,6 +61,7 @@ final class ModeService
 
     /**
      * @param string $confirmation for the autonomous mode: the property's id, typed by the person
+     * @param string $reason       kept in the log of operations: plain text, never guest data
      *
      * @throws OutOfBoundsException when the property does not exist
      * @throws ModeRefused          when the change is not allowed now
@@ -66,6 +70,10 @@ final class ModeService
     {
         $property = $this->properties->find($propertyId) ?? throw new OutOfBoundsException(sprintf('Unknown property "%s".', $propertyId));
         $from = $property->mode;
+        $reason = trim((string) preg_replace('/[\x00-\x1F\x7F]+/u', ' ', strip_tags($reason)));
+        if (PrivacyCheck::problem($reason, self::REASON_MAX) !== null) {
+            throw new ModeRefused(ModeRefused::REASON_PRIVATE, 'A reason cannot hold an email, a phone number or a document, and has at most 190 characters.');
+        }
         if ($from === $to) {
             return $property;
         }

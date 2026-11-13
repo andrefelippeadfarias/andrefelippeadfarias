@@ -23,6 +23,9 @@ use Ritmo\Domain\Relations\Coherence\CoherencePass;
 use Ritmo\Domain\Relations\Coherence\NightSet;
 use Ritmo\Domain\Relations\Coherence\PlanDraft;
 use Ritmo\Domain\Relations\Coherence\RelationReport;
+use Ritmo\Domain\Stay\Write\Expiry\ExpiryRewrite;
+use Ritmo\Domain\Stay\Write\Expiry\ExpiryWindow;
+use Ritmo\Domain\Stay\Write\PmsChangeEntry;
 use Ritmo\Domain\Support\Clock;
 
 /**
@@ -31,6 +34,7 @@ use Ritmo\Domain\Support\Clock;
  *   price every room night (gates, sales ladder, sold-out protection, pace step with its terms)
  *   -> relations between rooms (coherence) -> listing maximum -> step blocks follow the final floor
  *   -> delete-first plan for the ceilings to free (with the stay rules) -> no-effect filter
+ *   -> delete + rewrite on the nights whose stored rule has a lead-time expiry (W36)
  *   -> Validator -> (again without what it refused) -> PayloadBuilder -> Slicer.
  *
  * Precedence: safety (validator, today never rises) > owner orders and floors > ladder and pace >
@@ -62,7 +66,8 @@ final class PlanAssembler
         $deletions = (new CeilingRelease(new StayHook($wiring->stay), $this->rules->noEffect()->moneySlack))->apply($work, $inputs, $wiring->occupancy());
         $kept = $this->withoutEffectless($work, $inputs, $deletions);
         self::switchesSatisfied([...$kept->noEffect, ...$kept->roundingOnly], $report);
-        $plan = new Plan($inputs->property->id, $inputs->today, $this->clock->now(), $kept->kept, $deletions);
+        [$items, $deletions] = ExpiryRewrite::apply($kept->kept, $deletions, $inputs->overrides, self::expiries($inputs), $inputs->rooms);
+        $plan = new Plan($inputs->property->id, $inputs->today, $this->clock->now(), $items, $deletions);
 
         $validator = new Validator($this->rules, $this->clock, $this->rules->plan());
         $context = $wiring->validationContext($report);
@@ -70,7 +75,28 @@ final class PlanAssembler
         $validation = $validator->validate($plan, $inputs->property, $rooms, $context);
         $final = $validation->isValid() ? $validation : $this->withoutRefused($validator, $validation, $plan, $inputs, $wiring->validationContext($report, true));
 
-        return $this->finish($inputs, $plan, $validation, $final, $pricing->lines(), $kept, $report);
+        return $this->finish($inputs, $plan, $validation, $final, $pricing->lines(), $kept->noEffect, $kept->roundingOnly, $report);
+    }
+
+    /**
+     * The plan of an assembly with other items and these PMS changes (the stay writes of the run,
+     * Stay\Write\StayWritePlanner, merged into the price items): validated with the same context,
+     * again without what the validator refused, with its payload and slices. The deletions, the
+     * grid lines and the relations report stay those of the assembly.
+     *
+     * @param list<PlanItem>       $items
+     * @param list<PmsChangeEntry> $pmsChanges
+     */
+    public function reassemble(RunInputs $inputs, AssembledPlan $assembled, array $items, array $pmsChanges): AssembledPlan
+    {
+        $wiring = new RunWiring($this->rules, $this->clock, $inputs);
+        $first = $assembled->plan;
+        $plan = new Plan($first->propertyId, $first->today, $first->createdAt, $items, $first->deletions, $first->listingChanges, $pmsChanges);
+        $validator = new Validator($this->rules, $this->clock, $this->rules->plan());
+        $validation = $validator->validate($plan, $inputs->property, array_values($inputs->rooms), $wiring->validationContext($assembled->relations));
+        $final = $validation->isValid() ? $validation : $this->withoutRefused($validator, $validation, $plan, $inputs, $wiring->validationContext($assembled->relations, true));
+
+        return $this->finish($inputs, $plan, $validation, $final, $assembled->lines, $assembled->noEffect, $assembled->roundingOnly, $assembled->relations);
     }
 
     /**
@@ -150,6 +176,27 @@ final class PlanAssembler
     }
 
     /**
+     * The stored date rules with a lead-time expiry (W36): a write on their night is a delete +
+     * rewrite group, never a merge.
+     *
+     * @return array<string, array<string, ExpiryWindow>> room => night => expiry
+     */
+    private static function expiries(RunInputs $inputs): array
+    {
+        $out = [];
+        foreach ($inputs->overrides as $room => $nights) {
+            foreach ($nights as $night => $override) {
+                $expiry = $override->expiry();
+                if ($expiry !== null) {
+                    $out[(string) $room][(string) $night] = $expiry;
+                }
+            }
+        }
+
+        return $out;
+    }
+
+    /**
      * The plan validated again without the entries the validator refused, as the run would write
      * it; null when even that does not pass. A deletion and the item that writes its night again
      * are one group: when either is refused, both go.
@@ -167,7 +214,7 @@ final class PlanAssembler
         $deletions = array_keys(array_filter($plan->deletions, static fn (PlanDeletion $deletion): bool => isset($refused[$deletion->key()])));
         $effectless = array_filter($first->rejected(IssueSubject::Item), static fn (int $index): bool => self::onlyWithoutEffect($first, $index));
         self::switchesSatisfied(array_map(static fn (int $index): PlanItem => $plan->items[$index], $effectless), $context->relationReport);
-        $rest = $plan->without($items, $deletions, $first->rejected(IssueSubject::Listing));
+        $rest = $plan->without($items, $deletions, $first->rejected(IssueSubject::Listing), $first->rejected(IssueSubject::Pms));
         $again = $validator->validate($rest, $inputs->property, array_values($inputs->rooms), $context);
 
         return $again->isValid() ? $again : null;
@@ -205,8 +252,10 @@ final class PlanAssembler
 
     /**
      * @param list<NightLine> $lines
+     * @param list<PlanItem>  $noEffect
+     * @param list<PlanItem>  $roundingOnly
      */
-    private function finish(RunInputs $inputs, Plan $plan, ValidationResult $validation, ?ValidationResult $final, array $lines, NoEffectResult $kept, RelationReport $report): AssembledPlan
+    private function finish(RunInputs $inputs, Plan $plan, ValidationResult $validation, ?ValidationResult $final, array $lines, array $noEffect, array $roundingOnly, RelationReport $report): AssembledPlan
     {
         $payload = null;
         $slices = [];
@@ -215,6 +264,6 @@ final class PlanAssembler
             $slices = (new Slicer($this->rules->plan()->sliceMaxDates))->slice($payload, $inputs->today);
         }
 
-        return new AssembledPlan($plan, $validation, $final, $payload, $slices, $lines, $kept->noEffect, $kept->roundingOnly, $report);
+        return new AssembledPlan($plan, $validation, $final, $payload, $slices, $lines, $noEffect, $roundingOnly, $report);
     }
 }

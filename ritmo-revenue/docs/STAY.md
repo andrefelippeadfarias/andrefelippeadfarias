@@ -1,4 +1,4 @@
-# Ritmo Revenue: stay and arrival/departure rules (M2)
+# Ritmo Revenue: stay and arrival/departure rules (M2, writes in M4)
 
 This document covers `src/Domain/Calendar/Stay`: the minimum stay by arrival day, closed and open weekdays, orphan
 nights, holidays and seasons with their own stay, closed packages, the audit of the PMS inventory, the stay plan for
@@ -194,7 +194,20 @@ night's item); a night beyond the pricing write horizon stays unpaired.
 | `pms_too_many` | every change, when the run has more than `stay.write.max_changes_per_run` (alert `pms_changes_capped`) |
 | `pms_reverted_by_push` | a value the push put back `stay.write.revert_limit` times (`RevertLedger`; alert `stay_reverted_by_push`) |
 
-**To the gate** (`StayWriteRound::batch` -> `PmsWriteBatch`): the accepted entries become `CalendarChange`s
+**In a run** (`Application\Run\StayWriteStep`, called by the decide stage and by the rebuild of the write stage):
+full runs only; the merged items are validated again (`PlanAssembler::reassemble()`), the PMS changes are checked
+against the items that validation accepted, and the accepted changes are added to the plan (`Plan::$pmsChanges`) and
+validated once more, so the `Validator` seals them with the items (`Plan\Validation\PmsShapeCheck`: room mapped to the
+PMS, night from today and within `stay.write.horizon_days`, one change per room, night and field). The plan hash and
+the approval entries cover them (`PlanEntries::pms()`: kind `pms`, the values set and the values read before, so a PMS
+changed since is another entry); an approved subset keeps a pushed change only with its paired item
+(`RebuiltPlan::revalidate`). The decide stage leaves them in the state for the screens (`PmsState`) and counts
+`pms_would_write`, `pms_rejected`, `pms_frozen`, `pms_merge_conflicts`; the Approvals screen lists them in words
+(`Admin\Screens\PmsChangeText`). The verify stage counts `pms_nights_confirmed` apart. Not yet: the stay writes of a
+light run (orphan window) and the feeding of `RevertLedger` by the next run's observation (OPERATIONS.md, open points).
+
+**To the gate**: `WriteGate::issue()` builds the PMS steps from the sealed `Plan::$pmsChanges` only
+(`PmsCalendarChanges`; it takes no list from its caller). The accepted entries become `CalendarChange`s
 (`PmsCalendarChanges`), one night each, with the minimum stay read as the guard and `alsoPricing` set only when a pricing
 step of this run must go first (a held change goes alone). The M3 order, guard (`pricing_first`, `already_at_target`,
 `changed_since_read`), read-back and first-error stop apply unchanged; the simulator tests
@@ -211,10 +224,21 @@ Any write on a night whose rule has an expiry becomes a delete + rewrite group t
 masks, the floor and the ceiling the item does not set, without the expiry (golden `m4/stay/pace.ajustar_tetos.expiry`).
 
 **Channel limits read back** (`ChannelLimits::read`, D3): `channels.<name>.maxBookings` as a number or numeric text;
-anything else is left out and reported.
+anything else is left out and reported. Not wired to the connector yet (OPERATIONS.md, open points).
+
+**Lead-time expiry in a run**: `OverrideMapper` reads `lead_time_expiry` into `DateOverride::$leadTimeExpiryDays`
+(whole days only), `NightFields::fromOverride` gives `EXPIRY` = the last active day, and the plan assembly applies
+`ExpiryRewrite` after the no-effect filter (`tests/Unit/Domain/Plan/Assembly/PlanAssemblerTest.php`).
+
+**What the push sets** (D6, `Application\Run\PushedFields`): for the third-party watch, the rooms whose push carries
+them (`stay.pricing_sync`) expect the effective minimum stay and the arrival/departure of the masks in force; every
+room expects the minimum stay of its date rules (as in M3).
 
 **Divergences** (each in its test): SW-X1 an unpaired pushed PMS change is refused (the reference writes it and the
 push undoes it); SW-X2 `pricing_first` is also met when the pricing calendar already holds the value; SW-X3 the
-revert-by-push limit; SW-X4 the per-run cap; X1 every write on an expiring rule becomes a group (the reference converts
+revert-by-push limit; SW-X4 the per-run cap; SW-X5 every PMS change made for an orphan night (arrival rule) or an
+orphan side of a closed day carries the proof of this run's PMS read (`Occupancy::proof`: the night and its sold-out
+neighbour; for a sold-out closed day, the closed day and the free night before it), which `PmsChangeCheck` requires,
+while the reference's Beds24 batch carries none (`StayParity::pmsOrphanProof` applies it to the goldens); X1 every write on an expiring rule becomes a group (the reference converts
 only a ceiling release); SW-D2 consequence: a PMS change of the full batch raises the pricing value of its night to pair
 it (the reference's stay-only pricing plan would leave it, and the next push would undo the PMS).

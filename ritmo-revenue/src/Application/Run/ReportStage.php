@@ -56,6 +56,7 @@ final class ReportStage implements AfterWriteStage
         $validate = (array) ($summary['validate'] ?? []);
         $write = (array) ($summary['write'] ?? []);
         $verify = (array) ($summary['verify'] ?? []);
+        $decide = (array) ($summary['decide'] ?? []);
 
         return new RunFacts(
             light: $context->kind === RunKind::Light->value,
@@ -66,7 +67,7 @@ final class ReportStage implements AfterWriteStage
             overbooked: (int) ($watch['overbooked'] ?? 0),
             waveHold: ($watch['wave_hold'] ?? false) === true,
             wouldWrite: (int) ($validate[PlanItemStatus::WOULD_WRITE] ?? 0),
-            pmsWouldWrite: (int) ($write['pms_would_write'] ?? 0),
+            pmsWouldWrite: (int) ($decide['pms_would_write'] ?? 0),
             proposed: ($write['proposed'] ?? false) === true,
             entries: (int) ($write['entries'] ?? 0),
             refused: isset($write['refused']) ? (string) $write['refused'] : null,
@@ -76,11 +77,11 @@ final class ReportStage implements AfterWriteStage
             stop: isset($write['stop']) ? (string) $write['stop'] : null,
             held: (int) ($write['held'] ?? 0),
             rejected: (int) ($validate[PlanItemStatus::REJECTED] ?? 0),
-            pmsRejected: (int) ($write['pms_rejected'] ?? 0),
+            pmsRejected: (int) ($decide['pms_rejected'] ?? 0),
             overdue: (int) ($verify['delivery']['overdue'] ?? 0),
             marketAgeDays: $marketAge,
             pmsSkipped: array_map('intval', (array) ($write['pms_skipped'] ?? [])),
-            mergeConflicts: (int) ($write['pms_merge_conflicts'] ?? 0),
+            mergeConflicts: (int) ($decide['pms_merge_conflicts'] ?? 0),
         );
     }
 

@@ -195,6 +195,8 @@ final class ApprovalBoard
      */
     private function view(array $row, array $entries, array $pairs, array $order): RequestView
     {
+        $pms = array_values(array_filter($entries, static fn (EntryRow $e): bool => $e->kind === EntryRow::PMS));
+        $entries = array_values(array_filter($entries, static fn (EntryRow $e): bool => $e->kind !== EntryRow::PMS));
         $nights = array_values(array_filter($entries, static fn (EntryRow $e): bool => $e->night !== null));
         $byRoom = [];
         foreach (Segmenter::segments($nights, $order) as $segment) {
@@ -215,11 +217,12 @@ final class ApprovalBoard
             $row['decided_by'],
             $row['decided_at'],
             (string) $row['note'],
-            count($entries),
+            count($entries) + count($pms),
             $byRoom,
             array_values(array_filter($entries, static fn (EntryRow $e): bool => $e->night === null)),
             Impact::of($entries),
             $pairs,
+            $pms,
         );
     }
 

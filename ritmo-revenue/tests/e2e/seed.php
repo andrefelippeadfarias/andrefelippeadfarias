@@ -10,6 +10,8 @@
 
 declare(strict_types=1);
 
+use Ritmo\Application\Dashboard\Setup\SafetyValues;
+use Ritmo\Application\Dashboard\Setup\SetupState;
 use Ritmo\Domain\Config\RuleSet;
 use Ritmo\Domain\Support\Days;
 use Ritmo\WordPress\Services;
@@ -54,6 +56,14 @@ foreach ($scenario['rooms'] as $index => $room) {
         'tags' => '',
     ]);
 }
+
+// The safety limits as step 7 of the setup wizard confirms them (a condition of the approval mode,
+// void once a safety value or a room's reference minimum changes).
+Services::instance()->store()->set(SetupState::KEY, [
+    'safety_confirmed_at' => gmdate(DATE_ATOM),
+    'safety_confirmed_by' => 1,
+    'safety_fingerprint' => SafetyValues::fingerprint(Services::instance()->ruleSets()->current() ?? RuleSet::defaults(), Services::instance()->roomTypes()->all()),
+]);
 
 // Six competitor prices a night: weekdays around 400-700, weekends 30% higher.
 $today = Services::instance()->clock()->today(E2E_TIMEZONE);

@@ -9,11 +9,13 @@ use Ritmo\Application\ShadowRun\AfterWriteStage;
 use Ritmo\Application\ShadowRun\RunContext;
 use Ritmo\Application\ShadowRun\StageResult;
 use Ritmo\Application\Verify\DeliveryService;
+use Ritmo\Application\Verify\NightConfirmation;
 use Ritmo\Application\Verify\RecordService;
 use Ritmo\Domain\Model\RoomType;
 use Ritmo\Domain\Pricing\Cadence\StepProposal;
 use Ritmo\Domain\Support\Clock;
 use Ritmo\Domain\Write\Channel\ChannelArrival;
+use Ritmo\Domain\Write\State\Provider;
 use Ritmo\Infrastructure\Db\Repository\WriteOpRepository;
 use Ritmo\Infrastructure\Db\Repository\WrittenStepRepository;
 
@@ -68,7 +70,9 @@ final class VerifyStage implements AfterWriteStage
             $delivery = ['delivered' => count($report->delivered), 'pending' => count($report->pending), 'overdue' => count($report->overdue)];
         }
 
-        return new StageResult(['nights_confirmed' => count($confirmed), 'recorded' => $recorded, 'delivery' => $delivery], []);
+        $pms = count(array_filter($confirmed, static fn (NightConfirmation $night): bool => $night->written->provider === Provider::Pms));
+
+        return new StageResult(['nights_confirmed' => count($confirmed) - $pms, 'pms_nights_confirmed' => $pms, 'recorded' => $recorded, 'delivery' => $delivery], []);
     }
 
     /**

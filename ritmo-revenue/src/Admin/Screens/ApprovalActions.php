@@ -68,7 +68,7 @@ final class ApprovalActions
         }
         $view = ScreenServices::instance()->approvals()->find($property, $request);
         $keys = self::keys($form, $view, $decision === 'all');
-        $grant = $desk->approve($property, $request, get_current_user_id(), $keys, $config, $note);
+        $grant = $desk->approve($property, $request, get_current_user_id(), $keys, $config, $note, self::confirmations($form, $view));
         $added = array_values(array_diff(array_map(static fn (PlanEntry $e): string => $e->key(), $grant->approvedEntries), $keys ?? []));
         $count = count($grant->approvedEntries);
         Notice::flash(
@@ -97,7 +97,9 @@ final class ApprovalActions
      */
     private static function keys(Input $form, RequestView $view, bool $all): ?array
     {
-        $listing = $form->list('listing', self::ENTRY_PATTERN, 10);
+        $entries = $form->list('entries', self::ENTRY_PATTERN);
+        // a listing key is a listing change whichever list it came in
+        $listing = array_values(array_unique([...$form->list('listing', self::ENTRY_PATTERN, 10), ...array_filter($entries, static fn (string $k): bool => str_starts_with($k, PlanEntry::LISTING . '|'))]));
         if ($listing !== [] && !Capability::can(Capability::MANAGE_SAFETY)) {
             throw new UserFacing(__('Only a person allowed to change safety limits can approve a change of the listing.', 'ritmo-revenue'));
         }
@@ -116,12 +118,27 @@ final class ApprovalActions
 
             return $view->listing === [] && $listing === [] ? null : [...$nights, ...$listing];
         }
-        $keys = [...$form->list('entries', self::ENTRY_PATTERN), ...$listing];
+        $keys = array_values(array_unique([...$entries, ...$listing]));
         if ($keys === []) {
             throw new UserFacing(__('Tick the nights to approve, or approve everything.', 'ritmo-revenue'));
         }
 
         return $keys;
+    }
+
+    /**
+     * The amount typed for each listing change of the request (the service checks them again).
+     *
+     * @return array<string, string> entry key => amount typed
+     */
+    private static function confirmations(Input $form, RequestView $view): array
+    {
+        $out = [];
+        foreach ($view->listing as $row) {
+            $out[$row->key] = $form->text('confirm_' . md5($row->key), 32);
+        }
+
+        return $out;
     }
 
     /** The amount as a person types it: digits, a dot only when there are cents. */

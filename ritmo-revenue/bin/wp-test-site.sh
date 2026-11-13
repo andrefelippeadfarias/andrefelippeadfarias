@@ -6,6 +6,10 @@
 #   bin/wp-test-site.sh restart   restart the site server only (keeps the database), e.g. with
 #                                 RITMO_PRICING_CALENDAR_READ=0 in the environment
 #   bin/wp-test-site.sh stop      stop both servers
+#   bin/wp-test-site.sh relink <folder>
+#                                 point the site's plugin folder at another copy of the plugin
+#                                 (the update pass of bin/e2e.sh: built with an older copy, then
+#                                 switched to this one; the site keeps its database)
 #
 # The site: WordPress from https://wordpress.org/latest.zip on SQLite (the plugin
 # https://downloads.wordpress.org/plugin/sqlite-database-integration.zip and its db.php drop-in),
@@ -18,7 +22,8 @@
 #               start today in the property's timezone
 #
 # Environment: RITMO_PRICING_CALENDAR_READ=0 switches off the pricing system's calendar read (a POST
-# that reads; on by default).
+# that reads; on by default). RITMO_E2E_PLUGIN_SOURCE builds the site with another copy of the
+# plugin (default: this folder).
 
 set -euo pipefail
 
@@ -127,7 +132,7 @@ build() {
     unzip -q "$DOWNLOADS/sqlite-database-integration.zip" -d "$SITE/wp-content/plugins"
     cp "$SITE/wp-content/plugins/sqlite-database-integration/db.copy" "$SITE/wp-content/db.php"
     mkdir -p "$SITE/wp-content/database"
-    ln -s "$ROOT" "$SITE/wp-content/plugins/ritmo-revenue"
+    ln -s "${RITMO_E2E_PLUGIN_SOURCE:-$ROOT}" "$SITE/wp-content/plugins/ritmo-revenue"
     write_config
     php "$ROOT/tests/e2e/install.php" "$SITE" "$ADMIN_USER" "$ADMIN_PASSWORD"
 }
@@ -147,8 +152,13 @@ case "${1:-start}" in
         stop_pid "$BASE/site.pid"
         stop_pid "$BASE/api.pid"
         ;;
+    relink)
+        test -d "${2:-}" || { echo "Usage: bin/wp-test-site.sh relink <plugin folder>" >&2; exit 2; }
+        ln -sfn "$2" "$SITE/wp-content/plugins/ritmo-revenue"
+        start_site
+        ;;
     *)
-        echo "Usage: bin/wp-test-site.sh start|restart|stop" >&2
+        echo "Usage: bin/wp-test-site.sh start|restart|stop|relink <folder>" >&2
         exit 2
         ;;
 esac

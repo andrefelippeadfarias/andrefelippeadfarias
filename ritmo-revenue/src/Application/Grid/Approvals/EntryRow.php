@@ -19,6 +19,7 @@ final class EntryRow
     public const BOUNDS = 'bounds';
     public const REWRITE = 'rewrite';
     public const LISTING = 'listing';
+    public const PMS = 'pms';
 
     /**
      * @param array<string, int|float|string>                         $fields   what is sent

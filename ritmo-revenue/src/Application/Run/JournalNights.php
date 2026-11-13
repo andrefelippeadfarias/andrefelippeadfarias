@@ -66,7 +66,6 @@ final class JournalNights
     private static function nights(array $row, WriteOperation $operation, DateTimeImmutable $writtenAt): array
     {
         $payload = is_array($row['payload'] ?? null) ? $row['payload'] : [];
-        $room = (string) ($payload['room'] ?? '');
         $pms = $operation === WriteOperation::PmsCalendar;
         $provider = $pms ? Provider::Pms : Provider::Pricing;
         $kind = match (true) {
@@ -76,6 +75,7 @@ final class JournalNights
         };
         $out = [];
         foreach ((array) ($row['intended_state'] ?? []) as $target => $nights) {
+            $room = self::roomOf($payload, (string) $target);
             foreach ((array) $nights as $night => $want) {
                 if (!Days::isValid((string) $night)) {
                     continue;
@@ -100,6 +100,19 @@ final class JournalNights
         }
 
         return $out;
+    }
+
+    /**
+     * The room code of one target of a journal row: a PMS block names each room under its PMS id
+     * ('rooms'); rows written before that map existed carry one room ('room').
+     *
+     * @param array<string, mixed> $payload
+     */
+    public static function roomOf(array $payload, string $target): string
+    {
+        $rooms = is_array($payload['rooms'] ?? null) ? $payload['rooms'] : [];
+
+        return (string) ($rooms[$target] ?? $payload['room'] ?? '');
     }
 
     /**

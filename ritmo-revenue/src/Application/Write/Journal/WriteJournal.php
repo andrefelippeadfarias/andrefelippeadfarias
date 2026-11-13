@@ -53,6 +53,7 @@ final class WriteJournal
                 'dates' => $step->dates(),
                 'payload' => [
                     'room' => $step->roomCode,
+                    'rooms' => $step->targetRooms(),
                     'nights' => $step->nights,
                     'entries' => $step->payload,
                     'actor' => $issued->actor,

@@ -37,7 +37,12 @@ final class MarketText
             ? sprintf(__('Line %d', 'ritmo-revenue'), $problem->line)
             /* translators: 1: line of the file, 2: column name */
             : sprintf(__('Line %1$d, column %2$s', 'ritmo-revenue'), $problem->line, $problem->column);
-        $value = $problem->value === '' ? '' : ' ' . sprintf(/* translators: %s: the cell as typed */ __('("%s")', 'ritmo-revenue'), mb_substr($problem->value, 0, self::VALUE_SHOWN));
+        $value = match ($problem->value) {
+            '' => '',
+            MarketCsvProblem::HIDDEN_VALUE => ' ' . __('(value hidden: it looks like personal data, which is never kept)', 'ritmo-revenue'),
+            /* translators: %s: the cell as typed */
+            default => ' ' . sprintf(__('("%s")', 'ritmo-revenue'), mb_substr($problem->value, 0, self::VALUE_SHOWN)),
+        };
 
         return $where . ': ' . $what . $value;
     }

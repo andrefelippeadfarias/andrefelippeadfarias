@@ -514,10 +514,20 @@ The validator of 1.5 grew into the checks of `Plan/Validation` (VALIDATOR.md, se
 | `listing_needs_order` | Deletions and listing changes |  |
 | `listing_weekly_change_above_limit` | Deletions and listing changes |  |
 | `listing_base_below_min` | Deletions and listing changes |  |
+| `pms_room_unknown` | PMS changes (stay, arrival and departure) | The room is not a room of the property mapped to the PMS. |
+| `pms_past_night` | PMS changes (stay, arrival and departure) | The night is before the property's today. |
+| `pms_beyond_horizon` | PMS changes (stay, arrival and departure) | The night is beyond `stay.write.horizon_days`. |
+| `pms_duplicate` | PMS changes (stay, arrival and departure) | A second change of the same field on the same room night. |
 
-### 1.13 Not in this milestone
+### 1.13 Milestone 4: market series, reports and stay writes
 
-Writing (the write gate, the writer of the payload and its slices, the confirmation after writing and the step ledger recorded from what was written) comes in milestone 3. The market ruler of a ladder strategy and the nights closed in the PMS without a booking have no source in the shadow run yet, so there no ladder strategy acts and no night is held as blocked. `OccupancyWindows` counts a blocked night as sold, because the PMS inventory does not tell a block from a sale; `PmsPricingMismatch` is what shows blocks without a booking.
+**Market series** (`Domain\Market\Csv`, `Domain\Market\Series`; details and divergences MK-X1..X6 in docs/MARKET.md). `MarketCsvReader` reads the competitor price file row by row (`CsvBytes` checks the bytes and the encoding, `CsvColumns` the header, `CsvValues` the cells, `CsvContext` what a row needs to know, `CompetitorIndex` the competitors by name) into `ParsedRow` values or `MarketCsvProblem` codes, collected in a `CsvReadResult`. `StaySample` is one stay of one competitor; `NewestSamples` keeps the newest price per competitor, stay and basis; `SampleWindow` keeps only future stays inside `market.max_sample_age_days`. `StayValues` turns a stay into values per night, `ComparableFactor` the cheapest price into a comparable one (`CompetitorProfile`, `RoomBasis`), `Percentile` the quantile with the reference's rounding. `SeriesBuilder` builds the `SeriesDefinition`s of `market.series` (`StaySeries` per stay, `NightSeries`/`NightValue` per night, `TypeTable`/`TypeSummary` per night type). `PricePosition`/`BandPosition` place a price among the series. `MarketGaps` finds the nights an active ladder strategy would price without a value. `MarketConfig`/`MarketFields` are the section `market`; `LadderSeriesCheck` refuses a ladder rule citing a series or a percentile the market does not build.
+
+**Reports** (`Domain\Report`; details and divergences RP-X1..X10 in docs/REPORTS.md). Pure functions of immutable inputs, no clock: `BookingLine`/`BookingLines`/`BookingTotals`/`Grouping` (bookings by id and channel only); occupancy with the units booked (`RoomNight`, `OccupancyTable`, `OccupancyRow`, `OccupancyGroup`, `RowKind`, the 14-night `OccupancyMap` with `MapNight`/`MapCell`); the month (`MonthPerformance`, `MonthReport`, `MonthStays`, `MonthCancellations`, `MadeInMonth`, `MonthTarget`, `Period`); the 12-month review (`TwelveMonthReview`, `ReviewRow`, `ReviewResult`, `Reading`, `MarketMonth`, `ReviewSnapshot`, `ReviewDue`, `ReviewConfig`); targets and forecasts (`RevenueTargets`, `RevenueForecast`, `HolidayForecast`, `HolidayTarget`, `MonthForecast`, `PropertyTarget`, `TargetInputs`, `Scenario`, `ForecastConfig`); the weekly panel (`WeeklyPanel`, `WeeklyReport`, `MadeWeek`, `StayWeek`, `ShareRow`, `Moment`); the run report as codes with counts (`RunFacts`, `RunReportItems`, `RunLine`, `RunLineCode`; translated when shown). `ReportsConfig`/`ReportsFields` are the section `reports`.
+
+**Stay writes** (`Domain\Stay\Write`, docs/STAY.md section "Writes"). `Plan` carries `pmsChanges` (`PmsChangeEntry`): the validator checks their shape (`Plan\Validation\PmsShapeCheck`, codes above) and seals them with the items, so the write gate builds the PMS steps only from a sealed plan. What a change may set and why (pairing with the pricing item, orphan proof, frozen nights, the cap) is checked before, by `PmsChangeCheck`. `PlanAssembler::reassemble()` validates the plan again with the stay items merged in. A stored date rule with a lead-time expiry (`DateOverride::$leadTimeExpiryDays`, `expiry()`) turns any write on its night into a delete + rewrite group (`ExpiryRewrite`, W36); no body ever carries the expiry (W37).
+
+`OccupancyWindows` of the M1 dashboard still counts a night closed without a booking as sold; the reports use `RoomNight` with the units booked (RP-1).
 
 ## Part 2. Signature reference
 
@@ -1043,7 +1053,153 @@ public static function percentileOf(MarketAnchor $anchor, float $publicPrice): f
 
 ```php
 const SERIES = 'market';
-public static function of(array $anchors, RuleSet $rules): MarketRuler;
+```
+
+#### `Ritmo\Domain\Market\Csv\CompetitorIndex` (final class)
+
+```php
+public function __construct(array $competitors);
+public function find(string $text): ?int;
+```
+
+#### `Ritmo\Domain\Market\Csv\CsvBytes` (final class)
+
+```php
+const HEAD_BYTES = 8192;
+const BOM = '﻿';
+public static function looksBinaryOrCode(string $head): bool;
+public static function withoutBom(string $text): string;
+public static function isUtf8(string $bytes, bool $truncated = false): bool;
+public static function delimiter(string $headerLine): string;
+public static function firstLine(string $text): string;
+```
+
+#### `Ritmo\Domain\Market\Csv\CsvColumns` (final class)
+
+```php
+const REQUIRED = ['competitor', 'check_in', 'check_out', 'price'];
+const OPTIONAL = ['price_basis', 'room', 'currency', 'captured_at', 'source', 'available'];
+const GUEST_LIKE = ['name', 'guest', 'guest_name', 'email', 'e-mail', 'mail', 'phone', 'telefone', 'document', 'cpf', 'passport', 'address'];
+const MAX_COLUMNS = 50;
+public readonly array $positions;
+public readonly array $problems;
+public static function fromHeader(array $header): self;
+public function hasFileError(): bool;
+public function cell(array $row, string $column): string;
+```
+
+#### `Ritmo\Domain\Market\Csv\CsvContext` (final class)
+
+```php
+public readonly DateTimeImmutable $today;
+public readonly string $propertyId;
+public readonly DateTimeImmutable $now;
+public readonly string $timezone;
+public readonly string $currency;
+public readonly CompetitorIndex $competitors;
+public readonly int $maxRows;
+public readonly int $maxStayNights;
+public readonly int $maxSampleAgeDays;
+public function __construct(string $propertyId, DateTimeImmutable $today, DateTimeImmutable $now, string $timezone, string $currency, CompetitorIndex $competitors, int $maxRows = 20000, int $maxStayNights = 7, int $maxSampleAgeDays = 30);
+```
+
+#### `Ritmo\Domain\Market\Csv\CsvReadResult` (final class)
+
+```php
+public readonly array $rows;
+public readonly array $problems;
+public readonly int $total;
+public function __construct(array $rows, array $problems, int $total);
+public static function failed(MarketCsvProblem $problems): self;
+public function hasFileError(): bool;
+public function ofKind(string $kind): array;
+public function invalidLines(): int;
+```
+
+#### `Ritmo\Domain\Market\Csv\CsvValues` (final class)
+
+```php
+public static function price(string $text): ?float;
+public static function date(string $text): ?DateTimeImmutable;
+public static function flag(string $text): ?bool;
+public static function capture(string $text, string $timezone): ?DateTimeImmutable;
+```
+
+#### `Ritmo\Domain\Market\Csv\MarketCsvProblem` (final class)
+
+```php
+const FILE = 'file';
+const ERROR = 'error';
+const WARNING = 'warning';
+const MISSING_COLUMN = 'missing_column';
+const NOT_UTF8 = 'not_utf8';
+const TOO_MANY_ROWS = 'too_many_rows';
+const TOO_MANY_COLUMNS = 'too_many_columns';
+const FILE_TOO_LARGE = 'file_too_large';
+const NOT_CSV = 'not_csv';
+const EMPTY_FILE = 'empty_file';
+const ALREADY_IMPORTED = 'already_imported';
+const UNKNOWN_COMPETITOR = 'unknown_competitor';
+const BAD_DATE = 'bad_date';
+const CHECKOUT_NOT_AFTER_CHECKIN = 'checkout_not_after_checkin';
+const STAY_TOO_LONG = 'stay_too_long';
+const STAY_IN_PAST = 'stay_in_past';
+const BAD_PRICE = 'bad_price';
+const BAD_BASIS = 'bad_basis';
+const BAD_ROOM = 'bad_room';
+const BAD_CURRENCY = 'bad_currency';
+const CURRENCY_MISMATCH = 'currency_mismatch';
+const BAD_CAPTURE = 'bad_capture';
+const CAPTURE_IN_FUTURE = 'capture_in_future';
+const BAD_AVAILABLE = 'bad_available';
+const BAD_SOURCE = 'bad_source';
+const CELL_TOO_LONG = 'cell_too_long';
+const ROW_NOT_UTF8 = 'row_not_utf8';
+const CAPTURE_TOO_OLD = 'capture_too_old';
+const DUPLICATE_IN_FILE = 'duplicate_in_file';
+const CAPTURE_MISSING = 'capture_missing';
+const UNKNOWN_COLUMN = 'unknown_column';
+const GUEST_COLUMN = 'guest_column';
+const DUPLICATE_COLUMN = 'duplicate_column';
+public readonly string $value;
+public readonly string $kind;
+public readonly string $code;
+public readonly int $line;
+public readonly string $column;
+public function __construct(string $kind, string $code, int $line = 0, string $column = '', string $value = '');
+public static function file(string $code, string $column = ''): self;
+public function toStored(): array;
+```
+
+#### `Ritmo\Domain\Market\Csv\MarketCsvReader` (final class)
+
+```php
+const CELL_MAX_BYTES = 1000;
+public function __construct(CsvContext $context);
+public function read(array $rows): CsvReadResult;
+```
+
+#### `Ritmo\Domain\Market\Csv\ParsedRow` (final class)
+
+```php
+public readonly DateTimeImmutable $checkIn;
+public readonly int $line;
+public readonly int $competitorId;
+public readonly int $nights;
+public readonly RoomBasis $basis;
+public readonly float $price;
+public readonly ?float $total;
+public readonly string $currency;
+public readonly DateTimeImmutable $capturedAt;
+public readonly string $source;
+public readonly bool $available;
+public readonly string $dedupKey;
+public function __construct(int $line, int $competitorId, DateTimeImmutable $checkIn, int $nights, RoomBasis $basis, float $price, ?float $total, string $currency, DateTimeImmutable $capturedAt, string $source, bool $available, string $dedupKey);
+public static function dedupKey(string $propertyId, int $competitorId, DateTimeImmutable $checkIn, int $nights, RoomBasis $basis, string $source, DateTimeImmutable $capturedAt): string;
+public function checkOut(): DateTimeImmutable;
+public function toSample(int $sequence = 0): StaySample;
+public function toArray(): array;
+public static function fromArray(array $row): self;
 ```
 
 #### `Ritmo\Domain\Market\PriceFactor` (final class)
@@ -1071,6 +1227,238 @@ public function __construct(DateTimeImmutable $night, float $publicPrice, DateTi
 ```php
 public static function of(array $values, float $p): float;
 public static function median(array $values): float;
+```
+
+#### `Ritmo\Domain\Market\Series\BandPosition` (final class)
+
+```php
+const NEAR = 'near';
+const BETWEEN = 'between';
+const BELOW = 'below';
+const ABOVE = 'above';
+const NONE = 'none';
+public readonly string $kind;
+public readonly array $bands;
+public function __construct(string $kind, array $bands);
+```
+
+#### `Ritmo\Domain\Market\Series\ComparableFactor` (final class)
+
+```php
+const MEASURED = 'measured';
+const ESTIMATED = 'estimated';
+public static function of(?float $factor, string $source, float $default, float $cap): float;
+```
+
+#### `Ritmo\Domain\Market\Series\CompetitorProfile` (final class)
+
+```php
+const CODE_PATTERN = '/^[a-z0-9][a-z0-9-]{0,63}$/';
+const TAG_PATTERN = '/^[a-z][a-z0-9_-]{0,31}$/';
+public readonly int $id;
+public readonly string $code;
+public readonly array $tags;
+public readonly ?float $comparableFactor;
+public readonly string $factorSource;
+public readonly bool $active;
+public readonly bool $isOwn;
+public function __construct(int $id, string $code, array $tags = [], ?float $comparableFactor = null, string $factorSource = '', bool $active = true, bool $isOwn = false);
+public function counts(): bool;
+public function hasAnyTag(array $tags): bool;
+```
+
+#### `Ritmo\Domain\Market\Series\LadderSeriesCheck` (final class)
+
+```php
+const SERIES_UNKNOWN = 'ladder.series_unknown';
+const PERCENTILE_NOT_MEASURED = 'ladder.percentile_not_measured';
+public static function errors(array $ladder, MarketConfig $market): array;
+```
+
+#### `Ritmo\Domain\Market\Series\MarketConfig` (final class)
+
+```php
+public readonly array $series;
+public readonly array $percentiles;
+public readonly int $minCompetitorsPerStay;
+public readonly int $nightMinCompetitors;
+public readonly int $neighbourDays;
+public readonly int $maxSampleAgeDays;
+public readonly int $retentionDays;
+public readonly float $defaultFactor;
+public readonly float $estimatedFactorCap;
+public readonly int $smallSampleStays;
+public readonly int $smallSampleCompetitors;
+public readonly int $staleAfterDays;
+public readonly int $reminderHorizonDays;
+public readonly int $csvMaxBytes;
+public readonly int $csvMaxRows;
+public readonly int $csvMaxStayNights;
+public readonly array $bands;
+public function __construct(array $series, array $percentiles, int $minCompetitorsPerStay = 10, int $nightMinCompetitors = 20, int $neighbourDays = 3, int $maxSampleAgeDays = 30, int $retentionDays = 400, float $defaultFactor = 1.0, float $estimatedFactorCap = 2.0, int $smallSampleStays = 4, int $smallSampleCompetitors = 40, int $staleAfterDays = 7, int $reminderHorizonDays = 60, int $csvMaxBytes = 2097152, int $csvMaxRows = 20000, int $csvMaxStayNights = 7, array $bands = []);
+public static function neutral(): self;
+public static function fromArray(array $data): self;
+public function seriesByName(): array;
+```
+
+#### `Ritmo\Domain\Market\Series\MarketFields` (final class)
+
+```php
+const ROOT = 'market';
+const ANCHOR_PERCENTILES = [25, 50, 75, 90, 100];
+public static function all(): array;
+public static function defaultSeries(): array;
+public static function defaultBands(): array;
+```
+
+#### `Ritmo\Domain\Market\Series\MarketGaps` (final class)
+
+```php
+public static function find(array $strategies, MarketRuler $ruler, array $nights, DateTimeImmutable $today): array;
+```
+
+#### `Ritmo\Domain\Market\Series\NewestSamples` (final class)
+
+```php
+public static function of(array $samples): array;
+```
+
+#### `Ritmo\Domain\Market\Series\NightSeries` (final class)
+
+```php
+public function __construct(int $nightMinCompetitors, int $neighbourDays);
+public function of(DateTimeImmutable $night, array $sameType, ?TypeSummary $table): ?NightValue;
+```
+
+#### `Ritmo\Domain\Market\Series\NightValue` (final class)
+
+```php
+const NIGHT = 'night';
+const CONTAINING = 'containing';
+const NEIGHBOUR = 'neighbour';
+const TYPE_TABLE = 'type_table';
+public readonly array $values;
+public readonly string $origin;
+public readonly ?int $distanceDays;
+public readonly int $stays;
+public readonly int $competitors;
+public readonly ?DateTimeImmutable $oldestCapture;
+public readonly ?DateTimeImmutable $newestCapture;
+public function __construct(array $values, string $origin, ?int $distanceDays, int $stays, int $competitors, ?DateTimeImmutable $oldestCapture, ?DateTimeImmutable $newestCapture);
+```
+
+#### `Ritmo\Domain\Market\Series\Percentile` (final class)
+
+```php
+public static function of(array $values, int|float $p): float;
+public static function median(array $values): float;
+```
+
+#### `Ritmo\Domain\Market\Series\PricePosition` (final class)
+
+```php
+public static function percentile(float $price, array $values): ?float;
+public static function band(float $amount, array $bands, float $tolerance): BandPosition;
+```
+
+#### `Ritmo\Domain\Market\Series\RoomBasis` (enum)
+
+```php
+case Cheapest = 'cheapest';
+case Comparable = 'comparable';
+```
+
+#### `Ritmo\Domain\Market\Series\SampleWindow` (final class)
+
+```php
+public readonly DateTimeImmutable $today;
+public readonly DateTimeImmutable $capturedSince;
+public function __construct(DateTimeImmutable $today, DateTimeImmutable $capturedSince);
+public function admits(StaySample $sample): bool;
+```
+
+#### `Ritmo\Domain\Market\Series\SeriesBuilder` (final class)
+
+```php
+public function __construct(MarketConfig $config, array $catalogue, Closure $typeOf);
+public function build(array $samples, SampleWindow $window): array;
+```
+
+#### `Ritmo\Domain\Market\Series\SeriesDefinition` (final class)
+
+```php
+const ANCHOR = 'market';
+const NAME_PATTERN = '/^[a-z][a-z0-9_]{0,31}$/';
+public readonly string $name;
+public readonly RoomBasis $basis;
+public readonly array $tags;
+public function __construct(string $name, RoomBasis $basis, array $tags = []);
+public function takes(CompetitorProfile $competitor): bool;
+```
+
+#### `Ritmo\Domain\Market\Series\StaySample` (final class)
+
+```php
+const MAX_NIGHTS = 30;
+public readonly DateTimeImmutable $checkIn;
+public readonly int $competitorId;
+public readonly int $nights;
+public readonly RoomBasis $basis;
+public readonly float $price;
+public readonly ?float $total;
+public readonly DateTimeImmutable $capturedAt;
+public readonly bool $available;
+public readonly int $sequence;
+public function __construct(int $competitorId, DateTimeImmutable $checkIn, int $nights, RoomBasis $basis, float $price, ?float $total, DateTimeImmutable $capturedAt, bool $available = true, int $sequence = 0);
+public function perNight(): float;
+public function checkOut(): DateTimeImmutable;
+public function stayKey(): string;
+```
+
+#### `Ritmo\Domain\Market\Series\StaySeries` (final class)
+
+```php
+public readonly string $series;
+public readonly DateTimeImmutable $checkIn;
+public readonly int $nights;
+public readonly string $type;
+public readonly int $n;
+public readonly array $percentiles;
+public readonly array $values;
+public readonly DateTimeImmutable $oldestCapture;
+public readonly DateTimeImmutable $newestCapture;
+public function __construct(string $series, DateTimeImmutable $checkIn, int $nights, string $type, int $n, array $percentiles, array $values, DateTimeImmutable $oldestCapture, DateTimeImmutable $newestCapture);
+public function checkOut(): DateTimeImmutable;
+public function contains(DateTimeImmutable $night): bool;
+public function distanceTo(DateTimeImmutable $night): int;
+```
+
+#### `Ritmo\Domain\Market\Series\StayValues` (final class)
+
+```php
+public static function of(array $samples, array $catalogue, SeriesDefinition $series, float $defaultFactor, float $factorCap): array;
+public static function byCompetitor(array $samples, array $catalogue, SeriesDefinition $series, float $defaultFactor, float $factorCap): array;
+```
+
+#### `Ritmo\Domain\Market\Series\TypeSummary` (final class)
+
+```php
+public readonly string $type;
+public readonly int $stays;
+public readonly array $months;
+public readonly int $competitors;
+public readonly DateTimeImmutable $from;
+public readonly DateTimeImmutable $to;
+public readonly bool $smallSample;
+public readonly array $values;
+public function __construct(string $type, int $stays, array $months, int $competitors, DateTimeImmutable $from, DateTimeImmutable $to, bool $smallSample, array $values);
+```
+
+#### `Ritmo\Domain\Market\Series\TypeTable` (final class)
+
+```php
+public static function of(array $stays, array $percentiles, int $smallStays, int $smallCompetitors): TypeSummary;
+public static function value(array $stays, string $percentile): int;
 ```
 
 #### `Ritmo\Domain\Pricing\Cadence\CadenceConfig` (final class)
@@ -2163,6 +2551,7 @@ public function strategyDecided(): array;
 ```php
 public function __construct(RuleSet $rules, Clock $clock, string $pmsName);
 public function assemble(RunInputs $inputs): AssembledPlan;
+public function reassemble(RunInputs $inputs, AssembledPlan $assembled, array $items, array $pmsChanges): AssembledPlan;
 public function revalidate(RunInputs $inputs, Plan $plan, RelationReport $report): ValidationResult;
 ```
 
@@ -2297,6 +2686,7 @@ public function nights(): array;
 case Item = 'item';
 case Deletion = 'deletion';
 case Listing = 'listing';
+case Pms = 'pms';
 case Plan = 'plan';
 ```
 
@@ -2532,12 +2922,14 @@ public readonly DateTimeImmutable $createdAt;
 public readonly array $items;
 public readonly array $deletions;
 public readonly array $listingChanges;
+public readonly array $pmsChanges;
 public readonly string $propertyId;
-public function __construct(string $propertyId, DateTimeImmutable $today, DateTimeImmutable $createdAt, array $items, array $deletions = [], array $listingChanges = []);
+public function __construct(string $propertyId, DateTimeImmutable $today, DateTimeImmutable $createdAt, array $items, array $deletions = [], array $listingChanges = [], array $pmsChanges = []);
 public static function fromDecisions(Property $property, Clock $clock, array $decisions, array $before = []): self;
 public function count(): int;
 public function isEmpty(): bool;
-public function without(array $indexes, array $deletions = [], array $listingChanges = []): self;
+public function withPmsChanges(array $pmsChanges): self;
+public function without(array $indexes, array $deletions = [], array $listingChanges = [], array $pmsChanges = []): self;
 ```
 
 #### `Ritmo\Domain\Plan\PlanConfig` (final class)
@@ -2648,6 +3040,10 @@ const DELETE_REMOVES_HOLIDAY_FLOOR = 'delete_removes_holiday_floor';
 const LISTING_NEEDS_ORDER = 'listing_needs_order';
 const LISTING_WEEKLY_CHANGE_ABOVE_LIMIT = 'listing_weekly_change_above_limit';
 const LISTING_BASE_BELOW_MIN = 'listing_base_below_min';
+const PMS_ROOM_UNKNOWN = 'pms_room_unknown';
+const PMS_PAST_NIGHT = 'pms_past_night';
+const PMS_BEYOND_HORIZON = 'pms_beyond_horizon';
+const PMS_DUPLICATE = 'pms_duplicate';
 const NO_EFFECT = 'no_effect';
 const RISE_ABOVE_MAX_STEP = 'rise_above_max_step';
 const NO_BEFORE = 'no_before';
@@ -2838,6 +3234,13 @@ public function failure(?OrphanProof $proof, string $neighbour, DateTimeImmutabl
 public function contradicted(string $room, DateTimeImmutable $night, string $neighbour, bool $previousPast): bool;
 ```
 
+#### `Ritmo\Domain\Plan\Validation\PmsShapeCheck` (final class)
+
+```php
+public function __construct(IssueLog $log, int $horizonDays);
+public function check(array $changes, array $rooms, DateTimeImmutable $today): void;
+```
+
 #### `Ritmo\Domain\Plan\Validation\PriceBoundsCheck` (final class implements ItemCheck)
 
 ```php
@@ -2909,6 +3312,251 @@ public static function sealed(ValidatedPlan $plan): bool;
 public static function byRoomNight(array $bookings, DateRange $range): array;
 ```
 
+#### `Ritmo\Domain\Report\Booking\BookingLine` (final class)
+
+```php
+const DIRECT_API = 'direct_api';
+const DIRECT_MANUAL = 'direct_manual';
+public readonly string $pmsRef;
+public readonly ?string $propertyId;
+public readonly ?string $roomCode;
+public readonly BookingStatus $status;
+public readonly string $channel;
+public readonly DateTimeImmutable $arrival;
+public readonly int $nights;
+public readonly int $units;
+public readonly float $revenue;
+public readonly ?DateTimeImmutable $createdAt;
+public readonly ?int $leadDays;
+public readonly ?DateTimeImmutable $cancelledAt;
+public function __construct(string $pmsRef, ?string $propertyId, ?string $roomCode, BookingStatus $status, string $channel, DateTimeImmutable $arrival, int $nights, int $units, float $revenue, ?DateTimeImmutable $createdAt, ?int $leadDays, ?DateTimeImmutable $cancelledAt);
+public static function of(BookingRecord $booking, array $roomProperty, string $timezone): self;
+public static function channelOf(BookingRecord $booking): string;
+public function isCounted(): bool;
+public function isActive(): bool;
+public function isCancelled(): bool;
+public function revenuePerNight(): float;
+```
+
+#### `Ritmo\Domain\Report\Booking\BookingLines` (final class)
+
+```php
+public static function of(iterable $bookings, array $roomProperty, string $timezone): array;
+public static function ofProperty(array $lines, ?string $propertyId): array;
+```
+
+#### `Ritmo\Domain\Report\Booking\BookingTotals` (final class)
+
+```php
+public readonly int $bookings;
+public readonly int $cancelled;
+public readonly int $active;
+public readonly int $roomNights;
+public readonly float $revenue;
+public readonly ?float $adr;
+public readonly ?float $meanLeadDays;
+public readonly ?float $meanStayNights;
+public readonly float $cancelledRevenue;
+public readonly int $cancelledWithoutValue;
+public function __construct(int $bookings, int $cancelled, int $active, int $roomNights, float $revenue, ?float $adr, ?float $meanLeadDays, ?float $meanStayNights, float $cancelledRevenue, int $cancelledWithoutValue);
+public static function of(array $lines): self;
+public function toArray(): array;
+```
+
+#### `Ritmo\Domain\Report\Booking\Grouping` (final class)
+
+```php
+public static function totals(array $lines, Closure $key): array;
+```
+
+#### `Ritmo\Domain\Report\Config\ReportsConfig` (final class)
+
+```php
+public readonly int $mapNights;
+public readonly array $groups;
+public readonly ReviewConfig $review;
+public readonly ?DateTimeImmutable $weeklyStart;
+public readonly ForecastConfig $forecast;
+public function __construct(int $mapNights, array $groups, ReviewConfig $review, ?DateTimeImmutable $weeklyStart, ForecastConfig $forecast);
+public static function neutral(): self;
+public static function fromArray(array $data): self;
+```
+
+#### `Ritmo\Domain\Report\Config\ReportsFields` (final class)
+
+```php
+const ROOT = 'reports';
+public static function all(): array;
+```
+
+#### `Ritmo\Domain\Report\Month\MadeInMonth` (final class)
+
+```php
+public readonly ?string $propertyId;
+public readonly BookingTotals $overall;
+public readonly array $byChannel;
+public readonly array $byRoom;
+public readonly array $byWeek;
+public readonly array $byStayMonth;
+public function __construct(?string $propertyId, BookingTotals $overall, array $byChannel, array $byRoom, array $byWeek, array $byStayMonth);
+public static function of(?string $propertyId, array $lines, string $timezone): self;
+```
+
+#### `Ritmo\Domain\Report\Month\MonthCancellations` (final class)
+
+```php
+public readonly ?string $propertyId;
+public readonly int $count;
+public readonly float $revenue;
+public readonly int $ofBookingsMadeBefore;
+public function __construct(?string $propertyId, int $count, float $revenue, int $ofBookingsMadeBefore);
+```
+
+#### `Ritmo\Domain\Report\Month\MonthPerformance` (final class)
+
+```php
+public static function of(array $lines, string $month, DateTimeImmutable $asOf, array $capacities, array $targets, string $timezone): MonthReport;
+```
+
+#### `Ritmo\Domain\Report\Month\MonthReport` (final class)
+
+```php
+const SITE = '';
+public readonly string $month;
+public readonly DateTimeImmutable $asOf;
+public readonly array $made;
+public readonly array $cancellations;
+public readonly array $stays;
+public function __construct(string $month, DateTimeImmutable $asOf, array $made, array $cancellations, array $stays);
+```
+
+#### `Ritmo\Domain\Report\Month\MonthStays` (final class)
+
+```php
+public readonly string $propertyId;
+public readonly int $capacity;
+public readonly int $daysPast;
+public readonly int $realisedNights;
+public readonly float $realisedRevenue;
+public readonly ?float $realisedOccupancy;
+public readonly ?float $realisedAdr;
+public readonly ?float $realisedRevpar;
+public readonly int $daysAhead;
+public readonly int $aheadNights;
+public readonly float $aheadRevenue;
+public readonly ?float $aheadOccupancy;
+public readonly int $nights;
+public readonly float $revenue;
+public readonly ?float $occupancy;
+public readonly ?float $adr;
+public readonly ?float $minimum;
+public readonly ?float $gapToMinimum;
+public readonly int $freeNights;
+public readonly ?float $adrNeeded;
+public function __construct(string $propertyId, int $capacity, int $daysPast, int $realisedNights, float $realisedRevenue, ?float $realisedOccupancy, ?float $realisedAdr, ?float $realisedRevpar, int $daysAhead, int $aheadNights, float $aheadRevenue, ?float $aheadOccupancy, int $nights, float $revenue, ?float $occupancy, ?float $adr, ?float $minimum, ?float $gapToMinimum, int $freeNights, ?float $adrNeeded);
+public static function of(string $propertyId, int $capacity, int $days, int $daysPast, array $realised, array $ahead, MonthTarget $target): self;
+public function achieved(int $decimals): ?float;
+```
+
+#### `Ritmo\Domain\Report\Month\MonthTarget` (final class)
+
+```php
+public readonly ?float $minimum;
+public readonly ?float $realistic;
+public function __construct(?float $minimum = null, ?float $realistic = null);
+public function minimumSet(): ?float;
+```
+
+#### `Ritmo\Domain\Report\Month\Period` (final class)
+
+```php
+public readonly string $key;
+public readonly DateTimeImmutable $first;
+public readonly DateTimeImmutable $end;
+public readonly DateTimeImmutable $startsAt;
+public readonly int $days;
+public static function of(string $month, string $timezone): self;
+public static function keyOf(DateTimeImmutable $night): string;
+public static function following(DateTimeImmutable $day, int $count): array;
+public function contains(DateTimeImmutable $night): bool;
+public function number(): int;
+```
+
+#### `Ritmo\Domain\Report\Occupancy\MapCell` (final class)
+
+```php
+public readonly ?int $free;
+public readonly ?int $sold;
+public readonly ?int $total;
+public readonly ?float $price;
+public readonly ?float $sentPrice;
+public readonly ?int $minStay;
+public readonly ?string $demand;
+public function __construct(?int $free = null, ?int $sold = null, ?int $total = null, ?float $price = null, ?float $sentPrice = null, ?int $minStay = null, ?string $demand = null);
+public function isKnown(): bool;
+```
+
+#### `Ritmo\Domain\Report\Occupancy\MapNight` (final class)
+
+```php
+public readonly DateTimeImmutable $night;
+public readonly int $weekday;
+public readonly ?string $holiday;
+public readonly array $cells;
+public readonly int $free;
+public function __construct(DateTimeImmutable $night, int $weekday, ?string $holiday, array $cells, int $free);
+```
+
+#### `Ritmo\Domain\Report\Occupancy\OccupancyGroup` (final class)
+
+```php
+public readonly string $label;
+public readonly array $tags;
+public function __construct(string $label, array $tags);
+public function contains(RoomType $room): bool;
+```
+
+#### `Ritmo\Domain\Report\Occupancy\OccupancyMap` (final class)
+
+```php
+public static function of(DateTimeImmutable $today, int $nights, array $rooms, array $inventory, ?array $booked, array $pricing, array $holidays, array $demand = []): array;
+```
+
+#### `Ritmo\Domain\Report\Occupancy\OccupancyRow` (final class)
+
+```php
+public readonly RowKind $kind;
+public readonly string $key;
+public readonly array $windows;
+public function __construct(RowKind $kind, string $key, array $windows);
+```
+
+#### `Ritmo\Domain\Report\Occupancy\OccupancyTable` (final class)
+
+```php
+public static function of(array $rooms, array $inventory, ?array $booked, DateTimeImmutable $today, array $goals, array $siteGoals, array $groups): array;
+```
+
+#### `Ritmo\Domain\Report\Occupancy\RoomNight` (final class)
+
+```php
+public readonly int $sold;
+public readonly int $total;
+public readonly bool $blocked;
+public static function of(int $units, InventoryNight $night, ?int $booked): self;
+public function counts(): bool;
+public function free(): int;
+```
+
+#### `Ritmo\Domain\Report\Occupancy\RowKind` (enum)
+
+```php
+case Room = 'room';
+case Site = 'site';
+case Group = 'group';
+case Property = 'property';
+```
+
 #### `Ritmo\Domain\Report\OccupancyReport` (final class)
 
 ```php
@@ -2949,6 +3597,160 @@ public function detect(array $inventory): array;
 public function find(array $bookings, array $pricing, DateRange $range): array;
 ```
 
+#### `Ritmo\Domain\Report\Review\MarketMonth` (final class)
+
+```php
+public readonly ?float $soldPercent;
+public readonly ?float $lastYearPercent;
+public function __construct(?float $soldPercent, ?float $lastYearPercent);
+```
+
+#### `Ritmo\Domain\Report\Review\Reading` (enum)
+
+```php
+case Early = 'early';
+case Ahead = 'ahead';
+case OnPace = 'on_pace';
+case Behind = 'behind';
+```
+
+#### `Ritmo\Domain\Report\Review\ReviewConfig` (final class)
+
+```php
+public readonly int $intervalDays;
+public readonly float $aheadRatio;
+public readonly float $behindRatio;
+public readonly float $earlyMarketPercent;
+public readonly array $priceTags;
+public function __construct(int $intervalDays = 15, float $aheadRatio = 1.2, float $behindRatio = 0.8, float $earlyMarketPercent = 5.0, array $priceTags = []);
+public function reading(float $ownOccupancy, float $marketSoldPercent): Reading;
+```
+
+#### `Ritmo\Domain\Report\Review\ReviewDue` (final class)
+
+```php
+public readonly bool $due;
+public readonly ?int $daysSinceLast;
+public static function of(DateTimeImmutable $today, ?DateTimeImmutable $lastTaken, int $intervalDays): self;
+```
+
+#### `Ritmo\Domain\Report\Review\ReviewResult` (final class)
+
+```php
+public readonly DateTimeImmutable $today;
+public readonly DateTimeImmutable $asOf;
+public readonly ?DateTimeImmutable $previousDay;
+public readonly array $rows;
+public function __construct(DateTimeImmutable $today, DateTimeImmutable $asOf, ?DateTimeImmutable $previousDay, array $rows);
+public function behind(): array;
+```
+
+#### `Ritmo\Domain\Report\Review\ReviewRow` (final class)
+
+```php
+public readonly string $month;
+public readonly string $propertyId;
+public readonly float $soldRevenue;
+public readonly ?float $soldOccupancy;
+public readonly ?float $adr;
+public readonly ?float $minimum;
+public readonly ?float $realistic;
+public readonly ?float $achieved;
+public readonly ?float $pickupSinceLast;
+public readonly ?float $marketSoldPercent;
+public readonly ?float $marketLastYearPercent;
+public readonly ?Reading $reading;
+public readonly ?float $averagePrice;
+public readonly ?float $priceChange;
+public function __construct(string $month, string $propertyId, float $soldRevenue, ?float $soldOccupancy, ?float $adr, ?float $minimum, ?float $realistic, ?float $achieved, ?float $pickupSinceLast, ?float $marketSoldPercent, ?float $marketLastYearPercent, ?Reading $reading, ?float $averagePrice, ?float $priceChange);
+```
+
+#### `Ritmo\Domain\Report\Review\ReviewSnapshot` (final class)
+
+```php
+public readonly DateTimeImmutable $day;
+public readonly array $rows;
+public function __construct(DateTimeImmutable $day, array $rows);
+public static function of(ReviewResult $result): self;
+public function row(string $month, string $propertyId): ?array;
+public function toArray(): array;
+public static function fromArray(array $data): self;
+```
+
+#### `Ritmo\Domain\Report\Review\TwelveMonthReview` (final class)
+
+```php
+const MONTHS = 13;
+public static function of(array $lines, DateTimeImmutable $today, DateTimeImmutable $asOf, array $capacities, array $targets, array $market, array $prices, ?ReviewSnapshot $previous, ReviewConfig $config, string $timezone): ReviewResult;
+```
+
+#### `Ritmo\Domain\Report\RunLines\RunFacts` (final class)
+
+```php
+public readonly bool $light;
+public readonly int $lightNights;
+public readonly bool $shadow;
+public readonly bool $syncNow;
+public readonly int $securityFindings;
+public readonly int $overbooked;
+public readonly bool $waveHold;
+public readonly int $wouldWrite;
+public readonly int $pmsWouldWrite;
+public readonly bool $proposed;
+public readonly int $entries;
+public readonly ?string $refused;
+public readonly int $callsSent;
+public readonly int $confirmed;
+public readonly int $pmsConfirmed;
+public readonly ?string $stop;
+public readonly int $held;
+public readonly int $rejected;
+public readonly int $pmsRejected;
+public readonly int $overdue;
+public readonly ?int $marketAgeDays;
+public readonly array $pmsSkipped;
+public readonly int $mergeConflicts;
+public function __construct(bool $light = false, int $lightNights = 0, bool $shadow = true, bool $syncNow = false, int $securityFindings = 0, int $overbooked = 0, bool $waveHold = false, int $wouldWrite = 0, int $pmsWouldWrite = 0, bool $proposed = false, int $entries = 0, ?string $refused = null, int $callsSent = 0, int $confirmed = 0, int $pmsConfirmed = 0, ?string $stop = null, int $held = 0, int $rejected = 0, int $pmsRejected = 0, int $overdue = 0, ?int $marketAgeDays = null, array $pmsSkipped = [], int $mergeConflicts = 0);
+```
+
+#### `Ritmo\Domain\Report\RunLines\RunLine` (final class)
+
+```php
+public readonly RunLineCode $code;
+public readonly array $params;
+public static function of(RunLineCode $code, array $params = []): self;
+public static function fromArray(array $data): ?self;
+public function toArray(): array;
+```
+
+#### `Ritmo\Domain\Report\RunLines\RunLineCode` (enum)
+
+```php
+case LightIdle = 'light_idle';
+case SyncNow = 'sync_now';
+case SecurityFindings = 'security_findings';
+case Overbooked = 'overbooked';
+case WaveHold = 'wave_hold';
+case ShadowWouldWrite = 'shadow_would_write';
+case WaitingApproval = 'waiting_approval';
+case GateRefused = 'gate_refused';
+case Written = 'written';
+case WriteStopped = 'write_stopped';
+case Held = 'held';
+case ValidatorRefused = 'validator_refused';
+case DeliveryOverdue = 'delivery_overdue';
+case MarketStale = 'market_stale';
+case PmsSkipped = 'pms_skipped';
+case StayMergeConflict = 'stay_merge_conflict';
+public function params(): array;
+```
+
+#### `Ritmo\Domain\Report\RunLines\RunReportItems` (final class)
+
+```php
+public static function of(RunFacts $f, int $staleAfterDays = 0): array;
+```
+
 #### `Ritmo\Domain\Report\SoldMismatch` (final class)
 
 ```php
@@ -2958,6 +3760,172 @@ public readonly int $pmsSold;
 public readonly int $pricingSold;
 public function __construct(string $roomCode, DateTimeImmutable $night, int $pmsSold, int $pricingSold);
 public function difference(): int;
+```
+
+#### `Ritmo\Domain\Report\Targets\ForecastConfig` (final class)
+
+```php
+public readonly array $growth;
+public readonly array $index;
+public readonly float $realisticGrowth;
+public readonly array $maximumIndex;
+public readonly array $highMonths;
+public readonly array $seasonMinimum;
+public function __construct(array $growth = [], array $index = [], float $realisticGrowth = 1.0, array $maximumIndex = [], array $highMonths = [], array $seasonMinimum = []);
+public function growth(Scenario $scenario): float;
+public function index(Scenario $scenario, string $propertyId): float;
+public function maximumIndex(string $propertyId): float;
+public function isHigh(int $month): bool;
+public function seasonMinimum(int $month, string $propertyId): ?float;
+```
+
+#### `Ritmo\Domain\Report\Targets\HolidayForecast` (final class)
+
+```php
+public static function of(HolidayTarget $holiday): array;
+```
+
+#### `Ritmo\Domain\Report\Targets\HolidayTarget` (final class)
+
+```php
+public readonly string $period;
+public readonly int $roomNights;
+public readonly int $soldNights;
+public readonly float $soldRevenue;
+public readonly array $occupancy;
+public readonly array $adr;
+public function __construct(string $period, int $roomNights, int $soldNights, float $soldRevenue, array $occupancy, array $adr);
+public function belowFloor(float $floor): array;
+```
+
+#### `Ritmo\Domain\Report\Targets\MonthForecast` (final class)
+
+```php
+public readonly string $month;
+public readonly float $onBooks;
+public readonly array $scenarios;
+public readonly array $missing;
+public function __construct(string $month, float $onBooks, array $scenarios, array $missing);
+public function of(Scenario $scenario): int;
+```
+
+#### `Ritmo\Domain\Report\Targets\PropertyTarget` (final class)
+
+```php
+public readonly string $month;
+public readonly string $propertyId;
+public readonly bool $highSeason;
+public readonly ?int $today;
+public readonly ?int $realistic;
+public readonly ?int $maximum;
+public readonly ?float $minimum;
+public readonly ?int $revparOfMinimum;
+public readonly ?float $minimumVsRealistic;
+public function __construct(string $month, string $propertyId, bool $highSeason, ?int $today, ?int $realistic, ?int $maximum, ?float $minimum, ?int $revparOfMinimum, ?float $minimumVsRealistic);
+```
+
+#### `Ritmo\Domain\Report\Targets\RevenueForecast` (final class)
+
+```php
+public static function months(array $months, array $units, array $inputs, array $onBooks, ForecastConfig $config): array;
+```
+
+#### `Ritmo\Domain\Report\Targets\RevenueTargets` (final class)
+
+```php
+public static function of(array $months, array $units, array $inputs, ForecastConfig $config): array;
+```
+
+#### `Ritmo\Domain\Report\Targets\Scenario` (enum)
+
+```php
+case Floor = 'floor';
+case Base = 'base';
+case Goal = 'goal';
+```
+
+#### `Ritmo\Domain\Report\Targets\TargetInputs` (final class)
+
+```php
+public readonly ?float $marketOccupancyLy;
+public readonly ?float $marketAdrLy;
+public readonly float $occupancyCap;
+public readonly array $adjust;
+public readonly ?float $minimum;
+public readonly ?float $realistic;
+public function __construct(?float $marketOccupancyLy = null, ?float $marketAdrLy = null, float $occupancyCap = 1.0, array $adjust = [], ?float $minimum = null, ?float $realistic = null);
+public function hasMarket(): bool;
+public function adjust(Scenario $scenario): float;
+public function value(float $growth, float $index, int $units, int $days): float;
+```
+
+#### `Ritmo\Domain\Report\Weekly\MadeWeek` (final class)
+
+```php
+public readonly DateTimeImmutable $monday;
+public readonly string $propertyId;
+public readonly bool $complete;
+public readonly BookingTotals $totals;
+public readonly int $cancellations;
+public readonly float $cancelledRevenue;
+public function __construct(DateTimeImmutable $monday, string $propertyId, bool $complete, BookingTotals $totals, int $cancellations, float $cancelledRevenue);
+```
+
+#### `Ritmo\Domain\Report\Weekly\Moment` (enum)
+
+```php
+case Past = 'past';
+case Current = 'current';
+case Future = 'future';
+```
+
+#### `Ritmo\Domain\Report\Weekly\ShareRow` (final class)
+
+```php
+public readonly string $propertyId;
+public readonly string $key;
+public readonly BookingTotals $totals;
+public readonly float $share;
+public function __construct(string $propertyId, string $key, BookingTotals $totals, float $share);
+```
+
+#### `Ritmo\Domain\Report\Weekly\StayWeek` (final class)
+
+```php
+public readonly DateTimeImmutable $monday;
+public readonly string $propertyId;
+public readonly Moment $moment;
+public readonly int $roomNights;
+public readonly int $capacity;
+public readonly ?float $occupancy;
+public readonly float $revenue;
+public readonly ?float $adr;
+public readonly ?float $revpar;
+public function __construct(DateTimeImmutable $monday, string $propertyId, Moment $moment, int $roomNights, int $capacity, ?float $occupancy, float $revenue, ?float $adr, ?float $revpar);
+```
+
+#### `Ritmo\Domain\Report\Weekly\WeeklyPanel` (final class)
+
+```php
+const WEEKS_AROUND = 8;
+const DEFAULT_WEEKS_BACK = 26;
+const RECENT_DAYS = 28;
+const GOAL_MONTHS = 3;
+public static function of(array $lines, DateTimeImmutable $asOf, array $capacities, array $targets, string $timezone, ?DateTimeImmutable $start): WeeklyReport;
+public static function monday(DateTimeImmutable $day): DateTimeImmutable;
+```
+
+#### `Ritmo\Domain\Report\Weekly\WeeklyReport` (final class)
+
+```php
+public readonly DateTimeImmutable $today;
+public readonly DateTimeImmutable $start;
+public readonly array $made;
+public readonly array $stays;
+public readonly array $goals;
+public readonly array $channels;
+public readonly array $rooms;
+public function __construct(DateTimeImmutable $today, DateTimeImmutable $start, array $made, array $stays, array $goals, array $channels, array $rooms);
 ```
 
 #### `Ritmo\Domain\Report\WindowOccupancy` (final class)

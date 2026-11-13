@@ -31,6 +31,7 @@ final class ApprovalServiceTest extends TestCase
 {
     private const APPROVER = 3;
     private const VIEWER = 9;
+    private const SAFETY = 4;
 
     private PlanApprovalRepository $repository;
 
@@ -44,7 +45,7 @@ final class ApprovalServiceTest extends TestCase
     {
         $this->repository = new PlanApprovalRepository(VerifyDatabase::create());
         $this->clock = new MovableClock(PlanSample::NOW);
-        $this->capabilities = new Capabilities([self::APPROVER => [CapabilityCheck::APPROVE]]);
+        $this->capabilities = new Capabilities([self::APPROVER => [CapabilityCheck::APPROVE], self::SAFETY => [CapabilityCheck::APPROVE, CapabilityCheck::MANAGE_SAFETY]]);
         $this->service = new ApprovalService($this->repository, $this->capabilities, $this->clock);
     }
 
@@ -81,14 +82,30 @@ final class ApprovalServiceTest extends TestCase
         self::assertSame(['item|Deluxe|2027-03-10'], $this->repository->find($id)['rejected_keys']);
     }
 
-    public function testListingValuesNeedTheirNames(): void
+    public function testListingValuesNeedTheirNamesTheSafetyCapabilityAndTheTypedAmount(): void
     {
         [, $listing] = $this->service->propose(self::plan(), 41, new DateTimeImmutable('2027-03-03T11:00:00Z'));
+        $typed = ['listing|Deluxe|base' => '1020'];
 
-        self::assertRefused(ApprovalRefused::LISTING_NEEDS_EXPLICIT_APPROVAL, fn () => $this->service->approve($listing, self::APPROVER));
-        $grant = $this->service->approve($listing, self::APPROVER, ['listing|Deluxe|base']);
+        self::assertRefused(ApprovalRefused::LISTING_NEEDS_EXPLICIT_APPROVAL, fn () => $this->service->approve($listing, self::SAFETY));
+        self::assertRefused(ApprovalRefused::LISTING_NEEDS_SAFETY, fn () => $this->service->approve($listing, self::APPROVER, ['listing|Deluxe|base'], '', $typed));
+        self::assertRefused(ApprovalRefused::LISTING_NOT_CONFIRMED, fn () => $this->service->approve($listing, self::SAFETY, ['listing|Deluxe|base']));
+        self::assertRefused(ApprovalRefused::LISTING_NOT_CONFIRMED, fn () => $this->service->approve($listing, self::SAFETY, ['listing|Deluxe|base'], '', ['listing|Deluxe|base' => '1200']));
+        self::assertSame('pending', $this->repository->find($listing)['status'], 'nothing was decided');
+
+        $grant = $this->service->approve($listing, self::SAFETY, ['listing|Deluxe|base'], '', ['listing|Deluxe|base' => '1020,00']);
         self::assertSame(['listing|Deluxe|base'], $grant->approvedKeys());
         self::assertSame(['Deluxe|base'], $grant->listingChanges());
+        self::assertEquals($grant, $this->service->grant($listing));
+    }
+
+    public function testTheWriteOfAListingChangeNeedsTheApproverToStillHoldTheSafetyCapability(): void
+    {
+        [, $listing] = $this->service->propose(self::plan(), 41, new DateTimeImmutable('2027-03-03T11:00:00Z'));
+        $this->service->approve($listing, self::SAFETY, ['listing|Deluxe|base'], '', ['listing|Deluxe|base' => '1020']);
+        $lost = new ApprovalService($this->repository, new Capabilities([self::SAFETY => [CapabilityCheck::APPROVE]]), $this->clock);
+
+        self::assertRefused(ApprovalRefused::LISTING_NEEDS_SAFETY, fn () => $lost->grant($listing));
     }
 
     public function testOnlyAUserWithTheCapabilityDecides(): void

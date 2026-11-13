@@ -42,6 +42,8 @@ enum AlertCode: string
     case DeliveryOverdue = 'delivery_overdue';
     /** The 12-month review is due again. */
     case ReviewDue = 'review_due';
+    /** A run planned more PMS changes than stay.write.max_changes_per_run: none was written. */
+    case PmsChangesCapped = 'pms_changes_capped';
 
     public function severity(): AlertSeverity
     {
@@ -59,7 +61,7 @@ enum AlertCode: string
             self::Overbooked, self::SoldMismatch, self::PushDisabled, self::PushStale, self::InventoryClosedWithoutBooking,
             self::InventoryStayOffRule, self::InventoryArrivalOffRule, self::RecalcQuotaExhausted, self::ConnectorDown,
             self::ApprovalPending, self::RunLate, self::SchedulerStalled, self::MarketStale, self::MarketGap,
-            self::DeliveryOverdue, self::ReviewDue => AlertLifecycle::Condition,
+            self::DeliveryOverdue, self::ReviewDue, self::PmsChangesCapped => AlertLifecycle::Condition,
             default => AlertLifecycle::Event,
         };
     }

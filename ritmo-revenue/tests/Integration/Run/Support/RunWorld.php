@@ -6,6 +6,7 @@ namespace Ritmo\Tests\Integration\Run\Support;
 
 use Ritmo\Application\Approval\CapabilityCheck;
 use Ritmo\Application\EmergencySwitch;
+use Ritmo\Application\Dashboard\Setup\SafetyValues;
 use Ritmo\Application\Mode\ModePreconditions;
 use Ritmo\Application\Mode\ModeService;
 use Ritmo\Application\Run\RunStack;
@@ -177,14 +178,27 @@ final class RunWorld
         }
     }
 
+    /**
+     * A person allowed to change safety limits confirmed the safety values in force (step 7 of
+     * the setup: a condition of the approval mode, void once a value changes).
+     */
+    public function confirmSafety(): void
+    {
+        $this->store->set(ModePreconditions::SETUP_KEY, [
+            'safety_confirmed_at' => $this->clock->now()->format(DATE_ATOM),
+            'safety_confirmed_by' => 1,
+            'safety_fingerprint' => SafetyValues::fingerprint($this->stack->rules(), $this->stack->roomTypes()->all()),
+        ]);
+    }
+
     private function seed(PropertyMode $mode): void
     {
         $this->testConnections();
-        $this->store->set(ModePreconditions::SETUP_KEY, ['safety_confirmed_at' => $this->clock->now()->format(DATE_ATOM), 'safety_confirmed_by' => 1]);
         $this->stack->properties()->save(new Property(self::PROPERTY, 'Example Inn', 'UTC', 'BRL'));
         foreach (SimWorld::rooms() as $room) {
             $this->stack->roomTypes()->save($room);
         }
+        $this->confirmSafety();
         $anchors = new MarketAnchorRepository($this->db, $this->clock);
         foreach (DateRange::nights(Days::date('2027-02-28'), 70) as $night) {
             $anchors->save(self::PROPERTY, new MarketAnchor($night, 420.0, 500.0, 600.0, 700.0, 900.0, 8, Days::date('2027-02-27'), AnchorOrigin::Measured));

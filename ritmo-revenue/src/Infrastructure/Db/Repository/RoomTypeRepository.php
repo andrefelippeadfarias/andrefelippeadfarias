@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Ritmo\Infrastructure\Db\Repository;
 
+use InvalidArgumentException;
 use Ritmo\Domain\Model\RoomType;
 use Ritmo\Domain\Support\Clock;
 use Ritmo\Infrastructure\Db\Database;
@@ -66,6 +67,24 @@ final class RoomTypeRepository
     }
 
     /**
+     * The codes of the stored rows that are not a valid room type (changed by hand, or written
+     * by an older version): the reads leave them out instead of failing every screen and run.
+     *
+     * @return list<string>
+     */
+    public function unreadable(): array
+    {
+        $codes = [];
+        foreach ($this->db->select(sprintf('SELECT * FROM %s ORDER BY property_code, position, id', $this->db->table(self::TABLE))) as $row) {
+            if ($this->hydrate($row) === null) {
+                $codes[] = (string) $row['code'];
+            }
+        }
+
+        return $codes;
+    }
+
+    /**
      * @return list<RoomType> in the order of the property's list
      */
     public function forProperty(string $propertyId): array
@@ -75,10 +94,7 @@ final class RoomTypeRepository
             [$propertyId]
         );
 
-        return array_values(array_map(
-            $this->hydrate(...),
-            array_filter($rows, static fn (array $row): bool => $row['property_code'] === $propertyId)
-        ));
+        return $this->readable(array_filter($rows, static fn (array $row): bool => $row['property_code'] === $propertyId));
     }
 
     /**
@@ -86,10 +102,17 @@ final class RoomTypeRepository
      */
     public function all(): array
     {
-        return array_map(
-            $this->hydrate(...),
-            $this->db->select(sprintf('SELECT * FROM %s ORDER BY property_code, position, id', $this->db->table(self::TABLE)))
-        );
+        return $this->readable($this->db->select(sprintf('SELECT * FROM %s ORDER BY property_code, position, id', $this->db->table(self::TABLE))));
+    }
+
+    /**
+     * @param array<array<string, string|null>> $rows
+     *
+     * @return list<RoomType> the rows that are valid room types
+     */
+    private function readable(array $rows): array
+    {
+        return array_values(array_filter(array_map($this->hydrate(...), array_values($rows))));
     }
 
     /**
@@ -131,8 +154,24 @@ final class RoomTypeRepository
 
     /**
      * @param array<string, string|null> $row
+     *
+     * @return RoomType|null null for a row that is not a valid room type (see unreadable())
      */
-    private function hydrate(array $row): RoomType
+    private function hydrate(array $row): ?RoomType
+    {
+        try {
+            return $this->roomType($row);
+        } catch (InvalidArgumentException) {
+            return null;
+        }
+    }
+
+    /**
+     * @param array<string, string|null> $row
+     *
+     * @throws InvalidArgumentException
+     */
+    private function roomType(array $row): RoomType
     {
         return new RoomType(
             (string) $row['property_code'],

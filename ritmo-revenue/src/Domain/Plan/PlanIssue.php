@@ -113,6 +113,12 @@ final class PlanIssue
     public const LISTING_WEEKLY_CHANGE_ABOVE_LIMIT = 'listing_weekly_change_above_limit';
     public const LISTING_BASE_BELOW_MIN = 'listing_base_below_min';
 
+    // PMS changes (stay, arrival and departure).
+    public const PMS_ROOM_UNKNOWN = 'pms_room_unknown';
+    public const PMS_PAST_NIGHT = 'pms_past_night';
+    public const PMS_BEYOND_HORIZON = 'pms_beyond_horizon';
+    public const PMS_DUPLICATE = 'pms_duplicate';
+
     // Effect.
     /** Everything the item sets is already in force. */
     public const NO_EFFECT = 'no_effect';

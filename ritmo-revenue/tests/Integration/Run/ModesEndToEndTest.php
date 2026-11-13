@@ -26,7 +26,7 @@ final class ModesEndToEndTest extends TestCase
         self::assertGreaterThan(0, $summary['validate']['would_write'] ?? 0, 'the plan has something to write');
         self::assertSame(0, $summary['write']['writes_sent'] ?? null);
         self::assertSame([], $world->writes(), 'no write request reached the simulator');
-        self::assertNotSame([], $summary['report']['lines'] ?? []);
+        self::assertNotSame([], $summary['report']['items'] ?? []);
     }
 
     public function testAnAutonomousRunWritesItsPlanInSlicesAndRecordsWhatWasStored(): void

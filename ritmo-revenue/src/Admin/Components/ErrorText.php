@@ -7,7 +7,9 @@ namespace Ritmo\Admin\Components;
 use InvalidArgumentException;
 use OutOfBoundsException;
 use Ritmo\Admin\RefusalText;
+use Ritmo\Admin\Editors\EditorText;
 use Ritmo\Application\Approval\ApprovalRefused;
+use Ritmo\Application\Rules\RulesRefused;
 use Ritmo\Application\Mode\ModeRefused;
 use Ritmo\Domain\Config\InvalidConfig;
 use Throwable;
@@ -34,6 +36,9 @@ final class ErrorText
         }
         if ($failure instanceof ApprovalRefused) {
             return RefusalText::approval($failure);
+        }
+        if ($failure instanceof RulesRefused) {
+            return EditorText::refusal($failure);
         }
         if ($failure instanceof UserFacing || $failure instanceof InvalidConfig || self::ownValidation($failure)) {
             return $failure->getMessage();

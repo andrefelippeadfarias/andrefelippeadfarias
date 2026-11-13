@@ -6,7 +6,6 @@ namespace Ritmo\WordPress;
 
 use Closure;
 use Ritmo\Application\Dashboard\OccupancyQuery;
-use Ritmo\Application\Dashboard\PropertyDashboard;
 use Ritmo\Application\EmergencySwitch;
 use Ritmo\Application\Run\RunStack;
 use Ritmo\Application\Setup\SetupService;
@@ -204,11 +203,6 @@ final class Services
     public function occupancy(): OccupancyQuery
     {
         return $this->once('occupancy', fn (): OccupancyQuery => new OccupancyQuery($this->properties(), $this->roomTypes(), $this->ruleSets(), $this->snapshots(), $this->clock()));
-    }
-
-    public function dashboard(): PropertyDashboard
-    {
-        return $this->once('dashboard', fn (): PropertyDashboard => new PropertyDashboard($this->properties(), $this->occupancy(), $this->runs(), $this->planItems(), $this->alerts()));
     }
 
     public function setup(): SetupService

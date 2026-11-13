@@ -52,9 +52,11 @@ final class DiagnosticsView
                 /* translators: %s: version */
                 sprintf(__('PHP %s', 'ritmo-revenue'), PHP_VERSION),
                 function_exists('sodium_crypto_secretbox') ? __('Encryption available', 'ritmo-revenue') : __('Encryption missing: keys cannot be saved', 'ritmo-revenue'),
-                $services->vault()->protection() === 'database_only'
-                    ? __('Keys are protected only by the database: add RITMO_SECRET_KEY to wp-config.php.', 'ritmo-revenue')
-                    : __('Keys are protected by a key in wp-config.php.', 'ritmo-revenue'),
+                match ($services->vault()->protection()) {
+                    'unavailable' => __('RITMO_SECRET_KEY in wp-config.php is shorter than 32 characters: saved keys cannot be used until it is fixed.', 'ritmo-revenue'),
+                    'database_only' => __('Keys are protected only by the database: add RITMO_SECRET_KEY to wp-config.php.', 'ritmo-revenue'),
+                    default => __('Keys are protected by a key in wp-config.php.', 'ritmo-revenue'),
+                },
             ],
             'scheduler' => [
                 $cron['disabled'] ? __('WP-Cron is off: a server cron must call wp-cron.php every 5 minutes.', 'ritmo-revenue') : __('WP-Cron is on: runs start when the site is visited.', 'ritmo-revenue'),

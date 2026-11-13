@@ -64,6 +64,25 @@ final class WriteStep
     }
 
     /**
+     * The room code of each target: a PMS block may carry several rooms (one POST for the same
+     * night of every room), each under its own PMS room id; every other step has one room.
+     *
+     * @return array<string, string> target => room code
+     */
+    public function targetRooms(): array
+    {
+        $rooms = [];
+        foreach (array_keys($this->nights) as $target) {
+            $rooms[(string) $target] = $this->roomCode;
+        }
+        foreach ($this->changes as $change) {
+            $rooms[$change->roomId] = $change->roomCode;
+        }
+
+        return $rooms;
+    }
+
+    /**
      * @return list<string> every night of the step, all targets together
      */
     public function dates(): array

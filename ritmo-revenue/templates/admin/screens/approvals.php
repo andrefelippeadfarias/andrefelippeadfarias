@@ -120,6 +120,27 @@ endif;
             </fieldset>
         <?php endif; ?>
 
+        <?php if ($ritmo_request['pms'] !== []) : ?>
+            <fieldset class="ritmo-block" data-ritmo="pms-section">
+                <legend><?php esc_html_e('Stay and arrival/departure in the PMS', 'ritmo-revenue'); ?></legend>
+                <p class="ritmo-muted"><?php esc_html_e('Written to the PMS after the prices; never a price, never a booking.', 'ritmo-revenue'); ?></p>
+                <?php foreach ($ritmo_request['pms'] as $ritmo_change) : ?>
+                    <div class="ritmo-listing-row">
+                        <?php if ($ritmo_request['can_approve']) : ?>
+                            <label><input type="checkbox" name="entries[]" value="<?php echo esc_attr($ritmo_change['key']); ?>" data-ritmo="pms-check" checked> <?php echo esc_html($ritmo_change['label']); ?></label>
+                        <?php else : ?>
+                            <span><?php echo esc_html($ritmo_change['label']); ?></span>
+                        <?php endif; ?>
+                        <ul class="ritmo-plain">
+                            <?php foreach ($ritmo_change['lines'] as $ritmo_line) : ?>
+                                <li><?php echo esc_html($ritmo_line); ?></li>
+                            <?php endforeach; ?>
+                        </ul>
+                    </div>
+                <?php endforeach; ?>
+            </fieldset>
+        <?php endif; ?>
+
         <?php foreach ($ritmo_request['rooms'] as $ritmo_room) : ?>
             <details class="ritmo-room" data-ritmo="room-section" <?php if ($ritmo_room['open']) : ?>open<?php endif; ?>>
                 <summary>

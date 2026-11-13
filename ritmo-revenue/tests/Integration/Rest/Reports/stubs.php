@@ -24,7 +24,7 @@ namespace Ritmo\Admin\Reports {
     if (!function_exists(__NAMESPACE__ . '\wp_date')) {
         function wp_date(string $format, int $timestamp, ?\DateTimeZone $timezone = null): string
         {
-            return gmdate($format, $timestamp);
+            return (new \DateTimeImmutable('@' . $timestamp))->setTimezone($timezone ?? new \DateTimeZone('UTC'))->format($format);
         }
     }
     if (!function_exists(__NAMESPACE__ . '\number_format_i18n')) {
@@ -54,7 +54,7 @@ namespace Ritmo\Admin\Components {
     if (!function_exists(__NAMESPACE__ . '\wp_date')) {
         function wp_date(string $format, int $timestamp, ?\DateTimeZone $timezone = null): string
         {
-            return gmdate($format, $timestamp);
+            return (new \DateTimeImmutable('@' . $timestamp))->setTimezone($timezone ?? new \DateTimeZone('UTC'))->format($format);
         }
     }
     if (!function_exists(__NAMESPACE__ . '\number_format_i18n')) {

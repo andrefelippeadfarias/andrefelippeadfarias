@@ -53,7 +53,7 @@ final class ReportsAdminTest extends TestCase
         rewind($stream);
         $csv = (string) stream_get_contents($stream);
         self::assertSame(
-            "Room,Sold,Revenue,Occupancy,Change,Currency\n\"'=HYPERLINK(\"\"x\"\")\",3,1250.5,22.64,-5,BRL\n'+1,0,-10,,,BRL\n",
+            "\"Room\",\"Sold\",\"Revenue\",\"Occupancy\",\"Change\",\"Currency\"\n\"'=HYPERLINK(\"\"x\"\")\",3,1250.5,22.64,-5,\"BRL\"\n\"'+1\",0,-10,,,\"BRL\"\n",
             $csv
         );
         self::assertSame(['=HYPERLINK("x")', '3', "R$\u{00A0}1,250.50", '23%', "\u{2212}5.0%"], $table->formatted($table->rows[0], 'BRL'));

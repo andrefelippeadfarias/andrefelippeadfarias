@@ -93,7 +93,7 @@ final class WriteRunTest extends TestCase
 
         $this->world->clock->advance(60);
         $together = $this->world->write($this->world->validate([SimWorld::item('STD', '2027-03-15', 450.0, null, 3)]), [$pushed]);
-        self::assertSame(['stored', 'stored'], array_map(static fn ($r): string => $r->status->value, $together->results));
+        self::assertSame(['stored', 'stored'], array_map(static fn ($r): string => $r->status->value, $together->results), (string) $together->results[1]->reason);
     }
 
     public function testAPmsNightChangedSinceItWasPlannedIsSkipped(): void

@@ -76,6 +76,8 @@ final class SourceRulesTest extends TestCase
         self::assertLessThan($can, $method);
         self::assertLessThan($nonce, $can);
         self::assertLessThan($run, $nonce);
+        $catch = substr($handle, (int) strpos($handle, 'catch (Throwable $failure)'), 300);
+        self::assertStringContainsString("\$args['failed'] = true;", $catch, 'a download that failed redirects with its notice instead of an empty page');
     }
 
     public function testEveryFormOfTheScreensCarriesTheNonceOfAKnownAction(): void

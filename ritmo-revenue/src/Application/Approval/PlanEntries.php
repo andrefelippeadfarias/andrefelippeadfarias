@@ -7,6 +7,7 @@ namespace Ritmo\Application\Approval;
 use InvalidArgumentException;
 use Ritmo\Domain\Plan\Plan;
 use Ritmo\Domain\Plan\PlanItem;
+use Ritmo\Domain\Stay\Write\PmsChangeEntry;
 use Ritmo\Domain\Support\Days;
 use Ritmo\Domain\Support\Num;
 
@@ -17,6 +18,9 @@ use Ritmo\Domain\Support\Num;
  */
 final class PlanEntries
 {
+    /** Prefix of the values a PMS change found before it. */
+    public const BEFORE = 'before:';
+
     private function __construct()
     {
     }
@@ -24,7 +28,7 @@ final class PlanEntries
     /**
      * @param array<string, float> $bases room => listing base the percentages are over
      *
-     * @return list<PlanEntry> items, then deletions, then listing changes, in plan order
+     * @return list<PlanEntry> items, then deletions, then listing changes, then PMS changes, in plan order
      *
      * @throws InvalidArgumentException when the base of an item's room is missing
      */
@@ -36,6 +40,9 @@ final class PlanEntries
         }
         foreach ($plan->listingChanges as $change) {
             $entries[] = new PlanEntry(PlanEntry::LISTING, $change->roomCode, $change->field->value, ['value' => $change->value], $change->orderId);
+        }
+        foreach ($plan->pmsChanges as $change) {
+            $entries[] = self::pms($change);
         }
 
         return $entries;
@@ -50,6 +57,24 @@ final class PlanEntries
         usort($rows, static fn (array $a, array $b): int => strcmp($a['key'], $b['key']));
 
         return hash('sha256', (string) json_encode($rows, JSON_PRESERVE_ZERO_FRACTION | JSON_UNESCAPED_SLASHES));
+    }
+
+    /**
+     * A PMS change by its night and the fields it sets ("2027-03-12|pms_min_stay"), with the
+     * values read before ("before:pms_min_stay"): a PMS that changed since is another entry. A
+     * value that lifts a limit, or a field never read, is "none".
+     */
+    public static function pms(PmsChangeEntry $change): PlanEntry
+    {
+        $fields = $before = [];
+        foreach ($change->target->all() as $field => $value) {
+            $fields[$field] = $value ?? 'none';
+            $now = $change->before->get($field);
+            $before[self::BEFORE . $field] = $now ?? 'none';
+        }
+        ksort($fields);
+
+        return new PlanEntry(PlanEntry::PMS, $change->roomCode, Days::key($change->night) . '|' . implode(',', array_keys($fields)), $fields + $before, $change->orderId);
     }
 
     /**

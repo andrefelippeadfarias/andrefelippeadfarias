@@ -128,7 +128,7 @@ final class StayGoldenTest extends TestCase
         $dropped = 0;
         foreach (self::cases('calendario_12m.classificar_beds24.json') as $case) {
             $scenario = StayParity::scenario($case['name']);
-            $expected = array_map(fn (array $room): array => $this->withoutBlackoutChanges($room), $case['expected']);
+            $expected = array_map(fn (array $room): array => self::withPmsOrphanProofs($scenario, $this->withoutBlackoutChanges($room)), $case['expected']);
             $dropped += count(array_merge(...array_column($case['expected'], 'arrival_changes'))) - count(array_merge(...array_column($expected, 'arrival_changes')));
 
             self::assertSame($expected, array_map($this->auditOf(...), self::runAudit($scenario)), $case['name']);
@@ -175,6 +175,7 @@ final class StayGoldenTest extends TestCase
                     $item['min_stay_before'] = $inventory[$item['room']][$item['from']]->minStay ?? 1; // D2
                     ++$packageReads;
                 }
+                $item['proof'] = StayParity::pmsOrphanProof($scenario, $item['room'], $item['from'], $item['reason'], $item['proof']); // SW-X5
                 $expected[] = $item;
             }
             $changes = $batch->single(self::runAudit($scenario), Days::date($scenario['today']), $case['input']['stay_only']);
@@ -234,6 +235,23 @@ final class StayGoldenTest extends TestCase
     private function withoutBlackoutChanges(array $room): array
     {
         $room['arrival_changes'] = array_values(array_filter($room['arrival_changes'], static fn (array $c): bool => $c['before'] !== 'blackout'));
+
+        return $room;
+    }
+
+    /**
+     * Divergence SW-X5 on the arrival/departure changes of one room of the audit.
+     *
+     * @param array<string, mixed> $scenario
+     * @param array<string, mixed> $room
+     *
+     * @return array<string, mixed>
+     */
+    private static function withPmsOrphanProofs(array $scenario, array $room): array
+    {
+        foreach ($room['arrival_changes'] as $k => $change) {
+            $room['arrival_changes'][$k]['proof'] = StayParity::pmsOrphanProof($scenario, $room['room'], $change['night'], $change['reason'], $change['proof']);
+        }
 
         return $room;
     }

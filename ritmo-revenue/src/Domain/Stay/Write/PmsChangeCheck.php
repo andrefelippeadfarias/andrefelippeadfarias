@@ -133,6 +133,10 @@ final class PmsChangeCheck
         $nights = $context->inventory[$entry->roomCode] ?? [];
         $night = $nights[Days::key($entry->night)] ?? null;
         $neighbour = $nights[Days::key(Days::add($entry->night, $proof->neighbour === OrphanProof::NEXT ? 1 : -1))] ?? null;
+        if ($entry->reason === 'orphan_side_closed_day_sold_out') {
+            // the closed day itself is sold out: its side opens so the free night before it sells
+            return $night !== null && $night->available <= 0 && $neighbour !== null && $neighbour->available > 0;
+        }
         $free = $night !== null && $night->available > 0;
         $closed = $proof->previousPast !== null || ($neighbour !== null && $neighbour->available <= 0);
 

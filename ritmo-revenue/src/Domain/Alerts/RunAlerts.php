@@ -16,7 +16,7 @@ use Ritmo\Domain\Support\Days;
 final class RunAlerts
 {
     /** The codes a full run checks (and resolves when the condition is gone). */
-    public const CODES = [AlertCode::MarketStale, AlertCode::MarketGap, AlertCode::DeliveryOverdue, AlertCode::ReviewDue];
+    public const CODES = [AlertCode::MarketStale, AlertCode::MarketGap, AlertCode::DeliveryOverdue, AlertCode::ReviewDue, AlertCode::PmsChangesCapped];
 
     private function __construct()
     {
@@ -68,6 +68,17 @@ final class RunAlerts
             [],
             'The 12-month review is due.',
             ['from' => AlertDraft::instant($last)],
+        );
+    }
+
+    public static function pmsChangesCapped(string $propertyId, int $limit): AlertDraft
+    {
+        return new AlertDraft(
+            AlertCode::PmsChangesCapped,
+            $propertyId,
+            [],
+            sprintf('The run planned more than %d PMS changes; none was written.', $limit),
+            ['count' => $limit],
         );
     }
 }

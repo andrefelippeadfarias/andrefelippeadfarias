@@ -12,8 +12,10 @@ use Ritmo\Application\Write\Schedule\WriteStep;
  * What of a PMS block may still be sent, decided right before it with the calendar read again:
  * - a value the pricing system also pushes to the PMS goes only after the pricing step of the
  *   same room and nights was accepted in this run (else the next push undoes it): pricing_first;
- * - a change whose minimum stay read when it was planned is not the one there now is skipped:
- *   already_at_target, or changed_since_read (re-plan with the new calendar).
+ * - a change whose stay values read when it was planned (minimum and maximum stay, arrival and
+ *   departure restriction, a missing value included) are not the ones there now is skipped:
+ *   already_at_target when the PMS already holds every value it sets, else changed_since_read
+ *   (a person changed the night: re-plan with the new calendar, never write over it).
  * Reference: beds24.editar_lote (min_stay_antes); AP 01/11 (the push undid PMS-only writes).
  */
 final class PmsGuard
@@ -59,18 +61,31 @@ final class PmsGuard
                 return self::PRICING_FIRST;
             }
         }
-        if ($change->minStayBefore === null) {
+        $read = $change->readBefore();
+        if ($read === []) {
             return null;
         }
-        $differs = $atTarget = false;
+        $differs = false;
+        $atTarget = true;
         foreach ($change->nights() as $night) {
-            $now = $fresh->pms[$change->roomId][$night]['minStay'] ?? null;
-            if ($now !== $change->minStayBefore) {
-                $differs = true;
-                $atTarget = $atTarget || $now === $change->minStay;
+            $now = $fresh->pms[$change->roomId][$night] ?? [];
+            foreach ($read as $field => $before) {
+                $value = self::normal($field, $now[$field] ?? null);
+                if ($value !== self::normal($field, $before)) {
+                    $differs = true;
+                }
+                $atTarget = $atTarget && $value === self::normal($field, $change->sets($field));
             }
         }
 
         return $differs ? ($atTarget ? self::AT_TARGET : self::CHANGED) : null;
+    }
+
+    /**
+     * A minimum stay of none is a minimum of one night.
+     */
+    private static function normal(string $field, int|string|null $value): int|string|null
+    {
+        return $field === 'minStay' ? ($value ?? 1) : $value;
     }
 }

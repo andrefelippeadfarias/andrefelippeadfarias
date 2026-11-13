@@ -37,7 +37,9 @@ final class CalendarChange
     public readonly DateTimeImmutable $to;
 
     /**
-     * @param array<string, int|null> $channels channel => booking limit (null lifts it)
+     * @param array<string, int|null>         $channels channel => booking limit (null lifts it)
+     * @param array<string, int|string|null> $read     values read before the plan of the stay fields it sets, in the
+     *                                                 API's fields (minStay, maxStay, override; null: read as none)
      *
      * @throws InvalidArgumentException on a range that ends before it starts or that sets nothing
      */
@@ -55,6 +57,7 @@ final class CalendarChange
         public readonly bool $alsoPricing = false,
         public readonly string $reason = '',
         public readonly ?int $expectedAvailable = null,
+        public readonly array $read = [],
     ) {
         $this->from = Days::normalize($from);
         $this->to = Days::normalize($to);
@@ -94,6 +97,38 @@ final class CalendarChange
     }
 
     /**
+     * Every stay value read before the plan that the PMS must still hold right before the write:
+     * the minimum stay read ($minStayBefore) and the other values read ($read).
+     *
+     * @return array<string, int|string|null> API field => value read (null: none)
+     */
+    public function readBefore(): array
+    {
+        return $this->minStayBefore === null ? $this->read : ['minStay' => $this->minStayBefore] + $this->read;
+    }
+
+    /**
+     * The value this change sets in one of the API's stay fields (null: it does not set it).
+     */
+    public function sets(string $field): int|string|null
+    {
+        return match ($field) {
+            'minStay' => $this->minStay,
+            'maxStay' => $this->maxStay,
+            'override' => $this->restriction === null ? null : self::apiRestriction($this->restriction),
+            default => null,
+        };
+    }
+
+    /**
+     * A restriction as the PMS API names it.
+     */
+    public static function apiRestriction(Restriction $restriction): string
+    {
+        return self::RESTRICTIONS[$restriction->value];
+    }
+
+    /**
      * The range in the PMS API's fields.
      *
      * @return array<string, mixed>
@@ -107,7 +142,7 @@ final class CalendarChange
             }
         }
         if ($this->restriction !== null) {
-            $range['override'] = self::RESTRICTIONS[$this->restriction->value];
+            $range['override'] = self::apiRestriction($this->restriction);
         }
         if ($this->channels !== []) {
             $range['channels'] = $this->channels;

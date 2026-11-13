@@ -116,6 +116,11 @@ final class ApprovalsScreen
                 'price' => PriceText::change($e->before(), $e->after(), $currency),
                 'type' => ApprovalActions::plain($e->after()),
             ], $request->listing),
+            'pms' => array_map(static fn (EntryRow $e): array => [
+                'key' => $e->key,
+                'label' => ($names[$e->room] ?? $e->room) . ' · ' . ($e->night === null ? '' : NightDate::short($e->night)),
+                'lines' => PmsChangeText::lines($e->fields),
+            ], $request->pms),
             'pairs' => array_map(static fn (array $p): string => sprintf(
                 /* translators: 1: rooms, 2: name of the relation, 3: night */
                 __('%1$s are linked by the relation %2$s on %3$s. Approving only one of them may make the whole approval be refused when it is written.', 'ritmo-revenue'),

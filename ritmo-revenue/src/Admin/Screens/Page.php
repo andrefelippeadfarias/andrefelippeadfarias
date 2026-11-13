@@ -150,6 +150,7 @@ final class Page
             'emergency' => $strip?->emergency ?? ScreenServices::instance()->services()->emergencySwitch()->isEngaged(),
             'can_release' => Capability::can(Capability::MANAGE_CONNECTIONS) || Capability::can(Capability::APPROVE),
             'strip_failed' => $error !== null,
+            'unreadable_rooms' => ScreenServices::instance()->services()->roomTypes()->unreadable(),
             'tabs' => array_map(static fn (Tab $t): array => ['id' => $t->id, 'title' => $t->title, 'url' => Menu::url($slug, array_filter(['tab' => $t->id, 'property' => $property?->id ?? ''])), 'current' => $t->id === $tab], $tabs),
             'operations_url' => Menu::url(Menu::OPERATIONS, ['property' => $property?->id ?? '']),
         ];

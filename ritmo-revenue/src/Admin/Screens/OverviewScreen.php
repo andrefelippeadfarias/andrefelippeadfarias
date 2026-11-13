@@ -13,6 +13,7 @@ use Ritmo\Admin\Components\Menu;
 use Ritmo\Admin\Components\Money;
 use Ritmo\Admin\Components\NightDate;
 use Ritmo\Admin\Components\Percent;
+use Ritmo\Admin\Reports\RunLineText;
 use Ritmo\Application\Dashboard\Todo\TodoItem;
 use Ritmo\Domain\Model\Property;
 use Throwable;
@@ -257,7 +258,7 @@ final class OverviewScreen
                 )),
                 'status' => Labels::runStatus($run['status']),
                 'did' => $did,
-                'lines' => $last['lines'],
+                'lines' => array_slice(RunLineText::ofSummary(is_array($run['summary'] ?? null) ? $run['summary'] : [])['lines'], 0, 8),
                 'detail_url' => Menu::url(Menu::SETTINGS, ['tab' => 'diagnostics', 'run' => $run['id'], 'property' => $property->id]),
                 'nights_url' => Menu::url(Menu::NIGHTS, ['property' => $property->id, 'only' => 'would_change']),
                 'shadow' => $last['would_write'] !== null,

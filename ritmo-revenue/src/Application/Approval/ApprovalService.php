@@ -89,24 +89,30 @@ final class ApprovalService
 
     /**
      * A person approves the whole request (null) or the entries named (closed over their groups).
+     * A change of the listing's minimum, base or maximum is approved only by name, by a person
+     * allowed to change safety limits, with its new amount typed ($confirmations).
      *
-     * @param list<string>|null $selected entry keys; null approves everything (not for listing values)
+     * @param list<string>|null     $selected      entry keys; null approves everything (not for listing values)
+     * @param array<string, string> $confirmations listing entry key => the amount the person typed
      *
      * @throws ApprovalRefused when the request is unknown, not pending, expired, the user lacks the
      *                         capability, the selection is empty or names an unknown entry, or listing
-     *                         values are approved without naming them
+     *                         values are approved without naming them, without the safety capability
+     *                         or without their typed amount
      */
-    public function approve(int $id, int $userId, ?array $selected = null, string $note = ''): ApprovalGrant
+    public function approve(int $id, int $userId, ?array $selected = null, string $note = '', array $confirmations = []): ApprovalGrant
     {
         $row = $this->pendingRow($id, $userId);
         $entries = self::entries($row);
-        if ($selected === null && $row['kind'] === ApprovalKind::Listing->value) {
+        $listing = array_filter($entries, static fn (PlanEntry $e): bool => $e->kind === PlanEntry::LISTING);
+        if ($selected === null && ($row['kind'] === ApprovalKind::Listing->value || $listing !== [])) {
             throw new ApprovalRefused(ApprovalRefused::LISTING_NEEDS_EXPLICIT_APPROVAL, 'Each listing value must be approved by name.');
         }
         $selection = PartialApproval::close($entries, $selected ?? array_map(static fn (PlanEntry $e): string => $e->key(), $entries));
         if ($selection->approved === []) {
             throw new ApprovalRefused(ApprovalRefused::NOTHING_SELECTED, 'Nothing was selected.');
         }
+        $this->checkListing(array_values(array_filter($entries, static fn (PlanEntry $e): bool => in_array($e->key(), $selection->approved, true))), $userId, $confirmations);
         $now = $this->clock->now();
         if (!$this->repository->decide($id, ApprovalStatus::Approved->value, $selection->approved, $selection->rejected, $userId, CapabilityCheck::APPROVE, $now, $note)) {
             throw new ApprovalRefused(ApprovalRefused::NOT_PENDING, 'The request was decided meanwhile.');
@@ -147,8 +153,38 @@ final class ApprovalService
         if (!$this->capabilities->userCan((int) $row['decided_by'], CapabilityCheck::APPROVE)) {
             throw new ApprovalRefused(ApprovalRefused::NO_CAPABILITY, 'The approver no longer holds the approval capability.');
         }
+        $grant = $this->grantOf($row);
+        if ($grant->listingChanges() !== [] && !$this->capabilities->userCan((int) $row['decided_by'], CapabilityCheck::MANAGE_SAFETY)) {
+            throw new ApprovalRefused(ApprovalRefused::LISTING_NEEDS_SAFETY, 'The approver of a listing change no longer holds the safety capability.');
+        }
 
-        return $this->grantOf($row);
+        return $grant;
+    }
+
+    /**
+     * Every listing value approved: by a person allowed to change safety limits, with the new
+     * amount typed.
+     *
+     * @param list<PlanEntry>       $approved
+     * @param array<string, string> $confirmations
+     *
+     * @throws ApprovalRefused
+     */
+    private function checkListing(array $approved, int $userId, array $confirmations): void
+    {
+        foreach ($approved as $entry) {
+            if ($entry->kind !== PlanEntry::LISTING) {
+                continue;
+            }
+            if (!$this->capabilities->userCan($userId, CapabilityCheck::MANAGE_SAFETY)) {
+                throw new ApprovalRefused(ApprovalRefused::LISTING_NEEDS_SAFETY, 'Only a person allowed to change safety limits approves a change of the listing.');
+            }
+            $typed = str_replace(',', '.', trim($confirmations[$entry->key()] ?? ''));
+            $value = (float) ($entry->fields['value'] ?? 0);
+            if (preg_match('/^\d{1,9}(\.\d{1,2})?$/', $typed) !== 1 || abs((float) $typed - $value) >= 0.005) {
+                throw new ApprovalRefused(ApprovalRefused::LISTING_NOT_CONFIRMED, 'Type the new amount of each listing change to approve it.');
+            }
+        }
     }
 
     /**

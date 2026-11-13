@@ -7,8 +7,8 @@ namespace Ritmo\Application\Approval;
 use InvalidArgumentException;
 
 /**
- * One entry of a plan as a person approves it: a room night written or deleted, or a listing
- * value, with exactly what will be sent (whole percentages, stay, arrival and departure days) and
+ * One entry of a plan as a person approves it: a room night written or deleted, a listing value
+ * or a change of the PMS calendar (subject "night|fields"), with exactly what will be sent (whole percentages, stay, arrival and departure days) and
  * the order it cites. Explanations are not part of it: a plan rebuilt later with the same entries
  * is the same plan to the person who approved it.
  */
@@ -17,6 +17,7 @@ final class PlanEntry
     public const ITEM = 'item';
     public const DELETION = 'deletion';
     public const LISTING = 'listing';
+    public const PMS = 'pms';
 
     /**
      * @param string                          $subject the night ("YYYY-MM-DD") or the listing field
@@ -29,7 +30,7 @@ final class PlanEntry
         public readonly array $fields = [],
         public readonly ?string $orderId = null,
     ) {
-        if (!in_array($kind, [self::ITEM, self::DELETION, self::LISTING], true)) {
+        if (!in_array($kind, [self::ITEM, self::DELETION, self::LISTING, self::PMS], true)) {
             throw new InvalidArgumentException(sprintf('Unknown entry kind "%s".', $kind));
         }
     }
@@ -41,10 +42,12 @@ final class PlanEntry
 
     /**
      * Entries approved or refused together: a deletion and the item that writes its night again.
+     * A listing value and a PMS change stand alone (a PMS change whose paired pricing item is left
+     * out is refused when the approved plan is checked again: it would be undone by the push).
      */
     public function group(): string
     {
-        return $this->kind === self::LISTING ? $this->key() : 'night|' . $this->roomCode . '|' . $this->subject;
+        return $this->kind === self::LISTING || $this->kind === self::PMS ? $this->key() : 'night|' . $this->roomCode . '|' . $this->subject;
     }
 
     /**

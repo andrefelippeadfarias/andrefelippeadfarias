@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Ritmo\Admin\Editors;
 
+use Ritmo\Admin\Components\DomainText;
 use Ritmo\Application\Rules\RuleDiff;
 use Ritmo\Domain\Config\Field;
 use Ritmo\Domain\Config\Schema;
@@ -32,8 +33,8 @@ final class FieldView
             'key' => $field->key,
             'id' => FieldPath::anchor($path),
             'name' => self::name($ctx->nameRoot, $path),
-            'label' => $field->label,
-            'help' => $field->help,
+            'label' => DomainText::t($field->label),
+            'help' => DomainText::t($field->help),
             'error' => $ctx->errors[$path] ?? null,
             'disabled' => $ctx->readOnly || $field->locked,
             'locked' => $field->locked,

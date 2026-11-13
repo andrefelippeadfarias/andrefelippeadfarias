@@ -75,11 +75,17 @@ final class OperationRoutes
         }
         $stack = Services::instance()->stack();
         try {
-            $property = $stack->modes()->change((string) $request['id'], $mode, get_current_user_id(), $stack->rules()->modes(), (string) $request->get_param('confirmation'), (string) $request->get_param('reason'));
+            $property = $stack->modes()->change((string) $request['id'], $mode, get_current_user_id(), $stack->rules()->modes(), sanitize_text_field((string) $request->get_param('confirmation')), sanitize_text_field((string) $request->get_param('reason')));
         } catch (OutOfBoundsException) {
             return self::notFound();
         } catch (ModeRefused $refused) {
-            return new WP_Error('ritmo_' . $refused->reason, RefusalText::mode($refused), ['status' => $refused->reason === ModeRefused::NO_CAPABILITY ? 403 : 409]);
+            $status = match ($refused->reason) {
+                ModeRefused::NO_CAPABILITY => 403,
+                ModeRefused::REASON_PRIVATE => 400,
+                default => 409,
+            };
+
+            return new WP_Error('ritmo_' . $refused->reason, RefusalText::mode($refused), ['status' => $status]);
         }
 
         return new WP_REST_Response(['id' => $property->id, 'mode' => $property->mode->value]);
@@ -106,23 +112,38 @@ final class OperationRoutes
         try {
             $decision = OperationInput::decision($request->get_param('decision'));
             $keys = OperationInput::keys($request->get_param('keys'));
+            $confirmations = OperationInput::confirmations($request->get_param('confirm'));
         } catch (InvalidArgumentException $bad) {
             return new WP_Error('ritmo_bad_decision', __('Send the decision "approve" or "reject" and, to approve only part of the plan, a non-empty list of entry keys.', 'ritmo-revenue'), ['status' => 400]);
         }
+        $note = sanitize_text_field((string) $request->get_param('note'));
         try {
             if ($decision === OperationInput::REJECT) {
-                $stack->approvalDesk()->reject($property, (int) $request['id'], get_current_user_id(), $stack->rules()->approval(), sanitize_text_field((string) $request->get_param('note')));
+                $stack->approvalDesk()->reject($property, (int) $request['id'], get_current_user_id(), $stack->rules()->approval(), $note);
 
                 return new WP_REST_Response(['status' => 'rejected']);
             }
-            $grant = $stack->approvalDesk()->approve($property, (int) $request['id'], get_current_user_id(), $keys, $stack->rules()->approval(), sanitize_text_field((string) $request->get_param('note')));
+            $grant = $stack->approvalDesk()->approve($property, (int) $request['id'], get_current_user_id(), $keys, $stack->rules()->approval(), $note, $confirmations);
         } catch (OutOfBoundsException) {
             return self::notFound();
         } catch (ApprovalRefused $refused) {
-            return new WP_Error('ritmo_' . $refused->reason, RefusalText::approval($refused), ['status' => $refused->reason === ApprovalRefused::NO_CAPABILITY ? 403 : 409]);
+            return new WP_Error('ritmo_' . $refused->reason, RefusalText::approval($refused), ['status' => self::status($refused)]);
         }
 
         return new WP_REST_Response(['status' => 'approved', 'entries' => count($grant->approvedEntries)]);
+    }
+
+    /**
+     * The HTTP status of a refused decision: 403 for a capability, 400 for a note or a typed
+     * amount the person must correct, 409 for the state of the request.
+     */
+    private static function status(ApprovalRefused $refused): int
+    {
+        return match ($refused->reason) {
+            ApprovalRefused::NO_CAPABILITY, ApprovalRefused::LISTING_NEEDS_SAFETY => 403,
+            ApprovalRefused::NOTE_PRIVATE, ApprovalRefused::LISTING_NOT_CONFIRMED, ApprovalRefused::LISTING_NEEDS_EXPLICIT_APPROVAL => 400,
+            default => 409,
+        };
     }
 
     public static function changes(WP_REST_Request $request): WP_REST_Response|WP_Error

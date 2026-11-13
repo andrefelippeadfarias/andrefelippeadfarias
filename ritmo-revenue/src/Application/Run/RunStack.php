@@ -12,11 +12,15 @@ use Ritmo\Application\Approval\ApprovalService;
 use Ritmo\Application\Approval\CapabilityCheck;
 use Ritmo\Application\ConnectorSource;
 use Ritmo\Application\EmergencySwitch;
+use Ritmo\Application\Market\MarketFreshness;
+use Ritmo\Application\Market\MarketReminder;
 use Ritmo\Application\Market\MarketRulerAssembler;
 use Ritmo\Application\Market\MarketSeriesService;
 use Ritmo\Application\Mode\EmergencyControl;
+use Ritmo\Application\Dashboard\Setup\SafetyValues;
 use Ritmo\Application\Mode\ModePreconditions;
 use Ritmo\Application\Mode\ModeService;
+use Ritmo\Application\Report\Store\SnapshotStore;
 use Ritmo\Application\Schedule\LightRoundService;
 use Ritmo\Application\Schedule\LockedRunLauncher;
 use Ritmo\Application\Schedule\MovementTracker;
@@ -193,7 +197,7 @@ final class RunStack
 
     public function preconditions(): ModePreconditions
     {
-        return $this->once(__FUNCTION__, fn (): ModePreconditions => new ModePreconditions($this->runs(), new AlertLedger($this->db), $this->holds(), $this->switch, $this->store, $this->clock));
+        return $this->once(__FUNCTION__, fn (): ModePreconditions => new ModePreconditions($this->runs(), new AlertLedger($this->db), $this->holds(), $this->switch, $this->store, $this->clock, fn (): string => SafetyValues::fingerprint($this->rules(), $this->roomTypes()->all())));
     }
 
     public function holds(): WaveHoldRepository
@@ -253,11 +257,21 @@ final class RunStack
             new MarketAnchorRepository($this->db, $this->clock),
             new StepLedgerRepository($this->db),
             new OrderRepository($this->db, $this->clock),
-            new MarketRulerAssembler(new MarketSeriesRepository($this->db), new MarketAnchorRepository($this->db, $this->clock), new LadderReferenceRepository($this->db)),
+            $this->marketRuler(),
             $this->marketSeries(),
             new ThirdPartyWatch($this->observations(), $this->freezes(), $this->capabilities, $this->clock, $this->rules()->thirdParty()),
             new WeeklyReference($this->store),
         ));
+    }
+
+    public function stayWrites(): StayWriteStep
+    {
+        return $this->once(__FUNCTION__, fn (): StayWriteStep => new StayWriteStep($this->snapshots(), $this->connectors->pricingStaySync(), $this->clock));
+    }
+
+    public function marketRuler(): MarketRulerAssembler
+    {
+        return $this->once(__FUNCTION__, fn (): MarketRulerAssembler => new MarketRulerAssembler(new MarketSeriesRepository($this->db), new MarketAnchorRepository($this->db, $this->clock), new LadderReferenceRepository($this->db)));
     }
 
     public function marketSeries(): MarketSeriesService
@@ -280,13 +294,23 @@ final class RunStack
             new CollectStage($this->connectors, $this->snapshots(), $this->bookings(), $this->clock),
             $this->watchStage(),
             new MeasureStage($this->snapshots(), $this->bookings(), new AlertRepository($this->db, $this->clock), $this->clock),
-            new DecideStage($this->inputs(), $this->clock, $this->connectors->pricingPmsName()),
+            new DecideStage($this->inputs(), $this->clock, $this->connectors->pricingPmsName(), $this->stayWrites()),
             new ValidateStage(),
             new ShadowStage($this->planItems(), new RunPayloadRepository($this->db, $this->clock)),
             $this->writeStage(),
             new VerifyStage($this->writeOps(), $this->record(), $this->writtenSteps(), $this->connectors, $this->clock),
-            new ReportStage(),
+            new ReportStage($this->endChecks()),
         ], $this->runs(), $this->db, $this->switch, $this->clock, $this->logger));
+    }
+
+    private function endChecks(): RunEndChecks
+    {
+        return new RunEndChecks(
+            new MarketReminder(new MarketFreshness(new StaySampleRepository($this->db)), $this->marketRuler()),
+            new SnapshotStore($this->db),
+            $this->alerts(),
+            new AlertLedger($this->db),
+        );
     }
 
     public function opener(): RunOpener
@@ -437,7 +461,7 @@ final class RunStack
     private function writeStage(): WriteStage
     {
         return new WriteStage(
-            new PlanRebuild($this->inputs(), $this->clock, $this->connectors->pricingPmsName()),
+            new PlanRebuild($this->inputs(), $this->clock, $this->connectors->pricingPmsName(), $this->stayWrites()),
             new WriteRunner($this->connectors, $this->gate, $this->executor(), $this->writeOps(), $this->quotaRunStart(), $this->capabilities, $this->clock, $this->timeLeft),
             $this->approvalRequests(),
             $this->holds(),

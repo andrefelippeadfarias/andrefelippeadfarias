@@ -115,7 +115,7 @@ $ritmo_post = admin_url('admin-post.php');
             <?php else : ?>
                 <p data-ritmo="last-run-status"><strong><?php echo esc_html($view['last_run']['title']); ?></strong></p>
                 <?php if ($view['last_run']['lines'] !== []) : ?>
-                    <ul class="ritmo-facts" data-ritmo="report">
+                    <ul class="ritmo-lines" data-ritmo="report">
                         <?php foreach ($view['last_run']['lines'] as $ritmo_line) : ?>
                             <li><?php echo esc_html($ritmo_line); ?></li>
                         <?php endforeach; ?>

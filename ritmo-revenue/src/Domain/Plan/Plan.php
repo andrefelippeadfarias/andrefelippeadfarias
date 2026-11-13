@@ -11,6 +11,7 @@ use InvalidArgumentException;
 use Ritmo\Domain\Model\Identifier;
 use Ritmo\Domain\Model\Property;
 use Ritmo\Domain\Pricing\PaceDecision;
+use Ritmo\Domain\Stay\Write\PmsChangeEntry;
 use Ritmo\Domain\Support\Clock;
 use Ritmo\Domain\Support\Days;
 
@@ -36,12 +37,16 @@ final class Plan implements Countable
     /** @var list<ListingChange> */
     public readonly array $listingChanges;
 
+    /** @var list<PmsChangeEntry> */
+    public readonly array $pmsChanges;
+
     /**
      * @param DateTimeImmutable   $today          the property's "today" the plan was computed for (date-only)
      * @param DateTimeImmutable   $createdAt      instant the plan was computed
      * @param list<PlanItem>      $items
      * @param list<PlanDeletion>  $deletions      date rules deleted before the items are written
      * @param list<ListingChange> $listingChanges
+     * @param list<PmsChangeEntry> $pmsChanges    PMS calendar changes (stay, arrival and departure), written after the pricing steps
      *
      * @throws InvalidArgumentException on an invalid property id or an entry of the wrong class
      */
@@ -52,6 +57,7 @@ final class Plan implements Countable
         array $items,
         array $deletions = [],
         array $listingChanges = [],
+        array $pmsChanges = [],
     ) {
         if (!Identifier::isCode($propertyId)) {
             throw new InvalidArgumentException(sprintf('Invalid property id "%s".', $propertyId));
@@ -59,11 +65,13 @@ final class Plan implements Countable
         self::assertAll($items, PlanItem::class);
         self::assertAll($deletions, PlanDeletion::class);
         self::assertAll($listingChanges, ListingChange::class);
+        self::assertAll($pmsChanges, PmsChangeEntry::class);
         $this->today = Days::normalize($today);
         $this->createdAt = $createdAt->setTimezone(new DateTimeZone('UTC'));
         $this->items = array_values($items);
         $this->deletions = array_values($deletions);
         $this->listingChanges = array_values($listingChanges);
+        $this->pmsChanges = array_values($pmsChanges);
     }
 
     /**
@@ -90,11 +98,21 @@ final class Plan implements Countable
     }
 
     /**
-     * True when the plan writes nothing: no item, no deletion, no listing change.
+     * True when the plan writes nothing: no item, no deletion, no listing change, no PMS change.
      */
     public function isEmpty(): bool
     {
-        return $this->items === [] && $this->deletions === [] && $this->listingChanges === [];
+        return $this->items === [] && $this->deletions === [] && $this->listingChanges === [] && $this->pmsChanges === [];
+    }
+
+    /**
+     * The same plan with these PMS changes instead of its own.
+     *
+     * @param list<PmsChangeEntry> $pmsChanges
+     */
+    public function withPmsChanges(array $pmsChanges): self
+    {
+        return new self($this->propertyId, $this->today, $this->createdAt, $this->items, $this->deletions, $this->listingChanges, $pmsChanges);
     }
 
     /**
@@ -103,8 +121,9 @@ final class Plan implements Countable
      * @param list<int> $indexes         positions in $items
      * @param list<int> $deletions       positions in $deletions
      * @param list<int> $listingChanges  positions in $listingChanges
+     * @param list<int> $pmsChanges      positions in $pmsChanges
      */
-    public function without(array $indexes, array $deletions = [], array $listingChanges = []): self
+    public function without(array $indexes, array $deletions = [], array $listingChanges = [], array $pmsChanges = []): self
     {
         return new self(
             $this->propertyId,
@@ -113,6 +132,7 @@ final class Plan implements Countable
             array_values(array_diff_key($this->items, array_flip($indexes))),
             array_values(array_diff_key($this->deletions, array_flip($deletions))),
             array_values(array_diff_key($this->listingChanges, array_flip($listingChanges))),
+            array_values(array_diff_key($this->pmsChanges, array_flip($pmsChanges))),
         );
     }
 

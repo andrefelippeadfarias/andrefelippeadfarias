@@ -22,7 +22,7 @@ use Ritmo\Infrastructure\Schedule\AlertLedger;
  * The checks at the end of a full run (market spec 1.7, reports spec 2.4, M3 pendency D5): old
  * market prices, nights an active sales ladder cannot price, steps not confirmed at the channel
  * (not while the pricing system's own push is known to be off or late, which has its alert), and
- * the 12-month review due. Each condition is raised once per property and resolved by the run
+ * the 12-month review due, a run whose PMS changes hit stay.write.max_changes_per_run. Each condition is raised once per property and resolved by the run
  * that no longer finds it. Reads stored data only; writes nothing outside the plugin.
  */
 final class RunEndChecks
@@ -60,6 +60,9 @@ final class RunEndChecks
         $overdue = (int) ($verify['delivery']['overdue'] ?? 0);
         if ($overdue > 0 && $this->ledger->active($property->id, [AlertCode::PushDisabled->value, AlertCode::PushStale->value]) === []) {
             $drafts[] = RunAlerts::deliveryOverdue($property->id, $overdue);
+        }
+        if (($context->summary['decide']['pms_capped'] ?? false) === true) {
+            $drafts[] = RunAlerts::pmsChangesCapped($property->id, $context->rules->stayWrite()->maxChangesPerRun);
         }
         $review = $this->reviewDue($context);
         if ($review !== null) {

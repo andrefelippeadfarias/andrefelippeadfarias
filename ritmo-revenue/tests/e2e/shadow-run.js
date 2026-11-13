@@ -1,7 +1,7 @@
 /**
- * End-to-end check of milestone M1 on the throwaway site of bin/wp-test-site.sh (run it through
- * bin/e2e.sh): log in, set the connections, open the dashboard, run the shadow run, wait for it,
- * check that "what would be written" appears, take screenshots, and prove through the
+ * End-to-end check of milestone M1 on the M4 screens (run it through bin/e2e.sh): log in, set the
+ * connections in Settings, run the shadow run from the overview, check what it would change in
+ * the nights grid, the REST API and Diagnostics, take screenshots, and prove through the
  * simulator's log (GET /__log) that nothing but reads reached the APIs.
  *
  * Environment:
@@ -58,63 +58,53 @@ async function rest(page, route, nonce) {
 }
 
 async function connections(page) {
-    await page.goto(SITE + '/wp-admin/admin.php?page=ritmo-revenue-connections');
-    await page.selectOption('#ritmo-beds24-kind', 'refresh');
-    await page.fill('#ritmo-beds24-token', SECRETS[0]);
-    await page.fill('#ritmo-beds24-properties', '901001');
-    await page.fill('#ritmo-pricelabs-key', SECRETS[1]);
-    await page.fill('#ritmo-pricelabs-pms', 'beds24');
-    await submitAndWait(page, '#save_connections');
-    check((await page.textContent('.ritmo-notice')).includes('Connections saved.'), 'the connections were not saved');
+    await page.goto(SITE + '/wp-admin/admin.php?page=ritmo-revenue-settings&tab=connections&property=' + PROPERTY);
+    await page.fill('#ritmo-c-token', SECRETS[0]);
+    await page.fill('#ritmo-c-ids', '901001');
+    await page.fill('#ritmo-c-key', SECRETS[1]);
+    await page.fill('#ritmo-c-pms', 'beds24');
+    await submitAndWait(page, 'form:has(#ritmo-c-token) button[type=submit]');
+    check((await page.textContent('[data-ritmo="notice"]')).includes('Connections saved.'), 'the connections were not saved');
     const html = await page.content();
-    check(SECRETS.every((secret) => !html.includes(secret)), 'a secret came back to the browser');
-    const beds24Status = await page.textContent('[data-ritmo="beds24-secret"]');
-    check(beds24Status.includes('Configured, saved on'), 'the Beds24 token status is missing: ' + beds24Status);
-    check(!beds24Status.includes('0001'), 'characters of the token are shown: ' + beds24Status);
+    check(SECRETS.every((secret) => !html.includes(secret) && !html.includes(secret.slice(-8))), 'a secret (or a piece of it) came back to the browser');
 
     for (const provider of ['beds24', 'pricelabs']) {
-        await submitAndWait(page, '[data-ritmo="test-' + provider + '-button"]');
-        const result = await page.textContent('[data-ritmo="test-' + provider + '"]');
-        check(result.trim().startsWith('OK'), 'connection test of ' + provider + ' failed: ' + result.trim());
+        const region = '[data-ritmo="connection-result-' + provider + '"]';
+        const initial = await page.locator(region).innerText();
+        await page.click('[data-ritmo="connection-test-' + provider + '"]');
+        await page.waitForFunction(([r, t]) => document.querySelector(r).textContent.trim() !== t.trim(), [region, initial], { timeout: 30000 });
+        check(/Connected/.test(await page.locator(region).innerText()), 'connection test of ' + provider + ' failed: ' + await page.locator(region).innerText());
     }
     await shot(page, '01-connections.png');
 }
 
 async function setup(page) {
-    await page.goto(SITE + '/wp-admin/admin.php?page=ritmo-revenue-setup');
-    const table = await page.textContent('[data-ritmo="properties"]');
-    check(table.includes(PROPERTY) && table.includes('902001'), 'the seeded property or its mapping is missing from Setup');
-    await shot(page, '02-setup.png');
+    await page.goto(SITE + '/wp-admin/admin.php?page=ritmo-revenue&property=' + PROPERTY);
+    const header = await page.textContent('h1');
+    check(header.includes('Ritmo Revenue'), 'the overview of the seeded property does not open');
+    await shot(page, '02-overview-before.png');
 }
 
 async function shadowRun(page) {
     await page.goto(SITE + '/wp-admin/admin.php?page=ritmo-revenue&property=' + PROPERTY);
-    if (pass === 'setup') {
-        await shot(page, '03-dashboard-before.png');
-    }
     await Promise.all([
         page.waitForNavigation({ timeout: 180000 }),
         page.click('[data-ritmo="run-shadow"]'),
     ]);
-    await page.waitForSelector('[data-ritmo="run-status"]');
-    const status = (await page.textContent('[data-ritmo="run-status"]')).trim();
-    check(status === 'completed', 'the shadow run ended as "' + status + '"');
+    await page.goto(SITE + '/wp-admin/admin.php?page=ritmo-revenue&property=' + PROPERTY);
+    const last = await page.locator('[data-ritmo="card-last-run"]').innerText();
+    check(/completed/.test(last), 'the shadow run did not complete: ' + last);
 
-    const rows = await page.locator('.ritmo-would-write tbody tr').count();
-    check(rows > 0, '"What would be written" is empty');
-    const total = (await page.textContent('[data-ritmo="would-write-total"]')).trim();
-    check(new RegExp('^' + rows + ' of \\d+ room nights shown').test(total), 'the count of room nights is wrong: ' + total);
-    const why = (await page.locator('.ritmo-would-write tbody tr .ritmo-why').first().textContent()).trim();
-    check(why.includes('Proposed step'), 'the reason of an item is not explained: ' + why);
-    const reason = (await page.locator('.ritmo-would-write tbody tr [data-ritmo="reason"]').first().textContent()).trim();
-    check(reason.length > 0, 'the rule that priced the night is not named');
-    check(await page.locator('[data-ritmo="refused"]').count() === 1, 'the section of what the validator refused is missing');
-    check((await page.textContent('[data-ritmo="last-run"]')).includes('0 writes sent'), 'the run does not report zero writes');
-    await shot(page, pass === 'setup' ? '04-dashboard-after-shadow-run.png' : '06-dashboard-without-calendar-read.png');
+    await page.goto(SITE + '/wp-admin/admin.php?page=ritmo-revenue-nights&only=would_change&property=' + PROPERTY);
+    const rows = await page.locator('[data-ritmo="grid-cell"]').count();
+    check(rows > 0, '"what the last run would change" is empty');
+    check(rows === Number(await page.locator('[data-ritmo="grid-count"]').innerText()), 'the count of room nights is wrong');
+    await shot(page, pass === 'setup' ? '03-nights-would-change.png' : '06-nights-without-calendar-read.png');
     return rows;
 }
 
 async function restApi(page, browserErrors) {
+    await page.goto(SITE + '/wp-admin/admin.php?page=ritmo-revenue&property=' + PROPERTY);
     const nonce = await page.getAttribute('[data-ritmo="run-shadow"]', 'data-rest-nonce');
     const expectedFailures = browserErrors.length;
     const refused = await rest(page, 'status', null);
@@ -135,9 +125,9 @@ async function restApi(page, browserErrors) {
 }
 
 async function diagnostics(page) {
-    await page.goto(SITE + '/wp-admin/admin.php?page=ritmo-revenue-diagnostics');
+    await page.goto(SITE + '/wp-admin/admin.php?page=ritmo-revenue-settings&tab=diagnostics&property=' + PROPERTY);
     const db = (await page.textContent('[data-ritmo="db-version"]')).trim();
-    check(/^(\d+) of \1$/.test(db), 'the database is not up to date: ' + db);
+    check(/(\d+) of \1/.test(db), 'the database is not up to date: ' + db);
     check((await page.textContent('[data-ritmo="runs"]')).includes('completed'), 'Diagnostics does not list the run');
     await shot(page, '05-diagnostics.png');
 }

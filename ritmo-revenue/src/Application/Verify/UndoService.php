@@ -89,14 +89,38 @@ final class UndoService
      */
     public function confirm(array $changeIds, DateTimeImmutable $at): int
     {
-        $records = $this->changes->byIds($changeIds);
-        foreach ($records as $record) {
+        $marked = [];
+        foreach ($this->changes->byIds($changeIds) as $record) {
+            if ($record->provider === Provider::Pms) {
+                continue; // nothing writes a PMS value back yet: the row is never marked undone
+            }
             if ($record->runId !== null && $record->night !== null && $record->provider === Provider::Pricing) {
                 $this->steps->markUndone($record->runId, $record->roomCode, $record->night, $at);
             }
+            $marked[] = (int) $record->id;
         }
 
-        return $this->changes->markUndone($changeIds, $at);
+        return $this->changes->markUndone($marked, $at);
+    }
+
+    /**
+     * The rows that change a PMS value: the undo has no write path for them yet (a PMS restore
+     * would go through the gate, with approval), so they are left out and named to the person.
+     *
+     * @param list<int> $changeIds
+     *
+     * @return array{0: list<int>, 1: list<int>} the rows the undo takes, the PMS rows left out
+     */
+    public function withoutPms(array $changeIds): array
+    {
+        $pms = [];
+        foreach ($this->changes->byIds($changeIds) as $record) {
+            if ($record->provider === Provider::Pms) {
+                $pms[] = (int) $record->id;
+            }
+        }
+
+        return [array_values(array_diff(array_map('intval', $changeIds), $pms)), $pms];
     }
 
     /**

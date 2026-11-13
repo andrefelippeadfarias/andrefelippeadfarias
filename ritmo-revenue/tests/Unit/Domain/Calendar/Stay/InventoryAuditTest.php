@@ -80,7 +80,8 @@ final class InventoryAuditTest extends TestCase
         self::assertSame(['2027-03-05'], $this->nights($deluxe->orphanStays), 'the free night before sells alone (no arrival rule in force)');
         self::assertSame([ChangeTarget::Pricing, OrphanKind::NextNight, 1], [$deluxe->orphanStays[0]->target, $deluxe->orphanStays[0]->orphan, $deluxe->orphanStays[0]->minStay]);
         self::assertSame([Restriction::NoCheckout, StayReason::OrphanSidePreviousSoldOut], [$standard->arrivalChanges[0]->after, $standard->arrivalChanges[0]->reason]);
-        self::assertNull($standard->arrivalChanges[0]->proof);
+        self::assertSame(['source' => 'pms', 'neighbour' => 'previous', 'units' => 6, 'night_available' => 3, 'neighbour_available' => 0], $standard->arrivalChanges[0]->proof?->toArray(), 'the future orphan side carries the proof of the read (SW-X5)');
+        self::assertSame(['source' => 'pms', 'neighbour' => 'previous', 'units' => 4, 'night_available' => 0, 'neighbour_available' => 2], $deluxe->arrivalChanges[0]->proof?->toArray(), 'a sold-out closed day: its side opens for the free night before');
         self::assertSame([ChangeTarget::Pricing, OrphanKind::ClosedDay], [$standard->orphanStays[0]->target, $standard->orphanStays[0]->orphan], 'a future free closed day goes to the pricing system');
         self::assertSame([], $standard->closedDayStayBelow, 'the free side is not a stay below the rule');
     }

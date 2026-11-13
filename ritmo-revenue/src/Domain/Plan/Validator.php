@@ -25,6 +25,7 @@ use Ritmo\Domain\Plan\Validation\LastMinuteCheck;
 use Ritmo\Domain\Plan\Validation\ListingCheck;
 use Ritmo\Domain\Plan\Validation\MaskCheck;
 use Ritmo\Domain\Plan\Validation\OrphanProofCheck;
+use Ritmo\Domain\Plan\Validation\PmsShapeCheck;
 use Ritmo\Domain\Plan\Validation\PriceBoundsCheck;
 use Ritmo\Domain\Plan\Validation\RelationOrderCheck;
 use Ritmo\Domain\Plan\Validation\StayCheck;
@@ -113,6 +114,9 @@ final class Validator
         }
         (new DeletionCheck($this->calendar, $context->stay, $log, $authority))->check($plan->deletions, $byCode, $today);
         (new ListingCheck($this->rules, $authority, $log))->check($plan->listingChanges, $byCode, $context->weeklyReference, $today);
+        if ($plan->pmsChanges !== []) {
+            (new PmsShapeCheck($log, $this->rules->stayWrite()->horizonDays))->check($plan->pmsChanges, $byCode, $today);
+        }
 
         $errors = $log->errors();
 

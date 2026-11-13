@@ -30,6 +30,7 @@ final class RulesLayout
         'orders' => ['orders'],
         'plan' => ['plan', 'write', 'verify', 'approval', 'third_party', 'waves'],
         'runs' => ['schedule', 'light_run', 'alerts', 'modes'],
+        'reports' => ['reports'],
     ];
 
     /** Keys edited outside the general tab, before the section prefixes are looked at. */

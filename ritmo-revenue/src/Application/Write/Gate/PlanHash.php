@@ -8,6 +8,7 @@ use Ritmo\Domain\Plan\ListingChange;
 use Ritmo\Domain\Plan\Plan;
 use Ritmo\Domain\Plan\PlanDeletion;
 use Ritmo\Domain\Plan\PlanItem;
+use Ritmo\Domain\Stay\Write\PmsChangeEntry;
 use Ritmo\Domain\Support\Days;
 
 /**
@@ -25,6 +26,7 @@ final class PlanHash
         ], $plan->items);
         $deletions = array_map(static fn (PlanDeletion $d): array => ['room' => $d->roomCode, 'night' => Days::key($d->date)], $plan->deletions);
         $listing = array_map(static fn (ListingChange $c): array => ['room' => $c->roomCode, 'field' => $c->field->value, 'value' => $c->value, 'order' => $c->orderId], $plan->listingChanges);
+        $pms = array_map(static fn (PmsChangeEntry $c): array => ['room' => $c->roomCode, 'night' => Days::key($c->night), 'set' => $c->target->all(), 'order' => $c->orderId], $plan->pmsChanges);
 
         return hash('sha256', json_encode([
             'property' => $plan->propertyId,
@@ -32,7 +34,7 @@ final class PlanHash
             'items' => self::sorted($items),
             'deletions' => self::sorted($deletions),
             'listing' => self::sorted($listing),
-        ], JSON_THROW_ON_ERROR | JSON_PRESERVE_ZERO_FRACTION));
+        ] + ($pms === [] ? [] : ['pms' => self::sorted($pms)]), JSON_THROW_ON_ERROR | JSON_PRESERVE_ZERO_FRACTION));
     }
 
     /**

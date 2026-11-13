@@ -63,8 +63,11 @@ Tables (all prefixed, all with an auto-incremented `id`):
 | 7 Write path | `write_ops` again (the write-ahead journal: slice, label, dates, state before, intended and read back, token, plan and body hashes, the run that classified the row) and `api_quota_log` again (outcome, response id and error of a recalculation attempt) |
 | 8 Confirmation | `change_log` again (group, undone change, confirmation level, order, amounts) and `step_ledger` again (reached the channel at, undone at, journal reference); `plan_approvals` (plans waiting for a person), `night_observations` (what each read found per room night), `detected_freezes` (nights frozen because someone else changed them), `wave_holds` (the hold of a cancellation wave) |
 | 9 Operations | `scheduled_runs` (slot occurrences of each property), `operation_state` (pause and cursors), `booking_movements` (processed versions of bookings), `alerts` again (lifecycle: evidence, acknowledgement, resolution, e-mail, digest, occurrences) |
+| 10 Screens | `pending_items` again: the to-do list of the screens (kind, room night, done by and when; `Query\Screens\TodoRepository`) |
+| 11 Market series | `competitors` again (tags, profile, archived), `price_samples` again (one row per competitor stay: check-in, check-out, basis, currency, captured at, source, import), `market_imports` (each CSV import by its file hash: who, when, rows kept and refused; the file itself is never kept), `market_series` (the series of each night as `SeriesBuilder` built them, with the inputs' hash), `ladder_reference` (the reference values a ladder strategy version started from) |
+| 12 Reports | `report_snapshots` (each 12-month review saved), `revenue_targets` (targets and adjustments per month), `holiday_targets` (targets of a holiday) |
 
-`bookings` stores what `BookingRecord` carries and nothing else; a test lists its columns and fails when one that could identify a guest is added. No table can hold guest data: bookings appear only by their PMS id. `relations`, `periods`, `price_factors`, `competitors` and `pending_items` have no repository yet. `change_log` holds the night changes (`ChangeLogRepository`) and the operation events without a provider (`OperationEventRepository`: modes, approvals, the emergency switch, releases, undo requests, listing values that changed).
+`bookings` stores what `BookingRecord` carries and nothing else; a test lists its columns and fails when one that could identify a guest is added. No table can hold guest data: bookings appear only by their PMS id. `relations`, `periods` and `price_factors` of migration 1 are reserved and unused: relations and periods live in the rule set, which is versioned and validated (spec 05, D3). `change_log` holds the night changes (`ChangeLogRepository`) and the operation events without a provider (`OperationEventRepository`: modes, approvals, the emergency switch, releases, undo requests, listing values that changed).
 
 ### 1.4 Repositories
 
@@ -89,6 +92,9 @@ All in `Ritmo\Infrastructure\Db\Repository`, built with the `Database` (and the 
 | `WrittenStepRepository` | The step ledger as the write path keeps it: steps of stored nights, delivered at the channel, undone. |
 | `PlanApprovalRepository` | Requests waiting for a person: `create`, `pending`, `approved`, `latest`, `decide` (only from pending), `close`, `finish`. |
 | `NightObservationRepository`, `DetectedFreezeRepository`, `WaveHoldRepository` | What each read found, the nights frozen by a change of someone else, the hold of a cancellation wave. |
+| `CompetitorRepository`, `StaySampleRepository`, `MarketImportRepository`, `MarketSeriesRepository`, `LadderReferenceRepository` | The market (MARKET.md): competitors, one sample per competitor stay (deduplicated by competitor, stay and basis), the imports by file hash, the series of each night, the reference of a ladder strategy version. |
+| `OrderLedgerRepository`, `EditorEventRepository` | The orders as the Orders screen lists them (copy and end, never edit) and the editors' events in `change_log` (rule-set versions, orders, competitors, market imports). |
+| `Query\Screens\AlertListReader`, `Query\Screens\ChangeLogReader`, `Query\Screens\TodoRepository` | The paged reads of the Alerts and Changes screens and the to-do list. |
 | `Schedule\ScheduledRunRepository`, `Schedule\OperationStateRepository`, `Schedule\BookingMovementRepository`, `Schedule\AlertLedger` | The slots, the pause and cursors, the processed booking versions, the alerts with their lifecycle (`since()`: the alerts of a code first raised since an instant, for the conditions of a mode) (OPERATIONS.md, ALERTS.md). |
 
 ### 1.5 Secrets
@@ -256,6 +262,30 @@ public function description(): string;
 public function tables(): array;
 ```
 
+#### `Ritmo\Infrastructure\Db\Migration\Migration0010Screens` (final class implements Migration)
+
+```php
+public function version(): int;
+public function description(): string;
+public function tables(): array;
+```
+
+#### `Ritmo\Infrastructure\Db\Migration\Migration0011MarketSeries` (final class implements Migration)
+
+```php
+public function version(): int;
+public function description(): string;
+public function tables(): array;
+```
+
+#### `Ritmo\Infrastructure\Db\Migration\Migration0012Reports` (final class implements Migration)
+
+```php
+public function version(): int;
+public function description(): string;
+public function tables(): array;
+```
+
 #### `Ritmo\Infrastructure\Db\Migration\Migrations` (final class)
 
 ```php
@@ -300,6 +330,38 @@ public function upsert(string $table, array $row, array $uniqueColumns): void;
 public function update(string $table, array $values, array $where): int;
 public function delete(string $table, array $where): int;
 public function transaction(callable $work): mixed;
+```
+
+#### `Ritmo\Infrastructure\Db\Query\Screens\AlertListReader` (final class implements AlertList)
+
+```php
+public function __construct(Database $db);
+public function count(AlertFilter $filter): int;
+public function page(AlertFilter $filter, int $offset, int $limit): array;
+public function find(int $id): ?array;
+public function countBySeverity(?string $propertyId, array $severities): int;
+```
+
+#### `Ritmo\Infrastructure\Db\Query\Screens\ChangeLogReader` (final class implements ChangeList)
+
+```php
+public function __construct(Database $db, ChangeLogRepository $changes);
+public function count(ChangeFilter $filter): int;
+public function page(ChangeFilter $filter, int $offset, int $limit): array;
+```
+
+#### `Ritmo\Infrastructure\Db\Query\Screens\TodoRepository` (final class implements TodoStore)
+
+```php
+public function __construct(Database $db);
+public function add(TodoItem $item, DateTimeImmutable $now, bool $once = false): int;
+public function find(int $id): ?TodoItem;
+public function open(?string $propertyId, int $limit = 200): array;
+public function done(?string $propertyId, int $limit = 50): array;
+public function setStatus(int $id, string $status, int $userId, DateTimeImmutable $now): bool;
+public function closeKeys(array $keys, DateTimeImmutable $now): int;
+public function openKeys(string $kind): array;
+public function countDue(?string $propertyId, DateTimeImmutable $today): int;
 ```
 
 #### `Ritmo\Infrastructure\Db\Repository\AlertRepository` (final class)
@@ -350,6 +412,20 @@ public function markUndone(array $ids, DateTimeImmutable $at): int;
 public static function id(Database $db, string $table, string $code): ?int;
 ```
 
+#### `Ritmo\Infrastructure\Db\Repository\CompetitorRepository` (final class)
+
+```php
+public function __construct(Database $db, Clock $clock);
+public function add(string $propertyId, array $fields): int;
+public function update(string $propertyId, int $id, array $fields): bool;
+public function archive(string $propertyId, int $id): bool;
+public function find(string $propertyId, int $id): ?array;
+public function forProperty(string $propertyId, bool $activeOnly = false): array;
+public function profiles(string $propertyId): array;
+public function codeTaken(string $propertyId, string $code, int $exceptId = 0): bool;
+public function lastChange(string $propertyId): ?DateTimeImmutable;
+```
+
 #### `Ritmo\Infrastructure\Db\Repository\DetectedFreezeRepository` (final class)
 
 ```php
@@ -357,6 +433,18 @@ public function __construct(Database $db);
 public function add(string $propertyId, DetectedFreeze $freeze, ?int $runId = null): int;
 public function unreleased(string $propertyId): array;
 public function release(int $id, int $userId, DateTimeImmutable $at): bool;
+```
+
+#### `Ritmo\Infrastructure\Db\Repository\EditorEventRepository` (final class)
+
+```php
+const RULES_VERSION = 'rules_version';
+const ORDER = 'order';
+const COMPETITOR = 'competitor';
+const MARKET_IMPORT = 'market_import';
+public function __construct(Database $db);
+public function record(string $propertyId, string $kind, string $from, string $to, string $reason, string $actor, DateTimeImmutable $at, array $details = []): int;
+public function latest(string $propertyId, array $kinds, int $limit = 50): array;
 ```
 
 #### `Ritmo\Infrastructure\Db\Repository\InventorySnapshotRepository` (final class)
@@ -369,6 +457,15 @@ public function lastCapturedAt(string $roomCode): ?DateTimeImmutable;
 public function purgeCapturedBefore(DateTimeImmutable $instant): int;
 ```
 
+#### `Ritmo\Infrastructure\Db\Repository\LadderReferenceRepository` (final class)
+
+```php
+public function __construct(Database $db);
+public function take(string $propertyId, string $strategyId, array $prices, DateTimeImmutable $takenAt): int;
+public function latestVersion(string $propertyId, string $strategyId): ?int;
+public function latest(string $propertyId, string $strategyId, DateTimeImmutable $from, DateTimeImmutable $to): array;
+```
+
 #### `Ritmo\Infrastructure\Db\Repository\MarketAnchorRepository` (final class)
 
 ```php
@@ -377,6 +474,26 @@ public function save(string $propertyId, MarketAnchor $anchor): void;
 public function saveMany(string $propertyId, iterable $anchors): void;
 public function find(string $propertyId, DateTimeImmutable $night): ?MarketAnchor;
 public function range(string $propertyId, DateTimeImmutable $from, DateTimeImmutable $to): array;
+```
+
+#### `Ritmo\Infrastructure\Db\Repository\MarketImportRepository` (final class)
+
+```php
+const MAX_PROBLEMS = 200;
+public function __construct(Database $db);
+public function record(string $propertyId, int $userId, string $fileName, string $sha256, int $bytes, array $counts, array $problems, DateTimeImmutable $at): int;
+public function settle(int $id, int $imported, int $replaced): void;
+public function importedAt(string $propertyId, string $sha256): ?DateTimeImmutable;
+public function latest(string $propertyId, int $limit = 10): array;
+```
+
+#### `Ritmo\Infrastructure\Db\Repository\MarketSeriesRepository` (final class)
+
+```php
+public function __construct(Database $db);
+public function replace(string $propertyId, array $values, string $inputsHash, DateTimeImmutable $builtAt): int;
+public function range(string $propertyId, DateTimeImmutable $from, DateTimeImmutable $to): array;
+public function inputsHash(string $propertyId): ?string;
 ```
 
 #### `Ritmo\Infrastructure\Db\Repository\NightObservationRepository` (final class)
@@ -398,10 +515,22 @@ const WAVE_RELEASE = 'wave_release';
 const FREEZE_RELEASE = 'freeze_release';
 const UNDO = 'undo_request';
 const LISTING = 'listing_values';
+const PAUSE = 'pause';
 public function __construct(Database $db);
 public function record(string $propertyId, string $kind, string $from, string $to, string $reason, string $actor, DateTimeImmutable $at, ?int $runId = null): int;
 public function latest(string $propertyId, ?string $kind = null, int $limit = 50): array;
 public function lastTo(string $propertyId, string $kind, string $to): ?array;
+```
+
+#### `Ritmo\Infrastructure\Db\Repository\OrderLedgerRepository` (final class)
+
+```php
+const ENDED = 'ended';
+public function __construct(Database $db);
+public function active(string $propertyId, DateTimeImmutable $from): array;
+public function ended(string $propertyId, DateTimeImmutable $today, DateTimeImmutable $since): array;
+public function find(string $propertyId, int $id): ?array;
+public function end(string $propertyId, int $id, DateTimeImmutable $at): bool;
 ```
 
 #### `Ritmo\Infrastructure\Db\Repository\OrderRepository` (final class)
@@ -528,6 +657,18 @@ public function openRun(string $propertyId, string $kind): ?array;
 public function finish(int $runId, string $status, array $summary, DateTimeImmutable $finishedAt, ?string $error = null): void;
 public function find(int $runId): ?array;
 public function latest(?string $propertyId = null, int $limit = 20): array;
+```
+
+#### `Ritmo\Infrastructure\Db\Repository\StaySampleRepository` (final class)
+
+```php
+public function __construct(Database $db);
+public function store(string $propertyId, array $rows, ?int $importId): array;
+public function samples(string $propertyId, DateTimeImmutable $fromNight, DateTimeImmutable $capturedSince): array;
+public function page(string $propertyId, array $filters, int $offset, int $limit): array;
+public function newestCapture(string $propertyId, DateTimeImmutable $from, DateTimeImmutable $to): ?DateTimeImmutable;
+public function countsByCompetitor(string $propertyId, DateTimeImmutable $since): array;
+public function lastId(string $propertyId): int;
 ```
 
 #### `Ritmo\Infrastructure\Db\Repository\StepLedgerRepository` (final class)

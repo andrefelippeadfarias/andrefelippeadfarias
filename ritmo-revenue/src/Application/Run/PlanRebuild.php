@@ -21,6 +21,7 @@ final class PlanRebuild
         private readonly RunInputsReader $inputs,
         private readonly Clock $clock,
         private readonly string $pmsName,
+        private readonly StayWriteStep $stay,
     ) {
     }
 
@@ -29,6 +30,8 @@ final class PlanRebuild
         $inputs = $this->inputs->read($context, $this->clock->now());
         $assembler = new PlanAssembler($context->rules, $this->clock, $this->pmsName);
 
-        return new RebuiltPlan($inputs, $assembler, $assembler->assemble($inputs), $context->rules, $this->clock);
+        $stay = $this->stay->apply($context, $inputs, $assembler, $assembler->assemble($inputs));
+
+        return new RebuiltPlan($inputs, $assembler, $stay->assembled, $context->rules, $this->clock, $stay);
     }
 }

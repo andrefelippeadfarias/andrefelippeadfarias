@@ -27,6 +27,7 @@ final class RebuiltPlan
         public readonly AssembledPlan $assembled,
         private readonly RuleSet $rules,
         private readonly Clock $clock,
+        public readonly ?StayAssembly $stay = null,
     ) {
     }
 
@@ -43,9 +44,30 @@ final class RebuiltPlan
      */
     public function revalidate(Plan $plan): ?ValidatedPlan
     {
-        $result = $this->assembler->revalidate($this->inputs, $plan, $this->assembled->relations);
+        $result = $this->assembler->revalidate($this->inputs, self::withoutUnpaired($plan), $this->assembled->relations);
 
         return $result->isValid() ? $result->plan : null;
+    }
+
+    /**
+     * A plan cut down (an approved subset, the held cuts of a wave) keeps a pushed PMS change only
+     * with its paired pricing item, or when the pricing calendar already holds the value: written
+     * alone, the next push would undo it (stay spec 3.4, pms_unpaired).
+     */
+    private static function withoutUnpaired(Plan $plan): Plan
+    {
+        $items = [];
+        foreach ($plan->items as $item) {
+            $items[$item->key()] = true;
+        }
+        $drop = [];
+        foreach ($plan->pmsChanges as $index => $change) {
+            if ($change->needsPricingStep() && !isset($items[(string) $change->pairedItem])) {
+                $drop[] = $index;
+            }
+        }
+
+        return $drop === [] ? $plan : $plan->without([], [], [], $drop);
     }
 
     public function calendar(): FreshCalendar

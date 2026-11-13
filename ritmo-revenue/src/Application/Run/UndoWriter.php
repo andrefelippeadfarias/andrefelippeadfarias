@@ -50,6 +50,9 @@ final class UndoWriter
 {
     public const KIND = 'undo';
 
+    /** The refusal of the PMS rows of an undo: nothing writes a PMS value back yet (D9). */
+    public const PMS_LEFT_OUT = 'pms_field';
+
     public function __construct(
         private readonly PropertyRepository $properties,
         private readonly RoomTypeRepository $roomTypes,
@@ -117,8 +120,13 @@ final class UndoWriter
         $rooms = $this->live($rooms);
         $today = $this->clock->today($property->timezone);
         $context = new ValidationContext(null, $this->orders->book($property->id, $today));
+        [$changeIds, $pmsRows] = $this->undo->withoutPms($changeIds);
+        $leftOut = $pmsRows === [] ? [] : [self::PMS_LEFT_OUT];
+        if ($changeIds === []) {
+            return ['written' => 0, 'undone' => 0, 'refused' => $leftOut];
+        }
         $request = $this->undo->request($property, $rooms, $changeIds, $userId, new Validator($rules, $this->clock, $rules->plan()), $context, $runId);
-        $refused = array_values(array_unique(array_map(static fn ($issue): string => $issue->code, $request->refused)));
+        $refused = array_values(array_unique([...$leftOut, ...array_map(static fn ($issue): string => $issue->code, $request->refused)]));
         $grant = $request->grants[0] ?? null;
         $plan = $request->plan;
         if ($grant === null || $plan === null) {

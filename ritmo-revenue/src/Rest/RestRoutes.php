@@ -7,6 +7,10 @@ namespace Ritmo\Rest;
 use OutOfBoundsException;
 use Ritmo\Application\ShadowRun\PlanItemStatus;
 use Ritmo\Application\ShadowRun\RunOutcome;
+use Ritmo\Rest\Editors\EditorRoutes;
+use Ritmo\Rest\Market\MarketRoutes;
+use Ritmo\Rest\Reports\ReportRoutes;
+use Ritmo\Rest\Screens\ScreenRoutes;
 use Ritmo\WordPress\Roles;
 use Ritmo\WordPress\Services;
 use Throwable;
@@ -17,8 +21,9 @@ use WP_REST_Server;
 
 /**
  * The REST API ritmo/v1. Every route needs a capability of the plugin and the "wp_rest" nonce of
- * a logged-in session (header X-WP-Nonce). Only the shadow run changes anything, and only in
- * the plugin's own tables.
+ * a logged-in session (header X-WP-Nonce): these four routes, then the operations, the screens,
+ * the editors, the market and the reports (admin spec, appendix A). No route writes to an
+ * external system: writes go through the run and the write gate.
  */
 final class RestRoutes
 {
@@ -51,7 +56,12 @@ final class RestRoutes
             'methods' => WP_REST_Server::READABLE,
             'callback' => [self::class, 'run'],
             'permission_callback' => self::allowed(Roles::VIEW),
-        ]);        OperationRoutes::register();
+        ]);
+        OperationRoutes::register();
+        ScreenRoutes::register();
+        EditorRoutes::register();
+        MarketRoutes::register();
+        ReportRoutes::register();
     }
 
     /**

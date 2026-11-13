@@ -11,10 +11,12 @@ use Ritmo\Application\Grid\Approvals\ApprovalBoard;
 use Ritmo\Application\Grid\Approvals\EntryRow;
 use Ritmo\Application\Grid\Approvals\EntryWarnings;
 use Ritmo\Application\Grid\Approvals\Segment;
+use Ritmo\Domain\Model\PropertyMode;
 use Ritmo\Domain\Support\DateRange;
 use Ritmo\Domain\Support\Days;
 use Ritmo\Infrastructure\Db\Repository\PlanItemRepository;
 use Ritmo\Infrastructure\Db\Repository\RuleSetRepository;
+use Ritmo\Infrastructure\Db\Repository\RunRepository;
 use Ritmo\Infrastructure\Db\Repository\WaveHoldRepository;
 
 final class ApprovalBoardTest extends TestCase
@@ -122,6 +124,26 @@ final class ApprovalBoardTest extends TestCase
         self::assertSame(480.0, $row->floorAfter);
         self::assertSame(840.0, $row->ceilingAfter);
         self::assertSame(EntryRow::BOUNDS, $row->direction, 'nothing known before');
+    }
+
+    public function testANightWithoutADateRuleIsComparedWithTheListingValues(): void
+    {
+        $run = (new RunRepository($this->world->raw))->start('inn', 'shadow', PropertyMode::Shadow, null, $this->world->clock->now()->modify('-50 minutes'));
+        $items = new PlanItemRepository($this->world->raw, $this->world->clock);
+        $night = Days::date('2026-11-20');
+        $items->add($run, 'inn', 'A', $night, 'floor', null, 432.0, 'PACE_STEP', ['min_percent' => -28], status: 'would_write');
+        $items->add($run, 'inn', 'A', $night, 'ceiling', null, 1080.0, 'PACE_STEP', ['max_percent' => 80], status: 'would_write');
+        $this->request($run, [(new PlanEntry(PlanEntry::ITEM, 'A', '2026-11-20', ['floor_pct' => -28, 'ceiling_pct' => 80]))->toArray()]);
+
+        $view = $this->board()->waiting('inn')[0];
+        $row = $view->rooms['A'][0]->entries[0];
+
+        self::assertTrue($row->beforeFromListing);
+        self::assertSame(400.0, $row->before(), 'the listing minimum applies without a date rule');
+        self::assertSame(1200.0, $row->ceilingBefore, 'the listing maximum');
+        self::assertSame(EntryRow::UP, $row->direction);
+        self::assertSame(1, $view->impact->up);
+        self::assertEqualsWithDelta(8.0, (float) $row->changePercent(), 0.0001);
     }
 
     public function testTheStatusOfARequestAndARequestOfAnotherProperty(): void

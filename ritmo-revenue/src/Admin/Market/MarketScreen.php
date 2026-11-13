@@ -14,6 +14,7 @@ use Ritmo\Admin\Components\Screen;
 use Ritmo\Admin\Components\Tab;
 use Ritmo\Admin\Editors\ChoiceLabels;
 use Ritmo\Admin\Editors\EditorPage;
+use Ritmo\Application\Market\MarketReminder;
 use Ritmo\Application\Market\MarketSettings;
 use Ritmo\Domain\Config\InvalidConfig;
 use Ritmo\Domain\Config\RuleSet;
@@ -86,7 +87,7 @@ final class MarketScreen
             'prices' => self::prices($page, $query),
             'import' => ['preview' => $services->import()->pending($page->property->id, $query->text('preview', 64), get_current_user_id()), 'imports' => $services->board()->imports($page->property->id), 'max_bytes' => self::maxBytes($config)],
             'export' => ['today' => Days::key($today), 'until' => Days::key(Days::add($today, 89))],
-            default => self::summary($page, $rules, $config, $query->date('from') ?? $today, $today),
+            default => self::summary($page, $rules, $config, $query->date('from') ?? $today, $today) + ['gaps' => self::gaps($page, $rules, $config, $today), 'gap_nights' => MarketReminder::GAP_NIGHTS],
         };
         $page->render('admin/market/screen', $view);
     }
@@ -140,6 +141,19 @@ final class MarketScreen
             'previous' => $from > $today ? Days::key(max($today, Days::add($from, -30))) : null,
             'next' => Days::key(Days::add($from, 30)),
         ];
+    }
+
+    /**
+     * The coming nights the sales ladder would price without a market value, in words.
+     *
+     * @return list<array{night: string, missing: string}>
+     */
+    private static function gaps(EditorPage $page, RuleSet $rules, MarketConfig $config, DateTimeImmutable $today): array
+    {
+        return array_map(static fn (array $gap): array => [
+            'night' => NightDate::short($gap['night']),
+            'missing' => implode('; ', array_map(MarketText::point(...), $gap['missing'])),
+        ], MarketServices::instance()->reminder()->check($page->property, $rules, $config, $today)['gaps']);
     }
 
     /**

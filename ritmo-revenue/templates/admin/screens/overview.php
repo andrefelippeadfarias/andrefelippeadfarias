@@ -132,7 +132,18 @@ endif;
             <?php if ($ritmo_needs['todos'] !== []) : ?>
                 <ul class="ritmo-list">
                     <?php foreach ($ritmo_needs['todos'] as $ritmo_todo) : ?>
-                        <li><a href="<?php echo esc_url($ritmo_needs['todo_url']); ?>"><?php echo esc_html($ritmo_todo['title']); ?></a></li>
+                        <li><a href="<?php echo esc_url($ritmo_needs['todo_url']); ?>"><?php echo esc_html($ritmo_todo['title']); ?></a>
+                            <?php if ($ritmo_needs['can_close']) : ?>
+                                <form method="post" action="<?php echo esc_url(admin_url('admin-post.php')); ?>" class="ritmo-inline">
+                                    <?php wp_nonce_field('ritmo_todo_close:' . $ritmo_todo['id']); ?>
+                                    <input type="hidden" name="action" value="ritmo_todo_close">
+                                    <input type="hidden" name="item_id" value="<?php echo esc_attr((string) $ritmo_todo['id']); ?>">
+                                    <input type="hidden" name="property_id" value="<?php echo esc_attr($ritmo_needs['property_id']); ?>">
+                                    <input type="hidden" name="back_to" value="ritmo-revenue">
+                                    <button type="submit" class="button button-small" aria-label="<?php echo esc_attr(sprintf(/* translators: %s: title of the to-do item */ __('Done: %s', 'ritmo-revenue'), $ritmo_todo['title'])); ?>"><?php esc_html_e('Done', 'ritmo-revenue'); ?></button>
+                                </form>
+                            <?php endif; ?>
+                        </li>
                     <?php endforeach; ?>
                 </ul>
             <?php endif; ?>

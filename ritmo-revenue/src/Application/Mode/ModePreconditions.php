@@ -39,6 +39,9 @@ final class ModePreconditions
     /** The providers whose connection test must have passed. */
     public const PROVIDERS = ['beds24', 'pricelabs'];
 
+    /** Settings key of the setup progress (Dashboard\Setup\SetupState::KEY). */
+    public const SETUP_KEY = 'setup';
+
     private const DAY_SECONDS = 86400;
 
     private const WRITE_FAILED_DAYS = 7;
@@ -76,6 +79,9 @@ final class ModePreconditions
             } elseif (!self::within($last[0]['started_at'], $now, self::DAY_SECONDS)) {
                 $unmet[] = self::unmet('shadow_run_old', [], 'The newest completed shadow run is older than 24 hours: run one first.');
             }
+        }
+        if (!$this->safetyConfirmed()) {
+            $unmet[] = self::unmet('safety_confirmed', [], 'A person allowed to change safety limits must confirm them first (Settings, setup).');
         }
         foreach (self::PROVIDERS as $provider) {
             $test = $this->store->get(self::CONNECTION_TEST_PREFIX . $provider);
@@ -126,6 +132,16 @@ final class ModePreconditions
     public static function unmet(string $code, array $params, string $text): array
     {
         return ['code' => $code, 'params' => $params, 'text' => $text];
+    }
+
+    /**
+     * Step 7 of the setup (admin spec 5.1) recorded who confirmed the safety limits.
+     */
+    private function safetyConfirmed(): bool
+    {
+        $setup = $this->store->get(self::SETUP_KEY);
+
+        return is_array($setup) && is_string($setup['safety_confirmed_at'] ?? null) && $setup['safety_confirmed_at'] !== '';
     }
 
     private static function within(DateTimeImmutable $at, DateTimeImmutable $now, int $seconds): bool

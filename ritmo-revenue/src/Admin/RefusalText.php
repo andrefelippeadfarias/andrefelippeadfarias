@@ -49,7 +49,7 @@ final class RefusalText
     /**
      * @param array<string, int|string> $params
      */
-    private static function condition(string $code, array $params): string
+    public static function condition(string $code, array $params): string
     {
         $int = static fn (string $key): int => (int) ($params[$key] ?? 0);
         $text = static fn (string $key): string => (string) ($params[$key] ?? '');
@@ -66,6 +66,7 @@ final class RefusalText
             'write_failed_open' => __('A write failed and its alert is open: resolve it first.', 'ritmo-revenue'),
             /* translators: 1: days, 2: date of the failure */
             'write_failed_recent' => sprintf(__('A write failed in the last %1$d days (%2$s).', 'ritmo-revenue'), $int('days'), $text('date')),
+            'safety_confirmed' => __('A person allowed to change safety limits must confirm them first (Settings, setup).', 'ritmo-revenue'),
             'wave_hold' => __('A cancellation wave is holding price cuts: release it first.', 'ritmo-revenue'),
             'from_approval_only' => __('A property reaches the autonomous mode only from approval.', 'ritmo-revenue'),
             /* translators: 1: days needed, 2: plans needed, 3: days so far, 4: plans so far */

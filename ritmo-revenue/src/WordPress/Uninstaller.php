@@ -11,9 +11,9 @@ use Ritmo\Infrastructure\Db\WpdbDatabase;
 use Ritmo\Infrastructure\Store\OptionsStore;
 
 /**
- * Uninstall: removes the plugin's tables, options, role and capabilities, but only when the
- * site chose "delete data on uninstall" (Diagnostics). Otherwise it leaves everything, so that
- * deleting the plugin by mistake loses nothing.
+ * Uninstall: removes the plugin's tables, settings, transients, user meta, both roles and the five
+ * capabilities, but only when the site chose "delete data on uninstall" (Settings, uninstall).
+ * Otherwise it leaves everything, so that deleting the plugin by mistake loses nothing.
  */
 final class Uninstaller
 {
@@ -34,7 +34,12 @@ final class Uninstaller
         return new self($settings, static function () use ($settings): void {
             global $wpdb;
             Migrator::standard(new WpdbDatabase($wpdb), $settings)->uninstall();
-            $wpdb->query($wpdb->prepare("DELETE FROM {$wpdb->options} WHERE option_name LIKE %s", $wpdb->esc_like('ritmo_') . '%'));
+            // Settings (ritmo_*), and the transients of the screens (CSV previews, form errors).
+            foreach (['ritmo_', '_transient_ritmo_', '_transient_timeout_ritmo_'] as $prefix) {
+                $wpdb->query($wpdb->prepare("DELETE FROM {$wpdb->options} WHERE option_name LIKE %s", $wpdb->esc_like($prefix) . '%'));
+            }
+            // Per user: the property chosen, the alert e-mail choice, the rules draft.
+            $wpdb->query($wpdb->prepare("DELETE FROM {$wpdb->usermeta} WHERE meta_key LIKE %s", $wpdb->esc_like('ritmo_') . '%'));
             Roles::remove();
             Scheduler::unschedule();
         });

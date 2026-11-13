@@ -171,7 +171,7 @@ final class ApprovalBoard
     private function rows(string $propertyId, array $row): array
     {
         $context = $this->context($propertyId);
-        $plan = $row['run_id'] === null ? PlanIndex::empty() : new PlanIndex($this->planItems->forRun((int) $row['run_id']));
+        $plan = $row['run_id'] === null ? PlanIndex::empty() : (new PlanIndex($this->planItems->forRun((int) $row['run_id'])))->withListing($context['rooms']);
         $builder = new RowBuilder($plan, $context['rooms'], $context['calendar'], $context['today'], $this->holds->open($propertyId));
         $stored = array_values(array_filter($row['entries'], 'is_array'));
         $first = $builder->rows($stored);

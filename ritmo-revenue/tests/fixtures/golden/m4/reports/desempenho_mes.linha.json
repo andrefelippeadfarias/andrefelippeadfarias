@@ -1,0 +1,1528 @@
+{
+ "function": "desempenho_mes.linha",
+ "php_target": "Ritmo\\Domain\\Report\\BookingLine",
+ "notes": "One booking as the reports count it: property, room, status, channel label (direct split by the API origin), arrival, nights, units, revenue (charge items without an invoicee, else the price), creation instant, lead time in days at the property (UTC-3) and the cancellation instant (cancelTime, else modifiedTime of a cancelled booking). Property and room ids map through beds24.QUARTOS (fixtures only).",
+ "cases": [
+  {
+   "input": {
+    "booking": {
+     "id": 900000,
+     "propertyId": "350362",
+     "roomId": "722807",
+     "roomQty": 2,
+     "status": "confirmed",
+     "channel": "booking",
+     "referer": "booking",
+     "arrival": "2027-01-03",
+     "departure": "2027-01-07",
+     "bookingTime": "2026-09-05T14:43:00Z",
+     "price": 4440.89
+    }
+   },
+   "expected": {
+    "pousada": "Recanto",
+    "quarto": "Afrodite",
+    "status": "confirmed",
+    "canal": "Booking",
+    "chegada": "2027-01-03",
+    "noites": 4,
+    "un": 2,
+    "receita": 4440.89,
+    "feita": "2026-09-05T14:43:00+00:00",
+    "antecedencia": 120,
+    "cancelada_em": ""
+   }
+  },
+  {
+   "input": {
+    "booking": {
+     "id": 900001,
+     "propertyId": "350364",
+     "roomId": "722814",
+     "roomQty": 1,
+     "status": "confirmed",
+     "channel": "booking",
+     "referer": "booking",
+     "arrival": "2026-09-18",
+     "departure": "2026-09-20",
+     "bookingTime": "2026-09-18T06:51:00Z",
+     "price": 1065.51
+    }
+   },
+   "expected": {
+    "pousada": "Villa",
+    "quarto": "Balcony",
+    "status": "confirmed",
+    "canal": "Booking",
+    "chegada": "2026-09-18",
+    "noites": 2,
+    "un": 1,
+    "receita": 1065.51,
+    "feita": "2026-09-18T06:51:00+00:00",
+    "antecedencia": 0,
+    "cancelada_em": ""
+   }
+  },
+  {
+   "input": {
+    "booking": {
+     "id": 900002,
+     "propertyId": "350362",
+     "roomId": "722806",
+     "roomQty": 1,
+     "status": "cancelled",
+     "channel": "booking",
+     "referer": "booking",
+     "arrival": "2027-01-02",
+     "departure": "2027-01-04",
+     "bookingTime": "2026-12-03T11:57:00Z",
+     "price": 1868.24,
+     "cancelTime": "2026-12-10T23:57:00Z",
+     "modifiedTime": "2026-12-10T23:57:00Z"
+    }
+   },
+   "expected": {
+    "pousada": "Recanto",
+    "quarto": "Double",
+    "status": "cancelled",
+    "canal": "Booking",
+    "chegada": "2027-01-02",
+    "noites": 2,
+    "un": 1,
+    "receita": 1868.24,
+    "feita": "2026-12-03T11:57:00+00:00",
+    "antecedencia": 30,
+    "cancelada_em": "2026-12-10T23:57:00Z"
+   }
+  },
+  {
+   "input": {
+    "booking": {
+     "id": 900003,
+     "propertyId": "350364",
+     "roomId": "722813",
+     "roomQty": 1,
+     "status": "cancelled",
+     "channel": "airbnb",
+     "referer": "airbnb",
+     "arrival": "2026-11-17",
+     "departure": "2026-11-19",
+     "bookingTime": "2026-11-17T04:58:00Z",
+     "price": 2780.79,
+     "invoiceItems": [
+      {
+       "type": "charge",
+       "qty": 1,
+       "amount": 2502.71,
+       "lineTotal": 2502.71
+      },
+      {
+       "type": "payment",
+       "qty": 1,
+       "amount": -300.0,
+       "lineTotal": -300.0
+      }
+     ],
+     "modifiedTime": "2026-11-26T03:58:00Z"
+    }
+   },
+   "expected": {
+    "pousada": "Villa",
+    "quarto": "VK7",
+    "status": "cancelled",
+    "canal": "Airbnb",
+    "chegada": "2026-11-17",
+    "noites": 2,
+    "un": 1,
+    "receita": 2502.71,
+    "feita": "2026-11-17T04:58:00+00:00",
+    "antecedencia": 0,
+    "cancelada_em": "2026-11-26T03:58:00Z"
+   }
+  },
+  {
+   "input": {
+    "booking": {
+     "id": 900004,
+     "propertyId": "350362",
+     "roomId": "722805",
+     "roomQty": 1,
+     "status": "confirmed",
+     "channel": "expedia",
+     "referer": "expedia",
+     "arrival": "2026-11-06",
+     "departure": "2026-11-07",
+     "bookingTime": "2026-09-07T06:12:00Z",
+     "price": 1228.58
+    }
+   },
+   "expected": {
+    "pousada": "Recanto",
+    "quarto": "Q7",
+    "status": "confirmed",
+    "canal": "Expedia",
+    "chegada": "2026-11-06",
+    "noites": 1,
+    "un": 1,
+    "receita": 1228.58,
+    "feita": "2026-09-07T06:12:00+00:00",
+    "antecedencia": 60,
+    "cancelada_em": ""
+   }
+  },
+  {
+   "input": {
+    "booking": {
+     "id": 900005,
+     "propertyId": "350362",
+     "roomId": "722806",
+     "roomQty": 1,
+     "status": "cancelled",
+     "channel": "airbnb",
+     "referer": "airbnb",
+     "arrival": "2026-09-22",
+     "departure": "2026-09-24",
+     "bookingTime": "2026-09-21T13:32:00Z",
+     "price": 2269.78,
+     "invoiceItems": [
+      {
+       "type": "charge",
+       "qty": 1,
+       "amount": 2042.8,
+       "lineTotal": 2042.8
+      },
+      {
+       "type": "charge",
+       "qty": 2,
+       "amount": 35.0
+      }
+     ],
+     "modifiedTime": "2026-10-18T18:32:00Z"
+    }
+   },
+   "expected": {
+    "pousada": "Recanto",
+    "quarto": "Double",
+    "status": "cancelled",
+    "canal": "Airbnb",
+    "chegada": "2026-09-22",
+    "noites": 2,
+    "un": 1,
+    "receita": 2112.8,
+    "feita": "2026-09-21T13:32:00+00:00",
+    "antecedencia": 1,
+    "cancelada_em": "2026-10-18T18:32:00Z"
+   }
+  },
+  {
+   "input": {
+    "booking": {
+     "id": 900006,
+     "propertyId": "350364",
+     "roomId": "722813",
+     "roomQty": 1,
+     "status": "new",
+     "channel": "direct",
+     "referer": "API",
+     "arrival": "2026-10-29",
+     "departure": "2026-10-31",
+     "bookingTime": "2026-09-29T03:31:00Z",
+     "price": 1682.65,
+     "invoiceItems": [
+      {
+       "type": "charge",
+       "qty": 1,
+       "amount": 1514.39,
+       "lineTotal": 1514.39
+      }
+     ]
+    }
+   },
+   "expected": {
+    "pousada": "Villa",
+    "quarto": "VK7",
+    "status": "new",
+    "canal": "direto (API/site)",
+    "chegada": "2026-10-29",
+    "noites": 2,
+    "un": 1,
+    "receita": 1514.39,
+    "feita": "2026-09-29T03:31:00+00:00",
+    "antecedencia": 30,
+    "cancelada_em": ""
+   }
+  },
+  {
+   "input": {
+    "booking": {
+     "id": 900007,
+     "propertyId": "350364",
+     "roomId": "722813",
+     "roomQty": 2,
+     "status": "confirmed",
+     "channel": "booking",
+     "referer": "booking",
+     "arrival": "2026-11-20",
+     "departure": "2026-11-24",
+     "bookingTime": "2026-09-21T05:13:00Z",
+     "price": 3667.88,
+     "invoiceItems": [
+      {
+       "type": "charge",
+       "qty": 1,
+       "amount": 3301.09,
+       "lineTotal": 3301.09
+      },
+      {
+       "type": "charge",
+       "qty": 2,
+       "amount": 35.0
+      }
+     ]
+    }
+   },
+   "expected": {
+    "pousada": "Villa",
+    "quarto": "VK7",
+    "status": "confirmed",
+    "canal": "Booking",
+    "chegada": "2026-11-20",
+    "noites": 4,
+    "un": 2,
+    "receita": 3371.09,
+    "feita": "2026-09-21T05:13:00+00:00",
+    "antecedencia": 60,
+    "cancelada_em": ""
+   }
+  },
+  {
+   "input": {
+    "booking": {
+     "id": 900008,
+     "propertyId": "350364",
+     "roomId": "722815",
+     "roomQty": 1,
+     "status": "cancelled",
+     "channel": "airbnb",
+     "referer": "airbnb",
+     "arrival": "2026-11-15",
+     "departure": "2026-11-18",
+     "bookingTime": "2026-11-15T07:56:00Z",
+     "price": 3735.93,
+     "invoiceItems": [
+      {
+       "type": "charge",
+       "qty": 1,
+       "amount": 3362.34,
+       "lineTotal": 3362.34
+      },
+      {
+       "type": "charge",
+       "qty": 1,
+       "amount": 120.0,
+       "lineTotal": 120.0,
+       "invoiceeId": 77
+      },
+      {
+       "type": "payment",
+       "qty": 1,
+       "amount": -300.0,
+       "lineTotal": -300.0
+      }
+     ],
+     "modifiedTime": "2026-11-24T13:56:00Z"
+    }
+   },
+   "expected": {
+    "pousada": "Villa",
+    "quarto": "VK2",
+    "status": "cancelled",
+    "canal": "Airbnb",
+    "chegada": "2026-11-15",
+    "noites": 3,
+    "un": 1,
+    "receita": 3362.34,
+    "feita": "2026-11-15T07:56:00+00:00",
+    "antecedencia": 0,
+    "cancelada_em": "2026-11-24T13:56:00Z"
+   }
+  },
+  {
+   "input": {
+    "booking": {
+     "id": 900009,
+     "propertyId": "350364",
+     "roomId": "722813",
+     "roomQty": 1,
+     "status": "confirmed",
+     "channel": "expedia",
+     "referer": "expedia",
+     "arrival": "2026-10-16",
+     "departure": "2026-10-18",
+     "bookingTime": "2026-10-16T04:55:00Z",
+     "price": 1817.51,
+     "invoiceItems": [
+      {
+       "type": "charge",
+       "qty": 1,
+       "amount": 1635.76,
+       "lineTotal": 1635.76
+      },
+      {
+       "type": "payment",
+       "qty": 1,
+       "amount": -300.0,
+       "lineTotal": -300.0
+      }
+     ]
+    }
+   },
+   "expected": {
+    "pousada": "Villa",
+    "quarto": "VK7",
+    "status": "confirmed",
+    "canal": "Expedia",
+    "chegada": "2026-10-16",
+    "noites": 2,
+    "un": 1,
+    "receita": 1635.76,
+    "feita": "2026-10-16T04:55:00+00:00",
+    "antecedencia": 0,
+    "cancelada_em": ""
+   }
+  },
+  {
+   "input": {
+    "booking": {
+     "id": 900010,
+     "propertyId": "350362",
+     "roomId": "722806",
+     "roomQty": 1,
+     "status": "request",
+     "channel": "expedia",
+     "referer": "expedia",
+     "arrival": "2026-09-22",
+     "departure": "2026-09-26",
+     "bookingTime": "2026-09-22T16:00:00Z",
+     "price": 4514.62,
+     "invoiceItems": [
+      {
+       "type": "charge",
+       "qty": 1,
+       "amount": 4063.16,
+       "lineTotal": 4063.16
+      },
+      {
+       "type": "payment",
+       "qty": 1,
+       "amount": -300.0,
+       "lineTotal": -300.0
+      }
+     ]
+    }
+   },
+   "expected": {
+    "pousada": "Recanto",
+    "quarto": "Double",
+    "status": "request",
+    "canal": "Expedia",
+    "chegada": "2026-09-22",
+    "noites": 4,
+    "un": 1,
+    "receita": 4063.16,
+    "feita": "2026-09-22T16:00:00+00:00",
+    "antecedencia": 0,
+    "cancelada_em": ""
+   }
+  },
+  {
+   "input": {
+    "booking": {
+     "id": 900011,
+     "propertyId": "350364",
+     "roomId": "722815",
+     "roomQty": 1,
+     "status": "new",
+     "channel": "expedia",
+     "referer": "expedia",
+     "arrival": "2026-12-12",
+     "departure": "2026-12-14",
+     "bookingTime": "2026-10-13T18:14:00Z",
+     "price": 2484.78,
+     "invoiceItems": [
+      {
+       "type": "charge",
+       "qty": 1,
+       "amount": 2236.3,
+       "lineTotal": 2236.3
+      },
+      {
+       "type": "charge",
+       "qty": 1,
+       "amount": 120.0,
+       "lineTotal": 120.0,
+       "invoiceeId": 77
+      }
+     ]
+    }
+   },
+   "expected": {
+    "pousada": "Villa",
+    "quarto": "VK2",
+    "status": "new",
+    "canal": "Expedia",
+    "chegada": "2026-12-12",
+    "noites": 2,
+    "un": 1,
+    "receita": 2236.3,
+    "feita": "2026-10-13T18:14:00+00:00",
+    "antecedencia": 60,
+    "cancelada_em": ""
+   }
+  },
+  {
+   "input": {
+    "booking": {
+     "id": 900012,
+     "propertyId": "350364",
+     "roomId": "722814",
+     "roomQty": 1,
+     "status": "cancelled",
+     "channel": "airbnb",
+     "referer": "airbnb",
+     "arrival": "2026-09-30",
+     "departure": "2026-10-02",
+     "bookingTime": "2026-09-17T02:08:00Z",
+     "price": 2649.33,
+     "invoiceItems": [
+      {
+       "type": "charge",
+       "qty": 1,
+       "amount": 2384.4,
+       "lineTotal": 2384.4
+      },
+      {
+       "type": "charge",
+       "qty": 1,
+       "amount": 120.0,
+       "lineTotal": 120.0,
+       "invoiceeId": 77
+      },
+      {
+       "type": "payment",
+       "qty": 1,
+       "amount": -300.0,
+       "lineTotal": -300.0
+      }
+     ],
+     "modifiedTime": "2026-09-26T10:08:00Z"
+    }
+   },
+   "expected": {
+    "pousada": "Villa",
+    "quarto": "Balcony",
+    "status": "cancelled",
+    "canal": "Airbnb",
+    "chegada": "2026-09-30",
+    "noites": 2,
+    "un": 1,
+    "receita": 2384.4,
+    "feita": "2026-09-17T02:08:00+00:00",
+    "antecedencia": 14,
+    "cancelada_em": "2026-09-26T10:08:00Z"
+   }
+  },
+  {
+   "input": {
+    "booking": {
+     "id": 900013,
+     "propertyId": "350364",
+     "roomId": "722814",
+     "roomQty": 1,
+     "status": "cancelled",
+     "channel": "direct",
+     "referer": "frontdesk",
+     "arrival": "2027-01-09",
+     "departure": "2027-01-12",
+     "bookingTime": "2026-09-11T08:31:00Z",
+     "price": 3072.59,
+     "invoiceItems": [
+      {
+       "type": "charge",
+       "qty": 1,
+       "amount": 2765.33,
+       "lineTotal": 2765.33
+      }
+     ],
+     "modifiedTime": "2026-10-12T12:31:00Z"
+    }
+   },
+   "expected": {
+    "pousada": "Villa",
+    "quarto": "Balcony",
+    "status": "cancelled",
+    "canal": "direto (lançado à mão)",
+    "chegada": "2027-01-09",
+    "noites": 3,
+    "un": 1,
+    "receita": 2765.33,
+    "feita": "2026-09-11T08:31:00+00:00",
+    "antecedencia": 120,
+    "cancelada_em": "2026-10-12T12:31:00Z"
+   }
+  },
+  {
+   "input": {
+    "booking": {
+     "id": 900014,
+     "propertyId": "350362",
+     "roomId": "722805",
+     "roomQty": 1,
+     "status": "confirmed",
+     "channel": "expedia",
+     "referer": "expedia",
+     "arrival": "2026-11-06",
+     "departure": "2026-11-08",
+     "bookingTime": "2026-10-30T22:01:00Z",
+     "price": 1546.18,
+     "invoiceItems": [
+      {
+       "type": "charge",
+       "qty": 1,
+       "amount": 1391.56,
+       "lineTotal": 1391.56
+      },
+      {
+       "type": "charge",
+       "qty": 2,
+       "amount": 35.0
+      }
+     ]
+    }
+   },
+   "expected": {
+    "pousada": "Recanto",
+    "quarto": "Q7",
+    "status": "confirmed",
+    "canal": "Expedia",
+    "chegada": "2026-11-06",
+    "noites": 2,
+    "un": 1,
+    "receita": 1461.56,
+    "feita": "2026-10-30T22:01:00+00:00",
+    "antecedencia": 7,
+    "cancelada_em": ""
+   }
+  },
+  {
+   "input": {
+    "booking": {
+     "id": 900015,
+     "propertyId": "350364",
+     "roomId": "722815",
+     "roomQty": 1,
+     "status": "confirmed",
+     "channel": "booking",
+     "referer": "booking",
+     "arrival": "2026-11-24",
+     "departure": "2026-11-27",
+     "bookingTime": "2026-11-24T00:35:00Z",
+     "price": 2119.71,
+     "invoiceItems": [
+      {
+       "type": "charge",
+       "qty": 1,
+       "amount": 1907.74,
+       "lineTotal": 1907.74
+      },
+      {
+       "type": "charge",
+       "qty": 2,
+       "amount": 35.0
+      },
+      {
+       "type": "payment",
+       "qty": 1,
+       "amount": -300.0,
+       "lineTotal": -300.0
+      }
+     ]
+    }
+   },
+   "expected": {
+    "pousada": "Villa",
+    "quarto": "VK2",
+    "status": "confirmed",
+    "canal": "Booking",
+    "chegada": "2026-11-24",
+    "noites": 3,
+    "un": 1,
+    "receita": 1977.74,
+    "feita": "2026-11-24T00:35:00+00:00",
+    "antecedencia": 1,
+    "cancelada_em": ""
+   }
+  },
+  {
+   "input": {
+    "booking": {
+     "id": 900016,
+     "propertyId": "350362",
+     "roomId": "722806",
+     "roomQty": 1,
+     "status": "confirmed",
+     "channel": "booking",
+     "referer": "booking",
+     "arrival": "2026-10-30",
+     "departure": "2026-10-31",
+     "bookingTime": "2026-09-30T22:39:00Z",
+     "price": 1397.82
+    }
+   },
+   "expected": {
+    "pousada": "Recanto",
+    "quarto": "Double",
+    "status": "confirmed",
+    "canal": "Booking",
+    "chegada": "2026-10-30",
+    "noites": 1,
+    "un": 1,
+    "receita": 1397.82,
+    "feita": "2026-09-30T22:39:00+00:00",
+    "antecedencia": 30,
+    "cancelada_em": ""
+   }
+  },
+  {
+   "input": {
+    "booking": {
+     "id": 900017,
+     "propertyId": "350364",
+     "roomId": "722815",
+     "roomQty": 1,
+     "status": "confirmed",
+     "channel": "booking",
+     "referer": "booking",
+     "arrival": "2026-10-10",
+     "departure": "2026-10-13",
+     "bookingTime": "2026-10-07T23:44:00Z",
+     "price": 3298.74,
+     "invoiceItems": [
+      {
+       "type": "charge",
+       "qty": 1,
+       "amount": 2968.87,
+       "lineTotal": 2968.87
+      },
+      {
+       "type": "charge",
+       "qty": 2,
+       "amount": 35.0
+      }
+     ]
+    }
+   },
+   "expected": {
+    "pousada": "Villa",
+    "quarto": "VK2",
+    "status": "confirmed",
+    "canal": "Booking",
+    "chegada": "2026-10-10",
+    "noites": 3,
+    "un": 1,
+    "receita": 3038.87,
+    "feita": "2026-10-07T23:44:00+00:00",
+    "antecedencia": 3,
+    "cancelada_em": ""
+   }
+  },
+  {
+   "input": {
+    "booking": {
+     "id": 900018,
+     "propertyId": "350362",
+     "roomId": "722808",
+     "roomQty": 1,
+     "status": "confirmed",
+     "channel": "direct",
+     "referer": "API",
+     "arrival": "2026-10-28",
+     "departure": "2026-10-30",
+     "bookingTime": "2026-09-28T15:56:00Z",
+     "price": 2559.05,
+     "invoiceItems": [
+      {
+       "type": "charge",
+       "qty": 1,
+       "amount": 2303.15,
+       "lineTotal": 2303.15
+      }
+     ]
+    }
+   },
+   "expected": {
+    "pousada": "Recanto",
+    "quarto": "Q2",
+    "status": "confirmed",
+    "canal": "direto (API/site)",
+    "chegada": "2026-10-28",
+    "noites": 2,
+    "un": 1,
+    "receita": 2303.15,
+    "feita": "2026-09-28T15:56:00+00:00",
+    "antecedencia": 30,
+    "cancelada_em": ""
+   }
+  },
+  {
+   "input": {
+    "booking": {
+     "id": 900019,
+     "propertyId": "350364",
+     "roomId": "722814",
+     "roomQty": 1,
+     "status": "confirmed",
+     "channel": "airbnb",
+     "referer": "airbnb",
+     "arrival": "2026-11-28",
+     "departure": "2026-11-29",
+     "bookingTime": "2026-09-29T03:31:00Z",
+     "price": 918.68,
+     "invoiceItems": [
+      {
+       "type": "charge",
+       "qty": 1,
+       "amount": 826.81,
+       "lineTotal": 826.81
+      },
+      {
+       "type": "charge",
+       "qty": 2,
+       "amount": 35.0
+      }
+     ]
+    }
+   },
+   "expected": {
+    "pousada": "Villa",
+    "quarto": "Balcony",
+    "status": "confirmed",
+    "canal": "Airbnb",
+    "chegada": "2026-11-28",
+    "noites": 1,
+    "un": 1,
+    "receita": 896.81,
+    "feita": "2026-09-29T03:31:00+00:00",
+    "antecedencia": 60,
+    "cancelada_em": ""
+   }
+  },
+  {
+   "input": {
+    "booking": {
+     "id": 900020,
+     "propertyId": "350362",
+     "roomId": "722805",
+     "roomQty": 2,
+     "status": "request",
+     "channel": "expedia",
+     "referer": "expedia",
+     "arrival": "2026-10-04",
+     "departure": "2026-10-05",
+     "bookingTime": "2026-10-04T10:54:00Z",
+     "price": 1366.72,
+     "invoiceItems": [
+      {
+       "type": "charge",
+       "qty": 1,
+       "amount": 1230.05,
+       "lineTotal": 1230.05
+      }
+     ]
+    }
+   },
+   "expected": {
+    "pousada": "Recanto",
+    "quarto": "Q7",
+    "status": "request",
+    "canal": "Expedia",
+    "chegada": "2026-10-04",
+    "noites": 1,
+    "un": 2,
+    "receita": 1230.05,
+    "feita": "2026-10-04T10:54:00+00:00",
+    "antecedencia": 0,
+    "cancelada_em": ""
+   }
+  },
+  {
+   "input": {
+    "booking": {
+     "id": 900021,
+     "propertyId": "350362",
+     "roomId": "722806",
+     "roomQty": 1,
+     "status": "confirmed",
+     "channel": "direct",
+     "referer": "frontdesk",
+     "arrival": "2026-12-07",
+     "departure": "2026-12-09",
+     "bookingTime": "2026-11-07T20:02:00Z",
+     "price": 1900.51
+    }
+   },
+   "expected": {
+    "pousada": "Recanto",
+    "quarto": "Double",
+    "status": "confirmed",
+    "canal": "direto (lançado à mão)",
+    "chegada": "2026-12-07",
+    "noites": 2,
+    "un": 1,
+    "receita": 1900.51,
+    "feita": "2026-11-07T20:02:00+00:00",
+    "antecedencia": 30,
+    "cancelada_em": ""
+   }
+  },
+  {
+   "input": {
+    "booking": {
+     "id": 900022,
+     "propertyId": "350364",
+     "roomId": "722814",
+     "roomQty": 1,
+     "status": "confirmed",
+     "channel": "booking",
+     "referer": "booking",
+     "arrival": "2026-10-17",
+     "departure": "2026-10-18",
+     "bookingTime": "2026-10-16T19:59:00Z",
+     "price": 964.45,
+     "invoiceItems": [
+      {
+       "type": "charge",
+       "qty": 1,
+       "amount": 868.01,
+       "lineTotal": 868.01
+      },
+      {
+       "type": "charge",
+       "qty": 2,
+       "amount": 35.0
+      },
+      {
+       "type": "payment",
+       "qty": 1,
+       "amount": -300.0,
+       "lineTotal": -300.0
+      }
+     ]
+    }
+   },
+   "expected": {
+    "pousada": "Villa",
+    "quarto": "Balcony",
+    "status": "confirmed",
+    "canal": "Booking",
+    "chegada": "2026-10-17",
+    "noites": 1,
+    "un": 1,
+    "receita": 938.01,
+    "feita": "2026-10-16T19:59:00+00:00",
+    "antecedencia": 1,
+    "cancelada_em": ""
+   }
+  },
+  {
+   "input": {
+    "booking": {
+     "id": 900023,
+     "propertyId": "350362",
+     "roomId": "722806",
+     "roomQty": 1,
+     "status": "confirmed",
+     "channel": "direct",
+     "referer": "API",
+     "arrival": "2026-10-28",
+     "departure": "2026-10-31",
+     "bookingTime": "2026-10-25T20:46:00Z",
+     "price": 1633.23
+    }
+   },
+   "expected": {
+    "pousada": "Recanto",
+    "quarto": "Double",
+    "status": "confirmed",
+    "canal": "direto (API/site)",
+    "chegada": "2026-10-28",
+    "noites": 3,
+    "un": 1,
+    "receita": 1633.23,
+    "feita": "2026-10-25T20:46:00+00:00",
+    "antecedencia": 3,
+    "cancelada_em": ""
+   }
+  },
+  {
+   "input": {
+    "booking": {
+     "id": 900024,
+     "propertyId": "350362",
+     "roomId": "722806",
+     "roomQty": 1,
+     "status": "confirmed",
+     "channel": "airbnb",
+     "referer": "airbnb",
+     "arrival": "2027-02-17",
+     "departure": "2027-02-21",
+     "bookingTime": "2026-10-21T02:07:00Z",
+     "price": 4675.05
+    }
+   },
+   "expected": {
+    "pousada": "Recanto",
+    "quarto": "Double",
+    "status": "confirmed",
+    "canal": "Airbnb",
+    "chegada": "2027-02-17",
+    "noites": 4,
+    "un": 1,
+    "receita": 4675.05,
+    "feita": "2026-10-21T02:07:00+00:00",
+    "antecedencia": 120,
+    "cancelada_em": ""
+   }
+  },
+  {
+   "input": {
+    "booking": {
+     "id": 900025,
+     "propertyId": "350364",
+     "roomId": "722815",
+     "roomQty": 1,
+     "status": "confirmed",
+     "channel": "booking",
+     "referer": "booking",
+     "arrival": "2026-11-21",
+     "departure": "2026-11-23",
+     "bookingTime": "2026-11-14T06:53:00Z",
+     "price": 2180.58,
+     "invoiceItems": [
+      {
+       "type": "charge",
+       "qty": 1,
+       "amount": 1962.52,
+       "lineTotal": 1962.52
+      }
+     ]
+    }
+   },
+   "expected": {
+    "pousada": "Villa",
+    "quarto": "VK2",
+    "status": "confirmed",
+    "canal": "Booking",
+    "chegada": "2026-11-21",
+    "noites": 2,
+    "un": 1,
+    "receita": 1962.52,
+    "feita": "2026-11-14T06:53:00+00:00",
+    "antecedencia": 7,
+    "cancelada_em": ""
+   }
+  },
+  {
+   "input": {
+    "booking": {
+     "id": 900026,
+     "propertyId": "350364",
+     "roomId": "722814",
+     "roomQty": 1,
+     "status": "new",
+     "channel": "expedia",
+     "referer": "expedia",
+     "arrival": "2026-10-16",
+     "departure": "2026-10-18",
+     "bookingTime": "2026-10-13T08:04:00Z",
+     "price": 1101.77
+    }
+   },
+   "expected": {
+    "pousada": "Villa",
+    "quarto": "Balcony",
+    "status": "new",
+    "canal": "Expedia",
+    "chegada": "2026-10-16",
+    "noites": 2,
+    "un": 1,
+    "receita": 1101.77,
+    "feita": "2026-10-13T08:04:00+00:00",
+    "antecedencia": 3,
+    "cancelada_em": ""
+   }
+  },
+  {
+   "input": {
+    "booking": {
+     "id": 900027,
+     "propertyId": "350364",
+     "roomId": "722813",
+     "roomQty": 1,
+     "status": "confirmed",
+     "channel": "direct",
+     "referer": "API",
+     "arrival": "2026-10-24",
+     "departure": "2026-10-28",
+     "bookingTime": "2026-10-24T05:35:00Z",
+     "price": 2197.61
+    }
+   },
+   "expected": {
+    "pousada": "Villa",
+    "quarto": "VK7",
+    "status": "confirmed",
+    "canal": "direto (API/site)",
+    "chegada": "2026-10-24",
+    "noites": 4,
+    "un": 1,
+    "receita": 2197.61,
+    "feita": "2026-10-24T05:35:00+00:00",
+    "antecedencia": 0,
+    "cancelada_em": ""
+   }
+  },
+  {
+   "input": {
+    "booking": {
+     "id": 900028,
+     "propertyId": "350362",
+     "roomId": "722805",
+     "roomQty": 1,
+     "status": "new",
+     "channel": "direct",
+     "referer": "API",
+     "arrival": "2026-12-10",
+     "departure": "2026-12-14",
+     "bookingTime": "2026-12-11T02:19:00Z",
+     "price": 4106.62,
+     "invoiceItems": [
+      {
+       "type": "charge",
+       "qty": 1,
+       "amount": 3695.96,
+       "lineTotal": 3695.96
+      },
+      {
+       "type": "payment",
+       "qty": 1,
+       "amount": -300.0,
+       "lineTotal": -300.0
+      }
+     ]
+    }
+   },
+   "expected": {
+    "pousada": "Recanto",
+    "quarto": "Q7",
+    "status": "new",
+    "canal": "direto (API/site)",
+    "chegada": "2026-12-10",
+    "noites": 4,
+    "un": 1,
+    "receita": 3695.96,
+    "feita": "2026-12-11T02:19:00+00:00",
+    "antecedencia": 0,
+    "cancelada_em": ""
+   }
+  },
+  {
+   "input": {
+    "booking": {
+     "id": 900029,
+     "propertyId": "350362",
+     "roomId": "722807",
+     "roomQty": 2,
+     "status": "confirmed",
+     "channel": "direct",
+     "referer": "API",
+     "arrival": "2027-04-08",
+     "departure": "2027-04-10",
+     "bookingTime": "2026-12-09T05:34:00Z",
+     "price": 2156.72
+    }
+   },
+   "expected": {
+    "pousada": "Recanto",
+    "quarto": "Afrodite",
+    "status": "confirmed",
+    "canal": "direto (API/site)",
+    "chegada": "2027-04-08",
+    "noites": 2,
+    "un": 2,
+    "receita": 2156.72,
+    "feita": "2026-12-09T05:34:00+00:00",
+    "antecedencia": 120,
+    "cancelada_em": ""
+   }
+  },
+  {
+   "input": {
+    "booking": {
+     "id": 900030,
+     "propertyId": "350362",
+     "roomId": "722808",
+     "roomQty": 1,
+     "status": "confirmed",
+     "channel": "direct",
+     "referer": "API",
+     "arrival": "2026-09-09",
+     "departure": "2026-09-11",
+     "bookingTime": "2026-09-06T21:30:00Z",
+     "price": 997.7,
+     "invoiceItems": [
+      {
+       "type": "charge",
+       "qty": 1,
+       "amount": 897.93,
+       "lineTotal": 897.93
+      },
+      {
+       "type": "charge",
+       "qty": 2,
+       "amount": 35.0
+      }
+     ]
+    }
+   },
+   "expected": {
+    "pousada": "Recanto",
+    "quarto": "Q2",
+    "status": "confirmed",
+    "canal": "direto (API/site)",
+    "chegada": "2026-09-09",
+    "noites": 2,
+    "un": 1,
+    "receita": 967.93,
+    "feita": "2026-09-06T21:30:00+00:00",
+    "antecedencia": 3,
+    "cancelada_em": ""
+   }
+  },
+  {
+   "input": {
+    "booking": {
+     "id": 900031,
+     "propertyId": "350362",
+     "roomId": "722805",
+     "roomQty": 1,
+     "status": "confirmed",
+     "channel": "expedia",
+     "referer": "expedia",
+     "arrival": "2026-11-20",
+     "departure": "2026-11-21",
+     "bookingTime": "2026-10-22T01:42:00Z",
+     "price": 941.2
+    }
+   },
+   "expected": {
+    "pousada": "Recanto",
+    "quarto": "Q7",
+    "status": "confirmed",
+    "canal": "Expedia",
+    "chegada": "2026-11-20",
+    "noites": 1,
+    "un": 1,
+    "receita": 941.2,
+    "feita": "2026-10-22T01:42:00+00:00",
+    "antecedencia": 30,
+    "cancelada_em": ""
+   }
+  },
+  {
+   "input": {
+    "booking": {
+     "id": 900032,
+     "propertyId": "350364",
+     "roomId": "722815",
+     "roomQty": 1,
+     "status": "cancelled",
+     "channel": "booking",
+     "referer": "booking",
+     "arrival": "2026-12-07",
+     "departure": "2026-12-09",
+     "bookingTime": "2026-12-07T10:09:00Z",
+     "price": 1748.05,
+     "modifiedTime": "2027-01-02T07:09:00Z"
+    }
+   },
+   "expected": {
+    "pousada": "Villa",
+    "quarto": "VK2",
+    "status": "cancelled",
+    "canal": "Booking",
+    "chegada": "2026-12-07",
+    "noites": 2,
+    "un": 1,
+    "receita": 1748.05,
+    "feita": "2026-12-07T10:09:00+00:00",
+    "antecedencia": 0,
+    "cancelada_em": "2027-01-02T07:09:00Z"
+   }
+  },
+  {
+   "input": {
+    "booking": {
+     "id": 900033,
+     "propertyId": "350364",
+     "roomId": "722814",
+     "roomQty": 1,
+     "status": "confirmed",
+     "channel": "direct",
+     "referer": "frontdesk",
+     "arrival": "2027-01-14",
+     "departure": "2027-01-16",
+     "bookingTime": "2026-09-16T09:40:00Z",
+     "price": 1824.73,
+     "invoiceItems": [
+      {
+       "type": "charge",
+       "qty": 1,
+       "amount": 1642.26,
+       "lineTotal": 1642.26
+      },
+      {
+       "type": "payment",
+       "qty": 1,
+       "amount": -300.0,
+       "lineTotal": -300.0
+      }
+     ]
+    }
+   },
+   "expected": {
+    "pousada": "Villa",
+    "quarto": "Balcony",
+    "status": "confirmed",
+    "canal": "direto (lançado à mão)",
+    "chegada": "2027-01-14",
+    "noites": 2,
+    "un": 1,
+    "receita": 1642.26,
+    "feita": "2026-09-16T09:40:00+00:00",
+    "antecedencia": 120,
+    "cancelada_em": ""
+   }
+  },
+  {
+   "input": {
+    "booking": {
+     "id": 900034,
+     "propertyId": "350362",
+     "roomId": "722806",
+     "roomQty": 1,
+     "status": "new",
+     "channel": "direct",
+     "referer": "API",
+     "arrival": "2027-01-30",
+     "departure": "2027-02-01",
+     "bookingTime": "2026-10-02T19:00:00Z",
+     "price": 2596.14,
+     "invoiceItems": [
+      {
+       "type": "charge",
+       "qty": 1,
+       "amount": 2336.53,
+       "lineTotal": 2336.53
+      },
+      {
+       "type": "charge",
+       "qty": 2,
+       "amount": 35.0
+      }
+     ]
+    }
+   },
+   "expected": {
+    "pousada": "Recanto",
+    "quarto": "Double",
+    "status": "new",
+    "canal": "direto (API/site)",
+    "chegada": "2027-01-30",
+    "noites": 2,
+    "un": 1,
+    "receita": 2406.53,
+    "feita": "2026-10-02T19:00:00+00:00",
+    "antecedencia": 120,
+    "cancelada_em": ""
+   }
+  },
+  {
+   "input": {
+    "booking": {
+     "id": 900035,
+     "propertyId": "350362",
+     "roomId": "722807",
+     "roomQty": 2,
+     "status": "cancelled",
+     "channel": "booking",
+     "referer": "booking",
+     "arrival": "2026-11-16",
+     "departure": "2026-11-17",
+     "bookingTime": "2026-11-13T11:44:00Z",
+     "price": 1114.06,
+     "invoiceItems": [
+      {
+       "type": "charge",
+       "qty": 1,
+       "amount": 1002.65,
+       "lineTotal": 1002.65
+      },
+      {
+       "type": "charge",
+       "qty": 1,
+       "amount": 120.0,
+       "lineTotal": 120.0,
+       "invoiceeId": 77
+      }
+     ],
+     "cancelTime": "2026-11-16T17:44:00Z",
+     "modifiedTime": "2026-11-16T17:44:00Z"
+    }
+   },
+   "expected": {
+    "pousada": "Recanto",
+    "quarto": "Afrodite",
+    "status": "cancelled",
+    "canal": "Booking",
+    "chegada": "2026-11-16",
+    "noites": 1,
+    "un": 2,
+    "receita": 1002.65,
+    "feita": "2026-11-13T11:44:00+00:00",
+    "antecedencia": 3,
+    "cancelada_em": "2026-11-16T17:44:00Z"
+   }
+  },
+  {
+   "input": {
+    "booking": {
+     "id": 900036,
+     "propertyId": "350362",
+     "roomId": "722806",
+     "roomQty": 1,
+     "status": "confirmed",
+     "channel": "booking",
+     "referer": "booking",
+     "arrival": "2026-09-29",
+     "departure": "2026-10-03",
+     "bookingTime": "2026-09-26T10:06:00Z",
+     "price": 1986.22
+    }
+   },
+   "expected": {
+    "pousada": "Recanto",
+    "quarto": "Double",
+    "status": "confirmed",
+    "canal": "Booking",
+    "chegada": "2026-09-29",
+    "noites": 4,
+    "un": 1,
+    "receita": 1986.22,
+    "feita": "2026-09-26T10:06:00+00:00",
+    "antecedencia": 3,
+    "cancelada_em": ""
+   }
+  },
+  {
+   "input": {
+    "booking": {
+     "id": 900037,
+     "propertyId": "350362",
+     "roomId": "722805",
+     "roomQty": 1,
+     "status": "confirmed",
+     "channel": "expedia",
+     "referer": "expedia",
+     "arrival": "2026-12-13",
+     "departure": "2026-12-15",
+     "bookingTime": "2026-12-11T00:36:00Z",
+     "price": 2212.6
+    }
+   },
+   "expected": {
+    "pousada": "Recanto",
+    "quarto": "Q7",
+    "status": "confirmed",
+    "canal": "Expedia",
+    "chegada": "2026-12-13",
+    "noites": 2,
+    "un": 1,
+    "receita": 2212.6,
+    "feita": "2026-12-11T00:36:00+00:00",
+    "antecedencia": 3,
+    "cancelada_em": ""
+   }
+  },
+  {
+   "input": {
+    "booking": {
+     "id": 900038,
+     "propertyId": "350362",
+     "roomId": "722806",
+     "roomQty": 1,
+     "status": "confirmed",
+     "channel": "expedia",
+     "referer": "expedia",
+     "arrival": "2026-11-30",
+     "departure": "2026-12-03",
+     "bookingTime": "2026-11-27T03:04:00Z",
+     "price": 3247.83
+    }
+   },
+   "expected": {
+    "pousada": "Recanto",
+    "quarto": "Double",
+    "status": "confirmed",
+    "canal": "Expedia",
+    "chegada": "2026-11-30",
+    "noites": 3,
+    "un": 1,
+    "receita": 3247.83,
+    "feita": "2026-11-27T03:04:00+00:00",
+    "antecedencia": 3,
+    "cancelada_em": ""
+   }
+  },
+  {
+   "input": {
+    "booking": {
+     "id": 900039,
+     "propertyId": "350362",
+     "roomId": "722805",
+     "roomQty": 1,
+     "status": "confirmed",
+     "channel": "direct",
+     "referer": "API",
+     "arrival": "2026-12-29",
+     "departure": "2027-01-02",
+     "bookingTime": "2026-10-31T01:11:00Z",
+     "price": 3320.78
+    }
+   },
+   "expected": {
+    "pousada": "Recanto",
+    "quarto": "Q7",
+    "status": "confirmed",
+    "canal": "direto (API/site)",
+    "chegada": "2026-12-29",
+    "noites": 4,
+    "un": 1,
+    "receita": 3320.78,
+    "feita": "2026-10-31T01:11:00+00:00",
+    "antecedencia": 60,
+    "cancelada_em": ""
+   }
+  }
+ ]
+}

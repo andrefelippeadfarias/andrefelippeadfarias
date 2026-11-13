@@ -110,8 +110,8 @@ $ritmo_property = $ritmo_page->property?->id ?? '';
                                 <td data-label="<?php esc_attr_e('Release', 'ritmo-revenue'); ?>">
                                     <?php if ($view['may_approve']) : ?>
                                         <form method="post" action="<?php echo esc_url($view['post_url']); ?>">
-                                            <?php wp_nonce_field('ritmo_freeze_release:' . $ritmo_freeze['id']); ?>
-                                            <input type="hidden" name="action" value="ritmo_freeze_release">
+                                            <?php wp_nonce_field('ritmo_order_freeze_release:' . $ritmo_freeze['id']); ?>
+                                            <input type="hidden" name="action" value="ritmo_order_freeze_release">
                                             <input type="hidden" name="freeze" value="<?php echo esc_attr((string) $ritmo_freeze['id']); ?>">
                                             <input type="hidden" name="property" value="<?php echo esc_attr($ritmo_property); ?>">
                                             <input type="hidden" name="tab" value="freezes">

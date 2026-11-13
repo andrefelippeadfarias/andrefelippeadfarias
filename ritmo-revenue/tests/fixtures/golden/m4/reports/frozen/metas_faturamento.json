@@ -1,0 +1,154 @@
+{
+ "_doc": "Invented monthly targets for the M4 goldens (not the owner's).",
+ "por_pousada": {
+  "2026-09": {
+   "recanto": {
+    "minimo_dono": 180000,
+    "realista": 210000
+   },
+   "villa": {
+    "minimo_dono": 120000,
+    "realista": 150000
+   }
+  },
+  "2026-10": {
+   "recanto": {
+    "minimo_dono": 180000,
+    "realista": 210000
+   },
+   "villa": {
+    "minimo_dono": 120000,
+    "realista": 150000
+   }
+  },
+  "2026-11": {
+   "recanto": {
+    "minimo_dono": 180000,
+    "realista": 210000
+   },
+   "villa": {
+    "minimo_dono": 120000,
+    "realista": 150000
+   }
+  },
+  "2026-12": {
+   "recanto": {
+    "minimo_dono": 260000,
+    "realista": 300000
+   },
+   "villa": {
+    "realista": 240000
+   }
+  },
+  "2027-01": {
+   "recanto": {
+    "minimo_dono": 260000,
+    "realista": 300000
+   },
+   "villa": {
+    "minimo_dono": 200000,
+    "realista": 240000
+   }
+  },
+  "2027-02": {
+   "recanto": {
+    "minimo_dono": 180000,
+    "realista": 210000
+   },
+   "villa": {
+    "minimo_dono": 120000,
+    "realista": 150000
+   }
+  },
+  "2027-03": {
+   "recanto": {
+    "minimo_dono": 180000,
+    "realista": 210000
+   },
+   "villa": {
+    "minimo_dono": 120000,
+    "realista": 150000
+   }
+  },
+  "2027-04": {
+   "recanto": {
+    "minimo_dono": 180000,
+    "realista": 210000
+   },
+   "villa": {
+    "minimo_dono": 120000,
+    "realista": 150000
+   }
+  },
+  "2027-05": {
+   "recanto": {
+    "minimo_dono": 180000,
+    "realista": 210000
+   },
+   "villa": {
+    "minimo_dono": 120000,
+    "realista": 150000
+   }
+  },
+  "2027-06": {
+   "recanto": {
+    "minimo_dono": 180000,
+    "realista": 210000
+   },
+   "villa": {
+    "minimo_dono": 120000,
+    "realista": 150000
+   }
+  },
+  "2027-07": {
+   "recanto": {
+    "minimo_dono": 260000,
+    "realista": 300000
+   },
+   "villa": {
+    "minimo_dono": 200000,
+    "realista": 240000
+   }
+  },
+  "2027-08": {
+   "recanto": {
+    "minimo_dono": 180000,
+    "realista": 210000
+   },
+   "villa": {
+    "minimo_dono": 120000,
+    "realista": 150000
+   }
+  },
+  "2027-09": {
+   "recanto": {
+    "minimo_dono": 180000,
+    "realista": 210000
+   },
+   "villa": {
+    "minimo_dono": 120000,
+    "realista": 150000
+   }
+  },
+  "2027-10": {
+   "recanto": {
+    "minimo_dono": 180000,
+    "realista": 210000
+   },
+   "villa": {
+    "minimo_dono": 120000,
+    "realista": 150000
+   }
+  },
+  "2027-11": {
+   "recanto": {
+    "minimo_dono": 180000,
+    "realista": 210000
+   },
+   "villa": {
+    "minimo_dono": 120000,
+    "realista": 150000
+   }
+  }
+ }
+}

@@ -1,0 +1,560 @@
+{
+ "function": "metas_faturamento.meses",
+ "php_target": "Ritmo\\Domain\\Report\\RevenueForecast",
+ "notes": "Per month and scenario: sum over properties of market occupancy LY% / 100 x market ADR LY x growth x index x units x days (x the occupancy cap of the first property in its months), never below the book. The engine's month-specific adjustments (2026-10, 2027-03, 2027-04) become manual adjustments in the plugin (divergence R4); the invented case has none of those months.",
+ "cases": [
+  {
+   "input": {
+    "label": "module inputs",
+    "insumos": {
+     "lido_em": "2026-10-14",
+     "unidades": {
+      "recanto": 16,
+      "villa": 15
+     },
+     "mercado_ano_passado": {
+      "2026-10": {
+       "recanto": [
+        28,
+        571
+       ],
+       "villa": [
+        35,
+        515
+       ]
+      },
+      "2026-11": {
+       "recanto": [
+        35,
+        641
+       ],
+       "villa": [
+        42,
+        545
+       ]
+      },
+      "2026-12": {
+       "recanto": [
+        43,
+        734
+       ],
+       "villa": [
+        50,
+        702
+       ]
+      },
+      "2027-01": {
+       "recanto": [
+        36,
+        645
+       ],
+       "villa": [
+        45,
+        583
+       ]
+      },
+      "2027-02": {
+       "recanto": [
+        29,
+        652
+       ],
+       "villa": [
+        34,
+        572
+       ]
+      },
+      "2027-03": {
+       "recanto": [
+        27,
+        564
+       ],
+       "villa": [
+        34,
+        511
+       ]
+      },
+      "2027-04": {
+       "recanto": [
+        36,
+        695
+       ],
+       "villa": [
+        42,
+        648
+       ]
+      }
+     },
+     "realizado": {
+      "2026-09": {
+       "recanto": 182255,
+       "villa": 142356,
+       "total": 324612,
+       "diarias": 511,
+       "disponiveis": 950,
+       "ocupacao": 0.54,
+       "adr": 635,
+       "mercado_mesmo_mes": {
+        "recanto": [
+         37,
+         697
+        ],
+        "villa": [
+         40,
+         634
+        ]
+       },
+       "indice": {
+        "recanto": 1.48,
+        "villa": 1.25
+       }
+      },
+      "2026-10-01a14": {
+       "ocupacao": 0.484,
+       "adr": 559,
+       "revpar": 271,
+       "mercado_revpar": 217,
+       "indice_portfolio": 1.25
+      }
+     },
+     "livro": {
+      "2026-10": 238221,
+      "2026-11": 97762,
+      "2026-12": 58598,
+      "2027-01": 26096,
+      "2027-02": 8239,
+      "2027-03": 6416,
+      "2027-04": 4370
+     },
+     "cenarios": {
+      "piso": {
+       "indice": {
+        "recanto": 1.15,
+        "villa": 1.0
+       },
+       "crescimento": 1.0
+      },
+      "base": {
+       "indice": {
+        "recanto": 1.35,
+        "villa": 1.2
+       },
+       "crescimento": 1.05
+      },
+      "meta": {
+       "indice": {
+        "recanto": 1.7,
+        "villa": 1.5
+       },
+       "crescimento": 1.05
+      }
+     },
+     "teto_95_recanto": {
+      "2026-11": 0.95,
+      "2026-12": 0.95,
+      "2027-02": 0.94,
+      "2027-04": 0.97
+     },
+     "outubro_ultima_hora": {
+      "piso": 0,
+      "base": 27000,
+      "meta": 60000
+     },
+     "abril_sem_pascoa": {
+      "piso": -4000,
+      "base": -4000,
+      "meta": -4000
+     },
+     "feriados": {
+      "Finados (30/10 a 1/11, 3 noites)": {
+       "vendidas": 45,
+       "receita": 30932,
+       "diarias": 93,
+       "ocupacao": [
+        0.6,
+        0.72,
+        0.85
+       ],
+       "diaria": [
+        800,
+        900,
+        950
+       ],
+       "piso_skill": 800
+      },
+      "Consciência Negra (19 a 21/11, 3 noites)": {
+       "vendidas": 21,
+       "receita": 18989,
+       "diarias": 93,
+       "ocupacao": [
+        0.65,
+        0.78,
+        0.88
+       ],
+       "diaria": [
+        800,
+        900,
+        1000
+       ],
+       "piso_skill": 800
+      },
+      "Natal (24 a 26/12, 3 noites)": {
+       "vendidas": 2,
+       "receita": 1614,
+       "diarias": 93,
+       "ocupacao": [
+        0.6,
+        0.75,
+        0.85
+       ],
+       "diaria": [
+        1000,
+        1100,
+        1200
+       ],
+       "piso_skill": 1000
+      },
+      "Réveillon (29/12 a 2/1, 5 noites)": {
+       "vendidas": 23,
+       "receita": 20959,
+       "diarias": 155,
+       "ocupacao": [
+        0.7,
+        0.85,
+        0.92
+       ],
+       "diaria": [
+        1100,
+        1250,
+        1400
+       ],
+       "piso_skill": 1000
+      },
+      "Aniversário de SP (22 a 24/1, 3 noites)": {
+       "vendidas": 3,
+       "receita": 2521,
+       "diarias": 93,
+       "ocupacao": [
+        0.45,
+        0.6,
+        0.72
+       ],
+       "diaria": [
+        800,
+        850,
+        900
+       ],
+       "piso_skill": 800
+      },
+      "Carnaval (5 a 9/2, 5 noites)": {
+       "vendidas": 5,
+       "receita": 5603,
+       "diarias": 155,
+       "ocupacao": [
+        0.65,
+        0.75,
+        0.88
+       ],
+       "diaria": [
+        1000,
+        1050,
+        1100
+       ],
+       "piso_skill": 1000
+      },
+      "Páscoa (25 a 27/3, 3 noites)": {
+       "vendidas": 0,
+       "receita": 0,
+       "diarias": 93,
+       "ocupacao": [
+        0.6,
+        0.72,
+        0.85
+       ],
+       "diaria": [
+        1000,
+        1050,
+        1100
+       ],
+       "piso_skill": 1000
+      },
+      "Tiradentes (20 a 21/4, 2 noites)": {
+       "vendidas": 2,
+       "receita": 924,
+       "diarias": 62,
+       "ocupacao": [
+        0.45,
+        0.55,
+        0.65
+       ],
+       "diaria": [
+        800,
+        850,
+        900
+       ],
+       "piso_skill": 800
+      }
+     },
+     "pascoa_noites_normais_marco": {
+      "piso": 5678,
+      "base": 7130,
+      "meta": 8454
+     }
+    },
+    "dono": {
+     "baixa": {
+      "recanto": 220000,
+      "villa": 150000
+     },
+     "alta": {
+      "recanto": 350000,
+      "villa": 300000
+     },
+     "meses_alta": [
+      "2026-12",
+      "2027-01"
+     ],
+     "indice_maximo": {
+      "recanto": 2.0,
+      "villa": 1.8
+     }
+    },
+    "meses": [
+     "2026-10",
+     "2026-11",
+     "2026-12",
+     "2027-01",
+     "2027-02",
+     "2027-03",
+     "2027-04"
+    ]
+   },
+   "expected": {
+    "2026-10": {
+     "livro": 238221,
+     "piso": 238221,
+     "base": 265221,
+     "meta": 298221
+    },
+    "2026-11": {
+     "livro": 97762,
+     "piso": 220654,
+     "base": 274802,
+     "meta": 344845
+    },
+    "2026-12": {
+     "livro": 58598,
+     "piso": 334243,
+     "base": 416462,
+     "meta": 522529
+    },
+    "2027-01": {
+     "livro": 26096,
+     "piso": 254440,
+     "base": 316966,
+     "meta": 397719
+    },
+    "2027-02": {
+     "livro": 8239,
+     "piso": 173251,
+     "base": 215788,
+     "meta": 270780
+    },
+    "2027-03": {
+     "livro": 6416,
+     "piso": 206416,
+     "base": 257777,
+     "meta": 323658
+    },
+    "2027-04": {
+     "livro": 4370,
+     "piso": 252439,
+     "base": 315444,
+     "meta": 396834
+    }
+   }
+  },
+  {
+   "input": {
+    "label": "invented",
+    "insumos": {
+     "unidades": {
+      "recanto": 12,
+      "villa": 9
+     },
+     "mercado_ano_passado": {
+      "2027-05": {
+       "recanto": [
+        31,
+        560
+       ],
+       "villa": [
+        38,
+        500
+       ]
+      },
+      "2027-06": {
+       "recanto": [
+        44,
+        690
+       ],
+       "villa": [
+        49,
+        610
+       ]
+      },
+      "2027-07": {
+       "recanto": [
+        58,
+        820
+       ],
+       "villa": [
+        61,
+        700
+       ]
+      },
+      "2027-08": {
+       "recanto": [
+        40,
+        640
+       ],
+       "villa": [
+        45,
+        560
+       ]
+      }
+     },
+     "livro": {
+      "2027-05": 15000,
+      "2027-06": 61000,
+      "2027-07": 180000,
+      "2027-08": 9000
+     },
+     "cenarios": {
+      "piso": {
+       "indice": {
+        "recanto": 1.0,
+        "villa": 0.9
+       },
+       "crescimento": 1.0
+      },
+      "base": {
+       "indice": {
+        "recanto": 1.2,
+        "villa": 1.1
+       },
+       "crescimento": 1.04
+      },
+      "meta": {
+       "indice": {
+        "recanto": 1.5,
+        "villa": 1.3
+       },
+       "crescimento": 1.06
+      }
+     },
+     "teto_95_recanto": {
+      "2027-07": 0.93
+     },
+     "outubro_ultima_hora": {
+      "piso": 0,
+      "base": 0,
+      "meta": 0
+     },
+     "abril_sem_pascoa": {
+      "piso": 0,
+      "base": 0,
+      "meta": 0
+     },
+     "pascoa_noites_normais_marco": {
+      "piso": 0,
+      "base": 0,
+      "meta": 0
+     },
+     "feriados": {
+      "Páscoa (invented, 3 noites)": {
+       "vendidas": 10,
+       "receita": 9000,
+       "diarias": 63,
+       "ocupacao": [
+        0.5,
+        0.6,
+        0.7
+       ],
+       "diaria": [
+        700,
+        760,
+        820
+       ],
+       "piso_skill": 650
+      },
+      "Winter break (invented, 4 noites)": {
+       "vendidas": 70,
+       "receita": 61000,
+       "diarias": 84,
+       "ocupacao": [
+        0.6,
+        0.75,
+        0.8
+       ],
+       "diaria": [
+        900,
+        950,
+        1000
+       ],
+       "piso_skill": 900
+      }
+     }
+    },
+    "dono": {
+     "baixa": {
+      "recanto": 150000,
+      "villa": 90000
+     },
+     "alta": {
+      "recanto": 260000,
+      "villa": 160000
+     },
+     "meses_alta": [
+      "2027-07"
+     ],
+     "indice_maximo": {
+      "recanto": 1.8,
+      "villa": 1.6
+     }
+    },
+    "meses": [
+     "2027-05",
+     "2027-06",
+     "2027-07",
+     "2027-08"
+    ]
+   },
+   "expected": {
+    "2027-05": {
+     "livro": 15000,
+     "piso": 112288,
+     "base": 141238,
+     "meta": 175729
+    },
+    "2027-06": {
+     "livro": 61000,
+     "piso": 181929,
+     "base": 228726,
+     "meta": 284989
+    },
+    "2027-07": {
+     "livro": 180000,
+     "piso": 271758,
+     "base": 341632,
+     "meta": 425782
+    },
+    "2027-08": {
+     "livro": 9000,
+     "piso": 158509,
+     "base": 199282,
+     "meta": 248303
+    }
+   }
+  }
+ ]
+}

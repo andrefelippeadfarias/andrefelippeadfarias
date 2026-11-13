@@ -7,6 +7,9 @@ namespace Ritmo\Domain\Config;
 use Ritmo\Domain\Alerts\AlertsConfig;
 use Ritmo\Domain\Calendar\Stay\StayConfig;
 use Ritmo\Domain\Calendar\Stay\StayFields;
+use Ritmo\Domain\Market\Series\LadderSeriesCheck;
+use Ritmo\Domain\Market\Series\MarketConfig;
+use Ritmo\Domain\Market\Series\MarketFields;
 use Ritmo\Domain\Operations\LightRunConfig;
 use Ritmo\Domain\Operations\ModesConfig;
 use Ritmo\Domain\Operations\ScheduleConfig;
@@ -17,6 +20,10 @@ use Ritmo\Domain\Pricing\Cadence\NoEffectConfig;
 use Ritmo\Domain\Pricing\Ladder\LadderConfig;
 use Ritmo\Domain\Pricing\Protection\ProtectionConfig;
 use Ritmo\Domain\Relations\Config\RelationsConfig;
+use Ritmo\Domain\Report\Config\ReportsConfig;
+use Ritmo\Domain\Report\Config\ReportsFields;
+use Ritmo\Domain\Stay\Write\StayWriteConfig;
+use Ritmo\Domain\Stay\Write\StayWriteFields;
 use Ritmo\Domain\Support\Days;
 use Ritmo\Domain\Write\ApprovalConfig;
 use Ritmo\Domain\Write\Hold\WaveConfig;
@@ -277,6 +284,9 @@ final class RuleSetValidator
             ScheduleConfig::ROOT => static fn (): mixed => ScheduleConfig::fromArray($data[ScheduleConfig::ROOT]),
             LightRunConfig::ROOT => static fn (): mixed => LightRunConfig::fromArray($data[LightRunConfig::ROOT]),
             AlertsConfig::ROOT => static fn (): mixed => AlertsConfig::fromArray($data[AlertsConfig::ROOT]),
+            StayWriteFields::ROOT => static fn (): mixed => StayWriteConfig::fromArray((array) ($data[StayFields::ROOT]['write'] ?? [])),
+            MarketFields::ROOT => static fn (): mixed => MarketConfig::fromArray($data[MarketFields::ROOT]),
+            ReportsFields::ROOT => static fn (): mixed => ReportsConfig::fromArray($data[ReportsFields::ROOT]),
         ];
         $seen = [];
         foreach ($this->errors as $error) {
@@ -295,6 +305,28 @@ final class RuleSetValidator
                         $this->add($path, $error->code, $error->message);
                     }
                 }
+            }
+        }
+        $this->checkLadderSeries($data, $seen);
+    }
+
+    /**
+     * A sales ladder rule may only cite a series and a percentile the market builds (spec 06,
+     * 1.6): otherwise it would price nothing without saying so.
+     *
+     * @param array<int|string, mixed> $data
+     * @param array<string, true>      $seen
+     */
+    private function checkLadderSeries(array $data, array $seen): void
+    {
+        try {
+            $market = MarketConfig::fromArray($data[MarketFields::ROOT]);
+        } catch (InvalidConfig) {
+            return; // the market section's own errors are already listed
+        }
+        foreach (LadderSeriesCheck::errors((array) $data[LadderConfig::ROOT], $market) as $error) {
+            if (!isset($seen[$error->path . '|' . $error->code])) {
+                $this->add($error->path, $error->code, $error->message);
             }
         }
     }

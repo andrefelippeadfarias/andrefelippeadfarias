@@ -12,6 +12,7 @@ use Ritmo\Admin\Components\Menu;
 use Ritmo\Admin\Components\Ratio;
 use Ritmo\Admin\Components\UserFacing;
 use Ritmo\Admin\Notice;
+use Ritmo\Contracts\Exception\ConnectorException;
 use Ritmo\WordPress\ConnectorFactory;
 
 /**
@@ -91,8 +92,25 @@ final class WizardActions
             $ok = $result['ok'];
         }
         Notice::flash($ok ? Notice::SUCCESS : Notice::ERROR, $text);
+        if ($ok && $provider === 'pricelabs') {
+            self::rememberListings();
+        }
 
         return ['tab' => 'setup', 'step' => $ok ? $step + 1 : $step];
+    }
+
+    /**
+     * The listings found become the suggested rooms of step 5; when they cannot be read the rooms
+     * are typed by hand, so a failure here only leaves the suggestions empty.
+     */
+    private static function rememberListings(): void
+    {
+        $services = ScreenServices::instance();
+        try {
+            $services->listingSuggestions()->remember($services->services()->connectors()->pricing()->listListings());
+        } catch (ConnectorException) {
+            $services->listingSuggestions()->remember([]);
+        }
     }
 
     /**

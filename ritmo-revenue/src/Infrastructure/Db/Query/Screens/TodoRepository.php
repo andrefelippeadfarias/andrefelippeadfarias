@@ -11,7 +11,7 @@ use Ritmo\Infrastructure\Db\Database;
 use Ritmo\Infrastructure\Db\DbValue;
 
 /**
- * The to-do items in pending_items (columns of the DraftScreens migration). "details" keeps the
+ * The to-do items in pending_items (columns of migration 10). "details" keeps the
  * text a person typed and the parameters of a plugin item as JSON. Prepared statements only.
  */
 final class TodoRepository implements TodoStore

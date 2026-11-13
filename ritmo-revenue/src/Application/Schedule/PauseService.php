@@ -9,6 +9,7 @@ use InvalidArgumentException;
 use OutOfBoundsException;
 use Ritmo\Contracts\Logger;
 use Ritmo\Domain\Support\Clock;
+use Ritmo\Infrastructure\Db\Repository\OperationEventRepository;
 use Ritmo\Infrastructure\Db\Repository\PropertyRepository;
 use Ritmo\Infrastructure\Schedule\OperationStateRepository;
 
@@ -26,6 +27,7 @@ final class PauseService
         private readonly OperationStateRepository $states,
         private readonly Clock $clock,
         private readonly Logger $logger,
+        private readonly OperationEventRepository $events,
     ) {
     }
 
@@ -43,6 +45,7 @@ final class PauseService
         }
         $clean = trim((string) preg_replace('/[\x00-\x1F\x7F]+/u', ' ', $reason));
         $this->states->pause($propertyId, $until, $userId, mb_substr($clean, 0, self::MAX_REASON));
+        $this->events->record($propertyId, OperationEventRepository::PAUSE, 'running', $until?->format(DATE_ATOM) ?? 'until_resumed', mb_substr($clean, 0, self::MAX_REASON), 'user:' . $userId, $this->clock->now());
         $this->logger->info('The scheduled runs of a property were paused.', ['property_id' => $propertyId, 'user_id' => $userId, 'until' => $until?->format(DATE_ATOM)]);
     }
 
@@ -53,6 +56,7 @@ final class PauseService
     {
         $this->requireProperty($propertyId);
         $this->states->resume($propertyId);
+        $this->events->record($propertyId, OperationEventRepository::PAUSE, 'paused', 'resumed', '', 'user:' . $userId, $this->clock->now());
         $this->logger->info('The scheduled runs of a property were resumed.', ['property_id' => $propertyId, 'user_id' => $userId]);
     }
 

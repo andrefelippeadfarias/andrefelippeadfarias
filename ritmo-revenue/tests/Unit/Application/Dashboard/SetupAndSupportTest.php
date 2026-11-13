@@ -17,6 +17,7 @@ use Ritmo\Application\Dashboard\Setup\WouldDo;
 use Ritmo\Application\Grid\LastPlan;
 use Ritmo\Application\Setup\SetupService;
 use Ritmo\Contracts\ConnectionStatus;
+use Ritmo\Domain\Model\PropertyMode;
 use Ritmo\Infrastructure\Db\Repository\InventorySnapshotRepository;
 use Ritmo\Infrastructure\Db\Repository\MarketAnchorRepository;
 use Ritmo\Infrastructure\Db\Repository\PlanItemRepository;
@@ -108,6 +109,21 @@ final class SetupAndSupportTest extends TestCase
         self::assertSame(2, $summary['down']);
         self::assertSame('2026-11-15', $summary['nearest'][0]['night']);
         self::assertSame('2026-11-18', $summary['refused'][0]['night']);
+    }
+
+    public function testAShadowRunWithoutMarketPricesIsShownWithWhatItRead(): void
+    {
+        $world = new ScreenWorld();
+        $world->property();
+        $world->room('A');
+        $runs = new RunRepository($world->db);
+        $id = $runs->start('inn', 'shadow', PropertyMode::Shadow, null, $world->clock->now()->modify('-5 minutes'));
+        $runs->finish($id, RunRepository::COMPLETED, ['collect' => ['bookings_read' => 12], 'decide' => ['nights' => 180, 'no_market_data' => 176]], $world->clock->now()->modify('-4 minutes'));
+
+        $summary = (new WouldDo(new LastPlan($runs, new PlanItemRepository($world->db, $world->clock))))->summary('inn');
+
+        self::assertSame($id, (int) ($summary['run']['id'] ?? 0), 'the run is shown even though it planned nothing');
+        self::assertSame([180, 176, 0], [$summary['nights'], $summary['no_market'], $summary['total']]);
     }
 
     public function testConnectionReasonsAndTheCooldown(): void

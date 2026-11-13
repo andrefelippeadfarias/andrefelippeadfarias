@@ -68,7 +68,7 @@ final class NightGridQuery
         $rooms = array_slice($chosen, $offset, self::ROOMS_PER_PAGE);
         $range = DateRange::nights(Days::normalize($from), max(1, min(self::MAX_NIGHTS, $nights)));
         $rules = $this->ruleSets->current() ?? RuleSet::defaults();
-        $context = $this->context($property, $range, $rules);
+        $context = $this->context($property, $range, $rules, $chosen);
 
         $cells = [];
         foreach ($rooms as $room) {
@@ -95,13 +95,16 @@ final class NightGridQuery
             throw new OutOfBoundsException(sprintf('Unknown room "%s".', $roomCode));
         }
         $range = DateRange::nights(Days::normalize($night), 1);
-        $context = $this->context($property, $range, $this->ruleSets->current() ?? RuleSet::defaults());
+        $context = $this->context($property, $range, $this->ruleSets->current() ?? RuleSet::defaults(), [$room]);
         $calendar = $this->snapshots->latest($room->code, $range->first(), $range->last());
 
         return $this->cell($room, $range->first(), $calendar[Days::key($range->first())] ?? null, $context);
     }
 
-    private function context(Property $property, DateRange $range, RuleSet $rules): GridContext
+    /**
+     * @param list<RoomType> $rooms the rooms shown (their listing values stand in for a missing date rule)
+     */
+    private function context(Property $property, DateRange $range, RuleSet $rules, array $rooms): GridContext
     {
         $now = $this->clock->now();
         $last = $this->lastPlan->of($this->lastPlan->recentRuns($property->id));
@@ -122,7 +125,12 @@ final class NightGridQuery
             $now,
         );
 
-        return new GridContext($calendar, $holidays, $last['plan'], $last['run'], $marks, $this->clock->today($property->timezone));
+        $byCode = [];
+        foreach ($rooms as $room) {
+            $byCode[$room->code] = $room;
+        }
+
+        return new GridContext($calendar, $holidays, $last['plan']->withListing($byCode), $last['run'], $marks, $this->clock->today($property->timezone));
     }
 
     private function cell(RoomType $room, DateTimeImmutable $night, ?InventoryNight $calendar, GridContext $context): NightCell

@@ -89,6 +89,7 @@ final class NightsScreen
                     'label' => NightText::accessible($cell, $room->name, $currency),
                     'url' => $page->url(self::keep($filters) + ['room' => $room->code, 'night' => Days::key($night)]) . '#ritmo-night-detail',
                     'tone' => $cell->soldOut() || $cell->closedWithoutBooking() ? 'neutral' : self::tone($cell->planned->paceCategory()),
+                    'mark' => $cell->soldOut() || $cell->closedWithoutBooking() || $filters['show'] === 'pace' ? '' : self::mark($cell->planned->paceCategory()),
                     'arrow' => match ($cell->planned->direction()) {
                         'up' => '↑',
                         'down' => '↓',
@@ -225,6 +226,19 @@ final class NightsScreen
         }
 
         return $pages;
+    }
+
+    /** The symbol that goes with the tint, so colour is never the only sign of the pace. */
+    private static function mark(string $category): string
+    {
+        return match ($category) {
+            'ahead' => '▲',
+            'on_pace' => '●',
+            'behind' => '▼',
+            'very_behind' => '▼▼',
+            'floor' => '■',
+            default => '',
+        };
     }
 
     private static function tone(string $category): string

@@ -73,7 +73,7 @@ final class ScaffoldTest extends TestCase
             ['deactivation', $main, ['Ritmo\\WordPress\\Deactivator', 'deactivate']],
         ], $result['lifecycle']);
         self::assertSame(
-            ['init', 'init', 'admin_menu', 'admin_enqueue_scripts', 'admin_notices', 'rest_api_init', 'cron_schedules', 'ritmo_tick', 'admin_init', ...array_map(static fn (string $action): string => 'admin_post_' . $action, \Ritmo\Admin\AdminActions::names())],
+            ['init', 'init', 'admin_menu', 'admin_enqueue_scripts', 'admin_notices', 'rest_api_init', 'cron_schedules', 'ritmo_tick', 'admin_init', ...array_map(static fn (string $action): string => 'admin_post_' . $action, array_map(static fn ($a): string => $a->action, \Ritmo\Admin\AdminScreens::actions()))],
             $result['booted_hooks'],
             'boot registers the text domain, the update on every kind of request (not only the screens: the tick and the REST API run on an updated database), the screens, the actions, the REST API, the scheduler tick and its interval'
         );

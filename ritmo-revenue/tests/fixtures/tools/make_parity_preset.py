@@ -8,7 +8,9 @@ The sections of milestone M2 come from the parity fixtures the golden generators
 write next to it (run them first): parity-relations.json (relations, price_bands), parity-ladder.json
 (ladder, soldout, cadence, no_effect, orders), parity-stay.json (stay) and parity-plan.json (plan);
 those of milestone M3 from parity-write.json (write, quota), parity-verify.json (verify, third_party,
-waves, approval) and parity-ops.json (schedule, light_run, alerts, modes).
+waves, approval) and parity-ops.json (schedule, light_run, alerts, modes); those of milestone M4
+from parity-market.json (market), parity-reports.json (reports) and parity-stay-write.json
+(stay.write, placed inside the stay section).
 Inputs of a run that live in those fixtures (the market ruler, the weekly reference of the listings,
 the PMS name) are not rules and stay out of the preset.
 
@@ -54,6 +56,9 @@ MODULE_SECTIONS = {
     "parity-write.json": ["write", "quota"],
     "parity-verify.json": ["verify", "third_party", "waves", "approval"],
     "parity-ops.json": ["schedule", "light_run", "alerts", "modes"],
+    "parity-market.json": ["market"],
+    "parity-reports.json": ["reports"],
+    "parity-stay-write.json": ["stay.write"],
 }
 
 
@@ -197,7 +202,7 @@ def preset(cfg: dict) -> dict:
 
 
 def module_sections() -> dict:
-    """The M2 and M3 sections, copied from the parity fixture of the module that owns each one and completed
+    """The M2 to M4 sections, copied from the parity fixture of the module that owns each one and completed
     with the schema defaults (the fixtures leave out fields at their default), so that the preset
     passes the strict validator."""
     out: dict = {}
@@ -205,9 +210,13 @@ def module_sections() -> dict:
         with open(OUTPUT.parent / name, encoding="utf-8") as handle:
             fixture = json.load(handle)
         for section in sections:
-            if section not in fixture:
+            head, _, tail = section.partition(".")
+            if head not in fixture or (tail and tail not in fixture[head]):
                 raise SystemExit(f"{name} has no section {section!r}: run the golden generator of that module first")
-            out[section] = fixture[section]
+            if tail:
+                out.setdefault(head, {})[tail] = fixture[head][tail]
+            else:
+                out[section] = fixture[section]
     filled = subprocess.run(["php", str(TOOLS / "fill_defaults.php")], input=json.dumps(out), capture_output=True,
                             text=True, check=True)
     complete = json.loads(filled.stdout)
@@ -224,7 +233,7 @@ def main() -> int:
         handle.write("\n")
     rooms = sum(len(p["room_types"]) for p in data["properties"])
     print(f"{OUTPUT}: {len(data['properties'])} properties, {rooms} room types, {len(data['rules']['calendar']['holidays'])} holidays")
-    print("M2 and M3 sections from the module fixtures: " + ", ".join(s for sections in MODULE_SECTIONS.values() for s in sections))
+    print("Sections from the module fixtures: " + ", ".join(s for sections in MODULE_SECTIONS.values() for s in sections))
     print("left out (not in the rule set schema yet):")
     for item in LEFT_OUT:
         print("  - " + item)

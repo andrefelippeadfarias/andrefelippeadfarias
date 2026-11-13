@@ -65,7 +65,7 @@ final class TodoActions
         ScreenServices::instance()->todos()->close($property, $form->int('item_id', 0, 0), get_current_user_id());
         Notice::flash(Notice::SUCCESS, __('Marked as done.', 'ritmo-revenue'));
 
-        return ['property' => $property];
+        return ['property' => $property, 'page' => $form->choice('back_to', [Menu::TO_DO, Menu::OVERVIEW], Menu::TO_DO)];
     }
 
     /**

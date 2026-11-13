@@ -175,10 +175,12 @@ final class ApprovalsScreen
             $changes[] = ['field' => __('date rule removed before it is written again', 'ritmo-revenue'), 'price' => null];
         }
         if ($entry->floorAfter !== null) {
-            $changes[] = ['field' => __('floor', 'ritmo-revenue'), 'price' => self::moving($entry->floorBefore, $entry->floorAfter, $entry->floorPercent, $base, $currency)];
+            $from = $entry->beforeFromListing ? __('before: the listing minimum, as the night has no date rule yet', 'ritmo-revenue') : '';
+            $changes[] = ['field' => __('floor', 'ritmo-revenue'), 'price' => self::moving($entry->floorBefore, $entry->floorAfter, $entry->floorPercent, $base, $currency, $from)];
         }
         if ($entry->ceilingAfter !== null) {
-            $changes[] = ['field' => __('ceiling', 'ritmo-revenue'), 'price' => self::moving($entry->ceilingBefore, $entry->ceilingAfter, $entry->ceilingPercent, $base, $currency)];
+            $from = $entry->beforeFromListing ? __('before: the listing maximum, as the night has no date rule yet', 'ritmo-revenue') : '';
+            $changes[] = ['field' => __('ceiling', 'ritmo-revenue'), 'price' => self::moving($entry->ceilingBefore, $entry->ceilingAfter, $entry->ceilingPercent, $base, $currency, $from)];
         }
         if (isset($entry->fields['min_stay'])) {
             /* translators: %s: nights */
@@ -210,14 +212,18 @@ final class ApprovalsScreen
     /**
      * @return array{text: string, note: string, sr: string}
      */
-    private static function moving(?float $before, float $after, ?int $percent, float $roomBase, string $currency): array
+    private static function moving(?float $before, float $after, ?int $percent, float $roomBase, string $currency, string $from): array
     {
         $change = PriceText::change($before, $after, $currency);
-        if ($percent === null || $roomBase <= 0) {
+        $parts = [$change['note']];
+        if ($percent !== null && $roomBase > 0) {
+            $parts[] = PriceText::withBase($after, $percent, $roomBase, $currency)['note'];
+        }
+        $parts[] = $from;
+        $note = implode('; ', array_filter($parts, static fn (string $p): bool => $p !== ''));
+        if ($note === '') {
             return $change;
         }
-        $base = PriceText::withBase($after, $percent, $roomBase, $currency);
-        $note = trim($change['note'] . ($change['note'] === '' ? '' : '; ') . $base['note']);
 
         return ['text' => $change['text'], 'note' => $note, 'sr' => $change['sr'] . ' (' . $note . ')'];
     }

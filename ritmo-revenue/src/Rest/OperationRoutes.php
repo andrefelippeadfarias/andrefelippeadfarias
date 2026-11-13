@@ -34,7 +34,7 @@ use WP_REST_Server;
  * | POST /approvals/{id} | ritmo_approve (decision "approve" or "reject", required; optional non-empty list of entry keys) |
  * | GET /properties/{id}/changes | ritmo_view |
  * | POST /properties/{id}/undo | ritmo_approve |
- * | POST /emergency | ritmo_manage_connections (engaged: true or false, required) |
+ * | POST /emergency | engage: ritmo_approve or ritmo_manage_connections; release: ritmo_manage_connections (engaged: true or false, required) |
  */
 final class OperationRoutes
 {
@@ -53,7 +53,7 @@ final class OperationRoutes
         register_rest_route($ns, '/approvals/(?P<id>\d+)', ['methods' => WP_REST_Server::CREATABLE, 'callback' => [self::class, 'decide'], 'permission_callback' => RestRoutes::allowed(Roles::APPROVE)]);
         register_rest_route($ns, '/properties/' . self::PROPERTY . '/changes', ['methods' => WP_REST_Server::READABLE, 'callback' => [self::class, 'changes'], 'permission_callback' => RestRoutes::allowed(Roles::VIEW)]);
         register_rest_route($ns, '/properties/' . self::PROPERTY . '/undo', ['methods' => WP_REST_Server::CREATABLE, 'callback' => [self::class, 'undo'], 'permission_callback' => RestRoutes::allowed(Roles::APPROVE)]);
-        register_rest_route($ns, '/emergency', ['methods' => WP_REST_Server::CREATABLE, 'callback' => [self::class, 'emergency'], 'permission_callback' => RestRoutes::allowed(Roles::MANAGE_CONNECTIONS)]);
+        register_rest_route($ns, '/emergency', ['methods' => WP_REST_Server::CREATABLE, 'callback' => [self::class, 'emergency'], 'permission_callback' => RestRoutes::allowed(Roles::VIEW)]);
     }
 
     public static function runNow(WP_REST_Request $request): WP_REST_Response|WP_Error
@@ -174,6 +174,9 @@ final class OperationRoutes
             $engage = OperationInput::engaged($request->get_param('engaged'));
         } catch (InvalidArgumentException) {
             return new WP_Error('ritmo_bad_switch', __('Say whether the emergency switch is engaged: true or false.', 'ritmo-revenue'), ['status' => 400]);
+        }
+        if (!Roles::maySwitchEmergency($engage)) {
+            return new WP_Error('ritmo_forbidden', __('You are not allowed to do this.', 'ritmo-revenue'), ['status' => 403]);
         }
 
         return new WP_REST_Response(['engaged' => Services::instance()->stack()->emergency()->set($engage, 'REST', 'user:' . get_current_user_id())]);

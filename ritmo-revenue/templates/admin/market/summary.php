@@ -8,22 +8,27 @@
 
 declare(strict_types=1);
 
-use Ritmo\Admin\Editors\ChoiceLabels;
+use Ritmo\Admin\Market\MarketText;
 
 defined('ABSPATH') || exit;
 
 $ritmo_page = $view['page'];
-$ritmo_series_names = [
-    'cheapest' => __('Cheapest rooms', 'ritmo-revenue'),
-    'comparable' => __('Comparable rooms', 'ritmo-revenue'),
-    'peers_cheapest' => __('Closest competitors, cheapest rooms', 'ritmo-revenue'),
-    'peers_comparable' => __('Closest competitors, comparable rooms', 'ritmo-revenue'),
-];
 ?>
 <p class="ritmo-intro"><?php esc_html_e('What competitors charge per night, from the prices you import or type. The sales ladder and the pace read these values; they never change a price by themselves.', 'ritmo-revenue'); ?></p>
 <?php if ($view['rows'] === [] || array_filter($view['rows'], static fn (array $r): bool => $r['cells'] !== [] || $r['anchor'] !== '') === []) : ?>
     <div class="ritmo-empty" data-ritmo="empty">
         <p><?php esc_html_e('No market value for these nights yet: add competitors and import their prices.', 'ritmo-revenue'); ?></p>
+    </div>
+<?php endif; ?>
+<?php if ($view['gaps'] !== []) : ?>
+    <div class="notice notice-info ritmo-callout" data-ritmo="market-gaps" role="status">
+        <p><?php echo esc_html(sprintf(/* translators: 1: number of nights, 2: number of nights looked at */ _n('The sales ladder cannot price %1$d of the next %2$d nights: the market has no value it needs there. Import prices that cover these nights.', 'The sales ladder cannot price %1$d of the next %2$d nights: the market has no value it needs there. Import prices that cover these nights.', count($view['gaps']), 'ritmo-revenue'), count($view['gaps']), (int) $view['gap_nights'])); ?></p>
+        <ul>
+            <?php foreach (array_slice($view['gaps'], 0, 10) as $ritmo_gap) : ?>
+                <li><?php echo esc_html($ritmo_gap['night'] . ': ' . $ritmo_gap['missing']); ?></li>
+            <?php endforeach; ?>
+        </ul>
+        <?php if (count($view['gaps']) > 10) : ?><p><?php echo esc_html(sprintf(/* translators: %d: number of nights not listed */ _n('and %d more night.', 'and %d more nights.', count($view['gaps']) - 10, 'ritmo-revenue'), count($view['gaps']) - 10)); ?></p><?php endif; ?>
     </div>
 <?php endif; ?>
 <div class="ritmo-table-scroll">
@@ -32,7 +37,7 @@ $ritmo_series_names = [
         <thead><tr>
             <th scope="col"><?php esc_html_e('Night', 'ritmo-revenue'); ?></th>
             <?php foreach ($view['series'] as $ritmo_name) : ?>
-                <th scope="col"><?php echo esc_html($ritmo_series_names[$ritmo_name] ?? $ritmo_name); ?></th>
+                <th scope="col"><?php echo esc_html(MarketText::series($ritmo_name)); ?></th>
             <?php endforeach; ?>
             <th scope="col"><?php esc_html_e('Market anchor (middle)', 'ritmo-revenue'); ?></th>
             <th scope="col"><?php esc_html_e('Updated', 'ritmo-revenue'); ?></th>
@@ -43,7 +48,7 @@ $ritmo_series_names = [
                     <th scope="row" data-label="<?php esc_attr_e('Night', 'ritmo-revenue'); ?>"><?php echo esc_html($ritmo_row['night']); ?><br><span class="ritmo-muted"><?php echo esc_html($ritmo_row['type']); ?></span></th>
                     <?php foreach ($view['series'] as $ritmo_name) : ?>
                         <?php $ritmo_cell = $ritmo_row['cells'][$ritmo_name] ?? null; ?>
-                        <td data-label="<?php echo esc_attr($ritmo_series_names[$ritmo_name] ?? $ritmo_name); ?>">
+                        <td data-label="<?php echo esc_attr(MarketText::series($ritmo_name)); ?>">
                             <?php if ($ritmo_cell === null) : ?>
                                 <span class="ritmo-muted"><?php esc_html_e('no value', 'ritmo-revenue'); ?></span>
                             <?php else : ?>

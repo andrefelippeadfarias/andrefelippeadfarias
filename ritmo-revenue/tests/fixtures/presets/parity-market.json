@@ -1,0 +1,10 @@
+{
+ "_doc": "Parity fixture of the market section (M4): the reference's stay minimum of 15 competitors, a night on its own with 40, and the comparable factor 1.395 of faixas_dono. Test data only: never shipped.",
+ "market": {
+  "min_competitors_per_stay": 15,
+  "night_min_competitors": 40,
+  "comparable": {
+   "default_factor": 1.395
+  }
+ }
+}

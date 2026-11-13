@@ -11,8 +11,11 @@ use Ritmo\Application\Market\MarketBoard;
 use Ritmo\Application\Market\MarketExport;
 use Ritmo\Application\Market\MarketFreshness;
 use Ritmo\Application\Market\MarketImportService;
+use Ritmo\Application\Market\MarketReminder;
+use Ritmo\Application\Market\MarketRulerAssembler;
 use Ritmo\Application\Market\MarketSeriesService;
 use Ritmo\Infrastructure\Db\Repository\CompetitorRepository;
+use Ritmo\Infrastructure\Db\Repository\LadderReferenceRepository;
 use Ritmo\Infrastructure\Db\Repository\MarketAnchorRepository;
 use Ritmo\Infrastructure\Db\Repository\MarketImportRepository;
 use Ritmo\Infrastructure\Db\Repository\MarketSeriesRepository;
@@ -110,6 +113,14 @@ final class MarketServices
     public function freshness(): MarketFreshness
     {
         return $this->once('freshness', fn (): MarketFreshness => new MarketFreshness($this->samples()));
+    }
+
+    public function reminder(): MarketReminder
+    {
+        return $this->once('reminder', fn (): MarketReminder => new MarketReminder(
+            $this->freshness(),
+            new MarketRulerAssembler(new MarketSeriesRepository($this->services->db()), new MarketAnchorRepository($this->services->db(), $this->services->clock()), new LadderReferenceRepository($this->services->db())),
+        ));
     }
 
     public function uploads(): CsvUploadReader

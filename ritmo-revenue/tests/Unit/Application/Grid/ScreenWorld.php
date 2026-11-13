@@ -22,7 +22,6 @@ use Ritmo\Domain\Model\RoomType;
 use Ritmo\Domain\Support\DateRange;
 use Ritmo\Domain\Support\Days;
 use Ritmo\Domain\Support\FixedClock;
-use Ritmo\Infrastructure\Db\Migration\DraftScreens;
 use Ritmo\Infrastructure\Db\Migration\Migrations;
 use Ritmo\Infrastructure\Db\Migration\Migrator;
 use Ritmo\Infrastructure\Db\PdoDatabase;
@@ -63,7 +62,7 @@ final class ScreenWorld
     public function __construct(string $now = '2026-11-13T13:00:00Z')
     {
         $this->raw = PdoDatabase::inMemory();
-        (new Migrator($this->raw, new ArrayStore(), [...Migrations::all(), new DraftScreens()]))->migrate();
+        (new Migrator($this->raw, new ArrayStore(), Migrations::all()))->migrate();
         $this->db = new CountingDatabase($this->raw);
         $this->clock = new FixedClock($now);
         $this->settings = new ArrayStore();

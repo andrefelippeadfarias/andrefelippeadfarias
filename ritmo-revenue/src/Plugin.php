@@ -5,8 +5,7 @@ declare(strict_types=1);
 namespace Ritmo;
 
 use ReflectionClass;
-use Ritmo\Admin\AdminActions;
-use Ritmo\Admin\AdminPages;
+use Ritmo\Admin\AdminScreens;
 use Ritmo\Domain\Alerts\AlertCode;
 use Ritmo\Infrastructure\Db\DatabaseException;
 use Ritmo\Infrastructure\Db\Repository\AlertRepository;
@@ -48,14 +47,14 @@ final class Plugin
 
         add_action('init', [self::class, 'loadTextDomain']);
         add_action('init', [self::class, 'upgrade'], 5);
-        add_action('admin_menu', [AdminPages::class, 'register']);
-        add_action('admin_enqueue_scripts', [AdminPages::class, 'enqueue']);
-        add_action('admin_notices', [AdminPages::class, 'vaultNotice']);
+        add_action('admin_menu', [AdminScreens::class, 'register']);
+        add_action('admin_enqueue_scripts', [AdminScreens::class, 'enqueue']);
+        add_action('admin_notices', [AdminScreens::class, 'vaultNotice']);
         add_action('rest_api_init', [RestRoutes::class, 'register']);
         add_filter('cron_schedules', [WpCronTrigger::class, 'withInterval']);
         add_action(WpCronTrigger::HOOK, [self::class, 'tick']);
         add_action('admin_init', [self::class, 'watchScheduler']);
-        AdminActions::register();
+        AdminScreens::registerActions();
     }
 
     public static function isBooted(): bool

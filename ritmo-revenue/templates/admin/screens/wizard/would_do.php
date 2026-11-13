@@ -19,10 +19,13 @@ $ritmo_c = $view['c'];
 <?php else : ?>
     <div data-ritmo="would-do-summary">
         <p class="ritmo-big"><?php echo esc_html($ritmo_c['sentence']); ?></p>
+        <?php if ($ritmo_c['no_market'] !== '') : ?>
+            <p class="notice notice-warning inline" data-ritmo="would-do-no-market"><?php echo esc_html($ritmo_c['no_market']); ?> <a href="<?php echo esc_url($ritmo_c['market_url']); ?>"><?php esc_html_e('Go to Market', 'ritmo-revenue'); ?></a></p>
+        <?php endif; ?>
         <?php if ($ritmo_c['nearest'] !== []) : ?>
             <ul class="ritmo-list">
                 <?php foreach ($ritmo_c['nearest'] as $ritmo_n) : ?>
-                    <li><strong><?php echo esc_html($ritmo_n['title']); ?></strong>: <?php View::render('admin/screens/parts/price', ['price' => $ritmo_n['change']]); ?> · <?php echo esc_html($ritmo_n['reason']); ?></li>
+                    <li><strong><?php echo esc_html($ritmo_n['title']); ?></strong>: <?php echo esc_html($ritmo_n['field']); ?> <?php View::render('admin/screens/parts/price', ['price' => $ritmo_n['change']]); ?> · <?php echo esc_html($ritmo_n['reason']); ?></li>
                 <?php endforeach; ?>
             </ul>
         <?php endif; ?>

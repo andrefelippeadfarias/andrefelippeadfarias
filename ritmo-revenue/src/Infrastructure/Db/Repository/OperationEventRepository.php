@@ -25,8 +25,10 @@ final class OperationEventRepository
     public const UNDO = 'undo_request';
     /** The listing values (minimum, base, maximum) read differ from the stored ones: the stored follow. */
     public const LISTING = 'listing_values';
+    /** The scheduled runs of a property were paused ("to" = until when, or "resumed"). */
+    public const PAUSE = 'pause';
 
-    private const KINDS = [self::MODE, self::APPROVAL, self::EMERGENCY, self::WAVE_RELEASE, self::FREEZE_RELEASE, self::UNDO, self::LISTING];
+    private const KINDS = [self::MODE, self::APPROVAL, self::EMERGENCY, self::WAVE_RELEASE, self::FREEZE_RELEASE, self::UNDO, self::LISTING, self::PAUSE];
 
     private const TABLE = 'change_log';
 

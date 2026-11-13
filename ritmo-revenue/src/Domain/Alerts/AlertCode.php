@@ -34,13 +34,21 @@ enum AlertCode: string
     case SchedulerStalled = 'scheduler_stalled';
     case VigilanceGap = 'vigilance_gap';
     case ModeDemoted = 'mode_demoted';
+    /** The newest market price that covers the coming nights is older than market.stale_after_days. */
+    case MarketStale = 'market_stale';
+    /** An enabled sales ladder would price nights that have no value on the market ruler. */
+    case MarketGap = 'market_gap';
+    /** Steps written to the pricing system are not confirmed at the channel in time. */
+    case DeliveryOverdue = 'delivery_overdue';
+    /** The 12-month review is due again. */
+    case ReviewDue = 'review_due';
 
     public function severity(): AlertSeverity
     {
         return match ($this) {
             self::SecurityUnknownOrigin, self::SecurityCancellationBurst, self::SecurityZeroValue, self::SecurityZeroValueModified,
             self::Overbooked, self::WriteFailed, self::ConnectorDown, self::ModeDemoted => AlertSeverity::Critical,
-            self::ApprovalPending, self::ApprovalExpired => AlertSeverity::Info,
+            self::ApprovalPending, self::ApprovalExpired, self::MarketGap, self::ReviewDue => AlertSeverity::Info,
             default => AlertSeverity::Warning,
         };
     }
@@ -50,7 +58,8 @@ enum AlertCode: string
         return match ($this) {
             self::Overbooked, self::SoldMismatch, self::PushDisabled, self::PushStale, self::InventoryClosedWithoutBooking,
             self::InventoryStayOffRule, self::InventoryArrivalOffRule, self::RecalcQuotaExhausted, self::ConnectorDown,
-            self::ApprovalPending, self::RunLate, self::SchedulerStalled => AlertLifecycle::Condition,
+            self::ApprovalPending, self::RunLate, self::SchedulerStalled, self::MarketStale, self::MarketGap,
+            self::DeliveryOverdue, self::ReviewDue => AlertLifecycle::Condition,
             default => AlertLifecycle::Event,
         };
     }

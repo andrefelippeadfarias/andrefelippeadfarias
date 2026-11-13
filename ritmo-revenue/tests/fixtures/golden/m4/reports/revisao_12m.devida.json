@@ -1,0 +1,67 @@
+{
+ "function": "revisao_12m.devida",
+ "php_target": "Ritmo\\Domain\\Report\\TwelveMonthReview::due",
+ "notes": "Due when never run or 15 days or more since the last snapshot (reports.review.interval_days).",
+ "cases": [
+  {
+   "input": {
+    "hist": {
+     "revisoes": []
+    },
+    "hoje": "2026-11-13"
+   },
+   "expected": {
+    "due": true,
+    "why": "nunca rodou"
+   }
+  },
+  {
+   "input": {
+    "hist": {
+     "revisoes": [
+      {
+       "hoje": "2026-10-29"
+      }
+     ]
+    },
+    "hoje": "2026-11-13"
+   },
+   "expected": {
+    "due": true,
+    "why": "última em 2026-10-29 (15 dias)"
+   }
+  },
+  {
+   "input": {
+    "hist": {
+     "revisoes": [
+      {
+       "hoje": "2026-10-29"
+      }
+     ]
+    },
+    "hoje": "2026-11-12"
+   },
+   "expected": {
+    "due": false,
+    "why": "última em 2026-10-29 (14 dias)"
+   }
+  },
+  {
+   "input": {
+    "hist": {
+     "revisoes": [
+      {
+       "hoje": "2026-11-13"
+      }
+     ]
+    },
+    "hoje": "2026-11-13"
+   },
+   "expected": {
+    "due": false,
+    "why": "última em 2026-11-13 (0 dias)"
+   }
+  }
+ ]
+}

@@ -62,9 +62,9 @@ final class RulesPureTest extends TestCase
 
     public function testAnUnknownSectionIsComparedWithoutTheSchema(): void
     {
-        $changes = RuleDiff::between(['market' => ['percentiles' => [10, 50]]], ['market' => ['percentiles' => [10, 50, 90], 'neighbour_days' => 2]], Schema::ruleSet());
+        $changes = RuleDiff::between(['later' => ['percentiles' => [10, 50]]], ['later' => ['percentiles' => [10, 50, 90], 'neighbour_days' => 2]], Schema::ruleSet());
 
-        self::assertSame([['market.percentiles', null, FieldChange::CHANGED], ['market.neighbour_days', null, FieldChange::ADDED]], array_map(static fn (FieldChange $c): array => [$c->path, $c->key, $c->kind], $changes));
+        self::assertSame([['later.percentiles', null, FieldChange::CHANGED], ['later.neighbour_days', null, FieldChange::ADDED]], array_map(static fn (FieldChange $c): array => [$c->path, $c->key, $c->kind], $changes));
     }
 
     public function testThreeWayMergeKeepsBothChangesAndReportsConflicts(): void

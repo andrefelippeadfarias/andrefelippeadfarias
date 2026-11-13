@@ -9,9 +9,10 @@
  * internal names, no sideways scroll, labels, captions, one h1, no PHP error).
  *
  * The site must register the rules, orders and market screens and their form actions (see
- * docs/EDITORS.md, "Registration").
+ * docs/EDITORS.md, section 2, and docs/MARKET.md, section 8).
  *
- *   RITMO_E2E_SITE=http://127.0.0.1:8090 node tests/e2e/m4-editors.js
+ *   RITMO_E2E_SITE=http://127.0.0.1:8090 [RITMO_E2E_WP_ROOT=.wp-test/wordpress] [RITMO_E2E_TMP=<folder>] \
+ *       node tests/e2e/m4-editors.js
  */
 
 const fs = require('fs');
@@ -141,7 +142,16 @@ async function ruleVersion(page) {
     check(after === before + 1, 'saving did not add one version (' + before + ' then ' + after + ')');
     const top = await page.locator('[data-ritmo="versions-table"] tbody tr').first().innerText();
     check(top.includes('In force') && top.includes('End-to-end: goal of the next 7 days'), 'the new version is not the one in force: ' + top);
-    return { versions: after };
+
+    // The changes of the new version open in place (read-only REST route, text only).
+    const show = page.locator('[data-ritmo="version-changes-' + after + '"]');
+    check(await show.isVisible(), 'the button that opens the changes in place is missing');
+    await show.click();
+    const item = page.locator('[data-ritmo="versions-table"] tbody tr').first().locator('.ritmo-version-changes li');
+    await item.first().waitFor({ timeout: 10000 });
+    const change = await item.first().innerText();
+    check(change.includes('Next 7 days') && change.includes(old) && change.includes(next), 'the change opened in place reads: ' + change);
+    return { versions: after, change_in_place: change };
 }
 
 /* AC-RULES safety: a safety limit needs the typed value; a wrong one is refused by the server. */
@@ -237,7 +247,7 @@ async function orders(page) {
 }
 
 /* AC-MKT: a competitor, a price file with bad lines previewed then imported, the exports. */
-async function market(page) {
+async function market(page, errors) {
     await open(page, 'ritmo-revenue-market&tab=competitors');
     await page.fill('#ritmo-c-name', 'Example Lodge');
     await page.fill('#ritmo-c-tags', 'peer');
@@ -253,7 +263,7 @@ async function market(page) {
         `example-lodge,${day(12)},${day(11)},500,total,comparable,${day(0)}`,
         `example-lodge,${day(14)},${day(15)},=1+1,total,comparable,${day(0)}`,
     ];
-    const file = path.join(fs.mkdtempSync(path.join(os.tmpdir(), 'ritmo-e2e-')), 'prices.csv');
+    const file = path.join(fs.mkdtempSync(path.join(process.env.RITMO_E2E_TMP || os.tmpdir(), 'ritmo-e2e-')), 'prices.csv');
     fs.writeFileSync(file, lines.join('\n') + '\n');
     await open(page, 'ritmo-revenue-market&tab=import');
     await page.setInputFiles('#ritmo-prices-file', file);
@@ -263,6 +273,7 @@ async function market(page) {
     check(valid === 2 && invalid >= 2, 'the preview shows ' + valid + ' valid and ' + invalid + ' invalid lines');
     await submit(page, '[data-ritmo="csv-import"]');
     check(/prices? recorded/i.test(await notice(page)), 'the import said: ' + (await notice(page)));
+    check(uploadedFiles().length === 0, 'an uploaded file was left on the site: ' + uploadedFiles().join(', '));
 
     await open(page, 'ritmo-revenue-market&tab=prices');
     await page.selectOption('[data-ritmo="price-filters"] select[name=competitor]', { label: 'Example Lodge' });
@@ -278,7 +289,59 @@ async function market(page) {
         exported[download.suggestedFilename()] = body.split('\n').filter((l) => l !== '').length;
     }
     check(Object.keys(exported).length === 3, 'not every export downloaded: ' + JSON.stringify(exported));
-    return { csv_preview: { valid, invalid }, exported };
+    return { csv_preview: { valid, invalid }, exported, rest: await marketRoutes(page, errors) };
+}
+
+/*
+ * AC-MKT-4: the price file is read in place and never kept. With RITMO_E2E_WP_ROOT (the site's
+ * folder) the uploads folder is searched for any .csv file; without it the check is skipped.
+ */
+function uploadedFiles() {
+    const root = process.env.RITMO_E2E_WP_ROOT;
+    if (!root) {
+        return [];
+    }
+    const found = [];
+    const walk = (folder) => {
+        if (!fs.existsSync(folder)) {
+            return;
+        }
+        for (const entry of fs.readdirSync(folder, { withFileTypes: true })) {
+            const full = path.join(folder, entry.name);
+            if (entry.isDirectory()) {
+                walk(full);
+            } else if (/\.csv$/i.test(entry.name)) {
+                found.push(full);
+            }
+        }
+    };
+    walk(path.join(root, 'wp-content', 'uploads'));
+    return found;
+}
+
+/* The market and rules routes: the REST nonce is required, the answers are sentences and numbers. */
+async function marketRoutes(page, errors) {
+    await open(page, 'ritmo-revenue-rules&tab=versions');
+    const nonce = await page.locator('[data-ritmo="versions-table"]').getAttribute('data-rest-nonce');
+    const call = (route, withNonce) => page.evaluate(async ([url, header]) => {
+        const response = await fetch(url, { credentials: 'same-origin', headers: header ? { 'X-WP-Nonce': header } : {} });
+        return { status: response.status, body: await response.json() };
+    }, [SITE + '/?rest_route=' + encodeURIComponent(route.split('&')[0]) + '&' + route.split('&').slice(1).join('&'), withNonce ? nonce : '']);
+
+    const anonymous = await call('/ritmo/v1/market/competitors&property=' + PROPERTY, false);
+    check(anonymous.status === 401, 'a call without the REST nonce answered ' + anonymous.status);
+    const competitors = await call('/ritmo/v1/market/competitors&property=' + PROPERTY, true);
+    check(competitors.status === 200 && competitors.body.competitors.some((c) => c.name === 'Example Lodge'), 'the competitors route answered ' + competitors.status);
+    const ruler = await call('/ritmo/v1/market/ruler&property=' + PROPERTY, true);
+    check(ruler.status === 200 && ruler.body.nights.length === 90, 'the ruler route answered ' + ruler.status);
+    const imports = await call('/ritmo/v1/market/imports&property=' + PROPERTY, true);
+    check(imports.status === 200 && imports.body.imports.length >= 1 && !JSON.stringify(imports.body).includes('=1+1'), 'the imports route answered ' + imports.status);
+    const seen = errors.length;
+    const unknown = await call('/ritmo/v1/market/competitors&property=nowhere', true);
+    check(unknown.status === 404, 'an unknown property answered ' + unknown.status);
+    // The browser logs the expected 404 of that call; any other error stays.
+    errors.splice(seen, errors.length - seen, ...errors.slice(seen).filter((e) => !/status of 404/.test(e)));
+    return { competitors: competitors.body.competitors.length, ruler_nights: ruler.body.nights.length };
 }
 
 (async () => {
@@ -304,7 +367,7 @@ async function market(page) {
         results.push(await relations(page));
         results.push(await holidays(page));
         results.push(await orders(page));
-        results.push(await market(page));
+        results.push(await market(page, errors));
         await everyScreen(page, 1280);
         await everyScreen(page, 390);
         check(errors.length === 0, 'the browser reported errors: ' + errors.join(' | '));

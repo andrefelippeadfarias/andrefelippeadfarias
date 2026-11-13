@@ -1,0 +1,714 @@
+{
+ "function": "metas_faturamento.por_pousada",
+ "php_target": "Ritmo\\Domain\\Report\\RevenueTargets",
+ "notes": "Per month and property: today's forecast (base index, growth 1.05), realistic (goal index, growth 1.05), maximum (owner maximum index), owner minimum by season (high months listed), RevPAR of the minimum and the minimum against the realistic forecast (rounded to 2 decimals).",
+ "cases": [
+  {
+   "input": {
+    "label": "module inputs",
+    "insumos": {
+     "lido_em": "2026-10-14",
+     "unidades": {
+      "recanto": 16,
+      "villa": 15
+     },
+     "mercado_ano_passado": {
+      "2026-10": {
+       "recanto": [
+        28,
+        571
+       ],
+       "villa": [
+        35,
+        515
+       ]
+      },
+      "2026-11": {
+       "recanto": [
+        35,
+        641
+       ],
+       "villa": [
+        42,
+        545
+       ]
+      },
+      "2026-12": {
+       "recanto": [
+        43,
+        734
+       ],
+       "villa": [
+        50,
+        702
+       ]
+      },
+      "2027-01": {
+       "recanto": [
+        36,
+        645
+       ],
+       "villa": [
+        45,
+        583
+       ]
+      },
+      "2027-02": {
+       "recanto": [
+        29,
+        652
+       ],
+       "villa": [
+        34,
+        572
+       ]
+      },
+      "2027-03": {
+       "recanto": [
+        27,
+        564
+       ],
+       "villa": [
+        34,
+        511
+       ]
+      },
+      "2027-04": {
+       "recanto": [
+        36,
+        695
+       ],
+       "villa": [
+        42,
+        648
+       ]
+      }
+     },
+     "realizado": {
+      "2026-09": {
+       "recanto": 182255,
+       "villa": 142356,
+       "total": 324612,
+       "diarias": 511,
+       "disponiveis": 950,
+       "ocupacao": 0.54,
+       "adr": 635,
+       "mercado_mesmo_mes": {
+        "recanto": [
+         37,
+         697
+        ],
+        "villa": [
+         40,
+         634
+        ]
+       },
+       "indice": {
+        "recanto": 1.48,
+        "villa": 1.25
+       }
+      },
+      "2026-10-01a14": {
+       "ocupacao": 0.484,
+       "adr": 559,
+       "revpar": 271,
+       "mercado_revpar": 217,
+       "indice_portfolio": 1.25
+      }
+     },
+     "livro": {
+      "2026-10": 238221,
+      "2026-11": 97762,
+      "2026-12": 58598,
+      "2027-01": 26096,
+      "2027-02": 8239,
+      "2027-03": 6416,
+      "2027-04": 4370
+     },
+     "cenarios": {
+      "piso": {
+       "indice": {
+        "recanto": 1.15,
+        "villa": 1.0
+       },
+       "crescimento": 1.0
+      },
+      "base": {
+       "indice": {
+        "recanto": 1.35,
+        "villa": 1.2
+       },
+       "crescimento": 1.05
+      },
+      "meta": {
+       "indice": {
+        "recanto": 1.7,
+        "villa": 1.5
+       },
+       "crescimento": 1.05
+      }
+     },
+     "teto_95_recanto": {
+      "2026-11": 0.95,
+      "2026-12": 0.95,
+      "2027-02": 0.94,
+      "2027-04": 0.97
+     },
+     "outubro_ultima_hora": {
+      "piso": 0,
+      "base": 27000,
+      "meta": 60000
+     },
+     "abril_sem_pascoa": {
+      "piso": -4000,
+      "base": -4000,
+      "meta": -4000
+     },
+     "feriados": {
+      "Finados (30/10 a 1/11, 3 noites)": {
+       "vendidas": 45,
+       "receita": 30932,
+       "diarias": 93,
+       "ocupacao": [
+        0.6,
+        0.72,
+        0.85
+       ],
+       "diaria": [
+        800,
+        900,
+        950
+       ],
+       "piso_skill": 800
+      },
+      "Consciência Negra (19 a 21/11, 3 noites)": {
+       "vendidas": 21,
+       "receita": 18989,
+       "diarias": 93,
+       "ocupacao": [
+        0.65,
+        0.78,
+        0.88
+       ],
+       "diaria": [
+        800,
+        900,
+        1000
+       ],
+       "piso_skill": 800
+      },
+      "Natal (24 a 26/12, 3 noites)": {
+       "vendidas": 2,
+       "receita": 1614,
+       "diarias": 93,
+       "ocupacao": [
+        0.6,
+        0.75,
+        0.85
+       ],
+       "diaria": [
+        1000,
+        1100,
+        1200
+       ],
+       "piso_skill": 1000
+      },
+      "Réveillon (29/12 a 2/1, 5 noites)": {
+       "vendidas": 23,
+       "receita": 20959,
+       "diarias": 155,
+       "ocupacao": [
+        0.7,
+        0.85,
+        0.92
+       ],
+       "diaria": [
+        1100,
+        1250,
+        1400
+       ],
+       "piso_skill": 1000
+      },
+      "Aniversário de SP (22 a 24/1, 3 noites)": {
+       "vendidas": 3,
+       "receita": 2521,
+       "diarias": 93,
+       "ocupacao": [
+        0.45,
+        0.6,
+        0.72
+       ],
+       "diaria": [
+        800,
+        850,
+        900
+       ],
+       "piso_skill": 800
+      },
+      "Carnaval (5 a 9/2, 5 noites)": {
+       "vendidas": 5,
+       "receita": 5603,
+       "diarias": 155,
+       "ocupacao": [
+        0.65,
+        0.75,
+        0.88
+       ],
+       "diaria": [
+        1000,
+        1050,
+        1100
+       ],
+       "piso_skill": 1000
+      },
+      "Páscoa (25 a 27/3, 3 noites)": {
+       "vendidas": 0,
+       "receita": 0,
+       "diarias": 93,
+       "ocupacao": [
+        0.6,
+        0.72,
+        0.85
+       ],
+       "diaria": [
+        1000,
+        1050,
+        1100
+       ],
+       "piso_skill": 1000
+      },
+      "Tiradentes (20 a 21/4, 2 noites)": {
+       "vendidas": 2,
+       "receita": 924,
+       "diarias": 62,
+       "ocupacao": [
+        0.45,
+        0.55,
+        0.65
+       ],
+       "diaria": [
+        800,
+        850,
+        900
+       ],
+       "piso_skill": 800
+      }
+     },
+     "pascoa_noites_normais_marco": {
+      "piso": 5678,
+      "base": 7130,
+      "meta": 8454
+     }
+    },
+    "dono": {
+     "baixa": {
+      "recanto": 220000,
+      "villa": 150000
+     },
+     "alta": {
+      "recanto": 350000,
+      "villa": 300000
+     },
+     "meses_alta": [
+      "2026-12",
+      "2027-01"
+     ],
+     "indice_maximo": {
+      "recanto": 2.0,
+      "villa": 1.8
+     }
+    },
+    "meses": [
+     "2026-10",
+     "2026-11",
+     "2026-12",
+     "2027-01",
+     "2027-02",
+     "2027-03",
+     "2027-04"
+    ]
+   },
+   "expected": {
+    "2026-10": {
+     "recanto": {
+      "hoje": 112408,
+      "realista": 141551,
+      "maximo": 166531,
+      "minimo_dono": 220000,
+      "revpar_minimo_dono": 444,
+      "temporada": "baixa",
+      "minimo_dono_vs_realista": 0.55
+     },
+     "villa": {
+      "hoje": 105608,
+      "realista": 132011,
+      "maximo": 158413,
+      "minimo_dono": 150000,
+      "revpar_minimo_dono": 323,
+      "temporada": "baixa",
+      "minimo_dono_vs_realista": 0.14
+     }
+    },
+    "2026-11": {
+     "recanto": {
+      "hoje": 145015,
+      "realista": 182612,
+      "maximo": 214838,
+      "minimo_dono": 220000,
+      "revpar_minimo_dono": 458,
+      "temporada": "baixa",
+      "minimo_dono_vs_realista": 0.2
+     },
+     "villa": {
+      "hoje": 129786,
+      "realista": 162233,
+      "maximo": 194679,
+      "minimo_dono": 150000,
+      "revpar_minimo_dono": 333,
+      "temporada": "baixa",
+      "minimo_dono_vs_realista": -0.08
+     }
+    },
+    "2026-12": {
+     "recanto": {
+      "hoje": 210811,
+      "realista": 265465,
+      "maximo": 312312,
+      "minimo_dono": 350000,
+      "revpar_minimo_dono": 706,
+      "temporada": "alta",
+      "minimo_dono_vs_realista": 0.32
+     },
+     "villa": {
+      "hoje": 205651,
+      "realista": 257064,
+      "maximo": 308476,
+      "minimo_dono": 300000,
+      "revpar_minimo_dono": 645,
+      "temporada": "alta",
+      "minimo_dono_vs_realista": 0.17
+     }
+    },
+    "2027-01": {
+     "recanto": {
+      "hoje": 163255,
+      "realista": 205581,
+      "maximo": 241860,
+      "minimo_dono": 350000,
+      "revpar_minimo_dono": 706,
+      "temporada": "alta",
+      "minimo_dono_vs_realista": 0.7
+     },
+     "villa": {
+      "hoje": 153711,
+      "realista": 192139,
+      "maximo": 230566,
+      "minimo_dono": 300000,
+      "revpar_minimo_dono": 645,
+      "temporada": "alta",
+      "minimo_dono_vs_realista": 0.56
+     }
+    },
+    "2027-02": {
+     "recanto": {
+      "hoje": 112869,
+      "realista": 142131,
+      "maximo": 167213,
+      "minimo_dono": 220000,
+      "revpar_minimo_dono": 491,
+      "temporada": "baixa",
+      "minimo_dono_vs_realista": 0.55
+     },
+     "villa": {
+      "hoje": 102919,
+      "realista": 128649,
+      "maximo": 154378,
+      "minimo_dono": 150000,
+      "revpar_minimo_dono": 357,
+      "temporada": "baixa",
+      "minimo_dono_vs_realista": 0.17
+     }
+    },
+    "2027-03": {
+     "recanto": {
+      "hoje": 107065,
+      "realista": 134823,
+      "maximo": 158615,
+      "minimo_dono": 220000,
+      "revpar_minimo_dono": 444,
+      "temporada": "baixa",
+      "minimo_dono_vs_realista": 0.63
+     },
+     "villa": {
+      "hoje": 101794,
+      "realista": 127243,
+      "maximo": 152691,
+      "minimo_dono": 150000,
+      "revpar_minimo_dono": 323,
+      "temporada": "baixa",
+      "minimo_dono_vs_realista": 0.18
+     }
+    },
+    "2027-04": {
+     "recanto": {
+      "hoje": 165129,
+      "realista": 207940,
+      "maximo": 244636,
+      "minimo_dono": 220000,
+      "revpar_minimo_dono": 458,
+      "temporada": "baixa",
+      "minimo_dono_vs_realista": 0.06
+     },
+     "villa": {
+      "hoje": 154315,
+      "realista": 192893,
+      "maximo": 231472,
+      "minimo_dono": 150000,
+      "revpar_minimo_dono": 333,
+      "temporada": "baixa",
+      "minimo_dono_vs_realista": -0.22
+     }
+    }
+   }
+  },
+  {
+   "input": {
+    "label": "invented",
+    "insumos": {
+     "unidades": {
+      "recanto": 12,
+      "villa": 9
+     },
+     "mercado_ano_passado": {
+      "2027-05": {
+       "recanto": [
+        31,
+        560
+       ],
+       "villa": [
+        38,
+        500
+       ]
+      },
+      "2027-06": {
+       "recanto": [
+        44,
+        690
+       ],
+       "villa": [
+        49,
+        610
+       ]
+      },
+      "2027-07": {
+       "recanto": [
+        58,
+        820
+       ],
+       "villa": [
+        61,
+        700
+       ]
+      },
+      "2027-08": {
+       "recanto": [
+        40,
+        640
+       ],
+       "villa": [
+        45,
+        560
+       ]
+      }
+     },
+     "livro": {
+      "2027-05": 15000,
+      "2027-06": 61000,
+      "2027-07": 180000,
+      "2027-08": 9000
+     },
+     "cenarios": {
+      "piso": {
+       "indice": {
+        "recanto": 1.0,
+        "villa": 0.9
+       },
+       "crescimento": 1.0
+      },
+      "base": {
+       "indice": {
+        "recanto": 1.2,
+        "villa": 1.1
+       },
+       "crescimento": 1.04
+      },
+      "meta": {
+       "indice": {
+        "recanto": 1.5,
+        "villa": 1.3
+       },
+       "crescimento": 1.06
+      }
+     },
+     "teto_95_recanto": {
+      "2027-07": 0.93
+     },
+     "outubro_ultima_hora": {
+      "piso": 0,
+      "base": 0,
+      "meta": 0
+     },
+     "abril_sem_pascoa": {
+      "piso": 0,
+      "base": 0,
+      "meta": 0
+     },
+     "pascoa_noites_normais_marco": {
+      "piso": 0,
+      "base": 0,
+      "meta": 0
+     },
+     "feriados": {
+      "Páscoa (invented, 3 noites)": {
+       "vendidas": 10,
+       "receita": 9000,
+       "diarias": 63,
+       "ocupacao": [
+        0.5,
+        0.6,
+        0.7
+       ],
+       "diaria": [
+        700,
+        760,
+        820
+       ],
+       "piso_skill": 650
+      },
+      "Winter break (invented, 4 noites)": {
+       "vendidas": 70,
+       "receita": 61000,
+       "diarias": 84,
+       "ocupacao": [
+        0.6,
+        0.75,
+        0.8
+       ],
+       "diaria": [
+        900,
+        950,
+        1000
+       ],
+       "piso_skill": 900
+      }
+     }
+    },
+    "dono": {
+     "baixa": {
+      "recanto": 150000,
+      "villa": 90000
+     },
+     "alta": {
+      "recanto": 260000,
+      "villa": 160000
+     },
+     "meses_alta": [
+      "2027-07"
+     ],
+     "indice_maximo": {
+      "recanto": 1.8,
+      "villa": 1.6
+     }
+    },
+    "meses": [
+     "2027-05",
+     "2027-06",
+     "2027-07",
+     "2027-08"
+    ]
+   },
+   "expected": {
+    "2027-05": {
+     "recanto": {
+      "hoje": 81370,
+      "realista": 101712,
+      "maximo": 122055,
+      "minimo_dono": 150000,
+      "revpar_minimo_dono": 403,
+      "temporada": "baixa",
+      "minimo_dono_vs_realista": 0.47
+     },
+     "villa": {
+      "hoje": 61227,
+      "realista": 72359,
+      "maximo": 89057,
+      "minimo_dono": 90000,
+      "revpar_minimo_dono": 323,
+      "temporada": "baixa",
+      "minimo_dono_vs_realista": 0.24
+     }
+    },
+    "2027-06": {
+     "recanto": {
+      "hoje": 137713,
+      "realista": 172141,
+      "maximo": 206569,
+      "minimo_dono": 150000,
+      "revpar_minimo_dono": 417,
+      "temporada": "baixa",
+      "minimo_dono_vs_realista": -0.13
+     },
+     "villa": {
+      "hoje": 93212,
+      "realista": 110160,
+      "maximo": 135581,
+      "minimo_dono": 90000,
+      "revpar_minimo_dono": 333,
+      "temporada": "baixa",
+      "minimo_dono_vs_realista": -0.18
+     }
+    },
+    "2027-07": {
+     "recanto": {
+      "hoje": 207319,
+      "realista": 259148,
+      "maximo": 310978,
+      "minimo_dono": 260000,
+      "revpar_minimo_dono": 699,
+      "temporada": "alta",
+      "minimo_dono_vs_realista": 0.0
+     },
+     "villa": {
+      "hoje": 137599,
+      "realista": 162617,
+      "maximo": 200143,
+      "minimo_dono": 160000,
+      "revpar_minimo_dono": 573,
+      "temporada": "alta",
+      "minimo_dono_vs_realista": -0.02
+     }
+    },
+    "2027-08": {
+     "recanto": {
+      "hoje": 119992,
+      "realista": 149990,
+      "maximo": 179988,
+      "minimo_dono": 150000,
+      "revpar_minimo_dono": 403,
+      "temporada": "baixa",
+      "minimo_dono_vs_realista": 0.0
+     },
+     "villa": {
+      "hoje": 81206,
+      "realista": 95970,
+      "maximo": 118117,
+      "minimo_dono": 90000,
+      "revpar_minimo_dono": 323,
+      "temporada": "baixa",
+      "minimo_dono_vs_realista": -0.06
+     }
+    }
+   }
+  }
+ ]
+}

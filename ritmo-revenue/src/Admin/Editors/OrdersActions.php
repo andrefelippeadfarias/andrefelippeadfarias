@@ -32,7 +32,7 @@ final class OrdersActions
         return [
             new FormAction('ritmo_order_create', Capability::MANAGE_RULES, Menu::ORDERS, self::create(...)),
             new FormAction('ritmo_order_end', Capability::MANAGE_RULES, Menu::ORDERS, self::end(...), true, 'order'),
-            new FormAction('ritmo_freeze_release', Capability::APPROVE, Menu::ORDERS, self::release(...), true, 'freeze'),
+            new FormAction('ritmo_order_freeze_release', Capability::APPROVE, Menu::ORDERS, self::release(...), true, 'freeze'),
         ];
     }
 

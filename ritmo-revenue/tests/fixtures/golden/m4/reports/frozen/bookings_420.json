@@ -1,0 +1,8672 @@
+[
+ {
+  "id": 900000,
+  "propertyId": "350362",
+  "roomId": "722807",
+  "roomQty": 2,
+  "status": "confirmed",
+  "channel": "booking",
+  "referer": "booking",
+  "arrival": "2027-01-03",
+  "departure": "2027-01-07",
+  "bookingTime": "2026-09-05T14:43:00Z",
+  "price": 4440.89
+ },
+ {
+  "id": 900001,
+  "propertyId": "350364",
+  "roomId": "722814",
+  "roomQty": 1,
+  "status": "confirmed",
+  "channel": "booking",
+  "referer": "booking",
+  "arrival": "2026-09-18",
+  "departure": "2026-09-20",
+  "bookingTime": "2026-09-18T06:51:00Z",
+  "price": 1065.51
+ },
+ {
+  "id": 900002,
+  "propertyId": "350362",
+  "roomId": "722806",
+  "roomQty": 1,
+  "status": "cancelled",
+  "channel": "booking",
+  "referer": "booking",
+  "arrival": "2027-01-02",
+  "departure": "2027-01-04",
+  "bookingTime": "2026-12-03T11:57:00Z",
+  "price": 1868.24,
+  "cancelTime": "2026-12-10T23:57:00Z",
+  "modifiedTime": "2026-12-10T23:57:00Z"
+ },
+ {
+  "id": 900003,
+  "propertyId": "350364",
+  "roomId": "722813",
+  "roomQty": 1,
+  "status": "cancelled",
+  "channel": "airbnb",
+  "referer": "airbnb",
+  "arrival": "2026-11-17",
+  "departure": "2026-11-19",
+  "bookingTime": "2026-11-17T04:58:00Z",
+  "price": 2780.79,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 2502.71,
+    "lineTotal": 2502.71
+   },
+   {
+    "type": "payment",
+    "qty": 1,
+    "amount": -300.0,
+    "lineTotal": -300.0
+   }
+  ],
+  "modifiedTime": "2026-11-26T03:58:00Z"
+ },
+ {
+  "id": 900004,
+  "propertyId": "350362",
+  "roomId": "722805",
+  "roomQty": 1,
+  "status": "confirmed",
+  "channel": "expedia",
+  "referer": "expedia",
+  "arrival": "2026-11-06",
+  "departure": "2026-11-07",
+  "bookingTime": "2026-09-07T06:12:00Z",
+  "price": 1228.58
+ },
+ {
+  "id": 900005,
+  "propertyId": "350362",
+  "roomId": "722806",
+  "roomQty": 1,
+  "status": "cancelled",
+  "channel": "airbnb",
+  "referer": "airbnb",
+  "arrival": "2026-09-22",
+  "departure": "2026-09-24",
+  "bookingTime": "2026-09-21T13:32:00Z",
+  "price": 2269.78,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 2042.8,
+    "lineTotal": 2042.8
+   },
+   {
+    "type": "charge",
+    "qty": 2,
+    "amount": 35.0
+   }
+  ],
+  "modifiedTime": "2026-10-18T18:32:00Z"
+ },
+ {
+  "id": 900006,
+  "propertyId": "350364",
+  "roomId": "722813",
+  "roomQty": 1,
+  "status": "new",
+  "channel": "direct",
+  "referer": "API",
+  "arrival": "2026-10-29",
+  "departure": "2026-10-31",
+  "bookingTime": "2026-09-29T03:31:00Z",
+  "price": 1682.65,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 1514.39,
+    "lineTotal": 1514.39
+   }
+  ]
+ },
+ {
+  "id": 900007,
+  "propertyId": "350364",
+  "roomId": "722813",
+  "roomQty": 2,
+  "status": "confirmed",
+  "channel": "booking",
+  "referer": "booking",
+  "arrival": "2026-11-20",
+  "departure": "2026-11-24",
+  "bookingTime": "2026-09-21T05:13:00Z",
+  "price": 3667.88,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 3301.09,
+    "lineTotal": 3301.09
+   },
+   {
+    "type": "charge",
+    "qty": 2,
+    "amount": 35.0
+   }
+  ]
+ },
+ {
+  "id": 900008,
+  "propertyId": "350364",
+  "roomId": "722815",
+  "roomQty": 1,
+  "status": "cancelled",
+  "channel": "airbnb",
+  "referer": "airbnb",
+  "arrival": "2026-11-15",
+  "departure": "2026-11-18",
+  "bookingTime": "2026-11-15T07:56:00Z",
+  "price": 3735.93,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 3362.34,
+    "lineTotal": 3362.34
+   },
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 120.0,
+    "lineTotal": 120.0,
+    "invoiceeId": 77
+   },
+   {
+    "type": "payment",
+    "qty": 1,
+    "amount": -300.0,
+    "lineTotal": -300.0
+   }
+  ],
+  "modifiedTime": "2026-11-24T13:56:00Z"
+ },
+ {
+  "id": 900009,
+  "propertyId": "350364",
+  "roomId": "722813",
+  "roomQty": 1,
+  "status": "confirmed",
+  "channel": "expedia",
+  "referer": "expedia",
+  "arrival": "2026-10-16",
+  "departure": "2026-10-18",
+  "bookingTime": "2026-10-16T04:55:00Z",
+  "price": 1817.51,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 1635.76,
+    "lineTotal": 1635.76
+   },
+   {
+    "type": "payment",
+    "qty": 1,
+    "amount": -300.0,
+    "lineTotal": -300.0
+   }
+  ]
+ },
+ {
+  "id": 900010,
+  "propertyId": "350362",
+  "roomId": "722806",
+  "roomQty": 1,
+  "status": "request",
+  "channel": "expedia",
+  "referer": "expedia",
+  "arrival": "2026-09-22",
+  "departure": "2026-09-26",
+  "bookingTime": "2026-09-22T16:00:00Z",
+  "price": 4514.62,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 4063.16,
+    "lineTotal": 4063.16
+   },
+   {
+    "type": "payment",
+    "qty": 1,
+    "amount": -300.0,
+    "lineTotal": -300.0
+   }
+  ]
+ },
+ {
+  "id": 900011,
+  "propertyId": "350364",
+  "roomId": "722815",
+  "roomQty": 1,
+  "status": "new",
+  "channel": "expedia",
+  "referer": "expedia",
+  "arrival": "2026-12-12",
+  "departure": "2026-12-14",
+  "bookingTime": "2026-10-13T18:14:00Z",
+  "price": 2484.78,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 2236.3,
+    "lineTotal": 2236.3
+   },
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 120.0,
+    "lineTotal": 120.0,
+    "invoiceeId": 77
+   }
+  ]
+ },
+ {
+  "id": 900012,
+  "propertyId": "350364",
+  "roomId": "722814",
+  "roomQty": 1,
+  "status": "cancelled",
+  "channel": "airbnb",
+  "referer": "airbnb",
+  "arrival": "2026-09-30",
+  "departure": "2026-10-02",
+  "bookingTime": "2026-09-17T02:08:00Z",
+  "price": 2649.33,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 2384.4,
+    "lineTotal": 2384.4
+   },
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 120.0,
+    "lineTotal": 120.0,
+    "invoiceeId": 77
+   },
+   {
+    "type": "payment",
+    "qty": 1,
+    "amount": -300.0,
+    "lineTotal": -300.0
+   }
+  ],
+  "modifiedTime": "2026-09-26T10:08:00Z"
+ },
+ {
+  "id": 900013,
+  "propertyId": "350364",
+  "roomId": "722814",
+  "roomQty": 1,
+  "status": "cancelled",
+  "channel": "direct",
+  "referer": "frontdesk",
+  "arrival": "2027-01-09",
+  "departure": "2027-01-12",
+  "bookingTime": "2026-09-11T08:31:00Z",
+  "price": 3072.59,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 2765.33,
+    "lineTotal": 2765.33
+   }
+  ],
+  "modifiedTime": "2026-10-12T12:31:00Z"
+ },
+ {
+  "id": 900014,
+  "propertyId": "350362",
+  "roomId": "722805",
+  "roomQty": 1,
+  "status": "confirmed",
+  "channel": "expedia",
+  "referer": "expedia",
+  "arrival": "2026-11-06",
+  "departure": "2026-11-08",
+  "bookingTime": "2026-10-30T22:01:00Z",
+  "price": 1546.18,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 1391.56,
+    "lineTotal": 1391.56
+   },
+   {
+    "type": "charge",
+    "qty": 2,
+    "amount": 35.0
+   }
+  ]
+ },
+ {
+  "id": 900015,
+  "propertyId": "350364",
+  "roomId": "722815",
+  "roomQty": 1,
+  "status": "confirmed",
+  "channel": "booking",
+  "referer": "booking",
+  "arrival": "2026-11-24",
+  "departure": "2026-11-27",
+  "bookingTime": "2026-11-24T00:35:00Z",
+  "price": 2119.71,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 1907.74,
+    "lineTotal": 1907.74
+   },
+   {
+    "type": "charge",
+    "qty": 2,
+    "amount": 35.0
+   },
+   {
+    "type": "payment",
+    "qty": 1,
+    "amount": -300.0,
+    "lineTotal": -300.0
+   }
+  ]
+ },
+ {
+  "id": 900016,
+  "propertyId": "350362",
+  "roomId": "722806",
+  "roomQty": 1,
+  "status": "confirmed",
+  "channel": "booking",
+  "referer": "booking",
+  "arrival": "2026-10-30",
+  "departure": "2026-10-31",
+  "bookingTime": "2026-09-30T22:39:00Z",
+  "price": 1397.82
+ },
+ {
+  "id": 900017,
+  "propertyId": "350364",
+  "roomId": "722815",
+  "roomQty": 1,
+  "status": "confirmed",
+  "channel": "booking",
+  "referer": "booking",
+  "arrival": "2026-10-10",
+  "departure": "2026-10-13",
+  "bookingTime": "2026-10-07T23:44:00Z",
+  "price": 3298.74,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 2968.87,
+    "lineTotal": 2968.87
+   },
+   {
+    "type": "charge",
+    "qty": 2,
+    "amount": 35.0
+   }
+  ]
+ },
+ {
+  "id": 900018,
+  "propertyId": "350362",
+  "roomId": "722808",
+  "roomQty": 1,
+  "status": "confirmed",
+  "channel": "direct",
+  "referer": "API",
+  "arrival": "2026-10-28",
+  "departure": "2026-10-30",
+  "bookingTime": "2026-09-28T15:56:00Z",
+  "price": 2559.05,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 2303.15,
+    "lineTotal": 2303.15
+   }
+  ]
+ },
+ {
+  "id": 900019,
+  "propertyId": "350364",
+  "roomId": "722814",
+  "roomQty": 1,
+  "status": "confirmed",
+  "channel": "airbnb",
+  "referer": "airbnb",
+  "arrival": "2026-11-28",
+  "departure": "2026-11-29",
+  "bookingTime": "2026-09-29T03:31:00Z",
+  "price": 918.68,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 826.81,
+    "lineTotal": 826.81
+   },
+   {
+    "type": "charge",
+    "qty": 2,
+    "amount": 35.0
+   }
+  ]
+ },
+ {
+  "id": 900020,
+  "propertyId": "350362",
+  "roomId": "722805",
+  "roomQty": 2,
+  "status": "request",
+  "channel": "expedia",
+  "referer": "expedia",
+  "arrival": "2026-10-04",
+  "departure": "2026-10-05",
+  "bookingTime": "2026-10-04T10:54:00Z",
+  "price": 1366.72,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 1230.05,
+    "lineTotal": 1230.05
+   }
+  ]
+ },
+ {
+  "id": 900021,
+  "propertyId": "350362",
+  "roomId": "722806",
+  "roomQty": 1,
+  "status": "confirmed",
+  "channel": "direct",
+  "referer": "frontdesk",
+  "arrival": "2026-12-07",
+  "departure": "2026-12-09",
+  "bookingTime": "2026-11-07T20:02:00Z",
+  "price": 1900.51
+ },
+ {
+  "id": 900022,
+  "propertyId": "350364",
+  "roomId": "722814",
+  "roomQty": 1,
+  "status": "confirmed",
+  "channel": "booking",
+  "referer": "booking",
+  "arrival": "2026-10-17",
+  "departure": "2026-10-18",
+  "bookingTime": "2026-10-16T19:59:00Z",
+  "price": 964.45,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 868.01,
+    "lineTotal": 868.01
+   },
+   {
+    "type": "charge",
+    "qty": 2,
+    "amount": 35.0
+   },
+   {
+    "type": "payment",
+    "qty": 1,
+    "amount": -300.0,
+    "lineTotal": -300.0
+   }
+  ]
+ },
+ {
+  "id": 900023,
+  "propertyId": "350362",
+  "roomId": "722806",
+  "roomQty": 1,
+  "status": "confirmed",
+  "channel": "direct",
+  "referer": "API",
+  "arrival": "2026-10-28",
+  "departure": "2026-10-31",
+  "bookingTime": "2026-10-25T20:46:00Z",
+  "price": 1633.23
+ },
+ {
+  "id": 900024,
+  "propertyId": "350362",
+  "roomId": "722806",
+  "roomQty": 1,
+  "status": "confirmed",
+  "channel": "airbnb",
+  "referer": "airbnb",
+  "arrival": "2027-02-17",
+  "departure": "2027-02-21",
+  "bookingTime": "2026-10-21T02:07:00Z",
+  "price": 4675.05
+ },
+ {
+  "id": 900025,
+  "propertyId": "350364",
+  "roomId": "722815",
+  "roomQty": 1,
+  "status": "confirmed",
+  "channel": "booking",
+  "referer": "booking",
+  "arrival": "2026-11-21",
+  "departure": "2026-11-23",
+  "bookingTime": "2026-11-14T06:53:00Z",
+  "price": 2180.58,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 1962.52,
+    "lineTotal": 1962.52
+   }
+  ]
+ },
+ {
+  "id": 900026,
+  "propertyId": "350364",
+  "roomId": "722814",
+  "roomQty": 1,
+  "status": "new",
+  "channel": "expedia",
+  "referer": "expedia",
+  "arrival": "2026-10-16",
+  "departure": "2026-10-18",
+  "bookingTime": "2026-10-13T08:04:00Z",
+  "price": 1101.77
+ },
+ {
+  "id": 900027,
+  "propertyId": "350364",
+  "roomId": "722813",
+  "roomQty": 1,
+  "status": "confirmed",
+  "channel": "direct",
+  "referer": "API",
+  "arrival": "2026-10-24",
+  "departure": "2026-10-28",
+  "bookingTime": "2026-10-24T05:35:00Z",
+  "price": 2197.61
+ },
+ {
+  "id": 900028,
+  "propertyId": "350362",
+  "roomId": "722805",
+  "roomQty": 1,
+  "status": "new",
+  "channel": "direct",
+  "referer": "API",
+  "arrival": "2026-12-10",
+  "departure": "2026-12-14",
+  "bookingTime": "2026-12-11T02:19:00Z",
+  "price": 4106.62,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 3695.96,
+    "lineTotal": 3695.96
+   },
+   {
+    "type": "payment",
+    "qty": 1,
+    "amount": -300.0,
+    "lineTotal": -300.0
+   }
+  ]
+ },
+ {
+  "id": 900029,
+  "propertyId": "350362",
+  "roomId": "722807",
+  "roomQty": 2,
+  "status": "confirmed",
+  "channel": "direct",
+  "referer": "API",
+  "arrival": "2027-04-08",
+  "departure": "2027-04-10",
+  "bookingTime": "2026-12-09T05:34:00Z",
+  "price": 2156.72
+ },
+ {
+  "id": 900030,
+  "propertyId": "350362",
+  "roomId": "722808",
+  "roomQty": 1,
+  "status": "confirmed",
+  "channel": "direct",
+  "referer": "API",
+  "arrival": "2026-09-09",
+  "departure": "2026-09-11",
+  "bookingTime": "2026-09-06T21:30:00Z",
+  "price": 997.7,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 897.93,
+    "lineTotal": 897.93
+   },
+   {
+    "type": "charge",
+    "qty": 2,
+    "amount": 35.0
+   }
+  ]
+ },
+ {
+  "id": 900031,
+  "propertyId": "350362",
+  "roomId": "722805",
+  "roomQty": 1,
+  "status": "confirmed",
+  "channel": "expedia",
+  "referer": "expedia",
+  "arrival": "2026-11-20",
+  "departure": "2026-11-21",
+  "bookingTime": "2026-10-22T01:42:00Z",
+  "price": 941.2
+ },
+ {
+  "id": 900032,
+  "propertyId": "350364",
+  "roomId": "722815",
+  "roomQty": 1,
+  "status": "cancelled",
+  "channel": "booking",
+  "referer": "booking",
+  "arrival": "2026-12-07",
+  "departure": "2026-12-09",
+  "bookingTime": "2026-12-07T10:09:00Z",
+  "price": 1748.05,
+  "modifiedTime": "2027-01-02T07:09:00Z"
+ },
+ {
+  "id": 900033,
+  "propertyId": "350364",
+  "roomId": "722814",
+  "roomQty": 1,
+  "status": "confirmed",
+  "channel": "direct",
+  "referer": "frontdesk",
+  "arrival": "2027-01-14",
+  "departure": "2027-01-16",
+  "bookingTime": "2026-09-16T09:40:00Z",
+  "price": 1824.73,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 1642.26,
+    "lineTotal": 1642.26
+   },
+   {
+    "type": "payment",
+    "qty": 1,
+    "amount": -300.0,
+    "lineTotal": -300.0
+   }
+  ]
+ },
+ {
+  "id": 900034,
+  "propertyId": "350362",
+  "roomId": "722806",
+  "roomQty": 1,
+  "status": "new",
+  "channel": "direct",
+  "referer": "API",
+  "arrival": "2027-01-30",
+  "departure": "2027-02-01",
+  "bookingTime": "2026-10-02T19:00:00Z",
+  "price": 2596.14,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 2336.53,
+    "lineTotal": 2336.53
+   },
+   {
+    "type": "charge",
+    "qty": 2,
+    "amount": 35.0
+   }
+  ]
+ },
+ {
+  "id": 900035,
+  "propertyId": "350362",
+  "roomId": "722807",
+  "roomQty": 2,
+  "status": "cancelled",
+  "channel": "booking",
+  "referer": "booking",
+  "arrival": "2026-11-16",
+  "departure": "2026-11-17",
+  "bookingTime": "2026-11-13T11:44:00Z",
+  "price": 1114.06,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 1002.65,
+    "lineTotal": 1002.65
+   },
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 120.0,
+    "lineTotal": 120.0,
+    "invoiceeId": 77
+   }
+  ],
+  "cancelTime": "2026-11-16T17:44:00Z",
+  "modifiedTime": "2026-11-16T17:44:00Z"
+ },
+ {
+  "id": 900036,
+  "propertyId": "350362",
+  "roomId": "722806",
+  "roomQty": 1,
+  "status": "confirmed",
+  "channel": "booking",
+  "referer": "booking",
+  "arrival": "2026-09-29",
+  "departure": "2026-10-03",
+  "bookingTime": "2026-09-26T10:06:00Z",
+  "price": 1986.22
+ },
+ {
+  "id": 900037,
+  "propertyId": "350362",
+  "roomId": "722805",
+  "roomQty": 1,
+  "status": "confirmed",
+  "channel": "expedia",
+  "referer": "expedia",
+  "arrival": "2026-12-13",
+  "departure": "2026-12-15",
+  "bookingTime": "2026-12-11T00:36:00Z",
+  "price": 2212.6
+ },
+ {
+  "id": 900038,
+  "propertyId": "350362",
+  "roomId": "722806",
+  "roomQty": 1,
+  "status": "confirmed",
+  "channel": "expedia",
+  "referer": "expedia",
+  "arrival": "2026-11-30",
+  "departure": "2026-12-03",
+  "bookingTime": "2026-11-27T03:04:00Z",
+  "price": 3247.83
+ },
+ {
+  "id": 900039,
+  "propertyId": "350362",
+  "roomId": "722805",
+  "roomQty": 1,
+  "status": "confirmed",
+  "channel": "direct",
+  "referer": "API",
+  "arrival": "2026-12-29",
+  "departure": "2027-01-02",
+  "bookingTime": "2026-10-31T01:11:00Z",
+  "price": 3320.78
+ },
+ {
+  "id": 900040,
+  "propertyId": "350364",
+  "roomId": "722815",
+  "roomQty": 1,
+  "status": "confirmed",
+  "channel": "booking",
+  "referer": "booking",
+  "arrival": "2026-10-20",
+  "departure": "2026-10-24",
+  "bookingTime": "2026-09-20T23:03:00Z",
+  "price": 2241.26
+ },
+ {
+  "id": 900041,
+  "propertyId": "350362",
+  "roomId": "722806",
+  "roomQty": 1,
+  "status": "confirmed",
+  "channel": "direct",
+  "referer": "frontdesk",
+  "arrival": "2027-01-30",
+  "departure": "2027-02-01",
+  "bookingTime": "2026-10-02T07:11:00Z",
+  "price": 1291.31,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 1162.18,
+    "lineTotal": 1162.18
+   }
+  ]
+ },
+ {
+  "id": 900042,
+  "propertyId": "350364",
+  "roomId": "722815",
+  "roomQty": 1,
+  "status": "confirmed",
+  "channel": "direct",
+  "referer": "API",
+  "arrival": "2027-03-29",
+  "departure": "2027-03-31",
+  "bookingTime": "2026-11-29T21:17:00Z",
+  "price": 2007.46
+ },
+ {
+  "id": 900043,
+  "propertyId": "350362",
+  "roomId": "722808",
+  "roomQty": 1,
+  "status": "new",
+  "channel": "direct",
+  "referer": "API",
+  "arrival": "2026-10-30",
+  "departure": "2026-11-02",
+  "bookingTime": "2026-10-30T19:07:00Z",
+  "price": 1975.96,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 1778.36,
+    "lineTotal": 1778.36
+   },
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 120.0,
+    "lineTotal": 120.0,
+    "invoiceeId": 77
+   },
+   {
+    "type": "payment",
+    "qty": 1,
+    "amount": -300.0,
+    "lineTotal": -300.0
+   }
+  ]
+ },
+ {
+  "id": 900044,
+  "propertyId": "350364",
+  "roomId": "722815",
+  "roomQty": 1,
+  "status": "confirmed",
+  "channel": "direct",
+  "referer": "API",
+  "arrival": "2026-09-25",
+  "departure": "2026-09-27",
+  "bookingTime": "2026-09-12T02:30:00Z",
+  "price": 2727.81
+ },
+ {
+  "id": 900045,
+  "propertyId": "350364",
+  "roomId": "722815",
+  "roomQty": 1,
+  "status": "confirmed",
+  "channel": "booking",
+  "referer": "booking",
+  "arrival": "2027-02-07",
+  "departure": "2027-02-10",
+  "bookingTime": "2026-12-09T23:41:00Z",
+  "price": 2942.22,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 2648.0,
+    "lineTotal": 2648.0
+   },
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 120.0,
+    "lineTotal": 120.0,
+    "invoiceeId": 77
+   }
+  ]
+ },
+ {
+  "id": 900046,
+  "propertyId": "350362",
+  "roomId": "722808",
+  "roomQty": 1,
+  "status": "confirmed",
+  "channel": "direct",
+  "referer": "API",
+  "arrival": "2027-01-05",
+  "departure": "2027-01-07",
+  "bookingTime": "2026-11-06T14:42:00Z",
+  "price": 1975.93,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 1778.34,
+    "lineTotal": 1778.34
+   },
+   {
+    "type": "charge",
+    "qty": 2,
+    "amount": 35.0
+   },
+   {
+    "type": "payment",
+    "qty": 1,
+    "amount": -300.0,
+    "lineTotal": -300.0
+   }
+  ]
+ },
+ {
+  "id": 900047,
+  "propertyId": "350364",
+  "roomId": "722815",
+  "roomQty": 1,
+  "status": "confirmed",
+  "channel": "direct",
+  "referer": "API",
+  "arrival": "2026-12-03",
+  "departure": "2026-12-04",
+  "bookingTime": "2026-11-26T06:13:00Z",
+  "price": 1061.51,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 955.36,
+    "lineTotal": 955.36
+   },
+   {
+    "type": "charge",
+    "qty": 2,
+    "amount": 35.0
+   }
+  ]
+ },
+ {
+  "id": 900048,
+  "propertyId": "350362",
+  "roomId": "722808",
+  "roomQty": 1,
+  "status": "cancelled",
+  "channel": "expedia",
+  "referer": "expedia",
+  "arrival": "2026-09-14",
+  "departure": "2026-09-18",
+  "bookingTime": "2026-09-13T18:28:00Z",
+  "price": 2611.4,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 2350.26,
+    "lineTotal": 2350.26
+   },
+   {
+    "type": "charge",
+    "qty": 2,
+    "amount": 35.0
+   },
+   {
+    "type": "payment",
+    "qty": 1,
+    "amount": -300.0,
+    "lineTotal": -300.0
+   }
+  ],
+  "modifiedTime": "2026-10-14T14:28:00Z"
+ },
+ {
+  "id": 900049,
+  "propertyId": "350362",
+  "roomId": "722807",
+  "roomQty": 1,
+  "status": "new",
+  "channel": "direct",
+  "referer": "frontdesk",
+  "arrival": "2026-11-02",
+  "departure": "2026-11-04",
+  "bookingTime": "2026-10-19T18:24:00Z",
+  "price": 2577.94,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 2320.15,
+    "lineTotal": 2320.15
+   }
+  ]
+ },
+ {
+  "id": 900050,
+  "propertyId": "350364",
+  "roomId": "722814",
+  "roomQty": 1,
+  "status": "new",
+  "channel": "booking",
+  "referer": "booking",
+  "arrival": "2026-12-07",
+  "departure": "2026-12-09",
+  "bookingTime": "2026-11-07T16:52:00Z",
+  "price": 2380.73
+ },
+ {
+  "id": 900051,
+  "propertyId": "350362",
+  "roomId": "722806",
+  "roomQty": 1,
+  "status": "cancelled",
+  "channel": "airbnb",
+  "referer": "airbnb",
+  "arrival": "2026-11-16",
+  "departure": "2026-11-18",
+  "bookingTime": "2026-11-16T14:31:00Z",
+  "price": 1938.0,
+  "modifiedTime": "2026-11-29T21:31:00Z"
+ },
+ {
+  "id": 900052,
+  "propertyId": "350364",
+  "roomId": "722814",
+  "roomQty": 1,
+  "status": "confirmed",
+  "channel": "booking",
+  "referer": "booking",
+  "arrival": "2027-02-27",
+  "departure": "2027-03-02",
+  "bookingTime": "2026-10-30T09:53:00Z",
+  "price": 3246.01,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 2921.41,
+    "lineTotal": 2921.41
+   },
+   {
+    "type": "payment",
+    "qty": 1,
+    "amount": -300.0,
+    "lineTotal": -300.0
+   }
+  ]
+ },
+ {
+  "id": 900053,
+  "propertyId": "350364",
+  "roomId": "722815",
+  "roomQty": 2,
+  "status": "new",
+  "channel": "direct",
+  "referer": "API",
+  "arrival": "2026-10-05",
+  "departure": "2026-10-07",
+  "bookingTime": "2026-10-04T16:22:00Z",
+  "price": 2799.12
+ },
+ {
+  "id": 900054,
+  "propertyId": "350364",
+  "roomId": "722815",
+  "roomQty": 1,
+  "status": "confirmed",
+  "channel": "direct",
+  "referer": "frontdesk",
+  "arrival": "2026-12-07",
+  "departure": "2026-12-11",
+  "bookingTime": "2026-11-30T07:13:00Z",
+  "price": 4189.69
+ },
+ {
+  "id": 900055,
+  "propertyId": "350362",
+  "roomId": "722806",
+  "roomQty": 1,
+  "status": "confirmed",
+  "channel": "direct",
+  "referer": "API",
+  "arrival": "2027-02-13",
+  "departure": "2027-02-15",
+  "bookingTime": "2026-10-17T02:11:00Z",
+  "price": 1935.93
+ },
+ {
+  "id": 900056,
+  "propertyId": "350364",
+  "roomId": "722813",
+  "roomQty": 1,
+  "status": "confirmed",
+  "channel": "direct",
+  "referer": "API",
+  "arrival": "2026-12-06",
+  "departure": "2026-12-10",
+  "bookingTime": "2026-12-05T18:55:00Z",
+  "price": 1978.91
+ },
+ {
+  "id": 900057,
+  "propertyId": "350362",
+  "roomId": "722805",
+  "roomQty": 1,
+  "status": "cancelled",
+  "channel": "expedia",
+  "referer": "expedia",
+  "arrival": "2026-09-18",
+  "departure": "2026-09-20",
+  "bookingTime": "2026-09-17T19:46:00Z",
+  "price": 1399.76,
+  "cancelTime": "2026-10-02T15:46:00Z",
+  "modifiedTime": "2026-10-02T15:46:00Z"
+ },
+ {
+  "id": 900058,
+  "propertyId": "350362",
+  "roomId": "722806",
+  "roomQty": 1,
+  "status": "confirmed",
+  "channel": "direct",
+  "referer": "API",
+  "arrival": "2026-10-13",
+  "departure": "2026-10-16",
+  "bookingTime": "2026-10-06T16:16:00Z",
+  "price": 2541.61,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 2287.45,
+    "lineTotal": 2287.45
+   }
+  ]
+ },
+ {
+  "id": 900059,
+  "propertyId": "350364",
+  "roomId": "722813",
+  "roomQty": 1,
+  "status": "request",
+  "channel": "booking",
+  "referer": "booking",
+  "arrival": "2026-10-25",
+  "departure": "2026-10-26",
+  "bookingTime": "2026-10-18T17:34:00Z",
+  "price": 1253.45,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 1128.11,
+    "lineTotal": 1128.11
+   }
+  ]
+ },
+ {
+  "id": 900060,
+  "propertyId": "350362",
+  "roomId": "722808",
+  "roomQty": 1,
+  "status": "new",
+  "channel": "direct",
+  "referer": "frontdesk",
+  "arrival": "2027-02-04",
+  "departure": "2027-02-07",
+  "bookingTime": "2026-12-07T01:57:00Z",
+  "price": 2820.78
+ },
+ {
+  "id": 900061,
+  "propertyId": "350362",
+  "roomId": "722806",
+  "roomQty": 1,
+  "status": "new",
+  "channel": "booking",
+  "referer": "booking",
+  "arrival": "2026-11-13",
+  "departure": "2026-11-15",
+  "bookingTime": "2026-11-06T15:00:00Z",
+  "price": 1658.78,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 1492.9,
+    "lineTotal": 1492.9
+   },
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 120.0,
+    "lineTotal": 120.0,
+    "invoiceeId": 77
+   }
+  ]
+ },
+ {
+  "id": 900062,
+  "propertyId": "350364",
+  "roomId": "722813",
+  "roomQty": 1,
+  "status": "confirmed",
+  "channel": "airbnb",
+  "referer": "airbnb",
+  "arrival": "2026-11-28",
+  "departure": "2026-11-30",
+  "bookingTime": "2026-11-28T08:02:00Z",
+  "price": 2970.56,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 2673.5,
+    "lineTotal": 2673.5
+   },
+   {
+    "type": "payment",
+    "qty": 1,
+    "amount": -300.0,
+    "lineTotal": -300.0
+   }
+  ]
+ },
+ {
+  "id": 900063,
+  "propertyId": "350364",
+  "roomId": "722813",
+  "roomQty": 2,
+  "status": "new",
+  "channel": "direct",
+  "referer": "frontdesk",
+  "arrival": "2026-10-08",
+  "departure": "2026-10-10",
+  "bookingTime": "2026-10-08T16:46:00Z",
+  "price": 1065.1
+ },
+ {
+  "id": 900064,
+  "propertyId": "350364",
+  "roomId": "722814",
+  "roomQty": 2,
+  "status": "confirmed",
+  "channel": "direct",
+  "referer": "API",
+  "arrival": "2027-01-27",
+  "departure": "2027-01-31",
+  "bookingTime": "2026-09-29T20:04:00Z",
+  "price": 2314.31,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 2082.88,
+    "lineTotal": 2082.88
+   },
+   {
+    "type": "charge",
+    "qty": 2,
+    "amount": 35.0
+   },
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 120.0,
+    "lineTotal": 120.0,
+    "invoiceeId": 77
+   }
+  ]
+ },
+ {
+  "id": 900065,
+  "propertyId": "350364",
+  "roomId": "722815",
+  "roomQty": 1,
+  "status": "confirmed",
+  "channel": "airbnb",
+  "referer": "airbnb",
+  "arrival": "2026-10-22",
+  "departure": "2026-10-23",
+  "bookingTime": "2026-10-08T10:24:00Z",
+  "price": 635.82,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 572.24,
+    "lineTotal": 572.24
+   }
+  ]
+ },
+ {
+  "id": 900066,
+  "propertyId": "350362",
+  "roomId": "722807",
+  "roomQty": 1,
+  "status": "confirmed",
+  "channel": "direct",
+  "referer": "frontdesk",
+  "arrival": "2026-12-31",
+  "departure": "2027-01-03",
+  "bookingTime": "2026-12-01T18:21:00Z",
+  "price": 3265.35,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 2938.82,
+    "lineTotal": 2938.82
+   },
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 120.0,
+    "lineTotal": 120.0,
+    "invoiceeId": 77
+   }
+  ]
+ },
+ {
+  "id": 900067,
+  "propertyId": "350364",
+  "roomId": "722814",
+  "roomQty": 1,
+  "status": "confirmed",
+  "channel": "airbnb",
+  "referer": "airbnb",
+  "arrival": "2026-09-21",
+  "departure": "2026-09-23",
+  "bookingTime": "2026-09-18T07:35:00Z",
+  "price": 970.56,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 873.5,
+    "lineTotal": 873.5
+   },
+   {
+    "type": "charge",
+    "qty": 2,
+    "amount": 35.0
+   }
+  ]
+ },
+ {
+  "id": 900068,
+  "propertyId": "350362",
+  "roomId": "722806",
+  "roomQty": 2,
+  "status": "confirmed",
+  "channel": "expedia",
+  "referer": "expedia",
+  "arrival": "2026-12-05",
+  "departure": "2026-12-07",
+  "bookingTime": "2026-11-05T20:23:00Z",
+  "price": 1521.74
+ },
+ {
+  "id": 900069,
+  "propertyId": "350362",
+  "roomId": "722807",
+  "roomQty": 2,
+  "status": "cancelled",
+  "channel": "expedia",
+  "referer": "expedia",
+  "arrival": "2026-11-29",
+  "departure": "2026-12-03",
+  "bookingTime": "2026-09-30T17:22:00Z",
+  "price": 4198.52,
+  "cancelTime": "2026-10-29T09:22:00Z",
+  "modifiedTime": "2026-10-29T09:22:00Z"
+ },
+ {
+  "id": 900070,
+  "propertyId": "350364",
+  "roomId": "722813",
+  "roomQty": 1,
+  "status": "confirmed",
+  "channel": "booking",
+  "referer": "booking",
+  "arrival": "2026-10-10",
+  "departure": "2026-10-14",
+  "bookingTime": "2026-10-07T11:42:00Z",
+  "price": 2927.38,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 2634.64,
+    "lineTotal": 2634.64
+   }
+  ]
+ },
+ {
+  "id": 900071,
+  "propertyId": "350362",
+  "roomId": "722806",
+  "roomQty": 1,
+  "status": "cancelled",
+  "channel": "booking",
+  "referer": "booking",
+  "arrival": "2026-12-11",
+  "departure": "2026-12-12",
+  "bookingTime": "2026-12-10T09:25:00Z",
+  "price": 1318.52,
+  "modifiedTime": "2026-12-17T18:25:00Z"
+ },
+ {
+  "id": 900072,
+  "propertyId": "350362",
+  "roomId": "722806",
+  "roomQty": 1,
+  "status": "cancelled",
+  "channel": "direct",
+  "referer": "API",
+  "arrival": "2026-12-09",
+  "departure": "2026-12-11",
+  "bookingTime": "2026-12-06T04:20:00Z",
+  "price": 2398.99,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 2159.09,
+    "lineTotal": 2159.09
+   }
+  ],
+  "modifiedTime": "2026-12-11T02:20:00Z"
+ },
+ {
+  "id": 900073,
+  "propertyId": "350362",
+  "roomId": "722808",
+  "roomQty": 1,
+  "status": "confirmed",
+  "channel": "airbnb",
+  "referer": "airbnb",
+  "arrival": "2027-01-07",
+  "departure": "2027-01-10",
+  "bookingTime": "2026-09-09T10:12:00Z",
+  "price": 3329.33
+ },
+ {
+  "id": 900074,
+  "propertyId": "350362",
+  "roomId": "722808",
+  "roomQty": 1,
+  "status": "confirmed",
+  "channel": "expedia",
+  "referer": "expedia",
+  "arrival": "2026-12-30",
+  "departure": "2027-01-01",
+  "bookingTime": "2026-09-01T04:10:00Z",
+  "price": 2794.66
+ },
+ {
+  "id": 900075,
+  "propertyId": "350364",
+  "roomId": "722815",
+  "roomQty": 1,
+  "status": "confirmed",
+  "channel": "airbnb",
+  "referer": "airbnb",
+  "arrival": "2027-02-28",
+  "departure": "2027-03-02",
+  "bookingTime": "2026-10-31T17:42:00Z",
+  "price": 1307.75
+ },
+ {
+  "id": 900076,
+  "propertyId": "350364",
+  "roomId": "722813",
+  "roomQty": 1,
+  "status": "new",
+  "channel": "booking",
+  "referer": "booking",
+  "arrival": "2026-12-21",
+  "departure": "2026-12-22",
+  "bookingTime": "2026-10-22T22:28:00Z",
+  "price": 555.49,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 499.94,
+    "lineTotal": 499.94
+   }
+  ]
+ },
+ {
+  "id": 900077,
+  "propertyId": "350362",
+  "roomId": "722808",
+  "roomQty": 2,
+  "status": "confirmed",
+  "channel": "booking",
+  "referer": "booking",
+  "arrival": "2026-11-28",
+  "departure": "2026-12-02",
+  "bookingTime": "2026-09-29T14:18:00Z",
+  "price": 4927.83,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 4435.05,
+    "lineTotal": 4435.05
+   }
+  ]
+ },
+ {
+  "id": 900078,
+  "propertyId": "350364",
+  "roomId": "722813",
+  "roomQty": 1,
+  "status": "cancelled",
+  "channel": "direct",
+  "referer": "frontdesk",
+  "arrival": "2026-11-04",
+  "departure": "2026-11-05",
+  "bookingTime": "2026-10-05T06:07:00Z",
+  "price": 592.66,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 533.39,
+    "lineTotal": 533.39
+   },
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 120.0,
+    "lineTotal": 120.0,
+    "invoiceeId": 77
+   }
+  ],
+  "cancelTime": "2026-10-19T23:07:00Z",
+  "modifiedTime": "2026-10-19T23:07:00Z"
+ },
+ {
+  "id": 900079,
+  "propertyId": "350364",
+  "roomId": "722815",
+  "roomQty": 2,
+  "status": "confirmed",
+  "channel": "booking",
+  "referer": "booking",
+  "arrival": "2026-12-19",
+  "departure": "2026-12-20",
+  "bookingTime": "2026-12-06T02:41:00Z",
+  "price": 941.8,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 847.62,
+    "lineTotal": 847.62
+   }
+  ]
+ },
+ {
+  "id": 900080,
+  "propertyId": "350364",
+  "roomId": "722814",
+  "roomQty": 1,
+  "status": "confirmed",
+  "channel": "direct",
+  "referer": "API",
+  "arrival": "2026-10-28",
+  "departure": "2026-11-01",
+  "bookingTime": "2026-09-28T07:26:00Z",
+  "price": 2861.57
+ },
+ {
+  "id": 900081,
+  "propertyId": "350362",
+  "roomId": "722806",
+  "roomQty": 1,
+  "status": "cancelled",
+  "channel": "direct",
+  "referer": "API",
+  "arrival": "2027-01-03",
+  "departure": "2027-01-05",
+  "bookingTime": "2026-09-05T23:35:00Z",
+  "price": 1618.25,
+  "modifiedTime": "2026-09-14T07:35:00Z"
+ },
+ {
+  "id": 900082,
+  "propertyId": "350364",
+  "roomId": "722813",
+  "roomQty": 1,
+  "status": "cancelled",
+  "channel": "direct",
+  "referer": "frontdesk",
+  "arrival": "2026-11-28",
+  "departure": "2026-11-30",
+  "bookingTime": "2026-11-21T08:56:00Z",
+  "price": 913.7,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 822.33,
+    "lineTotal": 822.33
+   }
+  ],
+  "modifiedTime": "2026-12-22T17:56:00Z"
+ },
+ {
+  "id": 900083,
+  "propertyId": "350364",
+  "roomId": "722814",
+  "roomQty": 1,
+  "status": "confirmed",
+  "channel": "booking",
+  "referer": "booking",
+  "arrival": "2026-11-12",
+  "departure": "2026-11-16",
+  "bookingTime": "2026-11-11T23:56:00Z",
+  "price": 4855.23
+ },
+ {
+  "id": 900084,
+  "propertyId": "350364",
+  "roomId": "722815",
+  "roomQty": 2,
+  "status": "new",
+  "channel": "expedia",
+  "referer": "expedia",
+  "arrival": "2026-12-24",
+  "departure": "2026-12-27",
+  "bookingTime": "2026-11-24T03:02:00Z",
+  "price": 1772.87
+ },
+ {
+  "id": 900085,
+  "propertyId": "350364",
+  "roomId": "722815",
+  "roomQty": 1,
+  "status": "confirmed",
+  "channel": "expedia",
+  "referer": "expedia",
+  "arrival": "2026-12-12",
+  "departure": "2026-12-16",
+  "bookingTime": "2026-11-28T05:39:00Z",
+  "price": 3563.97,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 3207.57,
+    "lineTotal": 3207.57
+   }
+  ]
+ },
+ {
+  "id": 900086,
+  "propertyId": "350364",
+  "roomId": "722814",
+  "roomQty": 1,
+  "status": "confirmed",
+  "channel": "airbnb",
+  "referer": "airbnb",
+  "arrival": "2026-09-12",
+  "departure": "2026-09-15",
+  "bookingTime": "2026-09-05T10:44:00Z",
+  "price": 1745.7,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 1571.13,
+    "lineTotal": 1571.13
+   }
+  ]
+ },
+ {
+  "id": 900087,
+  "propertyId": "350364",
+  "roomId": "722815",
+  "roomQty": 1,
+  "status": "confirmed",
+  "channel": "booking",
+  "referer": "booking",
+  "arrival": "2026-11-16",
+  "departure": "2026-11-18",
+  "bookingTime": "2026-11-13T03:53:00Z",
+  "price": 2948.54,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 2653.69,
+    "lineTotal": 2653.69
+   },
+   {
+    "type": "charge",
+    "qty": 2,
+    "amount": 35.0
+   },
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 120.0,
+    "lineTotal": 120.0,
+    "invoiceeId": 77
+   },
+   {
+    "type": "payment",
+    "qty": 1,
+    "amount": -300.0,
+    "lineTotal": -300.0
+   }
+  ]
+ },
+ {
+  "id": 900088,
+  "propertyId": "350362",
+  "roomId": "722807",
+  "roomQty": 1,
+  "status": "confirmed",
+  "channel": "airbnb",
+  "referer": "airbnb",
+  "arrival": "2026-11-18",
+  "departure": "2026-11-21",
+  "bookingTime": "2026-11-18T04:02:00Z",
+  "price": 2307.63,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 2076.87,
+    "lineTotal": 2076.87
+   }
+  ]
+ },
+ {
+  "id": 900089,
+  "propertyId": "350362",
+  "roomId": "722805",
+  "roomQty": 1,
+  "status": "confirmed",
+  "channel": "expedia",
+  "referer": "expedia",
+  "arrival": "2026-09-19",
+  "departure": "2026-09-23",
+  "bookingTime": "2026-09-12T08:06:00Z",
+  "price": 4104.64,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 3694.18,
+    "lineTotal": 3694.18
+   }
+  ]
+ },
+ {
+  "id": 900090,
+  "propertyId": "350362",
+  "roomId": "722807",
+  "roomQty": 1,
+  "status": "confirmed",
+  "channel": "direct",
+  "referer": "frontdesk",
+  "arrival": "2026-12-20",
+  "departure": "2026-12-21",
+  "bookingTime": "2026-10-21T12:39:00Z",
+  "price": 589.93,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 530.94,
+    "lineTotal": 530.94
+   },
+   {
+    "type": "charge",
+    "qty": 2,
+    "amount": 35.0
+   },
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 120.0,
+    "lineTotal": 120.0,
+    "invoiceeId": 77
+   }
+  ]
+ },
+ {
+  "id": 900091,
+  "propertyId": "350362",
+  "roomId": "722805",
+  "roomQty": 2,
+  "status": "new",
+  "channel": "booking",
+  "referer": "booking",
+  "arrival": "2026-11-12",
+  "departure": "2026-11-16",
+  "bookingTime": "2026-10-13T07:53:00Z",
+  "price": 5849.2
+ },
+ {
+  "id": 900092,
+  "propertyId": "350362",
+  "roomId": "722806",
+  "roomQty": 1,
+  "status": "confirmed",
+  "channel": "direct",
+  "referer": "API",
+  "arrival": "2027-02-20",
+  "departure": "2027-02-22",
+  "bookingTime": "2026-10-23T10:15:00Z",
+  "price": 1269.91
+ },
+ {
+  "id": 900093,
+  "propertyId": "350362",
+  "roomId": "722805",
+  "roomQty": 1,
+  "status": "confirmed",
+  "channel": "booking",
+  "referer": "booking",
+  "arrival": "2026-11-10",
+  "departure": "2026-11-12",
+  "bookingTime": "2026-11-10T07:42:00Z",
+  "price": 980.72,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 882.65,
+    "lineTotal": 882.65
+   }
+  ]
+ },
+ {
+  "id": 900094,
+  "propertyId": "350362",
+  "roomId": "722806",
+  "roomQty": 1,
+  "status": "confirmed",
+  "channel": "expedia",
+  "referer": "expedia",
+  "arrival": "2027-02-16",
+  "departure": "2027-02-17",
+  "bookingTime": "2026-10-19T19:55:00Z",
+  "price": 994.92,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 895.43,
+    "lineTotal": 895.43
+   },
+   {
+    "type": "charge",
+    "qty": 2,
+    "amount": 35.0
+   }
+  ]
+ },
+ {
+  "id": 900095,
+  "propertyId": "350364",
+  "roomId": "722815",
+  "roomQty": 1,
+  "status": "confirmed",
+  "channel": "booking",
+  "referer": "booking",
+  "arrival": "2026-10-24",
+  "departure": "2026-10-25",
+  "bookingTime": "2026-10-22T01:37:00Z",
+  "price": 905.16
+ },
+ {
+  "id": 900096,
+  "propertyId": "350362",
+  "roomId": "722807",
+  "roomQty": 1,
+  "status": "cancelled",
+  "channel": "expedia",
+  "referer": "expedia",
+  "arrival": "2027-03-10",
+  "departure": "2027-03-13",
+  "bookingTime": "2026-11-10T17:57:00Z",
+  "price": 3979.61,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 3581.65,
+    "lineTotal": 3581.65
+   },
+   {
+    "type": "charge",
+    "qty": 2,
+    "amount": 35.0
+   }
+  ],
+  "modifiedTime": "2026-11-17T07:57:00Z"
+ },
+ {
+  "id": 900097,
+  "propertyId": "350364",
+  "roomId": "722813",
+  "roomQty": 2,
+  "status": "new",
+  "channel": "direct",
+  "referer": "frontdesk",
+  "arrival": "2026-09-19",
+  "departure": "2026-09-22",
+  "bookingTime": "2026-09-05T22:29:00Z",
+  "price": 3461.35,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 3115.22,
+    "lineTotal": 3115.22
+   },
+   {
+    "type": "charge",
+    "qty": 2,
+    "amount": 35.0
+   },
+   {
+    "type": "payment",
+    "qty": 1,
+    "amount": -300.0,
+    "lineTotal": -300.0
+   }
+  ]
+ },
+ {
+  "id": 900098,
+  "propertyId": "350364",
+  "roomId": "722813",
+  "roomQty": 2,
+  "status": "confirmed",
+  "channel": "direct",
+  "referer": "API",
+  "arrival": "2027-02-16",
+  "departure": "2027-02-17",
+  "bookingTime": "2026-10-19T20:06:00Z",
+  "price": 571.98,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 514.78,
+    "lineTotal": 514.78
+   },
+   {
+    "type": "charge",
+    "qty": 2,
+    "amount": 35.0
+   },
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 120.0,
+    "lineTotal": 120.0,
+    "invoiceeId": 77
+   }
+  ]
+ },
+ {
+  "id": 900099,
+  "propertyId": "350364",
+  "roomId": "722813",
+  "roomQty": 2,
+  "status": "confirmed",
+  "channel": "booking",
+  "referer": "booking",
+  "arrival": "2026-10-05",
+  "departure": "2026-10-06",
+  "bookingTime": "2026-09-28T04:45:00Z",
+  "price": 664.91,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 598.42,
+    "lineTotal": 598.42
+   }
+  ]
+ },
+ {
+  "id": 900100,
+  "propertyId": "350362",
+  "roomId": "722807",
+  "roomQty": 1,
+  "status": "confirmed",
+  "channel": "booking",
+  "referer": "booking",
+  "arrival": "2026-11-11",
+  "departure": "2026-11-13",
+  "bookingTime": "2026-10-28T22:02:00Z",
+  "price": 2965.7,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 2669.13,
+    "lineTotal": 2669.13
+   }
+  ]
+ },
+ {
+  "id": 900101,
+  "propertyId": "350362",
+  "roomId": "722805",
+  "roomQty": 1,
+  "status": "new",
+  "channel": "expedia",
+  "referer": "expedia",
+  "arrival": "2026-11-27",
+  "departure": "2026-11-28",
+  "bookingTime": "2026-11-13T18:57:00Z",
+  "price": 1366.38,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 1229.74,
+    "lineTotal": 1229.74
+   },
+   {
+    "type": "payment",
+    "qty": 1,
+    "amount": -300.0,
+    "lineTotal": -300.0
+   }
+  ]
+ },
+ {
+  "id": 900102,
+  "propertyId": "350362",
+  "roomId": "722808",
+  "roomQty": 1,
+  "status": "confirmed",
+  "channel": "direct",
+  "referer": "API",
+  "arrival": "2026-12-14",
+  "departure": "2026-12-17",
+  "bookingTime": "2026-10-16T01:10:00Z",
+  "price": 2075.74,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 1868.17,
+    "lineTotal": 1868.17
+   },
+   {
+    "type": "charge",
+    "qty": 2,
+    "amount": 35.0
+   }
+  ]
+ },
+ {
+  "id": 900103,
+  "propertyId": "350362",
+  "roomId": "722805",
+  "roomQty": 1,
+  "status": "confirmed",
+  "channel": "booking",
+  "referer": "booking",
+  "arrival": "2026-11-14",
+  "departure": "2026-11-16",
+  "bookingTime": "2026-11-07T23:45:00Z",
+  "price": 1380.47
+ },
+ {
+  "id": 900104,
+  "propertyId": "350364",
+  "roomId": "722813",
+  "roomQty": 1,
+  "status": "confirmed",
+  "channel": "direct",
+  "referer": "frontdesk",
+  "arrival": "2026-10-03",
+  "departure": "2026-10-04",
+  "bookingTime": "2026-09-30T08:17:00Z",
+  "price": 1481.36,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 1333.22,
+    "lineTotal": 1333.22
+   },
+   {
+    "type": "charge",
+    "qty": 2,
+    "amount": 35.0
+   },
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 120.0,
+    "lineTotal": 120.0,
+    "invoiceeId": 77
+   }
+  ]
+ },
+ {
+  "id": 900105,
+  "propertyId": "350362",
+  "roomId": "722805",
+  "roomQty": 2,
+  "status": "cancelled",
+  "channel": "direct",
+  "referer": "API",
+  "arrival": "2026-10-04",
+  "departure": "2026-10-06",
+  "bookingTime": "2026-10-01T03:22:00Z",
+  "price": 1616.53,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 1454.88,
+    "lineTotal": 1454.88
+   },
+   {
+    "type": "payment",
+    "qty": 1,
+    "amount": -300.0,
+    "lineTotal": -300.0
+   }
+  ],
+  "cancelTime": "2026-10-27T23:22:00Z",
+  "modifiedTime": "2026-10-27T23:22:00Z"
+ },
+ {
+  "id": 900106,
+  "propertyId": "350362",
+  "roomId": "722808",
+  "roomQty": 1,
+  "status": "cancelled",
+  "channel": "direct",
+  "referer": "API",
+  "arrival": "2026-12-17",
+  "departure": "2026-12-19",
+  "bookingTime": "2026-11-17T21:16:00Z",
+  "price": 1067.38,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 960.64,
+    "lineTotal": 960.64
+   },
+   {
+    "type": "charge",
+    "qty": 2,
+    "amount": 35.0
+   }
+  ],
+  "cancelTime": "2026-12-24T02:16:00Z",
+  "modifiedTime": "2026-12-24T02:16:00Z"
+ },
+ {
+  "id": 900107,
+  "propertyId": "350362",
+  "roomId": "722808",
+  "roomQty": 1,
+  "status": "confirmed",
+  "channel": "booking",
+  "referer": "booking",
+  "arrival": "2026-10-03",
+  "departure": "2026-10-05",
+  "bookingTime": "2026-10-03T10:51:00Z",
+  "price": 1542.65
+ },
+ {
+  "id": 900108,
+  "propertyId": "350364",
+  "roomId": "722815",
+  "roomQty": 2,
+  "status": "new",
+  "channel": "airbnb",
+  "referer": "airbnb",
+  "arrival": "2026-11-17",
+  "departure": "2026-11-21",
+  "bookingTime": "2026-10-18T22:25:00Z",
+  "price": 3232.19,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 2908.97,
+    "lineTotal": 2908.97
+   }
+  ]
+ },
+ {
+  "id": 900109,
+  "propertyId": "350364",
+  "roomId": "722815",
+  "roomQty": 2,
+  "status": "confirmed",
+  "channel": "booking",
+  "referer": "booking",
+  "arrival": "2026-09-23",
+  "departure": "2026-09-25",
+  "bookingTime": "2026-09-22T07:04:00Z",
+  "price": 2692.73,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 2423.46,
+    "lineTotal": 2423.46
+   }
+  ]
+ },
+ {
+  "id": 900110,
+  "propertyId": "350362",
+  "roomId": "722807",
+  "roomQty": 1,
+  "status": "cancelled",
+  "channel": "expedia",
+  "referer": "expedia",
+  "arrival": "2026-12-19",
+  "departure": "2026-12-21",
+  "bookingTime": "2026-12-13T01:36:00Z",
+  "price": 2035.41,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 1831.87,
+    "lineTotal": 1831.87
+   },
+   {
+    "type": "charge",
+    "qty": 2,
+    "amount": 35.0
+   }
+  ],
+  "cancelTime": "2027-01-20T01:36:00Z",
+  "modifiedTime": "2027-01-20T01:36:00Z"
+ },
+ {
+  "id": 900111,
+  "propertyId": "350364",
+  "roomId": "722813",
+  "roomQty": 2,
+  "status": "confirmed",
+  "channel": "booking",
+  "referer": "booking",
+  "arrival": "2026-09-08",
+  "departure": "2026-09-10",
+  "bookingTime": "2026-09-07T11:04:00Z",
+  "price": 1219.78,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 1097.8,
+    "lineTotal": 1097.8
+   }
+  ]
+ },
+ {
+  "id": 900112,
+  "propertyId": "350364",
+  "roomId": "722814",
+  "roomQty": 2,
+  "status": "request",
+  "channel": "booking",
+  "referer": "booking",
+  "arrival": "2026-11-03",
+  "departure": "2026-11-05",
+  "bookingTime": "2026-09-05T00:55:00Z",
+  "price": 1003.21,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 902.89,
+    "lineTotal": 902.89
+   }
+  ]
+ },
+ {
+  "id": 900113,
+  "propertyId": "350362",
+  "roomId": "722805",
+  "roomQty": 2,
+  "status": "new",
+  "channel": "booking",
+  "referer": "booking",
+  "arrival": "2026-10-07",
+  "departure": "2026-10-09",
+  "bookingTime": "2026-09-30T10:41:00Z",
+  "price": 901.96
+ },
+ {
+  "id": 900114,
+  "propertyId": "350362",
+  "roomId": "722806",
+  "roomQty": 1,
+  "status": "confirmed",
+  "channel": "booking",
+  "referer": "booking",
+  "arrival": "2026-11-22",
+  "departure": "2026-11-23",
+  "bookingTime": "2026-09-23T07:38:00Z",
+  "price": 1468.0,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 1321.2,
+    "lineTotal": 1321.2
+   },
+   {
+    "type": "charge",
+    "qty": 2,
+    "amount": 35.0
+   }
+  ]
+ },
+ {
+  "id": 900115,
+  "propertyId": "350364",
+  "roomId": "722814",
+  "roomQty": 1,
+  "status": "new",
+  "channel": "booking",
+  "referer": "booking",
+  "arrival": "2026-09-11",
+  "departure": "2026-09-13",
+  "bookingTime": "2026-09-10T05:27:00Z",
+  "price": 1440.39,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 1296.35,
+    "lineTotal": 1296.35
+   },
+   {
+    "type": "charge",
+    "qty": 2,
+    "amount": 35.0
+   }
+  ]
+ },
+ {
+  "id": 900116,
+  "propertyId": "350362",
+  "roomId": "722805",
+  "roomQty": 1,
+  "status": "new",
+  "channel": "expedia",
+  "referer": "expedia",
+  "arrival": "2027-01-06",
+  "departure": "2027-01-07",
+  "bookingTime": "2026-09-08T15:00:00Z",
+  "price": 1283.23,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 1154.91,
+    "lineTotal": 1154.91
+   },
+   {
+    "type": "payment",
+    "qty": 1,
+    "amount": -300.0,
+    "lineTotal": -300.0
+   }
+  ]
+ },
+ {
+  "id": 900117,
+  "propertyId": "350362",
+  "roomId": "722807",
+  "roomQty": 1,
+  "status": "cancelled",
+  "channel": "direct",
+  "referer": "API",
+  "arrival": "2026-11-14",
+  "departure": "2026-11-16",
+  "bookingTime": "2026-11-11T20:57:00Z",
+  "price": 1627.16,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 1464.44,
+    "lineTotal": 1464.44
+   },
+   {
+    "type": "charge",
+    "qty": 2,
+    "amount": 35.0
+   }
+  ],
+  "cancelTime": "2026-11-15T03:57:00Z",
+  "modifiedTime": "2026-11-15T03:57:00Z"
+ },
+ {
+  "id": 900118,
+  "propertyId": "350362",
+  "roomId": "722808",
+  "roomQty": 1,
+  "status": "confirmed",
+  "channel": "direct",
+  "referer": "frontdesk",
+  "arrival": "2027-02-17",
+  "departure": "2027-02-21",
+  "bookingTime": "2026-10-21T01:35:00Z",
+  "price": 2429.36,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 2186.42,
+    "lineTotal": 2186.42
+   },
+   {
+    "type": "payment",
+    "qty": 1,
+    "amount": -300.0,
+    "lineTotal": -300.0
+   }
+  ]
+ },
+ {
+  "id": 900119,
+  "propertyId": "350362",
+  "roomId": "722808",
+  "roomQty": 1,
+  "status": "cancelled",
+  "channel": "direct",
+  "referer": "API",
+  "arrival": "2026-10-27",
+  "departure": "2026-10-29",
+  "bookingTime": "2026-10-14T01:13:00Z",
+  "price": 2364.91,
+  "modifiedTime": "2026-11-03T01:13:00Z"
+ },
+ {
+  "id": 900120,
+  "propertyId": "350362",
+  "roomId": "722807",
+  "roomQty": 2,
+  "status": "cancelled",
+  "channel": "booking",
+  "referer": "booking",
+  "arrival": "2026-12-04",
+  "departure": "2026-12-07",
+  "bookingTime": "2026-12-01T12:34:00Z",
+  "price": 3968.6,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 3571.74,
+    "lineTotal": 3571.74
+   },
+   {
+    "type": "charge",
+    "qty": 2,
+    "amount": 35.0
+   }
+  ],
+  "cancelTime": "2026-12-15T12:34:00Z",
+  "modifiedTime": "2026-12-15T12:34:00Z"
+ },
+ {
+  "id": 900121,
+  "propertyId": "350362",
+  "roomId": "722805",
+  "roomQty": 2,
+  "status": "cancelled",
+  "channel": "booking",
+  "referer": "booking",
+  "arrival": "2026-09-29",
+  "departure": "2026-10-01",
+  "bookingTime": "2026-09-26T15:09:00Z",
+  "price": 1597.9,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 1438.11,
+    "lineTotal": 1438.11
+   },
+   {
+    "type": "charge",
+    "qty": 2,
+    "amount": 35.0
+   },
+   {
+    "type": "payment",
+    "qty": 1,
+    "amount": -300.0,
+    "lineTotal": -300.0
+   }
+  ],
+  "modifiedTime": "2026-11-03T12:09:00Z"
+ },
+ {
+  "id": 900122,
+  "propertyId": "350362",
+  "roomId": "722805",
+  "roomQty": 2,
+  "status": "request",
+  "channel": "expedia",
+  "referer": "expedia",
+  "arrival": "2027-02-20",
+  "departure": "2027-02-22",
+  "bookingTime": "2026-10-23T11:49:00Z",
+  "price": 2459.39,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 2213.45,
+    "lineTotal": 2213.45
+   }
+  ]
+ },
+ {
+  "id": 900123,
+  "propertyId": "350364",
+  "roomId": "722814",
+  "roomQty": 1,
+  "status": "cancelled",
+  "channel": "airbnb",
+  "referer": "airbnb",
+  "arrival": "2027-01-05",
+  "departure": "2027-01-06",
+  "bookingTime": "2026-12-06T18:32:00Z",
+  "price": 860.06,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 774.05,
+    "lineTotal": 774.05
+   },
+   {
+    "type": "payment",
+    "qty": 1,
+    "amount": -300.0,
+    "lineTotal": -300.0
+   }
+  ],
+  "cancelTime": "2026-12-15T02:32:00Z",
+  "modifiedTime": "2026-12-15T02:32:00Z"
+ },
+ {
+  "id": 900124,
+  "propertyId": "350364",
+  "roomId": "722814",
+  "roomQty": 1,
+  "status": "confirmed",
+  "channel": "direct",
+  "referer": "API",
+  "arrival": "2026-12-11",
+  "departure": "2026-12-12",
+  "bookingTime": "2026-12-11T18:55:00Z",
+  "price": 1131.36,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 1018.22,
+    "lineTotal": 1018.22
+   },
+   {
+    "type": "charge",
+    "qty": 2,
+    "amount": 35.0
+   }
+  ]
+ },
+ {
+  "id": 900125,
+  "propertyId": "350362",
+  "roomId": "722805",
+  "roomQty": 1,
+  "status": "cancelled",
+  "channel": "direct",
+  "referer": "API",
+  "arrival": "2026-09-30",
+  "departure": "2026-10-02",
+  "bookingTime": "2026-09-16T19:27:00Z",
+  "price": 1602.31,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 1442.08,
+    "lineTotal": 1442.08
+   },
+   {
+    "type": "charge",
+    "qty": 2,
+    "amount": 35.0
+   },
+   {
+    "type": "payment",
+    "qty": 1,
+    "amount": -300.0,
+    "lineTotal": -300.0
+   }
+  ],
+  "cancelTime": "2026-09-27T00:27:00Z",
+  "modifiedTime": "2026-09-27T00:27:00Z"
+ },
+ {
+  "id": 900126,
+  "propertyId": "350362",
+  "roomId": "722805",
+  "roomQty": 1,
+  "status": "cancelled",
+  "channel": "direct",
+  "referer": "API",
+  "arrival": "2026-10-04",
+  "departure": "2026-10-06",
+  "bookingTime": "2026-10-01T19:40:00Z",
+  "price": 2495.96,
+  "modifiedTime": "2026-10-25T00:40:00Z"
+ },
+ {
+  "id": 900127,
+  "propertyId": "350364",
+  "roomId": "722814",
+  "roomQty": 1,
+  "status": "confirmed",
+  "channel": "airbnb",
+  "referer": "airbnb",
+  "arrival": "2026-12-03",
+  "departure": "2026-12-05",
+  "bookingTime": "2026-11-19T13:23:00Z",
+  "price": 2955.83
+ },
+ {
+  "id": 900128,
+  "propertyId": "350364",
+  "roomId": "722815",
+  "roomQty": 1,
+  "status": "confirmed",
+  "channel": "expedia",
+  "referer": "expedia",
+  "arrival": "2026-09-19",
+  "departure": "2026-09-22",
+  "bookingTime": "2026-09-20T01:48:00Z",
+  "price": 2468.81
+ },
+ {
+  "id": 900129,
+  "propertyId": "350364",
+  "roomId": "722813",
+  "roomQty": 2,
+  "status": "cancelled",
+  "channel": "booking",
+  "referer": "booking",
+  "arrival": "2027-01-25",
+  "departure": "2027-01-27",
+  "bookingTime": "2026-11-26T16:56:00Z",
+  "price": 1416.92,
+  "cancelTime": "2026-11-29T05:56:00Z",
+  "modifiedTime": "2026-11-29T05:56:00Z"
+ },
+ {
+  "id": 900130,
+  "propertyId": "350362",
+  "roomId": "722807",
+  "roomQty": 1,
+  "status": "confirmed",
+  "channel": "booking",
+  "referer": "booking",
+  "arrival": "2026-11-15",
+  "departure": "2026-11-19",
+  "bookingTime": "2026-09-16T15:31:00Z",
+  "price": 3764.85,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 3388.36,
+    "lineTotal": 3388.36
+   },
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 120.0,
+    "lineTotal": 120.0,
+    "invoiceeId": 77
+   }
+  ]
+ },
+ {
+  "id": 900131,
+  "propertyId": "350364",
+  "roomId": "722813",
+  "roomQty": 1,
+  "status": "new",
+  "channel": "expedia",
+  "referer": "expedia",
+  "arrival": "2026-09-25",
+  "departure": "2026-09-27",
+  "bookingTime": "2026-09-11T12:12:00Z",
+  "price": 2886.99,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 2598.29,
+    "lineTotal": 2598.29
+   },
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 120.0,
+    "lineTotal": 120.0,
+    "invoiceeId": 77
+   }
+  ]
+ },
+ {
+  "id": 900132,
+  "propertyId": "350364",
+  "roomId": "722814",
+  "roomQty": 2,
+  "status": "new",
+  "channel": "airbnb",
+  "referer": "airbnb",
+  "arrival": "2026-10-01",
+  "departure": "2026-10-03",
+  "bookingTime": "2026-09-25T02:48:00Z",
+  "price": 1316.64
+ },
+ {
+  "id": 900133,
+  "propertyId": "350362",
+  "roomId": "722805",
+  "roomQty": 1,
+  "status": "confirmed",
+  "channel": "expedia",
+  "referer": "expedia",
+  "arrival": "2026-12-15",
+  "departure": "2026-12-18",
+  "bookingTime": "2026-12-12T19:34:00Z",
+  "price": 3670.97
+ },
+ {
+  "id": 900134,
+  "propertyId": "350362",
+  "roomId": "722807",
+  "roomQty": 1,
+  "status": "request",
+  "channel": "expedia",
+  "referer": "expedia",
+  "arrival": "2026-11-08",
+  "departure": "2026-11-12",
+  "bookingTime": "2026-10-09T08:22:00Z",
+  "price": 2523.93
+ },
+ {
+  "id": 900135,
+  "propertyId": "350364",
+  "roomId": "722814",
+  "roomQty": 1,
+  "status": "confirmed",
+  "channel": "airbnb",
+  "referer": "airbnb",
+  "arrival": "2026-12-03",
+  "departure": "2026-12-07",
+  "bookingTime": "2026-12-03T13:40:00Z",
+  "price": 4977.54,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 4479.79,
+    "lineTotal": 4479.79
+   }
+  ]
+ },
+ {
+  "id": 900136,
+  "propertyId": "350364",
+  "roomId": "722814",
+  "roomQty": 1,
+  "status": "confirmed",
+  "channel": "direct",
+  "referer": "frontdesk",
+  "arrival": "2026-10-02",
+  "departure": "2026-10-03",
+  "bookingTime": "2026-10-02T03:35:00Z",
+  "price": 1205.02
+ },
+ {
+  "id": 900137,
+  "propertyId": "350364",
+  "roomId": "722814",
+  "roomQty": 2,
+  "status": "confirmed",
+  "channel": "booking",
+  "referer": "booking",
+  "arrival": "2026-09-02",
+  "departure": "2026-09-05",
+  "bookingTime": "2026-09-01T13:55:00Z",
+  "price": 3533.54,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 3180.19,
+    "lineTotal": 3180.19
+   },
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 120.0,
+    "lineTotal": 120.0,
+    "invoiceeId": 77
+   },
+   {
+    "type": "payment",
+    "qty": 1,
+    "amount": -300.0,
+    "lineTotal": -300.0
+   }
+  ]
+ },
+ {
+  "id": 900138,
+  "propertyId": "350362",
+  "roomId": "722808",
+  "roomQty": 1,
+  "status": "cancelled",
+  "channel": "airbnb",
+  "referer": "airbnb",
+  "arrival": "2026-09-16",
+  "departure": "2026-09-17",
+  "bookingTime": "2026-09-13T09:01:00Z",
+  "price": 836.8,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 753.12,
+    "lineTotal": 753.12
+   }
+  ],
+  "cancelTime": "2026-09-14T21:01:00Z",
+  "modifiedTime": "2026-09-14T21:01:00Z"
+ },
+ {
+  "id": 900139,
+  "propertyId": "350362",
+  "roomId": "722805",
+  "roomQty": 2,
+  "status": "new",
+  "channel": "direct",
+  "referer": "API",
+  "arrival": "2026-11-18",
+  "departure": "2026-11-20",
+  "bookingTime": "2026-09-20T00:01:00Z",
+  "price": 1050.01
+ },
+ {
+  "id": 900140,
+  "propertyId": "350364",
+  "roomId": "722813",
+  "roomQty": 1,
+  "status": "new",
+  "channel": "airbnb",
+  "referer": "airbnb",
+  "arrival": "2026-11-26",
+  "departure": "2026-11-28",
+  "bookingTime": "2026-09-27T14:01:00Z",
+  "price": 2625.11
+ },
+ {
+  "id": 900141,
+  "propertyId": "350362",
+  "roomId": "722807",
+  "roomQty": 1,
+  "status": "cancelled",
+  "channel": "booking",
+  "referer": "booking",
+  "arrival": "2027-01-29",
+  "departure": "2027-02-01",
+  "bookingTime": "2026-11-30T21:14:00Z",
+  "price": 1742.37,
+  "modifiedTime": "2026-12-20T07:14:00Z"
+ },
+ {
+  "id": 900142,
+  "propertyId": "350362",
+  "roomId": "722805",
+  "roomQty": 2,
+  "status": "confirmed",
+  "channel": "expedia",
+  "referer": "expedia",
+  "arrival": "2026-09-17",
+  "departure": "2026-09-20",
+  "bookingTime": "2026-09-10T04:23:00Z",
+  "price": 1410.78,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 1269.7,
+    "lineTotal": 1269.7
+   },
+   {
+    "type": "payment",
+    "qty": 1,
+    "amount": -300.0,
+    "lineTotal": -300.0
+   }
+  ]
+ },
+ {
+  "id": 900143,
+  "propertyId": "350364",
+  "roomId": "722813",
+  "roomQty": 2,
+  "status": "new",
+  "channel": "direct",
+  "referer": "API",
+  "arrival": "2026-11-26",
+  "departure": "2026-11-28",
+  "bookingTime": "2026-11-26T23:08:00Z",
+  "price": 1599.81,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 1439.83,
+    "lineTotal": 1439.83
+   }
+  ]
+ },
+ {
+  "id": 900144,
+  "propertyId": "350364",
+  "roomId": "722815",
+  "roomQty": 1,
+  "status": "cancelled",
+  "channel": "booking",
+  "referer": "booking",
+  "arrival": "2026-11-21",
+  "departure": "2026-11-23",
+  "bookingTime": "2026-09-23T01:59:00Z",
+  "price": 1176.58,
+  "cancelTime": "2026-10-01T03:59:00Z",
+  "modifiedTime": "2026-10-01T03:59:00Z"
+ },
+ {
+  "id": 900145,
+  "propertyId": "350362",
+  "roomId": "722807",
+  "roomQty": 2,
+  "status": "confirmed",
+  "channel": "airbnb",
+  "referer": "airbnb",
+  "arrival": "2026-11-02",
+  "departure": "2026-11-05",
+  "bookingTime": "2026-11-01T19:49:00Z",
+  "price": 2871.95
+ },
+ {
+  "id": 900146,
+  "propertyId": "350362",
+  "roomId": "722806",
+  "roomQty": 1,
+  "status": "confirmed",
+  "channel": "airbnb",
+  "referer": "airbnb",
+  "arrival": "2027-02-08",
+  "departure": "2027-02-12",
+  "bookingTime": "2026-12-10T04:02:00Z",
+  "price": 3871.02,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 3483.92,
+    "lineTotal": 3483.92
+   }
+  ]
+ },
+ {
+  "id": 900147,
+  "propertyId": "350362",
+  "roomId": "722807",
+  "roomQty": 1,
+  "status": "confirmed",
+  "channel": "expedia",
+  "referer": "expedia",
+  "arrival": "2026-11-02",
+  "departure": "2026-11-03",
+  "bookingTime": "2026-10-03T17:19:00Z",
+  "price": 1437.5,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 1293.75,
+    "lineTotal": 1293.75
+   },
+   {
+    "type": "payment",
+    "qty": 1,
+    "amount": -300.0,
+    "lineTotal": -300.0
+   }
+  ]
+ },
+ {
+  "id": 900148,
+  "propertyId": "350364",
+  "roomId": "722813",
+  "roomQty": 1,
+  "status": "confirmed",
+  "channel": "airbnb",
+  "referer": "airbnb",
+  "arrival": "2027-01-01",
+  "departure": "2027-01-04",
+  "bookingTime": "2026-09-03T13:48:00Z",
+  "price": 1873.34,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 1686.01,
+    "lineTotal": 1686.01
+   }
+  ]
+ },
+ {
+  "id": 900149,
+  "propertyId": "350364",
+  "roomId": "722813",
+  "roomQty": 2,
+  "status": "cancelled",
+  "channel": "booking",
+  "referer": "booking",
+  "arrival": "2026-12-11",
+  "departure": "2026-12-14",
+  "bookingTime": "2026-12-10T13:54:00Z",
+  "price": 1709.53,
+  "cancelTime": "2027-01-10T20:54:00Z",
+  "modifiedTime": "2027-01-10T20:54:00Z"
+ },
+ {
+  "id": 900150,
+  "propertyId": "350362",
+  "roomId": "722807",
+  "roomQty": 1,
+  "status": "confirmed",
+  "channel": "expedia",
+  "referer": "expedia",
+  "arrival": "2026-11-11",
+  "departure": "2026-11-14",
+  "bookingTime": "2026-11-11T10:57:00Z",
+  "price": 3646.91,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 3282.22,
+    "lineTotal": 3282.22
+   },
+   {
+    "type": "charge",
+    "qty": 2,
+    "amount": 35.0
+   }
+  ]
+ },
+ {
+  "id": 900151,
+  "propertyId": "350362",
+  "roomId": "722807",
+  "roomQty": 2,
+  "status": "cancelled",
+  "channel": "expedia",
+  "referer": "expedia",
+  "arrival": "2026-12-30",
+  "departure": "2026-12-31",
+  "bookingTime": "2026-10-31T21:50:00Z",
+  "price": 1437.21,
+  "cancelTime": "2026-11-25T20:50:00Z",
+  "modifiedTime": "2026-11-25T20:50:00Z"
+ },
+ {
+  "id": 900152,
+  "propertyId": "350364",
+  "roomId": "722814",
+  "roomQty": 1,
+  "status": "new",
+  "channel": "booking",
+  "referer": "booking",
+  "arrival": "2026-09-17",
+  "departure": "2026-09-19",
+  "bookingTime": "2026-09-10T14:59:00Z",
+  "price": 2020.19,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 1818.17,
+    "lineTotal": 1818.17
+   },
+   {
+    "type": "charge",
+    "qty": 2,
+    "amount": 35.0
+   }
+  ]
+ },
+ {
+  "id": 900153,
+  "propertyId": "350362",
+  "roomId": "722807",
+  "roomQty": 2,
+  "status": "new",
+  "channel": "airbnb",
+  "referer": "airbnb",
+  "arrival": "2026-10-04",
+  "departure": "2026-10-06",
+  "bookingTime": "2026-09-27T19:37:00Z",
+  "price": 1220.8,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 1098.72,
+    "lineTotal": 1098.72
+   }
+  ]
+ },
+ {
+  "id": 900154,
+  "propertyId": "350362",
+  "roomId": "722806",
+  "roomQty": 1,
+  "status": "new",
+  "channel": "booking",
+  "referer": "booking",
+  "arrival": "2027-01-22",
+  "departure": "2027-01-23",
+  "bookingTime": "2026-09-24T15:07:00Z",
+  "price": 1306.63
+ },
+ {
+  "id": 900155,
+  "propertyId": "350362",
+  "roomId": "722808",
+  "roomQty": 1,
+  "status": "new",
+  "channel": "direct",
+  "referer": "frontdesk",
+  "arrival": "2026-11-14",
+  "departure": "2026-11-18",
+  "bookingTime": "2026-11-11T11:02:00Z",
+  "price": 2802.21,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 2521.99,
+    "lineTotal": 2521.99
+   },
+   {
+    "type": "charge",
+    "qty": 2,
+    "amount": 35.0
+   }
+  ]
+ },
+ {
+  "id": 900156,
+  "propertyId": "350364",
+  "roomId": "722814",
+  "roomQty": 1,
+  "status": "cancelled",
+  "channel": "booking",
+  "referer": "booking",
+  "arrival": "2026-09-02",
+  "departure": "2026-09-06",
+  "bookingTime": "2026-09-02T09:06:00Z",
+  "price": 2953.25,
+  "modifiedTime": "2026-10-10T18:06:00Z"
+ },
+ {
+  "id": 900157,
+  "propertyId": "350364",
+  "roomId": "722814",
+  "roomQty": 1,
+  "status": "cancelled",
+  "channel": "direct",
+  "referer": "frontdesk",
+  "arrival": "2026-11-22",
+  "departure": "2026-11-26",
+  "bookingTime": "2026-09-24T01:29:00Z",
+  "price": 2248.39,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 2023.55,
+    "lineTotal": 2023.55
+   }
+  ],
+  "modifiedTime": "2026-10-30T09:29:00Z"
+ },
+ {
+  "id": 900158,
+  "propertyId": "350362",
+  "roomId": "722807",
+  "roomQty": 1,
+  "status": "confirmed",
+  "channel": "direct",
+  "referer": "API",
+  "arrival": "2026-12-17",
+  "departure": "2026-12-20",
+  "bookingTime": "2026-11-17T22:13:00Z",
+  "price": 2073.48,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 1866.13,
+    "lineTotal": 1866.13
+   },
+   {
+    "type": "charge",
+    "qty": 2,
+    "amount": 35.0
+   },
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 120.0,
+    "lineTotal": 120.0,
+    "invoiceeId": 77
+   },
+   {
+    "type": "payment",
+    "qty": 1,
+    "amount": -300.0,
+    "lineTotal": -300.0
+   }
+  ]
+ },
+ {
+  "id": 900159,
+  "propertyId": "350362",
+  "roomId": "722806",
+  "roomQty": 2,
+  "status": "confirmed",
+  "channel": "expedia",
+  "referer": "expedia",
+  "arrival": "2026-10-10",
+  "departure": "2026-10-13",
+  "bookingTime": "2026-10-03T14:04:00Z",
+  "price": 1815.75,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 1634.17,
+    "lineTotal": 1634.17
+   }
+  ]
+ },
+ {
+  "id": 900160,
+  "propertyId": "350364",
+  "roomId": "722815",
+  "roomQty": 1,
+  "status": "confirmed",
+  "channel": "booking",
+  "referer": "booking",
+  "arrival": "2027-02-08",
+  "departure": "2027-02-10",
+  "bookingTime": "2026-12-11T00:37:00Z",
+  "price": 1114.13
+ },
+ {
+  "id": 900161,
+  "propertyId": "350362",
+  "roomId": "722805",
+  "roomQty": 1,
+  "status": "cancelled",
+  "channel": "booking",
+  "referer": "booking",
+  "arrival": "2026-12-03",
+  "departure": "2026-12-04",
+  "bookingTime": "2026-10-04T10:33:00Z",
+  "price": 1280.35,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 1152.32,
+    "lineTotal": 1152.32
+   },
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 120.0,
+    "lineTotal": 120.0,
+    "invoiceeId": 77
+   }
+  ],
+  "cancelTime": "2026-11-11T08:33:00Z",
+  "modifiedTime": "2026-11-11T08:33:00Z"
+ },
+ {
+  "id": 900162,
+  "propertyId": "350364",
+  "roomId": "722815",
+  "roomQty": 1,
+  "status": "confirmed",
+  "channel": "direct",
+  "referer": "API",
+  "arrival": "2027-01-01",
+  "departure": "2027-01-04",
+  "bookingTime": "2026-09-03T04:22:00Z",
+  "price": 4035.65
+ },
+ {
+  "id": 900163,
+  "propertyId": "350362",
+  "roomId": "722805",
+  "roomQty": 1,
+  "status": "new",
+  "channel": "airbnb",
+  "referer": "airbnb",
+  "arrival": "2026-12-05",
+  "departure": "2026-12-08",
+  "bookingTime": "2026-10-06T14:50:00Z",
+  "price": 2298.25,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 2068.43,
+    "lineTotal": 2068.43
+   },
+   {
+    "type": "charge",
+    "qty": 2,
+    "amount": 35.0
+   }
+  ]
+ },
+ {
+  "id": 900164,
+  "propertyId": "350362",
+  "roomId": "722808",
+  "roomQty": 1,
+  "status": "new",
+  "channel": "booking",
+  "referer": "booking",
+  "arrival": "2026-11-01",
+  "departure": "2026-11-02",
+  "bookingTime": "2026-11-01T09:55:00Z",
+  "price": 1396.74
+ },
+ {
+  "id": 900165,
+  "propertyId": "350362",
+  "roomId": "722806",
+  "roomQty": 1,
+  "status": "confirmed",
+  "channel": "booking",
+  "referer": "booking",
+  "arrival": "2026-10-22",
+  "departure": "2026-10-23",
+  "bookingTime": "2026-10-22T22:20:00Z",
+  "price": 1169.77,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 1052.79,
+    "lineTotal": 1052.79
+   },
+   {
+    "type": "charge",
+    "qty": 2,
+    "amount": 35.0
+   }
+  ]
+ },
+ {
+  "id": 900166,
+  "propertyId": "350362",
+  "roomId": "722806",
+  "roomQty": 2,
+  "status": "confirmed",
+  "channel": "booking",
+  "referer": "booking",
+  "arrival": "2026-12-11",
+  "departure": "2026-12-13",
+  "bookingTime": "2026-12-11T23:25:00Z",
+  "price": 2951.63,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 2656.47,
+    "lineTotal": 2656.47
+   },
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 120.0,
+    "lineTotal": 120.0,
+    "invoiceeId": 77
+   }
+  ]
+ },
+ {
+  "id": 900167,
+  "propertyId": "350364",
+  "roomId": "722813",
+  "roomQty": 1,
+  "status": "confirmed",
+  "channel": "booking",
+  "referer": "booking",
+  "arrival": "2027-01-28",
+  "departure": "2027-02-01",
+  "bookingTime": "2026-10-01T02:18:00Z",
+  "price": 5213.61
+ },
+ {
+  "id": 900168,
+  "propertyId": "350364",
+  "roomId": "722813",
+  "roomQty": 2,
+  "status": "confirmed",
+  "channel": "direct",
+  "referer": "frontdesk",
+  "arrival": "2027-01-05",
+  "departure": "2027-01-08",
+  "bookingTime": "2026-11-06T20:44:00Z",
+  "price": 4321.51
+ },
+ {
+  "id": 900169,
+  "propertyId": "350362",
+  "roomId": "722808",
+  "roomQty": 2,
+  "status": "cancelled",
+  "channel": "direct",
+  "referer": "frontdesk",
+  "arrival": "2026-11-30",
+  "departure": "2026-12-02",
+  "bookingTime": "2026-11-30T14:06:00Z",
+  "price": 1677.09,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 1509.38,
+    "lineTotal": 1509.38
+   },
+   {
+    "type": "charge",
+    "qty": 2,
+    "amount": 35.0
+   },
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 120.0,
+    "lineTotal": 120.0,
+    "invoiceeId": 77
+   }
+  ],
+  "cancelTime": "2026-12-11T01:06:00Z",
+  "modifiedTime": "2026-12-11T01:06:00Z"
+ },
+ {
+  "id": 900170,
+  "propertyId": "350364",
+  "roomId": "722813",
+  "roomQty": 1,
+  "status": "cancelled",
+  "channel": "booking",
+  "referer": "booking",
+  "arrival": "2026-11-12",
+  "departure": "2026-11-15",
+  "bookingTime": "2026-11-09T09:49:00Z",
+  "price": 3128.33,
+  "cancelTime": "2026-12-07T07:49:00Z",
+  "modifiedTime": "2026-12-07T07:49:00Z"
+ },
+ {
+  "id": 900171,
+  "propertyId": "350362",
+  "roomId": "722807",
+  "roomQty": 2,
+  "status": "confirmed",
+  "channel": "airbnb",
+  "referer": "airbnb",
+  "arrival": "2026-10-29",
+  "departure": "2026-10-31",
+  "bookingTime": "2026-10-26T07:08:00Z",
+  "price": 2053.23
+ },
+ {
+  "id": 900172,
+  "propertyId": "350364",
+  "roomId": "722814",
+  "roomQty": 1,
+  "status": "confirmed",
+  "channel": "airbnb",
+  "referer": "airbnb",
+  "arrival": "2026-11-06",
+  "departure": "2026-11-08",
+  "bookingTime": "2026-11-05T19:49:00Z",
+  "price": 1738.53,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 1564.68,
+    "lineTotal": 1564.68
+   },
+   {
+    "type": "charge",
+    "qty": 2,
+    "amount": 35.0
+   }
+  ]
+ },
+ {
+  "id": 900173,
+  "propertyId": "350364",
+  "roomId": "722814",
+  "roomQty": 1,
+  "status": "confirmed",
+  "channel": "booking",
+  "referer": "booking",
+  "arrival": "2027-02-22",
+  "departure": "2027-02-23",
+  "bookingTime": "2026-10-25T15:26:00Z",
+  "price": 477.82,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 430.04,
+    "lineTotal": 430.04
+   },
+   {
+    "type": "charge",
+    "qty": 2,
+    "amount": 35.0
+   },
+   {
+    "type": "payment",
+    "qty": 1,
+    "amount": -300.0,
+    "lineTotal": -300.0
+   }
+  ]
+ },
+ {
+  "id": 900174,
+  "propertyId": "350364",
+  "roomId": "722815",
+  "roomQty": 2,
+  "status": "confirmed",
+  "channel": "booking",
+  "referer": "booking",
+  "arrival": "2026-12-19",
+  "departure": "2026-12-21",
+  "bookingTime": "2026-11-19T19:54:00Z",
+  "price": 2078.48,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 1870.63,
+    "lineTotal": 1870.63
+   }
+  ]
+ },
+ {
+  "id": 900175,
+  "propertyId": "350364",
+  "roomId": "722815",
+  "roomQty": 1,
+  "status": "confirmed",
+  "channel": "direct",
+  "referer": "frontdesk",
+  "arrival": "2026-09-08",
+  "departure": "2026-09-12",
+  "bookingTime": "2026-09-08T09:41:00Z",
+  "price": 2503.09,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 2252.78,
+    "lineTotal": 2252.78
+   }
+  ]
+ },
+ {
+  "id": 900176,
+  "propertyId": "350362",
+  "roomId": "722806",
+  "roomQty": 1,
+  "status": "request",
+  "channel": "airbnb",
+  "referer": "airbnb",
+  "arrival": "2027-04-04",
+  "departure": "2027-04-05",
+  "bookingTime": "2026-12-05T17:35:00Z",
+  "price": 1126.88,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 1014.19,
+    "lineTotal": 1014.19
+   },
+   {
+    "type": "payment",
+    "qty": 1,
+    "amount": -300.0,
+    "lineTotal": -300.0
+   }
+  ]
+ },
+ {
+  "id": 900177,
+  "propertyId": "350362",
+  "roomId": "722807",
+  "roomQty": 2,
+  "status": "new",
+  "channel": "expedia",
+  "referer": "expedia",
+  "arrival": "2027-01-23",
+  "departure": "2027-01-26",
+  "bookingTime": "2026-09-25T18:18:00Z",
+  "price": 3357.0,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 3021.3,
+    "lineTotal": 3021.3
+   },
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 120.0,
+    "lineTotal": 120.0,
+    "invoiceeId": 77
+   },
+   {
+    "type": "payment",
+    "qty": 1,
+    "amount": -300.0,
+    "lineTotal": -300.0
+   }
+  ]
+ },
+ {
+  "id": 900178,
+  "propertyId": "350364",
+  "roomId": "722814",
+  "roomQty": 1,
+  "status": "confirmed",
+  "channel": "direct",
+  "referer": "API",
+  "arrival": "2027-02-09",
+  "departure": "2027-02-12",
+  "bookingTime": "2026-10-12T09:59:00Z",
+  "price": 4053.4,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 3648.06,
+    "lineTotal": 3648.06
+   },
+   {
+    "type": "charge",
+    "qty": 2,
+    "amount": 35.0
+   }
+  ]
+ },
+ {
+  "id": 900179,
+  "propertyId": "350364",
+  "roomId": "722814",
+  "roomQty": 1,
+  "status": "confirmed",
+  "channel": "direct",
+  "referer": "API",
+  "arrival": "2026-09-30",
+  "departure": "2026-10-01",
+  "bookingTime": "2026-09-29T21:53:00Z",
+  "price": 1469.04,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 1322.14,
+    "lineTotal": 1322.14
+   }
+  ]
+ },
+ {
+  "id": 900180,
+  "propertyId": "350364",
+  "roomId": "722815",
+  "roomQty": 1,
+  "status": "confirmed",
+  "channel": "direct",
+  "referer": "frontdesk",
+  "arrival": "2026-09-09",
+  "departure": "2026-09-11",
+  "bookingTime": "2026-09-08T16:45:00Z",
+  "price": 1809.53
+ },
+ {
+  "id": 900181,
+  "propertyId": "350362",
+  "roomId": "722808",
+  "roomQty": 1,
+  "status": "confirmed",
+  "channel": "booking",
+  "referer": "booking",
+  "arrival": "2027-02-03",
+  "departure": "2027-02-07",
+  "bookingTime": "2026-12-05T04:24:00Z",
+  "price": 4490.85,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 4041.77,
+    "lineTotal": 4041.77
+   }
+  ]
+ },
+ {
+  "id": 900182,
+  "propertyId": "350362",
+  "roomId": "722807",
+  "roomQty": 1,
+  "status": "confirmed",
+  "channel": "direct",
+  "referer": "API",
+  "arrival": "2026-12-12",
+  "departure": "2026-12-13",
+  "bookingTime": "2026-12-09T14:21:00Z",
+  "price": 1007.26,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 906.53,
+    "lineTotal": 906.53
+   },
+   {
+    "type": "charge",
+    "qty": 2,
+    "amount": 35.0
+   },
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 120.0,
+    "lineTotal": 120.0,
+    "invoiceeId": 77
+   }
+  ]
+ },
+ {
+  "id": 900183,
+  "propertyId": "350364",
+  "roomId": "722815",
+  "roomQty": 1,
+  "status": "confirmed",
+  "channel": "booking",
+  "referer": "booking",
+  "arrival": "2026-10-18",
+  "departure": "2026-10-22",
+  "bookingTime": "2026-10-11T08:49:00Z",
+  "price": 3839.96
+ },
+ {
+  "id": 900184,
+  "propertyId": "350364",
+  "roomId": "722815",
+  "roomQty": 2,
+  "status": "confirmed",
+  "channel": "booking",
+  "referer": "booking",
+  "arrival": "2027-02-22",
+  "departure": "2027-02-23",
+  "bookingTime": "2026-10-25T03:19:00Z",
+  "price": 789.79,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 710.81,
+    "lineTotal": 710.81
+   }
+  ]
+ },
+ {
+  "id": 900185,
+  "propertyId": "350362",
+  "roomId": "722806",
+  "roomQty": 1,
+  "status": "cancelled",
+  "channel": "expedia",
+  "referer": "expedia",
+  "arrival": "2026-09-17",
+  "departure": "2026-09-18",
+  "bookingTime": "2026-09-16T17:52:00Z",
+  "price": 1217.47,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 1095.72,
+    "lineTotal": 1095.72
+   },
+   {
+    "type": "charge",
+    "qty": 2,
+    "amount": 35.0
+   }
+  ],
+  "cancelTime": "2026-10-11T19:52:00Z",
+  "modifiedTime": "2026-10-11T19:52:00Z"
+ },
+ {
+  "id": 900186,
+  "propertyId": "350364",
+  "roomId": "722815",
+  "roomQty": 1,
+  "status": "confirmed",
+  "channel": "expedia",
+  "referer": "expedia",
+  "arrival": "2027-02-10",
+  "departure": "2027-02-13",
+  "bookingTime": "2026-12-12T06:21:00Z",
+  "price": 2812.6
+ },
+ {
+  "id": 900187,
+  "propertyId": "350362",
+  "roomId": "722806",
+  "roomQty": 1,
+  "status": "confirmed",
+  "channel": "direct",
+  "referer": "API",
+  "arrival": "2026-10-17",
+  "departure": "2026-10-18",
+  "bookingTime": "2026-10-14T14:58:00Z",
+  "price": 785.79
+ },
+ {
+  "id": 900188,
+  "propertyId": "350362",
+  "roomId": "722806",
+  "roomQty": 1,
+  "status": "new",
+  "channel": "direct",
+  "referer": "API",
+  "arrival": "2027-03-08",
+  "departure": "2027-03-09",
+  "bookingTime": "2026-11-09T00:41:00Z",
+  "price": 749.34
+ },
+ {
+  "id": 900189,
+  "propertyId": "350362",
+  "roomId": "722805",
+  "roomQty": 1,
+  "status": "new",
+  "channel": "booking",
+  "referer": "booking",
+  "arrival": "2027-01-09",
+  "departure": "2027-01-13",
+  "bookingTime": "2026-12-10T20:07:00Z",
+  "price": 4897.76
+ },
+ {
+  "id": 900190,
+  "propertyId": "350364",
+  "roomId": "722813",
+  "roomQty": 1,
+  "status": "confirmed",
+  "channel": "direct",
+  "referer": "API",
+  "arrival": "2026-10-11",
+  "departure": "2026-10-13",
+  "bookingTime": "2026-10-10T19:58:00Z",
+  "price": 2525.74
+ },
+ {
+  "id": 900191,
+  "propertyId": "350362",
+  "roomId": "722806",
+  "roomQty": 1,
+  "status": "confirmed",
+  "channel": "booking",
+  "referer": "booking",
+  "arrival": "2026-09-26",
+  "departure": "2026-09-28",
+  "bookingTime": "2026-09-23T21:19:00Z",
+  "price": 1373.66,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 1236.29,
+    "lineTotal": 1236.29
+   }
+  ]
+ },
+ {
+  "id": 900192,
+  "propertyId": "350362",
+  "roomId": "722807",
+  "roomQty": 2,
+  "status": "confirmed",
+  "channel": "booking",
+  "referer": "booking",
+  "arrival": "2026-09-18",
+  "departure": "2026-09-22",
+  "bookingTime": "2026-09-15T11:16:00Z",
+  "price": 4506.02,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 4055.42,
+    "lineTotal": 4055.42
+   },
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 120.0,
+    "lineTotal": 120.0,
+    "invoiceeId": 77
+   }
+  ]
+ },
+ {
+  "id": 900193,
+  "propertyId": "350362",
+  "roomId": "722806",
+  "roomQty": 2,
+  "status": "confirmed",
+  "channel": "airbnb",
+  "referer": "airbnb",
+  "arrival": "2027-02-16",
+  "departure": "2027-02-19",
+  "bookingTime": "2026-10-19T09:32:00Z",
+  "price": 1991.14,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 1792.03,
+    "lineTotal": 1792.03
+   },
+   {
+    "type": "payment",
+    "qty": 1,
+    "amount": -300.0,
+    "lineTotal": -300.0
+   }
+  ]
+ },
+ {
+  "id": 900194,
+  "propertyId": "350364",
+  "roomId": "722815",
+  "roomQty": 1,
+  "status": "confirmed",
+  "channel": "airbnb",
+  "referer": "airbnb",
+  "arrival": "2026-12-23",
+  "departure": "2026-12-26",
+  "bookingTime": "2026-11-23T03:32:00Z",
+  "price": 2296.81,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 2067.13,
+    "lineTotal": 2067.13
+   },
+   {
+    "type": "charge",
+    "qty": 2,
+    "amount": 35.0
+   },
+   {
+    "type": "payment",
+    "qty": 1,
+    "amount": -300.0,
+    "lineTotal": -300.0
+   }
+  ]
+ },
+ {
+  "id": 900195,
+  "propertyId": "350364",
+  "roomId": "722813",
+  "roomQty": 1,
+  "status": "confirmed",
+  "channel": "airbnb",
+  "referer": "airbnb",
+  "arrival": "2027-01-14",
+  "departure": "2027-01-15",
+  "bookingTime": "2026-09-16T03:54:00Z",
+  "price": 568.76
+ },
+ {
+  "id": 900196,
+  "propertyId": "350364",
+  "roomId": "722814",
+  "roomQty": 1,
+  "status": "confirmed",
+  "channel": "booking",
+  "referer": "booking",
+  "arrival": "2026-11-23",
+  "departure": "2026-11-27",
+  "bookingTime": "2026-11-23T16:44:00Z",
+  "price": 3495.76,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 3146.18,
+    "lineTotal": 3146.18
+   }
+  ]
+ },
+ {
+  "id": 900197,
+  "propertyId": "350364",
+  "roomId": "722814",
+  "roomQty": 1,
+  "status": "confirmed",
+  "channel": "airbnb",
+  "referer": "airbnb",
+  "arrival": "2026-11-14",
+  "departure": "2026-11-16",
+  "bookingTime": "2026-11-11T19:16:00Z",
+  "price": 2155.24,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 1939.72,
+    "lineTotal": 1939.72
+   },
+   {
+    "type": "charge",
+    "qty": 2,
+    "amount": 35.0
+   },
+   {
+    "type": "payment",
+    "qty": 1,
+    "amount": -300.0,
+    "lineTotal": -300.0
+   }
+  ]
+ },
+ {
+  "id": 900198,
+  "propertyId": "350364",
+  "roomId": "722814",
+  "roomQty": 1,
+  "status": "confirmed",
+  "channel": "direct",
+  "referer": "frontdesk",
+  "arrival": "2026-09-30",
+  "departure": "2026-10-04",
+  "bookingTime": "2026-09-16T21:57:00Z",
+  "price": 3793.24,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 3413.92,
+    "lineTotal": 3413.92
+   },
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 120.0,
+    "lineTotal": 120.0,
+    "invoiceeId": 77
+   }
+  ]
+ },
+ {
+  "id": 900199,
+  "propertyId": "350362",
+  "roomId": "722807",
+  "roomQty": 2,
+  "status": "new",
+  "channel": "direct",
+  "referer": "frontdesk",
+  "arrival": "2026-09-23",
+  "departure": "2026-09-25",
+  "bookingTime": "2026-09-16T12:36:00Z",
+  "price": 1857.08,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 1671.37,
+    "lineTotal": 1671.37
+   }
+  ]
+ },
+ {
+  "id": 900200,
+  "propertyId": "350362",
+  "roomId": "722807",
+  "roomQty": 1,
+  "status": "confirmed",
+  "channel": "airbnb",
+  "referer": "airbnb",
+  "arrival": "2026-12-27",
+  "departure": "2026-12-28",
+  "bookingTime": "2026-11-27T13:37:00Z",
+  "price": 947.76
+ },
+ {
+  "id": 900201,
+  "propertyId": "350362",
+  "roomId": "722807",
+  "roomQty": 2,
+  "status": "confirmed",
+  "channel": "airbnb",
+  "referer": "airbnb",
+  "arrival": "2026-11-17",
+  "departure": "2026-11-18",
+  "bookingTime": "2026-11-10T10:34:00Z",
+  "price": 674.97
+ },
+ {
+  "id": 900202,
+  "propertyId": "350362",
+  "roomId": "722806",
+  "roomQty": 2,
+  "status": "request",
+  "channel": "booking",
+  "referer": "booking",
+  "arrival": "2027-01-20",
+  "departure": "2027-01-21",
+  "bookingTime": "2026-09-22T13:21:00Z",
+  "price": 849.73,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 764.76,
+    "lineTotal": 764.76
+   }
+  ]
+ },
+ {
+  "id": 900203,
+  "propertyId": "350362",
+  "roomId": "722805",
+  "roomQty": 1,
+  "status": "confirmed",
+  "channel": "expedia",
+  "referer": "expedia",
+  "arrival": "2026-10-11",
+  "departure": "2026-10-14",
+  "bookingTime": "2026-09-11T05:04:00Z",
+  "price": 1579.78,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 1421.8,
+    "lineTotal": 1421.8
+   }
+  ]
+ },
+ {
+  "id": 900204,
+  "propertyId": "350362",
+  "roomId": "722808",
+  "roomQty": 2,
+  "status": "confirmed",
+  "channel": "direct",
+  "referer": "frontdesk",
+  "arrival": "2027-02-04",
+  "departure": "2027-02-06",
+  "bookingTime": "2026-10-07T12:54:00Z",
+  "price": 1056.58,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 950.92,
+    "lineTotal": 950.92
+   },
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 120.0,
+    "lineTotal": 120.0,
+    "invoiceeId": 77
+   },
+   {
+    "type": "payment",
+    "qty": 1,
+    "amount": -300.0,
+    "lineTotal": -300.0
+   }
+  ]
+ },
+ {
+  "id": 900205,
+  "propertyId": "350362",
+  "roomId": "722808",
+  "roomQty": 1,
+  "status": "new",
+  "channel": "expedia",
+  "referer": "expedia",
+  "arrival": "2026-11-26",
+  "departure": "2026-11-28",
+  "bookingTime": "2026-10-27T08:59:00Z",
+  "price": 2750.12,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 2475.11,
+    "lineTotal": 2475.11
+   },
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 120.0,
+    "lineTotal": 120.0,
+    "invoiceeId": 77
+   }
+  ]
+ },
+ {
+  "id": 900206,
+  "propertyId": "350362",
+  "roomId": "722807",
+  "roomQty": 2,
+  "status": "confirmed",
+  "channel": "direct",
+  "referer": "API",
+  "arrival": "2026-10-25",
+  "departure": "2026-10-27",
+  "bookingTime": "2026-10-25T11:33:00Z",
+  "price": 1973.61
+ },
+ {
+  "id": 900207,
+  "propertyId": "350362",
+  "roomId": "722808",
+  "roomQty": 1,
+  "status": "cancelled",
+  "channel": "expedia",
+  "referer": "expedia",
+  "arrival": "2026-11-22",
+  "departure": "2026-11-23",
+  "bookingTime": "2026-09-23T10:21:00Z",
+  "price": 1484.77,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 1336.29,
+    "lineTotal": 1336.29
+   },
+   {
+    "type": "payment",
+    "qty": 1,
+    "amount": -300.0,
+    "lineTotal": -300.0
+   }
+  ],
+  "modifiedTime": "2026-10-20T13:21:00Z"
+ },
+ {
+  "id": 900208,
+  "propertyId": "350362",
+  "roomId": "722805",
+  "roomQty": 2,
+  "status": "confirmed",
+  "channel": "direct",
+  "referer": "API",
+  "arrival": "2026-10-03",
+  "departure": "2026-10-04",
+  "bookingTime": "2026-10-03T12:25:00Z",
+  "price": 1290.04,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 1161.04,
+    "lineTotal": 1161.04
+   }
+  ]
+ },
+ {
+  "id": 900209,
+  "propertyId": "350362",
+  "roomId": "722806",
+  "roomQty": 1,
+  "status": "confirmed",
+  "channel": "airbnb",
+  "referer": "airbnb",
+  "arrival": "2026-11-15",
+  "departure": "2026-11-18",
+  "bookingTime": "2026-11-12T08:56:00Z",
+  "price": 4251.89,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 3826.7,
+    "lineTotal": 3826.7
+   }
+  ]
+ },
+ {
+  "id": 900210,
+  "propertyId": "350364",
+  "roomId": "722813",
+  "roomQty": 1,
+  "status": "new",
+  "channel": "booking",
+  "referer": "booking",
+  "arrival": "2026-11-12",
+  "departure": "2026-11-14",
+  "bookingTime": "2026-11-09T15:48:00Z",
+  "price": 2746.09
+ },
+ {
+  "id": 900211,
+  "propertyId": "350362",
+  "roomId": "722807",
+  "roomQty": 2,
+  "status": "confirmed",
+  "channel": "direct",
+  "referer": "frontdesk",
+  "arrival": "2026-12-14",
+  "departure": "2026-12-16",
+  "bookingTime": "2026-12-11T20:38:00Z",
+  "price": 2033.58,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 1830.22,
+    "lineTotal": 1830.22
+   }
+  ]
+ },
+ {
+  "id": 900212,
+  "propertyId": "350364",
+  "roomId": "722813",
+  "roomQty": 1,
+  "status": "confirmed",
+  "channel": "booking",
+  "referer": "booking",
+  "arrival": "2026-11-13",
+  "departure": "2026-11-16",
+  "bookingTime": "2026-11-06T04:06:00Z",
+  "price": 2087.21,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 1878.49,
+    "lineTotal": 1878.49
+   },
+   {
+    "type": "payment",
+    "qty": 1,
+    "amount": -300.0,
+    "lineTotal": -300.0
+   }
+  ]
+ },
+ {
+  "id": 900213,
+  "propertyId": "350364",
+  "roomId": "722815",
+  "roomQty": 2,
+  "status": "confirmed",
+  "channel": "booking",
+  "referer": "booking",
+  "arrival": "2026-09-22",
+  "departure": "2026-09-25",
+  "bookingTime": "2026-09-22T22:19:00Z",
+  "price": 1599.96
+ },
+ {
+  "id": 900214,
+  "propertyId": "350362",
+  "roomId": "722807",
+  "roomQty": 1,
+  "status": "confirmed",
+  "channel": "direct",
+  "referer": "frontdesk",
+  "arrival": "2026-12-17",
+  "departure": "2026-12-19",
+  "bookingTime": "2026-12-11T02:03:00Z",
+  "price": 1860.99,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 1674.89,
+    "lineTotal": 1674.89
+   }
+  ]
+ },
+ {
+  "id": 900215,
+  "propertyId": "350362",
+  "roomId": "722806",
+  "roomQty": 1,
+  "status": "confirmed",
+  "channel": "booking",
+  "referer": "booking",
+  "arrival": "2026-09-05",
+  "departure": "2026-09-08",
+  "bookingTime": "2026-09-04T05:54:00Z",
+  "price": 2270.59
+ },
+ {
+  "id": 900216,
+  "propertyId": "350362",
+  "roomId": "722805",
+  "roomQty": 1,
+  "status": "confirmed",
+  "channel": "booking",
+  "referer": "booking",
+  "arrival": "2026-11-02",
+  "departure": "2026-11-06",
+  "bookingTime": "2026-11-02T17:36:00Z",
+  "price": 2825.12,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 2542.61,
+    "lineTotal": 2542.61
+   },
+   {
+    "type": "charge",
+    "qty": 2,
+    "amount": 35.0
+   }
+  ]
+ },
+ {
+  "id": 900217,
+  "propertyId": "350364",
+  "roomId": "722814",
+  "roomQty": 1,
+  "status": "confirmed",
+  "channel": "direct",
+  "referer": "frontdesk",
+  "arrival": "2026-10-13",
+  "departure": "2026-10-15",
+  "bookingTime": "2026-10-11T00:32:00Z",
+  "price": 2962.59,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 2666.33,
+    "lineTotal": 2666.33
+   },
+   {
+    "type": "payment",
+    "qty": 1,
+    "amount": -300.0,
+    "lineTotal": -300.0
+   }
+  ]
+ },
+ {
+  "id": 900218,
+  "propertyId": "350364",
+  "roomId": "722813",
+  "roomQty": 1,
+  "status": "new",
+  "channel": "booking",
+  "referer": "booking",
+  "arrival": "2026-11-11",
+  "departure": "2026-11-12",
+  "bookingTime": "2026-10-28T06:36:00Z",
+  "price": 1427.71
+ },
+ {
+  "id": 900219,
+  "propertyId": "350364",
+  "roomId": "722815",
+  "roomQty": 1,
+  "status": "confirmed",
+  "channel": "booking",
+  "referer": "booking",
+  "arrival": "2026-09-25",
+  "departure": "2026-09-27",
+  "bookingTime": "2026-09-25T23:28:00Z",
+  "price": 2129.06
+ },
+ {
+  "id": 900220,
+  "propertyId": "350364",
+  "roomId": "722814",
+  "roomQty": 1,
+  "status": "confirmed",
+  "channel": "booking",
+  "referer": "booking",
+  "arrival": "2026-11-11",
+  "departure": "2026-11-12",
+  "bookingTime": "2026-09-13T01:03:00Z",
+  "price": 515.0,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 463.5,
+    "lineTotal": 463.5
+   },
+   {
+    "type": "charge",
+    "qty": 2,
+    "amount": 35.0
+   },
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 120.0,
+    "lineTotal": 120.0,
+    "invoiceeId": 77
+   }
+  ]
+ },
+ {
+  "id": 900221,
+  "propertyId": "350362",
+  "roomId": "722808",
+  "roomQty": 2,
+  "status": "new",
+  "channel": "direct",
+  "referer": "frontdesk",
+  "arrival": "2026-11-06",
+  "departure": "2026-11-08",
+  "bookingTime": "2026-10-23T12:43:00Z",
+  "price": 2498.42,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 2248.58,
+    "lineTotal": 2248.58
+   }
+  ]
+ },
+ {
+  "id": 900222,
+  "propertyId": "350362",
+  "roomId": "722807",
+  "roomQty": 1,
+  "status": "new",
+  "channel": "direct",
+  "referer": "API",
+  "arrival": "2026-12-15",
+  "departure": "2026-12-17",
+  "bookingTime": "2026-12-08T17:27:00Z",
+  "price": 2734.96
+ },
+ {
+  "id": 900223,
+  "propertyId": "350362",
+  "roomId": "722808",
+  "roomQty": 2,
+  "status": "confirmed",
+  "channel": "direct",
+  "referer": "API",
+  "arrival": "2026-10-29",
+  "departure": "2026-10-30",
+  "bookingTime": "2026-10-22T16:40:00Z",
+  "price": 1228.7,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 1105.83,
+    "lineTotal": 1105.83
+   },
+   {
+    "type": "charge",
+    "qty": 2,
+    "amount": 35.0
+   }
+  ]
+ },
+ {
+  "id": 900224,
+  "propertyId": "350362",
+  "roomId": "722808",
+  "roomQty": 1,
+  "status": "confirmed",
+  "channel": "booking",
+  "referer": "booking",
+  "arrival": "2027-03-14",
+  "departure": "2027-03-16",
+  "bookingTime": "2026-11-14T15:41:00Z",
+  "price": 1630.27,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 1467.24,
+    "lineTotal": 1467.24
+   }
+  ]
+ },
+ {
+  "id": 900225,
+  "propertyId": "350362",
+  "roomId": "722808",
+  "roomQty": 2,
+  "status": "confirmed",
+  "channel": "airbnb",
+  "referer": "airbnb",
+  "arrival": "2027-01-23",
+  "departure": "2027-01-27",
+  "bookingTime": "2026-11-24T22:15:00Z",
+  "price": 3277.1,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 2949.39,
+    "lineTotal": 2949.39
+   }
+  ]
+ },
+ {
+  "id": 900226,
+  "propertyId": "350364",
+  "roomId": "722813",
+  "roomQty": 1,
+  "status": "confirmed",
+  "channel": "airbnb",
+  "referer": "airbnb",
+  "arrival": "2026-09-26",
+  "departure": "2026-09-27",
+  "bookingTime": "2026-09-19T10:47:00Z",
+  "price": 1219.42,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 1097.48,
+    "lineTotal": 1097.48
+   },
+   {
+    "type": "charge",
+    "qty": 2,
+    "amount": 35.0
+   },
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 120.0,
+    "lineTotal": 120.0,
+    "invoiceeId": 77
+   }
+  ]
+ },
+ {
+  "id": 900227,
+  "propertyId": "350362",
+  "roomId": "722808",
+  "roomQty": 1,
+  "status": "confirmed",
+  "channel": "booking",
+  "referer": "booking",
+  "arrival": "2026-10-26",
+  "departure": "2026-10-27",
+  "bookingTime": "2026-10-19T22:25:00Z",
+  "price": 594.71
+ },
+ {
+  "id": 900228,
+  "propertyId": "350364",
+  "roomId": "722813",
+  "roomQty": 1,
+  "status": "confirmed",
+  "channel": "expedia",
+  "referer": "expedia",
+  "arrival": "2026-11-12",
+  "departure": "2026-11-13",
+  "bookingTime": "2026-11-05T11:45:00Z",
+  "price": 1313.56
+ },
+ {
+  "id": 900229,
+  "propertyId": "350364",
+  "roomId": "722813",
+  "roomQty": 1,
+  "status": "confirmed",
+  "channel": "booking",
+  "referer": "booking",
+  "arrival": "2026-11-30",
+  "departure": "2026-12-03",
+  "bookingTime": "2026-11-16T08:45:00Z",
+  "price": 1545.01
+ },
+ {
+  "id": 900230,
+  "propertyId": "350362",
+  "roomId": "722806",
+  "roomQty": 2,
+  "status": "confirmed",
+  "channel": "booking",
+  "referer": "booking",
+  "arrival": "2026-12-10",
+  "departure": "2026-12-12",
+  "bookingTime": "2026-12-03T10:38:00Z",
+  "price": 1775.83,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 1598.25,
+    "lineTotal": 1598.25
+   }
+  ]
+ },
+ {
+  "id": 900231,
+  "propertyId": "350364",
+  "roomId": "722815",
+  "roomQty": 1,
+  "status": "confirmed",
+  "channel": "direct",
+  "referer": "frontdesk",
+  "arrival": "2026-09-08",
+  "departure": "2026-09-10",
+  "bookingTime": "2026-09-08T04:02:00Z",
+  "price": 911.29,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 820.16,
+    "lineTotal": 820.16
+   },
+   {
+    "type": "payment",
+    "qty": 1,
+    "amount": -300.0,
+    "lineTotal": -300.0
+   }
+  ]
+ },
+ {
+  "id": 900232,
+  "propertyId": "350364",
+  "roomId": "722814",
+  "roomQty": 1,
+  "status": "new",
+  "channel": "booking",
+  "referer": "booking",
+  "arrival": "2026-10-04",
+  "departure": "2026-10-07",
+  "bookingTime": "2026-10-02T00:24:00Z",
+  "price": 2751.35,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 2476.22,
+    "lineTotal": 2476.22
+   }
+  ]
+ },
+ {
+  "id": 900233,
+  "propertyId": "350364",
+  "roomId": "722815",
+  "roomQty": 1,
+  "status": "request",
+  "channel": "booking",
+  "referer": "booking",
+  "arrival": "2026-12-11",
+  "departure": "2026-12-12",
+  "bookingTime": "2026-10-12T19:13:00Z",
+  "price": 981.87
+ },
+ {
+  "id": 900234,
+  "propertyId": "350362",
+  "roomId": "722808",
+  "roomQty": 2,
+  "status": "confirmed",
+  "channel": "expedia",
+  "referer": "expedia",
+  "arrival": "2026-11-28",
+  "departure": "2026-12-02",
+  "bookingTime": "2026-11-14T18:49:00Z",
+  "price": 4011.99,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 3610.79,
+    "lineTotal": 3610.79
+   },
+   {
+    "type": "charge",
+    "qty": 2,
+    "amount": 35.0
+   }
+  ]
+ },
+ {
+  "id": 900235,
+  "propertyId": "350364",
+  "roomId": "722814",
+  "roomQty": 1,
+  "status": "confirmed",
+  "channel": "booking",
+  "referer": "booking",
+  "arrival": "2026-12-29",
+  "departure": "2026-12-31",
+  "bookingTime": "2026-10-30T18:24:00Z",
+  "price": 1692.78
+ },
+ {
+  "id": 900236,
+  "propertyId": "350362",
+  "roomId": "722805",
+  "roomQty": 2,
+  "status": "confirmed",
+  "channel": "direct",
+  "referer": "frontdesk",
+  "arrival": "2026-10-10",
+  "departure": "2026-10-11",
+  "bookingTime": "2026-10-09T15:42:00Z",
+  "price": 746.55
+ },
+ {
+  "id": 900237,
+  "propertyId": "350364",
+  "roomId": "722815",
+  "roomQty": 2,
+  "status": "new",
+  "channel": "booking",
+  "referer": "booking",
+  "arrival": "2026-10-09",
+  "departure": "2026-10-12",
+  "bookingTime": "2026-09-09T15:52:00Z",
+  "price": 3901.97
+ },
+ {
+  "id": 900238,
+  "propertyId": "350362",
+  "roomId": "722805",
+  "roomQty": 2,
+  "status": "confirmed",
+  "channel": "booking",
+  "referer": "booking",
+  "arrival": "2026-10-24",
+  "departure": "2026-10-26",
+  "bookingTime": "2026-10-21T11:15:00Z",
+  "price": 2438.45,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 2194.61,
+    "lineTotal": 2194.61
+   }
+  ]
+ },
+ {
+  "id": 900239,
+  "propertyId": "350362",
+  "roomId": "722808",
+  "roomQty": 1,
+  "status": "cancelled",
+  "channel": "direct",
+  "referer": "API",
+  "arrival": "2026-12-31",
+  "departure": "2027-01-03",
+  "bookingTime": "2026-12-01T17:57:00Z",
+  "price": 1702.78,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 1532.5,
+    "lineTotal": 1532.5
+   },
+   {
+    "type": "charge",
+    "qty": 2,
+    "amount": 35.0
+   },
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 120.0,
+    "lineTotal": 120.0,
+    "invoiceeId": 77
+   }
+  ],
+  "cancelTime": "2027-01-05T18:57:00Z",
+  "modifiedTime": "2027-01-05T18:57:00Z"
+ },
+ {
+  "id": 900240,
+  "propertyId": "350362",
+  "roomId": "722806",
+  "roomQty": 2,
+  "status": "confirmed",
+  "channel": "airbnb",
+  "referer": "airbnb",
+  "arrival": "2027-02-01",
+  "departure": "2027-02-03",
+  "bookingTime": "2026-10-04T19:25:00Z",
+  "price": 1353.16,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 1217.84,
+    "lineTotal": 1217.84
+   }
+  ]
+ },
+ {
+  "id": 900241,
+  "propertyId": "350364",
+  "roomId": "722815",
+  "roomQty": 1,
+  "status": "confirmed",
+  "channel": "booking",
+  "referer": "booking",
+  "arrival": "2026-09-29",
+  "departure": "2026-09-30",
+  "bookingTime": "2026-09-22T08:10:00Z",
+  "price": 455.8
+ },
+ {
+  "id": 900242,
+  "propertyId": "350364",
+  "roomId": "722813",
+  "roomQty": 2,
+  "status": "confirmed",
+  "channel": "booking",
+  "referer": "booking",
+  "arrival": "2026-10-16",
+  "departure": "2026-10-19",
+  "bookingTime": "2026-10-13T13:12:00Z",
+  "price": 3450.27
+ },
+ {
+  "id": 900243,
+  "propertyId": "350362",
+  "roomId": "722805",
+  "roomQty": 1,
+  "status": "cancelled",
+  "channel": "booking",
+  "referer": "booking",
+  "arrival": "2026-11-12",
+  "departure": "2026-11-14",
+  "bookingTime": "2026-10-30T01:40:00Z",
+  "price": 1545.11,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 1390.6,
+    "lineTotal": 1390.6
+   }
+  ],
+  "modifiedTime": "2026-11-14T02:40:00Z"
+ },
+ {
+  "id": 900244,
+  "propertyId": "350364",
+  "roomId": "722815",
+  "roomQty": 1,
+  "status": "confirmed",
+  "channel": "expedia",
+  "referer": "expedia",
+  "arrival": "2026-11-26",
+  "departure": "2026-11-30",
+  "bookingTime": "2026-11-25T11:41:00Z",
+  "price": 2388.5,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 2149.65,
+    "lineTotal": 2149.65
+   },
+   {
+    "type": "charge",
+    "qty": 2,
+    "amount": 35.0
+   }
+  ]
+ },
+ {
+  "id": 900245,
+  "propertyId": "350362",
+  "roomId": "722808",
+  "roomQty": 1,
+  "status": "confirmed",
+  "channel": "airbnb",
+  "referer": "airbnb",
+  "arrival": "2026-11-13",
+  "departure": "2026-11-14",
+  "bookingTime": "2026-09-14T13:23:00Z",
+  "price": 689.86
+ },
+ {
+  "id": 900246,
+  "propertyId": "350364",
+  "roomId": "722814",
+  "roomQty": 2,
+  "status": "confirmed",
+  "channel": "expedia",
+  "referer": "expedia",
+  "arrival": "2026-11-02",
+  "departure": "2026-11-06",
+  "bookingTime": "2026-10-19T11:53:00Z",
+  "price": 1861.41,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 1675.27,
+    "lineTotal": 1675.27
+   }
+  ]
+ },
+ {
+  "id": 900247,
+  "propertyId": "350362",
+  "roomId": "722808",
+  "roomQty": 1,
+  "status": "new",
+  "channel": "booking",
+  "referer": "booking",
+  "arrival": "2026-10-12",
+  "departure": "2026-10-16",
+  "bookingTime": "2026-09-12T22:40:00Z",
+  "price": 4419.96,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 3977.96,
+    "lineTotal": 3977.96
+   },
+   {
+    "type": "payment",
+    "qty": 1,
+    "amount": -300.0,
+    "lineTotal": -300.0
+   }
+  ]
+ },
+ {
+  "id": 900248,
+  "propertyId": "350364",
+  "roomId": "722815",
+  "roomQty": 1,
+  "status": "cancelled",
+  "channel": "booking",
+  "referer": "booking",
+  "arrival": "2026-10-27",
+  "departure": "2026-10-29",
+  "bookingTime": "2026-10-13T03:22:00Z",
+  "price": 1565.68,
+  "modifiedTime": "2026-11-19T11:22:00Z"
+ },
+ {
+  "id": 900249,
+  "propertyId": "350364",
+  "roomId": "722813",
+  "roomQty": 2,
+  "status": "request",
+  "channel": "airbnb",
+  "referer": "airbnb",
+  "arrival": "2026-12-09",
+  "departure": "2026-12-11",
+  "bookingTime": "2026-12-08T05:20:00Z",
+  "price": 1830.08,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 1647.07,
+    "lineTotal": 1647.07
+   }
+  ]
+ },
+ {
+  "id": 900250,
+  "propertyId": "350362",
+  "roomId": "722808",
+  "roomQty": 2,
+  "status": "confirmed",
+  "channel": "expedia",
+  "referer": "expedia",
+  "arrival": "2026-11-27",
+  "departure": "2026-12-01",
+  "bookingTime": "2026-11-13T12:37:00Z",
+  "price": 3167.82
+ },
+ {
+  "id": 900251,
+  "propertyId": "350362",
+  "roomId": "722807",
+  "roomQty": 1,
+  "status": "confirmed",
+  "channel": "direct",
+  "referer": "API",
+  "arrival": "2026-11-14",
+  "departure": "2026-11-18",
+  "bookingTime": "2026-11-11T23:07:00Z",
+  "price": 5017.27,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 4515.54,
+    "lineTotal": 4515.54
+   }
+  ]
+ },
+ {
+  "id": 900252,
+  "propertyId": "350364",
+  "roomId": "722815",
+  "roomQty": 1,
+  "status": "new",
+  "channel": "booking",
+  "referer": "booking",
+  "arrival": "2027-01-25",
+  "departure": "2027-01-26",
+  "bookingTime": "2026-09-27T09:57:00Z",
+  "price": 872.62,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 785.36,
+    "lineTotal": 785.36
+   },
+   {
+    "type": "payment",
+    "qty": 1,
+    "amount": -300.0,
+    "lineTotal": -300.0
+   }
+  ]
+ },
+ {
+  "id": 900253,
+  "propertyId": "350364",
+  "roomId": "722813",
+  "roomQty": 2,
+  "status": "cancelled",
+  "channel": "expedia",
+  "referer": "expedia",
+  "arrival": "2026-11-08",
+  "departure": "2026-11-09",
+  "bookingTime": "2026-11-07T11:34:00Z",
+  "price": 1125.79,
+  "modifiedTime": "2026-11-09T22:34:00Z"
+ },
+ {
+  "id": 900254,
+  "propertyId": "350364",
+  "roomId": "722813",
+  "roomQty": 1,
+  "status": "confirmed",
+  "channel": "airbnb",
+  "referer": "airbnb",
+  "arrival": "2026-09-07",
+  "departure": "2026-09-09",
+  "bookingTime": "2026-09-04T12:24:00Z",
+  "price": 2687.69,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 2418.92,
+    "lineTotal": 2418.92
+   },
+   {
+    "type": "payment",
+    "qty": 1,
+    "amount": -300.0,
+    "lineTotal": -300.0
+   }
+  ]
+ },
+ {
+  "id": 900255,
+  "propertyId": "350364",
+  "roomId": "722813",
+  "roomQty": 1,
+  "status": "confirmed",
+  "channel": "direct",
+  "referer": "API",
+  "arrival": "2026-09-21",
+  "departure": "2026-09-22",
+  "bookingTime": "2026-09-07T05:15:00Z",
+  "price": 1287.71,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 1158.94,
+    "lineTotal": 1158.94
+   },
+   {
+    "type": "payment",
+    "qty": 1,
+    "amount": -300.0,
+    "lineTotal": -300.0
+   }
+  ]
+ },
+ {
+  "id": 900256,
+  "propertyId": "350364",
+  "roomId": "722813",
+  "roomQty": 1,
+  "status": "confirmed",
+  "channel": "direct",
+  "referer": "API",
+  "arrival": "2026-11-17",
+  "departure": "2026-11-19",
+  "bookingTime": "2026-11-14T13:06:00Z",
+  "price": 985.19,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 886.67,
+    "lineTotal": 886.67
+   },
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 120.0,
+    "lineTotal": 120.0,
+    "invoiceeId": 77
+   },
+   {
+    "type": "payment",
+    "qty": 1,
+    "amount": -300.0,
+    "lineTotal": -300.0
+   }
+  ]
+ },
+ {
+  "id": 900257,
+  "propertyId": "350362",
+  "roomId": "722807",
+  "roomQty": 2,
+  "status": "confirmed",
+  "channel": "direct",
+  "referer": "API",
+  "arrival": "2026-11-23",
+  "departure": "2026-11-27",
+  "bookingTime": "2026-11-22T20:46:00Z",
+  "price": 2766.86,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 2490.17,
+    "lineTotal": 2490.17
+   },
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 120.0,
+    "lineTotal": 120.0,
+    "invoiceeId": 77
+   }
+  ]
+ },
+ {
+  "id": 900258,
+  "propertyId": "350364",
+  "roomId": "722813",
+  "roomQty": 1,
+  "status": "confirmed",
+  "channel": "direct",
+  "referer": "API",
+  "arrival": "2026-09-12",
+  "departure": "2026-09-14",
+  "bookingTime": "2026-09-06T02:23:00Z",
+  "price": 1961.65,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 1765.49,
+    "lineTotal": 1765.49
+   },
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 120.0,
+    "lineTotal": 120.0,
+    "invoiceeId": 77
+   }
+  ]
+ },
+ {
+  "id": 900259,
+  "propertyId": "350362",
+  "roomId": "722808",
+  "roomQty": 1,
+  "status": "cancelled",
+  "channel": "airbnb",
+  "referer": "airbnb",
+  "arrival": "2026-10-03",
+  "departure": "2026-10-05",
+  "bookingTime": "2026-10-03T18:44:00Z",
+  "price": 1672.7,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 1505.43,
+    "lineTotal": 1505.43
+   },
+   {
+    "type": "charge",
+    "qty": 2,
+    "amount": 35.0
+   }
+  ],
+  "modifiedTime": "2026-10-13T08:44:00Z"
+ },
+ {
+  "id": 900260,
+  "propertyId": "350362",
+  "roomId": "722807",
+  "roomQty": 1,
+  "status": "confirmed",
+  "channel": "booking",
+  "referer": "booking",
+  "arrival": "2026-10-22",
+  "departure": "2026-10-24",
+  "bookingTime": "2026-10-15T22:52:00Z",
+  "price": 2437.08
+ },
+ {
+  "id": 900261,
+  "propertyId": "350364",
+  "roomId": "722814",
+  "roomQty": 1,
+  "status": "cancelled",
+  "channel": "booking",
+  "referer": "booking",
+  "arrival": "2026-12-08",
+  "departure": "2026-12-09",
+  "bookingTime": "2026-10-09T03:14:00Z",
+  "price": 742.02,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 667.82,
+    "lineTotal": 667.82
+   },
+   {
+    "type": "payment",
+    "qty": 1,
+    "amount": -300.0,
+    "lineTotal": -300.0
+   }
+  ],
+  "modifiedTime": "2026-11-16T08:14:00Z"
+ },
+ {
+  "id": 900262,
+  "propertyId": "350364",
+  "roomId": "722814",
+  "roomQty": 1,
+  "status": "new",
+  "channel": "expedia",
+  "referer": "expedia",
+  "arrival": "2027-01-01",
+  "departure": "2027-01-04",
+  "bookingTime": "2026-09-03T12:43:00Z",
+  "price": 2621.45,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 2359.3,
+    "lineTotal": 2359.3
+   },
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 120.0,
+    "lineTotal": 120.0,
+    "invoiceeId": 77
+   }
+  ]
+ },
+ {
+  "id": 900263,
+  "propertyId": "350364",
+  "roomId": "722815",
+  "roomQty": 1,
+  "status": "request",
+  "channel": "booking",
+  "referer": "booking",
+  "arrival": "2026-11-05",
+  "departure": "2026-11-07",
+  "bookingTime": "2026-10-29T23:12:00Z",
+  "price": 2882.72
+ },
+ {
+  "id": 900264,
+  "propertyId": "350364",
+  "roomId": "722813",
+  "roomQty": 1,
+  "status": "cancelled",
+  "channel": "booking",
+  "referer": "booking",
+  "arrival": "2026-11-24",
+  "departure": "2026-11-27",
+  "bookingTime": "2026-11-23T08:48:00Z",
+  "price": 1937.99,
+  "cancelTime": "2026-12-13T00:48:00Z",
+  "modifiedTime": "2026-12-13T00:48:00Z"
+ },
+ {
+  "id": 900265,
+  "propertyId": "350362",
+  "roomId": "722807",
+  "roomQty": 1,
+  "status": "confirmed",
+  "channel": "direct",
+  "referer": "frontdesk",
+  "arrival": "2026-12-25",
+  "departure": "2026-12-26",
+  "bookingTime": "2026-12-11T05:19:00Z",
+  "price": 966.17,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 869.55,
+    "lineTotal": 869.55
+   },
+   {
+    "type": "payment",
+    "qty": 1,
+    "amount": -300.0,
+    "lineTotal": -300.0
+   }
+  ]
+ },
+ {
+  "id": 900266,
+  "propertyId": "350362",
+  "roomId": "722805",
+  "roomQty": 1,
+  "status": "confirmed",
+  "channel": "expedia",
+  "referer": "expedia",
+  "arrival": "2026-12-11",
+  "departure": "2026-12-15",
+  "bookingTime": "2026-11-28T02:52:00Z",
+  "price": 2374.35
+ },
+ {
+  "id": 900267,
+  "propertyId": "350362",
+  "roomId": "722805",
+  "roomQty": 1,
+  "status": "new",
+  "channel": "direct",
+  "referer": "API",
+  "arrival": "2026-10-10",
+  "departure": "2026-10-12",
+  "bookingTime": "2026-09-10T08:31:00Z",
+  "price": 2286.11
+ },
+ {
+  "id": 900268,
+  "propertyId": "350364",
+  "roomId": "722814",
+  "roomQty": 1,
+  "status": "confirmed",
+  "channel": "direct",
+  "referer": "API",
+  "arrival": "2026-10-28",
+  "departure": "2026-10-30",
+  "bookingTime": "2026-10-21T03:24:00Z",
+  "price": 2545.36
+ },
+ {
+  "id": 900269,
+  "propertyId": "350362",
+  "roomId": "722806",
+  "roomQty": 1,
+  "status": "confirmed",
+  "channel": "direct",
+  "referer": "API",
+  "arrival": "2026-09-14",
+  "departure": "2026-09-15",
+  "bookingTime": "2026-09-13T20:25:00Z",
+  "price": 1441.52,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 1297.37,
+    "lineTotal": 1297.37
+   },
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 120.0,
+    "lineTotal": 120.0,
+    "invoiceeId": 77
+   }
+  ]
+ },
+ {
+  "id": 900270,
+  "propertyId": "350362",
+  "roomId": "722807",
+  "roomQty": 2,
+  "status": "new",
+  "channel": "booking",
+  "referer": "booking",
+  "arrival": "2026-09-10",
+  "departure": "2026-09-12",
+  "bookingTime": "2026-09-07T23:47:00Z",
+  "price": 2449.15
+ },
+ {
+  "id": 900271,
+  "propertyId": "350362",
+  "roomId": "722805",
+  "roomQty": 1,
+  "status": "confirmed",
+  "channel": "direct",
+  "referer": "frontdesk",
+  "arrival": "2026-12-18",
+  "departure": "2026-12-22",
+  "bookingTime": "2026-10-19T07:44:00Z",
+  "price": 5118.07,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 4606.26,
+    "lineTotal": 4606.26
+   },
+   {
+    "type": "charge",
+    "qty": 2,
+    "amount": 35.0
+   }
+  ]
+ },
+ {
+  "id": 900272,
+  "propertyId": "350362",
+  "roomId": "722806",
+  "roomQty": 1,
+  "status": "confirmed",
+  "channel": "direct",
+  "referer": "frontdesk",
+  "arrival": "2026-12-12",
+  "departure": "2026-12-14",
+  "bookingTime": "2026-12-12T02:35:00Z",
+  "price": 2644.32,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 2379.89,
+    "lineTotal": 2379.89
+   }
+  ]
+ },
+ {
+  "id": 900273,
+  "propertyId": "350364",
+  "roomId": "722813",
+  "roomQty": 2,
+  "status": "confirmed",
+  "channel": "airbnb",
+  "referer": "airbnb",
+  "arrival": "2026-10-16",
+  "departure": "2026-10-19",
+  "bookingTime": "2026-10-02T19:50:00Z",
+  "price": 4083.63,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 3675.27,
+    "lineTotal": 3675.27
+   }
+  ]
+ },
+ {
+  "id": 900274,
+  "propertyId": "350362",
+  "roomId": "722807",
+  "roomQty": 1,
+  "status": "new",
+  "channel": "booking",
+  "referer": "booking",
+  "arrival": "2026-09-20",
+  "departure": "2026-09-24",
+  "bookingTime": "2026-09-13T13:29:00Z",
+  "price": 3821.98,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 3439.78,
+    "lineTotal": 3439.78
+   },
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 120.0,
+    "lineTotal": 120.0,
+    "invoiceeId": 77
+   }
+  ]
+ },
+ {
+  "id": 900275,
+  "propertyId": "350362",
+  "roomId": "722805",
+  "roomQty": 1,
+  "status": "confirmed",
+  "channel": "direct",
+  "referer": "API",
+  "arrival": "2026-12-07",
+  "departure": "2026-12-11",
+  "bookingTime": "2026-12-04T14:03:00Z",
+  "price": 3638.65
+ },
+ {
+  "id": 900276,
+  "propertyId": "350362",
+  "roomId": "722805",
+  "roomQty": 1,
+  "status": "confirmed",
+  "channel": "expedia",
+  "referer": "expedia",
+  "arrival": "2026-11-24",
+  "departure": "2026-11-26",
+  "bookingTime": "2026-11-17T12:28:00Z",
+  "price": 2085.54
+ },
+ {
+  "id": 900277,
+  "propertyId": "350362",
+  "roomId": "722806",
+  "roomQty": 1,
+  "status": "confirmed",
+  "channel": "expedia",
+  "referer": "expedia",
+  "arrival": "2026-09-11",
+  "departure": "2026-09-15",
+  "bookingTime": "2026-09-04T08:31:00Z",
+  "price": 4966.07,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 4469.46,
+    "lineTotal": 4469.46
+   },
+   {
+    "type": "payment",
+    "qty": 1,
+    "amount": -300.0,
+    "lineTotal": -300.0
+   }
+  ]
+ },
+ {
+  "id": 900278,
+  "propertyId": "350362",
+  "roomId": "722805",
+  "roomQty": 1,
+  "status": "new",
+  "channel": "booking",
+  "referer": "booking",
+  "arrival": "2026-11-24",
+  "departure": "2026-11-27",
+  "bookingTime": "2026-09-25T07:19:00Z",
+  "price": 2266.44
+ },
+ {
+  "id": 900279,
+  "propertyId": "350362",
+  "roomId": "722806",
+  "roomQty": 2,
+  "status": "new",
+  "channel": "direct",
+  "referer": "frontdesk",
+  "arrival": "2026-09-28",
+  "departure": "2026-10-02",
+  "bookingTime": "2026-09-14T10:44:00Z",
+  "price": 2274.84,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 2047.36,
+    "lineTotal": 2047.36
+   },
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 120.0,
+    "lineTotal": 120.0,
+    "invoiceeId": 77
+   }
+  ]
+ },
+ {
+  "id": 900280,
+  "propertyId": "350364",
+  "roomId": "722813",
+  "roomQty": 1,
+  "status": "confirmed",
+  "channel": "direct",
+  "referer": "frontdesk",
+  "arrival": "2027-01-18",
+  "departure": "2027-01-20",
+  "bookingTime": "2026-11-19T23:33:00Z",
+  "price": 2298.72,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 2068.85,
+    "lineTotal": 2068.85
+   }
+  ]
+ },
+ {
+  "id": 900281,
+  "propertyId": "350362",
+  "roomId": "722805",
+  "roomQty": 1,
+  "status": "confirmed",
+  "channel": "direct",
+  "referer": "API",
+  "arrival": "2027-01-30",
+  "departure": "2027-02-03",
+  "bookingTime": "2026-10-02T06:23:00Z",
+  "price": 4848.18
+ },
+ {
+  "id": 900282,
+  "propertyId": "350362",
+  "roomId": "722805",
+  "roomQty": 1,
+  "status": "confirmed",
+  "channel": "booking",
+  "referer": "booking",
+  "arrival": "2026-10-31",
+  "departure": "2026-11-01",
+  "bookingTime": "2026-10-31T18:57:00Z",
+  "price": 1141.04
+ },
+ {
+  "id": 900283,
+  "propertyId": "350364",
+  "roomId": "722814",
+  "roomQty": 2,
+  "status": "new",
+  "channel": "direct",
+  "referer": "API",
+  "arrival": "2026-09-18",
+  "departure": "2026-09-20",
+  "bookingTime": "2026-09-11T08:09:00Z",
+  "price": 2361.8
+ },
+ {
+  "id": 900284,
+  "propertyId": "350362",
+  "roomId": "722805",
+  "roomQty": 1,
+  "status": "confirmed",
+  "channel": "booking",
+  "referer": "booking",
+  "arrival": "2026-11-15",
+  "departure": "2026-11-17",
+  "bookingTime": "2026-09-16T07:20:00Z",
+  "price": 1967.75,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 1770.98,
+    "lineTotal": 1770.98
+   }
+  ]
+ },
+ {
+  "id": 900285,
+  "propertyId": "350362",
+  "roomId": "722808",
+  "roomQty": 1,
+  "status": "confirmed",
+  "channel": "expedia",
+  "referer": "expedia",
+  "arrival": "2026-09-10",
+  "departure": "2026-09-13",
+  "bookingTime": "2026-09-09T08:47:00Z",
+  "price": 4021.55,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 3619.4,
+    "lineTotal": 3619.4
+   }
+  ]
+ },
+ {
+  "id": 900286,
+  "propertyId": "350364",
+  "roomId": "722815",
+  "roomQty": 1,
+  "status": "confirmed",
+  "channel": "airbnb",
+  "referer": "airbnb",
+  "arrival": "2026-10-21",
+  "departure": "2026-10-23",
+  "bookingTime": "2026-09-21T03:14:00Z",
+  "price": 2898.94
+ },
+ {
+  "id": 900287,
+  "propertyId": "350364",
+  "roomId": "722814",
+  "roomQty": 1,
+  "status": "request",
+  "channel": "direct",
+  "referer": "API",
+  "arrival": "2026-10-27",
+  "departure": "2026-10-29",
+  "bookingTime": "2026-10-20T21:08:00Z",
+  "price": 1103.38,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 993.04,
+    "lineTotal": 993.04
+   },
+   {
+    "type": "payment",
+    "qty": 1,
+    "amount": -300.0,
+    "lineTotal": -300.0
+   }
+  ]
+ },
+ {
+  "id": 900288,
+  "propertyId": "350362",
+  "roomId": "722805",
+  "roomQty": 1,
+  "status": "new",
+  "channel": "booking",
+  "referer": "booking",
+  "arrival": "2026-09-22",
+  "departure": "2026-09-24",
+  "bookingTime": "2026-09-08T13:47:00Z",
+  "price": 1736.9
+ },
+ {
+  "id": 900289,
+  "propertyId": "350362",
+  "roomId": "722805",
+  "roomQty": 1,
+  "status": "confirmed",
+  "channel": "booking",
+  "referer": "booking",
+  "arrival": "2026-10-18",
+  "departure": "2026-10-20",
+  "bookingTime": "2026-10-19T01:43:00Z",
+  "price": 2793.36,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 2514.02,
+    "lineTotal": 2514.02
+   },
+   {
+    "type": "charge",
+    "qty": 2,
+    "amount": 35.0
+   }
+  ]
+ },
+ {
+  "id": 900290,
+  "propertyId": "350362",
+  "roomId": "722808",
+  "roomQty": 1,
+  "status": "confirmed",
+  "channel": "airbnb",
+  "referer": "airbnb",
+  "arrival": "2026-12-03",
+  "departure": "2026-12-07",
+  "bookingTime": "2026-11-04T01:46:00Z",
+  "price": 2714.68,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 2443.21,
+    "lineTotal": 2443.21
+   },
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 120.0,
+    "lineTotal": 120.0,
+    "invoiceeId": 77
+   }
+  ]
+ },
+ {
+  "id": 900291,
+  "propertyId": "350364",
+  "roomId": "722814",
+  "roomQty": 1,
+  "status": "confirmed",
+  "channel": "expedia",
+  "referer": "expedia",
+  "arrival": "2027-01-08",
+  "departure": "2027-01-10",
+  "bookingTime": "2026-11-09T13:32:00Z",
+  "price": 2762.17,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 2485.95,
+    "lineTotal": 2485.95
+   },
+   {
+    "type": "payment",
+    "qty": 1,
+    "amount": -300.0,
+    "lineTotal": -300.0
+   }
+  ]
+ },
+ {
+  "id": 900292,
+  "propertyId": "350362",
+  "roomId": "722807",
+  "roomQty": 2,
+  "status": "new",
+  "channel": "direct",
+  "referer": "API",
+  "arrival": "2026-12-22",
+  "departure": "2026-12-25",
+  "bookingTime": "2026-11-23T00:37:00Z",
+  "price": 3539.3
+ },
+ {
+  "id": 900293,
+  "propertyId": "350364",
+  "roomId": "722814",
+  "roomQty": 1,
+  "status": "confirmed",
+  "channel": "airbnb",
+  "referer": "airbnb",
+  "arrival": "2026-12-02",
+  "departure": "2026-12-03",
+  "bookingTime": "2026-10-03T04:37:00Z",
+  "price": 830.36
+ },
+ {
+  "id": 900294,
+  "propertyId": "350362",
+  "roomId": "722807",
+  "roomQty": 2,
+  "status": "confirmed",
+  "channel": "airbnb",
+  "referer": "airbnb",
+  "arrival": "2027-01-06",
+  "departure": "2027-01-09",
+  "bookingTime": "2026-09-08T15:58:00Z",
+  "price": 3924.72
+ },
+ {
+  "id": 900295,
+  "propertyId": "350364",
+  "roomId": "722815",
+  "roomQty": 1,
+  "status": "cancelled",
+  "channel": "expedia",
+  "referer": "expedia",
+  "arrival": "2026-10-28",
+  "departure": "2026-10-29",
+  "bookingTime": "2026-10-28T20:40:00Z",
+  "price": 513.62,
+  "cancelTime": "2026-10-31T01:40:00Z",
+  "modifiedTime": "2026-10-31T01:40:00Z"
+ },
+ {
+  "id": 900296,
+  "propertyId": "350362",
+  "roomId": "722805",
+  "roomQty": 2,
+  "status": "new",
+  "channel": "booking",
+  "referer": "booking",
+  "arrival": "2026-12-20",
+  "departure": "2026-12-23",
+  "bookingTime": "2026-11-20T23:31:00Z",
+  "price": 3685.87
+ },
+ {
+  "id": 900297,
+  "propertyId": "350362",
+  "roomId": "722808",
+  "roomQty": 1,
+  "status": "confirmed",
+  "channel": "direct",
+  "referer": "API",
+  "arrival": "2027-02-02",
+  "departure": "2027-02-05",
+  "bookingTime": "2026-12-04T20:47:00Z",
+  "price": 3012.38,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 2711.14,
+    "lineTotal": 2711.14
+   }
+  ]
+ },
+ {
+  "id": 900298,
+  "propertyId": "350362",
+  "roomId": "722806",
+  "roomQty": 1,
+  "status": "confirmed",
+  "channel": "expedia",
+  "referer": "expedia",
+  "arrival": "2026-11-28",
+  "departure": "2026-11-29",
+  "bookingTime": "2026-11-22T02:48:00Z",
+  "price": 1206.13,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 1085.52,
+    "lineTotal": 1085.52
+   },
+   {
+    "type": "charge",
+    "qty": 2,
+    "amount": 35.0
+   },
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 120.0,
+    "lineTotal": 120.0,
+    "invoiceeId": 77
+   }
+  ]
+ },
+ {
+  "id": 900299,
+  "propertyId": "350362",
+  "roomId": "722805",
+  "roomQty": 1,
+  "status": "cancelled",
+  "channel": "expedia",
+  "referer": "expedia",
+  "arrival": "2026-11-13",
+  "departure": "2026-11-17",
+  "bookingTime": "2026-10-14T05:05:00Z",
+  "price": 4424.25,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 3981.83,
+    "lineTotal": 3981.83
+   },
+   {
+    "type": "charge",
+    "qty": 2,
+    "amount": 35.0
+   },
+   {
+    "type": "payment",
+    "qty": 1,
+    "amount": -300.0,
+    "lineTotal": -300.0
+   }
+  ],
+  "cancelTime": "2026-11-10T17:05:00Z",
+  "modifiedTime": "2026-11-10T17:05:00Z"
+ },
+ {
+  "id": 900300,
+  "propertyId": "350362",
+  "roomId": "722808",
+  "roomQty": 1,
+  "status": "confirmed",
+  "channel": "booking",
+  "referer": "booking",
+  "arrival": "2026-11-29",
+  "departure": "2026-12-01",
+  "bookingTime": "2026-11-27T00:55:00Z",
+  "price": 2363.94
+ },
+ {
+  "id": 900301,
+  "propertyId": "350362",
+  "roomId": "722807",
+  "roomQty": 1,
+  "status": "cancelled",
+  "channel": "direct",
+  "referer": "frontdesk",
+  "arrival": "2026-10-06",
+  "departure": "2026-10-10",
+  "bookingTime": "2026-09-29T06:14:00Z",
+  "price": 3489.54,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 3140.59,
+    "lineTotal": 3140.59
+   },
+   {
+    "type": "charge",
+    "qty": 2,
+    "amount": 35.0
+   }
+  ],
+  "cancelTime": "2026-10-13T01:14:00Z",
+  "modifiedTime": "2026-10-13T01:14:00Z"
+ },
+ {
+  "id": 900302,
+  "propertyId": "350362",
+  "roomId": "722807",
+  "roomQty": 1,
+  "status": "request",
+  "channel": "direct",
+  "referer": "frontdesk",
+  "arrival": "2026-09-20",
+  "departure": "2026-09-21",
+  "bookingTime": "2026-09-17T19:11:00Z",
+  "price": 599.64,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 539.68,
+    "lineTotal": 539.68
+   }
+  ]
+ },
+ {
+  "id": 900303,
+  "propertyId": "350362",
+  "roomId": "722805",
+  "roomQty": 1,
+  "status": "confirmed",
+  "channel": "expedia",
+  "referer": "expedia",
+  "arrival": "2026-09-24",
+  "departure": "2026-09-26",
+  "bookingTime": "2026-09-22T02:40:00Z",
+  "price": 2963.84,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 2667.46,
+    "lineTotal": 2667.46
+   },
+   {
+    "type": "charge",
+    "qty": 2,
+    "amount": 35.0
+   }
+  ]
+ },
+ {
+  "id": 900304,
+  "propertyId": "350362",
+  "roomId": "722805",
+  "roomQty": 2,
+  "status": "confirmed",
+  "channel": "booking",
+  "referer": "booking",
+  "arrival": "2027-03-19",
+  "departure": "2027-03-21",
+  "bookingTime": "2026-11-19T05:21:00Z",
+  "price": 2825.84,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 2543.26,
+    "lineTotal": 2543.26
+   }
+  ]
+ },
+ {
+  "id": 900305,
+  "propertyId": "350362",
+  "roomId": "722805",
+  "roomQty": 2,
+  "status": "confirmed",
+  "channel": "airbnb",
+  "referer": "airbnb",
+  "arrival": "2026-11-09",
+  "departure": "2026-11-13",
+  "bookingTime": "2026-11-06T19:41:00Z",
+  "price": 3334.61
+ },
+ {
+  "id": 900306,
+  "propertyId": "350362",
+  "roomId": "722807",
+  "roomQty": 1,
+  "status": "confirmed",
+  "channel": "direct",
+  "referer": "frontdesk",
+  "arrival": "2026-11-15",
+  "departure": "2026-11-18",
+  "bookingTime": "2026-10-16T23:35:00Z",
+  "price": 3535.01
+ },
+ {
+  "id": 900307,
+  "propertyId": "350364",
+  "roomId": "722815",
+  "roomQty": 1,
+  "status": "confirmed",
+  "channel": "airbnb",
+  "referer": "airbnb",
+  "arrival": "2026-11-30",
+  "departure": "2026-12-02",
+  "bookingTime": "2026-11-29T16:46:00Z",
+  "price": 2405.16,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 2164.64,
+    "lineTotal": 2164.64
+   },
+   {
+    "type": "charge",
+    "qty": 2,
+    "amount": 35.0
+   }
+  ]
+ },
+ {
+  "id": 900308,
+  "propertyId": "350364",
+  "roomId": "722814",
+  "roomQty": 1,
+  "status": "cancelled",
+  "channel": "booking",
+  "referer": "booking",
+  "arrival": "2026-10-22",
+  "departure": "2026-10-25",
+  "bookingTime": "2026-09-22T11:18:00Z",
+  "price": 1717.48,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 1545.73,
+    "lineTotal": 1545.73
+   },
+   {
+    "type": "charge",
+    "qty": 2,
+    "amount": 35.0
+   }
+  ],
+  "modifiedTime": "2026-10-10T06:18:00Z"
+ },
+ {
+  "id": 900309,
+  "propertyId": "350364",
+  "roomId": "722813",
+  "roomQty": 1,
+  "status": "confirmed",
+  "channel": "booking",
+  "referer": "booking",
+  "arrival": "2026-12-17",
+  "departure": "2026-12-19",
+  "bookingTime": "2026-12-03T16:01:00Z",
+  "price": 2772.53
+ },
+ {
+  "id": 900310,
+  "propertyId": "350364",
+  "roomId": "722813",
+  "roomQty": 2,
+  "status": "cancelled",
+  "channel": "direct",
+  "referer": "API",
+  "arrival": "2026-12-17",
+  "departure": "2026-12-19",
+  "bookingTime": "2026-11-17T15:47:00Z",
+  "price": 2754.48,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 2479.03,
+    "lineTotal": 2479.03
+   }
+  ],
+  "modifiedTime": "2026-11-20T03:47:00Z"
+ },
+ {
+  "id": 900311,
+  "propertyId": "350362",
+  "roomId": "722805",
+  "roomQty": 1,
+  "status": "cancelled",
+  "channel": "booking",
+  "referer": "booking",
+  "arrival": "2026-12-05",
+  "departure": "2026-12-08",
+  "bookingTime": "2026-11-28T07:15:00Z",
+  "price": 3282.9,
+  "cancelTime": "2027-01-06T08:15:00Z",
+  "modifiedTime": "2027-01-06T08:15:00Z"
+ },
+ {
+  "id": 900312,
+  "propertyId": "350364",
+  "roomId": "722813",
+  "roomQty": 2,
+  "status": "cancelled",
+  "channel": "expedia",
+  "referer": "expedia",
+  "arrival": "2026-10-06",
+  "departure": "2026-10-07",
+  "bookingTime": "2026-09-29T20:19:00Z",
+  "price": 1164.62,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 1048.16,
+    "lineTotal": 1048.16
+   }
+  ],
+  "cancelTime": "2026-10-03T19:19:00Z",
+  "modifiedTime": "2026-10-03T19:19:00Z"
+ },
+ {
+  "id": 900313,
+  "propertyId": "350364",
+  "roomId": "722815",
+  "roomQty": 2,
+  "status": "confirmed",
+  "channel": "direct",
+  "referer": "frontdesk",
+  "arrival": "2026-10-20",
+  "departure": "2026-10-22",
+  "bookingTime": "2026-10-14T00:56:00Z",
+  "price": 2289.18
+ },
+ {
+  "id": 900314,
+  "propertyId": "350364",
+  "roomId": "722815",
+  "roomQty": 1,
+  "status": "confirmed",
+  "channel": "expedia",
+  "referer": "expedia",
+  "arrival": "2026-09-03",
+  "departure": "2026-09-07",
+  "bookingTime": "2026-09-01T02:55:00Z",
+  "price": 2203.96,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 1983.56,
+    "lineTotal": 1983.56
+   },
+   {
+    "type": "charge",
+    "qty": 2,
+    "amount": 35.0
+   }
+  ]
+ },
+ {
+  "id": 900315,
+  "propertyId": "350364",
+  "roomId": "722814",
+  "roomQty": 1,
+  "status": "new",
+  "channel": "expedia",
+  "referer": "expedia",
+  "arrival": "2026-11-29",
+  "departure": "2026-12-02",
+  "bookingTime": "2026-11-26T04:38:00Z",
+  "price": 3626.49,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 3263.84,
+    "lineTotal": 3263.84
+   }
+  ]
+ },
+ {
+  "id": 900316,
+  "propertyId": "350362",
+  "roomId": "722806",
+  "roomQty": 2,
+  "status": "confirmed",
+  "channel": "booking",
+  "referer": "booking",
+  "arrival": "2026-09-11",
+  "departure": "2026-09-14",
+  "bookingTime": "2026-09-11T04:30:00Z",
+  "price": 1505.42,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 1354.88,
+    "lineTotal": 1354.88
+   },
+   {
+    "type": "charge",
+    "qty": 2,
+    "amount": 35.0
+   }
+  ]
+ },
+ {
+  "id": 900317,
+  "propertyId": "350364",
+  "roomId": "722813",
+  "roomQty": 2,
+  "status": "confirmed",
+  "channel": "direct",
+  "referer": "frontdesk",
+  "arrival": "2026-12-15",
+  "departure": "2026-12-17",
+  "bookingTime": "2026-10-16T09:48:00Z",
+  "price": 2010.66,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 1809.59,
+    "lineTotal": 1809.59
+   }
+  ]
+ },
+ {
+  "id": 900318,
+  "propertyId": "350362",
+  "roomId": "722808",
+  "roomQty": 1,
+  "status": "confirmed",
+  "channel": "direct",
+  "referer": "API",
+  "arrival": "2026-11-25",
+  "departure": "2026-11-29",
+  "bookingTime": "2026-11-25T09:14:00Z",
+  "price": 4957.06,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 4461.35,
+    "lineTotal": 4461.35
+   },
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 120.0,
+    "lineTotal": 120.0,
+    "invoiceeId": 77
+   }
+  ]
+ },
+ {
+  "id": 900319,
+  "propertyId": "350362",
+  "roomId": "722805",
+  "roomQty": 2,
+  "status": "confirmed",
+  "channel": "direct",
+  "referer": "frontdesk",
+  "arrival": "2026-12-05",
+  "departure": "2026-12-06",
+  "bookingTime": "2026-12-04T05:42:00Z",
+  "price": 1242.97
+ },
+ {
+  "id": 900320,
+  "propertyId": "350364",
+  "roomId": "722814",
+  "roomQty": 2,
+  "status": "confirmed",
+  "channel": "booking",
+  "referer": "booking",
+  "arrival": "2026-11-17",
+  "departure": "2026-11-20",
+  "bookingTime": "2026-11-11T02:45:00Z",
+  "price": 3433.3
+ },
+ {
+  "id": 900321,
+  "propertyId": "350364",
+  "roomId": "722813",
+  "roomQty": 1,
+  "status": "confirmed",
+  "channel": "expedia",
+  "referer": "expedia",
+  "arrival": "2026-11-23",
+  "departure": "2026-11-25",
+  "bookingTime": "2026-11-09T13:59:00Z",
+  "price": 935.98,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 842.38,
+    "lineTotal": 842.38
+   },
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 120.0,
+    "lineTotal": 120.0,
+    "invoiceeId": 77
+   }
+  ]
+ },
+ {
+  "id": 900322,
+  "propertyId": "350362",
+  "roomId": "722807",
+  "roomQty": 1,
+  "status": "request",
+  "channel": "expedia",
+  "referer": "expedia",
+  "arrival": "2026-11-17",
+  "departure": "2026-11-19",
+  "bookingTime": "2026-10-18T10:14:00Z",
+  "price": 2577.14
+ },
+ {
+  "id": 900323,
+  "propertyId": "350364",
+  "roomId": "722815",
+  "roomQty": 2,
+  "status": "new",
+  "channel": "expedia",
+  "referer": "expedia",
+  "arrival": "2026-09-08",
+  "departure": "2026-09-12",
+  "bookingTime": "2026-09-08T18:47:00Z",
+  "price": 2942.08,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 2647.87,
+    "lineTotal": 2647.87
+   }
+  ]
+ },
+ {
+  "id": 900324,
+  "propertyId": "350362",
+  "roomId": "722807",
+  "roomQty": 1,
+  "status": "confirmed",
+  "channel": "expedia",
+  "referer": "expedia",
+  "arrival": "2026-11-14",
+  "departure": "2026-11-16",
+  "bookingTime": "2026-09-16T00:50:00Z",
+  "price": 2158.06,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 1942.25,
+    "lineTotal": 1942.25
+   },
+   {
+    "type": "charge",
+    "qty": 2,
+    "amount": 35.0
+   }
+  ]
+ },
+ {
+  "id": 900325,
+  "propertyId": "350362",
+  "roomId": "722808",
+  "roomQty": 1,
+  "status": "cancelled",
+  "channel": "direct",
+  "referer": "frontdesk",
+  "arrival": "2026-11-14",
+  "departure": "2026-11-16",
+  "bookingTime": "2026-10-15T07:55:00Z",
+  "price": 2367.33,
+  "cancelTime": "2026-11-05T06:55:00Z",
+  "modifiedTime": "2026-11-05T06:55:00Z"
+ },
+ {
+  "id": 900326,
+  "propertyId": "350364",
+  "roomId": "722815",
+  "roomQty": 2,
+  "status": "request",
+  "channel": "airbnb",
+  "referer": "airbnb",
+  "arrival": "2026-11-15",
+  "departure": "2026-11-19",
+  "bookingTime": "2026-10-16T12:01:00Z",
+  "price": 2328.75,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 2095.88,
+    "lineTotal": 2095.88
+   },
+   {
+    "type": "payment",
+    "qty": 1,
+    "amount": -300.0,
+    "lineTotal": -300.0
+   }
+  ]
+ },
+ {
+  "id": 900327,
+  "propertyId": "350362",
+  "roomId": "722805",
+  "roomQty": 1,
+  "status": "confirmed",
+  "channel": "direct",
+  "referer": "frontdesk",
+  "arrival": "2026-12-11",
+  "departure": "2026-12-13",
+  "bookingTime": "2026-12-10T11:34:00Z",
+  "price": 2390.54
+ },
+ {
+  "id": 900328,
+  "propertyId": "350364",
+  "roomId": "722813",
+  "roomQty": 1,
+  "status": "cancelled",
+  "channel": "booking",
+  "referer": "booking",
+  "arrival": "2026-12-16",
+  "departure": "2026-12-19",
+  "bookingTime": "2026-12-13T23:00:00Z",
+  "price": 2378.66,
+  "cancelTime": "2026-12-20T18:00:00Z",
+  "modifiedTime": "2026-12-20T18:00:00Z"
+ },
+ {
+  "id": 900329,
+  "propertyId": "350364",
+  "roomId": "722815",
+  "roomQty": 2,
+  "status": "confirmed",
+  "channel": "booking",
+  "referer": "booking",
+  "arrival": "2027-03-02",
+  "departure": "2027-03-06",
+  "bookingTime": "2026-11-02T16:41:00Z",
+  "price": 3183.9
+ },
+ {
+  "id": 900330,
+  "propertyId": "350362",
+  "roomId": "722808",
+  "roomQty": 1,
+  "status": "confirmed",
+  "channel": "expedia",
+  "referer": "expedia",
+  "arrival": "2026-10-24",
+  "departure": "2026-10-28",
+  "bookingTime": "2026-10-24T21:47:00Z",
+  "price": 5682.24,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 5114.02,
+    "lineTotal": 5114.02
+   },
+   {
+    "type": "payment",
+    "qty": 1,
+    "amount": -300.0,
+    "lineTotal": -300.0
+   }
+  ]
+ },
+ {
+  "id": 900331,
+  "propertyId": "350362",
+  "roomId": "722807",
+  "roomQty": 1,
+  "status": "confirmed",
+  "channel": "booking",
+  "referer": "booking",
+  "arrival": "2026-11-15",
+  "departure": "2026-11-16",
+  "bookingTime": "2026-11-15T19:03:00Z",
+  "price": 562.11
+ },
+ {
+  "id": 900332,
+  "propertyId": "350364",
+  "roomId": "722815",
+  "roomQty": 1,
+  "status": "cancelled",
+  "channel": "booking",
+  "referer": "booking",
+  "arrival": "2026-11-22",
+  "departure": "2026-11-25",
+  "bookingTime": "2026-11-22T12:27:00Z",
+  "price": 1641.23,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 1477.11,
+    "lineTotal": 1477.11
+   },
+   {
+    "type": "charge",
+    "qty": 2,
+    "amount": 35.0
+   }
+  ],
+  "cancelTime": "2026-11-29T12:27:00Z",
+  "modifiedTime": "2026-11-29T12:27:00Z"
+ },
+ {
+  "id": 900333,
+  "propertyId": "350364",
+  "roomId": "722815",
+  "roomQty": 1,
+  "status": "confirmed",
+  "channel": "booking",
+  "referer": "booking",
+  "arrival": "2026-12-07",
+  "departure": "2026-12-11",
+  "bookingTime": "2026-10-08T22:24:00Z",
+  "price": 4995.46
+ },
+ {
+  "id": 900334,
+  "propertyId": "350362",
+  "roomId": "722805",
+  "roomQty": 1,
+  "status": "confirmed",
+  "channel": "direct",
+  "referer": "API",
+  "arrival": "2027-01-21",
+  "departure": "2027-01-23",
+  "bookingTime": "2026-09-23T19:51:00Z",
+  "price": 1515.7,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 1364.13,
+    "lineTotal": 1364.13
+   },
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 120.0,
+    "lineTotal": 120.0,
+    "invoiceeId": 77
+   }
+  ]
+ },
+ {
+  "id": 900335,
+  "propertyId": "350362",
+  "roomId": "722806",
+  "roomQty": 2,
+  "status": "cancelled",
+  "channel": "booking",
+  "referer": "booking",
+  "arrival": "2026-11-01",
+  "departure": "2026-11-04",
+  "bookingTime": "2026-10-03T02:22:00Z",
+  "price": 4402.47,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 3962.22,
+    "lineTotal": 3962.22
+   }
+  ],
+  "cancelTime": "2026-11-06T22:22:00Z",
+  "modifiedTime": "2026-11-06T22:22:00Z"
+ },
+ {
+  "id": 900336,
+  "propertyId": "350362",
+  "roomId": "722805",
+  "roomQty": 1,
+  "status": "new",
+  "channel": "booking",
+  "referer": "booking",
+  "arrival": "2026-10-30",
+  "departure": "2026-11-02",
+  "bookingTime": "2026-10-30T02:02:00Z",
+  "price": 3039.69
+ },
+ {
+  "id": 900337,
+  "propertyId": "350362",
+  "roomId": "722808",
+  "roomQty": 1,
+  "status": "confirmed",
+  "channel": "expedia",
+  "referer": "expedia",
+  "arrival": "2027-01-10",
+  "departure": "2027-01-14",
+  "bookingTime": "2026-12-11T11:20:00Z",
+  "price": 4617.78,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 4156.0,
+    "lineTotal": 4156.0
+   },
+   {
+    "type": "charge",
+    "qty": 2,
+    "amount": 35.0
+   }
+  ]
+ },
+ {
+  "id": 900338,
+  "propertyId": "350364",
+  "roomId": "722813",
+  "roomQty": 1,
+  "status": "confirmed",
+  "channel": "airbnb",
+  "referer": "airbnb",
+  "arrival": "2026-10-12",
+  "departure": "2026-10-16",
+  "bookingTime": "2026-10-09T23:32:00Z",
+  "price": 1938.55
+ },
+ {
+  "id": 900339,
+  "propertyId": "350364",
+  "roomId": "722813",
+  "roomQty": 2,
+  "status": "confirmed",
+  "channel": "direct",
+  "referer": "API",
+  "arrival": "2026-10-18",
+  "departure": "2026-10-22",
+  "bookingTime": "2026-10-18T20:06:00Z",
+  "price": 5081.13,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 4573.02,
+    "lineTotal": 4573.02
+   }
+  ]
+ },
+ {
+  "id": 900340,
+  "propertyId": "350364",
+  "roomId": "722813",
+  "roomQty": 1,
+  "status": "confirmed",
+  "channel": "airbnb",
+  "referer": "airbnb",
+  "arrival": "2026-12-05",
+  "departure": "2026-12-09",
+  "bookingTime": "2026-12-05T10:20:00Z",
+  "price": 3471.54,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 3124.39,
+    "lineTotal": 3124.39
+   },
+   {
+    "type": "charge",
+    "qty": 2,
+    "amount": 35.0
+   }
+  ]
+ },
+ {
+  "id": 900341,
+  "propertyId": "350362",
+  "roomId": "722808",
+  "roomQty": 1,
+  "status": "new",
+  "channel": "direct",
+  "referer": "frontdesk",
+  "arrival": "2026-11-26",
+  "departure": "2026-11-27",
+  "bookingTime": "2026-11-19T18:29:00Z",
+  "price": 593.78,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 534.4,
+    "lineTotal": 534.4
+   }
+  ]
+ },
+ {
+  "id": 900342,
+  "propertyId": "350362",
+  "roomId": "722805",
+  "roomQty": 1,
+  "status": "confirmed",
+  "channel": "airbnb",
+  "referer": "airbnb",
+  "arrival": "2027-03-24",
+  "departure": "2027-03-26",
+  "bookingTime": "2026-11-24T19:07:00Z",
+  "price": 2132.33,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 1919.1,
+    "lineTotal": 1919.1
+   }
+  ]
+ },
+ {
+  "id": 900343,
+  "propertyId": "350362",
+  "roomId": "722808",
+  "roomQty": 1,
+  "status": "confirmed",
+  "channel": "expedia",
+  "referer": "expedia",
+  "arrival": "2026-11-10",
+  "departure": "2026-11-14",
+  "bookingTime": "2026-09-11T09:16:00Z",
+  "price": 5321.0
+ },
+ {
+  "id": 900344,
+  "propertyId": "350364",
+  "roomId": "722815",
+  "roomQty": 1,
+  "status": "confirmed",
+  "channel": "direct",
+  "referer": "API",
+  "arrival": "2026-11-25",
+  "departure": "2026-11-26",
+  "bookingTime": "2026-10-26T12:27:00Z",
+  "price": 1373.65,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 1236.29,
+    "lineTotal": 1236.29
+   },
+   {
+    "type": "charge",
+    "qty": 2,
+    "amount": 35.0
+   },
+   {
+    "type": "payment",
+    "qty": 1,
+    "amount": -300.0,
+    "lineTotal": -300.0
+   }
+  ]
+ },
+ {
+  "id": 900345,
+  "propertyId": "350362",
+  "roomId": "722805",
+  "roomQty": 1,
+  "status": "confirmed",
+  "channel": "direct",
+  "referer": "frontdesk",
+  "arrival": "2026-10-31",
+  "departure": "2026-11-02",
+  "bookingTime": "2026-09-01T22:45:00Z",
+  "price": 2473.3,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 2225.97,
+    "lineTotal": 2225.97
+   },
+   {
+    "type": "payment",
+    "qty": 1,
+    "amount": -300.0,
+    "lineTotal": -300.0
+   }
+  ]
+ },
+ {
+  "id": 900346,
+  "propertyId": "350362",
+  "roomId": "722805",
+  "roomQty": 1,
+  "status": "cancelled",
+  "channel": "expedia",
+  "referer": "expedia",
+  "arrival": "2026-11-28",
+  "departure": "2026-11-30",
+  "bookingTime": "2026-09-29T21:46:00Z",
+  "price": 2855.19,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 2569.67,
+    "lineTotal": 2569.67
+   },
+   {
+    "type": "payment",
+    "qty": 1,
+    "amount": -300.0,
+    "lineTotal": -300.0
+   }
+  ],
+  "modifiedTime": "2026-10-26T13:46:00Z"
+ },
+ {
+  "id": 900347,
+  "propertyId": "350364",
+  "roomId": "722814",
+  "roomQty": 2,
+  "status": "confirmed",
+  "channel": "booking",
+  "referer": "booking",
+  "arrival": "2027-01-03",
+  "departure": "2027-01-04",
+  "bookingTime": "2026-12-04T21:59:00Z",
+  "price": 1060.79,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 954.71,
+    "lineTotal": 954.71
+   },
+   {
+    "type": "charge",
+    "qty": 2,
+    "amount": 35.0
+   }
+  ]
+ },
+ {
+  "id": 900348,
+  "propertyId": "350364",
+  "roomId": "722815",
+  "roomQty": 1,
+  "status": "confirmed",
+  "channel": "booking",
+  "referer": "booking",
+  "arrival": "2026-11-24",
+  "departure": "2026-11-25",
+  "bookingTime": "2026-09-25T03:11:00Z",
+  "price": 1367.25
+ },
+ {
+  "id": 900349,
+  "propertyId": "350364",
+  "roomId": "722814",
+  "roomQty": 2,
+  "status": "cancelled",
+  "channel": "expedia",
+  "referer": "expedia",
+  "arrival": "2026-12-30",
+  "departure": "2026-12-31",
+  "bookingTime": "2026-09-01T13:01:00Z",
+  "price": 843.27,
+  "cancelTime": "2026-09-25T07:01:00Z",
+  "modifiedTime": "2026-09-25T07:01:00Z"
+ },
+ {
+  "id": 900350,
+  "propertyId": "350364",
+  "roomId": "722813",
+  "roomQty": 1,
+  "status": "confirmed",
+  "channel": "booking",
+  "referer": "booking",
+  "arrival": "2027-02-02",
+  "departure": "2027-02-04",
+  "bookingTime": "2026-10-05T08:37:00Z",
+  "price": 1465.38,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 1318.84,
+    "lineTotal": 1318.84
+   },
+   {
+    "type": "charge",
+    "qty": 2,
+    "amount": 35.0
+   }
+  ]
+ },
+ {
+  "id": 900351,
+  "propertyId": "350364",
+  "roomId": "722813",
+  "roomQty": 1,
+  "status": "confirmed",
+  "channel": "expedia",
+  "referer": "expedia",
+  "arrival": "2026-11-19",
+  "departure": "2026-11-22",
+  "bookingTime": "2026-11-05T18:40:00Z",
+  "price": 2249.74,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 2024.77,
+    "lineTotal": 2024.77
+   },
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 120.0,
+    "lineTotal": 120.0,
+    "invoiceeId": 77
+   }
+  ]
+ },
+ {
+  "id": 900352,
+  "propertyId": "350364",
+  "roomId": "722815",
+  "roomQty": 1,
+  "status": "confirmed",
+  "channel": "booking",
+  "referer": "booking",
+  "arrival": "2026-12-09",
+  "departure": "2026-12-11",
+  "bookingTime": "2026-12-02T22:04:00Z",
+  "price": 2673.6
+ },
+ {
+  "id": 900353,
+  "propertyId": "350362",
+  "roomId": "722806",
+  "roomQty": 1,
+  "status": "confirmed",
+  "channel": "booking",
+  "referer": "booking",
+  "arrival": "2026-10-20",
+  "departure": "2026-10-23",
+  "bookingTime": "2026-10-07T00:42:00Z",
+  "price": 2032.12
+ },
+ {
+  "id": 900354,
+  "propertyId": "350362",
+  "roomId": "722808",
+  "roomQty": 1,
+  "status": "confirmed",
+  "channel": "expedia",
+  "referer": "expedia",
+  "arrival": "2026-12-08",
+  "departure": "2026-12-09",
+  "bookingTime": "2026-12-08T09:04:00Z",
+  "price": 555.31,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 499.78,
+    "lineTotal": 499.78
+   }
+  ]
+ },
+ {
+  "id": 900355,
+  "propertyId": "350362",
+  "roomId": "722808",
+  "roomQty": 1,
+  "status": "confirmed",
+  "channel": "direct",
+  "referer": "frontdesk",
+  "arrival": "2026-11-18",
+  "departure": "2026-11-21",
+  "bookingTime": "2026-11-17T22:40:00Z",
+  "price": 1730.47
+ },
+ {
+  "id": 900356,
+  "propertyId": "350364",
+  "roomId": "722815",
+  "roomQty": 1,
+  "status": "cancelled",
+  "channel": "booking",
+  "referer": "booking",
+  "arrival": "2026-10-24",
+  "departure": "2026-10-26",
+  "bookingTime": "2026-10-21T16:27:00Z",
+  "price": 2828.39,
+  "cancelTime": "2026-11-25T05:27:00Z",
+  "modifiedTime": "2026-11-25T05:27:00Z"
+ },
+ {
+  "id": 900357,
+  "propertyId": "350362",
+  "roomId": "722806",
+  "roomQty": 1,
+  "status": "cancelled",
+  "channel": "direct",
+  "referer": "API",
+  "arrival": "2026-09-03",
+  "departure": "2026-09-07",
+  "bookingTime": "2026-09-03T08:34:00Z",
+  "price": 4756.74,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 4281.07,
+    "lineTotal": 4281.07
+   }
+  ],
+  "cancelTime": "2026-09-16T17:34:00Z",
+  "modifiedTime": "2026-09-16T17:34:00Z"
+ },
+ {
+  "id": 900358,
+  "propertyId": "350364",
+  "roomId": "722814",
+  "roomQty": 1,
+  "status": "new",
+  "channel": "direct",
+  "referer": "API",
+  "arrival": "2026-12-05",
+  "departure": "2026-12-08",
+  "bookingTime": "2026-10-06T10:25:00Z",
+  "price": 3600.42
+ },
+ {
+  "id": 900359,
+  "propertyId": "350364",
+  "roomId": "722813",
+  "roomQty": 1,
+  "status": "confirmed",
+  "channel": "direct",
+  "referer": "API",
+  "arrival": "2027-01-20",
+  "departure": "2027-01-22",
+  "bookingTime": "2026-11-21T20:30:00Z",
+  "price": 1768.29
+ },
+ {
+  "id": 900360,
+  "propertyId": "350362",
+  "roomId": "722806",
+  "roomQty": 2,
+  "status": "confirmed",
+  "channel": "direct",
+  "referer": "frontdesk",
+  "arrival": "2026-12-16",
+  "departure": "2026-12-18",
+  "bookingTime": "2026-12-13T15:47:00Z",
+  "price": 2958.36
+ },
+ {
+  "id": 900361,
+  "propertyId": "350362",
+  "roomId": "722808",
+  "roomQty": 1,
+  "status": "new",
+  "channel": "booking",
+  "referer": "booking",
+  "arrival": "2026-10-27",
+  "departure": "2026-10-31",
+  "bookingTime": "2026-10-13T11:35:00Z",
+  "price": 5349.15
+ },
+ {
+  "id": 900362,
+  "propertyId": "350364",
+  "roomId": "722813",
+  "roomQty": 1,
+  "status": "new",
+  "channel": "booking",
+  "referer": "booking",
+  "arrival": "2027-01-02",
+  "departure": "2027-01-06",
+  "bookingTime": "2026-12-03T05:57:00Z",
+  "price": 4340.97,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 3906.87,
+    "lineTotal": 3906.87
+   },
+   {
+    "type": "charge",
+    "qty": 2,
+    "amount": 35.0
+   }
+  ]
+ },
+ {
+  "id": 900363,
+  "propertyId": "350364",
+  "roomId": "722813",
+  "roomQty": 1,
+  "status": "confirmed",
+  "channel": "airbnb",
+  "referer": "airbnb",
+  "arrival": "2027-01-12",
+  "departure": "2027-01-14",
+  "bookingTime": "2026-11-13T16:35:00Z",
+  "price": 1458.62,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 1312.76,
+    "lineTotal": 1312.76
+   }
+  ]
+ },
+ {
+  "id": 900364,
+  "propertyId": "350362",
+  "roomId": "722806",
+  "roomQty": 2,
+  "status": "confirmed",
+  "channel": "booking",
+  "referer": "booking",
+  "arrival": "2026-11-19",
+  "departure": "2026-11-21",
+  "bookingTime": "2026-11-12T12:28:00Z",
+  "price": 2389.97
+ },
+ {
+  "id": 900365,
+  "propertyId": "350364",
+  "roomId": "722814",
+  "roomQty": 2,
+  "status": "confirmed",
+  "channel": "booking",
+  "referer": "booking",
+  "arrival": "2026-10-15",
+  "departure": "2026-10-19",
+  "bookingTime": "2026-09-15T14:42:00Z",
+  "price": 2555.84
+ },
+ {
+  "id": 900366,
+  "propertyId": "350362",
+  "roomId": "722808",
+  "roomQty": 1,
+  "status": "new",
+  "channel": "airbnb",
+  "referer": "airbnb",
+  "arrival": "2026-12-05",
+  "departure": "2026-12-09",
+  "bookingTime": "2026-10-06T16:12:00Z",
+  "price": 5280.76
+ },
+ {
+  "id": 900367,
+  "propertyId": "350364",
+  "roomId": "722815",
+  "roomQty": 1,
+  "status": "confirmed",
+  "channel": "direct",
+  "referer": "API",
+  "arrival": "2027-02-22",
+  "departure": "2027-02-26",
+  "bookingTime": "2026-10-25T22:15:00Z",
+  "price": 1957.04,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 1761.34,
+    "lineTotal": 1761.34
+   }
+  ]
+ },
+ {
+  "id": 900368,
+  "propertyId": "350364",
+  "roomId": "722813",
+  "roomQty": 1,
+  "status": "confirmed",
+  "channel": "expedia",
+  "referer": "expedia",
+  "arrival": "2027-01-03",
+  "departure": "2027-01-04",
+  "bookingTime": "2026-09-05T18:28:00Z",
+  "price": 914.19
+ },
+ {
+  "id": 900369,
+  "propertyId": "350364",
+  "roomId": "722813",
+  "roomQty": 2,
+  "status": "new",
+  "channel": "booking",
+  "referer": "booking",
+  "arrival": "2026-10-12",
+  "departure": "2026-10-14",
+  "bookingTime": "2026-10-11T03:56:00Z",
+  "price": 1760.28,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 1584.25,
+    "lineTotal": 1584.25
+   }
+  ]
+ },
+ {
+  "id": 900370,
+  "propertyId": "350362",
+  "roomId": "722805",
+  "roomQty": 1,
+  "status": "request",
+  "channel": "direct",
+  "referer": "API",
+  "arrival": "2026-10-30",
+  "departure": "2026-10-31",
+  "bookingTime": "2026-10-27T10:48:00Z",
+  "price": 712.33,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 641.1,
+    "lineTotal": 641.1
+   }
+  ]
+ },
+ {
+  "id": 900371,
+  "propertyId": "350362",
+  "roomId": "722807",
+  "roomQty": 1,
+  "status": "new",
+  "channel": "direct",
+  "referer": "frontdesk",
+  "arrival": "2026-11-22",
+  "departure": "2026-11-24",
+  "bookingTime": "2026-11-09T01:32:00Z",
+  "price": 2654.02
+ },
+ {
+  "id": 900372,
+  "propertyId": "350364",
+  "roomId": "722815",
+  "roomQty": 1,
+  "status": "confirmed",
+  "channel": "booking",
+  "referer": "booking",
+  "arrival": "2026-11-13",
+  "departure": "2026-11-15",
+  "bookingTime": "2026-11-10T16:11:00Z",
+  "price": 1088.94
+ },
+ {
+  "id": 900373,
+  "propertyId": "350364",
+  "roomId": "722813",
+  "roomQty": 1,
+  "status": "confirmed",
+  "channel": "airbnb",
+  "referer": "airbnb",
+  "arrival": "2027-03-23",
+  "departure": "2027-03-26",
+  "bookingTime": "2026-11-23T21:34:00Z",
+  "price": 2023.4
+ },
+ {
+  "id": 900374,
+  "propertyId": "350362",
+  "roomId": "722805",
+  "roomQty": 2,
+  "status": "confirmed",
+  "channel": "booking",
+  "referer": "booking",
+  "arrival": "2026-10-19",
+  "departure": "2026-10-22",
+  "bookingTime": "2026-10-18T05:05:00Z",
+  "price": 1964.78
+ },
+ {
+  "id": 900375,
+  "propertyId": "350364",
+  "roomId": "722814",
+  "roomQty": 1,
+  "status": "confirmed",
+  "channel": "direct",
+  "referer": "API",
+  "arrival": "2026-10-06",
+  "departure": "2026-10-08",
+  "bookingTime": "2026-09-22T12:37:00Z",
+  "price": 1941.96
+ },
+ {
+  "id": 900376,
+  "propertyId": "350364",
+  "roomId": "722815",
+  "roomQty": 1,
+  "status": "confirmed",
+  "channel": "direct",
+  "referer": "API",
+  "arrival": "2026-11-21",
+  "departure": "2026-11-24",
+  "bookingTime": "2026-10-22T15:36:00Z",
+  "price": 1722.39
+ },
+ {
+  "id": 900377,
+  "propertyId": "350364",
+  "roomId": "722814",
+  "roomQty": 1,
+  "status": "confirmed",
+  "channel": "airbnb",
+  "referer": "airbnb",
+  "arrival": "2026-11-04",
+  "departure": "2026-11-07",
+  "bookingTime": "2026-09-06T02:24:00Z",
+  "price": 2406.3
+ },
+ {
+  "id": 900378,
+  "propertyId": "350362",
+  "roomId": "722805",
+  "roomQty": 2,
+  "status": "cancelled",
+  "channel": "expedia",
+  "referer": "expedia",
+  "arrival": "2027-02-22",
+  "departure": "2027-02-23",
+  "bookingTime": "2026-10-25T13:40:00Z",
+  "price": 1403.74,
+  "modifiedTime": "2026-10-31T11:40:00Z"
+ },
+ {
+  "id": 900379,
+  "propertyId": "350362",
+  "roomId": "722808",
+  "roomQty": 1,
+  "status": "confirmed",
+  "channel": "booking",
+  "referer": "booking",
+  "arrival": "2026-11-25",
+  "departure": "2026-11-28",
+  "bookingTime": "2026-10-26T14:56:00Z",
+  "price": 1807.04
+ },
+ {
+  "id": 900380,
+  "propertyId": "350362",
+  "roomId": "722807",
+  "roomQty": 1,
+  "status": "new",
+  "channel": "booking",
+  "referer": "booking",
+  "arrival": "2026-12-08",
+  "departure": "2026-12-11",
+  "bookingTime": "2026-12-05T05:05:00Z",
+  "price": 3976.58,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 3578.92,
+    "lineTotal": 3578.92
+   },
+   {
+    "type": "payment",
+    "qty": 1,
+    "amount": -300.0,
+    "lineTotal": -300.0
+   }
+  ]
+ },
+ {
+  "id": 900381,
+  "propertyId": "350364",
+  "roomId": "722814",
+  "roomQty": 2,
+  "status": "confirmed",
+  "channel": "airbnb",
+  "referer": "airbnb",
+  "arrival": "2026-12-24",
+  "departure": "2026-12-26",
+  "bookingTime": "2026-10-25T07:36:00Z",
+  "price": 2550.06,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 2295.05,
+    "lineTotal": 2295.05
+   },
+   {
+    "type": "charge",
+    "qty": 2,
+    "amount": 35.0
+   }
+  ]
+ },
+ {
+  "id": 900382,
+  "propertyId": "350362",
+  "roomId": "722806",
+  "roomQty": 1,
+  "status": "confirmed",
+  "channel": "airbnb",
+  "referer": "airbnb",
+  "arrival": "2026-10-10",
+  "departure": "2026-10-14",
+  "bookingTime": "2026-10-10T17:10:00Z",
+  "price": 5697.0,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 5127.3,
+    "lineTotal": 5127.3
+   },
+   {
+    "type": "charge",
+    "qty": 2,
+    "amount": 35.0
+   }
+  ]
+ },
+ {
+  "id": 900383,
+  "propertyId": "350362",
+  "roomId": "722807",
+  "roomQty": 1,
+  "status": "confirmed",
+  "channel": "airbnb",
+  "referer": "airbnb",
+  "arrival": "2026-09-11",
+  "departure": "2026-09-12",
+  "bookingTime": "2026-09-04T18:18:00Z",
+  "price": 453.62
+ },
+ {
+  "id": 900384,
+  "propertyId": "350362",
+  "roomId": "722807",
+  "roomQty": 1,
+  "status": "confirmed",
+  "channel": "direct",
+  "referer": "API",
+  "arrival": "2027-03-19",
+  "departure": "2027-03-20",
+  "bookingTime": "2026-11-20T00:32:00Z",
+  "price": 979.17,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 881.25,
+    "lineTotal": 881.25
+   },
+   {
+    "type": "charge",
+    "qty": 2,
+    "amount": 35.0
+   }
+  ]
+ },
+ {
+  "id": 900385,
+  "propertyId": "350364",
+  "roomId": "722814",
+  "roomQty": 1,
+  "status": "new",
+  "channel": "direct",
+  "referer": "API",
+  "arrival": "2026-11-16",
+  "departure": "2026-11-18",
+  "bookingTime": "2026-09-17T23:09:00Z",
+  "price": 1627.99,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 1465.19,
+    "lineTotal": 1465.19
+   }
+  ]
+ },
+ {
+  "id": 900386,
+  "propertyId": "350362",
+  "roomId": "722808",
+  "roomQty": 1,
+  "status": "confirmed",
+  "channel": "expedia",
+  "referer": "expedia",
+  "arrival": "2026-09-22",
+  "departure": "2026-09-25",
+  "bookingTime": "2026-09-21T19:29:00Z",
+  "price": 2156.43
+ },
+ {
+  "id": 900387,
+  "propertyId": "350362",
+  "roomId": "722805",
+  "roomQty": 1,
+  "status": "new",
+  "channel": "expedia",
+  "referer": "expedia",
+  "arrival": "2026-12-08",
+  "departure": "2026-12-10",
+  "bookingTime": "2026-12-01T14:07:00Z",
+  "price": 1194.98,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 1075.48,
+    "lineTotal": 1075.48
+   },
+   {
+    "type": "charge",
+    "qty": 2,
+    "amount": 35.0
+   },
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 120.0,
+    "lineTotal": 120.0,
+    "invoiceeId": 77
+   }
+  ]
+ },
+ {
+  "id": 900388,
+  "propertyId": "350362",
+  "roomId": "722808",
+  "roomQty": 1,
+  "status": "confirmed",
+  "channel": "expedia",
+  "referer": "expedia",
+  "arrival": "2026-10-06",
+  "departure": "2026-10-09",
+  "bookingTime": "2026-09-29T03:46:00Z",
+  "price": 1478.87,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 1330.98,
+    "lineTotal": 1330.98
+   },
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 120.0,
+    "lineTotal": 120.0,
+    "invoiceeId": 77
+   }
+  ]
+ },
+ {
+  "id": 900389,
+  "propertyId": "350364",
+  "roomId": "722814",
+  "roomQty": 1,
+  "status": "new",
+  "channel": "booking",
+  "referer": "booking",
+  "arrival": "2026-11-14",
+  "departure": "2026-11-16",
+  "bookingTime": "2026-11-14T18:29:00Z",
+  "price": 1822.37,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 1640.13,
+    "lineTotal": 1640.13
+   },
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 120.0,
+    "lineTotal": 120.0,
+    "invoiceeId": 77
+   }
+  ]
+ },
+ {
+  "id": 900390,
+  "propertyId": "350362",
+  "roomId": "722806",
+  "roomQty": 1,
+  "status": "request",
+  "channel": "booking",
+  "referer": "booking",
+  "arrival": "2026-10-27",
+  "departure": "2026-10-28",
+  "bookingTime": "2026-10-20T05:47:00Z",
+  "price": 509.66
+ },
+ {
+  "id": 900391,
+  "propertyId": "350362",
+  "roomId": "722808",
+  "roomQty": 1,
+  "status": "new",
+  "channel": "direct",
+  "referer": "API",
+  "arrival": "2026-11-18",
+  "departure": "2026-11-20",
+  "bookingTime": "2026-11-18T10:34:00Z",
+  "price": 2740.68,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 2466.61,
+    "lineTotal": 2466.61
+   },
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 120.0,
+    "lineTotal": 120.0,
+    "invoiceeId": 77
+   }
+  ]
+ },
+ {
+  "id": 900392,
+  "propertyId": "350362",
+  "roomId": "722807",
+  "roomQty": 2,
+  "status": "request",
+  "channel": "direct",
+  "referer": "frontdesk",
+  "arrival": "2026-12-23",
+  "departure": "2026-12-26",
+  "bookingTime": "2026-12-10T01:14:00Z",
+  "price": 3714.62,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 3343.16,
+    "lineTotal": 3343.16
+   },
+   {
+    "type": "charge",
+    "qty": 2,
+    "amount": 35.0
+   }
+  ]
+ },
+ {
+  "id": 900393,
+  "propertyId": "350364",
+  "roomId": "722815",
+  "roomQty": 1,
+  "status": "confirmed",
+  "channel": "booking",
+  "referer": "booking",
+  "arrival": "2026-10-04",
+  "departure": "2026-10-07",
+  "bookingTime": "2026-09-20T03:00:00Z",
+  "price": 3432.85
+ },
+ {
+  "id": 900394,
+  "propertyId": "350362",
+  "roomId": "722807",
+  "roomQty": 2,
+  "status": "new",
+  "channel": "direct",
+  "referer": "API",
+  "arrival": "2026-10-18",
+  "departure": "2026-10-20",
+  "bookingTime": "2026-10-04T22:44:00Z",
+  "price": 2221.6
+ },
+ {
+  "id": 900395,
+  "propertyId": "350362",
+  "roomId": "722808",
+  "roomQty": 1,
+  "status": "cancelled",
+  "channel": "booking",
+  "referer": "booking",
+  "arrival": "2026-09-29",
+  "departure": "2026-10-03",
+  "bookingTime": "2026-09-26T07:57:00Z",
+  "price": 4350.86,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 3915.77,
+    "lineTotal": 3915.77
+   },
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 120.0,
+    "lineTotal": 120.0,
+    "invoiceeId": 77
+   }
+  ],
+  "modifiedTime": "2026-09-28T19:57:00Z"
+ },
+ {
+  "id": 900396,
+  "propertyId": "350362",
+  "roomId": "722805",
+  "roomQty": 1,
+  "status": "confirmed",
+  "channel": "booking",
+  "referer": "booking",
+  "arrival": "2026-11-10",
+  "departure": "2026-11-13",
+  "bookingTime": "2026-11-03T14:12:00Z",
+  "price": 4037.92,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 3634.13,
+    "lineTotal": 3634.13
+   }
+  ]
+ },
+ {
+  "id": 900397,
+  "propertyId": "350364",
+  "roomId": "722813",
+  "roomQty": 1,
+  "status": "new",
+  "channel": "direct",
+  "referer": "API",
+  "arrival": "2026-11-23",
+  "departure": "2026-11-24",
+  "bookingTime": "2026-09-24T06:48:00Z",
+  "price": 945.79
+ },
+ {
+  "id": 900398,
+  "propertyId": "350364",
+  "roomId": "722813",
+  "roomQty": 2,
+  "status": "confirmed",
+  "channel": "booking",
+  "referer": "booking",
+  "arrival": "2026-10-17",
+  "departure": "2026-10-21",
+  "bookingTime": "2026-09-17T06:58:00Z",
+  "price": 2839.92
+ },
+ {
+  "id": 900399,
+  "propertyId": "350362",
+  "roomId": "722808",
+  "roomQty": 1,
+  "status": "new",
+  "channel": "airbnb",
+  "referer": "airbnb",
+  "arrival": "2026-10-18",
+  "departure": "2026-10-20",
+  "bookingTime": "2026-10-17T08:15:00Z",
+  "price": 1153.52
+ },
+ {
+  "id": 900400,
+  "propertyId": "350362",
+  "roomId": "722805",
+  "roomQty": 1,
+  "status": "confirmed",
+  "channel": "booking",
+  "referer": "booking",
+  "arrival": "2026-11-17",
+  "departure": "2026-11-19",
+  "bookingTime": "2026-11-03T14:22:00Z",
+  "price": 2184.84,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 1966.36,
+    "lineTotal": 1966.36
+   },
+   {
+    "type": "payment",
+    "qty": 1,
+    "amount": -300.0,
+    "lineTotal": -300.0
+   }
+  ]
+ },
+ {
+  "id": 900401,
+  "propertyId": "350362",
+  "roomId": "722805",
+  "roomQty": 1,
+  "status": "confirmed",
+  "channel": "booking",
+  "referer": "booking",
+  "arrival": "2026-10-24",
+  "departure": "2026-10-27",
+  "bookingTime": "2026-10-23T09:53:00Z",
+  "price": 2080.22
+ },
+ {
+  "id": 900402,
+  "propertyId": "350364",
+  "roomId": "722813",
+  "roomQty": 1,
+  "status": "confirmed",
+  "channel": "expedia",
+  "referer": "expedia",
+  "arrival": "2026-10-26",
+  "departure": "2026-10-27",
+  "bookingTime": "2026-10-19T10:35:00Z",
+  "price": 1333.46,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 1200.11,
+    "lineTotal": 1200.11
+   }
+  ]
+ },
+ {
+  "id": 900403,
+  "propertyId": "350362",
+  "roomId": "722807",
+  "roomQty": 1,
+  "status": "confirmed",
+  "channel": "expedia",
+  "referer": "expedia",
+  "arrival": "2026-12-07",
+  "departure": "2026-12-11",
+  "bookingTime": "2026-12-06T17:40:00Z",
+  "price": 2962.27,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 2666.04,
+    "lineTotal": 2666.04
+   }
+  ]
+ },
+ {
+  "id": 900404,
+  "propertyId": "350362",
+  "roomId": "722807",
+  "roomQty": 1,
+  "status": "confirmed",
+  "channel": "booking",
+  "referer": "booking",
+  "arrival": "2027-02-09",
+  "departure": "2027-02-10",
+  "bookingTime": "2026-10-12T03:20:00Z",
+  "price": 648.89,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 584.0,
+    "lineTotal": 584.0
+   }
+  ]
+ },
+ {
+  "id": 900405,
+  "propertyId": "350362",
+  "roomId": "722806",
+  "roomQty": 2,
+  "status": "confirmed",
+  "channel": "direct",
+  "referer": "frontdesk",
+  "arrival": "2026-11-08",
+  "departure": "2026-11-10",
+  "bookingTime": "2026-11-08T09:03:00Z",
+  "price": 1962.78,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 1766.5,
+    "lineTotal": 1766.5
+   },
+   {
+    "type": "charge",
+    "qty": 2,
+    "amount": 35.0
+   }
+  ]
+ },
+ {
+  "id": 900406,
+  "propertyId": "350362",
+  "roomId": "722807",
+  "roomQty": 1,
+  "status": "request",
+  "channel": "direct",
+  "referer": "frontdesk",
+  "arrival": "2026-11-06",
+  "departure": "2026-11-07",
+  "bookingTime": "2026-10-23T05:00:00Z",
+  "price": 1392.5,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 1253.25,
+    "lineTotal": 1253.25
+   }
+  ]
+ },
+ {
+  "id": 900407,
+  "propertyId": "350362",
+  "roomId": "722808",
+  "roomQty": 1,
+  "status": "confirmed",
+  "channel": "booking",
+  "referer": "booking",
+  "arrival": "2026-09-10",
+  "departure": "2026-09-12",
+  "bookingTime": "2026-09-07T11:03:00Z",
+  "price": 2037.18
+ },
+ {
+  "id": 900408,
+  "propertyId": "350364",
+  "roomId": "722815",
+  "roomQty": 2,
+  "status": "request",
+  "channel": "direct",
+  "referer": "API",
+  "arrival": "2026-11-15",
+  "departure": "2026-11-19",
+  "bookingTime": "2026-11-01T11:51:00Z",
+  "price": 2307.91
+ },
+ {
+  "id": 900409,
+  "propertyId": "350362",
+  "roomId": "722807",
+  "roomQty": 2,
+  "status": "new",
+  "channel": "expedia",
+  "referer": "expedia",
+  "arrival": "2026-12-25",
+  "departure": "2026-12-27",
+  "bookingTime": "2026-12-11T08:35:00Z",
+  "price": 1279.46,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 1151.51,
+    "lineTotal": 1151.51
+   }
+  ]
+ },
+ {
+  "id": 900410,
+  "propertyId": "350362",
+  "roomId": "722808",
+  "roomQty": 1,
+  "status": "confirmed",
+  "channel": "expedia",
+  "referer": "expedia",
+  "arrival": "2026-11-29",
+  "departure": "2026-12-01",
+  "bookingTime": "2026-11-15T10:02:00Z",
+  "price": 2555.54,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 2299.99,
+    "lineTotal": 2299.99
+   },
+   {
+    "type": "charge",
+    "qty": 2,
+    "amount": 35.0
+   }
+  ]
+ },
+ {
+  "id": 900411,
+  "propertyId": "350364",
+  "roomId": "722814",
+  "roomQty": 1,
+  "status": "confirmed",
+  "channel": "airbnb",
+  "referer": "airbnb",
+  "arrival": "2026-10-07",
+  "departure": "2026-10-10",
+  "bookingTime": "2026-09-23T20:01:00Z",
+  "price": 3398.0,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 3058.2,
+    "lineTotal": 3058.2
+   },
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 120.0,
+    "lineTotal": 120.0,
+    "invoiceeId": 77
+   },
+   {
+    "type": "payment",
+    "qty": 1,
+    "amount": -300.0,
+    "lineTotal": -300.0
+   }
+  ]
+ },
+ {
+  "id": 900412,
+  "propertyId": "350364",
+  "roomId": "722814",
+  "roomQty": 1,
+  "status": "confirmed",
+  "channel": "direct",
+  "referer": "frontdesk",
+  "arrival": "2026-10-05",
+  "departure": "2026-10-07",
+  "bookingTime": "2026-10-06T02:02:00Z",
+  "price": 919.07,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 827.16,
+    "lineTotal": 827.16
+   }
+  ]
+ },
+ {
+  "id": 900413,
+  "propertyId": "350362",
+  "roomId": "722807",
+  "roomQty": 1,
+  "status": "request",
+  "channel": "expedia",
+  "referer": "expedia",
+  "arrival": "2026-09-08",
+  "departure": "2026-09-10",
+  "bookingTime": "2026-09-05T06:50:00Z",
+  "price": 2421.71
+ },
+ {
+  "id": 900414,
+  "propertyId": "350364",
+  "roomId": "722815",
+  "roomQty": 1,
+  "status": "confirmed",
+  "channel": "direct",
+  "referer": "API",
+  "arrival": "2027-03-12",
+  "departure": "2027-03-14",
+  "bookingTime": "2026-11-12T03:39:00Z",
+  "price": 2032.65,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 1829.39,
+    "lineTotal": 1829.39
+   },
+   {
+    "type": "payment",
+    "qty": 1,
+    "amount": -300.0,
+    "lineTotal": -300.0
+   }
+  ]
+ },
+ {
+  "id": 900415,
+  "propertyId": "350362",
+  "roomId": "722808",
+  "roomQty": 1,
+  "status": "cancelled",
+  "channel": "booking",
+  "referer": "booking",
+  "arrival": "2026-10-26",
+  "departure": "2026-10-28",
+  "bookingTime": "2026-10-25T22:41:00Z",
+  "price": 1183.19,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 1064.87,
+    "lineTotal": 1064.87
+   },
+   {
+    "type": "charge",
+    "qty": 2,
+    "amount": 35.0
+   },
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 120.0,
+    "lineTotal": 120.0,
+    "invoiceeId": 77
+   }
+  ],
+  "cancelTime": "2026-10-31T03:41:00Z",
+  "modifiedTime": "2026-10-31T03:41:00Z"
+ },
+ {
+  "id": 900416,
+  "propertyId": "350364",
+  "roomId": "722813",
+  "roomQty": 1,
+  "status": "cancelled",
+  "channel": "booking",
+  "referer": "booking",
+  "arrival": "2026-11-15",
+  "departure": "2026-11-19",
+  "bookingTime": "2026-11-12T15:36:00Z",
+  "price": 5844.16,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 5259.74,
+    "lineTotal": 5259.74
+   }
+  ],
+  "modifiedTime": "2026-11-17T22:36:00Z"
+ },
+ {
+  "id": 900417,
+  "propertyId": "350364",
+  "roomId": "722813",
+  "roomQty": 1,
+  "status": "cancelled",
+  "channel": "airbnb",
+  "referer": "airbnb",
+  "arrival": "2027-02-12",
+  "departure": "2027-02-13",
+  "bookingTime": "2026-10-15T16:35:00Z",
+  "price": 1284.13,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 1155.72,
+    "lineTotal": 1155.72
+   },
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 120.0,
+    "lineTotal": 120.0,
+    "invoiceeId": 77
+   },
+   {
+    "type": "payment",
+    "qty": 1,
+    "amount": -300.0,
+    "lineTotal": -300.0
+   }
+  ],
+  "cancelTime": "2026-11-21T21:35:00Z",
+  "modifiedTime": "2026-11-21T21:35:00Z"
+ },
+ {
+  "id": 900418,
+  "propertyId": "350364",
+  "roomId": "722814",
+  "roomQty": 1,
+  "status": "new",
+  "channel": "booking",
+  "referer": "booking",
+  "arrival": "2026-10-31",
+  "departure": "2026-11-04",
+  "bookingTime": "2026-10-28T12:00:00Z",
+  "price": 5678.09,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 5110.28,
+    "lineTotal": 5110.28
+   },
+   {
+    "type": "charge",
+    "qty": 2,
+    "amount": 35.0
+   },
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 120.0,
+    "lineTotal": 120.0,
+    "invoiceeId": 77
+   }
+  ]
+ },
+ {
+  "id": 900419,
+  "propertyId": "350364",
+  "roomId": "722813",
+  "roomQty": 2,
+  "status": "confirmed",
+  "channel": "expedia",
+  "referer": "expedia",
+  "arrival": "2026-10-27",
+  "departure": "2026-10-29",
+  "bookingTime": "2026-10-20T16:39:00Z",
+  "price": 2888.33,
+  "invoiceItems": [
+   {
+    "type": "charge",
+    "qty": 1,
+    "amount": 2599.5,
+    "lineTotal": 2599.5
+   },
+   {
+    "type": "charge",
+    "qty": 2,
+    "amount": 35.0
+   },
+   {
+    "type": "payment",
+    "qty": 1,
+    "amount": -300.0,
+    "lineTotal": -300.0
+   }
+  ]
+ }
+]

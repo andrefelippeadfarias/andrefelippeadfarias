@@ -27,10 +27,13 @@ $ritmo_c = $view['c'];
         </select></p>
     <p><label for="ritmo-p-cur"><?php esc_html_e('Currency', 'ritmo-revenue'); ?></label>
         <select id="ritmo-p-cur" name="currency">
-            <?php foreach ($ritmo_c['currencies'] as $ritmo_cur) : ?><option value="<?php echo esc_attr($ritmo_cur); ?>"><?php echo esc_html($ritmo_cur); ?></option><?php endforeach; ?>
+            <?php foreach ($ritmo_c['currencies'] as $ritmo_cur) : ?><option value="<?php echo esc_attr($ritmo_cur); ?>" <?php selected($ritmo_cur, $ritmo_c['currency']); ?>><?php echo esc_html($ritmo_cur); ?></option><?php endforeach; ?>
         </select></p>
-    <p><label for="ritmo-p-tier"><?php esc_html_e('Tier', 'ritmo-revenue'); ?></label>
-        <input type="text" id="ritmo-p-tier" name="tier" value="standard" maxlength="32"></p>
+    <p><label for="ritmo-p-tier"><?php esc_html_e('Market position table of your rules', 'ritmo-revenue'); ?></label>
+        <select id="ritmo-p-tier" name="tier" aria-describedby="ritmo-p-tier-help">
+            <?php foreach ($ritmo_c['tiers'] as $ritmo_tier) : ?><option value="<?php echo esc_attr($ritmo_tier); ?>" <?php selected($ritmo_tier, 'standard'); ?>><?php echo esc_html($ritmo_tier); ?></option><?php endforeach; ?>
+        </select>
+        <span class="description" id="ritmo-p-tier-help"><?php esc_html_e('Which table of market positions the property aims at; "standard" fits most inns.', 'ritmo-revenue'); ?></span></p>
     <button type="submit" class="button button-primary" data-ritmo="wizard-continue"><?php esc_html_e('Save and continue', 'ritmo-revenue'); ?></button>
 </form>
 <?php endif; ?>

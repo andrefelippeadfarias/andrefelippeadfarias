@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Ritmo\Application\Grid;
 
 use DateTimeImmutable;
+use Ritmo\Domain\Model\RoomType;
 use Ritmo\Domain\Pricing\RuleCode;
 use Ritmo\Domain\Support\Days;
 use Ritmo\Domain\Support\Num;
@@ -41,6 +42,25 @@ final class PlanIndex
                 $this->prices[$key] = (float) $details['current_price'];
             }
         }
+    }
+
+    /**
+     * The same plan with the listing's minimum and maximum as the amounts in force of nights that
+     * had no date rule (PlannedNight::withListing).
+     *
+     * @param array<string, RoomType> $rooms code => room type
+     */
+    public function withListing(array $rooms): self
+    {
+        $copy = clone $this;
+        foreach ($copy->nights as $key => $night) {
+            $room = $rooms[explode('|', $key, 2)[0]] ?? null;
+            if ($room !== null) {
+                $copy->nights[$key] = $night->withListing($room->min, $room->max);
+            }
+        }
+
+        return $copy;
     }
 
     public static function empty(): self

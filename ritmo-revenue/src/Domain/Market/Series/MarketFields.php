@@ -53,7 +53,7 @@ final class MarketFields
             new Field("$m.small_sample.competitors", FieldType::Integer, 'Fewer competitors than', 'A kind of night whose stays have fewer competitors (median) is marked as a small sample.', 40, min: 1, max: 500),
             new Field("$m.stale_after_days", FieldType::Integer, 'Remind me after', 'When the newest price is older than this, the plugin reminds you to import fresh prices.', 7, min: 1, max: 60, unit: Field::UNIT_DAYS),
             new Field("$m.reminder_horizon_days", FieldType::Integer, 'Nights the reminder looks at', 'The reminder checks the nights from today to this many days ahead.', 60, min: 7, max: 366, unit: Field::UNIT_DAYS),
-            new Field("$m.csv", FieldType::Group, 'Price file'),
+            new Field("$m.csv", FieldType::Group, 'Price file', 'Limits of a price file uploaded on the Market screen; a file over a limit is refused whole.'),
             new Field("$m.csv.max_bytes", FieldType::Integer, 'Largest file', 'In bytes; never above the upload limit of the site.', 2097152, min: 102400, max: 10485760),
             new Field("$m.csv.max_rows", FieldType::Integer, 'Most rows in a file', '', 20000, min: 100, max: 50000),
             new Field("$m.csv.max_stay_nights", FieldType::Integer, 'Longest stay in a row', '', 7, min: 1, max: 30, unit: Field::UNIT_NIGHTS),

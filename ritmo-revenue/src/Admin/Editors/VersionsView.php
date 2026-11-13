@@ -49,7 +49,14 @@ final class VersionsView
             }
         }
 
-        return ['rows' => $rows, 'total' => $versions['total'], 'page_number' => $pageNumber, 'compare' => $compare];
+        return [
+            'rows' => $rows,
+            'total' => $versions['total'],
+            'page_number' => $pageNumber,
+            'compare' => $compare,
+            // The changes of a version open in place through the read-only compare route.
+            'compare_rest' => ['url' => rest_url('ritmo/v1/rules/compare'), 'nonce' => wp_create_nonce('wp_rest'), 'property' => $page->property?->id ?? ''],
+        ];
     }
 
     public static function person(int $userId): string

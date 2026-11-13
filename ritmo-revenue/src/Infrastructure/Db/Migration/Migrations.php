@@ -24,6 +24,9 @@ final class Migrations
             new Migration0007WritePath(),
             new Migration0008Confirmation(),
             new Migration0009Operations(),
+            new Migration0010Screens(),
+            new Migration0011MarketSeries(),
+            new Migration0012Reports(),
         ];
     }
 }

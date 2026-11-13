@@ -18,7 +18,7 @@ View::render('admin/editors/draft-bar', $view);
 <?php if ($view['rows'] === []) : ?>
     <div class="ritmo-empty" data-ritmo="empty"><p><?php esc_html_e('No version of the rules yet: the neutral defaults apply until the first one is saved.', 'ritmo-revenue'); ?></p></div>
 <?php else : ?>
-    <table class="widefat striped ritmo-table" data-ritmo="versions-table">
+    <table class="widefat striped ritmo-table" data-ritmo="versions-table" data-rest-url="<?php echo esc_url($view['compare_rest']['url']); ?>" data-rest-nonce="<?php echo esc_attr($view['compare_rest']['nonce']); ?>" data-property="<?php echo esc_attr($view['compare_rest']['property']); ?>" data-error="<?php esc_attr_e('The changes could not be loaded. Use the link to compare the two versions.', 'ritmo-revenue'); ?>">
         <caption><?php echo esc_html(sprintf(/* translators: %d: number of versions */ _n('%d version of the rules', '%d versions of the rules', (int) $view['total'], 'ritmo-revenue'), (int) $view['total'])); ?></caption>
         <thead><tr>
             <th scope="col"><?php esc_html_e('Version', 'ritmo-revenue'); ?></th>
@@ -42,6 +42,11 @@ View::render('admin/editors/draft-bar', $view);
                             <?php esc_html_e('first version', 'ritmo-revenue'); ?>
                         <?php else : ?>
                             <a href="<?php echo esc_url($ritmo_page->url(['from' => $ritmo_row['version'] - 1, 'to' => $ritmo_row['version']])); ?>"><?php echo esc_html(sprintf(/* translators: %d: number of changes */ _n('%d change', '%d changes', (int) $ritmo_row['changes'], 'ritmo-revenue'), (int) $ritmo_row['changes'])); ?></a>
+                            <?php if ((int) $ritmo_row['changes'] > 0) : ?>
+                                <button type="button" class="button-link" hidden data-ritmo-js="version-changes" data-ritmo="version-changes-<?php echo esc_attr((string) $ritmo_row['version']); ?>" data-from="<?php echo esc_attr((string) ($ritmo_row['version'] - 1)); ?>" data-to="<?php echo esc_attr((string) $ritmo_row['version']); ?>" aria-expanded="false"><?php esc_html_e('Show them here', 'ritmo-revenue'); ?></button>
+                                <ul class="ritmo-version-changes" hidden></ul>
+                                <p class="ritmo-muted" role="status"></p>
+                            <?php endif; ?>
                         <?php endif; ?>
                     </td>
                     <td data-label="<?php esc_attr_e('Actions', 'ritmo-revenue'); ?>">

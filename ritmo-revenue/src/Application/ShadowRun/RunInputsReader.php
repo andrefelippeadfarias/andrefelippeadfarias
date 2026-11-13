@@ -5,10 +5,12 @@ declare(strict_types=1);
 namespace Ritmo\Application\ShadowRun;
 
 use DateTimeImmutable;
+use Ritmo\Application\Market\MarketRulerAssembler;
+use Ritmo\Application\Market\MarketSeriesService;
 use Ritmo\Application\Run\WeeklyReference;
 use Ritmo\Application\Verify\ThirdPartyWatch;
 use Ritmo\Domain\Market\AnchorLookup;
-use Ritmo\Domain\Market\AnchorRuler;
+use Ritmo\Domain\Pricing\Ladder\MarketRuler;
 use Ritmo\Domain\Model\DateOverride;
 use Ritmo\Domain\Model\InventoryNight;
 use Ritmo\Domain\Model\PriceNight;
@@ -27,7 +29,7 @@ use Ritmo\Infrastructure\Db\Repository\StepLedgerRepository;
 /**
  * What the plan assembly of a run reads, from what the run collected: the calendar of every room
  * night (the pricing system's when it was read, else the PMS price with the date rule in force),
- * the date rules, the market anchors and the market ruler built from them (AnchorRuler), the step
+ * the date rules, the market anchors, the market ruler of every series (MarketRulerAssembler), the step
  * ledger, the owner orders with the freezes of nights someone else changed, the nights closed in
  * the PMS without a booking and the filter of a light run (both left in the state by the watch
  * stage) and the listing values at the start of the week.
@@ -45,6 +47,8 @@ final class RunInputsReader
         private readonly MarketAnchorRepository $anchors,
         private readonly StepLedgerRepository $ledger,
         private readonly OrderRepository $orders,
+        private readonly MarketRulerAssembler $ruler,
+        private readonly MarketSeriesService $marketSeries,
         private readonly ?ThirdPartyWatch $thirdParty = null,
         private readonly ?WeeklyReference $weekly = null,
     ) {
@@ -87,12 +91,24 @@ final class RunInputsReader
             new AnchorLookup($context->rules, $anchors),
             $this->ledger->ledger($context->property->id, $context->horizon->first(), $context->horizon->last()),
             $this->book($context),
-            AnchorRuler::of($anchors, $context->rules),
+            $this->ruler($context),
             self::keys($context->state['blocked'] ?? null) ?? [],
             self::keys($context->state['light_filter'] ?? null),
             $readAt,
             $this->weekly?->of($context->property->id, $context->listings(), $context->today) ?? [],
         );
+    }
+
+    /**
+     * The market ruler of the horizon: every configured series of the price files and the anchor
+     * series "market" (spec 06, 1.6). The series are rebuilt first when their inputs changed
+     * (another day, new samples, the market section).
+     */
+    private function ruler(RunContext $context): MarketRuler
+    {
+        $this->marketSeries->rebuildIfStale($context->property->id);
+
+        return $this->ruler->of($context->property, $context->rules, $context->horizon->first(), $context->horizon->last());
     }
 
     /**

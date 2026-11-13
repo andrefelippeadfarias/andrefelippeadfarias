@@ -4,23 +4,34 @@ declare(strict_types=1);
 
 namespace Ritmo\Application\Run;
 
+use Ritmo\Application\Market\MarketSettings;
 use Ritmo\Application\ShadowRun\AfterWriteStage;
 use Ritmo\Application\ShadowRun\PlanItemStatus;
 use Ritmo\Application\ShadowRun\RunContext;
 use Ritmo\Application\ShadowRun\StageResult;
+use Ritmo\Domain\Config\InvalidConfig;
 use Ritmo\Domain\Model\PropertyMode;
 use Ritmo\Domain\Operations\RunKind;
+use Ritmo\Domain\Report\RunLines\RunFacts;
+use Ritmo\Domain\Report\RunLines\RunLine;
+use Ritmo\Domain\Report\RunLines\RunReportItems;
 
 /**
- * The report of the run, kept with it (operations spec 9, O44-O46): the manual sync of tonight and
- * tomorrow first when the run wrote them, then security and overbooking, then where every item
- * went (written and confirmed, not confirmed, held by a cancellation wave, waiting for approval,
- * refused, or what shadow would write). A light run without anything to do says so in three
- * lines. No guest data: bookings only by count.
+ * The report of the run, kept with it (operations spec 9, O44-O46; reports spec 2.5): the manual
+ * sync of tonight and tomorrow first when the run wrote them, then security and overbooking, then
+ * where every item went (written and confirmed, held, waiting for approval, refused, or what
+ * shadow would write). The lines are stored as codes with counts and reason codes ("items"), so
+ * each reader sees them in their own language; no guest data, bookings only by count. A full run
+ * also runs the end checks (old market prices, gaps of the ruler, steps overdue at the channel,
+ * the review due).
  */
 final class ReportStage implements AfterWriteStage
 {
     public const NAME = 'report';
+
+    public function __construct(private readonly RunEndChecks $checks)
+    {
+    }
 
     public function name(): string
     {
@@ -30,66 +41,55 @@ final class ReportStage implements AfterWriteStage
     public function run(RunContext $context): StageResult
     {
         $summary = $context->summary;
+        $verify = (array) ($summary['verify'] ?? []);
+        $light = $context->kind === RunKind::Light->value;
+        $marketAge = $light ? null : $this->checks->check($context, $verify);
+        $items = RunReportItems::of(self::facts($context, $marketAge), $light ? 0 : self::staleAfter($context));
+
+        return new StageResult(['items' => array_map(static fn (RunLine $line): array => $line->toArray(), $items)], []);
+    }
+
+    private static function facts(RunContext $context, ?int $marketAge): RunFacts
+    {
+        $summary = $context->summary;
         $watch = (array) ($summary['watch'] ?? []);
         $validate = (array) ($summary['validate'] ?? []);
         $write = (array) ($summary['write'] ?? []);
         $verify = (array) ($summary['verify'] ?? []);
-        if ($context->kind === RunKind::Light->value && (int) ($watch['light']['nights'] ?? 0) === 0) {
-            return new StageResult(['lines' => ['Light run: no booking moved, no sold-out night flipped, nothing changed by hand.', 'Nothing was decided.', 'Writes sent: 0.']], []);
-        }
-        $lines = [];
-        if (($write['sync_now'] ?? false) === true) {
-            $lines[] = 'Sync now: tonight or tomorrow changed; ask the pricing system to send them to the PMS at once.';
-        }
-        if (($watch['security_findings'] ?? 0) > 0) {
-            $lines[] = sprintf('Security: %d finding(s) on the bookings; see the alerts.', $watch['security_findings']);
-        }
-        if (($watch['overbooked'] ?? 0) > 0) {
-            $lines[] = sprintf('Overbooking: %d room night(s) sold beyond the units.', $watch['overbooked']);
-        }
-        if (($watch['wave_hold'] ?? false) === true) {
-            $lines[] = 'A cancellation wave holds the price cuts until a person releases it.';
-        }
-        $lines = [...$lines, ...$this->destinies($context, $validate, $write, $verify)];
 
-        return new StageResult(['lines' => $lines], []);
+        return new RunFacts(
+            light: $context->kind === RunKind::Light->value,
+            lightNights: (int) ($watch['light']['nights'] ?? 0),
+            shadow: $context->mode === PropertyMode::Shadow,
+            syncNow: ($write['sync_now'] ?? false) === true,
+            securityFindings: (int) ($watch['security_findings'] ?? 0),
+            overbooked: (int) ($watch['overbooked'] ?? 0),
+            waveHold: ($watch['wave_hold'] ?? false) === true,
+            wouldWrite: (int) ($validate[PlanItemStatus::WOULD_WRITE] ?? 0),
+            pmsWouldWrite: (int) ($write['pms_would_write'] ?? 0),
+            proposed: ($write['proposed'] ?? false) === true,
+            entries: (int) ($write['entries'] ?? 0),
+            refused: isset($write['refused']) ? (string) $write['refused'] : null,
+            callsSent: (int) ($write['writes_sent'] ?? 0),
+            confirmed: (int) ($verify['nights_confirmed'] ?? 0),
+            pmsConfirmed: (int) ($verify['pms_nights_confirmed'] ?? 0),
+            stop: isset($write['stop']) ? (string) $write['stop'] : null,
+            held: (int) ($write['held'] ?? 0),
+            rejected: (int) ($validate[PlanItemStatus::REJECTED] ?? 0),
+            pmsRejected: (int) ($write['pms_rejected'] ?? 0),
+            overdue: (int) ($verify['delivery']['overdue'] ?? 0),
+            marketAgeDays: $marketAge,
+            pmsSkipped: array_map('intval', (array) ($write['pms_skipped'] ?? [])),
+            mergeConflicts: (int) ($write['pms_merge_conflicts'] ?? 0),
+        );
     }
 
-    /**
-     * @param array<string, mixed> $validate
-     * @param array<string, mixed> $write
-     * @param array<string, mixed> $verify
-     *
-     * @return list<string>
-     */
-    private function destinies(RunContext $context, array $validate, array $write, array $verify): array
+    private static function staleAfter(RunContext $context): int
     {
-        $lines = [];
-        $would = (int) ($validate[PlanItemStatus::WOULD_WRITE] ?? 0);
-        if ($context->mode === PropertyMode::Shadow) {
-            $lines[] = sprintf('Shadow: %d item(s) would be written; writes sent: 0.', $would);
-        } elseif (($write['proposed'] ?? false) === true) {
-            $lines[] = sprintf('Waiting for approval: %d room night(s); nothing is written before a person approves.', (int) ($write['entries'] ?? 0));
-        } elseif (isset($write['refused'])) {
-            $lines[] = sprintf('Not written: the write gate refused the plan (%s).', $write['refused']);
-        } else {
-            $confirmed = (int) ($verify['nights_confirmed'] ?? 0);
-            $lines[] = sprintf('Written: %d call(s) sent, %d room night(s) confirmed stored.', (int) ($write['writes_sent'] ?? 0), $confirmed);
-            if (isset($write['stop']) && $write['stop'] !== null) {
-                $lines[] = sprintf('The write stopped (%s): the next run reads the systems again and sends only what is missing.', $write['stop']);
-            }
+        try {
+            return MarketSettings::of($context->rules)->staleAfterDays;
+        } catch (InvalidConfig) {
+            return 0;
         }
-        if ((int) ($write['held'] ?? 0) > 0) {
-            $lines[] = sprintf('Held by a cancellation wave: %d entr(ies).', (int) $write['held']);
-        }
-        if ((int) ($validate[PlanItemStatus::REJECTED] ?? 0) > 0) {
-            $lines[] = sprintf('Refused by the validator: %d item(s).', (int) $validate[PlanItemStatus::REJECTED]);
-        }
-        $overdue = (int) ($verify['delivery']['overdue'] ?? 0);
-        if ($overdue > 0) {
-            $lines[] = sprintf('Not confirmed at the channel yet: %d step(s) overdue.', $overdue);
-        }
-
-        return $lines;
     }
 }

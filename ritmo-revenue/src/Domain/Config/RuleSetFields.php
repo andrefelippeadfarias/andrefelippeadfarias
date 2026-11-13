@@ -6,6 +6,7 @@ namespace Ritmo\Domain\Config;
 
 use Ritmo\Domain\Alerts\AlertsConfig;
 use Ritmo\Domain\Calendar\Stay\StayFields;
+use Ritmo\Domain\Market\Series\MarketFields;
 use Ritmo\Domain\Model\Identifier;
 use Ritmo\Domain\Model\NightType;
 use Ritmo\Domain\Model\PricePlan;
@@ -20,6 +21,8 @@ use Ritmo\Domain\Pricing\Ladder\LadderFields;
 use Ritmo\Domain\Pricing\Protection\ProtectionConfig;
 use Ritmo\Domain\Relations\Config\RelationFields;
 use Ritmo\Domain\Relations\Config\RelationsConfig;
+use Ritmo\Domain\Report\Config\ReportsFields;
+use Ritmo\Domain\Stay\Write\StayWriteFields;
 use Ritmo\Domain\Write\ApprovalConfig;
 use Ritmo\Domain\Write\Hold\WaveConfig;
 use Ritmo\Domain\Write\QuotaConfig;
@@ -82,6 +85,7 @@ final class RuleSetFields
             NoEffectConfig::fields(),
             OrdersConfig::fields(),
             StayFields::all(),
+            StayWriteFields::all(),
             PlanConfig::fields(),
             WriteConfig::fields(),
             QuotaConfig::fields(),
@@ -93,6 +97,8 @@ final class RuleSetFields
             ScheduleConfig::fields(),
             LightRunConfig::fields(),
             AlertsConfig::fields(),
+            MarketFields::all(),
+            ReportsFields::all(),
         );
     }
 

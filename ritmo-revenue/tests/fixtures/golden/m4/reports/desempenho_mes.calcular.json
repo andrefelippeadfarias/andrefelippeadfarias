@@ -1,0 +1,1843 @@
+{
+ "function": "desempenho_mes.calcular",
+ "php_target": "Ritmo\\Domain\\Report\\MonthPerformance",
+ "notes": "input.bookings 'bookings_420' = frozen/bookings_420.json. Targets from frozen/metas_faturamento.json (invented). Capacity per property from beds24.CAPACIDADE (16 and 15 units). Made in the month (by creation instant), stays in the month (realised before today, on the books from today), cancellations made in the month.",
+ "cases": [
+  {
+   "input": {
+    "bookings": "bookings_420",
+    "mes": "2026-10",
+    "ate": "2026-10-31T23:00:00+00:00"
+   },
+   "expected": {
+    "mes": "2026-10",
+    "ate": "2026-10-31T23:00:00+00:00",
+    "feitas": {
+     "Recanto": {
+      "geral": {
+       "reservas": 66,
+       "canceladas": 12,
+       "ativas": 54,
+       "diarias": 159,
+       "receita": 121549.05,
+       "adr": 764.46,
+       "antecedencia": 39.3,
+       "estadia": 2.39,
+       "receita_cancelada": 24791.3,
+       "canceladas_sem_valor": 0
+      },
+      "canal": {
+       "Airbnb": {
+        "reservas": 9,
+        "canceladas": 1,
+        "ativas": 8,
+        "diarias": 31,
+        "receita": 23508.16,
+        "adr": 758.33,
+        "antecedencia": 60.5,
+        "estadia": 3.0,
+        "receita_cancelada": 1575.43,
+        "canceladas_sem_valor": 0
+       },
+       "Booking": {
+        "reservas": 20,
+        "canceladas": 4,
+        "ativas": 16,
+        "diarias": 46,
+        "receita": 36992.23,
+        "adr": 804.18,
+        "antecedencia": 15.1,
+        "estadia": 2.31,
+        "receita_cancelada": 7640.01,
+        "canceladas_sem_valor": 0
+       },
+       "Expedia": {
+        "reservas": 10,
+        "canceladas": 3,
+        "ativas": 7,
+        "diarias": 17,
+        "receita": 13885.24,
+        "adr": 816.78,
+        "antecedencia": 32.0,
+        "estadia": 2.0,
+        "receita_cancelada": 6892.78,
+        "canceladas_sem_valor": 0
+       },
+       "direto (API/site)": {
+        "reservas": 17,
+        "canceladas": 3,
+        "ativas": 14,
+        "diarias": 39,
+        "receita": 28736.41,
+        "adr": 736.83,
+        "antecedencia": 45.3,
+        "estadia": 2.36,
+        "receita_cancelada": 6315.75,
+        "canceladas_sem_valor": 0
+       },
+       "direto (lançado à mão)": {
+        "reservas": 10,
+        "canceladas": 1,
+        "ativas": 9,
+        "diarias": 26,
+        "receita": 18427.01,
+        "adr": 708.73,
+        "antecedencia": 59.9,
+        "estadia": 2.33,
+        "receita_cancelada": 2367.33,
+        "canceladas_sem_valor": 0
+       }
+      },
+      "quarto": {
+       "Afrodite": {
+        "reservas": 11,
+        "canceladas": 1,
+        "ativas": 10,
+        "diarias": 24,
+        "receita": 19688.5,
+        "adr": 820.35,
+        "antecedencia": 29.2,
+        "estadia": 1.8,
+        "receita_cancelada": 1437.21,
+        "canceladas_sem_valor": 0
+       },
+       "Double": {
+        "reservas": 16,
+        "canceladas": 1,
+        "ativas": 15,
+        "diarias": 44,
+        "receita": 30117.75,
+        "adr": 684.49,
+        "antecedencia": 66.3,
+        "estadia": 2.4,
+        "receita_cancelada": 3962.22,
+        "canceladas_sem_valor": 0
+       },
+       "Q2": {
+        "reservas": 18,
+        "canceladas": 4,
+        "ativas": 14,
+        "diarias": 42,
+        "receita": 33595.24,
+        "adr": 799.89,
+        "antecedencia": 33.1,
+        "estadia": 2.64,
+        "receita_cancelada": 7442.54,
+        "canceladas_sem_valor": 0
+       },
+       "Q7": {
+        "reservas": 21,
+        "canceladas": 6,
+        "ativas": 15,
+        "diarias": 49,
+        "receita": 38147.56,
+        "adr": 778.52,
+        "antecedencia": 24.9,
+        "estadia": 2.53,
+        "receita_cancelada": 11949.33,
+        "canceladas_sem_valor": 0
+       }
+      },
+      "semana": {
+       "1ª semana": {
+        "reservas": 19,
+        "canceladas": 5,
+        "ativas": 14,
+        "diarias": 44,
+        "receita": 30177.62,
+        "adr": 685.85,
+        "antecedencia": 56.6,
+        "estadia": 2.43,
+        "receita_cancelada": 10640.81,
+        "canceladas_sem_valor": 0
+       },
+       "2ª semana": {
+        "reservas": 8,
+        "canceladas": 2,
+        "ativas": 6,
+        "diarias": 20,
+        "receita": 18511.99,
+        "adr": 925.6,
+        "antecedencia": 28.0,
+        "estadia": 2.5,
+        "receita_cancelada": 6416.74,
+        "canceladas_sem_valor": 0
+       },
+       "3ª semana": {
+        "reservas": 18,
+        "canceladas": 1,
+        "ativas": 17,
+        "diarias": 48,
+        "receita": 36495.31,
+        "adr": 760.32,
+        "antecedencia": 51.4,
+        "estadia": 2.35,
+        "receita_cancelada": 2367.33,
+        "canceladas_sem_valor": 0
+       },
+       "4ª semana": {
+        "reservas": 14,
+        "canceladas": 2,
+        "ativas": 12,
+        "diarias": 34,
+        "receita": 25622.7,
+        "adr": 753.61,
+        "antecedencia": 18.5,
+        "estadia": 2.25,
+        "receita_cancelada": 2538.61,
+        "canceladas_sem_valor": 0
+       },
+       "5ª semana": {
+        "reservas": 7,
+        "canceladas": 2,
+        "ativas": 5,
+        "diarias": 13,
+        "receita": 10741.43,
+        "adr": 826.26,
+        "antecedencia": 13.6,
+        "estadia": 2.6,
+        "receita_cancelada": 2827.81,
+        "canceladas_sem_valor": 0
+       }
+      },
+      "mes_estadia": {
+       "2026-10": {
+        "reservas": 31,
+        "canceladas": 5,
+        "ativas": 26,
+        "diarias": 76,
+        "receita": 54998.56,
+        "adr": 723.67,
+        "antecedencia": 3.6,
+        "estadia": 2.27,
+        "receita_cancelada": 9026.05,
+        "canceladas_sem_valor": 0
+       },
+       "2026-11": {
+        "reservas": 14,
+        "canceladas": 4,
+        "ativas": 10,
+        "diarias": 28,
+        "receita": 24600.73,
+        "adr": 878.6,
+        "antecedencia": 22.9,
+        "estadia": 2.2,
+        "receita_cancelada": 11771.98,
+        "canceladas_sem_valor": 0
+       },
+       "2026-12": {
+        "reservas": 8,
+        "canceladas": 2,
+        "ativas": 6,
+        "diarias": 19,
+        "receita": 17955.34,
+        "adr": 945.02,
+        "antecedencia": 60.0,
+        "estadia": 3.17,
+        "receita_cancelada": 2589.53,
+        "canceladas_sem_valor": 0
+       },
+       "2027-01": {
+        "reservas": 3,
+        "canceladas": 0,
+        "ativas": 3,
+        "diarias": 8,
+        "receita": 8416.89,
+        "adr": 1052.11,
+        "antecedencia": 120.0,
+        "estadia": 2.67,
+        "receita_cancelada": 0,
+        "canceladas_sem_valor": 0
+       },
+       "2027-02": {
+        "reservas": 10,
+        "canceladas": 1,
+        "ativas": 9,
+        "diarias": 28,
+        "receita": 15577.53,
+        "adr": 556.34,
+        "antecedencia": 120.0,
+        "estadia": 2.33,
+        "receita_cancelada": 1403.74,
+        "canceladas_sem_valor": 0
+       }
+      }
+     },
+     "Villa": {
+      "geral": {
+       "reservas": 53,
+       "canceladas": 6,
+       "ativas": 47,
+       "diarias": 144,
+       "receita": 99498.06,
+       "adr": 690.96,
+       "antecedencia": 35.1,
+       "estadia": 2.34,
+       "receita_cancelada": 7264.62,
+       "canceladas_sem_valor": 0
+      },
+      "canal": {
+       "Airbnb": {
+        "reservas": 8,
+        "canceladas": 1,
+        "ativas": 7,
+        "diarias": 26,
+        "receita": 13598.19,
+        "adr": 523.01,
+        "antecedencia": 43.0,
+        "estadia": 2.43,
+        "receita_cancelada": 1155.72,
+        "canceladas_sem_valor": 0
+       },
+       "Booking": {
+        "reservas": 20,
+        "canceladas": 3,
+        "ativas": 17,
+        "diarias": 46,
+        "receita": 38184.65,
+        "adr": 830.1,
+        "antecedencia": 41.2,
+        "estadia": 2.35,
+        "receita_cancelada": 5061.89,
+        "canceladas_sem_valor": 0
+       },
+       "Expedia": {
+        "reservas": 7,
+        "canceladas": 1,
+        "ativas": 6,
+        "diarias": 19,
+        "receita": 10518.71,
+        "adr": 553.62,
+        "antecedencia": 15.2,
+        "estadia": 2.17,
+        "receita_cancelada": 513.62,
+        "canceladas_sem_valor": 0
+       },
+       "direto (API/site)": {
+        "reservas": 11,
+        "canceladas": 0,
+        "ativas": 11,
+        "diarias": 36,
+        "receita": 27334.13,
+        "adr": 759.28,
+        "antecedencia": 44.5,
+        "estadia": 2.64,
+        "receita_cancelada": 0,
+        "canceladas_sem_valor": 0
+       },
+       "direto (lançado à mão)": {
+        "reservas": 7,
+        "canceladas": 1,
+        "ativas": 6,
+        "diarias": 17,
+        "receita": 9862.38,
+        "adr": 580.14,
+        "antecedencia": 11.7,
+        "estadia": 1.83,
+        "receita_cancelada": 533.39,
+        "canceladas_sem_valor": 0
+       }
+      },
+      "quarto": {
+       "Balcony": {
+        "reservas": 17,
+        "canceladas": 1,
+        "ativas": 16,
+        "diarias": 42,
+        "receita": 34243.54,
+        "adr": 815.32,
+        "antecedencia": 39.6,
+        "estadia": 2.25,
+        "receita_cancelada": 667.82,
+        "canceladas_sem_valor": 0
+       },
+       "VK2": {
+        "reservas": 17,
+        "canceladas": 3,
+        "ativas": 14,
+        "diarias": 43,
+        "receita": 30393.84,
+        "adr": 706.83,
+        "antecedencia": 43.2,
+        "estadia": 2.43,
+        "receita_cancelada": 4907.69,
+        "canceladas_sem_valor": 0
+       },
+       "VK7": {
+        "reservas": 19,
+        "canceladas": 2,
+        "ativas": 17,
+        "diarias": 59,
+        "receita": 34860.68,
+        "adr": 590.86,
+        "antecedencia": 24.3,
+        "estadia": 2.35,
+        "receita_cancelada": 1689.11,
+        "canceladas_sem_valor": 0
+       }
+      },
+      "semana": {
+       "1ª semana": {
+        "reservas": 11,
+        "canceladas": 1,
+        "ativas": 10,
+        "diarias": 29,
+        "receita": 22475.92,
+        "adr": 775.03,
+        "antecedencia": 26.4,
+        "estadia": 2.4,
+        "receita_cancelada": 533.39,
+        "canceladas_sem_valor": 0
+       },
+       "2ª semana": {
+        "reservas": 15,
+        "canceladas": 2,
+        "ativas": 13,
+        "diarias": 42,
+        "receita": 31983.21,
+        "adr": 761.5,
+        "antecedencia": 21.7,
+        "estadia": 2.54,
+        "receita_cancelada": 2233.5,
+        "canceladas_sem_valor": 0
+       },
+       "3ª semana": {
+        "reservas": 13,
+        "canceladas": 2,
+        "ativas": 11,
+        "diarias": 41,
+        "receita": 21445.53,
+        "adr": 523.06,
+        "antecedencia": 22.6,
+        "estadia": 2.18,
+        "receita_cancelada": 3984.11,
+        "canceladas_sem_valor": 0
+       },
+       "4ª semana": {
+        "reservas": 11,
+        "canceladas": 1,
+        "ativas": 10,
+        "diarias": 25,
+        "receita": 17671.46,
+        "adr": 706.86,
+        "antecedencia": 55.7,
+        "estadia": 2.2,
+        "receita_cancelada": 513.62,
+        "canceladas_sem_valor": 0
+       },
+       "5ª semana": {
+        "reservas": 3,
+        "canceladas": 0,
+        "ativas": 3,
+        "diarias": 7,
+        "receita": 5921.94,
+        "adr": 845.99,
+        "antecedencia": 100.0,
+        "estadia": 2.33,
+        "receita_cancelada": 0,
+        "canceladas_sem_valor": 0
+       }
+      },
+      "mes_estadia": {
+       "2026-10": {
+        "reservas": 29,
+        "canceladas": 3,
+        "ativas": 26,
+        "diarias": 83,
+        "receita": 59534.5,
+        "adr": 717.28,
+        "antecedencia": 3.6,
+        "estadia": 2.42,
+        "receita_cancelada": 4907.69,
+        "canceladas_sem_valor": 0
+       },
+       "2026-11": {
+        "reservas": 6,
+        "canceladas": 1,
+        "ativas": 5,
+        "diarias": 21,
+        "receita": 9040.63,
+        "adr": 430.51,
+        "antecedencia": 23.6,
+        "estadia": 2.6,
+        "receita_cancelada": 533.39,
+        "canceladas_sem_valor": 0
+       },
+       "2026-12": {
+        "reservas": 9,
+        "canceladas": 1,
+        "ativas": 8,
+        "diarias": 21,
+        "receita": 18029.9,
+        "adr": 858.57,
+        "antecedencia": 60.0,
+        "estadia": 2.12,
+        "receita_cancelada": 667.82,
+        "canceladas_sem_valor": 0
+       },
+       "2027-02": {
+        "reservas": 9,
+        "canceladas": 1,
+        "ativas": 8,
+        "diarias": 19,
+        "receita": 12893.03,
+        "adr": 678.58,
+        "antecedencia": 120.0,
+        "estadia": 2.12,
+        "receita_cancelada": 1155.72,
+        "canceladas_sem_valor": 0
+       }
+      }
+     },
+     "Total": {
+      "geral": {
+       "reservas": 119,
+       "canceladas": 18,
+       "ativas": 101,
+       "diarias": 303,
+       "receita": 221047.11,
+       "adr": 729.53,
+       "antecedencia": 37.4,
+       "estadia": 2.37,
+       "receita_cancelada": 32055.92,
+       "canceladas_sem_valor": 0
+      },
+      "canal": {
+       "Airbnb": {
+        "reservas": 17,
+        "canceladas": 2,
+        "ativas": 15,
+        "diarias": 57,
+        "receita": 37106.35,
+        "adr": 650.99,
+        "antecedencia": 52.3,
+        "estadia": 2.73,
+        "receita_cancelada": 2731.15,
+        "canceladas_sem_valor": 0
+       },
+       "Booking": {
+        "reservas": 40,
+        "canceladas": 7,
+        "ativas": 33,
+        "diarias": 92,
+        "receita": 75176.88,
+        "adr": 817.14,
+        "antecedencia": 28.6,
+        "estadia": 2.33,
+        "receita_cancelada": 12701.9,
+        "canceladas_sem_valor": 0
+       },
+       "Expedia": {
+        "reservas": 17,
+        "canceladas": 4,
+        "ativas": 13,
+        "diarias": 36,
+        "receita": 24403.95,
+        "adr": 677.89,
+        "antecedencia": 24.2,
+        "estadia": 2.08,
+        "receita_cancelada": 7406.4,
+        "canceladas_sem_valor": 0
+       },
+       "direto (API/site)": {
+        "reservas": 28,
+        "canceladas": 3,
+        "ativas": 25,
+        "diarias": 75,
+        "receita": 56070.54,
+        "adr": 747.61,
+        "antecedencia": 44.9,
+        "estadia": 2.48,
+        "receita_cancelada": 6315.75,
+        "canceladas_sem_valor": 0
+       },
+       "direto (lançado à mão)": {
+        "reservas": 17,
+        "canceladas": 2,
+        "ativas": 15,
+        "diarias": 43,
+        "receita": 28289.39,
+        "adr": 657.89,
+        "antecedencia": 40.6,
+        "estadia": 2.13,
+        "receita_cancelada": 2900.72,
+        "canceladas_sem_valor": 0
+       }
+      },
+      "quarto": {
+       "Afrodite": {
+        "reservas": 11,
+        "canceladas": 1,
+        "ativas": 10,
+        "diarias": 24,
+        "receita": 19688.5,
+        "adr": 820.35,
+        "antecedencia": 29.2,
+        "estadia": 1.8,
+        "receita_cancelada": 1437.21,
+        "canceladas_sem_valor": 0
+       },
+       "Balcony": {
+        "reservas": 17,
+        "canceladas": 1,
+        "ativas": 16,
+        "diarias": 42,
+        "receita": 34243.54,
+        "adr": 815.32,
+        "antecedencia": 39.6,
+        "estadia": 2.25,
+        "receita_cancelada": 667.82,
+        "canceladas_sem_valor": 0
+       },
+       "Double": {
+        "reservas": 16,
+        "canceladas": 1,
+        "ativas": 15,
+        "diarias": 44,
+        "receita": 30117.75,
+        "adr": 684.49,
+        "antecedencia": 66.3,
+        "estadia": 2.4,
+        "receita_cancelada": 3962.22,
+        "canceladas_sem_valor": 0
+       },
+       "Q2": {
+        "reservas": 18,
+        "canceladas": 4,
+        "ativas": 14,
+        "diarias": 42,
+        "receita": 33595.24,
+        "adr": 799.89,
+        "antecedencia": 33.1,
+        "estadia": 2.64,
+        "receita_cancelada": 7442.54,
+        "canceladas_sem_valor": 0
+       },
+       "Q7": {
+        "reservas": 21,
+        "canceladas": 6,
+        "ativas": 15,
+        "diarias": 49,
+        "receita": 38147.56,
+        "adr": 778.52,
+        "antecedencia": 24.9,
+        "estadia": 2.53,
+        "receita_cancelada": 11949.33,
+        "canceladas_sem_valor": 0
+       },
+       "VK2": {
+        "reservas": 17,
+        "canceladas": 3,
+        "ativas": 14,
+        "diarias": 43,
+        "receita": 30393.84,
+        "adr": 706.83,
+        "antecedencia": 43.2,
+        "estadia": 2.43,
+        "receita_cancelada": 4907.69,
+        "canceladas_sem_valor": 0
+       },
+       "VK7": {
+        "reservas": 19,
+        "canceladas": 2,
+        "ativas": 17,
+        "diarias": 59,
+        "receita": 34860.68,
+        "adr": 590.86,
+        "antecedencia": 24.3,
+        "estadia": 2.35,
+        "receita_cancelada": 1689.11,
+        "canceladas_sem_valor": 0
+       }
+      },
+      "semana": {
+       "1ª semana": {
+        "reservas": 30,
+        "canceladas": 6,
+        "ativas": 24,
+        "diarias": 73,
+        "receita": 52653.54,
+        "adr": 721.28,
+        "antecedencia": 44.0,
+        "estadia": 2.42,
+        "receita_cancelada": 11174.2,
+        "canceladas_sem_valor": 0
+       },
+       "2ª semana": {
+        "reservas": 23,
+        "canceladas": 4,
+        "ativas": 19,
+        "diarias": 62,
+        "receita": 50495.2,
+        "adr": 814.44,
+        "antecedencia": 23.7,
+        "estadia": 2.53,
+        "receita_cancelada": 8650.24,
+        "canceladas_sem_valor": 0
+       },
+       "3ª semana": {
+        "reservas": 31,
+        "canceladas": 3,
+        "ativas": 28,
+        "diarias": 89,
+        "receita": 57940.84,
+        "adr": 651.02,
+        "antecedencia": 40.1,
+        "estadia": 2.29,
+        "receita_cancelada": 6351.44,
+        "canceladas_sem_valor": 0
+       },
+       "4ª semana": {
+        "reservas": 25,
+        "canceladas": 3,
+        "ativas": 22,
+        "diarias": 59,
+        "receita": 43294.16,
+        "adr": 733.8,
+        "antecedencia": 35.4,
+        "estadia": 2.23,
+        "receita_cancelada": 3052.23,
+        "canceladas_sem_valor": 0
+       },
+       "5ª semana": {
+        "reservas": 10,
+        "canceladas": 2,
+        "ativas": 8,
+        "diarias": 20,
+        "receita": 16663.37,
+        "adr": 833.17,
+        "antecedencia": 46.0,
+        "estadia": 2.5,
+        "receita_cancelada": 2827.81,
+        "canceladas_sem_valor": 0
+       }
+      },
+      "mes_estadia": {
+       "2026-10": {
+        "reservas": 60,
+        "canceladas": 8,
+        "ativas": 52,
+        "diarias": 159,
+        "receita": 114533.06,
+        "adr": 720.33,
+        "antecedencia": 3.6,
+        "estadia": 2.35,
+        "receita_cancelada": 13933.74,
+        "canceladas_sem_valor": 0
+       },
+       "2026-11": {
+        "reservas": 20,
+        "canceladas": 5,
+        "ativas": 15,
+        "diarias": 49,
+        "receita": 33641.36,
+        "adr": 686.56,
+        "antecedencia": 23.1,
+        "estadia": 2.33,
+        "receita_cancelada": 12305.37,
+        "canceladas_sem_valor": 0
+       },
+       "2026-12": {
+        "reservas": 17,
+        "canceladas": 3,
+        "ativas": 14,
+        "diarias": 40,
+        "receita": 35985.24,
+        "adr": 899.63,
+        "antecedencia": 60.0,
+        "estadia": 2.57,
+        "receita_cancelada": 3257.35,
+        "canceladas_sem_valor": 0
+       },
+       "2027-01": {
+        "reservas": 3,
+        "canceladas": 0,
+        "ativas": 3,
+        "diarias": 8,
+        "receita": 8416.89,
+        "adr": 1052.11,
+        "antecedencia": 120.0,
+        "estadia": 2.67,
+        "receita_cancelada": 0,
+        "canceladas_sem_valor": 0
+       },
+       "2027-02": {
+        "reservas": 19,
+        "canceladas": 2,
+        "ativas": 17,
+        "diarias": 47,
+        "receita": 28470.56,
+        "adr": 605.76,
+        "antecedencia": 120.0,
+        "estadia": 2.24,
+        "receita_cancelada": 2559.46,
+        "canceladas_sem_valor": 0
+       }
+      }
+     }
+    },
+    "estadias": {
+     "Recanto": {
+      "realizado": {
+       "dias": 30,
+       "diarias": 98,
+       "receita": 66868.94,
+       "ocupacao": 0.204,
+       "adr": 682.34,
+       "revpar": 139.31
+      },
+      "vendido_ate_o_fim": {
+       "dias": 1,
+       "diarias": 4,
+       "receita": 3860.04,
+       "ocupacao": 0.25
+      },
+      "mes": {
+       "diarias": 102,
+       "receita": 70728.98,
+       "ocupacao": 0.206,
+       "adr": 693.42,
+       "minimo_dono": 180000,
+       "falta_para_o_minimo": 109271.02,
+       "diarias_livres": 12,
+       "diaria_necessaria_nas_livres": 9105.92
+      }
+     },
+     "Villa": {
+      "realizado": {
+       "dias": 30,
+       "diarias": 130,
+       "receita": 86764.45,
+       "ocupacao": 0.289,
+       "adr": 667.42,
+       "revpar": 192.81
+      },
+      "vendido_ate_o_fim": {
+       "dias": 1,
+       "diarias": 2,
+       "receita": 2010.46,
+       "ocupacao": 0.133
+      },
+      "mes": {
+       "diarias": 132,
+       "receita": 88774.91,
+       "ocupacao": 0.284,
+       "adr": 672.54,
+       "minimo_dono": 120000,
+       "falta_para_o_minimo": 31225.09,
+       "diarias_livres": 13,
+       "diaria_necessaria_nas_livres": 2401.93
+      }
+     }
+    },
+    "cancelamentos_no_mes": {
+     "Recanto": {
+      "quantidade": 13,
+      "receita": 26478.49,
+      "de_reservas_feitas_antes_do_mes": 8
+     },
+     "Villa": {
+      "quantidade": 8,
+      "receita": 12629.61,
+      "de_reservas_feitas_antes_do_mes": 6
+     },
+     "Total": {
+      "quantidade": 21,
+      "receita": 39108.1,
+      "de_reservas_feitas_antes_do_mes": 14
+     }
+    }
+   }
+  },
+  {
+   "input": {
+    "bookings": "bookings_420",
+    "mes": "2026-11",
+    "ate": "2026-11-13T13:00:00+00:00"
+   },
+   "expected": {
+    "mes": "2026-11",
+    "ate": "2026-11-13T13:00:00+00:00",
+    "feitas": {
+     "Recanto": {
+      "geral": {
+       "reservas": 26,
+       "canceladas": 3,
+       "ativas": 23,
+       "diarias": 77,
+       "receita": 53045.29,
+       "adr": 688.9,
+       "antecedencia": 15.7,
+       "estadia": 2.57,
+       "receita_cancelada": 6188.74,
+       "canceladas_sem_valor": 0
+      },
+      "canal": {
+       "Airbnb": {
+        "reservas": 5,
+        "canceladas": 0,
+        "ativas": 5,
+        "diarias": 23,
+        "receita": 13151.44,
+        "adr": 571.8,
+        "antecedencia": 8.8,
+        "estadia": 3.0,
+        "receita_cancelada": 0,
+        "canceladas_sem_valor": 0
+       },
+       "Booking": {
+        "reservas": 9,
+        "canceladas": 1,
+        "ativas": 8,
+        "diarias": 20,
+        "receita": 15755.83,
+        "adr": 787.79,
+        "antecedencia": 5.2,
+        "estadia": 2.25,
+        "receita_cancelada": 1002.65,
+        "canceladas_sem_valor": 0
+       },
+       "Expedia": {
+        "reservas": 4,
+        "canceladas": 1,
+        "ativas": 3,
+        "diarias": 15,
+        "receita": 8041.78,
+        "adr": 536.12,
+        "antecedencia": 14.7,
+        "estadia": 3.0,
+        "receita_cancelada": 3651.65,
+        "canceladas_sem_valor": 0
+       },
+       "direto (API/site)": {
+        "reservas": 4,
+        "canceladas": 1,
+        "ativas": 3,
+        "diarias": 7,
+        "receita": 7113.22,
+        "adr": 1016.17,
+        "antecedencia": 61.0,
+        "estadia": 2.33,
+        "receita_cancelada": 1534.44,
+        "canceladas_sem_valor": 0
+       },
+       "direto (lançado à mão)": {
+        "reservas": 4,
+        "canceladas": 0,
+        "ativas": 4,
+        "diarias": 12,
+        "receita": 8983.02,
+        "adr": 748.59,
+        "antecedencia": 11.8,
+        "estadia": 2.5,
+        "receita_cancelada": 0,
+        "canceladas_sem_valor": 0
+       }
+      },
+      "quarto": {
+       "Afrodite": {
+        "reservas": 8,
+        "canceladas": 3,
+        "ativas": 5,
+        "diarias": 17,
+        "receita": 14068.7,
+        "adr": 827.57,
+        "antecedencia": 5.0,
+        "estadia": 2.6,
+        "receita_cancelada": 6188.74,
+        "canceladas_sem_valor": 0
+       },
+       "Double": {
+        "reservas": 7,
+        "canceladas": 0,
+        "ativas": 7,
+        "diarias": 20,
+        "receita": 13717.66,
+        "adr": 685.88,
+        "antecedencia": 28.1,
+        "estadia": 2.0,
+        "receita_cancelada": 0,
+        "canceladas_sem_valor": 0
+       },
+       "Q2": {
+        "reservas": 5,
+        "canceladas": 0,
+        "ativas": 5,
+        "diarias": 19,
+        "receita": 11448.1,
+        "adr": 602.53,
+        "antecedencia": 21.4,
+        "estadia": 3.0,
+        "receita_cancelada": 0,
+        "canceladas_sem_valor": 0
+       },
+       "Q7": {
+        "reservas": 6,
+        "canceladas": 0,
+        "ativas": 6,
+        "diarias": 21,
+        "receita": 13810.83,
+        "adr": 657.66,
+        "antecedencia": 5.2,
+        "estadia": 2.83,
+        "receita_cancelada": 0,
+        "canceladas_sem_valor": 0
+       }
+      },
+      "semana": {
+       "1ª semana": {
+        "reservas": 12,
+        "canceladas": 0,
+        "ativas": 12,
+        "diarias": 40,
+        "receita": 26403.57,
+        "adr": 660.09,
+        "antecedencia": 15.8,
+        "estadia": 2.58,
+        "receita_cancelada": 0,
+        "canceladas_sem_valor": 0
+       },
+       "2ª semana": {
+        "reservas": 14,
+        "canceladas": 3,
+        "ativas": 11,
+        "diarias": 37,
+        "receita": 26641.72,
+        "adr": 720.05,
+        "antecedencia": 15.5,
+        "estadia": 2.55,
+        "receita_cancelada": 6188.74,
+        "canceladas_sem_valor": 0
+       }
+      },
+      "mes_estadia": {
+       "2026-11": {
+        "reservas": 20,
+        "canceladas": 2,
+        "ativas": 18,
+        "diarias": 64,
+        "receita": 44582.15,
+        "adr": 696.6,
+        "antecedencia": 5.0,
+        "estadia": 2.67,
+        "receita_cancelada": 2537.09,
+        "canceladas_sem_valor": 0
+       },
+       "2026-12": {
+        "reservas": 3,
+        "canceladas": 0,
+        "ativas": 3,
+        "diarias": 10,
+        "receita": 5865.46,
+        "adr": 586.55,
+        "antecedencia": 30.0,
+        "estadia": 2.67,
+        "receita_cancelada": 0,
+        "canceladas_sem_valor": 0
+       },
+       "2027-01": {
+        "reservas": 1,
+        "canceladas": 0,
+        "ativas": 1,
+        "diarias": 2,
+        "receita": 1848.34,
+        "adr": 924.17,
+        "antecedencia": 60.0,
+        "estadia": 2.0,
+        "receita_cancelada": 0,
+        "canceladas_sem_valor": 0
+       },
+       "2027-03": {
+        "reservas": 2,
+        "canceladas": 1,
+        "ativas": 1,
+        "diarias": 1,
+        "receita": 749.34,
+        "adr": 749.34,
+        "antecedencia": 120.0,
+        "estadia": 1.0,
+        "receita_cancelada": 3651.65,
+        "canceladas_sem_valor": 0
+       }
+      }
+     },
+     "Villa": {
+      "geral": {
+       "reservas": 19,
+       "canceladas": 3,
+       "ativas": 16,
+       "diarias": 49,
+       "receita": 38752.33,
+       "adr": 790.86,
+       "antecedencia": 28.3,
+       "estadia": 2.44,
+       "receita_cancelada": 9513.86,
+       "canceladas_sem_valor": 0
+      },
+      "canal": {
+       "Airbnb": {
+        "reservas": 2,
+        "canceladas": 0,
+        "ativas": 2,
+        "diarias": 4,
+        "receita": 3644.4,
+        "adr": 911.1,
+        "antecedencia": 2.0,
+        "estadia": 2.0,
+        "receita_cancelada": 0,
+        "canceladas_sem_valor": 0
+       },
+       "Booking": {
+        "reservas": 10,
+        "canceladas": 2,
+        "ativas": 8,
+        "diarias": 29,
+        "receita": 22290.37,
+        "adr": 768.63,
+        "antecedencia": 21.8,
+        "estadia": 2.75,
+        "receita_cancelada": 8388.07,
+        "canceladas_sem_valor": 0
+       },
+       "Expedia": {
+        "reservas": 5,
+        "canceladas": 1,
+        "ativas": 4,
+        "diarias": 8,
+        "receita": 6666.66,
+        "adr": 833.33,
+        "antecedencia": 23.8,
+        "estadia": 2.0,
+        "receita_cancelada": 1125.79,
+        "canceladas_sem_valor": 0
+       },
+       "direto (API/site)": {
+        "reservas": 1,
+        "canceladas": 0,
+        "ativas": 1,
+        "diarias": 2,
+        "receita": 1829.39,
+        "adr": 914.7,
+        "antecedencia": 120.0,
+        "estadia": 2.0,
+        "receita_cancelada": 0,
+        "canceladas_sem_valor": 0
+       },
+       "direto (lançado à mão)": {
+        "reservas": 1,
+        "canceladas": 0,
+        "ativas": 1,
+        "diarias": 6,
+        "receita": 4321.51,
+        "adr": 720.25,
+        "antecedencia": 60.0,
+        "estadia": 3.0,
+        "receita_cancelada": 0,
+        "canceladas_sem_valor": 0
+       }
+      },
+      "quarto": {
+       "Balcony": {
+        "reservas": 6,
+        "canceladas": 0,
+        "ativas": 6,
+        "diarias": 18,
+        "receita": 16799.61,
+        "adr": 933.31,
+        "antecedencia": 17.0,
+        "estadia": 2.5,
+        "receita_cancelada": 0,
+        "canceladas_sem_valor": 0
+       },
+       "VK2": {
+        "reservas": 4,
+        "canceladas": 0,
+        "ativas": 4,
+        "diarias": 14,
+        "receita": 8825.92,
+        "adr": 630.42,
+        "antecedencia": 61.5,
+        "estadia": 2.5,
+        "receita_cancelada": 0,
+        "canceladas_sem_valor": 0
+       },
+       "VK7": {
+        "reservas": 9,
+        "canceladas": 3,
+        "ativas": 6,
+        "diarias": 17,
+        "receita": 13126.8,
+        "adr": 772.16,
+        "antecedencia": 17.5,
+        "estadia": 2.33,
+        "receita_cancelada": 9513.86,
+        "canceladas_sem_valor": 0
+       }
+      },
+      "semana": {
+       "1ª semana": {
+        "reservas": 8,
+        "canceladas": 1,
+        "ativas": 7,
+        "diarias": 25,
+        "receita": 16737.64,
+        "adr": 669.51,
+        "antecedencia": 34.1,
+        "estadia": 2.57,
+        "receita_cancelada": 1125.79,
+        "canceladas_sem_valor": 0
+       },
+       "2ª semana": {
+        "reservas": 11,
+        "canceladas": 2,
+        "ativas": 9,
+        "diarias": 24,
+        "receita": 22014.69,
+        "adr": 917.28,
+        "antecedencia": 23.8,
+        "estadia": 2.33,
+        "receita_cancelada": 8388.07,
+        "canceladas_sem_valor": 0
+       }
+      },
+      "mes_estadia": {
+       "2026-11": {
+        "reservas": 14,
+        "canceladas": 3,
+        "ativas": 11,
+        "diarias": 29,
+        "receita": 24550.85,
+        "adr": 846.58,
+        "antecedencia": 5.7,
+        "estadia": 2.36,
+        "receita_cancelada": 9513.86,
+        "canceladas_sem_valor": 0
+       },
+       "2026-12": {
+        "reservas": 1,
+        "canceladas": 0,
+        "ativas": 1,
+        "diarias": 2,
+        "receita": 2380.73,
+        "adr": 1190.37,
+        "antecedencia": 30.0,
+        "estadia": 2.0,
+        "receita_cancelada": 0,
+        "canceladas_sem_valor": 0
+       },
+       "2027-01": {
+        "reservas": 2,
+        "canceladas": 0,
+        "ativas": 2,
+        "diarias": 8,
+        "receita": 6807.46,
+        "adr": 850.93,
+        "antecedencia": 60.0,
+        "estadia": 2.5,
+        "receita_cancelada": 0,
+        "canceladas_sem_valor": 0
+       },
+       "2027-03": {
+        "reservas": 2,
+        "canceladas": 0,
+        "ativas": 2,
+        "diarias": 10,
+        "receita": 5013.29,
+        "adr": 501.33,
+        "antecedencia": 120.0,
+        "estadia": 3.0,
+        "receita_cancelada": 0,
+        "canceladas_sem_valor": 0
+       }
+      }
+     },
+     "Total": {
+      "geral": {
+       "reservas": 45,
+       "canceladas": 6,
+       "ativas": 39,
+       "diarias": 126,
+       "receita": 91797.62,
+       "adr": 728.55,
+       "antecedencia": 20.8,
+       "estadia": 2.51,
+       "receita_cancelada": 15702.6,
+       "canceladas_sem_valor": 0
+      },
+      "canal": {
+       "Airbnb": {
+        "reservas": 7,
+        "canceladas": 0,
+        "ativas": 7,
+        "diarias": 27,
+        "receita": 16795.84,
+        "adr": 622.07,
+        "antecedencia": 6.9,
+        "estadia": 2.71,
+        "receita_cancelada": 0,
+        "canceladas_sem_valor": 0
+       },
+       "Booking": {
+        "reservas": 19,
+        "canceladas": 3,
+        "ativas": 16,
+        "diarias": 49,
+        "receita": 38046.2,
+        "adr": 776.45,
+        "antecedencia": 13.5,
+        "estadia": 2.5,
+        "receita_cancelada": 9390.72,
+        "canceladas_sem_valor": 0
+       },
+       "Expedia": {
+        "reservas": 9,
+        "canceladas": 2,
+        "ativas": 7,
+        "diarias": 23,
+        "receita": 14708.44,
+        "adr": 639.5,
+        "antecedencia": 19.9,
+        "estadia": 2.43,
+        "receita_cancelada": 4777.44,
+        "canceladas_sem_valor": 0
+       },
+       "direto (API/site)": {
+        "reservas": 5,
+        "canceladas": 1,
+        "ativas": 4,
+        "diarias": 9,
+        "receita": 8942.61,
+        "adr": 993.62,
+        "antecedencia": 75.8,
+        "estadia": 2.25,
+        "receita_cancelada": 1534.44,
+        "canceladas_sem_valor": 0
+       },
+       "direto (lançado à mão)": {
+        "reservas": 5,
+        "canceladas": 0,
+        "ativas": 5,
+        "diarias": 18,
+        "receita": 13304.53,
+        "adr": 739.14,
+        "antecedencia": 21.4,
+        "estadia": 2.6,
+        "receita_cancelada": 0,
+        "canceladas_sem_valor": 0
+       }
+      },
+      "quarto": {
+       "Afrodite": {
+        "reservas": 8,
+        "canceladas": 3,
+        "ativas": 5,
+        "diarias": 17,
+        "receita": 14068.7,
+        "adr": 827.57,
+        "antecedencia": 5.0,
+        "estadia": 2.6,
+        "receita_cancelada": 6188.74,
+        "canceladas_sem_valor": 0
+       },
+       "Balcony": {
+        "reservas": 6,
+        "canceladas": 0,
+        "ativas": 6,
+        "diarias": 18,
+        "receita": 16799.61,
+        "adr": 933.31,
+        "antecedencia": 17.0,
+        "estadia": 2.5,
+        "receita_cancelada": 0,
+        "canceladas_sem_valor": 0
+       },
+       "Double": {
+        "reservas": 7,
+        "canceladas": 0,
+        "ativas": 7,
+        "diarias": 20,
+        "receita": 13717.66,
+        "adr": 685.88,
+        "antecedencia": 28.1,
+        "estadia": 2.0,
+        "receita_cancelada": 0,
+        "canceladas_sem_valor": 0
+       },
+       "Q2": {
+        "reservas": 5,
+        "canceladas": 0,
+        "ativas": 5,
+        "diarias": 19,
+        "receita": 11448.1,
+        "adr": 602.53,
+        "antecedencia": 21.4,
+        "estadia": 3.0,
+        "receita_cancelada": 0,
+        "canceladas_sem_valor": 0
+       },
+       "Q7": {
+        "reservas": 6,
+        "canceladas": 0,
+        "ativas": 6,
+        "diarias": 21,
+        "receita": 13810.83,
+        "adr": 657.66,
+        "antecedencia": 5.2,
+        "estadia": 2.83,
+        "receita_cancelada": 0,
+        "canceladas_sem_valor": 0
+       },
+       "VK2": {
+        "reservas": 4,
+        "canceladas": 0,
+        "ativas": 4,
+        "diarias": 14,
+        "receita": 8825.92,
+        "adr": 630.42,
+        "antecedencia": 61.5,
+        "estadia": 2.5,
+        "receita_cancelada": 0,
+        "canceladas_sem_valor": 0
+       },
+       "VK7": {
+        "reservas": 9,
+        "canceladas": 3,
+        "ativas": 6,
+        "diarias": 17,
+        "receita": 13126.8,
+        "adr": 772.16,
+        "antecedencia": 17.5,
+        "estadia": 2.33,
+        "receita_cancelada": 9513.86,
+        "canceladas_sem_valor": 0
+       }
+      },
+      "semana": {
+       "1ª semana": {
+        "reservas": 20,
+        "canceladas": 1,
+        "ativas": 19,
+        "diarias": 65,
+        "receita": 43141.21,
+        "adr": 663.71,
+        "antecedencia": 22.5,
+        "estadia": 2.58,
+        "receita_cancelada": 1125.79,
+        "canceladas_sem_valor": 0
+       },
+       "2ª semana": {
+        "reservas": 25,
+        "canceladas": 5,
+        "ativas": 20,
+        "diarias": 61,
+        "receita": 48656.41,
+        "adr": 797.65,
+        "antecedencia": 19.2,
+        "estadia": 2.45,
+        "receita_cancelada": 14576.81,
+        "canceladas_sem_valor": 0
+       }
+      },
+      "mes_estadia": {
+       "2026-11": {
+        "reservas": 34,
+        "canceladas": 5,
+        "ativas": 29,
+        "diarias": 93,
+        "receita": 69133.0,
+        "adr": 743.37,
+        "antecedencia": 5.3,
+        "estadia": 2.55,
+        "receita_cancelada": 12050.95,
+        "canceladas_sem_valor": 0
+       },
+       "2026-12": {
+        "reservas": 4,
+        "canceladas": 0,
+        "ativas": 4,
+        "diarias": 12,
+        "receita": 8246.19,
+        "adr": 687.18,
+        "antecedencia": 30.0,
+        "estadia": 2.5,
+        "receita_cancelada": 0,
+        "canceladas_sem_valor": 0
+       },
+       "2027-01": {
+        "reservas": 3,
+        "canceladas": 0,
+        "ativas": 3,
+        "diarias": 10,
+        "receita": 8655.8,
+        "adr": 865.58,
+        "antecedencia": 60.0,
+        "estadia": 2.33,
+        "receita_cancelada": 0,
+        "canceladas_sem_valor": 0
+       },
+       "2027-03": {
+        "reservas": 4,
+        "canceladas": 1,
+        "ativas": 3,
+        "diarias": 11,
+        "receita": 5762.63,
+        "adr": 523.88,
+        "antecedencia": 120.0,
+        "estadia": 2.33,
+        "receita_cancelada": 3651.65,
+        "canceladas_sem_valor": 0
+       }
+      }
+     }
+    },
+    "estadias": {
+     "Recanto": {
+      "realizado": {
+       "dias": 12,
+       "diarias": 50,
+       "receita": 38197.8,
+       "ocupacao": 0.26,
+       "adr": 763.96,
+       "revpar": 198.95
+      },
+      "vendido_ate_o_fim": {
+       "dias": 18,
+       "diarias": 110,
+       "receita": 83518.96,
+       "ocupacao": 0.382
+      },
+      "mes": {
+       "diarias": 160,
+       "receita": 121716.76,
+       "ocupacao": 0.333,
+       "adr": 760.73,
+       "minimo_dono": 180000,
+       "falta_para_o_minimo": 58283.24,
+       "diarias_livres": 178,
+       "diaria_necessaria_nas_livres": 327.43
+      }
+     },
+     "Villa": {
+      "realizado": {
+       "dias": 12,
+       "diarias": 21,
+       "receita": 15463.08,
+       "ocupacao": 0.117,
+       "adr": 736.34,
+       "revpar": 85.91
+      },
+      "vendido_ate_o_fim": {
+       "dias": 18,
+       "diarias": 78,
+       "receita": 55379.08,
+       "ocupacao": 0.289
+      },
+      "mes": {
+       "diarias": 99,
+       "receita": 70842.17,
+       "ocupacao": 0.22,
+       "adr": 715.58,
+       "minimo_dono": 120000,
+       "falta_para_o_minimo": 49157.83,
+       "diarias_livres": 192,
+       "diaria_necessaria_nas_livres": 256.03
+      }
+     }
+    },
+    "cancelamentos_no_mes": {
+     "Recanto": {
+      "quantidade": 6,
+      "receita": 15406.72,
+      "de_reservas_feitas_antes_do_mes": 6
+     },
+     "Villa": {
+      "quantidade": 1,
+      "receita": 1125.79,
+      "de_reservas_feitas_antes_do_mes": 0
+     },
+     "Total": {
+      "quantidade": 7,
+      "receita": 16532.51,
+      "de_reservas_feitas_antes_do_mes": 6
+     }
+    }
+   }
+  },
+  {
+   "input": {
+    "bookings": "bookings_420",
+    "mes": "2026-12",
+    "ate": "2026-11-13T13:00:00+00:00"
+   },
+   "expected": {
+    "mes": "2026-12",
+    "ate": "2026-11-13T13:00:00+00:00",
+    "feitas": {
+     "Recanto": {
+      "geral": {
+       "reservas": 0,
+       "canceladas": 0,
+       "ativas": 0,
+       "diarias": 0,
+       "receita": 0,
+       "adr": null,
+       "antecedencia": null,
+       "estadia": null,
+       "receita_cancelada": 0,
+       "canceladas_sem_valor": 0
+      },
+      "canal": {},
+      "quarto": {},
+      "semana": {},
+      "mes_estadia": {}
+     },
+     "Villa": {
+      "geral": {
+       "reservas": 0,
+       "canceladas": 0,
+       "ativas": 0,
+       "diarias": 0,
+       "receita": 0,
+       "adr": null,
+       "antecedencia": null,
+       "estadia": null,
+       "receita_cancelada": 0,
+       "canceladas_sem_valor": 0
+      },
+      "canal": {},
+      "quarto": {},
+      "semana": {},
+      "mes_estadia": {}
+     },
+     "Total": {
+      "geral": {
+       "reservas": 0,
+       "canceladas": 0,
+       "ativas": 0,
+       "diarias": 0,
+       "receita": 0,
+       "adr": null,
+       "antecedencia": null,
+       "estadia": null,
+       "receita_cancelada": 0,
+       "canceladas_sem_valor": 0
+      },
+      "canal": {},
+      "quarto": {},
+      "semana": {},
+      "mes_estadia": {}
+     }
+    },
+    "estadias": {
+     "Recanto": {
+      "realizado": {
+       "dias": 0,
+       "diarias": 0,
+       "receita": 0.0,
+       "ocupacao": null,
+       "adr": null,
+       "revpar": null
+      },
+      "vendido_ate_o_fim": {
+       "dias": 31,
+       "diarias": 112,
+       "receita": 87015.0,
+       "ocupacao": 0.226
+      },
+      "mes": {
+       "diarias": 112,
+       "receita": 87015.0,
+       "ocupacao": 0.226,
+       "adr": 776.92,
+       "minimo_dono": 260000,
+       "falta_para_o_minimo": 172985.0,
+       "diarias_livres": 384,
+       "diaria_necessaria_nas_livres": 450.48
+      }
+     },
+     "Villa": {
+      "realizado": {
+       "dias": 0,
+       "diarias": 0,
+       "receita": 0.0,
+       "ocupacao": null,
+       "adr": null,
+       "revpar": null
+      },
+      "vendido_ate_o_fim": {
+       "dias": 31,
+       "diarias": 70,
+       "receita": 57840.04,
+       "ocupacao": 0.151
+      },
+      "mes": {
+       "diarias": 70,
+       "receita": 57840.04,
+       "ocupacao": 0.151,
+       "adr": 826.29,
+       "minimo_dono": null,
+       "falta_para_o_minimo": null,
+       "diarias_livres": 395,
+       "diaria_necessaria_nas_livres": null
+      }
+     }
+    },
+    "cancelamentos_no_mes": {
+     "Recanto": {
+      "quantidade": 0,
+      "receita": 0,
+      "de_reservas_feitas_antes_do_mes": 0
+     },
+     "Villa": {
+      "quantidade": 0,
+      "receita": 0,
+      "de_reservas_feitas_antes_do_mes": 0
+     },
+     "Total": {
+      "quantidade": 0,
+      "receita": 0,
+      "de_reservas_feitas_antes_do_mes": 0
+     }
+    }
+   }
+  },
+  {
+   "input": {
+    "bookings": "bookings_420",
+    "mes": "2027-01",
+    "ate": "2026-11-13T13:00:00+00:00"
+   },
+   "expected": {
+    "mes": "2027-01",
+    "ate": "2026-11-13T13:00:00+00:00",
+    "feitas": {
+     "Recanto": {
+      "geral": {
+       "reservas": 0,
+       "canceladas": 0,
+       "ativas": 0,
+       "diarias": 0,
+       "receita": 0,
+       "adr": null,
+       "antecedencia": null,
+       "estadia": null,
+       "receita_cancelada": 0,
+       "canceladas_sem_valor": 0
+      },
+      "canal": {},
+      "quarto": {},
+      "semana": {},
+      "mes_estadia": {}
+     },
+     "Villa": {
+      "geral": {
+       "reservas": 0,
+       "canceladas": 0,
+       "ativas": 0,
+       "diarias": 0,
+       "receita": 0,
+       "adr": null,
+       "antecedencia": null,
+       "estadia": null,
+       "receita_cancelada": 0,
+       "canceladas_sem_valor": 0
+      },
+      "canal": {},
+      "quarto": {},
+      "semana": {},
+      "mes_estadia": {}
+     },
+     "Total": {
+      "geral": {
+       "reservas": 0,
+       "canceladas": 0,
+       "ativas": 0,
+       "diarias": 0,
+       "receita": 0,
+       "adr": null,
+       "antecedencia": null,
+       "estadia": null,
+       "receita_cancelada": 0,
+       "canceladas_sem_valor": 0
+      },
+      "canal": {},
+      "quarto": {},
+      "semana": {},
+      "mes_estadia": {}
+     }
+    },
+    "estadias": {
+     "Recanto": {
+      "realizado": {
+       "dias": 0,
+       "diarias": 0,
+       "receita": 0.0,
+       "ocupacao": null,
+       "adr": null,
+       "revpar": null
+      },
+      "vendido_ate_o_fim": {
+       "dias": 31,
+       "diarias": 54,
+       "receita": 41245.61,
+       "ocupacao": 0.109
+      },
+      "mes": {
+       "diarias": 54,
+       "receita": 41245.61,
+       "ocupacao": 0.109,
+       "adr": 763.81,
+       "minimo_dono": 260000,
+       "falta_para_o_minimo": 218754.39,
+       "diarias_livres": 442,
+       "diaria_necessaria_nas_livres": 494.92
+      }
+     },
+     "Villa": {
+      "realizado": {
+       "dias": 0,
+       "diarias": 0,
+       "receita": 0.0,
+       "ocupacao": null,
+       "adr": null,
+       "revpar": null
+      },
+      "vendido_ate_o_fim": {
+       "dias": 31,
+       "diarias": 46,
+       "receita": 36316.96,
+       "ocupacao": 0.099
+      },
+      "mes": {
+       "diarias": 46,
+       "receita": 36316.96,
+       "ocupacao": 0.099,
+       "adr": 789.5,
+       "minimo_dono": 200000,
+       "falta_para_o_minimo": 163683.04,
+       "diarias_livres": 419,
+       "diaria_necessaria_nas_livres": 390.65
+      }
+     }
+    },
+    "cancelamentos_no_mes": {
+     "Recanto": {
+      "quantidade": 0,
+      "receita": 0,
+      "de_reservas_feitas_antes_do_mes": 0
+     },
+     "Villa": {
+      "quantidade": 0,
+      "receita": 0,
+      "de_reservas_feitas_antes_do_mes": 0
+     },
+     "Total": {
+      "quantidade": 0,
+      "receita": 0,
+      "de_reservas_feitas_antes_do_mes": 0
+     }
+    }
+   }
+  }
+ ]
+}

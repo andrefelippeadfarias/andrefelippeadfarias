@@ -9,14 +9,20 @@
  * approval in approval mode. Without JavaScript the main screens still render.
  *
  *   RITMO_E2E_SITE=http://127.0.0.1:8090 RITMO_E2E_API=http://127.0.0.1:8091 node tests/e2e/m4-screens.js
+ *
+ * With the argument "wizard" it runs the setup wizard instead (spec 5.1), on a fresh site before
+ * tests/e2e/seed.php:  RITMO_E2E_WP=<wordpress folder> node tests/e2e/m4-screens.js wizard
  */
 
 const fs = require('fs');
 const path = require('path');
+const { execFileSync } = require('child_process');
 const { chromium } = require('playwright');
 
 const SITE = process.env.RITMO_E2E_SITE || 'http://127.0.0.1:8090';
 const API = process.env.RITMO_E2E_API || 'http://127.0.0.1:8091';
+/* The WordPress folder of the site (the wizard pass adds market prices through tests/e2e/seed-market.php). */
+const WP = process.env.RITMO_E2E_WP || '';
 const USER = 'ritmo-e2e-admin';
 const PASSWORD = 'ritmo-e2e-only-password';
 const PROPERTY = 'example-inn';
@@ -52,6 +58,12 @@ async function simulatorRequests() {
 
 async function submitAndWait(page, selector) {
     await Promise.all([page.waitForNavigation({ timeout: 90000 }), page.click(selector)]);
+}
+
+/* A page without JavaScript is driven by the keyboard: focus the submit button and press Enter. */
+async function pressAndWait(page, selector) {
+    await page.locator(selector).focus();
+    await Promise.all([page.waitForNavigation({ timeout: 90000 }), page.keyboard.press('Enter')]);
 }
 
 async function open(page, slug) {
@@ -262,7 +274,14 @@ async function approvals(page) {
     const group = await page.locator('[data-ritmo="run-group"]').first().innerText();
     check(/Approved write/.test(group) && /approved by/.test(group) && /R\$/.test(group), 'change log: no approved write with its approver and amounts: ' + group.slice(0, 200));
     await page.screenshot({ path: path.join(SHOTS, 'm4-changes-after-write-1280.png'), fullPage: false });
-    return { entries, segments, approved, writes: written.length };
+
+    // AC-TODO-1 (part): a "Sync Now" item is never added twice for the same room and day. Whether one
+    // exists right after the write depends on the change log holding tonight's rows (see docs/ADMIN.md 7).
+    await open(page, 'ritmo-revenue-todo');
+    const sync = await page.locator('[data-ritmo="todo-row"]', { hasText: 'Sync Now' }).count();
+    await open(page, 'ritmo-revenue-todo');
+    check(await page.locator('[data-ritmo="todo-row"]', { hasText: 'Sync Now' }).count() === sync, 'to-do: a "Sync Now" item was added twice');
+    return { entries, segments, approved, writes: written.length, sync_now: sync };
 }
 
 async function todo(page) {
@@ -287,6 +306,62 @@ async function supportFile(page) {
     check(!/[^\s@"]+@[^\s@"]+\.[a-z]{2,}/i.test(body), 'support file: an e-mail address is in it');
 }
 
+/* Alerts (spec 5.10): the severity filter, a critical alert's facts in words, acknowledging it. */
+async function alerts(page) {
+    await open(page, 'ritmo-revenue-alerts&severity=warning');
+    const warnings = await page.locator('[data-ritmo="alert-row"]').allInnerTexts();
+    check(warnings.length > 0 && warnings.every((row) => /Warning/.test(row) && !/Critical/.test(row)), 'alerts: the warning filter shows other severities');
+    await open(page, 'ritmo-revenue-alerts&severity=critical&status=open');
+    const critical = page.locator('[data-ritmo="alert-row"]').first();
+    check(await critical.count() === 1, 'alerts: the scenario has no open critical alert');
+    await Promise.all([page.waitForNavigation(), critical.locator('a').first().click()]);
+    const detail = await page.locator('[data-ritmo="alert-detail"]').innerText();
+    check(await page.locator('[data-ritmo="alert-detail"] dl dt').count() > 0, 'alerts: the detail has no facts');
+    check(!/\{\s*"/.test(detail) && !/[a-z]+_[a-z]+_[a-z]+/.test(detail), 'alerts: the detail shows raw data: ' + detail.slice(0, 200));
+    await submitAndWait(page, '[data-ritmo="alert-ack"]');
+    await open(page, 'ritmo-revenue-alerts&severity=critical&status=acknowledged');
+    check(await page.locator('[data-ritmo="alert-row"]').count() >= 1, 'alerts: acknowledging did not change the status');
+}
+
+/* The change log export (spec 5.11, AC-CHG-4): BOM, header, the formula guard, amounts with a dot. */
+async function changesExport(page) {
+    await open(page, 'ritmo-revenue-changes');
+    const [download] = await Promise.all([page.waitForEvent('download'), page.click('[data-ritmo="changes-export"]')]);
+    const body = fs.readFileSync(await download.path(), 'utf8');
+    check(body.charCodeAt(0) === 0xfeff, 'export: no UTF-8 BOM');
+    const lines = body.slice(1).trim().split(/\r?\n/);
+    check(lines.length > 1, 'export: no rows');
+    const cells = lines.flatMap((line) => line.split(','));
+    const unguarded = cells.filter((cell) => /^"?[=+\-@\t\r]/.test(cell) && !/^-?\d+(\.\d+)?$/.test(cell));
+    check(unguarded.length === 0, 'export: a text cell starts with a formula character: ' + unguarded.slice(0, 3).join(' | '));
+    check(lines.slice(1).every((line) => !/\d,\d{2}"/.test(line)), 'export: an amount with a decimal comma');
+    check(!/[^\s@",]+@[^\s@",]+\.[a-z]{2,}/i.test(body), 'export: an e-mail address is in it');
+}
+
+/* Connections (spec 5.13, AC-CON-4): forgetting a key with the wrong name typed changes nothing. */
+async function forgetWithWrongName(page) {
+    await open(page, 'ritmo-revenue-settings&tab=connections');
+    await page.click('details:has([data-ritmo="forget-pricelabs"]) summary');
+    await page.fill('#ritmo-forget-pricelabs', 'Pricelabs');
+    check(await page.locator('[data-ritmo="forget-pricelabs"] button[type=submit]').isDisabled(), 'connections: the button is not disabled while the typed name differs');
+    // The server must refuse it too: post the form as a browser without the script would.
+    await Promise.all([page.waitForNavigation(), page.locator('[data-ritmo="forget-pricelabs"]').evaluate((form) => form.submit())]);
+    check(/does not match/.test(await page.locator('[data-ritmo="notice"]').innerText()), 'connections: a wrong name did not refuse forgetting the key');
+    await page.click('[data-ritmo="connection-test-pricelabs"]');
+    await page.waitForFunction(() => /Connected|Tested/.test(document.querySelector('[data-ritmo="connection-result-pricelabs"]').textContent), null, { timeout: 30000 });
+}
+
+/* Diagnostics (spec 5.14, AC-DIA-1 and 3): the log in words, a run's stages in words. */
+async function diagnostics(page) {
+    await open(page, 'ritmo-revenue-settings&tab=diagnostics');
+    check(!/\{\s*"/.test(await page.locator('[data-ritmo="log"]').innerText()), 'diagnostics: raw JSON in the log');
+    const link = page.locator('[data-ritmo="runs"] a[href*="run="]').first();
+    check(await link.count() === 1, 'diagnostics: no run to open');
+    await Promise.all([page.waitForNavigation(), link.click()]);
+    const stages = await page.locator('[data-ritmo="run-detail"] li').allInnerTexts();
+    check(stages.length >= 3 && stages.every((s) => !/[a-z]+_[a-z]+/.test(s)), 'diagnostics: the stages of a run are not in words: ' + stages.slice(0, 3).join(' | '));
+}
+
 async function forgedPost(page) {
     const status = await page.evaluate(async (site) => {
         const form = new FormData();
@@ -309,6 +384,129 @@ async function restChecks(page) {
     check(answer === 401, 'a REST route answered without the nonce (' + answer + ')');
 }
 
+async function login(page) {
+    await page.goto(SITE + '/wp-login.php');
+    await page.fill('#user_login', USER);
+    await page.fill('#user_pass', PASSWORD);
+    await submitAndWait(page, '#wp-submit');
+}
+
+async function setupStep(page, step) {
+    await page.goto(SITE + '/wp-admin/admin.php?page=ritmo-revenue-settings&tab=setup' + (step ? '&step=' + step : '') + '&property=' + PROPERTY);
+}
+
+async function currentStep(page) {
+    return Number(((await page.locator('[data-ritmo-current="1"]').getAttribute('data-ritmo')) || '').replace('wizard-step-', ''));
+}
+
+/*
+ * The setup wizard (spec 5.1, AC-WIZ-1 to 7) on a fresh site, before tests/e2e/seed.php: the keys
+ * with a wrong token first, then steps 4 to 8 without JavaScript, the room cards at 390 px, a wrong
+ * typed confirmation, and "what the plugin would do" with only reads in the simulator log.
+ */
+async function wizard(browser) {
+    const context = await browser.newContext({ deviceScaleFactor: 1 });
+    const page = await context.newPage();
+    await login(page);
+    await page.setViewportSize({ width: 1280, height: 900 });
+
+    await page.goto(SITE + '/wp-admin/admin.php?page=ritmo-revenue');
+    check(await page.locator('[data-ritmo="empty"] a[href*="tab=setup"]').count() === 1, 'wizard: the overview of a fresh site does not offer the setup');
+    await page.goto(SITE + '/wp-admin/admin.php?page=ritmo-revenue-settings&tab=setup');
+    check(await currentStep(page) === 2, 'wizard: a fresh site does not open on step 2');
+    for (let step = 3; step <= 9; step++) {
+        check(await page.locator('[data-ritmo="wizard-step-' + step + '"] .ritmo-done').count() === 0, 'wizard: step ' + step + ' is done on a fresh site');
+    }
+    await crossChecks(page, 'wizard-step-2', 1280);
+
+    await page.fill('#ritmo-w-token', 'wrong-refresh-token-9999');
+    await page.fill('#ritmo-w-ids', '901001');
+    await submitAndWait(page, '[data-ritmo="wizard-continue"]');
+    const refused = await page.locator('.wrap.ritmo').innerText();
+    check(/refused/i.test(refused), 'wizard: a wrong token does not name the cause: ' + refused.slice(0, 300));
+    check(!/Exception|not valid|HTTP|401|wrong-refresh/.test(refused), 'wizard: the answer to a wrong token shows internal details');
+    check(await currentStep(page) === 2, 'wizard: a wrong token went on to the next step');
+
+    await page.fill('#ritmo-w-token', SECRETS[0]);
+    await submitAndWait(page, '[data-ritmo="wizard-continue"]');
+    check(await currentStep(page) === 3, 'wizard: the PMS step did not go on after a good token');
+    await page.fill('#ritmo-w-key', SECRETS[1]);
+    await page.fill('#ritmo-w-pms', 'beds24');
+    await submitAndWait(page, '[data-ritmo="wizard-continue"]');
+    check(await currentStep(page) === 4, 'wizard: the pricing step did not go on');
+
+    const plain = await browser.newContext({ javaScriptEnabled: false, deviceScaleFactor: 1 });
+    const form = await plain.newPage();
+    await login(form);
+    await setupStep(form, 4);
+    check(await form.inputValue('#ritmo-p-cur') === 'BRL', 'wizard: the currency of the listings is not suggested');
+    await form.fill('#ritmo-p-name', 'Example Inn');
+    await form.fill('#ritmo-p-id', PROPERTY);
+    await form.selectOption('#ritmo-p-tz', 'America/Sao_Paulo');
+    await pressAndWait(form, '[data-ritmo="wizard-continue"]');
+    check(await currentStep(form) === 5, 'wizard: the property step did not go on without JavaScript');
+
+    check(await form.locator('[data-ritmo="rooms-suggested"]').count() === 1, 'wizard: the rooms are not suggested from the listings');
+    const units = { 902001: '4', 902002: '2', 902003: '1' };
+    for (let i = 0; i < 3; i++) {
+        const pms = await form.inputValue('#ritmo-r-' + i + '-pms_ref');
+        check(units[pms] !== undefined, 'wizard: room row ' + i + ' has no PMS room id suggested (' + pms + ')');
+        await form.fill('#ritmo-r-' + i + '-units', units[pms]);
+    }
+    const narrow = await plain.newPage();
+    await narrow.setViewportSize({ width: 390, height: 844 });
+    await setupStep(narrow, 5);
+    const cards = await narrow.locator('[data-ritmo="room-row"]').evaluateAll((rows) => rows.slice(0, 2).map((r) => r.getBoundingClientRect().toJSON()));
+    check(Math.abs(cards[0].x - cards[1].x) < 2 && cards[1].y > cards[0].y + cards[0].height - 2, 'wizard: the rooms are not one card per room at 390 px');
+    check(await narrow.evaluate(() => document.documentElement.scrollWidth - window.innerWidth) <= 1, 'wizard: the rooms step scrolls sideways at 390 px');
+    await narrow.screenshot({ path: path.join(SHOTS, 'm4-wizard-rooms-390.png'), fullPage: true });
+    await narrow.close();
+    await pressAndWait(form, '[data-ritmo="wizard-continue"]');
+    check(await currentStep(form) === 6, 'wizard: the rooms step did not go on: ' + await form.locator('[data-ritmo="notice"]').innerText().catch(() => ''));
+
+    await pressAndWait(form, '[data-ritmo="wizard-continue"]');
+    check(await currentStep(form) === 7, 'wizard: the rules step did not go on');
+
+    await form.fill('#ritmo-s-confirm', 'wrong-inn');
+    await pressAndWait(form, '[data-ritmo="wizard-continue"]');
+    check(/does not match/.test(await form.locator('[data-ritmo="notice"]').innerText()), 'wizard: a wrong typed confirmation was not refused');
+    check(await currentStep(form) === 7, 'wizard: a wrong typed confirmation went on');
+    await form.fill('#ritmo-s-confirm', PROPERTY);
+    await pressAndWait(form, '[data-ritmo="wizard-continue"]');
+    check(await currentStep(form) === 8, 'wizard: the safety step did not go on');
+
+    await pressAndWait(form, '[data-ritmo="run-shadow"]');
+    await setupStep(form, 0);
+    check(await currentStep(form) === 9, 'wizard: the shadow run did not lead to step 9');
+    const bare = await form.locator('[data-ritmo="would-do-summary"]').innerText();
+    check(/would change 0 nights/.test(bare) && await form.locator('[data-ritmo="would-do-no-market"] a[href*="ritmo-revenue-market"]').count() === 1, 'wizard: a run without market prices does not say why it changes nothing: ' + bare.slice(0, 300));
+
+    execFileSync('php', [path.join(__dirname, 'seed-market.php'), WP, PROPERTY]);
+    await setupStep(form, 8);
+    await pressAndWait(form, '[data-ritmo="run-shadow"]');
+    await setupStep(form, 9);
+    const summary = await form.locator('[data-ritmo="would-do-summary"]').innerText();
+    const would = Number((summary.match(/would change ([\d,.]+) night/) || [0, '0'])[1].replace(/[,.]/g, ''));
+    check(would >= 1, 'wizard: "what the plugin would do" changes no night: ' + summary.slice(0, 200));
+    check(/R\$/.test(summary), 'wizard: the changes are not in money');
+    check(writes(await simulatorRequests()).length === 0, 'wizard: the simulator was written to');
+    await plain.close();
+
+    for (let step = 1; step <= 9; step++) {
+        for (const width of [1280, 390]) {
+            await page.setViewportSize({ width, height: width > 400 ? 900 : 844 });
+            await setupStep(page, step);
+            await crossChecks(page, 'wizard-step-' + step, width);
+        }
+    }
+    await page.setViewportSize({ width: 1280, height: 900 });
+    await setupStep(page, 9);
+    await page.screenshot({ path: path.join(SHOTS, 'm4-wizard-would-do-1280.png'), fullPage: true });
+    await context.close();
+
+    return { would_change: would };
+}
+
 async function withoutJavaScript(browser) {
     const context = await browser.newContext({ javaScriptEnabled: false, deviceScaleFactor: 1 });
     const page = await context.newPage();
@@ -323,8 +521,28 @@ async function withoutJavaScript(browser) {
     await context.close();
 }
 
+async function wizardPass() {
+    const browser = await chromium.launch();
+    try {
+        console.log(JSON.stringify({ ok: true, results: [{ wizard: await wizard(browser) }] }, null, 2));
+    } catch (error) {
+        const pages = browser.contexts().flatMap((c) => c.pages());
+        for (let i = 0; i < pages.length; i++) {
+            await pages[i].screenshot({ path: path.join(SHOTS, 'm4-wizard-failure-' + i + '.png'), fullPage: true }).catch(() => null);
+        }
+        throw error;
+    } finally {
+        await browser.close();
+    }
+}
+
 (async () => {
     fs.mkdirSync(SHOTS, { recursive: true });
+    if (process.argv[2] === 'wizard') {
+        check(WP !== '', 'the wizard pass needs RITMO_E2E_WP, the WordPress folder of the site');
+        await wizardPass();
+        return;
+    }
     const browser = await chromium.launch();
     const context = await browser.newContext({ deviceScaleFactor: 1 });
     const page = await context.newPage();
@@ -355,6 +573,10 @@ async function withoutJavaScript(browser) {
         await todo(page);
         results.push({ approvals: await approvals(page) });
         await supportFile(page);
+        await alerts(page);
+        await changesExport(page);
+        await forgetWithWrongName(page);
+        await diagnostics(page);
         await forgedPost(page);
         await restChecks(page);
         await everyScreen(page, 1280, '');

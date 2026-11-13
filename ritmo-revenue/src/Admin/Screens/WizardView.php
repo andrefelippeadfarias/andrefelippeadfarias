@@ -12,6 +12,7 @@ use Ritmo\Admin\Components\NightDate;
 use Ritmo\Admin\Components\PriceText;
 use Ritmo\Admin\Components\Ratio;
 use Ritmo\Application\Dashboard\Setup\WizardProgress;
+use Ritmo\Application\Grid\PlannedNight;
 use Ritmo\Domain\Model\Property;
 use Ritmo\Domain\Model\RoomType;
 use Ritmo\Domain\Support\Days;
@@ -42,9 +43,6 @@ final class WizardView
         $progress = $services->wizard()->progress($property?->id);
         $asked = Input::query()->int('step', 0, 0, 9);
         $step = $asked >= 1 ? $asked : $progress->current();
-        if ($step === 8 && $progress->done(8)) {
-            $step = 9;
-        }
         $can = Capability::can(self::CAPABILITIES[WizardProgress::CAPABILITY[$step]]);
 
         return [
@@ -111,7 +109,13 @@ final class WizardView
             5 => self::rooms($property),
             6 => self::rules(),
             7 => self::safety($property),
-            8 => ['property_id' => $property?->id ?? '', 'rest_url' => rest_url('ritmo/v1/'), 'rest_nonce' => wp_create_nonce('wp_rest')],
+            8 => [
+                'property_id' => $property?->id ?? '',
+                'rest_url' => rest_url('ritmo/v1/'),
+                'rest_nonce' => wp_create_nonce('wp_rest'),
+                'done' => $property !== null && ScreenServices::instance()->wizard()->progress($property->id)->done(8),
+                'next_url' => Menu::url(Menu::SETTINGS, ['tab' => 'setup', 'step' => 9, 'property' => $property?->id ?? '']),
+            ],
             default => self::wouldDo($property),
         };
     }
@@ -170,7 +174,9 @@ final class WizardView
         return [
             'timezones' => timezone_identifiers_list(),
             'timezone' => in_array($site, timezone_identifiers_list(), true) ? $site : '',
+            'currency' => ScreenServices::instance()->listingSuggestions()->currency() ?? '',
             'currencies' => ['BRL', 'USD', 'EUR', 'GBP', 'ARS', 'MXN', 'CLP', 'COP', 'UYU', 'PEN', 'CAD', 'AUD'],
+            'tiers' => array_values(array_map('strval', array_keys((array) ScreenServices::instance()->wizard()->rules()->get('pace.target_percentile')))),
         ];
     }
 
@@ -185,8 +191,14 @@ final class WizardView
             'base' => self::plain($r->base), 'min' => self::plain($r->min), 'max' => self::plain($r->max), 'tags' => implode(', ', $r->tags),
         ], $rooms);
         $blank = ['code' => '', 'name' => '', 'units' => '1', 'pms_ref' => '', 'pricing_ref' => '', 'base' => '', 'min' => '', 'max' => '', 'tags' => ''];
+        $suggested = $rows === [] && $property !== null ? ScreenServices::instance()->listingSuggestions()->rows(array_map(static fn (RoomType $r): string => $r->code, ScreenServices::instance()->services()->roomTypes()->all())) : [];
 
-        return ['rows' => [...$rows, $blank, $blank, $blank], 'property_id' => $property?->id ?? '', 'has_property' => $property !== null];
+        return [
+            'rows' => $suggested === [] ? [...$rows, $blank, $blank, $blank] : [...$suggested, $blank],
+            'suggested' => $suggested !== [],
+            'property_id' => $property?->id ?? '',
+            'has_property' => $property !== null,
+        ];
     }
 
     /**
@@ -241,36 +253,61 @@ final class WizardView
         if ($property === null) {
             return ['empty' => true];
         }
-        $summary = ScreenServices::instance()->wouldDo()->summary($property->id);
         $rooms = [];
         $bases = [];
+        $types = [];
         foreach (ScreenServices::instance()->services()->roomTypes()->forProperty($property->id) as $room) {
             $rooms[$room->code] = $room->name;
             $bases[$room->code] = $room->base;
+            $types[$room->code] = $room;
         }
+        $summary = ScreenServices::instance()->wouldDo()->summary($property->id, $types);
         $minShadow = ScreenServices::instance()->wizard()->rules()->modes()->minShadowRuns;
 
         return [
             'empty' => $summary['run'] === null,
             'sentence' => sprintf(
-                /* translators: 1: nights it would change, 2: up, 3: down */
-                __('In shadow mode the plugin would change %1$s nights: %2$s up, %3$s down.', 'ritmo-revenue'),
+                /* translators: 1: room nights read, 2: nights it would change, 3: up, 4: down */
+                __('In shadow mode the plugin read %1$s room nights and would change %2$s nights: %3$s up, %4$s down.', 'ritmo-revenue'),
+                number_format_i18n($summary['nights']),
                 number_format_i18n($summary['total']),
                 number_format_i18n($summary['up']),
                 number_format_i18n($summary['down'])
             ),
+            'no_market' => $summary['no_market'] === 0 ? '' : sprintf(
+                /* translators: %s: number of room nights */
+                _n('%s room night was left as it is because there is no market price to compare it with. Add this week\'s market prices in Market, then run in shadow again.', '%s room nights were left as they are because there is no market price to compare them with. Add this week\'s market prices in Market, then run in shadow again.', $summary['no_market'], 'ritmo-revenue'),
+                number_format_i18n($summary['no_market'])
+            ),
+            'market_url' => Menu::url(Menu::MARKET, ['property' => $property->id]),
             'nearest' => array_map(static fn (array $c): array => [
                 'title' => ($rooms[$c['room']] ?? $c['room']) . ' · ' . NightDate::short(Days::date($c['night'])),
+                'field' => __('floor', 'ritmo-revenue'),
                 'price' => NightText::bound($c['planned']->floorProposed, $c['planned']->floorPercent, $bases[$c['room']] ?? 0.0, $property->currency),
-                'change' => PriceText::change($c['planned']->floorNow, $c['planned']->floorProposed, $property->currency),
+                'change' => self::change($c['planned'], $property->currency),
                 'reason' => NightText::reason($c['planned']->reason),
             ], $summary['nearest']),
-            'refused' => array_map(static fn (array $c): string => ($rooms[$c['room']] ?? $c['room']) . ' · ' . NightDate::short(Days::date($c['night'])), $summary['refused']),
+            'refused' => array_map(static fn (array $c): string => ($rooms[$c['room']] ?? $c['room']) . ' · ' . NightDate::short(Days::date($c['night'])) . ': ' . NightText::status($c['planned']), $summary['refused']),
             /* translators: %s: number of runs */
             'next' => sprintf(_n('Stay in shadow mode for at least %s run, then switch to approval in Operations, where every change waits for a person.', 'Stay in shadow mode for at least %s runs, then switch to approval in Operations, where every change waits for a person.', max(1, $minShadow), 'ritmo-revenue'), number_format_i18n(max(1, $minShadow))),
             'overview_url' => Menu::url(Menu::OVERVIEW, ['property' => $property->id]),
             'nights_url' => Menu::url(Menu::NIGHTS, ['property' => $property->id, 'only' => 'would_change']),
         ];
+    }
+
+    /**
+     * @return array{text: string, note: string, sr: string}
+     */
+    private static function change(PlannedNight $planned, string $currency): array
+    {
+        $change = PriceText::change($planned->floorNow, $planned->floorProposed, $currency);
+        if (!$planned->nowFromListing) {
+            return $change;
+        }
+        $from = __('before: the listing minimum, as the night has no date rule yet', 'ritmo-revenue');
+        $note = $change['note'] === '' ? $from : $change['note'] . '; ' . $from;
+
+        return ['text' => $change['text'], 'note' => $note, 'sr' => $change['sr'] . ' (' . $from . ')'];
     }
 
     private static function plain(float $amount): string

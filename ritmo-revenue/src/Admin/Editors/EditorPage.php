@@ -9,6 +9,7 @@ use Ritmo\Admin\Components\Input;
 use Ritmo\Admin\Components\Menu;
 use Ritmo\Admin\Components\Tab;
 use Ritmo\Admin\Notice;
+use Ritmo\Admin\Screens\Page;
 use Ritmo\Admin\View;
 use Ritmo\Domain\Model\Property;
 use Ritmo\Domain\Model\RoomType;
@@ -126,11 +127,10 @@ final class EditorPage
             /* translators: %s: name of the property shown instead */
             $notice ??= ['type' => Notice::WARNING, 'message' => sprintf(__('That property does not exist; showing %s.', 'ritmo-revenue'), $this->property->name), 'details' => []];
         }
-        $tabs = array_map(fn (Tab $t): array => ['title' => $t->title, 'url' => Menu::url($this->slug, array_filter(['property' => $this->property?->id ?? '', 'tab' => $t->id])), 'current' => $t->id === $this->tab], $this->tabs);
         View::render('admin/editors/frame', [
             'page' => $this,
+            'header' => Page::headerOf($this->slug, $this->title, $this->properties, $this->property, $this->tabs, $this->tab),
             'notice' => $notice,
-            'tabs' => $tabs,
             'template' => $template,
             'view' => $view,
             'post_url' => admin_url('admin-post.php'),

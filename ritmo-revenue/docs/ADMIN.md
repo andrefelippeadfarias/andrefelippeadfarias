@@ -17,7 +17,7 @@ service, setup wizard), which hands any write to the write gate of M3.
 | `src/Admin/Components` | `Menu`, `Tab`, `Screen`, `Capability`, `FormAction`, `Input`, `ConfirmTyped`, `Ratio`, `Money`, `Percent`, `PriceText`, `NightDate`, `Labels`, `Paging`, `PrivacyGuard`, `ErrorText`, `UserFacing`, `CsvWriter` | The menu and its redirects, form actions, input reading, the formats of money, percent and nights, the words of every code, the guest-data guard, error texts with a reference, CSV with the formula guard. |
 | `src/Admin/Screens` | `Screens`, `ScreenServices`, `Page`, `ScreenActions`, one `*Screen` per menu entry (`OverviewScreen`, `NightsScreen`, `ApprovalsScreen`, `AlertsScreen`, `TodoScreen`, `ChangesScreen`, `SettingsScreen`), the views (`NightDetailView`, `WizardView`, `ConnectionsView`, `DiagnosticsView`), the actions (`ApprovalActions`, `AlertActions`, `ChangeActions`, `TodoActions`, `NightActions`, `WizardActions`, `ConnectionActions`, `DiagnosticsActions`), the texts (`AlertText`, `ConnectionText`, `NightText`, `TodoText`, `UndoText`, `WarningText`, `PeopleNames`) and `UndoNow` | WordPress side of the screens: what each one renders, the property picker and status strip, and the handlers of its forms. |
 | `src/Rest/Screens` | `ScreenRoutes`, `ScreenEndpoints` | The REST routes the screens' script calls (section 5). |
-| `src/Application/Dashboard` | `StatusQuery`, `StatusStrip`; `Overview/` `OverviewQuery`, `Revenue`; `Alerts/` `AlertFilter`, `AlertList`; `Changes/` `ChangeFilter`, `ChangeList`, `ChangeGroups`, `UndoRequests`; `Todo/` `TodoItem`, `TodoStore`, `TodoService`, `TodoGenerator`; `Connections/` `ConnectionReason`, `ConnectionTests`; `Diagnostics/` `SupportBundle`; `Setup/` `SetupState`, `SafetyValues`, `WizardProgress`, `SetupWizard`, `RoomRowsRefused`, `WouldDo` | Read models and small use cases of the overview, alerts, change log, to-do, connections, diagnostics and setup. No WordPress. |
+| `src/Application/Dashboard` | `StatusQuery`, `StatusStrip`; `Overview/` `OverviewQuery`, `Revenue`; `Alerts/` `AlertFilter`, `AlertList`; `Changes/` `ChangeFilter`, `ChangeList`, `ChangeGroups`, `UndoRequests`; `Todo/` `TodoItem`, `TodoStore`, `TodoService`, `TodoGenerator`; `Connections/` `ConnectionReason`, `ConnectionTests`; `Diagnostics/` `SupportBundle`; `Setup/` `SetupState`, `SafetyValues`, `WizardProgress`, `SetupWizard`, `RoomRowsRefused`, `WouldDo`, `ListingSuggestions` | Read models and small use cases of the overview, alerts, change log, to-do, connections, diagnostics and setup. No WordPress. |
 | `src/Application/Grid` | `NightGridQuery`, `NightGrid`, `NightCell`, `NightFilter`, `NightMarks`, `GridContext`, `PlanIndex`, `PlannedNight`, `LastPlan`, `NightDetailQuery`, `NightDetail`; `Approvals/` `ApprovalBoard`, `RequestView`, `EntryRow`, `EntryWarnings`, `Segment`, `Segmenter`, `RelationHints`, `RowBuilder`, `Impact` | The nights grid and night detail; the approval requests as rooms, segments and nights in money. |
 | `src/Infrastructure/Db/Query/Screens` | `AlertListReader`, `ChangeLogReader`, `TodoRepository` | Paged, prepared reads of alerts and changes; the to-do store. |
 | `src/Infrastructure/Db/Migration/DraftScreens.php` | | Draft migration: the to-do columns of `pending_items` (number set at integration). |
@@ -67,6 +67,11 @@ step.
 
 - Keys go to the vault (`ritmo_wizard_save_pms` / `_pricing`) and are tested at once; the field
   never shows a saved key, only "saved".
+- Step 4 suggests the currency and step 5 starts with one room row per listing the pricing system
+  showed at step 3 (`ListingSuggestions`, kept in the setting `wizard_listings`): name, listing
+  id, minimum, base and maximum, a code from the initials of the name and the PMS room id guessed
+  from the number at the end of the listing id. Every value stays editable and a notice says to
+  check the PMS room id and the units (the PMS cannot list its rooms yet, decision D4).
 - Rooms are saved in one transaction; a refused row lists the row and the reason
   (`RoomRowsRefused`) and nothing is saved.
 - Rules: the conservative preset, or a preset file (`.json`, at most 1 MB), plus the weekend days.
@@ -76,7 +81,12 @@ step.
   confirmed is kept with a fingerprint of the values (`SetupState`, `SafetyValues`), so a later
   change of a limit asks for a new confirmation.
 - The shadow-run button uses the existing `ritmo_run_shadow` action and REST route of M2 (the
-  progress section is driven by `assets/admin.js`).
+  progress section is driven by `assets/admin.js`). Step 8 can be opened again to run once more.
+- Step 9 (`WouldDo`) reads the newest completed shadow run even when it planned nothing: it says
+  how many room nights were read, how many would change (up, down, the ten nearest with the floor
+  before and after) and, when the run had no market price for some nights, that those were left as
+  they are, with a link to Market. A site set up only through the wizard has no market prices, so
+  its first shadow run changes nothing until prices are added.
 
 ### 3.2 Overview
 
@@ -95,6 +105,14 @@ runs. All amounts in money; percentages in words.
 - The detail (`NightDetailQuery`) shows bookings by id and channel only, the freeze with its
   release form (approver, per-object nonce, "I understand" checkbox), the last 50 changes and the
   decisions of the last five runs.
+
+### 3.3.1 Amounts in force without a date rule
+
+A night the run priced without a date rule in force has no floor or ceiling of its own: the
+pricing system applies the listing's minimum and maximum. `PlanIndex::withListing()` fills them in
+(`PlannedNight::$nowFromListing`), so the approvals, the grid's arrows, the night detail and step 9
+show "listing minimum R$ 320 → R$ 433" instead of "— → R$ 433", and the impact counts such nights
+as up or down. The screen says where the amount before comes from.
 
 ### 3.4 Approvals
 
@@ -202,5 +220,17 @@ codes, never an exception message.
 - `tests/Integration/Rest/Screens`: the REST answers over SQLite.
 - `tests/e2e/m4-screens.js`: Playwright on a private test site and the simulator: menu, redirects,
   connections, shadow run, overview, grid, detail, to-do, approvals end to end with writes to the
-  simulator, change log, support file, nonces, every screen at 1280 and 390 pixels, focus order
-  and rendering without script.
+  simulator, change log and its export (BOM, formula guard), alerts (severity filter, facts,
+  acknowledge), forgetting a key with the wrong name, diagnostics (log, a run's stages), support
+  file, nonces, every screen at 1280 and 390 pixels, focus order and rendering without script.
+- `node tests/e2e/m4-screens.js wizard` (with `RITMO_E2E_WP`, the WordPress folder): the setup
+  wizard on a fresh site before `seed.php` (AC-WIZ-1 to 7): the fresh site opens on step 2, a wrong
+  token is refused in words, steps 4 to 8 by keyboard without JavaScript, the suggested rooms, the
+  room cards at 390 px, a wrong typed confirmation, step 9 explaining a run without market prices,
+  then market prices (`tests/e2e/seed-market.php`) and a second shadow run that would change
+  nights in money, with only reads in the simulator log. It needs `ritmo_manage_safety` on the
+  administrator (grants version 2 of the integration).
+- Known limit: the "Sync Now" to-do item is made from the change log; when the approved write's
+  steps for tonight are only "accepted" (not yet confirmed stored) the change log has no row for
+  tonight and the item appears only after the next run confirms them. The integration hooks the
+  generator to the write stage's steps (admin spec 12.3 item 5).

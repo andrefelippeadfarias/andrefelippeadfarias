@@ -1,0 +1,141 @@
+{
+ "function": "pace.ajustar_tetos",
+ "php_target": "Ritmo\\Domain\\Plan\\Assembly\\CeilingRelease + ExpiryRewrite",
+ "notes": "cfg is tests/fixtures/frozen/quartos.json. An item releasing the ceiling on a night whose rule has a ceiling or a lead_time_expiry goes delete-first and inherits min_stay, check_in and check_out of the deleted rule. The engine does NOT convert a floor-only item on a night whose rule has an expiry (2026-11-23 here): the procedure deletes it by hand (SKILL.md step 6). The plugin converts every write on such a night (W36, divergence X1).",
+ "cases": [
+  {
+   "input": {
+    "items": [
+     {
+      "tipo": "data",
+      "quarto": "Q7",
+      "data": "2026-11-20",
+      "min_price": 1300.0,
+      "max_price": 5000.0,
+      "motivo": "release"
+     },
+     {
+      "tipo": "data",
+      "quarto": "Q7",
+      "data": "2026-11-21",
+      "min_price": 1300.0,
+      "max_price": 5000.0,
+      "motivo": "release"
+     },
+     {
+      "tipo": "data",
+      "quarto": "Q7",
+      "data": "2026-11-22",
+      "min_price": 1300.0,
+      "max_price": 5000.0,
+      "motivo": "release"
+     },
+     {
+      "tipo": "data",
+      "quarto": "Q7",
+      "data": "2026-11-23",
+      "min_price": 1250.0,
+      "motivo": "floor only"
+     },
+     {
+      "tipo": "data",
+      "quarto": "Q7",
+      "data": "2026-11-24",
+      "min_price": 1250.0,
+      "max_price": 5000.0,
+      "motivo": "no rule"
+     }
+    ],
+    "rules": {
+     "Q7": {
+      "2026-11-20": {
+       "date": "2026-11-20",
+       "min_price": "10",
+       "min_price_type": "percent_base",
+       "min_stay": 2,
+       "check_in": "1111101",
+       "check_out": "1111110",
+       "lead_time_expiry": 3
+      },
+      "2026-11-21": {
+       "date": "2026-11-21",
+       "min_price": "10",
+       "min_price_type": "percent_base",
+       "max_price": "40",
+       "max_price_type": "percent_base",
+       "lead_time_expiry": 5
+      },
+      "2026-11-22": {
+       "date": "2026-11-22",
+       "min_price": "10",
+       "min_price_type": "percent_base",
+       "min_stay": 3
+      },
+      "2026-11-23": {
+       "date": "2026-11-23",
+       "min_price": "5",
+       "min_price_type": "percent_base",
+       "lead_time_expiry": 2
+      }
+     }
+    },
+    "hoje": "2026-11-13"
+   },
+   "expected": {
+    "items": [
+     {
+      "tipo": "data",
+      "quarto": "Q7",
+      "data": "2026-11-20",
+      "min_price": 1300.0,
+      "motivo": "release",
+      "min_stay": 2,
+      "check_in": "1111101",
+      "check_out": "1111110"
+     },
+     {
+      "tipo": "data",
+      "quarto": "Q7",
+      "data": "2026-11-21",
+      "min_price": 1300.0,
+      "motivo": "release",
+      "min_stay": 2
+     },
+     {
+      "tipo": "data",
+      "quarto": "Q7",
+      "data": "2026-11-22",
+      "min_price": 1300.0,
+      "motivo": "release"
+     },
+     {
+      "tipo": "data",
+      "quarto": "Q7",
+      "data": "2026-11-23",
+      "min_price": 1250.0,
+      "motivo": "floor only"
+     },
+     {
+      "tipo": "data",
+      "quarto": "Q7",
+      "data": "2026-11-24",
+      "min_price": 1250.0,
+      "motivo": "no rule"
+     }
+    ],
+    "delete": [
+     {
+      "tipo": "apagar",
+      "quarto": "Q7",
+      "data": "2026-11-20"
+     },
+     {
+      "tipo": "apagar",
+      "quarto": "Q7",
+      "data": "2026-11-21"
+     }
+    ]
+   }
+  }
+ ]
+}

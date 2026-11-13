@@ -1,0 +1,141 @@
+/* Reports screen (spec 05, 5.15): tables that become cards on a phone, the bar chart, the targets. */
+.ritmo-reports {
+    --ritmo-r-bar: #2271b1;
+    --ritmo-r-text: #1d2327;
+    --ritmo-r-muted: #50575e;
+    --ritmo-r-focus: var(--wp-admin-theme-color, #2271b1);
+    color: var(--ritmo-r-text);
+    max-width: 100%;
+}
+
+.ritmo-reports .ritmo-summary {
+    font-size: 15px;
+    margin: 12px 0 16px;
+}
+
+.ritmo-reports .ritmo-report-table {
+    margin: 0 0 24px;
+}
+
+.ritmo-reports .ritmo-table-scroll {
+    max-width: 100%;
+    overflow-x: auto;
+}
+
+.ritmo-reports .ritmo-table caption {
+    font-weight: 600;
+    padding: 8px 0;
+    text-align: left;
+}
+
+.ritmo-reports .ritmo-table td,
+.ritmo-reports .ritmo-table th[scope="row"] {
+    font-variant-numeric: tabular-nums;
+}
+
+.ritmo-reports .ritmo-download {
+    margin-top: 8px;
+}
+
+.ritmo-reports .ritmo-download .button,
+.ritmo-reports .ritmo-callout .button {
+    height: auto;
+    line-height: 1.4;
+    max-width: 100%;
+    padding-bottom: 4px;
+    padding-top: 4px;
+    text-align: left;
+    white-space: normal;
+}
+
+.ritmo-reports .ritmo-chart {
+    margin: 0 0 16px;
+    max-width: 640px;
+}
+
+.ritmo-reports .ritmo-bars {
+    display: block;
+    height: auto;
+    width: 100%;
+}
+
+.ritmo-reports .ritmo-bars__bar {
+    fill: var(--ritmo-r-bar);
+}
+
+.ritmo-reports .ritmo-bars__label,
+.ritmo-reports .ritmo-bars__value {
+    fill: var(--ritmo-r-text);
+    font-size: 12px;
+}
+
+.ritmo-reports .ritmo-target summary {
+    cursor: pointer;
+    font-weight: 600;
+    padding: 6px 0;
+}
+
+.ritmo-reports .ritmo-target-form {
+    display: grid;
+    gap: 4px 16px;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+}
+
+.ritmo-reports .ritmo-target-form p {
+    margin: 4px 0;
+}
+
+.ritmo-reports .ritmo-target-form input[type="text"] {
+    max-width: 100%;
+    width: 100%;
+}
+
+.ritmo-reports .ritmo-runs > li {
+    border-bottom: 1px solid #c3c4c7;
+    padding: 8px 0;
+}
+
+.ritmo-reports a:focus-visible,
+.ritmo-reports button:focus-visible,
+.ritmo-reports input:focus-visible,
+.ritmo-reports select:focus-visible,
+.ritmo-reports summary:focus-visible {
+    outline: 2px solid var(--ritmo-r-focus);
+    outline-offset: 2px;
+}
+
+@media (max-width: 600px) {
+    .ritmo-reports .ritmo-table thead {
+        display: none;
+    }
+
+    .ritmo-reports .ritmo-table,
+    .ritmo-reports .ritmo-table tbody,
+    .ritmo-reports .ritmo-table tfoot,
+    .ritmo-reports .ritmo-table tr,
+    .ritmo-reports .ritmo-table th,
+    .ritmo-reports .ritmo-table td {
+        display: block;
+        width: 100%;
+    }
+
+    .ritmo-reports .ritmo-table tr {
+        border-bottom: 1px solid #c3c4c7;
+        padding: 6px 0;
+    }
+
+    .ritmo-reports .ritmo-table td::before {
+        color: var(--ritmo-r-muted);
+        content: attr(data-label) ": ";
+    }
+
+    .ritmo-reports .ritmo-table-scroll {
+        overflow-x: visible;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .ritmo-reports * {
+        transition: none !important;
+    }
+}

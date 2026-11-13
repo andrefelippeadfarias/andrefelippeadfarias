@@ -9,7 +9,8 @@ use DateTimeImmutable;
 /**
  * One entry of a request as the approval screen shows it: what is sent, before and after in
  * money (from the plan items of the run that proposed it), the reason and the warnings. Plain
- * values; the screen turns them into words.
+ * values; the screen turns them into words. beforeFromListing: the night had no date rule, so the
+ * amounts before are the listing's minimum and maximum.
  */
 final class EntryRow
 {
@@ -46,6 +47,7 @@ final class EntryRow
         public readonly string $special,
         public readonly array $warnings,
         public readonly bool $held,
+        public readonly bool $beforeFromListing = false,
     ) {
     }
 

@@ -12,12 +12,15 @@ use Ritmo\Application\Approval\ApprovalService;
 use Ritmo\Application\Approval\CapabilityCheck;
 use Ritmo\Application\ConnectorSource;
 use Ritmo\Application\EmergencySwitch;
+use Ritmo\Application\Market\MarketRulerAssembler;
+use Ritmo\Application\Market\MarketSeriesService;
 use Ritmo\Application\Mode\EmergencyControl;
 use Ritmo\Application\Mode\ModePreconditions;
 use Ritmo\Application\Mode\ModeService;
 use Ritmo\Application\Schedule\LightRoundService;
 use Ritmo\Application\Schedule\LockedRunLauncher;
 use Ritmo\Application\Schedule\MovementTracker;
+use Ritmo\Application\Schedule\PauseService;
 use Ritmo\Application\Schedule\RunNowService;
 use Ritmo\Application\Schedule\ScheduleHousekeeping;
 use Ritmo\Application\Schedule\SchedulerTick;
@@ -48,9 +51,12 @@ use Ritmo\Infrastructure\Db\Database;
 use Ritmo\Infrastructure\Db\Repository\AlertRepository;
 use Ritmo\Infrastructure\Db\Repository\BookingRepository;
 use Ritmo\Infrastructure\Db\Repository\ChangeLogRepository;
+use Ritmo\Infrastructure\Db\Repository\CompetitorRepository;
 use Ritmo\Infrastructure\Db\Repository\DetectedFreezeRepository;
 use Ritmo\Infrastructure\Db\Repository\InventorySnapshotRepository;
+use Ritmo\Infrastructure\Db\Repository\LadderReferenceRepository;
 use Ritmo\Infrastructure\Db\Repository\MarketAnchorRepository;
+use Ritmo\Infrastructure\Db\Repository\MarketSeriesRepository;
 use Ritmo\Infrastructure\Db\Repository\NightObservationRepository;
 use Ritmo\Infrastructure\Db\Repository\OperationEventRepository;
 use Ritmo\Infrastructure\Db\Repository\OrderRepository;
@@ -62,6 +68,7 @@ use Ritmo\Infrastructure\Db\Repository\RoomTypeRepository;
 use Ritmo\Infrastructure\Db\Repository\RuleSetRepository;
 use Ritmo\Infrastructure\Db\Repository\RunPayloadRepository;
 use Ritmo\Infrastructure\Db\Repository\RunRepository;
+use Ritmo\Infrastructure\Db\Repository\StaySampleRepository;
 use Ritmo\Infrastructure\Db\Repository\StepLedgerRepository;
 use Ritmo\Infrastructure\Db\Repository\WaveHoldRepository;
 use Ritmo\Infrastructure\Db\Repository\WriteOpRepository;
@@ -179,6 +186,16 @@ final class RunStack
         return $this->once(__FUNCTION__, fn (): OperationEventRepository => new OperationEventRepository($this->db));
     }
 
+    public function pauses(): PauseService
+    {
+        return $this->once(__FUNCTION__, fn (): PauseService => new PauseService($this->properties(), $this->states(), $this->clock, $this->logger, $this->events()));
+    }
+
+    public function preconditions(): ModePreconditions
+    {
+        return $this->once(__FUNCTION__, fn (): ModePreconditions => new ModePreconditions($this->runs(), new AlertLedger($this->db), $this->holds(), $this->switch, $this->store, $this->clock));
+    }
+
     public function holds(): WaveHoldRepository
     {
         return $this->once(__FUNCTION__, fn (): WaveHoldRepository => new WaveHoldRepository($this->db));
@@ -236,8 +253,24 @@ final class RunStack
             new MarketAnchorRepository($this->db, $this->clock),
             new StepLedgerRepository($this->db),
             new OrderRepository($this->db, $this->clock),
+            new MarketRulerAssembler(new MarketSeriesRepository($this->db), new MarketAnchorRepository($this->db, $this->clock), new LadderReferenceRepository($this->db)),
+            $this->marketSeries(),
             new ThirdPartyWatch($this->observations(), $this->freezes(), $this->capabilities, $this->clock, $this->rules()->thirdParty()),
             new WeeklyReference($this->store),
+        ));
+    }
+
+    public function marketSeries(): MarketSeriesService
+    {
+        return $this->once(__FUNCTION__, fn (): MarketSeriesService => new MarketSeriesService(
+            $this->db,
+            $this->clock,
+            $this->properties(),
+            $this->ruleSets(),
+            new CompetitorRepository($this->db, $this->clock),
+            new StaySampleRepository($this->db),
+            new MarketSeriesRepository($this->db),
+            new MarketAnchorRepository($this->db, $this->clock),
         ));
     }
 
@@ -321,7 +354,7 @@ final class RunStack
             $this->alerts(),
             $this->store,
             $this->clock,
-            new ModePreconditions($this->runs(), new AlertLedger($this->db), $this->holds(), $this->switch, $this->store, $this->clock),
+            $this->preconditions(),
         ));
     }
 

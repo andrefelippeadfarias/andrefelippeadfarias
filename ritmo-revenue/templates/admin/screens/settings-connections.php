@@ -60,6 +60,7 @@ defined('ABSPATH') || exit;
                 <form method="post" action="<?php echo esc_url(admin_url('admin-post.php')); ?>" data-ritmo="forget-<?php echo esc_attr($ritmo_id); ?>" autocomplete="off">
                     <?php wp_nonce_field('ritmo_forget_secret'); ?>
                     <input type="hidden" name="action" value="ritmo_forget_secret">
+                    <input type="hidden" name="tab" value="connections">
                     <input type="hidden" name="provider" value="<?php echo esc_attr($ritmo_id); ?>">
                     <p class="ritmo-confirm" data-ritmo-js="confirm-typed">
                         <label for="ritmo-forget-<?php echo esc_attr($ritmo_id); ?>"><?php esc_html_e('To confirm, type the name of the system:', 'ritmo-revenue'); ?> <code><?php echo esc_html($ritmo_p['name']); ?></code></label>

@@ -6,7 +6,7 @@ namespace Ritmo\Tests\Unit\WordPress;
 
 use PHPUnit\Framework\TestCase;
 use ReflectionClass;
-use Ritmo\Admin\AdminActions;
+use Ritmo\Admin\AdminScreens;
 use Ritmo\Tests\Support\Fixtures;
 use Ritmo\Tests\Support\SourceScan;
 use Ritmo\WordPress\Roles;
@@ -51,23 +51,22 @@ final class WordPressLayerRulesTest extends TestCase
         self::assertStringNotContainsString('__return_true', $source . $operations);
     }
 
-    public function testEveryAdminActionChecksItsCapabilityAndNonceBeforeReadingTheForm(): void
+    public function testEveryAdminActionIsUniqueAndChecksAPluginCapability(): void
     {
-        $actions = (new ReflectionClass(AdminActions::class))->getConstant('ACTIONS');
-        self::assertSame(AdminActions::names(), array_keys($actions));
-        foreach ($actions as $action => [$method, $capability]) {
-            self::assertStringStartsWith('ritmo_', $action);
-            self::assertTrue(method_exists(AdminActions::class, $method), $method);
-            self::assertContains($capability, Roles::CAPABILITIES, $action);
+        $actions = AdminScreens::actions();
+        $names = array_map(static fn ($a): string => $a->action, $actions);
+        self::assertSame(array_values(array_unique($names)), $names, 'an action is registered once');
+        foreach ($actions as $action) {
+            self::assertStringStartsWith('ritmo_', $action->action);
+            self::assertContains($action->capability, Roles::CAPABILITIES, $action->action);
         }
-
-        $source = (string) file_get_contents(Fixtures::pluginRoot() . '/src/Admin/AdminActions.php');
-        $handle = substr($source, (int) strpos($source, 'private static function handle('));
-        self::assertLessThan(strpos($handle, '$method()'), strpos($handle, 'check_admin_referer($action)'));
-        self::assertLessThan(strpos($handle, 'check_admin_referer($action)'), strpos($handle, 'current_user_can($capability)'));
         foreach (SourceScan::phpFiles(Fixtures::pluginRoot() . '/templates') as $file) {
             $template = (string) file_get_contents($file);
             self::assertSame(substr_count($template, 'name="action"'), substr_count($template, 'wp_nonce_field('), basename($file) . ': every form carries a nonce');
+            preg_match_all('/name="action" value="(ritmo_[a-z_]+)"/', $template, $posted);
+            foreach ($posted[1] as $name) {
+                self::assertContains($name, $names, basename($file) . ': a form posts to a registered action');
+            }
         }
     }
 

@@ -52,6 +52,10 @@ final class AlertText
             'scheduler_stalled' => __('The scheduler stopped', 'ritmo-revenue'),
             'vigilance_gap' => __('Bookings were not watched for a while', 'ritmo-revenue'),
             'mode_demoted' => __('The mode was lowered after a failure', 'ritmo-revenue'),
+            'market_stale' => __('Market prices are old', 'ritmo-revenue'),
+            'market_gap' => __('Nights without market prices', 'ritmo-revenue'),
+            'delivery_overdue' => __('Prices not confirmed at the channels yet', 'ritmo-revenue'),
+            'review_due' => __('Time for the 12-month review', 'ritmo-revenue'),
             default => __('Alert', 'ritmo-revenue'),
         };
     }
@@ -77,6 +81,10 @@ final class AlertText
             'run_late', 'run_missed', 'scheduler_stalled' => __('The scheduled runs depend on WordPress being visited or on a server cron.', 'ritmo-revenue'),
             'vigilance_gap' => __('For a while no run read the bookings, so changes in that time were checked late.', 'ritmo-revenue'),
             'mode_demoted' => __('After a failed write the property went back to approval mode, so every change waits for a person.', 'ritmo-revenue'),
+            'market_stale' => __('The newest competitor prices for the coming nights are older than the rules allow, so the market rules decide on old data.', 'ritmo-revenue'),
+            'market_gap' => __('A sales ladder strategy is on, but some of the next nights have no competitor price, so it does not change them.', 'ritmo-revenue'),
+            'delivery_overdue' => __('The pricing system took the new prices, but the channels have not shown them yet within the expected time.', 'ritmo-revenue'),
+            'review_due' => __('The rules ask for a look at the next 12 months at a regular interval, and that time has come.', 'ritmo-revenue'),
             default => __('The plugin noticed something that needs a look.', 'ritmo-revenue'),
         };
     }
@@ -99,6 +107,9 @@ final class AlertText
             'approval_pending', 'approval_expired' => __('Review the plan in Approvals.', 'ritmo-revenue'),
             'run_late', 'run_missed', 'scheduler_stalled', 'vigilance_gap' => __('Make sure a server cron calls wp-cron.php every 5 minutes.', 'ritmo-revenue'),
             'mode_demoted' => __('Resolve the failure, then raise the mode again in Operations.', 'ritmo-revenue'),
+            'market_stale', 'market_gap' => __('Import a new file of competitor prices in Market.', 'ritmo-revenue'),
+            'delivery_overdue' => __('Check that the pricing system sends prices to the channels; the alert ends by itself when they arrive.', 'ritmo-revenue'),
+            'review_due' => __('Open the 12-month review in Reports and save it.', 'ritmo-revenue'),
             default => __('Read the facts below and resolve the alert when it is handled.', 'ritmo-revenue'),
         };
     }

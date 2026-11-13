@@ -1,0 +1,12 @@
+{
+ "_doc": "Parity fixture of the written stay section (M4, spec 06 part C): the reference writes the stay restrictions of every night of the year, with no cap in practice. Test data only: never shipped.",
+ "stay": {
+  "write": {
+   "enabled": true,
+   "horizon_days": 366,
+   "max_changes_per_run": 2000,
+   "revert_limit": 2,
+   "raise_own_stays": false
+  }
+ }
+}

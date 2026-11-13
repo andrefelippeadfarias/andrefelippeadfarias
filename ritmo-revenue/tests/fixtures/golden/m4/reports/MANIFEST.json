@@ -1,0 +1,29 @@
+{
+ "generated_for": "2026-11-13",
+ "frozen_now": "2026-11-13T13:00:00+00:00",
+ "engine": ".claude/skills/gestao-receita-pousadas/scripts",
+ "engine_commit": "036acfa9db12515ac92461345c0ae1e10ef369fa",
+ "engine_dirty": false,
+ "python": "3.11.17",
+ "frozen_inputs": [
+  "bookings_420.json",
+  "metas_faturamento.json"
+ ],
+ "tolerance": {
+  "amounts": 0.01,
+  "percentages_and_counts": "exact"
+ },
+ "files": {
+  "ocupacao.calcular.json": 2,
+  "desempenho_mes.linha.json": 40,
+  "desempenho_mes.agrega.json": 4,
+  "desempenho_mes.calcular.json": 4,
+  "revisao_12m.meses.json": 4,
+  "revisao_12m.devida.json": 4,
+  "revisao_12m.rodar.json": 2,
+  "painel_semanal.montar.json": 2,
+  "metas_faturamento.feriados.json": 2,
+  "metas_faturamento.meses.json": 2,
+  "metas_faturamento.por_pousada.json": 2
+ }
+}

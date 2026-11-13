@@ -47,6 +47,16 @@ final class LastPlan
     }
 
     /**
+     * The plan of one run, empty when it planned nothing (a shadow run without market prices).
+     *
+     * @param array<string, mixed> $run a row of RunRepository::latest
+     */
+    public function ofRun(array $run): PlanIndex
+    {
+        return new PlanIndex($this->items->forRun((int) $run['id']), (int) $run['id']);
+    }
+
+    /**
      * @return list<array<string, mixed>>
      */
     public function recentRuns(string $propertyId, int $limit = 20): array

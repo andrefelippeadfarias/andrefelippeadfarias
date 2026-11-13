@@ -1,0 +1,35 @@
+{
+ "_doc": "Parity fixture of the reports section (M4): the reference's occupancy group of the rooms with a bathtub, the review's price rooms, the weekly panel's fixed start and the forecast scenarios of metas_faturamento (INSUMOS and DONO as read on 2026-10-14). Test data only: never shipped.",
+ "reports": {
+  "occupancy": {
+   "map_nights": 14,
+   "groups": [
+    {"label": "Rooms with a bathtub", "tags": ["tub"]}
+   ]
+  },
+  "review": {
+   "interval_days": 15,
+   "ahead_ratio": 1.2,
+   "behind_ratio": 0.8,
+   "early_market_percent": 5,
+   "price_tags": ["tub"]
+  },
+  "weekly": {
+   "start_date": "2026-09-07"
+  },
+  "forecast": {
+   "scenarios": {
+    "floor": {"growth": 1.0, "index": {"recanto": 1.15, "villa": 1.0}},
+    "base": {"growth": 1.05, "index": {"recanto": 1.35, "villa": 1.2}},
+    "goal": {"growth": 1.05, "index": {"recanto": 1.7, "villa": 1.5}}
+   },
+   "realistic_growth": 1.05,
+   "maximum_index": {"recanto": 2.0, "villa": 1.8},
+   "high_months": [12, 1],
+   "season_minimum": {
+    "high": {"recanto": 350000, "villa": 300000},
+    "low": {"recanto": 220000, "villa": 150000}
+   }
+  }
+ }
+}

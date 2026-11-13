@@ -7,6 +7,8 @@ namespace Ritmo\Tests\Unit\Application;
 use DateTimeImmutable;
 use Ritmo\Application\ConnectorSource;
 use Ritmo\Application\EmergencySwitch;
+use Ritmo\Application\Market\MarketRulerAssembler;
+use Ritmo\Application\Market\MarketSeriesService;
 use Ritmo\Application\Run\RunOpener;
 use Ritmo\Application\ShadowRun\CollectStage;
 use Ritmo\Application\ShadowRun\DecideStage;
@@ -35,8 +37,11 @@ use Ritmo\Domain\Support\Days;
 use Ritmo\Infrastructure\Db\PdoDatabase;
 use Ritmo\Infrastructure\Db\Repository\AlertRepository;
 use Ritmo\Infrastructure\Db\Repository\BookingRepository;
+use Ritmo\Infrastructure\Db\Repository\CompetitorRepository;
 use Ritmo\Infrastructure\Db\Repository\InventorySnapshotRepository;
+use Ritmo\Infrastructure\Db\Repository\LadderReferenceRepository;
 use Ritmo\Infrastructure\Db\Repository\MarketAnchorRepository;
+use Ritmo\Infrastructure\Db\Repository\MarketSeriesRepository;
 use Ritmo\Infrastructure\Db\Repository\OrderRepository;
 use Ritmo\Infrastructure\Db\Repository\PlanItemRepository;
 use Ritmo\Infrastructure\Db\Repository\PropertyRepository;
@@ -44,6 +49,7 @@ use Ritmo\Infrastructure\Db\Repository\RoomTypeRepository;
 use Ritmo\Infrastructure\Db\Repository\RuleSetRepository;
 use Ritmo\Infrastructure\Db\Repository\RunPayloadRepository;
 use Ritmo\Infrastructure\Db\Repository\RunRepository;
+use Ritmo\Infrastructure\Db\Repository\StaySampleRepository;
 use Ritmo\Infrastructure\Db\Repository\StepLedgerRepository;
 use Ritmo\Infrastructure\Lock\DbLock;
 use Ritmo\Infrastructure\Log\MemoryLogger;
@@ -213,7 +219,14 @@ final class ShadowRunWorld
         return [
             new CollectStage($connectors ?? new StaticConnectorSource($this->pms, $this->pricing), $this->snapshots, $this->bookings, $this->clock),
             new MeasureStage($this->snapshots, $this->bookings, $this->alerts, $this->clock),
-            new DecideStage(new RunInputsReader($this->snapshots, $this->anchors, new StepLedgerRepository($this->db), new OrderRepository($this->db, $this->clock)), $this->clock, 'beds24'),
+            new DecideStage(new RunInputsReader(
+                $this->snapshots,
+                $this->anchors,
+                new StepLedgerRepository($this->db),
+                new OrderRepository($this->db, $this->clock),
+                new MarketRulerAssembler(new MarketSeriesRepository($this->db), $this->anchors, new LadderReferenceRepository($this->db)),
+                new MarketSeriesService($this->db, $this->clock, new PropertyRepository($this->db, $this->clock), new RuleSetRepository($this->db, $this->clock), new CompetitorRepository($this->db, $this->clock), new StaySampleRepository($this->db), new MarketSeriesRepository($this->db), $this->anchors),
+            ), $this->clock, 'beds24'),
             new ValidateStage(),
             new ShadowStage($this->planItems, new RunPayloadRepository($this->db, $this->clock)),
         ];

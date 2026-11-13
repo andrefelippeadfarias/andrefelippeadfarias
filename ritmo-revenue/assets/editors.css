@@ -102,6 +102,7 @@
     .ritmo-editors table.ritmo-table tr,
     .ritmo-editors table.ritmo-table th,
     .ritmo-editors table.ritmo-table td { display: block; width: 100%; box-sizing: border-box; }
+    .ritmo-editors table.ritmo-table caption { display: block; width: 100%; box-sizing: border-box; text-align: left; padding: 4px 8px; }
     .ritmo-editors table.ritmo-table thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
     .ritmo-editors table.ritmo-table tr { border-bottom: 1px solid var(--ritmo-border); padding: 6px 0; }
     .ritmo-editors table.ritmo-table [data-label]::before { content: attr(data-label); display: block; font-weight: 600; color: var(--ritmo-muted); font-size: 12px; }

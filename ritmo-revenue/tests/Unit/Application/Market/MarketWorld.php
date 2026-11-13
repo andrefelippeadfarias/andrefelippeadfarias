@@ -13,7 +13,6 @@ use Ritmo\Application\Market\MarketSeriesService;
 use Ritmo\Application\Market\PreviewStore;
 use Ritmo\Domain\Config\RuleSet;
 use Ritmo\Domain\Model\Property;
-use Ritmo\Infrastructure\Db\Migration\DraftMarket;
 use Ritmo\Infrastructure\Db\Migration\Migrations;
 use Ritmo\Infrastructure\Db\Migration\Migrator;
 use Ritmo\Infrastructure\Db\PdoDatabase;
@@ -59,7 +58,7 @@ final class MarketWorld
     public function __construct(?RuleSet $rules = null)
     {
         $this->db = PdoDatabase::inMemory();
-        (new Migrator($this->db, new ArrayStore(), [...Migrations::all(), new DraftMarket(count(Migrations::all()) + 1)]))->migrate();
+        (new Migrator($this->db, new ArrayStore(), Migrations::all()))->migrate();
         $this->clock = new MovableClock('2026-11-13T13:00:00Z');
         $properties = new PropertyRepository($this->db, $this->clock);
         $properties->save(new Property(self::PROPERTY, 'Inn One', 'America/Sao_Paulo', 'BRL'));

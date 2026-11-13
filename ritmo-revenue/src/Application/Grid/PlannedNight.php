@@ -8,6 +8,7 @@ namespace Ritmo\Application\Grid;
  * What the last completed run decided for one room night (its plan items for floor, ceiling and
  * minimum stay folded together): the status, the amounts in force and proposed, the percent of
  * the listing base it would send, and the reason. Every field is null for a night it did not price.
+ * nowFromListing: the amounts in force are the listing's minimum and maximum (no date rule).
  */
 final class PlannedNight
 {
@@ -35,7 +36,41 @@ final class PlannedNight
         public readonly array $relationCodes = [],
         public readonly ?string $orderId = null,
         public readonly bool $heldAtFloor = false,
+        public readonly bool $nowFromListing = false,
     ) {
+    }
+
+    /**
+     * A night the run priced without a date rule in force has the listing's own minimum and
+     * maximum as its floor and ceiling (the pricing system applies them when no rule exists): this
+     * fills them in and marks it, so a change reads "listing minimum R$ 380 → R$ 433".
+     */
+    public function withListing(float $min, float $max): self
+    {
+        $floorMissing = $this->floorNow === null && $this->floorProposed !== null && $min > 0;
+        $ceilingMissing = $this->ceilingNow === null && $this->ceilingProposed !== null && $max > 0;
+        if ($this->status === null || (!$floorMissing && !$ceilingMissing)) {
+            return $this;
+        }
+
+        return new self(
+            $this->status,
+            $this->reason,
+            $this->paceStatus,
+            $floorMissing ? $min : $this->floorNow,
+            $this->floorProposed,
+            $this->floorPercent,
+            $ceilingMissing ? $max : $this->ceilingNow,
+            $this->ceilingProposed,
+            $this->ceilingPercent,
+            $this->minStayNow,
+            $this->minStayProposed,
+            $this->issues,
+            $this->relationCodes,
+            $this->orderId,
+            $this->heldAtFloor,
+            true,
+        );
     }
 
     public static function none(): self

@@ -7,8 +7,7 @@ namespace Ritmo\Admin\Components;
 use Ritmo\WordPress\Roles;
 
 /**
- * The plugin's capabilities as the screens use them (admin spec 3.1). MANAGE_SAFETY is new in
- * M4: until the integration adds it to Roles (grants version 2), it is declared here.
+ * The plugin's capabilities as the screens use them (admin spec 3.1), the same as Roles.
  */
 final class Capability
 {
@@ -16,9 +15,9 @@ final class Capability
     public const MANAGE_RULES = Roles::MANAGE_RULES;
     public const APPROVE = Roles::APPROVE;
     public const MANAGE_CONNECTIONS = Roles::MANAGE_CONNECTIONS;
-    public const MANAGE_SAFETY = 'ritmo_manage_safety';
+    public const MANAGE_SAFETY = Roles::MANAGE_SAFETY;
 
-    public const ALL = [self::VIEW, self::MANAGE_RULES, self::APPROVE, self::MANAGE_CONNECTIONS, self::MANAGE_SAFETY];
+    public const ALL = Roles::CAPABILITIES;
 
     private function __construct()
     {

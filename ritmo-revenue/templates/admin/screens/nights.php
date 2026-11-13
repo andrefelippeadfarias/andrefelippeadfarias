@@ -23,7 +23,7 @@ $ritmo_f = $view['filters'];
 $ritmo_detail = $view['detail'];
 $ritmo_grid = $view['grid'];
 ?>
-<details class="ritmo-filters" data-ritmo="grid-filters" open>
+<details class="ritmo-filters" data-ritmo="grid-filters" data-ritmo-js="fold-narrow" open>
     <summary><?php esc_html_e('Filters', 'ritmo-revenue'); ?></summary>
     <form method="get" action="<?php echo esc_url($ritmo_f['action']); ?>">
         <input type="hidden" name="page" value="<?php echo esc_attr($ritmo_f['page']); ?>">
@@ -198,6 +198,7 @@ $ritmo_grid = $view['grid'];
                                     <td class="ritmo-cell ritmo-tone-<?php echo esc_attr($ritmo_cell['tone']); ?>">
                                         <a href="<?php echo esc_url($ritmo_cell['url']); ?>" aria-label="<?php echo esc_attr($ritmo_cell['label']); ?>" data-ritmo="grid-cell"<?php if ($ritmo_cell['would']) : ?> data-would-change="1"<?php endif; ?>>
                                             <span aria-hidden="true"><?php echo esc_html($ritmo_cell['text']); ?><?php echo esc_html($ritmo_cell['arrow']); ?></span>
+                                            <?php if ($ritmo_cell['mark'] !== '') : ?><span class="ritmo-pace-mark" aria-hidden="true"><?php echo esc_html($ritmo_cell['mark']); ?></span><?php endif; ?>
                                             <?php if ($ritmo_cell['frozen']) : ?><span class="dashicons dashicons-lock" aria-hidden="true"></span><?php endif; ?>
                                             <?php if ($ritmo_cell['order']) : ?><span class="dashicons dashicons-flag" aria-hidden="true"></span><?php endif; ?>
                                             <?php if ($ritmo_cell['alert']) : ?><span class="dashicons dashicons-warning" aria-hidden="true"></span><?php endif; ?>
@@ -216,10 +217,10 @@ $ritmo_grid = $view['grid'];
             <li><span class="dashicons dashicons-lock" aria-hidden="true"></span> <?php esc_html_e('frozen: someone else changed the night', 'ritmo-revenue'); ?></li>
             <li><span class="dashicons dashicons-flag" aria-hidden="true"></span> <?php esc_html_e('an owner order covers the night', 'ritmo-revenue'); ?></li>
             <li><span class="dashicons dashicons-warning" aria-hidden="true"></span> <?php esc_html_e('an active alert', 'ritmo-revenue'); ?></li>
-            <li><span class="ritmo-swatch ritmo-tone-good" aria-hidden="true"></span> <?php esc_html_e('ahead of pace', 'ritmo-revenue'); ?></li>
-            <li><span class="ritmo-swatch ritmo-tone-info" aria-hidden="true"></span> <?php esc_html_e('on pace', 'ritmo-revenue'); ?></li>
-            <li><span class="ritmo-swatch ritmo-tone-attention" aria-hidden="true"></span> <?php esc_html_e('behind pace or at the floor', 'ritmo-revenue'); ?></li>
-            <li><span class="ritmo-swatch ritmo-tone-critical" aria-hidden="true"></span> <?php esc_html_e('far behind pace', 'ritmo-revenue'); ?></li>
+            <li><span class="ritmo-swatch ritmo-tone-good" aria-hidden="true"></span> <span aria-hidden="true">▲</span> <?php esc_html_e('ahead of pace', 'ritmo-revenue'); ?></li>
+            <li><span class="ritmo-swatch ritmo-tone-info" aria-hidden="true"></span> <span aria-hidden="true">●</span> <?php esc_html_e('on pace', 'ritmo-revenue'); ?></li>
+            <li><span class="ritmo-swatch ritmo-tone-attention" aria-hidden="true"></span> <span aria-hidden="true">▼ ■</span> <?php esc_html_e('behind pace or at the floor', 'ritmo-revenue'); ?></li>
+            <li><span class="ritmo-swatch ritmo-tone-critical" aria-hidden="true"></span> <span aria-hidden="true">▼▼</span> <?php esc_html_e('far behind pace', 'ritmo-revenue'); ?></li>
             <li><span class="ritmo-swatch ritmo-tone-neutral" aria-hidden="true"></span> <?php esc_html_e('sold out or closed', 'ritmo-revenue'); ?></li>
         </ul>
     <?php endif; ?>

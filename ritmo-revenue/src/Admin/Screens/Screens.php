@@ -14,7 +14,7 @@ use Throwable;
 /**
  * The registry of the central screens (admin spec 4.1): their renderers by menu slug, the menu
  * counters, their form actions and their assets. The integration hands these to the menu and to
- * admin-post.php; nothing here edits the shared AdminPages, AdminActions or RestRoutes.
+ * admin-post.php (Admin\AdminScreens gathers every area).
  */
 final class Screens
 {

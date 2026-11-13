@@ -9,6 +9,7 @@ use InvalidArgumentException;
 use OutOfBoundsException;
 use PHPUnit\Framework\TestCase;
 use Ritmo\Application\Schedule\PauseService;
+use Ritmo\Infrastructure\Db\Repository\OperationEventRepository;
 use Ritmo\Application\Schedule\StallMonitor;
 use Ritmo\Infrastructure\Db\Repository\PropertyRepository;
 
@@ -16,7 +17,7 @@ final class PauseAndStallTest extends TestCase
 {
     private static function pauses(ScheduleWorld $world): PauseService
     {
-        return new PauseService(new PropertyRepository($world->db, $world->clock), $world->states, $world->clock, $world->logger);
+        return new PauseService(new PropertyRepository($world->db, $world->clock), $world->states, $world->clock, $world->logger, new OperationEventRepository($world->db));
     }
 
     public function testAPauseIsRecordedWithItsAuthorAndACleanReason(): void

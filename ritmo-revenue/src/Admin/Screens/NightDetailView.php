@@ -76,9 +76,9 @@ final class NightDetailView
             'prices' => [
                 ['label' => __('Price now (pricing system)', 'ritmo-revenue'), 'price' => PriceText::amount($cell->priceNow, $currency)],
                 ['label' => __('Price the PMS shows', 'ritmo-revenue'), 'price' => PriceText::amount($cell->pmsPrice, $currency)],
-                ['label' => __('Floor in force', 'ritmo-revenue'), 'price' => PriceText::amount($planned->floorNow, $currency)],
+                ['label' => __('Floor in force', 'ritmo-revenue'), 'price' => self::inForce($planned->floorNow, $planned->nowFromListing, $currency)],
                 ['label' => __('Floor proposed by the last run', 'ritmo-revenue'), 'price' => NightText::bound($planned->floorProposed, $planned->floorPercent, $base, $currency)],
-                ['label' => __('Ceiling in force', 'ritmo-revenue'), 'price' => PriceText::amount($planned->ceilingNow, $currency)],
+                ['label' => __('Ceiling in force', 'ritmo-revenue'), 'price' => self::inForce($planned->ceilingNow, $planned->nowFromListing, $currency)],
                 ['label' => __('Ceiling proposed by the last run', 'ritmo-revenue'), 'price' => NightText::bound($planned->ceilingProposed, $planned->ceilingPercent, $base, $currency)],
                 ['label' => __('Listing minimum', 'ritmo-revenue'), 'price' => PriceText::amount($detail->room->min, $currency)],
                 ['label' => __('Listing base', 'ritmo-revenue'), 'price' => PriceText::amount($base, $currency)],
@@ -167,6 +167,20 @@ final class NightDetailView
             : sprintf('%s → %s', self::plain($change->oldValue), self::plain($change->newValue));
 
         return sprintf('%s: %s (%s)', ucfirst($what), $values, $by);
+    }
+
+    /**
+     * @return array{text: string, note: string, sr: string}
+     */
+    private static function inForce(?float $amount, bool $fromListing, string $currency): array
+    {
+        $price = PriceText::amount($amount, $currency);
+        if (!$fromListing || $amount === null) {
+            return $price;
+        }
+        $note = __('from the listing: no date rule for this night', 'ritmo-revenue');
+
+        return ['text' => $price['text'], 'note' => $note, 'sr' => $price['sr'] . ' (' . $note . ')'];
     }
 
     private static function plain(int|float|string|null $value): string

@@ -96,6 +96,7 @@
 .ritmo-nightgrid thead .ritmo-sticky { z-index: 4; background: #f6f7f7; }
 .ritmo-nightgrid .ritmo-weekday, .ritmo-nightgrid .ritmo-holiday-name { display: block; font-weight: 400; }
 .ritmo-nightgrid .ritmo-holiday { background: var(--ritmo-attention-bg); color: var(--ritmo-attention-fg); }
+.ritmo-nightgrid .ritmo-pace-mark { display: block; font-size: 10px; line-height: 1; }
 .ritmo-nightgrid td a { display: block; padding: 6px 4px; min-height: 28px; color: inherit; text-decoration: none; }
 .ritmo-nightgrid td a:hover { text-decoration: underline; }
 .ritmo-nightgrid .dashicons { font-size: 14px; width: 14px; height: 14px; }
@@ -115,11 +116,11 @@
 .ritmo-listing-row { margin: 8px 0; }
 
 /* Wizard */
-.ritmo-wizard { display: grid; grid-template-columns: 240px minmax(0, 1fr); gap: 16px; }
+.ritmo-wizard { display: grid; grid-template-columns: minmax(0, 1fr); gap: 16px; }
 .ritmo-steps { margin: 0 0 0 20px; }
 .ritmo-steps li { margin: 6px 0; }
 .ritmo-steps [aria-current="step"] a { font-weight: 700; }
-.ritmo-done { color: var(--ritmo-good-fg); margin-left: 4px; }
+.ritmo-done { color: var(--ritmo-good-fg); margin-left: 4px; white-space: nowrap; }
 .ritmo-room-cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 12px; }
 .ritmo-room-card { border: 1px solid #c3c4c7; padding: 8px 12px; min-width: 0; }
 .ritmo-room-card input { width: 100%; }
@@ -136,9 +137,10 @@
 
 @media (max-width: 782px) {
     .ritmo-cards { grid-template-columns: minmax(0, 1fr); }
-    .ritmo-wizard { grid-template-columns: minmax(0, 1fr); }
-    .ritmo .button, .ritmo input[type="checkbox"] { min-height: 40px; }
-    .ritmo input[type="checkbox"] { min-width: 24px; }
+    .ritmo .button { min-height: 40px; }
+    .ritmo input[type="checkbox"] { width: 24px; height: 24px; }
+    .ritmo input[type="checkbox"]:not(label > input) { width: 40px; height: 40px; }
+    .ritmo label:has(> input[type="checkbox"]), .ritmo label:has(> input[type="radio"]) { display: inline-flex; align-items: center; gap: 6px; min-height: 40px; }
     .ritmo-filters form { display: block; }
 }
 
@@ -152,3 +154,9 @@
     .ritmo-nights { margin-left: 0; }
     .ritmo-facts { grid-template-columns: minmax(0, 1fr); }
 }
+
+/* Operations: the checklist of the next mode. */
+.ritmo-checklist { list-style: none; margin: 8px 0 12px; padding: 0; }
+.ritmo-checklist li { display: flex; gap: 6px; align-items: flex-start; margin: 4px 0; }
+.ritmo-met .dashicons { color: #007017; }
+.ritmo-unmet .dashicons { color: #8a4600; }

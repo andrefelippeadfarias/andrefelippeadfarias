@@ -235,6 +235,13 @@
             "batch": {
                 "urgent_days": 14,
                 "max_ranges": 100
+            },
+            "write": {
+                "enabled": false,
+                "horizon_days": 60,
+                "max_changes_per_run": 300,
+                "revert_limit": 2,
+                "raise_own_stays": false
             }
         },
         "plan": {
@@ -347,6 +354,124 @@
             },
             "inventory_max_nights_listed": 50,
             "connector_down_escalate_runs": 3
+        },
+        "market": {
+            "series": [
+                {
+                    "name": "cheapest",
+                    "basis": "cheapest",
+                    "tags": []
+                },
+                {
+                    "name": "comparable",
+                    "basis": "comparable",
+                    "tags": []
+                },
+                {
+                    "name": "peers_cheapest",
+                    "basis": "cheapest",
+                    "tags": [
+                        "peer"
+                    ]
+                },
+                {
+                    "name": "peers_comparable",
+                    "basis": "comparable",
+                    "tags": [
+                        "peer"
+                    ]
+                }
+            ],
+            "percentiles": [
+                10,
+                25,
+                40,
+                50,
+                65,
+                75,
+                90
+            ],
+            "min_competitors_per_stay": 10,
+            "night_min_competitors": 20,
+            "neighbour_days": 3,
+            "max_sample_age_days": 30,
+            "retention_days": 400,
+            "comparable": {
+                "default_factor": 1,
+                "estimated_factor_cap": 2
+            },
+            "small_sample": {
+                "stays": 4,
+                "competitors": 40
+            },
+            "stale_after_days": 7,
+            "reminder_horizon_days": 60,
+            "csv": {
+                "max_bytes": 2097152,
+                "max_rows": 20000,
+                "max_stay_nights": 7
+            },
+            "bands": [
+                {
+                    "label": "Fill",
+                    "percentile": 25
+                },
+                {
+                    "label": "Market",
+                    "percentile": 50
+                },
+                {
+                    "label": "Above market",
+                    "percentile": 65
+                },
+                {
+                    "label": "Premium",
+                    "percentile": 75
+                },
+                {
+                    "label": "Top",
+                    "percentile": 90
+                }
+            ]
+        },
+        "reports": {
+            "occupancy": {
+                "map_nights": 14,
+                "groups": []
+            },
+            "review": {
+                "interval_days": 15,
+                "ahead_ratio": 1.2,
+                "behind_ratio": 0.8,
+                "early_market_percent": 5,
+                "price_tags": []
+            },
+            "weekly": {
+                "start_date": null
+            },
+            "forecast": {
+                "scenarios": {
+                    "floor": {
+                        "growth": 1,
+                        "index": []
+                    },
+                    "base": {
+                        "growth": 1,
+                        "index": []
+                    },
+                    "goal": {
+                        "growth": 1,
+                        "index": []
+                    }
+                },
+                "realistic_growth": 1,
+                "maximum_index": [],
+                "high_months": [],
+                "season_minimum": {
+                    "high": [],
+                    "low": []
+                }
+            }
         }
     }
 }

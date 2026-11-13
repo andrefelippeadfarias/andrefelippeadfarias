@@ -17,6 +17,9 @@ $ritmo_c = $view['c'];
     <p data-ritmo="empty"><?php esc_html_e('Create the property first (step 4).', 'ritmo-revenue'); ?></p>
 <?php elseif ($view['can']) : ?>
 <p class="description"><?php esc_html_e('One row per room. The listing minimum, base and maximum are the values of the listing in the pricing system. The reference minimum starts at the listing minimum; change it in step 7.', 'ritmo-revenue'); ?></p>
+<?php if ($ritmo_c['suggested']) : ?>
+    <p class="notice notice-info inline" data-ritmo="rooms-suggested"><?php esc_html_e('The rows below come from the listings of the pricing system. Check the room id in the PMS and the number of units of each room: they are only suggestions.', 'ritmo-revenue'); ?></p>
+<?php endif; ?>
 <form method="post" action="<?php echo esc_url(admin_url('admin-post.php')); ?>" class="ritmo-form">
     <?php wp_nonce_field('ritmo_wizard_save_rooms'); ?>
     <input type="hidden" name="action" value="ritmo_wizard_save_rooms">

@@ -7,7 +7,7 @@ namespace Ritmo\Tests\Unit\Admin\Screens;
 require_once __DIR__ . '/WpStubs.php';
 
 use PHPUnit\Framework\TestCase;
-use Ritmo\Admin\AdminActions;
+use Ritmo\Admin\AdminScreens;
 use Ritmo\Admin\Components\Capability;
 use Ritmo\Admin\Components\Menu;
 use Ritmo\Admin\Screens\Screens;
@@ -41,7 +41,6 @@ final class SourceRulesTest extends TestCase
         $actions = Screens::actions();
         $names = array_map(static fn ($a): string => $a->action, $actions);
         self::assertSame(array_values(array_unique($names)), $names, 'an action is registered once');
-        self::assertSame([], array_intersect($names, AdminActions::names()), 'a new action never takes the name of an old one');
 
         $capabilities = [...Roles::CAPABILITIES, Capability::MANAGE_SAFETY];
         $pages = array_column(Menu::entries(), 'slug');
@@ -81,7 +80,7 @@ final class SourceRulesTest extends TestCase
 
     public function testEveryFormOfTheScreensCarriesTheNonceOfAKnownAction(): void
     {
-        $known = [...array_map(static fn ($a): string => $a->action, Screens::actions()), ...AdminActions::names()];
+        $known = array_map(static fn ($a): string => $a->action, AdminScreens::actions());
         $templates = SourceScan::phpFiles(Fixtures::pluginRoot() . '/templates/admin/screens');
         self::assertGreaterThan(20, count($templates));
         $seen = 0;

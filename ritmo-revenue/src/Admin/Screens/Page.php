@@ -117,35 +117,49 @@ final class Page
      */
     private function header(): array
     {
+        return self::headerOf($this->slug, $this->title, $this->properties, $this->property, $this->tabs, $this->tab);
+    }
+
+    /**
+     * The header of any screen of the plugin (also the editors' frame): title, property picker,
+     * status strip, emergency banner and the tabs the user may use.
+     *
+     * @param list<Property> $properties
+     * @param list<Tab>      $tabs
+     *
+     * @return array<string, mixed>
+     */
+    public static function headerOf(string $slug, string $title, array $properties, ?Property $property, array $tabs, string $tab): array
+    {
         $strip = null;
         $error = null;
-        if ($this->property !== null) {
+        if ($property !== null) {
             try {
-                $strip = ScreenServices::instance()->status()->forProperty($this->property->id);
+                $strip = ScreenServices::instance()->status()->forProperty($property->id);
             } catch (Throwable $failure) {
                 $error = $failure;
             }
         }
 
         return [
-            'h1' => sprintf('%s — %s', __('Ritmo Revenue', 'ritmo-revenue'), $this->title),
-            'picker' => count($this->properties) > 1 ? array_map(static fn (Property $p): array => ['id' => $p->id, 'name' => $p->name], $this->properties) : [],
-            'selected' => $this->property?->id ?? '',
-            'strip' => $strip === null ? [] : $this->strip($strip),
+            /* translators: %s: name of the screen */
+            'h1' => sprintf(__('Ritmo Revenue — %s', 'ritmo-revenue'), $title),
+            'picker' => count($properties) > 1 ? array_map(static fn (Property $p): array => ['id' => $p->id, 'name' => $p->name], $properties) : [],
+            'selected' => $property?->id ?? '',
+            'strip' => $strip === null ? [] : self::strip($strip, $property?->timezone ?? 'UTC'),
             'emergency' => $strip?->emergency ?? ScreenServices::instance()->services()->emergencySwitch()->isEngaged(),
             'can_release' => Capability::can(Capability::MANAGE_CONNECTIONS) || Capability::can(Capability::APPROVE),
             'strip_failed' => $error !== null,
-            'tabs' => array_map(fn (Tab $t): array => ['id' => $t->id, 'title' => $t->title, 'url' => Menu::url($this->slug, array_filter(['tab' => $t->id, 'property' => $this->property?->id ?? ''])), 'current' => $t->id === $this->tab], $this->tabs),
-            'operations_url' => Menu::url(Menu::OPERATIONS, ['property' => $this->property?->id ?? '']),
+            'tabs' => array_map(static fn (Tab $t): array => ['id' => $t->id, 'title' => $t->title, 'url' => Menu::url($slug, array_filter(['tab' => $t->id, 'property' => $property?->id ?? ''])), 'current' => $t->id === $tab], $tabs),
+            'operations_url' => Menu::url(Menu::OPERATIONS, ['property' => $property?->id ?? '']),
         ];
     }
 
     /**
      * @return list<array{text: string, url: string, tone: string, icon: string, hook: string}>
      */
-    private function strip(StatusStrip $strip): array
+    private static function strip(StatusStrip $strip, string $timezone): array
     {
-        $timezone = $this->property?->timezone ?? 'UTC';
         $items = [[
             /* translators: %s: Shadow, Approval or Autonomous */
             'text' => sprintf(__('Mode: %s', 'ritmo-revenue'), Labels::mode($strip->mode)),

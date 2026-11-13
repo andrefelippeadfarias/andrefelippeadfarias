@@ -93,6 +93,7 @@ final class RowBuilder
             EntryWarnings::special($night, $this->today, $holiday),
             EntryWarnings::of($night, $this->today, $holiday, $inGroup, $held, $entry->orderId, $linked),
             $held,
+            $planned->nowFromListing,
         );
     }
 

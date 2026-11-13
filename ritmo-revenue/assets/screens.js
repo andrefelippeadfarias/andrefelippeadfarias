@@ -179,6 +179,13 @@
         window.setTimeout(tick, Number(poller.getAttribute('data-interval') || 5) * 1000);
     }
 
+    /* On a phone the filters start folded, so the grid is the first thing seen. */
+    if (window.matchMedia && window.matchMedia('(max-width: 600px)').matches) {
+        each('details[data-ritmo-js="fold-narrow"]', function (details) {
+            details.open = false;
+        });
+    }
+
     /* The property id is suggested from its name (lowercase ASCII and hyphens) until it is edited. */
     each('[data-ritmo-js="slug-from"]', function (input) {
         var source = document.getElementById(input.getAttribute('data-source'));
@@ -191,5 +198,55 @@
                 }
             });
         }
+    });
+
+    /* The shadow run button: runs through the REST API and reloads when it ends (the form posts without JS). */
+    var SHADOW_MAX_CALLS = 30;
+
+    function shadowState(form, state, text) {
+        form.setAttribute('data-ritmo-state', state);
+        var progress = form.querySelector('[data-ritmo="progress"]');
+        if (progress) {
+            progress.textContent = text || '';
+        }
+    }
+
+    function shadowCall(button, form, calls) {
+        return fetch(button.getAttribute('data-rest-url'), {
+            method: 'POST',
+            credentials: 'same-origin',
+            headers: { 'X-WP-Nonce': button.getAttribute('data-rest-nonce'), 'Accept': 'application/json' }
+        }).then(function (response) {
+            return response.json().then(function (body) {
+                body = body || {};
+                if (response.ok && body.status === 'running' && calls < SHADOW_MAX_CALLS) {
+                    shadowState(form, 'running', button.getAttribute('data-text-running'));
+                    return shadowCall(button, form, calls + 1);
+                }
+                if (response.ok && body.status === 'completed') {
+                    shadowState(form, 'done', '');
+                    window.location.reload();
+                    return null;
+                }
+                shadowState(form, 'error', button.getAttribute('data-text-failed') + ' ' + (body.message || ''));
+                button.disabled = false;
+                return null;
+            });
+        });
+    }
+
+    document.addEventListener('click', function (event) {
+        var button = event.target.closest('[data-ritmo="run-shadow"]');
+        if (!button || !window.fetch || !button.getAttribute('data-rest-url')) {
+            return;
+        }
+        event.preventDefault();
+        var form = button.closest('form');
+        button.disabled = true;
+        shadowState(form, 'running', button.getAttribute('data-text-running'));
+        shadowCall(button, form, 1).catch(function () {
+            shadowState(form, 'error', button.getAttribute('data-text-failed'));
+            button.disabled = false;
+        });
     });
 }());

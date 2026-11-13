@@ -180,6 +180,7 @@ final class RunWorld
     private function seed(PropertyMode $mode): void
     {
         $this->testConnections();
+        $this->store->set(ModePreconditions::SETUP_KEY, ['safety_confirmed_at' => $this->clock->now()->format(DATE_ATOM), 'safety_confirmed_by' => 1]);
         $this->stack->properties()->save(new Property(self::PROPERTY, 'Example Inn', 'UTC', 'BRL'));
         foreach (SimWorld::rooms() as $room) {
             $this->stack->roomTypes()->save($room);

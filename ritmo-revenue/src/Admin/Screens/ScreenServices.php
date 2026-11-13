@@ -11,6 +11,7 @@ use Ritmo\Application\Dashboard\Connections\ConnectionTests;
 use Ritmo\Application\Dashboard\Overview\OverviewQuery;
 use Ritmo\Application\Dashboard\Setup\SetupState;
 use Ritmo\Application\Dashboard\Setup\SetupWizard;
+use Ritmo\Application\Dashboard\Setup\ListingSuggestions;
 use Ritmo\Application\Dashboard\Setup\WouldDo;
 use Ritmo\Application\Dashboard\StatusQuery;
 use Ritmo\Application\Dashboard\Todo\TodoGenerator;
@@ -180,6 +181,11 @@ final class ScreenServices
             new WpCapabilityCheck(),
             $this->services->clock(),
         ));
+    }
+
+    public function listingSuggestions(): ListingSuggestions
+    {
+        return $this->once('listing_suggestions', fn (): ListingSuggestions => new ListingSuggestions($this->services->store()));
     }
 
     public function wouldDo(): WouldDo

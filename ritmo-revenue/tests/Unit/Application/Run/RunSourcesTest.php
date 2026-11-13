@@ -6,16 +6,22 @@ namespace Ritmo\Tests\Unit\Application\Run;
 
 use DateTimeImmutable;
 use PHPUnit\Framework\TestCase;
+use Ritmo\Application\Market\MarketRulerAssembler;
 use Ritmo\Application\Run\WeeklyReference;
 use Ritmo\Domain\Config\RuleSet;
 use Ritmo\Domain\Market\AnchorRuler;
 use Ritmo\Domain\Model\AnchorOrigin;
 use Ritmo\Domain\Model\MarketAnchor;
+use Ritmo\Domain\Model\Property;
 use Ritmo\Domain\Support\Days;
+use Ritmo\Domain\Support\FixedClock;
 use Ritmo\Infrastructure\Db\Migration\Migrations;
 use Ritmo\Infrastructure\Db\Migration\Migrator;
 use Ritmo\Infrastructure\Db\PdoDatabase;
 use Ritmo\Infrastructure\Db\Repository\ChangeLogRepository;
+use Ritmo\Infrastructure\Db\Repository\LadderReferenceRepository;
+use Ritmo\Infrastructure\Db\Repository\MarketAnchorRepository;
+use Ritmo\Infrastructure\Db\Repository\MarketSeriesRepository;
 use Ritmo\Infrastructure\Db\Repository\OperationEventRepository;
 use Ritmo\Infrastructure\Store\ArrayStore;
 
@@ -25,14 +31,17 @@ use Ritmo\Infrastructure\Store\ArrayStore;
  */
 final class RunSourcesTest extends TestCase
 {
-    public function testTheMarketRulerOfARunIsTheAnchorsAsOneSeries(): void
+    public function testTheAnchorsOfARunAreTheSeriesMarketOfItsRuler(): void
     {
-        $anchors = [
-            '2027-03-05' => new MarketAnchor(Days::date('2027-03-05'), 400.0, 500.0, 600.0, 700.0, 900.0, 8, null, AnchorOrigin::Measured),
-            '2027-03-06' => new MarketAnchor(Days::date('2027-03-06'), 0.0, 0.0, 0.0, 0.0, 0.0, 0, null, AnchorOrigin::Measured),
-        ];
+        $db = PdoDatabase::inMemory();
+        (new Migrator($db, new ArrayStore(), Migrations::all()))->migrate();
+        $clock = new FixedClock(new DateTimeImmutable('2027-03-01T10:00:00Z'));
+        $anchors = new MarketAnchorRepository($db, $clock);
+        $anchors->save('inn', new MarketAnchor(Days::date('2027-03-05'), 400.0, 500.0, 600.0, 700.0, 900.0, 8, null, AnchorOrigin::Measured));
+        $anchors->save('inn', new MarketAnchor(Days::date('2027-03-06'), 0.0, 0.0, 0.0, 0.0, 0.0, 0, null, AnchorOrigin::Measured));
+        $assembler = new MarketRulerAssembler(new MarketSeriesRepository($db), $anchors, new LadderReferenceRepository($db));
 
-        $ruler = AnchorRuler::of($anchors, RuleSet::defaults());
+        $ruler = $assembler->of(new Property('inn', 'Inn', 'UTC', 'BRL'), RuleSet::defaults(), Days::date('2027-03-04'), Days::date('2027-03-07'));
 
         $night = $ruler->night(Days::date('2027-03-05'));
         self::assertNotNull($night);

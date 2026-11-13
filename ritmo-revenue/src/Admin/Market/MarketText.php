@@ -7,9 +7,11 @@ namespace Ritmo\Admin\Market;
 use DateTimeImmutable;
 use DateTimeZone;
 use Ritmo\Application\Market\MarketRefused;
+use Ritmo\Domain\Market\AnchorRuler;
 use Ritmo\Domain\Market\Csv\MarketCsvProblem;
 use Ritmo\Domain\Market\Series\ComparableFactor;
 use Ritmo\Domain\Market\Series\NightValue;
+use Ritmo\Domain\Pricing\Ladder\RulerPoint;
 
 /**
  * The words of the market screen: every problem of a price file as a plain sentence ("Line 7,
@@ -43,7 +45,7 @@ final class MarketText
     public static function what(string $code): string
     {
         return match ($code) {
-            MarketCsvProblem::MISSING_COLUMN => __('this required column is missing; nothing was imported.', 'ritmo-revenue'),
+            MarketCsvProblem::MISSING_COLUMN => __('this required column is missing.', 'ritmo-revenue'),
             MarketCsvProblem::NOT_UTF8 => __('the file is not text the plugin can read. Save it as UTF-8 and try again.', 'ritmo-revenue'),
             MarketCsvProblem::TOO_MANY_ROWS => __('the file has more rows than allowed. Split it into smaller files.', 'ritmo-revenue'),
             MarketCsvProblem::TOO_MANY_COLUMNS => __('the file has more than 50 columns.', 'ritmo-revenue'),
@@ -101,6 +103,31 @@ final class MarketText
             MarketRefused::BAD_PRICE => sprintf(__('The price was not recorded: %s', 'ritmo-revenue'), self::what((string) ($refused->params['code'] ?? ''))),
             default => __('Something went wrong. Nothing was changed.', 'ritmo-revenue'),
         };
+    }
+
+    /**
+     * The name of a price series as the screen shows it.
+     */
+    public static function series(string $name): string
+    {
+        return match ($name) {
+            'cheapest' => __('Cheapest rooms', 'ritmo-revenue'),
+            'comparable' => __('Comparable rooms', 'ritmo-revenue'),
+            'peers_cheapest' => __('Closest competitors, cheapest rooms', 'ritmo-revenue'),
+            'peers_comparable' => __('Closest competitors, comparable rooms', 'ritmo-revenue'),
+            AnchorRuler::SERIES => __('Market anchor', 'ritmo-revenue'),
+            /* translators: %s: name of a price series the site configured */
+            default => sprintf(__('Series %s', 'ritmo-revenue'), $name),
+        };
+    }
+
+    /**
+     * A point of the market a sales ladder rule reads: "Comparable rooms, percentile 50".
+     */
+    public static function point(RulerPoint $point): string
+    {
+        /* translators: 1: name of a price series, 2: a percentile such as 50 */
+        return sprintf(__('%1$s, percentile %2$s', 'ritmo-revenue'), self::series($point->series), self::number($point->percentile));
     }
 
     public static function origin(NightValue $value): string

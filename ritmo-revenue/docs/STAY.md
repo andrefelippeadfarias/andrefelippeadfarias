@@ -157,3 +157,64 @@ closed day (the engine answers for any night); free-text reasons become reason c
 (`semana_estadia_acima`, only for nights before the arrival rule starts), the old Saturday swap table (`troca_sabado`, unused when
 the Saturday closure is set), `dso_flag` and `preco_antes` (report fields), floors of `comparar` (pricing engine) and
 the stay checks of `validar_plano.Validador` (validator).
+
+## 7. Writes (M4: `Domain\Stay\Write`, `Application\Write\Calendar`)
+
+The stay rules write for real when `stay.write.enabled` is on (neutral **off**: the audit only raises alerts, as in M3;
+parity on). Nothing here relaxes a lock of M3: the PMS only ever gets `minStay`, `maxStay` (1-30, min <= max),
+`override` (`none`, `noCheckIn`, `noCheckOut`, `noCheckInOrCheckOut`) and, from an owner order or an undo only,
+availability and channel limits; never a price, never a booking route, never a blackout.
+
+**Planning** (`StayWritePlanner::plan(StayWriteInputs)`, spec 06 3.4): the inventory audit of this run over today ..
+today + `stay.write.horizon_days` (a light run: the orphan window) gives the single batch (`StayBatch::single`, full,
+in its write order); each PMS change becomes a `PmsChangeEntry` (room, night, PMS fields to set and read, reason,
+`alsoPricing`, proof), none on a frozen night (`frozenOut`, reported as "would fix"). The pricing stay plan
+(`PricingStayPlan`, stay-only unless `stay.write.raise_own_stays`) becomes plan items (`StayItemFactory`, reason code
+`STAY_<reason>`, orphan claim with its proof), merged into the price items one per room night (`StayItemMerger`: a
+field the price item leaves is taken; the same field with another value takes the stay item's, reported as
+`stay_merge_conflict`). Every change whose field the pricing system pushes is then paired (`StayPairing`): an item of
+the same room night setting the same value; else the pricing calendar of this run already holding it
+(`pricingHolds`, through `PushedPmsValues`); else a pricing item made from the change (`STAY_PMS_PAIR`, folded into the
+night's item); a night beyond the pricing write horizon stays unpaired.
+
+**Check** (`PmsChangeCheck`, called beside the validator; an error refuses that change only):
+
+| Code | Refuses |
+|---|---|
+| `pms_room_unknown` | a room not mapped to the PMS |
+| `pms_field_forbidden` | availability or channel limits without an owner order that allows them or an undo |
+| `pms_stay_range` | a minimum outside 1 .. `plan.validator.max_min_stay`, a maximum above 30, min > max (with the value read) |
+| `pms_blackout` | setting or clearing a blackout |
+| `pms_past_night` | a night before the property's today (clock read now) |
+| `pms_frozen` | a night frozen by a third-party change or a manual freeze |
+| `pms_orphan_proof` | an orphan change without a PMS proof of this run, older than `plan.validator.calendar_max_age_hours`, or that no longer holds on this run's inventory |
+| `pms_rule_mismatch` | a value the stay rules of this run do not ask for (undo and owner orders exempt) |
+| `pms_unpaired` | a pushed field whose pricing item was not accepted, unless the pricing calendar holds it |
+| `pms_duplicate` | a second change of the same room, night and field |
+| `pms_too_many` | every change, when the run has more than `stay.write.max_changes_per_run` (alert `pms_changes_capped`) |
+| `pms_reverted_by_push` | a value the push put back `stay.write.revert_limit` times (`RevertLedger`; alert `stay_reverted_by_push`) |
+
+**To the gate** (`StayWriteRound::batch` -> `PmsWriteBatch`): the accepted entries become `CalendarChange`s
+(`PmsCalendarChanges`), one night each, with the minimum stay read as the guard and `alsoPricing` set only when a pricing
+step of this run must go first (a held change goes alone). The M3 order, guard (`pricing_first`, `already_at_target`,
+`changed_since_read`), read-back and first-error stop apply unchanged; the simulator tests
+(`tests/Integration/Write/Calendar`) assert the pricing step first, the PMS body keys within the allow-list on the
+calendar route only, a refused pricing step stopping the PMS block, the emergency switch, and shadow sending nothing.
+
+**Undo** (`UndoPmsEntries`): the `PmsRestore`s of an undo become entries with reason `undo`, the fields read now as
+"before", and the pricing undo item of the same night as the pair of a pushed field (else `pms_unpaired`); the check
+skips the rule and proof checks for them and keeps every other.
+
+**Lead-time expiry** (`Expiry\ExpiryWindow`, `Expiry\ExpiryRewrite`; spec 06 D2): a rule of night N with an expiry of
+E days applies while the day is before N - E; the last active day is N - E - 1 (the value `NightFields::EXPIRY` takes).
+Any write on a night whose rule has an expiry becomes a delete + rewrite group that inherits the minimum stay, the
+masks, the floor and the ceiling the item does not set, without the expiry (golden `m4/stay/pace.ajustar_tetos.expiry`).
+
+**Channel limits read back** (`ChannelLimits::read`, D3): `channels.<name>.maxBookings` as a number or numeric text;
+anything else is left out and reported.
+
+**Divergences** (each in its test): SW-X1 an unpaired pushed PMS change is refused (the reference writes it and the
+push undoes it); SW-X2 `pricing_first` is also met when the pricing calendar already holds the value; SW-X3 the
+revert-by-push limit; SW-X4 the per-run cap; X1 every write on an expiring rule becomes a group (the reference converts
+only a ceiling release); SW-D2 consequence: a PMS change of the full batch raises the pricing value of its night to pair
+it (the reference's stay-only pricing plan would leave it, and the next push would undo the PMS).

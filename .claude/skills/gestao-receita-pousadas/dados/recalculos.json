@@ -458,6 +458,27 @@
    "resultado": "ok",
    "id_ms": 1794530134472,
    "registrado_em": "2026-11-13T00:35:38Z"
+  },
+  {
+   "quarto": "Double",
+   "em": "2026-11-13T11:05:52Z",
+   "resultado": "falha",
+   "erro": "400 Beds24 appears to be temporarily unavailable or under high load",
+   "registrado_em": "2026-11-13T11:05:52Z"
+  },
+  {
+   "quarto": "Afrodite",
+   "em": "2026-11-13T11:07:29Z",
+   "resultado": "ok",
+   "id_ms": 1794568049524,
+   "registrado_em": "2026-11-13T11:07:33Z"
+  },
+  {
+   "quarto": "VK2",
+   "em": "2026-11-13T11:07:43Z",
+   "resultado": "ok",
+   "id_ms": 1794568063483,
+   "registrado_em": "2026-11-13T11:07:47Z"
   }
  ]
 }

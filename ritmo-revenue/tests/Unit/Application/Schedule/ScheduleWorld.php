@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Ritmo\Tests\Unit\Application\Schedule;
 
 use Ritmo\Application\EmergencySwitch;
+use Ritmo\Application\Schedule\RunLauncher;
+use Ritmo\Application\Schedule\ScheduleHousekeeping;
 use Ritmo\Application\Schedule\ScheduleSource;
 use Ritmo\Application\Schedule\SchedulerTick;
 use Ritmo\Application\Schedule\TickReport;
@@ -15,6 +17,7 @@ use Ritmo\Infrastructure\Db\PdoDatabase;
 use Ritmo\Infrastructure\Db\Repository\PropertyRepository;
 use Ritmo\Infrastructure\Db\Repository\RunRepository;
 use Ritmo\Infrastructure\Lock\DbLock;
+use Ritmo\Infrastructure\Schedule\BookingMovementRepository;
 use Ritmo\Infrastructure\Schedule\OperationStateRepository;
 use Ritmo\Infrastructure\Schedule\ScheduledRunRepository;
 use Ritmo\Infrastructure\Store\ArrayStore;
@@ -52,6 +55,9 @@ final class ScheduleWorld
     public readonly RecordingLogger $logger;
 
     public ScheduleConfig $schedule;
+
+    /** A launcher that replaces the scripted one in the ticks (the real locked launcher). */
+    public ?RunLauncher $runLauncher = null;
 
     /**
      * @param array<string, mixed> $schedule the schedule section
@@ -94,9 +100,10 @@ final class ScheduleWorld
             $this->locks,
             $this->store,
             $this->switch,
-            $this->launcher,
+            $this->runLauncher ?? $this->launcher,
             $source,
             $this->alerts->service,
+            new ScheduleHousekeeping($this->slots, new BookingMovementRepository($this->db), $this->store, $this->clock),
             $this->clock,
             $this->logger,
         ))->run();

@@ -6,7 +6,7 @@ namespace Ritmo\Tests\Unit\Domain\Write;
 
 use DateTimeImmutable;
 use PHPUnit\Framework\TestCase;
-use Ritmo\Application\Approval\ApprovalConfig;
+use Ritmo\Domain\Write\ApprovalConfig;
 use Ritmo\Domain\Config\Field;
 use Ritmo\Domain\Config\InvalidConfig;
 use Ritmo\Domain\Pricing\Cadence\SoldBase;

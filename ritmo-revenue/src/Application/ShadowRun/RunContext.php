@@ -4,18 +4,21 @@ declare(strict_types=1);
 
 namespace Ritmo\Application\ShadowRun;
 
+use Closure;
 use DateTimeImmutable;
 use Ritmo\Domain\Config\RuleSet;
 use Ritmo\Domain\Model\DateOverride;
 use Ritmo\Domain\Model\PriceNight;
+use Ritmo\Domain\Model\PropertyMode;
 use Ritmo\Domain\Model\Property;
 use Ritmo\Domain\Model\RoomType;
 use Ritmo\Domain\Support\DateRange;
 
 /**
  * Everything a stage of one run works with: the property, its mapped room types, the rules the
- * run started with, the property day, the nights it covers, the summary so far and the state the
- * previous stages left.
+ * run started with, the property day, the nights it covers, the summary so far, the state the
+ * previous stages left, the kind of run and the mode it runs in (fixed when it started: shadow for
+ * a shadow run and for any run under the emergency switch).
  */
 final class RunContext
 {
@@ -34,7 +37,30 @@ final class RunContext
         public readonly string $stage = '',
         public readonly array $summary = [],
         public readonly array $state = [],
+        public readonly string $kind = 'shadow',
+        public readonly PropertyMode $mode = PropertyMode::Shadow,
+        public readonly ?int $rulesetVersion = null,
+        private readonly ?Closure $heartbeat = null,
     ) {
+    }
+
+    /**
+     * The same context with the heartbeat of the request working on the run (it extends the
+     * property's run lock and answers false when the lock was lost).
+     *
+     * @param (Closure(): bool)|null $heartbeat
+     */
+    public function withHeartbeat(?Closure $heartbeat): self
+    {
+        return new self($this->runId, $this->property, $this->rooms, $this->rules, $this->today, $this->horizon, $this->stage, $this->summary, $this->state, $this->kind, $this->mode, $this->rulesetVersion, $heartbeat);
+    }
+
+    /**
+     * Extends the run lock; false when the run lost it. True when nothing holds a lock (tests).
+     */
+    public function stillHeld(): bool
+    {
+        return $this->heartbeat === null || ($this->heartbeat)() === true;
     }
 
     /**
@@ -45,7 +71,7 @@ final class RunContext
      */
     public function after(string $stage, array $summary, array $state): self
     {
-        return new self($this->runId, $this->property, $this->rooms, $this->rules, $this->today, $this->horizon, $stage, $summary, $state);
+        return new self($this->runId, $this->property, $this->rooms, $this->rules, $this->today, $this->horizon, $stage, $summary, $state, $this->kind, $this->mode, $this->rulesetVersion, $this->heartbeat);
     }
 
     /**

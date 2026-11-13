@@ -8,39 +8,35 @@ use Closure;
 use Ritmo\Application\Dashboard\OccupancyQuery;
 use Ritmo\Application\Dashboard\PropertyDashboard;
 use Ritmo\Application\EmergencySwitch;
+use Ritmo\Application\Run\RunStack;
 use Ritmo\Application\Setup\SetupService;
-use Ritmo\Application\ShadowRun\CollectStage;
-use Ritmo\Application\ShadowRun\DecideStage;
-use Ritmo\Application\ShadowRun\MeasureStage;
-use Ritmo\Application\ShadowRun\RunInputsReader;
-use Ritmo\Application\ShadowRun\RunPipeline;
 use Ritmo\Application\ShadowRun\ShadowRunService;
-use Ritmo\Application\ShadowRun\ShadowStage;
-use Ritmo\Application\ShadowRun\ValidateStage;
+use Ritmo\Application\Write\Gate\WriteGate;
+use Ritmo\Domain\Config\RuleSet;
 use Ritmo\Domain\Support\Clock;
 use Ritmo\Domain\Support\SystemClock;
 use Ritmo\Infrastructure\Db\Migration\Migrator;
 use Ritmo\Infrastructure\Db\Repository\AlertRepository;
-use Ritmo\Infrastructure\Db\Repository\BookingRepository;
 use Ritmo\Infrastructure\Db\Repository\InventorySnapshotRepository;
 use Ritmo\Infrastructure\Db\Repository\MarketAnchorRepository;
-use Ritmo\Infrastructure\Db\Repository\OrderRepository;
 use Ritmo\Infrastructure\Db\Repository\PlanItemRepository;
 use Ritmo\Infrastructure\Db\Repository\PriceSampleRepository;
 use Ritmo\Infrastructure\Db\Repository\PropertyRepository;
 use Ritmo\Infrastructure\Db\Repository\QuotaLogRepository;
 use Ritmo\Infrastructure\Db\Repository\RoomTypeRepository;
 use Ritmo\Infrastructure\Db\Repository\RuleSetRepository;
-use Ritmo\Infrastructure\Db\Repository\RunPayloadRepository;
 use Ritmo\Infrastructure\Db\Repository\RunRepository;
-use Ritmo\Infrastructure\Db\Repository\StepLedgerRepository;
 use Ritmo\Infrastructure\Db\WpdbDatabase;
 use Ritmo\Infrastructure\Http\WpHttpClient;
 use Ritmo\Infrastructure\Lock\DbLock;
 use Ritmo\Infrastructure\Log\DbLogger;
 use Ritmo\Infrastructure\Log\LogSanitizer;
+use Ritmo\Infrastructure\Schedule\WpCronTrigger;
+use Ritmo\Infrastructure\Schedule\WpMailer;
+use Ritmo\Infrastructure\Schedule\WpRecipientDirectory;
 use Ritmo\Infrastructure\Secrets\SodiumVault;
 use Ritmo\Infrastructure\Store\OptionsStore;
+use Ritmo\Infrastructure\Support\SystemSleeper;
 
 /**
  * The objects of one WordPress request, built on first use and shared. This is where the
@@ -109,32 +105,27 @@ final class Services
 
     public function properties(): PropertyRepository
     {
-        return $this->once('properties', fn (): PropertyRepository => new PropertyRepository($this->db, $this->clock()));
+        return $this->stack()->properties();
     }
 
     public function roomTypes(): RoomTypeRepository
     {
-        return $this->once('roomTypes', fn (): RoomTypeRepository => new RoomTypeRepository($this->db, $this->clock()));
+        return $this->stack()->roomTypes();
     }
 
     public function ruleSets(): RuleSetRepository
     {
-        return $this->once('ruleSets', fn (): RuleSetRepository => new RuleSetRepository($this->db, $this->clock()));
+        return $this->stack()->ruleSets();
     }
 
     public function runs(): RunRepository
     {
-        return $this->once('runs', fn (): RunRepository => new RunRepository($this->db));
-    }
-
-    public function runPayloads(): RunPayloadRepository
-    {
-        return $this->once('runPayloads', fn (): RunPayloadRepository => new RunPayloadRepository($this->db, $this->clock()));
+        return $this->stack()->runs();
     }
 
     public function planItems(): PlanItemRepository
     {
-        return $this->once('planItems', fn (): PlanItemRepository => new PlanItemRepository($this->db, $this->clock()));
+        return $this->stack()->planItems();
     }
 
     public function alerts(): AlertRepository
@@ -144,12 +135,12 @@ final class Services
 
     public function snapshots(): InventorySnapshotRepository
     {
-        return $this->once('snapshots', fn (): InventorySnapshotRepository => new InventorySnapshotRepository($this->db));
+        return $this->stack()->snapshots();
     }
 
     public function locks(): DbLock
     {
-        return $this->once('locks', fn (): DbLock => new DbLock($this->db, $this->clock()));
+        return $this->stack()->locks();
     }
 
     public function emergencySwitch(): EmergencySwitch
@@ -157,40 +148,57 @@ final class Services
         return $this->once('switch', fn (): EmergencySwitch => new EmergencySwitch($this->store(), EmergencySwitch::constantIsSet()));
     }
 
+    /**
+     * The write gate: the only issuer of write tokens; the connectors check every write with it.
+     */
+    public function gate(): WriteGate
+    {
+        return $this->once('gate', function (): WriteGate {
+            $rules = (new RuleSetRepository($this->db, $this->clock()))->current() ?? RuleSet::defaults();
+
+            return new WriteGate($this->clock(), $this->emergencySwitch(), $rules->write(), $rules->plan());
+        });
+    }
+
     public function connectors(): ConnectorFactory
     {
         return $this->once('connectors', fn (): ConnectorFactory => new ConnectorFactory(
             $this->vault(),
             $this->store(),
-            $this->roomTypes(),
+            new RoomTypeRepository($this->db, $this->clock()),
             new QuotaLogRepository($this->db),
             new WpHttpClient(),
             $this->clock(),
             $this->logger(),
             $this->sanitizer(),
+            $this->gate(),
+        ));
+    }
+
+    /**
+     * Every run, the scheduler and the services around them (approvals, modes, undo).
+     */
+    public function stack(): RunStack
+    {
+        return $this->once('stack', fn (): RunStack => new RunStack(
+            $this->db,
+            $this->clock(),
+            $this->store(),
+            $this->logger(),
+            $this->connectors(),
+            $this->emergencySwitch(),
+            $this->gate(),
+            new WpCapabilityCheck(),
+            new WpMailer(),
+            new WpRecipientDirectory($this->store()),
+            new SystemSleeper(),
+            static fn () => WpCronTrigger::spawnNow(),
         ));
     }
 
     public function shadowRuns(): ShadowRunService
     {
-        return $this->once('shadowRuns', function (): ShadowRunService {
-            $clock = $this->clock();
-            $bookings = new BookingRepository($this->db);
-            $anchors = new MarketAnchorRepository($this->db, $clock);
-            $pipeline = new RunPipeline([
-                new CollectStage($this->connectors(), $this->snapshots(), $bookings, $clock),
-                new MeasureStage($this->snapshots(), $bookings, $this->alerts(), $clock),
-                new DecideStage(
-                    new RunInputsReader($this->snapshots(), $anchors, new StepLedgerRepository($this->db), new OrderRepository($this->db, $clock)),
-                    $clock,
-                    $this->connectors()->pricingPmsName(),
-                ),
-                new ValidateStage(),
-                new ShadowStage($this->planItems(), $this->runPayloads()),
-            ], $this->runs(), $this->db, $this->emergencySwitch(), $clock, $this->logger());
-
-            return new ShadowRunService($this->properties(), $this->roomTypes(), $this->ruleSets(), $this->runs(), $this->locks(), $this->emergencySwitch(), $pipeline, $clock, $this->logger());
-        });
+        return $this->stack()->shadowRuns();
     }
 
     public function occupancy(): OccupancyQuery

@@ -8,7 +8,7 @@ use PHPUnit\Framework\TestCase;
 use Ritmo\Application\Write\Schedule\CalendarChange;
 use Ritmo\Application\Write\Schedule\WriteSchedule;
 use Ritmo\Application\Write\Schedule\WriteStep;
-use Ritmo\Application\Write\WriteConfig;
+use Ritmo\Domain\Write\WriteConfig;
 use Ritmo\Contracts\WriteOperation;
 use Ritmo\Domain\Calendar\Stay\ArrivalDepartureChange;
 use Ritmo\Domain\Calendar\Stay\ChangeTarget;

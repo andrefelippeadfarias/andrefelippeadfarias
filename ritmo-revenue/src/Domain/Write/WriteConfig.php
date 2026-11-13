@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Ritmo\Application\Write;
+namespace Ritmo\Domain\Write;
 
 use Ritmo\Domain\Config\Field;
 use Ritmo\Domain\Config\FieldType;

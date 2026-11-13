@@ -13,7 +13,7 @@ use Ritmo\Infrastructure\Db\Database;
 use Ritmo\Infrastructure\Db\DbValue;
 
 /**
- * The step ledger as the write path keeps it (DraftVerify columns of step_ledger): steps are
+ * The step ledger as the write path keeps it (columns of migration 8): steps are
  * recorded only once their write is confirmed stored, marked delivered with the push that carried
  * them (when the PMS price agrees), and marked undone when an undo of the night is confirmed.
  * The cadence reads ledger(): undone steps are left out, delivered steps carry their push.

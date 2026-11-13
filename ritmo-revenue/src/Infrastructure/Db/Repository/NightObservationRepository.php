@@ -12,7 +12,7 @@ use Ritmo\Infrastructure\Db\Database;
 use Ritmo\Infrastructure\Db\DbValue;
 
 /**
- * What each read found per room night (DraftVerify table night_observations): the runs' reads
+ * What each read found per room night (table night_observations): the runs' reads
  * and the read-backs after the plugin's writes. A night is stored again only when its values
  * changed, so the table grows with changes, not with runs. Old superseded rows are purged.
  */

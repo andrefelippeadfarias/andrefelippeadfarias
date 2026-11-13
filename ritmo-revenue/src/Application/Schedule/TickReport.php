@@ -20,10 +20,12 @@ final class TickReport
     /**
      * @param bool                  $busy       another tick was working: this one did nothing
      * @param array<string, string> $properties property id => one of the constants
+     * @param bool                  $failed     the tick itself broke (the database, the lock table): logged, nothing reached WP-Cron
      */
     public function __construct(
         public readonly bool $busy,
         public readonly array $properties = [],
+        public readonly bool $failed = false,
     ) {
     }
 }

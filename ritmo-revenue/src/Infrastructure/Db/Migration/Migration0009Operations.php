@@ -9,8 +9,7 @@ use Ritmo\Infrastructure\Db\Schema\Index;
 use Ritmo\Infrastructure\Db\Schema\Table;
 
 /**
- * DRAFT of the operations migration (milestone M3: scheduler, light run, alerts; the integration
- * gives it its number and adds it to Migrations::all()).
+ * Operations (milestone M3: scheduler, light run, alerts).
  *
  * - scheduled_runs: one row per slot occurrence of a property (unique per property, local
  *   date-time and kind), with what became of it: status, promoted, run, start, end and delay.
@@ -21,11 +20,11 @@ use Ritmo\Infrastructure\Db\Schema\Table;
  * - alerts (stated again, M1 columns kept): the lifecycle columns (evidence, acknowledgement and
  *   resolution by whom, e-mail and digest instants, occurrences) and the dedupe lookup by status.
  */
-final class DraftOps implements Migration
+final class Migration0009Operations implements Migration
 {
     public function version(): int
     {
-        return 7;
+        return 9;
     }
 
     public function description(): string

@@ -4,8 +4,12 @@ declare(strict_types=1);
 
 namespace Ritmo\Domain\Config;
 
+use Ritmo\Domain\Alerts\AlertsConfig;
 use Ritmo\Domain\Calendar\Stay\StayConfig;
 use Ritmo\Domain\Calendar\Stay\StayFields;
+use Ritmo\Domain\Operations\LightRunConfig;
+use Ritmo\Domain\Operations\ModesConfig;
+use Ritmo\Domain\Operations\ScheduleConfig;
 use Ritmo\Domain\Orders\OrdersConfig;
 use Ritmo\Domain\Plan\PlanConfig;
 use Ritmo\Domain\Pricing\Cadence\CadenceConfig;
@@ -14,6 +18,12 @@ use Ritmo\Domain\Pricing\Ladder\LadderConfig;
 use Ritmo\Domain\Pricing\Protection\ProtectionConfig;
 use Ritmo\Domain\Relations\Config\RelationsConfig;
 use Ritmo\Domain\Support\Days;
+use Ritmo\Domain\Write\ApprovalConfig;
+use Ritmo\Domain\Write\Hold\WaveConfig;
+use Ritmo\Domain\Write\QuotaConfig;
+use Ritmo\Domain\Write\ThirdParty\ThirdPartyConfig;
+use Ritmo\Domain\Write\VerifyConfig;
+use Ritmo\Domain\Write\WriteConfig;
 
 /**
  * Checks a rule set array against the schema and the rules that span more than one field.
@@ -257,6 +267,16 @@ final class RuleSetValidator
             OrdersConfig::ROOT => static fn (): mixed => OrdersConfig::fromArray($data[OrdersConfig::ROOT]),
             StayFields::ROOT => static fn (): mixed => StayConfig::fromArray($data[StayFields::ROOT]),
             PlanConfig::ROOT => static fn (): mixed => PlanConfig::fromArray($data[PlanConfig::ROOT]),
+            WriteConfig::ROOT => static fn (): mixed => WriteConfig::fromArray($data[WriteConfig::ROOT]),
+            QuotaConfig::ROOT => static fn (): mixed => QuotaConfig::fromArray($data[QuotaConfig::ROOT]),
+            VerifyConfig::ROOT => static fn (): mixed => VerifyConfig::fromArray($data[VerifyConfig::ROOT]),
+            ApprovalConfig::ROOT => static fn (): mixed => ApprovalConfig::fromArray($data[ApprovalConfig::ROOT]),
+            ThirdPartyConfig::ROOT => static fn (): mixed => ThirdPartyConfig::fromArray($data[ThirdPartyConfig::ROOT]),
+            WaveConfig::ROOT => static fn (): mixed => WaveConfig::fromArray($data[WaveConfig::ROOT]),
+            ModesConfig::ROOT => static fn (): mixed => ModesConfig::fromArray($data[ModesConfig::ROOT]),
+            ScheduleConfig::ROOT => static fn (): mixed => ScheduleConfig::fromArray($data[ScheduleConfig::ROOT]),
+            LightRunConfig::ROOT => static fn (): mixed => LightRunConfig::fromArray($data[LightRunConfig::ROOT]),
+            AlertsConfig::ROOT => static fn (): mixed => AlertsConfig::fromArray($data[AlertsConfig::ROOT]),
         ];
         $seen = [];
         foreach ($this->errors as $error) {

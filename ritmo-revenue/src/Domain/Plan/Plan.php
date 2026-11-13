@@ -90,6 +90,14 @@ final class Plan implements Countable
     }
 
     /**
+     * True when the plan writes nothing: no item, no deletion, no listing change.
+     */
+    public function isEmpty(): bool
+    {
+        return $this->items === [] && $this->deletions === [] && $this->listingChanges === [];
+    }
+
+    /**
      * The same plan without the entries at the given positions (those a validation pointed at).
      *
      * @param list<int> $indexes         positions in $items

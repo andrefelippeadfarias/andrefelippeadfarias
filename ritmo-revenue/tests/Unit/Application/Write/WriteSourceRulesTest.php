@@ -10,7 +10,9 @@ use Ritmo\Tests\Support\SourceScan;
 
 /**
  * The fourth field lock, read in the source: only the write path issues tokens and sends writes.
- * - Nothing outside src/Application/Write names the write gate (so nothing else issues a token).
+ * - Nothing outside src/Application/Write names the write gate (so nothing else issues a token),
+ *   except the composition (RunStack, the WordPress services) and the two writers of a run that
+ *   ask it for a token: the write of a run (WriteRunner) and the undo (UndoWriter).
  * - The step sender is the one place of the plugin that calls a write method of a connector.
  * - No code builds a write request by hand outside the connectors and the schedule.
  */
@@ -41,7 +43,7 @@ final class WriteSourceRulesTest extends TestCase
             }
         }
 
-        self::assertSame([], $found);
+        self::assertSame(['RunStack.php', 'UndoWriter.php', 'WriteRunner.php', 'Services.php'], array_values(array_unique($found)));
     }
 
     public function testOnlyTheStepSenderCallsAWriteMethodOfAConnector(): void

@@ -123,8 +123,14 @@ final class RunWiring
     /**
      * What the validator needs besides the plan: the calendar the run read, the owner orders, the
      * strategy behind its order, the stay rules and the discount bands with the run's relations report.
+     *
+     * With $relationOrder the validator also checks the order of the related rooms in currency
+     * (RelationOrderCheck): only for a plan cut down after refusals, an approval or a hold, whose
+     * remaining items the relations stage did not see together. The plan as the relations stage
+     * built it is coherent by construction and is not checked again (the check is stricter than
+     * the reference there; docs/VALIDATOR.md).
      */
-    public function validationContext(RelationReport $report): ValidationContext
+    public function validationContext(RelationReport $report, bool $relationOrder = false): ValidationContext
     {
         $strategy = $this->ladder === null ? new NoStrategy() : new LadderStrategyGuard(
             $this->ladder,
@@ -143,6 +149,7 @@ final class RunWiring
             new DiscountBandCheck($this->graph, $this->relationsConfig->settings, $this->hooks->calendar, $this->hooks->orders),
             $report,
             $this->inputs->weeklyReference,
+            relations: $relationOrder ? $this->graph : null,
         );
     }
 
@@ -165,7 +172,7 @@ final class RunWiring
         return $out;
     }
 
-    private function freshCalendar(): FreshCalendar
+    public function freshCalendar(): FreshCalendar
     {
         $nights = [];
         foreach ($this->inputs->calendar as $code => $days) {

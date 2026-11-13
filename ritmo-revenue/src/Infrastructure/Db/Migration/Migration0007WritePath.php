@@ -9,8 +9,7 @@ use Ritmo\Infrastructure\Db\Schema\Index;
 use Ritmo\Infrastructure\Db\Schema\Table;
 
 /**
- * DRAFT of the write path's migration (milestone M3; the integration gives it its number and
- * adds it to Migrations::all()).
+ * Write path (milestone M3).
  *
  * - write_ops, the write-ahead journal: one row per step of a write run, inserted as "planned"
  *   before the first call and marked "sending" before its own call, with the nights, the state
@@ -21,7 +20,7 @@ use Ritmo\Infrastructure\Db\Schema\Table;
  *   failure or rate_limited), its response id and its error line; "succeeded" stays for the
  *   readers of M1.
  */
-final class DraftWrite implements Migration
+final class Migration0007WritePath implements Migration
 {
     public function version(): int
     {
@@ -43,24 +42,24 @@ final class DraftWrite implements Migration
                 Column::text('operation', 32),
                 Column::text('target_ref', 64)->default(''),
                 Column::text('group_key', 64)->default(''),
-                Column::int('slice_number')->default(0),
-                Column::text('label', 32)->default(''),
-                Column::longText('dates')->nullable(),
                 Column::longText('payload'),
-                Column::longText('before_state')->nullable(),
-                Column::longText('intended_state')->nullable(),
-                Column::longText('observed_state')->nullable(),
                 Column::text('status', 16)->default('planned'),
                 Column::int('attempts')->default(0),
                 Column::int('http_status')->nullable(),
                 Column::longText('error')->nullable(),
+                Column::dateTime('created_at'),
+                Column::dateTime('started_at')->nullable(),
+                Column::dateTime('finished_at')->nullable(),
+                Column::int('slice_number')->default(0),
+                Column::text('label', 32)->default(''),
+                Column::longText('dates')->nullable(),
+                Column::longText('before_state')->nullable(),
+                Column::longText('intended_state')->nullable(),
+                Column::longText('observed_state')->nullable(),
                 Column::text('token_id', 64)->default(''),
                 Column::text('plan_hash', 64)->default(''),
                 Column::text('body_hash', 64)->default(''),
                 Column::bigInt('resolved_run_id')->nullable(),
-                Column::dateTime('created_at'),
-                Column::dateTime('started_at')->nullable(),
-                Column::dateTime('finished_at')->nullable(),
             ], [
                 Index::plain('run', 'run_id'),
                 Index::plain('status', 'status'),
@@ -73,10 +72,10 @@ final class DraftWrite implements Migration
                 Column::text('action', 64),
                 Column::text('scope', 64)->default(''),
                 Column::bool('succeeded'),
+                Column::dateTime('called_at'),
                 Column::text('outcome', 16)->default('ok'),
                 Column::text('response_id', 64)->default(''),
                 Column::longText('error')->nullable(),
-                Column::dateTime('called_at'),
             ], [
                 Index::plain('calls', 'provider', 'action', 'called_at'),
                 Index::plain('scope', 'provider', 'action', 'scope', 'called_at'),

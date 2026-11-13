@@ -220,6 +220,30 @@ public function description(): string;
 public function tables(): array;
 ```
 
+#### `Ritmo\Infrastructure\Db\Migration\Migration0007WritePath` (final class implements Migration)
+
+```php
+public function version(): int;
+public function description(): string;
+public function tables(): array;
+```
+
+#### `Ritmo\Infrastructure\Db\Migration\Migration0008Confirmation` (final class implements Migration)
+
+```php
+public function version(): int;
+public function description(): string;
+public function tables(): array;
+```
+
+#### `Ritmo\Infrastructure\Db\Migration\Migration0009Operations` (final class implements Migration)
+
+```php
+public function version(): int;
+public function description(): string;
+public function tables(): array;
+```
+
 #### `Ritmo\Infrastructure\Db\Migration\Migrations` (final class)
 
 ```php
@@ -296,10 +320,31 @@ public function latestModification(string $pms): ?DateTimeImmutable;
 public function purgeDepartedBefore(DateTimeImmutable $date): int;
 ```
 
+#### `Ritmo\Infrastructure\Db\Repository\ChangeLogRepository` (final class)
+
+```php
+public function __construct(Database $db);
+public function recordAll(array $records): array;
+public function record(ChangeRecord $record): int;
+public function byIds(array $ids): array;
+public function forRun(int $runId): array;
+public function latest(string $propertyId, int $limit = 200): array;
+public function markUndone(array $ids, DateTimeImmutable $at): int;
+```
+
 #### `Ritmo\Infrastructure\Db\Repository\CodeLookup` (final class)
 
 ```php
 public static function id(Database $db, string $table, string $code): ?int;
+```
+
+#### `Ritmo\Infrastructure\Db\Repository\DetectedFreezeRepository` (final class)
+
+```php
+public function __construct(Database $db);
+public function add(string $propertyId, DetectedFreeze $freeze, ?int $runId = null): int;
+public function unreleased(string $propertyId): array;
+public function release(int $id, int $userId, DateTimeImmutable $at): bool;
 ```
 
 #### `Ritmo\Infrastructure\Db\Repository\InventorySnapshotRepository` (final class)
@@ -322,6 +367,15 @@ public function find(string $propertyId, DateTimeImmutable $night): ?MarketAncho
 public function range(string $propertyId, DateTimeImmutable $from, DateTimeImmutable $to): array;
 ```
 
+#### `Ritmo\Infrastructure\Db\Repository\NightObservationRepository` (final class)
+
+```php
+public function __construct(Database $db);
+public function recordChanged(string $propertyId, array $observations, ?int $runId = null): int;
+public function latest(string $propertyId, DateTimeImmutable $from, DateTimeImmutable $to): array;
+public function purgeBefore(string $propertyId, DateTimeImmutable $before): int;
+```
+
 #### `Ritmo\Infrastructure\Db\Repository\OrderRepository` (final class)
 
 ```php
@@ -329,6 +383,19 @@ const ACTIVE = 'active';
 public function __construct(Database $db, Clock $clock);
 public function add(string $propertyId, array $order, int $userId = 0): int;
 public function book(string $propertyId, DateTimeImmutable $from): OrderBook;
+```
+
+#### `Ritmo\Infrastructure\Db\Repository\PlanApprovalRepository` (final class)
+
+```php
+const PENDING = 'pending';
+public function __construct(Database $db);
+public function create(?int $runId, string $propertyId, string $kind, string $planHash, DateTimeImmutable $planDay, ?int $rulesetVersion, DateTimeImmutable $calendarReadAt, DateTimeImmutable $expiresAt, array $entries, DateTimeImmutable $now): int;
+public function find(int $id): ?array;
+public function pending(string $propertyId, ?string $kind = null): array;
+public function decide(int $id, string $status, array $approvedKeys, array $rejectedKeys, int $userId, string $capability, DateTimeImmutable $at, string $note = ''): bool;
+public function close(int $id, string $status, string $reason): bool;
+public function finish(int $id, string $fromStatus, string $status, string $reason, ?int $writeRunId): bool;
 ```
 
 #### `Ritmo\Infrastructure\Db\Repository\PlanItemRepository` (final class)
@@ -369,6 +436,16 @@ public function add(string $provider, string $action, string $scope, bool $succe
 public function instants(string $provider, string $action, string $scope, DateTimeImmutable $since, bool $inclusive = true): array;
 public function recent(int $limit = 50): array;
 public function purgeBefore(DateTimeImmutable $instant): int;
+```
+
+#### `Ritmo\Infrastructure\Db\Repository\RecalcAttemptRepository` (final class)
+
+```php
+const ACTION = 'recalculation';
+public function __construct(Database $db);
+public function record(string $provider, string $listing, string $outcome, DateTimeImmutable $at, ?string $error = null, string $responseId = ''): int;
+public function settle(int $id, string $outcome, ?string $error = null): void;
+public function since(string $provider, DateTimeImmutable $since): array;
 ```
 
 #### `Ritmo\Infrastructure\Db\Repository\RoomTypeRepository` (final class)
@@ -432,6 +509,41 @@ public function lastStep(string $roomCode, DateTimeImmutable $night): ?array;
 public function ledger(string $propertyId, DateTimeImmutable $from, DateTimeImmutable $to): StepLedger;
 public function forNight(string $roomCode, DateTimeImmutable $night): array;
 public function markReachedChannel(string $roomCode, DateTimeImmutable $pushedAt): int;
+```
+
+#### `Ritmo\Infrastructure\Db\Repository\WaveHoldRepository` (final class)
+
+```php
+public function __construct(Database $db);
+public function open(string $propertyId): ?WaveHold;
+public function hold(string $propertyId, WaveHold $hold, array $bookingRefs, DateTimeImmutable $now): int;
+public function release(string $propertyId, int $userId, DateTimeImmutable $at): bool;
+```
+
+#### `Ritmo\Infrastructure\Db\Repository\WriteOpRepository` (final class)
+
+```php
+const UNSETTLED = ['planned', 'sending', 'accepted', 'unknown'];
+public function __construct(Database $db);
+public function insertPlanned(array $row, DateTimeImmutable $at): int;
+public function markSending(int $id, DateTimeImmutable $at): void;
+public function finish(int $id, string $status, ?int $httpStatus, ?string $error, DateTimeImmutable $at): void;
+public function observe(int $id, string $status, array $observed): void;
+public function resolve(array $ids, int $runId, string $status): void;
+public function ofRun(int $runId): array;
+public function unsettled(string $propertyCode, int $exceptRunId): array;
+public function refusalStreak(string $propertyCode, string $bodyHash): int;
+```
+
+#### `Ritmo\Infrastructure\Db\Repository\WrittenStepRepository` (final class)
+
+```php
+public function __construct(Database $db);
+public function record(string $propertyId, StepRecord $step, ?int $runId = null, string $writeRef = ''): int;
+public function pending(string $propertyId): array;
+public function markDelivered(array $delivered): int;
+public function markUndone(int $runId, string $roomCode, DateTimeImmutable $night, DateTimeImmutable $at): int;
+public function ledger(string $propertyId, DateTimeImmutable $from, DateTimeImmutable $to): StepLedger;
 ```
 
 #### `Ritmo\Infrastructure\Db\Schema\Column` (final class)
@@ -543,11 +655,12 @@ public function delete(string $table, array $where): int;
 public function transaction(callable $work): mixed;
 ```
 
-#### `Ritmo\Infrastructure\Http\CreditAwareHttpClient` (final class implements HttpClient)
+#### `Ritmo\Infrastructure\Http\CreditAwareHttpClient` (final class implements WriteHttpClient, HttpClient)
 
 ```php
 public function __construct(HttpClient $inner, Clock $clock, Sleeper $sleeper, CreditHeaders $headers, float $minimumCredit = 5.0, float $maxWaitSeconds = 310.0, float $defaultRetryAfter = 60.0);
 public function request(string $method, string $url, array $headers = [], ?string $body = null, int $timeout = 30): HttpResponse;
+public function write(WriteToken $token, string $method, string $url, array $headers = [], ?string $body = null, int $timeout = 30): HttpResponse;
 public function waits(): array;
 ```
 
@@ -578,11 +691,12 @@ public function countInWindow(string $provider, string $action, string $scope, i
 public function opensAt(string $provider, string $action, string $scope, int $limit, int $windowSeconds, DateTimeImmutable $now): ?DateTimeImmutable;
 ```
 
-#### `Ritmo\Infrastructure\Http\GuardedHttpClient` (final class implements HttpClient)
+#### `Ritmo\Infrastructure\Http\GuardedHttpClient` (final class implements WriteHttpClient, HttpClient)
 
 ```php
-public function __construct(HttpClient $inner, ReadRouteAllowList $readRoutes, Logger $logger);
+public function __construct(HttpClient $inner, ReadRouteAllowList $readRoutes, Logger $logger, ?WriteRouteAllowList $writeRoutes = null, ?WriteAuthority $authority = null);
 public function request(string $method, string $url, array $headers = [], ?string $body = null, int $timeout = 30): HttpResponse;
+public function write(WriteToken $token, string $method, string $url, array $headers = [], ?string $body = null, int $timeout = 30): HttpResponse;
 public function blockedAttempts(): array;
 ```
 
@@ -632,11 +746,12 @@ public static function fromUrl(string $url): self;
 public function __toString(): string;
 ```
 
-#### `Ritmo\Infrastructure\Http\ThrottledHttpClient` (final class implements HttpClient)
+#### `Ritmo\Infrastructure\Http\ThrottledHttpClient` (final class implements WriteHttpClient, HttpClient)
 
 ```php
 public function __construct(HttpClient $inner, RateLimiter $limiter, string $key);
 public function request(string $method, string $url, array $headers = [], ?string $body = null, int $timeout = 30): HttpResponse;
+public function write(WriteToken $token, string $method, string $url, array $headers = [], ?string $body = null, int $timeout = 30): HttpResponse;
 ```
 
 #### `Ritmo\Infrastructure\Http\WpHttpClient` (final class implements HttpClient)
@@ -644,6 +759,16 @@ public function request(string $method, string $url, array $headers = [], ?strin
 ```php
 public function __construct(string $userAgent = 'RitmoRevenue');
 public function request(string $method, string $url, array $headers = [], ?string $body = null, int $timeout = 30): HttpResponse;
+```
+
+#### `Ritmo\Infrastructure\Http\WriteRouteAllowList` (final class)
+
+```php
+public static function none(): self;
+public function with(string $connector, string $method, string $host, string $pattern): self;
+public function withBase(string $connector, string $method, string $baseUrl, string $relativePattern): self;
+public function allows(string $method, string $host, string $path): bool;
+public function routes(): array;
 ```
 
 #### `Ritmo\Infrastructure\Lock\DbLock` (final class)
@@ -714,6 +839,101 @@ public function debug(string $message, array $context = []): void;
 public function info(string $message, array $context = []): void;
 public function warning(string $message, array $context = []): void;
 public function error(string $message, array $context = []): void;
+```
+
+#### `Ritmo\Infrastructure\Schedule\AlertLedger` (final class)
+
+```php
+public function __construct(Database $db);
+public function latestByKey(string $dedupeKey): ?AlertRecord;
+public function find(int $id): ?AlertRecord;
+public function insert(AlertDraft $draft, ?int $runId, DateTimeImmutable $now): AlertRecord;
+public function refresh(AlertRecord $alert, AlertDraft $draft, ?int $runId, DateTimeImmutable $now): AlertRecord;
+public function active(string $propertyId, array $codes): array;
+public function acknowledge(int $id, int $userId, DateTimeImmutable $now): void;
+public function resolve(int $id, ?int $userId, DateTimeImmutable $now): void;
+public function markNotified(int $id, DateTimeImmutable $now): void;
+public function notifiedSince(string $propertyId, DateTimeImmutable $since): int;
+public function pendingDigest(string $propertyId): array;
+public function markDigested(array $ids, DateTimeImmutable $now): void;
+```
+
+#### `Ritmo\Infrastructure\Schedule\BookingMovementRepository` (final class)
+
+```php
+public function __construct(Database $db);
+public function lastVersions(string $propertyId, string $pms, array $pmsRefs): array;
+public function record(string $propertyId, string $pms, array $versions, DateTimeImmutable $detectedAt, ?int $runId): void;
+public function purgeDepartedBefore(DateTimeImmutable $date): int;
+```
+
+#### `Ritmo\Infrastructure\Schedule\Mailer` (interface)
+
+```php
+public function send(array $to, string $subject, string $body): bool;
+```
+
+#### `Ritmo\Infrastructure\Schedule\OperationStateRepository` (final class)
+
+```php
+public function __construct(Database $db, Clock $clock);
+public function get(string $propertyId): OperationState;
+public function pause(string $propertyId, ?DateTimeImmutable $until, int $userId, string $reason): void;
+public function resume(string $propertyId): void;
+public function setMovementCursor(string $propertyId, DateTimeImmutable $cursor): void;
+public function setSlotsConsideredUntil(string $propertyId, DateTimeImmutable $instant): void;
+```
+
+#### `Ritmo\Infrastructure\Schedule\RecipientDirectory` (interface)
+
+```php
+public function addresses(): array;
+```
+
+#### `Ritmo\Infrastructure\Schedule\ScheduledRunRepository` (final class)
+
+```php
+public function __construct(Database $db, Clock $clock);
+public function materialise(string $propertyId, Slot $slot): bool;
+public function due(string $propertyId, DateTimeImmutable $now): array;
+public function oldestDueAt(?string $propertyId, DateTimeImmutable $now): ?DateTimeImmutable;
+public function running(string $propertyId): array;
+public function find(int $id): ?SlotRecord;
+public function findByKey(string $propertyId, Slot $slot): ?SlotRecord;
+public function forRun(int $runId): ?SlotRecord;
+public function started(int $id, ?int $runId, DateTimeImmutable $startedAt, int $delaySeconds, bool $promoted, SlotStatus $status): void;
+public function close(int $id, SlotStatus $status, DateTimeImmutable $at, string $note = ''): void;
+public function latest(string $propertyId, int $limit = 50): array;
+public function purgeBefore(DateTimeImmutable $instant): int;
+```
+
+#### `Ritmo\Infrastructure\Schedule\WpCronTrigger` (final class)
+
+```php
+const HOOK = 'ritmo_tick';
+const INTERVAL = 'ritmo_five_minutes';
+const INTERVAL_SECONDS = 300;
+public static function withInterval(array $schedules): array;
+public static function schedule(int $firstAt): void;
+public static function spawnNow(): void;
+public static function unschedule(): void;
+public static function state(): array;
+```
+
+#### `Ritmo\Infrastructure\Schedule\WpMailer` (final class implements Mailer)
+
+```php
+public function send(array $to, string $subject, string $body): bool;
+```
+
+#### `Ritmo\Infrastructure\Schedule\WpRecipientDirectory` (final class implements RecipientDirectory)
+
+```php
+const CAPABILITY = 'ritmo_approve';
+const OPT_OUT_META = 'ritmo_alert_email';
+const EXTRA_KEY = 'notifications.extra_addresses';
+public function __construct(KeyValueStore $settings);
+public function addresses(): array;
 ```
 
 #### `Ritmo\Infrastructure\Secrets\SecretStatus` (final class)

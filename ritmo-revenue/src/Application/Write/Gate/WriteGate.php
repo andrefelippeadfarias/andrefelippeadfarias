@@ -11,7 +11,7 @@ use Ritmo\Application\EmergencySwitch;
 use Ritmo\Application\Write\Schedule\CalendarChange;
 use Ritmo\Application\Write\Schedule\WriteSchedule;
 use Ritmo\Application\Write\Schedule\WriteStep;
-use Ritmo\Application\Write\WriteConfig;
+use Ritmo\Domain\Write\WriteConfig;
 use Ritmo\Contracts\Exception\WriteBlocked;
 use Ritmo\Contracts\WriteAuthority;
 use Ritmo\Contracts\WriteOperation;

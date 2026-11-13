@@ -46,6 +46,13 @@ namespace Ritmo\Infrastructure\Schedule {
             return true;
         }
 
+        function spawn_cron(int $gmtTime = 0): bool
+        {
+            ++WpScheduleFunctions::$spawned;
+
+            return true;
+        }
+
         function wp_clear_scheduled_hook(string $hook): int
         {
             unset(WpScheduleFunctions::$events[$hook]);
@@ -84,6 +91,8 @@ namespace Ritmo\Tests\Unit\Infrastructure\Schedule {
         /** @var array<string, array{int, string}> */
         public static array $events = [];
 
+        public static int $spawned = 0;
+
         public static function reset(): void
         {
             self::$mails = [];
@@ -92,6 +101,7 @@ namespace Ritmo\Tests\Unit\Infrastructure\Schedule {
             self::$users = [];
             self::$meta = [];
             self::$events = [];
+            self::$spawned = 0;
         }
     }
 
@@ -137,6 +147,8 @@ namespace Ritmo\Tests\Unit\Infrastructure\Schedule {
             self::assertSame([1000, WpCronTrigger::INTERVAL], WpScheduleFunctions::$events[WpCronTrigger::HOOK]);
             self::assertSame(1000, WpCronTrigger::state()['next_tick']);
             self::assertSame(300, WpCronTrigger::withInterval([])[WpCronTrigger::INTERVAL]['interval']);
+            WpCronTrigger::spawnNow();
+            self::assertSame(1, WpScheduleFunctions::$spawned, 'an approval starts its write at once');
             WpCronTrigger::unschedule();
             self::assertNull(WpCronTrigger::state()['next_tick']);
         }

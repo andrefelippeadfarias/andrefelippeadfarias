@@ -12,7 +12,7 @@ use Ritmo\Application\Write\Journal\StoredState;
 use Ritmo\Application\Write\Journal\WriteJournal;
 use Ritmo\Application\Write\Quota\RecalcGuard;
 use Ritmo\Application\Write\Schedule\WriteStep;
-use Ritmo\Application\Write\WriteConfig;
+use Ritmo\Domain\Write\WriteConfig;
 use Ritmo\Contracts\Exception\ConnectorException;
 use Ritmo\Contracts\Exception\WriteBlocked;
 use Ritmo\Contracts\WriteOperation;

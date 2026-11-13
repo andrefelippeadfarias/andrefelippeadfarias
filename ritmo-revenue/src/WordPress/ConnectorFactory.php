@@ -12,12 +12,14 @@ use Ritmo\Connectors\Beds24\Beds24Connector;
 use Ritmo\Connectors\Beds24\Beds24Credentials;
 use Ritmo\Connectors\PriceLabs\PriceLabsConfig;
 use Ritmo\Connectors\PriceLabs\PriceLabsConnector;
+use Ritmo\Connectors\Support\BaseUrl;
 use Ritmo\Contracts\ConnectionStatus;
 use Ritmo\Contracts\HttpClient;
 use Ritmo\Contracts\KeyValueStore;
 use Ritmo\Contracts\Logger;
 use Ritmo\Contracts\PmsConnector;
 use Ritmo\Contracts\PricingConnector;
+use Ritmo\Contracts\WriteAuthority;
 use Ritmo\Domain\Support\Clock;
 use Ritmo\Infrastructure\Db\Repository\QuotaLogRepository;
 use Ritmo\Infrastructure\Db\Repository\RoomTypeRepository;
@@ -30,6 +32,7 @@ use Ritmo\Infrastructure\Http\RateLimiter;
 use Ritmo\Infrastructure\Http\ReadRouteAllowList;
 use Ritmo\Infrastructure\Http\RequestTarget;
 use Ritmo\Infrastructure\Http\ThrottledHttpClient;
+use Ritmo\Infrastructure\Http\WriteRouteAllowList;
 use Ritmo\Infrastructure\Log\LogSanitizer;
 use Ritmo\Infrastructure\Secrets\SodiumVault;
 use Ritmo\Infrastructure\Support\SystemSleeper;
@@ -79,6 +82,7 @@ final class ConnectorFactory implements ConnectorSource
         private readonly Clock $clock,
         private readonly Logger $logger,
         private readonly LogSanitizer $sanitizer,
+        private readonly ?WriteAuthority $authority = null,
     ) {
     }
 
@@ -88,13 +92,20 @@ final class ConnectorFactory implements ConnectorSource
         $credentials = $this->settings->get(self::BEDS24_TOKEN_KIND, 'refresh') === 'long_life'
             ? Beds24Credentials::longLifeToken($token)
             : Beds24Credentials::refreshToken($token);
-        $config = new Beds24Config($credentials, $this->roomTypes->pmsMap(), self::propertyIds((string) $this->settings->get(self::BEDS24_PROPERTY_IDS, '')), self::constantUrl(self::BEDS24_URL_CONSTANT));
+        $units = [];
+        foreach ($this->roomTypes->all() as $room) {
+            if ($room->pmsRef !== '') {
+                $units[$room->pmsRef] = $room->units;
+            }
+        }
+        $config = new Beds24Config($credentials, $this->roomTypes->pmsMap(), self::propertyIds((string) $this->settings->get(self::BEDS24_PROPERTY_IDS, '')), self::constantUrl(self::BEDS24_URL_CONSTANT), Beds24Config::DEFAULT_MINIMUM_CREDIT, $units);
 
         return new Beds24Connector(
             new CreditAwareHttpClient($this->guarded(), $this->clock, new SystemSleeper(), CreditHeaders::fiveMinuteWindow()),
             $config,
             $this->clock,
-            $this->logger
+            $this->logger,
+            $this->authority,
         );
     }
 
@@ -110,7 +121,8 @@ final class ConnectorFactory implements ConnectorSource
             $this->pricingConfig(),
             $this->clock,
             new DbQuotaLedger($this->quotaLog),
-            $this->logger
+            $this->logger,
+            $this->authority,
         );
     }
 
@@ -169,7 +181,26 @@ final class ConnectorFactory implements ConnectorSource
             $routes = $routes->with(PriceLabsConnector::ID, 'POST', $target->host, $target->path);
         }
 
-        return new GuardedHttpClient($this->wire, $routes, $this->logger);
+        return new GuardedHttpClient($this->wire, $routes, $this->logger, $this->writeRoutes(), $this->authority);
+    }
+
+    /**
+     * The write routes of both systems at their base URLs (exact paths; a booking route cannot
+     * be declared), only when the write gate is the authority: a write needs a live token of it.
+     */
+    private function writeRoutes(): ?WriteRouteAllowList
+    {
+        if ($this->authority === null) {
+            return null;
+        }
+        $pricing = (new PriceLabsConfig('placeholder-key', self::DEFAULT_PRICELABS_PMS, self::constantUrl(self::PRICELABS_URL_CONSTANT)))->baseUrl;
+        $pms = BaseUrl::resolve(Beds24Connector::BASE_URL, self::constantUrl(self::BEDS24_URL_CONSTANT));
+        $routes = WriteRouteAllowList::none();
+        foreach ([...PriceLabsConnector::WRITE_ROUTES, PriceLabsConnector::LISTING_ROUTE] as [$method, $path]) {
+            $routes = $routes->withBase(PriceLabsConnector::ID, $method, $pricing, $path);
+        }
+
+        return $routes->withBase(Beds24Connector::ID, 'POST', $pms, Beds24Connector::CALENDAR_PATH);
     }
 
     private function secret(string $name, string $label): string

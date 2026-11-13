@@ -2437,6 +2437,7 @@ public function __construct(string $pms, PlanConfig $config = \Ritmo\Domain\Plan
   )),
    'reasonMaxLength' => 250,
    'sliceMaxDates' => 70,
+   'horizonNights' => 60,
 )));
 public function build(ValidatedPlan $plan, Property $property, array $rooms): Payload;
 ```
@@ -2540,6 +2541,7 @@ public readonly array $noDiscountRooms;
 public readonly LastMinuteRule $lastMinute;
 public readonly int $reasonMaxLength;
 public readonly int $sliceMaxDates;
+public readonly int $horizonNights;
 public function __construct(float $calendarMaxAgeHours = 6.0, array $occupancyReasonCodes = ['SOLD_OUT_PROTECTION', 'RELATION_DISCOUNT_BAND', 'RELATION_OCCUPANCY_SWITCH'], float $riseWarningPercent = 15.0, array $riseExemptReasonCodes = ['SOLD_OUT_PROTECTION'], int $maxMinStay = 30, int $marketEvidenceMinLength = 20, array $noDiscountRooms = [], LastMinuteRule $lastMinute = \Ritmo\Domain\Plan\LastMinuteRule::__set_state(array(
    'enabled' => false,
    'rooms' => 
@@ -2551,7 +2553,7 @@ public function __construct(float $calendarMaxAgeHours = 6.0, array $occupancyRe
    'lastUnitOnlyRooms' => 
   array (
   ),
-)), int $reasonMaxLength = 250, int $sliceMaxDates = 70);
+)), int $reasonMaxLength = 250, int $sliceMaxDates = 70, int $horizonNights = 60);
 public static function fromArray(array $data): self;
 public static function fields(): array;
 public function dependsOnOccupancy(string $reasonCode): bool;
@@ -2712,6 +2714,7 @@ public function __unserialize(array $data): void;
 #### `Ritmo\Domain\Plan\Validation\AuthorityCheck` (final class)
 
 ```php
+const NIGHT_FIXED_BY_ORDER = 'night_fixed_by_order';
 public function __construct(OrderBook $orders, StrategyGuard $strategies, IssueLog $log);
 public function resolve(int $index, string $room, DateTimeImmutable $night, ?string $orderId, IssueSubject $subject = IssueSubject::Item): ItemAuthority;
 ```
@@ -2726,7 +2729,7 @@ public function check(array $facts): void;
 #### `Ritmo\Domain\Plan\Validation\DeletionCheck` (final class)
 
 ```php
-public function __construct(HolidayCalendar $calendar, ?StayRules $stay, IssueLog $log);
+public function __construct(HolidayCalendar $calendar, ?StayRules $stay, IssueLog $log, ?AuthorityCheck $authority = null);
 public function check(array $deletions, array $rooms, DateTimeImmutable $today): void;
 ```
 
@@ -2829,6 +2832,14 @@ public function __construct(RuleSet $rules, PlanConfig $config, IssueLog $log);
 public function check(ItemFacts $f): void;
 ```
 
+#### `Ritmo\Domain\Plan\Validation\RelationOrderCheck` (final class)
+
+```php
+const RELATION_BROKEN = 'relation_broken';
+public function __construct(RelationGraph $graph, ?FreshCalendar $calendar, ?RelationReport $report, DateTimeImmutable $today, IssueLog $log, float $epsilon = 0.005);
+public function check(array $facts): void;
+```
+
 #### `Ritmo\Domain\Plan\Validation\StayCheck` (final class implements ItemCheck)
 
 ```php
@@ -2847,13 +2858,14 @@ public readonly ?DiscountBandCheck $bands;
 public readonly ?RelationReport $relationReport;
 public readonly array $weeklyReference;
 public readonly bool $acceptStaleCalendar;
+public readonly ?RelationGraph $relations;
 public function __construct(?FreshCalendar $calendar = null, OrderBook $orders = \Ritmo\Domain\Orders\OrderBook::__set_state(array(
    'orders' => 
   array (
   ),
    'defaultPercentile' => 50.0,
 )), StrategyGuard $strategies = \Ritmo\Domain\Plan\Port\NoStrategy::__set_state(array(
-)), ?StayRules $stay = null, ?DiscountBandCheck $bands = null, ?RelationReport $relationReport = null, array $weeklyReference = [], bool $acceptStaleCalendar = false);
+)), ?StayRules $stay = null, ?DiscountBandCheck $bands = null, ?RelationReport $relationReport = null, array $weeklyReference = [], bool $acceptStaleCalendar = false, ?RelationGraph $relations = null);
 ```
 
 #### `Ritmo\Domain\Plan\ValidationResult` (final class)

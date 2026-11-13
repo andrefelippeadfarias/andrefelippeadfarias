@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Ritmo\Application\Write\Schedule;
 
 use DateTimeImmutable;
-use Ritmo\Application\Write\WriteConfig;
+use Ritmo\Domain\Write\WriteConfig;
 use Ritmo\Contracts\WriteOperation;
 use Ritmo\Domain\Plan\Payload\CallKind;
 use Ritmo\Domain\Plan\Payload\ListingWrite;

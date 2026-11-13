@@ -11,7 +11,6 @@ use Ritmo\Domain\Alerts\AlertDraft;
 use Ritmo\Domain\Alerts\AlertRecord;
 use Ritmo\Domain\Alerts\AlertStatus;
 use Ritmo\Domain\Support\Days;
-use Ritmo\Infrastructure\Db\Migration\DraftOps;
 use Ritmo\Infrastructure\Db\Migration\Migrations;
 use Ritmo\Infrastructure\Db\Migration\Migrator;
 use Ritmo\Infrastructure\Db\PdoDatabase;
@@ -33,13 +32,13 @@ final class AlertLedgerTest extends TestCase
         return new AlertDraft($code, 'inn', ['room-a', $night], 'A night is sold beyond the units of the room.', ['units_over' => 1], 'room-a', Days::date($night), $evidence === null ? null : self::at($evidence));
     }
 
-    public function testTheDraftMigrationAddsTheLifecycleToAnExistingAlertsTable(): void
+    public function testMigrationNineAddsTheLifecycleToAnExistingAlertsTable(): void
     {
         $db = PdoDatabase::inMemory();
         $store = new ArrayStore();
-        (new Migrator($db, $store, Migrations::all()))->migrate();
+        (new Migrator($db, $store, array_slice(Migrations::all(), 0, 8)))->migrate();
         $old = (new AlertRepository($db, new MovableClock()))->raise('overbooked', AlertRepository::CRITICAL, 'Before the migration.', [], 'inn', 'room-a', null, 'overbooked:inn:room-a:2026-11-20');
-        (new Migrator($db, $store, [...Migrations::all(), new DraftOps()]))->migrate();
+        (new Migrator($db, $store, Migrations::all()))->migrate();
 
         $columns = (new SchemaInspector($db))->columns('alerts');
         foreach (['evidence_at', 'acknowledged_at', 'acknowledged_by', 'resolved_by', 'notified_at', 'digested_at', 'occurrences'] as $column) {

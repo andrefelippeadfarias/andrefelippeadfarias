@@ -33,7 +33,6 @@ use Ritmo\Domain\Plan\Plan;
 use Ritmo\Domain\Plan\ValidatedPlan;
 use Ritmo\Domain\Plan\Validator;
 use Ritmo\Domain\Support\Days;
-use Ritmo\Infrastructure\Db\Migration\DraftWrite;
 use Ritmo\Infrastructure\Db\Migration\Migrations;
 use Ritmo\Infrastructure\Db\Migration\Migrator;
 use Ritmo\Infrastructure\Db\PdoDatabase;
@@ -79,7 +78,7 @@ final class WriteOverHttpTest extends TestCase
         $this->switch = new EmergencySwitch(new ArrayStore());
         $this->gate = new WriteGate($this->clock, $this->switch);
         $db = PdoDatabase::inMemory();
-        (new Migrator($db, new ArrayStore(), [...Migrations::all(), new DraftWrite()]))->migrate();
+        (new Migrator($db, new ArrayStore(), Migrations::all()))->migrate();
         $this->ops = new WriteOpRepository($db);
         $logger = new RecordingLogger();
         $calendar = RequestTarget::fromUrl($this->server->priceLabsBaseUrl() . PriceLabsConnector::PRICES_PATH);

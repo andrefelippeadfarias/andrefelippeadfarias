@@ -9,13 +9,15 @@ use Ritmo\Infrastructure\Db\Database;
 use Ritmo\Infrastructure\Db\DbValue;
 
 /**
- * Plans waiting for a person (DraftVerify table plan_approvals). A row is created pending and
+ * Plans waiting for a person (table plan_approvals). A row is created pending and
  * leaves that state once: approved, rejected, expired or superseded. Every change of state is
  * conditional on the row still being pending, so two people deciding at once cannot both win.
  */
 final class PlanApprovalRepository
 {
     public const PENDING = 'pending';
+
+    public const APPROVED = 'approved';
 
     private const TABLE = 'plan_approvals';
 
@@ -70,8 +72,39 @@ final class PlanApprovalRepository
      */
     public function pending(string $propertyId, ?string $kind = null): array
     {
+        return $this->withStatus($propertyId, self::PENDING, $kind);
+    }
+
+    /**
+     * Requests approved by a person and not written yet, oldest first.
+     *
+     * @return list<array<string, mixed>>
+     */
+    public function approved(string $propertyId, ?string $kind = null): array
+    {
+        return $this->withStatus($propertyId, self::APPROVED, $kind);
+    }
+
+    /**
+     * The latest requests of a property, newest first, whatever their status.
+     *
+     * @return list<array<string, mixed>>
+     */
+    public function latest(string $propertyId, int $limit = 20): array
+    {
+        return array_map([self::class, 'decode'], $this->db->select(
+            sprintf('SELECT * FROM %s WHERE property_code = ? ORDER BY created_at DESC, id DESC LIMIT ?', $this->db->table(self::TABLE)),
+            [$propertyId, max(1, min(200, $limit))]
+        ));
+    }
+
+    /**
+     * @return list<array<string, mixed>>
+     */
+    private function withStatus(string $propertyId, string $status, ?string $kind): array
+    {
         $sql = sprintf('SELECT * FROM %s WHERE property_code = ? AND status = ?', $this->db->table(self::TABLE));
-        $params = [$propertyId, self::PENDING];
+        $params = [$propertyId, $status];
         if ($kind !== null) {
             $sql .= ' AND kind = ?';
             $params[] = $kind;

@@ -6,6 +6,7 @@ namespace Ritmo\Application\Verify;
 
 use Ritmo\Application\Approval\ApprovalGrant;
 use Ritmo\Domain\Plan\PlanIssue;
+use Ritmo\Domain\Plan\ValidatedPlan;
 use Ritmo\Domain\Write\Change\UndoDraft;
 
 /**
@@ -18,11 +19,13 @@ final class UndoRequest
     /**
      * @param list<PlanIssue>     $refused the Validator's errors (those entries are not undone)
      * @param list<ApprovalGrant> $grants
+     * @param ValidatedPlan|null  $plan    the undo as the Validator let it through (what the grants approve)
      */
     public function __construct(
         public readonly UndoDraft $draft,
         public readonly array $refused,
         public readonly array $grants,
+        public readonly ?ValidatedPlan $plan = null,
     ) {
     }
 }

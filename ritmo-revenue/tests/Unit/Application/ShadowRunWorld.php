@@ -7,6 +7,7 @@ namespace Ritmo\Tests\Unit\Application;
 use DateTimeImmutable;
 use Ritmo\Application\ConnectorSource;
 use Ritmo\Application\EmergencySwitch;
+use Ritmo\Application\Run\RunOpener;
 use Ritmo\Application\ShadowRun\CollectStage;
 use Ritmo\Application\ShadowRun\DecideStage;
 use Ritmo\Application\ShadowRun\MeasureStage;
@@ -68,6 +69,9 @@ final class ShadowRunWorld
     public const TIMEZONE = 'America/Sao_Paulo';
 
     public const FIRST_NIGHT = '2027-03-01';
+
+    /** Nights a run decides with the neutral rules (plan.horizon_nights). */
+    public const HORIZON_NIGHTS = 60;
 
     public readonly PdoDatabase $db;
 
@@ -138,7 +142,7 @@ final class ShadowRunWorld
 
     public static function nights(): DateRange
     {
-        return DateRange::nights(Days::date(self::FIRST_NIGHT), ShadowRunService::HORIZON_NIGHTS);
+        return DateRange::nights(Days::date(self::FIRST_NIGHT), self::HORIZON_NIGHTS);
     }
 
     public static function isWeekend(DateTimeImmutable $night): bool
@@ -222,8 +226,7 @@ final class ShadowRunWorld
     {
         return new ShadowRunService(
             new PropertyRepository($this->db, $this->clock),
-            new RoomTypeRepository($this->db, $this->clock),
-            new RuleSetRepository($this->db, $this->clock),
+            new RunOpener(new RoomTypeRepository($this->db, $this->clock), new RuleSetRepository($this->db, $this->clock), $this->runs, $this->clock, $this->logger),
             $this->runs,
             $this->locks,
             $this->switch,

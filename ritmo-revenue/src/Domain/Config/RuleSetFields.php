@@ -4,10 +4,14 @@ declare(strict_types=1);
 
 namespace Ritmo\Domain\Config;
 
+use Ritmo\Domain\Alerts\AlertsConfig;
 use Ritmo\Domain\Calendar\Stay\StayFields;
 use Ritmo\Domain\Model\Identifier;
 use Ritmo\Domain\Model\NightType;
 use Ritmo\Domain\Model\PricePlan;
+use Ritmo\Domain\Operations\LightRunConfig;
+use Ritmo\Domain\Operations\ModesConfig;
+use Ritmo\Domain\Operations\ScheduleConfig;
 use Ritmo\Domain\Orders\OrdersConfig;
 use Ritmo\Domain\Plan\PlanConfig;
 use Ritmo\Domain\Pricing\Cadence\CadenceConfig;
@@ -16,6 +20,12 @@ use Ritmo\Domain\Pricing\Ladder\LadderFields;
 use Ritmo\Domain\Pricing\Protection\ProtectionConfig;
 use Ritmo\Domain\Relations\Config\RelationFields;
 use Ritmo\Domain\Relations\Config\RelationsConfig;
+use Ritmo\Domain\Write\ApprovalConfig;
+use Ritmo\Domain\Write\Hold\WaveConfig;
+use Ritmo\Domain\Write\QuotaConfig;
+use Ritmo\Domain\Write\ThirdParty\ThirdPartyConfig;
+use Ritmo\Domain\Write\VerifyConfig;
+use Ritmo\Domain\Write\WriteConfig;
 
 /**
  * The field definitions of the rule set: every rule a customer can configure, with its type,
@@ -73,6 +83,16 @@ final class RuleSetFields
             OrdersConfig::fields(),
             StayFields::all(),
             PlanConfig::fields(),
+            WriteConfig::fields(),
+            QuotaConfig::fields(),
+            VerifyConfig::fields(),
+            ApprovalConfig::fields(),
+            ThirdPartyConfig::fields(),
+            WaveConfig::fields(),
+            ModesConfig::fields(),
+            ScheduleConfig::fields(),
+            LightRunConfig::fields(),
+            AlertsConfig::fields(),
         );
     }
 

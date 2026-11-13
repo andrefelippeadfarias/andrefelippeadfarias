@@ -10,7 +10,7 @@ This document covers how runs start (the scheduler) and what a light run does. T
 |---|---|---|
 | `src/Domain/Operations` (pure) | `ScheduleConfig`, `LocalTime`, `Slot`, `SlotKind`, `SlotStatus`, `SlotPlanner`, `DueSlotPolicy`, `SlotDecision`, `SlotRecord`, `PastRun`, `RunKind`, `OperationState` | The schedule of a property, its slots in the property's timezone, and the choice among due slots. |
 | `src/Domain/Operations` (pure) | `LightRunConfig`, `MovementWindow`, `MovementClassifier`, `MovementDetector`, `MovementBatch`, `Movement`, `MovementKind`, `BookingVersion`, `SoldOutFlip`, `SoldOutFlips`, `LightRoundFacts`, `LightRoundPlanner`, `LightRoundPlan`, `LightTrigger`, `DeferredWork`, `OrphanWindow` | The light run: what moved, which nights, which rooms may take a step, what waits for the next full run. |
-| `src/Application/Schedule` | `SchedulerTick`, `RunLauncher`, `LaunchResult`, `LaunchStatus`, `FailureKind`, `ScheduleSource`, `TickReport`, `PauseService`, `StallMonitor`, `MovementTracker`, `MovementRead`, `LightRoundService`, `LightRoundRequest`, `RoomQuota` | The tick, the pause, the stalled-scheduler check, the movement read and the scope of a light run. |
+| `src/Application/Schedule` | `SchedulerTick`, `RunLauncher`, `LockedRunLauncher`, `RunExecutor`, `RunNowService`, `LaunchResult`, `LaunchStatus`, `FailureKind`, `ScheduleSource`, `ScheduleHousekeeping`, `TickReport`, `PauseService`, `StallMonitor`, `MovementTracker`, `MovementRead`, `LightRoundService`, `LightRoundRequest`, `RoomQuota` | The tick, the property run lock, "Run now", the daily purge, the pause, the stalled-scheduler check, the movement read and the scope of a light run. |
 | `src/Infrastructure/Schedule` | `ScheduledRunRepository`, `OperationStateRepository`, `BookingMovementRepository`, `WpCronTrigger` | Slot rows, per-property state, processed booking versions, the WP-Cron event. |
 | `src/Infrastructure/Db/Migration/DraftOps.php` | | Draft migration (the integration numbers it): `scheduled_runs`, `operation_state`, `booking_movements`, and the lifecycle columns of `alerts`. |
 
@@ -41,7 +41,8 @@ them.
 ### 2.3 The tick (`SchedulerTick::run`)
 
 1. Store the heartbeat (`scheduler_last_tick`), take the site tick lock (`scheduler_tick`); held:
-   return busy. Resolve `scheduler_stalled`.
+   return busy. Resolve `scheduler_stalled`. The tick never throws: a broken tick (the database,
+   the lock table) is logged with the exception class and reported as `failed`.
 2. For each property, oldest due slot first, while the tick budget lasts:
    1. Lift a pause whose end passed.
    2. Record the slots that came due since the last tick (`scheduled_runs`, unique per property,
@@ -49,8 +50,10 @@ them.
       time starts at its local midnight; after a long stop at most 31 days are recorded.
    3. A run in progress (any kind) is continued through `RunLauncher::continueOpen` (stopped at
       its next stage boundary through `stopOpen` when the property is paused) and nothing else
-      starts for that property in this tick. A slot whose run ended outside the scheduler is
-      closed with the run's status.
+      starts for that property in this tick; while another request holds the property's run lock
+      the property waits. A run of an earlier local day is closed as failed instead and the tick
+      goes on to the new day's slots. A slot whose run ended outside the scheduler is closed with
+      the run's status.
    4. Under the emergency switch with `stop_reads_under_emergency`, every due slot ends
       `skipped_blocked`.
    5. `DueSlotPolicy::choose` decides the slot to run and closes the others (2.4).
@@ -62,6 +65,35 @@ them.
       `run_missed`.
 3. An exception of one property is logged with its class only, fails that slot and never stops
    the others.
+4. The first tick of each UTC day purges (`ScheduleHousekeeping`): slot rows that ended more than
+   90 days ago (a due or running slot stays) and the booking versions of bookings that departed
+   more than 8 days ago (before "today - 7" in every timezone).
+
+### 2.3.1 No overlap: the property run lock (`LockedRunLauncher`)
+
+- One lock key per property for every kind of run, `property_run:<id>` (TTL 600 s), taken around
+  every piece of work: starting a run, continuing it for one budget, stopping it. The scheduler and
+  "Run now" (`RunNowService`) go through the same launcher, and so does the write of an approved
+  plan (`approved_write`).
+- Held by another request: the answer is busy (the slot stays due, a person sees "busy"); nothing
+  is queued.
+- Between two requests the open run itself excludes a new one: a run starts only when the property
+  has no run in progress of any kind (the read-only milestone's `shadow` kind included); otherwise
+  the open run is continued.
+- A request that died leaves the lock to expire after its TTL; the next tick then resumes the open
+  run from its next stage through `RunExecutor::resume`, never from the start (S8).
+- The work itself is a `RunExecutor` (the run pipeline of each kind, integration): it never takes
+  the lock and calls the heartbeat it is given before each stage and each write slice; a false
+  answer (the lock was lost) stops it at once.
+- An open run of an earlier local day is closed as failed (`FailureKind::DayChanged`) and never
+  continued: its plan is never written.
+- "Run now" (`RunNowService`) runs a paused property too (a pause stops only scheduled slots, S11),
+  continues a run in progress instead of starting a second one, starts a `manual` run otherwise,
+  and is a forced shadow run under the emergency switch (`stop_reads_under_emergency` applies to
+  the scheduled reads only).
+- `WpCronTrigger::spawnNow()` asks WordPress to run the due cron events at once (decision D16): the
+  approval of a plan calls it so the `approved_write` slot starts without waiting five minutes,
+  still under the property's lock.
 
 ### 2.4 Which slot runs (`DueSlotPolicy`)
 
@@ -192,10 +224,14 @@ light run), the weekly review.
   `unschedule()` on deactivation, the hook calling `SchedulerTick::run`), replacing the hourly
   resume hook; add `WpCronTrigger`, `WpMailer` and `WpRecipientDirectory` to the reviewed list of
   `InfrastructureRulesTest`.
-- Implement `RunLauncher` over the run service (one lock key per property for every run kind; kinds
-  `full`, `light`, `manual`, `approved_write`; the light stages `collect_light`, `watch`, `scope`
-  using `MovementTracker`, `WatchService` and `LightRoundService`), `ScheduleSource` and the
-  sections `schedule`, `light_run`, `alerts` from the rule set, `RoomQuota` over the write path's
-  `RecalcQuota`.
+- Implement `RunExecutor` over the run pipeline (kinds `full`, `light`, `manual`,
+  `approved_write`; the light stages `collect_light`, `watch`, `scope` using `MovementTracker`,
+  `WatchService` and `LightRoundService`) and give it to `LockedRunLauncher`, which already holds
+  the property's run lock and closes runs of an earlier day; make "Run now" (REST and admin) call
+  `RunNowService`, and make `ShadowRunService` take `LockedRunLauncher::lockKey()` instead of
+  `shadow_run:<id>` (or retire it behind the executor), so that no run of a property bypasses the
+  lock. Implement `ScheduleSource` and the sections `schedule`, `light_run`, `alerts` from the rule
+  set, `RoomQuota` over the write path's `RecalcQuota`.
+- Call `WpCronTrigger::spawnNow()` after an approval is recorded (D16).
 - Record pause, resume and the hold in `change_log` (O41) once the change log of the write path is
   in place.

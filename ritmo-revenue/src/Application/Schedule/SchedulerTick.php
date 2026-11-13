@@ -44,7 +44,8 @@ use Throwable;
  * (or the slots are skipped when the schedule stops reads too). Every slot ends with a status;
  * late, missed and failed slots raise their alerts; a run that failed for a connector reason gets
  * one retry slot. An exception of one property is logged with its class only and never stops the
- * others or reaches WP-Cron.
+ * others or reaches WP-Cron. The first tick of each UTC day also purges the old slot rows and
+ * booking versions ({@see ScheduleHousekeeping}).
  */
 final class SchedulerTick
 {
@@ -70,12 +71,27 @@ final class SchedulerTick
         private readonly RunLauncher $launcher,
         private readonly ScheduleSource $schedules,
         private readonly AlertService $alerts,
+        private readonly ScheduleHousekeeping $housekeeping,
         private readonly Clock $clock,
         private readonly Logger $logger,
     ) {
     }
 
+    /**
+     * Never throws: WP-Cron gets nothing back from a broken tick, the log gets the exception class.
+     */
     public function run(int $budgetSeconds = self::DEFAULT_BUDGET_SECONDS): TickReport
+    {
+        try {
+            return $this->locked($budgetSeconds);
+        } catch (Throwable $e) {
+            $this->logger->error('The scheduler tick failed; the next tick tries again.', ['exception' => $e::class]);
+
+            return new TickReport(false, [], true);
+        }
+    }
+
+    private function locked(int $budgetSeconds): TickReport
     {
         $now = $this->clock->now();
         $this->store->set(self::HEARTBEAT_KEY, AlertDraft::instant($now));
@@ -95,6 +111,7 @@ final class SchedulerTick
                 }
                 $report[$property->id] = $this->guarded($property);
             }
+            $this->housekeeping->daily();
 
             return new TickReport(false, $report);
         } finally {
@@ -132,10 +149,14 @@ final class SchedulerTick
         $open = $this->launch(fn (): ?LaunchResult => $paused
             ? $this->launcher->stopOpen($property, 'The property is paused.')
             : $this->launcher->continueOpen($property, $schedule->runBudgetSeconds));
+        if ($open !== null && $open->status === LaunchStatus::Busy) {
+            return TickReport::WAITING;
+        }
         if ($open !== null) {
             $this->afterRun($property, $open, $planner, $policy);
-
-            return TickReport::CONTINUED;
+            if ($open->failure !== FailureKind::DayChanged) {
+                return TickReport::CONTINUED;
+            }
         }
 
         $due = $this->slots->due($property->id, $now);

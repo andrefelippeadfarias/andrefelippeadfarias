@@ -28,7 +28,7 @@ final class InProcessApis implements HttpClient
 {
     private const HOSTS = ['https://api.pricelabs.co/v1' => '/pricelabs/v1', 'https://api.beds24.com/v2' => '/beds24/v2'];
 
-    private readonly Simulator $simulator;
+    private Simulator $simulator;
 
     private readonly string $log;
 
@@ -54,7 +54,7 @@ final class InProcessApis implements HttpClient
 
     public function __destruct()
     {
-        foreach ([$this->log, $this->log . '.state', $this->log . '.writes'] as $file) {
+        foreach ([$this->log, $this->log . '.state', $this->log . '.writes', $this->log . '.scenario'] as $file) {
             if (is_file($file)) {
                 unlink($file);
             }
@@ -80,6 +80,21 @@ final class InProcessApis implements HttpClient
         }
 
         return new HttpResponse($reply->status, $reply->headers, $reply->body);
+    }
+
+    /**
+     * The same world with more bookings (as the PMS would serve them from now on); what the
+     * write runs stored is kept.
+     *
+     * @param list<array<string, mixed>> $bookings in the scenario's format
+     */
+    public function addBookings(array $bookings): void
+    {
+        $data = json_decode((string) file_get_contents(Fixtures::path('api/scenario.json')), true, 32, JSON_THROW_ON_ERROR);
+        $data['bookings'] = [...$data['bookings'], ...$bookings];
+        $file = $this->log . '.scenario';
+        file_put_contents($file, json_encode($data, JSON_THROW_ON_ERROR));
+        $this->simulator = new Simulator(Scenario::load($file), new Journal($this->log));
     }
 
     public function enableWrites(array $notReady = []): void

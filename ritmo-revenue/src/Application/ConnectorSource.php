@@ -28,4 +28,9 @@ interface ConnectorSource
      * serves by POST (ARCHITECTURE.md, section 6). When off, prices come from the PMS.
      */
     public function readsPricingCalendar(): bool;
+
+    /**
+     * The PMS of the listings as the pricing system names it: the payload of a plan carries it.
+     */
+    public function pricingPmsName(): string;
 }

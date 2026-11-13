@@ -1,8 +1,13 @@
 {
- "_doc": "Parity values of the operations area (M3: scheduler, light run, alerts) for the reference operation. The integration merges them into tests/fixtures/presets/parity.json (sections schedule, light_run and alerts; the operations spec nests them under 'operations'). The schedule is the reference's routines in the property's timezone; the channel factors are keyed by the parity preset's property ids.",
+ "_doc": "Parity values of the operations area (M3: scheduler, light run, alerts) for the reference operation. The integration merges them into tests/fixtures/presets/parity.json (sections schedule, light_run, alerts and modes; the operations spec nests them under 'operations'). The schedule is the reference's routines in the property's timezone; the channel factors are keyed by the parity preset's property ids. modes: the reference operation writes on its own, so the parity preset allows the autonomous mode (the thresholds are the neutral ones).",
  "schedule": {
   "full_time": "07:53",
-  "light_times": ["10:53", "13:53", "16:53", "19:53"],
+  "light_times": [
+   "10:53",
+   "13:53",
+   "16:53",
+   "19:53"
+  ],
   "min_spacing_minutes": 60,
   "late_tolerance_minutes": 30,
   "retry_failed_after_minutes": 15,
@@ -33,12 +38,27 @@
    "default_factor": 1.0,
    "price_basis": "current",
    "channel_factors": {
-    "recanto": {"booking": 0.49, "airbnb": 0.41, "direct": 1.0},
-    "villa": {"booking": 0.46, "airbnb": 0.31, "direct": 1.0}
+    "recanto": {
+     "booking": 0.49,
+     "airbnb": 0.41,
+     "direct": 1.0
+    },
+    "villa": {
+     "booking": 0.46,
+     "airbnb": 0.31,
+     "direct": 1.0
+    }
    }
   },
   "inventory_max_nights_listed": 50,
   "connector_down_escalate_runs": 3
  },
- "timezone": "America/Sao_Paulo"
+ "timezone": "America/Sao_Paulo",
+ "modes": {
+  "autonomous_enabled": true,
+  "min_shadow_runs": 3,
+  "min_approval_days": 7,
+  "min_written_plans": 5,
+  "demote_after_failed_writes": 2
+ }
 }

@@ -11,7 +11,7 @@ use Ritmo\Application\EmergencySwitch;
 use Ritmo\Application\Write\Gate\TonightState;
 use Ritmo\Application\Write\Gate\WriteContext;
 use Ritmo\Application\Write\Gate\WriteGate;
-use Ritmo\Application\Write\WriteConfig;
+use Ritmo\Domain\Write\WriteConfig;
 use Ritmo\Domain\Model\DateOverride;
 use Ritmo\Domain\Model\Property;
 use Ritmo\Domain\Model\PropertyMode;

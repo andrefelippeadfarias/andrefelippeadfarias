@@ -6,6 +6,7 @@ namespace Ritmo\Application\Write\Quota;
 
 use DateTimeImmutable;
 use DateTimeZone;
+use Ritmo\Domain\Write\QuotaConfig;
 
 /**
  * May a listing be recalculated now? The listing's rolling window, the account's rolling

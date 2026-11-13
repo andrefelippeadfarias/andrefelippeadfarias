@@ -2527,7 +2527,105 @@
       "payload": {
         "reason_max_length": 250,
         "slice_max_dates": 70
-      }
+      },
+      "horizon_nights": 60
+    },
+    "write": {
+      "max_read_age_minutes": 30,
+      "max_validation_age_minutes": 10,
+      "token_ttl_minutes": 15,
+      "horizon_days": 365,
+      "horizon_edge_days": 2,
+      "max_identical_refusals": 2,
+      "listing_changes_enabled": true,
+      "pms_max_ranges_per_post": 100,
+      "call_timeout_seconds": 300,
+      "max_dates_per_call": 70
+    },
+    "quota": {
+      "per_listing": 3,
+      "window_hours": 24,
+      "per_account_per_minute": 10,
+      "account_wait_after_429_seconds": 60,
+      "future_slack_seconds": 300,
+      "failure_cooldown_minutes": 0
+    },
+    "verify": {
+      "delivery_overdue_hours": 30
+    },
+    "third_party": {
+      "until_night_passes": false,
+      "freeze_days": 7
+    },
+    "waves": {
+      "min_cancellations": 3,
+      "window_hours": 3,
+      "hold_hours": null,
+      "scope": "property"
+    },
+    "approval": {
+      "max_calendar_age_hours": 6
+    },
+    "schedule": {
+      "full_time": "07:53",
+      "light_times": [
+        "10:53",
+        "13:53",
+        "16:53",
+        "19:53"
+      ],
+      "min_spacing_minutes": 60,
+      "late_tolerance_minutes": 30,
+      "retry_failed_after_minutes": 15,
+      "run_budget_seconds": 20,
+      "tick_budget_seconds": 40,
+      "max_movement_lookback_days": 30,
+      "stalled_after_minutes": 20,
+      "stop_reads_under_emergency": false
+    },
+    "light_run": {
+      "movement_overlap_minutes": 5,
+      "initial_lookback_hours": 24,
+      "protect_flip_days": 1,
+      "orphan_window_days": 7,
+      "read_rules_without_movement": false,
+      "read_listing_status": true
+    },
+    "alerts": {
+      "security": {
+        "enabled": true,
+        "origins_confirmed": true,
+        "zero_value": true,
+        "known_origins": []
+      },
+      "below_expected": {
+        "enabled": true,
+        "threshold": 0.7,
+        "critical_threshold": 0.5,
+        "default_factor": 1.0,
+        "price_basis": "current",
+        "channel_factors": {
+          "recanto": {
+            "booking": 0.49,
+            "airbnb": 0.41,
+            "direct": 1.0
+          },
+          "villa": {
+            "booking": 0.46,
+            "airbnb": 0.31,
+            "direct": 1.0
+          }
+        }
+      },
+      "inventory_max_nights_listed": 50,
+      "connector_down_escalate_runs": 3
+    },
+    "modes": {
+      "autonomous_enabled": true,
+      "min_shadow_runs": 3,
+      "min_approval_days": 7,
+      "min_written_plans": 5,
+      "demote_after_failed_writes": 2
     }
   }
 }

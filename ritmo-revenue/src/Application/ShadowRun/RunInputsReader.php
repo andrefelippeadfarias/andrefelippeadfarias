@@ -5,11 +5,15 @@ declare(strict_types=1);
 namespace Ritmo\Application\ShadowRun;
 
 use DateTimeImmutable;
+use Ritmo\Application\Run\WeeklyReference;
+use Ritmo\Application\Verify\ThirdPartyWatch;
 use Ritmo\Domain\Market\AnchorLookup;
+use Ritmo\Domain\Market\AnchorRuler;
 use Ritmo\Domain\Model\DateOverride;
 use Ritmo\Domain\Model\InventoryNight;
 use Ritmo\Domain\Model\PriceNight;
 use Ritmo\Domain\Model\RoomType;
+use Ritmo\Domain\Orders\OrderBook;
 use Ritmo\Domain\Plan\Assembly\RunInputs;
 use Ritmo\Domain\Plan\PlanItem;
 use Ritmo\Domain\Pricing\RuleCode;
@@ -21,13 +25,12 @@ use Ritmo\Infrastructure\Db\Repository\OrderRepository;
 use Ritmo\Infrastructure\Db\Repository\StepLedgerRepository;
 
 /**
- * What the plan assembly of a shadow run reads, from what the run collected: the calendar of
- * every room night (the pricing system's when it was read, else the PMS price with the date rule
- * in force), the date rules, the market anchors, the step ledger and the owner orders.
- *
- * A full run: no light-run filter. The market ruler of a sales ladder strategy and the nights
- * closed in the PMS without a booking have no source in this milestone, so no strategy acts and
- * no night is held as blocked.
+ * What the plan assembly of a run reads, from what the run collected: the calendar of every room
+ * night (the pricing system's when it was read, else the PMS price with the date rule in force),
+ * the date rules, the market anchors and the market ruler built from them (AnchorRuler), the step
+ * ledger, the owner orders with the freezes of nights someone else changed, the nights closed in
+ * the PMS without a booking and the filter of a light run (both left in the state by the watch
+ * stage) and the listing values at the start of the week.
  */
 final class RunInputsReader
 {
@@ -42,6 +45,8 @@ final class RunInputsReader
         private readonly MarketAnchorRepository $anchors,
         private readonly StepLedgerRepository $ledger,
         private readonly OrderRepository $orders,
+        private readonly ?ThirdPartyWatch $thirdParty = null,
+        private readonly ?WeeklyReference $weekly = null,
     ) {
     }
 
@@ -65,6 +70,12 @@ final class RunInputsReader
             }
         }
 
+        $anchors = $this->anchors->range(
+            $context->property->id,
+            Days::add($context->today, -self::ANCHOR_WINDOW_DAYS),
+            Days::add($context->today, self::ANCHOR_WINDOW_DAYS)
+        );
+
         return new RunInputs(
             $context->property,
             $context->rooms,
@@ -73,18 +84,48 @@ final class RunInputsReader
             Days::diff($context->today, $context->horizon->last()),
             $calendar,
             $overrides,
-            new AnchorLookup($context->rules, $this->anchors->range(
-                $context->property->id,
-                Days::add($context->today, -self::ANCHOR_WINDOW_DAYS),
-                Days::add($context->today, self::ANCHOR_WINDOW_DAYS)
-            )),
+            new AnchorLookup($context->rules, $anchors),
             $this->ledger->ledger($context->property->id, $context->horizon->first(), $context->horizon->last()),
-            $this->orders->book($context->property->id, $context->today),
-            null,
-            [],
-            null,
+            $this->book($context),
+            AnchorRuler::of($anchors, $context->rules),
+            self::keys($context->state['blocked'] ?? null) ?? [],
+            self::keys($context->state['light_filter'] ?? null),
             $readAt,
+            $this->weekly?->of($context->property->id, $context->listings(), $context->today) ?? [],
         );
+    }
+
+    /**
+     * The owner orders in force, with the manual freezes of the nights someone else changed.
+     */
+    private function book(RunContext $context): OrderBook
+    {
+        $book = $this->orders->book($context->property->id, $context->today);
+        foreach ($this->thirdParty?->orders($context->property) ?? [] as $order) {
+            $book = $book->with($order);
+        }
+
+        return $book;
+    }
+
+    /**
+     * Room-night keys a stage left in the state (blocked nights, the filter of a light run).
+     *
+     * @return array<string, true>|null null when the state holds none
+     */
+    private static function keys(mixed $value): ?array
+    {
+        if (!is_array($value)) {
+            return null;
+        }
+        $keys = [];
+        foreach ($value as $key) {
+            if (is_string($key) && $key !== '') {
+                $keys[$key] = true;
+            }
+        }
+
+        return $keys;
     }
 
     /**

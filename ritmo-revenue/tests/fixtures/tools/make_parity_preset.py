@@ -6,7 +6,9 @@ tests load this preset on the PHP side, so that PHP and Python compute from the 
 
 The sections of milestone M2 come from the parity fixtures the golden generators of each module
 write next to it (run them first): parity-relations.json (relations, price_bands), parity-ladder.json
-(ladder, soldout, cadence, no_effect, orders), parity-stay.json (stay) and parity-plan.json (plan).
+(ladder, soldout, cadence, no_effect, orders), parity-stay.json (stay) and parity-plan.json (plan);
+those of milestone M3 from parity-write.json (write, quota), parity-verify.json (verify, third_party,
+waves, approval) and parity-ops.json (schedule, light_run, alerts, modes).
 Inputs of a run that live in those fixtures (the market ruler, the weekly reference of the listings,
 the PMS name) are not rules and stay out of the preset.
 
@@ -43,12 +45,15 @@ LEFT_OUT = [
     "parametros.fator_canal, seguranca and the rest of parametros",
 ]
 
-# Rule set sections of milestone M2, by the module fixture that holds them.
+# Rule set sections of milestones M2 and M3, by the module fixture that holds them.
 MODULE_SECTIONS = {
     "parity-relations.json": ["relations", "price_bands"],
     "parity-ladder.json": ["ladder", "soldout", "cadence", "no_effect", "orders"],
     "parity-stay.json": ["stay"],
     "parity-plan.json": ["plan"],
+    "parity-write.json": ["write", "quota"],
+    "parity-verify.json": ["verify", "third_party", "waves", "approval"],
+    "parity-ops.json": ["schedule", "light_run", "alerts", "modes"],
 }
 
 
@@ -192,7 +197,7 @@ def preset(cfg: dict) -> dict:
 
 
 def module_sections() -> dict:
-    """The M2 sections, copied from the parity fixture of the module that owns each one and completed
+    """The M2 and M3 sections, copied from the parity fixture of the module that owns each one and completed
     with the schema defaults (the fixtures leave out fields at their default), so that the preset
     passes the strict validator."""
     out: dict = {}
@@ -219,7 +224,7 @@ def main() -> int:
         handle.write("\n")
     rooms = sum(len(p["room_types"]) for p in data["properties"])
     print(f"{OUTPUT}: {len(data['properties'])} properties, {rooms} room types, {len(data['rules']['calendar']['holidays'])} holidays")
-    print("M2 sections from the module fixtures: " + ", ".join(s for sections in MODULE_SECTIONS.values() for s in sections))
+    print("M2 and M3 sections from the module fixtures: " + ", ".join(s for sections in MODULE_SECTIONS.values() for s in sections))
     print("left out (not in the rule set schema yet):")
     for item in LEFT_OUT:
         print("  - " + item)

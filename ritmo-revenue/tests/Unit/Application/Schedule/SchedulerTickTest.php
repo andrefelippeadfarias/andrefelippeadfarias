@@ -302,4 +302,21 @@ final class SchedulerTickTest extends TestCase
         self::assertSame('RuntimeException', $world->slot('2026-11-12T07:30|full')?->note);
         self::assertStringNotContainsString('The run broke', $world->logger->dump());
     }
+
+    public function testABrokenTickNeverReachesWpCronAndABrokenPropertyNeverStopsTheTick(): void
+    {
+        $world = new ScheduleWorld('2026-11-12T10:31:00Z');
+        $world->db->execute('DROP TABLE wp_ritmo_operation_state');
+
+        $report = $world->tick();
+        self::assertFalse($report->failed);
+        self::assertSame(['inn' => TickReport::ERROR], $report->properties);
+
+        $world->db->execute('DROP TABLE wp_ritmo_locks');
+        $broken = $world->tick();
+        self::assertTrue($broken->failed);
+        self::assertSame([], $broken->properties);
+        $errors = $world->logger->entries('error');
+        self::assertArrayHasKey('exception', end($errors)['context'] ?? []);
+    }
 }

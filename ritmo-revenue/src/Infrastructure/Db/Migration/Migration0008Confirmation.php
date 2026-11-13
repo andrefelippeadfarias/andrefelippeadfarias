@@ -9,8 +9,7 @@ use Ritmo\Infrastructure\Db\Schema\Index;
 use Ritmo\Infrastructure\Db\Schema\Table;
 
 /**
- * DRAFT of the confirmation, record and approval area of milestone M3 (the integration gives it
- * its number and adds it to Migrations::all()).
+ * Confirmation, record and approval (milestone M3).
  *
  * - change_log: group, undone change, confirmation level, order and the amounts of percentages;
  * - step_ledger: when a step reached the channel (push and PMS price) and when it was undone;
@@ -21,11 +20,11 @@ use Ritmo\Infrastructure\Db\Schema\Table;
  *
  * No column can hold guest data: bookings appear only by their PMS id.
  */
-final class DraftVerify implements Migration
+final class Migration0008Confirmation implements Migration
 {
     public function version(): int
     {
-        return 7;
+        return 8;
     }
 
     public function description(): string

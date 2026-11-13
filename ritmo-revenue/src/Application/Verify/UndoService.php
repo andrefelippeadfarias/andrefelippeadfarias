@@ -76,7 +76,7 @@ final class UndoService
             }
         }
 
-        return new UndoRequest($draft, $refused, $grants);
+        return new UndoRequest($draft, $refused, $grants, $grants === [] ? null : $result->plan);
     }
 
     /**

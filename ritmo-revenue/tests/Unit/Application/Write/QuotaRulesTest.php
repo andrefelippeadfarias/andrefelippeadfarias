@@ -9,11 +9,11 @@ use PHPUnit\Framework\TestCase;
 use Ritmo\Application\Write\Quota\AttemptLog;
 use Ritmo\Application\Write\Quota\AttemptOutcome;
 use Ritmo\Application\Write\Quota\AttemptRefused;
-use Ritmo\Application\Write\Quota\QuotaConfig;
+use Ritmo\Domain\Write\QuotaConfig;
 use Ritmo\Application\Write\Quota\QuotaVerdict;
 use Ritmo\Application\Write\Quota\RecalcAttempt;
 use Ritmo\Application\Write\Quota\RecalcQuota;
-use Ritmo\Application\Write\WriteConfig;
+use Ritmo\Domain\Write\WriteConfig;
 use Ritmo\Domain\Config\InvalidConfig;
 use Ritmo\Tests\Support\Fixtures;
 

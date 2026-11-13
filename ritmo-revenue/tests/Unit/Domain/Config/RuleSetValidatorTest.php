@@ -209,7 +209,7 @@ final class RuleSetValidatorTest extends TestCase
     {
         $paths = array_map(static fn (ValidationError $error): string => $error->path, (new RuleSetValidator())->validate([]));
 
-        self::assertSame(['occupancy', 'calendar', 'pace', 'floors', 'price_factors', 'safety', 'relations', 'price_bands', 'ladder', 'soldout', 'cadence', 'no_effect', 'orders', 'stay', 'plan'], $paths);
+        self::assertSame(['occupancy', 'calendar', 'pace', 'floors', 'price_factors', 'safety', 'relations', 'price_bands', 'ladder', 'soldout', 'cadence', 'no_effect', 'orders', 'stay', 'plan', 'write', 'quota', 'verify', 'approval', 'third_party', 'waves', 'modes', 'schedule', 'light_run', 'alerts'], $paths);
     }
 
     public function testAValidatorCanBeReused(): void

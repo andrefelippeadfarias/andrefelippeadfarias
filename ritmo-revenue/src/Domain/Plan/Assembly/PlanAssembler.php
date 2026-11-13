@@ -68,9 +68,21 @@ final class PlanAssembler
         $context = $wiring->validationContext($report);
         $rooms = array_values($inputs->rooms);
         $validation = $validator->validate($plan, $inputs->property, $rooms, $context);
-        $final = $validation->isValid() ? $validation : $this->withoutRefused($validator, $validation, $plan, $inputs, $context);
+        $final = $validation->isValid() ? $validation : $this->withoutRefused($validator, $validation, $plan, $inputs, $wiring->validationContext($report, true));
 
         return $this->finish($inputs, $plan, $validation, $final, $pricing->lines(), $kept, $report);
+    }
+
+    /**
+     * Validates again a plan cut down from the one this assembly built for the same inputs (the
+     * entries a person approved, the plan without the cuts a cancellation wave holds, the repair
+     * of a broken group), with the same context and the relations report of the assembly.
+     */
+    public function revalidate(RunInputs $inputs, Plan $plan, RelationReport $report): ValidationResult
+    {
+        $wiring = new RunWiring($this->rules, $this->clock, $inputs);
+
+        return (new Validator($this->rules, $this->clock, $this->rules->plan()))->validate($plan, $inputs->property, array_values($inputs->rooms), $wiring->validationContext($report, true));
     }
 
     /**

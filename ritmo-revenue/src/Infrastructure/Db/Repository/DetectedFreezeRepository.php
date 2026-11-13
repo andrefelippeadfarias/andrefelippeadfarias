@@ -11,7 +11,7 @@ use Ritmo\Infrastructure\Db\Database;
 use Ritmo\Infrastructure\Db\DbValue;
 
 /**
- * Nights frozen because someone else changed them (DraftVerify table detected_freezes). A freeze
+ * Nights frozen because someone else changed them (table detected_freezes). A freeze
  * ends when a person releases it, its time ends or its nights pass; rows are kept for the record.
  */
 final class DetectedFreezeRepository

@@ -54,7 +54,7 @@ final class InfrastructureRulesTest extends TestCase
         }
 
         self::assertSame(
-            ['Db/Migration/Migrator.php', 'Db/WpdbDatabase.php', 'Http/WpHttpClient.php', 'Store/OptionsStore.php'],
+            ['Db/Migration/Migrator.php', 'Db/WpdbDatabase.php', 'Http/WpHttpClient.php', 'Schedule/WpCronTrigger.php', 'Schedule/WpMailer.php', 'Store/OptionsStore.php'],
             $mentioning,
             'a new class that needs WordPress must be reviewed and added here'
         );

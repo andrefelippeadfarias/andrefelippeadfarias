@@ -9,6 +9,7 @@ use Ritmo\Domain\Plan\ValidatedPlan;
 use Ritmo\Domain\Plan\Validator;
 use Ritmo\Domain\Support\Clock;
 use Ritmo\Domain\Support\Days;
+use Ritmo\Domain\Write\ApprovalConfig;
 use Ritmo\Infrastructure\Db\Repository\PlanApprovalRepository;
 
 /**

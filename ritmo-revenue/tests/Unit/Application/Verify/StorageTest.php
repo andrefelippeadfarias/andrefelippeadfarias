@@ -14,7 +14,6 @@ use Ritmo\Domain\Write\State\ChangeField;
 use Ritmo\Domain\Write\State\NightFields;
 use Ritmo\Domain\Write\State\Provider;
 use Ritmo\Domain\Write\ThirdParty\Observation;
-use Ritmo\Infrastructure\Db\Migration\DraftVerify;
 use Ritmo\Infrastructure\Db\Migration\Migrations;
 use Ritmo\Infrastructure\Db\Migration\Migrator;
 use Ritmo\Infrastructure\Db\Repository\ChangeLogRepository;
@@ -24,11 +23,11 @@ use Ritmo\Infrastructure\Db\Schema\SchemaInspector;
 use Ritmo\Infrastructure\Store\ArrayStore;
 
 /**
- * The draft migration and the repositories of the confirmation and approval area.
+ * The migration (8) and the repositories of the confirmation and approval area.
  */
 final class StorageTest extends TestCase
 {
-    public function testTheDraftAddsItsColumnsAndTablesAndRunsAgainHarmlessly(): void
+    public function testTheMigrationAddsItsColumnsAndTablesAndRunsAgainHarmlessly(): void
     {
         $db = VerifyDatabase::create();
         $inspector = new SchemaInspector($db);
@@ -39,8 +38,8 @@ final class StorageTest extends TestCase
         $columns = $inspector->columns('change_log');
         self::assertContains('undo_of', $columns);
         self::assertContains('reached_channel_at', $inspector->columns('step_ledger'));
-        $again = (new Migrator($db, new ArrayStore(), [...Migrations::all(), new DraftVerify()]))->migrate();
-        self::assertSame(7, max($again), 'every step runs again from version 0');
+        $again = (new Migrator($db, new ArrayStore(), Migrations::all()))->migrate();
+        self::assertContains(8, $again, 'every step runs again from version 0');
         self::assertSame($columns, $inspector->columns('change_log'), 'and changes nothing');
     }
 

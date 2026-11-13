@@ -10,7 +10,7 @@ use Ritmo\Infrastructure\Db\Database;
 use Ritmo\Infrastructure\Db\DbValue;
 
 /**
- * The cancellation-wave hold of each property (DraftVerify table wave_holds): one open row per
+ * The cancellation-wave hold of each property (table wave_holds): one open row per
  * property until a person releases it; a newer wave widens the open row. Bookings appear by
  * their PMS id only.
  */

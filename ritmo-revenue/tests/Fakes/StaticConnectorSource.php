@@ -19,7 +19,13 @@ final class StaticConnectorSource implements ConnectorSource
         private readonly ?PmsConnector $pms,
         private readonly ?PricingConnector $pricing,
         private readonly bool $readsPricingCalendar = false,
+        private readonly string $pricingPms = 'beds24',
     ) {
+    }
+
+    public function pricingPmsName(): string
+    {
+        return $this->pricingPms;
     }
 
     public function pms(): PmsConnector

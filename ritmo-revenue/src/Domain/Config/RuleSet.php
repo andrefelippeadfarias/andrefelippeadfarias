@@ -6,12 +6,16 @@ namespace Ritmo\Domain\Config;
 
 use DateTimeInterface;
 use OutOfBoundsException;
+use Ritmo\Domain\Alerts\AlertsConfig;
 use Ritmo\Domain\Calendar\Stay\StayConfig;
 use Ritmo\Domain\Calendar\Stay\StayFields;
 use Ritmo\Domain\Model\NightType;
 use Ritmo\Domain\Model\PaceStatus;
 use Ritmo\Domain\Model\PricePlan;
 use Ritmo\Domain\Model\Property;
+use Ritmo\Domain\Operations\LightRunConfig;
+use Ritmo\Domain\Operations\ModesConfig;
+use Ritmo\Domain\Operations\ScheduleConfig;
 use Ritmo\Domain\Orders\OrdersConfig;
 use Ritmo\Domain\Plan\PlanConfig;
 use Ritmo\Domain\Pricing\Cadence\CadenceConfig;
@@ -21,6 +25,12 @@ use Ritmo\Domain\Pricing\Protection\ProtectionConfig;
 use Ritmo\Domain\Relations\Config\RelationsConfig;
 use Ritmo\Domain\Support\DateRange;
 use Ritmo\Domain\Support\Days;
+use Ritmo\Domain\Write\ApprovalConfig;
+use Ritmo\Domain\Write\Hold\WaveConfig;
+use Ritmo\Domain\Write\QuotaConfig;
+use Ritmo\Domain\Write\ThirdParty\ThirdPartyConfig;
+use Ritmo\Domain\Write\VerifyConfig;
+use Ritmo\Domain\Write\WriteConfig;
 
 /**
  * A validated, immutable set of rules with typed access.
@@ -467,6 +477,86 @@ final class RuleSet
     public function plan(): PlanConfig
     {
         return $this->section(PlanConfig::ROOT, fn (): PlanConfig => PlanConfig::fromArray($this->data[PlanConfig::ROOT]));
+    }
+
+    /**
+     * The write path: freshness of reads and validation, token lifetime, call sizes (section "write").
+     */
+    public function write(): WriteConfig
+    {
+        return $this->section(WriteConfig::ROOT, fn (): WriteConfig => WriteConfig::fromArray($this->data[WriteConfig::ROOT]));
+    }
+
+    /**
+     * The recalculation quota of the pricing system (section "quota").
+     */
+    public function quota(): QuotaConfig
+    {
+        return $this->section(QuotaConfig::ROOT, fn (): QuotaConfig => QuotaConfig::fromArray($this->data[QuotaConfig::ROOT]));
+    }
+
+    /**
+     * Confirmation of what was written and of its arrival at the channels (section "verify").
+     */
+    public function verify(): VerifyConfig
+    {
+        return $this->section(VerifyConfig::ROOT, fn (): VerifyConfig => VerifyConfig::fromArray($this->data[VerifyConfig::ROOT]));
+    }
+
+    /**
+     * How long a plan may wait for a person (section "approval").
+     */
+    public function approval(): ApprovalConfig
+    {
+        return $this->section(ApprovalConfig::ROOT, fn (): ApprovalConfig => ApprovalConfig::fromArray($this->data[ApprovalConfig::ROOT]));
+    }
+
+    /**
+     * Nights someone else changed: how long they stay frozen (section "third_party").
+     */
+    public function thirdParty(): ThirdPartyConfig
+    {
+        return $this->section(ThirdPartyConfig::ROOT, fn (): ThirdPartyConfig => ThirdPartyConfig::fromArray($this->data[ThirdPartyConfig::ROOT]));
+    }
+
+    /**
+     * The cancellation wave that holds price cuts (section "waves").
+     */
+    public function waves(): WaveConfig
+    {
+        return $this->section(WaveConfig::ROOT, fn (): WaveConfig => WaveConfig::fromArray($this->data[WaveConfig::ROOT]));
+    }
+
+    /**
+     * When a property may leave the shadow mode (section "modes").
+     */
+    public function modes(): ModesConfig
+    {
+        return $this->section(ModesConfig::ROOT, fn (): ModesConfig => ModesConfig::fromArray($this->data[ModesConfig::ROOT]));
+    }
+
+    /**
+     * When the runs of each property start (section "schedule").
+     */
+    public function schedule(): ScheduleConfig
+    {
+        return $this->section(ScheduleConfig::ROOT, fn (): ScheduleConfig => ScheduleConfig::fromArray($this->data[ScheduleConfig::ROOT]));
+    }
+
+    /**
+     * What a light run reads and decides (section "light_run").
+     */
+    public function lightRun(): LightRunConfig
+    {
+        return $this->section(LightRunConfig::ROOT, fn (): LightRunConfig => LightRunConfig::fromArray($this->data[LightRunConfig::ROOT]));
+    }
+
+    /**
+     * The security, below-expected and inventory alerts (section "alerts").
+     */
+    public function alerts(): AlertsConfig
+    {
+        return $this->section(AlertsConfig::ROOT, fn (): AlertsConfig => AlertsConfig::fromArray($this->data[AlertsConfig::ROOT]));
     }
 
     /**

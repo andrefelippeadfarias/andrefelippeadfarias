@@ -46,6 +46,17 @@ final class WpCronTrigger
         }
     }
 
+    /**
+     * Asks WordPress to run the due cron events now, in a background request (operations spec
+     * D16): the tick that follows an approval starts the approved write at once instead of up to
+     * five minutes later. The tick still holds the property's run lock: the write waits for a run
+     * in progress and never overlaps it.
+     */
+    public static function spawnNow(): void
+    {
+        spawn_cron();
+    }
+
     public static function unschedule(): void
     {
         wp_clear_scheduled_hook(self::HOOK);

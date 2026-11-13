@@ -6,16 +6,14 @@ namespace Ritmo\Application\ShadowRun;
 
 use OutOfBoundsException;
 use Ritmo\Application\EmergencySwitch;
+use Ritmo\Application\Run\RunOpener;
+use Ritmo\Application\Schedule\LockedRunLauncher;
 use Ritmo\Contracts\Logger;
-use Ritmo\Domain\Config\RuleSet;
 use Ritmo\Domain\Model\Property;
-use Ritmo\Domain\Model\RoomType;
+use Ritmo\Domain\Model\PropertyMode;
 use Ritmo\Domain\Support\Clock;
-use Ritmo\Domain\Support\DateRange;
 use Ritmo\Domain\Support\Days;
 use Ritmo\Infrastructure\Db\Repository\PropertyRepository;
-use Ritmo\Infrastructure\Db\Repository\RoomTypeRepository;
-use Ritmo\Infrastructure\Db\Repository\RuleSetRepository;
 use Ritmo\Infrastructure\Db\Repository\RunRepository;
 use Ritmo\Infrastructure\Lock\DbLock;
 
@@ -30,9 +28,6 @@ final class ShadowRunService
 {
     public const KIND = 'shadow';
 
-    /** Nights the run covers, from today. */
-    public const HORIZON_NIGHTS = 60;
-
     public const LOCK_TTL_SECONDS = 600;
 
     /** Time after which no new stage starts in the same request. */
@@ -40,8 +35,7 @@ final class ShadowRunService
 
     public function __construct(
         private readonly PropertyRepository $properties,
-        private readonly RoomTypeRepository $roomTypes,
-        private readonly RuleSetRepository $ruleSets,
+        private readonly RunOpener $opener,
         private readonly RunRepository $runs,
         private readonly DbLock $locks,
         private readonly EmergencySwitch $switch,
@@ -51,9 +45,13 @@ final class ShadowRunService
     ) {
     }
 
+    /**
+     * The property's single run lock (LockedRunLauncher): a shadow run never overlaps a run of
+     * any other kind.
+     */
     public static function lockKey(string $propertyId): string
     {
-        return 'shadow_run:' . $propertyId;
+        return LockedRunLauncher::lockKey($propertyId);
     }
 
     /**
@@ -136,38 +134,13 @@ final class ShadowRunService
 
     private function context(Property $property): RunContext|RunOutcome
     {
-        $now = $this->clock->now();
         $today = $this->clock->today($property->timezone);
-        $horizon = DateRange::nights($today, self::HORIZON_NIGHTS);
-        $rooms = array_values(array_filter($this->roomTypes->forProperty($property->id), static fn (RoomType $room): bool => $room->pmsRef !== ''));
-
         $open = $this->runs->openRun($property->id, self::KIND);
         if ($open !== null && ($open['run_day'] === null || Days::key($open['run_day']) !== Days::key($today))) {
-            $this->runs->finish($open['id'], RunRepository::FAILED, $open['summary'], $now, 'The day of the property changed before the run ended; a new run was started.');
+            $this->runs->finish($open['id'], RunRepository::FAILED, $open['summary'], $this->clock->now(), 'The day of the property changed before the run ended; a new run was started.');
             $open = null;
         }
 
-        if ($open !== null) {
-            $this->logger->info('A shadow run resumes.', ['run_id' => $open['id'], 'property_id' => $property->id, 'stage' => $open['stage']]);
-
-            return new RunContext($open['id'], $property, $rooms, $this->rules($open['ruleset_version']), $today, $horizon, $open['stage'], $open['summary'], $this->runs->state($open['id']));
-        }
-
-        $version = $this->ruleSets->currentVersion();
-        $runId = $this->runs->start($property->id, self::KIND, $property->mode, $version, $now, $today);
-        $this->logger->info('A shadow run starts.', ['run_id' => $runId, 'property_id' => $property->id]);
-        if ($rooms === []) {
-            $error = 'No room type of the property is mapped to the PMS.';
-            $this->runs->finish($runId, RunRepository::FAILED, [], $now, $error);
-
-            return new RunOutcome(RunOutcome::FAILED, $runId, '', $error);
-        }
-
-        return new RunContext($runId, $property, $rooms, $this->rules($version), $today, $horizon);
-    }
-
-    private function rules(?int $version): RuleSet
-    {
-        return ($version === null ? null : $this->ruleSets->find($version)) ?? RuleSet::defaults();
+        return $open !== null ? $this->opener->reopen($property, $open) : $this->opener->open($property, self::KIND, PropertyMode::Shadow, $today);
     }
 }

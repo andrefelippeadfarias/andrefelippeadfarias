@@ -9,6 +9,7 @@ use DateTimeImmutable;
 use Ritmo\Contracts\Exception\ConnectorException;
 use Ritmo\Contracts\Exception\RateLimited;
 use Ritmo\Domain\Support\Clock;
+use Ritmo\Domain\Write\QuotaConfig;
 use Ritmo\Infrastructure\Db\Repository\RecalcAttemptRepository;
 
 /**

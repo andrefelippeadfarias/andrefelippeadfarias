@@ -81,7 +81,7 @@ final class ShadowRunServiceTest extends TestCase
         // starts from there and steps down, not up from 420.
         $world = ShadowRunWorld::pricing();
         $first = Days::date(ShadowRunWorld::FIRST_NIGHT);
-        $last = Days::add($first, ShadowRunService::HORIZON_NIGHTS - 1);
+        $last = Days::add($first, ShadowRunWorld::HORIZON_NIGHTS - 1);
         $pricing = new InMemoryPricingConnector(
             $world->listListings(),
             ['L-STD' => $world->readPrices('L-STD', $first, $last), 'L-STE' => $world->readPrices('L-STE', $first, $last)],
@@ -132,7 +132,7 @@ final class ShadowRunServiceTest extends TestCase
 
         $weekendNights = count(array_filter(iterator_to_array(ShadowRunWorld::nights()), ShadowRunWorld::isWeekend(...)));
         self::assertSame(2 * $weekendNights, $decide['no_market_data']);
-        self::assertSame(2 * ShadowRunService::HORIZON_NIGHTS, $decide['nights']);
+        self::assertSame(2 * ShadowRunWorld::HORIZON_NIGHTS, $decide['nights']);
         self::assertSame($decide['no_market_data'], $decide['by_reason'][NightLine::NO_MARKET_ANCHOR] + ($decide['by_reason'][NightLine::SOLD_OUT_NO_ANCHOR] ?? 0), 'such nights are set apart before the engine');
     }
 
@@ -355,7 +355,7 @@ final class ShadowRunServiceTest extends TestCase
         $outcome = $this->world->service()->run(ShadowRunWorld::PROPERTY);
         $decide = $this->world->runs->find((int) $outcome->runId)['summary']['decide'] ?? [];
 
-        self::assertSame(2 * ShadowRunService::HORIZON_NIGHTS, $decide['nights'], 'every room night of the snapshot has its line');
+        self::assertSame(2 * ShadowRunWorld::HORIZON_NIGHTS, $decide['nights'], 'every room night of the snapshot has its line');
         self::assertNotSame([], array_intersect_key($decide['by_reason'], array_flip([NightLine::PROTECTION, NightLine::PROTECTION_NONE])), 'the sold-out weekday night goes to the protection of sold-out nights');
     }
 }

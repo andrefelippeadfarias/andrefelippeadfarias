@@ -15,7 +15,7 @@ use Ritmo\Application\Write\Gate\PlanHash;
 use Ritmo\Application\Write\Gate\WriteContext;
 use Ritmo\Application\Write\Gate\WriteRefused;
 use Ritmo\Application\Write\Schedule\CalendarChange;
-use Ritmo\Application\Write\WriteConfig;
+use Ritmo\Domain\Write\WriteConfig;
 use Ritmo\Contracts\Exception\WriteBlocked;
 use Ritmo\Contracts\WriteOperation;
 use Ritmo\Contracts\WriteRequest;

@@ -108,6 +108,226 @@ Generated from the code. Do not edit between the markers; run `php bin/sync-gene
 
 <!-- BEGIN GENERATED SIGNATURES (php bin/sync-generated.php) -->
 
+#### `Ritmo\Application\Alerts\AlertNotifier` (final class)
+
+```php
+public function __construct(AlertLedger $ledger, Mailer $mailer, RecipientDirectory $recipients, NotificationPolicy $policy, Clock $clock, Logger $logger);
+public function notify(AlertRecord $alert, RaiseAction $action): Delivery;
+public function sendDigest(string $propertyId): int;
+```
+
+#### `Ritmo\Application\Alerts\AlertService` (final class)
+
+```php
+public function __construct(AlertLedger $ledger, AlertNotifier $notifier, Clock $clock);
+public function raise(AlertDraft $draft, ?int $runId = null): ?AlertRecord;
+public function raiseAll(array $drafts, ?int $runId = null): array;
+public function settle(string $propertyId, array $codes, array $raisedKeys, ?Closure $inScope = null): int;
+public function resolveKey(string $dedupeKey): bool;
+public function acknowledge(int $alertId, int $userId, bool $isApprover): void;
+public function resolve(int $alertId, int $userId, bool $isApprover): void;
+```
+
+#### `Ritmo\Application\Alerts\MailText` (final class)
+
+```php
+public static function subject(AlertRecord $alert): string;
+public static function body(AlertRecord $alert): string;
+public static function digestSubject(string $propertyId, int $count): string;
+public static function digestBody(array $alerts): string;
+```
+
+#### `Ritmo\Application\Alerts\WatchInput` (final class)
+
+```php
+public readonly string $propertyId;
+public readonly array $bookings;
+public readonly DateTimeImmutable $since;
+public readonly array $inventory;
+public readonly array $bookedUnits;
+public readonly array $roomUnits;
+public readonly DateRange $checked;
+public readonly ?int $runId;
+public function __construct(string $propertyId, array $bookings, DateTimeImmutable $since, array $inventory, array $bookedUnits, array $roomUnits, DateRange $checked, ?int $runId = null);
+```
+
+#### `Ritmo\Application\Alerts\WatchOutcome` (final class)
+
+```php
+public readonly array $security;
+public readonly array $belowExpected;
+public readonly array $overbooked;
+public readonly array $closed;
+public readonly array $blocked;
+public readonly array $waves;
+public readonly array $originsSeen;
+public function __construct(array $security, array $belowExpected, array $overbooked, array $closed, array $blocked, array $waves, array $originsSeen);
+```
+
+#### `Ritmo\Application\Alerts\WatchService` (final class)
+
+```php
+public function __construct(AlertService $alerts, AlertsConfig $config, CancellationWave $waves, InventorySnapshotRepository $snapshots);
+public function watch(WatchInput $in): WatchOutcome;
+public function audit(string $propertyId, array $audits, array $rooms, ?int $runId = null): void;
+```
+
+#### `Ritmo\Application\Approval\ApprovalGrant` (final class)
+
+```php
+public readonly int $approvalId;
+public readonly string $propertyId;
+public readonly ApprovalKind $kind;
+public readonly string $planHash;
+public readonly DateTimeImmutable $planDay;
+public readonly int $approvedBy;
+public readonly string $capability;
+public readonly DateTimeImmutable $approvedAt;
+public readonly DateTimeImmutable $expiresAt;
+public readonly array $approvedEntries;
+public function __construct(int $approvalId, string $propertyId, ApprovalKind $kind, string $planHash, DateTimeImmutable $planDay, int $approvedBy, string $capability, DateTimeImmutable $approvedAt, DateTimeImmutable $expiresAt, array $approvedEntries);
+public function approvedKeys(): array;
+public function listingChanges(): array;
+```
+
+#### `Ritmo\Application\Approval\ApprovalKind` (enum)
+
+```php
+case Plan = 'plan';
+case Listing = 'listing';
+case Undo = 'undo';
+```
+
+#### `Ritmo\Application\Approval\ApprovalRefused` (final class extends RuntimeException)
+
+```php
+const NOT_FOUND = 'not_found';
+const NOT_PENDING = 'not_pending';
+const NOT_APPROVED = 'not_approved';
+const NO_CAPABILITY = 'no_capability';
+const EXPIRED = 'approval_expired';
+const NOTHING_SELECTED = 'nothing_selected';
+const UNKNOWN_ENTRY = 'unknown_entry';
+const LISTING_NEEDS_EXPLICIT_APPROVAL = 'listing_needs_explicit_approval';
+const UNSEALED_PLAN = 'unsealed_plan';
+public readonly string $reason;
+public function __construct(string $reason, string $message);
+```
+
+#### `Ritmo\Application\Approval\ApprovalSelection` (final class)
+
+```php
+public readonly array $approved;
+public readonly array $rejected;
+public readonly array $added;
+public function __construct(array $approved, array $rejected, array $added);
+```
+
+#### `Ritmo\Application\Approval\ApprovalService` (final class)
+
+```php
+const SUPERSEDED = 'superseded';
+const DAY_OR_CALENDAR = 'day_turned_or_calendar_old';
+public function __construct(PlanApprovalRepository $repository, CapabilityCheck $capabilities, Clock $clock, ApprovalConfig $config = \Ritmo\Domain\Write\ApprovalConfig::__set_state(array(
+   'maxCalendarAgeHours' => 6,
+)));
+public function propose(ValidatedPlan $plan, ?int $runId, DateTimeImmutable $calendarReadAt, ?int $rulesetVersion = null, ApprovalKind $kind = ApprovalKind::Plan): array;
+public function approve(int $id, int $userId, ?array $selected = null, string $note = ''): ApprovalGrant;
+public function reject(int $id, int $userId, string $note = ''): void;
+public function grant(int $id): ApprovalGrant;
+public function entriesOf(int $id): array;
+public function markWritten(int $id, int $writeRunId): bool;
+public function expireDue(string $propertyId): int;
+public function expireAll(string $propertyId, string $reason): int;
+```
+
+#### `Ritmo\Application\Approval\ApprovalStatus` (enum)
+
+```php
+case Pending = 'pending';
+case Approved = 'approved';
+case Rejected = 'rejected';
+case Expired = 'expired';
+case Superseded = 'superseded';
+case Written = 'written';
+case Lapsed = 'lapsed';
+```
+
+#### `Ritmo\Application\Approval\ApprovalWindow` (final class)
+
+```php
+public static function expiresAt(DateTimeImmutable $planDay, string $timezone, DateTimeImmutable $calendarReadAt, int $maxCalendarAgeHours): DateTimeImmutable;
+```
+
+#### `Ritmo\Application\Approval\ApprovedSubset` (final class)
+
+```php
+public static function restrict(ApprovalGrant $grant, Plan $fresh, array $bases): RestrictedPlan;
+```
+
+#### `Ritmo\Application\Approval\CapabilityCheck` (interface)
+
+```php
+const APPROVE = 'ritmo_approve';
+public function userCan(int $userId, string $capability): bool;
+```
+
+#### `Ritmo\Application\Approval\PartialApproval` (final class)
+
+```php
+public static function close(array $entries, array $selected): ApprovalSelection;
+```
+
+#### `Ritmo\Application\Approval\PlanEntries` (final class)
+
+```php
+public static function of(Plan $plan, array $bases): array;
+public static function hash(array $entries): string;
+```
+
+#### `Ritmo\Application\Approval\PlanEntry` (final class)
+
+```php
+const ITEM = 'item';
+const DELETION = 'deletion';
+const LISTING = 'listing';
+public readonly string $kind;
+public readonly string $roomCode;
+public readonly string $subject;
+public readonly array $fields;
+public readonly ?string $orderId;
+public function __construct(string $kind, string $roomCode, string $subject, array $fields = [], ?string $orderId = null);
+public function key(): string;
+public function group(): string;
+public function sameAs(self $other): bool;
+public function toArray(): array;
+public static function fromArray(array $data): self;
+```
+
+#### `Ritmo\Application\Approval\RestrictedPlan` (final class)
+
+```php
+public readonly Plan $plan;
+public readonly array $needsNewApproval;
+public readonly array $notApproved;
+public function __construct(Plan $plan, array $needsNewApproval, array $notApproved);
+```
+
+#### `Ritmo\Application\Approval\WaveHoldService` (final class)
+
+```php
+public function __construct(WaveHoldRepository $holds, CapabilityCheck $capabilities, Clock $clock, WaveConfig $config = \Ritmo\Domain\Write\Hold\WaveConfig::__set_state(array(
+   'minCancellations' => 3,
+   'windowHours' => 3,
+   'holdHours' => NULL,
+   'scope' => 
+  \Ritmo\Domain\Write\Hold\HoldScope::Property,
+)));
+public function observe(string $propertyId, array $bookings, DateTimeImmutable $since): ?WaveHold;
+public function active(string $propertyId): ?WaveHold;
+public function release(string $propertyId, int $userId): bool;
+```
+
 #### `Ritmo\Application\ConnectionNotConfigured` (final class extends RuntimeException)
 
 ```php
@@ -160,6 +380,180 @@ public function isEngaged(): bool;
 public function isEngagedByConstant(): bool;
 public function engage(): void;
 public function release(): void;
+```
+
+#### `Ritmo\Application\Schedule\FailureKind` (enum)
+
+```php
+case Connector = 'connector';
+case Write = 'write';
+case DayChanged = 'day_changed';
+case Other = 'other';
+```
+
+#### `Ritmo\Application\Schedule\LaunchResult` (final class)
+
+```php
+public readonly LaunchStatus $status;
+public readonly ?int $runId;
+public readonly ?FailureKind $failure;
+public readonly string $note;
+public function __construct(LaunchStatus $status, ?int $runId = null, ?FailureKind $failure = null, string $note = '');
+public static function busy(): self;
+```
+
+#### `Ritmo\Application\Schedule\LaunchStatus` (enum)
+
+```php
+case Running = 'running';
+case Completed = 'completed';
+case Failed = 'failed';
+case Stopped = 'stopped';
+case Busy = 'busy';
+public function slotStatus(): SlotStatus;
+public function isFinal(): bool;
+```
+
+#### `Ritmo\Application\Schedule\LightRoundRequest` (final class)
+
+```php
+public readonly string $propertyId;
+public readonly array $rooms;
+public readonly DateTimeImmutable $today;
+public readonly int $horizonDays;
+public readonly array $movements;
+public readonly array $inventory;
+public readonly DateTimeImmutable $readStartedAt;
+public readonly array $manualChanges;
+public readonly int $newOverbooked;
+public readonly LightRunConfig $config;
+public function __construct(string $propertyId, array $rooms, DateTimeImmutable $today, int $horizonDays, array $movements, array $inventory, DateTimeImmutable $readStartedAt, array $manualChanges, int $newOverbooked, LightRunConfig $config);
+```
+
+#### `Ritmo\Application\Schedule\LightRoundService` (final class)
+
+```php
+public function __construct(InventorySnapshotRepository $snapshots, AlertService $alerts);
+public function plan(LightRoundRequest $request, RoomQuota $quota, ?int $runId = null): LightRoundPlan;
+```
+
+#### `Ritmo\Application\Schedule\LockedRunLauncher` (final class implements RunLauncher)
+
+```php
+const LOCK_TTL_SECONDS = 600;
+public function __construct(RunRepository $runs, DbLock $locks, RunExecutor $executor, Clock $clock, Logger $logger);
+public static function lockKey(string $propertyId): string;
+public function continueOpen(Property $property, int $budgetSeconds): ?LaunchResult;
+public function stopOpen(Property $property, string $reason): ?LaunchResult;
+public function start(Property $property, RunKind $kind, bool $forcedShadow, int $budgetSeconds): LaunchResult;
+```
+
+#### `Ritmo\Application\Schedule\MovementRead` (final class)
+
+```php
+public readonly MovementWindow $window;
+public readonly array $bookings;
+public readonly ?MovementBatch $batch;
+public readonly ?ConnectorException $failure;
+public static function read(MovementWindow $window, array $bookings, MovementBatch $batch): self;
+public static function failed(MovementWindow $window, ConnectorException $failure): self;
+public function succeeded(): bool;
+```
+
+#### `Ritmo\Application\Schedule\MovementTracker` (final class)
+
+```php
+const RETRY_AFTER_SECONDS = 10;
+public function __construct(OperationStateRepository $states, BookingMovementRepository $ledger, AlertService $alerts, Sleeper $sleeper, Clock $clock);
+public function read(string $propertyId, PmsConnector $pms, array $rooms, LightRunConfig $config, int $maxLookbackDays, ?int $runId = null): MovementRead;
+```
+
+#### `Ritmo\Application\Schedule\PauseService` (final class)
+
+```php
+const MAX_REASON = 190;
+public function __construct(PropertyRepository $properties, OperationStateRepository $states, Clock $clock, Logger $logger);
+public function pause(string $propertyId, ?DateTimeImmutable $until, string $reason, int $userId): void;
+public function resume(string $propertyId, int $userId): void;
+```
+
+#### `Ritmo\Application\Schedule\RoomQuota` (interface)
+
+```php
+public function permits(string $roomCode): bool;
+```
+
+#### `Ritmo\Application\Schedule\RunExecutor` (interface)
+
+```php
+public function start(Property $property, RunKind $kind, bool $forcedShadow, DateTimeImmutable $today, DateTimeImmutable $deadline, Closure $heartbeat): LaunchResult;
+public function resume(Property $property, int $runId, DateTimeImmutable $deadline, Closure $heartbeat): LaunchResult;
+```
+
+#### `Ritmo\Application\Schedule\RunLauncher` (interface)
+
+```php
+public function continueOpen(Property $property, int $budgetSeconds): ?LaunchResult;
+public function stopOpen(Property $property, string $reason): ?LaunchResult;
+public function start(Property $property, RunKind $kind, bool $forcedShadow, int $budgetSeconds): LaunchResult;
+```
+
+#### `Ritmo\Application\Schedule\RunNowService` (final class)
+
+```php
+const DEFAULT_BUDGET_SECONDS = 20;
+public function __construct(PropertyRepository $properties, RunLauncher $launcher, EmergencySwitch $switch);
+public function run(string $propertyId, int $budgetSeconds = 20): LaunchResult;
+```
+
+#### `Ritmo\Application\Schedule\ScheduleHousekeeping` (final class)
+
+```php
+const DAY_KEY = 'scheduler_housekeeping_day';
+const SLOT_RETENTION_DAYS = 90;
+const MOVEMENT_RETENTION_DAYS = 8;
+public function __construct(ScheduledRunRepository $slots, BookingMovementRepository $movements, KeyValueStore $store, Clock $clock);
+public function daily(): bool;
+```
+
+#### `Ritmo\Application\Schedule\ScheduleSource` (interface)
+
+```php
+public function schedule(Property $property): ScheduleConfig;
+```
+
+#### `Ritmo\Application\Schedule\SchedulerTick` (final class)
+
+```php
+const TICK_LOCK = 'scheduler_tick';
+const HEARTBEAT_KEY = 'scheduler_last_tick';
+const DEFAULT_BUDGET_SECONDS = 40;
+public function __construct(PropertyRepository $properties, ScheduledRunRepository $slots, OperationStateRepository $states, RunRepository $runs, DbLock $locks, KeyValueStore $store, EmergencySwitch $switch, RunLauncher $launcher, ScheduleSource $schedules, AlertService $alerts, ScheduleHousekeeping $housekeeping, Clock $clock, Logger $logger);
+public function run(int $budgetSeconds = 40): TickReport;
+```
+
+#### `Ritmo\Application\Schedule\StallMonitor` (final class)
+
+```php
+public function __construct(KeyValueStore $store, ScheduledRunRepository $slots, AlertService $alerts, Clock $clock);
+public function check(int $stalledAfterMinutes): bool;
+public function heartbeat(): ?DateTimeImmutable;
+```
+
+#### `Ritmo\Application\Schedule\TickReport` (final class)
+
+```php
+const IDLE = 'idle';
+const CONTINUED = 'continued';
+const STARTED = 'started';
+const WAITING = 'waiting';
+const BLOCKED = 'blocked';
+const DEFERRED = 'deferred';
+const ERROR = 'error';
+public readonly bool $busy;
+public readonly array $properties;
+public readonly bool $failed;
+public function __construct(bool $busy, array $properties = [], bool $failed = false);
 ```
 
 #### `Ritmo\Application\Setup\SampleCsv` (final class)
@@ -241,7 +635,10 @@ public readonly DateRange $horizon;
 public readonly string $stage;
 public readonly array $summary;
 public readonly array $state;
-public function __construct(int $runId, Property $property, array $rooms, RuleSet $rules, DateTimeImmutable $today, DateRange $horizon, string $stage = '', array $summary = [], array $state = []);
+public readonly string $kind;
+public readonly PropertyMode $mode;
+public readonly ?int $rulesetVersion;
+public function __construct(int $runId, Property $property, array $rooms, RuleSet $rules, DateTimeImmutable $today, DateRange $horizon, string $stage = '', array $summary = [], array $state = [], string $kind = 'shadow', PropertyMode $mode = PropertyMode::Shadow, ?int $rulesetVersion = null);
 public function after(string $stage, array $summary, array $state): self;
 public function capturedAt(): ?DateTimeImmutable;
 public function listings(): array;
@@ -340,6 +737,690 @@ public static function instant(?string $value): ?DateTimeImmutable;
 const NAME = 'validate';
 public function name(): string;
 public function run(RunContext $context): StageResult;
+```
+
+#### `Ritmo\Application\Verify\ConfirmationQuota` (interface)
+
+```php
+public function allows(string $roomCode, DateTimeImmutable $now): bool;
+```
+
+#### `Ritmo\Application\Verify\DeliveryService` (final class)
+
+```php
+public function __construct(WrittenStepRepository $steps, PricingConnector $pricing, PmsConnector $pms, ChannelArrival $arrival = \Ritmo\Domain\Write\Channel\ChannelArrival::__set_state(array(
+   'overdueHours' => 30,
+)));
+public function confirm(string $propertyId, array $rooms, DateTimeImmutable $now): ArrivalReport;
+```
+
+#### `Ritmo\Application\Verify\NightConfirmation` (final class)
+
+```php
+public readonly WrittenNight $written;
+public readonly StoredStatus $stored;
+public readonly NightFields $observed;
+public readonly array $differences;
+public readonly ?LiveRoute $liveRoute;
+public readonly ?LiveVerdict $live;
+public function __construct(WrittenNight $written, StoredStatus $stored, NightFields $observed, array $differences = [], ?LiveRoute $liveRoute = null, ?LiveVerdict $live = null);
+public function withLive(LiveRoute $route, ?LiveVerdict $verdict): self;
+public function isStored(): bool;
+```
+
+#### `Ritmo\Application\Verify\RecordOutcome` (final class)
+
+```php
+public readonly array $changeIds;
+public readonly array $stepIds;
+public function __construct(array $changeIds, array $stepIds);
+```
+
+#### `Ritmo\Application\Verify\RecordService` (final class)
+
+```php
+public function __construct(ChangeLogRepository $changes, WrittenStepRepository $steps, NightObservationRepository $observations);
+public function record(string $propertyId, array $confirmations, array $proposals, array $bases, string $actor, ?int $runId, DateTimeImmutable $storedAt): RecordOutcome;
+```
+
+#### `Ritmo\Application\Verify\StoredStatus` (enum)
+
+```php
+case Stored = 'stored';
+case Mismatch = 'mismatch';
+case Unread = 'unread';
+```
+
+#### `Ritmo\Application\Verify\ThirdPartyResult` (final class)
+
+```php
+public readonly array $changes;
+public readonly array $freezes;
+public readonly array $orders;
+public function __construct(array $changes, array $freezes, array $orders);
+```
+
+#### `Ritmo\Application\Verify\ThirdPartyWatch` (final class)
+
+```php
+public function __construct(NightObservationRepository $observations, DetectedFreezeRepository $freezes, CapabilityCheck $capabilities, Clock $clock, ThirdPartyConfig $config = \Ritmo\Domain\Write\ThirdParty\ThirdPartyConfig::__set_state(array(
+   'untilNightPasses' => false,
+   'freezeDays' => 7,
+)), ManualChangeDetector $detector = \Ritmo\Domain\Write\ThirdParty\ManualChangeDetector::__set_state(array(
+)));
+public function inspect(Property $property, array $current, array $unresolved = [], array $pushed = [], ?int $runId = null): ThirdPartyResult;
+public function orders(Property $property): array;
+public function release(int $freezeId, int $userId): bool;
+```
+
+#### `Ritmo\Application\Verify\UndoRequest` (final class)
+
+```php
+public readonly UndoDraft $draft;
+public readonly array $refused;
+public readonly array $grants;
+public function __construct(UndoDraft $draft, array $refused, array $grants);
+```
+
+#### `Ritmo\Application\Verify\UndoService` (final class)
+
+```php
+public function __construct(ChangeLogRepository $changes, WrittenStepRepository $steps, PricingConnector $pricing, PmsConnector $pms, ApprovalService $approvals, CapabilityCheck $capabilities, Clock $clock, UndoPlanner $planner = \Ritmo\Domain\Write\Change\UndoPlanner::__set_state(array(
+   'items' => 
+  array (
+  ),
+   'deletions' => 
+  array (
+  ),
+   'listing' => 
+  array (
+  ),
+   'restores' => 
+  array (
+  ),
+   'skipped' => 
+  array (
+  ),
+   'notes' => 
+  array (
+  ),
+   'undoOf' => 
+  array (
+  ),
+)));
+public function request(Property $property, array $rooms, array $changeIds, int $userId, Validator $validator, ValidationContext $context, ?int $runId = null): UndoRequest;
+public function confirm(array $changeIds, DateTimeImmutable $at): int;
+```
+
+#### `Ritmo\Application\Verify\Verifier` (final class)
+
+```php
+public function __construct(PricingConnector $pricing, PmsConnector $pms, LiveCheck $check = \Ritmo\Domain\Write\Confirm\LiveCheck::__set_state(array(
+)));
+public function stored(array $written, array $rooms): array;
+public function live(array $confirmations, array $rooms, array $listings, ConfirmationQuota $quota, DateTimeImmutable $now): array;
+```
+
+#### `Ritmo\Application\Write\Execute\PmsGuard` (final class)
+
+```php
+const PRICING_FIRST = 'pricing_first';
+const AT_TARGET = 'already_at_target';
+const CHANGED = 'changed_since_read';
+public function filter(WriteStep $step, array $pricingDone, StoredState $fresh): array;
+```
+
+#### `Ritmo\Application\Write\Execute\RunProgress` (final class)
+
+```php
+public function record(StepResult $result): void;
+public function stop(StopReason $reason, ?WriteStep $step = null): void;
+public function stopped(): ?StopReason;
+public function pricingRateLimited(): bool;
+public function alert(string $code): void;
+public function notRecalculated(string $listing): void;
+public function isNotRecalculated(string $listing): bool;
+public function pricingDone(): array;
+public function results(): array;
+public function outcome(array $nearNights): WriteOutcome;
+```
+
+#### `Ritmo\Application\Write\Execute\StepResult` (final class)
+
+```php
+public readonly WriteStep $step;
+public readonly OpStatus $status;
+public readonly string $reason;
+public readonly ?int $httpStatus;
+public function __construct(WriteStep $step, OpStatus $status, string $reason = '', ?int $httpStatus = null);
+public function with(OpStatus $status, string $reason = ''): self;
+```
+
+#### `Ritmo\Application\Write\Execute\StepSender` (final class)
+
+```php
+public function send(WriteRun $run, WriteStep $step): void;
+public static function classify(Throwable $failure): array;
+```
+
+#### `Ritmo\Application\Write\Execute\StopReason` (enum)
+
+```php
+case LockLost = 'lock_lost';
+case KillSwitch = 'kill_switch';
+case DayTurned = 'day_turned';
+case TokenExpired = 'token_expired';
+case TimeBudget = 'time_budget';
+case Rejected = 'rejected';
+case NotReady = 'not_ready';
+case RateLimited = 'rate_limited';
+case AuthFailed = 'auth_failed';
+case UpstreamError = 'upstream_error';
+case Unknown = 'unknown';
+case Blocked = 'blocked';
+case ReadFailed = 'read_failed';
+```
+
+#### `Ritmo\Application\Write\Execute\StoredCheck` (final class)
+
+```php
+public static function compare(array $intended, StoredState $fresh, bool $pms): array;
+```
+
+#### `Ritmo\Application\Write\Execute\WriteExecutor` (final class)
+
+```php
+public function __construct(WriteGate $gate, EmergencySwitch $switch, Clock $clock, WriteJournal $journal, WriteConfig $config = \Ritmo\Domain\Write\WriteConfig::__set_state(array(
+   'maxReadAgeMinutes' => 30,
+   'maxValidationAgeMinutes' => 10,
+   'tokenTtlMinutes' => 15,
+   'horizonDays' => 365,
+   'horizonEdgeDays' => 2,
+   'maxIdenticalRefusals' => 2,
+   'listingChangesEnabled' => false,
+   'pmsMaxRangesPerPost' => 100,
+   'callTimeoutSeconds' => 120,
+   'maxDatesPerCall' => 70,
+)), ?RecalcGuard $recalc = null);
+public function execute(WriteRun $run): WriteOutcome;
+```
+
+#### `Ritmo\Application\Write\Execute\WriteOutcome` (final class)
+
+```php
+public readonly array $results;
+public readonly ?StopReason $stopReason;
+public readonly array $alerts;
+public readonly array $brokenGroups;
+public function __construct(array $results, ?StopReason $stopReason, array $alerts, array $brokenGroups = []);
+public function stepsWith(OpStatus $status): array;
+public function statusOf(int $number): ?OpStatus;
+```
+
+#### `Ritmo\Application\Write\Execute\WriteRun` (final class)
+
+```php
+public readonly int $runId;
+public readonly Property $property;
+public readonly ValidatedPlan $plan;
+public readonly IssuedToken $issued;
+public readonly PricingConnector $pricing;
+public readonly ?PmsConnector $pms;
+public readonly Closure $heartbeat;
+public readonly ?DateTimeImmutable $deadline;
+public readonly ?DateTimeImmutable $runStart;
+public function __construct(int $runId, Property $property, ValidatedPlan $plan, IssuedToken $issued, PricingConnector $pricing, ?PmsConnector $pms, Closure $heartbeat, ?DateTimeImmutable $deadline = null, ?DateTimeImmutable $runStart = null);
+```
+
+#### `Ritmo\Application\Write\Gate\AutonomousAuthorization` (final class implements WriteAuthorization)
+
+```php
+public readonly string $propertyId;
+public readonly int $enabledBy;
+public readonly DateTimeImmutable $enabledAt;
+public function __construct(string $propertyId, int $enabledBy, DateTimeImmutable $enabledAt);
+public function refusal(WriteContext $context, string $planHash, DateTimeImmutable $today): ?string;
+public function isHuman(): bool;
+public function allowsListingChange(string $roomCode, string $field): bool;
+public function actor(): string;
+```
+
+#### `Ritmo\Application\Write\Gate\FieldLocks` (final class)
+
+```php
+public function check(array $steps, array $rooms): void;
+```
+
+#### `Ritmo\Application\Write\Gate\HumanApproval` (final class implements WriteAuthorization)
+
+```php
+public readonly string $id;
+public readonly string $propertyId;
+public readonly string $planHash;
+public readonly DateTimeImmutable $today;
+public readonly int $approvedBy;
+public readonly DateTimeImmutable $approvedAt;
+public readonly array $listingChanges;
+public function __construct(string $id, string $propertyId, string $planHash, DateTimeImmutable $today, int $approvedBy, DateTimeImmutable $approvedAt, array $listingChanges = []);
+public function refusal(WriteContext $context, string $planHash, DateTimeImmutable $today): ?string;
+public function isHuman(): bool;
+public function allowsListingChange(string $roomCode, string $field): bool;
+public function actor(): string;
+```
+
+#### `Ritmo\Application\Write\Gate\IssuedToken` (final class)
+
+```php
+public readonly WriteToken $token;
+public readonly array $steps;
+public readonly array $dropped;
+public readonly string $planHash;
+public readonly DateTimeImmutable $expiresAt;
+public readonly string $actor;
+public function __construct(WriteToken $token, array $steps, array $dropped, string $planHash, DateTimeImmutable $expiresAt, string $actor);
+public function journalId(): string;
+```
+
+#### `Ritmo\Application\Write\Gate\PlanHash` (final class)
+
+```php
+public static function of(Plan $plan): string;
+```
+
+#### `Ritmo\Application\Write\Gate\TokenGrant` (final class)
+
+```php
+public readonly string $propertyId;
+public readonly string $timezone;
+public readonly string $today;
+public readonly DateTimeImmutable $expiresAt;
+public readonly array $steps;
+public function __construct(string $propertyId, string $timezone, string $today, DateTimeImmutable $expiresAt, array $steps);
+public function revoke(): void;
+public function isRevoked(): bool;
+public function use(WriteRequest $request): bool;
+```
+
+#### `Ritmo\Application\Write\Gate\TonightGuard` (final class)
+
+```php
+public function check(array $steps, string $today, array $tonight, array $bases): void;
+```
+
+#### `Ritmo\Application\Write\Gate\TonightState` (final class)
+
+```php
+public readonly string $roomCode;
+public readonly ?float $price;
+public readonly ?DateOverride $rule;
+public function __construct(string $roomCode, ?float $price, ?DateOverride $rule);
+public function ruleHoldsThePriceDown(): bool;
+```
+
+#### `Ritmo\Application\Write\Gate\WriteAuthorization` (interface)
+
+```php
+public function refusal(WriteContext $context, string $planHash, DateTimeImmutable $today): ?string;
+public function isHuman(): bool;
+public function allowsListingChange(string $roomCode, string $field): bool;
+public function actor(): string;
+```
+
+#### `Ritmo\Application\Write\Gate\WriteContext` (final class)
+
+```php
+public readonly array $rooms;
+public readonly Property $property;
+public readonly DateTimeImmutable $readAt;
+public readonly array $tonight;
+public readonly Closure $lockHeld;
+public readonly string $pricingPms;
+public readonly bool $licenceAllowsWrites;
+public readonly ?Closure $canApprove;
+public function __construct(Property $property, array $rooms, DateTimeImmutable $readAt, array $tonight, Closure $lockHeld, string $pricingPms, bool $licenceAllowsWrites = true, ?Closure $canApprove = null);
+public function bases(): array;
+public function userCanApprove(int $userId): bool;
+```
+
+#### `Ritmo\Application\Write\Gate\WriteGate` (final class implements WriteAuthority)
+
+```php
+public function __construct(Clock $clock, EmergencySwitch $switch, WriteConfig $config = \Ritmo\Domain\Write\WriteConfig::__set_state(array(
+   'maxReadAgeMinutes' => 30,
+   'maxValidationAgeMinutes' => 10,
+   'tokenTtlMinutes' => 15,
+   'horizonDays' => 365,
+   'horizonEdgeDays' => 2,
+   'maxIdenticalRefusals' => 2,
+   'listingChangesEnabled' => false,
+   'pmsMaxRangesPerPost' => 100,
+   'callTimeoutSeconds' => 120,
+   'maxDatesPerCall' => 70,
+)), PlanConfig $planConfig = \Ritmo\Domain\Plan\PlanConfig::__set_state(array(
+   'calendarMaxAgeHours' => 6.0,
+   'occupancyReasonCodes' => 
+  array (
+    0 => 'SOLD_OUT_PROTECTION',
+    1 => 'RELATION_DISCOUNT_BAND',
+    2 => 'RELATION_OCCUPANCY_SWITCH',
+  ),
+   'riseWarningPercent' => 15.0,
+   'riseExemptReasonCodes' => 
+  array (
+    0 => 'SOLD_OUT_PROTECTION',
+  ),
+   'maxMinStay' => 30,
+   'marketEvidenceMinLength' => 20,
+   'noDiscountRooms' => 
+  array (
+  ),
+   'lastMinute' => 
+  \Ritmo\Domain\Plan\LastMinuteRule::__set_state(array(
+     'enabled' => false,
+     'rooms' => 
+    array (
+    ),
+     'maxDaysOut' => 0,
+     'maxDiscount' => 0.0,
+     'maxSoldShare' => 0.0,
+     'lastUnitOnlyRooms' => 
+    array (
+    ),
+  )),
+   'reasonMaxLength' => 250,
+   'sliceMaxDates' => 70,
+   'horizonNights' => 60,
+)));
+public function issue(ValidatedPlan $plan, WriteAuthorization $auth, WriteContext $context, array $pms = [], array $recalculate = []): IssuedToken;
+public function isLive(WriteToken $token): bool;
+public function verify(WriteToken $token, WriteRequest $request): void;
+public function revoke(WriteToken $token): void;
+```
+
+#### `Ritmo\Application\Write\Gate\WriteRefused` (final class extends DomainException)
+
+```php
+const UNSEALED_PLAN = 'unsealed_plan';
+const WRONG_PROPERTY = 'wrong_property';
+const STALE_PLAN = 'stale_plan';
+const STALE_VALIDATION = 'stale_validation';
+const STALE_READS = 'stale_reads';
+const KILL_SWITCH = 'kill_switch';
+const MODE_SHADOW = 'mode_shadow';
+const MODE_NOT_AUTONOMOUS = 'mode_not_autonomous';
+const LICENCE = 'licence';
+const NOT_APPROVED = 'not_approved';
+const APPROVAL_MISMATCH = 'approval_mismatch';
+const APPROVAL_STALE = 'approval_stale';
+const APPROVER_LACKS_CAPABILITY = 'approver_lacks_capability';
+const RAISE_TODAY_FLOOR = 'raise_today_floor';
+const RAISE_TODAY_CEILING = 'raise_today_ceiling';
+const RAISE_TODAY_DELETION = 'raise_today_deletion';
+const TONIGHT_UNKNOWN = 'tonight_unknown';
+const FORBIDDEN_FIELD = 'forbidden_field';
+const LOCK_NOT_HELD = 'lock_not_held';
+const NOTHING_TO_WRITE = 'nothing_to_write';
+const LISTING_NEEDS_APPROVAL = 'listing_needs_approval';
+public readonly string $reason;
+public readonly string $subject;
+public function __construct(string $reason, string $message, string $subject = '');
+```
+
+#### `Ritmo\Application\Write\Journal\NightRule` (final class)
+
+```php
+public static function ofOverride(?DateOverride $override): ?array;
+public static function sent(array $entry): array;
+public static function merged(?array $before, array $sent): array;
+public static function ofInventory(InventoryNight $night): array;
+public static function holds(?array $current, ?array $intended, array $fields): bool;
+```
+
+#### `Ritmo\Application\Write\Journal\OpStatus` (enum)
+
+```php
+case Planned = 'planned';
+case Sending = 'sending';
+case Accepted = 'accepted';
+case Stored = 'stored';
+case Rejected = 'rejected';
+case NotReady = 'not_ready';
+case RateLimited = 'rate_limited';
+case Unknown = 'unknown';
+case Mismatch = 'mismatch';
+case Skipped = 'skipped';
+case Abandoned = 'abandoned';
+case Quarantined = 'quarantined';
+```
+
+#### `Ritmo\Application\Write\Journal\StateReader` (final class)
+
+```php
+public function __construct(?PricingConnector $pricing, ?PmsConnector $pms);
+public function forSteps(array $steps): StoredState;
+public function read(array $pricing, array $pms): StoredState;
+```
+
+#### `Ritmo\Application\Write\Journal\StoredState` (final class)
+
+```php
+public readonly array $pricing;
+public readonly array $pms;
+public function __construct(array $pricing = [], array $pms = []);
+public function before(WriteStep $step): array;
+public function intended(WriteStep $step): array;
+```
+
+#### `Ritmo\Application\Write\Journal\WriteJournal` (final class)
+
+```php
+public function __construct(WriteOpRepository $ops, Clock $clock);
+public function plan(int $runId, string $propertyCode, IssuedToken $issued, StoredState $before): array;
+public function sending(int $row): void;
+public function finish(int $row, OpStatus $status, ?int $httpStatus = null, ?string $error = null): void;
+public function observe(int $row, OpStatus $status, array $observed): void;
+public function refusals(string $propertyCode, WriteStep $step): int;
+public static function bodyHash(WriteStep $step): string;
+```
+
+#### `Ritmo\Application\Write\Quota\AttemptLog` (final class)
+
+```php
+public function __construct(int $futureSlackSeconds = 300);
+public function accept(array $recorded, RecalcAttempt $attempt, DateTimeImmutable $now): ?RecalcAttempt;
+public static function instant(string $text): DateTimeImmutable;
+```
+
+#### `Ritmo\Application\Write\Quota\AttemptOutcome` (enum)
+
+```php
+case Pending = 'pending';
+case Ok = 'ok';
+case Failure = 'failure';
+case RateLimited = 'rate_limited';
+```
+
+#### `Ritmo\Application\Write\Quota\AttemptRefused` (final class extends DomainException)
+
+```php
+// no public members
+```
+
+#### `Ritmo\Application\Write\Quota\QuotaVerdict` (final class)
+
+```php
+const ROOM_QUOTA_SPENT = 'room_quota_spent';
+const ACCOUNT_MINUTE_LIMIT = 'account_minute_limit';
+const ACCOUNT_429_WAIT = 'account_429_wait';
+const ROOM_429_THIS_RUN = 'room_429_this_run';
+const ROOM_UPSTREAM_UNAVAILABLE_THIS_RUN = 'room_upstream_unavailable_this_run';
+const ROOM_FAILURE_THIS_RUN = 'room_failure_this_run';
+public readonly bool $allowed;
+public readonly array $blockedBy;
+public readonly int $used;
+public readonly int $left;
+public readonly array $byResult;
+public readonly ?DateTimeImmutable $roomSlotOpensAt;
+public readonly ?DateTimeImmutable $accountSlotOpensAt;
+public readonly ?DateTimeImmutable $account429WaitUntil;
+public readonly int $accountLastMinute;
+public readonly bool $morningSlotWarning;
+public readonly DateTimeImmutable $runStart;
+public function __construct(bool $allowed, array $blockedBy, int $used, int $left, array $byResult, ?DateTimeImmutable $roomSlotOpensAt, ?DateTimeImmutable $accountSlotOpensAt, ?DateTimeImmutable $account429WaitUntil, int $accountLastMinute, bool $morningSlotWarning, DateTimeImmutable $runStart);
+```
+
+#### `Ritmo\Application\Write\Quota\RecalcAttempt` (final class)
+
+```php
+const ERROR_LENGTH = 300;
+public readonly DateTimeImmutable $at;
+public readonly ?string $error;
+public readonly string $listing;
+public readonly AttemptOutcome $outcome;
+public readonly ?string $responseId;
+public readonly ?int $id;
+public function __construct(string $listing, DateTimeImmutable $at, AttemptOutcome $outcome, ?string $error = null, ?string $responseId = null, ?int $id = null);
+public function effectiveOutcome(DateTimeImmutable $now, int $pendingTimeoutSeconds): AttemptOutcome;
+```
+
+#### `Ritmo\Application\Write\Quota\RecalcGuard` (final class)
+
+```php
+public function __construct(RecalcAttemptRepository $attempts, Clock $clock, string $provider, QuotaConfig $config = \Ritmo\Domain\Write\QuotaConfig::__set_state(array(
+   'perListing' => 3,
+   'windowHours' => 24,
+   'perAccountPerMinute' => 10,
+   'accountWaitAfter429Seconds' => 60,
+   'futureSlackSeconds' => 300,
+   'failureCooldownMinutes' => 60,
+)), int $callTimeoutSeconds = 120);
+public function verdict(string $listing, DateTimeImmutable $runStart, ?DateTimeImmutable $nextFullRun = null): QuotaVerdict;
+public function attempt(string $listing, Closure $call): void;
+```
+
+#### `Ritmo\Application\Write\Quota\RecalcQuota` (final class)
+
+```php
+public function __construct(QuotaConfig $config = \Ritmo\Domain\Write\QuotaConfig::__set_state(array(
+   'perListing' => 3,
+   'windowHours' => 24,
+   'perAccountPerMinute' => 10,
+   'accountWaitAfter429Seconds' => 60,
+   'futureSlackSeconds' => 300,
+   'failureCooldownMinutes' => 60,
+)), int $pendingTimeoutSeconds = 120);
+public function verdict(array $attempts, string $listing, DateTimeImmutable $now, DateTimeImmutable $runStart, ?DateTimeImmutable $nextFullRun = null): QuotaVerdict;
+public function runStartFor(DateTimeImmutable $slotStart, DateTimeImmutable $now, bool $scheduled): DateTimeImmutable;
+```
+
+#### `Ritmo\Application\Write\Quota\RollingWindow` (final class)
+
+```php
+public static function opensAt(array $instants, int $limit, int $windowSeconds): ?DateTimeImmutable;
+```
+
+#### `Ritmo\Application\Write\Resume\BrokenGroup` (final class)
+
+```php
+const REASON = 'repair_group';
+public readonly string $groupKey;
+public readonly string $roomCode;
+public readonly string $listing;
+public readonly array $rewrite;
+public function __construct(string $groupKey, string $roomCode, string $listing, array $rewrite);
+public function repairItems(RoomType $room, string $today): array;
+```
+
+#### `Ritmo\Application\Write\Resume\NightClass` (enum)
+
+```php
+case Applied = 'applied';
+case NotApplied = 'not_applied';
+case Diverged = 'diverged';
+```
+
+#### `Ritmo\Application\Write\Resume\ResumePlanner` (final class)
+
+```php
+public function classify(array $rows, StoredState $fresh): ResumeReport;
+public static function targets(array $rows): array;
+```
+
+#### `Ritmo\Application\Write\Resume\ResumeReport` (final class)
+
+```php
+public readonly array $rows;
+public readonly array $nights;
+public readonly array $broken;
+public function __construct(array $rows, array $nights, array $broken);
+public function applied(): array;
+```
+
+#### `Ritmo\Application\Write\Resume\ResumeService` (final class)
+
+```php
+public function __construct(WriteOpRepository $ops);
+public function resume(int $runId, string $propertyCode, StateReader $reader): ResumeReport;
+```
+
+#### `Ritmo\Application\Write\Schedule\CalendarChange` (final class)
+
+```php
+public readonly DateTimeImmutable $from;
+public readonly DateTimeImmutable $to;
+public readonly string $roomCode;
+public readonly string $roomId;
+public readonly ?int $minStay;
+public readonly ?int $maxStay;
+public readonly ?Restriction $restriction;
+public readonly ?int $available;
+public readonly array $channels;
+public readonly ?int $minStayBefore;
+public readonly bool $alsoPricing;
+public readonly string $reason;
+public readonly ?int $expectedAvailable;
+public function __construct(string $roomCode, string $roomId, DateTimeImmutable $from, DateTimeImmutable $to, ?int $minStay = null, ?int $maxStay = null, ?Restriction $restriction = null, ?int $available = null, array $channels = [], ?int $minStayBefore = null, bool $alsoPricing = false, string $reason = '', ?int $expectedAvailable = null);
+public static function fromStay(array $changes, array $rooms): array;
+public function range(): array;
+public function nights(): array;
+```
+
+#### `Ritmo\Application\Write\Schedule\WriteSchedule` (final class)
+
+```php
+public function __construct(WriteConfig $config = \Ritmo\Domain\Write\WriteConfig::__set_state(array(
+   'maxReadAgeMinutes' => 30,
+   'maxValidationAgeMinutes' => 10,
+   'tokenTtlMinutes' => 15,
+   'horizonDays' => 365,
+   'horizonEdgeDays' => 2,
+   'maxIdenticalRefusals' => 2,
+   'listingChangesEnabled' => false,
+   'pmsMaxRangesPerPost' => 100,
+   'callTimeoutSeconds' => 120,
+   'maxDatesPerCall' => 70,
+)));
+public function build(array $slices, DateTimeImmutable $today, array $pms = [], array $recalculate = []): array;
+```
+
+#### `Ritmo\Application\Write\Schedule\WriteStep` (final class)
+
+```php
+public readonly int $number;
+public readonly WriteOperation $operation;
+public readonly string $roomCode;
+public readonly array $nights;
+public readonly array $payload;
+public readonly string $label;
+public readonly string $groupKey;
+public readonly array $changes;
+public function __construct(int $number, WriteOperation $operation, string $roomCode, array $nights, array $payload, string $label, string $groupKey = '', array $changes = []);
+public function at(int $number): self;
+public function request(): WriteRequest;
+public function target(): string;
+public function dates(): array;
+public function isGroupRewrite(): bool;
+public function fields(): array;
 ```
 
 #### `Ritmo\WordPress\Activator` (final class)

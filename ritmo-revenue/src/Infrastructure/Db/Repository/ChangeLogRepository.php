@@ -14,7 +14,7 @@ use Ritmo\Infrastructure\Db\DbValue;
 
 /**
  * The change log: one row per field the plugin changed and confirmed, with before, after, why,
- * who and how to undo the night (DraftVerify columns). Rows are never deleted; an undo marks
+ * who and how to undo the night (columns of migration 8). Rows are never deleted; an undo marks
  * them undone and adds its own rows pointing back ("undo_of").
  */
 final class ChangeLogRepository
@@ -118,6 +118,9 @@ final class ChangeLogRepository
     }
 
     /**
+     * Only the changes of nights and listings: the operation events kept in the same table
+     * (OperationEventRepository, no provider) are left out.
+     *
      * @param list<int|string> $params
      *
      * @return list<ChangeRecord>
@@ -125,7 +128,7 @@ final class ChangeLogRepository
     private function rows(string $where, array $params, bool $ordered = true): array
     {
         $rows = $this->db->select(
-            sprintf('SELECT * FROM %s WHERE %s%s', $this->db->table(self::TABLE), $where, $ordered ? ' ORDER BY created_at, id' : ''),
+            sprintf("SELECT * FROM %s WHERE provider <> '' AND %s%s", $this->db->table(self::TABLE), $where, $ordered ? ' ORDER BY created_at, id' : ''),
             $params
         );
 

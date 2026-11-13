@@ -720,6 +720,16 @@ public function noEffect(): NoEffectConfig;
 public function orders(): OrdersConfig;
 public function stay(): StayConfig;
 public function plan(): PlanConfig;
+public function write(): WriteConfig;
+public function quota(): QuotaConfig;
+public function verify(): VerifyConfig;
+public function approval(): ApprovalConfig;
+public function thirdParty(): ThirdPartyConfig;
+public function waves(): WaveConfig;
+public function modes(): ModesConfig;
+public function schedule(): ScheduleConfig;
+public function lightRun(): LightRunConfig;
+public function alerts(): AlertsConfig;
 ```
 
 #### `Ritmo\Domain\Config\RuleSetFields` (final class)
@@ -812,6 +822,12 @@ public function isRetryable(): bool;
 
 ```php
 public static function forOperation(string $operation): self;
+```
+
+#### `Ritmo\Contracts\Exception\NotReady` (final class extends ConnectorException)
+
+```php
+// no public members
 ```
 
 #### `Ritmo\Contracts\Exception\RateLimited` (final class extends ConnectorException)
@@ -945,9 +961,43 @@ public function deleteOverrides(WriteToken $token, string $listingRef, array $da
 public function updateListing(WriteToken $token, string $listingRef, array $fields): void;
 ```
 
+#### `Ritmo\Contracts\WriteAuthority` (interface)
+
+```php
+public function isLive(WriteToken $token): bool;
+public function verify(WriteToken $token, WriteRequest $request): void;
+```
+
+#### `Ritmo\Contracts\WriteHttpClient` (interface)
+
+```php
+public function write(WriteToken $token, string $method, string $url, array $headers = [], ?string $body = null, int $timeout = 30): HttpResponse;
+```
+
+#### `Ritmo\Contracts\WriteOperation` (enum)
+
+```php
+case OverridesWrite = 'overrides_write';
+case OverridesDelete = 'overrides_delete';
+case Recalculation = 'recalculation';
+case ListingUpdate = 'listing_update';
+case PmsCalendar = 'pms_calendar';
+public function isPms(): bool;
+```
+
+#### `Ritmo\Contracts\WriteRequest` (final class)
+
+```php
+public readonly array $nights;
+public readonly array $fields;
+public readonly WriteOperation $operation;
+public function __construct(WriteOperation $operation, array $nights, array $fields = []);
+```
+
 #### `Ritmo\Contracts\WriteToken` (final class)
 
 ```php
+public readonly string $id;
 public function __serialize(): array;
 public function __unserialize(array $data): void;
 ```

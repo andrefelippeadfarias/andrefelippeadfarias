@@ -165,25 +165,26 @@ final class PrivacyGuard
     }
 
     /**
-     * Whether one of the patterns finds a person's name: in the text without accents and invisible
-     * characters, saints and places ("São João") blanked. A text the patterns cannot read is
-     * refused, never let through.
+     * Whether one of the patterns finds a person's name, in the text as written or without accents
+     * and invisible characters, saints and places ("São João") blanked. A text the patterns cannot
+     * read is refused, never let through.
      *
      * @param list<string> $patterns
      */
     private static function nameIn(string $text, array $patterns): bool
     {
-        // Saints and places are blanked as written (an accent typed apart never makes one), then the
-        // rest is read without accents and invisible characters.
-        $people = preg_replace(self::NOT_A_PERSON, ' ', $text);
-        if ($people === null) {
+        // Saints and places are blanked as written (an accent typed apart never makes one); the
+        // patterns then read the text both as written and without accents and invisible characters,
+        // and a name found in either is a name.
+        $written = preg_replace(self::NOT_A_PERSON, ' ', $text);
+        if ($written === null) {
             return true;
         }
-        $people = self::normal($people);
-        foreach ($patterns as $pattern) {
-            $found = preg_match($pattern, $people);
-            if ($found !== 0) {
-                return true;
+        foreach ([$written, self::normal($written)] as $people) {
+            foreach ($patterns as $pattern) {
+                if (preg_match($pattern, $people) !== 0) {
+                    return true;
+                }
             }
         }
 
@@ -208,20 +209,12 @@ final class PrivacyGuard
     }
 
     /**
-     * Whether a label typed by a person (a period of the calendar) is clear of guest data: as it
-     * is, and in title case when it is written all in capitals or all in lower case
-     * ("CASAMENTO DA FAMÍLIA SOUZA").
+     * Whether a label typed by a person (a period of the calendar) is clear of guest data, as it is
+     * and in title case ("Casamento da família souza", "CASAMENTO DA FAMÍLIA SOUZA").
      */
     public static function clearLabel(string $label): bool
     {
-        if (self::requestProblem($label) !== null) {
-            return false;
-        }
-        if ($label === mb_strtoupper($label, 'UTF-8') || $label === mb_strtolower($label, 'UTF-8')) {
-            return self::requestProblem(self::titled($label)) === null;
-        }
-
-        return true;
+        return !self::readsLikeAPerson($label);
     }
 
     /**
@@ -238,7 +231,7 @@ final class PrivacyGuard
     /**
      * The data with every name of the property or of a room that reads like a person (as written or
      * in title case) replaced, in every string, by the room's code (the property's by "PROPERTY").
-     * A code that itself reads like a person ("Dona-Rosa") is replaced too, by "ROOM1", "ROOM2"...
+     * A code that itself reads like a person ("Dona-Rosa") is replaced too, by "ROOM#1", "ROOM#2"...
      * With $as, every such name is replaced by that word instead: the check of the data runs on
      * that form ("Quarto"), so a guest's name written next to a room's is still found. Only text is
      * taken out: nothing reaches the assistant that was not in the data.
@@ -254,21 +247,22 @@ final class PrivacyGuard
         foreach (self::namedThings($data) as [$name, $code]) {
             $name = trim((string) preg_replace('/\s+/u', ' ', $name));
             $isProperty = $code === null;
-            $codeReadsLikeAPerson = !$isProperty && self::readsLikeAPerson(strtr($code, '-_', '  '));
-            $neutral = $isProperty ? 'PROPERTY' : ($codeReadsLikeAPerson ? 'ROOM' . (++$rooms) : $code);
+            $codeReadsLikeAPerson = !$isProperty && self::readsLikeAPerson(strtr((string) $code, '-_', '  '));
+            // ROOM#n can never be a room's code, so a draft can never point it at another room.
+            $neutral = $isProperty ? 'PROPERTY' : ($codeReadsLikeAPerson ? 'ROOM#' . (++$rooms) : (string) $code);
             if ($name !== '' && self::readsLikeAPerson($name)) {
-                $replace[$name] = $as ?? $neutral;
+                $replace[] = [$name, $as ?? $neutral];
             }
             if ($codeReadsLikeAPerson) {
-                $replace[$code] = $as ?? $neutral;
+                $replace[] = [(string) $code, $as ?? $neutral];
             }
         }
         if ($replace === []) {
             return $data;
         }
-        uksort($replace, static fn (string $a, string $b): int => mb_strlen($b) <=> mb_strlen($a));
+        usort($replace, static fn (array $a, array $b): int => mb_strlen($b[0]) <=> mb_strlen($a[0]));
         $patterns = [];
-        foreach ($replace as $name => $code) {
+        foreach ($replace as [$name, $code]) {
             $words = array_map(static fn (string $w): string => preg_quote($w, '/'), explode(' ', $name));
             // The replacement goes in as plain text ("$1" or "\1" is never a reference).
             $patterns['/(?<![\p{L}\d])' . implode('[\s\x{00A0}]+', $words) . '(?![\p{L}\d])/iu'] = str_replace(['\\', '$'], ['\\\\', '\\$'], $code);
@@ -285,7 +279,7 @@ final class PrivacyGuard
     /**
      * @param array<int|string, mixed> $data
      *
-     * @return list<array{0: string, 1: ?string}> name => its code (null: the property)
+     * @return list<array{0: string, 1: string|int|null}> name => its code (null: the property)
      */
     private static function namedThings(array $data): array
     {

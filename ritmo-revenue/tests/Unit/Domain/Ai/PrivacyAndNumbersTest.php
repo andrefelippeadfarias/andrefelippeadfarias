@@ -221,12 +221,20 @@ final class PrivacyAndNumbersTest extends TestCase
         self::assertSame(PrivacyGuard::NAME, PrivacyGuard::problem("A hóspede\u{200B}Pereira pagou."), 'a zero-width space separates words');
         self::assertSame(PrivacyGuard::NAME, PrivacyGuard::problem("Reserva 4411\u{200C}hóspede Pereira pediu desconto"), 'a zero-width non-joiner separates words');
         self::assertSame(PrivacyGuard::NAME, PrivacyGuard::problem('A hóspede Silva de São Paulo pediu desconto'), 'a place after the name');
+        // Decomposed accents (text pasted from a PDF or a Mac) never hide a name the written text shows.
+        foreach (["pedido do Carla\u{0303}o da reserva 4411", "pedido do irma\u{0303}o Carlos da reserva 4411"] as $nfd) {
+            self::assertSame(PrivacyGuard::NAME, PrivacyGuard::requestProblem($nfd), 'NFD');
+        }
+        // A room code made of digits only is a code like any other.
+        $digits = $builder->request('Subir 5% no Standard nas sextas de janeiro', ['rooms' => [['code' => '53712345678', 'label' => 'Standard', 'base' => 300.0]]], 'pt_BR');
+        self::assertStringNotContainsString('53712345678', $digits->user);
+        self::assertFalse(PrivacyGuard::clearLabel('Aniversário da maria souza'), 'a label in sentence case is read in title case too');
 
         // A name in capitals is masked too; a code that reads like a person becomes ROOM1.
         $caps = $builder->report(\Ritmo\Domain\Ai\AiPurpose::WeeklyReport, ['report' => 'weekly panel', 'property' => 'POUSADA DONA FLOR'], [['label' => 'SUÍTE FAMÍLIA LUXO: room nights sold', 'value' => '12']], 'pt_BR', ['SFL' => 'SUÍTE FAMÍLIA LUXO', 'Dona-Rosa' => 'Chalé Dona Rosa']);
         self::assertStringNotContainsStringIgnoringCase('Família', $caps->user);
         self::assertStringNotContainsStringIgnoringCase('Dona', $caps->user);
-        self::assertStringContainsString('ROOM1', $caps->user);
+        self::assertStringContainsString('ROOM#1', $caps->user);
         self::assertStringContainsString('PROPERTY', $caps->user);
         // The check reads a masked name as a word: a guest's surname next to it, or an e-mail on its
         // domain, is still refused.

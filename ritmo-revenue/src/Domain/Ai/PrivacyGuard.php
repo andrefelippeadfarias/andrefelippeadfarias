@@ -11,17 +11,19 @@ namespace Ritmo\Domain\Ai;
  *   document, an address, a note or a free-text message) before a prompt is built;
  * - problem() and assertSendable(): refuse a text that looks like an e-mail address, a phone
  *   number, a Brazilian identity document (CPF, CNPJ) or a person's name (a capitalised name after
- *   "hóspede", "cliente", "Sr.", "guest"..., also after a colon or a dash; after a plural and a
- *   colon, a first name and a surname or a common first name; or two capitalised words before
- *   "pediu", "asked"...). Nothing is sent
- *   then: the person is told why. Dates, amounts, percentages and booking ids (up to nine digits)
- *   are not phone numbers. A name check that falls wholly inside a known name (the property, its
- *   rooms, a period that is itself clear: "Suíte Família Luxo") is not a person; one that reaches
- *   past it ("família Souza" next to a room called "Família") still is.
+ *   "hóspede", "clientes", "Sr.", "guest"..., with a space, a colon or a dash between them, except
+ *   a verb a request starts with, "Clientes: Subir 5%"; or two capitalised words before "pediu",
+ *   "asked"...). Nothing is sent then: the person is told why. Dates, amounts, percentages and
+ *   booking ids (up to nine digits) are not phone numbers.
  * - requestProblem() and assertRequestSendable(): the same for what the person types to the
  *   assistant, plus a common first name followed by a surname ("Maria Souza") or after an article
- *   or a preposition ("pedido da Maria"). Saints and places ("São João", "Nossa Senhora
- *   Aparecida") are left out of the name checks.
+ *   or a preposition ("pedido da Maria").
+ * - The name checks read the text without accents and invisible characters, with saints and places
+ *   ("São João", "Nossa Senhora Aparecida") blanked. The only names they spare are the property's
+ *   and its rooms' (names()): a name found wholly inside one of them, with nothing that could be a
+ *   surname right after it ("na Suíte Família Luxo nas sextas"), is the room; "a Dona Rosa
+ *   Pereira" next to a room "Chalé Dona Rosa", or "a família Souza" next to a room "Família", is a
+ *   guest. A period of the calendar whose name is not clear on its own (clearLabel()) is never sent.
  *
  * The name checks are a heuristic: the screen also asks the person never to write a guest's name.
  */
@@ -32,42 +34,29 @@ final class PrivacyGuard
     public const DOCUMENT = 'document';
     public const NAME = 'name';
 
-    /** A word that introduces one person ("hóspede", "cliente", "Sr.", "guest"...). */
-    private const TITLE_ONE = '(?<![\p{L}\d])(?i:h[óo]spede|cliente|fam[íi]lia|sra?\.?|srta\.?|senhora?|dona|guest|customer|mrs?\.?|ms\.?|miss)';
-
-    /** The same words, plurals too ("hóspedes", "clientes", "guests"...). */
+    /** A word that introduces a person ("hóspede", "clientes", "Sr.", "guest"...). */
     private const TITLE_ANY = '(?<![\p{L}\d])(?i:h[óo]spedes?|clientes?|fam[íi]lia|sra?\.?|srta\.?|senhora?|dona|guests?|customers?|mrs?\.?|ms\.?|miss)';
 
     /** A leading word for a kind of room ("Quarto", "Suítes do"...), left out of a room's short name. */
     private const ROOM_KIND = '/^(?i:quartos?|su[íi]tes?|chal[ée]s?|rooms?|cabanas?|apartamentos?|aptos?\.?|bangal[ôo]s?|lofts?|studios?|est[úu]dios?)(?:\s+(?i:d[aoe]s?))?\s+/u';
 
-    /** A colon or a dash between the word and the name. */
-    private const MARK = '\s*[:\-–—]\s*';
-
-    /** Capitalised words that are days, months and holidays, never a name ("Família Natal", "Cliente – Sexta"). */
-    private const NOT_A_NAME = '(?!(?:Segunda|Terça|Terca|Quarta|Quinta|Sexta|Sábado|Sabado|Domingo|Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sunday|Janeiro|Fevereiro|Março|Marco|Abril|Maio|Junho|Julho|Agosto|Setembro|Outubro|Novembro|Dezembro|January|February|March|April|May|June|July|August|September|October|November|December|Natal|Réveillon|Reveillon|Carnaval|Páscoa|Pascoa|Christmas|Easter|Feriado|Holiday)(?![\p{L}\d]))';
-
-    /** A capitalised name right after such a word ("hóspede Maria"). */
-    private const NAME_AFTER_TITLE = '/' . self::TITLE_ANY . '\s+' . self::NOT_A_NAME . '\p{Lu}\p{Ll}+/u';
+    /** Verbs a request starts with, never a name after "Clientes:" ("Atrair clientes: Subir 5%"). */
+    private const NOT_AFTER_MARK = '(?!(?:Subir|Baixar|Aumentar|Reduzir|Diminuir|Manter|Fechar|Abrir|Bloquear|Liberar|Colocar|Deixar|Criar|Mudar|Trocar|Oferecer|Vender|Segurar|Atrair|Raise|Lower|Increase|Decrease|Reduce|Keep|Close|Open|Block|Hold|Offer|Attract)(?![\p{L}\d]))';
 
     /**
-     * The capitalised words right after a name found ("Dona Rosa" + " Pereira"): a found name is
-     * spared by a known name only when these words are inside it too.
+     * A capitalised name right after such a word, with a space, a colon or a dash between them
+     * ("hóspede Maria", "Hóspede: Maria", "Hóspedes – Pereira").
      */
-    private const MORE_NAMES = '/\G(?:[\s\x{00A0}\-–—]+(?:(?:d[aoe]s?|von|van)\s+)?' . self::NOT_A_NAME . '\p{Lu}\p{Ll}+)*/u';
+    private const NAME_AFTER_TITLE = '/' . self::TITLE_ANY . '(?:\s*[:\-–—]\s*' . self::NOT_AFTER_MARK . '|\s+)\p{Lu}\p{Ll}+/u';
 
-    /**
-     * After a colon or a dash: any capitalised word after a word for one person ("Hóspede: Maria",
-     * "O cliente — Pereira"); after a plural, only a first name and a surname or a common first
-     * name ("Hóspedes: Maria Souza"), so "Atrair clientes: Subir 5%" is not a name.
-     */
-    private const NAME_AFTER_TITLE_MARK = '/' . self::TITLE_ONE . self::MARK . self::NOT_A_NAME . '\p{Lu}\p{Ll}+|' . self::TITLE_ANY . self::MARK . '(?:\p{Lu}\p{Ll}+\s+(?:(?:d[aoe]s?|von|van)\s+)?\p{Lu}\p{Ll}+|(?:' . self::FIRST_NAMES . ')(?![\p{L}\d]))/u';
+    /** Days, months and holidays: right after a room's name they are not a surname ("Quarto Família Natal inteiro"). */
+    private const DAYS_AND_HOLIDAYS = 'Segunda|Terca|Quarta|Quinta|Sexta|Sabado|Domingo|Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sunday|Janeiro|Fevereiro|Marco|Abril|Maio|Junho|Julho|Agosto|Setembro|Outubro|Novembro|Dezembro|January|February|March|April|May|June|July|August|September|October|November|December|Natal|Reveillon|Carnaval|Pascoa|Christmas|Easter|Feriado|Holiday';
 
     /** Saints, places and holidays that read like a title and a name ("Nossa Senhora Aparecida", "São João"). */
     private const NOT_A_PERSON = '/(?<![\p{L}\d])(?:(?i:nossa)\s+(?i:senhora)(?:\s+(?:d[aoe]s?\s+)?\p{Lu}\p{Ll}+)?|(?:São|Sao|Santa|Santo|Saint|St\.)\s+\p{Lu}\p{Ll}+)/u';
 
     /** Common first names (Brazilian and English) that are not also usual words, places or months. */
-    private const FIRST_NAMES = 'Maria|José|Jose|Ana|João|Joao|Antônio|Antonio|Francisco|Francisca|Carlos|Paulo|Pedro|Lucas|Luiz|Luis|Luís|Marcos|Luciana|Gabriel|Gabriela|Rafael|Rafaela|Daniel|Daniela|Marcelo|Bruno|Bruna|Eduardo|Felipe|Raimundo|Raimunda|Rodrigo|Manoel|Manuel|Mateus|Matheus|André|Andre|Fernando|Fernanda|Fábio|Fabio|Fabiana|Leonardo|Gustavo|Guilherme|Leandro|Tiago|Thiago|Anderson|Ricardo|Márcio|Marcio|Márcia|Marcia|Jorge|Sebastião|Alexandre|Roberto|Roberta|Edson|Diego|Vitor|Victor|Sérgio|Sergio|Cláudio|Claudio|Cláudia|Claudia|Juliana|Adriana|Patrícia|Patricia|Aline|Sandra|Camila|Amanda|Jéssica|Jessica|Letícia|Leticia|Júlia|Julia|Luana|Mariana|Beatriz|Larissa|Vanessa|Carla|Débora|Debora|Renata|Renato|Simone|Cristiane|Tatiane|Eliane|Raquel|Sônia|Sonia|Rosana|Isabela|Isabella|Carolina|Paula|Priscila|Natália|Natalia|Helena|Laura|Alice|Sofia|Sophia|Valentina|Manuela|Lorena|Heloísa|Heloisa|Cecília|Cecilia|Lívia|Livia|Giovanna|Bianca|Vinícius|Vinicius|Caio|Enzo|Miguel|Arthur|Artur|Davi|Bernardo|Heitor|Samuel|Henrique|Murilo|Igor|Otávio|Otavio|Wagner|Wellington|Rogério|Rogerio|Kelly|Michele|Michelle|Sílvia|Silvia|Regina|Teresa|Tereza|Lúcia|Lucia|Rita|Joana|Josefa|Antônia|Antonia|Marta|Denise|Elaine|Mônica|Monica|Luíza|Luiza|Lara|Yasmin|John|Mary|James|Robert|Michael|William|David|Richard|Joseph|Thomas|George|Peter|Jennifer|Linda|Elizabeth|Susan|Sarah|Karen|Nancy|Lisa|Emma|Olivia|Emily|Anna|Kate';
+    private const FIRST_NAMES = 'Maria|José|Jose|Ana|João|Joao|Antônio|Antonio|Francisco|Francisca|Carlos|Paulo|Pedro|Lucas|Luiz|Luis|Luís|Marcos|Luciana|Gabriel|Gabriela|Rafael|Rafaela|Daniel|Daniela|Marcelo|Bruno|Bruna|Eduardo|Felipe|Raimundo|Raimunda|Rodrigo|Manoel|Manuel|Mateus|Matheus|André|Andre|Fernando|Fernanda|Fábio|Fabio|Fabiana|Leonardo|Gustavo|Guilherme|Leandro|Tiago|Thiago|Anderson|Ricardo|Márcio|Marcio|Márcia|Marcia|Jorge|Sebastião|Sebastiao|Alexandre|Roberto|Roberta|Edson|Diego|Vitor|Victor|Sérgio|Sergio|Cláudio|Claudio|Cláudia|Claudia|Juliana|Adriana|Patrícia|Patricia|Aline|Sandra|Camila|Amanda|Jéssica|Jessica|Letícia|Leticia|Júlia|Julia|Luana|Mariana|Beatriz|Larissa|Vanessa|Carla|Débora|Debora|Renata|Renato|Simone|Cristiane|Tatiane|Eliane|Raquel|Sônia|Sonia|Rosana|Isabela|Isabella|Carolina|Paula|Priscila|Natália|Natalia|Helena|Laura|Alice|Sofia|Sophia|Valentina|Manuela|Lorena|Heloísa|Heloisa|Cecília|Cecilia|Lívia|Livia|Giovanna|Bianca|Vinícius|Vinicius|Caio|Enzo|Miguel|Arthur|Artur|Davi|Bernardo|Heitor|Samuel|Henrique|Murilo|Igor|Otávio|Otavio|Wagner|Wellington|Rogério|Rogerio|Kelly|Michele|Michelle|Sílvia|Silvia|Regina|Teresa|Tereza|Lúcia|Lucia|Rita|Joana|Josefa|Antônia|Antonia|Marta|Denise|Elaine|Mônica|Monica|Luíza|Luiza|Lara|Yasmin|John|Mary|James|Robert|Michael|William|David|Richard|Joseph|Thomas|George|Peter|Jennifer|Linda|Elizabeth|Susan|Sarah|Karen|Nancy|Lisa|Emma|Olivia|Emily|Anna|Kate';
 
     /** A first name followed by a surname ("Maria Souza", "Maria da Silva"). */
     private const FIRST_AND_SURNAME = '/(?<![\p{L}\d])(?:' . self::FIRST_NAMES . ')\s+(?:(?:d[aoe]s?|von|van)\s+)?\p{Lu}\p{Ll}+/u';
@@ -146,8 +135,9 @@ final class PrivacyGuard
     /**
      * What the text looks like it carries (one of the constants), or null when it may be sent.
      *
-     * @param list<string> $known names of the property, its rooms and periods (knownNames()): a
-     *                            name check that falls wholly inside one of them is not a person
+     * @param list<string> $known the names of the property and its rooms (names()): a name found
+     *                            wholly inside one of them, with nothing like a surname after it,
+     *                            is not a person
      */
     public static function problem(string $text, array $known = []): ?string
     {
@@ -159,13 +149,8 @@ final class PrivacyGuard
                 return self::DOCUMENT;
             }
         }
-        $people = self::normal($text);
-        $known = array_map(self::normal(...), $known);
-        [$names, $saints] = self::spared($people, $known);
-        foreach ([self::NAME_AFTER_TITLE, self::NAME_AFTER_TITLE_MARK, self::NAME_BEFORE_VERB] as $pattern) {
-            if (self::nameOutside($pattern, $people, $names, $saints)) {
-                return self::NAME;
-            }
+        if (self::nameIn($text, $known, [self::NAME_AFTER_TITLE, self::NAME_BEFORE_VERB])) {
+            return self::NAME;
         }
         $rest = (string) preg_replace(self::NOT_PHONE_PATTERNS, ' ', $text);
         if (preg_match_all('/\+?\(?\d[\d\s().\/-]*\d/', $rest, $matches) > 0) {
@@ -192,87 +177,137 @@ final class PrivacyGuard
         if ($problem !== null) {
             return $problem;
         }
-        $people = self::normal($text);
-        $known = array_map(self::normal(...), $known);
-        [$names, $saints] = self::spared($people, $known);
-        foreach ([self::FIRST_AND_SURNAME, self::FIRST_AFTER_ARTICLE] as $pattern) {
-            if (self::nameOutside($pattern, $people, $names, $saints)) {
-                return self::NAME;
-            }
-        }
 
-        return null;
+        return self::nameIn($text, $known, [self::FIRST_AND_SURNAME, self::FIRST_AFTER_ARTICLE]) ? self::NAME : null;
     }
 
     /**
-     * Whether the pattern finds a name the spared parts of the text do not cover: a match wholly
-     * inside a known name ("Família Luxo" in "Suíte Família Luxo"), or touching a saint or a place
-     * ("São João"), is not a person; "família Souza" next to a room called "Família" still is.
+     * Whether a pattern finds a person's name in the text. The text is read without accents and
+     * invisible characters; saints and places ("São João") are blanked first. A name found is not
+     * a person only when it lies wholly inside a known name and what comes right after that name
+     * cannot be a surname: the end, a sentence mark, a word in lower case, a number, another known
+     * name, or a day, month or holiday followed by one of those ("na Dona Rosa nas sextas" is the
+     * room; "a Dona Rosa Pereira", "a Dona Rosa O'Brien", "a família Souza" next to a room
+     * "Família" are guests).
      *
-     * @param list<array{0: int, 1: int}> $names  byte ranges of the known names in the text
-     * @param list<array{0: int, 1: int}> $saints byte ranges of saints and places in the text
+     * @param list<string> $known
+     * @param list<string> $patterns
      */
-    private static function nameOutside(string $pattern, string $text, array $names, array $saints): bool
+    private static function nameIn(string $text, array $known, array $patterns): bool
     {
-        $offset = 0;
-        while (($result = preg_match($pattern, $text, $match, PREG_OFFSET_CAPTURE, $offset)) === 1) {
-            [$found, $at] = $match[0];
-            $end = $at + strlen($found);
-            if (preg_match(self::MORE_NAMES, $text, $more, 0, $end) === 1) {
-                $end += strlen($more[0]);
+        $text = self::normal($text);
+        $places = $text;
+        if (preg_match_all(self::NOT_A_PERSON, $text, $matches, PREG_OFFSET_CAPTURE) > 0) {
+            foreach ($matches[0] as [$found, $at]) {
+                $places = substr_replace($places, str_repeat(' ', strlen($found)), $at, strlen($found));
             }
-            $spared = false;
-            foreach ($names as [$from, $to]) {
-                $spared = $spared || ($at >= $from && $end <= $to);
+        }
+        $names = self::occurrences($text, array_map(self::normal(...), $known));
+        foreach ($patterns as $pattern) {
+            $offset = 0;
+            while (($result = preg_match($pattern, $places, $match, PREG_OFFSET_CAPTURE, $offset)) === 1) {
+                [$found, $at] = $match[0];
+                if (!self::insideKnown($text, $at, $at + strlen($found), $names)) {
+                    return true;
+                }
+                // On to the next character (a whole UTF-8 character, never half of one).
+                $offset = $at + max(1, strlen(mb_substr($found, 0, 1, 'UTF-8')));
             }
-            foreach ($saints as [$from, $to]) {
-                $spared = $spared || ($at < $to && $end > $from);
-            }
-            if (!$spared) {
+            if ($result === false) {
+                // A text the pattern cannot read is refused, never let through.
                 return true;
             }
-            // On to the next character (a whole UTF-8 character, never half of one).
-            $offset = $at + max(1, strlen(mb_substr($found, 0, 1, 'UTF-8')));
         }
 
-        // A text the pattern cannot read (not UTF-8) is refused, never let through.
-        return $result === false;
+        return false;
     }
 
     /**
-     * The text in one Unicode form (NFC, combining marks that are left removed), so that "hóspede"
-     * typed with a combining accent is the same word.
+     * @param list<array{0: int, 1: int}> $names byte ranges of the known names in the text
+     */
+    private static function insideKnown(string $text, int $at, int $end, array $names): bool
+    {
+        foreach ($names as [$from, $to]) {
+            if ($at < $from) {
+                continue;
+            }
+            // Days, months and holidays right after the name belong to the request, not to a guest.
+            $after = $to;
+            if (preg_match('/\G(?:[\s\x{00A0}\p{Pd}:]+(?:' . self::DAYS_AND_HOLIDAYS . ')(?![\p{L}\d]))*/u', $text, $days, 0, $to) === 1) {
+                $after += strlen($days[0]);
+            }
+            if ($end <= $after && self::nothingLikeASurname($text, $after, $names)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * Whether what comes at this point of the text cannot continue a person's name.
+     *
+     * @param list<array{0: int, 1: int}> $names
+     */
+    private static function nothingLikeASurname(string $text, int $at, array $names): bool
+    {
+        $rest = substr($text, $at);
+        if (preg_match('/^[\s\x{00A0}]*(?:$|[.!?](?:[\s\x{00A0}]|$)|[,;:)\]»"”\p{Pd}][\s\x{00A0}]*(?:$|\p{Ll}|\d))/u', $rest) === 1) {
+            return true;
+        }
+        if (preg_match('/^[\s\x{00A0}]+(?:\d|%|R\$|\p{Ll})/u', $rest) === 1
+            && preg_match('/^[\s\x{00A0}]+(?:d[aoe]s?|del|della|di|du|la|le|van|von|der|den|y|mc|mac)[\s\x{00A0}]+\p{Lu}/iu', $rest) !== 1) {
+            return true;
+        }
+        // Another known name next: a list of rooms ("Dona Flor – Standard e Master").
+        if (preg_match('/^(?:[\s\x{00A0}]*[\p{Pd},\/][\s\x{00A0}]*|[\s\x{00A0}]+(?:e|and|ou|or)[\s\x{00A0}]+|[\s\x{00A0}]+)/u', $rest, $separator) === 1) {
+            $next = $at + strlen($separator[0]);
+            foreach ($names as [$from]) {
+                if ($from === $next) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * The text without accents (NFD, combining marks removed) and without invisible characters
+     * (format characters such as a zero-width space or a soft hyphen).
      */
     private static function normal(string $text): string
     {
         if (class_exists(\Normalizer::class)) {
-            $text = (string) (\Normalizer::normalize($text, \Normalizer::FORM_C) ?: $text);
+            $text = (string) (\Normalizer::normalize($text, \Normalizer::FORM_D) ?: $text);
         }
 
-        return (string) (preg_replace('/\p{Mn}+/u', '', $text) ?? $text);
+        // A zero-width space or a word joiner separates words; other invisible characters (a soft
+        // hyphen inside "hós-pede") are dropped.
+        $text = (string) (preg_replace('/[\x{200B}\x{2060}\x{FEFF}]/u', ' ', $text) ?? $text);
+
+        return (string) (preg_replace('/[\p{Mn}\p{Cf}]+/u', '', $text) ?? $text);
     }
 
     /**
-     * Whether a label typed by a person (a period, the line of a report) is clear of guest data as
-     * it is and in title case ("CASAMENTO DA FAMÍLIA SOUZA" is "Casamento Da Família Souza").
-     *
-     * @param list<string> $names see names()
+     * Whether a label typed by a person (a period of the calendar) is clear of guest data on its
+     * own, as it is and in title case ("CASAMENTO DA FAMÍLIA SOUZA" is "Casamento Da Família Souza").
      */
-    public static function clearLabel(string $label, array $names = []): bool
+    public static function clearLabel(string $label): bool
     {
-        return self::requestProblem($label, $names) === null
-            && self::requestProblem(mb_convert_case($label, MB_CASE_TITLE, 'UTF-8'), $names) === null;
+        return self::requestProblem($label) === null
+            && self::requestProblem(mb_convert_case($label, MB_CASE_TITLE, 'UTF-8')) === null;
     }
 
     /**
-     * The byte ranges of the known names (whole words, any case, any run of spaces) and of saints
-     * and places in the text.
+     * The byte ranges of the known names in the (normalised) text: whole words, any case, any run
+     * of spaces, also without a leading word for a kind of room.
      *
-     * @param list<string> $known
+     * @param list<string> $known normalised
      *
-     * @return array{0: list<array{0: int, 1: int}>, 1: list<array{0: int, 1: int}>}
+     * @return list<array{0: int, 1: int}>
      */
-    private static function spared(string $text, array $known): array
+    private static function occurrences(string $text, array $known): array
     {
         $names = [];
         foreach (self::variants($known) as $name) {
@@ -287,14 +322,8 @@ final class PrivacyGuard
                 }
             }
         }
-        $saints = [];
-        if (preg_match_all(self::NOT_A_PERSON, $text, $matches, PREG_OFFSET_CAPTURE) > 0) {
-            foreach ($matches[0] as [$found, $at]) {
-                $saints[] = [$at, $at + strlen($found)];
-            }
-        }
 
-        return [$names, $saints];
+        return $names;
     }
 
     /**
@@ -324,8 +353,7 @@ final class PrivacyGuard
     }
 
     /**
-     * The labels in a data tree (values under a "label" key, at any depth): the names of rooms,
-     * periods and the lines of a report.
+     * The labels in a data tree (values under a "label" key, at any depth).
      *
      * @param array<int|string, mixed> $data
      *
@@ -348,7 +376,7 @@ final class PrivacyGuard
     /**
      * The names in a data tree that the plugin takes from the property's setup, never typed about a
      * guest: the property ("property", "property_label") and its rooms ("room_label", the "label"
-     * of each item of a "rooms" list), at any depth. They are trusted as they are.
+     * of each item of a "rooms" list), at any depth. They are the only known names.
      *
      * @param array<int|string, mixed> $data
      *
@@ -372,27 +400,6 @@ final class PrivacyGuard
         }
 
         return array_values(array_unique(array_filter($names, static fn (string $n): bool => trim($n) !== '')));
-    }
-
-    /**
-     * The names a request or an answer may use for the data sent: names(), and every other label
-     * (a period, a line of a report) that is itself clear of guest data (clearLabel()).
-     *
-     * @param array<int|string, mixed> $data
-     *
-     * @return list<string>
-     */
-    public static function knownNames(array $data): array
-    {
-        $names = self::names($data);
-        $known = $names;
-        foreach (self::labels($data) as $label) {
-            if (!in_array($label, $known, true) && self::clearLabel($label, $names)) {
-                $known[] = $label;
-            }
-        }
-
-        return $known;
     }
 
     /**
@@ -440,7 +447,7 @@ final class PrivacyGuard
     }
 
     /**
-     * assertSendable() for texts that may name the property's rooms and periods.
+     * assertSendable() for texts that may name the property and its rooms.
      *
      * @param list<string> $known see problem()
      *

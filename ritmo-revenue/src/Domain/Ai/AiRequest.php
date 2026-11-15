@@ -18,8 +18,8 @@ final class AiRequest
     /**
      * @param list<string>              $system       stable text blocks; nothing variable (no date, no id)
      * @param array<string, mixed>|null $outputSchema JSON schema of a structured answer; null for text
-     * @param list<string>              $known        names of the property, its rooms and periods in
-     *                                                the data sent (PrivacyGuard::knownNames()): the
+     * @param list<string>              $known        names of the property and its rooms in
+     *                                                the data sent (PrivacyGuard::names()): the
      *                                                answer may use them, never taken for a person
      */
     public function __construct(

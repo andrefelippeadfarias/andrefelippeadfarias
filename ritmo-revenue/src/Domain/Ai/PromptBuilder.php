@@ -55,7 +55,7 @@ final class PromptBuilder
             $data['rooms'] = array_map(static fn (string $r): array => ['label' => mb_substr($r, 0, 120)], $rooms);
         }
 
-        return new AiRequest($purpose, PromptLibrary::system($purpose), $this->user($locale, $data), null, AiRequest::MAX_TOKENS, PrivacyGuard::knownNames($data));
+        return new AiRequest($purpose, PromptLibrary::system($purpose), $this->user($locale, $data), null, AiRequest::MAX_TOKENS, PrivacyGuard::names($data));
     }
 
     /**
@@ -69,7 +69,7 @@ final class PromptBuilder
     {
         $data = ['alert' => $alert];
 
-        return new AiRequest(AiPurpose::AlertExplanation, PromptLibrary::system(AiPurpose::AlertExplanation), $this->user($locale, $data), OutputSchemas::alert(), AiRequest::MAX_TOKENS, PrivacyGuard::knownNames($data));
+        return new AiRequest(AiPurpose::AlertExplanation, PromptLibrary::system(AiPurpose::AlertExplanation), $this->user($locale, $data), OutputSchemas::alert(), AiRequest::MAX_TOKENS, PrivacyGuard::names($data));
     }
 
     /**
@@ -89,10 +89,9 @@ final class PromptBuilder
         // A period whose name looks like guest data is left out (never sent, never a known name)
         // rather than refusing every request.
         if (is_array($data['periods'] ?? null)) {
-            $names = PrivacyGuard::names($data);
-            $data['periods'] = array_values(array_filter($data['periods'], static fn (mixed $p): bool => !is_array($p) || !is_string($p['label'] ?? null) || PrivacyGuard::clearLabel($p['label'], $names)));
+            $data['periods'] = array_values(array_filter($data['periods'], static fn (mixed $p): bool => !is_array($p) || !is_string($p['label'] ?? null) || PrivacyGuard::clearLabel($p['label'])));
         }
-        PrivacyGuard::assertRequestSendable($text, PrivacyGuard::knownNames($data));
+        PrivacyGuard::assertRequestSendable($text, PrivacyGuard::names($data));
         $catalogue = ($this->catalogue ?? RuleCatalogue::forRules())->text();
 
         return new AiRequest(
@@ -101,7 +100,7 @@ final class PromptBuilder
             $this->user($locale, $data) . "\n" . DataBlock::wrap('request', ['text' => $text]),
             OutputSchemas::draft(),
             AiRequest::MAX_TOKENS,
-            PrivacyGuard::knownNames($data)
+            PrivacyGuard::names($data)
         );
     }
 

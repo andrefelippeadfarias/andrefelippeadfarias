@@ -241,6 +241,29 @@ final class PrivacyAndNumbersTest extends TestCase
         $maria = $builder->alert(['code' => 'x', 'room' => 'QDM (Quarto Dona Maria)', 'room_label' => 'Quarto Dona Maria', 'summary' => 'Reserva 4411 abaixo do esperado.'], 'pt_BR');
         self::assertSame(AiStopped::PRIVACY, $refused(static fn () => \Ritmo\Domain\Ai\AnswerReader::alert($reply((string) json_encode(['explanation' => 'A Dona Maria Souza pagou abaixo do esperado na reserva 4411.', 'action' => 'Conferir.'])), $maria)));
         self::assertSame(PrivacyGuard::NAME, PrivacyGuard::problem("a ho\u{0301}spede Pereira chega amanhã"), 'a combining accent is the same word');
+        // Third review: saints and places, days and months, other ways to write a surname, plurals.
+        foreach ([
+            'A hóspede Silva de São Paulo pediu 10% de desconto no Standard em dezembro',
+            'Dar 10% de desconto ao Sr. Pedro Santa Rosa no Standard em dezembro',
+            'Give guest John St. Clair 10% off the Standard in December',
+            'Desconto de 10% para o Sr. Domingo Pereira nas sextas',
+            'Desconto de 10% para a Sra. May Watson nas sextas',
+            'Desconto de 10% para a família Natal no Standard',
+            'Hóspedes: Pereira e Souza chegam sexta; subir 5% no Standard',
+            'Guests: Smith and Jones want 10% off the Standard',
+        ] as $text) {
+            self::assertSame(AiStopped::PRIVACY, $refused(static fn () => $builder->request($text, $rooms('Standard'), 'pt_BR')), $text);
+        }
+        foreach (['Dona Rosa PEREIRA', "Dona Rosa O'Brien", 'Dona Rosa P. Souza', 'Dona Rosa del Valle', 'Dona Rosa Natal Pereira', "Dona Rosa\u{200B}Pereira", "Dona Rosa\u{2011}Pereira", 'Dona Rosa/Pereira'] as $guest) {
+            $text = 'Dar 10% de desconto para a ' . $guest . ' em dezembro';
+            self::assertSame(AiStopped::PRIVACY, $refused(static fn () => $builder->request($text, $rooms('Chalé Dona Rosa', 'Standard'), 'pt_BR')), $text);
+        }
+        self::assertSame(PrivacyGuard::NAME, PrivacyGuard::problem("A hós\u{00AD}pede Pereira pagou."), 'a soft hyphen inside the title');
+        self::assertNull($refused(static fn () => $builder->request('Atrair clientes: Subir 5% nas sextas de janeiro', $rooms('Standard'), 'pt_BR')));
+        foreach (['Subir 5% nos quartos Dona Flor - Standard - Suíte Master nas sextas', 'Quarto Dona Flor – Standard: subir 5% nas sextas de janeiro', 'Subir 5% no Chale Dona Flor nas sextas'] as $text) {
+            self::assertNull($refused(static fn () => $builder->request($text, $rooms('Quarto Dona Flor', 'Standard', 'Suíte Master'), 'pt_BR')), $text);
+        }
+        self::assertNull($refused(static fn () => $builder->request('Subir 5% na Suite Familia Luxo nas sextas', $rooms('Suíte Família Luxo'), 'pt_BR')), 'a room typed without accents');
         $data = $rooms('Standard') + ['property' => 'Pousada Dona Flor'];
         self::assertNull($refused(static fn () => $builder->request('Subir 5% em toda a Pousada Dona Flor em dezembro', $data, 'pt_BR')));
         $data = $rooms('Standard');

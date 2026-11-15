@@ -1289,9 +1289,10 @@
       "id": "double-1511-sem-regra-20261113",
       "responsavel": "skill",
       "desde": "2026-11-13",
-      "urgencia": 1,
-      "texto": "Panorâmica I (Double) 15/11, esgotada 6/6: o teto foi apagado às 08:12 de 13/11 para soltar a proteção e a regravação (piso -10% = R$ 1.332, sem teto, estadia 1) voltou 'Pricing data for this date isn't available yet'. A noite está sem regra por data. Regravar na rotina das 10:53 (depois do envio diário) ou às 12:10 com o recálculo da Double (cota livre a partir de 12:10). Item pronto em pendentes.json da rotina completa de 13/11 (rascunho c1113).",
-      "atualizado_em": "2026-11-13"
+      "urgencia": 3,
+      "texto": "Panorâmica I (Double) 15/11, esgotada 6/6: o teto foi apagado às 08:12 de 13/11 para soltar a proteção e a regravação (piso -10% = R$ 1.332, sem teto, estadia 1) voltou 'Pricing data for this date isn't available yet'. A noite está sem regra por data. Regravar na rotina das 10:53 (depois do envio diário) ou às 12:10 com o recálculo da Double (cota livre a partir de 12:10). Item pronto em pendentes.json da rotina completa de 13/11 (rascunho c1113). Atualização 15/11: a noite chegou a hoje (D0) sem regra e com 1 unidade livre (cancelamento); não foi regravada, porque o preço de hoje nunca sobe. Encerrada com a noite.",
+      "atualizado_em": "2026-11-15",
+      "status": "encerrada"
     },
     {
       "id": "afrodite-1201-regra-j-antiga-20261113",
@@ -1300,6 +1301,22 @@
       "urgencia": 3,
       "texto": "Afrodite 12/01/2027, esgotada 1/1: a Regra J antiga (piso e teto 42%, R$ 2.840) continua. O motor pede a proteção (piso da ordem R$ 1.565, teto livre), que exige apagar a regra, recalcular a Afrodite e regravar. Fazer quando houver recálculo livre na Afrodite (na manhã seguinte).",
       "atualizado_em": "2026-11-13"
+    },
+    {
+      "id": "mudanca-manual-feriado-1922-20261115",
+      "responsavel": "dono",
+      "desde": "2026-11-15",
+      "urgencia": 1,
+      "texto": "Em 13/11 às 14:17 BRT, uma mudança pela tela do PriceLabs (sem API) trocou as regras de 19 a 22/11 nos 7 quartos por preço +10% sobre o recomendado, piso +10% sobre o mínimo do anúncio e teto +10% sobre o máximo, e tirou a estadia mínima e as restrições de chegada/saída por data. A skill respeitou e congelou as noites (ordens manual-2026-11-15-*). Falta o dono confirmar se foi intencional (e, se não foi, trocar a senha do PriceLabs) e dizer se a estadia de 2 noites do feriado deve voltar.",
+      "atualizado_em": "2026-11-15"
+    },
+    {
+      "id": "gravacoes-adiadas-20261115",
+      "responsavel": "skill",
+      "desde": "2026-11-15",
+      "urgencia": 2,
+      "texto": "Da rotina de 15/11 (PriceLabs sem calendário e recálculo falhando por 'Beds24 temporarily unavailable'): King Spa 7 04/12 estadia 1 (noite órfã; recusada 'Pricing data not available'); estadia 2 de 15/11/2027 nos 7 quartos (PriceLabs e Beds24); King Spa 2 27/11 estadia 1 no Beds24 (órfã, confirmar efetiva); proteção da Afrodite 12-14/01 no lugar da Regra J antiga (apagar + recalcular + regravar). Fazer na rotina com recálculo funcionando.",
+      "atualizado_em": "2026-11-15"
     }
   ],
   "versao": "2026-11-12T13"

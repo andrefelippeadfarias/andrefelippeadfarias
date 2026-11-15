@@ -5103,6 +5103,70 @@ Sombra da flutuação: foto de hoje só com Afrodite e King Spa 2 (os outros 5 c
 
 **Envio:** as mudanças chegam aos canais no envio de hoje.
 
+## 15/11/2026, 07:54 a 09:20 BRT — Rotina completa de domingo, cobrindo as 9 rotinas que não rodaram (sexta 10:53 a sábado 19:53)
+
+**Por que 9 rotinas não rodaram:** o processo da sessão reiniciou várias vezes entre sexta e domingo, e os avisos das rotinas ficaram na fila até hoje às 07:53. Esta rodada usa o Beds24 desde sexta 07:53 e faz o trabalho das 9.
+
+**Mudança manual pelo dono ou pela equipe (sexta 13/11, 14:17 BRT, pela tela do PriceLabs, sem API):** nas noites de 19 a 22/11, nos 7 quartos, as regras do feriado foram trocadas por preço +10% sobre o recomendado, piso +10% sobre o mínimo do anúncio e teto +10% sobre o máximo. A estadia mínima e as restrições de chegada/saída por data dessas noites também foram retiradas. Antes, por exemplo, a Moinhos 20-21/11 tinha piso e teto de R$ 2.656 (127% da base) e estadia 2. **Respeitada e congelada** (`ordens_dono.json`: `manual-2026-11-15-<quarto>-2026-11-19`, de 19 a 22/11); o motor não mexe nessas noites. Efeito no Beds24: os sábados 21/11 da Moinhos e da Balcony já aparecem com estadia abaixo de 2. Pergunta ao dono: foi intencional? Se não foi, trocar a senha do PriceLabs.
+
+**Beds24 desde sexta 07:53:** 28 novas, 14 canceladas, 72 alteradas. **Segurança: 1 alerta** (3 cancelamentos da Booking em menos de 3 h na sexta, 13:06 a 15:54 BRT: Balcony 19-22/11, Panorâmica II 20-22/11, Panorâmica I 20-22/11). **Abaixo do esperado: 4** (Panorâmica II 20-23/11 direta, 31%; King Spa 7 16-18/11 direta, 33%; Balcony 28/11 direta, 41%; King Spa 2 17/11 pela Expedia, 47%; nº e hóspede só no relatório). **Overbooking:** King Spa 7 16/11 e Panorâmica II 22/11 (–1 cada); o da Panorâmica I 20-21/11 se resolveu com um cancelamento.
+
+**Ocupação (inventário do Beds24):** Recanto 55% em 7 dias, 47% em 15, 34% em 30; Villa 53%/55%/43%. Mercado (PriceLabs): 20-21/11 em 66% e 64% (ano passado 55% e 59%).
+
+**Concorrentes (Booking, 2 noites):** semana 24-26/11, mediana R$ 631; Recanto R$ 1.463 (o mais caro da amostra); Villa R$ 837. Fim de semana 04-06/12, mediana R$ 1.515; Recanto R$ 1.559; Villa R$ 1.653.
+
+**PriceLabs instável hoje:** o `get_listing_prices` da coleta voltou "Listing data does not exist" nos 7 quartos. Recálculos da Moinhos (08:00) e da Panorâmica I (08:06) voltaram "Beds24 appears to be temporarily unavailable" (contam na cota; nenhum outro tentado). O anúncio segue ativo e com envio ligado (último envio 14/11 15:27 BRT). Calendário de trabalho: último recálculo de cada quarto (12 e 13/11) com as regras por data lidas agora e a ocupação do Beds24 lida às 07:55; validação com `--aceitar-velho`.
+
+**Motor de pace:** 369 noites; 36 itens (17 para cima, 1 para baixo, 18 de coerência). Ficaram fora: Panorâmica I 17/11 (abaixo do piso de vitrine de dia de semana, como na sexta) e a proteção da Afrodite 12-14/01 (exige apagar e recalcular). **Validador:** 40 itens, 0 erros.
+
+**Gravado (08:08 a 09:14 BRT) e conferido pela resposta da API:**
+
+| Mudança | Antes | Depois | Como desfazer (pedir ao Claude) |
+|---|---|---|---|
+| Balcony 25/11 | R$ 673 | piso e teto R$ 1.041 (-18%), Escada de vendas (dono 01/11): 1/6 vendidas | regravar -47% |
+| King Spa 2 25/11 | R$ 1.083 | piso e teto R$ 1.192 (-6%), Escada de vendas (dono 01/11): 7/9 vendidas | regravar piso -25% e teto None% |
+| Balcony 26/11 | R$ 1.118 | piso e teto R$ 927 (-27%), Escada de vendas (dono 01/11): 0/6 vendidas | regravar -12% |
+| King Spa 2 26/11 | R$ 952 | piso e teto R$ 1.048 (-17%), Escada de vendas (dono 01/11): 5/9 vendidas | regravar piso -25% e teto None% |
+| Afrodite 27/11 | R$ 2.000 | piso e teto R$ 2.128 (7%), Plano do dono 09/11 (fds): abertura R$ 1065 público | regravar 0% |
+| Panorâmica I 27/11 | R$ 1.732 | piso e teto R$ 1.844 (25%), Plano do dono 09/11 (fds): abertura R$ 926 público | regravar 17% |
+| Afrodite 28/11 | R$ 2.000 | piso e teto R$ 2.128 (7%), Plano do dono 09/11 (fds): abertura R$ 1065 público | regravar 0% |
+| Panorâmica I 28/11 | R$ 1.732 | piso e teto R$ 1.844 (25%), Plano do dono 09/11 (fds): abertura R$ 926 público | regravar 17% |
+| Balcony 01/12 | R$ 914 | piso e teto R$ 914 (-28%), Escada de vendas (dono 01/11): 0/6 vendidas | regravar -28% |
+| Afrodite 03/12 | R$ 1.500 | piso e teto R$ 1.594 (-20%), Escada de vendas (dono 01/11): 1/16 vendidas | regravar -25% |
+| Panorâmica II 03/12 | R$ 1.240 | piso e teto R$ 1.300 (-18%), Escada de vendas (dono 01/11): 1/16 vendidas | regravar -22% |
+| Afrodite 04/12 | R$ 1.840 | piso e teto R$ 1.838 (-8%), Plano do dono 09/11 (fds): abertura R$ 1048 público | regravar -8% |
+| Panorâmica I 04/12 | R$ 1.598 | piso e teto R$ 1.584 (8%), Plano do dono 09/11 (fds): abertura R$ 911 público | regravar 8% |
+| Panorâmica II 04/12 | R$ 1.495 | piso e teto R$ 1.534 (-3%), Plano do dono 09/11 (fds): abertura R$ 911 público | regravar -6% |
+| Moinhos 04/12 | R$ 1.337 | piso e teto R$ 1.329 (14%), Plano do dono 09/11 (fds): abertura R$ 765 público | regravar 14% |
+| Afrodite 05/12 | R$ 1.960 | piso e teto R$ 1.957 (-2%), Plano do dono 09/11 (fds): abertura R$ 1048 público | regravar -2% |
+| Panorâmica I 05/12 | R$ 1.702 | piso e teto R$ 1.695 (15%), Plano do dono 09/11 (fds): abertura R$ 911 público | regravar 15% |
+| Panorâmica II 05/12 | R$ 1.495 | piso e teto R$ 1.584 (0%), Plano do dono 09/11 (fds): abertura R$ 911 público | regravar -6% |
+| Moinhos 05/12 | R$ 1.337 | piso e teto R$ 1.329 (14%), Plano do dono 09/11 (fds): abertura R$ 765 público | regravar 14% |
+| Balcony 12/12 | R$ 1.041 | piso e teto R$ 1.041 (-18%), Balcony no mercado do quarto sem banheira (plano do dono 09/ | regravar -18% |
+| Afrodite 16/12 | R$ 1.500 | piso e teto R$ 1.582 (-20%), Escada de vendas (dono 01/11): 2/16 vendidas | regravar -25% |
+| Panorâmica I 16/12 | R$ 1.243 | piso e teto R$ 1.303 (-11%), Ordem do Recanto: Panorâmica I não fica abaixo da Moinhos (R | regravar -16% |
+| Panorâmica II 16/12 | R$ 1.240 | piso e teto R$ 1.303 (-18%), Escada de vendas (dono 01/11): 2/16 vendidas | regravar -22% |
+| Moinhos 16/12 | R$ 1.232 | piso e teto R$ 1.294 (11%), Escada de vendas (dono 01/11): 2/7 vendidas | regravar piso 5% e teto None% |
+| Afrodite 17/12 | R$ 1.500 | piso e teto R$ 1.582 (-20%), Escada de vendas (dono 01/11): 1/16 vendidas | regravar -25% |
+| Panorâmica I 17/12 | R$ 1.243 | piso e teto R$ 1.303 (-11%), Ordem do Recanto: Panorâmica I não fica abaixo da Moinhos (R | regravar -16% |
+| Panorâmica II 17/12 | R$ 1.240 | piso e teto R$ 1.303 (-18%), Escada de vendas (dono 01/11): 1/16 vendidas | regravar -22% |
+| Moinhos 17/12 | R$ 1.232 | piso e teto R$ 1.294 (11%), Escada de vendas (dono 01/11): 1/7 vendidas | regravar piso 5% e teto None% |
+| Balcony 20/12 | R$ 1.295 | piso e teto R$ 1.295 (2%), Escada de vendas (dono 01/11): 0/6 vendidas | regravar 2% |
+| Balcony 13/01/27 | R$ 991 | piso e teto R$ 914 (-28%), Regra G: Balcony 10% abaixo da suíte com banheira livre mais | regravar -22% |
+| Balcony 14/01/27 | R$ 991 | piso e teto R$ 914 (-28%), Regra G: Balcony 10% abaixo da suíte com banheira livre mais | regravar -22% |
+
+**Beds24 (aplicado e relido, 2 conferidos):** King Spa 7 sábado 05/12 de fechado para `noCheckIn` (sábado esgotado com a sexta livre; desfazer: `noCheckInOrCheckOut`); King Spa 2 18/11 estadia 1 → 2 (quarta; desfazer: estadia 1).
+
+**Não gravado / pendente:**
+- **King Spa 7 04/12** (estadia 1, noite órfã) e **12/12**: o PriceLabs recusou com "Pricing data for this date isn't available yet"; ficam para a rotina com recálculo.
+- **Estadia de 15/11/2027** (nova segunda do horizonte) nos 7 quartos, no PriceLabs e no Beds24: fica para amanhã.
+- **King Spa 2 27/11** no Beds24 (órfã, estadia 2 → 1): aguarda o recálculo para confirmar a estadia efetiva no PriceLabs.
+- **Panorâmica I 15/11 (hoje):** a noite segue sem regra por data desde sexta (o teto foi apagado e a regravação recusada); hoje ela tem 1 unidade livre. Não regravo hoje: o preço de hoje nunca sobe.
+- **Afrodite 12/01 a 14/01:** proteção da esgotada no lugar da Regra J antiga; precisa de recálculo.
+- Conferência no recálculo: não conferido (recálculo indisponível).
+
+**Envio:** as mudanças chegam aos canais no envio de hoje.
+
 ## O que só pode ser feito na tela (passo a passo para você)
 
 1. **Safety Minimum Price → "Do Not Apply"** (Dynamic Pricing → Customizations → aba Groups → Edit no grupo Recanto dos Moinhos → All Customizations → Safety Minimum Price). Anote o valor atual antes.

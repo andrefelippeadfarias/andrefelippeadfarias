@@ -1128,6 +1128,7 @@ public static function capture(string $text, string $timezone): ?DateTimeImmutab
 #### `Ritmo\Domain\Market\Csv\MarketCsvProblem` (final class)
 
 ```php
+const HIDDEN_VALUE = '' . "\0" . 'hidden';
 const FILE = 'file';
 const ERROR = 'error';
 const WARNING = 'warning';
@@ -3710,7 +3711,8 @@ public readonly int $overdue;
 public readonly ?int $marketAgeDays;
 public readonly array $pmsSkipped;
 public readonly int $mergeConflicts;
-public function __construct(bool $light = false, int $lightNights = 0, bool $shadow = true, bool $syncNow = false, int $securityFindings = 0, int $overbooked = 0, bool $waveHold = false, int $wouldWrite = 0, int $pmsWouldWrite = 0, bool $proposed = false, int $entries = 0, ?string $refused = null, int $callsSent = 0, int $confirmed = 0, int $pmsConfirmed = 0, ?string $stop = null, int $held = 0, int $rejected = 0, int $pmsRejected = 0, int $overdue = 0, ?int $marketAgeDays = null, array $pmsSkipped = [], int $mergeConflicts = 0);
+public readonly array $notRecalculated;
+public function __construct(bool $light = false, int $lightNights = 0, bool $shadow = true, bool $syncNow = false, int $securityFindings = 0, int $overbooked = 0, bool $waveHold = false, int $wouldWrite = 0, int $pmsWouldWrite = 0, bool $proposed = false, int $entries = 0, ?string $refused = null, int $callsSent = 0, int $confirmed = 0, int $pmsConfirmed = 0, ?string $stop = null, int $held = 0, int $rejected = 0, int $pmsRejected = 0, int $overdue = 0, ?int $marketAgeDays = null, array $pmsSkipped = [], int $mergeConflicts = 0, array $notRecalculated = []);
 ```
 
 #### `Ritmo\Domain\Report\RunLines\RunLine` (final class)
@@ -3742,6 +3744,8 @@ case DeliveryOverdue = 'delivery_overdue';
 case MarketStale = 'market_stale';
 case PmsSkipped = 'pms_skipped';
 case StayMergeConflict = 'stay_merge_conflict';
+case NotRecalculated = 'not_recalculated';
+case Undone = 'undone';
 public function params(): array;
 ```
 

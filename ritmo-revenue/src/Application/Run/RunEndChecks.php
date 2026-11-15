@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Ritmo\Application\Run;
 
+use DateTimeImmutable;
+use DateTimeZone;
 use Ritmo\Application\Alerts\AlertService;
 use Ritmo\Application\Market\MarketReminder;
 use Ritmo\Application\Market\MarketSettings;
@@ -16,6 +18,8 @@ use Ritmo\Domain\Config\InvalidConfig;
 use Ritmo\Domain\Report\Config\ReportsConfig;
 use Ritmo\Domain\Report\Config\ReportsFields;
 use Ritmo\Domain\Report\Review\ReviewDue;
+use Ritmo\Domain\Support\Days;
+use Ritmo\Infrastructure\Db\Repository\RunRepository;
 use Ritmo\Infrastructure\Schedule\AlertLedger;
 
 /**
@@ -27,11 +31,15 @@ use Ritmo\Infrastructure\Schedule\AlertLedger;
  */
 final class RunEndChecks
 {
+    /** Runs read to find the first one of a property (the oldest of them stands for it). */
+    private const RUNS_LOOKED_AT = 500;
+
     public function __construct(
         private readonly MarketReminder $market,
         private readonly SnapshotStore $snapshots,
         private readonly AlertService $alerts,
         private readonly AlertLedger $ledger,
+        private readonly ?RunRepository $runs = null,
     ) {
     }
 
@@ -82,7 +90,17 @@ final class RunEndChecks
             return null;
         }
         $last = $this->snapshots->lastTaken($context->property->id);
+        // never reviewed: the interval counts from the first run of the property, not from day one
+        $since = $last ?? $this->firstRunDay($context);
 
-        return ReviewDue::of($context->today, $last, $config->review->intervalDays)->due ? RunAlerts::reviewDue($context->property->id, $last) : null;
+        return ReviewDue::of($context->today, $since, $config->review->intervalDays)->due ? RunAlerts::reviewDue($context->property->id, $last) : null;
+    }
+
+    private function firstRunDay(RunContext $context): ?DateTimeImmutable
+    {
+        $runs = $this->runs?->latest($context->property->id, self::RUNS_LOOKED_AT) ?? [];
+        $first = $runs === [] ? null : $runs[count($runs) - 1]['started_at'];
+
+        return $first === null ? null : Days::date($first->setTimezone(new DateTimeZone($context->property->timezone))->format('Y-m-d'));
     }
 }

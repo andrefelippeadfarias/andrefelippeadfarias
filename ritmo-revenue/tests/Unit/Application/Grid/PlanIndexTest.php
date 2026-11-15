@@ -35,6 +35,27 @@ final class PlanIndexTest extends TestCase
         self::assertNull($filled->night('A', '2026-12-01')->status, 'a night the run did not price stays empty');
     }
 
+    /**
+     * Regression (M4 product review): a night without a date rule whose price steps down from
+     * 1350 to 1248 goes DOWN, although its floor rises from the listing minimum of 750.
+     */
+    public function testTheDirectionIsThatOfThePriceAGuestPays(): void
+    {
+        $item = static fn (string $field, float $proposed): array => ['details' => ['current_price' => 1350.0]] + self::item('A', '2026-11-14', $field, null, $proposed);
+        $night = (new PlanIndex([$item('floor', 1248.0), $item('ceiling', 1248.0)]))->withListing(['A' => new RoomType('inn', 'A', 'Room A', 1, 'pms-A', 'pl-A', 1500.0, 750.0, 3600.0, 750.0)])->night('A', '2026-11-14');
+
+        self::assertSame(750.0, $night->floorNow);
+        self::assertSame(1350.0, $night->priceNow());
+        self::assertSame(1248.0, $night->priceAfter());
+        self::assertSame('down', $night->direction());
+
+        $raised = (new PlanIndex([['details' => ['current_price' => 600.0]] + self::item('A', '2026-11-15', 'floor', null, 722.0)]))->night('A', '2026-11-15');
+        self::assertSame('up', $raised->direction(), 'a floor above the price raises it');
+        $within = (new PlanIndex([['details' => ['current_price' => 900.0]] + self::item('A', '2026-11-16', 'floor', 500.0, 722.0)]))->night('A', '2026-11-16');
+        self::assertSame(900.0, $within->priceAfter(), 'a floor raised under the price leaves the price where it is');
+        self::assertSame('up', $within->direction(), 'then the range is what moves');
+    }
+
     public function testANightNotPricedIsNotFilled(): void
     {
         $none = PlannedNight::none();

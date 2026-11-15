@@ -172,7 +172,7 @@ final class WizardView
         $site = wp_timezone_string();
 
         return [
-            'timezones' => timezone_identifiers_list(),
+            'timezones' => self::timezones(),
             'timezone' => in_array($site, timezone_identifiers_list(), true) ? $site : '',
             'currency' => ScreenServices::instance()->listingSuggestions()->currency() ?? '',
             'currencies' => ['BRL', 'USD', 'EUR', 'GBP', 'ARS', 'MXN', 'CLP', 'COP', 'UYU', 'PEN', 'CAD', 'AUD'],
@@ -308,6 +308,21 @@ final class WizardView
         $note = $change['note'] === '' ? $from : $change['note'] . '; ' . $from;
 
         return ['text' => $change['text'], 'note' => $note, 'sr' => $change['sr'] . ' (' . $from . ')'];
+    }
+
+    /**
+     * The timezones as people read them ("America › Sao Paulo"), by region.
+     *
+     * @return array<string, string> identifier => label
+     */
+    private static function timezones(): array
+    {
+        $out = [];
+        foreach (timezone_identifiers_list() as $zone) {
+            $out[$zone] = str_replace(['/', '_'], [' › ', ' '], $zone);
+        }
+
+        return $out;
     }
 
     private static function plain(float $amount): string

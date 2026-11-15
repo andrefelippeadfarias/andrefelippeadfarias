@@ -56,6 +56,14 @@ final class SetupServiceTest extends TestCase
         self::assertSame(PropertyMode::Shadow, (new PropertyRepository($this->db, $this->clock))->find('inn')?->mode);
     }
 
+    /** M4 product review: the code is made from the name when the person leaves it empty. */
+    public function testAPropertyWithoutACodeTakesOneFromItsName(): void
+    {
+        self::assertSame('pousada-do-sao-joao', $this->setup->createProperty(['id' => '', 'name' => 'Pousada do São João', 'timezone' => 'UTC', 'currency' => 'BRL'])->id);
+        self::assertSame('pousada-do-sao-joao-2', $this->setup->createProperty(['id' => '', 'name' => 'Pousada do São João!', 'timezone' => 'UTC', 'currency' => 'BRL'])->id);
+        self::assertSame('property', $this->setup->freeId('***'));
+    }
+
     /**
      * @return iterable<string, array{array<string, mixed>, string}>
      */

@@ -20,6 +20,7 @@ final class NightGrid
      * @param array<string, array<string, NightCell|null>>   $cells    room code => "YYYY-MM-DD" => cell
      * @param array<string, string>                          $holidays "YYYY-MM-DD" => period name
      * @param array<string, mixed>|null                      $run      the run whose plan the cells show
+     * @param array<string, mixed>|null                      $latest   the newest run that decided, even when it priced no night
      */
     public function __construct(
         public readonly Property $property,
@@ -31,6 +32,7 @@ final class NightGrid
         public readonly array $holidays,
         public readonly ?array $run,
         public readonly NightFilter $filter,
+        public readonly ?array $latest = null,
     ) {
     }
 

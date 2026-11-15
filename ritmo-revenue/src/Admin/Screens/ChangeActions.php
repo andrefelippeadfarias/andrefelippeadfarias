@@ -40,6 +40,9 @@ final class ChangeActions
     }
 
     /**
+     * The undo writes at once (through the write gate, in any mode): the first post only keeps the
+     * ticked changes and shows what goes back; the second, confirmed, writes it.
+     *
      * @return array<string, string|int>
      */
     private static function undo(Input $form): array
@@ -49,6 +52,12 @@ final class ChangeActions
         if ($ids === []) {
             throw new UserFacing(__('Tick the changes to undo.', 'ritmo-revenue'));
         }
+        if ($form->text('confirmed', 1) !== '1') {
+            UndoSelection::keep($ids);
+
+            return ['property' => $property, 'undo' => 'confirm'];
+        }
+        UndoSelection::forget();
         $stack = ScreenServices::instance()->services()->stack();
         $result = (new UndoNow($stack->undoWriter(), $stack->rules()))->request($property, $ids, get_current_user_id());
         $details = array_values(array_unique(array_map(UndoText::reason(...), $result['left_out'])));

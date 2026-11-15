@@ -9,8 +9,11 @@ require_once __DIR__ . '/WpStubs.php';
 use PHPUnit\Framework\TestCase;
 use ReflectionClass;
 use Ritmo\Admin\Components\Labels;
+use Ritmo\Admin\Screens\AlertsScreen;
 use Ritmo\Admin\Screens\AlertText;
 use Ritmo\Admin\Screens\ConnectionText;
+use Ritmo\Admin\Screens\DiagnosticsView;
+use Ritmo\Admin\Screens\LogText;
 use Ritmo\Admin\Screens\NightText;
 use Ritmo\Admin\Screens\UndoText;
 use Ritmo\Admin\Screens\WarningText;
@@ -59,6 +62,37 @@ final class TextsTest extends TestCase
         self::assertSame('other', Labels::mode('a_later_mode'), 'an unknown value never shows its code');
     }
 
+    /**
+     * Regression (M4 product review): the run detail and the log show facts in words, never a raw
+     * key, a user id, an ISO date or an HTTP route; those stay under "Technical details".
+     */
+    public function testDiagnosticsShowFactsInWordsAndKeepTheRestTechnical(): void
+    {
+        $facts = ['rooms' => 3, 'listings_missing' => [], 'bookings_read_since' => '2026-11-12T23:59:59+00:00', 'mode' => 'approval', 'actor' => 'user:1', 'stop' => null, 'operation' => 'POST /refresh_listing', 'http_status' => 405];
+
+        $plain = DiagnosticsView::context($facts, 'UTC');
+        self::assertStringContainsString('Rooms: 3', $plain);
+        self::assertStringContainsString('Listings missing: 0', $plain);
+        self::assertStringContainsString('Mode: ' . Labels::mode('approval'), $plain);
+        self::assertDoesNotMatchRegularExpression('/user:1|T23:59|refresh_listing|405|_/', $plain);
+        self::assertSame('operation: POST /refresh_listing · http_status: 405', DiagnosticsView::technical($facts));
+
+        foreach (['A run ended.', 'PriceLabs write finished.', 'Beds24 request finished.'] as $message) {
+            self::assertNotSame('', LogText::message($message));
+            self::assertDoesNotMatchRegularExpression('/PriceLabs|Beds24/', LogText::message($message), 'the log names the systems by their role');
+        }
+    }
+
+    /** Regression (M4 product review): a failed write with no group left open does not say "Changes still open: 0". */
+    public function testAnAlertDoesNotShowZeroGroupsOpen(): void
+    {
+        $facts = new \ReflectionMethod(AlertsScreen::class, 'facts');
+        $shown = static fn (int $groups): array => array_column($facts->invoke(null, ['context' => ['provider' => 'pricing', 'groups_open' => $groups], 'room_code' => null, 'night' => null], null, 'UTC'), 'label');
+
+        self::assertNotContains(AlertText::factLabel('groups_open'), $shown(0));
+        self::assertContains(AlertText::factLabel('groups_open'), $shown(2));
+    }
+
     public function testEveryFieldOfTheChangeLogHasAWord(): void
     {
         $fields = array_values((new ReflectionClass(ChangeField::class))->getConstants());
@@ -94,7 +128,8 @@ final class TextsTest extends TestCase
                 self::assertDoesNotMatchRegularExpression('/HTTP|Exception|\{|\d{3} /', $text, $provider . ' ' . $reason);
             }
         }
-        self::assertSame('Beds24 refused the key. Create a new key in Beds24 and paste it here.', ConnectionText::result('beds24', 'auth'));
+        self::assertSame('Beds24 refused the token. Create a new token in Beds24 and paste it here.', ConnectionText::result('beds24', 'auth'), 'the PMS uses a token, the pricing system a key');
+        self::assertSame('PriceLabs refused the key. Create a new key in PriceLabs and paste it here.', ConnectionText::result('pricelabs', 'auth'));
         self::assertSame('Connected to PriceLabs: 3 of 4 listings belong to your PMS.', ConnectionText::result('pricelabs', 'ok', ['listings' => 3, 'account_listings' => 4]));
     }
 

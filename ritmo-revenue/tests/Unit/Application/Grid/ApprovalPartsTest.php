@@ -6,6 +6,8 @@ namespace Ritmo\Tests\Unit\Application\Grid;
 
 use DateTimeImmutable;
 use PHPUnit\Framework\TestCase;
+use Ritmo\Application\Approval\PlanEntry;
+use Ritmo\Application\Dashboard\StatusQuery;
 use Ritmo\Application\Grid\Approvals\EntryRow;
 use Ritmo\Application\Grid\Approvals\EntryWarnings;
 use Ritmo\Application\Grid\Approvals\Impact;
@@ -53,6 +55,28 @@ final class ApprovalPartsTest extends TestCase
         self::assertSame([400.0, 400.0], $segments[0]->beforeRange());
         self::assertSame([380.0, 380.0], $segments[0]->afterRange());
         self::assertEqualsWithDelta(-5.0, (float) $segments[0]->medianChange(), 0.0001);
+    }
+
+    /** Regression (M4 product review): a rule deleted and written again is one night waiting, not two. */
+    public function testTheNightsWaitingCountARewriteOnce(): void
+    {
+        $entries = [
+            (new PlanEntry(PlanEntry::DELETION, 'A', '2026-11-20', []))->toArray(),
+            (new PlanEntry(PlanEntry::ITEM, 'A', '2026-11-20', ['floor_pct' => -30]))->toArray(),
+            (new PlanEntry(PlanEntry::ITEM, 'A', '2026-11-21', ['floor_pct' => -30]))->toArray(),
+            (new PlanEntry(PlanEntry::ITEM, 'B', '2026-11-21', ['floor_pct' => -30]))->toArray(),
+        ];
+
+        self::assertSame(3, StatusQuery::nights($entries));
+    }
+
+    /** Regression (M4 product review): an order covering part of a run of nights is a segment of its own. */
+    public function testSegmentsBreakWhereAnOrderStartsOrEnds(): void
+    {
+        $ordered = static fn (string $night): EntryRow => new EntryRow('item|A|' . $night, 'item', 'A', Days::date($night), $night, 'night|A|' . $night, ['floor_pct' => -30], 'order-1', EntryRow::DOWN, 400.0, 380.0, -30, null, null, null, 'PACE_STEP', null, [], '', ['order'], false);
+        $rows = [self::row('A', '2026-11-20', 'PACE_STEP', EntryRow::DOWN), $ordered('2026-11-21'), $ordered('2026-11-22'), self::row('A', '2026-11-23', 'PACE_STEP', EntryRow::DOWN)];
+
+        self::assertSame([1, 2, 1], array_map(static fn ($s): int => $s->count(), Segmenter::segments($rows, ['A'])));
     }
 
     public function testTheImpactCountsNightsUpAndDownAndTheLargestRise(): void

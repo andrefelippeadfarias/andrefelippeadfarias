@@ -310,6 +310,7 @@ final class RunStack
             new SnapshotStore($this->db),
             $this->alerts(),
             new AlertLedger($this->db),
+            $this->runs(),
         );
     }
 
@@ -365,7 +366,7 @@ final class RunStack
 
     public function approvalDesk(): ApprovalDesk
     {
-        return $this->once(__FUNCTION__, fn (): ApprovalDesk => new ApprovalDesk($this->approvalRequests(), $this->capabilities, $this->slots(), $this->events(), $this->properties(), $this->clock, $this->wake));
+        return $this->once(__FUNCTION__, fn (): ApprovalDesk => new ApprovalDesk($this->approvalRequests(), $this->capabilities, $this->slots(), $this->events(), $this->properties(), $this->clock, $this->wake, $this->alerts()));
     }
 
     public function modes(): ModeService

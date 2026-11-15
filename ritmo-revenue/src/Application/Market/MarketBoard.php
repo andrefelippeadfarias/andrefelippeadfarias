@@ -20,8 +20,9 @@ use Ritmo\Infrastructure\Db\Repository\StaySampleRepository;
 
 /**
  * What the market screen shows, as plain values (no HTML, no text): the series per night with
- * where each value came from and its age, the competitors with their recent prices, a page of
- * prices and the latest imports. Read only.
+ * where each value came from and its age (the anchor's capture and sample when no series is
+ * configured), the competitors with their recent prices, a page of prices and the latest imports.
+ * Read only.
  */
 final class MarketBoard
 {
@@ -60,11 +61,17 @@ final class MarketBoard
                 $newest = $value->newestCapture === null ? $newest : max($newest ?? $value->newestCapture, $value->newestCapture);
                 $small = $small || $value->stays < $config->smallSampleStays || $value->competitors < $config->smallSampleCompetitors;
             }
+            $anchor = $anchors[$key] ?? null;
+            if ($series === [] && $anchor !== null && $anchor->n > 0) {
+                // without configured series the anchor is what the rules use: its capture and its sample
+                $newest = $anchor->capturedAt;
+                $small = $anchor->n < $config->smallSampleStays;
+            }
             $rows[] = [
                 'night' => $night,
                 'type' => $rules->nightType($night)->value,
                 'series' => $series,
-                'anchor' => $anchors[$key] ?? null,
+                'anchor' => $anchor,
                 'age_days' => $newest === null ? null : max(0, Days::diff($newest, $today)),
                 'small_sample' => $small,
             ];

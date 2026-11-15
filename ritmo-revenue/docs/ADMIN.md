@@ -112,7 +112,20 @@ A night the run priced without a date rule in force has no floor or ceiling of i
 pricing system applies the listing's minimum and maximum. `PlanIndex::withListing()` fills them in
 (`PlannedNight::$nowFromListing`), so the approvals, the grid's arrows, the night detail and step 9
 show "listing minimum R$ 320 → R$ 433" instead of "— → R$ 433", and the impact counts such nights
-as up or down. The screen says where the amount before comes from.
+as up or down. The screen says where the amount before comes from. A night with a date rule in
+the pricing system shows that rule's floor and ceiling as the amounts in force (`ShadowStage` takes
+them from the date rules read in the run when the engine's item carries only the price).
+
+### 3.3.2 Direction of a change (M4 product review)
+
+Up or down is the direction of the price a guest pays, not of the floor: the price read within the
+floor and ceiling in force against the same price within the proposed ones
+(`PlannedNight::priceNow()` / `priceAfter()`, `RuleInForce::price`). A night without a date rule
+whose price steps from R$ 1,350 to R$ 1,248 is a step down even though its floor rises from the
+listing minimum. When the price does not move (a floor raised under it, or no price read), the
+direction is that of the floor: the range moves. The approval shows the price guests pay first and
+the floor and ceiling under it; the impact, the segments and the "held by the wave" mark use the
+same direction.
 
 ### 3.4 Approvals
 
@@ -126,7 +139,13 @@ selection (nights, up, down, soon). Listing changes are typed again by amount an
   "Reject".
 - With the script: tri-state segment boxes, the closure of related entries (`PartialApproval`)
   and a live total through `POST /approvals/{id}/selection`.
-- After a decision the screen follows the request (`GET /approvals/{id}`) until a final status.
+- After a decision the screen follows the request (`GET /approvals/{id}`) until a final status:
+  written, written in part (some approved entries were left out, for example by the recalculation
+  limit of a listing: the run report has a line per room and `recalc_quota_exhausted` is raised),
+  write failed (nothing was taken), lapsed, expired, refused or superseded. A decision resolves the
+  `approval_pending` alert once nothing of the property waits.
+- The counts say nights (a rule deleted and written again is one night); a segment ends where an
+  owner order starts or ends; the median is shown only for two nights or more.
 - The statement count of the screen does not grow with the number of entries (test: same count
   for 100 and 2000).
 
@@ -140,9 +159,14 @@ confirmation checkbox) and the per-user e-mail opt-out.
 ### 3.6 Change log and undo
 
 Changes grouped by run, newest first, rows by room, night and field, values in money or words.
-Filters by night, date of the change, room, system, who (autonomous run, person, undo) and "not undone". Undo of selected changes
-goes through the undo service of M3 (`UndoNow`); what was left out is listed with its reason
-(`UndoText`). CSV export with the formula guard.
+Filters by night, date of the change, room, system, who (autonomous run, person, undo) and "not undone". The
+reason of each change is the reason of its plan item; a floor or ceiling written on a night that had
+no date rule shows the listing minimum or maximum as the value before. Undo of selected changes
+goes through the undo service of M3 (`UndoNow`), which writes at once in any mode: the first post
+only keeps the ticked changes (`UndoSelection`) and shows what goes back ("now → back to"), and
+"Undo now" writes it; "Cancel" keeps the changes. The undo run is grouped as "Undo by <name>" and
+leaves a report line. What was left out is listed with its reason (`UndoText`). CSV export with the
+formula guard. The undo as an approval request (decision D9) is still to come.
 
 ### 3.7 To-do
 
@@ -159,7 +183,9 @@ requests, nothing found, no properties, no listings, listings of another PMS, no
 
 ### 3.9 Diagnostics (Settings, Diagnostics)
 
-Versions, environment, schedule, last runs and the recent log in plain words; the support file
+Versions, environment, schedule, last runs and the recent log in plain words (known facts with
+translated labels, log messages translated by `LogText`; any other key, HTTP route or status only
+under a folded "Technical details"); the support file
 (`SupportBundle`) is a JSON download with an allowlist of keys. Secret-like settings become
 "saved" or "not saved", e-mail addresses are removed, and no guest data is included.
 

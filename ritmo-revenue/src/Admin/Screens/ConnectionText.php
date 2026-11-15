@@ -30,8 +30,11 @@ final class ConnectionText
 
         return match ($reason) {
             ConnectionReason::OK => self::ok($provider, $counts),
-            /* translators: %s: Beds24 or PriceLabs */
-            ConnectionReason::AUTH => sprintf(__('%1$s refused the key. Create a new key in %1$s and paste it here.', 'ritmo-revenue'), $name),
+            ConnectionReason::AUTH => $provider === 'beds24'
+                /* translators: %s: name of the PMS */
+                ? sprintf(__('%1$s refused the token. Create a new token in %1$s and paste it here.', 'ritmo-revenue'), $name)
+                /* translators: %s: name of the pricing system */
+                : sprintf(__('%1$s refused the key. Create a new key in %1$s and paste it here.', 'ritmo-revenue'), $name),
             /* translators: %s: Beds24 or PriceLabs */
             ConnectionReason::FORBIDDEN => sprintf(__('%s accepted the key but does not allow this access. Check the permissions of the key.', 'ritmo-revenue'), $name),
             /* translators: %s: Beds24 or PriceLabs */

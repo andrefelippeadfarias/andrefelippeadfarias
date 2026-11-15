@@ -22,7 +22,7 @@ foreach ($view['competitors'] as $ritmo_candidate) {
 }
 ?>
 <?php if ($view['competitors'] === []) : ?>
-    <div class="ritmo-empty" data-ritmo="empty"><p><?php esc_html_e('Add the hotels you compare yourself with. Mark as peer the ones closest to you; the peer series use only them.', 'ritmo-revenue'); ?></p></div>
+    <div class="ritmo-empty" data-ritmo="empty"><p><?php esc_html_e('Add the hotels you compare yourself with. Tick "close to you" on the ones most like yours: the peer market prices use only them.', 'ritmo-revenue'); ?></p></div>
 <?php else : ?>
     <table class="widefat striped ritmo-table">
         <caption><?php esc_html_e('Competitors of this property', 'ritmo-revenue'); ?></caption>
@@ -44,7 +44,7 @@ foreach ($view['competitors'] as $ritmo_candidate) {
                     </th>
                     <td data-label="<?php esc_attr_e('Code in price files', 'ritmo-revenue'); ?>"><code><?php echo esc_html($ritmo_c['code']); ?></code></td>
                     <td data-label="<?php esc_attr_e('Comparable room', 'ritmo-revenue'); ?>"><?php echo esc_html(MarketText::factor($ritmo_c['factor'], $ritmo_c['factor_source'], $ritmo_config->defaultFactor, $ritmo_config->estimatedFactorCap)); ?><?php if ($ritmo_c['room_label'] !== '') : ?><br><span class="ritmo-muted"><?php echo esc_html($ritmo_c['room_label']); ?></span><?php endif; ?></td>
-                    <td data-label="<?php esc_attr_e('Groups', 'ritmo-revenue'); ?>"><?php echo esc_html($ritmo_c['tags'] === [] ? '—' : implode(', ', $ritmo_c['tags'])); ?></td>
+                    <td data-label="<?php esc_attr_e('Groups', 'ritmo-revenue'); ?>"><?php echo esc_html(MarketText::groups($ritmo_c['tags'])); ?></td>
                     <td data-label="<?php esc_attr_e('Prices, last 30 days', 'ritmo-revenue'); ?>"><?php echo esc_html((string) $ritmo_c['prices_30_days']); ?></td>
                     <td data-label="<?php esc_attr_e('Actions', 'ritmo-revenue'); ?>">
                         <?php if ($view['may_edit']) : ?>
@@ -76,11 +76,12 @@ foreach ($view['competitors'] as $ritmo_candidate) {
         <input type="hidden" name="tab" value="competitors">
         <h2><?php echo esc_html($ritmo_editing === null ? __('Add a competitor', 'ritmo-revenue') : __('Change a competitor', 'ritmo-revenue')); ?></h2>
         <p><label for="ritmo-c-name"><?php esc_html_e('Name', 'ritmo-revenue'); ?></label><br><input type="text" id="ritmo-c-name" name="competitor_fields[name]" maxlength="120" required value="<?php echo esc_attr($ritmo_editing['name'] ?? ''); ?>"></p>
-        <p><label for="ritmo-c-code"><?php esc_html_e('Code used in price files (optional; made from the name)', 'ritmo-revenue'); ?></label><br><input type="text" id="ritmo-c-code" name="competitor_fields[code]" maxlength="64" pattern="[a-z0-9][a-z0-9-]*" value="<?php echo esc_attr($ritmo_editing['code'] ?? ''); ?>"></p>
+        <p><label for="ritmo-c-code"><?php esc_html_e('Code used in price files (optional; made from the name)', 'ritmo-revenue'); ?></label><br><input type="text" id="ritmo-c-code" name="competitor_fields[code]" maxlength="64" pattern="[a-z0-9][a-z0-9\-]*" value="<?php echo esc_attr($ritmo_editing['code'] ?? ''); ?>"></p>
         <p><label for="ritmo-c-ref"><?php esc_html_e('Reference (shown as text, never opened)', 'ritmo-revenue'); ?></label><br><input type="text" id="ritmo-c-ref" name="competitor_fields[reference]" maxlength="190" value="<?php echo esc_attr($ritmo_editing['reference'] ?? ''); ?>"></p>
         <p><label for="ritmo-c-room"><?php esc_html_e('Room compared', 'ritmo-revenue'); ?></label><br><input type="text" id="ritmo-c-room" name="competitor_fields[room_label]" maxlength="190" value="<?php echo esc_attr($ritmo_editing['room_label'] ?? ''); ?>"></p>
-        <p><label for="ritmo-c-tags"><?php esc_html_e('Groups (words separated by commas, such as peer)', 'ritmo-revenue'); ?></label><br><input type="text" id="ritmo-c-tags" name="competitor_fields[tags]" maxlength="190" value="<?php echo esc_attr(implode(', ', $ritmo_editing['tags'] ?? [])); ?>"></p>
-        <p><label for="ritmo-c-factor"><?php esc_html_e('Comparable room costs how many times the cheapest room (optional, such as 1.4)', 'ritmo-revenue'); ?></label><br><input type="text" inputmode="decimal" id="ritmo-c-factor" name="competitor_fields[factor]" value="<?php echo esc_attr(isset($ritmo_editing['factor']) ? (string) $ritmo_editing['factor'] : ''); ?>"></p>
+        <p><input type="hidden" name="competitor_fields[peer]" value="0"><label class="ritmo-check"><input type="checkbox" name="competitor_fields[peer]" value="1" <?php checked(in_array('peer', $ritmo_editing['tags'] ?? [], true)); ?>> <?php esc_html_e('Close to you (a peer): the peer market prices use only these competitors', 'ritmo-revenue'); ?></label></p>
+        <p><label for="ritmo-c-tags"><?php esc_html_e('Other groups (optional, words separated by commas)', 'ritmo-revenue'); ?></label><br><input type="text" id="ritmo-c-tags" name="competitor_fields[tags]" maxlength="190" value="<?php echo esc_attr(implode(', ', array_diff($ritmo_editing['tags'] ?? [], ['peer']))); ?>"></p>
+        <p><label for="ritmo-c-factor"><?php echo esc_html(sprintf(/* translators: %s: an example factor, in the format of the reader */ __('Comparable room costs how many times the cheapest room (optional, such as %s)', 'ritmo-revenue'), number_format_i18n(1.4, 1))); ?></label><br><input type="text" inputmode="decimal" id="ritmo-c-factor" name="competitor_fields[factor]" value="<?php echo esc_attr(isset($ritmo_editing['factor']) ? (string) $ritmo_editing['factor'] : ''); ?>"></p>
         <p><label for="ritmo-c-source"><?php esc_html_e('This factor was', 'ritmo-revenue'); ?></label><br>
             <select id="ritmo-c-source" name="competitor_fields[factor_source]">
                 <option value="" <?php selected($ritmo_editing['factor_source'] ?? '', ''); ?>><?php esc_html_e('Not said', 'ritmo-revenue'); ?></option>

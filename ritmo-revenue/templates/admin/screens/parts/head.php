@@ -36,7 +36,7 @@ $ritmo_notice = $view['notice'];
 <?php if ($ritmo_header['emergency']) : ?>
     <div class="notice notice-error ritmo-emergency" data-ritmo="emergency-banner" role="alert">
         <p>
-            <strong><?php esc_html_e('Emergency switch engaged: nothing is written to the pricing system or the PMS. Scheduled runs only read.', 'ritmo-revenue'); ?></strong>
+            <strong><?php esc_html_e('Emergency switch engaged: nothing is written to the pricing system or the PMS. Scheduled runs only read and watch the bookings.', 'ritmo-revenue'); ?></strong>
             <?php if ($ritmo_header['can_release']) : ?>
                 <a href="<?php echo esc_url($ritmo_header['operations_url']); ?>"><?php esc_html_e('Release it in Operations', 'ritmo-revenue'); ?></a>
             <?php endif; ?>

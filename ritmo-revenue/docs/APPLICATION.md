@@ -66,8 +66,8 @@ The admin is one menu "Ritmo Revenue" of twelve entries (spec 05, section 2; `Ad
 | Area | Classes |
 |---|---|
 | UI kit | `Admin\Components\...`: `Menu`, `Tab`, `Screen`, `FormAction`, `Capability`, `Input`, `Money`, `Percent`, `Ratio`, `PriceText`, `NightDate`, `Labels`, `Paging`, `ConfirmTyped` (typed confirmation: the property id, the new value or the provider's name), `DomainText` (the label and help of a rules setting, translated), `CsvWriter` (formula guard on every text cell; UTF-8 with BOM), `PrivacyGuard` (refuses e-mails, phones and documents in free text), `ErrorText`, `UserFacing`; `View` renders templates; `Notice` carries the message across the redirect; `ReasonText` and `RefusalText` say the why of a number and of a refusal in words. |
-| Central screens | `Admin\Screens\...`: `Screens` (renderers, counters, actions of the area), `Page`, `ScreenServices`, `OverviewScreen`, `NightsScreen`, `NightDetailView`, `NightText`, `NightActions`, `ApprovalsScreen`, `ApprovalActions`, `PmsChangeText` (a PMS change in words), `WarningText`, `AlertsScreen`, `AlertText`, `AlertActions`, `TodoScreen`, `TodoText`, `TodoActions`, `ChangesScreen`, `ChangeActions`, `UndoNow`, `UndoText`, `OperationsScreen`, `OperationsText`, `OperationsActions`, `SettingsScreen`, `SettingsActions`, `ConnectionsView`, `ConnectionText`, `ConnectionActions`, `DiagnosticsView`, `DiagnosticsActions`, `WizardView`, `WizardActions`, `PeopleNames`. Application side: `Dashboard\...` (`StatusQuery`, `StatusStrip`, `Overview\OverviewQuery`, `Alerts\AlertList`, `Alerts\AlertFilter`, `Changes\ChangeList`, `Changes\ChangeFilter`, `Changes\ChangeGroups`, `Changes\UndoRequests`, `Connections\ConnectionTests` (one test per provider every 30 s), `Connections\ConnectionReason`, `Diagnostics\SupportBundle` (JSON with a whitelist of keys), `Setup\SetupWizard`, `Setup\SetupState`, `Setup\WizardProgress`, `Setup\ListingSuggestions`, `Setup\RoomRowsRefused`, `Setup\SafetyValues`, `Setup\WouldDo`, `Todo\TodoGenerator`, `Todo\TodoItem`, `Todo\TodoService`, `Todo\TodoStore`) and `Grid\...` (`NightGrid`, `NightGridQuery`, `NightCell`, `NightMarks`, `NightFilter`, `NightDetail`, `NightDetailQuery`, `GridContext`, `LastPlan`, `PlanIndex`, `PlannedNight`; approvals: `Approvals\ApprovalBoard`, `RequestView`, `RowBuilder`, `EntryRow`, `EntryWarnings`, `Segment`, `Segmenter`, `Impact`, `RelationHints`). See docs/ADMIN.md. |
-| Editors | `Admin\Editors\...`: `EditorScreens`, `EditorPage`, `EditorServices`, `RulesScreen`, `RulesActions`, `RulesLayout` (every schema field placed once), `Placement`, `FieldView`, `FieldWidget`, `FieldContext`, `FieldPath`, `ValueText`, `ChoiceLabels`, `EditorText`, `RuleFormReader`, `RequestFields`, `FormScope`, `FormErrors`, `FormResult`, `DraftDesk`, `UserMetaDraftStorage`, `ReviewView`, `VersionsView`, `PresetFile`, `RelationsView`, `RelationForm`, `RelationText`, `RelationCycle`, `RelationActions`, `CalendarView`, `CalendarActions`, `OrdersScreen`, `OrdersActions`, `OrderText`. Application side, `Rules\...`: `RuleSetEditor` (draft per user, three-way merge, version N+1, never a write), `RuleDraft`, `RuleDraftStorage`, `RuleDiff`, `FieldChange`, `RuleMerge`, `RuleChecks`, `RulesRefused`, `SafetyFields`, `SavedVersion`, `VersionHistory`, `PendingApprovals`, `ApprovalServiceAdapter`, `PrivacyCheck`, `Percent`, `Calendar\HolidayCatalogue`, `Calendar\HolidayList`, `Calendar\HolidayProposals`, `Calendar\HolidayProposal`, `Calendar\Easter`, `Orders\OrderDesk`, `Orders\OrderBoard`, `Orders\OrderForm`. See docs/EDITORS.md. |
+| Central screens | `Admin\Screens\...`: `Screens` (renderers, counters, actions of the area), `Page`, `ScreenServices`, `OverviewScreen`, `NightsScreen`, `NightDetailView`, `NightText`, `NightActions`, `ApprovalsScreen`, `ApprovalActions`, `PmsChangeText` (a PMS change in words), `WarningText`, `AlertsScreen`, `AlertText`, `AlertActions`, `TodoScreen`, `TodoText`, `TodoActions`, `ChangesScreen`, `ChangeActions`, `UndoSelection` (the ticked changes kept for the confirmation of the undo), `UndoNow`, `UndoText`, `OperationsScreen`, `OperationsText`, `OperationsActions`, `SettingsScreen`, `SettingsActions`, `ConnectionsView`, `ConnectionText`, `ConnectionActions`, `DiagnosticsView`, `LogText` (the log messages translated when shown), `DiagnosticsActions`, `WizardView`, `WizardActions`, `PeopleNames`. Application side: `Dashboard\...` (`StatusQuery`, `StatusStrip`, `Overview\OverviewQuery`, `Alerts\AlertList`, `Alerts\AlertFilter`, `Changes\ChangeList`, `Changes\ChangeFilter`, `Changes\ChangeGroups`, `Changes\UndoRequests`, `Connections\ConnectionTests` (one test per provider every 30 s), `Connections\ConnectionReason`, `Diagnostics\SupportBundle` (JSON with a whitelist of keys), `Setup\SetupWizard`, `Setup\SetupState`, `Setup\WizardProgress`, `Setup\ListingSuggestions`, `Setup\RoomRowsRefused`, `Setup\SafetyValues`, `Setup\WouldDo`, `Todo\TodoGenerator`, `Todo\TodoItem`, `Todo\TodoService`, `Todo\TodoStore`) and `Grid\...` (`NightGrid`, `NightGridQuery`, `NightCell`, `NightMarks`, `NightFilter`, `NightDetail`, `NightDetailQuery`, `GridContext`, `LastPlan`, `PlanIndex`, `PlannedNight`; approvals: `Approvals\ApprovalBoard`, `RequestView`, `RowBuilder`, `EntryRow`, `EntryWarnings`, `Segment`, `Segmenter`, `Impact`, `RelationHints`). See docs/ADMIN.md. |
+| Editors | `Admin\Editors\...`: `EditorScreens`, `EditorPage`, `EditorServices`, `RulesScreen`, `RulesActions`, `RulesLayout` (every schema field placed once), `Placement`, `FieldView`, `FieldWidget`, `FieldContext`, `FieldPath`, `ValueText`, `ChoiceLabels`, `EditorText`, `RuleFormReader`, `RequestFields`, `FormScope`, `FormErrors`, `FormResult`, `DraftDesk`, `UserMetaDraftStorage`, `ReviewView`, `VersionsView`, `PresetFile`, `RelationsView`, `RelationForm`, `RelationText`, `RelationCycle`, `RelationActions`, `CalendarView`, `CalendarActions`, `OrdersScreen`, `OrdersActions`, `OrderFormDraft` (what a refused order form had, to fill it again), `OrderText`. Application side, `Rules\...`: `RuleSetEditor` (draft per user, three-way merge, version N+1, never a write), `RuleDraft`, `RuleDraftStorage`, `RuleDiff`, `FieldChange`, `RuleMerge`, `RuleChecks`, `RulesRefused`, `SafetyFields`, `SavedVersion`, `VersionHistory`, `PendingApprovals`, `ApprovalServiceAdapter`, `PrivacyCheck`, `Percent`, `Calendar\HolidayCatalogue`, `Calendar\HolidayList`, `Calendar\HolidayProposals`, `Calendar\HolidayProposal`, `Calendar\Easter`, `Orders\OrderDesk`, `Orders\OrderBoard`, `Orders\OrderForm`. See docs/EDITORS.md. |
 | Market | `Admin\Market\...`: `MarketScreen`, `MarketActions`, `MarketServices`, `MarketText`, `CsvUploadReader` (the upload read in place with fgetcsv, never moved or kept), `TransientPreviewStore`. Application side, `Market\...`: `MarketImportService`, `ImportPreview`, `PreviewStore`, `UploadedFile`, `MarketRefused`, `MarketBoard`, `MarketExport`, `CompetitorService`, `CompetitorInput`, `MarketSeriesService` (series rebuilt when their inputs changed), `MarketRulerAssembler` (the ruler of a run), `MarketFreshness`, `MarketReminder`, `MarketSettings`. See docs/MARKET.md. |
 | Reports | `Admin\Reports\...`: `ReportsScreen`, `ReportsActions`, `ReportsServices`, `ReportsText`, `ReportViews`, `ReportTable`, `Cell`, `BarChart` (inline SVG, the table is the accessible source), `OccupancyTables`, `MonthTables`, `ReviewTables`, `WeeklyTables`, `RunLineText` (the run report translated for the reader), `WriteReasonText`. Application side, `Report\...`: `ReportService`, `ReportScope`, `ReportSettings`, `Store\SnapshotStore`, `Store\RevenueTargetStore`, `Store\TargetRow`. See docs/REPORTS.md. |
 
@@ -209,8 +209,9 @@ public function audit(string $propertyId, array $audits, array $rooms, ?int $run
 #### `Ritmo\Application\Approval\ApprovalDesk` (final class)
 
 ```php
-public function __construct(PlanApprovalRepository $requests, CapabilityCheck $capabilities, ScheduledRunRepository $slots, OperationEventRepository $events, PropertyRepository $properties, Clock $clock, ?Closure $wake = null);
-public function approve(string $propertyId, int $requestId, int $userId, ?array $selected, ApprovalConfig $config, string $note = ''): ApprovalGrant;
+const NOTE_MAX = 190;
+public function __construct(PlanApprovalRepository $requests, CapabilityCheck $capabilities, ScheduledRunRepository $slots, OperationEventRepository $events, PropertyRepository $properties, Clock $clock, ?Closure $wake = null, ?AlertService $alerts = null);
+public function approve(string $propertyId, int $requestId, int $userId, ?array $selected, ApprovalConfig $config, string $note = '', array $confirmations = []): ApprovalGrant;
 public function reject(string $propertyId, int $requestId, int $userId, ApprovalConfig $config, string $note = ''): void;
 public function pending(string $propertyId, ApprovalConfig $config): array;
 ```
@@ -253,6 +254,9 @@ const NOTHING_SELECTED = 'nothing_selected';
 const UNKNOWN_ENTRY = 'unknown_entry';
 const LISTING_NEEDS_EXPLICIT_APPROVAL = 'listing_needs_explicit_approval';
 const UNSEALED_PLAN = 'unsealed_plan';
+const LISTING_NEEDS_SAFETY = 'listing_needs_safety';
+const LISTING_NOT_CONFIRMED = 'listing_not_confirmed';
+const NOTE_PRIVATE = 'note_private';
 public readonly string $reason;
 public function __construct(string $reason, string $message);
 ```
@@ -275,11 +279,11 @@ public function __construct(PlanApprovalRepository $repository, CapabilityCheck 
    'maxCalendarAgeHours' => 6,
 )));
 public function propose(ValidatedPlan $plan, ?int $runId, DateTimeImmutable $calendarReadAt, ?int $rulesetVersion = null, ApprovalKind $kind = ApprovalKind::Plan): array;
-public function approve(int $id, int $userId, ?array $selected = null, string $note = ''): ApprovalGrant;
+public function approve(int $id, int $userId, ?array $selected = null, string $note = '', array $confirmations = []): ApprovalGrant;
 public function reject(int $id, int $userId, string $note = ''): void;
 public function grant(int $id): ApprovalGrant;
 public function entriesOf(int $id): array;
-public function markWritten(int $id, int $writeRunId): bool;
+public function markWritten(int $id, int $writeRunId, ApprovalStatus $status = ApprovalStatus::Written): bool;
 public function expireDue(string $propertyId): int;
 public function expireAll(string $propertyId, string $reason): int;
 ```
@@ -294,6 +298,8 @@ case Expired = 'expired';
 case Superseded = 'superseded';
 case Written = 'written';
 case Lapsed = 'lapsed';
+case WrittenPartly = 'written_partly';
+case WriteFailed = 'write_failed';
 ```
 
 #### `Ritmo\Application\Approval\ApprovalWindow` (final class)
@@ -312,6 +318,7 @@ public static function restrict(ApprovalGrant $grant, Plan $fresh, array $bases)
 
 ```php
 const APPROVE = 'ritmo_approve';
+const MANAGE_SAFETY = 'ritmo_manage_safety';
 public function userCan(int $userId, string $capability): bool;
 ```
 
@@ -576,10 +583,11 @@ public function confirmSafety(DateTimeImmutable $at, int $userId, ?int $version,
 const MANAGE_SAFETY = 'ritmo_manage_safety';
 const NOTE_RULES = 'Setup wizard';
 const NOTE_SAFETY = 'Setup wizard: safety limits confirmed';
-public function __construct(Database $db, PropertyRepository $properties, RoomTypeRepository $roomTypes, RuleSetRepository $ruleSets, RunRepository $runs, SetupService $setup, ConnectionTests $tests, SetupState $state, CapabilityCheck $capabilities, Clock $clock);
+public function __construct(Database $db, PropertyRepository $properties, RoomTypeRepository $roomTypes, RuleSetRepository $ruleSets, RunRepository $runs, SetupService $setup, ConnectionTests $tests, SetupState $state, CapabilityCheck $capabilities, Clock $clock, RuleSetEditor $editor);
 public function progress(?string $propertyId): WizardProgress;
-public function saveRooms(array $rows): int;
+public function saveRooms(array $rows, int $userId): int;
 public function chooseRules(array $weekendDays, int $userId): int;
+public function importPreset(string $json, int $userId): array;
 public function confirmSafety(string $propertyId, array $limits, array $referenceMins, int $userId): void;
 public function rules(): RuleSet;
 ```
@@ -608,6 +616,7 @@ public function summary(string $propertyId, array $rooms = []): array;
 ```php
 public function __construct(PropertyRepository $properties, EmergencySwitch $switch, OperationStateRepository $states, PlanApprovalRepository $requests, RunRepository $runs, Clock $clock);
 public function forProperty(string $propertyId): StatusStrip;
+public static function nights(array $entries): int;
 public function waitingEverywhere(): int;
 ```
 
@@ -751,9 +760,12 @@ public readonly string $special;
 public readonly array $warnings;
 public readonly bool $held;
 public readonly bool $beforeFromListing;
-public function __construct(string $key, string $kind, string $room, ?DateTimeImmutable $night, string $subject, string $group, array $fields, ?string $orderId, string $direction, ?float $floorBefore, ?float $floorAfter, ?int $floorPercent, ?float $ceilingBefore, ?float $ceilingAfter, ?int $ceilingPercent, string $reason, ?string $paceStatus, array $trace, string $special, array $warnings, bool $held, bool $beforeFromListing = false);
+public readonly ?float $priceBefore;
+public readonly ?float $priceAfter;
+public function __construct(string $key, string $kind, string $room, ?DateTimeImmutable $night, string $subject, string $group, array $fields, ?string $orderId, string $direction, ?float $floorBefore, ?float $floorAfter, ?int $floorPercent, ?float $ceilingBefore, ?float $ceilingAfter, ?int $ceilingPercent, string $reason, ?string $paceStatus, array $trace, string $special, array $warnings, bool $held, bool $beforeFromListing = false, ?float $priceBefore = null, ?float $priceAfter = null);
 public function before(): ?float;
 public function after(): ?float;
+public function hasPrice(): bool;
 public function changePercent(): ?float;
 ```
 
@@ -864,7 +876,8 @@ public readonly PlanIndex $plan;
 public readonly ?array $run;
 public readonly NightMarks $marks;
 public readonly DateTimeImmutable $today;
-public function __construct(HolidayCalendar $calendar, array $holidays, PlanIndex $plan, ?array $run, NightMarks $marks, DateTimeImmutable $today);
+public readonly ?array $latest;
+public function __construct(HolidayCalendar $calendar, array $holidays, PlanIndex $plan, ?array $run, NightMarks $marks, DateTimeImmutable $today, ?array $latest = null);
 ```
 
 #### `Ritmo\Application\Grid\LastPlan` (final class)
@@ -920,7 +933,7 @@ public function __construct(NightCell $cell, RoomType $room, array $bookings, ?D
 #### `Ritmo\Application\Grid\NightDetailQuery` (final class)
 
 ```php
-public function __construct(NightGridQuery $grid, RoomTypeRepository $roomTypes, BookingRepository $bookings, DetectedFreezeRepository $freezes, ChangeLogRepository $changes, StepLedgerRepository $steps, PlanItemRepository $planItems);
+public function __construct(NightGridQuery $grid, RoomTypeRepository $roomTypes, BookingRepository $bookings, DetectedFreezeRepository $freezes, ChangeLogRepository $changes, StepLedgerRepository $steps, PlanItemRepository $planItems, ?RunRepository $runs = null);
 public function detail(string $propertyId, string $roomCode, DateTimeImmutable $night): NightDetail;
 ```
 
@@ -954,7 +967,8 @@ public readonly array $cells;
 public readonly array $holidays;
 public readonly ?array $run;
 public readonly NightFilter $filter;
-public function __construct(Property $property, array $rooms, int $roomsInAll, int $roomOffset, array $nights, array $cells, array $holidays, ?array $run, NightFilter $filter);
+public readonly ?array $latest;
+public function __construct(Property $property, array $rooms, int $roomsInAll, int $roomOffset, array $nights, array $cells, array $holidays, ?array $run, NightFilter $filter, ?array $latest = null);
 public function cell(string $room, string $night): ?NightCell;
 public function shown(): int;
 public function first(): ?DateTimeImmutable;
@@ -1020,10 +1034,14 @@ public readonly array $relationCodes;
 public readonly ?string $orderId;
 public readonly bool $heldAtFloor;
 public readonly bool $nowFromListing;
-public function __construct(?string $status = null, string $reason = '', ?string $paceStatus = null, ?float $floorNow = null, ?float $floorProposed = null, ?int $floorPercent = null, ?float $ceilingNow = null, ?float $ceilingProposed = null, ?int $ceilingPercent = null, ?int $minStayNow = null, ?int $minStayProposed = null, array $issues = [], array $relationCodes = [], ?string $orderId = null, bool $heldAtFloor = false, bool $nowFromListing = false);
+public readonly ?float $currentPrice;
+public function __construct(?string $status = null, string $reason = '', ?string $paceStatus = null, ?float $floorNow = null, ?float $floorProposed = null, ?int $floorPercent = null, ?float $ceilingNow = null, ?float $ceilingProposed = null, ?int $ceilingPercent = null, ?int $minStayNow = null, ?int $minStayProposed = null, array $issues = [], array $relationCodes = [], ?string $orderId = null, bool $heldAtFloor = false, bool $nowFromListing = false, ?float $currentPrice = null);
 public function withListing(float $min, float $max): self;
 public static function none(): self;
+public function priceNow(): ?float;
+public function priceAfter(): ?float;
 public function direction(): ?string;
+public static function sold(?float $price, ?float $floor, ?float $ceiling): ?float;
 public function paceCategory(): string;
 ```
 
@@ -1032,6 +1050,7 @@ public function paceCategory(): string;
 ```php
 const NAME_MAX = 120;
 const TEXT_MAX = 190;
+const PEER = 'peer';
 public static function read(array $input): array;
 public static function slug(string $name): string;
 ```
@@ -1196,7 +1215,7 @@ public function set(bool $engage, string $via, string $actor): bool;
 const CONNECTION_TEST_PREFIX = 'connection_test_';
 const PROVIDERS = ['beds24', 'pricelabs'];
 const SETUP_KEY = 'setup';
-public function __construct(RunRepository $runs, AlertLedger $alerts, WaveHoldRepository $holds, EmergencySwitch $switch, KeyValueStore $store, Clock $clock);
+public function __construct(RunRepository $runs, AlertLedger $alerts, WaveHoldRepository $holds, EmergencySwitch $switch, KeyValueStore $store, Clock $clock, ?Closure $safetyFingerprint = null);
 public function toApproval(Property $property, ModesConfig $config): array;
 public function toAutonomous(Property $property): array;
 public static function unmet(string $code, array $params, string $text): array;
@@ -1209,6 +1228,7 @@ const NO_CAPABILITY = 'no_capability';
 const CONDITIONS = 'conditions_not_met';
 const DISABLED = 'autonomous_disabled';
 const CONFIRMATION = 'confirmation_mismatch';
+const REASON_PRIVATE = 'reason_private';
 public readonly string $reason;
 public readonly array $conditions;
 public function __construct(string $reason, string $message, array $conditions = []);
@@ -1219,6 +1239,7 @@ public function __construct(string $reason, string $message, array $conditions =
 ```php
 const MANAGE_RULES = 'ritmo_manage_rules';
 const MANAGE_CONNECTIONS = 'ritmo_manage_connections';
+const REASON_MAX = 190;
 public function __construct(PropertyRepository $properties, OperationEventRepository $events, ApprovalService $approvals, CapabilityCheck $capabilities, AlertService $alerts, KeyValueStore $store, Clock $clock, ModePreconditions $preconditions);
 public function change(string $propertyId, PropertyMode $to, int $userId, ModesConfig $config, string $confirmation = '', string $reason = ''): Property;
 public function autonomousAuthorization(Property $property): ?AutonomousAuthorization;
@@ -1468,6 +1489,7 @@ const RULES_CHANGED = 'rules_changed';
 const NOTE_MAX = 190;
 public function __construct(Database $db, Clock $clock, RuleSetRepository $ruleSets, PropertyRepository $properties, EditorEventRepository $events, RuleChecks $checks, PendingApprovals $approvals);
 public function save(array $candidate, int $baseVersion, string $baseHash, int $userId, string $note, ?string $typed, bool $mayChangeSafety, string $source = 'editor', ?int $restoredFrom = null): SavedVersion;
+public function safetyConfirmation(array $candidate): string;
 public function waitingNights(): array;
 ```
 
@@ -1533,7 +1555,8 @@ public function schedule(Property $property): ScheduleConfig;
 #### `Ritmo\Application\Run\JournalNights` (final class)
 
 ```php
-public static function confirmed(array $rows, DateTimeImmutable $writtenAt): array;
+public static function confirmed(array $rows, DateTimeImmutable $writtenAt, array $reasons = []): array;
+public static function roomOf(array $payload, string $target): string;
 public static function fields(?array $state, bool $pms): NightFields;
 ```
 
@@ -1620,7 +1643,7 @@ public function run(RunContext $context): StageResult;
 #### `Ritmo\Application\Run\RunEndChecks` (final class)
 
 ```php
-public function __construct(MarketReminder $market, SnapshotStore $snapshots, AlertService $alerts, AlertLedger $ledger);
+public function __construct(MarketReminder $market, SnapshotStore $snapshots, AlertService $alerts, AlertLedger $ledger, ?RunRepository $runs = null);
 public function check(RunContext $context, array $verify): ?int;
 ```
 
@@ -1708,6 +1731,7 @@ public function apply(RunContext $context, RunInputs $inputs, PlanAssembler $ass
 
 ```php
 const KIND = 'undo';
+const PMS_LEFT_OUT = 'pms_field';
 public function __construct(PropertyRepository $properties, RoomTypeRepository $roomTypes, RunRepository $runs, OrderRepository $orders, UndoService $undo, RecordService $record, WriteOpRepository $ops, OperationEventRepository $events, ConnectorSource $connectors, WriteGate $gate, WriteExecutor $executor, EmergencySwitch $switch, DbLock $locks, CapabilityCheck $capabilities, Clock $clock);
 public function undo(string $propertyId, array $changeIds, int $userId, RuleSet $rules): array;
 ```
@@ -1746,6 +1770,9 @@ public function of(string $propertyId, array $listings, DateTimeImmutable $today
 #### `Ritmo\Application\Run\WriteReport` (final class)
 
 ```php
+const OUTCOME_WRITTEN = 'written';
+const OUTCOME_PARTLY = 'partly';
+const OUTCOME_FAILED = 'failed';
 public function __construct(AlertService $alerts, Clock $clock);
 public function summarize(RunContext $context, WriteOutcome $outcome, string $actor): array;
 ```
@@ -1955,8 +1982,12 @@ public static function parse(string $text): array;
 ```php
 public function __construct(Database $db, PropertyRepository $properties, RoomTypeRepository $roomTypes, RuleSetRepository $ruleSets, PriceSampleRepository $samples, MarketAnchorRepository $anchors, Clock $clock);
 public function createProperty(array $input): Property;
+public function freeId(string $name): string;
 public function saveRoomType(array $input): RoomType;
+public function roomType(array $input): RoomType;
+public function preset(string $json): Preset;
 public function importPreset(string $json, int $userId = 0): array;
+public function savePlaces(Preset $preset): array;
 public function importSamples(string $propertyId, string $csv): array;
 ```
 
@@ -2254,6 +2285,7 @@ public function __construct(ChangeLogRepository $changes, WrittenStepRepository 
 )));
 public function request(Property $property, array $rooms, array $changeIds, int $userId, Validator $validator, ValidationContext $context, ?int $runId = null): UndoRequest;
 public function confirm(array $changeIds, DateTimeImmutable $at): int;
+public function withoutPms(array $changeIds): array;
 ```
 
 #### `Ritmo\Application\Verify\Verifier` (final class)
@@ -2366,6 +2398,7 @@ public static function compare(array $intended, StoredState $fresh, bool $pms): 
 #### `Ritmo\Application\Write\Execute\WriteExecutor` (final class)
 
 ```php
+const QUOTA_SKIP = 'not_recalculated';
 public function __construct(WriteGate $gate, EmergencySwitch $switch, Clock $clock, WriteJournal $journal, WriteConfig $config = \Ritmo\Domain\Write\WriteConfig::__set_state(array(
    'maxReadAgeMinutes' => 30,
    'maxValidationAgeMinutes' => 10,
@@ -2827,8 +2860,12 @@ public readonly ?int $minStayBefore;
 public readonly bool $alsoPricing;
 public readonly string $reason;
 public readonly ?int $expectedAvailable;
-public function __construct(string $roomCode, string $roomId, DateTimeImmutable $from, DateTimeImmutable $to, ?int $minStay = null, ?int $maxStay = null, ?Restriction $restriction = null, ?int $available = null, array $channels = [], ?int $minStayBefore = null, bool $alsoPricing = false, string $reason = '', ?int $expectedAvailable = null);
+public readonly array $read;
+public function __construct(string $roomCode, string $roomId, DateTimeImmutable $from, DateTimeImmutable $to, ?int $minStay = null, ?int $maxStay = null, ?Restriction $restriction = null, ?int $available = null, array $channels = [], ?int $minStayBefore = null, bool $alsoPricing = false, string $reason = '', ?int $expectedAvailable = null, array $read = []);
 public static function fromStay(array $changes, array $rooms): array;
+public function readBefore(): array;
+public function sets(string $field): string|int|null;
+public static function apiRestriction(Restriction $restriction): string;
 public function range(): array;
 public function nights(): array;
 ```
@@ -2866,6 +2903,7 @@ public function __construct(int $number, WriteOperation $operation, string $room
 public function at(int $number): self;
 public function request(): WriteRequest;
 public function target(): string;
+public function targetRooms(): array;
 public function dates(): array;
 public function isGroupRewrite(): bool;
 public function fields(): array;
@@ -2874,6 +2912,7 @@ public function fields(): array;
 #### `Ritmo\WordPress\Activator` (final class)
 
 ```php
+const FIRST_VERSION_NOTE = 'Neutral defaults, stored at activation';
 public static function activate(): void;
 ```
 
@@ -3080,6 +3119,7 @@ public static function pace(?string $status): string;
 public static function paceSymbol(?string $status): string;
 public static function severity(string $severity): string;
 public static function alertStatus(string $status): string;
+public static function tier(string $tier): string;
 public static function approvalStatus(string $status): string;
 public static function approvalKind(string $kind): string;
 public static function provider(string $provider): string;
@@ -3127,6 +3167,7 @@ public static function weekday(DateTimeInterface $night): string;
 public static function day(DateTimeInterface $night): string;
 public static function range(DateTimeInterface $first, DateTimeInterface $last): string;
 public static function instant(DateTimeInterface $instant, string $timezone): string;
+public static function date(DateTimeInterface $instant, string $timezone): string;
 public static function time(DateTimeInterface $instant, string $timezone): string;
 public static function relative(DateTimeInterface $instant, DateTimeImmutable $now): string;
 ```
@@ -3369,6 +3410,13 @@ public function holds(string $key): bool;
 public function id(): string;
 ```
 
+#### `Ritmo\Admin\Editors\OrderFormDraft` (final class)
+
+```php
+public static function keep(array $fields): void;
+public static function take(): ?array;
+```
+
 #### `Ritmo\Admin\Editors\OrderText` (final class)
 
 ```php
@@ -3389,6 +3437,7 @@ public static function actions(): array;
 ```php
 public static function tabs(): array;
 public static function render(): void;
+public static function fieldId(string $path): string;
 ```
 
 #### `Ritmo\Admin\Editors\Placement` (final class)
@@ -3520,6 +3569,7 @@ public static function weekdayShort(int $day): string;
 ```php
 public static function of(EditorPage $page, int $pageNumber, ?int $from, ?int $to): array;
 public static function person(int $userId): string;
+public static function note(string $note): string;
 ```
 
 #### `Ritmo\Admin\Market\CsvUploadReader` (final class)
@@ -3572,6 +3622,7 @@ public static function series(string $name): string;
 public static function point(RulerPoint $point): string;
 public static function origin(NightValue $value): string;
 public static function factor(?float $factor, string $source, float $default, float $cap): string;
+public static function groups(array $tags): string;
 ```
 
 #### `Ritmo\Admin\Market\TransientPreviewStore` (final class implements PreviewStore)
@@ -3595,9 +3646,10 @@ public static function take(): ?array;
 #### `Ritmo\Admin\ReasonText` (final class)
 
 ```php
-public static function sentences(array $trace): array;
+public static function sentences(array $trace, string $currency = ''): array;
 public static function reason(string $code): string;
-public static function describe(array $trace): string;
+public static function describe(array $trace, string $currency = ''): string;
+public static function floorLabels(): array;
 ```
 
 #### `Ritmo\Admin\RefusalText` (final class)
@@ -3823,8 +3875,15 @@ public static function actions(): array;
 ```php
 const LOG_ROWS = 100;
 public static function build(Page $page): array;
-public static function context(array $context): string;
+public static function context(array $context, string $timezone = 'UTC'): string;
+public static function technical(array $context): string;
 public static function levelLabel(string $level): string;
+```
+
+#### `Ritmo\Admin\Screens\LogText` (final class)
+
+```php
+public static function message(string $english): string;
 ```
 
 #### `Ritmo\Admin\Screens\NightActions` (final class)
@@ -3992,6 +4051,14 @@ public function __construct(UndoWriter $writer, RuleSet $rules);
 public function request(string $propertyId, array $changeIds, int $userId): array;
 ```
 
+#### `Ritmo\Admin\Screens\UndoSelection` (final class)
+
+```php
+public static function keep(array $changeIds): void;
+public static function ids(): array;
+public static function forget(): void;
+```
+
 #### `Ritmo\Admin\Screens\UndoText` (final class)
 
 ```php
@@ -4064,6 +4131,7 @@ const APPROVE = 'approve';
 const REJECT = 'reject';
 public static function decision(mixed $value): string;
 public static function keys(mixed $value): ?array;
+public static function confirmations(mixed $value): array;
 public static function engaged(mixed $value): bool;
 public static function switchPosition(string $value): bool;
 ```

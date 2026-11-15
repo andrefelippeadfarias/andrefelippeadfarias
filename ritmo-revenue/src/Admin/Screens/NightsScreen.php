@@ -118,11 +118,13 @@ final class NightsScreen
                 __('Nights of %1$s, %2$s, %3$s', 'ritmo-revenue'),
                 $grid->property->name,
                 NightDate::range($first, $last),
-                $run === null ? __('prices from the PMS calendar (no run yet)', 'ritmo-revenue')
+                $run === null ? ($grid->latest === null ? __('prices from the PMS calendar (no run yet)', 'ritmo-revenue') : __('prices from the PMS calendar (the last run priced no night)', 'ritmo-revenue'))
                     /* translators: %s: date and time */
                     : sprintf(__('prices as read at %s', 'ritmo-revenue'), NightDate::instant($run['started_at'], $grid->property->timezone))
             ),
-            'no_run' => $run === null,
+            'no_run' => $run === null && $grid->latest === null,
+            'unplanned' => $run === null && $grid->latest !== null,
+            'market_url' => Menu::url(Menu::MARKET, ['property' => $grid->property->id]),
             'prev' => $page->url(['from' => Days::key(Days::add($first, -$step))] + self::keep($filters, ['from'])),
             'next' => $page->url(['from' => Days::key(Days::add($first, $step))] + self::keep($filters, ['from'])),
             'today' => $page->url(self::keep($filters, ['from'])),

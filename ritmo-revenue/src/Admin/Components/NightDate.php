@@ -65,6 +65,12 @@ final class NightDate
         return (string) wp_date(get_option('date_format') . ' ' . get_option('time_format'), $instant->getTimestamp(), self::zone($timezone));
     }
 
+    /** Only the date of an instant, in the site's date format and the property's zone. */
+    public static function date(DateTimeInterface $instant, string $timezone): string
+    {
+        return (string) wp_date((string) get_option('date_format'), $instant->getTimestamp(), self::zone($timezone));
+    }
+
     /** Only the time of an instant ("07:31"). */
     public static function time(DateTimeInterface $instant, string $timezone): string
     {

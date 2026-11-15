@@ -224,10 +224,11 @@ light run), the weekly review.
 
 | Alert | When |
 |---|---|
-| `market_stale` | the newest market price for the coming nights is older than `market.stale_after_days` |
+| `market_stale` | the newest market price for the coming nights is older than `market.stale_after_days` (titled "No market prices yet" when there is none) |
 | `market_gap` | an active sales ladder strategy would price nights the market ruler has no value for |
 | `delivery_overdue` | written steps not seen at the channel within `verify.delivery_overdue_hours`; not while `push_disabled` or `push_stale` is open (that one explains it) |
-| `review_due` | the last 12-month review is older than `reports.review.interval_days` |
+| `review_due` | the last 12-month review is older than `reports.review.interval_days`; a property never reviewed counts the interval from its first run (not due on day one) |
+| `recalc_quota_exhausted` | a write left nights of a room out because its listing could not be recalculated (the quota); the report has a `not_recalculated` line with the room and the nights, and an approved request reads "written in part" |
 | `pms_changes_capped` | the stay rules asked for more PMS changes than `stay.write.max_changes_per_run`; none was written |
 
 The stay and arrival/departure writes of a full run (`Run\StayWriteStep`, STAY.md "Writes") are planned after the plan assembly, checked by `Stay\Write\PmsChangeCheck` against the pricing items the validator accepted, and sealed with the plan; the write stage sends them after the pricing steps, through the gate. What the pricing system's push sets in the PMS (`Run\PushedFields`) is not taken for a change by someone else.
@@ -241,7 +242,7 @@ The stay and arrival/departure writes of a full run (`Run\StayWriteStep`, STAY.m
 | D4: one bookings read per run | the collect stage and the watch still read the bookings once each |
 | Stay writes of a light run (the orphan window) and the revert-by-push counter (`RevertLedger`) | light runs plan no stay write; the ledger is not fed by the next run's observation yet |
 | `RuleInForce` and a date rule past its lead-time expiry | an inactive rule is still read as in force by the PMS-price fallback (the pricing calendar, read by default, already says what applies) |
-| The undo as an approval request (spec 05 D9) and the PMS side of an undo through the gate | the undo still runs at once for the person who approves; PMS restores are not written |
+| The undo as an approval request (spec 05 D9) and the PMS side of an undo through the gate | the undo still runs at once for the person who approves, after a confirmation screen that lists what goes back; PMS rows are left out of an undo (never marked undone) |
 | The PMS room list in the setup wizard (spec 05 D4) | rooms are suggested from the pricing system's listings; the PMS id and the units are typed |
 | The "Sync Now" to-do item right after a write of tonight | made from the change log by the next screen load, not by the write stage |
 | Alert e-mails | still in English (the `Application` layer is free of WordPress) |

@@ -37,6 +37,7 @@ final class RunFacts
         public readonly ?int $marketAgeDays = null,
         public readonly array $pmsSkipped = [],
         public readonly int $mergeConflicts = 0,
+        public readonly array $notRecalculated = [],
     ) {
     }
 }

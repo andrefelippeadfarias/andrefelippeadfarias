@@ -129,7 +129,7 @@ async function targets(page) {
 async function runReports(page) {
     await open(page, 'runs');
     const text = await page.locator('[data-ritmo="run-reports"]').innerText();
-    check(text.includes('Shadow mode: 12 change would be written to the pricing system and 3 to the PMS; nothing was sent.'), 'runs: the coded line is not in words');
+    check(text.includes('Shadow mode: nothing was sent. 12 changes would have gone to the pricing system. 3 changes would have gone to the PMS.'), 'runs: the coded line is not in words');
     check(text.includes('Market prices are 9 days old.'), 'runs: the market line is missing');
     return { ok: true };
 }

@@ -20,4 +20,10 @@ enum ApprovalStatus: string
     case Written = 'written';
     /** Approved, but the write could not run before the approval expired. */
     case Lapsed = 'lapsed';
+
+    /** Approved and written, but some approved entries were left out (WriteReport::OUTCOME_PARTLY). */
+    case WrittenPartly = 'written_partly';
+
+    /** Approved, but the write sent nothing that was taken (WriteReport::OUTCOME_FAILED). */
+    case WriteFailed = 'write_failed';
 }

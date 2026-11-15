@@ -101,6 +101,12 @@ final class ShadowRunServiceTest extends TestCase
         $step = array_values(array_filter($trace, static fn (array $entry): bool => $entry['code'] === RuleCode::PACE_STEP))[0]['params'];
         self::assertSame('down', $step['direction']);
         self::assertSame(576.0, $step['from']);
+        self::assertSame(576.0, $night[0]['current'], 'the floor in force is the date rule\'s, not "none" (M4 product review)');
+        $ceiling = array_values(array_filter(
+            $this->world->planItems->forRun((int) $outcome->runId),
+            static fn (array $item): bool => $item['room_code'] === 'STD' && $item['night']->format('Y-m-d') === '2027-03-11' && $item['field'] === 'ceiling'
+        ));
+        self::assertSame(624.0, $ceiling[0]['current'] ?? null);
 
         $plain = array_filter(
             $this->world->planItems->forRun((int) $outcome->runId),

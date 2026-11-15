@@ -13,6 +13,8 @@ use Ritmo\Application\ShadowRun\RunContext;
 use Ritmo\Domain\Alerts\AlertCode;
 use Ritmo\Domain\Alerts\AlertDraft;
 use Ritmo\Domain\Config\RuleSet;
+use Ritmo\Domain\Report\Config\ReportsConfig;
+use Ritmo\Domain\Report\Config\ReportsFields;
 use Ritmo\Domain\Support\DateRange;
 use Ritmo\Infrastructure\Db\Repository\StaySampleRepository;
 use Ritmo\Infrastructure\Schedule\AlertLedger;
@@ -62,6 +64,22 @@ final class RunEndChecksTest extends TestCase
     }
 
     /**
+     * Regression (M4 product review): a property never reviewed is not asked for the 12-month
+     * review on its first run; the interval counts from its first run.
+     */
+    public function testTheFirstReviewIsDueOneIntervalAfterTheFirstRun(): void
+    {
+        $this->world->run();
+        $this->check([]);
+        self::assertSame([], $this->active(AlertCode::ReviewDue), 'not on the first day');
+
+        $interval = ReportsConfig::fromArray((array) (RuleSet::defaults()->toArray()[ReportsFields::ROOT] ?? []))->review->intervalDays;
+        $this->world->later(sprintf('+%d days', $interval + 1));
+        $this->check([]);
+        self::assertCount(1, $this->active(AlertCode::ReviewDue));
+    }
+
+    /**
      * @param array<string, mixed> $summary
      */
     private function check(array $summary): void
@@ -72,6 +90,7 @@ final class RunEndChecksTest extends TestCase
             new SnapshotStore($db),
             $this->world->stack->alerts(),
             new AlertLedger($db),
+            $this->world->stack->runs(),
         );
         $today = $this->world->clock->today('UTC');
         $context = new RunContext(1, $this->world->property(), [], RuleSet::defaults(), $today, DateRange::nights($today, 30), 'report', $summary, [], 'full');

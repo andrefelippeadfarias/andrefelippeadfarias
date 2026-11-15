@@ -154,7 +154,7 @@ final class ApprovalsScreen
             'nights' => sprintf(_n('%s night', '%s nights', $segment->nights(), 'ritmo-revenue'), number_format_i18n($segment->nights())),
             'reason' => $segment->direction() === EntryRow::REWRITE ? __('Rule deleted and written again', 'ritmo-revenue') : NightText::reason($segment->reason()),
             'change' => self::range($before, $currency) . ' → ' . self::range($after, $currency),
-            'median' => $median === null ? '' : sprintf(
+            'median' => $median === null || $segment->nights() < 2 ? '' : sprintf(
                 /* translators: %s: change in percent */
                 __('median %s', 'ritmo-revenue'),
                 self::signed($median)
@@ -178,6 +178,9 @@ final class ApprovalsScreen
         $changes = [];
         if ($entry->kind === 'deletion') {
             $changes[] = ['field' => __('date rule removed before it is written again', 'ritmo-revenue'), 'price' => null];
+        }
+        if ($entry->hasPrice()) {
+            $changes[] = ['field' => __('price guests pay', 'ritmo-revenue'), 'price' => PriceText::change($entry->priceBefore, $entry->priceAfter, $currency)];
         }
         if ($entry->floorAfter !== null) {
             $from = $entry->beforeFromListing ? __('before: the listing minimum, as the night has no date rule yet', 'ritmo-revenue') : '';
@@ -203,7 +206,7 @@ final class ApprovalsScreen
             'date' => $entry->night === null ? '' : NightDate::short($entry->night),
             'room' => $names[$entry->room] ?? $entry->room,
             'changes' => $changes,
-            'reason' => ReasonText::describe($entry->trace),
+            'reason' => ReasonText::describe($entry->trace, $currency),
             'pace' => $entry->paceStatus === null ? '' : Labels::pace($entry->paceStatus),
             'warnings' => array_map(static fn (string $w): array => ['code' => $w, 'text' => WarningText::long($w, $entry)], $entry->warnings),
             'held' => $entry->held,
@@ -283,14 +286,25 @@ final class ApprovalsScreen
             default => __('Plan', 'ritmo-revenue'),
         };
 
+        $nights = $request->impact->nights;
+        $where = sprintf(
+            /* translators: 1: number of nights, 2: number of rooms */
+            _n('%1$s night in %2$s room(s)', '%1$s nights in %2$s room(s)', $nights, 'ritmo-revenue'),
+            number_format_i18n($nights),
+            number_format_i18n($rooms)
+        );
+        if ($request->impact->listing > 0) {
+            /* translators: %s: number of listing changes */
+            $where .= ' · ' . sprintf(_n('%s listing change', '%s listing changes', $request->impact->listing, 'ritmo-revenue'), number_format_i18n($request->impact->listing));
+        }
+
         return sprintf(
-            /* translators: 1: Plan, Undo or Listing change, 2: date, 3: property, 4: entries, 5: rooms */
-            _n('%1$s of %2$s for %3$s — %4$s entries in %5$s room', '%1$s of %2$s for %3$s — %4$s entries in %5$s rooms', max(1, $rooms), 'ritmo-revenue'),
+            /* translators: 1: Plan, Undo or Listing change, 2: date, 3: property, 4: nights and rooms */
+            __('%1$s of %2$s for %3$s — %4$s', 'ritmo-revenue'),
             $kind,
             NightDate::short($request->planDay),
             $property->name,
-            number_format_i18n($request->entries),
-            number_format_i18n($rooms)
+            $where
         );
     }
 

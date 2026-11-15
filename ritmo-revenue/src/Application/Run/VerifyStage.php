@@ -48,7 +48,7 @@ final class VerifyStage implements AfterWriteStage
     {
         $now = $this->clock->now();
         $write = is_array($context->state['write'] ?? null) ? $context->state['write'] : [];
-        $confirmed = JournalNights::confirmed($this->ops->ofRun($context->runId), $now);
+        $confirmed = JournalNights::confirmed($this->ops->ofRun($context->runId), $now, self::reasons($context));
         $recorded = ['changes' => 0, 'steps' => 0];
         if ($confirmed !== [] && is_string($write['actor'] ?? null)) {
             $outcome = $this->record->record(
@@ -85,6 +85,25 @@ final class VerifyStage implements AfterWriteStage
         $out = [];
         foreach ($rooms as $room) {
             $out[$room->code] = $room;
+        }
+
+        return $out;
+    }
+
+    /**
+     * Why the plan of this run changed each night (the reason of its item and its order), so the
+     * change log says it.
+     *
+     * @return array<string, array{code: string, order_id: string|null}> "room|YYYY-MM-DD" => reason
+     */
+    private static function reasons(RunContext $context): array
+    {
+        $out = [];
+        foreach (is_array($context->state['items'] ?? null) ? $context->state['items'] : [] as $entry) {
+            $item = is_array($entry['item'] ?? null) ? $entry['item'] : [];
+            if (is_string($item['room'] ?? null) && is_string($item['date'] ?? null) && is_string($item['reason_code'] ?? null)) {
+                $out[$item['room'] . '|' . $item['date']] = ['code' => $item['reason_code'], 'order_id' => is_string($item['order_id'] ?? null) ? $item['order_id'] : null];
+            }
         }
 
         return $out;

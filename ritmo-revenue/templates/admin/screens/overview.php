@@ -105,7 +105,11 @@ endif;
     <section class="ritmo-card" data-ritmo="card-pace">
         <h2><?php esc_html_e('Pace, next 60 days', 'ritmo-revenue'); ?></h2>
         <?php if (!$view['pace']['ok']) : View::render('admin/screens/parts/card-error', $view['pace']); elseif ($view['pace']['empty']) : ?>
-            <p data-ritmo="empty"><?php esc_html_e('No run yet: the first run measures the pace of every night.', 'ritmo-revenue'); ?></p>
+            <?php if ($view['pace']['unplanned']) : ?>
+                <p data-ritmo="empty"><?php esc_html_e('The last run priced no night, so the pace was not measured: there are no market prices for these nights yet.', 'ritmo-revenue'); ?> <a href="<?php echo esc_url($view['pace']['market_url']); ?>"><?php esc_html_e('Import market prices', 'ritmo-revenue'); ?></a></p>
+            <?php else : ?>
+                <p data-ritmo="empty"><?php esc_html_e('No run yet: the first run measures the pace of every night.', 'ritmo-revenue'); ?></p>
+            <?php endif; ?>
         <?php else : ?>
             <ul class="ritmo-pace">
                 <?php foreach ($view['pace']['items'] as $ritmo_item) : ?>

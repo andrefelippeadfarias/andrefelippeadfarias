@@ -4,9 +4,11 @@ declare(strict_types=1);
 
 namespace Ritmo\Admin\Editors;
 
+use Ritmo\Application\Dashboard\Setup\SetupWizard;
 use Ritmo\Application\Rules\FieldChange;
 use Ritmo\Application\Rules\RulesRefused;
 use Ritmo\Domain\Config\Schema;
+use Ritmo\WordPress\Activator;
 
 /**
  * The versions tab (spec 05, 5.5.6): the versions with who saved them, when, from where, their
@@ -30,7 +32,7 @@ final class VersionsView
             'at' => wp_date(get_option('date_format') . ' ' . get_option('time_format'), $r['created_at']->getTimestamp()),
             'by' => self::person($r['created_by']),
             'source' => self::source($r['source'], $r['restored_from']),
-            'note' => $r['note'],
+            'note' => self::note((string) $r['note']),
             'changes' => $r['changes'],
             'in_force' => $r['in_force'],
         ], $versions['rows']);
@@ -78,6 +80,24 @@ final class VersionsView
             'wizard' => __('Setup', 'ritmo-revenue'),
             'editor' => __('Rules screen', 'ritmo-revenue'),
             default => '—',
+        };
+    }
+
+    /**
+     * The note of a version the plugin wrote itself, in the reader's language; a person's note as
+     * it was typed.
+     */
+    public static function note(string $note): string
+    {
+        $preset = 'Imported preset: ';
+
+        return match (true) {
+            $note === Activator::FIRST_VERSION_NOTE => __('Neutral defaults, stored at activation', 'ritmo-revenue'),
+            $note === SetupWizard::NOTE_RULES => __('Setup wizard', 'ritmo-revenue'),
+            $note === SetupWizard::NOTE_SAFETY => __('Setup wizard: safety limits confirmed', 'ritmo-revenue'),
+            /* translators: %s: name of the preset file */
+            str_starts_with($note, $preset) => sprintf(__('Imported preset: %s', 'ritmo-revenue'), substr($note, strlen($preset))),
+            default => $note,
         };
     }
 }

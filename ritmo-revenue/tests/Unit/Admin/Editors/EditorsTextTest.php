@@ -14,6 +14,7 @@ use Ritmo\Admin\Editors\OrderText;
 use Ritmo\Admin\Editors\RelationText;
 use Ritmo\Admin\Editors\RulesLayout;
 use Ritmo\Admin\Editors\ValueText;
+use Ritmo\Admin\Editors\VersionsView;
 use Ritmo\Application\Rules\SafetyFields;
 use Ritmo\Domain\Config\FieldType;
 use Ritmo\Domain\Config\RuleSet;
@@ -22,6 +23,8 @@ use Ritmo\Domain\Market\Series\MarketFields;
 use Ritmo\Domain\Orders\OrderReader;
 use Ritmo\Domain\Orders\OrderRelease;
 use Ritmo\Domain\Orders\OrderType;
+use Ritmo\Tests\Support\FakeTranslations;
+use Ritmo\WordPress\Activator;
 
 final class EditorsTextTest extends TestCase
 {
@@ -77,6 +80,30 @@ final class EditorsTextTest extends TestCase
         self::assertSame($schema->field('calendar')->label . ' › ' . $schema->field('calendar.holidays')->label . ' › Carnival › ' . $schema->field('calendar.holidays.*.end')->label, FieldPath::label('calendar.holidays.0.end', $schema, $rules));
         self::assertSame($schema->field('floors')->label . ' › ' . $schema->field('floors.owner')->label . ' › 2', FieldPath::label('floors.owner.1', $schema, $rules));
         self::assertSame('ritmo-f-floors-owner-1-amount', FieldPath::anchor('floors.owner.1.amount'));
+    }
+
+    /** Regression (M4 product review): the notes the plugin writes on a version are translated; a person's note is kept. */
+    public function testTheNotesOfThePluginsOwnVersionsAreTranslated(): void
+    {
+        FakeTranslations::$texts = ['Neutral defaults, stored at activation' => 'Padrões neutros', 'Imported preset: %s' => 'Preset importado: %s'];
+        try {
+            self::assertSame('Padrões neutros', VersionsView::note(Activator::FIRST_VERSION_NOTE));
+            self::assertSame('Preset importado: Example', VersionsView::note('Imported preset: Example'));
+            self::assertSame('Raised the weekend floor', VersionsView::note('Raised the weekend floor'));
+        } finally {
+            FakeTranslations::$texts = [];
+        }
+    }
+
+    /** Regression: the path of the review, the versions and the error summary is translated. */
+    public function testAPathReadsInThePersonsLanguage(): void
+    {
+        FakeTranslations::$texts = ['Occupancy' => 'Ocupação', 'Occupancy goals' => 'Metas de ocupação', 'Next 7 days' => 'Próximos 7 dias'];
+        try {
+            self::assertSame('Ocupação › Metas de ocupação › Próximos 7 dias', FieldPath::label('occupancy.goals.7', Schema::ruleSet(), RuleSet::defaults()->toArray()));
+        } finally {
+            FakeTranslations::$texts = [];
+        }
     }
 
     public function testValuesReadAsWords(): void

@@ -4,11 +4,17 @@ declare(strict_types=1);
 
 namespace Ritmo\Admin;
 
+use Ritmo\Admin\Components\Money;
+use Ritmo\Domain\Pricing\Ladder\LadderHardFloor;
+use Ritmo\Domain\Pricing\OrderSalesRamp;
+use Ritmo\Domain\Pricing\Floors;
 use Ritmo\Domain\Pricing\RuleCode;
+use Ritmo\Domain\Pricing\Terms\NightTermsResolver;
 
 /**
  * Turns the rule trace of a decision into sentences a person can read: why a night would get
- * the floor and ceiling the shadow run proposes. Amounts are in the sent price plan.
+ * the floor and ceiling the shadow run proposes. Amounts are in the sent price plan, in the
+ * currency of the property (numbers in the person's format when no currency is given).
  */
 final class ReasonText
 {
@@ -21,11 +27,11 @@ final class ReasonText
      *
      * @return list<string> one sentence per rule that applied, in the order the engine applied them
      */
-    public static function sentences(array $trace): array
+    public static function sentences(array $trace, string $currency = ''): array
     {
         $sentences = [];
         foreach ($trace as $entry) {
-            $sentence = self::sentence((string) ($entry['code'] ?? ''), is_array($entry['params'] ?? null) ? $entry['params'] : []);
+            $sentence = self::sentence((string) ($entry['code'] ?? ''), is_array($entry['params'] ?? null) ? $entry['params'] : [], $currency);
             if ($sentence !== null) {
                 $sentences[] = $sentence;
             }
@@ -50,6 +56,7 @@ final class ReasonText
             'RELATION_DISCOUNT_BAND' => __('Relation: discount band', 'ritmo-revenue'),
             'RELATION_OCCUPANCY_SWITCH' => __('Relation: occupancy switch', 'ritmo-revenue'),
             'CEILING_RELEASE_DELETE' => __('Ceiling freed (rule deleted first)', 'ritmo-revenue'),
+            'undo' => __('Undo of an earlier change', 'ritmo-revenue'),
             default => $code,
         };
     }
@@ -57,23 +64,25 @@ final class ReasonText
     /**
      * @param list<array{code: string, params: array<string, mixed>}> $trace
      */
-    public static function describe(array $trace): string
+    public static function describe(array $trace, string $currency = ''): string
     {
-        return implode(' ', self::sentences($trace));
+        return implode(' ', self::sentences($trace, $currency));
     }
 
     /**
      * @param array<string, mixed> $p
      */
-    private static function sentence(string $code, array $p): ?string
+    private static function sentence(string $code, array $p, string $currency): ?string
     {
+        $money = static fn (mixed $value): string => self::money($value, $currency);
+
         return match ($code) {
             RuleCode::NIGHT => self::night($p),
             RuleCode::PRICE_WITHIN_RULE_IN_FORCE => sprintf(
                 /* translators: 1: price read, 2: price the date rule in force allows */
                 __('The price read, %1$s, is outside the date rule in force: the engine starts from %2$s.', 'ritmo-revenue'),
-                self::number($p['read'] ?? null, 2),
-                self::number($p['price'] ?? null, 2)
+                $money($p['read'] ?? null),
+                $money($p['price'] ?? null)
             ),
             RuleCode::PACE_STATUS => sprintf(
                 /* translators: 1: pace status, 2: units sold, 3: units on sale, 4: percent sold, 5: percent the curve expects */
@@ -85,11 +94,11 @@ final class ReasonText
                 self::number($p['expected_percent'] ?? null, 1)
             ),
             RuleCode::MARKET_TARGET => sprintf(
-                /* translators: 1: market percentile, 2: public price at that percentile, 3: the same price in the sent plan */
-                __('Target: market percentile %1$s, %2$s public, %3$s sent.', 'ritmo-revenue'),
+                /* translators: 1: market percentile, 2: price guests see at that percentile, 3: the same price in the plan sent to the pricing system */
+                __('Target: the market price at percentile %1$s, %2$s as guests see it (%3$s in the plan sent to the pricing system).', 'ritmo-revenue'),
                 self::number($p['percentile'] ?? null),
-                self::number($p['public'] ?? null, 2),
-                self::number($p['sent'] ?? null, 2)
+                $money($p['public'] ?? null),
+                $money($p['sent'] ?? null)
             ),
             RuleCode::WEAK_ANCHOR => sprintf(
                 /* translators: 1: sample size, 2: age in days */
@@ -101,8 +110,8 @@ final class ReasonText
             RuleCode::STEP => sprintf(
                 /* translators: 1: price before, 2: price after, 3: largest step in percent */
                 __('One step from %1$s to %2$s (at most %3$s%%).', 'ritmo-revenue'),
-                self::number($p['from'] ?? null, 2),
-                self::number($p['to'] ?? null, 2),
+                $money($p['from'] ?? null),
+                $money($p['to'] ?? null),
                 self::number($p['max_percent'] ?? null, 1)
             ),
             RuleCode::ORDER_SALES_RAMP => sprintf(
@@ -110,19 +119,19 @@ final class ReasonText
                 __('Sales ramp of order %1$s: line %2$s, price %3$s over a floor of %4$s.', 'ritmo-revenue'),
                 (string) ($p['order'] ?? ''),
                 self::number($p['line'] ?? null, 2),
-                self::number($p['to'] ?? null, 2),
-                self::number($p['floor'] ?? null, 2)
+                $money($p['to'] ?? null),
+                $money($p['floor'] ?? null)
             ),
             RuleCode::HELD_AT_FLOOR => sprintf(
                 /* translators: 1: floor amount, 2: which floor */
                 __('Held at the hard floor of %1$s (%2$s).', 'ritmo-revenue'),
-                self::number($p['floor'] ?? null, 2),
+                $money($p['floor'] ?? null),
                 self::floorLabel((string) ($p['label'] ?? ''))
             ),
             RuleCode::CAPPED_AT_LISTING_MAX => sprintf(
                 /* translators: %s: highest floor allowed by the listing maximum */
                 __('Capped at %s by the listing maximum.', 'ritmo-revenue'),
-                self::number($p['highest_floor'] ?? null, 2)
+                $money($p['highest_floor'] ?? null)
             ),
             RuleCode::TODAY_NEVER_RISES => __('Tonight never goes up.', 'ritmo-revenue'),
             RuleCode::WITHIN_TOLERANCE => __('The change is within the tolerance: nothing to do.', 'ritmo-revenue'),
@@ -131,19 +140,19 @@ final class ReasonText
             RuleCode::CEILING_AT_TARGET => sprintf(
                 /* translators: %s: ceiling amount */
                 __('Ceiling at the target, %s, so the pricing system cannot jump past the step.', 'ritmo-revenue'),
-                self::number($p['ceiling'] ?? null, 2)
+                $money($p['ceiling'] ?? null)
             ),
             RuleCode::CEILING_FOLLOWS_FLOOR => sprintf(
                 /* translators: %s: ceiling amount */
                 __('Ceiling follows the floor down to %s.', 'ritmo-revenue'),
-                self::number($p['ceiling'] ?? null, 2)
+                $money($p['ceiling'] ?? null)
             ),
             RuleCode::PACE_STEP => sprintf(
                 /* translators: 1: "up" or "down", 2: new floor, 3: new ceiling */
                 __('Proposed step %1$s: floor %2$s, ceiling %3$s.', 'ritmo-revenue'),
                 ($p['direction'] ?? '') === 'down' ? __('down', 'ritmo-revenue') : __('up', 'ritmo-revenue'),
-                self::number($p['min_price'] ?? null, 2),
-                self::number($p['max_price'] ?? null, 2)
+                $money($p['min_price'] ?? null),
+                $money($p['max_price'] ?? null)
             ),
             default => null,
         };
@@ -159,8 +168,15 @@ final class ReasonText
             'holiday' => __('Holiday night', 'ritmo-revenue'),
             default => __('Weekday night', 'ritmo-revenue'),
         };
-        /* translators: 1: kind of night, 2: days until the night */
-        $text = sprintf(__('%1$s, %2$s days out.', 'ritmo-revenue'), $type, self::number($p['days_out'] ?? null));
+        $days = $p['days_out'] ?? null;
+        $text = match (true) {
+            /* translators: %s: kind of night */
+            !is_int($days) && !is_float($days) => sprintf(__('%s, days out not known.', 'ritmo-revenue'), $type),
+            /* translators: %s: kind of night */
+            (int) $days === 0 => sprintf(__('%s, tonight.', 'ritmo-revenue'), $type),
+            /* translators: 1: kind of night, 2: days until the night */
+            default => sprintf(_n('%1$s, %2$s day out.', '%1$s, %2$s days out.', (int) $days, 'ritmo-revenue'), $type, self::number($days)),
+        };
         if (is_string($p['period'] ?? null) && $p['period'] !== '') {
             /* translators: %s: name of the configured period */
             $text .= ' ' . sprintf(__('Period: %s.', 'ritmo-revenue'), $p['period']);
@@ -183,25 +199,64 @@ final class ReasonText
     private static function floorLabel(string $label): string
     {
         return match ($label) {
-            'listing_min' => __('listing minimum', 'ritmo-revenue'),
-            'reference_min_fraction' => __('safety limit', 'ritmo-revenue'),
-            'quality_floor' => __('quality floor', 'ritmo-revenue'),
-            'holiday_floor' => __('holiday floor', 'ritmo-revenue'),
-            'owner_floor' => __('owner floor', 'ritmo-revenue'),
-            'order_fallback_floor' => __('fallback floor of the order', 'ritmo-revenue'),
-            'order_descent_step' => __('descent step of the order', 'ritmo-revenue'),
-            'order_return_limit' => __('climb back limited to one step', 'ritmo-revenue'),
-            default => $label,
+            Floors::LISTING_MIN => __('listing minimum', 'ritmo-revenue'),
+            Floors::REFERENCE_MIN_FRACTION => __('safety limit', 'ritmo-revenue'),
+            Floors::QUALITY => __('quality floor', 'ritmo-revenue'),
+            Floors::HOLIDAY => __('holiday floor', 'ritmo-revenue'),
+            Floors::OWNER => __('owner floor', 'ritmo-revenue'),
+            OrderSalesRamp::FALLBACK_FLOOR => __('fallback floor of the order', 'ritmo-revenue'),
+            OrderSalesRamp::DESCENT_STEP => __('descent step of the order', 'ritmo-revenue'),
+            OrderSalesRamp::RETURN_LIMIT => __('climb back limited to one step', 'ritmo-revenue'),
+            NightTermsResolver::ORDER_FLOOR => __('minimum price of an owner order', 'ritmo-revenue'),
+            NightTermsResolver::MARKET_FLOOR => __('market floor', 'ritmo-revenue'),
+            NightTermsResolver::PREMIUM_FLOOR => __('floor of a premium relation', 'ritmo-revenue'),
+            LadderHardFloor::HOLIDAY_SAFETY_FLOOR => __('holiday safety floor', 'ritmo-revenue'),
+            default => __('another floor', 'ritmo-revenue'),
         };
     }
 
+    /**
+     * The floor labels the engine writes into a trace (Floors, OrderSalesRamp, NightTermsResolver,
+     * LadderHardFloor), each with its own words.
+     *
+     * @return list<string>
+     */
+    public static function floorLabels(): array
+    {
+        return [
+            Floors::LISTING_MIN, Floors::REFERENCE_MIN_FRACTION, Floors::QUALITY, Floors::HOLIDAY, Floors::OWNER,
+            OrderSalesRamp::FALLBACK_FLOOR, OrderSalesRamp::DESCENT_STEP, OrderSalesRamp::RETURN_LIMIT,
+            NightTermsResolver::ORDER_FLOOR, NightTermsResolver::MARKET_FLOOR, NightTermsResolver::PREMIUM_FLOOR,
+            LadderHardFloor::HOLIDAY_SAFETY_FLOOR,
+        ];
+    }
+
+    /**
+     * An amount in the currency of the property; without one, a number in the person's format.
+     */
+    private static function money(mixed $value, string $currency): string
+    {
+        if (!is_int($value) && !is_float($value)) {
+            return '?';
+        }
+
+        return $currency === '' ? self::number($value, 2) : Money::format((float) $value, $currency);
+    }
+
+    /**
+     * A number in the person's format, with up to $decimals decimals (none when it is whole).
+     */
     private static function number(mixed $value, int $decimals = 0): string
     {
         if (!is_int($value) && !is_float($value)) {
             return '?';
         }
-        $text = number_format((float) $value, $decimals, '.', '');
+        $rounded = round((float) $value, $decimals);
+        $shown = 0;
+        while ($shown < $decimals && abs(round($rounded, $shown) - $rounded) > 0.0000001) {
+            ++$shown;
+        }
 
-        return $decimals > 0 && str_contains($text, '.') ? rtrim(rtrim($text, '0'), '.') : $text;
+        return number_format_i18n($rounded, $shown);
     }
 }

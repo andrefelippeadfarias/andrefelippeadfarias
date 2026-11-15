@@ -6,6 +6,7 @@ namespace Ritmo\Admin\Market;
 
 use DateTimeImmutable;
 use DateTimeZone;
+use Ritmo\Application\Market\CompetitorInput;
 use Ritmo\Application\Market\MarketRefused;
 use Ritmo\Domain\Market\AnchorRuler;
 use Ritmo\Domain\Market\Csv\MarketCsvProblem;
@@ -63,7 +64,8 @@ final class MarketText
             MarketCsvProblem::CHECKOUT_NOT_AFTER_CHECKIN => __('the check-out must be after the check-in.', 'ritmo-revenue'),
             MarketCsvProblem::STAY_TOO_LONG => __('the stay is longer than allowed.', 'ritmo-revenue'),
             MarketCsvProblem::STAY_IN_PAST => __('the stay has already started; past prices are not imported.', 'ritmo-revenue'),
-            MarketCsvProblem::BAD_PRICE => __('the price is not a number above zero (such as 480 or 480.50, without thousands separators).', 'ritmo-revenue'),
+            /* translators: %s: an example amount with cents, in the reader's format */
+            MarketCsvProblem::BAD_PRICE => sprintf(__('the price is not a number above zero (such as 480 or %s, without thousands separators).', 'ritmo-revenue'), number_format_i18n(480.5, 2)),
             MarketCsvProblem::BAD_BASIS => __('the price basis is "total" or "per_night".', 'ritmo-revenue'),
             MarketCsvProblem::BAD_ROOM => __('the room is "cheapest" or "comparable".', 'ritmo-revenue'),
             MarketCsvProblem::BAD_CURRENCY => __('the currency is a three-letter code, such as BRL.', 'ritmo-revenue'),
@@ -96,7 +98,8 @@ final class MarketText
             MarketRefused::BAD_CODE => __('A code has lowercase letters, digits and dashes.', 'ritmo-revenue'),
             MarketRefused::CODE_TAKEN => __('Another competitor already has this code.', 'ritmo-revenue'),
             MarketRefused::BAD_TAG => __('A tag is a short lowercase word, such as peer.', 'ritmo-revenue'),
-            MarketRefused::BAD_FACTOR => __('The factor is a number above 0 and at most 10, such as 1.4.', 'ritmo-revenue'),
+            /* translators: %s: an example factor, in the reader's format */
+            MarketRefused::BAD_FACTOR => sprintf(__('The factor is a number above 0 and at most 10, such as %s.', 'ritmo-revenue'), number_format_i18n(1.4, 1)),
             MarketRefused::BAD_RATING => __('The rating is a number from 0 to 10.', 'ritmo-revenue'),
             /* translators: %s: date of the earlier import */
             MarketRefused::ALREADY_IMPORTED => sprintf(__('This file was already imported on %s. Nothing was imported.', 'ritmo-revenue'), self::date((string) ($refused->params['date'] ?? ''))),
@@ -179,9 +182,25 @@ final class MarketText
             : sprintf(__('Column %1$s: %2$s', 'ritmo-revenue'), $column, $what)) . ' ' . __('Nothing was imported.', 'ritmo-revenue');
     }
 
+    /**
+     * A factor in the person's format, with up to three decimals ("1,4" in pt_BR).
+     */
     private static function number(float $value): string
     {
-        return rtrim(rtrim(sprintf('%.3F', $value), '0'), '.');
+        $plain = rtrim(rtrim(sprintf('%.3F', $value), '0'), '.');
+        $decimals = str_contains($plain, '.') ? strlen($plain) - strpos($plain, '.') - 1 : 0;
+
+        return number_format_i18n($value, $decimals);
+    }
+
+    /**
+     * The groups of a competitor in words: the peer group by its meaning, the others as typed.
+     *
+     * @param list<string> $tags
+     */
+    public static function groups(array $tags): string
+    {
+        return $tags === [] ? '—' : implode(', ', array_map(static fn (string $tag): string => $tag === CompetitorInput::PEER ? __('close to you (peer)', 'ritmo-revenue') : $tag, $tags));
     }
 
     private static function date(string $ymd): string

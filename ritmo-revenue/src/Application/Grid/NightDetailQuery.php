@@ -14,6 +14,7 @@ use Ritmo\Infrastructure\Db\Repository\ChangeLogRepository;
 use Ritmo\Infrastructure\Db\Repository\DetectedFreezeRepository;
 use Ritmo\Infrastructure\Db\Repository\PlanItemRepository;
 use Ritmo\Infrastructure\Db\Repository\RoomTypeRepository;
+use Ritmo\Infrastructure\Db\Repository\RunRepository;
 use Ritmo\Infrastructure\Db\Repository\StepLedgerRepository;
 
 /**
@@ -37,6 +38,7 @@ final class NightDetailQuery
         private readonly ChangeLogRepository $changes,
         private readonly StepLedgerRepository $steps,
         private readonly PlanItemRepository $planItems,
+        private readonly ?RunRepository $runs = null,
     ) {
     }
 
@@ -70,17 +72,21 @@ final class NightDetailQuery
             $freeze,
             array_slice($changes, 0, self::HISTORY),
             array_slice($this->steps->forNight($roomCode, $night), 0, self::HISTORY),
-            $this->decisions($roomCode, $night),
+            $this->decisions($roomCode, $night, $changes),
         );
     }
 
     /**
-     * What the last runs decided for the night, newest first: run, status and reason.
+     * What the last runs decided for the night, newest first: run, status, reason, the mode the
+     * run ran in (null when unknown) and whether that run wrote the night.
      *
-     * @return list<array{run_id: int, status: string, reason: string}>
+     * @param list<ChangeRecord> $changes the plugin's writes of the night
+     *
+     * @return list<array{run_id: int, status: string, reason: string, mode: string|null, written: bool}>
      */
-    private function decisions(string $roomCode, DateTimeImmutable $night): array
+    private function decisions(string $roomCode, DateTimeImmutable $night, array $changes): array
     {
+        $writtenBy = array_flip(array_map(static fn (ChangeRecord $c): int => (int) $c->runId, $changes));
         $groups = [];
         foreach ($this->planItems->forNight($roomCode, $night, self::DECISIONS * 3) as $item) {
             $groups[$item['run_id']][] = $item;
@@ -88,7 +94,13 @@ final class NightDetailQuery
         $out = [];
         foreach ($groups as $runId => $items) {
             $planned = (new PlanIndex($items))->night($roomCode, Days::key($night));
-            $out[] = ['run_id' => (int) $runId, 'status' => (string) $planned->status, 'reason' => $planned->reason];
+            $out[] = [
+                'run_id' => (int) $runId,
+                'status' => (string) $planned->status,
+                'reason' => $planned->reason,
+                'mode' => $this->runs?->find((int) $runId)['mode']->value ?? null,
+                'written' => isset($writtenBy[(int) $runId]),
+            ];
         }
 
         return array_slice($out, 0, self::DECISIONS);

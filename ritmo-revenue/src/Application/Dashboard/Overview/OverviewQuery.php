@@ -116,7 +116,12 @@ final class OverviewQuery
             $rooms[] = ['code' => $room->code, 'name' => $room->name, 'units' => $room->units, 'nights' => $nights];
         }
 
-        return ['captured_at' => $plan['run']['started_at'] ?? null, 'nights' => iterator_to_array($range, false), 'rooms' => $rooms];
+        return [
+            'captured_at' => ($plan['run'] ?? $plan['latest'])['started_at'] ?? null,
+            'unplanned' => $plan['run'] === null && $plan['latest'] !== null,
+            'nights' => iterator_to_array($range, false),
+            'rooms' => $rooms,
+        ];
     }
 
     /**
@@ -170,7 +175,7 @@ final class OverviewQuery
             }
         }
 
-        return ['run_id' => $plan['plan']->runId, 'counts' => $counts, 'total' => array_sum($counts)];
+        return ['run_id' => $plan['plan']->runId, 'counts' => $counts, 'total' => array_sum($counts), 'unplanned' => $plan['run'] === null && $plan['latest'] !== null];
     }
 
     /**
@@ -194,18 +199,20 @@ final class OverviewQuery
 
     /**
      * The newest run with what it did, and, for the run whose plan the screens show, how many
-     * nights it would write.
+     * nights it would write. writes_taken counts the steps the systems took (a refused call is
+     * not a change); write_outcome is written, partly or failed (WriteReport), null without a write.
      *
-     * @return array{run: array<string, mixed>|null, would_write: int|null, writes_sent: int|null}
+     * @return array{run: array<string, mixed>|null, would_write: int|null, writes_sent: int|null, writes_taken: int|null, write_outcome: string|null}
      */
     public function lastRun(Property $property): array
     {
         $recent = $this->lastPlan->recentRuns($property->id, 5);
         $run = $recent[0] ?? null;
         if ($run === null) {
-            return ['run' => null, 'would_write' => null, 'writes_sent' => null];
+            return ['run' => null, 'would_write' => null, 'writes_sent' => null, 'writes_taken' => null, 'write_outcome' => null];
         }
         $plan = $this->lastPlan->of($recent);
+        $write = is_array($run['summary']['write'] ?? null) ? $run['summary']['write'] : [];
         $wouldWrite = $plan['run'] !== null && $plan['run']['id'] === $run['id']
             ? count(array_filter($plan['plan']->all(), static fn (PlannedNight $n): bool => $n->status === PlannedNight::WOULD_WRITE))
             : null;
@@ -213,7 +220,9 @@ final class OverviewQuery
         return [
             'run' => $run,
             'would_write' => $wouldWrite,
-            'writes_sent' => is_numeric($run['summary']['write']['writes_sent'] ?? null) ? (int) $run['summary']['write']['writes_sent'] : null,
+            'writes_sent' => is_numeric($write['writes_sent'] ?? null) ? (int) $write['writes_sent'] : null,
+            'writes_taken' => is_numeric($write['writes_taken'] ?? null) ? (int) $write['writes_taken'] : null,
+            'write_outcome' => is_string($write['outcome'] ?? null) ? $write['outcome'] : null,
         ];
     }
 

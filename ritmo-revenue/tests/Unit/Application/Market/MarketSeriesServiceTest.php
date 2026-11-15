@@ -113,6 +113,10 @@ final class MarketSeriesServiceTest extends TestCase
         $nights = $world->board->nights(new Property(MarketWorld::PROPERTY, 'Inn One', 'America/Sao_Paulo', 'BRL'), RuleSet::defaults(), MarketConfig::neutral(), Days::date('2026-12-01'), 7);
         self::assertCount(7, $nights);
         self::assertSame(['weekday', []], [$nights[0]['type'], $nights[0]['series']]);
+        $stay = $nights[3];
+        self::assertNotNull($stay['anchor']);
+        self::assertSame(0, $stay['age_days'], 'without series the anchor gives the age (M4 product review)');
+        self::assertTrue($stay['small_sample'], 'and its sample: one price is a small sample');
         $competitors = $world->board->competitors(MarketWorld::PROPERTY);
         self::assertSame([0, 1], array_column($competitors, 'prices_30_days'));
         self::assertSame(1, $world->board->prices(MarketWorld::PROPERTY, ['competitor' => $competitors[1]['id']], 1)['total']);

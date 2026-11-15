@@ -40,7 +40,7 @@ defined('ABSPATH') || exit;
         <p><?php echo esc_html($view['run']['status']); ?> · <?php echo esc_html($view['run']['started']); ?></p>
         <ul class="ritmo-list">
             <?php foreach ($view['run']['stages'] as $ritmo_stage) : ?>
-                <li><strong><?php echo esc_html($ritmo_stage['name']); ?></strong><?php if ($ritmo_stage['facts'] !== '') : ?>: <?php echo esc_html($ritmo_stage['facts']); ?><?php endif; ?></li>
+                <li><strong><?php echo esc_html($ritmo_stage['name']); ?></strong><?php if ($ritmo_stage['facts'] !== '') : ?>: <?php echo esc_html($ritmo_stage['facts']); ?><?php endif; ?><?php if ($ritmo_stage['technical'] !== '') : ?> <details class="ritmo-technical"><summary><?php esc_html_e('Technical details', 'ritmo-revenue'); ?></summary><code><?php echo esc_html($ritmo_stage['technical']); ?></code></details><?php endif; ?></li>
             <?php endforeach; ?>
         </ul>
     </section>
@@ -97,7 +97,7 @@ defined('ABSPATH') || exit;
     <?php else : ?>
         <ul class="ritmo-log">
             <?php foreach ($view['log'] as $ritmo_line) : ?>
-                <li><span class="ritmo-muted"><?php echo esc_html($ritmo_line['when']); ?> · <?php echo esc_html($ritmo_line['level']); ?></span> <?php echo esc_html($ritmo_line['message']); ?><?php if ($ritmo_line['context'] !== '') : ?> <span class="ritmo-muted"><?php echo esc_html($ritmo_line['context']); ?></span><?php endif; ?></li>
+                <li><span class="ritmo-muted"><?php echo esc_html($ritmo_line['when']); ?> · <?php echo esc_html($ritmo_line['level']); ?></span> <?php echo esc_html($ritmo_line['message']); ?><?php if ($ritmo_line['context'] !== '') : ?> <span class="ritmo-muted"><?php echo esc_html($ritmo_line['context']); ?></span><?php endif; ?><?php if ($ritmo_line['technical'] !== '') : ?> <details class="ritmo-technical"><summary><?php esc_html_e('Technical details', 'ritmo-revenue'); ?></summary><code><?php echo esc_html($ritmo_line['technical']); ?></code></details><?php endif; ?></li>
             <?php endforeach; ?>
         </ul>
     <?php endif; ?>

@@ -28,8 +28,11 @@ final class CompetitorInput
     {
     }
 
+    /** The group of the competitors closest to the property: the peers_* series use only them. */
+    public const PEER = 'peer';
+
     /**
-     * @param array<string, mixed> $input name, code, reference, room_label, tags (list or comma text), factor, factor_source, rating, is_own, active
+     * @param array<string, mixed> $input name, code, reference, room_label, tags (list or comma text), peer ("1" adds the peer group, "0" takes it out), factor, factor_source, rating, is_own, active
      *
      * @return array{code: string, name: string, reference: string, room_label: string, tags: list<string>, factor: float|null, factor_source: string, rating: float|null, is_own: bool, active: bool}
      *
@@ -52,7 +55,7 @@ final class CompetitorInput
             'name' => $name,
             'reference' => self::text($input, 'reference', self::TEXT_MAX),
             'room_label' => self::text($input, 'room_label', self::TEXT_MAX),
-            'tags' => self::tags($input['tags'] ?? []),
+            'tags' => self::peer(self::tags($input['tags'] ?? []), $input['peer'] ?? null),
             'factor' => self::number($input, 'factor', 0.0, 10.0, true, MarketRefused::BAD_FACTOR),
             'factor_source' => in_array($input['factor_source'] ?? '', [ComparableFactor::MEASURED, ComparableFactor::ESTIMATED], true) ? (string) $input['factor_source'] : '',
             'rating' => self::number($input, 'rating', 0.0, 10.0, false, MarketRefused::BAD_RATING),
@@ -88,6 +91,25 @@ final class CompetitorInput
         }
 
         return $text;
+    }
+
+    /**
+     * The groups with the peer group set by its own box (the free text cannot take it out).
+     *
+     * @param list<string> $tags
+     *
+     * @return list<string>
+     */
+    private static function peer(array $tags, mixed $peer): array
+    {
+        $others = array_values(array_filter($tags, static fn (string $t): bool => $t !== self::PEER));
+        $isPeer = match ((string) $peer) {
+            '1' => true,
+            '0' => false,
+            default => in_array(self::PEER, $tags, true),
+        };
+
+        return $isPeer ? [self::PEER, ...$others] : $others;
     }
 
     /**

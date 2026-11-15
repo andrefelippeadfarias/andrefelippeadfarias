@@ -82,6 +82,7 @@ final class ReportStage implements AfterWriteStage
             marketAgeDays: $marketAge,
             pmsSkipped: array_map('intval', (array) ($write['pms_skipped'] ?? [])),
             mergeConflicts: (int) ($decide['pms_merge_conflicts'] ?? 0),
+            notRecalculated: array_map('intval', (array) ($write['not_recalculated'] ?? [])),
         );
     }
 

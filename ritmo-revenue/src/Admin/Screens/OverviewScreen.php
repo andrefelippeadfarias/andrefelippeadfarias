@@ -15,6 +15,7 @@ use Ritmo\Admin\Components\NightDate;
 use Ritmo\Admin\Components\Percent;
 use Ritmo\Admin\Reports\RunLineText;
 use Ritmo\Application\Dashboard\Todo\TodoItem;
+use Ritmo\Application\Run\WriteReport;
 use Ritmo\Domain\Model\Property;
 use Throwable;
 
@@ -121,7 +122,8 @@ final class OverviewScreen
             'rows' => $rows,
             'caption' => $soon['captured_at'] === null ? __('No calendar read yet: it is read by the first run.', 'ritmo-revenue')
                 /* translators: %s: date and time the calendar was read */
-                : sprintf(__('Tonight and the next nights, as read at %s', 'ritmo-revenue'), NightDate::instant($soon['captured_at'], $property->timezone)),
+                : sprintf(__('Tonight and the next nights, as read at %s', 'ritmo-revenue'), NightDate::instant($soon['captured_at'], $property->timezone))
+                . (($soon['unplanned'] ?? false) ? '. ' . __('The prices are the PMS calendar\'s: the last run priced no night.', 'ritmo-revenue') : ''),
         ];
     }
 
@@ -184,7 +186,7 @@ final class OverviewScreen
             ];
         }
 
-        return ['items' => $items, 'total' => $pace['total'], 'empty' => $pace['run_id'] === null];
+        return ['items' => $items, 'total' => $pace['total'], 'empty' => $pace['run_id'] === null, 'unplanned' => $pace['unplanned'] ?? false, 'market_url' => Menu::url(Menu::MARKET, ['property' => $property->id])];
     }
 
     /**
@@ -230,12 +232,14 @@ final class OverviewScreen
             return ['run' => null];
         }
         $seconds = $run['finished_at'] === null ? null : $run['finished_at']->getTimestamp() - $run['started_at']->getTimestamp();
+        $taken = $last['writes_taken'] ?? $last['writes_sent'];
         $did = match (true) {
-            $last['writes_sent'] !== null && $last['writes_sent'] > 0 => sprintf(
+            ($last['write_outcome'] ?? null) === WriteReport::OUTCOME_FAILED => __('the write failed: no change was taken (see the alerts)', 'ritmo-revenue'),
+            $taken !== null && $taken > 0 => sprintf(
                 /* translators: %s: number of changes */
-                _n('wrote %s change', 'wrote %s changes', $last['writes_sent'], 'ritmo-revenue'),
-                number_format_i18n($last['writes_sent'])
-            ),
+                _n('wrote %s change', 'wrote %s changes', $taken, 'ritmo-revenue'),
+                number_format_i18n($taken)
+            ) . (($last['write_outcome'] ?? null) === WriteReport::OUTCOME_PARTLY ? ' · ' . __('some changes were left out (see the report below)', 'ritmo-revenue') : ''),
             $last['would_write'] !== null => sprintf(
                 /* translators: %s: number of nights */
                 _n('would write %s night (shadow)', 'would write %s nights (shadow)', $last['would_write'], 'ritmo-revenue'),
@@ -247,15 +251,16 @@ final class OverviewScreen
         return [
             'run' => [
                 'title' => sprintf(
-                    /* translators: 1: kind of run, 2: time */
-                    __('%1$s at %2$s', 'ritmo-revenue'),
+                    /* translators: 1: kind of run, 2: date, 3: time */
+                    __('%1$s on %2$s, at %3$s', 'ritmo-revenue'),
                     Labels::runKind($run['kind']),
-                    NightDate::instant($run['started_at'], $property->timezone)
-                ) . ($seconds === null ? '' : ' · ' . sprintf(
+                    NightDate::date($run['started_at'], $property->timezone),
+                    NightDate::time($run['started_at'], $property->timezone)
+                ) . ($seconds === null ? '' : ' · ' . ($seconds < 1 ? __('took less than a second', 'ritmo-revenue') : sprintf(
                     /* translators: %s: seconds */
                     _n('took %s second', 'took %s seconds', $seconds, 'ritmo-revenue'),
                     number_format_i18n($seconds)
-                )),
+                ))),
                 'status' => Labels::runStatus($run['status']),
                 'did' => $did,
                 'lines' => array_slice(RunLineText::ofSummary(is_array($run['summary'] ?? null) ? $run['summary'] : [])['lines'], 0, 8),

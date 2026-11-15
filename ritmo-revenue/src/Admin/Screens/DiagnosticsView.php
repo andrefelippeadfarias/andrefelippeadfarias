@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Ritmo\Admin\Screens;
 
 use DateTimeImmutable;
+use Exception;
 use Ritmo\Admin\Components\Capability;
 use Ritmo\Admin\Components\Input;
 use Ritmo\Admin\Components\Labels;
@@ -78,8 +79,9 @@ final class DiagnosticsView
             'log' => array_map(static fn (array $l): array => [
                 'level' => self::levelLabel((string) $l['level']),
                 'when' => NightDate::instant($l['created_at'], $timezone),
-                'message' => $services->sanitizer()->message($l['message']),
-                'context' => self::context($services->sanitizer()->context($l['context'])),
+                'message' => LogText::message($services->sanitizer()->message($l['message'])),
+                'context' => self::context($services->sanitizer()->context($l['context']), $timezone),
+                'technical' => self::technical($services->sanitizer()->context($l['context'])),
             ], $services->logger()->recent(self::LOG_ROWS, $level)),
             'level' => $level,
             'levels' => array_combine(self::LEVELS, array_map(self::levelLabel(...), self::LEVELS)),
@@ -127,7 +129,7 @@ final class DiagnosticsView
             if (!is_string($stage) || !is_array($summary)) {
                 continue;
             }
-            $stages[] = ['name' => Labels::runStage($stage), 'facts' => self::context($summary)];
+            $stages[] = ['name' => Labels::runStage($stage), 'facts' => self::context($summary, $timezone), 'technical' => self::technical($summary)];
         }
 
         return [
@@ -140,40 +142,99 @@ final class DiagnosticsView
     }
 
     /**
-     * Facts as "Label: value" joined by " · ": known keys translated, others in words; nested
-     * lists are counted, never printed as data.
+     * The facts a person reads, as "Label: value" joined by " · ": only the known keys, translated,
+     * with their values in words (a mode, a system, a date in the property's zone, a list as its
+     * count); a key not known is left to technical().
      *
      * @param array<string, mixed> $context
      */
-    public static function context(array $context): string
+    public static function context(array $context, string $timezone = 'UTC'): string
     {
         $parts = [];
         foreach ($context as $key => $value) {
-            if (!is_string($key)) {
+            $label = is_string($key) ? self::label($key) : null;
+            if ($label === null || $value === null || $value === '') {
                 continue;
             }
-            $label = match ($key) {
-                'run_id', 'run' => __('Run', 'ritmo-revenue'),
-                'stage' => __('Stage', 'ritmo-revenue'),
-                'duration_ms' => __('Duration (ms)', 'ritmo-revenue'),
-                'property', 'property_id' => __('Property', 'ritmo-revenue'),
-                'provider' => __('System', 'ritmo-revenue'),
-                'status' => __('Status', 'ritmo-revenue'),
-                default => ucfirst(str_replace('_', ' ', $key)),
-            };
-            $parts[] = $label . ': ' . match (true) {
-                is_array($value) => sprintf(
-                    /* translators: %s: number of items */
-                    _n('%s item', '%s items', count($value), 'ritmo-revenue'),
-                    number_format_i18n(count($value))
-                ),
-                is_bool($value) => $value ? __('yes', 'ritmo-revenue') : __('no', 'ritmo-revenue'),
-                $value === null => '—',
+            $parts[] = $label . ': ' . self::value($key, $value, $timezone);
+        }
+
+        return implode(' · ', $parts);
+    }
+
+    /**
+     * The facts of no known key, for support, as "key: value" (shown folded under "Technical
+     * details"); lists are counted, never printed as data.
+     *
+     * @param array<string, mixed> $context
+     */
+    public static function technical(array $context): string
+    {
+        $parts = [];
+        foreach ($context as $key => $value) {
+            if (!is_string($key) || self::label($key) !== null || $value === null || $value === '') {
+                continue;
+            }
+            $parts[] = $key . ': ' . match (true) {
+                is_array($value) => (string) count($value),
+                is_bool($value) => $value ? 'true' : 'false',
                 default => str_replace(['{', '}'], '', (string) $value),
             };
         }
 
         return implode(' · ', $parts);
+    }
+
+    private static function label(string $key): ?string
+    {
+        return match ($key) {
+            'run_id', 'run' => __('Run', 'ritmo-revenue'),
+            'stage' => __('Step', 'ritmo-revenue'),
+            'property', 'property_id' => __('Property', 'ritmo-revenue'),
+            'provider' => __('System', 'ritmo-revenue'),
+            'status' => __('Status', 'ritmo-revenue'),
+            'mode' => __('Mode', 'ritmo-revenue'),
+            'actor' => __('Who', 'ritmo-revenue'),
+            'rooms' => __('Rooms', 'ritmo-revenue'),
+            'nights' => __('Nights', 'ritmo-revenue'),
+            'listings_found' => __('Listings found', 'ritmo-revenue'),
+            'listings_missing' => __('Listings missing', 'ritmo-revenue'),
+            'bookings_read_since' => __('Bookings read since', 'ritmo-revenue'),
+            'would_write' => __('Nights that would change', 'ritmo-revenue'),
+            'rejected' => __('Refused by the safety checks', 'ritmo-revenue'),
+            'no_market_data' => __('Nights without market prices', 'ritmo-revenue'),
+            'writes_sent' => __('Calls sent', 'ritmo-revenue'),
+            'writes_taken' => __('Calls taken', 'ritmo-revenue'),
+            'nights_confirmed' => __('Nights confirmed in the pricing system', 'ritmo-revenue'),
+            'pms_nights_confirmed' => __('Nights confirmed in the PMS', 'ritmo-revenue'),
+            'entries' => __('Nights waiting for approval', 'ritmo-revenue'),
+            'held' => __('Price cuts held', 'ritmo-revenue'),
+            default => null,
+        };
+    }
+
+    private static function value(string $key, mixed $value, string $timezone): string
+    {
+        return match (true) {
+            is_array($value) => number_format_i18n(count($value)),
+            is_bool($value) => $value ? __('yes', 'ritmo-revenue') : __('no', 'ritmo-revenue'),
+            $key === 'mode' => Labels::mode((string) $value),
+            $key === 'stage' => Labels::runStage((string) $value),
+            $key === 'provider' => Labels::provider((string) $value),
+            $key === 'actor' => preg_match('/^user:(\d{1,18})$/', (string) $value, $m) === 1 ? PeopleNames::name((int) $m[1]) : __('the plugin', 'ritmo-revenue'),
+            is_string($value) && preg_match('/^\d{4}-\d{2}-\d{2}T/', $value) === 1 => self::instant($value, $timezone),
+            is_int($value) || is_float($value) => number_format_i18n($value),
+            default => str_replace(['{', '}'], '', (string) $value),
+        };
+    }
+
+    private static function instant(string $iso, string $timezone): string
+    {
+        try {
+            return NightDate::instant(new DateTimeImmutable($iso), $timezone);
+        } catch (Exception) {
+            return $iso;
+        }
     }
 
     /**

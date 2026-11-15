@@ -21,7 +21,7 @@ final class ScreenEndpoints
 {
     public const ENTRY_PATTERN = '/^(item|deletion|listing)\|[A-Za-z0-9_-]{1,32}\|[A-Za-z0-9_-]{1,40}$/';
 
-    private const FINAL = ['written', 'lapsed', 'expired', 'rejected', 'superseded'];
+    private const FINAL = ['written', 'written_partly', 'write_failed', 'lapsed', 'expired', 'rejected', 'superseded'];
 
     /**
      * @param Closure(string): array{ok: bool, reason: string, text: string, tested_at: string, cached: bool} $test

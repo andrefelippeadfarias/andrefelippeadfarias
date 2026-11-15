@@ -17,6 +17,9 @@ use Ritmo\Domain\Config\RuleSet;
  */
 final class Activator
 {
+    /** The note of the first version of the rules (translated when shown: VersionsView::note()). */
+    public const FIRST_VERSION_NOTE = 'Neutral defaults, stored at activation';
+
     private function __construct()
     {
     }
@@ -30,7 +33,7 @@ final class Activator
         Roles::install($services->store());
         try {
             if ($services->ruleSets()->currentVersion() === null) {
-                $services->ruleSets()->save(RuleSet::defaults(), 'Neutral defaults, stored at activation');
+                $services->ruleSets()->save(RuleSet::defaults(), self::FIRST_VERSION_NOTE);
             } else {
                 $services->ruleSets()->upgradeCurrent();
             }

@@ -155,7 +155,7 @@ final class OperationsActions
         }
         $engaged = ScreenServices::instance()->services()->stack()->emergency()->set($engage, 'Screen', 'user:' . get_current_user_id());
         if ($engage) {
-            Notice::flash(Notice::WARNING, __('Emergency switch engaged: no run starts and running ones stop before their next stage.', 'ritmo-revenue'));
+            Notice::flash(Notice::WARNING, __('Emergency switch engaged: nothing is written any more. A run that was writing stops before its next step; scheduled runs only read and watch the bookings.', 'ritmo-revenue'));
         } else {
             Notice::flash(Notice::SUCCESS, $engaged
                 ? __('The option was released, but the constant RITMO_KILL_SWITCH in wp-config.php keeps the switch engaged.', 'ritmo-revenue')

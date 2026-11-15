@@ -9,7 +9,9 @@ use Ritmo\Infrastructure\Db\Repository\RunRepository;
 
 /**
  * The plan of the newest completed run of a property that decided prices (shadow, full, light
- * or manual run; an undo or an approved write only replays an earlier plan), with that run.
+ * or manual run; an undo or an approved write only replays an earlier plan), with that run, and
+ * the newest completed deciding run even when it planned nothing ("latest": a run without market
+ * prices reads the calendars but prices no night), so a screen never says "no run yet" after one.
  */
 final class LastPlan
 {
@@ -25,25 +27,27 @@ final class LastPlan
     /**
      * @param list<array<string, mixed>> $recent the property's latest runs (RunRepository::latest), newest first
      *
-     * @return array{run: array<string, mixed>|null, plan: PlanIndex}
+     * @return array{run: array<string, mixed>|null, plan: PlanIndex, latest: array<string, mixed>|null}
      */
     public function of(array $recent): array
     {
         $tried = 0;
+        $latest = null;
         foreach ($recent as $run) {
             if ($run['status'] !== RunRepository::COMPLETED || !in_array($run['kind'], self::DECIDING_KINDS, true)) {
                 continue;
             }
+            $latest ??= $run;
             $plan = new PlanIndex($this->items->forRun((int) $run['id']), (int) $run['id']);
             if (!$plan->isEmpty()) {
-                return ['run' => $run, 'plan' => $plan];
+                return ['run' => $run, 'plan' => $plan, 'latest' => $latest];
             }
             if (++$tried >= self::CANDIDATES) {
                 break;
             }
         }
 
-        return ['run' => null, 'plan' => PlanIndex::empty()];
+        return ['run' => null, 'plan' => PlanIndex::empty(), 'latest' => $latest];
     }
 
     /**

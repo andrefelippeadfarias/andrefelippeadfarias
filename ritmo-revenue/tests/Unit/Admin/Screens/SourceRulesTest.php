@@ -27,6 +27,29 @@ final class SourceRulesTest extends TestCase
     /** Actions that change or remove one object: their nonce names that object. */
     private const PER_OBJECT = ['ritmo_approval_decide', 'ritmo_alert_acknowledge', 'ritmo_alert_resolve', 'ritmo_wave_release', 'ritmo_freeze_release', 'ritmo_todo_close', 'ritmo_todo_reopen'];
 
+    /**
+     * Browsers compile a pattern attribute with the "v" flag, where a "-" that is not a range
+     * must be escaped: "[A-Za-z0-9_-]" is an invalid pattern (a console error, and the field is
+     * not checked).
+     */
+    public function testEveryPatternAttributeIsValidWithTheVFlag(): void
+    {
+        $found = 0;
+        foreach (SourceScan::phpFiles(Fixtures::pluginRoot() . '/templates') as $file) {
+            preg_match_all('/pattern="([^"]*)"/', (string) file_get_contents($file), $patterns);
+            foreach ($patterns[1] as $pattern) {
+                ++$found;
+                preg_match_all('/\[((?:\\\\.|[^\]\\\\])*)\]/', $pattern, $classes);
+                foreach ($classes[1] as $class) {
+                    $withoutEscapes = (string) preg_replace('/\\\\./', '', $class);
+                    $withoutRanges = (string) preg_replace('/[^-]-[^-]/', '', $withoutEscapes);
+                    self::assertStringNotContainsString('-', $withoutRanges, basename($file) . ': ' . $pattern);
+                }
+            }
+        }
+        self::assertGreaterThan(1, $found);
+    }
+
     public function testEveryFileDeclaresStrictTypes(): void
     {
         $files = $this->sources();

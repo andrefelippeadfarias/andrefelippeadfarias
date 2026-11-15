@@ -39,7 +39,7 @@ $ritmo_page = $view['page'];
             <?php foreach ($view['series'] as $ritmo_name) : ?>
                 <th scope="col"><?php echo esc_html(MarketText::series($ritmo_name)); ?></th>
             <?php endforeach; ?>
-            <th scope="col"><?php esc_html_e('Market anchor (middle)', 'ritmo-revenue'); ?></th>
+            <th scope="col"><?php esc_html_e('Market anchor (median)', 'ritmo-revenue'); ?></th>
             <th scope="col"><?php esc_html_e('Updated', 'ritmo-revenue'); ?></th>
         </tr></thead>
         <tbody>
@@ -52,13 +52,13 @@ $ritmo_page = $view['page'];
                             <?php if ($ritmo_cell === null) : ?>
                                 <span class="ritmo-muted"><?php esc_html_e('no value', 'ritmo-revenue'); ?></span>
                             <?php else : ?>
-                                <?php echo esc_html(sprintf(/* translators: %s: amount */ __('Middle %s', 'ritmo-revenue'), $ritmo_cell['median'])); ?>
+                                <?php echo esc_html(sprintf(/* translators: %s: amount */ __('Median %s', 'ritmo-revenue'), $ritmo_cell['median'])); ?>
                                 <?php if ($ritmo_cell['range'] !== '') : ?><br><span class="ritmo-muted"><?php echo esc_html(sprintf(/* translators: %s: range of amounts */ __('usual range %s', 'ritmo-revenue'), $ritmo_cell['range'])); ?></span><?php endif; ?>
                                 <br><span class="ritmo-muted"><?php echo esc_html(sprintf(/* translators: 1: where the value comes from, 2: number of competitors */ _n('%1$s, %2$d competitor', '%1$s, %2$d competitors', (int) $ritmo_cell['competitors'], 'ritmo-revenue'), $ritmo_cell['from'], (int) $ritmo_cell['competitors'])); ?></span>
                             <?php endif; ?>
                         </td>
                     <?php endforeach; ?>
-                    <td data-label="<?php esc_attr_e('Market anchor (middle)', 'ritmo-revenue'); ?>"><?php echo esc_html($ritmo_row['anchor'] === '' ? '—' : $ritmo_row['anchor']); ?></td>
+                    <td data-label="<?php esc_attr_e('Market anchor (median)', 'ritmo-revenue'); ?>"><?php echo esc_html($ritmo_row['anchor'] === '' ? '—' : $ritmo_row['anchor']); ?></td>
                     <td data-label="<?php esc_attr_e('Updated', 'ritmo-revenue'); ?>">
                         <?php if ($ritmo_row['age'] === null) : ?>—<?php else : ?><?php echo esc_html(sprintf(/* translators: %d: number of days */ _n('captured %d day ago', 'captured %d days ago', (int) $ritmo_row['age'], 'ritmo-revenue'), (int) $ritmo_row['age'])); ?><?php endif; ?>
                         <?php if ($ritmo_row['old']) : ?> <span class="ritmo-badge ritmo-tone-attention"><?php esc_html_e('old', 'ritmo-revenue'); ?></span><?php endif; ?>
@@ -69,6 +69,7 @@ $ritmo_page = $view['page'];
         </tbody>
     </table>
 </div>
+<p class="ritmo-muted" data-ritmo="anchor-note"><?php esc_html_e('Market anchor: the median of the comparable room of the competitors that count in the market (their cheapest price times each one\'s factor), per night. A night without prices takes the median of the same kind of night in the month. The rules use it when no market series is set.', 'ritmo-revenue'); ?></p>
 <p class="ritmo-paging">
     <?php if ($view['previous'] !== null) : ?><a href="<?php echo esc_url($ritmo_page->url(['from' => $view['previous']])); ?>"><?php esc_html_e('Previous 30 nights', 'ritmo-revenue'); ?></a><?php endif; ?>
     <a href="<?php echo esc_url($ritmo_page->url(['from' => $view['next']])); ?>"><?php esc_html_e('Next 30 nights', 'ritmo-revenue'); ?></a>

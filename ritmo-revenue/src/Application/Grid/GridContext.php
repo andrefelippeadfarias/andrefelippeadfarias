@@ -15,7 +15,8 @@ final class GridContext
 {
     /**
      * @param array<string, string>     $holidays "YYYY-MM-DD" => period name
-     * @param array<string, mixed>|null $run
+     * @param array<string, mixed>|null $run    the run whose plan the cells show
+     * @param array<string, mixed>|null $latest the newest run that decided, even when it priced no night
      */
     public function __construct(
         public readonly HolidayCalendar $calendar,
@@ -24,6 +25,7 @@ final class GridContext
         public readonly ?array $run,
         public readonly NightMarks $marks,
         public readonly DateTimeImmutable $today,
+        public readonly ?array $latest = null,
     ) {
     }
 }

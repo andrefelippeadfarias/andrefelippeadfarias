@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Ritmo\Application\Dashboard\Changes;
 
 use Ritmo\Domain\Write\Change\ChangeRecord;
+use Ritmo\Domain\Write\Change\UndoPlanner;
 
 /**
  * The rows of a change-log page grouped by the run that wrote them, newest group first (rows of a
@@ -31,7 +32,7 @@ final class ChangeGroups
                 'run_id' => $row->runId,
                 'actor' => $row->actor,
                 'user_id' => self::userId($row->actor),
-                'undo' => $row->undoOf !== null,
+                'undo' => $row->undoOf !== null || $row->reasonCode === UndoPlanner::REASON,
                 'at' => $row->createdAt,
                 'rows' => [],
             ];

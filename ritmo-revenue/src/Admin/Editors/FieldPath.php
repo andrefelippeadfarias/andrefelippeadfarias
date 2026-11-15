@@ -4,13 +4,14 @@ declare(strict_types=1);
 
 namespace Ritmo\Admin\Editors;
 
+use Ritmo\Admin\Components\DomainText;
 use Ritmo\Domain\Config\FieldType;
 use Ritmo\Domain\Config\Schema;
 
 /**
  * A dotted path of the rules as a person reads it: "floors.owner.1.amount" is
- * "Floors › Owner floors › 2 › Amount" (a list item by its name, label or id when it has one,
- * else its position from 1). The screen never shows the dotted path itself (spec 05, 5.5.4).
+ * "Floors › Owner floors › 2 › Amount" in the language of the person (DomainText), a list item by
+ * its name, label or id when it has one, else its position from 1. The screen never shows the dotted path itself (spec 05, 5.5.4).
  */
 final class FieldPath
 {
@@ -41,7 +42,7 @@ final class FieldPath
                 $parts[] = $segment;
                 continue;
             }
-            $parts[] = $schema->field($key)->label;
+            $parts[] = DomainText::t($schema->field($key)->label);
         }
 
         return implode(self::SEPARATOR, $parts);

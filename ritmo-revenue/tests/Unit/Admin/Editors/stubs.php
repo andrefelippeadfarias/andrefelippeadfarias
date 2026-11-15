@@ -12,7 +12,7 @@ namespace Ritmo\Admin\Editors {
     if (!function_exists(__NAMESPACE__ . '\__')) {
         function __(string $text, string $domain = 'default'): string
         {
-            return $domain === 'ritmo-revenue' ? $text : '[wrong text domain] ' . $text;
+            return $domain === 'ritmo-revenue' ? \Ritmo\Tests\Support\FakeTranslations::of($text) : '[wrong text domain] ' . $text;
         }
     }
     if (!function_exists(__NAMESPACE__ . '\_n')) {
@@ -24,6 +24,12 @@ namespace Ritmo\Admin\Editors {
 }
 
 namespace Ritmo\Admin\Market {
+    if (!function_exists(__NAMESPACE__ . '\number_format_i18n')) {
+        function number_format_i18n(float $number, int $decimals = 0): string
+        {
+            return number_format($number, $decimals, '.', ',');
+        }
+    }
     if (!function_exists(__NAMESPACE__ . '\__')) {
         function __(string $text, string $domain = 'default'): string
         {
@@ -39,6 +45,12 @@ namespace Ritmo\Admin\Market {
 }
 
 namespace Ritmo\Admin\Components {
+    if (!function_exists(__NAMESPACE__ . '\__')) {
+        function __(string $text, string $domain = 'default'): string
+        {
+            return $domain === 'ritmo-revenue' ? \Ritmo\Tests\Support\FakeTranslations::of($text) : '[wrong text domain] ' . $text;
+        }
+    }
     if (!function_exists(__NAMESPACE__ . '\number_format_i18n')) {
         function number_format_i18n(float $number, int $decimals = 0): string
         {

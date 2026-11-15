@@ -27,6 +27,7 @@ use Ritmo\Domain\Model\PropertyMode;
 use Ritmo\Domain\Model\RoomType;
 use Ritmo\Domain\Plan\ValidationContext;
 use Ritmo\Domain\Plan\Validator;
+use Ritmo\Domain\Support\Days;
 use Ritmo\Domain\Support\Clock;
 use Ritmo\Infrastructure\Db\Repository\OperationEventRepository;
 use Ritmo\Infrastructure\Db\Repository\OrderRepository;
@@ -149,7 +150,11 @@ final class UndoWriter
         }
         $this->executor->execute(new WriteRun($runId, $property, $plan, $issued, $this->connectors->pricing(), $this->connectors->pms(), $heartbeat, null, $this->clock->now()));
         $now = $this->clock->now();
-        $confirmed = JournalNights::confirmed($this->ops->ofRun($runId), $now);
+        $reasons = [];
+        foreach ($plan->plan->items as $item) {
+            $reasons[$item->roomCode . '|' . Days::key($item->date)] = ['code' => $item->reasonCode, 'order_id' => null];
+        }
+        $confirmed = JournalNights::confirmed($this->ops->ofRun($runId), $now, $reasons);
         $this->record->record($property->id, $confirmed, [], $plan->bases + array_map(static fn (RoomType $r): float => $r->base, $rooms), $auth->actor(), $runId, $now);
         $complete = $confirmed !== [] && count($confirmed) >= count($plan->plan->items) + count($plan->plan->deletions);
         $undone = $complete ? $this->undo->confirm($changeIds, $now) : 0;

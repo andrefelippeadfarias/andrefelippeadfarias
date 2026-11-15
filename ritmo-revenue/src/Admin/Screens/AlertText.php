@@ -52,7 +52,7 @@ final class AlertText
             'scheduler_stalled' => __('The scheduler stopped', 'ritmo-revenue'),
             'vigilance_gap' => __('Bookings were not watched for a while', 'ritmo-revenue'),
             'mode_demoted' => __('The mode was lowered after a failure', 'ritmo-revenue'),
-            'market_stale' => __('Market prices are old', 'ritmo-revenue'),
+            'market_stale' => ($facts['days'] ?? null) === null ? __('No market prices yet', 'ritmo-revenue') : __('Market prices are old', 'ritmo-revenue'),
             'market_gap' => __('Nights without market prices', 'ritmo-revenue'),
             'delivery_overdue' => __('Prices not confirmed at the channels yet', 'ritmo-revenue'),
             'review_due' => __('Time for the 12-month review', 'ritmo-revenue'),

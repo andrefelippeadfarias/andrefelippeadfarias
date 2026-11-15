@@ -21,6 +21,7 @@ $ritmo_c = $view['c'];
     <input type="hidden" name="action" value="<?php echo esc_attr($ritmo_c['provider'] === 'beds24' ? 'ritmo_wizard_save_pms' : 'ritmo_wizard_save_pricing'); ?>">
     <input type="hidden" name="property_id" value="<?php echo esc_attr($view['property_id']); ?>">
     <?php if ($ritmo_c['provider'] === 'beds24') : ?>
+        <p><?php esc_html_e('The PMS (property management system) is where your bookings and your availability live. The plugin reads them; later it only changes the minimum stay and the arrival and departure days there, never a price and never a booking.', 'ritmo-revenue'); ?></p>
         <p class="description"><?php esc_html_e('Create the token in the PMS, in its settings of the API, with access to bookings, properties and the inventory.', 'ritmo-revenue'); ?></p>
         <p><label for="ritmo-w-kind"><?php esc_html_e('Kind of token', 'ritmo-revenue'); ?></label>
             <select id="ritmo-w-kind" name="beds24_token_kind">

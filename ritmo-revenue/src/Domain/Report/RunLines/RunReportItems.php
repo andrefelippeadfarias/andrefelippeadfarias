@@ -7,7 +7,8 @@ namespace Ritmo\Domain\Report\RunLines;
 /**
  * The lines of a run report, in the order the report stage writes them: what the watch found,
  * then what became of the plan (shadow, approval, refusal or the write), then holds, refusals,
- * skipped PMS changes, overdue steps and the market's age.
+ * skipped PMS changes, the nights of a room left out by the recalculation limit, overdue steps
+ * and the market's age.
  */
 final class RunReportItems
 {
@@ -41,6 +42,9 @@ final class RunReportItems
         $flag($f->mergeConflicts > 0, RunLineCode::StayMergeConflict, ['count' => $f->mergeConflicts]);
         foreach ($f->pmsSkipped as $reason => $count) {
             $flag($count > 0, RunLineCode::PmsSkipped, ['count' => $count, 'reason' => self::code((string) $reason)]);
+        }
+        foreach ($f->notRecalculated as $room => $nights) {
+            $flag($nights > 0, RunLineCode::NotRecalculated, ['room' => (string) $room, 'nights' => (int) $nights]);
         }
         $flag($f->overdue > 0, RunLineCode::DeliveryOverdue, ['count' => $f->overdue]);
         $flag($staleAfterDays > 0 && $f->marketAgeDays !== null && $f->marketAgeDays > $staleAfterDays, RunLineCode::MarketStale, ['days' => (int) $f->marketAgeDays]);

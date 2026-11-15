@@ -12,7 +12,7 @@ namespace Ritmo\Admin\Components {
     if (!function_exists(__NAMESPACE__ . '\__')) {
         function __(string $text, string $domain = 'default'): string
         {
-            return $domain === 'ritmo-revenue' ? $text : '[wrong text domain] ' . $text;
+            return $domain === 'ritmo-revenue' ? \Ritmo\Tests\Support\FakeTranslations::of($text) : '[wrong text domain] ' . $text;
         }
     }
     if (!function_exists(__NAMESPACE__ . '\_n')) {
@@ -66,6 +66,12 @@ namespace Ritmo\Admin\Components {
 }
 
 namespace Ritmo\Admin\Screens {
+    if (!function_exists(__NAMESPACE__ . '\get_userdata')) {
+        function get_userdata(int $userId): object|false
+        {
+            return $userId === 1 ? (object) ['display_name' => 'Owner'] : false;
+        }
+    }
 
     if (!function_exists(__NAMESPACE__ . '\__')) {
         function __(string $text, string $domain = 'default'): string

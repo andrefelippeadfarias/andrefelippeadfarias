@@ -26,12 +26,14 @@ enum RunLineCode: string
     case MarketStale = 'market_stale';
     case PmsSkipped = 'pms_skipped';
     case StayMergeConflict = 'stay_merge_conflict';
+    case NotRecalculated = 'not_recalculated';
+    case Undone = 'undone';
 
     /**
-     * The parameters of the line: name => 'int' (a count or number of days) or 'code' (a reason
-     * code, lowercase letters, digits and underscores).
+     * The parameters of the line: name => 'int' (a count or number of days), 'code' (a reason
+     * code, lowercase letters, digits and underscores) or 'room' (a room type code).
      *
-     * @return array<string, 'int'|'code'>
+     * @return array<string, 'int'|'code'|'room'>
      */
     public function params(): array
     {
@@ -45,6 +47,8 @@ enum RunLineCode: string
             self::ValidatorRefused => ['count' => 'int', 'pms' => 'int'],
             self::MarketStale => ['days' => 'int'],
             self::PmsSkipped => ['count' => 'int', 'reason' => 'code'],
+            self::NotRecalculated => ['room' => 'room', 'nights' => 'int'],
+            self::Undone => ['written' => 'int', 'undone' => 'int'],
         };
     }
 }

@@ -8,8 +8,10 @@ use DateTimeImmutable;
 use InvalidArgumentException;
 use Ritmo\Application\Approval\PlanEntry;
 use Ritmo\Application\Grid\PlanIndex;
+use Ritmo\Application\Grid\PlannedNight;
 use Ritmo\Domain\Calendar\HolidayCalendar;
 use Ritmo\Domain\Model\RoomType;
+use Ritmo\Domain\Pricing\RuleInForce;
 use Ritmo\Domain\Support\Days;
 use Ritmo\Domain\Support\Num;
 use Ritmo\Domain\Write\Hold\WaveHold;
@@ -70,8 +72,11 @@ final class RowBuilder
         $floorAfter = $floorPct === null ? null : ($planned->floorProposed ?? self::amount($floorPct, $base));
         $ceilingAfter = $ceilingPct === null ? null : ($planned->ceilingProposed ?? self::amount($ceilingPct, $base));
         $holiday = $night === null ? '' : ($this->calendar->holidayOn($night)?->name ?? '');
-        $held = $night !== null && $this->hold !== null && $this->hold->coversNight($entry->roomCode, $night)
-            && $floorAfter !== null && $planned->floorNow !== null && $floorAfter < $planned->floorNow;
+        $priceBefore = $planned->priceNow();
+        $priceAfter = PlannedNight::sold($planned->currentPrice, $floorAfter ?? $planned->floorNow, $ceilingAfter ?? $planned->ceilingNow);
+        $moves = $priceBefore !== null && $priceAfter !== null && abs($priceAfter - $priceBefore) >= RuleInForce::MARGIN;
+        $direction = self::direction($entry, $inGroup, $moves ? $priceBefore : $planned->floorNow, $moves ? $priceAfter : $floorAfter);
+        $held = $night !== null && $this->hold !== null && $this->hold->coversNight($entry->roomCode, $night) && $direction === EntryRow::DOWN;
 
         return new EntryRow(
             $entry->key(),
@@ -82,7 +87,7 @@ final class RowBuilder
             $entry->group(),
             $entry->fields,
             $entry->orderId,
-            self::direction($entry, $inGroup, $planned->floorNow, $floorAfter),
+            $direction,
             $planned->floorNow,
             $floorAfter,
             $floorPct,
@@ -96,6 +101,8 @@ final class RowBuilder
             EntryWarnings::of($night, $this->today, $holiday, $inGroup, $held, $entry->orderId, $linked),
             $held,
             $planned->nowFromListing,
+            $priceBefore,
+            $priceAfter,
         );
     }
 

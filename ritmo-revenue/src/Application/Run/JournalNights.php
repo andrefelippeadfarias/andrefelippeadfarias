@@ -40,11 +40,12 @@ final class JournalNights
     }
 
     /**
-     * @param list<array<string, mixed>> $rows the journal rows of a run (WriteOpRepository::ofRun)
+     * @param list<array<string, mixed>>                                     $rows    the journal rows of a run (WriteOpRepository::ofRun)
+     * @param array<string, array{code: string, order_id: string|null}> $reasons "room|YYYY-MM-DD" => why the plan changed the night
      *
      * @return list<NightConfirmation>
      */
-    public static function confirmed(array $rows, DateTimeImmutable $writtenAt): array
+    public static function confirmed(array $rows, DateTimeImmutable $writtenAt, array $reasons = []): array
     {
         $out = [];
         foreach ($rows as $row) {
@@ -52,18 +53,19 @@ final class JournalNights
             if ($row['status'] !== OpStatus::Stored->value || !in_array($operation, [WriteOperation::OverridesWrite, WriteOperation::OverridesDelete, WriteOperation::PmsCalendar], true)) {
                 continue;
             }
-            array_push($out, ...self::nights($row, $operation, $writtenAt));
+            array_push($out, ...self::nights($row, $operation, $writtenAt, $reasons));
         }
 
         return $out;
     }
 
     /**
-     * @param array<string, mixed> $row
+     * @param array<string, mixed>                                      $row
+     * @param array<string, array{code: string, order_id: string|null}> $reasons
      *
      * @return list<NightConfirmation>
      */
-    private static function nights(array $row, WriteOperation $operation, DateTimeImmutable $writtenAt): array
+    private static function nights(array $row, WriteOperation $operation, DateTimeImmutable $writtenAt, array $reasons): array
     {
         $payload = is_array($row['payload'] ?? null) ? $row['payload'] : [];
         $pms = $operation === WriteOperation::PmsCalendar;
@@ -84,6 +86,7 @@ final class JournalNights
                 if ($kind !== WriteKind::Delete && $sent->isEmpty()) {
                     continue;
                 }
+                $why = $pms ? null : ($reasons[$room . '|' . $night] ?? null);
                 $written = new WrittenNight(
                     $provider,
                     $room,
@@ -93,6 +96,8 @@ final class JournalNights
                     self::fields($row['before_state'][$target][$night] ?? null, $pms),
                     $writtenAt,
                     (string) ($row['group_key'] ?? ''),
+                    reasonCode: $why['code'] ?? '',
+                    orderId: $why['order_id'] ?? null,
                     journalRef: (string) ($row['id'] ?? ''),
                 );
                 $out[] = new NightConfirmation($written, StoredStatus::Stored, self::fields($row['observed_state'][$target][$night] ?? null, $pms));

@@ -36,7 +36,8 @@ use Ritmo\Domain\Support\Days;
  */
 final class WriteExecutor
 {
-    private const QUOTA_SKIP = 'not_recalculated';
+    /** Reason of a price step left out because its listing could not be recalculated (quota). */
+    public const QUOTA_SKIP = 'not_recalculated';
 
     private readonly StepSender $sender;
 

@@ -170,6 +170,8 @@ $ritmo_grid = $view['grid'];
         </nav>
         <?php if ($ritmo_grid['no_run']) : ?>
             <p class="ritmo-muted" data-ritmo="empty"><?php esc_html_e('Run the first shadow run to see the plugin\'s prices and reasons. Occupancy is shown from the PMS calendar.', 'ritmo-revenue'); ?></p>
+        <?php elseif ($ritmo_grid['unplanned']) : ?>
+            <p class="ritmo-muted" data-ritmo="empty"><?php esc_html_e('The last run priced no night: without market prices for a night the plugin does not price it. Occupancy is shown from the PMS calendar.', 'ritmo-revenue'); ?> <a href="<?php echo esc_url($ritmo_grid['market_url']); ?>"><?php esc_html_e('Import market prices', 'ritmo-revenue'); ?></a></p>
         <?php endif; ?>
         <p class="ritmo-muted"><span data-ritmo="grid-count"><?php echo esc_html(number_format_i18n($ritmo_grid['shown'])); ?></span> <?php esc_html_e('room nights shown', 'ritmo-revenue'); ?></p>
         <div class="ritmo-scroll ritmo-nightgrid-wrap" role="region" tabindex="0" aria-label="<?php esc_attr_e('Nights grid', 'ritmo-revenue'); ?>">

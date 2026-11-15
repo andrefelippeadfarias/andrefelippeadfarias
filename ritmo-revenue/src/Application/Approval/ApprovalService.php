@@ -207,9 +207,9 @@ final class ApprovalService
     /**
      * The approved write ran.
      */
-    public function markWritten(int $id, int $writeRunId): bool
+    public function markWritten(int $id, int $writeRunId, ApprovalStatus $status = ApprovalStatus::Written): bool
     {
-        return $this->repository->finish($id, ApprovalStatus::Approved->value, ApprovalStatus::Written->value, '', $writeRunId);
+        return $this->repository->finish($id, ApprovalStatus::Approved->value, $status->value, '', $writeRunId);
     }
 
     /**

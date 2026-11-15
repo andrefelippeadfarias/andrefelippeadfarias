@@ -91,6 +91,7 @@ final class ScreenServices
             $stack->changeLog(),
             new StepLedgerRepository($this->services->db()),
             $this->services->planItems(),
+            $stack->runs(),
         ));
     }
 

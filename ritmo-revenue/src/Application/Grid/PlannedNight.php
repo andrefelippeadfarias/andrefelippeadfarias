@@ -4,11 +4,19 @@ declare(strict_types=1);
 
 namespace Ritmo\Application\Grid;
 
+use Ritmo\Domain\Pricing\RuleInForce;
+
 /**
  * What the last completed run decided for one room night (its plan items for floor, ceiling and
  * minimum stay folded together): the status, the amounts in force and proposed, the percent of
- * the listing base it would send, and the reason. Every field is null for a night it did not price.
- * nowFromListing: the amounts in force are the listing's minimum and maximum (no date rule).
+ * the listing base it would send, the price read and the reason. Every field is null for a night
+ * it did not price. nowFromListing: the amounts in force are the listing's minimum and maximum
+ * (no date rule).
+ *
+ * The direction of a change is the direction of the price a guest pays: the price read within the
+ * floor and ceiling in force, against the same price within the proposed ones (RuleInForce). A
+ * floor raised from the listing minimum while the price itself steps down is a step down. When the
+ * price stays (or none was read), it is the direction of the floor: the range moves.
  */
 final class PlannedNight
 {
@@ -37,6 +45,7 @@ final class PlannedNight
         public readonly ?string $orderId = null,
         public readonly bool $heldAtFloor = false,
         public readonly bool $nowFromListing = false,
+        public readonly ?float $currentPrice = null,
     ) {
     }
 
@@ -70,6 +79,7 @@ final class PlannedNight
             $this->orderId,
             $this->heldAtFloor,
             true,
+            $this->currentPrice,
         );
     }
 
@@ -78,16 +88,47 @@ final class PlannedNight
         return new self();
     }
 
-    /** "up", "down" or "same" for the floor (the price follows it); null when not priced. */
+    /** The price a guest pays now: the price read within the floor and ceiling in force. */
+    public function priceNow(): ?float
+    {
+        return self::sold($this->currentPrice, $this->floorNow, $this->ceilingNow);
+    }
+
+    /** The price a guest pays once the plan is sent: the price read within the proposed floor and ceiling. */
+    public function priceAfter(): ?float
+    {
+        return self::sold($this->currentPrice, $this->floorProposed ?? $this->floorNow, $this->ceilingProposed ?? $this->ceilingNow);
+    }
+
+    /**
+     * "up", "down" or "same" for the price a guest pays (the floor when no price was read); null
+     * when not priced.
+     */
     public function direction(): ?string
     {
+        if ($this->status !== self::WOULD_WRITE) {
+            return null;
+        }
+        $now = $this->priceNow();
+        $next = $this->priceAfter();
+        if ($now !== null && $next !== null && abs($next - $now) >= RuleInForce::MARGIN) {
+            return $next > $now ? 'up' : 'down';
+        }
         $now = $this->floorNow ?? $this->ceilingNow;
         $next = $this->floorProposed ?? $this->ceilingProposed;
-        if ($this->status !== self::WOULD_WRITE || $now === null || $next === null) {
+        if ($now === null || $next === null) {
             return null;
         }
 
         return $next > $now ? 'up' : ($next < $now ? 'down' : 'same');
+    }
+
+    /**
+     * A price read brought within a floor and a ceiling; null without a price read.
+     */
+    public static function sold(?float $price, ?float $floor, ?float $ceiling): ?float
+    {
+        return $price === null ? null : RuleInForce::price($price, $floor, $ceiling);
     }
 
     /** The pace category of the overview: held at the floor counts apart. */

@@ -65,9 +65,47 @@ $ritmo_f = $view['filter'];
     <button type="submit" class="button" data-ritmo="changes-export"><?php esc_html_e('Export CSV', 'ritmo-revenue'); ?></button>
 </form>
 
+<?php if (is_array($view['undo_preview'] ?? null)) : $ritmo_preview = $view['undo_preview']; ?>
+    <section class="ritmo-card ritmo-wide ritmo-confirm" data-ritmo="undo-confirm" aria-labelledby="ritmo-undo-title">
+        <h2 id="ritmo-undo-title"><?php esc_html_e('Undo these changes now?', 'ritmo-revenue'); ?></h2>
+        <?php if ($ritmo_preview['rows'] === []) : ?>
+            <p><?php esc_html_e('There is nothing left to undo in what you ticked: the selection expired or the changes were already undone. Tick them again below.', 'ritmo-revenue'); ?></p>
+        <?php else : ?>
+            <p><?php esc_html_e('The plugin writes the values below back at once, through the same safety checks, whatever the mode. Nothing else changes.', 'ritmo-revenue'); ?></p>
+            <table class="widefat striped ritmo-table">
+                <caption class="screen-reader-text"><?php esc_html_e('What goes back', 'ritmo-revenue'); ?></caption>
+                <thead><tr>
+                    <th scope="col"><?php esc_html_e('Room and night', 'ritmo-revenue'); ?></th>
+                    <th scope="col"><?php esc_html_e('What changed', 'ritmo-revenue'); ?></th>
+                    <th scope="col"><?php esc_html_e('Now → back to', 'ritmo-revenue'); ?></th>
+                </tr></thead>
+                <tbody>
+                <?php foreach ($ritmo_preview['rows'] as $ritmo_row) : ?>
+                    <tr>
+                        <th scope="row" data-label="<?php esc_attr_e('Room and night', 'ritmo-revenue'); ?>"><?php echo esc_html($ritmo_row['room']); ?> · <?php echo esc_html($ritmo_row['night']); ?></th>
+                        <td data-label="<?php esc_attr_e('What changed', 'ritmo-revenue'); ?>"><?php echo esc_html($ritmo_row['what']); ?></td>
+                        <td data-label="<?php esc_attr_e('Now → back to', 'ritmo-revenue'); ?>"><?php View::render('admin/screens/parts/price', ['price' => $ritmo_row['price']]); ?></td>
+                    </tr>
+                <?php endforeach; ?>
+                </tbody>
+            </table>
+            <form method="post" action="<?php echo esc_url(admin_url('admin-post.php')); ?>" class="ritmo-actions">
+                <?php wp_nonce_field('ritmo_undo_request'); ?>
+                <input type="hidden" name="action" value="ritmo_undo_request">
+                <input type="hidden" name="confirmed" value="1">
+                <input type="hidden" name="property_id" value="<?php echo esc_attr($view['property_id']); ?>">
+                <?php foreach ($ritmo_preview['ids'] as $ritmo_id) : ?>
+                    <input type="hidden" name="changes[]" value="<?php echo esc_attr((string) $ritmo_id); ?>">
+                <?php endforeach; ?>
+                <button type="submit" class="button button-primary" data-ritmo="undo-now"><?php esc_html_e('Undo now', 'ritmo-revenue'); ?></button>
+            </form>
+        <?php endif; ?>
+        <p><a href="<?php echo esc_url($view['clear']); ?>"><?php esc_html_e('Cancel: keep the changes', 'ritmo-revenue'); ?></a></p>
+    </section>
+<?php endif; ?>
 <?php if ($view['empty']) : ?>
     <div class="ritmo-empty" data-ritmo="empty">
-        <p><?php esc_html_e('Nothing was written yet. In shadow mode the plugin writes nothing; see what it would do in Nights.', 'ritmo-revenue'); ?></p>
+        <p><?php echo esc_html(($view['shadow'] ?? true) ? __('Nothing was written yet. In shadow mode the plugin writes nothing; see what it would do in Nights.', 'ritmo-revenue') : __('No change was written yet. Approved plans and autonomous runs show up here once they are written.', 'ritmo-revenue')); ?></p>
     </div>
     <?php
     return;
@@ -113,6 +151,6 @@ endif;
         <?php if ($view['paging']['next'] !== '') : ?><a href="<?php echo esc_url($view['paging']['next']); ?>"><?php esc_html_e('Next', 'ritmo-revenue'); ?></a><?php endif; ?>
     </p>
     <?php if ($view['can_undo']) : ?>
-        <p><button type="submit" class="button" data-ritmo="undo-prepare"><?php esc_html_e('Prepare the undo of the ticked changes', 'ritmo-revenue'); ?></button></p>
+        <p><button type="submit" class="button" data-ritmo="undo-prepare"><?php esc_html_e('Undo the ticked changes…', 'ritmo-revenue'); ?></button> <span class="ritmo-muted"><?php esc_html_e('You will see what goes back before anything is written.', 'ritmo-revenue'); ?></span></p>
     <?php endif; ?>
 </form>

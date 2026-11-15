@@ -18,7 +18,7 @@ final class NightDetail
      * @param list<array{ref: string, channel: string, units: int}>    $bookings
      * @param list<ChangeRecord>                                          $changes   newest first
      * @param list<array<string, mixed>>                                  $steps     pace steps, newest first
-     * @param list<array{run_id: int, status: string, reason: string}>    $decisions newest first
+     * @param list<array{run_id: int, status: string, reason: string, mode: string|null, written: bool}> $decisions newest first
      */
     public function __construct(
         public readonly NightCell $cell,

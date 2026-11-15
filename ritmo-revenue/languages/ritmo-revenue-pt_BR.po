@@ -24,13 +24,13 @@ msgid "The confirmation does not match: type %s to confirm."
 msgstr "A confirmação não confere: digite %s para confirmar."
 
 #. translators: %s: a reference such as E-1a2b3c4d
-#: src/Admin/Components/ErrorText.php:47
+#: src/Admin/Components/ErrorText.php:52
 msgid "Something went wrong. Nothing was changed. Reference %s"
 msgstr "Algo deu errado. Nada foi alterado. Referência %s"
 
 #. translators: %d: the longest text allowed
 #. translators: %d: maximum number of characters
-#: src/Admin/Components/Input.php:51 src/Admin/Components/Input.php:66 src/Admin/Market/MarketText.php:89
+#: src/Admin/Components/Input.php:51 src/Admin/Components/Input.php:66 src/Admin/Market/MarketText.php:96
 msgid "A text here has at most %d characters."
 msgstr "Um texto aqui tem no máximo %d caracteres."
 
@@ -82,7 +82,7 @@ msgstr "Rodada iniciada por uma pessoa"
 msgid "Approved write"
 msgstr "Gravação aprovada"
 
-#: src/Admin/Components/Labels.php:46 src/Admin/Components/Labels.php:146 src/Admin/Screens/ApprovalsScreen.php:281 src/Admin/Screens/NightDetailView.php:160 templates/admin/screens/changes.php:86 templates/admin/screens/changes.php:97
+#: src/Admin/Components/Labels.php:46 src/Admin/Components/Labels.php:163 src/Admin/Screens/ApprovalsScreen.php:284 src/Admin/Screens/NightDetailView.php:163 templates/admin/screens/changes.php:124 templates/admin/screens/changes.php:135
 msgid "Undo"
 msgstr "Desfazer"
 
@@ -102,7 +102,7 @@ msgstr "falhou"
 msgid "stopped"
 msgstr "interrompida"
 
-#: src/Admin/Components/Labels.php:58 src/Admin/Components/Labels.php:132 src/Admin/Screens/NightDetailView.php:148
+#: src/Admin/Components/Labels.php:58 src/Admin/Components/Labels.php:147
 msgid "refused"
 msgstr "recusada"
 
@@ -150,11 +150,11 @@ msgstr "Escrevendo o relatório"
 msgid "Starting"
 msgstr "Começando"
 
-#: src/Admin/Components/Labels.php:84 templates/admin/screens/nights.php:220
+#: src/Admin/Components/Labels.php:84 templates/admin/screens/nights.php:222
 msgid "ahead of pace"
 msgstr "à frente do ritmo"
 
-#: src/Admin/Components/Labels.php:85 src/Admin/ReasonText.php:176 src/Admin/Reports/ReportsText.php:41 templates/admin/screens/nights.php:221
+#: src/Admin/Components/Labels.php:85 src/Admin/ReasonText.php:192 src/Admin/Reports/ReportsText.php:41 templates/admin/screens/nights.php:223
 msgid "on pace"
 msgstr "no ritmo"
 
@@ -174,7 +174,7 @@ msgstr "segurado no piso"
 msgid "no pace measured"
 msgstr "ritmo não medido"
 
-#: src/Admin/Components/Labels.php:110 templates/admin/screens/overview.php:126
+#: src/Admin/Components/Labels.php:110 templates/admin/screens/overview.php:130
 msgid "Critical"
 msgstr "Crítico"
 
@@ -198,140 +198,164 @@ msgstr "reconhecido"
 msgid "resolved"
 msgstr "resolvido"
 
-#: src/Admin/Components/Labels.php:130
+#: src/Admin/Components/Labels.php:134
+msgid "Standard (most inns)"
+msgstr "Padrão (a maioria das pousadas)"
+
+#: src/Admin/Components/Labels.php:135
+msgid "Premium (above most of the market)"
+msgstr "Premium (acima da maior parte do mercado)"
+
+#: src/Admin/Components/Labels.php:136
+msgid "Superior"
+msgstr "Superior"
+
+#: src/Admin/Components/Labels.php:137
+msgid "Economy (below most of the market)"
+msgstr "Econômico (abaixo da maior parte do mercado)"
+
+#: src/Admin/Components/Labels.php:145
 msgid "waiting for approval"
 msgstr "aguardando aprovação"
 
-#: src/Admin/Components/Labels.php:131
+#: src/Admin/Components/Labels.php:146
 msgid "approved, being written"
 msgstr "aprovado, sendo gravado"
 
-#: src/Admin/Components/Labels.php:133
+#: src/Admin/Components/Labels.php:148
 msgid "expired"
 msgstr "expirado"
 
-#: src/Admin/Components/Labels.php:134
+#: src/Admin/Components/Labels.php:149
 msgid "replaced by a newer plan"
 msgstr "substituído por um plano mais novo"
 
-#: src/Admin/Components/Labels.php:135
+#: src/Admin/Components/Labels.php:150 src/Admin/Screens/NightDetailView.php:149
 msgid "written"
 msgstr "gravado"
 
-#: src/Admin/Components/Labels.php:136
+#: src/Admin/Components/Labels.php:151
+msgid "written in part: some approved nights were left out (see the run report)"
+msgstr "gravado em parte: algumas noites aprovadas ficaram de fora (veja o relatório da rodada)"
+
+#: src/Admin/Components/Labels.php:152
+msgid "not written: the write failed (see the alerts)"
+msgstr "não gravado: a gravação falhou (veja os alertas)"
+
+#: src/Admin/Components/Labels.php:153
 msgid "not written: the nights changed before the write"
 msgstr "não gravado: as noites mudaram antes da gravação"
 
-#: src/Admin/Components/Labels.php:144 src/Admin/Screens/ApprovalsScreen.php:283
+#: src/Admin/Components/Labels.php:161 src/Admin/Screens/ApprovalsScreen.php:286
 msgid "Plan"
 msgstr "Plano"
 
-#: src/Admin/Components/Labels.php:145 src/Admin/Screens/ApprovalsScreen.php:282
+#: src/Admin/Components/Labels.php:162 src/Admin/Screens/ApprovalsScreen.php:285
 msgid "Listing change"
 msgstr "Mudança do anúncio"
 
-#: src/Admin/Components/Labels.php:154
+#: src/Admin/Components/Labels.php:171
 msgid "the PMS"
 msgstr "o PMS"
 
-#: src/Admin/Components/Labels.php:155
+#: src/Admin/Components/Labels.php:172
 msgid "the pricing system"
 msgstr "o sistema de preços"
 
-#: src/Admin/Components/Labels.php:156
+#: src/Admin/Components/Labels.php:173
 msgid "the listing"
 msgstr "o anúncio"
 
-#: src/Admin/Components/Labels.php:165 src/Admin/Screens/ApprovalsScreen.php:184 src/Admin/Screens/NightsScreen.php:160 src/Admin/Screens/WizardView.php:285
+#: src/Admin/Components/Labels.php:182 src/Admin/Screens/ApprovalsScreen.php:187 src/Admin/Screens/NightsScreen.php:162 src/Admin/Screens/WizardView.php:285
 msgid "floor"
 msgstr "piso"
 
-#: src/Admin/Components/Labels.php:166
+#: src/Admin/Components/Labels.php:183
 msgid "fixed floor"
 msgstr "piso fixo"
 
-#: src/Admin/Components/Labels.php:167 src/Admin/Screens/ApprovalsScreen.php:188 src/Admin/Screens/NightsScreen.php:161
+#: src/Admin/Components/Labels.php:184 src/Admin/Screens/ApprovalsScreen.php:191 src/Admin/Screens/NightsScreen.php:163
 msgid "ceiling"
 msgstr "teto"
 
-#: src/Admin/Components/Labels.php:168
+#: src/Admin/Components/Labels.php:185
 msgid "fixed ceiling"
 msgstr "teto fixo"
 
-#: src/Admin/Components/Labels.php:169
+#: src/Admin/Components/Labels.php:186
 msgid "fixed price"
 msgstr "preço fixo"
 
-#: src/Admin/Components/Labels.php:170
+#: src/Admin/Components/Labels.php:187
 msgid "validity of the date rule"
 msgstr "validade da regra de data"
 
-#: src/Admin/Components/Labels.php:171 src/Admin/Editors/OrdersScreen.php:135 src/Admin/Screens/NightsScreen.php:162
+#: src/Admin/Components/Labels.php:188 src/Admin/Editors/OrdersScreen.php:135 src/Admin/Screens/NightsScreen.php:164
 msgid "minimum stay"
 msgstr "estadia mínima"
 
-#: src/Admin/Components/Labels.php:172 src/Admin/Editors/OrdersScreen.php:136
+#: src/Admin/Components/Labels.php:189 src/Admin/Editors/OrdersScreen.php:136
 msgid "maximum stay"
 msgstr "estadia máxima"
 
-#: src/Admin/Components/Labels.php:173
+#: src/Admin/Components/Labels.php:190
 msgid "arrival"
 msgstr "chegada"
 
-#: src/Admin/Components/Labels.php:174
+#: src/Admin/Components/Labels.php:191
 msgid "departure"
 msgstr "saída"
 
-#: src/Admin/Components/Labels.php:175
+#: src/Admin/Components/Labels.php:192
 msgid "arrival and departure rule"
 msgstr "regra de chegada e saída"
 
-#: src/Admin/Components/Labels.php:176 src/Admin/Editors/OrdersScreen.php:139
+#: src/Admin/Components/Labels.php:193 src/Admin/Editors/OrdersScreen.php:139
 msgid "availability"
 msgstr "disponibilidade"
 
-#: src/Admin/Components/Labels.php:177
+#: src/Admin/Components/Labels.php:194
 msgid "date rule"
 msgstr "regra de data"
 
-#: src/Admin/Components/Labels.php:178 src/Admin/ReasonText.php:186
+#: src/Admin/Components/Labels.php:195 src/Admin/ReasonText.php:202
 msgid "listing minimum"
 msgstr "mínimo do anúncio"
 
-#: src/Admin/Components/Labels.php:179
+#: src/Admin/Components/Labels.php:196
 msgid "listing base"
 msgstr "preço base do anúncio"
 
-#: src/Admin/Components/Labels.php:180
+#: src/Admin/Components/Labels.php:197
 msgid "listing maximum"
 msgstr "máximo do anúncio"
 
-#: src/Admin/Components/Labels.php:181
+#: src/Admin/Components/Labels.php:198
 msgid "channel limit"
 msgstr "limite por canal"
 
-#: src/Admin/Components/Labels.php:188
+#: src/Admin/Components/Labels.php:205
 msgid "weekday night"
 msgstr "noite de semana"
 
-#: src/Admin/Components/Labels.php:189
+#: src/Admin/Components/Labels.php:206
 msgid "weekend night"
 msgstr "noite de fim de semana"
 
-#: src/Admin/Components/Labels.php:190
+#: src/Admin/Components/Labels.php:207
 msgid "holiday night"
 msgstr "noite de feriado"
 
-#: src/Admin/Components/Labels.php:197 src/Admin/Screens/DiagnosticsView.php:189
+#: src/Admin/Components/Labels.php:214 src/Admin/Screens/DiagnosticsView.php:250
 msgid "other"
 msgstr "outro"
 
-#: src/Admin/Components/Menu.php:52 src/Admin/Screens/OverviewScreen.php:33
+#: src/Admin/Components/Menu.php:52 src/Admin/Screens/OverviewScreen.php:34
 msgid "Overview"
 msgstr "Visão geral"
 
 #. translators: the name or the explanation of a setting of the rules
-#: src/Admin/Components/Menu.php:53 src/Admin/Screens/AlertText.php:131 src/Admin/Screens/NightsScreen.php:36 templates/admin/editors/calendar.php:84 templates/admin/editors/calendar.php:96 templates/admin/editors/orders.php:102 templates/admin/editors/orders.php:107 templates/admin/editors/orders.php:146 templates/admin/editors/orders.php:156 templates/admin/screens/nights.php:36 src/Domain/Config/Schema.php
+#: src/Admin/Components/Menu.php:53 src/Admin/Screens/AlertText.php:131 src/Admin/Screens/DiagnosticsView.php:199 src/Admin/Screens/NightsScreen.php:36 templates/admin/editors/calendar.php:84 templates/admin/editors/calendar.php:96 templates/admin/editors/orders.php:118 templates/admin/editors/orders.php:123 templates/admin/editors/orders.php:162 templates/admin/editors/orders.php:172 templates/admin/screens/nights.php:36 src/Domain/Config/Schema.php
 msgid "Nights"
 msgstr "Noites"
 
@@ -356,7 +380,7 @@ msgstr "Alertas"
 msgid "To-do"
 msgstr "Pendências"
 
-#: src/Admin/Components/Menu.php:60 src/Admin/Screens/ChangesScreen.php:37 templates/admin/screens/operations.php:66
+#: src/Admin/Components/Menu.php:60 src/Admin/Screens/ChangesScreen.php:40 templates/admin/screens/operations.php:66
 msgid "Change log"
 msgstr "Registro de mudanças"
 
@@ -386,7 +410,7 @@ msgstr "Operação"
 msgid "Settings"
 msgstr "Configurações"
 
-#: src/Admin/Components/Menu.php:67 src/Admin/Editors/VersionsView.php:78
+#: src/Admin/Components/Menu.php:67 src/Admin/Editors/VersionsView.php:80
 msgid "Setup"
 msgstr "Configuração"
 
@@ -406,7 +430,7 @@ msgstr "Diagnóstico"
 msgid "Uninstall"
 msgstr "Desinstalar"
 
-#: src/Admin/Components/Menu.php:85 src/Admin/Components/Menu.php:87 src/Admin/Screens/OperationsText.php:61 src/Admin/Screens/TodoScreen.php:65
+#: src/Admin/Components/Menu.php:85 src/Admin/Components/Menu.php:87 src/Admin/Screens/OperationsText.php:63 src/Admin/Screens/TodoScreen.php:65
 msgid "Ritmo Revenue"
 msgstr "Ritmo Revenue"
 
@@ -437,16 +461,16 @@ msgid "j M"
 msgstr "j M"
 
 #. translators: %s: a duration such as "12 minutes"
-#: src/Admin/Components/NightDate.php:81
+#: src/Admin/Components/NightDate.php:87
 msgid "%s ago"
 msgstr "há %s"
 
 #. translators: %s: a duration such as "3 hours"
-#: src/Admin/Components/NightDate.php:83
+#: src/Admin/Components/NightDate.php:89
 msgid "in %s"
 msgstr "em %s"
 
-#: src/Admin/Components/Paging.php:45 src/Admin/Editors/ValueText.php:98 src/Admin/Screens/ChangesScreen.php:152 templates/admin/editors/calendar.php:98 templates/admin/editors/calendar.php:99
+#: src/Admin/Components/Paging.php:45 src/Admin/Editors/ValueText.php:98 src/Admin/Screens/ChangesScreen.php:230 src/Admin/Screens/NightDetailView.php:194 templates/admin/editors/calendar.php:98 templates/admin/editors/calendar.php:99
 msgid "none"
 msgstr "nenhum"
 
@@ -487,7 +511,7 @@ msgstr "de %1$s a %2$s"
 msgid "not set"
 msgstr "não definido"
 
-#: src/Admin/Components/PrivacyGuard.php:37 src/Admin/Editors/EditorText.php:43 src/Admin/Market/MarketText.php:90
+#: src/Admin/Components/PrivacyGuard.php:37 src/Admin/Editors/EditorText.php:43 src/Admin/Market/MarketText.php:97
 msgid "Do not write guest names, e-mails, phone numbers or document numbers here. Refer to a booking by its id."
 msgstr "Não escreva aqui nomes, e-mails, telefones nem documentos de hóspedes. Cite uma reserva pelo número dela."
 
@@ -872,7 +896,7 @@ msgstr "Alguém mudou estas noites à mão: o plugin não mexe nelas por alguns 
 msgid "Leave these nights alone"
 msgstr "Não mexer nestas noites"
 
-#: src/Admin/Editors/OrderText.php:46 src/Admin/Editors/OrdersActions.php:119
+#: src/Admin/Editors/OrderText.php:46 src/Admin/Editors/OrdersActions.php:121
 msgid "Minimum price"
 msgstr "Preço mínimo"
 
@@ -936,7 +960,7 @@ msgstr "Uma mudança dos quartos à venda no PMS."
 msgid "A change of a setting of the pricing system."
 msgstr "Uma mudança de uma configuração do sistema de preços."
 
-#: src/Admin/Editors/OrderText.php:77 templates/admin/editors/orders.php:44
+#: src/Admin/Editors/OrderText.php:77 templates/admin/editors/orders.php:59
 msgid "All rooms"
 msgstr "Todos os quartos"
 
@@ -955,91 +979,91 @@ msgstr "Preço no percentil de mercado %1$s, nunca abaixo de %2$s nas noites fra
 msgid "%1$s for %2$s"
 msgstr "%1$s para %2$s"
 
-#: src/Admin/Editors/OrdersActions.php:58
+#: src/Admin/Editors/OrdersActions.php:59
 msgid "The order was not saved: correct the values marked below."
 msgstr "A ordem não foi salva: corrija os valores marcados abaixo."
 
-#: src/Admin/Editors/OrdersActions.php:66
+#: src/Admin/Editors/OrdersActions.php:68
 msgid "Order saved. It applies from the next run."
 msgstr "Ordem salva. Ela vale a partir da próxima rodada."
 
-#: src/Admin/Editors/OrdersActions.php:78
+#: src/Admin/Editors/OrdersActions.php:80
 msgid "Order ended. The next run no longer follows it."
 msgstr "Ordem encerrada. A próxima rodada não segue mais essa ordem."
 
-#: src/Admin/Editors/OrdersActions.php:92
+#: src/Admin/Editors/OrdersActions.php:94
 msgid "Tick the box to confirm you understand the plugin may change these nights again."
 msgstr "Marque a caixa para confirmar que você entende que o plugin pode voltar a mudar estas noites."
 
-#: src/Admin/Editors/OrdersActions.php:98
+#: src/Admin/Editors/OrdersActions.php:100
 msgid "Released: the plugin may change these nights again from the next run."
 msgstr "Liberadas: o plugin pode voltar a mudar estas noites a partir da próxima rodada."
 
-#: src/Admin/Editors/OrdersActions.php:112
+#: src/Admin/Editors/OrdersActions.php:114
 msgid "Kind of order"
 msgstr "Tipo de ordem"
 
 #. translators: the name or the explanation of a setting of the rules
-#: src/Admin/Editors/OrdersActions.php:113 src/Admin/Reports/ReportsScreen.php:48 src/Admin/Screens/WizardView.php:80 templates/admin/editors/orders.php:43 templates/admin/editors/orders.php:145 templates/admin/editors/orders.php:155 templates/admin/screens/nights.php:61 templates/admin/screens/wizard/rooms.php:15 src/Domain/Config/Schema.php
+#: src/Admin/Editors/OrdersActions.php:115 src/Admin/Reports/ReportsScreen.php:48 src/Admin/Screens/DiagnosticsView.php:198 src/Admin/Screens/WizardView.php:80 templates/admin/editors/orders.php:57 templates/admin/editors/orders.php:161 templates/admin/editors/orders.php:171 templates/admin/screens/nights.php:61 templates/admin/screens/wizard/rooms.php:15 src/Domain/Config/Schema.php
 msgid "Rooms"
 msgstr "Quartos"
 
 #. translators: the name or the explanation of a setting of the rules
-#: src/Admin/Editors/OrdersActions.php:114 templates/admin/editors/calendar.php:131 templates/admin/editors/orders.php:49 src/Domain/Config/Schema.php
+#: src/Admin/Editors/OrdersActions.php:116 templates/admin/editors/calendar.php:131 templates/admin/editors/orders.php:64 src/Domain/Config/Schema.php
 msgid "First night"
 msgstr "Primeira noite"
 
 #. translators: the name or the explanation of a setting of the rules
-#: src/Admin/Editors/OrdersActions.php:115 templates/admin/editors/orders.php:50 src/Domain/Config/Schema.php
+#: src/Admin/Editors/OrdersActions.php:117 templates/admin/editors/orders.php:65 src/Domain/Config/Schema.php
 msgid "Last night"
 msgstr "Última noite"
 
-#: src/Admin/Editors/OrdersActions.php:116
+#: src/Admin/Editors/OrdersActions.php:118
 msgid "Only these nights"
 msgstr "Só estas noites"
 
-#: src/Admin/Editors/OrdersActions.php:117
+#: src/Admin/Editors/OrdersActions.php:119
 msgid "Market percentile"
 msgstr "Percentil de mercado"
 
-#: src/Admin/Editors/OrdersActions.php:118 templates/admin/editors/orders.php:67
+#: src/Admin/Editors/OrdersActions.php:120 templates/admin/editors/orders.php:82
 msgid "What it allows"
 msgstr "O que ela libera"
 
 #. translators: the name or the explanation of a setting of the rules
-#: src/Admin/Editors/OrdersActions.php:120 templates/admin/editors/orders.php:144 templates/admin/editors/orders.php:154 src/Domain/Config/Schema.php
+#: src/Admin/Editors/OrdersActions.php:122 templates/admin/editors/orders.php:160 templates/admin/editors/orders.php:170 src/Domain/Config/Schema.php
 msgid "Order"
 msgstr "Ordem"
 
-#: src/Admin/Editors/OrdersActions.php:123
+#: src/Admin/Editors/OrdersActions.php:125
 msgid "the last night is before the first night."
 msgstr "a última noite vem antes da primeira."
 
-#: src/Admin/Editors/OrdersActions.php:124
+#: src/Admin/Editors/OrdersActions.php:126
 msgid "type a market percentile from 0 to 110."
 msgstr "digite um percentil de mercado de 0 a 110."
 
-#: src/Admin/Editors/OrdersActions.php:124
+#: src/Admin/Editors/OrdersActions.php:126
 msgid "an order covers at most a year."
 msgstr "uma ordem cobre no máximo um ano."
 
-#: src/Admin/Editors/OrdersActions.php:125
+#: src/Admin/Editors/OrdersActions.php:127
 msgid "each line is a date."
 msgstr "cada linha é uma data."
 
-#: src/Admin/Editors/OrdersActions.php:125
+#: src/Admin/Editors/OrdersActions.php:127
 msgid "type an amount above zero."
 msgstr "digite um valor acima de zero."
 
-#: src/Admin/Editors/OrdersActions.php:126
+#: src/Admin/Editors/OrdersActions.php:128
 msgid "this kind of order cannot allow that."
 msgstr "este tipo de ordem não pode liberar isso."
 
-#: src/Admin/Editors/OrdersActions.php:126
+#: src/Admin/Editors/OrdersActions.php:128
 msgid "choose what the order does."
 msgstr "escolha o que a ordem faz."
 
-#: src/Admin/Editors/OrdersActions.php:127
+#: src/Admin/Editors/OrdersActions.php:129
 msgid "give a value."
 msgstr "informe um valor."
 
@@ -1353,7 +1377,7 @@ msgid "Floors and price plans"
 msgstr "Pisos e planos de preço"
 
 #. translators: the name or the explanation of a setting of the rules
-#: src/Admin/Editors/RulesScreen.php:54 src/Admin/ReasonText.php:45 src/Domain/Config/Schema.php
+#: src/Admin/Editors/RulesScreen.php:54 src/Admin/ReasonText.php:51 src/Domain/Config/Schema.php
 msgid "Sales ladder"
 msgstr "Escada de vendas"
 
@@ -1457,30 +1481,47 @@ msgid_plural "%d settings"
 msgstr[0] "%d configuração"
 msgstr[1] "%d configurações"
 
-#: src/Admin/Editors/VersionsView.php:65
+#: src/Admin/Editors/VersionsView.php:67
 msgid "The plugin"
 msgstr "O plugin"
 
-#: src/Admin/Editors/VersionsView.php:69
+#: src/Admin/Editors/VersionsView.php:71
 msgid "A person no longer on this site"
 msgstr "Uma pessoa que não está mais neste site"
 
 #. translators: %d: the version restored
-#: src/Admin/Editors/VersionsView.php:76
+#: src/Admin/Editors/VersionsView.php:78
 msgid "Restored"
 msgstr "Restaurada"
 
-#: src/Admin/Editors/VersionsView.php:76
+#: src/Admin/Editors/VersionsView.php:78
 msgid "Restored from version %d"
 msgstr "Restaurada da versão %d"
 
-#: src/Admin/Editors/VersionsView.php:77 templates/admin/screens/wizard/rules.php:24
+#: src/Admin/Editors/VersionsView.php:79 templates/admin/screens/wizard/rules.php:24
 msgid "Preset file"
 msgstr "Arquivo de modelo de regras"
 
-#: src/Admin/Editors/VersionsView.php:79
+#: src/Admin/Editors/VersionsView.php:81
 msgid "Rules screen"
 msgstr "Tela de regras"
+
+#: src/Admin/Editors/VersionsView.php:95
+msgid "Neutral defaults, stored at activation"
+msgstr "Padrões neutros, guardados na ativação"
+
+#: src/Admin/Editors/VersionsView.php:96
+msgid "Setup wizard"
+msgstr "Assistente de configuração"
+
+#: src/Admin/Editors/VersionsView.php:97
+msgid "Setup wizard: safety limits confirmed"
+msgstr "Assistente de configuração: limites de segurança confirmados"
+
+#. translators: %s: name of the preset file
+#: src/Admin/Editors/VersionsView.php:99
+msgid "Imported preset: %s"
+msgstr "Preset importado: %s"
 
 #: src/Admin/Market/MarketActions.php:80 src/Rest/Market/MarketEndpoints.php:87
 msgid "Competitor saved; the market by night was updated."
@@ -1519,7 +1560,7 @@ msgstr[1] "%1$d preços registrados; valores de mercado atualizados para %2$d no
 msgid "Import cancelled: nothing was imported."
 msgstr "Importação cancelada: nada foi importado."
 
-#: src/Admin/Market/MarketActions.php:203 src/Admin/Market/MarketText.php:85 src/Admin/Reports/ReportsActions.php:124
+#: src/Admin/Market/MarketActions.php:203 src/Admin/Market/MarketText.php:92 src/Admin/Reports/ReportsActions.php:124
 msgid "Choose an existing property."
 msgstr "Escolha uma propriedade que exista."
 
@@ -1544,578 +1585,640 @@ msgid "Export"
 msgstr "Exportar"
 
 #. translators: 1: column name, 2: what is wrong
-#: src/Admin/Market/MarketText.php:33 src/Admin/Market/MarketText.php:174
+#: src/Admin/Market/MarketText.php:34 src/Admin/Market/MarketText.php:182
 msgid "Column %1$s: %2$s"
 msgstr "Coluna %1$s: %2$s"
 
 #. translators: %d: line of the file
-#: src/Admin/Market/MarketText.php:37
+#: src/Admin/Market/MarketText.php:38
 msgid "Line %d"
 msgstr "Linha %d"
 
 #. translators: 1: line of the file, 2: column name
-#: src/Admin/Market/MarketText.php:39
+#: src/Admin/Market/MarketText.php:40
 msgid "Line %1$d, column %2$s"
 msgstr "Linha %1$d, coluna %2$s"
 
+#: src/Admin/Market/MarketText.php:43
+msgid "(value hidden: it looks like personal data, which is never kept)"
+msgstr "(valor escondido: parece dado pessoal, que nunca é guardado)"
+
 #. translators: %s: the cell as typed
-#: src/Admin/Market/MarketText.php:40
+#: src/Admin/Market/MarketText.php:45
 msgid "(\"%s\")"
 msgstr "(\"%s\")"
 
-#: src/Admin/Market/MarketText.php:48
+#: src/Admin/Market/MarketText.php:54
 msgid "this required column is missing."
 msgstr "esta coluna obrigatória está faltando."
 
-#: src/Admin/Market/MarketText.php:49
+#: src/Admin/Market/MarketText.php:55
 msgid "the file is not text the plugin can read. Save it as UTF-8 and try again."
 msgstr "o arquivo não é um texto que o plugin consiga ler. Salve-o como UTF-8 e tente de novo."
 
-#: src/Admin/Market/MarketText.php:50
+#: src/Admin/Market/MarketText.php:56
 msgid "the file has more rows than allowed. Split it into smaller files."
 msgstr "o arquivo tem mais linhas que o permitido. Divida-o em arquivos menores."
 
-#: src/Admin/Market/MarketText.php:51
+#: src/Admin/Market/MarketText.php:57
 msgid "the file has more than 50 columns."
 msgstr "o arquivo tem mais de 50 colunas."
 
-#: src/Admin/Market/MarketText.php:52
+#: src/Admin/Market/MarketText.php:58
 msgid "the file is larger than allowed."
 msgstr "o arquivo é maior que o permitido."
 
-#: src/Admin/Market/MarketText.php:53
+#: src/Admin/Market/MarketText.php:59
 msgid "this is not a CSV text file."
 msgstr "este não é um arquivo de texto CSV."
 
-#: src/Admin/Market/MarketText.php:54
+#: src/Admin/Market/MarketText.php:60
 msgid "the file is empty or could not be uploaded."
 msgstr "o arquivo está vazio ou não pôde ser enviado."
 
-#: src/Admin/Market/MarketText.php:55
+#: src/Admin/Market/MarketText.php:61
 msgid "this file was already imported."
 msgstr "este arquivo já foi importado."
 
-#: src/Admin/Market/MarketText.php:56
+#: src/Admin/Market/MarketText.php:62
 msgid "no competitor of this property has this name or code."
 msgstr "nenhum concorrente desta propriedade tem este nome ou código."
 
-#: src/Admin/Market/MarketText.php:57
+#: src/Admin/Market/MarketText.php:63
 msgid "the date is not a date written as YYYY-MM-DD."
 msgstr "a data não está escrita como AAAA-MM-DD."
 
-#: src/Admin/Market/MarketText.php:58
+#: src/Admin/Market/MarketText.php:64
 msgid "the check-out must be after the check-in."
 msgstr "a saída precisa ser depois da chegada."
 
-#: src/Admin/Market/MarketText.php:59
+#: src/Admin/Market/MarketText.php:65
 msgid "the stay is longer than allowed."
 msgstr "a estadia é mais longa que o permitido."
 
-#: src/Admin/Market/MarketText.php:60
+#: src/Admin/Market/MarketText.php:66
 msgid "the stay has already started; past prices are not imported."
 msgstr "a estadia já começou; preços passados não são importados."
 
-#: src/Admin/Market/MarketText.php:61
-msgid "the price is not a number above zero (such as 480 or 480.50, without thousands separators)."
-msgstr "o preço não é um número acima de zero (como 480 ou 480.50, sem separador de milhar)."
+#. translators: %s: an example amount with cents, in the reader's format
+#: src/Admin/Market/MarketText.php:68
+msgid "the price is not a number above zero (such as 480 or %s, without thousands separators)."
+msgstr "o preço não é um número acima de zero (como 480 ou %s, sem separador de milhar)."
 
-#: src/Admin/Market/MarketText.php:62
+#: src/Admin/Market/MarketText.php:69
 msgid "the price basis is \"total\" or \"per_night\"."
 msgstr "a base do preço é \"total\" ou \"per_night\"."
 
-#: src/Admin/Market/MarketText.php:63
+#: src/Admin/Market/MarketText.php:70
 msgid "the room is \"cheapest\" or \"comparable\"."
 msgstr "o quarto é \"cheapest\" ou \"comparable\"."
 
-#: src/Admin/Market/MarketText.php:64
+#: src/Admin/Market/MarketText.php:71
 msgid "the currency is a three-letter code, such as BRL."
 msgstr "a moeda é um código de três letras, como BRL."
 
-#: src/Admin/Market/MarketText.php:65
+#: src/Admin/Market/MarketText.php:72
 msgid "the price is in another currency than the property's."
 msgstr "o preço está em outra moeda que não a da propriedade."
 
-#: src/Admin/Market/MarketText.php:66
+#: src/Admin/Market/MarketText.php:73
 msgid "the capture date is not a date or a date and time."
 msgstr "a data da coleta não é uma data nem uma data com hora."
 
-#: src/Admin/Market/MarketText.php:67
+#: src/Admin/Market/MarketText.php:74
 msgid "the capture date is in the future."
 msgstr "a data da coleta está no futuro."
 
-#: src/Admin/Market/MarketText.php:68
+#: src/Admin/Market/MarketText.php:75
 msgid "available is 1 or 0, yes or no."
 msgstr "disponível é 1 ou 0, sim ou não."
 
-#: src/Admin/Market/MarketText.php:69
+#: src/Admin/Market/MarketText.php:76
 msgid "the source is a short word of lowercase letters and digits."
 msgstr "a fonte é uma palavra curta de letras minúsculas e números."
 
-#: src/Admin/Market/MarketText.php:70
+#: src/Admin/Market/MarketText.php:77
 msgid "a cell is longer than 1000 characters."
 msgstr "uma célula tem mais de 1000 caracteres."
 
-#: src/Admin/Market/MarketText.php:71
+#: src/Admin/Market/MarketText.php:78
 msgid "the line has characters the plugin cannot read."
 msgstr "a linha tem caracteres que o plugin não consegue ler."
 
-#: src/Admin/Market/MarketText.php:72
+#: src/Admin/Market/MarketText.php:79
 msgid "the price is older than the prices that count; it is kept for history only."
 msgstr "o preço é mais antigo que os preços que contam; ele é guardado só como histórico."
 
-#: src/Admin/Market/MarketText.php:73
+#: src/Admin/Market/MarketText.php:80
 msgid "the same price appears again later in the file; the later line was kept."
 msgstr "o mesmo preço aparece de novo mais adiante no arquivo; a linha de baixo foi a que ficou."
 
-#: src/Admin/Market/MarketText.php:74
+#: src/Admin/Market/MarketText.php:81
 msgid "no capture date: the time of the import was used."
 msgstr "sem data de coleta: foi usado o horário da importação."
 
-#: src/Admin/Market/MarketText.php:75
+#: src/Admin/Market/MarketText.php:82
 msgid "this column is not used and was ignored."
 msgstr "esta coluna não é usada e foi ignorada."
 
-#: src/Admin/Market/MarketText.php:76
+#: src/Admin/Market/MarketText.php:83
 msgid "not imported: the plugin never stores guest data."
 msgstr "não importado: o plugin nunca guarda dados de hóspedes."
 
-#: src/Admin/Market/MarketText.php:77
+#: src/Admin/Market/MarketText.php:84
 msgid "this column appears twice; the second one was ignored."
 msgstr "esta coluna aparece duas vezes; a segunda foi ignorada."
 
-#: src/Admin/Market/MarketText.php:78
+#: src/Admin/Market/MarketText.php:85
 msgid "this value cannot be read."
 msgstr "este valor não pode ser lido."
 
-#: src/Admin/Market/MarketText.php:86
+#: src/Admin/Market/MarketText.php:93
 msgid "That competitor does not exist."
 msgstr "Esse concorrente não existe."
 
-#: src/Admin/Market/MarketText.php:87
+#: src/Admin/Market/MarketText.php:94
 msgid "Give the competitor a name."
 msgstr "Dê um nome ao concorrente."
 
-#: src/Admin/Market/MarketText.php:91
+#: src/Admin/Market/MarketText.php:98
 msgid "A code has lowercase letters, digits and dashes."
 msgstr "Um código tem letras minúsculas, números e hífens."
 
-#: src/Admin/Market/MarketText.php:92
+#: src/Admin/Market/MarketText.php:99
 msgid "Another competitor already has this code."
 msgstr "Outro concorrente já tem este código."
 
-#: src/Admin/Market/MarketText.php:93
+#: src/Admin/Market/MarketText.php:100
 msgid "A tag is a short lowercase word, such as peer."
 msgstr "Uma etiqueta é uma palavra curta em minúsculas, como peer."
 
-#: src/Admin/Market/MarketText.php:94
-msgid "The factor is a number above 0 and at most 10, such as 1.4."
-msgstr "O fator é um número acima de 0 e no máximo 10, como 1.4."
+#. translators: %s: an example factor, in the reader's format
+#: src/Admin/Market/MarketText.php:102
+msgid "The factor is a number above 0 and at most 10, such as %s."
+msgstr "O fator é um número acima de 0 e no máximo 10, como %s."
 
-#: src/Admin/Market/MarketText.php:95
+#: src/Admin/Market/MarketText.php:103
 msgid "The rating is a number from 0 to 10."
 msgstr "A nota é um número de 0 a 10."
 
 #. translators: %s: date of the earlier import
-#: src/Admin/Market/MarketText.php:97
+#: src/Admin/Market/MarketText.php:105
 msgid "This file was already imported on %s. Nothing was imported."
 msgstr "Este arquivo já foi importado em %s. Nada foi importado."
 
-#: src/Admin/Market/MarketText.php:99
+#: src/Admin/Market/MarketText.php:107
 msgid "No valid row is left to import. Nothing was imported."
 msgstr "Não sobrou nenhuma linha válida para importar. Nada foi importado."
 
-#: src/Admin/Market/MarketText.php:100
+#: src/Admin/Market/MarketText.php:108
 msgid "The preview is no longer available (it lasts 30 minutes). Upload the file again."
 msgstr "A prévia não está mais disponível (ela dura 30 minutos). Envie o arquivo de novo."
 
-#: src/Admin/Market/MarketText.php:101
+#: src/Admin/Market/MarketText.php:109
 msgid "The file has too many valid rows for one import. Split the file."
 msgstr "O arquivo tem linhas válidas demais para uma importação só. Divida o arquivo."
 
 #. translators: %s: what is wrong with the price
-#: src/Admin/Market/MarketText.php:103
+#: src/Admin/Market/MarketText.php:111
 msgid "The price was not recorded: %s"
 msgstr "O preço não foi registrado: %s"
 
-#: src/Admin/Market/MarketText.php:104
+#: src/Admin/Market/MarketText.php:112
 msgid "Something went wrong. Nothing was changed."
 msgstr "Algo deu errado. Nada foi alterado."
 
-#: src/Admin/Market/MarketText.php:114
+#: src/Admin/Market/MarketText.php:122
 msgid "Cheapest rooms"
 msgstr "Quartos mais baratos"
 
 #. translators: the name or the explanation of a setting of the rules
-#: src/Admin/Market/MarketText.php:115 src/Domain/Config/Schema.php
+#: src/Admin/Market/MarketText.php:123 src/Domain/Config/Schema.php
 msgid "Comparable rooms"
 msgstr "Quartos comparáveis"
 
-#: src/Admin/Market/MarketText.php:116
+#: src/Admin/Market/MarketText.php:124
 msgid "Closest competitors, cheapest rooms"
 msgstr "Concorrentes mais próximos, quartos mais baratos"
 
-#: src/Admin/Market/MarketText.php:117
+#: src/Admin/Market/MarketText.php:125
 msgid "Closest competitors, comparable rooms"
 msgstr "Concorrentes mais próximos, quartos comparáveis"
 
-#: src/Admin/Market/MarketText.php:118
+#: src/Admin/Market/MarketText.php:126
 msgid "Market anchor"
 msgstr "Âncora de mercado"
 
 #. translators: %s: name of a price series the site configured
-#: src/Admin/Market/MarketText.php:120
+#: src/Admin/Market/MarketText.php:128
 msgid "Series %s"
 msgstr "Série %s"
 
 #. translators: 1: name of a price series, 2: a percentile such as 50
-#: src/Admin/Market/MarketText.php:130
+#: src/Admin/Market/MarketText.php:138
 msgid "%1$s, percentile %2$s"
 msgstr "%1$s, percentil %2$s"
 
-#: src/Admin/Market/MarketText.php:136
+#: src/Admin/Market/MarketText.php:144
 msgid "measured on stays starting that night"
 msgstr "medido em estadias que começam naquela noite"
 
-#: src/Admin/Market/MarketText.php:137
+#: src/Admin/Market/MarketText.php:145
 msgid "stays that include the night"
 msgstr "estadias que incluem a noite"
 
 #. translators: %d: number of days
-#: src/Admin/Market/MarketText.php:139
+#: src/Admin/Market/MarketText.php:147
 msgid "nearest stays, %d day away"
 msgid_plural "nearest stays, %d days away"
 msgstr[0] "estadias mais próximas, a %d dia"
 msgstr[1] "estadias mais próximas, a %d dias"
 
-#: src/Admin/Market/MarketText.php:140
+#: src/Admin/Market/MarketText.php:148
 msgid "typical value for this kind of night"
 msgstr "valor típico para este tipo de noite"
 
 #. translators: %s: the default factor
-#: src/Admin/Market/MarketText.php:148
+#: src/Admin/Market/MarketText.php:156
 msgid "× %s (not set: default)"
 msgstr "× %s (não definido: padrão)"
 
 #. translators: %s: the factor used
-#: src/Admin/Market/MarketText.php:153
+#: src/Admin/Market/MarketText.php:161
 msgid "× %s (estimated, capped)"
 msgstr "× %s (estimado, limitado)"
 
 #. translators: %s: the factor
-#: src/Admin/Market/MarketText.php:155
+#: src/Admin/Market/MarketText.php:163
 msgid "× %s (estimated)"
 msgstr "× %s (estimado)"
 
 #. translators: %s: the factor
-#: src/Admin/Market/MarketText.php:159
+#: src/Admin/Market/MarketText.php:167
 msgid "× %s (measured)"
 msgstr "× %s (medido)"
 
-#: src/Admin/Market/MarketText.php:159
+#: src/Admin/Market/MarketText.php:167
 msgid "× %s"
 msgstr "× %s"
 
 #. translators: %s: size limit, such as 2 MB
-#: src/Admin/Market/MarketText.php:166
+#: src/Admin/Market/MarketText.php:174
 msgid "The file is larger than %s. Nothing was imported."
 msgstr "O arquivo é maior que %s. Nada foi importado."
 
 #. translators: %s: what is wrong with the file
-#: src/Admin/Market/MarketText.php:172
+#: src/Admin/Market/MarketText.php:180
 msgid "The file: %s"
 msgstr "O arquivo: %s"
 
-#: src/Admin/Market/MarketText.php:174
+#: src/Admin/Market/MarketText.php:182
 msgid "Nothing was imported."
 msgstr "Nada foi importado."
 
-#: src/Admin/ReasonText.php:43
+#: src/Admin/Market/MarketText.php:203
+msgid "close to you (peer)"
+msgstr "parecido com você (par)"
+
+#: src/Admin/ReasonText.php:49
 msgid "Pace step"
 msgstr "Passo do ritmo"
 
-#: src/Admin/ReasonText.php:44
+#: src/Admin/ReasonText.php:50
 msgid "Sales ramp of an owner order"
 msgstr "Rampa de vendas de uma ordem do dono"
 
-#: src/Admin/ReasonText.php:46
+#: src/Admin/ReasonText.php:52
 msgid "Protection of a sold-out night"
 msgstr "Proteção de noite esgotada"
 
-#: src/Admin/ReasonText.php:47
+#: src/Admin/ReasonText.php:53
 msgid "Relation: at least another room"
 msgstr "Relação: no mínimo outro quarto"
 
-#: src/Admin/ReasonText.php:48
+#: src/Admin/ReasonText.php:54
 msgid "Relation: between two rooms"
 msgstr "Relação: entre dois quartos"
 
-#: src/Admin/ReasonText.php:49
+#: src/Admin/ReasonText.php:55
 msgid "Relation: above the dearest room"
 msgstr "Relação: acima do mais caro"
 
-#: src/Admin/ReasonText.php:50
+#: src/Admin/ReasonText.php:56
 msgid "Relation: discount band"
 msgstr "Relação: faixa de desconto"
 
-#: src/Admin/ReasonText.php:51
+#: src/Admin/ReasonText.php:57
 msgid "Relation: occupancy switch"
 msgstr "Relação: troca por ocupação"
 
-#: src/Admin/ReasonText.php:52
+#: src/Admin/ReasonText.php:58
 msgid "Ceiling freed (rule deleted first)"
 msgstr "Teto liberado (regra apagada antes)"
 
+#: src/Admin/ReasonText.php:59
+msgid "Undo of an earlier change"
+msgstr "Desfazer de uma mudança anterior"
+
 #. translators: 1: price read, 2: price the date rule in force allows
-#: src/Admin/ReasonText.php:74
+#: src/Admin/ReasonText.php:83
 msgid "The price read, %1$s, is outside the date rule in force: the engine starts from %2$s."
 msgstr "O preço lido, %1$s, está fora da regra de data em vigor: o motor parte de %2$s."
 
 #. translators: 1: pace status, 2: units sold, 3: units on sale, 4: percent sold, 5: percent the curve expects
-#: src/Admin/ReasonText.php:80
+#: src/Admin/ReasonText.php:89
 msgid "Pace %1$s: %2$s of %3$s units sold (%4$s%% against %5$s%% expected)."
 msgstr "Ritmo %1$s: %2$s de %3$s unidades vendidas (%4$s%% contra %5$s%% esperado)."
 
-#. translators: 1: market percentile, 2: public price at that percentile, 3: the same price in the sent plan
-#: src/Admin/ReasonText.php:89
-msgid "Target: market percentile %1$s, %2$s public, %3$s sent."
-msgstr "Alvo: percentil de mercado %1$s, %2$s público, %3$s enviado."
+#. translators: 1: market percentile, 2: price guests see at that percentile, 3: the same price in the plan sent to the pricing system
+#: src/Admin/ReasonText.php:98
+msgid "Target: the market price at percentile %1$s, %2$s as guests see it (%3$s in the plan sent to the pricing system)."
+msgstr "Alvo: o preço do mercado no percentil %1$s, %2$s como o hóspede vê (%3$s no plano enviado ao sistema de preços)."
 
 #. translators: 1: sample size, 2: age in days
-#: src/Admin/ReasonText.php:96
+#: src/Admin/ReasonText.php:105
 msgid "Weak market data (%1$s prices, %2$s days old): half a step at most."
 msgstr "Dados de mercado fracos (%1$s preços, de %2$s dias atrás): no máximo meio passo."
 
-#: src/Admin/ReasonText.php:100
+#: src/Admin/ReasonText.php:109
 msgid "Ahead of pace: the price does not go down."
 msgstr "À frente do ritmo: o preço não baixa."
 
 #. translators: 1: price before, 2: price after, 3: largest step in percent
-#: src/Admin/ReasonText.php:103
+#: src/Admin/ReasonText.php:112
 msgid "One step from %1$s to %2$s (at most %3$s%%)."
 msgstr "Um passo de %1$s para %2$s (no máximo %3$s%%)."
 
 #. translators: 1: order id, 2: line of the ramp, 3: price reached, 4: floor of the ramp
-#: src/Admin/ReasonText.php:110
+#: src/Admin/ReasonText.php:119
 msgid "Sales ramp of order %1$s: line %2$s, price %3$s over a floor of %4$s."
 msgstr "Rampa de vendas da ordem %1$s: linha %2$s, preço %3$s sobre um piso de %4$s."
 
 #. translators: 1: floor amount, 2: which floor
-#: src/Admin/ReasonText.php:118
+#: src/Admin/ReasonText.php:127
 msgid "Held at the hard floor of %1$s (%2$s)."
 msgstr "Segurado no piso firme de %1$s (%2$s)."
 
 #. translators: %s: highest floor allowed by the listing maximum
-#: src/Admin/ReasonText.php:124
+#: src/Admin/ReasonText.php:133
 msgid "Capped at %s by the listing maximum."
 msgstr "Limitado a %s pelo máximo do anúncio."
 
-#: src/Admin/ReasonText.php:127
+#: src/Admin/ReasonText.php:136
 msgid "Tonight never goes up."
 msgstr "O preço de hoje nunca sobe."
 
-#: src/Admin/ReasonText.php:128
+#: src/Admin/ReasonText.php:137
 msgid "The change is within the tolerance: nothing to do."
 msgstr "A mudança está dentro da tolerância: nada a fazer."
 
-#: src/Admin/ReasonText.php:129
+#: src/Admin/ReasonText.php:138
 msgid "Waiting: the previous step has not reached the sales channels."
 msgstr "Esperando: o passo anterior ainda não chegou aos canais de venda."
 
-#: src/Admin/ReasonText.php:130
+#: src/Admin/ReasonText.php:139
 msgid "Waiting: there was a step in this direction in the last 24 hours."
 msgstr "Esperando: houve um passo nesta direção nas últimas 24 horas."
 
 #. translators: %s: ceiling amount
-#: src/Admin/ReasonText.php:133
+#: src/Admin/ReasonText.php:142
 msgid "Ceiling at the target, %s, so the pricing system cannot jump past the step."
 msgstr "Teto no alvo, %s, para o sistema de preços não pular além do passo."
 
 #. translators: %s: ceiling amount
-#: src/Admin/ReasonText.php:138
+#: src/Admin/ReasonText.php:147
 msgid "Ceiling follows the floor down to %s."
 msgstr "O teto acompanha o piso, descendo até %s."
 
 #. translators: 1: "up" or "down", 2: new floor, 3: new ceiling
-#: src/Admin/ReasonText.php:143
+#: src/Admin/ReasonText.php:152
 msgid "Proposed step %1$s: floor %2$s, ceiling %3$s."
 msgstr "Passo proposto %1$s: piso %2$s, teto %3$s."
 
-#: src/Admin/ReasonText.php:144 src/Admin/Screens/NightDetailView.php:135
+#: src/Admin/ReasonText.php:153 src/Admin/Screens/NightDetailView.php:135
 msgid "down"
 msgstr "para baixo"
 
-#: src/Admin/ReasonText.php:144 src/Admin/Screens/NightDetailView.php:135
+#: src/Admin/ReasonText.php:153 src/Admin/Screens/NightDetailView.php:135
 msgid "up"
 msgstr "para cima"
 
-#: src/Admin/ReasonText.php:158
+#: src/Admin/ReasonText.php:167
 msgid "Weekend night"
 msgstr "Noite de fim de semana"
 
-#: src/Admin/ReasonText.php:159
+#: src/Admin/ReasonText.php:168
 msgid "Holiday night"
 msgstr "Noite de feriado"
 
-#: src/Admin/ReasonText.php:160
+#: src/Admin/ReasonText.php:169
 msgid "Weekday night"
 msgstr "Noite de semana"
 
+#. translators: %s: kind of night
+#: src/Admin/ReasonText.php:174
+msgid "%s, days out not known."
+msgstr "%s, antecedência desconhecida."
+
+#. translators: %s: kind of night
+#: src/Admin/ReasonText.php:176
+msgid "%s, tonight."
+msgstr "%s, esta noite."
+
 #. translators: 1: kind of night, 2: days until the night
-#: src/Admin/ReasonText.php:163
-msgid "%1$s, %2$s days out."
-msgstr "%1$s, %2$s dias de antecedência."
+#: src/Admin/ReasonText.php:178
+msgid "%1$s, %2$s day out."
+msgid_plural "%1$s, %2$s days out."
+msgstr[0] "%1$s, %2$s dia de antecedência."
+msgstr[1] "%1$s, %2$s dias de antecedência."
 
 #. translators: %s: name of the configured period
-#: src/Admin/ReasonText.php:166
+#: src/Admin/ReasonText.php:182
 msgid "Period: %s."
 msgstr "Período: %s."
 
-#: src/Admin/ReasonText.php:175 src/Admin/Reports/ReportsText.php:40 src/Admin/Reports/ReportsText.php:52
+#: src/Admin/ReasonText.php:191 src/Admin/Reports/ReportsText.php:40 src/Admin/Reports/ReportsText.php:52
 msgid "ahead"
 msgstr "à frente"
 
-#: src/Admin/ReasonText.php:177 src/Admin/Reports/ReportsText.php:42
+#: src/Admin/ReasonText.php:193 src/Admin/Reports/ReportsText.php:42
 msgid "behind"
 msgstr "atrás"
 
-#: src/Admin/ReasonText.php:178
+#: src/Admin/ReasonText.php:194
 msgid "very behind"
 msgstr "muito atrás"
 
-#: src/Admin/ReasonText.php:187
+#: src/Admin/ReasonText.php:203
 msgid "safety limit"
 msgstr "limite de segurança"
 
-#: src/Admin/ReasonText.php:188
+#: src/Admin/ReasonText.php:204
 msgid "quality floor"
 msgstr "piso de qualidade"
 
-#: src/Admin/ReasonText.php:189
+#: src/Admin/ReasonText.php:205
 msgid "holiday floor"
 msgstr "piso de feriado"
 
-#: src/Admin/ReasonText.php:190
+#: src/Admin/ReasonText.php:206
 msgid "owner floor"
 msgstr "piso do dono"
 
-#: src/Admin/ReasonText.php:191
+#: src/Admin/ReasonText.php:207
 msgid "fallback floor of the order"
 msgstr "piso de reserva da ordem"
 
-#: src/Admin/ReasonText.php:192
+#: src/Admin/ReasonText.php:208
 msgid "descent step of the order"
 msgstr "degrau de descida da ordem"
 
-#: src/Admin/ReasonText.php:193
+#: src/Admin/ReasonText.php:209
 msgid "climb back limited to one step"
 msgstr "volta limitada a um passo"
 
-#: src/Admin/RefusalText.php:24
+#: src/Admin/ReasonText.php:210
+msgid "minimum price of an owner order"
+msgstr "preço mínimo de uma ordem do dono"
+
+#: src/Admin/ReasonText.php:211
+msgid "market floor"
+msgstr "piso de mercado"
+
+#: src/Admin/ReasonText.php:212
+msgid "floor of a premium relation"
+msgstr "piso de uma relação premium"
+
+#: src/Admin/ReasonText.php:213
+msgid "holiday safety floor"
+msgstr "piso de segurança de feriado"
+
+#: src/Admin/ReasonText.php:214
+msgid "another floor"
+msgstr "outro piso"
+
+#: src/Admin/RefusalText.php:26
 msgid "You do not hold the capability this change of mode needs."
 msgstr "Você não tem a permissão que esta troca de modo exige."
 
-#: src/Admin/RefusalText.php:25
+#: src/Admin/RefusalText.php:27
 msgid "The autonomous mode is switched off for this site."
 msgstr "O modo autônomo está desligado neste site."
 
-#: src/Admin/RefusalText.php:26
+#: src/Admin/RefusalText.php:28
 msgid "Type the property's id to confirm the autonomous mode."
 msgstr "Digite o id da propriedade para confirmar o modo autônomo."
 
-#: src/Admin/RefusalText.php:28
+#: src/Admin/RefusalText.php:29
+msgid "A reason cannot hold an email, a phone number or a document number (guest data is never kept). The mode was not changed."
+msgstr "O motivo não pode ter e-mail, telefone ou número de documento (dados de hóspede nunca são guardados). O modo não foi trocado."
+
+#: src/Admin/RefusalText.php:31
 msgid "The property does not meet the conditions of this mode yet."
 msgstr "A propriedade ainda não cumpre as condições deste modo."
 
-#: src/Admin/RefusalText.php:30
+#: src/Admin/RefusalText.php:33
 msgid "This change of mode is not allowed now."
 msgstr "Esta troca de modo não é permitida agora."
 
-#: src/Admin/RefusalText.php:37
+#: src/Admin/RefusalText.php:40
 msgid "There is no such plan."
 msgstr "Esse plano não existe."
 
-#: src/Admin/RefusalText.php:38
+#: src/Admin/RefusalText.php:41
 msgid "The plan was already decided, or replaced by a newer one."
 msgstr "O plano já foi decidido ou substituído por um mais novo."
 
-#: src/Admin/RefusalText.php:39
+#: src/Admin/RefusalText.php:42
 msgid "The plan is not approved."
 msgstr "O plano não está aprovado."
 
-#: src/Admin/RefusalText.php:40
+#: src/Admin/RefusalText.php:43
 msgid "You do not hold the approval capability."
 msgstr "Você não tem a permissão de aprovar."
 
-#: src/Admin/RefusalText.php:41
+#: src/Admin/RefusalText.php:44
 msgid "The plan expired: the day turned or its calendar is old. The next run proposes a new one."
 msgstr "O plano expirou: o dia virou ou o calendário dele está velho. A próxima rodada propõe um novo."
 
-#: src/Admin/RefusalText.php:42
+#: src/Admin/RefusalText.php:45
 msgid "Nothing was selected."
 msgstr "Nada foi selecionado."
 
-#: src/Admin/RefusalText.php:43
+#: src/Admin/RefusalText.php:46
 msgid "A night ticked is not part of this plan."
 msgstr "Uma noite marcada não faz parte deste plano."
 
-#: src/Admin/RefusalText.php:44
+#: src/Admin/RefusalText.php:47
 msgid "Each listing value must be approved by name."
 msgstr "Cada valor do anúncio precisa ser aprovado pelo nome."
 
-#: src/Admin/RefusalText.php:45
+#: src/Admin/RefusalText.php:48 src/Admin/Screens/ApprovalActions.php:104
+msgid "Only a person allowed to change safety limits can approve a change of the listing."
+msgstr "Só quem pode mudar os limites de segurança pode aprovar uma mudança do anúncio."
+
+#: src/Admin/RefusalText.php:49
+msgid "Type the new amount of each listing change you approve, exactly as shown."
+msgstr "Digite o novo valor de cada mudança do anúncio que você aprova, exatamente como aparece."
+
+#: src/Admin/RefusalText.php:50
+msgid "A note cannot hold an email, a phone number or a document number (guest data is never kept). Nothing was decided."
+msgstr "A observação não pode ter e-mail, telefone ou número de documento (dados de hóspede nunca são guardados). Nada foi decidido."
+
+#: src/Admin/RefusalText.php:51
 msgid "This decision is not allowed now."
 msgstr "Esta decisão não é permitida agora."
 
-#: src/Admin/RefusalText.php:58
+#: src/Admin/RefusalText.php:64
 msgid "The emergency switch is engaged."
 msgstr "A chave de emergência está ligada."
 
 #. translators: %s: code of the alert
-#: src/Admin/RefusalText.php:60
+#: src/Admin/RefusalText.php:66
 msgid "The alert %s is open: resolve it first."
 msgstr "O alerta %s está aberto: resolva-o primeiro."
 
 #. translators: 1: runs needed, 2: runs that completed
-#: src/Admin/RefusalText.php:62
+#: src/Admin/RefusalText.php:68
 msgid "The last %1$d runs must have completed in shadow mode with a plan (%2$d did)."
 msgstr "As últimas %1$d rodadas precisam ter terminado em modo sombra com um plano (%2$d terminaram)."
 
-#: src/Admin/RefusalText.php:63
+#: src/Admin/RefusalText.php:69
 msgid "The newest completed shadow run is older than 24 hours: run one first."
 msgstr "A rodada em sombra concluída mais recente tem mais de 24 horas: rode uma primeiro."
 
 #. translators: %s: beds24 or pricelabs
-#: src/Admin/RefusalText.php:65
+#: src/Admin/RefusalText.php:71
 msgid "Test the %s connection first: it must have passed within 24 hours."
 msgstr "Teste primeiro a conexão com %s: o teste precisa ter passado nas últimas 24 horas."
 
-#: src/Admin/RefusalText.php:66
+#: src/Admin/RefusalText.php:72
 msgid "A write failed and its alert is open: resolve it first."
 msgstr "Uma gravação falhou e o alerta dela está aberto: resolva-o primeiro."
 
 #. translators: 1: days, 2: date of the failure
-#: src/Admin/RefusalText.php:68
+#: src/Admin/RefusalText.php:74
 msgid "A write failed in the last %1$d days (%2$s)."
 msgstr "Uma gravação falhou nos últimos %1$d dias (%2$s)."
 
-#: src/Admin/RefusalText.php:69
+#: src/Admin/RefusalText.php:75
 msgid "A person allowed to change safety limits must confirm them first (Settings, setup)."
 msgstr "Uma pessoa que pode mudar os limites de segurança precisa confirmá-los primeiro (Configurações, configuração)."
 
-#: src/Admin/RefusalText.php:70
+#: src/Admin/RefusalText.php:76
 msgid "A cancellation wave is holding price cuts: release it first."
 msgstr "Uma onda de cancelamentos está segurando os cortes de preço: libere-a primeiro."
 
-#: src/Admin/RefusalText.php:71
+#: src/Admin/RefusalText.php:77
 msgid "A property reaches the autonomous mode only from approval."
 msgstr "Uma propriedade só chega ao modo autônomo a partir do modo aprovação."
 
 #. translators: 1: days needed, 2: plans needed, 3: days so far, 4: plans so far
-#: src/Admin/RefusalText.php:73
+#: src/Admin/RefusalText.php:79
 msgid "The property needs %1$d days in approval and %2$d approved plans written first (%3$d days and %4$d plans so far)."
 msgstr "A propriedade precisa antes de %1$d dias em modo aprovação e %2$d planos aprovados e gravados (até agora %3$d dias e %4$d planos)."
 
-#: src/Admin/RefusalText.php:74
+#: src/Admin/RefusalText.php:80
 msgid "A condition of this mode is not met."
 msgstr "Uma condição deste modo não foi cumprida."
 
@@ -2312,7 +2415,7 @@ msgid "Holiday"
 msgstr "Feriado"
 
 #. translators: the name or the explanation of a setting of the rules
-#: src/Admin/Reports/OccupancyTables.php:56 src/Admin/Reports/ReportsText.php:68 src/Admin/Reports/WeeklyTables.php:77 src/Admin/Screens/AlertText.php:126 templates/admin/editors/orders.php:102 templates/admin/editors/orders.php:106 templates/admin/editors/relations.php:98 templates/admin/editors/relations.php:102 templates/admin/market/import.php:86 templates/admin/market/import.php:95 templates/admin/market/prices.php:54 templates/admin/market/prices.php:63 templates/admin/market/prices.php:95 templates/admin/screens/changes.php:31 templates/admin/screens/nights.php:180 templates/admin/screens/overview.php:68 src/Domain/Config/Schema.php
+#: src/Admin/Reports/OccupancyTables.php:56 src/Admin/Reports/ReportsText.php:68 src/Admin/Reports/WeeklyTables.php:77 src/Admin/Screens/AlertText.php:126 templates/admin/editors/orders.php:118 templates/admin/editors/orders.php:122 templates/admin/editors/relations.php:98 templates/admin/editors/relations.php:102 templates/admin/market/import.php:86 templates/admin/market/import.php:95 templates/admin/market/prices.php:54 templates/admin/market/prices.php:63 templates/admin/market/prices.php:95 templates/admin/screens/changes.php:31 templates/admin/screens/nights.php:182 templates/admin/screens/overview.php:68 src/Domain/Config/Schema.php
 msgid "Room"
 msgstr "Quarto"
 
@@ -2341,7 +2444,7 @@ msgstr "Preço enviado"
 msgid "Minimum stay"
 msgstr "Estadia mínima"
 
-#: src/Admin/Reports/ReportTable.php:35 templates/admin/screens/wizard/property.php:28
+#: src/Admin/Reports/ReportTable.php:35 templates/admin/screens/wizard/property.php:33
 msgid "Currency"
 msgstr "Moeda"
 
@@ -2456,7 +2559,7 @@ msgid "Room group"
 msgstr "Grupo de quartos"
 
 #. translators: the name or the explanation of a setting of the rules
-#: src/Admin/Reports/ReportsText.php:71 src/Admin/Screens/DiagnosticsView.php:159 src/Admin/Screens/WizardView.php:79 templates/admin/screens/overview.php:32 templates/admin/screens/overview.php:43 templates/admin/screens/parts/head.php:25 templates/admin/screens/settings-diagnostics.php:58 templates/admin/screens/settings-diagnostics.php:70 templates/admin/screens/wizard/property.php:14 src/Domain/Config/Schema.php
+#: src/Admin/Reports/ReportsText.php:71 src/Admin/Screens/DiagnosticsView.php:193 src/Admin/Screens/WizardView.php:79 templates/admin/screens/overview.php:32 templates/admin/screens/overview.php:43 templates/admin/screens/parts/head.php:25 templates/admin/screens/settings-diagnostics.php:58 templates/admin/screens/settings-diagnostics.php:70 templates/admin/screens/wizard/property.php:16 src/Domain/Config/Schema.php
 msgid "Property"
 msgstr "Propriedade"
 
@@ -2550,116 +2653,175 @@ msgstr "Digite a ocupação vendida do mercado na aba de metas para comparar cad
 msgid "Unknown report line"
 msgstr "Linha de relatório desconhecida"
 
-#: src/Admin/Reports/RunLineText.php:55
+#: src/Admin/Reports/RunLineText.php:59
 msgid "Light run: no booking moved, no sold-out night flipped, nothing changed by hand. Nothing was decided. Writes sent: 0."
 msgstr "Rodada leve: nenhuma reserva mudou, nenhuma noite esgotada virou, nada foi mudado à mão. Nada foi decidido. Gravações enviadas: 0."
 
-#: src/Admin/Reports/RunLineText.php:56
+#: src/Admin/Reports/RunLineText.php:60
 msgid "Tonight or tomorrow changed: ask the pricing system to send them to the channels now."
 msgstr "Hoje ou amanhã mudou: peça ao sistema de preços para enviar essas noites aos canais agora."
 
 #. translators: %1$d: number of findings
-#: src/Admin/Reports/RunLineText.php:58
+#: src/Admin/Reports/RunLineText.php:62
 msgid "%1$d security finding on the bookings; see the alerts."
 msgid_plural "%1$d security findings on the bookings; see the alerts."
 msgstr[0] "%1$d achado de segurança nas reservas; veja os alertas."
 msgstr[1] "%1$d achados de segurança nas reservas; veja os alertas."
 
 #. translators: %1$d: number of room nights
-#: src/Admin/Reports/RunLineText.php:60
+#: src/Admin/Reports/RunLineText.php:64
 msgid "%1$d room night sold beyond the units."
 msgid_plural "%1$d room nights sold beyond the units."
 msgstr[0] "%1$d noite de quarto vendida além das unidades."
 msgstr[1] "%1$d noites de quarto vendidas além das unidades."
 
-#: src/Admin/Reports/RunLineText.php:61
+#: src/Admin/Reports/RunLineText.php:65
 msgid "A cancellation wave holds the price cuts until a person releases it."
 msgstr "Uma onda de cancelamentos segura os cortes de preço até uma pessoa liberá-la."
 
-#. translators: %1$d: changes for the pricing system, %2$d: changes for the PMS
-#: src/Admin/Reports/RunLineText.php:63
-msgid "Shadow mode: %1$d change would be written to the pricing system and %2$d to the PMS; nothing was sent."
-msgstr "Modo sombra: %1$d mudança seria gravada no sistema de preços e %2$d no PMS; nada foi enviado."
+#: src/Admin/Reports/RunLineText.php:67
+msgid "Shadow mode: nothing was sent."
+msgstr "Modo sombra: nada foi enviado."
+
+#. translators: %1$d: number of changes
+#: src/Admin/Reports/RunLineText.php:69
+msgid "%1$d change would have gone to the pricing system."
+msgid_plural "%1$d changes would have gone to the pricing system."
+msgstr[0] "%1$d mudança teria ido ao sistema de preços."
+msgstr[1] "%1$d mudanças teriam ido ao sistema de preços."
+
+#. translators: %1$d: number of changes
+#: src/Admin/Reports/RunLineText.php:71
+msgid "%1$d change would have gone to the PMS."
+msgid_plural "%1$d changes would have gone to the PMS."
+msgstr[0] "%1$d mudança teria ido ao PMS."
+msgstr[1] "%1$d mudanças teriam ido ao PMS."
 
 #. translators: %1$d: number of room nights
-#: src/Admin/Reports/RunLineText.php:65
+#: src/Admin/Reports/RunLineText.php:74
 msgid "Waiting for approval: %1$d room night; nothing is written before a person approves."
 msgid_plural "Waiting for approval: %1$d room nights; nothing is written before a person approves."
 msgstr[0] "Aguardando aprovação: %1$d noite de quarto; nada é gravado antes de uma pessoa aprovar."
 msgstr[1] "Aguardando aprovação: %1$d noites de quarto; nada é gravado antes de uma pessoa aprovar."
 
 #. translators: %1$s: why the write was refused, as a sentence
-#: src/Admin/Reports/RunLineText.php:67
+#: src/Admin/Reports/RunLineText.php:76
 msgid "Not written: %1$s"
 msgstr "Não gravado: %1$s"
 
-#. translators: %1$d: calls sent, %2$d: room nights confirmed in the pricing system, %3$d: room nights confirmed in the PMS
-#: src/Admin/Reports/RunLineText.php:69
-msgid "Written: %1$d calls sent; %2$d room nights confirmed in the pricing system and %3$d in the PMS."
-msgstr "Gravado: %1$d chamadas enviadas; %2$d noites de quarto conferidas no sistema de preços e %3$d no PMS."
+#. translators: %1$d: number of calls
+#: src/Admin/Reports/RunLineText.php:79
+msgid "Written: %1$d call sent."
+msgid_plural "Written: %1$d calls sent."
+msgstr[0] "Gravado: %1$d chamada enviada."
+msgstr[1] "Gravado: %1$d chamadas enviadas."
+
+#. translators: %1$d: number of room nights
+#: src/Admin/Reports/RunLineText.php:81
+msgid "%1$d room night confirmed in the pricing system."
+msgid_plural "%1$d room nights confirmed in the pricing system."
+msgstr[0] "%1$d noite de quarto confirmada no sistema de preços."
+msgstr[1] "%1$d noites de quarto confirmadas no sistema de preços."
+
+#. translators: %1$d: number of room nights
+#: src/Admin/Reports/RunLineText.php:83
+msgid "%1$d room night confirmed in the PMS."
+msgid_plural "%1$d room nights confirmed in the PMS."
+msgstr[0] "%1$d noite de quarto confirmada no PMS."
+msgstr[1] "%1$d noites de quarto confirmadas no PMS."
 
 #. translators: %1$s: why the write stopped, as a sentence
-#: src/Admin/Reports/RunLineText.php:71
+#: src/Admin/Reports/RunLineText.php:86
 msgid "The write stopped (%1$s). The next run reads the systems again and sends only what is missing."
 msgstr "A gravação parou (%1$s). A próxima rodada relê os sistemas e envia só o que falta."
 
 #. translators: %1$d: number of entries
-#: src/Admin/Reports/RunLineText.php:73
+#: src/Admin/Reports/RunLineText.php:88
 msgid "%1$d entry held by a cancellation wave."
 msgid_plural "%1$d entries held by a cancellation wave."
 msgstr[0] "%1$d item segurado por uma onda de cancelamentos."
 msgstr[1] "%1$d itens segurados por uma onda de cancelamentos."
 
-#. translators: %1$d: changes for the pricing system, %2$d: changes for the PMS
-#: src/Admin/Reports/RunLineText.php:75
-msgid "Refused by the checks: %1$d change for the pricing system, %2$d for the PMS."
-msgstr "Recusado pelas conferências: %1$d mudança para o sistema de preços, %2$d para o PMS."
+#. translators: %1$d: number of changes
+#: src/Admin/Reports/RunLineText.php:91
+msgid "Refused by the safety checks: %1$d change for the pricing system."
+msgid_plural "Refused by the safety checks: %1$d changes for the pricing system."
+msgstr[0] "Recusado pelas conferências de segurança: %1$d mudança para o sistema de preços."
+msgstr[1] "Recusado pelas conferências de segurança: %1$d mudanças para o sistema de preços."
+
+#. translators: %1$d: number of changes
+#: src/Admin/Reports/RunLineText.php:93
+msgid "Refused by the safety checks: %1$d change for the PMS."
+msgid_plural "Refused by the safety checks: %1$d changes for the PMS."
+msgstr[0] "Recusado pelas conferências de segurança: %1$d mudança para o PMS."
+msgstr[1] "Recusado pelas conferências de segurança: %1$d mudanças para o PMS."
 
 #. translators: %1$d: number of steps
-#: src/Admin/Reports/RunLineText.php:77
+#: src/Admin/Reports/RunLineText.php:96
 msgid "%1$d step not seen on the channels yet; see the alerts."
 msgid_plural "%1$d steps not seen on the channels yet; see the alerts."
 msgstr[0] "%1$d passo ainda não visto nos canais; veja os alertas."
 msgstr[1] "%1$d passos ainda não vistos nos canais; veja os alertas."
 
 #. translators: %1$d: age in days
-#: src/Admin/Reports/RunLineText.php:79
+#: src/Admin/Reports/RunLineText.php:98
 msgid "Market prices are %1$d day old."
 msgid_plural "Market prices are %1$d days old."
 msgstr[0] "Os preços de mercado têm %1$d dia."
 msgstr[1] "Os preços de mercado têm %1$d dias."
 
 #. translators: %1$d: number of PMS changes, %2$s: why, as a sentence
-#: src/Admin/Reports/RunLineText.php:81
+#: src/Admin/Reports/RunLineText.php:100
 msgid "%1$d PMS change skipped: %2$s"
 msgid_plural "%1$d PMS changes skipped: %2$s"
 msgstr[0] "%1$d mudança do PMS pulada: %2$s"
 msgstr[1] "%1$d mudanças do PMS puladas: %2$s"
 
 #. translators: %1$d: number of room nights
-#: src/Admin/Reports/RunLineText.php:83
+#: src/Admin/Reports/RunLineText.php:102
 msgid "%1$d room night took the stay rule's value over the price rule's."
 msgid_plural "%1$d room nights took the stay rule's value over the price rule's."
 msgstr[0] "%1$d noite de quarto ficou com o valor da regra de estadia no lugar do da regra de preço."
 msgstr[1] "%1$d noites de quarto ficaram com o valor da regra de estadia no lugar do da regra de preço."
 
-#: src/Admin/Reports/RunLineText.php:90
+#. translators: %1$d: number of room nights, %2$s: room code
+#: src/Admin/Reports/RunLineText.php:104
+msgid "%1$d night of %2$s was not written: the pricing system's limit of recalculations for this listing was reached. The next run writes it."
+msgid_plural "%1$d nights of %2$s were not written: the pricing system's limit of recalculations for this listing was reached. The next run writes them."
+msgstr[0] "%1$d noite de %2$s não foi gravada: o limite de recálculos do sistema de preços para este anúncio foi atingido. A próxima rodada grava."
+msgstr[1] "%1$d noites de %2$s não foram gravadas: o limite de recálculos do sistema de preços para este anúncio foi atingido. A próxima rodada grava."
+
+#. translators: %1$d: number of room nights
+#: src/Admin/Reports/RunLineText.php:107
+msgid "Undo: %1$d room night written back."
+msgid_plural "Undo: %1$d room nights written back."
+msgstr[0] "Desfazer: %1$d noite de quarto regravada."
+msgstr[1] "Desfazer: %1$d noites de quarto regravadas."
+
+#. translators: %1$d: number of changes
+#: src/Admin/Reports/RunLineText.php:109
+msgid "%1$d change marked as undone in the change log."
+msgid_plural "%1$d changes marked as undone in the change log."
+msgstr[0] "%1$d mudança marcada como desfeita no registro de mudanças."
+msgstr[1] "%1$d mudanças marcadas como desfeitas no registro de mudanças."
+
+#: src/Admin/Reports/RunLineText.php:125
 msgid "the pricing system had to take the same value first."
 msgstr "o sistema de preços precisava receber o mesmo valor antes."
 
-#: src/Admin/Reports/RunLineText.php:91
+#: src/Admin/Reports/RunLineText.php:126
 msgid "the PMS already had the value."
 msgstr "o PMS já tinha o valor."
 
-#: src/Admin/Reports/RunLineText.php:92
+#: src/Admin/Reports/RunLineText.php:127
 msgid "the PMS changed since it was read; the next run plans again."
 msgstr "o PMS mudou depois da leitura; a próxima rodada planeja de novo."
 
-#: src/Admin/Reports/RunLineText.php:93
+#: src/Admin/Reports/RunLineText.php:128
 msgid "for another reason."
 msgstr "por outro motivo."
 
-#: src/Admin/Reports/WeeklyTables.php:26 src/Admin/Screens/AlertsScreen.php:186 src/Admin/Screens/DiagnosticsView.php:170
+#: src/Admin/Reports/WeeklyTables.php:26 src/Admin/Screens/AlertsScreen.php:186 src/Admin/Screens/DiagnosticsView.php:220
 msgid "yes"
 msgstr "sim"
 
@@ -2932,10 +3094,14 @@ msgid "The mode was lowered after a failure"
 msgstr "O modo foi rebaixado depois de uma falha"
 
 #: src/Admin/Screens/AlertText.php:55
+msgid "No market prices yet"
+msgstr "Ainda sem preços de mercado"
+
+#: src/Admin/Screens/AlertText.php:55
 msgid "Market prices are old"
 msgstr "Os preços de mercado estão velhos"
 
-#: src/Admin/Screens/AlertText.php:56
+#: src/Admin/Screens/AlertText.php:56 src/Admin/Screens/DiagnosticsView.php:205
 msgid "Nights without market prices"
 msgstr "Noites sem preço de mercado"
 
@@ -3135,7 +3301,7 @@ msgstr "Leia os fatos abaixo e resolva o alerta quando ele estiver tratado."
 msgid "Booking"
 msgstr "Reserva"
 
-#: src/Admin/Screens/AlertText.php:130 src/Admin/Screens/DiagnosticsView.php:160 templates/admin/screens/changes.php:39
+#: src/Admin/Screens/AlertText.php:130 src/Admin/Screens/DiagnosticsView.php:194 templates/admin/screens/changes.php:39
 msgid "System"
 msgstr "Sistema"
 
@@ -3203,7 +3369,7 @@ msgstr "Itens"
 msgid "How many"
 msgstr "Quantos"
 
-#: src/Admin/Screens/AlertText.php:148
+#: src/Admin/Screens/AlertText.php:148 src/Admin/Screens/DiagnosticsView.php:211
 msgid "Price cuts held"
 msgstr "Cortes de preço segurados"
 
@@ -3213,11 +3379,11 @@ msgid "Until"
 msgstr "Até"
 
 #. translators: the name or the explanation of a setting of the rules
-#: src/Admin/Screens/AlertText.php:150 templates/admin/screens/operations.php:69 templates/admin/screens/overview.php:33 templates/admin/screens/overview.php:44 templates/admin/screens/settings-diagnostics.php:60 templates/admin/screens/settings-diagnostics.php:72 src/Domain/Config/Schema.php
+#: src/Admin/Screens/AlertText.php:150 src/Admin/Screens/DiagnosticsView.php:196 templates/admin/screens/operations.php:69 templates/admin/screens/overview.php:33 templates/admin/screens/overview.php:44 templates/admin/screens/settings-diagnostics.php:60 templates/admin/screens/settings-diagnostics.php:72 src/Domain/Config/Schema.php
 msgid "Mode"
 msgstr "Modo"
 
-#: src/Admin/Screens/AlertText.php:151
+#: src/Admin/Screens/AlertText.php:151 src/Admin/Screens/DiagnosticsView.php:192
 msgid "Step"
 msgstr "Passo"
 
@@ -3262,7 +3428,7 @@ msgstr "Resolvido: a rodada seguinte não o encontrou mais"
 msgid "Resolved by %s"
 msgstr "Resolvido por %s"
 
-#: src/Admin/Screens/AlertsScreen.php:186 src/Admin/Screens/DiagnosticsView.php:170
+#: src/Admin/Screens/AlertsScreen.php:186 src/Admin/Screens/DiagnosticsView.php:220
 msgid "no"
 msgstr "não"
 
@@ -3288,11 +3454,7 @@ msgid_plural "%s linked entries were approved with your selection."
 msgstr[0] "%s item ligado foi aprovado com a sua seleção."
 msgstr[1] "%s itens ligados foram aprovados com a sua seleção."
 
-#: src/Admin/Screens/ApprovalActions.php:102
-msgid "Only a person allowed to change safety limits can approve a change of the listing."
-msgstr "Só quem pode mudar os limites de segurança pode aprovar uma mudança do anúncio."
-
-#: src/Admin/Screens/ApprovalActions.php:121
+#: src/Admin/Screens/ApprovalActions.php:123
 msgid "Tick the nights to approve, or approve everything."
 msgstr "Marque as noites que quer aprovar ou aprove tudo."
 
@@ -3325,175 +3487,201 @@ msgstr "mediana %s"
 msgid "date rule removed before it is written again"
 msgstr "regra de data removida antes de ser gravada de novo"
 
-#: src/Admin/Screens/ApprovalsScreen.php:183 src/Admin/Screens/WizardView.php:307
+#: src/Admin/Screens/ApprovalsScreen.php:183
+msgid "price guests pay"
+msgstr "preço que o hóspede paga"
+
+#: src/Admin/Screens/ApprovalsScreen.php:186 src/Admin/Screens/WizardView.php:307
 msgid "before: the listing minimum, as the night has no date rule yet"
 msgstr "antes: o mínimo do anúncio, porque a noite ainda não tem regra de data"
 
-#: src/Admin/Screens/ApprovalsScreen.php:187
+#: src/Admin/Screens/ApprovalsScreen.php:190
 msgid "before: the listing maximum, as the night has no date rule yet"
 msgstr "antes: o máximo do anúncio, porque a noite ainda não tem regra de data"
 
 #. translators: %s: nights
-#: src/Admin/Screens/ApprovalsScreen.php:192
+#: src/Admin/Screens/ApprovalsScreen.php:195
 msgid "minimum stay %s night"
 msgid_plural "minimum stay %s nights"
 msgstr[0] "estadia mínima de %s noite"
 msgstr[1] "estadia mínima de %s noites"
 
-#: src/Admin/Screens/ApprovalsScreen.php:194
+#: src/Admin/Screens/ApprovalsScreen.php:197
 msgid "arrival days change"
 msgstr "os dias de chegada mudam"
 
-#: src/Admin/Screens/ApprovalsScreen.php:194
+#: src/Admin/Screens/ApprovalsScreen.php:197
 msgid "departure days change"
 msgstr "os dias de saída mudam"
 
 #. translators: 1: name, 2: date and time
-#: src/Admin/Screens/ApprovalsScreen.php:248
+#: src/Admin/Screens/ApprovalsScreen.php:251
 msgid "Approved by %1$s at %2$s"
 msgstr "Aprovado por %1$s em %2$s"
 
 #. translators: %s: number of entries
-#: src/Admin/Screens/ApprovalsScreen.php:267
+#: src/Admin/Screens/ApprovalsScreen.php:270
 msgid "%s entry"
 msgid_plural "%s entries"
 msgstr[0] "%s item"
 msgstr[1] "%s itens"
 
-#. translators: 1: Plan, Undo or Listing change, 2: date, 3: property, 4: entries, 5: rooms
-#: src/Admin/Screens/ApprovalsScreen.php:288
-msgid "%1$s of %2$s for %3$s — %4$s entries in %5$s room"
-msgid_plural "%1$s of %2$s for %3$s — %4$s entries in %5$s rooms"
-msgstr[0] "%1$s de %2$s para %3$s — %4$s itens em %5$s quarto"
-msgstr[1] "%1$s de %2$s para %3$s — %4$s itens em %5$s quartos"
+#. translators: 1: number of nights, 2: number of rooms
+#: src/Admin/Screens/ApprovalsScreen.php:292
+msgid "%1$s night in %2$s room(s)"
+msgid_plural "%1$s nights in %2$s room(s)"
+msgstr[0] "%1$s noite em %2$s quarto(s)"
+msgstr[1] "%1$s noites em %2$s quarto(s)"
+
+#. translators: %s: number of listing changes
+#. translators: %s: number
+#: src/Admin/Screens/ApprovalsScreen.php:298 src/Admin/Screens/ApprovalsScreen.php:352
+msgid "%s listing change"
+msgid_plural "%s listing changes"
+msgstr[0] "%s mudança do anúncio"
+msgstr[1] "%s mudanças do anúncio"
+
+#. translators: 1: Plan, Undo or Listing change, 2: date, 3: property, 4: nights and rooms
+#: src/Admin/Screens/ApprovalsScreen.php:303
+msgid "%1$s of %2$s for %3$s — %4$s"
+msgstr "%1$s de %2$s para %3$s — %4$s"
 
 #. translators: %s: time
-#: src/Admin/Screens/ApprovalsScreen.php:301
+#: src/Admin/Screens/ApprovalsScreen.php:315
 msgid "This plan expired at %s: the next run proposes a new one."
 msgstr "Este plano expirou em %s: a próxima rodada propõe um novo."
 
-#: src/Admin/Screens/ApprovalsScreen.php:304
+#: src/Admin/Screens/ApprovalsScreen.php:318
 msgid "the calendar it was built on gets too old then"
 msgstr "o calendário em que ele foi montado fica velho demais nessa hora"
 
-#: src/Admin/Screens/ApprovalsScreen.php:304
+#: src/Admin/Screens/ApprovalsScreen.php:318
 msgid "midnight of the property"
 msgstr "meia-noite na propriedade"
 
 #. translators: 1: time, 2: why it expires then
-#: src/Admin/Screens/ApprovalsScreen.php:307
+#: src/Admin/Screens/ApprovalsScreen.php:321
 msgid "valid until %1$s (%2$s)"
 msgstr "vale até %1$s (%2$s)"
 
 #. translators: 1: nights, 2: median change, 3: largest rise
-#: src/Admin/Screens/ApprovalsScreen.php:319
+#: src/Admin/Screens/ApprovalsScreen.php:333
 msgid "%1$s night up (median %2$s, largest %3$s)"
 msgid_plural "%1$s nights up (median %2$s, largest %3$s)"
 msgstr[0] "%1$s noite sobe (mediana %2$s, maior %3$s)"
 msgstr[1] "%1$s noites sobem (mediana %2$s, maior %3$s)"
 
 #. translators: 1: nights, 2: median change
-#: src/Admin/Screens/ApprovalsScreen.php:327
+#: src/Admin/Screens/ApprovalsScreen.php:341
 msgid "%1$s night down (median %2$s)"
 msgid_plural "%1$s nights down (median %2$s)"
 msgstr[0] "%1$s noite desce (mediana %2$s)"
 msgstr[1] "%1$s noites descem (mediana %2$s)"
 
 #. translators: %s: nights
-#: src/Admin/Screens/ApprovalsScreen.php:330
+#: src/Admin/Screens/ApprovalsScreen.php:344
 msgid "%s tonight or tomorrow"
 msgid_plural "%s tonight or tomorrow"
 msgstr[0] "%s hoje ou amanhã"
 msgstr[1] "%s hoje ou amanhã"
 
 #. translators: %s: nights
-#: src/Admin/Screens/ApprovalsScreen.php:332
+#: src/Admin/Screens/ApprovalsScreen.php:346
 msgid "%s on a holiday"
 msgid_plural "%s on holidays"
 msgstr[0] "%s num feriado"
 msgstr[1] "%s em feriados"
 
 #. translators: %s: number
-#: src/Admin/Screens/ApprovalsScreen.php:335
+#: src/Admin/Screens/ApprovalsScreen.php:349
 msgid "%s rule deleted and written again"
 msgid_plural "%s rules deleted and written again"
 msgstr[0] "%s regra apagada e gravada de novo"
 msgstr[1] "%s regras apagadas e gravadas de novo"
 
-#. translators: %s: number
-#: src/Admin/Screens/ApprovalsScreen.php:338
-msgid "%s listing change"
-msgid_plural "%s listing changes"
-msgstr[0] "%s mudança do anúncio"
-msgstr[1] "%s mudanças do anúncio"
-
-#: src/Admin/Screens/ApprovalsScreen.php:346
+#: src/Admin/Screens/ApprovalsScreen.php:360
 msgid "This property is in shadow mode: plans are only shown in Nights."
 msgstr "Esta propriedade está em modo sombra: os planos só aparecem em Noites."
 
-#: src/Admin/Screens/ApprovalsScreen.php:347
+#: src/Admin/Screens/ApprovalsScreen.php:361
 msgid "Autonomous: only listing changes and repairs wait here."
 msgstr "Autônomo: só mudanças do anúncio e reparos esperam aqui."
 
-#: src/Admin/Screens/ApprovalsScreen.php:348
+#: src/Admin/Screens/ApprovalsScreen.php:362
 msgid "The next full run proposes the next plan."
 msgstr "A próxima rodada completa propõe o próximo plano."
 
-#: src/Admin/Screens/ChangeActions.php:50
+#: src/Admin/Screens/ChangeActions.php:53
 msgid "Tick the changes to undo."
 msgstr "Marque as mudanças que quer desfazer."
 
 #. translators: %s: number of changes
-#: src/Admin/Screens/ChangeActions.php:57
+#: src/Admin/Screens/ChangeActions.php:66
 msgid "The undo of %s change is waiting for approval."
 msgid_plural "The undo of %s changes is waiting for approval."
 msgstr[0] "O desfazer de %s mudança está aguardando aprovação."
 msgstr[1] "O desfazer de %s mudanças está aguardando aprovação."
 
 #. translators: %s: number of changes undone
-#: src/Admin/Screens/ChangeActions.php:66
+#: src/Admin/Screens/ChangeActions.php:75
 msgid "%s change undone."
 msgid_plural "%s changes undone."
 msgstr[0] "%s mudança desfeita."
 msgstr[1] "%s mudanças desfeitas."
 
 #. translators: 1: name, 2: date and time
-#: src/Admin/Screens/ChangesScreen.php:102
+#: src/Admin/Screens/ChangesScreen.php:135
 msgid "Undo by %1$s · %2$s"
 msgstr "Desfeito por %1$s · %2$s"
 
-#: src/Admin/Screens/ChangesScreen.php:102
+#: src/Admin/Screens/ChangesScreen.php:135 src/Admin/Screens/DiagnosticsView.php:224
 msgid "the plugin"
 msgstr "o plugin"
 
 #. translators: 1: name, 2: date and time
-#: src/Admin/Screens/ChangesScreen.php:104
+#: src/Admin/Screens/ChangesScreen.php:137
 msgid "Approved write · approved by %1$s · %2$s"
 msgstr "Gravação aprovada · aprovada por %1$s · %2$s"
 
 #. translators: %s: date and time
-#: src/Admin/Screens/ChangesScreen.php:106
+#: src/Admin/Screens/ChangesScreen.php:139
 msgid "Autonomous run · %s"
 msgstr "Rodada autônoma · %s"
 
-#: src/Admin/Screens/ChangesScreen.php:134
+#: src/Admin/Screens/ChangesScreen.php:165
 msgid "seen on the channel"
 msgstr "visto no canal"
 
-#: src/Admin/Screens/ChangesScreen.php:135
-msgid "stored"
-msgstr "gravado"
+#: src/Admin/Screens/ChangesScreen.php:166
+msgid "read back from the system"
+msgstr "conferido no sistema"
 
 #. translators: %s: date and time
-#: src/Admin/Screens/ChangesScreen.php:140
+#: src/Admin/Screens/ChangesScreen.php:171
 msgid "undone %s"
 msgstr "desfeito %s"
 
-#: src/Admin/Screens/ChangesScreen.php:152
+#: src/Admin/Screens/ChangesScreen.php:190
+msgid "before: the listing minimum, as the night had no date rule"
+msgstr "antes: o mínimo do anúncio, porque a noite não tinha regra de data"
+
+#: src/Admin/Screens/ChangesScreen.php:191
+msgid "before: the listing maximum, as the night had no date rule"
+msgstr "antes: o máximo do anúncio, porque a noite não tinha regra de data"
+
+#: src/Admin/Screens/ChangesScreen.php:216
+msgid "back to the listing minimum: the night has no date rule"
+msgstr "volta ao mínimo do anúncio: a noite não tem regra de data"
+
+#: src/Admin/Screens/ChangesScreen.php:217
+msgid "back to the listing maximum: the night has no date rule"
+msgstr "volta ao máximo do anúncio: a noite não tem regra de data"
+
+#: src/Admin/Screens/ChangesScreen.php:230 src/Admin/Screens/NightDetailView.php:193
 msgid "set"
 msgstr "definido"
 
-#: src/Admin/Screens/ChangesScreen.php:153 src/Admin/Screens/NightDetailView.php:188
+#: src/Admin/Screens/ChangesScreen.php:231 src/Admin/Screens/NightDetailView.php:195
 msgid "days of the week"
 msgstr "dias da semana"
 
@@ -3507,60 +3695,65 @@ msgstr "Testado há %1$s segundos: %2$s"
 msgid "The key of %s was forgotten. The plugin cannot read from it until a new key is saved."
 msgstr "A chave de %s foi esquecida. O plugin não consegue ler dele até uma chave nova ser salva."
 
-#. translators: %s: Beds24 or PriceLabs
-#: src/Admin/Screens/ConnectionText.php:34
+#. translators: %s: name of the PMS
+#: src/Admin/Screens/ConnectionText.php:35
+msgid "%1$s refused the token. Create a new token in %1$s and paste it here."
+msgstr "%1$s recusou o token. Crie um token novo em %1$s e cole aqui."
+
+#. translators: %s: name of the pricing system
+#: src/Admin/Screens/ConnectionText.php:37
 msgid "%1$s refused the key. Create a new key in %1$s and paste it here."
 msgstr "%1$s recusou a chave. Crie uma chave nova em %1$s e cole aqui."
 
 #. translators: %s: Beds24 or PriceLabs
-#: src/Admin/Screens/ConnectionText.php:36
+#: src/Admin/Screens/ConnectionText.php:39
 msgid "%s accepted the key but does not allow this access. Check the permissions of the key."
 msgstr "%s aceitou a chave, mas ela não dá este acesso. Confira as permissões da chave."
 
 #. translators: %s: Beds24 or PriceLabs
-#: src/Admin/Screens/ConnectionText.php:38
+#: src/Admin/Screens/ConnectionText.php:41
 msgid "Could not reach %s. Try again in a few minutes."
 msgstr "Não foi possível falar com %s. Tente de novo em alguns minutos."
 
 #. translators: %s: Beds24 or PriceLabs
-#: src/Admin/Screens/ConnectionText.php:40
+#: src/Admin/Screens/ConnectionText.php:43
 msgid "%s asked to wait. Try again in a minute."
 msgstr "%s pediu para esperar. Tente de novo em um minuto."
 
 #. translators: %s: Beds24 or PriceLabs
-#: src/Admin/Screens/ConnectionText.php:42
+#: src/Admin/Screens/ConnectionText.php:45
 msgid "%s did not find what the plugin asked for. Check the ids typed here."
 msgstr "%s não encontrou o que o plugin pediu. Confira os ids digitados aqui."
 
-#: src/Admin/Screens/ConnectionText.php:43
+#: src/Admin/Screens/ConnectionText.php:46
 msgid "The key works but sees no property: check the property ids."
 msgstr "A chave funciona, mas não vê nenhuma propriedade: confira os ids das propriedades."
 
-#: src/Admin/Screens/ConnectionText.php:44
+#: src/Admin/Screens/ConnectionText.php:47
 msgid "The key works but the account has no listing."
 msgstr "A chave funciona, mas a conta não tem nenhum anúncio."
 
 #. translators: 1: number of listings, 2: name of the PMS in the pricing system
-#: src/Admin/Screens/ConnectionText.php:47
+#: src/Admin/Screens/ConnectionText.php:50
 msgid "%1$s listings found; none belongs to the PMS named \"%2$s\"."
 msgstr "%1$s anúncios encontrados; nenhum pertence ao PMS chamado \"%2$s\"."
 
 #. translators: %s: Beds24 or PriceLabs
-#: src/Admin/Screens/ConnectionText.php:52
+#: src/Admin/Screens/ConnectionText.php:55
 msgid "No key of %s is saved yet."
 msgstr "Ainda não há chave de %s salva."
 
-#: src/Admin/Screens/ConnectionText.php:53
+#: src/Admin/Screens/ConnectionText.php:56
 msgid "The test failed. Nothing was changed."
 msgstr "O teste falhou. Nada foi alterado."
 
 #. translators: 1: listings of the PMS, 2: listings in the account
-#: src/Admin/Screens/ConnectionText.php:65
+#: src/Admin/Screens/ConnectionText.php:68
 msgid "Connected to PriceLabs: %1$s of %2$s listings belong to your PMS."
 msgstr "Conectado ao PriceLabs: %1$s de %2$s anúncios pertencem ao seu PMS."
 
 #. translators: %s: number of properties
-#: src/Admin/Screens/ConnectionText.php:73
+#: src/Admin/Screens/ConnectionText.php:76
 msgid "Connected to Beds24: %s property visible."
 msgid_plural "Connected to Beds24: %s properties visible."
 msgstr[0] "Conectado ao Beds24: %s propriedade visível."
@@ -3597,127 +3790,251 @@ msgid "Last test %1$s: %2$s"
 msgstr "Último teste %1$s: %2$s"
 
 #. translators: %s: version
-#: src/Admin/Screens/DiagnosticsView.php:47
+#: src/Admin/Screens/DiagnosticsView.php:48
 msgid "Plugin %s"
 msgstr "Plugin %s"
 
 #. translators: 1: version of the database, 2: latest version
-#: src/Admin/Screens/DiagnosticsView.php:49
+#: src/Admin/Screens/DiagnosticsView.php:50
 msgid "Database %1$s of %2$s"
 msgstr "Banco de dados %1$s de %2$s"
 
 #. translators: %s: version
-#: src/Admin/Screens/DiagnosticsView.php:51
+#: src/Admin/Screens/DiagnosticsView.php:52
 msgid "WordPress %s"
 msgstr "WordPress %s"
 
 #. translators: %s: version
-#: src/Admin/Screens/DiagnosticsView.php:53 src/Admin/Screens/WizardView.php:133
+#: src/Admin/Screens/DiagnosticsView.php:54 src/Admin/Screens/WizardView.php:133
 msgid "PHP %s"
 msgstr "PHP %s"
 
-#: src/Admin/Screens/DiagnosticsView.php:54
+#: src/Admin/Screens/DiagnosticsView.php:55
 msgid "Encryption available"
 msgstr "Criptografia disponível"
 
-#: src/Admin/Screens/DiagnosticsView.php:54
+#: src/Admin/Screens/DiagnosticsView.php:55
 msgid "Encryption missing: keys cannot be saved"
 msgstr "Criptografia ausente: as chaves não podem ser salvas"
 
-#: src/Admin/Screens/DiagnosticsView.php:56
+#: src/Admin/Screens/DiagnosticsView.php:57
 msgid "RITMO_SECRET_KEY in wp-config.php is shorter than 32 characters: saved keys cannot be used until it is fixed."
 msgstr "A RITMO_SECRET_KEY no wp-config.php tem menos de 32 caracteres: as chaves salvas não podem ser usadas até isso ser corrigido."
 
-#: src/Admin/Screens/DiagnosticsView.php:57 src/Admin/Screens/WizardView.php:136
+#: src/Admin/Screens/DiagnosticsView.php:58 src/Admin/Screens/WizardView.php:136
 msgid "Keys are protected only by the database: add RITMO_SECRET_KEY to wp-config.php."
 msgstr "As chaves estão protegidas só pelo banco de dados: acrescente a RITMO_SECRET_KEY ao wp-config.php."
 
-#: src/Admin/Screens/DiagnosticsView.php:58 src/Admin/Screens/WizardView.php:137
+#: src/Admin/Screens/DiagnosticsView.php:59 src/Admin/Screens/WizardView.php:137
 msgid "Keys are protected by a key in wp-config.php."
 msgstr "As chaves estão protegidas por uma chave no wp-config.php."
 
-#: src/Admin/Screens/DiagnosticsView.php:62 src/Admin/Screens/WizardView.php:139
+#: src/Admin/Screens/DiagnosticsView.php:63 src/Admin/Screens/WizardView.php:139
 msgid "WP-Cron is off: a server cron must call wp-cron.php every 5 minutes."
 msgstr "O WP-Cron está desligado: um cron do servidor precisa chamar o wp-cron.php a cada 5 minutos."
 
-#: src/Admin/Screens/DiagnosticsView.php:62
+#: src/Admin/Screens/DiagnosticsView.php:63
 msgid "WP-Cron is on: runs start when the site is visited."
 msgstr "O WP-Cron está ligado: as rodadas começam quando o site é visitado."
 
-#: src/Admin/Screens/DiagnosticsView.php:63
+#: src/Admin/Screens/DiagnosticsView.php:64
 msgid "No tick is scheduled."
 msgstr "Nenhum ciclo está agendado."
 
 #. translators: %s: date and time
-#: src/Admin/Screens/DiagnosticsView.php:65
+#: src/Admin/Screens/DiagnosticsView.php:66
 msgid "Next tick: %s"
 msgstr "Próximo ciclo: %s"
 
 #. translators: %s: property
-#: src/Admin/Screens/DiagnosticsView.php:72
+#: src/Admin/Screens/DiagnosticsView.php:73
 msgid "%s: free"
 msgstr "%s: livre"
 
 #. translators: %s: property
-#: src/Admin/Screens/DiagnosticsView.php:74
+#: src/Admin/Screens/DiagnosticsView.php:75
 msgid "%s: a run is going on"
 msgstr "%s: há uma rodada em andamento"
 
 #. translators: %s: seconds
-#: src/Admin/Screens/DiagnosticsView.php:108
+#: src/Admin/Screens/DiagnosticsView.php:110
 msgid "%s second"
 msgid_plural "%s seconds"
 msgstr[0] "%s segundo"
 msgstr[1] "%s segundos"
 
-#: src/Admin/Screens/DiagnosticsView.php:110
+#: src/Admin/Screens/DiagnosticsView.php:112
 msgid "It stopped with an error; see the log."
 msgstr "Ela parou com um erro; veja o registro."
 
 #. translators: 1: run number, 2: kind of run
-#: src/Admin/Screens/DiagnosticsView.php:135
+#: src/Admin/Screens/DiagnosticsView.php:137
 msgid "Run %1$s · %2$s"
 msgstr "Rodada %1$s · %2$s"
 
-#: src/Admin/Screens/DiagnosticsView.php:156 templates/admin/screens/settings-diagnostics.php:57 templates/admin/screens/settings-diagnostics.php:69
+#: src/Admin/Screens/DiagnosticsView.php:191 templates/admin/screens/settings-diagnostics.php:57 templates/admin/screens/settings-diagnostics.php:69
 msgid "Run"
 msgstr "Rodada"
 
-#. translators: the name or the explanation of a setting of the rules
-#: src/Admin/Screens/DiagnosticsView.php:157 src/Domain/Config/Schema.php
-msgid "Stage"
-msgstr "Etapa"
-
-#: src/Admin/Screens/DiagnosticsView.php:158
-msgid "Duration (ms)"
-msgstr "Duração (ms)"
-
-#: src/Admin/Screens/DiagnosticsView.php:161 templates/admin/screens/alerts.php:32 templates/admin/screens/alerts.php:108 templates/admin/screens/alerts.php:119 templates/admin/screens/approvals.php:34 templates/admin/screens/approvals.php:45 templates/admin/screens/parts/head.php:48 templates/admin/screens/settings-diagnostics.php:61 templates/admin/screens/settings-diagnostics.php:73
+#: src/Admin/Screens/DiagnosticsView.php:195 templates/admin/screens/alerts.php:32 templates/admin/screens/alerts.php:108 templates/admin/screens/alerts.php:119 templates/admin/screens/approvals.php:34 templates/admin/screens/approvals.php:45 templates/admin/screens/parts/head.php:48 templates/admin/screens/settings-diagnostics.php:61 templates/admin/screens/settings-diagnostics.php:73
 msgid "Status"
 msgstr "Situação"
 
-#. translators: %s: number of items
-#: src/Admin/Screens/DiagnosticsView.php:167
-msgid "%s item"
-msgid_plural "%s items"
-msgstr[0] "%s item"
-msgstr[1] "%s itens"
+#: src/Admin/Screens/DiagnosticsView.php:197 templates/admin/screens/changes.php:46 templates/admin/screens/operations.php:47 templates/admin/screens/operations.php:55
+msgid "Who"
+msgstr "Quem"
 
-#: src/Admin/Screens/DiagnosticsView.php:185
+#: src/Admin/Screens/DiagnosticsView.php:200
+msgid "Listings found"
+msgstr "Anúncios encontrados"
+
+#: src/Admin/Screens/DiagnosticsView.php:201
+msgid "Listings missing"
+msgstr "Anúncios que faltam"
+
+#: src/Admin/Screens/DiagnosticsView.php:202
+msgid "Bookings read since"
+msgstr "Reservas lidas desde"
+
+#: src/Admin/Screens/DiagnosticsView.php:203
+msgid "Nights that would change"
+msgstr "Noites que mudariam"
+
+#: src/Admin/Screens/DiagnosticsView.php:204
+msgid "Refused by the safety checks"
+msgstr "Recusadas pelas conferências de segurança"
+
+#: src/Admin/Screens/DiagnosticsView.php:206
+msgid "Calls sent"
+msgstr "Chamadas enviadas"
+
+#: src/Admin/Screens/DiagnosticsView.php:207
+msgid "Calls taken"
+msgstr "Chamadas aceitas"
+
+#: src/Admin/Screens/DiagnosticsView.php:208
+msgid "Nights confirmed in the pricing system"
+msgstr "Noites confirmadas no sistema de preços"
+
+#: src/Admin/Screens/DiagnosticsView.php:209
+msgid "Nights confirmed in the PMS"
+msgstr "Noites confirmadas no PMS"
+
+#: src/Admin/Screens/DiagnosticsView.php:210
+msgid "Nights waiting for approval"
+msgstr "Noites aguardando aprovação"
+
+#: src/Admin/Screens/DiagnosticsView.php:246
 msgid "detail"
 msgstr "detalhe"
 
-#: src/Admin/Screens/DiagnosticsView.php:186
+#: src/Admin/Screens/DiagnosticsView.php:247
 msgid "information"
 msgstr "informação"
 
-#: src/Admin/Screens/DiagnosticsView.php:187
+#: src/Admin/Screens/DiagnosticsView.php:248
 msgid "warning"
 msgstr "atenção"
 
-#: src/Admin/Screens/DiagnosticsView.php:188
+#: src/Admin/Screens/DiagnosticsView.php:249
 msgid "error"
 msgstr "erro"
+
+#: src/Admin/Screens/LogText.php:21
+msgid "A run starts."
+msgstr "Uma rodada começa."
+
+#: src/Admin/Screens/LogText.php:22
+msgid "A run resumes."
+msgstr "Uma rodada continua."
+
+#: src/Admin/Screens/LogText.php:23
+msgid "A run ended."
+msgstr "Uma rodada terminou."
+
+#: src/Admin/Screens/LogText.php:24
+msgid "A stage of the run completed."
+msgstr "Uma etapa da rodada terminou."
+
+#: src/Admin/Screens/LogText.php:25
+msgid "A stage of the run failed."
+msgstr "Uma etapa da rodada falhou."
+
+#: src/Admin/Screens/LogText.php:26
+msgid "A run failed with an unexpected error."
+msgstr "Uma rodada falhou com um erro inesperado."
+
+#: src/Admin/Screens/LogText.php:27
+msgid "A run left open on an earlier day was closed as failed."
+msgstr "Uma rodada deixada aberta num dia anterior foi encerrada como falha."
+
+#: src/Admin/Screens/LogText.php:28
+msgid "An open run was stopped between two of its steps."
+msgstr "Uma rodada aberta foi parada entre duas etapas."
+
+#: src/Admin/Screens/LogText.php:29
+msgid "An open run was stopped by the emergency switch."
+msgstr "Uma rodada aberta foi parada pela chave de emergência."
+
+#: src/Admin/Screens/LogText.php:30
+msgid "A read of the pricing system finished."
+msgstr "Uma leitura do sistema de preços terminou."
+
+#: src/Admin/Screens/LogText.php:31
+msgid "A read of the PMS finished."
+msgstr "Uma leitura do PMS terminou."
+
+#: src/Admin/Screens/LogText.php:32
+msgid "A write to the pricing system finished."
+msgstr "Uma gravação no sistema de preços terminou."
+
+#: src/Admin/Screens/LogText.php:33
+msgid "A write to the PMS finished."
+msgstr "Uma gravação no PMS terminou."
+
+#: src/Admin/Screens/LogText.php:34
+msgid "The pricing system sent rows without a date or a price; they were left out."
+msgstr "O sistema de preços mandou linhas sem data ou sem preço; elas ficaram de fora."
+
+#: src/Admin/Screens/LogText.php:35
+msgid "The PMS refused the access token; the plugin renews it once."
+msgstr "O PMS recusou o token de acesso; o plugin o renova uma vez."
+
+#: src/Admin/Screens/LogText.php:36
+msgid "The PMS refused the access token of a write; the plugin renews it and sends the same change once."
+msgstr "O PMS recusou o token de acesso de uma gravação; o plugin o renova e envia a mesma mudança uma vez."
+
+#: src/Admin/Screens/LogText.php:37
+msgid "A request that could change an external system was blocked."
+msgstr "Um pedido que poderia mudar um sistema externo foi bloqueado."
+
+#: src/Admin/Screens/LogText.php:38
+msgid "An alert e-mail could not be sent."
+msgstr "Um e-mail de alerta não pôde ser enviado."
+
+#: src/Admin/Screens/LogText.php:39
+msgid "An alert e-mail has no recipient: nobody can approve, or everyone opted out."
+msgstr "Um e-mail de alerta não tem destinatário: ninguém pode aprovar ou todos pediram para não receber."
+
+#: src/Admin/Screens/LogText.php:40
+msgid "The scheduled runs of a property were paused."
+msgstr "As rodadas agendadas de uma propriedade foram pausadas."
+
+#: src/Admin/Screens/LogText.php:41
+msgid "The scheduled runs of a property were resumed."
+msgstr "As rodadas agendadas de uma propriedade foram retomadas."
+
+#: src/Admin/Screens/LogText.php:42
+msgid "A paused property resumed at the end of its pause."
+msgstr "Uma propriedade pausada voltou ao fim da pausa."
+
+#: src/Admin/Screens/LogText.php:43
+msgid "The scheduler failed; it tries again on its next turn."
+msgstr "O agendador falhou; ele tenta de novo na próxima vez."
+
+#: src/Admin/Screens/LogText.php:44
+msgid "The scheduler failed on a property; the others continue."
+msgstr "O agendador falhou numa propriedade; as outras continuam."
 
 #: src/Admin/Screens/NightActions.php:41
 msgid "Tick the box to confirm you understand the plugin may change this night again."
@@ -3808,8 +4125,8 @@ msgstr[0] "Estadia mínima: %s noite"
 msgstr[1] "Estadia mínima: %s noites"
 
 #: src/Admin/Screens/NightDetailView.php:98
-msgid "The last run did not price this night."
-msgstr "A última rodada não precificou esta noite."
+msgid "The last run did not price this night: without market prices for a night (Market) the plugin does not price it."
+msgstr "A última rodada não precificou esta noite: sem preços de mercado para uma noite (Mercado), o plugin não a precifica."
 
 #: src/Admin/Screens/NightDetailView.php:101
 msgid "The safety checks refused the change of this night; it is not written."
@@ -3838,44 +4155,56 @@ msgstr "chegou aos canais"
 msgid "Run %d"
 msgstr "Rodada %d"
 
-#: src/Admin/Screens/NightDetailView.php:147
-msgid "would write or wrote"
-msgstr "gravaria ou gravou"
+#: src/Admin/Screens/NightDetailView.php:147 src/Admin/Screens/NightText.php:110 src/Admin/Screens/NightsScreen.php:152
+msgid "refused by the safety checks"
+msgstr "recusada pelas conferências de segurança"
 
-#: src/Admin/Screens/NightDetailView.php:149 src/Admin/Screens/NightText.php:111
+#: src/Admin/Screens/NightDetailView.php:148 src/Admin/Screens/NightText.php:111
 msgid "no change"
 msgstr "sem mudança"
 
-#: src/Admin/Screens/NightDetailView.php:161
+#: src/Admin/Screens/NightDetailView.php:150
+msgid "would write (shadow mode: nothing is sent)"
+msgstr "gravaria (modo sombra: nada é enviado)"
+
+#: src/Admin/Screens/NightDetailView.php:151
+msgid "proposed: waits for a person to approve it"
+msgstr "proposto: aguarda uma pessoa aprovar"
+
+#: src/Admin/Screens/NightDetailView.php:152
+msgid "planned, not written by this run (see its report)"
+msgstr "planejado, não gravado por esta rodada (veja o relatório dela)"
+
+#: src/Admin/Screens/NightDetailView.php:164
 msgid "Autonomous run"
 msgstr "Rodada autônoma"
 
 #. translators: %s: name of the person
-#: src/Admin/Screens/NightDetailView.php:163
+#: src/Admin/Screens/NightDetailView.php:166
 msgid "Approved by %s"
 msgstr "Aprovado por %s"
 
-#: src/Admin/Screens/NightDetailView.php:181
+#: src/Admin/Screens/NightDetailView.php:184
 msgid "from the listing: no date rule for this night"
 msgstr "do anúncio: sem regra de data nesta noite"
 
-#: src/Admin/Screens/NightDetailView.php:194
+#: src/Admin/Screens/NightDetailView.php:203
 msgid "Closed in the PMS"
 msgstr "Fechada no PMS"
 
-#: src/Admin/Screens/NightDetailView.php:195
+#: src/Admin/Screens/NightDetailView.php:204
 msgid "No arrival this night"
 msgstr "Sem chegada nesta noite"
 
-#: src/Admin/Screens/NightDetailView.php:196
+#: src/Admin/Screens/NightDetailView.php:205
 msgid "No departure this night"
 msgstr "Sem saída nesta noite"
 
-#: src/Admin/Screens/NightDetailView.php:197
+#: src/Admin/Screens/NightDetailView.php:206
 msgid "No arrival and no departure this night"
 msgstr "Sem chegada e sem saída nesta noite"
 
-#: src/Admin/Screens/NightDetailView.php:198
+#: src/Admin/Screens/NightDetailView.php:207
 msgid "Arrival and departure allowed"
 msgstr "Chegada e saída permitidas"
 
@@ -3887,11 +4216,11 @@ msgstr "sem regra"
 msgid "another rule"
 msgstr "outra regra"
 
-#: src/Admin/Screens/NightText.php:44 src/Admin/Screens/NightText.php:73 src/Admin/Screens/OverviewScreen.php:110 templates/admin/market/prices.php:63
+#: src/Admin/Screens/NightText.php:44 src/Admin/Screens/NightText.php:73 src/Admin/Screens/OverviewScreen.php:111 templates/admin/market/prices.php:63
 msgid "sold out"
 msgstr "esgotada"
 
-#: src/Admin/Screens/NightText.php:47 src/Admin/Screens/NightText.php:75 src/Admin/Screens/OverviewScreen.php:111
+#: src/Admin/Screens/NightText.php:47 src/Admin/Screens/NightText.php:75 src/Admin/Screens/OverviewScreen.php:112
 msgid "closed"
 msgstr "fechada"
 
@@ -3913,7 +4242,7 @@ msgstr "não lido"
 msgid "not priced by the plugin"
 msgstr "não precificada pelo plugin"
 
-#: src/Admin/Screens/NightText.php:91 src/Admin/Screens/NightsScreen.php:151
+#: src/Admin/Screens/NightText.php:91 src/Admin/Screens/NightsScreen.php:153
 msgid "frozen"
 msgstr "congelada"
 
@@ -3937,10 +4266,6 @@ msgstr[1] "%s alertas abertos"
 msgid "the last run would change it"
 msgstr "a última rodada mudaria"
 
-#: src/Admin/Screens/NightText.php:110 src/Admin/Screens/NightsScreen.php:150
-msgid "refused by the safety checks"
-msgstr "recusada pelas conferências de segurança"
-
 #. translators: 1: property name, 2: range of nights, 3: when prices were read
 #: src/Admin/Screens/NightsScreen.php:118
 msgid "Nights of %1$s, %2$s, %3$s"
@@ -3950,55 +4275,59 @@ msgstr "Noites de %1$s, %2$s, %3$s"
 msgid "prices from the PMS calendar (no run yet)"
 msgstr "preços do calendário do PMS (ainda sem rodada)"
 
+#: src/Admin/Screens/NightsScreen.php:121
+msgid "prices from the PMS calendar (the last run priced no night)"
+msgstr "preços do calendário do PMS (a última rodada não precificou nenhuma noite)"
+
 #. translators: %s: date and time
 #: src/Admin/Screens/NightsScreen.php:123
 msgid "prices as read at %s"
 msgstr "preços como lidos em %s"
 
 #. translators: %s: number of nights
-#: src/Admin/Screens/NightsScreen.php:130
+#: src/Admin/Screens/NightsScreen.php:132
 msgid "← Previous %s nights"
 msgstr "← %s noites anteriores"
 
 #. translators: %s: number of nights
-#: src/Admin/Screens/NightsScreen.php:132
+#: src/Admin/Screens/NightsScreen.php:134
 msgid "Next %s nights →"
 msgstr "Próximas %s noites →"
 
-#: src/Admin/Screens/NightsScreen.php:148 templates/admin/editors/band.php:24
+#: src/Admin/Screens/NightsScreen.php:150 templates/admin/editors/band.php:24
 msgid "every night"
 msgstr "todas as noites"
 
-#: src/Admin/Screens/NightsScreen.php:149
+#: src/Admin/Screens/NightsScreen.php:151
 msgid "the last run would change"
 msgstr "a última rodada mudaria"
 
-#: src/Admin/Screens/NightsScreen.php:152
+#: src/Admin/Screens/NightsScreen.php:154
 msgid "with an owner order"
 msgstr "com ordem do dono"
 
-#: src/Admin/Screens/NightsScreen.php:153
+#: src/Admin/Screens/NightsScreen.php:155
 msgid "with an open alert"
 msgstr "com alerta aberto"
 
-#: src/Admin/Screens/NightsScreen.php:159
+#: src/Admin/Screens/NightsScreen.php:161
 msgid "price now"
 msgstr "preço agora"
 
-#: src/Admin/Screens/NightsScreen.php:163
+#: src/Admin/Screens/NightsScreen.php:165
 msgid "units sold"
 msgstr "unidades vendidas"
 
-#: src/Admin/Screens/NightsScreen.php:164
+#: src/Admin/Screens/NightsScreen.php:166
 msgid "pace"
 msgstr "ritmo"
 
-#: src/Admin/Screens/NightsScreen.php:165
+#: src/Admin/Screens/NightsScreen.php:167
 msgid "rule that decided"
 msgstr "regra que decidiu"
 
 #. translators: 1: first room, 2: last room
-#: src/Admin/Screens/NightsScreen.php:222
+#: src/Admin/Screens/NightsScreen.php:224
 msgid "Rooms %1$s–%2$s"
 msgstr "Quartos %1$s–%2$s"
 
@@ -4041,13 +4370,13 @@ msgstr "Rodadas agendadas retomadas."
 msgid "Choose to engage or to release the emergency switch."
 msgstr "Escolha ligar ou desligar a chave de emergência."
 
-#: src/Admin/Screens/OperationsActions.php:154 src/Admin/Screens/ScreenActions.php:45 src/Rest/OperationRoutes.php:179 src/Rest/RestRoutes.php:79
+#: src/Admin/Screens/OperationsActions.php:154 src/Admin/Screens/ScreenActions.php:45 src/Rest/OperationRoutes.php:200 src/Rest/RestRoutes.php:79
 msgid "You are not allowed to do this."
 msgstr "Você não tem permissão para fazer isso."
 
 #: src/Admin/Screens/OperationsActions.php:158
-msgid "Emergency switch engaged: no run starts and running ones stop before their next stage."
-msgstr "Chave de emergência ligada: nenhuma rodada começa, e as que estão rodando param antes da próxima etapa."
+msgid "Emergency switch engaged: nothing is written any more. A run that was writing stops before its next step; scheduled runs only read and watch the bookings."
+msgstr "Chave de emergência ligada: nada mais é gravado. Uma rodada que estava gravando para antes da próxima etapa; as rodadas agendadas só leem e vigiam as reservas."
 
 #: src/Admin/Screens/OperationsActions.php:161
 msgid "The option was released, but the constant RITMO_KILL_SWITCH in wp-config.php keeps the switch engaged."
@@ -4092,7 +4421,7 @@ msgid "Both connections passed a test within 24 hours."
 msgstr "As duas conexões passaram num teste nas últimas 24 horas."
 
 #. translators: %s: date and time
-#: src/Admin/Screens/OperationsScreen.php:166 src/Admin/Screens/OverviewScreen.php:280
+#: src/Admin/Screens/OperationsScreen.php:166 src/Admin/Screens/OverviewScreen.php:285
 msgid "Next full run: %s"
 msgstr "Próxima rodada completa: %s"
 
@@ -4114,213 +4443,237 @@ msgid "An approved plan was written"
 msgstr "Um plano aprovado foi gravado"
 
 #: src/Admin/Screens/OperationsText.php:34
+msgid "An approved plan was written in part"
+msgstr "Um plano aprovado foi gravado em parte"
+
+#: src/Admin/Screens/OperationsText.php:35
+msgid "The write of an approved plan failed"
+msgstr "A gravação de um plano aprovado falhou"
+
+#: src/Admin/Screens/OperationsText.php:36
 msgid "A plan changed status"
 msgstr "Um plano mudou de situação"
 
-#: src/Admin/Screens/OperationsText.php:36
+#: src/Admin/Screens/OperationsText.php:38
 msgid "Emergency switch engaged"
 msgstr "Chave de emergência ligada"
 
-#: src/Admin/Screens/OperationsText.php:36
+#: src/Admin/Screens/OperationsText.php:38
 msgid "Emergency switch released"
 msgstr "Chave de emergência desligada"
 
-#: src/Admin/Screens/OperationsText.php:37
+#: src/Admin/Screens/OperationsText.php:39
 msgid "The hold of price cuts after a wave of cancellations was released"
 msgstr "A trava de cortes de preço depois de uma onda de cancelamentos foi liberada"
 
-#: src/Admin/Screens/OperationsText.php:38
+#: src/Admin/Screens/OperationsText.php:40
 msgid "Frozen nights were released"
 msgstr "Noites congeladas foram liberadas"
 
-#: src/Admin/Screens/OperationsText.php:39
+#: src/Admin/Screens/OperationsText.php:41
 msgid "An undo was written"
 msgstr "Um desfazer foi gravado"
 
-#: src/Admin/Screens/OperationsText.php:39
+#: src/Admin/Screens/OperationsText.php:41
 msgid "An undo was written in part"
 msgstr "Um desfazer foi gravado em parte"
 
-#: src/Admin/Screens/OperationsText.php:40
+#: src/Admin/Screens/OperationsText.php:42
 msgid "The listing values read differ from the stored ones; the stored values follow"
 msgstr "Os valores lidos do anúncio diferem dos guardados; os guardados passam a seguir os lidos"
 
-#: src/Admin/Screens/OperationsText.php:41
+#: src/Admin/Screens/OperationsText.php:43
 msgid "Scheduled runs resumed"
 msgstr "Rodadas agendadas retomadas"
 
-#: src/Admin/Screens/OperationsText.php:41
+#: src/Admin/Screens/OperationsText.php:43
 msgid "Scheduled runs paused"
 msgstr "Rodadas agendadas pausadas"
 
 #. translators: %s: number of the new version
-#: src/Admin/Screens/OperationsText.php:43
+#: src/Admin/Screens/OperationsText.php:45
 msgid "Rules saved as version %s"
 msgstr "Regras salvas como versão %s"
 
-#: src/Admin/Screens/OperationsText.php:44
+#: src/Admin/Screens/OperationsText.php:46
 msgid "An order was ended"
 msgstr "Uma ordem foi encerrada"
 
-#: src/Admin/Screens/OperationsText.php:44
+#: src/Admin/Screens/OperationsText.php:46
 msgid "An order was created"
 msgstr "Uma ordem foi criada"
 
-#: src/Admin/Screens/OperationsText.php:45
+#: src/Admin/Screens/OperationsText.php:47
 msgid "A competitor was archived"
 msgstr "Um concorrente foi arquivado"
 
-#: src/Admin/Screens/OperationsText.php:45
+#: src/Admin/Screens/OperationsText.php:47
 msgid "A competitor was added or changed"
 msgstr "Um concorrente foi acrescentado ou mudado"
 
 #. translators: %s: number of prices
-#: src/Admin/Screens/OperationsText.php:47
+#: src/Admin/Screens/OperationsText.php:49
 msgid "Market prices imported: %s"
 msgstr "Preços de mercado importados: %s"
 
-#: src/Admin/Screens/OperationsText.php:48
+#: src/Admin/Screens/OperationsText.php:50
 msgid "A setting changed"
 msgstr "Uma configuração mudou"
 
 #. translators: 1: free units tonight, 2: units in all
-#: src/Admin/Screens/OverviewScreen.php:84
+#: src/Admin/Screens/OverviewScreen.php:85
 msgid "%1$s of %2$s free"
 msgstr "%1$s de %2$s livres"
 
 #. translators: 1: critical alerts, 2: warnings
-#: src/Admin/Screens/OverviewScreen.php:88
+#: src/Admin/Screens/OverviewScreen.php:89
 msgid "%1$s critical, %2$s warnings"
 msgstr "%1$s críticos, %2$s de atenção"
 
-#: src/Admin/Screens/OverviewScreen.php:90
+#: src/Admin/Screens/OverviewScreen.php:91
 msgid "No run yet"
 msgstr "Ainda sem rodada"
 
-#: src/Admin/Screens/OverviewScreen.php:101 src/Admin/Screens/WarningText.php:22 templates/admin/screens/overview.php:34 templates/admin/screens/overview.php:45
+#: src/Admin/Screens/OverviewScreen.php:102 src/Admin/Screens/WarningText.php:22 templates/admin/screens/overview.php:34 templates/admin/screens/overview.php:45
 msgid "Tonight"
 msgstr "Hoje"
 
-#: src/Admin/Screens/OverviewScreen.php:101 src/Admin/Screens/WarningText.php:23
+#: src/Admin/Screens/OverviewScreen.php:102 src/Admin/Screens/WarningText.php:23
 msgid "Tomorrow"
 msgstr "Amanhã"
 
 #. translators: %s: free units
-#: src/Admin/Screens/OverviewScreen.php:113
+#: src/Admin/Screens/OverviewScreen.php:114
 msgid "%s free"
 msgid_plural "%s free"
 msgstr[0] "%s livre"
 msgstr[1] "%s livres"
 
-#: src/Admin/Screens/OverviewScreen.php:122
+#: src/Admin/Screens/OverviewScreen.php:123
 msgid "No calendar read yet: it is read by the first run."
 msgstr "Nenhum calendário lido ainda: ele é lido pela primeira rodada."
 
 #. translators: %s: date and time the calendar was read
-#: src/Admin/Screens/OverviewScreen.php:124
+#: src/Admin/Screens/OverviewScreen.php:125
 msgid "Tonight and the next nights, as read at %s"
 msgstr "Hoje e as próximas noites, como lidos em %s"
 
+#: src/Admin/Screens/OverviewScreen.php:126
+msgid "The prices are the PMS calendar's: the last run priced no night."
+msgstr "Os preços são os do calendário do PMS: a última rodada não precificou nenhuma noite."
+
 #. translators: %s: number of days
-#: src/Admin/Screens/OverviewScreen.php:137
+#: src/Admin/Screens/OverviewScreen.php:139
 msgid "Next %s days"
 msgstr "Próximos %s dias"
 
 #. translators: 1: occupancy percent, 2: room nights sold, 3: room nights in all
-#: src/Admin/Screens/OverviewScreen.php:141
+#: src/Admin/Screens/OverviewScreen.php:143
 msgid "%1$s · %2$s of %3$s room nights sold"
 msgstr "%1$s · %2$s de %3$s noites de quarto vendidas"
 
 #. translators: %s: goal percent
-#: src/Admin/Screens/OverviewScreen.php:147
+#: src/Admin/Screens/OverviewScreen.php:149
 msgid "goal %s, from your rules"
 msgstr "meta de %s, das suas regras"
 
 #. translators: 1: amount, 2: number of bookings
-#: src/Admin/Screens/OverviewScreen.php:151
+#: src/Admin/Screens/OverviewScreen.php:153
 msgid "%1$s on the books, from %2$s booking"
 msgid_plural "%1$s on the books, from %2$s bookings"
 msgstr[0] "%1$s reservado, de %2$s reserva"
 msgstr[1] "%1$s reservado, de %2$s reservas"
 
 #. translators: %s: average daily rate
-#: src/Admin/Screens/OverviewScreen.php:157
+#: src/Admin/Screens/OverviewScreen.php:159
 msgid "average daily rate %s (revenue ÷ nights sold)"
 msgstr "diária média de %s (receita ÷ noites vendidas)"
 
-#: src/Admin/Screens/OverviewScreen.php:158
+#: src/Admin/Screens/OverviewScreen.php:160
 msgid "no night sold yet"
 msgstr "nenhuma noite vendida ainda"
 
 #. translators: 1: sold, 2: available, 3: percent
-#: src/Admin/Screens/OverviewScreen.php:162
+#: src/Admin/Screens/OverviewScreen.php:164
 msgid "%1$s of %2$s sold (%3$s)"
 msgstr "%1$s de %2$s vendidos (%3$s)"
 
 #. translators: 1: nights waiting, 2: time the plan expires
-#: src/Admin/Screens/OverviewScreen.php:200
+#: src/Admin/Screens/OverviewScreen.php:202
 msgid "%1$s night waits for your approval, valid until %2$s"
 msgid_plural "%1$s nights wait for your approval, valid until %2$s"
 msgstr[0] "%1$s noite espera a sua aprovação, vale até %2$s"
 msgstr[1] "%1$s noites esperam a sua aprovação, valem até %2$s"
 
+#: src/Admin/Screens/OverviewScreen.php:237
+msgid "the write failed: no change was taken (see the alerts)"
+msgstr "a gravação falhou: nenhuma mudança foi aceita (veja os alertas)"
+
 #. translators: %s: number of changes
-#: src/Admin/Screens/OverviewScreen.php:236
+#: src/Admin/Screens/OverviewScreen.php:240
 msgid "wrote %s change"
 msgid_plural "wrote %s changes"
 msgstr[0] "gravou %s mudança"
 msgstr[1] "gravou %s mudanças"
 
+#: src/Admin/Screens/OverviewScreen.php:242
+msgid "some changes were left out (see the report below)"
+msgstr "algumas mudanças ficaram de fora (veja o relatório abaixo)"
+
 #. translators: %s: number of nights
-#: src/Admin/Screens/OverviewScreen.php:241
+#: src/Admin/Screens/OverviewScreen.php:245
 msgid "would write %s night (shadow)"
 msgid_plural "would write %s nights (shadow)"
 msgstr[0] "gravaria %s noite (sombra)"
 msgstr[1] "gravaria %s noites (sombra)"
 
-#: src/Admin/Screens/OverviewScreen.php:244
+#: src/Admin/Screens/OverviewScreen.php:248
 msgid "changed nothing"
 msgstr "não mudou nada"
 
-#. translators: 1: kind of run, 2: time
-#: src/Admin/Screens/OverviewScreen.php:251
-msgid "%1$s at %2$s"
-msgstr "%1$s às %2$s"
+#. translators: 1: kind of run, 2: date, 3: time
+#: src/Admin/Screens/OverviewScreen.php:255
+msgid "%1$s on %2$s, at %3$s"
+msgstr "%1$s em %2$s, às %3$s"
+
+#: src/Admin/Screens/OverviewScreen.php:259
+msgid "took less than a second"
+msgstr "levou menos de um segundo"
 
 #. translators: %s: seconds
-#: src/Admin/Screens/OverviewScreen.php:256
+#: src/Admin/Screens/OverviewScreen.php:261
 msgid "took %s second"
 msgid_plural "took %s seconds"
 msgstr[0] "levou %s segundo"
 msgstr[1] "levou %s segundos"
 
-#: src/Admin/Screens/OverviewScreen.php:281
+#: src/Admin/Screens/OverviewScreen.php:286
 msgid "No light run left today."
 msgstr "Não sobrou rodada leve hoje."
 
 #. translators: %s: times of the light runs
-#: src/Admin/Screens/OverviewScreen.php:283
+#: src/Admin/Screens/OverviewScreen.php:288
 msgid "Light runs left today: %s"
 msgstr "Rodadas leves que ainda restam hoje: %s"
 
 #. translators: 1: occupancy, 2: goal
-#: src/Admin/Screens/OverviewScreen.php:293
+#: src/Admin/Screens/OverviewScreen.php:298
 msgid "%1$s (goal %2$s)"
 msgstr "%1$s (meta %2$s)"
 
-#: src/Admin/Screens/OverviewScreen.php:302
+#: src/Admin/Screens/OverviewScreen.php:307
 msgid "good"
 msgstr "bom"
 
-#: src/Admin/Screens/OverviewScreen.php:303
+#: src/Admin/Screens/OverviewScreen.php:308
 msgid "close to the goal"
 msgstr "perto da meta"
 
-#: src/Admin/Screens/OverviewScreen.php:304
+#: src/Admin/Screens/OverviewScreen.php:309
 msgid "below the goal"
 msgstr "abaixo da meta"
 
-#: src/Admin/Screens/OverviewScreen.php:305
+#: src/Admin/Screens/OverviewScreen.php:310
 msgid "not measured yet"
 msgstr "ainda não medido"
 
@@ -4330,28 +4683,28 @@ msgid "Ritmo Revenue — %s"
 msgstr "Ritmo Revenue — %s"
 
 #. translators: %s: Shadow, Approval or Autonomous
-#: src/Admin/Screens/Page.php:165
+#: src/Admin/Screens/Page.php:166
 msgid "Mode: %s"
 msgstr "Modo: %s"
 
-#: src/Admin/Screens/Page.php:173
+#: src/Admin/Screens/Page.php:174
 msgid "Runs paused"
 msgstr "Rodadas pausadas"
 
 #. translators: %s: time the pause ends
-#: src/Admin/Screens/Page.php:175
+#: src/Admin/Screens/Page.php:176
 msgid "Runs paused until %s"
 msgstr "Rodadas pausadas até %s"
 
 #. translators: 1: nights waiting, 2: time the plans expire
-#: src/Admin/Screens/Page.php:186
+#: src/Admin/Screens/Page.php:187
 msgid "%1$s night waiting for approval · valid until %2$s"
 msgid_plural "%1$s nights waiting for approval · valid until %2$s"
 msgstr[0] "%1$s noite aguardando aprovação · vale até %2$s"
 msgstr[1] "%1$s noites aguardando aprovação · valem até %2$s"
 
 #. translators: 1: kind of run, 2: time, 3: status in words
-#: src/Admin/Screens/Page.php:200
+#: src/Admin/Screens/Page.php:201
 msgid "Last run: %1$s at %2$s, %3$s"
 msgstr "Última rodada: %1$s às %2$s, %3$s"
 
@@ -4409,7 +4762,7 @@ msgid "This address only accepts a form."
 msgstr "Este endereço só aceita um formulário."
 
 #. translators: 1: row number, 2: why the row was refused
-#: src/Admin/Screens/ScreenActions.php:87
+#: src/Admin/Screens/ScreenActions.php:88
 msgid "Room %1$d: %2$s"
 msgstr "Quarto %1$d: %2$s"
 
@@ -4604,35 +4957,35 @@ msgid "Property \"%s\" created in shadow mode."
 msgstr "Propriedade \"%s\" criada em modo sombra."
 
 #. translators: %s: number of rooms
-#: src/Admin/Screens/WizardActions.php:161
+#: src/Admin/Screens/WizardActions.php:160
 msgid "%s room saved."
 msgid_plural "%s rooms saved."
 msgstr[0] "%s quarto salvo."
 msgstr[1] "%s quartos salvos."
 
 #. translators: 1: rules version, 2: properties, 3: room types
-#: src/Admin/Screens/WizardActions.php:176
+#: src/Admin/Screens/WizardActions.php:175
 msgid "Preset imported: rules version %1$d, %2$d properties and %3$d room types, all in shadow mode."
 msgstr "Modelo de regras importado: versão %1$d das regras, %2$d propriedades e %3$d tipos de quarto, todos em modo sombra."
 
-#: src/Admin/Screens/WizardActions.php:180
+#: src/Admin/Screens/WizardActions.php:179
 msgid "Choose at least one weekend night."
 msgstr "Escolha pelo menos uma noite de fim de semana."
 
 #. translators: %d: rules version
-#: src/Admin/Screens/WizardActions.php:184
+#: src/Admin/Screens/WizardActions.php:183
 msgid "Rules saved as version %d. They apply from the next run; no price was written."
 msgstr "Regras salvas como versão %d. Elas valem a partir da próxima rodada; nenhum preço foi gravado."
 
-#: src/Admin/Screens/WizardActions.php:208
+#: src/Admin/Screens/WizardActions.php:207
 msgid "Safety limits confirmed. They apply from the next run."
 msgstr "Limites de segurança confirmados. Eles valem a partir da próxima rodada."
 
-#: src/Admin/Screens/WizardActions.php:229
+#: src/Admin/Screens/WizardActions.php:221
 msgid "Choose a preset file to import."
 msgstr "Escolha um arquivo de modelo de regras para importar."
 
-#: src/Admin/Screens/WizardActions.php:232 src/Admin/Screens/WizardActions.php:236
+#: src/Admin/Screens/WizardActions.php:224 src/Admin/Screens/WizardActions.php:228
 msgid "A preset is a .json file of at most 1 MB."
 msgstr "Um modelo de regras é um arquivo .json de no máximo 1 MB."
 
@@ -4730,19 +5083,19 @@ msgstr "Não encontrado."
 msgid "Unknown mode."
 msgstr "Modo desconhecido."
 
-#: src/Rest/OperationRoutes.php:110
+#: src/Rest/OperationRoutes.php:117
 msgid "Send the decision \"approve\" or \"reject\" and, to approve only part of the plan, a non-empty list of entry keys."
 msgstr "Envie a decisão \"approve\" ou \"reject\" e, para aprovar só parte do plano, uma lista não vazia de chaves de itens."
 
-#: src/Rest/OperationRoutes.php:154
+#: src/Rest/OperationRoutes.php:175
 msgid "Choose the changes to undo."
 msgstr "Escolha as mudanças que quer desfazer."
 
-#: src/Rest/OperationRoutes.php:176
+#: src/Rest/OperationRoutes.php:197
 msgid "Say whether the emergency switch is engaged: true or false."
 msgstr "Diga se a chave de emergência está ligada: true ou false."
 
-#: src/Rest/OperationRoutes.php:187 src/Rest/RestRoutes.php:175
+#: src/Rest/OperationRoutes.php:208 src/Rest/RestRoutes.php:175
 msgid "There is no such property."
 msgstr "Essa propriedade não existe."
 
@@ -4829,7 +5182,7 @@ msgid "Periods, in the order that decides overlaps"
 msgstr "Períodos, na ordem que decide as sobreposições"
 
 #. translators: the name or the explanation of a setting of the rules
-#: templates/admin/editors/calendar.php:83 templates/admin/editors/calendar.php:93 templates/admin/editors/calendar.php:130 templates/admin/market/competitors.php:30 templates/admin/market/competitors.php:40 templates/admin/market/competitors.php:78 templates/admin/screens/wizard/property.php:19 templates/admin/screens/wizard/rooms.php:31 src/Domain/Config/Schema.php
+#: templates/admin/editors/calendar.php:83 templates/admin/editors/calendar.php:93 templates/admin/editors/calendar.php:130 templates/admin/market/competitors.php:30 templates/admin/market/competitors.php:40 templates/admin/market/competitors.php:78 templates/admin/screens/wizard/property.php:21 templates/admin/screens/wizard/rooms.php:31 src/Domain/Config/Schema.php
 msgid "Name"
 msgstr "Nome"
 
@@ -4846,7 +5199,7 @@ msgstr "Estadia mínima própria"
 msgid "Own floor"
 msgstr "Piso próprio"
 
-#: templates/admin/editors/calendar.php:88 templates/admin/editors/calendar.php:100 templates/admin/editors/orders.php:149 templates/admin/editors/orders.php:161 templates/admin/editors/relations.php:98 templates/admin/editors/relations.php:104 templates/admin/editors/versions.php:30 templates/admin/editors/versions.php:52 templates/admin/market/competitors.php:35 templates/admin/market/competitors.php:49
+#: templates/admin/editors/calendar.php:88 templates/admin/editors/calendar.php:100 templates/admin/editors/orders.php:165 templates/admin/editors/orders.php:177 templates/admin/editors/relations.php:98 templates/admin/editors/relations.php:104 templates/admin/editors/versions.php:30 templates/admin/editors/versions.php:52 templates/admin/market/competitors.php:35 templates/admin/market/competitors.php:49
 msgid "Actions"
 msgstr "Ações"
 
@@ -5023,125 +5376,129 @@ msgstr "O que você quer para algumas noites?"
 msgid "Continue"
 msgstr "Continuar"
 
-#: templates/admin/editors/orders.php:51
+#: templates/admin/editors/orders.php:40
+msgid "Correct these values and save again"
+msgstr "Corrija estes valores e salve de novo"
+
+#: templates/admin/editors/orders.php:66
 msgid "Or only these nights (one date per line, YYYY-MM-DD)"
 msgstr "Ou só estas noites (uma data por linha, AAAA-MM-DD)"
 
-#: templates/admin/editors/orders.php:54
+#: templates/admin/editors/orders.php:69
 msgid "Minimum price per room (price sent to the channels)"
 msgstr "Preço mínimo por quarto (preço enviado aos canais)"
 
-#: templates/admin/editors/orders.php:54
+#: templates/admin/editors/orders.php:69
 msgid "Minimum price on weak nights (optional)"
 msgstr "Preço mínimo nas noites fracas (opcional)"
 
-#: templates/admin/editors/orders.php:59
+#: templates/admin/editors/orders.php:74
 msgid "Never below the absolute floor of the room, whatever you type."
 msgstr "Nunca abaixo do piso absoluto do quarto, seja qual for o valor digitado."
 
-#: templates/admin/editors/orders.php:63
+#: templates/admin/editors/orders.php:78
 msgid "Market percentile (0 is the cheapest competitor, 100 the dearest)"
 msgstr "Percentil de mercado (0 é o concorrente mais barato, 100 o mais caro)"
 
 #. translators: the name or the explanation of a setting of the rules
-#: templates/admin/editors/orders.php:75 templates/admin/editors/review.php:68 src/Domain/Config/Schema.php
+#: templates/admin/editors/orders.php:91 templates/admin/editors/review.php:68 src/Domain/Config/Schema.php
 msgid "Safety limit"
 msgstr "Limite de segurança"
 
-#: templates/admin/editors/orders.php:78
+#: templates/admin/editors/orders.php:94
 msgid "To allow a safety limit, type the property id:"
 msgstr "Para liberar um limite de segurança, digite o id da propriedade:"
 
-#: templates/admin/editors/orders.php:81
+#: templates/admin/editors/orders.php:97
 msgid "The items marked as safety limits need a person allowed to change safety limits."
 msgstr "Os itens marcados como limites de segurança precisam de uma pessoa que pode mudar os limites de segurança."
 
-#: templates/admin/editors/orders.php:85
+#: templates/admin/editors/orders.php:101
 msgid "Note (optional; no guest data)"
 msgstr "Observação (opcional; sem dados de hóspedes)"
 
-#: templates/admin/editors/orders.php:87
+#: templates/admin/editors/orders.php:103
 msgid "End the original order"
 msgstr "Encerrar a ordem original"
 
-#: templates/admin/editors/orders.php:89
+#: templates/admin/editors/orders.php:105
 msgid "An order applies from the next run. It is never edited: to change it, copy it and end the original."
 msgstr "Uma ordem vale a partir da próxima rodada. Ela nunca é editada: para mudar, copie-a e encerre a original."
 
-#: templates/admin/editors/orders.php:90
+#: templates/admin/editors/orders.php:106
 msgid "Save the order"
 msgstr "Salvar a ordem"
 
-#: templates/admin/editors/orders.php:96
+#: templates/admin/editors/orders.php:112
 msgid "Nights changed by someone else"
 msgstr "Noites mudadas por outra pessoa"
 
-#: templates/admin/editors/orders.php:98
+#: templates/admin/editors/orders.php:114
 msgid "No night is frozen."
 msgstr "Nenhuma noite está congelada."
 
-#: templates/admin/editors/orders.php:101
+#: templates/admin/editors/orders.php:117
 msgid "The plugin leaves these nights alone until they are released or the freeze ends"
 msgstr "O plugin não mexe nestas noites até elas serem liberadas ou o congelamento acabar"
 
-#: templates/admin/editors/orders.php:102 templates/admin/editors/orders.php:108 templates/admin/screens/changes.php:88 templates/admin/screens/changes.php:100
+#: templates/admin/editors/orders.php:118 templates/admin/editors/orders.php:124 templates/admin/screens/changes.php:79 templates/admin/screens/changes.php:86 templates/admin/screens/changes.php:126 templates/admin/screens/changes.php:138
 msgid "What changed"
 msgstr "O que mudou"
 
-#: templates/admin/editors/orders.php:102 templates/admin/editors/orders.php:109
+#: templates/admin/editors/orders.php:118 templates/admin/editors/orders.php:125
 msgid "Frozen"
 msgstr "Congelada"
 
-#: templates/admin/editors/orders.php:102 templates/admin/editors/orders.php:110 templates/admin/editors/orders.php:119
+#: templates/admin/editors/orders.php:118 templates/admin/editors/orders.php:126 templates/admin/editors/orders.php:135
 msgid "Release"
 msgstr "Liberar"
 
-#: templates/admin/editors/orders.php:118
+#: templates/admin/editors/orders.php:134
 msgid "I understand the plugin may change these nights again from the next run"
 msgstr "Entendo que o plugin pode voltar a mudar estas noites a partir da próxima rodada"
 
-#: templates/admin/editors/orders.php:134
+#: templates/admin/editors/orders.php:150
 msgid "No order: the plugin follows the rules alone."
 msgstr "Nenhuma ordem: o plugin segue só as regras."
 
-#: templates/admin/editors/orders.php:135
+#: templates/admin/editors/orders.php:151
 msgid "Give an order"
 msgstr "Dar uma ordem"
 
-#: templates/admin/editors/orders.php:138
+#: templates/admin/editors/orders.php:154
 msgid "No order ended in the last 180 days."
 msgstr "Nenhuma ordem foi encerrada nos últimos 180 dias."
 
-#: templates/admin/editors/orders.php:142
+#: templates/admin/editors/orders.php:158
 msgid "Orders ended or past, last 180 days"
 msgstr "Ordens encerradas ou passadas, últimos 180 dias"
 
-#: templates/admin/editors/orders.php:142
+#: templates/admin/editors/orders.php:158
 msgid "Nights the plugin froze after a change by hand"
 msgstr "Noites que o plugin congelou depois de uma mudança à mão"
 
-#: templates/admin/editors/orders.php:142
+#: templates/admin/editors/orders.php:158
 msgid "Orders in force today or later"
 msgstr "Ordens em vigor hoje ou depois"
 
-#: templates/admin/editors/orders.php:147 templates/admin/editors/orders.php:157
+#: templates/admin/editors/orders.php:163 templates/admin/editors/orders.php:173
 msgid "What it does"
 msgstr "O que ela faz"
 
-#: templates/admin/editors/orders.php:148 templates/admin/editors/orders.php:160
+#: templates/admin/editors/orders.php:164 templates/admin/editors/orders.php:176
 msgid "Given by"
 msgstr "Dada por"
 
 #. translators: %s: date and time
-#: templates/admin/editors/orders.php:160
+#: templates/admin/editors/orders.php:176
 msgid "Ended %s"
 msgstr "Encerrada em %s"
 
-#: templates/admin/editors/orders.php:163
+#: templates/admin/editors/orders.php:179
 msgid "Copy"
 msgstr "Copiar"
 
-#: templates/admin/editors/orders.php:170
+#: templates/admin/editors/orders.php:186
 msgid "End it"
 msgstr "Encerrar"
 
@@ -5416,8 +5773,8 @@ msgid "Load into my draft"
 msgstr "Carregar no meu rascunho"
 
 #: templates/admin/market/competitors.php:25
-msgid "Add the hotels you compare yourself with. Mark as peer the ones closest to you; the peer series use only them."
-msgstr "Acrescente os hotéis com que você se compara. Marque como peer os mais parecidos com você; as séries de pares usam só esses."
+msgid "Add the hotels you compare yourself with. Tick \"close to you\" on the ones most like yours: the peer market prices use only them."
+msgstr "Acrescente os hotéis com que você se compara. Marque \"parecido com você\" nos mais parecidos com o seu: os preços de mercado dos pares usam só esses."
 
 #: templates/admin/market/competitors.php:28
 msgid "Competitors of this property"
@@ -5443,7 +5800,7 @@ msgstr "arquivado"
 msgid "your own listing"
 msgstr "seu próprio anúncio"
 
-#: templates/admin/market/competitors.php:51 templates/admin/screens/overview.php:173
+#: templates/admin/market/competitors.php:51 templates/admin/screens/overview.php:177
 msgid "Change"
 msgstr "Mudar"
 
@@ -5472,42 +5829,47 @@ msgid "Room compared"
 msgstr "Quarto comparado"
 
 #: templates/admin/market/competitors.php:82
-msgid "Groups (words separated by commas, such as peer)"
-msgstr "Grupos (palavras separadas por vírgulas, como peer)"
+msgid "Close to you (a peer): the peer market prices use only these competitors"
+msgstr "Parecido com você (par): os preços de mercado dos pares usam só esses concorrentes"
 
 #: templates/admin/market/competitors.php:83
-msgid "Comparable room costs how many times the cheapest room (optional, such as 1.4)"
-msgstr "Quantas vezes o quarto comparável custa o quarto mais barato (opcional, como 1.4)"
+msgid "Other groups (optional, words separated by commas)"
+msgstr "Outros grupos (opcional, palavras separadas por vírgulas)"
 
+#. translators: %s: an example factor, in the format of the reader
 #: templates/admin/market/competitors.php:84
+msgid "Comparable room costs how many times the cheapest room (optional, such as %s)"
+msgstr "O quarto comparável custa quantas vezes o quarto mais barato (opcional, como %s)"
+
+#: templates/admin/market/competitors.php:85
 msgid "This factor was"
 msgstr "Este fator foi"
 
-#: templates/admin/market/competitors.php:86
+#: templates/admin/market/competitors.php:87
 msgid "Not said"
 msgstr "Não informado"
 
-#: templates/admin/market/competitors.php:87
+#: templates/admin/market/competitors.php:88
 msgid "Measured on real prices"
 msgstr "Medido em preços reais"
 
-#: templates/admin/market/competitors.php:88
+#: templates/admin/market/competitors.php:89
 msgid "Estimated"
 msgstr "Estimado"
 
-#: templates/admin/market/competitors.php:90
+#: templates/admin/market/competitors.php:91
 msgid "Rating (optional, 0 to 10; shown only)"
 msgstr "Nota (opcional, de 0 a 10; só exibida)"
 
-#: templates/admin/market/competitors.php:91
+#: templates/admin/market/competitors.php:92
 msgid "This is my own listing on a channel (never part of the market)"
 msgstr "Este é o meu próprio anúncio num canal (nunca faz parte do mercado)"
 
-#: templates/admin/market/competitors.php:92
+#: templates/admin/market/competitors.php:93
 msgid "Counts in the market"
 msgstr "Conta no mercado"
 
-#: templates/admin/market/competitors.php:93
+#: templates/admin/market/competitors.php:94
 msgid "Save the competitor"
 msgstr "Salvar o concorrente"
 
@@ -5698,11 +6060,11 @@ msgstr "Preço colado sem concorrente"
 msgid "stay total %s"
 msgstr "total da estadia %s"
 
-#: templates/admin/market/prices.php:71 templates/admin/screens/alerts.php:125 templates/admin/screens/approvals.php:54 templates/admin/screens/changes.php:112
+#: templates/admin/market/prices.php:71 templates/admin/screens/alerts.php:125 templates/admin/screens/approvals.php:54 templates/admin/screens/changes.php:150
 msgid "Previous"
 msgstr "Anterior"
 
-#: templates/admin/market/prices.php:72 templates/admin/screens/alerts.php:126 templates/admin/screens/approvals.php:55 templates/admin/screens/changes.php:113
+#: templates/admin/market/prices.php:72 templates/admin/screens/alerts.php:126 templates/admin/screens/approvals.php:55 templates/admin/screens/changes.php:151
 msgid "Next"
 msgstr "Próximo"
 
@@ -5787,8 +6149,8 @@ msgstr[0] "Mercado a partir de %1$s, %2$d noite"
 msgstr[1] "Mercado a partir de %1$s, %2$d noites"
 
 #: templates/admin/market/summary.php:42 templates/admin/market/summary.php:61
-msgid "Market anchor (middle)"
-msgstr "Âncora de mercado (meio)"
+msgid "Market anchor (median)"
+msgstr "Âncora de mercado (mediana)"
 
 #: templates/admin/market/summary.php:43 templates/admin/market/summary.php:62
 msgid "Updated"
@@ -5800,8 +6162,8 @@ msgstr "sem valor"
 
 #. translators: %s: amount
 #: templates/admin/market/summary.php:55
-msgid "Middle %s"
-msgstr "Meio %s"
+msgid "Median %s"
+msgstr "Mediana %s"
 
 #. translators: %s: range of amounts
 #: templates/admin/market/summary.php:56
@@ -5830,11 +6192,15 @@ msgstr "velho"
 msgid "small sample"
 msgstr "amostra pequena"
 
-#: templates/admin/market/summary.php:73
+#: templates/admin/market/summary.php:72
+msgid "Market anchor: the median of the comparable room of the competitors that count in the market (their cheapest price times each one's factor), per night. A night without prices takes the median of the same kind of night in the month. The rules use it when no market series is set."
+msgstr "Âncora de mercado: a mediana do quarto comparável dos concorrentes que contam no mercado (o preço mais barato de cada um vezes o fator dele), por noite. Uma noite sem preços usa a mediana do mesmo tipo de noite no mês. As regras usam a âncora quando nenhuma série de mercado está configurada."
+
+#: templates/admin/market/summary.php:74
 msgid "Previous 30 nights"
 msgstr "30 noites anteriores"
 
-#: templates/admin/market/summary.php:74
+#: templates/admin/market/summary.php:75
 msgid "Next 30 nights"
 msgstr "Próximas 30 noites"
 
@@ -6011,7 +6377,7 @@ msgstr "Liberar a trava de cortes de preço"
 msgid "No open alert. The plugin checks bookings, the calendar and its own writes in every run."
 msgstr "Nenhum alerta aberto. O plugin confere as reservas, o calendário e as próprias gravações em toda rodada."
 
-#: templates/admin/screens/alerts.php:104 templates/admin/screens/alerts.php:115 templates/admin/screens/changes.php:87 templates/admin/screens/changes.php:99
+#: templates/admin/screens/alerts.php:104 templates/admin/screens/alerts.php:115 templates/admin/screens/changes.php:78 templates/admin/screens/changes.php:85 templates/admin/screens/changes.php:125 templates/admin/screens/changes.php:137
 msgid "Room and night"
 msgstr "Quarto e noite"
 
@@ -6152,10 +6518,6 @@ msgstr "PMS"
 msgid "listing"
 msgstr "anúncio"
 
-#: templates/admin/screens/changes.php:46 templates/admin/screens/operations.php:47 templates/admin/screens/operations.php:55
-msgid "Who"
-msgstr "Quem"
-
 #: templates/admin/screens/changes.php:48
 msgid "anyone"
 msgstr "qualquer pessoa"
@@ -6181,24 +6543,60 @@ msgid "Export CSV"
 msgstr "Exportar CSV"
 
 #: templates/admin/screens/changes.php:70
+msgid "Undo these changes now?"
+msgstr "Desfazer estas mudanças agora?"
+
+#: templates/admin/screens/changes.php:72
+msgid "There is nothing left to undo in what you ticked: the selection expired or the changes were already undone. Tick them again below."
+msgstr "Não há mais nada para desfazer no que você marcou: a seleção expirou ou as mudanças já foram desfeitas. Marque de novo abaixo."
+
+#: templates/admin/screens/changes.php:74
+msgid "The plugin writes the values below back at once, through the same safety checks, whatever the mode. Nothing else changes."
+msgstr "O plugin grava de volta, na hora, os valores abaixo, pelas mesmas conferências de segurança, em qualquer modo. Nada mais muda."
+
+#: templates/admin/screens/changes.php:76
+msgid "What goes back"
+msgstr "O que volta"
+
+#: templates/admin/screens/changes.php:80 templates/admin/screens/changes.php:87
+msgid "Now → back to"
+msgstr "Agora → volta para"
+
+#: templates/admin/screens/changes.php:100
+msgid "Undo now"
+msgstr "Desfazer agora"
+
+#: templates/admin/screens/changes.php:103
+msgid "Cancel: keep the changes"
+msgstr "Cancelar: manter as mudanças"
+
+#: templates/admin/screens/changes.php:108
 msgid "Nothing was written yet. In shadow mode the plugin writes nothing; see what it would do in Nights."
 msgstr "Nada foi gravado ainda. Em modo sombra o plugin não grava nada; veja o que ele faria em Noites."
 
-#: templates/admin/screens/changes.php:89 templates/admin/screens/changes.php:101
+#: templates/admin/screens/changes.php:108
+msgid "No change was written yet. Approved plans and autonomous runs show up here once they are written."
+msgstr "Nenhuma mudança foi gravada ainda. Planos aprovados e rodadas autônomas aparecem aqui depois de gravados."
+
+#: templates/admin/screens/changes.php:127 templates/admin/screens/changes.php:139
 msgid "Before → after"
 msgstr "Antes → depois"
 
-#: templates/admin/screens/changes.php:90 templates/admin/screens/changes.php:102 templates/admin/screens/nights.php:111 templates/admin/screens/operations.php:48 templates/admin/screens/operations.php:56
+#: templates/admin/screens/changes.php:128 templates/admin/screens/changes.php:140 templates/admin/screens/nights.php:111 templates/admin/screens/operations.php:48 templates/admin/screens/operations.php:56
 msgid "Why"
 msgstr "Por quê"
 
-#: templates/admin/screens/changes.php:91 templates/admin/screens/changes.php:103
+#: templates/admin/screens/changes.php:129 templates/admin/screens/changes.php:141
 msgid "Confirmed"
 msgstr "Confirmado"
 
-#: templates/admin/screens/changes.php:116
-msgid "Prepare the undo of the ticked changes"
-msgstr "Preparar o desfazer das mudanças marcadas"
+#: templates/admin/screens/changes.php:154
+msgid "Undo the ticked changes…"
+msgstr "Desfazer as mudanças marcadas…"
+
+#: templates/admin/screens/changes.php:154
+msgid "You will see what goes back before anything is written."
+msgstr "Você vê o que volta antes de qualquer gravação."
 
 #: templates/admin/screens/nights.php:16
 msgid "No property yet"
@@ -6277,50 +6675,58 @@ msgid "Run the first shadow run to see the plugin's prices and reasons. Occupanc
 msgstr "Faça a primeira rodada em sombra para ver os preços e os porquês do plugin. A ocupação vem do calendário do PMS."
 
 #: templates/admin/screens/nights.php:174
+msgid "The last run priced no night: without market prices for a night the plugin does not price it. Occupancy is shown from the PMS calendar."
+msgstr "A última rodada não precificou nenhuma noite: sem preços de mercado para uma noite, o plugin não a precifica. A ocupação vem do calendário do PMS."
+
+#: templates/admin/screens/nights.php:174 templates/admin/screens/overview.php:109
+msgid "Import market prices"
+msgstr "Importar preços de mercado"
+
+#: templates/admin/screens/nights.php:176
 msgid "room nights shown"
 msgstr "noites de quarto mostradas"
 
-#: templates/admin/screens/nights.php:175
+#: templates/admin/screens/nights.php:177
 msgid "Nights grid"
 msgstr "Grade de noites"
 
-#: templates/admin/screens/nights.php:196
+#: templates/admin/screens/nights.php:198
 msgid "not shown by the filter"
 msgstr "não mostrado pelo filtro"
 
-#: templates/admin/screens/nights.php:214
+#: templates/admin/screens/nights.php:216
 msgid "Legend of the grid"
 msgstr "Legenda da grade"
 
-#: templates/admin/screens/nights.php:215
+#: templates/admin/screens/nights.php:217
 msgid "the plugin would raise the price range"
 msgstr "o plugin subiria a faixa de preço"
 
-#: templates/admin/screens/nights.php:216
+#: templates/admin/screens/nights.php:218
 msgid "the plugin would lower the price range"
 msgstr "o plugin baixaria a faixa de preço"
 
-#: templates/admin/screens/nights.php:217
+#: templates/admin/screens/nights.php:219
 msgid "frozen: someone else changed the night"
 msgstr "congelada: outra pessoa mudou a noite"
 
-#: templates/admin/screens/nights.php:218
+#: templates/admin/screens/nights.php:220
 msgid "an owner order covers the night"
 msgstr "uma ordem do dono cobre a noite"
 
-#: templates/admin/screens/nights.php:219
+#: templates/admin/screens/nights.php:221
 msgid "an active alert"
 msgstr "um alerta ativo"
 
-#: templates/admin/screens/nights.php:222
+#: templates/admin/screens/nights.php:224
 msgid "behind pace or at the floor"
 msgstr "atrás do ritmo ou no piso"
 
-#: templates/admin/screens/nights.php:223
+#: templates/admin/screens/nights.php:225
 msgid "far behind pace"
 msgstr "muito atrás do ritmo"
 
-#: templates/admin/screens/nights.php:224
+#: templates/admin/screens/nights.php:226
 msgid "sold out or closed"
 msgstr "esgotada ou fechada"
 
@@ -6399,7 +6805,7 @@ msgstr "Trocar o modo"
 msgid "Runs"
 msgstr "Rodadas"
 
-#: templates/admin/screens/operations.php:114 templates/admin/screens/overview.php:156 templates/admin/screens/settings-diagnostics.php:52
+#: templates/admin/screens/operations.php:114 templates/admin/screens/overview.php:160 templates/admin/screens/settings-diagnostics.php:52
 msgid "No run yet."
 msgstr "Ainda sem rodada."
 
@@ -6479,7 +6885,7 @@ msgstr "Alertas abertos"
 msgid "Nights waiting"
 msgstr "Noites aguardando"
 
-#: templates/admin/screens/overview.php:38 templates/admin/screens/overview.php:49 templates/admin/screens/overview.php:154
+#: templates/admin/screens/overview.php:38 templates/admin/screens/overview.php:49 templates/admin/screens/overview.php:158
 msgid "Last run"
 msgstr "Última rodada"
 
@@ -6499,58 +6905,62 @@ msgstr "Hoje e as próximas noites"
 msgid "Pace, next 60 days"
 msgstr "Ritmo de vendas, próximos 60 dias"
 
-#: templates/admin/screens/overview.php:108
+#: templates/admin/screens/overview.php:109
+msgid "The last run priced no night, so the pace was not measured: there are no market prices for these nights yet."
+msgstr "A última rodada não precificou nenhuma noite, então o ritmo não foi medido: ainda não há preços de mercado para estas noites."
+
+#: templates/admin/screens/overview.php:111
 msgid "No run yet: the first run measures the pace of every night."
 msgstr "Ainda sem rodada: a primeira rodada mede o ritmo de vendas de cada noite."
 
-#: templates/admin/screens/overview.php:119
+#: templates/admin/screens/overview.php:123
 msgid "Needs you"
 msgstr "Precisa de você"
 
-#: templates/admin/screens/overview.php:123
+#: templates/admin/screens/overview.php:127
 msgid "Nothing needs you now."
 msgstr "Nada precisa de você agora."
 
-#: templates/admin/screens/overview.php:130
+#: templates/admin/screens/overview.php:134
 msgid "Review"
 msgstr "Revisar"
 
 #. translators: %s: title of the to-do item
-#: templates/admin/screens/overview.php:143
+#: templates/admin/screens/overview.php:147
 msgid "Done: %s"
 msgstr "Feito: %s"
 
-#: templates/admin/screens/overview.php:143 templates/admin/screens/todo.php:39 templates/admin/screens/todo.php:50
+#: templates/admin/screens/overview.php:147 templates/admin/screens/todo.php:39 templates/admin/screens/todo.php:50
 msgid "Done"
 msgstr "Feito"
 
-#: templates/admin/screens/overview.php:165
+#: templates/admin/screens/overview.php:169
 msgid "More about this run"
 msgstr "Mais sobre esta rodada"
 
-#: templates/admin/screens/overview.php:166
+#: templates/admin/screens/overview.php:170
 msgid "See what it would change"
 msgstr "Ver o que ela mudaria"
 
-#: templates/admin/screens/overview.php:171
+#: templates/admin/screens/overview.php:175
 msgid "Mode and next runs"
 msgstr "Modo e próximas rodadas"
 
-#: templates/admin/screens/overview.php:185 templates/admin/screens/wizard/shadow.php:30
+#: templates/admin/screens/overview.php:189 templates/admin/screens/wizard/shadow.php:30
 msgid "Running in shadow: reading and deciding, writing nothing…"
 msgstr "Rodando em sombra: lendo e decidindo, sem gravar nada…"
 
-#: templates/admin/screens/overview.php:186 templates/admin/screens/wizard/shadow.php:31
+#: templates/admin/screens/overview.php:190 templates/admin/screens/wizard/shadow.php:31
 msgid "The shadow run did not finish:"
 msgstr "A rodada em sombra não terminou:"
 
-#: templates/admin/screens/overview.php:186 templates/admin/screens/wizard/shadow.php:31
+#: templates/admin/screens/overview.php:190 templates/admin/screens/wizard/shadow.php:31
 msgid "Run in shadow now"
 msgstr "Rodar em sombra agora"
 
 #: templates/admin/screens/parts/head.php:39
-msgid "Emergency switch engaged: nothing is written to the pricing system or the PMS. Scheduled runs only read."
-msgstr "Chave de emergência ligada: nada é gravado no sistema de preços nem no PMS. As rodadas agendadas só leem."
+msgid "Emergency switch engaged: nothing is written to the pricing system or the PMS. Scheduled runs only read and watch the bookings."
+msgstr "Chave de emergência ligada: nada é gravado no sistema de preços nem no PMS. As rodadas agendadas só leem e vigiam as reservas."
 
 #: templates/admin/screens/parts/head.php:41
 msgid "Release it in Operations"
@@ -6560,7 +6970,12 @@ msgstr "Desligue em Operação"
 msgid "The status could not be loaded. Nothing was changed."
 msgstr "A situação não pôde ser carregada. Nada foi alterado."
 
-#: templates/admin/screens/parts/head.php:74
+#. translators: %s: room codes, separated by commas
+#: templates/admin/screens/parts/head.php:65
+msgid "Some rooms of the plugin could not be read and are left out of every screen and run: %s. Save them again in Settings, setup (step 5)."
+msgstr "Alguns quartos do plugin não puderam ser lidos e ficam fora de todas as telas e rodadas: %s. Salve-os de novo em Configurações, configuração (passo 5)."
+
+#: templates/admin/screens/parts/head.php:86
 msgid "Sections of this screen"
 msgstr "Seções desta tela"
 
@@ -6576,19 +6991,19 @@ msgstr "Trocar o token"
 msgid "Leave empty to keep the saved key."
 msgstr "Deixe vazio para manter a chave salva."
 
-#: templates/admin/screens/settings-connections.php:25 templates/admin/screens/wizard/connection.php:25
+#: templates/admin/screens/settings-connections.php:25 templates/admin/screens/wizard/connection.php:26
 msgid "Kind of token"
 msgstr "Tipo de token"
 
-#: templates/admin/screens/settings-connections.php:27 templates/admin/screens/wizard/connection.php:27
+#: templates/admin/screens/settings-connections.php:27 templates/admin/screens/wizard/connection.php:28
 msgid "Refresh token"
 msgstr "Token de renovação"
 
-#: templates/admin/screens/settings-connections.php:28 templates/admin/screens/wizard/connection.php:28
+#: templates/admin/screens/settings-connections.php:28 templates/admin/screens/wizard/connection.php:29
 msgid "Long-life token"
 msgstr "Token de longa duração"
 
-#: templates/admin/screens/settings-connections.php:30 templates/admin/screens/wizard/connection.php:33
+#: templates/admin/screens/settings-connections.php:30 templates/admin/screens/wizard/connection.php:34
 msgid "Property ids in the PMS (comma separated)"
 msgstr "Ids das propriedades no PMS (separados por vírgula)"
 
@@ -6596,7 +7011,7 @@ msgstr "Ids das propriedades no PMS (separados por vírgula)"
 msgid "Replace the API key"
 msgstr "Trocar a chave da API"
 
-#: templates/admin/screens/settings-connections.php:36 templates/admin/screens/wizard/connection.php:40
+#: templates/admin/screens/settings-connections.php:36 templates/admin/screens/wizard/connection.php:41
 msgid "Name of your PMS in the pricing system"
 msgstr "Nome do seu PMS no sistema de preços"
 
@@ -6648,6 +7063,10 @@ msgstr "Um arquivo para o suporte com versões, configurações, regras, as últ
 #: templates/admin/screens/settings-diagnostics.php:31
 msgid "Download the support file"
 msgstr "Baixar o arquivo de suporte"
+
+#: templates/admin/screens/settings-diagnostics.php:43 templates/admin/screens/settings-diagnostics.php:100
+msgid "Technical details"
+msgstr "Detalhes técnicos"
 
 #: templates/admin/screens/settings-diagnostics.php:50
 msgid "Last runs"
@@ -6746,62 +7165,70 @@ msgid "Do not write guest names, e-mails, phone numbers or document numbers. Ref
 msgstr "Não escreva nomes, e-mails, telefones nem documentos de hóspedes. Cite uma reserva pelo número dela."
 
 #: templates/admin/screens/wizard/connection.php:24
+msgid "The PMS (property management system) is where your bookings and your availability live. The plugin reads them; later it only changes the minimum stay and the arrival and departure days there, never a price and never a booking."
+msgstr "O PMS (sistema de gestão da propriedade, o sistema de reservas) é onde ficam suas reservas e sua disponibilidade. O plugin as lê; depois ele só muda lá a estadia mínima e os dias de chegada e saída, nunca um preço e nunca uma reserva."
+
+#: templates/admin/screens/wizard/connection.php:25
 msgid "Create the token in the PMS, in its settings of the API, with access to bookings, properties and the inventory."
 msgstr "Crie o token no PMS, nas configurações da API dele, com acesso a reservas, propriedades e inventário."
 
-#: templates/admin/screens/wizard/connection.php:30
+#: templates/admin/screens/wizard/connection.php:31
 msgid "Token"
 msgstr "Token"
 
-#: templates/admin/screens/wizard/connection.php:32
+#: templates/admin/screens/wizard/connection.php:33
 msgid "A token is saved. Leave empty to keep it."
 msgstr "Há um token salvo. Deixe vazio para mantê-lo."
 
-#: templates/admin/screens/wizard/connection.php:32
+#: templates/admin/screens/wizard/connection.php:33
 msgid "No token saved yet."
 msgstr "Nenhum token salvo ainda."
 
-#: templates/admin/screens/wizard/connection.php:36
+#: templates/admin/screens/wizard/connection.php:37
 msgid "Create the API key in the pricing system, in its account settings."
 msgstr "Crie a chave da API no sistema de preços, nas configurações da conta."
 
-#: templates/admin/screens/wizard/connection.php:37
+#: templates/admin/screens/wizard/connection.php:38
 msgid "API key"
 msgstr "Chave da API"
 
-#: templates/admin/screens/wizard/connection.php:39
+#: templates/admin/screens/wizard/connection.php:40
 msgid "A key is saved. Leave empty to keep it."
 msgstr "Há uma chave salva. Deixe vazio para mantê-la."
 
-#: templates/admin/screens/wizard/connection.php:39
+#: templates/admin/screens/wizard/connection.php:40
 msgid "No key saved yet."
 msgstr "Nenhuma chave salva ainda."
 
-#: templates/admin/screens/wizard/connection.php:43
+#: templates/admin/screens/wizard/connection.php:44
 msgid "Save and test"
 msgstr "Salvar e testar"
 
-#: templates/admin/screens/wizard/property.php:21
-msgid "Id (letters, digits, \"-\" and \"_\"; it cannot be changed later)"
-msgstr "Id (letras, números, \"-\" e \"_\"; não pode ser mudado depois)"
+#: templates/admin/screens/wizard/property.php:24
+msgid "Advanced: the code of the property"
+msgstr "Avançado: o código da propriedade"
 
-#: templates/admin/screens/wizard/property.php:23
+#: templates/admin/screens/wizard/property.php:25
+msgid "Code (letters, digits, \"-\" and \"_\"; made from the name when left empty; it cannot be changed later)"
+msgstr "Código (letras, números, \"-\" e \"_\"; feito a partir do nome quando fica vazio; não pode ser trocado depois)"
+
+#: templates/admin/screens/wizard/property.php:28
 msgid "Timezone"
 msgstr "Fuso horário"
 
-#: templates/admin/screens/wizard/property.php:25
+#: templates/admin/screens/wizard/property.php:30
 msgid "Choose…"
 msgstr "Escolha…"
 
-#: templates/admin/screens/wizard/property.php:32
-msgid "Market position table of your rules"
-msgstr "Tabela de posições de mercado das suas regras"
+#: templates/admin/screens/wizard/property.php:37
+msgid "Where your prices sit in the market"
+msgstr "Onde seus preços ficam no mercado"
 
-#: templates/admin/screens/wizard/property.php:36
-msgid "Which table of market positions the property aims at; \"standard\" fits most inns."
-msgstr "Qual tabela de posições de mercado a propriedade busca; \"standard\" serve para a maioria das pousadas."
+#: templates/admin/screens/wizard/property.php:41
+msgid "The rules aim at a different point of the market prices for each level; the standard level fits most inns."
+msgstr "As regras miram um ponto diferente dos preços de mercado em cada nível; o nível padrão serve para a maioria das pousadas."
 
-#: templates/admin/screens/wizard/property.php:37 templates/admin/screens/wizard/rooms.php:39 templates/admin/screens/wizard/rules.php:34
+#: templates/admin/screens/wizard/property.php:42 templates/admin/screens/wizard/rooms.php:39 templates/admin/screens/wizard/rules.php:34
 msgid "Save and continue"
 msgstr "Salvar e continuar"
 
@@ -7293,8 +7720,8 @@ msgstr "Menor mudança que vale gravar"
 
 #. translators: the name or the explanation of a setting of the rules
 #: src/Domain/Config/Schema.php
-msgid "Relative price change below which no step is produced (0.02 = 2%)."
-msgstr "Mudança relativa de preço abaixo da qual nenhum passo é gerado (0,02 = 2%)."
+msgid "Relative price change below which no step is produced."
+msgstr "Mudança relativa de preço abaixo da qual nenhum passo é gerado."
 
 #. translators: the name or the explanation of a setting of the rules
 #: src/Domain/Config/Schema.php
@@ -7318,8 +7745,8 @@ msgstr "Preços abaixo dos quais nenhuma regra pode ir. O piso de uma noite é o
 
 #. translators: the name or the explanation of a setting of the rules
 #: src/Domain/Config/Schema.php
-msgid "No price ever goes below this fraction of the reference minimum of the room (0.75 = 75%)."
-msgstr "Nenhum preço fica abaixo desta fração do mínimo de referência do quarto (0,75 = 75%)."
+msgid "No price ever goes below this fraction of the reference minimum of the room."
+msgstr "Nenhum preço fica abaixo desta fração do mínimo de referência do quarto."
 
 #. translators: the name or the explanation of a setting of the rules
 #: src/Domain/Config/Schema.php
@@ -7448,8 +7875,8 @@ msgstr "Maior mudança semanal de um anúncio"
 
 #. translators: the name or the explanation of a setting of the rules
 #: src/Domain/Config/Schema.php
-msgid "Base, minimum and maximum of a listing never move more than this fraction within one week (0.1 = 10%)."
-msgstr "O preço base, o mínimo e o máximo de um anúncio nunca mudam mais que esta fração numa semana (0,1 = 10%)."
+msgid "Base, minimum and maximum of a listing never move more than this fraction within one week."
+msgstr "Base, mínimo e máximo de um anúncio nunca se movem mais que esta fração numa semana."
 
 #. translators: the name or the explanation of a setting of the rules
 #: src/Domain/Config/Schema.php
@@ -7620,6 +8047,11 @@ msgstr "Onde ela roda"
 #: src/Domain/Config/Schema.php
 msgid "Strategy (inside the sales ladder), coherence (after the engine), audit (daily check of the current prices), validate (plan validator)."
 msgstr "Estratégia (dentro da escada de vendas), coerência (depois do motor), auditoria (conferência diária dos preços atuais), validação (validador do plano)."
+
+#. translators: the name or the explanation of a setting of the rules
+#: src/Domain/Config/Schema.php
+msgid "Stage"
+msgstr "Etapa"
 
 #. translators: the name or the explanation of a setting of the rules
 #: src/Domain/Config/Schema.php

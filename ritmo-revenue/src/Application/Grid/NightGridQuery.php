@@ -79,7 +79,7 @@ final class NightGridQuery
             }
         }
 
-        return new NightGrid($property, $rooms, count($chosen), $offset, iterator_to_array($range, false), $cells, $context->holidays, $context->run, $filter);
+        return new NightGrid($property, $rooms, count($chosen), $offset, iterator_to_array($range, false), $cells, $context->holidays, $context->run, $filter, $context->latest);
     }
 
     /**
@@ -130,7 +130,7 @@ final class NightGridQuery
             $byCode[$room->code] = $room;
         }
 
-        return new GridContext($calendar, $holidays, $last['plan']->withListing($byCode), $last['run'], $marks, $this->clock->today($property->timezone));
+        return new GridContext($calendar, $holidays, $last['plan']->withListing($byCode), $last['run'], $marks, $this->clock->today($property->timezone), $last['latest']);
     }
 
     private function cell(RoomType $room, DateTimeImmutable $night, ?InventoryNight $calendar, GridContext $context): NightCell

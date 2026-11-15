@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 namespace Ritmo\Admin;
 
+use Ritmo\Admin\Components\NightDate;
 use Ritmo\Application\Approval\ApprovalRefused;
 use Ritmo\Application\Mode\ModeRefused;
+use Ritmo\Domain\Support\Days;
 
 /**
  * The sentences a person reads when a change of mode or a decision on a plan is refused, through
@@ -69,7 +71,7 @@ final class RefusalText
             'connection_untested' => sprintf(__('Test the %s connection first: it must have passed within 24 hours.', 'ritmo-revenue'), $text('provider')),
             'write_failed_open' => __('A write failed and its alert is open: resolve it first.', 'ritmo-revenue'),
             /* translators: 1: days, 2: date of the failure */
-            'write_failed_recent' => sprintf(__('A write failed in the last %1$d days (%2$s).', 'ritmo-revenue'), $int('days'), $text('date')),
+            'write_failed_recent' => sprintf(__('A write failed in the last %1$d days (%2$s).', 'ritmo-revenue'), $int('days'), Days::isValid($text('date')) ? NightDate::short(Days::date($text('date'))) : $text('date')),
             'safety_confirmed' => __('A person allowed to change safety limits must confirm them first (Settings, setup).', 'ritmo-revenue'),
             'wave_hold' => __('A cancellation wave is holding price cuts: release it first.', 'ritmo-revenue'),
             'from_approval_only' => __('A property reaches the autonomous mode only from approval.', 'ritmo-revenue'),

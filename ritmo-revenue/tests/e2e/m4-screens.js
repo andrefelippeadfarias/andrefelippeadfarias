@@ -278,6 +278,18 @@ async function approvals(page) {
     check(/Approved write/.test(group) && /approved by/.test(group) && /R\$/.test(group), 'change log: no approved write with its approver and amounts: ' + group.slice(0, 200));
     await page.screenshot({ path: path.join(SHOTS, 'm4-changes-after-write-1280.png'), fullPage: false });
 
+    // M4 product review: the undo writes at once, so ticking and clicking first shows what goes
+    // back and writes nothing; "Cancel" keeps the changes.
+    const before = writes(await simulatorRequests()).length;
+    await page.locator('[data-ritmo="change"] input[name="changes[]"]').first().check();
+    await submitAndWait(page, '[data-ritmo="undo-prepare"]');
+    check(await page.locator('[data-ritmo="undo-confirm"] [data-ritmo="undo-now"]').count() === 1, 'change log: the undo did not ask for a confirmation');
+    check(/→/.test(await page.locator('[data-ritmo="undo-confirm"] tbody').innerText()), 'change log: the confirmation does not show what goes back');
+    check(writes(await simulatorRequests()).length === before, 'change log: preparing the undo wrote something');
+    await page.screenshot({ path: path.join(SHOTS, 'm4-changes-undo-confirm-1280.png'), fullPage: false });
+    await Promise.all([page.waitForNavigation(), page.locator('[data-ritmo="undo-confirm"] a').last().click()]);
+    check(await page.locator('[data-ritmo="undo-confirm"]').count() === 0, 'change log: cancel kept the confirmation open');
+
     // AC-TODO-1 (part): a "Sync Now" item is never added twice for the same room and day. Whether one
     // exists right after the write depends on the change log holding tonight's rows (see docs/ADMIN.md 7).
     await open(page, 'ritmo-revenue-todo');
@@ -444,6 +456,8 @@ async function wizard(browser) {
     await setupStep(form, 4);
     check(await form.inputValue('#ritmo-p-cur') === 'BRL', 'wizard: the currency of the listings is not suggested');
     await form.fill('#ritmo-p-name', 'Example Inn');
+    check(!/premium|standard\b/.test(await form.locator('#ritmo-p-tier').innerText()), 'wizard: the market levels show their internal names');
+    await form.locator('details.ritmo-advanced summary').click();
     await form.fill('#ritmo-p-id', PROPERTY);
     await form.selectOption('#ritmo-p-tz', 'America/Sao_Paulo');
     await pressAndWait(form, '[data-ritmo="wizard-continue"]');

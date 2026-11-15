@@ -7,7 +7,9 @@ namespace Ritmo\Application\Approval;
 use Closure;
 use DateTimeZone;
 use OutOfBoundsException;
+use Ritmo\Application\Alerts\AlertService;
 use Ritmo\Application\Rules\PrivacyCheck;
+use Ritmo\Domain\Alerts\AlertCode;
 use Ritmo\Domain\Operations\LocalTime;
 use Ritmo\Domain\Operations\Slot;
 use Ritmo\Domain\Operations\SlotKind;
@@ -23,7 +25,8 @@ use Ritmo\Infrastructure\Schedule\ScheduledRunRepository;
  * holds the approval capability approves all of it or whole groups of it, or refuses it; the
  * decision is recorded with who, when and why, and an approval puts an approved write on the
  * property's schedule at once (the scheduler starts it under the property's run lock, from fresh
- * reads, and writes only what was approved). The caller checks the nonce first.
+ * reads, and writes only what was approved). The caller checks the nonce first. Once no request
+ * of the property waits any more, its approval_pending alert is resolved.
  */
 final class ApprovalDesk
 {
@@ -40,6 +43,7 @@ final class ApprovalDesk
         private readonly PropertyRepository $properties,
         private readonly Clock $clock,
         private readonly ?Closure $wake = null,
+        private readonly ?AlertService $alerts = null,
     ) {
     }
 
@@ -56,6 +60,7 @@ final class ApprovalDesk
         $this->belongs($propertyId, $requestId);
         $grant = $this->service($config)->approve($requestId, $userId, $selected, $note, $confirmations);
         $this->events->record($propertyId, OperationEventRepository::APPROVAL, 'pending', 'approved', $note === '' ? sprintf('Request %d approved (%d entries).', $requestId, count($grant->approvedEntries)) : $note, 'user:' . $userId, $this->clock->now());
+        $this->settlePending($propertyId);
         $this->schedule($propertyId);
 
         return $grant;
@@ -71,6 +76,7 @@ final class ApprovalDesk
         $this->belongs($propertyId, $requestId);
         $this->service($config)->reject($requestId, $userId, $note);
         $this->events->record($propertyId, OperationEventRepository::APPROVAL, 'pending', 'rejected', $note === '' ? sprintf('Request %d refused.', $requestId) : $note, 'user:' . $userId, $this->clock->now());
+        $this->settlePending($propertyId);
     }
 
     /**
@@ -94,6 +100,16 @@ final class ApprovalDesk
         }
 
         return $out;
+    }
+
+    /**
+     * The "a plan waits for your approval" alert ends when nothing of the property waits any more.
+     */
+    private function settlePending(string $propertyId): void
+    {
+        if ($this->alerts !== null && $this->requests->pending($propertyId) === []) {
+            $this->alerts->settle($propertyId, [AlertCode::ApprovalPending], []);
+        }
     }
 
     private function schedule(string $propertyId): void

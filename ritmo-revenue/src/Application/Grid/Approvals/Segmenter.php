@@ -9,8 +9,8 @@ use Ritmo\Domain\Support\Days;
 /**
  * Groups the entries of a request into segments (decision D8): sorted by room order then night,
  * a segment is a maximal run of consecutive nights of one room with the same reason, the same
- * direction and the same special key (tonight, tomorrow and holiday nights apart). A deletion and
- * its rewrite of the same night stay in one segment. Pure.
+ * direction, the same order (or none) and the same special key (tonight, tomorrow and holiday
+ * nights apart). A deletion and its rewrite of the same night stay in one segment. Pure.
  */
 final class Segmenter
 {
@@ -61,6 +61,7 @@ final class Segmenter
             && $previous->reason === $next->reason
             && $previous->direction === $next->direction
             && $previous->special === $next->special
-            && $previous->held === $next->held;
+            && $previous->held === $next->held
+            && $previous->orderId === $next->orderId;
     }
 }

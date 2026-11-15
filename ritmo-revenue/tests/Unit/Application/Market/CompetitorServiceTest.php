@@ -57,6 +57,9 @@ final class CompetitorServiceTest extends TestCase
             }
         }
         self::assertCount(1, $world->competitors->forProperty(MarketWorld::PROPERTY));
+        self::assertSame(['peer', 'mountain'], CompetitorInput::read(['name' => 'Inn C', 'tags' => 'mountain', 'peer' => '1'])['tags'], 'the box sets the peer group (M4 product review)');
+        self::assertSame(['mountain'], CompetitorInput::read(['name' => 'Inn C', 'tags' => 'peer, mountain', 'peer' => '0'])['tags'], 'an unticked box takes it out');
+        self::assertSame(['peer'], CompetitorInput::read(['name' => 'Inn C', 'tags' => 'peer'])['tags'], 'without the box the text decides (REST)');
         self::assertSame('competitor', CompetitorInput::slug('***'));
         self::assertSame('hotel-dos-pinheiros', CompetitorInput::slug('  Hotel dos Pinheiros! '));
     }

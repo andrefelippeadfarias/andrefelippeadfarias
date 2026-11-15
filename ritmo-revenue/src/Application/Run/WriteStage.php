@@ -7,6 +7,7 @@ namespace Ritmo\Application\Run;
 use Ritmo\Application\Alerts\AlertService;
 use Ritmo\Application\Approval\ApprovalRefused;
 use Ritmo\Application\Approval\ApprovalService;
+use Ritmo\Application\Approval\ApprovalStatus;
 use Ritmo\Application\Approval\CapabilityCheck;
 use Ritmo\Application\Approval\ApprovedSubset;
 use Ritmo\Application\Approval\WaveHoldService;
@@ -166,8 +167,13 @@ final class WriteStage implements Stage
         }
         $summary = $this->report->summarize($context, $outcome, $auth->actor());
         if ($auth instanceof HumanApproval) {
-            $this->approvals($context)->markWritten((int) $auth->id, $context->runId);
-            $this->events->record($propertyId, OperationEventRepository::APPROVAL, 'approved', 'written', sprintf('Request %s written.', $auth->id), $auth->actor(), $this->clock->now(), $context->runId);
+            $status = match ($summary['outcome']) {
+                WriteReport::OUTCOME_WRITTEN => ApprovalStatus::Written,
+                WriteReport::OUTCOME_PARTLY => ApprovalStatus::WrittenPartly,
+                default => ApprovalStatus::WriteFailed,
+            };
+            $this->approvals($context)->markWritten((int) $auth->id, $context->runId, $status);
+            $this->events->record($propertyId, OperationEventRepository::APPROVAL, 'approved', $status->value, sprintf('Request %s: %s.', $auth->id, $status->value), $auth->actor(), $this->clock->now(), $context->runId);
         } else {
             $this->modes->afterWrite($context->property, $summary['failed'], $context->rules->modes());
         }

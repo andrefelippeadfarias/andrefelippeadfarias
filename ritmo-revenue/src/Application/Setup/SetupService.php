@@ -50,7 +50,7 @@ final class SetupService
      */
     public function createProperty(array $input): Property
     {
-        $id = self::text($input, 'id');
+        $id = self::text($input, 'id') === '' ? $this->freeId(self::text($input, 'name')) : self::text($input, 'id');
         if (!Identifier::isCode($id)) {
             throw new InvalidArgumentException('The property id is a short code of letters, digits, "-" and "_" (up to 32).');
         }
@@ -78,6 +78,23 @@ final class SetupService
         $this->properties->save($property);
 
         return $property;
+    }
+
+    /**
+     * A property code made from its name ("Pousada do Sol" → "pousada-do-sol"), not taken by
+     * another property (a number is added when it is).
+     */
+    public function freeId(string $name): string
+    {
+        $ascii = strtolower((string) preg_replace('/[^A-Za-z0-9]+/', '-', (string) iconv('UTF-8', 'ASCII//TRANSLIT//IGNORE', $name)));
+        $base = substr(trim($ascii, '-'), 0, 28);
+        $base = $base === '' ? 'property' : rtrim($base, '-');
+        $id = $base;
+        for ($n = 2; $this->properties->find($id) !== null; ++$n) {
+            $id = $base . '-' . $n;
+        }
+
+        return $id;
     }
 
     /**

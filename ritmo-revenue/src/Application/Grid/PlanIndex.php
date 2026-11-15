@@ -135,6 +135,8 @@ final class PlanIndex
             array_values(array_map('strval', array_filter((array) ($details['relation_codes'] ?? []), 'is_scalar'))),
             is_string($details['order_id'] ?? null) ? $details['order_id'] : null,
             in_array(RuleCode::HELD_AT_FLOOR, $codes, true),
+            false,
+            is_numeric($details['current_price'] ?? null) ? (float) $details['current_price'] : null,
         );
     }
 

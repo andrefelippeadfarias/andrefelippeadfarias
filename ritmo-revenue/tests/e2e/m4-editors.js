@@ -227,8 +227,26 @@ async function orders(page) {
     const to = new Date(Date.now() + 21 * 86400000).toISOString().slice(0, 10);
     // Unique per run, in letters: a long number in a note is refused as a possible phone number.
     const note = 'End-to-end floor ' + String(Date.now()).replace(/\d/g, (d) => 'abcdefghij'[d]);
+    // M4 product review (AC-ORD-4): a refused order comes back filled in, with the field marked
+    // and a summary that links to it; a note with guest data is not kept.
     await open(page, 'ritmo-revenue-orders&tab=new&type=floor');
-    const form = page.locator('[data-ritmo="order-form"]');
+    let form = page.locator('[data-ritmo="order-form"]');
+    await form.locator('input[name="order[from]"]').fill(to);
+    await form.locator('input[name="order[to]"]').fill(from);
+    await form.locator('input[name="order[rooms][]"][value="STD"]').check();
+    await form.locator('input[name="order[floors][STD]"]').fill('450');
+    await form.locator('textarea[name="order[note]"]').fill('call 11 98765-4321');
+    await submit(page, '[data-ritmo="order-form"] button.button-primary');
+    form = page.locator('[data-ritmo="order-form"]');
+    check(await page.locator('[data-ritmo="error-summary"] a[href^="#ritmo-f-order-"]').count() > 0, 'orders: a refused order has no summary linking to its fields');
+    check(await page.locator('[aria-invalid="true"]').count() > 0, 'orders: no field of the refused order is marked');
+    check(await form.locator('input[name="order[from]"]').inputValue() === to, 'orders: the first night typed was lost');
+    check(await form.locator('input[name="order[rooms][]"][value="STD"]').isChecked(), 'orders: the room ticked was lost');
+    check(await form.locator('input[name="order[floors][STD]"]').inputValue() === '450', 'orders: the minimum price typed was lost');
+    check(!/98765/.test(await form.locator('textarea[name="order[note]"]').inputValue()), 'orders: a note with a phone number was kept');
+
+    await open(page, 'ritmo-revenue-orders&tab=new&type=floor');
+    form = page.locator('[data-ritmo="order-form"]');
     await form.locator('input[name="order[from]"]').fill(from);
     await form.locator('input[name="order[to]"]').fill(to);
     await form.locator('input[name="order[rooms][]"][value="STD"]').check();

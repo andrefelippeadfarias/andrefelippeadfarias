@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Ritmo\Domain\Report\RunLines;
 
 use InvalidArgumentException;
+use Ritmo\Domain\Model\Identifier;
 
 /**
  * One line of a run report as it is stored: a code and its parameters (counts and reason codes
@@ -75,6 +76,13 @@ final class RunLine
         if ($type === 'code' && is_string($value) && preg_match(self::CODE_PATTERN, $value) === 1) {
             return $value;
         }
-        throw new InvalidArgumentException(sprintf('The parameter "%s" of the report line "%s" must be %s.', $name, $code->value, $type === 'int' ? 'a count' : 'a reason code'));
+        if ($type === 'room' && is_string($value) && Identifier::isCode($value)) {
+            return $value;
+        }
+        throw new InvalidArgumentException(sprintf('The parameter "%s" of the report line "%s" must be %s.', $name, $code->value, match ($type) {
+            'int' => 'a count',
+            'room' => 'a room code',
+            default => 'a reason code',
+        }));
     }
 }

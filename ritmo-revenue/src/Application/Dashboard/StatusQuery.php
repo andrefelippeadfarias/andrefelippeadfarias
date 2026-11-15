@@ -7,6 +7,7 @@ namespace Ritmo\Application\Dashboard;
 use OutOfBoundsException;
 use Ritmo\Application\EmergencySwitch;
 use Ritmo\Domain\Support\Clock;
+use Ritmo\Domain\Support\Days;
 use Ritmo\Infrastructure\Db\Repository\PlanApprovalRepository;
 use Ritmo\Infrastructure\Db\Repository\PropertyRepository;
 use Ritmo\Infrastructure\Db\Repository\RunRepository;
@@ -46,14 +47,32 @@ final class StatusQuery
             $state->isPausedAt($now),
             $state->isPausedAt($now) ? $state->pausedUntil : null,
             count($waiting),
-            array_sum(array_map(static fn (array $r): int => count($r['entries']), $waiting)),
+            array_sum(array_map(static fn (array $r): int => self::nights($r['entries']), $waiting)),
             $expires,
             $last === null ? null : ['id' => $last['id'], 'kind' => $last['kind'], 'status' => $last['status'], 'started_at' => $last['started_at'], 'finished_at' => $last['finished_at']],
         );
     }
 
     /**
-     * Entries waiting in every property: the counter of the Approvals menu entry.
+     * The room nights a request changes (a rule deleted and written again is one night; a change
+     * of the listing counts as one), so every screen says the same number of nights.
+     *
+     * @param list<array<string, mixed>> $entries as plan_approvals keeps them
+     */
+    public static function nights(array $entries): int
+    {
+        $keys = [];
+        foreach ($entries as $entry) {
+            $subject = is_array($entry) ? (string) ($entry['subject'] ?? '') : '';
+            $night = substr($subject, 0, 10);
+            $keys[(string) ($entry['room'] ?? '') . '|' . (Days::isValid($night) ? $night : $subject)] = true;
+        }
+
+        return count($keys);
+    }
+
+    /**
+     * Room nights waiting in every property: the counter of the Approvals menu entry.
      */
     public function waitingEverywhere(): int
     {
@@ -61,7 +80,7 @@ final class StatusQuery
         $count = 0;
         foreach ($this->properties->all() as $property) {
             foreach ($this->requests->pending($property->id) as $request) {
-                $count += $request['expires_at'] > $now ? count($request['entries']) : 0;
+                $count += $request['expires_at'] > $now ? self::nights($request['entries']) : 0;
             }
         }
 

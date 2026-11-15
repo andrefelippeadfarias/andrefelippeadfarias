@@ -171,7 +171,7 @@ final class AlertsScreen
         foreach (AlertText::FACTS as $key) {
             $label = AlertText::factLabel($key);
             $value = $context[$key] ?? null;
-            if ($label === null || $value === null || $value === '' || is_array($value)) {
+            if ($label === null || $value === null || $value === '' || is_array($value) || ($key === 'groups_open' && (int) $value === 0)) {
                 continue;
             }
             $facts[] = ['label' => $label, 'value' => self::value($key, $value, $property, $timezone)];

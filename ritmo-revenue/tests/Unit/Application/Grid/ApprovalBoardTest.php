@@ -146,6 +146,31 @@ final class ApprovalBoardTest extends TestCase
         self::assertEqualsWithDelta(8.0, (float) $row->changePercent(), 0.0001);
     }
 
+    /**
+     * Regression (M4 product review): the approval compares the price a guest pays, not the floor
+     * with the listing minimum. A step from 1350 to 1248 on a night without a date rule is a cut
+     * of 7.6%, shown with its range (the floor going from the listing minimum to 1248).
+     */
+    public function testAPriceStepDownIsADownEvenWhenTheFloorRisesFromTheListingMinimum(): void
+    {
+        $run = (new RunRepository($this->world->raw))->start('inn', 'shadow', PropertyMode::Shadow, null, $this->world->clock->now()->modify('-50 minutes'));
+        $items = new PlanItemRepository($this->world->raw, $this->world->clock);
+        $night = Days::date('2026-11-20');
+        $items->add($run, 'inn', 'A', $night, 'floor', null, 1080.0, 'PACE_STEP', ['min_percent' => 80, 'current_price' => 1170.0], status: 'would_write');
+        $items->add($run, 'inn', 'A', $night, 'ceiling', null, 1080.0, 'PACE_STEP', ['max_percent' => 80, 'current_price' => 1170.0], status: 'would_write');
+        $this->request($run, [(new PlanEntry(PlanEntry::ITEM, 'A', '2026-11-20', ['floor_pct' => 80, 'ceiling_pct' => 80]))->toArray()]);
+
+        $view = $this->board()->waiting('inn')[0];
+        $row = $view->rooms['A'][0]->entries[0];
+
+        self::assertSame(400.0, $row->floorBefore, 'the range still starts at the listing minimum');
+        self::assertSame(1170.0, $row->before());
+        self::assertSame(1080.0, $row->after());
+        self::assertSame(EntryRow::DOWN, $row->direction);
+        self::assertSame(0, $view->impact->up);
+        self::assertSame(1, $view->impact->down);
+    }
+
     public function testTheStatusOfARequestAndARequestOfAnotherProperty(): void
     {
         $id = $this->request(null, $this->entries(['A'], 3));

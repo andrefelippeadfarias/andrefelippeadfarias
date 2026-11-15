@@ -43,6 +43,13 @@ final class ApprovalEndToEndTest extends TestCase
         self::assertStringStartsWith('user:', (string) ($summary['write']['actor'] ?? ''));
         self::assertGreaterThan(0, $summary['verify']['nights_confirmed']);
         self::assertSame('written', $world->stack->approvalRequests()->find($pending[0]['id'])['status'] ?? null);
+        $changes = (new \Ritmo\Infrastructure\Db\Repository\ChangeLogRepository($world->db))->forRun((int) $written->runId);
+        self::assertNotSame([], $changes);
+        foreach ($changes as $change) {
+            if ($change->provider->value === 'pricing') {
+                self::assertNotSame('', $change->reasonCode, 'the change log says why (M4 product review)');
+            }
+        }
     }
 
     public function testTheSchedulerTickWritesTheApprovedPlanFirst(): void
@@ -79,6 +86,49 @@ final class ApprovalEndToEndTest extends TestCase
         foreach ($paths as $path) {
             self::assertStringContainsString('901001___902001', $path, 'only the approved room was written');
         }
+    }
+
+    /**
+     * Regression (M4 product review): approved nights left out are never skipped in silence. A
+     * recalculation refused by the pricing system counts against the listing's quota; the next
+     * approved write of the same routine leaves that room out, and the request reads "written in
+     * part", with a report line and an alert naming the room. The approval_pending alert ends with
+     * the decision.
+     */
+    public function testApprovedNightsLeftOutByTheRecalculationLimitAreReported(): void
+    {
+        $world = new RunWorld(PropertyMode::Approval);
+        $world->run();
+        self::assertNotSame([], (new \Ritmo\Infrastructure\Schedule\AlertLedger($world->db))->active(RunWorld::PROPERTY, ['approval_pending']));
+        $first = $world->stack->approvalDesk()->pending(RunWorld::PROPERTY, new ApprovalConfig())[0]['id'];
+        $world->stack->approvalDesk()->approve(RunWorld::PROPERTY, $first, RunWorld::OWNER, null, new ApprovalConfig());
+        self::assertSame([], (new \Ritmo\Infrastructure\Schedule\AlertLedger($world->db))->active(RunWorld::PROPERTY, ['approval_pending']), 'decided: nothing waits any more');
+
+        $world->apis->fault('POST', '/pricelabs/v1/refresh_listing', 400);
+        $world->run(RunKind::ApprovedWrite);
+        self::assertContains($world->stack->approvalRequests()->find($first)['status'] ?? null, ['written_partly', 'write_failed'], 'a refused recalculation is not a full write');
+
+        $world->later('+15 minutes');
+        $world->run();
+        $second = $world->stack->approvalDesk()->pending(RunWorld::PROPERTY, new ApprovalConfig())[0]['id'];
+        $world->stack->approvalDesk()->approve(RunWorld::PROPERTY, $second, RunWorld::OWNER, null, new ApprovalConfig());
+        $written = $world->run(RunKind::ApprovedWrite);
+
+        $summary = $world->summary($written->runId);
+        self::assertNotSame([], $summary['write']['not_recalculated'] ?? [], json_encode($summary['write'] ?? []));
+        self::assertSame('written_partly', $world->stack->approvalRequests()->find($second)['status'] ?? null);
+        $codes = array_column((array) ($summary['report']['items'] ?? []), 'code');
+        self::assertContains('not_recalculated', $codes, json_encode($summary['report'] ?? []));
+        self::assertNotSame([], (new \Ritmo\Infrastructure\Schedule\AlertLedger($world->db))->active(RunWorld::PROPERTY, ['recalc_quota_exhausted']));
+
+        // a day later the quota is free again: the room is written and its alert resolves
+        $world->later('+25 hours');
+        $world->run();
+        $third = $world->stack->approvalDesk()->pending(RunWorld::PROPERTY, new ApprovalConfig())[0]['id'];
+        $world->stack->approvalDesk()->approve(RunWorld::PROPERTY, $third, RunWorld::OWNER, null, new ApprovalConfig());
+        $world->run(RunKind::ApprovedWrite);
+        self::assertSame('written', $world->stack->approvalRequests()->find($third)['status'] ?? null);
+        self::assertSame([], (new \Ritmo\Infrastructure\Schedule\AlertLedger($world->db))->active(RunWorld::PROPERTY, ['recalc_quota_exhausted']));
     }
 
     public function testAPersonWithoutTheApprovalCapabilityCannotApprove(): void

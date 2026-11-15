@@ -124,6 +124,21 @@ final class Labels
         };
     }
 
+    /**
+     * A level of market position of the rules (pace.target_percentile): the known ones in words,
+     * another by its own name.
+     */
+    public static function tier(string $tier): string
+    {
+        return match ($tier) {
+            'standard' => __('Standard (most inns)', 'ritmo-revenue'),
+            'premium' => __('Premium (above most of the market)', 'ritmo-revenue'),
+            'superior' => __('Superior', 'ritmo-revenue'),
+            'budget', 'economy' => __('Economy (below most of the market)', 'ritmo-revenue'),
+            default => ucfirst(str_replace(['_', '-'], ' ', $tier)),
+        };
+    }
+
     public static function approvalStatus(string $status): string
     {
         return match ($status) {
@@ -133,6 +148,8 @@ final class Labels
             'expired' => __('expired', 'ritmo-revenue'),
             'superseded' => __('replaced by a newer plan', 'ritmo-revenue'),
             'written' => __('written', 'ritmo-revenue'),
+            'written_partly' => __('written in part: some approved nights were left out (see the run report)', 'ritmo-revenue'),
+            'write_failed' => __('not written: the write failed (see the alerts)', 'ritmo-revenue'),
             'lapsed' => __('not written: the nights changed before the write', 'ritmo-revenue'),
             default => self::other(),
         };

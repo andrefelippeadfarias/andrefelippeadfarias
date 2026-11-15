@@ -10,7 +10,9 @@ use DateTimeImmutable;
  * One entry of a request as the approval screen shows it: what is sent, before and after in
  * money (from the plan items of the run that proposed it), the reason and the warnings. Plain
  * values; the screen turns them into words. beforeFromListing: the night had no date rule, so the
- * amounts before are the listing's minimum and maximum.
+ * amounts before are the listing's minimum and maximum. priceBefore and priceAfter: the price a
+ * guest pays now and once the entry is written (the price read within the floor and ceiling);
+ * when the price moves it is what moves, and the floor and ceiling are the range around it.
  */
 final class EntryRow
 {
@@ -20,6 +22,9 @@ final class EntryRow
     public const REWRITE = 'rewrite';
     public const LISTING = 'listing';
     public const PMS = 'pms';
+
+    /** A price within this distance is the same price (RuleInForce::MARGIN). */
+    private const MARGIN = 0.5;
 
     /**
      * @param array<string, int|float|string>                         $fields   what is sent
@@ -49,18 +54,30 @@ final class EntryRow
         public readonly array $warnings,
         public readonly bool $held,
         public readonly bool $beforeFromListing = false,
+        public readonly ?float $priceBefore = null,
+        public readonly ?float $priceAfter = null,
     ) {
     }
 
-    /** The amount that moves: the floor when it is sent, else the ceiling. */
+    /** The amount that moves: the price a guest pays when known, else the floor when it is sent, else the ceiling. */
     public function before(): ?float
     {
+        if ($this->hasPrice()) {
+            return $this->priceBefore;
+        }
+
         return $this->floorAfter !== null ? $this->floorBefore : $this->ceilingBefore;
     }
 
     public function after(): ?float
     {
-        return $this->floorAfter ?? $this->ceilingAfter;
+        return $this->hasPrice() ? $this->priceAfter : ($this->floorAfter ?? $this->ceilingAfter);
+    }
+
+    /** The price a guest pays moves with this entry (by half a unit of money or more). */
+    public function hasPrice(): bool
+    {
+        return $this->priceBefore !== null && $this->priceAfter !== null && abs($this->priceAfter - $this->priceBefore) >= self::MARGIN;
     }
 
     /** The change in percent of the moving amount; null when one side is unknown. */

@@ -95,8 +95,8 @@ final class NightDetailView
             'why' => [
                 'status' => NightText::status($planned),
                 'pace' => Labels::pace($planned->paceCategory() === 'none' ? null : $planned->paceCategory()),
-                'rule' => $planned->status === null ? __('The last run did not price this night.', 'ritmo-revenue') : NightText::reason($planned->reason),
-                'sentences' => ReasonText::sentences($cell->trace),
+                'rule' => $planned->status === null ? __('The last run did not price this night: without market prices for a night (Market) the plugin does not price it.', 'ritmo-revenue') : NightText::reason($planned->reason),
+                'sentences' => ReasonText::sentences($cell->trace, $currency),
                 'orders' => $cell->orderIds,
                 'refused' => $planned->issues === [] ? [] : [__('The safety checks refused the change of this night; it is not written.', 'ritmo-revenue')],
             ],
@@ -143,10 +143,13 @@ final class NightDetailView
             $out[] = [
                 /* translators: %d: run number */
                 'when' => sprintf(__('Run %d', 'ritmo-revenue'), $decision['run_id']),
-                'text' => NightText::reason($decision['reason']) . ' · ' . match ($decision['status']) {
-                    'would_write' => __('would write or wrote', 'ritmo-revenue'),
-                    'rejected' => __('refused', 'ritmo-revenue'),
-                    default => __('no change', 'ritmo-revenue'),
+                'text' => NightText::reason($decision['reason']) . ' · ' . match (true) {
+                    $decision['status'] === 'rejected' => __('refused by the safety checks', 'ritmo-revenue'),
+                    $decision['status'] !== 'would_write' => __('no change', 'ritmo-revenue'),
+                    $decision['written'] => __('written', 'ritmo-revenue'),
+                    $decision['mode'] === 'shadow' => __('would write (shadow mode: nothing is sent)', 'ritmo-revenue'),
+                    $decision['mode'] === 'approval' => __('proposed: waits for a person to approve it', 'ritmo-revenue'),
+                    default => __('planned, not written by this run (see its report)', 'ritmo-revenue'),
                 },
             ];
         }
@@ -185,7 +188,13 @@ final class NightDetailView
 
     private static function plain(int|float|string|null $value): string
     {
-        return $value === null ? '—' : (is_string($value) && preg_match('/^[01]{7}$/', $value) === 1 ? __('days of the week', 'ritmo-revenue') : (string) $value);
+        return match (true) {
+            $value === null => '—',
+            $value === ChangeRecord::PRESENT => __('set', 'ritmo-revenue'),
+            $value === ChangeRecord::ABSENT => __('none', 'ritmo-revenue'),
+            is_string($value) && preg_match('/^[01]{7}$/', $value) === 1 => __('days of the week', 'ritmo-revenue'),
+            default => (string) $value,
+        };
     }
 
     private static function restriction(string $restriction): string

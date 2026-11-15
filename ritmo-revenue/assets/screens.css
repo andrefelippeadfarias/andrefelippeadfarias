@@ -123,7 +123,7 @@
 .ritmo-done { color: var(--ritmo-good-fg); margin-left: 4px; white-space: nowrap; }
 .ritmo-room-cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 12px; }
 .ritmo-room-card { border: 1px solid #c3c4c7; padding: 8px 12px; min-width: 0; }
-.ritmo-room-card input { width: 100%; }
+.ritmo-room-card input:not([type=checkbox]):not([type=radio]) { width: 100%; }
 .ritmo-day { display: inline-block; margin-right: 12px; }
 .ritmo-form label { font-weight: 600; }
 .ritmo-confirm code { font-size: 1em; }
@@ -171,3 +171,6 @@
 
 /* A select with long option texts (the sections of the rules in Portuguese) never widens the page. */
 .wrap.ritmo select { max-width: 100%; }
+.ritmo-technical { display: inline; }
+.ritmo-technical summary { display: inline; cursor: pointer; color: #50575e; }
+.ritmo-technical code { display: block; overflow-wrap: anywhere; }

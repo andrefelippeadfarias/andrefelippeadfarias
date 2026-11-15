@@ -35,7 +35,7 @@ Abra **Configurações › Configuração**. O assistente leva você por nove et
 1. **Boas-vindas e conferências**: o plugin confere a criptografia das chaves, o agendador do WordPress e o fuso horário do site.
 2. **Conectar o PMS**: cole o token do PMS e os ids das propriedades. A chave nunca volta para a tela: depois de salva, aparece só que ela existe.
 3. **Conectar o sistema de preços**: cole a chave da API e o nome do seu PMS no sistema de preços (por exemplo, `beds24`). O plugin lê os anúncios para sugerir os quartos.
-4. **Propriedade**: nome, id, fuso horário e moeda.
+4. **Propriedade**: nome, fuso horário, moeda e onde seus preços ficam no mercado (o nível padrão serve para a maioria das pousadas). O código da propriedade é feito a partir do nome; para escolher outro, abra **Avançado**.
 5. **Quartos**: uma linha por quarto, com o id do quarto no PMS, o número de unidades e os valores do anúncio. **Confira o id e as unidades**: são só sugestões.
 6. **Regras e calendário**: comece pelo modelo **Conservador (recomendado)**. As noites de fim de semana, os feriados e as temporadas ficam em **Regras › Calendário**.
 7. **Limites de segurança**: o menor preço permitido (uma fração do mínimo de referência de cada quarto), o limite semanal de mudança do anúncio e se o modo autônomo pode existir no site. Para confirmar, digite o id da propriedade. Só um administrador faz esta etapa.
@@ -109,9 +109,10 @@ Com a constante, a tela não consegue desligar a chave: só tirando a linha do a
 Em **Registro de mudanças**, cada gravação aparece com antes → depois, quem fez e quando:
 
 1. Marque as mudanças que quer desfazer.
-2. Clique em **Preparar o desfazer das mudanças marcadas**.
+2. Clique em **Desfazer as mudanças marcadas…**. Nada é gravado ainda: a tela mostra, para cada mudança, o valor de agora e o valor para o qual ela volta.
+3. Confira e clique em **Desfazer agora**, ou em **Cancelar: manter as mudanças**.
 
-O desfazer passa pelas mesmas conferências de uma gravação comum. Uma noite que outra pessoa mudou depois não é desfeita (ela fica como está), e uma noite que já passou também não.
+O desfazer grava na hora, em qualquer modo (inclusive em aprovação). Ele passa pelas mesmas conferências de uma gravação comum. Uma noite que outra pessoa mudou depois não é desfeita (ela fica como está), e uma noite que já passou também não.
 
 ## 9. Regras, ordens e calendário
 
@@ -123,7 +124,7 @@ O desfazer passa pelas mesmas conferências de uma gravação comum. Uma noite q
 
 ## 10. Preços de mercado por CSV
 
-Em **Mercado**, cadastre os concorrentes e importe um arquivo CSV com os preços deles. Uma linha por estadia:
+Em **Mercado**, cadastre os concorrentes (marque **Parecido com você (par)** nos mais parecidos com a sua pousada: os preços de mercado dos pares usam só esses) e importe um arquivo CSV com os preços deles. Uma linha por estadia:
 
 | Coluna | Exemplo |
 |---|---|

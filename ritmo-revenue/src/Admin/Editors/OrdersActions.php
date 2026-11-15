@@ -55,10 +55,12 @@ final class OrdersActions
                 $errors['order.' . $error->path] = $error->path === 'note' ? EditorText::privacy($error->message) : self::problem($error->path, $error->code);
             }
             FormErrors::flash($errors);
-            Notice::flash(Notice::ERROR, __('The order was not saved: correct the values marked below.', 'ritmo-revenue'), array_values($errors));
+            OrderFormDraft::keep($fields);
+            Notice::flash(Notice::ERROR, __('The order was not saved: correct the values marked below.', 'ritmo-revenue'));
 
             return ['tab' => 'new', 'type' => (string) ($fields['type'] ?? '')] + ($copy > 0 ? ['copy' => $copy] : []);
         } catch (RulesRefused $refused) {
+            OrderFormDraft::keep($fields);
             Notice::flash(Notice::ERROR, EditorText::refusal($refused));
 
             return ['tab' => 'new', 'type' => (string) ($fields['type'] ?? '')] + ($copy > 0 ? ['copy' => $copy] : []);

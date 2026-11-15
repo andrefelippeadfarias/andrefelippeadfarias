@@ -141,6 +141,18 @@ final class OrdersScreen
     }
 
     /**
+     * The id of the form field (or group) a problem of the order points at.
+     */
+    public static function fieldId(string $path): string
+    {
+        return match (true) {
+            str_starts_with($path, 'floors.') => 'ritmo-f-order-floors-' . preg_replace('/[^A-Za-z0-9_-]/', '', substr($path, 7)),
+            in_array($path, ['rooms', 'from', 'to', 'nights', 'percentile', 'releases', 'note'], true) => 'ritmo-f-order-' . $path,
+            default => 'ritmo-f-order-rooms',
+        };
+    }
+
+    /**
      * @return array<string, mixed>
      */
     private static function form(EditorPage $page, string $type, int $copyOf): array
@@ -156,11 +168,22 @@ final class OrdersScreen
         $type = $copy !== null ? $copy->type->value : $type;
         $releases = array_map(static fn (OrderRelease $r): array => ['value' => $r->value, 'text' => OrderText::release($r), 'safety' => in_array($r->value, OrderForm::SAFETY_RELEASES, true)], OrderRelease::cases());
 
+        $copied = $copy === null ? null : ['id' => $copyOf, 'rooms' => $copy->rooms, 'from' => Days::key($copy->from), 'to' => Days::key($copy->to), 'nights' => $copy->nights, 'floors' => $copy->floors, 'percentile' => $copy->percentile, 'releases' => array_map(static fn (OrderRelease $r): string => $r->value, $copy->releases), 'note' => $copy->note];
+        $errors = [];
+        foreach (FormErrors::take() as $path => $text) {
+            if (str_starts_with($path, 'order.')) {
+                $errors[substr($path, 6)] = $text;
+            }
+        }
+
         return [
             'type' => $type,
             'types' => array_map(static fn (string $t): array => ['value' => $t, 'label' => OrderText::type(OrderType::from($t))], OrderForm::TYPES),
             'rooms' => $page->roomNames(),
-            'copy' => $copy === null ? null : ['id' => $copyOf, 'rooms' => $copy->rooms, 'from' => Days::key($copy->from), 'to' => Days::key($copy->to), 'nights' => $copy->nights, 'floors' => $copy->floors, 'percentile' => $copy->percentile, 'releases' => array_map(static fn (OrderRelease $r): string => $r->value, $copy->releases), 'note' => $copy->note],
+            'copy' => $copied,
+            'values' => OrderFormDraft::take() ?? $copied ?? [],
+            'errors' => $errors,
+            'error_links' => array_map(static fn (string $path, string $text): array => ['url' => '#' . self::fieldId($path), 'text' => $text], array_keys($errors), $errors),
             'releases' => array_values(array_filter($releases, static fn (array $r): bool => in_array($r['value'], ['fixed_price', 'below_standard_floor', 'above_weekly_rise_limit', 'stay', 'orphan_stay', 'arrival_departure', 'discount_band', 'listing'], true))),
             'may_safety' => Capability::can(Capability::MANAGE_SAFETY),
             'property_id' => $page->property?->id ?? '',

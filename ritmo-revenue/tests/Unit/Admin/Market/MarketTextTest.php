@@ -24,7 +24,8 @@ final class MarketTextTest extends TestCase
 {
     public function testEveryProblemCodeHasItsOwnSentence(): void
     {
-        $codes = array_values(array_diff((new ReflectionClass(MarketCsvProblem::class))->getConstants(), [MarketCsvProblem::FILE, MarketCsvProblem::ERROR, MarketCsvProblem::WARNING]));
+        // HIDDEN_VALUE marks a cell value kept out because it looks like personal data: not a problem code
+        $codes = array_values(array_diff((new ReflectionClass(MarketCsvProblem::class))->getConstants(), [MarketCsvProblem::FILE, MarketCsvProblem::ERROR, MarketCsvProblem::WARNING, MarketCsvProblem::HIDDEN_VALUE]));
         $codes = array_values(array_filter($codes, 'is_string'));
         self::assertGreaterThan(25, count($codes));
         $fallback = MarketText::what('no_such_code');
@@ -66,6 +67,8 @@ final class MarketTextTest extends TestCase
     public function testFactorsAndOriginsReadInWords(): void
     {
         self::assertSame('× 1.4 (measured)', MarketText::factor(1.4, ComparableFactor::MEASURED, 1.0, 2.0));
+        self::assertSame('close to you (peer), mountain', MarketText::groups(['peer', 'mountain']));
+        self::assertSame('—', MarketText::groups([]));
         self::assertSame('× 2 (estimated, capped)', MarketText::factor(2.6, ComparableFactor::ESTIMATED, 1.0, 2.0));
         self::assertSame('× 1.8 (estimated)', MarketText::factor(1.8, ComparableFactor::ESTIMATED, 1.0, 2.0));
         self::assertSame('× 1.395 (not set: default)', MarketText::factor(null, '', 1.395, 2.0));

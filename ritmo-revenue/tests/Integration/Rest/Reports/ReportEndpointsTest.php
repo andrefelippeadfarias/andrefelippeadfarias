@@ -83,7 +83,7 @@ final class ReportEndpointsTest extends TestCase
         $endpoints = $this->endpoints($runs);
         [$status, $body] = $endpoints->runReport(1);
         self::assertSame(200, $status);
-        self::assertSame('Shadow mode: 3 change would be written to the pricing system and 1 to the PMS; nothing was sent.', $body['lines'][0]['text']);
+        self::assertSame('Shadow mode: nothing was sent. 3 changes would have gone to the pricing system. 1 change would have gone to the PMS.', $body['lines'][0]['text']);
         self::assertSame(['items' => 3, 'pms' => 1], $body['lines'][0]['params']);
         self::assertSame(['code' => null, 'params' => [], 'text' => 'Unknown report line'], $body['lines'][1], 'never the raw parameters');
         self::assertSame([true, 'Shadow: 2 item(s) would be written; writes sent: 0.'], [$endpoints->runReport(2)[1]['recorded'], $endpoints->runReport(2)[1]['lines'][0]['text']]);

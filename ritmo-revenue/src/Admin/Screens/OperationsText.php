@@ -31,6 +31,8 @@ final class OperationsText
                 'approved' => __('A plan was approved', 'ritmo-revenue'),
                 'rejected' => __('A plan was refused', 'ritmo-revenue'),
                 'written' => __('An approved plan was written', 'ritmo-revenue'),
+                'written_partly' => __('An approved plan was written in part', 'ritmo-revenue'),
+                'write_failed' => __('The write of an approved plan failed', 'ritmo-revenue'),
                 default => __('A plan changed status', 'ritmo-revenue'),
             },
             'emergency' => $to === 'engaged' ? __('Emergency switch engaged', 'ritmo-revenue') : __('Emergency switch released', 'ritmo-revenue'),

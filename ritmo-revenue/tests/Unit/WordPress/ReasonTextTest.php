@@ -15,6 +15,8 @@ namespace Ritmo\Admin {
 }
 
 namespace Ritmo\Tests\Unit\WordPress {
+    require_once __DIR__ . '/../Admin/Screens/WpStubs.php';
+
     use InvalidArgumentException;
     use PHPUnit\Framework\TestCase;
     use ReflectionClass;
@@ -42,7 +44,7 @@ namespace Ritmo\Tests\Unit\WordPress {
             self::assertSame([
                 'Holiday night, 12 days out. Period: Carnival.',
                 'Pace very behind: 0 of 4 units sold (0% against 37.5% expected).',
-                'Target: market percentile 30, 444.5 public, 444.5 sent.',
+                'Target: the market price at percentile 30, 444.5 as guests see it (444.5 in the plan sent to the pricing system).',
                 'Weak market data (3 prices, 20 days old): half a step at most.',
                 'One step from 640 to 544 (at most 15%).',
                 'Held at the hard floor of 560 (owner floor).',
@@ -57,7 +59,39 @@ namespace Ritmo\Tests\Unit\WordPress {
             foreach (array_diff($codes, $skips) as $code) {
                 self::assertCount(1, ReasonText::sentences([['code' => $code, 'params' => []]]), $code);
             }
-            self::assertSame(['Weekday night, ? days out.'], ReasonText::sentences([['code' => RuleCode::NIGHT, 'params' => []]]), 'a missing number shows as "?"');
+            self::assertSame(['Weekday night, days out not known.'], ReasonText::sentences([['code' => RuleCode::NIGHT, 'params' => []]]));
+        }
+
+        /** Regression: amounts in the currency of the property, numbers in the person's format, one day in the singular. */
+        public function testAmountsAreMoneyAndDaysAgreeWithTheirNumber(): void
+        {
+            $text = ReasonText::describe([
+                ['code' => RuleCode::NIGHT, 'params' => ['night_type' => 'weekend', 'days_out' => 1]],
+                ['code' => RuleCode::MARKET_TARGET, 'params' => ['percentile' => 30.0, 'public' => 828.8, 'sent' => 828.8]],
+                ['code' => RuleCode::STEP, 'params' => ['from' => 1350.0, 'to' => 1248.75, 'max_percent' => 7.5]],
+            ], 'BRL');
+
+            self::assertStringContainsString('Weekend night, 1 day out.', $text);
+            self::assertSame('Holiday night, tonight.', ReasonText::describe([['code' => RuleCode::NIGHT, 'params' => ['night_type' => 'holiday', 'days_out' => 0]]]));
+            self::assertStringContainsString("R$\u{00A0}828.80 as guests see it", $text);
+            self::assertStringContainsString("One step from R$\u{00A0}1,350 to R$\u{00A0}1,248.75 (at most 7.5%).", $text);
+            self::assertDoesNotMatchRegularExpression('/\b\d{4,}\b/', $text, 'no bare amount');
+        }
+
+        /** Regression: every floor the engine names reads in words, never as its code. */
+        public function testEveryFloorLabelOfTheEngineReadsInWords(): void
+        {
+            $labels = ReasonText::floorLabels();
+            self::assertContains('order_floor', $labels);
+            $texts = [];
+            foreach ($labels as $label) {
+                $text = ReasonText::describe([['code' => RuleCode::HELD_AT_FLOOR, 'params' => ['floor' => 500.0, 'label' => $label]]], 'BRL');
+                self::assertStringNotContainsString($label, $text);
+                self::assertStringNotContainsString('_', $text);
+                $texts[] = $text;
+            }
+            self::assertSame(count($texts), count(array_unique($texts)), 'one name per floor');
+            self::assertStringNotContainsString('some_new_floor', ReasonText::describe([['code' => RuleCode::HELD_AT_FLOOR, 'params' => ['floor' => 500.0, 'label' => 'some_new_floor']]]));
         }
 
         public function testTheTracesOfARealShadowRunAreExplained(): void

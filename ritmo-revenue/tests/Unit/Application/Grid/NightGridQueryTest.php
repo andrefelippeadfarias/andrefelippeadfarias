@@ -28,6 +28,26 @@ final class NightGridQueryTest extends TestCase
         $this->world->run(['A', 'B', 'C'], 60, ['A|2026-11-20' => 'would_write', 'B|2026-11-21' => 'would_write', 'C|2026-11-22' => 'rejected']);
     }
 
+    /**
+     * Regression (M4 product review): a run that priced no night (no market prices) is not "no
+     * run yet": the grid and the overview know it ran, and the plan of the run before still shows.
+     */
+    public function testARunThatPricedNoNightIsKnownApart(): void
+    {
+        $world = new ScreenWorld();
+        $world->property();
+        $world->room('A');
+        $world->calendar('A', 30);
+        $empty = $world->run([], 30);
+
+        $grid = $world->grid()->window('inn', $world->night('2026-11-13'), 30, [], NightFilter::from('all'));
+        self::assertNull($grid->run);
+        self::assertSame($empty, $grid->latest['id'] ?? null);
+        self::assertTrue($world->overview()->pace($world->properties()->find('inn'))['unplanned']);
+        self::assertTrue($world->overview()->soon($world->properties()->find('inn'))['unplanned']);
+        self::assertNotNull($world->overview()->soon($world->properties()->find('inn'))['captured_at'], 'the calendar of that run was read');
+    }
+
     public function testTheGridHasEveryRoomAndNightWithOccupancyPriceAndPlan(): void
     {
         $grid = $this->world->grid()->window('inn', $this->world->night('2026-11-13'), 30, [], NightFilter::from('all'));

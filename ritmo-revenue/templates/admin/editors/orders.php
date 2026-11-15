@@ -30,7 +30,21 @@ $ritmo_property = $ritmo_page->property?->id ?? '';
             <button type="submit" class="button button-primary"><?php esc_html_e('Continue', 'ritmo-revenue'); ?></button>
         </form>
     <?php else : ?>
-        <?php $ritmo_copy = $ritmo_form['copy']; ?>
+        <?php
+        $ritmo_copy = $ritmo_form['copy'];
+        $ritmo_values = $ritmo_form['values'];
+        $ritmo_errors = $ritmo_form['errors'];
+        ?>
+        <?php if ($ritmo_form['error_links'] !== []) : ?>
+            <div class="ritmo-error-summary" role="alert" tabindex="-1" data-ritmo="error-summary">
+                <h2><?php esc_html_e('Correct these values and save again', 'ritmo-revenue'); ?></h2>
+                <ul>
+                    <?php foreach ($ritmo_form['error_links'] as $ritmo_link) : ?>
+                        <li><a href="<?php echo esc_url($ritmo_link['url']); ?>"><?php echo esc_html($ritmo_link['text']); ?></a></li>
+                    <?php endforeach; ?>
+                </ul>
+            </div>
+        <?php endif; ?>
         <form method="post" action="<?php echo esc_url($view['post_url']); ?>" class="ritmo-card ritmo-form" data-ritmo="order-form">
             <?php wp_nonce_field('ritmo_order_create'); ?>
             <input type="hidden" name="action" value="ritmo_order_create">
@@ -39,32 +53,34 @@ $ritmo_property = $ritmo_page->property?->id ?? '';
             <input type="hidden" name="order[type]" value="<?php echo esc_attr($ritmo_form['type']); ?>">
             <?php if ($ritmo_copy !== null) : ?><input type="hidden" name="copy" value="<?php echo esc_attr((string) $ritmo_copy['id']); ?>"><?php endif; ?>
             <h2><?php foreach ($ritmo_form['types'] as $ritmo_type) : ?><?php if ($ritmo_type['value'] === $ritmo_form['type']) : ?><?php echo esc_html($ritmo_type['label']); ?><?php endif; ?><?php endforeach; ?></h2>
-            <fieldset id="ritmo-f-order-rooms">
+            <fieldset id="ritmo-f-order-rooms"<?php if (isset($ritmo_errors['rooms'])) : ?> aria-invalid="true" aria-describedby="<?php echo esc_attr('ritmo-f-order-rooms'); ?>-error"<?php endif; ?>>
                 <legend><?php esc_html_e('Rooms', 'ritmo-revenue'); ?></legend>
-                <label class="ritmo-check"><input type="checkbox" name="order[rooms][]" value="*" <?php checked(in_array('*', $ritmo_copy['rooms'] ?? [], true)); ?>> <?php esc_html_e('All rooms', 'ritmo-revenue'); ?></label>
+                <?php if (isset($ritmo_errors['rooms'])) : ?><span class="ritmo-field-error" id="<?php echo esc_attr('ritmo-f-order-rooms'); ?>-error"><?php echo esc_html($ritmo_errors['rooms']); ?></span><?php endif; ?>
+                <label class="ritmo-check"><input type="checkbox" name="order[rooms][]" value="*" <?php checked(in_array('*', $ritmo_values['rooms'] ?? [], true)); ?>> <?php esc_html_e('All rooms', 'ritmo-revenue'); ?></label>
                 <?php foreach ($ritmo_form['rooms'] as $ritmo_code => $ritmo_name) : ?>
-                    <label class="ritmo-check"><input type="checkbox" name="order[rooms][]" value="<?php echo esc_attr((string) $ritmo_code); ?>" <?php checked(in_array($ritmo_code, $ritmo_copy['rooms'] ?? [], true)); ?>> <?php echo esc_html($ritmo_name); ?></label>
+                    <label class="ritmo-check"><input type="checkbox" name="order[rooms][]" value="<?php echo esc_attr((string) $ritmo_code); ?>" <?php checked(in_array($ritmo_code, $ritmo_values['rooms'] ?? [], true)); ?>> <?php echo esc_html($ritmo_name); ?></label>
                 <?php endforeach; ?>
             </fieldset>
-            <p><label for="ritmo-f-order-from"><?php esc_html_e('First night', 'ritmo-revenue'); ?></label><br><input type="date" id="ritmo-f-order-from" name="order[from]" value="<?php echo esc_attr($ritmo_copy['from'] ?? ''); ?>"></p>
-            <p><label for="ritmo-f-order-to"><?php esc_html_e('Last night', 'ritmo-revenue'); ?></label><br><input type="date" id="ritmo-f-order-to" name="order[to]" value="<?php echo esc_attr($ritmo_copy['to'] ?? ''); ?>"></p>
-            <p><label for="ritmo-f-order-nights"><?php esc_html_e('Or only these nights (one date per line, YYYY-MM-DD)', 'ritmo-revenue'); ?></label><br><textarea id="ritmo-f-order-nights" name="order[nights]" rows="3"><?php echo esc_html(implode("\n", $ritmo_copy['nights'] ?? [])); ?></textarea></p>
+            <p><label for="ritmo-f-order-from"><?php esc_html_e('First night', 'ritmo-revenue'); ?></label><br><?php if (isset($ritmo_errors['from'])) : ?><span class="ritmo-field-error" id="<?php echo esc_attr('ritmo-f-order-from'); ?>-error"><?php echo esc_html($ritmo_errors['from']); ?></span><?php endif; ?><input type="date" id="ritmo-f-order-from" name="order[from]"<?php if (isset($ritmo_errors['from'])) : ?> aria-invalid="true" aria-describedby="<?php echo esc_attr('ritmo-f-order-from'); ?>-error"<?php endif; ?> value="<?php echo esc_attr($ritmo_values['from'] ?? ''); ?>"></p>
+            <p><label for="ritmo-f-order-to"><?php esc_html_e('Last night', 'ritmo-revenue'); ?></label><br><?php if (isset($ritmo_errors['to'])) : ?><span class="ritmo-field-error" id="<?php echo esc_attr('ritmo-f-order-to'); ?>-error"><?php echo esc_html($ritmo_errors['to']); ?></span><?php endif; ?><input type="date" id="ritmo-f-order-to" name="order[to]"<?php if (isset($ritmo_errors['to'])) : ?> aria-invalid="true" aria-describedby="<?php echo esc_attr('ritmo-f-order-to'); ?>-error"<?php endif; ?> value="<?php echo esc_attr($ritmo_values['to'] ?? ''); ?>"></p>
+            <p><label for="ritmo-f-order-nights"><?php esc_html_e('Or only these nights (one date per line, YYYY-MM-DD)', 'ritmo-revenue'); ?></label><br><?php if (isset($ritmo_errors['nights'])) : ?><span class="ritmo-field-error" id="<?php echo esc_attr('ritmo-f-order-nights'); ?>-error"><?php echo esc_html($ritmo_errors['nights']); ?></span><?php endif; ?><textarea id="ritmo-f-order-nights" name="order[nights]" rows="3"<?php if (isset($ritmo_errors['nights'])) : ?> aria-invalid="true" aria-describedby="<?php echo esc_attr('ritmo-f-order-nights'); ?>-error"<?php endif; ?>><?php echo esc_html(implode("\n", $ritmo_values['nights'] ?? [])); ?></textarea></p>
             <?php if (in_array($ritmo_form['type'], ['floor', 'target'], true)) : ?>
                 <fieldset>
                     <legend><?php echo esc_html($ritmo_form['type'] === 'floor' ? __('Minimum price per room (price sent to the channels)', 'ritmo-revenue') : __('Minimum price on weak nights (optional)', 'ritmo-revenue')); ?></legend>
                     <?php foreach ($ritmo_form['rooms'] as $ritmo_code => $ritmo_name) : ?>
                         <p><label for="ritmo-f-order-floors-<?php echo esc_attr((string) $ritmo_code); ?>"><?php echo esc_html($ritmo_name); ?></label><br>
-                            <input type="number" inputmode="decimal" min="0" step="0.01" id="ritmo-f-order-floors-<?php echo esc_attr((string) $ritmo_code); ?>" name="order[floors][<?php echo esc_attr((string) $ritmo_code); ?>]" value="<?php echo esc_attr(isset($ritmo_copy['floors'][$ritmo_code]) ? (string) $ritmo_copy['floors'][$ritmo_code] : ''); ?>"> <?php echo esc_html($ritmo_page->currency()); ?></p>
+                            <?php if (isset($ritmo_errors['floors.' . $ritmo_code])) : ?><span class="ritmo-field-error" id="<?php echo esc_attr('ritmo-f-order-floors-' . $ritmo_code); ?>-error"><?php echo esc_html($ritmo_errors['floors.' . $ritmo_code]); ?></span><?php endif; ?><input type="number" inputmode="decimal" min="0" step="0.01" id="ritmo-f-order-floors-<?php echo esc_attr((string) $ritmo_code); ?>" name="order[floors][<?php echo esc_attr((string) $ritmo_code); ?>]"<?php if (isset($ritmo_errors['floors.' . $ritmo_code])) : ?> aria-invalid="true" aria-describedby="<?php echo esc_attr('ritmo-f-order-floors-' . $ritmo_code); ?>-error"<?php endif; ?> value="<?php echo esc_attr(isset($ritmo_values['floors'][$ritmo_code]) ? (string) $ritmo_values['floors'][$ritmo_code] : ''); ?>"> <?php echo esc_html($ritmo_page->currency()); ?></p>
                     <?php endforeach; ?>
                     <?php if ($ritmo_form['type'] === 'floor') : ?><p class="ritmo-help"><?php esc_html_e('Never below the absolute floor of the room, whatever you type.', 'ritmo-revenue'); ?></p><?php endif; ?>
                 </fieldset>
             <?php endif; ?>
             <?php if ($ritmo_form['type'] === 'target') : ?>
-                <p><label for="ritmo-f-order-percentile"><?php esc_html_e('Market percentile (0 is the cheapest competitor, 100 the dearest)', 'ritmo-revenue'); ?></label><br><input type="number" id="ritmo-f-order-percentile" name="order[percentile]" min="0" max="110" step="1" value="<?php echo esc_attr(isset($ritmo_copy['percentile']) ? (string) (int) $ritmo_copy['percentile'] : $ritmo_form['percentile']); ?>"></p>
+                <p><label for="ritmo-f-order-percentile"><?php esc_html_e('Market percentile (0 is the cheapest competitor, 100 the dearest)', 'ritmo-revenue'); ?></label><br><?php if (isset($ritmo_errors['percentile'])) : ?><span class="ritmo-field-error" id="<?php echo esc_attr('ritmo-f-order-percentile'); ?>-error"><?php echo esc_html($ritmo_errors['percentile']); ?></span><?php endif; ?><input type="number" id="ritmo-f-order-percentile" name="order[percentile]"<?php if (isset($ritmo_errors['percentile'])) : ?> aria-invalid="true" aria-describedby="<?php echo esc_attr('ritmo-f-order-percentile'); ?>-error"<?php endif; ?> min="0" max="110" step="1" value="<?php echo esc_attr(isset($ritmo_values['percentile']) ? (string) (int) $ritmo_values['percentile'] : $ritmo_form['percentile']); ?>"></p>
             <?php endif; ?>
             <?php if (in_array($ritmo_form['type'], ['floor', 'rule', 'restriction'], true)) : ?>
-                <fieldset id="ritmo-f-order-releases">
+                <fieldset id="ritmo-f-order-releases"<?php if (isset($ritmo_errors['releases'])) : ?> aria-invalid="true" aria-describedby="<?php echo esc_attr('ritmo-f-order-releases'); ?>-error"<?php endif; ?>>
                     <legend><?php esc_html_e('What it allows', 'ritmo-revenue'); ?></legend>
+                    <?php if (isset($ritmo_errors['releases'])) : ?><span class="ritmo-field-error" id="<?php echo esc_attr('ritmo-f-order-releases'); ?>-error"><?php echo esc_html($ritmo_errors['releases']); ?></span><?php endif; ?>
                     <?php foreach ($ritmo_form['releases'] as $ritmo_release) : ?>
                         <?php
                         $ritmo_allowed = ['floor' => ['below_standard_floor'], 'restriction' => ['stay', 'orphan_stay', 'arrival_departure']][$ritmo_form['type']] ?? null;
@@ -72,7 +88,7 @@ $ritmo_property = $ritmo_page->property?->id ?? '';
                             continue;
                         }
                         ?>
-                        <label class="ritmo-check"><input type="checkbox" name="order[releases][]" value="<?php echo esc_attr($ritmo_release['value']); ?>" <?php checked(in_array($ritmo_release['value'], $ritmo_copy['releases'] ?? [], true)); ?> <?php disabled($ritmo_release['safety'] && !$ritmo_form['may_safety']); ?>> <?php echo esc_html($ritmo_release['text']); ?><?php if ($ritmo_release['safety']) : ?> <span class="ritmo-badge ritmo-tone-attention"><?php esc_html_e('Safety limit', 'ritmo-revenue'); ?></span><?php endif; ?></label>
+                        <label class="ritmo-check"><input type="checkbox" name="order[releases][]" value="<?php echo esc_attr($ritmo_release['value']); ?>" <?php checked(in_array($ritmo_release['value'], $ritmo_values['releases'] ?? [], true)); ?> <?php disabled($ritmo_release['safety'] && !$ritmo_form['may_safety']); ?>> <?php echo esc_html($ritmo_release['text']); ?><?php if ($ritmo_release['safety']) : ?> <span class="ritmo-badge ritmo-tone-attention"><?php esc_html_e('Safety limit', 'ritmo-revenue'); ?></span><?php endif; ?></label>
                     <?php endforeach; ?>
                     <?php if ($ritmo_form['may_safety']) : ?>
                         <p><label for="ritmo-order-confirmation"><?php esc_html_e('To allow a safety limit, type the property id:', 'ritmo-revenue'); ?> <code><?php echo esc_html($ritmo_form['property_id']); ?></code></label><br>
@@ -82,7 +98,7 @@ $ritmo_property = $ritmo_page->property?->id ?? '';
                     <?php endif; ?>
                 </fieldset>
             <?php endif; ?>
-            <p><label for="ritmo-f-order-note"><?php esc_html_e('Note (optional; no guest data)', 'ritmo-revenue'); ?></label><br><textarea id="ritmo-f-order-note" name="order[note]" rows="2" maxlength="500"><?php echo esc_html($ritmo_copy['note'] ?? ''); ?></textarea></p>
+            <p><label for="ritmo-f-order-note"><?php esc_html_e('Note (optional; no guest data)', 'ritmo-revenue'); ?></label><br><?php if (isset($ritmo_errors['note'])) : ?><span class="ritmo-field-error" id="<?php echo esc_attr('ritmo-f-order-note'); ?>-error"><?php echo esc_html($ritmo_errors['note']); ?></span><?php endif; ?><textarea id="ritmo-f-order-note" name="order[note]" rows="2" maxlength="500"<?php if (isset($ritmo_errors['note'])) : ?> aria-invalid="true" aria-describedby="<?php echo esc_attr('ritmo-f-order-note'); ?>-error"<?php endif; ?>><?php echo esc_html($ritmo_values['note'] ?? ''); ?></textarea></p>
             <?php if ($ritmo_copy !== null) : ?>
                 <p><label class="ritmo-check"><input type="checkbox" name="end_original" value="1" checked> <?php esc_html_e('End the original order', 'ritmo-revenue'); ?></label></p>
             <?php endif; ?>

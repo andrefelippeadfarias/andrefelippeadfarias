@@ -10,7 +10,7 @@ use PHPUnit\Framework\TestCase;
  */
 final class PmsChangedSinceReadTest extends TestCase
 {
-    public function testARestrictionChangedByAPersonAfterTheReadIsOverwritten(): void
+    public function testARestrictionChangedByAPersonAfterTheReadIsKept(): void
     {
         $world = StayWorld::auto(['closed_days' => [StayWorld::CLOSED_SATURDAY]]);
         $done = false;

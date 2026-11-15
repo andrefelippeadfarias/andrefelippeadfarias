@@ -28,7 +28,11 @@ final class ReportsAdminTest extends TestCase
         foreach (RunLineCode::cases() as $code) {
             $params = [];
             foreach ($code->params() as $name => $type) {
-                $params[$name] = $type === 'int' ? 7 : 'pricing_first';
+                $params[$name] = match ($type) {
+                    'int' => 7,
+                    'room' => 'DLX',
+                    default => 'pricing_first',
+                };
             }
             $text = RunLineText::of(RunLine::of($code, $params));
             self::assertNotSame('', $text, $code->value);
@@ -40,6 +44,17 @@ final class ReportsAdminTest extends TestCase
             }
         }
         self::assertSame('1 room night sold beyond the units.', RunLineText::of(RunLine::of(RunLineCode::Overbooked, ['count' => 1])));
+    }
+
+    /** Regression: every number of a line agrees with its noun, and a zero part is left out. */
+    public function testTheLinesAgreeWithTheirNumbers(): void
+    {
+        self::assertSame('Shadow mode: nothing was sent. 158 changes would have gone to the pricing system.', RunLineText::of(RunLine::of(RunLineCode::ShadowWouldWrite, ['items' => 158, 'pms' => 0])));
+        self::assertSame('Shadow mode: nothing was sent. 1 change would have gone to the pricing system. 2 changes would have gone to the PMS.', RunLineText::of(RunLine::of(RunLineCode::ShadowWouldWrite, ['items' => 1, 'pms' => 2])));
+        self::assertSame('Written: 1 call sent. 48 room nights confirmed in the pricing system.', RunLineText::of(RunLine::of(RunLineCode::Written, ['calls' => 1, 'confirmed' => 48, 'pms_confirmed' => 0])));
+        self::assertSame('Refused by the safety checks: 1 change for the PMS.', RunLineText::of(RunLine::of(RunLineCode::ValidatorRefused, ['count' => 0, 'pms' => 1])));
+        self::assertStringStartsWith('59 nights of STD were not written', RunLineText::of(RunLine::of(RunLineCode::NotRecalculated, ['room' => 'STD', 'nights' => 59])));
+        self::assertSame(['Undo: 2 room nights written back. 1 change marked as undone in the change log.'], RunLineText::ofSummary(['undo' => ['written' => 2, 'undone' => 1, 'refused' => []]])['lines'], 'an undo run has its line');
     }
 
     public function testATableExportsWithItsHeaderTheCurrencyAndTheFormulaGuard(): void

@@ -614,6 +614,7 @@ public function since(string $provider, DateTimeImmutable $since): array;
 public function __construct(Database $db, Clock $clock);
 public function save(RoomType $room): void;
 public function find(string $code): ?RoomType;
+public function unreadable(): array;
 public function forProperty(string $propertyId): array;
 public function all(): array;
 public function pmsMap(): array;

@@ -1,0 +1,34 @@
+/* Assistant of Ritmo Revenue: Ask, Settings, Usage and the "explain" buttons. No outside font or image. */
+.ritmo-ai .ritmo-card { max-width: 960px; }
+.ritmo-ai textarea.large-text { width: 100%; max-width: 100%; box-sizing: border-box; }
+.ritmo-ai label { display: inline-block; margin-bottom: 4px; font-weight: 600; }
+.ritmo-ai label input[type="checkbox"] { margin-right: 6px; }
+.ritmo-ai .description { display: block; margin-top: 4px; }
+.ritmo-ai-draft { border-top: 1px solid #dcdcde; padding: 12px 0; }
+.ritmo-ai-draft:first-of-type { border-top: 0; }
+.ritmo-ai-draft h3 { margin: 0 0 4px; font-size: 14px; }
+.ritmo-ai-actions { display: flex; flex-wrap: wrap; gap: 8px; }
+.ritmo-ai-actions form { margin: 0; }
+.ritmo-ai-text { border-left: 4px solid #2271b1; padding: 4px 12px; margin: 8px 0; background: #f6f7f7; }
+.ritmo-ai-text:empty { display: none; }
+.ritmo-ai-spend { font-size: 18px; font-weight: 600; }
+.ritmo-ai-meter { height: 10px; border-radius: 5px; background: #dcdcde; overflow: hidden; max-width: 480px; }
+.ritmo-ai-meter span { display: block; height: 100%; background: #2271b1; }
+.ritmo-ai-totals { display: grid; grid-template-columns: max-content auto; gap: 4px 16px; }
+.ritmo-ai-totals dd { margin: 0; font-variant-numeric: tabular-nums; }
+.ritmo-ai-table-wrap { overflow-x: auto; }
+.ritmo-ai-prices input[type="number"] { width: 7em; }
+.ritmo-ai-explain { margin: 8px 0; }
+.ritmo-ai button:focus-visible, .ritmo-ai-explain button:focus-visible { outline: 2px solid #2271b1; outline-offset: 2px; }
+[aria-busy="true"] { cursor: progress; }
+
+@media (max-width: 600px) {
+    .ritmo-ai-totals { grid-template-columns: minmax(0, 1fr); }
+    .ritmo-ai-totals dd { margin-bottom: 8px; }
+    .ritmo-ai-actions .button { width: 100%; text-align: center; }
+    .ritmo-ai input.regular-text, .ritmo-ai select { width: 100%; max-width: 100%; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .ritmo-ai *, .ritmo-ai-explain * { transition: none !important; animation: none !important; }
+}

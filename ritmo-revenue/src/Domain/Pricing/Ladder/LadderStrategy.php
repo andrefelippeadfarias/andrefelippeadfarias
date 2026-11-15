@@ -14,7 +14,7 @@ use Ritmo\Domain\Support\Days;
  * steps and drop, the relations solved inside its nights, its last-minute market floor and,
  * optionally, the owner order that must stay in force for it to act.
  *
- * Reference: plano_dono.py (the owner's plan module, made generic).
+ * Reference: the ladder strategy of the reference engine, made generic.
  */
 final class LadderStrategy
 {

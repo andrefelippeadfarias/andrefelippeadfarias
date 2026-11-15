@@ -10,7 +10,7 @@ use InvalidArgumentException;
  * The percentile p (0 to 100) of a list of prices, by linear interpolation between the closest
  * ranks.
  *
- * Reference: faixas_dono.quantil. The rank is (count - 1) * p / 100, in this order of operations
+ * Reference: the quantile of the reference market bands. The rank is (count - 1) * p / 100, in this order of operations
  * (the M1 anchor's Quantile::of multiplies by a fraction instead, which can differ in the last
  * bit), so the values match the reference before any rounding.
  */

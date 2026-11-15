@@ -19,6 +19,7 @@ final class LogText
     {
         return match ($english) {
             'A run starts.' => __('A run starts.', 'ritmo-revenue'),
+            'A run could not start: no room of the property is mapped to the PMS yet.' => __('A run could not be made: no room of the property is linked to the PMS yet (expected while the setup is not finished: save the rooms step).', 'ritmo-revenue'),
             'A run resumes.' => __('A run resumes.', 'ritmo-revenue'),
             'A run ended.' => __('A run ended.', 'ritmo-revenue'),
             'A stage of the run completed.' => __('A stage of the run completed.', 'ritmo-revenue'),
@@ -53,6 +54,8 @@ final class LogText
             'Claude connection tested.' => __('The connection to Claude was tested.', 'ritmo-revenue'),
             'Claude connection is set up wrongly on this site.' => __('The connection to Claude is set up wrongly on this site.', 'ritmo-revenue'),
             'A licence key was saved.' => __('A licence key was saved.', 'ritmo-revenue'),
+            'The licence was checked.' => __('The licence was checked.', 'ritmo-revenue'),
+            'A screen action failed.' => __('An action of a screen failed; the reference is the one the screen showed.', 'ritmo-revenue'),
             'The licence key was removed.' => __('The licence key was removed.', 'ritmo-revenue'),
             'The scheduled licence check failed.' => __('The scheduled licence check failed.', 'ritmo-revenue'),
             'A property went back to shadow mode because of the licence.' => __('A property went back to shadow mode because of the licence.', 'ritmo-revenue'),

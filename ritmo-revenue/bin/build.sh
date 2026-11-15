@@ -20,7 +20,8 @@
 #      the same bytes), read back: one folder, the files a site needs, exactly the staged files;
 #   7. its SHA-256, printed and written next to it (<zip>.sha256).
 #
-# The zip's timestamp is SOURCE_DATE_EPOCH when set, else the time of the last git commit.
+# The zip's timestamp is SOURCE_DATE_EPOCH when set, else the time of the last git commit; it is
+# printed with the SHA-256, because a published checksum is reproduced only with the same value.
 # Needs PHP 8.1+ with the zip extension. Never calls the network.
 
 set -euo pipefail
@@ -89,3 +90,4 @@ SUM="$(sha256sum "$ZIP" | cut -d' ' -f1)"
 SIZE="$(wc -c < "$ZIP" | tr -d ' ')"
 echo "Built $ZIP ($SIZE bytes, version $VERSION)"
 echo "sha256 $SUM"
+echo "SOURCE_DATE_EPOCH=$SOURCE_DATE_EPOCH (the time stamped on every file of the zip: the same files built with it give the same sha256)"

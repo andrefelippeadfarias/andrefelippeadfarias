@@ -28,8 +28,8 @@ use Ritmo\Domain\Support\Num;
  * Every floor is declared in a price plan and converted to the sent plan with the measured factor
  * of the room and night type (amount / factor).
  *
- * Reference: pace.pisos_enviados, pace.limite_seguranca, pace.teto_anuncio and
- * validar_plano.piso_absoluto.
+ * Reference: the floors, safety limit and listing ceiling of the reference engine, and its
+ * absolute floor check.
  */
 final class Floors
 {

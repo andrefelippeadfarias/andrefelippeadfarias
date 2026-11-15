@@ -156,6 +156,7 @@ public function upsert(string $table, array $row, array $uniqueColumns): void;
 public function update(string $table, array $values, array $where): int;
 public function delete(string $table, array $where): int;
 public function transaction(callable $work): mixed;
+public function abandonTransaction(): bool;
 ```
 
 #### `Ritmo\Infrastructure\Db\DatabaseException` (final class extends RuntimeException)
@@ -312,6 +313,7 @@ public function uninstall(): void;
 
 ```php
 public function transaction(callable $work): mixed;
+public function abandonTransaction(): bool;
 ```
 
 #### `Ritmo\Infrastructure\Db\PdoDatabase` (final class implements Database)
@@ -332,6 +334,7 @@ public function upsert(string $table, array $row, array $uniqueColumns): void;
 public function update(string $table, array $values, array $where): int;
 public function delete(string $table, array $where): int;
 public function transaction(callable $work): mixed;
+public function abandonTransaction(): bool;
 ```
 
 #### `Ritmo\Infrastructure\Db\Query\Screens\AlertListReader` (final class implements AlertList)
@@ -830,6 +833,7 @@ public function upsert(string $table, array $row, array $uniqueColumns): void;
 public function update(string $table, array $values, array $where): int;
 public function delete(string $table, array $where): int;
 public function transaction(callable $work): mixed;
+public function abandonTransaction(): bool;
 ```
 
 #### `Ritmo\Infrastructure\Http\CreditAwareHttpClient` (final class implements WriteHttpClient, HttpClient)

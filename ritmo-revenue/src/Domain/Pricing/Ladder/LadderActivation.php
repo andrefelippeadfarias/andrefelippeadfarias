@@ -13,7 +13,7 @@ use Ritmo\Domain\Orders\OrderBook;
  * it, when it lists nights) and is not a follow-up. Deleting the order switches off everything
  * the strategy does: its prices, its weekend floor override, its last-minute floor.
  *
- * Reference: plano_dono.ativo and pace.ordem_do_plano.
+ * Reference: the activation of the ladder strategy and its order in the reference engine.
  */
 final class LadderActivation
 {

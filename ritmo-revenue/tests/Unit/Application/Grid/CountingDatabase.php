@@ -99,4 +99,9 @@ final class CountingDatabase implements Database
     {
         return $this->inner->transaction($work);
     }
+
+    public function abandonTransaction(): bool
+    {
+        return $this->inner->abandonTransaction();
+    }
 }

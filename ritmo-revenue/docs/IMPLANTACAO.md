@@ -21,13 +21,13 @@ Este guia é para você colocar o Ritmo Revenue 1.0.0 no seu site **hoje** e com
 
 | Item | Mínimo | Onde conferir |
 |---|---|---|
-| PHP | 8.1 ou mais novo | WordPress: **Ferramentas › Saúde do site › Informações › Servidor** |
+| PHP | 8.1 ou mais novo | WordPress: **Ferramentas › Diagnóstico › Informação › Servidor** (em versões antigas do WordPress: Saúde do site › Informações) |
 | WordPress | 6.5 ou mais novo | **Painel › Atualizações** |
 | HTTPS | cadeado no navegador, endereço começando com `https://` | barra de endereço do site |
-| Extensões do PHP | `sodium` (criptografia das chaves) e `zip` (instalar pelo envio do zip) | **Ferramentas › Saúde do site › Informações › Servidor**; se faltar, peça à hospedagem |
-| Agendador | WP-Cron funcionando ou um cron de verdade (abaixo) | **Ferramentas › Saúde do site**: nada crítico sobre "eventos agendados" ou "solicitação de loopback" |
+| Extensões do PHP | `sodium` (criptografia das chaves) e `zip` (instalar pelo envio do zip) | **Ferramentas › Diagnóstico › Informação › Servidor** (em versões antigas do WordPress: Saúde do site › Informações); se faltar, peça à hospedagem |
+| Agendador | WP-Cron funcionando ou um cron de verdade (abaixo) | **Ferramentas › Diagnóstico** (antes: Saúde do site): nada crítico sobre "eventos agendados" ou "solicitação de loopback" |
 | Fuso horário do site | o da sua cidade | **Configurações › Geral › Fuso horário** |
-| Tamanho de envio | maior que o zip (cerca de 1,8 MB; o padrão do PHP, 2 MB, basta) | **Mídia › Adicionar novo** mostra o "tamanho máximo de envio" |
+| Tamanho de envio | maior que o zip (cerca de 1,8 MB; o padrão do PHP, 2 MB, basta) | **Mídia › Adicionar arquivo de mídia** (antes: Adicionar novo) mostra o "tamanho máximo de envio" |
 
 **Agendador.** O plugin roda sozinho (uma rodada completa por dia, às 07:30 no fuso da propriedade, se você não mudar). O agendador do WordPress (WP-Cron) só acorda quando alguém visita o site. Num site com pouca visita, peça à hospedagem (ou configure no painel dela, em "Tarefas cron") um cron que chame o WordPress a cada 5 minutos:
 
@@ -75,7 +75,7 @@ O plugin guarda o token do Beds24 e a chave do PriceLabs criptografados. Para es
 
 ## 4. Instalar e ativar
 
-1. **Plugins › Adicionar novo › Enviar plugin**.
+1. **Plugins › Adicionar plugin › Enviar plugin** (em versões antigas do WordPress: Adicionar novo).
 2. **Escolher arquivo**, selecione `ritmo-revenue-1.0.0.zip` e clique em **Instalar agora**.
 3. Quando aparecer "Plugin instalado com sucesso", clique em **Ativar plugin**.
 4. Confira em **Plugins**: "Ritmo Revenue", **Versão 1.0.0**, ativo. O menu **Ritmo Revenue** aparece no painel.
@@ -118,7 +118,7 @@ Abra **Ritmo Revenue › Configurações › Configuração** (é o assistente d
 1. **Boas-vindas e conferências.** As cinco conferências precisam estar "OK" (entre elas a criptografia das chaves, o agendador e o fuso horário; se disser que a proteção depende do banco, falta a `RITMO_SECRET_KEY` da seção 3). Quando tudo já está OK, o assistente pula esta etapa e abre direto na etapa 2.
 2. **Conectar o PMS (Beds24).** Escolha o tipo de token (**Token de longa duração** para o token só de leitura), cole o token e digite os números das propriedades no Beds24, separados por vírgula se forem mais de uma. **Salvar e testar.** Se for recusado, a tela diz o motivo (token recusado, sem acesso, sistema fora do ar).
 3. **Conectar o sistema de preços (PriceLabs).** Cole a chave da API e escreva `beds24` em "Nome do seu PMS no sistema de preços". O plugin lê os anúncios para sugerir os quartos.
-4. **Propriedade.** Nome da pousada, fuso horário (o da sua cidade), moeda (Real) e o nível de mercado (o padrão serve para a maioria). O código da propriedade é feito do nome e **não muda depois**.
+4. **Propriedade.** Nome da pousada, fuso horário (o da sua cidade), moeda (BRL) e o nível de mercado (o padrão serve para a maioria). O código da propriedade é feito do nome e **não muda depois**.
 5. **Quartos.** Uma linha por anúncio do PriceLabs. **Confira em cada linha** o número do quarto no Beds24 (Room ID) e o número de unidades: são só sugestões. Os valores mínimo, base e máximo vêm do anúncio. Se aparecerem quartos de outra pousada, marque **Não gerenciar este quarto** neles.
 6. **Regras e calendário.** Comece pelo modelo **Conservador (recomendado)** e confira os dias de fim de semana. Para a comparação com a skill ficar justa, o ideal é o plugin usar regras parecidas com as dela: você pode pedir ao Claude um arquivo de regras (preset `.json`) feito a partir das regras atuais da skill e enviá-lo nesta etapa. Sem ele, espere mais diferenças e anote-as (seção 8).
 7. **Limites de segurança.** O menor preço permitido de cada quarto, o limite semanal de mudança do anúncio e se o modo autônomo pode existir no site: **deixe o modo autônomo desligado**. Para confirmar, digite o id da propriedade (o código que a tela mostra).
@@ -129,13 +129,17 @@ Se a etapa 9 disser que muitas noites ficaram sem mudança **por falta de preço
 
 **Duas pousadas.** Faça o assistente de configuração para a primeira pousada até a etapa 9. Depois, no resumo do assistente, volte à etapa **Propriedade** e crie a segunda com o nome dela; nas etapas seguintes, marque **Não gerenciar este quarto** nos quartos da primeira. As conexões (etapas 2 e 3) valem para as duas; na etapa 2, os números das duas propriedades do Beds24 vão separados por vírgula.
 
+Entre a etapa 4 (Propriedade) e a etapa 5 (Quartos), o agendador pode tentar uma rodada da pousada nova, que ainda não tem quartos. Ela aparece como **falhou**, o Diagnóstico mostra no registro "Uma rodada não pôde ser feita: nenhum quarto da propriedade está ligado ao PMS ainda" e pode surgir o alerta "Uma rodada agendada está atrasada". É esperado e não grava nada: salve os quartos (etapa 5) e o alerta some na rodada seguinte. Por isso, faça as etapas 4 e 5 em seguida.
+
+**Memória.** Com o horizonte padrão de 60 noites, uma rodada de 12 quartos usa cerca de 85 MB. Não aumente `plan.horizon_nights` muito acima disso numa hospedagem com 128 MB de memória para o PHP: com 365 noites a rodada passa de 200 MB. Se o servidor parar uma rodada por falta de memória, ela é fechada como falha, a trava é liberada na hora e aparece o alerta "Uma rodada ficou sem memória".
+
 O assistente de IA (Claude) é opcional e fica desligado; não é preciso para o teste.
 
 ## 7. Primeira conexão com as contas reais: o que conferir
 
 Faça esta lista logo depois da primeira rodada em sombra e anote o resultado. Se algo não bater, **não siga para o protocolo**: gere o pacote de suporte (seção 8.4) e mande ao Claude.
 
-- [ ] **Conexões.** Em **Configurações › Conexões**, **Testar agora** nas duas: as duas "OK".
+- [ ] **Conexões.** Em **Configurações › Conexões**, **Testar agora** nas duas: as duas dizem "Conectado ao …" (por exemplo "Conectado ao Beds24: 1 propriedade visível." e "Conectado ao PriceLabs: 3 de 4 anúncios pertencem ao seu PMS.").
 - [ ] **Diagnóstico.** Em **Configurações › Diagnóstico**: a proteção das chaves é a chave própria do `wp-config.php`; a última rodada terminou; o registro recente não tem erros de leitura (chave recusada, sem acesso, limite de chamadas, resposta fora do formato). Abra "Detalhes técnicos" se aparecer algo estranho.
 - [ ] **Quartos.** Cada quarto do plugin aponta para o anúncio certo do PriceLabs e para o quarto certo do Beds24, com o número certo de unidades.
 - [ ] **Valores do anúncio.** Mínimo, base e máximo de cada quarto no plugin iguais aos do PriceLabs.

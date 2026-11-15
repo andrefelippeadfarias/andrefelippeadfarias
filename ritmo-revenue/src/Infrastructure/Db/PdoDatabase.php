@@ -173,7 +173,9 @@ final class PdoDatabase implements Database
 
     private function commitTransaction(): void
     {
-        $this->pdo->commit();
+        if ($this->pdo->inTransaction()) {
+            $this->pdo->commit();
+        }
     }
 
     private function rollBackTransaction(): void

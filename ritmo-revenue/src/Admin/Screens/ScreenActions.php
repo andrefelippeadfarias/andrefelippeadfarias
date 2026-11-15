@@ -99,6 +99,6 @@ final class ScreenActions
      */
     private static function log(string $reference, array $context): void
     {
-        ScreenServices::instance()->services()->logger()->log('error', 'A screen action failed: ' . $reference, $context);
+        ScreenServices::instance()->services()->logger()->log('error', 'A screen action failed.', ['reference' => $reference] + $context);
     }
 }

@@ -14,8 +14,8 @@ use Ritmo\Domain\Support\Days;
 /**
  * One row of the step ledger: a step that was written to the pricing system. Immutable.
  *
- * Reference: dados/passos.json rows (quarto, noite, de, para, direcao, status, vendidas, base,
- * total, gravado_em, chegou_ao_canal).
+ * Reference: the step ledger rows of the reference engine (room, night, from, to, direction,
+ * status, sold, base, total, written at, reached the channel).
  */
 final class StepRecord
 {

@@ -6,11 +6,11 @@ namespace Ritmo\Connectors\Licence;
 
 use Closure;
 use DateTimeImmutable;
-use DateTimeZone;
 use JsonException;
 use Ritmo\Contracts\HttpClient;
 use Ritmo\Contracts\HttpResponse;
 use Ritmo\Contracts\LicenceState;
+use Ritmo\Domain\Licence\LicenceProof;
 use Ritmo\Domain\Support\Clock;
 use SensitiveParameter;
 use Throwable;
@@ -132,28 +132,38 @@ final class HttpLicenceServer implements LicenceServer
             }
         }
 
-        if ($data['status'] === LicenceState::VALID && !$this->signed($data, $licenceKey, $siteUrl, $nonce)) {
+        if ($data['status'] !== LicenceState::VALID) {
+            return new LicenceState((string) $data['status'], $expiresAt, $now, $message);
+        }
+        $proof = $this->signed($data, $licenceKey, $siteUrl, $nonce);
+        if ($proof === null) {
             return $this->unreachable('The licence server\'s answer is not signed with the plugin\'s licence key, so it was not trusted.');
         }
 
-        return new LicenceState((string) $data['status'], $expiresAt, $now, $message);
+        return new LicenceState(LicenceState::VALID, $expiresAt, $now, $message, $proof);
     }
 
     /**
+     * The proof of a "valid" answer signed for this key, site and nonce; null when it is not.
+     *
      * @param array<mixed> $data
      */
-    private function signed(array $data, #[SensitiveParameter] string $licenceKey, string $siteUrl, string $nonce): bool
+    private function signed(array $data, #[SensitiveParameter] string $licenceKey, string $siteUrl, string $nonce): ?LicenceProof
     {
-        if ($this->publicKeys === [] || ($data['nonce'] ?? null) !== $nonce || !is_string($data['checked_at'] ?? null)) {
-            return false;
+        if ($this->publicKeys === [] || ($data['nonce'] ?? null) !== $nonce || !is_string($data['checked_at'] ?? null) || !is_string($data['signature'] ?? null)) {
+            return null;
         }
         if (self::instant($data['checked_at']) === null) {
-            return false;
+            return null;
         }
-        $expiresAt = is_string($data['expires_at'] ?? null) ? $data['expires_at'] : '';
-        $message = LicenceSignature::message($licenceKey, $siteUrl, LicenceState::VALID, $expiresAt, $data['checked_at'], $nonce);
+        $proof = LicenceProof::fromArray([
+            'expires_at' => is_string($data['expires_at'] ?? null) ? $data['expires_at'] : '',
+            'checked_at' => $data['checked_at'],
+            'nonce' => $nonce,
+            'signature' => $data['signature'],
+        ]);
 
-        return LicenceSignature::verify($this->publicKeys, $data['signature'] ?? null, $message);
+        return $proof !== null && LicenceSignature::verifies($this->publicKeys, $proof, $licenceKey, $siteUrl) ? $proof : null;
     }
 
     private function unreachable(string $message): LicenceState
@@ -183,18 +193,6 @@ final class HttpLicenceServer implements LicenceServer
      */
     private static function instant(mixed $text): ?DateTimeImmutable
     {
-        if (!is_string($text) || preg_match('/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(\.\d+)?(Z|[+-]\d{2}:\d{2})$/', $text) !== 1) {
-            return null;
-        }
-        $instant = DateTimeImmutable::createFromFormat(str_contains($text, '.') ? 'Y-m-d\TH:i:s.uP' : 'Y-m-d\TH:i:sP', $text);
-        if ($instant === false) {
-            return null;
-        }
-        $errors = DateTimeImmutable::getLastErrors();
-        if (is_array($errors) && ($errors['warning_count'] > 0 || $errors['error_count'] > 0)) {
-            return null;
-        }
-
-        return $instant->setTimezone(new DateTimeZone('UTC'));
+        return LicenceProof::instant($text);
     }
 }

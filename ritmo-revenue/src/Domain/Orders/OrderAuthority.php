@@ -15,7 +15,8 @@ use DateTimeInterface;
  * and, when the order backs a strategy, whose strategy acts on that room and night. Whatever it
  * cites, no item may touch a night frozen by a manual change other than the one it cites.
  *
- * Reference: validar_plano.Validador.validar_data (excecao "dono" + ordem_id) and ordens.congelada.
+ * Reference: the date check of the reference validator (the exception of a person's order with its
+ * id) and its frozen nights.
  * Generalisation: the reference accepts any order in force except two families (stay rules and the
  * strategy outside its scope); here an order authorises only what its releases list.
  */

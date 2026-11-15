@@ -15,7 +15,7 @@ use Ritmo\Domain\Support\Days;
  *
  * Immutable. Build it with {@see OrderReader::read()} from stored data, or directly.
  *
- * Reference: ordens.py (cobre, ordem_valida) and dados/ordens_dono.json.
+ * Reference: the orders of the reference engine (coverage and validity of an order).
  */
 final class OwnerOrder
 {

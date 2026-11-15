@@ -44,8 +44,14 @@ final class ErrorText
         if ($failure instanceof RoomRowsRefused) {
             return __('Some rooms could not be saved: nothing was saved.', 'ritmo-revenue');
         }
-        if ($failure instanceof UserFacing || $failure instanceof InvalidConfig || self::ownValidation($failure)) {
+        if ($failure instanceof InvalidConfig) {
+            return self::config($failure);
+        }
+        if ($failure instanceof UserFacing) {
             return $failure->getMessage();
+        }
+        if (self::ownValidation($failure)) {
+            return OwnMessageText::of($failure->getMessage()) ?? $failure->getMessage();
         }
         $reference = self::reference($failure);
         if ($log !== null) {
@@ -54,6 +60,28 @@ final class ErrorText
 
         /* translators: %s: a reference such as E-1a2b3c4d */
         return sprintf(__('Something went wrong. Nothing was changed. Reference %s', 'ritmo-revenue'), $reference);
+    }
+
+    /**
+     * A rule set, preset or settings that were not accepted, problem by problem in the reader's
+     * language (the path of each value as it is in the file).
+     */
+    public static function config(InvalidConfig $failure): string
+    {
+        $errors = $failure->errors();
+        $shown = array_map(
+            static fn (\Ritmo\Domain\Config\ValidationError $error): string => ($error->path === '' ? __('the file', 'ritmo-revenue') : $error->path) . ': ' . EditorText::problem($error),
+            array_slice($errors, 0, 5),
+        );
+        $more = count($errors) - count($shown);
+        /* translators: %s: the problems found, each as "<path of the value>: <what is wrong>", separated by ";" */
+        $text = sprintf(__('These values are not accepted, so nothing was saved: %s', 'ritmo-revenue'), implode('; ', $shown));
+        if ($more > 0) {
+            /* translators: %d: how many more problems were found */
+            $text .= ' ' . sprintf(_n('(and %d more problem)', '(and %d more problems)', $more, 'ritmo-revenue'), $more);
+        }
+
+        return $text;
     }
 
     /**

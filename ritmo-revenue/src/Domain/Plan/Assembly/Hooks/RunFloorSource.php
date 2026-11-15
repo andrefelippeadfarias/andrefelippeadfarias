@@ -28,7 +28,7 @@ use Ritmo\Domain\Support\Days;
 /**
  * The floors of a room night as the run's orders and strategy set them, for the relations.
  *
- * Reference: the hooks pace.coerencia computes inline (piso_com_ordem, pisos_enviados, the
+ * Reference: the hooks the reference engine computes inline (the floor with an order, the sent floors, the
  * floors of an order that releases going below the standard floor, piso_semana_mercado,
  * piso_duro_do_plano and the target of a target order).
  */

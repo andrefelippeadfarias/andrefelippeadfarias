@@ -9,8 +9,14 @@
 (function () {
     'use strict';
 
+    // The answers (and refusals) of the routes come in the language of the person's profile, as
+    // the rest of the screen, not in the site's.
+    function withUserLocale(url) {
+        return url + (url.indexOf('?') === -1 ? '?' : '&') + '_locale=user';
+    }
+
     function post(url, nonce, body) {
-        return window.fetch(url, {
+        return window.fetch(withUserLocale(url), {
             method: 'POST',
             credentials: 'same-origin',
             headers: { 'Content-Type': 'application/json', 'X-WP-Nonce': nonce },

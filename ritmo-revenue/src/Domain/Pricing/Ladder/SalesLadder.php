@@ -26,7 +26,8 @@ use Ritmo\Domain\Support\Num;
  *   per unit; a sold-out room is priced as its last unit;
  * - price: opening x (1 + step%)^steps, capped at the ceiling, then the last-minute drop.
  *
- * Reference: plano_dono.abertura_publico, teto_publico, degraus_escada, desce, preco_publico, enviado.
+ * Reference: the opening, ceiling, steps, step-down and public and sent prices of the ladder
+ * strategy of the reference engine.
  */
 final class SalesLadder
 {

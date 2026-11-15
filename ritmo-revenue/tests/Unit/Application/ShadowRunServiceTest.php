@@ -351,6 +351,8 @@ final class ShadowRunServiceTest extends TestCase
 
         self::assertSame(RunOutcome::FAILED, $outcome->status);
         self::assertSame('No room type of the property is mapped to the PMS.', $outcome->error);
+        $said = array_column($this->world->logger->entries('warning'), 'message');
+        self::assertContains('A run could not start: no room of the property is mapped to the PMS yet.', $said, 'the log says why the run failed');
 
         $this->expectException(OutOfBoundsException::class);
         $this->world->service()->run('nowhere');

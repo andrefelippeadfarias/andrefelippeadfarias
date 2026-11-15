@@ -46,6 +46,7 @@ final class LicenceRecord
      * @param DateTimeImmutable|null $lastValidAt       last answer "valid"
      * @param DateTimeImmutable|null $problemSince      first answer "expired" or "invalid" after the last "valid"
      * @param string                 $message           the provider's last message, plain text
+     * @param LicenceProof|null      $proof             the signed part of the last answer "valid" of the licence server
      */
     public function __construct(
         public readonly string $keyFingerprint = '',
@@ -58,6 +59,7 @@ final class LicenceRecord
         public readonly ?DateTimeImmutable $lastValidAt = null,
         public readonly ?DateTimeImmutable $problemSince = null,
         public readonly string $message = '',
+        public readonly ?LicenceProof $proof = null,
     ) {
         if ($keyFingerprint !== '' && preg_match('/^[0-9a-f]{16}$/', $keyFingerprint) !== 1) {
             throw new InvalidArgumentException('A licence key fingerprint is 16 hexadecimal characters.');
@@ -95,7 +97,7 @@ final class LicenceRecord
      *
      * @throws InvalidArgumentException on an unknown status
      */
-    public function withAnswer(string $providerId, string $status, ?DateTimeImmutable $expiresAt, DateTimeImmutable $at, string $message = ''): self
+    public function withAnswer(string $providerId, string $status, ?DateTimeImmutable $expiresAt, DateTimeImmutable $at, string $message = '', ?LicenceProof $proof = null): self
     {
         if (!in_array($status, [...self::STATUSES, self::UNREACHABLE], true)) {
             throw new InvalidArgumentException(sprintf('Unknown licence status "%s".', $status));
@@ -105,7 +107,7 @@ final class LicenceRecord
             return $this;
         }
         if ($status === self::UNREACHABLE) {
-            return new self($this->keyFingerprint, $this->providerId, $this->status, $this->expiresAt, $this->lastAnswerAt, $at, self::UNREACHABLE, $this->lastValidAt, $this->problemSince, $this->message);
+            return new self($this->keyFingerprint, $this->providerId, $this->status, $this->expiresAt, $this->lastAnswerAt, $at, self::UNREACHABLE, $this->lastValidAt, $this->problemSince, $this->message, $this->proof);
         }
         $expiresAt = $expiresAt === null ? null : self::utc($expiresAt);
         if ($status === self::EXPIRED && $expiresAt === null) {
@@ -113,14 +115,44 @@ final class LicenceRecord
         }
         $message = self::cleanMessage($message);
         if ($status === self::VALID) {
-            return new self($this->keyFingerprint, $providerId, $status, $expiresAt, $at, $at, $status, $at, null, $message);
+            return new self($this->keyFingerprint, $providerId, $status, $expiresAt, $at, $at, $status, $at, null, $message, $proof);
         }
 
-        return new self($this->keyFingerprint, $providerId, $status, $expiresAt, $at, $at, $status, $this->lastValidAt, $this->problemSince ?? $at, $message);
+        return new self($this->keyFingerprint, $providerId, $status, $expiresAt, $at, $at, $status, $this->lastValidAt, $this->problemSince ?? $at, $message, $this->proof);
     }
 
     /**
-     * @return array<string, string|null>
+     * The record as far as its last answer "valid" is proven by the signature of the licence
+     * server: the last valid answer is never later than the signed time of the check, and while
+     * the status is "valid" the end date is the signed one.
+     */
+    public function withSignedValid(DateTimeImmutable $checkedAt, ?DateTimeImmutable $expiresAt): self
+    {
+        if ($this->lastValidAt === null) {
+            return $this;
+        }
+        $checkedAt = self::utc($checkedAt);
+        $lastValidAt = $checkedAt < $this->lastValidAt ? $checkedAt : $this->lastValidAt;
+        $end = $this->status === self::VALID ? ($expiresAt === null ? null : self::utc($expiresAt)) : $this->expiresAt;
+
+        return new self($this->keyFingerprint, $this->providerId, $this->status, $end, $this->lastAnswerAt, $this->lastAttemptAt, $this->lastAttemptStatus, $lastValidAt, $this->problemSince, $this->message, $this->proof);
+    }
+
+    /**
+     * The record with its answers "valid" left out (they cannot be proven): it grants nothing more
+     * than a key never answered "valid".
+     */
+    public function withoutValid(): self
+    {
+        if ($this->lastValidAt === null && $this->status !== self::VALID) {
+            return $this;
+        }
+
+        return new self($this->keyFingerprint, $this->providerId, $this->status === self::VALID ? '' : $this->status, $this->expiresAt, $this->lastAnswerAt, $this->lastAttemptAt, $this->lastAttemptStatus === self::VALID ? '' : $this->lastAttemptStatus, null, null, $this->message);
+    }
+
+    /**
+     * @return array<string, string|array<string, string>|null>
      */
     public function toArray(): array
     {
@@ -135,6 +167,7 @@ final class LicenceRecord
             'last_valid_at' => self::text($this->lastValidAt),
             'problem_since' => self::text($this->problemSince),
             'message' => $this->message,
+            'proof' => $this->proof?->toArray(),
         ];
     }
 
@@ -159,6 +192,7 @@ final class LicenceRecord
                 self::instant($data, 'last_valid_at'),
                 self::instant($data, 'problem_since'),
                 self::cleanMessage(self::string($data, 'message')),
+                LicenceProof::fromArray($data['proof'] ?? null),
             );
         } catch (InvalidArgumentException) {
             return new self();

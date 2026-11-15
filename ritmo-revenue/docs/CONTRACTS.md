@@ -934,7 +934,8 @@ public readonly string $status;
 public readonly ?DateTimeImmutable $expiresAt;
 public readonly DateTimeImmutable $checkedAt;
 public readonly string $message;
-public function __construct(string $status, ?DateTimeImmutable $expiresAt, DateTimeImmutable $checkedAt, string $message = '');
+public readonly ?LicenceProof $proof;
+public function __construct(string $status, ?DateTimeImmutable $expiresAt, DateTimeImmutable $checkedAt, string $message = '', ?LicenceProof $proof = null);
 public function isValid(): bool;
 ```
 

@@ -71,6 +71,7 @@ final class EditorText
     {
         return match ($error->code) {
             ValidationError::REQUIRED => __('this is required.', 'ritmo-revenue'),
+            ValidationError::UNKNOWN => __('this setting is not known.', 'ritmo-revenue'),
             ValidationError::RANGE => __('this is outside the allowed range.', 'ritmo-revenue'),
             ValidationError::TYPE, ValidationError::FORMAT => __('this does not have the right form.', 'ritmo-revenue'),
             ValidationError::CHOICE => __('choose one of the options.', 'ritmo-revenue'),

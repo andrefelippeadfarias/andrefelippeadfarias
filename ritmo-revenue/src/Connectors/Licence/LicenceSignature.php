@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Ritmo\Connectors\Licence;
 
+use Ritmo\Domain\Licence\LicenceProof;
 use SensitiveParameter;
 use SodiumException;
 
@@ -37,6 +38,16 @@ final class LicenceSignature
     public static function message(#[SensitiveParameter] string $licenceKey, string $siteUrl, string $status, string $expiresAt, string $checkedAt, string $nonce): string
     {
         return implode("\n", [self::VERSION, hash('sha256', $licenceKey), $siteUrl, $status, $expiresAt, $checkedAt, $nonce]);
+    }
+
+    /**
+     * True when $proof is a "valid" answer signed by one of the keys for this licence key and site.
+     *
+     * @param list<string> $keys raw 32-byte Ed25519 public keys
+     */
+    public static function verifies(array $keys, LicenceProof $proof, #[SensitiveParameter] string $licenceKey, string $siteUrl): bool
+    {
+        return self::verify($keys, $proof->signature, self::message($licenceKey, $siteUrl, 'valid', $proof->expiresAt, $proof->checkedAt, $proof->nonce));
     }
 
     /**

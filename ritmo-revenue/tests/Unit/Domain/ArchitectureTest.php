@@ -283,6 +283,23 @@ final class ArchitectureTest extends TestCase
         }
     }
 
+    /** Regression (M5 final review): the shipped code never cites the modules or data files of the owner's own automation. */
+    public function testShippedCodeNeverCitesTheOwnersAutomation(): void
+    {
+        $root = Fixtures::pluginRoot();
+        $violations = [];
+        foreach (['src', 'templates', 'assets'] as $directory) {
+            $iterator = new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($root . '/' . $directory, \FilesystemIterator::SKIP_DOTS));
+            foreach ($iterator as $file) {
+                if (preg_match_all('/[a-z]+_dono\b|\bdono\b|pisos_enviados|hidro_vista|dados\/[a-z_]+\.json/i', (string) file_get_contents($file->getPathname()), $matches) > 0) {
+                    $violations[] = self::relative($file->getPathname()) . ': ' . implode(', ', array_unique($matches[0]));
+                }
+            }
+        }
+
+        self::assertSame([], $violations);
+    }
+
     public function testThePackageLeavesOutTheInternalDocumentsAndTheTests(): void
     {
         $file = Fixtures::pluginRoot() . '/.distignore';

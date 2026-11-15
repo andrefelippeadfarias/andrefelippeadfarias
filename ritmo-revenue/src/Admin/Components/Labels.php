@@ -173,6 +173,8 @@ final class Labels
             'listing' => __('the listing', 'ritmo-revenue'),
             'claude' => __('Claude (the assistant)', 'ritmo-revenue'),
             'licence', 'http' => __('the licence server', 'ritmo-revenue'),
+            'none' => __('no licence server (none is set up)', 'ritmo-revenue'),
+            'stub' => __('the test licence provider', 'ritmo-revenue'),
             'update', 'updates' => __('the update server', 'ritmo-revenue'),
             default => self::other(),
         };

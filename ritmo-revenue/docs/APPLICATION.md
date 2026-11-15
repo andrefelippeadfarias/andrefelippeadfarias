@@ -66,7 +66,7 @@ The admin is one menu "Ritmo Revenue" of thirteen entries (spec 05, section 2; `
 
 | Area | Classes |
 |---|---|
-| UI kit | `Admin\Components\...`: `Menu`, `Tab`, `Screen`, `FormAction`, `Capability`, `Input`, `Money`, `Percent`, `Ratio`, `PriceText`, `NightDate`, `Labels`, `Paging`, `ConfirmTyped` (typed confirmation: the property id, the new value or the provider's name), `DomainText` (the label and help of a rules setting, translated), `CsvWriter` (formula guard on every text cell; UTF-8 with BOM), `PrivacyGuard` (refuses e-mails, phones and documents in free text), `ErrorText`, `UserFacing`; `View` renders templates; `Notice` carries the message across the redirect; `ReasonText` and `RefusalText` say the why of a number and of a refusal in words. |
+| UI kit | `Admin\Components\...`: `Menu`, `Tab`, `Screen`, `FormAction`, `Capability`, `Input`, `Money`, `Percent`, `Ratio`, `PriceText`, `NightDate`, `Labels`, `Paging`, `ConfirmTyped` (typed confirmation: the property id, the new value or the provider's name), `DomainText` (the label and help of a rules setting, translated), `CsvWriter` (formula guard on every text cell; UTF-8 with BOM), `PrivacyGuard` (refuses e-mails, phones and documents in free text), `ErrorText`, `OwnMessageText` (the refusals of the setup and of a preset in words), `UserFacing`; `View` renders templates; `Notice` carries the message across the redirect; `ReasonText` and `RefusalText` say the why of a number and of a refusal in words. |
 | Central screens | `Admin\Screens\...`: `Screens` (renderers, counters, actions of the area), `Page`, `ScreenServices`, `OverviewScreen`, `NightsScreen`, `NightDetailView`, `NightText`, `NightActions`, `ApprovalsScreen`, `ApprovalActions`, `PmsChangeText` (a PMS change in words), `WarningText`, `AlertsScreen`, `AlertText`, `AlertActions`, `TodoScreen`, `TodoText`, `TodoActions`, `ChangesScreen`, `ChangeActions`, `UndoSelection` (the ticked changes kept for the confirmation of the undo), `UndoNow`, `UndoText`, `OperationsScreen`, `OperationsText`, `OperationsActions`, `SettingsScreen`, `SettingsActions`, `ConnectionsView`, `ConnectionText`, `ConnectionActions`, `DiagnosticsView`, `LogText` (the log messages translated when shown), `DiagnosticsActions`, `WizardView`, `WizardActions`, `RoomErrorText` (the refusals of the room step in words), `PeopleNames`. Application side: `Dashboard\...` (`StatusQuery`, `StatusStrip`, `Overview\OverviewQuery`, `Alerts\AlertList`, `Alerts\AlertFilter`, `Changes\ChangeList`, `Changes\ChangeFilter`, `Changes\ChangeGroups`, `Changes\UndoRequests`, `Connections\ConnectionTests` (one test per provider every 30 s), `Connections\ConnectionReason`, `Diagnostics\SupportBundle` (JSON with a whitelist of keys), `Setup\SetupWizard`, `Setup\SetupState`, `Setup\WizardProgress`, `Setup\ListingSuggestions`, `Setup\RoomRowsRefused`, `Setup\SafetyValues`, `Setup\WouldDo`, `Todo\TodoGenerator`, `Todo\TodoItem`, `Todo\TodoService`, `Todo\TodoStore`) and `Grid\...` (`NightGrid`, `NightGridQuery`, `NightCell`, `NightMarks`, `NightFilter`, `NightDetail`, `NightDetailQuery`, `GridContext`, `LastPlan`, `PlanIndex`, `PlannedNight`; approvals: `Approvals\ApprovalBoard`, `RequestView`, `RowBuilder`, `EntryRow`, `EntryWarnings`, `Segment`, `Segmenter`, `Impact`, `RelationHints`). See docs/ADMIN.md. |
 | Editors | `Admin\Editors\...`: `EditorScreens`, `EditorPage`, `EditorServices`, `RulesScreen`, `RulesActions`, `RulesLayout` (every schema field placed once), `Placement`, `FieldView`, `FieldWidget`, `FieldContext`, `FieldPath`, `ValueText`, `ChoiceLabels`, `EditorText`, `RuleFormReader`, `RequestFields`, `FormScope`, `FormErrors`, `FormResult`, `DraftDesk`, `UserMetaDraftStorage`, `ReviewView`, `VersionsView`, `PresetFile`, `RelationsView`, `RelationForm`, `RelationText`, `RelationCycle`, `RelationActions`, `CalendarView`, `CalendarActions`, `OrdersScreen`, `OrdersActions`, `OrderFormDraft` (what a refused order form had, to fill it again), `OrderText`. Application side, `Rules\...`: `RuleSetEditor` (draft per user, three-way merge, version N+1, never a write), `RuleDraft`, `RuleDraftStorage`, `RuleDiff`, `FieldChange`, `RuleMerge`, `RuleChecks`, `RulesRefused`, `SafetyFields`, `SavedVersion`, `VersionHistory`, `PendingApprovals`, `ApprovalServiceAdapter`, `PrivacyCheck`, `Percent`, `Calendar\HolidayCatalogue`, `Calendar\HolidayList`, `Calendar\HolidayProposals`, `Calendar\HolidayProposal`, `Calendar\Easter`, `Orders\OrderDesk`, `Orders\OrderBoard`, `Orders\OrderForm`. See docs/EDITORS.md. |
 | Market | `Admin\Market\...`: `MarketScreen`, `MarketActions`, `MarketServices`, `MarketText`, `CsvUploadReader` (the upload read in place with fgetcsv, never moved or kept), `TransientPreviewStore`. Application side, `Market\...`: `MarketImportService`, `ImportPreview`, `PreviewStore`, `UploadedFile`, `MarketRefused`, `MarketBoard`, `MarketExport`, `CompetitorService`, `CompetitorInput`, `MarketSeriesService` (series rebuilt when their inputs changed), `MarketRulerAssembler` (the ruler of a run), `MarketFreshness`, `MarketReminder`, `MarketSettings`. See docs/MARKET.md. |
@@ -2053,7 +2053,7 @@ public function plan(LightRoundRequest $request, RoomQuota $quota, ?int $runId =
 
 ```php
 const LOCK_TTL_SECONDS = 600;
-public function __construct(RunRepository $runs, DbLock $locks, RunExecutor $executor, Clock $clock, Logger $logger, ?Closure $onFatal = null);
+public function __construct(RunRepository $runs, DbLock $locks, RunExecutor $executor, Clock $clock, Logger $logger, Database $db, ?Closure $onFatal = null);
 public static function lockKey(string $propertyId): string;
 public function continueOpen(Property $property, int $budgetSeconds): ?LaunchResult;
 public function stopOpen(Property $property, string $reason): ?LaunchResult;
@@ -3479,6 +3479,7 @@ public static function t(string $english): string;
 
 ```php
 public static function from(Throwable $failure, ?callable $log = null): string;
+public static function config(InvalidConfig $failure): string;
 public static function reference(Throwable $failure): string;
 ```
 
@@ -3578,6 +3579,12 @@ public static function instant(DateTimeInterface $instant, string $timezone): st
 public static function date(DateTimeInterface $instant, string $timezone): string;
 public static function time(DateTimeInterface $instant, string $timezone): string;
 public static function relative(DateTimeInterface $instant, DateTimeImmutable $now): string;
+```
+
+#### `Ritmo\Admin\Components\OwnMessageText` (final class)
+
+```php
+public static function of(string $message): ?string;
 ```
 
 #### `Ritmo\Admin\Components\Paging` (final class)

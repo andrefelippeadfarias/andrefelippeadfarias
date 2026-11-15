@@ -17,7 +17,7 @@ use Ritmo\Domain\Support\Days;
  * The pace step uses it only when it is lower than the engine floor; it may go below the listing
  * minimum but never below the safety limit.
  *
- * Reference: plano_dono.piso_semana_ultima and pace.piso_semana_mercado.
+ * Reference: the last-minute weekday market floor of the reference engine.
  */
 final class LastMinuteMarketFloor
 {

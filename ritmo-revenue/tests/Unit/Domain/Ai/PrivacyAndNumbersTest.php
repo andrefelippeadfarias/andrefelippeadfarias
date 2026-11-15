@@ -73,6 +73,35 @@ final class PrivacyAndNumbersTest extends TestCase
         self::assertSame('', $queue->find($id)['request'] ?? null, 'the free text of a request is never kept');
     }
 
+    public function testAGuestsNameIsFoundAfterAColonAFirstNameOrAnArticleInARequest(): void
+    {
+        $known = ['Standard Room', 'Garden Suite', 'Suíte Maria Bonita'];
+        foreach ([
+            'Hóspede: Maria Souza. Subir 10% os sábados de dezembro no Standard Room',
+            'Pedido da Maria Souza: subir 10% os sábados de dezembro',
+            'A Maria Souza do quarto 3 quer desconto',
+            'Pedido da Maria: subir 5% na Garden Suite',
+            'Maria da Silva quer o quarto de casal',
+            'O cliente — Pereira reclamou do preço',
+        ] as $text) {
+            self::assertSame(PrivacyGuard::NAME, PrivacyGuard::requestProblem($text, $known), $text);
+        }
+        self::assertSame(PrivacyGuard::NAME, PrivacyGuard::problem('Hóspede: Maria Souza. Subir 10%'), 'the colon no longer hides the name anywhere');
+        foreach ([
+            'Subir 10% os sábados de dezembro na Garden Suite',
+            'Subir 10% na Suíte Maria Bonita no Natal',
+            'Feriado de Nossa Senhora Aparecida: subir 15%',
+            'Festa de São João: subir 10% na Standard Room',
+            'Hóspedes de São Paulo chegam no feriado',
+            'Para o cliente, Garden Suite está cara',
+            'Clientes da Standard Room pedem mais estadias curtas',
+            'O hóspede da reserva 12345 pediu desconto',
+        ] as $text) {
+            self::assertNull(PrivacyGuard::requestProblem($text, $known), $text);
+        }
+        self::assertSame(['Standard Room', 'Suíte Maria Bonita', 'Natal'], PrivacyGuard::labels(['rooms' => [['code' => 'SR', 'label' => 'Standard Room'], ['code' => 'MB', 'label' => 'Suíte Maria Bonita']], 'periods' => [['path' => 'p', 'label' => 'Natal']]]));
+    }
+
     public function testDatesAmountsPercentagesAndBookingIdsAreNotPhoneNumbers(): void
     {
         foreach ([

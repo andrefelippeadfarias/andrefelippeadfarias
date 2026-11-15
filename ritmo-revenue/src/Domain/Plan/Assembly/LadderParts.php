@@ -98,7 +98,7 @@ final class LadderParts
     }
 
     /**
-     * The strategy governs the room night (reference: plano_dono.governa_noite).
+     * The strategy governs the room night (as in the reference engine).
      *
      * @param array<string, true> $blocked rooms closed in the PMS that night
      */

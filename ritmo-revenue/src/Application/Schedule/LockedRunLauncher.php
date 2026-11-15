@@ -12,6 +12,7 @@ use Ritmo\Domain\Model\Property;
 use Ritmo\Domain\Operations\RunKind;
 use Ritmo\Domain\Support\Clock;
 use Ritmo\Domain\Support\Days;
+use Ritmo\Infrastructure\Db\Database;
 use Ritmo\Infrastructure\Db\Repository\RunRepository;
 use Ritmo\Infrastructure\Lock\DbLock;
 use Ritmo\Infrastructure\Lock\LockHandle;
@@ -47,6 +48,7 @@ final class LockedRunLauncher implements RunLauncher
         private readonly RunExecutor $executor,
         private readonly Clock $clock,
         private readonly Logger $logger,
+        private readonly Database $db,
         private readonly ?Closure $onFatal = null,
     ) {
     }
@@ -143,10 +145,15 @@ final class LockedRunLauncher implements RunLauncher
      * PHP stopped the request in the middle of a run (memory or time): the run is closed as
      * failed with the reason in words, the lock is given back at once (no wait of LOCK_TTL_SECONDS)
      * and the site is told. Never throws: it runs while PHP shuts down.
+     *
+     * PHP stops a run most often inside a stage, which works in a database transaction: that
+     * transaction is rolled back first, or everything written here would join it and be lost
+     * when the connection closes (the run "running", the lock held, no alert).
      */
     public function closeAfterFatal(Property $property, LockHandle $lock, string $message): void
     {
         try {
+            $this->db->abandonTransaction();
             $memory = str_contains($message, 'Allowed memory size');
             $reason = $memory
                 ? sprintf('PHP ran out of memory (memory_limit %s) during the run. Lower the nights a run decides (plan.horizon_nights) or ask the host for more memory.', (string) ini_get('memory_limit'))

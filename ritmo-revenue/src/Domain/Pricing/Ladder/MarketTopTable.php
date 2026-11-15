@@ -12,7 +12,7 @@ use Ritmo\Domain\Support\Days;
  * The public market top of the proportional ladder: the average of the highest comparable prices,
  * measured for holiday periods (by night) and for reference nights (by weekday or weekend).
  *
- * Reference: escada_reservas.topo_publico (dados/concorrentes_hidro_vista.json).
+ * Reference: the public top of the market in the booking ladder of the reference engine.
  */
 final class MarketTopTable
 {

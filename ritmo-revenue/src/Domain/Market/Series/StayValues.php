@@ -8,7 +8,7 @@ namespace Ritmo\Domain\Market\Series;
  * The per-night values of one stay for one series: one value per competitor the series takes,
  * in the order the competitors first appear among the samples.
  *
- * Reference: faixas_dono.estadia_por_noite. Cheapest value = the per-night price of the cheapest
+ * Reference: the per-night stay value of the reference market bands. Cheapest value = the per-night price of the cheapest
  * row; comparable value = the per-night price of a comparable row when one was measured (MK-X5),
  * else the cheapest value times the competitor's comparable factor. Unavailable rows, the
  * property's own listings, inactive competitors and competitors outside the catalogue are left

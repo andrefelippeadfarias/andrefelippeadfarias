@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Ritmo\Tests\Unit\Admin\Screens;
 
 require_once __DIR__ . '/WpStubs.php';
+require_once dirname(__DIR__) . '/Editors/stubs.php';
 
 use PHPUnit\Framework\TestCase;
 use ReflectionClass;
@@ -95,7 +96,8 @@ final class TextsTest extends TestCase
                 continue;
             }
             preg_match_all("/(?:logger(?:\\(\\))?|log\\(\\))->(?:info|warning|error|debug)\\(\\s*'([^']+)'/", (string) file_get_contents((string) $file), $matches);
-            foreach ($matches[1] as $message) {
+            preg_match_all("/(?:logger(?:\\(\\))?|log\\(\\))->log\\(\\s*[^,]+,\\s*'([^']+)'/", (string) file_get_contents((string) $file), $leveled);
+            foreach ([...$matches[1], ...$leveled[1]] as $message) {
                 if (!str_contains($logText, "'" . $message . "' =>")) {
                     $missing[] = $message;
                 }
@@ -104,6 +106,11 @@ final class TextsTest extends TestCase
         self::assertSame([], array_values(array_unique($missing)));
         self::assertNotSame(Labels::provider('nobody'), Labels::provider('claude'));
         self::assertNotSame(Labels::provider('nobody'), Labels::provider('licence'));
+        foreach (['none', 'stub', 'http'] as $licenceProvider) {
+            self::assertNotSame(Labels::provider('nobody'), Labels::provider($licenceProvider), $licenceProvider);
+        }
+        self::assertSame('The licence was checked.', LogText::message('The licence was checked.'));
+        self::assertSame('A run ended.', LogText::message('A run ended.'));
     }
 
     /** Regression (M4 product review): a failed write with no group left open does not say "Changes still open: 0". */
@@ -138,6 +145,44 @@ final class TextsTest extends TestCase
         self::assertSame('Some rooms could not be saved: nothing was saved.', \Ritmo\Admin\Components\ErrorText::from(new \Ritmo\Application\Dashboard\Setup\RoomRowsRefused([['row' => 1, 'message' => 'x']])));
         $source = (string) file_get_contents(dirname(__DIR__, 4) . '/src/Application/Setup/SetupService.php');
         self::assertStringContainsString("'The PMS room or the pricing listing is already mapped to the room \"%s\".'", $source, 'the sentence matched here is the one the application throws');
+    }
+
+    /** Regression (M5 final review): "Situação: completed" in the recent log of the Diagnostics screen. */
+    public function testTheStatusOfARunInTheRecentLogIsInWords(): void
+    {
+        $value = new \ReflectionMethod(\Ritmo\Admin\Screens\DiagnosticsView::class, 'value');
+        foreach (['completed', 'failed', 'running', 'stopped'] as $status) {
+            self::assertSame(Labels::runStatus($status), $value->invoke(null, 'status', $status, 'UTC'), $status);
+        }
+    }
+
+    /** Regression (M5 final review): the refusals of the setup steps and of a preset are said in the reader's language. */
+    public function testTheRefusalsOfTheSetupAndOfAPresetAreSaidInTheReadersLanguage(): void
+    {
+        $root = dirname(__DIR__, 4) . '/src/Application';
+        $unknown = [];
+        foreach (['Setup/SetupService.php', 'Dashboard/Setup/SetupWizard.php', 'Setup/SampleCsv.php'] as $file) {
+            preg_match_all("/throw new InvalidArgumentException\\((sprintf\\()?'((?:[^'\\\\]|\\\\.)*)'/", (string) file_get_contents($root . '/' . $file), $matches, PREG_SET_ORDER);
+            self::assertNotSame([], $matches, $file);
+            foreach ($matches as $match) {
+                $message = str_replace(['%s', '%d'], ['units', '3'], stripslashes($match[2]));
+                if (\Ritmo\Admin\Components\OwnMessageText::of($message) === null) {
+                    $unknown[] = $message;
+                }
+            }
+        }
+        self::assertSame([], $unknown, 'every refusal of the setup has its sentence in OwnMessageText');
+        self::assertNull(\Ritmo\Admin\Components\OwnMessageText::of('Something else.'));
+        self::assertSame('Line 7: the date must be written as YYYY-MM-DD.', \Ritmo\Admin\Components\OwnMessageText::of('Line 7: the date must be written as YYYY-MM-DD.'));
+        self::assertStringContainsString('Choose another name', (string) \Ritmo\Admin\Components\OwnMessageText::of('A property with this id already exists.'));
+        self::assertStringStartsWith('Something went wrong', \Ritmo\Admin\Components\ErrorText::from(new \InvalidArgumentException('A property with this id already exists.')), 'only a refusal thrown by the plugin is shown');
+
+        $preset = new \Ritmo\Domain\Config\InvalidConfig('preset', [new \Ritmo\Domain\Config\ValidationError('rules.occupancy.goals.7', \Ritmo\Domain\Config\ValidationError::RANGE, 'must be at most 100')]);
+        $text = \Ritmo\Admin\Components\ErrorText::from($preset);
+        self::assertSame('These values are not accepted, so nothing was saved: rules.occupancy.goals.7: this is outside the allowed range.', $text);
+        self::assertStringNotContainsString('Invalid preset', $text, 'never the English sentence of the application');
+        $many = new \Ritmo\Domain\Config\InvalidConfig('preset', array_fill(0, 7, new \Ritmo\Domain\Config\ValidationError('', \Ritmo\Domain\Config\ValidationError::FORMAT, 'x')));
+        self::assertStringEndsWith('(and 2 more problems)', \Ritmo\Admin\Components\ErrorText::from($many));
     }
 
     public function testEveryAlertCodeHasATitleAnExplanationAndAnAction(): void

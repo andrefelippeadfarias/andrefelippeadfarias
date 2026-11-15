@@ -5,7 +5,9 @@ declare(strict_types=1);
 namespace Ritmo\Application\Licence;
 
 use InvalidArgumentException;
+use Ritmo\Connectors\Licence\HttpLicenceServer;
 use Ritmo\Connectors\Licence\LicenceServer;
+use Ritmo\Connectors\Licence\LicenceSignature;
 use Ritmo\Contracts\KeyValueStore;
 use Ritmo\Contracts\LicenceState;
 use Ritmo\Contracts\Logger;
@@ -49,9 +51,16 @@ final class LicenceService implements LicenceVerdictSource
     ) {
     }
 
+    /**
+     * Where the licence stands, from the stored record as far as it can be trusted: a record that
+     * is not for the saved key counts as nothing answered, and an answer "valid" of the licence
+     * server counts only while its signature (kept with the record) still verifies for the saved
+     * key and this site. A record edited in the database therefore never grants a licence.
+     */
     public function verdict(): LicenceVerdict
     {
-        $record = $this->vault->has(self::VAULT_NAME) ? $this->record() : new LicenceRecord();
+        $key = $this->savedKey();
+        $record = $key === null ? new LicenceRecord() : $this->trusted($this->record(), $key);
 
         return (new LicenceEvaluator($this->settings->grace))->evaluate($record, $this->clock->now(), $this->settings->devMode);
     }
@@ -169,7 +178,7 @@ final class LicenceService implements LicenceVerdictSource
     {
         $provider = $this->providers->for($key);
         $answer = $this->answer($provider, $key, $activate);
-        $after = $record->withAnswer($provider->id(), $answer->status, $answer->expiresAt, $answer->checkedAt, $answer->message);
+        $after = $record->withAnswer($provider->id(), $answer->status, $answer->expiresAt, $answer->checkedAt, $answer->message, $answer->proof);
         $this->store->set(self::STATE_KEY, $after->toArray());
         $verdict = $this->verdict();
         $level = $verdict->standing === LicenceStanding::Active ? 'info' : 'warning';
@@ -213,6 +222,26 @@ final class LicenceService implements LicenceVerdictSource
         } catch (SecretUnavailable | InvalidArgumentException) {
             return null;
         }
+    }
+
+    private function trusted(LicenceRecord $record, LicenceKey $key): LicenceRecord
+    {
+        if (!$record->isFor($key)) {
+            return LicenceRecord::forKey($key);
+        }
+        if ($record->lastValidAt === null || $record->providerId === LicenceRecord::TEST_PROVIDER) {
+            // Nothing to prove, or the test provider, whose answers LicenceEvaluator accepts only in development mode.
+            return $record;
+        }
+        $proof = $record->proof;
+        $checkedAt = $proof?->checkedInstant();
+        if ($proof === null || $checkedAt === null || $record->providerId !== HttpLicenceServer::ID
+            || ($proof->expiresAt !== '' && $proof->expiresInstant() === null)
+            || !LicenceSignature::verifies($this->settings->publicKeys, $proof, $key->value(), $this->settings->siteUrl)) {
+            return $record->withoutValid();
+        }
+
+        return $record->withSignedValid($checkedAt, $proof->expiresInstant());
     }
 
     /**

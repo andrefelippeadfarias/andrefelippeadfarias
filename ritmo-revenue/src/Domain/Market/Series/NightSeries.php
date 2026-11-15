@@ -11,7 +11,7 @@ use Ritmo\Domain\Support\Num;
 /**
  * The value of a series on one night, from the measured stays of the night's kind.
  *
- * Reference: faixas_dono.regua_noite, used for every series (MK-X2):
+ * Reference: the night ruler of the reference market bands, used for every series (MK-X2):
  *  1. stays starting on the night with at least market.night_min_competitors values;
  *  2. else the stays that include the night;
  *  3. else the nearest stays within market.neighbour_days (only those at the smallest distance);

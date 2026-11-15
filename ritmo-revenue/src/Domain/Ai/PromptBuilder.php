@@ -77,7 +77,7 @@ final class PromptBuilder
         if ($text === '' || mb_strlen($text) > self::REQUEST_MAX) {
             throw new InvalidArgumentException(sprintf('A request has from 1 to %d characters.', self::REQUEST_MAX));
         }
-        PrivacyGuard::assertSendable($text);
+        PrivacyGuard::assertRequestSendable($text, PrivacyGuard::labels($data));
         $catalogue = ($this->catalogue ?? RuleCatalogue::forRules())->text();
 
         return new AiRequest(

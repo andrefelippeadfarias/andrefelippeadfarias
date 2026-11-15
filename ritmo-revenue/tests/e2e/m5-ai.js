@@ -246,7 +246,9 @@ async function refusalAndOverload(page) {
     );
     await open(page, '');
     await page.fill('[data-ritmo="ai-request"]', 'Baixar 5% as noites de terça da Garden Suite em janeiro');
+    const asked = page.waitForRequest((request) => request.method() === 'POST' && /ritmo(\/|%2F)v1(\/|%2F)ai(\/|%2F)drafts/.test(request.url()));
     await page.click('[data-ritmo="ai-draft-submit"]');
+    check(/[?&]_locale=user(&|$)/.test((await asked).url()), 'the route answers in the language of the profile (_locale=user)');
     await page.waitForFunction(() => /Claude is overloaded right now|Claude está sobrecarregada agora/.test(document.querySelector('[data-ritmo="ai-draft-status"]').innerText), null, { timeout: 180000 });
     const tries = (await aiLog()).filter((r) => r.path === '/v1/messages').slice(before);
     check(tries.length === 3 && tries.every((r) => r.status === 529), 'the 529 was tried three times in all, then given up: ' + tries.map((r) => r.status).join(','));

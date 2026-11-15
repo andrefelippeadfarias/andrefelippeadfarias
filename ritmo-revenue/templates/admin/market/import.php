@@ -71,7 +71,7 @@ $ritmo_codes = array_column($view['competitors'], 'name', 'id');
         <?php if ($ritmo_preview->moreProblems > 0) : ?><p><?php echo esc_html(sprintf(/* translators: %d: number of problems not listed */ __('and %d more.', 'ritmo-revenue'), $ritmo_preview->moreProblems)); ?></p><?php endif; ?>
         <?php if ($ritmo_preview->firstRows !== []) : ?>
             <table class="widefat striped ritmo-table" data-ritmo="csv-preview-valid">
-                <caption><?php echo esc_html(sprintf(/* translators: %d: number of rows shown */ __('The first %d valid rows', 'ritmo-revenue'), count($ritmo_preview->firstRows))); ?></caption>
+                <caption><?php echo esc_html(sprintf(/* translators: %d: number of rows shown */ _n('The first valid row', 'The first %d valid rows', count($ritmo_preview->firstRows), 'ritmo-revenue'), count($ritmo_preview->firstRows))); ?></caption>
                 <thead><tr>
                     <th scope="col"><?php esc_html_e('Line', 'ritmo-revenue'); ?></th>
                     <th scope="col"><?php esc_html_e('Competitor', 'ritmo-revenue'); ?></th>

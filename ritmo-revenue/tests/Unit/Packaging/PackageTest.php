@@ -111,7 +111,7 @@ final class PackageTest extends TestCase
     {
         $guide = (string) file_get_contents(Fixtures::pluginRoot() . '/docs/IMPLANTACAO.md');
 
-        foreach (['## 1. Hospedagem', 'PHP', 'WordPress', 'HTTPS', 'wp-cron.php', 'bin/build.sh', 'RITMO_SECRET_KEY', 'Plugins › Adicionar novo › Enviar plugin', '### Beds24', '### PriceLabs', 'leitura', '## 6. O assistente', '## 7. Primeira conexão', 'Diagnóstico', '## 8. Protocolo de teste', 'Exportar CSV', 'Relatórios das rodadas', 'arquivo de suporte', '## 9. Critérios', '## 10. A troca', 'Desligue a skill primeiro', 'Nunca o modo autônomo no primeiro dia', 'RITMO_KILL_SWITCH', 'Plugins › Desativar'] as $part) {
+        foreach (['## 1. Hospedagem', 'PHP', 'WordPress', 'HTTPS', 'wp-cron.php', 'bin/build.sh', 'RITMO_SECRET_KEY', 'Plugins › Adicionar plugin › Enviar plugin', '### Beds24', '### PriceLabs', 'leitura', '## 6. O assistente', '## 7. Primeira conexão', 'Diagnóstico', '## 8. Protocolo de teste', 'Exportar CSV', 'Relatórios das rodadas', 'arquivo de suporte', '## 9. Critérios', '## 10. A troca', 'Desligue a skill primeiro', 'Nunca o modo autônomo no primeiro dia', 'RITMO_KILL_SWITCH', 'Plugins › Desativar'] as $part) {
             self::assertStringContainsString($part, $guide);
         }
         self::assertStringContainsString('nunca gravam ao mesmo tempo', $guide);

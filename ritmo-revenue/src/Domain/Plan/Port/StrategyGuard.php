@@ -12,8 +12,8 @@ use DateTimeImmutable;
  * last-minute market floor is how far it may take a night under the listing minimum and the owner
  * floors.
  *
- * Reference: validar_plano.Validador.escopo_plano, piso_mercado_do_plano and the weekend floor of
- * padrao_qualidade (plano_dono.ativo).
+ * Reference: the plan scope, the plan's market floor and the weekend floor checks of the reference
+ * validator, while a strategy is active.
  */
 interface StrategyGuard
 {

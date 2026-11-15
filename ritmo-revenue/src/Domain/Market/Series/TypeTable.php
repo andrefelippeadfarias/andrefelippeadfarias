@@ -11,7 +11,7 @@ use Ritmo\Domain\Support\Num;
  * The typical value of a series on one kind of night: per percentile, the median within each
  * check-in month, then the median of those monthly medians, rounded half to even.
  *
- * Reference: faixas_dono.mediana_por_mes and the per-type part of faixas_dono.construir (the
+ * Reference: the monthly median and the per-type part of the series builder of the reference market bands (the
  * median number of competitors rounded half to even; a small sample has fewer than
  * market.small_sample.stays stays or fewer than market.small_sample.competitors competitors).
  */

@@ -5985,10 +5985,6 @@ msgstr "Nenhuma resposta neste mês."
 msgid "Last answers of the month"
 msgstr "Últimas respostas do mês"
 
-#: templates/admin/ai/usage.php:44
-msgid "When (UTC)"
-msgstr "Quando (UTC)"
-
 #: templates/admin/ai/usage.php:45
 msgid "What for"
 msgstr "Para quê"
@@ -6891,11 +6887,6 @@ msgstr "Observações"
 #: templates/admin/market/import.php:78
 msgid "and %d more."
 msgstr "e mais %d."
-
-#. translators: %d: number of rows shown
-#: templates/admin/market/import.php:81
-msgid "The first %d valid rows"
-msgstr "As primeiras %d linhas válidas"
 
 #: templates/admin/market/import.php:83 templates/admin/market/import.php:92
 msgid "Line"
@@ -10515,11 +10506,6 @@ msgstr "Noites que uma rodada decide"
 
 #. translators: the name or the explanation of a setting of the rules
 #: src/Domain/Config/Schema.php
-msgid "A run reads and decides this many nights, from the property's today."
-msgstr "Uma rodada lê e decide este número de noites, a partir do hoje da propriedade."
-
-#. translators: the name or the explanation of a setting of the rules
-#: src/Domain/Config/Schema.php
 msgid "Validator"
 msgstr "Validador"
 
@@ -12106,3 +12092,94 @@ msgstr "Crie o token no PMS, nas configurações da API dele, com acesso de leit
 
 msgid "Revenue management for small hotels and inns: pace-based pricing rules, market anchors and safe, auditable rate updates."
 msgstr "Gestão de receita para pousadas e hotéis pequenos: regras de preço pelo ritmo de vendas, âncoras de mercado e atualizações de preço seguras e auditáveis."
+
+msgid "the file"
+msgstr "o arquivo"
+
+msgid "These values are not accepted, so nothing was saved: %s"
+msgstr "Estes valores não foram aceitos, então nada foi salvo: %s"
+
+msgid "no licence server (none is set up)"
+msgstr "nenhum servidor de licença (nenhum configurado)"
+
+msgid "the test licence provider"
+msgstr "o fornecedor de licenças de teste"
+
+msgid "\"%s\" must be a whole number."
+msgstr "\"%s\" precisa ser um número inteiro."
+
+msgid "\"%s\" must be an amount such as 480 or 480.50."
+msgstr "\"%s\" precisa ser um valor como 480 ou 480.50."
+
+msgid "Paste at most %d lines at a time."
+msgstr "Cole no máximo %d linhas de cada vez."
+
+msgid "Line %d: write exactly a date and a price."
+msgstr "Linha %d: escreva exatamente uma data e um preço."
+
+msgid "Line %d: the date must be written as YYYY-MM-DD."
+msgstr "Linha %d: a data precisa estar no formato AAAA-MM-DD."
+
+msgid "Line %d: the price must be a positive number such as 480 or 480.50."
+msgstr "Linha %d: o preço precisa ser um número positivo, como 480 ou 480.50."
+
+msgid "The property code has up to 32 letters, digits, \"-\" and \"_\"."
+msgstr "O código da propriedade tem até 32 letras, números, \"-\" e \"_\"."
+
+msgid "A property with this code already exists. Choose another name (or another code), or open the property that is already there."
+msgstr "Já existe uma propriedade com este código. Escolha outro nome (ou outro código) ou abra a propriedade que já está lá."
+
+msgid "Give the property a name of up to 100 characters."
+msgstr "Dê à propriedade um nome de até 100 caracteres."
+
+msgid "Choose the timezone of the property from the list."
+msgstr "Escolha na lista o fuso horário da propriedade."
+
+msgid "The currency is a three-letter code such as BRL, USD or EUR."
+msgstr "A moeda é um código de três letras, como BRL, USD ou EUR."
+
+msgid "The tier is a lowercase name such as \"standard\" or \"premium\"."
+msgstr "O nível é um nome em letras minúsculas, como \"standard\" ou \"premium\"."
+
+msgid "Choose an existing property for the room."
+msgstr "Escolha uma propriedade que já existe para o quarto."
+
+msgid "Choose an existing property for the prices."
+msgstr "Escolha uma propriedade que já existe para os preços."
+
+msgid "Only a person allowed to change the safety limits can import a preset."
+msgstr "Só quem pode mudar os limites de segurança pode importar um modelo de regras."
+
+msgid "Only a person allowed to change the safety limits can confirm them."
+msgstr "Só quem pode mudar os limites de segurança pode confirmá-los."
+
+msgid "No price was found: write one \"date,price\" per line."
+msgstr "Nenhum preço foi encontrado: escreva um \"data,preço\" por linha."
+
+msgid "this setting is not known."
+msgstr "este ajuste não é conhecido."
+
+msgid "Reference"
+msgstr "Referência"
+
+msgid "A run could not be made: no room of the property is linked to the PMS yet (expected while the setup is not finished: save the rooms step)."
+msgstr "Uma rodada não pôde ser feita: nenhum quarto da propriedade está ligado ao PMS ainda (é esperado enquanto a configuração não termina: salve a etapa de quartos)."
+
+msgid "The licence was checked."
+msgstr "A licença foi verificada."
+
+msgid "An action of a screen failed; the reference is the one the screen showed."
+msgstr "Uma ação de uma tela falhou; a referência é a que a tela mostrou."
+
+msgid "A run reads and decides this many nights, from the property's today. More nights take more memory of the server: with 12 rooms, 60 nights take about 85 MB and 365 nights more than 200 MB, so on a host that gives PHP 128 MB keep it near 60."
+msgstr "Uma rodada lê e decide este número de noites, a partir do hoje da propriedade. Mais noites usam mais memória do servidor: com 12 quartos, 60 noites usam cerca de 85 MB e 365 noites mais de 200 MB; numa hospedagem que dá 128 MB ao PHP, fique perto de 60."
+
+msgid "(and %d more problem)"
+msgid_plural "(and %d more problems)"
+msgstr[0] "(e mais %d problema)"
+msgstr[1] "(e mais %d problemas)"
+
+msgid "The first valid row"
+msgid_plural "The first %d valid rows"
+msgstr[0] "A primeira linha válida"
+msgstr[1] "As primeiras %d linhas válidas"

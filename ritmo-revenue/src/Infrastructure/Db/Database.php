@@ -119,4 +119,13 @@ interface Database
      * @return T
      */
     public function transaction(callable $work): mixed;
+
+    /**
+     * Rolls back the transaction that PHP left open when it stopped the request inside
+     * transaction() (out of memory or time), so that what a shutdown function writes next is
+     * committed on its own instead of being lost with it. Never used during normal work.
+     *
+     * @return bool true when a transaction was open
+     */
+    public function abandonTransaction(): bool;
 }

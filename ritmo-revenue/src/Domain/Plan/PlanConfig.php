@@ -83,7 +83,7 @@ final class PlanConfig
 
         return [
             new Field('plan', FieldType::Group, 'Plan checks and payload', 'How a plan is validated before it can be written and how it is cut for the pricing system.'),
-            new Field('plan.horizon_nights', FieldType::Integer, 'Nights a run decides', 'A run reads and decides this many nights, from the property\'s today.', 60, min: 7, max: 365, unit: Field::UNIT_NIGHTS),
+            new Field('plan.horizon_nights', FieldType::Integer, 'Nights a run decides', 'A run reads and decides this many nights, from the property\'s today. More nights take more memory of the server: with 12 rooms, 60 nights take about 85 MB and 365 nights more than 200 MB, so on a host that gives PHP 128 MB keep it near 60.', 60, min: 7, max: 365, unit: Field::UNIT_NIGHTS),
             new Field('plan.validator', FieldType::Group, 'Validator', 'Checks of every plan; the safety limits themselves are in the floors and safety sections.'),
             new Field('plan.validator.calendar_max_age_hours', FieldType::Number, 'Fresh calendar (hours)', 'A decision that depends on occupancy needs a pricing calendar recalculated at most this many hours ago; an older one is refused unless accepted explicitly for one validation.', 6.0, min: 0.5, max: 168),
             new Field('plan.validator.occupancy_reason_codes', FieldType::ListOf, 'Decisions that depend on occupancy', 'Reason codes of the items whose decision reads units sold or free; they need the fresh calendar. A floor under the listing minimum always does.', ['SOLD_OUT_PROTECTION', 'RELATION_DISCOUNT_BAND', 'RELATION_OCCUPANCY_SWITCH'], max: 50, unique: true),

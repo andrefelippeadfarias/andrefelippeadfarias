@@ -49,6 +49,7 @@ final class RunOpener
         if ($rooms === []) {
             $error = 'No room type of the property is mapped to the PMS.';
             $this->runs->finish($runId, RunRepository::FAILED, [], $now, $error);
+            $this->logger->warning('A run could not start: no room of the property is mapped to the PMS yet.', ['run_id' => $runId, 'property_id' => $property->id]);
 
             return new RunOutcome(RunOutcome::FAILED, $runId, '', $error);
         }

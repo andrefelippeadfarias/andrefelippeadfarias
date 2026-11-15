@@ -21,7 +21,7 @@ O Ritmo Revenue nunca grava nada sozinho no começo. Toda propriedade começa em
 
 O plugin vem num arquivo zip, por exemplo `ritmo-revenue-1.0.0.zip` (cerca de 1,8 MB, abaixo do limite padrão de envio de 2 MB), com uma pasta `ritmo-revenue/` dentro. Junto dele vem o código sha256 do arquivo: se quiser conferir que o arquivo chegou inteiro, compare com o resultado de `sha256sum ritmo-revenue-1.0.0.zip`.
 
-1. Em **Plugins › Adicionar novo › Enviar plugin**, escolha o zip, clique em **Instalar agora** e depois em **Ativar plugin**. Não descompacte o arquivo antes.
+1. Em **Plugins › Adicionar plugin › Enviar plugin** (em versões antigas do WordPress: Adicionar novo), escolha o zip, clique em **Instalar agora** e depois em **Ativar plugin**. Não descompacte o arquivo antes.
    - Se o WordPress recusar o envio por tamanho ("O arquivo enviado excede..."), a hospedagem limita o envio a menos de 2 MB. Peça à hospedagem para aumentar `upload_max_filesize` e `post_max_size` (8 MB bastam) ou envie a pasta `ritmo-revenue/` descompactada para `wp-content/plugins/` pelo gerenciador de arquivos ou por SFTP e ative em **Plugins**.
 2. Aparece o menu **Ritmo Revenue** com treze telas: Visão geral, Noites, Aprovações, Alertas, Pendências, Registro de mudanças, Relatórios, Mercado, Ordens, Regras, Operação, Assistente e Configurações.
 3. Quem pode fazer o quê:
@@ -33,7 +33,7 @@ O plugin vem num arquivo zip, por exemplo `ritmo-revenue-1.0.0.zip` (cerca de 1,
 
 ## 3. O assistente de configuração
 
-Abra **Configurações › Configuração**. O assistente leva você por nove etapas, uma de cada vez, e funciona mesmo sem JavaScript:
+Abra **Ritmo Revenue › Configurações › Configuração** (o menu do plugin, não o Configurações do WordPress). O assistente leva você por nove etapas, uma de cada vez, e funciona mesmo sem JavaScript:
 
 1. **Boas-vindas e conferências**: o plugin confere a criptografia das chaves, o agendador do WordPress e o fuso horário do site.
 2. **Conectar o PMS**: cole o token do PMS e os ids das propriedades. A chave nunca volta para a tela: depois de salva, aparece só que ela existe.
@@ -45,7 +45,7 @@ Abra **Configurações › Configuração**. O assistente leva você por nove et
 8. **Primeira rodada em sombra**: o plugin lê tudo e decide cada noite, sem gravar nada.
 9. **O que o plugin faria**: quantas noites ele mudaria, quantas subiriam e quantas desceriam, e por quê.
 
-Se a etapa 9 disser que muitas noites ficaram sem mudança por falta de preço de mercado, traga os preços dos concorrentes (seção 8) e rode em sombra de novo.
+Se a etapa 9 disser que muitas noites ficaram sem mudança por falta de preço de mercado, traga os preços dos concorrentes (seção 10) e rode em sombra de novo.
 
 ## 4. Primeira semana em sombra
 
@@ -183,7 +183,7 @@ O **Assistente** usa a sua própria chave da API da Claude (da Anthropic) para t
 
 **Explicar.** No detalhe de um alerta, **Explicar em palavras simples**; em **Relatórios › Relatórios das rodadas**, **Pôr este relatório em palavras**. O texto só pode citar números que vieram do plugin; se citar outro número, é descartado.
 
-**Privacidade.** O plugin nunca manda para a Claude dados de hóspedes que ele guarda (as reservas vão só como números). O que você escreve no pedido vai como você escreveu: **não escreva nome, e-mail, telefone nem documento de hóspede**; cite uma reserva pelo número. Se o pedido tiver e-mail, telefone, CPF/CNPJ ou parecer trazer um nome de pessoa (por exemplo "hóspede João" ou "Maria Souza pediu"), nada é enviado e a tela explica por quê. O texto do pedido não fica guardado: o rascunho guarda só o resumo do que ele faria. Quando o modelo recusa um pedido ou a Claude está sobrecarregada, a tela diz isso com clareza e nada é guardado.
+**Privacidade.** O plugin nunca manda para a Claude dados de hóspedes que ele guarda (as reservas vão só como números). O que você escreve no pedido vai como você escreveu: **não escreva nome, e-mail, telefone nem documento de hóspede**; cite uma reserva pelo número. Se o pedido tiver e-mail, telefone, CPF/CNPJ ou parecer trazer um nome de pessoa (por exemplo "hóspede João", "Hóspede: Maria Souza", "pedido da Maria" ou "Maria Souza pediu"), nada é enviado e a tela explica por quê. Os nomes dos seus quartos não contam como nome de pessoa. A verificação é uma heurística e não pega todo nome: a regra continua sendo não escrever. O texto do pedido não fica guardado: o rascunho guarda só o resumo do que ele faria. Quando o modelo recusa um pedido ou a Claude está sobrecarregada, a tela diz isso com clareza e nada é guardado.
 
 O assistente só funciona com a licença válida (seção 15). Para desligar, desmarque **Ligado** em **Assistente › Configurações**; para apagar a chave, **Remover a chave**.
 
@@ -206,7 +206,7 @@ O endereço do servidor de licenças e a chave que assina as respostas dele vêm
 
 Quando houver uma versão nova, ela aparece em **Painel › Atualizações** e na tela **Plugins**, como nos outros plugins. O WordPress só instala uma versão **assinada** pelo fornecedor: os dados da versão e o arquivo são conferidos antes da instalação, e um arquivo alterado ou vindo de outro servidor é recusado. Para procurar agora, use **Procurar atualizações** em **Configurações › Licença**. Antes de atualizar, faça uma cópia de segurança do site, como para qualquer plugin. Seus dados, regras e chaves continuam depois da atualização.
 
-O canal de atualizações também é uma linha no `wp-config.php` (`RITMO_UPDATE_URL` e `RITMO_UPDATE_PUBLIC_KEY`). Sem ela, você atualiza enviando o zip novo em **Plugins › Adicionar novo › Enviar plugin** (o WordPress pergunta se quer substituir a versão instalada).
+O canal de atualizações também é uma linha no `wp-config.php` (`RITMO_UPDATE_URL` e `RITMO_UPDATE_PUBLIC_KEY`). Sem ela, você atualiza enviando o zip novo em **Plugins › Adicionar plugin › Enviar plugin** (o WordPress pergunta se quer substituir a versão instalada).
 
 **Desinstalar.** Desativar mantém tudo. Excluir o plugin sempre libera a licença no servidor e apaga as chaves e tokens salvos (Beds24, PriceLabs, Claude, licença): os dados guardados não levam nenhum segredo, e depois de reinstalar é preciso conectar de novo. Para apagar também os dados, marque antes, em **Configurações › Desinstalar**, a opção **Apagar todas as tabelas, configurações e chaves salvas do plugin** e salve; aí excluir o plugin remove também as tabelas, as configurações, os papéis e as tarefas agendadas do plugin.
 

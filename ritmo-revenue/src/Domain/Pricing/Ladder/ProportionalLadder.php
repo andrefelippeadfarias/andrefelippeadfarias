@@ -25,7 +25,7 @@ use Ritmo\Domain\Support\Num;
  * It works on two calendar readings (before and after), not on a ruler. The ordering relations
  * that follow its moves belong to the relations pass.
  *
- * Reference: escada_reservas.py (alvo, piso_dono, proporcional, teto, passo, plano).
+ * Reference: the booking ladder of the reference engine (target, floor, proportional step, ceiling, plan).
  */
 final class ProportionalLadder
 {

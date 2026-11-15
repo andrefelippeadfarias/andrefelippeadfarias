@@ -11,10 +11,15 @@ namespace Ritmo\Domain\Ai;
  *   document, an address, a note or a free-text message) before a prompt is built;
  * - problem() and assertSendable(): refuse a text that looks like an e-mail address, a phone
  *   number, a Brazilian identity document (CPF, CNPJ) or a person's name (a capitalised name after
- *   "hóspede", "cliente", "Sr.", "guest"... or two capitalised words before "pediu", "asked"...).
- *   Nothing is sent then: the person is told why. Dates, amounts, percentages and booking ids (up
- *   to nine digits) are not phone numbers. The name check is a heuristic: the screen also asks the
- *   person never to write a guest's name.
+ *   "hóspede", "cliente", "Sr.", "guest"..., with or without a colon, or two capitalised words
+ *   before "pediu", "asked"...). Nothing is sent then: the person is told why. Dates, amounts,
+ *   percentages and booking ids (up to nine digits) are not phone numbers.
+ * - requestProblem() and assertRequestSendable(): the same for what the person types to the
+ *   assistant, plus a common first name followed by a surname ("Maria Souza") or after an article
+ *   or a preposition ("pedido da Maria"). The names of the property's rooms and periods, and
+ *   saints and places ("São João", "Nossa Senhora Aparecida"), are left out of that check.
+ *
+ * The name checks are a heuristic: the screen also asks the person never to write a guest's name.
  */
 final class PrivacyGuard
 {
@@ -23,8 +28,20 @@ final class PrivacyGuard
     public const DOCUMENT = 'document';
     public const NAME = 'name';
 
-    /** A capitalised name after a word that introduces a person. */
-    private const NAME_AFTER_TITLE = '/(?<![\p{L}\d])(?i:h[óo]spede|cliente|fam[íi]lia|sra?\.?|srta\.?|senhora?|dona|guest|customer|mrs?\.?|ms\.?|miss)\s+\p{Lu}\p{Ll}+/u';
+    /** A capitalised name after a word that introduces a person ("hóspede Maria", "Hóspede: Maria"). */
+    private const NAME_AFTER_TITLE = '/(?<![\p{L}\d])(?i:h[óo]spedes?|clientes?|fam[íi]lia|sra?\.?|srta\.?|senhora?|dona|guests?|customers?|mrs?\.?|ms\.?|miss)(?:\s*[:\-–—]\s*|\s+)\p{Lu}\p{Ll}+/u';
+
+    /** Saints, places and holidays that read like a title and a name ("Nossa Senhora Aparecida", "São João"). */
+    private const NOT_A_PERSON = '/(?<![\p{L}\d])(?:(?i:nossa)\s+(?i:senhora)(?:\s+(?:d[aoe]s?\s+)?\p{Lu}\p{Ll}+)?|(?:São|Sao|Santa|Santo|Saint|St\.)\s+\p{Lu}\p{Ll}+)/u';
+
+    /** Common first names (Brazilian and English) that are not also usual words, places or months. */
+    private const FIRST_NAMES = 'Maria|José|Jose|Ana|João|Joao|Antônio|Antonio|Francisco|Francisca|Carlos|Paulo|Pedro|Lucas|Luiz|Luis|Luís|Marcos|Luciana|Gabriel|Gabriela|Rafael|Rafaela|Daniel|Daniela|Marcelo|Bruno|Bruna|Eduardo|Felipe|Raimundo|Raimunda|Rodrigo|Manoel|Manuel|Mateus|Matheus|André|Andre|Fernando|Fernanda|Fábio|Fabio|Fabiana|Leonardo|Gustavo|Guilherme|Leandro|Tiago|Thiago|Anderson|Ricardo|Márcio|Marcio|Márcia|Marcia|Jorge|Sebastião|Alexandre|Roberto|Roberta|Edson|Diego|Vitor|Victor|Sérgio|Sergio|Cláudio|Claudio|Cláudia|Claudia|Juliana|Adriana|Patrícia|Patricia|Aline|Sandra|Camila|Amanda|Jéssica|Jessica|Letícia|Leticia|Júlia|Julia|Luana|Mariana|Beatriz|Larissa|Vanessa|Carla|Débora|Debora|Renata|Renato|Simone|Cristiane|Tatiane|Eliane|Raquel|Sônia|Sonia|Rosana|Isabela|Isabella|Carolina|Paula|Priscila|Natália|Natalia|Helena|Laura|Alice|Sofia|Sophia|Valentina|Manuela|Lorena|Heloísa|Heloisa|Cecília|Cecilia|Lívia|Livia|Giovanna|Bianca|Vinícius|Vinicius|Caio|Enzo|Miguel|Arthur|Artur|Davi|Bernardo|Heitor|Samuel|Henrique|Murilo|Igor|Otávio|Otavio|Wagner|Wellington|Rogério|Rogerio|Kelly|Michele|Michelle|Sílvia|Silvia|Regina|Teresa|Tereza|Lúcia|Lucia|Rita|Joana|Josefa|Antônia|Antonia|Marta|Denise|Elaine|Mônica|Monica|Luíza|Luiza|Lara|Yasmin|John|Mary|James|Robert|Michael|William|David|Richard|Joseph|Thomas|George|Peter|Jennifer|Linda|Elizabeth|Susan|Sarah|Karen|Nancy|Lisa|Emma|Olivia|Emily|Anna|Kate';
+
+    /** A first name followed by a surname ("Maria Souza", "Maria da Silva"). */
+    private const FIRST_AND_SURNAME = '/(?<![\p{L}\d])(?:' . self::FIRST_NAMES . ')\s+(?:(?:d[aoe]s?|von|van)\s+)?\p{Lu}\p{Ll}+/u';
+
+    /** A first name after an article or a preposition ("pedido da Maria", "a Ana do quarto 3"). */
+    private const FIRST_AFTER_ARTICLE = '/(?<![\p{L}\d])(?i:a|o|à|ao|da|do|de|para|pra|com|pela|pelo|the|for|from|with|by|of)\s+(?:' . self::FIRST_NAMES . ')(?![\p{L}\d])/u';
 
     /** Two capitalised words before a verb a person does ("João Silva pediu"). */
     private const NAME_BEFORE_VERB = '/(?<![\p{L}\d])\p{Lu}\p{Ll}+\s+\p{Lu}\p{Ll}+\s+(?:pediu|pede|quer|queria|reclamou|reservou|ligou|disse|perguntou|cancelou|asked|wants|booked|called|said|complained|cancelled)(?![\p{L}\d])/u';
@@ -107,7 +124,8 @@ final class PrivacyGuard
                 return self::DOCUMENT;
             }
         }
-        if (preg_match(self::NAME_AFTER_TITLE, $text) === 1 || preg_match(self::NAME_BEFORE_VERB, $text) === 1) {
+        $people = (string) preg_replace(self::NOT_A_PERSON, ' ', $text);
+        if (preg_match(self::NAME_AFTER_TITLE, $people) === 1 || preg_match(self::NAME_BEFORE_VERB, $people) === 1) {
             return self::NAME;
         }
         $rest = (string) preg_replace(self::NOT_PHONE_PATTERNS, ' ', $text);
@@ -122,6 +140,62 @@ final class PrivacyGuard
         }
 
         return null;
+    }
+
+    /**
+     * problem() for a text the person typed to the assistant, with the first-name check too.
+     *
+     * @param list<string> $known names of the property's rooms and periods, never taken for a person
+     */
+    public static function requestProblem(string $text, array $known = []): ?string
+    {
+        $problem = self::problem($text);
+        if ($problem !== null) {
+            return $problem;
+        }
+        $known = array_filter($known, static fn (string $name): bool => trim($name) !== '');
+        usort($known, static fn (string $a, string $b): int => mb_strlen($b) <=> mb_strlen($a));
+        $people = (string) preg_replace(self::NOT_A_PERSON, ' ', str_ireplace($known, ' ', $text));
+        if (preg_match(self::FIRST_AND_SURNAME, $people) === 1 || preg_match(self::FIRST_AFTER_ARTICLE, $people) === 1) {
+            return self::NAME;
+        }
+
+        return null;
+    }
+
+    /**
+     * The labels in a data tree (values under a "label" key, at any depth): the names of rooms and
+     * periods that requestProblem() never takes for a person.
+     *
+     * @param array<int|string, mixed> $data
+     *
+     * @return list<string>
+     */
+    public static function labels(array $data): array
+    {
+        $labels = [];
+        foreach ($data as $key => $value) {
+            if ($key === 'label' && is_string($value)) {
+                $labels[] = $value;
+            } elseif (is_array($value)) {
+                array_push($labels, ...self::labels($value));
+            }
+        }
+
+        return array_values(array_unique($labels));
+    }
+
+    /**
+     * @param list<string> $known see requestProblem()
+     *
+     * @throws AiStopped (privacy) when the person's text looks like guest data
+     */
+    public static function assertRequestSendable(string $text, array $known = []): void
+    {
+        $problem = self::requestProblem($text, $known);
+        if ($problem !== null) {
+            throw new AiStopped(AiStopped::PRIVACY, 'Nothing was sent: the text looks like it carries guest data (an e-mail, a phone number, a document number or a guest\'s name). Refer to a booking by its id.', ['kind' => $problem]);
+        }
     }
 
     /**

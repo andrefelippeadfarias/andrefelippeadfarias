@@ -295,4 +295,64 @@ final class LicenceServiceTest extends TestCase
 
         self::assertSame(LicenceStanding::Grace, $service->daily()?->standing);
     }
+
+    public function testARecordWrittenByHandInTheDatabaseNeverGrantsALicence(): void
+    {
+        // A key in the vault, no server reached, and a "valid" record forged in the settings.
+        $service = $this->service(false, false);
+        $service->save(self::KEY);
+        $fingerprint = (string) $service->record()->keyFingerprint;
+        $forged = [
+            'key' => $fingerprint, 'provider' => 'http', 'status' => 'valid', 'expires_at' => null,
+            'last_answer_at' => '2026-11-15T09:00:00Z', 'last_attempt_at' => '2026-11-15T09:00:00Z', 'last_attempt_status' => 'valid',
+            'last_valid_at' => '2026-11-15T09:00:00Z', 'problem_since' => null, 'message' => '',
+        ];
+        $this->store->set(LicenceService::STATE_KEY, $forged);
+        $verdict = $this->service()->verdict();
+        self::assertSame(LicenceStanding::Unlicensed, $verdict->standing, 'no signed proof');
+        self::assertFalse($verdict->allowsWriting());
+        self::assertFalse($verdict->allowsAi());
+
+        // A proof that does not verify (made up, or signed by another key pair) counts for nothing.
+        $other = sodium_crypto_sign_secretkey(sodium_crypto_sign_seed_keypair(str_repeat("\x09", SODIUM_CRYPTO_SIGN_SEEDBYTES)));
+        $message = \Ritmo\Connectors\Licence\LicenceSignature::message(self::KEY, self::SITE, 'valid', '', '2026-11-15T09:00:00Z', 'n');
+        foreach ([base64_encode(str_repeat('a', 64)), base64_encode(sodium_crypto_sign_detached($message, $other))] as $signature) {
+            $this->store->set(LicenceService::STATE_KEY, $forged + ['proof' => ['expires_at' => '', 'checked_at' => '2026-11-15T09:00:00Z', 'nonce' => 'n', 'signature' => $signature]]);
+            self::assertSame(LicenceStanding::Unlicensed, $this->service()->verdict()->standing);
+        }
+
+        // The test provider's answers stay refused outside development mode.
+        $this->store->set(LicenceService::STATE_KEY, ['provider' => 'stub'] + $forged);
+        self::assertSame(LicenceReason::TEST_PROVIDER, $this->service()->verdict()->reason);
+    }
+
+    public function testASignedAnswerCountsOnlyForTheSavedKeyThisSiteAndItsOwnDates(): void
+    {
+        $this->http->queue(self::valid('2026-12-01T00:00:00Z'));
+        $service = $this->service();
+        $service->save(self::KEY);
+        self::assertSame(LicenceStanding::Active, $service->verdict()->standing);
+        $stored = $this->store->get(LicenceService::STATE_KEY);
+        self::assertIsArray($stored);
+        self::assertIsArray($stored['proof'] ?? null, 'the signed answer is kept with the record');
+
+        // Moving the dates of a real record forward does not lengthen the licence.
+        $this->store->set(LicenceService::STATE_KEY, ['expires_at' => null, 'last_valid_at' => '2027-06-01T00:00:00Z', 'last_attempt_at' => '2027-06-01T00:00:00Z'] + $stored);
+        $this->clock->advance(20 * 86400);
+        $verdict = $this->service()->verdict();
+        self::assertSame(LicenceStanding::Grace, $verdict->standing, 'the signed end date, 1 December, still counts');
+        self::assertSame(LicenceReason::EXPIRED, $verdict->reason);
+        $this->clock->advance(30 * 86400);
+        self::assertSame(LicenceStanding::Lapsed, $this->service()->verdict()->standing, 'the grace period counts from the signed end date, not from the edited dates');
+
+        // The same record on another site, or for another key, is not a licence.
+        $this->store->set(LicenceService::STATE_KEY, $stored);
+        $this->clock->advance(-50 * 86400);
+        self::assertSame(LicenceStanding::Active, $this->service()->verdict()->standing);
+        $elsewhere = new LicenceSettings(ServerUrl::parse('https://licences.example.com/v1', false), new GracePolicy(), false, 'https://copy.example.com', '1.0.0', 'ritmo-revenue', false, [SignedLicenceAnswers::publicKey()]);
+        $copy = new LicenceService($this->vault, $this->store, $this->clock, $this->logger, new ProviderChoice($elsewhere, $this->http, $this->clock), $elsewhere);
+        self::assertSame(LicenceStanding::Unlicensed, $copy->verdict()->standing);
+        $this->vault->put(LicenceService::VAULT_NAME, 'RR-2026-OTHER-KEY-01');
+        self::assertSame(LicenceReason::NOT_CHECKED, $this->service()->verdict()->reason, 'a record of another key');
+    }
 }

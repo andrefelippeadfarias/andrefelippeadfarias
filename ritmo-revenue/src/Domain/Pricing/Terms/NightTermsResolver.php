@@ -54,7 +54,7 @@ final class NightTermsResolver
 
     /**
      * The standard floor of a room night: the hard floor of the rule set, with the weekend
-     * override of a strategy (reference: pace.pisos_enviados).
+     * override of a strategy (as the reference engine does).
      */
     public function standardFloor(RoomType $room, DateTimeImmutable $night): HardFloor
     {

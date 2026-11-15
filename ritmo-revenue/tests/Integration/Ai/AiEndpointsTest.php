@@ -53,6 +53,11 @@ final class AiEndpointsTest extends TestCase
         [$status, $body] = $endpoints->draft('inn-1', 'O hóspede maria@example.com pediu desconto');
         self::assertSame([422, AiStopped::PRIVACY], [$status, $body['code']]);
         self::assertSame([], $world->api->sent(), 'guest data is never sent');
+        foreach (['Hóspede: Maria Souza. Subir 10% os sábados de dezembro no Standard Room', 'Pedido da Maria Souza: subir 10%', 'A Maria Souza do quarto 3 quer desconto'] as $named) {
+            [$status, $body] = $endpoints->draft('inn-1', $named);
+            self::assertSame([422, AiStopped::PRIVACY], [$status, $body['code']], $named);
+        }
+        self::assertSame([], $world->api->sent(), 'a guest\'s name is never sent');
 
         [$status, $body] = $endpoints->draft('inn-1', 'mude o modo para autônomo');
         self::assertSame([422, AiStopped::NOT_SUPPORTED], [$status, $body['code']]);

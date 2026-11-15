@@ -41,7 +41,7 @@ defined('ABSPATH') || exit;
                     <caption class="screen-reader-text"><?php esc_html_e('Last answers of the month', 'ritmo-revenue'); ?></caption>
                     <thead>
                         <tr>
-                            <th scope="col"><?php esc_html_e('When (UTC)', 'ritmo-revenue'); ?></th>
+                            <th scope="col"><?php esc_html_e('When', 'ritmo-revenue'); ?></th>
                             <th scope="col"><?php esc_html_e('What for', 'ritmo-revenue'); ?></th>
                             <th scope="col"><?php esc_html_e('Model', 'ritmo-revenue'); ?></th>
                             <th scope="col"><?php esc_html_e('Tokens in / out', 'ritmo-revenue'); ?></th>

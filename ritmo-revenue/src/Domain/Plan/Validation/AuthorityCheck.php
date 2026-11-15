@@ -18,8 +18,8 @@ use Ritmo\Domain\Plan\Port\StrategyGuard;
  * backs a strategy, the strategy must act there. Items and deletions are checked alike (a listing
  * change is checked on today only for the freeze: a fixed price is an amount, not a percentage).
  *
- * Reference: validar_plano.Validador.validar_data (excecao "dono" with ordem_id, congelada,
- * escopo_plano). The fixed-price night is a plugin rule (divergence X1 of docs/VERIFY.md): the
+ * Reference: the date check of the reference validator (the exception of a person's order with
+ * its id, frozen nights, plan scope). The fixed-price night is a plugin rule (divergence X1 of docs/VERIFY.md): the
  * reference engine only stays away from it, its validator does not look.
  */
 final class AuthorityCheck

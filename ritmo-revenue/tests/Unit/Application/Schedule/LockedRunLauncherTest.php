@@ -33,7 +33,7 @@ final class LockedRunLauncherTest extends TestCase
     {
         $this->world = new ScheduleWorld('2026-11-12T10:31:00Z');
         $this->executor = new ScriptedExecutor($this->world->runs, $this->world->clock);
-        $this->launcher = new LockedRunLauncher($this->world->runs, $this->world->locks, $this->executor, $this->world->clock, $this->world->logger);
+        $this->launcher = new LockedRunLauncher($this->world->runs, $this->world->locks, $this->executor, $this->world->clock, $this->world->logger, $this->world->db);
         $this->world->runLauncher = $this->launcher;
     }
 
@@ -185,7 +185,7 @@ final class LockedRunLauncherTest extends TestCase
     public function testARunStoppedByPhpIsClosedItsLockFreedAndTheSiteTold(): void
     {
         $told = [];
-        $launcher = new LockedRunLauncher($this->world->runs, $this->world->locks, $this->executor, $this->world->clock, $this->world->logger, static function (string $property, int $run, string $cause) use (&$told): void {
+        $launcher = new LockedRunLauncher($this->world->runs, $this->world->locks, $this->executor, $this->world->clock, $this->world->logger, $this->world->db, static function (string $property, int $run, string $cause) use (&$told): void {
             $told[] = [$property, $run, $cause];
         });
         $this->executor->next = ['running'];

@@ -15,7 +15,7 @@ use Ritmo\Domain\Model\RoomType;
  * discount ("discounted").
  *
  * Each plan has a measured factor in the rule set: plan price = sent price x factor.
- * Reference: pace.fator_publico and the "vitrine" and "real" factors of pace.pisos_enviados.
+ * Reference: the public, shown and real price factors of the reference engine.
  */
 final class PriceFactor
 {

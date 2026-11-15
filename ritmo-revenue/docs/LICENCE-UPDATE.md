@@ -94,7 +94,11 @@ provider: it reads `LicenceService::verdict()`, which evaluates the stored recor
   `licence_key`. Saving another key frees the earlier one on its provider first.
 - The record (`LicenceRecord`, setting `licence_state`) holds the provider's answers and a
   16-character fingerprint of the key, never the key. A damaged record is the empty one and grants
-  nothing.
+  nothing. With the last "valid" answer it keeps that answer's signed part (`LicenceProof`: end
+  date and check time as answered, nonce, signature); `verdict()` verifies it again every time
+  against the embedded public keys, the saved key and the site address, so a record edited in the
+  database (status "valid", a recent date, another key's record) never makes a licence valid or
+  longer.
 - The key travels only in the body of a POST to the licence server; it is never in a URL, a log
   line, a notice or the support file. The provider's message is kept as plain text (no markup, no
   control characters, 200 characters at most) and escaped where shown.

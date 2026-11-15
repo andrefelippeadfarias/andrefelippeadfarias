@@ -15,7 +15,7 @@ use Ritmo\Domain\Support\Days;
  * the room wins over the property. Held weekdays of a room stay as they are (nothing raises or
  * lowers them) until someone decides.
  *
- * Reference: comum.regra_dia_chegada, estadia_do_dia, aguardando_dono.
+ * Reference: the arrival-day rule of the reference engine (stay of the day, nights waiting for a decision).
  */
 final class ArrivalRule
 {

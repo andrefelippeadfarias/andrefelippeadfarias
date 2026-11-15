@@ -16,7 +16,7 @@ use Ritmo\Domain\Support\Days;
  *
  * Lookups are exact: a series or percentile that is not stored has no value (no interpolation).
  *
- * Reference: dados/regua_dono.json and plano_dono.ancora / plano_dono.fator.
+ * Reference: the price ruler, anchor and factor of the ladder strategy in the reference engine.
  */
 final class RulerNight
 {

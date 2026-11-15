@@ -8,7 +8,7 @@ namespace Ritmo\Domain\Market\Series;
  * The factor that turns a competitor's cheapest-room price into the price of its comparable room
  * (comparable price / cheapest price).
  *
- * Reference: faixas_dono.r_hidro. A competitor without a factor (or with zero) takes the default
+ * Reference: the comparable factor of the reference market bands. A competitor without a factor (or with zero) takes the default
  * factor; an estimated factor above the cap is capped, because an estimate that high is more
  * likely a wrong reading than a real gap.
  */

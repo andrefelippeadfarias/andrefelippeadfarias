@@ -8,7 +8,7 @@ namespace Ritmo\Domain\Market\Series;
  * Where a price sits in the market: its percentile among competitor values, and its place
  * among the market bands.
  *
- * Reference: faixas_dono.percentil_de and faixas_dono.posicao.
+ * Reference: the percentile and position of the reference market bands.
  */
 final class PricePosition
 {

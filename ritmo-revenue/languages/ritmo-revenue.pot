@@ -178,11 +178,11 @@ msgstr ""
 msgid "not set"
 msgstr ""
 
-#: src/Admin/Ai/AiScreen.php:149 src/Admin/Reports/WeeklyTables.php:26 src/Admin/Screens/AlertsScreen.php:188 src/Admin/Screens/DiagnosticsView.php:220
+#: src/Admin/Ai/AiScreen.php:149 src/Admin/Reports/WeeklyTables.php:26 src/Admin/Screens/AlertsScreen.php:188 src/Admin/Screens/DiagnosticsView.php:221
 msgid "yes"
 msgstr ""
 
-#: src/Admin/Ai/AiScreen.php:149 src/Admin/Screens/AlertsScreen.php:188 src/Admin/Screens/DiagnosticsView.php:220
+#: src/Admin/Ai/AiScreen.php:149 src/Admin/Screens/AlertsScreen.php:188 src/Admin/Screens/DiagnosticsView.php:221
 msgid "no"
 msgstr ""
 
@@ -538,9 +538,25 @@ msgid "Some rooms could not be saved: nothing was saved."
 msgstr ""
 
 #. translators: %s: a reference such as E-1a2b3c4d
-#: src/Admin/Components/ErrorText.php:56
+#: src/Admin/Components/ErrorText.php:62
 msgid "Something went wrong. Nothing was changed. Reference %s"
 msgstr ""
+
+#: src/Admin/Components/ErrorText.php:73
+msgid "the file"
+msgstr ""
+
+#. translators: %s: the problems found, each as "<path of the value>: <what is wrong>", separated by ";"
+#: src/Admin/Components/ErrorText.php:78
+msgid "These values are not accepted, so nothing was saved: %s"
+msgstr ""
+
+#. translators: %d: how many more problems were found
+#: src/Admin/Components/ErrorText.php:81
+msgid "(and %d more problem)"
+msgid_plural "(and %d more problems)"
+msgstr[0] ""
+msgstr[1] ""
 
 #. translators: %d: the longest text allowed
 #. translators: %d: maximum number of characters
@@ -789,90 +805,98 @@ msgid "the licence server"
 msgstr ""
 
 #: src/Admin/Components/Labels.php:176
+msgid "no licence server (none is set up)"
+msgstr ""
+
+#: src/Admin/Components/Labels.php:177
+msgid "the test licence provider"
+msgstr ""
+
+#: src/Admin/Components/Labels.php:178
 msgid "the update server"
 msgstr ""
 
-#: src/Admin/Components/Labels.php:185 src/Admin/Screens/ApprovalsScreen.php:213 src/Admin/Screens/NightsScreen.php:162 src/Admin/Screens/WizardView.php:285
+#: src/Admin/Components/Labels.php:187 src/Admin/Screens/ApprovalsScreen.php:213 src/Admin/Screens/NightsScreen.php:162 src/Admin/Screens/WizardView.php:285
 msgid "floor"
 msgstr ""
 
-#: src/Admin/Components/Labels.php:186
+#: src/Admin/Components/Labels.php:188
 msgid "fixed floor"
 msgstr ""
 
-#: src/Admin/Components/Labels.php:187 src/Admin/Screens/ApprovalsScreen.php:217 src/Admin/Screens/NightsScreen.php:163
+#: src/Admin/Components/Labels.php:189 src/Admin/Screens/ApprovalsScreen.php:217 src/Admin/Screens/NightsScreen.php:163
 msgid "ceiling"
 msgstr ""
 
-#: src/Admin/Components/Labels.php:188
+#: src/Admin/Components/Labels.php:190
 msgid "fixed ceiling"
 msgstr ""
 
-#: src/Admin/Components/Labels.php:189
+#: src/Admin/Components/Labels.php:191
 msgid "fixed price"
 msgstr ""
 
-#: src/Admin/Components/Labels.php:190
+#: src/Admin/Components/Labels.php:192
 msgid "validity of the date rule"
 msgstr ""
 
-#: src/Admin/Components/Labels.php:191 src/Admin/Editors/OrdersScreen.php:135 src/Admin/Screens/NightsScreen.php:164
+#: src/Admin/Components/Labels.php:193 src/Admin/Editors/OrdersScreen.php:135 src/Admin/Screens/NightsScreen.php:164
 msgid "minimum stay"
 msgstr ""
 
-#: src/Admin/Components/Labels.php:192 src/Admin/Editors/OrdersScreen.php:136
+#: src/Admin/Components/Labels.php:194 src/Admin/Editors/OrdersScreen.php:136
 msgid "maximum stay"
 msgstr ""
 
-#: src/Admin/Components/Labels.php:193
+#: src/Admin/Components/Labels.php:195
 msgid "arrival"
 msgstr ""
 
-#: src/Admin/Components/Labels.php:194
+#: src/Admin/Components/Labels.php:196
 msgid "departure"
 msgstr ""
 
-#: src/Admin/Components/Labels.php:195
+#: src/Admin/Components/Labels.php:197
 msgid "arrival and departure rule"
 msgstr ""
 
-#: src/Admin/Components/Labels.php:196 src/Admin/Editors/OrdersScreen.php:139
+#: src/Admin/Components/Labels.php:198 src/Admin/Editors/OrdersScreen.php:139
 msgid "availability"
 msgstr ""
 
-#: src/Admin/Components/Labels.php:197
+#: src/Admin/Components/Labels.php:199
 msgid "date rule"
 msgstr ""
 
-#: src/Admin/Components/Labels.php:198 src/Admin/ReasonText.php:202
+#: src/Admin/Components/Labels.php:200 src/Admin/ReasonText.php:202
 msgid "listing minimum"
 msgstr ""
 
-#: src/Admin/Components/Labels.php:199
+#: src/Admin/Components/Labels.php:201
 msgid "listing base"
 msgstr ""
 
-#: src/Admin/Components/Labels.php:200
+#: src/Admin/Components/Labels.php:202
 msgid "listing maximum"
 msgstr ""
 
-#: src/Admin/Components/Labels.php:201
+#: src/Admin/Components/Labels.php:203
 msgid "channel limit"
 msgstr ""
 
-#: src/Admin/Components/Labels.php:208
+#: src/Admin/Components/Labels.php:210
 msgid "weekday night"
 msgstr ""
 
-#: src/Admin/Components/Labels.php:209
+#: src/Admin/Components/Labels.php:211
 msgid "weekend night"
 msgstr ""
 
-#: src/Admin/Components/Labels.php:210
+#: src/Admin/Components/Labels.php:212
 msgid "holiday night"
 msgstr ""
 
-#: src/Admin/Components/Labels.php:217 src/Admin/Screens/DiagnosticsView.php:250
+#: src/Admin/Components/Labels.php:219 src/Admin/Screens/DiagnosticsView.php:252
 msgid "other"
 msgstr ""
 
@@ -881,7 +905,7 @@ msgid "Overview"
 msgstr ""
 
 #. translators: the name or the explanation of a setting of the rules
-#: src/Admin/Components/Menu.php:56 src/Admin/Screens/AlertText.php:134 src/Admin/Screens/DiagnosticsView.php:199 src/Admin/Screens/NightsScreen.php:36 templates/admin/editors/calendar.php:84 templates/admin/editors/calendar.php:96 templates/admin/editors/orders.php:118 templates/admin/editors/orders.php:123 templates/admin/editors/orders.php:162 templates/admin/editors/orders.php:172 templates/admin/screens/nights.php:36 src/Domain/Config/Schema.php
+#: src/Admin/Components/Menu.php:56 src/Admin/Screens/AlertText.php:134 src/Admin/Screens/DiagnosticsView.php:200 src/Admin/Screens/NightsScreen.php:36 templates/admin/editors/calendar.php:84 templates/admin/editors/calendar.php:96 templates/admin/editors/orders.php:118 templates/admin/editors/orders.php:123 templates/admin/editors/orders.php:162 templates/admin/editors/orders.php:172 templates/admin/screens/nights.php:36 src/Domain/Config/Schema.php
 msgid "Nights"
 msgstr ""
 
@@ -995,6 +1019,80 @@ msgstr ""
 #. translators: %s: a duration such as "3 hours"
 #: src/Admin/Components/NightDate.php:89
 msgid "in %s"
+msgstr ""
+
+#. translators: %s: the name of the field as sent by the form
+#: src/Admin/Components/OwnMessageText.php:25
+msgid "\"%s\" must be a whole number."
+msgstr ""
+
+#. translators: %s: the name of the field as sent by the form
+#: src/Admin/Components/OwnMessageText.php:29
+msgid "\"%s\" must be an amount such as 480 or 480.50."
+msgstr ""
+
+#. translators: %d: the most lines that can be pasted
+#: src/Admin/Components/OwnMessageText.php:33
+msgid "Paste at most %d lines at a time."
+msgstr ""
+
+#. translators: %d: the line number
+#: src/Admin/Components/OwnMessageText.php:40
+msgid "Line %d: write exactly a date and a price."
+msgstr ""
+
+#. translators: %d: the line number
+#: src/Admin/Components/OwnMessageText.php:42
+msgid "Line %d: the date must be written as YYYY-MM-DD."
+msgstr ""
+
+#. translators: %d: the line number
+#: src/Admin/Components/OwnMessageText.php:44
+msgid "Line %d: the price must be a positive number such as 480 or 480.50."
+msgstr ""
+
+#: src/Admin/Components/OwnMessageText.php:49
+msgid "The property code has up to 32 letters, digits, \"-\" and \"_\"."
+msgstr ""
+
+#: src/Admin/Components/OwnMessageText.php:50
+msgid "A property with this code already exists. Choose another name (or another code), or open the property that is already there."
+msgstr ""
+
+#: src/Admin/Components/OwnMessageText.php:51
+msgid "Give the property a name of up to 100 characters."
+msgstr ""
+
+#: src/Admin/Components/OwnMessageText.php:52
+msgid "Choose the timezone of the property from the list."
+msgstr ""
+
+#: src/Admin/Components/OwnMessageText.php:53
+msgid "The currency is a three-letter code such as BRL, USD or EUR."
+msgstr ""
+
+#: src/Admin/Components/OwnMessageText.php:54
+msgid "The tier is a lowercase name such as \"standard\" or \"premium\"."
+msgstr ""
+
+#: src/Admin/Components/OwnMessageText.php:55
+msgid "Choose an existing property for the room."
+msgstr ""
+
+#: src/Admin/Components/OwnMessageText.php:56
+msgid "Choose an existing property for the prices."
+msgstr ""
+
+#: src/Admin/Components/OwnMessageText.php:57
+msgid "Only a person allowed to change the safety limits can import a preset."
+msgstr ""
+
+#: src/Admin/Components/OwnMessageText.php:58
+msgid "Only a person allowed to change the safety limits can confirm them."
+msgstr ""
+
+#: src/Admin/Components/OwnMessageText.php:59
+msgid "No price was found: write one \"date,price\" per line."
 msgstr ""
 
 #: src/Admin/Components/Paging.php:45 src/Admin/Editors/ValueText.php:98 src/Admin/Screens/ChangesScreen.php:230 src/Admin/Screens/NightDetailView.php:194 templates/admin/editors/calendar.php:98 templates/admin/editors/calendar.php:99
@@ -1303,58 +1401,62 @@ msgid "this is required."
 msgstr ""
 
 #: src/Admin/Editors/EditorText.php:74
-msgid "this is outside the allowed range."
+msgid "this setting is not known."
 msgstr ""
 
 #: src/Admin/Editors/EditorText.php:75
-msgid "this does not have the right form."
+msgid "this is outside the allowed range."
 msgstr ""
 
 #: src/Admin/Editors/EditorText.php:76
-msgid "choose one of the options."
+msgid "this does not have the right form."
 msgstr ""
 
 #: src/Admin/Editors/EditorText.php:77
-msgid "a value is repeated."
+msgid "choose one of the options."
 msgstr ""
 
 #: src/Admin/Editors/EditorText.php:78
-msgid "this is fixed by the product."
+msgid "a value is repeated."
 msgstr ""
 
 #: src/Admin/Editors/EditorText.php:79
-msgid "the values are in the wrong order."
+msgid "this is fixed by the product."
 msgstr ""
 
 #: src/Admin/Editors/EditorText.php:80
-msgid "it names a room or a property that does not exist."
+msgid "the values are in the wrong order."
 msgstr ""
 
 #: src/Admin/Editors/EditorText.php:81
-msgid "a room cannot be compared with itself."
+msgid "it names a room or a property that does not exist."
 msgstr ""
 
 #: src/Admin/Editors/EditorText.php:82
-msgid "the room adjusted cannot be in the group it is compared with."
+msgid "a room cannot be compared with itself."
 msgstr ""
 
 #: src/Admin/Editors/EditorText.php:83
-msgid "it cites a relation that does not exist or is of the wrong kind."
+msgid "the room adjusted cannot be in the group it is compared with."
 msgstr ""
 
 #: src/Admin/Editors/EditorText.php:84
-msgid "the relations make room prices depend on each other in a loop."
+msgid "it cites a relation that does not exist or is of the wrong kind."
 msgstr ""
 
 #: src/Admin/Editors/EditorText.php:85
-msgid "it cites a market price series that is not built."
+msgid "the relations make room prices depend on each other in a loop."
 msgstr ""
 
 #: src/Admin/Editors/EditorText.php:86
-msgid "it cites a point of the market that is not kept."
+msgid "it cites a market price series that is not built."
 msgstr ""
 
 #: src/Admin/Editors/EditorText.php:87
+msgid "it cites a point of the market that is not kept."
+msgstr ""
+
+#: src/Admin/Editors/EditorText.php:88
 msgid "this value is not accepted."
 msgstr ""
 
@@ -1527,7 +1629,7 @@ msgid "Kind of order"
 msgstr ""
 
 #. translators: the name or the explanation of a setting of the rules
-#: src/Admin/Editors/OrdersActions.php:115 src/Admin/Reports/ReportsScreen.php:49 src/Admin/Screens/DiagnosticsView.php:198 src/Admin/Screens/WizardView.php:80 templates/admin/editors/orders.php:57 templates/admin/editors/orders.php:161 templates/admin/editors/orders.php:171 templates/admin/screens/nights.php:61 templates/admin/screens/wizard/rooms.php:15 src/Domain/Config/Schema.php
+#: src/Admin/Editors/OrdersActions.php:115 src/Admin/Reports/ReportsScreen.php:49 src/Admin/Screens/DiagnosticsView.php:199 src/Admin/Screens/WizardView.php:80 templates/admin/editors/orders.php:57 templates/admin/editors/orders.php:161 templates/admin/editors/orders.php:171 templates/admin/screens/nights.php:61 templates/admin/screens/wizard/rooms.php:15 src/Domain/Config/Schema.php
 msgid "Rooms"
 msgstr ""
 
@@ -3666,7 +3768,7 @@ msgstr ""
 msgid "Stays per week"
 msgstr ""
 
-#: src/Admin/Reports/WeeklyTables.php:43 templates/admin/market/import.php:125 templates/admin/market/import.php:130 templates/admin/screens/operations.php:45 templates/admin/screens/operations.php:53
+#: src/Admin/Reports/WeeklyTables.php:43 templates/admin/ai/usage.php:44 templates/admin/market/import.php:125 templates/admin/market/import.php:130 templates/admin/screens/operations.php:45 templates/admin/screens/operations.php:53
 msgid "When"
 msgstr ""
 
@@ -3914,7 +4016,7 @@ msgstr ""
 msgid "Market prices are old"
 msgstr ""
 
-#: src/Admin/Screens/AlertText.php:56 src/Admin/Screens/DiagnosticsView.php:205
+#: src/Admin/Screens/AlertText.php:56 src/Admin/Screens/DiagnosticsView.php:206
 msgid "Nights without market prices"
 msgstr ""
 
@@ -4198,7 +4300,7 @@ msgstr ""
 msgid "How many"
 msgstr ""
 
-#: src/Admin/Screens/AlertText.php:151 src/Admin/Screens/DiagnosticsView.php:211
+#: src/Admin/Screens/AlertText.php:151 src/Admin/Screens/DiagnosticsView.php:212
 msgid "Price cuts held"
 msgstr ""
 
@@ -4466,7 +4568,7 @@ msgstr[1] ""
 msgid "Undo by %1$s · %2$s"
 msgstr ""
 
-#: src/Admin/Screens/ChangesScreen.php:135 src/Admin/Screens/DiagnosticsView.php:224
+#: src/Admin/Screens/ChangesScreen.php:135 src/Admin/Screens/DiagnosticsView.php:226
 msgid "the plugin"
 msgstr ""
 
@@ -4716,59 +4818,63 @@ msgstr ""
 msgid "Who"
 msgstr ""
 
-#: src/Admin/Screens/DiagnosticsView.php:200
-msgid "Listings found"
+#: src/Admin/Screens/DiagnosticsView.php:198
+msgid "Reference"
 msgstr ""
 
 #: src/Admin/Screens/DiagnosticsView.php:201
-msgid "Listings missing"
+msgid "Listings found"
 msgstr ""
 
 #: src/Admin/Screens/DiagnosticsView.php:202
-msgid "Bookings read since"
+msgid "Listings missing"
 msgstr ""
 
 #: src/Admin/Screens/DiagnosticsView.php:203
-msgid "Nights that would change"
+msgid "Bookings read since"
 msgstr ""
 
 #: src/Admin/Screens/DiagnosticsView.php:204
+msgid "Nights that would change"
+msgstr ""
+
+#: src/Admin/Screens/DiagnosticsView.php:205
 msgid "Refused by the safety checks"
 msgstr ""
 
-#: src/Admin/Screens/DiagnosticsView.php:206
+#: src/Admin/Screens/DiagnosticsView.php:207
 msgid "Calls sent"
 msgstr ""
 
-#: src/Admin/Screens/DiagnosticsView.php:207
+#: src/Admin/Screens/DiagnosticsView.php:208
 msgid "Calls taken"
 msgstr ""
 
-#: src/Admin/Screens/DiagnosticsView.php:208
+#: src/Admin/Screens/DiagnosticsView.php:209
 msgid "Nights confirmed in the pricing system"
 msgstr ""
 
-#: src/Admin/Screens/DiagnosticsView.php:209
+#: src/Admin/Screens/DiagnosticsView.php:210
 msgid "Nights confirmed in the PMS"
 msgstr ""
 
-#: src/Admin/Screens/DiagnosticsView.php:210
+#: src/Admin/Screens/DiagnosticsView.php:211
 msgid "Nights waiting for approval"
 msgstr ""
 
-#: src/Admin/Screens/DiagnosticsView.php:246
+#: src/Admin/Screens/DiagnosticsView.php:248
 msgid "detail"
 msgstr ""
 
-#: src/Admin/Screens/DiagnosticsView.php:247
+#: src/Admin/Screens/DiagnosticsView.php:249
 msgid "information"
 msgstr ""
 
-#: src/Admin/Screens/DiagnosticsView.php:248
+#: src/Admin/Screens/DiagnosticsView.php:250
 msgid "warning"
 msgstr ""
 
-#: src/Admin/Screens/DiagnosticsView.php:249
+#: src/Admin/Screens/DiagnosticsView.php:251
 msgid "error"
 msgstr ""
 
@@ -4777,178 +4883,190 @@ msgid "A run starts."
 msgstr ""
 
 #: src/Admin/Screens/LogText.php:22
-msgid "A run resumes."
+msgid "A run could not be made: no room of the property is linked to the PMS yet (expected while the setup is not finished: save the rooms step)."
 msgstr ""
 
 #: src/Admin/Screens/LogText.php:23
-msgid "A run ended."
+msgid "A run resumes."
 msgstr ""
 
 #: src/Admin/Screens/LogText.php:24
-msgid "A stage of the run completed."
+msgid "A run ended."
 msgstr ""
 
 #: src/Admin/Screens/LogText.php:25
-msgid "A stage of the run failed."
+msgid "A stage of the run completed."
 msgstr ""
 
 #: src/Admin/Screens/LogText.php:26
-msgid "A run failed with an unexpected error."
+msgid "A stage of the run failed."
 msgstr ""
 
 #: src/Admin/Screens/LogText.php:27
-msgid "A run left open on an earlier day was closed as failed."
+msgid "A run failed with an unexpected error."
 msgstr ""
 
 #: src/Admin/Screens/LogText.php:28
-msgid "An open run was stopped between two of its steps."
+msgid "A run left open on an earlier day was closed as failed."
 msgstr ""
 
 #: src/Admin/Screens/LogText.php:29
-msgid "An open run was stopped by the emergency switch."
+msgid "An open run was stopped between two of its steps."
 msgstr ""
 
 #: src/Admin/Screens/LogText.php:30
-msgid "A read of the pricing system finished."
+msgid "An open run was stopped by the emergency switch."
 msgstr ""
 
 #: src/Admin/Screens/LogText.php:31
-msgid "A read of the PMS finished."
+msgid "A read of the pricing system finished."
 msgstr ""
 
 #: src/Admin/Screens/LogText.php:32
-msgid "A write to the pricing system finished."
+msgid "A read of the PMS finished."
 msgstr ""
 
 #: src/Admin/Screens/LogText.php:33
-msgid "A write to the PMS finished."
+msgid "A write to the pricing system finished."
 msgstr ""
 
 #: src/Admin/Screens/LogText.php:34
-msgid "The pricing system sent rows without a date or a price; they were left out."
+msgid "A write to the PMS finished."
 msgstr ""
 
 #: src/Admin/Screens/LogText.php:35
-msgid "The PMS refused the access token; the plugin renews it once."
+msgid "The pricing system sent rows without a date or a price; they were left out."
 msgstr ""
 
 #: src/Admin/Screens/LogText.php:36
-msgid "The PMS refused the access token of a write; the plugin renews it and sends the same change once."
+msgid "The PMS refused the access token; the plugin renews it once."
 msgstr ""
 
 #: src/Admin/Screens/LogText.php:37
-msgid "A request that could change an external system was blocked."
+msgid "The PMS refused the access token of a write; the plugin renews it and sends the same change once."
 msgstr ""
 
 #: src/Admin/Screens/LogText.php:38
-msgid "An alert e-mail could not be sent."
+msgid "A request that could change an external system was blocked."
 msgstr ""
 
 #: src/Admin/Screens/LogText.php:39
-msgid "An alert e-mail has no recipient: nobody can approve, or everyone opted out."
+msgid "An alert e-mail could not be sent."
 msgstr ""
 
 #: src/Admin/Screens/LogText.php:40
-msgid "The scheduled runs of a property were paused."
+msgid "An alert e-mail has no recipient: nobody can approve, or everyone opted out."
 msgstr ""
 
 #: src/Admin/Screens/LogText.php:41
-msgid "The scheduled runs of a property were resumed."
+msgid "The scheduled runs of a property were paused."
 msgstr ""
 
 #: src/Admin/Screens/LogText.php:42
-msgid "A paused property resumed at the end of its pause."
+msgid "The scheduled runs of a property were resumed."
 msgstr ""
 
 #: src/Admin/Screens/LogText.php:43
-msgid "The scheduler failed; it tries again on its next turn."
+msgid "A paused property resumed at the end of its pause."
 msgstr ""
 
 #: src/Admin/Screens/LogText.php:44
-msgid "The scheduler failed on a property; the others continue."
+msgid "The scheduler failed; it tries again on its next turn."
 msgstr ""
 
 #: src/Admin/Screens/LogText.php:45
-msgid "A background step of the plugin failed."
+msgid "The scheduler failed on a property; the others continue."
 msgstr ""
 
 #: src/Admin/Screens/LogText.php:46
-msgid "The scheduler waits for the database update."
+msgid "A background step of the plugin failed."
 msgstr ""
 
 #: src/Admin/Screens/LogText.php:47
-msgid "The stored rules do not pass validation after the update."
+msgid "The scheduler waits for the database update."
 msgstr ""
 
 #: src/Admin/Screens/LogText.php:48
-msgid "A run was stopped by the server (memory or time) and closed as failed."
+msgid "The stored rules do not pass validation after the update."
 msgstr ""
 
 #: src/Admin/Screens/LogText.php:49
-msgid "Claude answered."
+msgid "A run was stopped by the server (memory or time) and closed as failed."
 msgstr ""
 
 #: src/Admin/Screens/LogText.php:50
-msgid "A request to Claude failed."
+msgid "Claude answered."
 msgstr ""
 
 #: src/Admin/Screens/LogText.php:51
-msgid "A request to Claude finished."
+msgid "A request to Claude failed."
 msgstr ""
 
 #: src/Admin/Screens/LogText.php:52
-msgid "A request to Claude got no answer."
+msgid "A request to Claude finished."
 msgstr ""
 
 #: src/Admin/Screens/LogText.php:53
-msgid "The connection to Claude was tested."
+msgid "A request to Claude got no answer."
 msgstr ""
 
 #: src/Admin/Screens/LogText.php:54
-msgid "The connection to Claude is set up wrongly on this site."
+msgid "The connection to Claude was tested."
 msgstr ""
 
 #: src/Admin/Screens/LogText.php:55
-msgid "A licence key was saved."
+msgid "The connection to Claude is set up wrongly on this site."
 msgstr ""
 
 #: src/Admin/Screens/LogText.php:56
-msgid "The licence key was removed."
+msgid "A licence key was saved."
 msgstr ""
 
 #: src/Admin/Screens/LogText.php:57
-msgid "The scheduled licence check failed."
+msgid "The licence was checked."
 msgstr ""
 
 #: src/Admin/Screens/LogText.php:58
-msgid "A property went back to shadow mode because of the licence."
+msgid "An action of a screen failed; the reference is the one the screen showed."
 msgstr ""
 
 #: src/Admin/Screens/LogText.php:59
-msgid "A verified update is available."
+msgid "The licence key was removed."
 msgstr ""
 
 #: src/Admin/Screens/LogText.php:60
-msgid "An update package was verified."
+msgid "The scheduled licence check failed."
 msgstr ""
 
 #: src/Admin/Screens/LogText.php:61
-msgid "A downloaded update package was refused."
+msgid "A property went back to shadow mode because of the licence."
 msgstr ""
 
 #: src/Admin/Screens/LogText.php:62
-msgid "The information of an update was refused."
+msgid "A verified update is available."
 msgstr ""
 
 #: src/Admin/Screens/LogText.php:63
-msgid "The update server could not be reached."
+msgid "An update package was verified."
 msgstr ""
 
 #: src/Admin/Screens/LogText.php:64
-msgid "The update server did not answer with the release."
+msgid "A downloaded update package was refused."
 msgstr ""
 
 #: src/Admin/Screens/LogText.php:65
+msgid "The information of an update was refused."
+msgstr ""
+
+#: src/Admin/Screens/LogText.php:66
+msgid "The update server could not be reached."
+msgstr ""
+
+#: src/Admin/Screens/LogText.php:67
+msgid "The update server did not answer with the release."
+msgstr ""
+
+#: src/Admin/Screens/LogText.php:68
 msgid "A request to a server this channel may not reach was blocked."
 msgstr ""
 
@@ -6382,10 +6500,6 @@ msgstr ""
 msgid "Last answers of the month"
 msgstr ""
 
-#: templates/admin/ai/usage.php:44
-msgid "When (UTC)"
-msgstr ""
-
 #: templates/admin/ai/usage.php:45
 msgid "What for"
 msgstr ""
@@ -7299,8 +7413,10 @@ msgstr ""
 
 #. translators: %d: number of rows shown
 #: templates/admin/market/import.php:74
-msgid "The first %d valid rows"
-msgstr ""
+msgid "The first valid row"
+msgid_plural "The first %d valid rows"
+msgstr[0] ""
+msgstr[1] ""
 
 #: templates/admin/market/import.php:76 templates/admin/market/import.php:85
 msgid "Line"
@@ -10941,7 +11057,7 @@ msgstr ""
 
 #. translators: the name or the explanation of a setting of the rules
 #: src/Domain/Config/Schema.php
-msgid "A run reads and decides this many nights, from the property's today."
+msgid "A run reads and decides this many nights, from the property's today. More nights take more memory of the server: with 12 rooms, 60 nights take about 85 MB and 365 nights more than 200 MB, so on a host that gives PHP 128 MB keep it near 60."
 msgstr ""
 
 #. translators: the name or the explanation of a setting of the rules

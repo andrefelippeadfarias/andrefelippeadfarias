@@ -358,6 +358,7 @@ final class RunStack
             new PipelineRunExecutor($this->opener(), $this->runs(), $this->pipeline(), $this->licence()),
             $this->clock,
             $this->logger,
+            $this->db,
             fn (string $propertyId, int $runId, string $cause) => (new AlertRepository($this->db, $this->clock))->raise(
                 'run_stopped',
                 AlertRepository::WARNING,

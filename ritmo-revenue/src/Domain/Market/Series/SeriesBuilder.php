@@ -12,7 +12,7 @@ use Ritmo\Domain\Support\Num;
  * Measures every configured series on every stay: the stays that have enough competitor values
  * for a series get its percentiles.
  *
- * Reference: faixas_dono.construir. A stay counts for a series with at least
+ * Reference: the series builder of the reference market bands. A stay counts for a series with at least
  * market.min_competitors_per_stay values; its percentiles are Python's round of the percentile of
  * the values; stays are listed by check-in (ties keep the order they first appeared in). A stay
  * whose type is unknown (its nights have different types) is left out of every series.

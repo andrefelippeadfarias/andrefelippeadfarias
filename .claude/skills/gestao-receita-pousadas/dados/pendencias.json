@@ -1315,7 +1315,7 @@
       "responsavel": "skill",
       "desde": "2026-11-15",
       "urgencia": 2,
-      "texto": "Da rotina de 15/11 (PriceLabs sem calendário e recálculo falhando por 'Beds24 temporarily unavailable'): King Spa 7 04/12 estadia 1 (noite órfã; recusada 'Pricing data not available'); estadia 2 de 15/11/2027 nos 7 quartos (PriceLabs e Beds24); King Spa 2 27/11 estadia 1 no Beds24 (órfã, confirmar efetiva); proteção da Afrodite 12-14/01 no lugar da Regra J antiga (apagar + recalcular + regravar). Fazer na rotina com recálculo funcionando.",
+      "texto": "Da rotina de 15/11 (PriceLabs sem calendário e recálculo falhando por 'Beds24 temporarily unavailable'). Feito na rotina leve das 10:53 de 15/11: King Spa 7 04/12 e King Spa 2 27/11 com estadia 1 (PriceLabs e Beds24); King Spa 7 12/12 já estava no preço do plano. Falta: estadia 2 de 15/11/2027 nos 7 quartos (PriceLabs e Beds24; a auditoria de 12 meses da rotina completa gera) e a proteção da Afrodite 12-14/01 no lugar da Regra J antiga (apagar a regra antes do recálculo da manhã, recalcular e regravar).",
       "atualizado_em": "2026-11-15"
     }
   ],

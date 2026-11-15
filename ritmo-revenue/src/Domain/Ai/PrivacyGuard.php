@@ -157,11 +157,54 @@ final class PrivacyGuard
     }
 
     /**
-     * problem() for a text the person typed to the assistant, with the first-name checks too.
+     * problem() for a text the person typed to the assistant, with the first-name checks too: on the
+     * text, and also on the text without the names and codes of the data ($known), so a room's name
+     * between an article and a first name ("à hóspede do 101 Ana") never hides it. Every form only
+     * adds refusals.
+     *
+     * @param list<string> $known the labels and codes of the data sent (stripped())
      */
-    public static function requestProblem(string $text): ?string
+    public static function requestProblem(string $text, array $known = []): ?string
     {
-        return self::problem($text) ?? (self::nameIn($text, [self::FIRST_AND_SURNAME, self::FIRST_AFTER_ARTICLE]) ? self::NAME : null);
+        $problem = self::problem($text);
+        if ($problem !== null) {
+            return $problem;
+        }
+        $first = [self::FIRST_AND_SURNAME, self::FIRST_AFTER_ARTICLE];
+        if (self::nameIn($text, $first)) {
+            return self::NAME;
+        }
+        $known = array_values(array_filter(array_map('trim', $known), static fn (string $k): bool => $k !== ''));
+        if ($known !== []) {
+            usort($known, static fn (string $a, string $b): int => mb_strlen($b) <=> mb_strlen($a));
+            if (self::nameIn(str_ireplace($known, ' ', $text), $first)) {
+                return self::NAME;
+            }
+        }
+
+        return null;
+    }
+
+    /**
+     * The labels and codes in a data tree (values under "label", "code", "room_label" and
+     * "room_code", at any depth): what requestProblem() also takes out of the text.
+     *
+     * @param array<int|string, mixed> $data
+     *
+     * @return list<string>
+     */
+    public static function stripped(array $data): array
+    {
+        $out = [];
+        foreach ($data as $key => $value) {
+            if (in_array($key, ['label', 'code', 'room_label', 'room_code'], true) && (is_string($value) || is_int($value))) {
+                $out[] = (string) $value;
+            } elseif (is_array($value)) {
+                array_push($out, ...self::stripped($value));
+            }
+        }
+
+        return array_values(array_unique($out));
     }
 
     /**
@@ -348,11 +391,13 @@ final class PrivacyGuard
     }
 
     /**
+     * @param list<string> $known see requestProblem()
+     *
      * @throws AiStopped (privacy) when the person's text looks like guest data
      */
-    public static function assertRequestSendable(string $text): void
+    public static function assertRequestSendable(string $text, array $known = []): void
     {
-        $problem = self::requestProblem($text);
+        $problem = self::requestProblem($text, $known);
         if ($problem !== null) {
             throw new AiStopped(AiStopped::PRIVACY, 'Nothing was sent: the text looks like it carries guest data (an e-mail, a phone number, a document number or a guest\'s name). Refer to a booking by its id, and to a room whose name reads like a person by its code.', ['kind' => $problem]);
         }

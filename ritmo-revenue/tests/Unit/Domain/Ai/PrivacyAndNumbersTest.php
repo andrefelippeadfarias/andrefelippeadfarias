@@ -225,6 +225,12 @@ final class PrivacyAndNumbersTest extends TestCase
         foreach (["pedido do Carla\u{0303}o da reserva 4411", "pedido do irma\u{0303}o Carlos da reserva 4411"] as $nfd) {
             self::assertSame(PrivacyGuard::NAME, PrivacyGuard::requestProblem($nfd), 'NFD');
         }
+        // A room's name between an article and a first name never hides the first name.
+        $sandwich = ['rooms' => [['code' => 'Q101', 'label' => '101', 'base' => 300.0], ['code' => 'MST', 'label' => 'Master', 'base' => 400.0]], 'periods' => [['path' => 'p', 'label' => 'Natal', 'first' => '2026-12-24', 'last' => '2026-12-26', 'floor' => null]]];
+        foreach (['Subir 10% no Master e dar 5% de desconto à hóspede do 101 Ana', 'Desconto de 10% para a família do Master Pedro', 'Give a 10% discount to the Master John', 'Desconto no Natal para o natal Pedro'] as $text) {
+            self::assertSame(AiStopped::PRIVACY, $refused(static fn () => $builder->request($text, $sandwich, 'pt_BR')), $text);
+        }
+        self::assertNull($refused(static fn () => $builder->request('Subir 10% no Master e no 101 no Natal', $sandwich, 'pt_BR')));
         // A room code made of digits only is a code like any other.
         $digits = $builder->request('Subir 5% no Standard nas sextas de janeiro', ['rooms' => [['code' => '53712345678', 'label' => 'Standard', 'base' => 300.0]]], 'pt_BR');
         self::assertStringNotContainsString('53712345678', $digits->user);

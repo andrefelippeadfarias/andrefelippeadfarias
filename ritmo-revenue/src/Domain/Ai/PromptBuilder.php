@@ -94,7 +94,7 @@ final class PromptBuilder
         if (is_array($data['periods'] ?? null)) {
             $data['periods'] = array_values(array_filter($data['periods'], static fn (mixed $p): bool => !is_array($p) || !is_string($p['label'] ?? null) || PrivacyGuard::clearLabel($p['label'])));
         }
-        PrivacyGuard::assertRequestSendable($text);
+        PrivacyGuard::assertRequestSendable($text, PrivacyGuard::stripped($data));
         $catalogue = ($this->catalogue ?? RuleCatalogue::forRules())->text();
 
         return new AiRequest(

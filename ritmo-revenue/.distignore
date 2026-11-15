@@ -1,6 +1,8 @@
 # Left out of the distributed plugin package (the zip of milestone 5).
 # Internal planning document: it names the owner's properties.
 /docs/PLANO.md
+# The owner's own deployment guide (the switch from the current tool): not for customers.
+/docs/IMPLANTACAO.md
 # Tests and their fixtures (the parity preset and the frozen inputs carry the owner's data).
 /tests/
 # Development tools, scripts and local environments.

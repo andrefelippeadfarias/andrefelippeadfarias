@@ -10048,6 +10048,90 @@
    "gatilho_dias": 8,
    "gatilho_min_dias": 2,
    "nota": "F2 (Dia de semana (dom-qui)): régua com hidro medida em noite vizinha (12/01, 1 dia) (1 estadia), p50 R$ 651 público, p90 R$ 1883; ÷ 0.650 (Booking/enviado; ÷ 0.585 nos degraus de D7 ou menos); nunca abaixo do piso do dono. Gatilho de D7 sem venda nova: F1 (ou o piso do dono). Afrodite pelo prêmio dela e Balcony 10% abaixo (Regra G). Como desfazer: pedir 'Volte às ordens anteriores de 11/01/27'."
+  },
+  {
+   "id": "manual-2026-11-15-q7-2026-11-19",
+   "data": "2026-11-15",
+   "texto": "Mudança manual pela tela do PriceLabs (13/11 14:17 BRT, sem API): de 19 a 22/11, preço +10% sobre o recomendado, piso +10% sobre o mínimo do anúncio e teto +10% sobre o máximo; a estadia mínima e as restrições de chegada/saída por data foram retiradas. Respeitada e congelada; o dono confirma se foi intencional.",
+   "quartos": [
+    "Q7"
+   ],
+   "de": "2026-11-19",
+   "ate": "2026-11-22",
+   "tipo": "manual",
+   "libera": []
+  },
+  {
+   "id": "manual-2026-11-15-double-2026-11-19",
+   "data": "2026-11-15",
+   "texto": "Mudança manual pela tela do PriceLabs (13/11 14:17 BRT, sem API): de 19 a 22/11, preço +10% sobre o recomendado, piso +10% sobre o mínimo do anúncio e teto +10% sobre o máximo; a estadia mínima e as restrições de chegada/saída por data foram retiradas. Respeitada e congelada; o dono confirma se foi intencional.",
+   "quartos": [
+    "Double"
+   ],
+   "de": "2026-11-19",
+   "ate": "2026-11-22",
+   "tipo": "manual",
+   "libera": []
+  },
+  {
+   "id": "manual-2026-11-15-afrodite-2026-11-19",
+   "data": "2026-11-15",
+   "texto": "Mudança manual pela tela do PriceLabs (13/11 14:17 BRT, sem API): de 19 a 22/11, preço +10% sobre o recomendado, piso +10% sobre o mínimo do anúncio e teto +10% sobre o máximo; a estadia mínima e as restrições de chegada/saída por data foram retiradas. Respeitada e congelada; o dono confirma se foi intencional.",
+   "quartos": [
+    "Afrodite"
+   ],
+   "de": "2026-11-19",
+   "ate": "2026-11-22",
+   "tipo": "manual",
+   "libera": []
+  },
+  {
+   "id": "manual-2026-11-15-q2-2026-11-19",
+   "data": "2026-11-15",
+   "texto": "Mudança manual pela tela do PriceLabs (13/11 14:17 BRT, sem API): de 19 a 22/11, preço +10% sobre o recomendado, piso +10% sobre o mínimo do anúncio e teto +10% sobre o máximo; a estadia mínima e as restrições de chegada/saída por data foram retiradas. Respeitada e congelada; o dono confirma se foi intencional.",
+   "quartos": [
+    "Q2"
+   ],
+   "de": "2026-11-19",
+   "ate": "2026-11-22",
+   "tipo": "manual",
+   "libera": []
+  },
+  {
+   "id": "manual-2026-11-15-vk7-2026-11-19",
+   "data": "2026-11-15",
+   "texto": "Mudança manual pela tela do PriceLabs (13/11 14:17 BRT, sem API): de 19 a 22/11, preço +10% sobre o recomendado, piso +10% sobre o mínimo do anúncio e teto +10% sobre o máximo; a estadia mínima e as restrições de chegada/saída por data foram retiradas. Respeitada e congelada; o dono confirma se foi intencional.",
+   "quartos": [
+    "VK7"
+   ],
+   "de": "2026-11-19",
+   "ate": "2026-11-22",
+   "tipo": "manual",
+   "libera": []
+  },
+  {
+   "id": "manual-2026-11-15-balcony-2026-11-19",
+   "data": "2026-11-15",
+   "texto": "Mudança manual pela tela do PriceLabs (13/11 14:17 BRT, sem API): de 19 a 22/11, preço +10% sobre o recomendado, piso +10% sobre o mínimo do anúncio e teto +10% sobre o máximo; a estadia mínima e as restrições de chegada/saída por data foram retiradas. Respeitada e congelada; o dono confirma se foi intencional.",
+   "quartos": [
+    "Balcony"
+   ],
+   "de": "2026-11-19",
+   "ate": "2026-11-22",
+   "tipo": "manual",
+   "libera": []
+  },
+  {
+   "id": "manual-2026-11-15-vk2-2026-11-19",
+   "data": "2026-11-15",
+   "texto": "Mudança manual pela tela do PriceLabs (13/11 14:17 BRT, sem API): de 19 a 22/11, preço +10% sobre o recomendado, piso +10% sobre o mínimo do anúncio e teto +10% sobre o máximo; a estadia mínima e as restrições de chegada/saída por data foram retiradas. Respeitada e congelada; o dono confirma se foi intencional.",
+   "quartos": [
+    "VK2"
+   ],
+   "de": "2026-11-19",
+   "ate": "2026-11-22",
+   "tipo": "manual",
+   "libera": []
   }
  ]
 }

@@ -48,7 +48,7 @@ php bin/package/build.php check-source || fail "the sources are not ready for a 
 VERSION="$(php bin/package/build.php version)"
 if git -C "$ROOT" rev-parse --is-inside-work-tree >/dev/null 2>&1; then
     COMMIT="$(git -C "$ROOT" rev-parse --short HEAD 2>/dev/null || echo none)"
-    CHANGED="$(git -C "$ROOT" status --porcelain -- . 2>/dev/null | grep -Ev '^.. (dist|\.wp-test|tools)/' | wc -l | tr -d ' ')"
+    CHANGED="$(git -C "$ROOT" status --porcelain -- . 2>/dev/null | wc -l | tr -d ' ')"
     if [ "$CHANGED" != "0" ]; then
         echo "note: $CHANGED file(s) differ from commit $COMMIT; the zip is built from the files as they are now."
     fi

@@ -5223,6 +5223,18 @@ Estadia de 2 noites e a regra de entrada/saída da Afrodite mantidas (conferido 
 
 **Sombra da flutuação:** leitura das 16:53 guardada (60 noites, 7 quartos), nada gravado.
 
+## 15/11/2026, 19:53 a 20:00 BRT — Rotina leve das 19:53: sem venda nem cancelamento, 3 reservas de hoje abaixo do esperado
+
+**Beds24 desde 16:48 BRT:** 0 novas, 0 canceladas, 5 alteradas (estadias de hoje e de 16-17/11 na King Spa 7 e na Panorâmica I, mudança de situação; nenhuma mexe em noite livre). **Segurança: 0 alertas.**
+
+**Abaixo do esperado (topo do relatório; nomes só no relatório ao dono):** King Spa 7 hoje, 1 noite, direta, R$ 400 de R$ 1.517 (26%), lançada pela recepção da Villa (95824793); Panorâmica I hoje, 1 noite, Airbnb, R$ 221 de R$ 562 (39%; valor do Airbnb alterado agora para R$ 270) (95546070); King Spa 7 15-17/11, 2 noites, Booking, R$ 676 de R$ 1.193 (57%) (95970795). O esperado usa o preço de agora, que subiu ao longo do dia; abaixo de 50% costuma ser lançamento. A skill não altera reservas: o dono decide.
+
+**Overbooking ainda aberto:** King Spa 7 amanhã 16/11 (−1 livre) e Panorâmica II 22/11 (−1 livre).
+
+**Preço:** nada a regravar. Nenhuma chamada ao PriceLabs nem à Booking (sem reserva, cancelamento ou alerta de segurança).
+
+**Sombra da flutuação:** leitura das 19:53 guardada (60 noites, 7 quartos), nada gravado.
+
 ## O que só pode ser feito na tela (passo a passo para você)
 
 1. **Safety Minimum Price → "Do Not Apply"** (Dynamic Pricing → Customizations → aba Groups → Edit no grupo Recanto dos Moinhos → All Customizations → Safety Minimum Price). Anote o valor atual antes.

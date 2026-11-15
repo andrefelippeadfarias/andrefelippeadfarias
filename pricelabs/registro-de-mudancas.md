@@ -5200,6 +5200,29 @@ Recálculo de conferência não feito (cota guardada para as vendas da tarde); a
 
 **Inventário do Beds24 (hoje a +60):** igual ao das 10:53, fora as duas estadias de 1 noite gravadas naquela rotina (King Spa 7 04/12 e King Spa 2 27/11, conferidas no Beds24). Nenhuma noite fechada sem reserva nova.
 
+## 15/11/2026, 16:53 a 17:17 BRT — Rotina leve das 16:53: venda da Panorâmica I em 04-05/12, escada do plano do dono subiu um degrau
+
+**Beds24 desde 13:48 BRT:** 1 nova (Panorâmica I 04→06/12, 2 noites, Booking, R$ 1.644), 1 cancelada (Panorâmica I hoje, 1 noite, direta, R$ 1.370; a noite continua esgotada no Beds24, 0 livres, então não reabriu e a proteção de hoje fica como está) e 11 alteradas (estadias de hoje em curso). **Segurança: 0 alertas.** **Abaixo do esperado: 0.**
+
+**Logs do PriceLabs:** só as nossas gravações (última no Recanto às 09:13 BRT, na Villa às 11:00 BRT); nenhuma mudança manual nova. Como nada foi gravado no Recanto depois da leitura das regras por data das 11:01, usei essas leituras (3 chamadas a menos); a da Panorâmica I foi relida agora e bateu.
+
+**Recálculo:** Panorâmica I às 16:55 (ok; cota 2 de 3 em 24 h, resta 1). Ocupação: 04/12 com 4/6 e 05/12 com 5/6.
+
+**Motor (só nas noites da venda):** pelo plano do dono de 09/11 (fins de semana: abertura R$ 911 público, +7% por unidade depois da metade), a Panorâmica I sobe um degrau em cada noite e a Afrodite acompanha 15% acima dela. Panorâmica II e Moinhos sem item (já dentro da ordem do Recanto).
+
+**Gravado (17:10 e 17:16 BRT), validado (0 erros, 2 avisos de estadia de sábado) e conferido pela resposta da API:**
+
+| Mudança | Antes | Depois | Como desfazer (pedir ao Claude) |
+|---|---|---|---|
+| Panorâmica I sex 04/12 | +8% da base (R$ 1.598) | +15% (R$ 1.695; 2 degraus, 4/6) | voltar a +8% |
+| Panorâmica I sáb 05/12 | +15% (R$ 1.702) | +23% (R$ 1.814; 3 degraus, 5/6) | voltar a +15% |
+| Afrodite sex 04/12 | −8% (R$ 1.840) | −2% (R$ 1.958; 15% acima da Panorâmica I) | voltar a −8% |
+| Afrodite sáb 05/12 | −2% (R$ 1.960) | +5% (R$ 2.094) | voltar a −2% |
+
+Estadia de 2 noites e a regra de entrada/saída da Afrodite mantidas (conferido na resposta). Passos registrados no histórico do motor. Recálculo de conferência guardado (último da cota da Panorâmica I até amanhã 08:06); os novos preços entram no envio de amanhã. Sem chamadas à Booking.
+
+**Sombra da flutuação:** leitura das 16:53 guardada (60 noites, 7 quartos), nada gravado.
+
 ## O que só pode ser feito na tela (passo a passo para você)
 
 1. **Safety Minimum Price → "Do Not Apply"** (Dynamic Pricing → Customizations → aba Groups → Edit no grupo Recanto dos Moinhos → All Customizations → Safety Minimum Price). Anote o valor atual antes.

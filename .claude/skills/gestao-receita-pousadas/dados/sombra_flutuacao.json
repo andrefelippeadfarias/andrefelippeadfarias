@@ -1942,7 +1942,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 1},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 1},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 1},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 1}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 1},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 5}
    ],
    "Double": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 2},
@@ -1952,7 +1953,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 5},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 5},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 6},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 6}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 6},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 6}
    ],
    "Afrodite": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 0},
@@ -1962,7 +1964,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 1},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 1},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 1},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 1}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 1},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 1}
    ],
    "Q2": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 1},
@@ -1972,7 +1975,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 1},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 1},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 1},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 1}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 1},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 1}
    ],
    "VK7": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 7},
@@ -1982,7 +1986,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 7},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 7},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 7},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 7}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 7},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 7}
    ],
    "Balcony": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 1},
@@ -1992,7 +1997,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 2},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 2},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 2},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 2}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 2},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 1}
    ],
    "VK2": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 2},
@@ -2002,7 +2008,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 2},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 2},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 2},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 2}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 2},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 2}
    ]
   },
   "2026-11-16": {
@@ -2014,7 +2021,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 1},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 1},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 1},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 1}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 1},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 1}
    ],
    "Double": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 1},
@@ -2024,7 +2032,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 3},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 3},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 3},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 3}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 3},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 3}
    ],
    "Afrodite": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 0},
@@ -2034,7 +2043,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 1},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 1},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 1},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 1}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 1},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 1}
    ],
    "Q2": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 0},
@@ -2044,7 +2054,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 0},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 0},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 0},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 0}
    ],
    "VK7": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 7},
@@ -2054,7 +2065,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 7},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 7},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 7},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 7}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 7},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 7}
    ],
    "Balcony": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 0},
@@ -2064,7 +2076,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 1},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 1},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 1},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 1}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 1},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 1}
    ],
    "VK2": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 2},
@@ -2074,7 +2087,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 2},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 2},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 2},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 2}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 2},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 2}
    ]
   },
   "2026-11-17": {
@@ -2086,7 +2100,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 1},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 2},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 2},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 2}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 2},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 2}
    ],
    "Double": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 1},
@@ -2096,7 +2111,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 1},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 1},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 1},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 1}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 1},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 1}
    ],
    "Afrodite": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 0},
@@ -2106,7 +2122,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 0},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 0},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 0},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 0}
    ],
    "Q2": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 0},
@@ -2116,7 +2133,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 0},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 0},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 0},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 0}
    ],
    "VK7": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 7},
@@ -2126,7 +2144,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 7},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 7},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 7},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 7}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 7},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 7}
    ],
    "Balcony": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 0},
@@ -2136,7 +2155,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 0},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 0},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 0},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 0}
    ],
    "VK2": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 2},
@@ -2146,7 +2166,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 2},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 2},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 2},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 2}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 2},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 2}
    ]
   },
   "2026-11-18": {
@@ -2158,7 +2179,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 2},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 3},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 3},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 3}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 3},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 3}
    ],
    "Double": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 6},
@@ -2168,7 +2190,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 6},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 6},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 6},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 6}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 6},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 6}
    ],
    "Afrodite": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 0},
@@ -2178,7 +2201,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 0},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 0},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 0},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 0}
    ],
    "Q2": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 0},
@@ -2188,7 +2212,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 0},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 0},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 0},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 0}
    ],
    "VK7": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 4},
@@ -2198,7 +2223,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 5},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 5},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 5},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 5}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 5},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 5}
    ],
    "Balcony": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 0},
@@ -2208,7 +2234,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 0},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 0},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 0},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 0}
    ],
    "VK2": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 1},
@@ -2218,7 +2245,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 1},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 1},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 1},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 1}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 1},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 1}
    ]
   },
   "2026-11-19": {
@@ -2230,7 +2258,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 1},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 1},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 1},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 1}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 1},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 1}
    ],
    "Double": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 5},
@@ -2240,7 +2269,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 5},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 5},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 5},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 5}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 5},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 5}
    ],
    "Afrodite": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 1},
@@ -2250,7 +2280,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 1},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 1},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 1},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 1}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 1},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 1}
    ],
    "Q2": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 0},
@@ -2260,7 +2291,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 0},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 0},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 0},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 0}
    ],
    "VK7": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 0},
@@ -2270,7 +2302,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 0},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 0},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 0},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 0}
    ],
    "Balcony": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 0},
@@ -2280,7 +2313,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 0},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 0},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 1},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 1}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 1},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 0}
    ],
    "VK2": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 1},
@@ -2290,7 +2324,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 1},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 1},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 1},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 1}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 1},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 1}
    ]
   },
   "2026-11-20": {
@@ -2302,7 +2337,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 5},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 4},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 4},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 4}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 4},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 4}
    ],
    "Double": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 6},
@@ -2312,7 +2348,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 6},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 6},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 6},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 6}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 6},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 6}
    ],
    "Afrodite": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 1},
@@ -2322,7 +2359,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 1},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 1},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 1},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 1}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 1},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 1}
    ],
    "Q2": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 2},
@@ -2332,7 +2370,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 2},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 1},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 1},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 1}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 1},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 2}
    ],
    "VK7": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 6},
@@ -2342,7 +2381,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 7},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 7},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 7},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 7}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 7},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 7}
    ],
    "Balcony": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 3},
@@ -2352,7 +2392,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 3},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 3},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 4},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 4}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 4},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 3}
    ],
    "VK2": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 2},
@@ -2362,7 +2403,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 2},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 2},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 2},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 2}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 2},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 2}
    ]
   },
   "2026-11-21": {
@@ -2374,7 +2416,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 5},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 4},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 4},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 4}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 4},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 4}
    ],
    "Double": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 6},
@@ -2384,7 +2427,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 6},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 6},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 6},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 6}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 6},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 6}
    ],
    "Afrodite": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 1},
@@ -2394,7 +2438,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 1},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 1},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 1},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 1}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 1},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 1}
    ],
    "Q2": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 2},
@@ -2404,7 +2449,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 2},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 1},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 1},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 1}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 1},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 2}
    ],
    "VK7": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 3},
@@ -2414,7 +2460,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 4},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 4},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 4},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 4}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 4},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 4}
    ],
    "Balcony": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 3},
@@ -2424,7 +2471,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 3},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 3},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 4},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 4}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 4},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 3}
    ],
    "VK2": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 1},
@@ -2434,7 +2482,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 1},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 1},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 1},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 1}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 1},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 1}
    ]
   },
   "2026-11-22": {
@@ -2446,7 +2495,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 1},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 1},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 1},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 1}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 1},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 1}
    ],
    "Double": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 4},
@@ -2456,7 +2506,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 4},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 4},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 4},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 4}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 4},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 4}
    ],
    "Afrodite": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 0},
@@ -2466,7 +2517,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 0},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 0},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 0},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 0}
    ],
    "Q2": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 1},
@@ -2476,7 +2528,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 1},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 1},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 1},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 1}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 1},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 2}
    ],
    "VK7": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 6},
@@ -2486,7 +2539,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 7},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 7},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 7},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 7}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 7},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 7}
    ],
    "Balcony": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 0},
@@ -2496,7 +2550,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 0},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 0},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 0},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 0}
    ],
    "VK2": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 2},
@@ -2506,7 +2561,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 2},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 2},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 2},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 2}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 2},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 2}
    ]
   },
   "2026-11-23": {
@@ -2518,7 +2574,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 4},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 4},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 4},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 4}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 4},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 4}
    ],
    "Double": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 3},
@@ -2528,7 +2585,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 3},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 3},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 3},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 3}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 3},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 3}
    ],
    "Afrodite": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 0},
@@ -2538,7 +2596,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 0},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 0},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 0},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 0}
    ],
    "Q2": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 1},
@@ -2548,7 +2607,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 1},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 1},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 1},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 1}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 1},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 1}
    ],
    "VK7": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 6},
@@ -2558,7 +2618,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 7},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 7},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 7},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 7}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 7},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 7}
    ],
    "Balcony": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 0},
@@ -2568,7 +2629,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 0},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 0},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 0},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 0}
    ],
    "VK2": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 1},
@@ -2578,7 +2640,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 1},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 1},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 1},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 1}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 1},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 1}
    ]
   },
   "2026-11-24": {
@@ -2590,7 +2653,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 2},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 2},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 2},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 2}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 2},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 2}
    ],
    "Double": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 3},
@@ -2600,7 +2664,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 3},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 3},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 3},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 3}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 3},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 3}
    ],
    "Afrodite": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 0},
@@ -2610,7 +2675,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 0},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 0},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 0},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 0}
    ],
    "Q2": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 2},
@@ -2620,7 +2686,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 2},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 2},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 2},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 2}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 2},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 2}
    ],
    "VK7": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 5},
@@ -2630,7 +2697,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 7},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 7},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 7},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 7}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 7},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 7}
    ],
    "Balcony": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 0},
@@ -2640,7 +2708,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 0},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 0},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 0},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 0}
    ],
    "VK2": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 1},
@@ -2650,7 +2719,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 1},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 1},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 1},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 1}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 1},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 1}
    ]
   },
   "2026-11-25": {
@@ -2662,7 +2732,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 3},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 3},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 3},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 3}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 3},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 3}
    ],
    "Double": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 1},
@@ -2672,7 +2743,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 1},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 1},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 1},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 1}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 1},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 1}
    ],
    "Afrodite": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 1},
@@ -2682,7 +2754,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 1},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 1},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 1},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 1}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 1},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 1}
    ],
    "Q2": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 1},
@@ -2692,7 +2765,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 1},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 1},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 1},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 1}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 1},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 1}
    ],
    "VK7": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 4},
@@ -2702,7 +2776,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 6},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 6},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 6},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 6}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 6},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 6}
    ],
    "Balcony": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 1},
@@ -2712,7 +2787,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 1},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 1},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 1},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 1}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 1},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 1}
    ],
    "VK2": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 2},
@@ -2722,7 +2798,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 2},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 2},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 2},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 2}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 2},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 1}
    ]
   },
   "2026-11-26": {
@@ -2734,7 +2811,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 1},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 1},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 1},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 1}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 1},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 1}
    ],
    "Double": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 0},
@@ -2744,7 +2822,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 0},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 0},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 0},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 0}
    ],
    "Afrodite": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 0},
@@ -2754,7 +2833,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 0},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 0},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 0},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 0}
    ],
    "Q2": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 1},
@@ -2764,7 +2844,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 1},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 1},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 1},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 1}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 1},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 1}
    ],
    "VK7": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 3},
@@ -2774,7 +2855,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 4},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 4},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 4},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 4}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 4},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 4}
    ],
    "Balcony": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 0},
@@ -2784,7 +2866,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 0},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 0},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 0},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 0}
    ],
    "VK2": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 2},
@@ -2794,7 +2877,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 2},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 2},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 2},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 2}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 2},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 1}
    ]
   },
   "2026-11-27": {
@@ -2806,7 +2890,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 2},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 2},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 2},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 2}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 2},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 2}
    ],
    "Double": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 4},
@@ -2816,7 +2901,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 4},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 4},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 4},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 4}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 4},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 5}
    ],
    "Afrodite": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 0},
@@ -2826,7 +2912,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 1},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 1},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 1},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 1}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 1},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 1}
    ],
    "Q2": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 0},
@@ -2836,7 +2923,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 0},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 0},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 0},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 0}
    ],
    "VK7": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 4},
@@ -2846,7 +2934,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 4},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 4},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 4},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 4}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 4},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 4}
    ],
    "Balcony": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 0},
@@ -2856,7 +2945,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 0},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 0},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 0},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 2}
    ],
    "VK2": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 0},
@@ -2866,7 +2956,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 1},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 1},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 1},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 1}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 1},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 1}
    ]
   },
   "2026-11-28": {
@@ -2878,7 +2969,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 2},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 2},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 2},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 2}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 2},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 2}
    ],
    "Double": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 4},
@@ -2888,7 +2980,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 4},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 4},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 4},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 4}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 4},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 5}
    ],
    "Afrodite": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 0},
@@ -2898,7 +2991,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 1},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 1},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 1},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 1}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 1},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 1}
    ],
    "Q2": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 0},
@@ -2908,7 +3002,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 0},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 0},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 0},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 0}
    ],
    "VK7": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 7},
@@ -2918,7 +3013,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 7},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 7},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 7},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 7}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 7},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 7}
    ],
    "Balcony": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 0},
@@ -2928,7 +3024,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 0},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 0},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 0},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 3}
    ],
    "VK2": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 0},
@@ -2938,7 +3035,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 2},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 2},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 2},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 2}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 2},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 2}
    ]
   },
   "2026-11-29": {
@@ -2950,7 +3048,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 0},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 0},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 0},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 0}
    ],
    "Double": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 4},
@@ -2960,7 +3059,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 4},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 4},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 4},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 4}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 4},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 4}
    ],
    "Afrodite": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 0},
@@ -2970,7 +3070,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 0},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 0},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 0},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 0}
    ],
    "Q2": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 0},
@@ -2980,7 +3081,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 0},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 0},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 0},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 0}
    ],
    "VK7": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 6},
@@ -2990,7 +3092,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 7},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 7},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 7},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 7}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 7},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 7}
    ],
    "Balcony": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 0},
@@ -3000,7 +3103,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 0},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 0},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 0},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 2}
    ],
    "VK2": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 2},
@@ -3010,7 +3114,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 2},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 2},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 2},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 2}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 2},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 2}
    ]
   },
   "2026-11-30": {
@@ -3022,7 +3127,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 1},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 1},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 1},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 1}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 1},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 1}
    ],
    "Double": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 1},
@@ -3032,7 +3138,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 1},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 1},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 1},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 1}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 1},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 1}
    ],
    "Afrodite": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 1},
@@ -3042,7 +3149,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 1},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 1},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 1},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 1}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 1},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 1}
    ],
    "Q2": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 1},
@@ -3052,7 +3160,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 1},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 1},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 1},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 1}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 1},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 1}
    ],
    "VK7": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 3},
@@ -3062,7 +3171,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 4},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 4},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 4},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 4}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 4},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 4}
    ],
    "Balcony": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 0},
@@ -3072,7 +3182,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 0},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 0},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 0},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 0}
    ],
    "VK2": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 1},
@@ -3082,7 +3193,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 1},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 1},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 1},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 1}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 1},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 1}
    ]
   },
   "2026-12-01": {
@@ -3094,7 +3206,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 1},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 1},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 1},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 1}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 1},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 1}
    ],
    "Double": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 1},
@@ -3104,7 +3217,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 1},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 1},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 1},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 1}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 1},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 1}
    ],
    "Afrodite": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 1},
@@ -3114,7 +3228,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 1},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 1},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 1},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 1}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 1},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 1}
    ],
    "Q2": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 2},
@@ -3124,7 +3239,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 2},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 2},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 2},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 2}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 2},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 2}
    ],
    "VK7": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 1},
@@ -3134,7 +3250,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 1},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 2},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 2},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 2}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 2},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 2}
    ],
    "Balcony": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 0},
@@ -3144,7 +3261,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 0},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 0},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 0},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 0}
    ],
    "VK2": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 0},
@@ -3154,7 +3272,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 0},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 0},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 0},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 0}
    ]
   },
   "2026-12-02": {
@@ -3166,7 +3285,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 0},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 0},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 0},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 0}
    ],
    "Double": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 1},
@@ -3176,7 +3296,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 1},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 1},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 1},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 1}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 1},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 1}
    ],
    "Afrodite": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 1},
@@ -3186,7 +3307,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 1},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 1},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 1},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 1}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 1},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 1}
    ],
    "Q2": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 0},
@@ -3196,7 +3318,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 0},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 0},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 0},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 0}
    ],
    "VK7": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 2},
@@ -3206,7 +3329,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 2},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 2},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 2},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 2}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 2},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 2}
    ],
    "Balcony": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 0},
@@ -3216,7 +3340,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 0},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 0},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 0},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 0}
    ],
    "VK2": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 0},
@@ -3226,7 +3351,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 0},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 0},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 0},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 0}
    ]
   },
   "2026-12-03": {
@@ -3238,7 +3364,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 0},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 0},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 0},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 0}
    ],
    "Double": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 0},
@@ -3248,7 +3375,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 0},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 0},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 0},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 0}
    ],
    "Afrodite": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 0},
@@ -3258,7 +3386,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 0},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 0},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 0},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 0}
    ],
    "Q2": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 0},
@@ -3268,7 +3397,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 0},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 0},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 0},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 1}
    ],
    "VK7": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 1},
@@ -3278,7 +3408,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 1},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 1},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 1},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 1}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 1},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 1}
    ],
    "Balcony": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 0},
@@ -3288,7 +3419,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 0},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 0},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 0},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 0}
    ],
    "VK2": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 1},
@@ -3298,7 +3430,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 1},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 1},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 1},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 1}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 1},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 1}
    ]
   },
   "2026-12-04": {
@@ -3310,7 +3443,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 3},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 3},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 3},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 4}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 4},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 4}
    ],
    "Double": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 2},
@@ -3320,7 +3454,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 2},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 2},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 2},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 3}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 3},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 4}
    ],
    "Afrodite": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 0},
@@ -3330,7 +3465,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 0},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 0},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 0},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 0}
    ],
    "Q2": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 0},
@@ -3340,7 +3476,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 0},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 0},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 0},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 2}
    ],
    "VK7": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 1},
@@ -3350,7 +3487,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 2},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 2},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 2},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 2}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 2},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 3}
    ],
    "Balcony": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 1},
@@ -3360,7 +3498,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 2},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 2},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 2},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 2}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 2},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 2}
    ],
    "VK2": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 2},
@@ -3370,7 +3509,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 2},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 2},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 2},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 2}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 2},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 2}
    ]
   },
   "2026-12-05": {
@@ -3382,7 +3522,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 3},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 3},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 3},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 4}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 4},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 4}
    ],
    "Double": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 3},
@@ -3392,7 +3533,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 3},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 3},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 3},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 4}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 4},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 5}
    ],
    "Afrodite": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 0},
@@ -3402,7 +3544,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 0},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 0},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 0},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 0}
    ],
    "Q2": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 0},
@@ -3412,7 +3555,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 0},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 0},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 0},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 2}
    ],
    "VK7": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 5},
@@ -3422,7 +3566,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 6},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 6},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 6},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 6}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 6},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 7}
    ],
    "Balcony": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 1},
@@ -3432,7 +3577,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 2},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 2},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 2},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 2}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 2},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 2}
    ],
    "VK2": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 2},
@@ -3442,7 +3588,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 2},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 2},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 2},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 2}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 2},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 2}
    ]
   },
   "2026-12-06": {
@@ -3454,7 +3601,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 4},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 4},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 3},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 3}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 3},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 3}
    ],
    "Double": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 1},
@@ -3464,7 +3612,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 1},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 1},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 1},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 1}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 1},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 1}
    ],
    "Afrodite": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 0},
@@ -3474,7 +3623,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 0},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 0},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 0},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 0}
    ],
    "Q2": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 0},
@@ -3484,7 +3634,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 0},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 0},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 0},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 0}
    ],
    "VK7": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 5},
@@ -3494,7 +3645,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 6},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 6},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 6},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 6}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 6},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 7}
    ],
    "Balcony": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 0},
@@ -3504,7 +3656,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 0},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 0},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 0},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 0}
    ],
    "VK2": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 2},
@@ -3514,7 +3667,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 2},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 2},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 2},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 2}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 2},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 2}
    ]
   },
   "2026-12-07": {
@@ -3526,7 +3680,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 3},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 3},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 2},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 2}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 2},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 2}
    ],
    "Double": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 1},
@@ -3536,7 +3691,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 1},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 1},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 1},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 1}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 1},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 1}
    ],
    "Afrodite": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 0},
@@ -3546,7 +3702,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 0},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 0},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 0},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 0}
    ],
    "Q2": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 0},
@@ -3556,7 +3713,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 0},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 0},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 0},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 0}
    ],
    "VK7": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 5},
@@ -3566,7 +3724,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 5},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 5},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 5},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 5}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 5},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 5}
    ],
    "Balcony": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 0},
@@ -3576,7 +3735,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 0},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 0},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 0},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 0}
    ],
    "VK2": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 1},
@@ -3586,7 +3746,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 1},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 1},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 1},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 1}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 1},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 1}
    ]
   },
   "2026-12-08": {
@@ -3598,7 +3759,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 0},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 0},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 0},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 0}
    ],
    "Double": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 1},
@@ -3608,7 +3770,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 1},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 1},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 1},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 1}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 1},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 1}
    ],
    "Afrodite": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 0},
@@ -3618,7 +3781,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 0},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 0},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 0},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 0}
    ],
    "Q2": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 0},
@@ -3628,7 +3792,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 0},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 0},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 0},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 0}
    ],
    "VK7": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 2},
@@ -3638,7 +3803,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 2},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 2},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 2},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 2}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 2},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 2}
    ],
    "Balcony": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 0},
@@ -3648,7 +3814,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 0},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 0},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 0},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 0}
    ],
    "VK2": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 0},
@@ -3658,7 +3825,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 0},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 0},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 0},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 0}
    ]
   },
   "2026-12-09": {
@@ -3670,7 +3838,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 0},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 0},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 0},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 0}
    ],
    "Double": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 0},
@@ -3680,7 +3849,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 0},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 0},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 0},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 0}
    ],
    "Afrodite": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 0},
@@ -3690,7 +3860,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 0},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 0},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 0},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 0}
    ],
    "Q2": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 0},
@@ -3700,7 +3871,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 0},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 0},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 0},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 0}
    ],
    "VK7": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 2},
@@ -3710,7 +3882,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 2},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 2},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 2},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 2}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 2},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 2}
    ],
    "Balcony": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 0},
@@ -3720,7 +3893,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 0},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 0},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 0},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 0}
    ],
    "VK2": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 0},
@@ -3730,7 +3904,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 0},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 0},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 0},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 0}
    ]
   },
   "2026-12-10": {
@@ -3742,7 +3917,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 0},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 0},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 0},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 0}
    ],
    "Double": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 0},
@@ -3752,7 +3928,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 0},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 0},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 0},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 0}
    ],
    "Afrodite": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 0},
@@ -3762,7 +3939,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 0},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 0},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 0},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 0}
    ],
    "Q2": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 0},
@@ -3772,7 +3950,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 0},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 0},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 0},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 0}
    ],
    "VK7": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 2},
@@ -3782,7 +3961,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 2},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 2},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 2},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 2}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 2},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 2}
    ],
    "Balcony": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 0},
@@ -3792,7 +3972,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 0},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 0},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 0},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 0}
    ],
    "VK2": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 0},
@@ -3802,7 +3983,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 0},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 0},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 0},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 0}
    ]
   },
   "2026-12-11": {
@@ -3814,7 +3996,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 0},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 0},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 0},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 0}
    ],
    "Double": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 2},
@@ -3824,7 +4007,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 2},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 2},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 2},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 2}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 2},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 2}
    ],
    "Afrodite": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 1},
@@ -3834,7 +4018,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 1},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 1},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 1},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 1}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 1},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 1}
    ],
    "Q2": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 0},
@@ -3844,7 +4029,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 0},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 0},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 0},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 0}
    ],
    "VK7": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 1},
@@ -3854,7 +4040,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 1},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 1},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 2},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 2}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 2},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 2}
    ],
    "Balcony": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 0},
@@ -3864,7 +4051,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 0},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 0},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 0},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 0}
    ],
    "VK2": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 0},
@@ -3874,7 +4062,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 0},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 0},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 0},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 0}
    ]
   },
   "2026-12-12": {
@@ -3886,7 +4075,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 0},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 0},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 0},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 0}
    ],
    "Double": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 2},
@@ -3896,7 +4086,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 2},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 2},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 2},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 2}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 2},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 2}
    ],
    "Afrodite": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 1},
@@ -3906,7 +4097,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 1},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 1},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 1},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 1}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 1},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 1}
    ],
    "Q2": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 0},
@@ -3916,7 +4108,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 0},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 0},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 0},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 0}
    ],
    "VK7": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 6},
@@ -3926,7 +4119,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 5},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 5},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 6},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 6}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 6},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 6}
    ],
    "Balcony": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 0},
@@ -3936,7 +4130,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 0},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 0},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 0},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 0}
    ],
    "VK2": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 2},
@@ -3946,7 +4141,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 2},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 2},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 2},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 2}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 2},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 2}
    ]
   },
   "2026-12-13": {
@@ -3958,7 +4154,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 0},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 0},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 0},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 0}
    ],
    "Double": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 2},
@@ -3968,7 +4165,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 2},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 2},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 2},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 2}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 2},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 2}
    ],
    "Afrodite": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 1},
@@ -3978,7 +4176,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 1},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 1},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 1},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 1}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 1},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 1}
    ],
    "Q2": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 0},
@@ -3988,7 +4187,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 0},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 0},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 0},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 0}
    ],
    "VK7": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 5},
@@ -3998,7 +4198,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 5},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 5},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 5},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 5}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 5},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 5}
    ],
    "Balcony": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 0},
@@ -4008,7 +4209,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 0},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 0},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 0},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 0}
    ],
    "VK2": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 1},
@@ -4018,7 +4220,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 1},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 1},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 1},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 1}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 1},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 1}
    ]
   },
   "2026-12-14": {
@@ -4030,7 +4233,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 1},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 1},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 1},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 1}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 1},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 1}
    ],
    "Double": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 1},
@@ -4040,7 +4244,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 1},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 1},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 1},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 1}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 1},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 1}
    ],
    "Afrodite": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 1},
@@ -4050,7 +4255,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 1},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 1},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 1},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 1}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 1},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 1}
    ],
    "Q2": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 0},
@@ -4060,7 +4266,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 0},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 0},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 0},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 0}
    ],
    "VK7": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 2},
@@ -4070,7 +4277,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 3},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 3},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 3},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 3}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 3},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 3}
    ],
    "Balcony": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 0},
@@ -4080,7 +4288,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 0},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 0},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 0},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 0}
    ],
    "VK2": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 1},
@@ -4090,7 +4299,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 1},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 1},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 1},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 1}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 1},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 1}
    ]
   },
   "2026-12-15": {
@@ -4102,7 +4312,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 1},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 1},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 1},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 1}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 1},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 1}
    ],
    "Double": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 0},
@@ -4112,7 +4323,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 0},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 0},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 0},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 0}
    ],
    "Afrodite": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 0},
@@ -4122,7 +4334,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 0},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 0},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 0},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 0}
    ],
    "Q2": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 0},
@@ -4132,7 +4345,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 0},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 0},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 0},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 0}
    ],
    "VK7": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 3},
@@ -4142,7 +4356,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 3},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 3},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 3},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 3}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 3},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 3}
    ],
    "Balcony": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 0},
@@ -4152,7 +4367,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 0},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 0},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 0},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 0}
    ],
    "VK2": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 0},
@@ -4162,7 +4378,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 0},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 0},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 0},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 0}
    ]
   },
   "2026-12-16": {
@@ -4174,7 +4391,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 1},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 1},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 1},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 1}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 1},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 2}
    ],
    "Double": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 0},
@@ -4184,7 +4402,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 0},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 0},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 0},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 0}
    ],
    "Afrodite": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 0},
@@ -4194,7 +4413,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 0},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 0},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 0},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 0}
    ],
    "Q2": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 0},
@@ -4204,7 +4424,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 0},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 0},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 0},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 0}
    ],
    "VK7": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 4},
@@ -4214,7 +4435,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 4},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 4},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 4},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 4}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 4},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 4}
    ],
    "Balcony": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 0},
@@ -4224,7 +4446,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 0},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 0},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 0},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 0}
    ],
    "VK2": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 0},
@@ -4234,7 +4457,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 0},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 0},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 0},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 0}
    ]
   },
   "2026-12-17": {
@@ -4246,7 +4470,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 0},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 0},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 0},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 1}
    ],
    "Double": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 0},
@@ -4256,7 +4481,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 0},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 0},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 0},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 0}
    ],
    "Afrodite": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 0},
@@ -4266,7 +4492,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 0},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 0},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 0},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 0}
    ],
    "Q2": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 0},
@@ -4276,7 +4503,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 0},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 0},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 0},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 0}
    ],
    "VK7": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 3},
@@ -4286,7 +4514,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 3},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 3},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 3},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 3}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 3},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 3}
    ],
    "Balcony": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 0},
@@ -4296,7 +4525,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 0},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 0},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 0},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 0}
    ],
    "VK2": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 0},
@@ -4306,7 +4536,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 0},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 0},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 0},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 0}
    ]
   },
   "2026-12-18": {
@@ -4318,7 +4549,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 0},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 0},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 1},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 1}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 1},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 2}
    ],
    "Double": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 2},
@@ -4328,7 +4560,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 2},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 2},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 2},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 2}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 2},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 2}
    ],
    "Afrodite": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 0},
@@ -4338,7 +4571,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 0},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 0},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 0},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 0}
    ],
    "Q2": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 0},
@@ -4348,7 +4582,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 0},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 0},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 0},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 0}
    ],
    "VK7": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 1},
@@ -4358,7 +4593,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 1},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 1},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 1},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 1}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 1},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 1}
    ],
    "Balcony": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 0},
@@ -4368,7 +4604,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 0},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 0},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 0},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 0}
    ],
    "VK2": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 0},
@@ -4378,7 +4615,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 0},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 0},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 0},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 0}
    ]
   },
   "2026-12-19": {
@@ -4390,7 +4628,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 0},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 0},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 1},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 1}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 1},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 2}
    ],
    "Double": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 2},
@@ -4400,7 +4639,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 2},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 2},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 2},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 2}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 2},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 2}
    ],
    "Afrodite": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 0},
@@ -4410,7 +4650,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 0},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 0},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 0},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 0}
    ],
    "Q2": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 0},
@@ -4420,7 +4661,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 0},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 0},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 0},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 0}
    ],
    "VK7": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 2},
@@ -4430,7 +4672,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 2},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 2},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 2},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 2}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 2},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 2}
    ],
    "Balcony": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 0},
@@ -4440,7 +4683,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 0},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 0},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 0},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 0}
    ],
    "VK2": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 0},
@@ -4450,7 +4694,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 0},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 0},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 0},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 0}
    ]
   },
   "2026-12-20": {
@@ -4462,7 +4707,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 0},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 0},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 0},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 0}
    ],
    "Double": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 2},
@@ -4472,7 +4718,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 2},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 2},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 2},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 2}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 2},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 2}
    ],
    "Afrodite": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 0},
@@ -4482,7 +4729,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 0},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 0},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 0},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 0}
    ],
    "Q2": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 0},
@@ -4492,7 +4740,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 0},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 0},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 0},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 0}
    ],
    "VK7": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 1},
@@ -4502,7 +4751,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 2},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 2},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 2},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 2}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 2},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 2}
    ],
    "Balcony": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 0},
@@ -4512,7 +4762,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 0},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 0},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 0},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 0}
    ],
    "VK2": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 2},
@@ -4522,7 +4773,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 2},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 2},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 2},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 2}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 2},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 2}
    ]
   },
   "2026-12-21": {
@@ -4534,7 +4786,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 0},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 0},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 0},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 0}
    ],
    "Double": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 2},
@@ -4544,7 +4797,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 2},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 2},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 2},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 2}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 2},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 2}
    ],
    "Afrodite": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 0},
@@ -4554,7 +4808,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 0},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 0},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 0},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 0}
    ],
    "Q2": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 0},
@@ -4564,7 +4819,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 0},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 0},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 0},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 0}
    ],
    "VK7": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 2},
@@ -4574,7 +4830,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 3},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 3},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 3},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 3}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 3},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 3}
    ],
    "Balcony": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 0},
@@ -4584,7 +4841,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 0},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 0},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 0},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 0}
    ],
    "VK2": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 2},
@@ -4594,7 +4852,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 2},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 2},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 2},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 2}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 2},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 2}
    ]
   },
   "2026-12-22": {
@@ -4606,7 +4865,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 0},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 0},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 0},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 0}
    ],
    "Double": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 2},
@@ -4616,7 +4876,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 2},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 2},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 2},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 2}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 2},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 2}
    ],
    "Afrodite": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 0},
@@ -4626,7 +4887,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 0},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 0},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 0},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 0}
    ],
    "Q2": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 0},
@@ -4636,7 +4898,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 0},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 0},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 0},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 0}
    ],
    "VK7": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 2},
@@ -4646,7 +4909,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 2},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 2},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 2},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 2}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 2},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 2}
    ],
    "Balcony": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 0},
@@ -4656,7 +4920,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 0},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 0},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 0},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 0}
    ],
    "VK2": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 1},
@@ -4666,7 +4931,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 1},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 1},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 1},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 1}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 1},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 1}
    ]
   },
   "2026-12-23": {
@@ -4678,7 +4944,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 0},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 0},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 0},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 0}
    ],
    "Double": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 1},
@@ -4688,7 +4955,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 1},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 1},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 1},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 1}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 1},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 1}
    ],
    "Afrodite": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 0},
@@ -4698,7 +4966,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 0},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 0},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 0},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 0}
    ],
    "Q2": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 0},
@@ -4708,7 +4977,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 0},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 0},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 0},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 0}
    ],
    "VK7": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 2},
@@ -4718,7 +4988,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 2},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 2},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 2},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 2}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 2},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 2}
    ],
    "Balcony": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 0},
@@ -4728,7 +4999,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 0},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 0},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 0},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 0}
    ],
    "VK2": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 1},
@@ -4738,7 +5010,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 1},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 1},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 1},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 1}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 1},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 1}
    ]
   },
   "2026-12-24": {
@@ -4750,7 +5023,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 0},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 0},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 0},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 0}
    ],
    "Double": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 1},
@@ -4760,7 +5034,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 1},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 1},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 1},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 1}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 1},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 1}
    ],
    "Afrodite": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 0},
@@ -4770,7 +5045,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 0},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 0},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 0},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 0}
    ],
    "Q2": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 0},
@@ -4780,7 +5056,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 0},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 0},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 0},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 0}
    ],
    "VK7": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 1},
@@ -4790,7 +5067,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 1},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 1},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 1},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 1}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 1},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 1}
    ],
    "Balcony": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 4},
@@ -4800,7 +5078,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 4},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 4},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 4},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 4}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 4},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 4}
    ],
    "VK2": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 0},
@@ -4810,7 +5089,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 0},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 0},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 0},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 0}
    ]
   },
   "2026-12-25": {
@@ -4822,7 +5102,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 0},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 0},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 0},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 0}
    ],
    "Double": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 1},
@@ -4832,7 +5113,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 1},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 1},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 1},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 1}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 1},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 1}
    ],
    "Afrodite": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 0},
@@ -4842,7 +5124,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 0},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 0},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 0},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 0}
    ],
    "Q2": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 0},
@@ -4852,7 +5135,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 0},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 0},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 0},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 0}
    ],
    "VK7": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 1},
@@ -4862,7 +5146,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 1},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 1},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 1},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 1}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 1},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 1}
    ],
    "Balcony": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 0},
@@ -4872,7 +5157,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 0},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 0},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 0},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 0}
    ],
    "VK2": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 0},
@@ -4882,7 +5168,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 0},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 0},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 0},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 0}
    ]
   },
   "2026-12-26": {
@@ -4894,7 +5181,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 0},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 0},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 0},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 0}
    ],
    "Double": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 1},
@@ -4904,7 +5192,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 1},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 1},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 1},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 1}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 1},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 1}
    ],
    "Afrodite": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 0},
@@ -4914,7 +5203,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 0},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 0},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 0},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 0}
    ],
    "Q2": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 0},
@@ -4924,7 +5214,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 0},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 0},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 0},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 0}
    ],
    "VK7": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 0},
@@ -4934,7 +5225,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 0},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 0},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 0},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 0}
    ],
    "Balcony": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 0},
@@ -4944,7 +5236,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 0},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 0},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 0},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 0}
    ],
    "VK2": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 0},
@@ -4954,7 +5247,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 0},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 0},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 0},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 0}
    ]
   },
   "2026-12-27": {
@@ -4966,7 +5260,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 0},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 0},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 0},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 0}
    ],
    "Double": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 0},
@@ -4976,7 +5271,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 0},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 0},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 0},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 1}
    ],
    "Afrodite": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 0},
@@ -4986,7 +5282,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 0},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 0},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 0},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 0}
    ],
    "Q2": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 0},
@@ -4996,7 +5293,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 0},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 0},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 0},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 0}
    ],
    "VK7": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 0},
@@ -5006,7 +5304,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 0},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 0},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 0},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 0}
    ],
    "Balcony": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 0},
@@ -5016,7 +5315,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 0},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 0},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 0},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 0}
    ],
    "VK2": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 0},
@@ -5026,7 +5326,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 0},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 0},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 0},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 0}
    ]
   },
   "2026-12-28": {
@@ -5038,7 +5339,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 0},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 0},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 0},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 0}
    ],
    "Double": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 0},
@@ -5048,7 +5350,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 0},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 0},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 0},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 0}
    ],
    "Afrodite": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 0},
@@ -5058,7 +5361,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 0},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 0},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 0},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 0}
    ],
    "Q2": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 0},
@@ -5068,7 +5372,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 0},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 0},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 0},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 0}
    ],
    "VK7": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 1},
@@ -5078,7 +5383,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 2},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 2},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 2},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 2}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 2},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 2}
    ],
    "Balcony": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 0},
@@ -5088,7 +5394,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 0},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 0},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 0},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 0}
    ],
    "VK2": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 0},
@@ -5098,7 +5405,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 0},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 0},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 0},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 0}
    ]
   },
   "2026-12-29": {
@@ -5110,7 +5418,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 0},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 0},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 0},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 0}
    ],
    "Double": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 0},
@@ -5120,7 +5429,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 0},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 0},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 0},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 0}
    ],
    "Afrodite": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 0},
@@ -5130,7 +5440,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 0},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 0},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 0},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 0}
    ],
    "Q2": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 0},
@@ -5140,7 +5451,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 0},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 0},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 0},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 0}
    ],
    "VK7": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 2},
@@ -5150,7 +5462,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 2},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 2},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 2},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 2}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 2},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 2}
    ],
    "Balcony": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 0},
@@ -5160,7 +5473,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 0},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 0},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 0},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 0}
    ],
    "VK2": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 0},
@@ -5170,7 +5484,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 0},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 0},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 0},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 0}
    ]
   },
   "2026-12-30": {
@@ -5182,7 +5497,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 4},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 4},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 4},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 4}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 4},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 4}
    ],
    "Double": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 0},
@@ -5192,7 +5508,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 0},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 0},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 0},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 0}
    ],
    "Afrodite": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 0},
@@ -5202,7 +5519,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 0},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 0},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 0},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 0}
    ],
    "Q2": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 0},
@@ -5212,7 +5530,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 0},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 0},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 0},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 0}
    ],
    "VK7": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 2},
@@ -5222,7 +5541,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 3},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 3},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 3},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 3}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 3},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 3}
    ],
    "Balcony": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 1},
@@ -5232,7 +5552,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 1},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 1},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 1},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 1}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 1},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 1}
    ],
    "VK2": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 1},
@@ -5242,7 +5563,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 1},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 1},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 1},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 1}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 1},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 1}
    ]
   },
   "2026-12-31": {
@@ -5254,7 +5576,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 5},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 5},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 5},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 5}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 5},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 5}
    ],
    "Double": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 3},
@@ -5264,7 +5587,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 3},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 3},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 3},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 3}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 3},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 3}
    ],
    "Afrodite": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 0},
@@ -5274,7 +5598,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 0},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 0},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 0},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 0}
    ],
    "Q2": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 1},
@@ -5284,7 +5609,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 1},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 1},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 1},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 1}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 1},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 1}
    ],
    "VK7": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 3},
@@ -5294,7 +5620,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 4},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 4},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 4},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 4}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 4},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 4}
    ],
    "Balcony": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 5},
@@ -5304,7 +5631,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 5},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 5},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 5},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 5}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 5},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 5}
    ],
    "VK2": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 1},
@@ -5314,7 +5642,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 1},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 1},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 1},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 1}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 1},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 1}
    ]
   },
   "2027-01-01": {
@@ -5326,7 +5655,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 3},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 3},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 3},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 3}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 3},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 3}
    ],
    "Double": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 2},
@@ -5336,7 +5666,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 2},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 2},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 2},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 2}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 2},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 2}
    ],
    "Afrodite": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 0},
@@ -5346,7 +5677,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 0},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 0},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 0},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 0}
    ],
    "Q2": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 0},
@@ -5356,7 +5688,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 0},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 0},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 0},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 0}
    ],
    "VK7": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 2},
@@ -5366,7 +5699,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 2},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 2},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 2},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 2}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 2},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 2}
    ],
    "Balcony": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 1},
@@ -5376,7 +5710,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 1},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 1},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 1},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 1}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 1},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 1}
    ],
    "VK2": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 0},
@@ -5386,7 +5721,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 0},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 0},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 0},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 0}
    ]
   },
   "2027-01-02": {
@@ -5398,7 +5734,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 1},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 1},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 1},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 1}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 1},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 1}
    ],
    "Double": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 2},
@@ -5408,7 +5745,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 2},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 2},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 2},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 2}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 2},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 2}
    ],
    "Afrodite": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 0},
@@ -5418,7 +5756,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 0},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 0},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 0},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 0}
    ],
    "Q2": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 0},
@@ -5428,7 +5767,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 0},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 0},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 0},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 0}
    ],
    "VK7": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 1},
@@ -5438,7 +5778,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 1},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 1},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 1},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 1}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 1},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 1}
    ],
    "Balcony": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 0},
@@ -5448,7 +5789,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 0},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 0},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 0},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 0}
    ],
    "VK2": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 0},
@@ -5458,7 +5800,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 0},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 0},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 0},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 0}
    ]
   },
   "2027-01-03": {
@@ -5470,7 +5813,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 0},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 0},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 0},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 0}
    ],
    "Double": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 0},
@@ -5480,7 +5824,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 0},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 0},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 0},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 0}
    ],
    "Afrodite": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 1},
@@ -5490,7 +5835,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 1},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 1},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 1},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 1}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 1},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 1}
    ],
    "Q2": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 1},
@@ -5500,7 +5846,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 1},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 1},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 1},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 1}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 1},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 1}
    ],
    "VK7": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 1},
@@ -5510,7 +5857,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 1},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 1},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 1},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 1}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 1},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 1}
    ],
    "Balcony": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 0},
@@ -5520,7 +5868,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 0},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 0},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 0},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 0}
    ],
    "VK2": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 0},
@@ -5530,7 +5879,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 0},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 0},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 0},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 0}
    ]
   },
   "2027-01-04": {
@@ -5542,7 +5892,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 0},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 0},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 0},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 0}
    ],
    "Double": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 1},
@@ -5552,7 +5903,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 1},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 1},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 1},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 1}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 1},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 1}
    ],
    "Afrodite": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 1},
@@ -5562,7 +5914,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 1},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 1},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 1},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 1}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 1},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 1}
    ],
    "Q2": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 1},
@@ -5572,7 +5925,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 1},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 1},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 1},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 1}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 1},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 1}
    ],
    "VK7": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 1},
@@ -5582,7 +5936,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 1},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 1},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 1},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 1}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 1},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 1}
    ],
    "Balcony": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 0},
@@ -5592,7 +5947,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 0},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 0},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 0},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 0}
    ],
    "VK2": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 0},
@@ -5602,7 +5958,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 0},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 0},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 0},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 0}
    ]
   },
   "2027-01-05": {
@@ -5614,7 +5971,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 0},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 0},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 0},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 0}
    ],
    "Double": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 1},
@@ -5624,7 +5982,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 1},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 1},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 1},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 1}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 1},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 1}
    ],
    "Afrodite": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 1},
@@ -5634,7 +5993,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 1},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 1},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 1},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 1}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 1},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 1}
    ],
    "Q2": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 0},
@@ -5644,7 +6004,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 0},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 0},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 0},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 0}
    ],
    "VK7": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 1},
@@ -5654,7 +6015,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 1},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 1},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 1},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 1}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 1},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 1}
    ],
    "Balcony": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 0},
@@ -5664,7 +6026,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 0},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 0},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 0},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 0}
    ],
    "VK2": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 0},
@@ -5674,7 +6037,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 0},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 0},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 0},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 0}
    ]
   },
   "2027-01-06": {
@@ -5686,7 +6050,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 0},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 0},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 0},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 0}
    ],
    "Double": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 1},
@@ -5696,7 +6061,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 1},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 1},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 1},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 1}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 1},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 1}
    ],
    "Afrodite": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 0},
@@ -5706,7 +6072,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 0},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 0},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 0},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 0}
    ],
    "Q2": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 0},
@@ -5716,7 +6083,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 0},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 0},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 0},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 0}
    ],
    "VK7": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 0},
@@ -5726,7 +6094,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 0},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 0},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 0},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 0}
    ],
    "Balcony": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 0},
@@ -5736,7 +6105,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 0},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 0},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 0},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 0}
    ],
    "VK2": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 1},
@@ -5746,7 +6116,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 1},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 1},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 1},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 1}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 1},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 1}
    ]
   },
   "2027-01-07": {
@@ -5758,7 +6129,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 0},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 0},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 0},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 0}
    ],
    "Double": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 1},
@@ -5768,7 +6140,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 1},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 1},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 1},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 1}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 1},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 1}
    ],
    "Afrodite": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 0},
@@ -5778,7 +6151,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 0},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 0},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 0},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 0}
    ],
    "Q2": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 0},
@@ -5788,7 +6162,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 0},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 0},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 0},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 0}
    ],
    "VK7": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 0},
@@ -5798,7 +6173,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 0},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 0},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 0},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 0}
    ],
    "Balcony": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 0},
@@ -5808,7 +6184,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 0},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 0},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 0},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 0}
    ],
    "VK2": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 1},
@@ -5818,7 +6195,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 1},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 1},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 1},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 1}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 1},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 1}
    ]
   },
   "2027-01-08": {
@@ -5830,7 +6208,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 0},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 0},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 0},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 0}
    ],
    "Double": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 0},
@@ -5840,7 +6219,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 0},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 0},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 0},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 0}
    ],
    "Afrodite": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 0},
@@ -5850,7 +6230,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 0},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 0},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 0},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 0}
    ],
    "Q2": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 0},
@@ -5860,7 +6241,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 0},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 0},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 0},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 0}
    ],
    "VK7": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 0},
@@ -5870,7 +6252,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 0},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 0},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 0},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 0}
    ],
    "Balcony": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 0},
@@ -5880,7 +6263,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 0},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 0},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 0},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 0}
    ],
    "VK2": [
     {"lido_em": "2026-11-10T20:22:26Z", "vendidas": 1},
@@ -5890,7 +6274,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 1},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 1},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 1},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 1}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 1},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 1}
    ]
   },
   "2027-01-09": {
@@ -5900,7 +6285,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 0},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 0},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 0},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 0}
    ],
    "Double": [
     {"lido_em": "2026-11-11T10:54:45Z", "vendidas": 0},
@@ -5908,7 +6294,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 0},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 0},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 0},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 0}
    ],
    "Afrodite": [
     {"lido_em": "2026-11-11T10:54:45Z", "vendidas": 0},
@@ -5916,7 +6303,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 0},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 0},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 0},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 0}
    ],
    "Q2": [
     {"lido_em": "2026-11-11T10:54:45Z", "vendidas": 0},
@@ -5924,7 +6312,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 0},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 0},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 0},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 0}
    ],
    "VK7": [
     {"lido_em": "2026-11-11T10:54:45Z", "vendidas": 0},
@@ -5932,7 +6321,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 0},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 0},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 0},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 0}
    ],
    "Balcony": [
     {"lido_em": "2026-11-11T10:54:45Z", "vendidas": 0},
@@ -5940,7 +6330,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 0},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 0},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 0},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 0}
    ],
    "VK2": [
     {"lido_em": "2026-11-11T10:54:45Z", "vendidas": 0},
@@ -5948,7 +6339,8 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 0},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 0},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 0},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 0}
    ]
   },
   "2027-01-10": {
@@ -5956,66 +6348,126 @@
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 0},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 0},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 0},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 0}
    ],
    "Double": [
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 0},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 0},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 0},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 0}
    ],
    "Afrodite": [
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 0},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 0},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 0},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 0}
    ],
    "Q2": [
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 0},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 0},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 0},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 0}
    ],
    "VK7": [
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 0},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 0},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 0},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 0}
    ],
    "Balcony": [
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 0},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 0},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 0},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 0}
    ],
    "VK2": [
     {"lido_em": "2026-11-12T14:38:18Z", "vendidas": 0},
     {"lido_em": "2026-11-12T19:54:32Z", "vendidas": 0},
     {"lido_em": "2026-11-13T00:33:37Z", "vendidas": 0},
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 0}
    ]
   },
   "2027-01-11": {
    "Q7": [
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 1}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 1},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 1}
    ],
    "Double": [
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 0}
    ],
    "Afrodite": [
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 0}
    ],
    "Q2": [
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 0}
    ],
    "VK7": [
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 0}
    ],
    "Balcony": [
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 0},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 0}
    ],
    "VK2": [
-    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 1}
+    {"lido_em": "2026-11-13T10:58:35Z", "vendidas": 1},
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 1}
+   ]
+  },
+  "2027-01-12": {
+   "Q7": [
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 0}
+   ],
+   "Double": [
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 0}
+   ],
+   "Afrodite": [
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 1}
+   ],
+   "Q2": [
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 0}
+   ],
+   "VK7": [
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 1}
+   ],
+   "Balcony": [
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 0}
+   ],
+   "VK2": [
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 1}
+   ]
+  },
+  "2027-01-13": {
+   "Q7": [
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 0}
+   ],
+   "Double": [
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 0}
+   ],
+   "Afrodite": [
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 1}
+   ],
+   "Q2": [
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 0}
+   ],
+   "VK7": [
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 1}
+   ],
+   "Balcony": [
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 0}
+   ],
+   "VK2": [
+    {"lido_em": "2026-11-15T19:53:32Z", "vendidas": 0}
    ]
   }
  }

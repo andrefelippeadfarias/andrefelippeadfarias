@@ -511,6 +511,13 @@
    "em": "2026-11-15T14:01:28Z",
    "resultado": "ok",
    "registrado_em": "2026-11-15T14:01:28Z"
+  },
+  {
+   "quarto": "Double",
+   "em": "2026-11-15T19:55:06Z",
+   "resultado": "ok",
+   "id_ms": 1794772506883,
+   "registrado_em": "2026-11-15T19:55:15Z"
   }
  ]
 }

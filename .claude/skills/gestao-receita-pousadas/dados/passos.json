@@ -16177,6 +16177,58 @@
    "total": 16,
    "gravado_em": "2026-11-15T12:18:21+00:00",
    "chegou_ao_canal": false
+  },
+  {
+   "quarto": "Double",
+   "noite": "2026-12-04",
+   "de": 1598.0,
+   "para": 1695,
+   "direcao": "sobe",
+   "status": "plano",
+   "vendidas": 4,
+   "base": "quarto",
+   "total": 6,
+   "gravado_em": "2026-11-15T20:16:13+00:00",
+   "chegou_ao_canal": false
+  },
+  {
+   "quarto": "Afrodite",
+   "noite": "2026-12-04",
+   "de": 1840.0,
+   "para": 1958,
+   "direcao": "sobe",
+   "status": "plano",
+   "vendidas": 0,
+   "base": "quarto",
+   "total": 1,
+   "gravado_em": "2026-11-15T20:16:13+00:00",
+   "chegou_ao_canal": false
+  },
+  {
+   "quarto": "Double",
+   "noite": "2026-12-05",
+   "de": 1702.0,
+   "para": 1814,
+   "direcao": "sobe",
+   "status": "plano",
+   "vendidas": 5,
+   "base": "quarto",
+   "total": 6,
+   "gravado_em": "2026-11-15T20:16:13+00:00",
+   "chegou_ao_canal": false
+  },
+  {
+   "quarto": "Afrodite",
+   "noite": "2026-12-05",
+   "de": 1960.0,
+   "para": 2094,
+   "direcao": "sobe",
+   "status": "plano",
+   "vendidas": 0,
+   "base": "quarto",
+   "total": 1,
+   "gravado_em": "2026-11-15T20:16:13+00:00",
+   "chegou_ao_canal": false
   }
  ]
 }

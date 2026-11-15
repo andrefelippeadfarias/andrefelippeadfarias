@@ -1,6 +1,6 @@
 # Ritmo Revenue: guia do usuário
 
-Este guia é para quem cuida dos preços de uma pousada ou de um hotel pequeno. Ele explica, passo a passo, como instalar o plugin, conectar os seus sistemas, ver o que o plugin faria antes de deixá-lo gravar qualquer coisa, aprovar as mudanças, usar a chave de emergência, desfazer uma mudança, trazer os preços dos concorrentes e ler os relatórios.
+Este guia é para quem cuida dos preços de uma pousada ou de um hotel pequeno. Ele explica, passo a passo, como instalar o plugin, conectar os seus sistemas, ver o que o plugin faria antes de deixá-lo gravar qualquer coisa, aprovar as mudanças, usar a chave de emergência, desfazer uma mudança, trazer os preços dos concorrentes, ler os relatórios, usar o assistente opcional, cuidar da licença e receber atualizações.
 
 O Ritmo Revenue nunca grava nada sozinho no começo. Toda propriedade começa em **modo sombra**: o plugin lê as reservas e o calendário, decide o piso e o teto de cada noite e mostra o porquê, mas não grava nada. Só uma pessoa tira a propriedade do modo sombra.
 
@@ -19,12 +19,15 @@ O Ritmo Revenue nunca grava nada sozinho no começo. Toda propriedade começa em
 
 ## 2. Instalar
 
-1. Em **Plugins › Adicionar novo › Enviar plugin**, envie o arquivo do Ritmo Revenue e ative.
-2. Aparece o menu **Ritmo Revenue** com doze telas: Visão geral, Noites, Aprovações, Alertas, Pendências, Registro de mudanças, Relatórios, Mercado, Ordens, Regras, Operação e Configurações.
+O plugin vem num arquivo zip, por exemplo `ritmo-revenue-1.0.0.zip` (cerca de 1,8 MB, abaixo do limite padrão de envio de 2 MB), com uma pasta `ritmo-revenue/` dentro. Junto dele vem o código sha256 do arquivo: se quiser conferir que o arquivo chegou inteiro, compare com o resultado de `sha256sum ritmo-revenue-1.0.0.zip`.
+
+1. Em **Plugins › Adicionar novo › Enviar plugin**, escolha o zip, clique em **Instalar agora** e depois em **Ativar plugin**. Não descompacte o arquivo antes.
+   - Se o WordPress recusar o envio por tamanho ("O arquivo enviado excede..."), a hospedagem limita o envio a menos de 2 MB. Peça à hospedagem para aumentar `upload_max_filesize` e `post_max_size` (8 MB bastam) ou envie a pasta `ritmo-revenue/` descompactada para `wp-content/plugins/` pelo gerenciador de arquivos ou por SFTP e ative em **Plugins**.
+2. Aparece o menu **Ritmo Revenue** com treze telas: Visão geral, Noites, Aprovações, Alertas, Pendências, Registro de mudanças, Relatórios, Mercado, Ordens, Regras, Operação, Assistente e Configurações.
 3. Quem pode fazer o quê:
    - **Administrador**: tudo, inclusive mudar os limites de segurança.
-   - **Revenue Manager** (papel criado pelo plugin): vê tudo, muda regras, aprova e cuida das conexões, mas não muda os limites de segurança.
-   - **Revenue Viewer** (papel criado pelo plugin): só vê e baixa relatórios.
+   - **Revenue Manager** (papel criado pelo plugin): vê tudo, muda regras, aprova, cuida das conexões e pode usar o assistente, mas não muda os limites de segurança.
+   - **Revenue Viewer** (papel criado pelo plugin): só vê e baixa relatórios. Não usa o assistente (ele gasta créditos da sua conta da Claude).
 
    A permissão de mudar limites de segurança só vem com o papel de administrador. Para dar essa permissão a outra pessoa, um administrador precisa dá-la à mão.
 
@@ -128,11 +131,11 @@ Em **Mercado**, cadastre os concorrentes (marque **Parecido com você (par)** no
 
 | Coluna | Exemplo |
 |---|---|
-| `competitor` | `pousada-do-lago` (o código do concorrente) |
+| `competitor` | `pousada-do-lago` (o código do concorrente; `competitor_code` também é aceito) |
 | `check_in` | `2027-03-12` |
 | `check_out` | `2027-03-14` |
 | `price` | `980.00` |
-| `basis` | `total` ou `per_night` |
+| `price_basis` | `total` (o preço da estadia inteira, o padrão quando a coluna falta) ou `per_night` (o preço de uma noite); `basis` também é aceito |
 | `room` | `cheapest` (mais barato) ou `comparable` (comparável ao seu) |
 | `currency` | `BRL` |
 
@@ -166,9 +169,54 @@ Cada relatório tem uma frase-resumo, tabelas e um botão **Baixar CSV**.
 
 O plugin nunca guarda nome, e-mail, telefone nem documento de hóspede. Uma reserva aparece só pelo número e pelo canal, em telas, relatórios, alertas e exportações. O arquivo de suporte (**Configurações › Diagnóstico**) também não leva chaves, reservas, nomes nem e-mails.
 
-## 14. Quando algo dá errado
+## 14. O assistente (opcional)
+
+O **Assistente** usa a sua própria chave da API da Claude (da Anthropic) para três coisas: escrever em palavras o painel da semana e o relatório de uma rodada, explicar um alerta e transformar um pedido escrito por você num **rascunho**. Ele vem **desligado** e o plugin funciona igual sem ele.
+
+**Ligar.** Em **Assistente › Configurações** (só quem cuida das conexões):
+
+1. Cole a chave da API da Claude. Ela é guardada com criptografia e nunca volta para a tela.
+2. Escolha o modelo (`claude-opus-5-5` é o padrão; `claude-sonnet-5-5` e `claude-haiku-5-5` custam menos), o esforço (médio é o padrão) e o **teto mensal** em dólares. Ao chegar no teto, o assistente desliga até o mês seguinte ou até você aumentar o teto. O custo é cobrado pela Anthropic na sua conta; a tela **Uso e custo** mostra a estimativa do mês, sem guardar o que foi perguntado nem respondido.
+3. Marque **Ligado**, salve e clique em **Testar a conexão**: a tela mostra os modelos que a chave pode usar.
+
+**Pedir um rascunho.** Em **Assistente › Pedir**, escreva o que quer com as suas palavras, por exemplo "subir 10% os sábados de dezembro na suíte" ou "não vender abaixo de 900 no feriado". O assistente prepara um rascunho e ele fica em **Rascunhos aguardando você** (a tela **Aprovações** e o menu também avisam quantos esperam). Abra o rascunho: uma ordem abre no formulário de ordens já preenchido, e uma mudança de regra vai para o seu rascunho de regras (**Regras › Revisar e salvar**). **Nada vale enquanto você não salvar.** O assistente nunca grava preço, nunca dá uma ordem, nunca salva regras, nunca muda o modo, a chave de emergência nem os limites de segurança. Os valores do rascunho precisam estar no que você escreveu; o piso de um "subir 10%" é calculado pelo plugin a partir do preço base de cada quarto. O rascunho também fica dentro do que você pediu: só os quartos que você citou (todos os quartos só se você não citar nenhum ou escrever "todos os quartos"), só as datas, os meses ou o feriado que você citou (sem datas, no máximo 31 noites), e uma chave liga/desliga ou uma escolha das regras só muda se você citar o nome dela. Preço fixo e restrição de estadia você dá direto no formulário de ordens; a gravação no PMS, o validador e os limites de segurança nunca entram num rascunho.
+
+**Explicar.** No detalhe de um alerta, **Explicar em palavras simples**; em **Relatórios › Relatórios das rodadas**, **Pôr este relatório em palavras**. O texto só pode citar números que vieram do plugin; se citar outro número, é descartado.
+
+**Privacidade.** O plugin nunca manda para a Claude dados de hóspedes que ele guarda (as reservas vão só como números). O que você escreve no pedido vai como você escreveu: **não escreva nome, e-mail, telefone nem documento de hóspede**; cite uma reserva pelo número. Se o pedido tiver e-mail, telefone, CPF/CNPJ ou parecer trazer um nome de pessoa (por exemplo "hóspede João" ou "Maria Souza pediu"), nada é enviado e a tela explica por quê. O texto do pedido não fica guardado: o rascunho guarda só o resumo do que ele faria. Quando o modelo recusa um pedido ou a Claude está sobrecarregada, a tela diz isso com clareza e nada é guardado.
+
+O assistente só funciona com a licença válida (seção 15). Para desligar, desmarque **Ligado** em **Assistente › Configurações**; para apagar a chave, **Remover a chave**.
+
+## 15. Licença
+
+A licença decide se as propriedades podem sair do modo sombra e se o assistente funciona. **O modo sombra funciona sempre, com ou sem licença.**
+
+1. Em **Configurações › Licença** (só quem cuida das conexões), cole a chave da licença e salve. O plugin confere a chave no servidor de licenças e mostra a situação, a validade e a última conferência. A chave nunca volta para a tela.
+2. O plugin confere a licença uma vez por dia, sozinho, e quando você clica em **Conferir agora**. Nunca no meio de uma rodada.
+3. Situações:
+   - **Ativa**: tudo funciona.
+   - **Em carência**: o servidor de licenças ficou fora do ar, a licença venceu ou foi cancelada. Tudo continua funcionando por 30 dias e um aviso amarelo aparece nas telas do plugin, com a data do fim da carência.
+   - **Vencida** (a carência acabou) ou **sem licença**: as propriedades ficam só em modo sombra. Na **próxima rodada**, uma propriedade em modo aprovação ou autônomo volta para o modo sombra (o registro de mudanças diz que foi a licença), as aprovações que ainda não foram gravadas terminam e nada é gravado. Nada é cortado no meio de uma gravação. O assistente desliga. Um aviso vermelho aparece nas telas.
+4. Com a licença válida de novo, a propriedade **não** sobe de modo sozinha: uma pessoa volta a passar para o modo aprovação em **Operação**, como da primeira vez.
+5. Para tirar a licença deste site (por exemplo, para usá-la em outro), abra **Remover a chave da licença**, marque a confirmação e remova: a vaga é liberada no servidor.
+
+O endereço do servidor de licenças e a chave que assina as respostas dele vêm dentro do plugin; nenhuma linha do `wp-config.php` muda isso num site de verdade. Só uma resposta assinada pelo servidor de licenças do plugin vale como licença. Enquanto o plugin não tiver servidor de licenças, o site fica sem licença: só modo sombra.
+
+## 16. Atualizações
+
+Quando houver uma versão nova, ela aparece em **Painel › Atualizações** e na tela **Plugins**, como nos outros plugins. O WordPress só instala uma versão **assinada** pelo fornecedor: os dados da versão e o arquivo são conferidos antes da instalação, e um arquivo alterado ou vindo de outro servidor é recusado. Para procurar agora, use **Procurar atualizações** em **Configurações › Licença**. Antes de atualizar, faça uma cópia de segurança do site, como para qualquer plugin. Seus dados, regras e chaves continuam depois da atualização.
+
+O canal de atualizações também é uma linha no `wp-config.php` (`RITMO_UPDATE_URL` e `RITMO_UPDATE_PUBLIC_KEY`). Sem ela, você atualiza enviando o zip novo em **Plugins › Adicionar novo › Enviar plugin** (o WordPress pergunta se quer substituir a versão instalada).
+
+**Desinstalar.** Desativar mantém tudo. Excluir o plugin sempre libera a licença no servidor e apaga as chaves e tokens salvos (Beds24, PriceLabs, Claude, licença): os dados guardados não levam nenhum segredo, e depois de reinstalar é preciso conectar de novo. Para apagar também os dados, marque antes, em **Configurações › Desinstalar**, a opção **Apagar todas as tabelas, configurações e chaves salvas do plugin** e salve; aí excluir o plugin remove também as tabelas, as configurações, os papéis e as tarefas agendadas do plugin.
+
+**WordPress multisite.** Ative o plugin site a site (na tela **Plugins** de cada site que vai usá-lo). A ativação para a rede inteira é recusada, porque cada site tem as próprias tabelas, regras e agenda.
+
+## 17. Quando algo dá errado
 
 - **Uma conexão falhou**: teste de novo em **Configurações › Conexões**. A mensagem diz o motivo (chave recusada, sem acesso, sistema fora do ar).
 - **Nada foi gravado**: confira o modo em **Operação**, se a chave de emergência está ligada e se há um plano aguardando aprovação.
 - **As rodadas não acontecem**: o agendador do WordPress depende de visitas ao site. Num site com pouco movimento, configure um cron do servidor que chame `wp-cron.php` a cada 5 minutos.
-- **O idioma**: as telas seguem o idioma do seu perfil no WordPress (português do Brasil ou inglês).
+- **O idioma**: as telas seguem o idioma do seu perfil no WordPress (português do Brasil ou inglês). Os textos do assistente seguem o idioma do site.
+- **Não consigo sair do modo sombra**: veja a lista de condições em **Operação**; uma delas pode ser a licença (seção 15).
+- **O assistente não responde**: a tela diz o motivo (desligado, sem chave, sem licença, teto do mês, modelo indisponível para a chave, chave recusada, conta sem crédito, limite de uso da conta, recusa do modelo ou Claude sobrecarregada); o texto técnico fica em **Detalhes técnicos**. Teste a conexão em **Assistente › Configurações**.

@@ -25,8 +25,9 @@ use Ritmo\Domain\Ai\RuleCatalogue;
 /**
  * The optional assistant: words reports, explains alerts and turns a request into a draft.
  *
- * Nothing leaves the site unless the assistant is on, a key is saved, the month's estimated spend
- * is under the cap and the model is one the key may use: the gateway is not even built otherwise.
+ * Nothing leaves the site unless the assistant is on, the licence allows it, a key is saved, the
+ * month's estimated spend is under the cap and the model is one the key may use: the gateway is
+ * not even built otherwise.
  * Every answer is checked before it is used (stop reason, shape, numbers, guest data), and its
  * usage is recorded (tokens and cost, never content). The assistant never writes a price, never
  * creates an order or a rule version, never approves and never touches a mode, the emergency
@@ -40,6 +41,7 @@ final class AiAssistant
 
     /**
      * @param Closure(AiSettings, string): AiGateway $gateways builds the gateway for the settings and the key
+     * @param (Closure(): bool)|null                 $licensed whether the licence allows the assistant now (the stored verdict); null checks no licence
      */
     public function __construct(
         private readonly AiSettingsStore $store,
@@ -47,6 +49,7 @@ final class AiAssistant
         private readonly Closure $gateways,
         private readonly Logger $logger,
         ?RuleCatalogue $catalogue = null,
+        private readonly ?Closure $licensed = null,
     ) {
         $catalogue ??= RuleCatalogue::forRules();
         $this->prompts = new PromptBuilder($catalogue);
@@ -55,7 +58,7 @@ final class AiAssistant
 
     public function status(): AiStatus
     {
-        return new AiStatus($this->store->settings(), $this->store->hasKey(), $this->usage->current());
+        return new AiStatus($this->store->settings(), $this->store->hasKey(), $this->usage->current(), $this->licensed === null || ($this->licensed)() === true);
     }
 
     /**
@@ -132,12 +135,22 @@ final class AiAssistant
     private function ask(AiRequest $request): AiReply
     {
         [$settings, $gateway] = $this->open(true);
+        $reservation = $this->usage->reserve(self::highestCost($request, $settings), $settings->monthlyCapUsd);
+        if ($reservation === null) {
+            throw new AiStopped(AiStopped::BUDGET, 'This call could pass the monthly spending cap, so it was not made. Raise the cap or wait for next month.');
+        }
         try {
             $reply = $gateway->send($request);
         } catch (ConnectorException $e) {
+            $this->usage->release($reservation);
+
             throw $this->providerFailure($e, $request->purpose->value);
+        } catch (\Throwable $e) {
+            $this->usage->release($reservation);
+
+            throw $e;
         }
-        $this->usage->record($request->purpose, $reply, $settings->priceTable());
+        $this->usage->record($request->purpose, $reply, $settings->priceTable(), $reservation);
         $this->logger->info('Claude answered.', array_filter([
             'provider' => 'claude',
             'purpose' => $request->purpose->value,
@@ -167,6 +180,7 @@ final class AiAssistant
         if ($blocker !== null) {
             throw new AiStopped($blocker, match ($blocker) {
                 AiStopped::DISABLED => 'The assistant is off. Turn it on in its settings.',
+                AiStopped::LICENCE => 'The assistant needs a valid licence.',
                 AiStopped::NO_KEY => 'No Claude API key is saved. Add one in the assistant settings.',
                 AiStopped::BUDGET => 'The assistant reached its monthly spending cap and stays off until next month, or until the cap is raised.',
                 default => 'The saved key cannot use the chosen model. Choose another model in the assistant settings.',
@@ -177,7 +191,28 @@ final class AiAssistant
             throw new AiStopped(AiStopped::NO_KEY, 'The saved Claude API key cannot be read. Save it again in the assistant settings.');
         }
 
-        return [$status->settings, ($this->gateways)($status->settings, $key)];
+        try {
+            $gateway = ($this->gateways)($status->settings, $key);
+        } catch (InvalidArgumentException $e) {
+            $this->logger->warning('Claude connection is set up wrongly on this site.', ['provider' => 'claude']);
+
+            throw new AiStopped(AiStopped::CONFIG, 'The connection to Claude is set up wrongly on this site (a development setting such as RITMO_ANTHROPIC_BASE_URL without RITMO_DEV). Nothing was sent.', [], $e);
+        }
+
+        return [$status->settings, $gateway];
+    }
+
+    /**
+     * The most a call can cost: its prompt (about three characters a token, none read from the
+     * cache) and every token it may answer, at the chosen model's prices.
+     */
+    public static function highestCost(AiRequest $request, AiSettings $settings): float
+    {
+        $prices = $settings->priceTable()->forModel($settings->model);
+        $characters = strlen($request->user) + array_sum(array_map('strlen', $request->system));
+        $input = (int) ceil($characters / 3);
+
+        return ($input * max($prices->input, $prices->cacheWrite) + $request->maxTokens * $prices->output) / 1000000;
     }
 
     private function providerFailure(ConnectorException $e, string $what): AiStopped

@@ -13,6 +13,7 @@ use Ritmo\Admin\Components\Input;
 use Ritmo\Admin\Components\Labels;
 use Ritmo\Admin\Components\Menu;
 use Ritmo\Admin\Notice;
+use Ritmo\Application\Mode\LeaveShadowConfirmation;
 use Ritmo\Domain\Model\PropertyMode;
 use Ritmo\WordPress\Roles;
 
@@ -61,6 +62,7 @@ final class OperationsActions
     private static function runShadow(Input $form): array
     {
         $property = $form->text('property_id', 32);
+        \Ritmo\WordPress\TimeLimit::forEngine();
         $outcome = ScreenServices::instance()->services()->shadowRuns()->run($property);
         $ok = in_array($outcome->status, ['completed', 'running'], true);
         Notice::flash(
@@ -79,6 +81,7 @@ final class OperationsActions
     private static function runNow(Input $form): array
     {
         $property = $form->text('property_id', 32);
+        \Ritmo\WordPress\TimeLimit::forEngine();
         $result = ScreenServices::instance()->services()->stack()->runNow()->run($property);
         Notice::flash(
             in_array($result->status->value, ['completed', 'running'], true) ? Notice::SUCCESS : Notice::ERROR,
@@ -98,6 +101,10 @@ final class OperationsActions
         $mode = PropertyMode::tryFrom($form->choice('mode', array_map(static fn (PropertyMode $m): string => $m->value, PropertyMode::cases()), ''))
             ?? throw new InvalidArgumentException(__('Choose a mode.', 'ritmo-revenue'));
         $stack = ScreenServices::instance()->services()->stack();
+        $current = $stack->properties()->find($property);
+        if ($current !== null) {
+            LeaveShadowConfirmation::check($current, $mode, $form->text('confirmation', 64), $form->bool('sole_writer'));
+        }
         $changed = $stack->modes()->change($property, $mode, get_current_user_id(), $stack->rules()->modes(), $form->text('confirmation', 64), $form->text('reason', 190));
         /* translators: %s: Shadow, Approval or Autonomous */
         Notice::flash(Notice::SUCCESS, sprintf(__('The property is now in the %s mode.', 'ritmo-revenue'), Labels::mode($changed->mode->value)));

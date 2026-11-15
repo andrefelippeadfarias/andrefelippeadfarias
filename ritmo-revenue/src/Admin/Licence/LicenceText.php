@@ -26,10 +26,36 @@ final class LicenceText
     public static function standing(LicenceStanding $standing): string
     {
         return match ($standing) {
-            LicenceStanding::Active => __('Active', 'ritmo-revenue'),
+            LicenceStanding::Active => _x('Active', 'licence standing', 'ritmo-revenue'),
             LicenceStanding::Grace => __('Grace period', 'ritmo-revenue'),
             LicenceStanding::Lapsed => __('Lapsed', 'ritmo-revenue'),
             LicenceStanding::Unlicensed => __('No licence', 'ritmo-revenue'),
+        };
+    }
+
+    /**
+     * The last message of the licence server or of the plugin's own check, in the reader's
+     * language when it is a known one; any other is shown as the server wrote it.
+     */
+    public static function serverMessage(string $message): string
+    {
+        return match ($message) {
+            'Licence active.' => __('Licence active.', 'ritmo-revenue'),
+            'Licence expired.' => __('Licence expired.', 'ritmo-revenue'),
+            'Licence invalid.' => __('Licence not valid.', 'ritmo-revenue'),
+            'Unknown licence key.' => __('Unknown licence key.', 'ritmo-revenue'),
+            'The licence is in use on another site.' => __('The licence is in use on another site.', 'ritmo-revenue'),
+            'The licence is not activated on this site.' => __('The licence is not activated on this site.', 'ritmo-revenue'),
+            'The licence server could not be reached.' => __('The licence server could not be reached.', 'ritmo-revenue'),
+            'The licence server is busy or down.' => __('The licence server is busy or down.', 'ritmo-revenue'),
+            'The licence server gave an answer that is not understood.' => __('The licence server gave an answer that is not understood.', 'ritmo-revenue'),
+            'The licence server\'s answer is not signed with the plugin\'s licence key, so it was not trusted.' => __('The answer of the licence server is not signed with the plugin\'s licence key, so it was not trusted.', 'ritmo-revenue'),
+            'No licence server is configured.' => __('No licence server is configured.', 'ritmo-revenue'),
+            'Test licence.' => __('Test licence.', 'ritmo-revenue'),
+            'Test licence, expired.' => __('Test licence, expired.', 'ritmo-revenue'),
+            'The test provider is down.' => __('The test provider is down.', 'ritmo-revenue'),
+            'Unknown test licence.' => __('Unknown test licence.', 'ritmo-revenue'),
+            default => $message,
         };
     }
 
@@ -45,7 +71,7 @@ final class LicenceText
             LicenceReason::TEST_PROVIDER => __('This is a test key, which only works in development mode.', 'ritmo-revenue'),
             LicenceReason::UNREACHABLE => __('The licence server could not be reached; the last valid answer is kept.', 'ritmo-revenue'),
             LicenceReason::EXPIRED => __('The licence has expired.', 'ritmo-revenue'),
-            default => __('The licence server says this key is not valid for this site.', 'ritmo-revenue'),
+            default => __('The licence server does not accept this key: it is unknown, or it is not for this site.', 'ritmo-revenue'),
         };
     }
 

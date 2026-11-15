@@ -42,6 +42,9 @@ final class AiWorld
     public readonly AiAssistant $assistant;
     public int $gatewaysBuilt = 0;
 
+    /** What the licence says about the assistant (LicenceVerdict::allowsAi()). */
+    public bool $licensed = true;
+
     public function __construct(string $now = '2026-11-15T13:00:00Z')
     {
         $this->store = new ArrayStore();
@@ -57,7 +60,7 @@ final class AiWorld
 
             return new ClaudeProvider(new ClaudeClient(new AiHttpGuard($this->api), ClaudeConfig::fromSettings($settings, $key), $this->logger, static function (): void {
             }));
-        }, $this->logger);
+        }, $this->logger, null, fn (): bool => $this->licensed);
     }
 
     /**

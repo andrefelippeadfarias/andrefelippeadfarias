@@ -29,6 +29,28 @@ final class UninstallerTest extends TestCase
         self::assertSame(1, $removed);
     }
 
+    public function testTheSecretsGoEvenWhenTheDataIsKept(): void
+    {
+        $settings = new ArrayStore();
+        $settings->set(Uninstaller::VAULT, ['seed' => 'x', 'entries' => ['beds24.token' => 'y']]);
+        $settings->set('history', 'kept');
+        $removed = 0;
+        $secrets = 0;
+        $uninstaller = new Uninstaller($settings, static function () use (&$removed): void {
+            ++$removed;
+        }, static function () use (&$secrets, $settings): void {
+            ++$secrets;
+            $settings->delete(Uninstaller::VAULT);
+        });
+
+        self::assertFalse($uninstaller->run());
+        self::assertSame([0, 1], [$removed, $secrets]);
+        self::assertFalse($settings->has(Uninstaller::VAULT), 'tokens, keys and the seed are gone');
+        self::assertSame('kept', $settings->get('history'));
+        $vault = (new \ReflectionClassConstant(\Ritmo\Infrastructure\Secrets\SodiumVault::class, 'STORE_KEY'))->getValue();
+        self::assertSame(Uninstaller::VAULT, $vault, 'the key is the vault\'s own');
+    }
+
     public function testBeds24PropertyIdsAreWholeNumbersSeparatedByCommas(): void
     {
         self::assertSame(['901001', '42'], ConnectorFactory::propertyIds(' 901001, 42 ,, x, -3, 0'));

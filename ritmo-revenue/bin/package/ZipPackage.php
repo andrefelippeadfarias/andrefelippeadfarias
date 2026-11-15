@@ -15,6 +15,9 @@ use ZipArchive;
 final class ZipPackage
 {
     /** What a package that WordPress can install and run must hold, relative to the plugin folder. */
+    /** The largest zip: under the 2 MB upload limit (upload_max_filesize = 2M) of PHP and many hosts. */
+    public const MAX_BYTES = 2000000;
+
     public const REQUIRED = [
         'ritmo-revenue.php',
         'uninstall.php',
@@ -22,8 +25,6 @@ final class ZipPackage
         'src/autoload.php',
         'src/Plugin.php',
         'presets/default.json',
-        'languages/ritmo-revenue.pot',
-        'languages/ritmo-revenue-pt_BR.po',
         'languages/ritmo-revenue-pt_BR.mo',
         'languages/ritmo-revenue-pt_BR.l10n.php',
     ];
@@ -147,6 +148,10 @@ final class ZipPackage
             if (!in_array($required, $files, true)) {
                 $out[] = "$required is missing from the zip.";
             }
+        }
+        $size = (int) @filesize($zipPath);
+        if ($size > self::MAX_BYTES) {
+            $out[] = sprintf('The zip has %d bytes, over the %d that a host with the default upload limit (2 MB) accepts.', $size, self::MAX_BYTES);
         }
         sort($files, SORT_STRING);
         $sorted = $expected;

@@ -49,9 +49,10 @@ final class PackageTest extends TestCase
         foreach (['tests/', 'tools/', 'bin/', '.wp-test/', 'dist/', 'node_modules/'] as $folder) {
             self::assertSame([], array_values(array_filter($files, static fn (string $f): bool => str_starts_with($f, $folder))), "$folder is in the package");
         }
-        foreach (['docs/PLANO.md', 'docs/IMPLANTACAO.md', 'composer.json', '.distignore', '.gitignore'] as $file) {
+        foreach (['docs/PLANO.md', 'docs/IMPLANTACAO.md', 'composer.json', '.distignore', '.gitignore', 'README.md', 'docs/ARCHITECTURE.md', 'docs/CONTRACTS.md', 'docs/AI.md', 'docs/LICENCE-UPDATE.md', 'languages/ritmo-revenue.pot', 'languages/ritmo-revenue-pt_BR.po', 'languages/glossary-pt_BR.json'] as $file) {
             self::assertNotContains($file, $files);
         }
+        self::assertSame(['docs/GUIA-DO-USUARIO.md'], array_values(array_filter($files, static fn (string $f): bool => str_starts_with($f, 'docs/'))), 'only the user guide goes with the plugin');
         foreach ([...ZipPackage::REQUIRED, 'CHANGELOG.md', 'docs/GUIA-DO-USUARIO.md', 'assets/screens.js', 'templates/admin/screens/layout.php'] as $file) {
             self::assertContains($file, $files);
         }
@@ -61,7 +62,8 @@ final class PackageTest extends TestCase
         $zip = $this->dir . '/ritmo-revenue-test.zip';
         self::assertSame(count($files), ZipPackage::write($stage, $files, $zip, 'ritmo-revenue', 1789000000));
         self::assertSame([], ZipPackage::problems($zip, 'ritmo-revenue', $rules, $files));
-        self::assertLessThan(16 * 1024 * 1024, filesize($zip), 'the zip fits the common upload limits');
+        self::assertLessThanOrEqual(ZipPackage::MAX_BYTES, filesize($zip), 'the zip fits the default 2 MB upload limit');
+        self::assertLessThan(2 * 1024 * 1024, ZipPackage::MAX_BYTES);
     }
 
     public function testTheBuildScriptRunsEveryCheckBeforeTheZip(): void

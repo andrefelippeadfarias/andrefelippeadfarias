@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Ritmo\Admin\Screens;
 
 use Closure;
+use Ritmo\Admin\Ai\AiScreens;
 use Ritmo\Admin\Components\Capability;
 use Ritmo\Admin\Components\FormAction;
 use Ritmo\Admin\Components\Input;
@@ -60,6 +61,7 @@ final class Screens
             Menu::APPROVALS => $safe(static fn (): int => $services->status()->waitingEverywhere()),
             Menu::ALERTS => $safe(static fn (): int => $services->alerts()->countBySeverity(null, ['critical', 'warning'])),
             Menu::TO_DO => $safe(static fn (): int => $services->todoStore()->countDue(null, $services->services()->clock()->today(in_array(wp_timezone_string(), timezone_identifiers_list(), true) ? wp_timezone_string() : 'UTC'))),
+            Menu::ASSISTANT => $safe(static fn (): int => AiScreens::waitingDrafts()),
         ];
     }
 

@@ -20,8 +20,9 @@
 #      cron events, files) and everything of the snapshot still is (zip-site.php residue);
 #   8. WordPress logged no PHP error of the plugin.
 #
-# The site's upload limit is 64 MB (a php.ini of this test only), the common value of hosting
-# plans; the install pass fails when the zip is larger than the limit the upload form shows.
+# The site's upload limit is PHP's default, 2 MB (upload_max_filesize = 2M, a php.ini of this test
+# only), the lowest limit of common hosting plans; the install pass fails when the zip is larger
+# than the limit the upload form shows.
 # Needs Node with Playwright. Every outgoing request of the site stays on 127.0.0.1.
 
 set -euo pipefail
@@ -89,7 +90,7 @@ cp "$WORK/wp-config.php" "$WP/wp-config.php"
 php "$ROOT/tests/e2e/zip-site.php" install "$WP" "$ADMIN_USER" "$ADMIN_PASSWORD"
 php "$ROOT/tests/e2e/zip-site.php" snapshot "$WP" "$WORK/before.json"
 mkdir -p "$WORK/php-ini"
-printf 'upload_max_filesize = 64M\npost_max_size = 64M\n' > "$WORK/php-ini/uploads.ini"
+printf 'upload_max_filesize = 2M\npost_max_size = 8M\n' > "$WORK/php-ini/uploads.ini"
 # An empty first entry keeps PHP's own folder of .ini files.
 PHP_INI_SCAN_DIR=":$WORK/php-ini" "$ROOT/bin/wp-test-site.sh" restart
 

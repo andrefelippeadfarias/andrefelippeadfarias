@@ -16,6 +16,7 @@ final class Capability
     public const APPROVE = Roles::APPROVE;
     public const MANAGE_CONNECTIONS = Roles::MANAGE_CONNECTIONS;
     public const MANAGE_SAFETY = Roles::MANAGE_SAFETY;
+    public const USE_AI = Roles::USE_AI;
 
     public const ALL = Roles::CAPABILITIES;
 

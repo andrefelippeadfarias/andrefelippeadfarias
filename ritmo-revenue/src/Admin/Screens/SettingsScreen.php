@@ -6,12 +6,13 @@ namespace Ritmo\Admin\Screens;
 
 use Ritmo\Admin\Components\Capability;
 use Ritmo\Admin\Components\Menu;
+use Ritmo\Admin\Licence\LicenceScreen;
 use Ritmo\WordPress\Uninstaller;
 
 /**
  * Settings (admin spec 2.1): the tabs setup (the wizard), connections, diagnostics and uninstall
  * of this area; a tab the user may not use answers 403. The notifications tab belongs to the
- * operations screens.
+ * operations screens, the licence tab to Admin\Licence (M5).
  */
 final class SettingsScreen
 {
@@ -28,6 +29,7 @@ final class SettingsScreen
             'connections' => $page->render('settings-connections', ConnectionsView::build()),
             'uninstall' => $page->render('settings-uninstall', ['delete' => ScreenServices::instance()->services()->store()->get(Uninstaller::DELETE_DATA, false) === true]),
             'notifications' => $page->render('settings-notifications', []),
+            LicenceScreen::TAB => LicenceScreen::render($page),
             default => $page->render('settings-diagnostics', DiagnosticsView::build($page)),
         };
     }

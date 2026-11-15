@@ -89,8 +89,8 @@ A PMS connector is built with the room map of the site (PMS room id to room type
 | `HttpResponse` | `status()`, `isSuccess()` (2xx), `header($name)` (case-insensitive), `headers()` (lowercase names), `body()`, `json()` (array; throws `ConnectorException` when the body is not a JSON object or list). |
 | `ConnectionStatus` | `ok`, `message`, `details` (scalars safe to show). |
 | `MarketDataProvider::readAnchors($propertyId, $from, $to)` | `array<'YYYY-MM-DD', MarketAnchor>`, ascending; nights without data are absent. |
-| `LicenceProvider::check($licenceKey, $siteUrl): LicenceState` | Never throws; an unreachable provider answers `LicenceState::UNREACHABLE`. |
-| `AiProvider::complete($system, $messages, $maxTokens): string` | `$messages` is `list<array{role: 'user'|'assistant', content: string}>`. Text only; no guest data in prompts. |
+| `LicenceProvider::check($licenceKey, $siteUrl): LicenceState` | Never throws; an unreachable provider answers `LicenceState::UNREACHABLE`. Since M5 extended by `Connectors\Licence\LicenceServer` (activate, deactivate) and implemented by `HttpLicenceServer`, `StubLicenceProvider` and `NoLicenceServer`; how the answers become a standing is in [LICENCE-UPDATE.md](LICENCE-UPDATE.md). |
+| `AiProvider::complete($system, $messages, $maxTokens): string` | `$messages` is `list<array{role: 'user'|'assistant', content: string}>`. Text only; no guest data in prompts. Since M5 implemented by `Connectors\Ai\Claude\ClaudeProvider`, which also implements `Domain\Ai\AiGateway` (`send(AiRequest): AiReply`, `models()`), the richer port the assistant uses (stop reason, usage, fallback, structured answers); see [AI.md](AI.md). |
 | `KeyValueStore` | `get($key, $default = null)`, `getFresh($key, $default = null)` (read past any cache of the request, so a value stored by another request or process is seen; for the emergency switch), `has`, `set`, `delete`. JSON-encodable values. Not for secrets. |
 | `QuotaLedger` | `record($provider, $action, $scope, $succeeded, $at)` and `countSince($provider, $action, $scope, $since)`. A failed call still spends quota. `$scope` is a listing ref or `''` for the account. |
 | `Logger` | `log($level, $message, $context = [])` plus `debug`, `info`, `warning`, `error`. Levels are the constants `Logger::DEBUG` ... `Logger::ERROR`. |
@@ -303,6 +303,18 @@ What milestone 4 changed in shared signatures and behaviour. No interface of `sr
 | Run summaries: `decide` counts `pms_would_write`, `pms_rejected`, `pms_frozen`, `pms_merge_conflicts`, `pms_capped`; `verify` counts `pms_nights_confirmed` apart from `nights_confirmed`; `report` holds `items` (codes with counts) instead of English `lines` (runs recorded before are shown as they were). | OPERATIONS.md 5, REPORTS.md |
 | Migrations 10 (screens), 11 (market series), 12 (reports). | INFRASTRUCTURE.md 1.3 |
 | Capabilities: `ritmo_manage_safety` (administrators only) and the role `ritmo_revenue_viewer`; the emergency switch is engaged with `ritmo_approve` or `ritmo_manage_connections` and released only with `ritmo_manage_connections`. | APPLICATION.md 1.5 |
+
+### 1.11 Integration of milestone M5
+
+What milestone 5 changed in shared signatures and behaviour. No interface of `src/Contracts` changed.
+
+| Change | Where |
+|---|---|
+| `Roles::USE_AI` (`ritmo_use_ai`, version 3 of the grants: the manager role and administrators; not the viewer) and `Capability::USE_AI`. | AI.md 7, APPLICATION.md 1.8 |
+| `RunStack` takes a `LicenceVerdictSource` (last constructor argument; `null` is a site without a licence: shadow mode only) and builds `licence(): LicenceEnforcer`; `PipelineRunExecutor` takes the enforcer and opens a run in `modeAtRunStart()`; `ModePreconditions` takes it (last argument) and adds the condition `licence` to leaving shadow mode. | LICENCE-UPDATE.md 2.2 |
+| `AiAssistant` takes `licensed` (last argument, `Closure(): bool`); `AiStatus::$licensed`; `AiStopped::LICENCE`. `AiDraftQueue::countPending()`. | AI.md |
+| `WordPress\Services::licence()`, `licenceHttp()`, `updateHttp()`; `Infrastructure\Http\HostBoundHttpClient` (the hosts one channel may reach). | INFRASTRUCTURE.md 1.2 |
+| `Menu::ASSISTANT`; the Settings tab `licence`; the menu has thirteen entries. | ADMIN.md 2 |
 
 ## Part 2. Signature reference
 

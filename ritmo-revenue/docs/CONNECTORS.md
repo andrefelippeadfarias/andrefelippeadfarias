@@ -1,6 +1,6 @@
 # Ritmo Revenue: connectors
 
-What `src/Connectors` offers: the Beds24 PMS connector and the PriceLabs pricing connector, both read-only in milestone M1, plus the simulator and the fakes that test them. The contracts they implement are in [CONTRACTS.md](CONTRACTS.md); the HTTP clients, limiter and ledger they are wired with are in [INFRASTRUCTURE.md](INFRASTRUCTURE.md).
+What `src/Connectors` offers: the Beds24 PMS connector and the PriceLabs pricing connector, both read-only in milestone M1, plus the simulator and the fakes that test them; since M5 also the Claude connector of the optional assistant (section 8) and the licence providers (section 9). The contracts they implement are in [CONTRACTS.md](CONTRACTS.md); the HTTP clients, limiter and ledger they are wired with are in [INFRASTRUCTURE.md](INFRASTRUCTURE.md).
 
 ## 1. Wiring
 
@@ -86,10 +86,12 @@ It logs every request (method, path, query, status), answers `GET /__log`, `POST
 | Double | Use |
 |---|---|
 | `FakeApiServer` | Starts the simulator on a free port, reads and resets its log, asks for faults. |
-| `ScriptedHttpClient` | `HttpClient` that answers from a queue or a handler and records every request. |
+| `ScriptedHttpClient` | `HttpClient` that answers from a queue (a response, an exception or a closure that answers from the request) or a handler and records every request. |
+| `SignedLicenceAnswers` | Licence server answers signed with a fixed test key pair, built from the request (key, site, nonce), to test `HttpLicenceServer` and `LicenceService`. |
 | `InMemoryPmsConnector`, `InMemoryPricingConnector` | Connectors over data in memory with the contract's semantics, for tests of whatever consumes them; a conformance test holds them to the real connectors. |
 | `StaticConnectorSource` | The `Application\ConnectorSource` of the use-case tests: hands out the connectors it was given; a missing one is "not configured". |
 | `MemoryQuotaLedger`, `RecordingLogger`, `MovableClock`, `ClockSleeper` | Ledger, logger, clock (moved by hand, to the microsecond) and sleeper doubles, shared by every module's tests. |
+| `FixedLicence` | The `Application\Licence\LicenceVerdictSource` of the run tests: active unless the test lapses or removes it. |
 
 ## 7. Writes (M3)
 
@@ -124,3 +126,33 @@ documented calls but are not in the project's verified API notes yet (WRITE.md, 
 The simulator (`tests/fake-apis`) has a writable world, off by default: `POST /__writes` turns it
 on (`WriteWorld`, `PriceLabsWrites`, `Beds24Writes`), `GET /__writes` shows what was written and
 every write body received; faults take a mode (`apply_then_fail`, `drop_silently`, `delay`).
+
+## 8. The Claude connector of the assistant (M5)
+
+`src/Connectors/Ai/Claude` speaks to the Claude API by plain HTTP through `Contracts\HttpClient`
+(no SDK): `ClaudeConfig` (the key, hidden from dumps, the model, the effort, the fallback, the
+timeout and the base URL; `RITMO_ANTHROPIC_BASE_URL` only while `RITMO_DEV` is true),
+`ClaudeClient` (`POST /v1/messages` and `GET /v1/models`, header `anthropic-version: 2026-10-21`,
+the errors and their repetitions inside the time PHP has left), `MessageBody` (the body from a
+whitelist: never `temperature`, `top_p`, `top_k`, `thinking`, `tool_choice` or an assistant
+prefill), `ReplyParser` (the stop reason first, then the first text block; refusal and
+`max_tokens` are never a text), `ClaudeProvider` (`Contracts\AiProvider` and `Domain\Ai\AiGateway`)
+and `AiHttpGuard` (only those two routes, to the one host of the base URL). The assistant's own
+client (`Admin\Ai\AiServices`) is `AiHttpGuard` over `GuardedHttpClient` with a read list that
+holds only the messages route; the PMS and pricing connectors never get it, and their hosts are on
+none of its lists. Details in [AI.md](AI.md).
+
+## 9. The licence providers (M5)
+
+`src/Connectors/Licence`: `LicenceServer` (extends `Contracts\LicenceProvider` with activate and
+deactivate), `HttpLicenceServer` (the JSON protocol of the licence server embedded in
+`Application\Licence\LicenceSettings`: `POST <url>/activate | /validate | /deactivate`, a new
+nonce in every request; a "valid" answer counts only with a signature `LicenceSignature` verifies
+with the embedded Ed25519 public key, for that key, site and nonce), `LicenceSignature` (the signed
+lines and their check), `StubLicenceProvider` (keys `TEST-...`, only on a loopback site with
+`RITMO_DEV` and `RITMO_LICENCE_DEV` exactly true; no network), `NoLicenceServer` (no server
+configured) and
+`ServerUrl` (https without credentials, query or fragment; plain http only to a loopback host in
+development mode). The site wires the HTTP provider over `Infrastructure\Http\HostBoundHttpClient`
+(only the configured server's host) and `GuardedHttpClient` (of that host, only the three POSTs of
+the protocol), built by `licence()` of `WordPress\Services`. Details in [LICENCE-UPDATE.md](LICENCE-UPDATE.md).

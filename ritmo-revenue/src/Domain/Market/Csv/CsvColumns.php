@@ -6,7 +6,7 @@ namespace Ritmo\Domain\Market\Csv;
 
 /**
  * The columns of a market price file found in its header (names matched case-insensitively and
- * trimmed). Unknown columns are ignored with a warning; a column whose name looks like guest data
+ * trimmed; ALIASES give the same column under another name). Unknown columns are ignored with a warning; a column whose name looks like guest data
  * is ignored with its own warning (the plugin never stores guest data); a missing required column
  * is a file error.
  */
@@ -15,6 +15,9 @@ final class CsvColumns
     public const REQUIRED = ['competitor', 'check_in', 'check_out', 'price'];
 
     public const OPTIONAL = ['price_basis', 'room', 'currency', 'captured_at', 'source', 'available'];
+
+    /** Other names people give a column (an older guide called price_basis "basis"). */
+    public const ALIASES = ['basis' => 'price_basis', 'competitor_code' => 'competitor'];
 
     public const GUEST_LIKE = ['name', 'guest', 'guest_name', 'email', 'e-mail', 'mail', 'phone', 'telefone', 'document', 'cpf', 'passport', 'address'];
 
@@ -44,6 +47,7 @@ final class CsvColumns
                 continue;
             }
             $label = mb_check_encoding($name, 'UTF-8') ? $name : '?';
+            $name = self::ALIASES[$name] ?? $name;
             if (in_array($name, [...self::REQUIRED, ...self::OPTIONAL], true)) {
                 if (isset($positions[$name])) {
                     $problems[] = new MarketCsvProblem(MarketCsvProblem::WARNING, MarketCsvProblem::DUPLICATE_COLUMN, 1, $label);

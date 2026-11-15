@@ -23,13 +23,18 @@ final class RequestData
     }
 
     /**
-     * @param list<RoomType> $rooms
+     * @param list<RoomType>              $rooms
+     * @param array<string, list<string>> $names rule field key => its label in the reader's language
      *
      * @return array{data: array<string, mixed>, context: DraftContext}
      */
-    public static function of(Property $property, array $rooms, RuleSet $rules, DateTimeImmutable $today, string $request): array
+    public static function of(Property $property, array $rooms, RuleSet $rules, DateTimeImmutable $today, string $request, array $names = []): array
     {
-        $context = new DraftContext($today, self::bases($rooms), $request, $rules->toArray());
+        $labels = [];
+        foreach ($rooms as $room) {
+            $labels[$room->code] = $room->name;
+        }
+        $context = new DraftContext($today, self::bases($rooms), $request, $rules->toArray(), $names, $labels);
         $periods = [];
         foreach (is_array($rules->toArray()['calendar']['holidays'] ?? null) ? $rules->toArray()['calendar']['holidays'] : [] as $index => $period) {
             if (is_array($period) && is_string($period['start'] ?? null) && is_string($period['end'] ?? null)) {

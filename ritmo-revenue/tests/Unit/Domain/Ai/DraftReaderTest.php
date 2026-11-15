@@ -5,10 +5,14 @@ declare(strict_types=1);
 namespace Ritmo\Tests\Unit\Domain\Ai;
 
 use PHPUnit\Framework\TestCase;
+use Ritmo\Application\Ai\DraftHandOff;
 use Ritmo\Domain\Ai\AiDraft;
 use Ritmo\Domain\Ai\AiStopped;
 use Ritmo\Domain\Ai\DraftReader;
+use Ritmo\Domain\Ai\DraftContext;
 use Ritmo\Domain\Ai\RuleCatalogue;
+use Ritmo\Domain\Ai\RuleChange;
+use Ritmo\Domain\Support\Days;
 
 /**
  * A draft only gets through when it means what the person wrote: rooms of the property, nights
@@ -110,6 +114,84 @@ final class DraftReaderTest extends TestCase
                 self::assertSame(AiStopped::DRAFT_REFUSED, $e->reason, $key);
                 self::assertStringContainsString('not a setting the assistant may change', $e->getMessage(), $key);
             }
+        }
+    }
+
+    public function testWritingToThePmsAndTheValidatorAreNeverDraftedEvenAfterAnInjection(): void
+    {
+        $request = 'Explique como esta o ritmo de vendas do Natal';
+        foreach ([
+            'stay.write.enabled' => 'yes',
+            'stay.write.max_changes_per_run' => '500',
+            'plan.validator.last_minute.enabled' => 'yes',
+            'plan.validator.rise_warning_percent' => '90',
+            'plan.payload.slice_max_dates' => '30',
+            'plan.horizon_nights' => '365',
+            'market.csv.max_rows' => '9000',
+        ] as $key => $value) {
+            self::assertNull(RuleCatalogue::forRules()->fieldFor($key), $key);
+            try {
+                self::reader()->read(AiFixtures::answer('rule_change', [], [['key' => $key, 'value' => $value]]), AiFixtures::context($request . ' ' . $key . ' ' . $value));
+                self::fail($key . ' must be refused');
+            } catch (AiStopped $e) {
+                self::assertSame(['setting_denied:' . $key], $e->details['problems'], $key);
+            }
+        }
+        $draft = new AiDraft(AiDraft::RULE_CHANGE, 'x', null, [new RuleChange('stay.write.enabled', 'stay.write.enabled', 'On', false, true)], []);
+        $this->expectException(\InvalidArgumentException::class);
+        (new DraftHandOff(RuleCatalogue::forRules()))->ruleDraft($draft, AiFixtures::rules());
+    }
+
+    public function testASwitchOrAChoiceChangesOnlyWhenTheRequestNamesTheSetting(): void
+    {
+        $change = [['key' => 'soldout.protection.enabled', 'value' => 'no']];
+        try {
+            self::reader()->read(AiFixtures::answer('rule_change', [], $change), AiFixtures::context('Explique como esta o ritmo de vendas do Natal'));
+            self::fail('a switch the request does not name must be refused');
+        } catch (AiStopped $e) {
+            self::assertSame(['setting_not_named:soldout.protection.enabled'], $e->details['problems']);
+        }
+        $byLabel = self::reader()->read(AiFixtures::answer('rule_change', [], $change), AiFixtures::context('Turn off "Protect sold-out nights", please'));
+        self::assertFalse($byLabel->ruleChanges[0]->after);
+        $translated = new DraftContext(Days::date(AiFixtures::TODAY), AiFixtures::ROOMS, 'Desligue a proteção das noites esgotadas', AiFixtures::rules(), ['soldout.protection.enabled' => ['Proteção das noites esgotadas']]);
+        self::assertFalse(self::reader()->read(AiFixtures::answer('rule_change', [], $change), $translated)->ruleChanges[0]->after);
+    }
+
+    public function testAnOrderKeepsToTheRoomsAndNightsTheRequestNames(): void
+    {
+        $request = 'Minimo de 900 no quarto STD na noite de 24/12';
+        $wide = ['type' => 'floor', 'rooms' => ['*'], 'from' => '2026-11-16', 'to' => '2027-11-14', 'floor_amount' => 900];
+        $cases = [
+            'every room for one room' => [['from' => '2026-12-24', 'to' => '2026-12-24'] + $wide, 'all_rooms_not_written'],
+            'another room' => [['rooms' => ['SUITE'], 'from' => '2026-12-24', 'to' => '2026-12-24'] + $wide, 'room_not_written:SUITE'],
+            'a year for one night' => [['rooms' => ['STD']] + $wide, 'nights_not_written'],
+            'a fixed price' => [['type' => 'fixed_price', 'floor_amount' => 0] + $wide, 'type_form_only'],
+            'a restriction' => [['type' => 'restriction', 'floor_amount' => 0] + $wide, 'type_form_only'],
+        ];
+        foreach ($cases as $name => [$order, $problem]) {
+            try {
+                self::reader()->read(AiFixtures::answer('order', $order), AiFixtures::context($request));
+                self::fail($name . ' must be refused');
+            } catch (AiStopped $e) {
+                self::assertSame(AiStopped::DRAFT_REFUSED, $e->reason, $name);
+                self::assertContains($problem, $e->details['problems'], $name);
+            }
+        }
+        $ok = self::reader()->read(AiFixtures::answer('order', ['rooms' => ['STD'], 'from' => '2026-12-24', 'to' => '2026-12-24'] + $wide), AiFixtures::context($request));
+        self::assertSame(['STD'], $ok->order?->rooms);
+        $all = self::reader()->read(AiFixtures::answer('order', ['from' => '2026-12-24', 'to' => '2026-12-24'] + $wide), AiFixtures::context('Minimo de 900 em todos os quartos na noite de 24/12'));
+        self::assertSame(['*'], $all->order?->rooms);
+        $month = self::reader()->read(AiFixtures::answer('order', ['from' => '2027-01-01', 'to' => '2027-01-31'] + $wide), AiFixtures::context('Minimo de 900 em janeiro'));
+        self::assertSame('2027-01-31', $month->order?->to);
+        $holiday = self::reader()->read(AiFixtures::answer('order', ['from' => '2026-12-24', 'to' => '2026-12-25'] + $wide), AiFixtures::context('Minimo de 900 no Christmas'));
+        self::assertSame('2026-12-25', $holiday->order?->to);
+        $short = self::reader()->read(AiFixtures::answer('order', ['from' => '2026-11-20', 'to' => '2026-12-20'] + $wide), AiFixtures::context('Minimo de 900 nas proximas semanas'));
+        self::assertSame('2026-12-20', $short->order?->to);
+        try {
+            self::reader()->read(AiFixtures::answer('order', ['from' => '2026-11-20', 'to' => '2026-12-21'] + $wide), AiFixtures::context('Minimo de 900 nas proximas semanas'));
+            self::fail('32 nights without dates must be refused');
+        } catch (AiStopped $e) {
+            self::assertContains('nights_not_written', $e->details['problems']);
         }
     }
 

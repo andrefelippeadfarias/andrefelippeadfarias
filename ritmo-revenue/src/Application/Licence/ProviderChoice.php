@@ -13,8 +13,9 @@ use Ritmo\Domain\Licence\LicenceKey;
 use Ritmo\Domain\Support\Clock;
 
 /**
- * Which provider answers for a key: the test provider for a "TEST-" key in development mode, else
- * the licence server of RITMO_LICENCE_SERVER_URL, else nobody (the key stays "not checked").
+ * Which provider answers for a key: the test provider for a "TEST-" key in development mode (a
+ * loopback site with RITMO_DEV and RITMO_LICENCE_DEV), else the licence server with the public key
+ * that signs its answers (LicenceSettings), else nobody (the key stays "not checked").
  * Outside development mode a test key goes to the real server like any other key.
  */
 final class ProviderChoice
@@ -31,8 +32,8 @@ final class ProviderChoice
         if ($this->settings->devMode && $key->isTestKey()) {
             return new StubLicenceProvider($this->clock);
         }
-        if ($this->settings->server !== null) {
-            return new HttpLicenceServer($this->http, $this->settings->server, $this->clock, $this->settings->product, $this->settings->pluginVersion);
+        if ($this->settings->server !== null && $this->settings->publicKeys !== []) {
+            return new HttpLicenceServer($this->http, $this->settings->server, $this->clock, $this->settings->product, $this->settings->pluginVersion, $this->settings->publicKeys);
         }
 
         return new NoLicenceServer($this->clock);

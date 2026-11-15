@@ -51,6 +51,30 @@ final class ReleaseScanTest extends TestCase
         }
     }
 
+    public function testAMoFileIsReadByItsTextsNotByItsTablesOfOffsets(): void
+    {
+        require_once dirname(__DIR__, 3) . '/bin/i18n/Compiler.php';
+        // 81 characters: the length field of the entry is the byte "Q" between zero bytes.
+        $long = str_repeat('a', 79) . ' x';
+        $mo = (new \Ritmo\Tools\I18n\Compiler([
+            ['context' => null, 'singular' => $long, 'plural' => null, 'translations' => [$long], 'fuzzy' => false, 'comments' => []],
+        ]))->mo();
+        $scan = new ReleaseScan(['Q']);
+        self::assertSame(['Q'], $scan->ownerTerms($mo), 'byte by byte, the table spells the term');
+        $this->dir = TempTree::make(['languages/a.mo' => $mo]);
+        self::assertSame([], $scan->scan($this->dir, ['languages/a.mo']), 'the texts of the .mo do not hold it');
+        self::assertSame(2, substr_count((string) ReleaseScan::moStrings($mo), $long), 'the original and its translation');
+        self::assertStringNotContainsString("\0", (string) ReleaseScan::moStrings($mo));
+
+        $withTerm = (new \Ritmo\Tools\I18n\Compiler([
+            ['context' => null, 'singular' => 'Room Q', 'plural' => null, 'translations' => ['Quarto Q'], 'fuzzy' => false, 'comments' => []],
+        ]))->mo();
+        TempTree::remove($this->dir);
+        $this->dir = TempTree::make(['languages/a.mo' => $withTerm, 'languages/b.mo' => "not a .mo, Q"]);
+        self::assertCount(2, $scan->scan($this->dir, ['languages/a.mo', 'languages/b.mo']), 'a term in a text, or in a file that is not a .mo, is found');
+        self::assertNull(ReleaseScan::moStrings('not a .mo'));
+    }
+
     public function testATermInABinaryFileIsFoundToo(): void
     {
         $term = Fixtures::json('owner-terms.json')['terms'][0];

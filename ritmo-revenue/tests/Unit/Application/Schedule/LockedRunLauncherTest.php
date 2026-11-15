@@ -182,6 +182,29 @@ final class LockedRunLauncherTest extends TestCase
         $this->runNow()->run('nowhere');
     }
 
+    public function testARunStoppedByPhpIsClosedItsLockFreedAndTheSiteTold(): void
+    {
+        $told = [];
+        $launcher = new LockedRunLauncher($this->world->runs, $this->world->locks, $this->executor, $this->world->clock, $this->world->logger, static function (string $property, int $run, string $cause) use (&$told): void {
+            $told[] = [$property, $run, $cause];
+        });
+        $this->executor->next = ['running'];
+        $first = $launcher->start($this->inn(), RunKind::Full, false, 20);
+        self::assertSame(LaunchStatus::Running, $first->status);
+        // A later request holds the lock and runs out of memory in the middle of the run.
+        $lock = $this->world->locks->acquire(LockedRunLauncher::lockKey('inn'), LockedRunLauncher::LOCK_TTL_SECONDS);
+        self::assertNotNull($lock);
+
+        $launcher->closeAfterFatal($this->inn(), $lock, 'Allowed memory size of 134217728 bytes exhausted (tried to allocate 20480 bytes)');
+
+        self::assertFalse($this->world->locks->isLocked(LockedRunLauncher::lockKey('inn')), 'no wait of ten minutes for the lock');
+        $run = $this->world->runs->find((int) $first->runId);
+        self::assertSame(RunRepository::FAILED, $run['status'] ?? null);
+        self::assertStringContainsString('ran out of memory', (string) ($run['note'] ?? $run['error'] ?? json_encode($run)));
+        self::assertSame([['inn', (int) $first->runId, 'memory']], $told);
+        self::assertSame(LaunchStatus::Completed, $launcher->start($this->inn(), RunKind::Manual, false, 20)->status, 'the next run starts at once');
+    }
+
     private function runNow(): RunNowService
     {
         return new RunNowService(new PropertyRepository($this->world->db, $this->world->clock), $this->launcher, $this->world->switch);

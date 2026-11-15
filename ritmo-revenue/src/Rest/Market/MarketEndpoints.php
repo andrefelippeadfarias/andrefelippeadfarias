@@ -258,14 +258,7 @@ final class MarketEndpoints
             ], $preview->problems),
             'more_problems' => $preview->moreProblems,
             'unknown_competitors' => $preview->unknownCompetitors,
-            'text' => sprintf(
-                /* translators: 1: number of valid rows, 2: number of nights, 3: number of competitors, 4: number of lines ignored */
-                __('%1$d valid rows for %2$d nights and %3$d competitors; %4$d lines ignored. Nothing is stored until you confirm.', 'ritmo-revenue'),
-                $preview->valid,
-                $preview->nights,
-                $preview->competitors,
-                $preview->invalidLines
-            ),
+            'text' => MarketText::previewSummary($preview->valid, $preview->nights, $preview->competitors, $preview->invalidLines) . ' ' . __('Nothing is stored until you confirm.', 'ritmo-revenue'),
         ];
     }
 

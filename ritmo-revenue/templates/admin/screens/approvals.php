@@ -70,6 +70,12 @@ endif;
     </section>
 <?php endforeach; ?>
 
+<?php if (($view['ai_drafts'] ?? null) !== null) : ?>
+    <div class="notice notice-info inline" data-ritmo="ai-drafts-waiting">
+        <p><?php echo esc_html($view['ai_drafts']['text']); ?> <a href="<?php echo esc_url($view['ai_drafts']['url']); ?>"><?php esc_html_e('Review the drafts', 'ritmo-revenue'); ?></a></p>
+    </div>
+<?php endif; ?>
+
 <?php if ($view['empty']) : ?>
     <div class="ritmo-empty" data-ritmo="empty">
         <h2><?php esc_html_e('Nothing is waiting for approval', 'ritmo-revenue'); ?></h2>
@@ -80,7 +86,7 @@ endif;
 <?php foreach ($view['requests'] as $ritmo_request) : ?>
     <form method="post" action="<?php echo esc_url(admin_url('admin-post.php')); ?>" class="ritmo-card ritmo-wide ritmo-request" data-ritmo="approval-request" data-ritmo-js="selection-tree"
           <?php /* translators: 1: nights selected, 2: nights up, 3: nights down (filled in by the browser) */ ?>
-          data-text-total="<?php esc_attr_e('Selected: %1$s nights · %2$s up · %3$s down', 'ritmo-revenue'); ?>"
+          data-text-total="<?php esc_attr_e('Selected: %1$s changes · %2$s up · %3$s down', 'ritmo-revenue'); ?>"
           data-text-linked="<?php esc_attr_e('Linked entries were selected too.', 'ritmo-revenue'); ?>">
         <?php wp_nonce_field('ritmo_approval_decide:' . $ritmo_request['id']); ?>
         <input type="hidden" name="action" value="ritmo_approval_decide">

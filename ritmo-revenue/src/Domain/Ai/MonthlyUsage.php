@@ -17,12 +17,50 @@ final class MonthlyUsage
     /**
      * @param list<array{at: string, purpose: string, model: string, tokens: array{input: int, output: int, cache_write: int, cache_read: int}, cost_usd: float, fallback: bool, stop: string}> $calls newest last
      * @param array{calls: int, input: int, output: int, cache_write: int, cache_read: int, cost_usd: float, fallbacks: int, refusals: int} $totals
+     * @param array<string, array{usd: float, at: string}> $reserved reservation id => estimated cost and time
      */
     public function __construct(
         public readonly string $month,
         public readonly array $calls = [],
         public readonly array $totals = ['calls' => 0, 'input' => 0, 'output' => 0, 'cache_write' => 0, 'cache_read' => 0, 'cost_usd' => 0.0, 'fallbacks' => 0, 'refusals' => 0],
+        public readonly array $reserved = [],
     ) {
+    }
+
+    /**
+     * The estimated cost of the calls under way (reserved before each call, freed by its answer
+     * or its failure), so calls at the same time cannot pass the cap together.
+     */
+    public function reservedUsd(): float
+    {
+        return array_sum(array_map(static fn (array $r): float => (float) $r['usd'], $this->reserved));
+    }
+
+    /**
+     * With one more reservation; reservations older than $staleBefore (a call that died) are dropped.
+     */
+    public function reserving(string $id, float $usd, string $at, string $staleBefore): self
+    {
+        $reserved = $this->withoutStale($staleBefore)->reserved;
+        $reserved[$id] = ['usd' => max(0.0, $usd), 'at' => $at];
+
+        return new self($this->month, $this->calls, $this->totals, $reserved);
+    }
+
+    /**
+     * Without the reservations made before $staleBefore (calls that died before their answer).
+     */
+    public function withoutStale(string $staleBefore): self
+    {
+        return new self($this->month, $this->calls, $this->totals, array_filter($this->reserved, static fn (array $r): bool => strcmp($r['at'], $staleBefore) >= 0));
+    }
+
+    public function releasing(string $id): self
+    {
+        $reserved = $this->reserved;
+        unset($reserved[$id]);
+
+        return new self($this->month, $this->calls, $this->totals, $reserved);
     }
 
     /**
@@ -50,7 +88,7 @@ final class MonthlyUsage
         $totals['fallbacks'] += $reply->fallbackUsed ? 1 : 0;
         $totals['refusals'] += $reply->stopReason === AiReply::STOP_REFUSAL ? 1 : 0;
 
-        return new self($this->month, array_slice($calls, -self::KEEP_CALLS), $totals);
+        return new self($this->month, array_slice($calls, -self::KEEP_CALLS), $totals, $this->reserved);
     }
 
     public function spentUsd(): float
@@ -68,7 +106,7 @@ final class MonthlyUsage
      */
     public function toArray(): array
     {
-        return ['month' => $this->month, 'calls' => $this->calls, 'totals' => $this->totals];
+        return ['month' => $this->month, 'calls' => $this->calls, 'totals' => $this->totals] + ($this->reserved === [] ? [] : ['reserved' => $this->reserved]);
     }
 
     /**
@@ -87,6 +125,13 @@ final class MonthlyUsage
         }
         $calls = array_values(array_filter(is_array($data['calls'] ?? null) ? $data['calls'] : [], static fn (mixed $c): bool => is_array($c) && is_string($c['at'] ?? null)));
 
-        return new self($month, array_slice($calls, -self::KEEP_CALLS), $totals);
+        $reserved = [];
+        foreach (is_array($data['reserved'] ?? null) ? $data['reserved'] : [] as $id => $row) {
+            if (is_string($id) && is_array($row) && is_numeric($row['usd'] ?? null) && is_string($row['at'] ?? null)) {
+                $reserved[$id] = ['usd' => (float) $row['usd'], 'at' => $row['at']];
+            }
+        }
+
+        return new self($month, array_slice($calls, -self::KEEP_CALLS), $totals, $reserved);
     }
 }

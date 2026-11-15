@@ -115,7 +115,7 @@ final class PriceLabsSimulatorTest extends SimulatorTestCase
 
         $status = $connector->testConnection();
         self::assertFalse($status->ok);
-        self::assertSame(['http_status' => 403], $status->details);
+        self::assertSame(['http_status' => 403, 'reason' => 'auth'], $status->details, 'a PriceLabs key has no scopes: a 403 is the key refused');
         self::assertStringContainsString('API_KEY_INVALID', $status->message);
 
         try {

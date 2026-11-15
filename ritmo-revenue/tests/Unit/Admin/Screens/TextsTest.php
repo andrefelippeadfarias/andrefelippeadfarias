@@ -83,6 +83,29 @@ final class TextsTest extends TestCase
         }
     }
 
+    /** Regression (M5 product review): every message the plugin logs has its own entry in LogText. */
+    public function testEveryLoggedMessageIsTranslatedOnTheDiagnosticsScreen(): void
+    {
+        $root = dirname(__DIR__, 4) . '/src';
+        $logText = (string) file_get_contents($root . '/Admin/Screens/LogText.php');
+        $files = new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($root, \FilesystemIterator::SKIP_DOTS));
+        $missing = [];
+        foreach ($files as $file) {
+            if (!str_ends_with((string) $file, '.php')) {
+                continue;
+            }
+            preg_match_all("/(?:logger(?:\\(\\))?|log\\(\\))->(?:info|warning|error|debug)\\(\\s*'([^']+)'/", (string) file_get_contents((string) $file), $matches);
+            foreach ($matches[1] as $message) {
+                if (!str_contains($logText, "'" . $message . "' =>")) {
+                    $missing[] = $message;
+                }
+            }
+        }
+        self::assertSame([], array_values(array_unique($missing)));
+        self::assertNotSame(Labels::provider('nobody'), Labels::provider('claude'));
+        self::assertNotSame(Labels::provider('nobody'), Labels::provider('licence'));
+    }
+
     /** Regression (M4 product review): a failed write with no group left open does not say "Changes still open: 0". */
     public function testAnAlertDoesNotShowZeroGroupsOpen(): void
     {
@@ -101,6 +124,20 @@ final class TextsTest extends TestCase
         }
         self::assertSame('channel limit', Labels::field('pms_channel_limit:booking'));
         self::assertSame('listing base', Labels::field('base'));
+    }
+
+    public function testTheRefusalsOfTheRoomStepAreSaidInTheReadersLanguage(): void
+    {
+        $mapped = \Ritmo\Admin\Screens\RoomErrorText::of('The PMS room or the pricing listing is already mapped to the room "SR".');
+        self::assertStringContainsString('room SR', $mapped);
+        self::assertStringContainsString('Do not manage this room', $mapped);
+        foreach (['A room type needs a name.', 'A room type needs at least one unit.', 'Room type "max" must not be lower than "min".', 'Room type "base" must be greater than zero.', 'Invalid room type code "a b".'] as $message) {
+            self::assertNotSame($message, \Ritmo\Admin\Screens\RoomErrorText::of($message), $message);
+        }
+        self::assertSame('Something else.', \Ritmo\Admin\Screens\RoomErrorText::of('Something else.'));
+        self::assertSame('Some rooms could not be saved: nothing was saved.', \Ritmo\Admin\Components\ErrorText::from(new \Ritmo\Application\Dashboard\Setup\RoomRowsRefused([['row' => 1, 'message' => 'x']])));
+        $source = (string) file_get_contents(dirname(__DIR__, 4) . '/src/Application/Setup/SetupService.php');
+        self::assertStringContainsString("'The PMS room or the pricing listing is already mapped to the room \"%s\".'", $source, 'the sentence matched here is the one the application throws');
     }
 
     public function testEveryAlertCodeHasATitleAnExplanationAndAnAction(): void

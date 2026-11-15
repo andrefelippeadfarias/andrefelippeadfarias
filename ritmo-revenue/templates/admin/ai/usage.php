@@ -12,7 +12,7 @@ defined('ABSPATH') || exit;
 ?>
 <div class="ritmo-ai" data-ritmo="ai-usage">
     <section class="ritmo-card" aria-labelledby="ritmo-ai-month-title">
-        <h2 id="ritmo-ai-month-title"><?php /* translators: %s: a month such as 2026-11 */ echo esc_html(sprintf(__('Estimated spend in %s', 'ritmo-revenue'), $view['month'])); ?></h2>
+        <h2 id="ritmo-ai-month-title"><?php /* translators: %s: a month such as November 2026 */ echo esc_html(sprintf(__('Estimated spend in %s', 'ritmo-revenue'), $view['month'])); ?></h2>
         <p class="ritmo-ai-spend" data-ritmo="ai-spent"><?php /* translators: 1: amount spent, 2: monthly cap */ echo esc_html(sprintf(__('%1$s of a cap of %2$s', 'ritmo-revenue'), $view['spent'], $view['cap'])); ?></p>
         <div class="ritmo-ai-meter" role="img" aria-label="<?php /* translators: %d: share of the cap used */ echo esc_attr(sprintf(__('%d%% of the cap used', 'ritmo-revenue'), $view['share'])); ?>"><span style="<?php echo esc_attr('width: ' . (int) $view['share'] . '%'); ?>"></span></div>
         <?php if ($view['cap_reached']) : ?>

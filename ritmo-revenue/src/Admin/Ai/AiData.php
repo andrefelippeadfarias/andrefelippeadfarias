@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Ritmo\Admin\Ai;
 
+use Ritmo\Admin\Components\DomainText;
 use Ritmo\Admin\Components\Money;
 use Ritmo\Admin\Components\Percent;
 use Ritmo\Admin\Reports\ReportsServices;
@@ -11,6 +12,8 @@ use Ritmo\Admin\Reports\RunLineText;
 use Ritmo\Admin\Screens\AlertText;
 use Ritmo\Application\Ai\RequestData;
 use Ritmo\Domain\Ai\DraftContext;
+use Ritmo\Domain\Ai\RuleCatalogue;
+use Ritmo\Domain\Config\FieldType;
 use Ritmo\Domain\Ai\WeeklyFacts;
 use Ritmo\Domain\Config\RuleSet;
 use Ritmo\Domain\Model\Property;
@@ -54,7 +57,14 @@ final class AiData
         $services = Services::instance();
         $rules = $services->ruleSets()->current() ?? RuleSet::defaults();
 
-        return RequestData::of($property, $services->roomTypes()->forProperty($property->id), $rules, $services->clock()->today($property->timezone), $text);
+        $names = [];
+        foreach (RuleCatalogue::forRules()->fields() as $field) {
+            if ($field->type === FieldType::Boolean || $field->type === FieldType::Choice) {
+                $names[$field->key] = [DomainText::t($field->label)];
+            }
+        }
+
+        return RequestData::of($property, $services->roomTypes()->forProperty($property->id), $rules, $services->clock()->today($property->timezone), $text, $names);
     }
 
     /**

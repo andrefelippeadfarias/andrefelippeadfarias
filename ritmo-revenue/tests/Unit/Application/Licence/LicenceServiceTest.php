@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Ritmo\Tests\Unit\Application\Licence;
 
+use Closure;
 use PHPUnit\Framework\TestCase;
 use Ritmo\Application\Licence\LicenceRefused;
 use Ritmo\Application\Licence\LicenceService;
@@ -20,6 +21,7 @@ use Ritmo\Infrastructure\Store\ArrayStore;
 use Ritmo\Tests\Fakes\MovableClock;
 use Ritmo\Tests\Fakes\RecordingLogger;
 use Ritmo\Tests\Fakes\ScriptedHttpClient;
+use Ritmo\Tests\Fakes\SignedLicenceAnswers;
 
 final class LicenceServiceTest extends TestCase
 {
@@ -28,6 +30,8 @@ final class LicenceServiceTest extends TestCase
     private const SITE = 'https://inn.example.com';
 
     private MovableClock $clock;
+
+    private static ?MovableClock $now = null;
 
     private ScriptedHttpClient $http;
 
@@ -40,6 +44,7 @@ final class LicenceServiceTest extends TestCase
     protected function setUp(): void
     {
         $this->clock = new MovableClock('2026-11-15T10:00:00Z');
+        self::$now = $this->clock;
         $this->http = new ScriptedHttpClient();
         $this->store = new ArrayStore();
         $this->vault = new SodiumVault($this->store, $this->clock, str_repeat('v', 40));
@@ -48,14 +53,19 @@ final class LicenceServiceTest extends TestCase
 
     private function service(bool $dev = false, bool $server = true, int $graceDays = 30): LicenceService
     {
-        $settings = new LicenceSettings($server ? ServerUrl::parse('https://licences.example.com/v1', false) : null, new GracePolicy($graceDays), $dev, self::SITE, '1.0.0');
+        $settings = new LicenceSettings($server ? ServerUrl::parse('https://licences.example.com/v1', false) : null, new GracePolicy($graceDays), $dev, self::SITE, '1.0.0', 'ritmo-revenue', false, [SignedLicenceAnswers::publicKey()]);
 
         return new LicenceService($this->vault, $this->store, $this->clock, $this->logger, new ProviderChoice($settings, $this->http, $this->clock), $settings);
     }
 
-    private static function valid(?string $until = '2027-11-15T00:00:00Z'): HttpResponse
+    /**
+     * A "valid" answer signed with the test key, for the request it replies to.
+     */
+    private static function valid(?string $until = '2027-11-15T00:00:00Z'): Closure
     {
-        return ScriptedHttpClient::json(200, ['status' => 'valid', 'expires_at' => $until, 'message' => 'Licence active.']);
+        $clock = self::$now;
+
+        return SignedLicenceAnswers::answer('valid', $until, 'Licence active.', static fn (): string => $clock?->now()->format('Y-m-d\\TH:i:s\\Z') ?? '');
     }
 
     public function testSavingAKeyActivatesItAndKeepsItOnlyInTheVault(): void

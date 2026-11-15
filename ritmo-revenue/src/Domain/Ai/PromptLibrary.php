@@ -38,18 +38,18 @@ Task: turn the owner's request into a draft, in the JSON format required. You ne
 "kind":
 - "order": an owner order for some nights of some rooms (a minimum price, a raise, a market target, nights the engine must leave alone, a reminder);
 - "rule_change": new values of rule settings listed in the catalogue below;
-- "not_supported": anything else, and always for: changing the mode of a property, the emergency switch, a safety limit, the listing minimum, base or maximum, approvals, connections or keys, or sending prices now.
+- "not_supported": anything else, and always for: changing the mode of a property, the emergency switch, a safety limit, the listing minimum, base or maximum, approvals, connections or keys, writing to the PMS, the plan validator, a fixed price, a stay restriction, or sending prices now.
 "summary": one sentence in the locale's language that says what the draft would do.
 "order" (fill it only for kind "order"; for other kinds use type "follow_up", empty lists, empty texts and zeros):
-- "type": "floor" (a minimum price; the engine keeps pricing above it), "target" (a market percentile), "fixed_price" (the engine leaves the nights alone), "restriction" (stay or arrival rules), "follow_up" (a reminder that changes nothing);
-- "rooms": room codes from data.rooms, or ["*"] for every room of the property;
-- "from" and "to": the first and the last night, YYYY-MM-DD, between data.today and data.last_night; a holiday or a season means the nights of that period in data.periods;
+- "type": "floor" (a minimum price; the engine keeps pricing above it), "target" (a market percentile), "follow_up" (a reminder that changes nothing). A fixed price or a stay or arrival restriction is never a draft: use kind "not_supported";
+- "rooms": only the room codes from data.rooms that the owner named; ["*"] (every room) only when the owner named no room or said every room;
+- "from" and "to": the first and the last night, YYYY-MM-DD, between data.today and data.last_night, exactly the dates, months or holiday the owner named (a holiday means the nights of that period in data.periods); never a longer period than the owner asked;
 - "weekdays": only these nights of the week inside from and to (0 is Monday, 6 is Sunday), or an empty list for every night;
 - "floor_amount": an amount the owner wrote, as a number; 0 when the owner wrote none. Never invent an amount;
 - "change_percent": a relative change the owner asked for ("raise 10%" is 10, "lower 5%" is -5); 0 otherwise. The plugin computes the amounts from each room's base price; never compute them yourself;
 - "percentile": a market percentile the owner asked for, for type "target"; 0 otherwise;
 - "note": a short neutral note of what the owner asked, without guest data.
-"rule_changes" (only for kind "rule_change"; else an empty list): "key" is a dotted path of the catalogue, with the position of a list item where the catalogue shows "*" (data.periods gives the path of each period); "value" is the new value as plain text in the unit the catalogue shows (a share as a fraction: 0.7 for 70%; yes or no for a switch). Never a key outside the catalogue.
+"rule_changes" (only for kind "rule_change"; else an empty list): "key" is a dotted path of the catalogue, with the position of a list item where the catalogue shows "*" (data.periods gives the path of each period); "value" is the new value as plain text in the unit the catalogue shows (a share as a fraction: 0.7 for 70%; yes or no for a switch). Never a key outside the catalogue, and a switch or a choice only when the owner named that setting.
 "questions": what is unclear and needs the owner's answer (an unknown room, a missing date, an amount that could mean two things); an empty list when nothing is unclear. When the request cannot become a safe draft, use kind "not_supported" and explain in "summary".
 TXT;
 

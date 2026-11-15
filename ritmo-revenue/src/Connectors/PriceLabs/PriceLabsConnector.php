@@ -99,7 +99,11 @@ final class PriceLabsConnector implements PricingConnector
         try {
             $all = $this->readDirectory();
         } catch (ConnectorException $e) {
-            return new ConnectionStatus(false, $e->getMessage(), array_filter(['http_status' => $e->httpStatus()], 'is_int'));
+            // A PriceLabs key has no scopes: a 401 or a 403 (API_KEY_INVALID, API_KEY_MISSING) is
+            // always the key refused, never a key without some permission.
+            $refused = in_array($e->httpStatus(), [401, 403], true);
+
+            return new ConnectionStatus(false, $e->getMessage(), array_filter(['http_status' => $e->httpStatus(), 'reason' => $refused ? 'auth' : null], static fn (mixed $v): bool => $v !== null));
         }
 
         $mine = count(array_filter($all, $this->belongsToPms(...)));

@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-# End-to-end test of the plugin (milestones M1 to M4) on throwaway WordPress sites
+# End-to-end test of the plugin (milestones M1 to M5) on throwaway WordPress sites
 # (bin/wp-test-site.sh) against the local simulator (tests/fake-apis), with Playwright:
 #
 #   1. "wizard": a fresh site; the setup wizard of Settings (tests/e2e/m4-screens.js wizard),
@@ -20,7 +20,23 @@
 #      the capabilities after a new activation and a RITMO_SECRET_KEY that is too short;
 #   6. "update": a site built and seeded with the M3 plugin (git commit $RITMO_E2E_M3_REF,
 #      default 336ced7, read with git archive), switched to this code: migrations, roles and
-#      capabilities and every screen without error (tests/e2e/upgrade-checks.php).
+#      capabilities and every screen without error (tests/e2e/upgrade-checks.php);
+#   7. "assistant": a new seeded site (licensed by the test provider), connections and a shadow run
+#      that read the bookings (shadow-run.js setup), an alert (tests/e2e/seed-ai.php), then the
+#      optional assistant against the fake Claude API (tests/e2e/m5-ai.js): off by default, the
+#      write-only key, a request turned into a draft that waits for a person (Approvals) and opens in
+#      the order form or the rules draft, an alert explained, a run report in words, the refusal of
+#      the model and an overloaded API (529) in plain words, injection and guest data refused, no
+#      guest data in any body sent, no write to the PMS or the pricing system;
+#   8. "licence": a new seeded site without the test provider (RITMO_E2E_LICENCE_DEV=0),
+#      connections and a shadow run, then tests/e2e/m5-licence.js against the local licence and
+#      update server: activation, grace, lapse, the property put back in shadow mode by the next run
+#      with nothing written, removal; a tampered update refused and the signed one installed;
+#   9. "zip": bin/e2e-zip.sh, the package built by bin/build.sh installed on a clean site, used and
+#      deleted with nothing left.
+#
+# Every site but the licence and zip ones has RITMO_LICENCE_DEV and the test licence of seed.php,
+# so the passes of M3 and M4 may leave shadow mode.
 #
 # Run it alone, not next to bin/test.sh: both load the machine, and the built-in PHP servers of the
 # sites then drop connections (the helper requests of the passes are retried a few times).
@@ -98,5 +114,26 @@ php "$WORK/m3/tests/e2e/seed.php" "$WP"
 "$ROOT/bin/wp-test-site.sh" relink "$ROOT"
 php "$ROOT/tests/e2e/upgrade-checks.php" "$WP"
 no_plugin_errors "update"
+
+echo "== 7. M5 assistant (a new seeded site)"
+RITMO_PRICING_CALENDAR_READ= "$ROOT/bin/wp-test-site.sh" start
+php "$ROOT/tests/e2e/seed.php" "$WP"
+RITMO_E2E_PASS=setup RITMO_PRICING_CALENDAR_READ= RITMO_E2E_SCREENS="$WORK/ai-setup-shots" node "$ROOT/tests/e2e/shadow-run.js" > /dev/null
+ALERT_ID="$(php "$ROOT/tests/e2e/seed-ai.php" "$WP" example-inn)"
+RITMO_E2E_AI_ALERT="$ALERT_ID" node "$ROOT/tests/e2e/m5-ai.js"
+no_plugin_errors "assistant"
+
+echo "== 8. M5 licence and updates (a new seeded site, no test provider)"
+export RITMO_E2E_LICENCE_DEV=0
+RITMO_PRICING_CALENDAR_READ= "$ROOT/bin/wp-test-site.sh" start
+php "$ROOT/tests/e2e/seed.php" "$WP"
+RITMO_E2E_PASS=setup RITMO_PRICING_CALENDAR_READ= RITMO_E2E_SCREENS="$WORK/licence-setup-shots" node "$ROOT/tests/e2e/shadow-run.js" > /dev/null
+RITMO_E2E_WP="$WP" RITMO_E2E_PROPERTY=example-inn node "$ROOT/tests/e2e/m5-licence.js"
+no_plugin_errors "licence"
+
+echo "== 9. the zip on a clean site"
+"$ROOT/bin/wp-test-site.sh" stop
+"$ROOT/bin/e2e-zip.sh" "" "$SCREENS/zip"
+unset RITMO_E2E_LICENCE_DEV
 
 echo "E2E OK. Screenshots in $SCREENS"

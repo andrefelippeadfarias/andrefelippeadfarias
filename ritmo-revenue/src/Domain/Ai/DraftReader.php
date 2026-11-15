@@ -29,10 +29,18 @@ final class DraftReader
     public const PERCENT_MIN = -50.0;
     public const PERCENT_MAX = 200.0;
     public const AMOUNT_MAX = 9999999.0;
+    /** Order types a person gives in the form; the assistant never drafts them. */
+    public const FORM_ONLY_TYPES = ['fixed_price', 'restriction'];
+    /** Shortest label (in letters and digits) that names a setting by itself. */
+    public const NAME_MIN = 8;
 
     /** Why a draft is refused: code => English sentence (%s: the room or the setting). */
     public const PROBLEMS = [
+        'type_form_only' => 'a fixed price or a stay restriction is given by a person in the order form, never drafted',
         'no_room' => 'no room was chosen',
+        'all_rooms_not_written' => 'the request names some rooms, not every room',
+        'room_not_written' => 'room "%s" is not one the request names',
+        'nights_not_written' => 'the nights are not the dates, months or holiday the request names (or more than 31 nights when it names none)',
         'unknown_room' => '"%s" is not a room of this property',
         'amount_and_percent' => 'an order takes an amount or a percentage, not both',
         'amount_range' => 'the amount is out of range',
@@ -55,6 +63,7 @@ final class DraftReader
         'setting_missing' => '"%s" does not exist in the rules in force',
         'setting_value' => '"%s" does not take that value',
         'setting_not_written' => 'the value of "%s" is not one the request wrote',
+        'setting_not_named' => 'the request does not name the setting "%s"',
         'no_change' => 'nothing would change: the rules already hold these values',
         'rules_invalid' => 'the rules would not be valid at "%s"',
     ];
@@ -97,21 +106,34 @@ final class DraftReader
     {
         $problems = [];
         $type = (string) $order['type'];
-        $codes = array_keys($context->roomBases);
+        if (in_array($type, self::FORM_ONLY_TYPES, true)) {
+            throw self::refused([['type_form_only', '']]);
+        }
+        $codes = array_map('strval', array_keys($context->roomBases));
         $rooms = array_values(array_unique(array_map('strval', $order['rooms'])));
+        $named = RequestScope::namedRooms($context->request, $codes, $context->roomLabels);
+        $everyRoomAllowed = $named === [] || RequestScope::saysAllRooms($context->request);
         if (in_array('*', $rooms, true)) {
             $rooms = ['*'];
+            if (!$everyRoomAllowed) {
+                $problems[] = ['all_rooms_not_written', ''];
+            }
         } elseif ($rooms === []) {
             $problems[] = ['no_room', ''];
         }
         foreach ($rooms as $room) {
             if ($room !== '*' && !in_array($room, $codes, true)) {
                 $problems[] = ['unknown_room', $room];
+            } elseif ($room !== '*' && !$everyRoomAllowed && !in_array($room, $named, true)) {
+                $problems[] = ['room_not_written', $room];
             }
         }
         $covered = $rooms === ['*'] ? $codes : $rooms;
 
         [$from, $to, $nights] = $this->nights($order, $context, $problems);
+        if ($from !== '' && $to !== '' && Days::isValid((string) $order['from']) && Days::isValid((string) $order['to']) && !RequestScope::allowsNights($context->request, Days::date((string) $order['from']), Days::date((string) $order['to']), $context->today, $context->lastNight(), self::periods($context->rules))) {
+            $problems[] = ['nights_not_written', ''];
+        }
 
         $amount = (float) $order['floor_amount'];
         $percent = (float) $order['change_percent'];
@@ -257,6 +279,10 @@ final class DraftReader
                 $problems[] = ['setting_not_written', $path];
                 continue;
             }
+            if (!is_int($value) && !is_float($value) && !self::named($field, $path, $context)) {
+                $problems[] = ['setting_not_named', $path];
+                continue;
+            }
             $before = self::at($rules, $path);
             if ($before === $value || ((is_int($before) || is_float($before)) && (is_int($value) || is_float($value)) && (float) $before === (float) $value)) {
                 continue;
@@ -330,6 +356,27 @@ final class DraftReader
     }
 
     /**
+     * A switch or a choice changes only when the person named the setting: its key, its path or
+     * its label (in English or in the language of the screen). Short labels ("On") do not count.
+     */
+    private static function named(Field $field, string $path, DraftContext $context): bool
+    {
+        $names = [$field->key, $path];
+        foreach ([$field->label, ...($context->names[$field->key] ?? [])] as $label) {
+            if (mb_strlen(RequestScope::words((string) $label)) >= self::NAME_MIN) {
+                $names[] = (string) $label;
+            }
+        }
+        foreach ($names as $name) {
+            if (RequestScope::names($context->request, $name)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
      * @param array<int|string, mixed> $data
      */
     private static function exists(array $data, string $path): bool
@@ -370,6 +417,25 @@ final class DraftReader
         $data[$key] = $segments === [] ? $value : self::put(is_array($data[$key] ?? null) ? $data[$key] : [], $segments, $value);
 
         return $data;
+    }
+
+    /**
+     * The holiday periods of the calendar in force.
+     *
+     * @param array<string, mixed> $rules
+     *
+     * @return list<array{name: string, start: string, end: string}>
+     */
+    private static function periods(array $rules): array
+    {
+        $periods = [];
+        foreach (is_array($rules['calendar']['holidays'] ?? null) ? $rules['calendar']['holidays'] : [] as $period) {
+            if (is_array($period) && is_string($period['start'] ?? null) && is_string($period['end'] ?? null)) {
+                $periods[] = ['name' => (string) ($period['name'] ?? ''), 'start' => $period['start'], 'end' => $period['end']];
+            }
+        }
+
+        return $periods;
     }
 
     private static function money(float $amount): string

@@ -171,6 +171,9 @@ final class Labels
             'beds24', 'pms' => __('the PMS', 'ritmo-revenue'),
             'pricelabs', 'pricing' => __('the pricing system', 'ritmo-revenue'),
             'listing' => __('the listing', 'ritmo-revenue'),
+            'claude' => __('Claude (the assistant)', 'ritmo-revenue'),
+            'licence', 'http' => __('the licence server', 'ritmo-revenue'),
+            'update', 'updates' => __('the update server', 'ritmo-revenue'),
             default => self::other(),
         };
     }

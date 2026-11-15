@@ -85,7 +85,7 @@ final class ScreenActions
     {
         if ($failure instanceof RoomRowsRefused) {
             /* translators: 1: row number, 2: why the row was refused */
-            return array_map(static fn (array $e): string => sprintf(__('Room %1$d: %2$s', 'ritmo-revenue'), $e['row'], $e['message']), $failure->errors);
+            return array_map(static fn (array $e): string => $e['row'] === 0 ? RoomErrorText::of($e['message']) : sprintf(__('Room %1$d: %2$s', 'ritmo-revenue'), $e['row'], RoomErrorText::of($e['message'])), $failure->errors);
         }
         if ($failure instanceof InvalidConfig) {
             return array_values(array_unique(array_map(static fn (ValidationError $e): string => $e->message, $failure->errors())));

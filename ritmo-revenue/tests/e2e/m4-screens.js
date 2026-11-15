@@ -41,6 +41,8 @@ const SCREENS = [
     ['settings-setup', 'ritmo-revenue-settings&tab=setup'],
     ['settings-connections', 'ritmo-revenue-settings&tab=connections'],
     ['settings-diagnostics', 'ritmo-revenue-settings&tab=diagnostics'],
+    ['assistant', 'ritmo-revenue-assistant'],
+    ['settings-licence', 'ritmo-revenue-settings&tab=licence'],
 ];
 
 const results = [];
@@ -237,6 +239,8 @@ async function approvals(page) {
     await fetch(API + '/__writes', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ not_ready: [] }) });
     await open(page, 'ritmo-revenue-operations');
     await page.selectOption('#ritmo-mode', 'approval');
+    await page.fill('#ritmo-confirmation', await page.getAttribute('#ritmo-confirmation', 'data-expected'));
+    await page.check('#ritmo-sole-writer');
     await submitAndWait(page, '[data-ritmo="set-mode"]');
     await submitAndWait(page, '[data-ritmo="run-now-button"]');
     check(writes(await simulatorRequests()).length === 0, 'approval mode wrote before any approval');
@@ -578,7 +582,7 @@ async function wizardPass() {
         await page.setViewportSize({ width: 1280, height: 900 });
 
         const menu = await page.locator('#toplevel_page_ritmo-revenue .wp-submenu li a').allInnerTexts();
-        check(menu.length === 12, 'the menu has ' + menu.length + ' entries');
+        check(menu.length === 13, 'the menu has ' + menu.length + ' entries (the Assistant of M5 included)');
         results.push({ menu: menu.map((t) => t.replace(/\s+\d+.*$/, '')) });
 
         baseline = (await (await fetch(API + '/__log')).json()).requests.length;

@@ -18,7 +18,8 @@ use Ritmo\Infrastructure\Db\Schema\Table;
  * - booking_movements: per property, every processed version of a booking (fingerprint), so the
  *   overlap of two reads never counts a sale twice. No guest data: do not add such a column.
  * - alerts (stated again, M1 columns kept): the lifecycle columns (evidence, acknowledgement and
- *   resolution by whom, e-mail and digest instants, occurrences) and the dedupe lookup by status.
+ *   resolution by whom, e-mail and digest instants, occurrences). Every key stays within 767 bytes in
+ *   utf8mb4 (MySQL 5.6 with COMPACT rows).
  */
 final class Migration0009Operations implements Migration
 {
@@ -67,7 +68,7 @@ final class Migration0009Operations implements Migration
 
             new Table('booking_movements', [
                 Column::text('property_code', 32),
-                Column::text('pms', 32),
+                Column::text('pms', 31), // 32 + 31 + 64 + 64 characters: the unique key stays within 767 bytes in utf8mb4 (MySQL 5.6, COMPACT rows)
                 Column::text('pms_ref', 64),
                 Column::text('fingerprint', 64),
                 Column::text('kind', 16),
@@ -112,7 +113,8 @@ final class Migration0009Operations implements Migration
                 Index::plain('status', 'status', 'severity'),
                 Index::plain('dedupe', 'dedupe_key'),
                 Index::plain('property', 'property_code', 'created_at'),
-                Index::plain('dedupe_status', 'dedupe_key', 'status'),
+                // No (dedupe_key, status) key: 190 + 16 characters pass 767 bytes in utf8mb4 on MySQL 5.6;
+                // the dedupe key alone finds the rows.
                 Index::plain('notified', 'property_code', 'notified_at'),
             ]),
         ];

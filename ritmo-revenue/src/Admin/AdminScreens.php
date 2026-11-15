@@ -5,10 +5,12 @@ declare(strict_types=1);
 namespace Ritmo\Admin;
 
 use Closure;
+use Ritmo\Admin\Ai\AiScreens;
 use Ritmo\Admin\Components\FormAction;
 use Ritmo\Admin\Components\Menu;
 use Ritmo\Admin\Components\Screen;
 use Ritmo\Admin\Editors\EditorScreens;
+use Ritmo\Admin\Licence\LicenceActions;
 use Ritmo\Admin\Market\MarketActions;
 use Ritmo\Admin\Market\MarketScreen;
 use Ritmo\Admin\Reports\ReportsActions;
@@ -22,15 +24,18 @@ use Ritmo\WordPress\Roles;
 use Ritmo\WordPress\Services;
 
 /**
- * The admin of the plugin in WordPress (admin spec 2, 4.1): the twelve entries of the menu from
- * every area's screens, the counters, the redirects of the M1-M3 slugs, the stylesheets and
+ * The admin of the plugin in WordPress (admin spec 2, 4.1): the thirteen entries of the menu from
+ * every area's screens (the Assistant and the Licence tab of M5 included), the counters, the redirects of the M1-M3 slugs, the stylesheets and
  * scripts of each screen, every form action of admin-post.php (POST only, capability, nonce,
  * then the handler: Screens\ScreenActions) and the notice of a vault that cannot work.
  */
 final class AdminScreens
 {
     /** Screens whose templates use the editors' frame and stylesheet. */
-    private const EDITOR_SCREENS = [Menu::ORDERS, Menu::RULES, Menu::MARKET, Menu::REPORTS];
+    private const EDITOR_SCREENS = [Menu::ORDERS, Menu::RULES, Menu::MARKET, Menu::REPORTS, Menu::ASSISTANT];
+
+    /** Screens that may show the assistant's "explain" buttons (an alert, a run report). */
+    private const EXPLAIN_SCREENS = [Menu::ALERTS, Menu::REPORTS];
 
     private function __construct()
     {
@@ -49,7 +54,7 @@ final class AdminScreens
     public static function renderers(): array
     {
         $renderers = Screens::renderers() + [Menu::OPERATIONS => OperationsScreen::render(...)];
-        foreach ([...EditorScreens::screens(), ...MarketScreen::screens(), ...ReportsScreen::screens()] as $screen) {
+        foreach ([...EditorScreens::screens(), ...MarketScreen::screens(), ...ReportsScreen::screens(), ...AiScreens::screens()] as $screen) {
             /** @var Screen $screen */
             $renderers[$screen->slug] = $screen->render;
         }
@@ -71,6 +76,8 @@ final class AdminScreens
             ...EditorScreens::actions(),
             ...MarketActions::actions(),
             ...ReportsActions::actions(),
+            ...AiScreens::actions(),
+            ...LicenceActions::actions(),
         ];
     }
 
@@ -97,6 +104,11 @@ final class AdminScreens
         if ($page === Menu::REPORTS) {
             wp_enqueue_style('ritmo-reports', plugins_url('assets/reports.css', RITMO_FILE), ['ritmo-editors'], RITMO_VERSION);
             wp_enqueue_script('ritmo-reports', plugins_url('assets/reports.js', RITMO_FILE), [], RITMO_VERSION, ['in_footer' => true, 'strategy' => 'defer']);
+        }
+        if ($page === Menu::ASSISTANT || in_array($page, self::EXPLAIN_SCREENS, true)) {
+            $after = in_array($page, self::EDITOR_SCREENS, true) ? ['ritmo-editors'] : ['ritmo-screens'];
+            wp_enqueue_style('ritmo-ai', plugins_url('assets/ai.css', RITMO_FILE), $after, RITMO_VERSION);
+            wp_enqueue_script('ritmo-ai', plugins_url('assets/ai.js', RITMO_FILE), [], RITMO_VERSION, ['in_footer' => true, 'strategy' => 'defer']);
         }
     }
 

@@ -13,3 +13,33 @@
 /composer.json
 /.gitignore
 /.distignore
+# Developer documentation and readme: they describe the code, not the use of the plugin, and the
+# package stays under the 2 MB upload limit of most hosts. The user guide goes with the plugin.
+/README.md
+/docs/ADMIN.md
+/docs/AI.md
+/docs/ALERTS.md
+/docs/APPLICATION.md
+/docs/ARCHITECTURE.md
+/docs/CHANGELOG-UNDO.md
+/docs/CONNECTORS.md
+/docs/CONTRACTS.md
+/docs/EDITORS.md
+/docs/ENGINE.md
+/docs/INFRASTRUCTURE.md
+/docs/LADDER.md
+/docs/LICENCE-UPDATE.md
+/docs/MARKET.md
+/docs/OPERATIONS.md
+/docs/ORDERS.md
+/docs/RELATIONS.md
+/docs/REPORTS.md
+/docs/STAY.md
+/docs/VALIDATOR.md
+/docs/VERIFY.md
+/docs/WRITE.md
+# Translation sources: WordPress 6.5+ reads the .l10n.php (and the .mo); the .po, the .pot and
+# the glossary are for translators.
+/languages/*.po
+/languages/*.pot
+/languages/glossary-*.json

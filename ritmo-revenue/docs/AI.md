@@ -93,9 +93,19 @@ honoured only while `RITMO_DEV` is true.
   wrote**; the floors of a relative change are computed by the plugin from each room's base price
   (half to even, two decimals), never by the model; rule changes only for settings of the catalogue
   (`RuleCatalogue`: numbers, switches and choices; never a locked field, never `safety.*`,
-  `write.*`, `modes.*`, `quota.*`, `approval.*`, `third_party.*`, `verify.*`, `waves.*`,
-  `schedule.*`, `light_run.*`, `alerts.*`, `reports.*` or `floors.fraction_of_reference_min`), in
-  their range, applied to a copy of the rules in force and validated as a whole rule set.
+  `write.*`, `stay.write.*` (the PMS writes), `plan.validator.*`, `plan.payload.*`, `market.csv.*`,
+  `modes.*`, `quota.*`, `approval.*`, `third_party.*`, `verify.*`, `waves.*`, `schedule.*`,
+  `light_run.*`, `alerts.*`, `reports.*`, `plan.horizon_nights` or
+  `floors.fraction_of_reference_min`), in their range, applied to a copy of the rules in force and
+  validated as a whole rule set.
+- **The request bounds the draft** (`RequestScope`): a switch or a choice changes only when the
+  request names the setting (its key, or its label in English or in the screen's language; labels
+  shorter than eight letters do not count); an order covers every room (`*`) only when the request
+  names no room or says every room, and otherwise only the rooms it names; its first and last night
+  must be dates the request wrote (24/12, 2026-12-24, "24 de dezembro"), inside a month it named or
+  inside a holiday period named by its name, and a request with none of these covers at most 31
+  nights. Fixed-price and restriction orders are never drafted (`type_form_only`): a person gives
+  them in the form.
 - `DraftHandOff` checks once more when a person opens a draft (the catalogue and
   `Rules\SafetyFields`): an order fills the order form (`OrderFormDraft`, the form's own draft; the
   order is only given when the person saves it, with `OrderDesk`'s checks, safety releases included);
@@ -142,14 +152,13 @@ property, run or alert), always with a sentence in the reader's language.
 | `ritmo_ai_settings_save` | manage connections | | settings and, when typed, the key |
 | `ritmo_ai_key_forget` | manage connections | | forgets the key |
 | `ritmo_ai_test` | manage connections | | lists the models of the key |
-| `ritmo_ai_draft` | view | `ritmo_use_ai` | a request becomes a queued draft |
-| `ritmo_ai_weekly` | view | `ritmo_use_ai` | the weekly text, shown once |
+| `ritmo_ai_draft` | `ritmo_use_ai` | `ritmo_use_ai` (again, in the handler) | a request becomes a queued draft |
+| `ritmo_ai_weekly` | `ritmo_use_ai` | `ritmo_use_ai` | the weekly text, shown once |
 | `ritmo_ai_draft_open` (nonce per draft) | manage rules | `ritmo_use_ai` | opens the draft in its editor |
-| `ritmo_ai_draft_discard` (nonce per draft) | view | `ritmo_use_ai` | discards a draft |
+| `ritmo_ai_draft_discard` (nonce per draft) | `ritmo_use_ai` | `ritmo_use_ai` | discards a draft |
 
-The dispatcher's capability must be a constant of `Capability` or `Roles` (lint); until the
-integration adds `Capability::USE_AI`, the actions that ask the assistant check `ritmo_use_ai` in the
-handler, before anything.
+The dispatcher's capability is a constant of `Capability` (`Capability::USE_AI` since the
+integration); the handlers check `ritmo_use_ai` again before anything.
 
 ## 8. Simulator and tests
 
@@ -167,36 +176,39 @@ AnthropicApi.php`) or in process; also under an `/anthropic` prefix.
   catalogue, schemas, settings, prices, usage, answers, weekly facts, layers.
 - `tests/Unit/Connectors/Ai`: the request body and headers, the answers, errors and retries, the
   time budget, the guard, the key never dumped.
-- `tests/Unit/Application/Ai`: nothing leaves while off or without a key (the connector is not even
-  built), the cap, models of the key, refusal, fallback, drafts, injection, hand-off, queue.
+- `tests/Unit/Application/Ai`: nothing leaves while off, without a key or without a licence that
+  allows it (the connector is not even built), the cap, models of the key, refusal, fallback,
+  drafts, injection, hand-off, queue (and its count).
 - `tests/Unit/Admin/Ai`: texts of every stop and refusal, capability checks, write-only key.
 - `tests/Integration/Ai`: over real HTTP (cURL) to the simulator on 127.0.0.1, the REST answers,
-  and the Portuguese of every text (`ai-pt_BR.po`, merged by the integration).
-- `tests/e2e/m5-ai.js` (Playwright): off by default, write-only key, connection test, an order
-  draft opened in the form, a rule draft in the review, injection and guest data refused, weekly
-  text, usage without content, off again, no write to the PMS or the pricing system, every screen at
-  1280 and 390 px.
+  and the Portuguese of every text (in `languages/ritmo-revenue-pt_BR.po`).
+- `tests/e2e/m5-ai.js` (Playwright, stage 7 of `bin/e2e.sh`, after a shadow run that read the
+  simulator's bookings with their synthetic guest data): off by default, write-only key, connection
+  test, an order draft that waits for a person (the Approvals screen and the menu say so) and opens
+  in the form, a rule draft in the review, injection and guest data refused, a refusal of the model
+  and a 529 (tried three times in all) in plain words, an alert explained and a run report in
+  words, weekly text, usage without content, no guest data in any body sent, off again, no write to
+  the PMS or the pricing system, every screen at 1280 and 390 px.
 
-## 9. Registration (for the integration)
+## 9. Registration (done by the integration of M5)
 
-- `Roles`: `USE_AI = 'ritmo_use_ai'` in `CAPABILITIES`, grants version 3: manager and
-  administrator get `ritmo_use_ai` (update `RolesTest`). `Capability::USE_AI`; then
-  `AiActions` may name it in its `FormAction`s.
-- Menu: entry `AiScreen::SLUG` ("Assistant", `ritmo_view`) after Operations; renderer and actions
-  from `AiScreens::screens()` / `AiScreens::actions()`; assets on that screen: `editors.css`,
-  `ai.css`, `ai.js`.
-- REST: `Rest\Ai\AiRoutes::register()` on `rest_api_init`.
-- Alerts screen (detail of an alert) and run reports: `View::render('admin/ai/explain', $view)` with
-  `AiScreens::explainView('alert'|'run', $id)` when it is not null, and `ai.css`/`ai.js` enqueued
-  there.
-- `bin/wp-test-site.sh`: `define('RITMO_ANTHROPIC_BASE_URL', 'http://127.0.0.1:$API_PORT/anthropic')`
-  and the simulator mounted under `/anthropic` (router or a second `php -S`); `bin/e2e.sh`: run
-  `tests/e2e/m5-ai.js` on a seeded site.
-- Translations: merge `tests/Integration/Ai/ai-pt_BR.po` into `languages/ritmo-revenue-pt_BR.po`,
-  then `php bin/make-pot.php` and `php bin/compile-l10n.php`.
-- Uninstall: nothing new to add: the options `ritmo_ai_settings`, `ritmo_ai_usage`,
+- `Roles::USE_AI` (`ritmo_use_ai`) in `CAPABILITIES`, version 3 of the grants (the manager role and
+  administrators; not the viewer); `Capability::USE_AI`, named by `AiActions`.
+- Menu: the entry `Menu::ASSISTANT` (`AiScreen::SLUG`, "Assistant", `ritmo_view`) after
+  Operations, with a counter of the drafts waiting (`AiScreens::waitingDrafts()`); renderer and
+  actions from `AiScreens::screens()` / `AiScreens::actions()` in `AdminScreens`; assets on that
+  screen: `editors.css`, `ai.css`, `ai.js`; `ai.css`/`ai.js` also on Alerts and Reports.
+- REST: `Rest\Ai\AiRoutes::register()` from `RestRoutes::register()`.
+- The alert detail and each run report (Reports › Runs) render `admin/ai/explain` when
+  `AiScreens::explainView('alert'|'run', $id)` is not null. The Approvals screen says how many drafts
+  wait (they are not plans of prices: never approved there).
+- The licence: `AiAssistant` is built with `licensed` = the stored verdict's `allowsAi()`
+  (`WordPress\Services::licence()`); without it the reason is `licence` (409 on REST).
+- `bin/wp-test-site.sh` defines `RITMO_ANTHROPIC_BASE_URL` and serves the simulator under
+  `/anthropic` (`tests/fake-apis/router.php`); `bin/e2e.sh` runs `tests/e2e/m5-ai.js` (stage 7).
+- Translations merged into `languages/ritmo-revenue-pt_BR.po`.
+- Uninstall: nothing new: the options `ritmo_ai_settings`, `ritmo_ai_usage`,
   `ritmo_ai_usage_previous`, `ritmo_ai_drafts`, the vault entry `anthropic_api_key` (inside
   `ritmo_vault`) and the transients `ritmo_ai_result_*` go with the `ritmo_` prefixes the uninstaller
-  already removes.
-- Diagnostics/support bundle: may show whether the assistant is on, the model and the month's
-  spend; never the key.
+  removes (checked by `bin/e2e-zip.sh`).
+- Not done: the diagnostics screen and the support bundle do not show the assistant's state yet.

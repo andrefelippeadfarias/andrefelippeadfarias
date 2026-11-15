@@ -57,6 +57,7 @@ final class AlertText
             'delivery_overdue' => __('Prices not confirmed at the channels yet', 'ritmo-revenue'),
             'review_due' => __('Time for the 12-month review', 'ritmo-revenue'),
             'pms_changes_capped' => __('Too many stay changes for the PMS', 'ritmo-revenue'),
+            'run_stopped' => ($facts['cause'] ?? null) === 'memory' ? __('A run ran out of memory', 'ritmo-revenue') : __('A run was stopped by PHP', 'ritmo-revenue'),
             default => __('Alert', 'ritmo-revenue'),
         };
     }
@@ -87,6 +88,7 @@ final class AlertText
             'delivery_overdue' => __('The pricing system took the new prices, but the channels have not shown them yet within the expected time.', 'ritmo-revenue'),
             'review_due' => __('The rules ask for a look at the next 12 months at a regular interval, and that time has come.', 'ritmo-revenue'),
             'pms_changes_capped' => __('The stay rules asked for more changes of minimum stay or arrival and departure in the PMS than one run may write, so none was written. A rule may be set wrong.', 'ritmo-revenue'),
+            'run_stopped' => __('The server stopped a run before its end (usually for lack of memory: a long horizon of nights times many rooms). The run was closed as failed and nothing of it was written; the next run starts again.', 'ritmo-revenue'),
             default => __('The plugin noticed something that needs a look.', 'ritmo-revenue'),
         };
     }
@@ -113,6 +115,7 @@ final class AlertText
             'delivery_overdue' => __('Check that the pricing system sends prices to the channels; the alert ends by itself when they arrive.', 'ritmo-revenue'),
             'review_due' => __('Open the 12-month review in Reports and save it.', 'ritmo-revenue'),
             'pms_changes_capped' => __('Check the stay rules in Rules; the next run tries again.', 'ritmo-revenue'),
+            'run_stopped' => __('Lower the nights a run decides (Rules, plan) or ask the host to raise PHP\'s memory_limit to 256M or more.', 'ritmo-revenue'),
             default => __('Read the facts below and resolve the alert when it is handled.', 'ritmo-revenue'),
         };
     }

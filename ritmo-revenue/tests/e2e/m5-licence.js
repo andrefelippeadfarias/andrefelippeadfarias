@@ -17,8 +17,14 @@
  * package on another server is never offered; the signed release is installed by WordPress' own
  * updater on a copy of the plugin (the site's link to this folder is put back at the end).
  *
- * The site's wp-config.php has RITMO_DEV (plain http to 127.0.0.1); the server addresses and the
- * public key are defined by a must-use plugin this script writes and removes.
+ * With RITMO_E2E_PROPERTY (bin/e2e.sh: a seeded site whose connections were set and which ran in
+ * shadow mode), once the licence has lapsed: a property a person had put in approval mode goes
+ * back to shadow mode at its next run, the change log says the licence did it, and the PMS and
+ * pricing simulator (RITMO_E2E_API) receives no write.
+ *
+ * The site's wp-config.php has RITMO_DEV (plain http to 127.0.0.1) and not RITMO_LICENCE_DEV
+ * (bin/wp-test-site.sh with RITMO_E2E_LICENCE_DEV=0); the server addresses and the public key are
+ * defined by a must-use plugin this script writes and removes.
  */
 
 const fs = require('fs');
@@ -40,6 +46,8 @@ const PLUGIN_DIR = path.join(WP, 'wp-content', 'plugins', 'ritmo-revenue');
 const MU_PLUGIN = path.join(WP, 'wp-content', 'mu-plugins', 'ritmo-e2e-licence.php');
 const KEY = 'RR-E2E-VALID-0001';
 const RELEASE = '9.9.0';
+const PROPERTY = process.env.RITMO_E2E_PROPERTY || '';
+const API = process.env.RITMO_E2E_API || 'http://127.0.0.1:8091';
 
 const results = [];
 let simulator = null;
@@ -99,6 +107,7 @@ function writeMuPlugin(publicKey) {
         '<?php',
         '// Written by tests/e2e/m5-licence.js for the throwaway site only.',
         "define('RITMO_LICENCE_SERVER_URL', '" + SERVER + "/licence');",
+        "define('RITMO_LICENCE_PUBLIC_KEY', '" + publicKey + "');",
         "define('RITMO_UPDATE_URL', '" + SERVER + "/updates/latest.json');",
         "define('RITMO_UPDATE_PUBLIC_KEY', '" + publicKey + "');",
         '',
@@ -211,6 +220,25 @@ async function licencePass(page, context) {
         check(await notice.evaluate((el) => el.classList.contains('notice-error')), 'as an error');
         check(await notice.locator('a').count() === 1, 'with the way to the licence settings');
     });
+
+    if (PROPERTY !== '') {
+        await step('a lapsed licence puts the property back in shadow mode at its next run, and nothing is written', async () => {
+            const writes = async () => ((await (await fetch(API + '/__log')).json()).requests || [])
+                .filter((r) => !r.path.startsWith('/__') && r.method !== 'GET' && !(r.method === 'POST' && r.path === '/pricelabs/v1/listing_prices'));
+            check((await writes()).length === 0, 'nothing written before');
+            const out = JSON.parse(execFileSync('php', [path.join(__dirname, 'licence-run.php'), WP, PROPERTY], { encoding: 'utf8' }).trim().split('\n').pop());
+            check(out.licence === 'lapsed', 'the licence has lapsed: ' + out.licence);
+            check(out.before === 'approval', 'the property was in approval mode');
+            check(out.run_mode === 'shadow', 'the run started in shadow mode: ' + out.run_mode);
+            check(out.status === 'completed', 'the run completed (it reads and decides): ' + out.status);
+            check(out.after === 'shadow', 'the property is back in shadow mode for good: ' + out.after);
+            check(out.event && out.event.from === 'approval' && out.event.to === 'shadow' && out.event.actor === 'licence', 'the change log says the licence did it: ' + JSON.stringify(out.event));
+            check((await writes()).length === 0, 'no write reached the PMS or the pricing system');
+            await page.goto(SITE + '/wp-admin/admin.php?page=ritmo-revenue-operations&property=' + PROPERTY);
+            check(await page.locator('[data-ritmo="current-mode"][data-mode="shadow"]').count() === 1, 'the Operations screen shows shadow mode');
+            await shot(page, 'licence-lapsed-shadow');
+        });
+    }
 
     await step('a test key outside development mode goes to the real server and is not accepted', async () => {
         await page.goto(LICENCE_TAB);

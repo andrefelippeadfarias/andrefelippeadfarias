@@ -42,7 +42,8 @@ final class AiDraftQueue
             'property' => $propertyId,
             'user' => $userId,
             'created_at' => $this->clock->now()->format('Y-m-d\TH:i:s\Z'),
-            'request' => mb_substr($request, 0, 1000),
+            // The person's free text is never kept (it could carry a guest's name): the draft's summary says what it does.
+            'request' => '',
             'status' => self::PENDING,
             'draft' => $draft->toArray(),
         ];
@@ -83,6 +84,15 @@ final class AiDraftQueue
         }
 
         return $out;
+    }
+
+    /**
+     * How many drafts still wait for a person, for one property or for every property (the menu
+     * counter of the Assistant and the notice of the Approvals screen).
+     */
+    public function countPending(?string $propertyId = null): int
+    {
+        return count(array_filter($this->rows(), static fn (array $row): bool => $row['status'] === self::PENDING && ($propertyId === null || $row['property'] === $propertyId)));
     }
 
     /**
@@ -133,6 +143,6 @@ final class AiDraftQueue
             return null;
         }
 
-        return ['id' => $row['id'], 'property' => $row['property'], 'user' => (int) ($row['user'] ?? 0), 'created_at' => $row['created_at'], 'request' => (string) ($row['request'] ?? ''), 'status' => $row['status'], 'draft' => $draft];
+        return ['id' => $row['id'], 'property' => $row['property'], 'user' => (int) ($row['user'] ?? 0), 'created_at' => $row['created_at'], 'request' => '', 'status' => $row['status'], 'draft' => $draft];
     }
 }

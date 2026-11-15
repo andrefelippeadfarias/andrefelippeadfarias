@@ -7,6 +7,7 @@ namespace Ritmo\Tests\Unit\Connectors\PriceLabs;
 use InvalidArgumentException;
 use LogicException;
 use PHPUnit\Framework\TestCase;
+use Ritmo\Application\Dashboard\Connections\ConnectionReason;
 use ReflectionClass;
 use Ritmo\Connectors\PriceLabs\PriceLabsConfig;
 use Ritmo\Connectors\PriceLabs\PriceLabsConnector;
@@ -96,7 +97,8 @@ final class PriceLabsConnectorTest extends TestCase
 
         $status = $this->connector->testConnection();
         self::assertFalse($status->ok);
-        self::assertSame(['http_status' => 403], $status->details);
+        self::assertSame(['http_status' => 403, 'reason' => 'auth'], $status->details);
+        self::assertSame(ConnectionReason::AUTH, ConnectionReason::of($status), 'the screen says the key was refused, not that it lacks a permission');
         self::assertStringContainsString('API_KEY_INVALID', $status->message);
         self::assertStringNotContainsString(self::KEY, $status->message);
 

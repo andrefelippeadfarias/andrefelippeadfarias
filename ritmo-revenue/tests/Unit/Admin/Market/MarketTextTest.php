@@ -52,6 +52,23 @@ final class MarketTextTest extends TestCase
         self::assertSame('The file is larger than 2048 KB. Nothing was imported.', MarketText::refusal(new MarketRefused(MarketRefused::FILE_ERROR, '', ['code' => MarketCsvProblem::FILE_TOO_LARGE]), 2097152));
     }
 
+    public function testRepeatedNotesBecomeOneSentenceAndTheHeaderComesFirst(): void
+    {
+        $problems = [];
+        for ($line = 2; $line <= 181; $line++) {
+            $problems[] = new MarketCsvProblem(MarketCsvProblem::WARNING, MarketCsvProblem::CAPTURE_MISSING, $line, 'captured_at');
+        }
+        $problems[] = new MarketCsvProblem(MarketCsvProblem::WARNING, MarketCsvProblem::UNKNOWN_COLUMN, 1, 'basis2');
+        $problems[] = new MarketCsvProblem(MarketCsvProblem::WARNING, MarketCsvProblem::CAPTURE_MISSING, 200, 'price');
+
+        $sentences = MarketText::grouped($problems);
+
+        self::assertCount(3, $sentences);
+        self::assertStringStartsWith('Line 1, column basis2: ', $sentences[0], 'the problem of the header is not buried');
+        self::assertStringStartsWith('180 lines (from line 2 to 181), column captured_at: ', $sentences[1]);
+        self::assertStringStartsWith('Line 200, column price: ', $sentences[2]);
+    }
+
     public function testALineSaysWhereAndShowsTheCellCut(): void
     {
         $long = str_repeat('x', 60);

@@ -6,6 +6,7 @@ namespace Ritmo;
 
 use ReflectionClass;
 use Ritmo\Admin\AdminScreens;
+use Ritmo\Admin\Licence\LicenceHooks;
 use Ritmo\Domain\Alerts\AlertCode;
 use Ritmo\Infrastructure\Db\DatabaseException;
 use Ritmo\Infrastructure\Db\Repository\AlertRepository;
@@ -15,13 +16,15 @@ use Ritmo\WordPress\Activator;
 use Ritmo\WordPress\Roles;
 use Ritmo\WordPress\Scheduler;
 use Ritmo\WordPress\Services;
+use Ritmo\WordPress\TimeLimit;
 use Throwable;
 
 /**
  * Entry point of the plugin in WordPress.
  *
  * `boot()` is hooked to `plugins_loaded` by the main plugin file and registers the hooks of the
- * admin screens, the admin actions, the REST API and the scheduled hook. The objects behind them
+ * admin screens, the admin actions, the REST API, the scheduled hook, and the licence's notice,
+ * scheduled check and update filters (Admin\Licence\LicenceHooks). The objects behind them
  * are wired in WordPress\Services. It is safe to call more than once, and outside WordPress it
  * registers nothing.
  */
@@ -46,6 +49,14 @@ final class Plugin
         }
 
         add_action('init', [self::class, 'loadTextDomain']);
+        if (Activator::networkActivated()) {
+            // Active for a whole multisite network (activated before this was refused): nothing
+            // is installed or run on any site; the network admin is told to activate site by site.
+            add_action('network_admin_notices', [self::class, 'networkNotice']);
+            add_action('admin_notices', [self::class, 'networkNotice']);
+
+            return;
+        }
         add_action('init', [self::class, 'upgrade'], 5);
         add_action('admin_menu', [AdminScreens::class, 'register']);
         add_action('admin_enqueue_scripts', [AdminScreens::class, 'enqueue']);
@@ -55,6 +66,15 @@ final class Plugin
         add_action(WpCronTrigger::HOOK, [self::class, 'tick']);
         add_action('admin_init', [self::class, 'watchScheduler']);
         AdminScreens::registerActions();
+        LicenceHooks::register();
+    }
+
+    public static function networkNotice(): void
+    {
+        if (!current_user_can('manage_network_plugins') && !current_user_can('activate_plugins')) {
+            return;
+        }
+        echo '<div class="notice notice-error"><p>' . esc_html__('Ritmo Revenue is active for the whole network and does nothing that way. Deactivate it in the network\'s Plugins screen and activate it site by site.', 'ritmo-revenue') . '</p></div>';
     }
 
     public static function isBooted(): bool
@@ -109,7 +129,9 @@ final class Plugin
 
                 return;
             }
-            $services->stack()->tick()->run();
+            TimeLimit::forEngine('cron');
+            $stack = $services->stack();
+            $stack->tick()->run(TimeLimit::tickBudget($stack->rules()->schedule()->tickBudgetSeconds));
         } catch (Throwable $failure) {
             self::reportFailure('tick', $failure);
         }

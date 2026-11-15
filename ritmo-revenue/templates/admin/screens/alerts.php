@@ -58,6 +58,9 @@ $ritmo_d = $view['detail'];
         <?php if ($ritmo_d['night_url'] !== '') : ?><p><a href="<?php echo esc_url($ritmo_d['night_url']); ?>"><?php esc_html_e('Open the night', 'ritmo-revenue'); ?></a></p><?php endif; ?>
         <h3><?php esc_html_e('What to do', 'ritmo-revenue'); ?></h3>
         <p><?php echo esc_html($ritmo_d['action']); ?></p>
+        <?php if ($ritmo_d['ai_explain'] !== null) : ?>
+            <?php View::render('admin/ai/explain', $ritmo_d['ai_explain']); ?>
+        <?php endif; ?>
         <h3><?php esc_html_e('History', 'ritmo-revenue'); ?></h3>
         <ul class="ritmo-list"><?php foreach ($ritmo_d['history'] as $ritmo_event) : ?><li><span class="ritmo-muted"><?php echo esc_html($ritmo_event['when']); ?></span> · <?php echo esc_html($ritmo_event['text']); ?></li><?php endforeach; ?></ul>
         <div class="ritmo-actions">

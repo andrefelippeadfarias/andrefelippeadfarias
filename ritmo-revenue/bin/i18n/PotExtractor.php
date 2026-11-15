@@ -128,6 +128,28 @@ final class PotExtractor
         foreach ($this->schemaTexts() as $text) {
             $this->add(null, $text, null, self::SCHEMA_REF, self::SCHEMA_COMMENT);
         }
+        foreach ($this->headerTexts() as $field => $text) {
+            $this->add(null, $text, null, 'ritmo-revenue.php', $field . ' of the plugin');
+        }
+    }
+
+    /**
+     * The plugin's name and description from the header of the main file, which the Plugins
+     * screen shows translated.
+     *
+     * @return array<string, string>
+     */
+    private function headerTexts(): array
+    {
+        $header = (string) @file_get_contents($this->root . '/ritmo-revenue.php', false, null, 0, 8192);
+        $texts = [];
+        foreach (['Plugin Name', 'Description'] as $field) {
+            if (preg_match('/^[ \t\/*#@]*' . preg_quote($field, '/') . ':(.*)$/mi', $header, $m) === 1 && trim($m[1]) !== '') {
+                $texts[$field] = trim($m[1]);
+            }
+        }
+
+        return $texts;
     }
 
     /**

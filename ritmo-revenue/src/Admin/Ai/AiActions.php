@@ -25,8 +25,9 @@ use Ritmo\Infrastructure\Secrets\SecretUnavailable;
 
 /**
  * The forms of the Assistant screen. The dispatcher checks POST, the capability and the nonce
- * first; the handlers that ask the assistant check ritmo_use_ai again before anything (the
- * dispatcher's capability is the screen's). Nothing here writes a price, an order or a rule
+ * first (ritmo_use_ai for the actions that ask the assistant or handle its drafts); the handlers
+ * check ritmo_use_ai again before anything (opening a draft is dispatched with
+ * ritmo_manage_rules, because it fills an editor). Nothing here writes a price, an order or a rule
  * version: a draft is opened in its editor, where a person decides.
  */
 final class AiActions
@@ -54,10 +55,10 @@ final class AiActions
             new FormAction(self::SETTINGS, Capability::MANAGE_CONNECTIONS, $page, self::saveSettings(...)),
             new FormAction(self::FORGET_KEY, Capability::MANAGE_CONNECTIONS, $page, self::forgetKey(...)),
             new FormAction(self::TEST, Capability::MANAGE_CONNECTIONS, $page, self::test(...)),
-            new FormAction(self::DRAFT, Capability::VIEW, $page, self::draft(...)),
-            new FormAction(self::WEEKLY, Capability::VIEW, $page, self::weekly(...)),
+            new FormAction(self::DRAFT, Capability::USE_AI, $page, self::draft(...)),
+            new FormAction(self::WEEKLY, Capability::USE_AI, $page, self::weekly(...)),
             new FormAction(self::OPEN, Capability::MANAGE_RULES, $page, self::open(...), true, 'draft'),
-            new FormAction(self::DISCARD, Capability::VIEW, $page, self::discard(...), true, 'draft'),
+            new FormAction(self::DISCARD, Capability::USE_AI, $page, self::discard(...), true, 'draft'),
         ];
     }
 

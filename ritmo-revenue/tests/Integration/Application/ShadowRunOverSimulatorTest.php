@@ -24,6 +24,7 @@ use Ritmo\Infrastructure\Db\Repository\RunRepository;
 use Ritmo\Infrastructure\Schedule\RecipientDirectory;
 use Ritmo\Infrastructure\Store\ArrayStore;
 use Ritmo\Tests\Fakes\ClockSleeper;
+use Ritmo\Tests\Fakes\FixedLicence;
 use Ritmo\Tests\Fakes\StaticConnectorSource;
 use Ritmo\Tests\Integration\Connectors\SimulatorTestCase;
 use Ritmo\Tests\Unit\Application\Alerts\RecordingMailer;
@@ -91,7 +92,7 @@ final class ShadowRunOverSimulatorTest extends SimulatorTestCase
                 return [];
             }
         };
-        $stack = new RunStack($db, $clock, new ArrayStore(), $this->logger, $connectors, $switch, new WriteGate($clock, $switch), new Capabilities(), new RecordingMailer(), $recipients, new ClockSleeper($clock));
+        $stack = new RunStack($db, $clock, new ArrayStore(), $this->logger, $connectors, $switch, new WriteGate($clock, $switch), new Capabilities(), new RecordingMailer(), $recipients, new ClockSleeper($clock), licence: new FixedLicence());
         $runs = $stack->runs();
         $planItems = $stack->planItems();
         $service = $stack->shadowRuns();

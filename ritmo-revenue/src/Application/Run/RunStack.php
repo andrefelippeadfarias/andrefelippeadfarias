@@ -12,6 +12,9 @@ use Ritmo\Application\Approval\ApprovalService;
 use Ritmo\Application\Approval\CapabilityCheck;
 use Ritmo\Application\ConnectorSource;
 use Ritmo\Application\EmergencySwitch;
+use Ritmo\Application\Licence\LicenceEnforcer;
+use Ritmo\Application\Licence\LicenceVerdictSource;
+use Ritmo\Application\Licence\RepositoryModeLowering;
 use Ritmo\Application\Market\MarketFreshness;
 use Ritmo\Application\Market\MarketReminder;
 use Ritmo\Application\Market\MarketRulerAssembler;
@@ -50,6 +53,9 @@ use Ritmo\Contracts\KeyValueStore;
 use Ritmo\Contracts\Logger;
 use Ritmo\Domain\Alerts\NotificationPolicy;
 use Ritmo\Domain\Config\RuleSet;
+use Ritmo\Domain\Licence\LicenceReason;
+use Ritmo\Domain\Licence\LicenceStanding;
+use Ritmo\Domain\Licence\LicenceVerdict;
 use Ritmo\Domain\Support\Clock;
 use Ritmo\Infrastructure\Db\Database;
 use Ritmo\Infrastructure\Db\Repository\AlertRepository;
@@ -107,6 +113,7 @@ final class RunStack
     /**
      * @param (Closure(): void)|null         $wake     asks the scheduler to tick now (after an approval)
      * @param (Closure(): (int|null))|null   $timeLeft seconds the request may still work, for the write's deadline
+     * @param LicenceVerdictSource|null      $licence  how the licence stands (the stored verdict); null is a site without a licence: shadow mode only
      */
     public function __construct(
         public readonly Database $db,
@@ -122,7 +129,31 @@ final class RunStack
         private readonly Sleeper $sleeper,
         private readonly ?Closure $wake = null,
         private readonly ?Closure $timeLeft = null,
+        private readonly ?LicenceVerdictSource $licence = null,
     ) {
+    }
+
+    /**
+     * What the licence means for the runs (the mode a run starts in, and the lowering of a property
+     * whose licence no longer allows writing) and for leaving shadow mode.
+     */
+    public function licence(): LicenceEnforcer
+    {
+        return $this->once(__FUNCTION__, fn (): LicenceEnforcer => new LicenceEnforcer(
+            $this->licence ?? new class () implements LicenceVerdictSource {
+                public function verdict(): LicenceVerdict
+                {
+                    return new LicenceVerdict(LicenceStanding::Unlicensed, LicenceReason::NO_KEY);
+                }
+            },
+            new RepositoryModeLowering(
+                $this->properties(),
+                $this->events(),
+                fn (string $propertyId, string $reason): int => (new ApprovalService($this->approvalRequests(), $this->capabilities, $this->clock, $this->rules()->approval()))->expireAll($propertyId, $reason),
+                $this->clock,
+            ),
+            $this->logger,
+        ));
     }
 
     public function rules(): RuleSet
@@ -197,7 +228,7 @@ final class RunStack
 
     public function preconditions(): ModePreconditions
     {
-        return $this->once(__FUNCTION__, fn (): ModePreconditions => new ModePreconditions($this->runs(), new AlertLedger($this->db), $this->holds(), $this->switch, $this->store, $this->clock, fn (): string => SafetyValues::fingerprint($this->rules(), $this->roomTypes()->all())));
+        return $this->once(__FUNCTION__, fn (): ModePreconditions => new ModePreconditions($this->runs(), new AlertLedger($this->db), $this->holds(), $this->switch, $this->store, $this->clock, fn (): string => SafetyValues::fingerprint($this->rules(), $this->roomTypes()->all()), $this->licence()));
     }
 
     public function holds(): WaveHoldRepository
@@ -324,9 +355,20 @@ final class RunStack
         return $this->once(__FUNCTION__, fn (): LockedRunLauncher => new LockedRunLauncher(
             $this->runs(),
             $this->locks(),
-            new PipelineRunExecutor($this->opener(), $this->runs(), $this->pipeline()),
+            new PipelineRunExecutor($this->opener(), $this->runs(), $this->pipeline(), $this->licence()),
             $this->clock,
             $this->logger,
+            fn (string $propertyId, int $runId, string $cause) => (new AlertRepository($this->db, $this->clock))->raise(
+                'run_stopped',
+                AlertRepository::WARNING,
+                $cause === 'memory' ? 'PHP ran out of memory during a run; it was closed as failed.' : 'PHP stopped a run; it was closed as failed.',
+                ['cause' => $cause, 'memory_limit' => (string) ini_get('memory_limit')],
+                $propertyId,
+                '',
+                null,
+                'run_stopped:' . $propertyId,
+                $runId > 0 ? $runId : null,
+            ),
         ));
     }
 

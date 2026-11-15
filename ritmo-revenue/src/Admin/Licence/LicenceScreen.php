@@ -83,7 +83,7 @@ final class LicenceScreen
             'last_outcome' => LicenceText::answer($record->lastAttemptStatus),
             'grace_ends' => $verdict->graceEndsAt !== null ? NightDate::date($verdict->graceEndsAt, $zone) : '',
             'grace_days' => $settings->grace->days,
-            'message' => $record->message,
+            'message' => LicenceText::serverMessage($record->message),
             'writing' => $verdict->allowsWriting(),
             'provider' => match (true) {
                 $record->providerId === StubLicenceProvider::ID => __('Test provider (development mode)', 'ritmo-revenue'),

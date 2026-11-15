@@ -34,6 +34,7 @@ use Ritmo\Infrastructure\Http\GuardedHttpClient;
 use Ritmo\Infrastructure\Schedule\RecipientDirectory;
 use Ritmo\Infrastructure\Store\ArrayStore;
 use Ritmo\Tests\Fakes\ClockSleeper;
+use Ritmo\Tests\Fakes\FixedLicence;
 use Ritmo\Tests\Fakes\MemoryQuotaLedger;
 use Ritmo\Tests\Fakes\MovableClock;
 use Ritmo\Tests\Fakes\RecordingLogger;
@@ -80,6 +81,9 @@ final class RunWorld
 
     public readonly RunStack $stack;
 
+    /** The licence the runs read: active unless a test lapses it. */
+    public readonly FixedLicence $licence;
+
     /**
      * @param array<string, mixed> $rules sections of the rule set over the neutral defaults
      */
@@ -94,6 +98,7 @@ final class RunWorld
         (new Migrator($this->db, new ArrayStore(), Migrations::all()))->migrate();
         $this->logger = new RecordingLogger();
         $this->mailer = new RecordingMailer();
+        $this->licence = new FixedLicence();
         $this->capabilities = new Capabilities([self::OWNER => [CapabilityCheck::APPROVE, ModeService::MANAGE_RULES, ModeService::MANAGE_CONNECTIONS]]);
         $ruleSet = RuleSet::fromArray(array_replace_recursive(RuleSet::defaults()->toArray(), $rules));
         $this->gate = new WriteGate($this->clock, $this->switch, $ruleSet->write(), $ruleSet->plan());
@@ -107,7 +112,7 @@ final class RunWorld
                 return ['owner@example.test'];
             }
         };
-        $this->stack = new RunStack($this->db, $this->clock, $this->store, $this->logger, new StaticConnectorSource($pms, $pricing, true), $this->switch, $this->gate, $this->capabilities, $this->mailer, $recipients, new ClockSleeper($this->clock));
+        $this->stack = new RunStack($this->db, $this->clock, $this->store, $this->logger, new StaticConnectorSource($pms, $pricing, true), $this->switch, $this->gate, $this->capabilities, $this->mailer, $recipients, new ClockSleeper($this->clock), licence: $this->licence);
         $this->stack->ruleSets()->save($ruleSet);
         $this->seed($mode);
     }

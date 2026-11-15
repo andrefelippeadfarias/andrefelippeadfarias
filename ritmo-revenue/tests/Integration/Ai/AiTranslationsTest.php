@@ -13,10 +13,9 @@ use Ritmo\Tools\I18n\Po;
 use Ritmo\Tools\I18n\PotExtractor;
 
 /**
- * Every text of the assistant's screens, routes and templates has its Portuguese translation:
- * in languages/ritmo-revenue-pt_BR.po already, or in ai-pt_BR.po next to this test (the texts the
- * integration merges into it), with the same placeholders, the glossary's words and none of its
- * forbidden ones.
+ * Every text of the assistant's screens, routes and templates has its Portuguese translation in
+ * languages/ritmo-revenue-pt_BR.po (the texts of M5 were merged into it by the integration), with
+ * the same placeholders, the glossary's words and none of its forbidden ones.
  */
 final class AiTranslationsTest extends TestCase
 {
@@ -26,7 +25,7 @@ final class AiTranslationsTest extends TestCase
     {
         $root = Fixtures::pluginRoot();
         $translations = [];
-        foreach ([...Po::parse((string) file_get_contents($root . '/languages/ritmo-revenue-pt_BR.po')), ...Po::parse((string) file_get_contents(__DIR__ . '/ai-pt_BR.po'))] as $entry) {
+        foreach (Po::parse((string) file_get_contents($root . '/languages/ritmo-revenue-pt_BR.po')) as $entry) {
             if ($entry['singular'] !== '') {
                 $translations[$entry['singular']] = $entry['translations'];
             }

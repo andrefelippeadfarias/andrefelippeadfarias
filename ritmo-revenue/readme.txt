@@ -44,7 +44,7 @@ Supported systems: Beds24 (PMS, API v2) and PriceLabs (dynamic pricing, Customer
 2. Recommended: add a key of your own for the plugin's secrets vault to wp-config.php, with 32 characters or more: `define( 'RITMO_SECRET_KEY', '...' );`
 3. In Plugins > Add New > Upload Plugin, upload the ritmo-revenue zip and activate it.
 4. Open Ritmo Revenue > Settings > Setup and follow the wizard: connect the PMS and the pricing system, check the property and the rooms, confirm the safety limits and run in shadow.
-5. Leave the property in shadow mode for a few days and compare what the plugin would do with what you do today before you switch on approval mode.
+5. Leave the property in shadow mode for a few days and compare what the plugin would do with what you do today before you switch on approval mode. Switch only when no other tool writes prices for the property: the Operations screen asks you to type the property id and confirm it.
 
 == Frequently Asked Questions ==
 
@@ -74,7 +74,15 @@ No. The plugin works the same without it. The assistant is off until you save yo
 
 = What happens when I delete the plugin? =
 
-By default the plugin keeps its data, so that deleting it by mistake loses nothing. To remove its tables, settings, roles, capabilities and scheduled events on deletion, tick the option in Settings > Uninstall first.
+By default the plugin keeps its data (history, rules, reports), so that deleting it by mistake loses no history. Its secrets never stay: deleting it frees the licence and deletes the saved tokens and keys. To remove its tables, settings, roles, capabilities and scheduled events as well, tick the option in Settings > Uninstall first.
+
+= Does it work on a multisite network? =
+
+Yes, site by site: activate it in the Plugins screen of each site that uses it. Activation for the whole network is refused, because each site has its own tables, rules and schedule.
+
+= The upload says the file is too large. =
+
+The zip is under 2 MB, the default upload limit of PHP. If the host's limit is lower, ask it to raise upload_max_filesize, or upload the unzipped ritmo-revenue folder to wp-content/plugins/ and activate it in Plugins.
 
 == External services ==
 
@@ -82,14 +90,14 @@ The plugin connects only to the services you configure, and only from the server
 
 * Your PMS (Beds24, https://api.beds24.com): reads properties, rooms, bookings with their invoice items and the availability calendar; writes only availability, stay and arrival/departure rules, never in shadow mode. Sent: your token and the ids of your properties and rooms.
 * Your pricing system (PriceLabs, https://api.pricelabs.co): reads listings, prices, date rules and reservations; writes floors, ceilings and stay rules of nights, never in shadow mode. Sent: your API key and the ids of your listings.
-* Anthropic (https://api.anthropic.com), only when you turn on the assistant with your own key: sends the question and the figures it needs (rules, counts, prices and occupancy), never guest data.
-* The licence server, only when the site defines RITMO_LICENCE_SERVER_URL: sends the licence key, the site address and the plugin version.
+* Anthropic (https://api.anthropic.com), only when you turn on the assistant with your own key: sends the question as you wrote it and the figures it needs (rules, counts, prices and occupancy), never the guest data the plugin reads; a question that looks like it names a guest or carries an e-mail, a phone or a document is refused before sending.
+* The plugin's licence server, only when a licence key is saved: sends the licence key, the site address, the plugin version and a one-time number; its answer counts only when it is signed by the plugin's licence key.
 * The update server, only when an update address is configured: reads the signed description of the latest version and downloads the package, which is installed only when its signature is valid.
 
 == Changelog ==
 
 = 1.0.0 =
-* First release: shadow, approval and autonomous modes with the safety limits, the write gate, read-back and undo; scheduler with full and light runs; alerts; the twelve admin screens with the setup wizard; rules, relations, calendar and orders editors; market prices by CSV; reports; optional AI assistant with your own key; licence and signed updates; English and Brazilian Portuguese.
+* First release: shadow, approval and autonomous modes with the safety limits, the write gate, read-back and undo; scheduler with full and light runs; alerts; the thirteen admin screens with the setup wizard; rules, relations, calendar and orders editors; market prices by CSV; reports; optional AI assistant with your own key; licence and signed updates; English and Brazilian Portuguese.
 
 == Upgrade Notice ==
 

@@ -18,7 +18,7 @@ use Throwable;
  */
 final class ScriptedHttpClient implements HttpClient
 {
-    /** @var list<HttpResponse|Throwable> */
+    /** @var list<HttpResponse|Throwable|Closure> */
     private array $queue = [];
 
     /** @var list<array{method: string, url: string, path: string, query: array<string, list<string>>, headers: array<string, string>, body: ?string, timeout: int}> */
@@ -45,7 +45,10 @@ final class ScriptedHttpClient implements HttpClient
         return new HttpResponse($status, ['Content-Type' => 'application/json'] + $headers, json_encode($data, JSON_THROW_ON_ERROR));
     }
 
-    public function queue(HttpResponse|Throwable ...$replies): self
+    /**
+     * A Closure reply answers from the request: fn (string $method, string $url, array $headers, ?string $body): HttpResponse.
+     */
+    public function queue(HttpResponse|Throwable|Closure ...$replies): self
     {
         array_push($this->queue, ...$replies);
 
@@ -65,6 +68,9 @@ final class ScriptedHttpClient implements HttpClient
         ];
 
         $reply = array_shift($this->queue);
+        if ($reply instanceof Closure) {
+            $reply = $reply($method, $url, $headers, $body);
+        }
         if ($reply === null && $this->handler !== null) {
             $reply = ($this->handler)($method, $url, $headers, $body);
         }

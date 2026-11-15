@@ -2,7 +2,8 @@
 
 This document covers the menu and the central screens of the admin: setup wizard, overview, nights
 grid and night detail, approvals, alerts, change log and undo, to-do, connections and diagnostics.
-The rule editors, the market screens and the reports have their own documents. The write path the
+The rule editors, the market screens and the reports have their own documents; so do the screens
+of M5: the Assistant ([AI.md](AI.md)) and Settings › Licence ([LICENCE-UPDATE.md](LICENCE-UPDATE.md)). The write path the
 screens hand work to is in `WRITE.md`, `VERIFY.md` and `CHANGELOG-UNDO.md`; the alerts in
 `ALERTS.md`; the scheduler in `OPERATIONS.md`.
 
@@ -26,7 +27,7 @@ service, setup wizard), which hands any write to the write gate of M3.
 
 ## 2. Menu and navigation
 
-One top-level entry, "Ritmo Revenue", with twelve entries in this order (`Menu::entries()`):
+One top-level entry, "Ritmo Revenue", with thirteen entries in this order (`Menu::entries()`):
 
 | Entry | Slug | Capability | Tabs |
 |---|---|---|---|
@@ -41,11 +42,19 @@ One top-level entry, "Ritmo Revenue", with twelve entries in this order (`Menu::
 | Orders | `ritmo-revenue-orders` | view | (editors area) |
 | Rules | `ritmo-revenue-rules` | view | (editors area) |
 | Operations | `ritmo-revenue-operations` | view | (M3 screen) |
-| Settings | `ritmo-revenue-settings` | view | Setup (manage rules), Connections, Notifications, Diagnostics (view), Uninstall (manage connections) |
+| Assistant | `ritmo-revenue-assistant` | view | Ask, Usage and cost (`ritmo_use_ai`), Settings (manage connections); AI.md |
+| Settings | `ritmo-revenue-settings` | view | Setup (manage rules), Connections, Notifications, Licence (manage connections; LICENCE-UPDATE.md 2.7), Diagnostics (view), Uninstall (manage connections) |
 
 - Each area hands `Menu::register()` the renderer of its slug; a slug without one shows a short
-  note. Counters (waiting approvals, active alerts, due to-do items) use the WordPress counter
-  markup with a screen-reader text, hidden at zero.
+  note. Counters (waiting approvals, active alerts, due to-do items, the assistant's drafts waiting
+  for a person) use the WordPress counter markup with a screen-reader text, hidden at zero.
+- M5 on the central screens: the Approvals screen (Waiting) says how many drafts of the assistant
+  wait for the person and links to them: a draft is not a plan of prices, so it is never approved
+  there; it opens in the order form or the rules draft and a person saves it. The alert detail and
+  each run report (Reports › Runs) show "Explain in plain words" / "Put this report in words" to
+  whoever has `ritmo_use_ai` while the assistant is ready (`AiScreens::explainView()`; the answer is
+  added by `assets/ai.js`, the button is hidden without the script). The licence notice
+  (`LicenceNotice`) shows on the plugin's screens while the licence is not active.
 - The old slugs `ritmo-revenue-connections`, `-setup` and `-diagnostics` are hidden pages that
   redirect on `load-{hook}` to Settings with the right tab, keeping `property`.
 - `Page::open()` checks the capability of the entry and of the tab (403 otherwise), resolves the
@@ -213,6 +222,11 @@ the form through `Input`. Destructive actions on one object carry a nonce named 
 | `ritmo_wizard_confirm_safety` | manage safety | property id typed |
 | `ritmo_connection_test`, `ritmo_forget_secret` | manage connections | provider name typed to forget |
 | `ritmo_download_support_bundle` | manage connections | JSON download |
+| `ritmo_ai_settings_save`, `ritmo_ai_key_forget`, `ritmo_ai_test` | manage connections | the assistant's settings, key and connection test (AI.md 7) |
+| `ritmo_ai_draft`, `ritmo_ai_weekly` | `ritmo_use_ai` | a request becomes a queued draft; the weekly text shown once |
+| `ritmo_ai_draft_open` | manage rules (and `ritmo_use_ai`) | per draft; fills the order form or the rules draft, never saves |
+| `ritmo_ai_draft_discard` | `ritmo_use_ai` | per draft |
+| `ritmo_licence_save`, `ritmo_licence_check`, `ritmo_licence_remove`, `ritmo_update_check` | manage connections | the licence key (write-only), "Check now", removal with a ticked box, "Check for updates" (LICENCE-UPDATE.md 2.7) |
 
 ## 5. REST routes (`ritmo/v1`)
 
@@ -226,6 +240,8 @@ codes, never an exception message.
 | `/connections/(beds24\|pricelabs)/test` | POST | manage connections | result sentence (429 `ritmo_cooldown`) |
 | `/alerts/{id}/acknowledge` | POST | view | 403 `ritmo_forbidden` when not allowed |
 | `/alerts/{id}/resolve` | POST | approve | 403 `ritmo_forbidden` when not allowed |
+| `/ai/status`, `/ai/drafts`, `/ai/reports/weekly`, `/ai/runs/{id}/report`, `/ai/alerts/{id}/explain` | GET/POST | `ritmo_use_ai` | the assistant (AI.md 6): 409 when it is off, unlicensed, without a key, over the cap; 422 when a request or an answer is refused; 502 when Claude failed |
+| `/ai/test` | POST | manage connections | the models of the key |
 
 ## 6. Rules of the screens
 

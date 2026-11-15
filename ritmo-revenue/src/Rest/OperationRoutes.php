@@ -9,6 +9,7 @@ use OutOfBoundsException;
 use Ritmo\Admin\RefusalText;
 use Ritmo\Application\Approval\ApprovalRefused;
 use Ritmo\Application\Approval\PlanEntry;
+use Ritmo\Application\Mode\LeaveShadowConfirmation;
 use Ritmo\Application\Mode\ModeRefused;
 use Ritmo\Domain\Model\PropertyMode;
 use Ritmo\Domain\Write\Change\ChangeRecord;
@@ -59,6 +60,7 @@ final class OperationRoutes
     public static function runNow(WP_REST_Request $request): WP_REST_Response|WP_Error
     {
         try {
+            \Ritmo\WordPress\TimeLimit::forEngine();
             $result = Services::instance()->stack()->runNow()->run((string) $request['id']);
         } catch (OutOfBoundsException) {
             return self::notFound();
@@ -75,6 +77,10 @@ final class OperationRoutes
         }
         $stack = Services::instance()->stack();
         try {
+            $current = $stack->properties()->find((string) $request['id']);
+            if ($current !== null) {
+                LeaveShadowConfirmation::check($current, $mode, sanitize_text_field((string) $request->get_param('confirmation')), rest_sanitize_boolean($request->get_param('sole_writer') ?? false));
+            }
             $property = $stack->modes()->change((string) $request['id'], $mode, get_current_user_id(), $stack->rules()->modes(), sanitize_text_field((string) $request->get_param('confirmation')), sanitize_text_field((string) $request->get_param('reason')));
         } catch (OutOfBoundsException) {
             return self::notFound();

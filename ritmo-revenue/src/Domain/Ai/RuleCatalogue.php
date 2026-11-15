@@ -10,8 +10,8 @@ use Ritmo\Domain\Config\Schema;
 
 /**
  * The rule settings a draft of the assistant may propose: numbers, switches and choices of the
- * rule schema, never a locked field and never anything of safety, writing, modes, quotas,
- * approvals, the schedule or the alerts. The catalogue text (one line per field) is a stable
+ * rule schema, never a locked field and never anything of safety, writing (prices or the stay
+ * rules in the PMS), the plan validator, modes, quotas, approvals, the schedule or the alerts. The catalogue text (one line per field) is a stable
  * system block of the request prompt.
  */
 final class RuleCatalogue
@@ -19,11 +19,11 @@ final class RuleCatalogue
     /** Sections the assistant never proposes, whatever their fields. */
     public const DENIED_PREFIXES = [
         'safety.', 'write.', 'modes.', 'quota.', 'approval.', 'third_party.', 'verify.', 'waves.', 'schedule.',
-        'light_run.', 'alerts.', 'reports.',
+        'light_run.', 'alerts.', 'reports.', 'stay.write.', 'plan.validator.', 'plan.payload.', 'market.csv.',
     ];
 
     /** Single fields that are safety limits outside those sections. */
-    public const DENIED_KEYS = ['floors.fraction_of_reference_min'];
+    public const DENIED_KEYS = ['floors.fraction_of_reference_min', 'plan.horizon_nights'];
 
     private const TYPES = [FieldType::Integer, FieldType::Number, FieldType::Boolean, FieldType::Choice];
 

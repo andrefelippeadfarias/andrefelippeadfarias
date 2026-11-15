@@ -15,8 +15,8 @@ final class RolesTest extends TestCase
     {
         self::assertSame([
             'create' => true,
-            'grant' => self::FOUR,
-            'administrator' => Roles::CAPABILITIES,
+            'grant' => [...self::FOUR, Roles::USE_AI],
+            'administrator' => [...self::FOUR, Roles::MANAGE_SAFETY, Roles::USE_AI],
             'create_viewer' => true,
             'viewer' => [Roles::VIEW],
         ], Roles::pending(0, false, false));
@@ -26,11 +26,22 @@ final class RolesTest extends TestCase
     {
         self::assertSame([
             'create' => false,
-            'grant' => [],
-            'administrator' => [Roles::MANAGE_SAFETY],
+            'grant' => [Roles::USE_AI],
+            'administrator' => [Roles::MANAGE_SAFETY, Roles::USE_AI],
             'create_viewer' => true,
             'viewer' => [Roles::VIEW],
         ], Roles::pending(1, true, false));
+    }
+
+    public function testASiteAtVersionTwoGetsTheAssistantForManagersAndAdministratorsButNotForViewers(): void
+    {
+        self::assertSame([
+            'create' => false,
+            'grant' => [Roles::USE_AI],
+            'administrator' => [Roles::USE_AI],
+            'create_viewer' => false,
+            'viewer' => [],
+        ], Roles::pending(2, true, true));
     }
 
     public function testTheManagerRoleNeverReceivesTheSafetyCapability(): void
@@ -55,7 +66,7 @@ final class RolesTest extends TestCase
         $step = Roles::pending(0, true, false);
 
         self::assertFalse($step['create']);
-        self::assertSame(self::FOUR, $step['grant']);
+        self::assertSame([...self::FOUR, Roles::USE_AI], $step['grant']);
     }
 
     public function testEveryCapabilityIsGrantedToAdministratorsInExactlyOneVersion(): void

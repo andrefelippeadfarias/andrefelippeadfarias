@@ -28,6 +28,9 @@ final class LicenceHooks
         UpdateHooks::register(
             static fn () => LicenceServices::instance()->updates(),
             static fn (string $reason): string => LicenceText::updateRefusal($reason),
+            basename(dirname(RITMO_FILE)) . '/' . basename(RITMO_FILE),
+            'ritmo-revenue',
+            RITMO_VERSION,
         );
     }
 

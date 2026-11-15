@@ -21,9 +21,13 @@
 #   simulator:  http://127.0.0.1:8091  (php -S tests/fake-apis/router.php), its scenario moved to
 #               start today in the property's timezone
 #
+#   fake Claude API (the optional assistant): http://127.0.0.1:8091/anthropic, the same simulator
+#
 # Environment: RITMO_PRICING_CALENDAR_READ=0 switches off the pricing system's calendar read (a POST
-# that reads; on by default). RITMO_E2E_PLUGIN_SOURCE builds the site with another copy of the
-# plugin (default: this folder).
+# that reads; on by default). RITMO_E2E_LICENCE_DEV=0 leaves out RITMO_LICENCE_DEV (otherwise on:
+# the licence's test provider answers TEST- keys, so tests/e2e/seed.php can license the site and
+# the passes can leave shadow mode; the licence pass runs without it). RITMO_E2E_PLUGIN_SOURCE
+# builds the site with another copy of the plugin (default: this folder).
 
 set -euo pipefail
 
@@ -96,6 +100,10 @@ define('FS_METHOD', 'direct');
 define('RITMO_DEV', true);
 define('RITMO_BEDS24_BASE_URL', 'http://127.0.0.1:$API_PORT/beds24/v2');
 define('RITMO_PRICELABS_BASE_URL', 'http://127.0.0.1:$API_PORT/pricelabs/v1');
+define('RITMO_ANTHROPIC_BASE_URL', 'http://127.0.0.1:$API_PORT/anthropic');
+if (getenv('RITMO_E2E_LICENCE_DEV') !== '0') {
+    define('RITMO_LICENCE_DEV', true);
+}
 if (getenv('RITMO_PRICING_CALENDAR_READ') === '0') {
     define('RITMO_PRICING_CALENDAR_READ', false);
 }
@@ -115,8 +123,8 @@ start_site() {
 
 start_api() {
     stop_pid "$BASE/api.pid"
-    rm -f "$BASE/fake-apis.log" "$BASE/fake-apis.log".*
-    RITMO_FAKE_API_LOG="$BASE/fake-apis.log" RITMO_FAKE_API_START="$(TZ="$TIMEZONE" date +%F)" \
+    rm -f "$BASE/fake-apis.log" "$BASE/fake-apis.log".* "$BASE/fake-anthropic.json"
+    RITMO_FAKE_API_LOG="$BASE/fake-apis.log" RITMO_FAKE_ANTHROPIC_STATE="$BASE/fake-anthropic.json" RITMO_FAKE_API_START="$(TZ="$TIMEZONE" date +%F)" \
         setsid php -S "127.0.0.1:$API_PORT" "$ROOT/tests/fake-apis/router.php" >> "$BASE/api.out" 2>&1 < /dev/null &
     echo $! > "$BASE/api.pid"
     wait_for "http://127.0.0.1:$API_PORT/__log"

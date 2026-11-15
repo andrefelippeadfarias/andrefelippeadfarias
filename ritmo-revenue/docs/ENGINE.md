@@ -1079,6 +1079,7 @@ public static function firstLine(string $text): string;
 ```php
 const REQUIRED = ['competitor', 'check_in', 'check_out', 'price'];
 const OPTIONAL = ['price_basis', 'room', 'currency', 'captured_at', 'source', 'available'];
+const ALIASES = ['price_basis', 'competitor'];
 const GUEST_LIKE = ['name', 'guest', 'guest_name', 'email', 'e-mail', 'mail', 'phone', 'telefone', 'document', 'cpf', 'passport', 'address'];
 const MAX_COLUMNS = 50;
 public readonly array $positions;

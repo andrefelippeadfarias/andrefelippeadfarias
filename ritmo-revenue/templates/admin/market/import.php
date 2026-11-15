@@ -42,14 +42,7 @@ $ritmo_codes = array_column($view['competitors'], 'name', 'id');
 <?php else : ?>
     <section class="ritmo-card">
         <h2><?php esc_html_e('What this file would import', 'ritmo-revenue'); ?></h2>
-        <p data-ritmo="csv-preview-summary"><?php echo esc_html(sprintf(
-            /* translators: 1: valid rows, 2: nights, 3: competitors, 4: lines ignored */
-            __('%1$d valid rows for %2$d nights and %3$d competitors; %4$d lines ignored.', 'ritmo-revenue'),
-            $ritmo_preview->valid,
-            $ritmo_preview->nights,
-            $ritmo_preview->competitors,
-            $ritmo_preview->invalidLines
-        )); ?></p>
+        <p data-ritmo="csv-preview-summary"><?php echo esc_html(MarketText::previewSummary($ritmo_preview->valid, $ritmo_preview->nights, $ritmo_preview->competitors, $ritmo_preview->invalidLines)); ?></p>
         <?php if ($ritmo_preview->unknownCompetitors !== [] && $view['may_edit']) : ?>
             <form method="post" action="<?php echo esc_url($view['post_url']); ?>" class="ritmo-callout">
                 <?php wp_nonce_field('ritmo_competitors_create'); ?>
@@ -66,13 +59,13 @@ $ritmo_codes = array_column($view['competitors'], 'name', 'id');
         <?php if ($ritmo_errors !== []) : ?>
             <h3><?php esc_html_e('Lines ignored', 'ritmo-revenue'); ?></h3>
             <ul data-ritmo="csv-preview-invalid">
-                <?php foreach ($ritmo_errors as $ritmo_problem) : ?><li><?php echo esc_html(MarketText::problem($ritmo_problem)); ?></li><?php endforeach; ?>
+                <?php foreach (MarketText::grouped($ritmo_errors) as $ritmo_sentence) : ?><li><?php echo esc_html($ritmo_sentence); ?></li><?php endforeach; ?>
             </ul>
         <?php endif; ?>
         <?php if ($ritmo_warnings !== []) : ?>
             <h3><?php esc_html_e('Notes', 'ritmo-revenue'); ?></h3>
             <ul>
-                <?php foreach ($ritmo_warnings as $ritmo_problem) : ?><li><?php echo esc_html(MarketText::problem($ritmo_problem)); ?></li><?php endforeach; ?>
+                <?php foreach (MarketText::grouped($ritmo_warnings) as $ritmo_sentence) : ?><li><?php echo esc_html($ritmo_sentence); ?></li><?php endforeach; ?>
             </ul>
         <?php endif; ?>
         <?php if ($ritmo_preview->moreProblems > 0) : ?><p><?php echo esc_html(sprintf(/* translators: %d: number of problems not listed */ __('and %d more.', 'ritmo-revenue'), $ritmo_preview->moreProblems)); ?></p><?php endif; ?>

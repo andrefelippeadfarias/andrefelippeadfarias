@@ -5,11 +5,13 @@ declare(strict_types=1);
 namespace Ritmo\Admin\Components;
 
 use Closure;
+use Ritmo\Admin\Licence\LicenceScreen;
 
 /**
- * The "Ritmo Revenue" menu (admin spec 2.1): twelve entries in a fixed order, their tabs and the
- * capability of each, the counters, and the redirects of the M1-M3 slugs. Each area hands the
- * renderer of its own screens; an entry nobody renders yet shows a short note.
+ * The "Ritmo Revenue" menu (admin spec 2.1): thirteen entries in a fixed order (the Assistant of
+ * M5 after Operations), their tabs and the capability of each, the counters, and the redirects of
+ * the M1-M3 slugs. Each area hands the renderer of its own screens; an entry nobody renders yet
+ * shows a short note.
  */
 final class Menu
 {
@@ -25,6 +27,7 @@ final class Menu
     public const ORDERS = 'ritmo-revenue-orders';
     public const RULES = 'ritmo-revenue-rules';
     public const OPERATIONS = 'ritmo-revenue-operations';
+    public const ASSISTANT = 'ritmo-revenue-assistant';
     public const SETTINGS = 'ritmo-revenue-settings';
 
     /** Old slug => [new slug, tab]. */
@@ -39,7 +42,7 @@ final class Menu
     }
 
     /**
-     * The twelve entries in their order; titles translated now.
+     * The thirteen entries in their order; titles translated now.
      *
      * @return list<array{slug: string, title: string, capability: string, tabs: list<Tab>}>
      */
@@ -63,10 +66,12 @@ final class Menu
             ['slug' => self::ORDERS, 'title' => __('Orders', 'ritmo-revenue'), 'capability' => $v, 'tabs' => []],
             ['slug' => self::RULES, 'title' => __('Rules', 'ritmo-revenue'), 'capability' => $v, 'tabs' => []],
             ['slug' => self::OPERATIONS, 'title' => __('Operations', 'ritmo-revenue'), 'capability' => $v, 'tabs' => []],
+            ['slug' => self::ASSISTANT, 'title' => __('Assistant', 'ritmo-revenue'), 'capability' => $v, 'tabs' => []],
             ['slug' => self::SETTINGS, 'title' => __('Settings', 'ritmo-revenue'), 'capability' => $v, 'tabs' => [
                 new Tab('setup', __('Setup', 'ritmo-revenue'), Capability::MANAGE_RULES),
                 new Tab('connections', __('Connections', 'ritmo-revenue'), $c),
                 new Tab('notifications', __('Notifications', 'ritmo-revenue'), $c),
+                new Tab(LicenceScreen::TAB, __('Licence', 'ritmo-revenue'), $c),
                 new Tab('diagnostics', __('Diagnostics', 'ritmo-revenue'), $v),
                 new Tab('uninstall', __('Uninstall', 'ritmo-revenue'), $c),
             ]],

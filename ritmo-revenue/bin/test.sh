@@ -2,7 +2,7 @@
 #
 # Runs the PHPUnit suite with tests/phpunit.xml.
 #
-#   bin/test.sh                         lint (bin/lint.php), then the whole suite
+#   bin/test.sh                         lint (bin/lint.php, bin/lint-php81.php), then the whole suite
 #   bin/test.sh tests/Unit/Domain       one folder or file (relative to the plugin root or to the cwd)
 #   bin/test.sh NumTest                 anything that is not a path is passed as --filter
 #   bin/test.sh tests/Unit --testdox    extra arguments go straight to PHPUnit
@@ -69,6 +69,7 @@ fi
 
 if [ "$#" -eq 0 ]; then
     php "$ROOT/bin/lint.php"
+    php "$ROOT/bin/lint-php81.php"
 fi
 
 ARGS=()

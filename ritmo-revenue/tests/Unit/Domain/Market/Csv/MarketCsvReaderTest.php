@@ -72,6 +72,19 @@ final class MarketCsvReaderTest extends TestCase
         self::assertSame('2026-11-12T09:30:00+00:00', $row->capturedAt->format(DATE_ATOM));
     }
 
+    public function testTheGuidesBasisAndCompetitorCodeColumnsAreReadLikeTheirOwnNames(): void
+    {
+        $result = self::reader()->read([
+            ['competitor_code', 'check_in', 'check_out', 'price', 'basis', 'room', 'currency'],
+            ['comp-01', '2027-01-08', '2027-01-10', '980.00', 'per_night', 'cheapest', 'BRL'],
+        ]);
+
+        self::assertCount(1, $result->rows);
+        self::assertSame(980.0, $result->rows[0]->price, 'a price per night stays the price of one night, never halved');
+        self::assertNull($result->rows[0]->total);
+        self::assertSame([], array_filter($result->problems, static fn (MarketCsvProblem $p): bool => $p->code === MarketCsvProblem::UNKNOWN_COLUMN));
+    }
+
     public function testEveryRowErrorHasItsCode(): void
     {
         $cases = [

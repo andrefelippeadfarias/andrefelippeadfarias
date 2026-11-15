@@ -23,6 +23,9 @@ final class MarketText
 {
     private const VALUE_SHOWN = 40;
 
+    /** Up to this many problems of one kind in one column are listed one by one. */
+    public const GROUP_FROM = 3;
+
     private function __construct()
     {
     }
@@ -46,6 +49,61 @@ final class MarketText
         };
 
         return $where . ': ' . $what . $value;
+    }
+
+    /**
+     * The problems as sentences, the problems of the header first; more than GROUP_FROM problems
+     * of the same kind in the same column become one sentence with their count and lines, so a
+     * problem of the header is never buried under a hundred repeated notes.
+     *
+     * @param list<MarketCsvProblem> $problems
+     *
+     * @return list<string>
+     */
+    public static function grouped(array $problems): array
+    {
+        usort($problems, static fn (MarketCsvProblem $a, MarketCsvProblem $b): int => [$a->line > 1 ? 1 : 0, $a->line] <=> [$b->line > 1 ? 1 : 0, $b->line]);
+        $groups = [];
+        foreach ($problems as $problem) {
+            $groups[$problem->code . '|' . $problem->column][] = $problem;
+        }
+        $out = [];
+        foreach ($groups as $group) {
+            if (count($group) <= self::GROUP_FROM) {
+                foreach ($group as $problem) {
+                    $out[] = self::problem($problem);
+                }
+                continue;
+            }
+            $first = $group[0];
+            $last = $group[count($group) - 1];
+            $out[] = $first->column === ''
+                /* translators: 1: number of lines, 2: first line, 3: last line, 4: what is wrong */
+                ? sprintf(__('%1$d lines (from line %2$d to %3$d): %4$s', 'ritmo-revenue'), count($group), $first->line, $last->line, self::what($first->code))
+                /* translators: 1: number of lines, 2: first line, 3: last line, 4: column name, 5: what is wrong */
+                : sprintf(__('%1$d lines (from line %2$d to %3$d), column %4$s: %5$s', 'ritmo-revenue'), count($group), $first->line, $last->line, $first->column, self::what($first->code));
+        }
+
+        return $out;
+    }
+
+    /**
+     * What a file would import, each count with its own singular or plural.
+     */
+    public static function previewSummary(int $valid, int $nights, int $competitors, int $ignored): string
+    {
+        return sprintf(
+            /* translators: 1: "3 valid rows", 2: "2 nights", 3: "1 competitor", 4: "0 lines ignored" */
+            __('%1$s for %2$s and %3$s; %4$s.', 'ritmo-revenue'),
+            /* translators: %s: a number */
+            sprintf(_n('%s valid row', '%s valid rows', $valid, 'ritmo-revenue'), number_format_i18n($valid)),
+            /* translators: %s: a number */
+            sprintf(_n('%s night', '%s nights', $nights, 'ritmo-revenue'), number_format_i18n($nights)),
+            /* translators: %s: a number */
+            sprintf(_n('%s competitor', '%s competitors', $competitors, 'ritmo-revenue'), number_format_i18n($competitors)),
+            /* translators: %s: a number */
+            sprintf(_n('%s line ignored', '%s lines ignored', $ignored, 'ritmo-revenue'), number_format_i18n($ignored)),
+        );
     }
 
     public static function what(string $code): string

@@ -7,6 +7,7 @@ namespace Ritmo\Application\Run;
 use Closure;
 use DateTimeImmutable;
 use OutOfBoundsException;
+use Ritmo\Application\Licence\LicenceEnforcer;
 use Ritmo\Application\Schedule\FailureKind;
 use Ritmo\Application\Schedule\LaunchResult;
 use Ritmo\Application\Schedule\LaunchStatus;
@@ -23,7 +24,10 @@ use Ritmo\Infrastructure\Db\Repository\RunRepository;
  * The runs of the scheduler and of "Run now", over the run pipeline (collect, watch, measure,
  * decide, validate, shadow, write, verify, report). The mode is fixed when the run starts: the
  * property's mode, or shadow when the emergency switch is engaged (the run reads, watches and
- * decides, and writes nothing). The launcher holds the property's run lock around every call.
+ * decides, and writes nothing) or when the licence no longer allows writing (then the property
+ * itself goes back to shadow mode: LicenceEnforcer::modeAtRunStart). A run already open is resumed
+ * in its own mode, so nothing is cut in the middle of a write. The launcher holds the property's
+ * run lock around every call.
  */
 final class PipelineRunExecutor implements RunExecutor
 {
@@ -31,12 +35,14 @@ final class PipelineRunExecutor implements RunExecutor
         private readonly RunOpener $opener,
         private readonly RunRepository $runs,
         private readonly RunPipeline $pipeline,
+        private readonly LicenceEnforcer $licence,
     ) {
     }
 
     public function start(Property $property, RunKind $kind, bool $forcedShadow, DateTimeImmutable $today, DateTimeImmutable $deadline, Closure $heartbeat): LaunchResult
     {
-        $context = $this->opener->open($property, $kind->value, $forcedShadow ? PropertyMode::Shadow : $property->mode, $today);
+        $mode = $forcedShadow ? PropertyMode::Shadow : $this->licence->modeAtRunStart($property);
+        $context = $this->opener->open($property, $kind->value, $mode, $today);
         if ($context instanceof RunOutcome) {
             return self::launch($context);
         }

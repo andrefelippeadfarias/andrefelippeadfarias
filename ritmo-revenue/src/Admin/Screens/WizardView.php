@@ -289,7 +289,7 @@ final class WizardView
             ], $summary['nearest']),
             'refused' => array_map(static fn (array $c): string => ($rooms[$c['room']] ?? $c['room']) . ' · ' . NightDate::short(Days::date($c['night'])) . ': ' . NightText::status($c['planned']), $summary['refused']),
             /* translators: %s: number of runs */
-            'next' => sprintf(_n('Stay in shadow mode for at least %s run, then switch to approval in Operations, where every change waits for a person.', 'Stay in shadow mode for at least %s runs, then switch to approval in Operations, where every change waits for a person.', max(1, $minShadow), 'ritmo-revenue'), number_format_i18n(max(1, $minShadow))),
+            'next' => sprintf(_n('Stay in shadow mode for at least %s run, and for as many days as you need to compare its decisions with yours (a week or more is wise). Switch to approval in Operations only when no other tool writes prices for this property: then every change waits for a person.', 'Stay in shadow mode for at least %s runs, and for as many days as you need to compare its decisions with yours (a week or more is wise). Switch to approval in Operations only when no other tool writes prices for this property: then every change waits for a person.', max(1, $minShadow), 'ritmo-revenue'), number_format_i18n(max(1, $minShadow))),
             'overview_url' => Menu::url(Menu::OVERVIEW, ['property' => $property->id]),
             'nights_url' => Menu::url(Menu::NIGHTS, ['property' => $property->id, 'only' => 'would_change']),
         ];

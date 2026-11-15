@@ -15,13 +15,23 @@
  * - no request ever reaches the PMS or the pricing system but reads (no PUT, PATCH or DELETE, no
  *   POST but the calendar read), and the body sent to Claude carries no sampling or thinking
  *   parameter and no prefill;
+ * - a draft waits for a person: the Approvals screen and the menu say so (it is not a plan of
+ *   prices, so it is never approved there);
+ * - an alert is explained in plain words and a run report is put in words, from the plugin's facts;
+ * - a refusal of the model and an overloaded API (529, repeated twice, then given up) are shown in
+ *   plain words, never as a draft;
+ * - nothing of a guest (the simulator's bookings carry synthetic GUESTDATA names, e-mails and
+ *   phones, read by the shadow run before) is in any body sent to Claude;
  * - every screen at 1280 and 390 px: one h1, labelled fields, no sideways scroll, no PHP error.
  *
- * The site must register the Assistant screen, its form actions, its REST routes, the capability
- * ritmo_use_ai and define RITMO_ANTHROPIC_BASE_URL (docs/AI.md, section 9).
+ * The site (bin/wp-test-site.sh) registers the Assistant screen, its form actions, its REST routes,
+ * the capability ritmo_use_ai, defines RITMO_ANTHROPIC_BASE_URL and is licensed by the test
+ * provider (tests/e2e/seed.php); bin/e2e.sh runs the setup pass of shadow-run.js before (a shadow
+ * run that read the bookings) and tests/e2e/seed-ai.php (the alert to explain, its id in
+ * RITMO_E2E_AI_ALERT).
  *
  *   RITMO_E2E_SITE=http://127.0.0.1:8090 RITMO_E2E_API=http://127.0.0.1:8091 \
- *   RITMO_E2E_AI=http://127.0.0.1:8091/anthropic node tests/e2e/m5-ai.js
+ *   RITMO_E2E_AI=http://127.0.0.1:8091/anthropic RITMO_E2E_AI_ALERT=<id> node tests/e2e/m5-ai.js
  */
 
 const fs = require('fs');
@@ -38,6 +48,7 @@ const KEY = 'sk-ant-e2e-only-key-0001';
 const SHOTS = process.env.RITMO_E2E_SCREENS || path.join(__dirname, 'screenshots');
 const SLUG = 'ritmo-revenue-assistant';
 const SCREENS = [['ai-ask', ''], ['ai-settings', '&tab=settings'], ['ai-usage', '&tab=usage']];
+const ALERT = process.env.RITMO_E2E_AI_ALERT || '';
 
 const results = [];
 
@@ -165,11 +176,93 @@ async function orderDraft(page) {
     check(body.output_config.effort === 'medium' && body.output_config.format.type === 'json_schema', 'effort and the schema of the draft');
     check(body.fallbacks === 'default', 'the server-side fallback is asked');
     check(body.system[body.system.length - 1].cache_control.type === 'ephemeral', 'the last system block is the cache breakpoint');
+    await waitsForAPerson(page);
+    await open(page, '');
     await submit(page, '[data-ritmo="ai-draft-open"]');
     check(page.url().includes('page=ritmo-revenue-orders') && page.url().includes('tab=new'), 'the order form opens');
     const floors = await page.locator('input[name^="order[floors]"]').evaluateAll((inputs) => inputs.map((i) => i.value).filter((v) => v !== ''));
     check(floors.includes('770.00'), 'the form is filled in with the computed floor: ' + floors.join(','));
     return { order_draft_in_form: true };
+}
+
+/* The draft waits for a person: the Approvals screen points to it and the menu counts it. */
+async function waitsForAPerson(page) {
+    await page.goto(SITE + '/wp-admin/admin.php?page=ritmo-revenue-approvals&property=' + PROPERTY);
+    const waiting = page.locator('[data-ritmo="ai-drafts-waiting"]');
+    check(await waiting.count() === 1, 'the Approvals screen says a draft of the assistant waits');
+    check(/1 draft/.test(await waiting.innerText()) && /not a plan of prices/.test(await waiting.innerText()), 'in words: ' + (await waiting.innerText()));
+    check((await page.locator('#adminmenu a[href*="page=' + SLUG + '"] .pending-count').innerText()).trim() === '1', 'the menu counts the draft next to Assistant');
+    await crossChecks(page, 'approvals with a draft');
+    await page.screenshot({ path: path.join(SHOTS, 'm5-ai-approvals-draft-1280.png'), fullPage: true });
+}
+
+/* An alert explained in plain words, and a run report put in words, from the plugin's facts. */
+async function explainAndReport(page) {
+    check(ALERT !== '', 'RITMO_E2E_AI_ALERT names the alert to explain');
+    await page.goto(SITE + '/wp-admin/admin.php?page=ritmo-revenue-alerts&property=' + PROPERTY + '&alert=' + ALERT);
+    const alertBox = page.locator('#ritmo-alert-detail [data-ritmo="ai-explain"]');
+    check(await alertBox.count() === 1 && await alertBox.isVisible(), 'the alert detail offers the explanation');
+    await alertBox.locator('[data-ritmo-js="ai-explain"]').click();
+    const alertResult = alertBox.locator('[data-ritmo="ai-explain-result"]');
+    await page.waitForFunction(() => {
+        const el = document.querySelector('#ritmo-alert-detail [data-ritmo="ai-explain-result"]');
+        return el && el.querySelectorAll('p').length > 0;
+    }, null, { timeout: 180000 });
+    const explanation = await alertResult.innerText();
+    check(/Next step:/.test(explanation), 'an explanation and the next step: ' + explanation);
+    check(/9/.test(explanation), 'it cites the plugin\'s own fact (9 days): ' + explanation);
+    const explainBody = (await aiLog()).filter((r) => r.path === '/v1/messages').pop().body;
+    check(JSON.stringify(explainBody).includes('market'), 'the explanation was asked with the alert');
+    await page.screenshot({ path: path.join(SHOTS, 'm5-ai-alert-explained-1280.png'), fullPage: true });
+
+    await page.goto(SITE + '/wp-admin/admin.php?page=ritmo-revenue-reports&property=' + PROPERTY + '&tab=runs');
+    const runBox = page.locator('[data-ritmo="run-reports"] [data-ritmo="ai-explain"]').first();
+    check(await runBox.count() === 1 && await runBox.isVisible(), 'a run report offers its text in words');
+    await runBox.locator('[data-ritmo-js="ai-explain"]').click();
+    await page.waitForFunction(() => {
+        const el = document.querySelector('[data-ritmo="run-reports"] [data-ritmo="ai-explain-result"]');
+        return el && el.querySelectorAll('p').length > 0;
+    }, null, { timeout: 180000 });
+    const words = await runBox.locator('[data-ritmo="ai-explain-result"]').innerText();
+    check(words.trim().length > 20 && !/could not answer|not accept/.test(words), 'the run report in words: ' + words);
+    await page.screenshot({ path: path.join(SHOTS, 'm5-ai-run-in-words-1280.png'), fullPage: true });
+    return { alert_explained: true, run_report_in_words: true };
+}
+
+/* A refusal of the model and an overloaded API are told in plain words; nothing is kept. */
+async function refusalAndOverload(page) {
+    await script({ kind: 'refusal', category: 'cyber', explanation: 'The request was declined.' });
+    await open(page, '');
+    await page.fill('[data-ritmo="ai-request"]', 'Baixar 5% as noites de terça da Garden Suite em janeiro');
+    await page.click('[data-ritmo="ai-draft-submit"]');
+    await page.waitForFunction(() => /declined|recusou/.test(document.querySelector('[data-ritmo="ai-draft-status"]').innerText), null, { timeout: 180000 });
+    check(await page.locator('[data-ritmo="ai-draft"][data-kind="order"]').count() === 0, 'a refusal is never a draft');
+
+    const before = (await aiLog()).filter((r) => r.path === '/v1/messages').length;
+    await script(
+        { kind: 'error', status: 529, type: 'overloaded_error' },
+        { kind: 'error', status: 529, type: 'overloaded_error' },
+        { kind: 'error', status: 529, type: 'overloaded_error' },
+    );
+    await open(page, '');
+    await page.fill('[data-ritmo="ai-request"]', 'Baixar 5% as noites de terça da Garden Suite em janeiro');
+    await page.click('[data-ritmo="ai-draft-submit"]');
+    await page.waitForFunction(() => /Claude is overloaded right now|Claude está sobrecarregada agora/.test(document.querySelector('[data-ritmo="ai-draft-status"]').innerText), null, { timeout: 180000 });
+    const tries = (await aiLog()).filter((r) => r.path === '/v1/messages').slice(before);
+    check(tries.length === 3 && tries.every((r) => r.status === 529), 'the 529 was tried three times in all, then given up: ' + tries.map((r) => r.status).join(','));
+    await page.screenshot({ path: path.join(SHOTS, 'm5-ai-overloaded-1280.png'), fullPage: true });
+    return { refusal_in_words: true, overloaded_in_words: true };
+}
+
+/* Nothing of a guest in any request to Claude. */
+async function noGuestDataSent() {
+    const bodies = (await aiLog()).map((r) => JSON.stringify(r.body || {}));
+    check(bodies.length > 5, 'the assistant was asked');
+    for (const body of bodies) {
+        check(!/GUESTDATA/i.test(body), 'a guest field of the PMS reached Claude');
+        check(!/[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}/.test(body), 'an e-mail reached Claude');
+    }
+    return { guest_data_sent: 0, bodies_checked: bodies.length };
 }
 
 /* A rule change goes to the person's rules draft; the review shows it; nothing is saved. */
@@ -246,7 +339,8 @@ async function nothingWrittenToThePmsOrThePricingSystem() {
     const errors = [];
     page.on('pageerror', (error) => errors.push(error.message));
     page.on('console', (message) => {
-        if (message.type() === 'error' && !/the server responded with a status of 4(0[0-9]|22)/.test(message.text())) {
+        // The refusals answer 4xx and an overloaded Claude 502 (AI.md, section 6), on purpose.
+        if (message.type() === 'error' && !/the server responded with a status of (4(0[0-9]|22)|502)/.test(message.text())) {
             errors.push(message.text());
         }
     });
@@ -262,7 +356,10 @@ async function nothingWrittenToThePmsOrThePricingSystem() {
         results.push(await orderDraft(page));
         results.push(await ruleDraft(page));
         results.push(await refusals(page));
+        results.push(await refusalAndOverload(page));
+        results.push(await explainAndReport(page));
         results.push(await weeklyAndUsage(page));
+        results.push(await noGuestDataSent());
         await everyScreen(page, 1280);
         await everyScreen(page, 390);
         results.push(await offAgain(page));

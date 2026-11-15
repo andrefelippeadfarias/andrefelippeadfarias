@@ -15,12 +15,15 @@ use Ritmo\Contracts\HttpResponse;
 use Ritmo\Contracts\LicenceState;
 use Ritmo\Tests\Fakes\MovableClock;
 use Ritmo\Tests\Fakes\ScriptedHttpClient;
+use Ritmo\Tests\Fakes\SignedLicenceAnswers;
 
 final class HttpLicenceServerTest extends TestCase
 {
     private const KEY = 'RR-2026-ABCD-EFGH';
 
     private const SITE = 'https://inn.example.com';
+
+    private const NONCE = '0123456789abcdef0123456789abcdef';
 
     private ScriptedHttpClient $http;
 
@@ -29,12 +32,12 @@ final class HttpLicenceServerTest extends TestCase
     protected function setUp(): void
     {
         $this->http = new ScriptedHttpClient();
-        $this->server = new HttpLicenceServer($this->http, ServerUrl::parse('https://licences.example.com/api/v1/', false), new MovableClock('2026-11-15T10:00:00Z'), 'ritmo-revenue', '1.0.0');
+        $this->server = new HttpLicenceServer($this->http, ServerUrl::parse('https://licences.example.com/api/v1/', false), new MovableClock('2026-11-15T10:00:00Z'), 'ritmo-revenue', '1.0.0', [SignedLicenceAnswers::publicKey()], static fn (): string => self::NONCE);
     }
 
     public function testAValidAnswerWithAnEndDate(): void
     {
-        $this->http->queue(ScriptedHttpClient::json(200, ['status' => 'valid', 'expires_at' => '2027-11-15T00:00:00-03:00', 'message' => 'Licence active.']));
+        $this->http->queue(SignedLicenceAnswers::answer('valid', '2027-11-15T00:00:00-03:00', 'Licence active.'));
 
         $state = $this->server->activate(self::KEY, self::SITE);
 
@@ -46,7 +49,7 @@ final class HttpLicenceServerTest extends TestCase
 
     public function testTheKeyTravelsOnlyInThePostBody(): void
     {
-        $this->http->queue(ScriptedHttpClient::json(200, ['status' => 'valid', 'expires_at' => null]), ScriptedHttpClient::json(200, ['status' => 'valid']), ScriptedHttpClient::json(200, ['status' => 'deactivated']));
+        $this->http->queue(SignedLicenceAnswers::answer(), SignedLicenceAnswers::answer(), ScriptedHttpClient::json(200, ['status' => 'deactivated']));
 
         $this->server->activate(self::KEY, self::SITE);
         $this->server->check(self::KEY, self::SITE);
@@ -57,7 +60,9 @@ final class HttpLicenceServerTest extends TestCase
             self::assertStringStartsWith('https://licences.example.com/api/v1/', $request['url']);
             self::assertStringNotContainsString(self::KEY, $request['url']);
             self::assertStringNotContainsString(self::KEY, (string) json_encode($request['headers']));
-            self::assertSame(['licence_key' => self::KEY, 'site_url' => self::SITE, 'product' => 'ritmo-revenue', 'plugin_version' => '1.0.0'], json_decode((string) $request['body'], true));
+            $body = json_decode((string) $request['body'], true);
+            self::assertSame(['licence_key' => self::KEY, 'site_url' => self::SITE, 'product' => 'ritmo-revenue', 'plugin_version' => '1.0.0'], array_diff_key($body, ['nonce' => true]));
+            self::assertContains($body['nonce'] ?? self::NONCE, [self::NONCE]);
             self::assertSame('application/json', $request['headers']['Content-Type']);
             self::assertLessThanOrEqual(15, $request['timeout']);
         }
@@ -94,6 +99,30 @@ final class HttpLicenceServerTest extends TestCase
         $this->http->queue($reply);
 
         self::assertSame($status, $this->server->check(self::KEY, self::SITE)->status);
+    }
+
+    public function testOnlyAValidAnswerSignedByThePluginsLicenceKeyCounts(): void
+    {
+        $otherKey = sodium_crypto_sign_secretkey(sodium_crypto_sign_keypair());
+        $cases = [
+            'unsigned' => ScriptedHttpClient::json(200, ['status' => 'valid', 'expires_at' => null, 'message' => 'Licence active.']),
+            'signed by another server' => SignedLicenceAnswers::answer('valid', null, 'ok', '2026-11-15T10:00:00Z', $otherKey),
+            'a longer end date than signed' => SignedLicenceAnswers::answer('valid', '2027-01-01T00:00:00Z', 'ok', '2026-11-15T10:00:00Z', null, ['expires_at' => '2099-01-01T00:00:00Z']),
+            'an old answer replayed' => SignedLicenceAnswers::answer('valid', null, 'ok', '2026-11-15T10:00:00Z', null, ['nonce' => 'ffffffffffffffffffffffffffffffff']),
+            'no time of the check' => SignedLicenceAnswers::answer('valid', null, 'ok', 'yesterday'),
+            'a bad signature' => SignedLicenceAnswers::answer('valid', null, 'ok', '2026-11-15T10:00:00Z', null, ['signature' => base64_encode(str_repeat('x', 64))]),
+        ];
+        foreach ($cases as $name => $reply) {
+            $this->http->queue($reply);
+            $state = $this->server->activate(self::KEY, self::SITE);
+            self::assertSame(LicenceState::UNREACHABLE, $state->status, $name);
+            self::assertStringContainsString('not signed', $state->message, $name);
+        }
+        $this->http->queue(SignedLicenceAnswers::answer());
+        $other = new HttpLicenceServer($this->http, ServerUrl::parse('https://licences.example.com/api/v1/', false), new MovableClock('2026-11-15T10:00:00Z'), 'ritmo-revenue', '1.0.0', [], static fn (): string => self::NONCE);
+        self::assertSame(LicenceState::UNREACHABLE, $other->activate(self::KEY, self::SITE)->status, 'without a public key nothing is valid');
+        $this->http->queue(SignedLicenceAnswers::answer());
+        self::assertSame(LicenceState::VALID, $this->server->check(self::KEY, self::SITE)->status);
     }
 
     public function testADeactivationIsConfirmedOnlyByItsAnswer(): void

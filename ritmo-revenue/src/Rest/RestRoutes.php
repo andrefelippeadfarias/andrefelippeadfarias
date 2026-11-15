@@ -7,6 +7,7 @@ namespace Ritmo\Rest;
 use OutOfBoundsException;
 use Ritmo\Application\ShadowRun\PlanItemStatus;
 use Ritmo\Application\ShadowRun\RunOutcome;
+use Ritmo\Rest\Ai\AiRoutes;
 use Ritmo\Rest\Editors\EditorRoutes;
 use Ritmo\Rest\Market\MarketRoutes;
 use Ritmo\Rest\Reports\ReportRoutes;
@@ -62,6 +63,7 @@ final class RestRoutes
         EditorRoutes::register();
         MarketRoutes::register();
         ReportRoutes::register();
+        AiRoutes::register();
     }
 
     /**
@@ -117,6 +119,7 @@ final class RestRoutes
     public static function shadowRun(WP_REST_Request $request): WP_REST_Response|WP_Error
     {
         try {
+            \Ritmo\WordPress\TimeLimit::forEngine();
             $outcome = Services::instance()->shadowRuns()->run((string) $request['id']);
         } catch (OutOfBoundsException) {
             return self::unknownProperty();

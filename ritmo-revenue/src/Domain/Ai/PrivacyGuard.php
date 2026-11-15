@@ -10,14 +10,24 @@ namespace Ritmo\Domain\Ai;
  * - scrub(): drops every key of a data tree that names guest data (a name, a contact, a
  *   document, an address, a note or a free-text message) before a prompt is built;
  * - problem() and assertSendable(): refuse a text that looks like an e-mail address, a phone
- *   number or a Brazilian identity document (CPF, CNPJ). Nothing is sent then: the person is told
- *   why. Dates, amounts, percentages and booking ids (up to nine digits) are not phone numbers.
+ *   number, a Brazilian identity document (CPF, CNPJ) or a person's name (a capitalised name after
+ *   "hóspede", "cliente", "Sr.", "guest"... or two capitalised words before "pediu", "asked"...).
+ *   Nothing is sent then: the person is told why. Dates, amounts, percentages and booking ids (up
+ *   to nine digits) are not phone numbers. The name check is a heuristic: the screen also asks the
+ *   person never to write a guest's name.
  */
 final class PrivacyGuard
 {
     public const EMAIL = 'email';
     public const PHONE = 'phone';
     public const DOCUMENT = 'document';
+    public const NAME = 'name';
+
+    /** A capitalised name after a word that introduces a person. */
+    private const NAME_AFTER_TITLE = '/(?<![\p{L}\d])(?i:h[óo]spede|cliente|fam[íi]lia|sra?\.?|srta\.?|senhora?|dona|guest|customer|mrs?\.?|ms\.?|miss)\s+\p{Lu}\p{Ll}+/u';
+
+    /** Two capitalised words before a verb a person does ("João Silva pediu"). */
+    private const NAME_BEFORE_VERB = '/(?<![\p{L}\d])\p{Lu}\p{Ll}+\s+\p{Lu}\p{Ll}+\s+(?:pediu|pede|quer|queria|reclamou|reservou|ligou|disse|perguntou|cancelou|asked|wants|booked|called|said|complained|cancelled)(?![\p{L}\d])/u';
 
     /** Fragments of a normalised key (lowercase letters and digits only) that name guest data. */
     private const FORBIDDEN_KEYS = [
@@ -97,6 +107,9 @@ final class PrivacyGuard
                 return self::DOCUMENT;
             }
         }
+        if (preg_match(self::NAME_AFTER_TITLE, $text) === 1 || preg_match(self::NAME_BEFORE_VERB, $text) === 1) {
+            return self::NAME;
+        }
         $rest = (string) preg_replace(self::NOT_PHONE_PATTERNS, ' ', $text);
         if (preg_match_all('/\+?\(?\d[\d\s().\/-]*\d/', $rest, $matches) > 0) {
             foreach ($matches[0] as $candidate) {
@@ -138,7 +151,7 @@ final class PrivacyGuard
         foreach ($texts as $text) {
             $problem = self::problem($text);
             if ($problem !== null) {
-                throw new AiStopped(AiStopped::PRIVACY, 'Nothing was sent: the text looks like it carries guest data (an e-mail, a phone number or a document number). Refer to a booking by its id.', ['kind' => $problem]);
+                throw new AiStopped(AiStopped::PRIVACY, 'Nothing was sent: the text looks like it carries guest data (an e-mail, a phone number, a document number or a guest\'s name). Refer to a booking by its id.', ['kind' => $problem]);
             }
         }
     }

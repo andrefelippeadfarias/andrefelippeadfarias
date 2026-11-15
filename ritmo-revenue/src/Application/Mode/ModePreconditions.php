@@ -7,6 +7,7 @@ namespace Ritmo\Application\Mode;
 use Closure;
 use DateTimeImmutable;
 use Ritmo\Application\EmergencySwitch;
+use Ritmo\Application\Licence\LicenceEnforcer;
 use Ritmo\Contracts\KeyValueStore;
 use Ritmo\Domain\Alerts\AlertCode;
 use Ritmo\Domain\Model\Property;
@@ -22,6 +23,7 @@ use Ritmo\Infrastructure\Schedule\AlertLedger;
  * spec 6.1). Each unmet condition is a code, its values and an English sentence (the screens
  * translate the code); the change is refused while any is unmet.
  *
+ * Both: a licence that allows writing (LicenceEnforcer, code "licence").
  * Shadow to approval: the emergency switch released; no open connector_down or write_failed; the
  * last modes.min_shadow_runs runs of the property completed in shadow mode without the plan being
  * refused as a whole, the newest within 24 hours; both connections tested OK within 24 hours.
@@ -49,6 +51,7 @@ final class ModePreconditions
 
     /**
      * @param (Closure(): string)|null $safetyFingerprint the fingerprint of the safety values in force (SafetyValues::fingerprint)
+     * @param LicenceEnforcer|null     $licence           the licence's condition to leave shadow mode (code "licence"); null checks no licence
      */
     public function __construct(
         private readonly RunRepository $runs,
@@ -58,6 +61,7 @@ final class ModePreconditions
         private readonly KeyValueStore $store,
         private readonly Clock $clock,
         private readonly ?Closure $safetyFingerprint = null,
+        private readonly ?LicenceEnforcer $licence = null,
     ) {
     }
 
@@ -126,7 +130,13 @@ final class ModePreconditions
      */
     private function common(): array
     {
-        return $this->switch->isEngaged() ? [self::unmet('switch_engaged', [], 'The emergency switch is engaged.')] : [];
+        $unmet = $this->switch->isEngaged() ? [self::unmet('switch_engaged', [], 'The emergency switch is engaged.')] : [];
+        $licence = $this->licence?->unmetToLeaveShadow();
+        if ($licence !== null) {
+            $unmet[] = $licence;
+        }
+
+        return $unmet;
     }
 
     /**

@@ -51,7 +51,7 @@ Lifecycle: `Activator::activate()` (`Scheduler::schedule()` first: the five-minu
 
 ### 1.5 Screens and capabilities
 
-The admin is one menu "Ritmo Revenue" of twelve entries (spec 05, section 2; `Admin\Components\Menu`), registered by `Admin\AdminScreens` from each area's screens: Overview, Nights, Approvals, Alerts, To do, Changes, Reports, Market, Orders, Rules, Operations, Settings (tabs: connections, setup wizard, notifications, diagnostics, uninstall). The M1-M3 slugs redirect to the new screens keeping the property. Every screen checks its capability (403 by URL), prints only escaped values and works without JavaScript (post, redirect, get); scripts only improve it.
+The admin is one menu "Ritmo Revenue" of thirteen entries (spec 05, section 2; `Admin\Components\Menu`), registered by `Admin\AdminScreens` from each area's screens: Overview, Nights, Approvals, Alerts, To do, Changes, Reports, Market, Orders, Rules, Operations, Assistant (M5, AI.md), Settings (tabs: connections, setup wizard, notifications, licence (M5, LICENCE-UPDATE.md), diagnostics, uninstall). The M1-M3 slugs redirect to the new screens keeping the property. Every screen checks its capability (403 by URL), prints only escaped values and works without JavaScript (post, redirect, get); scripts only improve it.
 
 | Capability | Who has it by default | What it allows |
 |---|---|---|
@@ -60,13 +60,14 @@ The admin is one menu "Ritmo Revenue" of twelve entries (spec 05, section 2; `Ad
 | `ritmo_approve` | administrator, Revenue Manager | approvals, undo, releasing frozen nights, engaging the emergency switch |
 | `ritmo_manage_connections` | administrator, Revenue Manager | connections, modes, releasing the emergency switch, uninstall choice |
 | `ritmo_manage_safety` | administrator only (D2; a site may grant it by hand) | safety fields of the rules, listing minimum/base/maximum in an approval, the switch to autonomous; always with a typed confirmation |
+| `ritmo_use_ai` | administrator, Revenue Manager (version 3 of the grants, M5) | asking the optional assistant: a draft from a request, the weekly text, an alert explained, a run report in words (it spends the site's own API credit); its settings and key need `ritmo_manage_connections`, opening a draft in an editor `ritmo_manage_rules` |
 
-`WordPress\Roles` creates the role `ritmo_revenue_manager` (the four first capabilities) and the read-only role `ritmo_revenue_viewer`, gives the five to administrators, and applies versioned grants once (`roles_version`); the uninstaller removes both roles and the five capabilities. Every form posts to admin-post.php through `Admin\Screens\ScreenActions`: POST only, then the capability, then the nonce (per object where the action names one), and only then the handler reads its fields; it redirects back with a notice (`Admin\Notice`). A source test fails when a template echoes an unescaped value or reads `$_GET`/`$_POST`.
+`WordPress\Roles` creates the role `ritmo_revenue_manager` (the four first capabilities, then `ritmo_use_ai`) and the read-only role `ritmo_revenue_viewer`, gives the six to administrators, and applies versioned grants once (`roles_version`); the uninstaller removes both roles and the six capabilities. Every form posts to admin-post.php through `Admin\Screens\ScreenActions`: POST only, then the capability, then the nonce (per object where the action names one), and only then the handler reads its fields; it redirects back with a notice (`Admin\Notice`). A source test fails when a template echoes an unescaped value or reads `$_GET`/`$_POST`.
 
 | Area | Classes |
 |---|---|
 | UI kit | `Admin\Components\...`: `Menu`, `Tab`, `Screen`, `FormAction`, `Capability`, `Input`, `Money`, `Percent`, `Ratio`, `PriceText`, `NightDate`, `Labels`, `Paging`, `ConfirmTyped` (typed confirmation: the property id, the new value or the provider's name), `DomainText` (the label and help of a rules setting, translated), `CsvWriter` (formula guard on every text cell; UTF-8 with BOM), `PrivacyGuard` (refuses e-mails, phones and documents in free text), `ErrorText`, `UserFacing`; `View` renders templates; `Notice` carries the message across the redirect; `ReasonText` and `RefusalText` say the why of a number and of a refusal in words. |
-| Central screens | `Admin\Screens\...`: `Screens` (renderers, counters, actions of the area), `Page`, `ScreenServices`, `OverviewScreen`, `NightsScreen`, `NightDetailView`, `NightText`, `NightActions`, `ApprovalsScreen`, `ApprovalActions`, `PmsChangeText` (a PMS change in words), `WarningText`, `AlertsScreen`, `AlertText`, `AlertActions`, `TodoScreen`, `TodoText`, `TodoActions`, `ChangesScreen`, `ChangeActions`, `UndoSelection` (the ticked changes kept for the confirmation of the undo), `UndoNow`, `UndoText`, `OperationsScreen`, `OperationsText`, `OperationsActions`, `SettingsScreen`, `SettingsActions`, `ConnectionsView`, `ConnectionText`, `ConnectionActions`, `DiagnosticsView`, `LogText` (the log messages translated when shown), `DiagnosticsActions`, `WizardView`, `WizardActions`, `PeopleNames`. Application side: `Dashboard\...` (`StatusQuery`, `StatusStrip`, `Overview\OverviewQuery`, `Alerts\AlertList`, `Alerts\AlertFilter`, `Changes\ChangeList`, `Changes\ChangeFilter`, `Changes\ChangeGroups`, `Changes\UndoRequests`, `Connections\ConnectionTests` (one test per provider every 30 s), `Connections\ConnectionReason`, `Diagnostics\SupportBundle` (JSON with a whitelist of keys), `Setup\SetupWizard`, `Setup\SetupState`, `Setup\WizardProgress`, `Setup\ListingSuggestions`, `Setup\RoomRowsRefused`, `Setup\SafetyValues`, `Setup\WouldDo`, `Todo\TodoGenerator`, `Todo\TodoItem`, `Todo\TodoService`, `Todo\TodoStore`) and `Grid\...` (`NightGrid`, `NightGridQuery`, `NightCell`, `NightMarks`, `NightFilter`, `NightDetail`, `NightDetailQuery`, `GridContext`, `LastPlan`, `PlanIndex`, `PlannedNight`; approvals: `Approvals\ApprovalBoard`, `RequestView`, `RowBuilder`, `EntryRow`, `EntryWarnings`, `Segment`, `Segmenter`, `Impact`, `RelationHints`). See docs/ADMIN.md. |
+| Central screens | `Admin\Screens\...`: `Screens` (renderers, counters, actions of the area), `Page`, `ScreenServices`, `OverviewScreen`, `NightsScreen`, `NightDetailView`, `NightText`, `NightActions`, `ApprovalsScreen`, `ApprovalActions`, `PmsChangeText` (a PMS change in words), `WarningText`, `AlertsScreen`, `AlertText`, `AlertActions`, `TodoScreen`, `TodoText`, `TodoActions`, `ChangesScreen`, `ChangeActions`, `UndoSelection` (the ticked changes kept for the confirmation of the undo), `UndoNow`, `UndoText`, `OperationsScreen`, `OperationsText`, `OperationsActions`, `SettingsScreen`, `SettingsActions`, `ConnectionsView`, `ConnectionText`, `ConnectionActions`, `DiagnosticsView`, `LogText` (the log messages translated when shown), `DiagnosticsActions`, `WizardView`, `WizardActions`, `RoomErrorText` (the refusals of the room step in words), `PeopleNames`. Application side: `Dashboard\...` (`StatusQuery`, `StatusStrip`, `Overview\OverviewQuery`, `Alerts\AlertList`, `Alerts\AlertFilter`, `Changes\ChangeList`, `Changes\ChangeFilter`, `Changes\ChangeGroups`, `Changes\UndoRequests`, `Connections\ConnectionTests` (one test per provider every 30 s), `Connections\ConnectionReason`, `Diagnostics\SupportBundle` (JSON with a whitelist of keys), `Setup\SetupWizard`, `Setup\SetupState`, `Setup\WizardProgress`, `Setup\ListingSuggestions`, `Setup\RoomRowsRefused`, `Setup\SafetyValues`, `Setup\WouldDo`, `Todo\TodoGenerator`, `Todo\TodoItem`, `Todo\TodoService`, `Todo\TodoStore`) and `Grid\...` (`NightGrid`, `NightGridQuery`, `NightCell`, `NightMarks`, `NightFilter`, `NightDetail`, `NightDetailQuery`, `GridContext`, `LastPlan`, `PlanIndex`, `PlannedNight`; approvals: `Approvals\ApprovalBoard`, `RequestView`, `RowBuilder`, `EntryRow`, `EntryWarnings`, `Segment`, `Segmenter`, `Impact`, `RelationHints`). See docs/ADMIN.md. |
 | Editors | `Admin\Editors\...`: `EditorScreens`, `EditorPage`, `EditorServices`, `RulesScreen`, `RulesActions`, `RulesLayout` (every schema field placed once), `Placement`, `FieldView`, `FieldWidget`, `FieldContext`, `FieldPath`, `ValueText`, `ChoiceLabels`, `EditorText`, `RuleFormReader`, `RequestFields`, `FormScope`, `FormErrors`, `FormResult`, `DraftDesk`, `UserMetaDraftStorage`, `ReviewView`, `VersionsView`, `PresetFile`, `RelationsView`, `RelationForm`, `RelationText`, `RelationCycle`, `RelationActions`, `CalendarView`, `CalendarActions`, `OrdersScreen`, `OrdersActions`, `OrderFormDraft` (what a refused order form had, to fill it again), `OrderText`. Application side, `Rules\...`: `RuleSetEditor` (draft per user, three-way merge, version N+1, never a write), `RuleDraft`, `RuleDraftStorage`, `RuleDiff`, `FieldChange`, `RuleMerge`, `RuleChecks`, `RulesRefused`, `SafetyFields`, `SavedVersion`, `VersionHistory`, `PendingApprovals`, `ApprovalServiceAdapter`, `PrivacyCheck`, `Percent`, `Calendar\HolidayCatalogue`, `Calendar\HolidayList`, `Calendar\HolidayProposals`, `Calendar\HolidayProposal`, `Calendar\Easter`, `Orders\OrderDesk`, `Orders\OrderBoard`, `Orders\OrderForm`. See docs/EDITORS.md. |
 | Market | `Admin\Market\...`: `MarketScreen`, `MarketActions`, `MarketServices`, `MarketText`, `CsvUploadReader` (the upload read in place with fgetcsv, never moved or kept), `TransientPreviewStore`. Application side, `Market\...`: `MarketImportService`, `ImportPreview`, `PreviewStore`, `UploadedFile`, `MarketRefused`, `MarketBoard`, `MarketExport`, `CompetitorService`, `CompetitorInput`, `MarketSeriesService` (series rebuilt when their inputs changed), `MarketRulerAssembler` (the ruler of a run), `MarketFreshness`, `MarketReminder`, `MarketSettings`. See docs/MARKET.md. |
 | Reports | `Admin\Reports\...`: `ReportsScreen`, `ReportsActions`, `ReportsServices`, `ReportsText`, `ReportViews`, `ReportTable`, `Cell`, `BarChart` (inline SVG, the table is the accessible source), `OccupancyTables`, `MonthTables`, `ReviewTables`, `WeeklyTables`, `RunLineText` (the run report translated for the reader), `WriteReasonText`. Application side, `Report\...`: `ReportService`, `ReportScope`, `ReportSettings`, `Store\SnapshotStore`, `Store\RevenueTargetStore`, `Store\TargetRow`. See docs/REPORTS.md. |
@@ -91,6 +92,8 @@ Every route needs a logged-in session, the `wp_rest` nonce in `X-WP-Nonce` (401 
 
 | `POST /emergency` (engage) | `ritmo_approve` or `ritmo_manage_connections` | releasing needs `ritmo_manage_connections` (D23) |
 
+The assistant's routes (`GET /ai/status`, `POST /ai/drafts`, `/ai/reports/weekly`, `/ai/runs/{id}/report`, `/ai/alerts/{id}/explain` with `ritmo_use_ai`; `POST /ai/test` with `ritmo_manage_connections`) are `Rest\Ai\AiRoutes`/`AiEndpoints` (AI.md, section 6).
+
 The first four are `Rest\RestRoutes`; the operation routes are `Rest\OperationRoutes`. The routes where a page waits for an answer (D31) are `Rest\Screens\ScreenRoutes`/`ScreenEndpoints` (approval status, the preview of a selection, connection test, alerts, runs), `Rest\Editors\EditorRoutes`/`EditorEndpoints` (rule-set versions and their comparison), `Rest\Market\MarketRoutes`/`MarketEndpoints` (the seven market routes of MARKET.md) and `Rest\Reports\ReportRoutes`/`ReportEndpoints` (the reports, the review snapshot, the targets, a run's report). Every one goes through `RestRoutes::allowed()` (a real capability check and the REST nonce); errors are translated sentences with 400, 403, 404 or 409, never internal data.
 
 ### 1.7 The throwaway site and the end-to-end test
@@ -104,6 +107,7 @@ bin/e2e.sh [screenshot folder]
 3. `tests/e2e/shadow-run.js` (Playwright, Chromium): log in; connections; setup; shadow run from the dashboard; REST checks; Diagnostics; the simulator's log: only reads. Then the operations: switch to approval on the Operations screen, "Run now" (the plan waits; still only reads), approve everything, run the due tick through `wp-cron.php`: the approved writes reach the simulator; engage the emergency switch on the screen: "Run now" sends no write.
 4. Second pass with `RITMO_PRICING_CALENDAR_READ=1`: a second shadow run; only reads and `POST /pricelabs/v1/listing_prices` (and the writes of the approval of the first pass).
 5. WordPress' debug log must hold no PHP error, warning, notice or deprecation from a plugin file.
+6. M5 (ARCHITECTURE.md 5): the assistant against the fake Claude API on a new seeded site (`m5-ai.js`), the licence and the signed updates on a seeded site without the test provider (`m5-licence.js`, with `licence-run.php`: the next run after the lapse puts the property back in shadow mode and writes nothing), and the zip on a clean site (`bin/e2e-zip.sh`). The seeded sites of the other passes are licensed by the test provider (`RITMO_LICENCE_DEV`, key `TEST-VALID-...` saved by `seed.php`) so their approval and autonomous passes may leave shadow mode; `bin/wp-test-site.sh` also serves the fake Claude API under `/anthropic` and defines `RITMO_ANTHROPIC_BASE_URL`.
 
 The PHP end-to-end tests of the run (`tests/Integration/Run`, no browser) cover: shadow sends no write; approval writes nothing before the approval and the approved (or partly approved) entries after; autonomous writes in slices and records; a crash after N requests and the resume without sending twice; a process killed while writing and continued later (the run ends as failed, nothing is sent from its reads, the manual change made meanwhile is kept); a 429 in the middle; a failed recalculation not tried again before the next routine; the emergency switch between slices and between a deletion and its rewrite (repaired first by the next run; in approval mode proposed first and written once approved); a manual change on a night written by a group (frozen, never overwritten) and the plugin's own merged writes (never taken for manual changes); a listing base changed in the pricing system (the run writes over the base it read, stores it and alerts); approvals that end with a lower mode, the emergency switch or a newer approval; undo; a light run with a new booking (only its nights get a step) and without movement (three lines); the security and below-expected alerts.
 
@@ -122,7 +126,7 @@ The PHP end-to-end tests of the run (`tests/Integration/Run`, no browser) cover:
 | `ShadowRunService`, `RunNowService`, `LockedRunLauncher`, `RunLauncher`, `RunExecutor`, `LaunchResult`, `LaunchStatus`, `FailureKind` | Starting and continuing runs under the property's lock. |
 | `SchedulerTick`, `TickReport`, `ScheduleSource`, `ScheduleHousekeeping`, `StallMonitor`, `PauseService`, `MovementTracker`, `MovementRead`, `LightRoundService`, `LightRoundRequest`, `RoomQuota` | The scheduler and the light run (OPERATIONS.md). |
 | `AlertService`, `AlertNotifier`, `MailText`, `WatchService`, `WatchInput`, `WatchOutcome` | Alerts (ALERTS.md). |
-| `ModeService`, `ModePreconditions`, `ModeRefused`, `EmergencyControl` | Modes and the emergency switch (1.1, 1.4). |
+| `ModeService`, `ModePreconditions`, `ModeRefused`, `LeaveShadowConfirmation`, `EmergencyControl` | Modes and the emergency switch (1.1, 1.4); leaving shadow mode asks the typed property id and the word that no other tool writes prices (`LeaveShadowConfirmation`, checked by the Operations screen and the REST route before `ModeService::change()`). |
 | `UndoWriter` | Undo (1.4). |
 | `Write\...` (`WriteGate`, `WriteContext`, `WriteAuthorization`, `AutonomousAuthorization`, `HumanApproval`, `IssuedToken`, `TokenGrant`, `PlanHash`, `TonightGuard`, `TonightState`, `FieldLocks`, `WriteRefused`, `WriteExecutor`, `WriteRun`, `WriteOutcome`, `StepSender`, `StepResult`, `StopReason`, `RunProgress`, `PmsGuard`, `StoredCheck`, `WriteJournal`, `StateReader`, `StoredState`, `NightRule`, `OpStatus`, `RecalcGuard`, `RecalcQuota`, `RecalcAttempt`, `AttemptLog`, `AttemptOutcome`, `AttemptRefused`, `QuotaVerdict`, `RollingWindow`, `ResumeService`, `ResumePlanner`, `ResumeReport`, `BrokenGroup`, `NightClass`, `WriteSchedule`, `WriteStep`, `CalendarChange`) | The write path (WRITE.md). |
 | `Approval\...`, `Verify\...` | Approvals and confirmation (1.4, VERIFY.md). |
@@ -131,16 +135,115 @@ The PHP end-to-end tests of the run (`tests/Integration/Run`, no browser) cover:
 | `Services`, `ConnectorFactory`, `WpCapabilityCheck`, `Activator`, `Deactivator`, `Uninstaller`, `Roles`, `Scheduler`, `TimeLimit` | WordPress wiring and lifecycle (1.2). |
 | `AdminScreens`, `View`, `Notice`, `ReasonText`, `RefusalText` and the areas of 1.5 | Screens and form actions (1.5); the refusals through the text domain. |
 | `RestRoutes`, `OperationRoutes`, `OperationInput` | The REST API (1.6); the strict reading of decisions and of the switch. |
+| `Ai\...` (`AiAssistant`, `AiStatus`, `AiText`, `AiSettingsStore`, `UsageLedger`, `AiDraftQueue`, `DraftHandOff`, `RequestData`) | The optional assistant of M5 (AI.md): when a call may leave (on, licence, key, cap, model), the usage of each call without content, the drafts waiting for a person (also counted on the Approvals screen and next to the Assistant entry of the menu), how a draft reaches the order form or the rules draft. |
+| `Admin\Ai\...` (`AiScreens`, `AiScreen`, `AiActions`, `AiServices`, `AiData`, `AiWords`, `AiResult`, `AiCapability`), `Rest\Ai\...` (`AiRoutes`, `AiEndpoints`) | The Assistant screen (Ask, Settings, Usage and cost), its forms, the "explain" buttons of the alert detail and of the run reports, the routes `ritmo/v1/ai/*` (AI.md, sections 6 and 7). |
+| `Licence\...` (`LicenceService`, `LicenceSettings`, `ProviderChoice`, `LicenceRefused`, `LicenceVerdictSource`, `LicenceEnforcer`, `ModeLowering`, `RepositoryModeLowering`) | The licence of M5 (LICENCE-UPDATE.md): the key, the stored record and verdict, the provider; what the verdict means for the runs (`PipelineRunExecutor` asks `LicenceEnforcer::modeAtRunStart()` when a run opens: shadow mode, and the property lowered, once the licence no longer allows writing), for leaving shadow mode (`ModePreconditions`, code `licence`) and for the assistant (`AiAssistant`, reason `licence`). |
+| `Update\...` (`UpdateChecker`, `UpdateSettings`, `ManifestVerifier`, `ReleaseManifest`, `PackageVerifier`, `TrustedKeys`, `UpdateRefused`, `ReleaseSigner`) | The signed update channel (LICENCE-UPDATE.md, section 3). |
+| `Admin\Licence\...` (`LicenceScreen`, `LicenceActions`, `LicenceText`, `LicenceNotice`, `LicenceServices`, `LicenceHooks`) | Settings › Licence, its four form actions, the notice, the scheduled check `ritmo_licence_check` (registered by `Plugin::boot()`, removed by deactivation and uninstall) and the update filters. |
 
 ### 1.9 Not in this milestone
 
-Licence and the setup assistant's AI help come in milestone 5. Left open in M4 (each listed in docs/OPERATIONS.md, section "Open points"): the relation re-check and audit passes of the run (D1), the channel limits read back from the PMS (D3), one bookings read per run (D4), the stay writes of a light run, the undo as an approval request (D9), the PMS room list in the wizard (D4 of spec 05).
+Milestone 5 brought the optional assistant ([AI.md](AI.md)), the licence and the signed updates ([LICENCE-UPDATE.md](LICENCE-UPDATE.md)) and the package ([IMPLANTACAO.md](IMPLANTACAO.md) for the owner's own site; `bin/build.sh`, `bin/e2e-zip.sh`). Left open in M4 (each listed in docs/OPERATIONS.md, section "Open points"): the relation re-check and audit passes of the run (D1), the channel limits read back from the PMS (D3), one bookings read per run (D4), the stay writes of a light run, the undo as an approval request (D9), the PMS room list in the wizard (D4 of spec 05).
 
 ## Part 2. Signature reference
 
 Generated from the code. Do not edit between the markers; run `php bin/sync-generated.php`.
 
 <!-- BEGIN GENERATED SIGNATURES (php bin/sync-generated.php) -->
+
+#### `Ritmo\Application\Ai\AiAssistant` (final class)
+
+```php
+public function __construct(AiSettingsStore $store, UsageLedger $usage, Closure $gateways, Logger $logger, ?RuleCatalogue $catalogue = null, ?Closure $licensed = null);
+public function status(): AiStatus;
+public function testConnection(): array;
+public function reportText(AiPurpose $purpose, array $about, array $facts, string $locale): AiText;
+public function explainAlert(array $alert, string $locale): array;
+public function draft(string $text, array $data, DraftContext $context, string $locale): AiDraft;
+public static function highestCost(AiRequest $request, AiSettings $settings): float;
+```
+
+#### `Ritmo\Application\Ai\AiDraftQueue` (final class)
+
+```php
+const KEY = 'ai_drafts';
+const KEEP = 30;
+const LIFETIME_DAYS = 14;
+const PENDING = 'pending';
+const OPENED = 'opened';
+const DISCARDED = 'discarded';
+public function __construct(KeyValueStore $store, Clock $clock);
+public function add(string $propertyId, int $userId, string $request, AiDraft $draft): string;
+public function find(string $id): ?array;
+public function pending(string $propertyId): array;
+public function countPending(?string $propertyId = null): int;
+public function close(string $id, string $status): void;
+```
+
+#### `Ritmo\Application\Ai\AiSettingsStore` (final class)
+
+```php
+const SETTINGS_KEY = 'ai_settings';
+const SECRET = 'anthropic_api_key';
+public function __construct(KeyValueStore $store, SodiumVault $vault);
+public function settings(): AiSettings;
+public function save(AiSettings $settings): void;
+public function hasKey(): bool;
+public function key(): ?string;
+public function putKey(string $key): void;
+public function forgetKey(): void;
+public function vaultProblem(): ?string;
+```
+
+#### `Ritmo\Application\Ai\AiStatus` (final class)
+
+```php
+public readonly AiSettings $settings;
+public readonly bool $hasKey;
+public readonly MonthlyUsage $usage;
+public readonly bool $licensed;
+public function __construct(AiSettings $settings, bool $hasKey, MonthlyUsage $usage, bool $licensed = true);
+public function blocker(): ?string;
+public function isReady(): bool;
+```
+
+#### `Ritmo\Application\Ai\AiText` (final class)
+
+```php
+public readonly string $text;
+public readonly string $model;
+public readonly bool $fallback;
+public function __construct(string $text, string $model, bool $fallback);
+```
+
+#### `Ritmo\Application\Ai\DraftHandOff` (final class)
+
+```php
+public function __construct(RuleCatalogue $catalogue);
+public function orderFields(AiDraft $draft): ?array;
+public function ruleDraft(AiDraft $draft, array $rules): ?array;
+```
+
+#### `Ritmo\Application\Ai\RequestData` (final class)
+
+```php
+public static function of(Property $property, array $rooms, RuleSet $rules, DateTimeImmutable $today, string $request, array $names = []): array;
+```
+
+#### `Ritmo\Application\Ai\UsageLedger` (final class)
+
+```php
+const KEY = 'ai_usage';
+const PREVIOUS_KEY = 'ai_usage_previous';
+const RESERVATION_MINUTES = 15;
+public function __construct(KeyValueStore $store, Clock $clock, string $timezone, ?Closure $exclusive = null);
+public function month(): string;
+public function current(): MonthlyUsage;
+public function previous(): ?array;
+public function reserve(float $usd, float $capUsd): ?string;
+public function release(string $reservation): void;
+public function record(AiPurpose $purpose, AiReply $reply, PriceTable $prices, ?string $reservation = null): MonthlyUsage;
+```
 
 #### `Ritmo\Application\Alerts\AlertNotifier` (final class)
 
@@ -1045,6 +1148,93 @@ public static function sold(?float $price, ?float $floor, ?float $ceiling): ?flo
 public function paceCategory(): string;
 ```
 
+#### `Ritmo\Application\Licence\LicenceEnforcer` (final class)
+
+```php
+const UNMET_CODE = 'licence';
+public function __construct(LicenceVerdictSource $licence, ModeLowering $lowering, Logger $logger);
+public function modeAtRunStart(Property $property): PropertyMode;
+public function unmetToLeaveShadow(): ?array;
+public function allowsAi(): bool;
+```
+
+#### `Ritmo\Application\Licence\LicenceRefused` (final class extends RuntimeException)
+
+```php
+const BAD_KEY = 'bad_key';
+const COOLDOWN = 'cooldown';
+const VAULT = 'vault';
+public readonly string $reason;
+public function __construct(string $reason, string $message);
+```
+
+#### `Ritmo\Application\Licence\LicenceService` (final class implements LicenceVerdictSource)
+
+```php
+const VAULT_NAME = 'licence_key';
+const STATE_KEY = 'licence_state';
+const COOLDOWN_SECONDS = 30;
+public function __construct(SodiumVault $vault, KeyValueStore $store, Clock $clock, Logger $logger, ProviderChoice $providers, LicenceSettings $settings);
+public function verdict(): LicenceVerdict;
+public function record(): LicenceRecord;
+public function keyStatus(): SecretStatus;
+public function settings(): LicenceSettings;
+public function save(string $typed): LicenceVerdict;
+public function check(): LicenceVerdict;
+public function daily(): ?LicenceVerdict;
+public function remove(): bool;
+```
+
+#### `Ritmo\Application\Licence\LicenceSettings` (final class)
+
+```php
+const SERVER_CONSTANT = 'RITMO_LICENCE_SERVER_URL';
+const PUBLIC_KEY_CONSTANT = 'RITMO_LICENCE_PUBLIC_KEY';
+const GRACE_CONSTANT = 'RITMO_LICENCE_GRACE_DAYS';
+const DEV_CONSTANT = 'RITMO_LICENCE_DEV';
+const EMBEDDED_SERVER_URL = '';
+const EMBEDDED_PUBLIC_KEYS = '';
+public readonly ?ServerUrl $server;
+public readonly GracePolicy $grace;
+public readonly bool $devMode;
+public readonly string $siteUrl;
+public readonly string $pluginVersion;
+public readonly string $product;
+public readonly bool $serverInvalid;
+public readonly array $publicKeys;
+public function __construct(?ServerUrl $server, GracePolicy $grace, bool $devMode, string $siteUrl, string $pluginVersion = '', string $product = 'ritmo-revenue', bool $serverInvalid = false, array $publicKeys = []);
+public static function fromConstants(string $siteUrl, string $pluginVersion): self;
+public static function isLoopback(string $url): bool;
+```
+
+#### `Ritmo\Application\Licence\LicenceVerdictSource` (interface)
+
+```php
+public function verdict(): LicenceVerdict;
+```
+
+#### `Ritmo\Application\Licence\ModeLowering` (interface)
+
+```php
+public function toShadow(Property $property, string $reason): void;
+```
+
+#### `Ritmo\Application\Licence\ProviderChoice` (final class)
+
+```php
+public function __construct(LicenceSettings $settings, HttpClient $http, Clock $clock);
+public function for(LicenceKey $key): LicenceServer;
+```
+
+#### `Ritmo\Application\Licence\RepositoryModeLowering` (final class implements ModeLowering)
+
+```php
+const ACTOR = 'licence';
+const APPROVAL_REASON = 'licence_lapsed';
+public function __construct(PropertyRepository $properties, OperationEventRepository $events, Closure $expireApprovals, Clock $clock);
+public function toShadow(Property $property, string $reason): void;
+```
+
 #### `Ritmo\Application\Market\CompetitorInput` (final class)
 
 ```php
@@ -1209,13 +1399,19 @@ public function __construct(EmergencySwitch $switch, PropertyRepository $propert
 public function set(bool $engage, string $via, string $actor): bool;
 ```
 
+#### `Ritmo\Application\Mode\LeaveShadowConfirmation` (final class)
+
+```php
+public static function check(Property $property, PropertyMode $to, string $typed, bool $soleWriter): void;
+```
+
 #### `Ritmo\Application\Mode\ModePreconditions` (final class)
 
 ```php
 const CONNECTION_TEST_PREFIX = 'connection_test_';
 const PROVIDERS = ['beds24', 'pricelabs'];
 const SETUP_KEY = 'setup';
-public function __construct(RunRepository $runs, AlertLedger $alerts, WaveHoldRepository $holds, EmergencySwitch $switch, KeyValueStore $store, Clock $clock, ?Closure $safetyFingerprint = null);
+public function __construct(RunRepository $runs, AlertLedger $alerts, WaveHoldRepository $holds, EmergencySwitch $switch, KeyValueStore $store, Clock $clock, ?Closure $safetyFingerprint = null, ?LicenceEnforcer $licence = null);
 public function toApproval(Property $property, ModesConfig $config): array;
 public function toAutonomous(Property $property): array;
 public static function unmet(string $code, array $params, string $text): array;
@@ -1228,6 +1424,7 @@ const NO_CAPABILITY = 'no_capability';
 const CONDITIONS = 'conditions_not_met';
 const DISABLED = 'autonomous_disabled';
 const CONFIRMATION = 'confirmation_mismatch';
+const LEAVE_SHADOW = 'leave_shadow_unconfirmed';
 const REASON_PRIVATE = 'reason_private';
 public readonly string $reason;
 public readonly array $conditions;
@@ -1585,7 +1782,7 @@ public function inspect(RunContext $context): array;
 #### `Ritmo\Application\Run\PipelineRunExecutor` (final class implements RunExecutor)
 
 ```php
-public function __construct(RunOpener $opener, RunRepository $runs, RunPipeline $pipeline);
+public function __construct(RunOpener $opener, RunRepository $runs, RunPipeline $pipeline, LicenceEnforcer $licence);
 public function start(Property $property, RunKind $kind, bool $forcedShadow, DateTimeImmutable $today, DateTimeImmutable $deadline, Closure $heartbeat): LaunchResult;
 public function resume(Property $property, int $runId, DateTimeImmutable $deadline, Closure $heartbeat): LaunchResult;
 ```
@@ -1667,7 +1864,8 @@ public readonly ConnectorSource $connectors;
 public readonly EmergencySwitch $switch;
 public readonly WriteGate $gate;
 public readonly CapabilityCheck $capabilities;
-public function __construct(Database $db, Clock $clock, KeyValueStore $store, Logger $logger, ConnectorSource $connectors, EmergencySwitch $switch, WriteGate $gate, CapabilityCheck $capabilities, Mailer $mailer, RecipientDirectory $recipients, Sleeper $sleeper, ?Closure $wake = null, ?Closure $timeLeft = null);
+public function __construct(Database $db, Clock $clock, KeyValueStore $store, Logger $logger, ConnectorSource $connectors, EmergencySwitch $switch, WriteGate $gate, CapabilityCheck $capabilities, Mailer $mailer, RecipientDirectory $recipients, Sleeper $sleeper, ?Closure $wake = null, ?Closure $timeLeft = null, ?LicenceVerdictSource $licence = null);
+public function licence(): LicenceEnforcer;
 public function rules(): RuleSet;
 public function properties(): PropertyRepository;
 public function roomTypes(): RoomTypeRepository;
@@ -1855,11 +2053,12 @@ public function plan(LightRoundRequest $request, RoomQuota $quota, ?int $runId =
 
 ```php
 const LOCK_TTL_SECONDS = 600;
-public function __construct(RunRepository $runs, DbLock $locks, RunExecutor $executor, Clock $clock, Logger $logger);
+public function __construct(RunRepository $runs, DbLock $locks, RunExecutor $executor, Clock $clock, Logger $logger, ?Closure $onFatal = null);
 public static function lockKey(string $propertyId): string;
 public function continueOpen(Property $property, int $budgetSeconds): ?LaunchResult;
 public function stopOpen(Property $property, string $reason): ?LaunchResult;
 public function start(Property $property, RunKind $kind, bool $forcedShadow, int $budgetSeconds): LaunchResult;
+public function closeAfterFatal(Property $property, LockHandle $lock, string $message): void;
 ```
 
 #### `Ritmo\Application\Schedule\MovementRead` (final class)
@@ -2171,6 +2370,112 @@ public static function instant(?string $value): ?DateTimeImmutable;
 const NAME = 'validate';
 public function name(): string;
 public function run(RunContext $context): StageResult;
+```
+
+#### `Ritmo\Application\Update\ManifestVerifier` (final class)
+
+```php
+const FORMAT = 'ritmo-update/1';
+public function __construct(UpdateSettings $settings);
+public function verify(string $envelope): ReleaseManifest;
+```
+
+#### `Ritmo\Application\Update\PackageVerifier` (final class)
+
+```php
+public static function verify(string $bytes, ReleaseManifest $manifest, TrustedKeys $keys): void;
+```
+
+#### `Ritmo\Application\Update\ReleaseManifest` (final class)
+
+```php
+const VERSION_PATTERN = '/^\\d{1,4}\\.\\d{1,4}\\.\\d{1,4}(?:-[0-9A-Za-z.]{1,20})?$/';
+public readonly string $slug;
+public readonly string $version;
+public readonly string $package;
+public readonly string $sha256;
+public readonly int $size;
+public readonly string $packageSignature;
+public readonly string $name;
+public readonly string $requires;
+public readonly string $requiresPhp;
+public readonly string $tested;
+public readonly string $released;
+public readonly array $changelog;
+public static function fromPayload(string $payload, int $maxBytes): self;
+public function isNewerThan(string $installed): bool;
+```
+
+#### `Ritmo\Application\Update\ReleaseSigner` (final class)
+
+```php
+public static function keypair(): array;
+public static function secretKey(string $text): string;
+public static function publicKey(string $secretKey): string;
+public static function sign(string $secretKey, string $packageBytes, array $release): string;
+```
+
+#### `Ritmo\Application\Update\TrustedKeys` (final class)
+
+```php
+const KEY_BYTES = 32;
+const SIGNATURE_BYTES = 64;
+public static function parse(string $text): self;
+public static function of(array $keys): self;
+public function isEmpty(): bool;
+public function count(): int;
+public function verify(string $signature, string $message): bool;
+public function ids(): array;
+```
+
+#### `Ritmo\Application\Update\UpdateChecker` (final class)
+
+```php
+const CACHE_KEY = 'update_release';
+const FRESH_SECONDS = 43200;
+const RETRY_SECONDS = 3600;
+const METADATA_TIMEOUT = 15;
+const PACKAGE_TIMEOUT = 120;
+public function __construct(HttpClient $http, KeyValueStore $store, Clock $clock, Logger $logger, UpdateSettings $settings);
+public function settings(): UpdateSettings;
+public function latest(bool $force = false): ?ReleaseManifest;
+public function offer(): ?ReleaseManifest;
+public function lastProblem(): ?string;
+public function download(string $package): string;
+```
+
+#### `Ritmo\Application\Update\UpdateRefused` (final class extends RuntimeException)
+
+```php
+const NOT_CONFIGURED = 'not_configured';
+const UNREACHABLE = 'unreachable';
+const MALFORMED = 'malformed';
+const UNSIGNED = 'unsigned';
+const BAD_SIGNATURE = 'bad_signature';
+const WRONG_SLUG = 'wrong_slug';
+const OTHER_ORIGIN = 'other_origin';
+const NOT_NEWER = 'not_newer';
+const SIZE = 'size';
+const HASH = 'hash';
+const PACKAGE_SIGNATURE = 'package_signature';
+const UNKNOWN_PACKAGE = 'unknown_package';
+public readonly string $reason;
+public function __construct(string $reason, string $message);
+```
+
+#### `Ritmo\Application\Update\UpdateSettings` (final class)
+
+```php
+const MAX_PACKAGE_BYTES = 31457280;
+public readonly ?ServerUrl $metadataUrl;
+public readonly TrustedKeys $keys;
+public readonly string $installedVersion;
+public readonly string $slug;
+public readonly string $basename;
+public readonly bool $devMode;
+public readonly int $maxPackageBytes;
+public function __construct(?ServerUrl $metadataUrl, TrustedKeys $keys, string $installedVersion, string $slug = 'ritmo-revenue', string $basename = 'ritmo-revenue/ritmo-revenue.php', bool $devMode = false, int $maxPackageBytes = 31457280);
+public function enabled(): bool;
 ```
 
 #### `Ritmo\Application\Verify\ConfirmationQuota` (interface)
@@ -2913,7 +3218,9 @@ public function fields(): array;
 
 ```php
 const FIRST_VERSION_NOTE = 'Neutral defaults, stored at activation';
-public static function activate(): void;
+public static function activate(mixed $networkWide = false): void;
+public static function networkActivated(): bool;
+public static function basename(): string;
 ```
 
 #### `Ritmo\WordPress\ConnectorFactory` (final class implements ConnectorSource)
@@ -2952,10 +3259,11 @@ const MANAGE_RULES = 'ritmo_manage_rules';
 const APPROVE = 'ritmo_approve';
 const MANAGE_CONNECTIONS = 'ritmo_manage_connections';
 const MANAGE_SAFETY = 'ritmo_manage_safety';
+const USE_AI = 'ritmo_use_ai';
 const ROLE = 'ritmo_revenue_manager';
 const VIEWER_ROLE = 'ritmo_revenue_viewer';
-const CAPABILITIES = ['ritmo_view', 'ritmo_manage_rules', 'ritmo_approve', 'ritmo_manage_connections', 'ritmo_manage_safety'];
-const GRANTS = [[['ritmo_view', 'ritmo_manage_rules', 'ritmo_approve', 'ritmo_manage_connections'], ['ritmo_view', 'ritmo_manage_rules', 'ritmo_approve', 'ritmo_manage_connections'], []], [[], ['ritmo_manage_safety'], ['ritmo_view']]];
+const CAPABILITIES = ['ritmo_view', 'ritmo_manage_rules', 'ritmo_approve', 'ritmo_manage_connections', 'ritmo_manage_safety', 'ritmo_use_ai'];
+const GRANTS = [[['ritmo_view', 'ritmo_manage_rules', 'ritmo_approve', 'ritmo_manage_connections'], ['ritmo_view', 'ritmo_manage_rules', 'ritmo_approve', 'ritmo_manage_connections'], []], [[], ['ritmo_manage_safety'], ['ritmo_view']], [['ritmo_use_ai'], ['ritmo_use_ai'], []]];
 const VERSION_KEY = 'roles_version';
 public static function install(KeyValueStore $settings): void;
 public static function pending(int $done, bool $managerExists, bool $viewerExists = false): array;
@@ -2997,6 +3305,9 @@ public function emergencySwitch(): EmergencySwitch;
 public function gate(): WriteGate;
 public function connectors(): ConnectorFactory;
 public function stack(): RunStack;
+public function licence(): LicenceService;
+public function licenceHttp(?ServerUrl $server): HttpClient;
+public function updateHttp(UpdateSettings $settings): HttpClient;
 public function shadowRuns(): ShadowRunService;
 public function occupancy(): OccupancyQuery;
 public function setup(): SetupService;
@@ -3006,6 +3317,8 @@ public function setup(): SetupService;
 
 ```php
 const WRITE_SECONDS = 300;
+public static function forEngine(string $context = 'admin'): void;
+public static function tickBudget(int $rule): int;
 public static function forWrite(): ?int;
 ```
 
@@ -3013,8 +3326,10 @@ public static function forWrite(): ?int;
 
 ```php
 const DELETE_DATA = 'delete_data_on_uninstall';
-public function __construct(KeyValueStore $settings, Closure $removeData);
-public static function forSite(): self;
+const VAULT = 'vault';
+public function __construct(KeyValueStore $settings, Closure $removeData, ?Closure $removeSecrets = null);
+public static function forSite(bool $freeLicence = true): self;
+public static function everywhere(): void;
 public function run(): bool;
 ```
 
@@ -3035,6 +3350,97 @@ public static function enqueue(string $hook): void;
 public static function vaultNotice(): void;
 ```
 
+#### `Ritmo\Admin\Ai\AiActions` (final class)
+
+```php
+const SETTINGS = 'ritmo_ai_settings_save';
+const FORGET_KEY = 'ritmo_ai_key_forget';
+const TEST = 'ritmo_ai_test';
+const DRAFT = 'ritmo_ai_draft';
+const OPEN = 'ritmo_ai_draft_open';
+const DISCARD = 'ritmo_ai_draft_discard';
+const WEEKLY = 'ritmo_ai_weekly';
+public static function actions(): array;
+public static function saveSettings(Input $form): array;
+public static function forgetKey(Input $form): array;
+public static function test(Input $form): array;
+public static function draft(Input $form): array;
+public static function weekly(Input $form): array;
+public static function open(Input $form): array;
+public static function discard(Input $form): array;
+```
+
+#### `Ritmo\Admin\Ai\AiCapability` (final class)
+
+```php
+const USE_AI = 'ritmo_use_ai';
+public static function can(): bool;
+```
+
+#### `Ritmo\Admin\Ai\AiData` (final class)
+
+```php
+public static function locale(): string;
+public static function property(string $id): ?Property;
+public static function request(Property $property, string $text): array;
+public static function weekly(Property $property): array;
+public static function run(int $runId): ?array;
+public static function alert(int $alertId): ?array;
+```
+
+#### `Ritmo\Admin\Ai\AiResult` (final class)
+
+```php
+public static function keep(string $title, string $text, string $model, bool $fallback): void;
+public static function take(): ?array;
+```
+
+#### `Ritmo\Admin\Ai\AiScreen` (final class)
+
+```php
+const SLUG = 'ritmo-revenue-assistant';
+public static function tabs(): array;
+public static function render(): void;
+public static function draftRow(string $id, string $request, string $createdAt, AiDraft $draft, array $roomNames, string $currency): array;
+```
+
+#### `Ritmo\Admin\Ai\AiScreens` (final class)
+
+```php
+const ASSETS = ['ai'];
+public static function screens(): array;
+public static function actions(): array;
+public static function waitingDrafts(?string $propertyId = null): int;
+public static function explainView(string $kind, int $id): ?array;
+```
+
+#### `Ritmo\Admin\Ai\AiServices` (final class)
+
+```php
+public static function instance(): self;
+public function services(): Services;
+public function settings(): AiSettingsStore;
+public function usage(): UsageLedger;
+public function drafts(): AiDraftQueue;
+public function handOff(): DraftHandOff;
+public function assistant(): AiAssistant;
+public static function baseUrl(): string;
+```
+
+#### `Ritmo\Admin\Ai\AiWords` (final class)
+
+```php
+public static function stopped(AiStopped $stopped): array;
+public static function reason(string $reason, ?AiStopped $stopped = null): string;
+public static function provider(int $status): string;
+public static function problem(string $problem): string;
+public static function model(string $id): string;
+public static function effort(AiEffort $effort): string;
+public static function purpose(string $purpose): string;
+public static function kind(string $kind): string;
+public static function dollars(float $amount, int $decimals = 2): string;
+```
+
 #### `Ritmo\Admin\Components\Capability` (final class)
 
 ```php
@@ -3043,7 +3449,8 @@ const MANAGE_RULES = 'ritmo_manage_rules';
 const APPROVE = 'ritmo_approve';
 const MANAGE_CONNECTIONS = 'ritmo_manage_connections';
 const MANAGE_SAFETY = 'ritmo_manage_safety';
-const ALL = ['ritmo_view', 'ritmo_manage_rules', 'ritmo_approve', 'ritmo_manage_connections', 'ritmo_manage_safety'];
+const USE_AI = 'ritmo_use_ai';
+const ALL = ['ritmo_view', 'ritmo_manage_rules', 'ritmo_approve', 'ritmo_manage_connections', 'ritmo_manage_safety', 'ritmo_use_ai'];
 public static function can(string $capability): bool;
 ```
 
@@ -3142,6 +3549,7 @@ const MARKET = 'ritmo-revenue-market';
 const ORDERS = 'ritmo-revenue-orders';
 const RULES = 'ritmo-revenue-rules';
 const OPERATIONS = 'ritmo-revenue-operations';
+const ASSISTANT = 'ritmo-revenue-assistant';
 const SETTINGS = 'ritmo-revenue-settings';
 const REDIRECTS = [['ritmo-revenue-settings', 'connections'], ['ritmo-revenue-settings', 'setup'], ['ritmo-revenue-settings', 'diagnostics']];
 public static function entries(): array;
@@ -3572,6 +3980,58 @@ public static function person(int $userId): string;
 public static function note(string $note): string;
 ```
 
+#### `Ritmo\Admin\Licence\LicenceActions` (final class)
+
+```php
+public static function actions(): array;
+```
+
+#### `Ritmo\Admin\Licence\LicenceHooks` (final class)
+
+```php
+const CRON_HOOK = 'ritmo_licence_check';
+public static function register(): void;
+public static function schedule(): void;
+public static function unschedule(): void;
+public static function daily(): void;
+```
+
+#### `Ritmo\Admin\Licence\LicenceNotice` (final class)
+
+```php
+public static function render(): void;
+```
+
+#### `Ritmo\Admin\Licence\LicenceScreen` (final class)
+
+```php
+const TAB = 'licence';
+public static function tab(): Tab;
+public static function render(Page $page): void;
+public static function view(): array;
+```
+
+#### `Ritmo\Admin\Licence\LicenceServices` (final class)
+
+```php
+public static function instance(): self;
+public function services(): Services;
+public function licence(): LicenceService;
+public function updates(): UpdateChecker;
+```
+
+#### `Ritmo\Admin\Licence\LicenceText` (final class)
+
+```php
+public static function standing(LicenceStanding $standing): string;
+public static function serverMessage(string $message): string;
+public static function reason(LicenceVerdict $verdict): string;
+public static function consequence(LicenceVerdict $verdict, DateTimeImmutable $now, string $timezone): string;
+public static function answer(string $status): string;
+public static function refusal(LicenceRefused $refused): string;
+public static function updateRefusal(string $reason): string;
+```
+
 #### `Ritmo\Admin\Market\CsvUploadReader` (final class)
 
 ```php
@@ -3615,7 +4075,10 @@ public function uploads(): CsvUploadReader;
 #### `Ritmo\Admin\Market\MarketText` (final class)
 
 ```php
+const GROUP_FROM = 3;
 public static function problem(MarketCsvProblem $problem): string;
+public static function grouped(array $problems): array;
+public static function previewSummary(int $valid, int $nights, int $competitors, int $ignored): string;
 public static function what(string $code): string;
 public static function refusal(MarketRefused $refused, int $maxBytes = 0): string;
 public static function series(string $name): string;
@@ -3973,6 +4436,12 @@ public static function name(int $userId): string;
 public static function lines(array $fields): array;
 ```
 
+#### `Ritmo\Admin\Screens\RoomErrorText` (final class)
+
+```php
+public static function of(string $message): string;
+```
+
 #### `Ritmo\Admin\Screens\ScreenActions` (final class)
 
 ```php
@@ -4089,6 +4558,24 @@ public static function build(Page $page): array;
 
 ```php
 public static function render(string $template, array $view): void;
+```
+
+#### `Ritmo\Rest\Ai\AiEndpoints` (final class)
+
+```php
+public function __construct(AiAssistant $assistant, AiDraftQueue $drafts, Closure $words, Closure $requestInput, Closure $weeklyInput, Closure $runInput, Closure $alertInput, Closure $draftView, Closure $notFound, string $locale, int $userId);
+public function status(): array;
+public function draft(string $propertyId, string $text): array;
+public function weekly(string $propertyId): array;
+public function runReport(int $runId): array;
+public function explainAlert(int $alertId): array;
+public function test(): array;
+```
+
+#### `Ritmo\Rest\Ai\AiRoutes` (final class)
+
+```php
+public static function register(): void;
 ```
 
 #### `Ritmo\Rest\Editors\EditorEndpoints` (final class)

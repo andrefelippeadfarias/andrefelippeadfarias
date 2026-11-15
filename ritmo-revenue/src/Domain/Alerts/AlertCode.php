@@ -44,6 +44,8 @@ enum AlertCode: string
     case ReviewDue = 'review_due';
     /** A run planned more PMS changes than stay.write.max_changes_per_run: none was written. */
     case PmsChangesCapped = 'pms_changes_capped';
+    /** PHP stopped a run (out of memory or a fatal error): it was closed as failed and its lock freed. */
+    case RunStopped = 'run_stopped';
 
     public function severity(): AlertSeverity
     {

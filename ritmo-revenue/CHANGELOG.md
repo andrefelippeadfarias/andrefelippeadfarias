@@ -24,14 +24,15 @@ The first release.
 - Setup wizard: connections, property, rooms, rules preset, safety limits, a first shadow run and "what the plugin would do".
 - Overview, nights grid with the reason of every number, approvals, alerts, to-do, change log, reports, market, orders, rules (versions, review in words, relations, calendar with Brazilian and Portuguese holidays), operations, settings (connections, diagnostics, support file without keys or guest data, uninstall choice).
 - Market prices of competitors by CSV or typed in; reports with CSV downloads protected against formulas.
-- Capabilities per task (`ritmo_view`, `ritmo_manage_rules`, `ritmo_approve`, `ritmo_manage_connections`, `ritmo_manage_safety`), the Revenue Manager and Revenue Viewer roles; nonce and capability on every form and REST route.
+- Capabilities per task (`ritmo_view`, `ritmo_manage_rules`, `ritmo_approve`, `ritmo_manage_connections`, `ritmo_manage_safety`, and `ritmo_use_ai` for the assistant: manager and administrator), the Revenue Manager and Revenue Viewer roles; nonce and capability on every form and REST route.
 - English and Brazilian Portuguese.
 
 ### Optional
 
-- AI assistant with your own Claude API key: report texts, explanations of alerts and drafts of orders or rule changes from a request in your words. It never writes a price; a draft waits for a person and goes through the validator. No guest data is sent. Monthly spending cap.
-- Licence (shadow mode always works; the writing modes and the assistant need an active licence or its grace period) and updates signed by the publisher.
+- AI assistant with your own Claude API key: report texts, explanations of alerts and drafts of orders or rule changes from a request in your words. It never writes a price; a draft waits for a person and goes through the validator. No e-mail, phone or document is sent and requests that look like they name a guest are refused; the text of a request is never kept. Monthly spending cap, with the cost of every call reserved before it is made.
+- Licence (shadow mode always works; the writing modes and the assistant need an active licence or its grace period; only answers signed by the licence server count) and updates signed by the publisher.
 
 ### Package
 
-- `bin/build.sh` builds `dist/ritmo-revenue-<version>.zip` with its SHA-256, checked for PHP 8.1 compatibility, secrets and data of the pilot properties; `bin/e2e-zip.sh` installs it on a clean WordPress through Plugins > Add New > Upload Plugin, runs the wizard and deletes it, checking that the uninstall removes everything of the plugin and nothing else.
+- `bin/build.sh` builds `dist/ritmo-revenue-<version>.zip` with its SHA-256, checked for PHP 8.1 compatibility, secrets, names of real properties and a size under the 2 MB default upload limit (the package holds the user guide, not the developer documentation or the translation sources); `bin/e2e-zip.sh` installs it on a clean WordPress with that limit through Plugins > Add New > Upload Plugin, runs the wizard and deletes it, checking that the uninstall removes everything of the plugin and nothing else.
+- Multisite: activate it site by site; network activation is refused.

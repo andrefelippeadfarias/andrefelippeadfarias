@@ -104,6 +104,23 @@ final class ZipPackageTest extends TestCase
         self::assertContains('The zip holds 2 files, the staged package 1.', $problems);
     }
 
+    public function testAZipOverTheDefaultUploadLimitIsRefused(): void
+    {
+        $zip = $this->dir . '-big.zip';
+        $archive = new ZipArchive();
+        $archive->open($zip, ZipArchive::CREATE);
+        $archive->addFromString('ritmo-revenue/ritmo-revenue.php', random_bytes(ZipPackage::MAX_BYTES + 1000));
+        $archive->setCompressionName('ritmo-revenue/ritmo-revenue.php', ZipArchive::CM_STORE);
+        $archive->close();
+        try {
+            $problems = ZipPackage::problems($zip, 'ritmo-revenue', new DistIgnore(['/tests/']), ['ritmo-revenue.php']);
+        } finally {
+            unlink($zip);
+        }
+
+        self::assertNotEmpty(array_filter($problems, static fn (string $p): bool => str_contains($p, 'default upload limit (2 MB)')));
+    }
+
     public function testAFileThatIsNotAZipIsSaidSo(): void
     {
         file_put_contents($this->dir . '/fake.zip', 'not a zip');

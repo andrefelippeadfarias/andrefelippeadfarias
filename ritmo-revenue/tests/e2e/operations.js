@@ -157,6 +157,8 @@ async function main() {
         await operations(page);
         check((await page.getAttribute('[data-ritmo="current-mode"]', 'data-mode')) === 'shadow', 'a new property is not in shadow mode');
         await page.selectOption('#ritmo-mode', 'approval');
+        await page.fill('#ritmo-confirmation', await page.getAttribute('#ritmo-confirmation', 'data-expected'));
+        await page.check('#ritmo-sole-writer');
         await submitAndWait(page, '[data-ritmo="set-mode"]');
         check(/approval/i.test(await notice(page)), 'the mode did not change: ' + await notice(page));
         const run = await runNow(page);

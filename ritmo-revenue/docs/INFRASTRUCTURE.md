@@ -42,6 +42,8 @@ Two exceptions:
 - `ReadRouteAllowList`: a `POST` whose host and **exact** path were added with `->with($connector, 'POST', $host, $path)` passes `request()` (the pricing system's calendar read, ARCHITECTURE.md section 6). Only `POST` can be listed.
 - `GuardedHttpClient::write($token, ...)` (the `WriteHttpClient` port): only a route of the `WriteRouteAllowList` (exact paths at the base URLs the composition root declares; a booking route cannot be declared) and only the request a connector has just used a step of a live token for (`WriteAuthority::claim($token, $method, $url, $body)`: a live token alone lets nothing through; the same request may go once more, for the Beds24 token renewal after a 401). `ThrottledHttpClient` and `CreditAwareHttpClient` pass a write through and never repeat it. Without a write list and an authority every write is `WriteBlocked`.
 
+Since M5 two channels that are not connectors also go out, each over its own guarded client (`WordPress\Services`): the licence (`HostBoundHttpClient` with the host of the licence server of `LicenceSettings` over `GuardedHttpClient` whose read list holds only that server's `activate`, `validate` and `deactivate`) and the update channel (`HostBoundHttpClient` with the host of `RITMO_UPDATE_URL` over `GuardedHttpClient` with no read route: GET only). `HostBoundHttpClient` refuses with `WriteBlocked`, before the wrapped client, any request to another host (logged with the channel, the method and the host, never the body); with no server configured nothing leaves. The assistant has its own guard (`Connectors\Ai\Claude\AiHttpGuard`, AI.md). `Update\UpdateHooks` puts the verified release into WordPress' updater and lets WordPress install only a package `UpdateChecker::download()` verified; `Update\UpdateConstants` reads the channel's constants (LICENCE-UPDATE.md, section 3).
+
 ### 1.3 Database
 
 - `Database` has two implementations: `WpdbDatabase` (every value through `$wpdb->prepare`) and `PdoDatabase` (SQLite or MySQL through PDO).
@@ -875,6 +877,14 @@ public function write(WriteToken $token, string $method, string $url, array $hea
 public function blockedAttempts(): array;
 ```
 
+#### `Ritmo\Infrastructure\Http\HostBoundHttpClient` (final class implements HttpClient)
+
+```php
+public function __construct(HttpClient $inner, array $hosts, Logger $logger, string $channel);
+public static function hostsOf(array $urls): array;
+public function request(string $method, string $url, array $headers = [], ?string $body = null, int $timeout = 30): HttpResponse;
+```
+
 #### `Ritmo\Infrastructure\Http\RateLimit` (final class)
 
 ```php
@@ -1191,6 +1201,28 @@ public function sleep(float $seconds): void;
 
 ```php
 public function sleep(float $seconds): void;
+```
+
+#### `Ritmo\Infrastructure\Update\UpdateConstants` (final class)
+
+```php
+const EMBEDDED_URL = '';
+const EMBEDDED_PUBLIC_KEY = '';
+const URL_CONSTANT = 'RITMO_UPDATE_URL';
+const KEY_CONSTANT = 'RITMO_UPDATE_PUBLIC_KEY';
+const SLUG = 'ritmo-revenue';
+public static function settings(string $installedVersion, string $basename): UpdateSettings;
+public static function from(mixed $url, mixed $keys, string $installedVersion, string $basename, bool $devMode): UpdateSettings;
+```
+
+#### `Ritmo\Infrastructure\Update\UpdateHooks` (final class)
+
+```php
+public function __construct(Closure $checker, Closure $refusal, string $basename = 'ritmo-revenue/ritmo-revenue.php', string $slug = 'ritmo-revenue', string $installedVersion = '');
+public static function register(Closure $checker, Closure $refusal, string $basename = 'ritmo-revenue/ritmo-revenue.php', string $slug = 'ritmo-revenue', string $installedVersion = ''): self;
+public function offer(mixed $transient): mixed;
+public function details(mixed $result, mixed $action, mixed $args): mixed;
+public function download(mixed $reply, mixed $package, mixed $upgrader = null, mixed $hookExtra = []): mixed;
 ```
 
 <!-- END GENERATED SIGNATURES -->

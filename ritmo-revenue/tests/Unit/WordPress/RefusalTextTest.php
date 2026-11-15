@@ -59,6 +59,16 @@ namespace Ritmo\Tests\Unit\WordPress {
             }
         }
 
+        public function testTheLicenceConditionSaysWhatToDo(): void
+        {
+            $lapsed = RefusalText::condition('licence', ['standing' => 'lapsed', 'reason' => 'expired']);
+            $none = RefusalText::condition('licence', ['standing' => 'unlicensed', 'reason' => 'no_key']);
+
+            self::assertStringContainsString('lapsed', $lapsed);
+            self::assertStringContainsString('Settings, Licence', $none);
+            self::assertNotSame($lapsed, $none);
+        }
+
         public function testEveryApprovalRefusalHasItsTranslatableSentence(): void
         {
             foreach ((new ReflectionClass(ApprovalRefused::class))->getConstants() as $reason) {

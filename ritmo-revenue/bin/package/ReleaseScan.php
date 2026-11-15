@@ -175,6 +175,11 @@ final class ReleaseScan
                 continue;
             }
             $text = (string) file_get_contents($dir . '/' . $relative);
+            if (str_ends_with(strtolower($relative), '.mo')) {
+                // The texts of a .mo, not its tables of offsets: two bytes of an offset can spell a
+                // short term by chance. A file that does not read as a .mo is scanned whole.
+                $text = self::moStrings($text) ?? $text;
+            }
             $terms = $this->ownerTerms($text);
             if ($terms !== []) {
                 // The terms themselves are not printed: the build log may be shared.
@@ -186,6 +191,45 @@ final class ReleaseScan
         }
 
         return $out;
+    }
+
+    /**
+     * Every original and translated text of a gettext .mo, one per line; null when the bytes are
+     * not a .mo (its magic number, its counts or an offset out of the file).
+     */
+    public static function moStrings(string $bytes): ?string
+    {
+        if (strlen($bytes) < 28) {
+            return null;
+        }
+        $magic = unpack('V', substr($bytes, 0, 4))[1];
+        $format = match ($magic) {
+            0x950412de => 'V',
+            0xde120495 => 'N',
+            default => null,
+        };
+        if ($format === null) {
+            return null;
+        }
+        $header = unpack($format . '7', substr($bytes, 0, 28));
+        [$count, $originals, $translations] = [$header[3], $header[4], $header[5]];
+        $size = strlen($bytes);
+        if ($count < 0 || $originals + 8 * $count > $size || $translations + 8 * $count > $size) {
+            return null;
+        }
+        $texts = [];
+        foreach ([$originals, $translations] as $table) {
+            for ($i = 0; $i < $count; ++$i) {
+                $entry = unpack($format . '2', substr($bytes, $table + 8 * $i, 8));
+                [$length, $offset] = [$entry[1], $entry[2]];
+                if ($offset + $length > $size) {
+                    return null;
+                }
+                $texts[] = str_replace("\0", "\n", substr($bytes, $offset, $length));
+            }
+        }
+
+        return implode("\n", $texts);
     }
 
     private static function lineAt(string $text, int $offset): int

@@ -74,8 +74,8 @@ endif;
                     <?php foreach ($view['soon']['rows'] as $ritmo_row) : ?>
                         <tr>
                             <th scope="row"><?php echo esc_html($ritmo_row['room']); ?></th>
-                            <?php foreach ($ritmo_row['cells'] as $ritmo_cell) : ?>
-                                <td><?php echo esc_html($ritmo_cell['state']); ?><br><span class="ritmo-price" data-ritmo="price"><?php echo esc_html($ritmo_cell['price']); ?></span></td>
+                            <?php foreach (array_values($ritmo_row['cells']) as $ritmo_index => $ritmo_cell) : ?>
+                                <td data-label="<?php echo esc_attr((string) (array_values($view['soon']['columns'])[$ritmo_index] ?? '')); ?>"><?php echo esc_html($ritmo_cell['state']); ?><br><span class="ritmo-price" data-ritmo="price"><?php echo esc_html($ritmo_cell['price']); ?></span></td>
                             <?php endforeach; ?>
                         </tr>
                     <?php endforeach; ?>

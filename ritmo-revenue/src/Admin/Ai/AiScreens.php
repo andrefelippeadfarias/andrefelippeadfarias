@@ -39,6 +39,17 @@ final class AiScreens
     }
 
     /**
+     * The drafts of the assistant waiting for a person, for the menu counter (every property) and
+     * the notice of the Approvals screen (one property): they are not plans of prices, so they are
+     * reviewed in the Assistant and opened in the editors, never approved on that screen. Zero for
+     * whoever may not use the assistant.
+     */
+    public static function waitingDrafts(?string $propertyId = null): int
+    {
+        return AiCapability::can() ? AiServices::instance()->drafts()->countPending($propertyId) : 0;
+    }
+
+    /**
      * The view of templates/admin/ai/explain for an alert or a run report, or null when the person
      * may not use the assistant or it is not ready (no key, off, over the cap).
      *

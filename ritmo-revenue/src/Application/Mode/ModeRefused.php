@@ -16,6 +16,7 @@ final class ModeRefused extends RuntimeException
     public const CONDITIONS = 'conditions_not_met';
     public const DISABLED = 'autonomous_disabled';
     public const CONFIRMATION = 'confirmation_mismatch';
+    public const LEAVE_SHADOW = 'leave_shadow_unconfirmed';
     public const REASON_PRIVATE = 'reason_private';
 
     /**

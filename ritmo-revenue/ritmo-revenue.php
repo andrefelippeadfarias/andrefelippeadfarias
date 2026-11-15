@@ -2,12 +2,13 @@
 /**
  * Plugin Name:       Ritmo Revenue
  * Description:       Revenue management for small hotels and inns: pace-based pricing rules, market anchors and safe, auditable rate updates.
- * Version:           0.1.0
+ * Version:           1.0.0
  * Requires at least: 6.5
  * Requires PHP:      8.1
  * Author:            Ritmo
  * Text Domain:       ritmo-revenue
  * Domain Path:       /languages
+ * Update URI:        false
  *
  * @package Ritmo
  */
@@ -16,7 +17,7 @@ declare(strict_types=1);
 
 defined('ABSPATH') || exit;
 
-define('RITMO_VERSION', '0.1.0');
+define('RITMO_VERSION', '1.0.0');
 define('RITMO_FILE', __FILE__);
 define('RITMO_DIR', __DIR__);
 

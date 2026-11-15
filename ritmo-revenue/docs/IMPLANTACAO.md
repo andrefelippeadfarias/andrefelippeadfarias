@@ -13,7 +13,7 @@ Este guia é para você colocar o Ritmo Revenue 1.0.0 no seu site **hoje** e com
 - [ ] 3. Colocar a chave do cofre no `wp-config.php` (seção 3).
 - [ ] 4. Instalar e ativar o plugin (seção 4).
 - [ ] 5. Pegar o token do Beds24 (só leitura) e a chave da API do PriceLabs (seção 5).
-- [ ] 6. Fazer o assistente até a primeira rodada em sombra (seção 6).
+- [ ] 6. Fazer o assistente de configuração até a primeira rodada em sombra (seção 6).
 - [ ] 7. Conferir as primeiras leituras reais no Diagnóstico e nas telas (seção 7).
 - [ ] 8. Começar o protocolo de teste em sombra, com a skill operando (seção 8).
 
@@ -27,7 +27,7 @@ Este guia é para você colocar o Ritmo Revenue 1.0.0 no seu site **hoje** e com
 | Extensões do PHP | `sodium` (criptografia das chaves) e `zip` (instalar pelo envio do zip) | **Ferramentas › Saúde do site › Informações › Servidor**; se faltar, peça à hospedagem |
 | Agendador | WP-Cron funcionando ou um cron de verdade (abaixo) | **Ferramentas › Saúde do site**: nada crítico sobre "eventos agendados" ou "solicitação de loopback" |
 | Fuso horário do site | o da sua cidade | **Configurações › Geral › Fuso horário** |
-| Tamanho de envio | maior que o zip (cerca de 2,5 MB) | **Mídia › Adicionar novo** mostra o "tamanho máximo de envio" |
+| Tamanho de envio | maior que o zip (cerca de 1,8 MB; o padrão do PHP, 2 MB, basta) | **Mídia › Adicionar novo** mostra o "tamanho máximo de envio" |
 
 **Agendador.** O plugin roda sozinho (uma rodada completa por dia, às 07:30 no fuso da propriedade, se você não mudar). O agendador do WordPress (WP-Cron) só acorda quando alguém visita o site. Num site com pouca visita, peça à hospedagem (ou configure no painel dela, em "Tarefas cron") um cron que chame o WordPress a cada 5 minutos:
 
@@ -80,7 +80,7 @@ O plugin guarda o token do Beds24 e a chave do PriceLabs criptografados. Para es
 3. Quando aparecer "Plugin instalado com sucesso", clique em **Ativar plugin**.
 4. Confira em **Plugins**: "Ritmo Revenue", **Versão 1.0.0**, ativo. O menu **Ritmo Revenue** aparece no painel.
 
-Se o envio disser que o arquivo excede o tamanho máximo, peça à hospedagem para aumentar o limite de envio (`upload_max_filesize` e `post_max_size`, 16 MB ou mais) ou instale pelo gerenciador de arquivos: descompacte o zip e envie a pasta `ritmo-revenue` para `wp-content/plugins/`; depois ative em **Plugins**.
+Se o envio disser que o arquivo excede o tamanho máximo, peça à hospedagem para aumentar o limite de envio (`upload_max_filesize` e `post_max_size`, 8 MB bastam) ou instale pelo gerenciador de arquivos: descompacte o zip e envie a pasta `ritmo-revenue` para `wp-content/plugins/`; depois ative em **Plugins**.
 
 Nas telas do plugin vai aparecer um aviso de que não há licença. Isso é esperado: **sem licença o plugin funciona em modo sombra**, que é tudo o que o teste precisa. A licença só será necessária no dia da troca (seção 10).
 
@@ -111,23 +111,23 @@ A chave do PriceLabs não tem uma versão "só de leitura". Não tem problema: *
 
 Nunca cole tokens ou chaves numa conversa, num e-mail ou num arquivo do projeto: só nos campos do plugin.
 
-## 6. O assistente, passo a passo
+## 6. O assistente de configuração, passo a passo
 
-Abra **Ritmo Revenue › Configurações › Configuração**. São nove etapas; cada uma só abre quando a anterior termina.
+Abra **Ritmo Revenue › Configurações › Configuração** (é o assistente de configuração; o item **Assistente** do menu é outra coisa: o assistente de IA, opcional). São nove etapas; cada uma só abre quando a anterior termina.
 
-1. **Boas-vindas e conferências.** As três linhas precisam estar "OK": criptografia das chaves (se disser que a proteção depende do banco, falta a `RITMO_SECRET_KEY` da seção 3), agendador e fuso horário.
+1. **Boas-vindas e conferências.** As cinco conferências precisam estar "OK" (entre elas a criptografia das chaves, o agendador e o fuso horário; se disser que a proteção depende do banco, falta a `RITMO_SECRET_KEY` da seção 3). Quando tudo já está OK, o assistente pula esta etapa e abre direto na etapa 2.
 2. **Conectar o PMS (Beds24).** Escolha o tipo de token (**Token de longa duração** para o token só de leitura), cole o token e digite os números das propriedades no Beds24, separados por vírgula se forem mais de uma. **Salvar e testar.** Se for recusado, a tela diz o motivo (token recusado, sem acesso, sistema fora do ar).
 3. **Conectar o sistema de preços (PriceLabs).** Cole a chave da API e escreva `beds24` em "Nome do seu PMS no sistema de preços". O plugin lê os anúncios para sugerir os quartos.
 4. **Propriedade.** Nome da pousada, fuso horário (o da sua cidade), moeda (Real) e o nível de mercado (o padrão serve para a maioria). O código da propriedade é feito do nome e **não muda depois**.
 5. **Quartos.** Uma linha por anúncio do PriceLabs. **Confira em cada linha** o número do quarto no Beds24 (Room ID) e o número de unidades: são só sugestões. Os valores mínimo, base e máximo vêm do anúncio. Se aparecerem quartos de outra pousada, marque **Não gerenciar este quarto** neles.
 6. **Regras e calendário.** Comece pelo modelo **Conservador (recomendado)** e confira os dias de fim de semana. Para a comparação com a skill ficar justa, o ideal é o plugin usar regras parecidas com as dela: você pode pedir ao Claude um arquivo de regras (preset `.json`) feito a partir das regras atuais da skill e enviá-lo nesta etapa. Sem ele, espere mais diferenças e anote-as (seção 8).
-7. **Limites de segurança.** O menor preço permitido de cada quarto, o limite semanal de mudança do anúncio e se o modo autônomo pode existir no site: **deixe o modo autônomo desligado**. Para confirmar, digite o código da propriedade.
+7. **Limites de segurança.** O menor preço permitido de cada quarto, o limite semanal de mudança do anúncio e se o modo autônomo pode existir no site: **deixe o modo autônomo desligado**. Para confirmar, digite o id da propriedade (o código que a tela mostra).
 8. **Primeira rodada em sombra.** O plugin lê tudo e decide cada noite, sem gravar nada.
-9. **O que o plugin faria.** Quantas noites ele mudaria, quantas subiriam e quantas desceriam, e por quê.
+9. **O que o plugin faria.** Quantas noites ele mudaria, quantas subiriam e quantas desceriam, e por quê. **Durante o teste, ignore a sugestão desta etapa de passar para aprovação depois de algumas rodadas**: fique em sombra pelo menos 7 dias e enquanto a skill gravar preços (seções 8 e 9). Para sair da sombra, a tela **Operação** pede o id da propriedade e a confirmação de que nenhuma outra ferramenta grava preços nela.
 
 Se a etapa 9 disser que muitas noites ficaram sem mudança **por falta de preço de mercado**, é normal num site novo: o plugin compara com os preços dos concorrentes, que você traz em **Mercado** (arquivo CSV, formato no guia do usuário, seção 10). Peça ao Claude um CSV nesse formato a partir da última pesquisa de concorrentes da skill, importe em **Mercado** e rode em sombra de novo (**Visão geral › Rodar em sombra agora**).
 
-**Duas pousadas.** Faça o assistente para a primeira pousada até a etapa 9. Depois, no resumo do assistente, volte à etapa **Propriedade** e crie a segunda com o nome dela; nas etapas seguintes, marque **Não gerenciar este quarto** nos quartos da primeira. As conexões (etapas 2 e 3) valem para as duas; na etapa 2, os números das duas propriedades do Beds24 vão separados por vírgula.
+**Duas pousadas.** Faça o assistente de configuração para a primeira pousada até a etapa 9. Depois, no resumo do assistente, volte à etapa **Propriedade** e crie a segunda com o nome dela; nas etapas seguintes, marque **Não gerenciar este quarto** nos quartos da primeira. As conexões (etapas 2 e 3) valem para as duas; na etapa 2, os números das duas propriedades do Beds24 vão separados por vírgula.
 
 O assistente de IA (Claude) é opcional e fica desligado; não é preciso para o teste.
 
@@ -160,7 +160,7 @@ Nos dias de comparação, **não use "Rodar em sombra agora" depois que a skill 
 
 Quando alguém que não é o plugin muda uma noite no PriceLabs ou no Beds24, o plugin percebe na rodada seguinte, avisa ("mudança feita por outra pessoa") e **congela** aquela noite por 7 dias: ele não propõe nada nela. No teste, quem muda é a skill, todos os dias. Por isso:
 
-- os alertas de mudança feita por outra pessoa e as noites congeladas (filtro **congelada** em **Noites**) são, na prática, **a lista do que a skill mexeu**: não libere essas noites;
+- os alertas de mudança feita por outra pessoa e as noites congeladas (filtro **congelada** em **Noites**) são, na prática, **a lista do que a skill mexeu**: não libere essas noites. O "O que fazer" do alerta (liberar o congelamento) vale para o uso normal, não durante o teste;
 - uma noite que a skill mudou fica fora das propostas do plugin por alguns dias; a comparação dela é feita com a proposta da rodada **anterior** à mudança (é por isso que a rodada do plugin vem antes da rotina da skill).
 
 ### 8.3 A comparação de cada dia

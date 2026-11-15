@@ -34,6 +34,10 @@ const SCREENS = [
     ['ritmo-revenue-settings&tab=connections', ['Configurações', 'Conexões']],
     ['ritmo-revenue-settings&tab=setup', ['Configurações']],
     ['ritmo-revenue-settings&tab=diagnostics', ['Diagnóstico']],
+    ['ritmo-revenue-assistant', ['Assistente', 'Pedir']],
+    ['ritmo-revenue-assistant&tab=settings', ['Assistente']],
+    ['ritmo-revenue-assistant&tab=usage', ['Assistente']],
+    ['ritmo-revenue-settings&tab=licence', ['Licença']],
 ];
 
 function check(condition, message) {

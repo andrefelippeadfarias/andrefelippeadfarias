@@ -1,12 +1,15 @@
 <?php
 /**
  * The run reports: each run's lines in the reader's language; runs recorded before translation
- * was available show their lines as recorded.
+ * was available show their lines as recorded. To whoever may use the assistant (when it is ready),
+ * a button puts a run's report in plain words (templates/admin/ai/explain).
  *
  * @var array<string, mixed> $view
  */
 
 declare(strict_types=1);
+
+use Ritmo\Admin\View;
 
 defined('ABSPATH') || exit;
 ?>
@@ -27,6 +30,9 @@ defined('ABSPATH') || exit;
                     </ul>
                     <?php if ($ritmo_run['recorded']) : ?>
                         <p class="description"><?php esc_html_e('(recorded before translation was available)', 'ritmo-revenue'); ?></p>
+                    <?php endif; ?>
+                    <?php if ($ritmo_run['ai_explain'] !== null) : ?>
+                        <?php View::render('admin/ai/explain', $ritmo_run['ai_explain']); ?>
                     <?php endif; ?>
                 <?php endif; ?>
             </li>

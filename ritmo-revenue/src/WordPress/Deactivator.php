@@ -4,8 +4,11 @@ declare(strict_types=1);
 
 namespace Ritmo\WordPress;
 
+use Ritmo\Admin\Licence\LicenceHooks;
+
 /**
- * Deactivation: stops the scheduled hook. Data, roles and settings stay until uninstall.
+ * Deactivation: stops the scheduled hooks (the scheduler tick and the licence check). Data, roles
+ * and settings stay until uninstall.
  */
 final class Deactivator
 {
@@ -16,5 +19,6 @@ final class Deactivator
     public static function deactivate(): void
     {
         Scheduler::unschedule();
+        LicenceHooks::unschedule();
     }
 }

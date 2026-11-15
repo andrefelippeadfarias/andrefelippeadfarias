@@ -45,6 +45,34 @@ final class PrivacyAndNumbersTest extends TestCase
         }
     }
 
+    public function testAGuestsNameIsFound(): void
+    {
+        foreach ([
+            'Joao Silva pediu: subir 10% os sábados de dezembro no Standard Room',
+            'a hóspede Maria quer o quarto de casal',
+            'o cliente Souza reclamou do preço',
+            'família Oliveira chega no Natal',
+            'Sr. Pereira e Sra. Costa',
+            'the guest Smith asked for a discount',
+            'Ana Lima reservou duas noites',
+        ] as $text) {
+            self::assertSame(PrivacyGuard::NAME, PrivacyGuard::problem($text), $text);
+        }
+        foreach ([
+            'Subir 10% os sábados de dezembro na Garden Suite',
+            'Não vender abaixo de R$ 900 no feriado de Natal',
+            'Meta de ocupação dos próximos 7 dias em 70%',
+            'O hóspede da reserva 12345 pediu desconto',
+            'Baixar 5% as noites de terça da Garden Suite em janeiro',
+            'Clientes da Standard Room pedem mais estadias curtas',
+        ] as $text) {
+            self::assertNull(PrivacyGuard::problem($text), $text);
+        }
+        $queue = new \Ritmo\Application\Ai\AiDraftQueue(new \Ritmo\Infrastructure\Store\ArrayStore(), new \Ritmo\Tests\Fakes\MovableClock());
+        $id = $queue->add('inn-1', 1, 'texto livre da pessoa', new \Ritmo\Domain\Ai\AiDraft(\Ritmo\Domain\Ai\AiDraft::RULE_CHANGE, 'A draft.', null, [new \Ritmo\Domain\Ai\RuleChange('occupancy.goals.7', 'occupancy.goals.7', 'Goal', 60.0, 70.0)]));
+        self::assertSame('', $queue->find($id)['request'] ?? null, 'the free text of a request is never kept');
+    }
+
     public function testDatesAmountsPercentagesAndBookingIdsAreNotPhoneNumbers(): void
     {
         foreach ([

@@ -77,4 +77,11 @@ for ($day = 0; $day < $scenario['nights']; ++$day) {
 }
 $samples = $setup->importSamples(E2E_PROPERTY, implode("\n", $lines));
 
-printf("Seeded %s: rules version %d (then the operations tweak), room types %s, %d prices for %d nights.\n", E2E_PROPERTY, $preset['rules_version'], implode(', ', $codes), $samples['samples'], $samples['nights']);
+// The licence: with RITMO_LICENCE_DEV (bin/wp-test-site.sh, unless RITMO_E2E_LICENCE_DEV=0) the
+// test provider answers TEST- keys without any network, so the passes may leave shadow mode.
+$licence = 'none';
+if (defined('RITMO_LICENCE_DEV') && RITMO_LICENCE_DEV === true) {
+    $licence = Services::instance()->licence()->save('TEST-VALID-E2E-0001')->standing->value;
+}
+
+printf("Seeded %s (licence: %s): rules version %d (then the operations tweak), room types %s, %d prices for %d nights.\n", E2E_PROPERTY, $licence, $preset['rules_version'], implode(', ', $codes), $samples['samples'], $samples['nights']);

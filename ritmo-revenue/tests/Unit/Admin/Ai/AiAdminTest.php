@@ -40,6 +40,23 @@ final class AiAdminTest extends TestCase
         self::assertSame(count($seen), count(array_unique($seen)));
     }
 
+    public function testAFailedCallToClaudeSaysWhyByItsStatus(): void
+    {
+        $seen = [];
+        foreach ([401, 402, 403, 404, 413, 400, 429, 529, 500, 0] as $status) {
+            $words = AiWords::stopped(new AiStopped(AiStopped::PROVIDER, 'Claude refused the API key (HTTP ' . $status . ' on POST /v1/messages).', ['http_status' => $status]));
+            self::assertStringNotContainsString('HTTP', $words['message'], (string) $status);
+            self::assertStringStartsWith('Technical details: ', $words['details'][0]);
+            $seen[] = $words['message'];
+        }
+        self::assertSame(count($seen), count(array_unique($seen)));
+        self::assertStringContainsString('refused the API key', AiWords::provider(401));
+        self::assertStringContainsString('out of credit', AiWords::provider(402));
+        self::assertStringContainsString('usage limit', AiWords::provider(429));
+        self::assertStringContainsString('overloaded', AiWords::provider(529));
+        self::assertStringContainsString('RITMO_ANTHROPIC_BASE_URL', AiWords::reason(AiStopped::CONFIG));
+    }
+
     public function testEveryRefusalOfADraftHasItsOwnSentence(): void
     {
         $default = AiWords::problem('unknown');
@@ -52,7 +69,7 @@ final class AiAdminTest extends TestCase
     public function testAStopGivesItsDetailsAsSentences(): void
     {
         $refused = AiWords::stopped(new AiStopped(AiStopped::DRAFT_REFUSED, 'x', ['problems' => ['amount_not_written', 'setting_denied:safety.never_raise_today']]));
-        self::assertSame(['The amount is not one you wrote.', 'safety.never_raise_today is not a setting the assistant may change (safety limits, modes, writing and quotas never are).'], $refused['details']);
+        self::assertSame(['The amount is not one you wrote.', 'safety.never_raise_today is not a setting the assistant may change (safety limits, modes, writing, the plan validator and quotas never are).'], $refused['details']);
         self::assertSame(['Numbers not in the data: 5, 1.300'], AiWords::stopped(new AiStopped(AiStopped::UNKNOWN_NUMBER, 'x', ['numbers' => ['5', '1.300']]))['details']);
         self::assertStringContainsString('cannot turn this request into a draft: Mode changes are not drafts.', AiWords::stopped(new AiStopped(AiStopped::NOT_SUPPORTED, 'x', ['summary' => 'Mode changes are not drafts.', 'questions' => []]))['message']);
     }

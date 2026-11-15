@@ -18,9 +18,11 @@ use Ritmo\Contracts\KeyValueStore;
  *   get the same four.
  * - Version 2: administrators get ritmo_manage_safety (the manager role does not: a site grants
  *   it by hand, decision D2); the viewer role is created with ritmo_view.
+ * - Version 3 (M5): the manager role and administrators get ritmo_use_ai (asking the optional
+ *   assistant, which spends the site's own API credit); the viewer role does not.
  *
  * Deactivation keeps roles and capabilities (a deactivate-activate cycle would otherwise lose the
- * site's own changes); uninstall with "delete data" removes both roles and the five capabilities.
+ * site's own changes); uninstall with "delete data" removes both roles and the six capabilities.
  */
 final class Roles
 {
@@ -34,11 +36,13 @@ final class Roles
 
     public const MANAGE_SAFETY = 'ritmo_manage_safety';
 
+    public const USE_AI = 'ritmo_use_ai';
+
     public const ROLE = 'ritmo_revenue_manager';
 
     public const VIEWER_ROLE = 'ritmo_revenue_viewer';
 
-    public const CAPABILITIES = [self::VIEW, self::MANAGE_RULES, self::APPROVE, self::MANAGE_CONNECTIONS, self::MANAGE_SAFETY];
+    public const CAPABILITIES = [self::VIEW, self::MANAGE_RULES, self::APPROVE, self::MANAGE_CONNECTIONS, self::MANAGE_SAFETY, self::USE_AI];
 
     /**
      * Per version of the grants: what the manager role, the administrators and the viewer role
@@ -56,6 +60,11 @@ final class Roles
             'manager' => [],
             'administrator' => [self::MANAGE_SAFETY],
             'viewer' => [self::VIEW],
+        ],
+        3 => [
+            'manager' => [self::USE_AI],
+            'administrator' => [self::USE_AI],
+            'viewer' => [],
         ],
     ];
 

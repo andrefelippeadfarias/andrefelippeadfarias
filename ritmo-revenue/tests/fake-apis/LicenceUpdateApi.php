@@ -126,7 +126,18 @@ final class LicenceUpdateApi
             $licence['sites'][] = $site;
         }
 
-        return self::json(200, ['status' => $licence['status'], 'expires_at' => $licence['expires_at'], 'message' => $licence['status'] === 'valid' ? 'Licence active.' : 'Licence ' . $licence['status'] . '.']);
+        $checkedAt = gmdate('Y-m-d\\TH:i:s\\Z');
+        $nonce = is_string($request['nonce'] ?? null) ? $request['nonce'] : '';
+        $signed = implode("\n", ['ritmo-licence-v1', hash('sha256', $key), $site, (string) $licence['status'], (string) ($licence['expires_at'] ?? ''), $checkedAt, $nonce]);
+
+        return self::json(200, [
+            'status' => $licence['status'],
+            'expires_at' => $licence['expires_at'],
+            'message' => $licence['status'] === 'valid' ? 'Licence active.' : 'Licence ' . $licence['status'] . '.',
+            'checked_at' => $checkedAt,
+            'nonce' => $nonce,
+            'signature' => base64_encode(sodium_crypto_sign_detached($signed, $this->secretKey)),
+        ]);
     }
 
     /**

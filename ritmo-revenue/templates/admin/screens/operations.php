@@ -97,10 +97,9 @@ $ritmo_post = admin_url('admin-post.php');
                                 <option value="auto"><?php esc_html_e('Autonomous', 'ritmo-revenue'); ?></option>
                             <?php endif; ?>
                         </select></p>
-                    <?php if ($view['autonomous_enabled']) : ?>
-                        <p><label for="ritmo-confirmation"><?php esc_html_e('To switch to autonomous, type the property id', 'ritmo-revenue'); ?></label>
-                            <input type="text" id="ritmo-confirmation" name="confirmation" autocomplete="off" class="regular-text"></p>
-                    <?php endif; ?>
+                    <p><label for="ritmo-confirmation"><?php esc_html_e('To leave shadow mode (or to switch to autonomous), type the property id', 'ritmo-revenue'); ?></label>
+                        <input type="text" id="ritmo-confirmation" name="confirmation" autocomplete="off" class="regular-text" data-expected="<?php echo esc_attr($view['property_id']); ?>"></p>
+                    <p><label><input type="checkbox" id="ritmo-sole-writer" name="sole_writer" value="1"> <?php esc_html_e('No other tool writes prices or stay rules for this property (any other automation is turned off).', 'ritmo-revenue'); ?></label></p>
                     <p><label for="ritmo-reason"><?php esc_html_e('Why (optional)', 'ritmo-revenue'); ?></label>
                         <input type="text" id="ritmo-reason" name="reason" class="regular-text" maxlength="190"></p>
                     <button type="submit" class="button" data-ritmo="set-mode"><?php esc_html_e('Change mode', 'ritmo-revenue'); ?></button>

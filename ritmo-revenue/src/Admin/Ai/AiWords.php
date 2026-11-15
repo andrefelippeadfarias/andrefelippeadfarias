@@ -46,7 +46,8 @@ final class AiWords
             }
         }
         if ($stopped->reason === AiStopped::PROVIDER) {
-            $details[] = $stopped->getMessage();
+            /* translators: %s: the technical message of the failed call, in English */
+            $details[] = sprintf(__('Technical details: %s', 'ritmo-revenue'), $stopped->getMessage());
         }
 
         return ['message' => self::reason($stopped->reason, $stopped), 'details' => $details];
@@ -57,9 +58,10 @@ final class AiWords
         return match ($reason) {
             AiStopped::DISABLED => __('The assistant is off. An administrator can turn it on in its settings.', 'ritmo-revenue'),
             AiStopped::NO_KEY => __('No Claude API key is saved. An administrator can add one in the assistant settings.', 'ritmo-revenue'),
+            AiStopped::LICENCE => __('The assistant works only with a valid licence. An administrator can check it in Settings, Licence.', 'ritmo-revenue'),
             AiStopped::BUDGET => __('The assistant reached its monthly spending cap and stays off until next month, or until the cap is raised.', 'ritmo-revenue'),
             AiStopped::MODEL_UNAVAILABLE => __('The saved key cannot use the chosen model. Choose another model in the assistant settings.', 'ritmo-revenue'),
-            AiStopped::PRIVACY => __('Nothing was sent: the text looks like it carries guest data (an e-mail, a phone number or a document number). Refer to a booking by its id.', 'ritmo-revenue'),
+            AiStopped::PRIVACY => __('Nothing was sent: the text looks like it carries guest data (an e-mail, a phone number, a document number or a guest\'s name). Never write a guest\'s name; refer to a booking by its id.', 'ritmo-revenue'),
             AiStopped::REFUSAL => __('The model declined to answer this request. Nothing was kept.', 'ritmo-revenue'),
             AiStopped::MAX_TOKENS => __('The answer was cut before its end. Nothing was kept; try a shorter request.', 'ritmo-revenue'),
             AiStopped::INVALID_OUTPUT => __('The assistant answered in a shape the plugin does not accept. Nothing was kept.', 'ritmo-revenue'),
@@ -69,7 +71,28 @@ final class AiWords
                 /* translators: %s: what the assistant said about the request */
                 ? sprintf(__('The assistant cannot turn this request into a draft: %s', 'ritmo-revenue'), $stopped->details['summary'])
                 : __('The assistant cannot turn this request into a draft.', 'ritmo-revenue'),
+            AiStopped::CONFIG => __('The connection to Claude is set up wrongly on this site: RITMO_ANTHROPIC_BASE_URL is only for development (with RITMO_DEV). Remove it from wp-config.php. Nothing was sent.', 'ritmo-revenue'),
+            AiStopped::PROVIDER => self::provider((int) ($stopped?->details['http_status'] ?? 0)),
             default => __('Claude could not answer now. Nothing was changed.', 'ritmo-revenue'),
+        };
+    }
+
+    /**
+     * What a failed call to Claude means for the person, by the HTTP status Claude answered with.
+     */
+    public static function provider(int $status): string
+    {
+        return match (true) {
+            $status === 401 => __('Claude refused the API key. Paste a new key in the assistant settings (create it in the Anthropic console). Nothing was changed.', 'ritmo-revenue'),
+            $status === 403 => __('This API key may not use this model or feature. Choose another model or check the key in the Anthropic console. Nothing was changed.', 'ritmo-revenue'),
+            $status === 402 => __('Your Anthropic account is out of credit or has a billing problem. Check the plan and the credits of the account in the Anthropic console. Nothing was changed.', 'ritmo-revenue'),
+            $status === 429 => __('The usage limit of your Anthropic account was reached for now. Try again later. Nothing was changed.', 'ritmo-revenue'),
+            $status === 529 || $status === 503 => __('Claude is overloaded right now. Try again in a few minutes. Nothing was changed.', 'ritmo-revenue'),
+            $status === 404 => __('Claude does not know the chosen model. Test the connection and choose another model in the assistant settings. Nothing was changed.', 'ritmo-revenue'),
+            $status === 413 => __('The request was too large for Claude. Try a shorter request. Nothing was changed.', 'ritmo-revenue'),
+            $status === 400 => __('Claude refused the request as invalid. Try again; if it repeats, send the support package to the plugin support. Nothing was changed.', 'ritmo-revenue'),
+            $status >= 500 => __('Claude had an internal error. Try again in a few minutes. Nothing was changed.', 'ritmo-revenue'),
+            default => __('Claude could not be reached now (no answer in time or no connection). Try again later. Nothing was changed.', 'ritmo-revenue'),
         };
     }
 
@@ -81,7 +104,12 @@ final class AiWords
         [$code, $subject] = array_pad(explode(':', $problem, 2), 2, '');
 
         return match ($code) {
+            'type_form_only' => __('A fixed price or a stay restriction is not drafted by the assistant: give it yourself in the order form.', 'ritmo-revenue'),
             'no_room' => __('No room was chosen.', 'ritmo-revenue'),
+            'all_rooms_not_written' => __('Your request names some rooms, so the draft may not cover every room. Write "all rooms" if that is what you want.', 'ritmo-revenue'),
+            /* translators: %s: a room code */
+            'room_not_written' => sprintf(__('Room %s is not one your request names.', 'ritmo-revenue'), $subject),
+            'nights_not_written' => __('The nights are not the dates, months or holiday your request names. Without dates, a draft covers at most 31 nights: write the dates or the period.', 'ritmo-revenue'),
             /* translators: %s: a room code */
             'unknown_room' => sprintf(__('%s is not a room of this property.', 'ritmo-revenue'), $subject),
             'amount_and_percent' => __('An order takes an amount or a percentage, not both.', 'ritmo-revenue'),
@@ -102,7 +130,7 @@ final class AiWords
             'no_night' => __('No night between the first and the last falls on those days of the week.', 'ritmo-revenue'),
             'changes_count' => __('A rule change draft changes from 1 to 10 settings.', 'ritmo-revenue'),
             /* translators: %s: the dotted name of a setting */
-            'setting_denied' => sprintf(__('%s is not a setting the assistant may change (safety limits, modes, writing and quotas never are).', 'ritmo-revenue'), $subject),
+            'setting_denied' => sprintf(__('%s is not a setting the assistant may change (safety limits, modes, writing, the plan validator and quotas never are).', 'ritmo-revenue'), $subject),
             /* translators: %s: the dotted name of a setting */
             'setting_twice' => sprintf(__('%s is changed twice.', 'ritmo-revenue'), $subject),
             /* translators: %s: the dotted name of a setting */
@@ -111,6 +139,8 @@ final class AiWords
             'setting_value' => sprintf(__('%s does not take that value.', 'ritmo-revenue'), $subject),
             /* translators: %s: the dotted name of a setting */
             'setting_not_written' => sprintf(__('The value of %s is not one you wrote.', 'ritmo-revenue'), $subject),
+            /* translators: %s: the dotted name of a setting */
+            'setting_not_named' => sprintf(__('Your request does not name the setting %s. Name a switch or a choice by its label to change it.', 'ritmo-revenue'), $subject),
             'no_change' => __('Nothing would change: the rules already hold these values.', 'ritmo-revenue'),
             /* translators: %s: the dotted name of a setting */
             'rules_invalid' => sprintf(__('The rules would not be valid at %s.', 'ritmo-revenue'), $subject),

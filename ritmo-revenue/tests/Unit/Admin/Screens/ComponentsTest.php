@@ -8,6 +8,8 @@ require_once __DIR__ . '/WpStubs.php';
 
 use DateTimeImmutable;
 use PHPUnit\Framework\TestCase;
+use Ritmo\Admin\Ai\AiScreen;
+use Ritmo\Admin\Components\Capability;
 use Ritmo\Admin\Components\ConfirmTyped;
 use Ritmo\Admin\Components\CsvWriter;
 use Ritmo\Admin\Components\ErrorText;
@@ -179,12 +181,16 @@ final class ComponentsTest extends TestCase
         self::assertSame('Type a percentage', substr(ErrorText::from(new UserFacing('Type a percentage between 0 and 100, such as 75.')), 0, 17));
     }
 
-    public function testTheMenuHasTwelveEntriesInOrder(): void
+    public function testTheMenuHasThirteenEntriesInOrder(): void
     {
         self::assertSame(
-            ['ritmo-revenue', 'ritmo-revenue-nights', 'ritmo-revenue-approvals', 'ritmo-revenue-alerts', 'ritmo-revenue-todo', 'ritmo-revenue-changes', 'ritmo-revenue-reports', 'ritmo-revenue-market', 'ritmo-revenue-orders', 'ritmo-revenue-rules', 'ritmo-revenue-operations', 'ritmo-revenue-settings'],
+            ['ritmo-revenue', 'ritmo-revenue-nights', 'ritmo-revenue-approvals', 'ritmo-revenue-alerts', 'ritmo-revenue-todo', 'ritmo-revenue-changes', 'ritmo-revenue-reports', 'ritmo-revenue-market', 'ritmo-revenue-orders', 'ritmo-revenue-rules', 'ritmo-revenue-operations', 'ritmo-revenue-assistant', 'ritmo-revenue-settings'],
             array_column(Menu::entries(), 'slug')
         );
+        self::assertSame(AiScreen::SLUG, Menu::ASSISTANT);
+        $settings = array_values(array_filter(Menu::entries(), static fn (array $e): bool => $e['slug'] === Menu::SETTINGS))[0];
+        self::assertSame(['setup', 'connections', 'notifications', 'licence', 'diagnostics', 'uninstall'], array_map(static fn ($t) => $t->id, $settings['tabs']));
+        self::assertSame(Capability::MANAGE_CONNECTIONS, $settings['tabs'][3]->capability, 'the licence tab is for whoever manages the connections');
         self::assertSame(['ritmo-revenue-settings', 'connections'], Menu::REDIRECTS['ritmo-revenue-connections']);
     }
 }

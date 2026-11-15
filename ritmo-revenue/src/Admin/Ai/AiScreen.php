@@ -200,7 +200,7 @@ final class AiScreen
         $calls = [];
         foreach (array_reverse(array_slice($month->calls, -20)) as $call) {
             $calls[] = [
-                'at' => (string) $call['at'],
+                'at' => self::localTime((string) $call['at']),
                 'purpose' => AiWords::purpose((string) $call['purpose']),
                 'model' => (string) $call['model'],
                 'tokens' => number_format_i18n((float) (($call['tokens']['input'] ?? 0) + ($call['tokens']['cache_read'] ?? 0) + ($call['tokens']['cache_write'] ?? 0))) . ' / ' . number_format_i18n((float) ($call['tokens']['output'] ?? 0)),
@@ -212,7 +212,7 @@ final class AiScreen
         $spent = $month->spentUsd();
 
         return [
-            'month' => $month->month,
+            'month' => self::monthName($month->month),
             'spent' => AiWords::dollars($spent),
             'cap' => AiWords::dollars($settings->monthlyCapUsd),
             'share' => $settings->monthlyCapUsd > 0 ? min(100, (int) Num::roundHalfEven($spent / $settings->monthlyCapUsd * 100, 0)) : 0,
@@ -226,7 +226,30 @@ final class AiScreen
                 'refusals' => number_format_i18n((float) $month->totals['refusals']),
             ],
             'calls' => $calls,
-            'previous' => $previous === null ? null : ['month' => (string) $previous['month'], 'spent' => AiWords::dollars((float) ($previous['totals']['cost_usd'] ?? 0)), 'calls' => number_format_i18n((float) ($previous['totals']['calls'] ?? 0))],
+            'previous' => $previous === null ? null : ['month' => self::monthName((string) $previous['month']), 'spent' => AiWords::dollars((float) ($previous['totals']['cost_usd'] ?? 0)), 'calls' => number_format_i18n((float) ($previous['totals']['calls'] ?? 0))],
         ];
+    }
+
+    /**
+     * "2026-11" as the site's month name ("November 2026", "novembro de 2026").
+     */
+    private static function monthName(string $month): string
+    {
+        if (preg_match('/^\d{4}-\d{2}$/', $month) !== 1) {
+            return $month;
+        }
+        $first = strtotime($month . '-15T12:00:00Z');
+
+        return $first === false ? $month : (string) wp_date(_x('F Y', 'month and year', 'ritmo-revenue'), $first);
+    }
+
+    /**
+     * A stored UTC instant in the site's time zone and date format.
+     */
+    private static function localTime(string $at): string
+    {
+        $time = strtotime($at);
+
+        return $time === false ? $at : (string) wp_date(get_option('date_format') . ' ' . get_option('time_format'), $time);
     }
 }

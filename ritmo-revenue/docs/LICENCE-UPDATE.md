@@ -66,6 +66,18 @@ A key that was never valid gets no grace period. Reasons: `none`, `no_key`, `not
 - **Shadow mode always works.** The engine reads, decides and shows what it would do with or
   without a licence.
 
+Wiring (integration of M5): `WordPress\Services::licence()` builds the one `LicenceService` of a
+request (its provider over `Infrastructure\Http\HostBoundHttpClient`, bound to the host of
+the licence server of `LicenceSettings`, and `GuardedHttpClient`, whose read list holds only that server's
+`activate`, `validate` and `deactivate`); `RunStack` builds the `LicenceEnforcer` over it and
+`RepositoryModeLowering`; `PipelineRunExecutor::start` opens every run in `modeAtRunStart()` (unless
+the emergency switch already forces shadow mode); `ModePreconditions` adds `unmetToLeaveShadow()` to
+both raises; `AiAssistant` gets `allowsAi()`. `Plugin::boot()` calls `LicenceHooks::register()`;
+deactivation and uninstall call `LicenceHooks::unschedule()`; the uninstaller with "delete the data"
+frees the key on its provider first (one attempt). `LicenceEndToEndTest` (PHP, over the simulator)
+and `m5-licence.js` (stage 8 of `bin/e2e.sh`) show a lapsed licence putting a property in approval
+or autonomous mode back in shadow mode at its next run with nothing written.
+
 ### 2.3 Checks
 
 The provider is asked only: when a key is saved (`activate`), from the licence screen ("Check now",
@@ -89,17 +101,39 @@ provider: it reads `LicenceService::verdict()`, which evaluates the stored recor
 
 ### 2.5 The HTTP protocol (`HttpLicenceServer`)
 
-The server is `RITMO_LICENCE_SERVER_URL` (a constant of wp-config.php, never a stored setting, so
-nothing in the database can send the key elsewhere): https, without credentials, query or fragment.
+The server and the Ed25519 public key(s) that sign its answers are embedded in the plugin
+(`LicenceSettings::EMBEDDED_SERVER_URL` and `EMBEDDED_PUBLIC_KEYS`, empty until a licensing
+platform is chosen; with no key there is no server and every key stays "not checked"). Nothing in
+the database can send the key elsewhere. The address is https, without credentials, query or
+fragment.
 
 ```
 POST <url>/activate | <url>/validate | <url>/deactivate
 Content-Type: application/json
-{"licence_key": "...", "site_url": "https://example.com", "product": "ritmo-revenue", "plugin_version": "1.0.0"}
+{"licence_key": "...", "site_url": "https://example.com", "product": "ritmo-revenue", "plugin_version": "1.0.0", "nonce": "<32 hex, new for each request>"}
 
-200 {"status": "valid" | "expired" | "invalid", "expires_at": "2027-01-31T00:00:00Z" | null, "message": "..."}
+200 {"status": "valid" | "expired" | "invalid", "expires_at": "2027-01-31T00:00:00Z" | null, "message": "...",
+     "checked_at": "2026-11-15T10:00:00Z", "nonce": "<as sent>", "signature": "<base64>"}
 200 {"status": "deactivated"}                       (deactivate)
 ```
+
+A `valid` answer counts only when `signature` is the Ed25519 detached signature, by the server's
+secret key, of these lines joined by `\n` (`LicenceSignature`):
+
+```
+ritmo-licence-v1
+<sha256 of the licence key, hex>
+<site_url as sent>
+valid
+<expires_at as answered, or empty>
+<checked_at as answered>
+<nonce as sent>
+```
+
+An unsigned or wrongly signed `valid` (another key, another site, another nonce, a changed end
+date) is treated as a server that was not reached: the last answer is kept. A server that merely
+answers `{"status":"valid"}` therefore licenses nothing. `expired` and `invalid` need no signature
+(they grant nothing).
 
 | Answer | Means |
 |---|---|
@@ -114,13 +148,17 @@ change.
 
 ### 2.6 Development mode and the test provider
 
-`RITMO_LICENCE_DEV` exactly `true` (off by default) makes `StubLicenceProvider` answer keys starting
-with `TEST-`, without any network: `TEST-VALID-...` (valid one year), `TEST-EXPIRED-...` (ended
-yesterday), `TEST-DOWN-...` (not reached), anything else invalid. Its answers count only while the
-constant is on: a record made by the test provider on a site where the constant is off is
-`unlicensed` (`test_provider`), and a `TEST-` key typed there goes to the real server like any key.
-With `RITMO_DEV` or `RITMO_LICENCE_DEV`, the server addresses may be plain http on a loopback host
-(the local simulator).
+Only on a development site (its address on 127.0.0.1, localhost or ::1) and with `RITMO_DEV` or
+`RITMO_LICENCE_DEV` exactly `true`, the constants `RITMO_LICENCE_SERVER_URL` (another server; plain
+http allowed on a loopback host, the local simulator) and `RITMO_LICENCE_PUBLIC_KEY` (its public
+key) replace the embedded ones. On any other site they are ignored and the Licence tab says so.
+
+With both `RITMO_DEV` and `RITMO_LICENCE_DEV` exactly `true` on such a site, `StubLicenceProvider`
+answers keys starting with `TEST-`, without any network: `TEST-VALID-...` (valid one year),
+`TEST-EXPIRED-...` (ended yesterday), `TEST-DOWN-...` (not reached), anything else invalid. Its
+answers count only while that holds: a record made by the test provider elsewhere is `unlicensed`
+(`test_provider`), and a `TEST-` key typed there goes to the real server like any key. So neither
+the test provider nor a server of one's own can license a live site by configuration alone.
 
 ### 2.7 Screen, actions and notice
 
@@ -250,4 +288,9 @@ The simulator: `RITMO_FAKE_LICENCE_STATE=<file> RITMO_FAKE_UPDATE_SECRET_KEY=<ba
 - The update requests send no licence key: a server that serves updates to customers only must
   protect the package URLs itself.
 - Undo of earlier changes needs a writing mode; after the licence lapses the change log keeps the
-  "how to undo" of every change for a person to apply by hand.
+  "how to undo" of every change for a person to apply by hand. Between the lapse and the next run
+  of a property (at most a few hours) an undo asked by a person still goes through, like an
+  approval already given; the next run lowers the mode.
+- The update channel's own HTTP client is bound to the host of `RITMO_UPDATE_URL`; the package is
+  downloaded by WordPress itself and installed only after `UpdateChecker::download()` verified it
+  (same origin, size, hash, signature).

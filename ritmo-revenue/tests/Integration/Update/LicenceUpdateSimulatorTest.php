@@ -69,7 +69,7 @@ final class LicenceUpdateSimulatorTest extends TestCase
 
     private function licenceServer(): HttpLicenceServer
     {
-        return new HttpLicenceServer(new CurlHttpClient(), ServerUrl::parse(self::$server->url('/licence'), true), $this->clock, 'ritmo-revenue', '1.1.0');
+        return new HttpLicenceServer(new CurlHttpClient(), ServerUrl::parse(self::$server->url('/licence'), true), $this->clock, 'ritmo-revenue', '1.1.0', [(string) base64_decode(self::$server->publicKey, true)]);
     }
 
     private function checker(string $installed = '1.1.0', ?string $publicKey = null): UpdateChecker
@@ -117,7 +117,7 @@ final class LicenceUpdateSimulatorTest extends TestCase
         self::$server->licence(self::KEY, 'valid', '2027-11-15T00:00:00Z');
         $store = new ArrayStore();
         $logger = new RecordingLogger();
-        $settings = new LicenceSettings(ServerUrl::parse(self::$server->url('/licence'), true), new GracePolicy(), false, self::SITE, '1.1.0');
+        $settings = new LicenceSettings(ServerUrl::parse(self::$server->url('/licence'), true), new GracePolicy(), false, self::SITE, '1.1.0', 'ritmo-revenue', false, [(string) base64_decode(self::$server->publicKey, true)]);
         $service = new LicenceService(new SodiumVault($store, $this->clock, str_repeat('s', 40)), $store, $this->clock, $logger, new ProviderChoice($settings, new CurlHttpClient(), $this->clock), $settings);
 
         self::assertSame(LicenceStanding::Active, $service->save(self::KEY)->standing);

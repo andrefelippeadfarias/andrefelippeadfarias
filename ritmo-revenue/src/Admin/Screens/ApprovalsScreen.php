@@ -6,6 +6,7 @@ namespace Ritmo\Admin\Screens;
 
 use DateTimeImmutable;
 use DateTimeZone;
+use Ritmo\Admin\Ai\AiScreens;
 use Ritmo\Admin\Components\Capability;
 use Ritmo\Admin\Components\ErrorText;
 use Ritmo\Admin\Components\Input;
@@ -73,7 +74,32 @@ final class ApprovalsScreen
             'history' => null,
             'rest_url' => rest_url('ritmo/v1/'),
             'rest_nonce' => wp_create_nonce('wp_rest'),
+            'ai_drafts' => self::aiDrafts($property),
         ]);
+    }
+
+    /**
+     * The assistant's drafts waiting for this property: a count and the link to them (they are
+     * reviewed in the Assistant and opened in the order form or the rules draft), or null.
+     *
+     * @return array{text: string, url: string}|null
+     */
+    private static function aiDrafts(Property $property): ?array
+    {
+        try {
+            $count = AiScreens::waitingDrafts($property->id);
+        } catch (Throwable) {
+            return null;
+        }
+        if ($count === 0) {
+            return null;
+        }
+
+        return [
+            /* translators: %s: how many drafts */
+            'text' => sprintf(_n('%s draft from the assistant waits for you. It is not a plan of prices: open it in the order form or the rules draft, check it and save it yourself.', '%s drafts from the assistant wait for you. They are not plans of prices: open each in the order form or the rules draft, check it and save it yourself.', $count, 'ritmo-revenue'), number_format_i18n($count)),
+            'url' => Menu::url(Menu::ASSISTANT, ['tab' => 'ask', 'property' => $property->id]),
+        ];
     }
 
     /**
@@ -288,10 +314,11 @@ final class ApprovalsScreen
 
         $nights = $request->impact->nights;
         $where = sprintf(
-            /* translators: 1: number of nights, 2: number of rooms */
-            _n('%1$s night in %2$s room(s)', '%1$s nights in %2$s room(s)', $nights, 'ritmo-revenue'),
+            /* translators: 1: number of nights, 2: "1 room" or "3 rooms" */
+            _n('%1$s night in %2$s', '%1$s nights in %2$s', $nights, 'ritmo-revenue'),
             number_format_i18n($nights),
-            number_format_i18n($rooms)
+            /* translators: %s: number of rooms */
+            sprintf(_n('%s room', '%s rooms', $rooms, 'ritmo-revenue'), number_format_i18n($rooms))
         );
         if ($request->impact->listing > 0) {
             /* translators: %s: number of listing changes */

@@ -73,9 +73,13 @@ final class ScaffoldTest extends TestCase
             ['deactivation', $main, ['Ritmo\\WordPress\\Deactivator', 'deactivate']],
         ], $result['lifecycle']);
         self::assertSame(
-            ['init', 'init', 'admin_menu', 'admin_enqueue_scripts', 'admin_notices', 'rest_api_init', 'cron_schedules', 'ritmo_tick', 'admin_init', ...array_map(static fn (string $action): string => 'admin_post_' . $action, array_map(static fn ($a): string => $a->action, \Ritmo\Admin\AdminScreens::actions()))],
+            [
+                'init', 'init', 'admin_menu', 'admin_enqueue_scripts', 'admin_notices', 'rest_api_init', 'cron_schedules', 'ritmo_tick', 'admin_init',
+                ...array_map(static fn (string $action): string => 'admin_post_' . $action, array_map(static fn ($a): string => $a->action, \Ritmo\Admin\AdminScreens::actions())),
+                'admin_notices', 'ritmo_licence_check', 'init', 'pre_set_site_transient_update_plugins', 'plugins_api', 'upgrader_pre_download',
+            ],
             $result['booted_hooks'],
-            'boot registers the text domain, the update on every kind of request (not only the screens: the tick and the REST API run on an updated database), the screens, the actions, the REST API, the scheduler tick and its interval'
+            'boot registers the text domain, the update on every kind of request (not only the screens: the tick and the REST API run on an updated database), the screens, the actions, the REST API, the scheduler tick and its interval, then the licence notice, its scheduled check and the update filters'
         );
         self::assertTrue($result['booted']);
         self::assertTrue($result['autoload']);
@@ -94,12 +98,13 @@ final class ScaffoldTest extends TestCase
 
     public function testUninstallIsSafeInsideWordPress(): void
     {
-        $stubs = 'define("WP_UNINSTALL_PLUGIN", "ritmo-revenue/ritmo-revenue.php"); $asked = [];'
-            . 'function get_option($name, $default = false) { global $asked; $asked[] = $name; return $default; }';
-        [$exit, $output] = self::runPhp($stubs . 'require ' . var_export(self::root() . '/uninstall.php', true) . '; echo "DONE " . json_encode($asked);');
+        $stubs = 'define("WP_UNINSTALL_PLUGIN", "ritmo-revenue/ritmo-revenue.php"); $asked = []; $deleted = [];'
+            . 'function get_option($name, $default = false) { global $asked; $asked[] = $name; return $default; }'
+            . 'function delete_option($name) { global $deleted; $deleted[] = $name; return true; }';
+        [$exit, $output] = self::runPhp($stubs . 'require ' . var_export(self::root() . '/uninstall.php', true) . '; echo "DONE " . json_encode($asked) . " " . json_encode($deleted);');
 
         self::assertSame(0, $exit, $output);
-        self::assertSame('DONE ["ritmo_delete_data_on_uninstall"]', $output, 'without the choice to delete data, uninstall reads that choice and touches nothing');
+        self::assertSame('DONE ["ritmo_delete_data_on_uninstall"] ["ritmo_vault"]', $output, 'without the choice to delete data, uninstall reads that choice, keeps the data and deletes only the vault of secrets');
     }
 
     public function testBootIsIdempotent(): void

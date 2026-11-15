@@ -61,7 +61,7 @@ final class AiServices
 
     public function usage(): UsageLedger
     {
-        return $this->once('usage', fn (): UsageLedger => new UsageLedger($this->services->store(), $this->services->clock(), wp_timezone_string()));
+        return $this->once('usage', fn (): UsageLedger => new UsageLedger($this->services->store(), $this->services->clock(), wp_timezone_string(), $this->exclusive()));
     }
 
     public function drafts(): AiDraftQueue
@@ -76,7 +76,41 @@ final class AiServices
 
     public function assistant(): AiAssistant
     {
-        return $this->once('assistant', fn (): AiAssistant => new AiAssistant($this->settings(), $this->usage(), $this->gateways(), $this->services->logger()));
+        return $this->once('assistant', fn (): AiAssistant => new AiAssistant(
+            $this->settings(),
+            $this->usage(),
+            $this->gateways(),
+            $this->services->logger(),
+            licensed: fn (): bool => $this->services->licence()->verdict()->allowsAi(),
+        ));
+    }
+
+    /**
+     * Runs a change of the usage while holding the site's lock "ai_usage" (waits up to two
+     * seconds for it; a lock that cannot be had does not stop the change).
+     *
+     * @return Closure(Closure(): mixed): mixed
+     */
+    private function exclusive(): Closure
+    {
+        $locks = $this->services->locks();
+
+        return static function (Closure $work) use ($locks): mixed {
+            $handle = null;
+            for ($try = 0; $try < 40 && $handle === null; $try++) {
+                $handle = $locks->acquire('ai_usage', 30);
+                if ($handle === null) {
+                    usleep(50000);
+                }
+            }
+            try {
+                return $work();
+            } finally {
+                if ($handle !== null) {
+                    $locks->release($handle);
+                }
+            }
+        };
     }
 
     public static function baseUrl(): string

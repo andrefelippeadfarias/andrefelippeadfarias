@@ -135,7 +135,7 @@ A slot in the future is never started; a clock moved back never runs a slot twic
 | `late_tolerance_minutes` | 30 | 30 | Later starts raise `run_late`. |
 | `retry_failed_after_minutes` | 15 | 15 | One retry of a connector failure; 0 = never. |
 | `run_budget_seconds` | 20 | 20 | Work per property per tick. |
-| `tick_budget_seconds` | 40 | 40 | Work per tick. |
+| `tick_budget_seconds` | 40 | 40 | Work per tick. `Plugin::tick()` reads it (`WordPress\TimeLimit::tickBudget()`): it asks PHP for that time plus 30 s and, where the host refuses, keeps 5 s under `max_execution_time`. The tick and every request that runs the engine (Run now, a shadow run, the REST routes, a write) also ask WordPress for its larger memory limit (`wp_raise_memory_limit`, 256M by default). |
 | `max_movement_lookback_days` | 30 | 30 | Cap of the movement read after a stop (beyond: `vigilance_gap`). |
 | `stalled_after_minutes` | 20 | 20 | `scheduler_stalled` threshold. |
 | `stop_reads_under_emergency` | false | false | Under the emergency switch scheduled runs still read and watch as shadow runs; true stops them. |
@@ -230,8 +230,25 @@ light run), the weekly review.
 | `review_due` | the last 12-month review is older than `reports.review.interval_days`; a property never reviewed counts the interval from its first run (not due on day one) |
 | `recalc_quota_exhausted` | a write left nights of a room out because its listing could not be recalculated (the quota); the report has a `not_recalculated` line with the room and the nights, and an approved request reads "written in part" |
 | `pms_changes_capped` | the stay rules asked for more PMS changes than `stay.write.max_changes_per_run`; none was written |
+| `run_stopped` | PHP stopped a run (out of memory or a fatal error): `LockedRunLauncher` closed it as failed from a shutdown function, freed the property's lock at once and raised this alert (fact `cause`: `memory` or `fatal`) |
 
 The stay and arrival/departure writes of a full run (`Run\StayWriteStep`, STAY.md "Writes") are planned after the plan assembly, checked by `Stay\Write\PmsChangeCheck` against the pricing items the validator accepted, and sealed with the plan; the write stage sends them after the pricing steps, through the gate. What the pricing system's push sets in the PMS (`Run\PushedFields`) is not taken for a change by someone else.
+
+## 5.1 The licence and the runs (M5)
+
+A run fixes its mode when it opens (`PipelineRunExecutor::start`): the emergency switch gives
+shadow mode as before; otherwise `LicenceEnforcer::modeAtRunStart()` reads the stored licence
+verdict (never the provider) and, once the licence no longer allows writing (grace period over, no
+licence), the run opens in shadow mode and a property in approval or autonomous mode is put back in
+shadow mode for good: the mode, the event in the change log with the actor `licence`, and the end of
+every approval not written yet, like any lowering (`RepositoryModeLowering`). A run already open is
+resumed in its own mode, so a write is never cut in the middle; an approved write that starts after
+the lapse writes nothing. Shadow runs keep reading, deciding and reporting. Leaving shadow mode
+again needs a licence that allows writing (`ModePreconditions`, condition `licence`) and a person.
+
+The licence's own scheduled check is a separate WP-Cron event (`ritmo_licence_check`, twice a
+day, registered by `LicenceHooks`, removed on deactivation and uninstall); it never runs inside the
+scheduler's tick. Details in [LICENCE-UPDATE.md](LICENCE-UPDATE.md).
 
 ## 6. Open points (M4)
 

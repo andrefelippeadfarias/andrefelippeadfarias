@@ -9,8 +9,9 @@ use OutOfBoundsException;
 use Ritmo\Admin\RefusalText;
 use Ritmo\Admin\Editors\EditorText;
 use Ritmo\Application\Approval\ApprovalRefused;
-use Ritmo\Application\Rules\RulesRefused;
+use Ritmo\Application\Dashboard\Setup\RoomRowsRefused;
 use Ritmo\Application\Mode\ModeRefused;
+use Ritmo\Application\Rules\RulesRefused;
 use Ritmo\Domain\Config\InvalidConfig;
 use Throwable;
 
@@ -39,6 +40,9 @@ final class ErrorText
         }
         if ($failure instanceof RulesRefused) {
             return EditorText::refusal($failure);
+        }
+        if ($failure instanceof RoomRowsRefused) {
+            return __('Some rooms could not be saved: nothing was saved.', 'ritmo-revenue');
         }
         if ($failure instanceof UserFacing || $failure instanceof InvalidConfig || self::ownValidation($failure)) {
             return $failure->getMessage();

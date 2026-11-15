@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Ritmo\Admin\Reports;
 
+use Ritmo\Admin\Ai\AiScreens;
 use Ritmo\Admin\Components\Capability;
 use Ritmo\Admin\Components\Input;
 use Ritmo\Admin\Components\Menu;
@@ -85,14 +86,14 @@ final class ReportsScreen
     }
 
     /**
-     * @return list<array{started: string, kind: string, status: string, lines: list<string>, recorded: bool}>
+     * @return list<array{started: string, kind: string, status: string, lines: list<string>, recorded: bool, ai_explain: array{rest_url: string, rest_nonce: string, label: string}|null}>
      */
     private static function runs(string $propertyId): array
     {
         $out = [];
         foreach (ReportsServices::instance()->services()->runs()->latest($propertyId, 20) as $run) {
             $text = RunLineText::ofSummary($run['summary']);
-            $out[] = ['started' => wp_date(get_option('date_format') . ' ' . get_option('time_format'), $run['started_at']->getTimestamp()), 'kind' => $run['kind'], 'status' => $run['status'], ...$text];
+            $out[] = ['started' => wp_date(get_option('date_format') . ' ' . get_option('time_format'), $run['started_at']->getTimestamp()), 'kind' => $run['kind'], 'status' => $run['status'], ...$text, 'ai_explain' => $text['lines'] === [] ? null : AiScreens::explainView('run', (int) $run['id'])];
         }
 
         return $out;

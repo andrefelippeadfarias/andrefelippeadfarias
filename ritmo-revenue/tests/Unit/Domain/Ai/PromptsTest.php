@@ -25,7 +25,7 @@ final class PromptsTest extends TestCase
         'BASE' => '32f8c3ba',
         'REPORT' => '5a003eb8',
         'ALERT' => 'e283616f',
-        'REQUEST' => '8e7ef6c9',
+        'REQUEST' => '5ee19cc0',
     ];
 
     public function testTheFixedPromptsArePinned(): void

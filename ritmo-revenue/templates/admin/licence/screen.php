@@ -38,10 +38,10 @@ defined('ABSPATH') || exit;
     </dl>
     <p class="ritmo-hint"><?php esc_html_e('The licence is checked once a day and when you press "Check now", never during a pricing run. If the licence server cannot be reached, the last valid answer is kept for the grace period.', 'ritmo-revenue'); ?></p>
     <?php if ($view['server_invalid']) : ?>
-        <p class="ritmo-warning" data-ritmo="licence-server-invalid"><?php esc_html_e('RITMO_LICENCE_SERVER_URL in wp-config.php is not a valid https address, so the licence cannot be checked.', 'ritmo-revenue'); ?></p>
+        <p class="ritmo-warning" data-ritmo="licence-server-invalid"><?php esc_html_e('RITMO_LICENCE_SERVER_URL in wp-config.php is not used: it only counts for development, on a local site, with a valid address and the public key of that server. The licence is checked with the plugin\'s own licence server.', 'ritmo-revenue'); ?></p>
     <?php endif; ?>
     <?php if ($view['dev_mode']) : ?>
-        <p class="ritmo-warning" data-ritmo="licence-dev-mode"><?php esc_html_e('Development mode is on (RITMO_LICENCE_DEV): test keys starting with TEST- are accepted. Switch it off on a live site.', 'ritmo-revenue'); ?></p>
+        <p class="ritmo-warning" data-ritmo="licence-dev-mode"><?php esc_html_e('Development mode is on (RITMO_DEV and RITMO_LICENCE_DEV on a local site): test keys starting with TEST- are accepted.', 'ritmo-revenue'); ?></p>
     <?php endif; ?>
     <?php if ($view['key_saved']) : ?>
         <form method="post" action="<?php echo esc_url($view['post_url']); ?>" class="ritmo-inline">

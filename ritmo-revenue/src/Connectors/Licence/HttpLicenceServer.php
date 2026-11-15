@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Ritmo\Connectors\Licence;
 
+use Closure;
 use DateTimeImmutable;
 use DateTimeZone;
 use JsonException;
@@ -20,9 +21,14 @@ use Throwable;
  * directly or through a thin adapter:
  *
  *   POST <url>/activate | /validate | /deactivate
- *   {"licence_key": "...", "site_url": "https://...", "product": "ritmo-revenue", "plugin_version": "1.0.0"}
+ *   {"licence_key": "...", "site_url": "https://...", "product": "ritmo-revenue", "plugin_version": "1.0.0", "nonce": "<32 hex>"}
  *
- *   200 {"status": "valid" | "expired" | "invalid", "expires_at": "2027-01-31T00:00:00Z" | null, "message": "..."}
+ *   200 {"status": "valid" | "expired" | "invalid", "expires_at": "2027-01-31T00:00:00Z" | null, "message": "...",
+ *        "checked_at": "2026-11-15T10:00:00Z", "nonce": "<as sent>", "signature": "<base64 Ed25519>"}
+ *
+ * A "valid" answer counts only when it is signed by one of the plugin's licence public keys
+ * (LicenceSignature), for this key, this site and this request's nonce; an unsigned or wrongly
+ * signed "valid" is treated as a server that was not reached (the site keeps its last answer).
  *
  * A 401, 403, 404 or 410 means invalid; anything else that is not such an answer (no response,
  * a timeout, 429, 5xx, a body that is not that JSON) means the server was not reached, and the
@@ -36,12 +42,18 @@ final class HttpLicenceServer implements LicenceServer
 
     private const INVALID_STATUSES = [401, 403, 404, 410];
 
+    /**
+     * @param list<string>            $publicKeys raw Ed25519 public keys that sign a "valid" answer
+     * @param (Closure(): string)|null $nonce     a new nonce for each request (random by default)
+     */
     public function __construct(
         private readonly HttpClient $http,
         private readonly ServerUrl $server,
         private readonly Clock $clock,
         private readonly string $product = 'ritmo-revenue',
         private readonly string $pluginVersion = '',
+        private readonly array $publicKeys = [],
+        private readonly ?Closure $nonce = null,
     ) {
     }
 
@@ -77,28 +89,30 @@ final class HttpLicenceServer implements LicenceServer
 
     private function ask(string $endpoint, #[SensitiveParameter] string $licenceKey, string $siteUrl): LicenceState
     {
+        $nonce = $this->nonce === null ? bin2hex(random_bytes(16)) : ($this->nonce)();
         try {
-            $response = $this->post($endpoint, $licenceKey, $siteUrl);
+            $response = $this->post($endpoint, $licenceKey, $siteUrl, $nonce);
         } catch (Throwable) {
             return $this->unreachable('The licence server could not be reached.');
         }
 
-        return $this->answer($response);
+        return $this->answer($response, $licenceKey, $siteUrl, $nonce);
     }
 
-    private function post(string $endpoint, #[SensitiveParameter] string $licenceKey, string $siteUrl): HttpResponse
+    private function post(string $endpoint, #[SensitiveParameter] string $licenceKey, string $siteUrl, string $nonce = ''): HttpResponse
     {
-        $body = json_encode([
+        $body = json_encode(array_filter([
             'licence_key' => $licenceKey,
             'site_url' => $siteUrl,
             'product' => $this->product,
             'plugin_version' => $this->pluginVersion,
-        ], JSON_THROW_ON_ERROR | JSON_UNESCAPED_SLASHES);
+            'nonce' => $nonce,
+        ], static fn (string $value, string $name): bool => $name !== 'nonce' || $value !== '', ARRAY_FILTER_USE_BOTH), JSON_THROW_ON_ERROR | JSON_UNESCAPED_SLASHES);
 
         return $this->http->request('POST', $this->server->endpoint($endpoint), ['Content-Type' => 'application/json', 'Accept' => 'application/json'], $body, self::TIMEOUT);
     }
 
-    private function answer(HttpResponse $response): LicenceState
+    private function answer(HttpResponse $response, #[SensitiveParameter] string $licenceKey, string $siteUrl, string $nonce): LicenceState
     {
         $status = $response->status();
         $data = self::json($response->body());
@@ -118,7 +132,28 @@ final class HttpLicenceServer implements LicenceServer
             }
         }
 
+        if ($data['status'] === LicenceState::VALID && !$this->signed($data, $licenceKey, $siteUrl, $nonce)) {
+            return $this->unreachable('The licence server\'s answer is not signed with the plugin\'s licence key, so it was not trusted.');
+        }
+
         return new LicenceState((string) $data['status'], $expiresAt, $now, $message);
+    }
+
+    /**
+     * @param array<mixed> $data
+     */
+    private function signed(array $data, #[SensitiveParameter] string $licenceKey, string $siteUrl, string $nonce): bool
+    {
+        if ($this->publicKeys === [] || ($data['nonce'] ?? null) !== $nonce || !is_string($data['checked_at'] ?? null)) {
+            return false;
+        }
+        if (self::instant($data['checked_at']) === null) {
+            return false;
+        }
+        $expiresAt = is_string($data['expires_at'] ?? null) ? $data['expires_at'] : '';
+        $message = LicenceSignature::message($licenceKey, $siteUrl, LicenceState::VALID, $expiresAt, $data['checked_at'], $nonce);
+
+        return LicenceSignature::verify($this->publicKeys, $data['signature'] ?? null, $message);
     }
 
     private function unreachable(string $message): LicenceState

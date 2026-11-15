@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Ritmo\Admin\Screens;
 
+use Ritmo\Admin\Ai\AiScreens;
 use DateTimeImmutable;
 use Ritmo\Admin\Components\Capability;
 use Ritmo\Admin\Components\ErrorText;
@@ -155,6 +156,7 @@ final class AlertsScreen
             'can_ack' => $alert['status'] === 'open' && (!$approverOnly || Capability::can(Capability::APPROVE)),
             'can_resolve' => $alert['status'] !== 'resolved' && Capability::can(Capability::APPROVE),
             'wave' => $alert['code'] === 'security_cancellation_burst',
+            'ai_explain' => AiScreens::explainView('alert', (int) $alert['id']),
             'night_url' => $alert['night'] === null || $alert['room_code'] === '' ? '' : Menu::url(Menu::NIGHTS, ['property' => $alert['property_id'], 'room' => $alert['room_code'], 'night' => Days::key($alert['night'])]),
         ];
     }

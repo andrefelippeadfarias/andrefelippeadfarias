@@ -28,17 +28,23 @@ final class UpdateHooks
      * @param Closure(): UpdateChecker $checker built on first use
      * @param Closure(string): string  $refusal the text shown for an UpdateRefused reason
      */
-    public function __construct(private readonly Closure $checker, private readonly Closure $refusal)
-    {
+    public function __construct(
+        private readonly Closure $checker,
+        private readonly Closure $refusal,
+        private readonly string $basename = 'ritmo-revenue/ritmo-revenue.php',
+        private readonly string $slug = 'ritmo-revenue',
+        private readonly string $installedVersion = '',
+    ) {
     }
 
     /**
      * @param Closure(): UpdateChecker $checker
      * @param Closure(string): string  $refusal
+     * @param string                   $basename this plugin's basename, known without the checker (it may fail)
      */
-    public static function register(Closure $checker, Closure $refusal): self
+    public static function register(Closure $checker, Closure $refusal, string $basename = 'ritmo-revenue/ritmo-revenue.php', string $slug = 'ritmo-revenue', string $installedVersion = ''): self
     {
-        $hooks = new self($checker, $refusal);
+        $hooks = new self($checker, $refusal, $basename, $slug, $installedVersion);
         add_filter('pre_set_site_transient_update_plugins', [$hooks, 'offer']);
         add_filter('plugins_api', [$hooks, 'details'], 10, 3);
         add_filter('upgrader_pre_download', [$hooks, 'download'], 10, 4);
@@ -58,6 +64,13 @@ final class UpdateHooks
             $checker = ($this->checker)();
             $release = $checker->latest();
         } catch (Throwable) {
+            // Never leave another offer for this plugin (a plugin of the same name elsewhere).
+            if (isset($transient->response) && is_array($transient->response)) {
+                $response = $transient->response;
+                unset($response[$this->basename]);
+                $transient->response = $response;
+            }
+
             return $transient;
         }
         $settings = $checker->settings();
@@ -98,18 +111,18 @@ final class UpdateHooks
      */
     public function details(mixed $result, mixed $action, mixed $args): mixed
     {
+        if ($action !== 'plugin_information' || !is_object($args) || ($args->slug ?? null) !== $this->slug) {
+            return $result;
+        }
         try {
             $checker = ($this->checker)();
+            $settings = $checker->settings();
+            $release = $checker->offer();
         } catch (Throwable) {
-            return $result;
+            return $this->localDetails();
         }
-        $settings = $checker->settings();
-        if ($action !== 'plugin_information' || !is_object($args) || ($args->slug ?? null) !== $settings->slug) {
-            return $result;
-        }
-        $release = $checker->offer();
         if ($release === null) {
-            return $result;
+            return $this->localDetails();
         }
 
         return (object) [
@@ -136,13 +149,15 @@ final class UpdateHooks
         if ($reply !== false || !is_string($package)) {
             return $reply;
         }
+        $forThisPlugin = is_array($hookExtra) && ($hookExtra['plugin'] ?? null) === $this->basename;
         try {
             $checker = ($this->checker)();
         } catch (Throwable) {
-            return $reply;
+            // Nothing can be checked: a package for this plugin is refused, never installed unchecked.
+            return $forThisPlugin ? new WP_Error('ritmo_update_refused', ($this->refusal)(UpdateRefused::UNREACHABLE)) : $reply;
         }
         $settings = $checker->settings();
-        $forThisPlugin = is_array($hookExtra) && ($hookExtra['plugin'] ?? null) === $settings->basename;
+        $forThisPlugin = $forThisPlugin || (is_array($hookExtra) && ($hookExtra['plugin'] ?? null) === $settings->basename);
         $onTheServer = $settings->metadataUrl !== null && $settings->metadataUrl->sameOrigin($package, $settings->devMode);
         if (!$forThisPlugin && !$onTheServer) {
             return $reply;
@@ -160,6 +175,22 @@ final class UpdateHooks
         }
 
         return $file;
+    }
+
+    /**
+     * The details window without a verified release: this plugin's own facts, so WordPress never
+     * asks WordPress.org about a plugin of the same name.
+     */
+    private function localDetails(): object
+    {
+        return (object) [
+            'name' => 'Ritmo Revenue',
+            'slug' => $this->slug,
+            'version' => $this->installedVersion,
+            'requires' => '6.5',
+            'requires_php' => '8.1',
+            'sections' => ['description' => '<p>' . esc_html(($this->refusal)(UpdateRefused::NOT_CONFIGURED)) . '</p>'],
+        ];
     }
 
     /**

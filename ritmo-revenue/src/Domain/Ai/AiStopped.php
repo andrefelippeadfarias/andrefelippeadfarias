@@ -15,6 +15,7 @@ final class AiStopped extends RuntimeException
 {
     public const DISABLED = 'disabled';
     public const NO_KEY = 'no_key';
+    public const LICENCE = 'licence';
     public const BUDGET = 'budget';
     public const MODEL_UNAVAILABLE = 'model_unavailable';
     public const PRIVACY = 'privacy';
@@ -25,6 +26,8 @@ final class AiStopped extends RuntimeException
     public const DRAFT_REFUSED = 'draft_refused';
     public const NOT_SUPPORTED = 'not_supported';
     public const PROVIDER = 'provider';
+    /** The site's own setup of the connection is wrong (a development constant outside development). */
+    public const CONFIG = 'config';
 
     /**
      * @param array<string, string|int|float|list<string>> $details facts safe to show (codes, numbers, refusal category)

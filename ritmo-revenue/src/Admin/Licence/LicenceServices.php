@@ -6,17 +6,15 @@ namespace Ritmo\Admin\Licence;
 
 use Closure;
 use Ritmo\Application\Licence\LicenceService;
-use Ritmo\Application\Licence\LicenceSettings;
-use Ritmo\Application\Licence\ProviderChoice;
 use Ritmo\Application\Update\UpdateChecker;
-use Ritmo\Infrastructure\Http\WpHttpClient;
 use Ritmo\Infrastructure\Update\UpdateConstants;
 use Ritmo\WordPress\Services;
 
 /**
  * The licence and update objects of one request, over the site's services: the licence service
- * (vault, settings, clock, log; the provider through the WordPress HTTP API) and the update
- * checker. Built on first use.
+ * (WordPress\Services::licence(): vault, settings, clock, log; the provider through an HTTP client
+ * bound to the licence server's host) and the update checker (an HTTP client bound to the update
+ * server's host). Built on first use.
  */
 final class LicenceServices
 {
@@ -39,31 +37,27 @@ final class LicenceServices
         return $this->services;
     }
 
+    /**
+     * The site's licence service (WordPress\Services::licence(): the same object the runs read).
+     */
     public function licence(): LicenceService
     {
-        return $this->once('licence', function (): LicenceService {
-            $settings = LicenceSettings::fromConstants(home_url(), RITMO_VERSION);
-
-            return new LicenceService(
-                $this->services->vault(),
-                $this->services->store(),
-                $this->services->clock(),
-                $this->services->logger(),
-                new ProviderChoice($settings, new WpHttpClient('RitmoRevenue/' . RITMO_VERSION), $this->services->clock()),
-                $settings,
-            );
-        });
+        return $this->services->licence();
     }
 
     public function updates(): UpdateChecker
     {
-        return $this->once('updates', fn (): UpdateChecker => new UpdateChecker(
-            new WpHttpClient('RitmoRevenue/' . RITMO_VERSION),
-            $this->services->store(),
-            $this->services->clock(),
-            $this->services->logger(),
-            UpdateConstants::settings(RITMO_VERSION, plugin_basename(RITMO_FILE)),
-        ));
+        return $this->once('updates', function (): UpdateChecker {
+            $settings = UpdateConstants::settings(RITMO_VERSION, plugin_basename(RITMO_FILE));
+
+            return new UpdateChecker(
+                $this->services->updateHttp($settings),
+                $this->services->store(),
+                $this->services->clock(),
+                $this->services->logger(),
+                $settings,
+            );
+        });
     }
 
     /**

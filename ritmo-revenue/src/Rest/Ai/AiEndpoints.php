@@ -167,7 +167,7 @@ final class AiEndpoints
     private function stopped(AiStopped $e): array
     {
         $status = match ($e->reason) {
-            AiStopped::DISABLED, AiStopped::NO_KEY, AiStopped::BUDGET, AiStopped::MODEL_UNAVAILABLE => 409,
+            AiStopped::DISABLED, AiStopped::LICENCE, AiStopped::NO_KEY, AiStopped::BUDGET, AiStopped::MODEL_UNAVAILABLE, AiStopped::CONFIG => 409,
             AiStopped::PROVIDER => 502,
             default => 422,
         };

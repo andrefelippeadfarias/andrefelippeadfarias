@@ -7,10 +7,16 @@ namespace Ritmo\WordPress;
 use Closure;
 use Ritmo\Application\Dashboard\OccupancyQuery;
 use Ritmo\Application\EmergencySwitch;
+use Ritmo\Application\Licence\LicenceService;
+use Ritmo\Application\Licence\LicenceSettings;
+use Ritmo\Application\Licence\ProviderChoice;
 use Ritmo\Application\Run\RunStack;
 use Ritmo\Application\Setup\SetupService;
 use Ritmo\Application\ShadowRun\ShadowRunService;
+use Ritmo\Application\Update\UpdateSettings;
 use Ritmo\Application\Write\Gate\WriteGate;
+use Ritmo\Connectors\Licence\ServerUrl;
+use Ritmo\Contracts\HttpClient;
 use Ritmo\Domain\Config\RuleSet;
 use Ritmo\Domain\Support\Clock;
 use Ritmo\Domain\Support\SystemClock;
@@ -26,6 +32,10 @@ use Ritmo\Infrastructure\Db\Repository\RoomTypeRepository;
 use Ritmo\Infrastructure\Db\Repository\RuleSetRepository;
 use Ritmo\Infrastructure\Db\Repository\RunRepository;
 use Ritmo\Infrastructure\Db\WpdbDatabase;
+use Ritmo\Infrastructure\Http\GuardedHttpClient;
+use Ritmo\Infrastructure\Http\HostBoundHttpClient;
+use Ritmo\Infrastructure\Http\ReadRouteAllowList;
+use Ritmo\Infrastructure\Http\RequestTarget;
 use Ritmo\Infrastructure\Http\WpHttpClient;
 use Ritmo\Infrastructure\Lock\DbLock;
 use Ritmo\Infrastructure\Log\DbLogger;
@@ -192,7 +202,64 @@ final class Services
             new SystemSleeper(),
             static fn () => Scheduler::tickNow(),
             static fn (): ?int => TimeLimit::forWrite(),
+            $this->licence(),
         ));
+    }
+
+    /**
+     * The licence: the key in the vault, the stored record and verdict (what the runs, the mode
+     * changes and the assistant read), and the provider of RITMO_LICENCE_SERVER_URL (or the test
+     * provider in development mode). It asks the provider only when a person saves, checks or
+     * removes the key, and from the scheduled check; never during a run.
+     */
+    public function licence(): LicenceService
+    {
+        return $this->once('licence', function (): LicenceService {
+            $settings = LicenceSettings::fromConstants(home_url(), RITMO_VERSION);
+
+            return new LicenceService(
+                $this->vault(),
+                $this->store(),
+                $this->clock(),
+                $this->logger(),
+                new ProviderChoice($settings, $this->licenceHttp($settings->server), $this->clock()),
+                $settings,
+            );
+        });
+    }
+
+    /**
+     * The HTTP client of the licence: only the configured server's host, and of its routes only
+     * the three POSTs of the protocol (activate, validate, deactivate). No server, no request.
+     */
+    public function licenceHttp(?ServerUrl $server): HttpClient
+    {
+        $routes = ReadRouteAllowList::none();
+        foreach ($server === null ? [] : ['activate', 'validate', 'deactivate'] as $endpoint) {
+            $target = RequestTarget::fromUrl($server->endpoint($endpoint));
+            $routes = $routes->with('licence', 'POST', $target->host, $target->path);
+        }
+
+        return new HostBoundHttpClient(
+            new GuardedHttpClient(new WpHttpClient('RitmoRevenue/' . RITMO_VERSION), $routes, $this->logger()),
+            HostBoundHttpClient::hostsOf([$server?->url]),
+            $this->logger(),
+            'licence',
+        );
+    }
+
+    /**
+     * The HTTP client of the update channel: GET only (the signed metadata and the package it
+     * names, which must be on the same server), to the host of RITMO_UPDATE_URL alone.
+     */
+    public function updateHttp(UpdateSettings $settings): HttpClient
+    {
+        return new HostBoundHttpClient(
+            new GuardedHttpClient(new WpHttpClient('RitmoRevenue/' . RITMO_VERSION), ReadRouteAllowList::none(), $this->logger()),
+            HostBoundHttpClient::hostsOf([$settings->metadataUrl?->url]),
+            $this->logger(),
+            'update',
+        );
     }
 
     public function shadowRuns(): ShadowRunService

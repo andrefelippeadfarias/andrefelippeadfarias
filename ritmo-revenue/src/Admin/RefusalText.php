@@ -6,7 +6,9 @@ namespace Ritmo\Admin;
 
 use Ritmo\Admin\Components\NightDate;
 use Ritmo\Application\Approval\ApprovalRefused;
+use Ritmo\Application\Licence\LicenceEnforcer;
 use Ritmo\Application\Mode\ModeRefused;
+use Ritmo\Domain\Licence\LicenceStanding;
 use Ritmo\Domain\Support\Days;
 
 /**
@@ -26,6 +28,7 @@ final class RefusalText
             ModeRefused::NO_CAPABILITY => __('You do not hold the capability this change of mode needs.', 'ritmo-revenue'),
             ModeRefused::DISABLED => __('The autonomous mode is switched off for this site.', 'ritmo-revenue'),
             ModeRefused::CONFIRMATION => __('Type the property\'s id to confirm the autonomous mode.', 'ritmo-revenue'),
+            ModeRefused::LEAVE_SHADOW => __('To leave shadow mode, type the property\'s id and tick that no other tool writes prices or stay rules for this property (turn any other automation off first). The mode did not change.', 'ritmo-revenue'),
             ModeRefused::REASON_PRIVATE => __('A reason cannot hold an email, a phone number or a document number (guest data is never kept). The mode was not changed.', 'ritmo-revenue'),
             ModeRefused::CONDITIONS => $refused->conditions === []
                 ? __('The property does not meet the conditions of this mode yet.', 'ritmo-revenue')
@@ -77,6 +80,9 @@ final class RefusalText
             'from_approval_only' => __('A property reaches the autonomous mode only from approval.', 'ritmo-revenue'),
             /* translators: 1: days needed, 2: plans needed, 3: days so far, 4: plans so far */
             'approval_time' => sprintf(__('The property needs %1$d days in approval and %2$d approved plans written first (%3$d days and %4$d plans so far).', 'ritmo-revenue'), $int('days_needed'), $int('plans_needed'), $int('days'), $int('plans')),
+            LicenceEnforcer::UNMET_CODE => $text('standing') === LicenceStanding::Lapsed->value
+                ? __('The licence has lapsed: renew it (Settings, Licence) to leave shadow mode.', 'ritmo-revenue')
+                : __('A valid licence is needed to leave shadow mode (Settings, Licence).', 'ritmo-revenue'),
             default => __('A condition of this mode is not met.', 'ritmo-revenue'),
         };
     }

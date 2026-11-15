@@ -12,4 +12,4 @@ defined('WP_UNINSTALL_PLUGIN') || exit;
 
 require_once __DIR__ . '/src/autoload.php';
 
-\Ritmo\WordPress\Uninstaller::forSite()->run();
+\Ritmo\WordPress\Uninstaller::everywhere();

@@ -34,12 +34,20 @@ final class LockedRunLauncher implements RunLauncher
 
     private const LOCK_PREFIX = 'property_run:';
 
+    /** Memory kept aside while a run works, freed if PHP stops it, so the run can still be closed. */
+    private const RESERVE_BYTES = 1048576;
+
+    /**
+     * @param (Closure(string, int, string): void)|null $onFatal told when PHP stopped a run (out of
+     *                                                            memory or time): property id, run id, reason
+     */
     public function __construct(
         private readonly RunRepository $runs,
         private readonly DbLock $locks,
         private readonly RunExecutor $executor,
         private readonly Clock $clock,
         private readonly Logger $logger,
+        private readonly ?Closure $onFatal = null,
     ) {
     }
 
@@ -108,10 +116,52 @@ final class LockedRunLauncher implements RunLauncher
             return LaunchResult::busy();
         }
 
+        $guard = new \stdClass();
+        $guard->done = false;
+        $guard->reserve = str_repeat(' ', self::RESERVE_BYTES);
+        register_shutdown_function(function () use ($guard, $property, $lock): void {
+            if ($guard->done) {
+                return;
+            }
+            $guard->reserve = null;
+            $error = error_get_last();
+            if (!is_array($error) || !in_array($error['type'], [E_ERROR, E_CORE_ERROR, E_COMPILE_ERROR, E_USER_ERROR], true)) {
+                return;
+            }
+            $this->closeAfterFatal($property, $lock, (string) $error['message']);
+        });
         try {
             return $work($lock);
         } finally {
+            $guard->done = true;
+            $guard->reserve = null;
             $this->locks->release($lock);
+        }
+    }
+
+    /**
+     * PHP stopped the request in the middle of a run (memory or time): the run is closed as
+     * failed with the reason in words, the lock is given back at once (no wait of LOCK_TTL_SECONDS)
+     * and the site is told. Never throws: it runs while PHP shuts down.
+     */
+    public function closeAfterFatal(Property $property, LockHandle $lock, string $message): void
+    {
+        try {
+            $memory = str_contains($message, 'Allowed memory size');
+            $reason = $memory
+                ? sprintf('PHP ran out of memory (memory_limit %s) during the run. Lower the nights a run decides (plan.horizon_nights) or ask the host for more memory.', (string) ini_get('memory_limit'))
+                : (str_contains($message, 'Maximum execution time') ? 'PHP stopped the run at its time limit (max_execution_time). The next scheduled run continues it.' : 'PHP stopped the run with a fatal error.');
+            $open = $this->openRun($property->id);
+            if ($open !== null) {
+                $this->runs->finish($open['id'], RunRepository::FAILED, $open['summary'], $this->clock->now(), $reason);
+            }
+            $this->locks->release($lock);
+            $this->logger->error('A run was stopped by PHP and closed as failed.', ['property_id' => $property->id, 'run_id' => $open['id'] ?? null, 'cause' => $memory ? 'memory' : 'fatal']);
+            if ($this->onFatal !== null) {
+                ($this->onFatal)($property->id, (int) ($open['id'] ?? 0), $memory ? 'memory' : 'fatal');
+            }
+        } catch (\Throwable) {
+            return;
         }
     }
 

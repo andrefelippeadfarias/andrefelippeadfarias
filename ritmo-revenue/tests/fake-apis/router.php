@@ -7,6 +7,8 @@
  * Environment:
  *   RITMO_FAKE_API_LOG    file that receives one JSON line per request (method, path, query,
  *                         status); the state of the simulator is kept next to it
+ *   RITMO_FAKE_ANTHROPIC_STATE  the state of the fake Claude API served under /anthropic
+ *                         (AnthropicApi.php: its own log, script and cache; never in the log above)
  *   RITMO_FAKE_API_START  optional YYYY-MM-DD: moves the scenario so that its first night is that day
  *
  * The world it serves is tests/fixtures/api/scenario.json. Routes and the control plane are
@@ -27,6 +29,7 @@ require_once __DIR__ . '/WriteWorld.php';
 require_once __DIR__ . '/PriceLabsWrites.php';
 require_once __DIR__ . '/Beds24Writes.php';
 require_once __DIR__ . '/Simulator.php';
+require_once __DIR__ . '/AnthropicApi.php';
 
 if (PHP_SAPI !== 'cli-server') {
     return;
@@ -40,6 +43,17 @@ foreach ($_SERVER as $name => $value) {
 }
 
 $uri = (string) ($_SERVER['REQUEST_URI'] ?? '/');
+$path = (string) (parse_url($uri, PHP_URL_PATH) ?: '/');
+if (str_starts_with($path, '/anthropic/')) {
+    if (isset($_SERVER['CONTENT_TYPE'])) {
+        $headers['content-type'] = (string) $_SERVER['CONTENT_TYPE'];
+    }
+    (new AnthropicApi(getenv('RITMO_FAKE_ANTHROPIC_STATE') ?: sys_get_temp_dir() . '/ritmo-fake-anthropic.json'))
+        ->handle(strtoupper((string) ($_SERVER['REQUEST_METHOD'] ?? 'GET')), $path, $headers, (string) file_get_contents('php://input'))
+        ->emit();
+
+    return;
+}
 $simulator = new Simulator(
     Scenario::load(dirname(__DIR__) . '/fixtures/api/scenario.json', getenv('RITMO_FAKE_API_START') ?: null),
     new Journal(getenv('RITMO_FAKE_API_LOG') ?: sys_get_temp_dir() . '/ritmo-fake-apis.log')

@@ -201,6 +201,41 @@ final class UpdateHooksTest extends TestCase
         self::assertSame([], $this->http->lines());
     }
 
+    public function testAChannelThatCannotBeBuiltStillRemovesForeignOffersAndInstallsNothing(): void
+    {
+        UpdateHooksStubs::$filters = [];
+        $hooks = UpdateHooks::register(static function (): UpdateChecker {
+            throw new \RuntimeException('the services could not be built');
+        }, static fn (string $reason): string => 'refused: ' . $reason, self::BASENAME, 'ritmo-revenue', '1.1.0');
+
+        $transient = $hooks->offer(self::transient());
+        self::assertArrayNotHasKey(self::BASENAME, $transient->response, 'a plugin of the same name elsewhere is never offered');
+        self::assertArrayHasKey('other/other.php', $transient->response);
+
+        $refused = $hooks->download(false, 'https://downloads.wordpress.org/plugin/ritmo-revenue.9.9.9.zip', null, ['plugin' => self::BASENAME]);
+        self::assertInstanceOf(WP_Error::class, $refused);
+        self::assertSame('refused: unreachable', $refused->get_error_message());
+        self::assertFalse($hooks->download(false, 'https://downloads.wordpress.org/plugin/other.2.1.zip', null, ['plugin' => 'other/other.php']));
+
+        $details = $hooks->details(false, 'plugin_information', (object) ['slug' => 'ritmo-revenue']);
+        self::assertIsObject($details, 'the details window never asks WordPress.org');
+        self::assertSame('1.1.0', $details->version);
+        self::assertFalse($hooks->details(false, 'plugin_information', (object) ['slug' => 'another-plugin']));
+    }
+
+    public function testWithoutAReleaseTheDetailsWindowShowsThisPluginsOwnFacts(): void
+    {
+        UpdateHooksStubs::$filters = [];
+        $hooks = $this->hooks(UpdateConstants::from('', '', '1.1.0', self::BASENAME, false));
+
+        $details = $hooks->details(false, 'plugin_information', (object) ['slug' => 'ritmo-revenue']);
+
+        self::assertIsObject($details);
+        self::assertSame('ritmo-revenue', $details->slug);
+        self::assertStringContainsString('refused: not_configured', $details->sections['description']);
+        self::assertStringContainsString('Update URI:        false', (string) file_get_contents(dirname(__DIR__, 3) . '/ritmo-revenue.php'));
+    }
+
     public function testTheConstantsNeverTurnOnAChannelWithABadKey(): void
     {
         $settings = UpdateConstants::from('https://updates.example.com/latest.json', 'not-a-key', '1.1.0', self::BASENAME, false);

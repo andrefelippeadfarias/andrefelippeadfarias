@@ -142,7 +142,11 @@ check(!$switch->isEngaged(), 'released again');
 check($services->vault()->protection() === SodiumVault::PROTECTION_SITE_SALTS, 'without RITMO_SECRET_KEY the key is bound to the salts');
 $pdo = new PDO('sqlite:' . $site . '/wp-content/database/e2e.sqlite');
 $stored = json_decode((string) $pdo->query("SELECT option_value FROM wp_options WHERE option_name = 'ritmo_vault'")->fetchColumn(), true);
-check(is_array($stored) && count($stored['entries'] ?? []) === 2, 'both keys are stored');
+// The two connection keys and the licence key of tests/e2e/seed.php (the assistant has none here).
+$names = array_keys(is_array($stored) ? ($stored['entries'] ?? []) : []);
+sort($names);
+check($names === ['beds24_token', 'licence_key', 'pricelabs_api_key'], 'the connection keys and the licence key are stored: ' . implode(', ', $names));
+check(!str_contains((string) $pdo->query("SELECT GROUP_CONCAT(option_value) FROM wp_options WHERE option_name LIKE 'ritmo_%'")->fetchColumn(), 'TEST-VALID-E2E'), 'the licence key is nowhere in clear');
 foreach ($stored['entries'] as $name => $entry) {
     check(array_keys($entry) === ['k', 'n', 'c', 'u'], "$name keeps nothing of the key in clear");
     $seedOnly = sodium_crypto_generichash("ritmo-revenue/vault/v1\0" . base64_decode((string) $stored['seed']), '', SODIUM_CRYPTO_SECRETBOX_KEYBYTES);

@@ -62,7 +62,7 @@ $ritmo_page = $view['page'];
             <article class="ritmo-ai-draft" data-ritmo="ai-draft" data-kind="<?php echo esc_attr($ritmo_draft['kind']); ?>">
                 <h3><?php echo esc_html($ritmo_draft['kind_text']); ?></h3>
                 <p><strong><?php echo esc_html($ritmo_draft['summary']); ?></strong></p>
-                <p class="description"><?php /* translators: %s: the request as the person wrote it */ echo esc_html(sprintf(__('You asked: %s', 'ritmo-revenue'), $ritmo_draft['request'])); ?></p>
+                <?php if ($ritmo_draft['request'] !== '') : ?><p class="description"><?php /* translators: %s: the request as the person wrote it */ echo esc_html(sprintf(__('You asked: %s', 'ritmo-revenue'), $ritmo_draft['request'])); ?></p><?php endif; ?>
                 <ul>
                     <?php foreach ($ritmo_draft['lines'] as $ritmo_line) : ?>
                         <li><?php echo esc_html($ritmo_line); ?></li>

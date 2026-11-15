@@ -5192,6 +5192,14 @@ Recálculo de conferência não feito (cota guardada para as vendas da tarde); a
 
 **Ainda pendente:** estadia de 15/11/2027 nos 7 quartos (auditoria de amanhã) e a proteção da Afrodite 12-14/01 no lugar da Regra J antiga (apagar antes do recálculo da manhã e regravar).
 
+## 15/11/2026, 13:53 a 14:02 BRT — Rotina leve das 13:53: cancelamento da Moinhos 27-29/11, nada a regravar
+
+**Beds24 desde 10:49 BRT:** 0 novas, 1 cancelada e 11 alteradas (saídas e estadias em curso marcadas pela equipe). A cancelada é a reserva da Moinhos de 27 a 29/11 (Booking, feita às 10:59 BRT e cancelada à tarde): a sexta 27 e o sábado 28/11 voltam a 2 de 7 vendidas, o mesmo estado de antes dela. **Segurança: 0 alertas.** **Abaixo do esperado: 0.** **Overbooking que segue:** King Spa 7 amanhã (16/11) e Panorâmica II 22/11 (–1 cada), já avisados.
+
+**Preço:** nada a desfazer. A venda tinha deixado a Moinhos com 3 de 7, abaixo da metade, e a escada do plano do dono não subiu (rotina das 10:53); com o cancelamento, a noite segue na abertura do plano. O recálculo da Moinhos foi guardado: seria a 3ª tentativa em 24 h e deixaria sem vaga a rotina completa de amanhã, com a revisão semanal. Um eventual passo de descida dessas noites entra no plano de amanhã cedo. Nenhuma chamada ao PriceLabs nem à Booking nesta rotina.
+
+**Inventário do Beds24 (hoje a +60):** igual ao das 10:53, fora as duas estadias de 1 noite gravadas naquela rotina (King Spa 7 04/12 e King Spa 2 27/11, conferidas no Beds24). Nenhuma noite fechada sem reserva nova.
+
 ## O que só pode ser feito na tela (passo a passo para você)
 
 1. **Safety Minimum Price → "Do Not Apply"** (Dynamic Pricing → Customizations → aba Groups → Edit no grupo Recanto dos Moinhos → All Customizations → Safety Minimum Price). Anote o valor atual antes.

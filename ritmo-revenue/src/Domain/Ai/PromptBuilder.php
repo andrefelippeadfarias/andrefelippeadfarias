@@ -48,7 +48,9 @@ final class PromptBuilder
             throw new InvalidArgumentException('A report prompt is for the weekly report or a run report.');
         }
 
-        return new AiRequest($purpose, PromptLibrary::system($purpose), $this->user($locale, ['about' => $about, 'facts' => $facts]));
+        $data = ['about' => $about, 'facts' => $facts];
+
+        return new AiRequest($purpose, PromptLibrary::system($purpose), $this->user($locale, $data), null, AiRequest::MAX_TOKENS, PrivacyGuard::labels($data));
     }
 
     /**
@@ -60,7 +62,9 @@ final class PromptBuilder
      */
     public function alert(array $alert, string $locale): AiRequest
     {
-        return new AiRequest(AiPurpose::AlertExplanation, PromptLibrary::system(AiPurpose::AlertExplanation), $this->user($locale, ['alert' => $alert]), OutputSchemas::alert());
+        $data = ['alert' => $alert];
+
+        return new AiRequest(AiPurpose::AlertExplanation, PromptLibrary::system(AiPurpose::AlertExplanation), $this->user($locale, $data), OutputSchemas::alert(), AiRequest::MAX_TOKENS, PrivacyGuard::labels($data));
     }
 
     /**
@@ -84,7 +88,9 @@ final class PromptBuilder
             AiPurpose::RequestDraft,
             PromptLibrary::system(AiPurpose::RequestDraft, $catalogue),
             $this->user($locale, $data) . "\n" . DataBlock::wrap('request', ['text' => $text]),
-            OutputSchemas::draft()
+            OutputSchemas::draft(),
+            AiRequest::MAX_TOKENS,
+            PrivacyGuard::labels($data)
         );
     }
 

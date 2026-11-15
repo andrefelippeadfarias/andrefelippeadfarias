@@ -125,6 +125,13 @@ final class LicenceRecord
      * The record as far as its last answer "valid" is proven by the signature of the licence
      * server: the last valid answer is never later than the signed time of the check, and while
      * the status is "valid" the end date is the signed one.
+     *
+     * After an answer "expired" or "invalid" the dates the grace period counts from (the end date,
+     * the first answer with a problem) are not signed: they are kept no later than the latest
+     * signed date (the signed end date, or the signed time of the check when it is later), so a
+     * record edited in the database never stretches the grace period. A genuine record loses at
+     * most the time between its last signed check and its first answer with a problem, when the
+     * licence has no signed end date after that check.
      */
     public function withSignedValid(DateTimeImmutable $checkedAt, ?DateTimeImmutable $expiresAt): self
     {
@@ -132,10 +139,19 @@ final class LicenceRecord
             return $this;
         }
         $checkedAt = self::utc($checkedAt);
+        $signedEnd = $expiresAt === null ? null : self::utc($expiresAt);
         $lastValidAt = $checkedAt < $this->lastValidAt ? $checkedAt : $this->lastValidAt;
-        $end = $this->status === self::VALID ? ($expiresAt === null ? null : self::utc($expiresAt)) : $this->expiresAt;
+        if ($this->status === self::VALID) {
+            return new self($this->keyFingerprint, $this->providerId, $this->status, $signedEnd, $this->lastAnswerAt, $this->lastAttemptAt, $this->lastAttemptStatus, $lastValidAt, $this->problemSince, $this->message, $this->proof);
+        }
+        $bound = $signedEnd !== null && $signedEnd > $checkedAt ? $signedEnd : $checkedAt;
 
-        return new self($this->keyFingerprint, $this->providerId, $this->status, $end, $this->lastAnswerAt, $this->lastAttemptAt, $this->lastAttemptStatus, $lastValidAt, $this->problemSince, $this->message, $this->proof);
+        return new self($this->keyFingerprint, $this->providerId, $this->status, self::noLaterThan($this->expiresAt, $bound), $this->lastAnswerAt, $this->lastAttemptAt, $this->lastAttemptStatus, $lastValidAt, self::noLaterThan($this->problemSince, $bound), $this->message, $this->proof);
+    }
+
+    private static function noLaterThan(?DateTimeImmutable $date, DateTimeImmutable $bound): ?DateTimeImmutable
+    {
+        return $date !== null && $date > $bound ? $bound : $date;
     }
 
     /**

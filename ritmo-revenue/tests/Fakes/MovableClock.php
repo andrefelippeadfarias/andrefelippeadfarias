@@ -37,6 +37,12 @@ final class MovableClock implements Clock
      */
     public function advance(float $seconds): void
     {
-        $this->now = $this->now->modify(sprintf('%+d microseconds', (int) round($seconds * 1_000_000)));
+        // Whole seconds and the rest apart: PHP's date parser gets a move of a year or more in
+        // microseconds wrong (400 days moved the clock 16 hours).
+        $micro = (int) round($seconds * 1_000_000);
+        $whole = intdiv($micro, 1_000_000);
+        $rest = $micro - $whole * 1_000_000;
+        $now = $this->now->modify(sprintf('%+d seconds', $whole));
+        $this->now = $rest === 0 ? $now : $now->modify(sprintf('%+d microseconds', $rest));
     }
 }

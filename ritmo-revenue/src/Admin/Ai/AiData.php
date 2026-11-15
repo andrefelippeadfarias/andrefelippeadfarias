@@ -146,6 +146,7 @@ final class AiData
             'suggested' => AlertText::action($alert['code']),
             'summary' => mb_substr($alert['message'], 0, 300),
             'room' => $alert['room_code'] === '' ? '' : $alert['room_code'] . ' (' . ($rooms[$alert['room_code']] ?? '') . ')',
+            'room_label' => $rooms[$alert['room_code']] ?? '',
             'night' => $alert['night'] === null ? '' : Days::key($alert['night']),
             'facts' => $facts,
         ], 'property' => $alert['property_id']];

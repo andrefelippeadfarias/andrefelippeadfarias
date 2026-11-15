@@ -159,4 +159,37 @@ final class PrivacyAndNumbersTest extends TestCase
         self::assertFalse(NumberCheck::mentions('subir 10%', 15.0));
         self::assertFalse(NumberCheck::mentions('R$ 900', 990.0));
     }
+
+    public function testTheNamesOfRoomsAndPeriodsAreNeverTakenForAPerson(): void
+    {
+        $data = ['today' => '2026-11-15', 'currency' => 'BRL', 'rooms' => [['code' => 'SFL', 'label' => 'Suíte Família Luxo', 'base' => 480.0], ['code' => 'STD', 'label' => 'Standard', 'base' => 300.0]], 'periods' => []];
+        $builder = new \Ritmo\Domain\Ai\PromptBuilder();
+        foreach (['Subir 5% no Standard nas sextas de janeiro', 'Subir 5% na Suíte Família Luxo nas sextas de janeiro', 'Atrair clientes: Subir 5% nas sextas de janeiro'] as $text) {
+            $request = $builder->request($text, $data, 'pt_BR');
+            self::assertContains('Suíte Família Luxo', $request->known, $text);
+        }
+        self::assertNull(PrivacyGuard::problemIn($data), 'a room label in the data sent is not a guest');
+        self::assertSame(PrivacyGuard::NAME, PrivacyGuard::problem('Subir 5% na Suíte Família Luxo'), 'without the labels the same words read like a family name');
+
+        // An answer naming the room is kept; a guest's name next to it is still refused.
+        $report = $builder->report(\Ritmo\Domain\Ai\AiPurpose::WeeklyReport, ['period' => 'week'], [['label' => 'Suíte Família Luxo: room nights sold', 'value' => '12']], 'pt_BR');
+        self::assertContains('Suíte Família Luxo', $report->known);
+        $reply = static fn (string $text): \Ritmo\Domain\Ai\AiReply => new \Ritmo\Domain\Ai\AiReply($text, 'end_turn', new \Ritmo\Domain\Ai\TokenUsage(10, 10), 'model');
+        self::assertSame('A Suíte Família Luxo vendeu 12 noites.', \Ritmo\Domain\Ai\AnswerReader::text($reply('A Suíte Família Luxo vendeu 12 noites.'), $report));
+        try {
+            \Ritmo\Domain\Ai\AnswerReader::text($reply('A Suíte Família Luxo vendeu 12 noites; hóspede Pereira pediu desconto.'), $report);
+            self::fail('a guest\'s name next to a room name');
+        } catch (AiStopped $stopped) {
+            self::assertSame(AiStopped::PRIVACY, $stopped->reason);
+        }
+
+        // An alert names its room under room_label.
+        $alert = $builder->alert(['code' => 'x', 'room' => 'SFL (Suíte Família Luxo)', 'room_label' => 'Suíte Família Luxo', 'summary' => 'A Suíte Família Luxo vendeu abaixo do piso.'], 'pt_BR');
+        self::assertContains('Suíte Família Luxo', $alert->known);
+
+        // A name only counts as a room's when it is a whole word: a phone number stays a phone number.
+        self::assertSame(PrivacyGuard::PHONE, PrivacyGuard::problem('ligar 11 98765-4321 sobre a suíte 1', ['1', '11']));
+        self::assertSame(PrivacyGuard::NAME, PrivacyGuard::requestProblem('Hóspedes: Maria Souza no Standard', ['Standard']));
+        self::assertSame(PrivacyGuard::NAME, PrivacyGuard::requestProblem('Cliente: Pereira reclamou do Standard', ['Standard']));
+    }
 }

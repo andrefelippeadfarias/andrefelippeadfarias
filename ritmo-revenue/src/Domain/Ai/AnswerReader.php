@@ -40,7 +40,7 @@ final class AnswerReader
     {
         self::complete($reply);
         $text = trim($reply->text);
-        PrivacyGuard::assertSendable($text);
+        PrivacyGuard::assertSendableKnowing($request->known, $text);
         self::assertKnownNumbers($text, $request);
 
         return $text;
@@ -80,7 +80,7 @@ final class AnswerReader
         if ($explanation === '') {
             throw new AiStopped(AiStopped::INVALID_OUTPUT, 'The assistant gave no usable answer; nothing was kept.');
         }
-        PrivacyGuard::assertSendable($explanation, $action);
+        PrivacyGuard::assertSendableKnowing($request->known, $explanation, $action);
         self::assertKnownNumbers($explanation . "\n" . $action, $request);
 
         return ['explanation' => $explanation, 'action' => $action];

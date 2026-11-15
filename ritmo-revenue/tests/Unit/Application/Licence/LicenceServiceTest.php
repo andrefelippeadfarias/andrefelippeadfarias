@@ -355,4 +355,51 @@ final class LicenceServiceTest extends TestCase
         $this->vault->put(LicenceService::VAULT_NAME, 'RR-2026-OTHER-KEY-01');
         self::assertSame(LicenceReason::NOT_CHECKED, $this->service()->verdict()->reason, 'a record of another key');
     }
+
+    public function testDatesEditedAfterAnAnswerWithAProblemNeverStretchTheGracePeriod(): void
+    {
+        // One genuine signed "valid" answer, ending 1 December, then the record edited in the
+        // database to "expired" or "invalid" with dates far in the future.
+        $this->http->queue(self::valid('2026-12-01T00:00:00Z'));
+        $service = $this->service();
+        $service->save(self::KEY);
+        self::assertSame(LicenceStanding::Active, $service->verdict()->standing);
+        $stored = $this->store->get(LicenceService::STATE_KEY);
+        self::assertIsArray($stored);
+        $edits = [
+            'expired with an end date in 2099' => ['status' => 'expired', 'expires_at' => '2099-01-01T00:00:00Z', 'last_attempt_status' => 'expired'],
+            'invalid since 2099' => ['status' => 'invalid', 'problem_since' => '2099-01-01T00:00:00Z', 'last_attempt_status' => 'invalid'],
+            'expired without an end date, a problem since 2099' => ['status' => 'expired', 'expires_at' => null, 'problem_since' => '2099-01-01T00:00:00Z', 'last_attempt_status' => 'expired'],
+        ];
+        foreach ($edits as $label => $edit) {
+            $this->store->set(LicenceService::STATE_KEY, $edit + $stored);
+            $this->clock->advance(400 * 86400);
+            $verdict = $this->service()->verdict();
+            self::assertSame(LicenceStanding::Lapsed, $verdict->standing, $label);
+            self::assertFalse($verdict->allowsWriting(), $label);
+            self::assertFalse($verdict->allowsAi(), $label);
+            $this->clock->advance(-400 * 86400);
+            // The grace period ends at most 30 days after the signed end date, 1 December.
+            $this->clock->advance((16 + 30) * 86400);
+            self::assertSame(LicenceStanding::Lapsed, $this->service()->verdict()->standing, $label . ', 31 December');
+            $this->clock->advance(-(16 + 30) * 86400);
+        }
+    }
+
+    public function testAGenuineAnswerWithAProblemStillGetsItsGracePeriod(): void
+    {
+        $this->http->queue(self::valid('2027-11-15T00:00:00Z'));
+        $service = $this->service();
+        $service->save(self::KEY);
+        // Ten days later the server says the licence was revoked: 30 days of grace from that answer.
+        $this->clock->advance(10 * 86400);
+        $this->http->queue(SignedLicenceAnswers::answer('invalid', null, 'Licence revoked.', static fn (): string => ''));
+        $service->check();
+        $this->clock->advance(29 * 86400);
+        $verdict = $this->service()->verdict();
+        self::assertSame(LicenceStanding::Grace, $verdict->standing);
+        self::assertSame(LicenceReason::INVALID, $verdict->reason);
+        $this->clock->advance(2 * 86400);
+        self::assertSame(LicenceStanding::Lapsed, $this->service()->verdict()->standing);
+    }
 }

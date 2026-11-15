@@ -11,9 +11,12 @@ namespace Ritmo\Domain\Ai;
  *   document, an address, a note or a free-text message) before a prompt is built;
  * - problem() and assertSendable(): refuse a text that looks like an e-mail address, a phone
  *   number, a Brazilian identity document (CPF, CNPJ) or a person's name (a capitalised name after
- *   "hóspede", "cliente", "Sr.", "guest"..., with or without a colon, or two capitalised words
- *   before "pediu", "asked"...). Nothing is sent then: the person is told why. Dates, amounts,
- *   percentages and booking ids (up to nine digits) are not phone numbers.
+ *   "hóspede", "cliente", "Sr.", "guest"..., also after a colon or a dash; after a plural and a
+ *   colon, a first name and a surname or a common first name; or two capitalised words before
+ *   "pediu", "asked"...). Nothing is sent
+ *   then: the person is told why. Dates, amounts, percentages and booking ids (up to nine digits)
+ *   are not phone numbers. The names of the property's rooms and periods (the labels of the data
+ *   sent, "Suíte Família Luxo") are never taken for a person.
  * - requestProblem() and assertRequestSendable(): the same for what the person types to the
  *   assistant, plus a common first name followed by a surname ("Maria Souza") or after an article
  *   or a preposition ("pedido da Maria"). The names of the property's rooms and periods, and
@@ -28,8 +31,24 @@ final class PrivacyGuard
     public const DOCUMENT = 'document';
     public const NAME = 'name';
 
-    /** A capitalised name after a word that introduces a person ("hóspede Maria", "Hóspede: Maria"). */
-    private const NAME_AFTER_TITLE = '/(?<![\p{L}\d])(?i:h[óo]spedes?|clientes?|fam[íi]lia|sra?\.?|srta\.?|senhora?|dona|guests?|customers?|mrs?\.?|ms\.?|miss)(?:\s*[:\-–—]\s*|\s+)\p{Lu}\p{Ll}+/u';
+    /** A word that introduces one person ("hóspede", "cliente", "Sr.", "guest"...). */
+    private const TITLE_ONE = '(?<![\p{L}\d])(?i:h[óo]spede|cliente|fam[íi]lia|sra?\.?|srta\.?|senhora?|dona|guest|customer|mrs?\.?|ms\.?|miss)';
+
+    /** The same words, plurals too ("hóspedes", "clientes", "guests"...). */
+    private const TITLE_ANY = '(?<![\p{L}\d])(?i:h[óo]spedes?|clientes?|fam[íi]lia|sra?\.?|srta\.?|senhora?|dona|guests?|customers?|mrs?\.?|ms\.?|miss)';
+
+    /** A colon or a dash between the word and the name. */
+    private const MARK = '\s*[:\-–—]\s*';
+
+    /** A capitalised name right after such a word ("hóspede Maria"). */
+    private const NAME_AFTER_TITLE = '/' . self::TITLE_ANY . '\s+\p{Lu}\p{Ll}+/u';
+
+    /**
+     * After a colon or a dash: any capitalised word after a word for one person ("Hóspede: Maria",
+     * "O cliente — Pereira"); after a plural, only a first name and a surname or a common first
+     * name ("Hóspedes: Maria Souza"), so "Atrair clientes: Subir 5%" is not a name.
+     */
+    private const NAME_AFTER_TITLE_MARK = '/' . self::TITLE_ONE . self::MARK . '\p{Lu}\p{Ll}+|' . self::TITLE_ANY . self::MARK . '(?:\p{Lu}\p{Ll}+\s+(?:(?:d[aoe]s?|von|van)\s+)?\p{Lu}\p{Ll}+|(?:' . self::FIRST_NAMES . ')(?![\p{L}\d]))/u';
 
     /** Saints, places and holidays that read like a title and a name ("Nossa Senhora Aparecida", "São João"). */
     private const NOT_A_PERSON = '/(?<![\p{L}\d])(?:(?i:nossa)\s+(?i:senhora)(?:\s+(?:d[aoe]s?\s+)?\p{Lu}\p{Ll}+)?|(?:São|Sao|Santa|Santo|Saint|St\.)\s+\p{Lu}\p{Ll}+)/u';
@@ -113,8 +132,10 @@ final class PrivacyGuard
 
     /**
      * What the text looks like it carries (one of the constants), or null when it may be sent.
+     *
+     * @param list<string> $known names of the property's rooms and periods, never taken for a person
      */
-    public static function problem(string $text): ?string
+    public static function problem(string $text, array $known = []): ?string
     {
         if (preg_match(self::EMAIL_PATTERN, $text) === 1) {
             return self::EMAIL;
@@ -124,8 +145,9 @@ final class PrivacyGuard
                 return self::DOCUMENT;
             }
         }
-        $people = (string) preg_replace(self::NOT_A_PERSON, ' ', $text);
-        if (preg_match(self::NAME_AFTER_TITLE, $people) === 1 || preg_match(self::NAME_BEFORE_VERB, $people) === 1) {
+        $people = (string) preg_replace(self::NOT_A_PERSON, ' ', self::withoutKnown($text, $known));
+        if (preg_match(self::NAME_AFTER_TITLE, $people) === 1 || preg_match(self::NAME_AFTER_TITLE_MARK, $people) === 1
+            || preg_match(self::NAME_BEFORE_VERB, $people) === 1) {
             return self::NAME;
         }
         $rest = (string) preg_replace(self::NOT_PHONE_PATTERNS, ' ', $text);
@@ -149,13 +171,11 @@ final class PrivacyGuard
      */
     public static function requestProblem(string $text, array $known = []): ?string
     {
-        $problem = self::problem($text);
+        $problem = self::problem($text, $known);
         if ($problem !== null) {
             return $problem;
         }
-        $known = array_filter($known, static fn (string $name): bool => trim($name) !== '');
-        usort($known, static fn (string $a, string $b): int => mb_strlen($b) <=> mb_strlen($a));
-        $people = (string) preg_replace(self::NOT_A_PERSON, ' ', str_ireplace($known, ' ', $text));
+        $people = (string) preg_replace(self::NOT_A_PERSON, ' ', self::withoutKnown($text, $known));
         if (preg_match(self::FIRST_AND_SURNAME, $people) === 1 || preg_match(self::FIRST_AFTER_ARTICLE, $people) === 1) {
             return self::NAME;
         }
@@ -164,8 +184,25 @@ final class PrivacyGuard
     }
 
     /**
-     * The labels in a data tree (values under a "label" key, at any depth): the names of rooms and
-     * periods that requestProblem() never takes for a person.
+     * The text without the known names (whole words only, any case), longest first.
+     *
+     * @param list<string> $known
+     */
+    private static function withoutKnown(string $text, array $known): string
+    {
+        $known = array_values(array_filter(array_map('trim', $known), static fn (string $name): bool => $name !== ''));
+        usort($known, static fn (string $a, string $b): int => mb_strlen($b) <=> mb_strlen($a));
+        foreach ($known as $name) {
+            $text = (string) (preg_replace('/(?<![\p{L}\d])' . preg_quote($name, '/') . '(?![\p{L}\d])/iu', ' ', $text) ?? $text);
+        }
+
+        return $text;
+    }
+
+    /**
+     * The labels in a data tree (values under a "label" or "room_label" key, at any depth, and the
+     * name before the colon of a label such as "Garden Suite: room nights sold"): the names of
+     * rooms and periods that problem() and requestProblem() never take for a person.
      *
      * @param array<int|string, mixed> $data
      *
@@ -175,8 +212,12 @@ final class PrivacyGuard
     {
         $labels = [];
         foreach ($data as $key => $value) {
-            if ($key === 'label' && is_string($value)) {
+            if (($key === 'label' || $key === 'room_label') && is_string($value)) {
                 $labels[] = $value;
+                $colon = mb_strpos($value, ':');
+                if ($colon !== false && trim(mb_substr($value, 0, $colon)) !== '') {
+                    $labels[] = trim(mb_substr($value, 0, $colon));
+                }
             } elseif (is_array($value)) {
                 array_push($labels, ...self::labels($value));
             }
@@ -199,16 +240,19 @@ final class PrivacyGuard
     }
 
     /**
-     * The first problem of any string in a data tree (keys included), or null.
+     * The first problem of any string in a data tree (keys included), or null. The labels of the
+     * tree (labels()) are the names of rooms and periods, never taken for a person.
      *
      * @param array<int|string, mixed> $data
+     * @param list<string>|null        $known the labels of the whole tree (null: this tree's)
      */
-    public static function problemIn(array $data): ?string
+    public static function problemIn(array $data, ?array $known = null): ?string
     {
+        $known ??= self::labels($data);
         foreach ($data as $key => $value) {
-            $problem = (is_string($key) ? self::problem($key) : null)
-                ?? (is_string($value) ? self::problem($value) : null)
-                ?? (is_array($value) ? self::problemIn($value) : null);
+            $problem = (is_string($key) ? self::problem($key, $known) : null)
+                ?? (is_string($value) ? self::problem($value, $known) : null)
+                ?? (is_array($value) ? self::problemIn($value, $known) : null);
             if ($problem !== null) {
                 return $problem;
             }
@@ -222,8 +266,20 @@ final class PrivacyGuard
      */
     public static function assertSendable(string ...$texts): void
     {
+        self::assertSendableKnowing([], ...$texts);
+    }
+
+    /**
+     * assertSendable() for texts that may name the property's rooms and periods.
+     *
+     * @param list<string> $known see problem()
+     *
+     * @throws AiStopped (privacy) when a text looks like guest data
+     */
+    public static function assertSendableKnowing(array $known, string ...$texts): void
+    {
         foreach ($texts as $text) {
-            $problem = self::problem($text);
+            $problem = self::problem($text, $known);
             if ($problem !== null) {
                 throw new AiStopped(AiStopped::PRIVACY, 'Nothing was sent: the text looks like it carries guest data (an e-mail, a phone number, a document number or a guest\'s name). Refer to a booking by its id.', ['kind' => $problem]);
             }

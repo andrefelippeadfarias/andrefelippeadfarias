@@ -18,9 +18,6 @@ final class AiRequest
     /**
      * @param list<string>              $system       stable text blocks; nothing variable (no date, no id)
      * @param array<string, mixed>|null $outputSchema JSON schema of a structured answer; null for text
-     * @param list<string>              $known        names of the property and its rooms in
-     *                                                the data sent (PrivacyGuard::names()): the
-     *                                                answer may use them, never taken for a person
      */
     public function __construct(
         public readonly AiPurpose $purpose,
@@ -28,7 +25,6 @@ final class AiRequest
         public readonly string $user,
         public readonly ?array $outputSchema = null,
         public readonly int $maxTokens = self::MAX_TOKENS,
-        public readonly array $known = [],
     ) {
         if ($system === [] || array_filter($system, static fn (mixed $b): bool => !is_string($b) || trim($b) === '') !== []) {
             throw new InvalidArgumentException('A request has at least one system block, none of them empty.');

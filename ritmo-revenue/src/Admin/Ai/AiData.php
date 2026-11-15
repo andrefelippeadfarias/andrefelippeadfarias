@@ -68,7 +68,7 @@ final class AiData
     }
 
     /**
-     * @return array{about: array<string, string>, facts: list<array{label: string, value: string}>, rooms: list<string>}
+     * @return array{about: array<string, string>, facts: list<array{label: string, value: string}>, rooms: array<string, string>}
      */
     public static function weekly(Property $property): array
     {
@@ -86,7 +86,7 @@ final class AiData
     }
 
     /**
-     * @return array{about: array<string, string|int>, facts: list<array{label: string, value: string}>, property: string, rooms: list<string>}|null
+     * @return array{about: array<string, string|int>, facts: list<array{label: string, value: string}>, property: string, rooms: array<string, string>}|null
      */
     public static function run(int $runId): ?array
     {
@@ -147,6 +147,7 @@ final class AiData
             'suggested' => AlertText::action($alert['code']),
             'summary' => mb_substr($alert['message'], 0, 300),
             'room' => $alert['room_code'] === '' ? '' : $alert['room_code'] . ' (' . ($rooms[$alert['room_code']] ?? '') . ')',
+            'room_code' => $alert['room_code'],
             'room_label' => $rooms[$alert['room_code']] ?? '',
             'night' => $alert['night'] === null ? '' : Days::key($alert['night']),
             'facts' => $facts,
@@ -154,15 +155,16 @@ final class AiData
     }
 
     /**
-     * The names of the property's rooms, which a report may use and which are never taken for a guest.
+     * The property's rooms, code => name: a report names them, and a name that reads like a person
+     * goes as its code.
      *
-     * @return list<string>
+     * @return array<string, string>
      */
     private static function roomNames(string $propertyId): array
     {
         $names = [];
         foreach (Services::instance()->roomTypes()->forProperty($propertyId) as $room) {
-            $names[] = $room->name;
+            $names[$room->code] = $room->name;
         }
 
         return $names;

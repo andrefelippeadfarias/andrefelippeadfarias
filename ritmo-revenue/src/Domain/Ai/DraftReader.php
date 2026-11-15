@@ -85,7 +85,7 @@ final class DraftReader
         }
         $summary = trim(mb_substr((string) $answer['summary'], 0, self::SUMMARY_MAX));
         $questions = array_slice(array_values(array_filter(array_map(static fn (string $q): string => trim(mb_substr($q, 0, self::SUMMARY_MAX)), $answer['questions']), static fn (string $q): bool => $q !== '')), 0, self::MAX_QUESTIONS);
-        PrivacyGuard::assertSendableKnowing(array_values($context->roomLabels), $summary, ...$questions);
+        PrivacyGuard::assertSendable($summary, ...$questions);
 
         if ($answer['kind'] === 'not_supported') {
             throw new AiStopped(AiStopped::NOT_SUPPORTED, 'The assistant cannot turn this request into a draft.', ['summary' => $summary, 'questions' => $questions]);
@@ -185,7 +185,7 @@ final class DraftReader
             }
         }
         $note = trim(mb_substr((string) $order['note'], 0, self::NOTE_MAX));
-        PrivacyGuard::assertSendableKnowing(array_values($context->roomLabels), $note);
+        PrivacyGuard::assertSendable($note);
 
         if ($problems !== []) {
             throw self::refused($problems);

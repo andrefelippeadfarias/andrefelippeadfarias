@@ -39,7 +39,7 @@ final class PromptBuilder
      *
      * @param list<array{label: string, value: string|int|float}> $facts
      * @param array<string, string|int|float>                     $about what the report covers (period, property, run kind)
-     * @param list<string>                                        $rooms the names of the property's rooms, which the facts and the answer may use
+     * @param array<string, string>                               $rooms room code => name: a name that reads like a person goes as its code (PrivacyGuard::masked())
      *
      * @throws AiStopped (privacy)
      */
@@ -50,12 +50,17 @@ final class PromptBuilder
         }
 
         $data = ['about' => $about, 'facts' => $facts];
-        $rooms = array_values(array_filter($rooms, static fn (mixed $r): bool => is_string($r) && trim($r) !== ''));
-        if ($rooms !== []) {
-            $data['rooms'] = array_map(static fn (string $r): array => ['label' => mb_substr($r, 0, 120)], $rooms);
+        $list = [];
+        foreach ($rooms as $code => $name) {
+            if (is_string($name) && trim($name) !== '' && (string) $code !== '') {
+                $list[] = ['code' => (string) $code, 'label' => mb_substr($name, 0, 120)];
+            }
+        }
+        if ($list !== []) {
+            $data['rooms'] = $list;
         }
 
-        return new AiRequest($purpose, PromptLibrary::system($purpose), $this->user($locale, $data), null, AiRequest::MAX_TOKENS, PrivacyGuard::names($data));
+        return new AiRequest($purpose, PromptLibrary::system($purpose), $this->user($locale, PrivacyGuard::masked($data)));
     }
 
     /**
@@ -67,9 +72,7 @@ final class PromptBuilder
      */
     public function alert(array $alert, string $locale): AiRequest
     {
-        $data = ['alert' => $alert];
-
-        return new AiRequest(AiPurpose::AlertExplanation, PromptLibrary::system(AiPurpose::AlertExplanation), $this->user($locale, $data), OutputSchemas::alert(), AiRequest::MAX_TOKENS, PrivacyGuard::names($data));
+        return new AiRequest(AiPurpose::AlertExplanation, PromptLibrary::system(AiPurpose::AlertExplanation), $this->user($locale, PrivacyGuard::masked(['alert' => $alert])), OutputSchemas::alert());
     }
 
     /**
@@ -86,21 +89,20 @@ final class PromptBuilder
         if ($text === '' || mb_strlen($text) > self::REQUEST_MAX) {
             throw new InvalidArgumentException(sprintf('A request has from 1 to %d characters.', self::REQUEST_MAX));
         }
-        // A period whose name looks like guest data is left out (never sent, never a known name)
-        // rather than refusing every request.
+        // A period whose name looks like guest data is left out rather than refusing every request;
+        // a room or property name that reads like a person goes as its code.
         if (is_array($data['periods'] ?? null)) {
             $data['periods'] = array_values(array_filter($data['periods'], static fn (mixed $p): bool => !is_array($p) || !is_string($p['label'] ?? null) || PrivacyGuard::clearLabel($p['label'])));
         }
-        PrivacyGuard::assertRequestSendable($text, PrivacyGuard::names($data));
+        $data = PrivacyGuard::masked($data);
+        PrivacyGuard::assertRequestSendable($text);
         $catalogue = ($this->catalogue ?? RuleCatalogue::forRules())->text();
 
         return new AiRequest(
             AiPurpose::RequestDraft,
             PromptLibrary::system(AiPurpose::RequestDraft, $catalogue),
             $this->user($locale, $data) . "\n" . DataBlock::wrap('request', ['text' => $text]),
-            OutputSchemas::draft(),
-            AiRequest::MAX_TOKENS,
-            PrivacyGuard::names($data)
+            OutputSchemas::draft()
         );
     }
 

@@ -87,6 +87,7 @@ final class AiAssistant
     /**
      * @param array<string, string|int|float>                     $about
      * @param list<array{label: string, value: string|int|float}> $facts formatted by the reader's locale
+     * @param array<string, string>                               $rooms room code => name
      *
      * @throws AiStopped
      */

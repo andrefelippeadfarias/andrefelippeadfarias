@@ -250,7 +250,8 @@ final class PrivacyGuard
         $patterns = [];
         foreach ($replace as $name => $code) {
             $words = array_map(static fn (string $w): string => preg_quote($w, '/'), explode(' ', $name));
-            $patterns['/(?<![\p{L}\d])' . implode('[\s\x{00A0}]+', $words) . '(?![\p{L}\d])/iu'] = $code;
+            // The code goes in as plain text ("$1" or "\\1" in a code is never a reference).
+            $patterns['/(?<![\p{L}\d])' . implode('[\s\x{00A0}]+', $words) . '(?![\p{L}\d])/iu'] = str_replace(['\\', '$'], ['\\\\', '\\$'], $code);
         }
 
         return self::replaceIn($data, $patterns);

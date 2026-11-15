@@ -217,12 +217,32 @@ final class PrivacyAndNumbersTest extends TestCase
         $context = new \Ritmo\Domain\Ai\DraftContext(new \DateTimeImmutable('2026-11-15'), ['FAM' => 300.0], 'pedido', [], [], ['FAM' => 'Família']);
         self::assertSame(AiStopped::PRIVACY, $refused(static fn () => PrivacyGuard::assertSendableKnowing(array_values($context->roomLabels), 'A família Souza pediu 10% de desconto.')));
 
-        // A period is checked like any other text: a guest's name in it is never sent.
-        foreach (['Casamento da família Souza', 'Grupo do hóspede Pereira', 'Família: férias de julho com a família Souza'] as $period) {
+        // A period whose name looks like guest data (in any case) is left out: never sent, never a
+        // known name, and the other requests still go.
+        foreach (['Casamento da família Souza', 'Grupo do hóspede Pereira', 'Família: férias de julho com a família Souza', 'CASAMENTO DA FAMÍLIA SOUZA', 'casamento da família souza', 'Encontro de Clientes Premium'] as $period) {
             $data = $rooms('Standard');
             $data['periods'] = [['path' => 'calendar.holidays.0', 'label' => $period, 'first' => '2027-01-08', 'last' => '2027-01-10', 'floor' => null]];
-            self::assertSame(AiStopped::PRIVACY, $refused(static fn () => $builder->request('Subir 5% no Standard nas sextas de janeiro', $data, 'pt_BR')), $period);
+            $request = $builder->request('Subir 5% no Standard nas sextas de janeiro', $data, 'pt_BR');
+            self::assertStringNotContainsStringIgnoringCase(mb_substr($period, 0, 12), $request->user, $period);
+            self::assertNotContains($period, $request->known, $period);
+            self::assertSame(AiStopped::PRIVACY, $refused(static fn () => $builder->request('Fechar o Standard no Casamento da Família Souza', $data, 'pt_BR')), $period);
         }
+
+        // A known name never spares the surname written right after it.
+        foreach ([
+            ['Chalé Dona Rosa', 'Dar 10% de desconto para a Dona Rosa Pereira em dezembro'],
+            ['Quarto Dona Flor', 'Dar 10% de desconto para Dona Flor Souza nas sextas de dezembro'],
+            ['Chalé do Sr. Lua', 'Desconto de 10% para o Sr. Lua Pereira em dezembro'],
+        ] as [$label, $text]) {
+            self::assertSame(AiStopped::PRIVACY, $refused(static fn () => $builder->request($text, $rooms($label), 'pt_BR')), $text);
+        }
+        self::assertNull($refused(static fn () => $builder->request('Subir 5% na Dona Rosa nas sextas de janeiro', $rooms('Chalé Dona Rosa'), 'pt_BR')));
+        self::assertNull($refused(static fn () => $builder->request('Subir 10% no Quarto Família Natal inteiro', $rooms('Quarto Família'), 'pt_BR')));
+        $maria = $builder->alert(['code' => 'x', 'room' => 'QDM (Quarto Dona Maria)', 'room_label' => 'Quarto Dona Maria', 'summary' => 'Reserva 4411 abaixo do esperado.'], 'pt_BR');
+        self::assertSame(AiStopped::PRIVACY, $refused(static fn () => \Ritmo\Domain\Ai\AnswerReader::alert($reply((string) json_encode(['explanation' => 'A Dona Maria Souza pagou abaixo do esperado na reserva 4411.', 'action' => 'Conferir.'])), $maria)));
+        self::assertSame(PrivacyGuard::NAME, PrivacyGuard::problem("a ho\u{0301}spede Pereira chega amanhã"), 'a combining accent is the same word');
+        $data = $rooms('Standard') + ['property' => 'Pousada Dona Flor'];
+        self::assertNull($refused(static fn () => $builder->request('Subir 5% em toda a Pousada Dona Flor em dezembro', $data, 'pt_BR')));
         $data = $rooms('Standard');
         $data['periods'] = [['path' => 'calendar.holidays.0', 'label' => 'Festival de Inverno', 'first' => '2027-07-01', 'last' => '2027-07-31', 'floor' => null]];
         self::assertNull($refused(static fn () => $builder->request('Subir 10% no Standard durante o Festival de Inverno', $data, 'pt_BR')));

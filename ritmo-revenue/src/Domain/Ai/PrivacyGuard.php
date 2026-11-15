@@ -44,15 +44,24 @@ final class PrivacyGuard
     /** A colon or a dash between the word and the name. */
     private const MARK = '\s*[:\-–—]\s*';
 
+    /** Capitalised words that are days, months and holidays, never a name ("Família Natal", "Cliente – Sexta"). */
+    private const NOT_A_NAME = '(?!(?:Segunda|Terça|Terca|Quarta|Quinta|Sexta|Sábado|Sabado|Domingo|Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sunday|Janeiro|Fevereiro|Março|Marco|Abril|Maio|Junho|Julho|Agosto|Setembro|Outubro|Novembro|Dezembro|January|February|March|April|May|June|July|August|September|October|November|December|Natal|Réveillon|Reveillon|Carnaval|Páscoa|Pascoa|Christmas|Easter|Feriado|Holiday)(?![\p{L}\d]))';
+
     /** A capitalised name right after such a word ("hóspede Maria"). */
-    private const NAME_AFTER_TITLE = '/' . self::TITLE_ANY . '\s+\p{Lu}\p{Ll}+/u';
+    private const NAME_AFTER_TITLE = '/' . self::TITLE_ANY . '\s+' . self::NOT_A_NAME . '\p{Lu}\p{Ll}+/u';
+
+    /**
+     * The capitalised words right after a name found ("Dona Rosa" + " Pereira"): a found name is
+     * spared by a known name only when these words are inside it too.
+     */
+    private const MORE_NAMES = '/\G(?:[\s\x{00A0}\-–—]+(?:(?:d[aoe]s?|von|van)\s+)?' . self::NOT_A_NAME . '\p{Lu}\p{Ll}+)*/u';
 
     /**
      * After a colon or a dash: any capitalised word after a word for one person ("Hóspede: Maria",
      * "O cliente — Pereira"); after a plural, only a first name and a surname or a common first
      * name ("Hóspedes: Maria Souza"), so "Atrair clientes: Subir 5%" is not a name.
      */
-    private const NAME_AFTER_TITLE_MARK = '/' . self::TITLE_ONE . self::MARK . '\p{Lu}\p{Ll}+|' . self::TITLE_ANY . self::MARK . '(?:\p{Lu}\p{Ll}+\s+(?:(?:d[aoe]s?|von|van)\s+)?\p{Lu}\p{Ll}+|(?:' . self::FIRST_NAMES . ')(?![\p{L}\d]))/u';
+    private const NAME_AFTER_TITLE_MARK = '/' . self::TITLE_ONE . self::MARK . self::NOT_A_NAME . '\p{Lu}\p{Ll}+|' . self::TITLE_ANY . self::MARK . '(?:\p{Lu}\p{Ll}+\s+(?:(?:d[aoe]s?|von|van)\s+)?\p{Lu}\p{Ll}+|(?:' . self::FIRST_NAMES . ')(?![\p{L}\d]))/u';
 
     /** Saints, places and holidays that read like a title and a name ("Nossa Senhora Aparecida", "São João"). */
     private const NOT_A_PERSON = '/(?<![\p{L}\d])(?:(?i:nossa)\s+(?i:senhora)(?:\s+(?:d[aoe]s?\s+)?\p{Lu}\p{Ll}+)?|(?:São|Sao|Santa|Santo|Saint|St\.)\s+\p{Lu}\p{Ll}+)/u';
@@ -150,9 +159,11 @@ final class PrivacyGuard
                 return self::DOCUMENT;
             }
         }
-        [$names, $saints] = self::spared($text, $known);
+        $people = self::normal($text);
+        $known = array_map(self::normal(...), $known);
+        [$names, $saints] = self::spared($people, $known);
         foreach ([self::NAME_AFTER_TITLE, self::NAME_AFTER_TITLE_MARK, self::NAME_BEFORE_VERB] as $pattern) {
-            if (self::nameOutside($pattern, $text, $names, $saints)) {
+            if (self::nameOutside($pattern, $people, $names, $saints)) {
                 return self::NAME;
             }
         }
@@ -181,9 +192,11 @@ final class PrivacyGuard
         if ($problem !== null) {
             return $problem;
         }
-        [$names, $saints] = self::spared($text, $known);
+        $people = self::normal($text);
+        $known = array_map(self::normal(...), $known);
+        [$names, $saints] = self::spared($people, $known);
         foreach ([self::FIRST_AND_SURNAME, self::FIRST_AFTER_ARTICLE] as $pattern) {
-            if (self::nameOutside($pattern, $text, $names, $saints)) {
+            if (self::nameOutside($pattern, $people, $names, $saints)) {
                 return self::NAME;
             }
         }
@@ -202,9 +215,12 @@ final class PrivacyGuard
     private static function nameOutside(string $pattern, string $text, array $names, array $saints): bool
     {
         $offset = 0;
-        while (preg_match($pattern, $text, $match, PREG_OFFSET_CAPTURE, $offset) === 1) {
+        while (($result = preg_match($pattern, $text, $match, PREG_OFFSET_CAPTURE, $offset)) === 1) {
             [$found, $at] = $match[0];
             $end = $at + strlen($found);
+            if (preg_match(self::MORE_NAMES, $text, $more, 0, $end) === 1) {
+                $end += strlen($more[0]);
+            }
             $spared = false;
             foreach ($names as [$from, $to]) {
                 $spared = $spared || ($at >= $from && $end <= $to);
@@ -216,10 +232,36 @@ final class PrivacyGuard
                 return true;
             }
             // On to the next character (a whole UTF-8 character, never half of one).
-            $offset = $at + max(1, strlen(mb_substr($found, 0, 1)));
+            $offset = $at + max(1, strlen(mb_substr($found, 0, 1, 'UTF-8')));
         }
 
-        return false;
+        // A text the pattern cannot read (not UTF-8) is refused, never let through.
+        return $result === false;
+    }
+
+    /**
+     * The text in one Unicode form (NFC, combining marks that are left removed), so that "hóspede"
+     * typed with a combining accent is the same word.
+     */
+    private static function normal(string $text): string
+    {
+        if (class_exists(\Normalizer::class)) {
+            $text = (string) (\Normalizer::normalize($text, \Normalizer::FORM_C) ?: $text);
+        }
+
+        return (string) (preg_replace('/\p{Mn}+/u', '', $text) ?? $text);
+    }
+
+    /**
+     * Whether a label typed by a person (a period, the line of a report) is clear of guest data as
+     * it is and in title case ("CASAMENTO DA FAMÍLIA SOUZA" is "Casamento Da Família Souza").
+     *
+     * @param list<string> $names see names()
+     */
+    public static function clearLabel(string $label, array $names = []): bool
+    {
+        return self::requestProblem($label, $names) === null
+            && self::requestProblem(mb_convert_case($label, MB_CASE_TITLE, 'UTF-8'), $names) === null;
     }
 
     /**
@@ -334,7 +376,7 @@ final class PrivacyGuard
 
     /**
      * The names a request or an answer may use for the data sent: names(), and every other label
-     * (a period, a line of a report) that is itself clear of guest data, names() spared.
+     * (a period, a line of a report) that is itself clear of guest data (clearLabel()).
      *
      * @param array<int|string, mixed> $data
      *
@@ -345,7 +387,7 @@ final class PrivacyGuard
         $names = self::names($data);
         $known = $names;
         foreach (self::labels($data) as $label) {
-            if (!in_array($label, $known, true) && self::requestProblem($label, $names) === null) {
+            if (!in_array($label, $known, true) && self::clearLabel($label, $names)) {
                 $known[] = $label;
             }
         }

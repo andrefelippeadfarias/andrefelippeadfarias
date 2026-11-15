@@ -128,8 +128,8 @@ final class LicenceRecord
      *
      * After an answer "expired" or "invalid" the dates the grace period counts from (the end date,
      * the first answer with a problem) are not signed: they are kept no later than $latest (the
-     * signed end date when it comes before the signed check plus one grace period, that moment
-     * otherwise), so a record edited in the database never stretches the grace period past one
+     * signed end date when it comes after the signed check and before that check plus one grace
+     * period, that moment otherwise), so a record edited in the database never stretches the grace period past one
      * grace period after the last signed check. A genuine answer with a problem comes at the
      * signed end date (expired) or within the grace period after the last check (revoked, moved),
      * so its grace period is whole.

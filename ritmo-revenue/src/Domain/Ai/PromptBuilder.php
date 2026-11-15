@@ -86,6 +86,12 @@ final class PromptBuilder
         if ($text === '' || mb_strlen($text) > self::REQUEST_MAX) {
             throw new InvalidArgumentException(sprintf('A request has from 1 to %d characters.', self::REQUEST_MAX));
         }
+        // A period whose name looks like guest data is left out (never sent, never a known name)
+        // rather than refusing every request.
+        if (is_array($data['periods'] ?? null)) {
+            $names = PrivacyGuard::names($data);
+            $data['periods'] = array_values(array_filter($data['periods'], static fn (mixed $p): bool => !is_array($p) || !is_string($p['label'] ?? null) || PrivacyGuard::clearLabel($p['label'], $names)));
+        }
         PrivacyGuard::assertRequestSendable($text, PrivacyGuard::knownNames($data));
         $catalogue = ($this->catalogue ?? RuleCatalogue::forRules())->text();
 

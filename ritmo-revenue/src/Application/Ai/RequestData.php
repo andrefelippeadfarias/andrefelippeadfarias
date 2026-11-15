@@ -53,6 +53,7 @@ final class RequestData
             'last_night' => Days::key($context->lastNight()),
             'weekday_of_today' => Days::weekday($today),
             'currency' => $property->currency,
+            'property' => mb_substr($property->name, 0, 120),
             'rooms' => array_map(static fn (RoomType $r): array => ['code' => $r->code, 'label' => mb_substr($r->name, 0, 120), 'base' => $r->base], $rooms),
             'periods' => $periods,
         ], 'context' => $context];

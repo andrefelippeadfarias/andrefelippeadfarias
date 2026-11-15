@@ -157,7 +157,7 @@ Generated from the code. Do not edit between the markers; run `php bin/sync-gene
 public function __construct(AiSettingsStore $store, UsageLedger $usage, Closure $gateways, Logger $logger, ?RuleCatalogue $catalogue = null, ?Closure $licensed = null);
 public function status(): AiStatus;
 public function testConnection(): array;
-public function reportText(AiPurpose $purpose, array $about, array $facts, string $locale): AiText;
+public function reportText(AiPurpose $purpose, array $about, array $facts, string $locale, array $rooms = []): AiText;
 public function explainAlert(array $alert, string $locale): array;
 public function draft(string $text, array $data, DraftContext $context, string $locale): AiDraft;
 public static function highestCost(AiRequest $request, AiSettings $settings): float;

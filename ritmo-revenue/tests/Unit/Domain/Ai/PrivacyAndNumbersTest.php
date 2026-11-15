@@ -95,9 +95,11 @@ final class PrivacyAndNumbersTest extends TestCase
             'Para o cliente, Garden Suite está cara',
             'Clientes da Standard Room pedem mais estadias curtas',
             'O hóspede da reserva 12345 pediu desconto',
-            'Atrair clientes: Subir 5% nas sextas de janeiro',
         ] as $text) {
             self::assertNull(PrivacyGuard::requestProblem($text), $text);
+        }
+        foreach (['Atrair clientes: Subir 5% nas sextas de janeiro', 'Hóspede: Block reclamou do preço', 'Hóspedes: Abrir Pereira Souza', 'Guest: Close asked for 10% off'] as $text) {
+            self::assertSame(PrivacyGuard::NAME, PrivacyGuard::requestProblem($text), $text . ' (a capitalised word after a title and a colon is a name)');
         }
         self::assertSame(['Standard Room', 'Suíte Maria Bonita', 'Natal'], PrivacyGuard::labels(['rooms' => [['code' => 'SR', 'label' => 'Standard Room'], ['code' => 'MB', 'label' => 'Suíte Maria Bonita']], 'periods' => [['path' => 'p', 'label' => 'Natal']]]));
     }
@@ -217,6 +219,19 @@ final class PrivacyAndNumbersTest extends TestCase
         self::assertSame(PrivacyGuard::NAME, PrivacyGuard::problem("A hós\u{00AD}pede Pereira pagou."), 'a soft hyphen inside the title');
         self::assertSame(PrivacyGuard::NAME, PrivacyGuard::problem("a ho\u{0301}spede Pereira chega amanhã"), 'a combining accent is the same word');
         self::assertSame(PrivacyGuard::NAME, PrivacyGuard::problem("A hóspede\u{200B}Pereira pagou."), 'a zero-width space separates words');
+        self::assertSame(PrivacyGuard::NAME, PrivacyGuard::problem("Reserva 4411\u{200C}hóspede Pereira pediu desconto"), 'a zero-width non-joiner separates words');
+        self::assertSame(PrivacyGuard::NAME, PrivacyGuard::problem('A hóspede Silva de São Paulo pediu desconto'), 'a place after the name');
+
+        // A name in capitals is masked too; a code that reads like a person becomes ROOM1.
+        $caps = $builder->report(\Ritmo\Domain\Ai\AiPurpose::WeeklyReport, ['report' => 'weekly panel', 'property' => 'POUSADA DONA FLOR'], [['label' => 'SUÍTE FAMÍLIA LUXO: room nights sold', 'value' => '12']], 'pt_BR', ['SFL' => 'SUÍTE FAMÍLIA LUXO', 'Dona-Rosa' => 'Chalé Dona Rosa']);
+        self::assertStringNotContainsStringIgnoringCase('Família', $caps->user);
+        self::assertStringNotContainsStringIgnoringCase('Dona', $caps->user);
+        self::assertStringContainsString('ROOM1', $caps->user);
+        self::assertStringContainsString('PROPERTY', $caps->user);
+        // The check reads a masked name as a word: a guest's surname next to it, or an e-mail on its
+        // domain, is still refused.
+        self::assertSame(AiStopped::PRIVACY, $refused(static fn () => $builder->alert(['code' => 'x', 'room' => 'CDR', 'room_code' => 'CDR', 'room_label' => 'Chalé Dona Rosa', 'summary' => 'Chalé Dona Rosa Pereira reservou 3 noites abaixo do esperado.'], 'pt_BR')));
+        self::assertSame(AiStopped::PRIVACY, $refused(static fn () => $builder->report(\Ritmo\Domain\Ai\AiPurpose::WeeklyReport, ['report' => 'weekly panel', 'property' => 'Dona-Rosa'], [['label' => 'Contact', 'value' => 'joao.pereira@dona-rosa.com.br']], 'pt_BR')));
     }
 
     public function testAPeriodThatReadsLikeGuestDataIsLeftOut(): void
@@ -228,8 +243,11 @@ final class PrivacyAndNumbersTest extends TestCase
             self::assertStringNotContainsStringIgnoringCase('Souza', $request->user, $period);
             self::assertStringNotContainsStringIgnoringCase('Pereira', $request->user, $period);
         }
-        foreach (['Festival de Inverno', 'Festa do Senhor do Bonfim', 'Réveillon 2026/2027', 'Natal 24/12-26/12', 'Família na Serra', 'Corpus Christi'] as $period) {
+        foreach (['Festival de Inverno', 'Festa do Senhor do Bonfim', 'Família na Serra', 'FÉRIAS EM FAMÍLIA DE JULHO', 'Corpus Christi'] as $period) {
             self::assertTrue(PrivacyGuard::clearLabel($period), $period);
+        }
+        foreach (['(11) 2034-2056', '+55 (11) 2019-2020', '(11) 98/76-54/32'] as $phone) {
+            self::assertSame(PrivacyGuard::PHONE, PrivacyGuard::problem('ligar no ' . $phone), $phone);
         }
     }
 }

@@ -60,7 +60,7 @@ final class PromptBuilder
             $data['rooms'] = $list;
         }
 
-        return new AiRequest($purpose, PromptLibrary::system($purpose), $this->user($locale, PrivacyGuard::masked($data)));
+        return new AiRequest($purpose, PromptLibrary::system($purpose), $this->user($locale, $data));
     }
 
     /**
@@ -72,7 +72,7 @@ final class PromptBuilder
      */
     public function alert(array $alert, string $locale): AiRequest
     {
-        return new AiRequest(AiPurpose::AlertExplanation, PromptLibrary::system(AiPurpose::AlertExplanation), $this->user($locale, PrivacyGuard::masked(['alert' => $alert])), OutputSchemas::alert());
+        return new AiRequest(AiPurpose::AlertExplanation, PromptLibrary::system(AiPurpose::AlertExplanation), $this->user($locale, ['alert' => $alert]), OutputSchemas::alert());
     }
 
     /**
@@ -94,7 +94,6 @@ final class PromptBuilder
         if (is_array($data['periods'] ?? null)) {
             $data['periods'] = array_values(array_filter($data['periods'], static fn (mixed $p): bool => !is_array($p) || !is_string($p['label'] ?? null) || PrivacyGuard::clearLabel($p['label'])));
         }
-        $data = PrivacyGuard::masked($data);
         PrivacyGuard::assertRequestSendable($text);
         $catalogue = ($this->catalogue ?? RuleCatalogue::forRules())->text();
 
@@ -121,8 +120,11 @@ final class PromptBuilder
         if (preg_match(self::LOCALE_PATTERN, $locale) !== 1) {
             $locale = 'en';
         }
+        // Names of the property and of rooms that read like a person go as codes; the check runs on
+        // the data with those names read as an ordinary word, so a name next to one is still found.
         $data = PrivacyGuard::scrub($data);
-        $problem = PrivacyGuard::problemIn($data);
+        $problem = PrivacyGuard::problemIn(PrivacyGuard::masked($data, 'Quarto'));
+        $data = PrivacyGuard::masked($data);
         if ($problem !== null) {
             throw new AiStopped(AiStopped::PRIVACY, 'Nothing was sent: the data looks like it carries guest data (an e-mail, a phone number or a document number).', ['kind' => $problem]);
         }

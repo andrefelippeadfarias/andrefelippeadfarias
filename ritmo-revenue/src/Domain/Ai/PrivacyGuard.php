@@ -11,18 +11,20 @@ namespace Ritmo\Domain\Ai;
  *   document, an address, a note or a free-text message) before a prompt is built;
  * - problem() and assertSendable(): refuse a text that looks like an e-mail address, a phone
  *   number, a Brazilian identity document (CPF, CNPJ) or a person's name (a capitalised name after
- *   "hóspede", "clientes", "Sr.", "guest"..., with a space, a colon or a dash between them, except
- *   a verb a request starts with, "Clientes: Subir 5%"; or two capitalised words before "pediu",
- *   "asked"...). Nothing is sent then: the person is told why. Dates, date ranges, season years,
- *   amounts, percentages and booking ids (up to nine digits) are not phone numbers.
+ *   "hóspede", "clientes", "Sr.", "guest"..., with a space, a colon or a dash between them; or two
+ *   capitalised words before "pediu", "asked"...). Nothing is sent then: the person is told why.
+ *   Dates, amounts, percentages and booking ids (up to nine digits) are not phone numbers.
  * - requestProblem() and assertRequestSendable(): the same for what the person types to the
  *   assistant, plus a common first name followed by a surname ("Maria Souza") or after an article
  *   or a preposition ("pedido da Maria").
- * - The name checks read the text without accents and invisible characters, with saints and places
- *   ("São João", "Nossa Senhora Aparecida") blanked. They spare nothing else.
+ * - The name checks blank saints and places ("São João", "Nossa Senhora Aparecida") as written,
+ *   then read the text without accents and with invisible characters as spaces. They spare
+ *   nothing else.
  * - masked(): the data sent never carries a name of the property or of a room that reads like a
- *   person ("Suíte Família Luxo", "Chalé Dona Rosa"): it goes as the room's code (the property as
- *   "the property"), so such a name never blocks the assistant; the person writes the code.
+ *   person ("Suíte Família Luxo", "Chalé Dona Rosa", in any case): it goes as the room's code (the
+ *   property as "PROPERTY"), so such a name never blocks the assistant; the person writes the
+ *   code. The data is checked with those names read as "Quarto", so a guest's name next to one is
+ *   still found.
  *   clearLabel(): a period of the calendar whose name reads like guest data, in any case, is left
  *   out of the data.
  *
@@ -38,14 +40,11 @@ final class PrivacyGuard
     /** A word that introduces a person ("hóspede", "clientes", "Sr.", "guest"...). */
     private const TITLE_ANY = '(?<![\p{L}\d])(?i:h[óo]spedes?|clientes?|fam[íi]lia|sra?\.?|srta\.?|senhora?|dona|guests?|customers?|mrs?\.?|ms\.?|miss)';
 
-    /** Verbs a request starts with, never a name after "Clientes:" ("Atrair clientes: Subir 5%"). */
-    private const NOT_AFTER_MARK = '(?!(?:Subir|Baixar|Aumentar|Reduzir|Diminuir|Manter|Fechar|Abrir|Bloquear|Liberar|Colocar|Deixar|Criar|Mudar|Trocar|Oferecer|Vender|Segurar|Atrair|Raise|Lower|Increase|Decrease|Reduce|Keep|Close|Open|Block|Hold|Offer|Attract)(?![\p{L}\d]))';
-
     /**
      * A capitalised name right after such a word, with a space, a colon or a dash between them
      * ("hóspede Maria", "Hóspede: Maria", "Hóspedes – Pereira").
      */
-    private const NAME_AFTER_TITLE = '/' . self::TITLE_ANY . '(?:\s*[:\-–—]\s*' . self::NOT_AFTER_MARK . '|\s+)\p{Lu}\p{Ll}+/u';
+    private const NAME_AFTER_TITLE = '/' . self::TITLE_ANY . '(?:\s*[:\-–—]\s*|\s+)\p{Lu}\p{Ll}+/u';
 
     /** Saints, places and holidays that read like a title and a name ("Nossa Senhora Aparecida", "São João"). */
     private const NOT_A_PERSON = '/(?<![\p{L}\d])(?:(?i:nossa)\s+(?i:senhora)(?:\s+(?:d[aoe]s?\s+)?\p{Lu}\p{Ll}+)?|(?:São|Sao|Santa|Santo|Saint|St\.)\s+\p{Lu}\p{Ll}+)/u';
@@ -83,9 +82,6 @@ final class PrivacyGuard
         '/(?<!\d)\d{1,3}(?:[.,]\d{3})+(?:[.,]\d{1,2})?(?!\d)/',
         '/(?<!\d)\d+[.,]\d{1,2}(?!\d)/',
         '/(?<!\d)\d+(?:[.,]\d+)?\s?%/',
-        // Season years and ranges of days ("2026/2027", "24/12-26/12").
-        '/(?<!\d)(?:19|20)\d{2}\s?[\/\-–]\s?(?:19|20)\d{2}(?!\d)/u',
-        '/(?<!\d)\d{1,2}\/\d{1,2}\s?[\-–]\s?\d{1,2}\/\d{1,2}(?!\d)/u',
     ];
 
     /** A run of digits with separators (or a "+") from this many digits on is a phone number. */
@@ -177,11 +173,13 @@ final class PrivacyGuard
      */
     private static function nameIn(string $text, array $patterns): bool
     {
-        $text = self::normal($text);
-        $people = preg_replace_callback(self::NOT_A_PERSON, static fn (array $m): string => str_repeat(' ', strlen($m[0])), $text);
+        // Saints and places are blanked as written (an accent typed apart never makes one), then the
+        // rest is read without accents and invisible characters.
+        $people = preg_replace(self::NOT_A_PERSON, ' ', $text);
         if ($people === null) {
             return true;
         }
+        $people = self::normal($people);
         foreach ($patterns as $pattern) {
             $found = preg_match($pattern, $people);
             if ($found !== 0) {
@@ -193,17 +191,20 @@ final class PrivacyGuard
     }
 
     /**
-     * The text without accents (NFD, combining marks removed) and without invisible characters; a
-     * zero-width space or a word joiner separates words, a soft hyphen inside a word is dropped.
+     * The text without accents (NFD, combining marks removed) and with invisible characters read as
+     * spaces (a soft hyphen inside a word is dropped).
      */
     private static function normal(string $text): string
     {
         if (class_exists(\Normalizer::class)) {
             $text = (string) (\Normalizer::normalize($text, \Normalizer::FORM_D) ?: $text);
         }
-        $text = (string) (preg_replace('/[\x{200B}\x{2060}\x{FEFF}]/u', ' ', $text) ?? $text);
+        // A soft hyphen inside a word ("hós-pede") is dropped; every other invisible character (a
+        // zero-width space or joiner, a direction mark) separates words.
+        $text = (string) (preg_replace('/\x{00AD}+/u', '', $text) ?? $text);
+        $text = (string) (preg_replace('/[\p{Cf}\x{180E}]/u', ' ', $text) ?? $text);
 
-        return (string) (preg_replace('/[\p{Mn}\p{Cf}]+/u', '', $text) ?? $text);
+        return (string) (preg_replace('/\p{Mn}+/u', '', $text) ?? $text);
     }
 
     /**
@@ -217,30 +218,49 @@ final class PrivacyGuard
             return false;
         }
         if ($label === mb_strtoupper($label, 'UTF-8') || $label === mb_strtolower($label, 'UTF-8')) {
-            return self::requestProblem(mb_convert_case($label, MB_CASE_TITLE, 'UTF-8')) === null;
+            return self::requestProblem(self::titled($label)) === null;
         }
 
         return true;
     }
 
     /**
-     * The data with every name of the property or of a room that reads like a person (requestProblem())
-     * replaced, in every string, by the room's code (the property's by "the property"). The rooms
-     * come from the items of a "rooms" list with "code" and "label", and from "room_code" with
-     * "room_label"; the property from "property" (a name). Only text is taken out: nothing can
-     * reach the assistant that was not in the data.
+     * The text in title case with the small words in lower case ("FÉRIAS EM FAMÍLIA DE JULHO" is
+     * "Férias em Família de Julho").
+     */
+    private static function titled(string $text): string
+    {
+        $titled = mb_convert_case($text, MB_CASE_TITLE, 'UTF-8');
+
+        return (string) (preg_replace_callback('/(?<=\s)(?:De|Da|Do|Das|Dos|E|Em|Na|No|Nas|Nos|A|O|As|Os|Para|Com|Of|The|And|In|On)(?=\s)/u', static fn (array $m): string => mb_strtolower($m[0], 'UTF-8'), $titled) ?? $titled);
+    }
+
+    /**
+     * The data with every name of the property or of a room that reads like a person (as written or
+     * in title case) replaced, in every string, by the room's code (the property's by "PROPERTY").
+     * A code that itself reads like a person ("Dona-Rosa") is replaced too, by "ROOM1", "ROOM2"...
+     * With $as, every such name is replaced by that word instead: the check of the data runs on
+     * that form ("Quarto"), so a guest's name written next to a room's is still found. Only text is
+     * taken out: nothing reaches the assistant that was not in the data.
      *
      * @param array<int|string, mixed> $data
      *
      * @return array<int|string, mixed>
      */
-    public static function masked(array $data): array
+    public static function masked(array $data, ?string $as = null): array
     {
         $replace = [];
+        $rooms = 0;
         foreach (self::namedThings($data) as [$name, $code]) {
             $name = trim((string) preg_replace('/\s+/u', ' ', $name));
-            if ($name !== '' && self::requestProblem($name) !== null) {
-                $replace[$name] = $code;
+            $isProperty = $code === null;
+            $codeReadsLikeAPerson = !$isProperty && self::readsLikeAPerson(strtr($code, '-_', '  '));
+            $neutral = $isProperty ? 'PROPERTY' : ($codeReadsLikeAPerson ? 'ROOM' . (++$rooms) : $code);
+            if ($name !== '' && self::readsLikeAPerson($name)) {
+                $replace[$name] = $as ?? $neutral;
+            }
+            if ($codeReadsLikeAPerson) {
+                $replace[$code] = $as ?? $neutral;
             }
         }
         if ($replace === []) {
@@ -250,17 +270,22 @@ final class PrivacyGuard
         $patterns = [];
         foreach ($replace as $name => $code) {
             $words = array_map(static fn (string $w): string => preg_quote($w, '/'), explode(' ', $name));
-            // The code goes in as plain text ("$1" or "\\1" in a code is never a reference).
+            // The replacement goes in as plain text ("$1" or "\1" is never a reference).
             $patterns['/(?<![\p{L}\d])' . implode('[\s\x{00A0}]+', $words) . '(?![\p{L}\d])/iu'] = str_replace(['\\', '$'], ['\\\\', '\\$'], $code);
         }
 
         return self::replaceIn($data, $patterns);
     }
 
+    private static function readsLikeAPerson(string $name): bool
+    {
+        return self::requestProblem($name) !== null || self::requestProblem(self::titled($name)) !== null;
+    }
+
     /**
      * @param array<int|string, mixed> $data
      *
-     * @return list<array{0: string, 1: string}> name => what it is replaced by
+     * @return list<array{0: string, 1: ?string}> name => its code (null: the property)
      */
     private static function namedThings(array $data): array
     {
@@ -272,7 +297,7 @@ final class PrivacyGuard
             $things[] = [$data['room_label'], $data['room_code']];
         }
         if (is_string($data['property'] ?? null)) {
-            $things[] = [$data['property'], 'the property'];
+            $things[] = [$data['property'], null];
         }
         foreach ($data as $value) {
             if (is_array($value)) {

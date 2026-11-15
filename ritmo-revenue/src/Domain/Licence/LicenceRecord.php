@@ -127,13 +127,14 @@ final class LicenceRecord
      * the status is "valid" the end date is the signed one.
      *
      * After an answer "expired" or "invalid" the dates the grace period counts from (the end date,
-     * the first answer with a problem) are not signed: they are kept no later than the latest
-     * signed date (the signed end date, or the signed time of the check when it is later), so a
-     * record edited in the database never stretches the grace period. A genuine record loses at
-     * most the time between its last signed check and its first answer with a problem, when the
-     * licence has no signed end date after that check.
+     * the first answer with a problem) are not signed: they are kept no later than $latest (the
+     * signed end date when it comes before the signed check plus one grace period, that moment
+     * otherwise), so a record edited in the database never stretches the grace period past one
+     * grace period after the last signed check. A genuine answer with a problem comes at the
+     * signed end date (expired) or within the grace period after the last check (revoked, moved),
+     * so its grace period is whole.
      */
-    public function withSignedValid(DateTimeImmutable $checkedAt, ?DateTimeImmutable $expiresAt): self
+    public function withSignedValid(DateTimeImmutable $checkedAt, ?DateTimeImmutable $expiresAt, DateTimeImmutable $latest): self
     {
         if ($this->lastValidAt === null) {
             return $this;
@@ -144,7 +145,7 @@ final class LicenceRecord
         if ($this->status === self::VALID) {
             return new self($this->keyFingerprint, $this->providerId, $this->status, $signedEnd, $this->lastAnswerAt, $this->lastAttemptAt, $this->lastAttemptStatus, $lastValidAt, $this->problemSince, $this->message, $this->proof);
         }
-        $bound = $signedEnd !== null && $signedEnd > $checkedAt ? $signedEnd : $checkedAt;
+        $bound = self::utc($latest);
 
         return new self($this->keyFingerprint, $this->providerId, $this->status, self::noLaterThan($this->expiresAt, $bound), $this->lastAnswerAt, $this->lastAttemptAt, $this->lastAttemptStatus, $lastValidAt, self::noLaterThan($this->problemSince, $bound), $this->message, $this->proof);
     }

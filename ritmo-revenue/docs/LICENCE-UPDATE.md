@@ -99,8 +99,10 @@ provider: it reads `LicenceService::verdict()`, which evaluates the stored recor
   against the embedded public keys, the saved key and the site address, so a record edited in the
   database (status "valid", a recent date, another key's record) never makes a licence valid or
   longer. After an answer "expired" or "invalid" the dates its grace period counts from are not
-  signed, so they are kept no later than the latest signed date (the signed end date, or the
-  signed check time when later): moving them forward in the database never stretches the grace.
+  signed, so they are kept no later than one grace period after the last signed check (or the
+  signed end date, when it comes first): editing them in the database never stretches the grace
+  past two grace periods after the last signed check. A record left without a successful check
+  for a whole grace period stays lapsed, also when its signed end date comes later.
 - The key travels only in the body of a POST to the licence server; it is never in a URL, a log
   line, a notice or the support file. The provider's message is kept as plain text (no markup, no
   control characters, 200 characters at most) and escaped where shown.

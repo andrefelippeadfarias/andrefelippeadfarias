@@ -172,7 +172,7 @@ final class PrivacyAndNumbersTest extends TestCase
         self::assertSame(PrivacyGuard::NAME, PrivacyGuard::problem('Subir 5% na Suíte Família Luxo'), 'without the labels the same words read like a family name');
 
         // An answer naming the room is kept; a guest's name next to it is still refused.
-        $report = $builder->report(\Ritmo\Domain\Ai\AiPurpose::WeeklyReport, ['period' => 'week'], [['label' => 'Suíte Família Luxo: room nights sold', 'value' => '12']], 'pt_BR');
+        $report = $builder->report(\Ritmo\Domain\Ai\AiPurpose::WeeklyReport, ['period' => 'week'], [['label' => 'Suíte Família Luxo: room nights sold', 'value' => '12']], 'pt_BR', ['Suíte Família Luxo', 'Standard']);
         self::assertContains('Suíte Família Luxo', $report->known);
         $reply = static fn (string $text): \Ritmo\Domain\Ai\AiReply => new \Ritmo\Domain\Ai\AiReply($text, 'end_turn', new \Ritmo\Domain\Ai\TokenUsage(10, 10), 'model');
         self::assertSame('A Suíte Família Luxo vendeu 12 noites.', \Ritmo\Domain\Ai\AnswerReader::text($reply('A Suíte Família Luxo vendeu 12 noites.'), $report));
@@ -191,5 +191,52 @@ final class PrivacyAndNumbersTest extends TestCase
         self::assertSame(PrivacyGuard::PHONE, PrivacyGuard::problem('ligar 11 98765-4321 sobre a suíte 1', ['1', '11']));
         self::assertSame(PrivacyGuard::NAME, PrivacyGuard::requestProblem('Hóspedes: Maria Souza no Standard', ['Standard']));
         self::assertSame(PrivacyGuard::NAME, PrivacyGuard::requestProblem('Cliente: Pereira reclamou do Standard', ['Standard']));
+    }
+
+    public function testAKnownNameNeverHidesAGuestsNameNextToIt(): void
+    {
+        $builder = new \Ritmo\Domain\Ai\PromptBuilder();
+        $rooms = static fn (string ...$labels): array => ['today' => '2026-11-15', 'currency' => 'BRL', 'rooms' => array_map(static fn (string $l): array => ['code' => strtoupper(substr(md5($l), 0, 3)), 'label' => $l, 'base' => 300.0], $labels), 'periods' => []];
+        $refused = static function (callable $send): ?string {
+            try {
+                $send();
+            } catch (AiStopped $stopped) {
+                return $stopped->reason;
+            }
+
+            return null;
+        };
+
+        // A room called just "Família" never spares "família Souza".
+        self::assertSame(AiStopped::PRIVACY, $refused(static fn () => $builder->request('Dar 10% de desconto para a família Souza no Standard em dezembro', $rooms('Família', 'Standard'), 'pt_BR')));
+        $alert = $builder->alert(['code' => 'x', 'room' => 'FAM (Família)', 'room_label' => 'Família', 'summary' => 'Reserva 4411 abaixo do esperado.'], 'pt_BR');
+        $reply = static fn (string $text): \Ritmo\Domain\Ai\AiReply => new \Ritmo\Domain\Ai\AiReply($text, 'end_turn', new \Ritmo\Domain\Ai\TokenUsage(10, 10), 'model');
+        foreach (['A família Souza pagou abaixo do esperado na reserva 4411.', 'Família: Pereira reclamou do preço da reserva 4411.'] as $explanation) {
+            self::assertSame(AiStopped::PRIVACY, $refused(static fn () => \Ritmo\Domain\Ai\AnswerReader::alert($reply((string) json_encode(['explanation' => $explanation, 'action' => 'Conferir.'])), $alert)), $explanation);
+        }
+        $context = new \Ritmo\Domain\Ai\DraftContext(new \DateTimeImmutable('2026-11-15'), ['FAM' => 300.0], 'pedido', [], [], ['FAM' => 'Família']);
+        self::assertSame(AiStopped::PRIVACY, $refused(static fn () => PrivacyGuard::assertSendableKnowing(array_values($context->roomLabels), 'A família Souza pediu 10% de desconto.')));
+
+        // A period is checked like any other text: a guest's name in it is never sent.
+        foreach (['Casamento da família Souza', 'Grupo do hóspede Pereira', 'Família: férias de julho com a família Souza'] as $period) {
+            $data = $rooms('Standard');
+            $data['periods'] = [['path' => 'calendar.holidays.0', 'label' => $period, 'first' => '2027-01-08', 'last' => '2027-01-10', 'floor' => null]];
+            self::assertSame(AiStopped::PRIVACY, $refused(static fn () => $builder->request('Subir 5% no Standard nas sextas de janeiro', $data, 'pt_BR')), $period);
+        }
+        $data = $rooms('Standard');
+        $data['periods'] = [['path' => 'calendar.holidays.0', 'label' => 'Festival de Inverno', 'first' => '2027-07-01', 'last' => '2027-07-31', 'floor' => null]];
+        self::assertNull($refused(static fn () => $builder->request('Subir 10% no Standard durante o Festival de Inverno', $data, 'pt_BR')));
+
+        // A room by its short name, in the plural, with other spacing; the property by its name.
+        foreach ([
+            ['Quarto Dona Flor', 'Subir 5% na Dona Flor nas sextas de janeiro'],
+            ['Chalé do Sr. Lua', 'Subir 5% no Sr. Lua nos fins de semana de janeiro'],
+            ['Suíte Família Luxo', 'Subir 5% nas Suítes Família Luxo nas sextas de janeiro'],
+            ["Suíte  Família\u{00A0}Luxo", 'Subir 5% na Suíte Família Luxo nas sextas de janeiro'],
+        ] as [$label, $text]) {
+            self::assertNull($refused(static fn () => $builder->request($text, $rooms($label), 'pt_BR')), $text);
+        }
+        $weekly = $builder->report(\Ritmo\Domain\Ai\AiPurpose::WeeklyReport, ['report' => 'weekly panel', 'property' => 'Pousada Dona Flor'], [['label' => 'Occupancy', 'value' => '72%']], 'pt_BR');
+        self::assertSame('A Pousada Dona Flor teve 72% de ocupação.', \Ritmo\Domain\Ai\AnswerReader::text($reply('A Pousada Dona Flor teve 72% de ocupação.'), $weekly));
     }
 }

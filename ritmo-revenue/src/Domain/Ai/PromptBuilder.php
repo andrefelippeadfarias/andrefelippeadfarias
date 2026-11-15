@@ -39,18 +39,23 @@ final class PromptBuilder
      *
      * @param list<array{label: string, value: string|int|float}> $facts
      * @param array<string, string|int|float>                     $about what the report covers (period, property, run kind)
+     * @param list<string>                                        $rooms the names of the property's rooms, which the facts and the answer may use
      *
      * @throws AiStopped (privacy)
      */
-    public function report(AiPurpose $purpose, array $about, array $facts, string $locale): AiRequest
+    public function report(AiPurpose $purpose, array $about, array $facts, string $locale, array $rooms = []): AiRequest
     {
         if (!in_array($purpose, [AiPurpose::WeeklyReport, AiPurpose::RunReport], true)) {
             throw new InvalidArgumentException('A report prompt is for the weekly report or a run report.');
         }
 
         $data = ['about' => $about, 'facts' => $facts];
+        $rooms = array_values(array_filter($rooms, static fn (mixed $r): bool => is_string($r) && trim($r) !== ''));
+        if ($rooms !== []) {
+            $data['rooms'] = array_map(static fn (string $r): array => ['label' => mb_substr($r, 0, 120)], $rooms);
+        }
 
-        return new AiRequest($purpose, PromptLibrary::system($purpose), $this->user($locale, $data), null, AiRequest::MAX_TOKENS, PrivacyGuard::labels($data));
+        return new AiRequest($purpose, PromptLibrary::system($purpose), $this->user($locale, $data), null, AiRequest::MAX_TOKENS, PrivacyGuard::knownNames($data));
     }
 
     /**
@@ -64,7 +69,7 @@ final class PromptBuilder
     {
         $data = ['alert' => $alert];
 
-        return new AiRequest(AiPurpose::AlertExplanation, PromptLibrary::system(AiPurpose::AlertExplanation), $this->user($locale, $data), OutputSchemas::alert(), AiRequest::MAX_TOKENS, PrivacyGuard::labels($data));
+        return new AiRequest(AiPurpose::AlertExplanation, PromptLibrary::system(AiPurpose::AlertExplanation), $this->user($locale, $data), OutputSchemas::alert(), AiRequest::MAX_TOKENS, PrivacyGuard::knownNames($data));
     }
 
     /**
@@ -81,7 +86,7 @@ final class PromptBuilder
         if ($text === '' || mb_strlen($text) > self::REQUEST_MAX) {
             throw new InvalidArgumentException(sprintf('A request has from 1 to %d characters.', self::REQUEST_MAX));
         }
-        PrivacyGuard::assertRequestSendable($text, PrivacyGuard::labels($data));
+        PrivacyGuard::assertRequestSendable($text, PrivacyGuard::knownNames($data));
         $catalogue = ($this->catalogue ?? RuleCatalogue::forRules())->text();
 
         return new AiRequest(
@@ -90,7 +95,7 @@ final class PromptBuilder
             $this->user($locale, $data) . "\n" . DataBlock::wrap('request', ['text' => $text]),
             OutputSchemas::draft(),
             AiRequest::MAX_TOKENS,
-            PrivacyGuard::labels($data)
+            PrivacyGuard::knownNames($data)
         );
     }
 

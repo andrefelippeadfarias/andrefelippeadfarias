@@ -68,7 +68,7 @@ final class AiData
     }
 
     /**
-     * @return array{about: array<string, string>, facts: list<array{label: string, value: string}>}
+     * @return array{about: array<string, string>, facts: list<array{label: string, value: string}>, rooms: list<string>}
      */
     public static function weekly(Property $property): array
     {
@@ -82,11 +82,11 @@ final class AiData
             default => (string) $value,
         });
 
-        return ['about' => ['report' => 'weekly panel', 'property' => $property->name, 'currency' => $currency], 'facts' => $facts];
+        return ['about' => ['report' => 'weekly panel', 'property' => $property->name, 'currency' => $currency], 'facts' => $facts, 'rooms' => self::roomNames($property->id)];
     }
 
     /**
-     * @return array{about: array<string, string|int>, facts: list<array{label: string, value: string}>, property: string}|null
+     * @return array{about: array<string, string|int>, facts: list<array{label: string, value: string}>, property: string, rooms: list<string>}|null
      */
     public static function run(int $runId): ?array
     {
@@ -113,6 +113,7 @@ final class AiData
             'about' => ['report' => 'run report', 'run' => $runId, 'kind' => $run['kind'], 'mode' => $run['mode']->value, 'status' => $run['status'], 'started' => Days::key($run['started_at'])],
             'facts' => array_slice($facts, 0, 60),
             'property' => $run['property_id'],
+            'rooms' => self::roomNames((string) $run['property_id']),
         ];
     }
 
@@ -150,5 +151,20 @@ final class AiData
             'night' => $alert['night'] === null ? '' : Days::key($alert['night']),
             'facts' => $facts,
         ], 'property' => $alert['property_id']];
+    }
+
+    /**
+     * The names of the property's rooms, which a report may use and which are never taken for a guest.
+     *
+     * @return list<string>
+     */
+    private static function roomNames(string $propertyId): array
+    {
+        $names = [];
+        foreach (Services::instance()->roomTypes()->forProperty($propertyId) as $room) {
+            $names[] = $room->name;
+        }
+
+        return $names;
     }
 }

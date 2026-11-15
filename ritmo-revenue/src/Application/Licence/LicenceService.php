@@ -241,7 +241,11 @@ final class LicenceService implements LicenceVerdictSource
             return $record->withoutValid();
         }
 
-        return $record->withSignedValid($checkedAt, $proof->expiresInstant());
+        $signedEnd = $proof->expiresInstant();
+        $graceAfterCheck = $this->settings->grace->endsAt($checkedAt);
+        $latest = $signedEnd !== null && $signedEnd > $checkedAt && $signedEnd < $graceAfterCheck ? $signedEnd : $graceAfterCheck;
+
+        return $record->withSignedValid($checkedAt, $signedEnd, $latest);
     }
 
     /**

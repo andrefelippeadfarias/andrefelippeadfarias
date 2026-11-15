@@ -90,9 +90,9 @@ final class AiAssistant
      *
      * @throws AiStopped
      */
-    public function reportText(AiPurpose $purpose, array $about, array $facts, string $locale): AiText
+    public function reportText(AiPurpose $purpose, array $about, array $facts, string $locale, array $rooms = []): AiText
     {
-        $request = $this->prompts->report($purpose, $about, $facts, $locale);
+        $request = $this->prompts->report($purpose, $about, $facts, $locale, $rooms);
         $reply = $this->ask($request);
 
         return new AiText(AnswerReader::text($reply, $request), $reply->model, $reply->fallbackUsed);

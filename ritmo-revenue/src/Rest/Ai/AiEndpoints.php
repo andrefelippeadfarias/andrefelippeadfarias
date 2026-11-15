@@ -24,8 +24,8 @@ final class AiEndpoints
     /**
      * @param Closure(AiStopped): array{message: string, details: list<string>} $words
      * @param Closure(string, string): ?array{data: array<string, mixed>, context: \Ritmo\Domain\Ai\DraftContext, property: string} $requestInput property id and text
-     * @param Closure(string): ?array{about: array<string, mixed>, facts: list<array{label: string, value: string}>} $weeklyInput property id
-     * @param Closure(int): ?array{about: array<string, mixed>, facts: list<array{label: string, value: string}>} $runInput run id
+     * @param Closure(string): ?array{about: array<string, mixed>, facts: list<array{label: string, value: string}>, rooms?: list<string>} $weeklyInput property id
+     * @param Closure(int): ?array{about: array<string, mixed>, facts: list<array{label: string, value: string}>, rooms?: list<string>} $runInput run id
      * @param Closure(int): ?array{alert: array<string, mixed>} $alertInput alert id
      * @param Closure(string, string, string, \Ritmo\Domain\Ai\AiDraft, string): array<string, mixed> $draftView id, request, created at, draft, property id
      * @param Closure(string): string $notFound what was not found (property, run, alert) => a sentence
@@ -145,7 +145,7 @@ final class AiEndpoints
     private function report(AiPurpose $purpose, array $input): array
     {
         try {
-            $text = $this->assistant->reportText($purpose, $input['about'], $input['facts'], $this->locale);
+            $text = $this->assistant->reportText($purpose, $input['about'], $input['facts'], $this->locale, array_values(array_filter((array) ($input['rooms'] ?? []), 'is_string')));
         } catch (AiStopped $e) {
             return $this->stopped($e);
         }

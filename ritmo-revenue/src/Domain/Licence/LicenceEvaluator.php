@@ -53,12 +53,14 @@ final class LicenceEvaluator
     private function afterValid(LicenceRecord $record, DateTimeImmutable $lastValidAt, DateTimeImmutable $now): LicenceVerdict
     {
         $expiresAt = $record->expiresAt;
+        $staleAt = $this->grace->endsAt($lastValidAt);
         // The provider is the authority at the moment it answers: an end date already past when it
-        // said "valid" does not count; one that passed since then does.
-        if ($expiresAt !== null && $expiresAt > $lastValidAt && $now >= $expiresAt) {
+        // said "valid" does not count; one that passed since then does, while the last valid answer
+        // is recent (an end date after a whole grace period without a check never brings a lapsed
+        // licence back into grace).
+        if ($expiresAt !== null && $expiresAt > $lastValidAt && $expiresAt <= $staleAt && $now >= $expiresAt) {
             return $this->graceFrom($expiresAt, LicenceReason::EXPIRED, $record, $now);
         }
-        $staleAt = $this->grace->endsAt($lastValidAt);
         if ($record->lastAttemptStatus === LicenceRecord::UNREACHABLE || $now >= $staleAt) {
             return $this->graceFrom($lastValidAt, LicenceReason::UNREACHABLE, $record, $now);
         }

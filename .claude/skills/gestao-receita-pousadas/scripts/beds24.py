@@ -829,9 +829,10 @@ def _conferir(itens, depois):
 
 
 def editar_lote(plano, aplicar=False, max_faixas=MAX_FAIXAS_POST):
-    """Plano = [{quarto, de, ate, min_stay?, min_stay_antes?, override?, num_avail?, num_avail_esperado?, motivo}].
-    Lê o inventário antes; item com `min_stay_antes` cujo minStay lido diverge (em qualquer noite da faixa) é PULADO e
-    relatado (revisão de 05/11: o lote é feito com a leitura de horas antes; reserva, cancelamento, o envio do PriceLabs
+    """Plano = [{quarto, de, ate, min_stay?, min_stay_antes?, override?, num_avail?, num_avail_esperado?,
+    vizinha_esgotada?, motivo}]. Lê o inventário antes; item com `min_stay_antes` cujo minStay lido diverge (em qualquer
+    noite da faixa) é PULADO e relatado, e o item com `vizinha_esgotada` ({data, numAvail}: a noite vizinha que tem de
+    seguir esgotada no quarto; exceções das noites soltas do Réveillon, revisão de 16/11) também, quando ela reabriu (revisão de 05/11: o lote é feito com a leitura de horas antes; reserva, cancelamento, o envio do PriceLabs
     ou a equipe podem ter mudado a noite, e gravar por cima desfaria isso). Os itens que ficam vão em blocos de até
     `max_faixas` faixas por POST (agrupadas por quarto dentro do bloco), e cada bloco é relido e conferido item a item
     (`num_avail_esperado` = o numAvail líquido que deve voltar; sem ele, o gravado) antes do próximo; um bloco com erro de
@@ -845,8 +846,10 @@ def editar_lote(plano, aplicar=False, max_faixas=MAX_FAIXAS_POST):
         c = corpo_edicao(it["quarto"], it["de"], it["ate"], it.get("min_stay"), it.get("override"), it.get("num_avail"),
                          it.get("max_stay"), it.get("canais_max"))
         corpos.append((it, c[0]["roomId"], c[0]["calendar"]))
-    de = min(i["de"] for i in plano)
-    ate = max(i["ate"] for i in plano)
+    # revisão de 16/11 (Réveillon, 3ª verificação, R3-07): a noite da trava `vizinha_esgotada` entra na leitura de antes
+    travas = [i["vizinha_esgotada"]["data"] for i in plano if isinstance(i.get("vizinha_esgotada"), dict)]
+    de = min([i["de"] for i in plano] + travas)
+    ate = max([i["ate"] for i in plano] + travas)
     quartos = sorted({i["quarto"] for i in plano})
     antes = inventario(token_de_acesso(), de, ate, quartos)
     pulados, ficam = [], []
@@ -859,6 +862,16 @@ def editar_lote(plano, aplicar=False, max_faixas=MAX_FAIXAS_POST):
                                 "min_stay_antes": it["min_stay_antes"], "min_stay": it.get("min_stay"), "lido": difere,
                                 "por_que": ("já no alvo" if all(v == it.get("min_stay") for v in difere.values())
                                             else "minStay mudou desde o plano: refaça com o inventário novo")})
+                continue
+        ve = it.get("vizinha_esgotada")
+        if isinstance(ve, dict):
+            # a exceção das noites soltas do Réveillon só abre com a noite vizinha ainda esgotada no quarto: um
+            # cancelamento entre o plano e o lote a reabre, e a exceção comeria pacote
+            lido = (antes.get(it["quarto"], {}).get(ve.get("data")) or {}).get("numAvail")
+            if lido is None or int(lido) > int(ve.get("numAvail", 0)):
+                pulados.append({"quarto": it["quarto"], "de": it["de"], "ate": it["ate"], "vizinha_esgotada": ve,
+                                "lido": lido, "por_que": (f"a noite vizinha {ve.get('data')} não está mais esgotada "
+                                                          f"(numAvail {lido}): refaça com o inventário novo")})
                 continue
         ficam.append((it, rid, cal))
     blocos = [ficam[k:k + max(1, int(max_faixas))] for k in range(0, len(ficam), max(1, int(max_faixas)))]
@@ -916,7 +929,7 @@ CAMPOS_LOTE = ("min_stay", "max_stay", "override", "num_avail")
 
 # campos que fazem dois itens de lote serem o mesmo item (igual ao calendario_12m.CAMPOS_ITEM_LOTE)
 CAMPOS_ITEM_LOTE_UNICO = ("quarto", "de", "ate", "min_stay", "min_stay_antes", "max_stay", "override", "num_avail",
-                          "num_avail_esperado", "canais_max")
+                          "num_avail_esperado", "canais_max", "vizinha_esgotada")
 
 
 def juntar_planos(planos):

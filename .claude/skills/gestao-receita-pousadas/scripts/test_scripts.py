@@ -15,6 +15,10 @@ from ordens import carregar_ordens
 from validar_plano import Validador, montar_payload
 
 CFG = carregar_quartos()
+# a config real muda com a operação do Réveillon (16/11 16:40 BRT: portão do 01→03 do Recanto aberto, `*_por_quarto` em
+# regra_h_beds24): os testes conferem a lógica com a config de antes do portão e das exceções das noites soltas
+for _k in ("override_por_data_por_quarto", "estadia_minima_por_data_por_quarto", "override_por_data_por_quarto_motivo"):
+    CFG["parametros"]["regra_h_beds24"].pop(_k, None)
 # 30/10: excecao "dono" exige ordem_id vigente. Os testes conferem a lógica, não o calendário das ordens: as ordens reais
 # valem para todos os quartos e datas aqui, e "teste-dono" é a ordem genérica dos itens de teste.
 # A liberação da Regra G (`regra_g`) é por noite e por quarto (dono 01/11, Balcony 08-09/11): ampliada a todas as datas
@@ -423,8 +427,13 @@ class TestValidador(unittest.TestCase):
         # dono (14/10): correções só em percentual por data; mudar o anúncio exige a ordem do dono
         self.assertTrue(any("correções percentuais" in e for e in erros(
             [{"tipo": "anuncio", "quarto": "VK7", "campo": "min", "valor": 900, "motivo": "x"}])))
-        self.assertTrue(erros([{"tipo": "anuncio", "quarto": "VK7", "campo": "min", "valor": 700, "motivo": "x", "excecao": "dono"}]))
-        self.assertEqual(erros([{"tipo": "anuncio", "quarto": "VK7", "campo": "min", "valor": 900, "motivo": "x", "excecao": "dono"}]), [])
+        self.assertTrue(erros([{"tipo": "anuncio", "quarto": "VK7", "campo": "min", "valor": 700, "motivo": "x", "excecao": "dono",
+                                "ordem_id": "teste-dono"}]))
+        self.assertEqual(erros([{"tipo": "anuncio", "quarto": "VK7", "campo": "min", "valor": 900, "motivo": "x", "excecao": "dono",
+                                 "ordem_id": "teste-dono"}]), [])
+        # revisão de 16/11 (3ª verificação, R3-04): a exceção do dono no anúncio cita uma ordem registrada e vigente
+        self.assertTrue(any("sem ordem registrada" in e for e in erros(
+            [{"tipo": "anuncio", "quarto": "VK7", "campo": "min", "valor": 900, "motivo": "x", "excecao": "dono"}])))
 
     def test_proibidos(self):
         self.assertTrue(erros([{"tipo": "personalizacao", "quarto": "VK7", "descricao": "tirar oferta Genius",

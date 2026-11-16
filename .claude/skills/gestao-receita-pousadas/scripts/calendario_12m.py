@@ -804,7 +804,7 @@ MOTIVO_SEMANA = ("Regra A no Beds24 (dono 01/11, 'Sim'): domingo a quinta fora d
                  "sazonalidade")
 # o que um item do `beds24.py editar-lote` muda (e o que ele confere antes): dois itens iguais nisso são o mesmo item
 CAMPOS_ITEM_LOTE = ("quarto", "de", "ate", "min_stay", "min_stay_antes", "max_stay", "override", "num_avail",
-                    "num_avail_esperado", "canais_max")
+                    "num_avail_esperado", "canais_max", "vizinha_esgotada")
 
 
 def lote_beds24(classif: list[dict], so_estadia: bool = False) -> list[dict]:

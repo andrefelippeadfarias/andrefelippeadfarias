@@ -16,12 +16,27 @@ from ordens import carregar_ordens
 from validar_plano import Validador, em_reais, piso_pct
 
 CFG = carregar_quartos()
+# a config real muda com a operação (16/11 16:40 BRT: portão do 01→03 do Recanto aberto, `*_por_quarto` em
+# regra_h_beds24): os testes partem da config de antes do portão e das exceções e cada um monta o seu cenário
+for _k in ("override_por_data_por_quarto", "estadia_minima_por_data_por_quarto", "override_por_data_por_quarto_motivo"):
+    CFG["parametros"]["regra_h_beds24"].pop(_k, None)
 # depois de gravado e conferido o máximo de R$ 6.000 (reveillon_250k.py registrar com o item de anúncio)
 CFG6 = copy.deepcopy(CFG)
 for _q in ("Q7", "Double", "Q2", "VK7", "VK2", "Balcony"):
     CFG6["por_curto"][_q]["max"] = 6000
 ORDENS = carregar_ordens()
 ORDEM = R.ordem_do_dono(ORDENS)
+# 4ª condição do portão (revisão de 16/11, 3ª verificação, R3-03): o dono AINDA NÃO respondeu sobre 01→04 e 01→05. Os
+# testes que abrem o portão usam uma CÓPIA da ordem com um ok fictício de teste (não é resposta do dono)
+ORDEM_OK = copy.deepcopy(ORDEM)
+ORDEM_OK["execucao_skill"]["ok_01_04_05"] = dict(ORDEM["execucao_skill"]["ok_01_04_05"], resposta="aceita",
+                                                 texto_dono="(ok fictício de teste)", respondido_em="2026-11-17 10:00 BRT")
+ORDENS_OK = dict(ORDENS, **{R.ORDEM_ID: ORDEM_OK})
+# ordem com o ok do dono ainda pendente (estado antes da resposta dele; a ordem real tem a resposta de 16/11)
+ORDEM_PENDENTE = copy.deepcopy(ORDEM)
+ORDEM_PENDENTE["execucao_skill"]["ok_01_04_05"] = dict(ORDEM["execucao_skill"]["ok_01_04_05"], resposta=None,
+                                                       texto_dono=None, respondido_em=None)
+ORDENS_PENDENTE = dict(ORDENS, **{R.ORDEM_ID: ORDEM_PENDENTE})
 HOJE = date(2026, 11, 16)
 CORTE = "2026-11-16T14:39:12Z"
 
@@ -95,11 +110,32 @@ def valor_final(res: dict, q: str, n: str) -> float:
     raise KeyError((q, n))
 
 
-def validar(itens: list[dict], hoje: date = HOJE, cfg: dict | None = None, estado: dict | None = None) -> Validador:
+def validar(itens: list[dict], hoje: date = HOJE, cfg: dict | None = None, estado: dict | None = None,
+            ordens: dict | None = None, precos: dict | None = None) -> Validador:
     """O validador com o estado da ordem do teste (sem ele, o estado de 16/11: a promoção da Villa ativa)."""
-    v = Validador(cfg or CFG, hoje, {}, ordens=ORDENS, estados={R.ORDEM_ID: estado if estado is not None else estado_hoje()})
+    v = Validador(cfg or CFG, hoje, dict(precos or {}), ordens=ordens or ORDENS,
+                  estados={R.ORDEM_ID: estado if estado is not None else estado_hoje()})
     v.validar(copy.deepcopy(itens))
     return v
+
+
+def resumo_ok(lote: list[dict]) -> dict:
+    """O JSON do `beds24.py editar-lote --aplicar` sem erro, com o lote inteiro gravado e conferido."""
+    return {"itens": len(lote), "aplicar": True, "pulados": [], "a_gravar": len(lote), "n_blocos": 1, "resposta_ok": True,
+            "blocos": [], "conferidos": len(lote), "erros": []}
+
+
+def gravado_de(itens: list[dict]) -> dict:
+    """A releitura das regras do PriceLabs ({curto: {data: regra}}) depois de gravar a estadia e a máscara dos itens."""
+    out: dict = {}
+    for it in itens:
+        r = out.setdefault(it["quarto"], {}).setdefault(it["data"], {"date": it["data"]})
+        for k in ("min_stay", "check_in", "check_out"):
+            if it.get(k) is not None:
+                r[k] = str(it[k])
+        if it.get("check_in") is not None:
+            r["check_in_check_out_enabled"] = "1"
+    return out
 
 
 def prova_orfa(q: str, k: int, **mudar) -> dict:
@@ -325,12 +361,13 @@ class TestEscada(unittest.TestCase):
         res = self.plano(rs, hoje=date(2026, 11, 30), estado=est)
         self.assertTrue(res["contexto"]["pausa"])
         self.assertEqual(res["contexto"]["escada"]["Recanto"]["reveillon"], 1)
-        # acima do alarme (receita não informada, quarto-noites acima): a escada anda com os 2 pacotes
+        # acima do alarme (receita e quarto-noites acima da linha de 30/11): a escada anda com os 2 pacotes. Revisão de
+        # 16/11 (R3-08): sem a receita, as reservas do teste (sem valor) dariam R$ 0 e a escada pararia
         inv = inv_hoje()
         for q in ("Q7", "Double", "VK7", "Balcony"):
             for n in R.NOITES:
                 inv[q][n]["numAvail"] = max(0, inv[q][n]["numAvail"] - 1)
-        res2 = self.plano(rs, hoje=date(2026, 11, 30), estado=est, inv=inv)
+        res2 = self.plano(rs, hoje=date(2026, 11, 30), estado=est, inv=inv, receita=60000.0)
         self.assertFalse(res2["contexto"]["pausa"])
         self.assertEqual(res2["contexto"]["escada"]["Recanto"]["reveillon"], 2)
 
@@ -520,16 +557,19 @@ class TestFimDeSemanaNoPedido(unittest.TestCase):
         # abaixo do piso do período (Q7 4.051,35; Q2 4.070 em cadeia)
         v = validar([dict(base, quarto="Q7", min_price=3500, max_price=3500)], cfg=CFG6)
         self.assertTrue(any("piso do período" in e for e in v.erros), v.erros)
-        v = validar([dict(base, quarto="Q2", min_price=4038.6, max_price=4038.6)], cfg=CFG6)   # +155: 1 ponto abaixo
+        v = validar([dict(base, quarto="Q2", min_price=4054.5, max_price=4054.5)], cfg=CFG6)   # +155: 1 ponto abaixo
+        self.assertTrue(any("piso do período" in e for e in v.erros), v.erros)
+        v = validar([dict(base, quarto="Q2", min_price=4038.6, max_price=4038.6)], cfg=CFG6)   # +154: 2 pontos abaixo
         self.assertTrue(any("piso do período" in e for e in v.erros), v.erros)
         self.assertEqual(validar([dict(base, quarto="Q2", min_price=4070.4, max_price=4070.4)], cfg=CFG6).erros, [])
         # Afrodite: teto de R$ 8.000 no Réveillon (o máximo do anúncio dela é 10.000)
         v = validar([dict(base, quarto="Afrodite", min_price=8200, max_price=8200)])
         self.assertTrue(any("acima do teto da ordem" in e for e in v.erros), v.erros)
-        # Balcony abaixo do piso: só aviso (a Regra G vence)
+        # Balcony abaixo do piso: revisão de 16/11 (3ª verificação, R3-02): ERRO quando os 90% da suíte com banheira cabem
+        # no piso (no Réveillon, sempre: a King Spa não fica abaixo do piso dela, R$ 4.062,76); o aviso é só na faixa em
+        # que a Regra G vence (testes em TestPisoDaBalcony)
         v = validar([dict(base, quarto="Balcony", min_price=3500, max_price=3500)], cfg=CFG6)
-        self.assertFalse([e for e in v.erros if "piso do período" in e], v.erros)
-        self.assertTrue(any("piso do período" in a for a in v.avisos), v.avisos)
+        self.assertTrue(any("piso do período" in e for e in v.erros), v.erros)
 
     def test_villa_com_promocao_mantem_o_fim_de_semana(self):
         it = {"tipo": "data", "quarto": "VK7", "data": "2027-01-01", "min_price": 4113, "max_price": 4113,
@@ -750,29 +790,34 @@ class TestVillaFimDeSemana(unittest.TestCase):
         self.assertEqual(R.adotar_fator(f, 0.62, date(2026, 11, 17), 0.05)[0]["valor"], 0.62)
 
 
+def preparar_portao(fator_fds: float | None = None):
+    """Estado, regras e inventário de 18/11 com os preços do fim de semana gravados em 17/11 e enviados (price1 novo)."""
+    est = estado_hoje()
+    est["gravado_fds"] = {"Recanto": "2026-11-17T10:00:00Z", "Villa": "2026-11-17T10:00:00Z"}
+    if fator_fds is not None:
+        est["fatores"]["Recanto"]["fds"] = {"valor": fator_fds, "medido_em": "2026-11-17"}
+    regras = regras_hoje()
+    inv = inv_hoje()
+    inv["_lido_em"] = "2026-11-18T12:00:00Z"
+    plano = R.montar_plano(CFG, ORDEM, est, inv, regras, date(2026, 11, 17), [])
+    for it in plano["itens"]:      # o PriceLabs gravou e enviou: regras e price1 com o preço novo
+        p = piso_pct(CFG["por_curto"][it["quarto"]], it["min_price"])
+        regras[it["quarto"]][it["data"]].update(min_price=p, max_price=p)
+        inv[it["quarto"]][it["data"]]["price1"] = em_reais(CFG["por_curto"][it["quarto"]], p)
+    return est, regras, inv
+
+
 class TestPortao(unittest.TestCase):
     ENVIO = {"Recanto": "2026-11-18T11:47:00Z", "Villa": "2026-11-18T11:47:00Z"}
 
     def preparar(self, fator_fds: float | None = None):
-        est = estado_hoje()
-        est["gravado_fds"] = {"Recanto": "2026-11-17T10:00:00Z", "Villa": "2026-11-17T10:00:00Z"}
-        if fator_fds is not None:
-            est["fatores"]["Recanto"]["fds"] = {"valor": fator_fds, "medido_em": "2026-11-17"}
-        regras = regras_hoje()
-        inv = inv_hoje()
-        inv["_lido_em"] = "2026-11-18T12:00:00Z"
-        plano = R.montar_plano(CFG, ORDEM, est, inv, regras, date(2026, 11, 17), [])
-        for it in plano["itens"]:      # o PriceLabs gravou e enviou: regras e price1 com o preço novo
-            p = piso_pct(CFG["por_curto"][it["quarto"]], it["min_price"])
-            regras[it["quarto"]][it["data"]].update(min_price=p, max_price=p)
-            inv[it["quarto"]][it["data"]]["price1"] = em_reais(CFG["por_curto"][it["quarto"]], p)
-        return est, regras, inv
+        return preparar_portao(fator_fds)
 
     def test_condicao_2_contra_o_alvo_publico_da_ordem(self):
         # revisão de 16/11 (sonda_portao.py): fator 0,45, fim de semana cortado no pedido (Q7 4.974 × 0,45 = 2.238 contra
         # o alvo de 2.550, −12%). Antes o portão abria (o esperado caía junto); agora fica fechado e avisa
         est, regras, inv = self.preparar(0.45)
-        av = R.avaliar_portao(CFG, ORDEM, est, inv, regras, self.ENVIO, {"Recanto": 2238}, hoje=date(2026, 11, 18))
+        av = R.avaliar_portao(CFG, ORDEM_OK, est, inv, regras, self.ENVIO, {"Recanto": 2238}, hoje=date(2026, 11, 18))
         self.assertFalse(av["Recanto"]["pode"])
         self.assertTrue(any("abaixo do alvo da ordem" in f for f in av["Recanto"]["faltam"]), av["Recanto"]["faltam"])
         self.assertEqual((av["Recanto"]["prova"]["quarto_ref"], av["Recanto"]["prova"]["alvo_publico"]), ("Q7", 2550))
@@ -780,33 +825,34 @@ class TestPortao(unittest.TestCase):
         prova = dict(av["Recanto"]["prova"])
         it = {"tipo": "data", "quarto": "Q7", "data": "2027-01-01", "min_stay": 2, "manter_reason": True,
               "excecao": "dono", "ordem_id": R.ORDEM_ID, "motivo": "teste", "portao_0103": prova}
-        self.assertTrue(any("abaixo do alvo da ordem" in e for e in validar([it], date(2026, 11, 18)).erros))
+        self.assertTrue(any("abaixo do alvo da ordem" in e
+                            for e in validar([it], date(2026, 11, 18), ordens=ORDENS_OK).erros))
         sem_alvo = dict(prova, publico=2560, esperado=2552)
         sem_alvo.pop("alvo_publico")
         self.assertTrue(any("sem alvo_publico" in e for e in validar([dict(it, portao_0103=sem_alvo)],
-                                                                      date(2026, 11, 18)).erros))
+                                                                      date(2026, 11, 18), ordens=ORDENS_OK).erros))
         forjado = dict(prova, publico=2238, esperado=2238, alvo_publico=1500)
         self.assertTrue(any("menor alvo da pousada" in e for e in validar([dict(it, portao_0103=forjado)],
-                                                                           date(2026, 11, 18)).erros))
+                                                                           date(2026, 11, 18), ordens=ORDENS_OK).erros))
 
     def test_price1_so_nos_quartos_com_vaga(self):
         est, regras, inv = self.preparar()
         inv["Afrodite"]["2027-01-01"].update(numAvail=0, price1=4120)          # vendida e com o price1 velho
-        av = R.avaliar_portao(CFG, ORDEM, est, inv, regras, self.ENVIO, {"Recanto": 2560}, hoje=date(2026, 11, 18))
+        av = R.avaliar_portao(CFG, ORDEM_OK, est, inv, regras, self.ENVIO, {"Recanto": 2560}, hoje=date(2026, 11, 18))
         self.assertTrue(av["Recanto"]["pode"], av["Recanto"]["faltam"])
         inv["Afrodite"]["2027-01-01"]["numAvail"] = 1                           # com vaga: trava
-        av = R.avaliar_portao(CFG, ORDEM, est, inv, regras, self.ENVIO, {"Recanto": 2560}, hoje=date(2026, 11, 18))
+        av = R.avaliar_portao(CFG, ORDEM_OK, est, inv, regras, self.ENVIO, {"Recanto": 2560}, hoje=date(2026, 11, 18))
         self.assertFalse(av["Recanto"]["pode"])
 
     def test_preco_do_fim_de_semana_na_rotina_segura_o_portao(self):
         est, regras, inv = self.preparar()
         item = {"tipo": "data", "quarto": "Double", "data": "2027-01-02", "min_price": 4635, "max_price": 4635}
-        av = R.avaliar_portao(CFG, ORDEM, est, inv, regras, self.ENVIO, {"Recanto": 2560}, hoje=date(2026, 11, 18),
+        av = R.avaliar_portao(CFG, ORDEM_OK, est, inv, regras, self.ENVIO, {"Recanto": 2560}, hoje=date(2026, 11, 18),
                               itens_plano=[item])
         self.assertFalse(av["Recanto"]["pode"])
         self.assertTrue(any("muda nesta rotina" in f for f in av["Recanto"]["faltam"]))
         # item do Réveillon não segura
-        av = R.avaliar_portao(CFG, ORDEM, est, inv, regras, self.ENVIO, {"Recanto": 2560}, hoje=date(2026, 11, 18),
+        av = R.avaliar_portao(CFG, ORDEM_OK, est, inv, regras, self.ENVIO, {"Recanto": 2560}, hoje=date(2026, 11, 18),
                               itens_plano=[dict(item, data="2026-12-30")])
         self.assertTrue(av["Recanto"]["pode"], av["Recanto"]["faltam"])
 
@@ -843,7 +889,7 @@ class TestPortao(unittest.TestCase):
         import calendario_12m as c12
         est, regras, inv = self.preparar()
         hoje = date(2026, 11, 18)
-        saida, _ = R.decidir_portao(CFG, ORDEM, est, inv, regras, self.ENVIO, {"Recanto": 2560}, hoje, [])
+        saida, _ = R.decidir_portao(CFG, ORDEM_OK, est, inv, regras, self.ENVIO, {"Recanto": 2560}, hoje, [])
         self.assertTrue(saida["portao"]["Recanto"]["pode"])
         self.assertIn("patch_quartos", saida["portao"]["Recanto"])
         self.assertNotIn("patch_quartos", saida["portao"]["Villa"])
@@ -852,7 +898,8 @@ class TestPortao(unittest.TestCase):
                              "estado_novo": est}, datetime(2026, 11, 18, 13, 5, tzinfo=timezone.utc), copy.deepcopy(est))
         self.assertEqual(disco["gravado_fds"]["Recanto"], "2026-11-18T13:05:00Z")    # o envio de 11:47 ficou antes
         bruto = copy.deepcopy({k: v for k, v in CFG.items() if k not in ("por_curto", "por_id")})
-        feitas, recusas = R.aplicar_config(bruto, disco, hoje, portao=saida)
+        gravado = dict(resumo_beds24=resumo_ok(saida["lote_beds24"]), gravado_pl=gravado_de(saida["itens"]))
+        feitas, recusas = R.aplicar_config(bruto, disco, hoje, portao=saida, **gravado)
         self.assertEqual((feitas, recusas), (["portão do 01→03 aberto: Recanto"], []))
         self.assertEqual(disco["portao"]["Recanto"], {"aberto": True, "em": "2026-11-18"})
         self.assertFalse(disco["portao"]["Villa"]["aberto"])
@@ -868,11 +915,11 @@ class TestPortao(unittest.TestCase):
         for q in R.POUSADAS["Recanto"]:
             self.assertFalse([x for x in cl[q]["sabados_fora_da_regra"] if x["data"] == "2027-01-01"], q)
         # decisão de outro dia: recusada
-        f2, r2 = R.aplicar_config(copy.deepcopy(bruto), copy.deepcopy(disco), date(2026, 11, 19), portao=saida)
+        f2, r2 = R.aplicar_config(copy.deepcopy(bruto), copy.deepcopy(disco), date(2026, 11, 19), portao=saida, **gravado)
         self.assertEqual(f2, [])
         self.assertTrue(r2)
         # portão fechado na decisão: nada a aplicar
-        fechado, _ = R.decidir_portao(CFG, ORDEM, est, inv, regras, self.ENVIO, {"Recanto": 2300}, hoje, [])
+        fechado, _ = R.decidir_portao(CFG, ORDEM_OK, est, inv, regras, self.ENVIO, {"Recanto": 2300}, hoje, [])
         f3, _ = R.aplicar_config(copy.deepcopy({k: v for k, v in CFG.items() if k not in ("por_curto", "por_id")}),
                                  copy.deepcopy(est), hoje, portao=fechado)
         self.assertEqual(f3, [])
@@ -899,20 +946,20 @@ class TestPortao(unittest.TestCase):
         est, regras, inv = self.preparar()
         envio = {"Q7": "2026-11-18T11:47:00Z", "Q2": "2026-11-18T11:48:00Z", "Double": "2026-11-18T11:49:00Z",
                  "Afrodite": "2026-11-17T09:00:00Z"}          # a Afrodite ainda não enviou depois da gravação
-        av = R.avaliar_portao(CFG, ORDEM, est, inv, regras, envio, {"Recanto": 2560}, hoje=date(2026, 11, 18))
+        av = R.avaliar_portao(CFG, ORDEM_OK, est, inv, regras, envio, {"Recanto": 2560}, hoje=date(2026, 11, 18))
         self.assertFalse(av["Recanto"]["pode"])
         envio["Afrodite"] = "2026-11-18T11:50:00Z"
-        av = R.avaliar_portao(CFG, ORDEM, est, inv, regras, envio, {"Recanto": 2560}, hoje=date(2026, 11, 18))
+        av = R.avaliar_portao(CFG, ORDEM_OK, est, inv, regras, envio, {"Recanto": 2560}, hoje=date(2026, 11, 18))
         self.assertTrue(av["Recanto"]["pode"], av["Recanto"]["faltam"])
         self.assertEqual(av["Recanto"]["prova"]["envio"], "2026-11-18T11:47:00Z")
         del envio["Q2"]
-        av = R.avaliar_portao(CFG, ORDEM, est, inv, regras, envio, {"Recanto": 2560}, hoje=date(2026, 11, 18))
+        av = R.avaliar_portao(CFG, ORDEM_OK, est, inv, regras, envio, {"Recanto": 2560}, hoje=date(2026, 11, 18))
         self.assertTrue(any("Q2" in f for f in av["Recanto"]["faltam"]))
 
     def test_portao_aberto_por_pousada(self):
         est, regras, inv = self.preparar()
         hoje = date(2026, 11, 18)
-        av = R.avaliar_portao(CFG, ORDEM, est, inv, regras, {"Recanto": "2026-11-18T11:47:00Z",
+        av = R.avaliar_portao(CFG, ORDEM_OK, est, inv, regras, {"Recanto": "2026-11-18T11:47:00Z",
                                                              "Villa": "2026-11-18T11:47:00Z"},
                               {"Recanto": 2560, "Villa": 1700}, hoje=hoje)
         self.assertTrue(av["Recanto"]["pode"], av["Recanto"]["faltam"])
@@ -923,7 +970,7 @@ class TestPortao(unittest.TestCase):
         self.assertIn("--override none --min-stay 2", ac["comandos_beds24"][0])
         af = [i for i in ac["itens_pricelabs"] if i["quarto"] == "Afrodite" and i["data"] == "2027-01-01"][0]
         self.assertEqual((af["check_in"], af["check_out"], af["min_stay"]), ("1111111", "1111111", 2))
-        self.assertEqual(validar(ac["itens_pricelabs"], hoje).erros, [])
+        self.assertEqual(validar(ac["itens_pricelabs"], hoje, ordens=ORDENS_OK).erros, [])
         # sem a prova (e com a config fechada) o validador barra a estadia 2 e a sexta aberta
         sem = R.acoes_portao(CFG, ORDEM, inv, regras, "Recanto", None, hoje)["itens_pricelabs"]
         self.assertTrue(validar(sem, hoje).erros)
@@ -1041,11 +1088,11 @@ class TestRestricoesDaOrdem(unittest.TestCase):
                   "excecao": "dono", "ordem_id": R.ORDEM_ID, "motivo": "teste", "portao_0103": prova}
         preco = {"tipo": "data", "quarto": "Double", "data": "2027-01-01", "min_price": 4543.6, "max_price": 4543.6,
                  "excecao": "dono", "ordem_id": R.ORDEM_ID, "motivo": "teste"}
-        self.assertEqual(validar([portao]).erros, [])
-        self.assertTrue(any("não abre na rotina" in e for e in validar([portao, preco]).erros))
+        self.assertEqual(validar([portao], ordens=ORDENS_OK).erros, [])
+        self.assertTrue(any("não abre na rotina" in e for e in validar([portao, preco], ordens=ORDENS_OK).erros))
         # preço da Villa não segura o portão do Recanto
         vk = dict(preco, quarto="VK7", min_price=4987.6, max_price=4987.6)
-        self.assertEqual(validar([portao, vk]).erros, [])
+        self.assertEqual(validar([portao, vk], ordens=ORDENS_OK).erros, [])
 
 
 class TestNoitesSoltas(unittest.TestCase):
@@ -1174,7 +1221,7 @@ class TestJuntarERegistrar(unittest.TestCase):
         self.assertEqual(it[("Q7", "2027-01-01")]["min_stay"], 2)
         self.assertEqual(it[("Afrodite", "2027-01-01")]["check_in"], "1111111")
         self.assertEqual(len(un["itens"]), 16)
-        self.assertEqual(validar(un["itens"]).erros, [])
+        self.assertEqual(validar(un["itens"], ordens=ORDENS_OK).erros, [])
         # órfã e preço na mesma noite: um item só (o preço do plano, a máscara da exceção 1)
         inv = inv_hoje()
         inv["Afrodite"]["2026-12-31"]["numAvail"] = 0
@@ -1252,6 +1299,492 @@ class TestOutrosScriptsForaDasNoites(unittest.TestCase):
             out = orc.comparar(CFG, {n: r(3000, "0/7")}, {n: r(3200, "0/6")}, {n: r(1000, "0/2")}, d, d,
                                {n: r(1500, "")}, hoje=HOJE, ordens=self.ORD)
             self.assertEqual(bool(out), esperado, n)
+
+
+
+# ---------------------------------------------------------------------------------------------------------------------
+# 3ª verificação de 16/11 (achados R3-01 a R3-15, rev33/achados_r3.json): cada teste falhava com o código de antes
+ENVIO_18 = {"Recanto": "2026-11-18T11:47:00Z", "Villa": "2026-11-18T11:47:00Z"}
+D18 = date(2026, 11, 18)
+
+
+def _arquivos(dd, inv: dict) -> list[str]:
+    """inv.json e ov_<Q>.json na pasta do teste; devolve os --regras."""
+    import json
+    (dd / "inv.json").write_text(json.dumps(inv), encoding="utf-8")
+    regs = []
+    for q, ns in regras_hoje().items():
+        (dd / f"ov_{q}.json").write_text(json.dumps({"overrides": list(ns.values())}), encoding="utf-8")
+        regs.append(f"{q}={dd / f'ov_{q}.json'}")
+    return regs
+
+
+class TestR3Validador(unittest.TestCase):
+    BASE = {"tipo": "data", "motivo": "teste", "excecao": "dono", "ordem_id": R.ORDEM_ID}
+
+    def test_r3_01_mascara_de_um_lado_so(self):
+        # sonda_r3 casos A a D: o payload manda o lado ausente como 1111111 e abria a sexta 01/01, a saída do sábado
+        # 02/01 e a da quinta 31/12, com ou sem citar a ordem
+        semo = {"tipo": "data", "motivo": "teste", "manter_reason": True}
+        com = dict(self.BASE, manter_reason=True)
+        casos = {"A": dict(com, quarto="Afrodite", data="2027-01-01", check_out="1111111"),
+                 "B": dict(semo, quarto="Afrodite", data="2027-01-01", check_out="1111111"),
+                 "C": dict(com, quarto="Afrodite", data="2027-01-02", check_in="1111101"),
+                 "D": dict(com, quarto="Afrodite", data="2026-12-31", check_in="1110111")}
+        for k, it in casos.items():
+            v = validar([it])
+            self.assertTrue(any("só um lado da máscara" in e for e in v.erros), (k, v.erros))
+            self.assertTrue(any(" abre " in e for e in v.erros), (k, v.erros))     # avaliado como o payload manda
+        # os dois lados, como o reveillon_250k.py manda: passa
+        self.assertEqual(validar([dict(com, quarto="Afrodite", data="2027-01-01", check_in="1111011",
+                                       check_out="1111111")]).erros, [])
+        # fora das noites com máscara na ordem, um lado só não é trava da ordem
+        self.assertFalse([e for e in validar([dict(semo, quarto="Afrodite", data="2026-12-29", check_out="1111111")]).erros
+                          if "só um lado" in e])
+
+    def test_r3_02_piso_da_balcony_nas_4_noites(self):
+        base = dict(self.BASE, data="2026-12-30")
+        # sonda_balcony: 1.500, 2.600 e 3.300 passavam com 0 erro (só aviso)
+        for val in (1500, 2600, 3300):
+            v = validar([dict(base, quarto="Balcony", min_price=val, max_price=val)], cfg=CFG6)
+            self.assertTrue(any("piso do período" in e for e in v.erros), (val, v.erros))
+        self.assertEqual(validar([dict(base, quarto="Balcony", min_price=3657.6, max_price=3657.6)], cfg=CFG6).erros, [])
+        # a faixa do aviso: a suíte com banheira livre mais barata (calendário de --precos) a R$ 3.900, 90% = 3.510 abaixo
+        # do piso (3.651,43): a Regra G vence entre 85,5% e 90%; abaixo de 85,5% é ERRO
+        precos = {("VK7", "2026-12-30"): {"preco": 3900, "livres": 2, "vendidas": 5, "total": 7},
+                  ("VK2", "2026-12-30"): {"preco": 4100, "livres": 1, "vendidas": 1, "total": 2}}
+        v = validar([dict(base, quarto="Balcony", min_price=3500, max_price=3500)], cfg=CFG6, precos=precos)
+        self.assertFalse([e for e in v.erros if "piso do período" in e], v.erros)
+        self.assertTrue(any("a Regra G vence" in a for a in v.avisos), v.avisos)
+        v = validar([dict(base, quarto="Balcony", min_price=3000, max_price=3000)], cfg=CFG6, precos=precos)
+        self.assertTrue(any("85,5%" in e for e in v.erros), v.erros)
+        # a King Spa 7 esgotada no calendário: vale a King Spa 2 (4.100 × 0,9 = 3.690 cabe no piso): ERRO
+        precos[("VK7", "2026-12-30")]["livres"] = 0
+        v = validar([dict(base, quarto="Balcony", min_price=3500, max_price=3500)], cfg=CFG6, precos=precos)
+        self.assertTrue(any("a Regra G cabe no piso" in e for e in v.erros), v.erros)
+        # o plano de hoje e a Regra G do script seguem passando (King Spa no plano)
+        res = R.montar_plano(CFG6, ORDEM, estado_hoje(), inv_hoje(), regras_hoje(), HOJE,
+                             [reserva("VK7", "2026-12-30", "2027-01-01")])
+        self.assertEqual(validar(res["itens"], cfg=CFG6).erros, [])
+
+    def test_r3_04_anuncio_so_com_a_ordem_no_quarto_e_valor_aprovados(self):
+        an = {"tipo": "anuncio", "campo": "max", "excecao": "dono", "ordem_id": R.ORDEM_ID, "motivo": "teste"}
+        d23 = date(2026, 11, 23)
+        self.assertEqual(validar([dict(an, quarto="Q7", valor=6000)], d23).erros, [])
+        # sonda_anuncio: Q7 9.000, Afrodite 15.000 e ordem inexistente passavam
+        self.assertTrue(any("aprova o máximo" in e for e in validar([dict(an, quarto="Q7", valor=9000)], d23).erros))
+        self.assertTrue(any("só libera o máximo" in e
+                            for e in validar([dict(an, quarto="Afrodite", valor=15000)], d23).erros))
+        self.assertTrue(any("sem ordem registrada" in e
+                            for e in validar([dict(an, quarto="Q7", valor=6000, ordem_id="inexistente-xyz")], d23).erros))
+        self.assertTrue(validar([dict(an, quarto="Q7", campo="min", valor=1058)], d23).erros)
+        # antes de 23/11 (teto manual do dono de 19 a 22/11 em percent_max sobre o máximo): barrado
+        self.assertTrue(any("a partir de 2026-11-23" in e for e in validar([dict(an, quarto="Q7", valor=6000)]).erros))
+        # a volta a R$ 5.000 depois de 02/01 passa (a ordem venceu, mas a volta é dela)
+        self.assertEqual(validar([dict(an, quarto="Q7", valor=5000)], date(2027, 1, 3)).erros, [])
+        self.assertTrue(validar([dict(an, quarto="Q7", valor=6000)], date(2027, 1, 3)).erros)
+
+    def test_r3_05_apagar_nessas_noites_e_erro(self):
+        # sonda_r3 casos E e F: apagar citando a ordem passava só com avisos
+        for q, n in (("Afrodite", "2027-01-01"), ("Q7", "2026-12-31"), ("VK7", "2027-01-02")):
+            ap = {"tipo": "apagar", "quarto": q, "data": n, "motivo": "teste", "excecao": "dono", "ordem_id": R.ORDEM_ID}
+            self.assertTrue(any("apagar numa noite com ordem do dono por data" in e for e in validar([ap]).erros), (q, n))
+        fora = {"tipo": "apagar", "quarto": "Q7", "data": "2026-12-29", "motivo": "teste"}
+        self.assertFalse([e for e in validar([fora]).erros if "ordem do dono por data" in e])
+
+    def test_r3_09_piso_no_percentual_inteiro(self):
+        # val_folga: um ponto inteiro abaixo do piso aprovado passava (folga de 1% da base + R$ 1)
+        base = dict(self.BASE, data="2026-12-30")
+        aprovado = {"Q7": 246, "Q2": 156, "Double": 175, "Afrodite": 173, "VK7": 175, "VK2": 221}
+        for q, p in aprovado.items():
+            b = CFG["por_curto"][q]["base"]
+            ok, baixo = round(b * (1 + p / 100), 2), round(b * (1 + (p - 1) / 100), 2)
+            v = validar([dict(base, quarto=q, min_price=ok, max_price=ok)], cfg=CFG6)
+            self.assertFalse([e for e in v.erros if "piso" in e], (q, v.erros))
+            v = validar([dict(base, quarto=q, min_price=baixo, max_price=baixo)], cfg=CFG6)
+            self.assertTrue(any("piso do período" in e for e in v.erros), (q, p - 1))
+        # fim de semana (fator 0,5832): Moinhos +203 (público ~R$ 2.073, abaixo do piso público de R$ 2.077) barrado
+        fds = dict(self.BASE, data="2027-01-01", quarto="Q7")
+        self.assertTrue(any("piso do período" in e for e in validar([dict(fds, min_price=3554.19, max_price=3554.19)]).erros))
+        self.assertEqual(validar([dict(fds, min_price=3565.92, max_price=3565.92)]).erros, [])
+
+    def test_r3_09_piso_no_pedido_com_fator_muito_baixo(self):
+        # com o fator do fim de semana abaixo de ~0,42 o piso do período fica no pedido de 09/11 (Moinhos 4.974): o ceil
+        # dele (+325) passava do pedido; o plano fica no +324 (dentro do teto) e o validador aceita
+        est = estado_hoje()
+        est["fatores"]["Recanto"]["fds"] = {"valor": 0.40, "medido_em": "2026-11-20"}
+        res = R.montar_plano(CFG6, ORDEM, est, inv_hoje(), regras_hoje(), date(2026, 11, 20), [])
+        for q in ("Q7", "Q2", "Double", "Afrodite"):
+            self.assertLessEqual(valor_final(res, q, "2027-01-01"), R.pedido(ORDEM, q, "2027-01-01") + 0.01, q)
+        self.assertEqual(validar(res["itens"], date(2026, 11, 20), CFG6, est).erros, [])
+        it = dict(self.BASE, data="2027-01-01", quarto="Q7", min_price=4961.79, max_price=4961.79)   # +323: barrado
+        self.assertTrue(any("piso do período" in e for e in validar([it], date(2026, 11, 20), CFG6, est).erros))
+
+    def test_r3_10_ordem_do_recanto_no_validador(self):
+        base = dict(self.BASE, data="2026-12-30")
+        # val_ordem: Moinhos acima da Panorâmica I passava com 0 erro
+        its = [dict(base, quarto="Q7", min_price=4997, max_price=4997),
+               dict(base, quarto="Double", min_price=4987.6, max_price=4987.6)]
+        self.assertTrue(any("ordem do Recanto" in e and "Q7" in e for e in validar(its, cfg=CFG6).erros))
+        its = [dict(base, quarto="Q7", min_price=4058.58, max_price=4058.58),
+               dict(base, quarto="Q2", min_price=4070.4, max_price=4070.4),
+               dict(base, quarto="Double", min_price=4055.2, max_price=4055.2)]
+        self.assertTrue(any("ordem do Recanto" in e and "Q2 R$" in e for e in validar(its, cfg=CFG6).erros))
+        # Afrodite abaixo de 1,15 × Panorâmica I
+        its = [dict(base, quarto="Double", min_price=4987.6, max_price=4987.6),
+               dict(base, quarto="Afrodite", min_price=5460, max_price=5460)]
+        self.assertTrue(any("Afrodite R$" in e for e in validar(its, cfg=CFG6).erros))
+        # sem item da Double: o valor do calendário de --precos (a regra vigente) entra
+        precos = {("Double", "2026-12-30"): {"preco": 4987.6, "livres": 6, "vendidas": 0, "total": 6}}
+        v = validar([dict(base, quarto="Q7", min_price=4997, max_price=4997)], cfg=CFG6, precos=precos)
+        self.assertTrue(any("ordem do Recanto" in e for e in v.erros), v.erros)
+        # a proposta aprovada (Q2 4.070,40 "igual" à Double 4.070,00) passa na tolerância de R$ 1
+        its = [dict(base, quarto="Q7", min_price=4058.58, max_price=4058.58),
+               dict(base, quarto="Q2", min_price=4070.4, max_price=4070.4),
+               dict(base, quarto="Double", min_price=4070, max_price=4070),
+               dict(base, quarto="Afrodite", min_price=5460, max_price=5460)]
+        self.assertFalse([e for e in validar(its, cfg=CFG6).erros if "ordem do Recanto" in e and "Afrodite" not in e])
+
+
+class TestR3Plano(unittest.TestCase):
+    def test_r3_08_linha_de_alarme_com_a_receita(self):
+        # cen_receita: em 24/11 com 44 quarto-noites e um pacote, sem --receita a escada subia sem aviso
+        inv = inv_hoje()
+        for n in R.NOITES:
+            inv["Double"][n]["numAvail"] -= 1                    # 44 quarto-noites (≥ 43 da linha de 23/11)
+        rs = [reserva("Q7", "2026-12-30", "2027-01-01", quando="2026-11-20T10:00:00Z", rid=1)]
+        d24 = date(2026, 11, 24)
+        res = R.montar_plano(CFG, ORDEM, estado_hoje(), inv, regras_hoje(), d24, rs)
+        self.assertTrue(res["contexto"]["pausa"])                 # a reserva sem valor dá R$ 0 < 53.100
+        self.assertEqual(res["contexto"]["escada"]["Recanto"]["reveillon"], 0)
+        self.assertEqual(res["contexto"]["receita"], 0.0)
+        # a receita sai das reservas lidas (receita de hospedagem rateada por noite, como o beds24.py livro)
+        rs2 = [dict(rs[0], receita_hospedagem=60000.0), reserva("VK7", "2026-12-29", "2026-12-31", rid=2)]
+        rs2[1]["invoiceItems"] = [{"type": "charge", "lineTotal": 2000.0}]     # 29→31: só 30/12 conta (R$ 1.000)
+        self.assertEqual(R.receita_das_noites(CFG, rs2), 61000.0)
+        res2 = R.montar_plano(CFG, ORDEM, estado_hoje(), inv, regras_hoje(), d24, rs2[:1])
+        self.assertFalse(res2["contexto"]["pausa"], res2["contexto"]["alarme"])
+        self.assertEqual(res2["contexto"]["escada"]["Recanto"]["reveillon"], 1)
+        self.assertIn("reservas lidas", res2["contexto"]["receita_origem"])
+        # --receita explícita vale
+        res3 = R.montar_plano(CFG, ORDEM, estado_hoje(), inv, regras_hoje(), d24, rs2[:1], 40000.0)
+        self.assertTrue(res3["contexto"]["pausa"])
+        # sem reservas e sem receita, a partir de 23/11: parada, com aviso
+        res4 = R.montar_plano(CFG, ORDEM, estado_hoje(), inv, regras_hoje(), d24, None)
+        self.assertTrue(res4["contexto"]["pausa"])
+        self.assertTrue(any("sem a receita" in m for m in res4["avisos"]), res4["avisos"])
+        # antes de 23/11 nada muda (o plano de hoje)
+        self.assertFalse(R.montar_plano(CFG, ORDEM, estado_hoje(), inv_hoje(), regras_hoje(), HOJE, None)
+                         ["contexto"]["pausa"])
+
+    def test_r3_14_regra_sem_estadia_e_regra_com_validade(self):
+        regras = regras_hoje()
+        for n in ("2026-12-30", "2027-01-01"):
+            regras["Q7"][n].pop("min_stay")
+        af = regras["Afrodite"]["2027-01-01"]
+        for k in ("min_stay", "check_in_check_out_enabled", "check_in", "check_out"):
+            af.pop(k)
+        res = R.montar_plano(CFG, ORDEM, estado_hoje(), inv_hoje(), regras, HOJE, [])
+        it = por(res)
+        self.assertEqual((it[("Q7", "2026-12-30")]["min_stay"], it[("Q7", "2027-01-01")]["min_stay"]), (2, 3))
+        self.assertEqual((it[("Afrodite", "2027-01-01")]["check_in"], it[("Afrodite", "2027-01-01")]["check_out"]),
+                         ("1111011", "1111111"))
+        self.assertEqual(validar(res["itens"]).erros, [])
+        # a regra com a máscara e sem a estadia: o item leva a estadia; a máscara fica a da regra
+        regras2 = regras_hoje()
+        regras2["Afrodite"]["2027-01-02"].pop("min_stay")
+        it2 = por(R.montar_plano(CFG, ORDEM, estado_hoje(), inv_hoje(), regras2, HOJE, []))[("Afrodite", "2027-01-02")]
+        self.assertEqual(it2["min_stay"], 3)
+        self.assertNotIn("check_in", it2)
+        # exceção 2 aplicada na config: a estadia que o item põe é a da config (2), não a de antes do portão
+        cfg = copy.deepcopy(CFG)
+        cfg["parametros"]["regra_h_beds24"]["override_por_data_por_quarto"] = {"2027-01-02": {"Q7": "noCheckOut"}}
+        cfg["parametros"]["regra_h_beds24"]["estadia_minima_por_data_por_quarto"] = {"2027-01-02": {"Q7": 2}}
+        regras3 = regras_hoje()
+        regras3["Q7"]["2027-01-02"].pop("min_stay")
+        res3 = R.montar_plano(cfg, ORDEM, estado_hoje(), inv_hoje(), regras3, HOJE, [])
+        self.assertEqual(por(res3)[("Q7", "2027-01-02")]["min_stay"], 2)
+        v = Validador(cfg, HOJE, {}, ordens=ORDENS, estados={R.ORDEM_ID: estado_hoje()})
+        v.validar(copy.deepcopy(res3["itens"]))
+        self.assertEqual(v.erros, [])
+        # regra com validade (lead_time_expiry): ERRO no plano (apagar é barrado nessas noites)
+        regras4 = regras_hoje()
+        regras4["VK7"]["2026-12-31"]["lead_time_expiry"] = 3
+        with self.assertRaises(ValueError) as cm:
+            R.montar_plano(CFG, ORDEM, estado_hoje(), inv_hoje(), regras4, HOJE, [])
+        self.assertIn("lead_time_expiry", str(cm.exception))
+
+
+class TestR3PortaoEExcecoes(unittest.TestCase):
+    def test_r3_03_portao_espera_o_ok_do_dono(self):
+        ok = ORDEM_PENDENTE["execucao_skill"]["ok_01_04_05"]
+        self.assertEqual((ok["resposta"], ok["texto_dono"], ok["respondido_em"]), (None, None, None))   # pendente
+        # a ordem real tem a resposta literal do dono (16/11): "aceita"
+        real = ORDEM["execucao_skill"]["ok_01_04_05"]
+        self.assertEqual(real["resposta"], "aceita")
+        self.assertEqual(real["texto_dono"], "Pode de 1 a 4 e de 1 a 5, sem problema.")
+        est, regras, inv = preparar_portao()
+        av = R.avaliar_portao(CFG, ORDEM_PENDENTE, est, inv, regras, ENVIO_18, {"Recanto": 2560}, hoje=D18)
+        self.assertFalse(av["Recanto"]["pode"])
+        self.assertEqual(len(av["Recanto"]["faltam"]), 1, av["Recanto"]["faltam"])      # as 3 da ordem passaram
+        self.assertTrue(av["Recanto"]["faltam"][0].startswith("ok do dono para 01→04/01→05"))
+        saida, linhas = R.decidir_portao(CFG, ORDEM_PENDENTE, est, inv, regras, ENVIO_18, {"Recanto": 2560}, D18, [])
+        self.assertTrue(any(x.startswith("  falta: ok do dono para 01→04/01→05") for x in linhas), linhas)
+        self.assertEqual((saida["itens"], saida["lote_beds24"], saida["patch_quartos"]), ([], [], {}))
+        # com o ok registrado (cópia de teste), abre; a prova leva a resposta
+        av2 = R.avaliar_portao(CFG, ORDEM_OK, est, inv, regras, ENVIO_18, {"Recanto": 2560}, hoje=D18)
+        self.assertTrue(av2["Recanto"]["pode"], av2["Recanto"]["faltam"])
+        self.assertEqual(av2["Recanto"]["prova"]["ok_01_04_05"]["resposta"], "aceita")
+        # o validador barra a prova do portão enquanto a ordem não tem o ok
+        ac = R.acoes_portao(CFG, ORDEM_PENDENTE, inv, regras, "Recanto", av2["Recanto"]["prova"], D18)
+        self.assertTrue(any("ok do dono para 01→04/01→05" in e
+                            for e in validar(ac["itens_pricelabs"], D18, ordens=ORDENS_PENDENTE).erros))
+        self.assertEqual(validar(ac["itens_pricelabs"], D18, ordens=ORDENS_OK).erros, [])
+        # recusa registrada, ou resposta sem o texto literal: fechado
+        rec = copy.deepcopy(ORDEM_PENDENTE)
+        rec["execucao_skill"]["ok_01_04_05"].update(resposta="recusa", texto_dono="(teste)", respondido_em="2026-11-17")
+        av3 = R.avaliar_portao(CFG, rec, est, inv, regras, ENVIO_18, {"Recanto": 2560}, hoje=D18)
+        self.assertTrue(any("recusou" in f for f in av3["Recanto"]["faltam"]))
+        sem_texto = copy.deepcopy(ORDEM_OK)
+        sem_texto["execucao_skill"]["ok_01_04_05"]["texto_dono"] = None
+        self.assertFalse(R.avaliar_portao(CFG, sem_texto, est, inv, regras, ENVIO_18, {"Recanto": 2560},
+                                          hoje=D18)["Recanto"]["pode"])
+
+    def test_r3_06_orfas_sem_aplicar_config(self):
+        import json
+        import tempfile
+        from pathlib import Path
+        from unittest import mock
+        inv = inv_hoje()
+        inv["Balcony"]["2026-12-31"]["numAvail"] = 0              # exceção 1 abre: há patch
+        with tempfile.TemporaryDirectory() as d:
+            dd = Path(d)
+            regs = _arquivos(dd, inv)
+            quartos = dd / "quartos.json"
+            quartos.write_text("{}", encoding="utf-8")
+            args = ["orfas", "--hoje", "2026-11-16", "--replay", "--inventario", str(dd / "inv.json"), "--regras", *regs,
+                    "--saida", str(dd / "orfas.json"), "--lote-beds24", str(dd / "lote.json")]
+            with mock.patch.object(R, "ARQ_QUARTOS", quartos):
+                self.assertEqual(R.main(args + ["--aplicar-config"]), 1)
+                self.assertEqual(quartos.read_text(encoding="utf-8"), "{}")    # nada gravado na config
+                self.assertEqual(R.main(args), 0)
+                self.assertEqual(quartos.read_text(encoding="utf-8"), "{}")
+            saida = json.loads((dd / "orfas.json").read_text(encoding="utf-8"))
+            self.assertTrue(saida["patch_quartos"])
+            self.assertEqual(saida["lote_beds24"], json.loads((dd / "lote.json").read_text(encoding="utf-8")))
+
+    def test_r3_07_trava_de_inventario_no_lote_das_excecoes(self):
+        inv = inv_hoje()
+        inv["Balcony"]["2026-12-31"]["numAvail"] = 0
+        inv["Q7"]["2027-01-01"]["numAvail"] = 0
+        r = R.avaliar_orfas(CFG, ORDEM, estado_hoje(), inv, regras_hoje(), HOJE)
+        abre1 = [i for i in r["lote_beds24"] if i["quarto"] == "Balcony"]
+        self.assertEqual([i["vizinha_esgotada"] for i in abre1], [{"data": "2026-12-31", "numAvail": 0}])
+        abre2 = [i for i in r["lote_beds24"] if i["quarto"] == "Q7"]
+        self.assertEqual(len(abre2), 2)
+        self.assertTrue(all(i["vizinha_esgotada"] == {"data": "2027-01-01", "numAvail": 0} for i in abre2))
+        # o fechamento (volta ao pacote) não leva trava: fechar é sempre seguro
+        cfg = copy.deepcopy(CFG)
+        cfg["parametros"]["regra_h_beds24"]["override_por_data_por_quarto"] = {"2026-12-31": {"Balcony": "noCheckIn"}}
+        fech = R.avaliar_orfas(cfg, ORDEM, estado_hoje(), inv_hoje(), regras_hoje(), HOJE)
+        self.assertFalse([i for i in fech["lote_beds24"] if i.get("vizinha_esgotada")])
+
+    def test_r3_11_orfas_e_portao_na_mesma_rotina(self):
+        import beds24
+        est, regras, inv = preparar_portao()
+        cfg = copy.deepcopy(CFG)
+        rh = cfg["parametros"]["regra_h_beds24"]
+        rh["override_por_data_por_quarto"] = {"2027-01-02": {"Q7": "noCheckOut"}}     # exceção 2 aplicada no Q7
+        rh["estadia_minima_por_data_por_quarto"] = {"2027-01-02": {"Q7": 2}}
+        # 01/01 do Q7 com vaga (reabriu): a exceção 2 fecha; o portão do Recanto abre na mesma rotina
+        portao, _ = R.decidir_portao(cfg, ORDEM_OK, est, inv, regras, ENVIO_18, {"Recanto": 2560}, D18, [])
+        self.assertTrue(portao["portao"]["Recanto"]["pode"])
+        sem = R.avaliar_orfas(cfg, ORDEM, est, inv, regras, D18)
+        self.assertEqual(sem["quartos"]["Q7"]["acao_2"], "fechar")
+        with self.assertRaises(beds24.ErroBeds24):           # sem o portão: 3 contra 2, o editar-lote recusa os dois
+            beds24.juntar_planos([("lote_orfas", sem["lote_beds24"]), ("lote_portao", portao["lote_beds24"])])
+        com = R.avaliar_orfas(cfg, ORDEM, est, inv, regras, D18, portao)
+        self.assertEqual([i["min_stay"] for i in com["lote_beds24"] if i.get("min_stay") is not None], [2])
+        lote, _ = beds24.juntar_planos([("lote_orfas", com["lote_beds24"]), ("lote_portao", portao["lote_beds24"])])
+        self.assertEqual([i["min_stay"] for i in com["itens_pricelabs"]], [2])
+        # aplicar-config: as exceções antes do portão; a estadia 2 de 02/01 fica nos 4 quartos do Recanto
+        orfas = {"hoje": D18.isoformat(), "itens": com["itens_pricelabs"], "lote_beds24": com["lote_beds24"],
+                 "patch_quartos": com["patch_quartos"]}
+        bruto = copy.deepcopy({k: v for k, v in cfg.items() if k not in ("por_curto", "por_id")})
+        feitas, recusas = R.aplicar_config(bruto, copy.deepcopy(est), D18, portao=portao, orfas=orfas,
+                                           resumo_beds24=resumo_ok(lote),
+                                           gravado_pl=gravado_de(com["itens_pricelabs"] + portao["itens"]))
+        self.assertEqual(recusas, [])
+        self.assertEqual(len(feitas), 2)
+        rh2 = bruto["parametros"]["regra_h_beds24"]
+        self.assertEqual(rh2["estadia_minima_por_data_por_quarto"]["2027-01-02"],
+                         {"Q7": 2, "Q2": 2, "Double": 2, "Afrodite": 2})
+        self.assertNotIn("2027-01-02", rh2["override_por_data_por_quarto"])
+        # --portao de outro dia: recusado
+        with self.assertRaises(ValueError):
+            R.avaliar_orfas(cfg, ORDEM, est, inv, regras, date(2026, 11, 19), portao)
+
+    def test_r3_12_aplicar_config_so_com_o_beds24_e_o_pricelabs_conferidos(self):
+        est, regras, inv = preparar_portao()
+        saida, _ = R.decidir_portao(CFG, ORDEM_OK, est, inv, regras, ENVIO_18, {"Recanto": 2560}, D18, [])
+        lote = saida["lote_beds24"]
+        bruto = copy.deepcopy({k: v for k, v in CFG.items() if k not in ("por_curto", "por_id")})
+
+        def aplicar(**kw):
+            b, e = copy.deepcopy(bruto), copy.deepcopy(est)
+            f, r = R.aplicar_config(b, e, D18, portao=saida, **kw)
+            return f, r, b
+        f, r, _ = aplicar()
+        self.assertEqual(f, [])
+        self.assertTrue(any("resumo do editar-lote" in x for x in r), r)
+        for ruim, txt in ((dict(resumo_ok(lote), erros=["Q7 2027-01-01: override noCheckIn (esperado none)"]),
+                           "voltou com erro"), (dict(resumo_ok(lote), aplicar=False), "simulação"),
+                          (dict(resumo_ok(lote), parou_no_bloco=1, resposta_ok=False), "voltou com erro"),
+                          (dict(resumo_ok(lote), itens=2), "outro lote"),
+                          (dict(resumo_ok(lote), conferidos=3), "conferiu")):
+            f, r, _ = aplicar(resumo_beds24=ruim, gravado_pl=gravado_de(saida["itens"]))
+            self.assertEqual(f, [], txt)
+            self.assertTrue(any(txt in x for x in r), (txt, r))
+        # item do lote pulado (guarda): o portão do Recanto não vai à config
+        pul = dict(resumo_ok(lote), pulados=[{"quarto": "Q2", "de": "2027-01-02", "ate": "2027-01-02",
+                                              "por_que": "minStay mudou desde o plano: refaça com o inventário novo"}])
+        f, r, b = aplicar(resumo_beds24=pul, gravado_pl=gravado_de(saida["itens"]))
+        self.assertEqual(f, [])
+        self.assertTrue(any("portão Recanto: não aplicado" in x for x in r), r)
+        self.assertNotIn("override_por_data_por_quarto", b["parametros"]["regra_h_beds24"])
+        # PriceLabs sem a resposta da gravação, ou com a máscara da sexta não gravada
+        f, r, _ = aplicar(resumo_beds24=resumo_ok(lote))
+        self.assertEqual(f, [])
+        self.assertTrue(any("PriceLabs" in x for x in r), r)
+        g = gravado_de(saida["itens"])
+        g["Afrodite"]["2027-01-01"]["check_in"] = "1111011"
+        f, r, _ = aplicar(resumo_beds24=resumo_ok(lote), gravado_pl=g)
+        self.assertEqual(f, [])
+        self.assertTrue(any("Afrodite" in x and "check_in" in x for x in r), r)
+        # "já no alvo" conta como gravado; tudo conferido: aplica
+        alvo = dict(resumo_ok(lote), pulados=[{"quarto": "Q2", "de": "2027-01-02", "ate": "2027-01-02",
+                                               "por_que": "já no alvo"}])
+        f, r, _ = aplicar(resumo_beds24=alvo, gravado_pl=gravado_de(saida["itens"]))
+        self.assertEqual((f, r), (["portão do 01→03 aberto: Recanto"], []))
+        # exceções: o quarto com o item pulado (a vizinha reabriu) fica fora do patch; o outro entra
+        inv2 = inv_hoje()
+        inv2["Balcony"]["2026-12-31"]["numAvail"] = 0
+        inv2["VK7"]["2026-12-31"]["numAvail"] = 0
+        orf = R.avaliar_orfas(CFG, ORDEM, estado_hoje(), inv2, regras_hoje(), HOJE)
+        so = {"hoje": "2026-11-16", "itens": orf["itens_pricelabs"], "lote_beds24": orf["lote_beds24"],
+              "patch_quartos": orf["patch_quartos"]}
+        resumo = dict(resumo_ok(orf["lote_beds24"]), a_gravar=1, conferidos=1,
+                      pulados=[{"quarto": "VK7", "de": "2026-12-31", "ate": "2026-12-31",
+                                "por_que": "a noite vizinha 2026-12-31 não está mais esgotada (numAvail 1)"}])
+        b2 = copy.deepcopy(bruto)
+        f, r = R.aplicar_config(b2, estado_hoje(), HOJE, orfas=so, resumo_beds24=resumo, gravado_pl={})
+        self.assertEqual(f, ["exceções das noites soltas: Balcony"])
+        self.assertTrue(any(x.startswith("VK7:") for x in r), r)
+        self.assertEqual(b2["parametros"]["regra_h_beds24"]["override_por_data_por_quarto"]["2026-12-31"],
+                         {"Balcony": "noCheckIn"})
+
+    def test_r3_12_aplicar_config_pela_linha_de_comando(self):
+        import json
+        import tempfile
+        from pathlib import Path
+        from unittest import mock
+        est, regras, inv = preparar_portao()
+        saida, _ = R.decidir_portao(CFG, ORDEM_OK, est, inv, regras, ENVIO_18, {"Recanto": 2560}, D18, [])
+        bruto = {k: v for k, v in CFG.items() if k not in ("por_curto", "por_id")}
+        with tempfile.TemporaryDirectory() as d:
+            dd = Path(d)
+            (dd / "quartos.json").write_text(json.dumps(bruto, ensure_ascii=False), encoding="utf-8")
+            (dd / "estado.json").write_text(json.dumps(est, ensure_ascii=False), encoding="utf-8")
+            (dd / "portao.json").write_text(json.dumps(saida, ensure_ascii=False), encoding="utf-8")
+            (dd / "resumo.json").write_text(json.dumps(resumo_ok(saida["lote_beds24"])), encoding="utf-8")
+            pls = []
+            for q, regs in gravado_de(saida["itens"]).items():    # a resposta da gravação, como o PriceLabs devolve
+                (dd / f"grav_{q}.json").write_text(json.dumps({"data": {"overrides": list(regs.values())}}),
+                                                   encoding="utf-8")
+                pls.append(f"{q}={dd / f'grav_{q}.json'}")
+            base = ["aplicar-config", "--hoje", "2026-11-18", "--portao", str(dd / "portao.json"), "--estado",
+                    str(dd / "estado.json")]
+            with mock.patch.object(R, "ARQ_QUARTOS", dd / "quartos.json"):
+                self.assertEqual(R.main(base), 1)                                  # sem o resumo do Beds24
+                self.assertEqual(json.loads((dd / "quartos.json").read_text(encoding="utf-8")), bruto)
+                self.assertEqual(R.main(base + ["--resumo-beds24", str(dd / "resumo.json"), "--pricelabs", *pls]), 0)
+            cfg = json.loads((dd / "quartos.json").read_text(encoding="utf-8"))
+            self.assertEqual(cfg["parametros"]["regra_h_beds24"]["override_por_data_por_quarto"]["2027-01-01"],
+                             {"Q7": "none", "Q2": "none", "Double": "none", "Afrodite": "none"})
+            self.assertTrue(json.loads((dd / "estado.json").read_text(encoding="utf-8"))["portao"]["Recanto"]["aberto"])
+
+    def test_r3_13_excecao_so_com_a_vespera_para_todas_as_noites_soltas(self):
+        inv = inv_hoje()
+        inv["Q7"]["2026-12-31"]["numAvail"] = 0          # Q7: 3 noites soltas em 30/12
+        inv["Q7"]["2026-12-29"]["numAvail"] = 2          # 29/12 com 2: a 3ª venda 29→31 isolaria 30/12
+        r = R.avaliar_orfas(CFG, ORDEM, estado_hoje(), inv, regras_hoje(), HOJE)
+        x = r["quartos"]["Q7"]
+        self.assertEqual(x["excecao_1_ota"], "fechada")
+        self.assertIn("isolariam", x["excecao_1_por_que"])
+        self.assertEqual(x["venda_direta_29_31"], 2)                    # a venda direta segue
+        inv["Q7"]["2026-12-29"]["numAvail"] = 3
+        self.assertEqual(R.avaliar_orfas(CFG, ORDEM, estado_hoje(), inv, regras_hoje(), HOJE)["quartos"]["Q7"]
+                         ["excecao_1_ota"], "abre")
+        # aplicada: 29/12 cai abaixo das noites soltas, fecha; 29/12 esgota, fecha com URGENTE (janela do dia órfão)
+        cfg = copy.deepcopy(CFG)
+        cfg["parametros"]["regra_h_beds24"]["override_por_data_por_quarto"] = {"2026-12-31": {"Q7": "noCheckIn"}}
+        inv["Q7"]["2026-12-29"]["numAvail"] = 2
+        r = R.avaliar_orfas(cfg, ORDEM, estado_hoje(), inv, regras_hoje(), HOJE)
+        self.assertEqual((r["quartos"]["Q7"]["acao_1"], r["quartos"]["Q7"].get("urgente")), ("fechar", None))
+        inv["Q7"]["2026-12-29"]["numAvail"] = 0
+        r = R.avaliar_orfas(cfg, ORDEM, estado_hoje(), inv, regras_hoje(), HOJE)
+        self.assertEqual(r["quartos"]["Q7"]["acao_1"], "fechar")
+        self.assertTrue(r["quartos"]["Q7"]["urgente"])
+        self.assertTrue(any(m.startswith("URGENTE Q7") for m in r["avisos"]), r["avisos"])
+        # exceção 2: 02/01 com 6 soltas e 03/01 com 5: fechada; com 6, abre
+        inv = inv_hoje()
+        inv["Q7"]["2027-01-01"]["numAvail"] = 0
+        inv["Q7"]["2027-01-03"]["numAvail"] = 5
+        self.assertEqual(R.avaliar_orfas(CFG, ORDEM, estado_hoje(), inv, regras_hoje(), HOJE)["quartos"]["Q7"]
+                         ["excecao_2_ota"], "fechada")
+        inv["Q7"]["2027-01-03"]["numAvail"] = 6
+        self.assertEqual(R.avaliar_orfas(CFG, ORDEM, estado_hoje(), inv, regras_hoje(), HOJE)["quartos"]["Q7"]
+                         ["excecao_2_ota"], "abre")
+
+    def test_r3_15_portao_nao_avaliado_e_quarto_de_referencia(self):
+        import json
+        import tempfile
+        from pathlib import Path
+        # (a) rotina sem o envio e o público do dia: a saída e o lote do portão saem vazios e os passos seguintes iguais
+        with tempfile.TemporaryDirectory() as d:
+            dd = Path(d)
+            regs = _arquivos(dd, inv_hoje())
+            (dd / "lote_portao.json").write_text('[{"velho": true}]', encoding="utf-8")
+            args = ["portao", "--hoje", "2026-11-16", "--replay", "--inventario", str(dd / "inv.json"), "--regras", *regs,
+                    "--nao-avaliar", "--saida", str(dd / "portao.json"), "--lote-beds24", str(dd / "lote_portao.json")]
+            self.assertEqual(R.main(args), 0)
+            self.assertEqual(json.loads((dd / "lote_portao.json").read_text(encoding="utf-8")), [])
+            pt = json.loads((dd / "portao.json").read_text(encoding="utf-8"))
+            self.assertEqual((pt["itens"], pt["patch_quartos"], pt["nao_avaliado"]), ([], {}, True))
+            (dd / "plano.json").write_text('{"hoje": "2026-11-16", "itens": []}', encoding="utf-8")
+            orf = ["orfas", "--hoje", "2026-11-16", "--replay", "--inventario", str(dd / "inv.json"), "--regras", *regs,
+                   "--portao", str(dd / "portao.json"), "--saida", str(dd / "orfas.json")]
+            self.assertEqual(R.main(orf), 0)
+            self.assertEqual(R.main(["juntar", "--plano", str(dd / "plano.json"), str(dd / "orfas.json"),
+                                     str(dd / "portao.json"), "--saida", str(dd / "unico.json")]), 0)
+        # (b) o público vem do 30→03: o quarto de referência é o mais barato livre nas 4 noites
+        est, regras, inv = preparar_portao()
+        inv["Q7"]["2026-12-30"]["numAvail"] = 0         # a Moinhos (a mais barata) sem vaga em 30/12
+        av = R.avaliar_portao(CFG, ORDEM_OK, est, inv, regras, ENVIO_18, {"Recanto": 2596}, hoje=D18)
+        self.assertEqual(av["Recanto"]["prova"]["quarto_ref"], "Q2")
+        self.assertTrue(av["Recanto"]["pode"], av["Recanto"]["faltam"])
+        # com o quarto que a Booking mostrou (--publico Recanto=<R$>@Q7)
+        av = R.avaliar_portao(CFG, ORDEM_OK, est, inv, regras, ENVIO_18, {"Recanto": 2552}, hoje=D18,
+                              quarto_publico={"Recanto": "Q7"})
+        self.assertEqual((av["Recanto"]["prova"]["quarto_ref"], av["Recanto"]["pode"]), ("Q7", True))
+        av = R.avaliar_portao(CFG, ORDEM_OK, est, inv, regras, ENVIO_18, {"Recanto": 2552}, hoje=D18,
+                              quarto_publico={"Recanto": "VK7"})
+        self.assertTrue(any("quarto do público medido" in f for f in av["Recanto"]["faltam"]))
+        # nenhum quarto livre nas 4 noites: pede o quarto que a Booking mostrou
+        for q in R.POUSADAS["Recanto"]:
+            inv[q]["2026-12-31"]["numAvail"] = 0
+        av = R.avaliar_portao(CFG, ORDEM_OK, est, inv, regras, ENVIO_18, {"Recanto": 2552}, hoje=D18)
+        self.assertTrue(any("@<quarto>" in f for f in av["Recanto"]["faltam"]), av["Recanto"]["faltam"])
 
 
 if __name__ == "__main__":

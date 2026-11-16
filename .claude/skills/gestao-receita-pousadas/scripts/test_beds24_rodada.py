@@ -858,6 +858,55 @@ class TestEditarLoteVariosPlanos(Base):
         self.assertNotIn("planos", json.loads(out))
 
 
+class TestTravaVizinhaEsgotada(Base):
+    """Réveillon 2026/27 (3ª verificação de 16/11, R3-07): o item que abre a exceção das noites soltas leva
+    `vizinha_esgotada`; o editar-lote relê o inventário antes e pula o item se a noite vizinha reabriu (cancelamento entre
+    o `orfas` e o lote), sem gravar nada dele."""
+
+    def lote(self):
+        t31, t01 = {"data": "2026-12-31", "numAvail": 0}, {"data": "2027-01-01", "numAvail": 0}
+        return [{"quarto": "Q7", "de": "2026-12-31", "ate": "2026-12-31", "override": "noCheckIn", "motivo": "t",
+                 "vizinha_esgotada": t31},
+                {"quarto": "Q7", "de": "2027-01-02", "ate": "2027-01-02", "override": "noCheckOut", "motivo": "t",
+                 "vizinha_esgotada": t01},
+                {"quarto": "Q7", "de": "2027-01-02", "ate": "2027-01-02", "min_stay": 2, "motivo": "t",
+                 "pricelabs_tambem": True, "vizinha_esgotada": t01}]
+
+    def test_pula_o_item_quando_a_vizinha_reabriu(self):
+        self.falso.dia(722805, "2026-12-31")["numAvail"] = 0      # 31/12 segue esgotada: a exceção 1 grava
+        self.falso.dia(722805, "2027-01-01")["numAvail"] = 2      # 01/01 reabriu: a exceção 2 é pulada
+        f = self.arq("lote_orfas.json", self.lote())
+        rc, out, err = self.executar(beds24.main, ["editar-lote", "--plano", f, "--aplicar"])
+        self.assertEqual(rc, 0, err)
+        r = json.loads(out)
+        self.assertEqual((r["itens"], r["a_gravar"], r["conferidos"], r["erros"]), (3, 1, 1, []))
+        self.assertEqual([(p["de"], p["lido"]) for p in r["pulados"]], [("2027-01-02", 2), ("2027-01-02", 2)])
+        self.assertTrue(all("não está mais esgotada" in p["por_que"] for p in r["pulados"]))
+        self.assertEqual(self.falso.dia(722805, "2026-12-31")["override"], "noCheckIn")
+        self.assertEqual((self.falso.dia(722805, "2027-01-02")["override"], self.falso.dia(722805, "2027-01-02")["minStay"]),
+                         ("none", 2))                            # nada do item pulado foi gravado (o padrão do falso)
+        self.assertFalse(any("vizinha_esgotada" in fx for x in self.falso.posts[0] for fx in x["calendar"]))
+
+    def test_a_noite_da_trava_entra_na_leitura_de_antes(self):
+        self.falso.dia(722805, "2027-01-01")["numAvail"] = 0
+        f = self.arq("lote_orfas.json", self.lote()[1:])         # só 02/01; a trava é 01/01, fora da faixa dos itens
+        rc, out, err = self.executar(beds24.main, ["editar-lote", "--plano", f, "--aplicar"])
+        self.assertEqual(rc, 0, err)
+        r = json.loads(out)
+        self.assertEqual((r["a_gravar"], r["pulados"], r["erros"]), (2, [], []))
+        primeira = self.falso.chamadas[0]
+        self.assertEqual((primeira[0], primeira[1], primeira[2]["startDate"]), ("GET", "/inventory/rooms/calendar",
+                                                                              ["2027-01-01"]))
+        self.assertEqual((self.falso.dia(722805, "2027-01-02")["override"], self.falso.dia(722805, "2027-01-02")["minStay"]),
+                         ("noCheckOut", 2))
+
+    def test_itens_com_trava_diferente_nao_somem_no_juntar(self):
+        a = [dict(self.lote()[0])]
+        b = [dict(self.lote()[0], vizinha_esgotada={"data": "2026-12-31", "numAvail": 1})]
+        itens, _ = beds24.juntar_planos([("orfas", a), ("outro", b)])
+        self.assertEqual(len(itens), 2)
+
+
 class TestTokenEscrita(Base):
     def test_guardado_valido_vencido_e_permissao_600(self):
         relogio = [1_800_000_000.0]

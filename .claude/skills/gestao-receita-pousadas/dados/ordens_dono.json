@@ -10608,7 +10608,9 @@
       ]
      },
      "alvo_publico": "a prova (portao_0103) leva 'alvo_publico' (alvos.fds_publico do quarto de referência × 0,95^degraus) e o público medido não pode ficar mais de 5% abaixo dele; o alvo não pode ficar abaixo do menor alvo da pousada × 0,95^4",
-     "sem_preco_na_rotina": true
+     "sem_preco_na_rotina": true,
+     "exige_ok_dono": "ok_01_04_05",
+     "exige_ok_dono_nota": "Revisão de 16/11 (3ª verificação, R3-03): 4ª condição do portão, decisão de execução da skill (não do dono): o portão só abre com a resposta do dono sobre 01→04 e 01→05 registrada em execucao_skill.ok_01_04_05 (resposta 'aceita', com o texto literal e a data). O validador barra a prova do portão sem ela."
     },
     "excecao_1": {
      "noite": "2026-12-31",
@@ -10679,8 +10681,8 @@
       "Balcony": 1869.29
      },
      "fds_nunca_acima_do_pedido": true,
-     "folga_reais": "1% da base + R$ 1 (o % inteiro da base)",
-     "balcony": "aviso (a Regra G vence o piso quando ele passa de 90% da suíte com banheira livre + a folga)",
+     "folga_reais": "o % inteiro da base, arredondado para cima (revisão de 16/11, R3-09: a folga antiga de 1% da base + R$ 1 deixava passar um ponto abaixo do piso aprovado)",
+     "balcony": "aviso só quando 90% da suíte com banheira livre mais barata da Villa fica abaixo do piso (a Regra G vence); ERRO abaixo de min(piso, 85,5% da suíte) menos a folga do % inteiro (1% da base + R$ 1) e abaixo do piso quando os 90% cabem nele (revisão de 16/11, R3-02)",
      "nota": "Réveillon em enviado (Q2 e Double em cadeia: 4.070 e 4.069,40, proposta aprovada). Fim de semana em público: enviado = público ÷ fator do estado (estado_arquivo, com as flags da rodada do plano), nunca acima do pedido de 09/11; na Villa só depois de a promoção sair (com ela, villa_com_promocao)."
     },
     "villa_com_promocao": {
@@ -10694,7 +10696,23 @@
       "Balcony": 4483
      },
      "nota": "Enquanto a promoção da Villa ficar (estado: promocao_villa.ativa), o fim de semana da Villa mantém 4.988, 4.991 e 4.483 (alvos.fds_villa_com_promocao)."
-    }
+    },
+    "coerencia_recanto": {
+     "cadeia": [
+      "Q7",
+      "Q2",
+      "Double"
+     ],
+     "afrodite": {
+      "quarto": "Afrodite",
+      "sobre": "Double",
+      "fator": 1.15
+     },
+     "tolerancia_reais": 1,
+     "nota": "Revisão de 16/11 (3ª verificação, R3-10): o validador confere por noite, no valor enviado (o do item ou, sem item, o do calendário de --precos), Moinhos ≤ Panorâmica II ≤ Panorâmica I (tolerância de R$ 1 do % inteiro da base) e Afrodite ≥ 1,15 × Panorâmica I (dono 21/10; coerencia desta ordem)."
+    },
+    "apagar": "Revisão de 16/11 (3ª verificação, R3-05): 'apagar' nessas noites é ERRO sempre, cite ou não a ordem (tira de uma vez piso = teto, estadia e máscaras); mudança é item de data.",
+    "mascaras_um_lado": "Revisão de 16/11 (3ª verificação, R3-01): item com só check_in ou só check_out numa noite de 'mascaras' é ERRO (o payload manda o lado ausente como 1111111); a máscara é avaliada como o payload a manda."
    },
    "marco_21_12": {
     "data": "2026-12-21",
@@ -10719,7 +10737,19 @@
     "descida_parte": "Interpretação da skill, a confirmar com o dono: o degrau vale para a pousada que estiver abaixo da sua parte da linha, proporcional aos pacotes livres dela na linha de base (Réveillon Recanto 7/12 e Villa 5/12; fim de semana Recanto 11/23 e Villa 12/23).",
     "descida_marcos": "Cada marco (D7, D5, D3 e D1) é avaliado uma vez, na primeira rodada em ou depois dele (dados/reveillon_250k.json → degraus.<pousada>.<bloco>.marcos): bloco abaixo da linha daquele marco e a pousada abaixo da sua parte = +1 degrau na hora. Fora dos marcos, sobe um degrau por dia só quando o bloco não está abaixo da linha vigente (a do último marco) ou a pousada passou da sua parte. Marco sem rodada (rotina perdida) é avaliado com a contagem de agora. Por isso o `registrar` roda em toda rotina, mesmo sem item gravado.",
     "portao": "O portão não abre na rotina em que o preço do fim de semana da pousada muda (a Booking conferida mostrava o preço velho): espera o próximo envio. A config sai da decisão gravada pelo `portao` (aplicar-config), não de uma reavaliação depois do `registrar`.",
-    "excecoes_fecham": "A exceção 1 fecha também quando 29/12 esgota ou passa, e a 2 quando 03/01 esgota: a regra de dia órfão do PriceLabs manda mínimo 1 à noite isolada mesmo com regra por data (aprendizados.md), e 30→31 ou 02→03 passariam a vender sem o dono pedir."
+    "excecoes_fecham": "A exceção 1 fecha também quando 29/12 esgota ou passa, e a 2 quando 03/01 esgota: a regra de dia órfão do PriceLabs manda mínimo 1 à noite isolada mesmo com regra por data (aprendizados.md), e 30→31 ou 02→03 passariam a vender sem o dono pedir.",
+    "ok_01_04_05": {
+     "_doc": "4ª condição do portão do 01→03 (revisão de 16/11, 3ª verificação, R3-03; decisão de execução da skill, não do dono): com a máxima 4 de 30/12 a 02/01 (necessária para o 30→03), o 01→03 aberto deixa vender também 01→04 e 01→05, que o dono não pediu (ordem dono-2026-11-03-festas-pacotes: 'estender até o dia 03 apenas'). O portão (reveillon_250k.py portao) e o validador (prova portao_0103) só abrem com a resposta 'aceita' registrada aqui. Pergunta no relatório: pendência reveillon-250k-decisoes-20261116, item (b).",
+     "resposta": "aceita",
+     "texto_dono": "Pode de 1 a 4 e de 1 a 5, sem problema.",
+     "respondido_em": "2026-11-16 16:20 BRT",
+     "como_registrar": "Quando o dono responder: copie a resposta dele LITERAL em texto_dono, a data e a hora BRT em respondido_em (AAAA-MM-DD HH:MM BRT) e, em resposta, 'aceita' se ele aceitar 01→04 e 01→05 ou 'recusa' se não aceitar (dúvida: deixe null e pergunte de novo). Com 'recusa', o portão segue fechado e a skill propõe outra trava ao dono. Registre também em regras.md 4g e na pendência.",
+     "pendencia": "reveillon-250k-decisoes-20261116, item (b)",
+     "contexto": "Resposta à pergunta do relatório de 16/11 ~16:15 BRT: com o 01→03 aberto, a máxima 4 deixa vender também 01→04 e 01→05; o portão ficava fechado até ele responder. Portão do Recanto aberto em 16/11 16:33 BRT (registro de mudanças)."
+    },
+    "excecoes_abrem": "Revisão de 16/11 (3ª verificação, R3-13; execução da skill, para manter a trava aprovada '30→31 barrada' e '02→03 barrada'): a exceção 1 só abre (e fica aberta) com livres(29/12) ≥ livres(30/12) − livres(31/12), e a 2 com livres(03/01) ≥ livres(02/01) − livres(01/01); senão as próprias vendas 29→31 (02→04) esgotariam 29/12 (03/01) antes e a noite solta isolada passaria a 1 noite pela regra de dia órfão do PriceLabs. A venda direta pela recepção segue. Venda que esgota 29/12 ou 03/01 num quarto com a exceção aberta é urgente na rotina leve (orfas + editar-lote na hora).",
+    "receita_alarme": "Revisão de 16/11 (3ª verificação, R3-08): a receita das 4 noites da linha de alarme sai do próprio --reservas do plano (beds24.py reservas --json: receita de hospedagem de cada reserva confirmada ou nova, rateada por noite, a mesma conta do beds24.py livro); --receita só corrige à mão. A partir da primeira linha (23/11), sem receita a escada fica parada, com aviso.",
+    "config_depois_de_gravar": "Revisão de 16/11 (3ª verificação, R3-06/R3-12): a config (quartos.json) do portão e das exceções só pelo `aplicar-config`, depois do editar-lote --aplicar sem erro (--resumo-beds24) e da gravação do PriceLabs conferida (--pricelabs, a resposta ou a releitura das regras); `orfas --aplicar-config` saiu."
    }
   }
  ]

@@ -14,12 +14,16 @@ Uso (da pasta da skill), na ordem da rotina:
       --regras Q7=<ov.json> Double=<ov.json> Afrodite=<ov.json> Q2=<ov.json> VK7=<ov.json> Balcony=<ov.json> VK2=<ov.json>
       [--fator Recanto:fds=0.5832 ...] [--concorrente-max 2871] [--promocao-villa ativa|retirada]
       [--receita 46580.68] [--listings <listings.json>] [--saida plano.json] [--md relatorio.md]
-  python3 scripts/reveillon_250k.py orfas --hoje AAAA-MM-DD --inventario <inv.json> --regras ... --saida <orfas.json>
-      [--lote-beds24 <lote_orfas.json>]
+      (sem --receita, a receita das 4 noites da linha de alarme sai do próprio --reservas; sem as duas, a partir de
+      23/11 a escada fica parada)
   python3 scripts/reveillon_250k.py portao --hoje AAAA-MM-DD --inventario <inv_precos.json> --regras Q7=<ov.json> ...
       --plano <plano.json> --envio Q7=<last_date_pushed UTC> Q2=... (os 7; vale o mais antigo da pousada)
-      --publico Recanto=<R$ por noite> [...] [--promocao-villa ativa|retirada] --saida <portao.json>
-      [--lote-beds24 <lote_portao.json>] [--mostrar]
+      --publico Recanto=<R$ por noite>[@<quarto que a Booking mostrou>] [...] [--promocao-villa ativa|retirada]
+      --saida <portao.json> [--lote-beds24 <lote_portao.json>] [--mostrar]
+      (rotina sem o envio e o público do dia: `portao --hoje ... --inventario ... --nao-avaliar --saida ... --lote-beds24
+      ...` grava os dois vazios)
+  python3 scripts/reveillon_250k.py orfas --hoje AAAA-MM-DD --inventario <inv.json> --regras ... --portao <portao.json>
+      --saida <orfas.json> [--lote-beds24 <lote_orfas.json>]
   python3 scripts/reveillon_250k.py juntar --plano <plano.json> <orfas.json> <portao.json> --saida <unico.json>
   python3 validar_plano.py <unico.json> --hoje AAAA-MM-DD     (da pasta scripts)
   python3 scripts/reveillon_250k.py payloads --plano <unico.json> --hoje AAAA-MM-DD --pasta <pasta vazia>
@@ -30,7 +34,9 @@ Uso (da pasta da skill), na ordem da rotina:
       funde no estado em disco e, com item de anúncio, passa o max de quartos.json; rode também sem item gravado: os
       marcos da descida avaliados no dia ficam no estado)
   python3 scripts/reveillon_250k.py aplicar-config --hoje AAAA-MM-DD --portao <portao.json> --orfas <orfas.json>
-      (depois do PriceLabs e do Beds24: aplica em quartos.json a decisão gravada, sem reavaliar)
+      --resumo-beds24 <JSON do editar-lote --aplicar> --pricelabs Q7=<resposta da gravação ou releitura> ...
+      (depois do PriceLabs e do Beds24 gravados e conferidos: aplica em quartos.json a decisão gravada, sem reavaliar;
+      recusa com o editar-lote com erro e tira o quarto com item pulado ou com a estadia/máscara não conferida)
   python3 scripts/reveillon_250k.py vigia-maximo --hoje AAAA-MM-DD [--coleta <saida mesclada>]
       [--precos Q7=<get_listing_prices 12 meses> ...] [--regras Q7=<overrides 12 meses> ...] [--antes] [--saida <x.json>]
   python3 scripts/reveillon_250k.py estado
@@ -60,6 +66,7 @@ from comum import (PASTA_SKILL, ARQ_QUARTOS, carregar_quartos, data, hoje_brt, l
                    maximo_da_noite, periodo_feriado)
 from ordens import carregar_ordens  # noqa: E402
 import plano_dono as PD  # noqa: E402
+from validar_plano import falta_ok_do_dono  # noqa: E402
 
 ORDEM_ID = "dono-2026-11-16-reveillon-250k"
 ARQ_ESTADO = PASTA_SKILL / "dados" / "reveillon_250k.json"
@@ -279,7 +286,30 @@ def quarto_noites_vendidas(cfg: dict, inv: dict) -> int:
                if livres(inv, q, n) is not None)
 
 
+def receita_das_noites(cfg: dict, reservas: list[dict] | None) -> float:
+    """Receita de hospedagem das 4 noites (30/12 a 02/01), as duas pousadas, das reservas lidas na rotina (beds24.py
+    reservas --json, sem dado de hóspede): confirmadas e novas (beds24.STATUS_OCUPA), receita da reserva
+    (`receita_hospedagem` do arquivo, senão as diárias da fatura ou o price, beds24.receita_por_noite) rateada por noite,
+    a mesma conta do `beds24.py livro`. Revisão de 16/11 (3ª verificação, R3-08): a linha de alarme olhava só os
+    quarto-noites quando o --receita faltava."""
+    import beds24
+    tot = 0.0
+    for r in reservas or []:
+        if str(r.get("status") or "").lower() not in beds24.STATUS_OCUPA or _quarto_da_reserva(cfg, r) is None:
+            continue
+        chega, n, total = beds24.receita_por_noite(r)
+        if r.get("receita_hospedagem") is not None:
+            total = float(r["receita_hospedagem"])
+        for k in range(n):
+            if (chega + timedelta(days=k)).isoformat() in NOITES:
+                tot += total / n
+    return round(tot, 2)
+
+
 def abaixo_do_alarme(ordem: dict, hoje: date, qn: int, receita: float | None) -> tuple[bool, str]:
+    """(pausa, texto) da linha de alarme (receita e quarto-noites das 4 noites). Revisão de 16/11 (3ª verificação,
+    R3-08): a partir da primeira linha (23/11), sem a receita a escada fica parada (antes, a falta do --receita fazia a
+    linha olhar só os quarto-noites, sem aviso)."""
     lin = linha_alarme(ordem, hoje)
     if not lin:
         return False, "sem linha de alarme ainda (primeira em 23/11)"
@@ -287,9 +317,12 @@ def abaixo_do_alarme(ordem: dict, hoje: date, qn: int, receita: float | None) ->
     falta = []
     if qn < q_lin:
         falta.append(f"{qn} quarto-noites < {q_lin}")
-    if receita is not None and receita < rec:
+    if receita is None:
+        falta.append(f"receita das 4 noites não informada (--reservas ou --receita; linha {br(rec)}): escada parada")
+    elif receita < rec:
         falta.append(f"receita {br(receita)} < {br(rec)}")
-    txt = f"linha de {data(ds).strftime('%d/%m')}: " + (", ".join(falta) if falta else f"{qn} quarto-noites ≥ {q_lin}")
+    ok = f"{qn} quarto-noites ≥ {q_lin}" + (f", receita {br(receita)} ≥ {br(rec)}" if receita is not None else "")
+    txt = f"linha de {data(ds).strftime('%d/%m')}: " + (", ".join(falta) if falta else ok)
     return bool(falta), txt
 
 
@@ -488,7 +521,9 @@ def preco_bruto(cfg: dict, ordem: dict, estado: dict, q: str, n: str, escada: di
     pc = pct_de(cfg, q, v)
     if reais_de(cfg, q, pc) > lim_sup + 0.01:
         pc = pct_de(cfg, q, lim_sup, "floor")
-    elif reais_de(cfg, q, pc) < piso - 0.01 and reais_de(cfg, q, pct_de(cfg, q, piso, "ceil")) <= mx + 0.01:
+    elif reais_de(cfg, q, pc) < piso - 0.01 and reais_de(cfg, q, pct_de(cfg, q, piso, "ceil")) <= min(mx, lim_sup) + 0.01:
+        # o piso no % inteiro para cima, sem passar do teto (revisão de 16/11, 3ª verificação: com o fator do fim de
+        # semana abaixo de ~0,42, o piso fica no pedido de 09/11 e o ceil dele passava do pedido)
         pc = pct_de(cfg, q, piso, "ceil")
     desejado = reais_de(cfg, q, pc)
     segurado = desejado > mx_hoje + 0.5
@@ -625,6 +660,10 @@ def contexto(cfg: dict, ordem: dict, estado: dict, inv: dict, reservas: list[dic
     else:
         cont = contar_pacotes(cfg, reservas, corte, (estado.get("linha_base") or {}).get("cobertura_reservas"))
     qn = quarto_noites_vendidas(cfg, inv)
+    origem_receita = "--receita" if receita is not None else None
+    if receita is None and reservas is not None:
+        # revisão de 16/11 (3ª verificação, R3-08): a receita da linha de alarme sai das reservas lidas (como o livro)
+        receita, origem_receita = receita_das_noites(cfg, reservas), "reservas lidas, receita de hospedagem por noite"
     pausa, txt_alarme = abaixo_do_alarme(ordem, hoje, qn, receita)
     base_livres = estado["linha_base"]["pacotes_livres"]
     escada, degraus = {}, {}
@@ -642,16 +681,21 @@ def contexto(cfg: dict, ordem: dict, estado: dict, inv: dict, reservas: list[dic
     novo["bonus_marco"] = bonus
     novo["pacotes"] = {"Recanto": cont["Recanto"], "Villa": cont["Villa"], "total": cont["total"],
                        "contados_em": hoje.isoformat()}
-    return {"pacotes": cont, "quarto_noites": qn, "pausa": pausa, "alarme": txt_alarme, "escada": escada,
-            "degraus": degraus, "bonus_marco": bonus, "estado_novo": novo}
+    return {"pacotes": cont, "quarto_noites": qn, "receita": receita, "receita_origem": origem_receita, "pausa": pausa,
+            "alarme": txt_alarme, "escada": escada, "degraus": degraus, "bonus_marco": bonus, "estado_novo": novo}
 
 
 def _estadia_padrao(cfg: dict, ordem: dict, q: str, n: str) -> int:
-    """Estadia mínima da noite quando não há regra por data para herdar (o item cria a regra): 2 no Réveillon; 01 e 02/01
-    em 2 com o portão aberto para o quarto (config) ou na estadia de antes do portão (3)."""
+    """Estadia mínima da noite quando a regra por data não tem estadia para herdar (o item cria a regra ou a completa): a
+    da config do quarto (regra_h_beds24.estadia_minima_por_data_por_quarto: o portão aberto e a exceção 2 aplicada põem
+    2; revisão de 16/11, 3ª verificação: sem isso, o item voltava 02/01 a 3 com a exceção 2 aberta); senão 2 no Réveillon
+    e, em 01 e 02/01, 2 com o portão aberto para o quarto (config) ou a estadia de antes do portão (3)."""
+    rh = (cfg.get("parametros") or {}).get("regra_h_beds24") or {}
+    v = ((rh.get("estadia_minima_por_data_por_quarto") or {}).get(n) or {}).get(q)
+    if v is not None:
+        return int(v)
     if BLOCO_DE[n] == "reveillon":
         return 2
-    rh = (cfg.get("parametros") or {}).get("regra_h_beds24") or {}
     if (((rh.get("override_por_data_por_quarto") or {}).get(BLOCOS["fds"][0]) or {}).get(q)) == "none":
         return 2
     return int(((ordem.get("portao_0103") or {}).get("estadia_antes") or {}).get(n, 3))
@@ -749,7 +793,7 @@ def montar_plano(cfg: dict, ordem: dict, estado: dict, inv: dict, regras: dict, 
             notas["Balcony"] = g
         finais[n] = ps
         notas_noite[n] = notas
-    itens, linhas = [], []
+    itens, linhas, expira = [], [], []
     for n in NOITES:
         for q in QUARTOS:
             reg = (regras.get(q) or {}).get(n) or {}
@@ -762,6 +806,8 @@ def montar_plano(cfg: dict, ordem: dict, estado: dict, inv: dict, regras: dict, 
                 lin.update(novo=antes, pct=p_min, acao="noite passada (não grava)")
                 linhas.append(lin)
                 continue
+            if reg.get("lead_time_expiry") not in (None, "", 0, "0"):
+                expira.append(f"{q} {n} (lead_time_expiry {reg['lead_time_expiry']})")
             if x is None:
                 lin.update(novo=antes, pct=p_min, acao="mantém (Villa no fim de semana: aguarda a promoção sair e o "
                            "fator novo)")
@@ -807,17 +853,29 @@ def montar_plano(cfg: dict, ordem: dict, estado: dict, inv: dict, regras: dict, 
                   "preco_antes": antes, "motivo": "; ".join(partes)[:250], "excecao": "dono", "ordem_id": ORDEM_ID}
             if reg.get("min_stay") not in (None, ""):
                 it["estadia_vigente"] = int(reg["min_stay"])   # fica na regra (a API mescla); só para o validador
-            elif not reg:
-                it["min_stay"] = _estadia_padrao(cfg, ordem, q, n)   # noite sem regra: o item cria a regra
+            else:
+                # noite sem regra (o item cria a regra) ou regra sem estadia (recriada à mão ou apagada em parte; revisão
+                # de 16/11, 3ª verificação, R3-14: o item saía sem estadia e a noite ficava na padrão do PriceLabs, que
+                # pode ser 1): o item leva a estadia da noite e, na Afrodite sem a máscara ligada, a máscara do pacote
+                it["min_stay"] = _estadia_padrao(cfg, ordem, q, n)
                 masc = mascara_padrao_afrodite(cfg, n) if q == "Afrodite" else None
-                if masc:
+                if masc and str(reg.get("check_in_check_out_enabled") or "") != "1":
                     it["check_in"], it["check_out"] = masc
             cf = conferir_da_regra(reg)
             if cf:
                 it["conferir"] = cf
             itens.append(it)
+    if expira:
+        # revisão de 16/11 (3ª verificação, R3-14): a regra com validade expira antes da noite e leva junto o piso = teto,
+        # a estadia e as máscaras; o pace apaga e recria, mas nessas noites o validador barra 'apagar' (R3-05)
+        raise ValueError("regra por data com validade (lead_time_expiry) em " + "; ".join(expira) + ": ela expira antes "
+                         "da noite e leva piso, teto, estadia e máscara. Nessas noites 'apagar' é barrado: avise o dono "
+                         "(quem pôs a validade) e não grave por cima até decidir")
     an, avisos = itens_de_anuncio(cfg, ordem, finais, hoje, listings)
     itens += an
+    if ctx.get("receita") is None and linha_alarme(ordem, hoje):
+        avisos.append("sem a receita das 4 noites (--reservas ou --receita): a linha de alarme manda parar a escada "
+                      "até ela entrar (R3-08)")
     for x in linhas:
         if x.get("aviso"):
             avisos.append(f"{x['quarto']} {x['noite']}: {x['aviso']}")
@@ -833,6 +891,8 @@ def relatorio_md(cfg: dict, res: dict) -> str:
            f"{pk['Villa']['reveillon']} (total {pk['total']['reveillon']}); fim de semana Recanto {pk['Recanto']['fds']}, "
            f"Villa {pk['Villa']['fds']} (total {pk['total']['fds']}).",
            f"Contagem: {pk.get('modo', 'instante')}. Quarto-noites vendidas nas 4 noites: {c['quarto_noites']}. "
+           f"Receita das 4 noites: {br(c.get('receita'), 2)}"
+           + (f" ({c['receita_origem']})" if c.get("receita_origem") else "") + ". "
            f"Alarme: {c['alarme']}"
            + (" — escada PARADA." if c["pausa"] else "."),
            "Escada (pacotes usados): " + "; ".join(f"{p} {c['escada'][p]['reveillon']}/{c['escada'][p]['fds']}"
@@ -926,8 +986,9 @@ def alvo_publico_portao(ordem: dict, estado: dict, p: str, q: str) -> float:
 
 
 def avaliar_portao(cfg: dict, ordem: dict, estado: dict, inv: dict, regras: dict, envio: dict, publico: dict,
-                   tol_preco: float = 1.0, hoje: date | None = None, itens_plano: list[dict] | None = None) -> dict:
-    """{pousada: {pode, faltam, conferido, prova}}. Condições (ordem, portao_0103):
+                   tol_preco: float = 1.0, hoje: date | None = None, itens_plano: list[dict] | None = None,
+                   quarto_publico: dict | None = None) -> dict:
+    """{pousada: {pode, faltam, conferido, prova}}. Condições (ordem, portao_0103, e a 4ª da skill):
       (1) PriceLabs enviou depois da gravação dos preços do fim de semana (estado.gravado_fds[pousada]; o envio mais
           antigo entre os quartos) e o price1 do Beds24 em 01 e 02/01 bate com o planejado (regra por data vigente, piso
           = teto) nos quartos com vaga na noite (revisão de 16/11: noite vendida não trava a pousada); e o plano de preço
@@ -937,10 +998,18 @@ def avaliar_portao(cfg: dict, ordem: dict, estado: dict, inv: dict, regras: dict
           planejado × fator) E não abaixo do alvo público da ordem (alvos.fds_publico do quarto × 0,95^degraus, −5%;
           revisão de 16/11: com o fim de semana cortado no pedido de 09/11, o esperado caía junto e o portão abria com o
           público 12% abaixo do alvo);
-      (3) na Villa, promoção retirada e fator novo medido.
-    `prova` vai nos itens do PriceLabs do portão (o validador confere)."""
+      (3) na Villa, promoção retirada e fator novo medido;
+      (4) revisão de 16/11 (3ª verificação, R3-03; execução da skill, não condição do dono): o ok do dono para 01→04 e
+          01→05 (efeito colateral da máxima 4) registrado em execucao_skill.ok_01_04_05 (resposta 'aceita', texto
+          literal e data); sem ele, o portão fica FECHADO com "falta: ok do dono para 01→04/01→05".
+    O quarto de referência do público (condição 2) é o mais barato livre nas 4 noites (a Booking mede o 30→03), ou o
+    de `quarto_publico` ({pousada: quarto}, o que a Booking mostrou). `prova` vai nos itens do PriceLabs do portão (o
+    validador confere)."""
     tol = float(ordem["fator_publico"].get("tolerancia", 0.05))
     muda = pousadas_com_preco_fds(itens_plano)
+    pt_ordem = (ordem.get("restricoes") or {}).get("portao") or {}
+    ok_reg = (ordem.get("execucao_skill") or {}).get(pt_ordem.get("exige_ok_dono") or "") or {}
+    ok_reg = ok_reg if isinstance(ok_reg, dict) else {}
     out = {}
     for p, qs in POUSADAS.items():
         faltam, conferido = [], []
@@ -979,16 +1048,41 @@ def avaliar_portao(cfg: dict, ordem: dict, estado: dict, inv: dict, regras: dict
         promo_ok = p != "Villa" or villa_fds_liberada(estado)
         if not promo_ok:
             faltam.append("promoção da Villa não retirada ou fator novo não medido depois da retirada")
+        # (4) revisão de 16/11 (3ª verificação, R3-03): o ok do dono para 01→04 e 01→05 registrado na ordem
+        f_ok = falta_ok_do_dono(ordem, pt_ordem)
+        if f_ok:
+            faltam.append(f_ok)
+        elif ok_reg:
+            conferido.append(f"ok do dono para 01→04/01→05 em {ok_reg.get('respondido_em')}: "
+                             f"'{str(ok_reg.get('texto_dono'))[:80]}'")
         fator = float(estado["fatores"][p]["fds"]["valor"])
-        abertos = [q for q in qs if min(livres(inv, q, n) or 0 for n in BLOCOS["fds"]) > 0]
-        cand = sorted((esperado[(q, n)] * fator, q) for q in abertos for n in BLOCOS["fds"] if (q, n) in esperado)
+
+        def esp_do_quarto(q: str) -> float:
+            # o público por noite do fim de semana na Booking é (30→03 − 30→01) ÷ 2: a média das duas noites do quarto
+            return sum(esperado[(q, n)] for n in BLOCOS["fds"]) / len(BLOCOS["fds"]) * fator
+        # revisão de 16/11 (3ª verificação, R3-15): enquanto o público vier do 30→03, a Booking mostra um quarto livre nas
+        # 4 noites; o de referência é o mais barato deles (ou o que a Booking mostrou, com --publico <pousada>=<R$>@<quarto>)
+        com_fds = [q for q in qs if all((q, n) in esperado for n in BLOCOS["fds"])]
+        livres4 = [q for q in com_fds if min(livres(inv, q, n) or 0 for n in NOITES) > 0]
+        q_mostrado = (quarto_publico or {}).get(p)
+        falta_ref = None
+        if q_mostrado:
+            if q_mostrado not in com_fds:
+                falta_ref = (f"o quarto do público medido ({q_mostrado}) não é da pousada ou está sem vaga ou sem regra "
+                             "piso = teto em 01 e 02/01")
+            cand = [(esp_do_quarto(q_mostrado), q_mostrado)] if q_mostrado in com_fds else []
+        else:
+            cand = sorted((esp_do_quarto(q), q) for q in livres4)
+            if not cand:
+                falta_ref = ("nenhum quarto da pousada livre nas 4 noites (30/12 a 02/01) para o 30→03 da Booking: passe "
+                             f"--publico {p}=<R$>@<quarto> com o quarto que a Booking mostrou")
         esp_pub, q_ref = (cand[0][0], cand[0][1]) if cand else (None, None)
         alvo_ord = alvo_publico_portao(ordem, estado, p, q_ref) if q_ref else None
         med = publico.get(p)
         if med is None:
             faltam.append("público do fim de semana não medido na Booking")
         elif esp_pub is None:
-            faltam.append("sem quarto com o fim de semana livre para comparar o público")
+            faltam.append(falta_ref or "sem quarto com o fim de semana livre para comparar o público")
         elif abs(float(med) / esp_pub - 1) > tol + 1e-9:
             faltam.append(f"público medido {br(med)} fora de ±{tol:.0%} do esperado {br(esp_pub)} ({q_ref}: enviado × "
                           f"fator {fx(fator)})")
@@ -1006,18 +1100,22 @@ def avaliar_portao(cfg: dict, ordem: dict, estado: dict, inv: dict, regras: dict
                  "esperado": round(esp_pub, 2) if esp_pub is not None else None,
                  "alvo_publico": round(alvo_ord, 2) if alvo_ord is not None else None, "quarto_ref": q_ref,
                  "promocao_retirada": bool(promo_ok) if p == "Villa" else None}
+        if pt_ordem.get("exige_ok_dono"):
+            prova["ok_01_04_05"] = {k: ok_reg.get(k) for k in ("resposta", "respondido_em")}
         out[p] = {"pode": not faltam, "ja_aberto": bool(ja), "faltam": faltam, "conferido": conferido, "prova": prova}
     return out
 
 
 def decidir_portao(cfg: dict, ordem: dict, estado: dict, inv: dict, regras: dict, envio: dict, publico: dict,
-                   hoje: date, itens_plano: list[dict] | None, mostrar: bool = False) -> tuple[dict, list[str]]:
+                   hoje: date, itens_plano: list[dict] | None, mostrar: bool = False,
+                   quarto_publico: dict | None = None) -> tuple[dict, list[str]]:
     """A decisão do portão da rotina ({hoje, itens, portao, lote_beds24, comandos_beds24, patch_quartos}) e o texto.
     Só a pousada que passou (e ainda fechada) vai para os itens, o lote e o patch, e o patch dela fica em
     portao[pousada].patch_quartos para o `aplicar-config` (revisão de 16/11: com --mostrar e o portão fechado, o lote que
     ABRE o 01→03 era gravado; e o --aplicar-config reavaliava depois do `registrar`). Com `mostrar`, a pousada fechada
     só aparece no texto, como simulação."""
-    av = avaliar_portao(cfg, ordem, estado, inv, regras, envio, publico, hoje=hoje, itens_plano=itens_plano)
+    av = avaliar_portao(cfg, ordem, estado, inv, regras, envio, publico, hoje=hoje, itens_plano=itens_plano,
+                        quarto_publico=quarto_publico)
     saida = {"hoje": hoje.isoformat(), "itens": [], "portao": av, "lote_beds24": [], "comandos_beds24": [],
              "patch_quartos": {}}
     linhas = []
@@ -1117,16 +1215,30 @@ def aplicar_patch(cfg_bruto: dict, patch: dict) -> dict:
 
 # ---------------------------------------------------------------- noites soltas (exceções 1 e 2)
 def avaliar_orfas(cfg: dict, ordem: dict, estado: dict, inv: dict, regras: dict | None = None,
-                  hoje: date | None = None) -> dict:
+                  hoje: date | None = None, portao: dict | None = None) -> dict:
     """Por quarto: cotas de venda direta (29→31 e 02→04) e se a exceção abre (ou fecha) nas OTAs, com o que gravar. Os
     itens do PriceLabs levam `excecao_noite_solta` e a prova do inventário do Beds24 (`orfa_prova`: o quarto, a noite
     livre e a vizinha esgotada nele, com o lido_em), que o validador confere. Com `hoje`: a exceção 1 só abre até 29/12
     (a chegada do 29→31) e a 2 até 02/01; noite já passada não gera item.
     Fecha (revisão de 16/11; a regra de dia órfão do PriceLabs manda mínimo 1 à noite isolada mesmo com regra por data,
     aprendizados.md): a exceção 1 quando 31/12 reabre, quando 29/12 esgota ou quando 29/12 passa (ninguém mais faz o
-    29→31; a 30/12 isolada viraria 30→31); a 2 quando 01/01 reabre ou quando 03/01 esgota (a 02/01 isolada viraria 02→03)."""
+    29→31; a 30/12 isolada viraria 30→31); a 2 quando 01/01 reabre ou quando 03/01 esgota (a 02/01 isolada viraria 02→03).
+    Revisão de 16/11 (3ª verificação):
+      - R3-13: a exceção 1 só abre (e fica aberta) com livres(29/12) ≥ noites soltas de 30/12, e a 2 com livres(03/01) ≥
+        noites soltas de 02/01: senão as próprias vendas 29→31 (02→04) esgotariam 29/12 (03/01) antes e isolariam a noite
+        solta. Fechar por 29/12 ou 03/01 esgotada é `urgente` (a janela até a próxima rotina vende 30→31 ou 02→03);
+      - R3-07: o item do lote que ABRE a exceção leva `vizinha_esgotada` ({data, numAvail: 0}); o `beds24.py editar-lote`
+        relê o inventário antes de gravar e pula (e relata) o item se a vizinha reabriu entre o `orfas` e o lote;
+      - R3-11: com `portao` (a decisão do `portao` da MESMA rotina), o quarto da pousada cujo portão abre agora conta como
+        aberto (a estadia de volta de 02/01 é 2, a do portão; antes o lote das órfãs pedia 3 e o editar-lote recusava os
+        dois lotes)."""
     regras = regras or {}
     lido_em = inv.get("_lido_em")
+    abre_agora = set()
+    if portao:
+        if portao.get("hoje") and hoje is not None and portao["hoje"] != hoje.isoformat():
+            raise ValueError(f"--portao de {portao.get('hoje')}, não de hoje ({hoje.isoformat()}): rode o portão de novo")
+        abre_agora = {p for p, x in (portao.get("portao") or {}).items() if x.get("pode") and not x.get("ja_aberto")}
 
     def prova(q: str, noite: str, vizinha: str, lado: str) -> dict:
         return {"fonte": "beds24", "quarto": q, "unidades": unidades(cfg, q), "noite": noite,
@@ -1151,28 +1263,40 @@ def avaliar_orfas(cfg: dict, ordem: dict, estado: dict, inv: dict, regras: dict 
             out["avisos"].append(f"{q}: inventário sem as noites de 29/12 a 03/01")
             continue
         soltas30, soltas02 = max(0, L[f30] - L[r31]), max(0, L[s02] - L[s01])
-        e1 = L[r31] <= 0 < L[f30] and L[VESPERA] > 0 and (hoje is None or hoje <= data(VESPERA))
-        e2 = L[s01] <= 0 < L[s02] and L[DOMINGO] > 0 and (hoje is None or hoje <= data(s02))
+        # R3-13: a véspera (29/12) e o domingo (03/01) com vaga para todas as noites soltas
+        cabe1, cabe2 = L[VESPERA] >= soltas30, L[DOMINGO] >= soltas02
+        e1 = L[r31] <= 0 < L[f30] and L[VESPERA] > 0 and cabe1 and (hoje is None or hoje <= data(VESPERA))
+        e2 = L[s01] <= 0 < L[s02] and L[DOMINGO] > 0 and cabe2 and (hoje is None or hoje <= data(s02))
         # desfaz quando a noite vizinha reabre (ordem: "quando a noite vizinha reabrir, volta") e quando a estadia aprovada
-        # não cabe mais (29/12 esgotada ou passada; 03/01 esgotada), enquanto a noite não passou
-        fecha1 = (L[r31] > 0 or L[VESPERA] <= 0 or (hoje is not None and hoje > data(VESPERA))) \
+        # não cabe mais (29/12 esgotada ou passada; 03/01 esgotada) ou já não cabe para todas as noites soltas (R3-13),
+        # enquanto a noite não passou
+        fecha1 = (L[r31] > 0 or L[VESPERA] <= 0 or not cabe1 or (hoje is not None and hoje > data(VESPERA))) \
             and (hoje is None or data(r31) >= hoje)
-        fecha2 = (L[s01] > 0 or L[DOMINGO] <= 0) and (hoje is None or data(s02) >= hoje)
+        fecha2 = (L[s01] > 0 or L[DOMINGO] <= 0 or not cabe2) and (hoje is None or data(s02) >= hoje)
         e1_aplicada = (ovq.get(r31) or {}).get(q) == "noCheckIn"
         e2_aplicada = (ovq.get(s02) or {}).get(q) == "noCheckOut"
-        portao_aberto = (ovq.get(s01) or {}).get(q) == "none" or (rh.get("override_por_data") or {}).get(s01) == "none"
+        portao_aberto = (ovq.get(s01) or {}).get(q) == "none" or (rh.get("override_por_data") or {}).get(s01) == "none" \
+            or POUSADA_DE[q] in abre_agora
         ms_volta_02 = 2 if portao_aberto else int(((ordem.get("portao_0103") or {}).get("estadia_antes") or {}).get(s02, 3))
         ms03[q] = ((inv.get(q) or {}).get(DOMINGO) or {}).get("minStay")
         info = {"livres": L, "soltas_30_12": soltas30, "venda_direta_29_31": min(soltas30, L[VESPERA]),
                 "soltas_02_01": soltas02, "venda_direta_02_04": min(soltas02, L[DOMINGO]),
                 "excecao_1_ota": "abre" if e1 else "fechada", "excecao_2_ota": "abre" if e2 else "fechada",
                 "excecao_1_aplicada": e1_aplicada, "excecao_2_aplicada": e2_aplicada}
+        if L[r31] <= 0 < L[f30] and L[VESPERA] > 0 and not cabe1:
+            info["excecao_1_por_que"] = (f"29/12 com {L[VESPERA]} vaga(s) para {soltas30} noite(s) solta(s) de 30/12: as "
+                                         "vendas 29→31 isolariam 30/12 (fica a venda direta)")
+        if L[s01] <= 0 < L[s02] and L[DOMINGO] > 0 and not cabe2:
+            info["excecao_2_por_que"] = (f"03/01 com {L[DOMINGO]} vaga(s) para {soltas02} noite(s) solta(s) de 02/01: as "
+                                         "vendas 02→04 isolariam 02/01 (fica a venda direta)")
         reg31, reg02 = (regras.get(q) or {}).get(r31) or {}, (regras.get(q) or {}).get(s02) or {}
         if e1 and not e1_aplicada:
             info["acao_1"] = "abrir"
             p1 = prova(q, f30, r31, "seguinte")
             out["comandos_beds24"].append(_comando_beds24(q, r31, mot1, override="noCheckIn"))
-            out["lote_beds24"].append({"quarto": q, "de": r31, "ate": r31, "override": "noCheckIn", "motivo": mot1})
+            # R3-07: o editar-lote relê o inventário e só grava com 31/12 ainda esgotada no quarto
+            out["lote_beds24"].append({"quarto": q, "de": r31, "ate": r31, "override": "noCheckIn", "motivo": mot1,
+                                       "vizinha_esgotada": {"data": r31, "numAvail": 0}})
             patch["override_por_data_por_quarto"].setdefault(r31, {})[q] = "noCheckIn"
             if q == "Afrodite":
                 out["itens_pricelabs"].append({"tipo": "data", "quarto": q, "data": r31, "manter_reason": True,
@@ -1181,6 +1305,9 @@ def avaliar_orfas(cfg: dict, ordem: dict, estado: dict, inv: dict, regras: dict 
                                                "excecao_noite_solta": 1, "orfa_prova": p1})
         elif e1_aplicada and fecha1:
             info["acao_1"] = "fechar"
+            if L[VESPERA] <= 0 < L[f30] and (hoje is None or hoje <= data(VESPERA)):
+                # R3-13: 29/12 esgotou com a exceção aberta: a 30/12 isolada vende 30→31 (regra de dia órfão) até gravar
+                info["urgente"] = "29/12 esgotada com a exceção 1 aberta: 30→31 vendável até o lote ser gravado"
             out["comandos_beds24"].append(_comando_beds24(q, r31, mot_volta, override="noCheckInOrCheckOut"))
             out["lote_beds24"].append({"quarto": q, "de": r31, "ate": r31, "override": "noCheckInOrCheckOut",
                                        "motivo": mot_volta})
@@ -1194,8 +1321,12 @@ def avaliar_orfas(cfg: dict, ordem: dict, estado: dict, inv: dict, regras: dict 
             p2 = prova(q, s02, s01, "anterior")
             out["comandos_beds24"].append(_comando_beds24(q, s02, mot2, override="noCheckOut", min_stay=2))
             ms_antes = ((inv.get(q) or {}).get(s02) or {}).get("minStay")
-            out["lote_beds24"].append({"quarto": q, "de": s02, "ate": s02, "override": "noCheckOut", "motivo": mot2})
-            it_l = {"quarto": q, "de": s02, "ate": s02, "min_stay": 2, "motivo": mot2, "pricelabs_tambem": True}
+            # R3-07: o editar-lote relê o inventário e só grava com 01/01 ainda esgotada no quarto
+            trava = {"data": s01, "numAvail": 0}
+            out["lote_beds24"].append({"quarto": q, "de": s02, "ate": s02, "override": "noCheckOut", "motivo": mot2,
+                                       "vizinha_esgotada": dict(trava)})
+            it_l = {"quarto": q, "de": s02, "ate": s02, "min_stay": 2, "motivo": mot2, "pricelabs_tambem": True,
+                    "vizinha_esgotada": dict(trava)}
             if ms_antes is not None:
                 it_l["min_stay_antes"] = int(ms_antes)
             out["lote_beds24"].append(it_l)
@@ -1210,6 +1341,8 @@ def avaliar_orfas(cfg: dict, ordem: dict, estado: dict, inv: dict, regras: dict 
                 out["avisos"].append(f"{q}: 03/01 com estadia mínima {ms03[q]} no Beds24: o 02→04 não cabe (stayThrough)")
         elif e2_aplicada and fecha2:
             info["acao_2"] = "fechar"
+            if L[DOMINGO] <= 0 < L[s02]:
+                info["urgente"] = "03/01 esgotada com a exceção 2 aberta: 02→03 vendável até o lote ser gravado"
             out["comandos_beds24"].append(_comando_beds24(q, s02, mot_volta, override="noCheckInOrCheckOut",
                                                           min_stay=ms_volta_02))
             out["lote_beds24"].append({"quarto": q, "de": s02, "ate": s02, "override": "noCheckInOrCheckOut",
@@ -1224,6 +1357,8 @@ def avaliar_orfas(cfg: dict, ordem: dict, estado: dict, inv: dict, regras: dict 
                 it.update(check_in="1111101", check_out="1111101")
             out["itens_pricelabs"].append(it)
         out["quartos"][q] = info
+        if info.get("urgente"):
+            out["avisos"].append(f"URGENTE {q}: {info['urgente']} (rode o editar-lote agora; cite a janela no relatório)")
     out["patch_quartos"] = {k: v for k, v in patch.items() if v}
     if out["patch_quartos"]:
         out["patch_quartos"]["override_por_data_por_quarto_motivo"] = (
@@ -1268,30 +1403,174 @@ def registrar(plano: dict, em: datetime, atual: dict | None = None) -> dict:
     return novo
 
 
+def _overrides_de(d) -> list[dict]:
+    """A lista de regras por data ({date, ...}) de uma resposta do PriceLabs: a do update_listing_date_overrides
+    (persisted overrides) ou a releitura (get_listing_date_overrides), em qualquer nível do JSON."""
+    if isinstance(d, list):
+        if d and all(isinstance(x, dict) and x.get("date") for x in d):
+            return d
+        for x in d:
+            r = _overrides_de(x)
+            if r:
+                return r
+        return []
+    if isinstance(d, dict):
+        for k in ("overrides", "persisted_overrides", "data"):
+            if k in d:
+                r = _overrides_de(d[k])
+                if r:
+                    return r
+        for v in d.values():
+            if isinstance(v, (dict, list)):
+                r = _overrides_de(v)
+                if r:
+                    return r
+    return []
+
+
+def ler_gravado(pares: list[str] | None) -> dict:
+    """{curto: {data: regra}} das respostas da gravação do PriceLabs (ou da releitura das regras) por quarto."""
+    out = {}
+    for x in pares or []:
+        k, v = x.split("=", 1)
+        out[k] = {str(o["date"])[:10]: o for o in _overrides_de(ler_json(v)) if o.get("date")}
+    return out
+
+
+def conferir_resumo_beds24(resumo: dict | None, lote: list[dict]) -> tuple[str | None, set]:
+    """(falha geral, quartos com item pulado) do resumo do `beds24.py editar-lote --aplicar` (o JSON que ele imprime)
+    contra o lote da decisão. Revisão de 16/11 (3ª verificação, R3-12): a config só muda com o lote gravado e conferido;
+    item pulado (guarda de estadia que mudou ou noite vizinha que reabriu, R3-07) tira o quarto do patch, salvo "já no
+    alvo"."""
+    if not lote:
+        return None, set()
+    if not isinstance(resumo, dict):
+        return ("sem o resumo do editar-lote --aplicar (--resumo-beds24 <arquivo com o JSON que ele imprimiu>): a config "
+                "só muda depois do Beds24 gravado e conferido"), set()
+    if not resumo.get("aplicar"):
+        return "o resumo do editar-lote é de uma simulação (sem --aplicar): nada foi gravado no Beds24", set()
+    if resumo.get("erros") or resumo.get("parou_no_bloco") or resumo.get("resposta_ok") is False:
+        return ("o editar-lote voltou com erro (" + "; ".join(str(e) for e in (resumo.get("erros") or []))[:200]
+                + (f"; parou no bloco {resumo['parou_no_bloco']}" if resumo.get("parou_no_bloco") else "") + ")"), set()
+    import beds24
+    unicos = {json.dumps({k: i.get(k) for k in beds24.CAMPOS_ITEM_LOTE_UNICO}, sort_keys=True, ensure_ascii=False,
+                         default=str) for i in lote}
+    if int(resumo.get("itens") or 0) < len(unicos):
+        return (f"o resumo do editar-lote tem {resumo.get('itens')} item(ns) e a decisão manda {len(unicos)}: é o resumo "
+                "de outro lote?"), set()
+    if int(resumo.get("conferidos") or 0) < int(resumo.get("a_gravar") or 0):
+        return (f"o editar-lote conferiu {resumo.get('conferidos')} de {resumo.get('a_gravar')} itens gravados"), set()
+    chaves = {(i["quarto"], i["de"], i["ate"]) for i in lote}
+    pulados = {p["quarto"] for p in resumo.get("pulados") or []
+               if (p.get("quarto"), p.get("de"), p.get("ate")) in chaves and p.get("por_que") != "já no alvo"}
+    return None, pulados
+
+
+def conferir_gravacao_pl(itens: list[dict], gravado: dict | None) -> dict:
+    """{quarto: [falhas]} da estadia e da máscara dos itens do PriceLabs da decisão (portão, exceções) contra a resposta
+    da gravação ou a releitura das regras (`gravado` {curto: {data: regra}}). Revisão de 16/11 (3ª verificação, R3-12)."""
+    falhas: dict = {}
+    for it in itens or []:
+        if it.get("tipo") != "data":
+            continue
+        q, n = it["quarto"], it["data"]
+        campos = {k: str(it[k]) for k in ("min_stay", "check_in", "check_out") if it.get(k) is not None}
+        if not campos:
+            continue
+        reg = ((gravado or {}).get(q) or {}).get(n)
+        if reg is None:
+            falhas.setdefault(q, []).append(f"{n}: sem a resposta da gravação do PriceLabs (--pricelabs {q}=<arquivo>)")
+            continue
+        for k, v in campos.items():
+            lido = reg.get(k)
+            if lido is None or str(int(lido) if k == "min_stay" and str(lido).isdigit() else lido) != v:
+                falhas.setdefault(q, []).append(f"{n} {k}: gravado {lido!r}, esperado {v!r}")
+        if ("check_in" in campos or "check_out" in campos) and str(reg.get("check_in_check_out_enabled") or "") != "1":
+            falhas.setdefault(q, []).append(f"{n}: check_in_check_out_enabled não ligado")
+    return falhas
+
+
+def _patch_sem(patch: dict, fora: set) -> tuple[dict, set]:
+    """O patch sem os quartos de `fora` (e as datas que ficarem vazias) e os quartos que ele mexe."""
+    out, mexe = {}, set()
+    for chave, v in (patch or {}).items():
+        if not isinstance(v, dict):
+            out[chave] = v
+            continue
+        dst = {}
+        for ds, porq in v.items():
+            if porq is None:
+                dst[ds] = None
+                continue
+            mexe |= set(porq)
+            ficam = {q: x for q, x in porq.items() if q not in fora}
+            if ficam:
+                dst[ds] = ficam
+        if dst:
+            out[chave] = dst
+    if not any(isinstance(v, dict) for v in out.values()):
+        out = {}
+    return out, mexe
+
+
 def aplicar_config(cfg_bruto: dict, estado: dict, hoje: date, portao: dict | None = None,
-                   orfas: dict | None = None) -> tuple[list[str], list[str]]:
+                   orfas: dict | None = None, resumo_beds24: dict | None = None,
+                   gravado_pl: dict | None = None) -> tuple[list[str], list[str]]:
     """Aplica em quartos.json (regra_h_beds24) e no estado a DECISÃO gravada pelo `portao` e pelo `orfas` desta rotina,
     sem reavaliar (revisão de 16/11: o `portao --aplicar-config` reavaliava depois do `registrar` e, com o preço do fim de
     semana regravado, a condição 1 falhava e a config ficava sem o patch: a auditoria do Beds24 fechava o 01→03 de novo).
-    Só a pousada com `pode` e a prova avaliada hoje; decisão de outro dia é recusada. Devolve (feitas, recusas)."""
+    Só a pousada com `pode` e a prova avaliada hoje; decisão de outro dia é recusada. Revisão de 16/11 (3ª verificação):
+      - R3-12: só com o lote do Beds24 gravado e conferido (`resumo_beds24`, o JSON do `editar-lote --aplicar`: sem erro,
+        com os itens da decisão) e a estadia e a máscara dos itens do PriceLabs da decisão na resposta da gravação ou na
+        releitura (`gravado_pl` {curto: {data: regra}}); o quarto com item pulado ou não conferido fica fora (a pousada
+        inteira, no portão), com a recusa no relatório;
+      - R3-11: as exceções primeiro e o portão depois (o None da exceção 2 que fecha não apaga a estadia 2 do portão).
+    Devolve (feitas, recusas)."""
     feitas, recusas = [], []
     h = hoje.isoformat()
     for nome, d in (("portao", portao), ("orfas", orfas)):
         if d is not None and d.get("hoje") != h:
             recusas.append(f"{nome}: decisão de {d.get('hoje')}, não de hoje ({h}): rode de novo")
-    if portao and portao.get("hoje") == h:
-        for p, x in (portao.get("portao") or {}).items():
-            if not x.get("pode") or x.get("ja_aberto"):
-                continue
-            if (x.get("prova") or {}).get("avaliado_em") != h or not x.get("patch_quartos"):
-                recusas.append(f"portão {p}: sem prova de hoje ou sem o patch na decisão")
-                continue
-            aplicar_patch(cfg_bruto, copy.deepcopy(x["patch_quartos"]))
-            estado.setdefault("portao", {})[p] = {"aberto": True, "em": h}
-            feitas.append(f"portão do 01→03 aberto: {p}")
-    if orfas and orfas.get("hoje") == h and orfas.get("patch_quartos"):
-        aplicar_patch(cfg_bruto, copy.deepcopy(orfas["patch_quartos"]))
-        feitas.append("exceções das noites soltas")
+    portao = portao if portao and portao.get("hoje") == h else None
+    orfas = orfas if orfas and orfas.get("hoje") == h else None
+    abrir = {}
+    for p, x in ((portao or {}).get("portao") or {}).items():
+        if not x.get("pode") or x.get("ja_aberto"):
+            continue
+        if (x.get("prova") or {}).get("avaliado_em") != h or not x.get("patch_quartos"):
+            recusas.append(f"portão {p}: sem prova de hoje ou sem o patch na decisão")
+            continue
+        abrir[p] = x
+    lote = [i for i in (portao or {}).get("lote_beds24") or [] if (i.get("portao_0103") or {}).get("pousada") in abrir]
+    lote += [dict(i) for i in (orfas or {}).get("lote_beds24") or []]
+    pl = [i for i in (portao or {}).get("itens") or [] if POUSADA_DE.get(i.get("quarto")) in abrir]
+    pl += list((orfas or {}).get("itens") or [])
+    if orfas and orfas.get("patch_quartos") and "lote_beds24" not in orfas:
+        recusas.append("orfas: a decisão não traz o lote do Beds24 (saída de uma versão antiga do `orfas`): rode de novo")
+        orfas = None
+    falha_b24, pulados = conferir_resumo_beds24(resumo_beds24, lote)
+    if falha_b24:
+        recusas.append(f"Beds24: {falha_b24}; nada aplicado na config")
+        return feitas, recusas
+    falha_pl = conferir_gravacao_pl(pl, gravado_pl)
+    fora = set(pulados) | set(falha_pl)
+    for q in sorted(fora):
+        motivo = ("item do lote do Beds24 pulado (refaça com o inventário novo)" if q in pulados else
+                  "PriceLabs: " + "; ".join(falha_pl[q])[:200])
+        recusas.append(f"{q}: {motivo}")
+    if orfas and orfas.get("patch_quartos"):
+        patch, mexe = _patch_sem(orfas["patch_quartos"], fora)
+        if patch:
+            aplicar_patch(cfg_bruto, copy.deepcopy(patch))
+            feitas.append("exceções das noites soltas: " + ", ".join(sorted(mexe - fora)))
+    for p, x in abrir.items():
+        ruins = [q for q in POUSADAS[p] if q in fora]
+        if ruins:
+            recusas.append(f"portão {p}: não aplicado na config ({', '.join(ruins)} sem o Beds24 ou o PriceLabs conferido)")
+            continue
+        aplicar_patch(cfg_bruto, copy.deepcopy(x["patch_quartos"]))
+        estado.setdefault("portao", {})[p] = {"aberto": True, "em": h}
+        feitas.append(f"portão do 01→03 aberto: {p}")
     return feitas, recusas
 
 
@@ -1610,15 +1889,25 @@ def main(argv=None) -> int:
                     help="(saiu em 16/11: use `aplicar-config --portao <saida>` depois de gravar)")
     po.add_argument("--mostrar", action="store_true",
                     help="só imprime as ações (simulação) com o portão fechado; nada vai para --saida nem --lote-beds24")
+    po.add_argument("--nao-avaliar", action="store_true",
+                    help="rotina sem o envio e o público do dia: grava a --saida e o --lote-beds24 vazios (os passos "
+                         "seguintes ficam iguais)")
     orf = sub.add_parser("orfas", parents=[comuns])
     orf.add_argument("--lote-beds24")
+    orf.add_argument("--portao", help="o --saida do `portao` desta rotina (rode o portão antes): o quarto cuja pousada "
+                                      "abre o 01→03 agora volta 02/01 a 2, não a 3")
     orf.add_argument("--aplicar-config", action="store_true",
-                     help="aplica o patch já (prefira `aplicar-config --orfas <saida>` depois de gravar)")
+                     help="(saiu em 16/11: use `aplicar-config --orfas <saida>` depois de gravar e conferir)")
     apc = sub.add_parser("aplicar-config", help="depois de gravar PriceLabs e Beds24: aplica em quartos.json a decisão "
                                                 "gravada do `portao` e do `orfas` desta rotina (não reavalia)")
     apc.add_argument("--hoje", required=True)
     apc.add_argument("--portao", help="o --saida do `portao` desta rotina")
     apc.add_argument("--orfas", help="o --saida do `orfas` desta rotina")
+    apc.add_argument("--resumo-beds24", help="o JSON que o `beds24.py editar-lote ... --aplicar` imprimiu (obrigatório "
+                                             "quando a decisão tem lote)")
+    apc.add_argument("--pricelabs", nargs="*", default=[],
+                     help="Q7=<resposta do update_listing_date_overrides ou releitura get_listing_date_overrides> ... "
+                          "(obrigatório para os quartos com item do portão ou das exceções)")
     apc.add_argument("--estado", default=str(ARQ_ESTADO))
     rg = sub.add_parser("registrar", help="depois de gravar e conferir no PriceLabs: funde o plano no estado")
     rg.add_argument("--plano", required=True, help="o --saida do plano (ou o `juntar`), com o estado novo")
@@ -1696,7 +1985,9 @@ def main(argv=None) -> int:
         bruto = json.loads(Path(ARQ_QUARTOS).read_text(encoding="utf-8"))
         disco = carregar_estado(a.estado)
         feitas, recusas = aplicar_config(bruto, disco, hoje, ler_json(a.portao) if a.portao else None,
-                                         ler_json(a.orfas) if a.orfas else None)
+                                         ler_json(a.orfas) if a.orfas else None,
+                                         ler_json(a.resumo_beds24) if a.resumo_beds24 else None,
+                                         ler_gravado(a.pricelabs) if a.pricelabs else None)
         for m in recusas:
             print("recusado:", m)
         if not feitas:
@@ -1784,6 +2075,16 @@ def main(argv=None) -> int:
             print(f"estado gravado em {a.estado}")
         return 0
 
+    if a.cmd == "portao" and getattr(a, "nao_avaliar", False):
+        # revisão de 16/11 (3ª verificação, R3-15): rotina sem o envio e o público do dia (a leve): saída e lote vazios
+        saida = {"hoje": hoje.isoformat(), "itens": [], "portao": {}, "lote_beds24": [], "comandos_beds24": [],
+                 "patch_quartos": {}, "nao_avaliado": True}
+        if a.saida:
+            salvar_json(a.saida, saida)
+        if a.lote_beds24:
+            Path(a.lote_beds24).write_text("[]\n", encoding="utf-8")
+        print("portão não avaliado nesta rotina (sem o envio e o público do dia): saída e lote vazios")
+        return 0
     if a.cmd == "portao":
         if a.aplicar_config:
             print("ERRO: a config do portão se aplica depois de gravar o PriceLabs e o Beds24, pela decisão gravada: "
@@ -1795,8 +2096,14 @@ def main(argv=None) -> int:
                   "semana da pousada muda)")
             return 1
         itens_plano = [i for x in a.plano for i in (ler_json(x).get("itens") or [])]
-        saida, linhas = decidir_portao(cfg, ordem, estado, inv, regras, _pares(a.envio),
-                                       {k: float(v) for k, v in _pares(a.publico).items()}, hoje, itens_plano, a.mostrar)
+        publico, quarto_pub = {}, {}
+        for k, v in _pares(a.publico).items():
+            val, _, qp = v.partition("@")      # Recanto=2560 ou Recanto=2560@Q7 (o quarto que a Booking mostrou)
+            publico[k] = float(val)
+            if qp:
+                quarto_pub[k] = qp
+        saida, linhas = decidir_portao(cfg, ordem, estado, inv, regras, _pares(a.envio), publico, hoje, itens_plano,
+                                       a.mostrar, quarto_pub)
         for x in linhas:
             print(x)
         if a.saida:
@@ -1813,7 +2120,18 @@ def main(argv=None) -> int:
         return 0
 
     if a.cmd == "orfas":
-        r = avaliar_orfas(cfg, ordem, estado, inv, regras, hoje)
+        if a.aplicar_config:
+            # revisão de 16/11 (3ª verificação, R3-06): como no `portao`, a config só depois de gravar e conferir
+            print("ERRO: a config das exceções se aplica depois do PriceLabs e do Beds24 gravados e conferidos, pela "
+                  "decisão gravada: `aplicar-config --hoje <hoje> --orfas <saida do orfas> --resumo-beds24 <resumo do "
+                  "editar-lote> --pricelabs Q=<resposta> ...` (gravar já deixava a auditoria do Beds24 abrir a exceção "
+                  "sem o lote nem o PriceLabs)")
+            return 1
+        try:
+            r = avaliar_orfas(cfg, ordem, estado, inv, regras, hoje, ler_json(a.portao) if a.portao else None)
+        except ValueError as e:
+            print(f"ERRO: {e}")
+            return 1
         print("| Quarto | Livres 29/30/31/01/02/03 | Soltas 30/12 | 29→31 direta | Exceção 1 OTA | Soltas 02/01 | "
               "02→04 direta | Exceção 2 OTA |")
         print("|---|---|---|---|---|---|---|---|")
@@ -1823,6 +2141,10 @@ def main(argv=None) -> int:
                   f"{x['soltas_30_12']} | {x['venda_direta_29_31']} | {x['excecao_1_ota']}"
                   f"{' (' + x['acao_1'] + ')' if x.get('acao_1') else ''} | {x['soltas_02_01']} | {x['venda_direta_02_04']} | "
                   f"{x['excecao_2_ota']}{' (' + x['acao_2'] + ')' if x.get('acao_2') else ''} |")
+        for q, x in r["quartos"].items():
+            for k in ("excecao_1_por_que", "excecao_2_por_que"):
+                if x.get(k):
+                    print(f"{q}: exceção {k[8]} fechada: {x[k]}")
         for m in r["avisos"]:
             print("aviso:", m)
         for c in r["comandos_beds24"]:
@@ -1831,14 +2153,11 @@ def main(argv=None) -> int:
             print("patch de quartos.json (regra_h_beds24):", json.dumps(r["patch_quartos"], ensure_ascii=False))
         if a.saida:
             salvar_json(a.saida, {"hoje": hoje.isoformat(), "itens": r["itens_pricelabs"], "quartos": r["quartos"],
-                                  "comandos_beds24": r["comandos_beds24"], "patch_quartos": r["patch_quartos"]})
+                                  "comandos_beds24": r["comandos_beds24"], "lote_beds24": r["lote_beds24"],
+                                  "patch_quartos": r["patch_quartos"], "portao_considerado": bool(a.portao)})
         if a.lote_beds24:   # sempre escreve (lista vazia sem exceção a mexer): lote velho não fica na pasta
             Path(a.lote_beds24).write_text(json.dumps(r["lote_beds24"], ensure_ascii=False, indent=1) + "\n",
                                            encoding="utf-8")
-        if a.aplicar_config and r["patch_quartos"]:
-            bruto = json.loads(Path(ARQ_QUARTOS).read_text(encoding="utf-8"))
-            salvar_json(ARQ_QUARTOS, aplicar_patch(bruto, r["patch_quartos"]))
-            print(f"config gravada em {ARQ_QUARTOS}")
         return 0
     return 1
 

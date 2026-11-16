@@ -2,6 +2,34 @@
 
 Cada mudança feita na própria Skill (regras, parâmetros, scripts, fluxo) entra aqui: data, o que mudou, por quê (evidência) e como desfazer. A entrada mais nova fica em cima.
 
+## 16/11/2026 (~17:00 BRT): Réveillon 2026/27 — terceira verificação independente (achados R3-01 a R3-15)
+
+Correções no código e na ordem `dono-2026-11-16-reveillon-250k` (só ela) depois dos preços do Recanto gravados (efb00f8). Nenhuma API chamada; o comportamento dos preços já gravados não muda: o plano de hoje refeito com os mesmos insumos da gravação dá os mesmos 16 itens e os mesmos percentuais (Moinhos +324/+273, Panorâmica I +237/+207, Afrodite +235/+191, Panorâmica II +213/+180) e os mesmos pedidos, byte a byte; `pace.py` não mudou.
+
+- **Validador (`validar_plano.py`):**
+  - R3-01: item com só `check_in` ou só `check_out` numa noite com máscara da ordem é ERRO, e a máscara é avaliada como o payload a manda (o lado ausente vira 1111111). Antes, a sexta 01/01 da Afrodite, a saída do sábado 02/01 e a da quinta 31/12 abriam com 0 erro.
+  - R3-02: Balcony nas 4 noites. ERRO abaixo de min(piso do período, 85,5% da suíte com banheira livre mais barata) menos a folga do % inteiro, e abaixo do piso quando os 90% da suíte cabem nele; aviso só quando os 90% ficam abaixo do piso. A suíte vem do item, do calendário de `--precos` ou, sem os dois, do piso do período dela. Antes, R$ 1.500 passava.
+  - R3-04: anúncio com exceção do dono só com ordem registrada, vigente e do quarto; pela ordem do Réveillon, só o `max` dos 6 quartos, em R$ 6.000 a partir de 23/11, ou a volta a R$ 5.000.
+  - R3-05: `apagar` numa noite da ordem é ERRO, cite ou não a ordem.
+  - R3-09: o piso do período vale no % inteiro da base, arredondado para cima. Antes, a folga de 1% da base + R$ 1 deixava passar um ponto abaixo. O teste "+155" testava +154 e foi corrigido. O piso nunca passa do teto da noite: com o fator do fim de semana abaixo de ~0,42, o piso fica no pedido de 09/11 e o arredondamento para cima levava o plano acima do pedido (o validador barrava pelo teto). Isso foi corrigido no plano (`preco_bruto`) e no validador.
+  - R3-10: ordem do Recanto por noite (`restricoes.coerencia_recanto`), no valor enviado do item ou, sem item, do calendário de `--precos`: Moinhos ≤ Panorâmica II ≤ Panorâmica I (R$ 1 de tolerância por degrau) e Afrodite ≥ 1,15 × Panorâmica I.
+  - R3-03 (prova): o portão no validador também exige o ok do dono.
+- **`reveillon_250k.py`:**
+  - R3-03: **4ª condição do portão** (da skill, não do dono). O portão só abre com o ok do dono para 01→04 e 01→05 registrado em `execucao_skill.ok_01_04_05` (resposta "aceita", texto literal e data). Sem o ok: "falta: ok do dono para 01→04/01→05". Nesta mudança o campo ficou **pendente** (null).
+  - R3-08: a receita da linha de alarme sai do `--reservas` (receita de hospedagem rateada por noite, como o `beds24.py livro`; hoje R$ 46.580,68, igual ao livro). A partir de 23/11, sem receita, a escada fica parada, com aviso.
+  - R3-14: regra por data sem estadia faz o item levar a estadia da noite (a da config do quarto quando o portão ou a exceção 2 estão aplicados). Na Afrodite sem a máscara ligada, o item leva a máscara do pacote. Regra com `lead_time_expiry` numa das 4 noites para o plano com ERRO.
+  - R3-11: o `orfas` recebe `--portao` (a decisão do portão da mesma rotina; o portão roda antes). O `aplicar-config` aplica as exceções antes do portão.
+  - R3-13: as exceções só abrem (e só ficam abertas) com 29/12 (ou 03/01) com vaga para todas as noites soltas do quarto. Fechar porque 29/12 ou 03/01 esgotou sai como `URGENTE`.
+  - R3-07: o lote que abre uma exceção leva a trava `vizinha_esgotada`.
+  - R3-06 e R3-12: o `orfas --aplicar-config` saiu. O `aplicar-config` exige `--resumo-beds24` (o JSON do `editar-lote --aplicar`, sem erro e com os itens da decisão) e `--pricelabs Q=<resposta ou releitura>` (a estadia e a máscara gravadas). O quarto com item pulado ou não conferido fica fora da config; no portão, fica fora a pousada inteira.
+  - R3-15: `portao --nao-avaliar` grava a saída e o lote vazios (rotina sem o envio e o público do dia). O quarto de referência do público é o mais barato livre nas 4 noites (o 30→03) ou o de `--publico <pousada>=<R$>@<quarto>`, com a média das duas noites do fim de semana.
+- **`beds24.py`:** o `editar-lote` relê também a noite da trava `vizinha_esgotada` e pula o item, relatado em `pulados`, quando ela reabriu. `CAMPOS_ITEM_LOTE_UNICO` e o `calendario_12m.CAMPOS_ITEM_LOTE` passaram a incluir a trava.
+- **Ordem (`ordens_dono.json`, só a do Réveillon):** novos `restricoes.coerencia_recanto`, `restricoes.portao.exige_ok_dono`, notas de `apagar` e das máscaras e `piso_periodo.folga_reais`/`balcony` reescritos. Em `execucao_skill`: `ok_01_04_05` (pendente, com o modo de registrar), `excecoes_abrem`, `receita_alarme` e `config_depois_de_gravar`.
+- **Documentação:** `SKILL.md` 4d foi reescrito. O portão vem antes das noites soltas, com `--nao-avaliar` na rotina leve e a urgência da exceção que fecha; o item 10 ganhou o conflito entre lotes, os itens pulados e o `aplicar-config` com o resumo e as respostas; há um item novo sobre como registrar o ok do dono. Também mudaram `regras.md` 4g e `ferramentas.md`.
+- **Testes:** 20 testes novos (`TestR3Validador`, `TestR3Plano`, `TestR3PortaoEExcecoes` e 3 em `test_beds24_rodada.TestTravaVizinhaEsgotada`) e 3 ajustados (o +155; a Balcony a R$ 3.500, agora ERRO; o anúncio de `test_scripts` com `ordem_id`). Todos falhavam com o código de antes. Os testes que abrem o portão usam uma cópia da ordem com um ok fictício de teste. O `test_reveillon_250k` e o `test_scripts` partem da config de antes do portão: o portão do Recanto foi aberto na config real às 16:40 BRT, e 9 testes do HEAD dependiam do `quartos.json` vivo. Suíte: 438 testes OK.
+- **Depois desta mudança:** o dono respondeu o item (b) às ~16:20 BRT de 16/11 ("Pode de 1 a 4 e de 1 a 5, sem problema."; pendência, commit 836ec77). A rotina deve registrar essa resposta em `execucao_skill.ok_01_04_05`, como diz o `SKILL.md` 4d, para a Villa poder abrir. O portão do Recanto já está aberto na config e não depende disso.
+- **Como desfazer:** reverter este commit nos scripts, nos testes, na documentação e na ordem.
+
 ## 16/11/2026 (~14:00 BRT): Réveillon 2026/27 e fim de semana 01→03/01 (dono: "Pode fazer"; ordem `dono-2026-11-16-reveillon-250k`)
 
 - Dono 16/11 ~13:15 BRT, resposta às decisões de `pricelabs/reveillon-2026-meta-250k.md`: "Pode fazer" (itens 2, 3, 5 e 6 da mensagem: 01→03 pelo portão, preços, máximo de R$ 6.000, exceções das noites soltas). `regras.md` 4g e linha em 6b.

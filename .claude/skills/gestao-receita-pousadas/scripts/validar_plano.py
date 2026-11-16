@@ -309,6 +309,27 @@ def ordem_mais_nova(o: dict, ref: dict) -> bool:
     return dx > dr or (dx == dr and cx is not None and cr is not None and cx > cr)
 
 
+def falta_ok_do_dono(o: dict, pt: dict) -> str | None:
+    """4ª condição do portão do 01→03 (revisão de 16/11, 3ª verificação, R3-03): com a máxima 4 de 30/12 a 02/01
+    (necessária para o 30→03), o 01→03 aberto deixa vender também 01→04 e 01→05, que o dono não pediu (ordem de 03/11:
+    "estender até o dia 03 apenas"). `restricoes.portao.exige_ok_dono` aponta a chave em `execucao_skill` onde a resposta
+    dele fica registrada ({resposta: "aceita" | "recusa" | None, texto_dono, respondido_em}). None quando o ok está
+    registrado (resposta "aceita", com o texto literal e a data); senão o porquê (o portão fica fechado)."""
+    chave = (pt or {}).get("exige_ok_dono")
+    if not chave:
+        return None
+    ok = ((o or {}).get("execucao_skill") or {}).get(chave)
+    ok = ok if isinstance(ok, dict) else {}
+    resp = str(ok.get("resposta") or "").strip().lower()
+    if resp == "aceita" and str(ok.get("texto_dono") or "").strip() and ok.get("respondido_em"):
+        return None
+    if resp == "recusa":
+        return (f"o dono recusou 01→04/01→05 em {ok.get('respondido_em')} ('{str(ok.get('texto_dono') or '')[:80]}'): o "
+                "portão não abre com a máxima 4; a skill propõe outra trava ao dono")
+    return (f"ok do dono para 01→04/01→05 (pendente: registre a resposta dele em execucao_skill.{chave} da ordem "
+            f"{(o or {}).get('id')}, com o texto literal e a data; pendência reveillon-250k-decisoes-20261116, item b)")
+
+
 class Validador:
     def __init__(self, cfg: dict, hoje: date, precos: dict | None = None, horas_max: float = 6, aceitar_velho: bool = False,
                  ordens: dict | None = None, estados: dict | None = None, estado_plano: dict | None = None):
@@ -331,6 +352,11 @@ class Validador:
         self.par = cfg["parametros"]
         self.pisos: set = set()             # (curto, data) cujo valor em "finais" é piso de percentual
         self.ordem_item: dict = {}          # (curto, data) -> ordem_id do item com excecao 'dono' válida
+        # revisão de 16/11 (3ª verificação): valor enviado do item (base × (1 + pct/100), sem arredondar) para as travas da
+        # ordem que olham a noite inteira (coerência do Recanto, piso da Balcony contra a suíte com banheira)
+        self.enviados: dict = {}            # (curto, data) -> enviado do piso em percent_base
+        self._balcony_ordem: list = []      # Balcony abaixo do piso do período da ordem: decide no fim (Regra G)
+        self._coerencia_ordem: dict = {}    # (data, ordem_id) -> ordem com restricoes.coerencia_recanto
         # 30/10: excecao "dono" só com ordem_id de dados/ordens_dono.json vigente para o quarto e a noite
         self.ordens = ordens if isinstance(ordens, dict) else carregar_ordens(ordens)
 
@@ -417,6 +443,8 @@ class Validador:
             elif tipo == "personalizacao" and not it.get("como_desfazer"):
                 self.erro(i, it, "personalização sem 'como_desfazer'")
         self.validar_balcony(finais)
+        self.validar_balcony_da_ordem(finais)
+        self.validar_coerencia_da_ordem()
         self.validar_excecoes()
         self.validar_portao_sem_preco(itens)
 
@@ -551,6 +579,7 @@ class Validador:
             # Dono (14/10): o piso vai ao PriceLabs como variação % sobre a base, arredondada para cima. O que
             # vale nas travas é o valor efetivo desse percentual (nunca abaixo do pedido, até 1% da base acima).
             minimo = em_reais(q, piso_pct(q, float(it["min_price"])))
+            self.enviados[(q["curto"], d.isoformat())] = float(q["base"]) * (1 + piso_pct(q, float(it["min_price"])) / 100)
             mx_noite = maximo_da_noite(self.cfg, q["curto"], d)
             if minimo > mx_noite + 0.5:
                 # revisão de 04/11: piso acima do máximo do anúncio deixa piso > teto no PriceLabs (Natal a R$ 5.024).
@@ -786,6 +815,14 @@ class Validador:
             return
         ords = [o for o in ordens_por_data(self.ordens, q["curto"], d)
                 if (o.get("restricoes") or {}).get("preco_so_pela_ordem")]
+        if ords and apagar:
+            # revisão de 16/11 (3ª verificação, R3-05): apagar a regra por data tira de uma vez o piso = teto, a estadia e
+            # as máscaras de chegada/saída que a ordem manda manter (na Villa com a promoção, o 4.988/4.991/4.483); citar a
+            # ordem não basta. Mudança nessas noites é item de data (o validador confere cada campo)
+            self.erro(i, it, f"apagar numa noite com ordem do dono por data ({', '.join(o['id'] for o in ords)}): tira de "
+                             "uma vez piso, teto, estadia e máscaras da ordem; nunca nessas noites (use item de data com os "
+                             "campos que mudam)")
+            return
         if ords and it.get("ordem_id") not in {o["id"] for o in ords}:
             self.erro(i, it, f"{'apagar' if apagar else 'preço'} numa noite com ordem do dono por data "
                              f"({', '.join(o['id'] for o in ords)}): só o script dela mexe no preço; cite a ordem ou tire "
@@ -882,8 +919,20 @@ class Validador:
             if falhas is not None:
                 self.erro(i, it, f"{q['nome']}: estadia {ms} abaixo de {minimos[ds]} na noite pela ordem {o.get('id')}"
                           + (f" ({'; '.join(falhas)})" if falhas else " (nunca abaixo disso nas noites dela)"))
-        for campo, regra in ((r.get("mascaras") or {}).get(ds) or {}).items():
-            s = str(it.get(campo) or "")
+        coer = r.get("coerencia_recanto") or {}
+        if coer and curto in (list(coer.get("cadeia") or []) + [(coer.get("afrodite") or {}).get("quarto", "Afrodite")]):
+            self._coerencia_ordem.setdefault((ds, o.get("id")), o)
+        mascaras = (r.get("mascaras") or {}).get(ds) or {}
+        tem_mascara = it.get("check_in") is not None or it.get("check_out") is not None
+        if mascaras and tem_mascara and (it.get("check_in") is None or it.get("check_out") is None):
+            # revisão de 16/11 (3ª verificação, R3-01): o montar_payload manda o lado ausente como "1111111" e sobrescreve
+            # o da regra; com um lado só, a sexta 01/01, a saída do sábado 02/01 ou a da quinta 31/12 abriam sem erro
+            falta = "check_out" if it.get("check_out") is None else "check_in"
+            self.erro(i, it, f"{q['nome']}: item com só um lado da máscara em {ds} (falta {falta}): o payload manda o "
+                             f"outro como 1111111 e sobrescreve a regra; mande check_in e check_out (ordem {o.get('id')})")
+        for campo, regra in mascaras.items():
+            # avalia a máscara como o payload vai mandá-la: com um lado presente, o ausente vale "1111111"
+            s = str(it.get(campo) or ("1111111" if tem_mascara else ""))
             if len(s) != 7 or s[d.weekday()] != "1":
                 continue
             falha = None
@@ -905,6 +954,9 @@ class Validador:
         rh = (self.cfg.get("parametros") or {}).get("regra_h_beds24") or {}
         if (((rh.get("override_por_data_por_quarto") or {}).get(pt.get("noite_chegada")) or {}).get(curto)) == "none":
             return None
+        falta_ok = falta_ok_do_dono(o or {}, pt)
+        if falta_ok:
+            return falta_ok
         pr = it.get("portao_0103")
         if not isinstance(pr, dict):
             return "sem 'portao_0103' (prova do portão) e a config do quarto ainda fechada"
@@ -951,20 +1003,16 @@ class Validador:
         """Piso do período (`restricoes.piso_periodo`) e fim de semana da Villa com a promoção ativa
         (`restricoes.villa_com_promocao`), revisão de 16/11: um erro do script ou item à mão abaixo do piso aprovado
         passava com 0 erro. Réveillon: piso em enviado. Fim de semana: público ÷ fator do estado (`estado_arquivo`),
-        nunca acima do pedido de 09/11; na Villa só depois de a promoção sair; com ela, o enviado de antes. Folga de 1%
-        da base + R$ 1 (o % inteiro). Balcony: aviso (a Regra G vence)."""
+        nunca acima do pedido de 09/11; na Villa só depois de a promoção sair; com ela, o enviado de antes. Revisão de
+        16/11 (3ª verificação, R3-09): o piso do período vale no % inteiro da base, arredondado para cima (o plano sempre
+        põe o piso efetivo no ceil); a folga antiga de 1% da base + R$ 1 deixava passar um ponto inteiro abaixo do piso
+        aprovado. Balcony (R3-02): decide no fim do plano, contra a suíte com banheira (validar_balcony_da_ordem)."""
         ds, curto = d.isoformat(), q["curto"]
-        folga = 0.01 * float(q["base"]) + 1
         pp = r.get("piso_periodo") or {}
-        bloco = next((b for b, x in (o.get("blocos") or {}).items() if ds in (x.get("noites") or [])), None)
-        piso, origem = None, ""
-        est = None
-        if bloco == "reveillon" and curto in (pp.get("reveillon_enviado") or {}):
-            piso, origem = float(pp["reveillon_enviado"][curto]), "Réveillon, enviado"
-        elif bloco == "fds":
+        bloco = self._bloco_da_ordem(o, ds)
+        if bloco == "fds":
             est = self._estado_ordem(o)
-            pous = next((p for p, qs in ((r.get("portao") or {}).get("pousadas") or {}).items() if curto in qs),
-                        q.get("pousada"))
+            pous = self._pousada_da_ordem(r, curto, q.get("pousada"))
             promo = ((est.get("promocao_villa") or {}).get("ativa", True)) if est else True
             vp = r.get("villa_com_promocao") or {}
             if pous == "Villa" and promo:
@@ -973,21 +1021,136 @@ class Validador:
                     self.erro(i, it, f"{q['nome']}: enviado R$ {ef:.2f} abaixo de R$ {float(lim):.0f} no fim de semana "
                                      f"da Villa com a promoção ativa (ordem {o.get('id')}: {vp.get('nota') or ''})"[:400])
                 return
+        piso, origem = self._piso_periodo_de(o, r, curto, ds, q.get("pousada"))
+        if piso is None:
+            return
+        p_req = piso_pct(q, piso - 0.01)
+        teto = self._teto_enviado_de(r, curto, ds)
+        if teto is not None:
+            p_req = min(p_req, teto_pct(q, teto))   # o piso no pedido de 09/11 (fator baixo) não passa do teto da noite
+        if piso_pct(q, float(it["min_price"])) >= p_req:
+            return
+        msg = (f"{q['nome']}: enviado R$ {ef:.2f} abaixo do piso do período da ordem {o.get('id')} (R$ {piso:.2f}, "
+               f"+{p_req}% da base; {origem})")
+        if curto == "Balcony" and "aviso" in str(pp.get("balcony") or ""):
+            self._balcony_ordem.append({"i": i, "it": it, "q": q, "d": d, "o": o, "r": r, "piso": piso, "ef": ef,
+                                        "msg": msg})
+        else:
+            self.erro(i, it, msg)
+
+    @staticmethod
+    def _teto_enviado_de(r: dict, curto: str, ds: str) -> float | None:
+        """O teto enviado da ordem para o quarto na noite (`restricoes.teto_enviado`), ou None."""
+        tetos = r.get("teto_enviado") or []
+        for te in (tetos if isinstance(tetos, list) else [tetos]):
+            lim = (te.get("por_quarto") or {}).get(curto)
+            if lim is not None and ds in (te.get("noites") or []):
+                return float(lim[ds] if isinstance(lim, dict) else lim)
+        return None
+
+    @staticmethod
+    def _bloco_da_ordem(o: dict, ds: str) -> str | None:
+        return next((b for b, x in (o.get("blocos") or {}).items() if ds in (x.get("noites") or [])), None)
+
+    @staticmethod
+    def _pousada_da_ordem(r: dict, curto: str, padrao: str | None = None) -> str | None:
+        return next((p for p, qs in ((r.get("portao") or {}).get("pousadas") or {}).items() if curto in qs), padrao)
+
+    def _piso_periodo_de(self, o: dict, r: dict, curto: str, ds: str, pousada: str | None = None) -> tuple:
+        """(piso do período em enviado, origem) do quarto na noite pela ordem (`restricoes.piso_periodo`), ou (None, "").
+        Réveillon: em enviado. Fim de semana: público ÷ fator do estado, nunca acima do pedido de 09/11."""
+        pp = r.get("piso_periodo") or {}
+        bloco = self._bloco_da_ordem(o, ds)
+        if bloco == "reveillon" and curto in (pp.get("reveillon_enviado") or {}):
+            return float(pp["reveillon_enviado"][curto]), "Réveillon, enviado"
+        if bloco == "fds":
+            est = self._estado_ordem(o)
+            pous = self._pousada_da_ordem(r, curto, pousada)
             f = ((((est or {}).get("fatores") or {}).get(pous) or {}).get("fds") or {}).get("valor")
             pub = (pp.get("fds_publico") or {}).get(curto)
             if f and pub:
-                piso, origem = float(pub) / float(f), f"fim de semana, público R$ {float(pub):.0f} ÷ fator {float(f):.4f}"
+                piso = float(pub) / float(f)
                 ped = (o.get("pedido_0911") or {}).get(curto)
                 if pp.get("fds_nunca_acima_do_pedido") and ped is not None:
                     piso = min(piso, float(ped[ds] if isinstance(ped, dict) else ped))
-        if piso is None or ef >= piso - folga:
+                return piso, f"fim de semana, público R$ {float(pub):.0f} ÷ fator {float(f):.4f}"
+        return None, ""
+
+    def validar_balcony_da_ordem(self, finais: dict) -> None:
+        """Revisão de 16/11 (3ª verificação, R3-02): a Balcony nas noites da ordem com `restricoes.piso_periodo`. O piso do
+        período vale; só a Regra G pode deixá-la abaixo dele, e só quando 90% da suíte com banheira livre mais barata da
+        Villa fica abaixo do piso (aviso). ERRO abaixo de min(piso do período, 85,5% da suíte) menos a folga do % inteiro
+        (1% da base + R$ 1), e abaixo do piso quando os 90% da suíte cabem nele. A suíte: o valor do item no plano, senão
+        o calendário de --precos, senão o piso do período dela (o menor valor que ela pode ter: limite de baixo)."""
+        if not self._balcony_ordem:
             return
-        msg = (f"{q['nome']}: enviado R$ {ef:.2f} abaixo do piso do período da ordem {o.get('id')} (R$ {piso:.2f}; "
-               f"{origem})")
-        if curto == "Balcony" and "aviso" in str(pp.get("balcony") or ""):
-            self.aviso(i, it, msg + "; Balcony: a Regra G vence")
-        else:
-            self.erro(i, it, msg)
+        desc = float(self.par.get("regra_g_desconto", 0.10))
+        for x in self._balcony_ordem:
+            i, it, q, o, r, piso, ef = x["i"], x["it"], x["q"], x["o"], x["r"], x["piso"], x["ef"]
+            ds = x["d"].isoformat()
+            vals, todos = [], []
+            for k in PD.BANHEIRA_VILLA:
+                pk = self.precos.get((k, ds)) or {}
+                v = self.enviados.get((k, ds), finais.get((k, ds)))
+                if v is None:
+                    v = pk.get("preco")
+                if v is None:
+                    v = self._piso_periodo_de(o, r, k, ds, "Villa")[0]
+                if v is None:
+                    continue
+                todos.append(float(v))
+                if pk.get("livres") is None or int(pk["livres"]) > 0:
+                    vals.append(float(v))
+            ref = min(vals or todos) if (vals or todos) else None
+            folga = 0.01 * float(q["base"]) + 1
+            if ref is None:
+                self.erro(i, it, x["msg"] + "; sem a suíte com banheira da Villa para a Regra G")
+                continue
+            g_hi, g_lo = (1 - desc) * ref, (1 - desc) * 0.95 * ref
+            if g_hi < piso - 0.01 and ef >= g_lo - folga:
+                self.aviso(i, it, x["msg"] + f"; Balcony: a Regra G vence (90% da suíte com banheira livre mais barata, "
+                                             f"R$ {ref:.0f}, fica abaixo do piso)")
+            elif g_hi < piso - 0.01:
+                self.erro(i, it, x["msg"] + f"; abaixo também de 85,5% da suíte com banheira livre mais barata "
+                                            f"(R$ {ref:.0f}: Regra G de R$ {g_lo:.0f} a R$ {g_hi:.0f})")
+            else:
+                self.erro(i, it, x["msg"] + f"; a Regra G cabe no piso (90% da suíte com banheira livre mais barata, "
+                                            f"R$ {ref:.0f}, = R$ {g_hi:.0f})")
+
+    def validar_coerencia_da_ordem(self) -> None:
+        """Revisão de 16/11 (3ª verificação, R3-10): ordem do Recanto nas noites da ordem com `restricoes.coerencia_recanto`
+        (Moinhos ≤ Panorâmica II ≤ Panorâmica I e Afrodite ≥ 1,15 × Panorâmica I), no valor enviado: o do item no plano,
+        senão o do calendário de --precos (a regra vigente, quando o validador a tem). Só confere o par em que ao menos um
+        lado vem do plano (o que já está gravado e o plano não mexe fica para a auditoria). Tolerância de R$ 1 do % inteiro
+        da base (o 4.070,40 da Panorâmica II contra o 4.070,00 da Double é "igual" na proposta aprovada)."""
+        for (ds, oid), o in sorted(self._coerencia_ordem.items(), key=lambda kv: kv[0]):
+            c = ((o.get("restricoes") or {}).get("coerencia_recanto")) or {}
+            tol = float(c.get("tolerancia_reais", 1)) + 0.01
+
+            def val(k):
+                if (k, ds) in self.enviados:
+                    return self.enviados[(k, ds)], True
+                v = (self.precos.get((k, ds)) or {}).get("preco")
+                return (float(v) if v is not None else None), False
+            cadeia = list(c.get("cadeia") or [])
+            for ia, a in enumerate(cadeia):
+                for ib in range(ia + 1, len(cadeia)):
+                    # todo par da cadeia (a Moinhos contra a Panorâmica I também, quando a II não está no plano nem no
+                    # calendário), com R$ 1 de tolerância por degrau da cadeia
+                    b = cadeia[ib]
+                    (va, pa), (vb, pb) = val(a), val(b)
+                    lim = (tol - 0.01) * (ib - ia) + 0.01
+                    if va is None or vb is None or not (pa or pb) or va <= vb + lim:
+                        continue
+                    self.erros.append(f"ERRO ordem do Recanto {ds} ({oid}): {a} R$ {va:.2f} acima de {b} R$ {vb:.2f} "
+                                      f"(Moinhos ≤ Panorâmica II ≤ Panorâmica I, tolerância de R$ {lim:.0f})")
+            af = c.get("afrodite") or {}
+            if af:
+                (va, pa), (vb, pb) = val(af.get("quarto", "Afrodite")), val(af.get("sobre", "Double"))
+                fator = float(af.get("fator", 1.15))
+                if va is not None and vb is not None and (pa or pb) and va < vb * fator - tol:
+                    self.erros.append(f"ERRO ordem do Recanto {ds} ({oid}): Afrodite R$ {va:.2f} abaixo de "
+                                      f"{fator:.2f} × {af.get('sobre', 'Double')} (R$ {vb * fator:.2f})")
 
     def _falha_excecao(self, it: dict, curto: str, d: date, r: dict, k: int) -> str | None:
         """None quando a exceção k das noites soltas vale para o quarto: na config (override do quarto na noite) ou com
@@ -1234,6 +1397,8 @@ class Validador:
             self.erro(i, it, "dono (14/10): \"Lembre-se tem ser correções percentuais\": base, mínimo e máximo do anúncio "
                              "não se usam para corrigir preço; use piso/teto/preço em percentual por data "
                              "(mudar o anúncio só com excecao 'dono' e a ordem citada no motivo)")
+        else:
+            self.validar_ordem_do_anuncio(i, it, q, campo, valor)
         valor = float(valor)
         ref = self.cfg["referencia_semanal"]["valores"].get(q["curto"], {})
         if campo in ("base", "min") and ref.get(campo):
@@ -1245,6 +1410,47 @@ class Validador:
             self.erro(i, it, f"mínimo {valor:.0f} abaixo do limite de segurança {self.piso_absoluto(q):.0f}")
         if campo == "base" and valor < q["min"]:
             self.erro(i, it, "base abaixo do mínimo")
+
+    def validar_ordem_do_anuncio(self, i, it, q, campo, valor) -> None:
+        """Revisão de 16/11 (3ª verificação, R3-04): o item de anúncio com excecao 'dono' cita uma ordem que existe, cobre
+        o quarto e está vigente (como o item de data desde 30/10: `ordem_valida`; o anúncio vale para o ano inteiro, então
+        a vigência é a da ordem até hoje). A ordem com `maximo_anuncio` (Réveillon 2026/27, a primeira que autoriza mexer
+        no máximo) só libera o campo 'max', nos quartos da lista, no valor aprovado (`para`) ou na volta (`de`), e o valor
+        aprovado só a partir de execucao_skill.maximo_anuncio.gravar_a_partir_de."""
+        oid = it.get("ordem_id")
+        o = (self.ordens or {}).get(oid or "") or {}
+        ma = o.get("maximo_anuncio") or {}
+        try:
+            v = float(valor)
+        except (TypeError, ValueError):
+            v = None
+        volta = bool(ma) and campo == "max" and v is not None and ma.get("de") is not None and v == float(ma["de"])
+        quartos = o.get("quartos") or []
+        if not o:
+            self.erro(i, it, f"excecao 'dono' no anúncio sem ordem registrada (ordem_id={oid!r}): registre a ordem do dono "
+                             "em dados/ordens_dono.json e cite-a")
+            return
+        if o.get("tipo") in ("acompanhamento", "manual") or ("*" not in quartos and q["curto"] not in quartos):
+            self.erro(i, it, f"a ordem {oid} não cobre o anúncio de {q['curto']}")
+            return
+        if o.get("ate") and data(o["ate"]) < self.hoje and not volta:
+            self.erro(i, it, f"a ordem {oid} venceu em {o['ate']}: não vale para mudar o anúncio")
+            return
+        if not ma:
+            return
+        if campo != "max" or q["curto"] not in (ma.get("quartos") or []):
+            self.erro(i, it, f"a ordem {oid} só libera o máximo do anúncio ('max') de {', '.join(ma.get('quartos') or [])}; "
+                             f"item com '{campo}' de {q['curto']}")
+            return
+        aceitos = {float(x) for x in (ma.get("para"), ma.get("de")) if x is not None}
+        if v not in aceitos:
+            self.erro(i, it, f"a ordem {oid} aprova o máximo de R$ {float(ma['para']):.0f} (e a volta a "
+                             f"R$ {float(ma.get('de') or 0):.0f}); item com R$ {valor}")
+            return
+        desde = (((o.get("execucao_skill") or {}).get("maximo_anuncio") or {}).get("gravar_a_partir_de"))
+        if not volta and desde and self.hoje < data(desde):
+            self.erro(i, it, f"o máximo de R$ {v:.0f} da ordem {oid} só se grava a partir de {desde} "
+                             "(execucao_skill.maximo_anuncio: noites de 19 a 22/11 com teto manual do dono sobre o máximo)")
 
     @staticmethod
     def teto_efetivo(q: dict, it: dict) -> float:

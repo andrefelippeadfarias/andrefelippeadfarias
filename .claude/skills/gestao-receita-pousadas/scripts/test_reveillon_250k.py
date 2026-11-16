@@ -10,16 +10,16 @@ import copy
 import unittest
 from datetime import date, datetime, timezone
 
+import config_de_teste
 import reveillon_250k as R
-from comum import carregar_quartos, maximo_da_noite
+from comum import maximo_da_noite
 from ordens import carregar_ordens
 from validar_plano import Validador, em_reais, piso_pct
 
-CFG = carregar_quartos()
-# a config real muda com a operação (16/11 16:40 BRT: portão do 01→03 do Recanto aberto, `*_por_quarto` em
-# regra_h_beds24): os testes partem da config de antes do portão e das exceções e cada um monta o seu cenário
-for _k in ("override_por_data_por_quarto", "estadia_minima_por_data_por_quarto", "override_por_data_por_quarto_motivo"):
-    CFG["parametros"]["regra_h_beds24"].pop(_k, None)
+# a config real muda com a operação (16/11 16:35 BRT: portão do 01→03 do Recanto aberto, `*_por_quarto` em
+# regra_h_beds24; a partir de 23/11, o `max` de R$ 6.000 pelo `registrar`): os testes partem da config de antes do portão,
+# das exceções e do máximo novo (config_de_teste) e cada um monta o seu cenário
+CFG = config_de_teste.carregar()
 # depois de gravado e conferido o máximo de R$ 6.000 (reveillon_250k.py registrar com o item de anúncio)
 CFG6 = copy.deepcopy(CFG)
 for _q in ("Q7", "Double", "Q2", "VK7", "VK2", "Balcony"):
@@ -119,10 +119,20 @@ def validar(itens: list[dict], hoje: date = HOJE, cfg: dict | None = None, estad
     return v
 
 
-def resumo_ok(lote: list[dict]) -> dict:
-    """O JSON do `beds24.py editar-lote --aplicar` sem erro, com o lote inteiro gravado e conferido."""
-    return {"itens": len(lote), "aplicar": True, "pulados": [], "a_gravar": len(lote), "n_blocos": 1, "resposta_ok": True,
-            "blocos": [], "conferidos": len(lote), "erros": []}
+def resumo_ok(lote: list[dict], hoje: date = date(2026, 11, 18), estados: dict | None = None) -> dict:
+    """O JSON do `beds24.py editar-lote --aplicar` sem erro, com o lote inteiro gravado e conferido no dia `hoje`
+    (`estados` {(quarto, de): estado} muda o estado dos itens, como o editar-lote devolve; pulado vai em `pulados`)."""
+    import beds24
+    est = estados or {}
+    itens = [{"chave": beds24.chave_item_lote(i), "quarto": i["quarto"], "de": i["de"], "ate": i["ate"],
+              "estado": est.get((i["quarto"], i["de"]), "conferido")} for i in lote]
+    pul = [{"quarto": x["quarto"], "de": x["de"], "ate": x["ate"], "por_que": "a noite vizinha reabriu"
+            if x["estado"] == "pulado" else "já no alvo"} for x in itens if x["estado"] in ("pulado", "no_alvo")]
+    conf = sum(1 for x in itens if x["estado"] == "conferido")
+    return {"itens": len(lote), "aplicar": True, "pulados": pul, "a_gravar": len(lote) - len(pul), "n_blocos": 1,
+            "resposta_ok": True, "blocos": [], "conferidos": conf,
+            "erros": [f"{x['quarto']} {x['de']}: erro" for x in itens if x["estado"] == "com_erro"],
+            "gravado_em": f"{hoje.isoformat()}T15:00:00Z", "lote": itens}
 
 
 def gravado_de(itens: list[dict]) -> dict:
@@ -869,18 +879,20 @@ class TestPortao(unittest.TestCase):
                 regs.append(f"{q}={dd / f'ov_{q}.json'}")
             (dd / "plano.json").write_text('{"hoje": "2026-11-16", "itens": []}', encoding="utf-8")
             (dd / "lote.json").write_text('[{"velho": true}]', encoding="utf-8")
+            (dd / "estado.json").write_text(__import__("json").dumps(estado_hoje()), encoding="utf-8")
             args = ["portao", "--hoje", "2026-11-16", "--replay", "--inventario", str(dd / "inv.json"), "--regras", *regs,
-                    "--plano", str(dd / "plano.json"), "--saida", str(dd / "portao.json"), "--lote-beds24",
-                    str(dd / "lote.json"), "--mostrar"]
-            self.assertEqual(R.main(args), 0)
-            self.assertEqual(__import__("json").loads((dd / "lote.json").read_text(encoding="utf-8")), [])
-            saida = __import__("json").loads((dd / "portao.json").read_text(encoding="utf-8"))
-            self.assertEqual((saida["itens"], saida["patch_quartos"], saida["lote_beds24"]), ([], {}, []))
-            # o --aplicar-config do portão saiu (reavaliava depois do `registrar`)
-            self.assertEqual(R.main(args[:-1] + ["--aplicar-config"]), 1)
-            # sem --plano: recusa
-            i = args.index("--plano")
-            self.assertEqual(R.main(args[:i] + args[i + 2:]), 1)
+                    "--plano", str(dd / "plano.json"), "--estado", str(dd / "estado.json"), "--saida",
+                    str(dd / "portao.json"), "--lote-beds24", str(dd / "lote.json"), "--mostrar"]
+            with config_de_teste.quartos_em_arquivo():
+                self.assertEqual(R.main(args), 0)
+                self.assertEqual(__import__("json").loads((dd / "lote.json").read_text(encoding="utf-8")), [])
+                saida = __import__("json").loads((dd / "portao.json").read_text(encoding="utf-8"))
+                self.assertEqual((saida["itens"], saida["patch_quartos"], saida["lote_beds24"]), ([], {}, []))
+                # o --aplicar-config do portão saiu (reavaliava depois do `registrar`)
+                self.assertEqual(R.main(args[:-1] + ["--aplicar-config"]), 1)
+                # sem --plano: recusa
+                i = args.index("--plano")
+                self.assertEqual(R.main(args[:i] + args[i + 2:]), 1)
 
     def test_aplicar_config_pela_decisao_gravada(self):
         # revisão de 16/11 (reavaliacao_portao.py): decisão do item 4 (portão aberto) → gravação → `registrar` → a config
@@ -1554,21 +1566,23 @@ class TestR3PortaoEExcecoes(unittest.TestCase):
         import json
         import tempfile
         from pathlib import Path
-        from unittest import mock
         inv = inv_hoje()
         inv["Balcony"]["2026-12-31"]["numAvail"] = 0              # exceção 1 abre: há patch
         with tempfile.TemporaryDirectory() as d:
             dd = Path(d)
             regs = _arquivos(dd, inv)
-            quartos = dd / "quartos.json"
-            quartos.write_text("{}", encoding="utf-8")
+            (dd / "estado.json").write_text(json.dumps(estado_hoje()), encoding="utf-8")
             args = ["orfas", "--hoje", "2026-11-16", "--replay", "--inventario", str(dd / "inv.json"), "--regras", *regs,
-                    "--saida", str(dd / "orfas.json"), "--lote-beds24", str(dd / "lote.json")]
-            with mock.patch.object(R, "ARQ_QUARTOS", quartos):
+                    "--estado", str(dd / "estado.json"), "--saida", str(dd / "orfas.json"), "--lote-beds24",
+                    str(dd / "lote.json")]
+            # a config de teste num arquivo temporário (4ª verificação: o comando lia o quartos.json real, e uma exceção
+            # aplicada na operação fazia o teste falhar)
+            with config_de_teste.quartos_em_arquivo() as quartos:
+                antes = quartos.read_text(encoding="utf-8")
                 self.assertEqual(R.main(args + ["--aplicar-config"]), 1)
-                self.assertEqual(quartos.read_text(encoding="utf-8"), "{}")    # nada gravado na config
+                self.assertEqual(quartos.read_text(encoding="utf-8"), antes)    # nada gravado na config
                 self.assertEqual(R.main(args), 0)
-                self.assertEqual(quartos.read_text(encoding="utf-8"), "{}")
+                self.assertEqual(quartos.read_text(encoding="utf-8"), antes)
             saida = json.loads((dd / "orfas.json").read_text(encoding="utf-8"))
             self.assertTrue(saida["patch_quartos"])
             self.assertEqual(saida["lote_beds24"], json.loads((dd / "lote.json").read_text(encoding="utf-8")))
@@ -1609,7 +1623,7 @@ class TestR3PortaoEExcecoes(unittest.TestCase):
         self.assertEqual([i["min_stay"] for i in com["itens_pricelabs"]], [2])
         # aplicar-config: as exceções antes do portão; a estadia 2 de 02/01 fica nos 4 quartos do Recanto
         orfas = {"hoje": D18.isoformat(), "itens": com["itens_pricelabs"], "lote_beds24": com["lote_beds24"],
-                 "patch_quartos": com["patch_quartos"]}
+                 "patch_quartos": com["patch_quartos"], "quartos": com["quartos"]}
         bruto = copy.deepcopy({k: v for k, v in cfg.items() if k not in ("por_curto", "por_id")})
         feitas, recusas = R.aplicar_config(bruto, copy.deepcopy(est), D18, portao=portao, orfas=orfas,
                                            resumo_beds24=resumo_ok(lote),
@@ -1637,17 +1651,20 @@ class TestR3PortaoEExcecoes(unittest.TestCase):
         f, r, _ = aplicar()
         self.assertEqual(f, [])
         self.assertTrue(any("resumo do editar-lote" in x for x in r), r)
+        # 4ª verificação: o resumo é conferido item a item (o `lote` com a chave e o estado de cada item) e pelo dia
         for ruim, txt in ((dict(resumo_ok(lote), erros=["Q7 2027-01-01: override noCheckIn (esperado none)"]),
                            "voltou com erro"), (dict(resumo_ok(lote), aplicar=False), "simulação"),
                           (dict(resumo_ok(lote), parou_no_bloco=1, resposta_ok=False), "voltou com erro"),
-                          (dict(resumo_ok(lote), itens=2), "outro lote"),
-                          (dict(resumo_ok(lote), conferidos=3), "conferiu")):
+                          (dict(resumo_ok(lote), lote=resumo_ok(lote)["lote"][:2]), "outro lote"),
+                          ({k: v for k, v in resumo_ok(lote).items() if k != "lote"}, "lista dos itens"),
+                          (resumo_ok(lote, HOJE), "não de hoje"),
+                          (resumo_ok(lote, estados={("Q7", "2027-01-01"): "com_erro"}), "com_erro"),
+                          (resumo_ok(lote, estados={("Q7", "2027-01-01"): "incerto"}), "incerto")):
             f, r, _ = aplicar(resumo_beds24=ruim, gravado_pl=gravado_de(saida["itens"]))
             self.assertEqual(f, [], txt)
             self.assertTrue(any(txt in x for x in r), (txt, r))
         # item do lote pulado (guarda): o portão do Recanto não vai à config
-        pul = dict(resumo_ok(lote), pulados=[{"quarto": "Q2", "de": "2027-01-02", "ate": "2027-01-02",
-                                              "por_que": "minStay mudou desde o plano: refaça com o inventário novo"}])
+        pul = resumo_ok(lote, estados={("Q2", "2027-01-02"): "pulado"})
         f, r, b = aplicar(resumo_beds24=pul, gravado_pl=gravado_de(saida["itens"]))
         self.assertEqual(f, [])
         self.assertTrue(any("portão Recanto: não aplicado" in x for x in r), r)
@@ -1662,8 +1679,7 @@ class TestR3PortaoEExcecoes(unittest.TestCase):
         self.assertEqual(f, [])
         self.assertTrue(any("Afrodite" in x and "check_in" in x for x in r), r)
         # "já no alvo" conta como gravado; tudo conferido: aplica
-        alvo = dict(resumo_ok(lote), pulados=[{"quarto": "Q2", "de": "2027-01-02", "ate": "2027-01-02",
-                                               "por_que": "já no alvo"}])
+        alvo = resumo_ok(lote, estados={("Q2", "2027-01-02"): "no_alvo"})
         f, r, _ = aplicar(resumo_beds24=alvo, gravado_pl=gravado_de(saida["itens"]))
         self.assertEqual((f, r), (["portão do 01→03 aberto: Recanto"], []))
         # exceções: o quarto com o item pulado (a vizinha reabriu) fica fora do patch; o outro entra
@@ -1673,12 +1689,11 @@ class TestR3PortaoEExcecoes(unittest.TestCase):
         orf = R.avaliar_orfas(CFG, ORDEM, estado_hoje(), inv2, regras_hoje(), HOJE)
         so = {"hoje": "2026-11-16", "itens": orf["itens_pricelabs"], "lote_beds24": orf["lote_beds24"],
               "patch_quartos": orf["patch_quartos"]}
-        resumo = dict(resumo_ok(orf["lote_beds24"]), a_gravar=1, conferidos=1,
-                      pulados=[{"quarto": "VK7", "de": "2026-12-31", "ate": "2026-12-31",
-                                "por_que": "a noite vizinha 2026-12-31 não está mais esgotada (numAvail 1)"}])
+        so["quartos"] = orf["quartos"]
+        resumo = resumo_ok(orf["lote_beds24"], HOJE, estados={("VK7", "2026-12-31"): "pulado"})
         b2 = copy.deepcopy(bruto)
         f, r = R.aplicar_config(b2, estado_hoje(), HOJE, orfas=so, resumo_beds24=resumo, gravado_pl={})
-        self.assertEqual(f, ["exceções das noites soltas: Balcony"])
+        self.assertEqual(f, ["exceção 1 aberta: Balcony"])
         self.assertTrue(any(x.startswith("VK7:") for x in r), r)
         self.assertEqual(b2["parametros"]["regra_h_beds24"]["override_por_data_por_quarto"]["2026-12-31"],
                          {"Balcony": "noCheckIn"})
@@ -1702,8 +1717,8 @@ class TestR3PortaoEExcecoes(unittest.TestCase):
                 (dd / f"grav_{q}.json").write_text(json.dumps({"data": {"overrides": list(regs.values())}}),
                                                    encoding="utf-8")
                 pls.append(f"{q}={dd / f'grav_{q}.json'}")
-            base = ["aplicar-config", "--hoje", "2026-11-18", "--portao", str(dd / "portao.json"), "--estado",
-                    str(dd / "estado.json")]
+            base = ["aplicar-config", "--hoje", "2026-11-18", "--replay", "--portao", str(dd / "portao.json"),
+                    "--estado", str(dd / "estado.json")]
             with mock.patch.object(R, "ARQ_QUARTOS", dd / "quartos.json"):
                 self.assertEqual(R.main(base), 1)                                  # sem o resumo do Beds24
                 self.assertEqual(json.loads((dd / "quartos.json").read_text(encoding="utf-8")), bruto)
@@ -1755,18 +1770,22 @@ class TestR3PortaoEExcecoes(unittest.TestCase):
             dd = Path(d)
             regs = _arquivos(dd, inv_hoje())
             (dd / "lote_portao.json").write_text('[{"velho": true}]', encoding="utf-8")
+            (dd / "estado.json").write_text(json.dumps(estado_hoje()), encoding="utf-8")
             args = ["portao", "--hoje", "2026-11-16", "--replay", "--inventario", str(dd / "inv.json"), "--regras", *regs,
-                    "--nao-avaliar", "--saida", str(dd / "portao.json"), "--lote-beds24", str(dd / "lote_portao.json")]
-            self.assertEqual(R.main(args), 0)
-            self.assertEqual(json.loads((dd / "lote_portao.json").read_text(encoding="utf-8")), [])
-            pt = json.loads((dd / "portao.json").read_text(encoding="utf-8"))
-            self.assertEqual((pt["itens"], pt["patch_quartos"], pt["nao_avaliado"]), ([], {}, True))
-            (dd / "plano.json").write_text('{"hoje": "2026-11-16", "itens": []}', encoding="utf-8")
-            orf = ["orfas", "--hoje", "2026-11-16", "--replay", "--inventario", str(dd / "inv.json"), "--regras", *regs,
-                   "--portao", str(dd / "portao.json"), "--saida", str(dd / "orfas.json")]
-            self.assertEqual(R.main(orf), 0)
-            self.assertEqual(R.main(["juntar", "--plano", str(dd / "plano.json"), str(dd / "orfas.json"),
-                                     str(dd / "portao.json"), "--saida", str(dd / "unico.json")]), 0)
+                    "--estado", str(dd / "estado.json"), "--nao-avaliar", "--saida", str(dd / "portao.json"),
+                    "--lote-beds24", str(dd / "lote_portao.json")]
+            with config_de_teste.quartos_em_arquivo():
+                self.assertEqual(R.main(args), 0)
+                self.assertEqual(json.loads((dd / "lote_portao.json").read_text(encoding="utf-8")), [])
+                pt = json.loads((dd / "portao.json").read_text(encoding="utf-8"))
+                self.assertEqual((pt["itens"], pt["patch_quartos"], pt["nao_avaliado"]), ([], {}, True))
+                (dd / "plano.json").write_text('{"hoje": "2026-11-16", "itens": []}', encoding="utf-8")
+                orf = ["orfas", "--hoje", "2026-11-16", "--replay", "--inventario", str(dd / "inv.json"), "--regras",
+                       *regs, "--estado", str(dd / "estado.json"), "--portao", str(dd / "portao.json"), "--saida",
+                       str(dd / "orfas.json")]
+                self.assertEqual(R.main(orf), 0)
+                self.assertEqual(R.main(["juntar", "--plano", str(dd / "plano.json"), str(dd / "orfas.json"),
+                                         str(dd / "portao.json"), "--saida", str(dd / "unico.json")]), 0)
         # (b) o público vem do 30→03: o quarto de referência é o mais barato livre nas 4 noites
         est, regras, inv = preparar_portao()
         inv["Q7"]["2026-12-30"]["numAvail"] = 0         # a Moinhos (a mais barata) sem vaga em 30/12
@@ -1786,6 +1805,287 @@ class TestR3PortaoEExcecoes(unittest.TestCase):
         av = R.avaliar_portao(CFG, ORDEM_OK, est, inv, regras, ENVIO_18, {"Recanto": 2552}, hoje=D18)
         self.assertTrue(any("@<quarto>" in f for f in av["Recanto"]["faltam"]), av["Recanto"]["faltam"])
 
+
+
+def _orfas_decisao(r: dict, hoje: date = HOJE) -> dict:
+    """A saída do `orfas` (o --saida) a partir do avaliar_orfas."""
+    return {"hoje": hoje.isoformat(), "itens": r["itens_pricelabs"], "quartos": r["quartos"],
+            "lote_beds24": r["lote_beds24"], "patch_quartos": r["patch_quartos"], "portao_considerado": True}
+
+
+def _bruta(cfg: dict) -> dict:
+    return copy.deepcopy({k: v for k, v in cfg.items() if k not in ("por_curto", "por_id")})
+
+
+class TestR4(unittest.TestCase):
+    """Achados da 4ª verificação de 16/11 (correções da 3ª): o PriceLabs da exceção pulada, fechar contra abrir no
+    aplicar-config, identidade do resumo do Beds24, a resposta do PriceLabs, o ok do dono no aplicar-config e no orfas, a
+    recusa com o portão aberto, a Balcony na regra dos 80%, a tolerância do calendário e a config fixa dos testes."""
+
+    def test_excecao_aberta_so_no_pricelabs_fecha(self):
+        # 1º orfas: 01/01 da Afrodite esgotada, a exceção 2 abre (PriceLabs: entrada do sábado e mínimo 2)
+        inv = inv_hoje()
+        inv["Afrodite"]["2027-01-01"]["numAvail"] = 0
+        inv["Afrodite"]["2027-01-03"]["numAvail"] = 1
+        reg = regras_hoje()
+        r = R.avaliar_orfas(CFG, ORDEM, estado_hoje(), inv, reg, HOJE)
+        self.assertEqual(r["quartos"]["Afrodite"]["acao_2"], "abrir")
+        # item 8 grava o PriceLabs; no item 10, 01/01 reabriu e o editar-lote pula os dois itens (trava)
+        resumo = resumo_ok(r["lote_beds24"], HOJE, estados={("Afrodite", "2027-01-02"): "pulado"})
+        bruto = _bruta(CFG)
+        f, rec = R.aplicar_config(bruto, {}, HOJE, None, _orfas_decisao(r), resumo, gravado_de(r["itens_pricelabs"]))
+        self.assertEqual(f, [])
+        self.assertTrue(any("o PriceLabs do quarto já tem a exceção" in x for x in rec), rec)
+        # itens 1, 3 e 4 refeitos: as regras relidas mostram a exceção no PriceLabs, a config não
+        reg2 = copy.deepcopy(reg)
+        reg2["Afrodite"]["2027-01-02"].update(min_stay=2, check_in="1111111")
+        inv2 = copy.deepcopy(inv)
+        inv2["Afrodite"]["2027-01-01"]["numAvail"] = 1
+        r2 = R.avaliar_orfas(CFG, ORDEM, estado_hoje(), inv2, reg2, HOJE)
+        x = r2["quartos"]["Afrodite"]
+        self.assertEqual((x["acao_2"], x["excecao_2_so_no_pricelabs"]), ("fechar", True))
+        self.assertEqual([(i["data"], i["min_stay"], i["check_in"], i["check_out"]) for i in r2["itens_pricelabs"]],
+                         [("2027-01-02", 3, "1111101", "1111101")])
+        self.assertEqual(sorted(((i.get("override"), i.get("min_stay")) for i in r2["lote_beds24"]), key=str),
+                         [("noCheckInOrCheckOut", None), (None, 3)])
+        self.assertTrue(any("aberta só no PriceLabs" in m for m in r2["avisos"]), r2["avisos"])
+        self.assertEqual(validar(r2["itens_pricelabs"]).erros, [])
+        # exceção 1 da Afrodite (saída da quinta 31/12 aberta no PriceLabs) e a 2 do Q7 (mínimo 2 sem o portão)
+        reg3 = copy.deepcopy(reg)
+        reg3["Afrodite"]["2026-12-31"]["check_out"] = "1111111"
+        reg3["Q7"]["2027-01-02"]["min_stay"] = 2
+        r3 = R.avaliar_orfas(CFG, ORDEM, estado_hoje(), inv_hoje(), reg3, HOJE)
+        self.assertEqual(r3["quartos"]["Afrodite"]["acao_1"], "fechar")
+        self.assertEqual(r3["quartos"]["Q7"]["acao_2"], "fechar")
+        it_af = [i for i in r3["itens_pricelabs"] if i["quarto"] == "Afrodite"]
+        self.assertEqual([(i["data"], i["check_out"]) for i in it_af], [("2026-12-31", "1110111")])
+        # o mínimo 2 em 02/01 com o portão aberto na config não é exceção
+        cfg = copy.deepcopy(CFG)
+        cfg["parametros"]["regra_h_beds24"]["override_por_data_por_quarto"] = {"2027-01-01": {"Q7": "none"}}
+        r4 = R.avaliar_orfas(cfg, ORDEM, estado_hoje(), inv_hoje(), reg3, HOJE)
+        self.assertIsNone(r4["quartos"]["Q7"].get("acao_2"))
+
+    def test_fechar_entra_na_config_sem_o_pricelabs_e_com_erro_em_outro_item(self):
+        cfg = copy.deepcopy(CFG)
+        rh = cfg["parametros"]["regra_h_beds24"]
+        rh["override_por_data_por_quarto"] = {"2027-01-02": {"Q7": "noCheckOut", "Afrodite": "noCheckOut"}}
+        rh["estadia_minima_por_data_por_quarto"] = {"2027-01-02": {"Q7": 2, "Afrodite": 2}}
+        inv = inv_hoje()
+        for q in ("Q7", "Afrodite"):
+            inv[q]["2027-01-01"]["numAvail"] = 0
+            inv[q]["2027-01-02"]["numAvail"] = 1
+            inv[q]["2027-01-03"]["numAvail"] = 0          # 03/01 esgotou com a exceção aberta: URGENTE
+        inv["Balcony"]["2026-12-31"]["numAvail"] = 0      # e a Balcony abre a exceção 1 na mesma rotina
+        r = R.avaliar_orfas(cfg, ORDEM, estado_hoje(), inv, regras_hoje(), HOJE)
+        self.assertEqual((r["quartos"]["Q7"]["acao_2"], r["quartos"]["Afrodite"]["acao_2"]), ("fechar", "fechar"))
+        self.assertTrue(any(m.startswith("URGENTE Q7") and "itens 5 a 10" in m for m in r["avisos"]), r["avisos"])
+        orf = _orfas_decisao(r)
+        # Beds24 gravado e conferido, sem a resposta do PriceLabs: fecha a config (o lado seguro) e manda regravar
+        bruto = _bruta(cfg)
+        f, rec = R.aplicar_config(bruto, {}, HOJE, None, orf, resumo_ok(r["lote_beds24"], HOJE), None)
+        self.assertIn("exceção 2 fechada: Q7", f)
+        self.assertIn("exceção 2 fechada: Afrodite", f)
+        self.assertIn("exceção 1 aberta: Balcony", f)                    # a Balcony não tem item do PriceLabs
+        rh2 = bruto["parametros"]["regra_h_beds24"]
+        self.assertNotIn("2027-01-02", rh2.get("override_por_data_por_quarto") or {})
+        self.assertNotIn("2027-01-02", rh2.get("estadia_minima_por_data_por_quarto") or {})
+        self.assertTrue(any("regrave agora" in x and x.startswith("Q7") for x in rec), rec)
+        # a auditoria do Beds24 com a config fechada não reabre a exceção
+        import calendario_12m as c12
+        cfg2 = dict(bruto, por_curto={q["curto"]: q for q in bruto["quartos"]},
+                    por_id={q["id"]: q for q in bruto["quartos"]})
+        inv_a = {q: copy.deepcopy(v) for q, v in inv.items() if q != "_lido_em"}
+        for q in ("Q7", "Afrodite"):
+            inv_a[q]["2027-01-02"].update(override="noCheckInOrCheckOut", minStay=3)
+        cl = c12.classificar_beds24(cfg2, inv_a, date(2026, 12, 28), date(2027, 1, 4), hoje=HOJE)
+        lote_aud = [i for i in c12.lote_beds24(cl) if i["de"] <= "2027-01-02" <= i["ate"]
+                    and i["quarto"] in ("Q7", "Afrodite")]
+        self.assertEqual(lote_aud, [])
+        # erro de gravação em OUTRO item (a Balcony): os fechamentos conferidos entram; a abertura não
+        resumo = resumo_ok(r["lote_beds24"], HOJE, estados={("Balcony", "2026-12-31"): "com_erro"})
+        b2 = _bruta(cfg)
+        f, rec = R.aplicar_config(b2, {}, HOJE, None, orf, resumo, gravado_de(r["itens_pricelabs"]))
+        self.assertEqual(sorted(f), ["exceção 2 fechada: Afrodite", "exceção 2 fechada: Q7"])
+        self.assertTrue(any(x.startswith("Balcony: exceção 1 não aberta") for x in rec), rec)
+        # o fechamento não conferido no Beds24 deixa a config aberta, com a recusa
+        resumo = resumo_ok(r["lote_beds24"], HOJE, estados={("Q7", "2027-01-02"): "incerto"})
+        b3 = _bruta(cfg)
+        f, rec = R.aplicar_config(b3, {}, HOJE, None, orf, resumo, gravado_de(r["itens_pricelabs"]))
+        self.assertNotIn("exceção 2 fechada: Q7", f)
+        self.assertIn("exceção 2 fechada: Afrodite", f)
+        self.assertTrue(any(x.startswith("Q7: exceção 2 segue aberta") for x in rec), rec)
+
+    def test_resumo_de_outra_tentativa_ou_de_outro_lote(self):
+        inv = inv_hoje()
+        inv["Q7"]["2027-01-01"]["numAvail"] = 0
+        inv["Balcony"]["2026-12-31"]["numAvail"] = 0
+        r1 = R.avaliar_orfas(CFG, ORDEM, estado_hoje(), inv, regras_hoje(), HOJE)
+        resumo1 = resumo_ok(r1["lote_beds24"], HOJE, estados={("Q7", "2027-01-02"): "pulado"})
+        # itens 3 e 4 refeitos com o inventário novo: Q7 01/01 reabriu, VK7 31/12 esgotou
+        inv2 = copy.deepcopy(inv)
+        inv2["Q7"]["2027-01-01"]["numAvail"] = 1
+        inv2["VK7"]["2026-12-31"]["numAvail"] = 0
+        r2 = R.avaliar_orfas(CFG, ORDEM, estado_hoje(), inv2, regras_hoje(), HOJE)
+        b = _bruta(CFG)
+        f, rec = R.aplicar_config(b, {}, HOJE, None, _orfas_decisao(r2), resumo1, {})
+        self.assertEqual(f, [])
+        self.assertTrue(any("outra tentativa" in x for x in rec), rec)
+        self.assertNotIn("override_por_data_por_quarto", b["parametros"]["regra_h_beds24"])
+        # com o resumo do editar-lote refeito, aplica as duas
+        f, rec = R.aplicar_config(_bruta(CFG), {}, HOJE, None, _orfas_decisao(r2), resumo_ok(r2["lote_beds24"], HOJE),
+                                  {})
+        self.assertEqual((sorted(f), rec), (["exceção 1 aberta: Balcony", "exceção 1 aberta: VK7"], []))
+
+    def test_portao_so_pelos_itens_do_portao(self):
+        est, regras, inv = preparar_portao()
+        portao, _ = R.decidir_portao(CFG, ORDEM_OK, est, inv, regras, ENVIO_18, {"Recanto": 2560}, D18, [])
+        inv["Q7"]["2026-12-31"]["numAvail"] = 0                    # o Q7 abre a exceção 1 na mesma rotina
+        orf = R.avaliar_orfas(CFG, ORDEM, est, inv, regras, D18, portao)
+        self.assertEqual(orf["quartos"]["Q7"]["acao_1"], "abrir")
+        lote = portao["lote_beds24"] + orf["lote_beds24"]
+        resumo = resumo_ok(lote, D18, estados={("Q7", "2026-12-31"): "pulado"})
+        b = _bruta(CFG)
+        f, rec = R.aplicar_config(b, copy.deepcopy(est), D18, portao, _orfas_decisao(orf, D18), resumo,
+                                  gravado_de(portao["itens"] + orf["itens_pricelabs"]))
+        self.assertEqual(f, ["portão do 01→03 aberto: Recanto"])       # o item pulado das exceções não tira o portão
+        self.assertTrue(any(x.startswith("Q7: exceção 1 não aberta") for x in rec), rec)
+        self.assertNotIn("2026-12-31", b["parametros"]["regra_h_beds24"]["override_por_data_por_quarto"])
+
+    def test_ok_do_dono_no_aplicar_config_e_no_orfas(self):
+        est, regras, inv = preparar_portao()
+        portao, _ = R.decidir_portao(CFG, ORDEM_OK, est, inv, regras, ENVIO_18, {"Recanto": 2560}, D18, [])
+        tudo = dict(resumo_beds24=resumo_ok(portao["lote_beds24"], D18), gravado_pl=gravado_de(portao["itens"]))
+        # a ordem sem o ok (pendente): recusa
+        f, rec = R.aplicar_config(_bruta(CFG), copy.deepcopy(est), D18, portao, ordem=ORDEM_PENDENTE, **tudo)
+        self.assertEqual(f, [])
+        self.assertTrue(any("falta: ok do dono para 01→04/01→05" in x for x in rec), rec)
+        # decisão sem o ok na prova (código antigo ou editada à mão): recusa no aplicar-config e no orfas
+        velha = copy.deepcopy(portao)
+        velha["portao"]["Recanto"]["prova"].pop("ok_01_04_05")
+        f, rec = R.aplicar_config(_bruta(CFG), copy.deepcopy(est), D18, velha, ordem=ORDEM_OK, **tudo)
+        self.assertEqual(f, [])
+        self.assertTrue(any("na prova da decisão" in x for x in rec), rec)
+        with self.assertRaises(ValueError):
+            R.avaliar_orfas(CFG, ORDEM_OK, est, inv, regras, D18, velha)
+        with self.assertRaises(ValueError):
+            R.avaliar_orfas(CFG, ORDEM_PENDENTE, est, inv, regras, D18, portao)
+        # com o ok: aplica
+        f, rec = R.aplicar_config(_bruta(CFG), copy.deepcopy(est), D18, portao, ordem=ORDEM_OK, **tudo)
+        self.assertEqual((f, rec), (["portão do 01→03 aberto: Recanto"], []))
+
+    def test_aplicar_config_pela_linha_de_comando(self):
+        import json
+        import tempfile
+        from pathlib import Path
+        est, regras, inv = preparar_portao()
+        saida, _ = R.decidir_portao(CFG, ORDEM_OK, est, inv, regras, ENVIO_18, {"Recanto": 2560}, D18, [])
+        with tempfile.TemporaryDirectory() as d, config_de_teste.quartos_em_arquivo() as quartos:
+            dd = Path(d)
+            antes = quartos.read_text(encoding="utf-8")
+            (dd / "estado.json").write_text(json.dumps(est, ensure_ascii=False), encoding="utf-8")
+            (dd / "portao.json").write_text(json.dumps(saida, ensure_ascii=False), encoding="utf-8")
+            (dd / "resumo.json").write_text(json.dumps(resumo_ok(saida["lote_beds24"], D18)), encoding="utf-8")
+            (dd / "vazio.json").write_text("", encoding="utf-8")
+            base = ["aplicar-config", "--hoje", "2026-11-18", "--portao", str(dd / "portao.json"), "--estado",
+                    str(dd / "estado.json")]
+            # resposta do update com a verification: vale a releitura dela, não o eco do pedido em data.overrides
+            pls, ecos, pedidos = [], [], []
+            for q, regs in gravado_de(saida["itens"]).items():
+                eco = [{"date": n, "min_stay": "2"} for n in regs]
+                resp = {"success": True, "data": {"overrides": eco},
+                        "verification": {"overrides_after_update": {"success": True,
+                                                                    "data": {"overrides": list(regs.values())}}}}
+                (dd / f"resp_{q}.json").write_text(json.dumps(resp), encoding="utf-8")
+                pls.append(f"{q}={dd / f'resp_{q}.json'}")
+                ruim = dict(resp, verification={"overrides_after_update": {"data": {"overrides": [
+                    dict(o, min_stay=3) for o in regs.values()]}}})
+                (dd / f"eco_{q}.json").write_text(json.dumps(ruim), encoding="utf-8")
+                ecos.append(f"{q}={dd / f'eco_{q}.json'}")
+                (dd / f"payload_{q}.json").write_text(json.dumps({"listing_id": "x", "pms": "beds24",
+                                                                  "overrides": list(regs.values())}), encoding="utf-8")
+                pedidos.append(f"{q}={dd / f'payload_{q}.json'}")
+            com = base + ["--resumo-beds24", str(dd / "resumo.json")]
+            self.assertEqual(R.main(com + ["--pricelabs", *pls]), 1)                   # --hoje de outro dia
+            self.assertEqual(R.main(base + ["--replay", "--resumo-beds24", str(dd / "vazio.json"), "--pricelabs",
+                                            *pls]), 1)                                   # resumo vazio: sem traceback
+            self.assertEqual(R.main(com + ["--replay", "--pricelabs", *pedidos]), 1)      # o pedido não é resposta
+            self.assertEqual(R.main(com + ["--replay", "--pricelabs", *ecos]), 1)         # a verification manda
+            self.assertEqual(quartos.read_text(encoding="utf-8"), antes)
+            self.assertEqual(R.main(com + ["--replay", "--pricelabs", *pls]), 0)
+            cfg = json.loads(quartos.read_text(encoding="utf-8"))
+            self.assertEqual(cfg["parametros"]["regra_h_beds24"]["override_por_data_por_quarto"]["2027-01-01"],
+                             {"Q7": "none", "Q2": "none", "Double": "none", "Afrodite": "none"})
+
+    def test_recusa_do_dono_com_o_portao_aberto(self):
+        est, regras, inv = preparar_portao()
+        est["portao"]["Recanto"] = {"aberto": True, "em": "2026-11-16"}
+        rec = copy.deepcopy(ORDEM_OK)
+        rec["execucao_skill"]["ok_01_04_05"].update(resposta="recusa", texto_dono="(teste)", respondido_em="2026-11-17")
+        av = R.avaliar_portao(CFG, rec, est, inv, regras, ENVIO_18, {"Recanto": 2560}, hoje=D18)
+        self.assertIn("recusou", av["Recanto"]["urgente"])
+        self.assertNotIn("urgente", av["Villa"])
+        _, linhas = R.decidir_portao(CFG, rec, est, inv, regras, ENVIO_18, {"Recanto": 2560}, D18, [])
+        self.assertTrue(any(x.startswith("Recanto: portão JÁ ABERTO") for x in linhas), linhas)
+        self.assertTrue(any(x.startswith("  URGENTE Recanto") for x in linhas), linhas)
+        self.assertFalse(any("FECHADO (já aberto)" in x for x in linhas))
+        # com o ok "aceita", nada de urgente
+        self.assertNotIn("urgente", R.avaliar_portao(CFG, ORDEM_OK, est, inv, regras, ENVIO_18, {"Recanto": 2560},
+                                                     hoje=D18)["Recanto"])
+
+    def test_balcony_na_regra_dos_80_no_piso(self):
+        # Villa sem a promoção, fator 0,42, 1 degrau, as 9 suítes com banheira vendidas (regra dos 80%)
+        e = estado_hoje()
+        e["promocao_villa"] = {"ativa": False, "retirada_em": "2026-11-17"}
+        e["fatores"]["Villa"]["fds"] = {"valor": 0.42, "medido_em": "2026-11-18"}
+        inv = inv_hoje()
+        for n in R.NOITES:
+            inv["VK7"][n]["numAvail"] = 0
+            inv["VK2"][n]["numAvail"] = 0
+        orig = R.contexto
+
+        def ctx(*a, **k):
+            c = orig(*a, **k)
+            c["degraus"] = {"Recanto": {"reveillon": 0, "fds": 0}, "Villa": {"reveillon": 0, "fds": 1}}
+            c["escada"] = {"Recanto": {"reveillon": 0, "fds": 0}, "Villa": {"reveillon": 0, "fds": 0}}
+            return c
+        hoje = date(2026, 11, 20)
+        from unittest import mock
+        with mock.patch.object(R, "contexto", ctx):
+            res = R.montar_plano(CFG, ORDEM, e, inv, regras_hoje(), hoje, [])
+        it = por(res)
+        for n in R.BLOCOS["fds"]:
+            self.assertEqual(round(it[("Balcony", n)]["min_price"], 2), 4457.7)      # +251, o piso (antes +250)
+            self.assertIn("no piso do período", res["notas"][n]["Balcony"])
+        v = validar(res["itens"], hoje, estado=e)
+        self.assertEqual(v.erros, [])
+        # o +250 à mão segue barrado: o piso cabe nos 90% da suíte
+        mao = [dict(i, min_price=4445.0, max_price=4445.0) if (i["quarto"], i["data"]) == ("Balcony", "2027-01-01")
+               else i for i in res["itens"]]
+        self.assertTrue(any("a Regra G cabe no piso" in x for x in validar(mao, hoje, estado=e).erros))
+
+    def test_tolerancia_do_calendario_na_ordem_do_recanto(self):
+        it = {"tipo": "data", "quarto": "Double", "data": "2027-01-01", "min_price": 3862.8, "max_price": 3862.8,
+              "motivo": "teste", "excecao": "dono", "ordem_id": R.ORDEM_ID, "estadia_vigente": 3}
+        cal = {("Q2", "2027-01-01"): {"preco": 3864.0}}
+        e = estado_hoje()
+        e["fatores"]["Recanto"]["fds"] = {"valor": 0.7425, "medido_em": "2026-11-18"}
+        v = validar([it], cfg=CFG, estado=e, precos=cal)
+        self.assertFalse([x for x in v.erros if "ordem do Recanto" in x], v.erros)
+        cal[("Q2", "2027-01-01")] = {"preco": 3865.0}
+        v = validar([it], cfg=CFG, estado=e, precos=cal)
+        self.assertTrue([x for x in v.erros if "ordem do Recanto" in x], v.erros)
+
+    def test_config_de_teste_neutraliza_a_operacao(self):
+        c = copy.deepcopy(CFG)
+        for q in ("Q7", "Double", "Q2", "VK7", "VK2", "Balcony"):
+            c["por_curto"][q]["max"] = 6000
+        rh = c["parametros"]["regra_h_beds24"]
+        rh["override_por_data_por_quarto"] = {"2026-12-31": {"Balcony": "noCheckIn"}}
+        rh["estadia_minima_por_data_por_quarto"] = {"2027-01-02": {"Q7": 2}}
+        n = config_de_teste.neutra(c)
+        self.assertEqual({q: n["por_curto"][q]["max"] for q in ("Q7", "Balcony", "Afrodite")},
+                         {"Q7": 5000, "Balcony": 5000, "Afrodite": CFG["por_curto"]["Afrodite"]["max"]})
+        self.assertFalse(any(k in n["parametros"]["regra_h_beds24"] for k in config_de_teste.CHAVES_OPERACAO))
 
 if __name__ == "__main__":
     unittest.main()

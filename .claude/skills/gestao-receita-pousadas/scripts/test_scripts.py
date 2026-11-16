@@ -14,11 +14,12 @@ from ocupacao import calcular
 from ordens import carregar_ordens
 from validar_plano import Validador, montar_payload
 
-CFG = carregar_quartos()
-# a config real muda com a operação do Réveillon (16/11 16:40 BRT: portão do 01→03 do Recanto aberto, `*_por_quarto` em
-# regra_h_beds24): os testes conferem a lógica com a config de antes do portão e das exceções das noites soltas
-for _k in ("override_por_data_por_quarto", "estadia_minima_por_data_por_quarto", "override_por_data_por_quarto_motivo"):
-    CFG["parametros"]["regra_h_beds24"].pop(_k, None)
+import config_de_teste  # noqa: E402
+
+# a config real muda com a operação do Réveillon (16/11 16:35 BRT: portão do 01→03 do Recanto aberto, `*_por_quarto` em
+# regra_h_beds24; a partir de 23/11, o `max` de R$ 6.000): os testes conferem a lógica com a config de antes do portão, das
+# exceções das noites soltas e do máximo novo (config_de_teste)
+CFG = config_de_teste.carregar()
 # 30/10: excecao "dono" exige ordem_id vigente. Os testes conferem a lógica, não o calendário das ordens: as ordens reais
 # valem para todos os quartos e datas aqui, e "teste-dono" é a ordem genérica dos itens de teste.
 # A liberação da Regra G (`regra_g`) é por noite e por quarto (dono 01/11, Balcony 08-09/11): ampliada a todas as datas

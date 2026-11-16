@@ -36,7 +36,8 @@ Uso (da pasta da skill), na ordem da rotina:
   python3 scripts/reveillon_250k.py aplicar-config --hoje AAAA-MM-DD --portao <portao.json> --orfas <orfas.json>
       --resumo-beds24 <JSON do editar-lote --aplicar> --pricelabs Q7=<resposta da gravação ou releitura> ...
       (depois do PriceLabs e do Beds24 gravados e conferidos: aplica em quartos.json a decisão gravada, sem reavaliar;
-      recusa com o editar-lote com erro e tira o quarto com item pulado ou com a estadia/máscara não conferida)
+      confere o resumo item a item e o dia; abrir pede tudo conferido, fechar só os itens dela no Beds24; a resposta
+      do PriceLabs vale pela `verification`, nunca o pedido; --hoje fora do relógio pede --replay)
   python3 scripts/reveillon_250k.py vigia-maximo --hoje AAAA-MM-DD [--coleta <saida mesclada>]
       [--precos Q7=<get_listing_prices 12 meses> ...] [--regras Q7=<overrides 12 meses> ...] [--antes] [--saida <x.json>]
   python3 scripts/reveillon_250k.py estado
@@ -625,19 +626,25 @@ def regra_g(cfg: dict, ordem: dict, estado: dict, ps: dict, inv: dict, n: str) -
     tot = sum(unidades(cfg, k) for k in PD.BANHEIRA_VILLA)
     rn = PD.noite_regua(n)
     merc_pub = PD.ancora(rn, "lista", "50") if rn else None
+    p_piso = pct_de(cfg, "Balcony", bx["piso"], "ceil")
+    folga = 0.01 * base(cfg, "Balcony") + 1
+    # o piso do período cabe na Regra G pela folga do % inteiro (a mesma do validador): fica no piso
+    piso_cabe = p_piso > p_hi and reais_de(cfg, "Balcony", p_piso) <= ref * (1 - desc) + folga \
+        and reais_de(cfg, "Balcony", p_piso) < ref - 1
     if PD.balcony_no_mercado(vend, tot) and merc_pub:
         merc = merc_pub / bx["fator"]
-        pc = max(pct_de(cfg, "Balcony", merc, "ceil"), pct_de(cfg, "Balcony", bx["piso"], "ceil"))
-        pc = min(pc, p_hi)
+        pc = max(pct_de(cfg, "Balcony", merc, "ceil"), p_piso)
+        # revisão de 16/11 (4ª verificação): o mesmo limite do ramo normal; com só o p_hi (o floor dos reais antes do %),
+        # a Balcony ficava 1 ponto abaixo do piso que cabia nos 90% e o validador (R3-02) barrava o plano
+        pc = min(pc, p_piso if piso_cabe else p_hi)
         bx["pct"], bx["valor"] = pc, reais_de(cfg, "Balcony", pc)
         return (f"regra dos 80% ({vend}/{tot} suítes com banheira vendidas): mercado do quarto sem banheira "
-                f"{br(merc_pub)} público ÷ {fx(bx['fator'])}, até 90% da suíte livre ({br(ref)})")
+                f"{br(merc_pub)} público ÷ {fx(bx['fator'])}, até 90% da suíte livre ({br(ref)})"
+                + (f"; no piso do período ({br(bx['piso'], 2)})" if piso_cabe and pc == p_piso else ""))
     nota = f"Regra G: 90% da suíte com banheira livre mais barata ({br(ref)})"
     pc = p_hi
-    p_piso = pct_de(cfg, "Balcony", bx["piso"], "ceil")
     if p_piso > p_hi:
-        folga = 0.01 * base(cfg, "Balcony") + 1
-        if reais_de(cfg, "Balcony", p_piso) <= ref * (1 - desc) + folga and reais_de(cfg, "Balcony", p_piso) < ref - 1:
+        if piso_cabe:
             pc = p_piso
             nota += f"; no piso do período ({br(bx['piso'], 2)})"
         else:
@@ -1103,6 +1110,13 @@ def avaliar_portao(cfg: dict, ordem: dict, estado: dict, inv: dict, regras: dict
         if pt_ordem.get("exige_ok_dono"):
             prova["ok_01_04_05"] = {k: ok_reg.get(k) for k in ("resposta", "respondido_em")}
         out[p] = {"pode": not faltam, "ja_aberto": bool(ja), "faltam": faltam, "conferido": conferido, "prova": prova}
+        if ja and str(ok_reg.get("resposta") or "").strip().lower() == "recusa":
+            # revisão de 16/11 (4ª verificação): a recusa (ou a revogação) depois de aberto não fecha nada sozinha; o
+            # portão aberto segue vendendo 01→04 e 01→05 contra a resposta do dono
+            out[p]["urgente"] = (f"o dono recusou 01→04/01→05 ({ok_reg.get('respondido_em')}) com o portão do 01→03 já "
+                                 "aberto: pergunte ao dono se fecha o 01→03 (como_desfazer da ordem: 01/01 noCheckIn e "
+                                 "mínimo 3 em 01 e 02/01 no Beds24 e no PriceLabs, tirar os *_por_quarto da config) ou se "
+                                 "aceita outra trava; até ele responder, relate no topo do relatório")
     return out
 
 
@@ -1121,8 +1135,13 @@ def decidir_portao(cfg: dict, ordem: dict, estado: dict, inv: dict, regras: dict
     linhas = []
     for p, x in av.items():
         abre = x["pode"] and not x["ja_aberto"]
-        linhas.append(f"{p}: {'PODE ABRIR o 01→03' if x['pode'] else 'portão FECHADO'}"
-                      + (" (já aberto)" if x["ja_aberto"] else ""))
+        if x["ja_aberto"]:
+            # revisão de 16/11 (4ª verificação): "portão FECHADO (já aberto)" se contradizia
+            linhas.append(f"{p}: portão JÁ ABERTO; condições de hoje: " + ("todas ok" if x["pode"] else "com falta"))
+        else:
+            linhas.append(f"{p}: {'PODE ABRIR o 01→03' if x['pode'] else 'portão FECHADO'}")
+        if x.get("urgente"):
+            linhas.append(f"  URGENTE {p}: {x['urgente']}")
         linhas += [f"  falta: {f}" for f in x["faltam"]] + [f"  ok: {c}" for c in x["conferido"]]
         if not (abre or mostrar):
             continue
@@ -1214,6 +1233,41 @@ def aplicar_patch(cfg_bruto: dict, patch: dict) -> dict:
 
 
 # ---------------------------------------------------------------- noites soltas (exceções 1 e 2)
+def excecao_no_pricelabs(q: str, reg: dict, k: int, ms_volta_02: int) -> bool:
+    """A exceção k aberta na regra por data do PriceLabs do quarto (revisão de 16/11, 4ª verificação): exceção 1 = a
+    Afrodite com a saída da quinta 31/12 aberta (máscara ligada); exceção 2 = 02/01 com estadia abaixo da de volta
+    (`ms_volta_02`: 2 com o portão aberto, 3 antes dele) ou, na Afrodite, com a entrada do sábado aberta."""
+    if not reg:
+        return False
+    masc = str(reg.get("check_in_check_out_enabled") or "") == "1"
+    if k == 1:
+        co = str(reg.get("check_out") or "")
+        return q == "Afrodite" and masc and len(co) == 7 and co[3] == "1"
+    ms = reg.get("min_stay")
+    try:
+        abaixo = ms not in (None, "") and int(ms) < int(ms_volta_02)
+    except (TypeError, ValueError):
+        abaixo = False
+    ci = str(reg.get("check_in") or "")
+    return abaixo or (q == "Afrodite" and masc and len(ci) == 7 and ci[5] == "1")
+
+
+def falta_ok_portao(ordem: dict, x: dict) -> str | None:
+    """Revisão de 16/11 (4ª verificação): a 4ª condição do portão conferida também no `orfas --portao` e no
+    `aplicar-config` (antes só no `portao` e no validador): o ok do dono registrado na ordem e a resposta 'aceita' na
+    prova da decisão. None quando está tudo certo."""
+    pt = (ordem.get("restricoes") or {}).get("portao") or {}
+    if not pt.get("exige_ok_dono"):
+        return None
+    f = falta_ok_do_dono(ordem, pt)
+    if f:
+        return f"falta: {f}"
+    prova = (x or {}).get("prova") or {}
+    if str(((prova.get("ok_01_04_05") or {}).get("resposta")) or "").strip().lower() != "aceita":
+        return "falta: ok do dono para 01→04/01→05 na prova da decisão (decisão antiga ou editada à mão?)"
+    return None
+
+
 def avaliar_orfas(cfg: dict, ordem: dict, estado: dict, inv: dict, regras: dict | None = None,
                   hoje: date | None = None, portao: dict | None = None) -> dict:
     """Por quarto: cotas de venda direta (29→31 e 02→04) e se a exceção abre (ou fecha) nas OTAs, com o que gravar. Os
@@ -1231,7 +1285,14 @@ def avaliar_orfas(cfg: dict, ordem: dict, estado: dict, inv: dict, regras: dict 
         relê o inventário antes de gravar e pula (e relata) o item se a vizinha reabriu entre o `orfas` e o lote;
       - R3-11: com `portao` (a decisão do `portao` da MESMA rotina), o quarto da pousada cujo portão abre agora conta como
         aberto (a estadia de volta de 02/01 é 2, a do portão; antes o lote das órfãs pedia 3 e o editar-lote recusava os
-        dois lotes)."""
+        dois lotes).
+    Revisão de 16/11 (4ª verificação):
+      - a exceção conta como aplicada também pela regra do PriceLabs (`regras`, lidas DEPOIS da gravação quando a rotina
+        refaz os itens): Afrodite com a saída da quinta 31/12 aberta (exceção 1), ou 02/01 com a entrada do sábado aberta
+        na Afrodite ou com estadia abaixo da de volta (exceção 2). Quando o `editar-lote` pula a abertura (a vizinha
+        reabriu, R3-07), o PriceLabs já gravado fica com a exceção e a config não: sem isso, o `orfas` refeito não fechava
+        e o envio do PriceLabs levava a chegada/saída da Afrodite e a estadia 2 ao Beds24;
+      - o portão da decisão só conta como aberto com o ok do dono para 01→04/01→05 (4ª condição) na ordem e na prova."""
     regras = regras or {}
     lido_em = inv.get("_lido_em")
     abre_agora = set()
@@ -1239,6 +1300,10 @@ def avaliar_orfas(cfg: dict, ordem: dict, estado: dict, inv: dict, regras: dict 
         if portao.get("hoje") and hoje is not None and portao["hoje"] != hoje.isoformat():
             raise ValueError(f"--portao de {portao.get('hoje')}, não de hoje ({hoje.isoformat()}): rode o portão de novo")
         abre_agora = {p for p, x in (portao.get("portao") or {}).items() if x.get("pode") and not x.get("ja_aberto")}
+        for p in sorted(abre_agora):
+            f_ok = falta_ok_portao(ordem, (portao.get("portao") or {}).get(p) or {})
+            if f_ok:
+                raise ValueError(f"--portao: {p} com 'pode' e {f_ok}: rode o portão de novo")
 
     def prova(q: str, noite: str, vizinha: str, lado: str) -> dict:
         return {"fonte": "beds24", "quarto": q, "unidades": unidades(cfg, q), "noite": noite,
@@ -1273,24 +1338,30 @@ def avaliar_orfas(cfg: dict, ordem: dict, estado: dict, inv: dict, regras: dict 
         fecha1 = (L[r31] > 0 or L[VESPERA] <= 0 or not cabe1 or (hoje is not None and hoje > data(VESPERA))) \
             and (hoje is None or data(r31) >= hoje)
         fecha2 = (L[s01] > 0 or L[DOMINGO] <= 0 or not cabe2) and (hoje is None or data(s02) >= hoje)
-        e1_aplicada = (ovq.get(r31) or {}).get(q) == "noCheckIn"
-        e2_aplicada = (ovq.get(s02) or {}).get(q) == "noCheckOut"
+        e1_cfg = (ovq.get(r31) or {}).get(q) == "noCheckIn"
+        e2_cfg = (ovq.get(s02) or {}).get(q) == "noCheckOut"
         portao_aberto = (ovq.get(s01) or {}).get(q) == "none" or (rh.get("override_por_data") or {}).get(s01) == "none" \
             or POUSADA_DE[q] in abre_agora
         ms_volta_02 = 2 if portao_aberto else int(((ordem.get("portao_0103") or {}).get("estadia_antes") or {}).get(s02, 3))
+        reg31, reg02 = (regras.get(q) or {}).get(r31) or {}, (regras.get(q) or {}).get(s02) or {}
+        # 4ª verificação: a exceção aberta no PriceLabs sem a config (abertura pulada no Beds24) também conta
+        e1_pl, e2_pl = excecao_no_pricelabs(q, reg31, 1, ms_volta_02), excecao_no_pricelabs(q, reg02, 2, ms_volta_02)
+        e1_aplicada, e2_aplicada = e1_cfg or e1_pl, e2_cfg or e2_pl
         ms03[q] = ((inv.get(q) or {}).get(DOMINGO) or {}).get("minStay")
         info = {"livres": L, "soltas_30_12": soltas30, "venda_direta_29_31": min(soltas30, L[VESPERA]),
                 "soltas_02_01": soltas02, "venda_direta_02_04": min(soltas02, L[DOMINGO]),
                 "excecao_1_ota": "abre" if e1 else "fechada", "excecao_2_ota": "abre" if e2 else "fechada",
                 "excecao_1_aplicada": e1_aplicada, "excecao_2_aplicada": e2_aplicada}
+        for k, so_pl in ((1, e1_pl and not e1_cfg), (2, e2_pl and not e2_cfg)):
+            if so_pl:
+                info[f"excecao_{k}_so_no_pricelabs"] = True
         if L[r31] <= 0 < L[f30] and L[VESPERA] > 0 and not cabe1:
             info["excecao_1_por_que"] = (f"29/12 com {L[VESPERA]} vaga(s) para {soltas30} noite(s) solta(s) de 30/12: as "
                                          "vendas 29→31 isolariam 30/12 (fica a venda direta)")
         if L[s01] <= 0 < L[s02] and L[DOMINGO] > 0 and not cabe2:
             info["excecao_2_por_que"] = (f"03/01 com {L[DOMINGO]} vaga(s) para {soltas02} noite(s) solta(s) de 02/01: as "
                                          "vendas 02→04 isolariam 02/01 (fica a venda direta)")
-        reg31, reg02 = (regras.get(q) or {}).get(r31) or {}, (regras.get(q) or {}).get(s02) or {}
-        if e1 and not e1_aplicada:
+        if e1 and not e1_cfg:
             info["acao_1"] = "abrir"
             p1 = prova(q, f30, r31, "seguinte")
             out["comandos_beds24"].append(_comando_beds24(q, r31, mot1, override="noCheckIn"))
@@ -1316,7 +1387,7 @@ def avaliar_orfas(cfg: dict, ordem: dict, estado: dict, inv: dict, regras: dict 
                 out["itens_pricelabs"].append({"tipo": "data", "quarto": q, "data": r31, "manter_reason": True,
                                                "check_in": "1110111", "check_out": "1110111",
                                                "excecao": "dono", "ordem_id": ORDEM_ID, "motivo": mot_volta})
-        if e2 and not e2_aplicada:
+        if e2 and not e2_cfg:
             info["acao_2"] = "abrir"
             p2 = prova(q, s02, s01, "anterior")
             out["comandos_beds24"].append(_comando_beds24(q, s02, mot2, override="noCheckOut", min_stay=2))
@@ -1357,8 +1428,13 @@ def avaliar_orfas(cfg: dict, ordem: dict, estado: dict, inv: dict, regras: dict 
                 it.update(check_in="1111101", check_out="1111101")
             out["itens_pricelabs"].append(it)
         out["quartos"][q] = info
+        for k in (1, 2):
+            if info.get(f"excecao_{k}_so_no_pricelabs") and info.get(f"acao_{k}") == "fechar":
+                out["avisos"].append(f"{q}: exceção {k} aberta só no PriceLabs (a abertura foi pulada no Beds24 ou a "
+                                     "config ficou de fora): os itens que fecham vão ao PriceLabs e ao Beds24 nesta rotina")
         if info.get("urgente"):
-            out["avisos"].append(f"URGENTE {q}: {info['urgente']} (rode o editar-lote agora; cite a janela no relatório)")
+            out["avisos"].append(f"URGENTE {q}: {info['urgente']} (itens 5 a 10 agora: PriceLabs e editar-lote; cite a "
+                                 "janela no relatório)")
     out["patch_quartos"] = {k: v for k, v in patch.items() if v}
     if out["patch_quartos"]:
         out["patch_quartos"]["override_por_data_por_quarto_motivo"] = (
@@ -1404,8 +1480,10 @@ def registrar(plano: dict, em: datetime, atual: dict | None = None) -> dict:
 
 
 def _overrides_de(d) -> list[dict]:
-    """A lista de regras por data ({date, ...}) de uma resposta do PriceLabs: a do update_listing_date_overrides
-    (persisted overrides) ou a releitura (get_listing_date_overrides), em qualquer nível do JSON."""
+    """A lista de regras por data ({date, ...}) de uma resposta do PriceLabs. Revisão de 16/11 (4ª verificação): na
+    resposta do update_listing_date_overrides, `data.overrides` é o ECO do pedido (sem a estadia e a máscara que ficaram
+    na regra) e a releitura de verdade vem em `verification.overrides_after_update`: vale só ela. Sem `verification`, o
+    arquivo é a releitura (get_listing_date_overrides: `data.overrides` ou `overrides`)."""
     if isinstance(d, list):
         if d and all(isinstance(x, dict) and x.get("date") for x in d):
             return d
@@ -1415,6 +1493,10 @@ def _overrides_de(d) -> list[dict]:
                 return r
         return []
     if isinstance(d, dict):
+        if "verification" in d:
+            v = d.get("verification") or {}
+            return _overrides_de(v.get("overrides_after_update") if isinstance(v, dict) and
+                                 "overrides_after_update" in v else v)
         for k in ("overrides", "persisted_overrides", "data"):
             if k in d:
                 r = _overrides_de(d[k])
@@ -1429,41 +1511,64 @@ def _overrides_de(d) -> list[dict]:
 
 
 def ler_gravado(pares: list[str] | None) -> dict:
-    """{curto: {data: regra}} das respostas da gravação do PriceLabs (ou da releitura das regras) por quarto."""
+    """{curto: {data: regra}} das respostas da gravação do PriceLabs (com a `verification`) ou da releitura das regras,
+    por quarto. Revisão de 16/11 (4ª verificação): recusa o PEDIDO (payload_<Q>.json: listing_id, pms e overrides no
+    topo), que bateria consigo mesmo sem provar que o PriceLabs gravou (ValueError)."""
     out = {}
     for x in pares or []:
         k, v = x.split("=", 1)
-        out[k] = {str(o["date"])[:10]: o for o in _overrides_de(ler_json(v)) if o.get("date")}
+        j = ler_json(v)
+        if isinstance(j, dict) and "listing_id" in j and "pms" in j:
+            raise ValueError(f"--pricelabs {k}={v}: é o pedido (payload), não a resposta da gravação; passe a resposta do "
+                             "update_listing_date_overrides (com a verification) ou a releitura get_listing_date_overrides")
+        out[k] = {str(o["date"])[:10]: o for o in _overrides_de(j) if o.get("date")}
     return out
 
 
-def conferir_resumo_beds24(resumo: dict | None, lote: list[dict]) -> tuple[str | None, set]:
-    """(falha geral, quartos com item pulado) do resumo do `beds24.py editar-lote --aplicar` (o JSON que ele imprime)
-    contra o lote da decisão. Revisão de 16/11 (3ª verificação, R3-12): a config só muda com o lote gravado e conferido;
-    item pulado (guarda de estadia que mudou ou noite vizinha que reabriu, R3-07) tira o quarto do patch, salvo "já no
-    alvo"."""
+def chave_lote(i: dict) -> str:
+    """A chave do item de lote (beds24.CAMPOS_ITEM_LOTE_UNICO), a mesma que o `editar-lote --aplicar` devolve em `lote`."""
+    import beds24
+    return beds24.chave_item_lote(i)
+
+
+ESTADOS_OK = ("conferido", "no_alvo")
+
+
+def conferir_resumo_beds24(resumo: dict | None, lote: list[dict], hoje: date | None = None) -> tuple[str | None, dict, bool]:
+    """(falha geral, {chave do item: estado}, erro no lote) do resumo do `beds24.py editar-lote --aplicar` (o JSON que ele
+    imprime) contra o lote da decisão. Revisão de 16/11 (3ª verificação, R3-12): a config só muda com o lote gravado e
+    conferido. Revisão de 16/11 (4ª verificação): confere a IDENTIDADE, item a item (o resumo traz `lote` com a chave e o
+    estado de cada item: conferido, no_alvo, pulado, com_erro, incerto, nao_enviado) e o dia (`gravado_em`): um resumo
+    de outro lote ou de outra tentativa (com a contagem igual) passava. A falha geral só sai quando o resumo não serve
+    (sem resumo, simulação, de outro dia, sem um item da decisão); o erro de gravação de um item fica no estado dele e o
+    `erro no lote` diz se houve algum (abrir pede o lote sem erro; fechar, só os itens dele)."""
     if not lote:
-        return None, set()
+        return None, {}, False
     if not isinstance(resumo, dict):
         return ("sem o resumo do editar-lote --aplicar (--resumo-beds24 <arquivo com o JSON que ele imprimiu>): a config "
-                "só muda depois do Beds24 gravado e conferido"), set()
+                "só muda depois do Beds24 gravado e conferido"), {}, True
     if not resumo.get("aplicar"):
-        return "o resumo do editar-lote é de uma simulação (sem --aplicar): nada foi gravado no Beds24", set()
-    if resumo.get("erros") or resumo.get("parou_no_bloco") or resumo.get("resposta_ok") is False:
-        return ("o editar-lote voltou com erro (" + "; ".join(str(e) for e in (resumo.get("erros") or []))[:200]
-                + (f"; parou no bloco {resumo['parou_no_bloco']}" if resumo.get("parou_no_bloco") else "") + ")"), set()
-    import beds24
-    unicos = {json.dumps({k: i.get(k) for k in beds24.CAMPOS_ITEM_LOTE_UNICO}, sort_keys=True, ensure_ascii=False,
-                         default=str) for i in lote}
-    if int(resumo.get("itens") or 0) < len(unicos):
-        return (f"o resumo do editar-lote tem {resumo.get('itens')} item(ns) e a decisão manda {len(unicos)}: é o resumo "
-                "de outro lote?"), set()
-    if int(resumo.get("conferidos") or 0) < int(resumo.get("a_gravar") or 0):
-        return (f"o editar-lote conferiu {resumo.get('conferidos')} de {resumo.get('a_gravar')} itens gravados"), set()
-    chaves = {(i["quarto"], i["de"], i["ate"]) for i in lote}
-    pulados = {p["quarto"] for p in resumo.get("pulados") or []
-               if (p.get("quarto"), p.get("de"), p.get("ate")) in chaves and p.get("por_que") != "já no alvo"}
-    return None, pulados
+        return "o resumo do editar-lote é de uma simulação (sem --aplicar): nada foi gravado no Beds24", {}, True
+    if not isinstance(resumo.get("lote"), list):
+        return ("o resumo do editar-lote não traz a lista dos itens (`lote`; editar-lote de antes de 16/11?): rode o "
+                "editar-lote de novo com os lotes desta rotina"), {}, True
+    if hoje is not None:
+        g = ler_instante(resumo.get("gravado_em"))
+        if g is None or g.astimezone(timezone(timedelta(hours=-3))).date() != hoje:
+            return (f"o resumo do editar-lote é de {resumo.get('gravado_em')}, não de hoje ({hoje.isoformat()}): rode o "
+                    "editar-lote com os lotes desta rotina"), {}, True
+    estados = {}
+    for x in resumo["lote"]:
+        if isinstance(x, dict) and x.get("chave"):
+            estados.setdefault(x["chave"], x.get("estado"))
+    faltam = [i for i in lote if chave_lote(i) not in estados]
+    if faltam:
+        f = faltam[0]
+        return (f"o resumo do editar-lote não tem {len(faltam)} item(ns) da decisão ({f['quarto']} {f['de']}: é o resumo "
+                "de outro lote ou de outra tentativa?): rode o editar-lote com os lotes desta rotina"), {}, True
+    erro = bool(resumo.get("erros") or resumo.get("parou_no_bloco") or resumo.get("resposta_ok") is False
+                or any(estados[chave_lote(i)] not in ESTADOS_OK + ("pulado",) for i in lote))
+    return None, {chave_lote(i): estados[chave_lote(i)] for i in lote}, erro
 
 
 def conferir_gravacao_pl(itens: list[dict], gravado: dict | None) -> dict:
@@ -1490,49 +1595,52 @@ def conferir_gravacao_pl(itens: list[dict], gravado: dict | None) -> dict:
     return falhas
 
 
-def _patch_sem(patch: dict, fora: set) -> tuple[dict, set]:
-    """O patch sem os quartos de `fora` (e as datas que ficarem vazias) e os quartos que ele mexe."""
-    out, mexe = {}, set()
+def _patch_do_quarto(patch: dict, q: str, n: str) -> dict:
+    """A parte do patch de quartos.json de um quarto numa noite (com o motivo), ou {}."""
+    out = {}
     for chave, v in (patch or {}).items():
-        if not isinstance(v, dict):
-            out[chave] = v
-            continue
-        dst = {}
-        for ds, porq in v.items():
-            if porq is None:
-                dst[ds] = None
-                continue
-            mexe |= set(porq)
-            ficam = {q: x for q, x in porq.items() if q not in fora}
-            if ficam:
-                dst[ds] = ficam
-        if dst:
-            out[chave] = dst
-    if not any(isinstance(v, dict) for v in out.values()):
-        out = {}
-    return out, mexe
+        if isinstance(v, dict) and q in (v.get(n) or {}):
+            out.setdefault(chave, {})[n] = {q: v[n][q]}
+    if out and "override_por_data_por_quarto_motivo" in (patch or {}):
+        out["override_por_data_por_quarto_motivo"] = patch["override_por_data_por_quarto_motivo"]
+    return out
+
+
+NOITE_EXCECAO = {1: "2026-12-31", 2: "2027-01-02"}
 
 
 def aplicar_config(cfg_bruto: dict, estado: dict, hoje: date, portao: dict | None = None,
                    orfas: dict | None = None, resumo_beds24: dict | None = None,
-                   gravado_pl: dict | None = None) -> tuple[list[str], list[str]]:
+                   gravado_pl: dict | None = None, ordem: dict | None = None) -> tuple[list[str], list[str]]:
     """Aplica em quartos.json (regra_h_beds24) e no estado a DECISÃO gravada pelo `portao` e pelo `orfas` desta rotina,
     sem reavaliar (revisão de 16/11: o `portao --aplicar-config` reavaliava depois do `registrar` e, com o preço do fim de
     semana regravado, a condição 1 falhava e a config ficava sem o patch: a auditoria do Beds24 fechava o 01→03 de novo).
     Só a pousada com `pode` e a prova avaliada hoje; decisão de outro dia é recusada. Revisão de 16/11 (3ª verificação):
-      - R3-12: só com o lote do Beds24 gravado e conferido (`resumo_beds24`, o JSON do `editar-lote --aplicar`: sem erro,
-        com os itens da decisão) e a estadia e a máscara dos itens do PriceLabs da decisão na resposta da gravação ou na
-        releitura (`gravado_pl` {curto: {data: regra}}); o quarto com item pulado ou não conferido fica fora (a pousada
-        inteira, no portão), com a recusa no relatório;
+      - R3-12: só com o lote do Beds24 gravado e conferido (`resumo_beds24`, o JSON do `editar-lote --aplicar`) e a
+        estadia e a máscara dos itens do PriceLabs da decisão na resposta da gravação ou na releitura (`gravado_pl`
+        {curto: {data: regra}});
       - R3-11: as exceções primeiro e o portão depois (o None da exceção 2 que fecha não apaga a estadia 2 do portão).
+    Revisão de 16/11 (4ª verificação):
+      - o resumo é conferido item a item contra o lote da decisão (conferir_resumo_beds24);
+      - ABRIR (portão, exceção) pede o lote sem erro, os itens dela conferidos no Beds24 e os do PriceLabs conferidos;
+        FECHAR uma exceção pede só os itens dela conferidos no Beds24: fechar a config é o lado seguro (com a config
+        aberta, a auditoria diária reabria a exceção no Beds24); sem o PriceLabs conferido, a recusa manda regravá-lo;
+      - o portão de uma pousada só fica de fora por item do lote do PORTÃO não conferido ou item do PriceLabs do portão
+        não conferido (o item pulado das exceções tira só a exceção daquele quarto) e pelo ok do dono para 01→04/01→05
+        (4ª condição: na ordem e na prova; `ordem` None = a ordem registrada).
     Devolve (feitas, recusas)."""
     feitas, recusas = [], []
     h = hoje.isoformat()
+    ordem = ordem if ordem is not None else ordem_do_dono()
     for nome, d in (("portao", portao), ("orfas", orfas)):
         if d is not None and d.get("hoje") != h:
             recusas.append(f"{nome}: decisão de {d.get('hoje')}, não de hoje ({h}): rode de novo")
     portao = portao if portao and portao.get("hoje") == h else None
     orfas = orfas if orfas and orfas.get("hoje") == h else None
+    if orfas and orfas.get("patch_quartos") and ("lote_beds24" not in orfas or "quartos" not in orfas):
+        recusas.append("orfas: a decisão não traz o lote do Beds24 ou as ações por quarto (saída de uma versão antiga do "
+                       "`orfas`): rode de novo")
+        orfas = None
     abrir = {}
     for p, x in ((portao or {}).get("portao") or {}).items():
         if not x.get("pode") or x.get("ja_aberto"):
@@ -1541,32 +1649,73 @@ def aplicar_config(cfg_bruto: dict, estado: dict, hoje: date, portao: dict | Non
             recusas.append(f"portão {p}: sem prova de hoje ou sem o patch na decisão")
             continue
         abrir[p] = x
-    lote = [i for i in (portao or {}).get("lote_beds24") or [] if (i.get("portao_0103") or {}).get("pousada") in abrir]
-    lote += [dict(i) for i in (orfas or {}).get("lote_beds24") or []]
-    pl = [i for i in (portao or {}).get("itens") or [] if POUSADA_DE.get(i.get("quarto")) in abrir]
-    pl += list((orfas or {}).get("itens") or [])
-    if orfas and orfas.get("patch_quartos") and "lote_beds24" not in orfas:
-        recusas.append("orfas: a decisão não traz o lote do Beds24 (saída de uma versão antiga do `orfas`): rode de novo")
-        orfas = None
-    falha_b24, pulados = conferir_resumo_beds24(resumo_beds24, lote)
+    lote_portao = [i for i in (portao or {}).get("lote_beds24") or []]
+    lote_orfas = [dict(i) for i in (orfas or {}).get("lote_beds24") or []]
+    falha_b24, estados, erro_lote = conferir_resumo_beds24(resumo_beds24, lote_portao + lote_orfas, hoje)
     if falha_b24:
         recusas.append(f"Beds24: {falha_b24}; nada aplicado na config")
         return feitas, recusas
-    falha_pl = conferir_gravacao_pl(pl, gravado_pl)
-    fora = set(pulados) | set(falha_pl)
-    for q in sorted(fora):
-        motivo = ("item do lote do Beds24 pulado (refaça com o inventário novo)" if q in pulados else
-                  "PriceLabs: " + "; ".join(falha_pl[q])[:200])
-        recusas.append(f"{q}: {motivo}")
-    if orfas and orfas.get("patch_quartos"):
-        patch, mexe = _patch_sem(orfas["patch_quartos"], fora)
-        if patch:
-            aplicar_patch(cfg_bruto, copy.deepcopy(patch))
-            feitas.append("exceções das noites soltas: " + ", ".join(sorted(mexe - fora)))
+
+    def b24_ok(itens: list[dict]) -> tuple[bool, list[str]]:
+        ruins = [f"{i['quarto']} {i['de']} ({estados.get(chave_lote(i))})" for i in itens
+                 if estados.get(chave_lote(i)) not in ESTADOS_OK]
+        return not ruins, ruins
+    # exceções das noites soltas, por quarto e por exceção
+    for q, info in sorted(((orfas or {}).get("quartos") or {}).items()):
+        for k, n in NOITE_EXCECAO.items():
+            acao = (info or {}).get(f"acao_{k}")
+            if acao not in ("abrir", "fechar"):
+                continue
+            itens_b = [i for i in lote_orfas if i.get("quarto") == q and i.get("de") == n]
+            itens_p = [i for i in (orfas or {}).get("itens") or [] if i.get("quarto") == q and i.get("data") == n]
+            ok_b, ruins = b24_ok(itens_b)
+            f_pl = conferir_gravacao_pl(itens_p, gravado_pl).get(q)
+            patch = _patch_do_quarto((orfas or {}).get("patch_quartos") or {}, q, n)
+            if acao == "abrir":
+                if not ok_b:
+                    pul = any(estados.get(chave_lote(i)) == "pulado" for i in itens_b)
+                    recusas.append(f"{q}: exceção {k} não aberta na config (Beds24: {', '.join(ruins)})"
+                                   + ("; o PriceLabs do quarto já tem a exceção: releia o inventário e as regras (item 1) "
+                                      "e refaça os itens 3 a 10 (o `orfas` gera os itens que fecham)" if pul else ""))
+                    continue
+                if erro_lote:
+                    recusas.append(f"{q}: exceção {k} não aberta na config (o editar-lote voltou com erro em outro item)")
+                    continue
+                if f_pl:
+                    recusas.append(f"{q}: exceção {k} não aberta na config (PriceLabs: " + "; ".join(f_pl)[:200] + ")")
+                    continue
+                if patch:
+                    aplicar_patch(cfg_bruto, copy.deepcopy(patch))
+                feitas.append(f"exceção {k} aberta: {q}")
+            else:
+                if not ok_b:
+                    recusas.append(f"{q}: exceção {k} segue aberta na config: o fechamento não foi conferido no Beds24 "
+                                   f"({', '.join(ruins)}); releia o inventário e refaça agora (URGENTE se 29/12 ou 03/01 "
+                                   "esgotou)")
+                    continue
+                if patch:
+                    aplicar_patch(cfg_bruto, copy.deepcopy(patch))
+                feitas.append(f"exceção {k} fechada: {q}")
+                if f_pl:
+                    recusas.append(f"{q}: a config fechou a exceção {k}, mas o PriceLabs não foi conferido ("
+                                   + "; ".join(f_pl)[:160] + "): regrave agora a estadia e a máscara do quarto no "
+                                   "PriceLabs (o envio levaria a exceção de volta ao Beds24)")
+    # portão do 01→03, por pousada
     for p, x in abrir.items():
-        ruins = [q for q in POUSADAS[p] if q in fora]
-        if ruins:
-            recusas.append(f"portão {p}: não aplicado na config ({', '.join(ruins)} sem o Beds24 ou o PriceLabs conferido)")
+        f_ok = falta_ok_portao(ordem, x)
+        if f_ok:
+            recusas.append(f"portão {p}: não aplicado na config ({f_ok})")
+            continue
+        itens_b = [i for i in lote_portao if (i.get("portao_0103") or {}).get("pousada") == p]
+        itens_p = [i for i in (portao or {}).get("itens") or [] if POUSADA_DE.get(i.get("quarto")) == p]
+        ok_b, ruins = b24_ok(itens_b)
+        f_pl = conferir_gravacao_pl(itens_p, gravado_pl)
+        if not itens_b or not ok_b or erro_lote or f_pl:
+            motivo = ("sem o lote do Beds24 do portão na decisão" if not itens_b else
+                      f"Beds24: {', '.join(ruins)}" if not ok_b else
+                      "o editar-lote voltou com erro" if erro_lote else
+                      "PriceLabs: " + "; ".join(f"{q}: " + "; ".join(v) for q, v in sorted(f_pl.items()))[:240])
+            recusas.append(f"portão {p}: não aplicado na config ({motivo})")
             continue
         aplicar_patch(cfg_bruto, copy.deepcopy(x["patch_quartos"]))
         estado.setdefault("portao", {})[p] = {"aberto": True, "em": h}
@@ -1909,6 +2058,8 @@ def main(argv=None) -> int:
                      help="Q7=<resposta do update_listing_date_overrides ou releitura get_listing_date_overrides> ... "
                           "(obrigatório para os quartos com item do portão ou das exceções)")
     apc.add_argument("--estado", default=str(ARQ_ESTADO))
+    apc.add_argument("--ordens", default=None)
+    apc.add_argument("--replay", action="store_true", help="aceita --hoje diferente do relógio (testes, reprocesso)")
     rg = sub.add_parser("registrar", help="depois de gravar e conferir no PriceLabs: funde o plano no estado")
     rg.add_argument("--plano", required=True, help="o --saida do plano (ou o `juntar`), com o estado novo")
     rg.add_argument("--em", help="instante UTC da gravação (padrão: agora)")
@@ -1983,11 +2134,29 @@ def main(argv=None) -> int:
             print("ERRO: passe --portao e/ou --orfas (as saídas desta rotina)")
             return 1
         bruto = json.loads(Path(ARQ_QUARTOS).read_text(encoding="utf-8"))
+        if hoje != hoje_brt(bruto) and not a.replay:
+            # revisão de 16/11 (4ª verificação): como no plano, no portão e no orfas, a decisão é a de hoje
+            print(f"ERRO: --hoje {hoje} não é hoje em America/Sao_Paulo ({hoje_brt(bruto)}); use a data do relógio")
+            return 1
         disco = carregar_estado(a.estado)
+        resumo = None
+        if a.resumo_beds24:
+            try:
+                resumo = ler_json(a.resumo_beds24)
+            except (OSError, ValueError) as e:
+                # o editar-lote que falha antes de imprimir deixa o arquivo vazio (revisão de 16/11, 4ª verificação)
+                print(f"recusado: Beds24: resumo do editar-lote vazio ou inválido ({a.resumo_beds24}: {e}): o editar-lote "
+                      "falhou; releia o inventário do Beds24, veja o que ficou gravado e refaça os itens 1, 3, 4 e 10; "
+                      "nada aplicado na config")
+                return 1
+        try:
+            gravado = ler_gravado(a.pricelabs) if a.pricelabs else None
+        except (OSError, ValueError) as e:
+            print(f"ERRO: {e}")
+            return 1
+        ordem_ac = ordem_do_dono(carregar_ordens(a.ordens) if a.ordens else None)
         feitas, recusas = aplicar_config(bruto, disco, hoje, ler_json(a.portao) if a.portao else None,
-                                         ler_json(a.orfas) if a.orfas else None,
-                                         ler_json(a.resumo_beds24) if a.resumo_beds24 else None,
-                                         ler_gravado(a.pricelabs) if a.pricelabs else None)
+                                         ler_json(a.orfas) if a.orfas else None, resumo, gravado, ordem_ac)
         for m in recusas:
             print("recusado:", m)
         if not feitas:

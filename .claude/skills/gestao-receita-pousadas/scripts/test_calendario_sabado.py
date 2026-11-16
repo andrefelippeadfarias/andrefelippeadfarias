@@ -41,7 +41,9 @@ ORDEM_ORFA = "dono-2026-11-02-sabado-orfao"
 
 
 def cfg():
-    return copy.deepcopy(carregar_quartos())
+    # a config de antes da operação do Réveillon (portão, exceções e máximo de R$ 6.000: config_de_teste)
+    import config_de_teste
+    return copy.deepcopy(config_de_teste.neutra(carregar_quartos()))
 
 
 def av(n, ms=2, ov=F):

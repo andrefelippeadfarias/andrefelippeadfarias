@@ -873,10 +873,12 @@ class Validador:
 
     def _restricoes_de(self, i, it, q, d, o: dict):
         """Confere: preço fixo proibido; teto enviado por noite (fim de semana nunca acima do pedido de 09/11; Afrodite
-        no Réveillon até R$ 8.000); piso do período (Réveillon em enviado; fim de semana em público ÷ fator do estado,
-        nunca acima do pedido; Balcony só aviso, a Regra G vence); fim de semana da Villa com a promoção ativa no enviado
-        de antes; estadia mínima por noite (o valor menor só com a prova do portão ou da exceção 2, ou com a config do
-        quarto já aberta) e máscaras de chegada/saída na posição do dia (fechada sempre, ou aberta só com a prova)."""
+        no Réveillon até R$ 8.000); piso do período no % inteiro da base, para cima (Réveillon em enviado; fim de semana
+        em público ÷ fator do estado, nunca acima do pedido; a Balcony é decidida no fim do plano contra a suíte com
+        banheira, validar_balcony_da_ordem: aviso só quando os 90% da Regra G não cabem no piso, ERRO nos outros casos);
+        fim de semana da Villa com a promoção ativa no enviado de antes; estadia mínima por noite (o valor menor só com a
+        prova do portão ou da exceção 2, ou com a config do quarto já aberta) e máscaras de chegada/saída na posição do
+        dia (fechada sempre, ou aberta só com a prova; item com um lado só é ERRO)."""
         r = o.get("restricoes")
         if not r:
             return
@@ -1034,7 +1036,7 @@ class Validador:
                f"+{p_req}% da base; {origem})")
         if curto == "Balcony" and "aviso" in str(pp.get("balcony") or ""):
             self._balcony_ordem.append({"i": i, "it": it, "q": q, "d": d, "o": o, "r": r, "piso": piso, "ef": ef,
-                                        "msg": msg})
+                                        "msg": msg, "p_req": p_req})
         else:
             self.erro(i, it, msg)
 
@@ -1079,9 +1081,12 @@ class Validador:
     def validar_balcony_da_ordem(self, finais: dict) -> None:
         """Revisão de 16/11 (3ª verificação, R3-02): a Balcony nas noites da ordem com `restricoes.piso_periodo`. O piso do
         período vale; só a Regra G pode deixá-la abaixo dele, e só quando 90% da suíte com banheira livre mais barata da
-        Villa fica abaixo do piso (aviso). ERRO abaixo de min(piso do período, 85,5% da suíte) menos a folga do % inteiro
+        Villa não cabe no piso (aviso). ERRO abaixo de min(piso do período, 85,5% da suíte) menos a folga do % inteiro
         (1% da base + R$ 1), e abaixo do piso quando os 90% da suíte cabem nele. A suíte: o valor do item no plano, senão
-        o calendário de --precos, senão o piso do período dela (o menor valor que ela pode ter: limite de baixo)."""
+        o calendário de --precos, senão o piso do período dela (o menor valor que ela pode ter: limite de baixo).
+        Revisão de 16/11 (4ª verificação): "cabe" é decidido na grade do % inteiro, como o plano faz (regra_g): o piso
+        no % inteiro para cima (`p_req`) cabe quando o valor dele fica até 90% da suíte + a folga do % inteiro e abaixo
+        da suíte − R$ 1. Em reais contínuos, o validador dava ERRO num plano que o próprio script gera (regra dos 80%)."""
         if not self._balcony_ordem:
             return
         desc = float(self.par.get("regra_g_desconto", 0.10))
@@ -1107,22 +1112,27 @@ class Validador:
                 self.erro(i, it, x["msg"] + "; sem a suíte com banheira da Villa para a Regra G")
                 continue
             g_hi, g_lo = (1 - desc) * ref, (1 - desc) * 0.95 * ref
-            if g_hi < piso - 0.01 and ef >= g_lo - folga:
+            r_req = float(q["base"]) * (1 + int(x["p_req"]) / 100)
+            cabe = r_req <= g_hi + folga and r_req < ref - 1
+            if not cabe and ef >= g_lo - folga:
                 self.aviso(i, it, x["msg"] + f"; Balcony: a Regra G vence (90% da suíte com banheira livre mais barata, "
                                              f"R$ {ref:.0f}, fica abaixo do piso)")
-            elif g_hi < piso - 0.01:
+            elif not cabe:
                 self.erro(i, it, x["msg"] + f"; abaixo também de 85,5% da suíte com banheira livre mais barata "
                                             f"(R$ {ref:.0f}: Regra G de R$ {g_lo:.0f} a R$ {g_hi:.0f})")
             else:
                 self.erro(i, it, x["msg"] + f"; a Regra G cabe no piso (90% da suíte com banheira livre mais barata, "
-                                            f"R$ {ref:.0f}, = R$ {g_hi:.0f})")
+                                            f"R$ {ref:.0f}, = R$ {g_hi:.0f}; o piso no % inteiro, R$ {r_req:.2f}, cabe na "
+                                            "folga do % inteiro)")
 
     def validar_coerencia_da_ordem(self) -> None:
         """Revisão de 16/11 (3ª verificação, R3-10): ordem do Recanto nas noites da ordem com `restricoes.coerencia_recanto`
         (Moinhos ≤ Panorâmica II ≤ Panorâmica I e Afrodite ≥ 1,15 × Panorâmica I), no valor enviado: o do item no plano,
         senão o do calendário de --precos (a regra vigente, quando o validador a tem). Só confere o par em que ao menos um
         lado vem do plano (o que já está gravado e o plano não mexe fica para a auditoria). Tolerância de R$ 1 do % inteiro
-        da base (o 4.070,40 da Panorâmica II contra o 4.070,00 da Double é "igual" na proposta aprovada)."""
+        da base (o 4.070,40 da Panorâmica II contra o 4.070,00 da Double é "igual" na proposta aprovada). Revisão de 16/11
+        (4ª verificação): o lado que vem do calendário é o preço do get_listing_prices arredondado ao real (até R$ 0,50
+        do enviado): o par com um lado do calendário ganha mais R$ 0,50 de tolerância."""
         for (ds, oid), o in sorted(self._coerencia_ordem.items(), key=lambda kv: kv[0]):
             c = ((o.get("restricoes") or {}).get("coerencia_recanto")) or {}
             tol = float(c.get("tolerancia_reais", 1)) + 0.01
@@ -1139,7 +1149,7 @@ class Validador:
                     # calendário), com R$ 1 de tolerância por degrau da cadeia
                     b = cadeia[ib]
                     (va, pa), (vb, pb) = val(a), val(b)
-                    lim = (tol - 0.01) * (ib - ia) + 0.01
+                    lim = (tol - 0.01) * (ib - ia) + 0.01 + (0.5 if not (pa and pb) else 0)
                     if va is None or vb is None or not (pa or pb) or va <= vb + lim:
                         continue
                     self.erros.append(f"ERRO ordem do Recanto {ds} ({oid}): {a} R$ {va:.2f} acima de {b} R$ {vb:.2f} "
@@ -1148,7 +1158,8 @@ class Validador:
             if af:
                 (va, pa), (vb, pb) = val(af.get("quarto", "Afrodite")), val(af.get("sobre", "Double"))
                 fator = float(af.get("fator", 1.15))
-                if va is not None and vb is not None and (pa or pb) and va < vb * fator - tol:
+                tol_af = tol + (0.5 * (fator if not pb else 0) + (0.5 if not pa else 0))
+                if va is not None and vb is not None and (pa or pb) and va < vb * fator - tol_af:
                     self.erros.append(f"ERRO ordem do Recanto {ds} ({oid}): Afrodite R$ {va:.2f} abaixo de "
                                       f"{fator:.2f} × {af.get('sobre', 'Double')} (R$ {vb * fator:.2f})")
 

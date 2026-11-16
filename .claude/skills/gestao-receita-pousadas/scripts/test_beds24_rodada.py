@@ -1068,6 +1068,50 @@ class TestCredito(Base):
 
 
 
+class TestResumoItemAItem(Base):
+    """Réveillon 2026/27 (4ª verificação de 16/11): com --aplicar, o resumo traz `gravado_em` e `lote` (a chave e o
+    estado de cada item), que o `reveillon_250k.py aplicar-config` confere item a item; a releitura que falha depois do
+    POST sai no resumo (antes o stdout ficava vazio com o Beds24 já gravado)."""
+
+    lote = TestTravaVizinhaEsgotada.lote
+
+    def test_estado_de_cada_item_e_chave(self):
+        self.falso.dia(722805, "2026-12-31")["numAvail"] = 0
+        self.falso.dia(722805, "2027-01-01")["numAvail"] = 2      # 01/01 reabriu: os dois de 02/01 são pulados
+        lote = self.lote()
+        f = self.arq("lote_orfas.json", lote)
+        rc, out, err = self.executar(beds24.main, ["editar-lote", "--plano", f, "--aplicar"])
+        self.assertEqual(rc, 0, err)
+        r = json.loads(out)
+        self.assertEqual([x["estado"] for x in r["lote"]], ["conferido", "pulado", "pulado"])
+        self.assertEqual([x["chave"] for x in r["lote"]], [beds24.chave_item_lote(i) for i in lote])
+        self.assertTrue(r["gravado_em"].endswith("Z"))
+        self.assertFalse(any("_it" in x for x in r["pulados"]))
+        # na simulação, nada novo no resumo (o hash do editar-lote de antes segue igual)
+        rc, out, err = self.executar(beds24.main, ["editar-lote", "--plano", f])
+        self.assertNotIn("lote", json.loads(out))
+        self.assertNotIn("gravado_em", json.loads(out))
+
+    def test_releitura_que_falha_depois_do_post(self):
+        self.falso.dia(722805, "2026-12-31")["numAvail"] = 0
+        self.falso.dia(722805, "2027-01-01")["numAvail"] = 0
+        f = self.arq("lote_orfas.json", self.lote())
+        orig, n = beds24.inventario, {"k": 0}
+
+        def inv(*a, **k):
+            n["k"] += 1
+            if n["k"] >= 2:
+                raise beds24.ErroBeds24("leitura sintética falhou")
+            return orig(*a, **k)
+        with mock.patch.object(beds24, "inventario", inv):
+            rc, out, err = self.executar(beds24.main, ["editar-lote", "--plano", f, "--aplicar"])
+        self.assertEqual(rc, 0, err)
+        r = json.loads(out)                                      # o stdout tem o resumo (antes: vazio)
+        self.assertEqual(r["parou_no_bloco"], 1)
+        self.assertTrue(any("releitura falhou" in e for e in r["erros"]), r["erros"])
+        self.assertEqual({x["estado"] for x in r["lote"]}, {"incerto"})
+        self.assertEqual(self.falso.dia(722805, "2026-12-31")["override"], "noCheckIn")   # o POST foi feito
+
 class TestConferenciaFinal0711(unittest.TestCase):
     """Achados da conferência final de 07/11: item repetido entre planos e rateDescription longo."""
 

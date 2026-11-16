@@ -837,7 +837,12 @@ def editar_lote(plano, aplicar=False, max_faixas=MAX_FAIXAS_POST):
     `max_faixas` faixas por POST (agrupadas por quarto dentro do bloco), e cada bloco é relido e conferido item a item
     (`num_avail_esperado` = o numAvail líquido que deve voltar; sem ele, o gravado) antes do próximo; um bloco com erro de
     gravação para o lote. Sem --aplicar só mostra antes, mudança, pulados e blocos. Se houve espera pelo crédito de 5 min
-    (saldo baixo ou 429), o resumo traz `espera_credito_s` (o total; sem espera, a chave não aparece)."""
+    (saldo baixo ou 429), o resumo traz `espera_credito_s` (o total; sem espera, a chave não aparece).
+    Revisão de 16/11 (Réveillon, 4ª verificação): com --aplicar, o resumo traz `gravado_em` (UTC) e `lote`, a lista dos
+    itens com a chave (CAMPOS_ITEM_LOTE_UNICO) e o `estado` de cada um (conferido, com_erro, no_alvo, pulado, incerto =
+    POST ou releitura falhou depois de enviar, nao_enviado = depois do bloco que parou): o `reveillon_250k.py
+    aplicar-config` confere item a item que o resumo é do lote da decisão. A releitura que falha depois do POST não sai
+    mais só no stderr: o resumo volta com `erros`, `parou_no_bloco` e os itens do bloco `incerto`."""
     if not plano:
         return {"itens": 0, "aplicar": aplicar, "pulados": [], "blocos": [], "erros": [], "conferidos": 0}
     e0 = len(_ESPERAS)
@@ -861,7 +866,8 @@ def editar_lote(plano, aplicar=False, max_faixas=MAX_FAIXAS_POST):
                 pulados.append({"quarto": it["quarto"], "de": it["de"], "ate": it["ate"],
                                 "min_stay_antes": it["min_stay_antes"], "min_stay": it.get("min_stay"), "lido": difere,
                                 "por_que": ("já no alvo" if all(v == it.get("min_stay") for v in difere.values())
-                                            else "minStay mudou desde o plano: refaça com o inventário novo")})
+                                            else "minStay mudou desde o plano: refaça com o inventário novo"),
+                                "_it": it})
                 continue
         ve = it.get("vizinha_esgotada")
         if isinstance(ve, dict):
@@ -871,13 +877,16 @@ def editar_lote(plano, aplicar=False, max_faixas=MAX_FAIXAS_POST):
             if lido is None or int(lido) > int(ve.get("numAvail", 0)):
                 pulados.append({"quarto": it["quarto"], "de": it["de"], "ate": it["ate"], "vizinha_esgotada": ve,
                                 "lido": lido, "por_que": (f"a noite vizinha {ve.get('data')} não está mais esgotada "
-                                                          f"(numAvail {lido}): refaça com o inventário novo")})
+                                                          f"(numAvail {lido}): refaça com o inventário novo"),
+                                "_it": it})
                 continue
         ficam.append((it, rid, cal))
     blocos = [ficam[k:k + max(1, int(max_faixas))] for k in range(0, len(ficam), max(1, int(max_faixas)))]
     resumo = {"itens": len(plano), "quartos": quartos, "aplicar": aplicar, "pulados": pulados,
               "a_gravar": len(ficam), "max_faixas_por_post": max_faixas, "n_blocos": len(blocos)}
     if not aplicar:
+        for p in pulados:
+            p.pop("_it", None)
         resumo["amostra"] = [{"quarto": i["quarto"], "de": i["de"], "antes": antes.get(i["quarto"], {}).get(i["de"]),
                               "mudanca": {k: i[k] for k in ("min_stay", "max_stay", "override", "num_avail", "canais_max")
                                           if i.get(k) is not None}}
@@ -885,6 +894,13 @@ def editar_lote(plano, aplicar=False, max_faixas=MAX_FAIXAS_POST):
         return _com_espera(resumo, e0)
     sessao = {}  # token de escrita tirado na 1ª gravação, o mesmo para todos os blocos (401: troca 1 vez)
     erros, saida_blocos, conferidos = [], [], 0
+    # revisão de 16/11 (Réveillon, 4ª verificação): o estado de cada item, pela chave do item de lote
+    estados = {id(p["_it"]): ("no_alvo" if p["por_que"] == "já no alvo" else "pulado") for p in pulados if "_it" in p}
+    for p in pulados:
+        p.pop("_it", None)
+    for it, _, _ in ficam:
+        estados[id(it)] = "nao_enviado"
+    resumo["gravado_em"] = dt.datetime.now(dt.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
     for n, bloco in enumerate(blocos, 1):
         por_quarto = {}
         for _, rid, cal in bloco:
@@ -900,10 +916,28 @@ def editar_lote(plano, aplicar=False, max_faixas=MAX_FAIXAS_POST):
             saida_blocos.append(info)
             erros.append(f"bloco {n}: {e}")
             resumo["parou_no_bloco"] = n
+            for it in itens:
+                estados[id(it)] = "incerto"
             break
         info["resposta_ok"] = all((r or {}).get("success", True) for r in (resp if isinstance(resp, list) else [resp]))
-        depois = inventario(token_de_acesso(), info["de"], info["ate"], sorted({i["quarto"] for i in itens}))
-        e_bloco, com_erro = _conferir(itens, depois)
+        try:
+            depois = inventario(token_de_acesso(), info["de"], info["ate"], sorted({i["quarto"] for i in itens}))
+        except ErroBeds24 as e:
+            # o POST foi feito e a releitura falhou: o resumo sai com o erro (antes ia só ao stderr e o stdout ficava
+            # vazio, com o Beds24 já gravado)
+            info.update(erro=f"releitura depois do POST falhou: {e}", conferidos=0)
+            saida_blocos.append(info)
+            erros.append(f"bloco {n}: gravado e não conferido (releitura falhou: {e}); releia o inventário")
+            resumo["parou_no_bloco"] = n
+            for it in itens:
+                estados[id(it)] = "incerto"
+            break
+        e_bloco, com_erro = [], 0
+        for it in itens:
+            e_i, c_i = _conferir([it], depois)
+            e_bloco += e_i
+            com_erro += c_i
+            estados[id(it)] = "com_erro" if c_i else ("conferido" if info["resposta_ok"] else "incerto")
         info.update(erros=e_bloco, conferidos=len(itens) - com_erro)
         conferidos += info["conferidos"]
         erros += e_bloco
@@ -912,8 +946,16 @@ def editar_lote(plano, aplicar=False, max_faixas=MAX_FAIXAS_POST):
             resumo["parou_no_bloco"] = n
             break
     resumo.update({"resposta_ok": all(b.get("resposta_ok") for b in saida_blocos), "blocos": saida_blocos,
-                   "conferidos": conferidos, "erros": erros})
+                   "conferidos": conferidos, "erros": erros,
+                   "lote": [{"chave": chave_item_lote(it), "quarto": it["quarto"], "de": it["de"], "ate": it["ate"],
+                             "estado": estados.get(id(it), "nao_enviado")} for it in plano]})
     return _com_espera(resumo, e0)
+
+
+def chave_item_lote(it):
+    """A chave de um item de lote (os campos de CAMPOS_ITEM_LOTE_UNICO): a mesma do juntar_planos e do
+    reveillon_250k.py aplicar-config."""
+    return json.dumps({k: it.get(k) for k in CAMPOS_ITEM_LOTE_UNICO}, sort_keys=True, ensure_ascii=False, default=str)
 
 
 def _com_espera(resumo, e0):

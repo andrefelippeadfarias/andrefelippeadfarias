@@ -62,7 +62,7 @@ from ancora_mercado import ARQ_ANCORA, ancora_da_noite, percentil_de, tipo_noite
 from calendario_12m import estadia_da_noite, ler_recalculo, prova_sabado_orfao  # noqa: E402
 from validar_plano import estadia_exigida  # noqa: E402
 from comum import (PASTA_SKILL, abrir_dia, carregar_quartos, data, esgotado, hoje_brt, ler_json,  # noqa: E402
-                   mascara_valida, periodo_feriado, sexta_reaberta, vendidas_total)
+                   mascara_valida, maximo_da_noite, periodo_feriado, sexta_reaberta, vendidas_total)
 from ordens import (ARQ_ORDENS, alvo_da_ordem, carregar_ordens, congelada, ordem_valida, ordens_por_data,  # noqa: E402
                     piso_da_ordem, vendidas_base_escada)
 import plano_dono as PD  # noqa: E402
@@ -671,12 +671,13 @@ def limite_volta_degrau(cfg: dict, ao: dict | None, curto: str, d: date, k: int,
     return lim if lim < piso else None
 
 
-def teto_anuncio(cfg: dict, curto: str) -> float:
+def teto_anuncio(cfg: dict, curto: str, d=None) -> float:
     """Maior piso que o PriceLabs aplica sem passar do máximo do anúncio (piso em % inteiro da base, para baixo). No
     Recanto, em cadeia: Panorâmica I, depois Panorâmica II até ela, depois Moinhos até a Panorâmica II (revisão de
-    04/11: no Natal a Panorâmica II ia a R$ 5.024 e a Panorâmica I a R$ 5.017, acima do máximo de R$ 5.000)."""
+    04/11: no Natal a Panorâmica II ia a R$ 5.024 e a Panorâmica I a R$ 5.017, acima do máximo de R$ 5.000). O máximo é
+    o da noite `d` (comum.maximo_da_noite; dono 16/11: R$ 6.000 só de 30/12 a 02/01, R$ 5.000 nas outras noites)."""
     def topo(k: str, lim: float) -> float:
-        return efetivo(cfg, k, min(float(cfg["por_curto"][k]["max"]), lim), para_baixo=True)
+        return efetivo(cfg, k, min(maximo_da_noite(cfg, k, d), lim), para_baixo=True)
     if curto in ("Q7", "Q2", "Double") and all(k in cfg["por_curto"] for k in ("Q7", "Q2", "Double")):
         t = topo("Double", float("inf"))
         if curto == "Double":
@@ -693,7 +694,7 @@ def limitar_ao_maximo(cfg: dict, itens: list[dict]) -> None:
         if it.get("tipo") != "data" or it.get("min_price") in (None, ""):
             continue
         k = it["quarto"]
-        t = teto_anuncio(cfg, k)
+        t = teto_anuncio(cfg, k, it.get("data"))
         if efetivo(cfg, k, float(it["min_price"])) > t + 0.01:
             it["min_price"] = math.floor(t)
             it["motivo"] = (it.get("motivo", "") + f"; no máximo do anúncio (R$ {t:.0f} efetivos)")[:250]
@@ -723,7 +724,8 @@ def protecao_esgotada(cfg: dict, p: dict, anc: dict, origem: str, curto: str, d:
     # pisos PADRÃO do quarto: o piso de venda das ordens por data (R$ 300 no Genius 3) é para vender noite vazia, não
     # para proteger noite vendida (31/10: a Afrodite de 08/11 iria a R$ 937)
     piso_dono, _ = pisos_enviados(cfg, curto, d)
-    teto = float(teto_regra) if teto_regra else float(q["max"])
+    mx_noite = maximo_da_noite(cfg, curto, d)
+    teto = float(teto_regra) if teto_regra else mx_noite
     piso = min(max(pub / fp, piso_dono, float(piso_extra or 0)), teto)
     atual = float(r["price"])
     base = float(q["base"])
@@ -732,8 +734,8 @@ def protecao_esgotada(cfg: dict, p: dict, anc: dict, origem: str, curto: str, d:
         # sem piso no calendário (coleta resumida) nem regra na data, o piso efetivo é desconhecido (o PriceLabs pode ter
         # piso de fim de semana próprio, ex.: Panorâmica I a 150% da base): não grava; a rodada com recálculo protege
         return None
-    teto_cal = vigente(cfg, curto, r, regra, "max_price") or float(q["max"])
-    tem_teto = teto_cal < float(q["max"]) - 1 or bool(regra and regra.get("max_price") not in (None, ""))
+    teto_cal = vigente(cfg, curto, r, regra, "max_price") or mx_noite
+    tem_teto = teto_cal < mx_noite - 1 or bool(regra and regra.get("max_price") not in (None, ""))
     # 31/10 (revisão da rotina das 07:53): a proteção só SOBE o piso; piso vigente igual ou acima (com tolerância) e sem
     # teto a soltar fica como está (noite vendida com piso mais alto não perde nada e evita regravar todo dia)
     if atual_min >= piso * (1 - p["tolerancia"]) and not tem_teto:
@@ -755,12 +757,15 @@ def protecao_esgotada(cfg: dict, p: dict, anc: dict, origem: str, curto: str, d:
     if tem_teto and atual_min > novo_min and not legado_j:
         novo_min = round(atual_min, 2)
         fonte = f"piso vigente R$ {atual_min:.0f} mantido (a proteção só sobe o piso; {fonte})"
-    it = {"tipo": "data", "quarto": curto, "data": d.isoformat(), "min_price": novo_min, "max_price": float(q["max"]),
+    it = {"tipo": "data", "quarto": curto, "data": d.isoformat(), "min_price": novo_min, "max_price": mx_noite,
             "preco_antes": atual, "protecao": True,
             "motivo": (f"Proteção da noite esgotada ({v}/{u}; Regra J desligada pelo dono em 31/10): {fonte}; teto livre")}
     if teto_regra:
         it["max_price"] = math.floor(max(teto, it["min_price"]))
         it["motivo"] = it["motivo"].replace("teto livre", f"teto da faixa do dono R$ {it['max_price']}")
+    elif mx_noite < float(q["max"]) - 1:
+        # dono 16/11: o máximo do anúncio mais alto vale só no Réveillon; aqui o teto é o da noite (pace.ajustar_tetos)
+        it["motivo"] = it["motivo"].replace("teto livre", f"teto R$ {mx_noite:.0f} da noite")
     # o teto vai em percent_base arredondado para baixo em 1% da base: diferença menor que 1% da base já é o mesmo teto
     if teto_regra and atual_min >= piso * (1 - p["tolerancia"]) and abs(teto_cal - it["max_price"]) <= base * 0.01 + 1:
         return None
@@ -839,7 +844,7 @@ def _plano(cfg: dict, ancora: dict, cals: dict, hoje: date, ordens: dict, passos
             regra_n = (regras.get(curto) or {}).get(noite)
             # coleta resumida sem piso/teto: vale a regra vigente; sem regra, o mínimo do anúncio (nunca 0, revisão 31/10)
             piso_vig = vigente(cfg, curto, r, regra_n, "min_price") or float(q["min"])
-            teto_vig = vigente(cfg, curto, r, regra_n, "max_price") or float(q["max"])
+            teto_vig = vigente(cfg, curto, r, regra_n, "max_price") or maximo_da_noite(cfg, curto, noite)
             motivo_fora = None
             if q.get("fora_do_motor"):
                 motivo_fora = f"quarto fora do motor ({q.get('fora_do_motor_nota', 'ver quartos.json')})"
@@ -1020,8 +1025,8 @@ def _plano(cfg: dict, ancora: dict, cals: dict, hoje: date, ordens: dict, passos
             preso = None
             if novo < piso:
                 novo, preso = piso, f"presa no piso ({origem_piso} = R$ {piso:.0f} enviados, público ~R$ {piso * fp:.0f}, percentil {percentil_de(piso * fp, anc):.0f})"
-            capado = novo >= teto_anuncio(cfg, curto) - 0.01
-            novo = min(novo, teto_anuncio(cfg, curto))
+            capado = novo >= teto_anuncio(cfg, curto, d) - 0.01
+            novo = min(novo, teto_anuncio(cfg, curto, d))
             if k == 0 and novo > atual:
                 novo = atual  # hoje nunca sobe
             novo_cmp = efetivo(cfg, curto, novo) if escada_ordem and novo > atual else novo
@@ -1060,8 +1065,8 @@ def _plano(cfg: dict, ancora: dict, cals: dict, hoje: date, ordens: dict, passos
             if direcao == "sobe":
                 # revisão de 31/10: teto solto deixava o algoritmo pular além do passo (VK7 04/11: R$ 710 → R$ 1.100+);
                 # sobe pelo piso com o teto no alvo do motor (nunca abaixo do piso novo)
-                it["max_price"] = float(max(novo_r, math.floor(min(alvo_env, float(q["max"])))))
-            elif atual > novo_r + 1 and (atual > piso_vig + 1 or teto_vig < float(q["max"]) - 1):
+                it["max_price"] = float(max(novo_r, math.floor(min(alvo_env, maximo_da_noite(cfg, curto, noite)))))
+            elif atual > novo_r + 1 and (atual > piso_vig + 1 or teto_vig < maximo_da_noite(cfg, curto, noite) - 1):
                 # o algoritmo está acima do alvo, ou a noite tem teto (escada/Regra J antigas: piso = teto): o teto desce
                 # junto, senão o preço fica preso no teto antigo ou no algoritmo
                 it["max_price"] = novo_r
@@ -1099,7 +1104,7 @@ def item_do_plano(cfg: dict, p: dict, pn: dict, curto: str, d: date, k: int, r: 
     q = cfg["por_curto"][curto]
     noite = d.isoformat()
     tol = p["tolerancia"]
-    teto_a = teto_anuncio(cfg, curto)
+    teto_a = teto_anuncio(cfg, curto, d)
     alvo = pn["enviado"]
     capado = alvo >= teto_a - 0.01
     novo = min(alvo, teto_a)
@@ -1206,6 +1211,9 @@ def ajustar_tetos(cfg: dict, itens: list[dict], regras: dict, cals: dict | None 
     seria um percentual enorme e inútil). Para cada item com max_price no máximo do anúncio: se a regra vigente da
     noite tem teto ou validade (lead_time_expiry), a noite vai para a lista `apagar` (plano separado, gravado antes) e
     o item herda min_stay e check-in/out da regra apagada; senão o max_price só sai do item. Devolve (itens, apagar).
+    Dono 16/11 (Réveillon, máximo do anúncio de R$ 6.000 só por 30/12 a 02/01): onde o máximo da noite
+    (comum.maximo_da_noite, R$ 5.000) é menor que o do anúncio, o teto não solta: fica explícito no item (e entra no item
+    de piso de noite sem teto por data), senão a noite iria a R$ 6.000.
     Dono 04/11 (desde 05/11), com `cals` (recálculos): onde a regra do dia de chegada decide a noite (fora de feriado,
     pacote e sábado; e na noite órfã de feriado e véspera, dono 05/11), a estadia regravada é a dela
     (calendario_12m.estadia_da_noite), não a herdada: em 04/11 a
@@ -1226,14 +1234,25 @@ def ajustar_tetos(cfg: dict, itens: list[dict], regras: dict, cals: dict | None 
                 teto_reg = float(q["base"]) * (1 + float(reg["max_price"]) / 100)
             except (TypeError, ValueError):
                 teto_reg = None
-        solta = it.get("max_price") is not None and float(it["max_price"]) >= float(q["max"]) - 1
+        mx_noite = maximo_da_noite(cfg, it["quarto"], it.get("data"))
+        # dono 16/11 (ordem dono-2026-11-16-reveillon-250k): o máximo do anúncio sobe a R$ 6.000 só por causa de 30/12 a
+        # 02/01; nas outras noites o "teto livre" seria o máximo do anúncio (6.000). Revisão de 16/11: o teto da noite
+        # (R$ 5.000) fica explícito no item, em percent_base, sem apagar a regra (a API mescla e o teto novo substitui)
+        explicito = it.get("tipo") == "data" and mx_noite < float(q["max"]) - 1
+        solta = it.get("max_price") is not None and float(it["max_price"]) >= mx_noite - 1
         if not solta and it.get("max_price") is None and it.get("min_price") is not None and teto_reg is not None \
                 and float(it["min_price"]) > teto_reg + 1:
             solta = True  # piso novo acima do teto vigente: o teto antigo sai (senão piso > teto no PriceLabs)
-            it["max_price"] = float(q["max"])
+            it["max_price"] = mx_noite
+        if explicito and not solta and it.get("max_price") is None and it.get("min_price") is not None \
+                and not (reg and reg.get("max_price") not in (None, "")):
+            it["max_price"] = mx_noite  # noite sem teto por data: o algoritmo iria até o máximo do anúncio
         if solta:
-            it.pop("max_price")
-            if reg and (reg.get("max_price") not in (None, "") or reg.get("lead_time_expiry")):
+            if explicito:
+                it["max_price"] = mx_noite
+            else:
+                it.pop("max_price")
+            if reg and ((not explicito and reg.get("max_price") not in (None, "")) or reg.get("lead_time_expiry")):
                 apagar.append({"tipo": "apagar", "quarto": it["quarto"], "data": it["data"],
                                "motivo": f"solta o teto (R$ {em_reais_pct(q, reg.get('max_price'))}) antes de regravar o piso: {it.get('motivo', '')[:120]}"})
                 for campo in ("min_stay", "check_in", "check_out"):

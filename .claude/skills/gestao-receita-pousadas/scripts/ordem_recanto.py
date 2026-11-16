@@ -130,12 +130,19 @@ def horizonte_teto_fds(cfg: dict, hoje: dt.date) -> dt.date:
     return hoje + dt.timedelta(days=int(cfg["parametros"].get("afrodite_fds_horizonte_dias", 95)))
 
 
-def comparar(cfg, cal7, caldb, cal2, de, ate, calaf=None, hoje=None):
+def comparar(cfg, cal7, caldb, cal2, de, ate, calaf=None, hoje=None, ordens=None):
+    """Noites fora da ordem do Recanto. Revisão de 16/11: noite com ordem do dono por data (preco_por_data, como o
+    Réveillon 2026/27 do reveillon_250k.py) fica de fora: só o script da ordem mexe no preço dela."""
+    from ordens import carregar_ordens, ordens_por_data
+    ordens = carregar_ordens() if ordens is None else ordens
     hoje = hoje or de
     out, d = [], de
     teto_ate = horizonte_teto_fds(cfg, hoje)
     while d <= ate:
         s = d.isoformat()
+        if ordens_por_data(ordens, "Q2", d) or ordens_por_data(ordens, "Afrodite", d):
+            d += dt.timedelta(days=1)
+            continue
         if s in cal7 and s in caldb and s in cal2:
             # Regra J (dono, 27/10): suíte esgotada vai ao topo do mercado e sai da ordem; a ordem vale entre as que vendem
             esg = {k: esgotado(c[s], cfg["por_curto"][k]["unidades"]) for k, c in (("Q7", cal7), ("Double", caldb), ("Q2", cal2))}

@@ -38,6 +38,7 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from comum import carregar_quartos, periodo_feriado  # noqa: E402
 from validar_plano import em_reais  # noqa: E402
 import plano_dono as PD  # noqa: E402
+from ordens import ordens_por_data  # noqa: E402
 
 RAIZ = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 META = [(7, .70), (15, .50), (30, .35), (45, .25), (60, .15)]
@@ -110,6 +111,12 @@ def montar(cfg, comp, coleta, hoje, vendidas=None, ordens=None):
                     continue   # dono 21/10: a Queen (2) segue a faixa entre a Queen 7 e a Double (ordem_recanto.py)
                 if PD.governa_noite(k, s, cfg, ordens):
                     notas.append(f"{k} {s}: preço do plano do dono de 09/11 (pace.py), sem item aqui")
+                    continue
+                por_data = ordens_por_data(ordens, k, d)
+                if por_data:
+                    # revisão de 16/11: noite com ordem do dono por data (Réveillon 2026/27: reveillon_250k.py) é do script
+                    # dela; o validador barra item de preço que não cite a ordem
+                    notas.append(f"{k} {s}: ordem do dono por data ({por_data[0]['id']}), sem item aqui")
                     continue
                 q, x = Q[k], cal.get((k, s))
                 if not x:

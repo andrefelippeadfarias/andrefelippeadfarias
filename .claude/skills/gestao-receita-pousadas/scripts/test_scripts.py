@@ -22,6 +22,8 @@ CFG = carregar_quartos()
 ORDENS = {k: dict(v, quartos=["*"], de="2020-01-01", ate="2030-12-31",
                   libera=[x for x in (v.get("libera") or []) if x != "regra_g"])
           for k, v in carregar_ordens().items() if v.get("tipo") != "manual"}
+# a ordem do Réveillon 2026/27 (16/11) tem travas por noite no validador (restricoes): fica no escopo real dela
+ORDENS["dono-2026-11-16-reveillon-250k"] = carregar_ordens()["dono-2026-11-16-reveillon-250k"]
 ORDENS["teste-dono"] = {"id": "teste-dono", "quartos": ["*"], "de": "2020-01-01", "ate": "2030-12-31", "tipo": "regra", "libera": []}
 # ordem de teste que libera a estadia, dada ANTES da regra do dia de chegada (04/11) e outra DEPOIS dela (revisão 05/11)
 ORDENS["teste-dono-estadia"] = {"id": "teste-dono-estadia", "data": "2026-10-23", "quartos": ["*"], "de": "2020-01-01",
@@ -3850,7 +3852,9 @@ class TestFaixasDono(unittest.TestCase):
         por = {(o["pousada_faixa"], o["de"]): o for o in novas}
         o5 = por[("Recanto", fer.isoformat())]
         self.assertEqual(o5["faixa"], 5)
-        self.assertEqual(o5["pisos_enviados"]["Q7"], float(cfg["por_curto"]["Q7"]["max"]))   # F5 acima do máximo
+        # F5 acima do máximo: o máximo da noite (dono 16/11: R$ 6.000 só de 30/12 a 02/01; R$ 5.000 nas outras)
+        from comum import maximo_da_noite
+        self.assertEqual(o5["pisos_enviados"]["Q7"], maximo_da_noite(cfg, "Q7", fer))
         self.assertEqual(o5["degraus_dias"], [7, 5, 3, 1])
         self.assertEqual(len(o5["degraus_atras"]["Q7"]), 4)                                 # F4, F3, F2, F1
         o2 = por[("Recanto", sem.isoformat())]

@@ -144,7 +144,9 @@ def linha(fx: dict, cfg: dict, mod: dict, decisoes: list[dict], inv: dict, preco
         rz = razao(pous, k)
         fac = sum(un[q] * fator_quarto(cfg, q, d) for q in un) / U
         piso_pub = pisos_enviados(cfg, ref, d)[0] * rz
-        teto_pub = mx * rz
+        # dono 16/11: máximo de R$ 6.000 só de 30/12 a 02/01 (comum.maximo_da_noite); nas outras noites, R$ 5.000
+        from comum import maximo_da_noite
+        teto_pub = min(mx, maximo_da_noite(cfg, ref, d)) * rz
         pf = {}
         for f in range(1, 6):
             v = float(reg[str(PCT[f])])

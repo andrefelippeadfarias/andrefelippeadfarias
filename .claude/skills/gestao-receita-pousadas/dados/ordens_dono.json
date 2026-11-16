@@ -431,7 +431,21 @@
    "ate": "2027-12-31",
    "tipo": "regra",
    "libera": [],
-   "nota": "Escada de vendas no motor de pace (quartos.json parametros.pace.escada_vendas; ordem de base do mercado com escada_vendas). Não muda pisos, limites de segurança nem descontos."
+   "nota": "Escada de vendas no motor de pace (quartos.json parametros.pace.escada_vendas; ordem de base do mercado com escada_vendas). Não muda pisos, limites de segurança nem descontos.",
+   "noites_fora": [
+    "2026-12-30",
+    "2026-12-31",
+    "2027-01-01",
+    "2027-01-02"
+   ],
+   "substituida_em_parte": [
+    {
+     "em": "2026-11-16",
+     "por": "dono-2026-11-16-reveillon-250k",
+     "texto": "Pode fazer",
+     "parte": "noites 30/12 a 02/01 nos 7 quartos: a escada passa a ser por pacote vendido na pousada (+3% no Réveillon, +2% no fim de semana), ordem dono-2026-11-16-reveillon-250k"
+    }
+   ]
   },
   {
    "id": "dono-2026-11-01-villa-base-mercado",
@@ -785,7 +799,15 @@
    "de": "2026-11-02",
    "ate": "2099-12-31",
    "libera": [],
-   "nota": "Todo sábado noCheckInOrCheckOut no Beds24 nos 7 quartos (Afrodite também no PriceLabs por data, check_in e check_out com o sábado fechado), inclusive em feriado. Substitui a Regra H de 01/11 e as exceções de 01/11 (Natal 26/12 no Recanto, 02/01 na Afrodite). Permanente; exceção só com nova ordem do dono."
+   "nota": "Todo sábado noCheckInOrCheckOut no Beds24 nos 7 quartos (Afrodite também no PriceLabs por data, check_in e check_out com o sábado fechado), inclusive em feriado. Substitui a Regra H de 01/11 e as exceções de 01/11 (Natal 26/12 no Recanto, 02/01 na Afrodite). Permanente; exceção só com nova ordem do dono.",
+   "substituida_em_parte": [
+    {
+     "em": "2026-11-16",
+     "por": "dono-2026-11-16-reveillon-250k",
+     "texto": "Pode fazer",
+     "parte": "sábado 02/01/2027: entrada liberada só no quarto em que 01/01 esgotar (exceção 2, estadia 02→04 com mínimo 2); a saída do sábado segue fechada. Ordem dono-2026-11-16-reveillon-250k"
+    }
+   ]
   },
   {
    "id": "dono-2026-11-02-sabado-orfao",
@@ -1319,7 +1341,15 @@
      ]
     }
    },
-   "nota": "Interpretação: 'de X a Y' = chegada X e saída Y (o próprio dono: 'de 30 a 01 ou de 30 a 03'). Natal: só 23→25. Ano Novo: só 30→01 ou 30→03. Feito no Beds24 (7 quartos; stayThrough) e no PriceLabs (estadia mínima por data nos 7 quartos e chegada/saída da Afrodite, que o envio leva ao Beds24): 24/12, 31/12 e 02/01 sem chegada nem saída; 01/01 sem chegada; estadia máxima 2 em 23, 24 e 29/12 e 4 de 30/12 a 02/01; estadia mínima 2 em 23, 24, 30 e 31/12 e 1 em 29/12. Config em quartos.json (feriados Natal 23-24 e Réveillon 30/12-02/01; regra_h_beds24.override_por_data, estadia_minima_por_data, estadia_maxima_por_data), que a auditoria diária do Beds24 confere. Preço: nada muda por esta ordem (25-26 e 29/12 seguem com o piso de feriado). Reservas já feitas fora dos pacotes (9 no Natal, 13 no Ano Novo, 03/11) ficam como estão. Desfazer: pedir 'Abra o Natal e o Ano Novo como antes'."
+   "nota": "Interpretação: 'de X a Y' = chegada X e saída Y (o próprio dono: 'de 30 a 01 ou de 30 a 03'). Natal: só 23→25. Ano Novo: só 30→01 ou 30→03. Feito no Beds24 (7 quartos; stayThrough) e no PriceLabs (estadia mínima por data nos 7 quartos e chegada/saída da Afrodite, que o envio leva ao Beds24): 24/12, 31/12 e 02/01 sem chegada nem saída; 01/01 sem chegada; estadia máxima 2 em 23, 24 e 29/12 e 4 de 30/12 a 02/01; estadia mínima 2 em 23, 24, 30 e 31/12 e 1 em 29/12. Config em quartos.json (feriados Natal 23-24 e Réveillon 30/12-02/01; regra_h_beds24.override_por_data, estadia_minima_por_data, estadia_maxima_por_data), que a auditoria diária do Beds24 confere. Preço: nada muda por esta ordem (25-26 e 29/12 seguem com o piso de feriado). Reservas já feitas fora dos pacotes (9 no Natal, 13 no Ano Novo, 03/11) ficam como estão. Desfazer: pedir 'Abra o Natal e o Ano Novo como antes'.",
+   "substituida_em_parte": [
+    {
+     "em": "2026-11-16",
+     "por": "dono-2026-11-16-reveillon-250k",
+     "texto": "Pode fazer",
+     "parte": "Ano Novo: além de 30→01 e 30→03, abre o 01→03 (chegada sexta 01/01, mínimo 2, saída domingo 03/01; a máxima 4, necessária para o 30→03, deixa caber também 01→04 e 01→05: efeito colateral não pedido pelo dono, a relatar quando o portão abrir) quando o portão de cada pousada passar; exceção 1 (saída em 31/12, 29→31) só no quarto com 31/12 esgotado; exceção 2 (entrada no sábado 02/01, 02→04, mínimo 2) só no quarto com 01/01 esgotado. Ordem dono-2026-11-16-reveillon-250k; até o portão, a restrição de 03/11 segue igual"
+    }
+   ]
   },
   {
    "id": "dono-2026-11-03-recanto-fds-hidro-1113",
@@ -8315,7 +8345,18 @@
     3,
     1
    ],
-   "nota": "F5 (Réveillon (30/12-02/01)): régua com hidro medida na noite (3 estadias), p90 R$ 3946 público, p90 R$ 3946; ÷ 0.620 (Booking/enviado; ÷ 0.558 nos degraus de D7 ou menos); nunca abaixo do piso do dono. Descida gradual a partir de D7 com o vendido abaixo da curva: D7 F4, D5 F3, D3 F2, D1 F1. Afrodite pelo prêmio dela e Balcony 10% abaixo (Regra G). Limitado ao máximo do anúncio em Moinhos, Panorâmica II, Panorâmica I (subir o máximo é do dono). Como desfazer: pedir 'Volte às ordens anteriores de 30/12/26'."
+   "nota": "F5 (Réveillon (30/12-02/01)): régua com hidro medida na noite (3 estadias), p90 R$ 3946 público, p90 R$ 3946; ÷ 0.620 (Booking/enviado; ÷ 0.558 nos degraus de D7 ou menos); nunca abaixo do piso do dono. Descida gradual a partir de D7 com o vendido abaixo da curva: D7 F4, D5 F3, D3 F2, D1 F1. Afrodite pelo prêmio dela e Balcony 10% abaixo (Regra G). Limitado ao máximo do anúncio em Moinhos, Panorâmica II, Panorâmica I (subir o máximo é do dono). Como desfazer: pedir 'Volte às ordens anteriores de 30/12/26'.",
+   "noites_fora": [
+    "2026-12-30"
+   ],
+   "substituida_em_parte": [
+    {
+     "em": "2026-11-16",
+     "por": "dono-2026-11-16-reveillon-250k",
+     "texto": "Pode fazer",
+     "parte": "noite 30/12 inteira: preço pela ordem dono-2026-11-16-reveillon-250k (Réveillon no pedido de 09/11 / fim de semana pela proposta, escada por pacote, descida de D7 com a linha de pacotes); a F5 fica como registro"
+    }
+   ]
   },
   {
    "id": "dono-2026-11-04-faixa-villa-20261230",
@@ -8391,7 +8432,18 @@
     3,
     1
    ],
-   "nota": "F5 (Réveillon (30/12-02/01)): régua com hidro medida na noite (3 estadias), p90 R$ 3946 público, p90 R$ 3946; ÷ 0.650 (Booking/enviado; ÷ 0.585 nos degraus de D7 ou menos); nunca abaixo do piso do dono. Descida gradual a partir de D7 com o vendido abaixo da curva: D7 F4, D5 F3, D3 F2, D1 F1. Afrodite pelo prêmio dela e Balcony 10% abaixo (Regra G). Limitado ao máximo do anúncio em King Spa 7, King Spa 2, Balcony (subir o máximo é do dono). Como desfazer: pedir 'Volte às ordens anteriores de 30/12/26'."
+   "nota": "F5 (Réveillon (30/12-02/01)): régua com hidro medida na noite (3 estadias), p90 R$ 3946 público, p90 R$ 3946; ÷ 0.650 (Booking/enviado; ÷ 0.585 nos degraus de D7 ou menos); nunca abaixo do piso do dono. Descida gradual a partir de D7 com o vendido abaixo da curva: D7 F4, D5 F3, D3 F2, D1 F1. Afrodite pelo prêmio dela e Balcony 10% abaixo (Regra G). Limitado ao máximo do anúncio em King Spa 7, King Spa 2, Balcony (subir o máximo é do dono). Como desfazer: pedir 'Volte às ordens anteriores de 30/12/26'.",
+   "noites_fora": [
+    "2026-12-30"
+   ],
+   "substituida_em_parte": [
+    {
+     "em": "2026-11-16",
+     "por": "dono-2026-11-16-reveillon-250k",
+     "texto": "Pode fazer",
+     "parte": "noite 30/12 inteira: preço pela ordem dono-2026-11-16-reveillon-250k (Réveillon no pedido de 09/11 / fim de semana pela proposta, escada por pacote, descida de D7 com a linha de pacotes); a F5 fica como registro"
+    }
+   ]
   },
   {
    "id": "dono-2026-11-04-faixa-recanto-20261231",
@@ -8479,7 +8531,18 @@
     3,
     1
    ],
-   "nota": "F5 (Réveillon (30/12-02/01)): régua com hidro medida na noite (3 estadias), p90 R$ 3946 público, p90 R$ 3946; ÷ 0.620 (Booking/enviado; ÷ 0.558 nos degraus de D7 ou menos); nunca abaixo do piso do dono. Descida gradual a partir de D7 com o vendido abaixo da curva: D7 F4, D5 F3, D3 F2, D1 F1. Afrodite pelo prêmio dela e Balcony 10% abaixo (Regra G). Limitado ao máximo do anúncio em Moinhos, Panorâmica II, Panorâmica I (subir o máximo é do dono). Como desfazer: pedir 'Volte às ordens anteriores de 31/12/26'."
+   "nota": "F5 (Réveillon (30/12-02/01)): régua com hidro medida na noite (3 estadias), p90 R$ 3946 público, p90 R$ 3946; ÷ 0.620 (Booking/enviado; ÷ 0.558 nos degraus de D7 ou menos); nunca abaixo do piso do dono. Descida gradual a partir de D7 com o vendido abaixo da curva: D7 F4, D5 F3, D3 F2, D1 F1. Afrodite pelo prêmio dela e Balcony 10% abaixo (Regra G). Limitado ao máximo do anúncio em Moinhos, Panorâmica II, Panorâmica I (subir o máximo é do dono). Como desfazer: pedir 'Volte às ordens anteriores de 31/12/26'.",
+   "noites_fora": [
+    "2026-12-31"
+   ],
+   "substituida_em_parte": [
+    {
+     "em": "2026-11-16",
+     "por": "dono-2026-11-16-reveillon-250k",
+     "texto": "Pode fazer",
+     "parte": "noite 31/12 inteira: preço pela ordem dono-2026-11-16-reveillon-250k (Réveillon no pedido de 09/11 / fim de semana pela proposta, escada por pacote, descida de D7 com a linha de pacotes); a F5 fica como registro"
+    }
+   ]
   },
   {
    "id": "dono-2026-11-04-faixa-villa-20261231",
@@ -8555,7 +8618,18 @@
     3,
     1
    ],
-   "nota": "F5 (Réveillon (30/12-02/01)): régua com hidro medida na noite (3 estadias), p90 R$ 3946 público, p90 R$ 3946; ÷ 0.650 (Booking/enviado; ÷ 0.585 nos degraus de D7 ou menos); nunca abaixo do piso do dono. Descida gradual a partir de D7 com o vendido abaixo da curva: D7 F4, D5 F3, D3 F2, D1 F1. Afrodite pelo prêmio dela e Balcony 10% abaixo (Regra G). Limitado ao máximo do anúncio em King Spa 7, King Spa 2, Balcony (subir o máximo é do dono). Como desfazer: pedir 'Volte às ordens anteriores de 31/12/26'."
+   "nota": "F5 (Réveillon (30/12-02/01)): régua com hidro medida na noite (3 estadias), p90 R$ 3946 público, p90 R$ 3946; ÷ 0.650 (Booking/enviado; ÷ 0.585 nos degraus de D7 ou menos); nunca abaixo do piso do dono. Descida gradual a partir de D7 com o vendido abaixo da curva: D7 F4, D5 F3, D3 F2, D1 F1. Afrodite pelo prêmio dela e Balcony 10% abaixo (Regra G). Limitado ao máximo do anúncio em King Spa 7, King Spa 2, Balcony (subir o máximo é do dono). Como desfazer: pedir 'Volte às ordens anteriores de 31/12/26'.",
+   "noites_fora": [
+    "2026-12-31"
+   ],
+   "substituida_em_parte": [
+    {
+     "em": "2026-11-16",
+     "por": "dono-2026-11-16-reveillon-250k",
+     "texto": "Pode fazer",
+     "parte": "noite 31/12 inteira: preço pela ordem dono-2026-11-16-reveillon-250k (Réveillon no pedido de 09/11 / fim de semana pela proposta, escada por pacote, descida de D7 com a linha de pacotes); a F5 fica como registro"
+    }
+   ]
   },
   {
    "id": "dono-2026-11-04-faixa-recanto-20270101",
@@ -8643,7 +8717,18 @@
     3,
     1
    ],
-   "nota": "F5 (Réveillon (30/12-02/01)): régua com hidro medida na noite (2 estadias), p90 R$ 3896 público, p90 R$ 3896; ÷ 0.620 (Booking/enviado; ÷ 0.558 nos degraus de D7 ou menos); nunca abaixo do piso do dono. Descida gradual a partir de D7 com o vendido abaixo da curva: D7 F4, D5 F3, D3 F2, D1 F1. Afrodite pelo prêmio dela e Balcony 10% abaixo (Regra G). Limitado ao máximo do anúncio em Moinhos, Panorâmica II, Panorâmica I (subir o máximo é do dono). Como desfazer: pedir 'Volte às ordens anteriores de 01/01/27'."
+   "nota": "F5 (Réveillon (30/12-02/01)): régua com hidro medida na noite (2 estadias), p90 R$ 3896 público, p90 R$ 3896; ÷ 0.620 (Booking/enviado; ÷ 0.558 nos degraus de D7 ou menos); nunca abaixo do piso do dono. Descida gradual a partir de D7 com o vendido abaixo da curva: D7 F4, D5 F3, D3 F2, D1 F1. Afrodite pelo prêmio dela e Balcony 10% abaixo (Regra G). Limitado ao máximo do anúncio em Moinhos, Panorâmica II, Panorâmica I (subir o máximo é do dono). Como desfazer: pedir 'Volte às ordens anteriores de 01/01/27'.",
+   "noites_fora": [
+    "2027-01-01"
+   ],
+   "substituida_em_parte": [
+    {
+     "em": "2026-11-16",
+     "por": "dono-2026-11-16-reveillon-250k",
+     "texto": "Pode fazer",
+     "parte": "noite 01/01 inteira: preço pela ordem dono-2026-11-16-reveillon-250k (Réveillon no pedido de 09/11 / fim de semana pela proposta, escada por pacote, descida de D7 com a linha de pacotes); a F5 fica como registro"
+    }
+   ]
   },
   {
    "id": "dono-2026-11-04-faixa-villa-20270101",
@@ -8719,7 +8804,18 @@
     3,
     1
    ],
-   "nota": "F5 (Réveillon (30/12-02/01)): régua com hidro medida na noite (2 estadias), p90 R$ 3896 público, p90 R$ 3896; ÷ 0.650 (Booking/enviado; ÷ 0.585 nos degraus de D7 ou menos); nunca abaixo do piso do dono. Descida gradual a partir de D7 com o vendido abaixo da curva: D7 F4, D5 F3, D3 F2, D1 F1. Afrodite pelo prêmio dela e Balcony 10% abaixo (Regra G). Limitado ao máximo do anúncio em King Spa 7, King Spa 2, Balcony (subir o máximo é do dono). Como desfazer: pedir 'Volte às ordens anteriores de 01/01/27'."
+   "nota": "F5 (Réveillon (30/12-02/01)): régua com hidro medida na noite (2 estadias), p90 R$ 3896 público, p90 R$ 3896; ÷ 0.650 (Booking/enviado; ÷ 0.585 nos degraus de D7 ou menos); nunca abaixo do piso do dono. Descida gradual a partir de D7 com o vendido abaixo da curva: D7 F4, D5 F3, D3 F2, D1 F1. Afrodite pelo prêmio dela e Balcony 10% abaixo (Regra G). Limitado ao máximo do anúncio em King Spa 7, King Spa 2, Balcony (subir o máximo é do dono). Como desfazer: pedir 'Volte às ordens anteriores de 01/01/27'.",
+   "noites_fora": [
+    "2027-01-01"
+   ],
+   "substituida_em_parte": [
+    {
+     "em": "2026-11-16",
+     "por": "dono-2026-11-16-reveillon-250k",
+     "texto": "Pode fazer",
+     "parte": "noite 01/01 inteira: preço pela ordem dono-2026-11-16-reveillon-250k (Réveillon no pedido de 09/11 / fim de semana pela proposta, escada por pacote, descida de D7 com a linha de pacotes); a F5 fica como registro"
+    }
+   ]
   },
   {
    "id": "dono-2026-11-04-faixa-recanto-20270102",
@@ -8807,7 +8903,18 @@
     3,
     1
    ],
-   "nota": "F5 (Réveillon (30/12-02/01)): régua com hidro medida na noite (1 estadia), p90 R$ 3846 público, p90 R$ 3846; ÷ 0.620 (Booking/enviado; ÷ 0.558 nos degraus de D7 ou menos); nunca abaixo do piso do dono. Descida gradual a partir de D7 com o vendido abaixo da curva: D7 F4, D5 F3, D3 F2, D1 F1. Afrodite pelo prêmio dela e Balcony 10% abaixo (Regra G). Limitado ao máximo do anúncio em Moinhos, Panorâmica II, Panorâmica I (subir o máximo é do dono). Como desfazer: pedir 'Volte às ordens anteriores de 02/01/27'."
+   "nota": "F5 (Réveillon (30/12-02/01)): régua com hidro medida na noite (1 estadia), p90 R$ 3846 público, p90 R$ 3846; ÷ 0.620 (Booking/enviado; ÷ 0.558 nos degraus de D7 ou menos); nunca abaixo do piso do dono. Descida gradual a partir de D7 com o vendido abaixo da curva: D7 F4, D5 F3, D3 F2, D1 F1. Afrodite pelo prêmio dela e Balcony 10% abaixo (Regra G). Limitado ao máximo do anúncio em Moinhos, Panorâmica II, Panorâmica I (subir o máximo é do dono). Como desfazer: pedir 'Volte às ordens anteriores de 02/01/27'.",
+   "noites_fora": [
+    "2027-01-02"
+   ],
+   "substituida_em_parte": [
+    {
+     "em": "2026-11-16",
+     "por": "dono-2026-11-16-reveillon-250k",
+     "texto": "Pode fazer",
+     "parte": "noite 02/01 inteira: preço pela ordem dono-2026-11-16-reveillon-250k (Réveillon no pedido de 09/11 / fim de semana pela proposta, escada por pacote, descida de D7 com a linha de pacotes); a F5 fica como registro"
+    }
+   ]
   },
   {
    "id": "dono-2026-11-04-faixa-villa-20270102",
@@ -8883,7 +8990,18 @@
     3,
     1
    ],
-   "nota": "F5 (Réveillon (30/12-02/01)): régua com hidro medida na noite (1 estadia), p90 R$ 3846 público, p90 R$ 3846; ÷ 0.650 (Booking/enviado; ÷ 0.585 nos degraus de D7 ou menos); nunca abaixo do piso do dono. Descida gradual a partir de D7 com o vendido abaixo da curva: D7 F4, D5 F3, D3 F2, D1 F1. Afrodite pelo prêmio dela e Balcony 10% abaixo (Regra G). Limitado ao máximo do anúncio em King Spa 7, King Spa 2, Balcony (subir o máximo é do dono). Como desfazer: pedir 'Volte às ordens anteriores de 02/01/27'."
+   "nota": "F5 (Réveillon (30/12-02/01)): régua com hidro medida na noite (1 estadia), p90 R$ 3846 público, p90 R$ 3846; ÷ 0.650 (Booking/enviado; ÷ 0.585 nos degraus de D7 ou menos); nunca abaixo do piso do dono. Descida gradual a partir de D7 com o vendido abaixo da curva: D7 F4, D5 F3, D3 F2, D1 F1. Afrodite pelo prêmio dela e Balcony 10% abaixo (Regra G). Limitado ao máximo do anúncio em King Spa 7, King Spa 2, Balcony (subir o máximo é do dono). Como desfazer: pedir 'Volte às ordens anteriores de 02/01/27'.",
+   "noites_fora": [
+    "2027-01-02"
+   ],
+   "substituida_em_parte": [
+    {
+     "em": "2026-11-16",
+     "por": "dono-2026-11-16-reveillon-250k",
+     "texto": "Pode fazer",
+     "parte": "noite 02/01 inteira: preço pela ordem dono-2026-11-16-reveillon-250k (Réveillon no pedido de 09/11 / fim de semana pela proposta, escada por pacote, descida de D7 com a linha de pacotes); a F5 fica como registro"
+    }
+   ]
   },
   {
    "id": "dono-2026-11-04-faixa-recanto-20270103",
@@ -9805,7 +9923,15 @@
     "7": "aprovada: Afrodite no fim de semana 15% acima da Panorâmica I, no lugar da faixa de R$ 1.600-1.800 públicos de 27/10",
     "demais": "aprovadas as outras sugestões da página: feriados abrem na mediana do mercado com hidro (nunca acima do pedido de 09/11) e sobem pela escada até o p75; a 7 dias, noite de fim de semana ou feriado com menos de 60% vendido desce 10%"
    },
-   "nota": "Execução: régua por noite em dados/regua_dono.json (varredura de 09-10/11, 77 concorrentes, 32 estadias; fator público medido por pousada, mês e tipo; pedido de 09/11 como teto da abertura). Implementação no motor e gravação registradas em pricelabs/registro-de-mudancas.md (10/11). Interpretação da skill, a confirmar com o dono: '80% de lotação' = suítes com banheira da Villa na noite (8 de 9 vendidas)."
+   "nota": "Execução: régua por noite em dados/regua_dono.json (varredura de 09-10/11, 77 concorrentes, 32 estadias; fator público medido por pousada, mês e tipo; pedido de 09/11 como teto da abertura). Implementação no motor e gravação registradas em pricelabs/registro-de-mudancas.md (10/11). Interpretação da skill, a confirmar com o dono: '80% de lotação' = suítes com banheira da Villa na noite (8 de 9 vendidas).",
+   "substituida_em_parte": [
+    {
+     "em": "2026-11-16",
+     "por": "dono-2026-11-16-reveillon-250k",
+     "texto": "Pode fazer",
+     "parte": "noites 30/12 a 02/01 (decisão 6, festas do Recanto; e 'festas da Villa ficam como estão'): preço pela ordem dono-2026-11-16-reveillon-250k (preco_por_data vence o plano no motor). O resto do plano segue; a noite continua 'do plano' para as exigências e a ordem do Recanto"
+    }
+   ]
   },
   {
    "id": "dono-2026-11-04-faixa-recanto-20270110",
@@ -10132,6 +10258,469 @@
    "ate": "2026-11-22",
    "tipo": "manual",
    "libera": []
+  },
+  {
+   "id": "dono-2026-11-16-reveillon-250k",
+   "data": "2026-11-16",
+   "criada_em": "2026-11-16T16:15+00:00",
+   "texto": "Pode fazer",
+   "contexto": "Resposta do dono (16/11/2026, por volta de 13:15 BRT) à mensagem com as decisões do Réveillon 30/12→01/01 e do fim de semana 01→03/01 (pricelabs/reveillon-2026-meta-250k.md, seções 6, 7 e 9; pricelabs/reveillon-2026-meta-250k/dados.json: final.precos_recomendados, final.plano_de_acao, final.marcos, final.decisoes_do_dono). A mensagem respondida pedia: (2) abrir o fim de semana 01→03/01 (chegada sexta 01/01, saída domingo 03/01), mantendo 30→01 e 30→03, gravando só depois de o PriceLabs enviar os preços novos e de conferir na Booking; (3) 'Pode fazer' dos preços: Réveillon no pedido de 09/11 e fim de semana pela proposta (o dono não escolheu 'manter o pedido'), com a escada nova (+3% / +2% por pacote vendido na pousada) e a descida só a partir de D7 com os pisos do período; (5) subir o máximo do anúncio de R$ 5.000 para R$ 6.000 nessas datas (Q7, Double, Q2, VK7, VK2, Balcony; a Afrodite já tem máximo de R$ 10.000); (6) exceções das noites soltas: saída em 31/12 (estadias 29→31) e entrada no sábado 02/01 (estadias 02→04, mínimo 2), com a trava de não comer pacote. Os itens (1) e (4) da mensagem (fechar na extranet o 01→03 da Villa que vaza na Booking, pagar o PriceLabs, tirar a promoção da Villa, conferir o desconto do Recanto, não somar promoção com Genius) são do dono e seguem em dados/pendencias.json. Interpretação da skill: o 'Pode fazer' aprova tudo o que a skill pode executar da lista (2, 3, 5 e 6) e a escada, a descida e os pisos descritos na proposta.",
+   "quartos": [
+    "Q7",
+    "Double",
+    "Afrodite",
+    "Q2",
+    "VK7",
+    "VK2",
+    "Balcony"
+   ],
+   "de": "2026-12-30",
+   "ate": "2027-01-02",
+   "tipo": "preco_por_data",
+   "libera": [
+    "acima_15",
+    "anuncio",
+    "sabado_aberto",
+    "regra_g",
+    "chegada_saida_por_data",
+    "estadia_por_data",
+    "beds24_inventario"
+   ],
+   "libera_nota": "acima_15: Réveillon do Recanto direto ao pedido (até +56%); anuncio: máximo de R$ 6.000 (execução em execucao_skill.maximo_anuncio); chegada_saida_por_data/estadia_por_data/beds24_inventario: portão do 01→03 e exceções das noites soltas (Beds24 e PriceLabs), só com a prova de cada uma (restricoes); sabado_aberto: só a entrada no sábado 02/01 da exceção 2, no quarto em que 01/01 esgotar (restricoes.mascaras); regra_g: só a regra dos 80% (Balcony no mercado do quarto sem banheira, nunca acima da Regra G). Não libera preço fixo (piso = teto em percent_base) nem 'estadia' (a estadia do feriado, 2, já cobre o portão e a exceção 2; restricoes segura o resto). Revisão de 16/11: 'fixo' e 'estadia' saíram da lista: o dono não aprovou preço fixo nem estadia 1 nessas noites.",
+   "script": "scripts/reveillon_250k.py (plano, orfas, portao, juntar, payloads, registrar, vigia-maximo; sequência no SKILL.md, passo 4d); estado em dados/reveillon_250k.json",
+   "blocos": {
+    "reveillon": {
+     "noites": [
+      "2026-12-30",
+      "2026-12-31"
+     ],
+     "pacote": "30→01 (e 30→03)"
+    },
+    "fds": {
+     "noites": [
+      "2027-01-01",
+      "2027-01-02"
+     ],
+     "pacote": "01→03 (e 30→03)"
+    }
+   },
+   "alvos": {
+    "reveillon_enviado": {
+     "Q7": 4974,
+     "Q2": 4977,
+     "Double": 4988,
+     "Afrodite": 6700,
+     "VK7": 4988,
+     "VK2": 4991,
+     "Balcony": 4483
+    },
+    "reveillon_nota": "Recanto no pedido de 09/11 (dados/regua_dono.json, pedido_0911); Villa sem mudança agora (VK7 4.988 e VK2 4.991 = reta de R$ 5.000 da escada de 01/11 colada no máximo; Balcony 4.483 = Regra G). Enviado = price1 no Beds24 = base × (1 + pct/100), pct inteiro.",
+    "fds_publico": {
+     "Q7": 2550,
+     "Q2": 2600,
+     "Double": 2650,
+     "Afrodite": 3400,
+     "VK7": 2550,
+     "VK2": 2550,
+     "Balcony": 2295
+    },
+    "fds_nota": "Público por noite na Booking. Enviado = público ÷ fator público medido da pousada no bloco (Recanto 0,5832 em 16/11), nunca acima do pedido de 09/11 (Q7 4.974, Q2 4.977, Double 4.988, Afrodite 6.600 em 01/01 e 6.520 em 02/01). Villa: só depois de a promoção sair e de medir o fator novo; enquanto a promoção ficar, mantém o enviado de hoje (fds_villa_com_promocao).",
+    "fds_villa_com_promocao": {
+     "VK7": 4988,
+     "VK2": 4991,
+     "Balcony": 4483
+    }
+   },
+   "pedido_0911": {
+    "Q7": 4974,
+    "Q2": 4977,
+    "Double": 4988,
+    "VK7": 4988,
+    "VK2": 4991,
+    "Balcony": 4483,
+    "Afrodite": {
+     "2026-12-30": 6700,
+     "2026-12-31": 6700,
+     "2027-01-01": 6600,
+     "2027-01-02": 6520
+    }
+   },
+   "fator_publico": {
+    "medido_em": "2026-11-16",
+    "Recanto": {
+     "reveillon": 0.5832,
+     "fds": 0.5832
+    },
+    "Villa": {
+     "reveillon": 0.4461,
+     "fds": 0.3377
+    },
+    "nota": "Público na Booking ÷ enviado, medido em 16/11 (Recanto; em 09/11 era 0,6156). Villa distorcida pela promoção e pela tarifa que vaza no 01→03. Correção diária: o fator novo só substitui o guardado em dados/reveillon_250k.json quando o público sai de ±5% do alvo (fator mais de 5% diferente). Medir na Booking 30→01 e 30→03; o fim de semana pela diferença (30→03 − 30→01) até o 01→03 abrir; depois, 01→03 direto.",
+    "tolerancia": 0.05
+   },
+   "escada": {
+    "reveillon": 0.03,
+    "fds": 0.02,
+    "multiplicativa": true,
+    "conta": "Cada PACOTE novo vendido na pousada no bloco (reserva que cobre as duas noites do bloco: 30→01 conta 1 no Réveillon; 01→03 conta 1 no fim de semana; 30→03 conta 1 em cada; roomQty multiplica), líquido dos cancelamentos depois da linha de base, sobe os quartos daquela pousada naquele bloco. Linha de base: Beds24 lido em 16/11 (reservas às 14:39 UTC; inventário às 14:36 UTC).",
+    "linha_base_reservas": "2026-11-16T14:39:12Z",
+    "so_datas_futuras": true,
+    "pausa_abaixo_do_alarme": true
+   },
+   "tetos": {
+    "reveillon": {
+     "maximo_anuncio": 6000,
+     "Afrodite": 8000
+    },
+    "fds": {
+     "concorrente_hidro_max_publico": 2871,
+     "medido_em": "2026-11-16",
+     "regra": "concorrente com hidro mais caro do dia ÷ fator; nunca acima do pedido de 09/11",
+     "Afrodite": {
+      "2027-01-01": 6600,
+      "2027-01-02": 6520
+     },
+     "Balcony": "Regra G"
+    }
+   },
+   "descida": {
+    "degrau": 0.05,
+    "max_degraus": 4,
+    "cumulativa": true,
+    "linhas": {
+     "reveillon": [
+      [
+       "2026-12-23",
+       6
+      ],
+      [
+       "2026-12-25",
+       7
+      ],
+      [
+       "2026-12-27",
+       8
+      ],
+      [
+       "2026-12-29",
+       9
+      ]
+     ],
+     "fds": [
+      [
+       "2026-12-25",
+       9
+      ],
+      [
+       "2026-12-27",
+       10
+      ],
+      [
+       "2026-12-29",
+       12
+      ],
+      [
+       "2026-12-31",
+       14
+      ]
+     ]
+    },
+    "conta": "pacotes NOVOS vendidos desde 16/11 no bloco, as duas pousadas somadas",
+    "volta": "bloco de volta à linha: sobe um degrau por dia, só datas futuras",
+    "por_pousada": "O degrau vale para a pousada que estiver abaixo da sua parte (final.plano_de_acao). Como a parte é contada: execucao_skill.descida_parte.",
+    "alvo_do_degrau": "Cada degrau respeita o maior valor entre o piso do período e o alvo do degrau, nunca o público de hoje (final.plano_de_acao): com k degraus, alvo × 0,95^k, sem a escada.",
+    "marcos": "Degraus de 5% em D7, D5, D3 e D1 (as datas de 'linhas'), só se o bloco estiver abaixo da linha daquele marco."
+   },
+   "pisos_periodo": {
+    "regra": "alvo × 0,95^4 (em público, convertido pelo fator medido)",
+    "fator": 0.81450625,
+    "reveillon_enviado": {
+     "Q7": 4051.35,
+     "Q2": 4070,
+     "Double": 4062.76,
+     "Afrodite": 5457.19,
+     "VK7": 4062.76,
+     "VK2": 4065.2,
+     "Balcony": 3651.43
+    },
+    "fds_publico": {
+     "Q7": 2076.99,
+     "Q2": 2117.72,
+     "Double": 2158.44,
+     "Afrodite": 2769.32,
+     "VK7": 2076.99,
+     "VK2": 2076.99,
+     "Balcony": 1869.29
+    },
+    "cadeia": "Proposta aprovada (final.precos_recomendados): o piso da Panorâmica II no Réveillon é 4.070 enviados (+156), 'igual ao da Double, para manter a ordem Moinhos ≤ Panorâmica II ≤ Panorâmica I' (o piso próprio, 4.977 × 0,95^4 = 4.053,80, ficaria abaixo do piso efetivo da Moinhos, 4.058,58). No script: piso da Q2 ≥ piso efetivo da Q7 e piso da Double ≥ piso efetivo da Q2 − R$ 1 (o % inteiro da base não deixa igualar: 4.070,40 × 4.070,00 é 'igual' na proposta); a coerência nunca baixa um quarto abaixo do próprio piso, sobe o de cima."
+   },
+   "pausa_alarme": {
+    "linhas": [
+     [
+      "2026-11-23",
+      53100,
+      43
+     ],
+     [
+      "2026-11-30",
+      59600,
+      46
+     ],
+     [
+      "2026-12-07",
+      72000,
+      51
+     ],
+     [
+      "2026-12-14",
+      85500,
+      57
+     ],
+     [
+      "2026-12-21",
+      107100,
+      67
+     ],
+     [
+      "2026-12-28",
+      141700,
+      82
+     ],
+     [
+      "2027-01-01",
+      168600,
+      94
+     ]
+    ],
+    "nota": "Linha de alarme dos marcos (receita R$ e quarto-noites vendidas nas 4 noites, as duas pousadas). Abaixo dela, a escada para (o passo fica no que estava) e a recepção reforça a venda direta; antes de D7 o preço não desce por isso."
+   },
+   "coerencia": "Moinhos (Q7) ≤ Panorâmica II (Q2) ≤ Panorâmica I (Double) (dono 21/10); Afrodite a mais cara do Recanto (15% acima da Panorâmica I e 5% acima da mais cara das outras); Balcony pela Regra G (85,5% a 90% da suíte com banheira livre mais barata da Villa; no feriado, 90%) e a regra dos 80% (dono 09/11): com 8 ou 9 das 9 suítes com banheira da Villa vendidas na noite, a Balcony vai ao mercado do quarto sem banheira (lista p50 da régua ÷ fator da Villa), nunca acima da Regra G nem abaixo do piso do período. Nunca subir a noite de hoje (D0).",
+   "portao_0103": {
+    "condicoes": [
+     "PriceLabs voltou a enviar: last_date_pushed depois da gravação dos preços do fim de semana, e o price1 do Beds24 em 01 e 02/01 igual ao enviado planejado",
+     "público do fim de semana medido na Booking dentro do alvo (±5%)",
+     "na Villa, promoção retirada (e fator novo medido)"
+    ],
+    "por_pousada": true,
+    "beds24": "01/01 override 'none' (chegada liberada) e mínimo 2 em 01 e 02/01; 02/01 continua noCheckInOrCheckOut (salvo a exceção 2 por quarto); 31/12 continua noCheckInOrCheckOut (salvo a exceção 1 por quarto); máxima 4 de 30/12 a 02/01 continua.",
+    "pricelabs": "min_stay 2 em 01 e 02/01 nos quartos da pousada (o envio leva a estadia ao Beds24); Afrodite 01/01 com check_in e check_out '1111111' (sexta liberada); 02/01 mantém a máscara.",
+    "config": "quartos.json → regra_h_beds24.override_por_data_por_quarto e estadia_minima_por_data_por_quarto no mesmo passo (senão a auditoria diária desfaz); o patch sai de reveillon_250k.py portao.",
+    "ordem_gravacao": "PriceLabs primeiro, depois o Beds24, depois a config; conferir na Booking 15 a 35 min depois",
+    "estadia_antes": {
+     "2027-01-01": 3,
+     "2027-01-02": 3
+    },
+    "estadia_antes_nota": "estadia mínima de 01 e 02/01 antes do portão (PriceLabs por data, 16/11): a exceção 2 que fechar antes do portão volta a ela"
+   },
+   "excecoes_noites_soltas": {
+    "excecao_1": {
+     "o_que": "saída em 31/12 (estadia 29→31)",
+     "ota": "só no quarto em que 31/12 esgotar e com vaga em 30/12 e 29/12: 31/12 override noCheckIn (saída liberada)",
+     "venda_direta": "até (livres 30/12 − livres 31/12) por quarto, com vaga em 29/12",
+     "trava": "30→31 barrada pela mínima 2 de 30/12; 28→31 e 29→01 pela máxima 2 de 29/12"
+    },
+    "excecao_2": {
+     "o_que": "entrada no sábado 02/01 (estadia 02→04, mínimo 2)",
+     "ota": "só no quarto em que 01/01 esgotar e com vaga em 02/01 e 03/01: 02/01 override noCheckOut (chegada liberada) e mínimo 2",
+     "venda_direta": "até (livres 02/01 − livres 01/01) por quarto, com vaga em 03/01",
+     "trava": "saída em 02/01 continua fechada; 02→03 barrada pela mínima 2"
+    },
+    "desfazer": "quando a noite vizinha reabrir (cancelamento), volta a noCheckInOrCheckOut no mesmo dia (reveillon_250k.py orfas)"
+   },
+   "maximo_anuncio": {
+    "de": 5000,
+    "para": 6000,
+    "quartos": [
+     "Q7",
+     "Double",
+     "Q2",
+     "VK7",
+     "VK2",
+     "Balcony"
+    ],
+    "noites": [
+     "2026-12-30",
+     "2026-12-31",
+     "2027-01-01",
+     "2027-01-02"
+    ],
+    "teto_fora": 5000,
+    "nota": "O PriceLabs não tem máximo por data: o anúncio inteiro sobe e a skill segura R$ 5.000 nas outras noites (quartos.json → parametros.maximo_anuncio_por_noite; motor com teto explícito de R$ 5.000 por data (pace.ajustar_tetos), faixas e validador; vigia-maximo nos 12 meses). Execução em execucao_skill.maximo_anuncio. Voltar o máximo a R$ 5.000 depois de 02/01/2027."
+   },
+   "substitui": [
+    "dono-2026-11-04-faixa-recanto-20261230",
+    "dono-2026-11-04-faixa-recanto-20261231",
+    "dono-2026-11-04-faixa-recanto-20270101",
+    "dono-2026-11-04-faixa-recanto-20270102",
+    "dono-2026-11-04-faixa-villa-20261230",
+    "dono-2026-11-04-faixa-villa-20261231",
+    "dono-2026-11-04-faixa-villa-20270101",
+    "dono-2026-11-04-faixa-villa-20270102",
+    "dono-2026-11-01-subir-com-reservas (nessas 4 noites)",
+    "dono-2026-11-09-plano-nov-fev (decisão 6, festas do Recanto, nessas 4 noites)",
+    "dono-2026-11-03-festas-pacotes (em parte, só no portão e nas exceções)",
+    "dono-2026-11-02-sabados-fechados (em parte, só na exceção 2)"
+   ],
+   "como_desfazer": "Pedir 'Volte às regras anteriores do Réveillon': apagar esta ordem devolve as 4 noites ao motor (plano de 09/11 no Recanto; faixas F5 e escada de 01/11 na Villa, tirando das ordens antigas o noites_fora destas noites); voltar o máximo do anúncio a R$ 5.000 (update_listing_data) e quartos.json; se o portão já abriu, devolver 01/01 a noCheckIn e mínimo 3 em 01 e 02/01 (Beds24 e PriceLabs) e apagar as chaves _por_quarto de regra_h_beds24.",
+   "restricoes": {
+    "_doc": "Travas do validador (validar_plano.py, validar_restricoes_ordem) para TODO item de data nas noites e quartos desta ordem, cite ou não a ordem (revisão de 16/11: um item de outro script ou à mão que abrisse a sexta 01/01 da Afrodite passava). Item de preço (piso, teto, preço) ou apagar nessas noites sem citar a ordem é ERRO (tipo preco_por_data: só o reveillon_250k.py mexe no preço).",
+    "price_type_fixed": false,
+    "estadia_minima": {
+     "2026-12-30": 2,
+     "2026-12-31": 2,
+     "2027-01-01": 3,
+     "2027-01-02": 3
+    },
+    "estadia_minima_com_portao": {
+     "2027-01-01": 2,
+     "2027-01-02": 2
+    },
+    "estadia_minima_excecao_2": {
+     "2027-01-02": 2
+    },
+    "mascaras": {
+     "2026-12-31": {
+      "check_in": "fechada",
+      "check_out": "excecao_1"
+     },
+     "2027-01-01": {
+      "check_in": "portao"
+     },
+     "2027-01-02": {
+      "check_in": "excecao_2",
+      "check_out": "fechada"
+     }
+    },
+    "portao": {
+     "noite_chegada": "2027-01-01",
+     "tolerancia": 0.05,
+     "pousadas": {
+      "Recanto": [
+       "Q7",
+       "Double",
+       "Afrodite",
+       "Q2"
+      ],
+      "Villa": [
+       "VK7",
+       "Balcony",
+       "VK2"
+      ]
+     },
+     "alvo_publico": "a prova (portao_0103) leva 'alvo_publico' (alvos.fds_publico do quarto de referência × 0,95^degraus) e o público medido não pode ficar mais de 5% abaixo dele; o alvo não pode ficar abaixo do menor alvo da pousada × 0,95^4",
+     "sem_preco_na_rotina": true
+    },
+    "excecao_1": {
+     "noite": "2026-12-31",
+     "override": "noCheckIn",
+     "prova": "seguinte (30/12 livre, 31/12 esgotada no quarto)",
+     "prova_noite": "2026-12-30",
+     "prova_vizinha": "2026-12-31",
+     "lado": "seguinte"
+    },
+    "excecao_2": {
+     "noite": "2027-01-02",
+     "override": "noCheckOut",
+     "prova": "anterior (02/01 livre, 01/01 esgotada no quarto)",
+     "prova_noite": "2027-01-02",
+     "prova_vizinha": "2027-01-01",
+     "lado": "anterior"
+    },
+    "nota": "Estadia: nunca abaixo de 2 nas 4 noites; 01 e 02/01 em 3 até o portão abrir para o quarto (item com 'portao_0103' e a prova, ou quartos.json regra_h_beds24.override_por_data_por_quarto['2027-01-01'][quarto] = 'none'); 02/01 em 2 também pela exceção 2 ('excecao_noite_solta' 2 com orfa_prova, ou o override noCheckOut do quarto na config). Máscaras (posição do dia da semana da noite): 31/12 sem entrada sempre e saída só pela exceção 1; 01/01 entrada só com o portão; 02/01 saída fechada sempre e entrada só pela exceção 2. Prova das exceções (orfa_prova) com o quarto do item, a noite (30/12 ou 02/01) e a vizinha (31/12 ou 01/01).",
+    "estado_arquivo": "dados/reveillon_250k.json",
+    "preco_so_pela_ordem": true,
+    "teto_enviado": [
+     {
+      "noites": [
+       "2027-01-01",
+       "2027-01-02"
+      ],
+      "por_quarto": {
+       "Q7": 4974,
+       "Q2": 4977,
+       "Double": 4988,
+       "VK7": 4988,
+       "VK2": 4991,
+       "Afrodite": {
+        "2027-01-01": 6600,
+        "2027-01-02": 6520
+       }
+      },
+      "nota": "fim de semana: nunca acima do pedido de 09/11 (aprovado em 16/11); a Balcony fica pela Regra G"
+     },
+     {
+      "noites": [
+       "2026-12-30",
+       "2026-12-31"
+      ],
+      "por_quarto": {
+       "Afrodite": 8000
+      },
+      "nota": "Réveillon: teto da Afrodite R$ 8.000 (tetos.reveillon); os outros quartos ficam no máximo do anúncio"
+     }
+    ],
+    "piso_periodo": {
+     "reveillon_enviado": {
+      "Q7": 4051.35,
+      "Q2": 4070,
+      "Double": 4069.4,
+      "Afrodite": 5457.19,
+      "VK7": 4062.76,
+      "VK2": 4065.2,
+      "Balcony": 3651.43
+     },
+     "fds_publico": {
+      "Q7": 2076.99,
+      "Q2": 2117.72,
+      "Double": 2158.44,
+      "Afrodite": 2769.32,
+      "VK7": 2076.99,
+      "VK2": 2076.99,
+      "Balcony": 1869.29
+     },
+     "fds_nunca_acima_do_pedido": true,
+     "folga_reais": "1% da base + R$ 1 (o % inteiro da base)",
+     "balcony": "aviso (a Regra G vence o piso quando ele passa de 90% da suíte com banheira livre + a folga)",
+     "nota": "Réveillon em enviado (Q2 e Double em cadeia: 4.070 e 4.069,40, proposta aprovada). Fim de semana em público: enviado = público ÷ fator do estado (estado_arquivo, com as flags da rodada do plano), nunca acima do pedido de 09/11; na Villa só depois de a promoção sair (com ela, villa_com_promocao)."
+    },
+    "villa_com_promocao": {
+     "noites": [
+      "2027-01-01",
+      "2027-01-02"
+     ],
+     "por_quarto": {
+      "VK7": 4988,
+      "VK2": 4991,
+      "Balcony": 4483
+     },
+     "nota": "Enquanto a promoção da Villa ficar (estado: promocao_villa.ativa), o fim de semana da Villa mantém 4.988, 4.991 e 4.483 (alvos.fds_villa_com_promocao)."
+    }
+   },
+   "marco_21_12": {
+    "data": "2026-12-21",
+    "bloco": "reveillon",
+    "pacotes_minimos": 10,
+    "de": 12,
+    "aumento": 0.05,
+    "uma_vez": true,
+    "texto": "final.marcos[2026-12-21] da proposta aprovada: 'Com 10 ou mais dos 12 pacotes do Réveillon vendidos, os que restam sobem mais 5%, uma vez só, além da escada. Isso vale só para datas futuras e dentro do teto (R$ 5.000 ou 6.000 de enviado).'"
+   },
+   "execucao_skill": {
+    "_doc": "Decisões de execução e interpretações da skill sobre a ordem (revisão de 16/11): NÃO são parâmetros aprovados pelo dono. As que mudam o preço ou a venda vão ao dono no próximo relatório (pendência reveillon-250k-decisoes-20261116).",
+    "maximo_anuncio": {
+     "gravar_a_partir_de": "2026-11-23",
+     "gravar_quando": "o primeiro preço planejado de 30/12 a 02/01 de uma pousada precisar passar do máximo atual (R$ 5.000); sobe só os quartos dessa pousada na lista",
+     "por_pousada": true,
+     "config": "quartos.json → max 6000 só depois de gravar e conferir o update_listing_data (reveillon_250k.py registrar, com o item de anúncio no plano); antes disso o script segura o preço no máximo atual",
+     "antes_de_gravar": "vigia-maximo --antes com os preços dos 12 meses (get_listing_prices) e as regras por data: noite fora de 30/12 a 02/01 encostada no teto (≥ R$ 4.990) ou com o preço do algoritmo acima de R$ 5.000 e sem teto por data ganha teto de R$ 5.000 na mesma gravação; regra com teto 'percent_max' em noite futura bloqueia (o teto dela sobe junto com o máximo)",
+     "nota": "Revisão de 16/11 (execução, não ordem nova): hoje nenhum preço planejado passa de R$ 5.000 (o mais alto é R$ 4.988) e as noites de 19 a 22/11 têm mudança manual do dono com teto 'percent_max' +10% sobre o máximo do anúncio (manual-2026-11-15-*): subir o máximo hoje levaria esse teto de R$ 5.500 a R$ 6.600 sem o dono pedir. Por isso o máximo de R$ 6.000 aprovado sobe só quando a escada precisar e não antes de 23/11."
+    },
+    "marco_21_12": "A partir de 21/12, na primeira rotina com 10 ou mais pacotes NOVOS do Réveillon (as duas pousadas, desde a linha de base), as suítes do Réveillon das duas pousadas ganham ×1,05 sobre o valor da escada, dentro do teto, só em datas futuras (D0 nunca sobe). 'Uma vez só': fica ligado no estado (bonus_marco) e não soma de novo. Interpretação da skill: o marco vale de 21/12 em diante, não só no dia.",
+    "descida_parte": "Interpretação da skill, a confirmar com o dono: o degrau vale para a pousada que estiver abaixo da sua parte da linha, proporcional aos pacotes livres dela na linha de base (Réveillon Recanto 7/12 e Villa 5/12; fim de semana Recanto 11/23 e Villa 12/23).",
+    "descida_marcos": "Cada marco (D7, D5, D3 e D1) é avaliado uma vez, na primeira rodada em ou depois dele (dados/reveillon_250k.json → degraus.<pousada>.<bloco>.marcos): bloco abaixo da linha daquele marco e a pousada abaixo da sua parte = +1 degrau na hora. Fora dos marcos, sobe um degrau por dia só quando o bloco não está abaixo da linha vigente (a do último marco) ou a pousada passou da sua parte. Marco sem rodada (rotina perdida) é avaliado com a contagem de agora. Por isso o `registrar` roda em toda rotina, mesmo sem item gravado.",
+    "portao": "O portão não abre na rotina em que o preço do fim de semana da pousada muda (a Booking conferida mostrava o preço velho): espera o próximo envio. A config sai da decisão gravada pelo `portao` (aplicar-config), não de uma reavaliação depois do `registrar`.",
+    "excecoes_fecham": "A exceção 1 fecha também quando 29/12 esgota ou passa, e a 2 quando 03/01 esgota: a regra de dia órfão do PriceLabs manda mínimo 1 à noite isolada mesmo com regra por data (aprendizados.md), e 30→31 ou 02→03 passariam a vender sem o dono pedir."
+   }
   }
  ]
 }

@@ -705,7 +705,9 @@ def _gerar_ordens(fx: dict, cfg: dict, regra: dict, inv: dict, hoje: date, dias:
             pisos, topo, atras, degraus, vb, limitado, los = {}, {}, {}, {}, {}, [], {}
             tot = sum(vendidas_inv(inv, q, n, int(pc[q]["unidades"])) for q in QUARTOS[pous] if q != "Balcony")
             for q in qs:
-                mx = float(pc[q]["max"])
+                # dono 16/11: máximo de R$ 6.000 só de 30/12 a 02/01; nas outras noites a faixa segue limitada a R$ 5.000
+                from comum import maximo_da_noite
+                mx = maximo_da_noite(cfg, q, d)
                 fac = fator_quarto(cfg, q, d)
                 # nunca abaixo do piso do dono (página "Como pedir": "Nunca abaixo do seu piso"); a suspensão de piso
                 # das ordens antigas substituídas (ex.: base do mercado da Villa, 01/11) não passa para a faixa

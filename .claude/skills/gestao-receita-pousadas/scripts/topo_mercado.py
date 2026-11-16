@@ -39,7 +39,7 @@ from collections import defaultdict
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from calendario_12m import ler_recalculo  # noqa: E402
-from comum import carregar_quartos, esgotado, ler_json, resultado_workflow, vendidas_total  # noqa: E402
+from comum import carregar_quartos, esgotado, ler_json, maximo_da_noite, resultado_workflow, vendidas_total  # noqa: E402
 
 ARQ_HIDRO = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "dados", "concorrentes_hidro_vista.json")
 
@@ -127,7 +127,7 @@ def plano(cfg, cal: dict, hoje: dt.date, dias: int, periodos, over: dict, regras
                 alvo = pub / rj["fator_publico"][q["pousada"]]
             else:
                 alvo, fonte = base * rj["sem_dado_mult"], "sem dado de mercado: preço atual × " + str(rj["sem_dado_mult"])
-            alvo = min(max(alvo, atual), float(q["max"]))
+            alvo = min(max(alvo, atual), maximo_da_noite(cfg, curto, noite))  # dono 16/11: máximo da noite
             alvo = math.floor(alvo)
             if alvo <= atual + 1:
                 continue
@@ -152,7 +152,7 @@ def restaurar(cfg, cal: dict, regras: dict, hoje: dt.date) -> list[dict]:
             if r is None or esgotado(r, q["unidades"]):
                 continue
             itens.append({"tipo": "data", "quarto": curto, "data": noite, "min_price": float(m.group(1)),
-                          "max_price": float(q["max"]), "preco_antes": float(r["price"]),
+                          "max_price": maximo_da_noite(cfg, curto, noite), "preco_antes": float(r["price"]),
                           "motivo": f"Regra J desfeita: a noite reabriu; volta ao preço de antes (R$ {m.group(1)}) como piso"})
     return itens
 

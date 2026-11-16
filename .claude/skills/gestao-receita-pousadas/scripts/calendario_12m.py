@@ -77,7 +77,8 @@ import sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from comum import (DIAS_SEMANA, abrir_dia, aguardando_dono, carregar_quartos, estadia_do_dia,  # noqa: E402
-                   mascara_valida, orfa_permitida, periodo_feriado, regra_dia_chegada, sexta_reaberta, vendidas_total)
+                   mascara_valida, orfa_permitida, periodo_feriado, regra_dia_chegada, sexta_reaberta, valor_por_quarto,
+                   vendidas_total)
 from ordens import carregar_ordens, ordem_valida, piso_da_ordem  # noqa: E402
 from validar_plano import estadia_exigida, estadia_planejada, periodo_temporada, regra_do_dia_decide  # noqa: E402
 
@@ -568,11 +569,17 @@ def classificar_beds24(cfg: dict, inv: dict, de: dt.date, ate: dt.date, hoje: dt
             lado_orfao = None
             # dono 03/11 (pacotes fechados): estadia mínima e máxima por data em todos os quartos. Os quartos do Beds24 usam
             # restrictionStrategy "stayThrough": a estadia vale para TODA noite coberta pela reserva, não só a de chegada
-            mn_alvo = (rh.get("estadia_minima_por_data") or {}).get(ds)
-            mx_alvo = (rh.get("estadia_maxima_por_data") or {}).get(ds)
+            # dono 16/11 (ordem dono-2026-11-16-reveillon-250k): valor por quarto (`<chave>_por_quarto`) vence o geral:
+            # portão do 01→03 por pousada e exceções das noites soltas por quarto (scripts/reveillon_250k.py gera o patch)
+            mn_alvo = valor_por_quarto(rh, "estadia_minima_por_data", ds, q)
+            mx_alvo = valor_por_quarto(rh, "estadia_maxima_por_data", ds, q)
+            por_quarto = any(q in ((rh.get(k + "_por_quarto") or {}).get(ds) or {})
+                             for k in ("estadia_minima_por_data", "estadia_maxima_por_data", "override_por_data"))
+            motivo_data = ((rh.get("override_por_data_por_quarto_motivo") if por_quarto else None)
+                           or rh.get("override_por_data_motivo"))
             mx = int((v or {}).get("maxStay") or 365)
             if (mn_alvo is not None and ms != int(mn_alvo)) or (mx_alvo is not None and mx != int(mx_alvo)):
-                it_e = {"data": ds, "motivo": rh.get("override_por_data_motivo") or "estadia por data do dono"}
+                it_e = {"data": ds, "motivo": motivo_data or "estadia por data do dono"}
                 if mn_alvo is not None and ms != int(mn_alvo):
                     it_e.update({"min_stay": ms, "min_alvo": int(mn_alvo)})
                 if mx_alvo is not None and mx != int(mx_alvo):
@@ -580,11 +587,11 @@ def classificar_beds24(cfg: dict, inv: dict, de: dt.date, ate: dt.date, hoje: dt
                 por_data.append(it_e)
             # dono 03/11 (pacotes fechados: Natal 23→25, Ano Novo 30→01 ou 30→03): chegada/saída por data em todos os
             # quartos, acima da regra do sábado e da sexta da Afrodite; a estadia máxima fica no Beds24 (maxStay)
-            alvo_data = (rh.get("override_por_data") or {}).get(ds)
+            alvo_data = valor_por_quarto(rh, "override_por_data", ds, q)
             if alvo_data:
                 if o != alvo_data:
                     it = {"data": ds, "override": o, "troca": alvo_data,
-                          "motivo": rh.get("override_por_data_motivo") or "chegada/saída por data do dono"}
+                          "motivo": motivo_data or "chegada/saída por data do dono"}
                     if q == "Afrodite":
                         it["pricelabs_tambem"] = True
                     chegada.append(it)

@@ -98,7 +98,37 @@ def data_de_pacote(cfg: dict, d: date) -> bool:
     (`regra_h_beds24`). A estadia dessas noites é do pacote: a regra do dia de chegada (04/11) não mexe nelas."""
     rh = ((cfg.get("parametros") or {}).get("regra_h_beds24") or {})
     ds = d.isoformat()
-    return any(ds in (rh.get(k) or {}) for k in ("estadia_minima_por_data", "estadia_maxima_por_data", "override_por_data"))
+    chaves = ("estadia_minima_por_data", "estadia_maxima_por_data", "override_por_data")
+    return any(ds in (rh.get(k) or {}) or ds in (rh.get(k + "_por_quarto") or {}) for k in chaves)
+
+
+def maximo_da_noite(cfg: dict, curto: str, d=None) -> float:
+    """Máximo do anúncio que vale para os scripts na noite `d` (date ou "AAAA-MM-DD"). Dono 16/11 ("Pode fazer", ordem
+    dono-2026-11-16-reveillon-250k): o máximo do anúncio pode subir de R$ 5.000 para R$ 6.000 em Q7, Double, Q2, VK7, VK2 e
+    Balcony só por causa das noites de 30/12 a 02/01 (o `max` de quartos.json muda quando o update_listing_data for gravado
+    e conferido: reveillon_250k.py registrar); o PriceLabs não tem máximo por data, então nas outras noites a skill segue
+    tratando R$ 5.000 como o máximo (`parametros.maximo_anuncio_por_noite.teto_fora`: motor de pace, faixas e validador).
+    Sem a chave, ou para quarto fora dela, vale o `max` do anúncio. Sem `d`, vale o teto de fora (o mais baixo)."""
+    q = cfg["por_curto"][curto]
+    mx = float(q["max"])
+    lim = (cfg.get("parametros") or {}).get("maximo_anuncio_por_noite") or {}
+    if not lim or curto not in (lim.get("quartos") or []) or lim.get("teto_fora") is None:
+        return mx
+    ds = d.isoformat() if hasattr(d, "isoformat") else (str(d)[:10] if d else None)
+    if ds and ds in (lim.get("noites") or []):
+        return mx
+    return min(mx, float(lim["teto_fora"]))
+
+
+def valor_por_quarto(rh: dict, chave: str, ds: str, quarto: str | None):
+    """Valor por data da config do Beds24 (`regra_h_beds24`), com o valor por quarto vencendo o geral: `<chave>_por_quarto`
+    {data: {quarto: valor}} (dono 16/11, ordem dono-2026-11-16-reveillon-250k: portão do 01→03 por pousada e as exceções
+    das noites soltas por quarto) e depois `<chave>` {data: valor} (dono 03/11, igual para os 7 quartos). None sem
+    nenhum dos dois."""
+    pq = ((rh.get(chave + "_por_quarto") or {}).get(ds) or {})
+    if quarto and quarto in pq:
+        return pq[quarto]
+    return (rh.get(chave) or {}).get(ds)
 
 
 def orfa_permitida(cfg: dict, d: date, sabado: bool = False) -> bool:

@@ -292,7 +292,12 @@ class TestPlanoAuditorias(unittest.TestCase):
     def test_exigencias_calendario_12m(self):
         q7, vk7 = self.cfg["por_curto"]["Q7"], self.cfg["por_curto"]["VK7"]
         L = self.cfg["limites_seguranca"]
-        self.assertEqual(c12.exigencias(self.cfg, q7, date(2026, 11, 13))["piso"], round(max(q7["min"], 1000)))
+        # sexta governada pelo plano de 09/11: padrão de qualidade sem o mínimo do anúncio (R2). Revisão de 16/11: o teste
+        # usava max(mínimo do anúncio, 1000), que só dava 1000 com o mínimo da Moinhos abaixo de 1000 (passo 2 do mínimo
+        # do anúncio, 16/11: 920 → 1.058)
+        lim_seg = float(L["fracao_min_referencia"]) * float(q7["min_referencia"])
+        self.assertEqual(c12.exigencias(self.cfg, q7, date(2026, 11, 13))["piso"],
+                         round(max(float(L["padrao_qualidade_diaria"]), lim_seg)))
         fat = self.cfg["parametros"]["fator_vitrine_fds"]["Recanto"]
         self.assertEqual(c12.exigencias(self.cfg, q7, date(2027, 3, 5))["piso"], round(max(q7["min"], 850 / fat)))
         # Natal: Recanto sem o piso_real do período (só R$ 800 reais); Villa como está
@@ -414,7 +419,10 @@ class TestRevisao1011(unittest.TestCase):
             self.assertEqual(c12.exigencias(self.cfg, self.cfg["por_curto"]["Q7"], d)["piso"],
                              round(max(self.cfg["por_curto"]["Q7"]["min"], 850 / fat)))
         with PD.com_ordens(PLANO):
-            self.assertEqual(pace.pisos_enviados(self.cfg, "Q7", d)[0], 1000.0)
+            # o R$ 850 no Genius 3 sai e fica o padrão (R$ 1.000); o mínimo do anúncio segue no piso do pace (revisão de
+            # 16/11: o mínimo da Moinhos passou de 920 para 1.058 no passo 2 do mínimo do anúncio)
+            self.assertEqual(pace.pisos_enviados(self.cfg, "Q7", d)[0],
+                             max(float(self.cfg["por_curto"]["Q7"]["min"]), 1000.0))
             self.assertIsNone(ordem_recanto.faixa_fds_afrodite(self.cfg, date(2026, 11, 14)))
         # o validador olha as ordens dele: sem o plano, o R$ 850 de sexta volta a valer
         it = {"tipo": "data", "quarto": "Q7", "data": "2026-11-13", "min_price": 1100, "max_price": 1100,

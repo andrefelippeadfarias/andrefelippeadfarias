@@ -493,6 +493,25 @@
     0.42,
     0.72
    ]
+  },
+  "maximo_anuncio_por_noite": {
+   "ordem_id": "dono-2026-11-16-reveillon-250k",
+   "quartos": [
+    "Q7",
+    "Double",
+    "Q2",
+    "VK7",
+    "VK2",
+    "Balcony"
+   ],
+   "noites": [
+    "2026-12-30",
+    "2026-12-31",
+    "2027-01-01",
+    "2027-01-02"
+   ],
+   "teto_fora": 5000,
+   "nota": "Dono 16/11 ('Pode fazer', ordem dono-2026-11-16-reveillon-250k): máximo do anúncio de R$ 5.000 para R$ 6.000 em Q7, Double, Q2, VK7, VK2 e Balcony por causa do Réveillon (30/12 a 02/01). Execução (revisão de 16/11): o 'max' dos quartos fica em 5.000 até o update_listing_data ser gravado e conferido; quem passa o 'max' para 6.000 é o reveillon_250k.py registrar (item de anúncio do plano, a partir de 23/11 e só quando a escada precisar). O PriceLabs não tem máximo por data: com o anúncio em 6.000, a skill segura R$ 5.000 nas outras noites (comum.maximo_da_noite: pace.teto_anuncio e teto explícito por data em pace.ajustar_tetos, faixas_dono e o validador; vigia-maximo nos 12 meses). Voltar o máximo a 5.000 depois de 02/01/2027 e apagar esta chave. Afrodite fora (máximo de R$ 10.000)."
   }
  },
  "feriados": [

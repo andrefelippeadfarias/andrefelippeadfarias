@@ -39,7 +39,8 @@ from datetime import date
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from calendario_12m import ler_recalculo  # noqa: E402
-from comum import carregar_quartos, data, esgotado, hoje_brt, ler_json, periodo_feriado, vendidas_total  # noqa: E402
+from comum import (carregar_quartos, data, esgotado, hoje_brt, ler_json, maximo_da_noite, periodo_feriado,  # noqa: E402
+                   vendidas_total)
 
 ARQ_HIDRO = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "dados", "concorrentes_hidro_vista.json")
 
@@ -68,7 +69,8 @@ def alvo(cfg: dict, hidro: dict, curto: str, d: date):
     if not pub:
         return None, None
     q = cfg["por_curto"][curto]
-    return round(min(pub / par["regra_j"]["fator_publico"][q["pousada"]], float(q["max"])), 2), fonte
+    # dono 16/11: o máximo da noite (R$ 5.000 fora de 30/12 a 02/01 com o anúncio em 6.000)
+    return round(min(pub / par["regra_j"]["fator_publico"][q["pousada"]], maximo_da_noite(cfg, curto, d)), 2), fonte
 
 
 def piso_dono(cfg: dict, curto: str, d: date) -> float:

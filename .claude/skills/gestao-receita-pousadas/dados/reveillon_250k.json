@@ -1,0 +1,244 @@
+{
+ "_doc": "Estado da ordem dono-2026-11-16-reveillon-250k (scripts/reveillon_250k.py). Linha de base = Beds24 lido em 16/11 (sem dados de hóspede). fatores: fator público medido por pousada e bloco (o novo só entra fora de ±5%); degraus: descida de 5% por pousada e bloco ({valor, em, marcos}: cada marco D7/D5/D3/D1 avaliado uma vez, na primeira rodada em ou depois dele); escada: pacotes que a escada usa (parada abaixo do alarme); gravado_fds: instante UTC da gravação dos preços do fim de semana no PriceLabs (condição 1 do portão); portao: 01→03 aberto por pousada; bonus_marco: +5% do marco de 21/12 (uma vez). O `registrar` funde no estado em disco só o que o plano decide (escada, degraus, pacotes, bônus e as flags da rodada); portão e linha de base ficam os do disco.",
+ "ordem_id": "dono-2026-11-16-reveillon-250k",
+ "linha_base": {
+  "reservas_lidas_em": "2026-11-16T14:39:12Z",
+  "inventario_lido_em": "2026-11-16T14:36:55Z",
+  "livres": {
+   "Q7": {
+    "2026-12-29": 7,
+    "2026-12-30": 3,
+    "2026-12-31": 2,
+    "2027-01-01": 4,
+    "2027-01-02": 6,
+    "2027-01-03": 7
+   },
+   "Double": {
+    "2026-12-29": 6,
+    "2026-12-30": 6,
+    "2026-12-31": 3,
+    "2027-01-01": 4,
+    "2027-01-02": 4,
+    "2027-01-03": 6
+   },
+   "Afrodite": {
+    "2026-12-29": 1,
+    "2026-12-30": 1,
+    "2026-12-31": 1,
+    "2027-01-01": 1,
+    "2027-01-02": 1,
+    "2027-01-03": 0
+   },
+   "Q2": {
+    "2026-12-29": 2,
+    "2026-12-30": 2,
+    "2026-12-31": 1,
+    "2027-01-01": 2,
+    "2027-01-02": 2,
+    "2027-01-03": 1
+   },
+   "VK7": {
+    "2026-12-29": 5,
+    "2026-12-30": 4,
+    "2026-12-31": 3,
+    "2027-01-01": 5,
+    "2027-01-02": 6,
+    "2027-01-03": 6
+   },
+   "Balcony": {
+    "2026-12-29": 6,
+    "2026-12-30": 5,
+    "2026-12-31": 1,
+    "2027-01-01": 5,
+    "2027-01-02": 6,
+    "2027-01-03": 6
+   },
+   "VK2": {
+    "2026-12-29": 2,
+    "2026-12-30": 1,
+    "2026-12-31": 1,
+    "2027-01-01": 2,
+    "2027-01-02": 2,
+    "2027-01-03": 2
+   }
+  },
+  "pacotes_livres": {
+   "Recanto": {
+    "reveillon": 7,
+    "fds": 11
+   },
+   "Villa": {
+    "reveillon": 5,
+    "fds": 12
+   }
+  },
+  "cobertura_reservas": {
+   "61be18d586490d9f": {
+    "quarto": "VK7",
+    "reveillon": 1,
+    "fds": 0
+   },
+   "139c28f39c6a4d57": {
+    "quarto": "VK7",
+    "reveillon": 1,
+    "fds": 0
+   },
+   "85b8c22c412dedcb": {
+    "quarto": "VK7",
+    "reveillon": 0,
+    "fds": 1
+   },
+   "811780d92b14e3df": {
+    "quarto": "VK2",
+    "reveillon": 1,
+    "fds": 0
+   },
+   "70f4c59b43d24388": {
+    "quarto": "Q7",
+    "reveillon": 1,
+    "fds": 0
+   },
+   "c75cd0ca8793bfe2": {
+    "quarto": "Q7",
+    "reveillon": 0,
+    "fds": 1
+   },
+   "65162fb7d6dda312": {
+    "quarto": "Q7",
+    "reveillon": 1,
+    "fds": 0
+   },
+   "7f30144f7fa523bc": {
+    "quarto": "Balcony",
+    "reveillon": 1,
+    "fds": 0
+   },
+   "43ff710cc3fa0004": {
+    "quarto": "VK7",
+    "reveillon": 1,
+    "fds": 0
+   },
+   "6a3f9f1510c7513a": {
+    "quarto": "Double",
+    "reveillon": 0,
+    "fds": 1
+   },
+   "74f87095fac98edc": {
+    "quarto": "Q7",
+    "reveillon": 1,
+    "fds": 0
+   },
+   "2dcb101978991c84": {
+    "quarto": "Double",
+    "reveillon": 0,
+    "fds": 1
+   },
+   "800c59355c215fc9": {
+    "quarto": "Q7",
+    "reveillon": 1,
+    "fds": 0
+   }
+  },
+  "cobertura_nota": "Reservas ativas da leitura de 16/11 14:39 UTC que cobrem um bloco inteiro: chave = hash do id do Beds24 (sem id nem nome), quarto e quantos quartos cobrem o Réveillon (30→01) e o fim de semana (01→03). A contagem de pacotes novos é a diferença por reserva (revisão de 16/11: estendida, encurtada e trocada de quarto contam)."
+ },
+ "fatores": {
+  "Recanto": {
+   "reveillon": {
+    "valor": 0.5832,
+    "medido_em": "2026-11-16"
+   },
+   "fds": {
+    "valor": 0.5832,
+    "medido_em": "2026-11-16"
+   }
+  },
+  "Villa": {
+   "reveillon": {
+    "valor": 0.4461,
+    "medido_em": "2026-11-16"
+   },
+   "fds": {
+    "valor": 0.3377,
+    "medido_em": "2026-11-16"
+   }
+  }
+ },
+ "promocao_villa": {
+  "ativa": true,
+  "retirada_em": null
+ },
+ "concorrente_max_fds": {
+  "publico": 2871.0,
+  "medido_em": "2026-11-16"
+ },
+ "degraus": {
+  "Recanto": {
+   "reveillon": {
+    "valor": 0,
+    "em": null,
+    "marcos": []
+   },
+   "fds": {
+    "valor": 0,
+    "em": null,
+    "marcos": []
+   }
+  },
+  "Villa": {
+   "reveillon": {
+    "valor": 0,
+    "em": null,
+    "marcos": []
+   },
+   "fds": {
+    "valor": 0,
+    "em": null,
+    "marcos": []
+   }
+  }
+ },
+ "escada": {
+  "Recanto": {
+   "reveillon": 0,
+   "fds": 0
+  },
+  "Villa": {
+   "reveillon": 0,
+   "fds": 0
+  }
+ },
+ "pacotes": {
+  "Recanto": {
+   "reveillon": 0,
+   "fds": 0
+  },
+  "Villa": {
+   "reveillon": 0,
+   "fds": 0
+  },
+  "total": {
+   "reveillon": 0,
+   "fds": 0
+  },
+  "contados_em": "2026-11-16"
+ },
+ "gravado_fds": {
+  "Recanto": "2026-11-16T18:54:32Z",
+  "Villa": null
+ },
+ "portao": {
+  "Recanto": {
+   "aberto": false,
+   "em": null
+  },
+  "Villa": {
+   "aberto": false,
+   "em": null
+  }
+ },
+ "atualizado_em": "2026-11-16",
+ "bonus_marco": {
+  "ativo": false,
+  "em": null
+ }
+}

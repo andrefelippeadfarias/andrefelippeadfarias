@@ -5556,6 +5556,48 @@ A Balcony fica a 90% da King Spa livre mais barata (Regra G do dono). Perguntado
 
 **Nada foi gravado** no PriceLabs nem no Beds24 nesta rotina (sem venda nova; Moinhos e Panorâmica I sem cota de recálculo até amanhã). Conferência na Booking do feriadão 20→22 agendada para 20:30 BRT, 30 min depois do envio das 19:54.
 
+## 16/11/2026, 20:05 a 20:30 BRT — Ordens do dono: Moinhos fechado em 20 e 21/11 e "vender as janelas"
+
+**Texto do dono (~20:05):** "Tá, pode deixar balcone para o período de no que já está. A Moinhos fecha do dia 20 a 22, sim. Para não vender mais barato. Na verdade só venda onde tem uma janela. A preocupação é onde temos janelas, temos que vender as janelas."
+
+**Balcony:** fica como está em 20 e 21/11 (R$ 2.705,10 e R$ 2.692,40). A resposta foi registrada na ordem `dono-2026-11-16-fds-20-22-minimo-3000`.
+
+**Moinhos (ordem `dono-2026-11-16-moinhos-fecha-20-22`):** 20 e 21/11 fechados com `override blackout` no Beds24 às 20:11 BRT, conferido (numAvail 0).
+- Antes: 20/11 none (5 livres); 21/11 noCheckInOrCheckOut (5 livres).
+- Não há janela nessas noites: 19/11 tem 6 livres e 22/11 tem 7, mais que as 5 de 20 e 21.
+- Reabrir só com a confirmação do dono, depois que os R$ 3.002,88 chegarem ao Beds24 (recálculo das 08:04).
+- Como desfazer: `beds24.py editar --quarto Q7 --de 2026-11-20 --ate 2026-11-20 --override none` e `--de 2026-11-21 --ate 2026-11-21 --override noCheckInOrCheckOut`.
+
+**Vender as janelas (ordem `dono-2026-11-16-vender-janelas`; regra nova em `regras.md` 6a):**
+- **O que é janela:** unidade livre que nenhuma estadia válida vende com as restrições de hoje (Beds24 stayThrough).
+- **Leitura do Beds24 de 20:12:** 23 noites com unidade presa, 45 unidades-noite.
+- **Abertas no Beds24 às 20:18 BRT, lote conferido (7 de 7):**
+
+| Quarto | Noite | Livres (vizinhas) | Mudança | Presas antes → depois |
+|---|---|---|---|---|
+| Moinhos | seg 16/11 (hoje) | 6 (amanhã 5) | estadia 2 → 1 | 1 → 0 |
+| King Spa 2 | sáb 21/11 | 2 (sex 1, dom 0) | estadia 2 → 1; none → noCheckOut | 1 → 0 |
+| Panorâmica I | sex 04/12 | 1 (sáb 05/12 esgotado) | estadia 2 → 1; 05/12 → noCheckIn | 1 → 0 |
+| Panorâmica II | qua 02/12 | 2 (01/12 esgotada, 03/12 1) | estadia 2 → 1 | 1 → 0 |
+| King Spa 7 | sex 11/12 | 5 (sáb 12/12 1) | estadia 2 → 1; 12/12 → noCheckIn | 4 → 0 |
+
+- **Simulação antes de gravar:** as 5 janelas zeram e nenhuma noite nova fica presa. Fora dos pacotes, sobram 3 janelas a observar.
+- **Preço:** nenhum mudou.
+
+**Janelas a observar (não abertas):** abrir agora poria em risco mais unidades na noite vizinha do que as que estão presas. Abrem quando a vizinha esgotar.
+- King Spa 7 sex 18/12: 1 presa, sábado com 5 livres.
+- Balcony sex 27/11: 1 presa, sábado com 3 livres.
+- King Spa 2 sáb 09/01: 1 presa, sexta com 1 livre.
+
+**Janelas de pacote, só com o dono:**
+- Natal: Balcony 23/12 (4); King Spa 7 e King Spa 2 em 24/12 (1 cada).
+- Ano Novo 30/12: Moinhos 1, Panorâmica I 3, Panorâmica II 1, King Spa 7 1, Balcony 4.
+- 01 e 02/01: Moinhos 02/01 (2); Villa pelo portão fechado.
+
+**Pendente:**
+- Levar a estadia 1 ao PriceLabs por data, porque o envio dele sobrescreve a do Beds24. Fica para a rotina das 07:53, com a regra nova no calendario_12m, no validador e no lote do Beds24, para a auditoria não fechar as janelas.
+- Sem chamada ao PriceLabs nesta etapa.
+
 ## O que só pode ser feito na tela (passo a passo para você)
 
 1. **Safety Minimum Price → "Do Not Apply"** (Dynamic Pricing → Customizations → aba Groups → Edit no grupo Recanto dos Moinhos → All Customizations → Safety Minimum Price). Anote o valor atual antes.

@@ -10943,7 +10943,67 @@
     "acima_15"
    ],
    "minimo_enviado": 3000,
-   "como_desfazer": "Regravar 20 e 21/11 pela ordem dono-2026-11-16-lotar-19-23 (Q7 +63, Q2 +20, Double +29, VK7 +39, VK2 +62, Balcony +39) e tirar noites_fora 20-21 dela."
+   "como_desfazer": "Regravar 20 e 21/11 pela ordem dono-2026-11-16-lotar-19-23 (Q7 +63, Q2 +20, Double +29, VK7 +39, VK2 +62, Balcony +39) e tirar noites_fora 20-21 dela.",
+   "respostas": [
+    {
+     "em": "2026-11-16 ~20:05 BRT",
+     "pergunta": "Balcony a R$ 3.000 também em 20 e 21/11 (hoje R$ 2.705,10 e R$ 2.692,40, 90% da King Spa livre mais barata)?",
+     "texto_dono": "Tá, pode deixar balcone para o período de no que já está. A Moinhos fecha do dia 20 a 22, sim. Para não vender mais barato. Na verdade só venda onde tem uma janela. A preocupação é onde temos janelas, temos que vender as janelas.",
+     "leitura": "Balcony fica como está (R$ 2.705,10 em 20/11 e R$ 2.692,40 em 21/11)."
+    }
+   ]
+  },
+  {
+   "id": "dono-2026-11-16-moinhos-fecha-20-22",
+   "data": "2026-11-16",
+   "criada_em": "2026-11-16T23:05:00Z",
+   "texto": "Tá, pode deixar balcone para o período de no que já está. A Moinhos fecha do dia 20 a 22, sim. Para não vender mais barato. Na verdade só venda onde tem uma janela. A preocupação é onde temos janelas, temos que vender as janelas.",
+   "contexto": "Resposta do dono no chat (~20:05 BRT) à pergunta 'Fecho o Moinhos de 20 a 22/11 até as 08:04, para não vender barato esta noite?' (o Moinhos seguia a R$ 2.575 no Beds24, sem cota de recálculo do PriceLabs até 08:04 de 17/11 para levar os R$ 3.002,88 da ordem dono-2026-11-16-fds-20-22-minimo-3000). Leitura: noites de 20 e 21/11 (estadia 20→22) do Moinhos fechadas para venda no Beds24 (override blackout), sem janela nessas noites (19/11 com 6 livres e 22/11 com 7, mais que as 5 de 20 e 21). Reabrir depois do recálculo das 08:04 só com a confirmação do dono ('só venda onde tem uma janela'): perguntado.",
+   "tipo": "restricao",
+   "quartos": [
+    "Q7"
+   ],
+   "de": "2026-11-20",
+   "ate": "2026-11-21",
+   "libera": [],
+   "feito": "Beds24 Q7 20 e 21/11 override blackout às 20:11 BRT (23:11:50Z), conferido numAvail 0. Antes: 20/11 none (5 livres, estadia 1); 21/11 noCheckInOrCheckOut (5 livres, estadia 1).",
+   "como_desfazer": "beds24.py editar --quarto Q7 --de 2026-11-20 --ate 2026-11-20 --override none e --de 2026-11-21 --ate 2026-11-21 --override noCheckInOrCheckOut"
+  },
+  {
+   "id": "dono-2026-11-16-vender-janelas",
+   "data": "2026-11-16",
+   "criada_em": "2026-11-16T23:05:00Z",
+   "texto": "Tá, pode deixar balcone para o período de no que já está. A Moinhos fecha do dia 20 a 22, sim. Para não vender mais barato. Na verdade só venda onde tem uma janela. A preocupação é onde temos janelas, temos que vender as janelas.",
+   "contexto": "Ordem do dono no chat (~20:05 BRT). Leitura da skill: janela = unidade livre que nenhuma estadia válida consegue vender com as restrições de hoje (estadia mínima e chegada/saída do Beds24, stayThrough), ou seja, unidade presa entre noites vendidas. Vender as janelas: abrir o mínimo de restrição que torna a unidade vendável (1 diária na noite presa; no sábado preso, entrada no sábado com noCheckOut; na sexta presa com o sábado quase esgotado, saída no sábado com noCheckIn), sem mexer em preço, fora dos pacotes do Natal e do Ano Novo, do portão do Réveillon, dos sábados de festa e das noites fechadas ou congeladas pelo dono; abre só quando as unidades presas são pelo menos as livres da noite vizinha que a abertura põe em risco (senão fica 'janela a observar'), e volta à regra quando a janela some. Complementa a noite órfã de 04/11 e o sábado órfão de 02/11 (que só valem com a vizinha esgotada).",
+   "tipo": "regra",
+   "quartos": [
+    "Q7",
+    "Double",
+    "Afrodite",
+    "Q2",
+    "VK7",
+    "Balcony",
+    "VK2"
+   ],
+   "de": "2026-11-16",
+   "ate": "2027-11-16",
+   "libera": [
+    "janela"
+   ],
+   "feito": [
+    {
+     "em": "2026-11-16T23:18:55Z",
+     "onde": "Beds24 (lote conferido, 7 de 7)",
+     "itens": [
+      "Q7 16/11 estadia 2→1 (só a noite de hoje)",
+      "VK2 21/11 estadia 2→1 e override none→noCheckOut",
+      "Double 04/12 estadia 2→1 (órfã: 05/12 esgotado) e 05/12 noCheckInOrCheckOut→noCheckIn",
+      "Q2 02/12 estadia 2→1",
+      "VK7 11/12 estadia 2→1 e 12/12 noCheckInOrCheckOut→noCheckIn"
+     ]
+    }
+   ],
+   "pendente": "Levar a estadia 1 ao PriceLabs por data (o envio dele sobrescreve a estadia do Beds24) e pôr a regra no calendario_12m, no lote do Beds24 e no validador, para a rotina diária abrir, manter e fechar as janelas sozinha."
   }
  ]
 }

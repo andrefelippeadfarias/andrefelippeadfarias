@@ -5355,7 +5355,7 @@ Referência semanal (`quartos.json`) atualizada com os valores de hoje antes do 
 - 1 reserva nova: Moinhos, de 20 a 22/11, pela Booking;
 - 9 alterações de situação.
 
-## 16/11/2026, 16:20 a 16:40 BRT — Portão do 01→03 aberto no Recanto (dono 16/11: "Pode fazer" + "Pode de 1 a 4 e de 1 a 5, sem problema.")
+## 16/11/2026, 16:20 a 16:35 BRT — Portão do 01→03 aberto no Recanto (dono 16/11: "Pode fazer" + "Pode de 1 a 4 e de 1 a 5, sem problema.")
 
 **Decisão do dono (16/11, cerca de 16:20 BRT), texto literal:** "Pode de 1 a 4 e de 1 a 5, sem problema."
 - Com o 01→03 aberto, a máxima de 4 noites (necessária para o 30→03) deixa vender também 01→04 e 01→05. O dono aceitou.
@@ -5363,7 +5363,7 @@ Referência semanal (`quartos.json`) atualizada com os valores de hoje antes do 
 
 **As três condições do portão (código efb00f8):**
 1. **Envio:** o `last_date_pushed` do Recanto foi às 15:56:31 a 15:56:43 BRT, depois da gravação do fim de semana (15:54:32). O price1 no Beds24 bate nas 4 noites.
-2. **Público na Booking (Recanto, id 7562933, por coordenadas), às 16:33 BRT:**
+2. **Público na Booking (Recanto, id 7562933, por coordenadas), por volta das 16:25 BRT:**
    - 30→01: R$ 5.801,67, ou seja, R$ 2.900,84 por noite = 4.974 × 0,5832.
    - 30→03: R$ 10.904,67.
    - Fim de semana = (10.904,67 − 5.801,67) ÷ 2 = **R$ 2.551,50 por noite**, contra o alvo de R$ 2.550 (+0,06%).
@@ -5382,7 +5382,7 @@ Referência semanal (`quartos.json`) atualizada com os valores de hoje antes do 
 | Estado do Réveillon | `dados/reveillon_250k.json` → portão do Recanto | fechado | **aberto em 16/11** | `aberto: false` |
 
 - **PriceLabs:** gravado às 16:33:16, 16:33:22, 16:33:26 e 16:33:33 BRT, uma chamada por vez. A resposta da API manteve o piso = teto (+273, +180, +207, +191) e, em 02/01, a máscara da Afrodite (1111101).
-- **Beds24:** às 16:36 BRT, lote com 12 mudanças, todas conferidas, 0 erro. Releitura:
+- **Beds24:** às 16:34 BRT, lote com 12 mudanças, todas conferidas, 0 erro. Releitura:
   - 30/12: none, mínimo 2, máxima 4;
   - 31/12: noCheckInOrCheckOut, mínimo 2;
   - 01/01: **none, mínimo 2**;

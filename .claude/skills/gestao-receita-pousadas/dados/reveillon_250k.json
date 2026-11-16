@@ -228,8 +228,8 @@
  },
  "portao": {
   "Recanto": {
-   "aberto": false,
-   "em": null
+   "aberto": true,
+   "em": "2026-11-16"
   },
   "Villa": {
    "aberto": false,

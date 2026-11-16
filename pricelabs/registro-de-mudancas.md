@@ -5355,6 +5355,46 @@ Referência semanal (`quartos.json`) atualizada com os valores de hoje antes do 
 - 1 reserva nova: Moinhos, de 20 a 22/11, pela Booking;
 - 9 alterações de situação.
 
+## 16/11/2026, 16:20 a 16:40 BRT — Portão do 01→03 aberto no Recanto (dono 16/11: "Pode fazer" + "Pode de 1 a 4 e de 1 a 5, sem problema.")
+
+**Decisão do dono (16/11, cerca de 16:20 BRT), texto literal:** "Pode de 1 a 4 e de 1 a 5, sem problema."
+- Com o 01→03 aberto, a máxima de 4 noites (necessária para o 30→03) deixa vender também 01→04 e 01→05. O dono aceitou.
+- Isso supera, nesse ponto, a ordem de 03/11 ("estender até o dia 03 apenas").
+
+**As três condições do portão (código efb00f8):**
+1. **Envio:** o `last_date_pushed` do Recanto foi às 15:56:31 a 15:56:43 BRT, depois da gravação do fim de semana (15:54:32). O price1 no Beds24 bate nas 4 noites.
+2. **Público na Booking (Recanto, id 7562933, por coordenadas), às 16:33 BRT:**
+   - 30→01: R$ 5.801,67, ou seja, R$ 2.900,84 por noite = 4.974 × 0,5832.
+   - 30→03: R$ 10.904,67.
+   - Fim de semana = (10.904,67 − 5.801,67) ÷ 2 = **R$ 2.551,50 por noite**, contra o alvo de R$ 2.550 (+0,06%).
+   - Fator medido 0,5832, igual ao guardado.
+3. **Promoção:** só vale para a Villa. **O portão da Villa continua FECHADO** (preço do fim de semana não gravado, promoção ativa, público não medido).
+
+**Plano do dia:** 0 itens de preço (tudo vigente), 0 pacote novo desde 16/11, exceções das noites soltas fechadas (nenhum quarto com 31/12 ou 01/01 esgotado). Juntado com o portão: 8 itens, validador com 0 erro.
+
+| Mudança | Onde | Antes | Depois | Como desfazer |
+|---|---|---|---|---|
+| Estadia mínima em 01 e 02/01 (Moinhos, Panorâmica I, Panorâmica II, Afrodite) | PriceLabs, regra por data (`min_stay`) | 3 | **2** | regravar `min_stay` 3 em 01 e 02/01 |
+| Chegada e saída da Afrodite em 01/01 (sexta) | PriceLabs, máscara | entrada 1111011 e saída 1111111 | **entrada e saída 1111111** (sexta aberta) | regravar entrada 1111011 |
+| Chegada em 01/01 (os 4 quartos do Recanto) | Beds24, override | noCheckIn | **none** | `beds24.py editar --override noCheckIn` em 01/01 |
+| Estadia mínima em 01 e 02/01 (os 4 quartos) | Beds24, minStay | 3 | **2** | `beds24.py editar --min-stay 3` |
+| Configuração da auditoria diária | `quartos.json` → `regra_h_beds24.override_por_data_por_quarto` e `estadia_minima_por_data_por_quarto` (Q7, Q2, Double, Afrodite) | — | 01/01 none; mínimo 2 em 01 e 02/01 | apagar as chaves `*_por_quarto` |
+| Estado do Réveillon | `dados/reveillon_250k.json` → portão do Recanto | fechado | **aberto em 16/11** | `aberto: false` |
+
+- **PriceLabs:** gravado às 16:33:16, 16:33:22, 16:33:26 e 16:33:33 BRT, uma chamada por vez. A resposta da API manteve o piso = teto (+273, +180, +207, +191) e, em 02/01, a máscara da Afrodite (1111101).
+- **Beds24:** às 16:36 BRT, lote com 12 mudanças, todas conferidas, 0 erro. Releitura:
+  - 30/12: none, mínimo 2, máxima 4;
+  - 31/12: noCheckInOrCheckOut, mínimo 2;
+  - 01/01: **none, mínimo 2**;
+  - 02/01: noCheckInOrCheckOut, **mínimo 2**;
+  - máxima 4 de 30/12 a 02/01. Os preços seguem iguais.
+- **Estadias que passam a ser vendáveis no Recanto:** 30→01, 30→03, **01→03, 01→04 e 01→05**.
+- **Continuam bloqueadas:** 30→31, 31→02, 01→02, 02→03, 28→01 e 29→01.
+- **Conferência na Booking do 01→03:** fica para a próxima rotina, porque a Booking leva de 15 a 35 min para refletir.
+- **Pendências:**
+  - registrar o ok na ordem (`execucao_skill.ok_01_04_05`) quando a correção da 3ª verificação terminar;
+  - a Villa segue esperando o dono: tirar a promoção e fechar na extranet o 01→03 que vaza.
+
 ## O que só pode ser feito na tela (passo a passo para você)
 
 1. **Safety Minimum Price → "Do Not Apply"** (Dynamic Pricing → Customizations → aba Groups → Edit no grupo Recanto dos Moinhos → All Customizations → Safety Minimum Price). Anote o valor atual antes.

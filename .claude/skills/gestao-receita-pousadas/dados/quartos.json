@@ -350,7 +350,30 @@
     "2027-01-02": 4
    },
    "override_por_data_motivo": "Dono 03/11: pacotes fechados (Natal 23→25; Ano Novo 30→01 ou 30→03)",
-   "override_por_data_nota": "Dono 03/11: 'Natal de 23 a 25. Vamos deixar esse período pré-definido para que apenas tenhamos reservas nessas datas. Ano Novo, altíssima temporada, de 30 a 01 prefixado. Podendo o hóspede estender até o dia 03 apenas.' Chegada/saída por data valem para todos os quartos, acima da regra do sábado e da sexta da Afrodite (25/12 e 01/01 abrem a saída da Afrodite). Os quartos do Beds24 usam restrictionStrategy 'stayThrough': estadia mínima e máxima valem em cada noite da reserva. Estadia mínima 2 em 31/12 (antes 3) para o 30→01 caber; máxima 2 em 29/12 barra 28→01 e 29→01. A mínima vai também ao PriceLabs por data (o envio dele leva ao Beds24); a máxima só existe no Beds24. Reservas já feitas fora dos pacotes ficam como estão (a skill nunca mexe em reserva). Ordem dono-2026-11-03-festas-pacotes."
+   "override_por_data_nota": "Dono 03/11: 'Natal de 23 a 25. Vamos deixar esse período pré-definido para que apenas tenhamos reservas nessas datas. Ano Novo, altíssima temporada, de 30 a 01 prefixado. Podendo o hóspede estender até o dia 03 apenas.' Chegada/saída por data valem para todos os quartos, acima da regra do sábado e da sexta da Afrodite (25/12 e 01/01 abrem a saída da Afrodite). Os quartos do Beds24 usam restrictionStrategy 'stayThrough': estadia mínima e máxima valem em cada noite da reserva. Estadia mínima 2 em 31/12 (antes 3) para o 30→01 caber; máxima 2 em 29/12 barra 28→01 e 29→01. A mínima vai também ao PriceLabs por data (o envio dele leva ao Beds24); a máxima só existe no Beds24. Reservas já feitas fora dos pacotes ficam como estão (a skill nunca mexe em reserva). Ordem dono-2026-11-03-festas-pacotes.",
+   "override_por_data_por_quarto": {
+    "2027-01-01": {
+     "Q7": "none",
+     "Q2": "none",
+     "Double": "none",
+     "Afrodite": "none"
+    }
+   },
+   "estadia_minima_por_data_por_quarto": {
+    "2027-01-01": {
+     "Q7": 2,
+     "Q2": 2,
+     "Double": 2,
+     "Afrodite": 2
+    },
+    "2027-01-02": {
+     "Q7": 2,
+     "Q2": 2,
+     "Double": 2,
+     "Afrodite": 2
+    }
+   },
+   "override_por_data_por_quarto_motivo": "Dono 16/11 ('Pode fazer', ordem dono-2026-11-16-reveillon-250k): 01→03 aberto por pousada depois do portão; exceções das noites soltas por quarto"
   },
   "escada": {
    "passo": 0.07,

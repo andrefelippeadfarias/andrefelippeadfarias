@@ -1076,7 +1076,8 @@
       "desde": "2026-11-09",
       "urgencia": 2,
       "data_alvo": "2026-11-16",
-      "texto": "Ordem dono-2026-11-09-sombra-flutuacao-vk7 ('1. Sim'): semana em paralelo de 10/11 a 16/11 (scripts/sombra_flutuacao.py registrar na rotina das 07:53, sem gravar). Na revisão de 16/11: resumo da semana (sombra_flutuacao.py resumo --de 2026-11-10 --ate 2026-11-16) e, com ele, o desenho do teste da King Spa 7 (2 a 3 semanas, dias de semana fora de feriado com só piso de R$ 944 e teto livre; feriados, pacotes, sábados, estadia e ordens com prazo seguem por data), com o motor de pace sem travar essas noites. Estender aos outros quartos só com novo 'sim' do dono depois do resultado."
+      "texto": "Ordem dono-2026-11-09-sombra-flutuacao-vk7 ('1. Sim'): semana em paralelo de 10/11 a 16/11 (scripts/sombra_flutuacao.py registrar na rotina das 07:53, sem gravar). Na revisão de 16/11: resumo da semana (sombra_flutuacao.py resumo --de 2026-11-10 --ate 2026-11-16) e, com ele, o desenho do teste da King Spa 7 (2 a 3 semanas, dias de semana fora de feriado com só piso de R$ 944 e teto livre; feriados, pacotes, sábados, estadia e ordens com prazo seguem por data), com o motor de pace sem travar essas noites. Estender aos outros quartos só com novo 'sim' do dono depois do resultado. Revisão de 16/11: só 4 fotos de 7 (10 a 13/11; as rotinas de 14 e 15/11 não rodaram e o recálculo de 16/11 foi bloqueado pela cobrança no PriceLabs). King Spa 7 de domingo a quinta: 25 noites travadas, gravado médio R$ 1.183 contra solto bruto R$ 1.257 (+6,3%, sem calibração: nenhuma noite flutuando sem ajuste nosso); nenhuma noite de semana passou com unidade livre. Proposta ao dono no relatório de 16/11: teste de 2 semanas (domingo a quinta, 22/11 a 03/12) só na King Spa 7, soltando o teto e mantendo o piso do dono (R$ 500 no preço final), com retorno automático se a ocupação de 7 dias cair abaixo de 60%.",
+      "atualizado_em": "2026-11-16"
     },
     {
       "id": "analise-nov-fev-7-decisoes",
@@ -1315,8 +1316,25 @@
       "responsavel": "skill",
       "desde": "2026-11-15",
       "urgencia": 2,
-      "texto": "Da rotina de 15/11 (PriceLabs sem calendário e recálculo falhando por 'Beds24 temporarily unavailable'). Feito na rotina leve das 10:53 de 15/11: King Spa 7 04/12 e King Spa 2 27/11 com estadia 1 (PriceLabs e Beds24); King Spa 7 12/12 já estava no preço do plano. Falta: estadia 2 de 15/11/2027 nos 7 quartos (PriceLabs e Beds24; a auditoria de 12 meses da rotina completa gera) e a proteção da Afrodite 12-14/01 no lugar da Regra J antiga (apagar a regra antes do recálculo da manhã, recalcular e regravar).",
-      "atualizado_em": "2026-11-15"
+      "texto": "Da rotina de 15/11 (PriceLabs sem calendário e recálculo falhando por 'Beds24 temporarily unavailable'). Feito na rotina leve das 10:53 de 15/11: King Spa 7 04/12 e King Spa 2 27/11 com estadia 1 (PriceLabs e Beds24); King Spa 7 12/12 já estava no preço do plano. Falta: estadia 2 de 15/11/2027 nos 7 quartos (PriceLabs e Beds24; a auditoria de 12 meses da rotina completa gera) e a proteção da Afrodite 12-14/01 no lugar da Regra J antiga (apagar a regra antes do recálculo da manhã, recalcular e regravar). FEITO em 16/11 (rotina completa): estadia 2 em 15/11/2027 e 17/11/2027 nos 7 quartos (PriceLabs e Beds24, conferidos) e a proteção da Afrodite 12-14/01 (Regra J apagada; piso R$ 1.565 com teto livre).",
+      "atualizado_em": "2026-11-16",
+      "status": "resolvida"
+    },
+    {
+      "id": "pricelabs-cobranca-20261116",
+      "responsavel": "dono",
+      "desde": "2026-11-16",
+      "urgencia": 1,
+      "texto": "PriceLabs recusou o recálculo em 16/11 08:04 BRT com 'Please clear your dues before reviewing prices.' (cobrança em aberto na conta). As gravações seguem aceitas, mas sem recálculo o motor não confere nem dá passo de flutuação, e o envio diário aos canais pode parar. Regularizar na tela do PriceLabs: Account › Billing.",
+      "atualizado_em": "2026-11-16"
+    },
+    {
+      "id": "villa-janeiro-atras-20261116",
+      "responsavel": "dono",
+      "desde": "2026-11-16",
+      "urgencia": 2,
+      "texto": "Revisão dos 12 meses: janeiro/2027 da Villa atrás do mercado em duas revisões seguidas (01/11: 3% × 7%; 16/11: 6% × 8% vendido). Proposta: (a) estadia de 1 noite também às segundas e quartas de janeiro na Villa (hoje 2), (b) campanha de férias de janeiro no canal direto, ou (c) piso de dia de semana de janeiro de R$ 500 para R$ 450 no preço final só na Villa. Fevereiro, nas duas pousadas, ficou atrás pela primeira vez (acompanhar).",
+      "atualizado_em": "2026-11-16"
     }
   ],
   "versao": "2026-11-12T13"

@@ -5235,6 +5235,31 @@ Estadia de 2 noites e a regra de entrada/saída da Afrodite mantidas (conferido 
 
 **Sombra da flutuação:** leitura das 19:53 guardada (60 noites, 7 quartos), nada gravado.
 
+## 16/11/2026, 07:54 a 08:25 BRT — Rotina completa de segunda com revisão semanal: recálculo bloqueado por cobrança em aberto no PriceLabs
+
+**PriceLabs recusou o recálculo:** às 08:04 o `refresh_listing_pricing` da Moinhos voltou 400 "Please clear your dues before reviewing prices." (cobrança em aberto na conta). Registrado na cota como falha; nenhum outro quarto tentado. As gravações seguem aceitas. Sem calendário novo (todos com 15 a 23 h), nenhum passo de flutuação hoje: só o que não depende do recálculo.
+
+**Beds24 desde 19:48 BRT de ontem:** 0 novas, 1 cancelada (Balcony 29/11, Booking, R$ 0), 4 alteradas. **Segurança: 0 alertas.** **Abaixo do esperado: 0.** **Overbooking ainda aberto:** King Spa 7 hoje (16/11) e Panorâmica II 22/11. **Logs do PriceLabs:** só as nossas gravações; nenhuma mudança manual nova. **Envio:** último 15/11 09:21 BRT nos 7 quartos; envio ligado.
+
+**Gravado e conferido (resposta da API; Beds24 relido):**
+
+| Mudança | Onde | Antes | Depois | Como desfazer (pedir ao Claude) |
+|---|---|---|---|---|
+| Mínimo do anúncio, passo 2 da ordem de 09/11 ("2 Sim") | PriceLabs (anúncio) | Moinhos R$ 920, Panorâmica I R$ 1.035, Panorâmica II R$ 977 | R$ 1.058, R$ 1.190, R$ 1.123 (+15%) | voltar aos valores anteriores |
+| Estadia de seg 15/11/2027 e qua 17/11/2027 (datas novas no horizonte de 12 meses) | PriceLabs por data e Beds24, 7 quartos | 1 noite | 2 noites (dia de chegada, dono 04/11) | voltar a 1 noite |
+| Afrodite 12 a 14/01 (esgotada) | PriceLabs por data | Regra J antiga: piso = teto R$ 2.840 a R$ 2.880 | proteção da noite esgotada: piso da ordem da Afrodite R$ 1.565, teto livre; estadia 1/2/1 mantida | regravar a Regra J (não recomendado: desligada pelo dono em 31/10) |
+
+Referência semanal (`quartos.json`) atualizada com os valores de hoje antes do passo. As noites abaixo do novo mínimo (Moinhos 16-19 e 22/11, Panorâmica I 17/11, Panorâmica II 16-18/11) têm regra por data, que prevalece.
+
+**Conferido sem gravar:** King Spa 7 06/12 (esgotada): o piso da escada (R$ 1.658) já está acima do p90 do mercado (≈ R$ 1.173 enviados); a proteção só sobe o piso, nada a mudar. Afrodite sexta 20/11: a auditoria pede abrir entrada/saída, mas a noite está esgotada e dentro da mudança manual de 19-22/11 (congelada, aguardando o dono). Sábados com estadia 1 no Beds24 (Moinhos e Balcony 21/11, Moinhos 12/12): só o dono decide.
+
+**Revisão semanal:**
+- Faturamento (Beds24, bruto): novembro R$ 296 mil (108% da meta base, 86% da meta); dezembro R$ 152 mil (45% do mínimo, 36% da base, a 15 dias do início); janeiro R$ 51 mil (20% do mínimo).
+- Revisão dos 12 meses (`pricelabs/revisao-12-meses/2026-11-16.md`): atrás do mercado janeiro na Villa (segunda revisão seguida: pendência do dono com proposta) e fevereiro nas duas pousadas (primeira vez).
+- Desempenho do mês: `pricelabs/desempenho/2026-11_ate_2026-11-16.md`.
+- Sombra da flutuação: 4 fotos de 7 (10 a 13/11); King Spa 7 dom-qui com solto bruto +6,3% sobre o gravado (sem calibração). Proposta de teste no relatório.
+- Não feitos hoje (dependem do recálculo ou de sessão própria): motor de pace dos 60 dias, faixas do dono, fatores da semana, painel semanal, varredura da concorrência.
+
 ## O que só pode ser feito na tela (passo a passo para você)
 
 1. **Safety Minimum Price → "Do Not Apply"** (Dynamic Pricing → Customizations → aba Groups → Edit no grupo Recanto dos Moinhos → All Customizations → Safety Minimum Price). Anote o valor atual antes.

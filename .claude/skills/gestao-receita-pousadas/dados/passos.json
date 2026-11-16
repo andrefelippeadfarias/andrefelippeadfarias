@@ -16229,6 +16229,19 @@
    "total": 1,
    "gravado_em": "2026-11-15T20:16:13+00:00",
    "chegou_ao_canal": false
+  },
+  {
+   "quarto": "Q7",
+   "noite": "2026-11-18",
+   "de": 1056.0,
+   "para": 1268,
+   "direcao": "sobe",
+   "status": "ritmo",
+   "vendidas": 4,
+   "base": "quarto",
+   "total": 7,
+   "gravado_em": "2026-11-16T16:59:28+00:00",
+   "chegou_ao_canal": false
   }
  ]
 }

@@ -5286,6 +5286,35 @@ Referência semanal (`quartos.json`) atualizada com os valores de hoje antes do 
 
 **Gravações:** nenhuma. Tudo depende do "Pode fazer" do dono: abrir o 01→03, preços, escada, descida, máximo do anúncio e exceções das noites soltas. A ordem de 03/11 segue valendo até lá.
 
+## 16/11/2026, 13:53 a 14:00 BRT — Rotina leve das 13:53: PriceLabs liberado pelo pagamento; venda da Moinhos e cancelamentos da Panorâmica I em 18/11
+
+**Cobrança do PriceLabs:** o dono pagou (cerca de 13:50 BRT). Os recálculos da Moinhos (13:56) e da Panorâmica I (13:56) passaram, então o bloqueio saiu. O envio aos canais ainda não aconteceu: `last_date_pushed` continua em 15/11. O próximo envio sai junto com a gravação do Réveillon (recálculo e Sync Now).
+
+**Beds24 desde 10:51 BRT:**
+- 1 nova: Moinhos de 18 a 20/11, 2 noites, Booking, R$ 987.
+- 3 canceladas:
+  - King Spa 7 de 16 a 18/11 (direta). Resolve o overbooking da King Spa 7 de hoje, que agora está com 0 livres.
+  - Panorâmica I de 18 a 22/11, duas reservas (uma direta e uma do Airbnb).
+- 23 alteradas, mudanças de situação feitas pela equipe.
+- Overbooking que segue: Panorâmica II em 22/11 (–1).
+- **Segurança:** 0 alertas.
+- **Abaixo do esperado, 2 casos:**
+  - Afrodite de 19 a 22/11, direta, R$ 3 por 3 noites, lançada pela recepção. Já tinha sido apontada com R$ 0 e continua sem valor real.
+  - Panorâmica I de 20 a 23/11, Booking, R$ 1.764 (37% do price1 de hoje). Foi feita em 26/10, antes da subida de preço, então provavelmente não é erro.
+
+**Logs do PriceLabs (desde 10:41 BRT):** só as nossas gravações da manhã. Nenhuma mudança manual nova.
+
+**Preço em 18/11 (D2), pelo motor de pace com o código publicado:**
+- Moinhos: de R$ 1.056 para R$ 1.279 (+9%), escada com 4 de 7 vendidas.
+- Panorâmica I: fica em R$ 1.288. Sai a proteção de noite esgotada, que reabriu com os cancelamentos, e entra piso igual ao teto, porque a ordem do Recanto não deixa a Panorâmica I abaixo da Moinhos.
+- Panorâmica II: de R$ 1.113 para R$ 1.288 (–19%), entre as duas.
+- Validação: 0 erros. As 3 gravações foram conferidas na resposta da API, com min_stay 2 mantido. Ledger: 1 passo.
+- As noites de 19 a 22/11 continuam congeladas pela mudança manual do dono.
+- Calendários: Moinhos e Panorâmica I recalculados agora; Panorâmica II e Afrodite com o calendário da coleta da manhã, de 15/11, usados só para a coerência.
+- **Deslize:** as 3 gravações foram mandadas na mesma mensagem, contra a regra de uma chamada por vez. Entraram em sequência (16:59:13, :15 e :18 UTC), sem erro.
+
+**Cota de recálculo:** Moinhos 2 de 3 e Panorâmica I 2 de 3 em 24 h. A falha das 08:04 da Moinhos sai da janela amanhã às 08:04 BRT.
+
 ## O que só pode ser feito na tela (passo a passo para você)
 
 1. **Safety Minimum Price → "Do Not Apply"** (Dynamic Pricing → Customizations → aba Groups → Edit no grupo Recanto dos Moinhos → All Customizations → Safety Minimum Price). Anote o valor atual antes.

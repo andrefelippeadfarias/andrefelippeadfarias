@@ -5539,6 +5539,23 @@ A Balcony fica a 90% da King Spa livre mais barata (Regra G do dono). Perguntado
 
 **King Spa 7 em 21/11:** com a sexta esgotada e o domingo lotado, o recálculo do PriceLabs pôs estadia 1 no sábado (dia isolado). O sábado vira noite órfã vendável a ~R$ 3.004, a mesma janela que a regra do sábado órfão abre.
 
+## 16/11/2026, 19:56 a 20:02 BRT — Rotina leve das 19:53 (só leitura)
+
+**Beds24 (rodada desde 16:53 BRT, leitura das 19:56):** 5 reservas no período, todas já vistas e tratadas na ordem dos R$ 3.000 (a última às 19:24 BRT). Nenhuma reserva nova, cancelamento ou mudança manual depois das 19:25. Segurança: 0 alerta.
+- A King Spa 7 20→22, direta, lançada pela recepção (R$ 1.200 por noite), ganhou às 19:55 um pagamento de R$ 720 (sinal). Valor da reserva igual. O alerta de "abaixo do planejado" (47%) usa o preço de agora (R$ 3.004): a reserva entrou antes da subida.
+
+**Inventário de 16/11 a 15/01 lido; nada novo fora do que já está em pendência:**
+- Panorâmica I 20 e 21/11 fechadas (blackout das 19:56, reabre amanhã depois do recálculo);
+- Panorâmica II 22/11 com overbooking (−1);
+- King Spa 7 sábado 21/11 com estadia 1 e entrada aberta (2 livres);
+- King Spa 2 sábado 21/11 sem a trava de sábado (2 livres).
+
+**Quinta 19/11 segue com muita vaga:** Moinhos 6 de 7, King Spa 7 7 de 7, Balcony 6 de 6, Panorâmica I 4 de 6. O preço já está no mínimo do dono (Booking ≥ R$ 500).
+
+**Sombra da flutuação:** foto do fim do dia fechada (60 noites, 7 quartos).
+
+**Nada foi gravado** no PriceLabs nem no Beds24 nesta rotina (sem venda nova; Moinhos e Panorâmica I sem cota de recálculo até amanhã). Conferência na Booking do feriadão 20→22 agendada para 20:30 BRT, 30 min depois do envio das 19:54.
+
 ## O que só pode ser feito na tela (passo a passo para você)
 
 1. **Safety Minimum Price → "Do Not Apply"** (Dynamic Pricing → Customizations → aba Groups → Edit no grupo Recanto dos Moinhos → All Customizations → Safety Minimum Price). Anote o valor atual antes.

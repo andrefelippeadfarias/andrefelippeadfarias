@@ -5272,6 +5272,20 @@ Referência semanal (`quartos.json`) atualizada com os valores de hoje antes do 
 
 **Preço:** nada gravado (sem venda, cancelamento nem mudança manual; recálculo bloqueado).
 
+## 16/11/2026, 11:30 a 12:50 BRT — Pedido do dono: Réveillon 30/12→01/01 e fim de semana 01→03/01, preços e estratégia para R$ 250 mil
+
+**Pedido:** valores do Réveillon (quarta a sexta) e do fim de semana seguinte (sexta a domingo), sempre em duas diárias, e uma estratégia para pelo menos R$ 250 mil nessas 4 noites. Análise completa em `pricelabs/reveillon-2026-meta-250k.md`, com os dados em `pricelabs/reveillon-2026-meta-250k/dados.json` (sem dados de hóspedes). Feita com Beds24, Booking (conector oficial) e PriceLabs, só leitura, mais um Workflow de 10 agentes com verificação adversarial.
+
+**Alerta de segurança e preço:** a Villa (id 14824789, nome e endereço conferem) aparece à venda na Booking para 01→03 por R$ 3.027,38 (R$ 1.514 por noite). A razão Booking ÷ enviado é 0,338, abaixo do limite de alerta de 0,42. Foram 3 buscas iguais, às 11:45 e às 12:47 BRT. O Beds24 tem `noCheckIn` e mínimo de 3 em 01/01 nos 3 quartos da Villa, e o Recanto, com a mesma regra, aparece fechado. Algum quarto ou tarifa da Villa na Booking não recebe a restrição. Só o dono corrige, pela extranet; a skill não mexe.
+
+**Números:**
+- Vendido: 40 de 124 diárias, R$ 46.580,68. Faltam R$ 203.419.
+- Ainda vendáveis: 70 diárias (12 pacotes de Réveillon e 23 de fim de semana). Outras 14 noites ficam soltas (10 em 30/12 e 4 em 02/01).
+- Recanto: o fator público caiu de 0,6156 (09/11) para 0,5832.
+- Cenários: provável com o plano completo R$ 169 mil; se nada mudar, R$ 106 mil. R$ 250 mil só com todas as condições juntas (R$ 254 mil, folga de R$ 4,3 mil).
+
+**Gravações:** nenhuma. Tudo depende do "Pode fazer" do dono: abrir o 01→03, preços, escada, descida, máximo do anúncio e exceções das noites soltas. A ordem de 03/11 segue valendo até lá.
+
 ## O que só pode ser feito na tela (passo a passo para você)
 
 1. **Safety Minimum Price → "Do Not Apply"** (Dynamic Pricing → Customizations → aba Groups → Edit no grupo Recanto dos Moinhos → All Customizations → Safety Minimum Price). Anote o valor atual antes.

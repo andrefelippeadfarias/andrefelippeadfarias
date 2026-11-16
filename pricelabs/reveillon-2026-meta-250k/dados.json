@@ -1,0 +1,1435 @@
+{
+ "_doc": "Réveillon 30/12→01/01 e fim de semana 01→03/01: preços, vendido, mercado e estratégia para R$ 250 mil (pedido do dono, 16/11/2026). Sem dados de hóspedes. Capturas da Booking pelo conector oficial em 16/11 por volta de 11:45 BRT; recaptura da Villa 01→03 às 12:47 BRT (R$ 3.027,38, igual).",
+ "mercado": {
+  "nossos": {
+   "capturas": [
+    {
+     "pousada": "Recanto dos Moinhos",
+     "booking_id": "7562933",
+     "checkin": "2026-12-30",
+     "checkout": "2027-01-01",
+     "disponivel": true,
+     "preco_total": 3851.45,
+     "preco_por_noite": 1925.73,
+     "quarto_mais_barato_livre": "Q7 Suíte Moinhos (livres 3 em 30/12 e 2 em 31/12; enviado 3191 + 3413 = 6604)",
+     "enviado_mais_barato_livre_por_noite": 3302,
+     "fator_publico_medido": 0.5832,
+     "conferido_id_nome_endereco": true,
+     "nota": "Busca por coordenadas (raio 0,3 km). Voltou o id 7562933, 'Recanto dos Moinhos - Boutique Hotel', 575 Rua Januário Pereira, CEP 12460-000, nas mesmas coordenadas. Fator 0,5832 (3851,45 ÷ 6604), que é 5,3% abaixo do 0,6156 medido em 09/11. O resultado bate exatamente com 6604 × 0,5832. Próximos quartos mais baratos: Q2 7203, Double 7385, Afrodite 8520."
+    },
+    {
+     "pousada": "Recanto dos Moinhos",
+     "booking_id": "7562933",
+     "checkin": "2027-01-01",
+     "checkout": "2027-01-03",
+     "disponivel": false,
+     "quarto_mais_barato_livre": "Q7 Suíte Moinhos pelo pacote (livres 4 em 01/01 e 6 em 02/01; enviado 2979 + 2979 = 5958), mas a estadia está bloqueada",
+     "enviado_mais_barato_livre_por_noite": 2979,
+     "conferido_id_nome_endereco": false,
+     "nota": "Indisponível, como esperado (01/01 sem chegada e mínimo de 3 noites). Na busca por coordenadas só voltou um vizinho (id 16430814, Casa Campos do Jordão, R$ 6.300). O 7562933 não apareceu, por isso não deu para conferir id, nome e endereço nessa busca. Confirmação por hotel_names ['Recanto dos Moinhos']: erro hotel_names_no_availability ('no availability for the requested dates'). Sem preço medido. Estimativa se o 01→03 for aberto com o Q7 a 5958: R$ 3.474,71 com o fator de hoje (0,5832) ou R$ 3.667,74 com o de 09/11 (0,6156)."
+    },
+    {
+     "pousada": "Recanto dos Moinhos",
+     "booking_id": "7562933",
+     "checkin": "2026-12-30",
+     "checkout": "2027-01-03",
+     "disponivel": true,
+     "preco_total": 7326.16,
+     "preco_por_noite": 1831.54,
+     "quarto_mais_barato_livre": "Q7 Suíte Moinhos (livres 3/2/4/6; enviado 3191 + 3413 + 2979 + 2979 = 12562)",
+     "enviado_mais_barato_livre_por_noite": 3140.5,
+     "fator_publico_medido": 0.5832,
+     "conferido_id_nome_endereco": true,
+     "nota": "Busca por coordenadas. Mesmo id, nome e endereço da estadia (a). Fator 0,5832 (7326,16 ÷ 12562), igual ao do bloco Réveillon e 5,3% abaixo do 0,6156 de 09/11. Bate exatamente com 12562 × 0,5832. Próximos quartos mais baratos: Q2 14071, Double 14519, Afrodite 16760."
+    },
+    {
+     "pousada": "Villa Dolce Amore",
+     "booking_id": "14824789",
+     "checkin": "2026-12-30",
+     "checkout": "2027-01-01",
+     "disponivel": true,
+     "preco_total": 3999.45,
+     "preco_por_noite": 1999.73,
+     "quarto_mais_barato_livre": "Balcony sem banheira (livres 5 em 30/12 e só 1 em 31/12; enviado 4483 + 4483 = 8966)",
+     "enviado_mais_barato_livre_por_noite": 4483,
+     "fator_publico_medido": 0.4461,
+     "conferido_id_nome_endereco": true,
+     "nota": "Busca por hotel_names ['Villa Dolce Amore'] com destination Campos do Jordão. Voltou o id 14824789, 'Villa Dolce Amore - Boutique Hotel', R. das Candelas, 79 161, CEP 12460-712, nota 8,3 (219 avaliações). Fator 0,4461 (3999,45 ÷ 8966), 8,1% acima do 0,4127 de 09/11. Se a Booking estiver precificando VK7 (9976) e não a Balcony, o fator seria 0,4009. O conector não informa qual quarto ou tarifa foi precificado. Atenção: a Balcony tem só 1 unidade livre em 31/12; quando ela vender, o mais barato passa a ser o VK7 (9976)."
+    },
+    {
+     "pousada": "Villa Dolce Amore",
+     "booking_id": "14824789",
+     "checkin": "2027-01-01",
+     "checkout": "2027-01-03",
+     "disponivel": true,
+     "preco_total": 3027.38,
+     "preco_por_noite": 1513.69,
+     "quarto_mais_barato_livre": "Balcony sem banheira (livres 5 em 01/01 e 6 em 02/01; enviado 4483 + 4483 = 8966)",
+     "enviado_mais_barato_livre_por_noite": 4483,
+     "fator_publico_medido": 0.3377,
+     "conferido_id_nome_endereco": true,
+     "nota": "ANOMALIA: apareceu DISPONÍVEL, contra o esperado (01/01 sem chegada e mínimo de 3 no Beds24 para VK7, Balcony e VK2). Repeti a busca e o resultado foi o mesmo: id 14824789, mesmo nome e endereço, R$ 3.027,38. Fator 0,3377 (3027,38 ÷ 8966), 18,2% abaixo do 0,4127 de 09/11 e muito abaixo das outras estadias da Villa. Com VK7 seria 0,3035. Ou seja, a Villa está vendendo o fim de semana 01→03 sozinho na Booking, a cerca de R$ 1.514 por noite. É provável que a restrição de chegada ou de mínimo não esteja chegando a algum quarto ou tarifa da Villa na Booking."
+    },
+    {
+     "pousada": "Villa Dolce Amore",
+     "booking_id": "14824789",
+     "checkin": "2026-12-30",
+     "checkout": "2027-01-03",
+     "disponivel": true,
+     "preco_total": 7398.61,
+     "preco_por_noite": 1849.65,
+     "quarto_mais_barato_livre": "Balcony sem banheira (livres 5/1/5/6; enviado 4483 × 4 = 17932)",
+     "enviado_mais_barato_livre_por_noite": 4483,
+     "fator_publico_medido": 0.4126,
+     "conferido_id_nome_endereco": true,
+     "nota": "Busca por hotel_names. Mesmo id, nome e endereço. Fator 0,4126 (7398,61 ÷ 17932), praticamente igual ao 0,4127 de 09/11, que foi medido nesta mesma estadia. As estadias da Villa não somam: (a) + (b) = 7026,83 < (c) 7398,61 (diferença de R$ 371,78). Isso indica tarifa ou promoção diferente conforme a estadia, ou um quarto diferente sendo precificado. Com VK7 (19952) o fator seria 0,3708."
+    }
+   ],
+   "observacoes": "Capturas feitas em 16/11/2026, por volta de 11:45 BRT, só com o conector oficial da Booking (2 adultos, 1 quarto, BRL, país br, idioma pt-br). Nada foi gravado. Não chamei o PriceLabs nem o Beds24. Fiz 8 buscas: as 6 pedidas, mais a repetição da Villa 01→03 e a confirmação do Recanto 01→03 por nome. O conector devolve só o preço total da oferta mais barata, sem dizer o quarto ou a tarifa. Por isso o quarto mais barato livre foi deduzido do pacote, como pedido.\n\n1) RECANTO: fator de hoje 0,5832 nas duas estadias que abriram (30→01 e 30→03). É exatamente 5,3% abaixo do 0,6156 de 09/11. Os preços batem ao centavo com o Q7 × 0,5832 (6604 × 0,5832 = 3851,45; 12562 × 0,5832 = 7326,16). Então a Booking está refletindo o enviado do pacote para o Q7. Pela aritmética, 0,6156 = 0,648 × 0,95 e 0,5832 = 0,648 × 0,90. Isso sugere que algum desconto na Booking passou de 5% para 10% entre 09/11 e hoje, ou que outra tarifa (por exemplo, não reembolsável) virou a mais barata. É hipótese, não verifiquei: promoção e Genius são da extranet, só o dono confere. O 01→03 está indisponível, como esperado.\n\n2) VILLA: fatores diferentes conforme a estadia. 30→03: 0,4126, igual ao 0,4127 de 09/11. 30→01: 0,4461. 01→03: 0,3377. As estadias não somam (30→01 + 01→03 = 7026,83, contra 7398,61 no 30→03). Isso indica promoção ou tarifa condicionada à estadia, ou quarto diferente sendo precificado.\n\nALERTA PRINCIPAL: a Villa aparece DISPONÍVEL no 01→03 a R$ 3.027,38 (R$ 1.513,69 por noite). Pelo pacote, 01/01 está sem chegada e com mínimo de 3 em todos os quartos da Villa, e o Recanto, com a mesma regra, aparece fechado. A busca foi repetida e deu o mesmo resultado. Algum quarto ou tarifa da Villa na Booking provavelmente não está recebendo a restrição. O dono precisa conferir na extranet as restrições de 01/01 nas tarifas da Villa e se alguma promoção tem regras próprias. É, na prática, a abertura do fim de semana que o dono quer, só que sem o \"Pode fazer\" e no preço mais baixo de todo o período.\n\n3) PREÇO POR NOITE de hoje na Booking: Recanto R$ 1.926 (Réveillon) e R$ 1.832 (4 noites). Villa R$ 2.000 (Réveillon), R$ 1.514 (fim de semana) e R$ 1.850 (4 noites). Na régua de 09/11 do mercado com hidro, a mediana é R$ 2.190, o p75 R$ 3.135 e o p90 R$ 3.890 (faixa F5 por volta de R$ 3.850 a 3.950). Todos os nossos preços estão abaixo da mediana com hidro.\n\n4) RISCO DE SALTO: a Balcony tem só 1 unidade livre em 31/12. Quando vender, o mais barato livre da Villa no Réveillon passa a ser o VK7 (enviado 9976 por 2 noites), e o preço público sobe.\n\n5) RECANTO 01→03 se for aberto, estimativa com o Q7 a 5958 no pacote: cerca de R$ 3.475 com o fator de hoje, ou R$ 3.668 com o de 09/11.\n\nNenhum dado de hóspede foi usado."
+  },
+  "concorrentes_reveillon": {
+   "estadia": "Bloco Réveillon (quarta a sexta): check-in 2026-12-30, check-out 2027-01-01, 2 noites, 2 adultos, 1 quarto, BRL, user_country_code br, user_locale pt-br. Preço público da Booking via conector oficial, consulta em 2026-11-16.",
+   "propriedades": [
+    {
+     "nome": "Hotel Ascona",
+     "booking_id": "303535",
+     "disponivel": true,
+     "preco_total": 2465.48,
+     "preco_por_noite": 1232.74,
+     "tem_hidro_no_quarto": "sim",
+     "nota": 8.8,
+     "origem_da_busca": "lote 1 + busca hidro"
+    },
+    {
+     "nome": "Pousada Murano",
+     "booking_id": "13952548",
+     "disponivel": true,
+     "preco_total": 5235.57,
+     "preco_por_noite": 2617.79,
+     "tem_hidro_no_quarto": "sim",
+     "nota": 9.6,
+     "origem_da_busca": "lote 2 + busca hidro"
+    },
+    {
+     "nome": "Villa Belle Chalés",
+     "booking_id": "11111842",
+     "disponivel": true,
+     "preco_total": 2162.71,
+     "preco_por_noite": 1081.36,
+     "tem_hidro_no_quarto": "sim",
+     "origem_da_busca": "lote 2 + busca hidro + busca geral"
+    },
+    {
+     "nome": "Pousada Geada de Campos",
+     "booking_id": "8663470",
+     "disponivel": true,
+     "preco_total": 2037.15,
+     "preco_por_noite": 1018.58,
+     "tem_hidro_no_quarto": "sim",
+     "nota": 9.6,
+     "origem_da_busca": "lote 2 + busca hidro"
+    },
+    {
+     "nome": "Charmê Chalés",
+     "booking_id": "14828889",
+     "disponivel": true,
+     "preco_total": 5785.5,
+     "preco_por_noite": 2892.75,
+     "tem_hidro_no_quarto": "sim",
+     "origem_da_busca": "lote 3"
+    },
+    {
+     "nome": "Champet Boutique Hotel",
+     "booking_id": "13970463",
+     "disponivel": true,
+     "preco_total": 6043.31,
+     "preco_por_noite": 3021.66,
+     "tem_hidro_no_quarto": "incerto",
+     "origem_da_busca": "lote 3"
+    },
+    {
+     "nome": "vila grega hotel",
+     "booking_id": "8681352",
+     "disponivel": true,
+     "preco_total": 4731,
+     "preco_por_noite": 2365.5,
+     "tem_hidro_no_quarto": "sim",
+     "nota": 9.8,
+     "origem_da_busca": "lote 3"
+    },
+    {
+     "nome": "Euro Suit Campos do Jordão",
+     "booking_id": "4686715",
+     "disponivel": true,
+     "preco_total": 2740.71,
+     "preco_por_noite": 1370.36,
+     "tem_hidro_no_quarto": "incerto",
+     "nota": 9,
+     "origem_da_busca": "lote 3"
+    },
+    {
+     "nome": "Pousada Benevento",
+     "booking_id": "263588",
+     "disponivel": true,
+     "preco_total": 2707,
+     "preco_por_noite": 1353.5,
+     "tem_hidro_no_quarto": "nao",
+     "origem_da_busca": "lote 3"
+    },
+    {
+     "nome": "Suítes Rústicas Campos do Jordão - Com banheira de hidromassagem",
+     "booking_id": "12222014",
+     "disponivel": true,
+     "preco_total": 1040.4,
+     "preco_por_noite": 520.2,
+     "tem_hidro_no_quarto": "sim",
+     "nota": 8.6,
+     "origem_da_busca": "busca hidro"
+    },
+    {
+     "nome": "Chalés La Luna - Lavanda",
+     "booking_id": "15666048",
+     "disponivel": true,
+     "preco_total": 2040,
+     "preco_por_noite": 1020,
+     "tem_hidro_no_quarto": "sim",
+     "nota": 9.8,
+     "origem_da_busca": "busca hidro"
+    },
+    {
+     "nome": "Pousada Recanto Feliz",
+     "booking_id": "786418",
+     "disponivel": true,
+     "preco_total": 2479.1,
+     "preco_por_noite": 1239.55,
+     "tem_hidro_no_quarto": "sim",
+     "nota": 8.8,
+     "origem_da_busca": "busca hidro"
+    },
+    {
+     "nome": "Vila Husky",
+     "booking_id": "8556639",
+     "disponivel": true,
+     "preco_total": 2945,
+     "preco_por_noite": 1472.5,
+     "tem_hidro_no_quarto": "sim",
+     "origem_da_busca": "busca hidro"
+    },
+    {
+     "nome": "Suites e Chales petfriendly com ar, hidro e lareira",
+     "booking_id": "13223174",
+     "disponivel": true,
+     "preco_total": 2268,
+     "preco_por_noite": 1134,
+     "tem_hidro_no_quarto": "sim",
+     "nota": 7.6,
+     "origem_da_busca": "busca hidro"
+    },
+    {
+     "nome": "Caminho das Pedras Pousada de Charme",
+     "booking_id": "390598",
+     "disponivel": true,
+     "preco_total": 3212.1,
+     "preco_por_noite": 1606.05,
+     "tem_hidro_no_quarto": "nao",
+     "nota": 9.1,
+     "origem_da_busca": "busca geral"
+    },
+    {
+     "nome": "Hotel Garnier",
+     "booking_id": "8925172",
+     "disponivel": true,
+     "preco_total": 1822.5,
+     "preco_por_noite": 911.25,
+     "tem_hidro_no_quarto": "nao",
+     "nota": 8.2,
+     "origem_da_busca": "busca geral"
+    },
+    {
+     "nome": "Villa Montserrat",
+     "booking_id": "3005921",
+     "disponivel": true,
+     "preco_total": 2160,
+     "preco_por_noite": 1080,
+     "tem_hidro_no_quarto": "nao",
+     "nota": 8.8,
+     "origem_da_busca": "busca geral"
+    },
+    {
+     "nome": "Villa du Chocolat",
+     "booking_id": "4786199",
+     "disponivel": true,
+     "preco_total": 3315,
+     "preco_por_noite": 1657.5,
+     "tem_hidro_no_quarto": "incerto",
+     "nota": 9.5,
+     "origem_da_busca": "busca geral"
+    },
+    {
+     "nome": "Pousada Recanto da Giovana",
+     "booking_id": "304094",
+     "disponivel": true,
+     "preco_total": 1500,
+     "preco_por_noite": 750,
+     "tem_hidro_no_quarto": "nao",
+     "nota": 8.7,
+     "origem_da_busca": "busca geral"
+    },
+    {
+     "nome": "Pousada Alpes Azul",
+     "booking_id": "8170701",
+     "disponivel": true,
+     "preco_total": 2627.86,
+     "preco_por_noite": 1313.93,
+     "tem_hidro_no_quarto": "nao",
+     "origem_da_busca": "busca geral"
+    },
+    {
+     "nome": "Pousada Jordão",
+     "booking_id": "708383",
+     "disponivel": true,
+     "preco_total": 2880,
+     "preco_por_noite": 1440,
+     "tem_hidro_no_quarto": "nao",
+     "origem_da_busca": "busca geral"
+    },
+    {
+     "nome": "Pousada das Lavandas",
+     "disponivel": false,
+     "tem_hidro_no_quarto": "incerto",
+     "origem_da_busca": "lote 1 + repescagem (sem disponibilidade)"
+    },
+    {
+     "nome": "Villa Casato Residenza Boutique",
+     "disponivel": false,
+     "tem_hidro_no_quarto": "incerto",
+     "origem_da_busca": "lote 1 + repescagem (sem disponibilidade)"
+    },
+    {
+     "nome": "Matsubara Pousada",
+     "disponivel": false,
+     "tem_hidro_no_quarto": "incerto",
+     "origem_da_busca": "lote 1 + repescagem (sem disponibilidade)"
+    },
+    {
+     "nome": "L.A.H. Hostellerie",
+     "disponivel": false,
+     "tem_hidro_no_quarto": "incerto",
+     "origem_da_busca": "lote 1 + repescagem (sem disponibilidade)"
+    },
+    {
+     "nome": "DOM Hotel",
+     "disponivel": false,
+     "tem_hidro_no_quarto": "incerto",
+     "origem_da_busca": "lote 1 + repescagem (sem disponibilidade)"
+    },
+    {
+     "nome": "Secreto Boutique Hotel",
+     "disponivel": false,
+     "tem_hidro_no_quarto": "incerto",
+     "origem_da_busca": "lote 1 + repescagem (sem disponibilidade)"
+    },
+    {
+     "nome": "Europa Hotel (Campos do Jordão)",
+     "disponivel": false,
+     "tem_hidro_no_quarto": "incerto",
+     "origem_da_busca": "lote 1 + repescagem (sem disponibilidade; o lote 1 devolveu um homônimo em Brasília, descartado)"
+    },
+    {
+     "nome": "Pousada Cafe Poesia",
+     "disponivel": false,
+     "tem_hidro_no_quarto": "incerto",
+     "origem_da_busca": "lote 2 + repescagem (sem disponibilidade)"
+    },
+    {
+     "nome": "Chalé Villa Nature",
+     "disponivel": false,
+     "tem_hidro_no_quarto": "incerto",
+     "origem_da_busca": "lote 2 + repescagem (sem disponibilidade)"
+    },
+    {
+     "nome": "Bela Vista Chalé",
+     "disponivel": false,
+     "tem_hidro_no_quarto": "incerto",
+     "origem_da_busca": "lote 2 + repescagem (sem disponibilidade)"
+    },
+    {
+     "nome": "Pousada Casa Redonda",
+     "disponivel": false,
+     "tem_hidro_no_quarto": "incerto",
+     "origem_da_busca": "lote 2 + repescagem (sem disponibilidade)"
+    },
+    {
+     "nome": "Pousada Big Bear",
+     "disponivel": false,
+     "tem_hidro_no_quarto": "incerto",
+     "origem_da_busca": "lote 3 + repescagem (sem disponibilidade)"
+    },
+    {
+     "nome": "Pousada Villa Capivary",
+     "disponivel": false,
+     "tem_hidro_no_quarto": "incerto",
+     "origem_da_busca": "lote 3 + repescagem (sem disponibilidade)"
+    }
+   ],
+   "resumo_por_noite_com_hidro": {
+    "n": 11,
+    "p25": 1050.68,
+    "p50": 1232.74,
+    "p75": 1919,
+    "p90": 2617.79,
+    "max": 2892.75
+   },
+   "resumo_por_noite_todos": {
+    "n": 21,
+    "p25": 1080,
+    "p50": 1313.93,
+    "p75": 1606.05,
+    "p90": 2617.79
+   },
+   "buscas_feitas": [
+    "1) hotel_names lote 1 (8 nomes: Hotel Ascona, Pousada das Lavandas, Villa Casato Residenza Boutique, Matsubara Pousada, L.A.H. Hostellerie, DOM Hotel, Secreto Boutique Hotel, Europa Hotel), destination Campos do Jordão, Brazil: voltou só o Hotel Ascona e um falso positivo (Europa Hotel Brasília by Bsb Inn, em Taguatinga/DF, R$ 337,83, descartado).",
+    "2) hotel_names lote 2 (7 nomes: Villa Belle Chalés, Pousada Cafe Poesia, Pousada Murano, Chalé Villa Nature, Bela Vista Chalé, Pousada Geada de Campos, Pousada Casa Redonda): voltaram Murano, Villa Belle e Geada de Campos.",
+    "3) hotel_names lote 3 (7 nomes: Charmê Chalés, vila grega hotel, Champet Boutique Hotel, Euro Suit Campos do Jordão, Pousada Big Bear, Pousada Villa Capivary, Pousada Benevento): voltaram Charmê, Champet, vila grega, Euro Suit e Benevento.",
+    "4) Busca geral destination Campos do Jordão, Brazil com facilities [HOT_TUB_JACUZZI]: 10 resultados (inclui o Recanto dos Moinhos; a Villa Dolce Amore não apareceu).",
+    "5) Busca geral destination Campos do Jordão, Brazil sem filtro: 10 resultados (inclui Recanto dos Moinhos e Villa Dolce Amore).",
+    "6-7) Repescagem dos 13 nomes ausentes, em 2 lotes (7 + 6): as duas chamadas devolveram o erro hotel_names_no_availability ('no availability for the requested dates') para todos os 13. Não repeti, porque o conector orienta a não tentar de novo nas mesmas datas."
+   ],
+   "observacoes": "NOSSAS POUSADAS (fora da lista de concorrentes): Recanto dos Moinhos (7562933): R$ 3.851,45 pela estadia = R$ 1.925,73/noite. Apareceu na busca geral e na busca com hidro. Villa Dolce Amore (14824789): R$ 3.999,45 = R$ 1.999,73/noite, nota 8,3. Apareceu só na busca geral. As duas ficam um pouco acima do p75 dos concorrentes com hidro (R$ 1.919) e abaixo do p90 (R$ 2.618). Estão perto do p85 do mercado amplo. Fator público/enviado estimado, sem saber qual quarto a Booking mostrou: Recanto ≈ 0,58 se for o Q7 (enviado 3.191 + 3.413). Villa ≈ 0,45 se for a Balcony (4.483 x 2) ou ≈ 0,40 se for a VK7 (4.988 x 2). Isso confirma que a promoção da Villa continua ativa (0,41 medido em 09/11). Atenção: na Booking, a lista de comodidades da Villa Dolce Amore NÃO traz 'Jacuzzi', e por isso ela não aparece no filtro de hidromassagem. O Recanto aparece. Só o dono corrige isso, na extranet.\n\nDISPONIBILIDADE DA LISTA: 13 dos 22 nomes (59%) estão sem disponibilidade ou sem preço para 30/12→01/01: Pousada das Lavandas, Villa Casato, Matsubara, L.A.H. Hostellerie, DOM Hotel, Secreto Boutique, Europa Hotel, Cafe Poesia, Chalé Villa Nature, Bela Vista Chalé, Casa Redonda, Big Bear e Villa Capivary. 9 estão disponíveis. No lote 1, que tem quase só o segmento premium, 7 de 8 sumiram. O erro do conector não diferencia 'esgotado' de 'estadia mínima maior que 2 noites' ou 'pacote fechado'. É comum o Réveillon só vender pacote de 3 ou mais noites, então parte desses 13 pode estar só recusando a estadia de 2 noites. Na repescagem, 'Chalé Villa Nature' foi digitado como 'Chále'. No lote 2 o nome estava correto e também não voltou.\n\nSINAIS DE DEMANDA: (a) O premium da lista sumiu, e os que restam são mais baratos. Por isso a régua deste bloco tem viés de sobrevivência e fica bem abaixo da régua de 09/11, que era para a estadia 30/12→03/01: com hidro, p50 R$ 1.233 contra R$ 2.190, p75 R$ 1.919 contra R$ 3.135 e p90 R$ 2.618 contra R$ 3.890. Todos: p50 R$ 1.314 contra R$ 1.556 e p90 R$ 2.618 contra R$ 2.640. Isso indica um mercado esvaziado do topo, e não que o mercado esteja barato. (b) Cada busca geral devolveu só 10 propriedades, porque o conector limita o número de resultados. A amostra é pequena: n=21 disponíveis, n=11 com hidro 'sim'. (c) Nenhuma propriedade devolvida recusou a estadia de 2 noites. Entre as disponíveis, as mais caras são Champet (R$ 3.022/noite, sem jacuzzi listada), Charmê Chalés (R$ 2.893), Murano (R$ 2.618, 5 estrelas, nota 9,6) e vila grega (R$ 2.366, nota 9,8).\n\nCRITÉRIOS: preço por noite = preço 'book' do conector (total da estadia) ÷ 2. O conector não informa tipo de quarto, regime nem política de cancelamento. A hidro 'sim' veio do nome ou da comodidade 'Jacuzzi', que é declarada para a propriedade toda e pode ser de área comum. 'incerto' = só spa, sauna ou piscina geral (Champet, Euro Suit, Villa du Chocolat) ou sem dado (as 13 indisponíveis). 'nao' = nenhuma indicação nos dados devolvidos. Percentis por interpolação linear. Não chamei PriceLabs nem Beds24 e não gravei nada."
+  },
+  "concorrentes_fim_de_semana": {
+   "estadia": "Bloco fim de semana: check-in 2027-01-01 (sexta), check-out 2027-01-03 (domingo), 2 noites, 2 adultos, 1 quarto, BRL, user_country_code br, user_locale pt-br. Preço público medido na Booking em 2026-11-16 pelo conector oficial (mcp__Booking_com__accommodations_search).",
+   "propriedades": [
+    {
+     "nome": "L.A.H. Hostellerie",
+     "booking_id": "348210",
+     "disponivel": true,
+     "preco_total": 5742,
+     "preco_por_noite": 2871,
+     "tem_hidro_no_quarto": "sim",
+     "nota": 9.8,
+     "origem_da_busca": "lote 1 (hotel_names) + geral HOT_TUB_JACUZZI"
+    },
+    {
+     "nome": "Hotel Estoril",
+     "booking_id": "336912",
+     "disponivel": true,
+     "preco_total": 4843.58,
+     "preco_por_noite": 2421.79,
+     "tem_hidro_no_quarto": "sim",
+     "nota": 8.9,
+     "origem_da_busca": "geral HOT_TUB_JACUZZI"
+    },
+    {
+     "nome": "Carballo Hotel & Spa",
+     "booking_id": "1074675",
+     "disponivel": true,
+     "preco_total": 4653.1,
+     "preco_por_noite": 2326.55,
+     "tem_hidro_no_quarto": "sim",
+     "nota": 9.7,
+     "origem_da_busca": "geral HOT_TUB_JACUZZI"
+    },
+    {
+     "nome": "vila grega hotel",
+     "booking_id": "8681352",
+     "disponivel": true,
+     "preco_total": 4180,
+     "preco_por_noite": 2090,
+     "tem_hidro_no_quarto": "sim",
+     "nota": 9.8,
+     "origem_da_busca": "lote 3 (hotel_names) + geral HOT_TUB_JACUZZI"
+    },
+    {
+     "nome": "Charmê Chalés",
+     "booking_id": "14828889",
+     "disponivel": true,
+     "preco_total": 3900,
+     "preco_por_noite": 1950,
+     "tem_hidro_no_quarto": "sim",
+     "origem_da_busca": "lote 3 (hotel_names)"
+    },
+    {
+     "nome": "Pousada Murano",
+     "booking_id": "13952548",
+     "disponivel": true,
+     "preco_total": 3557.43,
+     "preco_por_noite": 1778.72,
+     "tem_hidro_no_quarto": "sim",
+     "nota": 9.6,
+     "origem_da_busca": "lote 2 (hotel_names) + geral HOT_TUB_JACUZZI + geral sem filtro"
+    },
+    {
+     "nome": "Vila Husky",
+     "booking_id": "8556639",
+     "disponivel": true,
+     "preco_total": 2180.25,
+     "preco_por_noite": 1090.13,
+     "tem_hidro_no_quarto": "sim",
+     "origem_da_busca": "geral HOT_TUB_JACUZZI"
+    },
+    {
+     "nome": "Villa Belle Chalés",
+     "booking_id": "11111842",
+     "disponivel": true,
+     "preco_total": 2162.71,
+     "preco_por_noite": 1081.36,
+     "tem_hidro_no_quarto": "sim",
+     "origem_da_busca": "lote 2 (hotel_names) + geral HOT_TUB_JACUZZI"
+    },
+    {
+     "nome": "Pousada Nacional Inn Campos do Jordão",
+     "booking_id": "295061",
+     "disponivel": true,
+     "preco_total": 2082.78,
+     "preco_por_noite": 1041.39,
+     "tem_hidro_no_quarto": "sim",
+     "nota": 9.1,
+     "origem_da_busca": "geral HOT_TUB_JACUZZI"
+    },
+    {
+     "nome": "Pousada Vila Tio Lé",
+     "booking_id": "1526492",
+     "disponivel": true,
+     "preco_total": 1875,
+     "preco_por_noite": 937.5,
+     "tem_hidro_no_quarto": "sim",
+     "origem_da_busca": "geral HOT_TUB_JACUZZI"
+    },
+    {
+     "nome": "Hotel Ascona",
+     "booking_id": "303535",
+     "disponivel": true,
+     "preco_total": 1800.63,
+     "preco_por_noite": 900.32,
+     "tem_hidro_no_quarto": "sim",
+     "nota": 8.8,
+     "origem_da_busca": "lote 1 (hotel_names) + geral HOT_TUB_JACUZZI"
+    },
+    {
+     "nome": "Pousada Geada de Campos",
+     "booking_id": "8663470",
+     "disponivel": true,
+     "preco_total": 1509.3,
+     "preco_por_noite": 754.65,
+     "tem_hidro_no_quarto": "sim",
+     "nota": 9.6,
+     "origem_da_busca": "lote 2 (hotel_names)"
+    },
+    {
+     "nome": "Caminho das Pedras Pousada de Charme",
+     "booking_id": "390598",
+     "disponivel": true,
+     "preco_total": 2739.01,
+     "preco_por_noite": 1369.51,
+     "tem_hidro_no_quarto": "nao",
+     "nota": 9.1,
+     "origem_da_busca": "geral sem filtro"
+    },
+    {
+     "nome": "Hotel JB",
+     "booking_id": "575313",
+     "disponivel": true,
+     "preco_total": 2156.4,
+     "preco_por_noite": 1078.2,
+     "tem_hidro_no_quarto": "incerto",
+     "nota": 9.2,
+     "origem_da_busca": "geral sem filtro"
+    },
+    {
+     "nome": "Pousada Benevento",
+     "booking_id": "263588",
+     "disponivel": true,
+     "preco_total": 2121,
+     "preco_por_noite": 1060.5,
+     "tem_hidro_no_quarto": "nao",
+     "origem_da_busca": "lote 3 (hotel_names)"
+    },
+    {
+     "nome": "Euro Suit Campos do Jordão - 950 m da Vila Capivari",
+     "booking_id": "4686715",
+     "disponivel": true,
+     "preco_total": 1930.64,
+     "preco_por_noite": 965.32,
+     "tem_hidro_no_quarto": "incerto",
+     "nota": 9,
+     "origem_da_busca": "lote 3 (hotel_names)"
+    },
+    {
+     "nome": "Pousada Itália Moderna",
+     "booking_id": "1099879",
+     "disponivel": true,
+     "preco_total": 1748,
+     "preco_por_noite": 874,
+     "tem_hidro_no_quarto": "nao",
+     "nota": 9.2,
+     "origem_da_busca": "geral sem filtro"
+    },
+    {
+     "nome": "Siena Hotel",
+     "booking_id": "362352",
+     "disponivel": true,
+     "preco_total": 1680,
+     "preco_por_noite": 840,
+     "tem_hidro_no_quarto": "nao",
+     "nota": 9.2,
+     "origem_da_busca": "geral sem filtro"
+    },
+    {
+     "nome": "Guida Residenza Pousada",
+     "booking_id": "495026",
+     "disponivel": true,
+     "preco_total": 1524.32,
+     "preco_por_noite": 762.16,
+     "tem_hidro_no_quarto": "nao",
+     "origem_da_busca": "geral sem filtro"
+    },
+    {
+     "nome": "Hotel Garnier",
+     "booking_id": "8925172",
+     "disponivel": true,
+     "preco_total": 1215,
+     "preco_por_noite": 607.5,
+     "tem_hidro_no_quarto": "nao",
+     "nota": 8.2,
+     "origem_da_busca": "geral sem filtro"
+    },
+    {
+     "nome": "Hotel Casa São José",
+     "booking_id": "362350",
+     "disponivel": true,
+     "preco_total": 1188,
+     "preco_por_noite": 594,
+     "tem_hidro_no_quarto": "nao",
+     "nota": 9.5,
+     "origem_da_busca": "geral sem filtro"
+    },
+    {
+     "nome": "Pousada Vale Verde",
+     "booking_id": "337281",
+     "disponivel": true,
+     "preco_total": 1040,
+     "preco_por_noite": 520,
+     "tem_hidro_no_quarto": "nao",
+     "origem_da_busca": "geral sem filtro"
+    },
+    {
+     "nome": "Pousada das Lavandas",
+     "disponivel": false,
+     "tem_hidro_no_quarto": "incerto",
+     "origem_da_busca": "lote 1 (ausente) + re-checagem: hotel_names_no_availability"
+    },
+    {
+     "nome": "Villa Casato Residenza Boutique",
+     "disponivel": false,
+     "tem_hidro_no_quarto": "incerto",
+     "origem_da_busca": "lote 1 (ausente) + re-checagem: hotel_names_no_availability"
+    },
+    {
+     "nome": "Matsubara Pousada",
+     "disponivel": false,
+     "tem_hidro_no_quarto": "incerto",
+     "origem_da_busca": "lote 1 (ausente) + re-checagem: hotel_names_no_availability"
+    },
+    {
+     "nome": "DOM Hotel",
+     "disponivel": false,
+     "tem_hidro_no_quarto": "incerto",
+     "origem_da_busca": "lote 1 (ausente) + re-checagem: hotel_names_no_availability"
+    },
+    {
+     "nome": "Secreto Boutique Hotel",
+     "disponivel": false,
+     "tem_hidro_no_quarto": "incerto",
+     "origem_da_busca": "lote 1 (ausente) + re-checagem: hotel_names_no_availability"
+    },
+    {
+     "nome": "Europa Hotel (Campos do Jordão)",
+     "disponivel": false,
+     "tem_hidro_no_quarto": "incerto",
+     "origem_da_busca": "lote 1 (casou com hotel errado em Brasília, descartado) + re-checagem 'Europa Hotel Campos do Jordão': hotel_names_no_availability"
+    },
+    {
+     "nome": "Pousada Cafe Poesia",
+     "disponivel": false,
+     "tem_hidro_no_quarto": "incerto",
+     "origem_da_busca": "lote 2 (ausente) + re-checagem: hotel_names_no_availability"
+    },
+    {
+     "nome": "Chalé Villa Nature",
+     "disponivel": false,
+     "tem_hidro_no_quarto": "incerto",
+     "origem_da_busca": "lote 2 (ausente) + re-checagem: hotel_names_no_availability"
+    },
+    {
+     "nome": "Bela Vista Chalé",
+     "disponivel": false,
+     "tem_hidro_no_quarto": "incerto",
+     "origem_da_busca": "lote 2 (ausente) + re-checagem: hotel_names_no_availability"
+    },
+    {
+     "nome": "Pousada Casa Redonda",
+     "disponivel": false,
+     "tem_hidro_no_quarto": "incerto",
+     "origem_da_busca": "lote 2 (ausente) + re-checagem: hotel_names_no_availability"
+    },
+    {
+     "nome": "Champet Boutique Hotel",
+     "disponivel": false,
+     "tem_hidro_no_quarto": "incerto",
+     "origem_da_busca": "lote 3 (ausente) + re-checagem: hotel_names_no_availability"
+    },
+    {
+     "nome": "Pousada Big Bear",
+     "disponivel": false,
+     "tem_hidro_no_quarto": "incerto",
+     "origem_da_busca": "lote 3 (ausente) + re-checagem: hotel_names_no_availability"
+    },
+    {
+     "nome": "Pousada Villa Capivary",
+     "disponivel": false,
+     "tem_hidro_no_quarto": "incerto",
+     "origem_da_busca": "lote 3 (ausente) + re-checagem: hotel_names_no_availability"
+    }
+   ],
+   "resumo_por_noite_com_hidro": {
+    "n": 12,
+    "p25": 1015.42,
+    "p50": 1434.42,
+    "p75": 2149.14,
+    "p90": 2412.27,
+    "max": 2871
+   },
+   "resumo_por_noite_todos": {
+    "n": 22,
+    "p25": 848.5,
+    "p50": 1050.95,
+    "p75": 1676.41,
+    "p90": 2302.89
+   },
+   "buscas_feitas": [
+    "1) hotel_names lote 1 (8 nomes): Hotel Ascona, Pousada das Lavandas, Villa Casato Residenza Boutique, Matsubara Pousada, L.A.H. Hostellerie, DOM Hotel, Secreto Boutique Hotel, Europa Hotel; destination 'Campos do Jordão, Brazil'. Voltaram 3: L.A.H. Hostellerie, Hotel Ascona e um falso positivo (Europa Hotel Brasília by Bsb Inn, id 9185378, Taguatinga-DF, descartado).",
+    "2) hotel_names lote 2 (7 nomes): Villa Belle Chalés, Pousada Cafe Poesia, Pousada Murano, Chalé Villa Nature, Bela Vista Chalé, Pousada Geada de Campos, Pousada Casa Redonda. Voltaram 3: Pousada Murano, Villa Belle Chalés, Pousada Geada de Campos.",
+    "3) hotel_names lote 3 (7 nomes): Charmê Chalés, vila grega hotel, Champet Boutique Hotel, Euro Suit Campos do Jordão, Pousada Big Bear, Pousada Villa Capivary, Pousada Benevento. Voltaram 4: Charmê Chalés, vila grega hotel, Euro Suit, Pousada Benevento.",
+    "4) Geral destination 'Campos do Jordão, Brazil' com facilities [HOT_TUB_JACUZZI]: 10 resultados (Murano, Vila Tio Lé, Ascona, Villa Belle, vila grega, Vila Husky, L.A.H., Nacional Inn, Carballo, Estoril).",
+    "5) Geral destination 'Campos do Jordão, Brazil' sem filtro: 10 resultados (Guida Residenza, Casa São José, Garnier, JB, Murano, Caminho das Pedras, Itália Moderna, Vale Verde, Siena, Villa Dolce Amore).",
+    "6) Re-checagem dos ausentes da lista, mesmo conector e mesmas datas, em lotes menores para separar 'nome não casou' de 'sem disponibilidade': [Pousada das Lavandas, Villa Casato Residenza Boutique, Matsubara Pousada, DOM Hotel, Secreto Boutique Hotel] -> erro hotel_names_no_availability para os 5.",
+    "7) Re-checagem: [Europa Hotel Campos do Jordão, Pousada Cafe Poesia, Chalé Villa Nature, Bela Vista Chalé] -> hotel_names_no_availability para os 4.",
+    "8) Re-checagem: [Pousada Casa Redonda, Champet Boutique Hotel, Pousada Big Bear, Pousada Villa Capivary] -> hotel_names_no_availability para os 4."
+   ],
+   "observacoes": "RESULTADO (sexta 01/01 a domingo 03/01/2027, preço público por noite = total da Booking ÷ 2). Concorrentes com hidro disponíveis (n=12): p25 R$ 1.015, p50 R$ 1.434, p75 R$ 2.149, p90 R$ 2.412, máximo R$ 2.871 (L.A.H. Hostellerie). Todos os disponíveis (n=22): p25 R$ 849, p50 R$ 1.051, p75 R$ 1.676, p90 R$ 2.303. Percentis por interpolação linear (igual ao PERCENTIL.INC do Excel).\n\nLISTA DE 22 CONCORRENTES: 9 com preço (L.A.H., Ascona, Murano, Villa Belle, Geada, Charmê, vila grega, Euro Suit, Benevento) e 13 esgotados, ou seja, 59% da lista. O conector respondeu 'hotel_names_no_availability' para Pousada das Lavandas, Villa Casato, Matsubara, DOM Hotel, Secreto, Europa Hotel (Campos), Cafe Poesia, Chalé Villa Nature, Bela Vista Chalé, Casa Redonda, Champet, Big Bear e Villa Capivary. Esse erro não separa 'esgotado' de 'regra que impede 01->03', como chegada fechada em 01/01 ou mínimo de 3 noites. Os dois casos são sinal de demanda ou de pacote fechado pelo concorrente. Nenhum concorrente devolveu preço sem disponibilidade. O lote 1 casou 'Europa Hotel' com um hotel de Brasília (R$ 286,03), que descartei. A re-checagem como 'Europa Hotel Campos do Jordão' também deu sem disponibilidade.\n\nSINAIS DE DEMANDA: (a) a maioria da lista nomeada, que são os pares mais caros e mais procurados por casais, está fora de venda para 01->03; (b) as buscas gerais pararam em 10 resultados cada, e a sobreposição foi grande (Murano nas três), então a oferta visível com hidro é curta; (c) mesmo assim, o preço do fim de semana é bem menor que o do Réveillon. A régua de 09/11 (estadia 30/12->03/01) dava p50 com hidro R$ 2.190, p75 R$ 3.135 e p90 R$ 3.890. Hoje, só para 01->03: p50 R$ 1.434 (-35%), p75 R$ 2.149 (-31%), p90 R$ 2.412 (-38%). A faixa F5 de 04/11 (p90 com hidro R$ 3.896 em 01/01 e R$ 3.846 em 02/01) está cerca de 60% acima do p90 medido hoje para este fim de semana. (d) PriceLabs no pacote: ocupação do mercado 47,4% em 01/01 e 24,9% em 02/01. O sábado ainda está fraco no mercado.\n\nNOSSAS POUSADAS NA BUSCA: Recanto dos Moinhos (7562933) não apareceu, o que bate com a regra vigente (01/01 sem chegada e mínimo de 3 noites, então 01->03 não é vendável sozinho). Villa Dolce Amore (14824789) APARECEU disponível para 01->03 na busca geral sem filtro: R$ 3.027,38 no total (R$ 1.513,69 por noite), nota 8,3 com 219 avaliações. Isso contradiz o pacote, que diz que todos os quartos da Villa estão com 01/01 'noCheckIn' e mínimo 3. Vale conferir, só em leitura, qual quarto ou tarifa da Villa está aberto na Booking para chegada em 01/01 e se a restrição chegou ao canal. O valor também está baixo em relação ao enviado: R$ 1.514 ÷ R$ 4.483 a 4.991 dá um fator de cerca de 0,30 a 0,34, abaixo do 0,4127 medido em 09/11, o que sugere uma promoção ativa e mais funda. Mesmo assim fica perto do p50 com hidro (R$ 1.434).\n\nCOMPARAÇÃO ESTIMADA (não medida, porque o Recanto não aparece): enviado de 01-02/01 × fator público do Recanto 0,6156 dá Q7 cerca de R$ 1.834, Q2 cerca de R$ 2.114, Double cerca de R$ 2.196 e Afrodite cerca de R$ 2.536 por noite. Os três primeiros ficam entre o p50 e o p75 com hidro; a Double fica no p75; a Afrodite fica acima do p90 (R$ 2.412) e abaixo do máximo (R$ 2.871).\n\nCONTA DE REFERÊNCIA COM OS DADOS DO PACOTE: no fim de semana restam 23 pacotes 01->03 possíveis (min(livres 01, livres 02) somando os 7 tipos), ou seja, 46 quarto-noites, mais 4 noites de 02/01 soltas. Se todos venderem ao público: no p50 com hidro cerca de R$ 66 mil, no p75 cerca de R$ 99 mil, no p90 cerca de R$ 111 mil, somados aos R$ 14,1 mil já vendidos no bloco. Para a meta de R$ 250 mil, faltam R$ 203,4 mil sobre 84 quarto-noites livres no período todo (34 do Réveillon e 50 do fim de semana). Isso dá uma média necessária de cerca de R$ 2.422 por noite com 100% de ocupação, praticamente o p90 com hidro do fim de semana. O fim de semana sozinho dificilmente sustenta essa média, então o Réveillon precisa carregar a diferença.\n\nLIMITAÇÕES: (1) o preço é o da oferta mais barata que a Booking mostra para 2 adultos. Pode ser um quarto sem hidro, uma tarifa não reembolsável e com ou sem café. Por isso o p50/p75 'com hidro' tende a subestimar o preço do quarto com hidro em si. (2) Classifiquei hidro = 'sim' pela facility 'Jacuzzi' do imóvel, como a regra pede. Em hotéis maiores (Ascona, Estoril, Nacional Inn, Carballo) a hidro pode existir só em algumas categorias ou ser de uso comum. (3) 'incerto' = só piscina, sauna ou spa geral (Euro Suit, JB) ou sem dados (os 13 esgotados). (4) vila grega hotel e Vila Husky têm o mesmo endereço (Rua Klaus Stemer 260) e podem ser do mesmo operador; mantive os dois. (5) Não liguei para o PriceLabs, não rodei o Beds24 e não gravei nada; usei só o conector oficial da Booking."
+  }
+ },
+ "final": {
+  "resumo_executivo": "QUANTO COBRAMOS HOJE (preço por noite que o hóspede vê na Booking em 16/11, para 2 adultos)\n- Réveillon (30/12 a 01/01), Recanto: de R$ 1.926 (Q7, medido) a R$ 2.484 (Afrodite).\n- Réveillon, Villa: de R$ 2.000 (Balcony, medido) a R$ 2.226 (King Spa).\n- Fim de semana (01 a 03/01), Recanto: fechado, porque 01/01 não aceita chegada e o mínimo é de 3 noites. Se abrisse hoje, com o desconto atual (fator 0,5832), ficaria assim: Q7 R$ 1.737, Q2 R$ 2.003, Double R$ 2.080 e Afrodite R$ 2.403.\n- Fim de semana, Villa: aberto por erro na Booking, de R$ 1.514 (Balcony, medido) a cerca de R$ 1.685 (King Spa). É o preço mais baixo do período.\n\nONDE ESTAMOS\n- Vendido: R$ 46.581 em 40 de 124 quarto-noites. Faltam R$ 203.419.\n- Ainda dá para vender 12 pacotes de Réveillon e 23 de fim de semana, ou seja, 70 quarto-noites. As outras 14 noites (10 em 30/12 e 4 em 02/01) só vendem com exceção às suas regras.\n- Se nada mudar, o provável é R$ 106 mil. O teto, vendendo 100%, é R$ 167 mil.\n\nO PLANO\n- Réveillon no seu pedido de 09/11: cerca de R$ 3.060 a 3.090 por noite nas suítes e R$ 4.125 na Afrodite.\n- Fim de semana aberto a R$ 2.550 a 2.650 por noite. É uma proposta abaixo do seu pedido de 09/11, e a decisão é sua. Só abre depois que o PriceLabs enviar os preços novos.\n- A promoção da Villa sai, e o desconto do Recanto volta a 5%.\n- Escada: a cada pacote vendido na pousada, o preço sobe 3% no Réveillon e 2% no fim de semana, com teto por quarto e só em datas futuras.\n- Descida só a partir de 7 dias antes (23/12 no Réveillon e 25/12 no fim de semana): 5% a menos em cada marco, com piso por quarto.\n- Resultado provável com o plano: R$ 169 mil.\n\nA META DE R$ 250 MIL\n- Sem exceção às suas regras, ela não fecha. Vendendo tudo, chegamos a R$ 215 mil. Mesmo se a Booking passasse a render 0,88 do preço público, chegaríamos a R$ 233 mil.\n- Ela fecha em R$ 254 mil, com folga de só R$ 4,3 mil, se as 4 condições acontecerem juntas:\n  1. Você abrir duas exceções para as noites soltas: saída em 31/12 e entrada no sábado 02/01.\n  2. A Booking render cerca de 0,88 do preço público (hoje rende cerca de 0,74). Para isso, a promoção não pode somar com o Genius, e 1/3 das vendas precisa ser direta.\n  3. O máximo do anúncio subir para R$ 6.000.\n  4. O Réveillon esgotar e o fim de semana vender 22 dos 23 pacotes.\n\nDECISÕES SUAS ATÉ 17/11\n1. Fechar já o 01→03 da Villa na extranet.\n2. Pagar o PriceLabs.\n3. Dar o \"Pode fazer\" dos preços: Réveillon, fim de semana, escada, descida e pisos.\n4. Tirar a promoção da Villa e voltar o desconto do Recanto para 5%.\n5. Dar o \"Pode fazer\" do 01→03. Eu só gravo depois de cumpridos os 3 passos de abertura.\n6. Decidir as duas exceções das noites soltas, cada uma com seu próprio \"Pode fazer\".",
+  "tabela_precos_atuais": [
+   {
+    "quarto": "Q7 Suíte Moinhos (Recanto)",
+    "bloco": "Réveillon 30/12→01/01 (medido na Booking; fator 0,5832)",
+    "livres_noite1": 3,
+    "livres_noite2": 2,
+    "pacotes_possiveis": 2,
+    "enviado_noite1": 3191,
+    "enviado_noite2": 3413,
+    "publico_pacote": 3851.45,
+    "genius3_pacote_estimado": 2598.2
+   },
+   {
+    "quarto": "Double / Panorâmica I (Recanto)",
+    "bloco": "Réveillon 30/12→01/01 (estimado com o fator medido hoje no Recanto, 0,5832)",
+    "livres_noite1": 6,
+    "livres_noite2": 3,
+    "pacotes_possiveis": 3,
+    "enviado_noite1": 3567,
+    "enviado_noite2": 3818,
+    "publico_pacote": 4306.93,
+    "genius3_pacote_estimado": 2905.47
+   },
+   {
+    "quarto": "Afrodite (Recanto)",
+    "bloco": "Réveillon 30/12→01/01 (estimado com o fator medido hoje no Recanto, 0,5832)",
+    "livres_noite1": 1,
+    "livres_noite2": 1,
+    "pacotes_possiveis": 1,
+    "enviado_noite1": 4120,
+    "enviado_noite2": 4400,
+    "publico_pacote": 4968.86,
+    "genius3_pacote_estimado": 3352.01
+   },
+   {
+    "quarto": "Q2 / Panorâmica II (Recanto)",
+    "bloco": "Réveillon 30/12→01/01 (estimado com o fator medido hoje no Recanto, 0,5832)",
+    "livres_noite1": 2,
+    "livres_noite2": 1,
+    "pacotes_possiveis": 1,
+    "enviado_noite1": 3482,
+    "enviado_noite2": 3721,
+    "publico_pacote": 4200.79,
+    "genius3_pacote_estimado": 2833.87
+   },
+   {
+    "quarto": "VK7 King Spa 7 (Villa)",
+    "bloco": "Réveillon 30/12→01/01 (estimado com o fator da Balcony medido hoje, 0,4461, com a promoção ativa)",
+    "livres_noite1": 4,
+    "livres_noite2": 3,
+    "pacotes_possiveis": 3,
+    "enviado_noite1": 4988,
+    "enviado_noite2": 4988,
+    "publico_pacote": 4450.29,
+    "genius3_pacote_estimado": 3936.79
+   },
+   {
+    "quarto": "Balcony sem banheira (Villa)",
+    "bloco": "Réveillon 30/12→01/01 (medido na Booking; fator 0,4461, com a promoção ativa)",
+    "livres_noite1": 5,
+    "livres_noite2": 1,
+    "pacotes_possiveis": 1,
+    "enviado_noite1": 4483,
+    "enviado_noite2": 4483,
+    "publico_pacote": 3999.45,
+    "genius3_pacote_estimado": 3537.97
+   },
+   {
+    "quarto": "VK2 King Spa 2 (Villa)",
+    "bloco": "Réveillon 30/12→01/01 (estimado com o fator da Balcony medido hoje, 0,4461, com a promoção ativa)",
+    "livres_noite1": 1,
+    "livres_noite2": 1,
+    "pacotes_possiveis": 1,
+    "enviado_noite1": 4991,
+    "enviado_noite2": 4991,
+    "publico_pacote": 4452.97,
+    "genius3_pacote_estimado": 3939.17
+   },
+   {
+    "quarto": "Q7 Suíte Moinhos (Recanto)",
+    "bloco": "Fim de semana 01→03/01 (fechado no Recanto; estimado com o fator de hoje, 0,5832. Com 0,6156, se o desconto voltar a 5%: 3.667,74)",
+    "livres_noite1": 4,
+    "livres_noite2": 6,
+    "pacotes_possiveis": 4,
+    "enviado_noite1": 2979,
+    "enviado_noite2": 2979,
+    "publico_pacote": 3474.71,
+    "genius3_pacote_estimado": 2344.05
+   },
+   {
+    "quarto": "Double / Panorâmica I (Recanto)",
+    "bloco": "Fim de semana 01→03/01 (fechado no Recanto; estimado com o fator de hoje, 0,5832. Com 0,6156: 4.391,69)",
+    "livres_noite1": 4,
+    "livres_noite2": 4,
+    "pacotes_possiveis": 4,
+    "enviado_noite1": 3567,
+    "enviado_noite2": 3567,
+    "publico_pacote": 4160.55,
+    "genius3_pacote_estimado": 2806.72
+   },
+   {
+    "quarto": "Afrodite (Recanto)",
+    "bloco": "Fim de semana 01→03/01 (fechado no Recanto; estimado com o fator de hoje, 0,5832. Com 0,6156: 5.072,54)",
+    "livres_noite1": 1,
+    "livres_noite2": 1,
+    "pacotes_possiveis": 1,
+    "enviado_noite1": 4120,
+    "enviado_noite2": 4120,
+    "publico_pacote": 4805.57,
+    "genius3_pacote_estimado": 3241.85
+   },
+   {
+    "quarto": "Q2 / Panorâmica II (Recanto)",
+    "bloco": "Fim de semana 01→03/01 (fechado no Recanto; estimado com o fator de hoje, 0,5832. Com 0,6156: 4.227,94)",
+    "livres_noite1": 2,
+    "livres_noite2": 2,
+    "pacotes_possiveis": 2,
+    "enviado_noite1": 3434,
+    "enviado_noite2": 3434,
+    "publico_pacote": 4005.42,
+    "genius3_pacote_estimado": 2702.07
+   },
+   {
+    "quarto": "VK7 King Spa 7 (Villa)",
+    "bloco": "Fim de semana 01→03/01 (aberto por erro na Booking; estimado com o fator da Balcony medido hoje, 0,3377)",
+    "livres_noite1": 5,
+    "livres_noite2": 6,
+    "pacotes_possiveis": 5,
+    "enviado_noite1": 4988,
+    "enviado_noite2": 4988,
+    "publico_pacote": 3368.9,
+    "genius3_pacote_estimado": 2980.18
+   },
+   {
+    "quarto": "Balcony sem banheira (Villa)",
+    "bloco": "Fim de semana 01→03/01 (aberto por erro na Booking; medido, fator 0,3377)",
+    "livres_noite1": 5,
+    "livres_noite2": 6,
+    "pacotes_possiveis": 5,
+    "enviado_noite1": 4483,
+    "enviado_noite2": 4483,
+    "publico_pacote": 3027.38,
+    "genius3_pacote_estimado": 2678.07
+   },
+   {
+    "quarto": "VK2 King Spa 2 (Villa)",
+    "bloco": "Fim de semana 01→03/01 (aberto por erro na Booking; estimado com o fator da Balcony medido hoje, 0,3377)",
+    "livres_noite1": 2,
+    "livres_noite2": 2,
+    "pacotes_possiveis": 2,
+    "enviado_noite1": 4991,
+    "enviado_noite2": 4991,
+    "publico_pacote": 3370.92,
+    "genius3_pacote_estimado": 2981.97
+   }
+  ],
+  "conta_da_meta": {
+   "vendido": 46580.68,
+   "falta": 203419.32,
+   "teto_status_quo": 167169,
+   "quarto_noites_vendaveis": 70,
+   "diaria_media_necessaria": 2906,
+   "explicacao": "VENDIDO\n- R$ 46.580,68 em 40 de 124 quarto-noites.\n- Diária média de R$ 1.165. Quase tudo foi vendido de agosto a outubro.\n- Réveillon: 28 noites, R$ 32.456,13. Fim de semana: 12 noites, R$ 14.124,55.\n- Faltam R$ 203.419,32.\n\nO QUE SOBRA\n- São 84 quarto-noites livres, mas só 70 vendem nas regras de hoje, em pacotes de 2 diárias:\n  - Réveillon: 12 pacotes. Q7 2, Double 3, Afrodite 1, Q2 1, VK7 3, Balcony 1, VK2 1.\n  - Fim de semana: 23 pacotes, depois de abrir o 01→03. Q7 4, Double 4, Afrodite 1, Q2 2, VK7 5, Balcony 5, VK2 2.\n- As outras 14 são noites soltas, que as regras não deixam vender:\n  - 10 em 30/12 (Balcony 4, Double 3, Q7 1, Q2 1, VK7 1). Só venderiam como 29→31, e o 31/12 não aceita saída (ordem de 03/11: só 30→01 ou 30→03).\n  - 4 em 02/01 (Q7 2, VK7 1, Balcony 1). Só venderiam com entrada no sábado, que fica sempre fechado (ordem de 02/11).\n  - O pacote não traz as vagas de 29/12 nem de 03/01, então é preciso conferir antes de prometer essas noites.\n\nQUANTO CADA NOITE PRECISA RENDER\n- Nas 70 noites vendáveis, cada uma precisa render R$ 2.906 pagos pelo hóspede. Se as 14 soltas também venderem, a média cai para R$ 2.422.\n- Hoje, o preço público médio dessas 70 noites é R$ 1.910: R$ 2.150 no Réveillon e R$ 1.784 no fim de semana (com o Recanto pelo fator de hoje, 0,5832, igual à tabela).\n- Hoje o hóspede paga cerca de 0,80 do preço público: a Booking rende cerca de 0,74 (0,49/0,63 no Recanto e 0,46/0,65 na Villa) e cerca de 1/4 das vendas é direta. Com 1/3 de venda direta, iria para cerca de 0,83. Para chegar a R$ 2.906 pagos com 0,83, o preço público médio precisaria ser de cerca de R$ 3.500 por noite.\n\nTETO SEM MUDAR NADA (vendendo 100% e o hóspede pagando o preço público cheio)\n- R$ 167.169. Para isso, os 12 pacotes teriam de virar 30→03, e o erro da Villa venderia o resto do fim de semana a R$ 1.514 a 1.685 por noite.\n- Sem o erro da Villa, o teto é R$ 144.949. Se os pacotes venderem só como 30→01, é R$ 98.178.\n- Mesmo abrindo o 01→03 e vendendo as 84 noites aos preços de hoje, o total fica em R$ 207.291.\n\nCOM O PLANO E SEM EXCEÇÕES ÀS SUAS REGRAS\n- Vendendo tudo (12 de 12 no Réveillon e 22 de 23 no fim de semana), com a escada calculada pela regra: R$ 214.819 se o hóspede pagar 0,83, ou R$ 233.062 se pagar 0,92.\n- Sem as noites soltas, a meta só fecharia se o hóspede pagasse 100% do preço público.\n\nCONCLUSÃO\n- Os R$ 250 mil exigem quatro coisas juntas: as duas exceções das noites soltas, a Booking rendendo cerca de 0,85 a 0,88 do preço público, o máximo do anúncio em R$ 6.000 e quase tudo vendido.\n- O provável com o plano é R$ 169 mil."
+  },
+  "cenarios": [
+   {
+    "nome": "1. Nada muda",
+    "premissas": "- O PriceLabs continua travado e os preços ficam os de hoje.\n- O 01→03 continua fechado no Recanto, e o erro da Villa continua.\n- Vendem 11 dos 12 pacotes 30→01 (sobra 1 Double). Três deles (Q7, Double e VK7) estendem para 30→03 ao preço de hoje.\n- O erro da Villa vende 5 pacotes 01→03 (3 Balcony e 2 VK7), a R$ 1.514 a 1.684 por noite.\n- O hóspede paga 0,80 do preço público: a Booking rende cerca de 0,74 e cerca de 1/4 das vendas é direta, como nas vendas atuais.",
+    "receita_total": 106203,
+    "atinge_250k": false
+   },
+   {
+    "nome": "2. Só a skill (o dono só paga o PriceLabs)",
+    "premissas": "- O motor do seu plano de 09/11 sobe o Réveillon do Recanto até o pedido, que é o teto, com o desconto de hoje (fator 0,5832): R$ 2.901 a 3.907 por noite. É uma conta otimista, porque pelo seu plano o motor só sobe 7% por unidade depois de metade vendida.\n- A Villa fica parada, porque a promoção trava o preço.\n- O 01→03 continua fechado, e o erro da Villa continua.\n- Mesmas vendas do cenário 1, com o hóspede pagando 0,80.",
+    "receita_total": 115302,
+    "atinge_250k": false
+   },
+   {
+    "nome": "3. Plano completo, ritmo provável (sem noites soltas)",
+    "premissas": "- O dono toma todas as decisões até 20/11, menos as exceções das noites soltas.\n- O 01→03 abre depois dos 3 passos.\n- Preços: Réveillon no pedido de 09/11 e fim de semana pela proposta (R$ 2.550 a 2.650; Afrodite R$ 3.400). Fatores: Recanto 0,6156 (desconto de volta a 5%) e Villa cerca de 0,62 (sem a promoção).\n- Vendem 11 dos 12 pacotes do Réveillon e 16 dos 23 do fim de semana. Seis do fim de semana vendem depois de D7, com os degraus de descida (10% a menos, em média).\n- Sem escada, por cautela. A escada somaria cerca de R$ 4 mil se o máximo subir para R$ 6.000.\n- O hóspede paga 0,83: 2/3 pela Booking a cerca de 0,74 e 1/3 direto a 100%.\n- Nenhuma noite solta.",
+    "receita_total": 168630,
+    "atinge_250k": false
+   },
+   {
+    "nome": "4. Plano completo, tudo vendido, sem exceções",
+    "premissas": "- Mesmas decisões e preços do cenário 3.\n- O Réveillon esgota (12 de 12) e o fim de semana vende 22 dos 23 pacotes.\n- Escada calculada pela regra, pacote a pacote:\n  - Réveillon: 3% a mais por pacote vendido na pousada. Dá média de +9,5% no Recanto e +6,2% na Villa, ou +8,2% no total. Isso exige o máximo de R$ 6.000; com R$ 5.000, a escada rende só +1,4%.\n  - Fim de semana: 2% a mais por pacote, com teto no concorrente com hidro mais caro (R$ 2.871 públicos). Dá média de +7,9%.\n- O hóspede paga 0,83.\n- Nenhuma noite solta.",
+    "receita_total": 214819,
+    "atinge_250k": false
+   },
+   {
+    "nome": "5. Igual ao 4, com a Booking rendendo 0,88 do preço público",
+    "premissas": "- Sem promoção somada ao Genius e com 1/3 de venda direta, o hóspede paga 0,92 no total. Hoje a Booking rende cerca de 0,74.\n- Nenhuma noite solta.\n- Mostra o limite sem exceções: para chegar a R$ 250 mil sem as noites soltas, o hóspede teria de pagar 100% do preço público.",
+    "receita_total": 233062,
+    "atinge_250k": false
+   },
+   {
+    "nome": "6. Meta condicional: o que os R$ 250 mil exigem",
+    "premissas": "- Tudo do cenário 5 (Réveillon esgotado, 22 dos 23 pacotes do fim de semana, escada pela regra, máximo de R$ 6.000 e a Booking rendendo 0,88), mais duas exceções às suas regras:\n  - Exceção 1: saída em 31/12, para vender 9 das 10 noites soltas de 30/12 como 29→31, a cerca de R$ 2.000 por noite.\n  - Exceção 2: entrada no sábado 02/01 (02→04, com mínimo de 2), para vender 3 das 4 noites soltas de 02/01, a cerca de R$ 1.700 por noite.\n- Ainda falta conferir as vagas de 29/12 e de 03/01.\n- A folga é de R$ 4,3 mil, menor que o efeito de qualquer premissa:\n  - sem a exceção do sábado, cai para R$ 249.622;\n  - com o máximo em R$ 5.000, cai para R$ 249.643;\n  - com 1 pacote a menos no fim de semana, cai para cerca de R$ 249,3 mil.\n- O hóspede precisa pagar pelo menos 0,90 do preço público, ou seja, a Booking a cerca de 0,85.\n- Só atinge se todas as condições acontecerem juntas.",
+    "receita_total": 254314,
+    "atinge_250k": true
+   },
+   {
+    "nome": "7. Teste de estresse: meta condicional com o hóspede pagando 0,83",
+    "premissas": "- Igual ao cenário 6, mas a Booking continua rendendo cerca de 0,74, como hoje, com 1/3 de venda direta. O total fica em 0,83.\n- Cada ponto a mais ou a menos no que o hóspede paga do preço público vale cerca de R$ 2.260.",
+    "receita_total": 233992,
+    "atinge_250k": false
+   },
+   {
+    "nome": "8. Pior caso",
+    "premissas": "- Caem as 3 reservas do Airbnb que ainda estão como 'new'. A base passa a ser os R$ 44.132,56 confirmados.\n- Nenhuma decisão do dono.\n- O Réveillon vende só 7 dos 12 pacotes, a cerca de R$ 1.300 pagos por noite. Dois deles estendem para 30→03, a cerca de R$ 1.250 por noite.\n- O erro da Villa vende 3 pacotes Balcony a R$ 1.514 por noite, com o Genius 3 por cima (o hóspede paga 72%).",
+    "receita_total": 73872,
+    "atinge_250k": false
+   }
+  ],
+  "precos_recomendados": [
+   {
+    "quarto": "Q7 Suíte Moinhos (Recanto)",
+    "bloco": "Réveillon 30/12→01/01",
+    "enviado_por_noite": 4974,
+    "publico_por_noite": 3062,
+    "pacote_publico": 6124,
+    "nota": "Hoje: R$ 1.926 por noite (medido). É o seu pedido de 09/11. Pelo seu plano, o pedido é o teto: o motor abriu abaixo e só sobe 7% por unidade depois de metade vendida. Ir direto ao pedido depende do 'Pode fazer' dos preços. No PriceLabs: regra por data com percent_base +324 sobre a base de 1.173. O público de R$ 3.062 supõe o desconto de volta a 5%; com 10%, fica em R$ 2.901. Escada: 3% a mais por pacote vendido no Réveillon do Recanto, até R$ 5.000 de enviado (R$ 6.000 se você subir o máximo). Piso do período: 4.059 enviados (+246, cerca de R$ 2.499 públicos). Restam 2 pacotes."
+   },
+   {
+    "quarto": "Double / Panorâmica I (Recanto)",
+    "bloco": "Réveillon 30/12→01/01",
+    "enviado_por_noite": 4988,
+    "publico_por_noite": 3071,
+    "pacote_publico": 6141,
+    "nota": "Hoje: cerca de R$ 2.153 por noite. É o seu pedido de 09/11 (percent_base +237 sobre a base de 1.480). Com o desconto em 10%: R$ 2.909. Mesma escada e mesmo teto da Q7. Piso do período: 4.070 enviados (+175, cerca de R$ 2.505 públicos). São 3 pacotes, o maior estoque do Réveillon no Recanto."
+   },
+   {
+    "quarto": "Q2 / Panorâmica II (Recanto)",
+    "bloco": "Réveillon 30/12→01/01",
+    "enviado_por_noite": 4977,
+    "publico_por_noite": 3064,
+    "pacote_publico": 6128,
+    "nota": "Hoje: cerca de R$ 2.100 por noite. É o seu pedido de 09/11 (percent_base +213 sobre a base de 1.590). Com o desconto em 10%: R$ 2.903. Piso do período: 4.070 enviados (+156), igual ao da Double, para manter a ordem Moinhos ≤ Panorâmica II ≤ Panorâmica I. Resta 1 pacote, porque há só 1 vaga em 31/12."
+   },
+   {
+    "quarto": "Afrodite (Recanto)",
+    "bloco": "Réveillon 30/12→01/01",
+    "enviado_por_noite": 6700,
+    "publico_por_noite": 4125,
+    "pacote_publico": 8249,
+    "nota": "Hoje: cerca de R$ 2.484 por noite. É o seu pedido de 09/11 (6.700 em 30 e 31/12; percent_base +235 sobre a base de 2.000). Fica perto da faixa F5 (R$ 3.946). Com o desconto em 10%: R$ 3.907. Teto da escada: 8.000 enviados. Piso do período: 5.460 enviados (+173, cerca de R$ 3.361 públicos). É 1 pacote."
+   },
+   {
+    "quarto": "VK7 King Spa 7 (Villa)",
+    "bloco": "Réveillon 30/12→01/01",
+    "enviado_por_noite": 4988,
+    "publico_por_noite": 3093,
+    "pacote_publico": 6185,
+    "nota": "O enviado não muda: já é o seu pedido e está colado no máximo, na reta de R$ 5.000 da escada de 01/11. Hoje o público é cerca de R$ 2.225, por causa da promoção. Os R$ 3.093 só acontecem se a promoção sair. O fator de cerca de 0,62 (0,65 geral × 0,95) ainda precisa ser confirmado na Booking. Piso do período: 4.070 enviados (+175). São 3 pacotes."
+   },
+   {
+    "quarto": "Balcony sem banheira (Villa)",
+    "bloco": "Réveillon 30/12→01/01",
+    "enviado_por_noite": 4483,
+    "publico_por_noite": 2779,
+    "pacote_publico": 5559,
+    "nota": "Hoje: R$ 2.000 por noite (medido). Segue a regra de 90% da King Spa. Só 1 pacote, porque há 1 vaga em 31/12. Quando vender, a VK7 passa a ser o preço de entrada da Villa. Depende de a promoção sair. Piso do período: 3.658 enviados (+188)."
+   },
+   {
+    "quarto": "VK2 King Spa 2 (Villa)",
+    "bloco": "Réveillon 30/12→01/01",
+    "enviado_por_noite": 4991,
+    "publico_por_noite": 3094,
+    "pacote_publico": 6189,
+    "nota": "Hoje: cerca de R$ 2.226 por noite. Mesmo raciocínio da VK7. Piso do período: 4.077 enviados (+221). É 1 pacote."
+   },
+   {
+    "quarto": "Q7 Suíte Moinhos (Recanto)",
+    "bloco": "Fim de semana 01→03/01",
+    "enviado_por_noite": 4142,
+    "publico_por_noite": 2550,
+    "pacote_publico": 5100,
+    "nota": "PROPOSTA, abaixo do seu pedido de 09/11. O pedido é 4.974 enviados, cerca de R$ 3.062 públicos, acima do concorrente mais caro de hoje (R$ 2.871). Depende do seu 'Pode fazer'; até lá, vale o seu plano de 09/11. Hoje o fim de semana está fechado; se abrisse, sairia a R$ 1.737 por noite (fator de hoje) ou R$ 1.834 (se o desconto voltar a 5%). No PriceLabs: percent_base +253 sobre a base de 1.173, cerca de 4.141 enviados. Com o desconto em 10%, o enviado sobe para 4.372. Escada: 2% a mais por pacote vendido no fim de semana do Recanto, com teto de R$ 2.871 públicos (4.664 enviados). Piso do período: 3.378 enviados (+188, cerca de R$ 2.080). São 4 pacotes."
+   },
+   {
+    "quarto": "Double / Panorâmica I (Recanto)",
+    "bloco": "Fim de semana 01→03/01",
+    "enviado_por_noite": 4305,
+    "publico_por_noite": 2650,
+    "pacote_publico": 5300,
+    "nota": "PROPOSTA, abaixo do seu pedido de 09/11 (4.988). Depende do seu 'Pode fazer'. Hoje, se abrisse: cerca de R$ 2.080 por noite (fator de hoje). É o topo das suítes do Recanto no fim de semana. percent_base +191. Com o desconto em 10%: enviado 4.544. Piso do período: 3.508 enviados (+137, cerca de R$ 2.159). São 4 pacotes."
+   },
+   {
+    "quarto": "Q2 / Panorâmica II (Recanto)",
+    "bloco": "Fim de semana 01→03/01",
+    "enviado_por_noite": 4224,
+    "publico_por_noite": 2600,
+    "pacote_publico": 5200,
+    "nota": "PROPOSTA, abaixo do seu pedido de 09/11 (4.977). Depende do seu 'Pode fazer'. Hoje, se abrisse: cerca de R$ 2.003 por noite. Fica entre a Q7 e a Double. percent_base +166. Com o desconto em 10%: enviado 4.458. Piso do período: 3.450 enviados (+117, cerca de R$ 2.124). São 2 pacotes."
+   },
+   {
+    "quarto": "Afrodite (Recanto)",
+    "bloco": "Fim de semana 01→03/01",
+    "enviado_por_noite": 5523,
+    "publico_por_noite": 3400,
+    "pacote_publico": 6800,
+    "nota": "PROPOSTA. O seu pedido de 09/11 é 6.600 em 01/01 e 6.520 em 02/01 (cerca de R$ 4.063 e R$ 4.014 públicos), feito para o 30→03. Até você decidir, o pedido continua como referência, e a skill não grava 5.523. Hoje, se abrisse: cerca de R$ 2.403 por noite. percent_base +176 (o pedido seria +230 e +226). Com o desconto em 10%: 5.830. Piso do período: 4.500 enviados (+125). É 1 pacote."
+   },
+   {
+    "quarto": "VK7 King Spa 7 (Villa)",
+    "bloco": "Fim de semana 01→03/01",
+    "enviado_por_noite": 4113,
+    "publico_por_noite": 2550,
+    "pacote_publico": 5100,
+    "nota": "PROPOSTA DE REDUÇÃO do enviado, de 4.988 para 4.113. Contraria a escada de 01/11 (reta de R$ 5.000), então só com o seu 'Pode fazer'. Mesmo assim o público sobe, porque a promoção sai. Hoje: R$ 1.684 por noite, à venda pelo erro, com a promoção (fator 0,3377). A skill só grava depois de a promoção sair e de medir o fator novo. Se a promoção ficar, mantém 4.988. Fica no preço da Q7 por causa da nota 8,3. percent_base +178. Piso do período: 3.360 enviados (+127). São 5 pacotes."
+   },
+   {
+    "quarto": "Balcony sem banheira (Villa)",
+    "bloco": "Fim de semana 01→03/01",
+    "enviado_por_noite": 3702,
+    "publico_por_noite": 2295,
+    "pacote_publico": 4590,
+    "nota": "PROPOSTA DE REDUÇÃO, de 4.483 para 3.702. Mesmas condições da VK7. Hoje: R$ 1.514 por noite (medido), à venda pelo erro. Segue a regra de 90% da King Spa. percent_base +191. Piso do período: 3.023 enviados (+138, cerca de R$ 1.874). São 5 pacotes."
+   },
+   {
+    "quarto": "VK2 King Spa 2 (Villa)",
+    "bloco": "Fim de semana 01→03/01",
+    "enviado_por_noite": 4113,
+    "publico_por_noite": 2550,
+    "pacote_publico": 5100,
+    "nota": "PROPOSTA DE REDUÇÃO, de 4.991 para 4.113. Mesmas condições da VK7. Hoje: cerca de R$ 1.685 por noite. percent_base +224. Piso do período: 3.353 enviados (+164). São 2 pacotes."
+   }
+  ],
+  "plano_de_acao": [
+   {
+    "quando": "Hoje (16/11) ou 17/11",
+    "o_que": "Fechar já, na extranet da Villa, a tarifa ou o quarto que está vendendo o 01→03 a R$ 3.027 (R$ 1.514 por noite), embora o Beds24 tenha 01/01 sem chegada e mínimo de 3. Fechar com ou sem a aprovação do fim de semana. Cada pacote vendido assim rende cerca de R$ 1.300 a 1.440 a menos que o plano, e reserva feita não se desfaz. Reabre só pelos 3 passos da ação de abertura do 01→03.",
+    "quem": "dono"
+   },
+   {
+    "quando": "Hoje (16/11) ou 17/11",
+    "o_que": "Pagar a cobrança em aberto do PriceLabs. O recálculo está bloqueado e o envio de 16/11 não saiu. Sem isso, nenhum preço novo chega à Booking. O impacto ao lado é o da skill sozinha, mas o pagamento destrava todo o resto.",
+    "quem": "dono",
+    "impacto_reais": 9100
+   },
+   {
+    "quando": "17/11",
+    "o_que": "Dar o 'Pode fazer' dos preços, em 4 partes:\n(a) Réveillon do Recanto direto no pedido de 09/11.\n(b) Fim de semana: aceitar a proposta abaixo do pedido, inclusive a redução do enviado da Villa, ou manter o pedido.\n(c) Escada nova só nessas 4 noites, no lugar da escada da Villa de 01/11 e da escada do Recanto de 09/11.\n(d) Descida só a partir de D7, com os pisos do período.\nAté a resposta, a skill não grava nada diferente das suas regras: segue o plano de 09/11 no Recanto e a escada de 01/11 na Villa, e a Afrodite fica no pedido de 6.600/6.520.",
+    "quem": "dono"
+   },
+   {
+    "quando": "17/11",
+    "o_que": "Tirar a promoção da Villa na Booking nas noites de 30/12 a 02/01. A Villa já está no máximo de R$ 5.000, então só assim o preço que o hóspede vê sobe.",
+    "quem": "dono",
+    "impacto_reais": 16900
+   },
+   {
+    "quando": "17/11",
+    "o_que": "Recanto: voltar o desconto da Booking de 10% para 5% nessas 4 noites (o fator caiu de 0,6156 para 0,5832 entre 09/11 e hoje). Também tirar as duas pousadas da Black Friday e de qualquer campanha de 30/12 a 03/01.",
+    "quem": "dono",
+    "impacto_reais": 3400
+   },
+   {
+    "quando": "Até 20/11",
+    "o_que": "Não deixar promoção somar com o Genius 2 e 3 nessas noites. Para a meta, a Booking precisa render cerca de 0,88 do preço público (hoje rende cerca de 0,74). O impacto ao lado é o de passar o total de 0,83 para 0,92 com tudo vendido. Cada ponto vale cerca de R$ 2 mil.",
+    "quem": "dono",
+    "impacto_reais": 18200
+   },
+   {
+    "quando": "Até 20/11",
+    "o_que": "Subir o máximo do anúncio de R$ 5.000 para R$ 6.000 em Q7, Double, Q2, VK7, VK2 e Balcony, só nas noites de 30/12 a 02/01. Se o PriceLabs não deixar por data, subir no anúncio todo, e a skill vigia as outras datas. Sem isso, a escada do Réveillon rende +1,4% em vez de +8,2%.",
+    "quem": "dono",
+    "impacto_reais": 4700
+   },
+   {
+    "quando": "17/11",
+    "o_que": "Dar o 'Pode fazer' para abrir o fim de semana 01→03: chegada na sexta 01/01 e saída no domingo 03/01, 2 diárias. O sábado 02/01 continua fechado para entrada e saída. O 30→01 e o 30→03 continuam. A gravação segue a ação de abertura (3 passos). O impacto é o do fim de semana no provável, menos o que viria de 3 extensões 30→03.",
+    "quem": "dono",
+    "impacto_reais": 51700
+   },
+   {
+    "quando": "No dia em que o PriceLabs voltar, com o 'Pode fazer' dos preços",
+    "o_que": "Preço só pelo PriceLabs, em regra por data com percent_base (variação sobre a base; piso e teto da noite no alvo).\n- Réveillon (30 e 31/12): Q7 +324 (4.974), Q2 +213 (4.977), Double +237 (4.988), Afrodite +235 (6.700). Villa sem mudança.\n- Fim de semana (01 e 02/01), se aprovado: Q7 +253 (cerca de 4.141), Q2 +166 (cerca de 4.229), Double +191 (cerca de 4.307), Afrodite +176 (cerca de 5.520) ou o pedido (+230 e +226). Na Villa, VK7 +178, VK2 +224 e Balcony +191, só depois de a promoção sair e de medir o fator novo.\n- Os pisos do período entram como mínimo, em percent_base.\nDepois do envio, conferir o price1 no Beds24 (só leitura) e medir o público na Booking pelo conector oficial: 30→01, 30→03 e o fim de semana pela diferença entre os dois.\nSem o 'Pode fazer', o motor segue o seu plano de 09/11.",
+    "quem": "skill"
+   },
+   {
+    "quando": "Só depois dos 3 passos, nesta ordem",
+    "o_que": "Abertura do 01→03, em 3 passos:\n(1) PriceLabs ativo e os preços do fim de semana já enviados.\n(2) Preço público do fim de semana medido na Booking, dentro do alvo (±5%), pela diferença 30→03 − 30→01.\n(3) Promoção da Villa retirada.\nSó então gravar no Beds24 as restrições: chegada liberada em 01/01, mínimo de 2 em 01 e 02/01, sábado 02/01 continua sem entrada nem saída, 30→01 e 30→03 sem mudança. No Beds24 vão só restrições (mínimo, chegada e saída), nunca preço. Se o 'Pode fazer' vier antes do PriceLabs, a skill espera, porque abrir com o enviado atual venderia o Recanto a R$ 1.737 a 2.403 por noite.",
+    "quem": "skill"
+   },
+   {
+    "quando": "Todos os dias, nas rotinas das 07:53 e 16:53",
+    "o_que": "Medir na Booking o 30→01, o 30→03 e, depois de aberto, o 01→03 das duas pousadas. Corrigir o enviado para manter o público no alvo.\nEscada: cada pacote novo vendido na pousada sobe os pacotes que restam no mesmo bloco dela: 3% no Réveillon e 2% no fim de semana.\nTetos:\n- Réveillon: o máximo do anúncio (R$ 5.000, ou R$ 6.000 se o dono subir); Afrodite 8.000.\n- Fim de semana: o concorrente com hidro mais caro do dia (hoje R$ 2.871 públicos, cerca de 4.664 enviados no Recanto e 4.631 na Villa); Balcony a 90% da King Spa; Afrodite no pedido de 6.600/6.520.\nSubidas (escada e correção do enviado) só valem para datas futuras: a noite de hoje (D0) nunca sobe. Abaixo da linha de alarme, a escada para.",
+    "quem": "skill"
+   },
+   {
+    "quando": "A partir de 18/11",
+    "o_que": "Campanha de venda direta para a base de clientes, por WhatsApp, Instagram e site, sempre pelo preço público do dia e nunca abaixo. O alvo é 1/3 das vendas novas. A ceia é opcional e só conta na meta se o valor entrar na reserva no Beds24.",
+    "quem": "recepcao",
+    "impacto_reais": 3200
+   },
+   {
+    "quando": "Depois de o 01→03 estar gravado",
+    "o_que": "Oferecer o 01→03, como reserva nova, aos hóspedes das 11 reservas que já saem em 01/01, sem mexer na reserva atual. Preparar a troca de quarto em 01/01.",
+    "quem": "recepcao"
+   },
+   {
+    "quando": "Antes do pedido das exceções (até 20/11)",
+    "o_que": "Ler no Beds24, só leitura, as vagas de 29/12 e de 03/01 nos quartos com noite solta: Balcony, Double, Q7, Q2 e VK7. Sem vaga nesses dias, as noites soltas não vendem nem com as exceções.",
+    "quem": "skill"
+   },
+   {
+    "quando": "Depois das duas exceções aprovadas (cada uma com o seu 'Pode fazer')",
+    "o_que": "Noites soltas: até as duas aprovações, nenhuma venda, nem direta, e nenhuma mudança no Beds24.\n- Exceção 1, saída em 31/12: as 10 noites de 30/12 vendem como 29→31, a cerca de R$ 2.000 por noite, primeiro pela recepção.\n- Exceção 2, entrada no sábado 02/01 com mínimo de 2: as 4 noites de 02/01 vendem como 02→04, a cerca de R$ 1.700 por noite.\nNas OTAs, só quando o 31/12 (ou o 01/01) esgotar naquele tipo de quarto. Assim nenhuma noite solta come pacote.",
+    "quem": "recepcao",
+    "impacto_reais": 21300
+   },
+   {
+    "quando": "19/11",
+    "o_que": "Conferir no Airbnb o preço exibido de 30/12 a 03/01: as vendas antigas saíram a R$ 294 a 844 por noite. Conferir também se as 3 reservas em 'new' (R$ 2.448,12) estão de pé, sem mexer nelas.",
+    "quem": "dono"
+   },
+   {
+    "quando": "19/11",
+    "o_que": "Incluir 'Jacuzzi/banheira de hidromassagem' nas comodidades da Villa na Booking. Hoje ela não aparece no filtro de hidro, e o Recanto aparece.",
+    "quem": "dono"
+   },
+   {
+    "quando": "Toda segunda, de 23/11 a 28/12",
+    "o_que": "Comparar receita, quarto-noites e pacotes vendidos com o marco e com a linha de alarme. Contar o ritmo por pacotes vendidos, não pela ocupação da noite. Antes de D7, abaixo do alarme, só parar a escada e reforçar a venda direta, sem baixar preço. Avisar o dono.",
+    "quem": "skill"
+   },
+   {
+    "quando": "De 23/12 (Réveillon) e de 25/12 (fim de semana) em diante",
+    "o_que": "Degraus de descida de 5% em D7, D5, D3 e D1, só se o bloco estiver abaixo da linha, contada em pacotes novos desde 16/11:\n- Réveillon: menos de 6 em 23/12, 7 em 25/12, 8 em 27/12 e 9 em 29/12.\n- Fim de semana: menos de 9 em 25/12, 10 em 27/12, 12 em 29/12 e 14 em 31/12.\nO degrau vale para a pousada que estiver abaixo da sua parte. Cada degrau respeita o maior valor entre o piso do período e o alvo do degrau, nunca o público de hoje. Se o bloco voltar acima da linha, sobe um degrau (5%) por vez, só em datas futuras.",
+    "quem": "skill"
+   },
+   {
+    "quando": "Semanal, a partir de 30/11",
+    "o_que": "Nova varredura dos concorrentes nos blocos 30→01 e 01→03 pelo conector oficial da Booking, para atualizar o p75, o p90 e o máximo com hidro, que é o teto da escada do fim de semana.",
+    "quem": "skill"
+   }
+  ],
+  "marcos": [
+   {
+    "data": "2026-11-17",
+    "alvo_receita": 46581,
+    "alvo_quarto_noites": 40,
+    "se_atras": "Este marco é de decisões. Se até o fim do dia o PriceLabs não voltou ou o 01→03 da Villa continua aberto na Booking, a skill reenvia a lista curta: (1) fechar o erro da Villa, (2) pagar o PriceLabs, (3) 'Pode fazer' dos preços, (4) promoção. Sem essas decisões, o provável é R$ 106 mil e o teto é R$ 167 mil."
+   },
+   {
+    "data": "2026-11-23",
+    "alvo_receita": 56500,
+    "alvo_quarto_noites": 44,
+    "se_atras": "Linha de alarme: R$ 53.100 e 43 quarto-noites. É D37 do Réveillon e D39 do fim de semana. Antes de D7 não há descida: abaixo do alarme, a escada para e a recepção reforça a venda direta. Conferir se o PriceLabs está enviando, se o erro da Villa foi fechado, se a promoção saiu e se o 01→03 só abriu depois dos 3 passos."
+   },
+   {
+    "data": "2026-11-30",
+    "alvo_receita": 66400,
+    "alvo_quarto_noites": 47,
+    "se_atras": "Linha de alarme: R$ 59.600 e 46 quarto-noites. O alvo acumulado desde 16/11 é cerca de 1 pacote de Réveillon e 2 de fim de semana. Abaixo do alarme: a escada fica parada, a venda direta é reforçada e o 01→03 é oferecido a quem sai em 01/01. O preço não desce. Começa a varredura semanal dos concorrentes."
+   },
+   {
+    "data": "2026-12-07",
+    "alvo_receita": 85200,
+    "alvo_quarto_noites": 54,
+    "se_atras": "Linha de alarme: R$ 72.000 e 51 quarto-noites. O alvo acumulado é cerca de 3 pacotes de Réveillon e 4 de fim de semana. Abaixo do alarme por duas rotinas seguidas: continua sem descida, porque faltam mais de 7 dias. A skill avisa o dono e só reforça a venda direta."
+   },
+   {
+    "data": "2026-12-14",
+    "alvo_receita": 105800,
+    "alvo_quarto_noites": 62,
+    "se_atras": "Linha de alarme: R$ 85.500 e 57 quarto-noites. O alvo acumulado é cerca de 4 pacotes de Réveillon e 7 de fim de semana. Abaixo do alarme: continua sem descida antes de D7. A skill avisa o dono que o alvo passa a ser o provável (cerca de R$ 169 mil) e confere os pisos do período gravados no PriceLabs (percent_base mínimo)."
+   },
+   {
+    "data": "2026-12-21",
+    "alvo_receita": 146800,
+    "alvo_quarto_noites": 78,
+    "se_atras": "Linha de alarme: R$ 107.100 e 67 quarto-noites. O alvo acumulado é cerca de 6 pacotes de Réveillon, 10 de fim de semana e 5 noites soltas, essas só com as exceções aprovadas. Ainda sem descida: o D7 do Réveillon é 23/12 e o do fim de semana é 25/12. Abaixo do alarme, a escada fica parada. Com 10 ou mais dos 12 pacotes do Réveillon vendidos, os que restam sobem mais 5%, uma vez só, além da escada. Isso vale só para datas futuras e dentro do teto (R$ 5.000 ou 6.000 de enviado). Esse ganho não entra nos cenários (até cerca de R$ 0,6 mil)."
+   },
+   {
+    "data": "2026-12-28",
+    "alvo_receita": 208600,
+    "alvo_quarto_noites": 102,
+    "se_atras": "Linha de alarme: R$ 141.700 e 82 quarto-noites. O alvo acumulado é cerca de 10 pacotes de Réveillon, 16 de fim de semana e 10 noites soltas.\nDegraus de 5% a menos, só se o bloco estiver abaixo da linha:\n- Réveillon: 23/12 (menos de 6 pacotes novos), 25/12 (menos de 7), 27/12 (menos de 8) e 29/12 (menos de 9).\n- Fim de semana: 25/12 (menos de 9), 27/12 (menos de 10), 29/12 (menos de 12) e 31/12 (menos de 14).\nNunca abaixo dos pisos do período:\n- Réveillon: Q7 4.059 enviados (cerca de R$ 2.499 públicos), Q2 e Double 4.070 (cerca de R$ 2.505), Afrodite 5.460 (cerca de R$ 3.361), VK7 4.070 (cerca de R$ 2.523), VK2 4.077 (cerca de R$ 2.528), Balcony 3.658 (cerca de R$ 2.268).\n- Fim de semana: Q7 3.378 (cerca de R$ 2.080), Q2 3.450 (cerca de R$ 2.124), Double 3.508 (cerca de R$ 2.159), Afrodite 4.500 (cerca de R$ 2.770), VK7 3.360 (cerca de R$ 2.083), VK2 3.353 (cerca de R$ 2.079), Balcony 3.023 (cerca de R$ 1.874). Esses pisos ficam entre o p50 e o p75 com hidro de hoje.\nSe o bloco voltar à linha, sobe um degrau por vez, só em datas futuras. A recepção faz a última rodada de venda direta."
+   },
+   {
+    "data": "2027-01-01",
+    "alvo_receita": 254300,
+    "alvo_quarto_noites": 120,
+    "se_atras": "Linha de alarme: R$ 168.600 e 94 quarto-noites. O alvo de R$ 254.300 e 120 quarto-noites é a meta condicional e inclui 12 noites soltas. Sem as exceções, o fim da linha é R$ 214.800 e 108 quarto-noites (com o hóspede pagando 0,83). Fechamento: o que sobrar do 01→03 fica no degrau de D1 (31/12), nunca abaixo do piso do período. O 02/01 solto só vende se você aprovou a entrada no sábado. Registrar o resultado por quarto e por bloco para o próximo Réveillon."
+   }
+  ],
+  "decisoes_do_dono": [
+   "Fechar já, na extranet, o 01→03 da Villa: a tarifa ou o quarto que está vendendo a R$ 1.514 por noite sem a restrição de 01/01. Fechar com ou sem a aprovação do fim de semana. Cada pacote vendido assim rende cerca de R$ 1.300 a 1.440 a menos e não se desfaz. Reabre só pelos 3 passos.",
+   "Pagar hoje a cobrança do PriceLabs. Sem isso, nenhum preço muda, e a Booking segue vendendo o Réveillon a R$ 1.926 a 2.484 por noite. A skill sozinha soma cerca de R$ 9 mil.",
+   "Dar o 'Pode fazer' dos preços, em 4 partes. (a) Réveillon do Recanto direto no pedido de 09/11 (Q7 4.974, Q2 4.977, Double 4.988, Afrodite 6.700). Hoje o seu plano só chega lá pela escada de +7% depois de metade vendida. (b) Fim de semana: aceitar a proposta abaixo do seu pedido (Q7 4.142, Q2 4.224, Double 4.305, Afrodite 5.523; na Villa, VK7 e VK2 4.113 e Balcony 3.702, uma redução de 4.988, 4.991 e 4.483 que só vale sem a promoção) ou manter o pedido de 09/11 (cerca de R$ 2.900 a 3.090 públicos, acima do concorrente mais caro; Afrodite 6.600/6.520). (c) Trocar, só nessas 4 noites, a escada da Villa de 01/11 (reta de R$ 5.000) e a do Recanto de 09/11 (+7% depois de metade vendida) pela escada nova: +3% no Réveillon e +2% no fim de semana por pacote vendido na pousada, com teto por quarto, sem subir a noite de hoje e com pausa abaixo do alarme. (d) Descida só a partir de D7, em degraus de 5%, com os pisos do período. Até a sua resposta, nada muda.",
+   "Tirar a promoção da Villa nas noites de 30/12 a 02/01. É a única forma de o preço público da Villa subir, porque o enviado já está no máximo. Vale cerca de R$ 17 mil no provável.",
+   "Recanto: voltar o desconto da Booking de 10% para 5% nessas noites e tirar o período da Black Friday e de qualquer campanha. Vale cerca de R$ 3,4 mil.",
+   "Não deixar promoção somar com o Genius 2 e 3 nessas noites. Para a meta, a Booking precisa render cerca de 0,88 do preço público (hoje rende cerca de 0,74). Cada ponto a mais que o hóspede paga vale cerca de R$ 2,3 mil.",
+   "Subir o máximo do anúncio de R$ 5.000 para R$ 6.000 em Q7, Double, Q2, VK7, VK2 e Balcony, de preferência só de 30/12 a 02/01. Sem isso, a escada do Réveillon rende +1,4% em vez de +8,2%, e a meta condicional cai para R$ 249,6 mil.",
+   "Dar o 'Pode fazer' para abrir o fim de semana 01→03: chegada na sexta 01/01, saída no domingo 03/01, 2 diárias. O sábado continua fechado. A skill só grava depois dos 3 passos: PriceLabs enviando, público medido dentro do alvo e promoção da Villa fora. Vale cerca de R$ 52 mil no provável.",
+   "Exceção 1, decisão separada: liberar a saída em 31/12 (estadias 29→31) para as 10 noites soltas de 30/12. É uma exceção à sua ordem de 03/11 ('só 30→01 ou 30→03'). Antes, a skill confere as vagas de 29/12.",
+   "Exceção 2, decisão separada: liberar a entrada no sábado 02/01 (estadias 02→04, com mínimo de 2) para as 4 noites soltas de 02/01. É uma exceção à regra dos sábados de 02/11. Antes, a skill confere as vagas de 03/01. Sem as duas exceções a meta não fecha; sem só a do sábado, fica em R$ 249,6 mil.",
+   "Autorizar a campanha de venda direta, sempre pelo preço público do dia, com alvo de 1/3 das vendas. A ceia é opcional e só conta se o valor entrar na reserva.",
+   "Aceitar o acompanhamento em duas linhas: a meta condicional (R$ 254 mil) e o alarme no provável (R$ 169 mil). O ritmo do Réveillon e do fim de semana passa a ser contado por pacotes vendidos.",
+   "Incluir 'Jacuzzi' nas comodidades da Villa na Booking e conferir o preço exibido no Airbnb de 30/12 a 03/01."
+  ],
+  "riscos": [
+   "A meta só fecha com 4 condições juntas: as duas exceções às suas regras, a Booking rendendo cerca de 0,88 do preço público (hoje rende cerca de 0,74), o máximo de R$ 6.000 e quase tudo vendido. A folga é de R$ 4,3 mil. O provável é R$ 169 mil e, se nada mudar, R$ 106 mil.",
+   "PriceLabs travado: a cada dia sem envio, a Booking segue vendendo o Réveillon a R$ 1.926 a 2.484 por noite e a Villa no fim de semana a R$ 1.514.",
+   "Erro da Villa no 01→03: cada pacote vendido a R$ 1.514 por noite fica, porque não se mexe em reserva feita. Rende cerca de R$ 1.300 a 1.440 a menos que o plano.",
+   "Abrir o 01→03 antes dos 3 passos vende o Recanto a R$ 1.737 a 2.403 por noite (enviado atual × 0,5832) e a Villa a R$ 1.514 a 1.685, se a promoção ficar.",
+   "O fim de semana é o ponto fraco. O mercado do sábado 02/01 está em 24,9% (fechou 2025 com 57,6%). A proposta (R$ 2.550 a 2.650) fica acima do p90 com hidro de hoje (R$ 2.412). Cada pacote não vendido tira cerca de R$ 5 mil da meta, mais que a folga.",
+   "Desconto de Genius e de canal: cada ponto do que o hóspede paga do preço público vale cerca de R$ 2,3 mil. Com 0,83, a meta condicional cai para cerca de R$ 234 mil.",
+   "O Réveillon proposto (cerca de R$ 3.060 a 3.090 por noite) fica acima de todos os concorrentes ainda à venda (o máximo é R$ 3.022). A aposta é que os 13 de 22 sem vaga estejam esgotados. Se estiverem só exigindo 3 noites ou mais, continuam na disputa, e aí entram os degraus de D7.",
+   "Com o máximo de R$ 5.000, a escada do Réveillon praticamente não anda. Se não der para subir o máximo só nessas datas, a mudança vale também para outros picos.",
+   "O fator público muda quando o dono mexe na promoção, e o conector da Booking não diz qual quarto ou tarifa foi precificado. Na Villa, o enviado do fim de semana cai enquanto o público sobe, então a skill só mexe depois de medir.",
+   "A Balcony tem só 1 vaga em 31/12. Quando vender, a VK7 passa a ser o preço de entrada da Villa no Réveillon.",
+   "A nota da Villa (8,3) fica abaixo dos pares (9,6 a 9,8). Por isso ela fica no preço da Q7, e não acima.",
+   "Noites soltas: abrir a saída em 31/12 ou a entrada no sábado nas OTAs antes de o 31/12 (ou o 01/01) esgotar naquele quarto come pacotes. As vagas de 29/12 e de 03/01 ainda não foram conferidas, e o 02→04 também exige mínimo de 2 em 02/01 (hoje é 3).",
+   "Em 01/01 há troca de quarto no feriado: sai o hóspede do Réveillon e entra o do fim de semana no mesmo dia.",
+   "A régua do Réveillon de hoje tem viés, porque só sobraram os concorrentes mais baratos. As referências de topo (régua de 09/11 e F5 de 04/11) têm 1 a 2 semanas.",
+   "Há 3 reservas do Airbnb em 'new' (R$ 2.448,12) ainda não confirmadas. O Airbnb vendeu o período a R$ 294 a 844 por noite.",
+   "Trocar as escadas e regras do dono (01/11 na Villa, 09/11 no Recanto) sem o 'Pode fazer' dele fere as ordens vigentes. Até a resposta, a skill não muda nada.",
+   "Os impactos de cada ação se sobrepõem e não devem ser somados. Valem os números dos cenários."
+  ],
+  "divergencias_entre_estrategistas": "Os números de base batem entre os três estrategistas e foram reconferidos em Python a partir do pacote: vendido R$ 46.580,68; faltam R$ 203.419,32; 12 pacotes de Réveillon, 23 de fim de semana e 14 noites soltas; preço público médio de R$ 1.910 (R$ 2.150 no Réveillon e R$ 1.784 no fim de semana).\n\nONDE OS ESTRATEGISTAS DIVERGIRAM\n\n1) PREÇO DO RÉVEILLON\n- Estrategista 1: R$ 3.600 a 3.800 por noite, com máximo de R$ 7.500.\n- Estrategista 2: cerca de R$ 2.900.\n- Estrategista 3: cerca de R$ 3.060 a 3.090, o pedido de 09/11.\n- Escolhido: o 3. Ir direto ao pedido depende do seu 'Pode fazer', porque o seu plano de 09/11 abre pelo mercado e só sobe pela escada.\n\n2) MÁXIMO DO ANÚNCIO\n- 7.500 no anúncio todo (1), 6.000 só no feriado (2), cerca de 5.500 (3).\n- Escolhido: 6.000, só nas datas do feriado.\n\n3) PREÇO DO FIM DE SEMANA\n- Estrategista 1: R$ 2.800 a 2.900.\n- Estrategista 2: R$ 1.925 a 2.250.\n- Estrategista 3: R$ 2.550 a 2.650.\n- Escolhido: o 3, como proposta abaixo do seu pedido, com o teto da escada no concorrente mais caro (R$ 2.871). A decisão é sua.\n\n4) PROMOÇÃO DA VILLA\n- O 1 e o 3 queriam tirar; o 2 queria limitar a 30%.\n- Escolhido: tirar.\n\n5) NOITES SOLTAS\n- O 1 e o 3 queriam abrir nas OTAs com trava; o 2 queria vender só pelo direto.\n- Agora ficam fora dos cenários-base: qualquer venda exige duas exceções às suas regras, cada uma com seu 'Pode fazer'.\n\n6) QUANTO O HÓSPEDE PAGA DO PREÇO PÚBLICO\n- 0,90 a 0,92 (1), 0,90 mais o direto a 100% (2), 0,83 (3).\n- Medido no pacote: a Booking rende cerca de 0,74.\n- Ficou: 0,80 sem mudança e 0,83 no plano. O 0,92 aparece só como condição da meta.\n\n7) FATOR DO RECANTO\n- O 1 e o 2 usaram 0,5832; o 3 usou 0,6156.\n- O 'quanto cobramos hoje' usa 0,5832 em tudo. O 0,6156 aparece só como 'se o desconto voltar a 5%'.\n\n8) CEIA\n- Ficou fora da conta.\n\n9) AFRODITE NO FIM DE SEMANA\n- R$ 4.000 (1), R$ 3.033 (2), R$ 3.400 (3).\n- A proposta é R$ 3.400. Até você decidir, vale o pedido de 6.600/6.520 como referência.\n\n10) RESULTADO PROVÁVEL\n- Cerca de R$ 222 mil (1), R$ 215 mil (2) e R$ 167 mil (3).\n- Na conta unificada e corrigida: cerca de R$ 169 mil.\n\n11) TETO SEM MUDAR NADA\n- R$ 98,2 mil, R$ 144,9 mil ou R$ 167,2 mil. As contas batem; a diferença é se o erro da Villa entra.\n\n12) MARCOS\n- Ficou a estrutura do 3: meta mais linha de alarme, com o ritmo contado por pacotes.\n\nCORREÇÕES PEDIDAS NA VERIFICAÇÃO (todas procedem; nenhuma foi rejeitada)\n\n- Noites soltas na meta (2 apontamentos, gravidade alta): procede.\n  - Refiz as contas: na conta antiga, sem as noites soltas a meta dava R$ 231.360, e sem as 3 de sábado, R$ 247.920.\n  - Na conta nova, tudo vendido dá R$ 214.819 (com 0,83) ou R$ 233.062 (com 0,92).\n  - A meta virou um cenário condicional às duas exceções, e saiu a contradição entre 'sábado fechado' e vender o 02→04 nas OTAs.\n\n- Fator do fim de semana do Recanto (2 apontamentos): procede.\n  - A tabela e o resumo agora usam 0,5832: R$ 1.737 a 2.403 por noite.\n  - Os 23 pacotes somam R$ 82.082 de preço público (R$ 1.784 por noite), batendo com a média.\n\n- Escada de +10% e +5% (2 apontamentos): procede.\n  - Pela regra, o Réveillon sobe +8,2% (Recanto +9,5%, Villa +6,2%) com o máximo de R$ 6.000, e só +1,4% com R$ 5.000.\n  - No fim de semana, 2% por pacote sem teto daria +10,5%. Pus o teto no concorrente com hidro mais caro (R$ 2.871), o que dá +7,9%.\n\n- Hóspede pagando 0,92: procede.\n  - O medido é cerca de 0,74 na Booking. Com 1/3 de venda direta, dá 0,83.\n  - Os 0,92 viraram condição da meta (a Booking rendendo 0,88).\n\n- Descida antes de D7: procede.\n  - Agora nada desce antes de D7. São degraus de 5% em D7, D5, D3 e D1, só se o bloco estiver abaixo da linha.\n  - A linha é a curva de feriado da skill aplicada ao provável, em pacotes. Se fosse aplicada às noites do bloco, o Réveillon (já 54% vendido) quase nunca desceria, e o fim de semana (21%, fechado até hoje) desceria até no caminho da meta.\n  - Os gatilhos de 01/11 dessas noites já tinham sido trocados pelas faixas F5 de 04/11.\n\n- Piso de feriado: procede.\n  - Cada quarto tem agora um piso do período, em enviado e em percent_base: o alvo × 0,95⁴, ou seja, o efeito máximo dos 4 degraus de 5%.\n  - Esses pisos ficam acima do piso_real de R$ 1.000 do quartos.json (2.381, 2.564 e 1.887 enviados).\n\n- Abrir o 01→03 no mesmo dia do 'Pode fazer': procede.\n  - Agora só abre depois dos 3 passos, e o 01→03 da Villa fecha já.\n\n- Subir o preço da noite de hoje: procede.\n  - As subidas valem só para datas futuras.\n\n- Fim de semana abaixo do pedido de 09/11: procede.\n  - Virou decisão sua, incluindo a redução do enviado da Villa. Até lá, valem as suas regras.\n\n- Escada sem dizer o que substitui: procede.\n  - A escada está descrita por completo e pede a sua aprovação para substituir as escadas de 01/11 e de 09/11, só nessas 4 noites.\n\n- Preço misturado com o Beds24: procede.\n  - As ações estão separadas: no Beds24 vão só restrições, e o preço vai pelo PriceLabs.\n  - Ressalva: no PriceLabs, o percent_base é a variação sobre a base. Por exemplo, Q7 4.142 = base × 3,53, o que se grava como +253, e não '353%'.\n\n- Marcos sem número: procede.\n  - Cada marco tem agora o percentual, o limiar em pacotes e o piso em reais.\n  - O 02/01 saiu do fechamento, salvo exceção aprovada."
+ },
+ "verificacao": {
+  "contas": {
+   "ok": false,
+   "problemas": [
+    {
+     "campo": "cenarios[3] (Meta) + plano_de_acao (noites soltas) + decisoes_do_dono[7]",
+     "problema": "A meta depende de vender noites soltas por estadias que as regras em vigor proíbem. (1) As 3 noites de 02/01 seriam vendidas como 02→04, com chegada no sábado. A regra do dono de 02/11 fecha todo sábado para entrada e saída, inclusive 02/01, e a própria ação 'Gravar o 01→03 no Beds24' diz 'sábado 02/01 sem entrada nem saída'. Mesmo assim, o plano manda abrir isso nas OTAs 'quando o 01/01 esgotar'. (2) As 9 noites de 30/12 seriam vendidas como 29→31, com saída em 31/12, que está noCheckInOrCheckOut, e a ordem do dono de 03/11 diz 'só 30→01 ou 30→03'. A disponibilidade de 29/12 e de 03/01 não está no pacote. As soltas somam R$ 21.252 pagos na meta (23.100 × 0,92), mas a folga é só de R$ 2.612. Refiz as contas: sem as 3 noites de sábado, a meta dá R$ 247.920 e não bate os R$ 250 mil. Sem nenhuma solta, dá R$ 231.360. Portanto 'atinge_250k: true' só vale com duas exceções às regras do dono.",
+     "correcao": "Marcar o cenário 4 como condicional às duas exceções (chegada no sábado 02/01 e saída em 31/12). Mostrar ao lado a meta sem as soltas: R$ 231.360. Tirar a contradição entre 'sábado 02/01 sem entrada nem saída' e abrir o 02→04 nas OTAs. Dizer que falta conferir a disponibilidade de 29/12 e de 03/01.",
+     "gravidade": "alta"
+    },
+    {
+     "campo": "resumo_executivo ('Se abrisse hoje, seria de R$ 1.834 a R$ 2.536') + tabela_precos_atuais (fim de semana no Recanto) + notas de precos_recomendados",
+     "problema": "O preço do fim de semana no Recanto 'hoje' foi calculado com o fator de 09/11 (0,6156). O fator medido hoje, nas duas estadias que abriram, é 0,5832. Com o fator de hoje, por noite, fica: Q7 R$ 1.737 (não 1.834), Q2 R$ 2.003 (não 2.114), Double R$ 2.080 (não 2.196) e Afrodite R$ 2.403 (não 2.536). Por pacote: 3.474,71 / 4.160,55 / 4.805,57 / 4.005,42, contra 3.667,74 / 4.391,69 / 5.072,54 / 4.227,94 na tabela. A diferença vai de R$ 193 a R$ 267 por pacote. O plano também é incoerente consigo mesmo: a média de 'R$ 1.784 no fim de semana', a de 'R$ 1.910' e o total de R$ 207.291 usam 0,5832. O público dos 23 pacotes dá R$ 84.491,58 pela tabela e R$ 82.082,83 pela média (diferença de R$ 2.408,75). Este é justamente o número que o dono pediu.",
+     "correcao": "Na faixa 'hoje', usar 0,5832: Recanto no fim de semana de R$ 1.737 a R$ 2.403 por noite. O 0,6156 pode aparecer como cenário 'se o desconto voltar a 5%'. Alinhar a tabela com as médias de 1.784 e 1.910.",
+     "gravidade": "media"
+    },
+    {
+     "campo": "cenarios[3] (escada +10% no Réveillon)",
+     "problema": "Os +10% de média no Réveillon não saem da regra de escada que o próprio plano descreve (+3% a cada pacote vendido na pousada). No Recanto, com 7 pacotes de 0% a +18% compostos, a média é 9,5%. Na Villa, com 5 pacotes, a média é 6,2%. Ponderado pelo público, dá 8,1%. Com 8,1%, a meta cai de R$ 252.612 para R$ 251.322, e a folga cai de R$ 2.612 para cerca de R$ 1.322. No fim de semana, os +5% usados ficam abaixo do que a regra de +2% por pacote daria (cerca de 11%). Ou seja, os dois percentuais não vêm da regra declarada.",
+     "correcao": "Calcular a média da escada pela regra (+3% por pacote, por pousada) ou declarar os +10% e os +5% como alvos sem ligação com a regra. Atualizar a folga.",
+     "gravidade": "media"
+    },
+    {
+     "campo": "cenarios[3] (hóspede paga 92% do público)",
+     "problema": "Os 92% não saem do pacote. Hoje, o que o hóspede da Booking paga sobre o preço público é 0,49/0,63 = 0,778 no Recanto e 0,46/0,65 = 0,708 na Villa (média de 0,743). Com 1/3 de venda direta a 100%, a mistura dá 0,83 e a meta fica em R$ 232.118. Para chegar a 0,92 com 1/3 de venda direta, a Booking teria de render 0,88 do público. Cada ponto percentual vale R$ 2.239, e a folga é de só R$ 2,6 mil.",
+     "correcao": "Mostrar a meta com a mistura medida (0,83, cerca de R$ 232 mil) e deixar claro que os 0,92 dependem de a Booking passar de cerca de 0,74 para cerca de 0,88.",
+     "gravidade": "media"
+    },
+    {
+     "campo": "cenarios[0] e cenarios[1] (106.471 e 115.569)",
+     "problema": "Pela diferença entre os cenários 2 e 1 (R$ 9.098), o pacote não vendido é uma Double, e com isso o cenário 1 refeito dá R$ 106.203. A diferença de R$ 267 vem da extensão da VK7. As noites de 01 e 02/01 foram somadas como 9.976 × 0,4126 = 4.116,10, por cima do 30→01 a 0,4461. Só que o 0,4126 foi medido sobre a estadia inteira de 4 noites: 19.952 × 0,4126 − 4.450,29 = 3.781,90. O teto do próprio plano usa essa conta certa (8.232,20). Resultado: R$ 334 a mais de público, ou R$ 267 a mais pagos.",
+     "correcao": "Cenário 1 ≈ R$ 106.203 e cenário 2 ≈ R$ 115.302. O impacto do PriceLabs (R$ 9.098) não muda.",
+     "gravidade": "baixa"
+    },
+    {
+     "campo": "plano_de_acao / decisoes_do_dono (Recanto voltar o desconto de 10% para 5%: R$ 3.700)",
+     "problema": "Dos R$ 3.677 calculados, R$ 1.830 vêm do fim de semana. Mas o próprio plano diz que, se o desconto ficar em 10%, o enviado do fim de semana sobe para 4.372 / 4.544 / 4.458 / 5.830, todos abaixo do máximo, e o preço público não muda. O que se perde de verdade fica só no Réveillon, onde o enviado está preso a 4.974–4.988 e ao máximo de 5.000: R$ 1.847.",
+     "correcao": "Impacto ≈ R$ 1.850.",
+     "gravidade": "baixa"
+    },
+    {
+     "campo": "plano_de_acao / decisoes_do_dono (subir o máximo para R$ 6.000: R$ 6.900)",
+     "problema": "Os R$ 6.932 são 10% do Réveillon inteiro × 0,92. Isso inclui a Afrodite, cujo máximo já é R$ 10.000 e que não precisa da mudança (R$ 759). Sem ela, o impacto é cerca de R$ 6.170. Com a escada refeita em 8,1% (item 3), fica perto de R$ 5.000.",
+     "correcao": "Tirar a Afrodite da conta: ≈ R$ 6,2 mil, ou ≈ R$ 5 mil com a escada recalculada.",
+     "gravidade": "baixa"
+    },
+    {
+     "campo": "plano_de_acao / decisoes_do_dono ('Pode fazer' 01→03 ≈ R$ 56 mil)",
+     "problema": "A conta é o fim de semana do cenário provável (0,85 × 117.450 × 16/23 = R$ 69.449) menos o erro da Villa no cenário 1 (R$ 12.657), o que dá R$ 56.792. Faltou descontar as noites de 01 e 02/01 que o cenário 1 já vende pelas 3 extensões 30→03 (R$ 9.401 pagos). Assim, o máximo isolado seria R$ 47.391. Além disso, cerca de R$ 11,8 mil do fim de semana da Villa são efeito de tirar a promoção, que já está nos R$ 18,4 mil. Só o Recanto no fim de semana dá entre R$ 28,7 mil e R$ 34,8 mil.",
+     "correcao": "Mostrar algo como 'R$ 30 a 47 mil, sobreposto à promoção', ou deixar explícito o que entra na conta.",
+     "gravidade": "baixa"
+    },
+    {
+     "campo": "conta_da_meta.teto_status_quo (167.169) / resumo_executivo",
+     "problema": "A conta de 167.169 está certa, mas foi feita com o hóspede pagando 100% do preço público. Os cenários, e a métrica do Beds24, usam o valor pago: 80% no status quo. Na mesma base dos cenários, o teto sem mudar nada é R$ 143.051.",
+     "correcao": "Dizer que o teto é 'a preço público cheio' ou mostrar também R$ 143 mil a 80%.",
+     "gravidade": "baixa"
+    },
+    {
+     "campo": "cenarios[5] (pior caso, Genius 3 a 72%)",
+     "problema": "O pacote dá Genius 3 da Villa = 0,575/0,65 = 88,5% do público, não 72%. Com o fator do pacote, o pior caso fica em R$ 75.367, e não em R$ 73.872 (diferença de R$ 1.495). Se as 3 reservas do Airbnb caírem, os pacotes de Réveillon possíveis passam de 12 para 15 (Q7, Double e Balcony ganham um cada), então o '7 dos 12' fica com o denominador errado.",
+     "correcao": "Usar 0,885 ou explicar de onde vêm os 72%. Ajustar o denominador.",
+     "gravidade": "baixa"
+    },
+    {
+     "campo": "marcos[5] (21/12: R$ 174.300 e 90 quarto-noites)",
+     "problema": "O texto diz '~7 pacotes de Réveillon, ~14 de fim de semana e ~7 noites soltas'. Isso dá 40 + 14 + 28 + 7 = 89 quarto-noites e, aos preços da meta (× 0,92), cerca de R$ 172.520. O alvo diz 90 e R$ 174.300 (diferença de cerca de R$ 1.780).",
+     "correcao": "Ajustar o texto ou o alvo para que um bata com o outro.",
+     "gravidade": "baixa"
+    },
+    {
+     "campo": "resumo_executivo ('Fim de semana aberto, a R$ 2.550 a 2.650 por noite')",
+     "problema": "A faixa deixa de fora a Balcony (R$ 2.295) e a Afrodite (R$ 3.400), que estão na tabela de preços recomendados. A média do fim de semana recomendado é R$ 2.553 por noite.",
+     "correcao": "Escrever 'R$ 2.295 (Balcony) a R$ 3.400 (Afrodite), suítes R$ 2.550–2.650'.",
+     "gravidade": "baixa"
+    },
+    {
+     "campo": "CONFERIDO SEM DIFERENÇA (só registro, não é erro)",
+     "problema": "Batem ao centavo ou dentro de R$ 1: vendido = 40 quarto-noites, R$ 46.580,68 (Réveillon 28 noites e R$ 32.456,13; fim de semana 12 noites e R$ 14.124,55; vendidas por quarto e noite iguais às das reservas; confirmadas R$ 44.132,56). Livres por quarto e noite, 84 no total. Pacotes: 12 no Réveillon (2/3/1/1/3/1/1) e 23 no fim de semana (4/4/1/2/5/5/2). Noites soltas: 10 em 30/12 e 4 em 02/01. Na tabela, todo enviado, público e Genius 3 (Recanto × 0,425/0,63; Villa × 0,575/0,65). Falta de R$ 203.419,32. Diária necessária de R$ 2.906 (70 noites) e R$ 2.422 (84 noites). Tetos de R$ 98.178, R$ 144.949 e R$ 167.169. Total de R$ 207.291. Médias de R$ 2.150, R$ 1.784 e R$ 1.910. Cenário 3: R$ 174.740 sem soltas e R$ 182.985 com soltas. Cenário 4: R$ 252.612. Cenário 5: R$ 225.738 (o plano diz 225.739). Impactos do PriceLabs (R$ 9.098), da promoção da Villa (R$ 18.404), do Genius de 80% para 85% (R$ 8.024) e das soltas (R$ 8.245 no provável e R$ 21.252 na meta). Públicos recomendados: enviado × 0,6156 ou × 0,62. Valores com 10% de desconto (4.372 / 4.544 / 4.458 / 5.830). Percentis da concorrência. Nenhum cenário vende mais pacotes do que os livres permitem nem conta o 31/12 sem o 30/12.",
+     "correcao": "Nenhuma.",
+     "gravidade": "baixa"
+    }
+   ]
+  },
+  "regras": {
+   "ok": false,
+   "problemas": [
+    {
+     "campo": "plano_de_acao (noites soltas, 18/11 a 29/12) + decisoes_do_dono + cenarios 3 e 4",
+     "problema": "As 14 noites soltas só vendem quebrando duas regras do dono. A estadia 29→31 sai em 31/12, que hoje está sem chegada nem saída, e a ordem literal de 03/11 só aceita 30→01 ou 30→03. A estadia 02→04 entra no sábado 02/01, e o sábado é sempre fechado para entrada e saída. O plano chama isso de 'exceção manual' e não avisa o dono que está pedindo para suspender essas duas regras. A frase 'Nas OTAs, só quando o 31/12 esgotar' supõe que a skill vai mudar restrições no Beds24 sem o 'Pode fazer'. A meta depende disso. O cenário 4 conta 12 noites soltas, cerca de R$ 21,3 mil. Sem elas, ele cai para cerca de R$ 231,4 mil. Tirando só as 3 de 02/01 (cerca de R$ 4,7 mil), já fica em cerca de R$ 247,9 mil, abaixo de R$ 250 mil. O pacote também não informa se 29/12 e 03-04/01 estão livres nesses quartos.",
+     "correcao": "Tirar as noites soltas dos cenários-base. Mostrar a meta sem elas (cerca de R$ 231 mil) e o provável sem elas (R$ 174.741). Levar ao dono um pedido separado e explícito: 'suspender a regra do sábado em 02/01' e 'abrir a saída em 31/12 (exceção à ordem de 03/11)', cada um com seu 'Pode fazer'. Até lá, nenhuma mudança no Beds24 e nenhuma venda nas OTAs. Conferir 29/12 e 03/01 antes de prometer essas noites.",
+     "gravidade": "alta"
+    },
+    {
+     "campo": "marcos (07/12, 14/12, 21/12) + riscos",
+     "problema": "As descidas de preço começam muito antes de D7. Pela régua de 04/11, essas datas são F5, e a regra é descida gradual só a partir de D7 se o vendido estiver abaixo da curva. Mesmo assim, o plano manda baixar 5% em 07/12 (D23 do Réveillon, D25 do fim de semana). Em 14/12 (D16/D18), manda o fim de semana para o p75 do dia (cerca de R$ 2.150 contra R$ 2.550, −16%, nada gradual) e permite −5% no Réveillon. Em 21/12 (D9/D11), aplica o segundo degrau de −5%.",
+     "correcao": "Antes de D7, só pausar a escada (não subir mais) e reforçar a venda direta, sem baixar. Começar a descida em 23/12 para o Réveillon e em 25/12 para o fim de semana, em degraus pequenos com % definido, sempre condicionada a estar abaixo da curva.",
+     "gravidade": "alta"
+    },
+    {
+     "campo": "marcos (se_atras) + precos_recomendados",
+     "problema": "O plano não diz qual é o piso de feriado de cada quarto. Nos degraus de descida, o único limite é 'nunca abaixo do preço público de hoje'. Isso não é o piso de feriado. Na Villa, esse preço é R$ 1.514 a 2.000, rebaixado pela promoção e pelo erro do 01→03. No Recanto, o fim de semana hoje nem está à venda. Além disso, o PriceLabs controla o enviado e não o preço público, então esse limite nem pode ser executado.",
+     "correcao": "Pôr o piso de feriado de cada quarto como enviado ou percent_base no PriceLabs. Cada degrau deve respeitar o maior entre esse piso e o alvo do degrau, nunca o público de hoje.",
+     "gravidade": "alta"
+    },
+    {
+     "campo": "plano_de_acao ('No mesmo dia do Pode fazer' / 17/11 Villa)",
+     "problema": "O plano manda abrir o 01→03 no Beds24 no mesmo dia do 'Pode fazer', sem esperar o PriceLabs voltar e enviar os preços novos. Se o dono der o 'Pode fazer' antes de pagar o PriceLabs, o Recanto abre o fim de semana com o enviado atual: público de cerca de R$ 1.737 a 2.403 com o fator de hoje (0,5832). A Villa, se a promoção não sair, continua a R$ 1.514. Reserva feita não se desfaz. Conferi pelo conector oficial da Booking: hoje a Villa vende o 01→03 a R$ 3.027,38 (2 noites) e o Recanto não tem disponibilidade.",
+     "correcao": "Abrir o 01→03 só depois de três passos, nesta ordem: (1) o PriceLabs ativo e os preços do fim de semana já enviados, (2) o preço público medido na Booking dentro do alvo e (3) na Villa, a promoção retirada. Até lá, recomendar ao dono que feche o 01→03 da Villa na extranet agora, aprovando ou não o fim de semana.",
+     "gravidade": "alta"
+    },
+    {
+     "campo": "plano_de_acao (rotinas diárias: escada e 'corrigir o enviado') + marcos 21/12 e 28/12",
+     "problema": "A escada (+3% e +2% por pacote vendido) e a correção diária do enviado para manter o público no alvo não fazem exceção para a noite de hoje. Nas rotinas de 30/12, 31/12, 01/01 e 02/01, e no 'os últimos sobem' de 21/12, a skill pode subir o preço da própria noite, o que fere a regra 'nunca subir o preço de hoje'.",
+     "correcao": "Escrever que subidas (escada, correção do enviado e 'últimos sobem') só valem para datas futuras. Na data corrente, o preço não sobe.",
+     "gravidade": "media"
+    },
+    {
+     "campo": "precos_recomendados (fim de semana) + plano_de_acao ('No mesmo dia do Pode fazer')",
+     "problema": "Pelo pacote, o pedido do dono de 09/11 cobre as 4 noites: Afrodite 6.700/6.700/6.600/6.520, Q7 4.974, Double 4.988, Q2 4.977, VK7 4.988, VK2 4.991 e Balcony 4.483. Para 01 e 02/01, o plano põe todos abaixo dele: Q7 4.142, Q2 4.224, Double 4.305, Afrodite 5.523, VK7 e VK2 4.113, Balcony 3.702. Só a Afrodite vai para decisão do dono, e mesmo ela aparece como ação da skill. Na Villa é uma redução real: de 4.988 para 4.113, contra a escada do dono de 01/11 ('reta R$ 5.000').",
+     "correcao": "Levar à decisão do dono todos os valores do fim de semana abaixo do pedido de 09/11, principalmente a redução do enviado da Villa. Até ele responder, a skill mantém o enviado atual ou o pedido, e a Afrodite fica em 6.600/6.520.",
+     "gravidade": "media"
+    },
+    {
+     "campo": "resumo_executivo ('Escada: o preço sobe a cada venda') + precos_recomendados (notas)",
+     "problema": "A escada nova (+3% no Réveillon e +2% no fim de semana, por pacote vendido na pousada) entra sem dizer se substitui as que o dono já mandou: a 'Escada de vendas (dono 01/11)' da Villa, por tipo de quarto e com reta de R$ 5.000, e o 'Plano do dono 09/11' do Recanto, com abertura e escada. Trocar uma regra do dono exige o aval dele. No resumo, a escada está vaga demais para executar.",
+     "correcao": "Descrever a escada completa: o que dispara a subida, o % por quarto ou por pousada, o teto por quarto, o congelamento na data corrente e a pausa abaixo do alarme. Levar ao dono como substituição das escadas de 01/11 e 09/11.",
+     "gravidade": "media"
+    },
+    {
+     "campo": "cenarios (4. Meta) + resumo_executivo",
+     "problema": "O '+10% no Réveillon pela escada' não sai da regra escrita. Com +3% por pacote vendido, os 7 pacotes do Recanto e os 5 da Villa vendidos em sequência dão no máximo cerca de +9,5% no Recanto e +6,2% na Villa, ou seja, cerca de +8,1% ponderado. Isso tira cerca de R$ 1,3 mil, metade da folga de R$ 2,6 mil. O '+5%' do fim de semana também é arbitrário. A conta do dono dá até cerca de +10%, mas isso empurra o preço ainda mais acima do p90. A folga fica menor que a incerteza de qualquer premissa (cada 1 ponto do % pago vale R$ 2.240). Por isso 'atinge_250k: true' é uma promessa sem conta.",
+     "correcao": "Calcular o ganho da escada pela própria regra (pacote a pacote) e mostrar a sensibilidade. Apresentar a meta como 'exige X, Y e Z' e não como 'atinge'.",
+     "gravidade": "media"
+    },
+    {
+     "campo": "plano_de_acao (Gravar o 01→03 no Beds24 / No dia em que o PriceLabs voltar)",
+     "problema": "A mesma ação junta restrições ('Gravar no Beds24') e preços (Q7 4.142 etc.), o que dá a entender que os preços seriam gravados no Beds24. Também fala em 'preço por data' em reais, mas a regra é preço só pelo PriceLabs, em regra por data em percent_base.",
+     "correcao": "Separar as duas coisas. As restrições ficam no Beds24 (mínimo, chegada e saída). Os preços vão por regra por data no PriceLabs, em percent_base. Exemplos: Q7 4.142 ÷ 1.173 ≈ 353%, Double 4.305 ÷ 1.480 ≈ 291%, Q2 4.224 ÷ 1.590 ≈ 266%. Depois, conferir o enviado.",
+     "gravidade": "media"
+    },
+    {
+     "campo": "tabela_precos_atuais + resumo_executivo (fim de semana do Recanto)",
+     "problema": "O 'quanto cobramos hoje' do fim de semana do Recanto ('se abrisse hoje, R$ 1.834 a R$ 2.536') usa o fator de 09/11 (0,6156). O fator de hoje é 0,5832, que dá R$ 1.737 a R$ 2.403, cerca de 5,5% a menos. A própria conta_da_meta usa 0,5832 (média de R$ 1.784). É justamente o valor que o dono pediu.",
+     "correcao": "Mostrar o fim de semana do Recanto com o fator de hoje: Q7 cerca de 1.737, Q2 cerca de 2.003, Double cerca de 2.080, Afrodite cerca de 2.403. Se quiser, deixar o valor com 0,6156 ao lado, rotulado como 'se o desconto voltar a 5%'.",
+     "gravidade": "media"
+    },
+    {
+     "campo": "marcos (21/12, 28/12, 01/01)",
+     "problema": "Alguns marcos têm ações sem número. Em 21/12, 'os últimos sobem' não diz quanto. Em 28/12, 'preço do dia do mercado' não diz qual percentil nem qual valor. Em 01/01, 'vende pelo preço do dia' também não tem número e ainda inclui o 02/01, que só vende com entrada no sábado.",
+     "correcao": "Dar % ou percentil e o piso em reais para cada um. Tirar o 02/01 do marco de 01/01, salvo exceção aprovada pelo dono.",
+     "gravidade": "media"
+    },
+    {
+     "campo": "plano_de_acao (desconto do Recanto, Genius e máximo do anúncio)",
+     "problema": "Três ações estão vagas ou sem comprovação. (1) O plano afirma que existe um 'desconto de 10%' no Recanto que deveria voltar a 5%. Isso é dedução da queda do fator de 0,6156 para 0,5832, e o pacote não diz qual desconto mudou. (2) 'Não deixar promoção somar com o Genius' não diz como fazer na extranet. (3) 'Subir o máximo no anúncio todo e a skill vigia as outras datas' não diz como a skill vigia. O máximo é do dono, e subir no anúncio todo afeta outros picos.",
+     "correcao": "Pedir ao dono que confira na extranet qual promoção ou desconto mudou depois de 09/11. Dizer quais promoções desativar ou quais tarifas excluir do Genius. Na falta de máximo por data, dizer quais regras da skill impedem as outras datas de passar de R$ 5.000.",
+     "gravidade": "baixa"
+    },
+    {
+     "campo": "plano_de_acao (impacto_reais) + cenario 2",
+     "problema": "Alguns impactos aparecem sem conta: R$ 56 mil do 'Pode fazer', R$ 18,4 mil da promoção, R$ 6,9 mil do máximo (que atribui todo o +10% ao máximo, embora a Afrodite tenha máximo de R$ 10.000 e não dependa dele). O cenário 2 supõe as mesmas vendas do cenário 1 com preços cerca de 50% maiores (R$ 2.901 a 3.907 contra R$ 1.926 a 2.484), sem nenhuma justificativa.",
+     "correcao": "Mostrar para cada impacto a conta: pacotes × preço × fator × % pago. No cenário 2, reduzir o volume ou explicar por que ele se mantém.",
+     "gravidade": "baixa"
+    },
+    {
+     "campo": "precos_recomendados (Réveillon do Recanto)",
+     "problema": "No Réveillon, a hierarquia do Recanto se desfaz: Q7 4.974, Q2 4.977 e Double 4.988 ficam a R$ 14 um do outro. Com o máximo em R$ 5.000, a primeira subida da escada leva os três a R$ 5.000. As regras 'Panorâmica II entre Moinhos e Panorâmica I' e 'Panorâmica I ≥ Moinhos' só continuam valendo porque empatam.",
+     "correcao": "Escrever que a escada mantém Q7 ≤ Q2 ≤ Double (e a Afrodite acima de todas) e registrar o empate no teto enquanto o máximo não subir.",
+     "gravidade": "baixa"
+    },
+    {
+     "campo": "plano_de_acao (recepção: oferta do 01→03 e venda direta)",
+     "problema": "'Preparar a troca de quarto em 01/01' pode ser lido como mudar o quarto de uma reserva existente, e a regra é não mexer em reservas. 2 das 11 reservas que saem em 01/01 vieram do Airbnb, e oferecer a esses hóspedes uma venda direta pode ferir as regras do Airbnb. A ceia 'conta se entrar na reserva', mas a métrica é receita de hospedagem.",
+     "correcao": "Deixar claro que a troca de quarto é só a limpeza entre a saída e a entrada, sem mudar o quarto de reservas existentes. Excluir as reservas do Airbnb da oferta direta. Deixar a ceia fora da meta de hospedagem.",
+     "gravidade": "baixa"
+    },
+    {
+     "campo": "resumo_executivo vs cenarios/plano_de_acao + metas da skill",
+     "problema": "Os prazos não batem: o resumo pede 'DECISÕES ATÉ 17/11', mas o cenário 3 supõe 'até 20/11' e o plano tem itens até 19/11 e 20/11. O plano também não cita as metas da skill para o feriado de 29/12 a 02/01 (piso R$ 115.009, base 156.896, meta 188.399) e não avisa que os cenários 'nada muda' e 'pior caso' ficam abaixo desse piso.",
+     "correcao": "Usar um só prazo para as decisões e citar a relação com as metas da skill, mesmo que elas cubram 5 noites e não 4.",
+     "gravidade": "baixa"
+    }
+   ]
+  }
+ }
+}

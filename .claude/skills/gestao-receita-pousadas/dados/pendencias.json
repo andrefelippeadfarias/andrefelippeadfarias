@@ -1335,6 +1335,22 @@
       "urgencia": 2,
       "texto": "Revisão dos 12 meses: janeiro/2027 da Villa atrás do mercado em duas revisões seguidas (01/11: 3% × 7%; 16/11: 6% × 8% vendido). Proposta: (a) estadia de 1 noite também às segundas e quartas de janeiro na Villa (hoje 2), (b) campanha de férias de janeiro no canal direto, ou (c) piso de dia de semana de janeiro de R$ 500 para R$ 450 no preço final só na Villa. Fevereiro, nas duas pousadas, ficou atrás pela primeira vez (acompanhar).",
       "atualizado_em": "2026-11-16"
+    },
+    {
+      "id": "villa-0103-aberto-booking-20261116",
+      "responsavel": "dono",
+      "desde": "2026-11-16",
+      "urgencia": 1,
+      "texto": "URGENTE, extranet da Villa: o 01→03/01 aparece à venda na Booking por R$ 3.027,38 (R$ 1.514 por noite; razão 0,338, abaixo do limite de alerta de 0,42). O Beds24 tem 01/01 sem chegada e mínimo de 3 noites nos 3 quartos, e o Recanto, com a mesma regra, aparece fechado. Conferir qual quarto ou tarifa da Villa não recebe a restrição (ou se uma promoção tem regras próprias) e fechar. Reabrir só pelos passos de pricelabs/reveillon-2026-meta-250k.md (seção 7).",
+      "atualizado_em": "2026-11-16"
+    },
+    {
+      "id": "reveillon-250k-decisoes-20261116",
+      "responsavel": "dono",
+      "desde": "2026-11-16",
+      "urgencia": 1,
+      "texto": "Réveillon e fim de semana 01→03 (meta de R$ 250 mil): decisões em pricelabs/reveillon-2026-meta-250k.md, seção 9.\n(1) 'Pode fazer' para abrir o 01→03 (sexta a domingo), mantendo o 30→01 e o 30→03.\n(2) 'Pode fazer' dos preços: Réveillon no pedido de 09/11, proposta do fim de semana, escada e descida a partir de D7.\n(3) Tirar a promoção da Villa de 30/12 a 02/01.\n(4) Conferir o desconto do Recanto na Booking (fator caiu de 0,6156 para 0,5832) e não deixar promoção somar com o Genius.\n(5) Máximo do anúncio de R$ 5.000 para R$ 6.000 nessas datas.\n(6) Exceções das noites soltas: saída em 31/12 e entrada no sábado 02/01.\n(7) Venda direta e venda extra na reserva.\n(8) 'Jacuzzi' nas comodidades da Villa.",
+      "atualizado_em": "2026-11-16"
     }
   ],
   "versao": "2026-11-12T13"

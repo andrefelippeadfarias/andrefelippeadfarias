@@ -1373,7 +1373,7 @@
       "responsavel": "skill",
       "desde": "2026-11-16",
       "urgencia": 1,
-      "texto": "Moinhos (Q7): regras de 19 a 23/11 gravadas em 16/11 19:17 BRT (19/11 −19%, 20-21 +63%, 22-23 −16%), mas sem recálculo (cota até 17/11 08:04 BRT). Na rotina das 07:53 de 17/11, depois das 08:04: refresh_listing_pricing do Q7 + sync_now, conferir price1 no Beds24 (950 / 1.912 / 1.912 / 985 / 985) e a vitrine da Booking (19/11 ≥ R$ 500)."
+      "texto": "Moinhos (Q7): regras de 19 a 23/11 gravadas em 16/11 19:17 BRT (19/11 −19%, 20-21 +63%, 22-23 −16%), mas sem recálculo (cota até 17/11 08:04 BRT). Na rotina das 07:53 de 17/11, depois das 08:04: refresh_listing_pricing do Q7 + sync_now, conferir price1 no Beds24 (950 / 3.002,88 / 3.002,88 / 985 / 985; 20-21 pela ordem dos R$ 3.000) e a vitrine da Booking (19/11 ≥ R$ 500)."
     },
     {
       "id": "villa-sabado-2111-manual-20261116",
@@ -1388,6 +1388,13 @@
       "desde": "2026-11-16",
       "urgencia": 1,
       "texto": "Ordem dono-2026-11-16-lotar-19-23, perguntas abertas: (1) abrir 1 diária no sábado 21/11 nas 4 vagas presas (Panorâmica I 1, King Spa 7 2, King Spa 2 1); (2) confirmar a noite de 23/11 dentro da ordem; (3) liberar os pisos de 20 a 23/11 (feriado R$ 800 reais; mediana com hidro do plano de 09/11) para ir abaixo; (4) 6 cancelamentos da Booking de 16/11: foram os hóspedes? Overbooking da Panorâmica II em 22/11 (3 para 2)."
+    },
+    {
+      "id": "double-blackout-2021-reabrir-20261117",
+      "responsavel": "skill",
+      "desde": "2026-11-16",
+      "urgencia": 1,
+      "texto": "Panorâmica I (Double) fechada com blackout em 20 e 21/11 (16/11 19:56 BRT), até o preço da ordem dono-2026-11-16-fds-20-22-minimo-3000 (+103%, R$ 3.004,40) chegar ao Beds24. Reabrir em 17/11 depois das 13:56 BRT (cota): refresh + sync do Double, conferir o price1 e então editar 20/11 → none e 21/11 → noCheckInOrCheckOut. Se o envio noturno do PriceLabs já tiver levado o preço, reabrir antes. Lembrete agendado (trig_01LABbJFcjx9ji3hvvR2WGqA). A auditoria do Beds24 não deve reabrir antes disso."
     }
   ],
   "versao": "2026-11-12T13"

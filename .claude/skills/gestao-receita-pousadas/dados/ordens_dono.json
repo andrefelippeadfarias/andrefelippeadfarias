@@ -10864,11 +10864,37 @@
    ],
    "noites_fora": {
     "Balcony": [
+     "2026-11-20",
+     "2026-11-21",
      "2026-11-22",
      "2026-11-23"
+    ],
+    "Q7": [
+     "2026-11-20",
+     "2026-11-21"
+    ],
+    "Double": [
+     "2026-11-20",
+     "2026-11-21"
+    ],
+    "Afrodite": [
+     "2026-11-20",
+     "2026-11-21"
+    ],
+    "Q2": [
+     "2026-11-20",
+     "2026-11-21"
+    ],
+    "VK7": [
+     "2026-11-20",
+     "2026-11-21"
+    ],
+    "VK2": [
+     "2026-11-20",
+     "2026-11-21"
     ]
    },
-   "noites_fora_motivo": "Balcony de 22 e 23/11 fica com o motor (regra dos 80% e Regra G recalculadas a cada rotina; verificação de 16/11)."
+   "noites_fora_motivo": "Balcony de 22 e 23/11 fica com o motor (regra dos 80% e Regra G recalculadas a cada rotina; verificação de 16/11). | 20 e 21/11 passam à ordem dono-2026-11-16-fds-20-22-minimo-3000 (16/11 ~19:25 BRT)."
   },
   {
    "id": "dono-2026-11-16-dia-19-minimo-500",
@@ -10894,6 +10920,30 @@
    "minimo_publico_booking": 500,
    "nota": "Só a noite de 19/11. Itens: Moinhos −19% (950,13), Panorâmica II −40% (954), Panorâmica I −35% (962), King Spa 7 −39% (902,80), King Spa 2 −29% (901,70), Balcony −37% (800,10; 88,7% da King Spa 2, Regra G). Público ~R$ 500-569. Nenhum item desta ordem pode ficar abaixo de R$ 500 na vitrine da Booking: medir depois do envio.",
    "como_desfazer": "Regravar 19/11 com os preços de antes (Moinhos 1.164, Panorâmica I 1.309, Panorâmica II 1.272, King Spa 7 1.157, King Spa 2 1.134, Balcony 1.189) e voltar o feriado a começar em 19/11 em quartos.json."
+  },
+  {
+   "id": "dono-2026-11-16-fds-20-22-minimo-3000",
+   "data": "2026-11-16",
+   "criada_em": "2026-11-16T22:27:00Z",
+   "texto": "Ajuste o valor dos finais de semana agora, pois estão vendendo muito barato. Devemos estar pelo menos a R$3.000 o dia 20 a 22.",
+   "contexto": "Ordem do dono no chat, 16/11 ~19:25 BRT, depois de 2 vendas do feriadão no preço da ordem dono-2026-11-16-lotar-19-23 (Panorâmica I 20→22 Booking R$ 1.968; King Spa 7 20→22 direta R$ 2.400). Leitura: noites de 20 e 21/11 (estadia 20→22) com preço enviado (Beds24/PriceLabs) de pelo menos R$ 3.000 por noite; na vitrine da Booking ~R$ 1.750/noite (R$ 3.500 a estadia) — atende 'R$ 3.000' por noite no Beds24 e 'R$ 3.000' pela estadia na Booking. Balcony (sem banheira) pela Regra G do dono a até 90% da King Spa livre mais barata (~R$ 2.700), perguntado ao dono se quer R$ 3.000 também nela. Domingo 22/11 (noite) fica como está. Substitui nessas noites a ordem dono-2026-11-16-lotar-19-23.",
+   "tipo": "preco_por_data",
+   "quartos": [
+    "Q7",
+    "Double",
+    "Afrodite",
+    "Q2",
+    "VK7",
+    "Balcony",
+    "VK2"
+   ],
+   "de": "2026-11-20",
+   "ate": "2026-11-21",
+   "libera": [
+    "acima_15"
+   ],
+   "minimo_enviado": 3000,
+   "como_desfazer": "Regravar 20 e 21/11 pela ordem dono-2026-11-16-lotar-19-23 (Q7 +63, Q2 +20, Double +29, VK7 +39, VK2 +62, Balcony +39) e tirar noites_fora 20-21 dela."
   }
  ]
 }

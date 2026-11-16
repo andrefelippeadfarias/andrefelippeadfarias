@@ -350,22 +350,26 @@ class TestRevisao1011(unittest.TestCase):
     def test_concorrencia_hidro_vista_fora_das_noites_do_plano(self):
         """Achado 1: o script não gera item nas suítes e noites do plano (VK2 19/11, feriado: +10% pelo piso)."""
         import concorrencia_hidro_vista as c
+        import config_de_teste
+        # cópia fixa (16/11 o dono liberou a quinta 19/11 e a ordem de lotar 19-23/11 mexeu nas ordens dessas noites):
+        # Consciência Negra de 19 a 21/11 e as ordens com as noites de 19 a 23/11 como antes da operação
+        cfg, ordens = config_de_teste.carregar(), config_de_teste.carregar_ordens()
         n = "2026-11-19"
         dia = lambda p, mu: {"date": n, "price": p, "min_stay": 2, "multi_unit_occupancy": mu, "booking_status": "",
                              "min_price": p}
         coleta = {"rooms": {"VK7": {"days": [dia(2096, "4/7")]}, "VK2": {"days": [dia(2096, "1/2")]},
                             "Balcony": {"days": [dia(1500, "0/6")]}}}
         comp = {"periodos": [{"rotulo": "t", "datas": [n], "mediana_a": 3000, "recanto": None}]}
-        sem, _ = c.montar(self.cfg, comp, coleta, date(2026, 11, 10), ordens={})
+        sem, _ = c.montar(cfg, comp, coleta, date(2026, 11, 10), ordens={})
         self.assertIn("VK2", {i["quarto"] for i in sem})             # sem a ordem: o +10% de antes
-        com, notas = c.montar(self.cfg, comp, coleta, date(2026, 11, 10), ordens=ORDENS_REAIS)
+        com, notas = c.montar(cfg, comp, coleta, date(2026, 11, 10), ordens=ordens)
         self.assertEqual(com, [])
         self.assertTrue(any("plano do dono" in x for x in notas))
         # R2 no piso do dono do script: sexta/sábado do período sem o R$ 850 (padrão de qualidade)
         n2 = "2026-12-04"
         coleta2 = {"rooms": {"Q7": {"days": [dict(dia(2000, "0/7"), date=n2)]}}}
         comp2 = {"periodos": [{"rotulo": "t", "datas": [n2], "mediana_a": 600, "recanto": 1100}]}
-        it, _ = c.montar(self.cfg, comp2, coleta2, date(2026, 11, 10), ordens=ORDENS_REAIS)
+        it, _ = c.montar(cfg, comp2, coleta2, date(2026, 11, 10), ordens=ordens)
         self.assertEqual(it, [])                                       # noite do plano
 
     def test_q2_e_afrodite_perto_do_plano_mas_fora_da_ordem_do_recanto(self):

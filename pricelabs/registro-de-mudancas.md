@@ -5501,6 +5501,44 @@ Antes das mudanças, o Recanto estava no percentil ~77 do feriadão.
 
 **Testes:** a mudança dos dados (feriado e ordens) quebrou 14 testes que usavam os dados reais como fixos. Um agente está corrigindo só os testes. O código das rotinas não mudou.
 
+## 16/11/2026, 19:25 a 19:57 BRT — Ordem do dono: feriadão 20→22/11 a pelo menos R$ 3.000 por noite
+
+**Ordem do dono (~19:25 BRT), texto literal:** "Ajuste o valor dos finais de semana agora, pois estão vendendo muito barato. Devemos estar pelo menos a R$3.000 o dia 20 a 22." Registrada como `dono-2026-11-16-fds-20-22-minimo-3000`: noites 20 e 21/11, libera `acima_15`, `minimo_enviado` 3000. Substitui nessas noites a ordem de lotar (noites_fora 20-21 nos 7 quartos).
+- **Leitura:** pelo menos R$ 3.000 enviados por noite (Beds24/PriceLabs). Na Booking, ~R$ 1.750 por noite, R$ 3.500 a estadia; cobre também a leitura "R$ 3.000 pela estadia na Booking".
+- **Fica de fora:** domingo 22/11 (noite) segue como estava.
+
+**Vendas que motivaram a ordem** (Beds24 desde 16:53, no preço da ordem de lotar):
+- Panorâmica I 20→22, Booking, R$ 1.968;
+- King Spa 7 20→22, direta, R$ 2.400.
+
+Também entraram para dezembro: Moinhos 04/12 2n (Booking R$ 1.670), Panorâmica I 04/12 3n (Booking R$ 2.548), Balcony 06/12 1n (Booking R$ 327).
+
+**PriceLabs (piso = teto, percent_base),** gravado às 19:52 e 19:53 BRT, uma chamada por quarto, conferido na resposta. Validador: 11 itens, 0 erro.
+
+| Quarto | 20/11 | 21/11 |
+|---|---|---|
+| Moinhos | 2.575 → **3.002,88** (+156%) | igual |
+| Panorâmica II | 1.908 → **3.005,10** (+89%) | igual |
+| Panorâmica I | 1.909 → **3.004,40** (+103%) | igual |
+| King Spa 7 | (esgotada) | 2.057 → **3.004,40** (+103%) |
+| King Spa 2 | 2.057 → **3.009,90** (+137%) | igual |
+| Balcony | 1.765 → **2.705,10** (+113%) | 1.765 → **2.692,40** (+112%) |
+
+A Balcony fica a 90% da King Spa livre mais barata (Regra G do dono). Perguntado ao dono se quer R$ 3.000 também nela.
+
+**Recálculo e Sync Now** (19:53 e 19:54 BRT): Panorâmica II, King Spa 7, King Spa 2 e Balcony. Cota:
+- Panorâmica II: 3 de 3;
+- Panorâmica I: 3 de 3, próxima vaga 17/11 13:56;
+- Moinhos: próxima vaga 17/11 08:04.
+
+**Panorâmica I e Moinhos ficam com o preço antigo no Beds24 até o recálculo de amanhã:**
+- **Panorâmica I:** fechada para venda em 20 e 21/11, com `override blackout` no Beds24 às 19:56 BRT, conferido (numAvail 0). Antes: 20/11 none com 1 livre; 21/11 noCheckInOrCheckOut com 2 livres.
+  - Reabre amanhã, depois do recálculo e do envio (lembrete agendado para 13:58 BRT): 20/11 → none; 21/11 → noCheckInOrCheckOut.
+  - Como desfazer agora: `beds24.py editar --quarto Double --de 2026-11-20 --ate 2026-11-20 --override none` e `--de 2026-11-21 --ate 2026-11-21 --override noCheckInOrCheckOut`.
+- **Moinhos:** fica aberta a R$ 2.575 (Booking ~R$ 1.502 por noite, estadia 20→22 ~R$ 3.004) até o recálculo das 08:04.
+
+**King Spa 7 em 21/11:** com a sexta esgotada e o domingo lotado, o recálculo do PriceLabs pôs estadia 1 no sábado (dia isolado). O sábado vira noite órfã vendável a ~R$ 3.004, a mesma janela que a regra do sábado órfão abre.
+
 ## O que só pode ser feito na tela (passo a passo para você)
 
 1. **Safety Minimum Price → "Do Not Apply"** (Dynamic Pricing → Customizations → aba Groups → Edit no grupo Recanto dos Moinhos → All Customizations → Safety Minimum Price). Anote o valor atual antes.

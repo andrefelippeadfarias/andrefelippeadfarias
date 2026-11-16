@@ -609,6 +609,34 @@
    "resultado": "ok",
    "id_ms": 1794867532976,
    "registrado_em": "2026-11-16T22:18:56Z"
+  },
+  {
+   "quarto": "Q2",
+   "em": "2026-11-16T22:53:45Z",
+   "resultado": "ok",
+   "id_ms": 1794869625495,
+   "registrado_em": "2026-11-16T22:53:49Z"
+  },
+  {
+   "quarto": "VK7",
+   "em": "2026-11-16T22:53:59Z",
+   "resultado": "ok",
+   "id_ms": 1794869639668,
+   "registrado_em": "2026-11-16T22:54:02Z"
+  },
+  {
+   "quarto": "VK2",
+   "em": "2026-11-16T22:54:13Z",
+   "resultado": "ok",
+   "id_ms": 1794869653904,
+   "registrado_em": "2026-11-16T22:54:17Z"
+  },
+  {
+   "quarto": "Balcony",
+   "em": "2026-11-16T22:54:25Z",
+   "resultado": "ok",
+   "id_ms": 1794869665788,
+   "registrado_em": "2026-11-16T22:54:30Z"
   }
  ]
 }

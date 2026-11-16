@@ -492,15 +492,20 @@ class TestMaximoAdiado(unittest.TestCase):
                                             {"date": "2026-12-26", "price": 4800, "uncustomized_price": 5100},
                                             {"date": "2026-11-20", "price": 5200}]},
                             "Afrodite": {"days": [{"date": "2026-12-24", "price": 7000}]}}}
-        r = R.vigia_maximo(CFG6, coleta, HOJE)
+        # mudança manual do dono pela tela, montada aqui (como a de 15/11 na Queen 7, 19 a 22/11): as ordens reais dessas
+        # noites mudam com a operação de 19 a 23/11 (16/11: lotar, `noites_fora` nas mudanças manuais)
+        manual = {"manual-teste-q7": {"id": "manual-teste-q7", "tipo": "manual", "quartos": ["Q7"], "de": "2026-11-19",
+                                      "ate": "2026-11-22", "libera": []}}
+        r = R.vigia_maximo(CFG6, coleta, HOJE, ordens=manual)
         self.assertEqual([(i["quarto"], i["data"], i["max_price"]) for i in r["itens"]], [("Q7", "2026-12-24", 5000.0)])
-        self.assertTrue(any("2026-11-20" in b for b in r["bloqueios"]), r["bloqueios"])   # noite congelada pelo dono
+        self.assertTrue(any("2026-11-20" in b and "manual-teste-q7" in b for b in r["bloqueios"]),
+                        r["bloqueios"])                                                 # noite congelada pelo dono
         self.assertEqual(validar(r["itens"], cfg=CFG6).erros, [])
         # antes de gravar: a noite com o algoritmo acima de 5.000 e sem teto por data também; percent_max bloqueia
         precos = {"VK7": {"data": [{"id": "x", "data": [{"date": "2027-02-06", "price": 4995},
                                                         {"date": "2027-07-10", "price": 3000}]}]}}
         regras = {"Q7": {"2027-03-01": {"date": "2027-03-01", "max_price": 10, "max_price_type": "percent_max"}}}
-        r = R.vigia_maximo(CFG6, coleta, HOJE, precos, regras, antes=True)
+        r = R.vigia_maximo(CFG6, coleta, HOJE, precos, regras, antes=True, ordens=manual)
         self.assertIn(("Q7", "2026-12-26"), {(i["quarto"], i["data"]) for i in r["itens"]})
         self.assertIn(("VK7", "2027-02-06"), {(i["quarto"], i["data"]) for i in r["itens"]})
         self.assertNotIn(("VK7", "2027-07-10"), {(i["quarto"], i["data"]) for i in r["itens"]})

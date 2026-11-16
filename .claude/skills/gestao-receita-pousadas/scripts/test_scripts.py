@@ -11,7 +11,6 @@ import os
 
 from comum import carregar_quartos, periodo_feriado
 from ocupacao import calcular
-from ordens import carregar_ordens
 from validar_plano import Validador, montar_payload
 
 import config_de_teste  # noqa: E402
@@ -24,11 +23,18 @@ CFG = config_de_teste.carregar()
 # valem para todos os quartos e datas aqui, e "teste-dono" é a ordem genérica dos itens de teste.
 # A liberação da Regra G (`regra_g`) é por noite e por quarto (dono 01/11, Balcony 08-09/11): ampliada a todas as datas
 # ela tiraria o erro de "Balcony muito abaixo" de todo teste; os testes que precisam dela criam a própria ordem.
+# As ordens vêm da cópia com as noites de 19 a 23/11 fixas (config_de_teste.carregar_ordens: sem as ordens por data
+# registradas a partir da ordem de lotar de 16/11 e com as `noites_fora` dessas noites como estavam). Aqui é estabilização
+# preventiva: as quebras de 16/11 neste arquivo vieram do feriado (a Consciência Negra passou a começar em 20/11 no
+# quartos.json real; o CFG acima usa o período fixo de 19 a 21/11). O congelamento manual de 19 a 22/11 (mudanças do dono
+# de 15/11) não entra no ORDENS ampliado (as ordens `manual` ficam de fora); só os testes que usam ORDENS_FIXAS no escopo
+# real das ordens o veem.
+ORDENS_FIXAS = config_de_teste.carregar_ordens()
 ORDENS = {k: dict(v, quartos=["*"], de="2020-01-01", ate="2030-12-31",
                   libera=[x for x in (v.get("libera") or []) if x != "regra_g"])
-          for k, v in carregar_ordens().items() if v.get("tipo") != "manual"}
+          for k, v in ORDENS_FIXAS.items() if v.get("tipo") != "manual"}
 # a ordem do Réveillon 2026/27 (16/11) tem travas por noite no validador (restricoes): fica no escopo real dela
-ORDENS["dono-2026-11-16-reveillon-250k"] = carregar_ordens()["dono-2026-11-16-reveillon-250k"]
+ORDENS["dono-2026-11-16-reveillon-250k"] = ORDENS_FIXAS["dono-2026-11-16-reveillon-250k"]
 ORDENS["teste-dono"] = {"id": "teste-dono", "quartos": ["*"], "de": "2020-01-01", "ate": "2030-12-31", "tipo": "regra", "libera": []}
 # ordem de teste que libera a estadia, dada ANTES da regra do dia de chegada (04/11) e outra DEPOIS dela (revisão 05/11)
 ORDENS["teste-dono-estadia"] = {"id": "teste-dono-estadia", "data": "2026-10-23", "quartos": ["*"], "de": "2020-01-01",
@@ -2266,14 +2272,14 @@ class TestDecisoes0511AfroditeSextaOrfasFeriado(unittest.TestCase):
 
     # ---------- dados e ordem
     def test_0_quartos_e_ordem(self):
-        from ordens import carregar_ordens, ordem_valida
+        from ordens import ordem_valida
         P = CFG["parametros"]
         self.assertTrue(P["estadia_por_dia_chegada"]["orfa_em_feriado"])
         self.assertTrue(P["regra_h_beds24"]["orfas"]["em_feriado"])
         self.assertNotIn("Afrodite", P["regra_h_beds24"]["sexta_override_por_quarto"])
         self.assertEqual(P["regra_h_beds24"]["sexta_reaberta_por_quarto"], {"Afrodite": "noCheckOut"})
         self.assertNotIn("aguardando_dono", P["estadia_por_dia_chegada"])
-        ords = carregar_ordens()
+        ords = config_de_teste.carregar_ordens()       # noites de 19 a 23/11 fixas (operação de 16/11 nelas)
         o = ords[self.OID]
         self.assertEqual((o["tipo"], o["data"], o["de"], o["ate"]), ("regra", "2026-11-05", "2026-11-05", "2099-12-31"))
         self.assertEqual(o["libera"], ["beds24_inventario", "chegada_saida_afrodite_sexta", "estadia_1_orfa_feriado"])
@@ -2351,7 +2357,6 @@ class TestDecisoes0511AfroditeSextaOrfasFeriado(unittest.TestCase):
     def test_b_sabado_orfao_de_feriado(self):
         import copy
         import calendario_12m as c12
-        from ordens import carregar_ordens
         n, av = self.noite, self.av
         D = dt.date
         f = "noCheckInOrCheckOut"
@@ -2368,7 +2373,7 @@ class TestDecisoes0511AfroditeSextaOrfasFeriado(unittest.TestCase):
         cl = {x["quarto"]: x for x in c12.classificar_beds24(CFG, inv, D(2026, 11, 20), D(2026, 11, 21))}
         self.assertEqual((cl["VK7"]["sabados_estadia_abaixo"], cl["VK7"]["orfas_estadia"]), ([], []))
         cal = {"2026-11-20": n(2, "7/7"), "2026-11-21": n(1, "5/7"), "2026-11-22": n(1, "1/7")}
-        x = {y["data"]: y for y in c12.comparar(CFG, "VK7", cal, D(2026, 11, 21), D(2026, 11, 21), carregar_ordens(),
+        x = {y["data"]: y for y in c12.comparar(CFG, "VK7", cal, D(2026, 11, 21), D(2026, 11, 21), ORDENS_FIXAS,
                                                 so_estadia=True)}["2026-11-21"]
         self.assertEqual(x["falta"], [])
         self.assertIn("sábado órfão", x["info"][0])
@@ -3823,8 +3828,7 @@ class TestFaixasDono(unittest.TestCase):
 
     def test_quantil_posicao_e_tipo(self):
         import faixas_dono as f
-        from comum import carregar_quartos
-        cfg = carregar_quartos()
+        cfg = config_de_teste.carregar()       # Consciência Negra de 19 a 21/11 (feriado fixo dos testes)
         self.assertEqual(f.quantil([100, 200, 300, 400, 500], 50), 300)
         self.assertEqual(f.quantil([100, 200], 25), 125)
         fx = {"F1": 400, "F2": 650, "F3": 880, "F4": 1100, "F5": 1570}
@@ -3845,9 +3849,8 @@ class TestFaixasDono(unittest.TestCase):
         """Ordem do dono de 04/11: F5 no feriado com descida gradual, F2 na semana com gatilho de D7, piso do dono e
         máximo do anúncio; a ordem antiga perde a noite por quarto e a ordem do dono mais nova vence a regra."""
         import faixas_dono as f
-        from comum import carregar_quartos
         from pace import pisos_enviados
-        cfg = carregar_quartos()
+        cfg = config_de_teste.carregar()       # Consciência Negra de 19 a 21/11 (feriado fixo dos testes)
         hid = {"25": 600, "50": 700, "65": 900, "75": 1100, "90": 5000}
         fx = {"estadias": [], "por_tipo": {t: {"hidro": dict(hid)} for t in f.TIPOS}}
         regra = {"id_base": "t-faixa", "data": "2026-11-04", "texto": "t",
@@ -4093,6 +4096,104 @@ class TestMarcarEnvioPorQuarto(unittest.TestCase):
             self.assertIn("envio desligado", out.getvalue())
             self.assertIn("Não use --ate", out.getvalue())
             self.assertFalse(json.loads(led.read_text())["passos"][0].get("chegou_ao_canal"))
+
+
+class TestConfigDeTesteJanela1923(unittest.TestCase):
+    """Cópia fixa dos testes para as noites de 19 a 23/11/2026 (16/11: o dono liberou a quinta 19/11 e mandou lotar as
+    duas pousadas; o quartos.json e o ordens_dono.json reais seguem mudando nessas noites). A cópia não depende de id,
+    nome de feriado nem texto de motivo: feriado casado pelo período, ordens por data novas pela hora do registro e
+    `noites_fora` da janela pela tabela fixa."""
+
+    def test_feriado_fixo_pelo_periodo(self):
+        import copy
+        fixo = config_de_teste.FERIADOS_FIXOS[0]
+        # o CFG dos testes: Consciência Negra de 19 a 21/11, com a entrada inteira de antes de 16/11
+        self.assertEqual(periodo_feriado(CFG, date(2026, 11, 19)), fixo)
+        base = config_de_teste.bruta()
+        cn = next(i for i, p in enumerate(base["feriados"]) if p["inicio"] == fixo["inicio"])
+        cn27 = {"nome": fixo["nome"], "inicio": "2027-11-19", "fim": "2027-11-21", "piso_real": 1000}
+
+        def neutra(feriados):
+            c = copy.deepcopy(base)
+            c["feriados"] = feriados
+            return config_de_teste.neutra(c)["feriados"]
+
+        def confere(fer):
+            self.assertEqual([p for p in fer if p["inicio"] <= "2026-11-21" and p["fim"] >= "2026-11-19"], [fixo])
+            i = fer.index(fixo)                                               # no lugar, pela data de início
+            self.assertEqual((fer[i - 1]["nome"], fer[i + 1]["inicio"]), ("Finados", "2026-12-23"))
+            self.assertEqual(len(fer), len(base["feriados"]) + 1)              # + a de 2027
+            self.assertIn(cn27, fer)                                          # a de 2027, de mesmo nome: intocada
+
+        outros = base["feriados"][:cn] + base["feriados"][cn + 1:]
+        # renomeada, encurtada e com outro piso e estadia (a operação de 16/11 e o que vier dela)
+        mudada = dict(fixo, nome="Consciência Negra (sexta e sábado)", inicio="2026-11-20", piso_real=1000,
+                      estadia_minima=3, nota="16/11: ...")
+        confere(neutra(base["feriados"][:cn] + [mudada] + base["feriados"][cn + 1:] + [cn27]))
+        # apagada: volta no lugar certo; partida em duas (véspera e feriado): uma só, a fixa
+        confere(neutra(outros + [cn27]))
+        partes = [dict(fixo, nome="Véspera", inicio="2026-11-19", fim="2026-11-19"),
+                  dict(fixo, inicio="2026-11-20", fim="2026-11-21")]
+        confere(neutra(base["feriados"][:cn] + partes + base["feriados"][cn + 1:] + [cn27]))
+
+    def test_ordens_fixas_na_janela(self):
+        import copy
+        from ordens import congelada
+        corte = "2026-11-16T20:25:00Z"
+        q7 = {"quartos": ["Q7"], "libera": []}
+        ords = {
+            # mudança manual de 15/11 que a operação tirou com `noites_fora` (motivo citando qualquer ordem)
+            "manual-a": dict(q7, id="manual-a", tipo="manual", data="2026-11-15", de="2026-11-19", ate="2026-11-22",
+                             noites_fora=["2026-11-19", "2026-11-20", "2026-11-21", "2026-11-22"],
+                             noites_fora_motivo="20 a 22/11 passam à ordem dono-2026-11-18-qualquer"),
+            # ordem antiga com noites fora da janela: essas ficam
+            "antiga": dict(q7, id="antiga", tipo="alvo_por_data", data="2026-11-04", de="2026-11-01",
+                           ate="2026-11-30", noites_fora={"Q7": ["2026-11-20", "2026-11-27"]}, noites_fora_motivo="x"),
+            # ordem com `noites_fora` na janela já no corte (NOITES_FORA_FIXAS)
+            "dono-2026-11-03-recanto-semana-hidro-1122": dict(
+                q7, id="dono-2026-11-03-recanto-semana-hidro-1122", tipo="alvo_por_data", data="2026-11-03",
+                quartos=["Q7", "Q2", "Double"], de="2026-11-22", ate="2026-11-22",
+                noites_fora={"Q7": ["2026-11-19", "2026-11-22"], "Q2": ["2026-11-22"]}),
+            # ordens por data registradas a partir do corte, cobrindo a janela: qualquer id e qualquer formato de hora
+            "nova-preco": dict(q7, id="nova-preco", tipo="preco_por_data", data="2026-11-18",
+                               criada_em="2026-11-18T12:00:00Z", de="2026-11-20", ate="2026-11-21"),
+            "nova-brt": dict(q7, id="nova-brt", tipo="alvo_por_data", data="2026-11-16",
+                             criada_em="2026-11-16T19:25-03:00", de="2026-11-19", ate="2026-11-23"),
+            "manual-nova": dict(q7, id="manual-nova", tipo="manual", data="2026-11-16", de="2026-11-21",
+                                ate="2026-11-23"),                              # ordens.py manual: sem a hora
+            # ficam: registrada antes do corte; nova fora da janela; nova só com noites fora dela; regra nova
+            "antes": dict(q7, id="antes", tipo="preco_por_data", data="2026-11-16", criada_em="2026-11-16T16:15+00:00",
+                          de="2026-11-20", ate="2026-11-20"),
+            "nova-fora": dict(q7, id="nova-fora", tipo="preco_por_data", data="2026-11-18",
+                              criada_em="2026-11-18T12:00:00Z", de="2026-11-27", ate="2026-11-28"),
+            "nova-noites": dict(q7, id="nova-noites", tipo="alvo_por_data", data="2026-11-18",
+                                criada_em="2026-11-18T12:00:00Z", de="2026-11-01", ate="2026-11-30",
+                                noites=["2026-11-27"]),
+            "regra-nova": dict(q7, id="regra-nova", tipo="regra", data="2026-11-18", criada_em="2026-11-18T12:00:00Z",
+                               de="2026-11-18", ate="2099-12-31", quartos=["*"], libera=["estadia"]),
+        }
+        entrada = copy.deepcopy(ords)
+        fx = config_de_teste.ordens_fixas(ords)
+        self.assertEqual(ords, entrada)                                                  # não muda a entrada
+        self.assertEqual(sorted(fx), sorted(set(ords) - {"nova-preco", "nova-brt", "manual-nova"}))
+        self.assertNotIn("noites_fora", fx["manual-a"])                                  # sem noite fora: sem chave
+        self.assertNotIn("noites_fora_motivo", fx["manual-a"])
+        self.assertEqual(congelada(fx, "Q7", date(2026, 11, 20))["id"], "manual-a")       # congelamento de 19 a 22/11
+        self.assertIsNone(congelada(ords, "Q7", date(2026, 11, 20)))                     # no arquivo mudado: não
+        self.assertEqual(fx["antiga"]["noites_fora"], {"Q7": ["2026-11-27"]})
+        self.assertEqual(fx["dono-2026-11-03-recanto-semana-hidro-1122"]["noites_fora"],
+                         {"Q7": ["2026-11-22"], "Q2": ["2026-11-22"], "Double": ["2026-11-22"]})
+        for k in ("antes", "nova-fora", "nova-noites", "regra-nova"):
+            self.assertEqual(fx[k], ords[k], k)
+        self.assertEqual(config_de_teste.registrada_em({"criada_em": corte}), config_de_teste.CORTE_ORDENS)
+        # a cópia fixa do arquivo real: toda mudança manual registrada antes do corte (as de 15/11) congela as noites
+        # dela na janela, seja qual for a `noites_fora` que a operação pôs nela no arquivo
+        for o in ORDENS_FIXAS.values():
+            if o.get("tipo") == "manual" and config_de_teste.registrada_em(o) < config_de_teste.CORTE_ORDENS:
+                for n in config_de_teste.JANELA:
+                    if o["de"] <= n <= o["ate"]:
+                        for q in o["quartos"]:
+                            self.assertTrue(congelada(ORDENS_FIXAS, q, date.fromisoformat(n)), (o["id"], q, n))
 
 
 if __name__ == "__main__":

@@ -1367,6 +1367,27 @@
       "urgencia": 3,
       "texto": "Ordem dono-2026-11-16-reveillon-250k: o máximo do anúncio de R$ 6.000 em Q7, Double, Q2, VK7, VK2 e Balcony (aprovado só por causa das noites de 30/12 a 02/01; o PriceLabs não tem máximo por data). Se tiver subido (pendência reveillon-250k-maximo-6000), em 03/01/2027: voltar o máximo a R$ 5.000 (update_listing_data, item de anúncio com excecao 'dono' e esta ordem), quartos.json → max 5000 e apagar parametros.maximo_anuncio_por_noite; se o portão abriu, apagar as chaves *_por_quarto de regra_h_beds24 (as noites já passaram). Até lá, a skill segura R$ 5.000 nas outras noites (comum.maximo_da_noite; teto explícito por data em pace.ajustar_tetos; vigia-maximo nos 12 meses).",
       "atualizado_em": "2026-11-16"
+    },
+    {
+      "id": "lotar-19-23-q7-recalculo-20261117",
+      "responsavel": "skill",
+      "desde": "2026-11-16",
+      "urgencia": 1,
+      "texto": "Moinhos (Q7): regras de 19 a 23/11 gravadas em 16/11 19:17 BRT (19/11 −19%, 20-21 +63%, 22-23 −16%), mas sem recálculo (cota até 17/11 08:04 BRT). Na rotina das 07:53 de 17/11, depois das 08:04: refresh_listing_pricing do Q7 + sync_now, conferir price1 no Beds24 (950 / 1.912 / 1.912 / 985 / 985) e a vitrine da Booking (19/11 ≥ R$ 500)."
+    },
+    {
+      "id": "villa-sabado-2111-manual-20261116",
+      "responsavel": "dono",
+      "desde": "2026-11-16",
+      "urgencia": 1,
+      "texto": "Sábado 21/11 da King Spa 7 e da King Spa 2 mudado à mão no Beds24 em 16/11 (override none e mínimo 2; de manhã estava noCheckOut e mínimo 1). Perguntado ao dono quem mudou. Prazo: sem resposta até a rotina das 07:53 de 17/11, aplicar a Regra H (noCheckInOrCheckOut, mínimo 2) pelo lote do Beds24 com min_stay_antes. Até lá, a auditoria não fecha essa noite."
+    },
+    {
+      "id": "lotar-19-23-perguntas-20261116",
+      "responsavel": "dono",
+      "desde": "2026-11-16",
+      "urgencia": 1,
+      "texto": "Ordem dono-2026-11-16-lotar-19-23, perguntas abertas: (1) abrir 1 diária no sábado 21/11 nas 4 vagas presas (Panorâmica I 1, King Spa 7 2, King Spa 2 1); (2) confirmar a noite de 23/11 dentro da ordem; (3) liberar os pisos de 20 a 23/11 (feriado R$ 800 reais; mediana com hidro do plano de 09/11) para ir abaixo; (4) 6 cancelamentos da Booking de 16/11: foram os hóspedes? Overbooking da Panorâmica II em 22/11 (3 para 2)."
     }
   ],
   "versao": "2026-11-12T13"

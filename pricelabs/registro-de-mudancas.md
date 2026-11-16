@@ -5435,6 +5435,72 @@ Referência semanal (`quartos.json`) atualizada com os valores de hoje antes do 
 
 **PriceLabs:** nenhuma gravação nesta rotina. Os logs desde 15:38 BRT, lidos às 16:32 antes do portão, só traziam as nossas gravações.
 
+## 16/11/2026, 17:25 a 19:20 BRT — Ordem do dono: lotar as duas pousadas de 19 a 23/11 (preço agressivo + janelas)
+
+**Ordens do dono, texto literal:**
+- (16/11 ~17:25 BRT) "Então vamos ficar de olho nas janelas das suítes que temos, pois vi que temos vagas como janela aqui. E vamos melhorar o preço do dia 19 para que possamos vender ele de forma completa. Vamos ser agressivos para lotarmos nossos dois hotéis do dia 19 até o dia 23." Registrada como `dono-2026-11-16-lotar-19-23` (preco_por_data, 7 quartos, noites de 19 a 23/11). A Balcony de 22 e 23/11 fica com o motor (noites_fora).
+- (~18:20 BRT) "Pode liberar o dia 19, mínimo R$ 500". Registrada como `dono-2026-11-16-dia-19-minimo-500` (só 19/11, libera `abaixo_piso`; mínimo de R$ 500 na vitrine da Booking). Em `quartos.json`, o feriado Consciência Negra passa a começar em 20/11.
+
+**Ordens antigas que saem dessas noites (noites_fora):**
+- a mudança manual de 13/11 (+10%), nos 7 quartos, de 19 a 22/11;
+- consciência-negra-p75 (as duas), villa-fds-hidro-1120;
+- faixas de 04/11 de 22 e 23/11.
+
+A regra de segurar descida em onda de cancelamentos também fica superada nessas noites pela ordem do dono.
+
+**Mercado medido na Booking hoje (13 concorrentes com hidro, preço por noite):**
+
+| Estadia | p25 | Mediana |
+|---|---|---|
+| Qui 19→20 | R$ 394 | R$ 696 |
+| Sex 20→22 | R$ 986 | R$ 1.180 |
+| Dom 22→23 | R$ 328 | R$ 469 |
+| Seg 23→24 | R$ 311 | R$ 394 |
+
+Antes das mudanças, o Recanto estava no percentil ~77 do feriadão.
+
+**Gravado no PriceLabs (piso = teto em percent_base), às 19:16 e 19:17 BRT, uma chamada por quarto, conferido na resposta da API.** Antes → depois, preço enviado (Beds24):
+
+| Quarto | Qui 19 | Sex 20 e Sáb 21 | Dom 22 | Seg 23 |
+|---|---|---|---|---|
+| Moinhos | 1.164 → **950** (−19%) | 2.575 → **1.912** (+63%) | 1.164 → **985** (−16%) | 1.478 → **985** (−16%) |
+| Panorâmica II | 1.272 → **954** (−40%) | 4.009 → **1.908** (+20%) | (overbooking, sem item) | 1.479 → **986** (−38%, órfã com 1 diária) |
+| Panorâmica I | 1.309 → **962** (−35%) | 3.557 → **1.909** (+29%) | 1.309 → **1.036** (−30%) | 1.480 → **1.036** (−30%) |
+| Afrodite | (esgotada) | (esgotada) | 1.650 → **1.500** (−25%) | 1.780 → **1.500** (−25%) |
+| King Spa 7 | 1.157 → **903** (−39%) | 3.838 → **2.057** (+39%) | (esgotada) | (esgotada) |
+| King Spa 2 | 1.134 → **902** (−29%) | 3.294 → **2.057** (+62%) | (esgotada) | 1.664 → **952** (−25%) |
+| Balcony | 1.189 → **800** (−37%) | 2.096 → **1.765** (+39%, Regra G 85,8%) | 949 → **686** (−46%, regra dos 80%) | 686 → 686 (sem mudança; mantido para a Regra G) |
+
+**Na vitrine da Booking (estimativa):**
+- Quinta 19: Recanto ~R$ 500 a 507 (1 noite, fator 0,5265) e Villa ~R$ 504 a 569. O mínimo do dono é R$ 500.
+- Sexta e sábado: Recanto ~R$ 1.113 e King Spa ~R$ 1.228 (mediana R$ 1.180).
+- Domingo e segunda: Recanto ~R$ 575 a 604.
+
+**Pisos usados:**
+- 20 e 21/11 (feriado): R$ 800 reais, o limite do dono.
+- 22 e 23/11: a mediana com hidro do plano de 09/11 (R$ 572), convertida pelo fator medido hoje.
+- Afrodite: R$ 1.500, o mínimo do anúncio.
+- 19/11: o mínimo de R$ 500 do dono.
+
+**Validação:** `validar_plano.py` com as ordens reais deu 28 itens, 0 erro e 11 avisos esperados (abaixo do piso padrão por ordem do dono; Balcony pela regra dos 80%).
+
+**Recálculo e envio:** às 19:17 e 19:18 BRT, recálculo em Panorâmica II, Panorâmica I, Afrodite, King Spa 7, King Spa 2 e Balcony, com os preços conferidos no calendário recalculado, seguido de Sync Now nos 6.
+- Cota: Panorâmica I 3 de 3 (próxima vaga 17/11 13:56 BRT).
+- **A Moinhos fica sem recálculo até 17/11 08:04 BRT** (cota): o preço novo dela chega ao Beds24 depois do recálculo e do Sync Now de amanhã às 08:04 (pendência).
+
+**Efeitos e riscos que o dono precisa saber:**
+- **Escada suspensa:** de 19 a 23/11 o preço fica no piso até lotar; não sobe com as reservas.
+- **Risco de overbooking:** se voltar alguma reserva cancelada hoje (6 da Booking, a direta da Panorâmica II de 20 a 22, a da King Spa 7 em 20/11 e a do Airbnb na King Spa 2), as vagas reabertas já estão à venda.
+- **Panorâmica II em 22/11:** segue com overbooking (3 reservas para 2 quartos).
+
+**Perguntas abertas ao dono:**
+- abrir 1 diária no sábado 21/11 para as 4 vagas presas;
+- quem mudou à mão o sábado da King Spa 7 e da King Spa 2. Sem resposta até a rotina das 07:53 de 17/11, a Regra H fecha esse sábado;
+- confirmar a noite de 23/11 dentro da ordem;
+- se libera os pisos de 20 a 23/11 para ir abaixo da mediana.
+
+**Testes:** a mudança dos dados (feriado e ordens) quebrou 14 testes que usavam os dados reais como fixos. Um agente está corrigindo só os testes. O código das rotinas não mudou.
+
 ## O que só pode ser feito na tela (passo a passo para você)
 
 1. **Safety Minimum Price → "Do Not Apply"** (Dynamic Pricing → Customizations → aba Groups → Edit no grupo Recanto dos Moinhos → All Customizations → Safety Minimum Price). Anote o valor atual antes.

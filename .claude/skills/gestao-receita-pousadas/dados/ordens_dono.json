@@ -579,7 +579,13 @@
    "frente_ocupacao": 0.5,
    "nota": "Sem pisos_enviados: vale o piso de feriado (R$ 800 reais ÷ fator real: King Spa R$ 2.051 enviados ≈ R$ 1.333 público; Balcony R$ 1.509 ≈ R$ 981; Recanto R$ 1.905 ≈ R$ 1.200). Validade 21/11. Recanto 19/11: ordem dono-2026-11-01-consciencia-negra-p75-recanto. Só desce (so_desce): o p75 é teto do pedido, não alvo de subida; a noite que passa a vender bem sai da ordem e segue o motor (com a escada de vendas).",
    "so_desce": true,
-   "criada_em": "2026-11-01T20:55+00:00"
+   "criada_em": "2026-11-01T20:55+00:00",
+   "noites_fora": [
+    "2026-11-19",
+    "2026-11-20",
+    "2026-11-21"
+   ],
+   "noites_fora_motivo": "substituídas pela ordem dono-2026-11-16-lotar-19-23 (16/11)"
   },
   {
    "id": "dono-2026-11-01-consciencia-negra-p75-recanto",
@@ -606,7 +612,11 @@
    "frente_ocupacao": 0.5,
    "nota": "Recanto só na quinta 19/11 (20 e 21/11 vendem bem e ficam com o motor). Piso de feriado R$ 1.905 enviados (≈ R$ 1.200 público); Afrodite segue acima das outras. Só desce (so_desce): o p75 é teto do pedido, não alvo de subida; a noite que passa a vender bem sai da ordem e segue o motor (com a escada de vendas).",
    "so_desce": true,
-   "criada_em": "2026-11-01T20:55+00:00"
+   "criada_em": "2026-11-01T20:55+00:00",
+   "noites_fora": [
+    "2026-11-19"
+   ],
+   "noites_fora_motivo": "substituídas pela ordem dono-2026-11-16-lotar-19-23 (16/11)"
   },
   {
    "data": "2026-11-01",
@@ -1084,7 +1094,12 @@
    ],
    "ocupacao_max": 0.7,
    "frente_ocupacao": 0.5,
-   "nota": "Consciência Negra (sexta e sábado). Régua: King Spa 7 e King Spa 2 (banheira) da mediana (p50) ao p90 dos quartos com hidro na Booking; Balcony (sem banheira) da mediana ao p75 da lista; preço público da varredura de 01/11 (62-70 concorrentes) ÷ razão Booking/enviado da Villa medida na mesma busca. O piso é a régua com 0 vendida; a escada sobe pela ocupação (suítes de 2 unidades: as 9 suítes com banheira da Villa) até o topo. Esta ordem não desce a noite abaixo do piso; quarto que já estava acima da régua fica com piso no menor preço de hoje das duas noites (a outra noite pode descer até ele se não vender). Substitui, nestas noites, a ordem dono-2026-11-01-villa-base-mercado (régua da lista) e a dono-2026-11-01-consciencia-negra-p75 na Villa. Como desfazer: pedir 'Volte a Villa dos fins de semana à régua da lista'."
+   "nota": "Consciência Negra (sexta e sábado). Régua: King Spa 7 e King Spa 2 (banheira) da mediana (p50) ao p90 dos quartos com hidro na Booking; Balcony (sem banheira) da mediana ao p75 da lista; preço público da varredura de 01/11 (62-70 concorrentes) ÷ razão Booking/enviado da Villa medida na mesma busca. O piso é a régua com 0 vendida; a escada sobe pela ocupação (suítes de 2 unidades: as 9 suítes com banheira da Villa) até o topo. Esta ordem não desce a noite abaixo do piso; quarto que já estava acima da régua fica com piso no menor preço de hoje das duas noites (a outra noite pode descer até ele se não vender). Substitui, nestas noites, a ordem dono-2026-11-01-villa-base-mercado (régua da lista) e a dono-2026-11-01-consciencia-negra-p75 na Villa. Como desfazer: pedir 'Volte a Villa dos fins de semana à régua da lista'.",
+   "noites_fora": [
+    "2026-11-20",
+    "2026-11-21"
+   ],
+   "noites_fora_motivo": "substituídas pela ordem dono-2026-11-16-lotar-19-23 (16/11)"
   },
   {
    "id": "dono-2026-11-02-villa-fds-hidro-1127",
@@ -4078,7 +4093,11 @@
    },
    "gatilho_dias": 7,
    "gatilho_min_dias": 2,
-   "nota": "F2 (Dia de semana (dom-qui)): régua com hidro medida na noite (1 estadia), p50 R$ 675 público, p90 R$ 1539; ÷ 0.620 (Booking/enviado; ÷ 0.558 nos degraus de D7 ou menos); nunca abaixo do piso do dono. Gatilho de D7 sem venda nova: F1 (ou o piso do dono). Afrodite pelo prêmio dela e Balcony 10% abaixo (Regra G). Como desfazer: pedir 'Volte às ordens anteriores de 22/11/26'."
+   "nota": "F2 (Dia de semana (dom-qui)): régua com hidro medida na noite (1 estadia), p50 R$ 675 público, p90 R$ 1539; ÷ 0.620 (Booking/enviado; ÷ 0.558 nos degraus de D7 ou menos); nunca abaixo do piso do dono. Gatilho de D7 sem venda nova: F1 (ou o piso do dono). Afrodite pelo prêmio dela e Balcony 10% abaixo (Regra G). Como desfazer: pedir 'Volte às ordens anteriores de 22/11/26'.",
+   "noites_fora": [
+    "2026-11-22"
+   ],
+   "noites_fora_motivo": "substituídas pela ordem dono-2026-11-16-lotar-19-23 (16/11)"
   },
   {
    "id": "dono-2026-11-04-faixa-villa-20261122",
@@ -4135,7 +4154,11 @@
    },
    "gatilho_dias": 7,
    "gatilho_min_dias": 2,
-   "nota": "F2 (Dia de semana (dom-qui)): régua com hidro medida na noite (1 estadia), p50 R$ 675 público, p90 R$ 1539; ÷ 0.650 (Booking/enviado; ÷ 0.585 nos degraus de D7 ou menos); nunca abaixo do piso do dono. Gatilho de D7 sem venda nova: F1 (ou o piso do dono). Afrodite pelo prêmio dela e Balcony 10% abaixo (Regra G). Como desfazer: pedir 'Volte às ordens anteriores de 22/11/26'."
+   "nota": "F2 (Dia de semana (dom-qui)): régua com hidro medida na noite (1 estadia), p50 R$ 675 público, p90 R$ 1539; ÷ 0.650 (Booking/enviado; ÷ 0.585 nos degraus de D7 ou menos); nunca abaixo do piso do dono. Gatilho de D7 sem venda nova: F1 (ou o piso do dono). Afrodite pelo prêmio dela e Balcony 10% abaixo (Regra G). Como desfazer: pedir 'Volte às ordens anteriores de 22/11/26'.",
+   "noites_fora": [
+    "2026-11-22"
+   ],
+   "noites_fora_motivo": "substituídas pela ordem dono-2026-11-16-lotar-19-23 (16/11)"
   },
   {
    "id": "dono-2026-11-04-faixa-recanto-20261123",
@@ -4199,7 +4222,11 @@
    },
    "gatilho_dias": 8,
    "gatilho_min_dias": 2,
-   "nota": "F2 (Dia de semana (dom-qui)): régua com hidro medida na noite (1 estadia), p50 R$ 560 público, p90 R$ 1579; ÷ 0.620 (Booking/enviado; ÷ 0.558 nos degraus de D7 ou menos); nunca abaixo do piso do dono. Gatilho de D7 sem venda nova: F1 (ou o piso do dono). Afrodite pelo prêmio dela e Balcony 10% abaixo (Regra G). Como desfazer: pedir 'Volte às ordens anteriores de 23/11/26'."
+   "nota": "F2 (Dia de semana (dom-qui)): régua com hidro medida na noite (1 estadia), p50 R$ 560 público, p90 R$ 1579; ÷ 0.620 (Booking/enviado; ÷ 0.558 nos degraus de D7 ou menos); nunca abaixo do piso do dono. Gatilho de D7 sem venda nova: F1 (ou o piso do dono). Afrodite pelo prêmio dela e Balcony 10% abaixo (Regra G). Como desfazer: pedir 'Volte às ordens anteriores de 23/11/26'.",
+   "noites_fora": [
+    "2026-11-23"
+   ],
+   "noites_fora_motivo": "substituídas pela ordem dono-2026-11-16-lotar-19-23 (16/11)"
   },
   {
    "id": "dono-2026-11-04-faixa-villa-20261123",
@@ -4256,7 +4283,11 @@
    },
    "gatilho_dias": 8,
    "gatilho_min_dias": 2,
-   "nota": "F2 (Dia de semana (dom-qui)): régua com hidro medida na noite (1 estadia), p50 R$ 560 público, p90 R$ 1579; ÷ 0.650 (Booking/enviado; ÷ 0.585 nos degraus de D7 ou menos); nunca abaixo do piso do dono. Gatilho de D7 sem venda nova: F1 (ou o piso do dono). Afrodite pelo prêmio dela e Balcony 10% abaixo (Regra G). Como desfazer: pedir 'Volte às ordens anteriores de 23/11/26'."
+   "nota": "F2 (Dia de semana (dom-qui)): régua com hidro medida na noite (1 estadia), p50 R$ 560 público, p90 R$ 1579; ÷ 0.650 (Booking/enviado; ÷ 0.585 nos degraus de D7 ou menos); nunca abaixo do piso do dono. Gatilho de D7 sem venda nova: F1 (ou o piso do dono). Afrodite pelo prêmio dela e Balcony 10% abaixo (Regra G). Como desfazer: pedir 'Volte às ordens anteriores de 23/11/26'.",
+   "noites_fora": [
+    "2026-11-23"
+   ],
+   "noites_fora_motivo": "substituídas pela ordem dono-2026-11-16-lotar-19-23 (16/11)"
   },
   {
    "id": "dono-2026-11-04-faixa-recanto-20261124",
@@ -10185,7 +10216,14 @@
    "de": "2026-11-19",
    "ate": "2026-11-22",
    "tipo": "manual",
-   "libera": []
+   "libera": [],
+   "noites_fora": [
+    "2026-11-19",
+    "2026-11-20",
+    "2026-11-21",
+    "2026-11-22"
+   ],
+   "noites_fora_motivo": "substituídas pela ordem dono-2026-11-16-lotar-19-23 (16/11); 19/11 liberada pelo dono ('Pode liberar o dia 19, mínimo R$ 500', 16/11 ~18:20 BRT)"
   },
   {
    "id": "manual-2026-11-15-double-2026-11-19",
@@ -10197,7 +10235,14 @@
    "de": "2026-11-19",
    "ate": "2026-11-22",
    "tipo": "manual",
-   "libera": []
+   "libera": [],
+   "noites_fora": [
+    "2026-11-19",
+    "2026-11-20",
+    "2026-11-21",
+    "2026-11-22"
+   ],
+   "noites_fora_motivo": "substituídas pela ordem dono-2026-11-16-lotar-19-23 (16/11); 19/11 liberada pelo dono ('Pode liberar o dia 19, mínimo R$ 500', 16/11 ~18:20 BRT)"
   },
   {
    "id": "manual-2026-11-15-afrodite-2026-11-19",
@@ -10209,7 +10254,14 @@
    "de": "2026-11-19",
    "ate": "2026-11-22",
    "tipo": "manual",
-   "libera": []
+   "libera": [],
+   "noites_fora": [
+    "2026-11-19",
+    "2026-11-20",
+    "2026-11-21",
+    "2026-11-22"
+   ],
+   "noites_fora_motivo": "substituídas pela ordem dono-2026-11-16-lotar-19-23 (16/11); 19/11 liberada pelo dono ('Pode liberar o dia 19, mínimo R$ 500', 16/11 ~18:20 BRT)"
   },
   {
    "id": "manual-2026-11-15-q2-2026-11-19",
@@ -10221,7 +10273,14 @@
    "de": "2026-11-19",
    "ate": "2026-11-22",
    "tipo": "manual",
-   "libera": []
+   "libera": [],
+   "noites_fora": [
+    "2026-11-19",
+    "2026-11-20",
+    "2026-11-21",
+    "2026-11-22"
+   ],
+   "noites_fora_motivo": "substituídas pela ordem dono-2026-11-16-lotar-19-23 (16/11); 19/11 liberada pelo dono ('Pode liberar o dia 19, mínimo R$ 500', 16/11 ~18:20 BRT)"
   },
   {
    "id": "manual-2026-11-15-vk7-2026-11-19",
@@ -10233,7 +10292,14 @@
    "de": "2026-11-19",
    "ate": "2026-11-22",
    "tipo": "manual",
-   "libera": []
+   "libera": [],
+   "noites_fora": [
+    "2026-11-19",
+    "2026-11-20",
+    "2026-11-21",
+    "2026-11-22"
+   ],
+   "noites_fora_motivo": "substituídas pela ordem dono-2026-11-16-lotar-19-23 (16/11); 19/11 liberada pelo dono ('Pode liberar o dia 19, mínimo R$ 500', 16/11 ~18:20 BRT)"
   },
   {
    "id": "manual-2026-11-15-balcony-2026-11-19",
@@ -10245,7 +10311,14 @@
    "de": "2026-11-19",
    "ate": "2026-11-22",
    "tipo": "manual",
-   "libera": []
+   "libera": [],
+   "noites_fora": [
+    "2026-11-19",
+    "2026-11-20",
+    "2026-11-21",
+    "2026-11-22"
+   ],
+   "noites_fora_motivo": "substituídas pela ordem dono-2026-11-16-lotar-19-23 (16/11); 19/11 liberada pelo dono ('Pode liberar o dia 19, mínimo R$ 500', 16/11 ~18:20 BRT)"
   },
   {
    "id": "manual-2026-11-15-vk2-2026-11-19",
@@ -10257,7 +10330,14 @@
    "de": "2026-11-19",
    "ate": "2026-11-22",
    "tipo": "manual",
-   "libera": []
+   "libera": [],
+   "noites_fora": [
+    "2026-11-19",
+    "2026-11-20",
+    "2026-11-21",
+    "2026-11-22"
+   ],
+   "noites_fora_motivo": "substituídas pela ordem dono-2026-11-16-lotar-19-23 (16/11); 19/11 liberada pelo dono ('Pode liberar o dia 19, mínimo R$ 500', 16/11 ~18:20 BRT)"
   },
   {
    "id": "dono-2026-11-16-reveillon-250k",
@@ -10751,6 +10831,69 @@
     "receita_alarme": "Revisão de 16/11 (3ª verificação, R3-08): a receita das 4 noites da linha de alarme sai do próprio --reservas do plano (beds24.py reservas --json: receita de hospedagem de cada reserva confirmada ou nova, rateada por noite, a mesma conta do beds24.py livro); --receita só corrige à mão. A partir da primeira linha (23/11), sem receita a escada fica parada, com aviso.",
     "config_depois_de_gravar": "Revisão de 16/11 (3ª verificação, R3-06/R3-12): a config (quartos.json) do portão e das exceções só pelo `aplicar-config`, depois do editar-lote --aplicar sem erro (--resumo-beds24) e da gravação do PriceLabs conferida (--pricelabs, a resposta ou a releitura das regras); `orfas --aplicar-config` saiu. 4ª verificação (16/11): o resumo do editar-lote é conferido item a item (chave e estado de cada item, e o dia); abrir (portão, exceção) pede o lote sem erro e tudo conferido no Beds24 e no PriceLabs; fechar uma exceção entra na config com os itens dela conferidos no Beds24, mesmo sem o PriceLabs conferido (fechar é o lado seguro; a recusa manda regravar o PriceLabs); o portão de uma pousada fica de fora só por item do portão não conferido ou sem o ok do dono na ordem e na prova; a resposta do PriceLabs vale pela releitura da `verification` (o `data.overrides` é o eco do pedido) e o próprio pedido é recusado."
    }
+  },
+  {
+   "id": "dono-2026-11-16-lotar-19-23",
+   "data": "2026-11-16",
+   "criada_em": "2026-11-16T20:25:00Z",
+   "texto": "Então vamos ficar de olho nas janelas das suítes que temos, pois vi que temos vagas como janela aqui. E vamos melhorar o preço do dia 19 para que possamos vender ele de forma completa. Vamos ser agressivos para lotarmos nossos dois hotéis do dia 19 até o dia 23.",
+   "contexto": "Ordem do dono no chat, 16/11/2026 por volta de 17:25 BRT. Leitura da skill: noites de 19/11 (quinta) a 23/11 (segunda), saída até 24/11, nas duas pousadas e nos 7 quartos (a noite de 23/11 a confirmar com o dono); preço agressivo para vender (19/11 prioridade, liberada pelo dono com mínimo de R$ 500 na Booking), piso = teto em percent_base, nunca abaixo dos pisos do dono (R$ 800 reais no feriado, piso de R$ 500 no Genius 3 / piso de mercado de D7-D0 do plano de 09/11 em preço público convertido pelo fator medido hoje na Booking, mínimos do anúncio, salvo onde a regra da skill já permite ficar abaixo deles: decisão 5 e regra dos 80% do plano de 09/11) nem do limite de segurança; Balcony com 80% das suítes com banheira vendidas no mercado do quarto sem banheira calculado pelo motor (R$ 678 em 22-23/11); abrir as janelas que as regras permitem. Substitui, nessas noites, a mudança manual de 13/11 (+10%) e as ordens alvo_por_data anteriores (consciência negra p75, villa-fds-hidro-1120, faixas de 04/11 de 22 e 23/11, villa-base-mercado), e a regra interna de segurar descida em onda de cancelamentos. Não libera piso do dono, Regra G, sábado (Regra H) nem estadia abaixo da exigida. Efeito a relatar: com piso = teto e preco_por_data, a escada de vendas (dono 01/11 e plano de 09/11) fica suspensa de 19 a 23/11: o preço não sobe com as reservas até o fim do período.",
+   "quartos": [
+    "Q7",
+    "Double",
+    "Afrodite",
+    "Q2",
+    "VK7",
+    "Balcony",
+    "VK2"
+   ],
+   "de": "2026-11-19",
+   "ate": "2026-11-23",
+   "tipo": "preco_por_data",
+   "libera": [],
+   "so_desce": true,
+   "passo_livre": true,
+   "nota": "Validada em rev39 com as ordens reais. Itens de 22 e 23/11 abaixo do piso de R$ 500 no Genius 3 citam dono-2026-11-09-plano-nov-fev (decisão 5); a Balcony de 22/11 cita a regra dos 80% do mesmo plano. 19/11: preço pela resposta do dono (mínimo R$ 500 na vitrine).",
+   "respostas": [
+    {
+     "em": "2026-11-16 ~18:20 BRT",
+     "pergunta": "Liberar o piso de feriado (R$ 800 reais) na quinta 19/11 para ser agressivo, e qual o mínimo?",
+     "texto_dono": "Pode liberar o dia 19, mínimo R$ 500",
+     "leitura": "19/11 deixa de ser noite de feriado (quartos.json: Consciência Negra começa em 20/11); mínimo de R$ 500 por noite no preço que o hóspede vê na Booking (vitrine), garantido também no desconto extra de 1 noite medido em 19/11 (fator 0,5265 no Recanto). Estadia de 1 noite mantida em 19/11 (como está)."
+    }
+   ],
+   "noites_fora": {
+    "Balcony": [
+     "2026-11-22",
+     "2026-11-23"
+    ]
+   },
+   "noites_fora_motivo": "Balcony de 22 e 23/11 fica com o motor (regra dos 80% e Regra G recalculadas a cada rotina; verificação de 16/11)."
+  },
+  {
+   "id": "dono-2026-11-16-dia-19-minimo-500",
+   "data": "2026-11-16",
+   "criada_em": "2026-11-16T21:20:00Z",
+   "texto": "Pode liberar o dia 19, mínimo R$ 500",
+   "contexto": "Resposta do dono (16/11 ~18:20 BRT) à pergunta: liberar o piso de feriado (R$ 800 reais) e os pisos de dia de semana na quinta 19/11 para ser agressivo (ordem dono-2026-11-16-lotar-19-23), e qual o mínimo. Leitura: mínimo de R$ 500 por noite no preço que o hóspede vê na Booking (vitrine), garantido também no desconto extra de 1 noite medido em 19/11 (fator 0,5265 no Recanto; 0,630 na Villa). 19/11 deixa de ser feriado em quartos.json (Consciência Negra começa em 20/11).",
+   "tipo": "preco_por_data",
+   "quartos": [
+    "Q7",
+    "Double",
+    "Afrodite",
+    "Q2",
+    "VK7",
+    "Balcony",
+    "VK2"
+   ],
+   "de": "2026-11-19",
+   "ate": "2026-11-19",
+   "libera": [
+    "abaixo_piso"
+   ],
+   "minimo_publico_booking": 500,
+   "nota": "Só a noite de 19/11. Itens: Moinhos −19% (950,13), Panorâmica II −40% (954), Panorâmica I −35% (962), King Spa 7 −39% (902,80), King Spa 2 −29% (901,70), Balcony −37% (800,10; 88,7% da King Spa 2, Regra G). Público ~R$ 500-569. Nenhum item desta ordem pode ficar abaixo de R$ 500 na vitrine da Booking: medir depois do envio.",
+   "como_desfazer": "Regravar 19/11 com os preços de antes (Moinhos 1.164, Panorâmica I 1.309, Panorâmica II 1.272, King Spa 7 1.157, King Spa 2 1.134, Balcony 1.189) e voltar o feriado a começar em 19/11 em quartos.json."
   }
  ]
 }

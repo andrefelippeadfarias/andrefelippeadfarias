@@ -5395,6 +5395,46 @@ Referência semanal (`quartos.json`) atualizada com os valores de hoje antes do 
   - registrar o ok na ordem (`execucao_skill.ok_01_04_05`) quando a correção da 3ª verificação terminar;
   - a Villa segue esperando o dono: tirar a promoção e fechar na extranet o 01→03 que vaza.
 
+## 16/11/2026, 16:53 a 17:10 BRT — Rotina leve das 16:53: 01→03 do Recanto já à venda na Booking; sábado 21/11 da Villa mexido à mão; descidas seguradas pela onda de cancelamentos
+
+**Código:** a rotina rodou com a cópia do commit a0819fe. A cópia anterior (efb00f8) trazia o `quartos.json` sem o portão aberto, e a auditoria fecharia o 01→03 de volta.
+
+**Beds24 desde 13:53 BRT:**
+- 3 novas:
+  - Moinhos de 20 a 22/11, Booking, R$ 3.323;
+  - Moinhos de 11 a 13/12, Expedia, R$ 1.053;
+  - Panorâmica I de 18 a 20/12, direta, R$ 1.643.
+- 9 canceladas:
+  - Booking: Moinhos 19 a 24/11, 20 a 22/11 (2); Panorâmica I 17 a 19/11, 18 a 20/11, 21 a 24/11;
+  - Panorâmica II de 20 a 22/11 (direta);
+  - King Spa 7 em 20/11 (direta);
+  - King Spa 2 de 20 a 22/11 (Airbnb, R$ 0).
+- 10 alteradas (mudança de situação pela equipe).
+- **Segurança:** alerta de rajada, 6 cancelamentos da Booking entre 13:56 e 15:11 BRT. Pedido ao dono: confirmar com a recepção e com os hóspedes.
+- **Abaixo do esperado:**
+  - Moinhos 11 a 13/12, Expedia, 43%. É o desconto do canal; provavelmente não é erro.
+  - Panorâmica I 18 a 20/12, "direta" lançada por API, R$ 1.643 contra R$ 3.286 do price1 (50%). Pedido ao dono: confirmar a tarifa.
+
+**Decisões:**
+- **Cancelamentos:** sem descida, pela regra da onda de cancelamentos (aprendizados, 06/11: descer por cancelamento espera a recepção confirmar). De 19 a 22/11 as noites seguem congeladas pela mudança manual do dono.
+- **Vendas novas:** o passo da escada fica para as 07:53 de amanhã (limite de recálculo):
+  - Moinhos em 11 e 12/12: sem vaga até 08:04 BRT;
+  - Panorâmica I em 18 e 19/12: a única vaga é a da medição da manhã.
+
+  A cadência guarda a venda, então o passo não se perde.
+- **Noites soltas de D0 a D8 fora do congelamento** (16, 17, 18, 23 e 24/11): estadia certa nos 7 quartos, nada a gravar.
+- **Auditoria do Beds24 (60 dias, `calendario_12m.py auditar`):** 3 itens, todos de 20 e 21/11, noites congeladas. **Não apliquei.**
+  - Afrodite 20/11: a sexta pede `none`, mas ela está esgotada (sem efeito).
+  - King Spa 7 e King Spa 2 em 21/11 (sábado): o alvo da auditoria é `noCheckInOrCheckOut`.
+  - **Mudança manual no Beds24 depois das 08:00:** pela manhã estavam `noCheckOut` com mínimo 1 (lado órfão); agora estão `none` com mínimo 2. Não foi a skill (sem gravação da skill nessas noites hoje). **Pergunta ao dono:** foi ele ou a recepção? Até a resposta, fica como está.
+- **Sombra da flutuação:** foto fechada (`sombra_flutuacao.py fechar`), 60 noites.
+
+**Booking (conector oficial), por volta das 17:00 BRT:**
+- **Recanto 01→03:** R$ 5.103, ou R$ 2.551,50 por noite = 4.375 × 0,5832. **O fim de semana aberto pelo portão já está à venda, no alvo.**
+- **Villa 01→03:** R$ 3.027,38, ou R$ 1.514 por noite, fator 0,3377. **Segue vazando.** É o portão fechado da Villa, que depende do dono na extranet (fechar o 01→03 e tirar a promoção).
+
+**PriceLabs:** nenhuma gravação nesta rotina. Os logs desde 15:38 BRT, lidos às 16:32 antes do portão, só traziam as nossas gravações.
+
 ## O que só pode ser feito na tela (passo a passo para você)
 
 1. **Safety Minimum Price → "Do Not Apply"** (Dynamic Pricing → Customizations → aba Groups → Edit no grupo Recanto dos Moinhos → All Customizations → Safety Minimum Price). Anote o valor atual antes.

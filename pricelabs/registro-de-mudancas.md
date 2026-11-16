@@ -5348,7 +5348,7 @@ Referência semanal (`quartos.json`) atualizada com os valores de hoje antes do 
   - Cota: Moinhos 3 de 3 (próxima vaga amanhã às 08:04 BRT, então o recálculo dela na rotina completa fica para depois disso); Panorâmica I 3 de 3 (vaga às 16:55 BRT); Afrodite e Panorâmica II 1 de 3.
   - Usei a última vaga da Moinhos porque o preço dela do Réveillon no canal estava cerca de R$ 1,8 mil por noite abaixo do novo.
 - **Sync Now:** às 15:56 e 15:57 BRT, nos 4 quartos (ids 854151059, 854151152, 854151060 e 854151177).
-- **Beds24 às 15:56:32 BRT:** Moinhos (4.974 / 4.974 / 4.375 / 4.375) e Panorâmica I (4.988 / 4.988 / 4.544 / 4.544) já chegaram certas. Afrodite e Panorâmica II ainda estavam com o preço antigo (envio em processamento); a conferência sai na próxima entrada.
+- **Beds24 às 15:56:32 BRT:** Moinhos (4.974 / 4.974 / 4.375 / 4.375) e Panorâmica I (4.988 / 4.988 / 4.544 / 4.544) já chegaram certas. Afrodite e Panorâmica II ainda estavam com o preço antigo (envio em processamento) e chegaram certas às 15:58:56 BRT: Afrodite 6.700 / 6.700 / 5.820 / 5.820 e Panorâmica II 4.977 / 4.977 / 4.452 / 4.452. **Os 4 quartos estão confirmados no Beds24.** A conferência na Booking (o público, condição do portão) sai na rotina das 16:53, mais de 30 min depois do envio.
 
 **Segurança (topo do relatório):** a Booking cancelou 6 reservas entre 13:56 e 15:11 BRT. São 3 da Moinhos (19 a 24/11 e duas de 20 a 22/11) e 3 da Panorâmica I (17 a 19/11, 18 a 20/11 e 21 a 24/11). Pedido ao dono: confirmar com a recepção e com os hóspedes. Enquanto isso, nenhum corte de preço por esses cancelamentos; de 19 a 22/11 as noites seguem congeladas pela mudança manual. Também houve:
 - 1 cancelamento direto da Panorâmica II (20 a 22/11);

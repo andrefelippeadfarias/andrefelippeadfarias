@@ -5260,6 +5260,18 @@ Referência semanal (`quartos.json`) atualizada com os valores de hoje antes do 
 - Sombra da flutuação: 4 fotos de 7 (10 a 13/11); King Spa 7 dom-qui com solto bruto +6,3% sobre o gravado (sem calibração). Proposta de teste no relatório.
 - Não feitos hoje (dependem do recálculo ou de sessão própria): motor de pace dos 60 dias, faixas do dono, fatores da semana, painel semanal, varredura da concorrência.
 
+## 16/11/2026, 10:56 a 11:00 BRT — Rotina leve das 10:53: envio diário parado pela cobrança em aberto no PriceLabs
+
+**Envio aos canais não saiu hoje:** `last_date_pushed` segue em 15/11 09:21 BRT nos 7 quartos (envio ligado), e o último recálculo também é de 15/11. Confirma o efeito da cobrança em aberto (recálculo recusado às 08:04): o Beds24 e a Booking ficam com os preços de ontem, e o que foi gravado hoje no PriceLabs (mínimo do anúncio do Recanto, proteção da Afrodite 12-14/01) só chega aos canais quando o envio voltar. Sem contorno: preço só pelo PriceLabs. Pendência do dono atualizada (`pricelabs-cobranca-20261116`).
+
+**Beds24 desde 07:50 BRT:** 0 novas, 0 canceladas, 7 alteradas (saídas de hoje na Panorâmica I, King Spa 7, Balcony e King Spa 2; mudança de situação, nenhuma mexe em noite livre). **Segurança: 0 alertas.** **Abaixo do esperado: 0.** **Overbooking ainda aberto:** King Spa 7 hoje (16/11) e Panorâmica II 22/11.
+
+**Logs do PriceLabs:** só as gravações da rotina das 07:53 (API); nenhuma mudança manual nova.
+
+**Booking (17-18/11, 2 adultos):** Recanto id 7562933, nome e endereço conferem, R$ 607 ÷ R$ 1.056 (Moinhos, livre mais barato) = 0,58; Villa id 14824789, nome e endereço conferem, R$ 424 ÷ R$ 749 (Balcony) = 0,57. As duas dentro da faixa 0,42 a 0,72: sem sinal de promoção ou dado mudado na extranet.
+
+**Preço:** nada gravado (sem venda, cancelamento nem mudança manual; recálculo bloqueado).
+
 ## O que só pode ser feito na tela (passo a passo para você)
 
 1. **Safety Minimum Price → "Do Not Apply"** (Dynamic Pricing → Customizations → aba Groups → Edit no grupo Recanto dos Moinhos → All Customizations → Safety Minimum Price). Anote o valor atual antes.

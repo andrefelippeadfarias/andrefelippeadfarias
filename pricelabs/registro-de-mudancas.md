@@ -5315,6 +5315,46 @@ Referência semanal (`quartos.json`) atualizada com os valores de hoje antes do 
 
 **Cota de recálculo:** Moinhos 2 de 3 e Panorâmica I 2 de 3 em 24 h. A falha das 08:04 da Moinhos sai da janela amanhã às 08:04 BRT.
 
+## 16/11/2026, 15:42 a 16:00 BRT — Réveillon e fim de semana 01→03/01 do Recanto gravados (dono 16/11, "Pode fazer"; ordem `dono-2026-11-16-reveillon-250k`)
+
+**Antes de gravar:**
+- Logs do PriceLabs desde 13:38 BRT: só as nossas 3 gravações das 13:59, sem mudança manual.
+- Beds24 desde 13:53 BRT: nenhuma reserva nem cancelamento de 30/12 a 02/01, então o plano continua valendo. O alerta de segurança está mais abaixo.
+- Plano conferido duas vezes pelos verificadores independentes: 16 itens, 0 erro e 0 aviso no validador.
+
+| Mudança | Onde | Antes | Depois | Como desfazer |
+|---|---|---|---|---|
+| Moinhos 30 e 31/12, piso = teto | PriceLabs, regra por data | +172 / +191 (R$ 3.190,56 / 3.413,43) | **+324** (R$ 4.973,52) | regravar +172/+191 piso = teto |
+| Moinhos 01 e 02/01, piso = teto | PriceLabs | +154 (R$ 2.979,42) | **+273** (R$ 4.375,29) | regravar +154 |
+| Panorâmica I 30 e 31/12 | PriceLabs | +141 / +158 (R$ 3.566,80 / 3.818,40) | **+237** (R$ 4.987,60) | regravar +141/+158 |
+| Panorâmica I 01 e 02/01 | PriceLabs | +141 (R$ 3.566,80) | **+207** (R$ 4.543,60) | regravar +141 |
+| Afrodite 30 e 31/12 | PriceLabs | +106 / +120 (R$ 4.120 / 4.400) | **+235** (R$ 6.700) | regravar +106/+120 |
+| Afrodite 01 e 02/01 | PriceLabs | +106 (R$ 4.120) | **+191** (R$ 5.820) | regravar +106 |
+| Panorâmica II 30 e 31/12 | PriceLabs | +119 / +134 (R$ 3.482,10 / 3.720,60) | **+213** (R$ 4.976,70) | regravar +119/+134 |
+| Panorâmica II 01 e 02/01 | PriceLabs | +116 (R$ 3.434,40) | **+180** (R$ 4.452) | regravar +116 |
+
+- **Público estimado na Booking** (enviado × fator 0,5832):
+  - Réveillon: Moinhos ~R$ 2.901, Panorâmica II ~2.902, Panorâmica I ~2.909, Afrodite ~3.907. É o pedido de 09/11.
+  - Fim de semana: Moinhos ~2.552, Panorâmica II ~2.596, Panorâmica I ~2.650, Afrodite ~3.394. São os alvos aprovados ÷ 0,5832.
+- **Conferido:**
+  - Ordem Moinhos ≤ Panorâmica II ≤ Panorâmica I e Afrodite ≥ 1,15 × Panorâmica I.
+  - Nada passa de R$ 5.000 nos quartos com máximo de 5.000.
+- **Gravação:** às 15:46:41, 15:46:54, 15:48:08 e 15:54:32 BRT, uma chamada por vez. A resposta da API confirmou piso = teto. Mantiveram-se a estadia mínima (2, 2, 3, 3) e as máscaras da Afrodite (31/12 1110111; 01/01 entrada 1111011 e saída 1111111; 02/01 1111101).
+- **Não mudou:**
+  - estadia mínima, chegada e saída: o portão do 01→03 continua fechado;
+  - a Villa: ela espera você tirar a promoção e fechar na extranet o 01→03 que vaza;
+  - o máximo dos anúncios. Ele fica em R$ 5.000 porque subir agora deixaria as noites de 19 a 22/11 (teto +10% sobre o máximo, sua mudança manual) passarem de R$ 5.000. Ele sobe só quando um preço da escada precisar passar de 5.000, a partir de 23/11.
+- **Recálculo:** às 15:55 BRT, nos 4 quartos (Afrodite, Panorâmica II, Panorâmica I e Moinhos). O calendário novo já traz os preços acima.
+  - Cota: Moinhos 3 de 3 (próxima vaga amanhã às 08:04 BRT, então o recálculo dela na rotina completa fica para depois disso); Panorâmica I 3 de 3 (vaga às 16:55 BRT); Afrodite e Panorâmica II 1 de 3.
+  - Usei a última vaga da Moinhos porque o preço dela do Réveillon no canal estava cerca de R$ 1,8 mil por noite abaixo do novo.
+- **Sync Now:** às 15:56 e 15:57 BRT, nos 4 quartos (ids 854151059, 854151152, 854151060 e 854151177).
+- **Beds24 às 15:56:32 BRT:** Moinhos (4.974 / 4.974 / 4.375 / 4.375) e Panorâmica I (4.988 / 4.988 / 4.544 / 4.544) já chegaram certas. Afrodite e Panorâmica II ainda estavam com o preço antigo (envio em processamento); a conferência sai na próxima entrada.
+
+**Segurança (topo do relatório):** a Booking cancelou 6 reservas entre 13:56 e 15:11 BRT. São 3 da Moinhos (19 a 24/11 e duas de 20 a 22/11) e 3 da Panorâmica I (17 a 19/11, 18 a 20/11 e 21 a 24/11). Pedido ao dono: confirmar com a recepção e com os hóspedes. Enquanto isso, nenhum corte de preço por esses cancelamentos; de 19 a 22/11 as noites seguem congeladas pela mudança manual. Também houve:
+- 1 cancelamento direto da Panorâmica II (20 a 22/11);
+- 1 reserva nova: Moinhos, de 20 a 22/11, pela Booking;
+- 9 alterações de situação.
+
 ## O que só pode ser feito na tela (passo a passo para você)
 
 1. **Safety Minimum Price → "Do Not Apply"** (Dynamic Pricing → Customizations → aba Groups → Edit no grupo Recanto dos Moinhos → All Customizations → Safety Minimum Price). Anote o valor atual antes.

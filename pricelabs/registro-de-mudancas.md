@@ -5634,6 +5634,24 @@ A Balcony fica a 90% da King Spa livre mais barata (Regra G do dono). Perguntado
 
 **King Spa 2 sábado 21/11:** o envio do PriceLabs traz estadia 2 e desfaz a estadia 1 da janela aberta às 20:18. Reaplico no Beds24 depois do envio e levo ao PriceLabs pela regra nova na rotina das 07:53.
 
+## 16/11/2026, 21:15 a 21:20 BRT — Envio conferido (ticket de 22-23/11) e Booking do feriadão 20→22
+
+**Beds24 às 21:15:** o preço do envio das 21:13 chegou.
+- Balcony 22 e 23/11: R$ 1.130.
+- King Spa 2 22 e 23/11: R$ 1.308.
+- O envio voltou a estadia do sábado 21/11 da King Spa 2 a 2. A janela foi reaplicada às 21:15:51 (estadia 1, `noCheckOut` mantido; lote conferido). Ela só fica firme quando a estadia 1 for também ao PriceLabs (pendência `vender-janelas-regra-20261116`).
+
+**Booking, estadia 20→22/11 para 2 adultos (conector oficial), 21:15 BRT:**
+
+| Pousada | Id, nome e endereço | Total 2 noites | Por noite | Quarto livre mais barato | Vitrine ÷ enviado |
+|---|---|---|---|---|---|
+| Recanto (busca por coordenadas) | 7562933, Recanto dos Moinhos - Boutique Hotel, Rua Januário Pereira 575: confere | R$ 3.505,03 | R$ 1.752,52 | Panorâmica II (R$ 3.005,10 × 2) | **0,583** (faixa 0,42-0,72) |
+| Villa (busca pelo nome) | 14824789, Villa Dolce Amore - Boutique Hotel, R. das Candelas 79: confere | R$ 2.502,04 | R$ 1.251,02 | Balcony (R$ 2.705,10 + R$ 2.692,40) | **0,464** (faixa 0,42-0,72) |
+
+- O Recanto mostra o preço novo (fator igual ao público medido, 0,583); o Moinhos e a Panorâmica I estão fechados nessas noites.
+- A Villa ficou dentro da faixa, mas abaixo do fator de vitrine dela (0,56 a 0,63). É coerente com a promoção da Villa ainda ativa na extranet, que é do dono (pergunta 12 da estratégia de dezembro).
+- Sem alerta de segurança.
+
 ## O que só pode ser feito na tela (passo a passo para você)
 
 1. **Safety Minimum Price → "Do Not Apply"** (Dynamic Pricing → Customizations → aba Groups → Edit no grupo Recanto dos Moinhos → All Customizations → Safety Minimum Price). Anote o valor atual antes.

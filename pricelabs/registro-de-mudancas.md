@@ -5678,6 +5678,42 @@ A Balcony fica a 90% da King Spa livre mais barata (Regra G do dono). Perguntado
 - King Spa 7 sábado 21/11 → `noCheckOut` (sábado órfão de 02/11).
 - Panorâmica II 23/11, estadia da segunda (está fechada até o recálculo; ao reabrir, volta a ser noite órfã com 1).
 
+## 17/11/2026, 07:54 a 08:10 BRT — Rotina completa de terça (parte 1: envio noturno, reaberturas, janelas e Réveillon)
+
+**Envio noturno do PriceLabs (16/11 22:07 BRT, os 7 quartos recalculados e enviados):** levou ao Beds24 os preços das ordens de ontem:
+- Moinhos: 3.003 (20-21/11) e 1.232 (22-23/11);
+- Panorâmica I: 3.004 (20-21/11) e 1.243 (22-23/11);
+- Panorâmica II: 1.240 (23/11).
+
+A estadia 1 das janelas também chegou: King Spa 2 21/11, Panorâmica I 04/12, Panorâmica II 02/12 e King Spa 7 11/12. Logs: só gravações da API, nenhuma mudança manual.
+
+**Beds24 desde 21:55 BRT de ontem:**
+- 1 nova: Panorâmica II 27→29/11, direta (pela API), R$ 1.510.
+- **Abaixo do planejado:** 50% do esperado (price1 de agora R$ 1.510 por noite; a reserva saiu a R$ 755 por noite). Vai ao dono. A skill não altera reservas.
+- Segurança: 0 alerta.
+
+**Reabertas no Beds24 às 07:56 BRT (lote conferido, 3 de 3), porque o preço já está certo:**
+- Panorâmica I 20/11 → `none` (1 livre) e 21/11 → `noCheckInOrCheckOut` (2 livres), a R$ 3.004.
+- Panorâmica II 23/11 → `none` (1 livre, noite órfã, estadia 1), a R$ 1.240.
+- O Moinhos 20-21/11 segue fechado, à espera do dono.
+- O lembrete das 13:58 foi apagado (feito antes).
+
+**Janelas (regra nova; primeira rodada com o código):**
+- Comparação com a auditoria sem janelas: a diferença é só a das janelas (5 voltas suprimidas e 1 abertura).
+- **Aberta às 07:57 (conferida):** Panorâmica I sábado 21/11 de `noCheckInOrCheckOut` para `noCheckOut`, com estadia 2 (o domingo tem livres, então não vai ao PriceLabs). Tem 2 livres e a sexta 1, logo 1 unidade presa.
+- No mesmo lote, a King Spa 7 sábado 21/11 foi para `noCheckOut` (sábado órfão de 02/11: a sexta está esgotada).
+- **Mantidas:** Panorâmica II 02/12, King Spa 2 21/11 e 09/01, King Spa 7 11/12.
+- **A observar:** Balcony 27/11 e King Spa 7 18/12.
+- **Fechadas:** 0.
+- **De pacote:** 15 noites, só com o dono.
+- Afrodite sexta 20/11 → `none` (regra de 05/11) não aplicada: a noite está esgotada.
+
+**Réveillon:**
+- Plano sem item: tudo vigente, 0 pacote novo, receita das 4 noites R$ 48.380,68.
+- Portão não avaliado nesta rotina (Villa fechada, à espera da promoção e do fator).
+- **Exceção 1 aberta na Balcony:** 31/12 esgotado, 5 livres em 30/12 e 6 em 29/12. 31/12 passou de `noCheckInOrCheckOut` a `noCheckIn` às 07:59 (lote conferido, trava `vizinha_esgotada`), então o 29→31 fica vendável.
+- Config aplicada e `registrar` feito.
+
 ## O que só pode ser feito na tela (passo a passo para você)
 
 1. **Safety Minimum Price → "Do Not Apply"** (Dynamic Pricing → Customizations → aba Groups → Edit no grupo Recanto dos Moinhos → All Customizations → Safety Minimum Price). Anote o valor atual antes.

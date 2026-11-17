@@ -5767,6 +5767,51 @@ A estadia 1 das janelas também chegou: King Spa 2 21/11, Panorâmica I 04/12, P
 
 **Nada gravado:** a única venda nova é da King Spa 2, sem cota até 19:18. A escada vai para a pendência.
 
+## 17/11/2026, 13:54 a 14:05 BRT — Rotina leve das 13:53: lote suspeito de 16 reservas da Booking; escada do Recanto
+
+**ALERTA DE SEGURANÇA:** 16 reservas da Booking foram criadas no Beds24 em 2 segundos, às 11:11:09 a 11:11:11 BRT (ids 96343979 a 96343994, "confirmed").
+
+**Sinais de anomalia:**
+- Plano de tarifa diferente do usual: "Rate 65710606/65711478", sem Genius e sem as tarifas 70358474 e 50068135.
+- Comissão 0.
+- Preço baixo: King Spa 2 de R$ 315 a R$ 448 por noite.
+- Nenhuma tem o número de reserva da Booking igual ao de uma reserva que já existia.
+
+**Overbooking criado:** King Spa 2 23/11 −4 e 24/11 −3 (2 unidades); King Spa 7 06/12 −1. A Panorâmica II 22/11 (−1) já vinha de antes.
+
+**Datas:**
+- King Spa 2: 23-27/11, 6 reservas.
+- King Spa 7: 25-27/11, 26/11, 06/12, 13-17/12, 30/12→01/01 (2, a R$ 1.533-2.051 por noite) e 18/09/2027.
+- Balcony: 20/02/2027.
+
+**O que a skill fez:**
+- Avisou o dono por push às 13:56 BRT e abriu a pendência `booking-lote-16-reservas-20261117`.
+- A skill não altera reservas.
+- Até o dono confirmar, essas reservas não contam para a escada (lote de 3 ou mais no mesmo minuto) nem para o Réveillon da Villa.
+
+**Outros movimentos desde 10:50 BRT:**
+- 1 consulta do Airbnb (King Spa 2 20-22/11, R$ 2.862, `inquiry`).
+- 1 cancelamento (King Spa 7 17-19/11, Booking).
+- 3 alteradas (situação).
+- O vigia não acusou origem desconhecida (a origem é Booking.com).
+
+**Escada do Recanto** (recálculo da Moinhos e da Panorâmica I às 13:56, cota registrada):
+- Motor com `--noites` nas noites com vendas novas; validador: 11 itens, 0 erro.
+- Logs lidos antes, sem mudança manual.
+- Gravado às 13:59 BRT, um quarto por vez, conferido na resposta (as máscaras da Afrodite foram mantidas).
+- Ledger registrado.
+
+| Quarto | Noites | Antes | Depois | Motivo |
+|---|---|---|---|---|
+| Moinhos | 04-05/12 | 1.337 | 1.423 (+22%) | 5/7 vendidas, 2º degrau de +7% |
+| Panorâmica I | 04/12 | 1.702 | 1.814 (+23%) | 5/6 vendidas, 3º degrau |
+| Panorâmica I | 18-19/12 | 1.643 | 1.758 (+19%) | 3/6 vendidas, 1º degrau |
+| Afrodite | 04/12; 18-19/12 | 1.960; 1.900 | 2.094; 2.026 | 15% acima da Panorâmica I |
+| Panorâmica II | 05/12 (esgotada) | 1.590 | 1.431 (−10%) | ordem do Recanto |
+| Panorâmica II | 18-19/12 | 1.558 | 1.638 (+4%) | ordem do Recanto |
+
+O preço vai aos canais no próximo envio (a cota da Moinhos e da Panorâmica I acabou até 15:55).
+
 ## O que só pode ser feito na tela (passo a passo para você)
 
 1. **Safety Minimum Price → "Do Not Apply"** (Dynamic Pricing → Customizations → aba Groups → Edit no grupo Recanto dos Moinhos → All Customizations → Safety Minimum Price). Anote o valor atual antes.

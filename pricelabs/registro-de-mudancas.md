@@ -5837,6 +5837,20 @@ O preço vai aos canais no próximo envio (a cota da Moinhos e da Panorâmica I 
 
 **Lote suspeito de 16 reservas da Booking (11:11):** sem resposta do dono ainda; segue fora da escada.
 
+## 17/11/2026, 19:20 a 19:30 BRT — King Spa 7 20/11 reaberta; noite órfã da King Spa 2 em 18/11
+
+**King Spa 7:**
+- Recálculo às 19:20 (cota registrada; 3.004 em 20/11) e Sync Now às 19:21. O price1 chegou ao Beds24 às 19:21 (3.004).
+- 20/11 → `none` às 19:22 (1 livre), conferido.
+- Janelas mantidas no sábado 21/11: King Spa 7 (3 livres, 2 presas), King Spa 2 e Panorâmica I.
+
+**King Spa 2 18/11 (noite órfã, Regra A):**
+- 19/11 esgotou com a venda da Booking das 13:57. A quarta 18/11 ficou livre com estadia 2.
+- PriceLabs: `min_stay` 1 às 19:25, item com `orfa_prova` do Beds24 (validador 0 erro). Recálculo às 19:25 (cota) e Sync Now às 19:26.
+- Beds24: estadia 2 → 1 às 19:26, lote conferido.
+
+**Escada da Villa segurada** (Balcony 06/12, King Spa 2 07-08/12): o calendário do PriceLabs já conta o lote suspeito de 16 reservas da Booking. Fica para depois da resposta do dono.
+
 ## O que só pode ser feito na tela (passo a passo para você)
 
 1. **Safety Minimum Price → "Do Not Apply"** (Dynamic Pricing → Customizations → aba Groups → Edit no grupo Recanto dos Moinhos → All Customizations → Safety Minimum Price). Anote o valor atual antes.

@@ -535,6 +535,21 @@
    ],
    "teto_fora": 5000,
    "nota": "Dono 16/11 ('Pode fazer', ordem dono-2026-11-16-reveillon-250k): máximo do anúncio de R$ 5.000 para R$ 6.000 em Q7, Double, Q2, VK7, VK2 e Balcony por causa do Réveillon (30/12 a 02/01). Execução (revisão de 16/11): o 'max' dos quartos fica em 5.000 até o update_listing_data ser gravado e conferido; quem passa o 'max' para 6.000 é o reveillon_250k.py registrar (item de anúncio do plano, a partir de 23/11 e só quando a escada precisar). O PriceLabs não tem máximo por data: com o anúncio em 6.000, a skill segura R$ 5.000 nas outras noites (comum.maximo_da_noite: pace.teto_anuncio e teto explícito por data em pace.ajustar_tetos, faixas_dono e o validador; vigia-maximo nos 12 meses). Voltar o máximo a 5.000 depois de 02/01/2027 e apagar esta chave. Afrodite fora (máximo de R$ 10.000)."
+  },
+  "vender_janelas": {
+   "ativa": true,
+   "ordem_id": "dono-2026-11-16-vender-janelas",
+   "desde": "2026-11-16",
+   "horizonte_dias": 60,
+   "estadia_maxima_simulada": 7,
+   "trava_fragmentacao": true,
+   "quartos_so_estadia": [
+    "Afrodite"
+   ],
+   "sabado_entrada": "noCheckOut",
+   "sabado_saida": "noCheckIn",
+   "noites_fora": {},
+   "nota": "Dono 16/11 ~20:05 BRT ('Na verdade só venda onde tem uma janela. A preocupação é onde temos janelas, temos que vender as janelas.'; ordem dono-2026-11-16-vender-janelas). Janela = unidade livre que nenhuma estadia válida vende com a regra normal (Beds24 stayThrough: estadia mínima e máxima em cada noite, chegada/saída), estadias de até estadia_maxima_simulada noites, de hoje a hoje + horizonte_dias. Abre o mínimo, sem preço: domingo a sexta 1 diária; sábado entrada no sábado (sabado_entrada), com estadia 2 se o domingo tem livres, senão 1; sexta com o sábado com menos livres, saída no sábado (sabado_saida) e 1 diária na sexta. Só com presas >= livres da vizinha de risco (sexta: o sábado; sábado: a sexta; trava_fragmentacao), senão 'a observar'. Nunca em pacote (Natal e Ano Novo), nas noites da ordem do Réveillon, no sábado de festa, em blackout ou noite esgotada, em noite congelada, nem nas noites_fora ({quarto: [datas]}); feriado pode. Afrodite só estadia (quartos_so_estadia: o envio do PriceLabs dela leva chegada/saída ao Beds24; sábado e sexta dela ficam 'a observar'). Volta à regra sozinha quando a janela some. Aplicada por vender_janelas.py, calendario_12m.py (plano, --so-estadia, auditar, lotes do Beds24, --janelas-json), validar_plano.py (janela_prova), beds24.py editar-lote (override_antes, num_avail_antes) e pace.py plano --janelas. ativa false volta tudo ao comportamento de antes (a regra fecha o que estiver aberto)."
   }
  },
  "feriados": [

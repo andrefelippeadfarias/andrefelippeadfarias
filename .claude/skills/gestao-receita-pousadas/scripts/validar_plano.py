@@ -47,6 +47,16 @@ o dono (`estadia_por_dia_chegada.aguardando_dono`; nenhuma desde 05/11) fica for
 cuja regra por data tem preço, piso, teto ou chegada/saída, ou reason da Regra J) faz o payload sair sem reason, para
 não apagar o da regra.
 
+Janela (dono 16/11 ~20:05: "Na verdade só venda onde tem uma janela. A preocupação é onde temos janelas, temos que vender
+as janelas."; ordem dono-2026-11-16-vender-janelas, `parametros.vender_janelas`): a estadia abaixo da regra (1 de
+segunda, quarta ou sexta; 1 no sábado; abaixo da do feriado) passa no item com "janela" e "janela_prova" (do
+calendario_12m: snapshot do inventário da regra, as mudanças e o vendável antes e depois), que o validador recalcula
+(vender_janelas.checar_prova_janela): lido_em de hoje ou ontem, a ordem vigente e com "janela" em libera, as presas
+(com a estadia máxima da config, nunca a da prova), a abertura que a regra escolhe (vender_janelas.escolher), a trava
+de fragmentação, nenhuma noite de pacote, Réveillon, festa, blackout ou congelada; o item não leva chegada/saída por data
+nem "orfa" (a órfã vence); com --precos, a noite esgotada desmente a janela. Item com "janela" e sem min_stay é ERRO. A
+ordem das janelas é regra aplicada por script: não serve de exceção "dono".
+
 Chegada e saída: sábado fechado para entrada e saída (dono 02/11), salvo as exceções do dono; a sexta da Afrodite tem
 entrada e saída abertas desde 05/11 (dono: "pode abrir Afrodite, saída de sexta"; `regra_h_beds24.sexta_reaberta_por_quarto`):
 fechar de novo a saída dela só com ordem do dono mais nova que a de 05/11.
@@ -79,6 +89,7 @@ from comum import (DIAS_SEMANA, aguardando_dono, carregar_quartos, data, data_de
                    maximo_da_noite, resultado_workflow, sexta_reaberta)
 from ordens import carregar_ordens, cobre, congelada, ordem_valida, ordens_por_data
 import plano_dono as PD
+from vender_janelas import checar_prova_janela, parametros as par_janelas
 
 TIPOS = {"data", "apagar", "anuncio", "personalizacao"}
 PALAVRAS_PROIBIDAS = ("ota", "oferta", "genius", "promo", "deal", "visibility")
@@ -687,6 +698,9 @@ class Validador:
             # segunda, quarta e sexta (dono 04/11) não avisam: o item sem min_stay mescla com a regra da data e a estadia
             # dela fica; quem apaga a data regrava a estadia (pace.ajustar_tetos)
             self.aviso(i, it, f"{'feriado' if fer else 'sábado'} sem min_stay no item: confira a estadia ({exig} noites) depois de gravar")
+        if it.get("janela") is not None and ms is None:
+            # revisão de 16/11 (vender as janelas): o item da janela existe só para levar a estadia dela ao PriceLabs
+            self.erro(i, it, f"{q['nome']}: item com 'janela' sem min_stay (a janela leva a estadia ao PriceLabs)")
         if it.get("manter_reason") and any(it.get(k) is not None for k in CAMPOS_VALOR):
             # o payload sem reason mantém o da regra da data; com preço novo ele ficaria mentindo (chegada/saída e estadia
             # não mudam o preço que o reason explica: 05/11, saída de sexta da Afrodite aberta mantendo o reason)
@@ -767,14 +781,36 @@ class Validador:
                                      "com o recálculo novo")
                 else:
                     orfa_ok = True
-            if (fer or pacote) and exig and ms < exig and not lib_est and not orfa_ok:
+            janela_ok = False
+            if it.get("janela") is not None:
+                # dono 16/11 ~20:05 ("temos que vender as janelas"): a unidade presa pela regra vende com a abertura
+                # mínima; a prova (janela_prova, do inventário do Beds24) vale por si e o validador a recalcula
+                prova_j = it.get("janela_prova")
+                noite_j = self.precos.get((q["curto"], d.isoformat())) or {}
+                if it.get("orfa"):
+                    self.erro(i, it, f"{q['nome']}: janela e órfã na mesma noite: a órfã vence (item sem 'janela')")
+                elif it.get("check_in") is not None or it.get("check_out") is not None:
+                    self.erro(i, it, f"{q['nome']}: janela não mexe em chegada/saída por data no PriceLabs (v1: Afrodite "
+                                     "só estadia; a chegada/saída da janela vai pelo lote do Beds24)")
+                else:
+                    falha = (_falha_lido_em(prova_j, self.hoje, fuso) if isinstance(prova_j, dict) and prova_j
+                             else "sem janela_prova") or \
+                        checar_prova_janela(self.cfg, self.ordens, it, q["curto"], d, self.hoje)
+                    if falha:
+                        self.erro(i, it, f"{q['nome']}: janela sem prova ({falha})")
+                    elif noite_j.get("livres") is not None and int(noite_j["livres"]) <= 0:
+                        self.erro(i, it, f"{q['nome']}: o calendário de --precos desmente a janela (noite com "
+                                         f"{noite_j['livres']} livre(s)): refaça com a leitura nova")
+                    else:
+                        janela_ok = True
+            if (fer or pacote) and exig and ms < exig and not lib_est and not orfa_ok and not janela_ok:
                 # dono 05/11: a órfã (noite órfã pela seguinte e sábado órfão, provados) passa em feriado; pacote nunca
                 self.erro(i, it, f"{'feriado (' + fer['nome'] + ')' if fer else 'pacote do dono (03/11)'} exige estadia "
                                  f"mínima {exig}; item com {ms}" + nao_libera)
             if decide_dia and exig:
                 # dono 04/11: "Abriremos apenas para uma diária. A diária de domingo, a diária de terça e a diária de
                 # quinta. Todas as outras deverão ser com no mínimo 2 dias" (última hora não libera)
-                if ms < exig and not orfa_ok and not lib_est:
+                if ms < exig and not orfa_ok and not lib_est and not janela_ok:
                     self.erro(i, it, f"{q['nome']}: chegada de {DIAS_SEMANA[d.weekday()]} exige estadia mínima {exig} "
                                      f"(dono 04/11: 1 diária só domingo, terça e quinta; noite órfã com 'orfa' e "
                                      f"'orfa_prova'); item com {ms}" + nao_libera)
@@ -790,13 +826,14 @@ class Validador:
                     # excecao 'dono', ou provado com orfa 'sábado' e orfa_prova) ou ordem do dono mais nova que libere
                     # 'estadia'
                     # dono 05/11: o sábado órfão também em feriado (orfa_ok já conferiu pacote e sábado de festa)
-                    ok = orfa_ok or (not fer and lib_est)
+                    # dono 16/11: a janela provada (entrada no sábado com estadia 1) também, em feriado inclusive
+                    ok = orfa_ok or janela_ok or (not fer and lib_est)
                     msg = ("sábado com 1 noite: desde 05/11 (dono 04/11, última hora não libera) só o sábado órfão de 02/11 "
                            f"(orfa 'sábado' com orfa_prova, ou excecao 'dono' com a ordem {ordem_orfa}; em feriado também, "
                            "dono 05/11) ou ordem do dono mais nova que libere 'estadia', fora de feriado" + nao_libera)
                 else:
                     # A política de não vender sábado sozinho é do dono: ordem expressa dele que libere 'estadia' também.
-                    ok = (not fer and (lib_est or orfa_ok)) or (
+                    ok = janela_ok or (not fer and (lib_est or orfa_ok)) or (
                         excecao == "regra_h" and not fer and it.get("ocupacao_sabado") is not None
                         and float(it["ocupacao_sabado"]) < 50 and self.hoje.weekday() in (2, 3, 4)
                         and antecedencia <= 3)
@@ -1197,6 +1234,10 @@ class Validador:
                 out[oid] = "a regra da saída de sexta da Afrodite e das órfãs de feriado (dono 05/11)"
         if est.get("ordem_id"):
             out[est["ordem_id"]] = "a regra da estadia pelo dia de chegada (dono 04/11)"
+        # revisão de 16/11: a regra das janelas (dono 16/11, "temos que vender as janelas") é aplicada por script
+        oj = par_janelas(self.cfg).get("ordem_id")
+        if oj:
+            out[oj] = "a regra das janelas (dono 16/11)"
         return out
 
     def libera_estadia(self, it: dict, excecao: str | None, d: date) -> tuple[bool, str | None]:

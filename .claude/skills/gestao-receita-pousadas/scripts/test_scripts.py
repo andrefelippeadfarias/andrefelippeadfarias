@@ -1740,6 +1740,13 @@ class TestEstadiaDiaDeChegada(unittest.TestCase):
                 inv[q][f"2026-11-{dd}"] = {"numAvail": 7 - v, "minStay": m, "maxStay": 7,
                                           "override": "noCheckInOrCheckOut" if dd in ("07", "14") else "none"}
             recs[q] = arq(f"rec_{q}.json", {"data": {"pricing_array": arr}})
+            # revisão de 16/11 (vender as janelas, ordem desde 16/11): a busca da janela da segunda 16/11 precisa do
+            # inventário até 23/11 (noite + 7); sem ele a noite não se avalia e a regra não sobe a estadia 1 dela
+            # (pode ser janela aberta: calendario_12m, `nao_avaliadas`). Noites livres, sem prender nada
+            for dd in range(18, 24):
+                dia = dt.date(2026, 11, dd)
+                inv[q][dia.isoformat()] = {"numAvail": 5, "minStay": 2 if dia.weekday() in (0, 2, 4, 5) else 1,
+                                           "maxStay": 7, "override": "noCheckInOrCheckOut" if dia.weekday() == 5 else "none"}
         ov_q7 = arq("ov_Q7.json", {"success": True, "data": {"overrides": [
             {"date": "2026-11-13", "price": "0", "price_type": "percent", "reason": "Escada"},
             {"date": "2026-11-09", "price": "0", "price_type": "percent", "reason": "Regra J (dono 27/10) antes R$ 900"}]}})

@@ -28,7 +28,9 @@ Edição do inventário (dono, 01/11/2026: "verificar sempre o inventário e edi
   noCheckIn/noCheckOut/noCheckInOrCheckOut/none). NUNCA preço (price1..16: preço só pelo PriceLabs) e NUNCA reservas.
 - `editar` é simulação por padrão (mostra antes e depois); com --aplicar grava e relê para conferir.
 - `editar-lote` (revisão de 05/11): item com `min_stay_antes` cujo minStay lido na hora diverge é pulado e relatado
-  (`pulados`); o resto vai em blocos de até 100 faixas por POST (`--max-faixas`), cada bloco relido e conferido.
+  (`pulados`); revisão de 16/11 (vender as janelas, dono 16/11): também o item com `override_antes` (override lido,
+  None = "none") e com `num_avail_antes` ({data: numAvail}: a janela depende das livres da noite e das vizinhas) que
+  divergem; o resto vai em blocos de até 100 faixas por POST (`--max-faixas`), cada bloco relido e conferido.
   Endpoint e campos: POST/GET /inventory/rooms/calendar (apiV2.yaml oficial, conferido em 01/11/2026).
 
 Menos chamadas (dono 06/11, plano-reducao-chamadas.md, passo 2: uma leitura de cada tipo por rotina e um lote de
@@ -829,8 +831,14 @@ def _conferir(itens, depois):
 
 
 def editar_lote(plano, aplicar=False, max_faixas=MAX_FAIXAS_POST):
-    """Plano = [{quarto, de, ate, min_stay?, min_stay_antes?, override?, num_avail?, num_avail_esperado?,
-    vizinha_esgotada?, motivo}]. Lê o inventário antes; item com `min_stay_antes` cujo minStay lido diverge (em qualquer
+    """Plano = [{quarto, de, ate, min_stay?, min_stay_antes?, override?, override_antes?, num_avail?, num_avail_esperado?,
+    num_avail_antes?, vizinha_esgotada?, motivo}]. Revisão de 16/11 (vender as janelas, dono 16/11: "temos que vender
+    as janelas"): `override_antes` (o override que o plano leu; None vira "none") diferente do lido em alguma noite da
+    faixa pula o item ("já no alvo" quando todas já estão no `override` do item); `num_avail_antes` ({data: numAvail}
+    lido no plano, da noite antes à noite depois das mudadas) com algum numAvail diferente pula o item (reserva ou
+    cancelamento: a janela se refaz com o inventário novo); as noites dela entram na leitura de antes; as partes da
+    mesma janela (estadia e chegada/saída: o mesmo quarto e a mesma `janela_prova.noite`) pulam juntas por QUALQUER
+    trava (revisão de 16/11, achado da verificação: antes só a `num_avail_antes`), salvo "já no alvo". Lê o inventário antes; item com `min_stay_antes` cujo minStay lido diverge (em qualquer
     noite da faixa) é PULADO e relatado, e o item com `vizinha_esgotada` ({data, numAvail}: a noite vizinha que tem de
     seguir esgotada no quarto; exceções das noites soltas do Réveillon, revisão de 16/11) também, quando ela reabriu (revisão de 05/11: o lote é feito com a leitura de horas antes; reserva, cancelamento, o envio do PriceLabs
     ou a equipe podem ter mudado a noite, e gravar por cima desfaria isso). Os itens que ficam vão em blocos de até
@@ -853,6 +861,8 @@ def editar_lote(plano, aplicar=False, max_faixas=MAX_FAIXAS_POST):
         corpos.append((it, c[0]["roomId"], c[0]["calendar"]))
     # revisão de 16/11 (Réveillon, 3ª verificação, R3-07): a noite da trava `vizinha_esgotada` entra na leitura de antes
     travas = [i["vizinha_esgotada"]["data"] for i in plano if isinstance(i.get("vizinha_esgotada"), dict)]
+    # revisão de 16/11 (vender as janelas): as noites da trava `num_avail_antes` também
+    travas += [ds for i in plano if isinstance(i.get("num_avail_antes"), dict) for ds in i["num_avail_antes"]]
     de = min([i["de"] for i in plano] + travas)
     ate = max([i["ate"] for i in plano] + travas)
     quartos = sorted({i["quarto"] for i in plano})
@@ -869,6 +879,27 @@ def editar_lote(plano, aplicar=False, max_faixas=MAX_FAIXAS_POST):
                                             else "minStay mudou desde o plano: refaça com o inventário novo"),
                                 "_it": it})
                 continue
+        if it.get("override_antes") is not None:
+            # revisão de 16/11 (janela): o override lido tem de ser o que o plano viu (None no Beds24 = "none")
+            lidos = {ds: ((antes.get(it["quarto"], {}).get(ds) or {}).get("override") or "none") for ds in _datas(it)}
+            difere = {ds: v for ds, v in lidos.items() if v != it["override_antes"]}
+            if difere:
+                pulados.append({"quarto": it["quarto"], "de": it["de"], "ate": it["ate"],
+                                "override_antes": it["override_antes"], "override": it.get("override"), "lido": difere,
+                                "por_que": ("já no alvo" if all(v == it.get("override") for v in difere.values())
+                                            else "override mudou desde o plano: refaça com o inventário novo"),
+                                "_it": it})
+                continue
+        na = it.get("num_avail_antes")
+        if isinstance(na, dict) and na:
+            # revisão de 16/11 (janela): as livres da noite e das vizinhas decidem a janela; mudou, pula (as duas partes)
+            lidos = {ds: (antes.get(it["quarto"], {}).get(ds) or {}).get("numAvail") for ds in na}
+            difere = {ds: v for ds, v in lidos.items() if v is None or int(v) != int(na[ds])}
+            if difere:
+                pulados.append({"quarto": it["quarto"], "de": it["de"], "ate": it["ate"], "num_avail_antes": na,
+                                "lido": difere, "por_que": ("numAvail mudou desde o plano (reserva ou cancelamento): a "
+                                                            "janela se refaz com o inventário novo"), "_it": it})
+                continue
         ve = it.get("vizinha_esgotada")
         if isinstance(ve, dict):
             # a exceção das noites soltas do Réveillon só abre com a noite vizinha ainda esgotada no quarto: um
@@ -881,6 +912,30 @@ def editar_lote(plano, aplicar=False, max_faixas=MAX_FAIXAS_POST):
                                 "_it": it})
                 continue
         ficam.append((it, rid, cal))
+    # revisão de 16/11 (achado da verificação): as partes da mesma janela (a diária da sexta e a saída no sábado da (c);
+    # a entrada e a estadia do sábado da (b2)) pulam juntas por qualquer trava: gravar só a saída no sábado, sem a
+    # diária da sexta, abriria uma estadia fora da janela. "Já no alvo" não conta (aquela parte já está no Beds24)
+    def _grupo_janela(it):
+        pv = it.get("janela_prova")
+        if it.get("janela") is None or not isinstance(pv, dict) or not pv.get("noite"):
+            return None
+        return (it["quarto"], pv["noite"])
+    grupos_pulados = {}
+    for p in pulados:
+        g = _grupo_janela(p.get("_it") or {}) if p.get("_it") else None
+        if g and p["por_que"] != "já no alvo":
+            grupos_pulados.setdefault(g, p["por_que"])
+    if grupos_pulados:
+        resto = []
+        for it, rid, cal in ficam:
+            g = _grupo_janela(it)
+            if g in grupos_pulados:
+                pulados.append({"quarto": it["quarto"], "de": it["de"], "ate": it["ate"],
+                                "por_que": (f"a outra parte da mesma janela ({it['quarto']} {g[1]}) foi pulada "
+                                            f"({grupos_pulados[g]}): pula junto"), "_it": it})
+            else:
+                resto.append((it, rid, cal))
+        ficam = resto
     blocos = [ficam[k:k + max(1, int(max_faixas))] for k in range(0, len(ficam), max(1, int(max_faixas)))]
     resumo = {"itens": len(plano), "quartos": quartos, "aplicar": aplicar, "pulados": pulados,
               "a_gravar": len(ficam), "max_faixas_por_post": max_faixas, "n_blocos": len(blocos)}
@@ -953,9 +1008,11 @@ def editar_lote(plano, aplicar=False, max_faixas=MAX_FAIXAS_POST):
 
 
 def chave_item_lote(it):
-    """A chave de um item de lote (os campos de CAMPOS_ITEM_LOTE_UNICO): a mesma do juntar_planos e do
-    reveillon_250k.py aplicar-config."""
-    return json.dumps({k: it.get(k) for k in CAMPOS_ITEM_LOTE_UNICO}, sort_keys=True, ensure_ascii=False, default=str)
+    """A chave de um item de lote (os campos de CAMPOS_ITEM_LOTE_UNICO, e os de CAMPOS_ITEM_LOTE_OPCIONAIS só quando o
+    item os tem: a chave de todo item sem eles fica byte a byte igual à de antes de 16/11): a mesma do juntar_planos, do
+    calendario_12m.lote_unico e do reveillon_250k.py aplicar-config."""
+    campos = CAMPOS_ITEM_LOTE_UNICO + tuple(k for k in CAMPOS_ITEM_LOTE_OPCIONAIS if it.get(k) is not None)
+    return json.dumps({k: it.get(k) for k in campos}, sort_keys=True, ensure_ascii=False, default=str)
 
 
 def _com_espera(resumo, e0):
@@ -972,6 +1029,9 @@ CAMPOS_LOTE = ("min_stay", "max_stay", "override", "num_avail")
 # campos que fazem dois itens de lote serem o mesmo item (igual ao calendario_12m.CAMPOS_ITEM_LOTE)
 CAMPOS_ITEM_LOTE_UNICO = ("quarto", "de", "ate", "min_stay", "min_stay_antes", "max_stay", "override", "num_avail",
                           "num_avail_esperado", "canais_max", "vizinha_esgotada")
+# revisão de 16/11 (vender as janelas): travas que entram na chave só quando presentes (igual ao
+# calendario_12m.CAMPOS_ITEM_LOTE_OPCIONAIS)
+CAMPOS_ITEM_LOTE_OPCIONAIS = ("override_antes", "num_avail_antes")
 
 
 def juntar_planos(planos):
@@ -996,8 +1056,7 @@ def juntar_planos(planos):
             # guardas min_stay_antes e num_avail_esperado) já trazido por um plano anterior não vai de novo ao POST
             # (iria duas vezes e o `conferidos` contaria em dobro). Mesma chave do calendario_12m.lote_unico: item com
             # guarda, faixa ou valor diferente segue no lote (revisão final de 07/11).
-            chave_item = json.dumps({k: it.get(k) for k in CAMPOS_ITEM_LOTE_UNICO}, sort_keys=True, ensure_ascii=False,
-                                    default=str)
+            chave_item = chave_item_lote(it)
             ja_visto = chave_item in itens_vistos and itens_vistos[chave_item] != nome
             itens_vistos.setdefault(chave_item, nome)
             for ds in datas:

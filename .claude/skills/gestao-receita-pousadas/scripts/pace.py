@@ -1205,8 +1205,21 @@ def sincronizar_pace(itens: list[dict], tol: float) -> None:
         pc["direcao"] = "sobe" if final > atual * (1 + tol) else ("desce" if final < atual * (1 - tol) else None)
 
 
+def janela_da_noite(janelas: dict | None, cfg: dict, quarto: str, ds: str, hoje: dt.date | None) -> dict | None:
+    """O alvo da janela (dono 16/11, "temos que vender as janelas"; `calendario_12m --janelas-json`, chave "alvos") da
+    noite, só com estadia e com a prova lida hoje ou ontem (`validar_plano._falha_lido_em`); senão None."""
+    jal = ((janelas or {}).get(quarto) or {}).get(ds)
+    if not jal or jal.get("min_stay") is None or not isinstance(jal.get("prova"), dict):
+        return None
+    if hoje is not None:
+        from validar_plano import _falha_lido_em
+        if _falha_lido_em(jal["prova"], hoje, cfg.get("fuso") or "America/Sao_Paulo"):
+            return None
+    return jal
+
+
 def ajustar_tetos(cfg: dict, itens: list[dict], regras: dict, cals: dict | None = None,
-                  hoje: dt.date | None = None) -> tuple[list[dict], list[dict]]:
+                  hoje: dt.date | None = None, janelas: dict | None = None) -> tuple[list[dict], list[dict]]:
     """Teto livre no PriceLabs = item SEM max_price (a API mescla campos e um max_price "igual ao máximo do anúncio"
     seria um percentual enorme e inútil). Para cada item com max_price no máximo do anúncio: se a regra vigente da
     noite tem teto ou validade (lead_time_expiry), a noite vai para a lista `apagar` (plano separado, gravado antes) e
@@ -1222,7 +1235,12 @@ def ajustar_tetos(cfg: dict, itens: list[dict], regras: dict, cals: dict | None 
     sábado órfão provado pelo recálculo (sexta esgotada e sábado livre, `regra_h_beds24.orfas`; em feriado também desde
     05/11), que mantém o 1 com `orfa` "sábado" e `orfa_prova` (o validador aceita com a ordem da escada ou da faixa no
     item); com `hoje` (correção de 07/11), o sábado de hoje com a sexta já passada também é órfão. Dono 05/11 ("Isso, pode abrir Afrodite, saída de sexta"): na sexta da Afrodite (`sexta_reaberta_por_quarto`,
-    fora de pacote), o check_out herdado que fecha a sexta volta com a sexta em 1 (o resto da máscara fica)."""
+    fora de pacote), o check_out herdado que fecha a sexta volta com a sexta em 1 (o resto da máscara fica).
+    Revisão de 16/11 (dono 16/11 ~20:05, "temos que vender as janelas"): com `janelas` ({quarto: {data: alvo}}, o
+    "alvos" do `calendario_12m --janelas-json`), a noite da janela fica, depois dos dois recálculos, com a estadia da
+    janela e leva `janela` e `janela_prova` (prova lida hoje ou ontem), salvo noite órfã (a órfã vence) e item com
+    chegada/saída herdada (o validador recusa máscara no item da janela: fica a estadia da regra, como antes). Sem
+    `janelas`, como antes: apagar a regra e regravar a estadia da regra desfaria a janela no PriceLabs."""
     apagar, saida = [], []
     for it in itens:
         it = dict(it)
@@ -1276,8 +1294,38 @@ def ajustar_tetos(cfg: dict, itens: list[dict], regras: dict, cals: dict | None 
                         it["min_stay"] = max(2, int(estadia_exigida(cfg, d_, periodo_feriado(cfg, d_)) or 2))
                     elif it.get("min_stay") is not None:
                         it.update(orfa="sábado", orfa_prova=prova_sab)
+                jal = janela_da_noite(janelas, cfg, it["quarto"], it["data"], hoje)
+                if jal and not it.get("orfa") and it.get("check_in") is None and it.get("check_out") is None:
+                    # dono 16/11: a janela aberta segue aberta no PriceLabs (o validador recalcula a prova)
+                    it["min_stay"] = int(jal["min_stay"])
+                    it.update(janela=jal.get("tipo") or "noite", janela_prova=jal["prova"])
         saida.append(it)
     return saida, apagar
+
+
+def riscos_sem_janelas(cfg: dict, itens: list[dict], apagar: list[dict], regras: dict,
+                       janelas: dict | None) -> list[dict]:
+    """Revisão de 16/11 (achado da verificação: a rotina leve rodava o `plano` sem --janelas e, ao apagar a regra da
+    noite, regravava a estadia 2 em cima da janela). Com a regra das janelas ligada (`parametros.vender_janelas.ativa`)
+    e SEM `janelas`: as noites cuja regra apagada tinha estadia abaixo da que o item regrava, fora da órfã (pode ser
+    janela aberta, dono 16/11). [{quarto, data, regra, item}]; vazio com `janelas` ou com a regra desligada."""
+    import vender_janelas
+    if janelas is not None or not vender_janelas.parametros(cfg).get("ativa"):
+        return []
+    apagadas = {(x["quarto"], x["data"]) for x in apagar}
+    out = []
+    for it in itens:
+        k = (it.get("quarto"), it.get("data"))
+        if k not in apagadas or it.get("min_stay") is None or it.get("orfa"):
+            continue
+        reg_ms = ((regras.get(k[0]) or {}).get(k[1]) or {}).get("min_stay")
+        try:
+            reg_ms = int(float(reg_ms))
+        except (TypeError, ValueError):
+            continue
+        if reg_ms < int(it["min_stay"]):
+            out.append({"quarto": k[0], "data": k[1], "regra": reg_ms, "item": int(it["min_stay"])})
+    return out
 
 
 def em_reais_pct(q: dict, pct) -> str:
@@ -1698,6 +1746,8 @@ def main(argv=None) -> int:
     pl.add_argument("--sombra", action="store_true")
     pl.add_argument("--regras", nargs="*", default=[], help="Q7=overrides.json ... (get_listing_date_overrides, D0-D60); obrigatório fora da sombra")
     pl.add_argument("--saida-apagar", help="plano separado com as noites cujo teto/validade precisa ser apagado antes (padrão: <saida> com sufixo _apagar)")
+    pl.add_argument("--janelas", help="--janelas-json do calendario_12m (dono 16/11, 'temos que vender as janelas'): a noite "
+                    "da janela cuja regra o motor apaga regrava a estadia da janela (não a da regra)")
     pl.add_argument("--noites", nargs="*", help="rotina leve: só estas noites recebem passo de pace (Q7=2026-11-10 ou "
                     "Q7=2026-11-10..2026-11-12; noites da reserva, sem a de saída); os outros calendários servem à coerência")
     pl.add_argument("--sem-registro", action="store_true", help="(padrão desde 01/11: o plano nunca grava o ledger; "
@@ -1782,9 +1832,16 @@ def main(argv=None) -> int:
     res = plano(cfg, ancora, cals, hoje, ordens, passos, bloq, a.dias, regra_j_ativa=motor.get("regra_j_ativa", True), regras=regras,
                 noites_filtro=filtro)
     with PD.com_ordens(ordens):  # as mesmas ordens do plano (o plano do dono de 09/11 só vale com a ordem dele)
-        itens, apagar = ajustar_tetos(cfg, res["itens"], regras, cals, hoje=hoje) if regras else (res["itens"], [])
+        alvos_jan = ((ler_json(a.janelas) or {}).get("alvos") or {}) if a.janelas else None
+        itens, apagar = ajustar_tetos(cfg, res["itens"], regras, cals, hoje=hoje, janelas=alvos_jan) if regras \
+            else (res["itens"], [])
         itens, nulos = sem_efeito(cfg, itens, cals, regras, {(x["quarto"], x["data"]) for x in apagar})
-    # o relatório conta só o que vai para a gravação (revisão de 31/10: dizia 9 itens com 8 gravados)
+    # revisão de 16/11 (achado da verificação): sem --janelas, a regra apagada com estadia abaixo da regravada pode ser
+    # janela aberta (dono 16/11): o item a fecharia no PriceLabs e o envio levaria ao Beds24
+    for r_ in riscos_sem_janelas(cfg, itens, apagar, regras, alvos_jan):
+        print(f"AVISO: {r_['quarto']} {r_['data']}: a regra apagada tinha estadia {r_['regra']} e o item regrava "
+              f"{r_['item']}; pode ser janela aberta (dono 16/11, 'temos que vender as janelas'): rode de novo com "
+              "--janelas <rascunho>/janelas.json (o --janelas-json do calendario_12m de hoje) antes de gravar")
     md = relatorio_md(cfg, dict(res, itens=itens), sombra)
     if nulos:
         md += "\n## Sem efeito (já vigentes, fora do plano e do ledger)\n\n" + "".join(

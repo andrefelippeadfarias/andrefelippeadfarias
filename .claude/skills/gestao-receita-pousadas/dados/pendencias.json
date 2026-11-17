@@ -1373,14 +1373,16 @@
       "responsavel": "skill",
       "desde": "2026-11-16",
       "urgencia": 1,
-      "texto": "Moinhos (Q7): regras de 19 a 23/11 gravadas em 16/11 19:17 BRT (19/11 −19%, 20-21 +63%, 22-23 −16%), mas sem recálculo (cota até 17/11 08:04 BRT). Na rotina das 07:53 de 17/11, depois das 08:04: refresh_listing_pricing do Q7 + sync_now, conferir price1 no Beds24 (950 / 3.002,88 / 3.002,88 / 985 / 985; 20-21 pela ordem dos R$ 3.000) e a vitrine da Booking (19/11 ≥ R$ 500). | 16/11 20:11 BRT: Moinhos 20 e 21/11 FECHADOS no Beds24 (blackout), ordem dono-2026-11-16-moinhos-fecha-20-22. Depois do recálculo das 08:04, conferir o preço, mas NÃO reabrir 20-21 sem a confirmação do dono ('Na verdade só venda onde tem uma janela'; perguntado em 16/11 ~20:30)."
+      "texto": "Moinhos (Q7): regras de 19 a 23/11 gravadas em 16/11 19:17 BRT (19/11 −19%, 20-21 +63%, 22-23 −16%), mas sem recálculo (cota até 17/11 08:04 BRT). Na rotina das 07:53 de 17/11, depois das 08:04: refresh_listing_pricing do Q7 + sync_now, conferir price1 no Beds24 (950 / 3.002,88 / 3.002,88 / 985 / 985; 20-21 pela ordem dos R$ 3.000) e a vitrine da Booking (19/11 ≥ R$ 500). | 16/11 20:11 BRT: Moinhos 20 e 21/11 FECHADOS no Beds24 (blackout), ordem dono-2026-11-16-moinhos-fecha-20-22. Depois do recálculo das 08:04, conferir o preço, mas NÃO reabrir 20-21 sem a confirmação do dono ('Na verdade só venda onde tem uma janela'; perguntado em 16/11 ~20:30). | FEITO 17/11: o envio noturno de 16/11 22:07 levou os preços da Moinhos (19/11 950; 20-21 3.003, fechadas pelo dono; 22-23 1.232). O recálculo das 08:05 deu 400 (Beds24 sobrecarregado; conta na cota). Moinhos 20-21 segue fechada até o dono responder (pendência moinhos-2021-reabrir-dono-20261116).",
+      "resolvido_em": "2026-11-17"
     },
     {
       "id": "villa-sabado-2111-manual-20261116",
       "responsavel": "skill",
       "desde": "2026-11-16",
       "urgencia": 1,
-      "texto": "Sábado 21/11 da King Spa 7 e da King Spa 2 mudado à mão no Beds24 em 16/11 (override none e mínimo 2; de manhã estava noCheckOut e mínimo 1). Perguntado ao dono quem mudou. Prazo: sem resposta até a rotina das 07:53 de 17/11, aplicar a Regra H (noCheckInOrCheckOut, mínimo 2) pelo lote do Beds24 com min_stay_antes. Até lá, a auditoria não fecha essa noite. | 16/11 ~20:05 BRT, dono: 'Na verdade só venda onde tem uma janela. A preocupação é onde temos janelas, temos que vender as janelas.' (ordem dono-2026-11-16-vender-janelas): o sábado 21/11 das King Spa fica aberto como janela, sem aplicar a Regra H: King Spa 7 (sexta e domingo esgotados) segue com estadia 1 e entrada aberta; King Spa 2 aberta às 20:18 BRT (noCheckOut, estadia 1; 1 unidade presa). Quem mudou à mão segue sem resposta, mas o prazo de fechar caiu."
+      "texto": "Sábado 21/11 da King Spa 7 e da King Spa 2 mudado à mão no Beds24 em 16/11 (override none e mínimo 2; de manhã estava noCheckOut e mínimo 1). Perguntado ao dono quem mudou. Prazo: sem resposta até a rotina das 07:53 de 17/11, aplicar a Regra H (noCheckInOrCheckOut, mínimo 2) pelo lote do Beds24 com min_stay_antes. Até lá, a auditoria não fecha essa noite. | 16/11 ~20:05 BRT, dono: 'Na verdade só venda onde tem uma janela. A preocupação é onde temos janelas, temos que vender as janelas.' (ordem dono-2026-11-16-vender-janelas): o sábado 21/11 das King Spa fica aberto como janela, sem aplicar a Regra H: King Spa 7 (sexta e domingo esgotados) segue com estadia 1 e entrada aberta; King Spa 2 aberta às 20:18 BRT (noCheckOut, estadia 1; 1 unidade presa). Quem mudou à mão segue sem resposta, mas o prazo de fechar caiu. | FEITO 17/11 07:57 BRT: King Spa 7 21/11 noCheckOut (sábado órfão, sexta esgotada) e King Spa 2 21/11 janela (noCheckOut, estadia 1, também no PriceLabs).",
+      "resolvido_em": "2026-11-17"
     },
     {
       "id": "lotar-19-23-perguntas-20261116",
@@ -1394,7 +1396,8 @@
       "responsavel": "skill",
       "desde": "2026-11-16",
       "urgencia": 1,
-      "texto": "Panorâmica I (Double) fechada com blackout em 20 e 21/11 (16/11 19:56 BRT), até o preço da ordem dono-2026-11-16-fds-20-22-minimo-3000 (+103%, R$ 3.004,40) chegar ao Beds24. Reabrir em 17/11 depois das 13:56 BRT (cota): refresh + sync do Double, conferir o price1 e então editar 20/11 → none e 21/11 → noCheckInOrCheckOut. Se o envio noturno do PriceLabs já tiver levado o preço, reabrir antes. Lembrete agendado (trig_01LABbJFcjx9ji3hvvR2WGqA). A auditoria do Beds24 não deve reabrir antes disso. | Ordem dono-2026-11-16-vender-janelas (16/11 ~20:05): ao reabrir, o sábado 21/11 vai a noCheckOut com estadia 1 (Beds24 e PriceLabs por data), não noCheckInOrCheckOut: com a sexta 20/11 com 1 livre e o sábado com 2, 1 unidade fica presa no sábado (janela). Se o dono disser que o feriadão só vende janela também na Panorâmica I, reabrir só o sábado."
+      "texto": "Panorâmica I (Double) fechada com blackout em 20 e 21/11 (16/11 19:56 BRT), até o preço da ordem dono-2026-11-16-fds-20-22-minimo-3000 (+103%, R$ 3.004,40) chegar ao Beds24. Reabrir em 17/11 depois das 13:56 BRT (cota): refresh + sync do Double, conferir o price1 e então editar 20/11 → none e 21/11 → noCheckInOrCheckOut. Se o envio noturno do PriceLabs já tiver levado o preço, reabrir antes. Lembrete agendado (trig_01LABbJFcjx9ji3hvvR2WGqA). A auditoria do Beds24 não deve reabrir antes disso. | Ordem dono-2026-11-16-vender-janelas (16/11 ~20:05): ao reabrir, o sábado 21/11 vai a noCheckOut com estadia 1 (Beds24 e PriceLabs por data), não noCheckInOrCheckOut: com a sexta 20/11 com 1 livre e o sábado com 2, 1 unidade fica presa no sábado (janela). Se o dono disser que o feriadão só vende janela também na Panorâmica I, reabrir só o sábado. | FEITO 17/11 07:56 BRT: o envio noturno de 16/11 22:07 levou R$ 3.004; Panorâmica I 20/11 none e 21/11 noCheckInOrCheckOut, depois janela do sábado (noCheckOut, estadia 2). Lembrete das 13:58 apagado.",
+      "resolvido_em": "2026-11-17"
     },
     {
       "id": "vender-janelas-regra-20261116",
@@ -1415,7 +1418,8 @@
       "responsavel": "skill",
       "desde": "2026-11-16",
       "urgencia": 1,
-      "texto": "Ordem dono-2026-11-16-ticket-22-23-minimo-500-600 (ticket mínimo R$ 600 nas suítes e R$ 500 na Balcony em 22 e 23/11), gravada no PriceLabs em 16/11 21:11 BRT. King Spa 2 e Balcony recalculadas e enviadas às 21:13. Falta o recálculo e o envio de: Moinhos (08:04, junto com a pendência lotar-19-23-q7), Panorâmica I (13:56, junto com o blackout de 20-21) e Panorâmica II (15:55). Panorâmica II 23/11 FECHADA no Beds24 (blackout, 21:13 BRT; estava a R$ 986, ~R$ 483 de ticket): reabrir com override none depois do envio das 15:55, conferindo price1 R$ 1.240 (noite órfã, estadia 1). Conferir price1: Moinhos 1.231,65; Panorâmica I 1.243,20; Panorâmica II 1.240,20; King Spa 2 1.308,10; Balcony 1.130,30."
+      "texto": "Ordem dono-2026-11-16-ticket-22-23-minimo-500-600 (ticket mínimo R$ 600 nas suítes e R$ 500 na Balcony em 22 e 23/11), gravada no PriceLabs em 16/11 21:11 BRT. King Spa 2 e Balcony recalculadas e enviadas às 21:13. Falta o recálculo e o envio de: Moinhos (08:04, junto com a pendência lotar-19-23-q7), Panorâmica I (13:56, junto com o blackout de 20-21) e Panorâmica II (15:55). Panorâmica II 23/11 FECHADA no Beds24 (blackout, 21:13 BRT; estava a R$ 986, ~R$ 483 de ticket): reabrir com override none depois do envio das 15:55, conferindo price1 R$ 1.240 (noite órfã, estadia 1). Conferir price1: Moinhos 1.231,65; Panorâmica I 1.243,20; Panorâmica II 1.240,20; King Spa 2 1.308,10; Balcony 1.130,30. | FEITO 17/11: o envio noturno de 16/11 22:07 levou Moinhos 1.232, Panorâmica I 1.243 e Panorâmica II 1.240 em 22-23/11; Panorâmica II 23/11 reaberta às 07:56 BRT (none, estadia 1).",
+      "resolvido_em": "2026-11-17"
     },
     {
       "id": "estrategia-dezembro-perguntas-20261117",
@@ -1423,6 +1427,20 @@
       "desde": "2026-11-17",
       "urgencia": 1,
       "texto": "Estratégia de dezembro (pricelabs/estrategia-dezembro-2026.md, v2): alvo recomendado metade da meta até 30/11 (R$ 261.265; Recanto R$ 132.733, Villa R$ 128.532). 12 perguntas Sim/Não na seção 5 e tarefas de extranet na seção 6; mensagem pronta para o relatório das 07:53 de 17/11. Nada gravado por ela."
+    },
+    {
+      "id": "escada-vendas-dezembro-20261117",
+      "responsavel": "skill",
+      "desde": "2026-11-17",
+      "urgencia": 1,
+      "texto": "Escada de vendas (plano de 09/11, +7% depois de metade vendida; proteção da esgotada) das vendas de 16/11 e 17/11 ainda sem passo: Moinhos 04-05/12 (Booking) e 11-12/12 (Expedia); Panorâmica I 04-06/12 (Booking) e 18-19/12 (direta); Balcony 06/12 (Booking); Panorâmica II 27-28/11 (direta de 17/11). Sem recálculo de manhã: cota só da Moinhos, e o recálculo dela deu 400 às 08:05. Fazer na rotina leve de cada quarto quando a cota abrir: Moinhos e Panorâmica I às 13:56 BRT, Panorâmica II e Afrodite às 15:55, King Spa 7, King Spa 2 e Balcony às 19:18. pace.py plano --noites com --regras (r1711/ov_<Q>.json, lidos às 07:58) e --janelas r1711/janelas.json."
+    },
+    {
+      "id": "q2-2711-direta-50pct-20261117",
+      "responsavel": "dono",
+      "desde": "2026-11-17",
+      "urgencia": 1,
+      "texto": "Reserva direta pela API, Panorâmica II 27→29/11, R$ 1.510 (R$ 755 por noite), 50% do esperado no price1 de agora (R$ 1.510 por noite). Perguntado ao dono se o valor está certo (site/motor de reservas ou erro). A skill não altera reservas."
     }
   ],
   "versao": "2026-11-12T13"

@@ -5714,6 +5714,38 @@ A estadia 1 das janelas também chegou: King Spa 2 21/11, Panorâmica I 04/12, P
 - **Exceção 1 aberta na Balcony:** 31/12 esgotado, 5 livres em 30/12 e 6 em 29/12. 31/12 passou de `noCheckInOrCheckOut` a `noCheckIn` às 07:59 (lote conferido, trava `vizinha_esgotada`), então o 29→31 fica vendável.
 - Config aplicada e `registrar` feito.
 
+## 17/11/2026, 08:05 a 08:15 BRT — Rotina completa de terça (parte 2: recálculo e motor)
+
+**Recálculo:**
+- Moinhos às 08:05: erro 400 "Beds24 appears to be temporarily unavailable or under high load". Registrado como falha na cota; a próxima vaga é às 13:56.
+- Os outros quartos estão sem cota até a tarde:
+  - Panorâmica I: 13:56;
+  - Panorâmica II e Afrodite: 15:55;
+  - King Spa 7, King Spa 2 e Balcony: 19:18.
+- Os calendários do PriceLabs são os do envio noturno, de 16/11 às 22:07.
+
+**Sem motor de pace hoje de manhã:** sem recálculo novo, nenhum passo de flutuação (regra do calendário velho).
+
+**Escada das vendas de ontem e de hoje** (pendência `escada-vendas-dezembro-20261117`), nas rotinas leves, quando a cota de cada quarto abrir:
+- Moinhos 04-05/12 e 11-12/12;
+- Panorâmica I 04-06/12 e 18-19/12;
+- Balcony 06/12;
+- Panorâmica II 27-28/11.
+
+**Lidas e guardadas para a tarde:** as regras por data dos 7 quartos (12 meses, sem validade vencida) e as janelas do dia.
+
+**Ocupação real (Beds24, confirmadas e novas):**
+
+| Horizonte | Recanto | Villa |
+|---|---|---|
+| 7 dias | 36% | 49% |
+| 15 dias | 36% | 48% |
+| 30 dias | 29% | 40% |
+| 45 dias | 24% | 34% |
+| 60 dias | 21% | 28% |
+
+**Estratégia de dezembro** (`pricelabs/estrategia-dezembro-2026.md`): as 12 perguntas foram ao dono no relatório desta rotina.
+
 ## O que só pode ser feito na tela (passo a passo para você)
 
 1. **Safety Minimum Price → "Do Not Apply"** (Dynamic Pricing → Customizations → aba Groups → Edit no grupo Recanto dos Moinhos → All Customizations → Safety Minimum Price). Anote o valor atual antes.

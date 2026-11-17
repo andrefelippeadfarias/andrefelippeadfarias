@@ -5851,6 +5851,32 @@ O preço vai aos canais no próximo envio (a cota da Moinhos e da Panorâmica I 
 
 **Escada da Villa segurada** (Balcony 06/12, King Spa 2 07-08/12): o calendário do PriceLabs já conta o lote suspeito de 16 reservas da Booking. Fica para depois da resposta do dono.
 
+## 17/11/2026, 19:54 a 20:05 BRT — Rotina leve das 19:53
+
+**Beds24 desde 16:50 BRT:** 5 novas, 1 cancelada, 3 alteradas. Segurança: 0 alerta.
+
+**Novas:**
+- Panorâmica II 19→22/11, Booking, R$ 4.021: a Panorâmica II esgota em 20 e 21/11.
+- Balcony 20→22/11, Booking, R$ 2.147.
+- King Spa 7 18/11, Booking, R$ 344 (62% do esperado).
+- King Spa 7 17/12, Booking, R$ 509.
+- **King Spa 7 Natal 23→25/12, Expedia, R$ 545:** 6% do esperado, R$ 272 por noite.
+
+**Alterada:** King Spa 7 17/11, Expedia, R$ 428 (43%).
+
+**Cancelada:** Balcony 31/12→02/01, direta (recepção), R$ 1.800, às 19:50.
+
+**Réveillon:** a Balcony 31/12 reabriu (1 livre).
+- A exceção 1 da Balcony fechou às 19:54: 31/12 de `noCheckIn` para `noCheckInOrCheckOut` no Beds24, lote conferido com a config aplicada.
+- O plano não tem item.
+- O plano contou 2 pacotes novos da Villa no Réveillon. São as 2 reservas suspeitas da King Spa 7 30/12→01/01 (lote das 11:11), por isso o `registrar` não foi rodado: a escada da Villa não conta essas reservas até o dono confirmar.
+
+**Janelas:** 0 a abrir, 6 mantidas, 2 a observar, 0 fechada.
+
+**Sombra da flutuação:** foto do fim do dia fechada.
+
+**Preço:** nada gravado.
+
 ## O que só pode ser feito na tela (passo a passo para você)
 
 1. **Safety Minimum Price → "Do Not Apply"** (Dynamic Pricing → Customizations → aba Groups → Edit no grupo Recanto dos Moinhos → All Customizations → Safety Minimum Price). Anote o valor atual antes.

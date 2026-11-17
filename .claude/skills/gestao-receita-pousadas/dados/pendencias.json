@@ -1441,6 +1441,13 @@
       "desde": "2026-11-17",
       "urgencia": 1,
       "texto": "Reserva direta pela API, Panorâmica II 27→29/11, R$ 1.510 (R$ 755 por noite), 50% do esperado no price1 de agora (R$ 1.510 por noite). Perguntado ao dono se o valor está certo (site/motor de reservas ou erro). A skill não altera reservas. | 17/11 10:53: segunda reserva direta pela API abaixo do esperado: King Spa 2 07→09/12, R$ 1.456 (R$ 728 por noite), 59% do price1 (R$ 1.226 + R$ 230 lançados, sinal de R$ 597,80). As duas vêm com referer 'API' e sinal de ~30-40%: parece um sistema de reservas direto (site ou WhatsApp) com preço próprio, abaixo do PriceLabs. Perguntado ao dono qual sistema é e qual tabela ele usa (liga à pergunta 7 da estratégia de dezembro, tabela do direto)."
+    },
+    {
+      "id": "booking-lote-16-reservas-20261117",
+      "responsavel": "dono",
+      "desde": "2026-11-17",
+      "urgencia": 0,
+      "texto": "URGENTE (segurança): 16 reservas da Booking criadas no Beds24 em 2 segundos (17/11 11:11:09-11 BRT), ids 96343979 a 96343994, todas 'confirmed', com plano de tarifa diferente do usual (Rate 65710606 / 65711478, sem 'Genius' e sem as tarifas 70358474/50068135), comissão 0 e preço baixo (King Spa 2 R$ 315-448 por noite). Criaram overbooking: King Spa 2 23/11 −4 e 24/11 −3 (2 unidades), King Spa 7 06/12 −1. Datas: King Spa 2 23-27/11 (6 reservas); King Spa 7 25-27/11, 06/12, 13-17/12, 30/12→01/01 (2, a R$ 1.533-2.051 por noite no Réveillon), 18/09/2027; Balcony 20/02/2027. Pode ser fila de reservas antigas entregue de uma vez (o Beds24 estava instável às 08:05) ou reservas falsas (dono, 03/11: 'A nossa booking .com foi invadida'). Pedido ao dono: conferir cada número na extranet (Reservas), a segurança da conta (2 etapas, usuários) e decidir o overbooking. Até a resposta: a skill não conta essas reservas para escada nem para o Réveillon da Villa (lote de 3+ no mesmo minuto já não conta na escada; o registrar do Réveillon da Villa fica suspenso) e não as usa para decidir preço. Push enviado ao dono às 13:56 BRT."
     }
   ],
   "versao": "2026-11-12T13"

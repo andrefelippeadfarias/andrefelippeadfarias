@@ -5746,6 +5746,27 @@ A estadia 1 das janelas também chegou: King Spa 2 21/11, Panorâmica I 04/12, P
 
 **Estratégia de dezembro** (`pricelabs/estrategia-dezembro-2026.md`): as 12 perguntas foram ao dono no relatório desta rotina.
 
+## 17/11/2026, 10:54 a 11:05 BRT — Rotina leve das 10:53
+
+**Beds24 desde 07:55 BRT:**
+- 1 nova: King Spa 2 07→09/12, direta pela API, R$ 1.456. 07/12 agora esgotada.
+- 1 alterada: King Spa 7 de 15/11, estadia passada; situação.
+- **Abaixo do planejado:** a King Spa 2 de 07/12 saiu a 59% do esperado (R$ 728 por noite contra price1 de R$ 1.226-1.334). É a segunda reserva direta pela API abaixo do preço em 12 h (a outra é a Panorâmica II 27/11, a 50%). As duas trazem sinal de 30-40%. Vai ao dono.
+- Segurança: 0 alerta.
+
+**PriceLabs:**
+- Logs: só as gravações da API até 22:00 de ontem; nenhuma mudança manual.
+- **Envio:** o último foi em 16/11 às 22:07 BRT, nos 7 quartos (menos de 30 h; ligado). O envio da manhã de hoje não apareceu. A Moinhos está com `last_refreshed_at` vazio desde o recálculo que falhou às 08:05.
+
+**Booking, 22→23/11 para 2 adultos (conector oficial):**
+- Recanto 7562933 (nome e endereço conferem): R$ 718,50. Moinhos a R$ 1.232, razão 0,583. Ticket ~R$ 604, acima do mínimo do dono (R$ 600).
+- Villa 14824789 (nome e endereço conferem): R$ 531,83. Balcony a R$ 1.130, razão 0,471 (promoção da Villa ativa). Ticket ~R$ 520, acima de R$ 500.
+- Dentro da faixa de 0,42 a 0,72: sem alerta.
+
+**Janelas:** 0 a abrir, 5 mantidas, 2 a observar, 0 fechada.
+
+**Nada gravado:** a única venda nova é da King Spa 2, sem cota até 19:18. A escada vai para a pendência.
+
 ## O que só pode ser feito na tela (passo a passo para você)
 
 1. **Safety Minimum Price → "Do Not Apply"** (Dynamic Pricing → Customizations → aba Groups → Edit no grupo Recanto dos Moinhos → All Customizations → Safety Minimum Price). Anote o valor atual antes.

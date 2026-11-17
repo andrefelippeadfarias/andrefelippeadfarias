@@ -1448,6 +1448,20 @@
       "desde": "2026-11-17",
       "urgencia": 0,
       "texto": "URGENTE (segurança): 16 reservas da Booking criadas no Beds24 em 2 segundos (17/11 11:11:09-11 BRT), ids 96343979 a 96343994, todas 'confirmed', com plano de tarifa diferente do usual (Rate 65710606 / 65711478, sem 'Genius' e sem as tarifas 70358474/50068135), comissão 0 e preço baixo (King Spa 2 R$ 315-448 por noite). Criaram overbooking: King Spa 2 23/11 −4 e 24/11 −3 (2 unidades), King Spa 7 06/12 −1. Datas: King Spa 2 23-27/11 (6 reservas); King Spa 7 25-27/11, 06/12, 13-17/12, 30/12→01/01 (2, a R$ 1.533-2.051 por noite no Réveillon), 18/09/2027; Balcony 20/02/2027. Pode ser fila de reservas antigas entregue de uma vez (o Beds24 estava instável às 08:05) ou reservas falsas (dono, 03/11: 'A nossa booking .com foi invadida'). Pedido ao dono: conferir cada número na extranet (Reservas), a segurança da conta (2 etapas, usuários) e decidir o overbooking. Até a resposta: a skill não conta essas reservas para escada nem para o Réveillon da Villa (lote de 3+ no mesmo minuto já não conta na escada; o registrar do Réveillon da Villa fica suspenso) e não as usa para decidir preço. Push enviado ao dono às 13:56 BRT."
+    },
+    {
+      "id": "vk7-2011-reabrir-20261117",
+      "responsavel": "skill",
+      "desde": "2026-11-17",
+      "urgencia": 1,
+      "texto": "King Spa 7 20/11 reaberta pelo cancelamento da direta 20-22/11 (17/11 16:11 BRT) a R$ 2.057 no Beds24, abaixo da ordem dos R$ 3.000. Gravado no PriceLabs às 16:56 BRT (+103%, R$ 3.004,40, estadia 2) e fechada no Beds24 (blackout, 16:57). Reabrir com override none depois do recálculo e do envio do VK7 (cota às 19:18 BRT; lembrete agendado às 19:19)."
+    },
+    {
+      "id": "vendas-abaixo-recepcao-expedia-20261117",
+      "responsavel": "dono",
+      "desde": "2026-11-17",
+      "urgencia": 1,
+      "texto": "17/11 tarde: (1) Recepção (VillaRecep1) vendeu King Spa 7 Natal 23→25/12 a R$ 861 por noite (R$ 1.722), 17% do preço do pacote de Natal no Beds24 (~R$ 4.988 por noite); (2) Expedia vendeu King Spa 2 13→15/12 por R$ 479 (2 noites), 22% do esperado (problema da tarifa da Expedia na Villa, pergunta 3 da estratégia de dezembro). O dono decide; a skill não altera reservas."
     }
   ],
   "versao": "2026-11-12T13"

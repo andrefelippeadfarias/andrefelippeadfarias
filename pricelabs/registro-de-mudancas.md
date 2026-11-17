@@ -5812,6 +5812,31 @@ A estadia 1 das janelas também chegou: King Spa 2 21/11, Panorâmica I 04/12, P
 
 O preço vai aos canais no próximo envio (a cota da Moinhos e da Panorâmica I acabou até 15:55).
 
+## 17/11/2026, 16:54 a 17:05 BRT — Rotina leve das 16:53
+
+**Beds24 desde 13:50 BRT:** 6 novas, 1 cancelada, 6 alteradas. Segurança: 0 alerta.
+
+**Novas:**
+- King Spa 7 19/11 (2) e King Spa 2 19/11, Booking, R$ 496 cada. Normais (Genius, comissão), no mínimo de R$ 500 da ordem de 19/11.
+- Balcony 27→29/12, Booking, R$ 2.332.
+- **King Spa 7 Natal 23→25/12, direta pela recepção, R$ 861 por noite:** 17% do preço do pacote de Natal. Vai ao dono.
+- **King Spa 2 13→15/12, Expedia, R$ 479:** 22% do esperado (a tarifa da Expedia na Villa, já conhecida). Vai ao dono.
+
+**Cancelada:** King Spa 7 20→22/11, direta (R$ 2.296), às 16:11. A sexta 20/11 reabriu com 1 livre a R$ 2.057.
+
+**Alteradas:**
+- 5 diretas antigas da Balcony 31/12, canceladas desde 02/09, só mexidas hoje. A Balcony 31/12 segue esgotada e a exceção 1 do Réveillon segue valendo.
+- King Spa 7 17/11 (Airbnb), situação.
+
+**King Spa 7 20/11:**
+- PriceLabs às 16:56 BRT: +103% (R$ 3.004,40, piso = teto, estadia 2), pela ordem `dono-2026-11-16-fds-20-22-minimo-3000`. Validador 0 erro, logs sem mudança manual, conferido na resposta.
+- Beds24 às 16:57: `blackout` até o recálculo e o envio de 19:18 BRT (cota do VK7); lembrete agendado às 19:19.
+- Como desfazer: `beds24.py editar --quarto VK7 --de 2026-11-20 --ate 2026-11-20 --override none`.
+
+**Sombra da flutuação:** foto do fim do dia fechada (60 noites).
+
+**Lote suspeito de 16 reservas da Booking (11:11):** sem resposta do dono ainda; segue fora da escada.
+
 ## O que só pode ser feito na tela (passo a passo para você)
 
 1. **Safety Minimum Price → "Do Not Apply"** (Dynamic Pricing → Customizations → aba Groups → Edit no grupo Recanto dos Moinhos → All Customizations → Safety Minimum Price). Anote o valor atual antes.

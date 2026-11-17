@@ -5652,6 +5652,32 @@ A Balcony fica a 90% da King Spa livre mais barata (Regra G do dono). Perguntado
 - A Villa ficou dentro da faixa, mas abaixo do fator de vitrine dela (0,56 a 0,63). É coerente com a promoção da Villa ainda ativa na extranet, que é do dono (pergunta 12 da estratégia de dezembro).
 - Sem alerta de segurança.
 
+## 16/11/2026, 21:20 a 22:00 BRT — Regra "vender as janelas" no código e janelas gravadas também no PriceLabs
+
+**Código (commit b1fca15):**
+- **O que entrou:** `scripts/vender_janelas.py` (novo), mais o calendario_12m (plano, `--so-estadia`, auditar, lotes do Beds24, `--janelas-json`), o validador (`janela_prova` conferida), o `beds24.py editar-lote` (travas `override_antes` e `num_avail_antes`; as partes da mesma janela pulam juntas) e o `pace.py plano --janelas`.
+- **Parâmetros:** `quartos.json` → `parametros.vender_janelas`.
+- **Testes:** 509 OK (eram 452).
+- **Verificação adversarial:** 3 lentes, 9 achados (1 alto, 3 médios, 5 baixos), todos corrigidos e conferidos.
+- **Simulação com o inventário real das 21:54:** a rotina de amanhã não desfaz as janelas e não reabre as noites fechadas pelo dono (Moinhos e Panorâmica I 20-21/11, Panorâmica II 23/11).
+
+**Por que gravar já:** a leitura do Beds24 das 21:54 mostrou que o envio noturno do PriceLabs tinha voltado a estadia 2 nas janelas abertas às 20:18 (King Spa 2 21/11, Panorâmica I 04/12, Panorâmica II 02/12, King Spa 7 11/12). O PriceLabs mandava 2 por data.
+
+**PriceLabs, 21:59 a 22:00 BRT:** estadia 1 por data, um quarto por vez, conferida na resposta. Preço, piso e teto mantidos, e o motivo antigo também (`manter_reason`). Logs lidos antes, sem mudança manual. Validador: 4 itens, 0 erro.
+- Panorâmica I 04/12 (noite órfã; 05/12 esgotado).
+- Panorâmica II 02/12 (janela).
+- King Spa 7 11/12 (janela; o sábado 12/12 segue `noCheckIn` no Beds24).
+- King Spa 2 21/11 (janela do sábado; `noCheckOut` no Beds24).
+
+**Beds24, 22:00:21 BRT:** lote de 5 itens, conferido 5 de 5, nenhum pulado.
+- Estadia 2 → 1 nessas 4 noites.
+- **Janela nova pela regra:** King Spa 2 sábado 09/01/2027 de `noCheckInOrCheckOut` para `noCheckOut`, com estadia 2. O sábado tem 2 livres e a sexta 1, então 1 unidade presa; a trava (1 ≥ 1) libera. O domingo tem livres, então a estadia 2 já basta e não vai ao PriceLabs.
+
+**Fica para a rotina das 07:53** (pela regra e pelos lotes normais):
+- Afrodite sexta 20/11 → none (regra de 05/11; esgotada).
+- King Spa 7 sábado 21/11 → `noCheckOut` (sábado órfão de 02/11).
+- Panorâmica II 23/11, estadia da segunda (está fechada até o recálculo; ao reabrir, volta a ser noite órfã com 1).
+
 ## O que só pode ser feito na tela (passo a passo para você)
 
 1. **Safety Minimum Price → "Do Not Apply"** (Dynamic Pricing → Customizations → aba Groups → Edit no grupo Recanto dos Moinhos → All Customizations → Safety Minimum Price). Anote o valor atual antes.

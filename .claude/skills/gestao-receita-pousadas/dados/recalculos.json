@@ -637,6 +637,20 @@
    "resultado": "ok",
    "id_ms": 1794869665788,
    "registrado_em": "2026-11-16T22:54:30Z"
+  },
+  {
+   "quarto": "VK2",
+   "em": "2026-11-17T00:12:46Z",
+   "resultado": "ok",
+   "id_ms": 1794874366345,
+   "registrado_em": "2026-11-17T00:12:59Z"
+  },
+  {
+   "quarto": "Balcony",
+   "em": "2026-11-17T00:13:08Z",
+   "resultado": "ok",
+   "id_ms": 1794874388091,
+   "registrado_em": "2026-11-17T00:13:11Z"
   }
  ]
 }

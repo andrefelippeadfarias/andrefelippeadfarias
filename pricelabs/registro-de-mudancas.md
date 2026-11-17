@@ -5598,6 +5598,42 @@ A Balcony fica a 90% da King Spa livre mais barata (Regra G do dono). Perguntado
 - Levar a estadia 1 ao PriceLabs por data, porque o envio dele sobrescreve a do Beds24. Fica para a rotina das 07:53, com a regra nova no calendario_12m, no validador e no lote do Beds24, para a auditoria não fechar as janelas.
 - Sem chamada ao PriceLabs nesta etapa.
 
+## 16/11/2026, 20:35 a 21:20 BRT — Ordem do dono: ticket mínimo de R$ 500 a R$ 600 nas noites de 22 e 23/11
+
+**Texto do dono (~20:35):** "E acabou de entrar uma reserva de R$350. Vamos aumentar o ticket para o mínimo até o dia 23 do dia 22. Entrada para entradas no dia 22 e no dia 23, no mínimo R$500 a R$600."
+
+**Leitura (ordem `dono-2026-11-16-ticket-22-23-minimo-500-600`):**
+- "Ticket" = valor da reserva por noite que chega no Beds24, já com os descontos da Booking (price1 × fator do canal: Recanto 0,49, Villa 0,46).
+- Mínimo de R$ 600 nas suítes com banheira e de R$ 500 na Balcony (sem banheira).
+- Substitui a ordem de lotar 19 a 23/11 nessas noites (`noites_fora` 22 e 23).
+- A reserva de R$ 350 ainda não estava no Beds24 às 20:24 BRT.
+
+**PriceLabs (piso = teto, percent_base), 21:11 e 21:12 BRT.** Logs lidos antes (sem mudança manual desde 19:53). Validador: 9 itens, 0 erro.
+
+| Quarto | Antes no Beds24 (22 / 23) | Novo enviado (22 e 23) | Ticket na Booking |
+|---|---|---|---|
+| Moinhos | 1.164 / 1.478 | **1.231,65** (+5%) | ~R$ 604 |
+| Panorâmica I | 1.036 / 1.036 | **1.243,20** (−16%) | ~R$ 609 |
+| Panorâmica II | (22 overbooking) / 986 | 23/11: **1.240,20** (−22%) | ~R$ 608 |
+| King Spa 2 | 1.206 / 952 | **1.308,10** (+3%) | ~R$ 602 |
+| Balcony | 686 / 686 | **1.130,30** (−11%; 86% da King Spa 2, Regra G) | ~R$ 520 |
+
+- **Afrodite** fica em R$ 1.500 (~R$ 735). **King Spa 7** está esgotada nas duas noites.
+- **Erro de procedimento:** as gravações da King Spa 2 e da Balcony saíram juntas, não uma por vez como manda a regra das chamadas ao PriceLabs. As duas responderam OK.
+
+**Recálculo e Sync Now:**
+- **Recalculados e enviados às 21:13:** King Spa 2 e Balcony. Com isso a cota dos dois acabou até 17/11 19:18 BRT.
+- **Moinhos, Panorâmica I e Panorâmica II:** sem cota. O preço vai com o recálculo de amanhã:
+  - Moinhos às 08:04;
+  - Panorâmica I às 13:56;
+  - Panorâmica II às 15:55.
+- **Até lá:**
+  - Moinhos (~R$ 570 e R$ 724) e Panorâmica I (~R$ 508) ficam abertos, acima do mínimo de R$ 500.
+  - **Panorâmica II 23/11 foi fechada no Beds24** (`override blackout`, 21:13 BRT, conferido). Estava a R$ 986, cerca de R$ 483 de ticket, abaixo do mínimo. Reabre depois do recálculo das 15:55, com o mesmo `none` e estadia 1 (noite órfã).
+  - Como desfazer: `beds24.py editar --quarto Q2 --de 2026-11-23 --ate 2026-11-23 --override none`.
+
+**King Spa 2 sábado 21/11:** o envio do PriceLabs traz estadia 2 e desfaz a estadia 1 da janela aberta às 20:18. Reaplico no Beds24 depois do envio e levo ao PriceLabs pela regra nova na rotina das 07:53.
+
 ## O que só pode ser feito na tela (passo a passo para você)
 
 1. **Safety Minimum Price → "Do Not Apply"** (Dynamic Pricing → Customizations → aba Groups → Edit no grupo Recanto dos Moinhos → All Customizations → Safety Minimum Price). Anote o valor atual antes.

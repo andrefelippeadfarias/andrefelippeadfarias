@@ -686,6 +686,83 @@
    "resultado": "ok",
    "id_ms": 1794954349934,
    "registrado_em": "2026-11-17T22:25:54Z"
+  },
+  {
+   "quarto": "Q7",
+   "em": "2026-11-18T10:55:30Z",
+   "resultado": "ok",
+   "id_ms": 1794999330436,
+   "registrado_em": "2026-11-18T10:55:38Z"
+  },
+  {
+   "quarto": "Double",
+   "em": "2026-11-18T10:55:47Z",
+   "resultado": "ok",
+   "id_ms": 1794999347545,
+   "registrado_em": "2026-11-18T10:55:50Z"
+  },
+  {
+   "quarto": "Afrodite",
+   "em": "2026-11-18T10:56:00Z",
+   "resultado": "ok",
+   "id_ms": 1794999360252,
+   "registrado_em": "2026-11-18T10:56:03Z"
+  },
+  {
+   "quarto": "Q2",
+   "em": "2026-11-18T10:56:12Z",
+   "resultado": "ok",
+   "id_ms": 1794999372472,
+   "registrado_em": "2026-11-18T10:56:15Z"
+  },
+  {
+   "quarto": "VK7",
+   "em": "2026-11-18T10:56:24Z",
+   "resultado": "ok",
+   "id_ms": 1794999384265,
+   "registrado_em": "2026-11-18T10:56:27Z"
+  },
+  {
+   "quarto": "Balcony",
+   "em": "2026-11-18T10:56:36Z",
+   "resultado": "ok",
+   "id_ms": 1794999396413,
+   "registrado_em": "2026-11-18T10:56:39Z"
+  },
+  {
+   "quarto": "VK2",
+   "em": "2026-11-18T10:56:48Z",
+   "resultado": "ok",
+   "id_ms": 1794999408566,
+   "registrado_em": "2026-11-18T10:56:51Z"
+  },
+  {
+   "quarto": "Q7",
+   "em": "2026-11-18T13:20:03Z",
+   "resultado": "ok",
+   "id_ms": 1795008003507,
+   "registrado_em": "2026-11-18T13:20:13Z"
+  },
+  {
+   "quarto": "Double",
+   "em": "2026-11-18T13:20:26Z",
+   "resultado": "ok",
+   "id_ms": 1795008026777,
+   "registrado_em": "2026-11-18T13:20:30Z"
+  },
+  {
+   "quarto": "Q2",
+   "em": "2026-11-18T13:20:43Z",
+   "resultado": "ok",
+   "id_ms": 1795008043576,
+   "registrado_em": "2026-11-18T13:20:47Z"
+  },
+  {
+   "quarto": "Afrodite",
+   "em": "2026-11-18T13:21:00Z",
+   "resultado": "ok",
+   "id_ms": 1795008060729,
+   "registrado_em": "2026-11-18T13:21:04Z"
   }
  ]
 }

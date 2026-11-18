@@ -5877,6 +5877,55 @@ O preço vai aos canais no próximo envio (a cota da Moinhos e da Panorâmica I 
 
 **Preço:** nada gravado.
 
+## 18/11/2026, 07:53 a 10:25 BRT — Rotina completa (quarta)
+
+**Atraso:** a rotina começou às 07:53, mas o processo da sessão reiniciou duas vezes no meio; as gravações saíram entre 08:16 e 10:21 BRT.
+
+**Beds24 desde 19:50 BRT de 17/11** (vigilância: 0 alerta): 3 novas, 3 canceladas, 1 alterada.
+- Novas: King Spa 7 20→22/11, Booking, R$ 3.388 (a sexta 20/11 esgotou); King Spa 7 11→13/12, direta pela recepção, R$ 1.700 (45% do esperado; vai ao dono); King Spa 2 17/11, direta, R$ 952.
+- Canceladas: King Spa 7 Natal 23→25/12 da Expedia (R$ 0, a de 6%); Balcony 31/12→02/01, direta; Balcony 20→22/11, Booking, R$ 0.
+- Alterada: Panorâmica I 21→24/11, Booking.
+
+**Moinhos 20 e 21/11 reaberto sem gravação da skill.** O blackout de 16/11 20:11 (ordem `dono-2026-11-16-moinhos-fecha-20-22`) não está mais no Beds24: override none, 5 livres, estadia 2, R$ 3.003. Nenhum registro ou log da skill reabriu. A skill não fechou de novo (pode ser decisão do dono ou da recepção, e o preço já está no mínimo de R$ 3.000); perguntado ao dono. O sábado 21/11 do Moinhos ficou fora do lote até a resposta.
+
+**Regras por data (12 meses) e auditoria:** 1 janela a abrir (Panorâmica II hoje, estadia 1), 4 mantidas, 2 a observar (Balcony 27/11, King Spa 7 18/12), 15 de pacote; 8 noites fora da regra (19/11/2027 nos 7 quartos e o Moinhos 12/12 com estadia 1).
+
+**Motor de pace (60 dias):** 64 itens; **20 itens da Villa ficaram fora**, nas noites das 16 reservas suspeitas da Booking (King Spa 2 23-26/11; King Spa 7 25-26/11, 06/12, 13-16/12): escada, proteção de esgotada, Balcony 80% e Regra G. Ficam para depois da resposta do dono. Validação: 0 erro, 8 avisos (descidas pelo piso de mercado de D0 a D7 e 2 sábados sem estadia no item, que a regra mantém).
+
+**Gravado no PriceLabs** (logs sem mudança manual; conferido na resposta, 0 diferença):
+- King Spa 2 07/12: teto antigo apagado e piso da esgotada regravado (+6%, R$ 1.346, estadia 2).
+- **Hoje (D0), com recálculo e Sync Now às 10:20:**
+  - Moinhos: R$ 1.279 → R$ 915.
+  - Panorâmica I: R$ 1.288 → R$ 962.
+  - Panorâmica II: R$ 1.288 → R$ 922, com estadia 1 (janela).
+  - Afrodite: R$ 1.680 → R$ 1.500.
+- Piso de mercado (D6-D7):
+  - Moinhos 24/11 → R$ 915 e 25/11 → R$ 927 (antes R$ 1.220).
+  - Panorâmica II 25/11: R$ 1.352 → R$ 1.081.
+  - Panorâmica I 24/11: R$ 1.732 → R$ 1.569; 25/11: R$ 1.450 → R$ 1.228.
+  - Afrodite 24/11: R$ 2.080 → R$ 1.900.
+- Escada que sobe (Recanto):
+  - Panorâmica II 27-28/11 → R$ 1.622 (esgotada) e 04/12 → R$ 1.590.
+  - 16-17/12: Moinhos R$ 1.302 → R$ 1.443, Panorâmica I → R$ 1.450, Panorâmica II → R$ 1.447, Afrodite R$ 1.600 → R$ 1.760.
+  - Panorâmica I 14/12 → R$ 1.243.
+- Escada da Villa:
+  - King Spa 7: 30/11 → R$ 1.288; 01/12 → R$ 1.169; 17/12 → R$ 1.228; 20/12 → R$ 1.584; 21/12 → R$ 1.761.
+  - King Spa 2: 30/11 → R$ 1.168; 01/12 → R$ 1.130; 08/12 → R$ 1.232; 17/12 → R$ 1.219; 06-07/01 → R$ 1.181; 15-16/01 → R$ 1.638 (plano de fim de semana).
+  - Balcony pela Regra G: 30/11 R$ 1.016; 01/12 R$ 991; 07/12 R$ 1.232; 08/12 R$ 1.016; 17/12 R$ 1.067; 20/12 R$ 1.372; 21/12 R$ 1.524; 17/01 R$ 965.
+- Estadia: 7 quartos em 19/11/2027 (2, explícita), Moinhos 12/12 (2); Afrodite 19/11/2027 com a sexta aberta.
+
+**Beds24:** Afrodite 19/11/2027 → none (conferido). A janela da Panorâmica II hoje (estadia 1) e o Moinhos 19/11/2027 (estadia 2) já estavam no alvo depois do Sync Now.
+
+**Histórico de passos:** 113 passos marcados como enviados (envio de 21:54 BRT); 40 passos novos registrados.
+
+**Faixas:** 8 ordens novas de faixa para as noites que entraram na janela de 60 dias.
+
+**Réveillon:** plano, portão (sem avaliar) e noites soltas: 0 item. O `registrar` não rodou: os 2 "pacotes novos" da Villa são as reservas suspeitas da King Spa 7 30/12→01/01. A King Spa 7 e a King Spa 2 seguram R$ 5.000 em 30-31/12 (o plano pede R$ 5.298; o máximo do anúncio só sobe a partir de 23/11).
+
+**Ocupação (Beds24, confirmadas + novas):** Recanto 44% / 38% / 30% (7/15/30 dias); Villa 60% / 53% / 46% (a Villa inclui o lote suspeito).
+
+**Como desfazer:** pedir "volte o D0 de 18/11 do Recanto" (Moinhos R$ 1.279, Panorâmica I e II R$ 1.288, Afrodite R$ 1.680) ou "volte a escada de 18/11" (o plano e os valores antigos estão em `plano_final.json` do rascunho de 18/11, coluna "antes").
+
 ## O que só pode ser feito na tela (passo a passo para você)
 
 1. **Safety Minimum Price → "Do Not Apply"** (Dynamic Pricing → Customizations → aba Groups → Edit no grupo Recanto dos Moinhos → All Customizations → Safety Minimum Price). Anote o valor atual antes.

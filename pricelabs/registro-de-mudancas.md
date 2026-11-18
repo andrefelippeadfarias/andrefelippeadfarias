@@ -5946,6 +5946,35 @@ O preço vai aos canais no próximo envio (a cota da Moinhos e da Panorâmica I 
 
 **Preço:** nada gravado.
 
+## 18/11/2026, 11:20 a 12:00 BRT — Respostas do dono à análise do feriado
+
+**Texto literal do dono:** "1. Sim / 2. Sim / 3. Fecha / 4. Me deixe todas as reservas de cada hotel para eu enviar para as recepções de cada hotel, para eles me confirmar esse status, ok / 5.ok".
+
+**3. Moinhos 20 e 21/11 fechado de novo** (ordem `dono-2026-11-16-moinhos-fecha-20-22`):
+- Beds24: `override blackout` às 11:30 BRT, conferido (numAvail 0).
+- Antes: none, 5 livres por noite, estadia 2, R$ 3.003.
+- Perguntado ao dono se "Fecha" queria dizer "fechou, pode manter aberto"; resposta "Reabre" reverte.
+- Como desfazer: `beds24.py editar --quarto Q7 --de 2026-11-20 --ate 2026-11-21 --override none`.
+
+**1 e 2. Preço do Moinhos 20 e 21/11 pronto para o caso de reabrir** (ordem `dono-2026-11-18-moinhos-2575`):
+- PriceLabs: +120% (R$ 2.580,60 enviados, ~R$ 1.504 por noite na Booking) às 11:34 BRT.
+- Logs sem mudança manual; validador 0 erro; conferido na resposta (estadia 2 mantida).
+- Vai ao Beds24 no envio da noite.
+- A F1 (R$ 1.975) só vale se o Moinhos for reaberto e seguir com 5 livres em 19/11 às 13:53.
+- Q7 20-21 saiu da ordem dos R$ 3.000.
+
+**5. Expedia fechada na Villa** (ordem `dono-2026-11-18-expedia-villa-fechada`):
+- Beds24: limite de reservas do canal Expedia "0" na King Spa 7, na Balcony e na King Spa 2, de 18/11/2026 a 17/11/2028, às 11:31 BRT.
+- Conferido na leitura: 3 itens, 0 erro.
+- As reservas já feitas não mudam.
+- Recanto: avaliar (pendência `expedia-recanto-avaliar-20261118`).
+
+**4. Listas para as recepções:** uma planilha por hotel, sem nome de hóspede (Nº Beds24 e Nº no canal), com as reservas de 18/11/2026 a 31/12/2027, lidas às 11:29 BRT.
+- Abas: "Conferir primeiro", "Todas ativas", "Canceladas recentes", com colunas amarelas para a recepção responder.
+- Recanto: 123 ativas e 11 com alerta. Os alertas: overbooking da Panorâmica II em 22/11, valor zero, valor abaixo de 50% em reservas feitas desde 01/11 e Expedia.
+- Villa: 190 ativas e 54 com alerta. Os alertas: as 16 do lote suspeito, overbooking da King Spa 2 em 23-24/11 e da King Spa 7 em 06/12, valor zero, abaixo de 50% e Expedia.
+- Os arquivos ficam no rascunho da sessão e não no repositório: são dados de reservas.
+
 ## O que só pode ser feito na tela (passo a passo para você)
 
 1. **Safety Minimum Price → "Do Not Apply"** (Dynamic Pricing → Customizations → aba Groups → Edit no grupo Recanto dos Moinhos → All Customizations → Safety Minimum Price). Anote o valor atual antes.

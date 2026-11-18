@@ -10931,7 +10931,18 @@
    ],
    "minimo_publico_booking": 500,
    "nota": "Só a noite de 19/11. Itens: Moinhos −19% (950,13), Panorâmica II −40% (954), Panorâmica I −35% (962), King Spa 7 −39% (902,80), King Spa 2 −29% (901,70), Balcony −37% (800,10; 88,7% da King Spa 2, Regra G). Público ~R$ 500-569. Nenhum item desta ordem pode ficar abaixo de R$ 500 na vitrine da Booking: medir depois do envio.",
-   "como_desfazer": "Regravar 19/11 com os preços de antes (Moinhos 1.164, Panorâmica I 1.309, Panorâmica II 1.272, King Spa 7 1.157, King Spa 2 1.134, Balcony 1.189) e voltar o feriado a começar em 19/11 em quartos.json."
+   "como_desfazer": "Regravar 19/11 com os preços de antes (Moinhos 1.164, Panorâmica I 1.309, Panorâmica II 1.272, King Spa 7 1.157, King Spa 2 1.134, Balcony 1.189) e voltar o feriado a começar em 19/11 em quartos.json.",
+   "noites_fora": {
+    "Q7": [
+     "2026-11-19"
+    ],
+    "Double": [
+     "2026-11-19"
+    ],
+    "Q2": [
+     "2026-11-19"
+    ]
+   }
   },
   {
    "id": "dono-2026-11-16-fds-20-22-minimo-3000",
@@ -11066,7 +11077,29 @@
     "suites_com_banheira": 600,
     "Balcony": 500
    },
-   "como_desfazer": "Regravar 22 e 23/11 pela ordem dono-2026-11-16-lotar-19-23 (Q7 -16%, Double -30%, Q2 -38%, VK2 -25%, Balcony -46%) e tirar noites_fora 22-23 dela."
+   "como_desfazer": "Regravar 22 e 23/11 pela ordem dono-2026-11-16-lotar-19-23 (Q7 -16%, Double -30%, Q2 -38%, VK2 -25%, Balcony -46%) e tirar noites_fora 22-23 dela.",
+   "noites_fora": {
+    "Q7": [
+     "2026-11-22",
+     "2026-11-23"
+    ],
+    "Double": [
+     "2026-11-22",
+     "2026-11-23"
+    ],
+    "Afrodite": [
+     "2026-11-22",
+     "2026-11-23"
+    ],
+    "Q2": [
+     "2026-11-23"
+    ],
+    "Balcony": [
+     "2026-11-22",
+     "2026-11-23"
+    ]
+   },
+   "noites_fora_motivo": "18/11: plano liberado do dono ('Pode o plano liberado') → dono-2026-11-18-plano-liberado-semana"
   },
   {
    "id": "dono-2026-11-04-faixa-recanto-20270112",
@@ -11637,6 +11670,111 @@
    "de": "2026-11-18",
    "ate": "2026-11-23",
    "libera": []
+  },
+  {
+   "id": "dono-2026-11-18-plano-liberado-semana",
+   "data": "2026-11-18",
+   "criada_em": "2026-11-18T22:20:00Z",
+   "texto": "Pode o plano liberado",
+   "contexto": "Resposta do dono (~19:20 BRT de 18/11) à proposta da meta de R$ 120 mil (pricelabs/analise-meta-120k-2026-11-18.md): (1) escada do Moinhos no feriado: qui 19/11 14h R$ 2.552 se saírem menos de 2 estadias; sex 20/11 10h R$ 2.100; (2) 22-23/11 na mediana do mercado (Recanto ~R$ 470/400 na vitrine; Balcony 920/800 enviado) e 1 diária na segunda 23 (Moinhos, Panorâmica I, Afrodite); (3) 19/11 Recanto ~R$ 400 na vitrine (Moinhos, Panorâmica I e II); (4) Expedia fechada no Recanto de 19 a 23/11.",
+   "tipo": "preco_por_data",
+   "quartos": [
+    "Q7",
+    "Double",
+    "Afrodite",
+    "Q2",
+    "Balcony"
+   ],
+   "de": "2026-11-19",
+   "ate": "2026-11-23",
+   "noites": [
+    "2026-11-19",
+    "2026-11-22",
+    "2026-11-23"
+   ],
+   "libera": [
+    "abaixo_piso",
+    "estadia",
+    "acima_15"
+   ],
+   "precos_enviados": {
+    "2026-11-19": {
+     "Q7": 751,
+     "Double": 770,
+     "Q2": 763
+    },
+    "2026-11-22": {
+     "Q7": 880,
+     "Double": 903,
+     "Afrodite": 1040,
+     "Balcony": 914
+    },
+    "2026-11-23": {
+     "Q7": 751,
+     "Double": 770,
+     "Afrodite": 900,
+     "Q2": 763,
+     "Balcony": 800
+    }
+   },
+   "estadia": {
+    "2026-11-23": {
+     "Q7": 1,
+     "Double": 1,
+     "Afrodite": 1
+    }
+   },
+   "como_desfazer": "19/11: Moinhos −19% (950), Panorâmica I −35% (962), Panorâmica II −40% (954) pela ordem dono-2026-11-16-dia-19-minimo-500; 22-23/11: Moinhos/Panorâmicas/Afrodite e Balcony de volta ao ticket mínimo (ordem dono-2026-11-16-ticket-22-23-minimo-500-600) e estadia 2 na segunda."
+  },
+  {
+   "id": "dono-2026-11-18-moinhos-escada-feriado",
+   "data": "2026-11-18",
+   "criada_em": "2026-11-18T22:20:00Z",
+   "texto": "Pode o plano liberado",
+   "contexto": "Resposta do dono (~19:20 BRT de 18/11) à proposta da meta de R$ 120 mil (pricelabs/analise-meta-120k-2026-11-18.md): (1) escada do Moinhos no feriado: qui 19/11 14h R$ 2.552 se saírem menos de 2 estadias; sex 20/11 10h R$ 2.100; (2) 22-23/11 na mediana do mercado (Recanto ~R$ 470/400 na vitrine; Balcony 920/800 enviado) e 1 diária na segunda 23 (Moinhos, Panorâmica I, Afrodite); (3) 19/11 Recanto ~R$ 400 na vitrine (Moinhos, Panorâmica I e II); (4) Expedia fechada no Recanto de 19 a 23/11.",
+   "tipo": "preco_por_data",
+   "quartos": [
+    "Q7"
+   ],
+   "de": "2026-11-20",
+   "ate": "2026-11-21",
+   "libera": [
+    "abaixo_piso",
+    "acima_15"
+   ],
+   "escada": [
+    {
+     "quando": "2026-11-19T17:00:00Z",
+     "se": "menos de 2 estadias do Moinhos 20→22 vendidas desde a reabertura de 18/11 18:46 BRT",
+     "enviado": 2552,
+     "percent_base": 118
+    },
+    {
+     "quando": "2026-11-20T13:00:00Z",
+     "se": "Moinhos ainda com unidade livre em 20 ou 21/11",
+     "enviado": 2100,
+     "percent_base": 79
+    }
+   ],
+   "como_desfazer": "Regravar Moinhos 20-21/11 a +156% (R$ 3.003) pela ordem dono-2026-11-18-moinhos-minimo-3000."
+  },
+  {
+   "id": "dono-2026-11-18-expedia-recanto-19-23",
+   "data": "2026-11-18",
+   "criada_em": "2026-11-18T22:20:00Z",
+   "texto": "Pode o plano liberado",
+   "contexto": "Resposta do dono (~19:20 BRT de 18/11) à proposta da meta de R$ 120 mil (pricelabs/analise-meta-120k-2026-11-18.md): (1) escada do Moinhos no feriado: qui 19/11 14h R$ 2.552 se saírem menos de 2 estadias; sex 20/11 10h R$ 2.100; (2) 22-23/11 na mediana do mercado (Recanto ~R$ 470/400 na vitrine; Balcony 920/800 enviado) e 1 diária na segunda 23 (Moinhos, Panorâmica I, Afrodite); (3) 19/11 Recanto ~R$ 400 na vitrine (Moinhos, Panorâmica I e II); (4) Expedia fechada no Recanto de 19 a 23/11.",
+   "tipo": "restricao",
+   "quartos": [
+    "Q7",
+    "Double",
+    "Afrodite",
+    "Q2"
+   ],
+   "de": "2026-11-19",
+   "ate": "2026-11-23",
+   "libera": [],
+   "como_desfazer": "beds24.py editar-lote com canais_max {\"expedia\": null} nos 4 quartos do Recanto, de 19 a 23/11."
   }
  ]
 }

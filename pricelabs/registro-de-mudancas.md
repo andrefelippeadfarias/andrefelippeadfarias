@@ -5926,6 +5926,26 @@ O preço vai aos canais no próximo envio (a cota da Moinhos e da Panorâmica I 
 
 **Como desfazer:** pedir "volte o D0 de 18/11 do Recanto" (Moinhos R$ 1.279, Panorâmica I e II R$ 1.288, Afrodite R$ 1.680) ou "volte a escada de 18/11" (o plano e os valores antigos estão em `plano_final.json` do rascunho de 18/11, coluna "antes").
 
+## 18/11/2026, 10:53 a 11:00 BRT — Rotina leve das 10:53
+
+**Beds24 desde 07:50 BRT:** 1 nova, 1 cancelada. As 7 "alteradas" são reservas antigas do Airbnb já canceladas, só mexidas. Segurança: 0 alerta.
+- **Nova:** Moinhos 19/11 pela Expedia, R$ 393. São 41% do esperado (R$ 950 no Beds24): a tarifa da Expedia sai barata também no Recanto. Vai ao dono, junto com a pergunta sobre a Expedia. 19/11 está na ordem do dono (mínimo R$ 500), então não houve passo de escada.
+- **Cancelada:** King Spa 7 30/12→01/01 pela Expedia, R$ 0, criada às 09:43 e cancelada às 09:53. É de novo o padrão de reserva de R$ 0 da Expedia no Réveillon da Villa.
+
+**Logs do PriceLabs:** só as gravações da rotina (API).
+
+**Envio:**
+- Recanto: 10:20-10:21, pelo Sync Now da rotina.
+- Villa: 09:45, envio diário.
+- As gravações da King Spa 7 e da Balcony das 10:19 (noites de 30/11 em diante) vão no envio da noite.
+- 20 passos marcados como enviados.
+
+**Booking (segurança):**
+- Villa: id 14824789, R. das Candelas, 79, R$ 417 em 24/11. Razão 0,61 sobre a Balcony livre (R$ 686): normal.
+- Recanto: a busca por coordenadas e pelo nome deu erro interno no conector, 3 vezes. As buscas por região também falharam desde 10:30; não insisti. Fica para a rotina das 13:53.
+
+**Preço:** nada gravado.
+
 ## O que só pode ser feito na tela (passo a passo para você)
 
 1. **Safety Minimum Price → "Do Not Apply"** (Dynamic Pricing → Customizations → aba Groups → Edit no grupo Recanto dos Moinhos → All Customizations → Safety Minimum Price). Anote o valor atual antes.

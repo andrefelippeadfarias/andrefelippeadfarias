@@ -1411,7 +1411,9 @@
       "responsavel": "dono",
       "desde": "2026-11-16",
       "urgencia": 0,
-      "texto": "Moinhos 20 e 21/11 fechados (blackout) pela ordem dono-2026-11-16-moinhos-fecha-20-22. Perguntado ao dono: depois que o preço de R$ 3.002,88 chegar ao Beds24 (recálculo das 08:04 de 17/11), reabrir o Moinhos 20→22 ou manter fechado vendendo só janela? Sem resposta, segue fechado. | 18/11 07:55: o inventário do Beds24 mostra o Moinhos 20 e 21/11 REABERTO (override none, 5 livres, estadia 2, price1 R$ 3.003), sem gravação da skill depois do blackout de 16/11 20:11 (registro e logs). Quem reabriu não aparece na leitura (provável tela do Beds24). A skill não fechou de novo: pode ser decisão do dono ou da recepção e o preço já está no mínimo de R$ 3.000 da ordem. Perguntado ao dono no relatório: 'Foi você ou a recepção? Se não foi, respondo \"Pode fechar\" e eu fecho 20 e 21/11 de novo.' O sábado 21/11 do Moinhos ficou com override none (a regra pede noCheckInOrCheckOut): fora do lote até a resposta."
+      "texto": "Moinhos 20 e 21/11 fechados (blackout) pela ordem dono-2026-11-16-moinhos-fecha-20-22. Perguntado ao dono: depois que o preço de R$ 3.002,88 chegar ao Beds24 (recálculo das 08:04 de 17/11), reabrir o Moinhos 20→22 ou manter fechado vendendo só janela? Sem resposta, segue fechado. | 18/11 07:55: o inventário do Beds24 mostra o Moinhos 20 e 21/11 REABERTO (override none, 5 livres, estadia 2, price1 R$ 3.003), sem gravação da skill depois do blackout de 16/11 20:11 (registro e logs). Quem reabriu não aparece na leitura (provável tela do Beds24). A skill não fechou de novo: pode ser decisão do dono ou da recepção e o preço já está no mínimo de R$ 3.000 da ordem. Perguntado ao dono no relatório: 'Foi você ou a recepção? Se não foi, respondo \"Pode fechar\" e eu fecho 20 e 21/11 de novo.' O sábado 21/11 do Moinhos ficou com override none (a regra pede noCheckInOrCheckOut): fora do lote até a resposta.",
+      "resolvida_em": "2026-11-18",
+      "resolucao": "18/11 ~11:20: dono '3. Fecha' → blackout de novo às 11:30 BRT, conferido."
     },
     {
       "id": "ticket-22-23-recalculos-20261117",
@@ -1447,7 +1449,7 @@
       "responsavel": "dono",
       "desde": "2026-11-17",
       "urgencia": 0,
-      "texto": "URGENTE (segurança): 16 reservas da Booking criadas no Beds24 em 2 segundos (17/11 11:11:09-11 BRT), ids 96343979 a 96343994, todas 'confirmed', com plano de tarifa diferente do usual (Rate 65710606 / 65711478, sem 'Genius' e sem as tarifas 70358474/50068135), comissão 0 e preço baixo (King Spa 2 R$ 315-448 por noite). Criaram overbooking: King Spa 2 23/11 −4 e 24/11 −3 (2 unidades), King Spa 7 06/12 −1. Datas: King Spa 2 23-27/11 (6 reservas); King Spa 7 25-27/11, 06/12, 13-17/12, 30/12→01/01 (2, a R$ 1.533-2.051 por noite no Réveillon), 18/09/2027; Balcony 20/02/2027. Pode ser fila de reservas antigas entregue de uma vez (o Beds24 estava instável às 08:05) ou reservas falsas (dono, 03/11: 'A nossa booking .com foi invadida'). Pedido ao dono: conferir cada número na extranet (Reservas), a segurança da conta (2 etapas, usuários) e decidir o overbooking. Até a resposta: a skill não conta essas reservas para escada nem para o Réveillon da Villa (lote de 3+ no mesmo minuto já não conta na escada; o registrar do Réveillon da Villa fica suspenso) e não as usa para decidir preço. Push enviado ao dono às 13:56 BRT. | 17/11 19:53: o plano do Réveillon contou 2 pacotes novos da Villa: são as 2 reservas suspeitas da King Spa 7 30/12→01/01. O `registrar` do Réveillon NÃO foi rodado (o estado não guarda essa contagem) até o dono confirmar. | 18/11 rotina completa: noites exatas do lote (Beds24): King Spa 2 23-26/11; King Spa 7 25-26/11, 06/12, 13-16/12, 30-31/12, 18/09/2027; Balcony 20/02/2027. Ficaram fora da gravação 20 itens da Villa nessas noites (escada da King Spa 7 26/11 e 13-16/12, King Spa 2 15-16/12, proteções de esgotada, Balcony 80% e Regra G) em scratchpad r1811/plano_fora_lote.json. A escada de 07-08/12 voltou (o lote não tem noites ali)."
+      "texto": "URGENTE (segurança): 16 reservas da Booking criadas no Beds24 em 2 segundos (17/11 11:11:09-11 BRT), ids 96343979 a 96343994, todas 'confirmed', com plano de tarifa diferente do usual (Rate 65710606 / 65711478, sem 'Genius' e sem as tarifas 70358474/50068135), comissão 0 e preço baixo (King Spa 2 R$ 315-448 por noite). Criaram overbooking: King Spa 2 23/11 −4 e 24/11 −3 (2 unidades), King Spa 7 06/12 −1. Datas: King Spa 2 23-27/11 (6 reservas); King Spa 7 25-27/11, 06/12, 13-17/12, 30/12→01/01 (2, a R$ 1.533-2.051 por noite no Réveillon), 18/09/2027; Balcony 20/02/2027. Pode ser fila de reservas antigas entregue de uma vez (o Beds24 estava instável às 08:05) ou reservas falsas (dono, 03/11: 'A nossa booking .com foi invadida'). Pedido ao dono: conferir cada número na extranet (Reservas), a segurança da conta (2 etapas, usuários) e decidir o overbooking. Até a resposta: a skill não conta essas reservas para escada nem para o Réveillon da Villa (lote de 3+ no mesmo minuto já não conta na escada; o registrar do Réveillon da Villa fica suspenso) e não as usa para decidir preço. Push enviado ao dono às 13:56 BRT. | 17/11 19:53: o plano do Réveillon contou 2 pacotes novos da Villa: são as 2 reservas suspeitas da King Spa 7 30/12→01/01. O `registrar` do Réveillon NÃO foi rodado (o estado não guarda essa contagem) até o dono confirmar. | 18/11 rotina completa: noites exatas do lote (Beds24): King Spa 2 23-26/11; King Spa 7 25-26/11, 06/12, 13-16/12, 30-31/12, 18/09/2027; Balcony 20/02/2027. Ficaram fora da gravação 20 itens da Villa nessas noites (escada da King Spa 7 26/11 e 13-16/12, King Spa 2 15-16/12, proteções de esgotada, Balcony 80% e Regra G) em scratchpad r1811/plano_fora_lote.json. A escada de 07-08/12 voltou (o lote não tem noites ali). | 18/11 ~11:20: dono pediu 'todas as reservas de cada hotel para eu enviar para as recepções de cada hotel, para eles me confirmar esse status'. Listas entregues (planilhas por hotel, sem nomes de hóspedes); aguardando o retorno das recepções."
     },
     {
       "id": "vk7-2011-reabrir-20261117",
@@ -1476,7 +1478,9 @@
       "responsavel": "dono",
       "desde": "2026-11-18",
       "urgencia": 0,
-      "texto": "Análise de 18/11 (pricelabs/analise-feriado-novembro-2026-11-18.md): Moinhos 20-21/11 com 5 livres por noite a R$ 3.003 enviado (~R$ 1.751 na vitrine, +48% sobre a mediana de D4). Proposta: ler 'R$ 3.000 o dia 20 a 22' como a estadia na Booking só no Moinhos: R$ 2.575 enviado (~R$ 1.501/noite), preço em que vendeu em 16/11. Se em 19/11 13:53 ainda houver 5 livres, propor a F1 (R$ 1.975 enviado). Só com ordem do dono; as outras suítes ficam em R$ 3.000."
+      "texto": "Análise de 18/11 (pricelabs/analise-feriado-novembro-2026-11-18.md): Moinhos 20-21/11 com 5 livres por noite a R$ 3.003 enviado (~R$ 1.751 na vitrine, +48% sobre a mediana de D4). Proposta: ler 'R$ 3.000 o dia 20 a 22' como a estadia na Booking só no Moinhos: R$ 2.575 enviado (~R$ 1.501/noite), preço em que vendeu em 16/11. Se em 19/11 13:53 ainda houver 5 livres, propor a F1 (R$ 1.975 enviado). Só com ordem do dono; as outras suítes ficam em R$ 3.000.",
+      "resolvida_em": "2026-11-18",
+      "resolucao": "18/11 ~11:20: dono '1. Sim / 2. Sim' → ordem dono-2026-11-18-moinhos-2575 (preço pronto para o caso de reabrir)."
     },
     {
       "id": "fator-publico-recanto-0583-20261118",
@@ -1484,6 +1488,13 @@
       "desde": "2026-11-18",
       "urgencia": 1,
       "texto": "quartos.json parametros.fator_publico.Recanto = 0,63 (29/10); medido 0,583 em 16-17/11. Com 0,63 o piso de D7 do motor cai no p42 e não na mediana aprovada em 09/11. Medir um dia de semana na Booking (24→25) e recalibrar na revisão (ou antes, se a medição confirmar)."
+    },
+    {
+      "id": "expedia-recanto-avaliar-20261118",
+      "responsavel": "skill",
+      "desde": "2026-11-18",
+      "urgencia": 1,
+      "texto": "Dono 18/11 ('5.ok'): Expedia fechada na Villa; no Recanto, avaliar. Levantar as reservas da Expedia no Recanto (valor recebido ÷ esperado) e levar ao dono a recomendação: fechar, ou pedir no painel da Expedia/Beds24 o multiplicador da tarifa."
     }
   ],
   "versao": "2026-11-12T13"

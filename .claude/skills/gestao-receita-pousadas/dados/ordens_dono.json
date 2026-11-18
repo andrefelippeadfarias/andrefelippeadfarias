@@ -10963,7 +10963,14 @@
      "texto_dono": "Tá, pode deixar balcone para o período de no que já está. A Moinhos fecha do dia 20 a 22, sim. Para não vender mais barato. Na verdade só venda onde tem uma janela. A preocupação é onde temos janelas, temos que vender as janelas.",
      "leitura": "Balcony fica como está (R$ 2.705,10 em 20/11 e R$ 2.692,40 em 21/11)."
     }
-   ]
+   ],
+   "noites_fora": {
+    "Q7": [
+     "2026-11-20",
+     "2026-11-21"
+    ]
+   },
+   "noites_fora_motivo": " | Q7 20-21/11 → dono-2026-11-18-moinhos-2575 (dono 18/11: '1. Sim')."
   },
   {
    "id": "dono-2026-11-16-moinhos-fecha-20-22",
@@ -10979,7 +10986,16 @@
    "ate": "2026-11-21",
    "libera": [],
    "feito": "Beds24 Q7 20 e 21/11 override blackout às 20:11 BRT (23:11:50Z), conferido numAvail 0. Antes: 20/11 none (5 livres, estadia 1); 21/11 noCheckInOrCheckOut (5 livres, estadia 1).",
-   "como_desfazer": "beds24.py editar --quarto Q7 --de 2026-11-20 --ate 2026-11-20 --override none e --de 2026-11-21 --ate 2026-11-21 --override noCheckInOrCheckOut"
+   "como_desfazer": "beds24.py editar --quarto Q7 --de 2026-11-20 --ate 2026-11-20 --override none e --de 2026-11-21 --ate 2026-11-21 --override noCheckInOrCheckOut",
+   "respostas": [
+    {
+     "em": "2026-11-18 ~11:20 BRT",
+     "pergunta": "Perguntas da análise de 18/11 (pricelabs/analise-feriado-novembro-2026-11-18.md): 1) Moinhos 20-21/11 a R$ 2.575 enviado ('R$ 3.000 pela estadia'), 2) se em 19/11 13:53 ainda houver 5 Moinhos livres, descer a R$ 1.975 enviado (F1), 3) 'Moinhos aberto em 20-21/11: confirma que fica aberto? Ele apareceu reaberto no Beds24 sem registro meu', 4) lote de 16 reservas suspeitas e overbooking da King Spa 2, 5) 'Expedia: hoje vendeu o Moinhos de 19/11 a 41% do preço esperado. Recomendo fechar a Expedia na Villa e avaliar no Recanto.'",
+     "texto_dono": "1. Sim\n2. Sim\n3. Fecha \n4. Me deixe todas as reservas de cada hotel para eu enviar para as recepções de cada hotel, para eles me confirmar esse status, ok\n5.ok",
+     "leitura": "'3. Fecha': fechar o Moinhos 20-21/11 de novo (reaberto sem registro até 18/11 de manhã). Itens 1 e 2 ('Sim'): preço de R$ 2.575 gravado no PriceLabs só para o caso de reabrir; a F1 condicional só vale se o dono reabrir. Perguntado no relatório se 'Fecha' era 'fechou/ok' (resposta 'Reabre' reverte).",
+     "feito": "Beds24 Q7 20 e 21/11 override blackout às 11:30 BRT (14:30Z), conferido numAvail 0. Antes: none, 5 livres em cada noite, estadia 2, R$ 3.003."
+    }
+   ]
   },
   {
    "id": "dono-2026-11-16-vender-janelas",
@@ -11527,6 +11543,45 @@
    "gatilho_dias": 7,
    "gatilho_min_dias": 2,
    "nota": "F2 (Dia de semana (dom-qui)): régua com hidro tabela do tipo, p50 R$ 648 público, p90 R$ 1784; ÷ 0.650 (Booking/enviado; ÷ 0.585 nos degraus de D7 ou menos); nunca abaixo do piso do dono. Gatilho de D7 sem venda nova: F1 (ou o piso do dono). Afrodite pelo prêmio dela e Balcony 10% abaixo (Regra G). Como desfazer: pedir 'Volte às ordens anteriores de 17/01/27'."
+  },
+  {
+   "id": "dono-2026-11-18-moinhos-2575",
+   "data": "2026-11-18",
+   "criada_em": "2026-11-18T14:35:00Z",
+   "texto": "1. Sim\n2. Sim\n3. Fecha \n4. Me deixe todas as reservas de cada hotel para eu enviar para as recepções de cada hotel, para eles me confirmar esse status, ok\n5.ok",
+   "contexto": "Perguntas da análise de 18/11 (pricelabs/analise-feriado-novembro-2026-11-18.md): 1) Moinhos 20-21/11 a R$ 2.575 enviado ('R$ 3.000 pela estadia'), 2) se em 19/11 13:53 ainda houver 5 Moinhos livres, descer a R$ 1.975 enviado (F1), 3) 'Moinhos aberto em 20-21/11: confirma que fica aberto? Ele apareceu reaberto no Beds24 sem registro meu', 4) lote de 16 reservas suspeitas e overbooking da King Spa 2, 5) 'Expedia: hoje vendeu o Moinhos de 19/11 a 41% do preço esperado. Recomendo fechar a Expedia na Villa e avaliar no Recanto.' Leitura do item 1: 'R$ 3.000 o dia 20 a 22' como o preço da estadia 20→22 na Booking, só no Moinhos: R$ 2.575 enviado (+120% da base = R$ 2.580,60; ~R$ 1.504 por noite na vitrine). Item 2: se o Moinhos for reaberto e em 19/11 13:53 ainda tiver 5 livres, descer à F1 do feriado (R$ 1.975 enviado, ~R$ 1.151 na vitrine). Com o Moinhos fechado (item 3), o preço fica pronto para o caso de reabrir.",
+   "tipo": "preco_por_data",
+   "quartos": [
+    "Q7"
+   ],
+   "de": "2026-11-20",
+   "ate": "2026-11-21",
+   "libera": [],
+   "enviado_alvo": 2575,
+   "condicional": {
+    "quando": "2026-11-19T16:53:00Z",
+    "se": "Moinhos aberto e com 5 livres em 20 e 21/11",
+    "entao_enviado": 1975
+   },
+   "como_desfazer": "Regravar Q7 20 e 21/11 a +156% (R$ 3.003) e tirar Q7 20-21 de noites_fora da ordem dono-2026-11-16-fds-20-22-minimo-3000."
+  },
+  {
+   "id": "dono-2026-11-18-expedia-villa-fechada",
+   "data": "2026-11-18",
+   "criada_em": "2026-11-18T14:35:00Z",
+   "texto": "1. Sim\n2. Sim\n3. Fecha \n4. Me deixe todas as reservas de cada hotel para eu enviar para as recepções de cada hotel, para eles me confirmar esse status, ok\n5.ok",
+   "contexto": "Perguntas da análise de 18/11 (pricelabs/analise-feriado-novembro-2026-11-18.md): 1) Moinhos 20-21/11 a R$ 2.575 enviado ('R$ 3.000 pela estadia'), 2) se em 19/11 13:53 ainda houver 5 Moinhos livres, descer a R$ 1.975 enviado (F1), 3) 'Moinhos aberto em 20-21/11: confirma que fica aberto? Ele apareceu reaberto no Beds24 sem registro meu', 4) lote de 16 reservas suspeitas e overbooking da King Spa 2, 5) 'Expedia: hoje vendeu o Moinhos de 19/11 a 41% do preço esperado. Recomendo fechar a Expedia na Villa e avaliar no Recanto.' Item 5 ('ok'): fechar a Expedia na Villa. Recanto: avaliar (a Expedia vendeu o Moinhos 19/11 a 41%).",
+   "tipo": "restricao",
+   "quartos": [
+    "VK7",
+    "Balcony",
+    "VK2"
+   ],
+   "de": "2026-11-18",
+   "ate": "2028-11-17",
+   "libera": [],
+   "feito": "Beds24: limite de reservas do canal Expedia = \"0\" (channels.expedia.maxBookings) nos 3 quartos da Villa, de 18/11/2026 a 17/11/2028, às 11:31 BRT (14:31:26Z), conferido na leitura (3 conferidos, 0 erro). Reservas já feitas não mudam.",
+   "como_desfazer": "beds24.py editar-lote com canais_max {\"expedia\": null} nos 3 quartos (reabrir pode levar mais tempo que fechar; aprendizados 03/11)."
   }
  ]
 }

@@ -11623,6 +11623,20 @@
      "leitura": "Confirma: vale só para o feriado (noites de 20 e 21/11, estadia 20→22). As outras noites do Moinhos não mudam."
     }
    ]
+  },
+  {
+   "id": "dono-2026-11-18-meta-120k-18-23",
+   "data": "2026-11-18",
+   "criada_em": "2026-11-18T22:00:00Z",
+   "texto": "Ajuste a estratégia para conseguirmos ao menos 120 mil nesses dias, com as noites que ainda temos vagas. E vamos precificar para conseguir bater exatamente esse número. Se conseguirmos subir, melhor, mas se não, ao menos isso. Verifique em que faixa de preço nós vamos nos alocar para conseguirmos garantir que as vendas serão feitas.",
+   "contexto": "Noites de 18 a 23/11 (duas pousadas). Vendido às 18:46 BRT: R$ 76.399. Modelo de 18/11 (workflow wf_966e5ec5-ac2; 2 modeladores, cético e síntese): com os preços de hoje (no piso das ordens do dono) o esperado é R$ 88,6 mil; o plano liberado (escada do Moinhos no feriado, 19/11 no p25 vivo, 22-23 na mediana viva) chega a R$ 91,2 mil; o preço 'exato 120 mil se vender tudo' (semana a ticket ~R$ 300) só bate com 100% vendido, chance ~0. As descidas abaixo dos mínimos do dono ficaram para a decisão dele (pendência meta-120k-decisoes-20261118).",
+   "tipo": "acompanhamento",
+   "quartos": [
+    "*"
+   ],
+   "de": "2026-11-18",
+   "ate": "2026-11-23",
+   "libera": []
   }
  ]
 }

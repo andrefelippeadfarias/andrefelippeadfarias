@@ -1513,6 +1513,13 @@
       "texto": "Moinhos 20-21/11 fechado (blackout) às ~14:15 BRT de 18/11 só até o price1 de R$ 3.003 chegar ao Beds24 (envio da noite ~22h; sem vaga de recálculo até 19/11 07:55). Conferência agendada para 22:20 BRT: com price1 >= 3.000 nas duas noites, reabrir 20/11 none e 21/11 noCheckInOrCheckOut; senão, na rotina de 19/11 07:53 recalcular (vaga 07:55), Sync Now e reabrir.",
       "resolvida_em": "2026-11-18",
       "resolucao": "price1 R$ 3.003 já no Beds24 às 18:46 BRT (antes do envio da noite); reaberto às 18:46 (20/11 none, 21/11 noCheckInOrCheckOut), conferido 5 livres por noite e estadia 2. Lembrete das 22:20 apagado."
+    },
+    {
+      "id": "meta-120k-decisoes-20261118",
+      "responsavel": "dono",
+      "desde": "2026-11-18",
+      "urgencia": 0,
+      "texto": "Meta de R$ 120 mil (18-23/11): perguntado ao dono (1) escada do Moinhos no feriado: qui 19/11 14h R$ 2.552 se saírem menos de 2; sex 20/11 10h R$ 2.100; (2) 22-23/11 na mediana do mercado (Recanto ~R$ 470/400 na vitrine, enviado 755-900; Balcony 800-920; 1 diária na segunda); (3) 19/11 Recanto a R$ 400 na vitrine (enviado 755-765), decidir hoje; (4) fechar a Expedia no Recanto de 19 a 23/11. Plano: pricelabs/analise-meta-120k-2026-11-18.md."
     }
   ],
   "versao": "2026-11-12T13"

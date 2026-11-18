@@ -6015,6 +6015,27 @@ O preço vai aos canais no próximo envio (a cota da Moinhos e da Panorâmica I 
 
 **Como desfazer:** regravar +120% (R$ 2.581) e reabrir com `beds24.py editar --quarto Q7 --de 2026-11-20 --ate 2026-11-20 --override none` e o mesmo comando de 21/11 com `--override noCheckInOrCheckOut`.
 
+## 18/11/2026, 16:54 a 17:05 BRT — Rotina leve das 16:53
+
+**Beds24 desde 13:48 BRT:** 4 novas, 1 cancelada, 1 alterada. Vigilância: 0 alerta.
+
+**Novas:**
+- **Panorâmica I sábado 21/11, 1 noite, Booking, R$ 1.886:** a unidade aberta às 13:58 como sábado órfão. A Panorâmica I esgotou em 20 e 21/11.
+- **King Spa 7 19/11 (2 unidades), Booking, R$ 496 cada:** mínimo de R$ 500 do dono na quinta.
+- **Moinhos 19→21/02/2027, Booking, R$ 1.296.**
+
+**Cancelada:** Balcony 04→07/01/2027 pela Booking, R$ 0, criada e cancelada em 10 minutos. É o padrão das reservas de R$ 0 da Expedia, agora pela Booking; anotado na pendência de segurança.
+
+**Alterada:** a 96295314 (troca do Moinhos para a Panorâmica I, já registrada).
+
+**Moinhos 20-21/11:** segue fechado (blackout), com price1 R$ 2.581 até o envio da noite. Conferência para reabrir às 22:20.
+
+**Estadia D0-D7** (plano `--so-estadia` com o inventário das 16:54): nada novo. As janelas da Balcony e da Panorâmica II de hoje seguem abertas.
+
+**Sombra da flutuação:** foto do fim do dia fechada (60 noites).
+
+**Preço:** nada gravado (vendas em noites com ordem do dono e fora de D60).
+
 ## O que só pode ser feito na tela (passo a passo para você)
 
 1. **Safety Minimum Price → "Do Not Apply"** (Dynamic Pricing → Customizations → aba Groups → Edit no grupo Recanto dos Moinhos → All Customizations → Safety Minimum Price). Anote o valor atual antes.

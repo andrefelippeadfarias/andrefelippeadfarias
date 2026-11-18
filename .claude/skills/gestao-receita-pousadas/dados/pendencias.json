@@ -1470,6 +1470,20 @@
       "desde": "2026-11-18",
       "urgencia": 1,
       "texto": "Quando o dono responder sobre o lote de 16 reservas da Booking: se forem reais, rodar o pace nas noites da Villa 23-26/11, 06/12, 13-16/12 (escada, proteção, Balcony 80%/Regra G) e o registrar do Réveillon; se forem falsas, esperar o cancelamento e rodar o pace com o inventário novo. Até lá, nenhuma gravação de preço nessas noites."
+    },
+    {
+      "id": "moinhos-2021-preco-2575-20261118",
+      "responsavel": "dono",
+      "desde": "2026-11-18",
+      "urgencia": 0,
+      "texto": "Análise de 18/11 (pricelabs/analise-feriado-novembro-2026-11-18.md): Moinhos 20-21/11 com 5 livres por noite a R$ 3.003 enviado (~R$ 1.751 na vitrine, +48% sobre a mediana de D4). Proposta: ler 'R$ 3.000 o dia 20 a 22' como a estadia na Booking só no Moinhos: R$ 2.575 enviado (~R$ 1.501/noite), preço em que vendeu em 16/11. Se em 19/11 13:53 ainda houver 5 livres, propor a F1 (R$ 1.975 enviado). Só com ordem do dono; as outras suítes ficam em R$ 3.000."
+    },
+    {
+      "id": "fator-publico-recanto-0583-20261118",
+      "responsavel": "skill",
+      "desde": "2026-11-18",
+      "urgencia": 1,
+      "texto": "quartos.json parametros.fator_publico.Recanto = 0,63 (29/10); medido 0,583 em 16-17/11. Com 0,63 o piso de D7 do motor cai no p42 e não na mediana aprovada em 09/11. Medir um dia de semana na Booking (24→25) e recalibrar na revisão (ou antes, se a medição confirmar)."
     }
   ],
   "versao": "2026-11-12T13"

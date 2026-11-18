@@ -6003,6 +6003,18 @@ O preço vai aos canais no próximo envio (a cota da Moinhos e da Panorâmica I 
 - **Moinhos 19/11 com 1 livre a mais:** a recepção trocou a reserva 96295314 (18→20/11) do Moinhos para a Panorâmica I.
 - **Como desfazer:** `beds24.py editar --quarto Q7 --de 2026-11-20 --ate 2026-11-21 --override blackout`.
 
+## 18/11/2026, 14:05 a 14:10 BRT — Dono: Moinhos com no mínimo R$ 3.000
+
+**Texto literal:** "Vamos aumentar o valor da suíte em Moinhos para no mínimo R$3.000 também." Registrada como ordem `dono-2026-11-18-moinhos-minimo-3000`. Ela substitui a `dono-2026-11-18-moinhos-2575` e cancela a descida condicional à F1 de 19/11.
+
+**O que foi feito:**
+- **Beds24 às 14:05:** Moinhos 20 e 21/11 fechado de novo (blackout), conferido. Antes: 5 livres por noite a R$ 2.581, 20/11 none e 21/11 noCheckInOrCheckOut.
+- **Motivo do fechamento:** o Moinhos não tem vaga de recálculo até 19/11 às 07:55. Sem ela, o preço novo só chega ao Beds24 no envio da noite (~22h). Fechado, não vende a R$ 2.581, abaixo do mínimo do dono.
+- **PriceLabs às 14:06:** +156% (R$ 3.003 enviados, ~R$ 1.751 por noite na Booking). Logs sem mudança manual, validador 0 erro, conferido na resposta (estadia 2 mantida).
+- **Reabertura:** conferência agendada para 22:20 BRT. Com o price1 de R$ 3.003 no Beds24, reabre 20/11 com none e 21/11 com noCheckInOrCheckOut. Sem ele, fica para a rotina de 19/11 às 07:53 (recálculo, Sync Now e conferência).
+
+**Como desfazer:** regravar +120% (R$ 2.581) e reabrir com `beds24.py editar --quarto Q7 --de 2026-11-20 --ate 2026-11-20 --override none` e o mesmo comando de 21/11 com `--override noCheckInOrCheckOut`.
+
 ## O que só pode ser feito na tela (passo a passo para você)
 
 1. **Safety Minimum Price → "Do Not Apply"** (Dynamic Pricing → Customizations → aba Groups → Edit no grupo Recanto dos Moinhos → All Customizations → Safety Minimum Price). Anote o valor atual antes.

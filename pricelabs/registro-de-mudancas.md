@@ -5975,6 +5975,26 @@ O preço vai aos canais no próximo envio (a cota da Moinhos e da Panorâmica I 
 - Villa: 190 ativas e 54 com alerta. Os alertas: as 16 do lote suspeito, overbooking da King Spa 2 em 23-24/11 e da King Spa 7 em 06/12, valor zero, abaixo de 50% e Expedia.
 - Os arquivos ficam no rascunho da sessão e não no repositório: são dados de reservas.
 
+## 18/11/2026, 13:54 a 14:05 BRT — Rotina leve das 13:53
+
+**Beds24 desde 10:48 BRT:** 2 novas, 0 cancelada, 4 alteradas. Segurança: 0 alerta.
+- **Panorâmica I 20→22/11, Booking, R$ 3.512:** vendida no preço da ordem dos R$ 3.000. A sexta 20/11 da Panorâmica I esgotou.
+- **Balcony 19/11, Booking, R$ 341** (1 noite, ordem do dono de 19/11).
+- **Alterada:** King Spa 7 20→22/11, direta da recepção (lançada em 04/11, mexida hoje), R$ 1.723. São 29% do esperado: vai ao dono e está na planilha da Villa.
+
+**Moinhos 20-21/11** segue fechado (blackout conferido na leitura).
+
+**Estadia** (plano `--so-estadia` com o inventário das 13:54; validador 0 erro; logs sem mudança manual):
+- **Panorâmica I sábado 21/11, sábado órfão (dono 02/11):** a sexta esgotou e sobra 1 unidade no sábado, com a entrada no sábado já aberta. Estadia 2 → 1.
+  - PriceLabs às 13:58, conferido; preço de R$ 3.004 mantido.
+  - Beds24 às 13:58, conferido.
+  - Recálculo da Panorâmica I às 13:57: 3ª vaga do dia, a próxima abre amanhã às 07:55.
+- **Balcony hoje 18/11, janela (6 livres):** estadia 2 → 1. PriceLabs às 13:58 e Beds24 às 13:58, conferidos.
+
+**Booking (segurança):** Recanto id 7562933, 575 Rua Januário Pereira, R$ 533,63 em 24/11. Razão 0,583 sobre o Moinhos (R$ 915): normal. A Villa já foi conferida às 10:53.
+
+**Preço:** nada gravado (as vendas são de noites com ordem do dono).
+
 ## O que só pode ser feito na tela (passo a passo para você)
 
 1. **Safety Minimum Price → "Do Not Apply"** (Dynamic Pricing → Customizations → aba Groups → Edit no grupo Recanto dos Moinhos → All Customizations → Safety Minimum Price). Anote o valor atual antes.

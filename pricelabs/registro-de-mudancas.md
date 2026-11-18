@@ -6082,6 +6082,18 @@ A análise está em `pricelabs/analise-meta-120k-2026-11-18.md`.
 - Expedia: `canais_max {"expedia": null}`.
 - Escada: apagar os 2 lembretes.
 
+## 18/11/2026, 19:56 a 20:00 BRT — Rotina leve das 19:53
+
+**Beds24 desde 16:48 BRT:** 2 novas (já contadas na previsão das 18:46), 2 alteradas. Segurança: 0 alerta.
+- King Spa 2 18/11 (R$ 689) e King Spa 2 20→22/11 (R$ 3.096), Booking. A King Spa 2 esgota em 20/11; sobra 1 no sábado 21.
+- **Alterada:** Panorâmica I 29/11→02/12, direta lançada em 17/09 e mexida hoje pela recepção (usuário isaacmiguel), R$ 1.641. São 42% do esperado: vai ao dono.
+
+**Plano liberado:** os preços de 19, 22 e 23/11 ainda não estão no Beds24 e esperam o envio da noite (~22h). Moinhos 20-21/11 aberto a R$ 3.003 (5 livres por noite).
+
+**Sombra da flutuação:** foto do fim do dia fechada.
+
+**Preço:** nada gravado nesta rotina.
+
 ## O que só pode ser feito na tela (passo a passo para você)
 
 1. **Safety Minimum Price → "Do Not Apply"** (Dynamic Pricing → Customizations → aba Groups → Edit no grupo Recanto dos Moinhos → All Customizations → Safety Minimum Price). Anote o valor atual antes.

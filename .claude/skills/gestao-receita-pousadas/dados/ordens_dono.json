@@ -11571,7 +11571,15 @@
     "se": "Moinhos aberto e com 5 livres em 20 e 21/11",
     "entao_enviado": 1975
    },
-   "como_desfazer": "Regravar Q7 20 e 21/11 a +156% (R$ 3.003) e tirar Q7 20-21 de noites_fora da ordem dono-2026-11-16-fds-20-22-minimo-3000."
+   "como_desfazer": "Regravar Q7 20 e 21/11 a +156% (R$ 3.003) e tirar Q7 20-21 de noites_fora da ordem dono-2026-11-16-fds-20-22-minimo-3000.",
+   "encerrada_em": "2026-11-18T17:10:00Z",
+   "encerrada_por": "dono-2026-11-18-moinhos-minimo-3000",
+   "noites_fora": {
+    "Q7": [
+     "2026-11-20",
+     "2026-11-21"
+    ]
+   }
   },
   {
    "id": "dono-2026-11-18-expedia-villa-fechada",
@@ -11590,6 +11598,24 @@
    "libera": [],
    "feito": "Beds24: limite de reservas do canal Expedia = \"0\" (channels.expedia.maxBookings) nos 3 quartos da Villa, de 18/11/2026 a 17/11/2028, às 11:31 BRT (14:31:26Z), conferido na leitura (3 conferidos, 0 erro). Reservas já feitas não mudam.",
    "como_desfazer": "beds24.py editar-lote com canais_max {\"expedia\": null} nos 3 quartos (reabrir pode levar mais tempo que fechar; aprendizados 03/11)."
+  },
+  {
+   "id": "dono-2026-11-18-moinhos-minimo-3000",
+   "data": "2026-11-18",
+   "criada_em": "2026-11-18T17:10:00Z",
+   "texto": "Vamos aumentar o valor da suíte em Moinhos para no mínimo R$3.000 também.",
+   "contexto": "Mensagem do dono ~14:10 BRT, logo depois do 'Reabre' (Moinhos 20-21/11 reaberto a R$ 2.581). Leitura: Moinhos 20 e 21/11 com no mínimo R$ 3.000 enviados (Beds24), igual às outras suítes pela ordem dono-2026-11-16-fds-20-22-minimo-3000 ('também'): +156% = R$ 3.002,88 (~R$ 1.751 por noite na Booking). Substitui a ordem dono-2026-11-18-moinhos-2575 e cancela a descida condicional à F1 de 19/11. Sem vaga de recálculo do Moinhos até 19/11 07:55, o preço só chega ao Beds24 no envio da noite: o Moinhos fica fechado (blackout) até o price1 de R$ 3.003 aparecer no Beds24, para não vender abaixo do mínimo do dono.",
+   "tipo": "preco_por_data",
+   "quartos": [
+    "Q7"
+   ],
+   "de": "2026-11-20",
+   "ate": "2026-11-21",
+   "libera": [
+    "acima_15"
+   ],
+   "minimo_enviado": 3000,
+   "como_desfazer": "Regravar Q7 20 e 21/11 a +120% (R$ 2.581) pela ordem dono-2026-11-18-moinhos-2575 (ou descer como o dono pedir) e reabrir o Beds24 se estiver fechado."
   }
  ]
 }

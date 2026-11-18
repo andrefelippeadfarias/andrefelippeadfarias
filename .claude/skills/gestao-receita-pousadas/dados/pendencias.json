@@ -1501,7 +1501,16 @@
       "responsavel": "skill",
       "desde": "2026-11-18",
       "urgencia": 0,
-      "texto": "Rotina de 19/11 13:53 BRT (16:53 UTC): se o Moinhos ainda tiver 5 livres em 20 e 21/11 (inventário do Beds24), descer os dois dias à F1 do feriado: R$ 1.975 enviado (~R$ 1.151 na Booking), pela ordem dono-2026-11-18-moinhos-2575 (dono: '2. Sim'). Gravar no PriceLabs (percent_base, piso = teto), recálculo (vaga do Moinhos reabre 19/11 07:55) e Sync Now; conferir o price1 no Beds24. Com 4 ou menos livres, manter R$ 2.581."
+      "texto": "Rotina de 19/11 13:53 BRT (16:53 UTC): se o Moinhos ainda tiver 5 livres em 20 e 21/11 (inventário do Beds24), descer os dois dias à F1 do feriado: R$ 1.975 enviado (~R$ 1.151 na Booking), pela ordem dono-2026-11-18-moinhos-2575 (dono: '2. Sim'). Gravar no PriceLabs (percent_base, piso = teto), recálculo (vaga do Moinhos reabre 19/11 07:55) e Sync Now; conferir o price1 no Beds24. Com 4 ou menos livres, manter R$ 2.581.",
+      "resolvida_em": "2026-11-18",
+      "resolucao": "Cancelada: dono 18/11 ~14:10 'Vamos aumentar o valor da suíte em Moinhos para no mínimo R$3.000 também.'"
+    },
+    {
+      "id": "moinhos-2021-reabrir-3003-20261118",
+      "responsavel": "skill",
+      "desde": "2026-11-18",
+      "urgencia": 0,
+      "texto": "Moinhos 20-21/11 fechado (blackout) às ~14:15 BRT de 18/11 só até o price1 de R$ 3.003 chegar ao Beds24 (envio da noite ~22h; sem vaga de recálculo até 19/11 07:55). Conferência agendada para 22:20 BRT: com price1 >= 3.000 nas duas noites, reabrir 20/11 none e 21/11 noCheckInOrCheckOut; senão, na rotina de 19/11 07:53 recalcular (vaga 07:55), Sync Now e reabrir."
     }
   ],
   "versao": "2026-11-12T13"

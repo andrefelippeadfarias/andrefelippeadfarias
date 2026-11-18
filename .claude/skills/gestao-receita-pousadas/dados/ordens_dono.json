@@ -11615,7 +11615,14 @@
     "acima_15"
    ],
    "minimo_enviado": 3000,
-   "como_desfazer": "Regravar Q7 20 e 21/11 a +120% (R$ 2.581) pela ordem dono-2026-11-18-moinhos-2575 (ou descer como o dono pedir) e reabrir o Beds24 se estiver fechado."
+   "como_desfazer": "Regravar Q7 20 e 21/11 a +120% (R$ 2.581) pela ordem dono-2026-11-18-moinhos-2575 (ou descer como o dono pedir) e reabrir o Beds24 se estiver fechado.",
+   "respostas": [
+    {
+     "em": "2026-11-18 ~14:15 BRT",
+     "texto_dono": "Digo isso para esse feriado.",
+     "leitura": "Confirma: vale só para o feriado (noites de 20 e 21/11, estadia 20→22). As outras noites do Moinhos não mudam."
+    }
+   ]
   }
  ]
 }

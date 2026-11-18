@@ -6048,6 +6048,40 @@ O preço vai aos canais no próximo envio (a cota da Moinhos e da Panorâmica I 
 - Máximo, com tudo o que está livre vendido no preço de hoje: R$ 136 mil.
 - Feriado de 19 a 21/11 (as duas pousadas): R$ 52.449 vendidos, 104% do piso de R$ 50.549.
 
+## 18/11/2026, 19:20 a 19:57 BRT — Dono: "Pode o plano liberado" (meta de R$ 120 mil, 18 a 23/11)
+
+**Ordens:**
+- `dono-2026-11-18-plano-liberado-semana`: 19, 22 e 23/11.
+- `dono-2026-11-18-moinhos-escada-feriado`: escada do Moinhos no feriado.
+- `dono-2026-11-18-expedia-recanto-19-23`: Expedia do Recanto.
+
+A análise está em `pricelabs/analise-meta-120k-2026-11-18.md`.
+
+**PriceLabs, gravado e conferido na resposta** (logs sem mudança manual; validador 0 erro), enviado → vitrine aproximada:
+
+| Noite | Moinhos | Panorâmica I | Panorâmica II | Afrodite | Balcony |
+|---|---|---|---|---|---|
+| Qui 19/11 | R$ 751 (−36%) | R$ 770 (−48%) | R$ 763 (−52%) | esgotada | R$ 800 (sem mudança) |
+| Dom 22/11 | R$ 880 (−25%) | R$ 903 (−39%) | overbooking | R$ 1.060 (−47%) | R$ 914 (−28%) |
+| Seg 23/11 | R$ 751 (−36%), 1 diária | R$ 770 (−48%), 1 diária | R$ 763 (−52%) | R$ 1.060 (−47%), 1 diária | R$ 800 (−37%) |
+
+- Vitrine: ~R$ 400 na quinta (p25 do mercado), ~R$ 470-550 no domingo e ~R$ 400-470 na segunda (mediana do mercado).
+- Afrodite: o plano pedia R$ 1.040 e R$ 900, mas o limite de segurança é de R$ 1.050. Ficou R$ 1.060.
+- Moinhos e Panorâmica I estão sem vaga de recálculo até 19/11 07:55: os preços chegam ao Beds24 no envio da noite (~22h).
+- As gravações do Moinhos e da Panorâmica I saíram juntas (deslize anotado nos aprendizados).
+
+**Escada do Moinhos no feriado** (20-21/11, hoje a R$ 3.003):
+- Lembrete para 19/11 às 14:00: R$ 2.557 (+118%) se saírem menos de 2 estadias.
+- Lembrete para 20/11 às 10:00: R$ 2.100 (+79%) se ainda houver vaga.
+
+**Beds24:** limite 0 do canal Expedia no Moinhos, Panorâmica I, Afrodite e Panorâmica II, de 19 a 23/11, às 19:54. Conferido: 4 itens, 0 erro.
+
+**Como desfazer:**
+- 19/11: voltar à ordem `dono-2026-11-16-dia-19-minimo-500` (Moinhos −19%, Panorâmica I −35%, Panorâmica II −40%).
+- 22-23/11: voltar ao ticket mínimo (ordem `dono-2026-11-16-ticket-22-23-minimo-500-600`) e à estadia 2 na segunda.
+- Expedia: `canais_max {"expedia": null}`.
+- Escada: apagar os 2 lembretes.
+
 ## O que só pode ser feito na tela (passo a passo para você)
 
 1. **Safety Minimum Price → "Do Not Apply"** (Dynamic Pricing → Customizations → aba Groups → Edit no grupo Recanto dos Moinhos → All Customizations → Safety Minimum Price). Anote o valor atual antes.

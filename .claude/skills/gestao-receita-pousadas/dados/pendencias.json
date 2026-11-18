@@ -1510,7 +1510,9 @@
       "responsavel": "skill",
       "desde": "2026-11-18",
       "urgencia": 0,
-      "texto": "Moinhos 20-21/11 fechado (blackout) às ~14:15 BRT de 18/11 só até o price1 de R$ 3.003 chegar ao Beds24 (envio da noite ~22h; sem vaga de recálculo até 19/11 07:55). Conferência agendada para 22:20 BRT: com price1 >= 3.000 nas duas noites, reabrir 20/11 none e 21/11 noCheckInOrCheckOut; senão, na rotina de 19/11 07:53 recalcular (vaga 07:55), Sync Now e reabrir."
+      "texto": "Moinhos 20-21/11 fechado (blackout) às ~14:15 BRT de 18/11 só até o price1 de R$ 3.003 chegar ao Beds24 (envio da noite ~22h; sem vaga de recálculo até 19/11 07:55). Conferência agendada para 22:20 BRT: com price1 >= 3.000 nas duas noites, reabrir 20/11 none e 21/11 noCheckInOrCheckOut; senão, na rotina de 19/11 07:53 recalcular (vaga 07:55), Sync Now e reabrir.",
+      "resolvida_em": "2026-11-18",
+      "resolucao": "price1 R$ 3.003 já no Beds24 às 18:46 BRT (antes do envio da noite); reaberto às 18:46 (20/11 none, 21/11 noCheckInOrCheckOut), conferido 5 livres por noite e estadia 2. Lembrete das 22:20 apagado."
     }
   ],
   "versao": "2026-11-12T13"

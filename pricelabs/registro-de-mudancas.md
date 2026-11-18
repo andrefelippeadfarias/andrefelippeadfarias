@@ -6036,6 +6036,18 @@ O preço vai aos canais no próximo envio (a cota da Moinhos e da Panorâmica I 
 
 **Preço:** nada gravado (vendas em noites com ordem do dono e fora de D60).
 
+## 18/11/2026, 18:46 BRT — Moinhos 20-21/11 reaberto a R$ 3.003
+
+- O price1 de R$ 3.003 chegou ao Beds24 antes do envio da noite (lido às 18:46).
+- Reaberto às 18:46: 20/11 blackout → none, 21/11 blackout → noCheckInOrCheckOut. Conferido: 5 livres por noite, estadia 2, R$ 3.003.
+- Lembrete das 22:20 apagado.
+
+**Previsão de 18 a 23/11 (pedido do dono):**
+- Vendido (confirmadas + novas, Beds24 às 18:46): R$ 76.399. Recanto R$ 37.417; Villa R$ 38.982, com R$ 2.003 do lote suspeito em 23/11.
+- Provável: ~R$ 90 mil.
+- Máximo, com tudo o que está livre vendido no preço de hoje: R$ 136 mil.
+- Feriado de 19 a 21/11 (as duas pousadas): R$ 52.449 vendidos, 104% do piso de R$ 50.549.
+
 ## O que só pode ser feito na tela (passo a passo para você)
 
 1. **Safety Minimum Price → "Do Not Apply"** (Dynamic Pricing → Customizations → aba Groups → Edit no grupo Recanto dos Moinhos → All Customizations → Safety Minimum Price). Anote o valor atual antes.

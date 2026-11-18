@@ -10994,8 +10994,16 @@
      "texto_dono": "1. Sim\n2. Sim\n3. Fecha \n4. Me deixe todas as reservas de cada hotel para eu enviar para as recepções de cada hotel, para eles me confirmar esse status, ok\n5.ok",
      "leitura": "'3. Fecha': fechar o Moinhos 20-21/11 de novo (reaberto sem registro até 18/11 de manhã). Itens 1 e 2 ('Sim'): preço de R$ 2.575 gravado no PriceLabs só para o caso de reabrir; a F1 condicional só vale se o dono reabrir. Perguntado no relatório se 'Fecha' era 'fechou/ok' (resposta 'Reabre' reverte).",
      "feito": "Beds24 Q7 20 e 21/11 override blackout às 11:30 BRT (14:30Z), conferido numAvail 0. Antes: none, 5 livres em cada noite, estadia 2, R$ 3.003."
+    },
+    {
+     "em": "2026-11-18 ~14:00 BRT",
+     "pergunta": "Se você quis dizer 'fechou, pode manter aberto', responda 'Reabre'.",
+     "texto_dono": "Reabre",
+     "leitura": "Reabrir o Moinhos 20-21/11 com o preço da ordem dono-2026-11-18-moinhos-2575.",
+     "feito": "PriceLabs: recálculo do Moinhos às 14:00:59 BRT (R$ 2.581 em 20 e 21/11) e Sync Now; price1 2.581 conferido no Beds24 às 14:01:39. Beds24 às 14:01:49: 20/11 blackout → none, 21/11 blackout → noCheckInOrCheckOut (sábado, dono 02/11); conferido: 5 livres em cada noite, estadia 2."
     }
-   ]
+   ],
+   "encerrada_em": "2026-11-18T17:01:49Z"
   },
   {
    "id": "dono-2026-11-16-vender-janelas",

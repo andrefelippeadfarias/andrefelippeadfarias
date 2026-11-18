@@ -1495,6 +1495,13 @@
       "desde": "2026-11-18",
       "urgencia": 1,
       "texto": "Dono 18/11 ('5.ok'): Expedia fechada na Villa; no Recanto, avaliar. Levantar as reservas da Expedia no Recanto (valor recebido ÷ esperado) e levar ao dono a recomendação: fechar, ou pedir no painel da Expedia/Beds24 o multiplicador da tarifa."
+    },
+    {
+      "id": "moinhos-2021-f1-condicional-20261119",
+      "responsavel": "skill",
+      "desde": "2026-11-18",
+      "urgencia": 0,
+      "texto": "Rotina de 19/11 13:53 BRT (16:53 UTC): se o Moinhos ainda tiver 5 livres em 20 e 21/11 (inventário do Beds24), descer os dois dias à F1 do feriado: R$ 1.975 enviado (~R$ 1.151 na Booking), pela ordem dono-2026-11-18-moinhos-2575 (dono: '2. Sim'). Gravar no PriceLabs (percent_base, piso = teto), recálculo (vaga do Moinhos reabre 19/11 07:55) e Sync Now; conferir o price1 no Beds24. Com 4 ou menos livres, manter R$ 2.581."
     }
   ],
   "versao": "2026-11-12T13"

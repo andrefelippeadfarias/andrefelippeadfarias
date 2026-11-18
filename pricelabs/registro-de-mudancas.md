@@ -5995,6 +5995,14 @@ O preço vai aos canais no próximo envio (a cota da Moinhos e da Panorâmica I 
 
 **Preço:** nada gravado (as vendas são de noites com ordem do dono).
 
+## 18/11/2026, 14:00 BRT — Dono: "Reabre" (Moinhos 20 e 21/11)
+
+- **Preço antes de reabrir:** recálculo do Moinhos às 14:00:59 (3ª vaga do dia; a próxima abre amanhã às 07:55) e Sync Now. O price1 de R$ 2.581 chegou ao Beds24 às 14:01:39, conferido.
+- **Beds24 às 14:01:49:** 20/11 blackout → none; 21/11 blackout → noCheckInOrCheckOut (sábado, dono 02/11). Conferido: 5 livres em cada noite, estadia 2, R$ 2.581 (~R$ 1.504 por noite na Booking).
+- **Amanhã às 13:53:** com 5 livres ainda, desce à F1 (R$ 1.975 enviado), pela resposta "2. Sim" (pendência `moinhos-2021-f1-condicional-20261119`).
+- **Moinhos 19/11 com 1 livre a mais:** a recepção trocou a reserva 96295314 (18→20/11) do Moinhos para a Panorâmica I.
+- **Como desfazer:** `beds24.py editar --quarto Q7 --de 2026-11-20 --ate 2026-11-21 --override blackout`.
+
 ## O que só pode ser feito na tela (passo a passo para você)
 
 1. **Safety Minimum Price → "Do Not Apply"** (Dynamic Pricing → Customizations → aba Groups → Edit no grupo Recanto dos Moinhos → All Customizations → Safety Minimum Price). Anote o valor atual antes.

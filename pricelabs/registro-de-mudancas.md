@@ -6342,6 +6342,24 @@ Relatório: `pricelabs/pesquisa-booking/diaria-2026-11-19/ranking-suites-compara
 
 **Como desfazer:** regravar o Moinhos 20 e 21/11 a +156% (R$ 3.003) em percent_base; King Spa 7 21/11 voltar a `none` no Beds24.
 
+## 19/11/2026, 16:53 a 17:05 BRT — Rotina leve das 16:53
+
+**Beds24 desde 13:48 BRT:** 3 novas, 0 canceladas, 3 alteradas (reservas de hoje da Villa remanejadas entre King Spa 7 e King Spa 2). Segurança: nenhum alerta. Abaixo do planejado: nenhuma.
+
+**Novas:**
+- Balcony 20→23/11 pela Booking (R$ 2.599). Com ela, a Balcony fica com 4 livres em 20 e 21/11 e 5 em 22/11.
+- Moinhos hoje pela Booking (R$ 426).
+- King Spa 7 hoje pelo Airbnb (R$ 507).
+
+**Preço:** nada a gravar.
+- Balcony 19-22/11 está congelada (mudança manual de 13/11 e dono 16/11: "pode deixar balcone").
+- 23/11 tem preço fixado pela ordem do plano liberado.
+- A noite de hoje nunca sobe.
+
+**Inventário de 19 a 27/11:** nenhuma noite nova esgotou nem reabriu. Sem órfã ou janela nova a gravar.
+
+**Ofertas (pedido do dono de 19/11):** a rotina semanal de ofertas na Booking, Expedia e Airbnb foi cancelada pelo dono ("Pode parar tudo, então, que não vamos fazer isso por aqui. Eu vou fazer manualmente"). Nada foi alterado; a regra §1 continua: ofertas, descontos de OTA e Genius são só do dono.
+
 ## O que só pode ser feito na tela (passo a passo para você)
 
 1. **Safety Minimum Price → "Do Not Apply"** (Dynamic Pricing → Customizations → aba Groups → Edit no grupo Recanto dos Moinhos → All Customizations → Safety Minimum Price). Anote o valor atual antes.

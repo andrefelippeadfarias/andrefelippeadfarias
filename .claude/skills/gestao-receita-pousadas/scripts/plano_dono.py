@@ -18,6 +18,10 @@ Regras aprovadas pelo dono ("Pode aplicar tudo, com exceção da questão do bal
   noite com 80% ou mais das suítes com banheira da Villa vendidas vai ao preço de mercado do quarto sem banheira,
   nunca acima da Regra G.
 
+Régua comparável (dono 18 e 19/11): noite com `comparaveis` em regua_dono.json tem `hidro` e `pares_hidro` só com suítes
+com banheira + café de fator medido (scripts/regua_dono_comparavel.py); nela a Moinhos abre no p40 de `hidro`, não no
+p40 de `lista`. `lista` e `pares_lista` seguem só para a Balcony (quarto sem banheira).
+
 Valores em preço PÚBLICO (Booking, sem desconto) convertidos em enviado pelo fator público medido na própria varredura
 (por pousada, mês e tipo de noite; a Villa tem promoção ativa em algumas datas). Só biblioteca padrão; sem rede.
 """
@@ -124,6 +128,11 @@ def abertura_publico(q: str, rn: dict, tipo: str) -> float | None:
         d = abertura_publico("Double", rn, tipo)
         return None if d is None else d * AFRODITE_SOBRE_DOUBLE
     serie, pct, mult = ABERTURA[g][q]
+    if rn.get("comparaveis") and serie == "lista":
+        # dono 18 e 19/11 (ordens dono-2026-11-18-suites-comparaveis e dono-2026-11-19-precificacao-dez-fev): com a régua
+        # de suítes comparáveis na noite (banheira + café, fator medido), a Moinhos abre no mesmo percentil, mas da
+        # suíte comparável; o "quarto mais barato" de cada hotel não é referência para suíte com banheira
+        serie = "hidro"
     v = ancora(rn, serie, pct)
     if v is None:
         return None

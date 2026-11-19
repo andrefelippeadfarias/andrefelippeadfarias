@@ -12086,6 +12086,30 @@
    "gatilho_dias": 8,
    "gatilho_min_dias": 2,
    "nota": "F2 (Dia de semana (dom-qui)): régua com hidro tabela do tipo, p50 R$ 648 público, p90 R$ 1784; ÷ 0.650 (Booking/enviado; ÷ 0.585 nos degraus de D7 ou menos); nunca abaixo do piso do dono. Gatilho de D7 sem venda nova: F1 (ou o piso do dono). Afrodite pelo prêmio dela e Balcony 10% abaixo (Regra G). Como desfazer: pedir 'Volte às ordens anteriores de 18/01/27'."
+  },
+  {
+   "id": "dono-2026-11-19-precificacao-dez-fev",
+   "data": "2026-11-19",
+   "criada_em": "2026-11-19T14:20:00Z",
+   "texto": "Maravilha, agora vamos fazer uma frescação agora para todo o período de janeiro, baseado nessas mesmas informações que estamos fazendo nesse mês, tá? E aí já vamos ajustar dezembro, janeiro e fevereiro já na precificação, nesse escopo que eu acabei de passar.",
+   "contexto": "Mensagem do dono no chat (~11:15 BRT de 19/11), logo depois do relatório da rotina leve das 10:53. Leitura da skill: 'frescação' = precificação (transcrição de voz); 'nessas mesmas informações' e 'nesse escopo' = a régua de suítes comparáveis (banheira + café, ordem dono-2026-11-18-suites-comparaveis) usada em novembro. Pedido: medir a régua comparável de dezembro a fevereiro (Booking, conector oficial) e reposicionar já os preços de 01/12/2026 a 28/02/2027 por ela, sem esperar o passo diário do motor. Ficam como estão as ordens por data do dono (Réveillon 250k e as demais preco_por_data), os limites de segurança e os pisos.",
+   "tipo": "regra",
+   "quartos": [
+    "Q7",
+    "Double",
+    "Afrodite",
+    "Q2",
+    "VK7",
+    "VK2",
+    "Balcony"
+   ],
+   "de": "2026-12-01",
+   "ate": "2027-02-28",
+   "libera": [
+    "reposicionar de uma vez ao alvo da régua comparável (sem o limite de passo diário do motor) nas noites de 01/12/2026 a 28/02/2027"
+   ],
+   "reposicionar": true,
+   "como_desfazer": "Tirar 'reposicionar' desta ordem (o motor volta ao passo diário) e regravar o preço anterior que cada item traz no motivo ('antes R$ ...'); a régua de 09/11 de cada noite fica em regua_dono.json → antes_comparaveis."
   }
  ]
 }

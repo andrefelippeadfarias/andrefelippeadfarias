@@ -63,8 +63,8 @@ from calendario_12m import estadia_da_noite, ler_recalculo, prova_sabado_orfao  
 from validar_plano import estadia_exigida  # noqa: E402
 from comum import (PASTA_SKILL, abrir_dia, carregar_quartos, data, esgotado, hoje_brt, ler_json,  # noqa: E402
                    mascara_valida, maximo_da_noite, periodo_feriado, sexta_reaberta, vendidas_total)
-from ordens import (ARQ_ORDENS, alvo_da_ordem, carregar_ordens, congelada, ordem_valida, ordens_por_data,  # noqa: E402
-                    piso_da_ordem, vendidas_base_escada)
+from ordens import (ARQ_ORDENS, alvo_da_ordem, carregar_ordens, cobre, congelada, ordem_valida,  # noqa: E402
+                    ordens_por_data, piso_da_ordem, vendidas_base_escada)
 import plano_dono as PD  # noqa: E402
 
 ARQ_PASSOS = PASTA_SKILL / "dados" / "passos.json"
@@ -481,6 +481,26 @@ def ordem_nova_sem_passo(passos: dict, curto: str, noite: str, ordem: dict, hoje
     return True
 
 
+def ordem_reposicao(ordens: dict, curto: str, d: date, hoje: date | None = None) -> dict | None:
+    """Ordem do dono que reposiciona de uma vez ao alvo da régua (dono 19/11: "já vamos ajustar dezembro, janeiro e
+    fevereiro já na precificação"): ordem do tipo regra com `reposicionar` verdadeiro, cobrindo o quarto e a noite
+    dentro de de/ate. Nessas noites o motor vai direto ao alvo (ou à reta da escada), sem o limite de passo diário
+    (pmax), e a cadência é dispensada uma vez (ordem_nova_sem_passo: só no dia da ordem e se a noite não teve passo
+    depois de `criada_em`). Âncora fraca (poucos hotéis ou busca velha) não reposiciona: segue o passo normal.
+    Vale só no dia da ordem (`data` == hoje): é uma reposição de uma vez; nos dias seguintes o motor volta ao passo diário
+    (sem `hoje`, como nos testes de cobertura, não confere o dia)."""
+    noite = d.isoformat()
+    for o in ordens.values():
+        if not o.get("reposicionar") or o.get("tipo") != "regra" or o.get("revogada"):
+            continue
+        if hoje is not None and str(o.get("data") or "") != hoje.isoformat():
+            continue
+        if not (str(o.get("de") or "") <= noite <= str(o.get("ate") or "")) or not cobre(o, curto, d):
+            continue
+        return o
+    return None
+
+
 def registrar_passos(passos: dict, itens: list[dict], agora: dt.datetime, caminho=None) -> None:
     for it in itens:
         pc = it.get("pace") or {}
@@ -864,7 +884,7 @@ def _plano(cfg: dict, ancora: dict, cals: dict, hoje: date, ordens: dict, passos
                 no_filtro = noites_filtro is None or (curto, noite) in noites_filtro or (
                     curto in ("Q2", "Afrodite") and any((x, noite) in noites_filtro for x in ("Q7", "Double", "Q2")))
                 it, linha = item_do_plano(cfg, p, plano_n[curto], curto, d, k, r, regra_n, atual, passos, agora,
-                                          no_filtro)
+                                          no_filtro, rep=ordem_reposicao(ordens, curto, d, hoje), hoje=hoje)
                 linhas.append(linha)
                 # sem item, vale o preço de hoje (já no plano, ou seguro pela cadência/D0/filtro): é o que fica no canal
                 # (a Regra G e a ordem do Recanto não podem seguir um preço que não vai ao canal)
@@ -1006,6 +1026,20 @@ def _plano(cfg: dict, ancora: dict, cals: dict, hoje: date, ordens: dict, passos
                     novo = atual  # a noite que já vende bem nunca desce para a reta
                 origem_piso = (f"escada de vendas da ordem {ao['id']} ({vv}/{tt} vendidas; reta R$ {reta:.0f}, piso "
                                f"padrão R$ {piso_pad:.0f})" + (f"; {origem_atras}" if origem_atras else ""))
+            # âncora boa para reposicionar: busca própria forte, ou a régua comparável do tipo de noite no MESMO mês (a
+            # média do mês não traz contagem de hotéis e por isso conta como "fraca" no passo; o mês vizinho não serve)
+            anc_rep = (not fraco) or (bool(anc.get("comparaveis")) and "mais próximo" not in str(origem)
+                                      and idade <= p["idade_max_dias"])
+            rep = ordem_reposicao(ordens, curto, d, hoje) if anc_rep else None
+            if rep:
+                # dono 19/11 (dez-fev pela régua comparável): direto ao alvo, sem o pmax da antecedência. A escada vai à
+                # reta só para cima (a noite que vende bem nunca desce para a reta, como no passo normal); fora da
+                # escada, ao alvo do status (a noite à frente da curva já tem alvo >= atual)
+                if escada_ordem:
+                    if reta is not None and reta >= atual:
+                        novo = reta
+                else:
+                    novo = alvo_env
             po = (piso, ordem_piso) if ordem_piso else None
             if sem_r3 is not None and novo >= sem_r3[0] - 0.5:
                 # o piso de mercado não decidiu a noite: o item fica com a ordem de antes (ou nenhuma)
@@ -1051,6 +1085,8 @@ def _plano(cfg: dict, ancora: dict, cals: dict, hoje: date, ordens: dict, passos
             ok, por_que = cadencia_permite(passos, curto, noite, direcao, agora, vv if esc_on else None, base_cont, tt)
             if not ok and usa_ordem and ordem_nova_sem_passo(passos, curto, noite, ao, hoje):
                 ok, por_que = True, ""  # ordem nova do dono vale na hora (01/11: "1 . Sim / 2. Sim"), uma vez por noite
+            if not ok and rep and ordem_nova_sem_passo(passos, curto, noite, rep, hoje):
+                ok, por_que = True, ""  # reposição do dono (19/11) vale na hora, uma vez por noite
             if not ok:
                 linha["cadencia"] = por_que
                 continue
@@ -1077,6 +1113,11 @@ def _plano(cfg: dict, ancora: dict, cals: dict, hoje: date, ordens: dict, passos
                 if po[1]["id"] == PD.ORDEM_ID and r3:
                     it["motivo"] = (it["motivo"] + f"; piso de mercado de D7 a D0 (plano do dono 09/11): R$ {r3[0]:.0f} "
                                     f"(antes R$ {sem_r3[0]:.0f})")[:250]
+            if rep:
+                it["motivo"] = (f"Reposição pela régua comparável ({rep['id']}): " + it["motivo"])[:250]
+                it["reposicao"] = rep["id"]
+                if not it.get("ordem_id"):
+                    it["excecao"], it["ordem_id"] = "dono", rep["id"]
             if teto_af or regra_af:
                 it["excecao"], it["ordem_id"] = "dono", "dono-2026-10-22-afrodite-mais-cara"
             if teto_af:
@@ -1092,7 +1133,8 @@ def _plano(cfg: dict, ancora: dict, cals: dict, hoje: date, ordens: dict, passos
 
 
 def item_do_plano(cfg: dict, p: dict, pn: dict, curto: str, d: date, k: int, r: dict, regra_n: dict | None,
-                  atual: float, passos: dict, agora: dt.datetime, no_filtro: bool = True) -> tuple[dict | None, dict]:
+                  atual: float, passos: dict, agora: dt.datetime, no_filtro: bool = True, rep: dict | None = None,
+                  hoje: date | None = None) -> tuple[dict | None, dict]:
     """(item, linha) da suíte-noite do plano do dono: piso = teto = preço do plano (como a escada), excecao 'dono' com a
     ordem do plano. Nunca acima do máximo do anúncio; D0 nunca sobe; arredondamento como o motor (para cima na subida,
     para baixo na descida, nunca abaixo dos pisos duros). Sem mudança de direção (tolerância de 3%), só trava piso e teto
@@ -1144,11 +1186,15 @@ def item_do_plano(cfg: dict, p: dict, pn: dict, curto: str, d: date, k: int, r: 
             ok, por_que = True, ""  # troca de regra (plano do dono de 09/11) vale na hora, uma vez por noite
         if not ok and fora_da_ordem:
             ok, por_que = True, ""  # ordem do Recanto (Panorâmica II/Afrodite fora da faixa): não espera a cadência
+        if not ok and rep and hoje is not None and ordem_nova_sem_passo(passos, curto, noite, rep, hoje):
+            ok, por_que = True, ""  # reposição do dono (19/11): a régua nova do plano vale na hora, uma vez por noite
         if not ok:
             linha["cadencia"] = por_que
             return None, linha
     motivo = (f"Plano do dono 09/11 ({pn['tipo']}): " + "; ".join(pn["partes"])
               + f"; público R$ {novo_r * pn['fator']:.0f} = R$ {novo_r} enviados (fator {pn['fator']:.3f}); antes R$ {atual:.0f}")
+    if rep:
+        motivo = f"Reposição pela régua comparável ({rep['id']}): " + motivo
     it = {"tipo": "data", "quarto": curto, "data": noite, "min_price": novo_r, "max_price": novo_r, "preco_antes": atual,
           "motivo": motivo[:250], "excecao": "dono", "ordem_id": PD.ORDEM_ID,
           "pace": {"status": "plano", "direcao": direcao, "atual": atual, "novo": novo_r, "alvo_enviado": round(alvo),

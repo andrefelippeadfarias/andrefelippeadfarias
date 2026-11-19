@@ -1503,7 +1503,8 @@
       "urgencia": 0,
       "texto": "Rotina de 19/11 13:53 BRT (16:53 UTC): se o Moinhos ainda tiver 5 livres em 20 e 21/11 (inventário do Beds24), descer os dois dias à F1 do feriado: R$ 1.975 enviado (~R$ 1.151 na Booking), pela ordem dono-2026-11-18-moinhos-2575 (dono: '2. Sim'). Gravar no PriceLabs (percent_base, piso = teto), recálculo (vaga do Moinhos reabre 19/11 07:55) e Sync Now; conferir o price1 no Beds24. Com 4 ou menos livres, manter R$ 2.581.",
       "resolvida_em": "2026-11-18",
-      "resolucao": "Cancelada: dono 18/11 ~14:10 'Vamos aumentar o valor da suíte em Moinhos para no mínimo R$3.000 também.'"
+      "resolucao": "Sem efeito: a ordem dono-2026-11-18-moinhos-minimo-3000 cancelou a descida condicional à F1, e a ordem dono-2026-11-18-moinhos-escada-feriado (dono 18/11 ~19:20, 'Pode o plano liberado') a substituiu pela escada: 19/11 14:00 R$ 2.557 (+118%) e 20/11 10:00 R$ 2.100. Na rotina de 19/11 13:53 o Moinhos tinha 5 livres em 20 e 21/11; aplicado o passo 1 da escada.",
+      "resolvido_em": "2026-11-19"
     },
     {
       "id": "moinhos-2021-reabrir-3003-20261118",

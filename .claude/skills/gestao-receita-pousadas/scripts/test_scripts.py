@@ -2205,7 +2205,7 @@ class TestRevisao0511Estadia(unittest.TestCase):
         inv = {"Q7": {"2026-11-09": av(3), "2026-11-23": av(3), "2026-11-30": av(3)},
                "Double": {"2026-11-16": av(3), "2026-12-07": av(3)},
                "VK2": {"2026-11-13": av(2, 1), "2026-11-27": av(2, 1)}}
-        cl = c12.classificar_beds24(CFG, inv, dt.date(2026, 11, 5), dt.date(2026, 12, 31))
+        cl = c12.classificar_beds24(CFG, inv, dt.date(2026, 11, 5), dt.date(2026, 12, 31), ordens=ORDENS_FIXAS)
         lotes = c12.lotes_estadia(CFG, cl, self.H)
         self.assertEqual(list(lotes), ["recanto_urgente", "recanto_Double", "recanto_Q7", "villa_urgente", "villa_VK2"])
         self.assertEqual(sorted(i["de"] for i in lotes["recanto_urgente"]), ["2026-11-09", "2026-11-16"])
@@ -4255,6 +4255,56 @@ class TestSuitesComparaveis(unittest.TestCase):
         self.assertEqual(e["fonte_fator"]["Villa"], "padrão (menor quarto livre da Villa é a Balcony)")
         self.assertEqual(e["certeza_alta_media"]["n"], 1)
         self.assertEqual(rc.buscas_ancora(r)["buscas"], [])                    # 1 comparável < mínimo: não vira âncora
+
+
+class TestEstadiaDaOrdem(unittest.TestCase):
+    """19/11: estadia fixada por ordem do dono por data (plano liberado, 1 diária na segunda 23/11) vence a regra do dia
+    de chegada na auditoria do PriceLabs e na do Beds24."""
+
+    def test_ordem_com_estadia_vence_a_regra(self):
+        import calendario_12m as c12
+        o = {"id": "o-est", "tipo": "preco_por_data", "quartos": ["Q7"], "de": "2026-11-23", "ate": "2026-11-23",
+             "noites": ["2026-11-23"], "libera": ["estadia"], "estadia": {"2026-11-23": {"Q7": 1}}, "criada_em": "2026-11-19"}
+        ords = dict(ORDENS_FIXAS, **{"o-est": o})
+        self.assertEqual(c12.estadia_da_ordem(ords, "Q7", dt.date(2026, 11, 23)), (1, "o-est"))
+        self.assertIsNone(c12.estadia_da_ordem(ords, "Double", dt.date(2026, 11, 23)))
+        sem = dict(o, libera=[])
+        self.assertIsNone(c12.estadia_da_ordem(dict(ORDENS_FIXAS, **{"o-est": sem}), "Q7", dt.date(2026, 11, 23)))
+        av = {"numAvail": 3, "minStay": 1, "maxStay": 7, "override": "none"}
+        inv = {"Q7": {"2026-11-23": dict(av)}}
+        cl = c12.classificar_beds24(CFG, inv, dt.date(2026, 11, 23), dt.date(2026, 11, 23), ordens=ords)
+        q7 = next(x for x in cl if x["quarto"] == "Q7")
+        self.assertEqual(q7.get("estadia_dia_chegada") or [], [])           # com a ordem: nada a subir
+        cl2 = c12.classificar_beds24(CFG, inv, dt.date(2026, 11, 23), dt.date(2026, 11, 23), ordens=ORDENS_FIXAS)
+        q7b = next(x for x in cl2 if x["quarto"] == "Q7")
+        self.assertEqual([e["alvo"] for e in q7b.get("estadia_dia_chegada") or []], [2])  # sem ela: segunda = 2
+
+
+class TestAncoraPorTipoComparavel(unittest.TestCase):
+    def test_por_tipo_e_noite_preferem_comparaveis(self):
+        from ancora_mercado import ancora_da_noite, construir
+        geral = {"buscas": [{"checkin": "2026-11-24", "checkout": "2026-11-25", "price_total_median": 300,
+                             "hidro_median": 300, "price_total_min": 200, "busca_em": "2026-11-18"}]}
+        comp = {"buscas": [{"checkin": "2026-11-25", "checkout": "2026-11-26", "busca_em": "2026-11-19",
+                            "percentis_noite": {"p25": 534, "p50": 999, "p75": 1228, "p90": 1500, "max": 2000, "n": 27}}]}
+        import json, tempfile
+        arqs = []
+        for d in (geral, comp):
+            f = tempfile.NamedTemporaryFile("w", suffix=".json", delete=False)
+            json.dump(d, f); f.close(); arqs.append(f.name)
+        try:
+            a = construir(CFG, arqs, date(2026, 11, 19))
+        finally:
+            for f in arqs:
+                os.unlink(f)
+        self.assertTrue(a["por_tipo"]["semana"]["2026-11"].get("comparaveis"))
+        self.assertEqual(a["por_tipo"]["semana"]["2026-11"]["p50"], 999)          # só a comparável entra no tipo/mês
+        anc, origem = ancora_da_noite(a, CFG, date(2026, 11, 24))                 # noite com busca geral própria
+        self.assertEqual((anc["p50"], "comparáveis" in origem), (999, True))
+        anc2, _ = ancora_da_noite(a, CFG, date(2026, 11, 26))                     # sem busca: tipo e mês comparável
+        self.assertEqual(anc2["p50"], 999)
+        anc3, origem3 = ancora_da_noite(a, CFG, date(2026, 12, 9))                # mês sem régua: o comparável mais próximo
+        self.assertEqual((anc3["p50"], "mais próximo" in origem3), (999, True))
 
 
 if __name__ == "__main__":

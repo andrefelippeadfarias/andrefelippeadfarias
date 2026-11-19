@@ -6199,6 +6199,37 @@ Antes, a R$ 1.232, o domingo 22/11 não vendia desde 16/11.
 - Natal: tirar as noites de `noites_fora`.
 - Régua: `concorrentes.json` anterior no commit b4bdd0b.
 
+## 19/11/2026, 07:53 a 08:50 BRT — Rotina completa (quinta), primeira com a régua de suítes comparáveis
+
+**Movimento no Beds24 desde 21:20 BRT de ontem:** 2 reservas novas (Panorâmica I e Panorâmica II, 1 noite hoje, Booking, R$ 334 e R$ 331) e 1 cancelamento (King Spa 2, noite de 18/11, Booking, R$ 689). Nenhum alerta de segurança, nenhuma reserva abaixo de 70% do esperado.
+
+**Ocupação real (Beds24, confirmadas + novas):**
+
+| Janela | Recanto | Villa |
+|---|---|---|
+| 19 a 26/11 | 51% (57/112), R$ 41,3 mil | 69% (72/105), R$ 44,0 mil |
+| 19/11 a 04/12 | 39%, R$ 68,0 mil | 54%, R$ 69,4 mil |
+| 19/11 a 03/01 | 26%, R$ 145,2 mil | 39%, R$ 177,2 mil |
+
+**Motor de pace com a régua comparável (PriceLabs, percent_base, piso = teto, 198 noites em 7 quartos, gravado em série entre 08:33 e 08:46 e conferido na resposta de cada quarto; 169 passos no ledger):**
+- 1 regra apagada: Afrodite 18/01/2027 (a faixa do dono dessa noite foi refeita em 2 ordens novas).
+- **Recanto, dias de semana de 24/11 a 18/01:** sobem de 5% a 15% (Moinhos 24/11 R$ 915 → 1.053, 26/11 R$ 1.220 → 1.403, dezembro R$ 1.232 → 1.356, janeiro R$ 1.232 → 1.294; Panorâmica I e II no mesmo passo, com a ordem do Recanto). Motivo: a régua de suítes com banheira e café (p50 R$ 945 na vitrine) fica acima da régua geral que segurava esses dias.
+- **Proteção de noite esgotada (p90):** Panorâmica II 24/11 e 01/12 (R$ 2.943); Afrodite 25/11, 30/11-02/12, 13-14/12 e 03-05/01; King Spa 7 29/11; King Spa 2 29/11, 07/12, 20-21/12.
+- **Natal da Villa saindo da F5 aos poucos:** King Spa 7 e King Spa 2 23-26/12 R$ 4.988 → 4.738 (−5%), 29/12 −5%; Balcony 23-26/12 R$ 4.483 → 4.258 (Regra G).
+- **Fora do plano:** itens da Villa nas noites do lote suspeito da Booking (24-26/11, 06/12, 13-16/12), até a recepção confirmar.
+
+**Beds24:** Panorâmica I, sábado 21/11 (esgotado): saída fechada → entrada e saída fechadas (regra do sábado, dono 02/11); conferido. A sexta 20/11 da Afrodite (abrir entrada e saída) ficou de fora: noite esgotada e exigiria gravar também no PriceLabs.
+
+**Código (a auditoria tentou desfazer a ordem do dono de 19/11):** `calendario_12m` passa a respeitar a estadia das ordens por data (`estadia_da_ordem`) e `ordens.piso_da_ordem` passa a ler `precos_enviados` das ordens `preco_por_data`; 3 itens da auditoria contra a ordem de 23/11 não foram aplicados. Âncora: `por_tipo` usa só noites comparáveis quando existem, e a noite sem busca própria cai no mês comparável mais próximo (antes caía na régua geral, p50 R$ 353 em dias de semana de dezembro). 167 testes OK.
+
+**Réveillon:** portão não avaliado (sem o envio do dia); noites órfãs: 0 itens.
+
+**Divergências PriceLabs × Beds24 (para a recepção):** King Spa 2 23/11 (Beds24 6 × PriceLabs 2) e 24/11 (5 × 2), King Spa 7 06/12 (8 × 7): overbooking do lote suspeito. Balcony 23/11 (PriceLabs 4 vendidas × 0 reservas no Beds24) e 24/11 (3 × 0): parece bloqueio sem reserva.
+
+**Envio:** gravado entre 08:33 e 08:46, colado no envio diário (~08:47). A rotina das 10:53 confere se o envio do dia levou os preços novos; se não levou, as noites de 24 a 26/11 precisam de um Sync Now.
+
+**Como desfazer:** cada regra traz o preço anterior no motivo ("antes R$ ..."); regravar esse valor em percent_base na mesma data. Passos no `dados/passos.json` (19/11).
+
 ## O que só pode ser feito na tela (passo a passo para você)
 
 1. **Safety Minimum Price → "Do Not Apply"** (Dynamic Pricing → Customizations → aba Groups → Edit no grupo Recanto dos Moinhos → All Customizations → Safety Minimum Price). Anote o valor atual antes.

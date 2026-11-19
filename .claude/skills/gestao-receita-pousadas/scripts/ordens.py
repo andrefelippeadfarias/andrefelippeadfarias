@@ -97,6 +97,14 @@ def piso_da_ordem(ordens: dict, quarto: str, d: date) -> tuple[float, dict] | No
     valor no lugar dos pisos padrão do dono; se houver mais de uma, vale o menor. None sem ordem."""
     achados = []
     for o in ordens.values():
+        # 19/11: ordem de preço por data com `precos_enviados` {noite: {quarto: reais}} (plano liberado, régua comparável
+        # de 22-23/11): o preço fixado pelo dono é o piso daquela noite (a auditoria não o sobe aos pisos padrão)
+        if o.get("tipo") == "preco_por_data" and cobre(o, quarto, d) and \
+                (not o.get("noites") or d.isoformat() in o["noites"]):
+            v = ((o.get("precos_enviados") or {}).get(d.isoformat()) or {}).get(quarto)
+            if v is not None:
+                achados.append((float(v), o))
+            continue
         # alvo_por_data (dono, 01/11) também traz o piso dele (o limite de segurança) no lugar dos pisos padrão
         if o.get("tipo") not in ("piso_por_data", "alvo_por_data") or not cobre(o, quarto, d):
             continue

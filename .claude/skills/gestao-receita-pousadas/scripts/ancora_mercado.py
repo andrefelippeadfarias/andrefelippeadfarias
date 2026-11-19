@@ -164,8 +164,11 @@ def construir(cfg: dict, arquivos: list[str], hoje: date, anterior: dict | None 
     for k, v in noites.items():
         grupos.setdefault((v["tipo"], k[:7]), []).append(v)
     for (tipo, mes), lista in grupos.items():
-        por_tipo.setdefault(tipo, {})[mes] = {p: round(statistics.median(x[p] for x in lista)) for p in PERCENTIS} | {
-            "n_noites": len(lista), "busca_em": max(x["busca_em"] for x in lista)}
+        # dono 18/11 (só suítes comparáveis): havendo noite com a régua comparável no tipo e mês, só elas entram
+        comp = [x for x in lista if x.get("comparaveis")]
+        usar = comp or lista
+        por_tipo.setdefault(tipo, {})[mes] = {p: round(statistics.median(x[p] for x in usar)) for p in PERCENTIS} | {
+            "n_noites": len(usar), "busca_em": max(x["busca_em"] for x in usar)} | ({"comparaveis": True} if comp else {})
     return {"_doc": ("Âncora de mercado do motor de pace: percentis do preço público por noite dos hotéis com hidro na "
                      "Booking (2 adultos). p50 e max medidos; p75/p90/p25 aproximados (ver ancora_mercado.py). "
                      "Noite sem busca própria usa `por_tipo` do mesmo tipo e mês."),
@@ -173,12 +176,25 @@ def construir(cfg: dict, arquivos: list[str], hoje: date, anterior: dict | None 
 
 
 def ancora_da_noite(ancora: dict, cfg: dict, d: date) -> tuple[dict | None, str]:
-    """(percentis, origem) da noite: busca própria, senão o tipo de noite no mês, senão o tipo no mês mais próximo."""
+    """(percentis, origem) da noite: busca própria, senão o tipo de noite no mês, senão o tipo no mês mais próximo.
+
+    Dono 18/11 ("Ignore todos os outros valores de suítes sem banheira e café da manhã"): a régua de suítes comparáveis
+    vence a busca geral. Noite sem busca comparável própria (e sem régua de ordem do dono) usa o tipo de noite do mês com
+    régua comparável; sem ela no mês, o mês comparável mais próximo do mesmo tipo; só sem nenhuma régua comparável do
+    tipo vale a busca geral (da noite ou do tipo)."""
     k = d.isoformat()
-    if k in (ancora.get("noites") or {}):
-        return ancora["noites"][k], "busca própria"
     tipo = tipo_noite(cfg, d)
     por_mes = (ancora.get("por_tipo") or {}).get(tipo) or {}
+    propria = (ancora.get("noites") or {}).get(k)
+    if propria is not None and (propria.get("comparaveis") or propria.get("ordem_id")):
+        return propria, "busca própria"
+    comp = {m: v for m, v in por_mes.items() if v.get("comparaveis")}
+    if comp:
+        mes = k[:7] if k[:7] in comp else min(comp, key=lambda m: abs((data(m + "-15") - d).days))
+        extra = "" if mes == k[:7] else " (mais próximo)"
+        return comp[mes], f"tipo {tipo}, mês {mes}{extra} (suítes comparáveis)"
+    if propria is not None:
+        return propria, "busca própria"
     if not por_mes:
         return None, "sem dado"
     mes = k[:7]

@@ -92,7 +92,7 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from comum import (DIAS_SEMANA, abrir_dia, aguardando_dono, carregar_quartos, data_de_pacote, estadia_do_dia,  # noqa: E402
                    mascara_valida, orfa_permitida, periodo_feriado, regra_dia_chegada, sexta_reaberta, valor_por_quarto,
                    vendidas_total)
-from ordens import carregar_ordens, ordem_valida, piso_da_ordem  # noqa: E402
+from ordens import carregar_ordens, ordem_valida, ordens_por_data, piso_da_ordem  # noqa: E402
 from validar_plano import (estadia_exigida, estadia_planejada, noite_orfa_decide, periodo_temporada,  # noqa: E402
                            regra_do_dia_decide)
 import vender_janelas  # noqa: E402
@@ -349,6 +349,20 @@ def nome_temporada(p: dict | None) -> str | None:
     return nome.strip()[:80]
 
 
+def estadia_da_ordem(ordens: dict | None, quarto: str, d: dt.date) -> tuple[int, str] | None:
+    """(estadia, ordem_id) quando uma ordem do dono por data, vigente para o quarto e a noite, fixa a estadia dela
+    (`estadia` {noite: {quarto: n}}) e libera 'estadia'. A mais nova vence."""
+    achadas = []
+    for o in ordens_por_data(ordens or {}, quarto, d):
+        n = ((o.get("estadia") or {}).get(d.isoformat()) or {}).get(quarto)
+        if n is not None and "estadia" in (o.get("libera") or []):
+            achadas.append((str(o.get("criada_em") or o.get("data") or ""), int(n), o["id"]))
+    if not achadas:
+        return None
+    _, n, oid = max(achadas)
+    return n, oid
+
+
 def comparar(cfg: dict, quarto: str, cal: dict, de: dt.date, ate: dt.date, ordens: dict | None = None,
              so_estadia: bool = False, regras: dict | None = None, efetiva: dict | None = None,
              inv: dict | None = None, lido_em: str | None = None, hoje: dt.date | None = None,
@@ -434,6 +448,7 @@ def comparar(cfg: dict, quarto: str, cal: dict, de: dt.date, ate: dt.date, orden
             except (TypeError, ValueError):
                 reg_ms = None
         estadia_info = False  # estadia abaixo da exigida por motivo conhecido: o item não regrava a estadia
+        estadia_ordem = estadia_da_ordem(ordens, quarto, d)
         if jan_ms is not None and not orfa and not espera:
             # dono 16/11 ~20:05 ("temos que vender as janelas"): a unidade presa pela regra vende com a estadia da janela.
             # No topo da cadeia: a "explícita 2" de segunda/quarta/sexta, a subida do sábado e do feriado e o dia órfão
@@ -446,6 +461,15 @@ def comparar(cfg: dict, quarto: str, cal: dict, de: dt.date, ate: dt.date, orden
                 tipo_est = "janela"
             else:
                 info.append(f"estadia {ms_ef}: janela aberta (ordem {pv.get('ordem_id') or 'dono-2026-11-16-vender-janelas'})")
+        elif estadia_ordem is not None:
+            # 19/11: estadia fixada por ordem do dono por data (`estadia` {noite: {quarto: n}} com `libera` estadia, ex.:
+            # plano liberado de 22-23/11) vence a regra do dia de chegada; a auditoria não sobe nem desce contra ela
+            estadia_info = True
+            if ms_ef != estadia_ordem[0]:
+                falta.append(f"estadia {ms_ef} != {estadia_ordem[0]} (ordem {estadia_ordem[1]})")
+                item["min_stay"], tipo_est = estadia_ordem[0], "ordem"
+            else:
+                info.append(f"estadia {ms_ef}: ordem do dono {estadia_ordem[1]}")
         elif espera:
             # revisão de 05/11: até o dono decidir, nem sobe nem desce (nem a estadia explícita do item com piso)
             estadia_info = True
@@ -590,7 +614,7 @@ def _num_avail_antes(inv_q: dict, prova: dict) -> dict:
 
 def classificar_beds24(cfg: dict, inv: dict, de: dt.date, ate: dt.date, hoje: dt.date | None = None,
                        lido_em: str | None = None, janelas: dict | None = None,
-                       nao_avaliadas: dict | None = None) -> list[dict]:
+                       nao_avaliadas: dict | None = None, ordens: dict | None = None) -> list[dict]:
     """Regra H no Beds24 (dono 01/11): por quarto, sábados com a chegada fechada (com a troca que a libera), sábados com
     estadia abaixo de 2 e noites fora do sábado com restrição (só o dono decide; vão ao relatório). A sexta da Afrodite
     (dono 05/11, `sexta_reaberta_por_quarto`) com o noCheckOut antigo volta a `none` (em `sabados_fora_da_regra`, com
@@ -612,6 +636,8 @@ def classificar_beds24(cfg: dict, inv: dict, de: dt.date, ate: dt.date, hoje: dt
     ou a saída aberta voltando a noCheckInOrCheckOut): vai a `janelas_nao_avaliadas` ({data, campo, atual, regra}) e a
     rotina completa, com o inventário de 12 meses, decide. Antes a regra normal fechava ali a janela aberta e a rotina
     seguinte reabria."""
+    # 19/11: estadia fixada por ordem do dono por data (estadia_da_ordem); sem `ordens`, as do arquivo
+    ordens_b24 = ordens if ordens is not None else carregar_ordens()
     rh = (cfg.get("parametros") or {}).get("regra_h_beds24") or {}
     alvo_sab = rh.get("sabado_override")  # dono 02/11: sábado fechado para entrada e saída, sempre
     troca = rh.get("troca_sabado") or {"noCheckIn": "none", "noCheckInOrCheckOut": "noCheckOut"}
@@ -807,6 +833,13 @@ def classificar_beds24(cfg: dict, inv: dict, de: dt.date, ate: dt.date, hoje: dt
                     _abrir(ds, jal, min_stay=ms, alvo_min=int(jal["min_stay"]))
                 else:
                     jan_mantidas.append(ds)
+            elif estadia_da_ordem(ordens_b24, q, d) is not None:
+                # 19/11: estadia fixada por ordem do dono por data vence a regra do dia de chegada (ex.: 1 diária na
+                # segunda 23/11, plano liberado); diferente dela, o lote leva a estadia da ordem
+                n_ord, oid_ord = estadia_da_ordem(ordens_b24, q, d)
+                if ms != n_ord:
+                    dia_chegada.append({"data": ds, "min_stay": ms, "alvo": n_ord,
+                                        "motivo": f"ordem do dono {oid_ord}: estadia {n_ord}"})
             elif regra_dia_chegada(cfg, d):
                 # dono 04/11 (desde 05/11): estadia pelo dia de chegada, de domingo a sexta (antes a sexta não era
                 # auditada e segunda/quarta voltavam a 1 por `semana_estadia_acima`); temporada acima do dia vale; noite
@@ -1003,7 +1036,9 @@ def lote_estadia_dia_chegada(classif: list[dict]) -> list[dict]:
     for x in classif:
         for s in x.get("estadia_dia_chegada", []):
             d = dt.date.fromisoformat(s["data"])
-            if s.get("orfa"):
+            if s.get("motivo"):  # 19/11: estadia de ordem do dono por data
+                motivo = s["motivo"]
+            elif s.get("orfa"):
                 motivo = "Dono 04/11 (libera órfã): noite livre com a seguinte esgotada no quarto, estadia 1"
                 if s.get("feriado"):
                     motivo += f"; em feriado ({s['feriado']}), dono 05/11"
@@ -1343,7 +1378,7 @@ def main(argv=None) -> int:
         # o corte em hoje + 4 vale só para os pisos e estadias do PriceLabs
         # correção de 07/11: com `hoje`, o sábado de hoje com a sexta já passada é sábado órfão (prova com `lido_em`)
         b24 = classificar_beds24(cfg, inv or {}, de_b24, ate, hoje=hoje, lido_em=lido_em,
-                                 janelas=alvos_jan if jan is not None else None, nao_avaliadas=na_jan)
+                                 janelas=alvos_jan if jan is not None else None, nao_avaliadas=na_jan, ordens=ordens)
         for x in b24:
             ch, es, ou = x["sabados_fora_da_regra"], x["sabados_estadia_abaixo"], x["outras_noites_bloqueadas"]
             se = x.get("semana_estadia_acima") or []

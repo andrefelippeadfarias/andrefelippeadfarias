@@ -71,6 +71,11 @@ class TestReguaDonoComparavel(unittest.TestCase):
         self.assertEqual(n15["fator_publico"], {"Recanto": 0.63, "Villa": 0.6173})
         self.assertNotIn("comparaveis", regua["noites"]["2027-01-22"])   # feriado sem estadia do grupo no mês
         self.assertNotIn("comparaveis", regua["noites"]["2027-03-05"])   # fora do período
+        # --manter-fator: a régua troca, o fator não
+        r2 = {"noites": {"2027-01-15": {"tipo": "fds", "hidro": {"40": 986}, "fator_publico": {"Recanto": 0.6157}}}}
+        RDC.atualizar(r2, [rk], "2026-12-01", "2027-02-28", manter_fator=True)
+        self.assertEqual(r2["noites"]["2027-01-15"]["fator_publico"]["Recanto"], 0.6157)
+        self.assertTrue(r2["noites"]["2027-01-15"]["comparaveis"])
         # rodar de novo não perde a régua original
         RDC.atualizar(regua, [rk], "2026-12-01", "2027-02-28")
         self.assertEqual(regua["noites"]["2027-01-15"]["antes_comparaveis"]["hidro"]["40"], 986)
@@ -105,6 +110,9 @@ class TestAberturaMoinhosComparavel(unittest.TestCase):
         self.assertAlmostEqual(PD.abertura_publico("Double", rc, "fds"), 1200 * 1.05)
         self.assertAlmostEqual(PD.abertura_publico("Afrodite", rc, "fds"), 1200 * 1.05 * 1.15)
         self.assertIsNone(PD.abertura_publico("Balcony", rc, "fds"))
+        # Moinhos nunca abre acima da Panorâmica I (populações diferentes: hidro × pares)
+        rb = dict(rc, pares_hidro={"50": 900, "65": 1000})
+        self.assertAlmostEqual(PD.abertura_publico("Q7", rb, "fds"), 900 * 1.05)
         # o pedido de 09/11 continua sendo o teto da abertura
         rp = dict(rc, pedido_0911={"Q7": 1500})
         self.assertAlmostEqual(PD.abertura_publico("Q7", rp, "fds"), 1500 * 0.62)

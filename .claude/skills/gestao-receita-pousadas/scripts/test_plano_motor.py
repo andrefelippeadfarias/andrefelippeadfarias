@@ -239,7 +239,14 @@ class TestPlanoMotor(unittest.TestCase):
             self.assertEqual(it[(k, n)]["ordem_id"], PD.ORDEM_ID)
             # nunca abaixo de R$ 800 reais (o piso_real de R$ 1.000 do Natal fica dispensado pela ordem)
             self.assertGreaterEqual(it[(k, n)]["min_price"] * self.cfg["por_curto"][k]["fator_real"], 800 - 1)
-        self.assertLess(it[("Q7", n)]["min_price"] * self.cfg["por_curto"]["Q7"]["fator_real"], 1000)
+        # até 19/11 a régua de 24/12 deixava a Moinhos abaixo de R$ 1.000 reais; com a régua comparável (ordem de 19/11,
+        # regua_dono.json `comparaveis`) ela abre no p40 das suítes comparáveis: confere a fórmula, não o valor antigo
+        import json
+        with open(PD.ARQ_REGUA, encoding="utf-8") as f:
+            rn = json.load(f)["noites"][n]
+        esperado = PD.preco_publico("Q7", rn, "natal", 0, 7, 14)["publico"] / PD.fator(rn, "Q7")
+        self.assertAlmostEqual(it[("Q7", n)]["min_price"], esperado, delta=0.02 * esperado + 2)
+        self.assertIn("Plano do dono", it[("Q7", n)]["motivo"])
         for k in ("VK7", "VK2"):
             self.assertNotEqual((it.get((k, n)) or {}).get("ordem_id"), PD.ORDEM_ID)
         v = Validador(self.cfg, hoje, {}, ordens=ORDENS_REAIS)

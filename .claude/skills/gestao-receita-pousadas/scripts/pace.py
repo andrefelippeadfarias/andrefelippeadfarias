@@ -1875,6 +1875,13 @@ def main(argv=None) -> int:
               "sem elas o motor não sabe que teto soltar nem que min_stay preservar")
         return 1
     filtro = ler_filtro_noites(a.noites) if a.noites is not None else None  # --noites sem valor: nenhuma noite recebe passo
+    fim = hoje + dt.timedelta(days=a.dias)
+    for o_ in ordens.values():
+        # revisão de 19/11: a reposição vale só no dia da ordem; noite além do horizonte não é reposicionada depois
+        if o_.get("reposicionar") and str(o_.get("data")) == hoje.isoformat() and str(o_.get("ate") or "") > fim.isoformat():
+            print(f"AVISO: a ordem {o_['id']} reposiciona até {o_['ate']}, mas o plano vai só até {fim.isoformat()} "
+                  f"(--dias {a.dias}): rode com --dias {(data(o_['ate']) - hoje).days} e --regras até {o_['ate']}, "
+                  "senão as noites depois do horizonte ficam só com o passo diário")
     res = plano(cfg, ancora, cals, hoje, ordens, passos, bloq, a.dias, regra_j_ativa=motor.get("regra_j_ativa", True), regras=regras,
                 noites_filtro=filtro)
     with PD.com_ordens(ordens):  # as mesmas ordens do plano (o plano do dono de 09/11 só vale com a ordem dele)

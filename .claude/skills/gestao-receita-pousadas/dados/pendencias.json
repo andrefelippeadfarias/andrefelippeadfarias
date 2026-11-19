@@ -1563,6 +1563,20 @@
       "desde": "2026-11-19",
       "urgencia": 3,
       "texto": "47 concorrentes seguem sem fator confiável do quarto com banheira (escada sem chegar ao quarto: tarifas repetidas e quarto com banheira na 5ª a 11ª posição). Tentar de novo na revisão de segunda 23/11 com mais degraus por estadia, ou pelo PDF filtrado do dono (Booking: 'banheira de hidromassagem' + 'café da manhã incluído')."
+    },
+    {
+      "id": "booking-recanto-fevereiro-fator-052-20261119",
+      "responsavel": "dono",
+      "desde": "2026-11-19",
+      "urgencia": 2,
+      "texto": "Na Booking, o Recanto aparece em fevereiro de 2027 com fator público 0,52 (preço da vitrine ÷ enviado), contra 0,62 nas outras datas: provável promoção ou oferta de reserva antecipada só nessas datas. Conferir na extranet (Promoções) se há desconto ativo para fevereiro e se deve continuar. A régua do dono ficou com o fator de 0,62 (--manter-fator); se o desconto for de propósito, avisar para a skill usar 0,52 em fevereiro."
+    },
+    {
+      "id": "villa-natal-reposicao-comparavel-20261119",
+      "responsavel": "dono",
+      "desde": "2026-11-19",
+      "urgencia": 2,
+      "texto": "Natal da Villa (King Spa 7, King Spa 2 e Balcony, 23 a 26/12): ficou fora da reposição dez-fev (ordem dono-2026-11-19-precificacao-dez-fev) e segue descendo 5% por dia desde R$ 4.738. A régua comparável levaria de uma vez a cerca de R$ 2.640-3.380 enviados (−32% a −46%). Perguntado ao dono: manter a descida gradual ou ir direto ao mercado?"
     }
   ],
   "versao": "2026-11-12T13"

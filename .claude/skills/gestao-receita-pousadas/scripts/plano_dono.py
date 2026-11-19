@@ -140,6 +140,12 @@ def abertura_publico(q: str, rn: dict, tipo: str) -> float | None:
     ped = (rn.get("pedido_0911") or {}).get(q)
     if ped:
         v = min(v, float(ped) * fator(rn, q))
+    if q == "Q7" and rn.get("comparaveis"):
+        # revisão de 19/11: com a régua comparável a Moinhos (p40 de `hidro`) e a Panorâmica I (`pares_hidro` × 1,05)
+        # vêm de populações diferentes; a Moinhos nunca abre acima da Panorâmica I (ordem do Recanto)
+        d = abertura_publico("Double", rn, tipo)
+        if d is not None:
+            v = min(v, d)
     return v
 
 

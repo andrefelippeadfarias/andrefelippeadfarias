@@ -104,7 +104,7 @@ def series_do_mes(estadias: list[tuple[dict, dict]], regua: dict, mes: str, grup
     return {"checkin": f"{grupo} de {mes}", "checkout": f"{len(usadas)} estadias", "_mes": True}, s
 
 
-def atualizar(regua: dict, rankings: list[dict], de: str, ate: str) -> list[dict]:
+def atualizar(regua: dict, rankings: list[dict], de: str, ate: str, manter_fator: bool = False) -> list[dict]:
     """Aplica na régua (em memória) e devolve as mudanças [{noite, tipo, antes, depois, fonte}]."""
     por_noite: dict[str, tuple[dict, dict]] = {}
     todas: list[tuple[dict, dict]] = []
@@ -139,7 +139,7 @@ def atualizar(regua: dict, rankings: list[dict], de: str, ate: str) -> list[dict
         origem = (f"{e['checkin']} ({e['checkout']})" if e.get("_mes") else f"estadia {e['checkin']}>{e['checkout']}")
         rn["fonte_comparavel"] = (f"suítes comparáveis (banheira + café, fator medido), {origem}: {s['n']} preços; "
                                   f"pares: {s['pares_fonte']} ({s['n_pares']})")
-        if s["fator_recanto"]:
+        if s["fator_recanto"] and not manter_fator:
             rn.setdefault("fator_publico", {})["Recanto"] = round(s["fator_recanto"], 4)
             rn.setdefault("fator_fonte", {})["Recanto"] = f"medido na estadia {e['checkin']}>{e['checkout']} (ranking)"
         mud.append({"noite": n, "tipo": rn.get("tipo"), "antes": antes, "depois": {"hidro": rn["hidro"],
@@ -155,6 +155,9 @@ def main(argv: list[str] | None = None) -> int:
     ap.add_argument("--de", default="2026-12-01")
     ap.add_argument("--ate", default="2027-02-28")
     ap.add_argument("--aplicar", action="store_true")
+    ap.add_argument("--manter-fator", action="store_true",
+                    help="não troca o fator público da régua pelo medido na estadia (ex.: desconto da Booking que pode "
+                         "não durar, como o 0,52 de fevereiro medido em 19/11)")
     a = ap.parse_args(argv)
     with open(a.regua, encoding="utf-8") as f:
         regua = json.load(f)
@@ -162,7 +165,7 @@ def main(argv: list[str] | None = None) -> int:
     for c in a.ranking:
         with open(c, encoding="utf-8") as f:
             rankings.append(json.load(f))
-    mud = atualizar(regua, rankings, a.de, a.ate)
+    mud = atualizar(regua, rankings, a.de, a.ate, a.manter_fator)
     sem = sorted(n for n in (regua.get("noites") or {}) if a.de <= n <= a.ate and n not in {m["noite"] for m in mud})
     print(f"{len(mud)} noites da régua do dono com suítes comparáveis; {len(sem)} sem estadia comparável (ficam como estão)"
           + (f": {', '.join(sem)}" if sem else ""))

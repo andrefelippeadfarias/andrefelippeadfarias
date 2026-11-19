@@ -6252,6 +6252,58 @@ Antes, a R$ 1.232, o domingo 22/11 não vendia desde 16/11.
 - Recanto: id 7562933, Rua Januário Pereira, 575; R$ 1.441 (R$ 721 por noite). Razão 0,59 sobre o Moinhos (R$ 1.232): normal.
 - Villa: id 14824789, R. das Candelas, 79; nota 8,3 (223); R$ 1.691. Razão 0,64 sobre a Balcony (R$ 1.549 + R$ 1.105): normal.
 
+## 19/11/2026, 11:15 a 12:10 BRT — Dezembro, janeiro e fevereiro pela régua de suítes comparáveis (pedido do dono)
+
+**Pedido do dono (texto literal):** "Maravilha, agora vamos fazer uma frescação agora para todo o período de janeiro, baseado nessas mesmas informações que estamos fazendo nesse mês, tá? E aí já vamos ajustar dezembro, janeiro e fevereiro já na precificação, nesse escopo que eu acabei de passar." O escopo é a régua de 18/11: só suítes com banheira e café da manhã. Virou a ordem `dono-2026-11-19-precificacao-dez-fev` (regra, 7 quartos, de 01/12/2026 a 28/02/2027). Ela leva cada noite direto ao alvo da régua nova, sem o passo diário de 5%, só no dia da ordem. Daqui para frente o motor volta ao passo normal. Regra em `regras.md` 6a.
+
+**Régua coletada:** 22 estadias de dezembro a fevereiro, pelo conector oficial da Booking (suítes com banheira e café; fator do quarto com banheira medido, certeza alta ou média). Mediana (p50) do preço público das suítes comparáveis por noite:
+- **Dezembro:** semana R$ 800 a 918; fim de semana R$ 1.306 a 1.432; entre festas R$ 1.115.
+- **Janeiro:** semana R$ 1.000 a 1.050; fim de semana R$ 1.127 a 1.230; feriado de SP R$ 1.051.
+- **Fevereiro:** semana R$ 927; fim de semana R$ 1.064 a 1.082; Carnaval R$ 1.290.
+
+Relatório: `pricelabs/pesquisa-booking/diaria-2026-11-19/ranking-suites-comparaveis-dez-fev.md`.
+
+**Dados:**
+- `dados/regua_dono.json`: 90 noites de dezembro a fevereiro com as séries `hidro` e `pares_hidro` das suítes comparáveis (marca `comparaveis`). O valor anterior de cada noite fica em `antes_comparaveis`. O fator público do Recanto ficou o da régua (`--manter-fator`): na Booking, fevereiro apareceu com fator 0,52 contra 0,62, provável promoção ou oferta de reserva antecipada.
+- `dados/ancora_mercado.json` refeita com as buscas comparáveis: 56 noites com busca própria; o `por_tipo` de dezembro, janeiro e fevereiro passa a ser comparável.
+- 50 ordens de faixa F2 (escada de vendas) para os dias de semana de 19/01 a 28/02. As faixas de 04/11 iam só até 18/01; sem elas, os dias de semana de fevereiro ficavam acima dos fins de semana.
+
+**Código:**
+- `pace.ordem_reposicao`: com uma ordem `reposicionar`, a noite vai direto ao alvo, só no dia da ordem.
+- `plano_dono`: com a régua comparável, a Moinhos abre no p40 de `hidro` e nunca acima da Panorâmica I.
+- Script novo: `scripts/regua_dono_comparavel.py`.
+- 10 testes novos; suíte toda verde. Revisão adversarial independente (14 agentes): nenhum achado confirmado.
+
+**Gravado no PriceLabs:** percent_base, 13 fatias em série, 533 noites em 7 quartos, conferidas 100% na resposta de cada fatia; última às 12:06 BRT. 489 passos no ledger.
+- Por quarto: Moinhos 80, Panorâmica I 81, Panorâmica II 81, Afrodite 80, King Spa 7 69, King Spa 2 71, Balcony 71.
+- Por tipo: 491 reposições, 17 proteções de noite esgotada (p90, teto livre), 21 da Regra G da Balcony e 4 outros.
+- Apagadas antes de regravar: Afrodite 19 e 20/01, para soltar o teto antes da proteção.
+
+**Média do enviado por mês e tipo de noite (antes → depois, R$):**
+
+| Mês, noite | Moinhos | Panorâmica I | Panorâmica II | Afrodite | King Spa 7 | King Spa 2 | Balcony |
+|---|---|---|---|---|---|---|---|
+| dez, semana | 1.420 → 1.499 (+6%) | 1.456 → 1.519 (+4%) | 1.549 → 1.607 (+4%) | 2.061 → 2.146 (+4%) | 1.413 → 1.554 (+10%) | 1.571 → 1.744 (+11%) | 1.173 → 1.306 (+11%) |
+| dez, fds | 1.329 → 2.029 (+53%) | 1.741 → 2.338 (+34%) | 1.574 → 2.242 (+42%) | 2.013 → 2.693 (+34%) | 1.776 → 2.319 (+31%) | 1.708 → 2.350 (+38%) | 1.352 → 1.668 (+23%) |
+| dez, feriado/festas | 2.998 → 3.142 (+5%) | 3.140 → 3.364 (+7%) | 3.110 → 3.314 (+7%) | 3.891 → 4.149 (+7%) | 4.552 → 4.508 (-1%) | 4.525 → 4.507 (-0%) | 4.031 → 3.989 (-1%) |
+| jan, semana | 1.273 → 1.652 (+30%) | 1.279 → 1.656 (+30%) | 1.281 → 1.666 (+30%) | 2.197 → 2.513 (+14%) | 1.182 → 1.595 (+35%) | 1.083 → 1.607 (+48%) | 973 → 1.433 (+47%) |
+| jan, fds | 1.161 → 1.615 (+39%) | 1.692 → 1.998 (+18%) | 1.569 → 1.913 (+22%) | 1.953 → 2.300 (+18%) | 1.658 → 1.959 (+18%) | 1.710 → 1.988 (+16%) | 1.482 → 1.731 (+17%) |
+| jan, feriado/festas | 2.897 → 2.942 (+2%) | 2.963 → 3.010 (+2%) | 2.932 → 2.980 (+2%) | 3.612 → 3.660 (+1%) | 3.229 → 3.229 (+0%) | 3.231 → 3.231 (+0%) | 2.832 → 2.855 (+1%) |
+| fev, semana | 1.287 → 1.484 (+15%) | 1.338 → 1.486 (+11%) | 1.322 → 1.484 (+12%) | 1.771 → 1.788 (+1%) | 1.343 → 1.441 (+7%) | 1.152 → 1.440 (+25%) | 1.006 → 1.287 (+28%) |
+| fev, fds | 1.009 → 1.560 (+55%) | 1.579 → 1.909 (+21%) | 1.442 → 1.828 (+27%) | 1.827 → 2.200 (+20%) | 1.574 → 1.894 (+20%) | 1.575 → 1.892 (+20%) | 1.410 → 1.702 (+21%) |
+| fev, feriado/festas | 2.276 → 1.912 (-16%) | 2.353 → 2.042 (-13%) | 2.337 → 2.019 (-14%) | 2.720 → 2.360 (-13%) | 2.264 → 2.057 (-9%) | 2.322 → 2.073 (-11%) | 1.987 → 1.892 (-5%) |
+
+**Fora do plano, de propósito:**
+- **Natal da Villa** (King Spa 7, King Spa 2 e Balcony, 23 a 26/12): segue descendo 5% por dia, como na rotina da manhã. A régua comparável derrubaria de 32% a 46% de uma vez; a pergunta foi para o dono.
+- **Noites do lote suspeito da Booking na Villa** (06/12, 13 a 16/12): ficam até a recepção confirmar.
+
+**Risco:** a maior parte das noites de semana de janeiro e fevereiro está com 0 vendida. Se as vendas não vierem, o motor desce pelo ritmo (status "atrás"), em passos diários.
+
+**Como desfazer:**
+- Cada regra traz o preço anterior no motivo ("antes R$ ..."); regrave esse valor em percent_base na mesma data.
+- A régua anterior de cada noite está em `antes_comparaveis` (`dados/regua_dono.json`). A âncora e as ordens anteriores estão no commit 64e109f.
+- Para parar a reposição, revogue a ordem `dono-2026-11-19-precificacao-dez-fev` em `dados/ordens_dono.json`.
+
 ## O que só pode ser feito na tela (passo a passo para você)
 
 1. **Safety Minimum Price → "Do Not Apply"** (Dynamic Pricing → Customizations → aba Groups → Edit no grupo Recanto dos Moinhos → All Customizations → Safety Minimum Price). Anote o valor atual antes.

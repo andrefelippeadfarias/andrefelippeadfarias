@@ -1578,6 +1578,13 @@
       "desde": "2026-11-19",
       "urgencia": 2,
       "texto": "Natal da Villa (King Spa 7, King Spa 2 e Balcony, 23 a 26/12): ficou fora da reposição dez-fev (ordem dono-2026-11-19-precificacao-dez-fev) e segue descendo 5% por dia desde R$ 4.738. A régua comparável levaria de uma vez a cerca de R$ 2.640-3.380 enviados (−32% a −46%). Perguntado ao dono: manter a descida gradual ou ir direto ao mercado?"
+    },
+    {
+      "id": "moinhos-vaga-recalculo-passo2-20261120",
+      "responsavel": "skill",
+      "desde": "2026-11-19",
+      "urgencia": 1,
+      "texto": "Rotina completa de 20/11 07:53: NÃO recalcule o Moinhos (Q7). Use o recálculo de 19/11 14:01 com mesclar_recalculo --velhos/--aceitar-velho. Os recálculos do Moinhos foram 19/11 07:56, 10:57 e 14:01 BRT; as vagas reabrem 20/11 às 07:56, 10:57 e 14:01. A vaga das 07:56 é a única antes do passo 2 da escada (20/11 10:00, R$ 2.100, trigger trig_01Ks4GQ3dCmC4yd8KJEtBZrn), que precisa de recálculo e Sync Now para chegar à Booking no dia do feriado."
     }
   ],
   "versao": "2026-11-12T13"

@@ -6304,6 +6304,44 @@ Relatório: `pricelabs/pesquisa-booking/diaria-2026-11-19/ranking-suites-compara
 - A régua anterior de cada noite está em `antes_comparaveis` (`dados/regua_dono.json`). A âncora e as ordens anteriores estão no commit 64e109f.
 - Para parar a reposição, revogue a ordem `dono-2026-11-19-precificacao-dez-fev` em `dados/ordens_dono.json`.
 
+## 19/11/2026, 13:53 a 14:15 BRT — Rotina leve das 13:53 e passo 1 da escada do Moinhos
+
+**Beds24 desde 10:48 BRT:** 0 novas, 4 canceladas, 5 alteradas.
+- **Canceladas:**
+  - Balcony 20→22/11, duas reservas pela Booking feitas em setembro (R$ 1.061 e R$ 1.332), canceladas às 12:17 e 12:18 BRT.
+  - King Spa 7 20→22/11 direta (R$ 1.700, VillaRecep1), cancelada às 13:38.
+  - Balcony 19/11 pela Booking com R$ 0 (padrão das reservas de valor zero).
+- **Segurança:** 1 alerta. Foram 3 cancelamentos da Booking em menos de 3 h (11:54 a 12:18 BRT); confirmar com a recepção se foram os hóspedes.
+- **Abaixo do planejado:** King Spa 7 20→22/11 direta (VillaRecep1, criada em 04/11), R$ 1.723 pela estadia, 29% do price1 de hoje (R$ 6.008). A reserva é anterior à subida do feriado, mas fica muito abaixo.
+
+**Inventário do feriado depois dos cancelamentos:**
+- Recanto: Moinhos 5 livres em 20 e 21/11; Panorâmica I e II e Afrodite esgotadas.
+- Villa: Balcony 5 livres em 20 e 21/11; King Spa 7 0 livres em 20/11 e 2 em 21/11; King Spa 2 1 livre em 20/11 e 2 em 21/11.
+
+**Beds24, King Spa 7 sábado 21/11:** saída fechada (none → `noCheckOut`), pela regra do sábado (dono 02/11). A sexta está esgotada e o sábado tem 2 livres, então só a entrada do sábado fica aberta. Gravado às 13:57 e conferido na releitura.
+- A Afrodite sexta 20/11 (abrir entrada e saída) ficou de fora, como de manhã: a noite está esgotada e exigiria gravar também no PriceLabs.
+- Janelas de 19 a 27/11: King Spa 2 21/11 mantida; Balcony 27/11 a observar.
+
+**Escada do Moinhos no feriado, passo 1** (ordem `dono-2026-11-18-moinhos-escada-feriado`, dono 18/11: "Pode o plano liberado"):
+- **Condição:** nenhuma estadia 20→22/11 vendida desde a reabertura (18/11 18:46 BRT); 5 livres em cada noite.
+- **Gravado às 14:00 BRT no PriceLabs:** Moinhos 20 e 21/11 de +156% para +118% em percent_base (R$ 3.003 → R$ 2.557 enviados, piso = teto); estadia 2 mantida. Conferido na resposta.
+- **Envio:** recálculo às 14:01 (R$ 2.557 nas duas noites; última vaga do Moinhos, a próxima reabre 20/11 às 07:56) e Sync Now às 14:02. Às 14:05 o price1 do Beds24 já era R$ 2.557 em 20 e 21/11 (5 livres, estadia 2). A conferência na Booking está agendada para 14:36. Pendência para a rotina de 20/11 07:53: não recalcular o Moinhos, para guardar a vaga das 07:56 para o passo 2.
+- **Passo 2:** 20/11 às 10:00, R$ 2.100 se ainda houver Moinhos livre.
+- A pendência da F1 (R$ 1.975) foi fechada: a ordem de R$ 3.000 a cancelou e a escada a substituiu.
+
+**Booking (segurança e vitrine, 20→22/11, conector oficial):**
+- Recanto: id 7562933, Rua Januário Pereira 575; R$ 3.454 pelas 2 noites, razão 0,58 sobre o Moinhos a R$ 3.003 (normal).
+- Villa: id 14824789, R. das Candelas 79; R$ 2.399 (R$ 1.200 por noite), razão 0,44 sobre a Balcony (normal, perto do limite de baixo: promoção da Balcony).
+
+**Mercado vivo do feriado** (workflow só de leitura, 3 buscas na Booking com café, 18 concorrentes livres, conferido por uma revisão cética):
+- Preço por noite do quarto mais barato: p25 R$ 710, p50 R$ 978, p75 R$ 1.157, p90 R$ 1.631. Entre as de nota 8 ou mais (n = 6): p50 R$ 1.134.
+- Nossa posição: Moinhos a R$ 1.470 ~p86; King Spa ~R$ 1.680 ~p93 (estimado); Balcony R$ 1.200 ~p82. A Balcony não tem banheira, então a comparação é direta: está acima do p75.
+- Amostra pequena: a ferramenta devolve só 10 resultados por busca, e só aparece quem ainda tem quarto livre.
+
+**Balcony 20-21/11:** 5 de 6 livres a R$ 2.705/2.692 enviados (R$ 1.200 por noite na vitrine). Está congelada (mudança manual de 13/11 e dono 16/11: "pode deixar balcone para o período no que já está"); a decisão é do dono.
+
+**Como desfazer:** regravar o Moinhos 20 e 21/11 a +156% (R$ 3.003) em percent_base; King Spa 7 21/11 voltar a `none` no Beds24.
+
 ## O que só pode ser feito na tela (passo a passo para você)
 
 1. **Safety Minimum Price → "Do Not Apply"** (Dynamic Pricing → Customizations → aba Groups → Edit no grupo Recanto dos Moinhos → All Customizations → Safety Minimum Price). Anote o valor atual antes.

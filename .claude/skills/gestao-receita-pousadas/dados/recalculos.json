@@ -826,6 +826,20 @@
    "resultado": "ok",
    "id_ms": 1795085810414,
    "registrado_em": "2026-11-19T10:56:54Z"
+  },
+  {
+   "quarto": "Q7",
+   "em": "2026-11-19T13:57:16Z",
+   "resultado": "ok",
+   "id_ms": 1795096636546,
+   "registrado_em": "2026-11-19T13:57:26Z"
+  },
+  {
+   "quarto": "Balcony",
+   "em": "2026-11-19T13:57:34Z",
+   "resultado": "ok",
+   "id_ms": 1795096654955,
+   "registrado_em": "2026-11-19T13:57:38Z"
   }
  ]
 }

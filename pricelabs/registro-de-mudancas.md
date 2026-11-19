@@ -6230,6 +6230,28 @@ Antes, a R$ 1.232, o domingo 22/11 não vendia desde 16/11.
 
 **Como desfazer:** cada regra traz o preço anterior no motivo ("antes R$ ..."); regravar esse valor em percent_base na mesma data. Passos no `dados/passos.json` (19/11).
 
+## 19/11/2026, 10:53 a 11:10 BRT — Rotina leve das 10:53
+
+**Beds24 desde 07:48 BRT:** 4 novas, 1 cancelada; as 6 "alteradas" são reservas antigas só mexidas. Segurança: 0 alerta.
+- **Abaixo do planejado:** Moinhos 27→29/11 pela Expedia, R$ 1.068 (46% do esperado, R$ 2.464). É a segunda venda da Expedia no Recanto abaixo de 50% em dois dias (a outra: Moinhos 19/11, 41%). A Expedia do Recanto só está fechada de 19 a 23/11 (ordem `dono-2026-11-18-expedia-recanto-19-23`); fechar além disso é decisão do dono.
+- **Novas pela Booking:** Panorâmica I hoje (R$ 436; esgota a noite), Balcony 27→29/11 (R$ 1.175), King Spa 2 25/04/2027 (R$ 686).
+- **Cancelada:** Moinhos hoje pela Booking, R$ 0, criada às 09:31 e cancelada às 09:36 (padrão das reservas de R$ 0).
+
+**Logs do PriceLabs:** só as gravações da rotina das 07:53 (API, última às 08:46:52). Nenhuma mudança manual.
+
+**Envio:** envio diário às 08:52-08:53, depois das gravações. As 198 noites gravadas de manhã estão no Beds24 com o valor exato enviado (price1 conferido noite a noite). 169 passos marcados como enviados.
+
+**Preço:** nada a gravar.
+- Moinhos 27-28/11 (3 de 7 vendidas): o plano do dono de 09/11 só sobe +7% a partir da 4ª unidade vendida na noite.
+- Balcony 27/11: o motor queria R$ 2.073, mas a Regra G segura a Balcony em 90% da King Spa livre (R$ 1.732); já está em R$ 1.549. 28/11 sem efeito (R$ 1.105, regra dos 80%).
+- Recálculos: Moinhos (cota 3 de 3; próxima vaga às 14:00) e Balcony (2 de 3).
+
+**Inventário do Beds24 (hoje a +60):** nada fora da regra a gravar. Afrodite sexta 20/11 (abrir entrada e saída) segue de fora: noite esgotada. Overbooking que continua: King Spa 2 23/11 (−4) e 24/11 (−3), Panorâmica II 22/11 (−1).
+
+**Booking (segurança e vitrine, 27→29/11, conector oficial):**
+- Recanto: id 7562933, Rua Januário Pereira, 575; R$ 1.441 (R$ 721 por noite). Razão 0,59 sobre o Moinhos (R$ 1.232): normal.
+- Villa: id 14824789, R. das Candelas, 79; nota 8,3 (223); R$ 1.691. Razão 0,64 sobre a Balcony (R$ 1.549 + R$ 1.105): normal.
+
 ## O que só pode ser feito na tela (passo a passo para você)
 
 1. **Safety Minimum Price → "Do Not Apply"** (Dynamic Pricing → Customizations → aba Groups → Edit no grupo Recanto dos Moinhos → All Customizations → Safety Minimum Price). Anote o valor atual antes.

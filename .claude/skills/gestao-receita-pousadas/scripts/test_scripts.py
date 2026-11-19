@@ -4248,12 +4248,13 @@ class TestSuitesComparaveis(unittest.TestCase):
             rc.CADASTRO = antigo
             os.unlink(f.name)
         e = r["estadias"][0]
-        self.assertEqual([c["slug"] for c in e["ranking"]], ["a", "b"])         # C (estimado) e o homônimo de Brasília fora
-        self.assertEqual(e["principal"]["p50"], 700)                           # 600 e 400 × 2,0
+        self.assertEqual([c["slug"] for c in e["ranking"]], ["a"])              # B (certeza incerto), C (estimado) e Brasília fora
+        self.assertEqual(e["principal"]["p50"], 600)
+        self.assertEqual(sorted(c["slug"] for c in e["estimados"]), ["b", "c"])
         self.assertNotIn("Balcony", [s["quarto"] for s in e["nossas"]])         # sem banheira: fora da régua
         self.assertEqual(e["fonte_fator"]["Villa"], "padrão (menor quarto livre da Villa é a Balcony)")
         self.assertEqual(e["certeza_alta_media"]["n"], 1)
-        self.assertEqual(rc.buscas_ancora(r)["buscas"], [])                    # 2 comparáveis < mínimo: não vira âncora
+        self.assertEqual(rc.buscas_ancora(r)["buscas"], [])                    # 1 comparável < mínimo: não vira âncora
 
 
 if __name__ == "__main__":

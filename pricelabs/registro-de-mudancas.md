@@ -6157,6 +6157,48 @@ Antes, a R$ 1.232, o domingo 22/11 não vendia desde 16/11.
 
 **Como desfazer:** voltar `dados/ancora_mercado.json` e `scripts/ancora_mercado.py` ao commit anterior.
 
+## 19/11/2026, 02:00 a 07:32 BRT — "Pode fazer tudo": calibração da régua, 22-23/11 ao p25 e Villa fora da F5 no Natal
+
+**Ordem:** `dono-2026-11-19-pode-fazer-tudo` ("Pode fazer tudo", resposta às 3 perguntas do ranking).
+
+**1. Calibração do fator do quarto com banheira (só leitura, workflow com 32 agentes):**
+- 63 concorrentes sem fator ou com fator "incerto".
+- Método: posição do quarto com banheira pelo Q&A da Booking, mais escada de preço em 25/11 e 27-29/11. Os casos duvidosos passaram por uma segunda pergunta e uma escada em 04-06/12.
+- Resultado: 16 ganharam fator confiável (certeza média). A régua principal passa de 14 a 30 hotéis, e o fator padrão vai de 1,395 para 1,252.
+- Os fatores "incerto" de 20/10 estavam inflados: Champet 2,0 → 1,2; Apple House 2,1 → 1,2; Moderna 2,4 → 1,44; Ascona 1,94 → 1,35. A partir de agora, só fator de certeza alta ou média entra na régua (`ranking_comparaveis.medido`).
+- Arquivos: `pricelabs/pesquisa-booking/diaria-2026-11-19/calibracao-r-hidro.json` e `pricelabs/pesquisa-booking/concorrentes.json`. Ranking e âncora refeitos (20 noites).
+
+**Régua final (p25 / mediana na vitrine):**
+
+| Estadia | p25 | Mediana |
+|---|---|---|
+| 22→23/11 | R$ 585 | R$ 945 |
+| 23→24/11 | R$ 530 | R$ 897 |
+| 25→26/11 | R$ 534 | R$ 999 |
+| 27→29/11 | R$ 843 | R$ 1.316 |
+| Natal 23→25/12 | R$ 1.358 | R$ 1.969 |
+| Réveillon | R$ 1.707 | R$ 2.123 |
+
+**2. 22-23/11 ao p25 da régua (PriceLabs, percent_base, piso = teto, gravado em série e conferido na resposta):**
+
+| Noite | Moinhos | Panorâmica I | Afrodite | Panorâmica II |
+|---|---|---|---|---|
+| 22/11 | R$ 880 → 950 (−19%) | R$ 903 → 977 (−34%) | R$ 1.060 → 1.140 (−43%) | esgotada, sem mudança |
+| 23/11 | R$ 751 → 868 (−26%) | R$ 770 → 888 (−40%) | R$ 1.060 (−47%, limite de segurança) | R$ 763 → 874 (−45%) |
+
+- Na vitrine: Moinhos ~R$ 585 em 22/11 e ~R$ 535 em 23/11.
+- Mantidas as relações do plano liberado e a estadia de 1 noite em 23/11. A Balcony fica como estava.
+- Chega ao Beds24 no próximo envio do PriceLabs: o Moinhos e a Panorâmica I têm recálculo de novo a partir das 07:55.
+
+**3. Natal da Villa:** King Spa 7, King Spa 2 e Balcony saem da F5 fixa em 23-26/12 (`noites_fora` nas ordens `dono-2026-11-04-faixa-villa-2026122x`). O motor de pace leva essas noites à régua comparável, no máximo 5% por dia a mais de 30 dias. Antes elas estavam no p82-p83.
+
+**4. Avaliações do Recanto:** o texto para o suporte da Booking foi enviado ao dono; o contato é dele.
+
+**Como desfazer:**
+- 22-23/11: voltar aos percentuais do plano liberado (na ordem).
+- Natal: tirar as noites de `noites_fora`.
+- Régua: `concorrentes.json` anterior no commit b4bdd0b.
+
 ## O que só pode ser feito na tela (passo a passo para você)
 
 1. **Safety Minimum Price → "Do Not Apply"** (Dynamic Pricing → Customizations → aba Groups → Edit no grupo Recanto dos Moinhos → All Customizations → Safety Minimum Price). Anote o valor atual antes.

@@ -1,0 +1,895 @@
+{
+ "hoteis": [
+  {
+   "slug": "alma-hotel",
+   "nome": "Alma Hotel",
+   "k": 4,
+   "k_confirmado": true,
+   "r_por_estadia": {
+    "2026-11-25": 1.3,
+    "2026-11-27": 1.3
+   },
+   "r_hidro": 1.3,
+   "certeza": "media",
+   "quarto_banheira": "Deluxe King Suite (28.0m²)",
+   "r_antes": null,
+   "fonte_antes": "não medido; usa r_hidro_padrao",
+   "obs": "Dúvida sobre k: o Q&A diz que NENHUM quarto tem banheira. k=4 vem só do cadastro do dono (Suíte King Deluxe = Deluxe King Suite, 4ª posição). Por regra estrita seria k=null. Em 25/11, 1185.46 e 1185.56 são quase iguais (provavelmente os doi"
+  },
+  {
+   "slug": "linda-casa-em-campos-do-jordao-campos-do-jordao12345",
+   "nome": "Bela Vista Chalé",
+   "k": 5,
+   "k_confirmado": true,
+   "r_por_estadia": {
+    "2026-11-25": 1.846,
+    "2026-12-04": 2.001
+   },
+   "r_hidro": 1.923,
+   "certeza": "media",
+   "quarto_banheira": "King Suite with Spa Bath (23.0m²)",
+   "r_antes": null,
+   "fonte_antes": "não medido; usa r_hidro_padrao",
+   "obs": "O cadastro diz 'Suíte com Cama Queen-size', mas o Q&A diz que as Queen Suites não têm banheira e que só a King Suite with Spa Bath (5ª) tem. Usei k=5 do Q&A; o cadastro discorda. Em 27-29/11, o mínimo de 1030/noite devolveu de novo o menor  | verif.: Concordo com k=5. Usei 3 chamadas de Q&A. Na pergunta conjunta com os dois ids, o Q&A disse que nenhum quarto do Bela Vista tem banheira, o que parece erro. Na pergunta só com este hotel, ele listou 5 tipos em ordem de preço: Standard 8m², "
+  },
+  {
+   "slug": "casa-regaleira",
+   "nome": "Casa Regaleira Hotel Boutique",
+   "k": null,
+   "k_confirmado": false,
+   "r_por_estadia": {},
+   "r_hidro": null,
+   "certeza": "incerto",
+   "quarto_banheira": "Deluxe Suite with Spa Bath (25.0m²)",
+   "r_antes": 1.075,
+   "fonte_antes": "escada 20/10 (k=2, certeza incerto)",
+   "obs": "k=2 confirmado pelo cadastro (Suíte Deluxe com Banheira de Hidromassagem). Em 25-26/11 o hotel está sem disponibilidade (erro hotel_names_no_availability), o que bate com o null do arquivo. Em 27-29/11, 2508 fica só +2% acima de 2460 e pode | verif.: Discordo da 1ª medição (k=2), mas com pouca confiança. As duas respostas do Q&A deste passo, a conjunta e a só deste hotel, dizem que a Deluxe Suite with Spa Bath é a mais barata e que nenhum tipo custa menos. Isso dá k=1, e segui a regra ("
+  },
+  {
+   "slug": "casablanca-boutique",
+   "nome": "Casablanca Hotel Boutique",
+   "k": 4,
+   "k_confirmado": true,
+   "r_por_estadia": {
+    "2026-11-27": 1.409
+   },
+   "r_hidro": 1.409,
+   "certeza": "incerto",
+   "quarto_banheira": "King Room with Spa Bath (45.0m²)",
+   "r_antes": null,
+   "fonte_antes": "não medido; usa r_hidro_padrao",
+   "obs": "k=4 confirmado pelo cadastro (Quarto com Cama King-size e Banheira de Hidromassagem). Em 25/11, 858, 868 e 877.8 diferem só ~1% entre si: parecem tarifas do mesmo quarto, então o 4º total (979) talvez não seja o King Spa. Em 27-29/11, o mín"
+  },
+  {
+   "slug": "champet-boutique",
+   "nome": "Champet Boutique Hotel",
+   "k": 3,
+   "k_confirmado": true,
+   "r_por_estadia": {
+    "2026-11-25": 1.188,
+    "2026-11-27": 1.202
+   },
+   "r_hidro": 1.195,
+   "certeza": "media",
+   "quarto_banheira": "Quarto Master com Varanda, Banheira de Hidromassagem e Cama King",
+   "r_antes": 1.999,
+   "fonte_antes": "escada 20/10 (k=3, certeza incerto)",
+   "obs": "k=3 confirmed: the Master room in the listing matches the hidro room from the owner's PDF. Lowest total matches the file (537.81 / 2223.13). Repeated totals at min 538 (25/11) and min 639 (25/11), and at min 1112 and 1222 (27/11); each time"
+  },
+  {
+   "slug": "dom-boutique",
+   "nome": "DOM Hotel",
+   "k": 4,
+   "k_confirmado": true,
+   "r_por_estadia": {
+    "2026-11-27": 1.444
+   },
+   "r_hidro": 1.444,
+   "certeza": "incerto",
+   "quarto_banheira": "Deluxe Suite with Spa Bath",
+   "r_antes": null,
+   "fonte_antes": "não medido; usa r_hidro_padrao",
+   "obs": "k=4 confirmed: Deluxe Suite with Spa Bath matches the hidro room from the owner's PDF. Lowest total matches the file (347.49 / 1705.86). On 25/11 the steps come in pairs about 3.1% apart (386.10/398.03 and 429/442.26), which suggests the sa"
+  },
+  {
+   "slug": "euro-suit-campos-do-jordao",
+   "nome": "Euro Suit Campos do Jordão - 950 m da Vila Capivari",
+   "k": null,
+   "k_confirmado": false,
+   "r_por_estadia": {},
+   "r_hidro": null,
+   "certeza": "incerto",
+   "quarto_banheira": "Suite with Spa Bath",
+   "r_antes": null,
+   "fonte_antes": "não medido; usa r_hidro_padrao",
+   "obs": "The spa suite matches the room from the owner's PDF ('Suíte com Banheira de Hidromassagem'). k=11 is uncertain: the Q&A puts the triple, quadruple and family rooms before the suites, so among double rooms the spa suite would be about 6th. B | verif.: Discordo do k=11 da primeira medição. A nova pergunta da Q&A (id 4686715, mesmo hotel, Avenida Emílio Ribas 100, Capivari) diz que o quarto com banheira mais barato é a 'Suite with Spa Bath' e que 6 tipos são mais baratos (Budget Double, St"
+  },
+  {
+   "slug": "europa-campos-do-jordao",
+   "nome": "Europa Hotel",
+   "k": null,
+   "k_confirmado": false,
+   "r_por_estadia": {},
+   "r_hidro": null,
+   "certeza": "incerto",
+   "quarto_banheira": "Double Room with Spa Bath",
+   "r_antes": null,
+   "fonte_antes": "não medido; usa r_hidro_padrao",
+   "obs": "Hotel not found in the price search. A search for 'Europa Hotel' with destination Campos do Jordão returned only Europa Hotel Brasília by Bsb Inn (id 9185378, Taguatinga) for both stays, so neither result counts and the ladder ended at step | verif.: Discordo do k=8 da primeira medição. A nova Q&A diz que o quarto com banheira mais barato é a 'Double Room with Spa Bath' e que 3 tipos são mais baratos (Double Room, Triple Room, Triple Room - Disability Access), então k=4. A primeira list"
+  },
+  {
+   "slug": "ascona",
+   "nome": "Hotel Ascona",
+   "k": 3,
+   "k_confirmado": true,
+   "r_por_estadia": {
+    "2026-11-25": 1.44,
+    "2026-12-04": 1.25
+   },
+   "r_hidro": 1.345,
+   "certeza": "media",
+   "quarto_banheira": "Suite with Whirlpool",
+   "r_antes": 1.937,
+   "fonte_antes": "escada 20/10 (k=3, certeza incerto)",
+   "obs": "Dúvida sobre k. O Q&A coloca a hidro na Suite with Whirlpool (posição 3) e diz que o Chalet (posição 6) não tem hidro, mas o cadastro do dono aponta Chalé. Em 25/11, 262,44 é exatamente 218,70 × 1,2: parece outra tarifa do mesmo quarto, não | verif.: CONCORDO com k=3, mas o 4º total da escada não é a suíte com hidro. Q&A: a pergunta do passo 1 respondeu mal. Disse 'Suite with Whirlpool' com '0 mais baratos (é o único tipo com banheira)', ou seja, contou os outros quartos com banheira, n"
+  },
+  {
+   "slug": "l-a-h-hostellerie",
+   "nome": "L.A.H. Hostellerie",
+   "k": 2,
+   "k_confirmado": true,
+   "r_por_estadia": {
+    "2026-11-25": 1.218,
+    "2026-11-27": 1.141
+   },
+   "r_hidro": 1.179,
+   "certeza": "media",
+   "quarto_banheira": "Double Room with Spa Bath",
+   "r_antes": 1.276,
+   "fonte_antes": "escada 20/10 (k=2, certeza incerto)",
+   "obs": "k=2 confirmado pelo cadastro (Quarto Duplo com Banheira de Hidromassagem = Double Room with Spa Bath). Em 27/11 o mínimo 1420 repetiu 2839,98 e foi preciso subir 3% (mínimo 1463). Leitura provável: 25/11 com hidro a 1401 (+251 sobre 1150) e"
+  },
+  {
+   "slug": "matsubara-pousada",
+   "nome": "Matsubara Pousada",
+   "k": 4,
+   "k_confirmado": true,
+   "r_por_estadia": {},
+   "r_hidro": null,
+   "certeza": "incerto",
+   "quarto_banheira": "Suite with Spa Bath",
+   "r_antes": null,
+   "fonte_antes": "não medido; usa r_hidro_padrao",
+   "obs": "k=4 confirmado pelo cadastro (Suíte com Banheira de Hidromassagem = Suite with Spa Bath, a mais cara). Os degraus de 25/11 são muito próximos (332/340/364): provavelmente misturam tarifas do mesmo quarto, então a posição 4 (415) é incerta e"
+  },
+  {
+   "slug": "pousada-alpes-azul",
+   "nome": "Pousada Alpes Azul",
+   "k": 7,
+   "k_confirmado": true,
+   "r_por_estadia": {},
+   "r_hidro": null,
+   "certeza": "incerto",
+   "quarto_banheira": "King Suite with Spa Bath",
+   "r_antes": null,
+   "fonte_antes": "não medido; usa r_hidro_padrao",
+   "obs": "k=7 confirmado pelo cadastro (Suíte com Cama King-size e Banheira de Hidromassagem = King Suite with Spa Bath, a mais cara dos 7 tipos). O limite de 7 chamadas foi atingido nas duas estadias antes de chegar a 8 totais distintos, então a tar | verif.: CONCORDO com k=7. O Q&A novo confirmou a King Suite with Spa Bath (20 m²) como o tipo mais barato com banheira de hidro, com 6 tipos mais baratos, e bate com o cadastro (Suíte com Cama King-size e Banheira de Hidromassagem). O Q&A não repet"
+  },
+  {
+   "slug": "apple-house",
+   "nome": "Pousada Apple House Campos do Jordao",
+   "k": 3,
+   "k_confirmado": true,
+   "r_por_estadia": {
+    "2026-11-25": 1.201,
+    "2026-11-27": 1.184
+   },
+   "r_hidro": 1.192,
+   "certeza": "media",
+   "quarto_banheira": "Chalet with Spa Bath",
+   "r_antes": 2.107,
+   "fonte_antes": "escada 20/10 (k=3, certeza incerto)",
+   "obs": "k=3 pelo Q&A (Chalet with Spa Bath); o quarto do cadastro (Master Suite with Spa Bath and Fireplace) aparece só na posição 7, e a ordem do Q&A parece duvidosa (Two-Bedroom antes da Master). Os degraus vêm em pares de +10% exato (224,10 para"
+  },
+  {
+   "slug": "pousada-blue-village-campos-do-jordao",
+   "nome": "Pousada Blue Village by Concavus",
+   "k": 5,
+   "k_confirmado": true,
+   "r_por_estadia": {
+    "2026-11-25": 1.217
+   },
+   "r_hidro": 1.217,
+   "certeza": "incerto",
+   "quarto_banheira": "Queen Room with Spa Bath",
+   "r_antes": null,
+   "fonte_antes": "não medido; usa r_hidro_padrao",
+   "obs": "k=5 pelo Q&A, e bate com o cadastro (Queen Room with Spa Bath / Quarto Queen com Banheira de Hidromassagem). As duas escadas pararam no limite de 7 chamadas com 5 totais distintos (precisava de 6). Em 25/11 os degraus sobem cerca de 5% cada"
+  },
+  {
+   "slug": "pousada-cantinho-da-serra-campos-do-jordao",
+   "nome": "Pousada Cantinho da Serra",
+   "k": null,
+   "k_confirmado": false,
+   "r_por_estadia": {},
+   "r_hidro": null,
+   "certeza": "incerto",
+   "quarto_banheira": "King Room with Spa Bath",
+   "r_antes": null,
+   "fonte_antes": "não medido; usa r_hidro_padrao",
+   "obs": "k=5 pelo Q&A, e bate com o cadastro (King Room with Spa Bath / Quarto King com Banheira de Hidromassagem). Escada INCONCLUSIVA: o filtro price.minimum não teve efeito neste hotel. A busca voltou sempre o mesmo total (234,09 em 25/11 até mín | verif.: NÃO CONCORDO com k=5 da 1ª medição, mas o novo k também não é confiável. O Q&A (pergunta nova, locale en) apontou 'King Suite with Spa Bath' como o quarto com banheira mais barato (no cadastro e na 1ª medição o nome é 'King Room with Spa Ba"
+  },
+  {
+   "slug": "pousada-miraggio",
+   "nome": "Pousada Casa Pinha em Campos do Jordão",
+   "k": 3,
+   "k_confirmado": true,
+   "r_por_estadia": {
+    "2026-11-27": 1.264,
+    "2026-12-04": 1.206
+   },
+   "r_hidro": 1.235,
+   "certeza": "media",
+   "quarto_banheira": "Deluxe Room with Hot Tub",
+   "r_antes": 1.1,
+   "fonte_antes": "escada 20/10 (k=2, certeza incerto)",
+   "obs": "k=3 pelo Q&A (Deluxe Room with Hot Tub), que corresponde ao cadastro (Quarto Deluxe com Banheira de Hidromassagem). Em 25/11 não há disponibilidade (erro hotel_names_no_availability, repetido 1 vez), então não tem escada. Em 27-29/11 o 1º p | verif.: CONCORDO com k=3. O Q&A novo deu 'Deluxe Room with Hot Tub' com 2 tipos mais baratos, na ordem Double Room, Deluxe Double Room e Deluxe Room with Hot Tub. Bate com a 1ª medição e com o cadastro (Quarto Deluxe com Banheira de Hidromassagem)."
+  },
+  {
+   "slug": "pousada-casa-redonda-campos-do-jordao",
+   "nome": "Pousada Casa Redonda",
+   "k": 4,
+   "k_confirmado": true,
+   "r_por_estadia": {},
+   "r_hidro": null,
+   "certeza": "incerto",
+   "quarto_banheira": "Deluxe Suite with Spa Bath",
+   "r_antes": 1.159,
+   "fonte_antes": "escada 20/10 (k=2, certeza incerto)",
+   "obs": "O Q&A dá k=4 (a fonte anterior dizia k=2, incerto). O quarto com banheira bate com o cadastro (Suíte Deluxe com Banheira de Hidromassagem). Os degraus são muito curtos (512, 520 e 540; 1472 e 1504) e parecem planos tarifários do mesmo quart"
+  },
+  {
+   "slug": "araucaria-premium",
+   "nome": "Pousada Chateau Elegance",
+   "k": null,
+   "k_confirmado": false,
+   "r_por_estadia": {},
+   "r_hidro": null,
+   "certeza": "incerto",
+   "quarto_banheira": "Double Room with Spa Bath",
+   "r_antes": null,
+   "fonte_antes": "não medido; usa r_hidro_padrao",
+   "obs": "Escada incompleta: k=9 pediria 10 totais, mas as duas estadias pararam no limite de 7 chamadas. Na de 25/11 houve 3 tarifas repetidas (281,75, 307,67 e 323,61), cada uma exigindo a alta de 3%; na de 27/11 houve 1 repetição (1743,83). O quar | verif.: Discordo do k=9 da primeira medição. Com a pergunta nova, o Q&A (en) diz que o quarto mais barato com banheira é o Double Room with Spa Bath e que só o Standard Double Room é mais barato. Por isso k=2. A lista agora tem 10 tipos: aparece um"
+  },
+  {
+   "slug": "villa-da-biagy-premium",
+   "nome": "Pousada D'Biagy Premium",
+   "k": 2,
+   "k_confirmado": true,
+   "r_por_estadia": {
+    "2026-11-25": 1.05
+   },
+   "r_hidro": 1.05,
+   "certeza": "incerto",
+   "quarto_banheira": "Deluxe Suite with Spa Bath",
+   "r_antes": null,
+   "fonte_antes": "não medido; usa r_hidro_padrao",
+   "obs": "k=2 confirmado pelo cadastro (Suíte Deluxe com Banheira de Hidromassagem). Na estadia de 25/11, 1 tarifa repetida (1123,85). Os totais 1180,04 e 1183 são quase iguais e podem ser dois planos do mesmo quarto. O 2º degrau fica cerca de 5% (25"
+  },
+  {
+   "slug": "geada-de-campos",
+   "nome": "Pousada Geada de Campos",
+   "k": 3,
+   "k_confirmado": true,
+   "r_por_estadia": {
+    "2026-11-25": 1.167,
+    "2026-11-27": 1.196
+   },
+   "r_hidro": 1.181,
+   "certeza": "media",
+   "quarto_banheira": "Triple Room with Bath",
+   "r_antes": null,
+   "fonte_antes": "não medido; usa r_hidro_padrao",
+   "obs": "O id 8663470 veio do passo 0, que também serviu de degrau 1 da estadia de 25/11. Não há quarto com hidro no cadastro. O Q&A diz que o 'Triple Room with Bath' tem banheira, provavelmente 'Quarto Triplo com Banheira': confirmar. Na estadia de"
+  },
+  {
+   "slug": "casa-bicho-preguica-campos-do-jordao",
+   "nome": "Pousada Hortelã Village",
+   "k": 8,
+   "k_confirmado": false,
+   "r_por_estadia": {},
+   "r_hidro": null,
+   "certeza": "incerto",
+   "quarto_banheira": "Luxury Triple Room",
+   "r_antes": null,
+   "fonte_antes": "não medido; usa r_hidro_padrao",
+   "obs": "k é DUVIDOSO. O Q&A diz que nenhum quarto tem banheira. k=8 veio só do cadastro: 'Quarto Triplo Luxo' = Luxury Triple Room, posição 8 de 10. As escadas pararam no limite de 7 chamadas, longe de k+1=9. Muitos degraus parecem a mesma tarifa c | verif.: NÃO concordo com o k=8 da primeira medição. Fiz duas perguntas no Q&A e as duas dizem que nenhum quarto da Pousada Hortelã Village tem banheira, hidro ou spa bath. Por isso k=null. O k=8 vinha só do cadastro: 'Quarto Triplo Luxo' = Luxury T"
+  },
+  {
+   "slug": "pousada-murano",
+   "nome": "Pousada Murano",
+   "k": 2,
+   "k_confirmado": true,
+   "r_por_estadia": {
+    "2026-11-25": 1.111,
+    "2026-11-27": 1.111
+   },
+   "r_hidro": 1.111,
+   "certeza": "media",
+   "quarto_banheira": "Double Room with Spa Bath",
+   "r_antes": 1.199,
+   "fonte_antes": "escada 20/10 (k=2, certeza incerto)",
+   "obs": "k=2 confere com o cadastro (Quarto Duplo com Banheira de Hidromassagem). Atenção: o degrau 1 é exatamente 0,9 x o degrau 2 nas duas estadias (1092.29 = 0,9 x 1213.65; 2378.97 = 0,9 x 2643.30). Então os degraus 1 e 2 podem ser o mesmo quarto"
+  },
+  {
+   "slug": "pousada-santha-serra",
+   "nome": "Pousada Victoria Villa By Nacional Inn - A 800 metros da Vila Capivari",
+   "k": 8,
+   "k_confirmado": true,
+   "r_por_estadia": {},
+   "r_hidro": null,
+   "certeza": "incerto",
+   "quarto_banheira": "Master Suite with Hot Tub",
+   "r_antes": 2.8,
+   "fonte_antes": "escada 20/10 (k=4, certeza incerto)",
+   "obs": "Hotel não encontrado na busca de preço. O nome_busca deu 'hotel_names_not_resolved' nas duas estadias, também na repetição. O Q&A chama o id 295236 de 'Pousada Victoria Villa Campos do Jordão'. Vale testar o nome_busca 'Pousada Victoria Vil | verif.: Concordo com k=8, mas com ressalva: não ficou confirmado. A pergunta do PASSO 1 respondeu 'Master Suite with Hot Tub, 0 cheaper room types', o que dá k=1 ao pé da letra. Só que a resposta não listou os quartos e deu 0 também para a Ville Le"
+  },
+  {
+   "slug": "pousada-ville-le-mont-campos-do-jordao",
+   "nome": "Pousada Ville Le Mont - Campos do Jordao",
+   "k": 7,
+   "k_confirmado": true,
+   "r_por_estadia": {},
+   "r_hidro": null,
+   "certeza": "incerto",
+   "quarto_banheira": "Suite with Hot Tub",
+   "r_antes": 1.921,
+   "fonte_antes": "escada 20/10 (k=4, certeza incerto)",
+   "obs": "Sem disponibilidade com café nas duas estadias. O conector respondeu 'hotel_names_no_availability' (o nome foi reconhecido), também na repetição. k=7 confere com o cadastro (Suíte com Banheira de Hidromassagem). O histórico tinha k=4, então | verif.: Concordo com k=7, mas com ressalva: não ficou confirmado. A pergunta do PASSO 1 respondeu 'Suite with Hot Tub, 0 cheaper', o que dá k=1. É a mesma resposta padrão da Victoria Villa, sem lista de quartos. A segunda pergunta, com a lista orde"
+  },
+  {
+   "slug": "secreto-boutique",
+   "nome": "Secreto Boutique Hotel",
+   "k": 7,
+   "k_confirmado": true,
+   "r_por_estadia": {},
+   "r_hidro": null,
+   "certeza": "incerto",
+   "quarto_banheira": "Premium Suite with Spa Bath",
+   "r_antes": null,
+   "fonte_antes": "não medido; usa r_hidro_padrao",
+   "obs": "O quarto com hidro do cadastro ('Casa Família') não aparece no Q&A. Pelo Q&A, o único quarto com spa bath no quarto é o 'Premium Suite with Spa Bath' (k=7), mas a ordem de preço do Q&A é duvidosa (Comfort Suite vem depois de Luxury Suite).  | verif.: Concordo com o k=7 da primeira medição, mas com ressalva. Na pergunta do passo 1, o Q&A respondeu '5 mais baratos' (k=6). Na mesma resposta, porém, não listou os quartos em ordem, então fiz uma segunda pergunta pedindo a lista completa em o"
+  },
+  {
+   "slug": "affeto-boutique-campos-do-jordao",
+   "nome": "Ti Voglio Bene",
+   "k": 5,
+   "k_confirmado": true,
+   "r_por_estadia": {
+    "2026-11-25": 1.358,
+    "2026-11-27": 1.349
+   },
+   "r_hidro": 1.353,
+   "certeza": "media",
+   "quarto_banheira": "Deluxe Double Room with Bath",
+   "r_antes": null,
+   "fonte_antes": "não medido; usa r_hidro_padrao",
+   "obs": "k=5 confirmado: o 'Deluxe Double Room with Bath' é o 'Quarto Duplo Deluxe com Banheira' do cadastro. Em 25-26 cheguei a k+1=6 totais; o 5º total é 511.50, ou seja, +134.85 (+35.8%) sobre o menor (376.65). Em 27-29 vieram só 5 totais com 7 c"
+  },
+  {
+   "slug": "estalagem-suites",
+   "nome": "Vila de Charme Suítes",
+   "k": 8,
+   "k_confirmado": true,
+   "r_por_estadia": {},
+   "r_hidro": null,
+   "certeza": "incerto",
+   "quarto_banheira": "King Suite with Spa Bath",
+   "r_antes": null,
+   "fonte_antes": "não medido; usa r_hidro_padrao",
+   "obs": "k=8 confirmado: o 'King Suite with Spa Bath' é a 'Suíte com Cama King-size e Banheira de Hidromassagem' do cadastro, e é o último da lista. Em 25-26 vieram só 5 totais com 7 chamadas (precisava de 9), então o total do k-ésimo não foi medido | verif.: Concordo com o k=8 da primeira medição. Na pergunta do passo 1, o Q&A disse '6 mais baratos' (k=7). Na lista completa em ordem de preço, pedida numa segunda pergunta, o 'King Suite with Spa Bath' aparece em 8º e último lugar, com 7 mais bar"
+  },
+  {
+   "slug": "la-vie-pousada-de-charme",
+   "nome": "Villa Belle Chalés",
+   "k": null,
+   "k_confirmado": false,
+   "r_por_estadia": {},
+   "r_hidro": null,
+   "certeza": "incerto",
+   "quarto_banheira": "Deluxe Suite with Spa Bath",
+   "r_antes": null,
+   "fonte_antes": "não medido; usa r_hidro_padrao",
+   "obs": "O id 11111842 veio do passo 0 (Villa Belle Chalés, Rua A 290, Campos do Jordão; o slug da URL é la-vie-pousada-de-charme). Essa busca também valeu como degrau 1 de 25-26. O cadastro não tinha quarto com hidro; pelo Q&A, k=6 é a 'Deluxe Suit | verif.: Não concordo com o k=6 da primeira medição, mas o k continua incerto. Na pergunta do passo 1, o Q&A respondeu '0 mais baratos', o que não serve: ele contou só os quartos com spa bath. Na lista completa em ordem de preço, pedida numa segunda"
+  },
+  {
+   "slug": "villa-casato-residenza",
+   "nome": "Villa Casato Residenza Boutique",
+   "k": 7,
+   "k_confirmado": true,
+   "r_por_estadia": {},
+   "r_hidro": null,
+   "certeza": "incerto",
+   "quarto_banheira": "King Suite with Spa Bath",
+   "r_antes": null,
+   "fonte_antes": "não medido; usa r_hidro_padrao",
+   "obs": "O id veio do passo 0 (304118, Capivari, Campos do Jordão). O degrau 1 de 25/11 é a própria busca do passo 0. Pelo Q&A k=7, mas só existem 6 totais distintos. Nas duas estadias, o mínimo acima do topo (2179/noite e 2586/noite) devolveu de no | verif.: Concordo com k=7. A pergunta nova do Q&A (com os 3 ids juntos) errou: disse '0 mais baratos' porque só olhou os quartos com banheira. Por isso fiz uma pergunta só para este hotel. Ela listou 8 quartos em ordem de preço, com a King Suite wit"
+  },
+  {
+   "slug": "casa-sabor-chocolate",
+   "nome": "Villa du Chocolat",
+   "k": 5,
+   "k_confirmado": true,
+   "r_por_estadia": {},
+   "r_hidro": null,
+   "certeza": "incerto",
+   "quarto_banheira": "Queen Room with Spa Bath",
+   "r_antes": null,
+   "fonte_antes": "não medido; usa r_hidro_padrao",
+   "obs": "k=5 confirmado pelo cadastro: 'Quarto com Cama Queen-size e Banheira de Hidromassagem' é a Queen Room with Spa Bath. Em 25/11 a escada travou em 702: com mínimo de 703, 725 e 747 por noite voltou sempre 702, abaixo do mínimo pedido. Não é o | verif.: Concordo com k=5. A pergunta com os 3 ids juntos errou: apontou a King Room with Spa Bath com '0 mais baratos'. Na pergunta só para este hotel, o Q&A listou 7 quartos em ordem de preço: 3 Double Room with Garden View (19, 21 e 22m²), Deluxe"
+  },
+  {
+   "slug": "ville-de-france",
+   "nome": "Ville de France",
+   "k": 4,
+   "k_confirmado": true,
+   "r_por_estadia": {},
+   "r_hidro": null,
+   "certeza": "incerto",
+   "quarto_banheira": "Deluxe Suite with Spa Bath",
+   "r_antes": null,
+   "fonte_antes": "não medido; usa r_hidro_padrao",
+   "obs": "k=4 confirmado pelo cadastro: 'Suíte Deluxe com Banheira de Hidromassagem' é a Deluxe Suite with Spa Bath. A busca com café devolveu o erro hotel_names_no_availability nas duas estadias, também na repetição. Não há preço para 25/11 nem para | verif.: Concordo com k=4. As duas perguntas do Q&A, com os 3 ids juntos e só com este hotel, deram 3 tipos mais baratos que a Deluxe Suite with Spa Bath: Double or Twin, Triple e Family Room, todas with Balcony. A Deluxe Family Suite vem acima dela"
+  },
+  {
+   "slug": "suite-privativa-com-aquecedor-decoracao-nova",
+   "nome": "vila grega hotel",
+   "k": 1,
+   "k_confirmado": true,
+   "r_por_estadia": {
+    "2026-11-25": 1.0,
+    "2026-11-27": 1.0
+   },
+   "r_hidro": 1.0,
+   "certeza": "media",
+   "quarto_banheira": "Superior Chalet",
+   "r_antes": null,
+   "fonte_antes": "não medido; usa r_hidro_padrao",
+   "obs": "O id veio do passo 0 (8681352, vila grega hotel, Rua Klaus Stemer 260, Campos do Jordão). O degrau 1 de 25/11 é a própria busca do passo 0. k=1 é duvidoso: o Q&A marca hot tub nos 7 tipos e banheira em nenhum, provavelmente por causa da Jac"
+  },
+  {
+   "slug": "a-nossa-casinha-na-montanha",
+   "nome": "ANC Montanha - 7 minutos do Capivari",
+   "k": 4,
+   "k_confirmado": true,
+   "r_por_estadia": {
+    "2026-11-27": 1.863,
+    "2026-12-04": 1.824
+   },
+   "r_hidro": 1.844,
+   "certeza": "media",
+   "quarto_banheira": "Suite with Spa Bath",
+   "r_antes": null,
+   "fonte_antes": "não medido; usa r_hidro_padrao",
+   "obs": "k=4 confirmado pelo cadastro (Suíte com Banheira de Hidromassagem = Suite with Spa Bath). 25/11: 193,8 repetiu com mín 194 (subiu 3%); com mín 276 e 284 voltou 158,1 (o mais barato), então acabou a escada com só 3 totais distintos e a suíte | verif.: CONCORDO com k=4. Na pergunta do passo 1 (feita para os 3 ids juntos), o Q&A disse que nenhum dos três hotéis tem quarto com banheira. Isso é contraditório, porque o próprio quarto se chama 'Suite with Spa Bath'. Por isso fiz uma pergunta p"
+  },
+  {
+   "slug": "araucaria-lodge",
+   "nome": "Araucária Lodge - 800 metros do Capivari",
+   "k": 5,
+   "k_confirmado": false,
+   "r_por_estadia": {
+    "2026-11-25": 1.488
+   },
+   "r_hidro": 1.488,
+   "certeza": "incerto",
+   "quarto_banheira": "Two-Bedroom Loft Apartment",
+   "r_antes": null,
+   "fonte_antes": "não medido; usa r_hidro_padrao",
+   "obs": "DÚVIDA SOBRE k: o Q&A diz que nenhum tipo de quarto tem banheira; k=5 vem só do cadastro do dono (Apartamento Loft de 2 Quartos = Two-Bedroom Loft Apartment, 5º e mais caro). Pela regra estrita seria k=null. 25/11: tarifas repetidas com mín | verif.: NÃO CONCORDO com k=5: k=null. As duas perguntas desta verificação (a dos 3 ids juntos e a só deste hotel) dizem que nenhum dos 5 tipos de quarto tem spa bath, hot tub, jacuzzi ou banheira, todos com banheiro privativo só com chuveiro. A 1ª "
+  },
+  {
+   "slug": "rancho-la-florida-campos-do-jordao",
+   "nome": "Art Lodge",
+   "k": 5,
+   "k_confirmado": true,
+   "r_por_estadia": {
+    "2026-11-25": 2.09,
+    "2026-11-27": 1.79
+   },
+   "r_hidro": 1.94,
+   "certeza": "media",
+   "quarto_banheira": "Superior Chalet",
+   "r_antes": null,
+   "fonte_antes": "não medido; usa r_hidro_padrao",
+   "obs": "DÚVIDA SOBRE k: o Q&A diz que nenhum tipo de quarto tem banheira; k=5 vem só do cadastro do dono (Chalé Superior = Superior Chalet, 5º). Pela regra estrita seria k=null. Os 6 totais distintos estão completos nas duas estadias, sem repetição"
+  },
+  {
+   "slug": "casa-tres-rios",
+   "nome": "Casa Três Rios - Campos do Jordão",
+   "k": 5,
+   "k_confirmado": true,
+   "r_por_estadia": {},
+   "r_hidro": null,
+   "certeza": "incerto",
+   "quarto_banheira": "Suite with Terrace",
+   "r_antes": 2.468,
+   "fonte_antes": "escada 20/10 (k=4, certeza incerto)",
+   "obs": "DÚVIDA SOBRE k: o cadastro (Suíte com Terraço) dá a posição 5, mas o Q&A diz que ela não tem banheira e que só o 6º, Deluxe Suite with Spa Bath, tem spa bath. Se valer o Q&A, k=6. 25-26/11: erro hotel_names_no_availability, repetido uma vez | verif.: CONCORDO com o número k=5, mas NÃO com o quarto, e o k continua incerto entre 5 e 6. Na pergunta só deste hotel, o Q&A pôs Deluxe Suite with Spa Bath em 5º (4 mais baratos, k=5) e Suite with Terrace em 6º, o mais caro. Disse também que só a"
+  },
+  {
+   "slug": "chateau-campos-do-jordao-flats-premium-by-hostyn",
+   "nome": "Chateau Campos do Jordão - Flats Premium - By Hostyn",
+   "k": 5,
+   "k_confirmado": false,
+   "r_por_estadia": {},
+   "r_hidro": null,
+   "certeza": "incerto",
+   "quarto_banheira": "Deluxe Apartment (Apartamento Deluxe)",
+   "r_antes": null,
+   "fonte_antes": "não medido; usa r_hidro_padrao",
+   "obs": "Dúvida sobre k: o Q&A diz que nenhum tipo tem banheira; k=5 vem só do cadastro do dono (Apartamento Deluxe = Deluxe Apartment, 5ª posição). Em 25/11 o filtro de preço não andou: 7 chamadas (mínimos 559→650/noite) devolveram sempre 558,90. E | verif.: Não concordo com k=5. As duas perguntas ao Q&A (a pedida e uma de acompanhamento que pediu a lista completa em ordem) dizem que nenhum tipo de quarto tem banheira, banheira de hidro ou jacuzzi no quarto, então pela regra k=null. O Q&A agora"
+  },
+  {
+   "slug": "bellavista-ltda",
+   "nome": "Chris Wellness Resort Hotel",
+   "k": 2,
+   "k_confirmado": true,
+   "r_por_estadia": {},
+   "r_hidro": null,
+   "certeza": "incerto",
+   "quarto_banheira": "Double Room with Individual Spa Bath (Quarto Duplo com Banheira de Hidromassagem Individual)",
+   "r_antes": 1.216,
+   "fonte_antes": "escada 20/10 (k=2, certeza incerto)",
+   "obs": "Hotel não encontrado na busca de preço: hotel_names 'Chris Wellness Resort Hotel' deu hotel_names_not_resolved nas 2 estadias (tentativa e repetição). Não há preço. O Q&A por id funcionou: k=2 confirmado pelo cadastro (Quarto Duplo com Banh | verif.: Concordo com k=2, com uma ressalva. A pergunta pedida ao Q&A respondeu '0 tipos mais baratos' (o que daria k=1), mas não trouxe a lista em ordem que tinha sido pedida. A pergunta de acompanhamento trouxe a lista completa: Standard Double Ro"
+  },
+  {
+   "slug": "estoril",
+   "nome": "Hotel Estoril",
+   "k": 7,
+   "k_confirmado": true,
+   "r_por_estadia": {},
+   "r_hidro": null,
+   "certeza": "incerto",
+   "quarto_banheira": "Honeymoon Suite (Suíte de Lua de Mel)",
+   "r_antes": null,
+   "fonte_antes": "não medido; usa r_hidro_padrao",
+   "obs": "k=7 confirmado pelo cadastro (Suíte de Lua de Mel). O limite de 7 chamadas parou as 2 escadas antes de k+1=8. Em 25/11, 919,68 e 1086,89 repetiram uma vez cada (+3%). Em 27-29, 2091,80 repetiu; o mínimo de 1078/noite saltou para 4322,46, en | verif.: Concordo com k=7, mas sem muita certeza. A pergunta pedida ao Q&A disse que o Estoril não tem nenhum tipo com banheira (o que daria k=null). A pergunta de acompanhamento contradiz isso: marca a Honeymoon Suite com banheira na 7ª posição, ig"
+  },
+  {
+   "slug": "savoy-campos-do-jordao",
+   "nome": "Hotel Savoy Excellence",
+   "k": 6,
+   "k_confirmado": true,
+   "r_por_estadia": {},
+   "r_hidro": null,
+   "certeza": "incerto",
+   "quarto_banheira": "King Room with Spa Bath",
+   "r_antes": null,
+   "fonte_antes": "não medido; usa r_hidro_padrao",
+   "obs": "Dúvida sobre k: k=6 (King Room with Spa Bath) é o primeiro tipo com banheira na lista. O quarto do cadastro (Quarto Duplo com Banheira de Hidromassagem = Double Room with Spa Bath) está na 7ª posição. A ordem do Q&A é duvidosa (Superior Sui | verif.: Não consigo confirmar k=6. A lista do Q&A repete a ordem da primeira medição: King Room with Spa Bath em 6º e Double Room with Spa Bath (o quarto do cadastro) em 7º, agora com 12 tipos. Já a pergunta pedida respondeu '0 tipos mais baratos q"
+  },
+  {
+   "slug": "pousada-kaliman-campos-do-jordapso",
+   "nome": "Kaliman Pousada Campos do Jordão",
+   "k": 4,
+   "k_confirmado": true,
+   "r_por_estadia": {},
+   "r_hidro": null,
+   "certeza": "incerto",
+   "quarto_banheira": "Premium Double Room with Spa Bath",
+   "r_antes": 1.395,
+   "fonte_antes": "escada 20/10 (k=2, certeza incerto)",
+   "obs": "Q&A coloca o Premium Double with Spa Bath (= quarto_hidro_cadastro) na posição 4; a fonte anterior dizia k=2, então k segue incerto. Em 25/11 a escada parou em 4 totais distintos com 7 chamadas (duas tarifas repetidas: 420.63 e 476.9), sem "
+  },
+  {
+   "slug": "pousada-annecy",
+   "nome": "Pousada Annecy - CAPIVARI Fácil acesso ao centrinho e Baden Bar",
+   "k": 6,
+   "k_confirmado": true,
+   "r_por_estadia": {
+    "2026-11-25": 2.669,
+    "2026-11-27": 3.063
+   },
+   "r_hidro": 2.866,
+   "certeza": "media",
+   "quarto_banheira": "Double Room with Spa Bath",
+   "r_antes": null,
+   "fonte_antes": "não medido; usa r_hidro_padrao",
+   "obs": "A escada é muito coerente entre as datas: as proporções 1.05, 1.10, 1.21, 1.30, 1.33 e o chalé no topo se repetem nas duas. k=6 confirmado pelo cadastro (Quarto Duplo com Banheira de Hidromassagem). O 6º degrau dá 1306/979 = 1.334 em 25/11 "
+  },
+  {
+   "slug": "araucaria-suites-campos-do-jordao",
+   "nome": "Pousada Araucária Suítes",
+   "k": null,
+   "k_confirmado": false,
+   "r_por_estadia": {},
+   "r_hidro": null,
+   "certeza": "incerto",
+   "quarto_banheira": null,
+   "r_antes": null,
+   "fonte_antes": "não medido; usa r_hidro_padrao",
+   "obs": "O Q&A não dá banheira em nenhum quarto, mas o cadastro aponta o 'Quarto Duplo Superior' (posição 2 no Q&A) como o quarto com hidro, e a busca lista 'Jacuzzi' entre as facilidades: há dúvida sobre k (2 se o cadastro estiver certo). Em 25/11  | verif.: Concorda com a 1ª medição (k=null). O Q&A com a pergunta nova (en) diz que a Pousada Araucária Suítes não tem nenhum tipo de quarto com hidro, jacuzzi, spa bath ou banheira privativa. Mas ele não listou os quartos em ordem de preço, como fo"
+  },
+  {
+   "slug": "recanto-dos-marcelinos-suites",
+   "nome": "Pousada Araucária Village",
+   "k": null,
+   "k_confirmado": false,
+   "r_por_estadia": {},
+   "r_hidro": null,
+   "certeza": "incerto",
+   "quarto_banheira": "Suite with Spa Bath",
+   "r_antes": 2.885,
+   "fonte_antes": "escada 20/10 (k=4, certeza incerto)",
+   "obs": "Suite with Spa Bath (= cadastro 'Suíte com Banheira de Hidromassagem') está na posição 5 do Q&A; a fonte anterior dizia k=4, então há dúvida. Em 25/11 o 5º degrau é 278.01 (1.56x o menor) e o 4º é 248.02 (1.39x); nenhum dos dois bate com o  | verif.: Pela regra mecânica o k é 1 (o Q&A diz que nenhum tipo de quarto é mais barato que a 'Suite with Spa Bath'), o que não bate com o k=5 da 1ª medição. Não considero esse k=1 confiável: o Q&A não listou os quartos em ordem de preço como foi pe"
+  },
+  {
+   "slug": "pousada-benevento",
+   "nome": "Pousada Benevento",
+   "k": 5,
+   "k_confirmado": true,
+   "r_por_estadia": {},
+   "r_hidro": null,
+   "certeza": "incerto",
+   "quarto_banheira": "Suite with Spa Bath",
+   "r_antes": 2.087,
+   "fonte_antes": "escada 20/10 (k=4, certeza incerto)",
+   "obs": "k=5 confirmado pelo cadastro (Suíte com Banheira de Hidromassagem = Suite with Spa Bath). Escada 25/11 parou no limite de 7 chamadas com 4 totais distintos (precisava 6), então o preço da suíte com spa bath não foi alcançado; 477,38 é só um | verif.: CONCORDO com k=5. Q&A individual (pergunta nova): só a Suite with Spa Bath tem banheira e há 4 tipos mais baratos (Double Room with Garden View, Standard Double or Twin, Standard Triple, Standard Quadruple). A ordem dos 2 primeiros saiu tro"
+  },
+  {
+   "slug": "pousada-big-bear",
+   "nome": "Pousada Big Bear",
+   "k": 3,
+   "k_confirmado": true,
+   "r_por_estadia": {
+    "2026-11-25": 1.17
+   },
+   "r_hidro": 1.17,
+   "certeza": "incerto",
+   "quarto_banheira": "Superior Suite",
+   "r_antes": 2.008,
+   "fonte_antes": "escada 20/10 (k=3, certeza incerto)",
+   "obs": "Dúvida sobre k: o Q&A diz que nenhum quarto tem banheira, inclusive a Superior Suite. k=3 vem só do cadastro do dono (Suíte Superior com hidro), que é a 3ª posição da lista do Q&A; a propriedade lista 'Jacuzzi' nas comodidades gerais. Banhe | verif.: CONCORDO com k=3, com ressalva. Fiz 3 Q&As e eles se contradizem: (a) conjunto: nenhum quarto com banheira; (b) individual: só a Superior Suite tem spa bath, lista Deluxe, Superior, Executive mas diz que 2 tipos são mais baratos que ela (po"
+  },
+  {
+   "slug": "pousada-bliss-house-campos-do-jordao1",
+   "nome": "Pousada Bliss House - Opções de suites com hidromassagem",
+   "k": 3,
+   "k_confirmado": true,
+   "r_por_estadia": {
+    "2026-11-25": 1.231
+   },
+   "r_hidro": 1.231,
+   "certeza": "incerto",
+   "quarto_banheira": "Queen Suite with Spa Bath",
+   "r_antes": null,
+   "fonte_antes": "não medido; usa r_hidro_padrao",
+   "obs": "k=3 (Queen Suite with Spa Bath), batendo com o cadastro (Suíte com Banheira de Hidromassagem). Em 25/11 os degraus sobem de 30 em 30 (260/290/320/340): podem ser tarifas diferentes do mesmo quarto, e o Triple Room pode não aparecer para 2 a | verif.: CONCORDO com k=3. Q&A individual: o quarto com banheira mais barato é a Queen Suite with Spa Bath, com 2 tipos mais baratos (Superior Suite e Triple Room), o que bate com a 1ª medição e com o cadastro (Suíte com Banheira de Hidromassagem). "
+  },
+  {
+   "slug": "pousada-casa-dos-sonhos-campos-do-jordao",
+   "nome": "Pousada Casa dos Sonhos",
+   "k": null,
+   "k_confirmado": false,
+   "r_por_estadia": {},
+   "r_hidro": null,
+   "certeza": "incerto",
+   "quarto_banheira": null,
+   "r_antes": null,
+   "fonte_antes": "não medido; usa r_hidro_padrao",
+   "obs": "k=null: o Q&A diz que nenhum quarto tem banheira, e o cadastro 'Chalé Superior' não aparece com esse nome na lista. Os candidatos seriam One-Bedroom Chalet (posição 6) ou Chalet (posição 7), o que exigiria uma escada de 7 a 8 degraus. Escad | verif.: CONCORDO com k=null. O Q&A conjunto disse que nenhum quarto tem banheira. O Q&A individual disse que a Family Suite with Balcony tinha hot tub privativo (posição 4), mas listou só 4 dos 8 tipos. Na pergunta de confirmação ele voltou atrás: "
+  },
+  {
+   "slug": "pousada-villa-d-biagy",
+   "nome": "Pousada D'Biagy Raízes",
+   "k": 5,
+   "k_confirmado": true,
+   "r_por_estadia": {},
+   "r_hidro": null,
+   "certeza": "incerto",
+   "quarto_banheira": "Deluxe Suite with Spa Bath",
+   "r_antes": 1.726,
+   "fonte_antes": "escada 20/10 (k=4, certeza incerto)",
+   "obs": "Pelo Q&A, k=5 (Deluxe Suite with Spa Bath = Suíte Deluxe com Banheira de Hidromassagem do cadastro). A fonte anterior usava k=4. As duas escadas pararam no limite de 7 chamadas com 5 totais distintos, um a menos que os k+1=6 pedidos. O 5º t"
+  },
+  {
+   "slug": "ilha-na-montanha",
+   "nome": "Pousada Di Oliva",
+   "k": 3,
+   "k_confirmado": false,
+   "r_por_estadia": {
+    "2026-11-25": 1.5
+   },
+   "r_hidro": 1.5,
+   "certeza": "incerto",
+   "quarto_banheira": "Deluxe King Studio",
+   "r_antes": null,
+   "fonte_antes": "não medido; usa r_hidro_padrao",
+   "obs": "Dúvida sobre k. O Q&A diz que nenhum quarto tem banheira, mas os facilities da busca mostram 'Jacuzzi' e 'Banheira ao ar livre'. O quarto do cadastro (Estúdio Deluxe com Cama King-size) é o Deluxe King Studio, que o Q&A lista duas vezes, na | verif.: NÃO concordo com k=null da primeira medição. Desta vez o Q&A disse, nas duas respostas (em grupo e só deste hotel), que o Deluxe King Studio tem banheira de hidro privativa. A consulta individual diz que há 2 tipos mais baratos e lista: Sui"
+  },
+  {
+   "slug": "pousada-do-conde-campos-do-jordao",
+   "nome": "Pousada Do Conde",
+   "k": null,
+   "k_confirmado": false,
+   "r_por_estadia": {},
+   "r_hidro": null,
+   "certeza": "incerto",
+   "quarto_banheira": "Queen Room with Spa Bath",
+   "r_antes": null,
+   "fonte_antes": "não medido; usa r_hidro_padrao",
+   "obs": "k=5 pelo Q&A, confirmado pelo cadastro (Queen Room with Spa Bath = Quarto com Cama Queen-size e Banheira de Hidromassagem). Em 25/11 a escada parou no limite de 7 chamadas com 5 totais distintos, faltando 1. O 5º total, 397.29 (1,51x o meno | verif.: NÃO concordo com k=5. O Q&A é contraditório e não sustenta 5. Na consulta só deste hotel, ele diz que o mais barato com banheira é o Queen Room with Spa Bath e que há 2 tipos mais baratos (k=3), mas omite esse quarto da lista que monta. Na "
+  },
+  {
+   "slug": "pousada-dom-alfredo-josa-c",
+   "nome": "Pousada Dom Alfredo José",
+   "k": null,
+   "k_confirmado": false,
+   "r_por_estadia": {},
+   "r_hidro": null,
+   "certeza": "incerto",
+   "quarto_banheira": "Deluxe Double Room with Bath",
+   "r_antes": null,
+   "fonte_antes": "não medido; usa r_hidro_padrao",
+   "obs": "k=8 pelo Q&A, confirmado pelo cadastro (Deluxe Double Room with Bath = Quarto Duplo Deluxe com Banheira). Em 25/11 a escada parou no limite de 7 chamadas com só 5 totais distintos (precisava de 9), então o quarto com banheira não foi alcanç | verif.: NÃO confirmo k=8, e o k continua incerto. A consulta em grupo omitiu este hotel, então perguntei só sobre ele. A resposta diz que o mais barato com banheira é o Deluxe Double Room with Bath e que há 2 tipos mais baratos (k=3). A lista que a"
+  },
+  {
+   "slug": "pousada-moderna",
+   "nome": "Pousada Itália Moderna",
+   "k": 2,
+   "k_confirmado": true,
+   "r_por_estadia": {
+    "2026-11-25": 1.395,
+    "2026-11-27": 1.484
+   },
+   "r_hidro": 1.44,
+   "certeza": "media",
+   "quarto_banheira": "Luxury Double Room",
+   "r_antes": 2.4,
+   "fonte_antes": "escada 20/10 (k=3, certeza incerto)",
+   "obs": "k incerto: o Q&A marca hot tub na Luxury Double Room (pos 2) e na Premium Double Room with Spa Bath (pos 4); o cadastro 'Quarto Duplo Deluxe com Hidromassagem' não bate exatamente com nenhum dos dois nomes, e a calibração anterior usava k=3"
+  },
+  {
+   "slug": "pousada-jardon",
+   "nome": "Pousada Jardon Campos do Jordão - Exclusiva para Adultos",
+   "k": null,
+   "k_confirmado": false,
+   "r_por_estadia": {},
+   "r_hidro": null,
+   "certeza": "incerto",
+   "quarto_banheira": "Luxury Suite with Spa Bath",
+   "r_antes": null,
+   "fonte_antes": "não medido; usa r_hidro_padrao",
+   "obs": "k=3 confirmado pelo cadastro (Suíte Luxo com Banheira de Hidromassagem = Luxury Suite with Spa Bath). Os totais vêm em pares de tarifa com +5,26% exato (289,56/304,8; 434,34/457,2; 1593,15/1677), o que indica 2 quartos com 2 tarifas cada, e | verif.: I do NOT agree with the first measurement's k=3. The new Q&A puts only 1 room type below the Luxury Suite with Spa Bath (Double or Twin Room), so k=2. It does not mention the Superior Double Room from the first answer, so that room's existe"
+  },
+  {
+   "slug": "pousada-la-sierra",
+   "nome": "Pousada La Sierra",
+   "k": null,
+   "k_confirmado": false,
+   "r_por_estadia": {},
+   "r_hidro": null,
+   "certeza": "incerto",
+   "quarto_banheira": "Double Room with Spa Bath",
+   "r_antes": null,
+   "fonte_antes": "não medido; usa r_hidro_padrao",
+   "obs": "k=2 confirmado pelo cadastro (Quarto Duplo com Banheira de Hidromassagem = Double Room with Spa Bath). Em 25-26 os degraus são limpos (250 / 399 / 499), e o quarto com banheira ≈ 399 (+149 sobre o menor). Em 27-29, com mínimos de 725, 747 e | verif.: I do NOT confirm the first measurement's k=2. The new Q&A puts 2 room types below the Double Room with Spa Bath (Junior Double Room and Triple Room), so k=3. The first answer had placed the Triple Room after the spa room. The two Q&As contr"
+  },
+  {
+   "slug": "pousada-luis-xv",
+   "nome": "Pousada Luis XV",
+   "k": 4,
+   "k_confirmado": true,
+   "r_por_estadia": {
+    "2026-11-25": 1.334
+   },
+   "r_hidro": 1.334,
+   "certeza": "incerto",
+   "quarto_banheira": "King Suite with Spa Bath",
+   "r_antes": null,
+   "fonte_antes": "não medido; usa r_hidro_padrao",
+   "obs": "k=4 pelo cadastro (Suíte King com Banheira de Hidromassagem = King Suite with Spa Bath). Há dúvida: o Q&A também marca hot tub na Deluxe Double or Twin Room (pos 2), mas o nome dela não cita banheira e a resposta parece confusa. Em 25-26 os | verif.: I AGREE with the first measurement's k=4. The new Q&A names the King Suite with Spa Bath as the cheapest room with a hot tub, with 3 cheaper rooms (Superior, Premium and Deluxe Double or Twin). That implicitly answers the earlier doubt: in "
+  },
+  {
+   "slug": "pousada-recanto-feliz",
+   "nome": "Pousada Recanto Feliz",
+   "k": 3,
+   "k_confirmado": true,
+   "r_por_estadia": {
+    "2026-11-25": 1.15
+   },
+   "r_hidro": 1.15,
+   "certeza": "incerto",
+   "quarto_banheira": "Master Room",
+   "r_antes": null,
+   "fonte_antes": "não medido; usa r_hidro_padrao",
+   "obs": "There is doubt about k. The Q&A says no room has a bathtub, Master Room included. k=3 comes only from the owner's listing ('Quarto Master' with hidro), which is position 3 in the Q&A list. The steps are small (8-20%). In 25/11 they look lik"
+  },
+  {
+   "slug": "pousada-villa-agi-campos-do-jordao",
+   "nome": "Pousada Vila Tio Lé",
+   "k": 6,
+   "k_confirmado": true,
+   "r_por_estadia": {},
+   "r_hidro": null,
+   "certeza": "incerto",
+   "quarto_banheira": "Deluxe Double Room with Bath",
+   "r_antes": null,
+   "fonte_antes": "não medido; usa r_hidro_padrao",
+   "obs": "The listed name is Pousada Vila Tio Lé (old slug villa-agi). The Q&A and the owner's listing agree on k=6 (Deluxe Double with Bath). The ladder hit the 7-call cap before reaching k+1 totals. The steps mix a rate 15% below base with the base | verif.: Concordo com o k=6 da primeira medição. Fiz uma pergunta nova no Q&A e ele respondeu que o quarto mais barato com banheira é o Deluxe Double Room with Bath e que há 5 tipos mais baratos: Standard Double, Superior Double, Junior Suite, Basic"
+  },
+  {
+   "slug": "pousada-villa-capivary",
+   "nome": "Pousada Villa Capivary Campos do Jordão",
+   "k": 5,
+   "k_confirmado": true,
+   "r_por_estadia": {
+    "2026-11-25": 1.667,
+    "2026-11-27": 1.929
+   },
+   "r_hidro": 1.798,
+   "certeza": "media",
+   "quarto_banheira": "Classic - Loft",
+   "r_antes": null,
+   "fonte_antes": "não medido; usa r_hidro_padrao",
+   "obs": "There is doubt about k. The Q&A says no room has a bathtub. k=5 comes only from the owner's listing ('Loft - Clássico' = Classic - Loft, position 5). The Q&A list puts triple and quadruple rooms before the Loft, which may not match real pri"
+  },
+  {
+   "slug": "pousada-da-lua-campos-do-jordapso",
+   "nome": "Pousada da Lua",
+   "k": 7,
+   "k_confirmado": true,
+   "r_por_estadia": {},
+   "r_hidro": null,
+   "certeza": "incerto",
+   "quarto_banheira": "Suite with Spa Bath",
+   "r_antes": null,
+   "fonte_antes": "não medido; usa r_hidro_padrao",
+   "obs": "The Q&A and the owner's listing agree on k=7 (Suite with Spa Bath). 25/11: the ladder hit the 7-call cap with only 5 distinct totals, so the bathtub room was not reached. Two steps returned the same total and needed the 3% raise. 27-29/11:  | verif.: Concordo com o k=7 da primeira medição. O Q&A, com a pergunta nova, diz que o quarto mais barato com banheira é a Suite with Spa Bath e que há 6 tipos mais baratos, então k = 6 + 1 = 7. Na lista de preço do Q&A aparecem só 5 antes dela: Sui"
+  },
+  {
+   "slug": "pousada-bella-locanda",
+   "nome": "Smart Hotel Reserva Campos do Jordão",
+   "k": 4,
+   "k_confirmado": true,
+   "r_por_estadia": {
+    "2026-12-04": 1.299
+   },
+   "r_hidro": 1.299,
+   "certeza": "incerto",
+   "quarto_banheira": "Deluxe Suite with Spa Bath",
+   "r_antes": 2.527,
+   "fonte_antes": "escada 20/10 (k=3, certeza incerto)",
+   "obs": "k=4 pelo Q&A (Deluxe Suite with Spa Bath bate com o cadastro 'Suíte Deluxe com Banheira de Hidromassagem'); a medição anterior dizia k=3 incerto. Family Suite (posição 3, até 3 pessoas) pode estar fora da ordem real de preço. Dia 25: 5 tota | verif.: CONCORDO com k=4. No passo 1, o Q&A respondeu mal para este hotel. Disse que nenhum quarto é mais barato porque a Deluxe Suite with Spa Bath é o único com hidro, ou seja, contou só os quartos com hidro. Pela regra literal daria k=1, mas des"
+  },
+  {
+   "slug": "pousada-chateau-do-luar",
+   "nome": "VELINN Pousada Chateau do Luar Prime",
+   "k": null,
+   "k_confirmado": false,
+   "r_por_estadia": {},
+   "r_hidro": null,
+   "certeza": "incerto",
+   "quarto_banheira": "Superior Double Room with Spa Bath",
+   "r_antes": null,
+   "fonte_antes": "não medido; usa r_hidro_padrao",
+   "obs": "k=5 pelo Q&A (Superior Double Room with Spa Bath bate com o cadastro). Dúvida sobre k: a lista parece ordenada por capacidade (triplo, quádruplo e quíntuplo antes do Spa); para 2 adultos o quarto com hidro pode ser bem mais barato que a pos | verif.: NÃO CONCORDO com k=5, mas o k=8 desta medição também é pouco confiável. Pela regra do passo 1, o Q&A listou 7 tipos mais baratos que o Superior Double Room with Spa Bath (Double, Deluxe, Queen Room with Balcony, Triple, Quadruple, Quintuple"
+  },
+  {
+   "slug": "pousada-charme-vila-natal-campos-do-jordao",
+   "nome": "Villa Montserrat",
+   "k": 5,
+   "k_confirmado": true,
+   "r_por_estadia": {
+    "2026-11-27": 1.39
+   },
+   "r_hidro": 1.39,
+   "certeza": "incerto",
+   "quarto_banheira": "Deluxe Suite with Spa Bath",
+   "r_antes": null,
+   "fonte_antes": "não medido; usa r_hidro_padrao",
+   "obs": "k=5 pelo Q&A (Deluxe Suite with Spa Bath bate com o cadastro 'Suíte Deluxe com Banheira de Hidromassagem'). Os totais vêm em pares de tarifa com 10% de desconto. Dia 25: 216/240, 259.20/288, 261.47/290.52, ou seja, só 3 tipos de quarto. Dia"
+  }
+ ]
+}

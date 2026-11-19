@@ -7,9 +7,10 @@ café da manhã, pois nós oferecemos banheira e café da manhã em nossos hoté
 
 Regra: a referência de mercado é SÓ suíte com banheira/hidro no quarto e café incluído. Um preço sem prova de que é dessa
 suíte não entra na régua principal:
-  - concorrente: menor quarto com café da busca oficial (conector da Booking) × `r_hidro` MEDIDO do hotel (escada de
-    preço ou PDF filtrado do dono; r = 1 quando o menor quarto já é o da banheira). Hotel sem `r_hidro` medido fica na
-    régua ampla (× r_hidro_padrao), marcado "estimado", nunca na principal;
+  - concorrente: menor quarto com café da busca oficial (conector da Booking) × `r_hidro` MEDIDO do hotel com certeza
+    alta ou média (escada de preço + posição do quarto com banheira no Q&A, ou PDF filtrado do dono; r = 1 quando o menor
+    quarto já é o da banheira). Hotel sem `r_hidro` ou com certeza "incerto" fica na régua ampla, marcado "estimado",
+    nunca na principal;
   - nós: só as 6 suítes com banheira (`quartos.json` → banheira). A Balcony (sem banheira) fica fora. O preço da Villa
     na busca é o do menor quarto livre (quase sempre a Balcony), por isso a King Spa entra pelo enviado × fator público
     medido no mesmo dia.
@@ -74,7 +75,10 @@ def noites(ci: date, co: date) -> list[str]:
 
 
 def medido(ref: dict) -> bool:
-    return bool(ref.get("r_hidro")) and "não medido" not in str(ref.get("r_hidro_fonte", ""))
+    """r_hidro medido com certeza alta ou média. Calibração de 19/11: os fatores "incerto" de 20/10 saíram até 70% acima
+    da medida nova (Champet 2,0 → 1,2; Apple House 2,1 → 1,2), por isso ficam fora da régua principal."""
+    f = str(ref.get("r_hidro_fonte", ""))
+    return bool(ref.get("r_hidro")) and "não medido" not in f and re.search(r"certeza (alta|media|média)", f) is not None
 
 
 def comparaveis(e: dict, cad: dict, padrao: float) -> tuple[list[dict], list[dict], dict]:

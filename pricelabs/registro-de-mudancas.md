@@ -6360,6 +6360,21 @@ Relatório: `pricelabs/pesquisa-booking/diaria-2026-11-19/ranking-suites-compara
 
 **Ofertas (pedido do dono de 19/11):** a rotina semanal de ofertas na Booking, Expedia e Airbnb foi cancelada pelo dono ("Pode parar tudo, então, que não vamos fazer isso por aqui. Eu vou fazer manualmente"). Nada foi alterado; a regra §1 continua: ofertas, descontos de OTA e Genius são só do dono.
 
+## 19/11/2026, 19:53 a 20:05 BRT — Rotina leve das 19:53
+
+**Beds24 desde 16:48 BRT:** 2 novas, 2 canceladas, 14 alteradas (quase todas reservas de hoje, mexidas no check-in pela recepção). Segurança: nenhum alerta.
+- **Abaixo do planejado:** a mesma reserva da Expedia já relatada às 10:53 (Moinhos 19/11, R$ 393 de R$ 751, 52%).
+- **Novas:**
+  - Moinhos 27→29/11 pela Booking (R$ 1.631). É a 4ª unidade vendida em 27 e 28/11.
+  - Moinhos de hoje pela Booking (R$ 439).
+- **Canceladas:** 2 reservas diretas da King Spa 7 de hoje (R$ 496 cada), criadas e canceladas no mesmo dia pela recepção.
+
+**Preço:** nada gravado.
+- O degrau de +7% do plano do dono no Moinhos 27-28/11, que começa na 4ª unidade, ficou para 20/11. O Moinhos não tem vaga de recálculo (3 de 3; a próxima abre 20/11 às 07:56 e está reservada ao passo 2 da escada das 10:00), então fica "não conferido (limite de recálculo)".
+- Pendência `moinhos-2728-degrau-20261120`: aplicar na rotina das 10:53 de 20/11 com o recálculo do passo 2.
+
+**Inventário de 19 a 29/11:** nenhuma noite esgotou ou reabriu além da noite de hoje. Sem órfã ou janela nova.
+
 ## O que só pode ser feito na tela (passo a passo para você)
 
 1. **Safety Minimum Price → "Do Not Apply"** (Dynamic Pricing → Customizations → aba Groups → Edit no grupo Recanto dos Moinhos → All Customizations → Safety Minimum Price). Anote o valor atual antes.

@@ -6094,6 +6094,25 @@ A análise está em `pricelabs/analise-meta-120k-2026-11-18.md`.
 
 **Preço:** nada gravado nesta rotina.
 
+## 18/11/2026, 21:25 BRT — Primeira leitura do plano liberado (pedido do dono)
+
+**Preços no Beds24:** os do plano liberado chegaram pelo envio da noite, conferidos no inventário das 21:23.
+- Moinhos: 751 em 19/11, 880 em 22/11 e 751 em 23/11.
+- Panorâmica I 770, Panorâmica II 763, Afrodite 1.060 e Balcony 914/800.
+- Estadia 1 na segunda nos quartos do plano.
+
+**Vendas desde que os preços entraram** (~1h20), todas pela Booking:
+- Panorâmica I 19/11: R$ 436.
+- Moinhos 22/11, 2 unidades: R$ 518 cada.
+
+Antes, a R$ 1.232, o domingo 22/11 não vendia desde 16/11.
+
+**Placar de 18 a 23/11:** R$ 77.870 vendidos (+R$ 1.472). Provável ~R$ 92,2 mil. Se vender tudo nos preços de hoje, R$ 121,7 mil. Feriado 19-21: R$ 52.885.
+
+**Moinhos 20-21/11:** sem venda desde a reabertura (18:46). Primeiro passo da escada amanhã às 14h.
+
+**Sem gravação:** o Moinhos está sem vaga de recálculo até 07:55. A subida de passo no domingo (2 vendas em 1 hora) fica para a rotina das 07:53, com o ritmo da noite.
+
 ## O que só pode ser feito na tela (passo a passo para você)
 
 1. **Safety Minimum Price → "Do Not Apply"** (Dynamic Pricing → Customizations → aba Groups → Edit no grupo Recanto dos Moinhos → All Customizations → Safety Minimum Price). Anote o valor atual antes.

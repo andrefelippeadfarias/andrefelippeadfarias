@@ -1522,6 +1522,34 @@
       "texto": "Meta de R$ 120 mil (18-23/11): perguntado ao dono (1) escada do Moinhos no feriado: qui 19/11 14h R$ 2.552 se saírem menos de 2; sex 20/11 10h R$ 2.100; (2) 22-23/11 na mediana do mercado (Recanto ~R$ 470/400 na vitrine, enviado 755-900; Balcony 800-920; 1 diária na segunda); (3) 19/11 Recanto a R$ 400 na vitrine (enviado 755-765), decidir hoje; (4) fechar a Expedia no Recanto de 19 a 23/11. Plano: pricelabs/analise-meta-120k-2026-11-18.md.",
       "resolvida_em": "2026-11-18",
       "resolucao": "Dono: 'Pode o plano liberado' (~19:20 BRT)."
+    },
+    {
+      "id": "regua-comparavel-22-23-plano-liberado-20261119",
+      "responsavel": "dono",
+      "desde": "2026-11-19",
+      "urgencia": 1,
+      "texto": "Régua de suítes comparáveis (ordem dono-2026-11-18-suites-comparaveis) contra o plano liberado de 22-23/11 (ordem dono-2026-11-18-plano-liberado-semana, preços fixos): o Recanto está no p12 a p28 das suítes com banheira e café (Moinhos R$ 542 e R$ 466 na vitrine; mediana comparável R$ 914 em 22/11 e R$ 795 em 23/11). Pergunta: subir as unidades livres de 22 e 23/11 até o p25 comparável (Moinhos ~R$ 1.040 enviados em 22/11 e ~R$ 955 em 23/11; vitrine ~R$ 640/590) ou manter o plano liberado para vender? A skill não muda preço fixado pelo dono sozinha."
+    },
+    {
+      "id": "r-hidro-calibrar-44-hoteis-20261119",
+      "responsavel": "Skill",
+      "desde": "2026-11-19",
+      "urgencia": 2,
+      "texto": "44 dos 77 concorrentes não têm r_hidro medido e ficam fora da régua comparável (19/11: régua com 14 a 26 hotéis por estadia; só 7 a 12 com certeza alta ou média). Medir na revisão de segunda 23/11 pela escada de preço mínimo do conector (dia de semana e fim de semana) ou pelo PDF filtrado do dono (Booking, filtros 'banheira de hidromassagem' + 'café da manhã incluído', 2 adultos). O 'perguntas e respostas' da Booking não serve para preço (teste de 19/11)."
+    },
+    {
+      "id": "recanto-sem-nota-booking-20261119",
+      "responsavel": "dono",
+      "desde": "2026-11-19",
+      "urgencia": 2,
+      "texto": "No ranking das suítes comparáveis, a nota mediana dos concorrentes é 9,2 a 9,4; a Villa tem 8,3 (223 avaliações) e o Recanto aparece SEM nota no anúncio ativo da Booking (7562933; as 226 avaliações ficaram no anúncio antigo). Hóspede que compara suítes com banheira vê o Recanto como 'sem avaliações'. Sugestão: perguntar ao suporte de parceiros da Booking se dá para levar as avaliações do anúncio antigo para o ativo; enquanto isso, a régua não sobe o Recanto além da mediana comparável sem venda (motor de pace)."
+    },
+    {
+      "id": "villa-king-spa-natal-acima-regua-20261119",
+      "responsavel": "dono",
+      "desde": "2026-11-19",
+      "urgencia": 2,
+      "texto": "Natal 23→25 e 25→27/12: a King Spa (faixa F5 do dono, R$ 5.000 enviados, ordens dono-2026-11-04-faixa-villa-2026122x) fica no p76 a p81 das suítes comparáveis (~R$ 2.793 na vitrine, mediana R$ 2.192 e R$ 1.689), com 4 a 6 King Spa 7 livres e nota 8,3 contra 9,3 da mediana. O Recanto no Natal está no p24 a p50. Leitura para o dono decidir se mantém a F5 na Villa; a skill não muda faixa do dono."
     }
   ],
   "versao": "2026-11-12T13"

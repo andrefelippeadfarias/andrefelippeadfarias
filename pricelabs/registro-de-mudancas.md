@@ -6113,6 +6113,50 @@ Antes, a R$ 1.232, o domingo 22/11 não vendia desde 16/11.
 
 **Sem gravação:** o Moinhos está sem vaga de recálculo até 07:55. A subida de passo no domingo (2 vendas em 1 hora) fica para a rotina das 07:53, com o ritmo da noite.
 
+## 19/11/2026, 01:10 a 01:50 BRT — Régua de suítes comparáveis e ranking (pedido do dono)
+
+**Pedido (18/11 ~21:30 BRT):** "Então, vamos ajustar nossos preços sempre para valores de suítes companheira. [...] Ignore todos os outros valores de suítes sem banheira e café da manhã, pois nós oferecemos banheira e café da manhã em nossos hotéis." Ordem `dono-2026-11-18-suites-comparaveis` (regra permanente; `regras.md` 5 e 6a).
+
+**Pesquisa (só leitura):**
+- Booking pelo conector oficial: 77 concorrentes do perfil × 11 estadias (20/11 a 03/01), 88 buscas, nenhuma com erro; de 38 a 67 hotéis por estadia.
+- Recanto por coordenadas: 22→23/11 R$ 541,73 e 27→29/11 R$ 1.558,97 (fator público 0,62 e 0,63).
+- Expedia: 4 buscas, 2 com "Unknown error"; preços em dólar, sem busca por nome e sem prova de banheira ou café por quarto: fora da régua.
+- Airbnb: sem conector oficial, e raspagem é proibida.
+
+**Régua:** só concorrente com `r_hidro` medido: menor quarto com café × fator do quarto com banheira. Ficam de 14 a 26 hotéis por estadia. Nossas 6 suítes com banheira entram pelo enviado do Beds24 × fator público; a Balcony fica fora.
+
+| Estadia | Comparáveis | p25 | Mediana | Nossas suítes livres (vitrine, percentil) |
+|---|---|---|---|---|
+| 20→22/11 | 14 | R$ 2.072 | R$ 2.420 | Moinhos R$ 1.862 (p21) |
+| 22→23/11 | 26 | R$ 640 | R$ 914 | Moinhos R$ 542 (p19), Panorâmica I R$ 556 (p19), Afrodite R$ 653 (p27) |
+| 23→24/11 | 25 | R$ 591 | R$ 795 | Moinhos R$ 466 (p12), Panorâmica I e II ~R$ 475 (p16), Afrodite R$ 657 (p28) |
+| 25→26/11 | 25 | R$ 565 | R$ 795 | Moinhos R$ 575 (p28), Panorâmica II R$ 670 (p32), Panorâmica I R$ 761 (p48) |
+| 27→29/11 | 26 | R$ 1.028 | R$ 1.542 | Moinhos R$ 780 (p8), Panorâmica I R$ 1.171 (p31), Afrodite R$ 1.355 (p35) |
+| 04→06/12 | 26 | R$ 1.327 | R$ 1.423 | Moinhos R$ 887 (p12), Afrodite R$ 1.302 (p23) |
+| 11→13/12 | 24 | R$ 1.305 | R$ 1.479 | Moinhos R$ 800 (p0), Panorâmicas ~R$ 990 (p12) |
+| 23→25/12 | 17 | R$ 1.476 | R$ 2.192 | Recanto R$ 1.469 a 1.922 (p24 a p41); King Spa R$ 2.793 (p76) |
+| 25→27/12 | 16 | R$ 1.348 | R$ 1.689 | Recanto R$ 1.360 a 1.686 (p25 a p50); King Spa R$ 2.793 (p81) |
+| 29→30/12 | 21 | R$ 885 | R$ 1.356 | Recanto ~R$ 1.185 (p43); King Spa R$ 1.573 a 1.678 (p62 a p67) |
+| 30/12→03/01 | 26 | R$ 1.954 | R$ 2.678 | Recanto ~R$ 2.900 (p54), Afrodite R$ 3.881 (p85), King Spa R$ 2.793 (p50) |
+
+**O que mudou (sem gravação no PriceLabs nem no Beds24):**
+- `scripts/ranking_comparaveis.py` (novo) e passo 4 do `references/mercado-diario.md`: o ranking entra em toda rotina completa.
+- `scripts/ancora_mercado.py`: aceita `percentis_noite`; a régua comparável vence a busca geral e a régua de lista da ordem de 02/11.
+- `dados/ancora_mercado.json` refeita com a régua comparável em 20 noites de 20/11 a 02/01. Exemplos: 27-28/11 com p50 de R$ 816 para R$ 1.542; 04-05/12 de R$ 677 para R$ 1.423; 25/11 de R$ 268 para R$ 795.
+- O motor de pace usa a âncora nova a partir da rotina das 07:53. Ordens por data, pisos, faixas e limites do dono continuam acima dela, e o passo segue limitado: 5% a 20% por dia conforme a antecedência.
+- Simulação com os calendários de 18/11: só 6 itens mudam (de 38 para 43 itens); a maioria das noites está presa por ordem ou faixa do dono.
+- `scripts/mercado_diario.py`: a Villa não é comparada pelo preço da busca, que é o da Balcony.
+- Arquivos: `pricelabs/pesquisa-booking/diaria-2026-11-19/` (capturas, resumo e `ranking-suites-comparaveis.md`).
+- Testes: 165 no `test_scripts` e os 8 outros arquivos verdes.
+
+**Para o dono (pendências):**
+- 22-23/11, plano liberado, abaixo do p25 comparável: subir ou manter?
+- Recanto sem nota no anúncio ativo da Booking.
+- King Spa no Natal no p76 a p81.
+- Fator `r_hidro` de 44 hotéis a medir (Skill, revisão de 23/11).
+
+**Como desfazer:** voltar `dados/ancora_mercado.json` e `scripts/ancora_mercado.py` ao commit anterior.
+
 ## O que só pode ser feito na tela (passo a passo para você)
 
 1. **Safety Minimum Price → "Do Not Apply"** (Dynamic Pricing → Customizations → aba Groups → Edit no grupo Recanto dos Moinhos → All Customizations → Safety Minimum Price). Anote o valor atual antes.

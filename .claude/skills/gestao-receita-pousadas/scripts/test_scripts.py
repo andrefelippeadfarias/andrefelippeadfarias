@@ -4203,5 +4203,58 @@ class TestConfigDeTesteJanela1923(unittest.TestCase):
                             self.assertTrue(congelada(ORDENS_FIXAS, q, date.fromisoformat(n)), (o["id"], q, n))
 
 
+class TestSuitesComparaveis(unittest.TestCase):
+    """Dono 18/11: régua só de suítes com banheira + café ("Ignore todos os outros valores de suítes sem banheira e
+    café da manhã")."""
+
+    def test_percentis_noite_e_prioridade_na_ancora(self):
+        from ancora_mercado import percentis_da_busca, substitui
+        s = {"checkin": "2026-11-25", "checkout": "2026-11-26",
+             "percentis_noite": {"p25": 565, "p50": 795, "p75": 1242, "p90": 1606, "max": 2400, "n": 25}}
+        p = percentis_da_busca(s)
+        self.assertEqual((p["p50"], p["n"], p["comparaveis"]), (795, 25, True))
+        geral = {"p50": 309, "n": 65, "p50_medido": True, "busca_em": "2026-11-19"}
+        comp = dict(p, busca_em="2026-11-19")
+        self.assertTrue(substitui(comp, geral, date(2026, 11, 19), 10))       # comparável troca a geral, mesmo com n menor
+        self.assertFalse(substitui(geral, comp, date(2026, 11, 20), 10))      # geral não volta enquanto a comparável é fresca
+        self.assertTrue(substitui(geral, comp, date(2026, 12, 5), 10))        # comparável velha: a geral volta
+        dono = dict(geral, ordem_id="o", n=62)
+        self.assertTrue(substitui(comp, dono, date(2026, 11, 19), 10))       # a régua de lista (menor quarto) da ordem de 02/11 também sai
+        dono_comp = dict(comp, ordem_id="o", n=62)
+        self.assertFalse(substitui(comp, dono_comp, date(2026, 11, 19), 10)) # entre comparáveis, a régua de ordem só sai por amostra maior
+
+    def test_ranking_so_comprovados_e_sem_balcony(self):
+        import json
+        import tempfile
+        import ranking_comparaveis as rc
+        cad = {"r_hidro_padrao": 1.4, "hoteis": [
+            {"slug": "a", "nome": "A", "r_hidro": 1.0, "r_hidro_fonte": "escada 20/10 (k=1, certeza alta)", "nota": 9.0},
+            {"slug": "b", "nome": "B", "r_hidro": 2.0, "r_hidro_fonte": "escada 20/10 (k=3, certeza incerto)", "nota": 9.2},
+            {"slug": "c", "nome": "C", "r_hidro": None, "r_hidro_fonte": "não medido; usa r_hidro_padrao", "nota": 8.8}]}
+        with tempfile.NamedTemporaryFile("w", suffix=".json", delete=False) as f:
+            json.dump(cad, f)
+        antigo = rc.CADASTRO
+        rc.CADASTRO = f.name
+        try:
+            resp = {"estadias": [{"checkin": "2026-11-25", "checkout": "2026-11-26", "hoteis": [
+                {"slug": "a", "preco_total": 600}, {"slug": "b", "preco_total": 400}, {"slug": "c", "preco_total": 300},
+                {"slug": "europa-brasilia1", "preco_total": 100},
+                {"slug": "villa-dolce-amore-boutique-panoramica", "preco_total": 500}]}]}
+            inv = {q: {"2026-11-25": {"numAvail": 1, "override": "none", "price1": 1000}}
+                   for q in ("Q7", "Double", "Afrodite", "Q2", "VK7", "VK2")}
+            inv["Balcony"] = {"2026-11-25": {"numAvail": 3, "override": "none", "price1": 900}}
+            r = rc.ranking(date(2026, 11, 19), resp, inv, {}, {})
+        finally:
+            rc.CADASTRO = antigo
+            os.unlink(f.name)
+        e = r["estadias"][0]
+        self.assertEqual([c["slug"] for c in e["ranking"]], ["a", "b"])         # C (estimado) e o homônimo de Brasília fora
+        self.assertEqual(e["principal"]["p50"], 700)                           # 600 e 400 × 2,0
+        self.assertNotIn("Balcony", [s["quarto"] for s in e["nossas"]])         # sem banheira: fora da régua
+        self.assertEqual(e["fonte_fator"]["Villa"], "padrão (menor quarto livre da Villa é a Balcony)")
+        self.assertEqual(e["certeza_alta_media"]["n"], 1)
+        self.assertEqual(rc.buscas_ancora(r)["buscas"], [])                    # 2 comparáveis < mínimo: não vira âncora
+
+
 if __name__ == "__main__":
     unittest.main()

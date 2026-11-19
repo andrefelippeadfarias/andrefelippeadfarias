@@ -67,6 +67,11 @@ def buscas_do_arquivo(dados: dict) -> list[dict]:
 
 def percentis_da_busca(s: dict) -> dict | None:
     """p25/p50/p75/p90/max públicos POR NOITE da estadia, ou None sem dado com hidro."""
+    pc = s.get("percentis_noite")
+    if isinstance(pc, dict) and pc.get("p50"):
+        # dono 18/11: régua só de suítes comparáveis (banheira + café), percentis já por noite (ranking_comparaveis.py)
+        out = {p: round(float(pc[p])) for p in PERCENTIS}
+        return out | {"n": int(pc.get("n") or 0), "n_comparaveis": int(pc.get("n") or 0), "p50_medido": True, "comparaveis": True}
     ci, co = data(s["checkin"]), data(s["checkout"])
     n_noites = max(1, (co - ci).days)
     comps = []
@@ -111,6 +116,15 @@ def substitui(novo: dict, velho: dict, hoje: date, idade_max: int) -> bool:
         except (ValueError, TypeError):
             return False
 
+    # dono 18/11 ("Ignore todos os outros valores de suítes sem banheira e café da manhã", ordem
+    # dono-2026-11-18-suites-comparaveis): a régua de suítes comparáveis (banheira + café, preço medido) vence a busca
+    # geral, inclusive a régua de lista fixada pela ordem de 02/11 (menor quarto de cada hotel); a geral só volta se a
+    # comparável envelhecer
+    comp_n, comp_v = bool(novo.get("comparaveis")), bool(velho.get("comparaveis"))
+    if comp_v and not comp_n and fresca(velho):
+        return False
+    if comp_n and not comp_v:
+        return True
     # dono 02/11 ("Pode fazer", ordem dono-2026-11-02-nov-fds-regua-lista): noite com régua fixada por ordem do dono só
     # sai para uma busca com amostra pelo menos do mesmo tamanho (a busca da coleta, ~10 hotéis, não troca 62-65)
     if velho.get("ordem_id") and int(novo.get("n") or 0) < int(velho.get("n") or 0):

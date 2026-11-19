@@ -948,7 +948,14 @@
      "2026-11-27",
      "2026-11-28"
     ]
-   }
+   },
+   "substituida_em_parte": [
+    {
+     "por": "dono-2026-11-18-suites-comparaveis",
+     "em": "2026-11-19",
+     "o_que": "régua de 27-28/11 (13-14/11 já passaram)"
+    }
+   ]
   },
   {
    "id": "dono-2026-11-02-aniv-sp-gatilho",
@@ -11775,6 +11782,40 @@
    "ate": "2026-11-23",
    "libera": [],
    "como_desfazer": "beds24.py editar-lote com canais_max {\"expedia\": null} nos 4 quartos do Recanto, de 19 a 23/11."
+  },
+  {
+   "id": "dono-2026-11-18-suites-comparaveis",
+   "data": "2026-11-18",
+   "criada_em": "2026-11-19T00:35:00Z",
+   "texto": "Então, vamos ajustar nossos preços sempre para valores de suítes companheira. Então, você vai entrar nas pesquisas da Booking, da Expedia e do Airbnb, fazer buscas dos nossos concorrentes para que você possa nos qualificar e fazer um ranking sempre com suítes companheiras. Ignore todos os outros valores de suítes sem banheira e café da manhã, pois nós oferecemos banheira e café da manhã em nossos hotéis.",
+   "contexto": "Mensagem do dono no chat (~21:30 BRT de 18/11). Leitura da skill: 'companheira' = comparáveis. A régua de mercado passa a ser só suíte com banheira/hidro no quarto e café incluído. Concorrente entra pelo menor quarto com café da busca oficial da Booking × r_hidro MEDIDO (escada de preço ou PDF filtrado do dono); hotel sem r_hidro medido fica fora da régua principal (aparece como 'fora da régua'). Nossas suítes: só as 6 com banheira (a Balcony fica fora); preço público = enviado do Beds24 × fator público medido no dia. Ranking diário na rotina completa (scripts/ranking_comparaveis.py, references/mercado-diario.md passo 4) e âncora do motor de pace pela régua comparável (ancora_mercado.py: percentis_noite; vence a busca geral e a régua de lista da ordem dono-2026-11-02-nov-fds-regua-lista). Ordens por data, pisos, faixas e limites do dono continuam valendo acima da régua. Fontes: Booking (conector oficial); Expedia testada em 19/11 (conector responde em USD, sem busca por nome, sem dado de café nem de banheira por quarto: só leitura de apoio); Airbnb sem conector oficial e raspagem proibida (só com print, PDF ou CSV que o dono mandar).",
+   "tipo": "regra",
+   "quartos": [
+    "Q7",
+    "Double",
+    "Afrodite",
+    "Q2",
+    "VK7",
+    "VK2",
+    "Balcony"
+   ],
+   "de": "2026-11-18",
+   "ate": "2027-11-18",
+   "libera": [],
+   "substitui_em_parte": [
+    {
+     "id": "dono-2026-11-02-nov-fds-regua-lista",
+     "o_que": "régua de lista (menor quarto de 62-65 hotéis) em 27-28/11: trocada pela régua de suítes comparáveis em 19/11"
+    }
+   ],
+   "feito": [
+    {
+     "em": "2026-11-19T04:40:00Z",
+     "o_que": "ranking de 11 estadias (20/11 a 03/01) e âncora do motor refeita com a régua comparável (20 noites; 27-28/11 de p50 R$ 816 para R$ 1.542)",
+     "arquivo": "pricelabs/pesquisa-booking/diaria-2026-11-19/ranking-suites-comparaveis.md"
+    }
+   ],
+   "como_desfazer": "dados/ancora_mercado.json da véspera está no commit anterior (git show HEAD~1:...); voltar ancora_mercado.substitui para não preferir 'comparaveis' e tirar o passo 4 de references/mercado-diario.md."
   }
  ]
 }

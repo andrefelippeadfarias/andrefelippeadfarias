@@ -115,7 +115,10 @@ def consolidar(hoje: dt.date, respostas: str, captado: str) -> dict:
                     continue
                 noite = total / n
                 if slug in NOSSOS:
-                    nossos[NOSSOS[slug]] = round(noite, 2)
+                    # dono 18/11 (só suítes com banheira + café): o menor quarto livre da Villa é a Balcony, sem banheira,
+                    # e não entra na comparação; a King Spa entra pelo ranking_comparaveis.py
+                    if NOSSOS[slug] != "Villa":
+                        nossos[NOSSOS[slug]] = round(noite, 2)
                 elif ref:
                     comp.append(noite * float(ref.get("r_hidro") or padrao))
             comp.sort()

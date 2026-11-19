@@ -6325,7 +6325,7 @@ Relatório: `pricelabs/pesquisa-booking/diaria-2026-11-19/ranking-suites-compara
 **Escada do Moinhos no feriado, passo 1** (ordem `dono-2026-11-18-moinhos-escada-feriado`, dono 18/11: "Pode o plano liberado"):
 - **Condição:** nenhuma estadia 20→22/11 vendida desde a reabertura (18/11 18:46 BRT); 5 livres em cada noite.
 - **Gravado às 14:00 BRT no PriceLabs:** Moinhos 20 e 21/11 de +156% para +118% em percent_base (R$ 3.003 → R$ 2.557 enviados, piso = teto); estadia 2 mantida. Conferido na resposta.
-- **Envio:** recálculo às 14:01 (R$ 2.557 nas duas noites; última vaga do Moinhos, a próxima reabre 20/11 às 07:56) e Sync Now às 14:02. Às 14:05 o price1 do Beds24 já era R$ 2.557 em 20 e 21/11 (5 livres, estadia 2). A conferência na Booking está agendada para 14:36. Pendência para a rotina de 20/11 07:53: não recalcular o Moinhos, para guardar a vaga das 07:56 para o passo 2.
+- **Envio:** recálculo às 14:01 (R$ 2.557 nas duas noites; última vaga do Moinhos, a próxima reabre 20/11 às 07:56) e Sync Now às 14:02. Às 14:05 o price1 do Beds24 já era R$ 2.557 em 20 e 21/11 (5 livres, estadia 2). Conferido na Booking às 14:36 (conector oficial, coordenadas): Recanto 20→22/11 a R$ 2.858 pelas 2 noites (R$ 1.429 por noite; antes R$ 3.454), razão 0,56 sobre R$ 2.557 × 2. O preço novo já está na vitrine. Pendência para a rotina de 20/11 07:53: não recalcular o Moinhos, para guardar a vaga das 07:56 para o passo 2.
 - **Passo 2:** 20/11 às 10:00, R$ 2.100 se ainda houver Moinhos livre.
 - A pendência da F1 (R$ 1.975) foi fechada: a ordem de R$ 3.000 a cancelou e a escada a substituiu.
 

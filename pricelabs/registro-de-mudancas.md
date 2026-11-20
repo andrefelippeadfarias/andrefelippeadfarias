@@ -6552,6 +6552,27 @@ O agendamento do passo 2 (Moinhos 20 e 21/11 a R$ 2.100, ordem `dono-2026-11-18-
 
 **Inventário:** Panorâmica II com overbooking de −1 em 22/11 e King Spa 2 com −4 em 23/11 (noite do lote suspeito já conhecido). Vão para a recepção.
 
+## 20/11/2026, 19:53 a 20:05 BRT — Rotina leve das 19:53
+
+**Beds24 desde 16:48 BRT:** 2 novas, 3 canceladas e 16 alteradas; 0 alerta de segurança. As alteradas são, em sua maioria, reservas antigas mexidas no check-in de hoje.
+- **Novas:**
+  - King Spa 2 sáb 21/11, 1 noite, pela Booking (R$ 762, 72% do esperado): 1ª venda do plano do fim de semana.
+  - King Spa 7 20→22/11, direta, recepção da Villa (R$ 3.000, 41% do esperado). Reabriu o overbooking da King Spa 7 de hoje (−1).
+- **Canceladas:** Balcony 20→22/11 direta (R$ 1.320); Balcony 20→22/11 e 11→13/12 pela Booking, ambas criadas e canceladas nesta mesma rodada (efeito zero).
+- **Abaixo de 70% do esperado:** a nova King Spa 7 20→22/11 (41%). As outras 8 da lista são reservas antigas alteradas no check-in: o price1 de agora é o do feriado, por isso a razão cai.
+
+**Inventário (hoje a +60):**
+- Sábado 21/11: King Spa 7 com 1 livre (Beds24 ainda a R$ 3.265; R$ 2.412 sai às 08:05) e King Spa 2 com 1 livre (R$ 2.286).
+- Domingo 22/11: Moinhos 5, Panorâmica I 3 e Afrodite 1 livres; Expedia aberta só nessa noite.
+- **Overbooking:** Moinhos 20/11 (−2) e King Spa 7 20/11 (−1, nova). Seguem os já conhecidos: Panorâmica II 22/11 (−1); King Spa 2 23/11 (−4) e 24/11 (−3) e King Spa 7 06/12 (−1), do lote suspeito.
+
+**PriceLabs:** nada gravado nem lido.
+- As noites com venda nova (21/11) são da ordem `dono-2026-11-20-vender-fds-banheira`; o motor não mexe nelas.
+- 20/11 é D0.
+- Nenhuma noite esgotou nem reabriu em D0-D1.
+
+**Pendente:** o dono ainda não respondeu (A)/(B) sobre o mínimo de R$ 550. O lembrete das 08:05 aplica a leitura (A) se não houver resposta até 07:50.
+
 ## O que só pode ser feito na tela (passo a passo para você)
 
 1. **Safety Minimum Price → "Do Not Apply"** (Dynamic Pricing → Customizations → aba Groups → Edit no grupo Recanto dos Moinhos → All Customizations → Safety Minimum Price). Anote o valor atual antes.

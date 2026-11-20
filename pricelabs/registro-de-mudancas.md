@@ -6488,6 +6488,36 @@ O agendamento do passo 2 (Moinhos 20 e 21/11 a R$ 2.100, ordem `dono-2026-11-18-
 
 **Como desfazer:** regravar o "antes R$" em percent_base nas 5 noites e tirar as noites de `noites_fora` das ordens manuais.
 
+## 20/11/2026, 16:53 a 17:00 BRT — Rotina leve das 16:53
+
+**Beds24 desde 13:48 BRT:** 2 novas, 1 cancelada e 3 alteradas; 0 alerta de segurança.
+- Novas: Balcony 20→22/11 direto (R$ 1.320, recepção da Villa) e Panorâmica I 02→05/12 direto (R$ 2.953, pela API/motor de reservas).
+- Cancelada: King Spa 7 20→22/11 da Booking (R$ 0). Resolveu o overbooking da King Spa 7 de hoje e abriu 2 vagas no sábado 21/11.
+- Alteradas: King Spa 7 20→22/11 direto (R$ 2.400), King Spa 2 de hoje pelo Airbnb e Panorâmica I 20→22/11 da Booking.
+
+**Reservas abaixo de 70% do esperado (topo do relatório; o dono decide):**
+- Balcony 20→22/11 (29%) e King Spa 7 20→22/11 (33%), ambas da recepção da Villa.
+- King Spa 2 de hoje pelo Airbnb (37%).
+- Panorâmica I 02→05/12 pela API (54%).
+- O esperado usa o price1 de agora. Nas noites do feriado, o desconto de −20% do dono (19/11) explica parte da diferença.
+
+**Inventário:**
+- Moinhos de hoje segue com overbooking de −2 (recepção remaneja).
+- Sábado 21/11: King Spa 7 com 2 livres e King Spa 2 com 2 livres.
+- Domingo 22/11: Moinhos 5, Panorâmica I 3 e Afrodite 1 livres, a R$ 751, 844 e 1.060 enviados.
+- A King Spa 7 de sábado sai a R$ 2.412 no recálculo das 08:05 de 21/11 (agendado).
+
+**Gravado** (motor de pace com `--noites` da venda nova; recálculo da Panorâmica I às 16:5x, cota 3 de 3; percent_base, piso = teto, conferido na resposta; logs lidos antes, sem mudança manual nova):
+
+| Noite | Quarto | Antes | Enviado | Motivo |
+|---|---|---|---|---|
+| qui 03/12 | Panorâmica I | R$ 1.480 | R$ 1.613 | escada de vendas, 1 de 6 vendidas |
+| qui 03/12 | Afrodite | R$ 1.840 | R$ 1.940 | Afrodite acima da mais cara (coerência) |
+| sex 04/12 | Panorâmica II | R$ 2.464 | R$ 2.337 | ordem do Recanto (noite já esgotada, 2 de 2) |
+
+- O item da Panorâmica II e o da Afrodite usaram os calendários da manhã (`--aceitar-velho`, itens de coerência).
+- O envio desses três sai no envio diário do PriceLabs. A cota de recálculo da Panorâmica I acabou até 21/11 ~16:50.
+
 ## O que só pode ser feito na tela (passo a passo para você)
 
 1. **Safety Minimum Price → "Do Not Apply"** (Dynamic Pricing → Customizations → aba Groups → Edit no grupo Recanto dos Moinhos → All Customizations → Safety Minimum Price). Anote o valor atual antes.

@@ -6418,6 +6418,21 @@ Relatório: `pricelabs/pesquisa-booking/diaria-2026-11-19/ranking-suites-compara
 
 O agendamento do passo 2 (Moinhos 20 e 21/11 a R$ 2.100, ordem `dono-2026-11-18-moinhos-escada-feriado`) disparou às 10:00 e **não foi gravado**. A mudança manual do dono de 19/11 22:23 BRT (recomendado −20% em 20-22/11, nos 7 quartos) é mais nova e substituiu a escada; as noites estão congeladas (`manual-2026-11-20-q7-2026-11-20`). O Moinhos segue no preço do dono (R$ 2.195 enviados no Beds24 às 07:55).
 
+## 20/11/2026, 10:53 a 11:05 BRT — Rotina leve das 10:53
+
+**Beds24 desde 07:48 BRT:** 0 novas, 1 cancelada (Balcony 20→22/11 pela Booking, R$ 2.147; noite congelada pela mudança manual do dono, sem ação de preço), 7 alteradas (check-ins de hoje). Segurança: nenhum alerta.
+- **Abaixo do planejado:** 3 check-ins de hoje (King Spa 7 direta R$ 540, King Spa 2 Airbnb R$ 415, King Spa 7 Booking R$ 1.273). São reservas antigas comparadas com o preço de hoje, que o dono subiu na véspera.
+
+**Logs do PriceLabs:** só as gravações da skill das 08:06-08:07 e a mudança manual do dono de 19/11 22:23 (já congelada). Nada novo.
+
+**Envio:** o envio diário não saiu hoje. O `last_date_pushed` dos 7 quartos ficou em 19/11 22:29 BRT, o envio que veio com a mudança manual do dono. As 11 noites gravadas às 08:06 seguiam com o preço velho no Beds24 (Moinhos 27-28/11 ainda R$ 1.232).
+- Feito: recálculo e Sync Now às 10:58-10:59 em Moinhos, King Spa 7, King Spa 2 e Balcony.
+- Às 11:03, todas no Beds24 com o valor certo: Moinhos 27/11 R$ 1.185 e 28/11 R$ 1.314; King Spa 7 R$ 1.569 / 1.421 / 1.687; King Spa 2 R$ 1.562 / 1.295 / 1.689; Balcony R$ 1.397 / 1.130 / 1.460 (27/11, 30/11, 04/01).
+
+**Booking (segurança e vitrine, 27→29/11, conector oficial):**
+- Recanto: id 7562933, Rua Januário Pereira 575; R$ 1.297 pelas 2 noites; razão 0,53 sobre o Moinhos (R$ 1.232 antes do envio). Normal.
+- Villa: id 14824789, R. das Candelas 79; R$ 1.691; razão 0,64 sobre a Balcony. Normal.
+
 ## O que só pode ser feito na tela (passo a passo para você)
 
 1. **Safety Minimum Price → "Do Not Apply"** (Dynamic Pricing → Customizations → aba Groups → Edit no grupo Recanto dos Moinhos → All Customizations → Safety Minimum Price). Anote o valor atual antes.

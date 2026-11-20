@@ -6456,6 +6456,38 @@ O agendamento do passo 2 (Moinhos 20 e 21/11 a R$ 2.100, ordem `dono-2026-11-18-
 - Os 2 itens do lote (Afrodite sexta 20/11 abrir; King Spa 2 sábado 21/11 fechar) ficaram de fora: noites congeladas pela mudança do dono.
 - Balcony 27/11 segue "a observar".
 
+## 20/11/2026, 15:20 a 15:45 BRT — Vender todas as suítes com banheira do fim de semana (pedido do dono)
+
+**Pedido do dono (literal):** "Vamos vender as vagas desse final de semana todas . Crie um plano para garantirmos que vamos vender todas as suites com banheira ." Ordem `dono-2026-11-20-vender-fds-banheira` (preco_por_data, 21-22/11; libera abaixo_piso, acima_15, estadia). As noites saíram do congelamento da mudança manual de 19/11 só nesses quartos e noites (`noites_fora`).
+
+**Vagas com banheira às 15:24 (Beds24):** sábado 21/11 King Spa 7 (1) e King Spa 2 (2); domingo 22/11 Moinhos (5), Panorâmica I (3) e Afrodite (1). Hoje (20/11) não há vaga; há overbooking no Moinhos (−2) e na King Spa 7 (−1).
+
+**Mercado ao vivo na Booking** (workflow só de leitura, quarto com banheira de cada concorrente, conferido por cético):
+- Sábado: p25 R$ 1.113, p40 R$ 1.216, p50 R$ 1.260.
+- Domingo: p25 R$ 348, p40 R$ 416, p50 R$ 469; só com café, p50 R$ 521.
+- Antes: King Spa a R$ 1.253 e 1.460 na vitrine; Moinhos a R$ 628 com café (~p89 do domingo).
+
+**Gravado** (PriceLabs, percent_base, piso = teto, conferido na resposta):
+
+| Noite | Quarto | Antes | Enviado | Público (aprox.) |
+|---|---|---|---|---|
+| sáb 21/11 | King Spa 2 | R$ 2.557 | R$ 2.286 | R$ 1.120 (p25) |
+| sáb 21/11 | King Spa 7 | R$ 2.980 | R$ 2.412 | R$ 1.180 (p25-p40) |
+| dom 22/11 | Moinhos | R$ 900 | R$ 751 | R$ 524 com café |
+| dom 22/11 | Panorâmica I | R$ 1.273 | R$ 844 | R$ 589 com café |
+| dom 22/11 | Afrodite | R$ 1.620 | R$ 1.060 | R$ 740 com café |
+
+- Sábado fica acima do piso de feriado (R$ 800 reais ÷ 0,39 = R$ 2.051 enviados).
+- Domingo fica no limite de segurança do validador (70% do mínimo do anúncio; só o dono muda).
+
+**Envio:**
+- Recálculo e Sync Now às 15:38-15:39 na King Spa 2, Moinhos, Panorâmica I e Afrodite. Às 15:44 o price1 no Beds24 confere nos 4.
+- A King Spa 7 ficou sem vaga de recálculo (3 de 3). Recálculo e Sync Now agendados para 21/11 08:05 BRT; até lá o Beds24 mostra R$ 3.265, preço flutuante da mudança do dono.
+
+**Fora:** a Balcony (sem banheira) segue congelada pela mudança manual do dono. A Regra G avisou: Balcony 21/11 R$ 2.198, acima de 90% da King Spa 2.
+
+**Como desfazer:** regravar o "antes R$" em percent_base nas 5 noites e tirar as noites de `noites_fora` das ordens manuais.
+
 ## O que só pode ser feito na tela (passo a passo para você)
 
 1. **Safety Minimum Price → "Do Not Apply"** (Dynamic Pricing → Customizations → aba Groups → Edit no grupo Recanto dos Moinhos → All Customizations → Safety Minimum Price). Anote o valor atual antes.

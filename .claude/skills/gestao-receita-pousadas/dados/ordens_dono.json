@@ -15135,6 +15135,90 @@
    "gatilho_dias": 7,
    "gatilho_min_dias": 2,
    "nota": "F2 (Dia de semana (dom-qui)): régua com hidro medida em noite vizinha (03/03, 3 dias) (1 estadia), p50 R$ 572 público, p90 R$ 1975; ÷ 0.650 (Booking/enviado; ÷ 0.585 nos degraus de D7 ou menos); nunca abaixo do piso do dono. Gatilho de D7 sem venda nova: F1 (ou o piso do dono). Afrodite pelo prêmio dela e Balcony 10% abaixo (Regra G). Como desfazer: pedir 'Volte às ordens anteriores de 28/02/27'."
+  },
+  {
+   "id": "manual-2026-11-20-q7-2026-11-20",
+   "data": "2026-11-20",
+   "texto": "Mudança manual pela tela do PriceLabs (19/11 22:23 BRT, web, sem API, os 7 quartos de uma vez): de 20 a 22/11, preço = recomendado −20% (price −20% percent; piso e teto −20% sobre o mínimo e o máximo do anúncio) e estadia mínima por data retirada; substitui as regras de piso = teto da skill (no Moinhos, o passo 1 da escada, R$ 2.557, e o passo 2 das 10:00 de 20/11 deixam de valer). Respeitada e congelada.",
+   "quartos": [
+    "Q7"
+   ],
+   "de": "2026-11-20",
+   "ate": "2026-11-22",
+   "tipo": "manual",
+   "libera": []
+  },
+  {
+   "id": "manual-2026-11-20-double-2026-11-20",
+   "data": "2026-11-20",
+   "texto": "Mudança manual pela tela do PriceLabs (19/11 22:23 BRT, web, sem API, os 7 quartos de uma vez): de 20 a 22/11, preço = recomendado −20% (price −20% percent; piso e teto −20% sobre o mínimo e o máximo do anúncio) e estadia mínima por data retirada; substitui as regras de piso = teto da skill (no Moinhos, o passo 1 da escada, R$ 2.557, e o passo 2 das 10:00 de 20/11 deixam de valer). Respeitada e congelada.",
+   "quartos": [
+    "Double"
+   ],
+   "de": "2026-11-20",
+   "ate": "2026-11-22",
+   "tipo": "manual",
+   "libera": []
+  },
+  {
+   "id": "manual-2026-11-20-afrodite-2026-11-20",
+   "data": "2026-11-20",
+   "texto": "Mudança manual pela tela do PriceLabs (19/11 22:23 BRT, web, sem API, os 7 quartos de uma vez): de 20 a 22/11, preço = recomendado −20% (price −20% percent; piso e teto −20% sobre o mínimo e o máximo do anúncio) e estadia mínima por data retirada; substitui as regras de piso = teto da skill (no Moinhos, o passo 1 da escada, R$ 2.557, e o passo 2 das 10:00 de 20/11 deixam de valer). Respeitada e congelada.",
+   "quartos": [
+    "Afrodite"
+   ],
+   "de": "2026-11-20",
+   "ate": "2026-11-22",
+   "tipo": "manual",
+   "libera": []
+  },
+  {
+   "id": "manual-2026-11-20-q2-2026-11-20",
+   "data": "2026-11-20",
+   "texto": "Mudança manual pela tela do PriceLabs (19/11 22:23 BRT, web, sem API, os 7 quartos de uma vez): de 20 a 22/11, preço = recomendado −20% (price −20% percent; piso e teto −20% sobre o mínimo e o máximo do anúncio) e estadia mínima por data retirada; substitui as regras de piso = teto da skill (no Moinhos, o passo 1 da escada, R$ 2.557, e o passo 2 das 10:00 de 20/11 deixam de valer). Respeitada e congelada.",
+   "quartos": [
+    "Q2"
+   ],
+   "de": "2026-11-20",
+   "ate": "2026-11-22",
+   "tipo": "manual",
+   "libera": []
+  },
+  {
+   "id": "manual-2026-11-20-vk7-2026-11-20",
+   "data": "2026-11-20",
+   "texto": "Mudança manual pela tela do PriceLabs (19/11 22:23 BRT, web, sem API, os 7 quartos de uma vez): de 20 a 22/11, preço = recomendado −20% (price −20% percent; piso e teto −20% sobre o mínimo e o máximo do anúncio) e estadia mínima por data retirada; substitui as regras de piso = teto da skill (no Moinhos, o passo 1 da escada, R$ 2.557, e o passo 2 das 10:00 de 20/11 deixam de valer). Respeitada e congelada.",
+   "quartos": [
+    "VK7"
+   ],
+   "de": "2026-11-20",
+   "ate": "2026-11-22",
+   "tipo": "manual",
+   "libera": []
+  },
+  {
+   "id": "manual-2026-11-20-balcony-2026-11-20",
+   "data": "2026-11-20",
+   "texto": "Mudança manual pela tela do PriceLabs (19/11 22:23 BRT, web, sem API, os 7 quartos de uma vez): de 20 a 22/11, preço = recomendado −20% (price −20% percent; piso e teto −20% sobre o mínimo e o máximo do anúncio) e estadia mínima por data retirada; substitui as regras de piso = teto da skill (no Moinhos, o passo 1 da escada, R$ 2.557, e o passo 2 das 10:00 de 20/11 deixam de valer). Respeitada e congelada.",
+   "quartos": [
+    "Balcony"
+   ],
+   "de": "2026-11-20",
+   "ate": "2026-11-22",
+   "tipo": "manual",
+   "libera": []
+  },
+  {
+   "id": "manual-2026-11-20-vk2-2026-11-20",
+   "data": "2026-11-20",
+   "texto": "Mudança manual pela tela do PriceLabs (19/11 22:23 BRT, web, sem API, os 7 quartos de uma vez): de 20 a 22/11, preço = recomendado −20% (price −20% percent; piso e teto −20% sobre o mínimo e o máximo do anúncio) e estadia mínima por data retirada; substitui as regras de piso = teto da skill (no Moinhos, o passo 1 da escada, R$ 2.557, e o passo 2 das 10:00 de 20/11 deixam de valer). Respeitada e congelada.",
+   "quartos": [
+    "VK2"
+   ],
+   "de": "2026-11-20",
+   "ate": "2026-11-22",
+   "tipo": "manual",
+   "libera": []
   }
  ]
 }

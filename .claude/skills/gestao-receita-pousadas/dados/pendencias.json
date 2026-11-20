@@ -1584,14 +1584,18 @@
       "responsavel": "skill",
       "desde": "2026-11-19",
       "urgencia": 1,
-      "texto": "Rotina completa de 20/11 07:53: NÃO recalcule o Moinhos (Q7). Use o recálculo de 19/11 14:01 com mesclar_recalculo --velhos/--aceitar-velho. Os recálculos do Moinhos foram 19/11 07:56, 10:57 e 14:01 BRT; as vagas reabrem 20/11 às 07:56, 10:57 e 14:01. A vaga das 07:56 é a única antes do passo 2 da escada (20/11 10:00, R$ 2.100, trigger trig_01Ks4GQ3dCmC4yd8KJEtBZrn), que precisa de recálculo e Sync Now para chegar à Booking no dia do feriado."
+      "texto": "Rotina completa de 20/11 07:53: NÃO recalcule o Moinhos (Q7). Use o recálculo de 19/11 14:01 com mesclar_recalculo --velhos/--aceitar-velho. Os recálculos do Moinhos foram 19/11 07:56, 10:57 e 14:01 BRT; as vagas reabrem 20/11 às 07:56, 10:57 e 14:01. A vaga das 07:56 é a única antes do passo 2 da escada (20/11 10:00, R$ 2.100, trigger trig_01Ks4GQ3dCmC4yd8KJEtBZrn), que precisa de recálculo e Sync Now para chegar à Booking no dia do feriado.",
+      "resolvido_em": "2026-11-20",
+      "resolucao": "Sem efeito: a mudança manual do dono de 19/11 22:23 BRT (recomendado −20% em 20-22/11, os 7 quartos) substituiu a escada; o passo 2 das 10:00 não se aplica. A vaga das 07:56 foi usada pela rotina completa (Moinhos recalculado 08:03)."
     },
     {
       "id": "moinhos-2728-degrau-20261120",
       "responsavel": "skill",
       "desde": "2026-11-19",
       "urgencia": 1,
-      "texto": "Moinhos 27-28/11: a 4ª unidade foi vendida em 19/11 ~19:30 BRT (Booking 27→29, R$ 1.631; Beds24 com 3 livres de 7 nas duas noites). Pelo plano do dono de 09/11 (fds), o +7% começa na 4ª unidade. Sem vaga de recálculo do Moinhos até 20/11 07:56 (reservada ao passo 2 da escada das 10:00), o degrau não foi aplicado em 19/11. Aplique na rotina das 10:53 de 20/11 com o recálculo do passo 2 (pace.py plano --noites Q7=2026-11-27..2026-11-28 com --regras e --janelas): validar, gravar, registrar no ledger e conferir o price1."
+      "texto": "Moinhos 27-28/11: a 4ª unidade foi vendida em 19/11 ~19:30 BRT (Booking 27→29, R$ 1.631; Beds24 com 3 livres de 7 nas duas noites). Pelo plano do dono de 09/11 (fds), o +7% começa na 4ª unidade. Sem vaga de recálculo do Moinhos até 20/11 07:56 (reservada ao passo 2 da escada das 10:00), o degrau não foi aplicado em 19/11. Aplique na rotina das 10:53 de 20/11 com o recálculo do passo 2 (pace.py plano --noites Q7=2026-11-27..2026-11-28 com --regras e --janelas): validar, gravar, registrar no ledger e conferir o price1.",
+      "resolvido_em": "2026-11-20",
+      "resolucao": "Aplicado na rotina completa de 20/11 (08:06 BRT): Moinhos 28/11 R$ 1.232 → 1.306 (+7%, 4/7); 27/11 R$ 1.232 → 1.175 (+7% e −10% a D7 com menos de 60% vendido). Conferido na resposta."
     }
   ],
   "versao": "2026-11-12T13"

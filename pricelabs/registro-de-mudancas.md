@@ -6375,6 +6375,45 @@ Relatório: `pricelabs/pesquisa-booking/diaria-2026-11-19/ranking-suites-compara
 
 **Inventário de 19 a 29/11:** nenhuma noite esgotou ou reabriu além da noite de hoje. Sem órfã ou janela nova.
 
+## 20/11/2026, 07:53 a 08:20 BRT — Rotina completa (sexta, feriado)
+
+**Mudança manual do dono (logs do PriceLabs):** 19/11 às 22:23 BRT, pela tela (`add_custom_pricing`, web, sem API), nos 7 quartos de uma vez, enviada às 22:29.
+- De 20 a 22/11: preço = recomendado do PriceLabs −20% (price −20% percent; piso e teto −20% sobre o mínimo e o máximo do anúncio) e estadia mínima por data retirada.
+- Substituiu as regras de piso = teto da skill. Exemplos de preço enviado (Beds24): Moinhos 20-21 R$ 2.557 → 2.195; Panorâmica I 20/11 R$ 3.004 → 3.467; Afrodite 20/11 R$ 6.411 → 4.686; King Spa 7 20/11 R$ 3.004 → 4.000; Balcony 20-21 R$ 2.705 → 1.882.
+- Respeitada e congelada (`ordens.py manual`, 7 ordens `manual-2026-11-20-*`). O passo 2 da escada do Moinhos (20/11 10:00, R$ 2.100) não se aplica.
+
+**Beds24 desde ontem 19:48 BRT:** 6 novas (2 do Airbnb ainda em consulta), 2 canceladas. Segurança: nenhum alerta.
+- **Abaixo do planejado** (diretas da recepção, price1 de hoje):
+  - King Spa 2 07→09/12, R$ 500 (11%), VillaRecep1; substitui uma reserva direta de R$ 1.456 cancelada na mesma noite;
+  - King Spa 7 04/01, R$ 450 (28%), VillaRecep1;
+  - King Spa 7 03→05/02, R$ 900 (31%), isaacmiguel.
+
+**Ocupação real (Beds24, confirmadas + novas):**
+
+| Janela | Recanto | Villa |
+|---|---|---|
+| 20 a 27/11 | 45% (50/112), R$ 37,6 mil | 67% (70/105), R$ 42,3 mil |
+| 20/11 a 05/12 | 42%, R$ 75,3 mil | 54%, R$ 70,2 mil |
+| 20/11 a 04/01 | 26%, R$ 145,0 mil | 38%, R$ 173,2 mil |
+
+**Recálculos:** os 7 quartos às 08:03-08:04 (o Moinhos usou a vaga das 07:56, livre porque o passo 2 da escada caiu).
+
+**Motor de pace** (PriceLabs, percent_base, piso = teto, 11 noites em 4 quartos, gravadas às 08:06-08:07 e conferidas na resposta; 9 passos no ledger):
+- **Moinhos:**
+  - 28/11: R$ 1.232 → 1.306 (+7% pela 4ª unidade vendida, plano do dono de 09/11).
+  - 27/11: R$ 1.232 → 1.175 (+7% e −10% a D7, com menos de 60% vendido).
+  - 19/12: estadia 1 → 2 (sábado), preço mantido.
+- **King Spa 7 e King Spa 2 27/11:** R$ 1.732 e 1.740 → 1.555 (plano do dono, −10% a D7). 30/11 e 04/01: degrau da escada (+5% a +10%).
+- **Balcony:** 27/11 R$ 1.549 → 1.397 (Regra G); 30/11 R$ 1.016 → 1.130; 04/01 R$ 1.435 → 1.461.
+- **Fora do plano:** 22 itens da Villa nas noites do lote suspeito da Booking (24-26/11, 06/12, 13-16/12), até a recepção confirmar. Entre eles, a proteção p90 da King Spa nas noites esgotadas.
+
+**Beds24:** sábado 20/11/2027 (novo dia no horizonte de 12 meses) fechado para entrada e saída em 6 quartos; conferido.
+- De fora: Afrodite sexta 20/11 (abrir entrada e saída) e King Spa 2 sábado 21/11 (fechar). As duas noites estão congeladas pela mudança manual do dono.
+
+**Janelas:** Panorâmica II 02/12 e King Spa 2 09/01 mantidas; Balcony 27/11 e King Spa 7 18/12 a observar.
+
+**Como desfazer:** cada regra traz "antes R$" no motivo; regravar esse valor em percent_base. Sábado de 2027-11-20 no Beds24: voltar a `none`.
+
 ## O que só pode ser feito na tela (passo a passo para você)
 
 1. **Safety Minimum Price → "Do Not Apply"** (Dynamic Pricing → Customizations → aba Groups → Edit no grupo Recanto dos Moinhos → All Customizations → Safety Minimum Price). Anote o valor atual antes.

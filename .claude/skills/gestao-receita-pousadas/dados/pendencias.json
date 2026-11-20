@@ -1596,6 +1596,20 @@
       "texto": "Moinhos 27-28/11: a 4ª unidade foi vendida em 19/11 ~19:30 BRT (Booking 27→29, R$ 1.631; Beds24 com 3 livres de 7 nas duas noites). Pelo plano do dono de 09/11 (fds), o +7% começa na 4ª unidade. Sem vaga de recálculo do Moinhos até 20/11 07:56 (reservada ao passo 2 da escada das 10:00), o degrau não foi aplicado em 19/11. Aplique na rotina das 10:53 de 20/11 com o recálculo do passo 2 (pace.py plano --noites Q7=2026-11-27..2026-11-28 com --regras e --janelas): validar, gravar, registrar no ledger e conferir o price1.",
       "resolvido_em": "2026-11-20",
       "resolucao": "Aplicado na rotina completa de 20/11 (08:06 BRT): Moinhos 28/11 R$ 1.232 → 1.306 (+7%, 4/7); 27/11 R$ 1.232 → 1.175 (+7% e −10% a D7 com menos de 60% vendido). Conferido na resposta."
+    },
+    {
+      "id": "moinhos-22-minimo-550-20261121",
+      "responsavel": "skill",
+      "desde": "2026-11-20",
+      "urgencia": 1,
+      "texto": "Ordem dono-2026-11-20-minimo-550-domingo ('3. Minimo de 550,00'). Em 21/11, na rotina das 07:53 ou no lembrete das 08:05 (trig_011MZmxZRM4WkSEfwfjNsB6J): se o dono respondeu (A) ou não respondeu até 07:50 e o Moinhos de 22/11 segue com vaga, gravar Q7 2026-11-22 piso = teto -29% percent_base (R$ 832,83 enviados; ~R$ 550,7 sem café e ~R$ 581 com café na Booking), recálculo (cota livre às 08:03), Sync Now, conferir price1 no Beds24 e a vitrine sem café ≥ R$ 550,00 15-35 min depois. Se (B): não gravar; o Moinhos fica a -36% (750,72) e não desce. Sábado à noite: Moinhos e Panorâmica I não descem (sem degrau acima de R$ 550 que respeite a ordem do Recanto); só a Afrodite pode descer, até ~-51% (R$ 980 enviados, ~R$ 648 na vitrine). King Spa de sábado: mantém o piso de feriado (R$ 2.051 enviados) até o dono dizer outra coisa."
+    },
+    {
+      "id": "dono-confirmar-minimo-550-20261120",
+      "responsavel": "dono",
+      "desde": "2026-11-20",
+      "urgencia": 1,
+      "texto": "Confirmar a leitura de '3. Minimo de 550,00' (20/11): (A) R$ 550 na vitrine da Booking, tarifa mais barata → Moinhos de domingo sobe de R$ 496 para ~R$ 551 (enviado 751 → 833); ou (B) o 550 só limita a descida → Moinhos fica a R$ 496 e não desce. E se o mínimo vale para as King Spa de sábado (hoje R$ 1.120-1.180 na Booking; piso de feriado ~R$ 1.005). Padrão sem resposta até 21/11 07:50: (A), e King Spa no piso de feriado."
     }
   ],
   "versao": "2026-11-12T13"

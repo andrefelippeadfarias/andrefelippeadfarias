@@ -6518,6 +6518,40 @@ O agendamento do passo 2 (Moinhos 20 e 21/11 a R$ 2.100, ordem `dono-2026-11-18-
 - O item da Panorâmica II e o da Afrodite usaram os calendários da manhã (`--aceitar-velho`, itens de coerência).
 - O envio desses três sai no envio diário do PriceLabs. A cota de recálculo da Panorâmica I acabou até 21/11 ~16:50.
 
+## 20/11/2026, 17:05 a 17:35 BRT — Respostas do dono às 3 decisões do fim de semana
+
+**Respostas do dono (literal):** "1. Mínimo de 1000 reais / 2. Sim / 3. Minimo de 550,00". As perguntas eram as do relatório das 16:53. A leitura passou por um painel de 3 leitores independentes e um cético (workflow `wf_2b1bc76e-1e2`).
+
+**Vitrine da Booking às 17:10, domingo 22→23/11** (conector oficial; preço da noite):
+
+| Quarto | Sem café | Com café, não reembolsável | Com café, flexível | Enviado |
+|---|---|---|---|---|
+| Moinhos | R$ 496 | R$ 524 | R$ 541 | R$ 751 |
+| Panorâmica I | R$ 558 | R$ 589 | R$ 607 | R$ 844 |
+| Afrodite | R$ 701 | R$ 740 | R$ 763 | R$ 1.060 |
+
+**1. Recepção** (ordem `dono-2026-11-20-extensao-domingo-1000`):
+- A quem sai no domingo, a recepção oferece a noite de 22→23/11 por no mínimo R$ 1.000 por noite e quarto, em venda direta.
+- Na Afrodite vale o maior entre R$ 1.000 e o price1.
+- Só no mesmo tipo de quarto e com vaga.
+- Nada muda no PriceLabs nem no Beds24.
+
+**2. Expedia do Recanto reaberta só em 22/11** (ordem `dono-2026-11-20-expedia-recanto-22`):
+- No Beds24, o limite de reservas do canal Expedia foi tirado (null) em 22/11 nos 4 quartos, às 17:22 BRT.
+- Conferido na leitura: 4 conferidos, 0 erro. 21 e 23/11 foram relidos com limite 0.
+- A noite de 22/11 saiu da ordem `dono-2026-11-18-expedia-recanto-19-23` (`noites_fora`).
+- Atenção: a Expedia entrega ~41-46% do price1, abaixo dos 49% da Booking.
+
+**3. Mínimo de R$ 550** (ordem `dono-2026-11-20-minimo-550-domingo`, libera abaixo_piso e acima_15):
+- Leitura principal (confiança 0,4-0,6): R$ 550 na vitrine da Booking, na tarifa mais barata, nas suítes com banheira do domingo.
+- O Moinhos está a R$ 496. Item preparado e validado: Moinhos 22/11 a −29% percent_base (R$ 832,83 enviados; ~R$ 550,7 sem café e ~R$ 581 com café). O validador arredondava 833 para −28% (R$ 844,56), acima da Panorâmica I; o alvo foi ajustado.
+- Panorâmica I e Afrodite já cumprem.
+- Pergunta ao dono: (A) subir ou (B) só limitar a descida. Sem resposta até 21/11 07:50, grava-se (A) no lembrete das 08:05 (recálculo do Moinhos livre às 08:03).
+- Sábado à noite: Moinhos e Panorâmica I não descem; só a Afrodite pode descer, até ~R$ 980 enviados.
+- King Spa de sábado: o 550 não vale; seguem no piso de feriado (R$ 2.051 enviados).
+
+**Inventário:** Panorâmica II com overbooking de −1 em 22/11 e King Spa 2 com −4 em 23/11 (noite do lote suspeito já conhecido). Vão para a recepção.
+
 ## O que só pode ser feito na tela (passo a passo para você)
 
 1. **Safety Minimum Price → "Do Not Apply"** (Dynamic Pricing → Customizations → aba Groups → Edit no grupo Recanto dos Moinhos → All Customizations → Safety Minimum Price). Anote o valor atual antes.

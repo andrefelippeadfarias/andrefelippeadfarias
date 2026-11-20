@@ -6414,6 +6414,10 @@ Relatório: `pricelabs/pesquisa-booking/diaria-2026-11-19/ranking-suites-compara
 
 **Como desfazer:** cada regra traz "antes R$" no motivo; regravar esse valor em percent_base. Sábado de 2027-11-20 no Beds24: voltar a `none`.
 
+## 20/11/2026, 10:00 BRT — Passo 2 da escada do Moinhos: não aplicado
+
+O agendamento do passo 2 (Moinhos 20 e 21/11 a R$ 2.100, ordem `dono-2026-11-18-moinhos-escada-feriado`) disparou às 10:00 e **não foi gravado**. A mudança manual do dono de 19/11 22:23 BRT (recomendado −20% em 20-22/11, nos 7 quartos) é mais nova e substituiu a escada; as noites estão congeladas (`manual-2026-11-20-q7-2026-11-20`). O Moinhos segue no preço do dono (R$ 2.195 enviados no Beds24 às 07:55).
+
 ## O que só pode ser feito na tela (passo a passo para você)
 
 1. **Safety Minimum Price → "Do Not Apply"** (Dynamic Pricing → Customizations → aba Groups → Edit no grupo Recanto dos Moinhos → All Customizations → Safety Minimum Price). Anote o valor atual antes.

@@ -6639,6 +6639,8 @@ O agendamento do passo 2 (Moinhos 20 e 21/11 a R$ 2.100, ordem `dono-2026-11-18-
 
 **Booking:** busca de segurança feita às 08:45 (Recanto e Villa conferem). Não repetida.
 
+**11:01 (lembrete do Moinhos):** a API do Beds24 continua fora (agora 000, sem resposta). Não recalculei, para não gastar a cota. Nova tentativa agendada para 12:00 (trig_01KNsMy23G8sYvfb2gq5Zq1A), com rodada, recálculo e Sync Now por prioridade.
+
 ## O que só pode ser feito na tela (passo a passo para você)
 
 1. **Safety Minimum Price → "Do Not Apply"** (Dynamic Pricing → Customizations → aba Groups → Edit no grupo Recanto dos Moinhos → All Customizations → Safety Minimum Price). Anote o valor atual antes.

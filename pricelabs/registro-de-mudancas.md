@@ -6703,6 +6703,7 @@ Recálculo da Panorâmica I às 15:41 (cota livre às 15:38): 22/11 R$ 858, 25/1
 
 - Recálculo (último do dia nos dois) e Sync Now às 17:04.
 - Conferido no Beds24 às ~17:06: Moinhos R$ 891, Panorâmica I R$ 903. Vitrine da Booking às 17:32.
+- **17:32, vitrine na Booking:** Moinhos R$ 564,38 sem café (R$ 595,74 com café); Panorâmica I R$ 571,98 (R$ 603,76 com café); Afrodite R$ 671,42. O mínimo de R$ 550 está cumprido com folga.
 
 ## O que só pode ser feito na tela (passo a passo para você)
 

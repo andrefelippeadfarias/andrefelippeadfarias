@@ -6676,7 +6676,7 @@ O agendamento do passo 2 (Moinhos 20 e 21/11 a R$ 2.100, ordem `dono-2026-11-18-
 
 **Inventário:** nada novo. Overbookings conhecidos: Panorâmica II 22/11 (−1); King Spa 2 23/11 (−4) e 24/11 (−3); King Spa 7 06/12 (−1).
 
-**Envio:** Panorâmica II recalculada às 13:54 (25/11 R$ 1.447, 26/11 R$ 1.510, 29-30/11 R$ 1.495, 03/12 R$ 1.574) e Sync Now. Conferência do price1 em andamento.
+**Envio:** Panorâmica II recalculada às 13:54 (25/11 R$ 1.447, 26/11 R$ 1.510, 29-30/11 R$ 1.495, 03/12 R$ 1.574) e Sync Now. Conferido no Beds24 às ~14:00: 25/11 R$ 1.447.
 
 ## O que só pode ser feito na tela (passo a passo para você)
 

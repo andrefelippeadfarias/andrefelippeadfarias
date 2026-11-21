@@ -6680,7 +6680,7 @@ O agendamento do passo 2 (Moinhos 20 e 21/11 a R$ 2.100, ordem `dono-2026-11-18-
 
 ## 21/11/2026, 15:41 BRT — Panorâmica I: envio do domingo e de 25-30/11
 
-Recálculo da Panorâmica I às 15:41 (cota livre às 15:38): 22/11 R$ 858, 25/11 R$ 1.643, 26/11 R$ 1.510, 29/11 R$ 1.732, 30/11 R$ 1.510. Sync Now às 15:41. Conferência do price1 no Beds24 em andamento (às 15:42 ainda R$ 844).
+Recálculo da Panorâmica I às 15:41 (cota livre às 15:38): 22/11 R$ 858, 25/11 R$ 1.643, 26/11 R$ 1.510, 29/11 R$ 1.732, 30/11 R$ 1.510. Sync Now às 15:41. Conferido no Beds24 às ~15:43: 22/11 R$ 858. Com isso os 7 quartos estão com as gravações de 21/11 nos canais. A vitrine da Booking será conferida na rotina das 16:53.
 
 ## O que só pode ser feito na tela (passo a passo para você)
 

@@ -1618,7 +1618,7 @@
       "responsavel": "dono",
       "desde": "2026-11-21",
       "urgencia": 1,
-      "texto": "SEGURANÇA: 3 reservas da Booking no padrão do lote suspeito de 17/11 (mesmo segundo, 'confirmed', comissão 0, Rate 65710606/65711478): ids 96515659 (King Spa 7 26→27/11, R$ 407), 96515660 (King Spa 2 02→15/01/2027, 13 noites, R$ 9.367) e 96515661 (King Spa 7 02→03/10/2027, R$ 927). Confirmar na extranet da Booking se existem; se não, a recepção cancela no Beds24 (a skill não cancela). Enquanto isso, as noites da Villa de 02 a 14/01/2027 ficam fora do plano do motor e a órfã da King Spa 2 em 13/01 não foi aberta."
+      "texto": "SEGURANÇA: 3 reservas da Booking no padrão do lote suspeito de 17/11 (mesmo segundo, 'confirmed', comissão 0, Rate 65710606/65711478): ids 96515659 (King Spa 7 26→27/11, R$ 407), 96515660 (King Spa 2 02→15/01/2027, 13 noites, R$ 9.367) e 96515661 (King Spa 7 02→03/10/2027, R$ 927). Confirmar na extranet da Booking se existem; se não, a recepção cancela no Beds24 (a skill não cancela). Enquanto isso, as noites da Villa de 02 a 14/01/2027 ficam fora do plano do motor e a órfã da King Spa 2 em 13/01 não foi aberta. | 21/11 13:53: atenção ao critério — a reserva 95652089 (King Spa 7 20/11, Booking, criada em 03/11) também tem Rate 65710606, comissão 0 e 'confirmed', e o hóspede fez check-in (alterada pela recepção). O padrão sozinho não prova fraude; o que pesa no lote de 3 é a criação no mesmo segundo e as datas estranhas (13 noites, 1 noite 11 meses à frente). Confirmar na extranet continua sendo o caminho."
     }
   ],
   "versao": "2026-11-12T13"

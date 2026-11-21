@@ -6665,6 +6665,19 @@ O agendamento do passo 2 (Moinhos 20 e 21/11 a R$ 2.100, ordem `dono-2026-11-18-
 
 **12:28, vitrine na Booking (22→23/11, conector oficial):** Moinhos R$ 550,75 sem café, R$ 581,35 com café e R$ 599,71 com café e estacionamento. O mínimo de R$ 550 do dono está cumprido. Panorâmica I a R$ 550,10, ainda com R$ 843,60 até o envio das 15:40 (vai a ~R$ 560). Afrodite a R$ 690,89.
 
+## 21/11/2026, 13:53 a 14:05 BRT — Rotina leve das 13:53
+
+**Beds24 desde 11:55 BRT:** 1 nova e 4 alteradas; 0 alerta de segurança.
+- **Nova:** Balcony 21→23/11, direta, R$ 321 pelas 2 noites (10% do esperado de R$ 3.174), lançada pela recepção da Villa. Parece erro de lançamento: a recepção deve conferir.
+- **Alterada:** King Spa 2 04→07/12 pela Expedia (rede de afiliados), R$ 1.239-1.301 (21%). É reserva antiga, de antes do fechamento da Expedia da Villa.
+- **Alteradas:** 3 reservas de 20/11 (check-out).
+  - Uma delas (King Spa 7, Booking, criada em 03/11) tem o mesmo padrão do lote suspeito (Rate 65710606, comissão 0, 'confirmed') e foi uma hospedagem real.
+  - O padrão sozinho não prova fraude. O que pesa no lote de 3 de ontem é a criação no mesmo segundo e as datas atípicas.
+
+**Inventário:** nada novo. Overbookings conhecidos: Panorâmica II 22/11 (−1); King Spa 2 23/11 (−4) e 24/11 (−3); King Spa 7 06/12 (−1).
+
+**Envio:** Panorâmica II recalculada às 13:54 (25/11 R$ 1.447, 26/11 R$ 1.510, 29-30/11 R$ 1.495, 03/12 R$ 1.574) e Sync Now. Conferência do price1 em andamento.
+
 ## O que só pode ser feito na tela (passo a passo para você)
 
 1. **Safety Minimum Price → "Do Not Apply"** (Dynamic Pricing → Customizations → aba Groups → Edit no grupo Recanto dos Moinhos → All Customizations → Safety Minimum Price). Anote o valor atual antes.

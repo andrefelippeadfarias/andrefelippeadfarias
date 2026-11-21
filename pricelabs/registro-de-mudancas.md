@@ -6663,6 +6663,8 @@ O agendamento do passo 2 (Moinhos 20 e 21/11 a R$ 2.100, ordem `dono-2026-11-18-
 - Panorâmica II (25-30/11 e 03/12): a trava não repete na mesma rodada um recálculo que falhou; fica para a rotina das 13:53.
 - Vitrine do Moinhos na Booking: lembrete às 12:28.
 
+**12:28, vitrine na Booking (22→23/11, conector oficial):** Moinhos R$ 550,75 sem café, R$ 581,35 com café e R$ 599,71 com café e estacionamento. O mínimo de R$ 550 do dono está cumprido. Panorâmica I a R$ 550,10, ainda com R$ 843,60 até o envio das 15:40 (vai a ~R$ 560). Afrodite a R$ 690,89.
+
 ## O que só pode ser feito na tela (passo a passo para você)
 
 1. **Safety Minimum Price → "Do Not Apply"** (Dynamic Pricing → Customizations → aba Groups → Edit no grupo Recanto dos Moinhos → All Customizations → Safety Minimum Price). Anote o valor atual antes.

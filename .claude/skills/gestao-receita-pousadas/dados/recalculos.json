@@ -1015,6 +1015,12 @@
    "resultado": "ok",
    "id_ms": 1795259145184,
    "registrado_em": "2026-11-21T11:05:52Z"
+  },
+  {
+   "quarto": "Q2",
+   "em": "2026-11-21T13:55:36Z",
+   "resultado": "falha",
+   "registrado_em": "2026-11-21T13:55:36Z"
   }
  ]
 }

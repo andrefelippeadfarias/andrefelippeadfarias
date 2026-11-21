@@ -6620,6 +6620,25 @@ O agendamento do passo 2 (Moinhos 20 e 21/11 a R$ 2.100, ordem `dono-2026-11-18-
 - Recanto: id 7562933, nome confere.
 - Villa: id 14824789, R. das Candelas 79. Balcony 22/11 a R$ 509,97 (razão 0,43, perto do limite de alerta de 0,42).
 
+## 21/11/2026, 10:53 a 11:00 BRT — Rotina leve das 10:53 (Beds24 fora)
+
+**Vigia sem Beds24:** a API v2 do Beds24 responde 200 com corpo vazio desde as 10:53 (até em chamada sem credencial; o site deles responde normalmente). Três tentativas da rodada e três do curl falharam.
+- Plano B: a lista de reservas do PriceLabs veio vazia ("lista não importada").
+- Não dá para dizer se houve reserva nova desde 07:48.
+
+**Logs do PriceLabs:** só as gravações da skill de hoje (08:03-08:45). Nenhuma mudança manual.
+
+**Envio:** o envio diário não saiu de novo.
+- Só o Moinhos tem envio hoje (Sync Now das 08:04).
+- Os outros 6 quartos seguem com o envio de 20/11 (15:27-15:39 BRT).
+- As gravações das 08:13-08:45 (motor de pace e o domingo do Moinhos e da Panorâmica I) ainda não estão nos canais.
+
+**Recálculo:** o teste com a Panorâmica II às 10:55 deu erro 500 do PriceLabs, provavelmente pela queda do Beds24. A falha conta na cota (restam 1).
+- Nenhum outro quarto foi tentado.
+- O Moinhos (cota livre às 10:58) fica para o lembrete das 11:00, se o Beds24 tiver voltado.
+
+**Booking:** busca de segurança feita às 08:45 (Recanto e Villa conferem). Não repetida.
+
 ## O que só pode ser feito na tela (passo a passo para você)
 
 1. **Safety Minimum Price → "Do Not Apply"** (Dynamic Pricing → Customizations → aba Groups → Edit no grupo Recanto dos Moinhos → All Customizations → Safety Minimum Price). Anote o valor atual antes.

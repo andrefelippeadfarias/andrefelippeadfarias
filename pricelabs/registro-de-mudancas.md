@@ -6678,6 +6678,10 @@ O agendamento do passo 2 (Moinhos 20 e 21/11 a R$ 2.100, ordem `dono-2026-11-18-
 
 **Envio:** Panorâmica II recalculada às 13:54 (25/11 R$ 1.447, 26/11 R$ 1.510, 29-30/11 R$ 1.495, 03/12 R$ 1.574) e Sync Now. Conferido no Beds24 às ~14:00: 25/11 R$ 1.447.
 
+## 21/11/2026, 15:41 BRT — Panorâmica I: envio do domingo e de 25-30/11
+
+Recálculo da Panorâmica I às 15:41 (cota livre às 15:38): 22/11 R$ 858, 25/11 R$ 1.643, 26/11 R$ 1.510, 29/11 R$ 1.732, 30/11 R$ 1.510. Sync Now às 15:41. Conferência do price1 no Beds24 em andamento (às 15:42 ainda R$ 844).
+
 ## O que só pode ser feito na tela (passo a passo para você)
 
 1. **Safety Minimum Price → "Do Not Apply"** (Dynamic Pricing → Customizations → aba Groups → Edit no grupo Recanto dos Moinhos → All Customizations → Safety Minimum Price). Anote o valor atual antes.

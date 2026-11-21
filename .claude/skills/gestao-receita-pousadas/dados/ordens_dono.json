@@ -15271,8 +15271,8 @@
      "VK2": 2286
     },
     "2026-11-22": {
-     "Q7": 844.56,
-     "Double": 858.4,
+     "Q7": 891.48,
+     "Double": 902.8,
      "Afrodite": 1060
     }
    },
@@ -15340,18 +15340,18 @@
    "item_preparado": {
     "Q7": {
      "2026-11-22": {
-      "percent_base": -28,
-      "enviado": 844.56
+      "percent_base": -24,
+      "enviado": 891.48
      }
     },
     "Double": {
      "2026-11-22": {
-      "percent_base": -42,
-      "enviado": 858.4
+      "percent_base": -39,
+      "enviado": 902.8
      }
     }
    },
-   "estado": "aplicada (leitura A, sem resposta do dono até 07:50 de 21/11): Moinhos 22/11 -29% às 08:03 (R$ 832,83; recálculo 08:04, Sync Now, price1 833 no Beds24); vitrine às 08:44 R$ 542,93 sem café (razão D1 0,652, tarifa do dia só com cancelamento grátis) → Moinhos -28% (R$ 844,56) e Panorâmica I -42% (R$ 858,40, acima do Moinhos) às 08:44-08:45; envio do Moinhos às 11:00 (cota 10:58) e da Panorâmica I às 15:40 (cota 15:38)",
+   "estado": "aplicada (leitura A, sem resposta do dono até 07:50 de 21/11): Moinhos 22/11 -29% às 08:03 (R$ 832,83; recálculo 08:04, Sync Now, price1 833 no Beds24); vitrine às 08:44 R$ 542,93 sem café (razão D1 0,652, tarifa do dia só com cancelamento grátis) → Moinhos -28% (R$ 844,56) e Panorâmica I -42% (R$ 858,40, acima do Moinhos) às 08:44-08:45; envio do Moinhos às 11:00 (cota 10:58) e da Panorâmica I às 15:40 (cota 15:38); 16:55: a razão D1 caiu para 0,633 (Moinhos R$ 535,24 e Panorâmica I R$ 543,48 sem café) → Moinhos -24% (R$ 891,48) e Panorâmica I -39% (R$ 902,80), margem até razão 0,62; recálculo e Sync Now às 17:04",
    "libera": [
     "abaixo_piso",
     "acima_15"

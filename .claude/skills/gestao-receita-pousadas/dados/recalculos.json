@@ -1070,6 +1070,20 @@
    "resultado": "ok",
    "id_ms": 1795286484047,
    "registrado_em": "2026-11-21T18:41:28Z"
+  },
+  {
+   "quarto": "Q7",
+   "em": "2026-11-21T20:04:18Z",
+   "resultado": "ok",
+   "id_ms": 1795291458121,
+   "registrado_em": "2026-11-21T20:04:21Z"
+  },
+  {
+   "quarto": "Double",
+   "em": "2026-11-21T20:04:32Z",
+   "resultado": "ok",
+   "id_ms": 1795291472742,
+   "registrado_em": "2026-11-21T20:04:36Z"
   }
  ]
 }

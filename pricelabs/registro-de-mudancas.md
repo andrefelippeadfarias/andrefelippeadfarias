@@ -6682,6 +6682,28 @@ O agendamento do passo 2 (Moinhos 20 e 21/11 a R$ 2.100, ordem `dono-2026-11-18-
 
 Recálculo da Panorâmica I às 15:41 (cota livre às 15:38): 22/11 R$ 858, 25/11 R$ 1.643, 26/11 R$ 1.510, 29/11 R$ 1.732, 30/11 R$ 1.510. Sync Now às 15:41. Conferido no Beds24 às ~15:43: 22/11 R$ 858. Com isso os 7 quartos estão com as gravações de 21/11 nos canais. A vitrine da Booking será conferida na rotina das 16:53.
 
+## 21/11/2026, 16:53 a 17:06 BRT — Rotina leve das 16:53
+
+**Beds24 desde 13:48 BRT:** nenhuma reserva nova nem cancelamento; 3 alteradas (check-ins de hoje); 0 alerta de segurança.
+- A Balcony direta 21→23/11 segue com R$ 321 (10%), sem correção da recepção.
+
+**Inventário:** nada novo. Os overbookings são os já conhecidos.
+
+**Vitrine de domingo 22/11 (Booking, 16:55):**
+- A razão Booking ÷ enviado caiu de 0,652 para 0,633 com os mesmos preços enviados.
+- Moinhos R$ 535,24 sem café (R$ 564,98 com café) com R$ 845; Panorâmica I R$ 543,48 com R$ 858; Afrodite R$ 671,42 com R$ 1.060.
+- Mínimo de R$ 550 do dono (tarifa mais barata) quebrado no Moinhos e na Panorâmica I.
+
+**Gravado** (ordem `dono-2026-11-20-minimo-550-domingo`, percent_base, piso = teto, validado, logs sem mudança manual):
+
+| Noite | Quarto | Antes | Agora | Na Booking (razão 0,633) | Na Booking (razão 0,62) |
+|---|---|---|---|---|---|
+| dom 22/11 | Moinhos | R$ 845 | R$ 891,48 (−24%) | ~R$ 564 | ~R$ 553 |
+| dom 22/11 | Panorâmica I | R$ 858 | R$ 902,80 (−39%) | ~R$ 572 | ~R$ 560 |
+
+- Recálculo (último do dia nos dois) e Sync Now às 17:04.
+- Conferência no Beds24 em andamento; vitrine da Booking às 17:32.
+
 ## O que só pode ser feito na tela (passo a passo para você)
 
 1. **Safety Minimum Price → "Do Not Apply"** (Dynamic Pricing → Customizations → aba Groups → Edit no grupo Recanto dos Moinhos → All Customizations → Safety Minimum Price). Anote o valor atual antes.

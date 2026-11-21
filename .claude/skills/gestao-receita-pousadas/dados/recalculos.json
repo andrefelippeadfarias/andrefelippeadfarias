@@ -966,6 +966,55 @@
    "resultado": "ok",
    "id_ms": 1795204550282,
    "registrado_em": "2026-11-20T19:55:57Z"
+  },
+  {
+   "quarto": "Q7",
+   "em": "2026-11-21T11:04:02Z",
+   "resultado": "ok",
+   "id_ms": 1795259042823,
+   "registrado_em": "2026-11-21T11:04:08Z"
+  },
+  {
+   "quarto": "Double",
+   "em": "2026-11-21T11:04:30Z",
+   "resultado": "ok",
+   "id_ms": 1795259070616,
+   "registrado_em": "2026-11-21T11:04:35Z"
+  },
+  {
+   "quarto": "Afrodite",
+   "em": "2026-11-21T11:04:44Z",
+   "resultado": "ok",
+   "id_ms": 1795259084726,
+   "registrado_em": "2026-11-21T11:04:48Z"
+  },
+  {
+   "quarto": "Q2",
+   "em": "2026-11-21T11:04:59Z",
+   "resultado": "ok",
+   "id_ms": 1795259099305,
+   "registrado_em": "2026-11-21T11:05:03Z"
+  },
+  {
+   "quarto": "VK7",
+   "em": "2026-11-21T11:05:14Z",
+   "resultado": "ok",
+   "id_ms": 1795259114722,
+   "registrado_em": "2026-11-21T11:05:19Z"
+  },
+  {
+   "quarto": "Balcony",
+   "em": "2026-11-21T11:05:29Z",
+   "resultado": "ok",
+   "id_ms": 1795259129920,
+   "registrado_em": "2026-11-21T11:05:34Z"
+  },
+  {
+   "quarto": "VK2",
+   "em": "2026-11-21T11:05:45Z",
+   "resultado": "ok",
+   "id_ms": 1795259145184,
+   "registrado_em": "2026-11-21T11:05:52Z"
   }
  ]
 }

@@ -6705,6 +6705,25 @@ Recálculo da Panorâmica I às 15:41 (cota livre às 15:38): 22/11 R$ 858, 25/1
 - Conferido no Beds24 às ~17:06: Moinhos R$ 891, Panorâmica I R$ 903. Vitrine da Booking às 17:32.
 - **17:32, vitrine na Booking:** Moinhos R$ 564,38 sem café (R$ 595,74 com café); Panorâmica I R$ 571,98 (R$ 603,76 com café); Afrodite R$ 671,42. O mínimo de R$ 550 está cumprido com folga.
 
+## 21/11/2026, 19:53 a 20:05 BRT — Rotina leve das 19:53
+
+**Beds24 desde 16:48 BRT:** 2 novas, 2 alteradas; 0 alerta de segurança.
+- **Nova, Panorâmica I dom 22/11, Booking:** R$ 409,90, tarifa "Não reembolsável" com Genius (R$ 361,67 na tarifa; comissão R$ 89,52), feita às 18:11 com o preço de R$ 903 já no canal.
+  - O hóspede pagou abaixo dos R$ 550 da vitrine.
+  - O desconto do Genius e o da tarifa não reembolsável são da extranet (só o dono).
+- **Nova, Balcony 21/11 (hoje), Booking:** R$ 751.
+- **Alterada:** King Spa 7 21/11, direta (isaacmiguel), R$ 900 (37% do price1 de hoje; reserva antiga).
+
+**Inventário:**
+- Domingo 22/11: Moinhos 5, Panorâmica I 2, Afrodite 1, Balcony 4 livres.
+- **Bloqueio sem reserva em 23/11:**
+  - Panorâmica I com 2 reservas e 1 livre de 6 (3 unidades fechadas sem reserva; às 16:53 eram 4 livres).
+  - Afrodite sem reserva e com 0 livre (às 16:53, 1 livre).
+  - Não mexido; vai ao dono.
+- Overbookings conhecidos sem mudança.
+
+**PriceLabs:** nada gravado. As noites com venda nova são D0 (Balcony 21/11) ou da ordem do dono (Panorâmica I 22/11).
+
 ## O que só pode ser feito na tela (passo a passo para você)
 
 1. **Safety Minimum Price → "Do Not Apply"** (Dynamic Pricing → Customizations → aba Groups → Edit no grupo Recanto dos Moinhos → All Customizations → Safety Minimum Price). Anote o valor atual antes.

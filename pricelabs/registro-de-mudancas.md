@@ -6641,6 +6641,28 @@ O agendamento do passo 2 (Moinhos 20 e 21/11 a R$ 2.100, ordem `dono-2026-11-18-
 
 **11:01 (lembrete do Moinhos):** a API do Beds24 continua fora (agora 000, sem resposta). Não recalculei, para não gastar a cota. Nova tentativa agendada para 12:00 (trig_01KNsMy23G8sYvfb2gq5Zq1A), com rodada, recálculo e Sync Now por prioridade.
 
+## 21/11/2026, 12:00 a 12:06 BRT — Beds24 de volta: envio das gravações de hoje
+
+**Beds24:** a API voltou por volta das 12:00 (fora desde ~10:53).
+
+**Reservas de 07:48 a 12:00** (rodada; 0 alerta de segurança):
+- Nova: Balcony 21/11, 1 noite, pela Booking (R$ 875, padrão normal: 'new', comissão e tarifa Genius).
+- Afrodite 19→22/11: a recepção corrigiu o valor de R$ 3 para R$ 3.000.
+- Canceladas: uma reserva antiga da Booking no Moinhos 20→22/11 e a direta da Balcony 20→22/11 (R$ 1.321).
+- Abaixo do esperado: Balcony 04→06/12 pela Expedia, R$ 292 de R$ 3.060 (10%). É uma reserva antiga (de antes do fechamento da Expedia da Villa em 18/11), alterada agora.
+
+**Recálculo e Sync Now às 12:01-12:02:** Moinhos, King Spa 7, King Spa 2, Afrodite e Balcony.
+
+**Conferido no price1 do Beds24 (12:02-12:04):**
+- Moinhos: 22/11 R$ 845, 24/11 R$ 1.279, 26/11 R$ 1.501, 28/11 R$ 1.185.
+- Afrodite: 26/11 R$ 1.820, 29/11 R$ 2.080.
+- Natal 23/12: King Spa 7 R$ 4.514, King Spa 2 R$ 4.521, Balcony R$ 4.064.
+
+**Pendentes:**
+- Panorâmica I (domingo a R$ 858 e 25-30/11): cota livre às 15:38 (lembrete das 15:40).
+- Panorâmica II (25-30/11 e 03/12): a trava não repete na mesma rodada um recálculo que falhou; fica para a rotina das 13:53.
+- Vitrine do Moinhos na Booking: lembrete às 12:28.
+
 ## O que só pode ser feito na tela (passo a passo para você)
 
 1. **Safety Minimum Price → "Do Not Apply"** (Dynamic Pricing → Customizations → aba Groups → Edit no grupo Recanto dos Moinhos → All Customizations → Safety Minimum Price). Anote o valor atual antes.

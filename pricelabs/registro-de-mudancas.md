@@ -6702,7 +6702,7 @@ Recálculo da Panorâmica I às 15:41 (cota livre às 15:38): 22/11 R$ 858, 25/1
 | dom 22/11 | Panorâmica I | R$ 858 | R$ 902,80 (−39%) | ~R$ 572 | ~R$ 560 |
 
 - Recálculo (último do dia nos dois) e Sync Now às 17:04.
-- Conferência no Beds24 em andamento; vitrine da Booking às 17:32.
+- Conferido no Beds24 às ~17:06: Moinhos R$ 891, Panorâmica I R$ 903. Vitrine da Booking às 17:32.
 
 ## O que só pode ser feito na tela (passo a passo para você)
 

@@ -1119,6 +1119,20 @@
    "resultado": "falha",
    "erro": "400 Beds24 temporarily unavailable or under high load",
    "registrado_em": "2026-11-22T11:05:12Z"
+  },
+  {
+   "quarto": "Double",
+   "em": "2026-11-22T11:08:05Z",
+   "resultado": "ok",
+   "id_ms": 1795345685651,
+   "registrado_em": "2026-11-22T11:08:11Z"
+  },
+  {
+   "quarto": "Q2",
+   "em": "2026-11-22T11:08:23Z",
+   "resultado": "ok",
+   "id_ms": 1795345703718,
+   "registrado_em": "2026-11-22T11:08:31Z"
   }
  ]
 }

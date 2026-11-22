@@ -6724,6 +6724,46 @@ Recálculo da Panorâmica I às 15:41 (cota livre às 15:38): 22/11 R$ 858, 25/1
 
 **PriceLabs:** nada gravado. As noites com venda nova são D0 (Balcony 21/11) ou da ordem do dono (Panorâmica I 22/11).
 
+## 22/11/2026, 07:53 a 08:15 BRT — Rotina completa (domingo), interrompida antes de gravar
+
+**Beds24 desde ontem 19:48 BRT:** 1 nova, 5 alteradas; 0 alerta de segurança.
+- Nova: Afrodite 23/11, direta, R$ 1.060 (isaacmiguel, 22/11 00:02).
+
+**Bloqueios sem reserva em 23/11 (para a recepção/dono):**
+- Afrodite: 1 reserva e mais 1 unidade bloqueada → aparece −1 no Beds24.
+- Panorâmica I: 2 reservas de 6 e só 1 livre → 3 unidades fechadas sem reserva.
+
+**Recálculos:**
+- 07:55-07:56: King Spa 7, King Spa 2, Balcony, Afrodite.
+- 08:05: o Moinhos falhou (400 "Beds24 temporarily unavailable"); a falha zerou a cota dele até 12:01.
+- 08:08: Panorâmica I e Panorâmica II.
+- O Moinhos entrou no motor com o recálculo de ontem às 17:04.
+- A coleta não trouxe os 3 quartos do Recanto; as entradas deles foram copiadas da coleta de ontem e sobrescritas pelos recálculos.
+
+**Envio da madrugada:** saiu para Afrodite e os 3 quartos da Villa.
+
+**Motor de pace:** 33 itens, todos da Villa nas noites dos lotes suspeitos (23-26/11, 06/12, 13-16/12, 02-14/01), fora do plano. No Recanto, nenhum passo novo.
+
+**Auditoria:** a segunda 22/11/2027 (dia novo no horizonte) pede estadia 2 nos 7 quartos (PriceLabs e Beds24). Plano validado (7 itens, 0 erro).
+- A primeira gravação (Moinhos) pediu aprovação e foi interrompida às ~08:15. Nada foi gravado.
+- Fica pendente (não urgente: noite de daqui a um ano).
+
+## 22/11/2026, 10:53 a 11:00 BRT — Rotina leve das 10:53
+
+**Beds24 desde 07:48 BRT:** 1 nova, 1 cancelada, 12 alteradas; 0 alerta de segurança.
+- Nova: Balcony 27→29/11 pela Booking, R$ 1.173 (padrão normal).
+- Cancelada: 96343980, King Spa 2 23/11, uma das 16 reservas do lote suspeito de 17/11. O overbooking da King Spa 2 em 23/11 caiu de −4 para −3.
+- Alteradas: 8 reservas diretas antigas da Panorâmica I em 22/12, já canceladas (R$ 303 cada), e check-outs de hoje.
+
+**Envio:** sem gravação nova desde ontem; os preços vigentes estão nos canais. O Moinhos e as Panorâmicas foram enviados ontem às 13:54-17:04.
+
+**Booking (segurança e vitrine, 23→24/11):**
+- Recanto: id 7562933, Rua Januário Pereira 575; R$ 429,66 (razão 0,495 sobre o Moinhos de R$ 868).
+- Villa: id 14824789, R. das Candelas 79; R$ 355,74 (razão 0,445 sobre a Balcony de R$ 800).
+- Dentro da faixa (0,42-0,72); desconto de última hora da Booking.
+
+**PriceLabs:** nada gravado (a estadia de 22/11/2027 segue pendente).
+
 ## O que só pode ser feito na tela (passo a passo para você)
 
 1. **Safety Minimum Price → "Do Not Apply"** (Dynamic Pricing → Customizations → aba Groups → Edit no grupo Recanto dos Moinhos → All Customizations → Safety Minimum Price). Anote o valor atual antes.

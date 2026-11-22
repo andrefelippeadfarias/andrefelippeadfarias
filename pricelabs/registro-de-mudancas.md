@@ -6785,6 +6785,30 @@ Recálculo da Panorâmica I às 15:41 (cota livre às 15:38): 22/11 R$ 858, 25/1
 - As vendas novas são em 23/11 (D1, noites da ordem do dono).
 - King Spa 2 de hoje (D0) não sobe.
 
+## 22/11/2026, 16:53 a 17:05 BRT — Rotina leve das 16:53
+
+**SEGURANÇA:** o vigia apontou uma rajada de 5 cancelamentos da Booking em 2 h (14:00-16:01 BRT), todos de reservas para hoje (22/11).
+- Moinhos: 96581091 (criada e cancelada hoje), 96420903 e 96420904 (Tarifa semanal, criadas em 19/11).
+- King Spa 7: 95970801 e 95970804 (Rate 65710606, criadas em 10/11).
+- Cancelamentos no dia da chegada; a recepção confirma.
+- **Terceiro lote no padrão suspeito**, 3 reservas da Booking criadas no mesmo segundo (15:07 BRT), 'confirmed', comissão 0, Rate 65710606/65711478:
+  - Balcony 22→24/11, R$ 656;
+  - King Spa 7 14→16/12, R$ 1.088;
+  - King Spa 7 28→30/12, R$ 2.244.
+
+**Outras novas:**
+- Panorâmica I 27→29/11 pela Booking, R$ 2.031 (normal). A Panorâmica I e a Panorâmica II ficaram esgotadas em 27-28/11.
+- King Spa 7 hoje: Booking R$ 360 (normal) e direta R$ 655 (isaacmiguel, 68%).
+- Reservas "black" (bloqueio) da recepção para hoje: Moinhos, Panorâmica I e Afrodite, 1 unidade cada (16:03-16:06).
+
+**Abaixo do esperado:** King Spa 7 22/01/2027 direta (setBooking JSON), R$ 900 (44%); reserva antiga alterada.
+
+**Recálculo e motor:**
+- Panorâmica I recalculada às 16:55 (último do dia).
+- O motor para 27-28/11 só propôs baixar a Panorâmica II (esgotada) de R$ 1.622 para R$ 1.185 por coerência. Não gravado, porque a noite está esgotada e a proteção p90 entra no plano de amanhã.
+
+**Inventário:** os bloqueios não retirados de 23/11 seguem (Panorâmica I −2, Afrodite −1). King Spa 2 23/11 −2 e 24/11 −3.
+
 ## O que só pode ser feito na tela (passo a passo para você)
 
 1. **Safety Minimum Price → "Do Not Apply"** (Dynamic Pricing → Customizations → aba Groups → Edit no grupo Recanto dos Moinhos → All Customizations → Safety Minimum Price). Anote o valor atual antes.

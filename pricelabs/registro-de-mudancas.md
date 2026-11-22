@@ -6764,6 +6764,27 @@ Recálculo da Panorâmica I às 15:41 (cota livre às 15:38): 22/11 R$ 858, 25/1
 
 **PriceLabs:** nada gravado (a estadia de 22/11/2027 segue pendente).
 
+## 22/11/2026, 13:53 a 14:05 BRT — Rotina leve das 13:53
+
+**Beds24 desde 10:48 BRT:** 3 novas, 3 canceladas, 17 alteradas; 0 alerta de segurança.
+- **Novas, Panorâmica I 23/11, diretas (isaacmiguel):**
+  - 2 de 23→25/11: R$ 864 e R$ 881 (33% do esperado).
+  - 1 de 23→24/11: R$ 476 (44%).
+  - Ocuparam as 3 unidades que estavam bloqueadas sem reserva. O bloqueio não foi tirado, por isso o Beds24 mostra −2 em 23/11 (real: 1 livre, fechada aos canais).
+  - Na Afrodite 23/11, a mesma coisa: −1 (1 reserva e 1 bloqueio).
+- **Canceladas:**
+  - King Spa 7 22/11 pela Booking (96020750, Rate 65710606, criada em 11/11).
+  - King Spa 2 25/11 pelo Airbnb (R$ 0).
+  - Uma reserva antiga da Booking de 22/11.
+  - King Spa 2 hoje (22/11) ficou com 2 livres; King Spa 7 24/11 com 1 livre.
+- **Alteradas:** 2 reservas do lote suspeito de 17/11 (King Spa 2 23/11; 96343985 e 96343979) foram mexidas pela recepção e têm hóspedes com nome. É sinal de que pelo menos parte do lote é real (fila entregue de uma vez). Seguem a 56-59% do esperado.
+
+**Inventário:** King Spa 2 23/11 com −2 (era −3) e 24/11 com −3; Panorâmica II hoje com −1.
+
+**PriceLabs:** nada gravado.
+- As vendas novas são em 23/11 (D1, noites da ordem do dono).
+- King Spa 2 de hoje (D0) não sobe.
+
 ## O que só pode ser feito na tela (passo a passo para você)
 
 1. **Safety Minimum Price → "Do Not Apply"** (Dynamic Pricing → Customizations → aba Groups → Edit no grupo Recanto dos Moinhos → All Customizations → Safety Minimum Price). Anote o valor atual antes.

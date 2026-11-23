@@ -6852,6 +6852,34 @@ Recalculados depois de gravar (Moinhos, Panorâmica I e II, King Spa 7 e 2, Balc
 - Efeito das mudanças da semana (workflow de 4 agentes, só leitura, com verificação adversarial; tabela em `aprendizados.md`): funcionaram a quinta 19/11 a preço de piso (15 vendas, diárias de R$ 331-507), o feriadão a ≥ R$ 3.000 nas Panorâmicas e na King Spa (R$ 1.548-1.886 por noite) e o sábado 21/11 das suítes com banheira (esgotou). Não funcionaram o domingo 22 e a segunda 23/11 (p25 e mínimo de R$ 550: 1 venda por canal). Subidas da escada: 0 venda em 2-6 dias; descidas a 7 dias: 2 vendas. A escada sobe também noites "atrás" no ritmo: proposta ao dono (pendência `escada-nao-sobe-atras-20261123`).
 - Noites presas no piso: 30 (Afrodite 21, pela regra "acima da mais cara das outras"; Balcony 7; King Spa 2). RevPAR de novembro: Recanto R$ 367 → R$ 407, Villa R$ 323 → R$ 354 na semana.
 
+## 23/11/2026, 10:54 a 11:05 BRT — Rotina leve das 10:53
+
+**SEGURANÇA:**
+- O vigia apontou uma rajada de 4 cancelamentos diretos em 3 h (08:37 a 10:27 BRT). São reservas da própria recepção:
+  - Panorâmica I 23→25/11, R$ 864 e R$ 881 (mesmos valores de 2 reservas do 1º lote suspeito na King Spa 7 23→25/11, que seguem confirmadas);
+  - Moinhos 23/11, R$ 1.060;
+  - King Spa 7 23→25/11, R$ 600 (a de 20% do esperado).
+- Booking da Villa (id 14824789, nome e endereço conferem) para 30/11→02/12: R$ 963,14 contra R$ 2.514 enviados na Balcony (o mais barato livre). **Razão 0,383, abaixo do alerta de 0,42.** Segundo dia de semana seguido (0,436 em 01/12 na coleta de hoje); nos fins de semana, 0,637. Possível promoção ou tarifa de dia de semana na extranet: só o dono confere.
+- Recanto (id 7562933, nome e endereço conferem) para 24/11: R$ 743 contra R$ 1.501 do Moinhos. Razão 0,495, dentro da faixa e no padrão da véspera da chegada.
+
+**Beds24 desde 07:48 BRT:** 0 novas, 5 canceladas, 8 alteradas.
+- Canceladas: as 4 diretas acima e o Moinhos 23→26/11 pela Booking (R$ 1.108). O Moinhos fica com 6 de 7 livres em 24/11.
+- **Abaixo do esperado:** Panorâmica I 24/11, direta da recepção, R$ 476 (o Beds24 conta R$ 389 de hospedagem contra R$ 2.116: 18%).
+- Os bloqueios negativos de 23-24/11 sumiram (Panorâmica I, Afrodite e King Spa 2 em 0 ou 1).
+
+**Logs do PriceLabs:** só as 9 gravações da rotina das 07:53; nenhuma mudança manual.
+
+**Envio:**
+- Às 08:19-08:20 chegou para Moinhos, Panorâmica I e II, King Spa 7 e Balcony (ledger marcado: 17 passos).
+- A King Spa 2 não tinha recebido: Sync Now repetido às 10:56 e price1 conferido no Beds24 às 10:57 (30/11 R$ 1.499; Natal R$ 4.077-4.305; 28/12 R$ 2.400).
+- A Afrodite segue com o envio de 22/11.
+
+**Recálculo:** Afrodite falhou de novo às 10:57 (400, Beds24 sob carga). Registrado; resta 1 tentativa em 24 h, que fica para as 13:53. Moinhos e Panorâmica I estão sem saldo (próximas vagas às 19:54 e 16:55).
+
+**Preço:** nada gravado.
+- A descida do Moinhos de 24/11 pelo cancelamento (escada: de 2 para 1 vendida) fica para a vaga das 19:54. Sem saldo de recálculo não se dá passo de flutuação.
+- A estadia de 22/11/2027 da Afrodite espera o recálculo dela.
+
 ## O que só pode ser feito na tela (passo a passo para você)
 
 1. **Safety Minimum Price → "Do Not Apply"** (Dynamic Pricing → Customizations → aba Groups → Edit no grupo Recanto dos Moinhos → All Customizations → Safety Minimum Price). Anote o valor atual antes.

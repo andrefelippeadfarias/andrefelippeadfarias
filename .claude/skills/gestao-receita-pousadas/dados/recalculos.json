@@ -1238,6 +1238,13 @@
    "resultado": "ok",
    "id_ms": 1795432733490,
    "registrado_em": "2026-11-23T11:18:56Z"
+  },
+  {
+   "quarto": "Afrodite",
+   "em": "2026-11-23T13:57:00Z",
+   "resultado": "falha",
+   "erro": "400 Beds24 temporarily unavailable or under high load",
+   "registrado_em": "2026-11-23T13:57:00Z"
   }
  ]
 }

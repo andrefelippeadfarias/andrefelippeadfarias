@@ -1629,7 +1629,10 @@
       "desde": "2026-11-22",
       "urgencia": 3,
       "texto": "Estadia 2 na segunda 22/11/2027 (dia novo no horizonte de 12 meses) nos 7 quartos: PriceLabs (min_stay '2' por data) e Beds24 (lote único com min_stay_antes 1). Plano validado em 22/11 (c2211/plano_final.json, 0 erro); a gravação pediu aprovação e foi interrompida. Refazer na próxima rotina completa (a auditoria gera de novo).",
-      "resolucao_parcial": "23/11 07:53: gravado no PriceLabs e no Beds24 em 6 quartos (Moinhos, Panorâmica I e II, King Spa 7 e 2, Balcony; conferido). Falta a Afrodite: o PriceLabs recusou a data ('Pricing data for this date isn't available yet') porque o calendário dela não foi recalculado hoje (400 Beds24 sob carga às 07:55). Fazer depois do recálculo da Afrodite na rotina das 10:53: min_stay '2' por data no PriceLabs e, só depois, o item do Beds24 (c2311/lote_b24_unico.json, Afrodite 2027-11-22, min_stay_antes 1)."
+      "resolucao_parcial": "23/11 07:53: gravado no PriceLabs e no Beds24 em 6 quartos (Moinhos, Panorâmica I e II, King Spa 7 e 2, Balcony; conferido). Falta a Afrodite: o PriceLabs recusou a data ('Pricing data for this date isn't available yet') porque o calendário dela não foi recalculado hoje (400 Beds24 sob carga às 07:55). Fazer depois do recálculo da Afrodite na rotina das 10:53: min_stay '2' por data no PriceLabs e, só depois, o item do Beds24 (c2311/lote_b24_unico.json, Afrodite 2027-11-22, min_stay_antes 1).",
+      "atualizacoes": [
+        "23/11 10:57: recálculo da Afrodite falhou de novo (400 Beds24 sob carga); resta 1 tentativa, às 13:53."
+      ]
     },
     {
       "id": "dono-extensao-domingo-abaixo-1000-20261122",
@@ -1642,8 +1645,11 @@
       "id": "villa-booking-razao-0436-20261123",
       "responsavel": "dono",
       "desde": "2026-11-23",
-      "urgencia": 2,
-      "texto": "Booking da Villa (id 14824789) na ter 01/12 (1 noite): R$ 526,16 para o quarto mais barato livre, a Balcony enviada a R$ 1.206 → razão 0,436 (alerta abaixo de 0,42; promoção ativa abaixo de 0,55). Nos fins de semana 04-06/12 e 11-13/12 a razão é 0,637 (normal). Possível promoção de dia de semana ou tarifa não reembolsável/mobile na extranet: o dono confere (a skill não entra na extranet)."
+      "urgencia": 1,
+      "texto": "Booking da Villa (id 14824789) na ter 01/12 (1 noite): R$ 526,16 para o quarto mais barato livre, a Balcony enviada a R$ 1.206 → razão 0,436 (alerta abaixo de 0,42; promoção ativa abaixo de 0,55). Nos fins de semana 04-06/12 e 11-13/12 a razão é 0,637 (normal). Possível promoção de dia de semana ou tarifa não reembolsável/mobile na extranet: o dono confere (a skill não entra na extranet).",
+      "atualizacoes": [
+        "23/11 10:56: segunda leitura de dia de semana: 30/11→02/12 R$ 963,14 na Booking contra R$ 2.514 enviados na Balcony = 0,383, abaixo do alerta de 0,42 (id, nome e endereço conferem). Fins de semana seguem em 0,637."
+      ]
     },
     {
       "id": "escada-nao-sobe-atras-20261123",
@@ -1651,6 +1657,13 @@
       "desde": "2026-11-23",
       "urgencia": 2,
       "texto": "Proposta (revisão semanal 23/11): a escada de vendas (dono 01/11) hoje sobe também noites que o motor marca 'atrás' ou 'muito atrás' no ritmo, porque o piso da reta passa do preço atual (ex.: Moinhos 24/11 a D1 com 2 de 7: R$ 1.279 → R$ 1.500; Balcony 30/11 com 0 de 6: R$ 1.130 → R$ 1.308; em 21/11 Moinhos 29/11 com 0 de 7 e Panorâmica I 26/11 com 0 de 6). Na semana, essas subidas não trouxeram venda por canal; as descidas a 7 dias trouxeram 2. Pergunta: 'Posso deixar a escada subir só noite no ritmo ou à frente (em noite atrás, segura o preço)?' Mudança de regra: só com o sim do dono."
+    },
+    {
+      "id": "moinhos-24-descida-cancelamento-20261123",
+      "responsavel": "skill",
+      "desde": "2026-11-23",
+      "urgencia": 1,
+      "texto": "Moinhos ter 24/11: subiu hoje às 07:53 pela escada (2 de 7 vendidas, R$ 1.279 → R$ 1.501). Às 10:53 o cancelamento da Booking 23→26/11 deixou 1 de 7 vendida (6 livres). Cancelamento desce pela mesma reta, mas o Moinhos está sem saldo de recálculo até 19:54 BRT. Na rotina das 19:53 (ou às 19:54): recalcular o Moinhos, pace.py plano com --regras e --janelas e --noites Q7=2026-11-24..2026-11-25, validar, gravar e Sync Now (D1). Ver também a proposta escada-nao-sobe-atras-20261123."
     }
   ],
   "versao": "2026-11-12T13"

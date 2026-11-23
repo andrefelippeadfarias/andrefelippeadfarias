@@ -6849,6 +6849,8 @@ Recalculados depois de gravar (Moinhos, Panorâmica I e II, King Spa 7 e 2, Balc
 - Fator público (Booking ÷ enviado, quarto livre mais barato): Recanto 0,585 em 01/12 e 04-06/12, 0,583 em 11-13/12 (igual a 16/11); Villa 0,637 nos fins de semana e **0,436 na ter 01/12** (Booking R$ 526 para a Balcony a R$ 1.206: perto do alerta de 0,42; possível promoção de dia de semana). Fatores mantidos (0,63 e 0,65): perto da chegada a semana mediu 0,63-0,66.
 - Revisão dos 12 meses: em dia (16/11); próxima em 01/12.
 - Não feitos hoje: varredura da concorrência (sessão própria), painel semanal.
+- Efeito das mudanças da semana (workflow de 4 agentes, só leitura, com verificação adversarial; tabela em `aprendizados.md`): funcionaram a quinta 19/11 a preço de piso (15 vendas, diárias de R$ 331-507), o feriadão a ≥ R$ 3.000 nas Panorâmicas e na King Spa (R$ 1.548-1.886 por noite) e o sábado 21/11 das suítes com banheira (esgotou). Não funcionaram o domingo 22 e a segunda 23/11 (p25 e mínimo de R$ 550: 1 venda por canal). Subidas da escada: 0 venda em 2-6 dias; descidas a 7 dias: 2 vendas. A escada sobe também noites "atrás" no ritmo: proposta ao dono (pendência `escada-nao-sobe-atras-20261123`).
+- Noites presas no piso: 30 (Afrodite 21, pela regra "acima da mais cara das outras"; Balcony 7; King Spa 2). RevPAR de novembro: Recanto R$ 367 → R$ 407, Villa R$ 323 → R$ 354 na semana.
 
 ## O que só pode ser feito na tela (passo a passo para você)
 

@@ -1644,6 +1644,13 @@
       "desde": "2026-11-23",
       "urgencia": 2,
       "texto": "Booking da Villa (id 14824789) na ter 01/12 (1 noite): R$ 526,16 para o quarto mais barato livre, a Balcony enviada a R$ 1.206 → razão 0,436 (alerta abaixo de 0,42; promoção ativa abaixo de 0,55). Nos fins de semana 04-06/12 e 11-13/12 a razão é 0,637 (normal). Possível promoção de dia de semana ou tarifa não reembolsável/mobile na extranet: o dono confere (a skill não entra na extranet)."
+    },
+    {
+      "id": "escada-nao-sobe-atras-20261123",
+      "responsavel": "dono",
+      "desde": "2026-11-23",
+      "urgencia": 2,
+      "texto": "Proposta (revisão semanal 23/11): a escada de vendas (dono 01/11) hoje sobe também noites que o motor marca 'atrás' ou 'muito atrás' no ritmo, porque o piso da reta passa do preço atual (ex.: Moinhos 24/11 a D1 com 2 de 7: R$ 1.279 → R$ 1.500; Balcony 30/11 com 0 de 6: R$ 1.130 → R$ 1.308; em 21/11 Moinhos 29/11 com 0 de 7 e Panorâmica I 26/11 com 0 de 6). Na semana, essas subidas não trouxeram venda por canal; as descidas a 7 dias trouxeram 2. Pergunta: 'Posso deixar a escada subir só noite no ritmo ou à frente (em noite atrás, segura o preço)?' Mudança de regra: só com o sim do dono."
     }
   ],
   "versao": "2026-11-12T13"

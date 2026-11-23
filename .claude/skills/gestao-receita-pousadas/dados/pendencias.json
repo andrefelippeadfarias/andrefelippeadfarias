@@ -1618,14 +1618,32 @@
       "responsavel": "dono",
       "desde": "2026-11-21",
       "urgencia": 1,
-      "texto": "SEGURANÇA: 3 reservas da Booking no padrão do lote suspeito de 17/11 (mesmo segundo, 'confirmed', comissão 0, Rate 65710606/65711478): ids 96515659 (King Spa 7 26→27/11, R$ 407), 96515660 (King Spa 2 02→15/01/2027, 13 noites, R$ 9.367) e 96515661 (King Spa 7 02→03/10/2027, R$ 927). Confirmar na extranet da Booking se existem; se não, a recepção cancela no Beds24 (a skill não cancela). Enquanto isso, as noites da Villa de 02 a 14/01/2027 ficam fora do plano do motor e a órfã da King Spa 2 em 13/01 não foi aberta. | 21/11 13:53: atenção ao critério — a reserva 95652089 (King Spa 7 20/11, Booking, criada em 03/11) também tem Rate 65710606, comissão 0 e 'confirmed', e o hóspede fez check-in (alterada pela recepção). O padrão sozinho não prova fraude; o que pesa no lote de 3 é a criação no mesmo segundo e as datas estranhas (13 noites, 1 noite 11 meses à frente). Confirmar na extranet continua sendo o caminho. | 22/11 16:53: TERCEIRO LOTE no mesmo padrão — 3 reservas criadas no mesmo segundo (22/11 15:07:31-32 BRT), 'confirmed', comissão 0, Rate 65710606/65711478: 96580709 Balcony 22→24/11 (R$ 656), 96580710 King Spa 7 14→16/12 (R$ 1.088), 96580711 King Spa 7 28→30/12 (R$ 2.244). No mesmo dia, reservas antigas com o mesmo padrão foram canceladas no dia da chegada (95970801 e 95970804, King Spa 7 22/11; 96020750). Hipótese a confirmar com o dono: uma conexão/tarifa da Booking (Rate 65710606/65711478) que entrega reservas em lote e sem comissão no Beds24."
+      "texto": "SEGURANÇA: 3 reservas da Booking no padrão do lote suspeito de 17/11 (mesmo segundo, 'confirmed', comissão 0, Rate 65710606/65711478): ids 96515659 (King Spa 7 26→27/11, R$ 407), 96515660 (King Spa 2 02→15/01/2027, 13 noites, R$ 9.367) e 96515661 (King Spa 7 02→03/10/2027, R$ 927). Confirmar na extranet da Booking se existem; se não, a recepção cancela no Beds24 (a skill não cancela). Enquanto isso, as noites da Villa de 02 a 14/01/2027 ficam fora do plano do motor e a órfã da King Spa 2 em 13/01 não foi aberta. | 21/11 13:53: atenção ao critério — a reserva 95652089 (King Spa 7 20/11, Booking, criada em 03/11) também tem Rate 65710606, comissão 0 e 'confirmed', e o hóspede fez check-in (alterada pela recepção). O padrão sozinho não prova fraude; o que pesa no lote de 3 é a criação no mesmo segundo e as datas estranhas (13 noites, 1 noite 11 meses à frente). Confirmar na extranet continua sendo o caminho. | 22/11 16:53: TERCEIRO LOTE no mesmo padrão — 3 reservas criadas no mesmo segundo (22/11 15:07:31-32 BRT), 'confirmed', comissão 0, Rate 65710606/65711478: 96580709 Balcony 22→24/11 (R$ 656), 96580710 King Spa 7 14→16/12 (R$ 1.088), 96580711 King Spa 7 28→30/12 (R$ 2.244). No mesmo dia, reservas antigas com o mesmo padrão foram canceladas no dia da chegada (95970801 e 95970804, King Spa 7 22/11; 96020750). Hipótese a confirmar com o dono: uma conexão/tarifa da Booking (Rate 65710606/65711478) que entrega reservas em lote e sem comissão no Beds24.",
+      "atualizacoes": [
+        "23/11 07:53: as noites dos lotes seguem fora do motor; 38 itens do plano de hoje (Villa) não gravados por isso. A receita de novembro da Villa (R$ 153.538) inclui essas reservas."
+      ]
     },
     {
       "id": "estadia-2027-11-22-pendente",
       "responsavel": "skill",
       "desde": "2026-11-22",
       "urgencia": 3,
-      "texto": "Estadia 2 na segunda 22/11/2027 (dia novo no horizonte de 12 meses) nos 7 quartos: PriceLabs (min_stay '2' por data) e Beds24 (lote único com min_stay_antes 1). Plano validado em 22/11 (c2211/plano_final.json, 0 erro); a gravação pediu aprovação e foi interrompida. Refazer na próxima rotina completa (a auditoria gera de novo)."
+      "texto": "Estadia 2 na segunda 22/11/2027 (dia novo no horizonte de 12 meses) nos 7 quartos: PriceLabs (min_stay '2' por data) e Beds24 (lote único com min_stay_antes 1). Plano validado em 22/11 (c2211/plano_final.json, 0 erro); a gravação pediu aprovação e foi interrompida. Refazer na próxima rotina completa (a auditoria gera de novo).",
+      "resolucao_parcial": "23/11 07:53: gravado no PriceLabs e no Beds24 em 6 quartos (Moinhos, Panorâmica I e II, King Spa 7 e 2, Balcony; conferido). Falta a Afrodite: o PriceLabs recusou a data ('Pricing data for this date isn't available yet') porque o calendário dela não foi recalculado hoje (400 Beds24 sob carga às 07:55). Fazer depois do recálculo da Afrodite na rotina das 10:53: min_stay '2' por data no PriceLabs e, só depois, o item do Beds24 (c2311/lote_b24_unico.json, Afrodite 2027-11-22, min_stay_antes 1)."
+    },
+    {
+      "id": "dono-extensao-domingo-abaixo-1000-20261122",
+      "responsavel": "dono",
+      "desde": "2026-11-22",
+      "urgencia": 1,
+      "texto": "Ordem de 20/11 ('1. Mínimo de 1000 reais' para a extensão de domingo 22/11): a recepção do Recanto lançou a noite de 22/11 como direta abaixo do mínimo: Afrodite R$ 450 e Panorâmica I R$ 500 (os bloqueios 'black' das 16:03-16:06 viraram reservas confirmadas); o Moinhos segue 'black' a R$ 450. Na Villa, King Spa 7 23→25/11 direta R$ 600 (20% do esperado). Achado na rotina de 22/11 19:53 (interrompida) e relatado em 23/11. A skill não altera reservas: o dono confirma com a recepção se foram extensões combinadas e se o valor fica."
+    },
+    {
+      "id": "villa-booking-razao-0436-20261123",
+      "responsavel": "dono",
+      "desde": "2026-11-23",
+      "urgencia": 2,
+      "texto": "Booking da Villa (id 14824789) na ter 01/12 (1 noite): R$ 526,16 para o quarto mais barato livre, a Balcony enviada a R$ 1.206 → razão 0,436 (alerta abaixo de 0,42; promoção ativa abaixo de 0,55). Nos fins de semana 04-06/12 e 11-13/12 a razão é 0,637 (normal). Possível promoção de dia de semana ou tarifa não reembolsável/mobile na extranet: o dono confere (a skill não entra na extranet)."
     }
   ],
   "versao": "2026-11-12T13"

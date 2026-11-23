@@ -1140,6 +1140,104 @@
    "resultado": "ok",
    "id_ms": 1795377301549,
    "registrado_em": "2026-11-22T19:55:09Z"
+  },
+  {
+   "quarto": "Q7",
+   "em": "2026-11-22T22:54:21Z",
+   "resultado": "ok",
+   "id_ms": 1795388061056,
+   "registrado_em": "2026-11-22T22:54:28Z"
+  },
+  {
+   "quarto": "Q7",
+   "em": "2026-11-23T10:55:20Z",
+   "resultado": "ok",
+   "id_ms": 1795431320331,
+   "registrado_em": "2026-11-23T10:55:23Z"
+  },
+  {
+   "quarto": "Double",
+   "em": "2026-11-23T10:55:32Z",
+   "resultado": "ok",
+   "id_ms": 1795431332197,
+   "registrado_em": "2026-11-23T10:55:34Z"
+  },
+  {
+   "quarto": "Afrodite",
+   "em": "2026-11-23T10:55:42Z",
+   "resultado": "falha",
+   "erro": "400 Beds24 temporarily unavailable or under high load",
+   "registrado_em": "2026-11-23T10:55:42Z"
+  },
+  {
+   "quarto": "VK7",
+   "em": "2026-11-23T10:57:32Z",
+   "resultado": "ok",
+   "id_ms": 1795431452848,
+   "registrado_em": "2026-11-23T10:57:35Z"
+  },
+  {
+   "quarto": "VK2",
+   "em": "2026-11-23T10:57:43Z",
+   "resultado": "ok",
+   "id_ms": 1795431463784,
+   "registrado_em": "2026-11-23T10:57:46Z"
+  },
+  {
+   "quarto": "Balcony",
+   "em": "2026-11-23T10:57:54Z",
+   "resultado": "ok",
+   "id_ms": 1795431474388,
+   "registrado_em": "2026-11-23T10:57:57Z"
+  },
+  {
+   "quarto": "Q2",
+   "em": "2026-11-23T10:58:05Z",
+   "resultado": "ok",
+   "id_ms": 1795431485457,
+   "registrado_em": "2026-11-23T10:58:07Z"
+  },
+  {
+   "quarto": "Q7",
+   "em": "2026-11-23T11:17:48Z",
+   "resultado": "ok",
+   "id_ms": 1795432668044,
+   "registrado_em": "2026-11-23T11:17:57Z"
+  },
+  {
+   "quarto": "Double",
+   "em": "2026-11-23T11:18:06Z",
+   "resultado": "ok",
+   "id_ms": 1795432686392,
+   "registrado_em": "2026-11-23T11:18:09Z"
+  },
+  {
+   "quarto": "Q2",
+   "em": "2026-11-23T11:18:18Z",
+   "resultado": "ok",
+   "id_ms": 1795432698322,
+   "registrado_em": "2026-11-23T11:18:21Z"
+  },
+  {
+   "quarto": "VK7",
+   "em": "2026-11-23T11:18:31Z",
+   "resultado": "ok",
+   "id_ms": 1795432711379,
+   "registrado_em": "2026-11-23T11:18:34Z"
+  },
+  {
+   "quarto": "VK2",
+   "em": "2026-11-23T11:18:41Z",
+   "resultado": "ok",
+   "id_ms": 1795432721857,
+   "registrado_em": "2026-11-23T11:18:44Z"
+  },
+  {
+   "quarto": "Balcony",
+   "em": "2026-11-23T11:18:53Z",
+   "resultado": "ok",
+   "id_ms": 1795432733490,
+   "registrado_em": "2026-11-23T11:18:56Z"
   }
  ]
 }

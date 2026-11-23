@@ -6809,6 +6809,47 @@ Recálculo da Panorâmica I às 15:41 (cota livre às 15:38): 22/11 R$ 858, 25/1
 
 **Inventário:** os bloqueios não retirados de 23/11 seguem (Panorâmica I −2, Afrodite −1). King Spa 2 23/11 −2 e 24/11 −3.
 
+## 22/11/2026, 19:53 a 19:58 BRT — Rotina leve das 19:53, interrompida antes de gravar
+
+O processo reiniciou depois da validação; nada foi gravado nem relatado nesta rotina. O que ela achou (Beds24 desde 16:48 BRT):
+- **1 nova:** Moinhos 27→29/11 pela Booking, R$ 1.154. O passo da escada do Moinhos em 27-28/11 (R$ 1.185 → R$ 1.397, 5 de 7 vendidas) foi validado e ficou para a rotina de 23/11 07:53, que o gravou.
+- **Extensões de domingo abaixo do mínimo do dono** (ordem de 20/11: "Mínimo de 1000 reais"): os bloqueios "black" da recepção de 22/11 viraram reservas diretas confirmadas: Afrodite R$ 450 e Panorâmica I R$ 500 (lançadas pela recepção do Recanto); o Moinhos segue "black" a R$ 450. Também abaixo de 70%: King Spa 7 23→25/11 direta R$ 600 (20% do esperado, recepção da Villa) e King Spa 7 22/11 direta R$ 655 (68%). A skill não altera reservas: vai ao dono.
+- 0 canceladas; 0 alertas de segurança.
+
+## 23/11/2026, 07:53 a 08:35 BRT — Rotina completa de segunda com revisão semanal
+
+**Beds24 desde 19:48 BRT de ontem:** 0 novas, 0 canceladas, 2 alteradas (King Spa 7 22/11 R$ 360 e Moinhos 22-26/11 R$ 1.285, ambas Booking). **Segurança: 0 alertas.** **Abaixo do esperado: 0 novas.** **Logs do PriceLabs:** nenhuma mudança desde 21/11 20:04 BRT (nem manual, nem nossa: a gravação de 22/11 cedo foi interrompida). **Envio:** último em 22/11 (17:59 BRT no Moinhos e na Panorâmica I; 14:03 na Panorâmica II; 04:51-04:52 na Afrodite e na Villa).
+
+**Coleta:** o `get_listing_prices` devolveu "Listing data does not exist" nos 7 quartos (a coleta rodou junto com os recálculos). O plano usou os recálculos de hoje (Moinhos, Panorâmica I e II, King Spa 7 e 2, Balcony, 07:55-07:58). A Afrodite ficou com o calendário de ontem: o recálculo das 07:55 voltou 400 "Beds24 temporarily unavailable or under high load" (registrado; a trava da cota não deixa repetir na mesma rodada).
+
+**Gravado e conferido (resposta da API; recálculo depois; Beds24 relido):**
+
+| Mudança | Onde | Antes | Depois | Como desfazer (pedir ao Claude) |
+|---|---|---|---|---|
+| Escada de vendas, ter 24/11 | PriceLabs por data | Moinhos R$ 1.279; Panorâmica I R$ 1.761 | R$ 1.501 (2 de 7 vendidas); R$ 2.116 (5 de 6) | voltar ao preço anterior |
+| Escada, qua 25/11 | PriceLabs por data | Moinhos R$ 1.232; Panorâmica II R$ 1.447 | R$ 1.490; R$ 1.638 (abaixo da Panorâmica I, R$ 1.643) | idem |
+| Plano do dono 09/11 (fds), 27-28/11 | PriceLabs por data | Moinhos R$ 1.185 | R$ 1.408 (5 de 7; venda de ontem 19:53) | idem |
+| Escada, dom 29/11 | PriceLabs por data | Panorâmica I R$ 1.732; Panorâmica II R$ 1.495; Afrodite R$ 2.080 | R$ 1.820; R$ 1.558; R$ 2.200 (coerência: 20% acima da mais cara) | idem |
+| Escada, seg 30/11 | PriceLabs por data | King Spa 7 R$ 1.421; King Spa 2 R$ 1.295; Balcony R$ 1.130 | R$ 1.613; R$ 1.499; R$ 1.308 (Regra G) | idem |
+| Natal 23-26/12 (pace, D30-D33, 0 a 3 de 7 vendidas) | PriceLabs por data | King Spa 7 R$ 4.514; King Spa 2 R$ 4.521; Balcony R$ 4.051-4.064 | R$ 4.070-4.292; R$ 4.077-4.305; R$ 3.658-3.861 (−5% a −10%) | idem |
+| Seg 28/12 | PriceLabs por data | King Spa 2 R$ 2.286; Balcony R$ 1.956 | R$ 2.400 (escada); R$ 2.070 (Regra G) | idem |
+| Janela da Balcony sex 27/11 (2 livres, 1 presa pela regra) | PriceLabs e Beds24 | estadia 2; sáb 28/11 fechado | estadia 1 na sexta; saída no sábado (noCheckIn) | voltar a estadia 2 e sábado fechado |
+| Estadia de seg 22/11/2027 (data nova no horizonte) | PriceLabs e Beds24, 6 quartos | 1 noite | 2 noites (dia de chegada, dono 04/11) | voltar a 1 |
+| Mínimo do anúncio, passo 3 da ordem de 09/11 ("2 Sim") | PriceLabs (anúncio) | Moinhos R$ 1.058; Panorâmica I R$ 1.190; Panorâmica II R$ 1.123 | R$ 1.216; R$ 1.220; R$ 1.220 | voltar aos valores anteriores |
+
+Recalculados depois de gravar (Moinhos, Panorâmica I e II, King Spa 7 e 2, Balcony) e enviados com Sync Now às 08:19 BRT. Beds24 relido às 08:21: 15 de 18 noites conferidas já com o preço novo; a King Spa 2 ainda com o preço antigo (envio na fila). Referência semanal (`quartos.json`) atualizada com os valores de hoje antes do passo do mínimo; as noites abaixo do novo mínimo têm regra por data (que prevalece) ou ficam em 2028.
+
+**Ficou de fora, de propósito:**
+- Noites dos lotes suspeitos da Booking na Villa (23-26/11, 06/12, 13-16/12, 30-31/12, 02-14/01, Balcony 22-23/11, King Spa 7 14-15/12 e 28-29/12): 38 itens do motor (proteção p90, Regra 80% e escada) esperam a confirmação do dono.
+- Itens em suítes esgotadas: Afrodite 24/11 e Panorâmica II 27-28/11 (o motor queria baixá-la por coerência).
+- Afrodite 22/11/2027 (estadia 2): o PriceLabs recusou ("Pricing data for this date isn't available yet"), porque o calendário dela não foi recalculado hoje. Fica para depois do recálculo das 10:53, no PriceLabs e no Beds24 juntos.
+
+**Revisão semanal:**
+- Novembro (Beds24, bruto, realizado + vendido): Recanto R$ 183.003 contra mínimo de R$ 220.000 (faltam R$ 36.997; R$ 561 por diária nas 66 livres); Villa R$ 153.538 contra R$ 150.000 (acima do mínimo, mas inclui as reservas dos lotes suspeitos). Ocupação até ontem 59% e 67%; RevPAR R$ 407 e R$ 354. Detalhe: `pricelabs/desempenho/2026-11_ate_2026-11-23.md`.
+- Fator público (Booking ÷ enviado, quarto livre mais barato): Recanto 0,585 em 01/12 e 04-06/12, 0,583 em 11-13/12 (igual a 16/11); Villa 0,637 nos fins de semana e **0,436 na ter 01/12** (Booking R$ 526 para a Balcony a R$ 1.206: perto do alerta de 0,42; possível promoção de dia de semana). Fatores mantidos (0,63 e 0,65): perto da chegada a semana mediu 0,63-0,66.
+- Revisão dos 12 meses: em dia (16/11); próxima em 01/12.
+- Não feitos hoje: varredura da concorrência (sessão própria), painel semanal.
+
 ## O que só pode ser feito na tela (passo a passo para você)
 
 1. **Safety Minimum Price → "Do Not Apply"** (Dynamic Pricing → Customizations → aba Groups → Edit no grupo Recanto dos Moinhos → All Customizations → Safety Minimum Price). Anote o valor atual antes.

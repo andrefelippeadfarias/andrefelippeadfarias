@@ -17,15 +17,19 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 import sys
 from datetime import datetime, timezone
 
 from comum import ler_instante, ler_json, resultado_workflow
 
 
-def mesclar_quarto(quarto: dict, refresh: dict) -> tuple[dict, int]:
+def mesclar_quarto(quarto: dict, refresh: dict, instante: str | None = None) -> tuple[dict, int]:
     """Troca preço, enviado, estadia e ocupação dos dias que existem nos dois lados. Mantém o resto.
-    Devolve (quarto mesclado, dias trocados). Zero trocado = refresh vazio ou em erro: não use como dado fresco."""
+    Devolve (quarto mesclado, dias trocados). Zero trocado = refresh vazio ou em erro: não use como dado fresco.
+    `instante`: quando o recálculo foi feito, se o arquivo não trouxer `last_refreshed_at` (o main passa a hora de
+    modificação do arquivo). Aprendizado de 23/11: um recálculo da véspera reaproveitado saía carimbado como "agora"
+    e o validador o tratava como fresco; copie com `cp -p` para manter a hora."""
     arr = (refresh.get("data") or {}).get("pricing_array") or []
     novo = {str(x.get("date"))[:10]: x for x in arr}
     dias, trocados = [], 0
@@ -52,7 +56,7 @@ def mesclar_quarto(quarto: dict, refresh: dict) -> tuple[dict, int]:
     saida = {**quarto, "days": dias}
     if trocados:
         ts = (refresh.get("data") or {}).get("last_refreshed_at")
-        saida["last_refreshed_at"] = ts or datetime.now(timezone.utc).isoformat(timespec="seconds")
+        saida["last_refreshed_at"] = ts or instante or datetime.now(timezone.utc).isoformat(timespec="seconds")
         saida["mesclado_em"] = datetime.now(timezone.utc).isoformat(timespec="seconds")
     return saida, trocados
 
@@ -94,7 +98,8 @@ def main(argv=None) -> int:
         if curto not in coleta.get("rooms", {}):
             print(f"quarto desconhecido na coleta: {curto}", file=sys.stderr)
             return 2
-        mesclado, n = mesclar_quarto(coleta["rooms"][curto], ler_json(caminho))
+        instante = datetime.fromtimestamp(os.path.getmtime(caminho), timezone.utc).isoformat(timespec="seconds")
+        mesclado, n = mesclar_quarto(coleta["rooms"][curto], ler_json(caminho), instante)
         if n == 0:
             print(f"{curto}: o recálculo não trouxe nenhum dia (erro, 429 ou vazio); nada gravado", file=sys.stderr)
             return 2

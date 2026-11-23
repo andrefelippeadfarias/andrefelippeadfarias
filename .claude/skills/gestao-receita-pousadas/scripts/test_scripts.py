@@ -607,6 +607,10 @@ class TestMesclar(unittest.TestCase):
         self.assertEqual([c for c, _ in quartos_velhos({"rooms": {"VK7": quarto, "Q7": {"last_refreshed_at": "2026-10-13T11:00:00Z"}}}, 6, agora)], ["VK7"])
         # refresh vazio: zero trocados (o chamador não grava)
         self.assertEqual(mesclar_quarto(quarto, {"success": False})[1], 0)
+        # sem last_refreshed_at no arquivo: vale o instante passado (hora do arquivo), não "agora" (23/11)
+        mv, _ = mesclar_quarto(quarto, refresh, "2026-10-12T10:56:25+00:00")
+        self.assertEqual(mv["last_refreshed_at"], "2026-10-12T10:56:25+00:00")
+        self.assertEqual([c for c, _ in quartos_velhos({"rooms": {"VK7": mv}}, 6, agora)], ["VK7"])
 
 
 class TestFaixas(unittest.TestCase):

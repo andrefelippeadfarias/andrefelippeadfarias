@@ -21,7 +21,7 @@
    "nome": "Queen (7)",
    "pousada": "Recanto",
    "unidades": 7,
-   "min": 1058,
+   "min": 1216,
    "base": 1173,
    "max": 5000,
    "min_referencia": 800,
@@ -42,7 +42,7 @@
    "nome": "Double",
    "pousada": "Recanto",
    "unidades": 6,
-   "min": 1190,
+   "min": 1220,
    "base": 1480,
    "max": 5000,
    "min_referencia": 900,
@@ -91,7 +91,7 @@
    "nome": "Queen (2)",
    "pousada": "Recanto",
    "unidades": 2,
-   "min": 1123,
+   "min": 1220,
    "base": 1590,
    "max": 5000,
    "min_referencia": 850,
@@ -179,15 +179,15 @@
   }
  ],
  "referencia_semanal": {
-  "data": "2026-11-16",
-  "nota": "Base e mínimo de cada quarto no início da semana (lidos do PriceLabs na coleta de 16/11 07:55, antes dos passos do dia). A revisão de segunda atualiza. O validador barra mudança acima do limite semanal contra estes valores. Atualizada em 16/11 para o passo 2 da ordem dono-2026-11-09-minimo-piso-semana (em 09/11: Q7 800, Double 900, Q2 850, VK2 879).",
+  "data": "2026-11-23",
+  "nota": "Base e mínimo de cada quarto no início da semana (lidos do PriceLabs na coleta de 23/11 07:55, antes dos passos do dia). A revisão de segunda atualiza. O validador barra mudança acima do limite semanal contra estes valores. Atualizada em 23/11 para o passo 3 da ordem dono-2026-11-09-minimo-piso-semana (em 16/11: Q7 920, Double 1035, Q2 977; em 09/11: Q7 800, Double 900, Q2 850, VK2 879).",
   "valores": {
    "Q7": {
-    "min": 920,
+    "min": 1058,
     "base": 1173
    },
    "Double": {
-    "min": 1035,
+    "min": 1190,
     "base": 1480
    },
    "Afrodite": {
@@ -195,7 +195,7 @@
     "base": 2000
    },
    "Q2": {
-    "min": 977,
+    "min": 1123,
     "base": 1590
    },
    "VK7": {
@@ -406,7 +406,8 @@
    "medido_em": "2026-10-29",
    "fonte": "preço público na Booking ÷ enviado: Recanto anúncio 7562933 (0,53-0,63 por data, 29/10 pós-sync; 0,658 em 25/10), Villa 14824789 (~0,65). Único fator de comparação com o mercado (motor de pace e âncora); os fatores do Genius 3 (fator_vitrine_semana/fds) só convertem os pisos do dono e o fator_real só o piso de feriado. Recalibrar toda rotina completa pela busca dos nossos anúncios; abaixo de 0,55 é promoção ativa a confirmar com o dono.",
    "nota": "30/10/2026: criado na reformulação da estratégia (motor de pace).",
-   "revisao_semanal_2026-11-02": "Mantidos 0,63 (Recanto) e 0,65 (Villa). Medição de 01/11 pela Booking (conector oficial, nossos anúncios): novembro 0,633 (Recanto 13/11) e 0,653 (Villa 13/11), batendo com os fatores; dezembro e janeiro 0,61-0,62 nas duas pousadas (a mais de 30 dias). O motor usa um fator só: nas noites de dezembro em diante o alvo enviado sai ~3% abaixo do que a vitrine pede. Nenhuma promoção nova abaixo de 0,55 encontrada; a reserva Genius de última hora da King Spa 7 (06-08/11) pagou 0,38 do enviado."
+   "revisao_semanal_2026-11-02": "Mantidos 0,63 (Recanto) e 0,65 (Villa). Medição de 01/11 pela Booking (conector oficial, nossos anúncios): novembro 0,633 (Recanto 13/11) e 0,653 (Villa 13/11), batendo com os fatores; dezembro e janeiro 0,61-0,62 nas duas pousadas (a mais de 30 dias). O motor usa um fator só: nas noites de dezembro em diante o alvo enviado sai ~3% abaixo do que a vitrine pede. Nenhuma promoção nova abaixo de 0,55 encontrada; a reserva Genius de última hora da King Spa 7 (06-08/11) pagou 0,38 do enviado.",
+   "revisao_semanal_2026-11-23": "Mantidos 0,63 (Recanto) e 0,65 (Villa). Medição de 23/11 pela Booking (coleta, conector oficial, nossos anúncios, quarto livre mais barato): Recanto 0,585 (ter 01/12, Moinhos R$ 1.279), 0,585 (04-06/12) e 0,583 (11-13/12), igual a 16/11 (0,583); Villa 0,637 nos dois fins de semana e 0,436 na ter 01/12 (Booking R$ 526 ÷ Balcony R$ 1.206: perto do alerta de 0,42 e abaixo de 0,55, possível promoção de dia de semana a confirmar com o dono). Não mudado porque as noites perto da chegada mediram 0,63-0,66 na semana (Moinhos e Panorâmica I em 21-22/11) e o motor age sobretudo de D2 a D30; se a medição longe da chegada seguir em 0,58 na próxima segunda, passar o Recanto para 0,60."
   },
   "pace": {
    "curvas": {

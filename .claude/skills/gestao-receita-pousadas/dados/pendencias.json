@@ -1664,6 +1664,20 @@
       "desde": "2026-11-23",
       "urgencia": 1,
       "texto": "Moinhos ter 24/11: subiu hoje às 07:53 pela escada (2 de 7 vendidas, R$ 1.279 → R$ 1.501). Às 10:53 o cancelamento da Booking 23→26/11 deixou 1 de 7 vendida (6 livres). Cancelamento desce pela mesma reta, mas o Moinhos está sem saldo de recálculo até 19:54 BRT. Na rotina das 19:53 (ou às 19:54): recalcular o Moinhos, pace.py plano com --regras e --janelas e --noites Q7=2026-11-24..2026-11-25, validar, gravar e Sync Now (D1). Ver também a proposta escada-nao-sobe-atras-20261123."
+    },
+    {
+      "id": "beds24-credencial-perdida-20261124",
+      "responsavel": "dono",
+      "desde": "2026-11-24",
+      "urgencia": 1,
+      "texto": "O contêiner da sessão foi trocado em 24/11 e o arquivo da credencial do Beds24 (/root/.beds24) sumiu: a API devolve 401. Sem ela, as rotinas não veem reservas, cancelamentos, inventário nem alertas de segurança, e não editam estadia. Salvar o token de longa duração do Beds24 (leitura e escrita de inventário) como segredo de rede do ambiente, host beds24.com, cabeçalho 'token' sem prefixo, pelo cartão que a skill abre (nunca no chat)."
+    },
+    {
+      "id": "plano-20261124-por-gravar",
+      "responsavel": "skill",
+      "desde": "2026-11-24",
+      "urgencia": 1,
+      "texto": "Do plano de 24/11 07:53 (validado, 0 erro) ficaram sem gravar: Panorâmica II 25/11 (R$ 1.638 → ~R$ 1.590), Moinhos 27-28/11 (R$ 1.408 → ~R$ 1.501, se ainda houver vaga), Balcony 27/11 estadia 2 (PriceLabs e Beds24, com 28/11 noCheckInOrCheckOut), estadia 2 em 24/11/2027 nos 7 quartos e na Afrodite 22/11/2027 (PriceLabs e Beds24). Refazer recálculo, plano e validação quando o Beds24 tiver credencial (o inventário entra na auditoria)."
     }
   ],
   "versao": "2026-11-12T13"

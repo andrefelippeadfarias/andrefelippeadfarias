@@ -6908,6 +6908,32 @@ Recalculados depois de gravar (Moinhos, Panorâmica I e II, King Spa 7 e 2, Balc
   - Panorâmica I 24/11 com 4 de 6: o motor pedia R$ 1.884, barrado pelas 24 h.
 - Nada gravado. A estadia de 2027 da Afrodite foi de novo cortada pelo reinício.
 
+## 24/11/2026, 07:53 a 16:55 BRT — Rotina completa e rotinas leves, cortadas por reinícios; contêiner trocado e Beds24 sem credencial
+
+**Rotina completa das 07:53:**
+- **Beds24 desde 19:48 BRT de 23/11:**
+  - 4 novas: Balcony 10→13/12 pela Booking R$ 2.511; Panorâmica I 27→29/11 pelo Airbnb R$ 1.513 (consulta); King Spa 7 09→13/12, 2 diretas da recepção da Villa a R$ 2.300 cada (29% do esperado).
+  - 2 canceladas: Moinhos 27→29/11 (Booking, R$ 2.887) e Panorâmica I 27→29/11 (direta, R$ 2.262).
+- **Coleta:** o `get_listing_prices` voltou "Listing data does not exist" nos 7 quartos de novo, agora sem recálculo em paralelo. O defeito é do PriceLabs, não da concorrência (corrige o aprendizado de 23/11).
+- **Recálculos:** Moinhos, Panorâmica I e II, Afrodite e Balcony ok (07:59-08:01). King Spa 7 e King Spa 2 falharam (400, Beds24 sob carga).
+- **Plano validado** (13 itens, 0 erro):
+  - Panorâmica I hoje R$ 2.116 → R$ 1.884 (4 de 6 depois do cancelamento);
+  - Panorâmica II 25/11 R$ 1.638 → R$ 1.590;
+  - Moinhos 27-28/11 R$ 1.408 → R$ 1.501 (6 de 7);
+  - Balcony 27/11 estadia de volta a 2 (a janela deixou de valer com o cancelamento de 23/11);
+  - estadia 2 em 24/11/2027 (7 quartos) e na Afrodite 22/11/2027.
+- **Gravado e conferido:** só a 1ª fatia, Panorâmica I 24/11 a +28% da base (R$ 1.894). O processo reiniciou em seguida.
+
+**Troca do contêiner (antes das 10:53):**
+- O rascunho da rodada foi apagado.
+- O registro de cota sem commit se perdeu (recadastrado à mão).
+- O arquivo da credencial do Beds24 (`/root/.beds24`) não existe mais: a API devolve 401.
+- Sem Beds24 não há movimento de reservas, vigia, inventário nem edição. O plano B de reservas é o `get_pms_reservations` do PriceLabs.
+- **Ficam por gravar** (refazer o plano quando o Beds24 voltar):
+  - Panorâmica II 25/11;
+  - Moinhos 27-28/11;
+  - estadias de 2027 e da Balcony 27/11, no PriceLabs e no Beds24.
+
 ## O que só pode ser feito na tela (passo a passo para você)
 
 1. **Safety Minimum Price → "Do Not Apply"** (Dynamic Pricing → Customizations → aba Groups → Edit no grupo Recanto dos Moinhos → All Customizations → Safety Minimum Price). Anote o valor atual antes.

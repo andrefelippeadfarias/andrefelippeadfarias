@@ -6880,6 +6880,34 @@ Recalculados depois de gravar (Moinhos, Panorâmica I e II, King Spa 7 e 2, Balc
 - A descida do Moinhos de 24/11 pelo cancelamento (escada: de 2 para 1 vendida) fica para a vaga das 19:54. Sem saldo de recálculo não se dá passo de flutuação.
 - A estadia de 22/11/2027 da Afrodite espera o recálculo dela.
 
+## 23/11/2026, 13:53, 16:53 e 19:53 BRT — Rotinas leves da tarde (as três cortadas por reinício do processo antes do registro; registradas em 24/11)
+
+**13:53 (Beds24 desde 10:48 BRT):**
+- 4 novas:
+  - Moinhos 27→29/11 pela Booking, R$ 1.512 e R$ 1.647. O Moinhos esgotou 27-28/11.
+  - Panorâmica I hoje (23/11): 2 diretas da recepção, R$ 766 cada.
+  - Afrodite hoje: a direta de R$ 1.060 voltou como confirmada (antes no Moinhos).
+- 1 cancelada: Balcony 27→29/11 pela Booking (tarifa normal, ~R$ 697 por noite, feita em 19/11). Balcony fica com 3 livres em 27/11 e 2 em 28/11.
+- 0 alertas.
+- Afrodite recalculada às 13:55 (3ª tentativa do dia, a primeira que passou). O motor não deu passo nela em 27-28/11: o plano do fim de semana do dono conta a própria suíte (0 de 1).
+- A estadia 2 de 22/11/2027 da Afrodite foi validada (0 erro), mas não chegou a ser gravada.
+
+**16:53 (desde 13:48 BRT):**
+- 0 novas. 1 cancelada: King Spa 2 29/11 pelo Airbnb. A noite reabriu com 1 livre; a proteção p90 (R$ 2.858) fica até o plano da manhã.
+- A reserva da Booking da Afrodite 27→29/11 (R$ 1.833, feita em 11/11) foi mudada de quarto para a Afrodite; a Panorâmica II reabriu 1 vaga em 27-28/11.
+- **Abaixo do esperado:** Afrodite hoje, direta, R$ 357 (34%), lançada pela recepção.
+- Logs do PriceLabs: só as nossas gravações.
+
+**19:53 (desde 16:48 BRT):**
+- 2 novas:
+  - Panorâmica II 27→29/11, direta, R$ 3.244. **Recanto esgotado em 27-28/11 (16 de 16).**
+  - King Spa 7 16/12, direta, R$ 500 (45%, recepção da Villa). É noite de lote suspeito.
+- 18 alteradas: chegadas do dia, incluindo reservas do 1º lote suspeito (King Spa 7 e King Spa 2 23/11), que estão entrando como hóspedes reais.
+- Moinhos e Panorâmica I recalculados às 19:56:
+  - Moinhos 24/11 com 1 de 7. O alvo do motor é R$ 1.500 (p50 do mercado com banheira, R$ 945 na vitrine ÷ 0,63), então não há descida. O passo de subida também está barrado ("já houve passo há menos de 24 h").
+  - Panorâmica I 24/11 com 4 de 6: o motor pedia R$ 1.884, barrado pelas 24 h.
+- Nada gravado. A estadia de 2027 da Afrodite foi de novo cortada pelo reinício.
+
 ## O que só pode ser feito na tela (passo a passo para você)
 
 1. **Safety Minimum Price → "Do Not Apply"** (Dynamic Pricing → Customizations → aba Groups → Edit no grupo Recanto dos Moinhos → All Customizations → Safety Minimum Price). Anote o valor atual antes.

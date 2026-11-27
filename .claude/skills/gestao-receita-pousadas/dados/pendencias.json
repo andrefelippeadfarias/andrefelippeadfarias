@@ -1670,7 +1670,10 @@
       "responsavel": "dono",
       "desde": "2026-11-24",
       "urgencia": 1,
-      "texto": "O contêiner da sessão foi trocado em 24/11 e o arquivo da credencial do Beds24 (/root/.beds24) sumiu: a API devolve 401. Sem ela, as rotinas não veem reservas, cancelamentos, inventário nem alertas de segurança, e não editam estadia. Salvar o token de longa duração do Beds24 (leitura e escrita de inventário) como segredo de rede do ambiente, host beds24.com, cabeçalho 'token' sem prefixo, pelo cartão que a skill abre (nunca no chat)."
+      "texto": "O contêiner da sessão foi trocado em 24/11 e o arquivo da credencial do Beds24 (/root/.beds24) sumiu: a API devolve 401. Sem ela, as rotinas não veem reservas, cancelamentos, inventário nem alertas de segurança, e não editam estadia. Salvar o token de longa duração do Beds24 (leitura e escrita de inventário) como segredo de rede do ambiente, host beds24.com, cabeçalho 'token' sem prefixo, pelo cartão que a skill abre (nunca no chat).",
+      "atualizacoes": [
+        "27/11 09:45 BRT: o cartão de credencial (request_credential, host beds24.com, cabeçalho 'token') foi recusado ou não pôde ser mostrado; não pedir de novo por ele. O dono pode cadastrar em Configurações do ambiente → Editar → Network secrets (host beds24.com, cabeçalho token, sem prefixo). De 24/11 10:53 a 27/11 as rotinas foram cortadas por reinícios do processo."
+      ]
     },
     {
       "id": "plano-20261124-por-gravar",

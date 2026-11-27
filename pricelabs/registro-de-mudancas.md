@@ -6963,6 +6963,7 @@ Recalculados depois de gravar (Moinhos, Panorâmica I e II, King Spa 7 e 2, Balc
   - 07/12: Panorâmica I R$ 1.643; Panorâmica II R$ 1.542; Afrodite R$ 1.980.
   - 08/12: Panorâmica I R$ 1.406; Panorâmica II R$ 1.336; Afrodite R$ 1.700.
   - 10/12: Panorâmica I R$ 1.613; Panorâmica II R$ 1.526; Afrodite R$ 1.940.
+- **Recalculados e enviados (Sync Now às 11:11-11:14):** Panorâmica I e II, Afrodite, King Spa 7, King Spa 2 e Balcony. O recálculo confere os valores gravados (ex.: 29/11 Panorâmica I R$ 1.510, Afrodite R$ 1.820; Natal King Spa 7 R$ 3.730-3.863, Balcony R$ 3.302-3.467). Sem Beds24 não dá para conferir o price1.
 
 ## O que só pode ser feito na tela (passo a passo para você)
 

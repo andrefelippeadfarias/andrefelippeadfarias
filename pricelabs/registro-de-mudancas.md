@@ -6934,6 +6934,25 @@ Recalculados depois de gravar (Moinhos, Panorâmica I e II, King Spa 7 e 2, Balc
   - Moinhos 27-28/11;
   - estadias de 2027 e da Balcony 27/11, no PriceLabs e no Beds24.
 
+## 27/11/2026, 09:45 a 10:12 BRT — Rotina completa (plano B: Beds24 sem credencial)
+
+**Antes:** de 24/11 10:53 a 27/11 as rotinas foram cortadas por reinícios do processo; o cartão de credencial do Beds24 foi recusado em 27/11 (não será pedido de novo; cadastro pelo dono em Configurações do ambiente → Network secrets, host beds24.com, cabeçalho `token`).
+
+**Reservas (plano B, `get_pms_reservations`, feitas de 23 a 25/11):**
+- Moinhos 27→29/11: +2 (direta R$ 1.335 e Booking R$ 1.646).
+- Panorâmica I: 24→26/11 Booking R$ 1.480; 07→09/12 direta R$ 3.759.
+- Afrodite 03/12 Booking R$ 1.277.
+- **4º lote suspeito da Booking** (4 reservas no mesmo segundo, 24/11 09:13 BRT, comissão 0): Balcony 24→26/11 R$ 691; King Spa 7 07→09/12 R$ 1.252, 16/12 R$ 543, 30/12→01/01 R$ 3.153. Noites somadas às do filtro.
+
+**Logs do PriceLabs:** só a nossa gravação de 24/11. **Envio:** diário saindo (26/11 07:47; Afrodite 27/11 00:29).
+
+**Recálculos:** Panorâmica I e II, Afrodite, King Spa 7, Balcony, King Spa 2 ok (09:46-09:48); Moinhos 400 (Beds24 sob carga), barrado na rodada. Sem o Moinhos, o motor tratou-o como esgotado na coerência do Recanto: **itens do Recanto adiados** para a rodada das 10:53.
+
+**Gravado e conferido (Villa, 25 noites, validado 0 erro):**
+- King Spa 7: 30/11 R$ 1.613 → R$ 1.465; 03/12 R$ 1.569; 04/12 R$ 2.294 → R$ 2.072; 09-10/12 R$ 1.732 e R$ 1.569; 11/12 R$ 2.279 → R$ 2.560; Natal 23/12 R$ 4.070 → R$ 3.730, 24-26/12 R$ 4.292 → R$ 3.863.
+- King Spa 2: 30/11 R$ 1.499 → R$ 1.461; 03/12 e 10/12 R$ 1.549; 08/12 R$ 1.562; 09/12 R$ 1.689.
+- Balcony: 03/12 R$ 1.384; 04/12 R$ 1.854; 05/12 R$ 1.003 → R$ 2.210 (Regra G); 08-10/12 R$ 1.321 a R$ 1.461; Natal 23/12 R$ 3.302, 24-26/12 R$ 3.467-3.480.
+
 ## O que só pode ser feito na tela (passo a passo para você)
 
 1. **Safety Minimum Price → "Do Not Apply"** (Dynamic Pricing → Customizations → aba Groups → Edit no grupo Recanto dos Moinhos → All Customizations → Safety Minimum Price). Anote o valor atual antes.

@@ -6965,6 +6965,26 @@ Recalculados depois de gravar (Moinhos, Panorâmica I e II, King Spa 7 e 2, Balc
   - 10/12: Panorâmica I R$ 1.613; Panorâmica II R$ 1.526; Afrodite R$ 1.940.
 - **Recalculados e enviados (Sync Now às 11:11-11:14):** Panorâmica I e II, Afrodite, King Spa 7, King Spa 2 e Balcony. O recálculo confere os valores gravados (ex.: 29/11 Panorâmica I R$ 1.510, Afrodite R$ 1.820; Natal King Spa 7 R$ 3.730-3.863, Balcony R$ 3.302-3.467). Sem Beds24 não dá para conferir o price1.
 
+## 27/11/2026, 13:53 a 14:00 BRT — Rotina leve das 13:53 (plano B: Beds24 sem credencial)
+
+**Reservas pelo PriceLabs (feitas de 25 a 27/11):**
+- **Recanto lotou 27-28/11:**
+  - Moinhos +2 pela Booking (R$ 1.342 e R$ 1.255);
+  - Panorâmica I: direta R$ 1.850 e Booking R$ 2.000 (1 da Booking cancelada);
+  - Panorâmica II: Booking R$ 1.754.
+- Panorâmica I 06/12 (Booking R$ 888) e 10/12 (Booking R$ 796).
+- **Afrodite 28→30/12 pela Booking, R$ 2.180:** a noite esgotou; a proteção p90 entra no plano da manhã.
+- King Spa 2 27→29/11 pela Booking, R$ 1.438.
+- King Spa 7: 3 diretas canceladas (27-28/11 R$ 3.552, 28/11 R$ 670, 29-30/11 R$ 800). O PriceLabs segue com 28/11 a 7 de 7: outras reservas ocupam a vaga.
+
+**Alertas:**
+- **Balcony 27-28/11:** 2 reservas diretas lançadas às 09:52-09:53 BRT **sem valor** (R$ 0). Confirmar com a recepção.
+- **Abaixo do esperado:** King Spa 7 03/12, direta de 25/11, R$ 500 (~32% do enviado).
+
+**Preço:**
+- King Spa 7 recalculada às 13:54 (3ª do dia). O motor em 28-29/11 não pede mudança: 28/11 segue lotada no PriceLabs; 29/11, com 1 livre a R$ 2.856 (proteção), desce no plano da manhã.
+- Nada gravado.
+
 ## O que só pode ser feito na tela (passo a passo para você)
 
 1. **Safety Minimum Price → "Do Not Apply"** (Dynamic Pricing → Customizations → aba Groups → Edit no grupo Recanto dos Moinhos → All Customizations → Safety Minimum Price). Anote o valor atual antes.

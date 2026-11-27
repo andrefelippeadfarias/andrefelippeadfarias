@@ -6985,6 +6985,10 @@ Recalculados depois de gravar (Moinhos, Panorâmica I e II, King Spa 7 e 2, Balc
 - King Spa 7 recalculada às 13:54 (3ª do dia). O motor em 28-29/11 não pede mudança: 28/11 segue lotada no PriceLabs; 29/11, com 1 livre a R$ 2.856 (proteção), desce no plano da manhã.
 - Nada gravado.
 
+## 27/11/2026, 16:54 BRT — Rotina leve das 16:53 (plano B)
+
+A lista de reservas do PriceLabs não trouxe nada novo depois de 10:52 BRT. A lista atrasa algumas horas, e o Beds24 segue sem credencial (401). Nada gravado; nenhuma outra chamada ao PriceLabs.
+
 ## O que só pode ser feito na tela (passo a passo para você)
 
 1. **Safety Minimum Price → "Do Not Apply"** (Dynamic Pricing → Customizations → aba Groups → Edit no grupo Recanto dos Moinhos → All Customizations → Safety Minimum Price). Anote o valor atual antes.

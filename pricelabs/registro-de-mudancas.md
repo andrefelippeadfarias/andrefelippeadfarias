@@ -6953,6 +6953,17 @@ Recalculados depois de gravar (Moinhos, Panorâmica I e II, King Spa 7 e 2, Balc
 - King Spa 2: 30/11 R$ 1.499 → R$ 1.461; 03/12 e 10/12 R$ 1.549; 08/12 R$ 1.562; 09/12 R$ 1.689.
 - Balcony: 03/12 R$ 1.384; 04/12 R$ 1.854; 05/12 R$ 1.003 → R$ 2.210 (Regra G); 08-10/12 R$ 1.321 a R$ 1.461; Natal 23/12 R$ 3.302, 24-26/12 R$ 3.467-3.480.
 
+## 27/11/2026, 10:53 a 11:12 BRT — Rotina leve das 10:53: Recanto gravado
+
+- Moinhos recalculado às 10:54. Motor rodado com os 7 quartos: 14 itens no Recanto (validado, 0 erro). Os itens estranhos da Panorâmica II da manhã, vindos da falta do Moinhos, sumiram.
+- **Apagado e regravado:** Afrodite 03/12 (vendida pela Booking): teto antigo de R$ 1.940 retirado; proteção p90, piso R$ 3.200, teto livre.
+- **Gravado e conferido:**
+  - Domingo 29/11: Afrodite R$ 2.200 → R$ 1.820; Panorâmica I R$ 1.820 → R$ 1.510; Panorâmica II R$ 1.558 → R$ 1.511 (escada para baixo, 4 de 16 vendidas).
+  - Panorâmica II 03/12 R$ 1.574 → R$ 1.638.
+  - 07/12: Panorâmica I R$ 1.643; Panorâmica II R$ 1.542; Afrodite R$ 1.980.
+  - 08/12: Panorâmica I R$ 1.406; Panorâmica II R$ 1.336; Afrodite R$ 1.700.
+  - 10/12: Panorâmica I R$ 1.613; Panorâmica II R$ 1.526; Afrodite R$ 1.940.
+
 ## O que só pode ser feito na tela (passo a passo para você)
 
 1. **Safety Minimum Price → "Do Not Apply"** (Dynamic Pricing → Customizations → aba Groups → Edit no grupo Recanto dos Moinhos → All Customizations → Safety Minimum Price). Anote o valor atual antes.

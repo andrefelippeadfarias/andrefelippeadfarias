@@ -6989,6 +6989,10 @@ Recalculados depois de gravar (Moinhos, Panorâmica I e II, King Spa 7 e 2, Balc
 
 A lista de reservas do PriceLabs não trouxe nada novo depois de 10:52 BRT. A lista atrasa algumas horas, e o Beds24 segue sem credencial (401). Nada gravado; nenhuma outra chamada ao PriceLabs.
 
+## 27/11/2026, 19:54 BRT — Rotina leve das 19:53 (plano B)
+
+Sem reserva nova na lista do PriceLabs depois de 10:52 BRT. Beds24 segue 401 (token não cadastrado). Nada gravado.
+
 ## O que só pode ser feito na tela (passo a passo para você)
 
 1. **Safety Minimum Price → "Do Not Apply"** (Dynamic Pricing → Customizations → aba Groups → Edit no grupo Recanto dos Moinhos → All Customizations → Safety Minimum Price). Anote o valor atual antes.

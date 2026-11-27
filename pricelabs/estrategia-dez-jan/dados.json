@@ -1,0 +1,3868 @@
+{
+ "gerado_em": "2026-11-27T13:15Z",
+ "fonte": "PriceLabs get_pms_reservations (estadias 01/12-31/01, sem nomes) + recalculos de 27/11 (6 quartos; Moinhos so por regra por data) + regras por data",
+ "capacidade": {
+  "Q7": 7,
+  "Double": 6,
+  "Afrodite": 1,
+  "Q2": 2,
+  "VK7": 7,
+  "Balcony": 6,
+  "VK2": 2
+ },
+ "base": {
+  "Q7": 1173,
+  "Double": 1480,
+  "Afrodite": 2000,
+  "Q2": 1590,
+  "VK7": 1480,
+  "Balcony": 1270,
+  "VK2": 1270
+ },
+ "noites": [
+  {
+   "data": "2026-12-01",
+   "dia_semana": "ter",
+   "quartos": {
+    "Q7": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 1279,
+     "ocupacao_pricelabs": null,
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Escada de vendas (dono 01/11): 1/7 vendidas; reta R$ 1270 (p50 R$ 800 público); degrau a"
+    },
+    "Double": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 1288.0,
+     "ocupacao_pricelabs": "1/6",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Escada de vendas (dono 01/11): 1/6 vendidas; reta R$ 1270 (p50 R$ 800 público); degrau a"
+    },
+    "Afrodite": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 2860.0,
+     "ocupacao_pricelabs": "-1",
+     "regra": "Proteção da noite esgotada (1/1; Regra J desligada pelo dono em 31/10): piso no p90 do mercado com hidro, R$ 1794 público = R$ 2848 enviados (busca própria); te"
+    },
+    "Q2": {
+     "vendidas_reservas": 1,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 565,
+     "enviado": 2862.0,
+     "ocupacao_pricelabs": "2/2",
+     "regra": "Proteção da noite esgotada (2/2; Regra J desligada pelo dono em 31/10): piso no p90 do mercado com hidro, R$ 1794 público = R$ 2848 enviados (busca própria); te"
+    },
+    "VK7": {
+     "vendidas_reservas": 1,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 450,
+     "enviado": 1391.0,
+     "ocupacao_pricelabs": "2/7",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Escada de vendas (dono 01/11): 2/7 vendidas; reta R$ 1378 (p57 R$ 896 público); degrau a"
+    },
+    "Balcony": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 1206.0,
+     "ocupacao_pricelabs": "0/6",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Escada de vendas (dono 01/11): 0/6 vendidas; reta R$ 1231 (p50 R$ 800 público); degrau a"
+    },
+    "VK2": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 1346.0,
+     "ocupacao_pricelabs": "0/2",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Escada de vendas (dono 01/11): 2/9 vendidas; reta R$ 1341 (p55 R$ 872 público); degrau a"
+    }
+   }
+  },
+  {
+   "data": "2026-12-02",
+   "dia_semana": "qua",
+   "quartos": {
+    "Q7": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 1466,
+     "ocupacao_pricelabs": null,
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Escada de vendas (dono 01/11): 0/7 vendidas; reta R$ 1457 (p50 R$ 918 público); degrau a"
+    },
+    "Double": {
+     "vendidas_reservas": 1,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 1480.0,
+     "ocupacao_pricelabs": "1/6",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Escada de vendas (dono 01/11): 0/6 vendidas; reta R$ 1457 (p50 R$ 918 público); degrau a"
+    },
+    "Afrodite": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 3200.0,
+     "ocupacao_pricelabs": "-1",
+     "regra": "Proteção da noite esgotada (1/1; Regra J desligada pelo dono em 31/10): piso no p90 do mercado com hidro, R$ 2006 público = R$ 3184 enviados (tipo semana, mês 2"
+    },
+    "Q2": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 1479.0,
+     "ocupacao_pricelabs": "0/2",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Escada de vendas (dono 01/11): 1/16 vendidas; reta R$ 1457 (p50 R$ 918 público); degrau "
+    },
+    "VK7": {
+     "vendidas_reservas": 1,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 602,
+     "enviado": 1421.0,
+     "ocupacao_pricelabs": "2/7",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Escada de vendas (dono 01/11): 2/7 vendidas; reta R$ 1412 (p50 R$ 918 público); degrau a"
+    },
+    "Balcony": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 1270.0,
+     "ocupacao_pricelabs": "0/6",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Escada de vendas (dono 01/11): 0/6 vendidas; reta R$ 1412 (p50 R$ 918 público); degrau a"
+    },
+    "VK2": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 1422.0,
+     "ocupacao_pricelabs": "0/2",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Escada de vendas (dono 01/11): 2/9 vendidas; reta R$ 1412 (p50 R$ 918 público); degrau a"
+    }
+   }
+  },
+  {
+   "data": "2026-12-03",
+   "dia_semana": "qui",
+   "quartos": {
+    "Q7": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 1466,
+     "ocupacao_pricelabs": null,
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Escada de vendas (dono 01/11): 0/7 vendidas; reta R$ 1457 (p50 R$ 918 público); degrau a"
+    },
+    "Double": {
+     "vendidas_reservas": 1,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 1613.0,
+     "ocupacao_pricelabs": "1/6",
+     "regra": "Escada de vendas (dono 01/11): 1/6 vendidas; reta R$ 1609 (p57 R$ 1014 público); degrau até R$ 1610; antes R$ 1480"
+    },
+    "Afrodite": {
+     "vendidas_reservas": 1,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 1126,
+     "enviado": 1940.0,
+     "ocupacao_pricelabs": "-1",
+     "regra": "Afrodite 20% acima da mais cara das outras (R$ 1613)"
+    },
+    "Q2": {
+     "vendidas_reservas": 1,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 764,
+     "enviado": 1574.0,
+     "ocupacao_pricelabs": "1/2",
+     "regra": "Escada de vendas (dono 01/11): 2/16 vendidas; reta R$ 1571 (p55 R$ 990 público); degrau até R$ 1572; antes R$ 1526; Ordem do Recanto: Panorâmica II entre Moinho"
+    },
+    "VK7": {
+     "vendidas_reservas": 1,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 602,
+     "enviado": 1421.0,
+     "ocupacao_pricelabs": "2/7",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Escada de vendas (dono 01/11): 1/7 vendidas; reta R$ 1412 (p50 R$ 918 público); degrau a"
+    },
+    "Balcony": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 1270.0,
+     "ocupacao_pricelabs": "0/6",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Escada de vendas (dono 01/11): 0/6 vendidas; reta R$ 1412 (p50 R$ 918 público); degrau a"
+    },
+    "VK2": {
+     "vendidas_reservas": 1,
+     "vendidas_lote_suspeito": 1,
+     "receita_noite": 541,
+     "enviado": 1422.0,
+     "ocupacao_pricelabs": "1/2",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Escada de vendas (dono 01/11): 2/9 vendidas; reta R$ 1412 (p50 R$ 918 público); degrau a"
+    }
+   }
+  },
+  {
+   "data": "2026-12-04",
+   "dia_semana": "sex",
+   "quartos": {
+    "Q7": {
+     "vendidas_reservas": 5,
+     "vendidas_lote_suspeito": 2,
+     "receita_noite": 2378,
+     "enviado": 2334,
+     "ocupacao_pricelabs": null,
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Plano do dono 09/11 (fds): abertura R$ 1274 público; 5/7 vendidas; 2 degrau(s) de +7%; p"
+    },
+    "Double": {
+     "vendidas_reservas": 6,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 2644,
+     "enviado": 2486.0,
+     "ocupacao_pricelabs": "6/6",
+     "regra": "Estadia pelo dia de chegada (dono 04/11): sexta 04/12 com estadia 1 no PriceLabs e no Beds24 (auditoria 21/11)"
+    },
+    "Afrodite": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 2860.0,
+     "ocupacao_pricelabs": "-1",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Plano do dono 09/11 (fds): abertura R$ 1729 público; 0/1 vendidas; 15% acima da Panorâmi"
+    },
+    "Q2": {
+     "vendidas_reservas": 2,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 1556,
+     "enviado": 2337.0,
+     "ocupacao_pricelabs": "2/2",
+     "regra": "Plano do dono 09/11 (fds): abertura R$ 1504 público; 2/2 vendidas; 1 degrau(s) de +7%; ordem do Recanto: entre Moinhos e Panorâmica I (R$ 2334-2334); público R$"
+    },
+    "VK7": {
+     "vendidas_reservas": 3,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 1815,
+     "enviado": 2294.0,
+     "ocupacao_pricelabs": "3/7",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Plano do dono 09/11 (fds): abertura R$ 1435 público; 3/7 vendidas; público R$ 1435 = R$ "
+    },
+    "Balcony": {
+     "vendidas_reservas": 3,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 1686,
+     "enviado": 2057.0,
+     "ocupacao_pricelabs": "3/6",
+     "regra": "Regra G: Balcony 10% abaixo da suíte com banheira livre mais barata (R$ 2294)"
+    },
+    "VK2": {
+     "vendidas_reservas": 2,
+     "vendidas_lote_suspeito": 1,
+     "receita_noite": 954,
+     "enviado": 2451.0,
+     "ocupacao_pricelabs": "2/2",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Plano do dono 09/11 (fds): abertura R$ 1477 público; 2/2 vendidas; 1 degrau(s) de +7%; p"
+    }
+   }
+  },
+  {
+   "data": "2026-12-05",
+   "dia_semana": "sab",
+   "quartos": {
+    "Q7": {
+     "vendidas_reservas": 5,
+     "vendidas_lote_suspeito": 2,
+     "receita_noite": 2378,
+     "enviado": 2334,
+     "ocupacao_pricelabs": null,
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Plano do dono 09/11 (fds): abertura R$ 1274 público; 5/7 vendidas; 2 degrau(s) de +7%; p"
+    },
+    "Double": {
+     "vendidas_reservas": 6,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 3606,
+     "enviado": 2486.0,
+     "ocupacao_pricelabs": "6/6",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Plano do dono 09/11 (fds): abertura R$ 1504 público; 6/6 vendidas; 3 degrau(s) de +7%; p"
+    },
+    "Afrodite": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 2860.0,
+     "ocupacao_pricelabs": "-1",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Plano do dono 09/11 (fds): abertura R$ 1729 público; 0/1 vendidas; 15% acima da Panorâmi"
+    },
+    "Q2": {
+     "vendidas_reservas": 2,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 1556,
+     "enviado": 2337.0,
+     "ocupacao_pricelabs": "2/2",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Plano do dono 09/11 (fds): abertura R$ 1504 público; 2/2 vendidas; 1 degrau(s) de +7%; o"
+    },
+    "VK7": {
+     "vendidas_reservas": 7,
+     "vendidas_lote_suspeito": 1,
+     "receita_noite": 4818,
+     "enviado": 2457.0,
+     "ocupacao_pricelabs": "5/7",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Plano do dono 09/11 (fds): abertura R$ 1504 público; 7/7 vendidas; 3 degrau(s) de +7%; p"
+    },
+    "Balcony": {
+     "vendidas_reservas": 3,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 1686,
+     "enviado": 1003.0,
+     "ocupacao_pricelabs": "3/6",
+     "regra": "Balcony no mercado do quarto sem banheira (plano do dono 09/11, regra dos 80%): 8/9 vendidas nas suítes com banheira da Villa; Regra G suspensa na noite; mercad"
+    },
+    "VK2": {
+     "vendidas_reservas": 2,
+     "vendidas_lote_suspeito": 1,
+     "receita_noite": 954,
+     "enviado": 2451.0,
+     "ocupacao_pricelabs": "2/2",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Plano do dono 09/11 (fds): abertura R$ 1504 público; 2/2 vendidas; 1 degrau(s) de +7%; p"
+    }
+   }
+  },
+  {
+   "data": "2026-12-06",
+   "dia_semana": "dom",
+   "quartos": {
+    "Q7": {
+     "vendidas_reservas": 3,
+     "vendidas_lote_suspeito": 2,
+     "receita_noite": 1764,
+     "enviado": 1630,
+     "ocupacao_pricelabs": null,
+     "regra": "Escada de vendas (dono 01/11): 3/7 vendidas; reta R$ 1628 (p58 R$ 1026 público); degrau até R$ 1629; antes R$ 1490"
+    },
+    "Double": {
+     "vendidas_reservas": 2,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 1710,
+     "enviado": 1643.0,
+     "ocupacao_pricelabs": "3/6",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Escada de vendas (dono 01/11): 2/6 vendidas; reta R$ 1457 (p50 R$ 918 público); degrau a"
+    },
+    "Afrodite": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 1980.0,
+     "ocupacao_pricelabs": "-1",
+     "regra": "Escada de vendas (dono 01/11): 5/16 vendidas; reta R$ 1632 (p53 R$ 979 público); degrau até R$ 1957; antes R$ 1800; Afrodite 20% acima da mais cara das outras ("
+    },
+    "Q2": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 1638.0,
+     "ocupacao_pricelabs": "0/2",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Escada de vendas (dono 01/11): 5/16 vendidas; reta R$ 1533 (p53 R$ 966 público); degrau "
+    },
+    "VK7": {
+     "vendidas_reservas": 8,
+     "vendidas_lote_suspeito": 3,
+     "receita_noite": 4498,
+     "enviado": 1658.0,
+     "ocupacao_pricelabs": "6/7",
+     "regra": "Escada de vendas (dono 01/11): 6/7 vendidas; reta R$ 1950 (p77 R$ 530 público); degrau até R$ 1645; antes R$ 1495"
+    },
+    "Balcony": {
+     "vendidas_reservas": 1,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 326,
+     "enviado": 686.0,
+     "ocupacao_pricelabs": "1/6",
+     "regra": "Confirma (mesmo valor vigente) a Balcony no mercado pela regra dos 80% (8/9 suítes com banheira da Villa vendidas); a Regra G fica suspensa na noite mesmo com a"
+    },
+    "VK2": {
+     "vendidas_reservas": 2,
+     "vendidas_lote_suspeito": 1,
+     "receita_noite": 954,
+     "enviado": 1167.0,
+     "ocupacao_pricelabs": "2/2",
+     "regra": "Proteção da noite esgotada (2/2; Regra J desligada pelo dono em 31/10): piso no p90 do mercado com hidro, R$ 704 público = R$ 1083 enviados (tipo semana, mês 20"
+    }
+   }
+  },
+  {
+   "data": "2026-12-07",
+   "dia_semana": "seg",
+   "quartos": {
+    "Q7": {
+     "vendidas_reservas": 2,
+     "vendidas_lote_suspeito": 2,
+     "receita_noite": 1084,
+     "enviado": 1466,
+     "ocupacao_pricelabs": null,
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Escada de vendas (dono 01/11): 2/7 vendidas; reta R$ 1457 (p50 R$ 918 público); degrau a"
+    },
+    "Double": {
+     "vendidas_reservas": 2,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 2532,
+     "enviado": 1480.0,
+     "ocupacao_pricelabs": "2/6",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Escada de vendas (dono 01/11): 1/6 vendidas; reta R$ 1457 (p50 R$ 918 público); degrau a"
+    },
+    "Afrodite": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 1780.0,
+     "ocupacao_pricelabs": "-1",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Escada de vendas (dono 01/11): 3/16 vendidas; reta R$ 1500 (p50 R$ 918 público); degrau "
+    },
+    "Q2": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 1479.0,
+     "ocupacao_pricelabs": "0/2",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Escada de vendas (dono 01/11): 3/16 vendidas; reta R$ 1457 (p50 R$ 918 público); degrau "
+    },
+    "VK7": {
+     "vendidas_reservas": 6,
+     "vendidas_lote_suspeito": 1,
+     "receita_noite": 3275,
+     "enviado": 1717.0,
+     "ocupacao_pricelabs": "5/7",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Escada de vendas (dono 01/11): 5/7 vendidas; reta R$ 1707 (p63 R$ 1109 público); degrau "
+    },
+    "Balcony": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 1486.0,
+     "ocupacao_pricelabs": "0/6",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Escada de vendas (dono 01/11): 0/6 vendidas; reta R$ 1412 (p50 R$ 918 público); degrau a"
+    },
+    "VK2": {
+     "vendidas_reservas": 2,
+     "vendidas_lote_suspeito": 1,
+     "receita_noite": 791,
+     "enviado": 3099.0,
+     "ocupacao_pricelabs": "2/2",
+     "regra": "Proteção da noite esgotada (2/2; Regra J desligada pelo dono em 31/10): piso no p90 do mercado com hidro, R$ 2006 público = R$ 3086 enviados (tipo semana, mês 2"
+    }
+   }
+  },
+  {
+   "data": "2026-12-08",
+   "dia_semana": "ter",
+   "quartos": {
+    "Q7": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 1267,
+     "ocupacao_pricelabs": null,
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Escada de vendas (dono 01/11): 0/7 vendidas; reta R$ 1262 (p50 R$ 795 público); degrau a"
+    },
+    "Double": {
+     "vendidas_reservas": 2,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 2532,
+     "enviado": 1273.0,
+     "ocupacao_pricelabs": "2/6",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Escada de vendas (dono 01/11): 1/6 vendidas; reta R$ 1262 (p50 R$ 795 público); degrau a"
+    },
+    "Afrodite": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 1540.0,
+     "ocupacao_pricelabs": "-1",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Escada de vendas (dono 01/11): 1/16 vendidas; reta R$ 1500 (p50 R$ 795 público); degrau "
+    },
+    "Q2": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 1272.0,
+     "ocupacao_pricelabs": "0/2",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Escada de vendas (dono 01/11): 1/16 vendidas; reta R$ 1262 (p50 R$ 795 público); degrau "
+    },
+    "VK7": {
+     "vendidas_reservas": 3,
+     "vendidas_lote_suspeito": 1,
+     "receita_noite": 1536,
+     "enviado": 1376.0,
+     "ocupacao_pricelabs": "3/7",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Escada de vendas (dono 01/11): 2/7 vendidas; reta R$ 1372 (p57 R$ 892 público); degrau a"
+    },
+    "Balcony": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 1232.0,
+     "ocupacao_pricelabs": "0/6",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Escada de vendas (dono 01/11): 0/6 vendidas; reta R$ 1223 (p50 R$ 795 público); degrau a"
+    },
+    "VK2": {
+     "vendidas_reservas": 1,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 250,
+     "enviado": 1460.0,
+     "ocupacao_pricelabs": "1/2",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Escada de vendas (dono 01/11): 3/9 vendidas; reta R$ 1447 (p60 R$ 941 público); degrau a"
+    }
+   }
+  },
+  {
+   "data": "2026-12-09",
+   "dia_semana": "qua",
+   "quartos": {
+    "Q7": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 1466,
+     "ocupacao_pricelabs": null,
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Escada de vendas (dono 01/11): 0/7 vendidas; reta R$ 1457 (p50 R$ 918 público); degrau a"
+    },
+    "Double": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 1480.0,
+     "ocupacao_pricelabs": "0/6",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Escada de vendas (dono 01/11): 0/6 vendidas; reta R$ 1457 (p50 R$ 918 público); degrau a"
+    },
+    "Afrodite": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 1780.0,
+     "ocupacao_pricelabs": "-1",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Escada de vendas (dono 01/11): 0/16 vendidas; reta R$ 1500 (p50 R$ 918 público); degrau "
+    },
+    "Q2": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 1479.0,
+     "ocupacao_pricelabs": "0/2",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Escada de vendas (dono 01/11): 0/16 vendidas; reta R$ 1457 (p50 R$ 918 público); degrau "
+    },
+    "VK7": {
+     "vendidas_reservas": 4,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 2060,
+     "enviado": 1569.0,
+     "ocupacao_pricelabs": "4/7",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Escada de vendas (dono 01/11): 2/7 vendidas; reta R$ 1560 (p57 R$ 1014 público); degrau "
+    },
+    "Balcony": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 1359.0,
+     "ocupacao_pricelabs": "0/6",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Escada de vendas (dono 01/11): 0/6 vendidas; reta R$ 1412 (p50 R$ 918 público); degrau a"
+    },
+    "VK2": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 1524.0,
+     "ocupacao_pricelabs": "0/2",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Escada de vendas (dono 01/11): 2/9 vendidas; reta R$ 1523 (p55 R$ 990 público); degrau a"
+    }
+   }
+  },
+  {
+   "data": "2026-12-10",
+   "dia_semana": "qui",
+   "quartos": {
+    "Q7": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 1466,
+     "ocupacao_pricelabs": null,
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Escada de vendas (dono 01/11): 0/7 vendidas; reta R$ 1457 (p50 R$ 918 público); degrau a"
+    },
+    "Double": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 1480.0,
+     "ocupacao_pricelabs": "1/6",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Escada de vendas (dono 01/11): 0/6 vendidas; reta R$ 1457 (p50 R$ 918 público); degrau a"
+    },
+    "Afrodite": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 1780.0,
+     "ocupacao_pricelabs": "-1",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Escada de vendas (dono 01/11): 0/16 vendidas; reta R$ 1500 (p50 R$ 918 público); degrau "
+    },
+    "Q2": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 1479.0,
+     "ocupacao_pricelabs": "0/2",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Escada de vendas (dono 01/11): 0/16 vendidas; reta R$ 1457 (p50 R$ 918 público); degrau "
+    },
+    "VK7": {
+     "vendidas_reservas": 4,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 1936,
+     "enviado": 1421.0,
+     "ocupacao_pricelabs": "3/7",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Escada de vendas (dono 01/11): 2/7 vendidas; reta R$ 1412 (p50 R$ 918 público); degrau a"
+    },
+    "Balcony": {
+     "vendidas_reservas": 1,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 837,
+     "enviado": 1270.0,
+     "ocupacao_pricelabs": "1/6",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Escada de vendas (dono 01/11): 0/6 vendidas; reta R$ 1412 (p50 R$ 918 público); degrau a"
+    },
+    "VK2": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 1422.0,
+     "ocupacao_pricelabs": "0/2",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Escada de vendas (dono 01/11): 2/9 vendidas; reta R$ 1412 (p50 R$ 918 público); degrau a"
+    }
+   }
+  },
+  {
+   "data": "2026-12-11",
+   "dia_semana": "sex",
+   "quartos": {
+    "Q7": {
+     "vendidas_reservas": 1,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 526,
+     "enviado": 2135,
+     "ocupacao_pricelabs": null,
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Plano do dono 09/11 (fds): abertura R$ 1310 público; 1/7 vendidas; público R$ 1310 = R$ "
+    },
+    "Double": {
+     "vendidas_reservas": 2,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 336,
+     "enviado": 2442.0,
+     "ocupacao_pricelabs": "2/6",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Plano do dono 09/11 (fds): abertura R$ 1504 público; 2/6 vendidas; público R$ 1504 = R$ "
+    },
+    "Afrodite": {
+     "vendidas_reservas": 1,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 1126,
+     "enviado": 2820.0,
+     "ocupacao_pricelabs": "-1",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Plano do dono 09/11 (fds): abertura R$ 1729 público; 1/1 vendidas; 15% acima da Panorâmi"
+    },
+    "Q2": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 2369.0,
+     "ocupacao_pricelabs": "0/2",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Plano do dono 09/11 (fds): abertura R$ 1498 público; 0/2 vendidas; ordem do Recanto: ent"
+    },
+    "VK7": {
+     "vendidas_reservas": 5,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 3700,
+     "enviado": 2279.0,
+     "ocupacao_pricelabs": "5/7",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Plano do dono 09/11 (fds): abertura R$ 1368 público; 3/7 vendidas; público R$ 1368 = R$ "
+    },
+    "Balcony": {
+     "vendidas_reservas": 1,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 837,
+     "enviado": 2045.0,
+     "ocupacao_pricelabs": "1/6",
+     "regra": "Regra G: Balcony 10% abaixo da suíte com banheira livre mais barata (R$ 2279)"
+    },
+    "VK2": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 2324.0,
+     "ocupacao_pricelabs": "0/2",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Plano do dono 09/11 (fds): abertura R$ 1395 público; 0/2 vendidas; público R$ 1395 = R$ "
+    }
+   }
+  },
+  {
+   "data": "2026-12-12",
+   "dia_semana": "sab",
+   "quartos": {
+    "Q7": {
+     "vendidas_reservas": 1,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 526,
+     "enviado": 2135,
+     "ocupacao_pricelabs": null,
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Plano do dono 09/11 (fds): abertura R$ 1310 público; 1/7 vendidas; público R$ 1310 = R$ "
+    },
+    "Double": {
+     "vendidas_reservas": 2,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 336,
+     "enviado": 2442.0,
+     "ocupacao_pricelabs": "2/6",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Plano do dono 09/11 (fds): abertura R$ 1504 público; 2/6 vendidas; público R$ 1504 = R$ "
+    },
+    "Afrodite": {
+     "vendidas_reservas": 1,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 1126,
+     "enviado": 2820.0,
+     "ocupacao_pricelabs": "-1",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Plano do dono 09/11 (fds): abertura R$ 1729 público; 1/1 vendidas; 15% acima da Panorâmi"
+    },
+    "Q2": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 2369.0,
+     "ocupacao_pricelabs": "0/2",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Plano do dono 09/11 (fds): abertura R$ 1498 público; 0/2 vendidas; ordem do Recanto: ent"
+    },
+    "VK7": {
+     "vendidas_reservas": 9,
+     "vendidas_lote_suspeito": 1,
+     "receita_noite": 6025,
+     "enviado": 2560.0,
+     "ocupacao_pricelabs": "7/7",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Plano do dono 09/11 (fds): abertura R$ 1504 público; 7/7 vendidas; 3 degrau(s) de +7%; p"
+    },
+    "Balcony": {
+     "vendidas_reservas": 1,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 837,
+     "enviado": 1041.0,
+     "ocupacao_pricelabs": "3/6",
+     "regra": "Balcony no mercado do quarto sem banheira (plano do dono 09/11, regra dos 80%): 8/9 vendidas nas suítes com banheira da Villa; Regra G suspensa na noite; mercad"
+    },
+    "VK2": {
+     "vendidas_reservas": 2,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 2171,
+     "enviado": 2553.0,
+     "ocupacao_pricelabs": "2/2",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Plano do dono 09/11 (fds): abertura R$ 1501 público; 2/2 vendidas; 1 degrau(s) de +7%; p"
+    }
+   }
+  },
+  {
+   "data": "2026-12-13",
+   "dia_semana": "dom",
+   "quartos": {
+    "Q7": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 1466,
+     "ocupacao_pricelabs": null,
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Escada de vendas (dono 01/11): 0/7 vendidas; reta R$ 1457 (p50 R$ 918 público); degrau a"
+    },
+    "Double": {
+     "vendidas_reservas": 2,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 1239,
+     "enviado": 1480.0,
+     "ocupacao_pricelabs": "2/6",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Escada de vendas (dono 01/11): 2/6 vendidas; reta R$ 1457 (p50 R$ 918 público); degrau a"
+    },
+    "Afrodite": {
+     "vendidas_reservas": 1,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 1126,
+     "enviado": 3200.0,
+     "ocupacao_pricelabs": "-1",
+     "regra": "Proteção da noite esgotada (1/1; Regra J desligada pelo dono em 31/10): piso no p90 do mercado com hidro, R$ 2006 público = R$ 3184 enviados (tipo semana, mês 2"
+    },
+    "Q2": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 1479.0,
+     "ocupacao_pricelabs": "0/2",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Escada de vendas (dono 01/11): 3/16 vendidas; reta R$ 1457 (p50 R$ 918 público); degrau "
+    },
+    "VK7": {
+     "vendidas_reservas": 6,
+     "vendidas_lote_suspeito": 1,
+     "receita_noite": 3109,
+     "enviado": 1169.0,
+     "ocupacao_pricelabs": "6/7",
+     "regra": "Escada de vendas (dono 01/11): 5/7 vendidas; reta R$ 1800 (p70 R$ 474 público); degrau até R$ 1166; antes R$ 1110"
+    },
+    "Balcony": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 1016.0,
+     "ocupacao_pricelabs": "0/6",
+     "regra": "Escada de vendas (dono 01/11): 0/6 vendidas; reta R$ 888 (p50 R$ 340 público); degrau até R$ 887; antes R$ 965; Regra G: Balcony 10% abaixo da suíte com banheir"
+    },
+    "VK2": {
+     "vendidas_reservas": 2,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 970,
+     "enviado": 1168.0,
+     "ocupacao_pricelabs": "2/2",
+     "regra": "Escada de vendas (dono 01/11): 6/9 vendidas; reta R$ 1637 (p66 R$ 448 público); degrau até R$ 1161; antes R$ 1105"
+    }
+   }
+  },
+  {
+   "data": "2026-12-14",
+   "dia_semana": "seg",
+   "quartos": {
+    "Q7": {
+     "vendidas_reservas": 1,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 581,
+     "enviado": 1466,
+     "ocupacao_pricelabs": null,
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Escada de vendas (dono 01/11): 1/7 vendidas; reta R$ 1457 (p50 R$ 918 público); degrau a"
+    },
+    "Double": {
+     "vendidas_reservas": 1,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 703,
+     "enviado": 1480.0,
+     "ocupacao_pricelabs": "1/6",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Escada de vendas (dono 01/11): 1/6 vendidas; reta R$ 1457 (p50 R$ 918 público); degrau a"
+    },
+    "Afrodite": {
+     "vendidas_reservas": 1,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 1126,
+     "enviado": 3200.0,
+     "ocupacao_pricelabs": "-1",
+     "regra": "Proteção da noite esgotada (1/1; Regra J desligada pelo dono em 31/10): piso no p90 do mercado com hidro, R$ 2006 público = R$ 3184 enviados (tipo semana, mês 2"
+    },
+    "Q2": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 1479.0,
+     "ocupacao_pricelabs": "0/2",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Escada de vendas (dono 01/11): 3/16 vendidas; reta R$ 1457 (p50 R$ 918 público); degrau "
+    },
+    "VK7": {
+     "vendidas_reservas": 7,
+     "vendidas_lote_suspeito": 4,
+     "receita_noite": 3794,
+     "enviado": 1110.0,
+     "ocupacao_pricelabs": "7/7",
+     "regra": "Escada de vendas (dono 01/11): 3/7 vendidas; reta R$ 1529 (p63 R$ 430 público); degrau até R$ 1104; antes R$ 1051"
+    },
+    "Balcony": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 965.0,
+     "ocupacao_pricelabs": "0/6",
+     "regra": "Regra G: Balcony 10% abaixo da suíte com banheira livre mais barata (R$ 1105)"
+    },
+    "VK2": {
+     "vendidas_reservas": 2,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 970,
+     "enviado": 1105.0,
+     "ocupacao_pricelabs": "2/2",
+     "regra": "Escada de vendas (dono 01/11): 4/9 vendidas; reta R$ 1451 (p61 R$ 417 público); degrau até R$ 1094; antes R$ 1041"
+    }
+   }
+  },
+  {
+   "data": "2026-12-15",
+   "dia_semana": "ter",
+   "quartos": {
+    "Q7": {
+     "vendidas_reservas": 1,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 581,
+     "enviado": 1267,
+     "ocupacao_pricelabs": null,
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Escada de vendas (dono 01/11): 1/7 vendidas; reta R$ 1262 (p50 R$ 795 público); degrau a"
+    },
+    "Double": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 1273.0,
+     "ocupacao_pricelabs": "0/6",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Escada de vendas (dono 01/11): 0/6 vendidas; reta R$ 1262 (p50 R$ 795 público); degrau a"
+    },
+    "Afrodite": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 1540.0,
+     "ocupacao_pricelabs": "-1",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Escada de vendas (dono 01/11): 1/16 vendidas; reta R$ 1500 (p50 R$ 795 público); degrau "
+    },
+    "Q2": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 1272.0,
+     "ocupacao_pricelabs": "0/2",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Escada de vendas (dono 01/11): 1/16 vendidas; reta R$ 1262 (p50 R$ 795 público); degrau "
+    },
+    "VK7": {
+     "vendidas_reservas": 5,
+     "vendidas_lote_suspeito": 3,
+     "receita_noite": 2451,
+     "enviado": 1110.0,
+     "ocupacao_pricelabs": "5/7",
+     "regra": "Escada de vendas (dono 01/11): 3/7 vendidas; reta R$ 1529 (p63 R$ 422 público); degrau até R$ 1104; antes R$ 1051"
+    },
+    "Balcony": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 965.0,
+     "ocupacao_pricelabs": "0/6",
+     "regra": "Regra G: Balcony 10% abaixo da suíte com banheira livre mais barata (R$ 1105)"
+    },
+    "VK2": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 1105.0,
+     "ocupacao_pricelabs": "0/2",
+     "regra": "Escada de vendas (dono 01/11): 3/9 vendidas; reta R$ 1393 (p60 R$ 408 público); degrau até R$ 1094; antes R$ 1041"
+    }
+   }
+  },
+  {
+   "data": "2026-12-16",
+   "dia_semana": "qua",
+   "quartos": {
+    "Q7": {
+     "vendidas_reservas": 2,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 1116,
+     "enviado": 1619,
+     "ocupacao_pricelabs": null,
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Escada de vendas (dono 01/11): 2/7 vendidas; reta R$ 1609 (p57 R$ 1014 público); degrau "
+    },
+    "Double": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 1628.0,
+     "ocupacao_pricelabs": "0/6",
+     "regra": "Ordem do Recanto: Panorâmica I não fica abaixo da Moinhos (R$ 1619)"
+    },
+    "Afrodite": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 1960.0,
+     "ocupacao_pricelabs": "-1",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Escada de vendas (dono 01/11): 2/16 vendidas; reta R$ 1619 (p53 R$ 956 público); degrau "
+    },
+    "Q2": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 1622.0,
+     "ocupacao_pricelabs": "0/2",
+     "regra": "Ordem do Recanto: Panorâmica II entre Moinhos (R$ 1619) e Panorâmica I (R$ 1628)"
+    },
+    "VK7": {
+     "vendidas_reservas": 7,
+     "vendidas_lote_suspeito": 4,
+     "receita_noite": 4044,
+     "enviado": 1110.0,
+     "ocupacao_pricelabs": "7/7",
+     "regra": "Escada de vendas (dono 01/11): 4/7 vendidas; reta R$ 1637 (p66 R$ 433 público); degrau até R$ 1104; antes R$ 1051"
+    },
+    "Balcony": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 965.0,
+     "ocupacao_pricelabs": "0/6",
+     "regra": "Regra G: Balcony 10% abaixo da suíte com banheira livre mais barata (R$ 1105)"
+    },
+    "VK2": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 1105.0,
+     "ocupacao_pricelabs": "0/2",
+     "regra": "Escada de vendas (dono 01/11): 4/9 vendidas; reta R$ 1451 (p61 R$ 414 público); degrau até R$ 1094; antes R$ 1041"
+    }
+   }
+  },
+  {
+   "data": "2026-12-17",
+   "dia_semana": "qui",
+   "quartos": {
+    "Q7": {
+     "vendidas_reservas": 1,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 536,
+     "enviado": 1595,
+     "ocupacao_pricelabs": null,
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Escada de vendas (dono 01/11): 1/7 vendidas; reta R$ 1587 (p56 R$ 1000 público); degrau "
+    },
+    "Double": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 1598.0,
+     "ocupacao_pricelabs": "0/6",
+     "regra": "Ordem do Recanto: Panorâmica I não fica abaixo da Moinhos (R$ 1595)"
+    },
+    "Afrodite": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 1940.0,
+     "ocupacao_pricelabs": "-1",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Escada de vendas (dono 01/11): 1/16 vendidas; reta R$ 1612 (p52 R$ 954 público); degrau "
+    },
+    "Q2": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 1606.0,
+     "ocupacao_pricelabs": "0/2",
+     "regra": "Ordem do Recanto: Panorâmica II entre Moinhos (R$ 1595) e Panorâmica I (R$ 1598)"
+    },
+    "VK7": {
+     "vendidas_reservas": 4,
+     "vendidas_lote_suspeito": 2,
+     "receita_noite": 2280,
+     "enviado": 1865.0,
+     "ocupacao_pricelabs": "4/7",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Escada de vendas (dono 01/11): 4/7 vendidas; reta R$ 1854 (p70 R$ 1205 público); degrau "
+    },
+    "Balcony": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 1524.0,
+     "ocupacao_pricelabs": "0/6",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Escada de vendas (dono 01/11): 0/6 vendidas; reta R$ 1412 (p50 R$ 918 público); degrau a"
+    },
+    "VK2": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 1753.0,
+     "ocupacao_pricelabs": "0/2",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Escada de vendas (dono 01/11): 4/9 vendidas; reta R$ 1744 (p65 R$ 1133 público); degrau "
+    }
+   }
+  },
+  {
+   "data": "2026-12-18",
+   "dia_semana": "sex",
+   "quartos": {
+    "Q7": {
+     "vendidas_reservas": 2,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 1115,
+     "enviado": 1619,
+     "ocupacao_pricelabs": null,
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Plano do dono 09/11 (fds): abertura R$ 996 público; 2/7 vendidas; público R$ 996 = R$ 16"
+    },
+    "Double": {
+     "vendidas_reservas": 3,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 339,
+     "enviado": 2087.0,
+     "ocupacao_pricelabs": "3/6",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Plano do dono 09/11 (fds): abertura R$ 1200 público; 3/6 vendidas; 1 degrau(s) de +7%; p"
+    },
+    "Afrodite": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 2400.0,
+     "ocupacao_pricelabs": "-1",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Plano do dono 09/11 (fds): abertura R$ 1380 público; 0/1 vendidas; 15% acima da Panorâmi"
+    },
+    "Q2": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 1956.0,
+     "ocupacao_pricelabs": "0/2",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Plano do dono 09/11 (fds): abertura R$ 1200 público; 0/2 vendidas; público R$ 1201 = R$ "
+    },
+    "VK7": {
+     "vendidas_reservas": 1,
+     "vendidas_lote_suspeito": 1,
+     "receita_noite": 830,
+     "enviado": 2161.0,
+     "ocupacao_pricelabs": "1/7",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Plano do dono 09/11 (fds): abertura R$ 1200 público; 1/7 vendidas; público R$ 1201 = R$ "
+    },
+    "Balcony": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 1930.0,
+     "ocupacao_pricelabs": "0/6",
+     "regra": "Regra G: Balcony 10% abaixo da suíte com banheira livre mais barata (R$ 2159)"
+    },
+    "VK2": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 2159.0,
+     "ocupacao_pricelabs": "0/2",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Plano do dono 09/11 (fds): abertura R$ 1200 público; 0/2 vendidas; público R$ 1201 = R$ "
+    }
+   }
+  },
+  {
+   "data": "2026-12-19",
+   "dia_semana": "sab",
+   "quartos": {
+    "Q7": {
+     "vendidas_reservas": 2,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 1115,
+     "enviado": 1619,
+     "ocupacao_pricelabs": null,
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Plano do dono 09/11 (fds): abertura R$ 996 público; 2/7 vendidas; público R$ 996 = R$ 16"
+    },
+    "Double": {
+     "vendidas_reservas": 3,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 339,
+     "enviado": 2087.0,
+     "ocupacao_pricelabs": "3/6",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Plano do dono 09/11 (fds): abertura R$ 1200 público; 3/6 vendidas; 1 degrau(s) de +7%; p"
+    },
+    "Afrodite": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 2400.0,
+     "ocupacao_pricelabs": "-1",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Plano do dono 09/11 (fds): abertura R$ 1380 público; 0/1 vendidas; 15% acima da Panorâmi"
+    },
+    "Q2": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 1956.0,
+     "ocupacao_pricelabs": "0/2",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Plano do dono 09/11 (fds): abertura R$ 1200 público; 0/2 vendidas; público R$ 1201 = R$ "
+    },
+    "VK7": {
+     "vendidas_reservas": 2,
+     "vendidas_lote_suspeito": 1,
+     "receita_noite": 1686,
+     "enviado": 2161.0,
+     "ocupacao_pricelabs": "2/7",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Plano do dono 09/11 (fds): abertura R$ 1200 público; 2/7 vendidas; público R$ 1201 = R$ "
+    },
+    "Balcony": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 1930.0,
+     "ocupacao_pricelabs": "0/6",
+     "regra": "Regra G: Balcony 10% abaixo da suíte com banheira livre mais barata (R$ 2159)"
+    },
+    "VK2": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 2159.0,
+     "ocupacao_pricelabs": "0/2",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Plano do dono 09/11 (fds): abertura R$ 1200 público; 0/2 vendidas; público R$ 1201 = R$ "
+    }
+   }
+  },
+  {
+   "data": "2026-12-20",
+   "dia_semana": "dom",
+   "quartos": {
+    "Q7": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 1490,
+     "ocupacao_pricelabs": null,
+     "regra": "Escada de vendas (dono 01/11): 0/7 vendidas; reta R$ 1500 (p50 R$ 945 público); degrau até R$ 1479; antes R$ 1408"
+    },
+    "Double": {
+     "vendidas_reservas": 2,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 300,
+     "enviado": 1495.0,
+     "ocupacao_pricelabs": "2/6",
+     "regra": "Escada de vendas (dono 01/11): 2/6 vendidas; reta R$ 1500 (p50 R$ 945 público); degrau até R$ 1493; antes R$ 1421"
+    },
+    "Afrodite": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 1800.0,
+     "ocupacao_pricelabs": "-1",
+     "regra": "Escada de vendas (dono 01/11): 2/16 vendidas; reta R$ 1680 (p50 R$ 945 público); degrau até R$ 1794; antes R$ 1720; Afrodite 20% acima da mais cara das outras ("
+    },
+    "Q2": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 1495.0,
+     "ocupacao_pricelabs": "0/2",
+     "regra": "Escada de vendas (dono 01/11): 2/16 vendidas; reta R$ 1500 (p50 R$ 945 público); degrau até R$ 1486; antes R$ 1415; Ordem do Recanto: Panorâmica II entre Moinho"
+    },
+    "VK7": {
+     "vendidas_reservas": 2,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 780,
+     "enviado": 1584.0,
+     "ocupacao_pricelabs": "2/7",
+     "regra": "Escada de vendas (dono 01/11): 2/7 vendidas; reta R$ 1604 (p57 R$ 385 público); degrau até R$ 1570; antes R$ 1495"
+    },
+    "Balcony": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 1422.0,
+     "ocupacao_pricelabs": "0/6",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Escada de vendas (dono 01/11): 0/6 vendidas; reta R$ 1412 (p50 R$ 918 público); degrau a"
+    },
+    "VK2": {
+     "vendidas_reservas": 2,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 1373,
+     "enviado": 3099.0,
+     "ocupacao_pricelabs": "2/2",
+     "regra": "Proteção da noite esgotada (2/2; Regra J desligada pelo dono em 31/10): piso no p90 do mercado com hidro, R$ 2006 público = R$ 3086 enviados (tipo semana, mês 2"
+    }
+   }
+  },
+  {
+   "data": "2026-12-21",
+   "dia_semana": "seg",
+   "quartos": {
+    "Q7": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 1654,
+     "ocupacao_pricelabs": null,
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Escada de vendas (dono 01/11): 0/7 vendidas; reta R$ 1644 (p50 R$ 1036 público); degrau "
+    },
+    "Double": {
+     "vendidas_reservas": 2,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 300,
+     "enviado": 1658.0,
+     "ocupacao_pricelabs": "2/6",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Escada de vendas (dono 01/11): 2/6 vendidas; reta R$ 1644 (p50 R$ 1036 público); degrau "
+    },
+    "Afrodite": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 2020.0,
+     "ocupacao_pricelabs": "-1",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Escada de vendas (dono 01/11): 2/16 vendidas; reta R$ 1680 (p50 R$ 1036 público); degrau"
+    },
+    "Q2": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 1670.0,
+     "ocupacao_pricelabs": "0/2",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Escada de vendas (dono 01/11): 2/16 vendidas; reta R$ 1644 (p50 R$ 1036 público); degrau"
+    },
+    "VK7": {
+     "vendidas_reservas": 3,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 1378,
+     "enviado": 1894.0,
+     "ocupacao_pricelabs": "3/7",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Escada de vendas (dono 01/11): 3/7 vendidas; reta R$ 1888 (p63 R$ 1227 público); degrau "
+    },
+    "Balcony": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 1638.0,
+     "ocupacao_pricelabs": "0/6",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Escada de vendas (dono 01/11): 0/6 vendidas; reta R$ 1594 (p50 R$ 1036 público); degrau "
+    },
+    "VK2": {
+     "vendidas_reservas": 2,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 1373,
+     "enviado": 3188.0,
+     "ocupacao_pricelabs": "2/2",
+     "regra": "Proteção da noite esgotada (2/2; Regra J desligada pelo dono em 31/10): piso no p90 do mercado com hidro, R$ 2066 público = R$ 3178 enviados (busca própria); te"
+    }
+   }
+  },
+  {
+   "data": "2026-12-22",
+   "dia_semana": "ter",
+   "quartos": {
+    "Q7": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 1490,
+     "ocupacao_pricelabs": null,
+     "regra": "Escada de vendas (dono 01/11): 0/7 vendidas; reta R$ 1500 (p50 R$ 945 público); degrau até R$ 1479; antes R$ 1408"
+    },
+    "Double": {
+     "vendidas_reservas": 2,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 302,
+     "enviado": 1495.0,
+     "ocupacao_pricelabs": "2/6",
+     "regra": "Escada de vendas (dono 01/11): 2/6 vendidas; reta R$ 1500 (p50 R$ 945 público); degrau até R$ 1493; antes R$ 1421"
+    },
+    "Afrodite": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 1800.0,
+     "ocupacao_pricelabs": "-1",
+     "regra": "Escada de vendas (dono 01/11): 2/16 vendidas; reta R$ 1680 (p50 R$ 945 público); degrau até R$ 1794; antes R$ 1720; Afrodite 20% acima da mais cara das outras ("
+    },
+    "Q2": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 1495.0,
+     "ocupacao_pricelabs": "0/2",
+     "regra": "Escada de vendas (dono 01/11): 2/16 vendidas; reta R$ 1500 (p50 R$ 945 público); degrau até R$ 1486; antes R$ 1415; Ordem do Recanto: Panorâmica II entre Moinho"
+    },
+    "VK7": {
+     "vendidas_reservas": 2,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 838,
+     "enviado": 1584.0,
+     "ocupacao_pricelabs": "2/7",
+     "regra": "Escada de vendas (dono 01/11): 2/7 vendidas; reta "
+    },
+    "Balcony": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 1410.0,
+     "ocupacao_pricelabs": "0/6",
+     "regra": "Escada de vendas (dono 01/11): 0/6 vendidas; reta R$ 1454 (p50 R$ 945 público); degrau até R$ 1441; antes R$ 1372; Regra G: Balcony 10% abaixo da suíte com banh"
+    },
+    "VK2": {
+     "vendidas_reservas": 1,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 711,
+     "enviado": 1575.0,
+     "ocupacao_pricelabs": "1/2",
+     "regra": "Escada de vendas (dono 01/11): 3/9 vendidas; reta "
+    }
+   }
+  },
+  {
+   "data": "2026-12-23",
+   "dia_semana": "qua",
+   "quartos": {
+    "Q7": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 2803,
+     "ocupacao_pricelabs": null,
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Plano do dono 09/11 (natal): abertura R$ 1721 público; 0/7 vendidas; público R$ 1721 = R"
+    },
+    "Double": {
+     "vendidas_reservas": 1,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 831,
+     "enviado": 3212.0,
+     "ocupacao_pricelabs": "1/6",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Plano do dono 09/11 (natal): abertura R$ 1969 público; 1/6 vendidas; público R$ 1969 = R"
+    },
+    "Afrodite": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 3700.0,
+     "ocupacao_pricelabs": "-1",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Plano do dono 09/11 (natal): abertura R$ 2264 público; 0/1 vendidas; 15% acima da Panorâ"
+    },
+    "Q2": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 3116.0,
+     "ocupacao_pricelabs": "0/2",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Plano do dono 09/11 (natal): abertura R$ 1969 público; 0/2 vendidas; ordem do Recanto: e"
+    },
+    "VK7": {
+     "vendidas_reservas": 3,
+     "vendidas_lote_suspeito": 1,
+     "receita_noite": 2102,
+     "enviado": 4070.0,
+     "ocupacao_pricelabs": "3/7",
+     "regra": "Pace (ritmo: 3/7 vendidas, curva 30% a D30); alvo p67 R$ 2196 público = R$ 3378 enviados (busca própria); antes R$ 4514"
+    },
+    "Balcony": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 3658.0,
+     "ocupacao_pricelabs": "0/6",
+     "regra": "Pace (muito atras: 0/6 vendidas, curva 30% a D30); alvo p25 R$ 1358 público = R$ 2089 enviados (busca própria); antes R$ 4064"
+    },
+    "VK2": {
+     "vendidas_reservas": 1,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 711,
+     "enviado": 4077.0,
+     "ocupacao_pricelabs": "1/2",
+     "regra": "Pace (ritmo: 1/2 vendidas, curva 30% a D30); alvo p68 R$ 2204 público = R$ 3391 enviados (busca própria); antes R$ 4521"
+    }
+   }
+  },
+  {
+   "data": "2026-12-24",
+   "dia_semana": "qui",
+   "quartos": {
+    "Q7": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 2803,
+     "ocupacao_pricelabs": null,
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Plano do dono 09/11 (natal): abertura R$ 1721 público; 0/7 vendidas; público R$ 1721 = R"
+    },
+    "Double": {
+     "vendidas_reservas": 1,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 1068,
+     "enviado": 3212.0,
+     "ocupacao_pricelabs": "1/6",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Plano do dono 09/11 (natal): abertura R$ 1969 público; 1/6 vendidas; público R$ 1969 = R"
+    },
+    "Afrodite": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 3700.0,
+     "ocupacao_pricelabs": "-1",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Plano do dono 09/11 (natal): abertura R$ 2264 público; 0/1 vendidas; 15% acima da Panorâ"
+    },
+    "Q2": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 3116.0,
+     "ocupacao_pricelabs": "0/2",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Plano do dono 09/11 (natal): abertura R$ 1969 público; 0/2 vendidas; ordem do Recanto: e"
+    },
+    "VK7": {
+     "vendidas_reservas": 2,
+     "vendidas_lote_suspeito": 1,
+     "receita_noite": 2102,
+     "enviado": 4292.0,
+     "ocupacao_pricelabs": "2/7",
+     "regra": "Pace (ritmo: 2/7 vendidas, curva 29% a D31); alvo p61 R$ 2120 público = R$ 3262 enviados (busca própria); antes R$ 4514"
+    },
+    "Balcony": {
+     "vendidas_reservas": 4,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 3438,
+     "enviado": 3861.0,
+     "ocupacao_pricelabs": "4/6",
+     "regra": "Regra G: Balcony 10% abaixo da suíte com banheira livre mais barata (R$ 4292)"
+    },
+    "VK2": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 4305.0,
+     "ocupacao_pricelabs": "0/2",
+     "regra": "Pace (ritmo: 0/2 vendidas, curva 29% a D31); alvo p59 R$ 2087 público = R$ 3210 enviados (busca própria); antes R$ 4521"
+    }
+   }
+  },
+  {
+   "data": "2026-12-25",
+   "dia_semana": "sex",
+   "quartos": {
+    "Q7": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 2264,
+     "ocupacao_pricelabs": null,
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Plano do dono 09/11 (natal): abertura R$ 1393 público; 0/7 vendidas; público R$ 1393 = R"
+    },
+    "Double": {
+     "vendidas_reservas": 1,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 1690,
+     "enviado": 2620.0,
+     "ocupacao_pricelabs": "1/6",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Plano do dono 09/11 (natal): abertura R$ 1605 público; 1/6 vendidas; público R$ 1605 = R"
+    },
+    "Afrodite": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 3020.0,
+     "ocupacao_pricelabs": "-1",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Plano do dono 09/11 (natal): abertura R$ 1846 público; 0/1 vendidas; 15% acima da Panorâ"
+    },
+    "Q2": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 2544.0,
+     "ocupacao_pricelabs": "0/2",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Plano do dono 09/11 (natal): abertura R$ 1605 público; 0/2 vendidas; ordem do Recanto: e"
+    },
+    "VK7": {
+     "vendidas_reservas": 1,
+     "vendidas_lote_suspeito": 1,
+     "receita_noite": 1241,
+     "enviado": 4292.0,
+     "ocupacao_pricelabs": "1/7",
+     "regra": "Pace (ritmo: 1/7 vendidas, curva 29% a D32); alvo p56 R$ 1747 público = R$ 2688 enviados (busca própria); antes R$ 4514"
+    },
+    "Balcony": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 3861.0,
+     "ocupacao_pricelabs": "0/6",
+     "regra": "Pace (atras: 0/6 vendidas, curva 29% a D32); alvo p40 R$ 1431 público = R$ 2202 enviados (busca própria); antes R$ 4064"
+    },
+    "VK2": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 4305.0,
+     "ocupacao_pricelabs": "0/2",
+     "regra": "Pace (ritmo: 0/2 vendidas, curva 29% a D32); alvo p54 R$ 1716 público = R$ 2640 enviados (busca própria); antes R$ 4521"
+    }
+   }
+  },
+  {
+   "data": "2026-12-26",
+   "dia_semana": "sab",
+   "quartos": {
+    "Q7": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 2264,
+     "ocupacao_pricelabs": null,
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Plano do dono 09/11 (natal): abertura R$ 1393 público; 0/7 vendidas; público R$ 1393 = R"
+    },
+    "Double": {
+     "vendidas_reservas": 1,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 1690,
+     "enviado": 2620.0,
+     "ocupacao_pricelabs": "1/6",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Plano do dono 09/11 (natal): abertura R$ 1605 público; 1/6 vendidas; público R$ 1605 = R"
+    },
+    "Afrodite": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 3020.0,
+     "ocupacao_pricelabs": "-1",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Plano do dono 09/11 (natal): abertura R$ 1846 público; 0/1 vendidas; 15% acima da Panorâ"
+    },
+    "Q2": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 2544.0,
+     "ocupacao_pricelabs": "0/2",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Plano do dono 09/11 (natal): abertura R$ 1605 público; 0/2 vendidas; ordem do Recanto: e"
+    },
+    "VK7": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 4292.0,
+     "ocupacao_pricelabs": "0/7",
+     "regra": "Pace (atras: 0/7 vendidas, curva 28% a D33); alvo p40 R$ 1431 público = R$ 2202 enviados (busca própria); antes R$ 4514"
+    },
+    "Balcony": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 3861.0,
+     "ocupacao_pricelabs": "0/6",
+     "regra": "Pace (atras: 0/6 vendidas, curva 28% a D33); alvo p40 R$ 1431 público = R$ 2202 enviados (busca própria); antes R$ 4064"
+    },
+    "VK2": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 4305.0,
+     "ocupacao_pricelabs": "0/2",
+     "regra": "Pace (atras: 0/2 vendidas, curva 28% a D33); alvo p40 R$ 1431 público = R$ 2202 enviados (busca própria); antes R$ 4521"
+    }
+   }
+  },
+  {
+   "data": "2026-12-27",
+   "dia_semana": "dom",
+   "quartos": {
+    "Q7": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 1713,
+     "ocupacao_pricelabs": null,
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Plano do dono 09/11 (entre_festas): abertura R$ 1049 público; 0/7 vendidas; público R$ 1"
+    },
+    "Double": {
+     "vendidas_reservas": 1,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 734,
+     "enviado": 1820.0,
+     "ocupacao_pricelabs": "0/6",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Plano do dono 09/11 (entre_festas): abertura R$ 1115 público; 1/6 vendidas; público R$ 1"
+    },
+    "Afrodite": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 2200.0,
+     "ocupacao_pricelabs": "-1",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Plano do dono 09/11 (entre_festas): abertura R$ 1282 público; 0/1 vendidas; 15% acima da"
+    },
+    "Q2": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 1797.0,
+     "ocupacao_pricelabs": "0/2",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Plano do dono 09/11 (entre_festas): abertura R$ 1115 público; 0/2 vendidas; ordem do Rec"
+    },
+    "VK7": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 2087.0,
+     "ocupacao_pricelabs": "0/7",
+     "regra": "Escada de vendas (dono 01/11): 0/7 vendidas; reta R$ 2077 (p50 R$ 328 público); degrau até R$ 2077; antes R$ 3493"
+    },
+    "Balcony": {
+     "vendidas_reservas": 1,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 1166,
+     "enviado": 1867.0,
+     "ocupacao_pricelabs": "1/6",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Pace (ritmo: 1/6 vendidas, curva 7% a D38); alvo p57 R$ 1261 público = R$ 1940 enviados "
+    },
+    "VK2": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 2083.0,
+     "ocupacao_pricelabs": "0/2",
+     "regra": "Escada de vendas (dono 01/11): 0/9 vendidas; reta R$ 2077 (p50 R$ 328 público); degrau até R$ 2077; antes R$ 3010"
+    }
+   }
+  },
+  {
+   "data": "2026-12-28",
+   "dia_semana": "seg",
+   "quartos": {
+    "Q7": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 1713,
+     "ocupacao_pricelabs": null,
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Plano do dono 09/11 (entre_festas): abertura R$ 1049 público; 0/7 vendidas; público R$ 1"
+    },
+    "Double": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 1820.0,
+     "ocupacao_pricelabs": "0/6",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Plano do dono 09/11 (entre_festas): abertura R$ 1115 público; 0/6 vendidas; público R$ 1"
+    },
+    "Afrodite": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 2200.0,
+     "ocupacao_pricelabs": "-1",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Plano do dono 09/11 (entre_festas): abertura R$ 1282 público; 0/1 vendidas; 15% acima da"
+    },
+    "Q2": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 1797.0,
+     "ocupacao_pricelabs": "0/2",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Plano do dono 09/11 (entre_festas): abertura R$ 1115 público; 0/2 vendidas; ordem do Rec"
+    },
+    "VK7": {
+     "vendidas_reservas": 3,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 2422,
+     "enviado": 2486.0,
+     "ocupacao_pricelabs": "3/7",
+     "regra": "Escada de vendas (dono 01/11): 2/7 vendidas; reta R$ 2482 (p61 R$ 417 público); degrau até R$ 2482; antes R$ 2398"
+    },
+    "Balcony": {
+     "vendidas_reservas": 1,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 1166,
+     "enviado": 2070.0,
+     "ocupacao_pricelabs": "1/6",
+     "regra": "Regra G: Balcony 10% abaixo da suíte com banheira livre mais barata (R$ 2400)"
+    },
+    "VK2": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 2400.0,
+     "ocupacao_pricelabs": "0/2",
+     "regra": "Escada de vendas (dono 01/11): 3/9 vendidas; reta R$ 2388 (p63 R$ 1407 público); degrau até R$ 2388; antes R$ 2286"
+    }
+   }
+  },
+  {
+   "data": "2026-12-29",
+   "dia_semana": "ter",
+   "quartos": {
+    "Q7": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 1912,
+     "ocupacao_pricelabs": null,
+     "regra": "Plano do dono 09/11 (entre_festas): abertura R$ ; 0/7 vendidas"
+    },
+    "Double": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 1909.0,
+     "ocupacao_pricelabs": "0/6",
+     "regra": "Plano do dono 09/11 (entre_festas): abertura R$ ; 0/6 vendidas"
+    },
+    "Afrodite": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 2200.0,
+     "ocupacao_pricelabs": "-1",
+     "regra": "Plano do dono 09/11 (entre_festas): abertura R$ ; 0/1 vendidas"
+    },
+    "Q2": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 1924.0,
+     "ocupacao_pricelabs": "0/2",
+     "regra": "Plano do dono 09/11 (entre_festas): abertura R$ ; 0/2 vendidas"
+    },
+    "VK7": {
+     "vendidas_reservas": 3,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 3286,
+     "enviado": 2575.0,
+     "ocupacao_pricelabs": "3/7",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Pace (ritmo: 2/7 vendidas, curva 24% a D40); alvo p61 R$ 1410 público = R$ 2169 enviados"
+    },
+    "Balcony": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 1892.0,
+     "ocupacao_pricelabs": "0/6",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Pace (atras: 0/6 vendidas, curva 24% a D40); alvo p40 R$ 1017 público = R$ 1564 enviados"
+    },
+    "VK2": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 2565.0,
+     "ocupacao_pricelabs": "0/2",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Pace (ritmo: 0/2 vendidas, curva 24% a D40); alvo p59 R$ 1344 público = R$ 2068 enviados"
+    }
+   }
+  },
+  {
+   "data": "2026-12-30",
+   "dia_semana": "qua",
+   "quartos": {
+    "Q7": {
+     "vendidas_reservas": 4,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 2876,
+     "enviado": 4974,
+     "ocupacao_pricelabs": null,
+     "regra": "Dono 16/11 'Pode fazer' (dono-2026-11-16-reveillon-250k): Réveillon, pedido de 09/11; público ~R$ 2.901 (fator 0,5832); antes R$ 3.191"
+    },
+    "Double": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 4988.0,
+     "ocupacao_pricelabs": "0/6",
+     "regra": "Dono 16/11 'Pode fazer' (dono-2026-11-16-reveillon-250k): Réveillon, pedido de 09/11; público ~R$ 2.909 (fator 0,5832); antes R$ 3.567"
+    },
+    "Afrodite": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 6700.0,
+     "ocupacao_pricelabs": "-1",
+     "regra": "Dono 16/11 'Pode fazer' (dono-2026-11-16-reveillon-250k): Réveillon, pedido de 09/11; público ~R$ 3.907 (fator 0,5832); antes R$ 4.120"
+    },
+    "Q2": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 4977.0,
+     "ocupacao_pricelabs": "0/2",
+     "regra": "Dono 16/11 'Pode fazer' (dono-2026-11-16-reveillon-250k): Réveillon, pedido de 09/11; público ~R$ 2.902 (fator 0,5832); antes R$ 3.482"
+    },
+    "VK7": {
+     "vendidas_reservas": 6,
+     "vendidas_lote_suspeito": 3,
+     "receita_noite": 8474,
+     "enviado": 4988.0,
+     "ocupacao_pricelabs": "6/7",
+     "regra": "Escada de vendas (dono 01/11): 2/7 vendidas; reta R$ 5000 (p90 R$ 1316"
+    },
+    "Balcony": {
+     "vendidas_reservas": 1,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 486,
+     "enviado": 4483.0,
+     "ocupacao_pricelabs": "1/6",
+     "regra": "Escada de vendas (dono 01/11): 1/6 vendidas; reta R$ 45"
+    },
+    "VK2": {
+     "vendidas_reservas": 1,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 1598,
+     "enviado": 4991.0,
+     "ocupacao_pricelabs": "1/2",
+     "regra": "Escada de vendas (dono 01/11): 3/9 vendidas; reta R$ 5000 (p"
+    }
+   }
+  },
+  {
+   "data": "2026-12-31",
+   "dia_semana": "qui",
+   "quartos": {
+    "Q7": {
+     "vendidas_reservas": 5,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 4282,
+     "enviado": 4974,
+     "ocupacao_pricelabs": null,
+     "regra": "Dono 16/11 'Pode fazer' (dono-2026-11-16-reveillon-250k): Réveillon, pedido de 09/11; público ~R$ 2.901 (fator 0,5832); antes R$ 3.413"
+    },
+    "Double": {
+     "vendidas_reservas": 3,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 850,
+     "enviado": 4988.0,
+     "ocupacao_pricelabs": "3/6",
+     "regra": "Dono 16/11 'Pode fazer' (dono-2026-11-16-reveillon-250k): Réveillon, pedido de 09/11; público ~R$ 2.909 (fator 0,5832); antes R$ 3.818"
+    },
+    "Afrodite": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 6700.0,
+     "ocupacao_pricelabs": "-1",
+     "regra": "Dono 16/11 'Pode fazer' (dono-2026-11-16-reveillon-250k): Réveillon, pedido de 09/11; público ~R$ 3.907 (fator 0,5832); antes R$ 4.400"
+    },
+    "Q2": {
+     "vendidas_reservas": 1,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 2733,
+     "enviado": 4977.0,
+     "ocupacao_pricelabs": "1/2",
+     "regra": "Dono 16/11 'Pode fazer' (dono-2026-11-16-reveillon-250k): Réveillon, pedido de 09/11; público ~R$ 2.902 (fator 0,5832); antes R$ 3.721"
+    },
+    "VK7": {
+     "vendidas_reservas": 7,
+     "vendidas_lote_suspeito": 3,
+     "receita_noite": 10411,
+     "enviado": 4988.0,
+     "ocupacao_pricelabs": "7/7",
+     "regra": "Escada de vendas (dono 01/11): 3/7 vendidas; reta R$ 5000 (p90 R$ 1316"
+    },
+    "Balcony": {
+     "vendidas_reservas": 5,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 2374,
+     "enviado": 4483.0,
+     "ocupacao_pricelabs": "5/6",
+     "regra": "Escada de vendas (dono 01/11): 5/6 vendidas; reta R$ 45"
+    },
+    "VK2": {
+     "vendidas_reservas": 1,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 1598,
+     "enviado": 4991.0,
+     "ocupacao_pricelabs": "1/2",
+     "regra": "Escada de vendas (dono 01/11): 4/9 vendidas; reta R$ 5000 (p"
+    }
+   }
+  },
+  {
+   "data": "2027-01-01",
+   "dia_semana": "sex",
+   "quartos": {
+    "Q7": {
+     "vendidas_reservas": 3,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 3988,
+     "enviado": 4375,
+     "ocupacao_pricelabs": null,
+     "regra": "Dono 16/11 'Pode fazer' (dono-2026-11-16-reveillon-250k): fim de semana, alvo público R$ 2.550 ÷ fator 0,5832; público ~R$ 2.552; antes R$ 2.979"
+    },
+    "Double": {
+     "vendidas_reservas": 2,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 338,
+     "enviado": 4544.0,
+     "ocupacao_pricelabs": "2/6",
+     "regra": "Dono 16/11 'Pode fazer' (dono-2026-11-16-reveillon-250k): fim de semana, alvo público R$ 2.650 ÷ fator 0,5832; público ~R$ 2.650; antes R$ 3.567"
+    },
+    "Afrodite": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 5820.0,
+     "ocupacao_pricelabs": "-1",
+     "regra": "Dono 16/11 'Pode fazer' (dono-2026-11-16-reveillon-250k): fim de semana, alvo público R$ 3.400 ÷ fator 0,5832; público ~R$ 3.394; antes R$ 4.120"
+    },
+    "Q2": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 4452.0,
+     "ocupacao_pricelabs": "0/2",
+     "regra": "Dono 16/11 'Pode fazer' (dono-2026-11-16-reveillon-250k): fim de semana, alvo público R$ 2.600 ÷ fator 0,5832; público ~R$ 2.596; antes R$ 3.434"
+    },
+    "VK7": {
+     "vendidas_reservas": 2,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 3340,
+     "enviado": 4988.0,
+     "ocupacao_pricelabs": "2/7",
+     "regra": "Escada de vendas (dono 01/11): 2/7 vendidas; reta R$ 5000 (p90 R$ 1316"
+    },
+    "Balcony": {
+     "vendidas_reservas": 1,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 658,
+     "enviado": 4483.0,
+     "ocupacao_pricelabs": "1/6",
+     "regra": "Escada de vendas (dono 01/11): 1/6 vendidas; reta R$ 45"
+    },
+    "VK2": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 4991.0,
+     "ocupacao_pricelabs": "0/2",
+     "regra": "Escada de vendas (dono 01/11): 2/9 vendidas; reta R$ 5000 (p"
+    }
+   }
+  },
+  {
+   "data": "2027-01-02",
+   "dia_semana": "sab",
+   "quartos": {
+    "Q7": {
+     "vendidas_reservas": 1,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 1406,
+     "enviado": 4375,
+     "ocupacao_pricelabs": null,
+     "regra": "Dono 16/11 'Pode fazer' (dono-2026-11-16-reveillon-250k): fim de semana, alvo público R$ 2.550 ÷ fator 0,5832; público ~R$ 2.552; antes R$ 2.979"
+    },
+    "Double": {
+     "vendidas_reservas": 2,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 338,
+     "enviado": 4544.0,
+     "ocupacao_pricelabs": "2/6",
+     "regra": "Dono 16/11 'Pode fazer' (dono-2026-11-16-reveillon-250k): fim de semana, alvo público R$ 2.650 ÷ fator 0,5832; público ~R$ 2.650; antes R$ 3.567"
+    },
+    "Afrodite": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 5820.0,
+     "ocupacao_pricelabs": "-1",
+     "regra": "Dono 16/11 'Pode fazer' (dono-2026-11-16-reveillon-250k): fim de semana, alvo público R$ 3.400 ÷ fator 0,5832; público ~R$ 3.394; antes R$ 4.120"
+    },
+    "Q2": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 4452.0,
+     "ocupacao_pricelabs": "0/2",
+     "regra": "Dono 16/11 'Pode fazer' (dono-2026-11-16-reveillon-250k): fim de semana, alvo público R$ 2.600 ÷ fator 0,5832; público ~R$ 2.596; antes R$ 3.434"
+    },
+    "VK7": {
+     "vendidas_reservas": 1,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 1936,
+     "enviado": 4988.0,
+     "ocupacao_pricelabs": "1/7",
+     "regra": "Escada de vendas (dono 01/11): 1/7 vendidas; reta R$ 5000 (p90 R$ 1316"
+    },
+    "Balcony": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 4483.0,
+     "ocupacao_pricelabs": "0/6",
+     "regra": "Escada de vendas (dono 01/11): 0/6 vendidas; reta R$ 45"
+    },
+    "VK2": {
+     "vendidas_reservas": 1,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 720,
+     "enviado": 4991.0,
+     "ocupacao_pricelabs": "1/2",
+     "regra": "Escada de vendas (dono 01/11): 1/9 vendidas; reta R$ 5000 (p"
+    }
+   }
+  },
+  {
+   "data": "2027-01-03",
+   "dia_semana": "dom",
+   "quartos": {
+    "Q7": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 1654,
+     "ocupacao_pricelabs": null,
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Escada de vendas (dono 01/11): 0/7 vendidas; reta R$ 1644 (p50 R$ 1036 público); degrau "
+    },
+    "Double": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 1658.0,
+     "ocupacao_pricelabs": "0/6",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Escada de vendas (dono 01/11): 0/6 vendidas; reta R$ 1644 (p50 R$ 1036 público); degrau "
+    },
+    "Afrodite": {
+     "vendidas_reservas": 1,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 807,
+     "enviado": 3100.0,
+     "ocupacao_pricelabs": "-1",
+     "regra": "Proteção da noite esgotada (1/1; Regra J desligada pelo dono em 31/10): piso no p90 do mercado com hidro, R$ 1949 público = R$ 3094 enviados (tipo semana, mês 2"
+    },
+    "Q2": {
+     "vendidas_reservas": 1,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 562,
+     "enviado": 1670.0,
+     "ocupacao_pricelabs": "1/2",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Escada de vendas (dono 01/11): 2/16 vendidas; reta R$ 1644 (p50 R$ 1036 público); degrau"
+    },
+    "VK7": {
+     "vendidas_reservas": 1,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 598,
+     "enviado": 1598.0,
+     "ocupacao_pricelabs": "1/7",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Escada de vendas (dono 01/11): 1/7 vendidas; reta R$ 1594 (p50 R$ 1036 público); degrau "
+    },
+    "Balcony": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 1435.0,
+     "ocupacao_pricelabs": "0/6",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Escada de vendas (dono 01/11): 0/6 vendidas; reta R$ 1594 (p50 R$ 1036 público); degrau "
+    },
+    "VK2": {
+     "vendidas_reservas": 1,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 720,
+     "enviado": 1600.0,
+     "ocupacao_pricelabs": "1/2",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Escada de vendas (dono 01/11): 1/9 vendidas; reta R$ 1594 (p50 R$ 1036 público); degrau "
+    }
+   }
+  },
+  {
+   "data": "2027-01-04",
+   "dia_semana": "seg",
+   "quartos": {
+    "Q7": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 1654,
+     "ocupacao_pricelabs": null,
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Escada de vendas (dono 01/11): 0/7 vendidas; reta R$ 1644 (p50 R$ 1036 público); degrau "
+    },
+    "Double": {
+     "vendidas_reservas": 1,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 749,
+     "enviado": 1658.0,
+     "ocupacao_pricelabs": "1/6",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Escada de vendas (dono 01/11): 1/6 vendidas; reta R$ 1644 (p50 R$ 1036 público); degrau "
+    },
+    "Afrodite": {
+     "vendidas_reservas": 1,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 807,
+     "enviado": 3100.0,
+     "ocupacao_pricelabs": "-1",
+     "regra": "Proteção da noite esgotada (1/1; Regra J desligada pelo dono em 31/10): piso no p90 do mercado com hidro, R$ 1949 público = R$ 3094 enviados (tipo semana, mês 2"
+    },
+    "Q2": {
+     "vendidas_reservas": 1,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 562,
+     "enviado": 1670.0,
+     "ocupacao_pricelabs": "1/2",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Escada de vendas (dono 01/11): 3/16 vendidas; reta R$ 1644 (p50 R$ 1036 público); degrau"
+    },
+    "VK7": {
+     "vendidas_reservas": 2,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 1048,
+     "enviado": 1687.0,
+     "ocupacao_pricelabs": "2/7",
+     "regra": "Escada de vendas (dono 01/11): 2/7 vendidas; reta R$ 1717 (p57 R$ 1116 público); degrau até R$ 1678; antes R$ 1598"
+    },
+    "Balcony": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 1460.0,
+     "ocupacao_pricelabs": "0/6",
+     "regra": "Regra G: Balcony 10% abaixo da suíte com banheira livre mais barata (R$ 1687)"
+    },
+    "VK2": {
+     "vendidas_reservas": 1,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 720,
+     "enviado": 1689.0,
+     "ocupacao_pricelabs": "1/2",
+     "regra": "Escada de vendas (dono 01/11): 2/9 vendidas; reta R$ 1686 (p55 R$ 1096 público); degrau até R$ 1680; antes R$ 1600"
+    }
+   }
+  },
+  {
+   "data": "2027-01-05",
+   "dia_semana": "ter",
+   "quartos": {
+    "Q7": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 1677,
+     "ocupacao_pricelabs": null,
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Escada de vendas (dono 01/11): 0/7 vendidas; reta R$ 1665 (p50 R$ 1049 público); degrau "
+    },
+    "Double": {
+     "vendidas_reservas": 1,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 749,
+     "enviado": 1687.0,
+     "ocupacao_pricelabs": "1/6",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Escada de vendas (dono 01/11): 1/6 vendidas; reta R$ 1665 (p50 R$ 1049 público); degrau "
+    },
+    "Afrodite": {
+     "vendidas_reservas": 1,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 807,
+     "enviado": 3320.0,
+     "ocupacao_pricelabs": "-1",
+     "regra": "Proteção da noite esgotada (1/1; Regra J desligada pelo dono em 31/10): piso no p90 do mercado com hidro, R$ 2082 público = R$ 3305 enviados (busca própria); te"
+    },
+    "Q2": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 1685.0,
+     "ocupacao_pricelabs": "0/2",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Escada de vendas (dono 01/11): 2/16 vendidas; reta R$ 1665 (p50 R$ 1049 público); degrau"
+    },
+    "VK7": {
+     "vendidas_reservas": 1,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 586,
+     "enviado": 1628.0,
+     "ocupacao_pricelabs": "1/7",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Escada de vendas (dono 01/11): 1/7 vendidas; reta R$ 1614 (p50 R$ 1049 público); degrau "
+    },
+    "Balcony": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 1460.0,
+     "ocupacao_pricelabs": "0/6",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Escada de vendas (dono 01/11): 0/6 vendidas; reta R$ 1614 (p50 R$ 1049 público); degrau "
+    },
+    "VK2": {
+     "vendidas_reservas": 1,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 720,
+     "enviado": 1626.0,
+     "ocupacao_pricelabs": "1/2",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Escada de vendas (dono 01/11): 1/9 vendidas; reta R$ 1614 (p50 R$ 1049 público); degrau "
+    }
+   }
+  },
+  {
+   "data": "2027-01-06",
+   "dia_semana": "qua",
+   "quartos": {
+    "Q7": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 1654,
+     "ocupacao_pricelabs": null,
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Escada de vendas (dono 01/11): 0/7 vendidas; reta R$ 1644 (p50 R$ 1036 público); degrau "
+    },
+    "Double": {
+     "vendidas_reservas": 1,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 749,
+     "enviado": 1658.0,
+     "ocupacao_pricelabs": "1/6",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Escada de vendas (dono 01/11): 1/6 vendidas; reta R$ 1644 (p50 R$ 1036 público); degrau "
+    },
+    "Afrodite": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 2020.0,
+     "ocupacao_pricelabs": "-1",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Escada de vendas (dono 01/11): 1/16 vendidas; reta R$ 1644 (p50 R$ 1036 público); degrau"
+    },
+    "Q2": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 1670.0,
+     "ocupacao_pricelabs": "0/2",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Escada de vendas (dono 01/11): 1/16 vendidas; reta R$ 1644 (p50 R$ 1036 público); degrau"
+    },
+    "VK7": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 1598.0,
+     "ocupacao_pricelabs": "0/7",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Escada de vendas (dono 01/11): 0/7 vendidas; reta R$ 1594 (p50 R$ 1036 público); degrau "
+    },
+    "Balcony": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 1435.0,
+     "ocupacao_pricelabs": "0/6",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Escada de vendas (dono 01/11): 0/6 vendidas; reta R$ 1594 (p50 R$ 1036 público); degrau "
+    },
+    "VK2": {
+     "vendidas_reservas": 2,
+     "vendidas_lote_suspeito": 1,
+     "receita_noite": 1459,
+     "enviado": 1676.0,
+     "ocupacao_pricelabs": "2/2",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Escada de vendas (dono 01/11): 1/9 vendidas; reta R$ 1676 (p54 R$ 1089 público); degrau "
+    }
+   }
+  },
+  {
+   "data": "2027-01-07",
+   "dia_semana": "qui",
+   "quartos": {
+    "Q7": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 1654,
+     "ocupacao_pricelabs": null,
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Escada de vendas (dono 01/11): 0/7 vendidas; reta R$ 1644 (p50 R$ 1036 público); degrau "
+    },
+    "Double": {
+     "vendidas_reservas": 1,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 749,
+     "enviado": 1658.0,
+     "ocupacao_pricelabs": "1/6",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Escada de vendas (dono 01/11): 1/6 vendidas; reta R$ 1644 (p50 R$ 1036 público); degrau "
+    },
+    "Afrodite": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 2020.0,
+     "ocupacao_pricelabs": "-1",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Escada de vendas (dono 01/11): 1/16 vendidas; reta R$ 1644 (p50 R$ 1036 público); degrau"
+    },
+    "Q2": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 1670.0,
+     "ocupacao_pricelabs": "0/2",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Escada de vendas (dono 01/11): 1/16 vendidas; reta R$ 1644 (p50 R$ 1036 público); degrau"
+    },
+    "VK7": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 1598.0,
+     "ocupacao_pricelabs": "0/7",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Escada de vendas (dono 01/11): 0/7 vendidas; reta R$ 1594 (p50 R$ 1036 público); degrau "
+    },
+    "Balcony": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 1435.0,
+     "ocupacao_pricelabs": "0/6",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Escada de vendas (dono 01/11): 0/6 vendidas; reta R$ 1594 (p50 R$ 1036 público); degrau "
+    },
+    "VK2": {
+     "vendidas_reservas": 2,
+     "vendidas_lote_suspeito": 1,
+     "receita_noite": 1459,
+     "enviado": 1676.0,
+     "ocupacao_pricelabs": "2/2",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Escada de vendas (dono 01/11): 1/9 vendidas; reta R$ 1676 (p54 R$ 1089 público); degrau "
+    }
+   }
+  },
+  {
+   "data": "2027-01-08",
+   "dia_semana": "sex",
+   "quartos": {
+    "Q7": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 1654,
+     "ocupacao_pricelabs": null,
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Plano do dono 09/11 (fds): abertura R$ 1012 público; 0/7 vendidas; público R$ 1012 = R$ "
+    },
+    "Double": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 1998.0,
+     "ocupacao_pricelabs": "0/6",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Plano do dono 09/11 (fds): abertura R$ 1224 público; 0/6 vendidas; público R$ 1225 = R$ "
+    },
+    "Afrodite": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 2300.0,
+     "ocupacao_pricelabs": "-1",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Plano do dono 09/11 (fds): abertura R$ 1408 público; 0/1 vendidas; 15% acima da Panorâmi"
+    },
+    "Q2": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 1924.0,
+     "ocupacao_pricelabs": "0/2",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Plano do dono 09/11 (fds): abertura R$ 1224 público; 0/2 vendidas; ordem do Recanto: ent"
+    },
+    "VK7": {
+     "vendidas_reservas": 1,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 862,
+     "enviado": 1880.0,
+     "ocupacao_pricelabs": "1/7",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Plano do dono 09/11 (fds): abertura R$ 1224 público; 0/7 vendidas; público R$ 1225 = R$ "
+    },
+    "Balcony": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 1689.0,
+     "ocupacao_pricelabs": "0/6",
+     "regra": "Regra G: Balcony 10% abaixo da suíte com banheira livre mais barata (R$ 1880)"
+    },
+    "VK2": {
+     "vendidas_reservas": 2,
+     "vendidas_lote_suspeito": 1,
+     "receita_noite": 1459,
+     "enviado": 2019.0,
+     "ocupacao_pricelabs": "2/2",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Plano do dono 09/11 (fds): abertura R$ 1224 público; 1/2 vendidas; 1 degrau(s) de +7%; p"
+    }
+   }
+  },
+  {
+   "data": "2027-01-09",
+   "dia_semana": "sab",
+   "quartos": {
+    "Q7": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 1654,
+     "ocupacao_pricelabs": null,
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Plano do dono 09/11 (fds): abertura R$ 1012 público; 0/7 vendidas; público R$ 1012 = R$ "
+    },
+    "Double": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 1998.0,
+     "ocupacao_pricelabs": "0/6",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Plano do dono 09/11 (fds): abertura R$ 1224 público; 0/6 vendidas; público R$ 1225 = R$ "
+    },
+    "Afrodite": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 2300.0,
+     "ocupacao_pricelabs": "-1",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Plano do dono 09/11 (fds): abertura R$ 1408 público; 0/1 vendidas; 15% acima da Panorâmi"
+    },
+    "Q2": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 1924.0,
+     "ocupacao_pricelabs": "0/2",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Plano do dono 09/11 (fds): abertura R$ 1224 público; 0/2 vendidas; ordem do Recanto: ent"
+    },
+    "VK7": {
+     "vendidas_reservas": 1,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 862,
+     "enviado": 1880.0,
+     "ocupacao_pricelabs": "1/7",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Plano do dono 09/11 (fds): abertura R$ 1224 público; 0/7 vendidas; público R$ 1225 = R$ "
+    },
+    "Balcony": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 1689.0,
+     "ocupacao_pricelabs": "0/6",
+     "regra": "Regra G: Balcony 10% abaixo da suíte com banheira livre mais barata (R$ 1880)"
+    },
+    "VK2": {
+     "vendidas_reservas": 1,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 720,
+     "enviado": 1880.0,
+     "ocupacao_pricelabs": "1/2",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Plano do dono 09/11 (fds): abertura R$ 1224 público; 0/2 vendidas; público R$ 1225 = R$ "
+    }
+   }
+  },
+  {
+   "data": "2027-01-10",
+   "dia_semana": "dom",
+   "quartos": {
+    "Q7": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 1654,
+     "ocupacao_pricelabs": null,
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Escada de vendas (dono 01/11): 0/7 vendidas; reta R$ 1644 (p50 R$ 1036 público); degrau "
+    },
+    "Double": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 1658.0,
+     "ocupacao_pricelabs": "0/6",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Escada de vendas (dono 01/11): 0/6 vendidas; reta R$ 1644 (p50 R$ 1036 público); degrau "
+    },
+    "Afrodite": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 2020.0,
+     "ocupacao_pricelabs": "-1",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Escada de vendas (dono 01/11): 0/16 vendidas; reta R$ 1644 (p50 R$ 1036 público); degrau"
+    },
+    "Q2": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 1670.0,
+     "ocupacao_pricelabs": "0/2",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Escada de vendas (dono 01/11): 0/16 vendidas; reta R$ 1644 (p50 R$ 1036 público); degrau"
+    },
+    "VK7": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 1598.0,
+     "ocupacao_pricelabs": "0/7",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Escada de vendas (dono 01/11): 0/7 vendidas; reta R$ 1594 (p50 R$ 1036 público); degrau "
+    },
+    "Balcony": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 1435.0,
+     "ocupacao_pricelabs": "0/6",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Escada de vendas (dono 01/11): 0/6 vendidas; reta R$ 1594 (p50 R$ 1036 público); degrau "
+    },
+    "VK2": {
+     "vendidas_reservas": 1,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 720,
+     "enviado": 1600.0,
+     "ocupacao_pricelabs": "1/2",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Escada de vendas (dono 01/11): 0/9 vendidas; reta R$ 1594 (p50 R$ 1036 público); degrau "
+    }
+   }
+  },
+  {
+   "data": "2027-01-11",
+   "dia_semana": "seg",
+   "quartos": {
+    "Q7": {
+     "vendidas_reservas": 1,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 658,
+     "enviado": 1654,
+     "ocupacao_pricelabs": null,
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Escada de vendas (dono 01/11): 1/7 vendidas; reta R$ 1644 (p50 R$ 1036 público); degrau "
+    },
+    "Double": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 1658.0,
+     "ocupacao_pricelabs": "0/6",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Escada de vendas (dono 01/11): 0/6 vendidas; reta R$ 1644 (p50 R$ 1036 público); degrau "
+    },
+    "Afrodite": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 2020.0,
+     "ocupacao_pricelabs": "-1",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Escada de vendas (dono 01/11): 1/16 vendidas; reta R$ 1644 (p50 R$ 1036 público); degrau"
+    },
+    "Q2": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 1670.0,
+     "ocupacao_pricelabs": "0/2",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Escada de vendas (dono 01/11): 1/16 vendidas; reta R$ 1644 (p50 R$ 1036 público); degrau"
+    },
+    "VK7": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 1598.0,
+     "ocupacao_pricelabs": "0/7",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Escada de vendas (dono 01/11): 0/7 vendidas; reta R$ 1594 (p50 R$ 1036 público); degrau "
+    },
+    "Balcony": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 1435.0,
+     "ocupacao_pricelabs": "0/6",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Escada de vendas (dono 01/11): 0/6 vendidas; reta R$ 1594 (p50 R$ 1036 público); degrau "
+    },
+    "VK2": {
+     "vendidas_reservas": 2,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 1292,
+     "enviado": 1600.0,
+     "ocupacao_pricelabs": "2/2",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Escada de vendas (dono 01/11): 1/9 vendidas; reta R$ 1594 (p50 R$ 1036 público); degrau "
+    }
+   }
+  },
+  {
+   "data": "2027-01-12",
+   "dia_semana": "ter",
+   "quartos": {
+    "Q7": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 1666,
+     "ocupacao_pricelabs": null,
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Escada de vendas (dono 01/11): 0/7 vendidas; reta R$ 1663 (p50 R$ 1048 público); degrau "
+    },
+    "Double": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 1672.0,
+     "ocupacao_pricelabs": "0/6",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Escada de vendas (dono 01/11): 0/6 vendidas; reta R$ 1663 (p50 R$ 1048 público); degrau "
+    },
+    "Afrodite": {
+     "vendidas_reservas": 1,
+     "vendidas_lote_suspeito": 1,
+     "receita_noite": 791,
+     "enviado": 3100.0,
+     "ocupacao_pricelabs": "-1",
+     "regra": "Proteção da noite esgotada (1/1; Regra J desligada pelo dono em 31/10): piso no p90 do mercado com hidro, R$ 1949 público = R$ 3094 enviados (busca própria); te"
+    },
+    "Q2": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 1670.0,
+     "ocupacao_pricelabs": "0/2",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Escada de vendas (dono 01/11): 1/16 vendidas; reta R$ 1663 (p50 R$ 1048 público); degrau"
+    },
+    "VK7": {
+     "vendidas_reservas": 1,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 495,
+     "enviado": 1613.0,
+     "ocupacao_pricelabs": "1/7",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Escada de vendas (dono 01/11): 1/7 vendidas; reta R$ 1612 (p50 R$ 1048 público); degrau "
+    },
+    "Balcony": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 1448.0,
+     "ocupacao_pricelabs": "0/6",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Escada de vendas (dono 01/11): 0/6 vendidas; reta R$ 1612 (p50 R$ 1048 público); degrau "
+    },
+    "VK2": {
+     "vendidas_reservas": 2,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 1292,
+     "enviado": 1626.0,
+     "ocupacao_pricelabs": "2/2",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Escada de vendas (dono 01/11): 2/9 vendidas; reta R$ 1612 (p50 R$ 1048 público); degrau "
+    }
+   }
+  },
+  {
+   "data": "2027-01-13",
+   "dia_semana": "qua",
+   "quartos": {
+    "Q7": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 1654,
+     "ocupacao_pricelabs": null,
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Escada de vendas (dono 01/11): 0/7 vendidas; reta R$ 1644 (p50 R$ 1036 público); degrau "
+    },
+    "Double": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 1658.0,
+     "ocupacao_pricelabs": "0/6",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Escada de vendas (dono 01/11): 0/6 vendidas; reta R$ 1644 (p50 R$ 1036 público); degrau "
+    },
+    "Afrodite": {
+     "vendidas_reservas": 1,
+     "vendidas_lote_suspeito": 1,
+     "receita_noite": 791,
+     "enviado": 3100.0,
+     "ocupacao_pricelabs": "-1",
+     "regra": "Proteção da noite esgotada (1/1; Regra J desligada pelo dono em 31/10): piso no p90 do mercado com hidro, R$ 1949 público = R$ 3094 enviados (tipo semana, mês 2"
+    },
+    "Q2": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 1670.0,
+     "ocupacao_pricelabs": "0/2",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Escada de vendas (dono 01/11): 1/16 vendidas; reta R$ 1644 (p50 R$ 1036 público); degrau"
+    },
+    "VK7": {
+     "vendidas_reservas": 1,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 495,
+     "enviado": 1598.0,
+     "ocupacao_pricelabs": "1/7",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Escada de vendas (dono 01/11): 1/7 vendidas; reta R$ 1594 (p50 R$ 1036 público); degrau "
+    },
+    "Balcony": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 1435.0,
+     "ocupacao_pricelabs": "0/6",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Escada de vendas (dono 01/11): 0/6 vendidas; reta R$ 1594 (p50 R$ 1036 público); degrau "
+    },
+    "VK2": {
+     "vendidas_reservas": 1,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 720,
+     "enviado": 1600.0,
+     "ocupacao_pricelabs": "1/2",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Escada de vendas (dono 01/11): 1/9 vendidas; reta R$ 1594 (p50 R$ 1036 público); degrau "
+    }
+   }
+  },
+  {
+   "data": "2027-01-14",
+   "dia_semana": "qui",
+   "quartos": {
+    "Q7": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 1654,
+     "ocupacao_pricelabs": null,
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Escada de vendas (dono 01/11): 0/7 vendidas; reta R$ 1644 (p50 R$ 1036 público); degrau "
+    },
+    "Double": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 1658.0,
+     "ocupacao_pricelabs": "0/6",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Escada de vendas (dono 01/11): 0/6 vendidas; reta R$ 1644 (p50 R$ 1036 público); degrau "
+    },
+    "Afrodite": {
+     "vendidas_reservas": 1,
+     "vendidas_lote_suspeito": 1,
+     "receita_noite": 791,
+     "enviado": 3100.0,
+     "ocupacao_pricelabs": "-1",
+     "regra": "Proteção da noite esgotada (1/1; Regra J desligada pelo dono em 31/10): piso no p90 do mercado com hidro, R$ 1949 público = R$ 3094 enviados (tipo semana, mês 2"
+    },
+    "Q2": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 1670.0,
+     "ocupacao_pricelabs": "0/2",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Escada de vendas (dono 01/11): 1/16 vendidas; reta R$ 1644 (p50 R$ 1036 público); degrau"
+    },
+    "VK7": {
+     "vendidas_reservas": 2,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 1223,
+     "enviado": 1598.0,
+     "ocupacao_pricelabs": "2/7",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Escada de vendas (dono 01/11): 2/7 vendidas; reta R$ 1594 (p50 R$ 1036 público); degrau "
+    },
+    "Balcony": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 1435.0,
+     "ocupacao_pricelabs": "0/6",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Escada de vendas (dono 01/11): 0/6 vendidas; reta R$ 1594 (p50 R$ 1036 público); degrau "
+    },
+    "VK2": {
+     "vendidas_reservas": 2,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 954,
+     "enviado": 1600.0,
+     "ocupacao_pricelabs": "2/2",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Escada de vendas (dono 01/11): 3/9 vendidas; reta R$ 1594 (p50 R$ 1036 público); degrau "
+    }
+   }
+  },
+  {
+   "data": "2027-01-15",
+   "dia_semana": "sex",
+   "quartos": {
+    "Q7": {
+     "vendidas_reservas": 1,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 1290,
+     "enviado": 1595,
+     "ocupacao_pricelabs": null,
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Plano do dono 09/11 (fds): abertura R$ 981 público; 1/7 vendidas; público R$ 981 = R$ 15"
+    },
+    "Double": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 1998.0,
+     "ocupacao_pricelabs": "0/6",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Plano do dono 09/11 (fds): abertura R$ 1224 público; 0/6 vendidas; público R$ 1225 = R$ "
+    },
+    "Afrodite": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 2300.0,
+     "ocupacao_pricelabs": "-1",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Plano do dono 09/11 (fds): abertura R$ 1408 público; 0/1 vendidas; 15% acima da Panorâmi"
+    },
+    "Q2": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 1908.0,
+     "ocupacao_pricelabs": "0/2",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Plano do dono 09/11 (fds): abertura R$ 1224 público; 0/2 vendidas; ordem do Recanto: ent"
+    },
+    "VK7": {
+     "vendidas_reservas": 1,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 728,
+     "enviado": 1998.0,
+     "ocupacao_pricelabs": "1/7",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Plano do dono 09/11 (fds): abertura R$ 1224 público; 1/7 vendidas; público R$ 1225 = R$ "
+    },
+    "Balcony": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 1791.0,
+     "ocupacao_pricelabs": "0/6",
+     "regra": "Regra G: Balcony 10% abaixo da suíte com banheira livre mais barata (R$ 1998)"
+    },
+    "VK2": {
+     "vendidas_reservas": 1,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 233,
+     "enviado": 2096.0,
+     "ocupacao_pricelabs": "1/2",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Plano do dono 09/11 (fds): abertura R$ 1204 público; 1/2 vendidas; 1 degrau(s) de +7%; p"
+    }
+   }
+  },
+  {
+   "data": "2027-01-16",
+   "dia_semana": "sab",
+   "quartos": {
+    "Q7": {
+     "vendidas_reservas": 1,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 1290,
+     "enviado": 1595,
+     "ocupacao_pricelabs": null,
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Plano do dono 09/11 (fds): abertura R$ 981 público; 1/7 vendidas; público R$ 981 = R$ 15"
+    },
+    "Double": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 1998.0,
+     "ocupacao_pricelabs": "0/6",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Plano do dono 09/11 (fds): abertura R$ 1224 público; 0/6 vendidas; público R$ 1225 = R$ "
+    },
+    "Afrodite": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 2300.0,
+     "ocupacao_pricelabs": "-1",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Plano do dono 09/11 (fds): abertura R$ 1408 público; 0/1 vendidas; 15% acima da Panorâmi"
+    },
+    "Q2": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 1908.0,
+     "ocupacao_pricelabs": "0/2",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Plano do dono 09/11 (fds): abertura R$ 1224 público; 0/2 vendidas; ordem do Recanto: ent"
+    },
+    "VK7": {
+     "vendidas_reservas": 1,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 728,
+     "enviado": 1998.0,
+     "ocupacao_pricelabs": "1/7",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Plano do dono 09/11 (fds): abertura R$ 1224 público; 1/7 vendidas; público R$ 1225 = R$ "
+    },
+    "Balcony": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 1791.0,
+     "ocupacao_pricelabs": "0/6",
+     "regra": "Regra G: Balcony 10% abaixo da suíte com banheira livre mais barata (R$ 1998)"
+    },
+    "VK2": {
+     "vendidas_reservas": 1,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 233,
+     "enviado": 2096.0,
+     "ocupacao_pricelabs": "1/2",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Plano do dono 09/11 (fds): abertura R$ 1204 público; 1/2 vendidas; 1 degrau(s) de +7%; p"
+    }
+   }
+  },
+  {
+   "data": "2027-01-17",
+   "dia_semana": "dom",
+   "quartos": {
+    "Q7": {
+     "vendidas_reservas": 2,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 2072,
+     "enviado": 1654,
+     "ocupacao_pricelabs": null,
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Escada de vendas (dono 01/11): 2/7 vendidas; reta R$ 1644 (p50 R$ 1036 público); degrau "
+    },
+    "Double": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 1658.0,
+     "ocupacao_pricelabs": "0/6",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Escada de vendas (dono 01/11): 0/6 vendidas; reta R$ 1644 (p50 R$ 1036 público); degrau "
+    },
+    "Afrodite": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 2020.0,
+     "ocupacao_pricelabs": "-1",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Escada de vendas (dono 01/11): 2/16 vendidas; reta R$ 1644 (p50 R$ 1036 público); degrau"
+    },
+    "Q2": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 1670.0,
+     "ocupacao_pricelabs": "0/2",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Escada de vendas (dono 01/11): 2/16 vendidas; reta R$ 1644 (p50 R$ 1036 público); degrau"
+    },
+    "VK7": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 1598.0,
+     "ocupacao_pricelabs": "0/7",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Escada de vendas (dono 01/11): 0/7 vendidas; reta R$ 1594 (p50 R$ 1036 público); degrau "
+    },
+    "Balcony": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 1435.0,
+     "ocupacao_pricelabs": "0/6",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Escada de vendas (dono 01/11): 0/6 vendidas; reta R$ 1594 (p50 R$ 1036 público); degrau "
+    },
+    "VK2": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 1600.0,
+     "ocupacao_pricelabs": "0/2",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Escada de vendas (dono 01/11): 0/9 vendidas; reta R$ 1594 (p50 R$ 1036 público); degrau "
+    }
+   }
+  },
+  {
+   "data": "2027-01-18",
+   "dia_semana": "seg",
+   "quartos": {
+    "Q7": {
+     "vendidas_reservas": 1,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 782,
+     "enviado": 1654,
+     "ocupacao_pricelabs": null,
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Escada de vendas (dono 01/11): 1/7 vendidas; reta R$ 1644 (p50 R$ 1036 público); degrau "
+    },
+    "Double": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 1658.0,
+     "ocupacao_pricelabs": "0/6",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Escada de vendas (dono 01/11): 0/6 vendidas; reta R$ 1644 (p50 R$ 1036 público); degrau "
+    },
+    "Afrodite": {
+     "vendidas_reservas": 1,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 3100.0,
+     "ocupacao_pricelabs": "-1",
+     "regra": "Proteção da noite esgotada (1/1; Regra J desligada pelo dono em 31/10): piso no p90 do mercado com hidro, R$ 1949 público = R$ 3094 enviados (tipo semana, mês 2"
+    },
+    "Q2": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 1670.0,
+     "ocupacao_pricelabs": "0/2",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Escada de vendas (dono 01/11): 2/16 vendidas; reta R$ 1644 (p50 R$ 1036 público); degrau"
+    },
+    "VK7": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 1598.0,
+     "ocupacao_pricelabs": "0/7",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Escada de vendas (dono 01/11): 0/7 vendidas; reta R$ 1594 (p50 R$ 1036 público); degrau "
+    },
+    "Balcony": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 1435.0,
+     "ocupacao_pricelabs": "0/6",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Escada de vendas (dono 01/11): 0/6 vendidas; reta R$ 1594 (p50 R$ 1036 público); degrau "
+    },
+    "VK2": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 1600.0,
+     "ocupacao_pricelabs": "0/2",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Escada de vendas (dono 01/11): 0/9 vendidas; reta R$ 1594 (p50 R$ 1036 público); degrau "
+    }
+   }
+  },
+  {
+   "data": "2027-01-19",
+   "dia_semana": "ter",
+   "quartos": {
+    "Q7": {
+     "vendidas_reservas": 1,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 782,
+     "enviado": 1630,
+     "ocupacao_pricelabs": null,
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Escada de vendas (dono 01/11): 1/7 vendidas; reta R$ 1625 (p50 R$ 1024 público); degrau "
+    },
+    "Double": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 1643.0,
+     "ocupacao_pricelabs": "0/6",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Escada de vendas (dono 01/11): 0/6 vendidas; reta R$ 1625 (p50 R$ 1024 público); degrau "
+    },
+    "Afrodite": {
+     "vendidas_reservas": 1,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 3100.0,
+     "ocupacao_pricelabs": "-1",
+     "regra": "Proteção da noite esgotada (1/1; Regra J desligada pelo dono em 31/10): piso no p90 do mercado com hidro, R$ 1949 público = R$ 3094 enviados (busca própria); te"
+    },
+    "Q2": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 1638.0,
+     "ocupacao_pricelabs": "0/2",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Escada de vendas (dono 01/11): 2/16 vendidas; reta R$ 1625 (p50 R$ 1024 público); degrau"
+    },
+    "VK7": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 1584.0,
+     "ocupacao_pricelabs": "0/7",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Escada de vendas (dono 01/11): 0/7 vendidas; reta R$ 1575 (p50 R$ 1024 público); degrau "
+    },
+    "Balcony": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 1422.0,
+     "ocupacao_pricelabs": "0/6",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Escada de vendas (dono 01/11): 0/6 vendidas; reta R$ 1575 (p50 R$ 1024 público); degrau "
+    },
+    "VK2": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 1588.0,
+     "ocupacao_pricelabs": "0/2",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Escada de vendas (dono 01/11): 0/9 vendidas; reta R$ 1575 (p50 R$ 1024 público); degrau "
+    }
+   }
+  },
+  {
+   "data": "2027-01-20",
+   "dia_semana": "qua",
+   "quartos": {
+    "Q7": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 1654,
+     "ocupacao_pricelabs": null,
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Escada de vendas (dono 01/11): 0/7 vendidas; reta R$ 1644 (p50 R$ 1036 público); degrau "
+    },
+    "Double": {
+     "vendidas_reservas": 1,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 696,
+     "enviado": 1658.0,
+     "ocupacao_pricelabs": "1/6",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Escada de vendas (dono 01/11): 1/6 vendidas; reta R$ 1644 (p50 R$ 1036 público); degrau "
+    },
+    "Afrodite": {
+     "vendidas_reservas": 1,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 3100.0,
+     "ocupacao_pricelabs": "-1",
+     "regra": "Proteção da noite esgotada (1/1; Regra J desligada pelo dono em 31/10): piso no p90 do mercado com hidro, R$ 1949 público = R$ 3094 enviados (tipo semana, mês 2"
+    },
+    "Q2": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 1670.0,
+     "ocupacao_pricelabs": "0/2",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Escada de vendas (dono 01/11): 2/16 vendidas; reta R$ 1644 (p50 R$ 1036 público); degrau"
+    },
+    "VK7": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 1598.0,
+     "ocupacao_pricelabs": "0/7",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Escada de vendas (dono 01/11): 0/7 vendidas; reta R$ 1594 (p50 R$ 1036 público); degrau "
+    },
+    "Balcony": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 1435.0,
+     "ocupacao_pricelabs": "0/6",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Escada de vendas (dono 01/11): 0/6 vendidas; reta R$ 1594 (p50 R$ 1036 público); degrau "
+    },
+    "VK2": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 1600.0,
+     "ocupacao_pricelabs": "0/2",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Escada de vendas (dono 01/11): 0/9 vendidas; reta R$ 1594 (p50 R$ 1036 público); degrau "
+    }
+   }
+  },
+  {
+   "data": "2027-01-21",
+   "dia_semana": "qui",
+   "quartos": {
+    "Q7": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 1654,
+     "ocupacao_pricelabs": null,
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Escada de vendas (dono 01/11): 0/7 vendidas; reta R$ 1644 (p50 R$ 1036 público); degrau "
+    },
+    "Double": {
+     "vendidas_reservas": 1,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 696,
+     "enviado": 1658.0,
+     "ocupacao_pricelabs": "1/6",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Escada de vendas (dono 01/11): 1/6 vendidas; reta R$ 1644 (p50 R$ 1036 público); degrau "
+    },
+    "Afrodite": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 2020.0,
+     "ocupacao_pricelabs": "-1",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Escada de vendas (dono 01/11): 1/16 vendidas; reta R$ 1644 (p50 R$ 1036 público); degrau"
+    },
+    "Q2": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 1670.0,
+     "ocupacao_pricelabs": "0/2",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Escada de vendas (dono 01/11): 1/16 vendidas; reta R$ 1644 (p50 R$ 1036 público); degrau"
+    },
+    "VK7": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 1598.0,
+     "ocupacao_pricelabs": "0/7",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Escada de vendas (dono 01/11): 0/7 vendidas; reta R$ 1594 (p50 R$ 1036 público); degrau "
+    },
+    "Balcony": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 1435.0,
+     "ocupacao_pricelabs": "0/6",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Escada de vendas (dono 01/11): 0/6 vendidas; reta R$ 1594 (p50 R$ 1036 público); degrau "
+    },
+    "VK2": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 1600.0,
+     "ocupacao_pricelabs": "0/2",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Escada de vendas (dono 01/11): 0/9 vendidas; reta R$ 1594 (p50 R$ 1036 público); degrau "
+    }
+   }
+  },
+  {
+   "data": "2027-01-22",
+   "dia_semana": "sex",
+   "quartos": {
+    "Q7": {
+     "vendidas_reservas": 1,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 840,
+     "enviado": 1912,
+     "ocupacao_pricelabs": null,
+     "regra": "Plano do dono 09/11 (fds): abertura R$ 712 públi; 1/7 vendidas"
+    },
+    "Double": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 1909.0,
+     "ocupacao_pricelabs": "0/6",
+     "regra": "Plano do dono 09/11 (fds): abertura R$ 1079 públ; 0/6 vendidas"
+    },
+    "Afrodite": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 2200.0,
+     "ocupacao_pricelabs": "-1",
+     "regra": "Plano do dono 09/11 (fds): abertura R$ 1241 públ; 0/1 vendidas"
+    },
+    "Q2": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 1924.0,
+     "ocupacao_pricelabs": "0/2",
+     "regra": "Plano do dono 09/11 (fds): abertura R$ 1079 públ; 0/2 vendidas"
+    },
+    "VK7": {
+     "vendidas_reservas": 1,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 2057.0,
+     "ocupacao_pricelabs": "1/7",
+     "regra": "Plano do dono 09/11 (fds): abertura R$ 1079 públ; 0/7 vendidas"
+    },
+    "Balcony": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 1842.0,
+     "ocupacao_pricelabs": "0/6",
+     "regra": "Regra G (Balcony 90% da suíte livre)"
+    },
+    "VK2": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 2057.0,
+     "ocupacao_pricelabs": "0/2",
+     "regra": "Plano do dono 09/11 (fds): abertura R$ 1079 públ; 0/2 vendidas"
+    }
+   }
+  },
+  {
+   "data": "2027-01-23",
+   "dia_semana": "sab",
+   "quartos": {
+    "Q7": {
+     "vendidas_reservas": 1,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 840,
+     "enviado": 1912,
+     "ocupacao_pricelabs": null,
+     "regra": "Plano do dono 09/11 (fds): abertura R$ 712 públi; 1/7 vendidas"
+    },
+    "Double": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 1909.0,
+     "ocupacao_pricelabs": "0/6",
+     "regra": "Plano do dono 09/11 (fds): abertura R$ 1079 públ; 0/6 vendidas"
+    },
+    "Afrodite": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 2200.0,
+     "ocupacao_pricelabs": "-1",
+     "regra": "Plano do dono 09/11 (fds): abertura R$ 1241 públ; 0/1 vendidas"
+    },
+    "Q2": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 1924.0,
+     "ocupacao_pricelabs": "0/2",
+     "regra": "Plano do dono 09/11 (fds): abertura R$ 1079 públ; 0/2 vendidas"
+    },
+    "VK7": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 2057.0,
+     "ocupacao_pricelabs": "0/7",
+     "regra": "Plano do dono 09/11 (fds): abertura R$ 1079 públ; 0/7 vendidas"
+    },
+    "Balcony": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 1842.0,
+     "ocupacao_pricelabs": "0/6",
+     "regra": "Regra G (Balcony 90% da suíte livre)"
+    },
+    "VK2": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 2057.0,
+     "ocupacao_pricelabs": "0/2",
+     "regra": "Plano do dono 09/11 (fds): abertura R$ 1079 públ; 0/2 vendidas"
+    }
+   }
+  },
+  {
+   "data": "2027-01-24",
+   "dia_semana": "dom",
+   "quartos": {
+    "Q7": {
+     "vendidas_reservas": 1,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 840,
+     "enviado": 2135,
+     "ocupacao_pricelabs": null,
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Pace (ritmo: 1/7 vendidas, curva 12% a D66); alvo p69 R$ 1338 público = R$ 2123 enviados"
+    },
+    "Double": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 2146.0,
+     "ocupacao_pricelabs": "0/6",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Pace (ritmo: 0/6 vendidas, curva 12% a D66); alvo p65 R$ 1283 público = R$ 2036 enviados"
+    },
+    "Afrodite": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 2260.0,
+     "ocupacao_pricelabs": "-1",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Pace (ritmo: 0/1 vendidas, curva 12% a D66); alvo p67 R$ 1307 público = R$ 2074 enviados"
+    },
+    "Q2": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 2146.0,
+     "ocupacao_pricelabs": "0/2",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Pace (ritmo: 0/2 vendidas, curva 12% a D66); alvo p67 R$ 1307 público = R$ 2074 enviados"
+    },
+    "VK7": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 2057.0,
+     "ocupacao_pricelabs": "0/7",
+     "regra": "12m 21/10: piso feriado Aniversário de São Paulo"
+    },
+    "Balcony": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 1626.0,
+     "ocupacao_pricelabs": "0/6",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Pace (ritmo: 0/6 vendidas, curva 12% a D66); alvo p50 R$ 1051 público = R$ 1617 enviados"
+    },
+    "VK2": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 2057.0,
+     "ocupacao_pricelabs": "0/2",
+     "regra": "12m 21/10: piso feriado Aniversário de São Paulo"
+    }
+   }
+  },
+  {
+   "data": "2027-01-25",
+   "dia_semana": "seg",
+   "quartos": {
+    "Q7": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 1654,
+     "ocupacao_pricelabs": null,
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Escada de vendas (dono 01/11): 0/7 vendidas; reta R$ 1644 (p50 R$ 1036 público); degrau "
+    },
+    "Double": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 1658.0,
+     "ocupacao_pricelabs": "0/6",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Escada de vendas (dono 01/11): 0/6 vendidas; reta R$ 1644 (p50 R$ 1036 público); degrau "
+    },
+    "Afrodite": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 2020.0,
+     "ocupacao_pricelabs": "-1",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Escada de vendas (dono 01/11): 0/16 vendidas; reta R$ 1644 (p50 R$ 1036 público); degrau"
+    },
+    "Q2": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 1670.0,
+     "ocupacao_pricelabs": "0/2",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Escada de vendas (dono 01/11): 0/16 vendidas; reta R$ 1644 (p50 R$ 1036 público); degrau"
+    },
+    "VK7": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 1598.0,
+     "ocupacao_pricelabs": "0/7",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Escada de vendas (dono 01/11): 0/7 vendidas; reta R$ 1594 (p50 R$ 1036 público); degrau "
+    },
+    "Balcony": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 1435.0,
+     "ocupacao_pricelabs": "0/6",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Escada de vendas (dono 01/11): 0/6 vendidas; reta R$ 1594 (p50 R$ 1036 público); degrau "
+    },
+    "VK2": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 1600.0,
+     "ocupacao_pricelabs": "0/2",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Escada de vendas (dono 01/11): 0/9 vendidas; reta R$ 1594 (p50 R$ 1036 público); degrau "
+    }
+   }
+  },
+  {
+   "data": "2027-01-26",
+   "dia_semana": "ter",
+   "quartos": {
+    "Q7": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 1595,
+     "ocupacao_pricelabs": null,
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Escada de vendas (dono 01/11): 0/7 vendidas; reta R$ 1586 (p50 R$ 999 público); degrau a"
+    },
+    "Double": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 1598.0,
+     "ocupacao_pricelabs": "0/6",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Escada de vendas (dono 01/11): 0/6 vendidas; reta R$ 1586 (p50 R$ 999 público); degrau a"
+    },
+    "Afrodite": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 1940.0,
+     "ocupacao_pricelabs": "-1",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Escada de vendas (dono 01/11): 0/16 vendidas; reta R$ 1586 (p50 R$ 999 público); degrau "
+    },
+    "Q2": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 1606.0,
+     "ocupacao_pricelabs": "0/2",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Escada de vendas (dono 01/11): 0/16 vendidas; reta R$ 1586 (p50 R$ 999 público); degrau "
+    },
+    "VK7": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 1539.0,
+     "ocupacao_pricelabs": "0/7",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Escada de vendas (dono 01/11): 0/7 vendidas; reta R$ 1537 (p50 R$ 999 público); degrau a"
+    },
+    "Balcony": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 1384.0,
+     "ocupacao_pricelabs": "0/6",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Escada de vendas (dono 01/11): 0/6 vendidas; reta R$ 1537 (p50 R$ 999 público); degrau a"
+    },
+    "VK2": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 1549.0,
+     "ocupacao_pricelabs": "0/2",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Escada de vendas (dono 01/11): 0/9 vendidas; reta R$ 1537 (p50 R$ 999 público); degrau a"
+    }
+   }
+  },
+  {
+   "data": "2027-01-27",
+   "dia_semana": "qua",
+   "quartos": {
+    "Q7": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 1654,
+     "ocupacao_pricelabs": null,
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Escada de vendas (dono 01/11): 0/7 vendidas; reta R$ 1644 (p50 R$ 1036 público); degrau "
+    },
+    "Double": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 1658.0,
+     "ocupacao_pricelabs": "0/6",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Escada de vendas (dono 01/11): 0/6 vendidas; reta R$ 1644 (p50 R$ 1036 público); degrau "
+    },
+    "Afrodite": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 2020.0,
+     "ocupacao_pricelabs": "-1",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Escada de vendas (dono 01/11): 0/16 vendidas; reta R$ 1644 (p50 R$ 1036 público); degrau"
+    },
+    "Q2": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 1670.0,
+     "ocupacao_pricelabs": "0/2",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Escada de vendas (dono 01/11): 0/16 vendidas; reta R$ 1644 (p50 R$ 1036 público); degrau"
+    },
+    "VK7": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 1598.0,
+     "ocupacao_pricelabs": "0/7",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Escada de vendas (dono 01/11): 0/7 vendidas; reta R$ 1594 (p50 R$ 1036 público); degrau "
+    },
+    "Balcony": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 1435.0,
+     "ocupacao_pricelabs": "0/6",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Escada de vendas (dono 01/11): 0/6 vendidas; reta R$ 1594 (p50 R$ 1036 público); degrau "
+    },
+    "VK2": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 1600.0,
+     "ocupacao_pricelabs": "0/2",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Escada de vendas (dono 01/11): 0/9 vendidas; reta R$ 1594 (p50 R$ 1036 público); degrau "
+    }
+   }
+  },
+  {
+   "data": "2027-01-28",
+   "dia_semana": "qui",
+   "quartos": {
+    "Q7": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 1654,
+     "ocupacao_pricelabs": null,
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Escada de vendas (dono 01/11): 0/7 vendidas; reta R$ 1644 (p50 R$ 1036 público); degrau "
+    },
+    "Double": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 1658.0,
+     "ocupacao_pricelabs": "0/6",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Escada de vendas (dono 01/11): 0/6 vendidas; reta R$ 1644 (p50 R$ 1036 público); degrau "
+    },
+    "Afrodite": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 2020.0,
+     "ocupacao_pricelabs": "-1",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Escada de vendas (dono 01/11): 0/16 vendidas; reta R$ 1644 (p50 R$ 1036 público); degrau"
+    },
+    "Q2": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 1670.0,
+     "ocupacao_pricelabs": "0/2",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Escada de vendas (dono 01/11): 0/16 vendidas; reta R$ 1644 (p50 R$ 1036 público); degrau"
+    },
+    "VK7": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 1598.0,
+     "ocupacao_pricelabs": "0/7",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Escada de vendas (dono 01/11): 0/7 vendidas; reta R$ 1594 (p50 R$ 1036 público); degrau "
+    },
+    "Balcony": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 1435.0,
+     "ocupacao_pricelabs": "0/6",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Escada de vendas (dono 01/11): 0/6 vendidas; reta R$ 1594 (p50 R$ 1036 público); degrau "
+    },
+    "VK2": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 1600.0,
+     "ocupacao_pricelabs": "0/2",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Escada de vendas (dono 01/11): 0/9 vendidas; reta R$ 1594 (p50 R$ 1036 público); degrau "
+    }
+   }
+  },
+  {
+   "data": "2027-01-29",
+   "dia_semana": "sex",
+   "quartos": {
+    "Q7": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 1595,
+     "ocupacao_pricelabs": null,
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Plano do dono 09/11 (fds): abertura R$ 979 público; 0/7 vendidas; público R$ 980 = R$ 15"
+    },
+    "Double": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 1998.0,
+     "ocupacao_pricelabs": "0/6",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Plano do dono 09/11 (fds): abertura R$ 1224 público; 0/6 vendidas; público R$ 1225 = R$ "
+    },
+    "Afrodite": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 2300.0,
+     "ocupacao_pricelabs": "-1",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Plano do dono 09/11 (fds): abertura R$ 1408 público; 0/1 vendidas; 15% acima da Panorâmi"
+    },
+    "Q2": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 1908.0,
+     "ocupacao_pricelabs": "0/2",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Plano do dono 09/11 (fds): abertura R$ 1224 público; 0/2 vendidas; ordem do Recanto: ent"
+    },
+    "VK7": {
+     "vendidas_reservas": 1,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 940,
+     "enviado": 1998.0,
+     "ocupacao_pricelabs": "1/7",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Plano do dono 09/11 (fds): abertura R$ 1224 público; 1/7 vendidas; público R$ 1225 = R$ "
+    },
+    "Balcony": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 1714.0,
+     "ocupacao_pricelabs": "0/6",
+     "regra": "Regra G: Balcony 10% abaixo da suíte com banheira livre mais barata (R$ 1918)"
+    },
+    "VK2": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 1918.0,
+     "ocupacao_pricelabs": "0/2",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Plano do dono 09/11 (fds): abertura R$ 1176 público; 0/2 vendidas; público R$ 1177 = R$ "
+    }
+   }
+  },
+  {
+   "data": "2027-01-30",
+   "dia_semana": "sab",
+   "quartos": {
+    "Q7": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 1595,
+     "ocupacao_pricelabs": null,
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Plano do dono 09/11 (fds): abertura R$ 979 público; 0/7 vendidas; público R$ 980 = R$ 15"
+    },
+    "Double": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 1998.0,
+     "ocupacao_pricelabs": "0/6",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Plano do dono 09/11 (fds): abertura R$ 1224 público; 0/6 vendidas; público R$ 1225 = R$ "
+    },
+    "Afrodite": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 2300.0,
+     "ocupacao_pricelabs": "-1",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Plano do dono 09/11 (fds): abertura R$ 1408 público; 0/1 vendidas; 15% acima da Panorâmi"
+    },
+    "Q2": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 1908.0,
+     "ocupacao_pricelabs": "0/2",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Plano do dono 09/11 (fds): abertura R$ 1224 público; 0/2 vendidas; ordem do Recanto: ent"
+    },
+    "VK7": {
+     "vendidas_reservas": 2,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 1937,
+     "enviado": 1998.0,
+     "ocupacao_pricelabs": "2/7",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Plano do dono 09/11 (fds): abertura R$ 1224 público; 2/7 vendidas; público R$ 1225 = R$ "
+    },
+    "Balcony": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 1714.0,
+     "ocupacao_pricelabs": "0/6",
+     "regra": "Regra G: Balcony 10% abaixo da suíte com banheira livre mais barata (R$ 1918)"
+    },
+    "VK2": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 1918.0,
+     "ocupacao_pricelabs": "0/2",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Plano do dono 09/11 (fds): abertura R$ 1176 público; 0/2 vendidas; público R$ 1177 = R$ "
+    }
+   }
+  },
+  {
+   "data": "2027-01-31",
+   "dia_semana": "dom",
+   "quartos": {
+    "Q7": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 1654,
+     "ocupacao_pricelabs": null,
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Escada de vendas (dono 01/11): 0/7 vendidas; reta R$ 1644 (p50 R$ 1036 público); degrau "
+    },
+    "Double": {
+     "vendidas_reservas": 2,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 284,
+     "enviado": 1658.0,
+     "ocupacao_pricelabs": "2/6",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Escada de vendas (dono 01/11): 2/6 vendidas; reta R$ 1644 (p50 R$ 1036 público); degrau "
+    },
+    "Afrodite": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 2020.0,
+     "ocupacao_pricelabs": "-1",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Escada de vendas (dono 01/11): 2/16 vendidas; reta R$ 1644 (p50 R$ 1036 público); degrau"
+    },
+    "Q2": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 1670.0,
+     "ocupacao_pricelabs": "0/2",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Escada de vendas (dono 01/11): 2/16 vendidas; reta R$ 1644 (p50 R$ 1036 público); degrau"
+    },
+    "VK7": {
+     "vendidas_reservas": 1,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 997,
+     "enviado": 1569.0,
+     "ocupacao_pricelabs": "1/7",
+     "regra": "Escada proporcional (dono 26 e 28/10): 0→1 de 7 vendidas; alvo R$ 3122 = média dos tops com hidro e vista (semana (semana 24/11)); antes R$ 1297"
+    },
+    "Balcony": {
+     "vendidas_reservas": 0,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 0,
+     "enviado": 1410.0,
+     "ocupacao_pricelabs": "0/6",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Escada de vendas (dono 01/11): 0/6 vendidas; reta R$ 1594 (p50 R$ 1036 público); degrau "
+    },
+    "VK2": {
+     "vendidas_reservas": 1,
+     "vendidas_lote_suspeito": 0,
+     "receita_noite": 651,
+     "enviado": 1600.0,
+     "ocupacao_pricelabs": "1/2",
+     "regra": "Reposição pela régua comparável (dono-2026-11-19-precificacao-dez-fev): Escada de vendas (dono 01/11): 2/9 vendidas; reta R$ 1594 (p50 R$ 1036 público); degrau "
+    }
+   }
+  }
+ ]
+}
